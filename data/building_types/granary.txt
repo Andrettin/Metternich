@@ -9,7 +9,6 @@ granary = {
 		camp
 		hamlet
 		village
-		campus
 		estate
 		temple
 		town

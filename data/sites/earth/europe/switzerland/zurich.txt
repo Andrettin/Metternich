@@ -11,7 +11,7 @@ zurich = {
 		
 		1521 = {
 			buildings += university #University founded in Zurich in 1521; Source: "The Cambridge Modern History Atlas", 1912, p. 9.
-			holding_type = campus
+			holding_type = city
 		}
 	}
 }

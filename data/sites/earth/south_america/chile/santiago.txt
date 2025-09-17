@@ -7,7 +7,7 @@ santiago_de_chile = {
 	history = {
 		1738 = {
 			buildings += university #University founded in Santiago in 1738; Source: Enrique Martínez Ruiz; Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 226.
-			holding_type = campus
+			holding_type = city
 		}
 	}
 }

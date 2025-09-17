@@ -9,7 +9,7 @@ grenoble = {
 	history = {
 		1339 = {
 			buildings += university #University founded in Grenoble in 1339; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
-			holding_type = campus
+			holding_type = city
 		}
 		
 		1836 = {

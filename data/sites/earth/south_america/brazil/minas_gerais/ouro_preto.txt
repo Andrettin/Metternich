@@ -9,7 +9,7 @@ ouro_preto = {
 	history = {
 		1839 = {
 			buildings += college #Escola de Farmácia de Ouro Preto founded in 1839; Source: Keila Grinberg; Ricardo Salles, "O Brasil Imperial", vol. I, 2009, p. 296.
-			holding_type = campus
+			holding_type = city
 		}
 		
 		1876 = {

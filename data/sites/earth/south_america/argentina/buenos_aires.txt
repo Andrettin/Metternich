@@ -12,7 +12,7 @@ buenos_aires = {
 		
 		1784 = {
 			buildings += college #College or seminary founded in Buenos Aires in 1784; Source: Enrique Martínez Ruiz; Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 226.
-			holding_type = campus
+			holding_type = city
 		}
 	}
 }

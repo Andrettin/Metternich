@@ -7,7 +7,7 @@ liverpool = {
 	history = {
 		1903 = {
 			buildings += university #University founded in Liverpool in 1903; Source: David Thomson, "Europe Since Napoleon", 1966, p. 449.
-			holding_type = campus
+			holding_type = city
 		}
 	}
 }

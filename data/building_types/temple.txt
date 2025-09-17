@@ -7,7 +7,6 @@ shrine = {
 	required_technology = ceremonial_burial
 	holding_types = {
 		village
-		campus
 		estate
 		temple
 		town

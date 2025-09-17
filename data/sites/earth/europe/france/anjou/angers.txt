@@ -8,12 +8,11 @@ angers = {
 	history = {
 		1250 = {
 			buildings += university #University existent in Angers in 1250; Source: "Atlas de História Mundial", 2001, p. 144.
-			holding_type = campus
+			holding_type = city
 		}
 	
 		1789 = {
 			buildings += courthouse #Prévôt des maréchaux and chief court of the salt tax existent in Angers in 1789; Source: William R. Shepherd, "Historical Atlas", 1911, p. 147.
-			holding_type = city
 		}
 		
 		1836 = {

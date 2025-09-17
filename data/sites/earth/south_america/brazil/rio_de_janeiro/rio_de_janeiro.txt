@@ -23,7 +23,7 @@ rio_de_janeiro = {
 		
 		1862 = {
 			buildings += college #Instituto Politécnico Brasileiro founded in Rio de Janeiro in 1862; Source: Silvia Fernanda de Mendonça Figueirôa, "Ciência e tecnologia no Brasil Imperial: Guilherme Schüch, Barão de Capanema (1824-1908)", 2005, p. 446.
-			holding_type = campus
+			holding_type = city
 		}
 		
 		1872 = {

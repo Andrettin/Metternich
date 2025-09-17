@@ -7,7 +7,7 @@ lima = {
 	history = {
 		1551 = {
 			buildings += university #University founded in Lima in 1551; Source: Enrique Martínez Ruiz; Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 226.
-			holding_type = campus
+			holding_type = city
 		}
 	}
 }

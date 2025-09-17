@@ -12,7 +12,7 @@ orleans = {
 	history = {
 		1305 = {
 			buildings += university #University founded in Orléans in 1305; Source: "Atlas de História Mundial", 2001, p. 144.
-			holding_type = campus
+			holding_type = city
 		}
 		
 		1360 = {
@@ -21,7 +21,6 @@ orleans = {
 		
 		1789 = {
 			buildings += courthouse #Prévôt des maréchaux and chief court of the salt tax existent in Orléans in 1789; Source: William R. Shepherd, "Historical Atlas", 1911, p. 147.
-			holding_type = city
 		}
 		
 		1836 = {

@@ -12,7 +12,7 @@ groningen = {
 		
 		1614 = {
 			buildings += university #University founded in Groningen in 1614; Source: Henry Kamen, "Early Modern European Society", 2021, p. 291.
-			holding_type = campus
+			holding_type = city
 		}
 	}
 }

@@ -7,7 +7,7 @@ caracas = {
 	history = {
 		1721 = {
 			buildings += university #University founded in Caracas in 1721; Source: Enrique Martínez Ruiz; Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 226.
-			holding_type = campus
+			holding_type = city
 		}
 	}
 }

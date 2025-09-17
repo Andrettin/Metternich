@@ -10,7 +10,6 @@ stockade = {
 		town
 		city
 		metropolis
-		campus
 		estate
 		temple
 	}

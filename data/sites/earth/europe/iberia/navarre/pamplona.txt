@@ -13,7 +13,7 @@ pamplona = {
 		
 		1628 = {
 			buildings += university #Major university founded in Pamplona in 1628; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
-			holding_type = campus
+			holding_type = city
 		}
 		
 		1725 = {

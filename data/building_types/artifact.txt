@@ -8,7 +8,6 @@ artifact = {
 	holding_types = {
 		camp
 		hamlet
-		campus
 		estate
 		temple
 		town

@@ -8,7 +8,6 @@ observatory = {
 	holding_types = {
 		city
 		metropolis
-		campus
 	}
 	conditions = {
 		game_rule = research_commodity

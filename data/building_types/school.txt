@@ -6,7 +6,6 @@ school = {
 	provincial = true
 	holding_types = {
 		village
-		campus
 		town
 		city
 		metropolis
@@ -36,7 +35,6 @@ college = {
 	provincial = true
 	required_building = school
 	holding_types = {
-		campus
 		city
 		metropolis
 	}
@@ -66,7 +64,6 @@ university = {
 	required_building = college
 	required_technology = university
 	holding_types = {
-		campus
 		city
 		metropolis
 	}

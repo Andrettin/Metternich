@@ -8,7 +8,7 @@ santiago_de_compostela = {
 	history = {
 		1532 = {
 			buildings += university #University founded in Santiago de Compostela in 1532; Source: "The Cambridge Modern History Atlas", 1912, p. 9.
-			holding_type = campus
+			holding_type = city
 		}
 	}
 }

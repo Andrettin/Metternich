@@ -12,7 +12,7 @@ dublin = {
 		
 		1312 = {
 			buildings += university #University founded in Dublin in 1312; Source: "Atlas de História Mundial", p. 144.
-			holding_type = campus
+			holding_type = city
 		}
 		
 		1360 = {

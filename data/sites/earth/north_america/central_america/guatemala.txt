@@ -7,7 +7,7 @@ guatemala = {
 	history = {
 		1676 = {
 			buildings += university #University founded in Guatemala in 1676; Source: Enrique Martínez Ruiz; Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 226.
-			holding_type = campus
+			holding_type = city
 		}
 	}
 }

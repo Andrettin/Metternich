@@ -12,7 +12,7 @@ murcia = {
 		
 		1614 = {
 			buildings += university #Minor university founded in Murcia in 1614; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
-			holding_type = campus
+			holding_type = city
 		}
 		
 		1806 = {

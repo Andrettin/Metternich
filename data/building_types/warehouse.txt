@@ -13,7 +13,6 @@ warehouse = {
 		town
 		city
 		metropolis
-		campus
 		estate
 		temple
 	}

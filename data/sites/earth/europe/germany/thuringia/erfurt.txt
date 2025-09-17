@@ -15,7 +15,7 @@ erfurt = {
 		
 		1379 = {
 			buildings += university #University founded in Erfurt in 1379; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
-			holding_type = campus
+			holding_type = city
 		}
 	}
 }

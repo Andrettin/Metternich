@@ -12,7 +12,7 @@ bologna = {
 	history = {
 		1250 = {
 			buildings += university #University existent in Bologna in 1250; Source: "Atlas de História Mundial", 2001, p. 144.
-			holding_type = campus
+			holding_type = city
 		}
 		
 		1360 = {

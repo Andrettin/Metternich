@@ -10,7 +10,6 @@ alchemists_shop = {
 		town
 		city
 		metropolis
-		campus
 	}
 	commodity_costs = {
 		lumber = 4

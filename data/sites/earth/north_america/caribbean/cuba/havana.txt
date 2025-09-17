@@ -9,7 +9,7 @@ havana = {
 	history = {
 		1721 = {
 			buildings += college #College or seminary founded in Havana in 1721 or 1728; Source: Enrique Martínez Ruiz; Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 226.
-			holding_type = campus
+			holding_type = city
 		}
 	}
 }

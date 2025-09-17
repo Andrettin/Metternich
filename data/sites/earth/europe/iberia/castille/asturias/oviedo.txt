@@ -13,7 +13,7 @@ oviedo = {
 		
 		1580 = {
 			buildings += university #University founded in Oviedo in 1580; Source: "The Cambridge Modern History Atlas", 1912, p. 9.
-			holding_type = campus
+			holding_type = city
 		}
 		
 		1608 = {
