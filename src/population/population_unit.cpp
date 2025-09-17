@@ -5,7 +5,6 @@
 #include "domain/country.h"
 #include "domain/country_game_data.h"
 #include "domain/culture.h"
-#include "domain/ideology.h"
 #include "economy/commodity.h"
 #include "economy/resource.h"
 #include "game/game.h"
@@ -189,44 +188,6 @@ void population_unit::set_site(const metternich::site *site)
 
 	const metternich::country *country = site ? site->get_game_data()->get_owner() : nullptr;
 	this->set_country(country);
-}
-
-void population_unit::set_ideology(const metternich::ideology *ideology)
-{
-	if (ideology == this->get_ideology()) {
-		return;
-	}
-
-	if (this->get_ideology() != nullptr) {
-		this->get_site()->get_game_data()->get_population()->change_ideology_count(this->get_ideology(), -1);
-	}
-
-	this->ideology = ideology;
-
-	if (this->get_ideology() != nullptr) {
-		this->get_site()->get_game_data()->get_population()->change_ideology_count(this->get_ideology(), 1);
-	}
-}
-
-void population_unit::choose_ideology()
-{
-	std::vector<const metternich::ideology *> potential_ideologies;
-
-	for (const metternich::ideology *ideology : ideology::get_all()) {
-		if (ideology->get_conditions() != nullptr && !ideology->get_conditions()->check(this, read_only_context(this))) {
-			continue;
-		}
-
-		const int weight = ideology->get_weight_factor()->calculate(this).to_int();
-
-		for (int i = 0; i < weight; ++i) {
-			potential_ideologies.push_back(ideology);
-		}
-	}
-
-	if (!potential_ideologies.empty()) {
-		this->set_ideology(vector::get_random(potential_ideologies));
-	}
 }
 
 bool population_unit::is_food_producer() const

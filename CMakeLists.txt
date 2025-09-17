@@ -68,8 +68,6 @@ set(domain_SRCS
 	src/domain/idea.cpp
 	src/domain/idea_slot.cpp
 	src/domain/idea_trait.cpp
-	src/domain/ideology.cpp
-	src/domain/ideology_container.cpp
 	src/domain/journal_entry.cpp
 	src/domain/law.cpp
 	src/domain/law_group.cpp
@@ -396,8 +394,6 @@ set(domain_HDRS
 	src/domain/idea_slot.h
 	src/domain/idea_trait.h
 	src/domain/idea_type.h
-	src/domain/ideology.h
-	src/domain/ideology_container.h
 	src/domain/journal_entry.h
 	src/domain/law.h
 	src/domain/law_group.h
@@ -608,14 +604,12 @@ set(script_condition_HDRS
 	src/script/condition/has_flag_condition.h
 	src/script/condition/has_pathway_condition.h
 	src/script/condition/has_population_culture_condition.h
-	src/script/condition/has_population_ideology_condition.h
 	src/script/condition/has_population_religion_condition.h
 	src/script/condition/has_population_type_condition.h
 	src/script/condition/has_resource_condition.h
 	src/script/condition/has_route_condition.h
 	src/script/condition/has_terrain_condition.h
 	src/script/condition/housing_condition.h
-	src/script/condition/ideology_condition.h
 	src/script/condition/improvement_condition.h
 	src/script/condition/independent_condition.h
 	src/script/condition/infantry_condition.h

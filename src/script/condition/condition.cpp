@@ -51,14 +51,12 @@
 #include "script/condition/has_flag_condition.h"
 #include "script/condition/has_pathway_condition.h"
 #include "script/condition/has_population_culture_condition.h"
-#include "script/condition/has_population_ideology_condition.h"
 #include "script/condition/has_population_religion_condition.h"
 #include "script/condition/has_population_type_condition.h"
 #include "script/condition/has_resource_condition.h"
 #include "script/condition/has_route_condition.h"
 #include "script/condition/has_terrain_condition.h"
 #include "script/condition/housing_condition.h"
-#include "script/condition/ideology_condition.h"
 #include "script/condition/improvement_condition.h"
 #include "script/condition/independent_condition.h"
 #include "script/condition/infantry_condition.h"
@@ -191,9 +189,7 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			return std::make_unique<promotion_condition>(value, condition_operator);
 		}
 	} else if constexpr (std::is_same_v<scope_type, population_unit>) {
-		if (key == "ideology") {
-			return std::make_unique<ideology_condition>(value, condition_operator);
-		} else if (key == "population_type") {
+		if (key == "population_type") {
 			return std::make_unique<population_type_condition>(value, condition_operator);
 		}
 	} else if constexpr (std::is_same_v<scope_type, province>) {
@@ -271,8 +267,6 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			return std::make_unique<has_building_class_condition<scope_type>>(value, condition_operator);
 		} else if (key == "has_population_culture") {
 			return std::make_unique<has_population_culture_condition<scope_type>>(value, condition_operator);
-		} else if (key == "has_population_ideology") {
-			return std::make_unique<has_population_ideology_condition<scope_type>>(value, condition_operator);
 		} else if (key == "has_population_religion") {
 			return std::make_unique<has_population_religion_condition<scope_type>>(value, condition_operator);
 		} else if (key == "has_population_type") {

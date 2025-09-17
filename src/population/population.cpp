@@ -4,7 +4,6 @@
 
 #include "database/defines.h"
 #include "domain/culture.h"
-#include "domain/ideology.h"
 #include "game/game.h"
 #include "population/population_type.h"
 #include "population/population_unit.h"
@@ -192,34 +191,6 @@ std::vector<const phenotype *> population::get_weighted_phenotypes_for_culture(c
 	return archimedes::map::to_weighted_vector(phenotype_counts);
 }
 
-QVariantList population::get_ideology_counts_qvariant_list() const
-{
-	return archimedes::map::to_qvariant_list(this->get_ideology_counts());
-}
-
-void population::change_ideology_count(const ideology *ideology, const int change)
-{
-	if (change == 0) {
-		return;
-	}
-
-	const int count = (this->ideology_counts[ideology] += change);
-
-	assert_throw(count >= 0);
-
-	if (count == 0) {
-		this->ideology_counts.erase(ideology);
-	}
-
-	for (population *upper_population : this->upper_populations) {
-		upper_population->change_ideology_count(ideology, change);
-	}
-
-	if (game::get()->is_running()) {
-		emit ideology_counts_changed();
-	}
-}
-
 void population::on_population_unit_gained(const population_unit *population_unit, const int multiplier)
 {
 	this->change_population_unit_count(multiplier);
@@ -229,9 +200,6 @@ void population::on_population_unit_gained(const population_unit *population_uni
 	this->change_culture_count(population_unit->get_culture(), multiplier);
 	this->change_religion_count(population_unit->get_religion(), multiplier);
 	this->change_phenotype_count(population_unit->get_phenotype(), multiplier);
-	if (population_unit->get_ideology() != nullptr) {
-		this->change_ideology_count(population_unit->get_ideology(), multiplier);
-	}
 }
 
 }

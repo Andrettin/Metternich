@@ -1,7 +1,6 @@
 #pragma once
 
 #include "domain/culture_container.h"
-#include "domain/ideology_container.h"
 #include "population/population_type_container.h"
 #include "religion/religion_container.h"
 #include "species/phenotype_container.h"
@@ -22,7 +21,6 @@ class population final : public QObject
 	Q_PROPERTY(QVariantList culture_counts READ get_culture_counts_qvariant_list NOTIFY culture_counts_changed)
 	Q_PROPERTY(QVariantList religion_counts READ get_religion_counts_qvariant_list NOTIFY religion_counts_changed)
 	Q_PROPERTY(QVariantList phenotype_counts READ get_phenotype_counts_qvariant_list NOTIFY phenotype_counts_changed)
-	Q_PROPERTY(QVariantList ideology_counts READ get_ideology_counts_qvariant_list NOTIFY ideology_counts_changed)
 	Q_PROPERTY(int literacy_rate READ get_literacy_rate NOTIFY type_counts_changed)
 	Q_PROPERTY(int literate_count READ get_literate_count NOTIFY type_counts_changed)
 
@@ -146,14 +144,6 @@ public:
 
 	std::vector<const phenotype *> get_weighted_phenotypes_for_culture(const culture *culture) const;
 
-	const ideology_map<int> &get_ideology_counts() const
-	{
-		return this->ideology_counts;
-	}
-
-	QVariantList get_ideology_counts_qvariant_list() const;
-	void change_ideology_count(const ideology *ideology, const int change);
-
 	int get_literate_count() const
 	{
 		return this->literate_count;
@@ -206,10 +196,6 @@ public:
 		for (const auto &[phenotype, count] : other_population->get_phenotype_counts()) {
 			this->change_phenotype_count(phenotype, count * change);
 		}
-
-		for (const auto &[ideology, count] : other_population->get_ideology_counts()) {
-			this->change_ideology_count(ideology, count * change);
-		}
 	}
 
 	void on_population_unit_gained(const population_unit *population_unit, const int multiplier = 1);
@@ -229,7 +215,6 @@ signals:
 	void religion_counts_changed();
 	void main_religion_changed(const religion *religion);
 	void phenotype_counts_changed();
-	void ideology_counts_changed();
 
 private:
 	int population_unit_count = 0;
@@ -240,7 +225,6 @@ private:
 	religion_map<int> religion_counts;
 	const religion *main_religion = nullptr;
 	phenotype_map<int> phenotype_counts;
-	ideology_map<int> ideology_counts;
 	int literate_count = 0;
 	std::vector<population *> upper_populations;
 };

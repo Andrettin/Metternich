@@ -1,7 +1,0 @@
-reactionary = {
-	name = "Reactionary"
-	color = { 30 30 100 }
-	weight_factor = {
-		base_value = 100
-	}
-}

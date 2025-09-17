@@ -430,26 +430,6 @@ Rectangle {
 				data_source: selected_site_game_data ? selected_site_game_data.population : null
 			}
 		}
-		
-		Item {
-			width: ideology_chart.width
-			height: ideology_chart.y + ideology_chart.height
-		
-			SmallText {
-				id: ideology_chart_label
-				anchors.horizontalCenter: ideology_chart.horizontalCenter
-				text: qsTr("Ideology")
-				visible: ideology_chart.visible
-			}
-			
-			IdeologyChart {
-				id: ideology_chart
-				anchors.top: ideology_chart_label.bottom
-				anchors.topMargin: 4 * scale_factor
-				anchors.horizontalCenter: parent.horizontalCenter
-				data_source: selected_site_game_data ? selected_site_game_data.population : null
-			}
-		}
 	}
 	
 	PortraitButton {

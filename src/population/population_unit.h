@@ -16,7 +16,6 @@ namespace metternich {
 class country;
 class culture;
 class icon;
-class ideology;
 class phenotype;
 class population_type;
 class province;
@@ -91,14 +90,6 @@ public:
 
 	void set_site(const site *site);
 
-	const metternich::ideology *get_ideology() const
-	{
-		return this->ideology;
-	}
-
-	void set_ideology(const metternich::ideology *ideology);
-	void choose_ideology();
-
 	bool is_food_producer() const;
 
 signals:
@@ -118,7 +109,6 @@ private:
 	const metternich::phenotype *phenotype = nullptr;
 	const metternich::country *country = nullptr;
 	const site *site = nullptr;
-	const metternich::ideology *ideology = nullptr;
 };
 
 }

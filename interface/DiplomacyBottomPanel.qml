@@ -182,23 +182,6 @@ Rectangle {
 	ReligionChart {
 		id: religion_chart
 		anchors.top: population_type_chart.top
-		anchors.right: ideology_chart.left
-		anchors.rightMargin: 16 * scale_factor
-		visible: false//selected_country !== null
-		data_source: selected_country_game_data ? selected_country_game_data.population : null
-	}
-	
-	SmallText {
-		id: ideology_chart_label
-		anchors.top: country_text.top
-		anchors.horizontalCenter: ideology_chart.horizontalCenter
-		text: "Ideology"
-		visible: ideology_chart.visible
-	}
-	
-	IdeologyChart {
-		id: ideology_chart
-		anchors.top: population_type_chart.top
 		anchors.right: religious_map_mode_button.left
 		anchors.rightMargin: 16 * scale_factor
 		visible: false//selected_country !== null

@@ -393,10 +393,6 @@ QCoro::Task<void> game::start_coro()
 			country_game_data *country_game_data = country->get_game_data();
 			country_government *country_government = country->get_government();
 
-			for (population_unit *population_unit : country_game_data->get_population_units()) {
-				population_unit->choose_ideology();
-			}
-
 			for (const office *office : office::get_all()) {
 				country_government->check_office_holder(office, nullptr);
 			}
