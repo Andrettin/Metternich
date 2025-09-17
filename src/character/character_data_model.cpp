@@ -54,17 +54,17 @@ QVariant character_data_model::data(const QModelIndex &index, const int role) co
 	}
 
 	try {
+		const character_data_row *row_data = reinterpret_cast<const character_data_row *>(index.constInternalPointer());
+
 		switch (role) {
 			case Qt::DisplayRole:
-			{
-				const character_data_row *row_data = reinterpret_cast<const character_data_row *>(index.constInternalPointer());
-
 				if (!row_data->value.empty()) {
 					return QString::fromStdString(std::format("{} {}", row_data->name, row_data->value));
 				} else {
 					return QString::fromStdString(row_data->name);
 				}
-			}
+			case role::item:
+				return QVariant::fromValue(row_data->item);
 			default:
 				throw std::runtime_error(std::format("Invalid character data model role: {}.", role));
 		}
@@ -222,7 +222,7 @@ void character_data_model::create_equipment_rows()
 	auto top_row = std::make_unique<character_data_row>("Equipment");
 
 	for (const auto &[item_slot, count] : this->get_character()->get_species()->get_item_slot_counts()) {
-		const std::vector<item *> &slot_equipped_items = character_game_data->get_equipped_items(item_slot);
+		const std::vector<metternich::item *> &slot_equipped_items = character_game_data->get_equipped_items(item_slot);
 
 		for (int i = 0; i < count; ++i) {
 			if (static_cast<size_t>(i) >= slot_equipped_items.size()) {
@@ -237,6 +237,7 @@ void character_data_model::create_equipment_rows()
 			}
 
 			auto row = std::make_unique<character_data_row>(slot_name, slot_equipped_items[i]->get_name(), top_row.get());
+			row->item = slot_equipped_items[i];
 			top_row->child_rows.push_back(std::move(row));
 		}
 	}
@@ -254,12 +255,13 @@ void character_data_model::create_inventory_rows()
 
 	auto top_row = std::make_unique<character_data_row>("Inventory");
 
-	for (const qunique_ptr<item> &item : character_game_data->get_items()) {
+	for (const qunique_ptr<metternich::item> &item : character_game_data->get_items()) {
 		if (item->is_equipped()) {
 			continue;
 		}
 
 		auto row = std::make_unique<character_data_row>(item->get_name(), std::string(), top_row.get());
+		row->item = item.get();
 		top_row->child_rows.push_back(std::move(row));
 	}
 
