@@ -1,7 +1,7 @@
 #pragma once
 
-#include "country/cultural_group.h"
-#include "country/culture.h"
+#include "domain/cultural_group.h"
+#include "domain/culture.h"
 #include "script/condition/condition.h"
 
 namespace metternich {

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "country/country.h"
-#include "country/country_game_data.h"
+#include "domain/country.h"
+#include "domain/country_game_data.h"
 #include "script/condition/condition.h"
 #include "util/string_conversion_util.h"
 #include "util/string_util.h"

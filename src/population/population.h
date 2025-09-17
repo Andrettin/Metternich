@@ -1,7 +1,7 @@
 #pragma once
 
-#include "country/culture_container.h"
-#include "country/ideology_container.h"
+#include "domain/culture_container.h"
+#include "domain/ideology_container.h"
 #include "population/population_type_container.h"
 #include "religion/religion_container.h"
 #include "species/phenotype_container.h"

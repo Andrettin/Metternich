@@ -1,8 +1,8 @@
 #pragma once
 
+#include "domain/country.h"
+#include "domain/country_economy.h"
 #include "economy/commodity.h"
-#include "country/country.h"
-#include "country/country_economy.h"
 #include "script/modifier_effect/modifier_effect.h"
 
 namespace metternich {

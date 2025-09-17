@@ -2,9 +2,9 @@
 
 #include "map/diplomatic_map_image_provider.h"
 
-#include "country/country.h"
-#include "country/country_game_data.h"
-#include "country/diplomacy_state.h"
+#include "domain/country.h"
+#include "domain/country_game_data.h"
+#include "domain/diplomacy_state.h"
 #include "game/game.h"
 #include "map/diplomatic_map_mode.h"
 #include "map/map.h"

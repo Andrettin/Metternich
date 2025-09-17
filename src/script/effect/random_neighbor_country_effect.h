@@ -1,7 +1,7 @@
 #pragma once
 
-#include "country/country.h"
-#include "country/country_game_data.h"
+#include "domain/country.h"
+#include "domain/country_game_data.h"
 #include "script/condition/and_condition.h"
 #include "script/effect/scope_effect_base.h"
 #include "util/vector_random_util.h"

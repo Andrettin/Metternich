@@ -2,7 +2,7 @@
 
 #include "script/text_processor.h"
 
-#include "country/culture.h"
+#include "domain/culture.h"
 #include "infrastructure/settlement_type.h"
 #include "map/province.h"
 #include "map/province_game_data.h"

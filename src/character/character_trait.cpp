@@ -4,7 +4,7 @@
 
 #include "character/character_attribute.h"
 #include "character/character_trait_type.h"
-#include "country/office.h"
+#include "domain/office.h"
 #include "script/condition/and_condition.h"
 #include "script/effect/effect_list.h"
 #include "script/modifier.h"

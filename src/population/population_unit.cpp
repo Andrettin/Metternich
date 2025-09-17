@@ -2,10 +2,10 @@
 
 #include "population/population_unit.h"
 
-#include "country/country.h"
-#include "country/country_game_data.h"
-#include "country/culture.h"
-#include "country/ideology.h"
+#include "domain/country.h"
+#include "domain/country_game_data.h"
+#include "domain/culture.h"
+#include "domain/ideology.h"
 #include "economy/commodity.h"
 #include "economy/resource.h"
 #include "game/game.h"

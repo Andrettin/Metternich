@@ -2,7 +2,7 @@
 
 #include "map/map_country_model.h"
 
-#include "country/country.h"
+#include "domain/country.h"
 #include "game/game.h"
 #include "map/map_province_model.h"
 #include "map/province.h"

@@ -2,11 +2,11 @@
 
 #include "unit/transporter.h"
 
-#include "country/country.h"
-#include "country/country_economy.h"
-#include "country/country_game_data.h"
-#include "country/cultural_group.h"
-#include "country/culture.h"
+#include "domain/country.h"
+#include "domain/country_economy.h"
+#include "domain/country_game_data.h"
+#include "domain/cultural_group.h"
+#include "domain/culture.h"
 #include "language/name_generator.h"
 #include "map/site.h"
 #include "map/site_game_data.h"

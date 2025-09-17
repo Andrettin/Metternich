@@ -2,7 +2,7 @@
 
 #include "database/data_entry_history.h"
 
-Q_MOC_INCLUDE("country/country.h")
+Q_MOC_INCLUDE("domain/country.h")
 Q_MOC_INCLUDE("map/province.h")
 Q_MOC_INCLUDE("map/site.h")
 

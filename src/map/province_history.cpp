@@ -2,8 +2,8 @@
 
 #include "map/province_history.h"
 
-#include "country/culture.h"
 #include "database/gsml_data.h"
+#include "domain/culture.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/site.h"

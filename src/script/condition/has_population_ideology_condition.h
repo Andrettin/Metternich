@@ -1,6 +1,6 @@
 #pragma once
 
-#include "country/ideology.h"
+#include "domain/ideology.h"
 #include "population/population.h"
 #include "script/condition/condition.h"
 #include "util/string_util.h"

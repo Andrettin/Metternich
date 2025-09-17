@@ -1,6 +1,6 @@
 #pragma once
 
-#include "country/country.h"
+#include "domain/country.h"
 #include "script/condition/condition.h"
 #include "script/target_variant.h"
 #include "util/assert_util.h"

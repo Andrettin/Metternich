@@ -2,12 +2,12 @@
 
 #include "infrastructure/settlement_building_slot.h"
 
-#include "country/country.h"
-#include "country/country_economy.h"
-#include "country/country_game_data.h"
-#include "country/country_technology.h"
-#include "country/culture.h"
 #include "database/defines.h"
+#include "domain/country.h"
+#include "domain/country_economy.h"
+#include "domain/country_game_data.h"
+#include "domain/country_technology.h"
+#include "domain/culture.h"
 #include "economy/commodity.h"
 #include "game/game.h"
 #include "infrastructure/building_class.h"

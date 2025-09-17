@@ -1,8 +1,8 @@
 #pragma once
 
-#include "country/country.h"
-#include "country/country_game_data.h"
-#include "country/culture.h"
+#include "domain/country.h"
+#include "domain/country_game_data.h"
+#include "domain/culture.h"
 #include "database/defines.h"
 #include "script/effect/effect.h"
 #include "unit/transporter.h"

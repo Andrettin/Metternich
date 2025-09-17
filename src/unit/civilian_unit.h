@@ -3,7 +3,7 @@
 #include "economy/resource_container.h"
 #include "map/terrain_type_container.h"
 
-Q_MOC_INCLUDE("country/country.h")
+Q_MOC_INCLUDE("domain/country.h")
 Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("unit/civilian_unit_type.h")
 

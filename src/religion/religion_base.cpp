@@ -2,8 +2,8 @@
 
 #include "religion/religion_base.h"
 
-#include "country/country_tier.h"
-#include "country/government_type.h"
+#include "domain/country_tier.h"
+#include "domain/government_type.h"
 #include "util/gender.h"
 #include "util/string_util.h"
 

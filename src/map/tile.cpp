@@ -2,8 +2,8 @@
 
 #include "map/tile.h"
 
-#include "country/country.h"
 #include "database/defines.h"
+#include "domain/country.h"
 #include "economy/resource.h"
 #include "infrastructure/improvement.h"
 #include "infrastructure/pathway.h"

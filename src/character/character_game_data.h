@@ -7,8 +7,8 @@
 #include "unit/military_unit_type_container.h"
 #include "util/centesimal_int.h"
 
-Q_MOC_INCLUDE("country/country.h")
-Q_MOC_INCLUDE("country/office.h")
+Q_MOC_INCLUDE("domain/country.h")
+Q_MOC_INCLUDE("domain/office.h")
 Q_MOC_INCLUDE("ui/portrait.h")
 
 namespace metternich {

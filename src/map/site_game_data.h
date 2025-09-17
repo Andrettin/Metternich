@@ -5,7 +5,7 @@
 #include "script/scripted_modifier_container.h"
 #include "util/qunique_ptr.h"
 
-Q_MOC_INCLUDE("country/country.h")
+Q_MOC_INCLUDE("domain/country.h")
 Q_MOC_INCLUDE("infrastructure/improvement.h")
 Q_MOC_INCLUDE("infrastructure/settlement_type.h")
 Q_MOC_INCLUDE("map/province.h")

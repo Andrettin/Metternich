@@ -2,8 +2,8 @@
 
 #include "character/character.h"
 #include "character/character_role.h"
-#include "country/country.h"
-#include "country/country_government.h"
+#include "domain/country.h"
+#include "domain/country_government.h"
 #include "script/condition/condition.h"
 #include "util/vector_util.h"
 

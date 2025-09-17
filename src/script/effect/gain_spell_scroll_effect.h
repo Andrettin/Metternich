@@ -2,8 +2,8 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
-#include "country/country.h"
-#include "country/country_game_data.h"
+#include "domain/country.h"
+#include "domain/country_game_data.h"
 #include "script/context.h"
 #include "script/effect/effect.h"
 #include "spell/spell.h"

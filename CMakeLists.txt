@@ -34,44 +34,6 @@ set(character_SRCS
 source_group(character FILES ${character_SRCS})
 set_source_files_properties(${character_SRCS} PROPERTIES UNITY_GROUP "character")
 
-set(country_SRCS
-	src/country/consulate.cpp
-	src/country/consulate_container.cpp
-	src/country/country.cpp
-	src/country/country_ai.cpp
-	src/country/country_container.cpp
-	src/country/country_economy.cpp
-	src/country/country_game_data.cpp
-	src/country/country_government.cpp
-	src/country/country_history.cpp
-	src/country/country_military.cpp
-	src/country/country_rank.cpp
-	src/country/country_technology.cpp
-	src/country/country_tier_data.cpp
-	src/country/country_turn_data.cpp
-	src/country/cultural_group.cpp
-	src/country/culture.cpp
-	src/country/culture_base.cpp
-	src/country/culture_container.cpp
-	src/country/culture_history.cpp
-	src/country/government_group.cpp
-	src/country/government_type.cpp
-	src/country/government_type_container.cpp
-	src/country/idea.cpp
-	src/country/idea_slot.cpp
-	src/country/idea_trait.cpp
-	src/country/ideology.cpp
-	src/country/ideology_container.cpp
-	src/country/journal_entry.cpp
-	src/country/law.cpp
-	src/country/law_group.cpp
-	src/country/law_group_container.cpp
-	src/country/office.cpp
-	src/country/subject_type.cpp
-)
-source_group(country FILES ${country_SRCS})
-set_source_files_properties(${country_SRCS} PROPERTIES UNITY_GROUP "country")
-
 set(database_SRCS
 	src/database/data_entry_container.cpp
 	src/database/defines.cpp
@@ -79,6 +41,44 @@ set(database_SRCS
 )
 source_group(database FILES ${database_SRCS})
 set_source_files_properties(${database_SRCS} PROPERTIES UNITY_GROUP "database")
+
+set(domain_SRCS
+	src/domain/consulate.cpp
+	src/domain/consulate_container.cpp
+	src/domain/country.cpp
+	src/domain/country_ai.cpp
+	src/domain/country_container.cpp
+	src/domain/country_economy.cpp
+	src/domain/country_game_data.cpp
+	src/domain/country_government.cpp
+	src/domain/country_history.cpp
+	src/domain/country_military.cpp
+	src/domain/country_rank.cpp
+	src/domain/country_technology.cpp
+	src/domain/country_tier_data.cpp
+	src/domain/country_turn_data.cpp
+	src/domain/cultural_group.cpp
+	src/domain/culture.cpp
+	src/domain/culture_base.cpp
+	src/domain/culture_container.cpp
+	src/domain/culture_history.cpp
+	src/domain/government_group.cpp
+	src/domain/government_type.cpp
+	src/domain/government_type_container.cpp
+	src/domain/idea.cpp
+	src/domain/idea_slot.cpp
+	src/domain/idea_trait.cpp
+	src/domain/ideology.cpp
+	src/domain/ideology_container.cpp
+	src/domain/journal_entry.cpp
+	src/domain/law.cpp
+	src/domain/law_group.cpp
+	src/domain/law_group_container.cpp
+	src/domain/office.cpp
+	src/domain/subject_type.cpp
+)
+source_group(domain FILES ${domain_SRCS})
+set_source_files_properties(${domain_SRCS} PROPERTIES UNITY_GROUP "domain")
 
 set(economy_SRCS
 	src/economy/commodity.cpp
@@ -316,8 +316,8 @@ set_source_files_properties(${xbrz_SRCS} PROPERTIES UNITY_GROUP "xbrz")
 
 set(metternich_SRCS
 	${character_SRCS}
-	${country_SRCS}
 	${database_SRCS}
+	${domain_SRCS}
 	${economy_SRCS}
 	${game_SRCS}
 	${infrastructure_SRCS}
@@ -358,54 +358,54 @@ set(character_HDRS
 )
 source_group(character FILES ${character_HDRS})
 
-set(country_HDRS
-	src/country/consulate.h
-	src/country/consulate_container.h
-	src/country/country.h
-	src/country/country_ai.h
-	src/country/country_container.h
-	src/country/country_economy.h
-	src/country/country_game_data.h
-	src/country/country_government.h
-	src/country/country_history.h
-	src/country/country_military.h
-	src/country/country_rank.h
-	src/country/country_technology.h
-	src/country/country_tier.h
-	src/country/country_tier_data.h
-	src/country/country_turn_data.h
-	src/country/country_type.h
-	src/country/cultural_group.h
-	src/country/cultural_group_rank.h
-	src/country/culture.h
-	src/country/culture_base.h
-	src/country/culture_container.h
-	src/country/culture_history.h
-	src/country/diplomacy_state.h
-	src/country/government_group.h
-	src/country/government_type.h
-	src/country/government_type_container.h
-	src/country/idea.h
-	src/country/idea_slot.h
-	src/country/idea_trait.h
-	src/country/idea_type.h
-	src/country/ideology.h
-	src/country/ideology_container.h
-	src/country/journal_entry.h
-	src/country/law.h
-	src/country/law_group.h
-	src/country/law_group_container.h
-	src/country/office.h
-	src/country/subject_type.h
-)
-source_group(country FILES ${country_HDRS})
-
 set(database_HDRS
 	src/database/data_entry_container.h
 	src/database/defines.h
 	src/database/preferences.h
 )
 source_group(database FILES ${database_HDRS})
+
+set(domain_HDRS
+	src/domain/consulate.h
+	src/domain/consulate_container.h
+	src/domain/country.h
+	src/domain/country_ai.h
+	src/domain/country_container.h
+	src/domain/country_economy.h
+	src/domain/country_game_data.h
+	src/domain/country_government.h
+	src/domain/country_history.h
+	src/domain/country_military.h
+	src/domain/country_rank.h
+	src/domain/country_technology.h
+	src/domain/country_tier.h
+	src/domain/country_tier_data.h
+	src/domain/country_turn_data.h
+	src/domain/country_type.h
+	src/domain/cultural_group.h
+	src/domain/cultural_group_rank.h
+	src/domain/culture.h
+	src/domain/culture_base.h
+	src/domain/culture_container.h
+	src/domain/culture_history.h
+	src/domain/diplomacy_state.h
+	src/domain/government_group.h
+	src/domain/government_type.h
+	src/domain/government_type_container.h
+	src/domain/idea.h
+	src/domain/idea_slot.h
+	src/domain/idea_trait.h
+	src/domain/idea_type.h
+	src/domain/ideology.h
+	src/domain/ideology_container.h
+	src/domain/journal_entry.h
+	src/domain/law.h
+	src/domain/law_group.h
+	src/domain/law_group_container.h
+	src/domain/office.h
+	src/domain/subject_type.h
+)
+source_group(domain FILES ${domain_HDRS})
 
 set(economy_HDRS
 	src/economy/commodity.h
@@ -860,8 +860,8 @@ source_group(xbrz FILES ${xbrz_HDRS})
 
 set(metternich_HDRS
 	${character_HDRS}
-	${country_HDRS}
 	${database_HDRS}
+	${domain_HDRS}
 	${economy_HDRS}
 	${game_HDRS}
 	${infrastructure_HDRS}

@@ -2,7 +2,7 @@
 
 #include "map/province_map_image_provider.h"
 
-#include "country/diplomacy_state.h"
+#include "domain/diplomacy_state.h"
 #include "game/game.h"
 #include "map/diplomatic_map_mode.h"
 #include "map/map.h"

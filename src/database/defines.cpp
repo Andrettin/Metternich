@@ -3,9 +3,9 @@
 #include "database/defines.h"
 
 #include "character/character_trait_type.h"
-#include "country/diplomacy_state.h"
 #include "database/database.h"
 #include "database/preferences.h"
+#include "domain/diplomacy_state.h"
 #include "economy/commodity.h"
 #include "game/character_event.h"
 #include "game/country_event.h"

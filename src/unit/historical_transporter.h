@@ -4,7 +4,7 @@
 #include "database/named_data_entry.h"
 #include "util/qunique_ptr.h"
 
-Q_MOC_INCLUDE("country/country.h")
+Q_MOC_INCLUDE("domain/country.h")
 Q_MOC_INCLUDE("species/phenotype.h")
 Q_MOC_INCLUDE("unit/transporter_type.h")
 

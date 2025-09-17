@@ -1,7 +1,7 @@
 #pragma once
 
-#include "country/idea.h"
 #include "database/data_type.h"
+#include "domain/idea.h"
 
 namespace metternich {
 

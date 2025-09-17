@@ -2,9 +2,9 @@
 
 #include "unit/army.h"
 
-#include "country/country.h"
-#include "country/country_game_data.h"
-#include "country/country_government.h"
+#include "domain/country.h"
+#include "domain/country_game_data.h"
+#include "domain/country_government.h"
 #include "engine_interface.h"
 #include "game/country_event.h"
 #include "game/event_trigger.h"

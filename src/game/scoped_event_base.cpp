@@ -2,8 +2,8 @@
 
 #include "game/scoped_event_base.h"
 
-#include "country/country.h"
 #include "database/gsml_data.h"
+#include "domain/country.h"
 #include "game/event.h"
 #include "game/event_option.h"
 #include "game/event_random_group.h"

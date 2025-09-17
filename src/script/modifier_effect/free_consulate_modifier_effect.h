@@ -1,8 +1,8 @@
 #pragma once
 
-#include "country/country.h"
-#include "country/country_game_data.h"
-#include "country/consulate.h"
+#include "domain/country.h"
+#include "domain/country_game_data.h"
+#include "domain/consulate.h"
 #include "script/modifier_effect/modifier_effect.h"
 
 namespace metternich {

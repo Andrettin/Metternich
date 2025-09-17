@@ -1,8 +1,8 @@
 #pragma once
 
-#include "country/country.h"
-#include "country/country_government.h"
-#include "country/law.h"
+#include "domain/country.h"
+#include "domain/country_government.h"
+#include "domain/law.h"
 #include "script/condition/condition.h"
 #include "util/string_util.h"
 

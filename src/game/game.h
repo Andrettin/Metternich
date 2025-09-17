@@ -4,7 +4,7 @@
 #include "util/qunique_ptr.h"
 #include "util/singleton.h"
 
-Q_MOC_INCLUDE("country/country.h")
+Q_MOC_INCLUDE("domain/country.h")
 
 namespace archimedes {
 	class era;

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "country/country_military.h"
+#include "domain/country_military.h"
 #include "script/condition/condition.h"
 #include "unit/military_unit_category.h"
 

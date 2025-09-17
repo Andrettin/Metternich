@@ -1,7 +1,7 @@
 #pragma once
 
-#include "country/country.h"
-#include "country/country_game_data.h"
+#include "domain/country.h"
+#include "domain/country_game_data.h"
 #include "economy/commodity.h"
 #include "script/effect/effect.h"
 #include "util/assert_util.h"

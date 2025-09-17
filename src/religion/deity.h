@@ -1,7 +1,7 @@
 #pragma once
 
-#include "country/culture_container.h"
-#include "country/idea.h"
+#include "domain/culture_container.h"
+#include "domain/idea.h"
 #include "database/data_entry_container.h"
 #include "database/data_type.h"
 

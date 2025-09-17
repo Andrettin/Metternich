@@ -2,7 +2,7 @@
 
 #include "util/centesimal_int.h"
 
-Q_MOC_INCLUDE("country/country.h")
+Q_MOC_INCLUDE("domain/country.h")
 Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("unit/transporter_type.h")
 

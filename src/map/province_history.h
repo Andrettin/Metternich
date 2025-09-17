@@ -1,12 +1,12 @@
 #pragma once
 
-#include "country/culture_container.h"
 #include "database/data_entry_history.h"
+#include "domain/culture_container.h"
 #include "population/population_group_map.h"
 #include "species/phenotype_container.h"
 #include "util/centesimal_int.h"
 
-Q_MOC_INCLUDE("country/country.h")
+Q_MOC_INCLUDE("domain/country.h")
 Q_MOC_INCLUDE("religion/religion.h")
 
 namespace metternich {

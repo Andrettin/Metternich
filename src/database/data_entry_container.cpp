@@ -4,9 +4,9 @@
 
 #include "character/character_attribute.h"
 #include "character/monster_type.h"
-#include "country/cultural_group.h"
-#include "country/idea_slot.h"
-#include "country/office.h"
+#include "domain/cultural_group.h"
+#include "domain/idea_slot.h"
+#include "domain/office.h"
 #include "economy/commodity_unit.h"
 #include "game/game_rule.h"
 #include "item/item_class.h"

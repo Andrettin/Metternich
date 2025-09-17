@@ -2,9 +2,9 @@
 
 #include "economy/income_transaction.h"
 
-#include "country/country.h"
-#include "country/country_game_data.h"
 #include "database/defines.h"
+#include "domain/country.h"
+#include "domain/country_game_data.h"
 #include "economy/commodity.h"
 #include "economy/income_transaction_type.h"
 #include "util/number_util.h"

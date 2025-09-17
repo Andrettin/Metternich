@@ -2,9 +2,9 @@
 
 #include "population/population.h"
 
-#include "country/culture.h"
-#include "country/ideology.h"
 #include "database/defines.h"
+#include "domain/culture.h"
+#include "domain/ideology.h"
 #include "game/game.h"
 #include "population/population_type.h"
 #include "population/population_unit.h"

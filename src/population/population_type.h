@@ -7,8 +7,8 @@
 #include "util/centesimal_int.h"
 #include "util/decimillesimal_int.h"
 
-Q_MOC_INCLUDE("country/cultural_group.h")
-Q_MOC_INCLUDE("country/culture.h")
+Q_MOC_INCLUDE("domain/cultural_group.h")
+Q_MOC_INCLUDE("domain/culture.h")
 Q_MOC_INCLUDE("economy/commodity.h")
 Q_MOC_INCLUDE("game/game_rule.h")
 Q_MOC_INCLUDE("population/population_class.h")

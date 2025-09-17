@@ -5,8 +5,8 @@
 #include "economy/commodity_container.h"
 #include "util/centesimal_int.h"
 
-Q_MOC_INCLUDE("country/cultural_group.h")
-Q_MOC_INCLUDE("country/culture.h")
+Q_MOC_INCLUDE("domain/cultural_group.h")
+Q_MOC_INCLUDE("domain/culture.h")
 Q_MOC_INCLUDE("technology/technology.h")
 Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("unit/transporter_class.h")

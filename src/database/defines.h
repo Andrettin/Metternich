@@ -7,7 +7,7 @@
 #include "util/dice.h"
 #include "util/singleton.h"
 
-Q_MOC_INCLUDE("country/office.h")
+Q_MOC_INCLUDE("domain/office.h")
 Q_MOC_INCLUDE("economy/commodity.h")
 Q_MOC_INCLUDE("game/game_rule.h")
 Q_MOC_INCLUDE("infrastructure/pathway.h")

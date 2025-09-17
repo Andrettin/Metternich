@@ -4,8 +4,8 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
-#include "country/country.h"
-#include "country/office.h"
+#include "domain/country.h"
+#include "domain/office.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/site.h"

@@ -2,8 +2,8 @@
 
 #include "unit/civilian_unit_type.h"
 
-#include "country/cultural_group.h"
-#include "country/culture.h"
+#include "domain/cultural_group.h"
+#include "domain/culture.h"
 #include "economy/commodity.h"
 #include "economy/resource.h"
 #include "infrastructure/pathway.h"

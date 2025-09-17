@@ -2,7 +2,7 @@
 
 #include "game/scenario.h"
 
-#include "country/country.h"
+#include "domain/country.h"
 #include "time/calendar.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"

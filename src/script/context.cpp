@@ -3,8 +3,8 @@
 #include "script/context.h"
 
 #include "character/character.h"
-#include "country/country.h"
 #include "database/gsml_data.h"
+#include "domain/country.h"
 #include "map/province.h"
 #include "map/site.h"
 #include "population/population_unit.h"

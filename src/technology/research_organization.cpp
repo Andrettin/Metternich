@@ -2,7 +2,7 @@
 
 #include "technology/research_organization.h"
 
-#include "country/idea_type.h"
+#include "domain/idea_type.h"
 #include "technology/research_organization_trait.h"
 #include "technology/technology.h"
 

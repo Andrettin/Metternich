@@ -1,6 +1,6 @@
 #pragma once
 
-#include "country/country.h"
+#include "domain/country.h"
 #include "game/game.h"
 #include "script/condition/condition.h"
 #include "util/vector_util.h"

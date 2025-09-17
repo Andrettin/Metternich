@@ -2,9 +2,9 @@
 
 #include "map/site.h"
 
-#include "country/cultural_group.h"
-#include "country/culture.h"
-#include "country/government_type.h"
+#include "domain/cultural_group.h"
+#include "domain/culture.h"
+#include "domain/government_type.h"
 #include "economy/resource.h"
 #include "map/province.h"
 #include "map/province_history.h"

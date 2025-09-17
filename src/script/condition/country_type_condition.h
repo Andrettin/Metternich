@@ -1,7 +1,7 @@
 #pragma once
 
-#include "country/country.h"
-#include "country/country_type.h"
+#include "domain/country.h"
+#include "domain/country_type.h"
 #include "script/condition/condition.h"
 
 #include <magic_enum/magic_enum.hpp>

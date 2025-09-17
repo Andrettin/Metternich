@@ -1,7 +1,7 @@
 #pragma once
 
-#include "country/country.h"
-#include "country/country_economy.h"
+#include "domain/country.h"
+#include "domain/country_economy.h"
 #include "database/defines.h"
 #include "economy/commodity.h"
 #include "economy/commodity_unit.h"

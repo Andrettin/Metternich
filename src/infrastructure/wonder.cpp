@@ -2,8 +2,8 @@
 
 #include "infrastructure/wonder.h"
 
-#include "country/country.h"
-#include "country/country_game_data.h"
+#include "domain/country.h"
+#include "domain/country_game_data.h"
 #include "economy/commodity.h"
 #include "game/game.h"
 #include "game/game_rule.h"

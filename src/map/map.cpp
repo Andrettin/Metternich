@@ -2,12 +2,12 @@
 
 #include "map/map.h"
 
-#include "country/country.h"
-#include "country/country_game_data.h"
-#include "country/country_technology.h"
-#include "country/country_turn_data.h"
 #include "database/defines.h"
 #include "database/preferences.h"
+#include "domain/country.h"
+#include "domain/country_game_data.h"
+#include "domain/country_technology.h"
+#include "domain/country_turn_data.h"
 #include "economy/resource.h"
 #include "game/game.h"
 #include "infrastructure/improvement.h"

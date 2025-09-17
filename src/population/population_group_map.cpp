@@ -2,7 +2,7 @@
 
 #include "population/population_group_map.h"
 
-#include "country/culture.h"
+#include "domain/culture.h"
 #include "population/population_type.h"
 #include "religion/religion.h"
 #include "species/phenotype.h"

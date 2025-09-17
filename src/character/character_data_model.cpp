@@ -6,7 +6,7 @@
 #include "character/character_attribute.h"
 #include "character/character_class.h"
 #include "character/character_game_data.h"
-#include "country/culture.h"
+#include "domain/culture.h"
 #include "item/item.h"
 #include "item/item_slot.h"
 #include "religion/deity.h"

@@ -2,7 +2,7 @@
 
 #include "religion/deity_slot.h"
 
-#include "country/idea_type.h"
+#include "domain/idea_type.h"
 
 namespace metternich {
 

@@ -2,10 +2,10 @@
 
 #include "map/map_generator.h"
 
-#include "country/country.h"
-#include "country/country_container.h"
-#include "country/culture.h"
 #include "database/defines.h"
+#include "domain/country.h"
+#include "domain/country_container.h"
+#include "domain/culture.h"
 #include "economy/resource.h"
 #include "map/elevation_type.h"
 #include "map/forestation_type.h"
