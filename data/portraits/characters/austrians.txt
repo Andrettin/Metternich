@@ -12,6 +12,21 @@ maria_theresia = {
 	}
 }
 
+franz_i_of_austria = {
+	filepath = "portraits/characters/franz_i_of_austria.png"
+	character_conditions = {
+		gender = male
+		not = {
+			cultural_group = african
+			cultural_group = asian
+		}
+		or = {
+			character_class = statesman
+			character_class = warrior #aristocrat
+		}
+	}
+}
+
 metternich = {
 	filepath = "portraits/characters/metternich.png"
 	character_conditions = {
@@ -24,6 +39,7 @@ metternich = {
 			character_class = diplomat
 			character_class = high_judge
 			character_class = statesman
+			character_class = warrior #aristocrat
 		}
 	}
 }

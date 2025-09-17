@@ -146,6 +146,7 @@ franz_i_of_austria = { #Franz von Habsburg, Emperor Franz II of the Holy Roman E
 	character_class = warrior
 	culture = austrian
 	religion = catholic
+	portrait = franz_i_of_austria
 	home_settlement = vienna
 	gender = male
 	father = leopold_ii_of_the_holy_roman_empire

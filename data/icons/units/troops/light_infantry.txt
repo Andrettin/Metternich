@@ -1,0 +1,3 @@
+grenzer = {
+	filepath = "icons/units/troops/grenzer.png"
+}
