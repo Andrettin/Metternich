@@ -5,7 +5,7 @@ lighthouse = {
 	icon = anchor
 	provincial = true
 	required_technology = cartography
-	settlement_types = {
+	holding_types = {
 		city
 		metropolis
 	}

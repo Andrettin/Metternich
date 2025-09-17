@@ -7,7 +7,7 @@ chambery = {
 	
 	history = {
 		1280 = {
-			settlement_type = town #existed in the 1280-1748 period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 130.
+			holding_type = town #existed in the 1280-1748 period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 130.
 		}
 		
 		1836 = {

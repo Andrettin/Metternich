@@ -7,7 +7,7 @@ quito = {
 	history = {
 		1769 = {
 			buildings += university #University S. Gregorio founded in Quito in 1769; Source: Enrique Martínez Ruiz; Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 226.
-			settlement_type = campus
+			holding_type = campus
 		}
 	}
 }

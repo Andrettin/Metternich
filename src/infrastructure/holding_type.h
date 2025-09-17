@@ -15,7 +15,7 @@ class and_condition;
 template <typename scope_type>
 class modifier;
 
-class settlement_type final : public named_data_entry, public data_type<settlement_type>
+class holding_type final : public named_data_entry, public data_type<holding_type>
 {
 	Q_OBJECT
 
@@ -23,12 +23,12 @@ class settlement_type final : public named_data_entry, public data_type<settleme
 	Q_PROPERTY(int free_resource_improvement_level MEMBER free_resource_improvement_level READ get_free_resource_improvement_level NOTIFY changed)
 
 public:
-	static constexpr const char class_identifier[] = "settlement_type";
-	static constexpr const char property_class_identifier[] = "metternich::settlement_type*";
-	static constexpr const char database_folder[] = "settlement_types";
+	static constexpr const char class_identifier[] = "holding_type";
+	static constexpr const char property_class_identifier[] = "metternich::holding_type*";
+	static constexpr const char database_folder[] = "holding_types";
 
-	explicit settlement_type(const std::string &identifier);
-	~settlement_type();
+	explicit holding_type(const std::string &identifier);
+	~holding_type();
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
@@ -41,14 +41,14 @@ public:
 
 	void set_image_filepath(const std::filesystem::path &filepath);
 
-	const std::vector<const settlement_type *> &get_base_settlement_types() const
+	const std::vector<const holding_type *> &get_base_holding_types() const
 	{
-		return this->base_settlement_types;
+		return this->base_holding_types;
 	}
 
-	const std::vector<const settlement_type *> &get_upgraded_settlement_types() const
+	const std::vector<const holding_type *> &get_upgraded_holding_types() const
 	{
-		return this->upgraded_settlement_types;
+		return this->upgraded_holding_types;
 	}
 
 	int get_level() const
@@ -90,8 +90,8 @@ signals:
 
 private:
 	std::filesystem::path image_filepath;
-	std::vector<const settlement_type *> base_settlement_types;
-	std::vector<const settlement_type *> upgraded_settlement_types;
+	std::vector<const holding_type *> base_holding_types;
+	std::vector<const holding_type *> upgraded_holding_types;
 	int level = 0;
 	int free_resource_improvement_level = 0;
 	std::vector<const population_class *> population_classes;

@@ -5,7 +5,7 @@ coffee_house = {
 	icon = coffee
 	provincial = true
 	required_technology = economics
-	settlement_types = {
+	holding_types = {
 		town
 		city
 		metropolis

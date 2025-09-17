@@ -9,7 +9,7 @@ valladolid = {
 	history = {
 		1346 = {
 			buildings += university #University founded in Valladolid in 1346; Source: "Atlas de História Mundial", 2001, p. 144.
-			settlement_type = campus
+			holding_type = campus
 		}
 	}
 }

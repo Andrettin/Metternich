@@ -15,12 +15,12 @@ mexico_city = {
 		
 		1539 = {
 			buildings += printing_press #printing press founded in Mexico City in 1539; Source: Henry Kamen, "Early Modern European Society", 2021, p. 286.
-			settlement_type = town
+			holding_type = town
 		}
 		
 		1551 = {
 			buildings += university #University founded in Mexico City in 1551; Source: Enrique Martínez Ruiz; Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 226.
-			settlement_type = city
+			holding_type = city
 		}
 	}
 }

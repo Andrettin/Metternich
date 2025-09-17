@@ -6,7 +6,7 @@ dock = {
 	provincial = true
 	free_in_capital = true
 	required_technology = seafaring
-	settlement_types = {
+	holding_types = {
 		camp
 		hamlet
 		village
@@ -27,9 +27,9 @@ dock = {
 	}
 	free_on_start_conditions = {
 		or = {
-			settlement_type = town
-			settlement_type = city
-			settlement_type = metropolis
+			holding_type = town
+			holding_type = city
+			holding_type = metropolis
 		}
 	}
 }
@@ -43,7 +43,7 @@ shipyard = {
 	capital_only = true
 	required_building = dock
 	required_technology = seafaring
-	settlement_types = {
+	holding_types = {
 		city
 		metropolis
 	}

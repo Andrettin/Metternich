@@ -6,7 +6,7 @@ warehouse = {
 	provincial = true
 	warehouse = true
 	free_in_capital = true
-	settlement_types = {
+	holding_types = {
 		camp
 		hamlet
 		village

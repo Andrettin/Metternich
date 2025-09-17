@@ -5,7 +5,7 @@ war_college = {
 	icon = wall
 	provincial = true
 	provincial_capital_only = true
-	settlement_types = {
+	holding_types = {
 		city
 		metropolis
 		castle

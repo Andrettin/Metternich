@@ -5,7 +5,7 @@ artifact = {
 	icon = bell
 	provincial = true
 	wonder_only = true
-	settlement_types = {
+	holding_types = {
 		camp
 		hamlet
 		campus

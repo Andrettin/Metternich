@@ -22,11 +22,11 @@
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot_type.h"
 #include "infrastructure/building_type.h"
+#include "infrastructure/holding_type.h"
 #include "infrastructure/improvement.h"
 #include "infrastructure/improvement_slot.h"
 #include "infrastructure/pathway.h"
 #include "infrastructure/settlement_building_slot.h"
-#include "infrastructure/settlement_type.h"
 #include "infrastructure/wonder.h"
 #include "map/diplomatic_map_mode.h"
 #include "map/map.h"
@@ -182,8 +182,8 @@ site_tier site_game_data::get_tier() const
 {
 	site_tier tier = site_tier::none;
 
-	if (this->get_settlement_type() != nullptr) {
-		tier = static_cast<site_tier>(this->get_settlement_type()->get_level());
+	if (this->get_holding_type() != nullptr) {
+		tier = static_cast<site_tier>(this->get_holding_type()->get_level());
 	} else if (this->get_resource_improvement() != nullptr) {
 		tier = static_cast<site_tier>(this->get_resource_improvement()->get_level());
 	}
@@ -370,25 +370,25 @@ void site_game_data::on_population_main_religion_changed(const metternich::relig
 	}
 }
 
-void site_game_data::set_settlement_type(const metternich::settlement_type *settlement_type)
+void site_game_data::set_holding_type(const metternich::holding_type *holding_type)
 {
 	assert_throw(this->site->is_settlement());
 
-	if (settlement_type == this->get_settlement_type()) {
+	if (holding_type == this->get_holding_type()) {
 		return;
 	}
 
-	const metternich::settlement_type *old_settlement_type = this->get_settlement_type();
+	const metternich::holding_type *old_holding_type = this->get_holding_type();
 
-	if (old_settlement_type != nullptr) {
-		if (old_settlement_type->get_modifier() != nullptr) {
-			old_settlement_type->get_modifier()->apply(this->site, -1);
+	if (old_holding_type != nullptr) {
+		if (old_holding_type->get_modifier() != nullptr) {
+			old_holding_type->get_modifier()->apply(this->site, -1);
 		}
 	}
 
-	this->settlement_type = settlement_type;
+	this->holding_type = holding_type;
 
-	if (old_settlement_type == nullptr && this->get_settlement_type() != nullptr) {
+	if (old_holding_type == nullptr && this->get_holding_type() != nullptr) {
 		this->on_settlement_built(1);
 
 		if (this->get_owner() != nullptr) {
@@ -396,7 +396,7 @@ void site_game_data::set_settlement_type(const metternich::settlement_type *sett
 				this->get_owner()->get_game_data()->set_capital(this->site);
 			}
 		}
-	} else if (old_settlement_type != nullptr && this->get_settlement_type() == nullptr) {
+	} else if (old_holding_type != nullptr && this->get_holding_type() == nullptr) {
 		this->on_settlement_built(-1);
 
 		if (this->get_owner() != nullptr) {
@@ -406,9 +406,9 @@ void site_game_data::set_settlement_type(const metternich::settlement_type *sett
 		}
 	}
 
-	if (this->get_settlement_type() != nullptr) {
-		if (this->get_settlement_type()->get_modifier() != nullptr) {
-			this->get_settlement_type()->get_modifier()->apply(this->site, 1);
+	if (this->get_holding_type() != nullptr) {
+		if (this->get_holding_type()->get_modifier() != nullptr) {
+			this->get_holding_type()->get_modifier()->apply(this->site, 1);
 		}
 
 		this->check_building_conditions();
@@ -416,35 +416,35 @@ void site_game_data::set_settlement_type(const metternich::settlement_type *sett
 	}
 
 	if (game::get()->is_running()) {
-		emit settlement_type_changed();
-		emit map::get()->tile_settlement_type_changed(this->get_tile_pos());
+		emit holding_type_changed();
+		emit map::get()->tile_holding_type_changed(this->get_tile_pos());
 	}
 }
 
-void site_game_data::check_settlement_type()
+void site_game_data::check_holding_type()
 {
-	if (this->get_settlement_type() == nullptr) {
+	if (this->get_holding_type() == nullptr) {
 		return;
 	}
 
-	if (this->get_settlement_type()->get_conditions() == nullptr || this->get_settlement_type()->get_conditions()->check(this->site, read_only_context(this->site))) {
+	if (this->get_holding_type()->get_conditions() == nullptr || this->get_holding_type()->get_conditions()->check(this->site, read_only_context(this->site))) {
 		return;
 	}
 
-	const std::vector<const metternich::settlement_type *> potential_settlement_types = this->get_best_settlement_types(this->get_settlement_type()->get_base_settlement_types());
+	const std::vector<const metternich::holding_type *> potential_holding_types = this->get_best_holding_types(this->get_holding_type()->get_base_holding_types());
 
-	assert_throw(!potential_settlement_types.empty());
-	this->set_settlement_type(vector::get_random(potential_settlement_types));
+	assert_throw(!potential_holding_types.empty());
+	this->set_holding_type(vector::get_random(potential_holding_types));
 }
 
-std::vector<const metternich::settlement_type *> site_game_data::get_best_settlement_types(const std::vector<const metternich::settlement_type *> &settlement_types) const
+std::vector<const metternich::holding_type *> site_game_data::get_best_holding_types(const std::vector<const metternich::holding_type *> &holding_types) const
 {
-	std::vector<const metternich::settlement_type *> potential_settlement_types;
+	std::vector<const metternich::holding_type *> potential_holding_types;
 
 	int best_preserved_building_count = 0;
 
-	for (const metternich::settlement_type *base_settlement_type : settlement_types) {
-		if (base_settlement_type->get_conditions() != nullptr && !base_settlement_type->get_conditions()->check(this->site, read_only_context(this->site))) {
+	for (const metternich::holding_type *base_holding_type : holding_types) {
+		if (base_holding_type->get_conditions() != nullptr && !base_holding_type->get_conditions()->check(this->site, read_only_context(this->site))) {
 			continue;
 		}
 
@@ -454,7 +454,7 @@ std::vector<const metternich::settlement_type *> site_game_data::get_best_settle
 				continue;
 			}
 
-			if (vector::contains(building_slot->get_building()->get_settlement_types(), base_settlement_type)) {
+			if (vector::contains(building_slot->get_building()->get_holding_types(), base_holding_type)) {
 				++preserved_building_count;
 			}
 		}
@@ -462,34 +462,34 @@ std::vector<const metternich::settlement_type *> site_game_data::get_best_settle
 		if (preserved_building_count < best_preserved_building_count) {
 			continue;
 		} else if (preserved_building_count > best_preserved_building_count) {
-			potential_settlement_types.clear();
+			potential_holding_types.clear();
 			best_preserved_building_count = preserved_building_count;
 		}
 
-		potential_settlement_types.push_back(base_settlement_type);
+		potential_holding_types.push_back(base_holding_type);
 	}
 
-	if (potential_settlement_types.empty()) {
-		std::vector<const metternich::settlement_type *> base_settlement_types;
+	if (potential_holding_types.empty()) {
+		std::vector<const metternich::holding_type *> base_holding_types;
 
-		for (const metternich::settlement_type *settlement_type : settlement_types) {
-			for (const metternich::settlement_type *base_settlement_type : settlement_type->get_base_settlement_types()) {
-				if (!vector::contains(base_settlement_types, base_settlement_type)) {
-					base_settlement_types.push_back(base_settlement_type);
+		for (const metternich::holding_type *holding_type : holding_types) {
+			for (const metternich::holding_type *base_holding_type : holding_type->get_base_holding_types()) {
+				if (!vector::contains(base_holding_types, base_holding_type)) {
+					base_holding_types.push_back(base_holding_type);
 				}
 			}
 		}
 
-		return this->get_best_settlement_types(base_settlement_types);
+		return this->get_best_holding_types(base_holding_types);
 	}
 
-	return potential_settlement_types;
+	return potential_holding_types;
 }
 
 bool site_game_data::is_built() const
 {
 	if (this->site->is_settlement()) {
-		return this->get_settlement_type() != nullptr;
+		return this->get_holding_type() != nullptr;
 	} else {
 		return this->get_main_improvement() != nullptr && !this->get_main_improvement()->is_visitable();
 	}
@@ -811,7 +811,7 @@ void site_game_data::check_free_buildings()
 	}
 
 	const resource *resource = this->get_resource();
-	const int free_resource_improvement_level = this->get_settlement_type()->get_free_resource_improvement_level();
+	const int free_resource_improvement_level = this->get_holding_type()->get_free_resource_improvement_level();
 	if (resource != nullptr && free_resource_improvement_level > 0) {
 		for (const improvement *improvement : resource->get_improvements()) {
 			if (improvement->get_level() > free_resource_improvement_level) {
@@ -1045,7 +1045,7 @@ bool site_game_data::can_have_population_type(const population_type *type) const
 	assert_throw(this->is_built());
 
 	if (this->site->is_settlement()) {
-		return this->get_settlement_type()->can_have_population_type(type);
+		return this->get_holding_type()->can_have_population_type(type);
 	} else {
 		return this->get_main_improvement()->can_have_population_type(type);
 	}

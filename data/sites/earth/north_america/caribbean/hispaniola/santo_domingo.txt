@@ -9,7 +9,7 @@ santo_domingo = {
 	history = {
 		1538 = {
 			buildings += university #University C. Sto. Tomás founded in Santo Domingo in 1538; Source: Enrique Martínez Ruiz; Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 226.
-			settlement_type = campus
+			holding_type = campus
 		}
 	}
 }

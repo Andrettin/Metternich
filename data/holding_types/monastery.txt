@@ -2,7 +2,7 @@ monastery = {
 	name = "Monastery"
 	image_filepath = "tiles/settlements/town.png"
 	free_resource_improvement_level = 3
-	base_settlement_types = {
+	base_holding_types = {
 		village
 	}
 	population_classes = {
@@ -16,7 +16,7 @@ monastery = {
 	build_conditions = {
 	}
 	conditions = {
-		game_rule = additional_settlement_types
+		game_rule = additional_holding_types
 		not = {
 			resource = center_of_trade
 		}

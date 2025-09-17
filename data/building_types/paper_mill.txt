@@ -5,7 +5,7 @@ paper_mill = {
 	icon = paper
 	provincial = true
 	required_technology = papermaking
-	settlement_types = {
+	holding_types = {
 		town
 		city
 		metropolis

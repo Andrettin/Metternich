@@ -5,7 +5,7 @@ post_office = {
 	icon = treaty
 	provincial = true
 	required_technology = national_bureaucracy
-	settlement_types = {
+	holding_types = {
 		city
 		metropolis
 	}

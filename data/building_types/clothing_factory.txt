@@ -4,7 +4,7 @@ tailors_house = {
 	portrait = factory
 	icon = clothing
 	provincial = true
-	settlement_types = {
+	holding_types = {
 		village
 		town
 		city
@@ -33,7 +33,7 @@ tailors_shop = {
 	icon = clothing
 	provincial = true
 	required_building = tailors_house
-	settlement_types = {
+	holding_types = {
 		town
 		city
 		metropolis
@@ -61,7 +61,7 @@ clothing_factory = {
 	icon = clothing
 	provincial = true
 	required_building = tailors_shop
-	settlement_types = {
+	holding_types = {
 		town
 		city
 		metropolis

@@ -5,7 +5,7 @@ granary = {
 	icon = grain
 	provincial = true
 	required_technology = pottery
-	settlement_types = {
+	holding_types = {
 		camp
 		hamlet
 		village

@@ -5,7 +5,7 @@ steel_mill = {
 	icon = steel
 	provincial = true
 	required_technology = crucible_process
-	settlement_types = {
+	holding_types = {
 		town
 		city
 		metropolis

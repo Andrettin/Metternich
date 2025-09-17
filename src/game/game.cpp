@@ -42,11 +42,11 @@
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot.h"
 #include "infrastructure/building_type.h"
+#include "infrastructure/holding_type.h"
 #include "infrastructure/improvement.h"
 #include "infrastructure/improvement_slot.h"
 #include "infrastructure/pathway.h"
 #include "infrastructure/settlement_building_slot.h"
-#include "infrastructure/settlement_type.h"
 #include "infrastructure/wonder.h"
 #include "map/direction.h"
 #include "map/map.h"
@@ -385,7 +385,7 @@ QCoro::Task<void> game::start_coro()
 				continue;
 			}
 
-			site->get_game_data()->check_settlement_type();
+			site->get_game_data()->check_holding_type();
 			site->get_game_data()->calculate_commodity_outputs();
 		}
 
@@ -863,12 +863,12 @@ void game::apply_sites()
 		if (site_province != nullptr && site_province->get_game_data()->is_on_map()) {
 			const site_history *site_history = site->get_history();
 
-			if (site_history->get_settlement_type() != nullptr) {
+			if (site_history->get_holding_type() != nullptr) {
 				if (!site->is_settlement()) {
-					throw std::runtime_error(std::format("Site \"{}\" has a settlement type in history, but is not a settlement.", site->get_identifier()));
+					throw std::runtime_error(std::format("Site \"{}\" has a holding type in history, but is not a holding.", site->get_identifier()));
 				}
 
-				site_game_data->set_settlement_type(site_history->get_settlement_type());
+				site_game_data->set_holding_type(site_history->get_holding_type());
 
 				if (tile->get_resource() != nullptr) {
 					map::get()->set_tile_resource_discovered(site_game_data->get_tile_pos(), true);
@@ -895,26 +895,26 @@ void game::apply_sites()
 			continue;
 		}
 
-		const settlement_type *best_settlement_type = nullptr;
-		for (const settlement_type *settlement_type : settlement_type::get_all()) {
-			if (!settlement_type->get_base_settlement_types().empty()) {
+		const holding_type *best_holding_type = nullptr;
+		for (const holding_type *holding_type : holding_type::get_all()) {
+			if (!holding_type->get_base_holding_types().empty()) {
 				continue;
 			}
 
-			if (settlement_type->get_conditions() != nullptr && !settlement_type->get_conditions()->check(provincial_capital, read_only_context(provincial_capital))) {
+			if (holding_type->get_conditions() != nullptr && !holding_type->get_conditions()->check(provincial_capital, read_only_context(provincial_capital))) {
 				continue;
 			}
 
-			if (settlement_type->get_build_conditions() != nullptr && !settlement_type->get_build_conditions()->check(provincial_capital, read_only_context(provincial_capital))) {
+			if (holding_type->get_build_conditions() != nullptr && !holding_type->get_build_conditions()->check(provincial_capital, read_only_context(provincial_capital))) {
 				continue;
 			}
 
-			best_settlement_type = settlement_type;
+			best_holding_type = holding_type;
 			break;
 		}
 
-		assert_throw(best_settlement_type != nullptr);
-		provincial_capital_game_data->set_settlement_type(best_settlement_type);
+		assert_throw(best_holding_type != nullptr);
+		provincial_capital_game_data->set_holding_type(best_holding_type);
 	}
 
 	//set the capitals here, so that building requirements that require a capital can be fulfilled
@@ -1009,7 +1009,7 @@ void game::apply_site_buildings(const site *site)
 	}
 
 	metternich::site_game_data *settlement_game_data = settlement->get_game_data();
-	const metternich::settlement_type *settlement_type = settlement_game_data->get_settlement_type();
+	const metternich::holding_type *holding_type = settlement_game_data->get_holding_type();
 
 	const site_history *site_history = site->get_history();
 
@@ -1044,12 +1044,12 @@ void game::apply_site_buildings(const site *site)
 
 		while (building != nullptr) {
 			if (building->is_provincial() && settlement == site) {
-				if (settlement_type == nullptr) {
-					throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have building \"{}\", but has no settlement type.", settlement->get_identifier(), building->get_identifier()));
+				if (holding_type == nullptr) {
+					throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have building \"{}\", but has no holding type.", settlement->get_identifier(), building->get_identifier()));
 				}
 
-				if (!vector::contains(building->get_settlement_types(), settlement_type)) {
-					throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have building \"{}\", but its settlement type of \"{}\" is not appropriate for it.", settlement->get_identifier(), building->get_identifier(), settlement_type->get_identifier()));
+				if (!vector::contains(building->get_holding_types(), holding_type)) {
+					throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have building \"{}\", but its holding type of \"{}\" is not appropriate for it.", settlement->get_identifier(), building->get_identifier(), holding_type->get_identifier()));
 				}
 			}
 
@@ -1086,12 +1086,12 @@ void game::apply_site_buildings(const site *site)
 			continue;
 		}
 
-		if (settlement_type == nullptr) {
-			throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have wonder \"{}\", but has no settlement type.", settlement->get_identifier(), wonder->get_identifier()));
+		if (holding_type == nullptr) {
+			throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have wonder \"{}\", but has no holding type.", settlement->get_identifier(), wonder->get_identifier()));
 		}
 
-		if (!vector::contains(wonder->get_building()->get_settlement_types(), settlement_type)) {
-			throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have wonder \"{}\", but its settlement type of \"{}\" is not appropriate for the wonder's building type of \"{}\".", settlement->get_identifier(), wonder->get_identifier(), settlement_type->get_identifier(), wonder->get_building()->get_identifier()));
+		if (!vector::contains(wonder->get_building()->get_holding_types(), holding_type)) {
+			throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have wonder \"{}\", but its holding type of \"{}\" is not appropriate for the wonder's building type of \"{}\".", settlement->get_identifier(), wonder->get_identifier(), holding_type->get_identifier(), wonder->get_building()->get_identifier()));
 		}
 
 		settlement_building_slot *building_slot = settlement_game_data->get_building_slot(building_slot_type);

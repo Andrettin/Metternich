@@ -5,7 +5,7 @@ tobacconists_house = {
 	icon = tobacco
 	provincial = true
 	required_technology = cigar_production
-	settlement_types = {
+	holding_types = {
 		village
 		town
 		city
@@ -29,7 +29,7 @@ tobacconists_shop = {
 	provincial = true
 	required_building = tobacconists_house
 	required_technology = cigar_production
-	settlement_types = {
+	holding_types = {
 		town
 		city
 		metropolis
@@ -52,7 +52,7 @@ cigar_factory = {
 	provincial = true
 	required_building = tobacconists_shop
 	required_technology = cigar_production
-	settlement_types = {
+	holding_types = {
 		town
 		city
 		metropolis

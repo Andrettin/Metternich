@@ -8,7 +8,7 @@ pipe_maker = {
 	conditions = {
 		game_rule = lead_commodity
 	}
-	settlement_types = {
+	holding_types = {
 		town
 		city
 		metropolis

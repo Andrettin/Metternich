@@ -112,12 +112,12 @@ set(infrastructure_SRCS
 	src/infrastructure/building_slot_type_container.cpp
 	src/infrastructure/building_type.cpp
 	src/infrastructure/building_type_container.cpp
+	src/infrastructure/holding_type.cpp
 	src/infrastructure/improvement.cpp
 	src/infrastructure/improvement_container.cpp
 	src/infrastructure/pathway.cpp
 	src/infrastructure/pathway_container.cpp
 	src/infrastructure/settlement_building_slot.cpp
-	src/infrastructure/settlement_type.cpp
 	src/infrastructure/wonder.cpp
 )
 source_group(infrastructure FILES ${infrastructure_SRCS})
@@ -445,13 +445,13 @@ set(infrastructure_HDRS
 	src/infrastructure/building_slot_type_container.h
 	src/infrastructure/building_type.h
 	src/infrastructure/building_type_container.h
+	src/infrastructure/holding_type.h
 	src/infrastructure/improvement.h
 	src/infrastructure/improvement_container.h
 	src/infrastructure/improvement_slot.h
 	src/infrastructure/pathway.h
 	src/infrastructure/pathway_container.h
 	src/infrastructure/settlement_building_slot.h
-	src/infrastructure/settlement_type.h
 	src/infrastructure/wonder.h
 )
 source_group(infrastructure FILES ${infrastructure_HDRS})
@@ -609,6 +609,7 @@ set(script_condition_HDRS
 	src/script/condition/has_resource_condition.h
 	src/script/condition/has_route_condition.h
 	src/script/condition/has_terrain_condition.h
+	src/script/condition/holding_type_condition.h
 	src/script/condition/housing_condition.h
 	src/script/condition/improvement_condition.h
 	src/script/condition/independent_condition.h
@@ -642,7 +643,6 @@ set(script_condition_HDRS
 	src/script/condition/scripted_condition.h
 	src/script/condition/scripted_condition_condition.h
 	src/script/condition/scripted_modifier_condition.h
-	src/script/condition/settlement_type_condition.h
 	src/script/condition/site_condition.h
 	src/script/condition/site_scope_condition.h
 	src/script/condition/source_character_condition.h

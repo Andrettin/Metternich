@@ -5,7 +5,7 @@ observatory = {
 	icon = research
 	provincial = true
 	required_technology = astronomy
-	settlement_types = {
+	holding_types = {
 		city
 		metropolis
 		campus

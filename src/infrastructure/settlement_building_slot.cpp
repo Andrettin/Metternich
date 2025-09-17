@@ -66,7 +66,7 @@ bool settlement_building_slot::can_have_building(const building_type *building) 
 		return false;
 	}
 
-	if (!vector::contains(building->get_settlement_types(), settlement_game_data->get_settlement_type())) {
+	if (!vector::contains(building->get_holding_types(), settlement_game_data->get_holding_type())) {
 		return false;
 	}
 

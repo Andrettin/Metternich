@@ -4,7 +4,7 @@ carpenters_house = {
 	portrait = factory
 	icon = furniture
 	provincial = true
-	settlement_types = {
+	holding_types = {
 		village
 		town
 		city
@@ -31,7 +31,7 @@ carpenters_shop = {
 	icon = furniture
 	provincial = true
 	required_building = carpenters_house
-	settlement_types = {
+	holding_types = {
 		town
 		city
 		metropolis
@@ -57,7 +57,7 @@ furniture_factory = {
 	icon = furniture
 	provincial = true
 	required_building = carpenters_shop
-	settlement_types = {
+	holding_types = {
 		town
 		city
 		metropolis

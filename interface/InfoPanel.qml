@@ -141,7 +141,7 @@ Rectangle {
 		
 		readonly property string icon_identifier: selected_civilian_unit ? selected_civilian_unit.icon.identifier : (
 			selected_site ? (
-				(selected_site.settlement && selected_site.game_data.settlement_type !== null) ? "" : (
+				(selected_site.settlement && selected_site.game_data.holding_type !== null) ? "" : (
 					(selected_site.game_data.improvement && selected_site.game_data.improvement.visitable) ? "skull" : (selected_site.map_data.resource.icon ? selected_site.map_data.resource.icon.identifier : selected_site.map_data.resource.commodity.icon.identifier)
 				)
 			) : ""
@@ -464,7 +464,7 @@ Rectangle {
 		anchors.left: parent.left
 		anchors.leftMargin: 16 * scale_factor
 		text: selected_site_game_data ? format_text(commodity_outputs_to_string(selected_site_game_data.commodity_outputs)) : ""
-		visible: selected_site !== null && selected_site.settlement && selected_site.game_data.settlement_type !== null && !selected_garrison && viewing_settlement_info
+		visible: selected_site !== null && selected_site.settlement && selected_site.game_data.holding_type !== null && !selected_garrison && viewing_settlement_info
 		
 		function commodity_outputs_to_string(commodity_outputs) {
 			var str = ""
@@ -634,7 +634,7 @@ Rectangle {
 		anchors.bottom: parent.bottom
 		anchors.bottomMargin: 4 * scale_factor
 		icon_identifier: "cog"
-		visible: selected_site !== null && selected_site.settlement && selected_site.game_data.settlement_type !== null && !selected_garrison && !viewing_settlement_info
+		visible: selected_site !== null && selected_site.settlement && selected_site.game_data.holding_type !== null && !selected_garrison && !viewing_settlement_info
 		
 		onClicked: {
 			viewing_settlement_info = true
@@ -700,7 +700,7 @@ Rectangle {
 		anchors.bottom: parent.bottom
 		anchors.bottomMargin: 4 * scale_factor
 		icon_identifier: "settlement"
-		visible: selected_site !== null && selected_site.settlement && selected_site.game_data.settlement_type !== null && !selected_garrison && viewing_settlement_info
+		visible: selected_site !== null && selected_site.settlement && selected_site.game_data.holding_type !== null && !selected_garrison && viewing_settlement_info
 		
 		onClicked: {
 			viewing_settlement_info = false

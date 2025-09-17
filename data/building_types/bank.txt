@@ -5,7 +5,7 @@ bank = {
 	icon = wealth
 	provincial = true
 	required_technology = banking
-	settlement_types = {
+	holding_types = {
 		city
 		metropolis
 	}

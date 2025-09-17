@@ -12,7 +12,7 @@ london = {
 	history = {
 		604 = {
 			buildings += temple #a church was built in London in 604 AD; Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 109.
-			settlement_type = monastery
+			holding_type = monastery
 		}
 		
 		704 = {
@@ -20,7 +20,7 @@ london = {
 		}
 		
 		1360 = {
-			settlement_type = city #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			holding_type = city #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 		
 		1500 = {

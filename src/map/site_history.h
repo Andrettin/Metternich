@@ -6,14 +6,14 @@
 #include "util/centesimal_int.h"
 
 Q_MOC_INCLUDE("domain/culture.h")
-Q_MOC_INCLUDE("infrastructure/settlement_type.h")
+Q_MOC_INCLUDE("infrastructure/holding_type.h")
 Q_MOC_INCLUDE("religion/religion.h")
 
 namespace metternich {
 
 class building_type;
+class holding_type;
 class improvement;
-class settlement_type;
 class site;
 class wonder;
 enum class improvement_slot;
@@ -27,7 +27,7 @@ class site_history final : public data_entry_history
 	Q_PROPERTY(bool developed MEMBER developed)
 	Q_PROPERTY(int development_level MEMBER development_level)
 	Q_PROPERTY(site_tier tier READ get_tier WRITE set_tier)
-	Q_PROPERTY(metternich::settlement_type* settlement_type MEMBER settlement_type)
+	Q_PROPERTY(metternich::holding_type* holding_type MEMBER holding_type)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture)
 	Q_PROPERTY(metternich::religion* religion MEMBER religion)
 	Q_PROPERTY(int population READ get_population WRITE set_population)
@@ -48,7 +48,7 @@ public:
 
 	bool is_developed() const
 	{
-		return this->developed || this->development_level > 0 || this->get_settlement_type() != nullptr || !this->get_improvements().empty() || !this->get_buildings().empty() || !this->get_wonders().empty() || !this->get_population_groups().empty();
+		return this->developed || this->development_level > 0 || this->get_holding_type() != nullptr || !this->get_improvements().empty() || !this->get_buildings().empty() || !this->get_wonders().empty() || !this->get_population_groups().empty();
 	}
 
 	int get_development_level() const
@@ -70,9 +70,9 @@ public:
 		this->development_level = static_cast<int>(tier);
 	}
 
-	const metternich::settlement_type *get_settlement_type() const
+	const metternich::holding_type *get_holding_type() const
 	{
-		return this->settlement_type;
+		return this->holding_type;
 	}
 
 	const std::map<improvement_slot, const improvement *> &get_improvements() const
@@ -197,7 +197,7 @@ private:
 	bool resource_discovered = false;
 	bool developed = false;
 	int development_level = 0;
-	metternich::settlement_type *settlement_type = nullptr;
+	metternich::holding_type *holding_type = nullptr;
 	metternich::culture *culture = nullptr;
 	metternich::religion *religion = nullptr;
 	std::map<improvement_slot, const improvement *> improvements;

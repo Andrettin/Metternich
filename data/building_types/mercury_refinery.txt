@@ -8,7 +8,7 @@ mercury_refinery = {
 	conditions = {
 		game_rule = mercury_commodity
 	}
-	settlement_types = {
+	holding_types = {
 		town
 		city
 		metropolis

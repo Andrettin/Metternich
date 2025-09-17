@@ -10,7 +10,7 @@ tribal_village = {
 	}
 	#free_on_start_conditions = {
 	#	improvement = none
-	#	settlement_type = none
+	#	holding_type = none
 	#	not = {
 	#		resource = none
 	#		resource = oil

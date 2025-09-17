@@ -10,7 +10,7 @@ new_york = {
 	
 	history = {
 		1609 = {
-			settlement_type = hamlet #New Amsterdam founded by the Dutch in 1609; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
+			holding_type = hamlet #New Amsterdam founded by the Dutch in 1609; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
 		}
 	}
 }

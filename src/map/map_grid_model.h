@@ -84,7 +84,7 @@ public:
 	void on_tile_exploration_changed(const QPoint &tile_pos);
 	void on_tile_prospection_changed(const QPoint &tile_pos);
 	void on_tile_resource_changed(const QPoint &tile_pos);
-	void on_tile_settlement_type_changed(const QPoint &tile_pos);
+	void on_tile_holding_type_changed(const QPoint &tile_pos);
 	void on_tile_improvement_changed(const QPoint &tile_pos);
 	void on_tile_pathway_changed(const QPoint &tile_pos);
 	void on_tile_civilian_unit_changed(const QPoint &tile_pos);

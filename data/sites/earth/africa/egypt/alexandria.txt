@@ -11,7 +11,7 @@ alexandria = {
 	
 	history = {
 		-336 = {
-			settlement_type = city #important settlement in the 336-323 BC period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 18-19.
+			holding_type = city #important settlement in the 336-323 BC period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 18-19.
 		}
 		
 		-250 = {

@@ -5,7 +5,7 @@ sewer_system = {
 	icon = architecture
 	provincial = true
 	required_technology = sanitation
-	settlement_types = {
+	holding_types = {
 		city
 		metropolis
 	}

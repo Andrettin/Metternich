@@ -12,11 +12,11 @@ namespace metternich {
 
 class civilian_unit;
 class country;
+class holding_type;
 class improvement;
 class pathway;
 class province;
 class resource;
-class settlement_type;
 class site;
 class terrain_type;
 
@@ -82,7 +82,7 @@ public:
 	void set_site(const metternich::site *site);
 
 	const metternich::site *get_settlement() const;
-	const settlement_type *get_settlement_type() const;
+	const holding_type *get_holding_type() const;
 
 	const metternich::resource *get_resource() const;
 	bool is_resource_discovered() const;

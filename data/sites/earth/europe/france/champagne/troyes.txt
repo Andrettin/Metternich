@@ -12,7 +12,7 @@ troyes = {
 	history = {
 		782 = {
 			buildings += temple #Alcuin moved from England to the court of Charlemagne in 782, and received the abbey of St. Lupus at Troyes; Source: Frank Stenton, "Anglo-Saxon England", 1971, pp. 188-189.
-			settlement_type = monastery
+			holding_type = monastery
 		}
 		
 		919 = {

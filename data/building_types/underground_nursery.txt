@@ -6,7 +6,7 @@ underground_nursery = {
 	icon = heart
 	provincial = true
 	required_technology = burrowing
-	settlement_types = {
+	holding_types = {
 		village
 		town
 		city

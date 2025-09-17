@@ -5,7 +5,7 @@ courthouse = {
 	icon = courthouse
 	provincial = true
 	required_technology = code_of_laws
-	settlement_types = {
+	holding_types = {
 		city
 		metropolis
 	}

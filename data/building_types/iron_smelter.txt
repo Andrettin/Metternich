@@ -5,7 +5,7 @@ iron_smelter = {
 	icon = iron
 	provincial = true
 	required_technology = ironworking
-	settlement_types = {
+	holding_types = {
 		town
 		city
 		metropolis

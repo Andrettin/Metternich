@@ -4,7 +4,7 @@ village_hall = {
 	portrait = town
 	icon = flag
 	provincial = true
-	settlement_types = {
+	holding_types = {
 		village
 		town
 		city
@@ -28,7 +28,7 @@ town_hall = {
 	icon = flag
 	provincial = true
 	required_building = village_hall
-	settlement_types = {
+	holding_types = {
 		town
 		city
 		metropolis
@@ -51,7 +51,7 @@ city_hall = {
 	icon = flag
 	provincial = true
 	required_building = town_hall
-	settlement_types = {
+	holding_types = {
 		city
 		metropolis
 	}
@@ -74,7 +74,7 @@ state_house = {
 	provincial = true
 	provincial_capitol = true
 	required_building = city_hall
-	settlement_types = {
+	holding_types = {
 		city
 		metropolis
 	}
@@ -97,7 +97,7 @@ capitol = {
 	provincial = true
 	capitol = true
 	required_building = state_house
-	settlement_types = {
+	holding_types = {
 		city
 		metropolis
 	}

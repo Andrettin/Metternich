@@ -5,7 +5,7 @@ monument = {
 	icon = architecture
 	provincial = true
 	required_technology = mysticism
-	settlement_types = {
+	holding_types = {
 		town
 		city
 		metropolis

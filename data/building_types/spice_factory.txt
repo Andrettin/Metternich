@@ -5,7 +5,7 @@ spice_factory = {
 	icon = spices
 	provincial = true
 	required_technology = colonization
-	settlement_types = {
+	holding_types = {
 		town
 		city
 		metropolis

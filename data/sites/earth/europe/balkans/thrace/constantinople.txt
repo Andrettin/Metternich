@@ -11,15 +11,15 @@ constantinople = {
 	history = {
 		395 = {
 			buildings += cathedral #Constantinople was the seat of a patriarchate in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
-			settlement_type = city
+			holding_type = city
 		}
 		
 		526 = {
-			settlement_type = city #important settlement in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			holding_type = city #important settlement in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 		}
 		
 		1360 = {
-			settlement_type = city #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			holding_type = city #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 	}
 }

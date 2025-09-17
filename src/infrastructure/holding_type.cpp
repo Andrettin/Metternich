@@ -1,6 +1,6 @@
 #include "metternich.h"
 
-#include "infrastructure/settlement_type.h"
+#include "infrastructure/holding_type.h"
 
 #include "database/database.h"
 #include "map/tile_image_provider.h"
@@ -13,24 +13,24 @@
 
 namespace metternich {
 
-settlement_type::settlement_type(const std::string &identifier) : named_data_entry(identifier)
+holding_type::holding_type(const std::string &identifier) : named_data_entry(identifier)
 {
 }
 
-settlement_type::~settlement_type()
+holding_type::~holding_type()
 {
 }
 
-void settlement_type::process_gsml_scope(const gsml_data &scope)
+void holding_type::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "base_settlement_types") {
+	if (tag == "base_holding_types") {
 		for (const std::string &value : values) {
-			settlement_type *settlement_type = settlement_type::get(value);
-			this->base_settlement_types.push_back(settlement_type);
-			settlement_type->upgraded_settlement_types.push_back(this);
+			holding_type *holding_type = holding_type::get(value);
+			this->base_holding_types.push_back(holding_type);
+			holding_type->upgraded_holding_types.push_back(this);
 		}
 	} else if (tag == "population_classes") {
 		for (const std::string &value : values) {
@@ -53,7 +53,7 @@ void settlement_type::process_gsml_scope(const gsml_data &scope)
 	}
 }
 
-void settlement_type::initialize()
+void holding_type::initialize()
 {
 	tile_image_provider::get()->load_image("settlement/" + this->get_identifier() + "/0");
 
@@ -62,14 +62,14 @@ void settlement_type::initialize()
 	named_data_entry::initialize();
 }
 
-void settlement_type::check() const
+void holding_type::check() const
 {
 	if (this->get_image_filepath().empty()) {
-		throw std::runtime_error(std::format("Settlement type \"{}\" has no image filepath.", this->get_identifier()));
+		throw std::runtime_error(std::format("Holding type \"{}\" has no image filepath.", this->get_identifier()));
 	}
 
-	if (vector::contains(this->get_base_settlement_types(), this)) {
-		throw std::runtime_error(std::format("Settlement type \"{}\" is an upgrade of itself.", this->get_identifier()));
+	if (vector::contains(this->get_base_holding_types(), this)) {
+		throw std::runtime_error(std::format("Holding type \"{}\" is an upgrade of itself.", this->get_identifier()));
 	}
 
 	if (this->get_conditions() != nullptr) {
@@ -81,7 +81,7 @@ void settlement_type::check() const
 	}
 }
 
-void settlement_type::set_image_filepath(const std::filesystem::path &filepath)
+void holding_type::set_image_filepath(const std::filesystem::path &filepath)
 {
 	if (filepath == this->get_image_filepath()) {
 		return;
@@ -90,24 +90,24 @@ void settlement_type::set_image_filepath(const std::filesystem::path &filepath)
 	this->image_filepath = database::get()->get_graphics_path(this->get_module()) / filepath;
 }
 
-void settlement_type::calculate_level()
+void holding_type::calculate_level()
 {
 	if (this->get_level() != 0) {
 		return;
 	}
 
-	if (!this->get_base_settlement_types().empty()) {
-		for (const settlement_type *base_settlement_type : this->get_base_settlement_types()) {
-			const_cast<settlement_type *>(base_settlement_type)->calculate_level();
+	if (!this->get_base_holding_types().empty()) {
+		for (const holding_type *base_holding_type : this->get_base_holding_types()) {
+			const_cast<holding_type *>(base_holding_type)->calculate_level();
 
-			this->level = std::max(this->level, base_settlement_type->get_level() + 1);
+			this->level = std::max(this->level, base_holding_type->get_level() + 1);
 		}
 	} else {
 		this->level = 1;
 	}
 }
 
-bool settlement_type::can_have_population_type(const population_type *population_type) const
+bool holding_type::can_have_population_type(const population_type *population_type) const
 {
 	assert_throw(population_type != nullptr);
 

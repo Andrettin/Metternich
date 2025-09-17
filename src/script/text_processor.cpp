@@ -3,7 +3,7 @@
 #include "script/text_processor.h"
 
 #include "domain/culture.h"
-#include "infrastructure/settlement_type.h"
+#include "infrastructure/holding_type.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/site.h"
@@ -157,14 +157,14 @@ std::string text_processor::process_province_tokens(const province *province, st
 	}
 }
 
-std::string text_processor::process_settlement_type_tokens(const settlement_type *settlement_type, std::queue<std::string> &tokens) const
+std::string text_processor::process_holding_type_tokens(const holding_type *holding_type, std::queue<std::string> &tokens) const
 {
-	if (settlement_type == nullptr) {
-		throw std::runtime_error("No settlement type provided when processing settlement type tokens.");
+	if (holding_type == nullptr) {
+		throw std::runtime_error("No holding type provided when processing holding type tokens.");
 	}
 
 	if (tokens.empty()) {
-		throw std::runtime_error("No tokens provided when processing settlement type tokens.");
+		throw std::runtime_error("No tokens provided when processing holding type tokens.");
 	}
 
 	const std::string token = queue::take(tokens);
@@ -173,9 +173,9 @@ std::string text_processor::process_settlement_type_tokens(const settlement_type
 	const std::string front_subtoken = queue::take(subtokens);
 
 	if (front_subtoken == "name") {
-		return settlement_type->get_name();
+		return holding_type->get_name();
 	} else {
-		return this->process_named_data_entry_token(settlement_type, front_subtoken);
+		return this->process_named_data_entry_token(holding_type, front_subtoken);
 	}
 }
 
@@ -196,10 +196,10 @@ std::string text_processor::process_site_tokens(const site *site, std::queue<std
 
 	if (front_subtoken == "name") {
 		return site->get_game_data()->get_current_cultural_name();
+	} else if (front_subtoken == "holding_type") {
+		return this->process_holding_type_tokens(site->get_game_data()->get_holding_type(), tokens);
 	} else if (front_subtoken == "province") {
 		return this->process_province_tokens(site->get_game_data()->get_province(), tokens);
-	} else if (front_subtoken == "settlement_type") {
-		return this->process_settlement_type_tokens(site->get_game_data()->get_settlement_type(), tokens);
 	} else {
 		return this->process_named_data_entry_token(site, front_subtoken);
 	}

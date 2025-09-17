@@ -1,8 +1,8 @@
-campus = {
-	name = "Campus"
+castle = {
+	name = "Castle"
 	image_filepath = "tiles/settlements/town.png"
 	free_resource_improvement_level = 3
-	base_settlement_types = {
+	base_holding_types = {
 		village
 	}
 	population_classes = {
@@ -10,14 +10,23 @@ campus = {
 		untrained_workers
 		trained_workers
 		expert_workers
-		academics
+		soldiers
+		officers
+	}
+	build_conditions = {
+		has_building_class = stockade
 	}
 	conditions = {
-		game_rule = additional_settlement_types
+		game_rule = additional_holding_types
 		not = {
 			resource = center_of_trade
 			resource = holy_site
 		}
-		has_building_class = school
+		province = {
+			or = {
+				produces_commodity = leadership
+				produces_commodity = manpower
+			}
+		}
 	}
 }

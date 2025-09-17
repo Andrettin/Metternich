@@ -5,7 +5,7 @@ food_processing_center = {
 	icon = canned_food
 	provincial = true
 	required_technology = improved_food_preservation
-	settlement_types = {
+	holding_types = {
 		town
 		city
 		metropolis

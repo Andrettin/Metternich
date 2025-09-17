@@ -19,11 +19,11 @@ class civilian_unit_type;
 class country;
 class cultural_group;
 class culture;
+class holding_type;
 class icon;
 class population_unit;
 class portrait;
 class province;
-class settlement_type;
 class site;
 class technology;
 enum class military_unit_category;
@@ -118,9 +118,9 @@ public:
 
 	void calculate_level();
 
-	const std::vector<const settlement_type *> &get_settlement_types() const
+	const std::vector<const holding_type *> &get_holding_types() const
 	{
-		return this->settlement_types;
+		return this->holding_types;
 	}
 
 	const std::vector<const civilian_unit_type *> &get_recruited_civilian_unit_types() const
@@ -293,7 +293,7 @@ private:
 	const metternich::icon *icon = nullptr;
 	bool provincial = false;
 	int level = 0;
-	std::vector<const settlement_type *> settlement_types;
+	std::vector<const holding_type *> holding_types;
 	std::vector<const civilian_unit_type *> recruited_civilian_unit_types;
 	std::vector<military_unit_category> recruited_military_unit_categories;
 	std::vector<transporter_category> recruited_transporter_categories;

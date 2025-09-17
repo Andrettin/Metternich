@@ -14,7 +14,7 @@ zagreb = {
 	
 	history = {
 		1360 = {
-			settlement_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			holding_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 		
 		1815 = {
@@ -27,7 +27,7 @@ zagreb = {
 		
 		1874 = {
 			buildings += university #University founded in Zagreb in 1874; Source: A.J.P. Taylor, "The Habsburg Monarchy, 1809-1918", 1964,
-			settlement_type = campus
+			holding_type = campus
 		}
 	}
 }

@@ -7,7 +7,7 @@ evora = {
 	history = {
 		395 = {
 			buildings += cathedral #Evora was the seat of a bishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
-			settlement_type = city
+			holding_type = city
 		}
 	}
 }

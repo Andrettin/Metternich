@@ -21,7 +21,7 @@ village = {
 	name = "Village"
 	image_filepath = "tiles/settlements/village.png"
 	free_resource_improvement_level = 2
-	base_settlement_types = {
+	base_holding_types = {
 		camp
 		hamlet
 	}
@@ -40,7 +40,7 @@ town = {
 	name = "Town"
 	image_filepath = "tiles/settlements/town.png"
 	free_resource_improvement_level = 3
-	base_settlement_types = {
+	base_holding_types = {
 		village
 	}
 	population_classes = {
@@ -87,7 +87,7 @@ city = {
 	name = "City"
 	image_filepath = "tiles/settlements/city.png"
 	free_resource_improvement_level = 4
-	base_settlement_types = {
+	base_holding_types = {
 		campus
 		castle
 		monastery
@@ -135,7 +135,7 @@ metropolis = {
 	name = "Metropolis"
 	image_filepath = "tiles/settlements/metropolis.png"
 	free_resource_improvement_level = 5
-	base_settlement_types = {
+	base_holding_types = {
 		city
 	}
 	population_classes = {

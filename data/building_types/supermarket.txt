@@ -5,7 +5,7 @@ supermarket = {
 	icon = canned_food
 	provincial = true
 	required_technology = refrigeration
-	settlement_types = {
+	holding_types = {
 		city
 		metropolis
 	}

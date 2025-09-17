@@ -83,10 +83,10 @@ myths_enabled = {
 	hidden = true
 }
 
-additional_settlement_types = {
-	name = "Additional Settlement Types"
+additional_holding_types = {
+	name = "Additional Holding Types"
 	default_value = false
-	description = "Allow additional settlement types"
+	description = "Allow additional holding types"
 	hidden = true
 }
 

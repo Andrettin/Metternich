@@ -6,8 +6,8 @@
 #include "util/qunique_ptr.h"
 
 Q_MOC_INCLUDE("domain/country.h")
+Q_MOC_INCLUDE("infrastructure/holding_type.h")
 Q_MOC_INCLUDE("infrastructure/improvement.h")
-Q_MOC_INCLUDE("infrastructure/settlement_type.h")
 Q_MOC_INCLUDE("map/province.h")
 Q_MOC_INCLUDE("population/population.h")
 
@@ -18,6 +18,7 @@ class building_class;
 class building_type;
 class country;
 class culture;
+class holding_type;
 class improvement;
 class pathway;
 class phenotype;
@@ -29,7 +30,6 @@ class religion;
 class resource;
 class scripted_site_modifier;
 class settlement_building_slot;
-class settlement_type;
 class site;
 class tile;
 enum class improvement_slot;
@@ -44,7 +44,7 @@ class site_game_data final : public QObject
 	Q_PROPERTY(QString title_name READ get_title_name_qstring NOTIFY title_name_changed)
 	Q_PROPERTY(const metternich::country* owner READ get_owner NOTIFY owner_changed)
 	Q_PROPERTY(QString current_cultural_name READ get_current_cultural_name_qstring NOTIFY culture_changed)
-	Q_PROPERTY(const metternich::settlement_type* settlement_type READ get_settlement_type NOTIFY settlement_type_changed)
+	Q_PROPERTY(const metternich::holding_type* holding_type READ get_holding_type NOTIFY holding_type_changed)
 	Q_PROPERTY(const metternich::improvement* improvement READ get_main_improvement NOTIFY improvements_changed)
 	Q_PROPERTY(const metternich::improvement* resource_improvement READ get_resource_improvement NOTIFY improvements_changed)
 	Q_PROPERTY(QVariantList building_slots READ get_building_slots_qvariant_list CONSTANT)
@@ -121,14 +121,14 @@ public:
 	void set_religion(const metternich::religion *religion);
 	void on_population_main_religion_changed(const metternich::religion *religion);
 
-	const metternich::settlement_type *get_settlement_type() const
+	const metternich::holding_type *get_holding_type() const
 	{
-		return this->settlement_type;
+		return this->holding_type;
 	}
 
-	void set_settlement_type(const metternich::settlement_type *settlement_type);
-	void check_settlement_type();
-	std::vector<const metternich::settlement_type *> get_best_settlement_types(const std::vector<const metternich::settlement_type *> &settlement_types) const;
+	void set_holding_type(const metternich::holding_type *holding_type);
+	void check_holding_type();
+	std::vector<const metternich::holding_type *> get_best_holding_types(const std::vector<const metternich::holding_type *> &holding_types) const;
 
 	Q_INVOKABLE bool is_built() const;
 
@@ -412,7 +412,7 @@ signals:
 	void culture_changed();
 	void religion_changed();
 	void improvements_changed();
-	void settlement_type_changed();
+	void holding_type_changed();
 	void scripted_modifiers_changed();
 	void population_units_changed();
 	void housing_changed();
@@ -424,7 +424,7 @@ private:
 	const country *owner = nullptr;
 	const metternich::culture *culture = nullptr;
 	const metternich::religion *religion = nullptr;
-	const metternich::settlement_type *settlement_type = nullptr;
+	const metternich::holding_type *holding_type = nullptr;
 	std::map<improvement_slot, const improvement *> improvements;
 	bool resource_discovered = false;
 	std::vector<qunique_ptr<settlement_building_slot>> building_slots;

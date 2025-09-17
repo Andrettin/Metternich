@@ -25,6 +25,7 @@ namespace metternich {
 	class game;
 	class game_rules;
 	class government_type;
+	class holding_type;
 	class icon;
 	class improvement;
 	class map;
@@ -44,7 +45,6 @@ namespace metternich {
 	class religious_group;
 	class resource;
 	class route_game_data;
-	class settlement_type;
 	class site;
 	class site_game_data;
 	class technology;

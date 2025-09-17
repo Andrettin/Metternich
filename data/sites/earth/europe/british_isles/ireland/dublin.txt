@@ -7,16 +7,16 @@ dublin = {
 	
 	history = {
 		802 = {
-			settlement_type = village #existed c. 802 AD; Source: William R. Shepherd, "Historical Atlas", 1911, p. 60.
+			holding_type = village #existed c. 802 AD; Source: William R. Shepherd, "Historical Atlas", 1911, p. 60.
 		}
 		
 		1312 = {
 			buildings += university #University founded in Dublin in 1312; Source: "Atlas de História Mundial", p. 144.
-			settlement_type = campus
+			holding_type = campus
 		}
 		
 		1360 = {
-			settlement_type = city #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			holding_type = city #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 		
 		1591 = {

@@ -4,7 +4,7 @@ school = {
 	portrait = university
 	icon = university
 	provincial = true
-	settlement_types = {
+	holding_types = {
 		village
 		campus
 		town
@@ -35,7 +35,7 @@ college = {
 	icon = university
 	provincial = true
 	required_building = school
-	settlement_types = {
+	holding_types = {
 		campus
 		city
 		metropolis
@@ -65,7 +65,7 @@ university = {
 	provincial = true
 	required_building = college
 	required_technology = university
-	settlement_types = {
+	holding_types = {
 		campus
 		city
 		metropolis
@@ -109,7 +109,7 @@ monastic_school = {
 	icon = university
 	provincial = true
 	required_technology = monastic_school
-	settlement_types = {
+	holding_types = {
 		monastery
 	}
 	settlement_conditions = {
@@ -137,7 +137,7 @@ cathedral_school = {
 	provincial = true
 	required_building = monastic_school
 	required_technology = cathedral_school
-	settlement_types = {
+	holding_types = {
 		monastery
 	}
 	settlement_conditions = {

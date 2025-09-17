@@ -8,7 +8,7 @@ guadalajara = {
 	history = {
 		1791 = {
 			buildings += college #College or seminary founded in Guadalajara in 1791; Source: Enrique Martínez Ruiz; Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 226.
-			settlement_type = campus
+			holding_type = campus
 		}
 	}
 }

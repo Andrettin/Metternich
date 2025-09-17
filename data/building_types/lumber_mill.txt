@@ -4,7 +4,7 @@ sawyers_house = {
 	portrait = factory
 	icon = lumber
 	provincial = true
-	settlement_types = {
+	holding_types = {
 		village
 		town
 		city
@@ -27,7 +27,7 @@ sawyers_shop = {
 	icon = lumber
 	provincial = true
 	required_building = sawyers_house
-	settlement_types = {
+	holding_types = {
 		town
 		city
 		metropolis
@@ -50,7 +50,7 @@ lumber_mill = {
 	provincial = true
 	required_building = sawyers_shop
 	required_technology = saw_mill
-	settlement_types = {
+	holding_types = {
 		town
 		city
 		metropolis

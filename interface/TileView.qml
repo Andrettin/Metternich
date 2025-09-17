@@ -95,7 +95,7 @@ Item {
 		anchors.top: parent.top
 		anchors.topMargin: 8 * scale_factor
 		source: resource ? ("image://icon/" + (site && site.game_data.resource_improvement ? site.game_data.resource_improvement.icon.identifier : resource.tiny_icon.identifier)) : "image://empty/"
-		visible: province !== null && is_center_tile && resource !== null && site && (site.game_data.settlement_type !== null || (improvement !== null && improvement.resource === null))
+		visible: province !== null && is_center_tile && resource !== null && site && (site.game_data.holding_type !== null || (improvement !== null && improvement.resource === null))
 	}
 	
 	Rectangle {
@@ -251,8 +251,8 @@ Item {
 			
 			if (!explored) {
 				text += "Unexplored"
-			} else if (site !== null && site.settlement && site.game_data.settlement_type) {
-				text += site.game_data.settlement_type.name
+			} else if (site !== null && site.settlement && site.game_data.holding_type) {
+				text += site.game_data.holding_type.name
 				
 				if (resource !== null) {
 					text += ") ("

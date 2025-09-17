@@ -87,11 +87,11 @@ const metternich::site *tile::get_settlement() const
 	return nullptr;
 }
 
-const settlement_type *tile::get_settlement_type() const
+const holding_type *tile::get_holding_type() const
 {
 	const metternich::site *settlement = this->get_settlement();
 	if (settlement != nullptr) {
-		return settlement->get_game_data()->get_settlement_type();
+		return settlement->get_game_data()->get_holding_type();
 	}
 
 	return nullptr;

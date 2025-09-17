@@ -9,7 +9,7 @@
 #include "economy/commodity.h"
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot_type.h"
-#include "infrastructure/settlement_type.h"
+#include "infrastructure/holding_type.h"
 #include "population/population_type.h"
 #include "population/population_unit.h"
 #include "script/condition/and_condition.h"
@@ -46,9 +46,9 @@ void building_type::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "settlement_types") {
+	if (tag == "holding_types") {
 		for (const std::string &value : values) {
-			this->settlement_types.push_back(settlement_type::get(value));
+			this->holding_types.push_back(holding_type::get(value));
 		}
 	} else if (tag == "recruited_civilian_unit_types") {
 		for (const std::string &value : values) {
@@ -197,12 +197,12 @@ void building_type::check() const
 		throw std::runtime_error(std::format("Building type \"{}\" requires itself.", this->get_identifier()));
 	}
 
-	if (this->is_provincial() && this->get_settlement_types().empty()) {
-		throw std::runtime_error(std::format("Building type \"{}\" is provincial, but does not have any settlement types listed for it.", this->get_identifier()));
+	if (this->is_provincial() && this->get_holding_types().empty()) {
+		throw std::runtime_error(std::format("Building type \"{}\" is provincial, but does not have any holding types listed for it.", this->get_identifier()));
 	}
 
-	if (!this->is_provincial() && !this->get_settlement_types().empty()) {
-		throw std::runtime_error(std::format("Building type \"{}\" is not provincial, but does have settlement types listed for it.", this->get_identifier()));
+	if (!this->is_provincial() && !this->get_holding_types().empty()) {
+		throw std::runtime_error(std::format("Building type \"{}\" is not provincial, but does have holding types listed for it.", this->get_identifier()));
 	}
 
 	if (this->get_province_modifier() != nullptr && !this->is_provincial()) {

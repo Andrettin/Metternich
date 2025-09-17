@@ -8,9 +8,9 @@
 #include "economy/commodity.h"
 #include "economy/resource.h"
 #include "game/game.h"
+#include "infrastructure/holding_type.h"
 #include "infrastructure/improvement.h"
 #include "infrastructure/pathway.h"
-#include "infrastructure/settlement_type.h"
 #include "map/celestial_body_type.h"
 #include "map/map.h"
 #include "map/province.h"
@@ -33,7 +33,7 @@ map_grid_model::map_grid_model()
 	connect(map::get(), &map::tile_exploration_changed, this, &map_grid_model::on_tile_exploration_changed);
 	connect(map::get(), &map::tile_prospection_changed, this, &map_grid_model::on_tile_prospection_changed);
 	connect(map::get(), &map::tile_resource_changed, this, &map_grid_model::on_tile_resource_changed);
-	connect(map::get(), &map::tile_settlement_type_changed, this, &map_grid_model::on_tile_settlement_type_changed);
+	connect(map::get(), &map::tile_holding_type_changed, this, &map_grid_model::on_tile_holding_type_changed);
 	connect(map::get(), &map::tile_improvement_changed, this, &map_grid_model::on_tile_improvement_changed);
 	connect(map::get(), &map::tile_pathway_changed, this, &map_grid_model::on_tile_pathway_changed);
 	connect(map::get(), &map::tile_civilian_unit_changed, this, &map_grid_model::on_tile_civilian_unit_changed);
@@ -157,8 +157,8 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 						image_source += "/" + QString::number(tile->get_improvement_variation());
 
 						object_image_sources.push_back(std::move(image_source));
-					} else if (tile->get_settlement_type() != nullptr) {
-						QString image_source = "tile/settlement/" + tile->get_settlement_type()->get_identifier_qstring() + "/0";
+					} else if (tile->get_holding_type() != nullptr) {
+						QString image_source = "tile/settlement/" + tile->get_holding_type()->get_identifier_qstring() + "/0";
 						object_image_sources.push_back(std::move(image_source));
 					} else if (tile->get_site()->get_game_data()->get_main_improvement() != nullptr) {
 						QString image_source = "tile/improvement/" + tile->get_site()->get_game_data()->get_main_improvement()->get_identifier_qstring();
@@ -176,7 +176,7 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 						tile->get_resource() != nullptr
 						&& tile->is_resource_discovered()
 						&& (
-							(tile->get_settlement_type() == nullptr && tile->get_site()->get_game_data()->get_main_improvement() == nullptr && !tile->get_site()->is_celestial_body())
+							(tile->get_holding_type() == nullptr && tile->get_site()->get_game_data()->get_main_improvement() == nullptr && !tile->get_site()->is_celestial_body())
 							|| tile->get_resource()->is_natural_wonder()
 						)
 					) {
@@ -304,7 +304,7 @@ void map_grid_model::on_tile_resource_changed(const QPoint &tile_pos)
 	});
 }
 
-void map_grid_model::on_tile_settlement_type_changed(const QPoint &tile_pos)
+void map_grid_model::on_tile_holding_type_changed(const QPoint &tile_pos)
 {
 	const QModelIndex index = this->index(tile_pos.y(), tile_pos.x());
 	emit dataChanged(index, index, {

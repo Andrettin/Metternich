@@ -5,7 +5,7 @@ fur_trading_post = {
 	icon = furs
 	provincial = true
 	required_technology = furs
-	settlement_types = {
+	holding_types = {
 		town
 		city
 		metropolis

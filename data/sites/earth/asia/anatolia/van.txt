@@ -7,7 +7,7 @@ van = {
 	
 	history = {
 		1481 = {
-			settlement_type = town #existed in the 1481-1683 period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 124.
+			holding_type = town #existed in the 1481-1683 period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 124.
 		}
 	}
 }

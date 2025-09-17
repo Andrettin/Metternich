@@ -5,7 +5,7 @@ stock_exchange = {
 	icon = wealth
 	provincial = true
 	required_technology = economics
-	settlement_types = {
+	holding_types = {
 		city
 		metropolis
 	}

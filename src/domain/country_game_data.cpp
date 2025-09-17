@@ -41,10 +41,10 @@
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot_type.h"
 #include "infrastructure/building_type.h"
+#include "infrastructure/holding_type.h"
 #include "infrastructure/improvement.h"
 #include "infrastructure/improvement_slot.h"
 #include "infrastructure/settlement_building_slot.h"
-#include "infrastructure/settlement_type.h"
 #include "infrastructure/wonder.h"
 #include "map/diplomatic_map_mode.h"
 #include "map/map.h"
@@ -931,7 +931,7 @@ void country_game_data::choose_capital()
 					continue;
 				}
 
-				if (best_capital->get_game_data()->get_settlement_type()->get_level() >= settlement_game_data->get_settlement_type()->get_level()) {
+				if (best_capital->get_game_data()->get_holding_type()->get_level() >= settlement_game_data->get_holding_type()->get_level()) {
 					continue;
 				}
 			}

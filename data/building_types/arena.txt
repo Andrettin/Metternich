@@ -5,7 +5,7 @@ arena = {
 	icon = architecture
 	provincial = true
 	required_technology = architecture
-	settlement_types = {
+	holding_types = {
 		city
 		metropolis
 	}

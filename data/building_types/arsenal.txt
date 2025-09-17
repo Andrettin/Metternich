@@ -4,7 +4,7 @@ armory = {
 	portrait = factory
 	icon = tools
 	provincial = true
-	settlement_types = {
+	holding_types = {
 		village
 		town
 		city
@@ -34,7 +34,7 @@ magazine = {
 	icon = tools
 	provincial = true
 	required_building = armory
-	settlement_types = {
+	holding_types = {
 		town
 		city
 		metropolis
@@ -63,7 +63,7 @@ arsenal = {
 	icon = tools
 	provincial = true
 	required_building = magazine
-	settlement_types = {
+	holding_types = {
 		town
 		city
 		metropolis

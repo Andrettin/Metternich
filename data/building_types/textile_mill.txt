@@ -4,7 +4,7 @@ weavers_house = {
 	portrait = factory
 	icon = fabric
 	provincial = true
-	settlement_types = {
+	holding_types = {
 		village
 		town
 		city
@@ -33,7 +33,7 @@ weavers_shop = {
 	icon = fabric
 	provincial = true
 	required_building = weavers_house
-	settlement_types = {
+	holding_types = {
 		town
 		city
 		metropolis
@@ -61,7 +61,7 @@ textile_mill = {
 	icon = fabric
 	provincial = true
 	required_building = weavers_shop
-	settlement_types = {
+	holding_types = {
 		town
 		city
 		metropolis

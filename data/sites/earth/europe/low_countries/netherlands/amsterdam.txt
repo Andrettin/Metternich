@@ -8,12 +8,12 @@ amsterdam = {
 	history = {
 		1600 = {
 			population = 100000 #Amsterdam had a population of 100,000+ in 1600; Source: Henry Kamen, "Early Modern European Society", 2021, p. 34.
-			settlement_type = city
+			holding_type = city
 		}
 		
 		1620 = {
 			buildings += newspaper #the English newspaper "Corrant out of Italy, Germany etc." was founded in Amsterdam in 1620; Source: Henry Kamen, "Early Modern European Society", 2021, p. 309.
-			settlement_type = city
+			holding_type = city
 			
 			#French newspaper founded in Amsterdam in 1620; Source: Henry Kamen, "Early Modern European Society", 2021, p. 309.
 		}
@@ -37,7 +37,7 @@ amsterdam = {
 		
 		1877 = {
 			buildings += university #State university founded in Amsterdam in 1877; Source: David Thomson, "Europe Since Napoleon", 1966, p. 449.
-			settlement_type = city
+			holding_type = city
 		}
 		
 		1905 = {

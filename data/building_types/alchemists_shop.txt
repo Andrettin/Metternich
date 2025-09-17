@@ -5,7 +5,7 @@ alchemists_shop = {
 	icon = research
 	provincial = true
 	required_technology = alchemy
-	settlement_types = {
+	holding_types = {
 		village
 		town
 		city

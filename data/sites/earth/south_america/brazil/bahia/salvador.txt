@@ -8,7 +8,7 @@ salvador = {
 	
 	history = {
 		1549 = {
-			settlement_type = village #Salvador founded by the Portuguese in 1549; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 107-110.
+			holding_type = village #Salvador founded by the Portuguese in 1549; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 107-110.
 			culture = brazilian
 			religion = catholic
 		}
