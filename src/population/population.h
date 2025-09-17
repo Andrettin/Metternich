@@ -23,8 +23,6 @@ class population final : public QObject
 	Q_PROPERTY(QVariantList religion_counts READ get_religion_counts_qvariant_list NOTIFY religion_counts_changed)
 	Q_PROPERTY(QVariantList phenotype_counts READ get_phenotype_counts_qvariant_list NOTIFY phenotype_counts_changed)
 	Q_PROPERTY(QVariantList ideology_counts READ get_ideology_counts_qvariant_list NOTIFY ideology_counts_changed)
-	Q_PROPERTY(int average_consciousness READ get_average_consciousness_int NOTIFY consciousness_changed)
-	Q_PROPERTY(int average_militancy READ get_average_militancy_int NOTIFY militancy_changed)
 	Q_PROPERTY(int literacy_rate READ get_literacy_rate NOTIFY type_counts_changed)
 	Q_PROPERTY(int literate_count READ get_literate_count NOTIFY type_counts_changed)
 
@@ -156,34 +154,6 @@ public:
 	QVariantList get_ideology_counts_qvariant_list() const;
 	void change_ideology_count(const ideology *ideology, const int change);
 
-	centesimal_int get_average_consciousness() const;
-
-	int get_average_consciousness_int() const
-	{
-		return this->get_average_consciousness().to_int();
-	}
-
-	const centesimal_int &get_total_consciousness() const
-	{
-		return this->total_consciousness;
-	}
-
-	void change_total_consciousness(const centesimal_int &change);
-
-	centesimal_int get_average_militancy() const;
-
-	int get_average_militancy_int() const
-	{
-		return this->get_average_militancy().to_int();
-	}
-
-	const centesimal_int &get_total_militancy() const
-	{
-		return this->total_militancy;
-	}
-
-	void change_total_militancy(const centesimal_int &change);
-
 	int get_literate_count() const
 	{
 		return this->literate_count;
@@ -240,9 +210,6 @@ public:
 		for (const auto &[ideology, count] : other_population->get_ideology_counts()) {
 			this->change_ideology_count(ideology, count * change);
 		}
-
-		this->change_total_consciousness(other_population->get_total_consciousness() * change);
-		this->change_total_militancy(other_population->get_total_militancy() * change);
 	}
 
 	void on_population_unit_gained(const population_unit *population_unit, const int multiplier = 1);
@@ -263,8 +230,6 @@ signals:
 	void main_religion_changed(const religion *religion);
 	void phenotype_counts_changed();
 	void ideology_counts_changed();
-	void consciousness_changed();
-	void militancy_changed();
 
 private:
 	int population_unit_count = 0;
@@ -276,8 +241,6 @@ private:
 	const religion *main_religion = nullptr;
 	phenotype_map<int> phenotype_counts;
 	ideology_map<int> ideology_counts;
-	centesimal_int total_consciousness;
-	centesimal_int total_militancy;
 	int literate_count = 0;
 	std::vector<population *> upper_populations;
 };

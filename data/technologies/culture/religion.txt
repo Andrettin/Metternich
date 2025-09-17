@@ -146,22 +146,6 @@ organized_religion = {
 	}
 }
 
-relics = {
-	name = "Relics"
-	subcategory = religion
-	portrait = temple
-	icon = wooden_cross
-	period = 1000_1100
-	cost_commodity = piety
-	prerequisites = {
-		monotheism
-	}
-	modifier = {
-		clergymen_militancy_modifier = -0.01
-		firebrand_preachers_militancy_modifier = -0.01
-	}
-}
-
 theology = {
 	name = "Theology"
 	subcategory = religion

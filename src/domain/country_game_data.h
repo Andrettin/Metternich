@@ -884,25 +884,6 @@ public:
 		this->set_population_type_modifier_multiplier(type, this->get_population_type_modifier_multiplier(type) + change);
 	}
 
-	const centesimal_int &get_population_type_militancy_modifier(const population_type *type) const
-	{
-		const auto find_iterator = this->population_type_militancy_modifiers.find(type);
-
-		if (find_iterator != this->population_type_militancy_modifiers.end()) {
-			return find_iterator->second;
-		}
-
-		static constexpr centesimal_int zero;
-		return zero;
-	}
-
-	void set_population_type_militancy_modifier(const population_type *type, const centesimal_int &value);
-
-	void change_population_type_militancy_modifier(const population_type *type, const centesimal_int &change)
-	{
-		this->set_population_type_militancy_modifier(type, this->get_population_type_militancy_modifier(type) + change);
-	}
-
 	int get_building_cost_efficiency_modifier() const
 	{
 		return this->building_cost_efficiency_modifier;
@@ -1160,7 +1141,6 @@ private:
 	std::map<std::string, int> unit_name_counts;
 	transporter_type_map<std::map<transporter_stat, centesimal_int>> transporter_type_stat_modifiers;
 	population_type_map<centesimal_int> population_type_modifier_multipliers;
-	population_type_map<centesimal_int> population_type_militancy_modifiers;
 	int building_cost_efficiency_modifier = 0;
 	building_class_map<int> building_class_cost_efficiency_modifiers;
 	int wonder_cost_efficiency_modifier = 0;

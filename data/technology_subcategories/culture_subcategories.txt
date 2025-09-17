@@ -28,11 +28,6 @@ noble_customs = {
 	icon = crown_baronial
 }
 
-popular_customs = {
-	name = "Popular Customs"
-	category = culture
-	icon = music
-}
 religion = {
 	name = "Religion"
 	category = culture

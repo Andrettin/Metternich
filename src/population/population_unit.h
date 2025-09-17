@@ -38,12 +38,7 @@ class population_unit final : public QObject
 	Q_PROPERTY(const metternich::site* site READ get_site NOTIFY site_changed)
 
 public:
-	static constexpr int max_consciousness = 10;
-	static constexpr int max_militancy = 10;
-
 	explicit population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const site *site);
-
-	void do_turn();
 
 	std::string get_scope_name() const;
 
@@ -104,30 +99,6 @@ public:
 	void set_ideology(const metternich::ideology *ideology);
 	void choose_ideology();
 
-	const centesimal_int &get_consciousness() const
-	{
-		return this->consciousness;
-	}
-
-	void set_consciousness(const centesimal_int &consciousness);
-
-	void change_consciousness(const centesimal_int &change)
-	{
-		this->set_consciousness(this->get_consciousness() + change);
-	}
-
-	const centesimal_int &get_militancy() const
-	{
-		return this->militancy;
-	}
-
-	void set_militancy(const centesimal_int &militancy);
-
-	void change_militancy(const centesimal_int &change)
-	{
-		this->set_militancy(this->get_militancy() + change);
-	}
-
 	bool is_food_producer() const;
 
 signals:
@@ -148,8 +119,6 @@ private:
 	const metternich::country *country = nullptr;
 	const site *site = nullptr;
 	const metternich::ideology *ideology = nullptr;
-	centesimal_int consciousness;
-	centesimal_int militancy;
 };
 
 }

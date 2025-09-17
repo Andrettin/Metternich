@@ -116,12 +116,6 @@ paternalism = {
 	prerequisites = {
 		nationalism
 	}
-	cost_factor = {
-		modifier = {
-			factor = 0.33
-			consciousness < 3
-		}
-	}
 }
 
 democracy = {
@@ -167,12 +161,6 @@ individualism = {
 	prerequisites = {
 		rights_of_man
 		constitutionalism
-	}
-	cost_factor = {
-		modifier = {
-			factor = 0.67
-			consciousness >= 2
-		}
 	}
 	modifier = {
 		statesmanship_output_modifier = 5

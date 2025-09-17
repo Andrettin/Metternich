@@ -591,7 +591,6 @@ set(script_condition_HDRS
 	src/script/condition/coastal_condition.h
 	src/script/condition/commodity_condition.h
 	src/script/condition/condition.h
-	src/script/condition/consciousness_condition.h
 	src/script/condition/core_condition.h
 	src/script/condition/country_condition.h
 	src/script/condition/country_exists_condition.h
@@ -623,7 +622,6 @@ set(script_condition_HDRS
 	src/script/condition/is_advisor_condition.h
 	src/script/condition/is_military_unit_category_available_condition.h
 	src/script/condition/law_condition.h
-	src/script/condition/militancy_condition.h
 	src/script/condition/military_unit_category_condition.h
 	src/script/condition/military_unit_domain_condition.h
 	src/script/condition/military_unit_type_condition.h
@@ -678,7 +676,6 @@ set(script_effect_HDRS
 	src/script/effect/clear_flag_effect.h
 	src/script/effect/commodity_effect.h
 	src/script/effect/commodity_percent_effect.h
-	src/script/effect/consciousness_effect.h
 	src/script/effect/country_effect.h
 	src/script/effect/create_military_unit_effect.h
 	src/script/effect/create_transporter_effect.h
@@ -694,7 +691,6 @@ set(script_effect_HDRS
 	src/script/effect/hidden_effect.h
 	src/script/effect/if_effect.h
 	src/script/effect/location_effect.h
-	src/script/effect/militancy_effect.h
 	src/script/effect/office_holder_effect.h
 	src/script/effect/opinion_modifiers_effect.h
 	src/script/effect/population_scaled_commodity_effect.h
@@ -757,7 +753,6 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/modifier_effect.h
 	src/script/modifier_effect/output_modifier_effect.h
 	src/script/modifier_effect/population_type_bonus_modifier_effect.h
-	src/script/modifier_effect/population_type_militancy_modifier_effect.h
 	src/script/modifier_effect/port_level_modifier_effect.h
 	src/script/modifier_effect/resource_output_modifier_effect.h
 	src/script/modifier_effect/ship_stat_modifier_effect.h

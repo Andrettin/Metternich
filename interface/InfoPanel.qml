@@ -354,8 +354,6 @@ Rectangle {
 			"Population: " + number_string(selected_site_game_data.population.size)
 			 + "\nHousing: " + selected_site_game_data.population_unit_count + "/" + selected_site_game_data.housing
 			 + "\nLiteracy: " + selected_site_game_data.population.literacy_rate + "%"
-			 + "\nConsciousness: " + selected_site_game_data.population.average_consciousness
-			 + "\nMilitancy: " + selected_site_game_data.population.average_militancy
 		) : ""
 		visible: selected_site !== null && selected_site.game_data.can_have_population() && selected_site.game_data.is_built() && !selected_garrison && viewing_population
 	}

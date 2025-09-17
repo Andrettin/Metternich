@@ -220,58 +220,6 @@ void population::change_ideology_count(const ideology *ideology, const int chang
 	}
 }
 
-centesimal_int population::get_average_consciousness() const
-{
-	if (this->get_population_unit_count() == 0) {
-		return centesimal_int(0);
-	}
-
-	return this->get_total_consciousness() / this->get_population_unit_count();
-}
-
-void population::change_total_consciousness(const centesimal_int &change)
-{
-	if (change == 0) {
-		return;
-	}
-
-	this->total_consciousness += change;
-
-	for (population *upper_population : this->upper_populations) {
-		upper_population->change_total_consciousness(change);
-	}
-
-	if (game::get()->is_running()) {
-		emit consciousness_changed();
-	}
-}
-
-centesimal_int population::get_average_militancy() const
-{
-	if (this->get_population_unit_count() == 0) {
-		return centesimal_int(0);
-	}
-
-	return this->get_total_militancy() / this->get_population_unit_count();
-}
-
-void population::change_total_militancy(const centesimal_int &change)
-{
-	if (change == 0) {
-		return;
-	}
-
-	this->total_militancy += change;
-
-	for (population *upper_population : this->upper_populations) {
-		upper_population->change_total_militancy(change);
-	}
-
-	if (game::get()->is_running()) {
-		emit militancy_changed();
-	}
-}
-
 void population::on_population_unit_gained(const population_unit *population_unit, const int multiplier)
 {
 	this->change_population_unit_count(multiplier);
@@ -284,9 +232,6 @@ void population::on_population_unit_gained(const population_unit *population_uni
 	if (population_unit->get_ideology() != nullptr) {
 		this->change_ideology_count(population_unit->get_ideology(), multiplier);
 	}
-
-	this->change_total_consciousness(population_unit->get_consciousness() * multiplier);
-	this->change_total_militancy(population_unit->get_militancy() * multiplier);
 }
 
 }

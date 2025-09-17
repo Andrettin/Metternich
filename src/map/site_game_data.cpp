@@ -102,16 +102,6 @@ void site_game_data::initialize_resource()
 
 void site_game_data::do_turn()
 {
-	//copy the population units vector, since they might move away in their do_turn() function
-	std::vector<population_unit *> population_units;
-	for (const qunique_ptr<population_unit> &population_unit : this->population_units) {
-		population_units.push_back(population_unit.get());
-	}
-
-	for (population_unit *population_unit : population_units) {
-		population_unit->do_turn();
-	}
-
 	this->decrement_scripted_modifiers();
 }
 

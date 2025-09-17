@@ -48,18 +48,6 @@ population_unit::population_unit(const population_type *type, const metternich::
 	connect(this, &population_unit::type_changed, this, &population_unit::icon_changed);
 }
 
-void population_unit::do_turn()
-{
-	if (this->get_country() != nullptr) {
-		const country_game_data *country_game_data = this->get_country()->get_game_data();
-
-		const centesimal_int &militancy_modifier = country_game_data->get_population_type_militancy_modifier(this->get_type());
-		if (militancy_modifier != 0) {
-			this->change_militancy(militancy_modifier);
-		}
-	}
-}
-
 std::string population_unit::get_scope_name() const
 {
 	return std::format("{} {}", this->get_culture()->get_name(), this->get_type()->get_name());
@@ -238,54 +226,6 @@ void population_unit::choose_ideology()
 
 	if (!potential_ideologies.empty()) {
 		this->set_ideology(vector::get_random(potential_ideologies));
-	}
-}
-
-void population_unit::set_consciousness(const centesimal_int &consciousness)
-{
-	if (consciousness == this->get_consciousness()) {
-		return;
-	} else if (consciousness < 0) {
-		this->set_consciousness(centesimal_int(0));
-		return;
-	} else if (consciousness > population_unit::max_consciousness) {
-		this->set_consciousness(centesimal_int(population_unit::max_consciousness));
-		return;
-	}
-
-	const centesimal_int old_consciousness = this->get_consciousness();
-
-	this->consciousness = consciousness;
-
-	const centesimal_int change = consciousness - old_consciousness;
-	this->get_site()->get_game_data()->get_population()->change_total_consciousness(change);
-
-	if (game::get()->is_running() && consciousness.to_int() != old_consciousness.to_int()) {
-		this->choose_ideology();
-	}
-}
-
-void population_unit::set_militancy(const centesimal_int &militancy)
-{
-	if (militancy == this->get_militancy()) {
-		return;
-	} else if (militancy < 0) {
-		this->set_militancy(centesimal_int(0));
-		return;
-	} else if (militancy > population_unit::max_militancy) {
-		this->set_militancy(centesimal_int(population_unit::max_militancy));
-		return;
-	}
-
-	const centesimal_int old_militancy = this->get_militancy();
-
-	this->militancy = militancy;
-
-	const centesimal_int change = militancy - old_militancy;
-	this->get_site()->get_game_data()->get_population()->change_total_militancy(change);
-
-	if (game::get()->is_running() && militancy.to_int() != old_militancy.to_int()) {
-		this->choose_ideology();
 	}
 }
 

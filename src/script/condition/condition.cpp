@@ -34,7 +34,6 @@
 #include "script/condition/coastal_condition.h"
 #include "script/condition/commodity_condition.h"
 #include "script/condition/condition_base.ipp"
-#include "script/condition/consciousness_condition.h"
 #include "script/condition/core_condition.h"
 #include "script/condition/country_condition.h"
 #include "script/condition/country_exists_condition.h"
@@ -66,7 +65,6 @@
 #include "script/condition/is_advisor_condition.h"
 #include "script/condition/is_military_unit_category_available_condition.h"
 #include "script/condition/law_condition.h"
-#include "script/condition/militancy_condition.h"
 #include "script/condition/military_unit_category_condition.h"
 #include "script/condition/military_unit_domain_condition.h"
 #include "script/condition/military_unit_type_condition.h"
@@ -295,14 +293,6 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			return std::make_unique<near_water_condition<scope_type>>(value, condition_operator);
 		} else if (key == "provincial_capital") {
 			return std::make_unique<provincial_capital_condition<scope_type>>(value, condition_operator);
-		}
-	}
-
-	if constexpr (std::is_same_v<scope_type, country> || std::is_same_v<scope_type, population_unit> || std::is_same_v<scope_type, site> || std::is_same_v<scope_type, province>) {
-		if (key == "consciousness") {
-			return std::make_unique<consciousness_condition<scope_type>>(value, condition_operator);
-		} else if (key == "militancy") {
-			return std::make_unique<militancy_condition<scope_type>>(value, condition_operator);
 		}
 	}
 
