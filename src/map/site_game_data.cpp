@@ -1330,40 +1330,6 @@ void site_game_data::calculate_commodity_outputs()
 	}
 }
 
-int site_game_data::get_pathway_level() const
-{
-	const tile *tile = this->get_tile();
-
-	if (tile == nullptr) {
-		return 0;
-	}
-
-	const pathway *pathway = tile->get_best_pathway();
-	if (pathway == nullptr) {
-		return 0;
-	}
-
-	return pathway->get_transport_level();
-}
-
-void site_game_data::set_depot_level(const int level)
-{
-	if (level == this->get_depot_level()) {
-		return;
-	}
-
-	this->depot_level = level;
-}
-
-void site_game_data::set_port_level(const int level)
-{
-	if (level == this->get_port_level()) {
-		return;
-	}
-
-	this->port_level = level;
-}
-
 bool site_game_data::can_be_visited() const
 {
 	const improvement *improvement = this->get_improvement(improvement_slot::main);

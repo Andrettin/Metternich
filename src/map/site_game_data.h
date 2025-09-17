@@ -385,32 +385,6 @@ public:
 		return this->get_commodity_outputs().contains(commodity);
 	}
 
-	int get_pathway_level() const;
-
-	int get_depot_level() const
-	{
-		return this->depot_level;
-	}
-
-	void set_depot_level(const int level);
-
-	void change_depot_level(const int change)
-	{
-		this->set_depot_level(this->get_depot_level() + change);
-	}
-
-	int get_port_level() const
-	{
-		return this->port_level;
-	}
-
-	void set_port_level(const int level);
-
-	void change_port_level(const int change)
-	{
-		this->set_port_level(this->get_port_level() + change);
-	}
-
 	bool can_be_visited() const;
 
 	const std::vector<army *> &get_visiting_armies() const
@@ -465,8 +439,6 @@ private:
 	centesimal_int output_modifier;
 	int resource_output_modifier = 0;
 	commodity_map<centesimal_int> commodity_output_modifiers;
-	int depot_level = 0;
-	int port_level = 0;
 	std::vector<army *> visiting_armies; //armies visiting this site
 };
 

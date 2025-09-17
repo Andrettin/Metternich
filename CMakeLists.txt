@@ -729,7 +729,6 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/commodity_output_modifier_effect.h
 	src/script/modifier_effect/commodity_throughput_modifier_effect.h
 	src/script/modifier_effect/deployment_limit_modifier_effect.h
-	src/script/modifier_effect/depot_level_modifier_effect.h
 	src/script/modifier_effect/diplomatic_penalty_for_expansion_modifier_effect.h
 	src/script/modifier_effect/free_artillery_promotion_modifier_effect.h
 	src/script/modifier_effect/free_building_class_modifier_effect.h
@@ -747,7 +746,6 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/modifier_effect.h
 	src/script/modifier_effect/output_modifier_effect.h
 	src/script/modifier_effect/population_type_bonus_modifier_effect.h
-	src/script/modifier_effect/port_level_modifier_effect.h
 	src/script/modifier_effect/resource_output_modifier_effect.h
 	src/script/modifier_effect/ship_stat_modifier_effect.h
 	src/script/modifier_effect/species_armor_class_bonus_modifier_effect.h
