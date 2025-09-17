@@ -11,7 +11,7 @@ granary = {
 		village
 		campus
 		castle
-		monastery
+		temple
 		town
 		city
 		metropolis

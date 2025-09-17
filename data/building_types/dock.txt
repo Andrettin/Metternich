@@ -15,7 +15,7 @@ dock = {
 		metropolis
 		campus
 		castle
-		monastery
+		temple
 	}
 	wealth_cost = 3000
 	commodity_costs = {

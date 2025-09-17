@@ -12,7 +12,7 @@ stockade = {
 		metropolis
 		campus
 		castle
-		monastery
+		temple
 	}
 }
 

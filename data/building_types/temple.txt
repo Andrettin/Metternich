@@ -9,7 +9,7 @@ shrine = {
 		village
 		campus
 		castle
-		monastery
+		temple
 		town
 		city
 		metropolis
@@ -25,7 +25,7 @@ temple = {
 	required_building = shrine
 	required_technology = ceremonial_burial
 	holding_types = {
-		monastery
+		temple
 		city
 		metropolis
 	}
@@ -43,7 +43,7 @@ cathedral = {
 	required_building = temple
 	required_technology = monotheism
 	holding_types = {
-		monastery
+		temple
 		city
 		metropolis
 	}

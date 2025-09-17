@@ -110,7 +110,7 @@ monastic_school = {
 	provincial = true
 	required_technology = monastic_school
 	holding_types = {
-		monastery
+		temple
 	}
 	settlement_conditions = {
 		or = {
@@ -138,7 +138,7 @@ cathedral_school = {
 	required_building = monastic_school
 	required_technology = cathedral_school
 	holding_types = {
-		monastery
+		temple
 	}
 	settlement_conditions = {
 		or = {

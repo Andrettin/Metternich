@@ -10,7 +10,7 @@ monument = {
 		city
 		metropolis
 		castle
-		monastery
+		temple
 	}
 	conditions = {
 		game_rule = culture_commodity

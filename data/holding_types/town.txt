@@ -94,7 +94,6 @@ city = {
 	base_holding_types = {
 		campus
 		castle
-		monastery
 		town
 	}
 	population_classes = {

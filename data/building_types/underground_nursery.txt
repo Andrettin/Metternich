@@ -12,7 +12,7 @@ underground_nursery = {
 		city
 		metropolis
 		castle
-		monastery
+		temple
 	}
 	settlement_modifier = {
 		amenities_bonus = 3

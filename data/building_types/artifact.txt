@@ -10,7 +10,7 @@ artifact = {
 		hamlet
 		campus
 		castle
-		monastery
+		temple
 		town
 		city
 		metropolis

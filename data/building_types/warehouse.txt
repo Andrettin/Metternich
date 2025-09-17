@@ -15,7 +15,7 @@ warehouse = {
 		metropolis
 		campus
 		castle
-		monastery
+		temple
 	}
 	country_modifier = {
 		storage_capacity = 100
