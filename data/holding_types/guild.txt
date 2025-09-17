@@ -1,0 +1,33 @@
+guild = {
+	name = "Guild"
+	portrait = trading_post
+	image_filepath = "tiles/settlements/town.png"
+	free_resource_improvement_level = 1
+	population_classes = {
+		slaves
+		untrained_workers
+		trained_workers
+		expert_workers
+		apprentice_blacksmiths
+		journeyman_blacksmiths
+		master_blacksmiths
+		apprentice_carpenters
+		journeyman_carpenters
+		master_carpenters
+		apprentice_furriers
+		journeyman_furriers
+		master_furriers
+		apprentice_gunsmiths
+		journeyman_gunsmiths
+		master_gunsmiths
+		apprentice_tobacconists
+		journeyman_tobacconists
+		master_tobacconists
+		apprentice_weavers
+		journeyman_weavers
+		master_weavers
+		bureaucrats
+		elder_statesmen
+		capitalists
+	}
+}
