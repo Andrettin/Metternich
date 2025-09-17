@@ -81,6 +81,8 @@ site_game_data::site_game_data(const metternich::site *site) : site(site)
 	connect(this, &site_game_data::owner_changed, this, &site_game_data::title_name_changed);
 	connect(this, &site_game_data::culture_changed, this, &site_game_data::title_name_changed);
 	connect(this, &site_game_data::religion_changed, this, &site_game_data::title_name_changed);
+
+	connect(this, &site_game_data::holding_type_changed, this, &site_game_data::portrait_changed);
 }
 
 void site_game_data::initialize_resource()
@@ -562,6 +564,15 @@ void site_game_data::set_improvement(const improvement_slot slot, const improvem
 
 	emit improvements_changed();
 	emit map::get()->tile_improvement_changed(this->get_tile_pos());
+}
+
+const portrait *site_game_data::get_portrait() const
+{
+	if (this->get_holding_type() != nullptr) {
+		return this->get_holding_type()->get_portrait();
+	}
+
+	return nullptr;
 }
 
 QVariantList site_game_data::get_building_slots_qvariant_list() const

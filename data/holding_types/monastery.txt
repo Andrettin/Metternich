@@ -1,5 +1,6 @@
 monastery = {
 	name = "Monastery"
+	portrait = temple
 	image_filepath = "tiles/settlements/town.png"
 	free_resource_improvement_level = 3
 	base_holding_types = {

@@ -25,6 +25,7 @@ class phenotype;
 class population;
 class population_type;
 class population_unit;
+class portrait;
 class province;
 class religion;
 class resource;
@@ -47,6 +48,7 @@ class site_game_data final : public QObject
 	Q_PROPERTY(const metternich::holding_type* holding_type READ get_holding_type NOTIFY holding_type_changed)
 	Q_PROPERTY(const metternich::improvement* improvement READ get_main_improvement NOTIFY improvements_changed)
 	Q_PROPERTY(const metternich::improvement* resource_improvement READ get_resource_improvement NOTIFY improvements_changed)
+	Q_PROPERTY(const metternich::portrait* portrait READ get_portrait NOTIFY portrait_changed)
 	Q_PROPERTY(QVariantList building_slots READ get_building_slots_qvariant_list CONSTANT)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(metternich::population* population READ get_population CONSTANT)
@@ -160,6 +162,8 @@ public:
 	bool has_improvement(const improvement *improvement) const;
 	bool has_improvement_or_better(const improvement *improvement) const;
 	void set_improvement(const improvement_slot slot, const improvement *improvement);
+
+	const portrait *get_portrait() const;
 
 	const std::vector<qunique_ptr<settlement_building_slot>> &get_building_slots() const
 	{
@@ -413,6 +417,7 @@ signals:
 	void religion_changed();
 	void improvements_changed();
 	void holding_type_changed();
+	void portrait_changed();
 	void scripted_modifiers_changed();
 	void population_units_changed();
 	void housing_changed();

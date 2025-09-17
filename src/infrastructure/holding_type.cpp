@@ -64,6 +64,10 @@ void holding_type::initialize()
 
 void holding_type::check() const
 {
+	if (this->get_portrait() == nullptr) {
+		throw std::runtime_error(std::format("Holding type \"{}\" has no portrait.", this->get_identifier()));
+	}
+
 	if (this->get_image_filepath().empty()) {
 		throw std::runtime_error(std::format("Holding type \"{}\" has no image filepath.", this->get_identifier()));
 	}

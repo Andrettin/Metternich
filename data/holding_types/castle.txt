@@ -1,5 +1,6 @@
 castle = {
 	name = "Castle"
+	portrait = aristocratic_palace
 	image_filepath = "tiles/settlements/town.png"
 	free_resource_improvement_level = 3
 	base_holding_types = {

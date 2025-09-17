@@ -1,5 +1,6 @@
 hamlet = {
 	name = "Hamlet"
+	portrait = town
 	image_filepath = "tiles/settlements/hamlet.png"
 	free_resource_improvement_level = 1
 	population_classes = {
@@ -19,6 +20,7 @@ hamlet = {
 
 village = {
 	name = "Village"
+	portrait = town
 	image_filepath = "tiles/settlements/village.png"
 	free_resource_improvement_level = 2
 	base_holding_types = {
@@ -38,6 +40,7 @@ village = {
 
 town = {
 	name = "Town"
+	portrait = town
 	image_filepath = "tiles/settlements/town.png"
 	free_resource_improvement_level = 3
 	base_holding_types = {
@@ -85,6 +88,7 @@ town = {
 
 city = {
 	name = "City"
+	portrait = city
 	image_filepath = "tiles/settlements/city.png"
 	free_resource_improvement_level = 4
 	base_holding_types = {
@@ -133,6 +137,7 @@ city = {
 
 metropolis = {
 	name = "Metropolis"
+	portrait = city
 	image_filepath = "tiles/settlements/metropolis.png"
 	free_resource_improvement_level = 5
 	base_holding_types = {
