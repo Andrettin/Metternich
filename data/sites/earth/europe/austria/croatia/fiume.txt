@@ -20,7 +20,7 @@ fiume = {
 		}
 		
 		1873 = {
-			buildings += rail_depot #Pest-Zagreb-Fiume railroad built in 1873; Source: Ivan Erceg, "Außenhandel der Nordadriatischen Seestädte als Faktor im Entstehen der kapitalistischen Beziehungen in Österreich im 18. und 19. Jahrhundert", 1968, p. 465.
+			#buildings += rail_depot #Pest-Zagreb-Fiume railroad built in 1873; Source: Ivan Erceg, "Außenhandel der Nordadriatischen Seestädte als Faktor im Entstehen der kapitalistischen Beziehungen in Österreich im 18. und 19. Jahrhundert", 1968, p. 465.
 		}
 	}
 }
