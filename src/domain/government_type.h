@@ -44,7 +44,6 @@ public:
 	using site_title_name_map = std::map<site_tier, std::string>;
 	using office_title_inner_name_map = std::map<country_tier, std::map<gender, std::string>>;
 	using office_title_name_map = data_entry_map<office, office_title_inner_name_map>;
-	using landholder_title_name_map = std::map<site_tier, std::map<gender, std::string>>;
 
 	static constexpr const char class_identifier[] = "government_type";
 	static constexpr const char property_class_identifier[] = "metternich::government_type*";
@@ -59,9 +58,6 @@ public:
 	static void process_office_title_name_scope(std::map<government_variant, office_title_inner_name_map> &office_title_names, const gsml_data &scope);
 	static void process_office_title_name_scope(office_title_inner_name_map &office_title_names, const gsml_data &scope);
 	static void process_office_title_name_scope(std::map<gender, std::string> &office_title_names, const gsml_data &scope);
-	static void process_landholder_title_name_scope(std::map<government_variant, landholder_title_name_map> &landholder_title_names, const gsml_data &scope);
-	static void process_landholder_title_name_scope(landholder_title_name_map &landholder_title_names, const gsml_data &scope);
-	static void process_landholder_title_name_scope(std::map<gender, std::string> &landholder_title_names, const gsml_data &scope);
 
 	explicit government_type(const std::string &identifier);
 	~government_type();
@@ -73,7 +69,6 @@ public:
 	const std::string &get_title_name(const country_tier tier) const;
 	const std::string &get_site_title_name(const site_tier tier) const;
 	const std::string &get_office_title_name(const office *office, const country_tier tier, const gender gender) const;
-	const std::string &get_landholder_title_name(const site_tier tier, const gender gender) const;
 
 	const government_group *get_group() const
 	{
@@ -143,7 +138,6 @@ private:
 	title_name_map title_names;
 	site_title_name_map site_title_names;
 	office_title_name_map office_title_names;
-	landholder_title_name_map landholder_title_names;
 };
 
 }

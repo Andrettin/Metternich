@@ -115,10 +115,6 @@ max_character_traits_per_type = {
 	personality = 1
 }
 
-scaled_landholder_modifier = {
-	resource_output_modifier = 5
-}
-
 max_character_skill = 10 #used for calculating character skill based on skill multipliers; this is not a hard cap
 ruler_office = ruler
 interior_minister_office = steward

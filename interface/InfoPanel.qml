@@ -441,7 +441,7 @@ Rectangle {
 		visible: holder !== null && (viewing_settlement_info || (selected_site !== null && !selected_site.settlement)) && !viewing_population
 		circle: true
 		
-		readonly property var holder: selected_site !== null ? (selected_site.settlement && province_game_data ? province_game_data.governor : selected_site.game_data.landholder) : null
+		readonly property var holder: selected_site !== null && selected_site.settlement && province_game_data ? province_game_data.governor : null
 		
 		onClicked: {
 			character_dialog.character = holder

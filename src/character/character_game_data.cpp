@@ -361,10 +361,6 @@ std::string character_game_data::get_titled_name() const
 		return std::format("{} {}", this->character->get_governable_province()->get_game_data()->get_governor_title_name(), this->character->get_full_name());
 	}
 
-	if (this->is_landholder()) {
-		return std::format("{} {}", this->character->get_holdable_site()->get_game_data()->get_landholder_title_name(), this->character->get_full_name());
-	}
-
 	return this->character->get_full_name();
 }
 
@@ -475,10 +471,6 @@ void character_game_data::die()
 
 	if (this->is_governor()) {
 		this->character->get_governable_province()->get_game_data()->on_governor_died(this->character);
-	}
-
-	if (this->is_landholder()) {
-		this->character->get_holdable_site()->get_game_data()->on_landholder_died(this->character);
 	}
 
 	assert_throw(this->get_office() == nullptr);
@@ -630,9 +622,6 @@ void character_game_data::change_attribute_value(const character_attribute *attr
 	if (this->is_governor()) {
 		this->apply_governor_modifier(this->character->get_governable_province(), -1);
 	}
-	if (this->is_landholder()) {
-		this->apply_landholder_modifier(this->character->get_holdable_site(), -1);
-	}
 	if (this->character->has_role(character_role::leader)) {
 		for (const character_trait *trait : this->get_traits()) {
 			if (trait->get_scaled_leader_modifier() != nullptr && attribute == trait->get_attribute()) {
@@ -652,9 +641,6 @@ void character_game_data::change_attribute_value(const character_attribute *attr
 	}
 	if (this->is_governor()) {
 		this->apply_governor_modifier(this->character->get_governable_province(), 1);
-	}
-	if (this->is_landholder()) {
-		this->apply_landholder_modifier(this->character->get_holdable_site(), 1);
 	}
 	if (this->character->has_role(character_role::leader)) {
 		for (const character_trait *trait : this->get_traits()) {
@@ -1218,35 +1204,6 @@ void character_game_data::apply_trait_governor_modifier(const character_trait *t
 
 	if (trait->get_scaled_governor_modifier() != nullptr) {
 		trait->get_scaled_governor_modifier()->apply(province, std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()) * multiplier);
-	}
-}
-
-bool character_game_data::is_landholder() const
-{
-	return this->character->get_holdable_site() != nullptr && this->character->get_holdable_site()->get_game_data()->get_landholder() == this->character;
-}
-
-std::string character_game_data::get_landholder_modifier_string(const metternich::site *site) const
-{
-	assert_throw(this->character->has_role(character_role::landholder));
-	assert_throw(site != nullptr);
-
-	std::string str;
-
-	if (defines::get()->get_scaled_landholder_modifier() != nullptr) {
-		str = defines::get()->get_scaled_landholder_modifier()->get_string(site, this->get_attribute_value(character_attribute::get("intelligence")));
-	}
-
-	return str;
-}
-
-void character_game_data::apply_landholder_modifier(const metternich::site *site, const int multiplier) const
-{
-	assert_throw(this->character->has_role(character_role::landholder));
-	assert_throw(site != nullptr);
-
-	if (defines::get()->get_scaled_landholder_modifier() != nullptr) {
-		defines::get()->get_scaled_landholder_modifier()->apply(site, this->get_attribute_value(character_attribute::get("intelligence")) * multiplier);
 	}
 }
 

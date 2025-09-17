@@ -45,8 +45,6 @@ void culture_base::process_gsml_scope(const gsml_data &scope)
 		government_type::process_site_title_name_scope(this->site_title_names, scope);
 	} else if (tag == "office_title_names") {
 		government_type::process_office_title_name_scope(this->office_title_names, scope);
-	} else if (tag == "landholder_title_names") {
-		government_type::process_landholder_title_name_scope(this->landholder_title_names, scope);
 	} else if (tag == "building_class_types") {
 		scope.for_each_property([&](const gsml_property &property) {
 			const std::string &key = property.get_key();
@@ -332,38 +330,6 @@ const std::string &culture_base::get_office_title_name(const office *office, con
 
 	if (this->get_group() != nullptr) {
 		return this->get_group()->get_office_title_name(office, government_type, tier, gender);
-	}
-
-	return string::empty_str;
-}
-
-const std::string &culture_base::get_landholder_title_name(const government_type *government_type, const site_tier tier, const gender gender) const
-{
-	auto find_iterator = this->landholder_title_names.find(government_type);
-	if (find_iterator == this->landholder_title_names.end()) {
-		find_iterator = this->landholder_title_names.find(government_type->get_group());
-	}
-
-	if (find_iterator != this->landholder_title_names.end()) {
-		auto sub_find_iterator = find_iterator->second.find(tier);
-		if (sub_find_iterator == find_iterator->second.end()) {
-			sub_find_iterator = find_iterator->second.find(site_tier::none);
-		}
-
-		if (sub_find_iterator != find_iterator->second.end()) {
-			auto sub_sub_find_iterator = sub_find_iterator->second.find(gender);
-			if (sub_sub_find_iterator == sub_find_iterator->second.end()) {
-				sub_sub_find_iterator = sub_find_iterator->second.find(gender::none);
-			}
-
-			if (sub_sub_find_iterator != sub_find_iterator->second.end()) {
-				return sub_sub_find_iterator->second;
-			}
-		}
-	}
-
-	if (this->get_group() != nullptr) {
-		return this->get_group()->get_landholder_title_name(government_type, tier, gender);
 	}
 
 	return string::empty_str;

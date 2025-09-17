@@ -1539,10 +1539,6 @@ QCoro::Task<void> game::on_setup_finished()
 
 					site->get_game_data()->check_free_improvement(improvement);
 				}
-
-				if (site->get_map_data()->get_type() == site_type::resource || site->get_map_data()->get_type() == site_type::celestial_body) {
-					site->get_game_data()->check_landholder();
-				}
 			}
 
 			//build free on start buildings

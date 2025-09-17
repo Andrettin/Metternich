@@ -165,52 +165,6 @@ void government_type::process_office_title_name_scope(std::map<gender, std::stri
 	});
 }
 
-void government_type::process_landholder_title_name_scope(std::map<government_variant, landholder_title_name_map> &landholder_title_names, const gsml_data &scope)
-{
-	scope.for_each_child([&](const gsml_data &child_scope) {
-		government_variant government_variant{};
-		const government_group *government_group = government_group::try_get(child_scope.get_tag());
-		if (government_group != nullptr) {
-			government_variant = government_group;
-		} else {
-			government_variant = government_type::get(child_scope.get_tag());
-		}
-
-		government_type::process_landholder_title_name_scope(landholder_title_names[government_variant], child_scope);
-	});
-}
-
-void government_type::process_landholder_title_name_scope(landholder_title_name_map &landholder_title_names, const gsml_data &scope)
-{
-	scope.for_each_property([&](const gsml_property &property) {
-		const std::string &key = property.get_key();
-		const std::string &value = property.get_value();
-		if (magic_enum::enum_contains<site_tier>(key)) {
-			const site_tier tier = magic_enum::enum_cast<site_tier>(key).value();
-			landholder_title_names[tier][gender::none] = value;
-		} else {
-			const gender gender = enum_converter<metternich::gender>::to_enum(key);
-			landholder_title_names[site_tier::none][gender] = value;
-		}
-	});
-
-	scope.for_each_child([&](const gsml_data &child_scope) {
-		const site_tier tier = magic_enum::enum_cast<site_tier>(child_scope.get_tag()).value();
-
-		government_type::process_landholder_title_name_scope(landholder_title_names[tier], child_scope);
-	});
-}
-
-void government_type::process_landholder_title_name_scope(std::map<gender, std::string> &landholder_title_names, const gsml_data &scope)
-{
-	scope.for_each_property([&](const gsml_property &property) {
-		const std::string &key = property.get_key();
-		const std::string &value = property.get_value();
-		const gender gender = enum_converter<archimedes::gender>::to_enum(key);
-		landholder_title_names[gender] = value;
-	});
-}
-
 government_type::government_type(const std::string &identifier) : named_data_entry(identifier)
 {
 }
@@ -259,8 +213,6 @@ void government_type::process_gsml_scope(const gsml_data &scope)
 		government_type::process_site_title_name_scope(this->site_title_names, scope);
 	} else if (tag == "office_title_names") {
 		government_type::process_office_title_name_scope(this->office_title_names, scope);
-	} else if (tag == "landholder_title_names") {
-		government_type::process_landholder_title_name_scope(this->landholder_title_names, scope);
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
@@ -337,24 +289,6 @@ const std::string &government_type::get_office_title_name(const office *office, 
 	}
 
 	return this->get_group()->get_office_title_name(office, tier, gender);
-}
-
-const std::string &government_type::get_landholder_title_name(const site_tier tier, const gender gender) const
-{
-	const auto find_iterator = this->landholder_title_names.find(tier);
-	if (find_iterator != this->landholder_title_names.end()) {
-		auto sub_find_iterator = find_iterator->second.find(gender);
-		if (sub_find_iterator != find_iterator->second.end()) {
-			return sub_find_iterator->second;
-		}
-
-		sub_find_iterator = find_iterator->second.find(gender::none);
-		if (sub_find_iterator != find_iterator->second.end()) {
-			return sub_find_iterator->second;
-		}
-	}
-
-	return this->get_group()->get_landholder_title_name(tier, gender);
 }
 
 QString government_type::get_modifier_string(const metternich::country *country) const

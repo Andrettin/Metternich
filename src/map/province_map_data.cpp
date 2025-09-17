@@ -8,6 +8,7 @@
 #include "map/site_map_data.h"
 #include "map/tile.h"
 #include "util/assert_util.h"
+#include "util/container_util.h"
 
 namespace metternich {
 
@@ -107,6 +108,11 @@ void province_map_data::add_border_tile(const QPoint &tile_pos)
 	}
 
 	emit territory_changed();
+}
+
+QVariantList province_map_data::get_sites_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_sites());
 }
 
 }

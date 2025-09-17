@@ -81,11 +81,6 @@ site_game_data::site_game_data(const metternich::site *site) : site(site)
 	connect(this, &site_game_data::owner_changed, this, &site_game_data::title_name_changed);
 	connect(this, &site_game_data::culture_changed, this, &site_game_data::title_name_changed);
 	connect(this, &site_game_data::religion_changed, this, &site_game_data::title_name_changed);
-
-	connect(this, &site_game_data::owner_changed, this, &site_game_data::landholder_title_name_changed);
-	connect(this, &site_game_data::culture_changed, this, &site_game_data::landholder_title_name_changed);
-	connect(this, &site_game_data::religion_changed, this, &site_game_data::landholder_title_name_changed);
-	connect(this, &site_game_data::landholder_changed, this, &site_game_data::landholder_title_name_changed);
 }
 
 void site_game_data::initialize_resource()
@@ -204,13 +199,6 @@ const std::string &site_game_data::get_title_name() const
 {
 	const site_tier tier = this->get_tier();
 	return this->site->get_title_name(this->get_owner() ? this->get_owner()->get_government()->get_government_type() : nullptr, tier, this->get_culture());
-}
-
-const std::string &site_game_data::get_landholder_title_name() const
-{
-	const site_tier tier = this->get_tier();
-	const gender gender = this->get_landholder() != nullptr ? this->get_landholder()->get_gender() : gender::male;
-	return this->site->get_landholder_title_name(this->get_owner() ? this->get_owner()->get_government()->get_government_type() : nullptr, tier, gender, this->get_culture());
 }
 
 void site_game_data::set_owner(const country *owner)
@@ -1198,95 +1186,6 @@ void site_game_data::change_housing(const centesimal_int &change)
 	}
 
 	emit housing_changed();
-}
-
-void site_game_data::set_landholder(const character *landholder)
-{
-	if (landholder == this->get_landholder()) {
-		return;
-	}
-
-	const character *old_landholder = this->get_landholder();
-
-	if (old_landholder != nullptr) {
-		old_landholder->get_game_data()->apply_landholder_modifier(this->site, -1);
-		old_landholder->get_game_data()->set_country(nullptr);
-	}
-
-	this->landholder = landholder;
-
-	if (this->get_landholder() != nullptr) {
-		this->get_landholder()->get_game_data()->apply_landholder_modifier(this->site, 1);
-		this->get_landholder()->get_game_data()->set_country(this->get_owner());
-	}
-
-	if (game::get()->is_running()) {
-		emit landholder_changed();
-
-		if (old_landholder != nullptr) {
-			emit old_landholder->get_game_data()->landholder_changed();
-		}
-
-		if (landholder != nullptr) {
-			emit landholder->get_game_data()->landholder_changed();
-		}
-	}
-}
-
-void site_game_data::check_landholder()
-{
-	if (this->get_owner() == nullptr || this->get_owner()->get_game_data()->is_under_anarchy() || !this->is_built() || this->get_resource() == nullptr) {
-		this->set_landholder(nullptr);
-		return;
-	}
-
-	//if the site has no landholder, see if there is any character who can become its landholder
-	if (this->get_landholder() == nullptr) {
-		std::vector<const character *> potential_landholders;
-
-		for (const character *character : this->site->get_landholders()) {
-			assert_throw(character->has_role(character_role::landholder));
-
-			const character_game_data *character_game_data = character->get_game_data();
-			if (character_game_data->get_country() != nullptr) {
-				continue;
-			}
-
-			if (character_game_data->is_dead()) {
-				continue;
-			}
-
-			if (character->get_conditions() != nullptr && !character->get_conditions()->check(this->get_owner(), read_only_context(this->get_owner()))) {
-				continue;
-			}
-
-			potential_landholders.push_back(character);
-		}
-
-		if (!potential_landholders.empty()) {
-			this->set_landholder(vector::get_random(potential_landholders));
-
-			if (this->get_owner() == game::get()->get_player_country() && game::get()->is_running()) {
-				const portrait *interior_minister_portrait = this->get_owner()->get_government()->get_interior_minister_portrait();
-
-				engine_interface::get()->add_notification(std::format("New Landholder of {}", this->get_current_cultural_name()), interior_minister_portrait, std::format("{} has become the new landholder of {}!\n\n{}", this->get_landholder()->get_full_name(), this->get_current_cultural_name(), this->get_landholder()->get_game_data()->get_landholder_modifier_string(this->site)));
-			}
-		}
-	}
-}
-
-void site_game_data::on_landholder_died(const character *landholder)
-{
-	if (game::get()->is_running()) {
-		if (this->get_owner() == game::get()->get_player_country()) {
-			const portrait *interior_minister_portrait = this->get_owner()->get_government()->get_interior_minister_portrait();
-
-			engine_interface::get()->add_notification(std::format("Landholder of {} Retired", this->get_current_cultural_name()), interior_minister_portrait, std::format("Your Excellency, after a distinguished career in our service, landholder {} of {} has decided to retire.", landholder->get_full_name(), this->get_current_cultural_name()));
-		}
-	}
-
-	this->set_landholder(nullptr);
-	this->check_landholder();
 }
 
 void site_game_data::change_base_commodity_output(const commodity *commodity, const centesimal_int &change)

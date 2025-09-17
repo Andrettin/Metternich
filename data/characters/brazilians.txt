@@ -98,7 +98,6 @@ anna_josepha_de_souza = { #Source: Barão de Vasconcellos, "Archivo Nobiliarchic
 francisco_jose_teixeira = { #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, p. 209.
 	name = "Francisco Jose" #"Francisco José"
 	surname = "Teixeira"
-	role = landholder
 	character_class = farmer #prestigious liberal political leader, landowner and banker
 	culture = brazilian
 	religion = catholic
@@ -108,8 +107,8 @@ francisco_jose_teixeira = { #Source: Barão de Vasconcellos, "Archivo Nobiliarch
 	mother = anna_josepha_de_souza
 	birth_date = 1780.9.6
 	death_date = 1866.3.22
-	holdable_site = itambe #baron of Itambé
 	
+	#baron of Itambé
 	#was "comendador"/commander of the (Brazilian) Imperial Order of the Rose
 	
 	history = {
@@ -136,7 +135,6 @@ francisca_bernardina_do_sacramento_leite_ribeiro = { #Source: Barão de Vasconce
 francisco_jose_teixeira_leite = { #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, p. 532.
 	name = "Francisco Jose" #"Francisco José"
 	surname = "Teixeira Leite"
-	role = landholder
 	character_class = farmer #coffee plantation owner
 	culture = brazilian
 	religion = catholic
@@ -146,8 +144,8 @@ francisco_jose_teixeira_leite = { #Source: Barão de Vasconcellos, "Archivo Nobi
 	mother = francisca_bernardina_do_sacramento_leite_ribeiro
 	birth_date = 1804.11.13
 	death_date = 1884.5.2
-	holdable_site = vassouras #baron of Vassouras
 	
+	#baron of Vassouras
 	#was dignitary of the (Brazilian) Imperial Order of the Rose
 	#was knight of the (Brazilian) Imperial Order of Christ
 }
@@ -155,14 +153,13 @@ francisco_jose_teixeira_leite = { #Source: Barão de Vasconcellos, "Archivo Nobi
 ernesto_justiniano_da_silva_freire = { #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, p. 209.
 	name = "Ernesto Justiniano"
 	surname = "da Silva Freire"
-	role = landholder
 	character_class = farmer
 	culture = brazilian
 	religion = catholic
 	home_site = recife #born in Pernambuco
 	gender = male
 	start_date = 1880.3.8 #date he became baron
-	holdable_site = itambe #(second) baron of Itambé
 	
+	#(second) baron of Itambé
 	#was colonel of the (Brazilian) National Guard
 }

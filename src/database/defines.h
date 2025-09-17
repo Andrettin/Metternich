@@ -294,11 +294,6 @@ public:
 		return std::numeric_limits<int>::max();
 	}
 
-	const modifier<const site> *get_scaled_landholder_modifier() const
-	{
-		return this->scaled_landholder_modifier.get();
-	}
-
 	int get_max_character_skill() const
 	{
 		return this->max_character_skill;
@@ -464,7 +459,6 @@ private:
 	const icon *treasure_fleet_icon = nullptr;
 	std::map<character_trait_type, int> min_character_traits_per_type;
 	std::map<character_trait_type, int> max_character_traits_per_type;
-	std::unique_ptr<modifier<const site>> scaled_landholder_modifier;
 	int max_character_skill = 0;
 	const office *ruler_office = nullptr;
 	const office *interior_minister_office = nullptr;

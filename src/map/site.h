@@ -59,7 +59,6 @@ class site final : public named_data_entry, public data_type<site>
 public:
 	using government_variant = std::variant<const government_type *, const government_group *>;
 	using site_title_name_map = std::map<government_variant, std::map<site_tier, std::string>>;
-	using landholder_title_name_map = std::map<government_variant, std::map<site_tier, std::map<gender, std::string>>>;
 
 	static constexpr const char class_identifier[] = "site";
 	static constexpr const char property_class_identifier[] = "metternich::site*";
@@ -169,17 +168,6 @@ public:
 	const std::string &get_cultural_name(const cultural_group *cultural_group) const;
 
 	const std::string &get_title_name(const government_type *government_type, const site_tier tier, const culture *culture) const;
-	const std::string &get_landholder_title_name(const government_type *government_type, const site_tier tier, const gender gender, const culture *culture) const;
-
-	const std::vector<const character *> &get_landholders() const
-	{
-		return this->landholders;
-	}
-
-	void add_landholder(const character *character)
-	{
-		this->landholders.push_back(character);
-	}
 
 	const std::vector<const region *> &get_generation_regions() const
 	{
@@ -207,8 +195,6 @@ private:
 	std::map<const culture *, std::string> cultural_names;
 	std::map<const cultural_group *, std::string> cultural_group_names;
 	site_title_name_map title_names;
-	landholder_title_name_map landholder_title_names;
-	std::vector<const character *> landholders;
 	std::vector<const region *> generation_regions; //regions other than its own province where this site can be generated; this is used if the map's world is not the site's own world
 	qunique_ptr<site_history> history;
 	qunique_ptr<site_map_data> map_data;

@@ -48,7 +48,6 @@ public:
 	using title_name_map = std::map<government_variant, std::map<country_tier, std::string>>;
 	using site_title_name_map = std::map<government_variant, std::map<site_tier, std::string>>;
 	using office_title_name_map = data_entry_map<office, std::map<government_variant, std::map<country_tier, std::map<gender, std::string>>>>;
-	using landholder_title_name_map = std::map<government_variant, std::map<site_tier, std::map<gender, std::string>>>;
 
 	explicit culture_base(const std::string &identifier);
 	~culture_base();
@@ -79,7 +78,6 @@ public:
 	const std::string &get_title_name(const government_type *government_type, const country_tier tier) const;
 	const std::string &get_site_title_name(const government_type *government_type, const site_tier tier) const;
 	const std::string &get_office_title_name(const office *office, const government_type *government_type, const country_tier tier, const gender gender) const;
-	const std::string &get_landholder_title_name(const government_type *government_type, const site_tier tier, const gender gender) const;
 
 	const building_type *get_building_class_type(const building_class *building_class) const;
 	void set_building_class_type(const building_class *building_class, const building_type *building_type);
@@ -128,7 +126,6 @@ private:
 	title_name_map title_names;
 	site_title_name_map site_title_names;
 	office_title_name_map office_title_names;
-	landholder_title_name_map landholder_title_names;
 	building_class_map<const building_type *> building_class_types;
 	population_class_map<const population_type *> population_class_types;
 	civilian_unit_class_map<const civilian_unit_type *> civilian_class_unit_types;

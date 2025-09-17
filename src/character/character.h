@@ -73,7 +73,6 @@ class character final : public character_base, public data_type<character>
 	Q_PROPERTY(int skill MEMBER skill READ get_skill NOTIFY changed)
 	Q_PROPERTY(archimedes::centesimal_int skill_multiplier READ get_skill_multiplier WRITE set_skill_multiplier NOTIFY changed)
 	Q_PROPERTY(metternich::province* governable_province MEMBER governable_province NOTIFY changed)
-	Q_PROPERTY(metternich::site* holdable_site MEMBER holdable_site NOTIFY changed)
 	Q_PROPERTY(QString leader_type_name READ get_leader_type_name_qstring NOTIFY changed)
 	Q_PROPERTY(metternich::character_game_data* game_data READ get_game_data NOTIFY game_data_changed)
 
@@ -240,11 +239,6 @@ public:
 		return this->governable_province;
 	}
 
-	const site *get_holdable_site() const
-	{
-		return this->holdable_site;
-	}
-
 	bool is_admiral() const;
 	bool is_explorer() const;
 	std::string_view get_leader_type_name() const;
@@ -273,7 +267,6 @@ private:
 	const site *home_site = nullptr;
 	int skill = 0;
 	province *governable_province = nullptr;
-	site *holdable_site = nullptr;
 	std::vector<const character_trait *> traits;
 	std::unique_ptr<const and_condition<country>> conditions;
 	qunique_ptr<character_history> history;

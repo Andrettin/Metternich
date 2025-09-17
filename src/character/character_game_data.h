@@ -56,7 +56,6 @@ class character_game_data final : public QObject
 	Q_PROPERTY(bool ruler READ is_ruler NOTIFY ruler_changed)
 	Q_PROPERTY(const metternich::office* office READ get_office NOTIFY office_changed)
 	Q_PROPERTY(bool governor READ is_governor NOTIFY governor_changed)
-	Q_PROPERTY(bool landholder READ is_landholder NOTIFY landholder_changed)
 	Q_PROPERTY(QVariantList spells READ get_spells_qvariant_list NOTIFY spells_changed)
 	Q_PROPERTY(QVariantList items READ get_items_qvariant_list NOTIFY items_changed)
 	Q_PROPERTY(bool deployable READ is_deployable NOTIFY spells_changed)
@@ -279,16 +278,6 @@ public:
 	void apply_governor_modifier(const metternich::province *province, const int multiplier) const;
 	void apply_trait_governor_modifier(const character_trait *trait, const metternich::province *province, const int multiplier) const;
 
-	bool is_landholder() const;
-	std::string get_landholder_modifier_string(const metternich::site *site) const;
-
-	Q_INVOKABLE QString get_landholder_modifier_qstring(const metternich::site *site) const
-	{
-		return QString::fromStdString(this->get_landholder_modifier_string(site));
-	}
-
-	void apply_landholder_modifier(const metternich::site *site, const int multiplier) const;
-
 	metternich::military_unit *get_military_unit() const
 	{
 		return this->military_unit;
@@ -456,7 +445,6 @@ signals:
 	void ruler_changed();
 	void office_changed();
 	void governor_changed();
-	void landholder_changed();
 	void spells_changed();
 	void items_changed();
 	void equipped_items_changed();

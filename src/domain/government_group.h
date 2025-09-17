@@ -24,7 +24,6 @@ public:
 	using title_name_map = std::map<country_tier, std::string>;
 	using site_title_name_map = std::map<site_tier, std::string>;
 	using office_title_name_map = data_entry_map<office, std::map<country_tier, std::map<gender, std::string>>>;
-	using landholder_title_name_map = std::map<site_tier, std::map<gender, std::string>>;
 
 	static constexpr const char class_identifier[] = "government_group";
 	static constexpr const char property_class_identifier[] = "metternich::government_group*";
@@ -54,7 +53,6 @@ public:
 	const std::string &get_title_name(const country_tier tier) const;
 	const std::string &get_site_title_name(const site_tier tier) const;
 	const std::string &get_office_title_name(const office *office, const country_tier tier, const gender gender) const;
-	const std::string &get_landholder_title_name(const site_tier tier, const gender gender) const;
 
 signals:
 	void changed();
@@ -66,7 +64,6 @@ private:
 	title_name_map title_names;
 	site_title_name_map site_title_names;
 	office_title_name_map office_title_names;
-	landholder_title_name_map landholder_title_names;
 };
 
 }

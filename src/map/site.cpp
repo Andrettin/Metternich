@@ -56,8 +56,6 @@ void site::process_gsml_scope(const gsml_data &scope)
 		});
 	} else if (tag == "title_names") {
 		government_type::process_site_title_name_scope(this->title_names, scope);
-	} else if (tag == "landholder_title_names") {
-		government_type::process_landholder_title_name_scope(this->landholder_title_names, scope);
 	} else if (tag == "generation_regions") {
 		for (const std::string &value : values) {
 			this->generation_regions.push_back(region::get(value));
@@ -228,43 +226,6 @@ const std::string &site::get_title_name(const government_type *government_type, 
 	assert_throw(government_type != nullptr);
 
 	return government_type->get_site_title_name(tier);
-}
-
-const std::string &site::get_landholder_title_name(const government_type *government_type, const site_tier tier, const gender gender, const culture *culture) const
-{
-	auto find_iterator = this->landholder_title_names.find(government_type);
-	if (find_iterator == this->landholder_title_names.end()) {
-		find_iterator = this->landholder_title_names.find(government_type->get_group());
-	}
-
-	if (find_iterator != this->landholder_title_names.end()) {
-		auto sub_find_iterator = find_iterator->second.find(tier);
-		if (sub_find_iterator == find_iterator->second.end()) {
-			sub_find_iterator = find_iterator->second.find(site_tier::none);
-		}
-
-		if (sub_find_iterator != find_iterator->second.end()) {
-			auto sub_sub_find_iterator = sub_find_iterator->second.find(gender);
-			if (sub_sub_find_iterator == sub_find_iterator->second.end()) {
-				sub_sub_find_iterator = sub_find_iterator->second.find(gender::none);
-			}
-
-			if (sub_sub_find_iterator != sub_find_iterator->second.end()) {
-				return sub_sub_find_iterator->second;
-			}
-		}
-	}
-
-	if (culture != nullptr) {
-		const std::string &culture_landholder_title_name = culture->get_landholder_title_name(government_type, tier, gender);
-		if (!culture_landholder_title_name.empty()) {
-			return culture_landholder_title_name;
-		}
-	}
-
-	assert_throw(government_type != nullptr);
-
-	return government_type->get_landholder_title_name(tier, gender);
 }
 
 bool site::can_be_generated_on_world(const metternich::world *world) const

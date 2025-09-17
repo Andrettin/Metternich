@@ -75,10 +75,6 @@ void defines::process_gsml_scope(const gsml_data &scope)
 
 			this->max_character_traits_per_type[type] = value;
 		});
-	} else if (tag == "scaled_landholder_modifier") {
-		auto modifier = std::make_unique<metternich::modifier<const site>>();
-		modifier->process_gsml_data(scope);
-		this->scaled_landholder_modifier = std::move(modifier);
 	} else if (tag == "experience_per_level") {
 		scope.for_each_property([&](const gsml_property &property) {
 			const int level = std::stoi(property.get_key());

@@ -14,6 +14,7 @@ class province_map_data final : public QObject
 
 	Q_PROPERTY(bool coastal READ is_coastal CONSTANT)
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect NOTIFY territory_changed)
+	Q_PROPERTY(QVariantList sites READ get_sites_qvariant_list CONSTANT)
 
 public:
 	explicit province_map_data(const metternich::province *province);
@@ -83,6 +84,8 @@ public:
 	{
 		return this->sites;
 	}
+
+	QVariantList get_sites_qvariant_list() const;
 
 	const std::vector<const site *> &get_settlement_sites() const
 	{
