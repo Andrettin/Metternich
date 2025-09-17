@@ -8,7 +8,7 @@ shrine = {
 	holding_types = {
 		village
 		campus
-		castle
+		estate
 		temple
 		town
 		city

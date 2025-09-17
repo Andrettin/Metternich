@@ -9,7 +9,7 @@ monument = {
 		town
 		city
 		metropolis
-		castle
+		estate
 		temple
 	}
 	conditions = {

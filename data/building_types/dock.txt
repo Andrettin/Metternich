@@ -14,7 +14,7 @@ dock = {
 		city
 		metropolis
 		campus
-		castle
+		estate
 		temple
 	}
 	wealth_cost = 3000

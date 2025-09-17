@@ -11,7 +11,7 @@ stockade = {
 		city
 		metropolis
 		campus
-		castle
+		estate
 		temple
 	}
 }
@@ -29,7 +29,7 @@ fort = {
 		town
 		city
 		metropolis
-		castle
+		estate
 	}
 }
 
@@ -45,6 +45,6 @@ fortress = {
 	holding_types = {
 		city
 		metropolis
-		castle
+		estate
 	}
 }

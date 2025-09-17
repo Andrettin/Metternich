@@ -10,7 +10,7 @@ granary = {
 		hamlet
 		village
 		campus
-		castle
+		estate
 		temple
 		town
 		city

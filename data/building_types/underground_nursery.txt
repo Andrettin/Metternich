@@ -11,7 +11,7 @@ underground_nursery = {
 		town
 		city
 		metropolis
-		castle
+		estate
 		temple
 	}
 	settlement_modifier = {

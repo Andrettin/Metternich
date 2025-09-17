@@ -8,7 +8,7 @@ war_college = {
 	holding_types = {
 		city
 		metropolis
-		castle
+		estate
 	}
 	settlement_modifier = {
 		housing_bonus = 1

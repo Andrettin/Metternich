@@ -12,7 +12,7 @@ london = {
 	history = {
 		604 = {
 			buildings += temple #a church was built in London in 604 AD; Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 109.
-			holding_type = monastery
+			holding_type = temple
 		}
 		
 		704 = {

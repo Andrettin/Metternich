@@ -93,7 +93,6 @@ city = {
 	free_resource_improvement_level = 4
 	base_holding_types = {
 		campus
-		castle
 		town
 	}
 	population_classes = {

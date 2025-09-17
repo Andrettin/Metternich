@@ -14,7 +14,7 @@ warehouse = {
 		city
 		metropolis
 		campus
-		castle
+		estate
 		temple
 	}
 	country_modifier = {

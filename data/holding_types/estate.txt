@@ -1,0 +1,14 @@
+estate = {
+	name = "Estate"
+	portrait = aristocratic_palace
+	image_filepath = "tiles/settlements/town.png"
+	free_resource_improvement_level = 1
+	population_classes = {
+		slaves
+		untrained_workers
+		trained_workers
+		expert_workers
+		soldiers
+		officers
+	}
+}

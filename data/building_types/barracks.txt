@@ -7,7 +7,7 @@ barracks = {
 	holding_types = {
 		city
 		metropolis
-		castle
+		estate
 	}
 	recruited_military_unit_categories = {
 		mace_infantry

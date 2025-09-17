@@ -9,7 +9,7 @@ artifact = {
 		camp
 		hamlet
 		campus
-		castle
+		estate
 		temple
 		town
 		city
