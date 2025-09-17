@@ -122,16 +122,44 @@ QModelIndex character_data_model::parent(const QModelIndex &index) const
 
 void character_data_model::set_character(const metternich::character *character)
 {
-	this->beginResetModel();
+	if (this->character != nullptr) {
+		disconnect(this->character->get_game_data(), &character_game_data::armor_class_bonus_changed, this, &character_data_model::update_armor_class_rows);
+		disconnect(this->character->get_game_data(), &character_game_data::species_armor_class_bonuses_changed, this, &character_data_model::update_armor_class_rows);
+		disconnect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::update_damage_row);
+		disconnect(this->character->get_game_data(), &character_game_data::items_changed, this, &character_data_model::create_inventory_rows);
+		disconnect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::create_item_rows);
+	}
 
 	this->character = character;
 
-	this->top_rows.clear();
+	this->reset_model();
 
 	if (character != nullptr) {
+		connect(this->character->get_game_data(), &character_game_data::armor_class_bonus_changed, this, &character_data_model::update_armor_class_rows);
+		connect(this->character->get_game_data(), &character_game_data::species_armor_class_bonuses_changed, this, &character_data_model::update_armor_class_rows);
+		connect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::update_damage_row);
+		connect(character->get_game_data(), &character_game_data::items_changed, this, &character_data_model::create_inventory_rows);
+		connect(character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::create_item_rows);
+	}
+
+	emit character_changed();
+}
+
+void character_data_model::reset_model()
+{
+	this->beginResetModel();
+	this->resetting_model = true;
+
+	this->top_rows.clear();
+	this->armor_class_row = nullptr;
+	this->damage_row = nullptr;
+	this->equipment_row = nullptr;
+	this->inventory_row = nullptr;
+
+	if (this->character != nullptr) {
 		const character_game_data *character_game_data = this->get_character()->get_game_data();
 
-		this->top_rows.push_back(std::make_unique<character_data_row>("Species:", character->get_species()->get_name()));
+		this->top_rows.push_back(std::make_unique<character_data_row>("Species:", this->character->get_species()->get_name()));
 
 		const character_class *character_class = character_game_data->get_character_class();
 		if (character_class != nullptr) {
@@ -150,13 +178,13 @@ void character_data_model::set_character(const metternich::character *character)
 		this->top_rows.push_back(std::make_unique<character_data_row>("Age:", number::to_formatted_string(character_game_data->get_age())));
 
 		if (character->get_culture() != nullptr) {
-			this->top_rows.push_back(std::make_unique<character_data_row>("Culture:", character->get_culture()->get_name()));
+			this->top_rows.push_back(std::make_unique<character_data_row>("Culture:", this->character->get_culture()->get_name()));
 		}
 
 		if (character->is_deity()) {
-			this->top_rows.push_back(std::make_unique<character_data_row>("Pantheon:", character->get_deity()->get_pantheon()->get_name()));
+			this->top_rows.push_back(std::make_unique<character_data_row>("Pantheon:", this->character->get_deity()->get_pantheon()->get_name()));
 		} else {
-			this->top_rows.push_back(std::make_unique<character_data_row>("Religion:", character->get_religion()->get_name()));
+			this->top_rows.push_back(std::make_unique<character_data_row>("Religion:", this->character->get_religion()->get_name()));
 		}
 
 		this->create_attribute_rows();
@@ -165,17 +193,15 @@ void character_data_model::set_character(const metternich::character *character)
 
 		this->create_armor_class_rows();
 		this->create_to_hit_bonus_rows();
-
-		this->top_rows.push_back(std::make_unique<character_data_row>("Damage:", character_game_data->get_damage_dice().to_display_string()));
+		this->create_damage_row();
 
 		if (!character_game_data->get_items().empty()) {
-			this->create_equipment_rows();
-			this->create_inventory_rows();
+			this->create_item_rows();
 		}
 	}
 
+	this->resetting_model = false;
 	this->endResetModel();
-	emit character_changed();
 }
 
 void character_data_model::create_attribute_rows()
@@ -194,16 +220,29 @@ void character_data_model::create_attribute_rows()
 
 void character_data_model::create_armor_class_rows()
 {
+	auto row = std::make_unique<character_data_row>("Armor Class:");
+	this->armor_class_row = row.get();
+	this->top_rows.push_back(std::move(row));
+
+	this->update_armor_class_rows();
+}
+
+void character_data_model::update_armor_class_rows()
+{
+	assert_throw(this->armor_class_row != nullptr);
+
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
 
-	auto armor_class_row = std::make_unique<character_data_row>("Armor Class:", std::to_string(character_game_data->get_armor_class_bonus()));
+	this->armor_class_row->value = std::to_string(character_game_data->get_armor_class_bonus());
+
+	this->clear_child_rows(this->armor_class_row);
 
 	for (const auto &[species, bonus] : character_game_data->get_species_armor_class_bonuses()) {
-		auto row = std::make_unique<character_data_row>(std::format("Against {}:", string::get_plural_form(species->get_name())), std::to_string(character_game_data->get_armor_class_bonus() + bonus), armor_class_row.get());
-		armor_class_row->child_rows.push_back(std::move(row));
+		auto row = std::make_unique<character_data_row>(std::format("Against {}:", string::get_plural_form(species->get_name())), std::to_string(character_game_data->get_armor_class_bonus() + bonus), this->armor_class_row);
+		this->armor_class_row->child_rows.push_back(std::move(row));
 	}
 
-	this->top_rows.push_back(std::move(armor_class_row));
+	this->on_child_rows_inserted(this->armor_class_row);
 }
 
 void character_data_model::create_to_hit_bonus_rows()
@@ -215,11 +254,60 @@ void character_data_model::create_to_hit_bonus_rows()
 	this->top_rows.push_back(std::move(to_hit_bonus_row));
 }
 
+void character_data_model::create_damage_row()
+{
+	auto row = std::make_unique<character_data_row>("Damage:");
+	this->damage_row = row.get();
+	this->top_rows.push_back(std::move(row));
+
+	this->update_damage_row();
+}
+
+void character_data_model::update_damage_row()
+{
+	assert_throw(this->damage_row != nullptr);
+
+	const character_game_data *character_game_data = this->get_character()->get_game_data();
+	this->damage_row->value = character_game_data->get_damage_dice().to_display_string();
+}
+
+void character_data_model::create_item_rows()
+{
+	this->create_equipment_rows();
+	this->create_inventory_rows();
+}
+
 void character_data_model::create_equipment_rows()
 {
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
 
-	auto top_row = std::make_unique<character_data_row>("Equipment");
+	size_t equipment_row_index = 0;
+
+	if (this->equipment_row == nullptr) {
+		auto top_row = std::make_unique<character_data_row>("Equipment");
+		this->equipment_row = top_row.get();
+
+		const std::optional<size_t> inventory_row_index = this->get_top_row_index(this->inventory_row);
+
+		if (inventory_row_index.has_value()) {
+			this->top_rows.insert(this->top_rows.begin() + inventory_row_index.value(), std::move(top_row));
+			equipment_row_index = inventory_row_index.value();
+		} else {
+			this->top_rows.push_back(std::move(top_row));
+			equipment_row_index = this->top_rows.size() - 1;
+		}
+
+		if (!this->resetting_model) {
+			this->beginInsertRows(QModelIndex(), static_cast<int>(equipment_row_index), static_cast<int>(equipment_row_index));
+			this->endInsertRows();
+		}
+	}
+
+	if (equipment_row_index == 0) {
+		equipment_row_index = this->get_top_row_index(this->equipment_row).value();
+	}
+
+	this->clear_child_rows(this->equipment_row);
 
 	for (const auto &[item_slot, count] : this->get_character()->get_species()->get_item_slot_counts()) {
 		const std::vector<metternich::item *> &slot_equipped_items = character_game_data->get_equipped_items(item_slot);
@@ -236,40 +324,116 @@ void character_data_model::create_equipment_rows()
 				slot_name = item_slot->get_name() + ":";
 			}
 
-			auto row = std::make_unique<character_data_row>(slot_name, slot_equipped_items[i]->get_name(), top_row.get());
+			auto row = std::make_unique<character_data_row>(slot_name, slot_equipped_items[i]->get_name(), this->equipment_row);
 			row->item = slot_equipped_items[i];
-			top_row->child_rows.push_back(std::move(row));
+			this->equipment_row->child_rows.push_back(std::move(row));
 		}
 	}
 
-	if (top_row->child_rows.empty()) {
-		return;
-	}
+	if (this->equipment_row->child_rows.empty()) {
+		if (!this->resetting_model) {
+			this->beginRemoveRows(QModelIndex(), static_cast<int>(equipment_row_index), static_cast<int>(equipment_row_index));
+		}
 
-	this->top_rows.push_back(std::move(top_row));
+		this->top_rows.erase(this->top_rows.begin() + equipment_row_index);
+		this->equipment_row = nullptr;
+
+		if (!this->resetting_model) {
+			this->endRemoveRows();
+		}
+	} else {
+		this->on_child_rows_inserted(this->equipment_row);
+	}
 }
 
 void character_data_model::create_inventory_rows()
 {
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
 
-	auto top_row = std::make_unique<character_data_row>("Inventory");
+	if (this->inventory_row == nullptr) {
+		auto top_row = std::make_unique<character_data_row>("Inventory");
+		this->inventory_row = top_row.get();
+		this->top_rows.push_back(std::move(top_row));
+
+		if (!this->resetting_model) {
+			this->beginInsertRows(QModelIndex(), static_cast<int>(this->top_rows.size()) - 1, static_cast<int>(this->top_rows.size()) - 1);
+			this->endInsertRows();
+		}
+	}
+
+	this->clear_child_rows(this->inventory_row);
 
 	for (const qunique_ptr<metternich::item> &item : character_game_data->get_items()) {
 		if (item->is_equipped()) {
 			continue;
 		}
 
-		auto row = std::make_unique<character_data_row>(item->get_name(), std::string(), top_row.get());
+		auto row = std::make_unique<character_data_row>(item->get_name(), std::string(), this->inventory_row);
 		row->item = item.get();
-		top_row->child_rows.push_back(std::move(row));
+		this->inventory_row->child_rows.push_back(std::move(row));
 	}
 
-	if (top_row->child_rows.empty()) {
+	if (this->inventory_row->child_rows.empty()) {
+		const size_t inventory_row_index = this->get_top_row_index(this->inventory_row).value();
+
+		if (!this->resetting_model) {
+			this->beginRemoveRows(QModelIndex(), static_cast<int>(inventory_row_index), static_cast<int>(inventory_row_index));
+		}
+
+		this->top_rows.erase(this->top_rows.begin() + inventory_row_index);
+		this->inventory_row = nullptr;
+
+		if (!this->resetting_model) {
+			this->endRemoveRows();
+		}
+	} else {
+		this->on_child_rows_inserted(this->inventory_row);
+	}
+}
+
+std::optional<size_t> character_data_model::get_top_row_index(const character_data_row *row) const
+{
+	if (row != nullptr) {
+		for (size_t i = 0; i < this->top_rows.size(); ++i) {
+			const std::unique_ptr<const character_data_row> &top_row = this->top_rows.at(i);
+			if (top_row.get() == row) {
+				return i;
+			}
+		}
+	}
+
+	return std::nullopt;
+}
+
+void character_data_model::clear_child_rows(character_data_row *row)
+{
+	const size_t row_index = this->get_top_row_index(row).value();
+	const QModelIndex row_model_index = this->index(static_cast<int>(row_index), 0);
+	const size_t child_row_count = row->child_rows.size();
+
+	if (child_row_count == 0) {
 		return;
 	}
 
-	this->top_rows.push_back(std::move(top_row));
+	if (!this->resetting_model) {
+		this->beginRemoveRows(row_model_index, 0, static_cast<int>(child_row_count) - 1);
+	}
+
+	row->child_rows.clear();
+
+	if (!this->resetting_model) {
+		this->endRemoveRows();
+	}
+}
+
+void character_data_model::on_child_rows_inserted(character_data_row *row)
+{
+	if (!this->resetting_model && !row->child_rows.empty()) {
+		const size_t row_index = this->get_top_row_index(row).value();
+		const QModelIndex row_model_index = this->index(static_cast<int>(row_index), 0);
+		this->beginInsertRows(row_model_index, 0, static_cast<int>(row->child_rows.size()) - 1);
+		this->endInsertRows();
+	}
 }
 
 }

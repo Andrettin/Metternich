@@ -46,6 +46,7 @@
 #include "infrastructure/improvement_slot.h"
 #include "infrastructure/wonder.h"
 #include "item/affix_type.h"
+#include "item/item.h"
 #include "map/diplomatic_map_image_provider.h"
 #include "map/elevation_type.h"
 #include "map/forestation_type.h"
@@ -212,6 +213,8 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<idea>("", 1);
 		qmlRegisterAnonymousType<idea_slot>("", 1);
 		qmlRegisterAnonymousType<improvement>("", 1);
+		qmlRegisterAnonymousType<item>("", 1);
+		qmlRegisterAnonymousType<const item>("", 1);
 		qmlRegisterAnonymousType<journal_entry>("", 1);
 		qmlRegisterAnonymousType<law>("", 1);
 		qmlRegisterAnonymousType<law_group>("", 1);

@@ -64,11 +64,20 @@ public:
 
 	void set_character(const metternich::character *character);
 
+	void reset_model();
 	void create_attribute_rows();
 	void create_armor_class_rows();
+	void update_armor_class_rows();
 	void create_to_hit_bonus_rows();
+	void create_damage_row();
+	void update_damage_row();
+	void create_item_rows();
 	void create_equipment_rows();
 	void create_inventory_rows();
+
+	std::optional<size_t> get_top_row_index(const character_data_row *row) const;
+	void clear_child_rows(character_data_row *row);
+	void on_child_rows_inserted(character_data_row *row);
 
 signals:
 	void character_changed();
@@ -76,6 +85,11 @@ signals:
 private:
 	const metternich::character *character = nullptr;
 	std::vector<std::unique_ptr<const character_data_row>> top_rows;
+	character_data_row *armor_class_row = nullptr;
+	character_data_row *damage_row = nullptr;
+	character_data_row *equipment_row = nullptr;
+	character_data_row *inventory_row = nullptr;
+	bool resetting_model = false;
 };
 
 }

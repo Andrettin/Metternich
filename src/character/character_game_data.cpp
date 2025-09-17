@@ -775,6 +775,10 @@ void character_game_data::change_species_armor_class_bonus(const species *specie
 	if (new_value == 0) {
 		this->species_armor_class_bonuses.erase(species);
 	}
+
+	if (game::get()->is_running()) {
+		emit species_armor_class_bonuses_changed();
+	}
 }
 
 void character_game_data::set_to_hit_bonus(const int bonus)
@@ -1432,6 +1436,10 @@ void character_game_data::equip_item(item *item)
 	item->set_equipped(true);
 
 	this->on_item_equipped(item, 1);
+
+	if (game::get()->is_running()) {
+		emit equipped_items_changed();
+	}
 }
 
 void character_game_data::deequip_item(item *item)
@@ -1446,6 +1454,10 @@ void character_game_data::deequip_item(item *item)
 	item->set_equipped(false);
 
 	this->on_item_equipped(item, -1);
+
+	if (game::get()->is_running()) {
+		emit equipped_items_changed();
+	}
 }
 
 void character_game_data::on_item_equipped(const item *item, const int multiplier)

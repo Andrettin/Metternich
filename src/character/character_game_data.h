@@ -389,9 +389,9 @@ public:
 		return static_cast<int>(this->get_equipped_items(slot).size());
 	}
 
-	bool can_equip_item(const item *item, const bool ignore_already_equipped) const;
-	void equip_item(item *item);
-	void deequip_item(item *item);
+	Q_INVOKABLE bool can_equip_item(const metternich::item *item, const bool ignore_already_equipped) const;
+	Q_INVOKABLE void equip_item(metternich::item *item);
+	Q_INVOKABLE void deequip_item(metternich::item *item);
 	void on_item_equipped(const item *item, const int multiplier);
 	void on_item_equipped_with_enchantment(const enchantment *enchantment, const int multiplier);
 
@@ -449,6 +449,7 @@ signals:
 	void hit_points_changed();
 	void max_hit_points_changed();
 	void armor_class_bonus_changed();
+	void species_armor_class_bonuses_changed();
 	void to_hit_bonus_changed();
 	void traits_changed();
 	void scripted_modifiers_changed();
