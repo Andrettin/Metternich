@@ -27,6 +27,7 @@ class item final : public QObject
 	Q_PROPERTY(const metternich::icon* icon READ get_icon CONSTANT)
 	Q_PROPERTY(const metternich::item_material* material READ get_material CONSTANT)
 	Q_PROPERTY(const metternich::enchantment* enchantment READ get_enchantment CONSTANT)
+	Q_PROPERTY(bool equipped READ is_equipped NOTIFY equipped_changed)
 
 public:
 	explicit item(const item_type *type, const item_material *material, const metternich::enchantment *enchantment);
@@ -86,10 +87,12 @@ public:
 	void set_equipped(const bool equipped)
 	{
 		this->equipped = equipped;
+		emit equipped_changed();
 	}
 
 signals:
 	void name_changed();
+	void equipped_changed();
 
 private:
 	std::string name;
