@@ -2,7 +2,6 @@ guild = {
 	name = "Guild"
 	portrait = trading_post
 	image_filepath = "tiles/settlements/town.png"
-	free_resource_improvement_level = 1
 	population_classes = {
 		slaves
 		untrained_workers

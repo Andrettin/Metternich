@@ -2,7 +2,6 @@ camp = {
 	name = "Camp"
 	portrait = town
 	image_filepath = "tiles/settlements/hamlet.png"
-	free_resource_improvement_level = 1
 	population_classes = {
 		tribesmen
 	}

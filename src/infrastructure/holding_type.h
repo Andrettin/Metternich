@@ -24,7 +24,6 @@ class holding_type final : public named_data_entry, public data_type<holding_typ
 
 	Q_PROPERTY(const metternich::portrait* portrait MEMBER portrait READ get_portrait NOTIFY changed)
 	Q_PROPERTY(std::filesystem::path image_filepath MEMBER image_filepath WRITE set_image_filepath NOTIFY changed)
-	Q_PROPERTY(int free_resource_improvement_level MEMBER free_resource_improvement_level READ get_free_resource_improvement_level NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "holding_type";
@@ -67,11 +66,6 @@ public:
 
 	void calculate_level();
 
-	int get_free_resource_improvement_level() const
-	{
-		return this->free_resource_improvement_level;
-	}
-
 	const std::vector<const population_class *> &get_population_classes() const
 	{
 		return this->population_classes;
@@ -103,7 +97,6 @@ private:
 	std::vector<const holding_type *> base_holding_types;
 	std::vector<const holding_type *> upgraded_holding_types;
 	int level = 0;
-	int free_resource_improvement_level = 0;
 	std::vector<const population_class *> population_classes;
 	std::unique_ptr<const and_condition<site>> conditions;
 	std::unique_ptr<const and_condition<site>> build_conditions;

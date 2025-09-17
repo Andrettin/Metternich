@@ -821,20 +821,6 @@ void site_game_data::check_free_buildings()
 		}
 	}
 
-	const resource *resource = this->get_resource();
-	const int free_resource_improvement_level = this->get_holding_type()->get_free_resource_improvement_level();
-	if (resource != nullptr && free_resource_improvement_level > 0) {
-		for (const improvement *improvement : resource->get_improvements()) {
-			if (improvement->get_level() > free_resource_improvement_level) {
-				continue;
-			}
-
-			if (this->check_free_improvement(improvement)) {
-				changed = true;
-			}
-		}
-	}
-
 	if (this->is_capital()) {
 		for (const building_type *building : building_type::get_all()) {
 			if (!building->is_free_in_capital()) {
