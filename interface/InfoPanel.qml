@@ -271,6 +271,20 @@ Rectangle {
 		}
 	}
 	
+	SitePortraitGrid {
+		id: site_portrait_grid
+		anchors.top: province_info_text.bottom
+		anchors.topMargin: 8 * scale_factor
+		anchors.bottom: end_turn_button_internal.top
+		anchors.bottomMargin: 16 * scale_factor
+		anchors.left: parent.left
+		anchors.leftMargin: 8 * scale_factor
+		anchors.right: parent.right
+		anchors.rightMargin: 8 * scale_factor
+		visible: selected_province !== null && !selected_garrison
+		sites: selected_province ? selected_province.map_data.sites : []
+	}
+	
 	SmallText {
 		id: province_info_text
 		anchors.top: title.bottom
