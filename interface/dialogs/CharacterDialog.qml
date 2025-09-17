@@ -83,13 +83,15 @@ DialogBase {
 					}
 				}
 				
-				if (hovered) {
-					status_text = text
-					middle_status_text = middle_text
-				} else {
-					if (status_text === text && middle_status_text === middle_text) {
-						status_text = ""
-						middle_status_text = ""
+				if (status_text !== undefined) {
+					if (hovered) {
+						status_text = text
+						middle_status_text = middle_text
+					} else {
+						if (status_text === text && middle_status_text === middle_text) {
+							status_text = ""
+							middle_status_text = ""
+						}
 					}
 				}
 			}
