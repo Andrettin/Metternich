@@ -1,7 +1,9 @@
 korneuburg = {
 	name = "Korneuburg"
 	world = earth
-	#geocoordinate = { 16.333055555556 48.345277777778 }
+	geocoordinate = { 16.333055555556 48.345277777778 }
+	type = settlement
+	holding_type = temple
 	province = lower_austria
 	
 	history = {

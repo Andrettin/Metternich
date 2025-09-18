@@ -1,0 +1,8 @@
+wagram = {
+	name = "Wagram"
+	world = earth
+	geocoordinate = { 16.564444444444 48.299444444444 }
+	type = settlement
+	holding_type = estate
+	province = lower_austria
+}

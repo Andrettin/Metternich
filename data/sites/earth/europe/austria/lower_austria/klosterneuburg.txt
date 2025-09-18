@@ -2,6 +2,8 @@ klosterneuburg = {
 	name = "Klosterneuburg"
 	world = earth
 	geocoordinate = { 16.316666666667 48.304166666667 }
+	type = settlement
+	holding_type = estate
 	province = lower_austria
 	
 	history = {
