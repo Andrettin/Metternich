@@ -102,7 +102,7 @@ void map_template::initialize()
 				continue;
 			}
 
-			if (site->get_type() == site_type::none) {
+			if (site->get_type() == site_type::none || site->get_type() == site_type::resource) {
 				continue;
 			}
 
