@@ -85,13 +85,9 @@ void site::initialize()
 
 void site::check() const
 {
-	if (this->get_type() == site_type::terrain) {
-		assert_throw(this->get_terrain_type() != nullptr);
-	} else {
-		if (this->get_type() != site_type::resource && this->get_type() != site_type::settlement) {
-			//resource and settlement sites can also have a terrain type
-			assert_throw(this->get_terrain_type() == nullptr);
-		}
+	if (this->get_type() != site_type::resource && this->get_type() != site_type::settlement) {
+		//resource and settlement sites can also have a terrain type
+		assert_throw(this->get_terrain_type() == nullptr);
 	}
 
 	if (this->get_type() == site_type::settlement && this->get_holding_type() == nullptr) {
