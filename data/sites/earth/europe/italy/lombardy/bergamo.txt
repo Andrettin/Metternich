@@ -2,13 +2,15 @@ bergamo = {
 	name = "Bergamo"
 	world = earth
 	geocoordinate = { 9.66999344752 45.70040041000 } #from Natural Earth
-	type = resource
-	resource = cattle
+	type = holding
+	holding_type = estate
+	#resource = cattle
 	province = lombardy
 	
 	history = {
 		395 = {
-			buildings += cathedral #Bergamo was the seat of a bishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
+			#buildings += cathedral #Bergamo was the seat of a bishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
+			developed = true
 		}
 		
 		919 = {

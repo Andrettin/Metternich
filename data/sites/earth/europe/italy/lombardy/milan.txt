@@ -3,7 +3,7 @@ milan = {
 	world = earth
 	geocoordinate = { 9.20500890976 45.46997519840 } #from Natural Earth
 	type = holding
-	resource = center_of_trade
+	holding_type = guild
 	cultural_names = {
 		roman = "Mediolanum" #Source: "Ancient Warfare VII.6", 2013, p. 7.
 	}
@@ -13,8 +13,8 @@ milan = {
 	
 	history = {
 		395 = {
-			buildings += cathedral #Milan was the seat of an archbishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
-			holding_type = city
+			#buildings += cathedral #Milan was the seat of an archbishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
+			developed = true
 		}
 		
 		768 = {
@@ -22,11 +22,11 @@ milan = {
 		}
 		
 		919 = {
-			holding_type = city #important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			#important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
 		}
 		
 		1360 = {
-			#holding_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			#existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 		
 		1500 = {

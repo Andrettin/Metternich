@@ -2,8 +2,9 @@ verona = {
 	name = "Verona"
 	world = earth
 	geocoordinate = { 10.99001623400 45.44039044100 } #from Natural Earth
-	type = resource
-	resource = silk
+	type = holding
+	holding_type = estate
+	#resource = silk
 	province = venetia
 	
 	history = {

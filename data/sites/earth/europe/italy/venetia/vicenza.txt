@@ -2,6 +2,8 @@ vicenza = {
 	name = "Vicenza"
 	world = earth
 	geocoordinate = { 11.55 45.55 }
+	type = holding
+	holding_type = guild
 	province = venetia
 	
 	history = {

@@ -2,13 +2,15 @@ brescia = {
 	name = "Brescia"
 	world = earth
 	geocoordinate = { 10.220280555556 45.538888888889 }
-	type = resource
-	resource = silk
+	type = holding
+	holding_type = guild
+	#resource = silk
 	province = lombardy
 	
 	history = {
 		395 = {
-			buildings += cathedral #Brescia was the seat of a bishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
+			#buildings += cathedral #Brescia was the seat of a bishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
+			developed = true
 		}
 		
 		919 = {

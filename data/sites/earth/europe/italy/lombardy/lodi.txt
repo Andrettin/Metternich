@@ -2,6 +2,8 @@ lodi = {
 	name = "Lodi"
 	world = earth
 	geocoordinate = { 9.5 45.316666666667 }
+	type = holding
+	holding_type = estate
 	province = lombardy
 	
 	history = {
