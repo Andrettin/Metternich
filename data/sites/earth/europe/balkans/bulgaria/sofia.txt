@@ -2,7 +2,7 @@ sofia = {
 	name = "Sofia"
 	world = earth
 	geocoordinate = { 23.31665401070 42.68334942530 } #from Natural Earth
-	type = settlement
+	type = holding
 	
 	history = {
 		1360 = {

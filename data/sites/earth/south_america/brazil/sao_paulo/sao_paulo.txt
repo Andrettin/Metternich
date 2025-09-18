@@ -2,7 +2,7 @@ sao_paulo = {
 	name = "Sao Paulo" #"São Paulo"
 	world = earth
 	geocoordinate = { -46.62501998040 -23.55867958700 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = sao_paulo
 	
 	history = {

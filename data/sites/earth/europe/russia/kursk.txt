@@ -2,6 +2,6 @@ kursk = {
 	name = "Kursk"
 	world = earth
 	geocoordinate = { 36.19002844110 51.73998008130 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = kursk
 }

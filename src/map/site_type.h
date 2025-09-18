@@ -4,7 +4,7 @@ namespace metternich {
 
 enum class site_type {
 	none,
-	settlement,
+	holding,
 	resource,
 	habitable_world,
 	celestial_body

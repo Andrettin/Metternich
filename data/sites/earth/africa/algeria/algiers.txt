@@ -2,7 +2,7 @@ algiers = {
 	name = "Algiers"
 	world = earth
 	geocoordinate = { 3.05055252952 36.76306479800 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = algeria
 	
 	history = {

@@ -2,6 +2,6 @@ kars = {
 	name = "Kars"
 	world = earth
 	geocoordinate = { 43.09746211630 40.60846315420 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = grain #Arable land; Source: "CIA Atlas of the Middle East", 1993.
 }

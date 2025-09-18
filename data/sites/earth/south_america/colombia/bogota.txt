@@ -2,7 +2,7 @@ bogota = {
 	name = "Bogota"
 	world = earth
 	geocoordinate = { -74.08334395520 4.59642356253 } #from Natural Earth
-	type = settlement
+	type = holding
 	
 	history = {
 		1626 = {

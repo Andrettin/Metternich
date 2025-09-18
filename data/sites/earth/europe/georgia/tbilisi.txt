@@ -2,7 +2,7 @@ tbilisi = {
 	name = "Tbilisi" #also known as Tiflis
 	world = earth
 	geocoordinate = { 44.79079544960 41.72500998850 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = sheep
 	province = georgia_caucasus
 	

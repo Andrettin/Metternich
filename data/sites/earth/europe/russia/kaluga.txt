@@ -2,7 +2,7 @@ kaluga = {
 	name = "Kaluga"
 	world = earth
 	geocoordinate = { 36.27002355830 54.52037884430 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = kaluga
 	
 	history = {

@@ -2,7 +2,7 @@ erzincan = {
 	name = "Erzincan"
 	world = earth
 	geocoordinate = { 39.49277258180 39.75264975900 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = grain #Irrigated farming; Source: "CIA Atlas of the Middle East", 1993.
 	
 	history = {

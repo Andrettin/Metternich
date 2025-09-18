@@ -2,5 +2,5 @@ trinidad = {
 	name = "Trinidad"
 	world = earth
 	geocoordinate = { -64.89997684900 -14.83337237670 } #from Natural Earth
-	type = settlement
+	type = holding
 }

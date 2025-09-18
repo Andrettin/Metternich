@@ -2,6 +2,6 @@ peshawar = {
 	name = "Peshawar"
 	world = earth
 	geocoordinate = { 71.53500280650 34.00501609190 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = khyber_pakhtunkhwa
 }

@@ -2,5 +2,5 @@ victoria = {
 	name = "Victoria"
 	world = earth
 	geocoordinate = { -123.35000085600 48.43328269360 } #from Natural Earth
-	type = settlement
+	type = holding
 }

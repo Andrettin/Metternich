@@ -2,7 +2,7 @@ moscow = {
 	name = "Moscow"
 	world = earth
 	geocoordinate = { 37.61552282590 55.75216412260 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = moscow
 	
 	history = {

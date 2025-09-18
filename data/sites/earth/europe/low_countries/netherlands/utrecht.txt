@@ -2,7 +2,7 @@ utrecht = {
 	name = "Utrecht"
 	world = earth
 	geocoordinate = { 5.12003861351 52.10034568190 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = utrecht
 	
 	history = {

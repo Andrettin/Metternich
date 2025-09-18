@@ -2,7 +2,7 @@ tula = {
 	name = "Tula"
 	world = earth
 	geocoordinate = { 37.62994055050 54.19995912590 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = tula
 	
 	history = {

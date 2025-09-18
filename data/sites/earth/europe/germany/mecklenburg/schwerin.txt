@@ -2,7 +2,7 @@ schwerin = {
 	name = "Schwerin"
 	world = earth
 	geocoordinate = { 11.41669861050 53.63330407740 } #from Natural Earth
-	type = settlement
+	type = holding
 	
 	history = {
 		919 = {

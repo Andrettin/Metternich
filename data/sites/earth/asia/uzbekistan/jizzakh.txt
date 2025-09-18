@@ -2,5 +2,5 @@ jizzakh = {
 	name = "Jizzakh"
 	world = earth
 	geocoordinate = { 67.83000931690 40.10038047190 } #from Natural Earth
-	type = settlement
+	type = holding
 }

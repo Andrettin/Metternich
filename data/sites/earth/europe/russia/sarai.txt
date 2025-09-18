@@ -2,7 +2,7 @@ sarai = {
 	name = "Sarai"
 	world = earth
 	geocoordinate = { 47.454586 47.174355 }
-	type = settlement
+	type = holding
 	
 	history = {
 		1360 = {

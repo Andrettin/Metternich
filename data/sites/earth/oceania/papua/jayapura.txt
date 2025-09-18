@@ -2,5 +2,5 @@ jayapura = {
 	name = "Jayapura"
 	world = earth
 	geocoordinate = { 140.69998002000 -2.53298622753 } #from Natural Earth
-	type = settlement
+	type = holding
 }

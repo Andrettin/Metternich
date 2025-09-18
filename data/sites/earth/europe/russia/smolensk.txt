@@ -2,7 +2,7 @@ smolensk = {
 	name = "Smolensk"
 	world = earth
 	geocoordinate = { 32.04733557000 54.78268841460 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = smolensk
 	
 	history = {

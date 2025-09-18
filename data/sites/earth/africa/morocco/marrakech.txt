@@ -2,7 +2,7 @@ marrakech = {
 	name = "Marrakech" #also known as Morocco
 	world = earth
 	geocoordinate = { -7.99998742820 31.62999310200 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = marrakech
 	
 	history = {

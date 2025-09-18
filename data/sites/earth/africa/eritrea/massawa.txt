@@ -2,7 +2,7 @@ massawa = {
 	name = "Massawa"
 	world = earth
 	geocoordinate = { 39.45003617220 15.61011822400 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = fruit
 	province = semenawi_keyih_bahri
 }

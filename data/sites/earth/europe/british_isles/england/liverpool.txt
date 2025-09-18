@@ -2,7 +2,7 @@ liverpool = {
 	name = "Liverpool"
 	world = earth
 	geocoordinate = { -2.91799788554 53.41600180980 } #from Natural Earth
-	type = settlement
+	type = holding
 	
 	history = {
 		1903 = {

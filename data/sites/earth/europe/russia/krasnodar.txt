@@ -2,5 +2,5 @@ krasnodar = {
 	name = "Krasnodar"
 	world = earth
 	geocoordinate = { 39.00003779980 45.01997682600 } #from Natural Earth
-	type = settlement
+	type = holding
 }

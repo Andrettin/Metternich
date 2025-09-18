@@ -2,7 +2,7 @@ buenos_aires = {
 	name = "Buenos Aires"
 	world = earth
 	geocoordinate = { -58.39753137370 -34.60250160850 } #from Natural Earth
-	type = settlement
+	type = holding
 	
 	history = {
 		1535 = {

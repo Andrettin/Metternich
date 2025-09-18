@@ -2,7 +2,7 @@ cagliari = {
 	name = "Cagliari"
 	world = earth
 	geocoordinate = { 9.10398148462 39.22239788720 } #from Natural Earth
-	type = settlement
+	type = holding
 	cultural_names = {
 		roman = "Caralis" #Source: "Ancient Warfare VII.6", 2013, p. 7.
 	}

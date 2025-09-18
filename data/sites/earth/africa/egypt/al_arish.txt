@@ -2,7 +2,7 @@ al_arish = {
 	name = "Al Arish"
 	world = earth
 	geocoordinate = { 33.80056188840 31.12488181460 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = fruit
 	province = sinai
 }

@@ -2,7 +2,7 @@ nis = {
 	name = "Nis" #"Niš"
 	world = earth
 	geocoordinate = { 21.89999629590 43.33041587230 } #from Natural Earth
-	type = settlement
+	type = holding
 	
 	history = {
 		1360 = {

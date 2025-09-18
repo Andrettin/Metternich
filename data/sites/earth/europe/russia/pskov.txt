@@ -2,7 +2,7 @@ pskov = {
 	name = "Pskov"
 	world = earth
 	geocoordinate = { 28.32993973670 57.82999595040 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = pskov
 	
 	history = {

@@ -2,7 +2,7 @@ graz = {
 	name = "Graz"
 	world = earth
 	geocoordinate = { 15.41000484080 47.07775819810 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = styria
 	
 	history = {

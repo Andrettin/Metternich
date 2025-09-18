@@ -2,7 +2,7 @@ groningen = {
 	name = "Groningen"
 	world = earth
 	geocoordinate = { 6.58000117862 53.22040651360 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = groningen
 	
 	history = {

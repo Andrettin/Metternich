@@ -2,7 +2,7 @@ hangzhou = {
 	name = "Hangzhou"
 	world = earth
 	geocoordinate = { 120.17001867600 30.24997397770 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = silk
 	province = zhejiang
 }

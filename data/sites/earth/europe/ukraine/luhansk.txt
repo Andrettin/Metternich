@@ -2,5 +2,5 @@ luhansk = {
 	name = "Luhansk"
 	world = earth
 	geocoordinate = { 39.33438431680 48.56976015130 } #from Natural Earth
-	type = settlement
+	type = holding
 }

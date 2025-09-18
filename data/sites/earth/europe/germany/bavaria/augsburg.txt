@@ -2,7 +2,7 @@ augsburg = {
 	name = "Augsburg"
 	world = earth
 	geocoordinate = { 10.89999588890 48.35000612290 } #from Natural Earth
-	type = settlement
+	type = holding
 	cultural_names = {
 		roman = "Augusta Vindelicorum" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 38-39.
 	}

@@ -2,7 +2,7 @@ edinburgh = {
 	name = "Edinburgh"
 	world = earth
 	geocoordinate = { -3.21909061829 55.94832785960 } #from Natural Earth
-	type = settlement
+	type = holding
 	
 	history = {
 		1360 = {

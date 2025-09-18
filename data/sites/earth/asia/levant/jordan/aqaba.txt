@@ -2,6 +2,6 @@ aqaba = {
 	name = "Aqaba"
 	world = earth
 	geocoordinate = { 35.07769323600 29.52699485170 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = aqaba
 }

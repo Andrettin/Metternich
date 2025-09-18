@@ -2,6 +2,6 @@ nakhchivan = {
 	name = "Nakhchivan"
 	world = earth
 	geocoordinate = { 45.41220454790 39.20922039700 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = nakhchivan
 }

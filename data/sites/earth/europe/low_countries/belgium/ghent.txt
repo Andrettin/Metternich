@@ -2,7 +2,7 @@ ghent = {
 	name = "Ghent"
 	world = earth
 	geocoordinate = { 3.70002193057 51.02999757800 } #from Natural Earth
-	type = settlement
+	type = holding
 	
 	history = {
 		919 = {

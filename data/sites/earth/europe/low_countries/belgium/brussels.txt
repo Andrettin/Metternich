@@ -2,7 +2,7 @@ brussels = {
 	name = "Brussels"
 	world = earth
 	geocoordinate = { 4.33331660830 50.83331707670 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = brabant
 	
 	history = {

@@ -2,7 +2,7 @@ guatemala = {
 	name = "Guatemala"
 	world = earth
 	geocoordinate = { -90.52696557790 14.62113466280 } #from Natural Earth
-	type = settlement
+	type = holding
 	
 	history = {
 		1676 = {

@@ -2,7 +2,7 @@ zaragoza = {
 	name = "Zaragoza"
 	world = earth
 	geocoordinate = { -0.88998213846 41.65000164700 } #from Natural Earth
-	type = settlement
+	type = holding
 	cultural_names = {
 		roman = "Caesaraugusta"
 	}

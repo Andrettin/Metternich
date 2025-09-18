@@ -2,7 +2,7 @@ lima = {
 	name = "Lima"
 	world = earth
 	geocoordinate = { -77.05006209480 -12.04801267610 } #from Natural Earth
-	type = settlement
+	type = holding
 	
 	history = {
 		1551 = {

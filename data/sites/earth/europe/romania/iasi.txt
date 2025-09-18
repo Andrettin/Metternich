@@ -2,7 +2,7 @@ iasi = {
 	name = "Iasi" #"Iași"
 	world = earth
 	geocoordinate = { 27.57494706090 47.16834698390 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = fruit
 	province = moldavia
 	

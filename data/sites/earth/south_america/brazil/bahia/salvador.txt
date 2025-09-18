@@ -2,7 +2,7 @@ salvador = {
 	name = "Salvador"
 	world = earth
 	geocoordinate = { -38.47998742830 -12.96997190470 } #from Natural Earth
-	type = settlement
+	type = holding
 	resource = center_of_trade
 	province = bahia
 	

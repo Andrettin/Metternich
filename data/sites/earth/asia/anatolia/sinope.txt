@@ -2,7 +2,7 @@ sinope = {
 	name = "Sinope"
 	world = earth
 	geocoordinate = { 35.15300149970 42.02299801770 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = grain #Arable land; Source: "CIA Atlas of the Middle East", 1993.
 	
 	history = {

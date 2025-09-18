@@ -2,7 +2,7 @@ sevastopol = {
 	name = "Sevastopol" #also known as Cherson
 	world = earth
 	geocoordinate = { 33.46497513710 44.59997662260 } #from Natural Earth
-	type = settlement
+	type = holding
 	
 	history = {
 		1360 = {

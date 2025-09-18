@@ -2,6 +2,6 @@ khojand = {
 	name = "Khojand" #also known as Leninabad
 	world = earth
 	geocoordinate = { 69.00000365160 39.75000300860 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = khojand
 }

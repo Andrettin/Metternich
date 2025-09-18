@@ -2,5 +2,5 @@ montevideo = {
 	name = "Montevideo"
 	world = earth
 	geocoordinate = { -56.17105228840 -34.85804156620 } #from Natural Earth
-	type = settlement
+	type = holding
 }

@@ -2,7 +2,7 @@ seville = {
 	name = "Seville"
 	world = earth
 	geocoordinate = { -5.98000736635 37.40501527820 } #from Natural Earth
-	type = settlement
+	type = holding
 	cultural_names = {
 		roman = "Hispalis"
 	}

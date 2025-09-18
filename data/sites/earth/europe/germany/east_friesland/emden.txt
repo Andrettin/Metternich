@@ -2,7 +2,7 @@ emden = {
 	name = "Emden"
 	world = earth
 	geocoordinate = { 7.21665482446 53.36667665520 } #from Natural Earth
-	type = settlement
+	type = holding
 	
 	history = {
 		1360 = {

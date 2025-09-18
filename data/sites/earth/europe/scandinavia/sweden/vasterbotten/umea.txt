@@ -2,6 +2,6 @@ umea = {
 	name = "Umea" #"Umeå"
 	world = earth
 	geocoordinate = { 20.23999426140 63.82999147460 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = vasterbotten
 }

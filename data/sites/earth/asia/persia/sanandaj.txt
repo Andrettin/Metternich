@@ -2,7 +2,7 @@ sanandaj = {
 	name = "Sanandaj"
 	world = earth
 	geocoordinate = { 47.02001338580 35.30000164700 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = sheep
 	province = kordestan
 }

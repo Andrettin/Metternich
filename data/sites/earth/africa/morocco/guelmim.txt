@@ -2,5 +2,5 @@ guelmim = {
 	name = "Guelmim"
 	world = earth
 	geocoordinate = { -10.07001611470 28.97997397770 } #from Natural Earth
-	type = settlement
+	type = holding
 }

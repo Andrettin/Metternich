@@ -2,7 +2,7 @@ zurich = {
 	name = "Zurich" #"Zürich"
 	world = earth
 	geocoordinate = { 8.55001013046 47.37998781240 } #from Natural Earth
-	type = settlement
+	type = holding
 	
 	history = {
 		919 = {

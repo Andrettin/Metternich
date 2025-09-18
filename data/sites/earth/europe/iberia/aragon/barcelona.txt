@@ -2,7 +2,7 @@ barcelona = {
 	name = "Barcelona"
 	world = earth
 	geocoordinate = { 2.18337031923 41.38329957990 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = cattle
 	province = catalonia
 	

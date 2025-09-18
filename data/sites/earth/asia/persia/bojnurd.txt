@@ -2,7 +2,7 @@ bojnurd = {
 	name = "Bojnurd"
 	world = earth
 	geocoordinate = { 57.32000484090 37.46999839180 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = coal
 	province = north_khorasan
 }

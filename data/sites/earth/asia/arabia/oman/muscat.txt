@@ -2,7 +2,7 @@ muscat = {
 	name = "Muscat"
 	world = earth
 	geocoordinate = { 58.59331213260 23.61332480770 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = opium
 	province = oman
 }

@@ -2,7 +2,7 @@ santiago_de_compostela = {
 	name = "Santiago de Compostela"
 	world = earth
 	geocoordinate = { -8.54109135073 42.88289796860 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = holy_site
 	
 	history = {

@@ -2,7 +2,7 @@ tver = {
 	name = "Tver"
 	world = earth
 	geocoordinate = { 35.88999507520 56.85997763990 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = tver
 	
 	history = {

@@ -2,7 +2,7 @@ ayacucho = {
 	name = "Ayacucho"
 	world = earth
 	geocoordinate = { -74.21995060390 -13.17502398800 } #from Natural Earth
-	type = settlement
+	type = holding
 	
 	history = {
 		1680 = {

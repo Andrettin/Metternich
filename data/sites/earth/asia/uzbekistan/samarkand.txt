@@ -2,6 +2,6 @@ samarkand = {
 	name = "Samarkand"
 	world = earth
 	geocoordinate = { 66.94499873750 39.67001914370 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = samarkand
 }

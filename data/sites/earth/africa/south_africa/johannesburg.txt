@@ -2,7 +2,7 @@ johannesburg = {
 	name = "Johannesburg"
 	world = earth
 	geocoordinate = { 28.03000972360 -26.17004474000 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = sheep
 	province = gauteng
 }

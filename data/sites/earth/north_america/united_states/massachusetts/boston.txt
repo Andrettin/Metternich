@@ -2,7 +2,7 @@ boston = {
 	name = "Boston"
 	world = earth
 	geocoordinate = { -71.07001367360 42.32996014310 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = massachusetts
 	
 	history = {

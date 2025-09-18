@@ -2,7 +2,7 @@ turin = {
 	name = "Turin"
 	world = earth
 	geocoordinate = { 7.66996048853 45.07038718570 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = piedmont
 	
 	history = {

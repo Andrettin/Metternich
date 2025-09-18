@@ -12,7 +12,7 @@ center_of_trade = {
 		mountains
 	}
 	site_types = {
-		settlement
+		holding
 	}
 	modifier = {
 		trade_bonus = 1

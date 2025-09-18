@@ -2,7 +2,7 @@ vilnius = {
 	name = "Vilnius"
 	world = earth
 	geocoordinate = { 25.31663529330 54.68336631180 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = lithuania
 	
 	history = {

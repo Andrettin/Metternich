@@ -2,5 +2,5 @@ tegucigalpa = {
 	name = "Tegucigalpa"
 	world = earth
 	geocoordinate = { -87.21752933930 14.10204490050 } #from Natural Earth
-	type = settlement
+	type = holding
 }

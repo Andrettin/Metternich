@@ -2,7 +2,7 @@ bloemfontein = {
 	name = "Bloemfontein"
 	world = earth
 	geocoordinate = { 26.22991288120 -29.11999387740 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = sheep
 	province = oranje
 }

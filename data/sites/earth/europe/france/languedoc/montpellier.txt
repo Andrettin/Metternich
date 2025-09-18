@@ -2,7 +2,7 @@ montpellier = {
 	name = "Montpellier"
 	world = earth
 	geocoordinate = { 3.86998571637 43.61039878240 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = cattle
 	province = lower_languedoc
 	

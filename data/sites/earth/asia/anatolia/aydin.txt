@@ -2,5 +2,5 @@ aydin = {
 	name = "Aydin"
 	world = earth
 	geocoordinate = { 27.85002071000 37.84997519840 } #from Natural Earth
-	type = settlement
+	type = holding
 }

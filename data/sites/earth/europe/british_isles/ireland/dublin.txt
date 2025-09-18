@@ -2,7 +2,7 @@ dublin = {
 	name = "Dublin"
 	world = earth
 	geocoordinate = { -6.24890568178 53.33306113600 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = leinster
 	
 	history = {

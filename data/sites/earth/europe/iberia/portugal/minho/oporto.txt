@@ -2,7 +2,7 @@ oporto = {
 	name = "Oporto"
 	world = earth
 	geocoordinate = { -8.62000126284 41.15000632640 } #from Natural Earth
-	type = settlement
+	type = holding
 	resource = center_of_trade
 	
 	history = {

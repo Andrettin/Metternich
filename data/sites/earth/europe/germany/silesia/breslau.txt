@@ -2,7 +2,7 @@ breslau = {
 	name = "Breslau"
 	world = earth
 	geocoordinate = { 17.03000931670 51.11043194490 } #from Natural Earth
-	type = settlement
+	type = holding
 	cultural_names = {
 		polish = "Wroclaw" #"Wrocław"
 	}

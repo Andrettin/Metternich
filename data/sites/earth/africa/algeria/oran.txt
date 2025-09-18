@@ -2,7 +2,7 @@ oran = {
 	name = "Oran"
 	world = earth
 	geocoordinate = { -0.61997277974 35.71000246080 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = oran
 	
 	history = {

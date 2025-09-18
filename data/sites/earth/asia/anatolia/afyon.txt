@@ -2,6 +2,6 @@ afyon = {
 	name = "Afyon"
 	world = earth
 	geocoordinate = { 30.55001094430 38.75038535470 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = grain #Wheat; Source: Map No. 501871 of the Perry-Castañeda Library Map Collection, 1974.
 }

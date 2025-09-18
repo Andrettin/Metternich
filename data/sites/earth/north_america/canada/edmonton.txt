@@ -2,5 +2,5 @@ edmonton = {
 	name = "Edmonton"
 	world = earth
 	geocoordinate = { -113.49998193500 53.55002463690 } #from Natural Earth
-	type = settlement
+	type = holding
 }

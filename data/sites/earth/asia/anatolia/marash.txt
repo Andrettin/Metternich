@@ -2,7 +2,7 @@ marash = {
 	name = "Marash" #Kahramanmaraş
 	world = earth
 	geocoordinate = { 36.94502111690 37.60998984680 } #from Natural Earth
-	type = settlement
+	type = holding
 	
 	history = {
 		1360 = {

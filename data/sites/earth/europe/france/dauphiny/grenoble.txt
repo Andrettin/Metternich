@@ -2,7 +2,7 @@ grenoble = {
 	name = "Grenoble"
 	world = earth
 	geocoordinate = { 5.72000199242 45.18038047190 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = tobacco
 	province = dauphiny
 	

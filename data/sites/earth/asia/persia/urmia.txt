@@ -2,7 +2,7 @@ urmia = {
 	name = "Urmia" #also known as Urumia
 	world = earth
 	geocoordinate = { 44.99998164750 37.52999472970 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = sheep
 	province = west_azarbaijan
 }

@@ -2,7 +2,7 @@ ioanina = {
 	name = "Ioanina"
 	world = earth
 	geocoordinate = { 20.85086136750 39.66790041000 } #from Natural Earth
-	type = settlement
+	type = holding
 	cultural_names = {
 		albanian = "Janina"
 	}

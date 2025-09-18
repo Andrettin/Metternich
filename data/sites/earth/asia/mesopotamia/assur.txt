@@ -2,7 +2,7 @@ assur = {
 	name = "Assur"
 	world = earth
 	geocoordinate = { 43.2625 35.456666666667 }
-	type = settlement
+	type = holding
 	
 	history = {
 		-1450 = {

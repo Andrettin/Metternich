@@ -2,7 +2,7 @@ kimberley = {
 	name = "Kimberley"
 	world = earth
 	geocoordinate = { 24.77000199250 -28.74683835980 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = cattle
 	province = northern_cape
 }

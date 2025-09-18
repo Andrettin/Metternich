@@ -2,7 +2,7 @@ santo_domingo = {
 	name = "Santo Domingo"
 	world = earth
 	geocoordinate = { -69.90008508470 18.47007285460 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = tobacco
 	province = santo_domingo
 	

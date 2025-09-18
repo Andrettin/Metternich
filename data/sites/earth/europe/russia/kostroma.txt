@@ -2,7 +2,7 @@ kostroma = {
 	name = "Kostroma"
 	world = earth
 	geocoordinate = { 40.94002274450 57.77002545080 } #from Natural Earth
-	type = settlement
+	type = holding
 	
 	history = {
 		1360 = {

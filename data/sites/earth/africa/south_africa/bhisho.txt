@@ -2,6 +2,6 @@ bhisho = {
 	name = "Bhisho"
 	world = earth
 	geocoordinate = { 27.38999710970 -32.86999753950 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = eastern_cape
 }

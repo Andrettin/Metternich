@@ -2,7 +2,7 @@ mecca = {
 	name = "Mecca"
 	world = earth
 	geocoordinate = { 39.82003942750 21.43002138160 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = holy_site
 	province = mecca
 }

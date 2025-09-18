@@ -2,7 +2,7 @@ oslo = {
 	name = "Oslo" #also known as Christiania
 	world = earth
 	geocoordinate = { 10.74997920600 59.91669028640 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = fish
 	province = akershus
 	

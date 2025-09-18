@@ -2,5 +2,5 @@ guanajuato = {
 	name = "Guanajuato"
 	world = earth
 	geocoordinate = { -101.27997847700 21.02040814110 } #from Natural Earth
-	type = settlement
+	type = holding
 }

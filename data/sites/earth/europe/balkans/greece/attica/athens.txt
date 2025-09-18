@@ -2,7 +2,7 @@ athens = {
 	name = "Athens"
 	world = earth
 	geocoordinate = { 23.73332108430 37.98332623190 } #from Natural Earth
-	type = settlement
+	type = holding
 	resource = center_of_trade
 	province = attica
 	

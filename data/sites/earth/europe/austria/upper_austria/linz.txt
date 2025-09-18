@@ -2,7 +2,7 @@ linz = {
 	name = "Linz"
 	world = earth
 	geocoordinate = { 14.28878128930 48.31923280750 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = upper_austria
 	
 	history = {

@@ -2,7 +2,7 @@ bechar = {
 	name = "Bechar"
 	world = earth
 	geocoordinate = { -2.23000370422 31.61110536600 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = sheep
 	province = bechar
 }

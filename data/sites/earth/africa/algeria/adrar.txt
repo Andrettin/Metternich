@@ -2,5 +2,5 @@ adrar = {
 	name = "Adrar"
 	world = earth
 	geocoordinate = { -0.93557 25.70040000 } #from Natural Earth
-	type = settlement
+	type = holding
 }

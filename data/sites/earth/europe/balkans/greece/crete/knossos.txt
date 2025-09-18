@@ -2,7 +2,7 @@ knossos = {
 	name = "Knossos"
 	world = earth
 	geocoordinate = { 25.163155555556 35.297961111111 }
-	type = settlement
+	type = holding
 	
 	history = {
 		-1450 = {

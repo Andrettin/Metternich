@@ -2,7 +2,7 @@ copenhagen = {
 	name = "Copenhagen"
 	world = earth
 	geocoordinate = { 12.56348574730 55.67856419040 } #from Natural Earth
-	type = settlement
+	type = holding
 	
 	history = {
 		1360 = {

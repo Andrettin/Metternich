@@ -2,7 +2,7 @@ santiago_de_chile = {
 	name = "Santiago de Chile"
 	world = earth
 	geocoordinate = { -70.66704085460 -33.45001381550 } #from Natural Earth
-	type = settlement
+	type = holding
 	
 	history = {
 		1738 = {

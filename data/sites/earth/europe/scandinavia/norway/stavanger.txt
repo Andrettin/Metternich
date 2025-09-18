@@ -2,7 +2,7 @@ stavanger = {
 	name = "Stavanger"
 	world = earth
 	geocoordinate = { 5.68000443383 58.97000388500 } #from Natural Earth
-	type = settlement
+	type = holding
 	
 	history = {
 		1360 = {

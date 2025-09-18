@@ -2,7 +2,7 @@ gorgan = {
 	name = "Gorgan"
 	world = earth
 	geocoordinate = { 54.48002315150 36.83034751290 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = sheep
 	province = golestan
 }

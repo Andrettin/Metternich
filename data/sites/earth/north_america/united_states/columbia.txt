@@ -2,5 +2,5 @@ columbia = {
 	name = "Columbia"
 	world = earth
 	geocoordinate = { -80.89998213880 34.03997519840 } #from Natural Earth
-	type = settlement
+	type = holding
 }

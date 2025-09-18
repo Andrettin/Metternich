@@ -2,7 +2,7 @@ cuzco = {
 	name = "Cuzco"
 	world = earth
 	geocoordinate = { -71.97215499030 -13.52502846390 } #from Natural Earth
-	type = settlement
+	type = holding
 	
 	history = {
 		1692 = {

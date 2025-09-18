@@ -2,7 +2,7 @@ merv = {
 	name = "Merv" #also known as Mary
 	world = earth
 	geocoordinate = { 61.83332108440 37.60001629540 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = holy_site
 	province = merv
 }

@@ -2,7 +2,7 @@ hameenlinna = {
 	name = "Hameenlinna" #"Hämeenlinna"
 	world = earth
 	geocoordinate = { 24.47199954270 60.99699611030 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = timber
 	province = tavastia
 }

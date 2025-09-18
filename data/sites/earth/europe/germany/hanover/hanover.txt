@@ -2,7 +2,7 @@ hanover = {
 	name = "Hanover"
 	world = earth
 	geocoordinate = { 9.71665726588 52.36697023430 } #from Natural Earth
-	type = settlement
+	type = holding
 	
 	history = {
 		1360 = {

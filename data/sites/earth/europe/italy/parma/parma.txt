@@ -2,6 +2,6 @@ parma = {
 	name = "Parma"
 	world = earth
 	geocoordinate = { 10.32003128930 44.81042889310 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = parma
 }

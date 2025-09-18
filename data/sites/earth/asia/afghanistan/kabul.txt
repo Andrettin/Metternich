@@ -2,7 +2,7 @@ kabul = {
 	name = "Kabul"
 	world = earth
 	geocoordinate = { 69.18326004930 34.51669028630 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = timber
 	province = afghanistan
 	

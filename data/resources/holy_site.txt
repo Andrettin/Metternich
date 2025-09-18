@@ -11,7 +11,7 @@ holy_site = {
 		mountains
 	}
 	site_types = {
-		settlement
+		holding
 	}
 	modifier = {
 		piety_bonus = 1

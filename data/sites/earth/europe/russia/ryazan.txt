@@ -2,7 +2,7 @@ ryazan = {
 	name = "Ryazan"
 	world = earth
 	geocoordinate = { 39.71999385450 54.61995932930 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = ryazan
 	
 	history = {

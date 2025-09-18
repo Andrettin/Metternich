@@ -2,7 +2,7 @@ antioch = {
 	name = "Antioch"
 	world = earth
 	geocoordinate = { 36.11667655840 36.23333409290 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = holy_site
 	
 	history = {

@@ -2,7 +2,7 @@ nanchang = {
 	name = "Nanchang"
 	world = earth
 	geocoordinate = { 115.87999629600 28.67999228820 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = timber
 	province = jiangxi
 }

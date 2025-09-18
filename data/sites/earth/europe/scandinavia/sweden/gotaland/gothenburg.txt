@@ -2,6 +2,6 @@ gothenburg = {
 	name = "Gothenburg"
 	world = earth
 	geocoordinate = { 12.00003210310 57.75000083330 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = vastergotland
 }

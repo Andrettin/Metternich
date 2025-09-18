@@ -2,7 +2,7 @@ sari = {
 	name = "Sari"
 	world = earth
 	geocoordinate = { 53.10000402710 36.55039044090 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = sheep
 	province = mazandaran
 }

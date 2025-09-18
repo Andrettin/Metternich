@@ -2,7 +2,7 @@ thessalonica = {
 	name = "Thessalonica" #also known as Salonika
 	world = earth
 	geocoordinate = { 22.88500077180 40.69610638330 } #from Natural Earth
-	type = settlement
+	type = holding
 	
 	history = {
 		1360 = {

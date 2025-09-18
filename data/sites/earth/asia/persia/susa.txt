@@ -2,7 +2,7 @@ susa = {
 	name = "Susa"
 	world = earth
 	geocoordinate = { 48.25 32.2 }
-	type = settlement
+	type = holding
 	
 	history = {
 		-1450 = {

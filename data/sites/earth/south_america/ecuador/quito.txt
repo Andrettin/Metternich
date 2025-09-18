@@ -2,7 +2,7 @@ quito = {
 	name = "Quito"
 	world = earth
 	geocoordinate = { -78.50005110850 -0.21498818065 } #from Natural Earth
-	type = settlement
+	type = holding
 	
 	history = {
 		1769 = {

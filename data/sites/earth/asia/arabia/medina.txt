@@ -2,7 +2,7 @@ medina = {
 	name = "Medina"
 	world = earth
 	geocoordinate = { 39.58000239950 24.49998903300 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = holy_site
 	province = medina
 }

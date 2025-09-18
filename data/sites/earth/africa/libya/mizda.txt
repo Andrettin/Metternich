@@ -2,5 +2,5 @@ mizda = {
 	name = "Mizda"
 	world = earth
 	geocoordinate = { 12.98333125680 31.43372601220 } #from Natural Earth
-	type = settlement
+	type = holding
 }

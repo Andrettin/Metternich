@@ -2,7 +2,7 @@ belgrade = {
 	name = "Belgrade"
 	world = earth
 	geocoordinate = { 20.46799068060 44.81864544580 } #from Natural Earth
-	type = settlement
+	type = holding
 	cultural_names = {
 		roman = "Singidunum" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 38-39.
 	}

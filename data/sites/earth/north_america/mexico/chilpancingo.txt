@@ -2,5 +2,5 @@ chilpancingo = {
 	name = "Chilpancingo"
 	world = earth
 	geocoordinate = { -99.50000960470 17.54997397760 } #from Natural Earth
-	type = settlement
+	type = holding
 }

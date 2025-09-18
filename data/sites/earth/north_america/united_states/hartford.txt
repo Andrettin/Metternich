@@ -2,5 +2,5 @@ hartford = {
 	name = "Hartford"
 	world = earth
 	geocoordinate = { -72.67996708340 41.77002016100 } #from Natural Earth
-	type = settlement
+	type = holding
 }

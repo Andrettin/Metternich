@@ -2,7 +2,7 @@ bursa = {
 	name = "Bursa" #also known as Brusa
 	world = earth
 	geocoordinate = { 29.06999792350 40.19998679510 } #from Natural Earth
-	type = settlement
+	type = holding
 	
 	history = {
 		1360 = {

@@ -2,6 +2,6 @@ mbabane = {
 	name = "Mbabane"
 	world = earth
 	geocoordinate = { 31.13333451210 -26.31665077840 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = swaziland
 }

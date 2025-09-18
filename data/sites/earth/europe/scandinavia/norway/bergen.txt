@@ -2,7 +2,7 @@ bergen = {
 	name = "Bergen"
 	world = earth
 	geocoordinate = { 5.32452225609 60.39100242020 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = fish
 	province = hordaland
 }

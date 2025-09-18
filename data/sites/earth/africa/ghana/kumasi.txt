@@ -2,5 +2,5 @@ kumasi = {
 	name = "Kumasi"
 	world = earth
 	geocoordinate = { -1.63001448710 6.68999086398 } #from Natural Earth
-	type = settlement
+	type = holding
 }

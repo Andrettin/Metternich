@@ -2,7 +2,7 @@ cyrene = {
 	name = "Cyrene"
 	world = earth
 	geocoordinate = { 21.86216914740 32.82813702290 } #from Natural Earth (Shahhat)
-	type = settlement
+	type = holding
 	cultural_names = {
 		#arabic = "Shahhat"
 	}

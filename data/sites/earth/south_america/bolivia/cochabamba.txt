@@ -2,5 +2,5 @@ cochabamba = {
 	name = "Cochabamba"
 	world = earth
 	geocoordinate = { -66.16997684900 -17.41001096720 } #from Natural Earth
-	type = settlement
+	type = holding
 }

@@ -2,7 +2,7 @@ philippopolis = {
 	name = "Philippopolis"
 	world = earth
 	geocoordinate = { 24.75398229850 42.15397605290 } #from Natural Earth
-	type = settlement
+	type = holding
 	cultural_names = {
 		bulgarian = "Plovdiv"
 	}

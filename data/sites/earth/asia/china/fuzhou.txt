@@ -2,7 +2,7 @@ fuzhou = {
 	name = "Fuzhou"
 	world = earth
 	geocoordinate = { 119.30004593800 26.07999595030 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = tea
 	province = fujian
 }

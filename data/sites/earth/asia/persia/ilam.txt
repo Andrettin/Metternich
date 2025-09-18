@@ -2,7 +2,7 @@ ilam = {
 	name = "Ilam"
 	world = earth
 	geocoordinate = { 46.43002355830 33.63041363430 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = cotton
 	province = elam
 }

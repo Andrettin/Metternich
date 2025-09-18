@@ -2,7 +2,7 @@ nizhny_novgorod = {
 	name = "Nizhny Novgorod"
 	world = earth
 	geocoordinate = { 44.00009435910 56.33300722160 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = timber
 	province = nizhegorod
 	

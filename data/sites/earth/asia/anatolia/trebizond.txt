@@ -2,7 +2,7 @@ trebizond = {
 	name = "Trebizond"
 	world = earth
 	geocoordinate = { 39.71999385450 40.97999086410 } #from Natural Earth
-	type = settlement
+	type = holding
 	cultural_names = {
 		turkish = "Trabzon"
 	}

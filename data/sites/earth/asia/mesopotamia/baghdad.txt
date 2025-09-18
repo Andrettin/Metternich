@@ -2,7 +2,7 @@ baghdad = {
 	name = "Baghdad"
 	world = earth
 	geocoordinate = { 44.39386877320 33.33864849750 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = holy_site
 	province = diyala
 	

@@ -2,7 +2,7 @@ ashgabat = {
 	name = "Ashgabat" #also known as Ashkhabad
 	world = earth
 	geocoordinate = { 58.38329911180 37.94999493310 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = opium
 	province = ahal
 }

@@ -2,7 +2,7 @@ baltimore = {
 	name = "Baltimore"
 	world = earth
 	geocoordinate = { -76.61998498710 39.29999005030 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = tobacco
 	province = maryland
 }

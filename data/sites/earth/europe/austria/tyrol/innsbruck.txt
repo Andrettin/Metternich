@@ -2,7 +2,7 @@ innsbruck = {
 	name = "Innsbruck"
 	world = earth
 	geocoordinate = { 11.40999059920 47.28040732740 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = timber
 	province = tyrol
 }

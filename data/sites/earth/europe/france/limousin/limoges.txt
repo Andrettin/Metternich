@@ -2,7 +2,7 @@ limoges = {
 	name = "Limoges"
 	world = earth
 	geocoordinate = { 1.24999059918 45.82997906400 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = cattle
 	province = limousin
 	

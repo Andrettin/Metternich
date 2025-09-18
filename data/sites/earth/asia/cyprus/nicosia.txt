@@ -2,7 +2,7 @@ nicosia = {
 	name = "Nicosia"
 	world = earth
 	geocoordinate = { 33.36663488640 35.16667645170 } #from Natural Earth
-	type = settlement
+	type = holding
 	
 	history = {
 		1360 = {

@@ -2,5 +2,5 @@ viedma = {
 	name = "Viedma"
 	world = earth
 	geocoordinate = { -63.00001530110 -40.79995278040 } #from Natural Earth
-	type = settlement
+	type = holding
 }

@@ -85,26 +85,30 @@ void site::initialize()
 
 void site::check() const
 {
-	if (this->get_type() != site_type::resource && this->get_type() != site_type::settlement) {
+	if (this->get_type() != site_type::resource && this->get_type() != site_type::holding) {
 		//resource and settlement sites can also have a terrain type
 		assert_throw(this->get_terrain_type() == nullptr);
 	}
 
-	if (this->get_type() == site_type::settlement && this->get_holding_type() == nullptr) {
+	if (this->get_type() == site_type::holding && this->get_holding_type() == nullptr) {
 		log::log_error(std::format("Holding site \"{}\" has no holding type.", this->get_identifier()));
-	} else if (this->get_type() != site_type::settlement && this->get_holding_type() != nullptr) {
+	} else if (this->get_type() != site_type::holding && this->get_holding_type() != nullptr) {
 		log::log_error(std::format("Site \"{}\" has a holding type, but is not a holding.", this->get_identifier()));
 	}
 
 	switch (this->get_type()) {
-		case site_type::settlement:
+		case site_type::holding:
+			if (this->get_province() == nullptr) {
+				log::log_error(std::format("Holding \"{}\" has no province.", this->get_identifier()));
+			}
+			break;
 		case site_type::habitable_world:
 			if (this->get_province() != nullptr) {
 				if (this->get_province()->get_provincial_capital() != this) {
-					log::log_error(std::format("Settlement site \"{}\" is not the provincial capital of its province.", this->get_identifier()));
+					log::log_error(std::format("Habitable world \"{}\" is not the provincial capital of its province.", this->get_identifier()));
 				}
 			} else {
-				log::log_error(std::format("Settlement site \"{}\" has no province.", this->get_identifier()));
+				log::log_error(std::format("Habitable world \"{}\" has no province.", this->get_identifier()));
 			}
 			break;
 		case site_type::resource:
@@ -151,7 +155,7 @@ void site::reset_game_data()
 
 bool site::is_settlement() const
 {
-	return this->get_type() == site_type::settlement || this->get_type() == site_type::habitable_world;
+	return this->get_type() == site_type::holding || this->get_type() == site_type::habitable_world;
 }
 
 bool site::is_celestial_body() const

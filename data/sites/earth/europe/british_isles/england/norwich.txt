@@ -2,7 +2,7 @@ norwich = {
 	name = "Norwich"
 	world = earth
 	geocoordinate = { 1.30001338563 52.63036500970 } #from Natural Earth
-	type = settlement
+	type = holding
 	
 	history = {
 		1360 = {

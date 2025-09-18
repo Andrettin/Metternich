@@ -2,7 +2,7 @@ karbala = {
 	name = "Karbala"
 	world = earth
 	geocoordinate = { 44.02448563520 32.61492006330 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = karbala
 	
 	history = {

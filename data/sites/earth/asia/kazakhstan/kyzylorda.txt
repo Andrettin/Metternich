@@ -2,6 +2,6 @@ kyzylorda = {
 	name = "Kyzylorda"
 	world = earth
 	geocoordinate = { 65.46498571660 44.80001609200 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = kyzylorda
 }

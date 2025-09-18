@@ -2,7 +2,7 @@ angers = {
 	name = "Angers"
 	world = earth
 	geocoordinate = { -0.53002994933 47.48000754710 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = anjou
 	
 	history = {

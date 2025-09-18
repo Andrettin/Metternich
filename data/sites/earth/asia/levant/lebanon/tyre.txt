@@ -2,7 +2,7 @@ tyre = {
 	name = "Tyre"
 	world = earth
 	geocoordinate = { 35.2 33.266666666667 }
-	type = settlement
+	type = holding
 	
 	history = {
 		-1450 = {

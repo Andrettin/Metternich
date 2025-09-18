@@ -2,5 +2,5 @@ aracaju = {
 	name = "Aracaju"
 	world = earth
 	geocoordinate = { -37.11996708330 -10.90002073280 } #from Natural Earth
-	type = settlement
+	type = holding
 }

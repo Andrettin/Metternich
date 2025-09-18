@@ -2,5 +2,5 @@ tokyo = {
 	name = "Tokyo"
 	world = earth
 	geocoordinate = { 139.75140742900 35.68501690580 } #from Natural Earth
-	type = settlement
+	type = holding
 }

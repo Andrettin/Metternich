@@ -2,7 +2,7 @@ malmo = {
 	name = "Malmo" #"Malmö"
 	world = earth
 	geocoordinate = { 13.03330236680 55.58333721830 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = grain
 	province = scania
 }

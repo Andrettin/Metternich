@@ -2,7 +2,7 @@ magdeburg = {
 	name = "Magdeburg"
 	world = earth
 	geocoordinate = { 11.62000362010 52.13042136550 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = magdeburg
 	
 	history = {

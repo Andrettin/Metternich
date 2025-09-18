@@ -2,7 +2,7 @@ palencia = {
 	name = "Palencia"
 	world = earth
 	geocoordinate = { -4.5333333333333 42.016666666667 }
-	type = settlement
+	type = holding
 	province = palencia
 	
 	history = {

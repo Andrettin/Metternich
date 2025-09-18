@@ -2,7 +2,7 @@ liege = {
 	name = "Liege" #"Liège"
 	world = earth
 	geocoordinate = { 5.58001053734 50.62999615390 } #from Natural Earth
-	type = settlement
+	type = holding
 	
 	history = {
 		919 = {

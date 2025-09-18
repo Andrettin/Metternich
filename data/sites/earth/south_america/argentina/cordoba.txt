@@ -2,7 +2,7 @@ cordoba_argentina = {
 	name = "Cordoba" #"Córdoba"
 	world = earth
 	geocoordinate = { -64.18229455730 -31.39995807010 } #from Natural Earth
-	type = settlement
+	type = holding
 	
 	history = {
 		1700 = {

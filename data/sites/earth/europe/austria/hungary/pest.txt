@@ -2,7 +2,7 @@ pest = {
 	name = "Pest"
 	world = earth
 	geocoordinate = { 19.1 47.5 }
-	type = settlement
+	type = holding
 	resource = center_of_trade
 	province = pest
 	

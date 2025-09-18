@@ -2,7 +2,7 @@ kalmar = {
 	name = "Kalmar"
 	world = earth
 	geocoordinate = { 16.36658727890 56.66701784170 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = smaland
 	
 	history = {

@@ -2,7 +2,7 @@ tarsus = {
 	name = "Tarsus"
 	world = earth
 	geocoordinate = { 34.87997920610 36.92039369610 } #from Natural Earth
-	type = settlement
+	type = holding
 	
 	history = {
 		1360 = {

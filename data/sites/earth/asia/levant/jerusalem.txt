@@ -2,7 +2,7 @@ jerusalem = {
 	name = "Jerusalem"
 	world = earth
 	geocoordinate = { 35.20662593460 31.77840781560 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = holy_site
 	province = palestine
 	

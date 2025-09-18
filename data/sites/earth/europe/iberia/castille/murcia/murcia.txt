@@ -3,7 +3,7 @@ murcia = {
 	world = earth
 	geocoordinate = { -1.12996749003 37.97999310210 } #from Natural Earth
 	pos_offset = { 0 -1 }
-	type = settlement
+	type = holding
 	
 	history = {
 		1360 = {

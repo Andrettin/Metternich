@@ -2,7 +2,7 @@ chambery = {
 	name = "Chambery" #"Chambéry"
 	world = earth
 	geocoordinate = { 5.9208333333333 45.566388888889 }
-	type = settlement
+	type = holding
 	province = savoy
 	
 	history = {

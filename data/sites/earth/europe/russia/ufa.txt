@@ -2,7 +2,7 @@ ufa = {
 	name = "Ufa"
 	world = earth
 	geocoordinate = { 56.04003128950 54.78997479160 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = iron_ore
 	province = bashkortostan
 }

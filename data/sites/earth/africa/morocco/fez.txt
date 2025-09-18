@@ -2,7 +2,7 @@ fez = {
 	name = "Fez"
 	world = earth
 	geocoordinate = { -5.00037723939 34.05459962870 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = fez
 	
 	history = {

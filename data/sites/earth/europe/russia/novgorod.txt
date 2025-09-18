@@ -2,7 +2,7 @@ novgorod = {
 	name = "Novgorod"
 	world = earth
 	geocoordinate = { 31.33001501340 58.49998089510 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = novgorod
 	
 	history = {

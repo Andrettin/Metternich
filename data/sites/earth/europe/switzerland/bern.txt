@@ -2,7 +2,7 @@ bern = {
 	name = "Bern"
 	world = earth
 	geocoordinate = { 7.46697546248 46.91668275870 } #from Natural Earth
-	type = settlement
+	type = holding
 	
 	history = {
 		919 = {

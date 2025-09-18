@@ -2,7 +2,7 @@ amsterdam = {
 	name = "Amsterdam"
 	world = earth
 	geocoordinate = { 4.91664017601 52.34996868810 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = holland
 	
 	history = {

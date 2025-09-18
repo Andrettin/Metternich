@@ -2,7 +2,7 @@ ur = {
 	name = "Ur"
 	world = earth
 	geocoordinate = { 46.104444 30.962222 }
-	type = settlement
+	type = holding
 	
 	history = {
 		-1450 = {

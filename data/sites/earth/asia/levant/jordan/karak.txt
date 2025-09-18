@@ -2,5 +2,5 @@ karak = {
 	name = "Karak"
 	world = earth
 	geocoordinate = { 35.70473506550 31.18511069640 } #from Natural Earth
-	type = settlement
+	type = holding
 }

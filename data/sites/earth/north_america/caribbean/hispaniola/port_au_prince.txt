@@ -2,7 +2,7 @@ port_au_prince = {
 	name = "Port-au-Prince"
 	world = earth
 	geocoordinate = { -72.33603458830 18.54102459610 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = tobacco
 	province = haiti
 }

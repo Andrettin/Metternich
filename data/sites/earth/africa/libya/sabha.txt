@@ -2,7 +2,7 @@ sabha = {
 	name = "Sabha"
 	world = earth
 	geocoordinate = { 14.43332027050 27.03327109680 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = sheep
 	province = fezzan
 }

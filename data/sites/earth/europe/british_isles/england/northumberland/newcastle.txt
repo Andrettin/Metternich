@@ -2,7 +2,7 @@ newcastle = {
 	name = "Newcastle"
 	world = earth
 	geocoordinate = { -1.59999047994 55.00037538570 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = coal
 	province = northumberland
 }

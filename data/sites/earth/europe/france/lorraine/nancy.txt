@@ -2,7 +2,7 @@ nancy = {
 	name = "Nancy"
 	world = earth
 	geocoordinate = { 6.20002437198 48.68368084620 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = dye
 	province = lorraine
 	

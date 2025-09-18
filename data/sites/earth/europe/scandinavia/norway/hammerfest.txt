@@ -2,7 +2,7 @@ hammerfest = {
 	name = "Hammerfest"
 	world = earth
 	geocoordinate = { 23.68800085320 70.66127992670 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = timber
 	province = finnmark
 }

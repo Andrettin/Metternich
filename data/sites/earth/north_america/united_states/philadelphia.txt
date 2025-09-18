@@ -2,7 +2,7 @@ philadelphia = {
 	name = "Philadelphia"
 	world = earth
 	geocoordinate = { -75.16999597340 39.99997316390 } #from Natural Earth
-	type = settlement
+	type = holding
 	
 	history = {
 		1815 = {

@@ -2,6 +2,6 @@ bryansk = {
 	name = "Bryansk"
 	world = earth
 	geocoordinate = { 34.42998083370 53.25999066070 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = bryansk
 }

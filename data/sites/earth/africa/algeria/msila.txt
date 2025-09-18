@@ -2,5 +2,5 @@ msila = {
 	name = "M'sila"
 	world = earth
 	geocoordinate = { 4.54500058388 35.70000309600 } #from Natural Earth
-	type = settlement
+	type = holding
 }

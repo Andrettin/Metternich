@@ -2,6 +2,6 @@ guiyang = {
 	name = "Guiyang"
 	world = earth
 	geocoordinate = { 106.72003861400 26.58004294740 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = guizhou
 }

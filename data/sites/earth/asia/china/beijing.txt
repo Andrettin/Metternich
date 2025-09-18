@@ -2,7 +2,7 @@ beijing = {
 	name = "Beijing"
 	world = earth
 	geocoordinate = { 116.38828568400 39.92889223130 } #from Natural Earth
-	type = settlement
+	type = holding
 	resource = center_of_trade
 	province = hebei
 }

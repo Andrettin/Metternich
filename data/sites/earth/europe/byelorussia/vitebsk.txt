@@ -2,7 +2,7 @@ vitebsk = {
 	name = "Vitebsk"
 	world = earth
 	geocoordinate = { 30.18533036170 55.18871014310 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = vitebsk
 	
 	history = {

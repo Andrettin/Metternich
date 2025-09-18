@@ -2,5 +2,5 @@ kozani = {
 	name = "Kozani"
 	world = earth
 	geocoordinate = { 21.78896 40.30069 }
-	type = settlement
+	type = holding
 }

@@ -2,7 +2,7 @@ quetta = {
 	name = "Quetta"
 	world = earth
 	geocoordinate = { 67.02499385460 30.22000164690 } #from Natural Earth
-	type = settlement
+	type = holding
 	#resource = sheep
 	province = balochistan
 }

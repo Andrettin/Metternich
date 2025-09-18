@@ -2,6 +2,6 @@ canton = {
 	name = "Canton"
 	world = earth
 	geocoordinate = { 113.32501013100 23.14498130190 } #from Natural Earth (Guangzhou)
-	type = settlement
+	type = holding
 	province = canton
 }

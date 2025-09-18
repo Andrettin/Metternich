@@ -2,5 +2,5 @@ iqaluit = {
 	name = "Iqaluit"
 	world = earth
 	geocoordinate = { -68.50019174610 63.75045937890 } #from Natural Earth
-	type = settlement
+	type = holding
 }

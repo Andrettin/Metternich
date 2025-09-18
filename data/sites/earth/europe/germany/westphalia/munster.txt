@@ -2,7 +2,7 @@ munster = {
 	name = "Munster" #"Münster"
 	world = earth
 	geocoordinate = { 7.62004105493 51.97040529290 } #from Natural Earth
-	type = settlement
+	type = holding
 	
 	history = {
 		919 = {

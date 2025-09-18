@@ -2,6 +2,6 @@ isfahan = {
 	name = "Isfahan"
 	world = earth
 	geocoordinate = { 51.70003779990 32.70000530910 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = isfahan
 }

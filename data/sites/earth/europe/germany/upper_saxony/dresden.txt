@@ -2,7 +2,7 @@ dresden = {
 	name = "Dresden"
 	world = earth
 	geocoordinate = { 13.75000280630 51.04997051910 } #from Natural Earth
-	type = settlement
+	type = holding
 	
 	history = {
 		1360 = {

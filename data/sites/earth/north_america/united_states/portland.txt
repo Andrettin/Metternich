@@ -2,5 +2,5 @@ portland = {
 	name = "Portland"
 	world = earth
 	geocoordinate = { -122.67999007400 45.52002382310 } #from Natural Earth
-	type = settlement
+	type = holding
 }

@@ -2,6 +2,6 @@ hamadan = {
 	name = "Hamadan"
 	world = earth
 	geocoordinate = { 48.51501257200 34.79602724100 } #from Natural Earth
-	type = settlement
+	type = holding
 	province = hamadan
 }

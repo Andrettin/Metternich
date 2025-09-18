@@ -2,6 +2,6 @@ canterbury = {
 	name = "Canterbury"
 	world = earth
 	geocoordinate = { 1.0775 51.278333333333 }
-	type = settlement
+	type = holding
 	#resource = holy_site
 }
