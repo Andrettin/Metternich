@@ -2,9 +2,6 @@ scania = {
 	name = "Scania"
 	color = { 192 65 97 }
 	provincial_capital = malmo
-	resources = {
-		grain = 1
-	}
 	regions = {
 		sweden
 	}

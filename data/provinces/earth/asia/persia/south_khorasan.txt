@@ -2,9 +2,6 @@ south_khorasan = {
 	name = "South Khorasan"
 	color = { 176 182 54 }
 	provincial_capital = birjand
-	resources = {
-		cotton = 1
-	}
 	regions = {
 		persia
 	}

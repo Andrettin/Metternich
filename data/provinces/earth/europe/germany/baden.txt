@@ -2,13 +2,6 @@ baden = {
 	name = "Baden"
 	color = { 94 34 10 }
 	provincial_capital = karlsruhe
-	resources = {
-		grain = 2
-		fruit = 2
-		cattle = 1
-		sheep = 1
-		timber = 4
-	}
 	regions = {
 		germany
 	}

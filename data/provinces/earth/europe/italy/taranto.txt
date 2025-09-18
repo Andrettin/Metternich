@@ -6,11 +6,6 @@ taranto = {
 		greek = "Taras"
 		roman = "Tarentum"
 	}
-	resources = {
-		fruit = 1
-		cattle = 1
-		timber = 5
-	}
 	regions = {
 		italy
 	}

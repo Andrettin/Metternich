@@ -2,9 +2,6 @@ orenburg = {
 	name = "Orenburg"
 	color = { 133 87 164 }
 	provincial_capital = orenburg
-	resources = {
-		iron_ore = 1
-	}
 	regions = {
 		european_russia
 	}

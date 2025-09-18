@@ -2,9 +2,6 @@ constantine = {
 	name = "Constantine"
 	color = { 215 207 203 }
 	provincial_capital = constantine
-	resources = {
-		iron_ore = 1
-	}
 	regions = {
 		algeria
 	}

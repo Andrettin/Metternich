@@ -2,10 +2,6 @@ holstein = {
 	name = "Holstein"
 	color = { 128 65 96 }
 	provincial_capital = kiel
-	resources = {
-		grain = 3
-		cattle = 3
-	}
 	regions = {
 		germany
 	}

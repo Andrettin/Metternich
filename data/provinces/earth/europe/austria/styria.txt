@@ -2,14 +2,6 @@ styria = {
 	name = "Styria"
 	color = { 176 97 65 }
 	provincial_capital = graz
-	resources = {
-		grain = 3
-		fruit = 2
-		cattle = 2
-		sheep = 1
-		iron_ore = 2 #Source: Map No. 77706 of the Perry-Castañeda Library Map Collection, 1969.
-		salt = 1 #Source: Map No. 77706 of the Perry-Castañeda Library Map Collection, 1969.
-	}
 	regions = {
 		austria #only Lower Styria belongs to modern Austria; Upper Styria is part of Slovenia
 		imperial_austria_1806

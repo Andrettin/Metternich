@@ -2,9 +2,6 @@ fars = {
 	name = "Fars"
 	color = { 228 211 218 }
 	provincial_capital = shiraz
-	resources = {
-		opium = 1
-	}
 	regions = {
 		persia
 	}

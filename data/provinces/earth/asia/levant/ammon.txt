@@ -2,9 +2,6 @@ ammon = {
 	name = "Ammon"
 	color = { 206 35 30 }
 	provincial_capital = ammon
-	resources = {
-		grain = 1
-	}
 	cultural_names = {
 		arabic = "Amman"
 	}

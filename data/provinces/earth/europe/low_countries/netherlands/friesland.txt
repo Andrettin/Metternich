@@ -2,10 +2,6 @@ friesland = {
 	name = "Friesland"
 	color = { 65 192 33 }
 	provincial_capital = leeuwarden
-	resources = {
-		grain = 2
-		fruit = 1
-	}
 	regions = {
 		netherlands
 	}

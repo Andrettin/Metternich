@@ -2,9 +2,6 @@ razavi_khorasan = {
 	name = "Razavi Khorasan"
 	color = { 52 161 33 }
 	provincial_capital = mashhad
-	resources = {
-		coal = 1
-	}
 	regions = {
 		persia
 	}

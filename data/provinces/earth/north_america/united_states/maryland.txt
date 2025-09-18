@@ -2,9 +2,6 @@ maryland = {
 	name = "Maryland"
 	color = { 240 128 0 }
 	provincial_capital = baltimore
-	resources = {
-		tobacco = 1
-	}
 	regions = {
 		thirteen_colonies
 		united_states

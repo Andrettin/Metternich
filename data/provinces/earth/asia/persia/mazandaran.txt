@@ -2,9 +2,6 @@ mazandaran = {
 	name = "Mazandaran"
 	color = { 17 193 68 }
 	provincial_capital = sari
-	resources = {
-		sheep = 1
-	}
 	regions = {
 		persia
 	}

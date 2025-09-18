@@ -2,9 +2,6 @@ azerbaijan = {
 	name = "Azerbaijan"
 	color = { 170 72 127 }
 	provincial_capital = baku
-	resources = {
-		grain = 1
-	}
 	regions = {
 		azerbaijan
 	}

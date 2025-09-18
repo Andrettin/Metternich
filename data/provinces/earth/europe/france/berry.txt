@@ -2,9 +2,6 @@ berry = {
 	name = "Berry"
 	color = { 144 224 0 }
 	provincial_capital = bourges
-	resources = {
-		timber = 1
-	}
 	regions = {
 		france
 	}

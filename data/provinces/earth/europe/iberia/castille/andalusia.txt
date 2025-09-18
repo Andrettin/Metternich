@@ -2,14 +2,6 @@ andalusia = {
 	name = "Andalusia"
 	color = { 128 16 32 }
 	provincial_capital = seville
-	resources = {
-		grain = 4
-		fruit = 2
-		sheep = 1
-		horses = 1
-		copper = 5 #Source: Map No. 501745 of the Perry-Castañeda Library Map Collection, 1974.
-		lead = 3 #Source: Map No. 501745 of the Perry-Castañeda Library Map Collection, 1974.
-	}
 	regions = {
 		spain
 	}

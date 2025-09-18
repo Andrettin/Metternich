@@ -2,9 +2,6 @@ riyadh = {
 	name = "Riyadh"
 	color = { 143 165 83 }
 	provincial_capital = riyadh
-	resources = {
-		sheep = 1
-	}
 	regions = {
 		asia
 		middle_east

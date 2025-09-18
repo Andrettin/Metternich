@@ -2,9 +2,6 @@ illinois = {
 	name = "Illinois"
 	color = { 144 128 64 }
 	provincial_capital = chicago
-	resources = {
-		coal = 1
-	}
 	regions = {
 		mississippi_basin
 		united_states

@@ -2,9 +2,6 @@ moselle = {
 	name = "Moselle"
 	color = { 248 197 32 }
 	provincial_capital = metz
-	resources = {
-		gold = 1
-	}
 	regions = {
 		lorraine
 	}

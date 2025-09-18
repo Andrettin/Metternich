@@ -2,9 +2,6 @@ mogilev = {
 	name = "Mogilev"
 	color = { 65 160 224 }
 	provincial_capital = mogilev
-	resources = {
-		grain = 1
-	}
 	regions = {
 		byelorussia
 		poland_lithuania

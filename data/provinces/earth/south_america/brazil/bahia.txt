@@ -2,12 +2,6 @@ bahia = {
 	name = "Bahia"
 	color = { 1 160 176 }
 	provincial_capital = salvador
-	resources = {
-		tobacco = 1 #Source: Map No. 503241 of the Perry-Castañeda Library Map Collection, 1977.
-		iron_ore = 2 #Source: Map No. 503241 of the Perry-Castañeda Library Map Collection, 1977.
-		diamonds = 2 #diamonds and other precious stones; Source: Map No. 503241 of the Perry-Castañeda Library Map Collection, 1977.
-		oil = 1 #Source: Map No. 503241 of the Perry-Castañeda Library Map Collection, 1977.
-	}
 	regions = {
 		brazil
 	}

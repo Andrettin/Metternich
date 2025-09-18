@@ -2,9 +2,6 @@ virginia = {
 	name = "Virginia"
 	color = { 192 176 192 }
 	provincial_capital = richmond
-	resources = {
-		tobacco = 1
-	}
 	regions = {
 		thirteen_colonies
 		united_states

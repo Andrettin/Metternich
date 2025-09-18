@@ -2,9 +2,6 @@ west_baluchistan = {
 	name = "West Baluchistan"
 	color = { 156 107 5 }
 	provincial_capital = zahedan
-	resources = {
-		grain = 1
-	}
 	regions = {
 		persia
 	}

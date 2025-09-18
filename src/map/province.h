@@ -199,11 +199,6 @@ public:
 	const std::string &get_cultural_name(const culture *culture) const;
 	const std::string &get_cultural_name(const cultural_group *cultural_group) const;
 
-	const resource_map<int> &get_resource_counts() const
-	{
-		return this->resource_counts;
-	}
-
 	const std::vector<region *> &get_regions() const
 	{
 		return this->regions;
@@ -272,7 +267,6 @@ private:
 	std::vector<const metternich::terrain_type *> terrain_types;
 	std::map<const culture *, std::string> cultural_names;
 	std::map<const cultural_group *, std::string> cultural_group_names;
-	resource_map<int> resource_counts;
 	std::vector<region *> regions; //regions where this province is located
 	std::vector<const country *> core_countries;
 	province_map<const terrain_feature *> border_rivers;

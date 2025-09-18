@@ -2,9 +2,6 @@ algeria = {
 	name = "Algeria"
 	color = { 136 222 8 }
 	provincial_capital = algiers
-	resources = {
-		grain = 1
-	}
 	regions = {
 		algeria
 	}

@@ -2,11 +2,6 @@ lower_austria = {
 	name = "Lower Austria"
 	color = { 49 97 65 }
 	provincial_capital = vienna
-	resources = {
-		grain = 3
-		fruit = 5
-		horses = 1
-	}
 	regions = {
 		austria
 		imperial_austria_1806

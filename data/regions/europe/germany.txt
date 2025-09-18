@@ -36,9 +36,4 @@ pomerania = {
 		europe
 		west_and_central_europe
 	}
-	resources = {
-		fruit = 1
-		cattle = 2
-		timber = 3
-	}
 }

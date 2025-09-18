@@ -2,9 +2,6 @@ carniola = {
 	name = "Carniola"
 	color = { 176 224 64 }
 	provincial_capital = laibach
-	resources = {
-		cotton = 1
-	}
 	regions = {
 		cisleithania
 		imperial_austria_1806

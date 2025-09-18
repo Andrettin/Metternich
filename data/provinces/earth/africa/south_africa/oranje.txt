@@ -2,9 +2,6 @@ oranje = {
 	name = "Oranje"
 	color = { 225 215 247 }
 	provincial_capital = bloemfontein
-	resources = {
-		sheep = 1
-	}
 	regions = {
 		africa
 	}

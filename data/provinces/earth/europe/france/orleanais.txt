@@ -2,9 +2,6 @@ orleanais = {
 	name = "Orleanais"
 	color = { 16 223 0 }
 	provincial_capital = orleans
-	resources = {
-		timber = 1
-	}
 	regions = {
 		france
 	}

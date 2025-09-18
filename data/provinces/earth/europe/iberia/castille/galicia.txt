@@ -2,11 +2,6 @@ galicia = {
 	name = "Galicia"
 	color = { 84 45 206 }
 	provincial_capital = santiago_de_compostela
-	resources = {
-		grain = 2
-		cattle = 2
-		sheep = 2
-	}
 	regions = {
 		spain
 	}

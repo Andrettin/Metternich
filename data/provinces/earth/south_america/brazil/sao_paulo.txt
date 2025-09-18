@@ -2,13 +2,6 @@ sao_paulo = {
 	name = "Sao Paulo" #"São Paulo"
 	color = { 83 205 137 }
 	provincial_capital = sao_paulo
-	resources = {
-		grain = 2 #corn; Source: Map No. 503241 of the Perry-Castañeda Library Map Collection, 1977.
-		cattle = 1 #Source: Map No. 503241 of the Perry-Castañeda Library Map Collection, 1977.
-		iron_ore = 1 #Source: Map No. 503241 of the Perry-Castañeda Library Map Collection, 1977.
-		diamonds = 1 #diamonds and other precious stones; Source: Map No. 503241 of the Perry-Castañeda Library Map Collection, 1977.
-		coffee = 1
-	}
 	regions = {
 		brazil
 	}

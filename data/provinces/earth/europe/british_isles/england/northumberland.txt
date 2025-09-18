@@ -2,9 +2,6 @@ northumberland = {
 	name = "Northumberland"
 	color = { 96 96 0 }
 	provincial_capital = newcastle
-	resources = {
-		coal = 1
-	}
 	regions = {
 		england
 	}

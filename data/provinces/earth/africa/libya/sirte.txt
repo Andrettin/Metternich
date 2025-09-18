@@ -2,9 +2,6 @@ sirte = {
 	name = "Sirte"
 	color = { 97 208 94 }
 	provincial_capital = sirte
-	resources = {
-		sheep = 1
-	}
 	regions = {
 		libya
 	}

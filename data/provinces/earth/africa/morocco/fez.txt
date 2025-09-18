@@ -2,9 +2,6 @@ fez = {
 	name = "Fez"
 	color = { 56 243 51 }
 	provincial_capital = fez
-	resources = {
-		grain = 1
-	}
 	regions = {
 		morocco
 	}

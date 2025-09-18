@@ -2,9 +2,6 @@ akershus = {
 	name = "Akershus"
 	color = { 192 65 224 }
 	provincial_capital = oslo
-	resources = {
-		fish = 1
-	}
 	regions = {
 		norway
 	}

@@ -2,9 +2,6 @@ djibouti = {
 	name = "Djibouti"
 	color = { 135 64 144 }
 	provincial_capital = djibouti
-	resources = {
-		cattle = 1
-	}
 	regions = {
 		africa
 	}

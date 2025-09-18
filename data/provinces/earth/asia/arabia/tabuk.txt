@@ -2,9 +2,6 @@ tabuk = {
 	name = "Tabuk"
 	color = { 238 169 174 }
 	provincial_capital = tabuk
-	resources = {
-		sheep = 1
-	}
 	regions = {
 		asia
 		middle_east

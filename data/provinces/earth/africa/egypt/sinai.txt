@@ -2,9 +2,6 @@ sinai = {
 	name = "Sinai"
 	color = { 88 149 3 }
 	provincial_capital = al_arish
-	resources = {
-		fruit = 1
-	}
 	regions = {
 		egypt
 	}

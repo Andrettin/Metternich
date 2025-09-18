@@ -2,9 +2,6 @@ yazd = {
 	name = "Yazd"
 	color = { 169 200 97 }
 	provincial_capital = yazd
-	resources = {
-		iron_ore = 1
-	}
 	regions = {
 		persia
 	}

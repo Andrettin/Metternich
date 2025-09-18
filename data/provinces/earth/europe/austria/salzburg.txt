@@ -5,10 +5,6 @@ salzburg = {
 	cultural_names = {
 		roman = "Iuvavum"
 	}
-	resources = {
-		grain = 2
-		fruit = 1
-	}
 	regions = {
 		austria
 		imperial_austria_1806

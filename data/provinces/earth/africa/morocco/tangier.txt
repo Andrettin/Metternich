@@ -2,9 +2,6 @@ tangier = {
 	name = "Tangier"
 	color = { 210 21 71 }
 	provincial_capital = tangier
-	resources = {
-		grain = 1
-	}
 	regions = {
 		morocco
 	}

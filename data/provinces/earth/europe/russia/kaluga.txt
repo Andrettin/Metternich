@@ -2,9 +2,6 @@ kaluga = {
 	name = "Kaluga"
 	color = { 35 212 109 }
 	provincial_capital = kaluga
-	resources = {
-		timber = 1
-	}
 	regions = {
 		european_russia
 	}

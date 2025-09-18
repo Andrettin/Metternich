@@ -2,11 +2,6 @@ herzegovina = {
 	name = "Herzegovina"
 	color = { 54 215 74 }
 	provincial_capital = mostar
-	resources = {
-		fruit = 1
-		timber = 5
-		tobacco = 2 #Source: Map No. 802172 of the Perry-Castañeda Library Map Collection, 1993.
-	}
 	regions = {
 		bosnia
 	}

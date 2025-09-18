@@ -2,9 +2,6 @@ karbala = {
 	name = "Karbala"
 	color = { 104 212 60 }
 	provincial_capital = karbala
-	resources = {
-		grain = 1
-	}
 	regions = {
 		asia
 		middle_east

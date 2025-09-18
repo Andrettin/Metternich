@@ -2,11 +2,6 @@ bukovina = {
 	name = "Bukovina"
 	color = { 49 160 160 }
 	provincial_capital = czernowitz
-	resources = {
-		timber = 2
-		
-		fruit = 1
-	}
 	regions = {
 		galicia
 	}

@@ -2,11 +2,6 @@ extremadura = {
 	name = "Extremadura"
 	color = { 80 48 192 }
 	provincial_capital = merida
-	resources = {
-		cattle = 2
-		sheep = 3
-		lead = 1 #Source: Map No. 501745 of the Perry-Castañeda Library Map Collection, 1974.
-	}
 	regions = {
 		spain
 	}

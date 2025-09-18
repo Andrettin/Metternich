@@ -2,9 +2,6 @@ moscow = {
 	name = "Moscow"
 	color = { 224 160 33 }
 	provincial_capital = moscow
-	resources = {
-		timber = 1
-	}
 	regions = {
 		european_russia
 	}

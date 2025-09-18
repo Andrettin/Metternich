@@ -2,12 +2,6 @@ rio_grande_do_sul = {
 	name = "Rio Grande do Sul"
 	color = { 68 199 176 }
 	provincial_capital = porto_alegre
-	resources = {
-		grain = 1 #corn; Source: Map No. 503241 of the Perry-Castañeda Library Map Collection, 1977.
-		cattle = 1 #Source: Map No. 503241 of the Perry-Castañeda Library Map Collection, 1977.
-		tobacco = 1 #Source: Map No. 503241 of the Perry-Castañeda Library Map Collection, 1977.
-		coal = 2 #Source: Map No. 503241 of the Perry-Castañeda Library Map Collection, 1977.
-	}
 	regions = {
 		brazil
 	}

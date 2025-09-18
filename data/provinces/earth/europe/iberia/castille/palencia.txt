@@ -2,9 +2,6 @@ palencia = {
 	name = "Palencia"
 	color = { 74 63 31 }
 	provincial_capital = palencia
-	resources = {
-		grain = 1
-	}
 	regions = {
 		spain
 	}

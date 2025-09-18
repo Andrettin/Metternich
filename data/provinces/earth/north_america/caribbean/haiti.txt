@@ -5,9 +5,6 @@ haiti = {
 	cultural_names = {
 		french = "Saint-Domingue"
 	}
-	resources = {
-		tobacco = 1
-	}
 	regions = {
 		caribbean
 	}

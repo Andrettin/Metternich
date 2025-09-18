@@ -2,9 +2,6 @@ limousin = {
 	name = "Limousin"
 	color = { 48 96 0 }
 	provincial_capital = limoges
-	resources = {
-		cattle = 1
-	}
 	regions = {
 		france
 	}

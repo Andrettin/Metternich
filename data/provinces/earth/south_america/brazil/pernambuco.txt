@@ -2,10 +2,6 @@ pernambuco = {
 	name = "Pernambuco"
 	color = { 33 128 80 }
 	provincial_capital = recife
-	resources = {
-		grain = 1 #corn; Source: Map No. 503241 of the Perry-Castañeda Library Map Collection, 1977.
-		coffee = 1
-	}
 	regions = {
 		brazil
 	}

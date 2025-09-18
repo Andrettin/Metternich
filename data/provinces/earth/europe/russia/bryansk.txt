@@ -2,9 +2,6 @@ bryansk = {
 	name = "Bryansk"
 	color = { 173 107 57 }
 	provincial_capital = bryansk
-	resources = {
-		cattle = 1
-	}
 	regions = {
 		european_russia
 	}

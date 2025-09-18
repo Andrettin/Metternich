@@ -2,9 +2,6 @@ florida = {
 	name = "Florida"
 	color = { 160 48 0 }
 	provincial_capital = tallahassee
-	resources = {
-		cotton = 1
-	}
 	regions = {
 		united_states
 	}

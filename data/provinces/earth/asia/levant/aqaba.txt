@@ -2,9 +2,6 @@ aqaba = {
 	name = "Aqaba"
 	color = { 211 20 110 }
 	provincial_capital = aqaba
-	resources = {
-		sheep = 1
-	}
 	regions = {
 		asia
 		middle_east

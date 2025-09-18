@@ -2,10 +2,6 @@ cosenza = {
 	name = "Cosenza"
 	color = { 128 3 14 }
 	provincial_capital = cosenza
-	resources = {
-		fruit = 4
-		sheep = 2
-	}
 	regions = {
 		italy
 	}

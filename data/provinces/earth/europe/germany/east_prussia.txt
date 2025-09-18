@@ -2,12 +2,6 @@ east_prussia = {
 	name = "East Prussia"
 	color = { 65 33 160 }
 	provincial_capital = konigsberg
-	resources = {
-		grain = 4
-		fruit = 1
-		cattle = 1
-		timber = 2
-	}
 	regions = {
 		european_russia
 	}

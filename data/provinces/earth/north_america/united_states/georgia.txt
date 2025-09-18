@@ -2,9 +2,6 @@ georgia = {
 	name = "Georgia"
 	color = { 64 112 64 }
 	provincial_capital = atlanta
-	resources = {
-		cotton = 1
-	}
 	regions = {
 		thirteen_colonies
 		united_states

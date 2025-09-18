@@ -2,9 +2,6 @@ hadarom = {
 	name = "Hadarom"
 	color = { 210 162 55 }
 	provincial_capital = beersheba
-	resources = {
-		grain = 1
-	}
 	regions = {
 		asia
 		middle_east

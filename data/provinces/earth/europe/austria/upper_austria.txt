@@ -2,10 +2,6 @@ upper_austria = {
 	name = "Upper Austria"
 	color = { 144 1 160 }
 	provincial_capital = linz
-	resources = {
-		grain = 1
-		salt = 1 #Source: Map No. 77706 of the Perry-Castañeda Library Map Collection, 1969.
-	}
 	regions = {
 		austria
 		imperial_austria_1806

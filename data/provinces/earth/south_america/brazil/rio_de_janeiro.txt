@@ -2,9 +2,6 @@ rio_de_janeiro = {
 	name = "Rio de Janeiro"
 	color = { 31 205 137 }
 	provincial_capital = rio_de_janeiro
-	resources = {
-		coffee = 1
-	}
 	regions = {
 		brazil
 	}

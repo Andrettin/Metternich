@@ -2,9 +2,6 @@ kyzylorda = {
 	name = "Kyzylorda"
 	color = { 231 192 117 }
 	provincial_capital = kyzylorda
-	resources = {
-		coal = 1
-	}
 	regions = {
 		kazakhstan
 	}

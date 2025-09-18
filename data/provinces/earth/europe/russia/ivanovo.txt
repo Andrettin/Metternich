@@ -2,9 +2,6 @@ ivanovo = {
 	name = "Ivanovo"
 	color = { 241 254 26 }
 	provincial_capital = ivanovo
-	resources = {
-		timber = 1
-	}
 	regions = {
 		european_russia
 	}

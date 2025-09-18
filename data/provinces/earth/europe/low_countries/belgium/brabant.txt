@@ -2,13 +2,6 @@ brabant = {
 	name = "Brabant"
 	color = { 1 128 97 }
 	provincial_capital = brussels
-	resources = {
-		grain = 1
-		fruit = 2
-		sheep = 1
-		timber = 4
-		coal = 1
-	}
 	regions = {
 		belgium
 	}

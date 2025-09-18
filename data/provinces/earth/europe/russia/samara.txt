@@ -2,9 +2,6 @@ samara = {
 	name = "Samara"
 	color = { 127 73 251 }
 	provincial_capital = samara
-	resources = {
-		grain = 1
-	}
 	regions = {
 		european_russia
 	}

@@ -2,9 +2,6 @@ afghanistan = {
 	name = "Afghanistan"
 	color = { 194 33 232 }
 	provincial_capital = kabul
-	resources = {
-		timber = 1
-	}
 	regions = {
 		asia
 	}

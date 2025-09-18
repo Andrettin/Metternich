@@ -2,9 +2,6 @@ ardabil = {
 	name = "Ardabil"
 	color = { 245 43 125 }
 	provincial_capital = ardabil
-	resources = {
-		timber = 1
-	}
 	regions = {
 		persia
 	}

@@ -2,9 +2,6 @@ nakhchivan = {
 	name = "Nakhchivan"
 	color = { 111 236 67 }
 	provincial_capital = nakhchivan
-	resources = {
-		iron_ore = 1
-	}
 	regions = {
 		azerbaijan
 	}

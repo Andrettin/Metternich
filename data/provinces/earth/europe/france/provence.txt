@@ -2,9 +2,6 @@ provence = {
 	name = "Provence"
 	color = { 49 192 223 }
 	provincial_capital = marseilles
-	resources = {
-		fruit = 1
-	}
 	regions = {
 		france
 	}

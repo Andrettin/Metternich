@@ -2,14 +2,6 @@ minas_gerais = {
 	name = "Minas Gerais"
 	color = { 132 153 248 }
 	provincial_capital = ouro_preto
-	resources = {
-		grain = 1 #corn; Source: Map No. 503241 of the Perry-Castañeda Library Map Collection, 1977.
-		tobacco = 1 #Source: Map No. 503241 of the Perry-Castañeda Library Map Collection, 1977.
-		cattle = 1 #Source: Map No. 503241 of the Perry-Castañeda Library Map Collection, 1977.
-		iron_ore = 3 #Source: Map No. 503241 of the Perry-Castañeda Library Map Collection, 1977.
-		diamonds = 1 #diamonds and other precious stones; Source: Map No. 503241 of the Perry-Castañeda Library Map Collection, 1977.
-		coffee = 1
-	}
 	regions = {
 		brazil
 	}

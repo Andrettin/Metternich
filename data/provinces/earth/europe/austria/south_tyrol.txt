@@ -2,9 +2,6 @@ south_tyrol = {
 	name = "South Tyrol"
 	color = { 126 94 49 }
 	provincial_capital = trent
-	resources = {
-		grain = 1
-	}
 	regions = {
 		austria
 	}

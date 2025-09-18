@@ -2,9 +2,6 @@ west_azarbaijan = {
 	name = "West Azarbaijan"
 	color = { 82 30 18 }
 	provincial_capital = urmia
-	resources = {
-		sheep = 1
-	}
 	regions = {
 		persia
 	}

@@ -2,9 +2,6 @@ finland = {
 	name = "Finland"
 	color = { 44 80 36 }
 	provincial_capital = turku
-	resources = {
-		fish = 1
-	}
 	regions = {
 		finland
 	}

@@ -2,9 +2,6 @@ qazvin = {
 	name = "Qazvin"
 	color = { 180 116 13 }
 	provincial_capital = qazvin
-	resources = {
-		timber = 1
-	}
 	regions = {
 		persia
 	}

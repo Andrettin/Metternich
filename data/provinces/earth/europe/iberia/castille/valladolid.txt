@@ -2,9 +2,6 @@ valladolid = {
 	name = "Valladolid"
 	color = { 66 18 25 }
 	provincial_capital = valladolid
-	resources = {
-		cattle = 1
-	}
 	regions = {
 		spain
 	}

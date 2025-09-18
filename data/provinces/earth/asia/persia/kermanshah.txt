@@ -2,9 +2,6 @@ kermanshah = {
 	name = "Kermanshah"
 	color = { 240 191 102 }
 	provincial_capital = kermanshah
-	resources = {
-		sheep = 1
-	}
 	regions = {
 		persia
 	}

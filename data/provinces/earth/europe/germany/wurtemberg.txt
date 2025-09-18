@@ -2,12 +2,6 @@ wurtemberg = {
 	name = "Wurtemberg"
 	color = { 17 128 96 }
 	provincial_capital = stuttgart
-	resources = {
-		grain = 3
-		fruit = 1
-		sheep = 1
-		timber = 1
-	}
 	regions = {
 		germany
 	}

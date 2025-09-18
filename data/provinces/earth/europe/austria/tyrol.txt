@@ -2,9 +2,6 @@ tyrol = {
 	name = "Tyrol"
 	color = { 81 192 224 }
 	provincial_capital = innsbruck
-	resources = {
-		timber = 1
-	}
 	regions = {
 		austria
 	}

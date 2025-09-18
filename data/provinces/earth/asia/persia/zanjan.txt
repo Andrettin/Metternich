@@ -2,9 +2,6 @@ zanjan = {
 	name = "Zanjan"
 	color = { 159 61 145 }
 	provincial_capital = zanjan
-	resources = {
-		cattle = 1
-	}
 	regions = {
 		persia
 	}

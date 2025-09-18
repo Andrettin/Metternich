@@ -2,9 +2,6 @@ nizhegorod = {
 	name = "Nizhegorod"
 	color = { 81 19 61 }
 	provincial_capital = nizhny_novgorod
-	resources = {
-		timber = 1
-	}
 	regions = {
 		european_russia
 	}

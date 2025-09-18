@@ -5,13 +5,6 @@ valencia = {
 	cultural_names = {
 		roman = "Valentia" #Source: "Ancient Warfare VII.6", 2013, p. 7.
 	}
-	resources = {
-		grain = 1
-		fruit = 3
-		cattle = 2
-		horses = 1
-		lead = 1 #Source: Map No. 501745 of the Perry-Castañeda Library Map Collection, 1974.
-	}
 	regions = {
 		spain
 	}

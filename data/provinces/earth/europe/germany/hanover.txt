@@ -2,10 +2,6 @@ hanover = {
 	name = "Hanover"
 	color = { 105 75 145 }
 	provincial_capital = hanover
-	resources = {
-		grain = 4
-		fruit = 1
-	}
 	regions = {
 		germany
 	}

@@ -2,12 +2,6 @@ moravia = {
 	name = "Moravia"
 	color = { 113 224 128 }
 	provincial_capital = olmutz
-	resources = {
-		sheep = 2
-		oil = 1
-		
-		coal = 1
-	}
 	regions = {
 		moravia
 	}

@@ -2,9 +2,6 @@ chuy = {
 	name = "Chuy"
 	color = { 76 53 92 }
 	provincial_capital = bishkek
-	resources = {
-		sheep = 1
-	}
 	regions = {
 		kyrgyzstan
 	}

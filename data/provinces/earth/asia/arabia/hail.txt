@@ -2,9 +2,6 @@ hail = {
 	name = "Hail"
 	color = { 112 246 94 }
 	provincial_capital = hail
-	resources = {
-		sheep = 1
-	}
 	regions = {
 		asia
 		middle_east

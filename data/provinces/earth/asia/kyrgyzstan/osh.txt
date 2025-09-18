@@ -2,9 +2,6 @@ osh = {
 	name = "Osh"
 	color = { 71 33 28 }
 	provincial_capital = osh
-	resources = {
-		grain = 1
-	}
 	regions = {
 		kyrgyzstan
 	}

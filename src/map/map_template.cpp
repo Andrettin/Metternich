@@ -615,7 +615,6 @@ void map_template::apply() const
 		map_generator.generate();
 	} else {
 		this->apply_terrain();
-		this->generate_resource_sites();
 		this->apply_site_terrain();
 		this->apply_rivers();
 		this->apply_border_rivers();
@@ -902,124 +901,6 @@ void map_template::apply_provinces() const
 
 		map->set_tile_site(tile_pos, site);
 	}
-}
-
-void map_template::generate_resource_sites() const
-{
-	province_map<std::vector<const site *>> available_sites_per_province;
-	province_map<resource_map<int>> province_placed_resource_counts;
-	std::map<const site *, QPoint> site_positions;
-
-	for (const auto &[tile_pos, site] : this->sites_by_position) {
-		if (site->get_province() == nullptr) {
-			continue;
-		}
-
-		if (site->get_type() == site_type::none) {
-			available_sites_per_province[site->get_province()].push_back(site);
-			site_positions[site] = tile_pos;
-		} else if (site->get_resource() != nullptr) {
-			++province_placed_resource_counts[site->get_province()][site->get_resource()];
-		}
-	}
-
-	for (auto &[province, available_sites] : available_sites_per_province) {
-		resource_map<int> resources_to_generate = province->get_resource_counts();
-
-		for (const auto &[resource, count] : province_placed_resource_counts[province]) {
-			if (!resources_to_generate.contains(resource)) {
-				continue;
-			}
-
-			resources_to_generate[resource] -= count;
-		}
-
-		const bool success = this->generate_resource_sites(resources_to_generate, available_sites, site_positions);
-		if (!success) {
-			log::log_error(std::format("Failed to generate resource sites for province \"{}\".", province->get_identifier()));
-		}
-	}
-
-	for (const region *region : region::get_all()) {
-		resource_map<int> resources_to_generate = region->get_resource_counts();
-
-		if (resources_to_generate.empty()) {
-			continue;
-		}
-
-		std::vector<const site *> available_sites;
-		for (const province *province : region->get_provinces()) {
-			const std::vector<const site *> &province_available_sites = available_sites_per_province[province];
-			vector::merge(available_sites, province_available_sites);
-
-			for (const auto &[resource, count] : province_placed_resource_counts[province]) {
-				if (!resources_to_generate.contains(resource)) {
-					continue;
-				}
-
-				resources_to_generate[resource] -= count;
-			}
-		}
-
-		if (available_sites.empty()) {
-			continue;
-		}
-
-		const bool success = this->generate_resource_sites(resources_to_generate, available_sites, site_positions);
-		if (!success) {
-			log::log_error(std::format("Failed to generate resource sites for region \"{}\".", region->get_identifier()));
-		}
-	}
-}
-
-bool map_template::generate_resource_sites(const resource_map<int> &resource_counts, std::vector<const site *> &available_sites, const std::map<const site *, QPoint> &site_positions) const
-{
-	const map *map = map::get();
-
-	for (const auto &[resource, count] : resource_counts) {
-		if (count <= 0) {
-			continue;
-		}
-
-		if (!resource->is_enabled()) {
-			continue;
-		}
-
-		for (int i = 0; i < count; ++i) {
-			std::vector<const site *> potential_sites;
-			bool found_site_with_suitable_terrain = false;
-
-			for (const site *site : available_sites) {
-				if (site->get_map_data()->get_type() != site_type::none) {
-					continue;
-				}
-
-				const terrain_type *tile_terrain = map->get_tile(site_positions.find(site)->second)->get_terrain();
-				const bool has_suitable_terrain = vector::contains(resource->get_terrain_types(), tile_terrain);
-
-				if (!has_suitable_terrain && found_site_with_suitable_terrain) {
-					continue;
-				} else if (has_suitable_terrain && !found_site_with_suitable_terrain) {
-					potential_sites.clear();
-					found_site_with_suitable_terrain = true;
-				}
-
-				potential_sites.push_back(site);
-			}
-
-			if (potential_sites.empty()) {
-				log::log_error(std::format("No site available for generating resource \"{}\".", resource->get_identifier()));
-				return false;
-			}
-
-			const site *chosen_site = vector::get_random(potential_sites);
-			chosen_site->get_map_data()->set_type(site_type::resource);
-			chosen_site->get_map_data()->set_resource(resource);
-			std::erase(available_sites, chosen_site);
-		}
-	}
-
-	return true;
 }
 
 void map_template::generate_additional_sites() const

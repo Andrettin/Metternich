@@ -2,16 +2,6 @@ castille = {
 	name = "Castille"
 	color = { 48 32 128 }
 	provincial_capital = madrid
-	resources = {
-		grain = 7
-		cattle = 4
-		sheep = 2
-		horses = 1
-		timber = 3
-		cinnabar = 2 #mercury; Source: Map No. 501745 of the Perry-Castañeda Library Map Collection, 1974.
-		lead = 1 #Source: Map No. 501745 of the Perry-Castañeda Library Map Collection, 1974.
-		zinc = 1 #Source: Map No. 501745 of the Perry-Castañeda Library Map Collection, 1974.
-	}
 	regions = {
 		spain
 	}

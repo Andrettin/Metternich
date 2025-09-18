@@ -2,9 +2,6 @@ ostrobothnia = {
 	name = "Ostrobothnia"
 	color = { 208 70 127 }
 	provincial_capital = vaasa
-	resources = {
-		timber = 1
-	}
 	regions = {
 		finland
 	}

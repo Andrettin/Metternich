@@ -2,9 +2,6 @@ pskov = {
 	name = "Pskov"
 	color = { 77 163 105 }
 	provincial_capital = pskov
-	resources = {
-		cattle = 1
-	}
 	regions = {
 		european_russia
 	}

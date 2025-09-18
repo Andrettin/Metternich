@@ -2,9 +2,6 @@ yaroslavl = {
 	name = "Yaroslavl"
 	color = { 194 1 164 }
 	provincial_capital = yaroslavl
-	resources = {
-		timber = 1
-	}
 	regions = {
 		european_russia
 	}

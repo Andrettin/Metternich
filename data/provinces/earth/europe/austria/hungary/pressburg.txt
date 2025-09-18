@@ -2,13 +2,6 @@ pressburg = {
 	name = "Pressburg"
 	color = { 81 97 97 }
 	provincial_capital = pressburg
-	resources = {
-		grain = 4
-		fruit = 1
-		timber = 1
-		
-		cattle = 1
-	}
 	cultural_names = {
 		slovak = "Bratislava"
 	}

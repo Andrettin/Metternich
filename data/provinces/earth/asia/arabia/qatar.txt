@@ -2,9 +2,6 @@ qatar = {
 	name = "Qatar"
 	color = { 92 12 156 }
 	provincial_capital = doha
-	resources = {
-		grain = 1
-	}
 	regions = {
 		asia
 		middle_east

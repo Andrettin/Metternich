@@ -2,14 +2,6 @@ granada = {
 	name = "Granada"
 	color = { 160 176 64 }
 	provincial_capital = granada
-	resources = {
-		grain = 1
-		fruit = 3
-		cattle = 2
-		iron_ore = 1
-		cinnabar = 1 #mercury; Source: Map No. 501745 of the Perry-Castañeda Library Map Collection, 1974.
-		lead = 5 #Source: Map No. 501745 of the Perry-Castañeda Library Map Collection, 1974.
-	}
 	regions = {
 		spain
 	}

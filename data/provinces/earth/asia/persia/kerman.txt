@@ -2,9 +2,6 @@ kerman = {
 	name = "Kerman"
 	color = { 125 41 53 }
 	provincial_capital = kerman
-	resources = {
-		cotton = 1
-	}
 	regions = {
 		persia
 	}

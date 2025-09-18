@@ -2,9 +2,6 @@ franche_comte = {
 	name = "Franche-Comte" #"Franche-Comté"
 	color = { 162 225 129 }
 	provincial_capital = besancon
-	resources = {
-		coal = 1
-	}
 	regions = {
 		france
 	}

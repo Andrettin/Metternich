@@ -2,9 +2,6 @@ croatia = {
 	name = "Croatia"
 	color = { 244 17 246 }
 	provincial_capital = zagreb
-	resources = {
-		timber = 1
-	}
 	regions = {
 		croatia
 		hungary_croatia_slavonia

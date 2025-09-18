@@ -2,9 +2,6 @@ alexandria = {
 	name = "Alexandria"
 	color = { 249 44 41 }
 	provincial_capital = alexandria
-	resources = {
-		cotton = 1
-	}
 	regions = {
 		egypt
 	}

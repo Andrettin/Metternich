@@ -2,9 +2,6 @@ gilan = {
 	name = "Gilan"
 	color = { 246 132 89 }
 	provincial_capital = rasht
-	resources = {
-		timber = 1
-	}
 	regions = {
 		persia
 	}

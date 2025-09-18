@@ -2,9 +2,6 @@ samarkand = {
 	name = "Samarkand"
 	color = { 140 150 17 }
 	provincial_capital = samarkand
-	resources = {
-		grain = 1
-	}
 	regions = {
 		uzbekistan
 	}

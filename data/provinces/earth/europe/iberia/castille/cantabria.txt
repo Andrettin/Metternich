@@ -2,11 +2,6 @@ cantabria = {
 	name = "Cantabria"
 	color = { 82 47 191 }
 	provincial_capital = santander
-	resources = {
-		zinc = 2 #Source: Map No. 501745 of the Perry-Castañeda Library Map Collection, 1974.
-		
-		fish = 1
-	}
 	regions = {
 		spain
 	}

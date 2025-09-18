@@ -2,9 +2,6 @@ tripolitania = {
 	name = "Tripolitania"
 	color = { 18 186 8 }
 	provincial_capital = tripoli
-	resources = {
-		fruit = 1
-	}
 	regions = {
 		libya
 	}

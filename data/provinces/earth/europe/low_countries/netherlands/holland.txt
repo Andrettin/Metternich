@@ -2,10 +2,6 @@ holland = {
 	name = "Holland"
 	color = { 119 119 50 }
 	provincial_capital = amsterdam
-	resources = {
-		grain = 2
-		fruit = 1
-	}
 	regions = {
 		netherlands
 	}

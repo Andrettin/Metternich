@@ -2,12 +2,6 @@ minho = {
 	name = "Minho"
 	color = { 208 160 0 }
 	provincial_capital = oporto
-	resources = {
-		grain = 3
-		cattle = 2
-		sheep = 4
-		timber = 1
-	}
 	regions = {
 		portugal
 	}

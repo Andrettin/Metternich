@@ -2,9 +2,6 @@ rostov = {
 	name = "Rostov"
 	color = { 177 191 157 }
 	provincial_capital = rostov
-	resources = {
-		coal = 1
-	}
 	regions = {
 		european_russia
 	}

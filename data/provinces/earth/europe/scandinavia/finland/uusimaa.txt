@@ -2,9 +2,6 @@ uusimaa = {
 	name = "Uusimaa"
 	color = { 91 56 83 }
 	provincial_capital = helsinki
-	resources = {
-		grain = 1
-	}
 	regions = {
 		finland
 	}

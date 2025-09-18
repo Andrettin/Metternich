@@ -2,9 +2,6 @@ brest = {
 	name = "Brest"
 	color = { 191 223 32 }
 	provincial_capital = brest_litovsk
-	resources = {
-		grain = 1
-	}
 	regions = {
 		byelorussia
 		poland_lithuania

@@ -2,9 +2,6 @@ burgundy = {
 	name = "Burgundy"
 	color = { 240 128 96 }
 	provincial_capital = dijon
-	resources = {
-		fruit = 1
-	}
 	regions = {
 		france
 	}

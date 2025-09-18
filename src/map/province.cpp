@@ -54,11 +54,6 @@ void province::process_gsml_scope(const gsml_data &scope)
 			const cultural_group *cultural_group = cultural_group::get(property.get_key());
 			this->cultural_group_names[cultural_group] = property.get_value();
 		});
-	} else if (tag == "resources") {
-		scope.for_each_property([&](const gsml_property &property) {
-			const resource *resource = resource::get(property.get_key());
-			this->resource_counts[resource] = std::stoi(property.get_value());
-		});
 	} else if (tag == "border_rivers") {
 		scope.for_each_property([&](const gsml_property &property) {
 			province *border_province = province::get(property.get_key());
@@ -130,12 +125,6 @@ void province::check() const
 	for (const auto &[border_province, border_river] : this->border_rivers) {
 		if (!border_river->is_river() && !border_river->is_border_river()) {
 			throw std::runtime_error(std::format("Province \"{}\" has the terrain feature \"{}\" set as a border river, but the latter is not a river.", this->get_identifier(), border_river->get_identifier()));
-		}
-	}
-
-	for (const auto &[resource, count] : this->get_resource_counts()) {
-		if (!resource->get_site_types().contains(site_type::resource)) {
-			throw std::runtime_error(std::format("Province \"{}\" has resource \"{}\" in its resources list, but that resource cannot be set for resource sites.", this->get_identifier(), resource->get_identifier()));
 		}
 	}
 }

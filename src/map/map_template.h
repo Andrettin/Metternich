@@ -210,8 +210,6 @@ public:
 	void apply_border_rivers() const;
 	void apply_routes() const;
 	void apply_provinces() const;
-	void generate_resource_sites() const;
-	bool generate_resource_sites(const resource_map<int> &resource_counts, std::vector<const site *> &available_sites, const std::map<const site *, QPoint> &site_positions) const;
 	void generate_additional_sites() const;
 	void generate_site(const site *site) const;
 

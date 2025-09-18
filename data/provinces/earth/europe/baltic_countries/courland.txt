@@ -2,9 +2,6 @@ courland = {
 	name = "Courland"
 	color = { 1 224 33 }
 	provincial_capital = mitau
-	resources = {
-		cattle = 1
-	}
 	regions = {
 		latvia
 	}

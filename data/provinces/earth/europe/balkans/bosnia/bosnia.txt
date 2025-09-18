@@ -2,15 +2,6 @@ bosnia = {
 	name = "Bosnia"
 	color = { 141 109 152 }
 	provincial_capital = sarajevo
-	resources = {
-		grain = 1
-		fruit = 1
-		coal = 3 #lignite; Source: Map No. 802172 of the Perry-Castañeda Library Map Collection, 1993.
-		copper = 1 #Source: Map No. 802172 of the Perry-Castañeda Library Map Collection, 1993.
-		iron_ore = 3 #Source: Map No. 802172 of the Perry-Castañeda Library Map Collection, 1993.
-		lead = 1 #Source: Map No. 802172 of the Perry-Castañeda Library Map Collection, 1993.
-		zinc = 1 #Source: Map No. 802172 of the Perry-Castañeda Library Map Collection, 1993.
-	}
 	regions = {
 		bosnia
 	}

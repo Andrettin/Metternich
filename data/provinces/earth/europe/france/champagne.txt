@@ -2,9 +2,6 @@ champagne = {
 	name = "Champagne"
 	color = { 239 0 223 }
 	provincial_capital = troyes
-	resources = {
-		timber = 1
-	}
 	regions = {
 		france
 	}

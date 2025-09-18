@@ -2,9 +2,6 @@ palestine = {
 	name = "Palestine"
 	color = { 113 221 147 }
 	provincial_capital = jerusalem
-	resources = {
-		grain = 1
-	}
 	regions = {
 		asia
 		middle_east

@@ -2,9 +2,6 @@ belgorod = {
 	name = "Belgorod"
 	color = { 142 55 51 }
 	provincial_capital = belgorod
-	resources = {
-		grain = 1
-	}
 	regions = {
 		european_russia
 	}

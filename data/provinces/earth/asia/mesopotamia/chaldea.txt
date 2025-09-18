@@ -2,9 +2,6 @@ chaldea = {
 	name = "Chaldea"
 	color = { 155 16 90 }
 	provincial_capital = basra
-	resources = {
-		fruit = 1
-	}
 	regions = {
 		asia
 		middle_east

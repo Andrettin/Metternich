@@ -2,9 +2,6 @@ lorestan = {
 	name = "Lorestan"
 	color = { 213 66 191 }
 	provincial_capital = khorramabad
-	resources = {
-		cotton = 1
-	}
 	regions = {
 		persia
 	}

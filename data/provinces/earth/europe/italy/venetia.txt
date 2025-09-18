@@ -2,11 +2,6 @@ venetia = {
 	name = "Venetia"
 	color = { 176 1 160 }
 	provincial_capital = venice
-	resources = {
-		grain = 4
-		fruit = 2
-		sheep = 1
-	}
 	regions = {
 		italy
 	}

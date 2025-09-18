@@ -2,12 +2,6 @@ parma = {
 	name = "Parma"
 	color = { 112 1 32 }
 	provincial_capital = parma
-	resources = {
-		grain = 2
-		fruit = 2
-		
-		iron_ore = 1
-	}
 	regions = {
 		italy
 	}

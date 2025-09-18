@@ -2,9 +2,6 @@ medina = {
 	name = "Medina"
 	color = { 77 166 63 }
 	provincial_capital = medina
-	resources = {
-		grain = 1
-	}
 	regions = {
 		asia
 		middle_east

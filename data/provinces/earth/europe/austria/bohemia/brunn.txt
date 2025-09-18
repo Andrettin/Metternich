@@ -5,13 +5,6 @@ brunn = {
 	cultural_names = {
 		czech = "Brno"
 	}
-	resources = {
-		grain = 5
-		fruit = 4
-		cattle = 2
-		
-		coal = 1
-	}
 	regions = {
 		moravia
 	}

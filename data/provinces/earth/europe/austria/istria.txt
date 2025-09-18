@@ -2,12 +2,6 @@ istria = {
 	name = "Istria"
 	color = { 144 0 33 }
 	provincial_capital = trieste
-	resources = {
-		grain = 3
-		fruit = 2
-		sheep = 1
-		coal = 1
-	}
 	regions = {
 		cisleithania
 		croatia

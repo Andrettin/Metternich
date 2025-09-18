@@ -2,12 +2,6 @@ west_galicia = {
 	name = "West Galicia"
 	color = { 144 96 96 }
 	provincial_capital = cracow
-	resources = {
-		grain = 2
-		fruit = 2
-		coal = 1
-		oil = 1
-	}
 	regions = {
 		galicia
 		poland

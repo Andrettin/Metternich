@@ -2,12 +2,6 @@ hesse = {
 	name = "Hesse"
 	color = { 17 65 160 }
 	provincial_capital = frankfurt
-	resources = {
-		grain = 3
-		fruit = 2
-		cattle = 1
-		timber = 1
-	}
 	regions = {
 		germany
 	}

@@ -2,12 +2,6 @@ westphalia = {
 	name = "Westphalia"
 	color = { 1 128 224 }
 	provincial_capital = munster
-	resources = {
-		grain = 3
-		sheep = 1
-		timber = 2
-		coal = 1
-	}
 	regions = {
 		germany
 	}

@@ -2,9 +2,6 @@ lodz = {
 	name = "Lodz" #"Łódź"
 	color = { 192 97 160 }
 	provincial_capital = lodz
-	resources = {
-		cattle = 1
-	}
 	regions = {
 		poland
 		poland_lithuania

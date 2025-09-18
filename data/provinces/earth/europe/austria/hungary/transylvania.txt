@@ -2,11 +2,6 @@ transylvania = {
 	name = "Transylvania"
 	color = { 108 208 7 }
 	provincial_capital = klausenburg
-	resources = {
-		grain = 3
-		sheep = 1
-		timber = 2
-	}
 	regions = {
 		romania
 		royal_hungary

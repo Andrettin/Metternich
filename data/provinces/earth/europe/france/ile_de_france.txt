@@ -2,9 +2,6 @@ ile_de_france = {
 	name = "Ile-de-France"
 	color = { 144 96 0 }
 	provincial_capital = paris
-	resources = {
-		grain = 1
-	}
 	regions = {
 		france
 	}

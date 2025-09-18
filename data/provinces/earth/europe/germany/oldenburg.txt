@@ -2,11 +2,6 @@ oldenburg = {
 	name = "Oldenburg"
 	color = { 231 184 84 }
 	provincial_capital = oldenburg
-	resources = {
-		grain = 2
-		fruit = 1
-		sheep = 1
-	}
 	regions = {
 		germany
 	}

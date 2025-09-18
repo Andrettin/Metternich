@@ -2,9 +2,6 @@ trondelag = {
 	name = "Trondelag" #"Trøndelag"
 	color = { 192 64 192 }
 	provincial_capital = trondheim
-	resources = {
-		timber = 1
-	}
 	regions = {
 		norway
 	}

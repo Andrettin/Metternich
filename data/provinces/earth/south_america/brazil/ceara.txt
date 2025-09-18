@@ -2,10 +2,6 @@ ceara = {
 	name = "Ceara" #"Ceará"
 	color = { 131 92 31 }
 	provincial_capital = fortaleza
-	resources = {
-		iron_ore = 2 #Source: Map No. 503241 of the Perry-Castañeda Library Map Collection, 1977.
-		fruit = 1
-	}
 	regions = {
 		brazil
 	}

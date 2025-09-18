@@ -2,11 +2,6 @@ east_galicia = {
 	name = "East Galicia"
 	color = { 17 160 33 }
 	provincial_capital = lemberg
-	resources = {
-		grain = 3
-		fruit = 1
-		oil = 1
-	}
 	regions = {
 		galicia
 		poland_lithuania

@@ -2,12 +2,6 @@ schleswig = {
 	name = "Schleswig"
 	color = { 0 192 96 }
 	provincial_capital = flensburg
-	resources = {
-		grain = 1
-		fruit = 1
-		cattle = 2
-		sheep = 1
-	}
 	regions = {
 		germany
 	}

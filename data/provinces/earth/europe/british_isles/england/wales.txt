@@ -2,9 +2,6 @@ wales = {
 	name = "Wales"
 	color = { 143 77 6 }
 	provincial_capital = cardiff
-	resources = {
-		coal = 1
-	}
 	regions = {
 		wales
 	}

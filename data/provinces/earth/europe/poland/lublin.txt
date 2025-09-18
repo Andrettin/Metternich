@@ -2,11 +2,6 @@ lublin = {
 	name = "Lublin"
 	color = { 81 160 224 }
 	provincial_capital = lublin
-	resources = {
-		grain = 4
-		fruit = 1
-		iron_ore = 1
-	}
 	regions = {
 		galicia_and_west_galicia
 		poland

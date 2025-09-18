@@ -2,9 +2,6 @@ jiangsu = {
 	name = "Jiangsu"
 	color = { 32 139 5 }
 	provincial_capital = nanjing
-	resources = {
-		tea = 1
-	}
 	regions = {
 		asia
 	}

@@ -2,9 +2,6 @@ jiangxi = {
 	name = "Jiangxi"
 	color = { 92 52 181 }
 	provincial_capital = nanchang
-	resources = {
-		timber = 1
-	}
 	regions = {
 		asia
 	}

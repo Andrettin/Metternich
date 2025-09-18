@@ -2,10 +2,6 @@ banat = {
 	name = "Banat"
 	color = { 201 13 189 }
 	provincial_capital = temesvar
-	resources = {
-		grain = 2
-		fruit = 2
-	}
 	regions = {
 		romania
 		royal_hungary

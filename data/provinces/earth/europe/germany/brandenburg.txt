@@ -2,11 +2,6 @@ brandenburg = {
 	name = "Brandenburg"
 	color = { 131 177 168 }
 	provincial_capital = berlin
-	resources = {
-		grain = 4
-		fruit = 1
-		cattle = 2
-	}
 	regions = {
 		germany
 	}

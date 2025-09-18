@@ -2,9 +2,6 @@ fezzan = {
 	name = "Fezzan"
 	color = { 150 253 100 }
 	provincial_capital = sabha
-	resources = {
-		sheep = 1
-	}
 	regions = {
 		libya
 	}

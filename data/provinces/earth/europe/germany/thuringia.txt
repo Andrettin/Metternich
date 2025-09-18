@@ -2,12 +2,6 @@ thuringia = {
 	name = "Thuringia"
 	color = { 97 128 97 }
 	provincial_capital = erfurt
-	resources = {
-		grain = 4
-		fruit = 2
-		cattle = 2
-		timber = 2
-	}
 	regions = {
 		germany
 	}

@@ -2,9 +2,6 @@ semenawi_keyih_bahri = {
 	name = "Semenawi Keyih Bahri"
 	color = { 205 15 34 }
 	provincial_capital = massawa
-	resources = {
-		fruit = 1
-	}
 	regions = {
 		eritrea
 	}

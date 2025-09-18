@@ -2,11 +2,6 @@ kesmark = {
 	name = "Kesmark"
 	color = { 45 81 158 }
 	provincial_capital = kesmark
-	resources = {
-		grain = 4
-		fruit = 4
-		cattle = 1
-	}
 	regions = {
 		slovakia
 	}

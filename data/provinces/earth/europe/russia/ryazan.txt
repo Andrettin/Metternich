@@ -2,9 +2,6 @@ ryazan = {
 	name = "Ryazan"
 	color = { 235 249 197 }
 	provincial_capital = ryazan
-	resources = {
-		timber = 1
-	}
 	regions = {
 		european_russia
 	}

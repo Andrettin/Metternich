@@ -2,9 +2,6 @@ upper_languedoc = {
 	name = "Upper Languedoc"
 	color = { 48 96 128 }
 	provincial_capital = toulouse
-	resources = {
-		grain = 1
-	}
 	regions = {
 		france
 	}

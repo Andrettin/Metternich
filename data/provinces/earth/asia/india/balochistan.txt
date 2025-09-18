@@ -2,9 +2,6 @@ balochistan = {
 	name = "Balochistan"
 	color = { 231 212 242 }
 	provincial_capital = quetta
-	resources = {
-		sheep = 1
-	}
 	regions = {
 		asia
 	}

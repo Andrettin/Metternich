@@ -6,12 +6,6 @@ naples = {
 		greek = "Neapolis"
 		roman = "Neapolis" #Source: "Ancient Warfare VII.6", 2013, p. 7.
 	}
-	resources = {
-		grain = 4
-		fruit = 2
-		
-		fish = 1
-	}
 	regions = {
 		italy
 	}

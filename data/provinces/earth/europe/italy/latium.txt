@@ -2,11 +2,6 @@ latium = {
 	name = "Latium"
 	color = { 176 192 160 }
 	provincial_capital = rome
-	resources = {
-		grain = 3
-		fruit = 2
-		sheep = 2
-	}
 	regions = {
 		italy
 	}

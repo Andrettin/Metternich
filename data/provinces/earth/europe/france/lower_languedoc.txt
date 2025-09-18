@@ -2,9 +2,6 @@ lower_languedoc = {
 	name = "Lower Languedoc"
 	color = { 109 163 20 }
 	provincial_capital = montpellier
-	resources = {
-		cattle = 1
-	}
 	regions = {
 		france
 	}

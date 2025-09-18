@@ -2,9 +2,6 @@ mato_grosso = {
 	name = "Mato Grosso"
 	color = { 12 169 0 }
 	provincial_capital = cuiaba
-	resources = {
-		diamonds = 2 #diamonds and other precious stones; Source: Map No. 503241 of the Perry-Castañeda Library Map Collection, 1977.
-	}
 	regions = {
 		brazil
 	}

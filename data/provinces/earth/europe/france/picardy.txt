@@ -2,9 +2,6 @@ picardy = {
 	name = "Picardy"
 	color = { 16 160 192 }
 	provincial_capital = amiens
-	resources = {
-		fish = 1
-	}
 	regions = {
 		france
 	}

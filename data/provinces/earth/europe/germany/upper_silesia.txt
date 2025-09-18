@@ -2,12 +2,6 @@ upper_silesia = {
 	name = "Upper Silesia"
 	color = { 175 159 32 }
 	provincial_capital = oppeln
-	resources = {
-		grain = 2
-		cattle = 2
-		iron_ore = 1
-		coal = 1
-	}
 	regions = {
 		poland
 	}

@@ -5,11 +5,6 @@ posen = {
 	cultural_names = {
 		polish = "Poznan" #"Poznań"
 	}
-	resources = {
-		grain = 2
-		cattle = 3
-		timber = 2
-	}
 	regions = {
 		poland
 		poland_lithuania

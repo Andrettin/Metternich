@@ -2,9 +2,6 @@ tamanrasset = {
 	name = "Tamanrasset"
 	color = { 181 163 124 }
 	provincial_capital = tamanrasset
-	resources = {
-		sheep = 1
-	}
 	regions = {
 		algeria
 	}

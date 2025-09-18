@@ -2,13 +2,6 @@ navarre = {
 	name = "Navarre"
 	color = { 16 224 192 }
 	provincial_capital = pamplona
-	resources = {
-		grain = 2
-		sheep = 1
-		zinc = 1 #Source: Map No. 501745 of the Perry-Castañeda Library Map Collection, 1974.
-		
-		fruit = 1
-	}
 	regions = {
 		spain
 	}

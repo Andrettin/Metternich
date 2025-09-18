@@ -2,13 +2,6 @@ lower_silesia = {
 	name = "Lower Silesia"
 	color = { 110 97 127 }
 	provincial_capital = breslau
-	resources = {
-		grain = 1
-		cattle = 1
-		sheep = 2
-		timber = 3
-		iron_ore = 1
-	}
 	regions = {
 		poland
 	}

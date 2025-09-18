@@ -2,9 +2,6 @@ warsaw = {
 	name = "Warsaw"
 	color = { 65 97 160 }
 	provincial_capital = warsaw
-	resources = {
-		cattle = 1
-	}
 	regions = {
 		poland
 		poland_lithuania

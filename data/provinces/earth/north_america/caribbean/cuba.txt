@@ -2,9 +2,6 @@ cuba = {
 	name = "Cuba"
 	color = { 143 89 118 }
 	provincial_capital = havana
-	resources = {
-		tobacco = 1
-	}
 	regions = {
 		caribbean
 	}

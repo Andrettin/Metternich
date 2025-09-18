@@ -2,9 +2,6 @@ misrata = {
 	name = "Misrata"
 	color = { 144 67 111 }
 	provincial_capital = misrata
-	resources = {
-		fruit = 1
-	}
 	regions = {
 		libya
 	}

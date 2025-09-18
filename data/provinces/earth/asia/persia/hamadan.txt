@@ -2,9 +2,6 @@ hamadan = {
 	name = "Hamadan"
 	color = { 255 152 92 }
 	provincial_capital = hamadan
-	resources = {
-		fruit = 1
-	}
 	regions = {
 		persia
 	}

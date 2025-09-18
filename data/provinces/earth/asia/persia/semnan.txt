@@ -2,9 +2,6 @@ semnan = {
 	name = "Semnan"
 	color = { 200 57 222 }
 	provincial_capital = semnan
-	resources = {
-		coal = 1
-	}
 	regions = {
 		persia
 	}

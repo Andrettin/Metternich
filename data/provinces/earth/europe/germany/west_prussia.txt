@@ -2,11 +2,6 @@ west_prussia = {
 	name = "West Prussia"
 	color = { 128 160 160 }
 	provincial_capital = danzig
-	resources = {
-		grain = 3
-		cattle = 1
-		timber = 4
-	}
 	regions = {
 		poland
 		poland_lithuania

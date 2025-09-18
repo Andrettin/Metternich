@@ -18,20 +18,6 @@ region::~region()
 {
 }
 
-void region::process_gsml_scope(const gsml_data &scope)
-{
-	const std::string &tag = scope.get_tag();
-
-	if (tag == "resources") {
-		scope.for_each_property([&](const gsml_property &property) {
-			const resource *resource = resource::get(property.get_key());
-			this->resource_counts[resource] = std::stoi(property.get_value());
-		});
-	} else {
-		named_data_entry::process_gsml_scope(scope);
-	}
-}
-
 void region::initialize()
 {
 	for (region *subregion : this->subregions) {

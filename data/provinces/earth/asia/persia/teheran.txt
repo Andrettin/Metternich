@@ -2,9 +2,6 @@ teheran = {
 	name = "Teheran"
 	color = { 91 77 69 }
 	provincial_capital = teheran
-	resources = {
-		cotton = 1
-	}
 	regions = {
 		persia
 	}

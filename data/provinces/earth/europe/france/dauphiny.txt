@@ -2,9 +2,6 @@ dauphiny = {
 	name = "Dauphiny"
 	color = { 48 192 96 }
 	provincial_capital = grenoble
-	resources = {
-		tobacco = 1
-	}
 	regions = {
 		france
 	}

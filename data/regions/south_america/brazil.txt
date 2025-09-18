@@ -3,9 +3,6 @@ brazil = {
 	superregions = {
 		south_america
 	}
-	resources = {
-		frogs = 1
-	}
 	
 	history = {
 		1000 = {

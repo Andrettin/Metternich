@@ -2,18 +2,6 @@ catalonia = {
 	name = "Catalonia"
 	color = { 224 192 32 }
 	provincial_capital = barcelona
-	resources = {
-		grain = 4
-		cattle = 2
-		sheep = 1
-		timber = 2
-		tin = 1
-		iron_ore = 1
-		gold = 1
-		lead = 2 #Source: Map No. 501745 of the Perry-Castañeda Library Map Collection, 1974.
-		
-		cattle = 1
-	}
 	regions = {
 		spain
 	}

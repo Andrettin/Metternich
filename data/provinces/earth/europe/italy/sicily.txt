@@ -2,14 +2,6 @@ sicily = {
 	name = "Sicily"
 	color = { 192 144 160 }
 	provincial_capital = palermo
-	resources = {
-		grain = 2
-		fruit = 1
-		sheep = 1
-		cotton = 2
-		
-		fish = 1
-	}
 	regions = {
 		italy
 	}

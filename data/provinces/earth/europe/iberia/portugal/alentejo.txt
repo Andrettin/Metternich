@@ -2,12 +2,6 @@ alentejo = {
 	name = "Alentejo"
 	color = { 235 169 53 }
 	provincial_capital = evora
-	resources = {
-		grain = 3
-		sheep = 2
-		timber = 1
-		iron_ore = 1 #Source: Map No. 500530 of the Perry-Castañeda Library Map Collection, 1972.
-	}
 	regions = {
 		portugal
 	}

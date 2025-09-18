@@ -2,9 +2,6 @@ western_cape = {
 	name = "Western Cape"
 	color = { 195 47 117 }
 	provincial_capital = cape_town
-	resources = {
-		fruit = 1
-	}
 	regions = {
 		africa
 	}

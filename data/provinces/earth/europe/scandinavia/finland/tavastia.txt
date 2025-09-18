@@ -2,9 +2,6 @@ tavastia = {
 	name = "Tavastia"
 	color = { 151 180 107 }
 	provincial_capital = hameenlinna
-	resources = {
-		timber = 1
-	}
 	regions = {
 		finland
 	}
