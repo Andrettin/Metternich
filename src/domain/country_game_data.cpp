@@ -3203,7 +3203,10 @@ bool country_game_data::is_tile_explored(const QPoint &tile_pos) const
 		return true;
 	}
 
-	return false;
+	//return false;
+
+	//disable exploration mechanics for now
+	return true;
 }
 
 bool country_game_data::is_province_discovered(const province *province) const
