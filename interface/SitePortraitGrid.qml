@@ -27,6 +27,8 @@ Flickable {
 				onEntered: {
 					if (site.game_data.holding_type !== null) {
 						status_text = site.game_data.holding_type.name + " of " + site.game_data.current_cultural_name
+					} else if (site.holding_type !== null) {
+						status_text = site.game_data.current_cultural_name + " (" + site.holding_type.name + " Slot)"
 					} else {
 						status_text = site.game_data.current_cultural_name
 					}
