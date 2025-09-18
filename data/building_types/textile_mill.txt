@@ -8,6 +8,7 @@ weavers_house = {
 		village
 		town
 		city
+		guild
 	}
 	settlement_conditions = {
 		province = {
@@ -35,6 +36,7 @@ weavers_shop = {
 	holding_types = {
 		town
 		city
+		guild
 	}
 	settlement_conditions = {
 		province = {
@@ -62,6 +64,7 @@ textile_mill = {
 	holding_types = {
 		town
 		city
+		guild
 	}
 	settlement_conditions = {
 		province = {

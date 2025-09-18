@@ -3,6 +3,7 @@ temesvar = {
 	world = earth
 	geocoordinate = { 21.22344844430 45.75882061670 } #from Natural Earth
 	type = holding
+	holding_type = estate
 	#resource = grain
 	cultural_names = {
 		romanian = "Timisoara" #"Timișoara"

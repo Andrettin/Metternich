@@ -3,12 +3,12 @@ pest = {
 	world = earth
 	geocoordinate = { 19.1 47.5 }
 	type = holding
-	resource = center_of_trade
+	holding_type = estate
 	province = pest
 	
 	history = {
 		1360 = {
-			holding_type = city #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			developed = true #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 		
 		1873 = {

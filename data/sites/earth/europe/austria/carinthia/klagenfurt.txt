@@ -3,6 +3,7 @@ klagenfurt = {
 	world = earth
 	geocoordinate = { 14.31002030300 46.62034425770 } #from Natural Earth
 	type = holding
+	holding_type = guild
 	#resource = coal
 	province = carinthia
 	

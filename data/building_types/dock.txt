@@ -13,6 +13,7 @@ dock = {
 		town
 		city
 		estate
+		guild
 		temple
 	}
 	wealth_cost = 3000
@@ -42,6 +43,7 @@ shipyard = {
 	required_technology = seafaring
 	holding_types = {
 		city
+		guild
 	}
 	recruited_transporter_categories = {
 		small_merchant_ship

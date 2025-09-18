@@ -3,7 +3,7 @@ salzburg = {
 	world = earth
 	geocoordinate = { 13.04002030300 47.81047833160 } #from Natural Earth
 	type = holding
-	resource = center_of_trade
+	holding_type = temple
 	province = salzburg
 	cultural_names = {
 		roman = "Iuvavum"
@@ -12,7 +12,6 @@ salzburg = {
 	history = {
 		739 = {
 			buildings += cathedral #Salzburg became a bishopric in 739; Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 169.
-			holding_type = city
 		}
 		
 		768 = {
@@ -20,11 +19,11 @@ salzburg = {
 		}
 		
 		919 = {
-			holding_type = city #important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			#important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
 		}
 		
 		1360 = {
-			#holding_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			#existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 		
 		1815 = {

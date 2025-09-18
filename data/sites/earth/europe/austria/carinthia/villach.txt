@@ -2,6 +2,9 @@ villach = {
 	name = "Villach"
 	world = earth
 	geocoordinate = { 13.833333333333 46.616666666667 }
+	type = holding
+	holding_type = estate
+	province = carinthia
 	
 	history = {
 		919 = {

@@ -2,6 +2,8 @@ grado = {
 	name = "Grado"
 	world = earth
 	geocoordinate = { 13.4 45.683333 }
+	type = holding
+	holding_type = estate
 	province = venetia
 	
 	history = {

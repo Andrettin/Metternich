@@ -2,8 +2,8 @@ steyr = {
 	name = "Steyr" #also known as Steier
 	world = earth
 	geocoordinate = { 14.416666666667 48.05 }
-	type = resource
-	resource = grain #Crop cultivation with livestock; Source: Map No. 77706 of the Perry-Castañeda Library Map Collection, 1969.
+	type = holding
+	holding_type = guild
 	province = upper_austria
 	
 	history = {
