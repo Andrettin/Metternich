@@ -13,7 +13,7 @@ FileDialog {
 	fileMode: FileDialog.OpenFile
 	
 	onAccepted: {
-		var file_url = save_game_dialog.selectedFile
+		var file_url = load_game_dialog.selectedFile
 		metternich.game.load(file_url)
 	}
 }

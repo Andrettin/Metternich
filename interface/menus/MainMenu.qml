@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import ".."
+import "../dialogs"
 
 MenuBase {
 	id: main_menu
@@ -22,6 +23,15 @@ MenuBase {
 		}
 		
 		TextButton {
+			id: load_game_button
+			text: "Load Game"
+			width: 128 * scale_factor
+			onClicked: {
+				load_game_dialog.open()
+			}
+		}
+		
+		TextButton {
 			id: exit_button
 			text: qsTr("Exit")
 			width: 128 * scale_factor
@@ -30,5 +40,9 @@ MenuBase {
 				window.close()
 			}
 		}
+	}
+	
+	LoadGameDialog {
+		id: load_game_dialog
 	}
 }
