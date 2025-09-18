@@ -56,8 +56,10 @@ public:
 	void save(const std::filesystem::path &filepath) const;
 	Q_INVOKABLE void save(const QUrl &filepath) const;
 
-	void load(const std::filesystem::path &filepath);
-	Q_INVOKABLE void load(const QUrl &filepath);
+	[[nodiscard]]
+	QCoro::Task<void> load(const std::filesystem::path &filepath);
+
+	Q_INVOKABLE QCoro::QmlTask load(const QUrl &filepath);
 
 	const game_rules *get_rules() const
 	{
@@ -90,6 +92,7 @@ public:
 		return this->setup_scenario_coro(scenario);
 	}
 
+	[[nodiscard]]
 	QCoro::Task<void> setup_scenario_coro(metternich::scenario *scenario);
 
 	Q_INVOKABLE QCoro::QmlTask start()
@@ -97,7 +100,9 @@ public:
 		return this->start_coro();
 	}
 
+	[[nodiscard]]
 	QCoro::Task<void> start_coro();
+
 	Q_INVOKABLE void stop();
 
 	void clear();
@@ -187,6 +192,9 @@ public:
 	{
 		this->set_price(commodity, this->get_price(commodity) + value);
 	}
+
+	[[nodiscard]]
+	QCoro::Task<void> create_map_images();
 
 	[[nodiscard]]
 	QCoro::Task<void> create_diplomatic_map_image();

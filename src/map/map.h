@@ -34,8 +34,14 @@ public:
 	map();
 	~map();
 
+	void process_gsml_property(const gsml_property &property);
+	void process_gsml_scope(const gsml_data &scope);
+
+	gsml_data to_gsml_data() const;
+
 	void create_tiles();
 	void initialize();
+	void process_border_tiles();
 	void clear();
 	void clear_tile_game_data();
 
@@ -105,6 +111,11 @@ public:
 	}
 
 	QVariantList get_provinces_qvariant_list() const;
+
+	void add_province(const province *province)
+	{
+		this->provinces.push_back(province);
+	}
 
 	void initialize_diplomatic_map();
 

@@ -48,6 +48,77 @@ map::~map()
 {
 }
 
+void map::process_gsml_property(const gsml_property &property)
+{
+	const std::string &key = property.get_key();
+
+	throw std::runtime_error(std::format("Invalid map data property: \"{}\".", key));
+}
+
+void map::process_gsml_scope(const gsml_data &scope)
+{
+	const std::string &tag = scope.get_tag();
+
+	if (tag == "size") {
+		const QSize map_size = scope.to_size();
+		this->set_size(map_size);
+		this->create_tiles();
+	} else if (tag == "tile_provinces") {
+		int y = 0;
+		scope.for_each_child([&](const gsml_data &child_scope) {
+			for (size_t x = 0; x < child_scope.get_values().size(); ++x) {
+				const std::string &value = child_scope.get_values()[x];
+				const province *province = nullptr;
+				if (value != "n") {
+					const int map_province_index = std::stoi(value);
+					province = this->get_provinces().at(map_province_index);
+				}
+
+				if (province != nullptr) {
+					const QPoint tile_pos(static_cast<int>(x), y);
+					this->set_tile_province(tile_pos, province);
+				}
+			}
+			++y;
+		});
+
+		this->process_border_tiles();
+		for (const province *province : this->get_provinces()) {
+			province->get_map_data()->on_map_created();
+		}
+		this->initialize_diplomatic_map();
+	} else {
+		throw std::runtime_error(std::format("Invalid map data scope: \"{}\".", tag));
+	}
+}
+
+gsml_data map::to_gsml_data() const
+{
+	gsml_data data("map");
+
+	data.add_child("size", gsml_data::from_size(this->get_size()));
+
+	std::map<const province *, size_t> map_province_indices;
+	for (size_t i = 0; i < this->get_provinces().size(); ++i) {
+		map_province_indices[this->get_provinces().at(i)] = i;
+	}
+
+	gsml_data tile_provinces_data("tile_provinces");
+	for (int y = 0; y < this->get_height(); ++y) {
+		gsml_data tile_provinces_row_data;
+		for (int x = 0; x < this->get_width(); ++x) {
+			const QPoint tile_pos(x, y);
+			const tile *tile = this->get_tile(tile_pos);
+			assert_throw(tile != nullptr);
+			tile_provinces_row_data.add_value(tile->get_province() != nullptr ? std::to_string(map_province_indices.find(tile->get_province())->second) : "n");
+		}
+		tile_provinces_data.add_child(std::move(tile_provinces_row_data));
+	}
+	data.add_child(std::move(tile_provinces_data));
+
+	return data;
+}
+
 void map::create_tiles()
 {
 	this->tiles = std::make_unique<std::vector<tile>>();
@@ -138,8 +209,41 @@ void map::initialize()
 		}
 	}
 
+	this->process_border_tiles();
+
 	province_set provinces;
 
+	for (int x = 0; x < this->get_width(); ++x) {
+		for (int y = 0; y < this->get_height(); ++y) {
+			const QPoint tile_pos(x, y);
+			tile *tile = this->get_tile(tile_pos);
+			const province *tile_province = tile->get_province();
+
+			if (tile_province == nullptr) {
+				continue;
+			}
+
+			if (tile->get_site() != nullptr) {
+				tile_province->get_map_data()->process_site_tile(tile_pos);
+			}
+
+			provinces.insert(tile_province);
+		}
+	}
+
+	this->provinces = container::to_vector(provinces);
+
+	for (const province *province : this->get_provinces()) {
+		province->get_map_data()->on_map_created();
+	}
+
+	this->initialize_diplomatic_map();
+
+	emit provinces_changed();
+}
+
+void map::process_border_tiles()
+{
 	for (int x = 0; x < this->get_width(); ++x) {
 		for (int y = 0; y < this->get_height(); ++y) {
 			const QPoint tile_pos(x, y);
@@ -186,29 +290,13 @@ void map::initialize()
 				this->update_tile_terrain_tile(tile_pos);
 			}
 
-			if (tile->get_site() != nullptr) {
-				tile_province->get_map_data()->process_site_tile(tile_pos);
-			}
-
 			if (is_border_tile) {
 				tile->sort_border_directions();
 
 				tile_province->get_map_data()->add_border_tile(tile_pos);
 			}
-
-			provinces.insert(tile_province);
 		}
 	}
-
-	this->provinces = container::to_vector(provinces);
-
-	for (const province *province : this->get_provinces()) {
-		province->get_map_data()->on_map_created();
-	}
-
-	this->initialize_diplomatic_map();
-
-	emit provinces_changed();
 }
 
 void map::clear()
@@ -599,6 +687,8 @@ const metternich::province *map::get_tile_province(const QPoint &tile_pos) const
 
 void map::set_tile_province(const QPoint &tile_pos, const province *province)
 {
+	assert_throw(province != nullptr);
+
 	tile *tile = this->get_tile(tile_pos);
 	tile->set_province(province);
 	province->get_map_data()->add_tile(tile_pos);
@@ -950,7 +1040,7 @@ void map::initialize_diplomatic_map()
 		emit diplomatic_map_image_size_changed();
 	}
 
-	const QSize relative_size = this->diplomatic_map_image_size / map::get()->get_size();
+	const QSize relative_size = this->diplomatic_map_image_size / this->get_size();
 	this->diplomatic_map_tile_pixel_size = std::max(relative_size.width(), relative_size.height());
 }
 
