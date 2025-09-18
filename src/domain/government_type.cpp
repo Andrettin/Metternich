@@ -238,7 +238,7 @@ void government_type::check() const
 	}
 
 	if (this->get_modifier() == nullptr) {
-		log::log_error(std::format("Government type \"{}\" has no modifier.", this->get_identifier()));
+		//log::log_error(std::format("Government type \"{}\" has no modifier.", this->get_identifier()));
 	}
 
 	if (this->get_conditions() != nullptr) {
