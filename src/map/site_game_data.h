@@ -11,6 +11,10 @@ Q_MOC_INCLUDE("infrastructure/improvement.h")
 Q_MOC_INCLUDE("map/province.h")
 Q_MOC_INCLUDE("population/population.h")
 
+namespace archimedes {
+	class gsml_data;
+}
+
 namespace metternich {
 
 class army;
@@ -61,6 +65,11 @@ public:
 	static constexpr int settlement_base_free_food_consumption = 1;
 
 	explicit site_game_data(const metternich::site *site);
+
+	void process_gsml_property(const gsml_property &property);
+	void process_gsml_scope(const gsml_data &scope);
+
+	gsml_data to_gsml_data() const;
 
 	void initialize_resource();
 	void do_turn();

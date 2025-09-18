@@ -6,6 +6,8 @@
 #include "character/character_game_data.h"
 #include "character/character_role.h"
 #include "database/defines.h"
+#include "database/gsml_data.h"
+#include "database/gsml_property.h"
 #include "domain/country.h"
 #include "domain/country_economy.h"
 #include "domain/country_game_data.h"
@@ -83,6 +85,36 @@ site_game_data::site_game_data(const metternich::site *site) : site(site)
 	connect(this, &site_game_data::religion_changed, this, &site_game_data::title_name_changed);
 
 	connect(this, &site_game_data::holding_type_changed, this, &site_game_data::portrait_changed);
+}
+
+void site_game_data::process_gsml_property(const gsml_property &property)
+{
+	const std::string &key = property.get_key();
+	const std::string &value = property.get_value();
+
+	if (key == "holding_type") {
+		this->holding_type = holding_type::get(value);
+	} else {
+		throw std::runtime_error(std::format("Invalid site game data property: \"{}\".", key));
+	}
+}
+
+void site_game_data::process_gsml_scope(const gsml_data &scope)
+{
+	const std::string &tag = scope.get_tag();
+
+	throw std::runtime_error(std::format("Invalid site game data scope: \"{}\".", tag));
+}
+
+gsml_data site_game_data::to_gsml_data() const
+{
+	gsml_data data(this->site->get_identifier());
+
+	if (this->get_holding_type() != nullptr) {
+		data.add_property("holding_type", this->get_holding_type()->get_identifier());
+	}
+
+	return data;
 }
 
 void site_game_data::initialize_resource()

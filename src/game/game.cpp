@@ -160,6 +160,27 @@ void game::process_gsml_scope(const gsml_data &scope)
 		auto rules = make_qunique<game_rules>();
 		scope.process(rules.get());
 		this->rules = std::move(rules);
+	} else if (tag == "countries") {
+		scope.for_each_child([&](const gsml_data &country_data) {
+			const country *country = country::get(country_data.get_tag());
+			country_data.process(country->get_game_data());
+		});
+	} else if (tag == "sites") {
+		scope.for_each_child([&](const gsml_data &child_scope) {
+			const site *site = site::get(child_scope.get_tag());
+			child_scope.process(site->get_game_data());
+		});
+	} else if (tag == "characters") {
+		scope.for_each_child([&](const gsml_data &character_data) {
+			const character *character = character::get(character_data.get_tag());
+			character_data.process(character->get_game_data());
+		});
+	} else if (tag == "generated_characters") {
+		scope.for_each_child([&](const gsml_data &character_data) {
+			auto generated_character = make_qunique<character>(character_data.get_tag());
+			generated_character->moveToThread(QApplication::instance()->thread());
+			character_data.process(generated_character.get());
+		});
 	} else if (tag == "character_delayed_effects") {
 		scope.for_each_child([&](const gsml_data &delayed_effect_data) {
 			auto delayed_effect = std::make_unique<delayed_effect_instance<const character>>();
@@ -206,22 +227,6 @@ void game::process_gsml_scope(const gsml_data &scope)
 				this->fired_events.insert(event);
 			}
 		});
-	} else if (tag == "countries") {
-		scope.for_each_child([&](const gsml_data &country_data) {
-			const country *country = country::get(country_data.get_tag());
-			country_data.process(country->get_game_data());
-		});
-	} else if (tag == "characters") {
-		scope.for_each_child([&](const gsml_data &character_data) {
-			const character *character = character::get(character_data.get_tag());
-			character_data.process(character->get_game_data());
-		});
-	} else if (tag == "generated_characters") {
-		scope.for_each_child([&](const gsml_data &character_data) {
-			auto generated_character = make_qunique<character>(character_data.get_tag());
-			generated_character->moveToThread(QApplication::instance()->thread());
-			character_data.process(generated_character.get());
-		});
 	} else {
 		throw std::runtime_error(std::format("Invalid game data scope: \"{}\".", tag));
 	}
@@ -237,6 +242,34 @@ gsml_data game::to_gsml_data() const
 	data.add_property("turn", std::to_string(this->turn));
 	data.add_property("player_character", this->get_player_character()->get_identifier());
 	data.add_property("player_country", this->get_player_country()->get_identifier());
+
+	gsml_data countries_data("countries");
+	for (const country *country : this->get_countries()) {
+		countries_data.add_child(country->get_game_data()->to_gsml_data());
+	}
+	data.add_child(std::move(countries_data));
+
+	gsml_data sites_data("sites");
+	for (const site *site : site::get_all()) {
+		if (!site->get_map_data()->is_on_map()) {
+			continue;
+		}
+
+		sites_data.add_child(site->get_game_data()->to_gsml_data());
+	}
+	data.add_child(std::move(sites_data));
+
+	gsml_data characters_data("characters");
+	for (const character *character : character::get_all()) {
+		characters_data.add_child(character->get_game_data()->to_gsml_data());
+	}
+	data.add_child(std::move(characters_data));
+
+	gsml_data generated_characters_data("generated_characters");
+	for (const qunique_ptr<character> &character : this->get_generated_characters()) {
+		generated_characters_data.add_child(character->to_gsml_data());
+	}
+	data.add_child(std::move(generated_characters_data));
 
 	if (!this->character_delayed_effects.empty()) {
 		gsml_data delayed_effects_data("character_delayed_effects");
@@ -275,24 +308,6 @@ gsml_data game::to_gsml_data() const
 		}
 		data.add_child(std::move(fired_events_data));
 	}
-
-	gsml_data countries_data("countries");
-	for (const country *country : this->get_countries()) {
-		countries_data.add_child(country->get_game_data()->to_gsml_data());
-	}
-	data.add_child(std::move(countries_data));
-
-	gsml_data characters_data("characters");
-	for (const character *character : character::get_all()) {
-		characters_data.add_child(character->get_game_data()->to_gsml_data());
-	}
-	data.add_child(std::move(characters_data));
-
-	gsml_data generated_characters_data("generated_characters");
-	for (const qunique_ptr<character> &character : this->get_generated_characters()) {
-		generated_characters_data.add_child(character->to_gsml_data());
-	}
-	data.add_child(std::move(generated_characters_data));
 
 	return data;
 }
