@@ -102,6 +102,10 @@ void map_template::initialize()
 				continue;
 			}
 
+			if (site->get_type() == site_type::none) {
+				continue;
+			}
+
 			//if the site is not placed in its province, nudge its position to be in the nearest point in its province
 			if (site_province != tile_province && !province_image.isNull()) {
 				bool found_pos = false;

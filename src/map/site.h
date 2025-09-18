@@ -25,6 +25,7 @@ class cultural_group;
 class culture;
 class government_group;
 class government_type;
+class holding_type;
 class province;
 class region;
 class resource;
@@ -49,6 +50,7 @@ class site final : public named_data_entry, public data_type<site>
 	Q_PROPERTY(bool settlement READ is_settlement NOTIFY changed)
 	Q_PROPERTY(bool celestial_body READ is_celestial_body NOTIFY changed)
 	Q_PROPERTY(const metternich::celestial_body_type* celestial_body_type MEMBER celestial_body_type READ get_celestial_body_type)
+	Q_PROPERTY(const metternich::holding_type* holding_type MEMBER holding_type READ get_holding_type NOTIFY changed)
 	Q_PROPERTY(metternich::terrain_type* terrain_type MEMBER terrain_type)
 	Q_PROPERTY(metternich::resource* resource MEMBER resource NOTIFY changed)
 	Q_PROPERTY(metternich::province* province MEMBER province NOTIFY changed)
@@ -133,6 +135,11 @@ public:
 		return this->celestial_body_type;
 	}
 
+	const metternich::holding_type *get_holding_type() const
+	{
+		return this->holding_type;
+	}
+
 	const metternich::terrain_type *get_terrain_type() const
 	{
 		return this->terrain_type;
@@ -187,6 +194,7 @@ private:
 	std::optional<centesimal_int> astrodistance; //the site's distance from its map template's center (in light-years)
 	site_type type;
 	const metternich::celestial_body_type *celestial_body_type = nullptr;
+	const metternich::holding_type *holding_type = nullptr;
 	metternich::terrain_type *terrain_type = nullptr;
 	metternich::resource *resource = nullptr;
 	metternich::province *province = nullptr;

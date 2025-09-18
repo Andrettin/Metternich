@@ -94,6 +94,12 @@ void site::check() const
 		}
 	}
 
+	if (this->get_type() == site_type::settlement && this->get_holding_type() == nullptr) {
+		log::log_error(std::format("Holding site \"{}\" has no holding type.", this->get_identifier()));
+	} else if (this->get_type() != site_type::settlement && this->get_holding_type() != nullptr) {
+		log::log_error(std::format("Site \"{}\" has a holding type, but is not a holding.", this->get_identifier()));
+	}
+
 	switch (this->get_type()) {
 		case site_type::settlement:
 		case site_type::habitable_world:

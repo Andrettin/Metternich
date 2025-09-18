@@ -878,7 +878,13 @@ void game::apply_sites()
 		if (site_province != nullptr && site_province->get_game_data()->is_on_map()) {
 			const site_history *site_history = site->get_history();
 
-			if (site_history->get_holding_type() != nullptr) {
+			if (site->get_holding_type() != nullptr && site_history->is_developed()) {
+				site_game_data->set_holding_type(site->get_holding_type());
+
+				if (tile->get_resource() != nullptr) {
+					map::get()->set_tile_resource_discovered(site_game_data->get_tile_pos(), true);
+				}
+			} else if (site_history->get_holding_type() != nullptr) {
 				if (!site->is_settlement()) {
 					throw std::runtime_error(std::format("Site \"{}\" has a holding type in history, but is not a holding.", site->get_identifier()));
 				}

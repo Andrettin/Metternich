@@ -9,6 +9,7 @@ school = {
 		town
 		city
 		metropolis
+		guild
 	}
 	settlement_conditions = {
 		or = {
@@ -37,6 +38,7 @@ college = {
 	holding_types = {
 		city
 		metropolis
+		guild
 	}
 	settlement_conditions = {
 		or = {
@@ -66,6 +68,7 @@ university = {
 	holding_types = {
 		city
 		metropolis
+		guild
 	}
 	settlement_conditions = {
 		or = {

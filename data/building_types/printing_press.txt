@@ -6,6 +6,7 @@ printing_press = {
 	provincial = true
 	required_technology = printing_press
 	holding_types = {
+		guild
 		town
 		city
 		metropolis
@@ -34,6 +35,7 @@ newspaper = {
 	required_building = printing_press
 	required_technology = printing_press
 	holding_types = {
+		guild
 		city
 		metropolis
 	}
