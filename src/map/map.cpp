@@ -51,8 +51,16 @@ map::~map()
 void map::process_gsml_property(const gsml_property &property)
 {
 	const std::string &key = property.get_key();
+	const std::string &value = property.get_value();
 
-	throw std::runtime_error(std::format("Invalid map data property: \"{}\".", key));
+	if (key == "tile_terrains") {
+		for (size_t i = 0; i < value.size(); ++i) {
+			const char c = value[i];
+			(*this->tiles)[i].set_terrain(terrain_type::get_by_character(c));
+		}
+	} else {
+		throw std::runtime_error(std::format("Invalid map data property: \"{}\".", key));
+	}
 }
 
 void map::process_gsml_scope(const gsml_data &scope)
@@ -97,6 +105,13 @@ gsml_data map::to_gsml_data() const
 	gsml_data data("map");
 
 	data.add_child("size", gsml_data::from_size(this->get_size()));
+
+	std::string tile_terrains_str;
+	tile_terrains_str.reserve(this->tiles->size());
+	for (const tile &tile : *this->tiles) {
+		tile_terrains_str += tile.get_terrain()->get_character();
+	}
+	data.add_property("tile_terrains", tile_terrains_str);
 
 	std::map<const province *, size_t> map_province_indices;
 	for (size_t i = 0; i < this->get_provinces().size(); ++i) {
