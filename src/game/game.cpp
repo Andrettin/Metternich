@@ -975,7 +975,7 @@ void game::apply_sites()
 			for (const auto &[improvement_slot, improvement] : site_improvements) {
 				if (improvement != nullptr) {
 					if (!improvement->get_resources().empty()) {
-						assert_throw(site->get_map_data()->get_type() == site_type::resource || site->get_map_data()->get_type() == site_type::celestial_body || site->is_settlement());
+						assert_throw(site->get_type() == site_type::resource || site->get_type() == site_type::celestial_body || site->is_settlement());
 
 						if (tile->get_resource() == nullptr) {
 							throw std::runtime_error(std::format("Failed to set resource improvement for tile for site \"{}\", as it has no resource.", site->get_identifier()));
@@ -998,7 +998,7 @@ void game::apply_sites()
 			}
 
 			if (site_history->is_resource_discovered()) {
-				assert_throw(site->get_map_data()->get_type() == site_type::resource || site->get_map_data()->get_type() == site_type::celestial_body || site->is_settlement());
+				assert_throw(site->get_type() == site_type::resource || site->get_type() == site_type::celestial_body || site->is_settlement());
 				map::get()->set_tile_resource_discovered(site_game_data->get_tile_pos(), true);
 			}
 		} catch (...) {

@@ -5,7 +5,6 @@
 #include "economy/resource.h"
 #include "map/map.h"
 #include "map/site.h"
-#include "map/site_type.h"
 #include "map/terrain_type.h"
 #include "map/tile.h"
 #include "util/assert_util.h"
@@ -18,10 +17,6 @@ site_map_data::site_map_data(const metternich::site *site)
 {
 	if (site->get_resource() != nullptr && site->get_resource()->is_enabled()) {
 		this->set_resource(site->get_resource());
-	}
-
-	if (site->get_type() != site_type::resource || this->get_resource() != nullptr) {
-		this->type = site->get_type();
 	}
 }
 
@@ -48,17 +43,6 @@ tile *site_map_data::get_tile() const
 	}
 
 	return nullptr;
-}
-
-void site_map_data::set_type(const site_type type)
-{
-	if (type == this->get_type()) {
-		return;
-	}
-
-	assert_throw(type != site_type::settlement);
-	assert_throw(type != site_type::habitable_world);
-	this->type = type;
 }
 
 void site_map_data::set_resource(const metternich::resource *resource)

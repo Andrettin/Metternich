@@ -671,7 +671,7 @@ void map_template::apply_site_terrain() const
 			continue;
 		}
 
-		assert_throw(site->get_map_data()->get_type() == site_type::terrain || site->get_map_data()->get_type() == site_type::resource || site->get_map_data()->get_type() == site_type::settlement);
+		assert_throw(site->get_type() == site_type::terrain || site->get_type() == site_type::resource || site->get_type() == site_type::settlement);
 
 		map->set_tile_terrain(tile_pos, site_terrain);
 	}
@@ -894,7 +894,7 @@ void map_template::apply_provinces() const
 
 	//apply tile sites
 	for (const auto &[tile_pos, site] : this->sites_by_position) {
-		if (site->get_map_data()->get_type() == site_type::resource) {
+		if (site->get_type() == site_type::resource) {
 			//disabled resource site application
 			continue;
 		}

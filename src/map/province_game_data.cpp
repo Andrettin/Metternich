@@ -1311,7 +1311,7 @@ void province_game_data::clear_military_unit_recruitment_counts()
 void province_game_data::calculate_site_commodity_outputs()
 {
 	for (const site *site : this->get_sites()) {
-		if (!site->is_settlement() && site->get_map_data()->get_type() != site_type::resource && site->get_map_data()->get_type() != site_type::celestial_body) {
+		if (!site->is_settlement() && site->get_type() != site_type::resource && site->get_type() != site_type::celestial_body) {
 			continue;
 		}
 
@@ -1322,7 +1322,7 @@ void province_game_data::calculate_site_commodity_outputs()
 void province_game_data::calculate_site_commodity_output(const commodity *commodity)
 {
 	for (const site *site : this->get_sites()) {
-		if (!site->is_settlement() && site->get_map_data()->get_type() != site_type::resource && site->get_map_data()->get_type() != site_type::celestial_body) {
+		if (!site->is_settlement() && site->get_type() != site_type::resource && site->get_type() != site_type::celestial_body) {
 			continue;
 		}
 

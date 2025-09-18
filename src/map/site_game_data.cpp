@@ -1065,7 +1065,7 @@ void site_game_data::remove_scripted_modifier(const scripted_site_modifier *modi
 
 bool site_game_data::can_have_population() const
 {
-	return this->site->is_settlement() || this->site->get_map_data()->get_type() == site_type::resource || (this->site->get_map_data()->get_type() == site_type::celestial_body && this->get_resource() != nullptr);
+	return this->site->is_settlement() || this->site->get_type() == site_type::resource || (this->site->get_type() == site_type::celestial_body && this->get_resource() != nullptr);
 }
 
 bool site_game_data::can_have_population_type(const population_type *type) const
@@ -1350,7 +1350,7 @@ void site_game_data::calculate_commodity_outputs()
 			output /= 100;
 		}
 
-		if (commodity->is_labor() && (this->site->get_map_data()->get_type() == site_type::resource || this->site->get_map_data()->get_type() == site_type::celestial_body)) {
+		if (commodity->is_labor() && (this->site->get_type() == site_type::resource || this->site->get_type() == site_type::celestial_body)) {
 			//population units in resource sites do not produce labor
 			output = centesimal_int(0);
 		}
