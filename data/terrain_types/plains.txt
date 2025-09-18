@@ -1,6 +1,7 @@
 plains = {
 	name = "Plains"
 	color = { 224 224 128 }
+	character = p
 	icon = mountains
 	image_filepath = "tiles/terrain/semi_dry_grass.png"
 	elevation_type = flatlands

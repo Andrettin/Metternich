@@ -172,6 +172,10 @@ void terrain_type::check() const
 {
 	assert_throw(this->get_color().isValid());
 
+	if (this->get_character() == 0) {
+		throw std::runtime_error(std::format("Terrain type \"{}\" has no character.", this->get_identifier()));
+	}
+
 	if (this->get_icon() == nullptr) {
 		throw std::runtime_error(std::format("Terrain type \"{}\" has no icon.", this->get_identifier()));
 	}

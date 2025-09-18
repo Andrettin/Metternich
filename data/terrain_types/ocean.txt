@@ -1,6 +1,7 @@
 ocean = {
 	name = "Ocean"
 	color = { 0 255 255 }
+	character = 4
 	icon = mountains
 	image_filepath = "tiles/terrain/shallow_water.png"
 	water = true

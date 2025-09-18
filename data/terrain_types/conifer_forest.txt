@@ -1,6 +1,7 @@
 conifer_forest = {
 	name = "Conifer Forest"
 	color = { 0 128 0 }
+	character = f
 	icon = pine_tree
 	image_filepath = "tiles/terrain/conifer_forest.png"
 	forest = true

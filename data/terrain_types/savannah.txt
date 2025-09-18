@@ -1,6 +1,7 @@
 savannah = {
 	name = "Savannah"
 	color = { 0 224 128 }
+	character = 3
 	icon = mountains
 	image_filepath = "tiles/terrain/semi_dry_grass.png"
 	elevation_type = flatlands

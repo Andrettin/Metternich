@@ -1,6 +1,7 @@
 swamp = {
 	name = "Swamp"
 	color = { 0 128 128 }
+	character = s
 	icon = mountains
 	image_filepath = "tiles/terrain/grassland.png"
 	wetland = true
