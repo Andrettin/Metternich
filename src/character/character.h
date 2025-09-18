@@ -88,7 +88,7 @@ public:
 
 	static bool skill_compare(const character *lhs, const character *rhs);
 
-	static character *generate(const metternich::species *species, const metternich::character_class *character_class, const int level, const metternich::culture *culture, const metternich::religion *religion, const site *home_settlement);
+	static const character *generate(const metternich::species *species, const metternich::character_class *character_class, const int level, const metternich::culture *culture, const metternich::religion *religion, const site *home_settlement);
 
 	explicit character(const std::string &identifier);
 	~character();

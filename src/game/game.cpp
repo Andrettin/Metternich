@@ -144,7 +144,7 @@ void game::process_gsml_property(const gsml_property &property)
 	} else if (key == "turn") {
 		this->turn = std::stoi(value);
 	} else if (key == "player_character") {
-		this->player_character = character::get(value);
+		this->player_character = this->get_character(value);
 	} else if (key == "player_country") {
 		this->player_country = country::get(value);
 	} else {
@@ -180,6 +180,7 @@ void game::process_gsml_scope(const gsml_data &scope)
 			auto generated_character = make_qunique<character>(character_data.get_tag());
 			generated_character->moveToThread(QApplication::instance()->thread());
 			character_data.process(generated_character.get());
+			this->add_generated_character(std::move(generated_character));
 		});
 	} else if (tag == "character_delayed_effects") {
 		scope.for_each_child([&](const gsml_data &delayed_effect_data) {
@@ -2038,13 +2039,30 @@ QCoro::Task<void> game::create_exploration_diplomatic_map_image()
 	() == map::get()->get_ocean_diplomatic_map_image().size());
 }
 
+const character *game::get_character(const std::string &identifier) const
+{
+	const character *character = character::try_get(identifier);
+	if (character != nullptr) {
+		return character;
+	}
+
+	const auto find_iterator = this->generated_characters_by_identifier.find(identifier);
+	if (find_iterator != this->generated_characters_by_identifier.end()) {
+		return find_iterator->second;
+	}
+
+	throw std::runtime_error(std::format("Failed to get game character for identifier \"{}\".", identifier));
+}
+
 void game::add_generated_character(qunique_ptr<character> &&character)
 {
+	this->generated_characters_by_identifier[character->get_identifier()] = character.get();
 	this->generated_characters.push_back(std::move(character));
 }
 
 void game::remove_generated_character(character *character)
 {
+	this->generated_characters_by_identifier.erase(character->get_identifier());
 	vector::remove(this->generated_characters, character);
 }
 

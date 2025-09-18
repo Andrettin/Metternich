@@ -5,6 +5,7 @@
 #include "character/character.h"
 #include "database/gsml_data.h"
 #include "domain/country.h"
+#include "game/game.h"
 #include "map/province.h"
 #include "map/site.h"
 #include "population/population_unit.h"
@@ -20,7 +21,7 @@ void context_base<read_only>::process_gsml_property(const gsml_property &propert
 	const std::string &value = property.get_value();
 
 	if (key == "root_character") {
-		this->root_scope = character::get(value);
+		this->root_scope = game::get()->get_character(value);
 	} else if (key == "root_country") {
 		this->root_scope = country::get(value);
 	} else if (key == "root_province") {
@@ -28,7 +29,7 @@ void context_base<read_only>::process_gsml_property(const gsml_property &propert
 	} else if (key == "root_site") {
 		this->root_scope = site::get(value);
 	} else if (key == "source_character") {
-		this->source_scope = character::get(value);
+		this->source_scope = game::get()->get_character(value);
 	} else if (key == "source_country") {
 		this->source_scope = country::get(value);
 	} else if (key == "source_province") {
