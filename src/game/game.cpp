@@ -160,10 +160,32 @@ void game::process_gsml_scope(const gsml_data &scope)
 		auto rules = make_qunique<game_rules>();
 		scope.process(rules.get());
 		this->rules = std::move(rules);
+	} else if (tag == "tile_provinces") {
+		int y = 0;
+		scope.for_each_child([&](const gsml_data &child_scope) {
+			for (size_t x = 0; x < child_scope.get_values().size(); ++x) {
+				const std::string &value = child_scope.get_values()[x];
+				const province *province = nullptr;
+				if (value != "n") {
+					const int map_province_index = std::stoi(value);
+					province = map::get()->get_provinces().at(map_province_index);
+				}
+
+				const QPoint tile_pos(static_cast<int>(x), y);
+				tile *tile = map::get()->get_tile(tile_pos);
+				tile->set_province(province);
+			}
+			++y;
+		});
 	} else if (tag == "countries") {
 		scope.for_each_child([&](const gsml_data &country_data) {
 			const country *country = country::get(country_data.get_tag());
 			country_data.process(country->get_game_data());
+		});
+	} else if (tag == "provinces") {
+		scope.for_each_child([&](const gsml_data &child_scope) {
+			const province *province = province::get(child_scope.get_tag());
+			child_scope.process(province->get_game_data());
 		});
 	} else if (tag == "sites") {
 		scope.for_each_child([&](const gsml_data &child_scope) {
@@ -247,6 +269,24 @@ gsml_data game::to_gsml_data() const
 		provinces_data.add_child(province->get_game_data()->to_gsml_data());
 	}
 	data.add_child(std::move(provinces_data));
+
+	std::map<const province *, size_t> map_province_indices;
+	for (size_t i = 0; i < map::get()->get_provinces().size(); ++i) {
+		map_province_indices[map::get()->get_provinces().at(i)] = i;
+	}
+
+	gsml_data tile_provinces_data("tile_provinces");
+	for (int y = 0; y < map::get()->get_height(); ++y) {
+		gsml_data tile_provinces_row_data;
+		for (int x = 0; x < map::get()->get_width(); ++x) {
+			const QPoint tile_pos(x, y);
+			const tile *tile = map::get()->get_tile(tile_pos);
+			assert_throw(tile != nullptr);
+			tile_provinces_row_data.add_value(tile->get_province() != nullptr ? std::to_string(map_province_indices.find(tile->get_province())->second) : "n");
+		}
+		tile_provinces_data.add_child(std::move(tile_provinces_row_data));
+	}
+	data.add_child(std::move(tile_provinces_data));
 
 	gsml_data countries_data("countries");
 	for (const country *country : this->get_countries()) {
