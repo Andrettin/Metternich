@@ -72,7 +72,6 @@
 #include "species/geological_era.h"
 #include "species/taxonomic_rank.h"
 #include "spell/spell_target.h"
-#include "technology/research_organization.h"
 #include "technology/technology.h"
 #include "technology/technology_category.h"
 #include "technology/technology_model.h"
@@ -226,7 +225,6 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<preferences>("", 1);
 		qmlRegisterAnonymousType<province>("", 1);
 		qmlRegisterAnonymousType<province_game_data>("", 1);
-		qmlRegisterAnonymousType<research_organization>("", 1);
 		qmlRegisterAnonymousType<scenario>("", 1);
 		qmlRegisterAnonymousType<scripted_character_modifier>("", 1);
 		qmlRegisterAnonymousType<site>("", 1);

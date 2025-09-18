@@ -3,8 +3,7 @@
 namespace metternich {
 
 enum class idea_type {
-	deity,
-	research_organization
+	deity
 };
 
 }

@@ -21,7 +21,6 @@ class country_technology final : public QObject
 	Q_PROPERTY(QVariantList researchable_technologies READ get_researchable_technologies_qvariant_list NOTIFY technologies_changed)
 	Q_PROPERTY(QVariantList future_technologies READ get_future_technologies_qvariant_list NOTIFY technologies_changed)
 	Q_PROPERTY(QVariantList current_researches READ get_current_researches_qvariant_list NOTIFY current_researches_changed)
-	Q_PROPERTY(QVariantList available_research_organization_slots READ get_available_research_organization_slots_qvariant_list NOTIFY available_research_slots_changed)
 
 public:
 	explicit country_technology(const metternich::country *country, const country_game_data *game_data);
@@ -95,8 +94,6 @@ public:
 
 	void gain_free_technologies(const int count);
 	void gain_technologies_known_by_others();
-
-	QVariantList get_available_research_organization_slots_qvariant_list() const;
 
 	const centesimal_int &get_technology_cost_modifier() const
 	{

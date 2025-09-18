@@ -37,7 +37,6 @@ class pathway;
 class portrait;
 class religion;
 class religious_group;
-class research_organization;
 class resource;
 class technological_period;
 class technology_category;
@@ -361,30 +360,6 @@ public:
 
 	void add_enabled_law(const law *law);
 
-	const std::vector<const research_organization *> &get_enabled_research_organizations() const
-	{
-		return this->enabled_research_organizations;
-	}
-
-	std::vector<const research_organization *> get_enabled_research_organizations_for_country(const country *country) const;
-
-	void add_enabled_research_organization(const research_organization *organization)
-	{
-		this->enabled_research_organizations.push_back(organization);
-	}
-
-	const std::vector<const research_organization *> &get_disabled_research_organizations() const
-	{
-		return this->disabled_research_organizations;
-	}
-
-	std::vector<const research_organization *> get_disabled_research_organizations_for_country(const country *country) const;
-
-	void add_disabled_research_organization(const research_organization *organization)
-	{
-		this->disabled_research_organizations.push_back(organization);
-	}
-
 	const std::vector<const deity *> &get_enabled_deities() const
 	{
 		return this->enabled_deities;
@@ -501,8 +476,6 @@ private:
 	std::vector<const transporter_type *> enabled_transporters;
 	std::vector<const government_type *> enabled_government_types;
 	std::vector<const law *> enabled_laws;
-	std::vector<const research_organization *> enabled_research_organizations;
-	std::vector<const research_organization *> disabled_research_organizations;
 	std::vector<const deity *> enabled_deities;
 	std::vector<const deity *> disabled_deities;
 	std::unique_ptr<const metternich::modifier<const country>> modifier;

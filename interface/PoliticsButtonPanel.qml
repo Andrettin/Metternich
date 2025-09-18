@@ -82,26 +82,4 @@ Rectangle {
 			}
 		}
 	}
-	
-	IconButton {
-		id: research_organizations_button
-		anchors.top: religion_button.bottom
-		anchors.topMargin: 4 * scale_factor
-		anchors.horizontalCenter: parent.horizontalCenter
-		icon_identifier: "cog"
-		highlighted: politics_view_mode === PoliticsView.Mode.ResearchOrganizations
-		visible: country_game_data.technology.available_research_organization_slots.length > 0
-		
-		onClicked: {
-			politics_view_mode = PoliticsView.Mode.ResearchOrganizations
-		}
-		
-		onHoveredChanged: {
-			if (hovered) {
-				status_text = "View Research Organizations"
-			} else {
-				status_text = ""
-			}
-		}
-	}
 }

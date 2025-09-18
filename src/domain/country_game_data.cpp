@@ -71,8 +71,6 @@
 #include "script/opinion_modifier.h"
 #include "script/scripted_country_modifier.h"
 #include "species/phenotype.h"
-#include "technology/research_organization.h"
-#include "technology/research_organization_slot.h"
 #include "ui/icon.h"
 #include "ui/icon_container.h"
 #include "ui/portrait.h"
@@ -2170,9 +2168,6 @@ void country_game_data::set_idea(const idea_slot *slot, const idea *idea)
 				case idea_type::deity:
 					engine_interface::get()->add_notification(std::format("{} Worshiped", idea->get_cultural_name(this->country->get_culture())), interior_minister_portrait, std::format("The cult of {} has become widespread in our nation!\n\n{}", idea->get_cultural_name(this->country->get_culture()), idea->get_modifier_string(this->country)));
 					break;
-				case idea_type::research_organization:
-					engine_interface::get()->add_notification(std::format("{} Gains Contract", idea->get_name()), interior_minister_portrait, std::format("The {} has gained an important contract with our govenment to conduct research!\n\n{}", idea->get_name(), idea->get_modifier_string(this->country)));
-					break;
 				default:
 					assert_throw(false);
 			}
@@ -2257,9 +2252,6 @@ void country_game_data::check_idea(const idea_slot *slot)
 					case idea_type::deity:
 						engine_interface::get()->add_notification(std::format("{} No Longer Worshiped", old_idea->get_cultural_name(this->country->get_culture())), interior_minister_portrait, std::format("Your Excellency, despite a long and proud history of being worshiped in our nation, the cult of {} has lost favor amongst our people, and declined to nothingness.", old_idea->get_cultural_name(this->country->get_culture())));
 						break;
-					case idea_type::research_organization:
-						engine_interface::get()->add_notification(std::format("{} Abolished", old_idea->get_name()), interior_minister_portrait, std::format("Your Excellency, despite a long and proud history in conducting research for our nation, the {} has lost its ability to function, and has been abolished.", old_idea->get_name()));
-						break;
 					default:
 						assert_throw(false);
 				}
@@ -2295,11 +2287,6 @@ std::vector<const idea *> country_game_data::get_appointable_ideas(const idea_sl
 		case idea_type::deity:
 			for (const deity *deity : deity::get_all()) {
 				potential_ideas.push_back(deity);
-			}
-			break;
-		case idea_type::research_organization:
-			for (const research_organization *research_organization : research_organization::get_all()) {
-				potential_ideas.push_back(research_organization);
 			}
 			break;
 		default:
@@ -2407,11 +2394,6 @@ std::vector<const idea_slot *> country_game_data::get_available_idea_slots(const
 	switch (idea_type) {
 		case idea_type::deity:
 			for (const deity_slot *slot : deity_slot::get_all()) {
-				available_idea_slots.push_back(slot);
-			}
-			break;
-		case idea_type::research_organization:
-			for (const research_organization_slot *slot : research_organization_slot::get_all()) {
 				available_idea_slots.push_back(slot);
 			}
 			break;

@@ -534,11 +534,6 @@ void country_technology::gain_technologies_known_by_others()
 	}
 }
 
-QVariantList country_technology::get_available_research_organization_slots_qvariant_list() const
-{
-	return container::to_qvariant_list(this->get_game_data()->get_available_idea_slots(idea_type::research_organization));
-}
-
 void country_technology::set_technology_category_cost_modifier(const technology_category *category, const centesimal_int &value)
 {
 	if (value == this->get_technology_category_cost_modifier(category)) {

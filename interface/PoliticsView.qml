@@ -54,15 +54,6 @@ Item {
 		visible: politics_view_mode === PoliticsView.Mode.Religion
 	}
 	
-	ResearchOrganizationsView {
-		id: research_organizations_view
-		anchors.top: top_bar.bottom
-		anchors.bottom: status_bar.top
-		anchors.left: infopanel.right
-		anchors.right: button_panel.left
-		visible: politics_view_mode === PoliticsView.Mode.ResearchOrganizations
-	}
-	
 	PoliticsButtonPanel {
 		id: button_panel
 		anchors.top: parent.top

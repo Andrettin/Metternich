@@ -20,13 +20,6 @@ laws = {
 	hidden = true
 }
 
-research_organizations = {
-	name = "Research Organizations"
-	default_value = false
-	description = "Allow countries to select research organizations"
-	hidden = true
-}
-
 culture_commodity = {
 	name = "Culture Commodity"
 	default_value = false
