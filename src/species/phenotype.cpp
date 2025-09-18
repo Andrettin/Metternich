@@ -13,7 +13,7 @@ namespace metternich {
 void phenotype::initialize()
 {
 	if (!this->color.isValid()) {
-		log::log_error(std::format("Phenotype \"{}\" has no color. A random one will be generated for it.", this->get_identifier()));
+		//log::log_error(std::format("Phenotype \"{}\" has no color. A random one will be generated for it.", this->get_identifier()));
 		this->color = random::get()->generate_color();
 	}
 
