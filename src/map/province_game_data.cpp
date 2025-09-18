@@ -123,7 +123,9 @@ gsml_data province_game_data::to_gsml_data() const
 		data.add_property("religion", this->get_religion()->get_identifier());
 	}
 
-	data.add_property("level", std::to_string(this->get_level()));
+	if (this->get_level() != 0) {
+		data.add_property("level", std::to_string(this->get_level()));
+	}
 
 	return data;
 }

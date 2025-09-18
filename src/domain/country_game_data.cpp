@@ -144,8 +144,15 @@ void country_game_data::process_gsml_property(const gsml_property &property)
 void country_game_data::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
+	const std::vector<std::string> &values = scope.get_values();
 
-	throw std::runtime_error(std::format("Invalid country game data scope: \"{}\".", tag));
+	if (tag == "provinces") {
+		for (const std::string &value : values) {
+			this->provinces.push_back(province::get(value));
+		}
+	} else {
+		throw std::runtime_error(std::format("Invalid country game data scope: \"{}\".", tag));
+	}
 }
 
 gsml_data country_game_data::to_gsml_data() const
@@ -154,6 +161,12 @@ gsml_data country_game_data::to_gsml_data() const
 
 	data.add_property("tier", std::string(magic_enum::enum_name(this->get_tier())));
 	data.add_property("religion", this->get_religion()->get_identifier());
+
+	gsml_data provinces_data("provinces");
+	for (const province *province : this->get_provinces()) {
+		provinces_data.add_value(province->get_identifier());
+	}
+	data.add_child(std::move(provinces_data));
 
 	return data;
 }
