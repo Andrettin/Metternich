@@ -317,10 +317,6 @@ Rectangle {
 				var commodity = kv_pair.key
 				var output = kv_pair.value
 				
-				if (commodity.labor) {
-					continue
-				}
-				
 				if (commodity.housing) {
 					continue
 				}
@@ -488,10 +484,6 @@ Rectangle {
 				var output = commodity_outputs[i].value
 				
 				if (commodity.local) {
-					continue
-				}
-				
-				if (commodity.labor) {
 					continue
 				}
 				

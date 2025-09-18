@@ -1,8 +1,0 @@
-labor = {
-	name = "Labor"
-	type = resource
-	icon = labor
-	abstract = true
-	storable = false
-	labor = true
-}

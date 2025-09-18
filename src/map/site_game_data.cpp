@@ -1350,11 +1350,6 @@ void site_game_data::calculate_commodity_outputs()
 			output /= 100;
 		}
 
-		if (commodity->is_labor() && (this->site->get_type() == site_type::resource || this->site->get_type() == site_type::celestial_body)) {
-			//population units in resource sites do not produce labor
-			output = centesimal_int(0);
-		}
-
 		this->set_commodity_output(commodity, output);
 	}
 }

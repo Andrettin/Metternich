@@ -371,7 +371,7 @@ bool country_economy::can_change_commodity_input(const commodity *commodity, con
 			return false;
 		}
 	} else {
-		//for non-storable commodities, like Labor, the commodity output is used directly instead of storage
+		//for non-storable commodities, the commodity output is used directly instead of storage
 		if (this->get_net_commodity_output(commodity) < change) {
 			return false;
 		}

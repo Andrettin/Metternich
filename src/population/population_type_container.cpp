@@ -21,10 +21,6 @@ bool population_type_compare::operator()(const population_type *lhs, const popul
 			return lhs_output_commodity != nullptr;
 		}
 
-		if (lhs_output_commodity->is_labor() != rhs_output_commodity->is_labor()) {
-			return lhs_output_commodity->is_labor();
-		}
-
 		if (lhs_output_commodity->is_storable() != rhs_output_commodity->is_storable()) {
 			return !lhs_output_commodity->is_storable();
 		}

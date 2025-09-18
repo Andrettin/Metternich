@@ -32,7 +32,6 @@ class commodity final : public named_data_entry, public data_type<commodity>
 	Q_PROPERTY(bool local MEMBER local READ is_local NOTIFY changed)
 	Q_PROPERTY(bool provincial MEMBER provincial READ is_provincial NOTIFY changed)
 	Q_PROPERTY(bool negative_allowed MEMBER negative_allowed READ is_negative_allowed NOTIFY changed)
-	Q_PROPERTY(bool labor MEMBER labor READ is_labor NOTIFY changed)
 	Q_PROPERTY(bool housing MEMBER housing READ is_housing NOTIFY changed)
 	Q_PROPERTY(int wealth_value MEMBER wealth_value READ get_wealth_value NOTIFY changed)
 	Q_PROPERTY(int base_price MEMBER base_price READ get_base_price NOTIFY changed)
@@ -93,11 +92,6 @@ public:
 	bool is_negative_allowed() const
 	{
 		return this->negative_allowed;
-	}
-
-	bool is_labor() const
-	{
-		return this->labor;
 	}
 
 	bool is_housing() const
@@ -161,7 +155,6 @@ private:
 	bool local = false;
 	bool provincial = false;
 	bool negative_allowed = false;
-	bool labor = false;
 	bool housing = false;
 	int wealth_value = 0;
 	int base_price = 0;

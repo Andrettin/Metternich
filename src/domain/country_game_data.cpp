@@ -1934,7 +1934,6 @@ population_unit *country_game_data::choose_starvation_population_unit()
 
 	bool found_non_food_producer = false;
 	bool found_producer = false;
-	bool found_labor_producer = false;
 	int lowest_output_value = std::numeric_limits<int>::max();
 	for (population_unit *population_unit : this->get_population_units()) {
 		if (population_unit->get_site()->is_settlement() && population_unit->get_site()->get_game_data()->get_population_unit_count() == 1) {
@@ -1955,15 +1954,6 @@ population_unit *country_game_data::choose_starvation_population_unit()
 			continue;
 		} else if (!found_producer && is_producer) {
 			found_producer = true;
-			lowest_output_value = population_unit->get_type()->get_output_value();
-			population_units.clear();
-		}
-
-		const bool is_labor_producer = population_unit->get_type()->get_output_commodity() != nullptr && population_unit->get_type()->get_output_commodity()->is_labor();
-		if (found_labor_producer && !is_labor_producer) {
-			continue;
-		} else if (!found_labor_producer && is_labor_producer) {
-			found_labor_producer = true;
 			lowest_output_value = population_unit->get_type()->get_output_value();
 			population_units.clear();
 		}

@@ -20,22 +20,12 @@ Rectangle {
 		width: 1 * scale_factor
 	}
 	
-	IndustryCounter {
-		id: labor_counter
-		anchors.left: parent.left
-		anchors.top: parent.top
-		anchors.topMargin: 96 * scale_factor
-		name: "Available Labor"
-		icon_identifier: "labor"
-		count: (country_game_data.economy.commodity_outputs && country_game_data.economy.commodity_inputs) ? (country_game_data.economy.get_commodity_output("labor") - country_game_data.economy.get_commodity_input("labor")) : 0 //the conditional is there to make the counter be updated when the labor output or input changes
-	}
-	
 	ListView {
 		id: population_unit_list
 		anchors.left: parent.left
 		anchors.right: parent.right
-		anchors.top: labor_counter.bottom
-		anchors.topMargin: 8 * scale_factor
+		anchors.top: parent.top
+		anchors.topMargin: 96 * scale_factor
 		anchors.bottom: back_button.top
 		anchors.bottomMargin: 8 * scale_factor
 		boundsBehavior: Flickable.StopAtBounds
