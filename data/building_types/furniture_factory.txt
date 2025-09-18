@@ -8,7 +8,6 @@ carpenters_house = {
 		village
 		town
 		city
-		metropolis
 	}
 	settlement_conditions = {
 		province = {
@@ -34,7 +33,6 @@ carpenters_shop = {
 	holding_types = {
 		town
 		city
-		metropolis
 	}
 	settlement_conditions = {
 		province = {
@@ -60,7 +58,6 @@ furniture_factory = {
 	holding_types = {
 		town
 		city
-		metropolis
 	}
 	settlement_conditions = {
 		province = {

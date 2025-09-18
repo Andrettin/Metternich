@@ -12,7 +12,6 @@ dock = {
 		village
 		town
 		city
-		metropolis
 		estate
 		temple
 	}
@@ -28,7 +27,6 @@ dock = {
 		or = {
 			holding_type = town
 			holding_type = city
-			holding_type = metropolis
 		}
 	}
 }
@@ -44,7 +42,6 @@ shipyard = {
 	required_technology = seafaring
 	holding_types = {
 		city
-		metropolis
 	}
 	recruited_transporter_categories = {
 		small_merchant_ship

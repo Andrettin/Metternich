@@ -8,7 +8,6 @@ coffee_house = {
 	holding_types = {
 		town
 		city
-		metropolis
 	}
 	conditions = {
 		game_rule = culture_commodity

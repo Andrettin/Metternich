@@ -7,7 +7,6 @@ courthouse = {
 	required_technology = code_of_laws
 	holding_types = {
 		city
-		metropolis
 	}
 	conditions = {
 		game_rule = additional_buildings

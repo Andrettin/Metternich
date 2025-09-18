@@ -7,7 +7,6 @@ bank = {
 	required_technology = banking
 	holding_types = {
 		city
-		metropolis
 	}
 	conditions = {
 		game_rule = trade_commodity

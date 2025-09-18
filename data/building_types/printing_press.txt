@@ -9,7 +9,6 @@ printing_press = {
 		guild
 		town
 		city
-		metropolis
 	}
 	conditions = {
 		game_rule = additional_buildings
@@ -37,7 +36,6 @@ newspaper = {
 	holding_types = {
 		guild
 		city
-		metropolis
 	}
 	conditions = {
 		game_rule = additional_buildings

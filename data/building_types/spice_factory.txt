@@ -8,7 +8,6 @@ spice_factory = {
 	holding_types = {
 		town
 		city
-		metropolis
 	}
 	conditions = {
 		game_rule = trade_commodity

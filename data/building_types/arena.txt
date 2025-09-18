@@ -7,7 +7,6 @@ arena = {
 	required_technology = architecture
 	holding_types = {
 		city
-		metropolis
 	}
 	conditions = {
 		game_rule = additional_buildings

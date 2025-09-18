@@ -9,7 +9,6 @@ alchemists_shop = {
 		village
 		town
 		city
-		metropolis
 	}
 	commodity_costs = {
 		lumber = 4

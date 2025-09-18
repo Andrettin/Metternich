@@ -7,7 +7,6 @@ sewer_system = {
 	required_technology = sanitation
 	holding_types = {
 		city
-		metropolis
 	}
 	conditions = {
 		game_rule = additional_buildings

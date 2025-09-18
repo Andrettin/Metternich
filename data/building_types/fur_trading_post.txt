@@ -8,7 +8,6 @@ fur_trading_post = {
 	holding_types = {
 		town
 		city
-		metropolis
 	}
 	conditions = {
 		game_rule = trade_commodity

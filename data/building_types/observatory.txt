@@ -7,7 +7,6 @@ observatory = {
 	required_technology = astronomy
 	holding_types = {
 		city
-		metropolis
 	}
 	conditions = {
 		game_rule = research_commodity

@@ -7,7 +7,6 @@ stock_exchange = {
 	required_technology = economics
 	holding_types = {
 		city
-		metropolis
 	}
 	conditions = {
 		game_rule = trade_commodity

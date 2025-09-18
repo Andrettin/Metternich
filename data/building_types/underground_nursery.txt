@@ -10,7 +10,6 @@ underground_nursery = {
 		village
 		town
 		city
-		metropolis
 		estate
 		temple
 	}

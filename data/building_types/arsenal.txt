@@ -8,7 +8,6 @@ armory = {
 		village
 		town
 		city
-		metropolis
 	}
 	settlement_conditions = {
 		province = {
@@ -37,7 +36,6 @@ magazine = {
 	holding_types = {
 		town
 		city
-		metropolis
 	}
 	settlement_conditions = {
 		province = {
@@ -66,7 +64,6 @@ arsenal = {
 	holding_types = {
 		town
 		city
-		metropolis
 	}
 	settlement_conditions = {
 		province = {

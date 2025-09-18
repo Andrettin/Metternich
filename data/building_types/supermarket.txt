@@ -7,7 +7,6 @@ supermarket = {
 	required_technology = refrigeration
 	holding_types = {
 		city
-		metropolis
 	}
 	conditions = {
 		game_rule = trade_commodity

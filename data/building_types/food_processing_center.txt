@@ -8,7 +8,6 @@ food_processing_center = {
 	holding_types = {
 		town
 		city
-		metropolis
 	}
 	settlement_conditions = {
 		province = {

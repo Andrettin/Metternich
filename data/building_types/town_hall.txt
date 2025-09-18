@@ -8,7 +8,6 @@ village_hall = {
 		village
 		town
 		city
-		metropolis
 	}
 	country_modifier = {
 		commodity_demand = {
@@ -31,7 +30,6 @@ town_hall = {
 	holding_types = {
 		town
 		city
-		metropolis
 	}
 	country_modifier = {
 		commodity_demand = {
@@ -53,7 +51,6 @@ city_hall = {
 	required_building = town_hall
 	holding_types = {
 		city
-		metropolis
 	}
 	country_modifier = {
 		commodity_demand = {
@@ -76,7 +73,6 @@ state_house = {
 	required_building = city_hall
 	holding_types = {
 		city
-		metropolis
 	}
 	country_modifier = {
 		commodity_demand = {
@@ -99,7 +95,6 @@ capitol = {
 	required_building = state_house
 	holding_types = {
 		city
-		metropolis
 	}
 	country_modifier = {
 		commodity_demand = {

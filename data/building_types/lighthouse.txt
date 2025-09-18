@@ -7,7 +7,6 @@ lighthouse = {
 	required_technology = cartography
 	holding_types = {
 		city
-		metropolis
 	}
 	conditions = {
 		game_rule = additional_buildings

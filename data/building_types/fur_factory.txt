@@ -9,7 +9,6 @@ furriers_house = {
 		village
 		town
 		city
-		metropolis
 	}
 	settlement_conditions = {
 		province = {
@@ -33,7 +32,6 @@ furriers_shop = {
 	holding_types = {
 		town
 		city
-		metropolis
 	}
 	settlement_conditions = {
 		province = {
@@ -57,7 +55,6 @@ fur_factory = {
 	holding_types = {
 		town
 		city
-		metropolis
 	}
 	settlement_conditions = {
 		province = {

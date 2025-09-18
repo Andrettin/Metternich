@@ -11,7 +11,6 @@ shrine = {
 		temple
 		town
 		city
-		metropolis
 	}
 }
 
@@ -26,7 +25,6 @@ temple = {
 	holding_types = {
 		temple
 		city
-		metropolis
 	}
 	settlement_modifier = {
 		amenities_bonus = 1
@@ -44,7 +42,6 @@ cathedral = {
 	holding_types = {
 		temple
 		city
-		metropolis
 	}
 	settlement_modifier = {
 		amenities_bonus = 4

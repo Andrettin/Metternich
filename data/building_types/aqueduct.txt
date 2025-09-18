@@ -8,7 +8,6 @@ aqueduct = {
 	holding_types = {
 		town
 		city
-		metropolis
 	}
 	conditions = {
 		game_rule = additional_buildings

@@ -7,7 +7,6 @@ war_college = {
 	provincial_capital_only = true
 	holding_types = {
 		city
-		metropolis
 		estate
 	}
 	settlement_modifier = {

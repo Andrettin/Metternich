@@ -8,7 +8,6 @@ monument = {
 	holding_types = {
 		town
 		city
-		metropolis
 		estate
 		temple
 	}

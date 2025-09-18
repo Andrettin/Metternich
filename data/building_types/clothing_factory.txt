@@ -8,7 +8,6 @@ tailors_house = {
 		village
 		town
 		city
-		metropolis
 	}
 	settlement_conditions = {
 		province = {
@@ -36,7 +35,6 @@ tailors_shop = {
 	holding_types = {
 		town
 		city
-		metropolis
 	}
 	settlement_conditions = {
 		province = {
@@ -64,7 +62,6 @@ clothing_factory = {
 	holding_types = {
 		town
 		city
-		metropolis
 	}
 	settlement_conditions = {
 		province = {

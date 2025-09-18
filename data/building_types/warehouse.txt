@@ -12,7 +12,6 @@ warehouse = {
 		village
 		town
 		city
-		metropolis
 		estate
 		temple
 	}

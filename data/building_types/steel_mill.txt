@@ -8,7 +8,6 @@ steel_mill = {
 	holding_types = {
 		town
 		city
-		metropolis
 	}
 	settlement_conditions = {
 		province = {

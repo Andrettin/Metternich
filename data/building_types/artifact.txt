@@ -12,7 +12,6 @@ artifact = {
 		temple
 		town
 		city
-		metropolis
 	}
 	conditions = {
 		game_rule = additional_buildings

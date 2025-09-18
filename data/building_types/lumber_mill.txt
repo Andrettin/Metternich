@@ -8,7 +8,6 @@ sawyers_house = {
 		village
 		town
 		city
-		metropolis
 	}
 	settlement_conditions = {
 		province = {
@@ -30,7 +29,6 @@ sawyers_shop = {
 	holding_types = {
 		town
 		city
-		metropolis
 	}
 	settlement_conditions = {
 		province = {
@@ -53,7 +51,6 @@ lumber_mill = {
 	holding_types = {
 		town
 		city
-		metropolis
 	}
 	settlement_conditions = {
 		province = {
