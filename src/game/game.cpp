@@ -240,8 +240,12 @@ gsml_data game::to_gsml_data() const
 
 	data.add_property("date", date::to_string(this->get_date()));
 	data.add_property("turn", std::to_string(this->turn));
-	data.add_property("player_character", this->get_player_character()->get_identifier());
-	data.add_property("player_country", this->get_player_country()->get_identifier());
+
+	gsml_data provinces_data("provinces");
+	for (const province *province : map::get()->get_provinces()) {
+		provinces_data.add_child(province->get_game_data()->to_gsml_data());
+	}
+	data.add_child(std::move(provinces_data));
 
 	gsml_data countries_data("countries");
 	for (const country *country : this->get_countries()) {
@@ -270,6 +274,9 @@ gsml_data game::to_gsml_data() const
 		generated_characters_data.add_child(character->to_gsml_data());
 	}
 	data.add_child(std::move(generated_characters_data));
+
+	data.add_property("player_character", this->get_player_character()->get_identifier());
+	data.add_property("player_country", this->get_player_country()->get_identifier());
 
 	if (!this->character_delayed_effects.empty()) {
 		gsml_data delayed_effects_data("character_delayed_effects");

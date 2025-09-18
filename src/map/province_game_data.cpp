@@ -82,6 +82,52 @@ province_game_data::~province_game_data()
 {
 }
 
+void province_game_data::process_gsml_property(const gsml_property &property)
+{
+	const std::string &key = property.get_key();
+	const std::string &value = property.get_value();
+
+	if (key == "domain") {
+		this->owner = country::get(value);
+	} else if (key == "culture") {
+		this->culture = culture::get(value);
+	} else if (key == "religion") {
+		this->religion = religion::get(value);
+	} else if (key == "level") {
+		this->level = std::stoi(value);
+	} else {
+		throw std::runtime_error(std::format("Invalid province game data property: \"{}\".", key));
+	}
+}
+
+void province_game_data::process_gsml_scope(const gsml_data &scope)
+{
+	const std::string &tag = scope.get_tag();
+
+	throw std::runtime_error(std::format("Invalid province game data scope: \"{}\".", tag));
+}
+
+gsml_data province_game_data::to_gsml_data() const
+{
+	gsml_data data(this->province->get_identifier());
+
+	if (this->get_owner() != nullptr) {
+		data.add_property("domain", this->get_owner()->get_identifier());
+	}
+
+	if (this->get_culture() != nullptr) {
+		data.add_property("culture", this->get_culture()->get_identifier());
+	}
+
+	if (this->get_religion() != nullptr) {
+		data.add_property("religion", this->get_religion()->get_identifier());
+	}
+
+	data.add_property("level", std::to_string(this->get_level()));
+
+	return data;
+}
+
 void province_game_data::do_turn()
 {
 	for (const site *site : this->get_sites()) {

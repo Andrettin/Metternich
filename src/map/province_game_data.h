@@ -18,6 +18,10 @@ Q_MOC_INCLUDE("population/population.h")
 Q_MOC_INCLUDE("religion/religion.h")
 Q_MOC_INCLUDE("ui/icon.h")
 
+namespace archimedes {
+	class gsml_data;
+}
+
 namespace metternich {
 
 class army;
@@ -72,6 +76,11 @@ public:
 	explicit province_game_data(const metternich::province *province);
 	province_game_data(const province_game_data &other) = delete;
 	~province_game_data();
+
+	void process_gsml_property(const gsml_property &property);
+	void process_gsml_scope(const gsml_data &scope);
+
+	gsml_data to_gsml_data() const;
 
 	void do_turn();
 	void do_events();
