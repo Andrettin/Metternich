@@ -1,16 +1,13 @@
-armored_fish = {
-	name = "Armored Fish"
-	subcategory = aquatic_animals
-	portrait = building_slot
-	icon = fish
-	period = cretaceous
-	year = -400000000 #Hemicyclaspis
-	cost_commodity = research
-	cultures = {
-		reptilian
-	}
-	prerequisites = {
-		full_armor
-		spiny_fins
-	}
-}
+#armored_fish = {
+#	name = "Armored Fish"
+#	subcategory = aquatic_animals
+#	portrait = building_slot
+#	icon = fish
+#	period = cretaceous
+#	year = -400000000 #Hemicyclaspis
+#	cost_commodity = research
+#	prerequisites = {
+#		full_armor
+#		spiny_fins
+#	}
+#}

@@ -7,8 +7,6 @@ rio_grande_do_norte = {
 	}
 	
 	history = {
-		owner = gondwana
-		culture = reptilian
 		religion = pagan
 		
 		-4000 = {

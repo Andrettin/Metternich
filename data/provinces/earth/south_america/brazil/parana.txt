@@ -7,8 +7,6 @@ parana = {
 	}
 	
 	history = {
-		owner = gondwana
-		culture = reptilian
 		religion = pagan
 		
 		-4000 = {

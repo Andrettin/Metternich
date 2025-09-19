@@ -7,14 +7,10 @@ highlands = {
 	}
 	
 	history = {
-		owner = elginerpetontids
-		culture = amphibian
 		religion = pagan
 		
-		-419200000 = { #Elginerpeton lived in Elgin in the Devonian; Source: https://paleobiodb.org/classic/basicTaxonInfo?taxon_no=txn:242708
-			owner = elginerpetontids
-			culture = amphibian
-			religion = pagan
+		-419200000 = {
+			#Elginerpeton lived in Elgin in the Devonian; Source: https://paleobiodb.org/classic/basicTaxonInfo?taxon_no=txn:242708
 		}
 		
 		-4000 = {

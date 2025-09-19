@@ -1,4 +1,0 @@
-underground_nursery = {
-	name = "Underground Nursery"
-	slot_type = underground_nursery
-}

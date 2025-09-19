@@ -7,8 +7,6 @@ tierra_del_fuego = {
 	}
 	
 	history = {
-		owner = gondwana
-		culture = reptilian
 		religion = pagan
 		
 		-4000 = {

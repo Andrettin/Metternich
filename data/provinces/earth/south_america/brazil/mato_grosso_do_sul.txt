@@ -7,8 +7,6 @@ mato_grosso_do_sul = {
 	}
 	
 	history = {
-		owner = gondwana
-		culture = reptilian
 		religion = pagan
 		
 		-4000 = {

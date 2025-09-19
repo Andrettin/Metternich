@@ -7,8 +7,6 @@ rio_de_janeiro = {
 	}
 	
 	history = {
-		owner = gondwana
-		culture = reptilian
 		religion = pagan
 		
 		-4000 = {

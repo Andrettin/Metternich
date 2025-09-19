@@ -7,14 +7,10 @@ castille = {
 	}
 	
 	history = {
-		owner = crusafontids
-		culture = mammalian
 		religion = pagan
 		
-		-143100000 = { #Crusafontia lived in Spain in the Cretaceous; Source: https://paleobiodb.org/classic/basicTaxonInfo?taxon_no=txn:39892
-			owner = crusafontids
-			culture = mammalian
-			religion = pagan
+		-143100000 = {
+			#Crusafontia lived in Spain in the Cretaceous; Source: https://paleobiodb.org/classic/basicTaxonInfo?taxon_no=txn:39892
 		}
 		
 		-4000 = {

@@ -7,15 +7,7 @@ estonia = {
 	}
 	
 	history = {
-		owner = ventastegids
-		culture = amphibian
 		religion = pagan
-		
-		-419200000 = {
-			owner = ventastegids
-			culture = amphibian
-			religion = pagan
-		}
 		
 		-4000 = {
 			culture = estonian

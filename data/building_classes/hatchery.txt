@@ -1,4 +1,0 @@
-hatchery = {
-	name = "Hatchery"
-	slot_type = hatchery
-}

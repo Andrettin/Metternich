@@ -7,19 +7,10 @@ new_mexico = {
 	}
 	
 	history = {
-		owner = hylerpetontids
-		culture = amphibian
 		religion = pagan
 		
-		-358900000 = {
-			owner = hylerpetontids
-			culture = amphibian
-			religion = pagan
-		}
-		
-		-143100000 = { #Alphadon lived in New Mexico in the Cretaceous; Source: https://paleobiodb.org/classic/basicTaxonInfo?taxon_no=487156
-			owner = alphadontids
-			culture = mammalian
+		-143100000 = {
+			#Alphadon lived in New Mexico in the Cretaceous; Source: https://paleobiodb.org/classic/basicTaxonInfo?taxon_no=487156
 		}
 		
 		-4000 = {

@@ -7,8 +7,6 @@ santa_cruz_bolivia = {
 	}
 	
 	history = {
-		owner = gondwana
-		culture = reptilian
 		religion = pagan
 		
 		-4000 = {

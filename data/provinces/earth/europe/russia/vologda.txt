@@ -7,15 +7,7 @@ vologda = {
 	}
 	
 	history = {
-		owner = tulerpetontids
-		culture = amphibian
 		religion = pagan
-		
-		-419200000 = {
-			owner = tulerpetontids
-			culture = amphibian
-			religion = pagan
-		}
 		
 		-4000 = {
 			culture = slavic

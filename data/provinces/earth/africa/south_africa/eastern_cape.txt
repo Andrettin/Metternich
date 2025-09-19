@@ -7,14 +7,10 @@ eastern_cape = {
 	}
 	
 	history = {
-		owner = megazostrodontids
-		culture = mammalian
 		religion = pagan
 		
-		-201400000 = { #Megazostrodon lived in South Africa in the Jurassic; Source: https://paleobiodb.org/classic/basicTaxonInfo?taxon_no=txn:39752
-			owner = megazostrodontids
-			culture = mammalian
-			religion = pagan
+		-201400000 = {
+			#Megazostrodon lived in South Africa in the Jurassic; Source: https://paleobiodb.org/classic/basicTaxonInfo?taxon_no=txn:39752
 		}
 		
 		-4000 = {

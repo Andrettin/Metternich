@@ -1,16 +1,13 @@
-archosaurs = {
-	name = "Archosaurs"
-	subcategory = body_proportions
-	portrait = building_slot
-	icon = lion
-	period = neogene
-	year = -72700000 #Tyrannosaurus
-	cost_commodity = research
-	cultures = {
-		reptilian
-	}
-	prerequisites = {
-		serrated_teeth
-		upright_stature
-	}
-}
+#archosaurs = {
+#	name = "Archosaurs"
+#	subcategory = body_proportions
+#	portrait = building_slot
+#	icon = lion
+#	period = neogene
+#	year = -72700000 #Tyrannosaurus
+#	cost_commodity = research
+#	prerequisites = {
+#		serrated_teeth
+#		upright_stature
+#	}
+#}

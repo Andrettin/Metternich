@@ -7,15 +7,7 @@ luxembourg = {
 	}
 	
 	history = {
-		owner = ichthyostegids
-		culture = amphibian
 		religion = pagan
-		
-		-419200000 = {
-			owner = ichthyostegids
-			culture = amphibian
-			religion = pagan
-		}
 		
 		-4000 = {
 			owner = gaul

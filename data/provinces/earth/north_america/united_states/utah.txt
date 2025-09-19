@@ -7,24 +7,14 @@ utah = {
 	}
 	
 	history = {
-		owner = hylerpetontids
-		culture = amphibian
 		religion = pagan
 		
-		-358900000 = {
-			owner = hylerpetontids
-			culture = amphibian
-			religion = pagan
+		-86300000 = {
+			#Alphadon lived there in the Santonian period; Source: https://fossilworks.org/?a=samplePage&sample_no=4596
 		}
 		
-		-86300000 = { #Alphadon lived there in the Santonian period; Source: https://fossilworks.org/?a=samplePage&sample_no=4596
-			owner = alphadontids
-			culture = mammalian
-		}
-		
-		-70600000 = { #Alphadon lived there in the Lancian period; Source: https://fossilworks.org/?a=samplePage&sample_no=4558 ; Source: https://fossilworks.org/?a=samplePage&sample_no=4583
-			owner = alphadontids
-			culture = mammalian
+		-70600000 = {
+			#Alphadon lived there in the Lancian period; Source: https://fossilworks.org/?a=samplePage&sample_no=4558 ; Source: https://fossilworks.org/?a=samplePage&sample_no=4583
 		}
 		
 		-4000 = {

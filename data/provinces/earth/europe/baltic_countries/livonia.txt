@@ -8,14 +8,10 @@ livonia = {
 	}
 	
 	history = {
-		owner = ventastegids
-		culture = amphibian
 		religion = pagan
 		
-		-419200000 = { #Ventastega lived in Latvia in the Devonian; Source: https://paleobiodb.org/classic/basicTaxonInfo?taxon_no=txn:226306
-			owner = ventastegids
-			culture = amphibian
-			religion = pagan
+		-419200000 = {
+			#Ventastega lived in Latvia in the Devonian; Source: https://paleobiodb.org/classic/basicTaxonInfo?taxon_no=txn:226306
 		}
 		
 		-4000 = {

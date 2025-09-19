@@ -4,8 +4,6 @@ falkland_islands = {
 	provincial_capital = stanley
 	
 	history = {
-		owner = gondwana
-		culture = reptilian
 		religion = pagan
 		
 		-4000 = {

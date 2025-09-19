@@ -7,14 +7,10 @@ nova_scotia = {
 	}
 	
 	history = {
-		owner = hylerpetontids
-		culture = amphibian
 		religion = pagan
 		
-		-358900000 = { #Hylerpeton lived in Nova Scotia in the Carboniferous; Source: https://paleobiodb.org/classic/basicTaxonInfo?taxon_no=txn:37297
-			owner = hylerpetontids
-			culture = amphibian
-			religion = pagan
+		-358900000 = {
+			#Hylerpeton lived in Nova Scotia in the Carboniferous; Source: https://paleobiodb.org/classic/basicTaxonInfo?taxon_no=txn:37297
 		}
 		
 		-4000 = {

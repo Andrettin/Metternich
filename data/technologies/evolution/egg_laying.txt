@@ -1,13 +1,9 @@
-egg_laying = {
-	name = "Egg Laying"
-	subcategory = procreation
-	portrait = building_slot
-	icon = lion
-	period = devonian
-	year = -385000000 #Gyroptychius
-	cost_commodity = research
-	cultures = {
-		mammalian
-		reptilian
-	}
-}
+#egg_laying = {
+#	name = "Egg Laying"
+#	subcategory = procreation
+#	portrait = building_slot
+#	icon = lion
+#	period = devonian
+#	year = -385000000 #Gyroptychius
+#	cost_commodity = research
+#}

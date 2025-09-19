@@ -7,15 +7,7 @@ indiana = {
 	}
 	
 	history = {
-		owner = hylerpetontids
-		culture = amphibian
 		religion = pagan
-		
-		-358900000 = {
-			owner = hylerpetontids
-			culture = amphibian
-			religion = pagan
-		}
 		
 		-4000 = {
 			owner = iroquois
