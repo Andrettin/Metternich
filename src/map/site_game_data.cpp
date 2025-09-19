@@ -103,12 +103,21 @@ void site_game_data::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 
-	throw std::runtime_error(std::format("Invalid site game data scope: \"{}\".", tag));
+	if (tag == "tile_pos") {
+		const QPoint tile_pos = scope.to_point();
+		this->site->get_map_data()->set_tile_pos(tile_pos);
+		map::get()->set_tile_site(tile_pos, this->site);
+	} else {
+		throw std::runtime_error(std::format("Invalid site game data scope: \"{}\".", tag));
+	}
 }
 
 gsml_data site_game_data::to_gsml_data() const
 {
 	gsml_data data(this->site->get_identifier());
+
+	assert_throw(this->is_on_map());
+	data.add_child("tile_pos", gsml_data::from_point(this->get_tile_pos()));
 
 	if (this->get_holding_type() != nullptr) {
 		data.add_property("holding_type", this->get_holding_type()->get_identifier());

@@ -42,6 +42,7 @@ public:
 	void create_tiles();
 	void initialize();
 	void process_border_tiles();
+	void process_site_tiles();
 	void clear();
 	void clear_tile_game_data();
 

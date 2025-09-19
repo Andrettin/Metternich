@@ -179,6 +179,8 @@ void game::process_gsml_scope(const gsml_data &scope)
 			const site *site = site::get(child_scope.get_tag());
 			child_scope.process(site->get_game_data());
 		});
+
+		map::get()->process_site_tiles();
 	} else if (tag == "characters") {
 		scope.for_each_child([&](const gsml_data &character_data) {
 			const character *character = character::get(character_data.get_tag());

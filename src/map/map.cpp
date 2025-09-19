@@ -225,6 +225,7 @@ void map::initialize()
 	}
 
 	this->process_border_tiles();
+	this->process_site_tiles();
 
 	province_set provinces;
 
@@ -236,10 +237,6 @@ void map::initialize()
 
 			if (tile_province == nullptr) {
 				continue;
-			}
-
-			if (tile->get_site() != nullptr) {
-				tile_province->get_map_data()->process_site_tile(tile_pos);
 			}
 
 			provinces.insert(tile_province);
@@ -309,6 +306,25 @@ void map::process_border_tiles()
 				tile->sort_border_directions();
 
 				tile_province->get_map_data()->add_border_tile(tile_pos);
+			}
+		}
+	}
+}
+
+void map::process_site_tiles()
+{
+	for (int x = 0; x < this->get_width(); ++x) {
+		for (int y = 0; y < this->get_height(); ++y) {
+			const QPoint tile_pos(x, y);
+			tile *tile = this->get_tile(tile_pos);
+			const province *tile_province = tile->get_province();
+
+			if (tile_province == nullptr) {
+				continue;
+			}
+
+			if (tile->get_site() != nullptr) {
+				tile_province->get_map_data()->process_site_tile(tile_pos);
 			}
 		}
 	}
