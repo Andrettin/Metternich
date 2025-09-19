@@ -137,6 +137,10 @@ void country_game_data::process_gsml_property(const gsml_property &property)
 		this->tier = magic_enum::enum_cast<country_tier>(value).value();
 	} else if (key == "religion") {
 		this->religion = religion::get(value);
+	} else if (key == "government_type") {
+		this->government_type = government_type::get(value);
+	} else if (key == "capital") {
+		this->capital = site::get(value);
 	} else {
 		throw std::runtime_error(std::format("Invalid country game data property: \"{}\".", key));
 	}
@@ -162,6 +166,14 @@ gsml_data country_game_data::to_gsml_data() const
 
 	data.add_property("tier", std::string(magic_enum::enum_name(this->get_tier())));
 	data.add_property("religion", this->get_religion()->get_identifier());
+
+	if (this->get_government_type() != nullptr) {
+		data.add_property("government_type", this->get_government_type()->get_identifier());
+	}
+
+	if (this->get_capital() != nullptr) {
+		data.add_property("capital", this->get_capital()->get_identifier());
+	}
 
 	gsml_data provinces_data("provinces");
 	for (const province *province : this->get_provinces()) {

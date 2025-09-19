@@ -164,8 +164,9 @@ void game::process_gsml_scope(const gsml_data &scope)
 		scope.process(map::get());
 	} else if (tag == "countries") {
 		scope.for_each_child([&](const gsml_data &country_data) {
-			const country *country = country::get(country_data.get_tag());
+			country *country = country::get(country_data.get_tag());
 			country_data.process(country->get_game_data());
+			this->countries.push_back(country);
 		});
 	} else if (tag == "provinces") {
 		scope.for_each_child([&](const gsml_data &child_scope) {
@@ -355,6 +356,10 @@ QCoro::Task<void> game::load(const std::filesystem::path &filepath)
 			co_return;
 		}
 
+		if (this->is_running()) {
+			this->stop();
+		}
+
 		gsml_parser parser;
 		gsml_data data;
 
@@ -365,8 +370,11 @@ QCoro::Task<void> game::load(const std::filesystem::path &filepath)
 			log::log_error(std::format("Failed to parse save file: {}", path::to_string(filepath)));
 		}
 
-		this->clear();
 		data.process(this);
+
+		for (const country *country : this->get_countries()) {
+			country->get_game_data()->calculate_territory_rect();
+		}
 
 		co_await this->create_map_images();
 
