@@ -6,7 +6,7 @@
 
 namespace metternich {
 
-class country;
+class domain;
 
 template <typename scope_type>
 class modifier;
@@ -33,19 +33,19 @@ public:
 		return this->icon;
 	}
 
-	const modifier<const country> *get_modifier() const
+	const modifier<const domain> *get_modifier() const
 	{
 		return this->modifier.get();
 	}
 
-	Q_INVOKABLE QString get_modifier_string(metternich::country *country) const;
+	Q_INVOKABLE QString get_modifier_string(metternich::domain *domain) const;
 
 signals:
 	void changed();
 
 private:
 	const metternich::icon *icon = nullptr;
-	std::unique_ptr<const modifier<const country>> modifier;
+	std::unique_ptr<const modifier<const domain>> modifier;
 };
 
 }

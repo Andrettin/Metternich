@@ -8,7 +8,7 @@
 namespace metternich {
 
 class character;
-class country;
+class domain;
 class population_unit;
 class province;
 class site;
@@ -43,7 +43,7 @@ public:
 	}
 };
 
-class country_scripted_condition final : public data_entry, public data_type<country_scripted_condition>, public scripted_condition_base<country, read_only_context, condition<country>>
+class country_scripted_condition final : public data_entry, public data_type<country_scripted_condition>, public scripted_condition_base<domain, read_only_context, condition<domain>>
 {
 	Q_OBJECT
 

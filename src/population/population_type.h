@@ -153,12 +153,12 @@ public:
 		return this->max_modifier_multiplier;
 	}
 
-	const modifier<const country> *get_country_modifier() const
+	const modifier<const domain> *get_country_modifier() const
 	{
 		return this->country_modifier.get();
 	}
 
-	Q_INVOKABLE QString get_country_modifier_string(const metternich::country *country) const;
+	Q_INVOKABLE QString get_country_modifier_string(const metternich::domain *domain) const;
 
 	const std::vector<const population_type *> &get_equivalent_population_types() const
 	{
@@ -185,7 +185,7 @@ private:
 	int output_value = 1;
 	int resource_output_bonus = 0;
 	centesimal_int max_modifier_multiplier = centesimal_int(0);
-	std::unique_ptr<modifier<const country>> country_modifier;
+	std::unique_ptr<modifier<const domain>> country_modifier;
 	std::vector<const population_type *> equivalent_population_types;
 	const game_rule *required_game_rule = nullptr;
 };

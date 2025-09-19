@@ -8,10 +8,10 @@
 #include "character/character_trait.h"
 #include "character/character_trait_type.h"
 #include "database/defines.h"
-#include "domain/country.h"
 #include "domain/country_economy.h"
-#include "domain/country_game_data.h"
 #include "domain/country_technology.h"
+#include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "domain/government_group.h"
 #include "domain/government_type.h"
 #include "domain/journal_entry.h"
@@ -39,12 +39,12 @@
 
 namespace metternich {
 
-country_government::country_government(const metternich::country *country, const country_game_data *game_data)
-	: country(country)
+country_government::country_government(const metternich::domain *domain, const domain_game_data *game_data)
+	: domain(domain)
 {
-	connect(game_data, &country_game_data::tier_changed, this, &country_government::office_title_names_changed);
-	connect(game_data, &country_game_data::government_type_changed, this, &country_government::office_title_names_changed);
-	connect(game_data, &country_game_data::religion_changed, this, &country_government::office_title_names_changed);
+	connect(game_data, &domain_game_data::tier_changed, this, &country_government::office_title_names_changed);
+	connect(game_data, &domain_game_data::government_type_changed, this, &country_government::office_title_names_changed);
+	connect(game_data, &domain_game_data::religion_changed, this, &country_government::office_title_names_changed);
 	connect(this, &country_government::office_holders_changed, this, &country_government::office_title_names_changed);
 }
 
@@ -52,16 +52,16 @@ country_government::~country_government()
 {
 }
 
-country_game_data *country_government::get_game_data() const
+domain_game_data *country_government::get_game_data() const
 {
-	return this->country->get_game_data();
+	return this->domain->get_game_data();
 }
 
 const std::string &country_government::get_office_title_name(const office *office) const
 {
 	const character *office_holder = this->get_office_holder(office);
 	const gender gender = office_holder != nullptr ? office_holder->get_gender() : gender::male;
-	return this->country->get_office_title_name(office, this->get_game_data()->get_government_type(), this->get_game_data()->get_tier(), gender, this->get_game_data()->get_religion());
+	return this->domain->get_office_title_name(office, this->get_game_data()->get_government_type(), this->get_game_data()->get_tier(), gender, this->get_game_data()->get_religion());
 }
 
 QVariantList country_government::get_laws_qvariant_list() const
@@ -79,14 +79,14 @@ void country_government::set_law(const law_group *law_group, const law *law)
 
 	const metternich::law *old_law = this->get_law(law_group);
 	if (old_law != nullptr) {
-		old_law->get_modifier()->remove(this->country);
+		old_law->get_modifier()->remove(this->domain);
 	}
 
 	this->laws[law_group] = law;
 
 	if (law != nullptr) {
 		assert_throw(law->get_group() == law_group);
-		law->get_modifier()->apply(this->country);
+		law->get_modifier()->apply(this->domain);
 	}
 
 	this->get_game_data()->check_government_type();
@@ -103,11 +103,11 @@ bool country_government::has_law(const law *law) const
 
 bool country_government::can_have_law(const metternich::law *law) const
 {
-	if (law->get_required_technology() != nullptr && !this->country->get_technology()->has_technology(law->get_required_technology())) {
+	if (law->get_required_technology() != nullptr && !this->domain->get_technology()->has_technology(law->get_required_technology())) {
 		return false;
 	}
 
-	if (law->get_conditions() != nullptr && !law->get_conditions()->check(this->country, read_only_context(this->country))) {
+	if (law->get_conditions() != nullptr && !law->get_conditions()->check(this->domain, read_only_context(this->domain))) {
 		return false;
 	}
 
@@ -125,7 +125,7 @@ bool country_government::can_enact_law(const metternich::law *law) const
 	}
 
 	for (const auto &[commodity, cost] : law->get_commodity_costs()) {
-		if (this->country->get_economy()->get_stored_commodity(commodity) < (cost * this->get_total_law_cost_modifier() / 100)) {
+		if (this->domain->get_economy()->get_stored_commodity(commodity) < (cost * this->get_total_law_cost_modifier() / 100)) {
 			return false;
 		}
 	}
@@ -136,7 +136,7 @@ bool country_government::can_enact_law(const metternich::law *law) const
 void country_government::enact_law(const law *law)
 {
 	for (const auto &[commodity, cost] : law->get_commodity_costs()) {
-		this->country->get_economy()->change_stored_commodity(commodity, -cost * this->get_total_law_cost_modifier() / 100);
+		this->domain->get_economy()->change_stored_commodity(commodity, -cost * this->get_total_law_cost_modifier() / 100);
 	}
 
 	this->set_law(law->get_group(), law);
@@ -200,7 +200,7 @@ void country_government::set_office_holder(const office *office, const character
 	}
 
 	if (old_office_holder != nullptr) {
-		old_office_holder->get_game_data()->apply_office_modifier(this->country, office, -1);
+		old_office_holder->get_game_data()->apply_office_modifier(this->domain, office, -1);
 		old_office_holder->get_game_data()->set_office(nullptr);
 		old_office_holder->get_game_data()->set_country(nullptr);
 	}
@@ -217,9 +217,9 @@ void country_government::set_office_holder(const office *office, const character
 	}
 
 	if (character != nullptr) {
-		character->get_game_data()->apply_office_modifier(this->country, office, 1);
+		character->get_game_data()->apply_office_modifier(this->domain, office, 1);
 		character->get_game_data()->set_office(office);
-		character->get_game_data()->set_country(this->country);
+		character->get_game_data()->set_country(this->domain);
 	}
 
 	if (old_office != nullptr) {
@@ -227,7 +227,7 @@ void country_government::set_office_holder(const office *office, const character
 	}
 
 	if (office->is_ruler()) {
-		if (this->country == game::get()->get_player_country()) {
+		if (this->domain == game::get()->get_player_country()) {
 			game::get()->set_player_character(character);
 		}
 	}
@@ -247,10 +247,10 @@ void country_government::set_office_holder(const office *office, const character
 			}
 		}
 
-		if (this->country == game::get()->get_player_country() && character != nullptr) {
+		if (this->domain == game::get()->get_player_country() && character != nullptr) {
 			const portrait *interior_minister_portrait = this->get_interior_minister_portrait();
 
-			engine_interface::get()->add_notification(std::format("New {}", office->get_name()), interior_minister_portrait, std::format("{} has become our new {}!\n\n{}", character->get_full_name(), string::lowered(office->get_name()), character->get_game_data()->get_office_modifier_string(this->country, office)));
+			engine_interface::get()->add_notification(std::format("New {}", office->get_name()), interior_minister_portrait, std::format("{} has become our new {}!\n\n{}", character->get_full_name(), string::lowered(office->get_name()), character->get_game_data()->get_office_modifier_string(this->domain, office)));
 		}
 	}
 }
@@ -273,7 +273,7 @@ void country_government::set_appointed_office_holder(const office *office, const
 	if (character != nullptr) {
 		const commodity_map<int> commodity_costs = this->get_advisor_commodity_costs(office);
 		for (const auto &[commodity, cost] : commodity_costs) {
-			this->country->get_economy()->change_stored_commodity(commodity, -cost);
+			this->domain->get_economy()->change_stored_commodity(commodity, -cost);
 		}
 
 		this->appointed_office_holders[office] = character;
@@ -284,7 +284,7 @@ void country_government::set_appointed_office_holder(const office *office, const
 	if (old_appointee != nullptr) {
 		const commodity_map<int> commodity_costs = this->get_advisor_commodity_costs(office);
 		for (const auto &[commodity, cost] : commodity_costs) {
-			this->country->get_economy()->change_stored_commodity(commodity, cost);
+			this->domain->get_economy()->change_stored_commodity(commodity, cost);
 		}
 	}
 
@@ -439,11 +439,11 @@ bool country_government::can_have_office_holder(const office *office, const char
 		return false;
 	}
 
-	if (character_game_data->get_country() != nullptr && character_game_data->get_country() != this->country) {
+	if (character_game_data->get_country() != nullptr && character_game_data->get_country() != this->domain) {
 		return false;
 	}
 
-	if (character->get_home_settlement() == nullptr || (character_game_data->get_country() != this->country && character->get_home_settlement()->get_game_data()->get_owner() != this->country)) {
+	if (character->get_home_settlement() == nullptr || (character_game_data->get_country() != this->domain && character->get_home_settlement()->get_game_data()->get_owner() != this->domain)) {
 		return false;
 	}
 
@@ -456,7 +456,7 @@ bool country_government::can_have_office_holder(const office *office, const char
 		return false;
 	}
 
-	if (character->get_conditions() != nullptr && !character->get_conditions()->check(this->country, read_only_context(this->country))) {
+	if (character->get_conditions() != nullptr && !character->get_conditions()->check(this->domain, read_only_context(this->domain))) {
 		return false;
 	}
 
@@ -500,7 +500,7 @@ bool country_government::can_appoint_office_holder(const office *office, const c
 
 	const commodity_map<int> commodity_costs = this->get_advisor_commodity_costs(office);
 	for (const auto &[commodity, cost] : commodity_costs) {
-		if (this->country->get_economy()->get_stored_commodity(commodity) < cost) {
+		if (this->domain->get_economy()->get_stored_commodity(commodity) < cost) {
 			return false;
 		}
 	}
@@ -511,7 +511,7 @@ bool country_government::can_appoint_office_holder(const office *office, const c
 void country_government::on_office_holder_died(const office *office, const character *office_holder)
 {
 	if (game::get()->is_running()) {
-		if (this->country == game::get()->get_player_country()) {
+		if (this->domain == game::get()->get_player_country()) {
 			const portrait *interior_minister_portrait = this->get_interior_minister_portrait();
 
 			if (office->is_ruler()) {
@@ -525,9 +525,9 @@ void country_government::on_office_holder_died(const office *office, const chara
 		}
 
 		if (office->is_ruler()) {
-			context ctx(this->country);
+			context ctx(this->domain);
 			ctx.source_scope = office_holder;
-			country_event::check_events_for_scope(this->country, event_trigger::ruler_death, ctx);
+			country_event::check_events_for_scope(this->domain, event_trigger::ruler_death, ctx);
 		}
 	}
 
@@ -544,7 +544,7 @@ std::vector<const office *> country_government::get_available_offices() const
 	std::vector<const office *> available_offices;
 
 	for (const office *office : office::get_all()) {
-		if (office->get_conditions() != nullptr && !office->get_conditions()->check(this->country, read_only_context(this->country))) {
+		if (office->get_conditions() != nullptr && !office->get_conditions()->check(this->domain, read_only_context(this->domain))) {
 			continue;
 		}
 

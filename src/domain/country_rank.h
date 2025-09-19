@@ -6,7 +6,7 @@
 
 namespace metternich {
 
-class country;
+class domain;
 
 template <typename scope_type>
 class and_condition;
@@ -45,7 +45,7 @@ public:
 		return this->relative_score_threshold;
 	}
 
-	const and_condition<country> *get_conditions() const
+	const and_condition<domain> *get_conditions() const
 	{
 		return this->conditions.get();
 	}
@@ -57,7 +57,7 @@ private:
 	int priority = 0;
 	centesimal_int average_score_threshold;
 	centesimal_int relative_score_threshold;
-	std::unique_ptr<const and_condition<country>> conditions;
+	std::unique_ptr<const and_condition<domain>> conditions;
 };
 
 }

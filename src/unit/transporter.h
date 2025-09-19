@@ -2,14 +2,14 @@
 
 #include "util/centesimal_int.h"
 
-Q_MOC_INCLUDE("domain/country.h")
+Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("unit/transporter_type.h")
 
 namespace metternich {
 
-class country;
 class culture_base;
+class domain;
 class icon;
 class phenotype;
 class transporter_type;
@@ -23,10 +23,10 @@ class transporter final : public QObject
 	Q_PROPERTY(QString name READ get_name_qstring NOTIFY name_changed)
 	Q_PROPERTY(const metternich::transporter_type* type READ get_type NOTIFY type_changed)
 	Q_PROPERTY(const metternich::icon* icon READ get_icon NOTIFY icon_changed)
-	Q_PROPERTY(const metternich::country* country READ get_country CONSTANT)
+	Q_PROPERTY(const metternich::domain* country READ get_country CONSTANT)
 
 public:
-	explicit transporter(const transporter_type *type, const metternich::country *country, const metternich::phenotype *phenotype);
+	explicit transporter(const transporter_type *type, const metternich::domain *domain, const metternich::phenotype *phenotype);
 
 	void do_turn();
 
@@ -65,9 +65,9 @@ public:
 
 	const icon *get_icon() const;
 
-	const metternich::country *get_country() const
+	const metternich::domain *get_country() const
 	{
-		return this->country;
+		return this->domain;
 	}
 
 	const metternich::culture_base *get_culture() const;
@@ -180,7 +180,7 @@ signals:
 private:
 	std::string name;
 	const transporter_type *type = nullptr;
-	const metternich::country *country = nullptr;
+	const metternich::domain *domain = nullptr;
 	const metternich::phenotype *phenotype = nullptr;
 	int hit_points = 0;
 	int max_hit_points = 0;

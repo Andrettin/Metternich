@@ -71,7 +71,7 @@ bool factor_modifier<scope_type>::check_conditions(const scope_type *scope) cons
 }
 
 template class factor_modifier<character>;
-template class factor_modifier<country>;
+template class factor_modifier<domain>;
 template class factor_modifier<population_unit>;
 template class factor_modifier<province>;
 template class factor_modifier<site>;

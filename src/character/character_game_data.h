@@ -7,7 +7,7 @@
 #include "unit/military_unit_type_container.h"
 #include "util/centesimal_int.h"
 
-Q_MOC_INCLUDE("domain/country.h")
+Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("domain/office.h")
 Q_MOC_INCLUDE("ui/portrait.h")
 
@@ -17,7 +17,7 @@ class character;
 class character_attribute;
 class character_trait;
 class civilian_unit;
-class country;
+class domain;
 class enchantment;
 class item;
 class item_slot;
@@ -41,7 +41,7 @@ class character_game_data final : public QObject
 
 	Q_PROPERTY(QString titled_name READ get_titled_name_qstring NOTIFY titled_name_changed)
 	Q_PROPERTY(const metternich::portrait* portrait READ get_portrait NOTIFY portrait_changed)
-	Q_PROPERTY(const metternich::country* country READ get_country NOTIFY country_changed)
+	Q_PROPERTY(const metternich::domain* country READ get_country NOTIFY country_changed)
 	Q_PROPERTY(int age READ get_age NOTIFY age_changed)
 	Q_PROPERTY(bool dead READ is_dead NOTIFY dead_changed)
 	Q_PROPERTY(const metternich::character_class* character_class READ get_character_class NOTIFY character_class_changed)
@@ -87,12 +87,12 @@ public:
 	bool is_current_portrait_valid() const;
 	void check_portrait();
 
-	const metternich::country *get_country() const
+	const metternich::domain *get_country() const
 	{
-		return this->country;
+		return this->domain;
 	}
 
-	void set_country(const metternich::country *country);
+	void set_country(const metternich::domain *domain);
 
 	int get_age() const;
 
@@ -257,15 +257,15 @@ public:
 	}
 
 	void set_office(const metternich::office *office);
-	std::string get_office_modifier_string(const metternich::country *country, const metternich::office *office) const;
+	std::string get_office_modifier_string(const metternich::domain *domain, const metternich::office *office) const;
 
-	Q_INVOKABLE QString get_office_modifier_qstring(const metternich::country *country, const metternich::office *office) const
+	Q_INVOKABLE QString get_office_modifier_qstring(const metternich::domain *domain, const metternich::office *office) const
 	{
-		return QString::fromStdString(this->get_office_modifier_string(country, office));
+		return QString::fromStdString(this->get_office_modifier_string(domain, office));
 	}
 
-	void apply_office_modifier(const metternich::country *country, const metternich::office *office, const int multiplier) const;
-	void apply_trait_office_modifier(const character_trait *trait, const metternich::country *country, const metternich::office *office, const int multiplier) const;
+	void apply_office_modifier(const metternich::domain *domain, const metternich::office *office, const int multiplier) const;
+	void apply_trait_office_modifier(const character_trait *trait, const metternich::domain *domain, const metternich::office *office, const int multiplier) const;
 
 	bool is_governor() const;
 	std::string get_governor_modifier_string(const metternich::province *province) const;
@@ -299,7 +299,7 @@ public:
 		return this->get_military_unit() != nullptr;
 	}
 
-	void deploy_to_province(const metternich::country *country, const province *province);
+	void deploy_to_province(const metternich::domain *domain, const province *province);
 	void undeploy();
 
 	metternich::civilian_unit *get_civilian_unit() const
@@ -452,7 +452,7 @@ signals:
 private:
 	const metternich::character *character = nullptr;
 	const metternich::portrait *portrait = nullptr;
-	const metternich::country *country = nullptr;
+	const metternich::domain *domain = nullptr;
 	bool dead = false;
 	const character_class *character_class = nullptr;
 	int level = 0;

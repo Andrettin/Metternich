@@ -11,7 +11,7 @@ Q_MOC_INCLUDE("ui/icon.h")
 namespace metternich {
 
 class commodity;
-class country;
+class domain;
 class icon;
 class population_class;
 class resource;
@@ -164,7 +164,7 @@ public:
 		return this->modifier.get();
 	}
 
-	const metternich::modifier<const country> *get_country_modifier() const
+	const metternich::modifier<const domain> *get_country_modifier() const
 	{
 		return this->country_modifier.get();
 	}
@@ -194,7 +194,7 @@ private:
 	std::unique_ptr<const and_condition<site>> conditions;
 	std::unique_ptr<const and_condition<site>> free_on_start_conditions;
 	std::unique_ptr<metternich::modifier<const site>> modifier;
-	std::unique_ptr<metternich::modifier<const country>> country_modifier;
+	std::unique_ptr<metternich::modifier<const domain>> country_modifier;
 };
 
 }

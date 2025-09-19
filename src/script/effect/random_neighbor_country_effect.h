@@ -1,20 +1,20 @@
 #pragma once
 
-#include "domain/country.h"
-#include "domain/country_game_data.h"
+#include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "script/condition/and_condition.h"
 #include "script/effect/scope_effect_base.h"
 #include "util/vector_random_util.h"
 
 namespace metternich {
 
-class country;
+class domain;
 
-class random_neighbor_country_effect final : public scope_effect_base<const country, const country>
+class random_neighbor_country_effect final : public scope_effect_base<const domain, const domain>
 {
 public:
 	explicit random_neighbor_country_effect(const gsml_operator effect_operator)
-		: scope_effect_base<const country, const country>(effect_operator)
+		: scope_effect_base<const domain, const domain>(effect_operator)
 	{
 	}
 
@@ -31,15 +31,15 @@ public:
 		if (tag == "conditions") {
 			this->conditions.process_gsml_data(scope);
 		} else {
-			scope_effect_base<const country, const country>::process_gsml_scope(scope);
+			scope_effect_base<const domain, const domain>::process_gsml_scope(scope);
 		}
 	}
 
-	virtual void do_assignment_effect(const country *upper_scope, context &ctx) const override
+	virtual void do_assignment_effect(const domain *upper_scope, context &ctx) const override
 	{
-		std::vector<const country *> potential_countries;
+		std::vector<const domain *> potential_countries;
 
-		for (const country *neighbor_country : upper_scope->get_game_data()->get_neighbor_countries()) {
+		for (const domain *neighbor_country : upper_scope->get_game_data()->get_neighbor_countries()) {
 			if (!this->conditions.check(neighbor_country, ctx)) {
 				continue;
 			}
@@ -63,7 +63,7 @@ public:
 	}
 
 private:
-	and_condition<country> conditions;
+	and_condition<domain> conditions;
 };
 
 }

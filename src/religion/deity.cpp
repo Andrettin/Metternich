@@ -3,10 +3,10 @@
 #include "religion/deity.h"
 
 #include "character/character.h"
-#include "domain/country.h"
-#include "domain/country_game_data.h"
 #include "domain/cultural_group.h"
 #include "domain/culture.h"
+#include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "domain/idea_type.h"
 #include "religion/deity_slot.h"
 #include "religion/deity_trait.h"
@@ -129,9 +129,9 @@ const std::string &deity::get_cultural_name(const cultural_group *cultural_group
 	return this->get_name();
 }
 
-bool deity::is_available_for_country_slot(const country *country, const idea_slot *slot) const
+bool deity::is_available_for_country_slot(const domain *domain, const idea_slot *slot) const
 {
-	if (!idea::is_available_for_country_slot(country, slot)) {
+	if (!idea::is_available_for_country_slot(domain, slot)) {
 		return false;
 	}
 
@@ -141,9 +141,9 @@ bool deity::is_available_for_country_slot(const country *country, const idea_slo
 		return false;
 	}
 
-	const country_game_data *country_game_data = country->get_game_data();
+	const domain_game_data *domain_game_data = domain->get_game_data();
 
-	if (!vector::contains(this->get_religions(), country_game_data->get_religion())) {
+	if (!vector::contains(this->get_religions(), domain_game_data->get_religion())) {
 		return false;
 	}
 

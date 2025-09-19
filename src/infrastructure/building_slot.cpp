@@ -2,10 +2,10 @@
 
 #include "infrastructure/building_slot.h"
 
-#include "domain/country.h"
 #include "domain/country_economy.h"
 #include "domain/country_technology.h"
 #include "domain/culture.h"
+#include "domain/domain.h"
 #include "game/game.h"
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot_type.h"

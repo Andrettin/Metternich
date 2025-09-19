@@ -1,7 +1,7 @@
 #pragma once
 
-#include "domain/country.h"
 #include "domain/country_economy.h"
+#include "domain/domain.h"
 #include "economy/commodity.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
@@ -30,7 +30,7 @@ public:
 			return;
 		}
 
-		if constexpr (std::is_same_v<scope_type, const country>) {
+		if constexpr (std::is_same_v<scope_type, const domain>) {
 			scope->get_economy()->change_commodity_output_modifier(this->commodity, this->value * multiplier);
 		} else {
 			scope->get_game_data()->change_commodity_output_modifier(this->commodity, this->value * multiplier);

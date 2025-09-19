@@ -45,11 +45,9 @@ set_source_files_properties(${database_SRCS} PROPERTIES UNITY_GROUP "database")
 set(domain_SRCS
 	src/domain/consulate.cpp
 	src/domain/consulate_container.cpp
-	src/domain/country.cpp
 	src/domain/country_ai.cpp
 	src/domain/country_container.cpp
 	src/domain/country_economy.cpp
-	src/domain/country_game_data.cpp
 	src/domain/country_government.cpp
 	src/domain/country_history.cpp
 	src/domain/country_military.cpp
@@ -62,6 +60,8 @@ set(domain_SRCS
 	src/domain/culture_base.cpp
 	src/domain/culture_container.cpp
 	src/domain/culture_history.cpp
+	src/domain/domain.cpp
+	src/domain/domain_game_data.cpp
 	src/domain/government_group.cpp
 	src/domain/government_type.cpp
 	src/domain/government_type_container.cpp
@@ -363,11 +363,9 @@ source_group(database FILES ${database_HDRS})
 set(domain_HDRS
 	src/domain/consulate.h
 	src/domain/consulate_container.h
-	src/domain/country.h
 	src/domain/country_ai.h
 	src/domain/country_container.h
 	src/domain/country_economy.h
-	src/domain/country_game_data.h
 	src/domain/country_government.h
 	src/domain/country_history.h
 	src/domain/country_military.h
@@ -384,6 +382,8 @@ set(domain_HDRS
 	src/domain/culture_container.h
 	src/domain/culture_history.h
 	src/domain/diplomacy_state.h
+	src/domain/domain.h
+	src/domain/domain_game_data.h
 	src/domain/government_group.h
 	src/domain/government_type.h
 	src/domain/government_type_container.h

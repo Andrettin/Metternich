@@ -4,10 +4,10 @@
 
 #include "database/defines.h"
 #include "database/preferences.h"
-#include "domain/country.h"
-#include "domain/country_game_data.h"
 #include "domain/country_technology.h"
 #include "domain/country_turn_data.h"
+#include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "economy/resource.h"
 #include "game/game.h"
 #include "infrastructure/improvement.h"
@@ -786,11 +786,11 @@ void map::set_tile_resource_discovered(const QPoint &tile_pos, const bool discov
 	tile->get_site()->get_game_data()->set_resource_discovered(discovered);
 
 	if (discovered && resource->get_discovery_technology() != nullptr && tile->get_owner() != nullptr) {
-		for (const country *country : game::get()->get_countries()) {
-			country_game_data *country_game_data = country->get_game_data();
-			country_technology *country_technology = country->get_technology();
+		for (const domain *domain : game::get()->get_countries()) {
+			domain_game_data *domain_game_data = domain->get_game_data();
+			country_technology *country_technology = domain->get_technology();
 
-			if (!country_game_data->is_tile_explored(tile_pos)) {
+			if (!domain_game_data->is_tile_explored(tile_pos)) {
 				continue;
 			}
 
@@ -899,24 +899,24 @@ bool map::is_tile_near_celestial_body(const QPoint &tile_pos) const
 bool map::is_tile_on_country_border(const QPoint &tile_pos) const
 {
 	const tile *tile = this->get_tile(tile_pos);
-	const country *tile_country = tile->get_owner();
+	const domain *tile_domain = tile->get_owner();
 
-	if (tile_country == nullptr) {
+	if (tile_domain == nullptr) {
 		return false;
 	}
 
 	bool result = false;
 
-	point::for_each_adjacent_until(tile_pos, [this, tile_country, &result](const QPoint &adjacent_pos) {
+	point::for_each_adjacent_until(tile_pos, [this, tile_domain, &result](const QPoint &adjacent_pos) {
 		if (!this->contains(adjacent_pos)) {
 			result = true;
 			return true;
 		}
 
 		const metternich::tile *adjacent_tile = this->get_tile(adjacent_pos);
-		const country *adjacent_country = adjacent_tile->get_owner();
+		const domain *adjacent_domain = adjacent_tile->get_owner();
 
-		if (tile_country != adjacent_country) {
+		if (tile_domain != adjacent_domain) {
 			result = true;
 			return true;
 		}
@@ -979,19 +979,19 @@ bool map::is_tile_on_province_border_with(const QPoint &tile_pos, const province
 void map::calculate_tile_country_border_directions(const QPoint &tile_pos)
 {
 	tile *tile = this->get_tile(tile_pos);
-	const country *tile_country = tile->get_owner();
+	const domain *tile_domain = tile->get_owner();
 
 	tile->clear_country_border_directions();
 
-	point::for_each_adjacent(tile_pos, [this, tile, &tile_pos, tile_country](const QPoint &adjacent_pos) {
+	point::for_each_adjacent(tile_pos, [this, tile, &tile_pos, tile_domain](const QPoint &adjacent_pos) {
 		if (!this->contains(adjacent_pos)) {
 			return;
 		}
 
 		const metternich::tile *adjacent_tile = this->get_tile(adjacent_pos);
-		const country *adjacent_country = adjacent_tile->get_owner();
+		const domain *adjacent_domain = adjacent_tile->get_owner();
 
-		if (tile_country != adjacent_country && tile_country != nullptr && adjacent_country != nullptr) {
+		if (tile_domain != adjacent_domain && tile_domain != nullptr && adjacent_domain != nullptr) {
 			tile->add_country_border_direction(offset_to_direction(adjacent_pos - tile_pos));
 		}
 	});
@@ -1201,10 +1201,10 @@ void map::update_minimap_rect(const QRect &tile_rect)
 					continue;
 				}
 
-				const country *country = tile->get_owner();
+				const domain *domain = tile->get_owner();
 
-				if (country != nullptr) {
-					this->minimap_image.setPixelColor(pixel_pos, country->get_game_data()->get_diplomatic_map_color());
+				if (domain != nullptr) {
+					this->minimap_image.setPixelColor(pixel_pos, domain->get_game_data()->get_diplomatic_map_color());
 					continue;
 				}
 			}

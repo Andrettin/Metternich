@@ -14,11 +14,11 @@ namespace metternich {
 	class civilian_unit_class;
 	class civilian_unit_type;
 	class commodity;
-	class country;
-	class country_game_data;
 	class cultural_group;
 	class culture;
 	class defines;
+	class domain;
+	class domain_game_data;
 	class dynasty;
 	class event;
 	class event_random_group;

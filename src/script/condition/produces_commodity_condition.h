@@ -26,7 +26,7 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		if constexpr (std::is_same_v<scope_type, country>) {
+		if constexpr (std::is_same_v<scope_type, domain>) {
 			return scope->get_economy()->produces_commodity(this->commodity);
 		} else {
 			return scope->get_game_data()->produces_commodity(this->commodity);

@@ -2,8 +2,8 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
-#include "domain/country.h"
-#include "domain/country_game_data.h"
+#include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "script/context.h"
 #include "script/effect/effect.h"
 #include "spell/spell.h"
@@ -15,10 +15,10 @@ namespace metternich {
 
 class character;
 
-class gain_spell_scroll_effect final : public effect<const country>
+class gain_spell_scroll_effect final : public effect<const domain>
 {
 public:
-	explicit gain_spell_scroll_effect(const std::string &value, const gsml_operator effect_operator) : effect<const country>(effect_operator)
+	explicit gain_spell_scroll_effect(const std::string &value, const gsml_operator effect_operator) : effect<const domain>(effect_operator)
 	{
 		this->spell = spell::get(value);
 	}
@@ -29,7 +29,7 @@ public:
 		return class_identifier;
 	}
 
-	const character *get_best_character(const country *scope, const read_only_context &ctx) const
+	const character *get_best_character(const domain *scope, const read_only_context &ctx) const
 	{
 		//get a suitable character from the ones participating in the adventure (if any)
 		//otherwise, try any of the country's characters
@@ -80,7 +80,7 @@ public:
 		return nullptr;
 	}
 
-	virtual void do_assignment_effect(const country *scope, context &ctx) const override
+	virtual void do_assignment_effect(const domain *scope, context &ctx) const override
 	{
 		const character *character = this->get_best_character(scope, ctx);
 
@@ -91,7 +91,7 @@ public:
 		character->get_game_data()->learn_spell(this->spell);
 	}
 
-	virtual std::string get_assignment_string(const country *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override
+	virtual std::string get_assignment_string(const domain *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override
 	{
 		Q_UNUSED(indent);
 		Q_UNUSED(prefix);

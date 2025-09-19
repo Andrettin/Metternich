@@ -2,9 +2,9 @@
 
 #include "unit/army.h"
 
-#include "domain/country.h"
-#include "domain/country_game_data.h"
 #include "domain/country_government.h"
+#include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "engine_interface.h"
 #include "game/country_event.h"
 #include "game/event_trigger.h"
@@ -30,7 +30,7 @@ army::army(const std::vector<military_unit *> &military_units, target_variant &&
 {
 	assert_throw(!this->get_military_units().empty());
 
-	this->country = this->get_military_units().at(0)->get_country();
+	this->domain = this->get_military_units().at(0)->get_country();
 
 	for (military_unit *military_unit : this->get_military_units()) {
 		military_unit->set_army(this);
@@ -121,7 +121,7 @@ void army::do_turn()
 		context ctx(this->get_country());
 		ctx.source_scope = target_site;
 		ctx.attacking_army = this;
-		country_event::check_events_for_scope(country, event_trigger::site_visited, ctx);
+		country_event::check_events_for_scope(domain, event_trigger::site_visited, ctx);
 
 		target_site_game_data->set_improvement(improvement_slot::main, nullptr);
 	}

@@ -1,22 +1,25 @@
 #pragma once
 
+#include "database/data_entry_container.h"
 #include "infrastructure/building_type_container.h"
 #include "map/site_container.h"
 
 namespace metternich {
 
-class country;
-class country_game_data;
+class domain;
+class domain_game_data;
+class technology;
+class technology_category;
 
 class country_ai final : public QObject
 {
 	Q_OBJECT
 
 public:
-	explicit country_ai(const metternich::country *country);
+	explicit country_ai(const metternich::domain *domain);
 	~country_ai();
 
-	country_game_data *get_game_data() const;
+	domain_game_data *get_game_data() const;
 
 	void do_turn();
 
@@ -95,7 +98,7 @@ public:
 	}
 
 private:
-	const metternich::country *country = nullptr;
+	const metternich::domain *domain = nullptr;
 	building_type_map<int> building_desire_modifiers;
 	site_map<building_type_map<int>> settlement_building_desire_modifiers;
 };

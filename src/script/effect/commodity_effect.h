@@ -1,7 +1,7 @@
 #pragma once
 
-#include "domain/country.h"
 #include "domain/country_economy.h"
+#include "domain/domain.h"
 #include "database/defines.h"
 #include "economy/commodity.h"
 #include "economy/commodity_unit.h"
@@ -12,11 +12,11 @@
 
 namespace metternich {
 
-class commodity_effect final : public effect<const country>
+class commodity_effect final : public effect<const domain>
 {
 public:
 	explicit commodity_effect(const metternich::commodity *commodity, const gsml_operator effect_operator)
-		: effect<const country>(effect_operator), commodity(commodity)
+		: effect<const domain>(effect_operator), commodity(commodity)
 	{
 	}
 
@@ -39,7 +39,7 @@ public:
 		assert_throw(this->commodity != nullptr);
 	}
 
-	virtual void do_assignment_effect(const country *scope) const override
+	virtual void do_assignment_effect(const domain *scope) const override
 	{
 		if (!this->commodity->is_enabled()) {
 			return;
@@ -48,7 +48,7 @@ public:
 		scope->get_economy()->set_stored_commodity(this->commodity, this->calculate_quantity());
 	}
 
-	virtual void do_addition_effect(const country *scope) const override
+	virtual void do_addition_effect(const domain *scope) const override
 	{
 		if (!this->commodity->is_enabled()) {
 			return;
@@ -64,7 +64,7 @@ public:
 		scope->get_economy()->change_stored_commodity(this->commodity, change);
 	}
 
-	virtual void do_subtraction_effect(const country *scope) const override
+	virtual void do_subtraction_effect(const domain *scope) const override
 	{
 		if (!this->commodity->is_enabled()) {
 			return;

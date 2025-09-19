@@ -8,8 +8,8 @@ Q_MOC_INCLUDE("technology/technology.h")
 
 namespace metternich {
 
-class country;
-class country_game_data;
+class domain;
+class domain_game_data;
 class technology_category;
 class technology_subcategory;
 
@@ -23,10 +23,10 @@ class country_technology final : public QObject
 	Q_PROPERTY(QVariantList current_researches READ get_current_researches_qvariant_list NOTIFY current_researches_changed)
 
 public:
-	explicit country_technology(const metternich::country *country, const country_game_data *game_data);
+	explicit country_technology(const metternich::domain *domain, const domain_game_data *game_data);
 	~country_technology();
 
-	country_game_data *get_game_data() const;
+	domain_game_data *get_game_data() const;
 
 	void do_research();
 
@@ -163,7 +163,7 @@ signals:
 	void available_research_slots_changed();
 
 private:
-	const metternich::country *country = nullptr;
+	const metternich::domain *domain = nullptr;
 	technology_set technologies;
 	technology_set current_researches;
 	int free_technology_count = 0;

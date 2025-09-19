@@ -11,7 +11,7 @@ template <typename scope_type>
 class capital_effect final : public effect<scope_type>
 {
 public:
-	using value_type = std::conditional_t<std::is_same_v<scope_type, const country>, const site *, bool>;
+	using value_type = std::conditional_t<std::is_same_v<scope_type, const domain>, const site *, bool>;
 
 	explicit capital_effect(const value_type value, const gsml_operator effect_operator = gsml_operator::assignment)
 		: effect<scope_type>(effect_operator), value(value)
@@ -21,7 +21,7 @@ public:
 	explicit capital_effect(const std::string &value, const gsml_operator effect_operator)
 		: effect<scope_type>(effect_operator)
 	{
-		if constexpr (std::is_same_v<scope_type, const country>) {
+		if constexpr (std::is_same_v<scope_type, const domain>) {
 			this->value = site::get(value);
 		} else {
 			this->value = string::to_bool(value);
@@ -39,21 +39,21 @@ public:
 		Q_UNUSED(ctx);
 
 		const site *settlement = nullptr;
-		const country *country = nullptr;
+		const domain *domain = nullptr;
 
-		if constexpr (std::is_same_v<scope_type, const metternich::country>) {
+		if constexpr (std::is_same_v<scope_type, const metternich::domain>) {
 			settlement = this->value;
-			country = scope;
+			domain = scope;
 		} else {
 			settlement = scope;
-			country = scope->get_game_data()->get_owner();
+			domain = scope->get_game_data()->get_owner();
 		}
 
-		if (country == nullptr) {
+		if (domain == nullptr) {
 			return;
 		}
 
-		if (settlement->get_game_data()->get_owner() != country) {
+		if (settlement->get_game_data()->get_owner() != domain) {
 			return;
 		}
 
@@ -61,7 +61,7 @@ public:
 			return;
 		}
 
-		country->get_game_data()->set_capital(settlement);
+		domain->get_game_data()->set_capital(settlement);
 	}
 
 	virtual std::string get_assignment_string(const scope_type *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override
@@ -72,7 +72,7 @@ public:
 
 		std::string capital_name;
 
-		if constexpr (std::is_same_v<scope_type, const country>) {
+		if constexpr (std::is_same_v<scope_type, const domain>) {
 			capital_name = this->value->get_name();
 		} else {
 			capital_name = scope->get_name();

@@ -10,12 +10,12 @@
 #include "character/character_trait.h"
 #include "character/character_trait_type.h"
 #include "database/defines.h"
-#include "domain/country.h"
-#include "domain/country_game_data.h"
 #include "domain/country_government.h"
 #include "domain/country_military.h"
 #include "domain/country_technology.h"
 #include "domain/culture.h"
+#include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "domain/office.h"
 #include "engine_interface.h"
 #include "game/character_event.h"
@@ -253,28 +253,28 @@ void character_game_data::apply_history(const QDate &start_date)
 		return;
 	}
 
-	const metternich::country *country = character_history->get_country();
+	const metternich::domain *domain = character_history->get_country();
 
-	if ((this->character->has_role(character_role::advisor) || this->character->has_role(character_role::leader) || this->character->has_role(character_role::civilian)) && country != nullptr && !country->get_game_data()->is_under_anarchy()) {
-		country_game_data *country_game_data = country->get_game_data();
-		country_technology *country_technology = country->get_technology();
+	if ((this->character->has_role(character_role::advisor) || this->character->has_role(character_role::leader) || this->character->has_role(character_role::civilian)) && domain != nullptr && !domain->get_game_data()->is_under_anarchy()) {
+		domain_game_data *domain_game_data = domain->get_game_data();
+		country_technology *country_technology = domain->get_technology();
 
 		if (this->character->has_role(character_role::leader)) {
 			const province *deployment_province = character_history->get_deployment_province();
-			if (deployment_province == nullptr && country_game_data->get_capital_province() != nullptr) {
-				deployment_province = country_game_data->get_capital_province();
+			if (deployment_province == nullptr && domain_game_data->get_capital_province() != nullptr) {
+				deployment_province = domain_game_data->get_capital_province();
 			}
 
 			assert_throw(deployment_province != nullptr);
 
-			if (deployment_province->is_water_zone() || deployment_province->get_game_data()->get_owner() == country) {
-				assert_throw(country != nullptr);
-				this->deploy_to_province(country, deployment_province);
+			if (deployment_province->is_water_zone() || deployment_province->get_game_data()->get_owner() == domain) {
+				assert_throw(domain != nullptr);
+				this->deploy_to_province(domain, deployment_province);
 			}
 		} else if (this->character->has_role(character_role::civilian)) {
 			const site *deployment_site = character_history->get_deployment_site();
-			if (deployment_site == nullptr && country_game_data->get_capital() != nullptr) {
-				deployment_site = country_game_data->get_capital();
+			if (deployment_site == nullptr && domain_game_data->get_capital() != nullptr) {
+				deployment_site = domain_game_data->get_capital();
 			}
 
 			assert_throw(deployment_site != nullptr);
@@ -283,7 +283,7 @@ void character_game_data::apply_history(const QDate &start_date)
 				return;
 			}
 
-			if (deployment_site->get_game_data()->get_owner() != country) {
+			if (deployment_site->get_game_data()->get_owner() != domain) {
 				return;
 			}
 
@@ -306,10 +306,10 @@ void character_game_data::apply_history(const QDate &start_date)
 				tile_pos = nearest_tile_pos.value();
 			}
 
-			auto civilian_unit = make_qunique<metternich::civilian_unit>(this->character, country);
+			auto civilian_unit = make_qunique<metternich::civilian_unit>(this->character, domain);
 			civilian_unit->set_tile_pos(tile_pos);
 
-			country_game_data->add_civilian_unit(std::move(civilian_unit));
+			domain_game_data->add_civilian_unit(std::move(civilian_unit));
 		}
 	}
 }
@@ -411,13 +411,13 @@ void character_game_data::check_portrait()
 	this->portrait = vector::get_random(potential_portraits);
 }
 
-void character_game_data::set_country(const metternich::country *country)
+void character_game_data::set_country(const metternich::domain *domain)
 {
-	if (country == this->get_country()) {
+	if (domain == this->get_country()) {
 		return;
 	}
 
-	this->country = country;
+	this->domain = domain;
 
 	if (game::get()->is_running()) {
 		emit country_changed();
@@ -617,7 +617,7 @@ void character_game_data::change_attribute_value(const character_attribute *attr
 	}
 
 	if (this->get_office() != nullptr) {
-		this->apply_office_modifier(this->country, this->get_office(), -1);
+		this->apply_office_modifier(this->domain, this->get_office(), -1);
 	}
 	if (this->is_governor()) {
 		this->apply_governor_modifier(this->character->get_governable_province(), -1);
@@ -637,7 +637,7 @@ void character_game_data::change_attribute_value(const character_attribute *attr
 	}
 
 	if (this->get_office() != nullptr) {
-		this->apply_office_modifier(this->country, this->get_office(), 1);
+		this->apply_office_modifier(this->domain, this->get_office(), 1);
 	}
 	if (this->is_governor()) {
 		this->apply_governor_modifier(this->character->get_governable_province(), 1);
@@ -1080,7 +1080,7 @@ void character_game_data::set_office(const metternich::office *office)
 	}
 }
 
-std::string character_game_data::get_office_modifier_string(const metternich::country *country, const metternich::office *office) const
+std::string character_game_data::get_office_modifier_string(const metternich::domain *domain, const metternich::office *office) const
 {
 	if (!office->is_ruler()) {
 		assert_throw(this->character->has_role(character_role::advisor));
@@ -1100,11 +1100,11 @@ std::string character_game_data::get_office_modifier_string(const metternich::co
 		std::string trait_modifier_str;
 
 		if (trait->get_office_modifier(office) != nullptr) {
-			trait_modifier_str = trait->get_office_modifier(office)->get_string(country, 1, indent);
+			trait_modifier_str = trait->get_office_modifier(office)->get_string(domain, 1, indent);
 		}
 
 		if (trait->get_scaled_office_modifier(office) != nullptr) {
-			trait_modifier_str = trait->get_scaled_office_modifier(office)->get_string(country, std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()), indent);
+			trait_modifier_str = trait->get_scaled_office_modifier(office)->get_string(domain, std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()), indent);
 		}
 
 		if (trait_modifier_str.empty()) {
@@ -1129,28 +1129,28 @@ std::string character_game_data::get_office_modifier_string(const metternich::co
 	return str;
 }
 
-void character_game_data::apply_office_modifier(const metternich::country *country, const metternich::office *office, const int multiplier) const
+void character_game_data::apply_office_modifier(const metternich::domain *domain, const metternich::office *office, const int multiplier) const
 {
 	if (!office->is_ruler()) {
 		assert_throw(this->character->has_role(character_role::advisor));
 	}
 
-	assert_throw(country != nullptr);
+	assert_throw(domain != nullptr);
 	assert_throw(office != nullptr);
 
 	for (const character_trait *trait : this->get_traits()) {
-		this->apply_trait_office_modifier(trait, country, office, multiplier);
+		this->apply_trait_office_modifier(trait, domain, office, multiplier);
 	}
 }
 
-void character_game_data::apply_trait_office_modifier(const character_trait *trait, const metternich::country *country, const metternich::office *office, const int multiplier) const
+void character_game_data::apply_trait_office_modifier(const character_trait *trait, const metternich::domain *domain, const metternich::office *office, const int multiplier) const
 {
 	if (trait->get_office_modifier(office) != nullptr) {
-		trait->get_office_modifier(office)->apply(country, multiplier);
+		trait->get_office_modifier(office)->apply(domain, multiplier);
 	}
 
 	if (trait->get_scaled_office_modifier(office) != nullptr) {
-		trait->get_scaled_office_modifier(office)->apply(country, std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()) * multiplier);
+		trait->get_scaled_office_modifier(office)->apply(domain, std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()) * multiplier);
 	}
 }
 
@@ -1216,22 +1216,22 @@ bool character_game_data::is_deployable() const
 	return true;
 }
 
-void character_game_data::deploy_to_province(const metternich::country *country, const province *province)
+void character_game_data::deploy_to_province(const metternich::domain *domain, const province *province)
 {
-	assert_throw(country != nullptr);
+	assert_throw(domain != nullptr);
 	assert_throw(province != nullptr);
 	assert_throw(!this->is_deployed());
 	assert_throw(this->is_deployable());
 
-	const military_unit_type *military_unit_type = country->get_military()->get_best_military_unit_category_type(this->character->get_military_unit_category(), this->character->get_culture());
+	const military_unit_type *military_unit_type = domain->get_military()->get_best_military_unit_category_type(this->character->get_military_unit_category(), this->character->get_culture());
 
-	auto military_unit = make_qunique<metternich::military_unit>(military_unit_type, country, this->character);
+	auto military_unit = make_qunique<metternich::military_unit>(military_unit_type, domain, this->character);
 
 	assert_throw(military_unit->can_move_to(province));
 
 	military_unit->set_province(province);
 
-	country->get_military()->add_military_unit(std::move(military_unit));
+	domain->get_military()->add_military_unit(std::move(military_unit));
 
 	assert_throw(this->get_country() != nullptr);
 }

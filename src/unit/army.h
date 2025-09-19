@@ -1,13 +1,13 @@
 #pragma once
 
-Q_MOC_INCLUDE("domain/country.h")
+Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("map/province.h")
 Q_MOC_INCLUDE("map/site.h")
 
 namespace metternich {
 
 class character;
-class country;
+class domain;
 class military_unit;
 class province;
 class site;
@@ -17,7 +17,7 @@ class army final : public QObject
 {
 	Q_OBJECT
 
-	Q_PROPERTY(const metternich::country* country READ get_country CONSTANT)
+	Q_PROPERTY(const metternich::domain* country READ get_country CONSTANT)
 	Q_PROPERTY(const metternich::province* target_province READ get_target_province CONSTANT)
 	Q_PROPERTY(const metternich::site* target_site READ get_target_site CONSTANT)
 	Q_PROPERTY(QVariantList military_units READ get_military_units_qvariant_list NOTIFY military_units_changed)
@@ -30,9 +30,9 @@ public:
 
 	void do_turn();
 
-	const metternich::country *get_country() const
+	const metternich::domain *get_country() const
 	{
-		return this->country;
+		return this->domain;
 	}
 
 	const province *get_target_province() const
@@ -70,7 +70,7 @@ signals:
 	void military_units_changed();
 
 private:
-	const metternich::country *country = nullptr;
+	const metternich::domain *domain = nullptr;
 	std::vector<military_unit *> military_units;
 	target_variant target; //the province or site the army is moving to
 };

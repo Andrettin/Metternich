@@ -1,7 +1,7 @@
 #pragma once
 
-#include "domain/country.h"
-#include "domain/country_game_data.h"
+#include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/site.h"
@@ -27,7 +27,7 @@ public:
 
 	virtual bool check_assignment(const upper_scope_type *upper_scope, const read_only_context &ctx) const override
 	{
-		if constexpr (std::is_same_v<upper_scope_type, country>) {
+		if constexpr (std::is_same_v<upper_scope_type, domain>) {
 			for (const province *province : upper_scope->get_game_data()->get_provinces()) {
 				for (const site *settlement_site : province->get_game_data()->get_settlement_sites()) {
 					if (!settlement_site->get_game_data()->is_built()) {

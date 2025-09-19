@@ -1,18 +1,18 @@
 #pragma once
 
-#include "domain/country.h"
 #include "domain/country_type.h"
+#include "domain/domain.h"
 #include "script/condition/condition.h"
 
 #include <magic_enum/magic_enum.hpp>
 
 namespace metternich {
 
-class country_type_condition final : public condition<country>
+class country_type_condition final : public condition<domain>
 {
 public:
 	explicit country_type_condition(const std::string &value, const gsml_operator condition_operator)
-		: condition<country>(condition_operator)
+		: condition<domain>(condition_operator)
 	{
 		this->country_type = magic_enum::enum_cast<metternich::country_type>(value).value();
 	}
@@ -23,7 +23,7 @@ public:
 		return class_identifier;
 	}
 
-	virtual bool check_assignment(const country *scope, const read_only_context &ctx) const override
+	virtual bool check_assignment(const domain *scope, const read_only_context &ctx) const override
 	{
 		Q_UNUSED(ctx);
 
@@ -34,7 +34,7 @@ public:
 	{
 		Q_UNUSED(indent);
 
-		return std::format("{} country type", string::highlight(get_country_type_name(this->country_type)));;
+		return std::format("{} country type", string::highlight(get_country_type_name(this->country_type)));
 	}
 
 private:

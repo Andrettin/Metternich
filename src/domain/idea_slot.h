@@ -4,7 +4,7 @@
 
 namespace metternich {
 
-class country;
+class domain;
 enum class idea_type;
 
 template <typename scope_type>
@@ -24,7 +24,7 @@ public:
 
 	virtual idea_type get_idea_type() const = 0;
 
-	const and_condition<country> *get_conditions() const
+	const and_condition<domain> *get_conditions() const
 	{
 		return this->conditions.get();
 	}
@@ -33,7 +33,7 @@ signals:
 	void changed();
 
 private:
-	std::unique_ptr<const and_condition<country>> conditions;
+	std::unique_ptr<const and_condition<domain>> conditions;
 };
 
 }

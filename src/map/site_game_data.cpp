@@ -8,13 +8,13 @@
 #include "database/defines.h"
 #include "database/gsml_data.h"
 #include "database/gsml_property.h"
-#include "domain/country.h"
 #include "domain/country_economy.h"
-#include "domain/country_game_data.h"
 #include "domain/country_government.h"
 #include "domain/country_technology.h"
 #include "domain/country_turn_data.h"
 #include "domain/culture.h"
+#include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "economy/commodity.h"
 #include "economy/resource.h"
 #include "engine_interface.h"
@@ -244,13 +244,13 @@ const std::string &site_game_data::get_title_name() const
 	return this->site->get_title_name(this->get_owner() ? this->get_owner()->get_game_data()->get_government_type() : nullptr, tier, this->get_culture());
 }
 
-void site_game_data::set_owner(const country *owner)
+void site_game_data::set_owner(const domain *owner)
 {
 	if (owner == this->get_owner()) {
 		return;
 	}
 
-	const country *old_owner = this->get_owner();
+	const domain *old_owner = this->get_owner();
 
 	if (old_owner != nullptr) {
 		for (const auto &[improvement, commodity_bonuses] : old_owner->get_economy()->get_improvement_commodity_bonuses()) {
@@ -835,7 +835,7 @@ void site_game_data::check_free_buildings()
 {
 	assert_throw(this->site->is_settlement());
 
-	const country *owner = this->get_owner();
+	const domain *owner = this->get_owner();
 	if (owner == nullptr) {
 		return;
 	}
@@ -844,7 +844,7 @@ void site_game_data::check_free_buildings()
 		return;
 	}
 
-	const country_game_data *owner_game_data = owner->get_game_data();
+	const domain_game_data *owner_game_data = owner->get_game_data();
 
 	bool changed = false;
 
@@ -962,9 +962,9 @@ void site_game_data::on_building_gained(const building_type *building, const int
 	assert_throw(this->get_province() != nullptr);
 
 	if (this->get_owner() != nullptr) {
-		country_game_data *country_game_data = this->get_owner()->get_game_data();
+		domain_game_data *domain_game_data = this->get_owner()->get_game_data();
 		country_economy *country_economy = this->get_owner()->get_economy();
-		country_game_data->change_settlement_building_count(building, multiplier);
+		domain_game_data->change_settlement_building_count(building, multiplier);
 
 		for (const auto &[commodity, bonus] : country_economy->get_building_commodity_bonuses(building)) {
 			this->change_base_commodity_output(commodity, centesimal_int(bonus) * multiplier);

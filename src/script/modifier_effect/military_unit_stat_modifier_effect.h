@@ -2,8 +2,8 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
-#include "domain/country.h"
 #include "domain/country_military.h"
+#include "domain/domain.h"
 #include "script/modifier_effect/modifier_effect.h"
 #include "unit/military_unit.h"
 #include "unit/military_unit_category.h"
@@ -39,7 +39,7 @@ public:
 		const std::string &key = property.get_key();
 		const std::string &value = property.get_value();
 
-		if constexpr (std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, const country>) {
+		if constexpr (std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, const metternich::domain>) {
 			if (key == "domain") {
 				this->domain = magic_enum::enum_cast<military_unit_domain>(value).value();
 				return;
@@ -95,7 +95,7 @@ public:
 		for (const military_unit_type *military_unit_type : types) {
 			if constexpr (std::is_same_v<scope_type, const character>) {
 				scope->get_game_data()->change_commanded_military_unit_type_stat_modifier(military_unit_type, this->stat, this->value * multiplier);
-			} else if constexpr (std::is_same_v<scope_type, const country>) {
+			} else if constexpr (std::is_same_v<scope_type, const metternich::domain>) {
 				scope->get_military()->change_military_unit_type_stat_modifier(military_unit_type, this->stat, this->value * multiplier);
 			} else {
 				assert_throw(false);

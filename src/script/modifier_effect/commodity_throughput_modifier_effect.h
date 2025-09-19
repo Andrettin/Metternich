@@ -1,7 +1,7 @@
 #pragma once
 
-#include "domain/country.h"
 #include "domain/country_economy.h"
+#include "domain/domain.h"
 #include "economy/commodity.h"
 #include "script/modifier_effect/modifier_effect.h"
 

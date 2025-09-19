@@ -12,8 +12,8 @@
 #include "util/qunique_ptr.h"
 
 Q_MOC_INCLUDE("character/character.h")
-Q_MOC_INCLUDE("domain/country.h")
 Q_MOC_INCLUDE("domain/culture.h")
+Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("population/population.h")
 Q_MOC_INCLUDE("religion/religion.h")
 Q_MOC_INCLUDE("ui/icon.h")
@@ -28,8 +28,8 @@ class army;
 class character;
 class civilian_unit;
 class commodity;
-class country;
 class culture;
+class domain;
 class icon;
 class improvement;
 class military_unit;
@@ -53,7 +53,7 @@ class province_game_data final : public QObject
 	Q_OBJECT
 
 	Q_PROPERTY(QString governor_title_name READ get_governor_title_name_qstring NOTIFY governor_title_name_changed)
-	Q_PROPERTY(const metternich::country* owner READ get_owner NOTIFY owner_changed)
+	Q_PROPERTY(const metternich::domain* owner READ get_owner NOTIFY owner_changed)
 	Q_PROPERTY(const metternich::culture* culture READ get_culture NOTIFY culture_changed)
 	Q_PROPERTY(const metternich::religion* religion READ get_religion NOTIFY religion_changed)
 	Q_PROPERTY(int level READ get_level NOTIFY level_changed)
@@ -97,12 +97,12 @@ public:
 		return QString::fromStdString(this->get_governor_title_name());
 	}
 
-	const country *get_owner() const
+	const domain *get_owner() const
 	{
 		return this->owner;
 	}
 
-	void set_owner(const country *country);
+	void set_owner(const domain *domain);
 
 	bool is_capital() const;
 
@@ -257,8 +257,8 @@ public:
 	}
 
 	QVariantList get_military_units_qvariant_list() const;
-	std::vector<military_unit *> get_country_military_units(const country *country) const;
-	Q_INVOKABLE QVariantList get_country_military_units_qvariant_list(const metternich::country *country) const;
+	std::vector<military_unit *> get_country_military_units(const domain *domain) const;
+	Q_INVOKABLE QVariantList get_country_military_units_qvariant_list(const metternich::domain *domain) const;
 
 	void add_military_unit(military_unit *military_unit);
 	void remove_military_unit(military_unit *military_unit);
@@ -279,14 +279,14 @@ public:
 
 	void change_military_unit_category_count(const military_unit_category category, const int change);
 
-	bool has_country_military_unit(const country *country) const;
-	Q_INVOKABLE QVariantList get_country_military_unit_category_counts(metternich::country *country) const;
-	Q_INVOKABLE int get_country_military_unit_category_count(const metternich::military_unit_category category, metternich::country *country) const;
+	bool has_country_military_unit(const domain *domain) const;
+	Q_INVOKABLE QVariantList get_country_military_unit_category_counts(metternich::domain *domain) const;
+	Q_INVOKABLE int get_country_military_unit_category_count(const metternich::military_unit_category category, metternich::domain *domain) const;
 
 	Q_INVOKABLE const icon *get_military_unit_icon() const;
 	Q_INVOKABLE const icon *get_military_unit_category_icon(const metternich::military_unit_category category) const;
 	Q_INVOKABLE QString get_military_unit_category_name(const metternich::military_unit_category category) const;
-	Q_INVOKABLE const icon *get_country_military_unit_icon(metternich::country *country) const;
+	Q_INVOKABLE const icon *get_country_military_unit_icon(metternich::domain *domain) const;
 
 	const std::vector<army *> &get_entering_armies() const
 	{
@@ -522,7 +522,7 @@ signals:
 
 private:
 	const metternich::province *province = nullptr;
-	const country *owner = nullptr;
+	const domain *owner = nullptr;
 	const metternich::culture *culture = nullptr;
 	const metternich::religion *religion = nullptr;
 	int level = 0;

@@ -13,14 +13,14 @@
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "domain/consulate.h"
-#include "domain/country.h"
-#include "domain/country_game_data.h"
 #include "domain/country_tier.h"
 #include "domain/country_tier_data.h"
 #include "domain/country_turn_data.h"
 #include "domain/country_type.h"
 #include "domain/cultural_group_rank.h"
 #include "domain/diplomacy_state.h"
+#include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "domain/government_type.h"
 #include "domain/idea.h"
 #include "domain/idea_slot.h"
@@ -194,11 +194,11 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<commodity_unit>("", 1);
 		qmlRegisterAnonymousType<const commodity_unit>("", 1);
 		qmlRegisterAnonymousType<consulate>("", 1);
-		qmlRegisterAnonymousType<country>("", 1);
-		qmlRegisterAnonymousType<country_game_data>("", 1);
 		qmlRegisterAnonymousType<country_tier_data>("", 1);
 		qmlRegisterAnonymousType<country_turn_data>("", 1);
 		qmlRegisterAnonymousType<defines>("", 1);
+		qmlRegisterAnonymousType<domain>("", 1);
+		qmlRegisterAnonymousType<domain_game_data>("", 1);
 		qmlRegisterAnonymousType<dynasty>("", 1);
 		qmlRegisterAnonymousType<era>("", 1);
 		qmlRegisterAnonymousType<event>("", 1);

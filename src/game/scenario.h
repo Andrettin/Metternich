@@ -13,7 +13,7 @@ namespace archimedes {
 
 namespace metternich {
 
-class country;
+class domain;
 class map_template;
 
 class scenario final : public named_data_entry, public data_type<scenario>
@@ -116,10 +116,9 @@ private:
 	calendar *start_date_calendar = nullptr; //the calendar for the start date
 	archimedes::timeline *timeline = nullptr; //the timeline in which the scenario is set
 	metternich::map_template *map_template = nullptr;
-	metternich::country *default_country = nullptr;
 	bool hidden = false;
 	std::string description;
-	std::vector<const country *> default_countries;
+	std::vector<const domain *> default_countries;
 };
 
 }

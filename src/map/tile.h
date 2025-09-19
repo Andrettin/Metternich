@@ -11,7 +11,7 @@ namespace archimedes {
 namespace metternich {
 
 class civilian_unit;
-class country;
+class domain;
 class holding_type;
 class improvement;
 class pathway;
@@ -72,7 +72,7 @@ public:
 		this->province = province;
 	}
 
-	const country *get_owner() const;
+	const domain *get_owner() const;
 
 	const metternich::site *get_site() const
 	{

@@ -31,9 +31,9 @@ class character_history;
 class character_trait;
 class civilian_unit_class;
 class civilian_unit_type;
-class country;
 class culture;
 class deity;
+class domain;
 class dynasty;
 class phenotype;
 class portrait;
@@ -229,7 +229,7 @@ public:
 		return this->traits;
 	}
 
-	const and_condition<country> *get_conditions() const
+	const and_condition<domain> *get_conditions() const
 	{
 		return this->conditions.get();
 	}
@@ -268,7 +268,7 @@ private:
 	int skill = 0;
 	province *governable_province = nullptr;
 	std::vector<const character_trait *> traits;
-	std::unique_ptr<const and_condition<country>> conditions;
+	std::unique_ptr<const and_condition<domain>> conditions;
 	qunique_ptr<character_history> history;
 	qunique_ptr<character_game_data> game_data;
 };

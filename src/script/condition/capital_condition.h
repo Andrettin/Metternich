@@ -12,7 +12,7 @@ template <typename scope_type>
 class capital_condition final : public condition<scope_type>
 {
 public:
-	using value_type = std::conditional_t<std::is_same_v<scope_type, country>, const site *, bool>;
+	using value_type = std::conditional_t<std::is_same_v<scope_type, domain>, const site *, bool>;
 
 	explicit capital_condition(const value_type value, const gsml_operator condition_operator = gsml_operator::assignment)
 		: condition<scope_type>(condition_operator), value(value)
@@ -22,7 +22,7 @@ public:
 	explicit capital_condition(const std::string &value, const gsml_operator condition_operator)
 		: condition<scope_type>(condition_operator)
 	{
-		if constexpr (std::is_same_v<scope_type, country>) {
+		if constexpr (std::is_same_v<scope_type, domain>) {
 			this->value = site::get(value);
 		} else {
 			this->value = string::to_bool(value);
@@ -39,7 +39,7 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		if constexpr (std::is_same_v<scope_type, country>) {
+		if constexpr (std::is_same_v<scope_type, domain>) {
 			return scope->get_game_data()->get_capital() == this->value;
 		} else {
 			const bool is_capital = scope->get_game_data()->is_capital();
@@ -51,7 +51,7 @@ public:
 	{
 		Q_UNUSED(indent);
 
-		if constexpr (std::is_same_v<scope_type, country>) {
+		if constexpr (std::is_same_v<scope_type, domain>) {
 			return std::format("{} is the capital", condition<scope_type>::get_object_string(this->value));
 		} else {
 			if (this->value) {

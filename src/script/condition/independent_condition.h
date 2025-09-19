@@ -1,18 +1,18 @@
 #pragma once
 
-#include "domain/country.h"
-#include "domain/country_game_data.h"
+#include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "script/condition/condition.h"
 #include "util/string_conversion_util.h"
 #include "util/string_util.h"
 
 namespace metternich {
 
-class independent_condition final : public condition<country>
+class independent_condition final : public condition<domain>
 {
 public:
 	explicit independent_condition(const std::string &value, const gsml_operator condition_operator)
-		: condition<country>(condition_operator)
+		: condition<domain>(condition_operator)
 	{
 		this->value = string::to_bool(value);
 	}
@@ -23,7 +23,7 @@ public:
 		return class_identifier;
 	}
 
-	virtual bool check_assignment(const country *scope, const read_only_context &ctx) const override
+	virtual bool check_assignment(const domain *scope, const read_only_context &ctx) const override
 	{
 		Q_UNUSED(ctx);
 

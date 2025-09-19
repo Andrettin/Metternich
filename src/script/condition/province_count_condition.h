@@ -1,16 +1,16 @@
 #pragma once
 
-#include "domain/country.h"
-#include "domain/country_game_data.h"
+#include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "script/condition/numerical_condition.h"
 
 namespace metternich {
 
-class province_count_condition final : public numerical_condition<country, read_only_context>
+class province_count_condition final : public numerical_condition<domain, read_only_context>
 {
 public:
 	explicit province_count_condition(const std::string &value, const gsml_operator condition_operator)
-		: numerical_condition<country, read_only_context>(value, condition_operator)
+		: numerical_condition<domain, read_only_context>(value, condition_operator)
 	{
 	}
 
@@ -20,7 +20,7 @@ public:
 		return class_identifier;
 	}
 
-	virtual int get_scope_value(const country *scope) const override
+	virtual int get_scope_value(const domain *scope) const override
 	{
 		return scope->get_game_data()->get_province_count();
 	}

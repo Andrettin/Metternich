@@ -1,14 +1,14 @@
 #pragma once
 
-#include "domain/country.h"
-#include "domain/country_game_data.h"
 #include "domain/culture.h"
+#include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "infrastructure/building_class.h"
 #include "script/modifier_effect/modifier_effect.h"
 
 namespace metternich {
 
-class building_cost_efficiency_modifier_effect final : public modifier_effect<const country>
+class building_cost_efficiency_modifier_effect final : public modifier_effect<const domain>
 {
 public:
 	building_cost_efficiency_modifier_effect()
@@ -39,7 +39,7 @@ public:
 		}
 	}
 
-	virtual void apply(const country *scope, const centesimal_int &multiplier) const override
+	virtual void apply(const domain *scope, const centesimal_int &multiplier) const override
 	{
 		if (this->building_class != nullptr) {
 			scope->get_game_data()->change_building_class_cost_efficiency_modifier(this->building_class, (this->value * multiplier).to_int());
@@ -48,7 +48,7 @@ public:
 		}
 	}
 
-	virtual std::string get_base_string(const country *scope) const override
+	virtual std::string get_base_string(const domain *scope) const override
 	{
 		if (this->building_class != nullptr) {
 			const building_type *building = scope->get_culture()->get_building_class_type(this->building_class);

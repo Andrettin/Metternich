@@ -8,7 +8,7 @@ namespace metternich {
 
 class character;
 class character_attribute;
-class country;
+class domain;
 class military_unit;
 class office;
 class province;
@@ -84,7 +84,7 @@ public:
 
 	QString get_modifier_string() const;
 
-	const metternich::modifier<const country> *get_office_modifier(const office *office) const
+	const metternich::modifier<const domain> *get_office_modifier(const office *office) const
 	{
 		const auto find_iterator = this->office_modifiers.find(office);
 		if (find_iterator != this->office_modifiers.end()) {
@@ -94,7 +94,7 @@ public:
 		return nullptr;
 	}
 
-	const metternich::modifier<const country> *get_scaled_office_modifier(const office *office) const
+	const metternich::modifier<const domain> *get_scaled_office_modifier(const office *office) const
 	{
 		const auto find_iterator = this->scaled_office_modifiers.find(office);
 		if (find_iterator != this->scaled_office_modifiers.end()) {
@@ -104,17 +104,17 @@ public:
 		return nullptr;
 	}
 
-	const metternich::modifier<const country> *get_advisor_modifier() const
+	const metternich::modifier<const domain> *get_advisor_modifier() const
 	{
 		return this->advisor_modifier.get();
 	}
 
-	const metternich::modifier<const country> *get_scaled_advisor_modifier() const
+	const metternich::modifier<const domain> *get_scaled_advisor_modifier() const
 	{
 		return this->scaled_advisor_modifier.get();
 	}
 
-	const effect_list<const country> *get_advisor_effects() const
+	const effect_list<const domain> *get_advisor_effects() const
 	{
 		return this->advisor_effects.get();
 	}
@@ -156,11 +156,11 @@ private:
 	std::unique_ptr<const and_condition<character>> conditions;
 	std::unique_ptr<const and_condition<character>> generation_conditions;
 	std::unique_ptr<const metternich::modifier<const character>> modifier;
-	data_entry_map<office, std::unique_ptr<const metternich::modifier<const country>>> office_modifiers;
-	data_entry_map<office, std::unique_ptr<const metternich::modifier<const country>>> scaled_office_modifiers;
-	std::unique_ptr<const metternich::modifier<const country>> advisor_modifier;
-	std::unique_ptr<const metternich::modifier<const country>> scaled_advisor_modifier;
-	std::unique_ptr<const effect_list<const country>> advisor_effects;
+	data_entry_map<office, std::unique_ptr<const metternich::modifier<const domain>>> office_modifiers;
+	data_entry_map<office, std::unique_ptr<const metternich::modifier<const domain>>> scaled_office_modifiers;
+	std::unique_ptr<const metternich::modifier<const domain>> advisor_modifier;
+	std::unique_ptr<const metternich::modifier<const domain>> scaled_advisor_modifier;
+	std::unique_ptr<const effect_list<const domain>> advisor_effects;
 	std::unique_ptr<const metternich::modifier<const province>> governor_modifier;
 	std::unique_ptr<const metternich::modifier<const province>> scaled_governor_modifier;
 	std::unique_ptr<const metternich::modifier<const character>> leader_modifier;

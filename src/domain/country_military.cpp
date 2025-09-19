@@ -5,12 +5,12 @@
 #include "character/character.h"
 #include "character/character_game_data.h"
 #include "character/character_role.h"
-#include "domain/country.h"
 #include "domain/country_economy.h"
-#include "domain/country_game_data.h"
 #include "domain/country_government.h"
 #include "domain/country_technology.h"
 #include "domain/culture.h"
+#include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "economy/commodity.h"
 #include "engine_interface.h"
 #include "game/game.h"
@@ -30,8 +30,8 @@
 
 namespace metternich {
 
-country_military::country_military(const metternich::country *country)
-	: country(country)
+country_military::country_military(const metternich::domain *domain)
+	: domain(domain)
 {
 }
 
@@ -39,9 +39,9 @@ country_military::~country_military()
 {
 }
 
-country_game_data *country_military::get_game_data() const
+domain_game_data *country_military::get_game_data() const
 {
-	return this->country->get_game_data();
+	return this->domain->get_game_data();
 }
 
 void country_military::do_military_unit_recruitment()
@@ -55,7 +55,7 @@ void country_military::do_military_unit_recruitment()
 			province->get_game_data()->do_military_unit_recruitment();
 		}
 	} catch (...) {
-		std::throw_with_nested(std::runtime_error(std::format("Error doing military unit recruitment for country \"{}\".", this->country->get_identifier())));
+		std::throw_with_nested(std::runtime_error(std::format("Error doing military unit recruitment for country \"{}\".", this->domain->get_identifier())));
 	}
 }
 
@@ -73,7 +73,7 @@ void country_military::add_leader(const character *leader)
 
 void country_military::remove_leader(const character *leader)
 {
-	assert_throw(leader->get_game_data()->get_country() == this->country);
+	assert_throw(leader->get_game_data()->get_country() == this->domain);
 
 	std::erase(this->leaders, leader);
 
@@ -94,8 +94,8 @@ void country_military::clear_leaders()
 
 void country_military::on_leader_died(const character *leader)
 {
-	if (this->country == game::get()->get_player_country()) {
-		const portrait *war_minister_portrait = this->country->get_government()->get_war_minister_portrait();
+	if (this->domain == game::get()->get_player_country()) {
+		const portrait *war_minister_portrait = this->domain->get_government()->get_war_minister_portrait();
 
 		const std::string_view leader_type_name = leader->get_leader_type_name();
 
@@ -128,7 +128,7 @@ bool country_military::create_military_unit(const military_unit_type *military_u
 				continue;
 			}
 
-			if (character->get_game_data()->get_country() != nullptr && character->get_game_data()->get_country() != this->country) {
+			if (character->get_game_data()->get_country() != nullptr && character->get_game_data()->get_country() != this->domain) {
 				continue;
 			}
 
@@ -136,7 +136,7 @@ bool country_military::create_military_unit(const military_unit_type *military_u
 				continue;
 			}
 
-			if (character->has_role(character_role::advisor) && character->get_game_data()->get_country() != this->country) {
+			if (character->has_role(character_role::advisor) && character->get_game_data()->get_country() != this->domain) {
 				//if the character is an advisor, they must already have been recruited by the country as an advisor before being usable as a military unit
 				continue;
 			}
@@ -149,7 +149,7 @@ bool country_military::create_military_unit(const military_unit_type *military_u
 				continue;
 			}
 
-			if (character->get_conditions() != nullptr && !character->get_conditions()->check(this->country, read_only_context(this->country))) {
+			if (character->get_conditions() != nullptr && !character->get_conditions()->check(this->domain, read_only_context(this->domain))) {
 				continue;
 			}
 
@@ -164,7 +164,7 @@ bool country_military::create_military_unit(const military_unit_type *military_u
 	qunique_ptr<military_unit> military_unit;
 
 	if (chosen_character != nullptr) {
-		military_unit = make_qunique<metternich::military_unit>(military_unit_type, this->country, chosen_character);
+		military_unit = make_qunique<metternich::military_unit>(military_unit_type, this->domain, chosen_character);
 	} else {
 		if (phenotype == nullptr) {
 			const std::vector<const metternich::phenotype *> weighted_phenotypes = this->get_game_data()->get_weighted_phenotypes();
@@ -173,7 +173,7 @@ bool country_military::create_military_unit(const military_unit_type *military_u
 		}
 		assert_throw(phenotype != nullptr);
 
-		military_unit = make_qunique<metternich::military_unit>(military_unit_type, this->country, phenotype);
+		military_unit = make_qunique<metternich::military_unit>(military_unit_type, this->domain, phenotype);
 	}
 
 	assert_throw(military_unit != nullptr);
@@ -200,7 +200,7 @@ void country_military::add_military_unit(qunique_ptr<military_unit> &&military_u
 	}
 
 	if (military_unit->get_character() != nullptr && !military_unit->get_character()->has_role(character_role::advisor)) {
-		military_unit->get_character()->get_game_data()->set_country(this->country);
+		military_unit->get_character()->get_game_data()->set_country(this->domain);
 	}
 
 	this->get_game_data()->add_unit_name(military_unit->get_name());
@@ -218,7 +218,7 @@ void country_military::remove_military_unit(military_unit *military_unit)
 	}
 
 	if (military_unit->get_character() != nullptr && !military_unit->get_character()->has_role(character_role::advisor)) {
-		assert_throw(military_unit->get_character()->get_game_data()->get_country() == this->country);
+		assert_throw(military_unit->get_character()->get_game_data()->get_country() == this->domain);
 		military_unit->get_character()->get_game_data()->set_country(nullptr);
 	}
 
@@ -302,7 +302,7 @@ const military_unit_type *country_military::get_best_military_unit_category_type
 			continue;
 		}
 
-		if (type->get_required_technology() != nullptr && !this->country->get_technology()->has_technology(type->get_required_technology())) {
+		if (type->get_required_technology() != nullptr && !this->domain->get_technology()->has_technology(type->get_required_technology())) {
 			continue;
 		}
 
@@ -312,7 +312,7 @@ const military_unit_type *country_military::get_best_military_unit_category_type
 				continue;
 			}
 
-			if (upgrade->get_required_technology() != nullptr && !this->country->get_technology()->has_technology(upgrade->get_required_technology())) {
+			if (upgrade->get_required_technology() != nullptr && !this->domain->get_technology()->has_technology(upgrade->get_required_technology())) {
 				continue;
 			}
 
@@ -336,7 +336,7 @@ const military_unit_type *country_military::get_best_military_unit_category_type
 
 const military_unit_type *country_military::get_best_military_unit_category_type(const military_unit_category category) const
 {
-	return this->get_best_military_unit_category_type(category, this->country->get_culture());
+	return this->get_best_military_unit_category_type(category, this->domain->get_culture());
 }
 
 void country_military::add_army(qunique_ptr<army> &&army)

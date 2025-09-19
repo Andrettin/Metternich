@@ -1,13 +1,13 @@
 #pragma once
 
-#include "domain/country.h"
 #include "domain/country_technology.h"
+#include "domain/domain.h"
 #include "script/modifier_effect/modifier_effect.h"
 #include "util/string_conversion_util.h"
 
 namespace metternich {
 
-class gain_technologies_known_by_others_modifier_effect final : public modifier_effect<const country>
+class gain_technologies_known_by_others_modifier_effect final : public modifier_effect<const domain>
 {
 public:
 	explicit gain_technologies_known_by_others_modifier_effect(const std::string &value)
@@ -21,19 +21,19 @@ public:
 		return identifier;
 	}
 
-	virtual void apply(const country *scope, const centesimal_int &multiplier) const override
+	virtual void apply(const domain *scope, const centesimal_int &multiplier) const override
 	{
 		scope->get_technology()->change_gain_technologies_known_by_others_count((this->value * multiplier).to_int());
 	}
 
-	virtual std::string get_base_string(const country *scope) const override
+	virtual std::string get_base_string(const domain *scope) const override
 	{
 		Q_UNUSED(scope);
 
 		return "Gain technologies acquired by 2 known countries";
 	}
 
-	virtual std::string get_string(const country *scope, const centesimal_int &multiplier, const bool ignore_decimals) const override
+	virtual std::string get_string(const domain *scope, const centesimal_int &multiplier, const bool ignore_decimals) const override
 	{
 		Q_UNUSED(multiplier);
 		Q_UNUSED(ignore_decimals);

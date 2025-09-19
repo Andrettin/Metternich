@@ -73,7 +73,7 @@ void improvement::process_gsml_scope(const gsml_data &scope)
 		this->modifier = std::make_unique<metternich::modifier<const site>>();
 		this->modifier->process_gsml_data(scope);
 	} else if (tag == "country_modifier") {
-		this->country_modifier = std::make_unique<metternich::modifier<const country>>();
+		this->country_modifier = std::make_unique<metternich::modifier<const domain>>();
 		this->country_modifier->process_gsml_data(scope);
 	} else {
 		data_entry::process_gsml_scope(scope);

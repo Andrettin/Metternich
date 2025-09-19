@@ -4,7 +4,7 @@
 #include "util/qunique_ptr.h"
 #include "util/singleton.h"
 
-Q_MOC_INCLUDE("domain/country.h")
+Q_MOC_INCLUDE("domain/domain.h")
 
 namespace archimedes {
 	class era;
@@ -16,7 +16,7 @@ namespace metternich {
 
 class army;
 class character;
-class country;
+class domain;
 class event;
 class game_rules;
 class province;
@@ -39,7 +39,7 @@ class game final : public QObject, public singleton<game>
 	Q_PROPERTY(int turn READ get_turn NOTIFY turn_changed)
 	Q_PROPERTY(QVariantList countries READ get_countries_qvariant_list NOTIFY countries_changed)
 	Q_PROPERTY(const metternich::character* player_character READ get_player_character WRITE set_player_character NOTIFY player_character_changed)
-	Q_PROPERTY(const metternich::country* player_country READ get_player_country WRITE set_player_country NOTIFY player_country_changed)
+	Q_PROPERTY(const metternich::domain* player_country READ get_player_country WRITE set_player_country NOTIFY player_country_changed)
 	Q_PROPERTY(const metternich::game_rules* rules READ get_rules CONSTANT)
 
 public:
@@ -152,14 +152,14 @@ public:
 		return QString::fromStdString(this->get_date_string());
 	}
 
-	const std::vector<country *> &get_countries() const
+	const std::vector<domain *> &get_countries() const
 	{
 		return this->countries;
 	}
 
 	QVariantList get_countries_qvariant_list() const;
-	void add_country(country *country);
-	void remove_country(country *country);
+	void add_country(domain *domain);
+	void remove_country(domain *domain);
 
 	void calculate_country_ranks();
 
@@ -178,12 +178,12 @@ public:
 		emit player_character_changed();
 	}
 
-	const country *get_player_country() const
+	const domain *get_player_country() const
 	{
 		return this->player_country;
 	}
 
-	void set_player_country(const country *country);
+	void set_player_country(const domain *domain);
 
 	Q_INVOKABLE int get_price(const metternich::commodity *commodity) const;
 	void set_price(const commodity *commodity, const int value);
@@ -212,7 +212,7 @@ public:
 		this->exploration_changed = true;
 	}
 
-	const country *get_wonder_country(const wonder *wonder) const
+	const domain *get_wonder_country(const wonder *wonder) const
 	{
 		const auto find_iterator = this->wonder_countries.find(wonder);
 
@@ -223,7 +223,7 @@ public:
 		return nullptr;
 	}
 
-	void set_wonder_country(const wonder *wonder, const country *country)
+	void set_wonder_country(const wonder *wonder, const domain *country)
 	{
 		if (country == this->get_wonder_country(wonder)) {
 			return;
@@ -267,7 +267,7 @@ private:
 
 public:
 	void add_delayed_effect(std::unique_ptr<delayed_effect_instance<const character>> &&delayed_effect);
-	void add_delayed_effect(std::unique_ptr<delayed_effect_instance<const country>> &&delayed_effect);
+	void add_delayed_effect(std::unique_ptr<delayed_effect_instance<const domain>> &&delayed_effect);
 	void add_delayed_effect(std::unique_ptr<delayed_effect_instance<const province>> &&delayed_effect);
 	void add_delayed_effect(std::unique_ptr<delayed_effect_instance<const site>> &&delayed_effect);
 	void clear_delayed_effects();
@@ -294,17 +294,17 @@ private:
 	const metternich::scenario *scenario = nullptr;
 	QDate date; //the current date in the game
 	int turn = 1;
-	std::vector<country *> countries; //the countries currently in the game, i.e. those with at least 1 province
+	std::vector<domain *> countries; //the countries currently in the game, i.e. those with at least 1 province
 	const character *player_character = nullptr;
-	const country *player_country = nullptr;
+	const domain *player_country = nullptr;
 	commodity_map<int> prices;
 	QImage exploration_diplomatic_map_image;
 	bool exploration_changed = false;
-	std::map<const wonder *, const country *> wonder_countries;
+	std::map<const wonder *, const domain *> wonder_countries;
 	std::vector<qunique_ptr<character>> generated_characters;
 	std::map<std::string, const character *> generated_characters_by_identifier;
 	std::vector<std::unique_ptr<delayed_effect_instance<const character>>> character_delayed_effects;
-	std::vector<std::unique_ptr<delayed_effect_instance<const country>>> country_delayed_effects;
+	std::vector<std::unique_ptr<delayed_effect_instance<const domain>>> country_delayed_effects;
 	std::vector<std::unique_ptr<delayed_effect_instance<const province>>> province_delayed_effects;
 	std::vector<std::unique_ptr<delayed_effect_instance<const site>>> site_delayed_effects;
 	std::set<const metternich::event *> fired_events;

@@ -2,11 +2,11 @@
 
 #include "unit/transporter.h"
 
-#include "domain/country.h"
 #include "domain/country_economy.h"
-#include "domain/country_game_data.h"
 #include "domain/cultural_group.h"
 #include "domain/culture.h"
+#include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "language/name_generator.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
@@ -21,8 +21,8 @@
 
 namespace metternich {
 
-transporter::transporter(const transporter_type *type, const metternich::country *country, const metternich::phenotype *phenotype)
-	: type(type), country(country), phenotype(phenotype)
+transporter::transporter(const transporter_type *type, const metternich::domain *domain, const metternich::phenotype *phenotype)
+	: type(type), domain(domain), phenotype(phenotype)
 {
 	assert_throw(this->get_type() != nullptr);
 	assert_throw(this->get_country() != nullptr);

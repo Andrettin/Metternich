@@ -1,10 +1,9 @@
 #include "metternich.h"
 
-#include "domain/country.h"
+#include "domain/domain.h"
 
 #include "database/defines.h"
 #include "domain/country_ai.h"
-#include "domain/country_game_data.h"
 #include "domain/country_government.h"
 #include "domain/country_history.h"
 #include "domain/country_tier.h"
@@ -12,6 +11,7 @@
 #include "domain/country_turn_data.h"
 #include "domain/country_type.h"
 #include "domain/culture.h"
+#include "domain/domain_game_data.h"
 #include "domain/government_group.h"
 #include "domain/government_type.h"
 #include "domain/office.h"
@@ -29,17 +29,17 @@
 
 namespace metternich {
 
-country::country(const std::string &identifier)
+domain::domain(const std::string &identifier)
 	: named_data_entry(identifier), type(country_type::polity), default_tier(country_tier::none), min_tier(country_tier::none), max_tier(country_tier::none)
 {
 	this->reset_game_data();
 }
 
-country::~country()
+domain::~domain()
 {
 }
 
-void country::process_gsml_scope(const gsml_data &scope)
+void domain::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
@@ -63,7 +63,7 @@ void country::process_gsml_scope(const gsml_data &scope)
 	}
 }
 
-void country::initialize()
+void domain::initialize()
 {
 	if (this->get_min_tier() == country_tier::none) {
 		this->min_tier = this->get_default_tier();
@@ -84,7 +84,7 @@ void country::initialize()
 	named_data_entry::initialize();
 }
 
-void country::check() const
+void domain::check() const
 {
 	if (this->get_default_tier() == country_tier::none) {
 		throw std::runtime_error(std::format("Country \"{}\" has no default tier.", this->get_identifier()));
@@ -121,19 +121,19 @@ void country::check() const
 	assert_throw(this->get_color().isValid());
 }
 
-data_entry_history *country::get_history_base()
+data_entry_history *domain::get_history_base()
 {
 	return this->history.get();
 }
 
-void country::reset_history()
+void domain::reset_history()
 {
 	this->history = make_qunique<country_history>(this);
 }
 
-void country::reset_game_data()
+void domain::reset_game_data()
 {
-	this->game_data = make_qunique<country_game_data>(this);
+	this->game_data = make_qunique<domain_game_data>(this);
 
 	this->reset_turn_data();
 	this->reset_ai();
@@ -142,54 +142,54 @@ void country::reset_game_data()
 	this->get_game_data()->set_government_type(this->get_default_government_type());
 }
 
-country_economy *country::get_economy() const
+country_economy *domain::get_economy() const
 {
 	return this->get_game_data()->get_economy();
 }
 
-country_government *country::get_government() const
+country_government *domain::get_government() const
 {
 	return this->get_game_data()->get_government();
 }
 
-country_military *country::get_military() const
+country_military *domain::get_military() const
 {
 	return this->get_game_data()->get_military();
 }
 
-country_technology *country::get_technology() const
+country_technology *domain::get_technology() const
 {
 	return this->get_game_data()->get_technology();
 }
 
-void country::reset_turn_data()
+void domain::reset_turn_data()
 {
 	this->turn_data = make_qunique<country_turn_data>(this);
 	emit turn_data_changed();
 }
 
-void country::reset_ai()
+void domain::reset_ai()
 {
 	this->ai = make_qunique<country_ai>(this);
 	emit ai_changed();
 }
 
-bool country::is_playable() const
+bool domain::is_playable() const
 {
 	return this->get_type() == country_type::polity;
 }
 
-bool country::is_tribe() const
+bool domain::is_tribe() const
 {
 	return this->get_type() == country_type::tribe;
 }
 
-bool country::is_clade() const
+bool domain::is_clade() const
 {
 	return this->get_type() == country_type::clade;
 }
 
-const QColor &country::get_color() const
+const QColor &domain::get_color() const
 {
 	if (!this->color.isValid()) {
 		return defines::get()->get_minor_nation_color();
@@ -198,7 +198,7 @@ const QColor &country::get_color() const
 	return this->color;
 }
 
-const std::string &country::get_name(const government_type *government_type, const country_tier tier) const
+const std::string &domain::get_name(const government_type *government_type, const country_tier tier) const
 {
 	if (government_type == nullptr) {
 		return this->get_name();
@@ -223,7 +223,7 @@ const std::string &country::get_name(const government_type *government_type, con
 	return this->get_name();
 }
 
-std::string country::get_titled_name(const government_type *government_type, const country_tier tier, const religion *religion) const
+std::string domain::get_titled_name(const government_type *government_type, const country_tier tier, const religion *religion) const
 {
 	auto find_iterator = this->short_names.find(government_type);
 	if (find_iterator == this->short_names.end()) {
@@ -254,7 +254,7 @@ std::string country::get_titled_name(const government_type *government_type, con
 	}
 }
 
-const std::string &country::get_title_name(const government_type *government_type, const country_tier tier, const religion *religion) const
+const std::string &domain::get_title_name(const government_type *government_type, const country_tier tier, const religion *religion) const
 {
 	if (government_type == nullptr) {
 		return country_tier_data::get(tier)->get_name();
@@ -293,7 +293,7 @@ const std::string &country::get_title_name(const government_type *government_typ
 	return government_type->get_title_name(tier);
 }
 
-const std::string &country::get_office_title_name(const office *office, const government_type *government_type, const country_tier tier, const gender gender, const religion *religion) const
+const std::string &domain::get_office_title_name(const office *office, const government_type *government_type, const country_tier tier, const gender gender, const religion *religion) const
 {
 	const auto office_find_iterator = this->office_title_names.find(office);
 	if (office_find_iterator != this->office_title_names.end()) {
@@ -338,12 +338,12 @@ const std::string &country::get_office_title_name(const office *office, const go
 	return government_type->get_office_title_name(office, tier, gender);
 }
 
-bool country::can_declare_war() const
+bool domain::can_declare_war() const
 {
 	return this->get_type() == country_type::polity;
 }
 
-std::vector<const technology *> country::get_available_technologies() const
+std::vector<const technology *> domain::get_available_technologies() const
 {
 	std::vector<const technology *> technologies;
 
@@ -360,7 +360,7 @@ std::vector<const technology *> country::get_available_technologies() const
 	return technologies;
 }
 
-QVariantList country::get_available_technologies_qvariant_list() const
+QVariantList domain::get_available_technologies_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_available_technologies());
 }

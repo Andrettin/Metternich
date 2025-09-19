@@ -4,13 +4,13 @@
 #include "database/named_data_entry.h"
 #include "util/qunique_ptr.h"
 
-Q_MOC_INCLUDE("domain/country.h")
+Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("species/phenotype.h")
 Q_MOC_INCLUDE("unit/transporter_type.h")
 
 namespace metternich {
 
-class country;
+class domain;
 class historical_transporter_history;
 class phenotype;
 class transporter_type;
@@ -20,7 +20,7 @@ class historical_transporter final : public named_data_entry, public data_type<h
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::transporter_type* type MEMBER type)
-	Q_PROPERTY(metternich::country* country MEMBER country)
+	Q_PROPERTY(metternich::domain* country MEMBER domain)
 	Q_PROPERTY(metternich::phenotype* phenotype MEMBER phenotype)
 	Q_PROPERTY(int quantity MEMBER quantity READ get_quantity)
 
@@ -48,9 +48,9 @@ public:
 		return this->type;
 	}
 
-	const metternich::country *get_country() const
+	const metternich::domain *get_country() const
 	{
-		return this->country;
+		return this->domain;
 	}
 
 	const metternich::phenotype *get_phenotype() const
@@ -65,7 +65,7 @@ public:
 
 private:
 	transporter_type *type = nullptr;
-	metternich::country *country = nullptr;
+	metternich::domain *domain = nullptr;
 	metternich::phenotype *phenotype = nullptr;
 	int quantity = 1;
 	qunique_ptr<historical_transporter_history> history;

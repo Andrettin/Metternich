@@ -3,11 +3,11 @@
 #include "infrastructure/settlement_building_slot.h"
 
 #include "database/defines.h"
-#include "domain/country.h"
 #include "domain/country_economy.h"
-#include "domain/country_game_data.h"
 #include "domain/country_technology.h"
 #include "domain/culture.h"
+#include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "economy/commodity.h"
 #include "game/game.h"
 #include "infrastructure/building_class.h"
@@ -278,7 +278,7 @@ const wonder *settlement_building_slot::get_buildable_wonder() const
 	return nullptr;
 }
 
-const country *settlement_building_slot::get_country() const
+const domain *settlement_building_slot::get_country() const
 {
 	return this->get_settlement()->get_game_data()->get_owner();
 }
@@ -375,8 +375,8 @@ QString settlement_building_slot::get_modifier_string() const
 		}
 
 		if (this->get_building()->get_weighted_country_modifier() != nullptr) {
-			const country_game_data *country_game_data = this->get_country()->get_game_data();
-			const centesimal_int multiplier = centesimal_int(1) / country_game_data->get_settlement_count();
+			const domain_game_data *domain_game_data = this->get_country()->get_game_data();
+			const centesimal_int multiplier = centesimal_int(1) / domain_game_data->get_settlement_count();
 			str += "\n" + this->get_building()->get_weighted_country_modifier()->get_string(this->get_country(), multiplier, 1, false);
 		}
 	}

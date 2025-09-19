@@ -6,12 +6,12 @@
 
 namespace metternich {
 
-class country;
+class domain;
 
 template <typename scope_type>
 class modifier;
 
-class scripted_country_modifier final : public scripted_modifier, public data_type<scripted_country_modifier>, public scripted_scoped_modifier<country>
+class scripted_country_modifier final : public scripted_modifier, public data_type<scripted_country_modifier>, public scripted_scoped_modifier<domain>
 {
 	Q_OBJECT
 
@@ -37,7 +37,7 @@ public:
 		scripted_scoped_modifier::check();
 	}
 
-	Q_INVOKABLE QString get_modifier_string(metternich::country *scope) const
+	Q_INVOKABLE QString get_modifier_string(metternich::domain *scope) const
 	{
 		return scripted_scoped_modifier::get_modifier_string(scope);
 	}

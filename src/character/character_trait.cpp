@@ -54,27 +54,27 @@ void character_trait::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "office_modifiers") {
 		scope.for_each_child([&](const gsml_data &child_scope) {
 			const office *office = office::get(child_scope.get_tag());
-			auto modifier = std::make_unique<metternich::modifier<const country>>();
+			auto modifier = std::make_unique<metternich::modifier<const domain>>();
 			modifier->process_gsml_data(child_scope);
 			this->office_modifiers[office] = std::move(modifier);
 		});
 	} else if (tag == "scaled_office_modifiers") {
 		scope.for_each_child([&](const gsml_data &child_scope) {
 			const office *office = office::get(child_scope.get_tag());
-			auto modifier = std::make_unique<metternich::modifier<const country>>();
+			auto modifier = std::make_unique<metternich::modifier<const domain>>();
 			modifier->process_gsml_data(child_scope);
 			this->scaled_office_modifiers[office] = std::move(modifier);
 		});
 	} else if (tag == "advisor_modifier") {
-		auto modifier = std::make_unique<metternich::modifier<const country>>();
+		auto modifier = std::make_unique<metternich::modifier<const domain>>();
 		modifier->process_gsml_data(scope);
 		this->advisor_modifier = std::move(modifier);
 	} else if (tag == "scaled_advisor_modifier") {
-		auto modifier = std::make_unique<metternich::modifier<const country>>();
+		auto modifier = std::make_unique<metternich::modifier<const domain>>();
 		modifier->process_gsml_data(scope);
 		this->scaled_advisor_modifier = std::move(modifier);
 	} else if (tag == "advisor_effects") {
-		auto effect_list = std::make_unique<metternich::effect_list<const country>>();
+		auto effect_list = std::make_unique<metternich::effect_list<const domain>>();
 		effect_list->process_gsml_data(scope);
 		this->advisor_effects = std::move(effect_list);
 	} else if (tag == "governor_modifier") {

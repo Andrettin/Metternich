@@ -12,8 +12,8 @@
 #include "character/character_trait.h"
 #include "character/character_trait_type.h"
 #include "database/defines.h"
-#include "domain/country.h"
 #include "domain/culture.h"
+#include "domain/domain.h"
 #include "game/game.h"
 #include "language/name_generator.h"
 #include "map/province.h"
@@ -184,7 +184,7 @@ void character::process_gsml_scope(const gsml_data &scope)
 			this->traits.push_back(character_trait::get(value));
 		}
 	} else if (tag == "conditions") {
-		auto conditions = std::make_unique<and_condition<country>>();
+		auto conditions = std::make_unique<and_condition<domain>>();
 		conditions->process_gsml_data(scope);
 		this->conditions = std::move(conditions);
 	} else if (tag == "game_data") {

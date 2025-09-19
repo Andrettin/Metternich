@@ -2,9 +2,9 @@
 
 #include "population/population_unit.h"
 
-#include "domain/country.h"
-#include "domain/country_game_data.h"
 #include "domain/culture.h"
+#include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "economy/commodity.h"
 #include "economy/resource.h"
 #include "game/game.h"
@@ -140,9 +140,9 @@ const icon *population_unit::get_small_icon() const
 	return this->get_type()->get_phenotype_small_icon(this->get_phenotype());
 }
 
-void population_unit::set_country(const metternich::country *country)
+void population_unit::set_country(const metternich::domain *domain)
 {
-	if (country == this->get_country()) {
+	if (domain == this->get_country()) {
 		return;
 	}
 
@@ -150,7 +150,7 @@ void population_unit::set_country(const metternich::country *country)
 		this->get_country()->get_game_data()->remove_population_unit(this);
 	}
 
-	this->country = country;
+	this->domain = domain;
 
 	if (this->get_country() != nullptr) {
 		this->get_country()->get_game_data()->add_population_unit(this);
@@ -186,8 +186,8 @@ void population_unit::set_site(const metternich::site *site)
 		emit province_changed();
 	}
 
-	const metternich::country *country = site ? site->get_game_data()->get_owner() : nullptr;
-	this->set_country(country);
+	const metternich::domain *domain = site ? site->get_game_data()->get_owner() : nullptr;
+	this->set_country(domain);
 }
 
 bool population_unit::is_food_producer() const

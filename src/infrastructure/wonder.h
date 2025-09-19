@@ -16,7 +16,7 @@ namespace archimedes {
 namespace metternich {
 
 class building_type;
-class country;
+class domain;
 class portrait;
 class province;
 class technology;
@@ -78,21 +78,21 @@ public:
 		return this->wealth_cost;
 	}
 
-	int get_wealth_cost_for_country(const country *country) const;
+	int get_wealth_cost_for_country(const domain *domain) const;
 
 	const commodity_map<int> &get_commodity_costs() const
 	{
 		return this->commodity_costs;
 	}
 
-	commodity_map<int> get_commodity_costs_for_country(const country *country) const;
+	commodity_map<int> get_commodity_costs_for_country(const domain *domain) const;
 
-	const factor<country> *get_cost_factor() const
+	const factor<domain> *get_cost_factor() const
 	{
 		return this->cost_factor.get();
 	}
 
-	const and_condition<country> *get_conditions() const
+	const and_condition<domain> *get_conditions() const
 	{
 		return this->conditions.get();
 	}
@@ -107,7 +107,7 @@ public:
 		return this->province_modifier.get();
 	}
 
-	const modifier<const country> *get_country_modifier() const
+	const modifier<const domain> *get_country_modifier() const
 	{
 		return this->country_modifier.get();
 	}
@@ -124,11 +124,11 @@ private:
 	technology *obsolescence_technology = nullptr;
 	int wealth_cost = 0;
 	commodity_map<int> commodity_costs;
-	std::unique_ptr<const factor<country>> cost_factor;
-	std::unique_ptr<const and_condition<country>> conditions;
+	std::unique_ptr<const factor<domain>> cost_factor;
+	std::unique_ptr<const and_condition<domain>> conditions;
 	std::unique_ptr<const and_condition<province>> province_conditions;
 	std::unique_ptr<modifier<const province>> province_modifier;
-	std::unique_ptr<modifier<const country>> country_modifier;
+	std::unique_ptr<modifier<const domain>> country_modifier;
 	std::vector<const game_rule *> required_game_rules;
 };
 

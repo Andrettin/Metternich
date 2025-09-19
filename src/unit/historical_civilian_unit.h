@@ -4,14 +4,14 @@
 #include "database/named_data_entry.h"
 #include "util/qunique_ptr.h"
 
-Q_MOC_INCLUDE("domain/country.h")
+Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("species/phenotype.h")
 Q_MOC_INCLUDE("unit/civilian_unit_type.h")
 
 namespace metternich {
 
 class civilian_unit_type;
-class country;
+class domain;
 class historical_civilian_unit_history;
 class phenotype;
 
@@ -20,7 +20,7 @@ class historical_civilian_unit final : public named_data_entry, public data_type
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::civilian_unit_type* type MEMBER type)
-	Q_PROPERTY(metternich::country* owner MEMBER owner)
+	Q_PROPERTY(metternich::domain* owner MEMBER owner)
 	Q_PROPERTY(metternich::phenotype* phenotype MEMBER phenotype)
 
 public:
@@ -47,7 +47,7 @@ public:
 		return this->type;
 	}
 
-	const country *get_owner() const
+	const domain *get_owner() const
 	{
 		return this->owner;
 	}
@@ -59,7 +59,7 @@ public:
 
 private:
 	civilian_unit_type *type = nullptr;
-	country *owner = nullptr;
+	domain *owner = nullptr;
 	metternich::phenotype *phenotype = nullptr;
 	qunique_ptr<historical_civilian_unit_history> history;
 };

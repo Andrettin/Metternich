@@ -2,10 +2,10 @@
 
 #include "infrastructure/building_type.h"
 
-#include "domain/country.h"
-#include "domain/country_game_data.h"
 #include "domain/cultural_group.h"
 #include "domain/culture.h"
+#include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "economy/commodity.h"
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot_type.h"
@@ -68,11 +68,11 @@ void building_type::process_gsml_scope(const gsml_data &scope)
 			this->commodity_costs[commodity] = commodity->string_to_value(property.get_value());
 		});
 	} else if (tag == "cost_factor") {
-		auto factor = std::make_unique<metternich::factor<country>>(100);
+		auto factor = std::make_unique<metternich::factor<domain>>(100);
 		factor->process_gsml_data(scope);
 		this->cost_factor = std::move(factor);
 	} else if (tag == "conditions") {
-		auto conditions = std::make_unique<and_condition<country>>();
+		auto conditions = std::make_unique<and_condition<domain>>();
 		conditions->process_gsml_data(scope);
 		this->conditions = std::move(conditions);
 	} else if (tag == "settlement_conditions") {
@@ -94,10 +94,10 @@ void building_type::process_gsml_scope(const gsml_data &scope)
 		this->province_modifier = std::make_unique<modifier<const province>>();
 		this->province_modifier->process_gsml_data(scope);
 	} else if (tag == "country_modifier") {
-		this->country_modifier = std::make_unique<modifier<const country>>();
+		this->country_modifier = std::make_unique<modifier<const domain>>();
 		this->country_modifier->process_gsml_data(scope);
 	} else if (tag == "weighted_country_modifier") {
-		this->weighted_country_modifier = std::make_unique<modifier<const country>>();
+		this->weighted_country_modifier = std::make_unique<modifier<const domain>>();
 		this->weighted_country_modifier->process_gsml_data(scope);
 	} else if (tag == "effects") {
 		auto effect_list = std::make_unique<metternich::effect_list<const site>>();
@@ -247,13 +247,13 @@ QVariantList building_type::get_recruited_transporter_categories_qvariant_list()
 	return container::to_qvariant_list(this->get_recruited_transporter_categories());
 }
 
-int building_type::get_wealth_cost_for_country(const country *country) const
+int building_type::get_wealth_cost_for_country(const domain *domain) const
 {
 	int cost = this->get_wealth_cost();
 
 	if (cost > 0) {
-		if (country->get_game_data()->get_building_cost_efficiency_modifier() != 0) {
-			const int cost_efficiency_modifier = country->get_game_data()->get_building_cost_efficiency_modifier() + country->get_game_data()->get_building_class_cost_efficiency_modifier(this->get_building_class());
+		if (domain->get_game_data()->get_building_cost_efficiency_modifier() != 0) {
+			const int cost_efficiency_modifier = domain->get_game_data()->get_building_cost_efficiency_modifier() + domain->get_game_data()->get_building_class_cost_efficiency_modifier(this->get_building_class());
 			if (cost_efficiency_modifier >= 0) {
 				cost *= 100;
 				cost /= 100 + cost_efficiency_modifier;
@@ -264,7 +264,7 @@ int building_type::get_wealth_cost_for_country(const country *country) const
 		}
 
 		if (this->get_cost_factor() != nullptr) {
-			cost = this->get_cost_factor()->calculate(country, centesimal_int(cost)).to_int();
+			cost = this->get_cost_factor()->calculate(domain, centesimal_int(cost)).to_int();
 		}
 
 		cost = std::max(1, cost);
@@ -273,14 +273,14 @@ int building_type::get_wealth_cost_for_country(const country *country) const
 	return cost;
 }
 
-commodity_map<int> building_type::get_commodity_costs_for_country(const country *country) const
+commodity_map<int> building_type::get_commodity_costs_for_country(const domain *domain) const
 {
 	commodity_map<int> costs = this->get_commodity_costs();
 
 	for (auto &[commodity, cost] : costs) {
 		if (cost > 0) {
-			if (country->get_game_data()->get_building_cost_efficiency_modifier() != 0) {
-				const int cost_efficiency_modifier = country->get_game_data()->get_building_cost_efficiency_modifier() + country->get_game_data()->get_building_class_cost_efficiency_modifier(this->get_building_class());
+			if (domain->get_game_data()->get_building_cost_efficiency_modifier() != 0) {
+				const int cost_efficiency_modifier = domain->get_game_data()->get_building_cost_efficiency_modifier() + domain->get_game_data()->get_building_class_cost_efficiency_modifier(this->get_building_class());
 				if (cost_efficiency_modifier >= 0) {
 					cost *= 100;
 					cost /= 100 + cost_efficiency_modifier;
@@ -291,7 +291,7 @@ commodity_map<int> building_type::get_commodity_costs_for_country(const country 
 			}
 
 			if (this->get_cost_factor() != nullptr) {
-				cost = this->get_cost_factor()->calculate(country, centesimal_int(cost)).to_int();
+				cost = this->get_cost_factor()->calculate(domain, centesimal_int(cost)).to_int();
 			}
 
 			cost = std::max(1, cost);

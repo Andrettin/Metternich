@@ -10,7 +10,7 @@ namespace metternich {
 
 class army;
 class character;
-class country;
+class domain;
 class military_unit;
 class population_unit;
 class province;
@@ -24,7 +24,7 @@ struct context_base
 	using military_unit_ptr = std::conditional_t<read_only, const military_unit *, military_unit *>;
 	using population_unit_type = std::conditional_t<read_only, const population_unit, population_unit>;
 	using population_unit_ptr = population_unit_type *;
-	using scope_variant_type = std::variant<std::monostate, const character *, const country *, military_unit_ptr, population_unit_ptr, const province *, const site *>;
+	using scope_variant_type = std::variant<std::monostate, const character *, const domain *, military_unit_ptr, population_unit_ptr, const province *, const site *>;
 
 	context_base()
 	{
@@ -43,8 +43,8 @@ struct context_base
 	{
 		if constexpr (std::is_same_v<scope_type, const character>) {
 			return this->saved_character_scopes;
-		} else if constexpr (std::is_same_v<scope_type, const country>) {
-			return this->saved_country_scopes;
+		} else if constexpr (std::is_same_v<scope_type, const domain>) {
+			return this->saved_domain_scopes;
 		} else if constexpr (std::is_same_v<scope_type, population_unit_type>) {
 			return this->saved_population_unit_scopes;
 		} else if constexpr (std::is_same_v<scope_type, const province>) {
@@ -59,8 +59,8 @@ struct context_base
 	{
 		if constexpr (std::is_same_v<scope_type, const character>) {
 			return this->saved_character_scopes;
-		} else if constexpr (std::is_same_v<scope_type, const country>) {
-			return this->saved_country_scopes;
+		} else if constexpr (std::is_same_v<scope_type, const domain>) {
+			return this->saved_domain_scopes;
 		} else if constexpr (std::is_same_v<scope_type, population_unit_type>) {
 			return this->saved_population_unit_scopes;
 		} else if constexpr (std::is_same_v<scope_type, const province>) {
@@ -102,7 +102,7 @@ struct context_base
 	scope_variant_type source_scope = std::monostate();
 	scope_variant_type previous_scope = std::monostate();
 	std::map<std::string, const character *> saved_character_scopes;
-	std::map<std::string, const country *> saved_country_scopes;
+	std::map<std::string, const domain *> saved_domain_scopes;
 	std::map<std::string, population_unit_ptr> saved_population_unit_scopes;
 	std::map<std::string, const province *> saved_province_scopes;
 	std::map<std::string, const site *> saved_site_scopes;
@@ -158,7 +158,7 @@ public:
 		this->previous_scope = read_only_context::scope_from_mutable(ctx.previous_scope);
 
 		this->saved_character_scopes = ctx.saved_character_scopes;
-		this->saved_country_scopes = ctx.saved_country_scopes;
+		this->saved_domain_scopes = ctx.saved_domain_scopes;
 		this->saved_province_scopes = ctx.saved_province_scopes;
 		this->saved_site_scopes = ctx.saved_site_scopes;
 

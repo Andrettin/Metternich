@@ -6,11 +6,11 @@
 
 namespace metternich {
 
-class is_military_unit_category_available_condition final : public condition<country>
+class is_military_unit_category_available_condition final : public condition<domain>
 {
 public:
 	explicit is_military_unit_category_available_condition(const std::string &value, const gsml_operator condition_operator)
-		: condition<country>(condition_operator)
+		: condition<domain>(condition_operator)
 	{
 		this->category = magic_enum::enum_cast<military_unit_category>(value).value();
 	}
@@ -21,7 +21,7 @@ public:
 		return class_identifier;
 	}
 
-	virtual bool check_assignment(const country *scope, const read_only_context &ctx) const override
+	virtual bool check_assignment(const domain *scope, const read_only_context &ctx) const override
 	{
 		Q_UNUSED(ctx);
 

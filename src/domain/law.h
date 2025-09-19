@@ -10,6 +10,7 @@ Q_MOC_INCLUDE("ui/icon.h")
 
 namespace metternich {
 
+class domain;
 class law_group;
 class technology;
 
@@ -62,17 +63,17 @@ public:
 
 	QVariantList get_commodity_costs_qvariant_list() const;
 
-	const and_condition<country> *get_conditions() const
+	const and_condition<domain> *get_conditions() const
 	{
 		return this->conditions.get();
 	}
 
-	const modifier<const country> *get_modifier() const
+	const modifier<const domain> *get_modifier() const
 	{
 		return this->modifier.get();
 	}
 
-	Q_INVOKABLE QString get_modifier_string(const metternich::country *country) const;
+	Q_INVOKABLE QString get_modifier_string(const metternich::domain *domain) const;
 
 signals:
 	void changed();
@@ -82,8 +83,8 @@ private:
 	const icon *icon = nullptr;
 	technology *required_technology = nullptr;
 	commodity_map<int> commodity_costs;
-	std::unique_ptr<const and_condition<country>> conditions;
-	std::unique_ptr<const modifier<const country>> modifier;
+	std::unique_ptr<const and_condition<domain>> conditions;
+	std::unique_ptr<const modifier<const domain>> modifier;
 };
 
 }

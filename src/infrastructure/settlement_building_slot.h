@@ -54,7 +54,7 @@ public:
 		return this->settlement;
 	}
 
-	virtual const country *get_country() const override;
+	virtual const domain *get_country() const override;
 
 	QString get_modifier_string() const;
 

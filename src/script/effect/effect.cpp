@@ -4,7 +4,7 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
-#include "domain/country.h"
+#include "domain/domain.h"
 #include "domain/office.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
@@ -66,7 +66,7 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 		} else if (key == "traits") {
 			return std::make_unique<traits_effect>(value, effect_operator);
 		}
-	} else if constexpr (std::is_same_v<scope_type, const country>) {
+	} else if constexpr (std::is_same_v<scope_type, const domain>) {
 		static const std::string percent_suffix = "_percent";
 		static const std::string population_scaled_commodity_prefix = "population_scaled_";
 
@@ -99,7 +99,7 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 		}
 	}
 
-	if constexpr (std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, const country>) {
+	if constexpr (std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, const domain>) {
 		if (key == "event") {
 			return std::make_unique<event_effect<scope_type>>(value, effect_operator);
 		}
@@ -112,7 +112,7 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 		}
 	}
 
-	if constexpr (std::is_same_v<scope_type, const country> || std::is_same_v<scope_type, const site>) {
+	if constexpr (std::is_same_v<scope_type, const domain> || std::is_same_v<scope_type, const site>) {
 		if (key == "capital") {
 			return std::make_unique<capital_effect<scope_type>>(value, effect_operator);
 		}
@@ -136,7 +136,7 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 	const gsml_operator effect_operator = scope.get_operator();
 	std::unique_ptr<effect> effect;
 
-	if constexpr (std::is_same_v<scope_type, const country>) {
+	if constexpr (std::is_same_v<scope_type, const domain>) {
 		if (effect_identifier == "any_known_country") {
 			effect = std::make_unique<any_known_country_effect>(effect_operator);
 		} else if (effect_identifier == "any_neighbor_country") {
@@ -166,13 +166,13 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 		}
 	}
 
-	if constexpr (std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, const country>) {
+	if constexpr (std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, const domain>) {
 		if (effect_identifier == "delayed") {
 			effect = std::make_unique<delayed_effect<scope_type>>(effect_operator);
 		}
 	}
 
-	if constexpr (std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, const country> || std::is_same_v<scope_type, const province> || std::is_same_v<scope_type, const site>) {
+	if constexpr (std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, const domain> || std::is_same_v<scope_type, const province> || std::is_same_v<scope_type, const site>) {
 		if (effect_identifier == "scripted_modifiers") {
 			effect = std::make_unique<scripted_modifiers_effect<scope_type>>(effect_operator);
 		}
@@ -193,7 +193,7 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 	} else if (effect_identifier == "saved_character_scope") {
 		effect = std::make_unique<saved_scope_effect<scope_type, const character>>(effect_operator);
 	} else if (effect_identifier == "saved_country_scope") {
-		effect = std::make_unique<saved_scope_effect<scope_type, const country>>(effect_operator);
+		effect = std::make_unique<saved_scope_effect<scope_type, const domain>>(effect_operator);
 	} else if (effect_identifier == "saved_population_unit_scope") {
 		effect = std::make_unique<saved_scope_effect<scope_type, population_unit>>(effect_operator);
 	} else if (effect_identifier == "saved_province_scope") {
@@ -216,11 +216,11 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 }
 
 template <typename scope_type>
-const country *effect<scope_type>::get_scope_country(const scope_type *scope)
+const domain *effect<scope_type>::get_scope_country(const scope_type *scope)
 {
 	if constexpr (std::is_same_v<scope_type, const character>) {
 		return scope->get_game_data()->get_country();
-	} else if constexpr (std::is_same_v<scope_type, const country>) {
+	} else if constexpr (std::is_same_v<scope_type, const domain>) {
 		return scope;
 	} else if constexpr (std::is_same_v<scope_type, population_unit>) {
 		return scope->get_country();
@@ -243,7 +243,7 @@ const province *effect<scope_type>::get_scope_province(const scope_type *scope)
 }
 
 template class effect<const character>;
-template class effect<const country>;
+template class effect<const domain>;
 template class effect<population_unit>;
 template class effect<const province>;
 template class effect<const site>;

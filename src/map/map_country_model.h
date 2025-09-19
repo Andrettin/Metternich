@@ -10,7 +10,7 @@ Q_MOC_INCLUDE("map/map_province_model.h")
 
 namespace metternich {
 
-class country;
+class domain;
 class map_province_model;
 
 class map_country_model : public QAbstractListModel
@@ -26,7 +26,7 @@ public:
 	};
 
 	void reset_model();
-	void create_country_geopolygons(const country *country, const std::vector<const QGeoPolygon *> &country_province_geopolygons);
+	void create_country_geopolygons(const domain *domain, const std::vector<const QGeoPolygon *> &country_province_geopolygons);
 
 	void set_map_province_model(const metternich::map_province_model *map_province_model)
 	{
@@ -51,7 +51,7 @@ public:
 		return role_names;
 	}
 
-	std::pair<const country *, const QGeoPolygon *> get_geopolygon_data(const int index) const;
+	std::pair<const domain *, const QGeoPolygon *> get_geopolygon_data(const int index) const;
 
 private:
 	const map_province_model *map_province_model = nullptr;

@@ -3,7 +3,7 @@
 #include "map/tile.h"
 
 #include "database/defines.h"
-#include "domain/country.h"
+#include "domain/domain.h"
 #include "economy/resource.h"
 #include "infrastructure/improvement.h"
 #include "infrastructure/pathway.h"
@@ -52,7 +52,7 @@ void tile::set_terrain(const terrain_type *terrain)
 	this->terrain = terrain;
 }
 
-const country *tile::get_owner() const
+const domain *tile::get_owner() const
 {
 	if (this->get_province() == nullptr) {
 		return nullptr;

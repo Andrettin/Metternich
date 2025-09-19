@@ -2,14 +2,14 @@
 
 #include "database/data_entry_history.h"
 
-Q_MOC_INCLUDE("domain/country.h")
+Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("map/province.h")
 Q_MOC_INCLUDE("map/site.h")
 
 namespace metternich {
 
 class character;
-class country;
+class domain;
 class province;
 class site;
 
@@ -17,7 +17,7 @@ class character_history final : public data_entry_history
 {
 	Q_OBJECT
 
-	Q_PROPERTY(const metternich::country* country MEMBER country)
+	Q_PROPERTY(const metternich::domain* country MEMBER domain)
 	Q_PROPERTY(int level MEMBER level READ get_level)
 	Q_PROPERTY(const metternich::province* deployment_province MEMBER deployment_province)
 	Q_PROPERTY(const metternich::site* deployment_site MEMBER deployment_site)
@@ -25,9 +25,9 @@ class character_history final : public data_entry_history
 public:
 	explicit character_history(const metternich::character *character);
 
-	const metternich::country *get_country() const
+	const metternich::domain *get_country() const
 	{
-		return this->country;
+		return this->domain;
 	}
 
 	int get_level() const
@@ -47,7 +47,7 @@ public:
 
 private:
 	const metternich::character *character = nullptr;
-	const metternich::country *country = nullptr;
+	const metternich::domain *domain = nullptr;
 	int level = 0;
 	const province *deployment_province = nullptr;
 	const site *deployment_site = nullptr;

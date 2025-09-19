@@ -2,10 +2,10 @@
 
 #include "unit/transporter_type.h"
 
-#include "domain/country.h"
-#include "domain/country_game_data.h"
 #include "domain/cultural_group.h"
 #include "domain/culture.h"
+#include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "economy/commodity.h"
 #include "technology/technology.h"
 #include "unit/transporter_category.h"
@@ -85,10 +85,10 @@ bool transporter_type::is_ship() const
 	return this->get_transporter_class()->is_ship();
 }
 
-centesimal_int transporter_type::get_stat_for_country(const transporter_stat stat, const country *country) const
+centesimal_int transporter_type::get_stat_for_country(const transporter_stat stat, const domain *domain) const
 {
 	centesimal_int value = this->get_stat(stat);
-	value += country->get_game_data()->get_transporter_type_stat_modifier(this, stat);
+	value += domain->get_game_data()->get_transporter_type_stat_modifier(this, stat);
 	return value;
 }
 

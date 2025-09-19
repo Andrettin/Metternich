@@ -3,7 +3,7 @@
 #include "game/scoped_event_base.h"
 
 #include "database/gsml_data.h"
-#include "domain/country.h"
+#include "domain/domain.h"
 #include "game/event.h"
 #include "game/event_option.h"
 #include "game/event_random_group.h"
@@ -31,8 +31,8 @@ const scope_type *scoped_event_base<scope_type>::get_scope_from_context(const re
 {
 	if constexpr (std::is_same_v<scope_type, const character>) {
 		return std::get<const character *>(ctx.root_scope);
-	} else if constexpr (std::is_same_v<scope_type, const country>) {
-		return std::get<const country *>(ctx.root_scope);
+	} else if constexpr (std::is_same_v<scope_type, const domain>) {
+		return std::get<const domain *>(ctx.root_scope);
 	} else if constexpr (std::is_same_v<scope_type, const province>) {
 		return std::get<const province *>(ctx.root_scope);
 	} else if constexpr (std::is_same_v<scope_type, const site>) {
@@ -45,7 +45,7 @@ bool scoped_event_base<scope_type>::is_player_scope(const scope_type *scope)
 {
 	if constexpr (std::is_same_v<scope_type, const character>) {
 		return scope == game::get()->get_player_character();
-	} else if constexpr (std::is_same_v<scope_type, const country>) {
+	} else if constexpr (std::is_same_v<scope_type, const domain>) {
 		return scope == game::get()->get_player_country();
 	} else if constexpr (std::is_same_v<scope_type, const province>) {
 		return scope->get_game_data()->get_owner() == game::get()->get_player_country();
@@ -357,7 +357,7 @@ void scoped_event_base<scope_type>::fire(const scope_type *scope, const context 
 }
 
 template class scoped_event_base<const character>;
-template class scoped_event_base<const country>;
+template class scoped_event_base<const domain>;
 template class scoped_event_base<const province>;
 template class scoped_event_base<const site>;
 

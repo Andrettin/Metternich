@@ -26,13 +26,13 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		const country *country = condition<upper_scope_type>::get_scope_country(upper_scope);
+		const domain *domain = condition<upper_scope_type>::get_scope_country(upper_scope);
 
-		if (country == nullptr) {
+		if (domain == nullptr) {
 			return nullptr;
 		}
 
-		return country->get_government()->get_ruler();
+		return domain->get_government()->get_ruler();
 	}
 
 	virtual std::string get_scope_name() const override

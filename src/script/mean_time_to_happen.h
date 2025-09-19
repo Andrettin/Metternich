@@ -10,7 +10,7 @@ namespace archimedes {
 namespace metternich {
 
 class character;
-class country;
+class domain;
 class province;
 class site;
 
@@ -36,7 +36,7 @@ private:
 };
 
 extern template class mean_time_to_happen<character>;
-extern template class mean_time_to_happen<country>;
+extern template class mean_time_to_happen<domain>;
 extern template class mean_time_to_happen<province>;
 extern template class mean_time_to_happen<site>;
 

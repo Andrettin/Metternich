@@ -1,14 +1,14 @@
 #pragma once
 
-#include "domain/country.h"
 #include "domain/country_economy.h"
+#include "domain/domain.h"
 #include "economy/commodity.h"
 #include "script/modifier_effect/modifier_effect.h"
 #include "util/number_util.h"
 
 namespace metternich {
 
-class commodity_demand_modifier_effect final : public modifier_effect<const country>
+class commodity_demand_modifier_effect final : public modifier_effect<const domain>
 {
 public:
 	virtual const std::string &get_identifier() const override
@@ -31,7 +31,7 @@ public:
 		}
 	}
 
-	virtual void apply(const country *scope, const centesimal_int &multiplier) const override
+	virtual void apply(const domain *scope, const centesimal_int &multiplier) const override
 	{
 		if (!this->commodity->is_enabled()) {
 			return;
@@ -40,7 +40,7 @@ public:
 		scope->get_economy()->change_commodity_demand(this->commodity, decimillesimal_int(this->value * multiplier));
 	}
 
-	virtual std::string get_base_string(const country *scope) const override
+	virtual std::string get_base_string(const domain *scope) const override
 	{
 		Q_UNUSED(scope);
 
@@ -52,7 +52,7 @@ public:
 		return true;
 	}
 
-	virtual bool is_hidden(const country *scope) const override
+	virtual bool is_hidden(const domain *scope) const override
 	{
 		Q_UNUSED(scope);
 

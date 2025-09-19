@@ -11,7 +11,7 @@ namespace metternich {
 
 class building_type;
 class character;
-class country;
+class domain;
 class improvement;
 class portrait;
 class province;
@@ -70,9 +70,9 @@ public:
 		return QString::fromStdString(this->get_description());
 	}
 
-	bool check_preconditions(const country *country) const;
-	bool check_conditions(const country *country) const;
-	bool check_completion_conditions(const country *country, const bool ignore_random_chance) const;
+	bool check_preconditions(const domain *domain) const;
+	bool check_conditions(const domain *domain) const;
+	bool check_completion_conditions(const domain *domain, const bool ignore_random_chance) const;
 	Q_INVOKABLE QString get_completion_conditions_string() const;
 
 	const decimillesimal_int &get_completion_random_chance() const
@@ -80,33 +80,33 @@ public:
 		return this->completion_random_chance;
 	}
 
-	const and_condition<country> *get_failure_conditions() const
+	const and_condition<domain> *get_failure_conditions() const
 	{
 		return this->failure_conditions.get();
 	}
 
 	Q_INVOKABLE QString get_failure_conditions_string() const;
 
-	const effect_list<const country> *get_completion_effects() const
+	const effect_list<const domain> *get_completion_effects() const
 	{
 		return this->completion_effects.get();
 	}
 
-	Q_INVOKABLE QString get_completion_effects_string(metternich::country *country) const;
+	Q_INVOKABLE QString get_completion_effects_string(metternich::domain *domain) const;
 
-	const effect_list<const country> *get_failure_effects() const
+	const effect_list<const domain> *get_failure_effects() const
 	{
 		return this->failure_effects.get();
 	}
 
-	Q_INVOKABLE QString get_failure_effects_string(metternich::country *country) const;
+	Q_INVOKABLE QString get_failure_effects_string(metternich::domain *domain) const;
 
-	const modifier<const country> *get_active_modifier() const
+	const modifier<const domain> *get_active_modifier() const
 	{
 		return this->active_modifier.get();
 	}
 
-	const modifier<const country> *get_completion_modifier() const
+	const modifier<const domain> *get_completion_modifier() const
 	{
 		return this->completion_modifier.get();
 	}
@@ -153,15 +153,15 @@ signals:
 private:
 	metternich::portrait *portrait = nullptr;
 	std::string description;
-	std::unique_ptr<const and_condition<country>> preconditions;
-	std::unique_ptr<const and_condition<country>> conditions;
-	std::unique_ptr<const and_condition<country>> completion_conditions;
+	std::unique_ptr<const and_condition<domain>> preconditions;
+	std::unique_ptr<const and_condition<domain>> conditions;
+	std::unique_ptr<const and_condition<domain>> completion_conditions;
 	decimillesimal_int completion_random_chance;
-	std::unique_ptr<const and_condition<country>> failure_conditions;
-	std::unique_ptr<const effect_list<const country>> completion_effects;
-	std::unique_ptr<const effect_list<const country>> failure_effects;
-	std::unique_ptr<const modifier<const country>> active_modifier;
-	std::unique_ptr<const modifier<const country>> completion_modifier;
+	std::unique_ptr<const and_condition<domain>> failure_conditions;
+	std::unique_ptr<const effect_list<const domain>> completion_effects;
+	std::unique_ptr<const effect_list<const domain>> failure_effects;
+	std::unique_ptr<const modifier<const domain>> active_modifier;
+	std::unique_ptr<const modifier<const domain>> completion_modifier;
 	std::vector<const province *> owned_provinces;
 	std::vector<const site *> owned_sites;
 	std::vector<const building_type *> built_buildings;

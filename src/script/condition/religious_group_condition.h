@@ -77,7 +77,7 @@ public:
 				if constexpr (std::is_same_v<target_scope_type, std::monostate>) {
 					assert_throw(false);
 					return nullptr;
-				} else if constexpr (std::is_same_v<target_scope_type, country> || std::is_same_v<target_scope_type, province> || std::is_same_v<target_scope_type, site>) {
+				} else if constexpr (std::is_same_v<target_scope_type, domain> || std::is_same_v<target_scope_type, province> || std::is_same_v<target_scope_type, site>) {
 					return target_scope->get_game_data()->get_religion();
 				} else {
 					return target_scope->get_religion();

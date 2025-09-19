@@ -1,7 +1,7 @@
 #pragma once
 
-#include "domain/country.h"
 #include "domain/country_military.h"
+#include "domain/domain.h"
 #include "script/modifier_effect/modifier_effect.h"
 #include "unit/military_unit_stat.h"
 #include "unit/military_unit_type.h"
@@ -13,7 +13,7 @@
 
 namespace metternich {
 
-class ship_stat_modifier_effect final : public modifier_effect<const country>
+class ship_stat_modifier_effect final : public modifier_effect<const domain>
 {
 public:
 	explicit ship_stat_modifier_effect(const std::string &stat_name, const std::string &value)
@@ -27,7 +27,7 @@ public:
 		return identifier;
 	}
 
-	virtual void apply(const country *scope, const centesimal_int &multiplier) const override
+	virtual void apply(const domain *scope, const centesimal_int &multiplier) const override
 	{
 		for (const military_unit_type *military_unit_type : military_unit_type::get_all()) {
 			if (military_unit_type->is_ship()) {
@@ -42,7 +42,7 @@ public:
 		}
 	}
 
-	virtual std::string get_base_string(const country *scope) const override
+	virtual std::string get_base_string(const domain *scope) const override
 	{
 		Q_UNUSED(scope);
 

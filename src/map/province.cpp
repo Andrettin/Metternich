@@ -2,9 +2,9 @@
 
 #include "map/province.h"
 
-#include "domain/country.h"
 #include "domain/cultural_group.h"
 #include "domain/culture.h"
+#include "domain/domain.h"
 #include "economy/resource.h"
 #include "map/province_game_data.h"
 #include "map/province_history.h"
@@ -217,8 +217,8 @@ std::vector<const region *> province::get_shared_regions_with(const province *ot
 
 bool province::has_core_country_of_culture(const culture *culture) const
 {
-	for (const country *country : this->get_core_countries()) {
-		if (country->get_culture() == culture) {
+	for (const domain *domain : this->get_core_countries()) {
+		if (domain->get_culture() == culture) {
 			return true;
 		}
 	}

@@ -1,16 +1,16 @@
 #pragma once
 
-#include "domain/country.h"
-#include "domain/country_game_data.h"
+#include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "script/condition/scope_condition_base.h"
 
 namespace metternich {
 
-class any_neighbor_country_condition final : public scope_condition_base<country, country, read_only_context, condition<country>>
+class any_neighbor_country_condition final : public scope_condition_base<domain, domain, read_only_context, condition<domain>>
 {
 public:
 	explicit any_neighbor_country_condition(const gsml_operator condition_operator)
-		: scope_condition_base<country, country, read_only_context, condition<country>>(condition_operator)
+		: scope_condition_base<domain, domain, read_only_context, condition<domain>>(condition_operator)
 	{
 	}
 
@@ -20,9 +20,9 @@ public:
 		return class_identifier;
 	}
 
-	virtual bool check_assignment(const country *upper_scope, const read_only_context &ctx) const override
+	virtual bool check_assignment(const domain *upper_scope, const read_only_context &ctx) const override
 	{
-		for (const country *neighbor_country : upper_scope->get_game_data()->get_neighbor_countries()) {
+		for (const domain *neighbor_country : upper_scope->get_game_data()->get_neighbor_countries()) {
 			if (this->check_scope(neighbor_country, ctx)) {
 				return true;
 			}

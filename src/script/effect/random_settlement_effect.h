@@ -1,7 +1,7 @@
 #pragma once
 
-#include "domain/country.h"
-#include "domain/country_game_data.h"
+#include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/site.h"
@@ -12,11 +12,11 @@
 
 namespace metternich {
 
-class random_settlement_effect final : public scope_effect_base<const country, const site>
+class random_settlement_effect final : public scope_effect_base<const domain, const site>
 {
 public:
 	explicit random_settlement_effect(const gsml_operator effect_operator)
-		: scope_effect_base<const country, const site>(effect_operator)
+		: scope_effect_base<const domain, const site>(effect_operator)
 	{
 	}
 
@@ -33,11 +33,11 @@ public:
 		if (tag == "conditions") {
 			this->conditions.process_gsml_data(scope);
 		} else {
-			scope_effect_base<const country, const site>::process_gsml_scope(scope);
+			scope_effect_base<const domain, const site>::process_gsml_scope(scope);
 		}
 	}
 
-	virtual void do_assignment_effect(const country *upper_scope, context &ctx) const override
+	virtual void do_assignment_effect(const domain *upper_scope, context &ctx) const override
 	{
 		std::vector<const site *> potential_settlements;
 

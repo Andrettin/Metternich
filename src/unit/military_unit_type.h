@@ -15,9 +15,9 @@ Q_MOC_INCLUDE("unit/military_unit_class.h")
 namespace metternich {
 
 class military_unit_class;
-class country;
 class cultural_group;
 class culture;
+class domain;
 class icon;
 class promotion;
 class technology;
@@ -93,8 +93,8 @@ public:
 		return zero;
 	}
 
-	centesimal_int get_stat_for_country(const military_unit_stat stat, const country *country) const;
-	Q_INVOKABLE QString get_stats_for_country_qstring(const country *country) const;
+	centesimal_int get_stat_for_country(const military_unit_stat stat, const domain *domain) const;
+	Q_INVOKABLE QString get_stats_for_country_qstring(const domain *domain) const;
 
 	const technology *get_required_technology() const
 	{

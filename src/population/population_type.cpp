@@ -3,10 +3,10 @@
 #include "population/population_type.h"
 
 #include "database/defines.h"
-#include "domain/country.h"
-#include "domain/country_game_data.h"
 #include "domain/cultural_group.h"
 #include "domain/culture.h"
+#include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "economy/commodity.h"
 #include "game/game.h"
 #include "game/game_rules.h"
@@ -52,7 +52,7 @@ void population_type::process_gsml_scope(const gsml_data &scope)
 			this->commodity_demands[commodity] = std::move(demand);
 		});
 	} else if (tag == "country_modifier") {
-		this->country_modifier = std::make_unique<modifier<const country>>();
+		this->country_modifier = std::make_unique<modifier<const domain>>();
 		this->country_modifier->process_gsml_data(scope);
 	} else if (tag == "equivalent_population_types") {
 		for (const std::string &value : values) {
@@ -125,14 +125,14 @@ void population_type::check() const
 	}
 }
 
-QString population_type::get_country_modifier_string(const metternich::country *country) const
+QString population_type::get_country_modifier_string(const metternich::domain *domain) const
 {
 	if (this->get_output_commodity() == nullptr && this->get_country_modifier() == nullptr) {
 		return QString();
 	}
 
-	const country_game_data *country_game_data = country->get_game_data();
-	const int population_type_count = country_game_data->get_population()->get_type_count(this);
+	const domain_game_data *domain_game_data = domain->get_game_data();
+	const int population_type_count = domain_game_data->get_population()->get_type_count(this);
 
 	std::string str;
 
@@ -141,7 +141,7 @@ QString population_type::get_country_modifier_string(const metternich::country *
 	}
 
 	if (this->get_country_modifier() != nullptr) {
-		const std::string modifier_str = this->get_country_modifier()->get_string(country, centesimal_int::min(population_type_count * country_game_data->get_population_type_modifier_multiplier(this), this->get_max_modifier_multiplier()));
+		const std::string modifier_str = this->get_country_modifier()->get_string(domain, centesimal_int::min(population_type_count * domain_game_data->get_population_type_modifier_multiplier(this), this->get_max_modifier_multiplier()));
 		if (!modifier_str.empty()) {
 			if (!str.empty()) {
 				str += "\n";

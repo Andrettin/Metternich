@@ -1,7 +1,7 @@
 #pragma once
 
-#include "domain/country.h"
-#include "domain/country_game_data.h"
+#include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/terrain_type.h"

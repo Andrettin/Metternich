@@ -1,14 +1,14 @@
 #pragma once
 
-#include "domain/country.h"
-#include "domain/country_game_data.h"
+#include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "population/population_type.h"
 #include "script/modifier_effect/modifier_effect.h"
 #include "util/string_util.h"
 
 namespace metternich {
 
-class population_type_bonus_modifier_effect final : public modifier_effect<const country>
+class population_type_bonus_modifier_effect final : public modifier_effect<const domain>
 {
 public:
 	explicit population_type_bonus_modifier_effect(const metternich::population_type *population_type, const std::string &value)
@@ -22,7 +22,7 @@ public:
 		return identifier;
 	}
 
-	virtual void apply(const country *scope, const centesimal_int &multiplier) const override
+	virtual void apply(const domain *scope, const centesimal_int &multiplier) const override
 	{
 		if (!this->population_type->is_enabled()) {
 			return;
@@ -31,7 +31,7 @@ public:
 		scope->get_game_data()->change_population_type_modifier_multiplier(this->population_type, this->value * multiplier / 100);
 	}
 
-	virtual std::string get_base_string(const country *scope) const override
+	virtual std::string get_base_string(const domain *scope) const override
 	{
 		Q_UNUSED(scope);
 
@@ -43,7 +43,7 @@ public:
 		return true;
 	}
 
-	virtual bool is_hidden(const country *scope) const override
+	virtual bool is_hidden(const domain *scope) const override
 	{
 		Q_UNUSED(scope);
 

@@ -15,9 +15,9 @@ Q_MOC_INCLUDE("map/site.h")
 namespace metternich {
 
 class character;
-class country;
 class cultural_group;
 class culture;
+class domain;
 class province_game_data;
 class province_history;
 class province_map_data;
@@ -208,14 +208,14 @@ public:
 	Q_INVOKABLE void remove_region(region *region);
 	std::vector<const region *> get_shared_regions_with(const province *other_province) const;
 
-	const std::vector<const country *> &get_core_countries() const
+	const std::vector<const domain *> &get_core_countries() const
 	{
 		return this->core_countries;
 	}
 
-	void add_core_country(const country *country)
+	void add_core_country(const domain *domain)
 	{
-		this->core_countries.push_back(country);
+		this->core_countries.push_back(domain);
 	}
 
 	bool has_core_country_of_culture(const culture *culture) const;
@@ -268,7 +268,7 @@ private:
 	std::map<const culture *, std::string> cultural_names;
 	std::map<const cultural_group *, std::string> cultural_group_names;
 	std::vector<region *> regions; //regions where this province is located
-	std::vector<const country *> core_countries;
+	std::vector<const domain *> core_countries;
 	province_map<const terrain_feature *> border_rivers;
 	std::vector<const metternich::world *> generation_worlds; //worlds other than its own where this province can be generated
 	std::vector<const site *> sites; //sites located in this province, used for map generation

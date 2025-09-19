@@ -3,11 +3,11 @@
 #include "domain/country_technology.h"
 
 #include "database/defines.h"
-#include "domain/country.h"
 #include "domain/country_ai.h"
 #include "domain/country_economy.h"
-#include "domain/country_game_data.h"
 #include "domain/country_government.h"
+#include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "domain/idea_slot.h"
 #include "domain/idea_type.h"
 #include "economy/commodity.h"
@@ -29,19 +29,19 @@
 
 namespace metternich {
 
-country_technology::country_technology(const metternich::country *country, const country_game_data *game_data)
-	: country(country)
+country_technology::country_technology(const metternich::domain *domain, const domain_game_data *game_data)
+	: domain(domain)
 {
-	connect(game_data, &country_game_data::available_idea_slots_changed, this, &country_technology::available_research_slots_changed);
+	connect(game_data, &domain_game_data::available_idea_slots_changed, this, &country_technology::available_research_slots_changed);
 }
 
 country_technology::~country_technology()
 {
 }
 
-country_game_data *country_technology::get_game_data() const
+domain_game_data *country_technology::get_game_data() const
 {
-	return this->country->get_game_data();
+	return this->domain->get_game_data();
 }
 
 void country_technology::do_research()
@@ -65,7 +65,7 @@ void country_technology::do_research()
 		this->current_researches.clear();
 		emit current_researches_changed();
 	} catch (...) {
-		std::throw_with_nested(std::runtime_error("Error doing research for country \"" + this->country->get_identifier() + "\"."));
+		std::throw_with_nested(std::runtime_error("Error doing research for domain \"" + this->domain->get_identifier() + "\"."));
 	}
 }
 
@@ -80,12 +80,12 @@ void country_technology::add_technology(const technology *technology)
 		return;
 	}
 
-	assert_throw(technology->is_available_for_country(this->country));
+	assert_throw(technology->is_available_for_country(this->domain));
 
 	this->technologies.insert(technology);
 
 	if (technology->get_modifier() != nullptr) {
-		technology->get_modifier()->apply(this->country, 1);
+		technology->get_modifier()->apply(this->domain, 1);
 	}
 
 	for (const commodity *enabled_commodity : technology->get_enabled_commodities()) {
@@ -93,10 +93,10 @@ void country_technology::add_technology(const technology *technology)
 			continue;
 		}
 
-		this->country->get_economy()->add_available_commodity(enabled_commodity);
+		this->domain->get_economy()->add_available_commodity(enabled_commodity);
 
 		if (enabled_commodity->is_tradeable()) {
-			this->country->get_economy()->add_tradeable_commodity(enabled_commodity);
+			this->domain->get_economy()->add_tradeable_commodity(enabled_commodity);
 		}
 	}
 
@@ -203,7 +203,7 @@ void country_technology::add_technology(const technology *technology)
 
 	if (game::get()->is_running()) {
 		if (!technology->get_enabled_laws().empty()) {
-			this->country->get_government()->check_laws();
+			this->domain->get_government()->check_laws();
 		}
 
 		emit technologies_changed();
@@ -230,7 +230,7 @@ void country_technology::remove_technology(const technology *technology)
 	this->technologies.erase(technology);
 
 	if (technology->get_modifier() != nullptr) {
-		technology->get_modifier()->apply(this->country, -1);
+		technology->get_modifier()->apply(this->domain, -1);
 	}
 
 	for (const commodity *enabled_commodity : technology->get_enabled_commodities()) {
@@ -238,15 +238,15 @@ void country_technology::remove_technology(const technology *technology)
 			continue;
 		}
 
-		this->country->get_economy()->remove_available_commodity(enabled_commodity);
+		this->domain->get_economy()->remove_available_commodity(enabled_commodity);
 
 		if (enabled_commodity->is_tradeable()) {
-			this->country->get_economy()->remove_tradeable_commodity(enabled_commodity);
+			this->domain->get_economy()->remove_tradeable_commodity(enabled_commodity);
 		}
 	}
 
 	if (!technology->get_enabled_laws().empty()) {
-		this->country->get_government()->check_laws();
+		this->domain->get_government()->check_laws();
 	}
 
 	//remove any technologies requiring this one as well
@@ -267,7 +267,7 @@ void country_technology::check_technologies()
 
 	const technology_set technologies = this->get_technologies();
 	for (const technology *technology : technologies) {
-		if (!technology->is_available_for_country(this->country)) {
+		if (!technology->is_available_for_country(this->domain)) {
 			this->remove_technology(technology);
 		}
 	}
@@ -277,7 +277,7 @@ bool country_technology::can_gain_technology(const technology *technology) const
 {
 	assert_throw(technology != nullptr);
 
-	if (!technology->is_available_for_country(this->country)) {
+	if (!technology->is_available_for_country(this->domain)) {
 		return false;
 	}
 
@@ -300,13 +300,13 @@ bool country_technology::can_research_technology(const technology *technology) c
 		return false;
 	}
 
-	const int wealth_cost = technology->get_wealth_cost_for_country(this->country);
-	if (wealth_cost > 0 && wealth_cost > this->country->get_economy()->get_wealth()) {
+	const int wealth_cost = technology->get_wealth_cost_for_country(this->domain);
+	if (wealth_cost > 0 && wealth_cost > this->domain->get_economy()->get_wealth()) {
 		return false;
 	}
 
-	for (const auto &[commodity, cost] : technology->get_commodity_costs_for_country(this->country)) {
-		if (cost > this->country->get_economy()->get_stored_commodity(commodity)) {
+	for (const auto &[commodity, cost] : technology->get_commodity_costs_for_country(this->domain)) {
+		if (cost > this->domain->get_economy()->get_stored_commodity(commodity)) {
 			return false;
 		}
 	}
@@ -318,7 +318,7 @@ std::vector<const technology *> country_technology::get_researchable_technologie
 {
 	std::vector<const technology *> researchable_technologies;
 
-	for (const technology *technology : this->country->get_available_technologies()) {
+	for (const technology *technology : this->domain->get_available_technologies()) {
 		if (!this->is_technology_researchable(technology)) {
 			continue;
 		}
@@ -347,7 +347,7 @@ bool country_technology::is_technology_researchable(const technology *technology
 
 QVariantList country_technology::get_future_technologies_qvariant_list() const
 {
-	std::vector<const technology *> future_technologies = this->country->get_available_technologies();
+	std::vector<const technology *> future_technologies = this->domain->get_available_technologies();
 	std::erase_if(future_technologies, [this](const technology *technology) {
 		if (this->has_technology(technology)) {
 			return true;
@@ -380,11 +380,11 @@ void country_technology::add_current_research(const technology *technology)
 {
 	assert_throw(this->can_research_technology(technology));
 
-	const int wealth_cost = technology->get_wealth_cost_for_country(this->country);
-	this->country->get_economy()->change_wealth(-wealth_cost);
+	const int wealth_cost = technology->get_wealth_cost_for_country(this->domain);
+	this->domain->get_economy()->change_wealth(-wealth_cost);
 
-	for (const auto &[commodity, cost] : technology->get_commodity_costs_for_country(this->country)) {
-		this->country->get_economy()->change_stored_commodity(commodity, -cost);
+	for (const auto &[commodity, cost] : technology->get_commodity_costs_for_country(this->domain)) {
+		this->domain->get_economy()->change_stored_commodity(commodity, -cost);
 	}
 
 	this->current_researches.insert(technology);
@@ -396,11 +396,11 @@ void country_technology::remove_current_research(const technology *technology, c
 	assert_throw(this->get_current_researches().contains(technology));
 
 	if (restore_costs) {
-		const int wealth_cost = technology->get_wealth_cost_for_country(this->country);
-		this->country->get_economy()->change_wealth(wealth_cost);
+		const int wealth_cost = technology->get_wealth_cost_for_country(this->domain);
+		this->domain->get_economy()->change_wealth(wealth_cost);
 
-		for (const auto &[commodity, cost] : technology->get_commodity_costs_for_country(this->country)) {
-			this->country->get_economy()->change_stored_commodity(commodity, cost);
+		for (const auto &[commodity, cost] : technology->get_commodity_costs_for_country(this->domain)) {
+			this->domain->get_economy()->change_stored_commodity(commodity, cost);
 		}
 	}
 
@@ -420,12 +420,12 @@ void country_technology::on_technology_researched(const technology *technology)
 		bool first_to_research = true;
 
 		//technology grants a free technology for the first one to research it
-		for (const metternich::country *country : game::get()->get_countries()) {
-			if (country == this->country) {
+		for (const metternich::domain *domain : game::get()->get_countries()) {
+			if (domain == this->domain) {
 				continue;
 			}
 
-			if (country->get_technology()->has_technology(technology)) {
+			if (domain->get_technology()->has_technology(technology)) {
 				first_to_research = false;
 				break;
 			}
@@ -437,7 +437,7 @@ void country_technology::on_technology_researched(const technology *technology)
 	}
 
 	if (technology->get_shared_prestige() > 0 && defines::get()->get_prestige_commodity()->is_enabled()) {
-		this->country->get_economy()->change_stored_commodity(defines::get()->get_prestige_commodity(), technology->get_shared_prestige_for_country(this->country));
+		this->domain->get_economy()->change_stored_commodity(defines::get()->get_prestige_commodity(), technology->get_shared_prestige_for_country(this->domain));
 	}
 
 	emit technology_researched(technology);
@@ -493,7 +493,7 @@ void country_technology::gain_free_technology()
 	}
 
 	if (this->get_game_data()->is_ai()) {
-		const technology *chosen_technology = this->country->get_ai()->get_research_choice(research_choice_map);
+		const technology *chosen_technology = this->domain->get_ai()->get_research_choice(research_choice_map);
 		this->gain_free_technology(chosen_technology);
 	} else {
 		const std::vector<const technology *> potential_technologies = archimedes::map::get_values(research_choice_map);
@@ -515,7 +515,7 @@ void country_technology::gain_technologies_known_by_others()
 
 	technology_map<int> technology_known_counts;
 
-	for (const metternich::country *known_country : this->get_game_data()->get_known_countries()) {
+	for (const metternich::domain *known_country : this->get_game_data()->get_known_countries()) {
 		for (const technology *technology : known_country->get_technology()->get_technologies()) {
 			++technology_known_counts[technology];
 		}

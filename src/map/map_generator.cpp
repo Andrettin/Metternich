@@ -3,9 +3,9 @@
 #include "map/map_generator.h"
 
 #include "database/defines.h"
-#include "domain/country.h"
 #include "domain/country_container.h"
 #include "domain/culture.h"
+#include "domain/domain.h"
 #include "economy/resource.h"
 #include "map/elevation_type.h"
 #include "map/forestation_type.h"
@@ -858,7 +858,7 @@ void map_generator::generate_countries_from_provinces(const std::vector<const pr
 
 	std::vector<const province *> potential_seas;
 	std::vector<const province *> potential_lakes;
-	std::vector<const country *> potential_countries;
+	std::vector<const domain *> potential_countries;
 	country_map<std::vector<const province *>> provinces_by_country;
 
 	for (const province *province : provinces) {
@@ -868,7 +868,7 @@ void map_generator::generate_countries_from_provinces(const std::vector<const pr
 			potential_lakes.push_back(province);
 		} else {
 			const province_history *province_history = province->get_history();
-			const country *owner = province_history->get_owner();
+			const domain *owner = province_history->get_owner();
 			if (owner == nullptr) {
 				continue;
 			}
@@ -904,12 +904,12 @@ void map_generator::generate_countries_from_provinces(const std::vector<const pr
 
 	vector::shuffle(potential_countries);
 
-	for (const country *country : potential_countries) {
+	for (const domain *domain : potential_countries) {
 		if (static_cast<int>(this->generated_provinces.size()) >= this->zone_count) {
 			break;
 		}
 
-		this->generate_country(country, provinces_by_country.find(country)->second);
+		this->generate_country(domain, provinces_by_country.find(domain)->second);
 	}
 }
 
@@ -925,10 +925,10 @@ bool map_generator::generate_ocean(const region *ocean)
 	return !provinces.empty();
 }
 
-bool map_generator::generate_country(const country *country, const std::vector<const province *> &country_provinces)
+bool map_generator::generate_country(const domain *domain, const std::vector<const province *> &country_provinces)
 {
-	const province *default_capital_province = country->get_default_capital()->get_province();
-	const std::vector<const province *> generated_provinces = this->generate_province_group(country_provinces, default_capital_province->get_history()->get_owner() == country ? default_capital_province : nullptr);
+	const province *default_capital_province = domain->get_default_capital()->get_province();
+	const std::vector<const province *> generated_provinces = this->generate_province_group(country_provinces, default_capital_province->get_history()->get_owner() == domain ? default_capital_province : nullptr);
 
 	return !generated_provinces.empty();
 }

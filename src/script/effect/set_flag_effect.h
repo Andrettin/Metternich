@@ -1,7 +1,7 @@
 #pragma once
 
-#include "domain/country.h"
-#include "domain/country_game_data.h"
+#include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "script/effect/effect.h"
 #include "script/flag.h"
 #include "util/string_util.h"
@@ -10,7 +10,7 @@ namespace metternich {
 
 class flag;
 
-class set_flag_effect final : public effect<const country>
+class set_flag_effect final : public effect<const domain>
 {
 public:
 	explicit set_flag_effect(const metternich::flag *flag, const gsml_operator effect_operator)
@@ -34,7 +34,7 @@ public:
 		return class_identifier;
 	}
 
-	virtual void do_assignment_effect(const country *scope) const override
+	virtual void do_assignment_effect(const domain *scope) const override
 	{
 		scope->get_game_data()->set_flag(this->flag);
 	}

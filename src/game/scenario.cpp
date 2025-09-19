@@ -2,7 +2,7 @@
 
 #include "game/scenario.h"
 
-#include "domain/country.h"
+#include "domain/domain.h"
 #include "time/calendar.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
@@ -38,7 +38,7 @@ void scenario::process_gsml_scope(const gsml_data &scope)
 
 	if (tag == "default_countries") {
 		for (const std::string &value : values) {
-			this->default_countries.push_back(country::get(value));
+			this->default_countries.push_back(domain::get(value));
 		}
 	} else {
 		data_entry::process_gsml_scope(scope);

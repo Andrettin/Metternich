@@ -71,7 +71,7 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 		} else if (character_attribute::try_get(key) != nullptr) {
 			return std::make_unique<character_attribute_modifier_effect>(character_attribute::get(key), value);
 		}
-	} else if constexpr (std::is_same_v<scope_type, const country>) {
+	} else if constexpr (std::is_same_v<scope_type, const domain>) {
 		static const std::string capital_commodity_bonus_prefix = "capital_";
 		static const std::string commodity_bonus_per_population_suffix = "_bonus_per_population";
 		static const std::string commodity_per_building_infix = "_per_";
@@ -184,7 +184,7 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 		}
 	}
 
-	if constexpr (std::is_same_v<scope_type, const country> || std::is_same_v<scope_type, const province>) {
+	if constexpr (std::is_same_v<scope_type, const domain> || std::is_same_v<scope_type, const province>) {
 		static const std::string commodity_bonus_for_tile_threshold_suffix = "_bonus_for_tile_threshold";
 		static const std::string commodity_per_improved_resource_infix = "_per_improved_";
 
@@ -204,7 +204,7 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 		}
 	}
 
-	if constexpr (std::is_same_v<scope_type, const country> || std::is_same_v<scope_type, const province> || std::is_same_v<scope_type, const site>) {
+	if constexpr (std::is_same_v<scope_type, const domain> || std::is_same_v<scope_type, const province> || std::is_same_v<scope_type, const site>) {
 		static const std::string output_modifier_suffix = "_output_modifier";
 
 		if (key == "output_modifier") {
@@ -230,7 +230,7 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 		if (tag == "species_armor_class_bonus") {
 			modifier_effect = std::make_unique<species_armor_class_bonus_modifier_effect>();
 		}
-	} else if constexpr (std::is_same_v<scope_type, const country>) {
+	} else if constexpr (std::is_same_v<scope_type, const domain>) {
 		if (tag == "ai_building_desire") {
 			modifier_effect = std::make_unique<ai_building_desire_modifier_effect>();
 		} else if (tag == "building_cost_efficiency") {
@@ -250,7 +250,7 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 		}
 	}
 	
-	if constexpr (std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, const country>) {
+	if constexpr (std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, const domain>) {
 		if (tag == "military_unit_stat") {
 			modifier_effect = std::make_unique<military_unit_stat_modifier_effect<scope_type>>();
 		}
@@ -266,7 +266,7 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 }
 
 template class modifier_effect<const character>;
-template class modifier_effect<const country>;
+template class modifier_effect<const domain>;
 template class modifier_effect<military_unit>;
 template class modifier_effect<const province>;
 template class modifier_effect<const site>;

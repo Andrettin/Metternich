@@ -2,16 +2,16 @@
 
 namespace metternich {
 
-class country;
+class domain;
 
-struct country_compare final
+struct domain_compare final
 {
-	bool operator()(const country *country, const metternich::country *other_country) const;
+	bool operator()(const domain *lhs, const domain *rhs) const;
 };
 
-using country_set = std::set<const country *, country_compare>;
+using country_set = std::set<const domain *, domain_compare>;
 
 template <typename T>
-using country_map = std::map<const country *, T, country_compare>;
+using country_map = std::map<const domain *, T, domain_compare>;
 
 }

@@ -5,7 +5,7 @@
 namespace metternich {
 
 class character;
-class country;
+class domain;
 class military_unit;
 class province;
 class site;
@@ -31,7 +31,7 @@ public:
 };
 
 extern template class modifier_effect<const character>;
-extern template class modifier_effect<const country>;
+extern template class modifier_effect<const domain>;
 extern template class modifier_effect<military_unit>;
 extern template class modifier_effect<const province>;
 extern template class modifier_effect<const site>;

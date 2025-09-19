@@ -6,7 +6,7 @@
 namespace metternich {
 
 class character;
-class country;
+class domain;
 class province;
 enum class event_trigger;
 
@@ -65,7 +65,7 @@ public:
 	{
 		if constexpr (std::is_same_v<scope_type, const character>) {
 			return this->character_events;
-		} else if constexpr (std::is_same_v<scope_type, const country>) {
+		} else if constexpr (std::is_same_v<scope_type, const domain>) {
 			return this->country_events;
 		} else if constexpr (std::is_same_v<scope_type, const province>) {
 			return this->province_events;
@@ -79,7 +79,7 @@ public:
 		this->character_events.push_back(event);
 	}
 
-	void add_event(const scoped_event_base<const country> *event)
+	void add_event(const scoped_event_base<const domain> *event)
 	{
 		this->country_events.push_back(event);
 	}
@@ -100,7 +100,7 @@ private:
 	int delay = 0;
 	int delay_days = 0;
 	std::vector<const scoped_event_base<const character> *> character_events;
-	std::vector<const scoped_event_base<const country> *> country_events;
+	std::vector<const scoped_event_base<const domain> *> country_events;
 	std::vector<const scoped_event_base<const province> *> province_events;
 	std::vector<const scoped_event_base<const site> *> site_events;
 };

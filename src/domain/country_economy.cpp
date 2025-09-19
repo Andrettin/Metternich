@@ -2,10 +2,10 @@
 
 #include "domain/country_economy.h"
 
-#include "domain/country.h"
-#include "domain/country_game_data.h"
-#include "domain/country_turn_data.h"
 #include "database/defines.h"
+#include "domain/country_turn_data.h"
+#include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "economy/commodity.h"
 #include "economy/expense_transaction_type.h"
 #include "economy/income_transaction_type.h"
@@ -27,11 +27,11 @@
 
 namespace metternich {
 
-country_economy::country_economy(const metternich::country *country, const country_game_data *game_data)
-	: country(country)
+country_economy::country_economy(const metternich::domain *domain, const domain_game_data *game_data)
+	: domain(domain)
 {
-	connect(game_data, &country_game_data::provinces_changed, this, &country_economy::resource_counts_changed);
-	connect(game_data, &country_game_data::diplomacy_states_changed, this, &country_economy::vassal_resource_counts_changed);
+	connect(game_data, &domain_game_data::provinces_changed, this, &country_economy::resource_counts_changed);
+	connect(game_data, &domain_game_data::diplomacy_states_changed, this, &country_economy::vassal_resource_counts_changed);
 
 	for (const commodity *commodity : commodity::get_all()) {
 		if (!commodity->is_enabled()) {
@@ -54,9 +54,9 @@ country_economy::~country_economy()
 {
 }
 
-country_game_data *country_economy::get_game_data() const
+domain_game_data *country_economy::get_game_data() const
 {
-	return this->country->get_game_data();
+	return this->domain->get_game_data();
 }
 
 void country_economy::do_production()
@@ -90,7 +90,7 @@ void country_economy::do_production()
 			}
 		}
 	} catch (...) {
-		std::throw_with_nested(std::runtime_error(std::format("Error doing production for country \"{}\".", this->country->get_identifier())));
+		std::throw_with_nested(std::runtime_error(std::format("Error doing production for country \"{}\".", this->domain->get_identifier())));
 	}
 }
 
@@ -102,8 +102,8 @@ void country_economy::do_trade(country_map<commodity_map<int>> &country_luxury_d
 		}
 
 		//get the known countries and sort them by priority
-		std::vector<const metternich::country *> countries = container::to_vector(this->get_game_data()->get_known_countries());
-		std::sort(countries.begin(), countries.end(), [&](const metternich::country *lhs, const metternich::country *rhs) {
+		std::vector<const metternich::domain *> countries = container::to_vector(this->get_game_data()->get_known_countries());
+		std::sort(countries.begin(), countries.end(), [&](const metternich::domain *lhs, const metternich::domain *rhs) {
 			if (this->get_game_data()->is_vassal_of(lhs) != this->get_game_data()->is_vassal_of(rhs)) {
 				return this->get_game_data()->is_vassal_of(lhs);
 			}
@@ -137,8 +137,8 @@ void country_economy::do_trade(country_map<commodity_map<int>> &country_luxury_d
 		for (auto &[commodity, offer] : offers) {
 			const int price = game::get()->get_price(commodity);
 
-			for (const metternich::country *other_country : countries) {
-				country_economy *other_country_economy = other_country->get_economy();
+			for (const metternich::domain *other_domain : countries) {
+				country_economy *other_country_economy = other_domain->get_economy();
 
 				const int bid = other_country_economy->get_bid(commodity);
 				if (bid != 0) {
@@ -146,7 +146,7 @@ void country_economy::do_trade(country_map<commodity_map<int>> &country_luxury_d
 					sold_quantity = std::min(sold_quantity, other_country_economy->get_wealth() / price);
 
 					if (sold_quantity > 0) {
-						this->do_sale(other_country, commodity, sold_quantity, true);
+						this->do_sale(other_domain, commodity, sold_quantity, true);
 
 						offer -= sold_quantity;
 
@@ -156,12 +156,12 @@ void country_economy::do_trade(country_map<commodity_map<int>> &country_luxury_d
 					}
 				}
 
-				int &demand = country_luxury_demands[other_country][commodity];
+				int &demand = country_luxury_demands[other_domain][commodity];
 				if (demand > 0) {
 					const int sold_quantity = std::min(offer, demand);
 
 					if (sold_quantity > 0) {
-						this->do_sale(country, commodity, sold_quantity, false);
+						this->do_sale(domain, commodity, sold_quantity, false);
 
 						offer -= sold_quantity;
 						demand -= sold_quantity;
@@ -174,7 +174,7 @@ void country_economy::do_trade(country_map<commodity_map<int>> &country_luxury_d
 			}
 		}
 	} catch (...) {
-		std::throw_with_nested(std::runtime_error(std::format("Error doing trade for country \"{}\".", this->country->get_identifier())));
+		std::throw_with_nested(std::runtime_error(std::format("Error doing trade for domain \"{}\".", this->domain->get_identifier())));
 	}
 }
 
@@ -212,7 +212,7 @@ void country_economy::add_taxable_wealth(const int taxable_wealth, const income_
 		return;
 	}
 
-	const int tax = taxable_wealth * country_game_data::vassal_tax_rate / 100;
+	const int tax = taxable_wealth * domain_game_data::vassal_tax_rate / 100;
 	const int taxed_wealth = taxable_wealth - tax;
 
 	this->get_game_data()->get_overlord()->get_economy()->add_taxable_wealth(tax, tax_income_type);
@@ -220,8 +220,8 @@ void country_economy::add_taxable_wealth(const int taxable_wealth, const income_
 	this->change_wealth(taxed_wealth);
 
 	if (tax != 0) {
-		this->get_game_data()->get_overlord()->get_turn_data()->add_income_transaction(tax_income_type, tax, nullptr, 0, this->country);
-		this->country->get_turn_data()->add_expense_transaction(expense_transaction_type::tax, tax, nullptr, 0, this->get_game_data()->get_overlord());
+		this->get_game_data()->get_overlord()->get_turn_data()->add_income_transaction(tax_income_type, tax, nullptr, 0, this->domain);
+		this->domain->get_turn_data()->add_expense_transaction(expense_transaction_type::tax, tax, nullptr, 0, this->get_game_data()->get_overlord());
 	}
 }
 
@@ -261,14 +261,14 @@ void country_economy::set_stored_commodity(const commodity *commodity, const int
 	}
 
 	if (value < 0 && !commodity->is_negative_allowed()) {
-		throw std::runtime_error("Tried to set the storage of commodity \"" + commodity->get_identifier() + "\" for country \"" + this->country->get_identifier() + "\" to a negative number.");
+		throw std::runtime_error("Tried to set the storage of commodity \"" + commodity->get_identifier() + "\" for country \"" + this->domain->get_identifier() + "\" to a negative number.");
 	}
 
 	if (commodity->is_convertible_to_wealth()) {
 		assert_throw(value > 0);
 		const int wealth_conversion_income = commodity->get_wealth_value() * value;
 		this->add_taxable_wealth(wealth_conversion_income, income_transaction_type::treasure_fleet);
-		this->country->get_turn_data()->add_income_transaction(income_transaction_type::liquidated_riches, wealth_conversion_income, commodity, value);
+		this->domain->get_turn_data()->add_income_transaction(income_transaction_type::liquidated_riches, wealth_conversion_income, commodity, value);
 		return;
 	}
 
@@ -519,33 +519,33 @@ void country_economy::set_offer(const commodity *commodity, const int value)
 	}
 }
 
-void country_economy::do_sale(const metternich::country *other_country, const commodity *commodity, const int sold_quantity, const bool state_purchase)
+void country_economy::do_sale(const metternich::domain *other_domain, const commodity *commodity, const int sold_quantity, const bool state_purchase)
 {
 	this->change_stored_commodity(commodity, -sold_quantity);
 
 	const int price = game::get()->get_price(commodity);
 	const int sale_income = price * sold_quantity;
 	this->add_taxable_wealth(sale_income, income_transaction_type::tariff);
-	this->country->get_turn_data()->add_income_transaction(income_transaction_type::sale, sale_income, commodity, sold_quantity, other_country != this->country ? other_country : nullptr);
+	this->domain->get_turn_data()->add_income_transaction(income_transaction_type::sale, sale_income, commodity, sold_quantity, other_domain != this->domain ? other_domain : nullptr);
 
 	this->change_offer(commodity, -sold_quantity);
 
-	country_game_data *other_country_game_data = other_country->get_game_data();
-	country_economy *other_country_economy = other_country->get_economy();
+	domain_game_data *other_domain_game_data = other_domain->get_game_data();
+	country_economy *other_country_economy = other_domain->get_economy();
 
 	if (state_purchase) {
 		other_country_economy->change_stored_commodity(commodity, sold_quantity);
 		const int purchase_expense = price * sold_quantity;
 		other_country_economy->change_wealth(-purchase_expense);
-		other_country->get_turn_data()->add_expense_transaction(expense_transaction_type::purchase, purchase_expense, commodity, sold_quantity, this->country);
+		other_domain->get_turn_data()->add_expense_transaction(expense_transaction_type::purchase, purchase_expense, commodity, sold_quantity, this->domain);
 
 		other_country_economy->change_bid(commodity, -sold_quantity);
 	}
 
 	//improve relations between the two countries after they traded (even if it was not a state purchase)
-	if (this->country != other_country) {
-		this->get_game_data()->change_base_opinion(other_country, 1);
-		other_country_game_data->change_base_opinion(this->country, 1);
+	if (this->domain != other_domain) {
+		this->get_game_data()->change_base_opinion(other_domain, 1);
+		other_domain_game_data->change_base_opinion(this->domain, 1);
 	}
 }
 

@@ -12,7 +12,7 @@ namespace metternich {
 
 class character_attribute;
 class civilian_unit_class;
-class country;
+class domain;
 class item_type;
 class species;
 class technology;

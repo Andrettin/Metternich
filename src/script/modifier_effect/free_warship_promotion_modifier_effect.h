@@ -1,14 +1,14 @@
 #pragma once
 
-#include "domain/country.h"
 #include "domain/country_military.h"
+#include "domain/domain.h"
 #include "script/modifier.h"
 #include "script/modifier_effect/modifier_effect.h"
 #include "unit/promotion.h"
 
 namespace metternich {
 
-class free_warship_promotion_modifier_effect final : public modifier_effect<const country>
+class free_warship_promotion_modifier_effect final : public modifier_effect<const domain>
 {
 public:
 	explicit free_warship_promotion_modifier_effect(const std::string &value)
@@ -23,19 +23,19 @@ public:
 		return identifier;
 	}
 
-	virtual void apply(const country *scope, const centesimal_int &multiplier) const override
+	virtual void apply(const domain *scope, const centesimal_int &multiplier) const override
 	{
 		scope->get_military()->change_free_warship_promotion_count(this->promotion, (this->value * multiplier).to_int());
 	}
 
-	virtual std::string get_base_string(const country *scope) const override
+	virtual std::string get_base_string(const domain *scope) const override
 	{
 		Q_UNUSED(scope);
 
 		return std::format("Free Warship Promotion: {}", this->promotion->get_name());
 	}
 
-	virtual std::string get_string(const country *scope, const centesimal_int &multiplier, const bool ignore_decimals) const override
+	virtual std::string get_string(const domain *scope, const centesimal_int &multiplier, const bool ignore_decimals) const override
 	{
 		Q_UNUSED(multiplier);
 		Q_UNUSED(ignore_decimals);

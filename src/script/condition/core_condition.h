@@ -1,6 +1,6 @@
 #pragma once
 
-#include "domain/country.h"
+#include "domain/domain.h"
 #include "map/province.h"
 #include "script/condition/condition.h"
 #include "util/vector_util.h"
@@ -13,7 +13,7 @@ public:
 	explicit core_condition(const std::string &value, const gsml_operator condition_operator)
 		: condition<province>(condition_operator)
 	{
-		this->country = country::get(value);
+		this->domain = domain::get(value);
 	}
 
 	virtual const std::string &get_class_identifier() const override
@@ -26,18 +26,18 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		return vector::contains(scope->get_core_countries(), this->country);
+		return vector::contains(scope->get_core_countries(), this->domain);
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override
 	{
 		Q_UNUSED(indent);
 
-		return condition<province>::get_object_string(this->country) + " core";
+		return condition<province>::get_object_string(this->domain) + " core";
 	}
 
 private:
-	const metternich::country *country = nullptr;
+	const metternich::domain *domain = nullptr;
 };
 
 }

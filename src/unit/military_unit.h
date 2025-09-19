@@ -2,7 +2,7 @@
 
 #include "util/centesimal_int.h"
 
-Q_MOC_INCLUDE("domain/country.h")
+Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("unit/military_unit_type.h")
 
@@ -10,9 +10,9 @@ namespace metternich {
 
 class army;
 class character;
-class country;
 class cultural_group;
 class culture;
+class domain;
 class icon;
 class military_unit_type;
 class phenotype;
@@ -30,7 +30,7 @@ class military_unit final : public QObject
 	Q_PROPERTY(QString name READ get_name_qstring NOTIFY name_changed)
 	Q_PROPERTY(const metternich::military_unit_type* type READ get_type NOTIFY type_changed)
 	Q_PROPERTY(const metternich::icon* icon READ get_icon NOTIFY icon_changed)
-	Q_PROPERTY(const metternich::country* country READ get_country CONSTANT)
+	Q_PROPERTY(const metternich::domain* country READ get_country CONSTANT)
 	Q_PROPERTY(bool moving READ is_moving NOTIFY army_changed)
 	Q_PROPERTY(QVariantList promotions READ get_promotions_qvariant_list NOTIFY promotions_changed)
 	Q_PROPERTY(int hit_points READ get_hit_points NOTIFY hit_points_changed)
@@ -42,8 +42,8 @@ public:
 	static constexpr int morale_recovery_per_turn = 20;
 
 	explicit military_unit(const military_unit_type *type);
-	explicit military_unit(const military_unit_type *type, const metternich::country *country, const metternich::phenotype *phenotype);
-	explicit military_unit(const military_unit_type *type, const metternich::country *country, const character *character);
+	explicit military_unit(const military_unit_type *type, const metternich::domain *domain, const metternich::phenotype *phenotype);
+	explicit military_unit(const military_unit_type *type, const metternich::domain *domain, const character *character);
 
 	void do_turn();
 	void do_ai_turn();
@@ -83,9 +83,9 @@ public:
 
 	const icon *get_icon() const;
 
-	const metternich::country *get_country() const
+	const metternich::domain *get_country() const
 	{
-		return this->country;
+		return this->domain;
 	}
 
 	const metternich::culture *get_culture() const;
@@ -124,7 +124,7 @@ public:
 		return this->get_army() != nullptr;
 	}
 
-	bool is_hostile_to(const metternich::country *country) const;
+	bool is_hostile_to(const metternich::domain *domain) const;
 
 	int get_hit_points() const
 	{
@@ -243,7 +243,7 @@ signals:
 private:
 	std::string name;
 	const military_unit_type *type = nullptr;
-	const metternich::country *country = nullptr;
+	const metternich::domain *domain = nullptr;
 	const metternich::phenotype *phenotype = nullptr;
 	const metternich::character *character = nullptr;
 	const metternich::province *province = nullptr; //the province the unit is in

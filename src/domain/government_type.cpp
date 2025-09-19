@@ -182,7 +182,7 @@ void government_type::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->forbidden_laws.push_back(law::get(value));
 		}
-		auto conditions = std::make_unique<and_condition<country>>();
+		auto conditions = std::make_unique<and_condition<domain>>();
 		conditions->process_gsml_data(scope);
 		this->conditions = std::move(conditions);
 	} else if (tag == "default_laws") {
@@ -196,11 +196,11 @@ void government_type::process_gsml_scope(const gsml_data &scope)
 			}
 		});
 	} else if (tag == "conditions") {
-		auto conditions = std::make_unique<and_condition<country>>();
+		auto conditions = std::make_unique<and_condition<domain>>();
 		conditions->process_gsml_data(scope);
 		this->conditions = std::move(conditions);
 	} else if (tag == "modifier") {
-		auto modifier = std::make_unique<metternich::modifier<const country>>();
+		auto modifier = std::make_unique<metternich::modifier<const domain>>();
 		modifier->process_gsml_data(scope);
 		this->modifier = std::move(modifier);
 	} else if (tag == "ruler_character_classes") {
@@ -291,13 +291,13 @@ const std::string &government_type::get_office_title_name(const office *office, 
 	return this->get_group()->get_office_title_name(office, tier, gender);
 }
 
-QString government_type::get_modifier_string(const metternich::country *country) const
+QString government_type::get_modifier_string(const metternich::domain *domain) const
 {
 	if (this->get_modifier() == nullptr) {
 		return QString();
 	}
 
-	return QString::fromStdString(this->get_modifier()->get_string(country));
+	return QString::fromStdString(this->get_modifier()->get_string(domain));
 }
 
 }

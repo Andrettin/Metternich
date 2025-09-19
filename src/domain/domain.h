@@ -6,10 +6,10 @@
 #include "util/qunique_ptr.h"
 
 Q_MOC_INCLUDE("domain/country_ai.h")
-Q_MOC_INCLUDE("domain/country_game_data.h")
 Q_MOC_INCLUDE("domain/country_tier.h")
 Q_MOC_INCLUDE("domain/country_turn_data.h")
 Q_MOC_INCLUDE("domain/culture.h")
+Q_MOC_INCLUDE("domain/domain_game_data.h")
 Q_MOC_INCLUDE("domain/government_type.h")
 Q_MOC_INCLUDE("map/site.h")
 Q_MOC_INCLUDE("religion/religion.h")
@@ -24,13 +24,13 @@ namespace metternich {
 class character;
 class country_ai;
 class country_economy;
-class country_game_data;
 class country_government;
 class country_history;
 class country_military;
 class country_technology;
 class country_turn_data;
 class culture;
+class domain_game_data;
 class government_group;
 class government_type;
 class office;
@@ -41,7 +41,7 @@ class site;
 enum class country_tier;
 enum class country_type;
 
-class country final : public named_data_entry, public data_type<country>
+class domain final : public named_data_entry, public data_type<domain>
 {
 	Q_OBJECT
 
@@ -59,7 +59,7 @@ class country final : public named_data_entry, public data_type<country>
 	Q_PROPERTY(bool short_name MEMBER short_name READ has_short_name NOTIFY changed)
 	Q_PROPERTY(bool definite_article MEMBER definite_article NOTIFY changed)
 	Q_PROPERTY(QVariantList available_technologies READ get_available_technologies_qvariant_list NOTIFY changed)
-	Q_PROPERTY(metternich::country_game_data* game_data READ get_game_data NOTIFY game_data_changed)
+	Q_PROPERTY(metternich::domain_game_data* game_data READ get_game_data NOTIFY game_data_changed)
 	Q_PROPERTY(metternich::country_turn_data* turn_data READ get_turn_data NOTIFY turn_data_changed)
 	Q_PROPERTY(metternich::country_ai* ai READ get_ai NOTIFY ai_changed)
 
@@ -68,16 +68,16 @@ public:
 	using title_name_map = std::map<government_variant, std::map<country_tier, std::string>>;
 	using office_title_name_map = data_entry_map<office, std::map<government_variant, std::map<country_tier, std::map<gender, std::string>>>>;
 
-	static constexpr const char class_identifier[] = "country";
-	static constexpr const char property_class_identifier[] = "metternich::country*";
-	static constexpr const char database_folder[] = "countries";
+	static constexpr const char class_identifier[] = "domain";
+	static constexpr const char property_class_identifier[] = "metternich::domain*";
+	static constexpr const char database_folder[] = "domains";
 	static constexpr bool history_enabled = true;
 
 	static constexpr int min_opinion = -200;
 	static constexpr int max_opinion = 200;
 
-	explicit country(const std::string &identifier);
-	~country();
+	explicit domain(const std::string &identifier);
+	~domain();
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
@@ -93,7 +93,7 @@ public:
 
 	void reset_game_data();
 
-	country_game_data *get_game_data() const
+	domain_game_data *get_game_data() const
 	{
 		return this->game_data.get();
 	}
@@ -214,7 +214,7 @@ private:
 	office_title_name_map office_title_names;
 	std::vector<province *> core_provinces;
 	qunique_ptr<country_history> history;
-	qunique_ptr<country_game_data> game_data;
+	qunique_ptr<domain_game_data> game_data;
 	qunique_ptr<country_turn_data> turn_data;
 	qunique_ptr<country_ai> ai;
 };

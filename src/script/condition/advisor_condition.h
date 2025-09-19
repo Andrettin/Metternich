@@ -2,18 +2,18 @@
 
 #include "character/character.h"
 #include "character/character_role.h"
-#include "domain/country.h"
 #include "domain/country_government.h"
+#include "domain/domain.h"
 #include "script/condition/condition.h"
 #include "util/vector_util.h"
 
 namespace metternich {
 
-class advisor_condition final : public condition<country>
+class advisor_condition final : public condition<domain>
 {
 public:
 	explicit advisor_condition(const std::string &value, const gsml_operator condition_operator)
-		: condition<country>(condition_operator)
+		: condition<domain>(condition_operator)
 	{
 		this->advisor = character::get(value);
 	}
@@ -24,7 +24,7 @@ public:
 		return class_identifier;
 	}
 
-	virtual bool check_assignment(const country *scope, const read_only_context &ctx) const override
+	virtual bool check_assignment(const domain *scope, const read_only_context &ctx) const override
 	{
 		Q_UNUSED(ctx);
 

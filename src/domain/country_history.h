@@ -8,6 +8,7 @@
 #include "util/centesimal_int.h"
 
 Q_MOC_INCLUDE("character/character.h")
+Q_MOC_INCLUDE("domain/country_tier.h")
 Q_MOC_INCLUDE("domain/government_type.h")
 Q_MOC_INCLUDE("religion/religion.h")
 
@@ -15,7 +16,7 @@ namespace metternich {
 
 class character;
 class consulate;
-class country;
+class domain;
 class government_type;
 class law;
 class office;
@@ -37,7 +38,7 @@ class country_history final : public data_entry_history
 	Q_PROPERTY(int wealth MEMBER wealth READ get_wealth)
 
 public:
-	explicit country_history(const metternich::country *country);
+	explicit country_history(const metternich::domain *domain);
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 
@@ -106,7 +107,7 @@ public:
 		return this->diplomacy_states;
 	}
 
-	diplomacy_state get_diplomacy_state(const metternich::country *other_country) const;
+	diplomacy_state get_diplomacy_state(const metternich::domain *other_domain) const;
 
 	const country_map<const consulate *> &get_consulates() const
 	{
@@ -114,7 +115,7 @@ public:
 	}
 
 private:
-	const metternich::country *country = nullptr;
+	const metternich::domain *domain = nullptr;
 	country_tier tier{};
 	const metternich::religion *religion = nullptr;
 	const metternich::government_type *government_type = nullptr;

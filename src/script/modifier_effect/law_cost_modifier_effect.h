@@ -1,12 +1,12 @@
 #pragma once
 
-#include "domain/country.h"
 #include "domain/country_government.h"
+#include "domain/domain.h"
 #include "script/modifier_effect/modifier_effect.h"
 
 namespace metternich {
 
-class law_cost_modifier_effect final : public modifier_effect<const country>
+class law_cost_modifier_effect final : public modifier_effect<const domain>
 {
 public:
 	explicit law_cost_modifier_effect(const std::string &value) : modifier_effect(value)
@@ -19,12 +19,12 @@ public:
 		return identifier;
 	}
 
-	virtual void apply(const country *scope, const centesimal_int &multiplier) const override
+	virtual void apply(const domain *scope, const centesimal_int &multiplier) const override
 	{
 		scope->get_government()->change_law_cost_modifier((this->value * multiplier).to_int());
 	}
 
-	virtual std::string get_base_string(const country *scope) const override
+	virtual std::string get_base_string(const domain *scope) const override
 	{
 		Q_UNUSED(scope);
 

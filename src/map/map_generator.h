@@ -5,7 +5,7 @@
 
 namespace metternich {
 
-class country;
+class domain;
 class map_template;
 class region;
 enum class elevation_type;
@@ -109,7 +109,7 @@ private:
 	void generate_countries();
 	void generate_countries_from_provinces(const std::vector<const province *> &provinces);
 	bool generate_ocean(const region *ocean);
-	bool generate_country(const country *country, const std::vector<const province *> &country_provinces);
+	bool generate_country(const domain *domain, const std::vector<const province *> &country_provinces);
 	void generate_star_systems();
 	std::vector<const province *> generate_province_group(const std::vector<const province *> &potential_provinces, const province *capital_province);
 	int generate_province(const province *province, std::vector<int> &group_zone_indexes);

@@ -3,12 +3,12 @@
 #include "technology/technology.h"
 
 #include "database/defines.h"
-#include "domain/country.h"
-#include "domain/country_game_data.h"
 #include "domain/country_government.h"
 #include "domain/country_technology.h"
 #include "domain/cultural_group.h"
 #include "domain/culture.h"
+#include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "domain/government_type.h"
 #include "domain/law.h"
 #include "domain/office.h"
@@ -141,11 +141,11 @@ void technology::process_gsml_scope(const gsml_data &scope)
 			this->prerequisites.push_back(technology::get(value));
 		}
 	} else if (tag == "cost_factor") {
-		auto factor = std::make_unique<metternich::factor<country>>(100);
+		auto factor = std::make_unique<metternich::factor<domain>>(100);
 		factor->process_gsml_data(scope);
 		this->cost_factor = std::move(factor);
 	} else if (tag == "modifier") {
-		auto modifier = std::make_unique<metternich::modifier<const country>>();
+		auto modifier = std::make_unique<metternich::modifier<const domain>>();
 		modifier->process_gsml_data(scope);
 		this->modifier = std::move(modifier);
 	} else {
@@ -259,19 +259,19 @@ const technology_category *technology::get_category() const
 	return nullptr;
 }
 
-bool technology::is_available_for_country(const country *country) const
+bool technology::is_available_for_country(const domain *domain) const
 {
 	if (!this->is_enabled()) {
 		return false;
 	}
 
 	if (!this->cultures.empty() || !this->cultural_groups.empty()) {
-		if (this->cultures.contains(country->get_culture())) {
+		if (this->cultures.contains(domain->get_culture())) {
 			return true;
 		}
 
 		for (const cultural_group *cultural_group : this->cultural_groups) {
-			if (country->get_culture()->is_part_of_group(cultural_group)) {
+			if (domain->get_culture()->is_part_of_group(cultural_group)) {
 				return true;
 			}
 		}
@@ -280,11 +280,11 @@ bool technology::is_available_for_country(const country *country) const
 	}
 
 	if (!this->religions.empty() || !this->religious_groups.empty()) {
-		if (this->religions.contains(country->get_game_data()->get_religion())) {
+		if (this->religions.contains(domain->get_game_data()->get_religion())) {
 			return true;
 		}
 
-		if (vector::contains(this->religious_groups, country->get_game_data()->get_religion()->get_group())) {
+		if (vector::contains(this->religious_groups, domain->get_game_data()->get_religion()->get_group())) {
 			return true;
 		}
 
@@ -294,7 +294,7 @@ bool technology::is_available_for_country(const country *country) const
 	return true;
 }
 
-int technology::get_shared_prestige_for_country(const country *country) const
+int technology::get_shared_prestige_for_country(const domain *domain) const
 {
 	int prestige = this->get_shared_prestige();
 
@@ -302,12 +302,12 @@ int technology::get_shared_prestige_for_country(const country *country) const
 		return prestige;
 	}
 
-	for (const metternich::country *loop_country : game::get()->get_countries()) {
-		if (loop_country == country) {
+	for (const metternich::domain *loop_domain : game::get()->get_countries()) {
+		if (loop_domain == domain) {
 			continue;
 		}
 
-		if (loop_country->get_technology()->has_technology(this)) {
+		if (loop_domain->get_technology()->has_technology(this)) {
 			prestige /= 2;
 		}
 
@@ -403,16 +403,16 @@ int technology::get_total_cost_weights() const
 	return cost_weights;
 }
 
-centesimal_int technology::get_cost_for_country(const country *country) const
+centesimal_int technology::get_cost_for_country(const domain *domain) const
 {
 	centesimal_int cost(this->cost);
 
 	if (cost > 0) {
-		cost *= centesimal_int(100) + country->get_technology()->get_technology_cost_modifier() + country->get_technology()->get_technology_category_cost_modifier(this->get_category()) + country->get_technology()->get_technology_subcategory_cost_modifier(this->get_subcategory());
+		cost *= centesimal_int(100) + domain->get_technology()->get_technology_cost_modifier() + domain->get_technology()->get_technology_category_cost_modifier(this->get_category()) + domain->get_technology()->get_technology_subcategory_cost_modifier(this->get_subcategory());
 		cost /= 100;
 
 		if (this->get_cost_factor() != nullptr) {
-			cost = this->get_cost_factor()->calculate(country, cost);
+			cost = this->get_cost_factor()->calculate(domain, cost);
 		}
 
 		cost = centesimal_int::max(centesimal_int(1), cost);
@@ -421,7 +421,7 @@ centesimal_int technology::get_cost_for_country(const country *country) const
 	return cost;
 }
 
-int technology::get_wealth_cost_for_country(const country *country) const
+int technology::get_wealth_cost_for_country(const domain *domain) const
 {
 	const int wealth_cost_weight = this->get_wealth_cost_weight();
 
@@ -429,15 +429,15 @@ int technology::get_wealth_cost_for_country(const country *country) const
 		return 0;
 	}
 
-	centesimal_int cost = this->get_cost_for_country(country) * 100;
+	centesimal_int cost = this->get_cost_for_country(domain) * 100;
 	cost *= wealth_cost_weight;
 	cost /= this->get_total_cost_weights();
 	return std::max(1, cost.to_int());
 }
 
-commodity_map<int> technology::get_commodity_costs_for_country(const country *country) const
+commodity_map<int> technology::get_commodity_costs_for_country(const domain *domain) const
 {
-	const centesimal_int cost = this->get_cost_for_country(country);
+	const centesimal_int cost = this->get_cost_for_country(domain);
 	const int total_cost_weights = this->get_total_cost_weights();
 
 	commodity_map<int> costs;
@@ -472,9 +472,9 @@ commodity_map<int> technology::get_commodity_costs_for_country(const country *co
 	return costs;
 }
 
-QVariantList technology::get_commodity_costs_for_country_qvariant_list(const country *country) const
+QVariantList technology::get_commodity_costs_for_country_qvariant_list(const domain *domain) const
 {
-	return archimedes::map::to_qvariant_list(this->get_commodity_costs_for_country(country));
+	return archimedes::map::to_qvariant_list(this->get_commodity_costs_for_country(domain));
 }
 
 void technology::calculate_cost()
@@ -503,12 +503,12 @@ std::vector<const building_type *> technology::get_enabled_buildings_for_culture
 	return buildings;
 }
 
-std::vector<const wonder *> technology::get_enabled_wonders_for_country(const country *country) const
+std::vector<const wonder *> technology::get_enabled_wonders_for_country(const domain *domain) const
 {
 	std::vector<const wonder *> wonders;
 
 	for (const wonder *wonder : this->get_enabled_wonders()) {
-		if (wonder->get_conditions() != nullptr && !wonder->get_conditions()->check(country, read_only_context(country))) {
+		if (wonder->get_conditions() != nullptr && !wonder->get_conditions()->check(domain, read_only_context(domain))) {
 			continue;
 		}
 
@@ -518,12 +518,12 @@ std::vector<const wonder *> technology::get_enabled_wonders_for_country(const co
 	return wonders;
 }
 
-std::vector<const wonder *> technology::get_disabled_wonders_for_country(const country *country) const
+std::vector<const wonder *> technology::get_disabled_wonders_for_country(const domain *domain) const
 {
 	std::vector<const wonder *> wonders;
 
 	for (const wonder *wonder : this->get_disabled_wonders()) {
-		if (wonder->get_conditions() != nullptr && !wonder->get_conditions()->check(country, read_only_context(country))) {
+		if (wonder->get_conditions() != nullptr && !wonder->get_conditions()->check(domain, read_only_context(domain))) {
 			continue;
 		}
 
@@ -662,18 +662,18 @@ void technology::add_enabled_law(const law *law)
 	});
 }
 
-std::vector<const deity *> technology::get_enabled_deities_for_country(const country *country) const
+std::vector<const deity *> technology::get_enabled_deities_for_country(const domain *domain) const
 {
 	std::vector<const deity *> deities;
 
 	for (const deity *deity : this->get_enabled_deities()) {
-		if (deity->get_conditions() != nullptr && !deity->get_conditions()->check(country, read_only_context(country))) {
+		if (deity->get_conditions() != nullptr && !deity->get_conditions()->check(domain, read_only_context(domain))) {
 			continue;
 		}
 
 		bool traits_allowed = true;
 		for (const idea_trait *trait : deity->get_traits()) {
-			if (trait->get_conditions() != nullptr && !trait->get_conditions()->check(country, read_only_context(country))) {
+			if (trait->get_conditions() != nullptr && !trait->get_conditions()->check(domain, read_only_context(domain))) {
 				traits_allowed = false;
 				break;
 			}
@@ -688,18 +688,18 @@ std::vector<const deity *> technology::get_enabled_deities_for_country(const cou
 	return deities;
 }
 
-std::vector<const deity *> technology::get_disabled_deities_for_country(const country *country) const
+std::vector<const deity *> technology::get_disabled_deities_for_country(const domain *domain) const
 {
 	std::vector<const deity *> deities;
 
 	for (const deity *deity : this->get_disabled_deities()) {
-		if (deity->get_conditions() != nullptr && !deity->get_conditions()->check(country, read_only_context(country))) {
+		if (deity->get_conditions() != nullptr && !deity->get_conditions()->check(domain, read_only_context(domain))) {
 			continue;
 		}
 
 		bool traits_allowed = true;
 		for (const idea_trait *trait : deity->get_traits()) {
-			if (trait->get_conditions() != nullptr && !trait->get_conditions()->check(country, read_only_context(country))) {
+			if (trait->get_conditions() != nullptr && !trait->get_conditions()->check(domain, read_only_context(domain))) {
 				traits_allowed = false;
 				break;
 			}
@@ -714,18 +714,18 @@ std::vector<const deity *> technology::get_disabled_deities_for_country(const co
 	return deities;
 }
 
-std::string technology::get_modifier_string(const country *country) const
+std::string technology::get_modifier_string(const domain *domain) const
 {
 	if (this->get_modifier() == nullptr) {
 		return std::string();
 	}
 
-	return this->get_modifier()->get_string(country);
+	return this->get_modifier()->get_string(domain);
 }
 
-QString technology::get_effects_string(const metternich::country *country) const
+QString technology::get_effects_string(const metternich::domain *domain) const
 {
-	std::string str = this->get_modifier_string(country);
+	std::string str = this->get_modifier_string(domain);
 
 	if (this->get_free_technologies() > 0) {
 		if (!str.empty()) {
@@ -740,7 +740,7 @@ QString technology::get_effects_string(const metternich::country *country) const
 			str += "\n";
 		}
 
-		const int prestige = this->get_shared_prestige_for_country(country);
+		const int prestige = this->get_shared_prestige_for_country(domain);
 		str += std::format("+{} {}", prestige, defines::get()->get_prestige_commodity()->get_name());
 	}
 
@@ -768,7 +768,7 @@ QString technology::get_effects_string(const metternich::country *country) const
 		}
 	}
 
-	const std::vector<const building_type *> buildings = this->get_enabled_buildings_for_culture(country->get_culture());
+	const std::vector<const building_type *> buildings = this->get_enabled_buildings_for_culture(domain->get_culture());
 	if (!buildings.empty()) {
 		for (const building_type *building : buildings) {
 			if (!str.empty()) {
@@ -779,7 +779,7 @@ QString technology::get_effects_string(const metternich::country *country) const
 		}
 	}
 
-	const std::vector<const wonder *> enabled_wonders = this->get_enabled_wonders_for_country(country);
+	const std::vector<const wonder *> enabled_wonders = this->get_enabled_wonders_for_country(domain);
 	if (!enabled_wonders.empty()) {
 		for (const wonder *wonder : enabled_wonders) {
 			if (!str.empty()) {
@@ -790,7 +790,7 @@ QString technology::get_effects_string(const metternich::country *country) const
 		}
 	}
 
-	const std::vector<const wonder *> disabled_wonders = this->get_disabled_wonders_for_country(country);
+	const std::vector<const wonder *> disabled_wonders = this->get_disabled_wonders_for_country(domain);
 	if (!disabled_wonders.empty()) {
 		for (const wonder *wonder : disabled_wonders) {
 			if (!str.empty()) {
@@ -843,7 +843,7 @@ QString technology::get_effects_string(const metternich::country *country) const
 		}
 	}
 
-	const std::vector<const civilian_unit_type *> civilian_units = this->get_enabled_civilian_units_for_culture(country->get_culture());
+	const std::vector<const civilian_unit_type *> civilian_units = this->get_enabled_civilian_units_for_culture(domain->get_culture());
 	if (!civilian_units.empty()) {
 		for (const civilian_unit_type *civilian_unit : civilian_units) {
 			if (!str.empty()) {
@@ -854,7 +854,7 @@ QString technology::get_effects_string(const metternich::country *country) const
 		}
 	}
 
-	const std::vector<const military_unit_type *> military_units = get_enabled_military_units_for_culture(country->get_culture());
+	const std::vector<const military_unit_type *> military_units = get_enabled_military_units_for_culture(domain->get_culture());
 	if (!military_units.empty()) {
 		for (const military_unit_type *military_unit : military_units) {
 			if (!str.empty()) {
@@ -865,7 +865,7 @@ QString technology::get_effects_string(const metternich::country *country) const
 		}
 	}
 
-	const std::vector<const transporter_type *> transporters = get_enabled_transporters_for_culture(country->get_culture());
+	const std::vector<const transporter_type *> transporters = get_enabled_transporters_for_culture(domain->get_culture());
 	if (!transporters.empty()) {
 		for (const transporter_type *transporter : transporters) {
 			if (!str.empty()) {
@@ -888,7 +888,7 @@ QString technology::get_effects_string(const metternich::country *country) const
 
 	if (!this->get_enabled_laws().empty()) {
 		for (const law *law : this->get_enabled_laws()) {
-			if (law->get_conditions() != nullptr && !law->get_conditions()->check(country, read_only_context(country))) {
+			if (law->get_conditions() != nullptr && !law->get_conditions()->check(domain, read_only_context(domain))) {
 				continue;
 			}
 
@@ -900,7 +900,7 @@ QString technology::get_effects_string(const metternich::country *country) const
 		}
 	}
 
-	const std::vector<const deity *> enabled_deities = this->get_enabled_deities_for_country(country);
+	const std::vector<const deity *> enabled_deities = this->get_enabled_deities_for_country(domain);
 	if (!enabled_deities.empty()) {
 		for (const deity *deity : enabled_deities) {
 			if (!str.empty()) {
@@ -911,7 +911,7 @@ QString technology::get_effects_string(const metternich::country *country) const
 		}
 	}
 
-	const std::vector<const deity *> disabled_deities = this->get_disabled_deities_for_country(country);
+	const std::vector<const deity *> disabled_deities = this->get_disabled_deities_for_country(domain);
 	if (!disabled_deities.empty()) {
 		for (const deity *deity : disabled_deities) {
 			if (!str.empty()) {

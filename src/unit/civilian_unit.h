@@ -3,7 +3,7 @@
 #include "economy/resource_container.h"
 #include "map/terrain_type_container.h"
 
-Q_MOC_INCLUDE("domain/country.h")
+Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("unit/civilian_unit_type.h")
 
@@ -11,7 +11,7 @@ namespace metternich {
 
 class character;
 class civilian_unit_type;
-class country;
+class domain;
 class icon;
 class improvement;
 class phenotype;
@@ -24,7 +24,7 @@ class civilian_unit final : public QObject
 	Q_PROPERTY(QString name READ get_name_qstring CONSTANT)
 	Q_PROPERTY(const metternich::civilian_unit_type* type READ get_type NOTIFY type_changed)
 	Q_PROPERTY(const metternich::icon* icon READ get_icon NOTIFY icon_changed)
-	Q_PROPERTY(const metternich::country* owner READ get_owner CONSTANT)
+	Q_PROPERTY(const metternich::domain* owner READ get_owner CONSTANT)
 	Q_PROPERTY(const metternich::character* character READ get_character CONSTANT)
 	Q_PROPERTY(QPoint tile_pos READ get_tile_pos NOTIFY tile_pos_changed)
 	Q_PROPERTY(bool moving READ is_moving NOTIFY original_tile_pos_changed)
@@ -37,8 +37,8 @@ public:
 	static constexpr int exploration_turns = 1;
 	static constexpr int prospection_turns = 1;
 
-	explicit civilian_unit(const civilian_unit_type *type, const country *owner, const metternich::phenotype *phenotype);
-	explicit civilian_unit(const metternich::character *character, const country *owner);
+	explicit civilian_unit(const civilian_unit_type *type, const domain *owner, const metternich::phenotype *phenotype);
+	explicit civilian_unit(const metternich::character *character, const domain *owner);
 
 	void do_turn();
 	void do_ai_turn();
@@ -72,7 +72,7 @@ public:
 
 	const icon *get_icon() const;
 
-	const country *get_owner() const
+	const domain *get_owner() const
 	{
 		return this->owner;
 	}
@@ -171,7 +171,7 @@ signals:
 private:
 	std::string name;
 	const civilian_unit_type *type = nullptr;
-	const country *owner = nullptr;
+	const domain *owner = nullptr;
 	const metternich::phenotype *phenotype = nullptr;
 	const metternich::character *character = nullptr;
 	QPoint tile_pos = QPoint(-1, -1);

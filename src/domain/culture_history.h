@@ -4,7 +4,7 @@
 
 namespace metternich {
 
-class country;
+class domain;
 class province;
 class region;
 class technology;
@@ -63,7 +63,7 @@ public:
 		std::erase(this->explored_regions, region);
 	}
 
-	void apply_to_country(const country *country) const;
+	void apply_to_country(const domain *domain) const;
 
 private:
 	std::vector<technology *> technologies;

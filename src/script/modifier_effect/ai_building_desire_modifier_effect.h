@@ -1,13 +1,13 @@
 #pragma once
 
-#include "domain/country.h"
 #include "domain/country_ai.h"
+#include "domain/domain.h"
 #include "infrastructure/building_type.h"
 #include "script/modifier_effect/modifier_effect.h"
 
 namespace metternich {
 
-class ai_building_desire_modifier_effect final : public modifier_effect<const country>
+class ai_building_desire_modifier_effect final : public modifier_effect<const domain>
 {
 public:
 	virtual const std::string &get_identifier() const override
@@ -30,19 +30,19 @@ public:
 		}
 	}
 
-	virtual void apply(const country *scope, const centesimal_int &multiplier) const override
+	virtual void apply(const domain *scope, const centesimal_int &multiplier) const override
 	{
 		scope->get_ai()->change_building_desire_modifier(this->building, (this->value * multiplier).to_int());
 	}
 
-	virtual std::string get_base_string(const country *scope) const override
+	virtual std::string get_base_string(const domain *scope) const override
 	{
 		Q_UNUSED(scope);
 
 		return std::format("AI {} Building Desire", this->building->get_name());
 	}
 
-	virtual bool is_hidden(const country *scope) const override
+	virtual bool is_hidden(const domain *scope) const override
 	{
 		Q_UNUSED(scope);
 

@@ -1,17 +1,17 @@
 #pragma once
 
 #include "character/character.h"
-#include "domain/country.h"
 #include "domain/country_government.h"
+#include "domain/domain.h"
 #include "script/condition/condition.h"
 
 namespace metternich {
 
-class ruler_condition final : public condition<country>
+class ruler_condition final : public condition<domain>
 {
 public:
 	explicit ruler_condition(const std::string &value, const gsml_operator condition_operator)
-		: condition<metternich::country>(condition_operator)
+		: condition<metternich::domain>(condition_operator)
 	{
 		this->ruler = character::get(value);
 	}
@@ -22,7 +22,7 @@ public:
 		return class_identifier;
 	}
 
-	virtual bool check_assignment(const country *scope, const read_only_context &ctx) const override
+	virtual bool check_assignment(const domain *scope, const read_only_context &ctx) const override
 	{
 		Q_UNUSED(ctx);
 

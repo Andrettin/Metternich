@@ -4,12 +4,12 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
-#include "domain/country.h"
-#include "domain/country_game_data.h"
 #include "domain/country_military.h"
 #include "domain/cultural_group.h"
 #include "domain/culture.h"
 #include "domain/diplomacy_state.h"
+#include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "game/game.h"
 #include "infrastructure/improvement.h"
 #include "language/name_generator.h"
@@ -55,10 +55,10 @@ military_unit::military_unit(const military_unit_type *type) : type(type)
 	this->check_free_promotions();
 }
 
-military_unit::military_unit(const military_unit_type *type, const metternich::country *country, const metternich::phenotype *phenotype)
+military_unit::military_unit(const military_unit_type *type, const metternich::domain *domain, const metternich::phenotype *phenotype)
 	: military_unit(type)
 {
-	this->country = country;
+	this->domain = domain;
 	this->phenotype = phenotype;
 
 	this->generate_name();
@@ -79,8 +79,8 @@ military_unit::military_unit(const military_unit_type *type, const metternich::c
 	this->check_free_promotions();
 }
 
-military_unit::military_unit(const military_unit_type *type, const metternich::country *country, const metternich::character *character)
-	: military_unit(type, country, character->get_phenotype())
+military_unit::military_unit(const military_unit_type *type, const metternich::domain *domain, const metternich::character *character)
+	: military_unit(type, domain, character->get_phenotype())
 {
 	this->character = character;
 	this->name = character->get_full_name();
@@ -345,7 +345,7 @@ bool military_unit::can_move_to(const metternich::province *province) const
 		//water zones can be freely moved to, if there is a path to them, as they are never owned by countries
 		return true;
 	} else {
-		const metternich::country *province_owner = province->get_game_data()->get_owner();
+		const metternich::domain *province_owner = province->get_game_data()->get_owner();
 
 		if (province_owner != nullptr) {
 			if (province_owner == this->get_country()) {
@@ -363,9 +363,9 @@ bool military_unit::can_move_to(const metternich::province *province) const
 	return false;
 }
 
-bool military_unit::is_hostile_to(const metternich::country *country) const
+bool military_unit::is_hostile_to(const metternich::domain *domain) const
 {
-	return this->get_country()->get_game_data()->can_attack(country);
+	return this->get_country()->get_game_data()->can_attack(domain);
 }
 
 void military_unit::set_hit_points(const int hit_points)

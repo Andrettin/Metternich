@@ -1,8 +1,8 @@
 #pragma once
 
-#include "domain/country.h"
 #include "domain/country_military.h"
 #include "domain/culture.h"
+#include "domain/domain.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "script/effect/effect.h"
@@ -16,11 +16,11 @@
 
 namespace metternich {
 
-class create_military_unit_effect final : public effect<const country>
+class create_military_unit_effect final : public effect<const domain>
 {
 public:
 	explicit create_military_unit_effect(const gsml_operator effect_operator)
-		: effect<const country>(effect_operator)
+		: effect<const domain>(effect_operator)
 	{
 	}
 
@@ -50,11 +50,11 @@ public:
 		} else if (key == "count") {
 			this->count = std::stoi(value);
 		} else {
-			effect<const country>::process_gsml_property(property);
+			effect<const domain>::process_gsml_property(property);
 		}
 	}
 
-	virtual void do_assignment_effect(const country *scope, context &ctx) const override
+	virtual void do_assignment_effect(const domain *scope, context &ctx) const override
 	{
 		Q_UNUSED(ctx);
 
@@ -71,7 +71,7 @@ public:
 		scope->get_military()->create_military_unit(type, nullptr, nullptr, {});
 	}
 
-	virtual std::string get_assignment_string(const country *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override
+	virtual std::string get_assignment_string(const domain *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override
 	{
 		Q_UNUSED(ctx);
 		Q_UNUSED(indent);
@@ -86,7 +86,7 @@ public:
 		return std::format("Gain {} {} {}", this->count, string::highlight(type->get_name()), type->is_ship() ? "warship" : "regiment");
 	}
 
-	const military_unit_type *get_type(const country *scope) const
+	const military_unit_type *get_type(const domain *scope) const
 	{
 		if (this->type != nullptr) {
 			return this->type;

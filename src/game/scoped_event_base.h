@@ -7,7 +7,7 @@ namespace archimedes {
 namespace metternich {
 
 class character;
-class country;
+class domain;
 class event;
 class province;
 class site;
@@ -158,7 +158,7 @@ private:
 };
 
 extern template class scoped_event_base<const character>;
-extern template class scoped_event_base<const country>;
+extern template class scoped_event_base<const domain>;
 extern template class scoped_event_base<const province>;
 extern template class scoped_event_base<const site>;
 

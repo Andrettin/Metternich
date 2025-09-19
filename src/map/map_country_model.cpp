@@ -2,7 +2,7 @@
 
 #include "map/map_country_model.h"
 
-#include "domain/country.h"
+#include "domain/domain.h"
 #include "game/game.h"
 #include "map/map_province_model.h"
 #include "map/province.h"
@@ -31,14 +31,14 @@ void map_country_model::reset_model()
 		country_province_geopolygons[province->get_game_data()->get_owner()].push_back(geopolygon);
 	}
 
-	for (const country *country : game::get()->get_countries()) {
-		this->create_country_geopolygons(country, country_province_geopolygons[country]);
+	for (const domain *domain : game::get()->get_countries()) {
+		this->create_country_geopolygons(domain, country_province_geopolygons[domain]);
 	}
 
 	this->endResetModel();
 }
 
-void map_country_model::create_country_geopolygons(const country *country, const std::vector<const QGeoPolygon *> &country_province_geopolygons)
+void map_country_model::create_country_geopolygons(const domain *domain, const std::vector<const QGeoPolygon *> &country_province_geopolygons)
 {
 	std::vector<QPolygonF> country_polygons;
 
@@ -72,7 +72,7 @@ void map_country_model::create_country_geopolygons(const country *country, const
 		country_geopolygons.push_back(geopolygon::from_polygon(country_polygon));
 	}
 
-	this->country_geopolygons[country] = std::move(country_geopolygons);
+	this->country_geopolygons[domain] = std::move(country_geopolygons);
 }
 
 int map_country_model::rowCount(const QModelIndex &parent) const
@@ -114,18 +114,18 @@ QVariant map_country_model::data(const QModelIndex &index, const int role) const
 	return QVariant();
 }
 
-std::pair<const country *, const QGeoPolygon *> map_country_model::get_geopolygon_data(const int index) const
+std::pair<const domain *, const QGeoPolygon *> map_country_model::get_geopolygon_data(const int index) const
 {
 	int i = 0;
 
-	for (const auto &[country, geopolygons] : this->country_geopolygons) {
+	for (const auto &[domain, geopolygons] : this->country_geopolygons) {
 		const int geopolygons_size = static_cast<int>(geopolygons.size());
 		if (index >= (i + geopolygons_size)) {
 			i += geopolygons_size;
 			continue;
 		}
 
-		return std::pair<const metternich::country *, const QGeoPolygon *>(country, geopolygons.at(index - i).get());
+		return std::pair<const metternich::domain *, const QGeoPolygon *>(domain, geopolygons.at(index - i).get());
 	}
 
 	throw std::runtime_error(std::format("Geopolygon data not found for index {}.", index));

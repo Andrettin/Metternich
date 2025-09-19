@@ -4,9 +4,9 @@
 
 #include "character/character.h"
 #include "domain/consulate.h"
-#include "domain/country.h"
 #include "domain/country_tier.h"
 #include "domain/diplomacy_state.h"
+#include "domain/domain.h"
 #include "domain/law.h"
 #include "domain/law_group.h"
 #include "domain/office.h"
@@ -18,8 +18,8 @@
 
 namespace metternich {
 
-country_history::country_history(const metternich::country *country)
-	: country(country), tier(country_tier::none)
+country_history::country_history(const metternich::domain *domain)
+	: domain(domain), tier(country_tier::none)
 {
 }
 
@@ -53,7 +53,7 @@ void country_history::process_gsml_scope(const gsml_data &scope)
 			this->commodities[commodity] = commodity->string_to_value(property.get_value());
 		});
 	} else if (tag == "diplomacy_state") {
-		const metternich::country *other_country = nullptr;
+		const metternich::domain *other_domain = nullptr;
 		std::optional<diplomacy_state> state;
 		const metternich::subject_type *subject_type = nullptr;
 
@@ -62,7 +62,7 @@ void country_history::process_gsml_scope(const gsml_data &scope)
 			const std::string &value = property.get_value();
 
 			if (key == "country") {
-				other_country = country::get(value);
+				other_domain = domain::get(value);
 			} else if (key == "state") {
 				state = magic_enum::enum_cast<diplomacy_state>(value).value();
 			} else if (key == "subject_type") {
@@ -73,7 +73,7 @@ void country_history::process_gsml_scope(const gsml_data &scope)
 			}
 		});
 
-		if (other_country == nullptr) {
+		if (other_domain == nullptr) {
 			throw std::runtime_error("Diplomacy state has no country.");
 		}
 
@@ -99,14 +99,14 @@ void country_history::process_gsml_scope(const gsml_data &scope)
 				throw std::runtime_error("Non-vassalage diplomacy state has a subject type.");
 			}
 
-			if (is_vassalage_diplomacy_state(this->get_diplomacy_state(other_country))) {
+			if (is_vassalage_diplomacy_state(this->get_diplomacy_state(other_domain))) {
 				this->subject_type = nullptr;
 			}
 		}
 
-		this->diplomacy_states[other_country] = state.value();
+		this->diplomacy_states[other_domain] = state.value();
 	} else if (tag == "consulate") {
-		const metternich::country *other_country = nullptr;
+		const metternich::domain *other_domain = nullptr;
 		const consulate *consulate = nullptr;
 
 		scope.for_each_property([&](const gsml_property &property) {
@@ -114,7 +114,7 @@ void country_history::process_gsml_scope(const gsml_data &scope)
 			const std::string &value = property.get_value();
 
 			if (key == "country") {
-				other_country = country::get(value);
+				other_domain = domain::get(value);
 			} else if (key == "consulate") {
 				consulate = consulate::get(value);
 			} else {
@@ -122,19 +122,19 @@ void country_history::process_gsml_scope(const gsml_data &scope)
 			}
 		});
 
-		if (other_country == nullptr) {
+		if (other_domain == nullptr) {
 			throw std::runtime_error("Consulate history has no country.");
 		}
 
-		this->consulates[other_country] = consulate;
+		this->consulates[other_domain] = consulate;
 	} else {
 		data_entry_history::process_gsml_scope(scope);
 	}
 }
 
-diplomacy_state country_history::get_diplomacy_state(const metternich::country *other_country) const
+diplomacy_state country_history::get_diplomacy_state(const metternich::domain *other_domain) const
 {
-	const auto find_iterator = this->diplomacy_states.find(other_country);
+	const auto find_iterator = this->diplomacy_states.find(other_domain);
 
 	if (find_iterator != this->diplomacy_states.end()) {
 		return find_iterator->second;

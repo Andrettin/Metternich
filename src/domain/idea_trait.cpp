@@ -24,15 +24,15 @@ void idea_trait::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 
 	if (tag == "conditions") {
-		auto conditions = std::make_unique<and_condition<country>>();
+		auto conditions = std::make_unique<and_condition<domain>>();
 		conditions->process_gsml_data(scope);
 		this->conditions = std::move(conditions);
 	} else if (tag == "modifier") {
-		auto modifier = std::make_unique<metternich::modifier<const country>>();
+		auto modifier = std::make_unique<metternich::modifier<const domain>>();
 		modifier->process_gsml_data(scope);
 		this->modifier = std::move(modifier);
 	} else if (tag == "scaled_modifier") {
-		auto modifier = std::make_unique<metternich::modifier<const country>>();
+		auto modifier = std::make_unique<metternich::modifier<const domain>>();
 		modifier->process_gsml_data(scope);
 		this->scaled_modifier = std::move(modifier);
 	} else {

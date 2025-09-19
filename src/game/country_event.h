@@ -5,9 +5,9 @@
 
 namespace metternich {
 
-class country;
+class domain;
 
-class country_event final : public event, public data_type<country_event>, public scoped_event_base<const country>
+class country_event final : public event, public data_type<country_event>, public scoped_event_base<const domain>
 {
 	Q_OBJECT
 

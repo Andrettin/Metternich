@@ -2,13 +2,13 @@
 
 #include "domain/country_container.h"
 
-#include "domain/country.h"
+#include "domain/domain.h"
 
 namespace metternich {
 
-bool country_compare::operator()(const country *country, const metternich::country *other_country) const
+bool domain_compare::operator()(const domain *lhs, const domain *rhs) const
 {
-	return country->get_identifier() < other_country->get_identifier();
+	return lhs->get_identifier() < rhs->get_identifier();
 }
 
 }

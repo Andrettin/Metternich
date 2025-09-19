@@ -27,14 +27,14 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		const country *country = nullptr;
+		const domain *domain = nullptr;
 		if constexpr (std::is_same_v<scope_type, character>) {
-			country = scope->get_game_data()->get_country();
+			domain = scope->get_game_data()->get_country();
 		} else {
-			country = scope;
+			domain = scope;
 		}
 
-		return this->value == country->get_game_data()->at_war();
+		return this->value == domain->get_game_data()->at_war();
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override

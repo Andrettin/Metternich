@@ -10,8 +10,8 @@ Q_MOC_INCLUDE("domain/law_group.h")
 namespace metternich {
 
 class character;
-class country;
-class country_game_data;
+class domain;
+class domain_game_data;
 class law;
 class office;
 
@@ -31,10 +31,10 @@ class country_government final : public QObject
 public:
 	static constexpr int base_advisor_cost = 80;
 
-	explicit country_government(const metternich::country *country, const country_game_data *game_data);
+	explicit country_government(const metternich::domain *domain, const domain_game_data *game_data);
 	~country_government();
 
-	country_game_data *get_game_data() const;
+	domain_game_data *get_game_data() const;
 
 	const std::string &get_office_title_name(const office *office) const;
 
@@ -167,7 +167,7 @@ signals:
 	void available_offices_changed();
 
 private:
-	const metternich::country *country = nullptr;
+	const metternich::domain *domain = nullptr;
 	law_group_map<const law *> laws;
 	data_entry_map<office, const character *> office_holders;
 	data_entry_map<office, const character *> appointed_office_holders;

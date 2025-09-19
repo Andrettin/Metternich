@@ -2,8 +2,8 @@
 
 #include "infrastructure/wonder.h"
 
-#include "domain/country.h"
-#include "domain/country_game_data.h"
+#include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "economy/commodity.h"
 #include "game/game.h"
 #include "game/game_rule.h"
@@ -42,11 +42,11 @@ void wonder::process_gsml_scope(const gsml_data &scope)
 			this->commodity_costs[commodity] = commodity->string_to_value(property.get_value());
 		});
 	} else if (tag == "cost_factor") {
-		auto factor = std::make_unique<metternich::factor<country>>(100);
+		auto factor = std::make_unique<metternich::factor<domain>>(100);
 		factor->process_gsml_data(scope);
 		this->cost_factor = std::move(factor);
 	} else if (tag == "conditions") {
-		auto conditions = std::make_unique<and_condition<country>>();
+		auto conditions = std::make_unique<and_condition<domain>>();
 		conditions->process_gsml_data(scope);
 		this->conditions = std::move(conditions);
 	} else if (tag == "province_conditions") {
@@ -57,7 +57,7 @@ void wonder::process_gsml_scope(const gsml_data &scope)
 		this->province_modifier = std::make_unique<modifier<const province>>();
 		this->province_modifier->process_gsml_data(scope);
 	} else if (tag == "country_modifier") {
-		this->country_modifier = std::make_unique<modifier<const country>>();
+		this->country_modifier = std::make_unique<modifier<const domain>>();
 		this->country_modifier->process_gsml_data(scope);
 	} else {
 		data_entry::process_gsml_scope(scope);
@@ -102,31 +102,31 @@ void wonder::check() const
 	}
 }
 
-int wonder::get_wealth_cost_for_country(const country *country) const
+int wonder::get_wealth_cost_for_country(const domain *domain) const
 {
 	int cost = this->get_wealth_cost();
 
 	if (cost > 0 && this->get_cost_factor() != nullptr) {
-		cost = this->get_cost_factor()->calculate(country, centesimal_int(cost)).to_int();
+		cost = this->get_cost_factor()->calculate(domain, centesimal_int(cost)).to_int();
 		cost = std::max(1, cost);
 	}
 
 	return cost;
 }
 
-commodity_map<int> wonder::get_commodity_costs_for_country(const country *country) const
+commodity_map<int> wonder::get_commodity_costs_for_country(const domain *domain) const
 {
 	commodity_map<int> costs = this->get_commodity_costs();
 
 	for (auto &[commodity, cost] : costs) {
 		if (cost > 0) {
-			if (country->get_game_data()->get_wonder_cost_efficiency_modifier() != 0) {
+			if (domain->get_game_data()->get_wonder_cost_efficiency_modifier() != 0) {
 				cost *= 100;
-				cost /= 100 + country->get_game_data()->get_wonder_cost_efficiency_modifier();
+				cost /= 100 + domain->get_game_data()->get_wonder_cost_efficiency_modifier();
 			}
 
 			if (this->get_cost_factor() != nullptr) {
-				cost = this->get_cost_factor()->calculate(country, centesimal_int(cost)).to_int();
+				cost = this->get_cost_factor()->calculate(domain, centesimal_int(cost)).to_int();
 			}
 
 			cost = std::max(1, cost);

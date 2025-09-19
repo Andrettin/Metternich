@@ -1,8 +1,8 @@
 #pragma once
 
-#include "domain/country.h"
-#include "domain/country_game_data.h"
 #include "domain/culture.h"
+#include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "database/defines.h"
 #include "script/effect/effect.h"
 #include "unit/transporter.h"
@@ -15,11 +15,11 @@
 
 namespace metternich {
 
-class create_transporter_effect final : public effect<const country>
+class create_transporter_effect final : public effect<const domain>
 {
 public:
 	explicit create_transporter_effect(const gsml_operator effect_operator)
-		: effect<const country>(effect_operator)
+		: effect<const domain>(effect_operator)
 	{
 	}
 
@@ -49,11 +49,11 @@ public:
 		} else if (key == "count") {
 			this->count = std::stoi(value);
 		} else {
-			effect<const country>::process_gsml_property(property);
+			effect<const domain>::process_gsml_property(property);
 		}
 	}
 
-	virtual void do_assignment_effect(const country *scope, context &ctx) const override
+	virtual void do_assignment_effect(const domain *scope, context &ctx) const override
 	{
 		Q_UNUSED(ctx);
 
@@ -70,7 +70,7 @@ public:
 		scope->get_game_data()->create_transporter(type, nullptr);
 	}
 
-	virtual std::string get_assignment_string(const country *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override
+	virtual std::string get_assignment_string(const domain *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override
 	{
 		Q_UNUSED(ctx);
 		Q_UNUSED(indent);
@@ -85,7 +85,7 @@ public:
 		return std::format("Gain {} {} {}", this->count, string::highlight(type->get_name()), type->is_ship() ? "merchant ship" : "transporter");
 	}
 
-	const transporter_type *get_type(const country *scope) const
+	const transporter_type *get_type(const domain *scope) const
 	{
 		if (this->type != nullptr) {
 			return this->type;

@@ -106,17 +106,17 @@ public:
 		return this->required_technology;
 	}
 
-	const and_condition<country> *get_conditions() const
+	const and_condition<domain> *get_conditions() const
 	{
 		return this->conditions.get();
 	}
 
-	const modifier<const country> *get_modifier() const
+	const modifier<const domain> *get_modifier() const
 	{
 		return this->modifier.get();
 	}
 
-	Q_INVOKABLE QString get_modifier_string(const metternich::country *country) const;
+	Q_INVOKABLE QString get_modifier_string(const metternich::domain *country) const;
 
 	const std::vector<const character_class *> &get_ruler_character_classes() const
 	{
@@ -132,8 +132,8 @@ private:
 	std::vector<const law *> forbidden_laws;
 	law_group_map<const law *> default_laws;
 	technology *required_technology = nullptr;
-	std::unique_ptr<const and_condition<country>> conditions;
-	std::unique_ptr<const modifier<const country>> modifier;
+	std::unique_ptr<const and_condition<domain>> conditions;
+	std::unique_ptr<const modifier<const domain>> modifier;
 	std::vector<const character_class *> ruler_character_classes;
 	title_name_map title_names;
 	site_title_name_map site_title_names;

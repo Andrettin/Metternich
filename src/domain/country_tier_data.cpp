@@ -20,7 +20,7 @@ void country_tier_data::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 
 	if (tag == "modifier") {
-		auto modifier = std::make_unique<metternich::modifier<const country>>();
+		auto modifier = std::make_unique<metternich::modifier<const domain>>();
 		modifier->process_gsml_data(scope);
 		this->modifier = std::move(modifier);
 	} else {
@@ -39,13 +39,13 @@ void country_tier_data::check() const
 	}
 }
 
-QString country_tier_data::get_modifier_string(metternich::country *country) const
+QString country_tier_data::get_modifier_string(metternich::domain *domain) const
 {
 	if (this->get_modifier() == nullptr) {
 		return QString();
 	}
 
-	return QString::fromStdString(this->get_modifier()->get_string(country));
+	return QString::fromStdString(this->get_modifier()->get_string(domain));
 }
 
 }

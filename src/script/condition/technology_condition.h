@@ -1,7 +1,7 @@
 #pragma once
 
-#include "domain/country.h"
 #include "domain/country_technology.h"
+#include "domain/domain.h"
 #include "script/condition/condition.h"
 #include "technology/technology.h"
 #include "util/string_util.h"
@@ -28,13 +28,13 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		const country *country = condition<scope_type>::get_scope_country(scope);
+		const domain *domain = condition<scope_type>::get_scope_country(scope);
 
-		if (country == nullptr) {
+		if (domain == nullptr) {
 			return false;
 		}
 
-		return country->get_technology()->has_technology(this->technology);
+		return domain->get_technology()->has_technology(this->technology);
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override

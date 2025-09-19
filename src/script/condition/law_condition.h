@@ -1,7 +1,7 @@
 #pragma once
 
-#include "domain/country.h"
 #include "domain/country_government.h"
+#include "domain/domain.h"
 #include "domain/law.h"
 #include "script/condition/condition.h"
 #include "util/string_util.h"
@@ -28,7 +28,7 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		const country *country = condition<scope_type>::get_scope_country(scope);
+		const domain *country = condition<scope_type>::get_scope_country(scope);
 
 		if (country == nullptr) {
 			return false;

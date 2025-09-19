@@ -1,16 +1,16 @@
 #pragma once
 
-#include "domain/country.h"
 #include "domain/country_technology.h"
+#include "domain/domain.h"
 #include "script/effect/effect.h"
 #include "util/string_util.h"
 
 namespace metternich {
 
-class free_technologies_effect final : public effect<const country>
+class free_technologies_effect final : public effect<const domain>
 {
 public:
-	explicit free_technologies_effect(const std::string &value, const gsml_operator effect_operator) : effect<const country>(effect_operator)
+	explicit free_technologies_effect(const std::string &value, const gsml_operator effect_operator) : effect<const domain>(effect_operator)
 	{
 		this->count = std::stoi(value);
 	}
@@ -21,7 +21,7 @@ public:
 		return class_identifier;
 	}
 
-	virtual void do_assignment_effect(const country *scope, context &ctx) const override
+	virtual void do_assignment_effect(const domain *scope, context &ctx) const override
 	{
 		Q_UNUSED(ctx);
 

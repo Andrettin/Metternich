@@ -1,7 +1,7 @@
 #pragma once
 
-#include "domain/country.h"
-#include "domain/country_game_data.h"
+#include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "infrastructure/building_type.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
@@ -31,7 +31,7 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		if constexpr (std::is_same_v<scope_type, country>) {
+		if constexpr (std::is_same_v<scope_type, domain>) {
 			return scope->get_game_data()->has_building_or_better(this->building);
 		} else if constexpr (std::is_same_v<scope_type, province>) {
 			for (const site *settlement : scope->get_game_data()->get_settlement_sites()) {

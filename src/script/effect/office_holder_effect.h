@@ -1,20 +1,20 @@
 #pragma once
 
-#include "domain/country.h"
 #include "domain/country_government.h"
+#include "domain/domain.h"
 #include "script/effect/scope_effect.h"
 
 namespace metternich {
 
 class character;
-class country;
+class domain;
 class office;
 
-class office_holder_effect final : public scope_effect<const country, const character>
+class office_holder_effect final : public scope_effect<const domain, const character>
 {
 public:
 	explicit office_holder_effect(const metternich::office *office, const gsml_operator effect_operator)
-		: scope_effect<const country, const character>(effect_operator), office(office)
+		: scope_effect<const domain, const character>(effect_operator), office(office)
 	{
 	}
 
@@ -24,7 +24,7 @@ public:
 		return class_identifier;
 	}
 	
-	virtual const character *get_scope(const country *upper_scope) const override
+	virtual const character *get_scope(const domain *upper_scope) const override
 	{
 		return upper_scope->get_government()->get_office_holder(this->office);
 	}

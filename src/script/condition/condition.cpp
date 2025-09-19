@@ -137,7 +137,7 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 		} else if (character_attribute::try_get(key) != nullptr) {
 			return std::make_unique<character_attribute_condition>(character_attribute::get(key), value, condition_operator);
 		}
-	} else if constexpr (std::is_same_v<scope_type, country>) {
+	} else if constexpr (std::is_same_v<scope_type, domain>) {
 		static const std::string population_scaled_commodity_prefix = "population_scaled_";
 
 		if (key == "advisor") {
@@ -220,7 +220,7 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 		}
 	}
 	
-	if constexpr (std::is_same_v<scope_type, character> || std::is_same_v<scope_type, country>) {
+	if constexpr (std::is_same_v<scope_type, character> || std::is_same_v<scope_type, domain>) {
 		if (key == "war") {
 			return std::make_unique<war_condition<scope_type>>(value, condition_operator);
 		}
@@ -240,13 +240,13 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 		}
 	}
 	
-	if constexpr (std::is_same_v<scope_type, character> || std::is_same_v<scope_type, country> || std::is_same_v<scope_type, province> || std::is_same_v<scope_type, site>) {
+	if constexpr (std::is_same_v<scope_type, character> || std::is_same_v<scope_type, domain> || std::is_same_v<scope_type, province> || std::is_same_v<scope_type, site>) {
 		if (key == "scripted_modifier") {
 			return std::make_unique<scripted_modifier_condition<scope_type>>(value, condition_operator);
 		}
 	}
 	
-	if constexpr (std::is_same_v<scope_type, country> || std::is_same_v<scope_type, province>) {
+	if constexpr (std::is_same_v<scope_type, domain> || std::is_same_v<scope_type, province>) {
 		if (key == "has_resource") {
 			return std::make_unique<has_resource_condition<scope_type>>(value, condition_operator);
 		} else if (key == "has_terrain") {
@@ -256,7 +256,7 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 		}
 	}
 
-	if constexpr (std::is_same_v<scope_type, country> || std::is_same_v<scope_type, province> || std::is_same_v<scope_type, site>) {
+	if constexpr (std::is_same_v<scope_type, domain> || std::is_same_v<scope_type, province> || std::is_same_v<scope_type, site>) {
 		if (key == "capital") {
 			return std::make_unique<capital_condition<scope_type>>(value, condition_operator);
 		} else if (key == "coastal") {
@@ -274,7 +274,7 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 		}
 	}
 
-	if constexpr (std::is_same_v<scope_type, country> || std::is_same_v<scope_type, site>) {
+	if constexpr (std::is_same_v<scope_type, domain> || std::is_same_v<scope_type, site>) {
 		if (key == "available_housing") {
 			return std::make_unique<available_housing_condition<scope_type>>(value, condition_operator);
 		} else if (key == "housing") {
@@ -326,7 +326,7 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 		return std::make_unique<year_condition<scope_type>>(value, condition_operator);
 	}
 
-	if constexpr (std::is_same_v<scope_type, country>) {
+	if constexpr (std::is_same_v<scope_type, domain>) {
 		if (commodity::try_get(key) != nullptr) {
 			return std::make_unique<commodity_condition>(commodity::get(key), value, condition_operator);
 		}
@@ -342,7 +342,7 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 	const gsml_operator condition_operator = scope.get_operator();
 	std::unique_ptr<condition_base<scope_type, read_only_context>> condition;
 
-	if constexpr (std::is_same_v<scope_type, country>) {
+	if constexpr (std::is_same_v<scope_type, domain>) {
 		if (tag == "any_known_country") {
 			condition = std::make_unique<any_known_country_condition>(condition_operator);
 		} else if (tag == "any_neighbor_country") {
@@ -360,7 +360,7 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 		}
 	}
 
-	if constexpr (std::is_same_v<scope_type, country> || std::is_same_v<scope_type, province>) {
+	if constexpr (std::is_same_v<scope_type, domain> || std::is_same_v<scope_type, province>) {
 		if (tag == "any_settlement") {
 			condition = std::make_unique<any_settlement_condition<scope_type>>(condition_operator);
 		} else if (tag == "ruler") {
@@ -381,7 +381,7 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 	} else if (tag == "saved_character_scope") {
 		condition = std::make_unique<saved_scope_condition<scope_type, character, read_only_context, metternich::condition<character>>>(condition_operator);
 	} else if (tag == "saved_country_scope") {
-		condition = std::make_unique<saved_scope_condition<scope_type, country, read_only_context, metternich::condition<country>>>(condition_operator);
+		condition = std::make_unique<saved_scope_condition<scope_type, domain, read_only_context, metternich::condition<domain>>>(condition_operator);
 	} else if (tag == "saved_province_scope") {
 		condition = std::make_unique<saved_scope_condition<scope_type, province, read_only_context, metternich::condition<province>>>(condition_operator);
 	} else if (tag == "saved_site_scope") {
@@ -399,11 +399,11 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 }
 
 template <typename scope_type>
-const country *condition<scope_type>::get_scope_country(const scope_type *scope)
+const domain *condition<scope_type>::get_scope_country(const scope_type *scope)
 {
 	if constexpr (std::is_same_v<scope_type, character>) {
 		return scope->get_game_data()->get_country();
-	} else if constexpr (std::is_same_v<scope_type, country>) {
+	} else if constexpr (std::is_same_v<scope_type, domain>) {
 		return scope;
 	} else if constexpr (std::is_same_v<scope_type, military_unit> || std::is_same_v<scope_type, population_unit>) {
 		return scope->get_country();

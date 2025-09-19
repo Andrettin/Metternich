@@ -1,14 +1,14 @@
 #pragma once
 
-#include "domain/country.h"
 #include "domain/country_technology.h"
+#include "domain/domain.h"
 #include "script/modifier_effect/modifier_effect.h"
 #include "technology/technology_category.h"
 #include "technology/technology_subcategory.h"
 
 namespace metternich {
 
-class technology_cost_modifier_effect final : public modifier_effect<const country>
+class technology_cost_modifier_effect final : public modifier_effect<const domain>
 {
 public:
 	technology_cost_modifier_effect() = default;
@@ -40,7 +40,7 @@ public:
 		}
 	}
 
-	virtual void apply(const country *scope, const centesimal_int &multiplier) const override
+	virtual void apply(const domain *scope, const centesimal_int &multiplier) const override
 	{
 		if (this->subcategory != nullptr) {
 			scope->get_technology()->change_technology_subcategory_cost_modifier(this->subcategory, this->value * multiplier);
@@ -51,7 +51,7 @@ public:
 		}
 	}
 
-	virtual std::string get_base_string(const country *scope) const override
+	virtual std::string get_base_string(const domain *scope) const override
 	{
 		Q_UNUSED(scope);
 

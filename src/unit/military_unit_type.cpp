@@ -2,7 +2,7 @@
 
 #include "unit/military_unit_type.h"
 
-#include "domain/country.h"
+#include "domain/domain.h"
 #include "domain/country_military.h"
 #include "domain/cultural_group.h"
 #include "domain/culture.h"
@@ -154,17 +154,17 @@ bool military_unit_type::is_ship() const
 	return this->get_unit_class()->is_ship();
 }
 
-centesimal_int military_unit_type::get_stat_for_country(const military_unit_stat stat, const country *country) const
+centesimal_int military_unit_type::get_stat_for_country(const military_unit_stat stat, const domain *domain) const
 {
 	centesimal_int value = this->get_stat(stat);
-	value += country->get_military()->get_military_unit_type_stat_modifier(this, stat);
+	value += domain->get_military()->get_military_unit_type_stat_modifier(this, stat);
 	return value;
 }
 
-QString military_unit_type::get_stats_for_country_qstring(const country *country) const
+QString military_unit_type::get_stats_for_country_qstring(const domain *domain) const
 {
 	std::set<military_unit_stat> used_stats = container::to_set(archimedes::map::get_keys(this->get_stats()));
-	for (const auto &[stat, value] : country->get_military()->get_military_unit_type_stat_modifiers(this)) {
+	for (const auto &[stat, value] : domain->get_military()->get_military_unit_type_stat_modifiers(this)) {
 		used_stats.insert(stat);
 	}
 
@@ -180,7 +180,7 @@ QString military_unit_type::get_stats_for_country_qstring(const country *country
 			str += ", ";
 		}
 
-		str += std::format("{} {}", this->get_stat_for_country(stat, country).to_string(), get_military_unit_stat_short_name(stat));
+		str += std::format("{} {}", this->get_stat_for_country(stat, domain).to_string(), get_military_unit_stat_short_name(stat));
 	}
 
 	return QString::fromStdString(str);

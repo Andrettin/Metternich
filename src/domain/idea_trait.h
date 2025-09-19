@@ -4,7 +4,7 @@
 
 namespace metternich {
 
-class country;
+class domain;
 enum class idea_type;
 
 template <typename scope_type>
@@ -26,17 +26,17 @@ public:
 
 	virtual idea_type get_idea_type() const = 0;
 
-	const and_condition<country> *get_conditions() const
+	const and_condition<domain> *get_conditions() const
 	{
 		return this->conditions.get();
 	}
 
-	const metternich::modifier<const country> *get_modifier() const
+	const metternich::modifier<const domain> *get_modifier() const
 	{
 		return this->modifier.get();
 	}
 
-	const metternich::modifier<const country> *get_scaled_modifier() const
+	const metternich::modifier<const domain> *get_scaled_modifier() const
 	{
 		return this->scaled_modifier.get();
 	}
@@ -45,9 +45,9 @@ signals:
 	void changed();
 
 private:
-	std::unique_ptr<const and_condition<country>> conditions; //conditions for the country to have the idea with this trait
-	std::unique_ptr<const metternich::modifier<const country>> modifier;
-	std::unique_ptr<const metternich::modifier<const country>> scaled_modifier;
+	std::unique_ptr<const and_condition<domain>> conditions; //conditions for the country to have the idea with this trait
+	std::unique_ptr<const metternich::modifier<const domain>> modifier;
+	std::unique_ptr<const metternich::modifier<const domain>> scaled_modifier;
 };
 
 }

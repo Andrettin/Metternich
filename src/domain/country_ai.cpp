@@ -2,12 +2,12 @@
 
 #include "domain/country_ai.h"
 
-#include "domain/country.h"
 #include "domain/country_economy.h"
-#include "domain/country_game_data.h"
 #include "domain/country_government.h"
 #include "domain/country_military.h"
 #include "domain/country_technology.h"
+#include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "domain/idea_type.h"
 #include "domain/journal_entry.h"
 #include "domain/office.h"
@@ -26,7 +26,7 @@
 
 namespace metternich {
 
-country_ai::country_ai(const metternich::country *country) : country(country)
+country_ai::country_ai(const metternich::domain *domain) : domain(domain)
 {
 }
 
@@ -34,9 +34,9 @@ country_ai::~country_ai()
 {
 }
 
-country_game_data *country_ai::get_game_data() const
+domain_game_data *country_ai::get_game_data() const
 {
-	return this->country->get_game_data();
+	return this->domain->get_game_data();
 }
 
 void country_ai::do_turn()
@@ -78,7 +78,7 @@ void country_ai::choose_current_research()
 {
 	assert_throw(this->get_game_data()->is_ai());
 
-	const data_entry_map<technology_category, const technology *> research_choice_map = this->country->get_technology()->get_research_choice_map(false);
+	const data_entry_map<technology_category, const technology *> research_choice_map = this->domain->get_technology()->get_research_choice_map(false);
 
 	if (research_choice_map.empty()) {
 		return;
@@ -87,7 +87,7 @@ void country_ai::choose_current_research()
 	const technology *chosen_technology = this->get_research_choice(research_choice_map);
 
 	if (chosen_technology != nullptr) {
-		this->country->get_technology()->add_current_research(chosen_technology);
+		this->domain->get_technology()->add_current_research(chosen_technology);
 	}
 }
 
@@ -147,22 +147,22 @@ void country_ai::appoint_ideas()
 
 void country_ai::appoint_office_holders()
 {
-	for (const office *office : this->country->get_government()->get_available_offices()) {
+	for (const office *office : this->domain->get_government()->get_available_offices()) {
 		if (!office->is_appointable()) {
 			continue;
 		}
 
-		if (this->country->get_government()->get_office_holder(office) != nullptr) {
+		if (this->domain->get_government()->get_office_holder(office) != nullptr) {
 			continue;
 		}
 
-		if (this->country->get_government()->get_appointed_office_holder(office) != nullptr) {
+		if (this->domain->get_government()->get_appointed_office_holder(office) != nullptr) {
 			continue;
 		}
 
-		const character *character = this->country->get_government()->get_best_office_holder(office, nullptr);
+		const character *character = this->domain->get_government()->get_best_office_holder(office, nullptr);
 		if (character != nullptr) {
-			this->country->get_government()->set_appointed_office_holder(office, character);
+			this->domain->get_government()->set_appointed_office_holder(office, character);
 		}
 	}
 }

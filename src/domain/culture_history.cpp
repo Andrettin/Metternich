@@ -2,19 +2,19 @@
 
 #include "domain/culture_history.h"
 
-#include "domain/country.h"
-#include "domain/country_game_data.h"
 #include "domain/country_technology.h"
+#include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/region.h"
 
 namespace metternich {
 
-void culture_history::apply_to_country(const country *country) const
+void culture_history::apply_to_country(const domain *domain) const
 {
-	country_game_data *country_game_data = country->get_game_data();
-	country_technology *country_technology = country->get_technology();
+	domain_game_data *domain_game_data = domain->get_game_data();
+	country_technology *country_technology = domain->get_technology();
 
 	for (const technology *technology : this->get_technologies()) {
 		country_technology->add_technology_with_prerequisites(technology);
@@ -25,7 +25,7 @@ void culture_history::apply_to_country(const country *country) const
 			continue;
 		}
 
-		country_game_data->explore_province(province);
+		domain_game_data->explore_province(province);
 	}
 
 	for (const region *region : this->get_explored_regions()) {
@@ -34,7 +34,7 @@ void culture_history::apply_to_country(const country *country) const
 				continue;
 			}
 
-			country_game_data->explore_province(province);
+			domain_game_data->explore_province(province);
 		}
 	}
 }

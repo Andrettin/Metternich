@@ -2,8 +2,8 @@
 
 #include "util/centesimal_int.h"
 
-Q_MOC_INCLUDE("domain/country.h")
 Q_MOC_INCLUDE("domain/culture.h")
+Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("map/province.h")
 Q_MOC_INCLUDE("map/site.h")
 Q_MOC_INCLUDE("population/population_type.h")
@@ -13,8 +13,8 @@ Q_MOC_INCLUDE("ui/icon.h")
 
 namespace metternich {
 
-class country;
 class culture;
+class domain;
 class icon;
 class phenotype;
 class population_type;
@@ -32,7 +32,7 @@ class population_unit final : public QObject
 	Q_PROPERTY(const metternich::religion* religion READ get_religion NOTIFY religion_changed)
 	Q_PROPERTY(const metternich::phenotype* phenotype READ get_phenotype NOTIFY phenotype_changed)
 	Q_PROPERTY(const metternich::icon* icon READ get_icon NOTIFY icon_changed)
-	Q_PROPERTY(const metternich::country* country READ get_country NOTIFY country_changed)
+	Q_PROPERTY(const metternich::domain* country READ get_country NOTIFY country_changed)
 	Q_PROPERTY(const metternich::province* province READ get_province NOTIFY province_changed)
 	Q_PROPERTY(const metternich::site* site READ get_site NOTIFY site_changed)
 
@@ -74,12 +74,12 @@ public:
 	const icon *get_icon() const;
 	const icon *get_small_icon() const;
 
-	const metternich::country *get_country() const
+	const metternich::domain *get_country() const
 	{
-		return this->country;
+		return this->domain;
 	}
 
-	void set_country(const metternich::country *country);
+	void set_country(const metternich::domain *domain);
 
 	const province *get_province() const;
 
@@ -107,7 +107,7 @@ private:
 	const metternich::culture *culture = nullptr;
 	const metternich::religion *religion = nullptr;
 	const metternich::phenotype *phenotype = nullptr;
-	const metternich::country *country = nullptr;
+	const metternich::domain *domain = nullptr;
 	const site *site = nullptr;
 };
 

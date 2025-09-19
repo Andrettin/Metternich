@@ -4,12 +4,12 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
-#include "domain/country.h"
 #include "domain/country_economy.h"
-#include "domain/country_game_data.h"
 #include "domain/country_technology.h"
 #include "domain/cultural_group.h"
 #include "domain/culture.h"
+#include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "economy/resource.h"
 #include "infrastructure/improvement.h"
 #include "language/name_generator.h"
@@ -32,7 +32,7 @@
 
 namespace metternich {
 
-civilian_unit::civilian_unit(const civilian_unit_type *type, const country *owner, const metternich::phenotype *phenotype)
+civilian_unit::civilian_unit(const civilian_unit_type *type, const domain *owner, const metternich::phenotype *phenotype)
 	: type(type), owner(owner), phenotype(phenotype)
 {
 	assert_throw(this->get_type() != nullptr);
@@ -43,16 +43,16 @@ civilian_unit::civilian_unit(const civilian_unit_type *type, const country *owne
 
 	connect(this, &civilian_unit::type_changed, this, &civilian_unit::icon_changed);
 
-	connect(this->get_owner()->get_game_data(), &country_game_data::provinces_changed, this, &civilian_unit::improvable_resources_changed);
+	connect(this->get_owner()->get_game_data(), &domain_game_data::provinces_changed, this, &civilian_unit::improvable_resources_changed);
 	connect(this->get_owner()->get_economy(), &country_economy::commodity_outputs_changed, this, &civilian_unit::improvable_resources_changed);
 	connect(this->get_owner()->get_technology(), &country_technology::technologies_changed, this, &civilian_unit::improvable_resources_changed);
 
-	connect(this->get_owner()->get_game_data(), &country_game_data::provinces_changed, this, &civilian_unit::prospectable_tiles_changed);
-	connect(this->get_owner()->get_game_data(), &country_game_data::prospected_tiles_changed, this, &civilian_unit::prospectable_tiles_changed);
+	connect(this->get_owner()->get_game_data(), &domain_game_data::provinces_changed, this, &civilian_unit::prospectable_tiles_changed);
+	connect(this->get_owner()->get_game_data(), &domain_game_data::prospected_tiles_changed, this, &civilian_unit::prospectable_tiles_changed);
 	connect(this->get_owner()->get_technology(), &country_technology::technologies_changed, this, &civilian_unit::prospectable_tiles_changed);
 }
 
-civilian_unit::civilian_unit(const metternich::character *character, const country *owner)
+civilian_unit::civilian_unit(const metternich::character *character, const domain *owner)
 	: civilian_unit(character->get_civilian_unit_type(), owner, character->get_phenotype())
 {
 	this->character = character;

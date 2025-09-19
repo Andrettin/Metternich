@@ -17,7 +17,7 @@ public:
 	{
 		if constexpr (std::is_same_v<scope_type, const character>) {
 			this->event = character_event::get(value);
-		} else if constexpr (std::is_same_v<scope_type, const country>) {
+		} else if constexpr (std::is_same_v<scope_type, const domain>) {
 			this->event = country_event::get(value);
 		} else if constexpr (std::is_same_v<scope_type, const province>) {
 			this->event = province_event::get(value);

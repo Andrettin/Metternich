@@ -29,11 +29,11 @@ void law::process_gsml_scope(const gsml_data &scope)
 			this->commodity_costs[commodity] = commodity->string_to_value(property.get_value());
 		});
 	} else if (tag == "conditions") {
-		auto conditions = std::make_unique<and_condition<country>>();
+		auto conditions = std::make_unique<and_condition<domain>>();
 		conditions->process_gsml_data(scope);
 		this->conditions = std::move(conditions);
 	} else if (tag == "modifier") {
-		auto modifier = std::make_unique<metternich::modifier<const country>>();
+		auto modifier = std::make_unique<metternich::modifier<const domain>>();
 		modifier->process_gsml_data(scope);
 		this->modifier = std::move(modifier);
 	} else {
@@ -78,9 +78,9 @@ QVariantList law::get_commodity_costs_qvariant_list() const
 	return archimedes::map::to_qvariant_list(this->get_commodity_costs());
 }
 
-QString law::get_modifier_string(const metternich::country *country) const
+QString law::get_modifier_string(const metternich::domain *domain) const
 {
-	return QString::fromStdString(this->get_modifier()->get_string(country));
+	return QString::fromStdString(this->get_modifier()->get_string(domain));
 }
 
 }

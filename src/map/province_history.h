@@ -6,13 +6,13 @@
 #include "species/phenotype_container.h"
 #include "util/centesimal_int.h"
 
-Q_MOC_INCLUDE("domain/country.h")
+Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("religion/religion.h")
 
 namespace metternich {
 
-class country;
 class culture;
+class domain;
 class province;
 class religion;
 
@@ -20,7 +20,7 @@ class province_history final : public data_entry_history
 {
 	Q_OBJECT
 
-	Q_PROPERTY(metternich::country* owner MEMBER owner)
+	Q_PROPERTY(metternich::domain* owner MEMBER owner)
 	Q_PROPERTY(metternich::religion* religion MEMBER religion)
 	Q_PROPERTY(int population READ get_population WRITE set_population)
 	Q_PROPERTY(archimedes::centesimal_int literacy_rate MEMBER literacy_rate READ get_literacy_rate)
@@ -33,7 +33,7 @@ public:
 	virtual void process_gsml_property(const gsml_property &property) override;
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 
-	const country *get_owner() const
+	const domain *get_owner() const
 	{
 		return this->owner;
 	}
@@ -135,7 +135,7 @@ public:
 
 private:
 	const metternich::province *province = nullptr;
-	country *owner = nullptr;
+	domain *owner = nullptr;
 	culture_map<int64_t> culture_weights;
 	metternich::religion *religion = nullptr;
 	phenotype_map<int64_t> phenotype_weights;

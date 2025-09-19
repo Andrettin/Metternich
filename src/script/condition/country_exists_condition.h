@@ -1,6 +1,6 @@
 #pragma once
 
-#include "domain/country.h"
+#include "domain/domain.h"
 #include "game/game.h"
 #include "script/condition/condition.h"
 #include "util/vector_util.h"
@@ -14,7 +14,7 @@ public:
 	explicit country_exists_condition(const std::string &value, const gsml_operator condition_operator)
 		: condition<scope_type>(condition_operator)
 	{
-		this->country = country::get(value);
+		this->domain = domain::get(value);
 	}
 
 	virtual const std::string &get_class_identifier() const override
@@ -28,18 +28,18 @@ public:
 		Q_UNUSED(scope);
 		Q_UNUSED(ctx);
 
-		return vector::contains(game::get()->get_countries(), this->country);
+		return vector::contains(game::get()->get_countries(), this->domain);
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override
 	{
 		Q_UNUSED(indent);
 
-		return this->country->get_game_data()->get_name() + " exists";
+		return this->domain->get_game_data()->get_name() + " exists";
 	}
 
 private:
-	const metternich::country *country = nullptr;
+	const metternich::domain *domain = nullptr;
 };
 
 }

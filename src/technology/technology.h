@@ -24,10 +24,10 @@ namespace metternich {
 class building_type;
 class civilian_unit_type;
 class commodity;
-class country;
 class cultural_group;
 class culture;
 class deity;
+class domain;
 class government_type;
 class icon;
 class improvement;
@@ -143,7 +143,7 @@ public:
 		return this->icon;
 	}
 
-	Q_INVOKABLE bool is_available_for_country(const metternich::country *country) const;
+	Q_INVOKABLE bool is_available_for_country(const metternich::domain *domain) const;
 
 	bool is_discovery() const
 	{
@@ -170,7 +170,7 @@ public:
 		return this->shared_prestige;
 	}
 
-	int get_shared_prestige_for_country(const country *country) const;
+	int get_shared_prestige_for_country(const domain *domain) const;
 
 	const std::vector<technology *> get_prerequisites() const
 	{
@@ -206,14 +206,14 @@ public:
 	int get_wealth_cost_weight() const;
 	commodity_map<int> get_commodity_cost_weights() const;
 	int get_total_cost_weights() const;
-	centesimal_int get_cost_for_country(const country *country) const;
-	Q_INVOKABLE int get_wealth_cost_for_country(const metternich::country *country) const;
-	commodity_map<int> get_commodity_costs_for_country(const country *country) const;
-	Q_INVOKABLE QVariantList get_commodity_costs_for_country_qvariant_list(const metternich::country *country) const;
+	centesimal_int get_cost_for_country(const domain *domain) const;
+	Q_INVOKABLE int get_wealth_cost_for_country(const metternich::domain *domain) const;
+	commodity_map<int> get_commodity_costs_for_country(const domain *domain) const;
+	Q_INVOKABLE QVariantList get_commodity_costs_for_country_qvariant_list(const metternich::domain *domain) const;
 
 	void calculate_cost();
 
-	const factor<country> *get_cost_factor() const
+	const factor<domain> *get_cost_factor() const
 	{
 		return this->cost_factor.get();
 	}
@@ -256,7 +256,7 @@ public:
 		return this->enabled_wonders;
 	}
 
-	std::vector<const wonder *> get_enabled_wonders_for_country(const country *country) const;
+	std::vector<const wonder *> get_enabled_wonders_for_country(const domain *domain) const;
 
 	void add_enabled_wonder(const wonder *wonder)
 	{
@@ -268,7 +268,7 @@ public:
 		return this->disabled_wonders;
 	}
 
-	std::vector<const wonder *> get_disabled_wonders_for_country(const country *country) const;
+	std::vector<const wonder *> get_disabled_wonders_for_country(const domain *domain) const;
 
 	void add_disabled_wonder(const wonder *wonder)
 	{
@@ -365,7 +365,7 @@ public:
 		return this->enabled_deities;
 	}
 
-	std::vector<const deity *> get_enabled_deities_for_country(const country *country) const;
+	std::vector<const deity *> get_enabled_deities_for_country(const domain *domain) const;
 
 	void add_enabled_deity(const deity *deity)
 	{
@@ -377,20 +377,20 @@ public:
 		return this->disabled_deities;
 	}
 
-	std::vector<const deity *> get_disabled_deities_for_country(const country *country) const;
+	std::vector<const deity *> get_disabled_deities_for_country(const domain *domain) const;
 
 	void add_disabled_deity(const deity *deity)
 	{
 		this->disabled_deities.push_back(deity);
 	}
 
-	const metternich::modifier<const country> *get_modifier() const
+	const metternich::modifier<const domain> *get_modifier() const
 	{
 		return this->modifier.get();
 	}
 
-	std::string get_modifier_string(const country *country) const;
-	Q_INVOKABLE QString get_effects_string(const metternich::country *country) const;
+	std::string get_modifier_string(const domain *domain) const;
+	Q_INVOKABLE QString get_effects_string(const metternich::domain *domain) const;
 
 	virtual named_data_entry *get_tree_parent() const override
 	{
@@ -461,7 +461,7 @@ private:
 	int cost = 0;
 	int wealth_cost_weight = technology::default_wealth_cost_weight;
 	commodity_map<int> commodity_cost_weights;
-	std::unique_ptr<const factor<country>> cost_factor;
+	std::unique_ptr<const factor<domain>> cost_factor;
 	std::vector<const commodity *> enabled_commodities;
 	std::vector<const resource *> enabled_resources;
 	std::vector<const building_type *> enabled_buildings;
@@ -478,7 +478,7 @@ private:
 	std::vector<const law *> enabled_laws;
 	std::vector<const deity *> enabled_deities;
 	std::vector<const deity *> disabled_deities;
-	std::unique_ptr<const metternich::modifier<const country>> modifier;
+	std::unique_ptr<const metternich::modifier<const domain>> modifier;
 	const game_rule *required_game_rule = nullptr;
 };
 

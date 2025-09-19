@@ -5,7 +5,7 @@
 
 namespace metternich {
 
-class country;
+class domain;
 class expense_transaction;
 class income_transaction;
 enum class diplomacy_state;
@@ -25,7 +25,7 @@ class country_turn_data final : public QObject
 public:
 	using transaction_object_variant = std::variant<std::nullptr_t, const commodity *, const population_type *>;
 
-	explicit country_turn_data(const metternich::country *country);
+	explicit country_turn_data(const metternich::domain *domain);
 	~country_turn_data();
 
 	int get_total_income() const
@@ -41,8 +41,8 @@ public:
 	QVariantList get_income_transactions_qvariant_list() const;
 	QVariantList get_expense_transactions_qvariant_list() const;
 
-	void add_income_transaction(const income_transaction_type transaction_type, const int amount, const transaction_object_variant &object = nullptr, const int object_quantity = 0, const metternich::country *other_country = nullptr);
-	void add_expense_transaction(const expense_transaction_type transaction_type, const int amount, const transaction_object_variant &object = nullptr, const int object_quantity = 0, const metternich::country *other_country = nullptr);
+	void add_income_transaction(const income_transaction_type transaction_type, const int amount, const transaction_object_variant &object = nullptr, const int object_quantity = 0, const metternich::domain *other_domain = nullptr);
+	void add_expense_transaction(const expense_transaction_type transaction_type, const int amount, const transaction_object_variant &object = nullptr, const int object_quantity = 0, const metternich::domain *other_domain = nullptr);
 
 	bool is_diplomatic_map_dirty() const
 	{
@@ -75,7 +75,7 @@ public:
 	}
 
 private:
-	const metternich::country *country = nullptr;
+	const metternich::domain *domain = nullptr;
 	int total_income = 0;
 	int total_expense = 0;
 	std::vector<qunique_ptr<income_transaction>> income_transactions;

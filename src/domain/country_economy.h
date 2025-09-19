@@ -10,8 +10,8 @@
 
 namespace metternich {
 
-class country;
-class country_game_data;
+class domain;
+class domain_game_data;
 enum class income_transaction_type;
 
 class country_economy final : public QObject
@@ -34,10 +34,10 @@ class country_economy final : public QObject
 	Q_PROPERTY(int throughput_modifier READ get_throughput_modifier NOTIFY throughput_modifier_changed)
 
 public:
-	explicit country_economy(const metternich::country *country, const country_game_data *game_data);
+	explicit country_economy(const metternich::domain *domain, const domain_game_data *game_data);
 	~country_economy();
 
-	country_game_data *get_game_data() const;
+	domain_game_data *get_game_data() const;
 
 	void do_production();
 	void do_trade(country_map<commodity_map<int>> &country_luxury_demands);
@@ -304,7 +304,7 @@ public:
 		emit offers_changed();
 	}
 
-	void do_sale(const metternich::country *other_country, const commodity *commodity, const int sold_quantity, const bool state_purchase);
+	void do_sale(const metternich::domain *other_domain, const commodity *commodity, const int sold_quantity, const bool state_purchase);
 
 	const commodity_map<int> &get_commodity_needs() const
 	{
@@ -683,7 +683,7 @@ signals:
 	void throughput_modifier_changed();
 
 private:
-	const metternich::country *country = nullptr;
+	const metternich::domain *domain = nullptr;
 	resource_map<int> resource_counts;
 	resource_map<int> vassal_resource_counts;
 	commodity_set available_commodities;

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "domain/country.h"
 #include "domain/country_economy.h"
+#include "domain/domain.h"
 #include "economy/commodity.h"
 #include "script/effect/effect.h"
 #include "util/assert_util.h"
@@ -9,7 +9,7 @@
 
 namespace metternich {
 
-class commodity_percent_effect final : public effect<const country>
+class commodity_percent_effect final : public effect<const domain>
 {
 public:
 	explicit commodity_percent_effect(const commodity *commodity, const std::string &value, const gsml_operator effect_operator)
@@ -29,13 +29,13 @@ public:
 		assert_throw(this->commodity != nullptr);
 	}
 
-	int get_quantity(const country *scope) const
+	int get_quantity(const domain *scope) const
 	{
 		const int stored_commodity = scope->get_economy()->get_stored_commodity(this->commodity);
 		return stored_commodity * this->percent / 100;
 	}
 
-	virtual void do_assignment_effect(const country *scope) const override
+	virtual void do_assignment_effect(const domain *scope) const override
 	{
 		if (!this->commodity->is_enabled()) {
 			return;
@@ -44,7 +44,7 @@ public:
 		scope->get_economy()->set_stored_commodity(this->commodity, this->get_quantity(scope));
 	}
 
-	virtual void do_addition_effect(const country *scope) const override
+	virtual void do_addition_effect(const domain *scope) const override
 	{
 		if (!this->commodity->is_enabled()) {
 			return;
@@ -53,7 +53,7 @@ public:
 		scope->get_economy()->change_stored_commodity(this->commodity, this->get_quantity(scope));
 	}
 
-	virtual void do_subtraction_effect(const country *scope) const override
+	virtual void do_subtraction_effect(const domain *scope) const override
 	{
 		if (!this->commodity->is_enabled()) {
 			return;
@@ -62,7 +62,7 @@ public:
 		scope->get_economy()->change_stored_commodity(this->commodity, this->get_quantity(scope) * -1);
 	}
 
-	virtual std::string get_assignment_string(const country *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override
+	virtual std::string get_assignment_string(const domain *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override
 	{
 		Q_UNUSED(ctx);
 		Q_UNUSED(indent);
@@ -71,7 +71,7 @@ public:
 		return std::format("Set {} to {}", string::highlight(this->commodity->get_name()), std::to_string(this->get_quantity(scope)));
 	}
 
-	virtual std::string get_addition_string(const country *scope, const read_only_context &ctx, const size_t indent) const override
+	virtual std::string get_addition_string(const domain *scope, const read_only_context &ctx, const size_t indent) const override
 	{
 		Q_UNUSED(ctx);
 		Q_UNUSED(indent);
@@ -84,7 +84,7 @@ public:
 		return std::format("Gain {} {}", std::to_string(quantity), string::highlight(this->commodity->get_name()));
 	}
 
-	virtual std::string get_subtraction_string(const country *scope, const read_only_context &ctx) const override
+	virtual std::string get_subtraction_string(const domain *scope, const read_only_context &ctx) const override
 	{
 		Q_UNUSED(ctx);
 

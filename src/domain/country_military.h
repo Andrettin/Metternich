@@ -11,8 +11,8 @@ Q_MOC_INCLUDE("unit/military_unit_type.h")
 namespace metternich {
 
 class army;
-class country;
-class country_game_data;
+class domain;
+class domain_game_data;
 class military_unit;
 class military_unit_type;
 enum class military_unit_category;
@@ -27,10 +27,10 @@ class country_military final : public QObject
 public:
 	static constexpr int base_deployment_limit = 10;
 
-	explicit country_military(const metternich::country *country);
+	explicit country_military(const metternich::domain *domain);
 	~country_military();
 
-	country_game_data *get_game_data() const;
+	domain_game_data *get_game_data() const;
 
 	void do_military_unit_recruitment();
 
@@ -273,7 +273,7 @@ signals:
 	void military_units_changed();
 
 private:
-	const metternich::country *country = nullptr;
+	const metternich::domain *domain = nullptr;
 	std::vector<const character *> leaders;
 	std::vector<qunique_ptr<military_unit>> military_units;
 	std::vector<qunique_ptr<army>> armies;

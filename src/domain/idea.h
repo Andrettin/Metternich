@@ -7,7 +7,7 @@ Q_MOC_INCLUDE("ui/portrait.h")
 
 namespace metternich {
 
-class country;
+class domain;
 class portrait;
 class idea_slot;
 class idea_trait;
@@ -79,9 +79,9 @@ public:
 		return !this->get_traits().empty();
 	}
 
-	virtual bool is_available_for_country_slot(const country *country, const idea_slot *slot) const;
+	virtual bool is_available_for_country_slot(const domain *domain, const idea_slot *slot) const;
 
-	const and_condition<country> *get_conditions() const
+	const and_condition<domain> *get_conditions() const
 	{
 		return this->conditions.get();
 	}
@@ -96,15 +96,15 @@ public:
 		this->traits.push_back(trait);
 	}
 
-	std::string get_modifier_string(const country *country) const;
+	std::string get_modifier_string(const domain *domain) const;
 
-	Q_INVOKABLE QString get_modifier_qstring(const country *country) const
+	Q_INVOKABLE QString get_modifier_qstring(const domain *domain) const
 	{
-		return QString::fromStdString(this->get_modifier_string(country));
+		return QString::fromStdString(this->get_modifier_string(domain));
 	}
 
-	void apply_modifier(const country *country, const int multiplier) const;
-	void apply_trait_modifier(const idea_trait *trait, const country *country, const int multiplier) const;
+	void apply_modifier(const domain *domain, const int multiplier) const;
+	void apply_trait_modifier(const idea_trait *trait, const domain *domain, const int multiplier) const;
 
 signals:
 	void changed();
@@ -113,7 +113,7 @@ private:
 	const metternich::portrait *portrait = nullptr;
 	technology *required_technology = nullptr;
 	technology *obsolescence_technology = nullptr;
-	std::unique_ptr<const and_condition<country>> conditions;
+	std::unique_ptr<const and_condition<domain>> conditions;
 	std::vector<const idea_trait *> traits;
 };
 

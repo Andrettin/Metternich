@@ -8,7 +8,7 @@ namespace archimedes {
 namespace metternich {
 
 class character;
-class country;
+class domain;
 class population_unit;
 class province;
 class site;
@@ -40,7 +40,7 @@ private:
 };
 
 extern template class effect_list<const character>;
-extern template class effect_list<const country>;
+extern template class effect_list<const domain>;
 extern template class effect_list<population_unit>;
 extern template class effect_list<const province>;
 extern template class effect_list<const site>;

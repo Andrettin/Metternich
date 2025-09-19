@@ -22,7 +22,7 @@ void office::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 
 	if (tag == "conditions") {
-		auto conditions = std::make_unique<and_condition<country>>();
+		auto conditions = std::make_unique<and_condition<domain>>();
 		conditions->process_gsml_data(scope);
 		this->conditions = std::move(conditions);
 	} else if (tag == "holder_conditions") {

@@ -13,7 +13,7 @@ namespace archimedes {
 namespace metternich {
 
 class character;
-class country;
+class domain;
 class military_unit;
 class province;
 class site;
@@ -46,7 +46,7 @@ private:
 };
 
 extern template class modifier<const character>;
-extern template class modifier<const country>;
+extern template class modifier<const domain>;
 extern template class modifier<military_unit>;
 extern template class modifier<const province>;
 extern template class modifier<const site>;

@@ -19,12 +19,12 @@
 #include "util/qunique_ptr.h"
 
 Q_MOC_INCLUDE("character/character.h")
-Q_MOC_INCLUDE("domain/country.h")
 Q_MOC_INCLUDE("domain/country_economy.h")
 Q_MOC_INCLUDE("domain/country_government.h")
 Q_MOC_INCLUDE("domain/country_military.h")
 Q_MOC_INCLUDE("domain/country_technology.h")
 Q_MOC_INCLUDE("domain/country_tier.h")
+Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("domain/government_type.h")
 Q_MOC_INCLUDE("domain/journal_entry.h")
 Q_MOC_INCLUDE("domain/subject_type.h")
@@ -41,7 +41,6 @@ class building_type;
 class character;
 class civilian_unit;
 class consulate;
-class country;
 class country_ai;
 class country_economy;
 class country_government;
@@ -49,6 +48,7 @@ class country_military;
 class country_rank;
 class country_technology;
 class culture;
+class domain;
 class event;
 class flag;
 class government_type;
@@ -83,7 +83,7 @@ struct read_only_context;
 template <typename scope_type>
 class modifier;
 
-class country_game_data final : public QObject
+class domain_game_data final : public QObject
 {
 	Q_OBJECT
 
@@ -96,7 +96,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(QString titled_name READ get_titled_name_qstring NOTIFY title_name_changed)
 	Q_PROPERTY(QString title_name READ get_title_name_qstring NOTIFY title_name_changed)
 	Q_PROPERTY(const metternich::religion* religion READ get_religion NOTIFY religion_changed)
-	Q_PROPERTY(const metternich::country* overlord READ get_overlord NOTIFY overlord_changed)
+	Q_PROPERTY(const metternich::domain* overlord READ get_overlord NOTIFY overlord_changed)
 	Q_PROPERTY(QString type_name READ get_type_name_qstring NOTIFY type_name_changed)
 	Q_PROPERTY(const metternich::subject_type* subject_type READ get_subject_type NOTIFY subject_type_changed)
 	Q_PROPERTY(const metternich::government_type *government_type READ get_government_type NOTIFY government_type_changed)
@@ -139,8 +139,8 @@ public:
 	static constexpr int deity_cost_increment = 100;
 	static constexpr int vassal_tax_rate = 50;
 
-	explicit country_game_data(metternich::country *country);
-	~country_game_data();
+	explicit domain_game_data(metternich::domain *domain);
+	~domain_game_data();
 
 	void process_gsml_property(const gsml_property &property);
 	void process_gsml_scope(const gsml_data &scope);
@@ -216,24 +216,24 @@ public:
 
 	void set_religion(const metternich::religion *religion);
 
-	const metternich::country *get_overlord() const
+	const metternich::domain *get_overlord() const
 	{
 		return this->overlord;
 	}
 
-	void set_overlord(const metternich::country *overlord);
+	void set_overlord(const metternich::domain *overlord);
 
-	bool is_vassal_of(const metternich::country *country) const;
-	bool is_any_vassal_of(const metternich::country *country) const;
+	bool is_vassal_of(const metternich::domain *domain) const;
+	bool is_any_vassal_of(const metternich::domain *domain) const;
 
-	Q_INVOKABLE bool is_any_vassal_of(metternich::country *country)
+	Q_INVOKABLE bool is_any_vassal_of(metternich::domain *domain)
 	{
-		const metternich::country *country_const = country;
-		return this->is_any_vassal_of(country_const);
+		const metternich::domain *domain_const = domain;
+		return this->is_any_vassal_of(domain_const);
 	}
 
-	bool is_overlord_of(const metternich::country *country) const;
-	bool is_any_overlord_of(const metternich::country *country) const;
+	bool is_overlord_of(const metternich::domain *domain) const;
+	bool is_any_overlord_of(const metternich::domain *domain) const;
 
 	bool is_independent() const
 	{
@@ -379,20 +379,20 @@ public:
 		return this->known_countries;
 	}
 
-	bool is_country_known(const metternich::country *other_country) const
+	bool is_country_known(const metternich::domain *other_domain) const
 	{
-		return this->get_known_countries().contains(other_country);
+		return this->get_known_countries().contains(other_domain);
 	}
 
-	void add_known_country(const metternich::country *other_country);
+	void add_known_country(const metternich::domain *other_domain);
 
-	void remove_known_country(const metternich::country *other_country)
+	void remove_known_country(const metternich::domain *other_domain)
 	{
-		this->known_countries.erase(other_country);
+		this->known_countries.erase(other_domain);
 	}
 
-	diplomacy_state get_diplomacy_state(const metternich::country *other_country) const;
-	void set_diplomacy_state(const metternich::country *other_country, const diplomacy_state state);
+	diplomacy_state get_diplomacy_state(const metternich::domain *other_domain) const;
+	void set_diplomacy_state(const metternich::domain *other_domain, const diplomacy_state state);
 
 	const std::map<diplomacy_state, int> &get_diplomacy_state_counts() const
 	{
@@ -400,17 +400,17 @@ public:
 	}
 
 	void change_diplomacy_state_count(const diplomacy_state state, const int change);
-	Q_INVOKABLE QString get_diplomacy_state_diplomatic_map_suffix(metternich::country *other_country) const;
+	Q_INVOKABLE QString get_diplomacy_state_diplomatic_map_suffix(metternich::domain *other_domain) const;
 
 	bool at_war() const;
 
-	bool can_attack(const metternich::country *other_country) const;
+	bool can_attack(const metternich::domain *other_domain) const;
 
-	std::optional<diplomacy_state> get_offered_diplomacy_state(const metternich::country *other_country) const;
+	std::optional<diplomacy_state> get_offered_diplomacy_state(const metternich::domain *other_domain) const;
 
-	Q_INVOKABLE int get_offered_diplomacy_state_int(metternich::country *other_country) const
+	Q_INVOKABLE int get_offered_diplomacy_state_int(metternich::domain *other_domain) const
 	{
-		const std::optional<diplomacy_state> state = this->get_offered_diplomacy_state(other_country);
+		const std::optional<diplomacy_state> state = this->get_offered_diplomacy_state(other_domain);
 
 		if (!state.has_value()) {
 			return -1;
@@ -419,22 +419,22 @@ public:
 		return static_cast<int>(state.value());
 	}
 
-	void set_offered_diplomacy_state(const metternich::country *other_country, const std::optional<diplomacy_state> &state);
+	void set_offered_diplomacy_state(const metternich::domain *other_domain, const std::optional<diplomacy_state> &state);
 
-	Q_INVOKABLE void set_offered_diplomacy_state_int(metternich::country *other_country, const int state)
+	Q_INVOKABLE void set_offered_diplomacy_state_int(metternich::domain *other_domain, const int state)
 	{
 		if (state == -1) {
-			this->set_offered_diplomacy_state(other_country, std::nullopt);
+			this->set_offered_diplomacy_state(other_domain, std::nullopt);
 		} else {
-			this->set_offered_diplomacy_state(other_country, static_cast<diplomacy_state>(state));
+			this->set_offered_diplomacy_state(other_domain, static_cast<diplomacy_state>(state));
 		}
 	}
 
 	QVariantList get_consulates_qvariant_list() const;
 
-	const consulate *get_consulate(const metternich::country *other_country) const
+	const consulate *get_consulate(const metternich::domain *other_domain) const
 	{
-		const auto find_iterator = this->consulates.find(other_country);
+		const auto find_iterator = this->consulates.find(other_domain);
 
 		if (find_iterator != this->consulates.end()) {
 			return find_iterator->second;
@@ -443,11 +443,11 @@ public:
 		return nullptr;
 	}
 
-	void set_consulate(const metternich::country *other_country, const consulate *consulate);
+	void set_consulate(const metternich::domain *other_domain, const consulate *consulate);
 
-	int get_opinion_of(const metternich::country *other) const;
+	int get_opinion_of(const metternich::domain *other) const;
 
-	int get_base_opinion(const metternich::country *other) const
+	int get_base_opinion(const metternich::domain *other) const
 	{
 		const auto find_iterator = this->base_opinions.find(other);
 		if (find_iterator != this->base_opinions.end()) {
@@ -457,14 +457,14 @@ public:
 		return 0;
 	}
 
-	void set_base_opinion(const metternich::country *other, const int opinion);
+	void set_base_opinion(const metternich::domain *other, const int opinion);
 
-	void change_base_opinion(const metternich::country *other, const int change)
+	void change_base_opinion(const metternich::domain *other, const int change)
 	{
 		this->set_base_opinion(other, this->get_base_opinion(other) + change);
 	}
 
-	const opinion_modifier_map<int> &get_opinion_modifiers_for(const metternich::country *other) const
+	const opinion_modifier_map<int> &get_opinion_modifiers_for(const metternich::domain *other) const
 	{
 		static const opinion_modifier_map<int> empty_map;
 
@@ -476,16 +476,16 @@ public:
 		return empty_map;
 	}
 
-	void add_opinion_modifier(const metternich::country *other, const opinion_modifier *modifier, const int duration);
-	void remove_opinion_modifier(const metternich::country *other, const opinion_modifier *modifier);
+	void add_opinion_modifier(const metternich::domain *other, const opinion_modifier *modifier, const int duration);
+	void remove_opinion_modifier(const metternich::domain *other, const opinion_modifier *modifier);
 
-	int get_opinion_weighted_prestige_for(const metternich::country *other) const;
+	int get_opinion_weighted_prestige_for(const metternich::domain *other) const;
 
-	std::vector<const metternich::country *> get_vassals() const;
+	std::vector<const metternich::domain *> get_vassals() const;
 	QVariantList get_vassals_qvariant_list() const;
 	QVariantList get_subject_type_counts_qvariant_list() const;
 
-	std::vector<const metternich::country *> get_neighbor_countries() const;
+	std::vector<const metternich::domain *> get_neighbor_countries() const;
 
 	const QColor &get_diplomatic_map_color() const;
 
@@ -694,7 +694,7 @@ public:
 
 	void on_wonder_gained(const wonder *wonder, const int multiplier);
 
-	bool can_declare_war_on(const metternich::country *other_country) const;
+	bool can_declare_war_on(const metternich::domain *other_domain) const;
 
 	const std::map<idea_type, data_entry_map<idea_slot, const idea *>> &get_ideas() const
 	{
@@ -765,9 +765,9 @@ public:
 	void remove_scripted_modifier(const scripted_country_modifier *modifier);
 	void decrement_scripted_modifiers();
 
-	void apply_modifier(const modifier<const metternich::country> *modifier, const int multiplier = 1);
+	void apply_modifier(const modifier<const metternich::domain> *modifier, const int multiplier = 1);
 
-	void remove_modifier(const modifier<const metternich::country> *modifier)
+	void remove_modifier(const modifier<const metternich::domain> *modifier)
 	{
 		this->apply_modifier(modifier, -1);
 	}
@@ -1107,10 +1107,10 @@ signals:
 	void maintenance_cost_changed();
 
 private:
-	metternich::country *country = nullptr;
+	metternich::domain *domain = nullptr;
 	country_tier tier{};
 	const metternich::religion *religion = nullptr;
-	const metternich::country *overlord = nullptr;
+	const metternich::domain *overlord = nullptr;
 	const metternich::government_type *government_type = nullptr;
 	std::vector<const province *> provinces;
 	const site *capital = nullptr;

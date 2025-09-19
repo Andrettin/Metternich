@@ -7,7 +7,7 @@ namespace archimedes {
 namespace metternich {
 
 class character;
-class country;
+class domain;
 class province;
 class site;
 
@@ -36,7 +36,7 @@ private:
 };
 
 extern template class scripted_scoped_modifier<character>;
-extern template class scripted_scoped_modifier<country>;
+extern template class scripted_scoped_modifier<domain>;
 extern template class scripted_scoped_modifier<province>;
 extern template class scripted_scoped_modifier<site>;
 

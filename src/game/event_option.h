@@ -9,7 +9,7 @@ namespace metternich {
 
 class character;
 class character_trait;
-class country;
+class domain;
 class province;
 class site;
 struct context;
@@ -62,7 +62,7 @@ private:
 };
 
 extern template class event_option<const character>;
-extern template class event_option<const country>;
+extern template class event_option<const domain>;
 extern template class event_option<const province>;
 extern template class event_option<const site>;
 

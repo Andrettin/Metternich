@@ -6,11 +6,11 @@
 #include "character/character_game_data.h"
 #include "character/character_role.h"
 #include "database/defines.h"
-#include "domain/country.h"
-#include "domain/country_game_data.h"
 #include "domain/country_government.h"
 #include "domain/country_military.h"
 #include "domain/country_technology.h"
+#include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "domain/office.h"
 #include "game/game.h"
 #include "game/game_rules.h"
@@ -47,35 +47,35 @@ void journal_entry::process_gsml_scope(const gsml_data &scope)
 	const std::vector<std::string> &values = scope.get_values();
 
 	if (tag == "preconditions") {
-		auto conditions = std::make_unique<and_condition<country>>();
+		auto conditions = std::make_unique<and_condition<domain>>();
 		conditions->process_gsml_data(scope);
 		this->preconditions = std::move(conditions);
 	} else if (tag == "conditions") {
-		auto conditions = std::make_unique<and_condition<country>>();
+		auto conditions = std::make_unique<and_condition<domain>>();
 		conditions->process_gsml_data(scope);
 		this->conditions = std::move(conditions);
 	} else if (tag == "completion_conditions") {
-		auto conditions = std::make_unique<and_condition<country>>();
+		auto conditions = std::make_unique<and_condition<domain>>();
 		conditions->process_gsml_data(scope);
 		this->completion_conditions = std::move(conditions);
 	} else if (tag == "failure_conditions") {
-		auto conditions = std::make_unique<and_condition<country>>();
+		auto conditions = std::make_unique<and_condition<domain>>();
 		conditions->process_gsml_data(scope);
 		this->failure_conditions = std::move(conditions);
 	} else if (tag == "completion_effects") {
-		auto effects = std::make_unique<effect_list<const country>>();
+		auto effects = std::make_unique<effect_list<const domain>>();
 		effects->process_gsml_data(scope);
 		this->completion_effects = std::move(effects);
 	} else if (tag == "failure_effects") {
-		auto effects = std::make_unique<effect_list<const country>>();
+		auto effects = std::make_unique<effect_list<const domain>>();
 		effects->process_gsml_data(scope);
 		this->failure_effects = std::move(effects);
 	} else if (tag == "active_modifier") {
-		auto modifier = std::make_unique<metternich::modifier<const country>>();
+		auto modifier = std::make_unique<metternich::modifier<const domain>>();
 		modifier->process_gsml_data(scope);
 		this->active_modifier = std::move(modifier);
 	} else if (tag == "completion_modifier") {
-		auto modifier = std::make_unique<metternich::modifier<const country>>();
+		auto modifier = std::make_unique<metternich::modifier<const domain>>();
 		modifier->process_gsml_data(scope);
 		this->completion_modifier = std::move(modifier);
 	} else if (tag == "owned_provinces") {
@@ -188,25 +188,25 @@ void journal_entry::check() const
 	}
 }
 
-bool journal_entry::check_preconditions(const country *country) const
+bool journal_entry::check_preconditions(const domain *domain) const
 {
-	const read_only_context ctx(country);
+	const read_only_context ctx(domain);
 
-	if (this->preconditions != nullptr && !this->preconditions->check(country, ctx)) {
+	if (this->preconditions != nullptr && !this->preconditions->check(domain, ctx)) {
 		return false;
 	}
 
 	for (const technology *technology : this->get_researched_technologies()) {
-		if (!technology->is_available_for_country(country)) {
+		if (!technology->is_available_for_country(domain)) {
 			return false;
 		}
 	}
 
-	const bool can_recruit_advisors = country->get_government()->can_have_appointable_offices();
+	const bool can_recruit_advisors = domain->get_government()->can_have_appointable_offices();
 
 	for (const character *character : this->get_recruited_characters()) {
-		const metternich::country *character_country = character->get_game_data()->get_country();
-		if (character_country != nullptr && character_country != country) {
+		const metternich::domain *character_domain = character->get_game_data()->get_country();
+		if (character_domain != nullptr && character_domain != domain) {
 			return false;
 		}
 
@@ -218,15 +218,15 @@ bool journal_entry::check_preconditions(const country *country) const
 	return true;
 }
 
-bool journal_entry::check_conditions(const country *country) const
+bool journal_entry::check_conditions(const domain *domain) const
 {
-	const read_only_context ctx(country);
+	const read_only_context ctx(domain);
 
-	if (this->conditions != nullptr && !this->conditions->check(country, ctx)) {
+	if (this->conditions != nullptr && !this->conditions->check(domain, ctx)) {
 		return false;
 	}
 
-	const country_technology *country_technology = country->get_technology();
+	const country_technology *country_technology = domain->get_technology();
 
 	for (const technology *technology : this->get_researched_technologies()) {
 		if (!technology->is_discovery() && !country_technology->is_technology_researchable(technology) && !country_technology->has_technology(technology)) {
@@ -237,7 +237,7 @@ bool journal_entry::check_conditions(const country *country) const
 	return true;
 }
 
-bool journal_entry::check_completion_conditions(const country *country, const bool ignore_random_chance) const
+bool journal_entry::check_completion_conditions(const domain *domain, const bool ignore_random_chance) const
 {
 	if (this->completion_conditions == nullptr
 		&& this->owned_provinces.empty()
@@ -254,18 +254,18 @@ bool journal_entry::check_completion_conditions(const country *country, const bo
 		return false;
 	}
 
-	const read_only_context ctx(country);
+	const read_only_context ctx(domain);
 
-	if (this->completion_conditions != nullptr && !this->completion_conditions->check(country, ctx)) {
+	if (this->completion_conditions != nullptr && !this->completion_conditions->check(domain, ctx)) {
 		return false;
 	}
 
-	const country_game_data *country_game_data = country->get_game_data();
-	const country_military *country_military = country->get_military();
-	const country_technology *country_technology = country->get_technology();
+	const domain_game_data *domain_game_data = domain->get_game_data();
+	const country_military *country_military = domain->get_military();
+	const country_technology *country_technology = domain->get_technology();
 
 	for (const province *province : this->owned_provinces) {
-		if (province->get_game_data()->get_owner() != country) {
+		if (province->get_game_data()->get_owner() != domain) {
 			return false;
 		}
 	}
@@ -279,13 +279,13 @@ bool journal_entry::check_completion_conditions(const country *country, const bo
 			return false;
 		}
 
-		if (site->get_game_data()->get_province()->get_game_data()->get_owner() != country) {
+		if (site->get_game_data()->get_province()->get_game_data()->get_owner() != domain) {
 			return false;
 		}
 	}
 
 	for (const building_type *building : this->get_built_buildings()) {
-		if (!country_game_data->has_building(building)) {
+		if (!domain_game_data->has_building(building)) {
 			return false;
 		}
 	}
@@ -326,13 +326,13 @@ bool journal_entry::check_completion_conditions(const country *country, const bo
 		for (const character_role role : character->get_roles()) {
 			switch (role) {
 				case character_role::advisor:
-					recruited = character->get_game_data()->get_office() != nullptr && character->get_game_data()->get_country() == country;
+					recruited = character->get_game_data()->get_office() != nullptr && character->get_game_data()->get_country() == domain;
 					break;
 				case character_role::leader:
 					recruited = vector::contains(country_military->get_leaders(), character);
 					break;
 				case character_role::civilian:
-					recruited = country_game_data->has_civilian_character(character);
+					recruited = domain_game_data->has_civilian_character(character);
 					break;
 				default:
 					break;
@@ -466,16 +466,16 @@ QString journal_entry::get_failure_conditions_string() const
 	return QString::fromStdString(this->get_failure_conditions()->get_conditions_string(0));
 }
 
-QString journal_entry::get_completion_effects_string(metternich::country *country) const
+QString journal_entry::get_completion_effects_string(metternich::domain *domain) const
 {
 	std::string str;
 
 	if (this->get_completion_effects() != nullptr) {
-		str = this->get_completion_effects()->get_effects_string(country, read_only_context(country));
+		str = this->get_completion_effects()->get_effects_string(domain, read_only_context(domain));
 	}
 
 	if (this->get_completion_modifier() != nullptr) {
-		std::string modifier_str = this->get_completion_modifier()->get_string(country);
+		std::string modifier_str = this->get_completion_modifier()->get_string(domain);
 
 		if (!modifier_str.empty()) {
 			if (!str.empty()) {
@@ -489,13 +489,13 @@ QString journal_entry::get_completion_effects_string(metternich::country *countr
 	return QString::fromStdString(str);
 }
 
-QString journal_entry::get_failure_effects_string(metternich::country *country) const
+QString journal_entry::get_failure_effects_string(metternich::domain *domain) const
 {
 	if (this->get_failure_effects() == nullptr) {
 		return QString();
 	}
 
-	return QString::fromStdString(this->get_failure_effects()->get_effects_string(country, read_only_context(country)));
+	return QString::fromStdString(this->get_failure_effects()->get_effects_string(domain, read_only_context(domain)));
 }
 
 std::vector<const building_type *> journal_entry::get_built_buildings_with_requirements() const

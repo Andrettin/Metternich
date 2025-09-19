@@ -2,14 +2,14 @@
 
 #include "economy/commodity_container.h"
 
-Q_MOC_INCLUDE("domain/country.h")
+Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("infrastructure/building_type.h")
 
 namespace metternich {
 
 class building_slot_type;
 class building_type;
-class country;
+class domain;
 class wonder;
 
 class building_slot : public QObject
@@ -19,7 +19,7 @@ class building_slot : public QObject
 	Q_PROPERTY(const metternich::building_slot_type* type READ get_type CONSTANT)
 	Q_PROPERTY(const metternich::building_type* building READ get_building NOTIFY building_changed)
 	Q_PROPERTY(const metternich::building_type* under_construction_building READ get_under_construction_building WRITE set_under_construction_building NOTIFY under_construction_building_changed)
-	Q_PROPERTY(const metternich::country* country READ get_country CONSTANT)
+	Q_PROPERTY(const metternich::domain* country READ get_country CONSTANT)
 
 public:
 	explicit building_slot(const building_slot_type *type);
@@ -64,7 +64,7 @@ public:
 
 	Q_INVOKABLE const metternich::building_type *get_buildable_building() const;
 
-	virtual const metternich::country *get_country() const = 0;
+	virtual const metternich::domain *get_country() const = 0;
 
 	bool is_available() const;
 

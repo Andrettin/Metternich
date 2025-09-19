@@ -5,7 +5,7 @@
 #include "script/scripted_modifier_container.h"
 #include "util/qunique_ptr.h"
 
-Q_MOC_INCLUDE("domain/country.h")
+Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("infrastructure/holding_type.h")
 Q_MOC_INCLUDE("infrastructure/improvement.h")
 Q_MOC_INCLUDE("map/province.h")
@@ -20,8 +20,8 @@ namespace metternich {
 class army;
 class building_class;
 class building_type;
-class country;
 class culture;
+class domain;
 class holding_type;
 class improvement;
 class pathway;
@@ -47,7 +47,7 @@ class site_game_data final : public QObject
 	Q_PROPERTY(QPoint tile_pos READ get_tile_pos CONSTANT)
 	Q_PROPERTY(const metternich::province* province READ get_province CONSTANT)
 	Q_PROPERTY(QString title_name READ get_title_name_qstring NOTIFY title_name_changed)
-	Q_PROPERTY(const metternich::country* owner READ get_owner NOTIFY owner_changed)
+	Q_PROPERTY(const metternich::domain* owner READ get_owner NOTIFY owner_changed)
 	Q_PROPERTY(QString current_cultural_name READ get_current_cultural_name_qstring NOTIFY culture_changed)
 	Q_PROPERTY(const metternich::holding_type* holding_type READ get_holding_type NOTIFY holding_type_changed)
 	Q_PROPERTY(const metternich::improvement* improvement READ get_main_improvement NOTIFY improvements_changed)
@@ -102,12 +102,12 @@ public:
 		return QString::fromStdString(this->get_title_name());
 	}
 
-	const country *get_owner() const
+	const domain *get_owner() const
 	{
 		return this->owner;
 	}
 
-	void set_owner(const country *owner);
+	void set_owner(const domain *owner);
 
 	const metternich::culture *get_culture() const
 	{
@@ -435,7 +435,7 @@ signals:
 
 private:
 	const metternich::site *site = nullptr;
-	const country *owner = nullptr;
+	const domain *owner = nullptr;
 	const metternich::culture *culture = nullptr;
 	const metternich::religion *religion = nullptr;
 	const metternich::holding_type *holding_type = nullptr;

@@ -7,7 +7,7 @@
 namespace metternich {
 
 class character;
-class country;
+class domain;
 class population_unit;
 class province;
 class site;
@@ -80,7 +80,7 @@ public:
 	}
 };
 
-class country_scripted_effect final : public data_entry, public data_type<country_scripted_effect>, public scripted_effect_base<const country>
+class country_scripted_effect final : public data_entry, public data_type<country_scripted_effect>, public scripted_effect_base<const domain>
 {
 	Q_OBJECT
 
