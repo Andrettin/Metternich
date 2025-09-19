@@ -43,7 +43,7 @@ country_government::country_government(const metternich::country *country, const
 	: country(country)
 {
 	connect(game_data, &country_game_data::tier_changed, this, &country_government::office_title_names_changed);
-	connect(this, &country_government::government_type_changed, this, &country_government::office_title_names_changed);
+	connect(game_data, &country_game_data::government_type_changed, this, &country_government::office_title_names_changed);
 	connect(game_data, &country_game_data::religion_changed, this, &country_government::office_title_names_changed);
 	connect(this, &country_government::office_holders_changed, this, &country_government::office_title_names_changed);
 }
@@ -61,86 +61,7 @@ const std::string &country_government::get_office_title_name(const office *offic
 {
 	const character *office_holder = this->get_office_holder(office);
 	const gender gender = office_holder != nullptr ? office_holder->get_gender() : gender::male;
-	return this->country->get_office_title_name(office, this->get_government_type(), this->get_game_data()->get_tier(), gender, this->get_game_data()->get_religion());
-}
-
-void country_government::set_government_type(const metternich::government_type *government_type)
-{
-	if (government_type == this->get_government_type()) {
-		return;
-	}
-
-	if (government_type != nullptr) {
-		if (this->country->is_tribe() && !government_type->get_group()->is_tribal()) {
-			throw std::runtime_error(std::format("Tried to set a non-tribal government type (\"{}\") for a tribal country (\"{}\").", government_type->get_identifier(), this->country->get_identifier()));
-		}
-
-		if (this->country->is_clade() && !government_type->get_group()->is_clade()) {
-			throw std::runtime_error(std::format("Tried to set a non-clade government type (\"{}\") for a clade country (\"{}\").", government_type->get_identifier(), this->country->get_identifier()));
-		}
-	}
-
-	if (this->get_government_type() != nullptr && this->get_government_type()->get_modifier() != nullptr) {
-		this->get_government_type()->get_modifier()->apply(this->country, -1);
-	}
-
-	this->government_type = government_type;
-
-	if (this->get_government_type() != nullptr && this->get_government_type()->get_modifier() != nullptr) {
-		this->get_government_type()->get_modifier()->apply(this->country, 1);
-	}
-
-	if (game::get()->is_running()) {
-		emit government_type_changed();
-	}
-}
-
-bool country_government::can_have_government_type(const metternich::government_type *government_type) const
-{
-	if (government_type->get_required_technology() != nullptr && !this->country->get_technology()->has_technology(government_type->get_required_technology())) {
-		return false;
-	}
-
-	for (const law *forbidden_law : government_type->get_forbidden_laws()) {
-		if (this->has_law(forbidden_law)) {
-			return false;
-		}
-	}
-
-	if (government_type->get_conditions() != nullptr && !government_type->get_conditions()->check(this->country, read_only_context(this->country))) {
-		return false;
-	}
-
-	return true;
-}
-
-void country_government::check_government_type()
-{
-	if (this->get_government_type() != nullptr && this->can_have_government_type(this->get_government_type())) {
-		return;
-	}
-
-	std::vector<const metternich::government_type *> potential_government_types;
-
-	for (const metternich::government_type *government_type : government_type::get_all()) {
-		if (this->can_have_government_type(government_type)) {
-			potential_government_types.push_back(government_type);
-		}
-	}
-
-	assert_throw(!potential_government_types.empty());
-
-	this->set_government_type(vector::get_random(potential_government_types));
-}
-
-bool country_government::is_tribal() const
-{
-	return this->get_government_type()->get_group()->is_tribal();
-}
-
-bool country_government::is_clade() const
-{
-	return this->get_government_type()->get_group()->is_clade();
+	return this->country->get_office_title_name(office, this->get_game_data()->get_government_type(), this->get_game_data()->get_tier(), gender, this->get_game_data()->get_religion());
 }
 
 QVariantList country_government::get_laws_qvariant_list() const
@@ -168,7 +89,7 @@ void country_government::set_law(const law_group *law_group, const law *law)
 		law->get_modifier()->apply(this->country);
 	}
 
-	this->check_government_type();
+	this->get_game_data()->check_government_type();
 
 	if (game::get()->is_running()) {
 		emit laws_changed();
@@ -199,7 +120,7 @@ bool country_government::can_enact_law(const metternich::law *law) const
 		return false;
 	}
 
-	if (vector::contains(this->get_government_type()->get_forbidden_laws(), law)) {
+	if (vector::contains(this->get_game_data()->get_government_type()->get_forbidden_laws(), law)) {
 		return false;
 	}
 
@@ -234,7 +155,7 @@ void country_government::check_laws()
 		}
 
 		if (this->get_law(law_group) == nullptr) {
-			const law *government_type_default_law = this->get_government_type()->get_default_law(law_group);
+			const law *government_type_default_law = this->get_game_data()->get_government_type()->get_default_law(law_group);
 			if (government_type_default_law != nullptr && this->can_have_law(government_type_default_law)) {
 				this->set_law(law_group, government_type_default_law);
 			}
@@ -420,7 +341,7 @@ void country_government::check_office_holders()
 
 std::vector<const character *> country_government::get_appointable_office_holders(const office *office) const
 {
-	assert_throw(this->get_government_type() != nullptr);
+	assert_throw(this->get_game_data()->get_government_type() != nullptr);
 
 	std::vector<const character *> potential_holders;
 
@@ -462,7 +383,7 @@ QVariantList country_government::get_appointable_office_holders_qvariant_list(co
 
 const character *country_government::get_best_office_holder(const office *office, const character *previous_holder) const
 {
-	assert_throw(this->get_government_type() != nullptr);
+	assert_throw(this->get_game_data()->get_government_type() != nullptr);
 
 	std::vector<const character *> potential_holders;
 	int best_attribute_value = 0;
@@ -540,7 +461,7 @@ bool country_government::can_have_office_holder(const office *office, const char
 	}
 
 	if (office->is_ruler()) {
-		if (character->get_character_class() == nullptr || !vector::contains(this->get_government_type()->get_ruler_character_classes(), character->get_character_class())) {
+		if (character->get_character_class() == nullptr || !vector::contains(this->get_game_data()->get_government_type()->get_ruler_character_classes(), character->get_character_class())) {
 			return false;
 		}
 	} else {

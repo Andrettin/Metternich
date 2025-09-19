@@ -4,7 +4,6 @@
 #include "domain/law_group_container.h"
 #include "economy/commodity_container.h"
 
-Q_MOC_INCLUDE("domain/government_type.h")
 Q_MOC_INCLUDE("domain/law.h")
 Q_MOC_INCLUDE("domain/law_group.h")
 
@@ -13,7 +12,6 @@ namespace metternich {
 class character;
 class country;
 class country_game_data;
-class government_type;
 class law;
 class office;
 
@@ -21,7 +19,6 @@ class country_government final : public QObject
 {
 	Q_OBJECT
 
-	Q_PROPERTY(const metternich::government_type *government_type READ get_government_type NOTIFY government_type_changed)
 	Q_PROPERTY(QVariantList laws READ get_laws_qvariant_list NOTIFY laws_changed)
 	Q_PROPERTY(const metternich::character* ruler READ get_ruler NOTIFY ruler_changed)
 	Q_PROPERTY(QVariantList office_holders READ get_office_holders_qvariant_list NOTIFY office_holders_changed)
@@ -45,18 +42,6 @@ public:
 	{
 		return QString::fromStdString(this->get_office_title_name(office));
 	}
-
-	const metternich::government_type *get_government_type() const
-	{
-		return this->government_type;
-	}
-
-	void set_government_type(const metternich::government_type *government_type);
-	bool can_have_government_type(const metternich::government_type *government_type) const;
-	void check_government_type();
-
-	bool is_tribal() const;
-	bool is_clade() const;
 
 	const law_group_map<const law *> &get_laws() const
 	{
@@ -175,7 +160,6 @@ public:
 
 signals:
 	void office_title_names_changed();
-	void government_type_changed();
 	void laws_changed();
 	void ruler_changed();
 	void office_holders_changed();
@@ -184,7 +168,6 @@ signals:
 
 private:
 	const metternich::country *country = nullptr;
-	const metternich::government_type *government_type = nullptr;
 	law_group_map<const law *> laws;
 	data_entry_map<office, const character *> office_holders;
 	data_entry_map<office, const character *> appointed_office_holders;

@@ -139,7 +139,7 @@ void country::reset_game_data()
 	this->reset_ai();
 
 	this->get_game_data()->set_tier(this->get_default_tier());
-	this->get_government()->set_government_type(this->get_default_government_type());
+	this->get_game_data()->set_government_type(this->get_default_government_type());
 }
 
 country_economy *country::get_economy() const

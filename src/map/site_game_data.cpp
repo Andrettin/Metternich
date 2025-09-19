@@ -241,7 +241,7 @@ site_tier site_game_data::get_tier() const
 const std::string &site_game_data::get_title_name() const
 {
 	const site_tier tier = this->get_tier();
-	return this->site->get_title_name(this->get_owner() ? this->get_owner()->get_government()->get_government_type() : nullptr, tier, this->get_culture());
+	return this->site->get_title_name(this->get_owner() ? this->get_owner()->get_game_data()->get_government_type() : nullptr, tier, this->get_culture());
 }
 
 void site_game_data::set_owner(const country *owner)
@@ -1203,7 +1203,7 @@ const population_class *site_game_data::get_default_literate_population_class() 
 	assert_throw(this->is_built());
 
 	if (this->site->is_settlement()) {
-		if (this->get_owner() != nullptr && !this->get_owner()->get_government()->is_tribal() && !this->get_owner()->get_government()->is_clade()) {
+		if (this->get_owner() != nullptr && !this->get_owner()->get_game_data()->is_tribal() && !this->get_owner()->get_game_data()->is_clade()) {
 			return defines::get()->get_default_literate_population_class();
 		}
 	}

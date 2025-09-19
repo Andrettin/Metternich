@@ -22,6 +22,7 @@
 #include "domain/country_type.h"
 #include "domain/culture.h"
 #include "domain/diplomacy_state.h"
+#include "domain/government_group.h"
 #include "domain/government_type.h"
 #include "domain/idea.h"
 #include "domain/idea_slot.h"
@@ -111,7 +112,7 @@ country_game_data::country_game_data(metternich::country *country)
 	this->technology = make_qunique<country_technology>(country, this);
 
 	connect(this, &country_game_data::tier_changed, this, &country_game_data::title_name_changed);
-	connect(this->get_government(), &country_government::government_type_changed, this, &country_game_data::title_name_changed);
+	connect(this, &country_game_data::government_type_changed, this, &country_game_data::title_name_changed);
 	connect(this, &country_game_data::religion_changed, this, &country_game_data::title_name_changed);
 	connect(this, &country_game_data::rank_changed, this, &country_game_data::type_name_changed);
 
@@ -210,7 +211,7 @@ void country_game_data::do_turn()
 
 		this->check_journal_entries();
 
-		this->get_government()->check_government_type();
+		this->check_government_type();
 		this->check_characters();
 		this->check_ideas();
 	} catch (...) {
@@ -509,17 +510,17 @@ void country_game_data::set_tier(const country_tier tier)
 
 const std::string &country_game_data::get_name() const
 {
-	return this->country->get_name(this->get_government()->get_government_type(), this->get_tier());
+	return this->country->get_name(this->get_government_type(), this->get_tier());
 }
 
 std::string country_game_data::get_titled_name() const
 {
-	return this->country->get_titled_name(this->get_government()->get_government_type(), this->get_tier(), this->get_religion());
+	return this->country->get_titled_name(this->get_government_type(), this->get_tier(), this->get_religion());
 }
 
 const std::string &country_game_data::get_title_name() const
 {
-	return this->country->get_title_name(this->get_government()->get_government_type(), this->get_tier(), this->get_religion());
+	return this->country->get_title_name(this->get_government_type(), this->get_tier(), this->get_religion());
 }
 
 void country_game_data::set_religion(const metternich::religion *religion)
@@ -630,7 +631,6 @@ std::string country_game_data::get_type_name() const
 	return std::string();
 }
 
-
 void country_game_data::set_subject_type(const metternich::subject_type *subject_type)
 {
 	if (subject_type == this->get_subject_type()) {
@@ -643,7 +643,86 @@ void country_game_data::set_subject_type(const metternich::subject_type *subject
 		emit subject_type_changed();
 	}
 
-	this->get_government()->check_government_type();
+	this->check_government_type();
+}
+
+void country_game_data::set_government_type(const metternich::government_type *government_type)
+{
+	if (government_type == this->get_government_type()) {
+		return;
+	}
+
+	if (government_type != nullptr) {
+		if (this->country->is_tribe() && !government_type->get_group()->is_tribal()) {
+			throw std::runtime_error(std::format("Tried to set a non-tribal government type (\"{}\") for a tribal country (\"{}\").", government_type->get_identifier(), this->country->get_identifier()));
+		}
+
+		if (this->country->is_clade() && !government_type->get_group()->is_clade()) {
+			throw std::runtime_error(std::format("Tried to set a non-clade government type (\"{}\") for a clade country (\"{}\").", government_type->get_identifier(), this->country->get_identifier()));
+		}
+	}
+
+	if (this->get_government_type() != nullptr && this->get_government_type()->get_modifier() != nullptr) {
+		this->get_government_type()->get_modifier()->apply(this->country, -1);
+	}
+
+	this->government_type = government_type;
+
+	if (this->get_government_type() != nullptr && this->get_government_type()->get_modifier() != nullptr) {
+		this->get_government_type()->get_modifier()->apply(this->country, 1);
+	}
+
+	if (game::get()->is_running()) {
+		emit government_type_changed();
+	}
+}
+
+bool country_game_data::can_have_government_type(const metternich::government_type *government_type) const
+{
+	if (government_type->get_required_technology() != nullptr && !this->country->get_technology()->has_technology(government_type->get_required_technology())) {
+		return false;
+	}
+
+	for (const law *forbidden_law : government_type->get_forbidden_laws()) {
+		if (this->get_government()->has_law(forbidden_law)) {
+			return false;
+		}
+	}
+
+	if (government_type->get_conditions() != nullptr && !government_type->get_conditions()->check(this->country, read_only_context(this->country))) {
+		return false;
+	}
+
+	return true;
+}
+
+void country_game_data::check_government_type()
+{
+	if (this->get_government_type() != nullptr && this->can_have_government_type(this->get_government_type())) {
+		return;
+	}
+
+	std::vector<const metternich::government_type *> potential_government_types;
+
+	for (const metternich::government_type *government_type : government_type::get_all()) {
+		if (this->can_have_government_type(government_type)) {
+			potential_government_types.push_back(government_type);
+		}
+	}
+
+	assert_throw(!potential_government_types.empty());
+
+	this->set_government_type(vector::get_random(potential_government_types));
+}
+
+bool country_game_data::is_tribal() const
+{
+	return this->get_government_type()->get_group()->is_tribal();
+}
+
+bool country_game_data::is_clade() const
+{
+	return this->get_government_type()->get_group()->is_clade();
 }
 
 QVariantList country_game_data::get_provinces_qvariant_list() const
@@ -1318,9 +1397,9 @@ bool country_game_data::can_attack(const metternich::country *other_country) con
 		return false;
 	}
 
-	if (other_country->get_government()->is_clade()) {
+	if (other_country->is_clade()) {
 		return true;
-	} else if (this->get_government()->is_clade()) {
+	} else if (this->is_clade()) {
 		return false;
 	}
 
@@ -1334,7 +1413,7 @@ bool country_game_data::can_attack(const metternich::country *other_country) con
 			break;
 	}
 
-	if (other_country->get_government()->is_tribal() || this->get_government()->is_tribal()) {
+	if (other_country->get_game_data()->is_tribal() || this->is_tribal()) {
 		return true;
 	}
 
@@ -1792,7 +1871,7 @@ void country_game_data::change_military_score(const int change)
 
 const population_class *country_game_data::get_default_population_class() const
 {
-	if (this->get_government()->is_tribal() || this->get_government()->is_clade()) {
+	if (this->is_tribal() || this->is_clade()) {
 		return defines::get()->get_default_tribal_population_class();
 	} else {
 		return defines::get()->get_default_population_class();
@@ -2582,7 +2661,7 @@ void country_game_data::check_characters()
 
 void country_game_data::generate_ruler()
 {
-	const government_type *government_type = this->get_government()->get_government_type();
+	const metternich::government_type *government_type = this->get_government_type();
 	assert_throw(government_type != nullptr);
 
 	std::vector<const species *> species_list = this->country->get_culture()->get_species();

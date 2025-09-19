@@ -592,13 +592,13 @@ void game::apply_history(const metternich::scenario *scenario)
 			}
 
 			if (country_history->get_government_type() != nullptr) {
-				country_government->set_government_type(country_history->get_government_type());
+				country_game_data->set_government_type(country_history->get_government_type());
 
 				if (country_history->get_government_type()->get_required_technology() != nullptr) {
 					country_technology->add_technology_with_prerequisites(country_history->get_government_type()->get_required_technology());
 				}
 			} else if (country->get_default_government_type() != nullptr) {
-				country_government->set_government_type(country->get_default_government_type());
+				country_game_data->set_government_type(country->get_default_government_type());
 
 				if (country->get_default_government_type()->get_required_technology() != nullptr) {
 					country_technology->add_technology_with_prerequisites(country->get_default_government_type()->get_required_technology());
@@ -660,7 +660,6 @@ void game::apply_history(const metternich::scenario *scenario)
 
 		for (const country *country : this->get_countries()) {
 			country_game_data *country_game_data = country->get_game_data();
-			country_government *country_government = country->get_government();
 
 			if (country_game_data->get_overlord() != nullptr) {
 				if (country_game_data->get_subject_type() == nullptr) {
@@ -674,7 +673,7 @@ void game::apply_history(const metternich::scenario *scenario)
 				}
 			}
 
-			country_government->check_government_type();
+			country_game_data->check_government_type();
 		}
 
 		this->apply_sites();
@@ -1554,7 +1553,7 @@ QCoro::Task<void> game::on_setup_finished()
 		country_economy *country_economy = country->get_economy();
 		country_government *country_government = country->get_government();
 
-		country_government->check_government_type();
+		country_game_data->check_government_type();
 		country_government->check_laws();
 
 		for (const office *office : office::get_all()) {

@@ -25,6 +25,7 @@ Q_MOC_INCLUDE("domain/country_government.h")
 Q_MOC_INCLUDE("domain/country_military.h")
 Q_MOC_INCLUDE("domain/country_technology.h")
 Q_MOC_INCLUDE("domain/country_tier.h")
+Q_MOC_INCLUDE("domain/government_type.h")
 Q_MOC_INCLUDE("domain/journal_entry.h")
 Q_MOC_INCLUDE("domain/subject_type.h")
 Q_MOC_INCLUDE("map/site.h")
@@ -50,6 +51,7 @@ class country_technology;
 class culture;
 class event;
 class flag;
+class government_type;
 class idea;
 class idea_slot;
 class journal_entry;
@@ -97,6 +99,7 @@ class country_game_data final : public QObject
 	Q_PROPERTY(const metternich::country* overlord READ get_overlord NOTIFY overlord_changed)
 	Q_PROPERTY(QString type_name READ get_type_name_qstring NOTIFY type_name_changed)
 	Q_PROPERTY(const metternich::subject_type* subject_type READ get_subject_type NOTIFY subject_type_changed)
+	Q_PROPERTY(const metternich::government_type *government_type READ get_government_type NOTIFY government_type_changed)
 	Q_PROPERTY(QVariantList provinces READ get_provinces_qvariant_list NOTIFY provinces_changed)
 	Q_PROPERTY(const metternich::site* capital READ get_capital NOTIFY capital_changed)
 	Q_PROPERTY(bool coastal READ is_coastal NOTIFY provinces_changed)
@@ -250,6 +253,18 @@ public:
 	}
 
 	void set_subject_type(const metternich::subject_type *subject_type);
+
+	const metternich::government_type *get_government_type() const
+	{
+		return this->government_type;
+	}
+
+	void set_government_type(const metternich::government_type *government_type);
+	bool can_have_government_type(const metternich::government_type *government_type) const;
+	void check_government_type();
+
+	bool is_tribal() const;
+	bool is_clade() const;
 
 	const std::vector<const province *> &get_provinces() const
 	{
@@ -1064,6 +1079,7 @@ signals:
 	void overlord_changed();
 	void type_name_changed();
 	void subject_type_changed();
+	void government_type_changed();
 	void diplomacy_states_changed();
 	void offered_diplomacy_states_changed();
 	void consulates_changed();
@@ -1095,6 +1111,7 @@ private:
 	country_tier tier{};
 	const metternich::religion *religion = nullptr;
 	const metternich::country *overlord = nullptr;
+	const metternich::government_type *government_type = nullptr;
 	std::vector<const province *> provinces;
 	const site *capital = nullptr;
 	int settlement_count = 0; //only includes built settlements

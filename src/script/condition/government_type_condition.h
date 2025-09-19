@@ -1,7 +1,7 @@
 #pragma once
 
 #include "domain/country.h"
-#include "domain/country_government.h"
+#include "domain/country_game_data.h"
 #include "domain/government_type.h"
 #include "script/condition/condition.h"
 
@@ -26,7 +26,7 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		return scope->get_government()->get_government_type() == this->government_type;
+		return scope->get_game_data()->get_government_type() == this->government_type;
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override

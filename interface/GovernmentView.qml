@@ -18,12 +18,12 @@ Item {
 		anchors.top: government_type_label.bottom
 		anchors.topMargin: 8 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
-		icon_identifier: country_game_data.government.government_type.icon.identifier
-		name: country_game_data.government.government_type.name
-		tooltip: country_game_data.government.government_type.name + (modifier_string.length > 0 ? format_text(small_text("\n"
+		icon_identifier: country_game_data.government_type.icon.identifier
+		name: country_game_data.government_type.name
+		tooltip: country_game_data.government_type.name + (modifier_string.length > 0 ? format_text(small_text("\n"
 			+ "\n" + modifier_string)) : "")
 		
-		readonly property string modifier_string: country_game_data.government.government_type.get_modifier_string(country)
+		readonly property string modifier_string: country_game_data.government_type.get_modifier_string(country)
 	}
 	
 	SmallText {
