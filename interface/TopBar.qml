@@ -10,6 +10,7 @@ Rectangle {
 	readonly property var stored_commodities: metternich.game.player_country.game_data.economy.stored_commodities
 	readonly property var regency_commodity: metternich.get_commodity("regency")
 	readonly property var top_bar_commodities: [metternich.defines.wealth_commodity, regency_commodity]
+	property bool commodities_visible: true
 	
 	PanelTiledBackground {
 	}
@@ -50,6 +51,7 @@ Rectangle {
 		anchors.left: date_label.left
 		anchors.leftMargin: 128 * scale_factor
 		anchors.right: parent.right
+		visible: commodities_visible
 		
 		Repeater {
 			model: top_bar_commodities
