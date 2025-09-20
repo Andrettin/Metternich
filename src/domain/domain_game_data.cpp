@@ -2637,12 +2637,6 @@ std::vector<const character *> domain_game_data::get_characters() const
 	vector::merge(characters, this->get_military()->get_leaders());
 	vector::merge(characters, this->get_civilian_characters());
 
-	for (const province *province : this->get_provinces()) {
-		if (province->get_game_data()->get_governor() != nullptr) {
-			characters.push_back(province->get_game_data()->get_governor());
-		}
-	}
-
 	return characters;
 }
 
@@ -2665,10 +2659,6 @@ void domain_game_data::check_characters()
 	}
 
 	this->get_government()->check_office_holders();
-
-	for (const province *province : this->get_provinces()) {
-		province->get_game_data()->check_governor();
-	}
 }
 
 void domain_game_data::generate_ruler()

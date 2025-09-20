@@ -77,14 +77,6 @@ void character_trait::process_gsml_scope(const gsml_data &scope)
 		auto effect_list = std::make_unique<metternich::effect_list<const domain>>();
 		effect_list->process_gsml_data(scope);
 		this->advisor_effects = std::move(effect_list);
-	} else if (tag == "governor_modifier") {
-		auto modifier = std::make_unique<metternich::modifier<const province>>();
-		modifier->process_gsml_data(scope);
-		this->governor_modifier = std::move(modifier);
-	} else if (tag == "scaled_governor_modifier") {
-		auto modifier = std::make_unique<metternich::modifier<const province>>();
-		modifier->process_gsml_data(scope);
-		this->scaled_governor_modifier = std::move(modifier);
 	} else if (tag == "leader_modifier") {
 		auto modifier = std::make_unique<metternich::modifier<const character>>();
 		modifier->process_gsml_data(scope);
@@ -118,10 +110,6 @@ void character_trait::check() const
 
 	if (this->get_advisor_effects() != nullptr) {
 		this->get_advisor_effects()->check();
-	}
-
-	if (this->get_scaled_governor_modifier() != nullptr && this->get_attribute() == nullptr) {
-		throw std::runtime_error(std::format("Character trait \"{}\" with scaled governor modifier has no attribute.", this->get_identifier()));
 	}
 
 	if (this->get_scaled_leader_modifier() != nullptr && this->get_attribute() == nullptr) {

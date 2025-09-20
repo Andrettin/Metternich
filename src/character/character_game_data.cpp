@@ -357,10 +357,6 @@ std::string character_game_data::get_titled_name() const
 		return std::format("{} {}", this->get_country()->get_government()->get_office_title_name(this->get_office()), this->character->get_full_name());
 	}
 
-	if (this->is_governor()) {
-		return std::format("{} {}", this->character->get_governable_province()->get_game_data()->get_governor_title_name(), this->character->get_full_name());
-	}
-
 	return this->character->get_full_name();
 }
 
@@ -467,10 +463,6 @@ void character_game_data::die()
 
 	if (this->get_military_unit() != nullptr) {
 		this->get_country()->get_military()->on_leader_died(this->character);
-	}
-
-	if (this->is_governor()) {
-		this->character->get_governable_province()->get_game_data()->on_governor_died(this->character);
 	}
 
 	assert_throw(this->get_office() == nullptr);
@@ -619,9 +611,6 @@ void character_game_data::change_attribute_value(const character_attribute *attr
 	if (this->get_office() != nullptr) {
 		this->apply_office_modifier(this->domain, this->get_office(), -1);
 	}
-	if (this->is_governor()) {
-		this->apply_governor_modifier(this->character->get_governable_province(), -1);
-	}
 	if (this->character->has_role(character_role::leader)) {
 		for (const character_trait *trait : this->get_traits()) {
 			if (trait->get_scaled_leader_modifier() != nullptr && attribute == trait->get_attribute()) {
@@ -638,9 +627,6 @@ void character_game_data::change_attribute_value(const character_attribute *attr
 
 	if (this->get_office() != nullptr) {
 		this->apply_office_modifier(this->domain, this->get_office(), 1);
-	}
-	if (this->is_governor()) {
-		this->apply_governor_modifier(this->character->get_governable_province(), 1);
 	}
 	if (this->character->has_role(character_role::leader)) {
 		for (const character_trait *trait : this->get_traits()) {
@@ -914,14 +900,6 @@ void character_game_data::on_trait_gained(const character_trait *trait, const in
 		}
 	}
 
-	if (this->is_governor()) {
-		assert_throw(this->get_country() != nullptr);
-
-		if (trait->get_governor_modifier() != nullptr || trait->get_scaled_governor_modifier() != nullptr) {
-			this->apply_trait_governor_modifier(trait, this->character->get_governable_province(), multiplier);
-		}
-	}
-
 	for (const auto &[attribute, bonus] : trait->get_attribute_bonuses()) {
 		this->change_attribute_value(attribute, bonus * multiplier);
 	}
@@ -1151,59 +1129,6 @@ void character_game_data::apply_trait_office_modifier(const character_trait *tra
 
 	if (trait->get_scaled_office_modifier(office) != nullptr) {
 		trait->get_scaled_office_modifier(office)->apply(domain, std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()) * multiplier);
-	}
-}
-
-bool character_game_data::is_governor() const
-{
-	return this->character->get_governable_province() != nullptr && this->character->get_governable_province()->get_game_data()->get_governor() == this->character;
-}
-
-std::string character_game_data::get_governor_modifier_string(const metternich::province *province) const
-{
-	assert_throw(this->character->has_role(character_role::governor));
-
-	std::string str;
-
-	for (const character_trait *trait : this->get_traits()) {
-		if (trait->get_governor_modifier() == nullptr && trait->get_scaled_governor_modifier() == nullptr) {
-			continue;
-		}
-
-		if (!str.empty()) {
-			str += "\n";
-		}
-
-		str += string::highlight(trait->get_name());
-		if (trait->get_governor_modifier() != nullptr) {
-			str += "\n" + trait->get_governor_modifier()->get_string(province, 1, 1);
-		}
-		if (trait->get_scaled_governor_modifier() != nullptr) {
-			str += "\n" + trait->get_scaled_governor_modifier()->get_string(province, std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()), 1);
-		}
-	}
-
-	return str;
-}
-
-void character_game_data::apply_governor_modifier(const metternich::province *province, const int multiplier) const
-{
-	assert_throw(this->character->has_role(character_role::governor));
-	assert_throw(province != nullptr);
-
-	for (const character_trait *trait : this->get_traits()) {
-		this->apply_trait_governor_modifier(trait, province, multiplier);
-	}
-}
-
-void character_game_data::apply_trait_governor_modifier(const character_trait *trait, const metternich::province *province, const int multiplier) const
-{
-	if (trait->get_governor_modifier() != nullptr) {
-		trait->get_governor_modifier()->apply(province, multiplier);
-	}
-
-	if (trait->get_scaled_governor_modifier() != nullptr) {
-		trait->get_scaled_governor_modifier()->apply(province, std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()) * multiplier);
 	}
 }
 

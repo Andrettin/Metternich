@@ -55,7 +55,6 @@ class character_game_data final : public QObject
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(bool ruler READ is_ruler NOTIFY ruler_changed)
 	Q_PROPERTY(const metternich::office* office READ get_office NOTIFY office_changed)
-	Q_PROPERTY(bool governor READ is_governor NOTIFY governor_changed)
 	Q_PROPERTY(QVariantList spells READ get_spells_qvariant_list NOTIFY spells_changed)
 	Q_PROPERTY(QVariantList items READ get_items_qvariant_list NOTIFY items_changed)
 	Q_PROPERTY(bool deployable READ is_deployable NOTIFY spells_changed)
@@ -267,17 +266,6 @@ public:
 	void apply_office_modifier(const metternich::domain *domain, const metternich::office *office, const int multiplier) const;
 	void apply_trait_office_modifier(const character_trait *trait, const metternich::domain *domain, const metternich::office *office, const int multiplier) const;
 
-	bool is_governor() const;
-	std::string get_governor_modifier_string(const metternich::province *province) const;
-
-	Q_INVOKABLE QString get_governor_modifier_qstring(const metternich::province *province) const
-	{
-		return QString::fromStdString(this->get_governor_modifier_string(province));
-	}
-
-	void apply_governor_modifier(const metternich::province *province, const int multiplier) const;
-	void apply_trait_governor_modifier(const character_trait *trait, const metternich::province *province, const int multiplier) const;
-
 	metternich::military_unit *get_military_unit() const
 	{
 		return this->military_unit;
@@ -444,7 +432,6 @@ signals:
 	void scripted_modifiers_changed();
 	void ruler_changed();
 	void office_changed();
-	void governor_changed();
 	void spells_changed();
 	void items_changed();
 	void equipped_items_changed();

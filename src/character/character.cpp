@@ -264,10 +264,6 @@ void character::initialize()
 		}
 	}
 
-	if (this->get_governable_province() != nullptr) {
-		this->governable_province->add_governor(this);
-	}
-
 	character_base::initialize();
 }
 
@@ -285,13 +281,6 @@ void character::check() const
 
 	for (const character_role role : this->get_roles()) {
 		switch (role) {
-			case character_role::governor:
-			{
-				if (this->get_governable_province() == nullptr) {
-					throw std::runtime_error(std::format("Character \"{}\" is a governor, but has no governable province.", this->get_identifier()));
-				}
-				break;
-			}
 			case character_role::leader:
 				if (this->get_military_unit_category() == military_unit_category::none) {
 					throw std::runtime_error(std::format("Character \"{}\" is a leader, but has no military unit category.", this->get_identifier()));
@@ -309,10 +298,6 @@ void character::check() const
 			default:
 				break;
 		}
-	}
-
-	if (!this->has_role(character_role::governor) && this->get_governable_province() != nullptr) {
-		throw std::runtime_error(std::format("Character \"{}\" has a governable province, but is not a governor.", this->get_identifier()));
 	}
 
 	if (this->get_species() == nullptr) {

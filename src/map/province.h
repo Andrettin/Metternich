@@ -240,16 +240,6 @@ public:
 		this->sites.push_back(site);
 	}
 
-	const std::vector<const character *> &get_governors() const
-	{
-		return this->governors;
-	}
-
-	void add_governor(const character *character)
-	{
-		this->governors.push_back(character);
-	}
-
 signals:
 	void changed();
 
@@ -272,7 +262,6 @@ private:
 	province_map<const terrain_feature *> border_rivers;
 	std::vector<const metternich::world *> generation_worlds; //worlds other than its own where this province can be generated
 	std::vector<const site *> sites; //sites located in this province, used for map generation
-	std::vector<const character *> governors;
 	qunique_ptr<province_history> history;
 	qunique_ptr<province_map_data> map_data;
 	qunique_ptr<province_game_data> game_data;

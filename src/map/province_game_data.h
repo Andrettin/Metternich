@@ -52,7 +52,6 @@ class province_game_data final : public QObject
 {
 	Q_OBJECT
 
-	Q_PROPERTY(QString governor_title_name READ get_governor_title_name_qstring NOTIFY governor_title_name_changed)
 	Q_PROPERTY(const metternich::domain* owner READ get_owner NOTIFY owner_changed)
 	Q_PROPERTY(const metternich::culture* culture READ get_culture NOTIFY culture_changed)
 	Q_PROPERTY(const metternich::religion* religion READ get_religion NOTIFY religion_changed)
@@ -65,7 +64,6 @@ class province_game_data final : public QObject
 	Q_PROPERTY(QPoint center_tile_pos READ get_center_tile_pos CONSTANT)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(metternich::population* population READ get_population CONSTANT)
-	Q_PROPERTY(const metternich::character* governor READ get_governor NOTIFY governor_changed)
 	Q_PROPERTY(QVariantList military_units READ get_military_units_qvariant_list NOTIFY military_units_changed)
 	Q_PROPERTY(QVariantList military_unit_category_counts READ get_military_unit_category_counts_qvariant_list NOTIFY military_unit_category_counts_changed)
 	Q_PROPERTY(QVariantList entering_armies READ get_entering_armies_qvariant_list NOTIFY entering_armies_changed)
@@ -89,13 +87,6 @@ public:
 	void do_military_unit_recruitment();
 
 	bool is_on_map() const;
-
-	const std::string &get_governor_title_name() const;
-
-	QString get_governor_title_name_qstring() const
-	{
-		return QString::fromStdString(this->get_governor_title_name());
-	}
 
 	const domain *get_owner() const
 	{
@@ -241,15 +232,6 @@ public:
 	{
 		return this->population.get();
 	}
-
-	const character *get_governor() const
-	{
-		return this->governor;
-	}
-
-	void set_governor(const character *governor);
-	void check_governor();
-	void on_governor_died(const character *governor);
 
 	const std::vector<military_unit *> &get_military_units() const
 	{
@@ -506,7 +488,6 @@ public:
 	province_game_data &operator =(const province_game_data &other) = delete;
 
 signals:
-	void governor_title_name_changed();
 	void owner_changed();
 	void culture_changed();
 	void religion_changed();
@@ -514,7 +495,6 @@ signals:
 	void map_image_changed();
 	void scripted_modifiers_changed();
 	void population_units_changed();
-	void governor_changed();
 	void military_units_changed();
 	void military_unit_category_counts_changed();
 	void entering_armies_changed();
@@ -535,7 +515,6 @@ private:
 	scripted_province_modifier_map<int> scripted_modifiers;
 	std::vector<population_unit *> population_units;
 	qunique_ptr<metternich::population> population;
-	const character *governor = nullptr;
 	std::vector<military_unit *> military_units;
 	std::map<military_unit_category, int> military_unit_category_counts;
 	std::vector<army *> entering_armies; //armies entering this province

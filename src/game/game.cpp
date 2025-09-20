@@ -1575,8 +1575,6 @@ QCoro::Task<void> game::on_setup_finished()
 		}
 
 		for (const province *province : domain_game_data->get_provinces()) {
-			province->get_game_data()->check_governor();
-
 			for (const site *site : province->get_game_data()->get_sites()) {
 				for (const improvement *improvement : improvement::get_all()) {
 					if (improvement->get_free_on_start_conditions() == nullptr) {

@@ -72,10 +72,6 @@ province_game_data::province_game_data(const metternich::province *province)
 	this->population = make_qunique<metternich::population>();
 	connect(this->get_population(), &population::main_culture_changed, this, &province_game_data::on_population_main_culture_changed);
 	connect(this->get_population(), &population::main_religion_changed, this, &province_game_data::on_population_main_religion_changed);
-
-	connect(this, &province_game_data::culture_changed, this, &province_game_data::governor_title_name_changed);
-	connect(this, &province_game_data::religion_changed, this, &province_game_data::governor_title_name_changed);
-	connect(this, &province_game_data::governor_changed, this, &province_game_data::governor_title_name_changed);
 }
 
 province_game_data::~province_game_data()
@@ -250,13 +246,6 @@ void province_game_data::do_military_unit_recruitment()
 bool province_game_data::is_on_map() const
 {
 	return this->province->get_map_data()->is_on_map();
-}
-
-const std::string &province_game_data::get_governor_title_name() const
-{
-	static const std::string governor_title_name = "Governor";
-	//FIXME: add cultural variation and etc. for governor title names
-	return governor_title_name;
 }
 
 void province_game_data::set_owner(const domain *domain)
@@ -924,95 +913,6 @@ void province_game_data::remove_population_unit(population_unit *population_unit
 void province_game_data::clear_population_units()
 {
 	this->population_units.clear();
-}
-
-void province_game_data::set_governor(const character *governor)
-{
-	if (governor == this->get_governor()) {
-		return;
-	}
-
-	const character *old_governor = this->get_governor();
-
-	if (old_governor != nullptr) {
-		old_governor->get_game_data()->apply_governor_modifier(this->province, -1);
-		old_governor->get_game_data()->set_country(nullptr);
-	}
-
-	this->governor = governor;
-
-	if (this->get_governor() != nullptr) {
-		this->get_governor()->get_game_data()->apply_governor_modifier(this->province, 1);
-		this->get_governor()->get_game_data()->set_country(this->get_owner());
-	}
-
-	if (game::get()->is_running()) {
-		emit governor_changed();
-
-		if (old_governor != nullptr) {
-			emit old_governor->get_game_data()->governor_changed();
-		}
-
-		if (governor != nullptr) {
-			emit governor->get_game_data()->governor_changed();
-		}
-	}
-}
-
-void province_game_data::check_governor()
-{
-	if (this->get_owner() == nullptr || this->get_owner()->get_game_data()->is_under_anarchy()) {
-		this->set_governor(nullptr);
-		return;
-	}
-
-	//if the province has no governor, see if there is any character who can become its governor
-	if (this->get_governor() == nullptr) {
-		std::vector<const character *> potential_governors;
-
-		for (const character *character : this->province->get_governors()) {
-			assert_throw(character->has_role(character_role::governor));
-
-			const character_game_data *character_game_data = character->get_game_data();
-			if (character_game_data->get_country() != nullptr) {
-				continue;
-			}
-
-			if (character_game_data->is_dead()) {
-				continue;
-			}
-
-			if (character->get_conditions() != nullptr && !character->get_conditions()->check(this->get_owner(), read_only_context(this->get_owner()))) {
-				continue;
-			}
-
-			potential_governors.push_back(character);
-		}
-
-		if (!potential_governors.empty()) {
-			this->set_governor(vector::get_random(potential_governors));
-
-			if (this->get_owner() == game::get()->get_player_country() && game::get()->is_running()) {
-				const portrait *interior_minister_portrait = this->get_owner()->get_government()->get_interior_minister_portrait();
-
-				engine_interface::get()->add_notification(std::format("New Governor of {}", this->get_current_cultural_name()), interior_minister_portrait, std::format("{} has become the new governor of {}!\n\n{}", this->get_governor()->get_full_name(), this->get_current_cultural_name(), this->get_governor()->get_game_data()->get_governor_modifier_string(this->province)));
-			}
-		}
-	}
-}
-
-void province_game_data::on_governor_died(const character *governor)
-{
-	if (game::get()->is_running()) {
-		if (this->get_owner() == game::get()->get_player_country()) {
-			const portrait *interior_minister_portrait = this->get_owner()->get_government()->get_interior_minister_portrait();
-
-			engine_interface::get()->add_notification(std::format("Governor of {} Retired", this->get_current_cultural_name()), interior_minister_portrait, std::format("Your Excellency, after a distinguished career in our service, governor {} of {} has decided to retire.", governor->get_full_name(), this->get_current_cultural_name()));
-		}
-	}
-
-	this->set_governor(nullptr);
-	this->check_governor();
 }
 
 QVariantList province_game_data::get_military_units_qvariant_list() const

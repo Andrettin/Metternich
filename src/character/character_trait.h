@@ -119,16 +119,6 @@ public:
 		return this->advisor_effects.get();
 	}
 
-	const metternich::modifier<const province> *get_governor_modifier() const
-	{
-		return this->governor_modifier.get();
-	}
-
-	const metternich::modifier<const province> *get_scaled_governor_modifier() const
-	{
-		return this->scaled_governor_modifier.get();
-	}
-
 	const metternich::modifier<const character> *get_leader_modifier() const
 	{
 		return this->leader_modifier.get();
@@ -161,8 +151,6 @@ private:
 	std::unique_ptr<const metternich::modifier<const domain>> advisor_modifier;
 	std::unique_ptr<const metternich::modifier<const domain>> scaled_advisor_modifier;
 	std::unique_ptr<const effect_list<const domain>> advisor_effects;
-	std::unique_ptr<const metternich::modifier<const province>> governor_modifier;
-	std::unique_ptr<const metternich::modifier<const province>> scaled_governor_modifier;
 	std::unique_ptr<const metternich::modifier<const character>> leader_modifier;
 	std::unique_ptr<const metternich::modifier<const character>> scaled_leader_modifier;
 	std::unique_ptr<const metternich::modifier<military_unit>> military_unit_modifier;
