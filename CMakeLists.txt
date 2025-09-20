@@ -344,7 +344,6 @@ set(character_HDRS
 	src/character/character_data_model.h
 	src/character/character_game_data.h
 	src/character/character_history.h
-	src/character/character_role.h
 	src/character/character_trait.h
 	src/character/character_trait_type.h
 	src/character/dynasty.h
@@ -580,7 +579,6 @@ set(script_condition_HDRS
 	src/script/condition/character_condition.h
 	src/script/condition/character_attribute_condition.h
 	src/script/condition/character_class_condition.h
-	src/script/condition/character_role_condition.h
 	src/script/condition/coastal_condition.h
 	src/script/condition/commodity_condition.h
 	src/script/condition/condition.h

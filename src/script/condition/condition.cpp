@@ -30,7 +30,6 @@
 #include "script/condition/character_condition.h"
 #include "script/condition/character_attribute_condition.h"
 #include "script/condition/character_class_condition.h"
-#include "script/condition/character_role_condition.h"
 #include "script/condition/coastal_condition.h"
 #include "script/condition/commodity_condition.h"
 #include "script/condition/condition_base.ipp"
@@ -125,8 +124,6 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			return std::make_unique<character_condition>(value, condition_operator);
 		} else if (key == "character_class") {
 			return std::make_unique<character_class_condition>(value, condition_operator);
-		} else if (key == "character_role") {
-			return std::make_unique<character_role_condition>(value, condition_operator);
 		} else if (key == "primary_attribute") {
 			return std::make_unique<primary_attribute_condition>(value, condition_operator);
 		} else if (key == "trait") {

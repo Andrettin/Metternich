@@ -1,7 +1,6 @@
 #pragma once
 
 #include "character/character.h"
-#include "character/character_role.h"
 #include "domain/country_government.h"
 #include "domain/domain.h"
 #include "script/condition/condition.h"

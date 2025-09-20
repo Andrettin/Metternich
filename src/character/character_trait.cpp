@@ -65,14 +65,6 @@ void character_trait::process_gsml_scope(const gsml_data &scope)
 			modifier->process_gsml_data(child_scope);
 			this->scaled_office_modifiers[office] = std::move(modifier);
 		});
-	} else if (tag == "leader_modifier") {
-		auto modifier = std::make_unique<metternich::modifier<const character>>();
-		modifier->process_gsml_data(scope);
-		this->leader_modifier = std::move(modifier);
-	} else if (tag == "scaled_leader_modifier") {
-		auto modifier = std::make_unique<metternich::modifier<const character>>();
-		modifier->process_gsml_data(scope);
-		this->scaled_leader_modifier = std::move(modifier);
 	} else if (tag == "military_unit_modifier") {
 		auto modifier = std::make_unique<metternich::modifier<military_unit>>();
 		modifier->process_gsml_data(scope);
@@ -90,10 +82,6 @@ void character_trait::check() const
 
 	if (!this->scaled_office_modifiers.empty() && this->get_attribute() == nullptr) {
 		throw std::runtime_error(std::format("Character trait \"{}\" with scaled office modifier has no attribute.", this->get_identifier()));
-	}
-
-	if (this->get_scaled_leader_modifier() != nullptr && this->get_attribute() == nullptr) {
-		throw std::runtime_error(std::format("Character trait \"{}\" with scaled leader modifier has no attribute.", this->get_identifier()));
 	}
 
 	trait_base::check();

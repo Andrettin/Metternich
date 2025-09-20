@@ -45,7 +45,6 @@ georg_ludwig_von_schwarzenberg = { #Source: "Encyclopædia Britannica", 1911, vo
 karl_philipp_zu_schwarzenberg = { #Source: "Encyclopædia Britannica", 1911, vol. 24, pp. 390-391.
 	name = "Karl Philipp"
 	dynasty = schwarzenberg
-	role = leader
 	character_class = warrior
 	culture = austrian
 	religion = catholic

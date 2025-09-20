@@ -6,7 +6,6 @@
 #include "character/character_attribute.h"
 #include "character/character_class.h"
 #include "character/character_history.h"
-#include "character/character_role.h"
 #include "character/character_trait.h"
 #include "character/character_trait_type.h"
 #include "database/defines.h"
@@ -39,8 +38,6 @@
 #include "species/species.h"
 #include "spell/spell.h"
 #include "ui/portrait.h"
-#include "unit/civilian_unit.h"
-#include "unit/civilian_unit_type.h"
 #include "unit/military_unit.h"
 #include "unit/military_unit_category.h"
 #include "util/assert_util.h"
@@ -255,61 +252,14 @@ void character_game_data::apply_history(const QDate &start_date)
 
 	const metternich::domain *domain = character_history->get_country();
 
-	if (!domain->get_game_data()->is_under_anarchy()) {
-		domain_game_data *domain_game_data = domain->get_game_data();
-		country_technology *country_technology = domain->get_technology();
-
-		if (this->character->has_role(character_role::leader)) {
+	if (domain != nullptr && !domain->get_game_data()->is_under_anarchy()) {
+		if (this->character->get_military_unit_category() != military_unit_category::none) {
 			const province *deployment_province = character_history->get_deployment_province();
-			if (deployment_province == nullptr && domain_game_data->get_capital_province() != nullptr) {
-				deployment_province = domain_game_data->get_capital_province();
-			}
-
-			assert_throw(deployment_province != nullptr);
-
-			if (deployment_province->is_water_zone() || deployment_province->get_game_data()->get_owner() == domain) {
-				assert_throw(domain != nullptr);
-				this->deploy_to_province(domain, deployment_province);
-			}
-		} else if (this->character->has_role(character_role::civilian)) {
-			const site *deployment_site = character_history->get_deployment_site();
-			if (deployment_site == nullptr && domain_game_data->get_capital() != nullptr) {
-				deployment_site = domain_game_data->get_capital();
-			}
-
-			assert_throw(deployment_site != nullptr);
-
-			if (!deployment_site->get_game_data()->is_on_map()) {
-				return;
-			}
-
-			if (deployment_site->get_game_data()->get_owner() != domain) {
-				return;
-			}
-
-			const civilian_unit_type *type = this->character->get_civilian_unit_type();
-			assert_throw(type != nullptr);
-
-			if (type->get_required_technology() != nullptr) {
-				country_technology->add_technology_with_prerequisites(type->get_required_technology());
-			}
-
-			QPoint tile_pos = deployment_site->get_game_data()->get_tile_pos();
-
-			if (map::get()->get_tile(tile_pos)->get_civilian_unit() != nullptr) {
-				const std::optional<QPoint> nearest_tile_pos = map::get()->get_nearest_available_tile_pos_for_civilian_unit(tile_pos);
-				if (!nearest_tile_pos.has_value()) {
-					log::log_error(std::format("Cannot deploy civilian character \"{}\", since the tile of its deployment site (\"{}\") is already occupied by another civilian unit, and so are any valid tiles near it.", this->character->get_identifier(), deployment_site->get_identifier()));
-					return;
+			if (deployment_province != nullptr) {
+				if (deployment_province->is_water_zone() || deployment_province->get_game_data()->get_owner() == domain) {
+					this->deploy_to_province(domain, deployment_province);
 				}
-
-				tile_pos = nearest_tile_pos.value();
 			}
-
-			auto civilian_unit = make_qunique<metternich::civilian_unit>(this->character, domain);
-			civilian_unit->set_tile_pos(tile_pos);
-
-			domain_game_data->add_civilian_unit(std::move(civilian_unit));
 		}
 	}
 }
@@ -455,10 +405,6 @@ void character_game_data::die()
 	if (this->get_office() != nullptr) {
 		assert_throw(this->get_country() != nullptr);
 		this->get_country()->get_government()->on_office_holder_died(this->get_office(), this->character);
-	}
-
-	if (this->get_civilian_unit() != nullptr) {
-		this->get_country()->get_game_data()->on_civilian_character_died(this->character);
 	}
 
 	if (this->get_military_unit() != nullptr) {
@@ -611,13 +557,6 @@ void character_game_data::change_attribute_value(const character_attribute *attr
 	if (this->get_office() != nullptr) {
 		this->apply_office_modifier(this->domain, this->get_office(), -1);
 	}
-	if (this->character->has_role(character_role::leader)) {
-		for (const character_trait *trait : this->get_traits()) {
-			if (trait->get_scaled_leader_modifier() != nullptr && attribute == trait->get_attribute()) {
-				this->apply_modifier(trait->get_scaled_leader_modifier(), -std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()));
-			}
-		}
-	}
 
 	const int new_value = (this->attribute_values[attribute] += change);
 
@@ -627,13 +566,6 @@ void character_game_data::change_attribute_value(const character_attribute *attr
 
 	if (this->get_office() != nullptr) {
 		this->apply_office_modifier(this->domain, this->get_office(), 1);
-	}
-	if (this->character->has_role(character_role::leader)) {
-		for (const character_trait *trait : this->get_traits()) {
-			if (trait->get_scaled_leader_modifier() != nullptr && attribute == trait->get_attribute()) {
-				this->apply_modifier(trait->get_scaled_leader_modifier(), std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()));
-			}
-		}
 	}
 }
 
@@ -906,16 +838,6 @@ void character_game_data::on_trait_gained(const character_trait *trait, const in
 
 	if (trait->get_modifier() != nullptr) {
 		this->apply_modifier(trait->get_modifier(), multiplier);
-	}
-
-	if (this->character->has_role(character_role::leader)) {
-		if (trait->get_leader_modifier() != nullptr) {
-			this->apply_modifier(trait->get_leader_modifier(), multiplier);
-		}
-
-		if (trait->get_scaled_leader_modifier() != nullptr) {
-			this->apply_modifier(trait->get_scaled_leader_modifier(), std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()) * multiplier);
-		}
 	}
 
 	if (trait->get_military_unit_modifier() != nullptr && this->get_military_unit() != nullptr) {

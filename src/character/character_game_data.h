@@ -16,7 +16,6 @@ namespace metternich {
 class character;
 class character_attribute;
 class character_trait;
-class civilian_unit;
 class domain;
 class enchantment;
 class item;
@@ -290,20 +289,6 @@ public:
 	void deploy_to_province(const metternich::domain *domain, const province *province);
 	void undeploy();
 
-	metternich::civilian_unit *get_civilian_unit() const
-	{
-		return this->civilian_unit;
-	}
-
-	void set_civilian_unit(metternich::civilian_unit *civilian_unit)
-	{
-		if (civilian_unit == this->get_civilian_unit()) {
-			return;
-		}
-
-		this->civilian_unit = civilian_unit;
-	}
-
 	void apply_modifier(const modifier<const metternich::character> *modifier, const int multiplier);
 	void apply_military_unit_modifier(metternich::military_unit *military_unit, const int multiplier);
 
@@ -455,7 +440,6 @@ private:
 	scripted_character_modifier_map<int> scripted_modifiers;
 	const metternich::office *office = nullptr;
 	metternich::military_unit *military_unit = nullptr;
-	metternich::civilian_unit *civilian_unit = nullptr;
 	spell_set spells;
 	spell_set item_spells;
 	std::vector<qunique_ptr<item>> items;

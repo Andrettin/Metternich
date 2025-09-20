@@ -4,7 +4,6 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
-#include "character/character_role.h"
 #include "database/defines.h"
 #include "domain/country_government.h"
 #include "domain/country_military.h"
@@ -400,15 +399,7 @@ QString journal_entry::get_completion_conditions_string() const
 			str += "\n";
 		}
 
-		std::string character_type_name;
-
-		if (character->has_role(character_role::leader)) {
-			character_type_name = character->get_leader_type_name();
-		} else if (character->has_role(character_role::civilian)) {
-			character_type_name = character->get_civilian_unit_type()->get_name();
-		}
-
-		str += std::format("Recruit {} ({})", character->get_full_name(), character_type_name);
+		str += std::format("Recruit {}", character->get_full_name());
 	}
 
 	if (this->get_completion_random_chance() != 0) {

@@ -43,7 +43,6 @@ class province;
 class religion;
 class site;
 class species;
-enum class character_role;
 enum class military_unit_category;
 
 template <typename scope_type>
@@ -96,7 +95,6 @@ public:
 	explicit character(const std::string &identifier);
 	~character();
 
-	virtual void process_gsml_property(const gsml_property &property) override;
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
 	virtual void check() const override;
@@ -127,16 +125,6 @@ public:
 	}
 
 	virtual bool is_surname_first() const override;
-
-	const std::set<character_role> &get_roles() const
-	{
-		return this->roles;
-	}
-
-	bool has_role(const character_role role) const
-	{
-		return this->get_roles().contains(role);
-	}
 
 	const metternich::species *get_species() const
 	{
@@ -257,7 +245,6 @@ signals:
 
 private:
 	metternich::dynasty *dynasty = nullptr;
-	std::set<character_role> roles;
 	metternich::species *species = nullptr;
 	const metternich::character_class *character_class = nullptr;
 	int level = 0;

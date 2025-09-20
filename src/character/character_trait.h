@@ -104,16 +104,6 @@ public:
 		return nullptr;
 	}
 
-	const metternich::modifier<const character> *get_leader_modifier() const
-	{
-		return this->leader_modifier.get();
-	}
-
-	const metternich::modifier<const character> *get_scaled_leader_modifier() const
-	{
-		return this->scaled_leader_modifier.get();
-	}
-
 	const metternich::modifier<military_unit> *get_military_unit_modifier() const
 	{
 		return this->military_unit_modifier.get();
@@ -133,8 +123,6 @@ private:
 	std::unique_ptr<const metternich::modifier<const character>> modifier;
 	data_entry_map<office, std::unique_ptr<const metternich::modifier<const domain>>> office_modifiers;
 	data_entry_map<office, std::unique_ptr<const metternich::modifier<const domain>>> scaled_office_modifiers;
-	std::unique_ptr<const metternich::modifier<const character>> leader_modifier;
-	std::unique_ptr<const metternich::modifier<const character>> scaled_leader_modifier;
 	std::unique_ptr<const metternich::modifier<military_unit>> military_unit_modifier;
 };
 

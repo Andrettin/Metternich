@@ -4,7 +4,6 @@
 #include "character/character_attribute.h"
 #include "character/character_data_model.h"
 #include "character/character_game_data.h"
-#include "character/character_role.h"
 #include "character/character_trait_type.h"
 #include "character/dynasty.h"
 #include "character/starting_age_category.h"
@@ -160,7 +159,6 @@ int main(int argc, char **argv)
 		enum_converter<log_level>();
 
 		database_util::register_enum<affix_type>();
-		database_util::register_enum<character_role>();
 		database_util::register_enum<character_trait_type>();
 		database_util::register_enum<commodity_type>();
 		database_util::register_enum<country_tier>();

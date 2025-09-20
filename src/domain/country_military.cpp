@@ -4,7 +4,6 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
-#include "character/character_role.h"
 #include "domain/country_economy.h"
 #include "domain/country_government.h"
 #include "domain/country_technology.h"
@@ -120,10 +119,6 @@ bool country_military::create_military_unit(const military_unit_type *military_u
 		std::vector<const metternich::character *> potential_characters;
 
 		for (const metternich::character *character : character::get_all()) {
-			if (!character->has_role(character_role::leader)) {
-				continue;
-			}
-
 			if (character->get_military_unit_category() != military_unit_type->get_category()) {
 				continue;
 			}

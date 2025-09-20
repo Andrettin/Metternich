@@ -777,10 +777,6 @@ public:
 
 	void generate_ruler();
 
-	bool has_civilian_character(const character *character) const;
-	std::vector<const character *> get_civilian_characters() const;
-	void on_civilian_character_died(const character *character);
-
 	const std::vector<qunique_ptr<civilian_unit>> &get_civilian_units() const
 	{
 		return this->civilian_units;

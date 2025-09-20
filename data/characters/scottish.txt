@@ -1,7 +1,6 @@
 robert_stevenson = { #Source: "Encyclopædia Britannica", 1911, vol. 25, p. 907.
 	name = "Robert"
 	surname = "Stevenson"
-	role = civilian
 	character_class = engineer #lighthouse engineer
 	culture = scottish
 	religion = protestant
@@ -23,7 +22,6 @@ robert_stevenson = { #Source: "Encyclopædia Britannica", 1911, vol. 25, p. 907.
 	history = {
 		1797 = {
 			country = great_britain #was engineer to the Commissioners of Northern Lighthouses from 1797 to 1843
-			deployment_site = edinburgh
 		}
 		
 		#married the daughter of Thomas Smith in 1799
@@ -35,7 +33,6 @@ robert_stevenson = { #Source: "Encyclopædia Britannica", 1911, vol. 25, p. 907.
 alan_stevenson = { #Source: "Encyclopædia Britannica", 1911, vol. 25, p. 907.
 	name = "Alan"
 	surname = "Stevenson"
-	role = civilian
 	character_class = engineer
 	culture = scottish
 	religion = protestant
@@ -62,7 +59,6 @@ alan_stevenson = { #Source: "Encyclopædia Britannica", 1911, vol. 25, p. 907.
 david_stevenson = { #Source: "Encyclopædia Britannica", 1911, vol. 25, p. 907.
 	name = "David"
 	surname = "Stevenson"
-	role = civilian
 	character_class = engineer
 	culture = scottish
 	religion = protestant
@@ -92,7 +88,6 @@ david_stevenson = { #Source: "Encyclopædia Britannica", 1911, vol. 25, p. 907.
 thomas_stevenson = { #Source: "Encyclopædia Britannica", 1911, vol. 25, p. 907.
 	name = "Thomas"
 	surname = "Stevenson"
-	role = civilian
 	character_class = engineer
 	culture = scottish
 	religion = protestant

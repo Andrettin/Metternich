@@ -20,7 +20,6 @@ class character_history final : public data_entry_history
 	Q_PROPERTY(const metternich::domain* country MEMBER domain)
 	Q_PROPERTY(int level MEMBER level READ get_level)
 	Q_PROPERTY(const metternich::province* deployment_province MEMBER deployment_province)
-	Q_PROPERTY(const metternich::site* deployment_site MEMBER deployment_site)
 
 public:
 	explicit character_history(const metternich::character *character);
@@ -40,17 +39,11 @@ public:
 		return this->deployment_province;
 	}
 
-	const site *get_deployment_site() const
-	{
-		return this->deployment_site;
-	}
-
 private:
 	const metternich::character *character = nullptr;
 	const metternich::domain *domain = nullptr;
 	int level = 0;
 	const province *deployment_province = nullptr;
-	const site *deployment_site = nullptr;
 };
 
 }

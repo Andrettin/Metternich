@@ -6,7 +6,6 @@
 #include "character/character_class.h"
 #include "character/character_game_data.h"
 #include "character/character_history.h"
-#include "character/character_role.h"
 #include "character/dynasty.h"
 #include "character/monster_type.h"
 #include "character/starting_age_category.h"
@@ -163,29 +162,12 @@ character::~character()
 {
 }
 
-void character::process_gsml_property(const gsml_property &property)
-{
-	const std::string &key = property.get_key();
-	const std::string &value = property.get_value();
-
-	if (key == "role") {
-		assert_throw(property.get_operator() == gsml_operator::assignment);
-		this->roles = { magic_enum::enum_cast<character_role>(value).value() };
-	} else {
-		character_base::process_gsml_property(property);
-	}
-}
-
 void character::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "roles") {
-		for (const std::string &value : values) {
-			this->roles.insert(magic_enum::enum_cast<character_role>(value).value());
-		}
-	} else if (tag == "traits") {
+	if (tag == "traits") {
 		for (const std::string &value : values) {
 			this->traits.push_back(character_trait::get(value));
 		}
@@ -285,27 +267,6 @@ void character::initialize()
 
 void character::check() const
 {
-	for (const character_role role : this->get_roles()) {
-		switch (role) {
-			case character_role::leader:
-				if (this->get_military_unit_category() == military_unit_category::none) {
-					throw std::runtime_error(std::format("Character \"{}\" is a leader, but has no military unit category.", this->get_identifier()));
-				}
-				break;
-			case character_role::civilian:
-				if (this->get_civilian_unit_class() == nullptr) {
-					throw std::runtime_error(std::format("Character \"{}\" is a civilian, but has no civilian unit class.", this->get_identifier()));
-				}
-
-				if (this->get_civilian_unit_type() == nullptr) {
-					throw std::runtime_error(std::format("Character \"{}\" is a civilian, but its culture (\"{}\") has no civilian unit type for its civilian unit class (\"{}\").", this->get_identifier(), this->get_culture()->get_identifier(), this->get_civilian_unit_class()->get_identifier()));
-				}
-				break;
-			default:
-				break;
-		}
-	}
-
 	if (this->get_species() == nullptr) {
 		throw std::runtime_error(std::format("Character \"{}\" has no species.", this->get_identifier()));
 	}
@@ -591,7 +552,7 @@ bool character::is_explorer() const
 
 std::string_view character::get_leader_type_name() const
 {
-	assert_throw(this->has_role(character_role::leader));
+	assert_throw(this->get_military_unit_category() != military_unit_category::none);
 
 	if (this->is_admiral()) {
 		return "Admiral";

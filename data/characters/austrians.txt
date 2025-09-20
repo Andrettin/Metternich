@@ -243,9 +243,6 @@ philipp_von_hornigk = {
 johann_von_eggenberg = {
 	name = "Johann"
 	surname = "von Eggenberg"
-	roles = {
-		civilian
-	}
 	character_class = merchant
 	culture = austrian
 	religion = catholic

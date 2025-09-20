@@ -4,7 +4,6 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
-#include "character/character_role.h"
 #include "character/character_trait.h"
 #include "character/character_trait_type.h"
 #include "database/defines.h"

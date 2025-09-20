@@ -111,9 +111,6 @@ john_paul_jones = {
 john_jacob_astor = {
 	name = "John Jacob"
 	surname = "Astor"
-	roles = {
-		civilian
-	}
 	character_class = merchant
 	culture = german
 	religion = protestant
@@ -129,9 +126,6 @@ john_jacob_astor = {
 eli_whitney = {
 	name = "Eli"
 	surname = "Whitney"
-	roles = {
-		civilian
-	}
 	character_class = farmer
 	culture = american
 	religion = protestant

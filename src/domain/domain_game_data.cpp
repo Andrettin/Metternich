@@ -5,7 +5,6 @@
 #include "character/character.h"
 #include "character/character_class.h"
 #include "character/character_game_data.h"
-#include "character/character_role.h"
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "domain/consulate.h"
@@ -2635,7 +2634,6 @@ std::vector<const character *> domain_game_data::get_characters() const
 	}
 
 	vector::merge(characters, this->get_military()->get_leaders());
-	vector::merge(characters, this->get_civilian_characters());
 
 	return characters;
 }
@@ -2692,44 +2690,6 @@ void domain_game_data::generate_ruler()
 	this->get_government()->set_office_holder(defines::get()->get_ruler_office(), ruler);
 }
 
-bool domain_game_data::has_civilian_character(const character *character) const
-{
-	for (const qunique_ptr<civilian_unit> &civilian_unit : this->civilian_units) {
-		if (civilian_unit->get_character() == character) {
-			return true;
-		}
-	}
-
-	return false;
-}
-
-std::vector<const character *> domain_game_data::get_civilian_characters() const
-{
-	std::vector<const character *> civilian_characters;
-
-	for (const qunique_ptr<civilian_unit> &civilian_unit : this->civilian_units) {
-		if (civilian_unit->get_character() != nullptr) {
-			civilian_characters.push_back(civilian_unit->get_character());
-		}
-	}
-
-	return civilian_characters;
-}
-
-void domain_game_data::on_civilian_character_died(const character *character)
-{
-	if (this->domain == game::get()->get_player_country()) {
-		const portrait *interior_minister_portrait = this->get_government()->get_interior_minister_portrait();
-
-		const std::string &civilian_unit_type_name = character->get_civilian_unit_type()->get_name();
-
-		engine_interface::get()->add_notification(std::format("{} Retired", civilian_unit_type_name), interior_minister_portrait, std::format("Your Excellency, after a distinguished career in our service, the {} {} has decided to retire.", string::lowered(civilian_unit_type_name), character->get_full_name()));
-	}
-
-	assert_throw(character->get_game_data()->get_civilian_unit() != nullptr);
-	character->get_game_data()->get_civilian_unit()->disband(true);
-}
-
 bool domain_game_data::create_civilian_unit(const civilian_unit_type *civilian_unit_type, const site *deployment_site, const phenotype *phenotype)
 {
 	if (this->is_under_anarchy()) {
@@ -2754,59 +2714,20 @@ bool domain_game_data::create_civilian_unit(const civilian_unit_type *civilian_u
 		tile_pos = nearest_tile_pos.value();
 	}
 
-	std::vector<const character *> potential_characters;
-
-	for (const character *character : character::get_all()) {
-		if (!character->has_role(character_role::civilian)) {
-			continue;
-		}
-
-		if (character->get_civilian_unit_type() != civilian_unit_type) {
-			continue;
-		}
-
-		if (character->get_game_data()->get_country() != nullptr && character->get_game_data()->get_country() != this->domain) {
-			continue;
-		}
-
-		if (character->get_game_data()->get_civilian_unit() != nullptr) {
-			continue;
-		}
-
-		if (phenotype != nullptr && character->get_phenotype() != phenotype) {
-			continue;
-		}
-
-		if (character->get_game_data()->is_dead()) {
-			continue;
-		}
-
-		if (character->get_conditions() != nullptr && !character->get_conditions()->check(this->domain, read_only_context(this->domain))) {
-			continue;
-		}
-
-		potential_characters.push_back(character);
-	}
-
 	qunique_ptr<civilian_unit> civilian_unit;
 
-	if (!potential_characters.empty()) {
-		const character *character = vector::get_random(potential_characters);
-		civilian_unit = make_qunique<metternich::civilian_unit>(character, this->domain);
-	} else {
-		if (phenotype == nullptr) {
-			const std::vector<const metternich::phenotype *> weighted_phenotypes = this->get_weighted_phenotypes();
-			if (weighted_phenotypes.empty()) {
-				return false;
-			}
-
-			phenotype = vector::get_random(weighted_phenotypes);
+	if (phenotype == nullptr) {
+		const std::vector<const metternich::phenotype *> weighted_phenotypes = this->get_weighted_phenotypes();
+		if (weighted_phenotypes.empty()) {
+			return false;
 		}
 
-		assert_throw(phenotype != nullptr);
-
-		civilian_unit = make_qunique<metternich::civilian_unit>(civilian_unit_type, this->domain, phenotype);
+		phenotype = vector::get_random(weighted_phenotypes);
 	}
+
+	assert_throw(phenotype != nullptr);
+
+	civilian_unit = make_qunique<metternich::civilian_unit>(civilian_unit_type, this->domain, phenotype);
 
 	assert_throw(civilian_unit != nullptr);
 
@@ -2819,10 +2740,6 @@ bool domain_game_data::create_civilian_unit(const civilian_unit_type *civilian_u
 
 void domain_game_data::add_civilian_unit(qunique_ptr<civilian_unit> &&civilian_unit)
 {
-	if (civilian_unit->get_character() != nullptr) {
-		civilian_unit->get_character()->get_game_data()->set_country(this->domain);
-	}
-
 	this->add_unit_name(civilian_unit->get_name());
 	this->civilian_units.push_back(std::move(civilian_unit));
 }
@@ -2830,11 +2747,6 @@ void domain_game_data::add_civilian_unit(qunique_ptr<civilian_unit> &&civilian_u
 void domain_game_data::remove_civilian_unit(civilian_unit *civilian_unit)
 {
 	assert_throw(civilian_unit != nullptr);
-
-	if (civilian_unit->get_character() != nullptr) {
-		assert_throw(civilian_unit->get_character()->get_game_data()->get_country() == this->domain);
-		civilian_unit->get_character()->get_game_data()->set_country(nullptr);
-	}
 
 	this->remove_unit_name(civilian_unit->get_name());
 

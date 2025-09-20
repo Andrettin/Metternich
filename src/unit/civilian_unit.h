@@ -9,7 +9,6 @@ Q_MOC_INCLUDE("unit/civilian_unit_type.h")
 
 namespace metternich {
 
-class character;
 class civilian_unit_type;
 class domain;
 class icon;
@@ -25,7 +24,6 @@ class civilian_unit final : public QObject
 	Q_PROPERTY(const metternich::civilian_unit_type* type READ get_type NOTIFY type_changed)
 	Q_PROPERTY(const metternich::icon* icon READ get_icon NOTIFY icon_changed)
 	Q_PROPERTY(const metternich::domain* owner READ get_owner CONSTANT)
-	Q_PROPERTY(const metternich::character* character READ get_character CONSTANT)
 	Q_PROPERTY(QPoint tile_pos READ get_tile_pos NOTIFY tile_pos_changed)
 	Q_PROPERTY(bool moving READ is_moving NOTIFY original_tile_pos_changed)
 	Q_PROPERTY(bool working READ is_working NOTIFY task_completion_turns_changed)
@@ -38,7 +36,6 @@ public:
 	static constexpr int prospection_turns = 1;
 
 	explicit civilian_unit(const civilian_unit_type *type, const domain *owner, const metternich::phenotype *phenotype);
-	explicit civilian_unit(const metternich::character *character, const domain *owner);
 
 	void do_turn();
 	void do_ai_turn();
@@ -83,11 +80,6 @@ public:
 	const metternich::phenotype *get_phenotype() const
 	{
 		return this->phenotype;
-	}
-
-	const metternich::character *get_character() const
-	{
-		return this->character;
 	}
 
 	const QPoint &get_tile_pos() const
@@ -173,7 +165,6 @@ private:
 	const civilian_unit_type *type = nullptr;
 	const domain *owner = nullptr;
 	const metternich::phenotype *phenotype = nullptr;
-	const metternich::character *character = nullptr;
 	QPoint tile_pos = QPoint(-1, -1);
 	QPoint original_tile_pos = QPoint(-1, -1); //the tile position before moving
 	const improvement *improvement_under_construction = nullptr;
