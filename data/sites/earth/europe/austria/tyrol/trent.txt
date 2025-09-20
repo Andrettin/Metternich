@@ -3,6 +3,7 @@ trent = {
 	world = earth
 	geocoordinate = { 11.11998246120 46.08042889310 } #from Natural Earth
 	type = holding
+	holding_type = temple
 	province = south_tyrol
 	cultural_names = {
 		italian = "Trento"
@@ -10,11 +11,11 @@ trent = {
 	
 	history = {
 		919 = {
-			holding_type = town #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
 		}
 		
 		1815 = {
-			holding_type = town #existed in the 1815-1866 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+			#existed in the 1815-1866 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
 		}
 	}
 }
