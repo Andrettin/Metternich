@@ -8,9 +8,8 @@ Rectangle {
 	clip: true
 	
 	readonly property var stored_commodities: metternich.game.player_country.game_data.economy.stored_commodities
-	readonly property var wealth_value: metternich.game.player_country.game_data.economy.stored_commodities.length > 0 ? metternich.game.player_country.game_data.economy.get_stored_commodity(metternich.defines.wealth_commodity) : 0 //refer to the stored commodities to ensure the counter is updated when wealth changes
-	readonly property var wealth_unit: metternich.defines.wealth_commodity.get_unit(wealth_value)
 	readonly property var regency_commodity: metternich.get_commodity("regency")
+	readonly property var top_bar_commodities: [metternich.defines.wealth_commodity, regency_commodity]
 	
 	PanelTiledBackground {
 	}
@@ -44,93 +43,79 @@ Rectangle {
 		}
 	}
 	
-	Image {
-		id: wealth_icon
-		source: "image://icon/trade_consulate"
+	Row {
+		id: commodities_row
 		anchors.top: parent.top
-		anchors.topMargin: 3 * scale_factor
+		anchors.bottom: parent.bottom
 		anchors.left: date_label.left
 		anchors.leftMargin: 128 * scale_factor
-	}
-
-	SmallText {
-		id: wealth_label
-		text: metternich.defines.wealth_commodity.value_to_qstring(wealth_value)
-		anchors.top: parent.top
-		anchors.topMargin: 1 * scale_factor
-		anchors.left: wealth_icon.right
-		anchors.leftMargin: 4 * scale_factor
-	}
-
-	MouseArea {
-		anchors.top: wealth_icon.top
-		anchors.bottom: wealth_icon.bottom
-		anchors.left: wealth_icon.left
-		anchors.right: wealth_label.right
-		hoverEnabled: true
+		anchors.right: parent.right
 		
-		readonly property int min_income: metternich.game.player_country.game_data.min_income
-		readonly property int max_income: metternich.game.player_country.game_data.max_income
-		readonly property var income_unit: metternich.defines.wealth_commodity.get_unit(max_income)
-		readonly property int income_unit_value: metternich.defines.wealth_commodity.get_unit_value(income_unit)
-		readonly property int maintenance_cost: metternich.game.player_country.game_data.maintenance_cost
-		readonly property string wealth_status_text: get_plural_form(wealth_unit.name)
-			+ format_text("\t\tIncome: " + number_string(Math.floor(min_income / income_unit_value)) + "-" + number_string(Math.floor(max_income / income_unit_value)) + " " + income_unit.suffix)
-			+ format_text("\t\tMaintenance Cost: " + metternich.defines.wealth_commodity.value_to_qstring(maintenance_cost))
-			+ format_text("\t\t" + metternich.defines.wealth_commodity.get_units_tooltip())
-		
-		onEntered: {
-			if (status_text !== undefined) {
-				status_text = wealth_status_text
-			}
-		}
-		onExited: {
-			if (status_text !== undefined) {
-				status_text = ""
-			}
-		}
-		onWealth_status_textChanged: {
-			if (containsMouse) {
-				status_text = wealth_status_text
-			}
-		}
-	}
-	
-	Image {
-		id: regency_icon
-		source: "image://icon/empire_crown"
-		anchors.top: parent.top
-		anchors.topMargin: 3 * scale_factor
-		anchors.left: wealth_label.left
-		anchors.leftMargin: 96 * scale_factor
-		visible: regency_commodity.enabled
-	}
+		Repeater {
+			model: top_bar_commodities
+			
+			Item {
+				width: commodity_icon.width + (2 + 96) * scale_factor
+				height: commodities_row.height
+				
+				readonly property var commodity: model.modelData
+				readonly property var commodity_value: stored_commodities.length > 0 ? metternich.game.player_country.game_data.economy.get_stored_commodity(commodity) : 0 //refer to the stored commodities to ensure the counter is updated when the storage value for this commodity changes
+				
+				Image {
+					id: commodity_icon
+					source: "image://icon/" + commodity.tiny_icon.identifier
+					anchors.top: parent.top
+					anchors.topMargin: 3 * scale_factor
+					anchors.left: parent.left
+					visible: commodity.enabled
+				}
 
-	SmallText {
-		id: regency_label
-		text: metternich.game.player_country.game_data.economy.stored_commodities.length > 0 ? number_string(metternich.game.player_country.game_data.economy.get_stored_commodity(regency_commodity)) : 0 //refer to the stored commodities to ensure the counter is updated when prestige changes
-		anchors.top: parent.top
-		anchors.topMargin: 1 * scale_factor
-		anchors.left: regency_icon.right
-		anchors.leftMargin: 2 * scale_factor
-		visible: regency_commodity.enabled
-	}
+				SmallText {
+					id: commodity_label
+					text: commodity.value_to_qstring(commodity_value)
+					anchors.top: parent.top
+					anchors.topMargin: 1 * scale_factor
+					anchors.left: commodity_icon.right
+					anchors.leftMargin: 2 * scale_factor
+					visible: commodity.enabled
+				}
 
-	MouseArea {
-		anchors.top: regency_icon.top
-		anchors.bottom: regency_icon.bottom
-		anchors.left: regency_icon.left
-		anchors.right: regency_label.right
-		hoverEnabled: true
-		enabled: regency_commodity.enabled
-		onEntered: {
-			if (status_text !== undefined) {
-				status_text = regency_commodity.name
-			}
-		}
-		onExited: {
-			if (status_text !== undefined) {
-				status_text = ""
+				MouseArea {
+					anchors.top: commodity_icon.top
+					anchors.bottom: commodity_icon.bottom
+					anchors.left: commodity_icon.left
+					anchors.right: commodity_label.right
+					hoverEnabled: true
+					enabled: commodity.enabled
+					
+					readonly property bool is_wealth: commodity === metternich.defines.wealth_commodity
+					readonly property var commodity_unit: commodity.get_unit(commodity_value)
+					readonly property int min_income: is_wealth ? metternich.game.player_country.game_data.min_income : 0
+					readonly property int max_income: is_wealth ? metternich.game.player_country.game_data.max_income : 0
+					readonly property var income_unit: commodity.get_unit(max_income)
+					readonly property int income_unit_value: income_unit ? commodity.get_unit_value(income_unit) : 0
+					readonly property int maintenance_cost: is_wealth ? metternich.game.player_country.game_data.maintenance_cost : 0
+					readonly property string commodity_status_text: (commodity_unit ? get_plural_form(commodity_unit.name) : commodity.name)
+						+ (is_wealth ? format_text("\t\tIncome: " + number_string(Math.floor(min_income / income_unit_value)) + "-" + number_string(Math.floor(max_income / income_unit_value)) + " " + income_unit.suffix) : "")
+						+ (is_wealth ? format_text("\t\tMaintenance Cost: " + commodity.value_to_qstring(maintenance_cost)) : "")
+						+ (commodity_unit ? format_text("\t\t" + commodity.get_units_tooltip()) : "")
+					
+					onEntered: {
+						if (status_text !== undefined) {
+							status_text = commodity_status_text
+						}
+					}
+					onExited: {
+						if (status_text !== undefined) {
+							status_text = ""
+						}
+					}
+					onCommodity_status_textChanged: {
+						if (containsMouse) {
+							status_text = commodity_status_text
+						}
+					}
+				}
 			}
 		}
 	}

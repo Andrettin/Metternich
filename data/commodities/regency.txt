@@ -2,5 +2,6 @@ regency = {
 	name = "Regency"
 	type = resource
 	icon = crown_comital
+	tiny_icon = empire_crown
 	abstract = true
 }

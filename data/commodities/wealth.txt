@@ -2,6 +2,7 @@ wealth = {
 	name = "Wealth"
 	type = resource
 	icon = chest
+	tiny_icon = trade_consulate
 	base_price = 1
 	abstract = true
 	negative_allowed = true

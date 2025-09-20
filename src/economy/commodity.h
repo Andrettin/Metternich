@@ -25,7 +25,8 @@ class commodity final : public named_data_entry, public data_type<commodity>
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::commodity_type type MEMBER type READ get_type NOTIFY changed)
-	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
+	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
+	Q_PROPERTY(const metternich::icon* tiny_icon MEMBER tiny_icon READ get_tiny_icon NOTIFY changed)
 	Q_PROPERTY(metternich::food_type food_type MEMBER food_type READ get_food_type NOTIFY changed)
 	Q_PROPERTY(bool abstract MEMBER abstract READ is_abstract NOTIFY changed)
 	Q_PROPERTY(bool storable MEMBER storable READ is_storable NOTIFY changed)
@@ -60,6 +61,11 @@ public:
 	const metternich::icon *get_icon() const
 	{
 		return this->icon;
+	}
+
+	const metternich::icon *get_tiny_icon() const
+	{
+		return this->tiny_icon;
 	}
 
 	bool is_food() const;
@@ -148,7 +154,8 @@ signals:
 
 private:
 	commodity_type type {};
-	metternich::icon *icon = nullptr;
+	const metternich::icon *icon = nullptr;
+	const metternich::icon *tiny_icon = nullptr;
 	metternich::food_type food_type;
 	bool abstract = false;
 	bool storable = true;
