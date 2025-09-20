@@ -255,7 +255,7 @@ void character_game_data::apply_history(const QDate &start_date)
 
 	const metternich::domain *domain = character_history->get_country();
 
-	if ((this->character->has_role(character_role::advisor) || this->character->has_role(character_role::leader) || this->character->has_role(character_role::civilian)) && domain != nullptr && !domain->get_game_data()->is_under_anarchy()) {
+	if (!domain->get_game_data()->is_under_anarchy()) {
 		domain_game_data *domain_game_data = domain->get_game_data();
 		country_technology *country_technology = domain->get_technology();
 
@@ -1060,10 +1060,6 @@ void character_game_data::set_office(const metternich::office *office)
 
 std::string character_game_data::get_office_modifier_string(const metternich::domain *domain, const metternich::office *office) const
 {
-	if (!office->is_ruler()) {
-		assert_throw(this->character->has_role(character_role::advisor));
-	}
-
 	assert_throw(office != nullptr);
 
 	std::string str;
@@ -1109,10 +1105,6 @@ std::string character_game_data::get_office_modifier_string(const metternich::do
 
 void character_game_data::apply_office_modifier(const metternich::domain *domain, const metternich::office *office, const int multiplier) const
 {
-	if (!office->is_ruler()) {
-		assert_throw(this->character->has_role(character_role::advisor));
-	}
-
 	assert_throw(domain != nullptr);
 	assert_throw(office != nullptr);
 
