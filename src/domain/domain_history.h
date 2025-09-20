@@ -2,7 +2,7 @@
 
 #include "database/data_entry_container.h"
 #include "database/data_entry_history.h"
-#include "domain/country_container.h"
+#include "domain/domain_container.h"
 #include "domain/law_group_container.h"
 #include "economy/commodity_container.h"
 #include "util/centesimal_int.h"
@@ -26,7 +26,7 @@ class technology;
 enum class country_tier;
 enum class diplomacy_state;
 
-class country_history final : public data_entry_history
+class domain_history final : public data_entry_history
 {
 	Q_OBJECT
 
@@ -38,7 +38,7 @@ class country_history final : public data_entry_history
 	Q_PROPERTY(int wealth MEMBER wealth READ get_wealth)
 
 public:
-	explicit country_history(const metternich::domain *domain);
+	explicit domain_history(const metternich::domain *domain);
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 
@@ -102,14 +102,14 @@ public:
 		return this->commodities;
 	}
 
-	const country_map<diplomacy_state> &get_diplomacy_states() const
+	const domain_map<diplomacy_state> &get_diplomacy_states() const
 	{
 		return this->diplomacy_states;
 	}
 
 	diplomacy_state get_diplomacy_state(const metternich::domain *other_domain) const;
 
-	const country_map<const consulate *> &get_consulates() const
+	const domain_map<const consulate *> &get_consulates() const
 	{
 		return this->consulates;
 	}
@@ -126,8 +126,8 @@ private:
 	law_group_map<const law *> laws;
 	int wealth = 0;
 	commodity_map<int> commodities;
-	country_map<diplomacy_state> diplomacy_states;
-	country_map<const consulate *> consulates;
+	domain_map<diplomacy_state> diplomacy_states;
+	domain_map<const consulate *> consulates;
 };
 
 }

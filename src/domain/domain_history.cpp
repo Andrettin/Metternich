@@ -1,6 +1,6 @@
 #include "metternich.h"
 
-#include "domain/country_history.h"
+#include "domain/domain_history.h"
 
 #include "character/character.h"
 #include "domain/consulate.h"
@@ -18,12 +18,12 @@
 
 namespace metternich {
 
-country_history::country_history(const metternich::domain *domain)
+domain_history::domain_history(const metternich::domain *domain)
 	: domain(domain), tier(country_tier::none)
 {
 }
 
-void country_history::process_gsml_scope(const gsml_data &scope)
+void domain_history::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 
@@ -132,7 +132,7 @@ void country_history::process_gsml_scope(const gsml_data &scope)
 	}
 }
 
-diplomacy_state country_history::get_diplomacy_state(const metternich::domain *other_domain) const
+diplomacy_state domain_history::get_diplomacy_state(const metternich::domain *other_domain) const
 {
 	const auto find_iterator = this->diplomacy_states.find(other_domain);
 

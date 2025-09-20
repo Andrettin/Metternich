@@ -1,6 +1,6 @@
 #pragma once
 
-#include "domain/country_container.h"
+#include "domain/domain_container.h"
 
 #pragma warning(push, 0)
 #include <QAbstractListModel> 
@@ -55,7 +55,7 @@ public:
 
 private:
 	const map_province_model *map_province_model = nullptr;
-	country_map<std::vector<std::unique_ptr<QGeoPolygon>>> country_geopolygons;
+	domain_map<std::vector<std::unique_ptr<QGeoPolygon>>> country_geopolygons;
 };
 
 }

@@ -18,7 +18,7 @@ void map_country_model::reset_model()
 {
 	this->beginResetModel();
 
-	country_map<std::vector<const QGeoPolygon *>> country_province_geopolygons;
+	domain_map<std::vector<const QGeoPolygon *>> country_province_geopolygons;
 
 	for (const auto &province_geopolygon_data : this->map_province_model->get_province_geopolygons()) {
 		const province *province = province_geopolygon_data.first;

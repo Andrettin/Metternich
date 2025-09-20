@@ -15,7 +15,6 @@
 #include "domain/country_ai.h"
 #include "domain/country_economy.h"
 #include "domain/country_government.h"
-#include "domain/country_history.h"
 #include "domain/country_military.h"
 #include "domain/country_rank.h"
 #include "domain/country_technology.h"
@@ -27,6 +26,7 @@
 #include "domain/diplomacy_state.h"
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
+#include "domain/domain_history.h"
 #include "domain/government_type.h"
 #include "domain/law.h"
 #include "domain/office.h"
@@ -579,31 +579,31 @@ void game::apply_history(const metternich::scenario *scenario)
 		}
 
 		for (const domain *domain : this->get_countries()) {
-			const country_history *country_history = domain->get_history();
+			const domain_history *domain_history = domain->get_history();
 			domain_game_data *domain_game_data = domain->get_game_data();
 			country_economy *country_economy = domain->get_economy();
 			country_government *country_government = domain->get_government();
 			country_technology *country_technology = domain->get_technology();
 
-			if (country_history->get_tier() != country_tier::none) {
-				domain->get_game_data()->set_tier(country_history->get_tier());
+			if (domain_history->get_tier() != country_tier::none) {
+				domain->get_game_data()->set_tier(domain_history->get_tier());
 			}
 
-			if (country_history->get_religion() != nullptr) {
-				domain_game_data->set_religion(country_history->get_religion());
+			if (domain_history->get_religion() != nullptr) {
+				domain_game_data->set_religion(domain_history->get_religion());
 			}
 
-			const subject_type *subject_type = country_history->get_subject_type();
+			const subject_type *subject_type = domain_history->get_subject_type();
 			if (subject_type != nullptr) {
 				//disable overlordship for now
 				//domain_game_data->set_subject_type(subject_type);
 			}
 
-			if (country_history->get_government_type() != nullptr) {
-				domain_game_data->set_government_type(country_history->get_government_type());
+			if (domain_history->get_government_type() != nullptr) {
+				domain_game_data->set_government_type(domain_history->get_government_type());
 
-				if (country_history->get_government_type()->get_required_technology() != nullptr) {
-					country_technology->add_technology_with_prerequisites(country_history->get_government_type()->get_required_technology());
+				if (domain_history->get_government_type()->get_required_technology() != nullptr) {
+					country_technology->add_technology_with_prerequisites(domain_history->get_government_type()->get_required_technology());
 				}
 			} else if (domain->get_default_government_type() != nullptr) {
 				domain_game_data->set_government_type(domain->get_default_government_type());
@@ -613,7 +613,7 @@ void game::apply_history(const metternich::scenario *scenario)
 				}
 			}
 
-			for (const auto &[office, office_holder] : country_history->get_office_holders()) {
+			for (const auto &[office, office_holder] : domain_history->get_office_holders()) {
 				assert_throw(scenario->get_start_date() >= office_holder->get_start_date());
 				if (office_holder->get_death_date().isValid() && scenario->get_start_date() >= office_holder->get_death_date()) {
 					continue;
@@ -628,11 +628,11 @@ void game::apply_history(const metternich::scenario *scenario)
 				country_government->set_office_holder(office, office_holder);
 			}
 
-			for (const technology *technology : country_history->get_technologies()) {
+			for (const technology *technology : domain_history->get_technologies()) {
 				country_technology->add_technology_with_prerequisites(technology);
 			}
 
-			for (const auto &[law_group, law] : country_history->get_laws()) {
+			for (const auto &[law_group, law] : domain_history->get_laws()) {
 				country_government->set_law(law_group, law);
 
 				if (law->get_required_technology() != nullptr) {
@@ -640,9 +640,9 @@ void game::apply_history(const metternich::scenario *scenario)
 				}
 			}
 
-			country_economy->set_wealth(country_history->get_wealth());
+			country_economy->set_wealth(domain_history->get_wealth());
 
-			for (const auto &[other_country, diplomacy_state] : country_history->get_diplomacy_states()) {
+			for (const auto &[other_country, diplomacy_state] : domain_history->get_diplomacy_states()) {
 				if (!other_country->get_game_data()->is_alive()) {
 					continue;
 				}
@@ -656,7 +656,7 @@ void game::apply_history(const metternich::scenario *scenario)
 				other_country->get_game_data()->set_diplomacy_state(domain, get_diplomacy_state_counterpart(diplomacy_state));
 			}
 
-			for (const auto &[other_country, consulate] : country_history->get_consulates()) {
+			for (const auto &[other_country, consulate] : domain_history->get_consulates()) {
 				if (!other_country->get_game_data()->is_alive()) {
 					continue;
 				}
@@ -1198,7 +1198,7 @@ void game::apply_population_history()
 		region->get_history()->distribute_population();
 	}
 
-	country_map<population_group_map<int>> country_populations;
+	domain_map<population_group_map<int>> country_populations;
 
 	for (const province *province : map::get()->get_provinces()) {
 		if (province->is_water_zone()) {
@@ -1639,8 +1639,8 @@ QCoro::Task<void> game::do_turn_coro()
 	try {
 		this->process_delayed_effects();
 
-		country_map<commodity_map<int>> old_bids;
-		country_map<commodity_map<int>> old_offers;
+		domain_map<commodity_map<int>> old_bids;
+		domain_map<commodity_map<int>> old_offers;
 
 		for (domain *domain : this->get_countries()) {
 			domain->reset_turn_data();
@@ -1735,7 +1735,7 @@ void game::do_trade()
 		return lhs->get_identifier() < rhs->get_identifier();
 	});
 
-	country_map<commodity_map<int>> country_luxury_demands;
+	domain_map<commodity_map<int>> country_luxury_demands;
 
 	for (const domain *domain : trade_countries) {
 		country_economy *country_economy = domain->get_economy();

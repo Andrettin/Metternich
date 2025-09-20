@@ -3,9 +3,9 @@
 #include "map/map_generator.h"
 
 #include "database/defines.h"
-#include "domain/country_container.h"
 #include "domain/culture.h"
 #include "domain/domain.h"
+#include "domain/domain_container.h"
 #include "economy/resource.h"
 #include "map/elevation_type.h"
 #include "map/forestation_type.h"
@@ -859,7 +859,7 @@ void map_generator::generate_countries_from_provinces(const std::vector<const pr
 	std::vector<const province *> potential_seas;
 	std::vector<const province *> potential_lakes;
 	std::vector<const domain *> potential_countries;
-	country_map<std::vector<const province *>> provinces_by_country;
+	domain_map<std::vector<const province *>> provinces_by_country;
 
 	for (const province *province : provinces) {
 		if (province->is_sea() || province->is_bay()) {

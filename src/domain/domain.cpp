@@ -5,13 +5,13 @@
 #include "database/defines.h"
 #include "domain/country_ai.h"
 #include "domain/country_government.h"
-#include "domain/country_history.h"
 #include "domain/country_tier.h"
 #include "domain/country_tier_data.h"
 #include "domain/country_turn_data.h"
 #include "domain/country_type.h"
 #include "domain/culture.h"
 #include "domain/domain_game_data.h"
+#include "domain/domain_history.h"
 #include "domain/government_group.h"
 #include "domain/government_type.h"
 #include "domain/office.h"
@@ -128,7 +128,7 @@ data_entry_history *domain::get_history_base()
 
 void domain::reset_history()
 {
-	this->history = make_qunique<country_history>(this);
+	this->history = make_qunique<domain_history>(this);
 }
 
 void domain::reset_game_data()

@@ -2,7 +2,7 @@
 
 #include "database/data_entry_container.h"
 #include "domain/consulate_container.h"
-#include "domain/country_container.h"
+#include "domain/domain_container.h"
 #include "economy/commodity_container.h"
 #include "infrastructure/building_class_container.h"
 #include "infrastructure/building_type_container.h"
@@ -374,7 +374,7 @@ public:
 		}
 	}
 
-	const country_set &get_known_countries() const
+	const domain_set &get_known_countries() const
 	{
 		return this->known_countries;
 	}
@@ -1125,13 +1125,13 @@ private:
 	std::vector<QPoint> border_tiles;
 	terrain_type_map<int> tile_terrain_counts;
 	const metternich::subject_type *subject_type = nullptr;
-	country_set known_countries;
-	country_map<diplomacy_state> diplomacy_states;
+	domain_set known_countries;
+	domain_map<diplomacy_state> diplomacy_states;
 	std::map<diplomacy_state, int> diplomacy_state_counts;
-	country_map<diplomacy_state> offered_diplomacy_states;
-	country_map<const consulate *> consulates;
-	country_map<int> base_opinions;
-	country_map<opinion_modifier_map<int>> opinion_modifiers;
+	domain_map<diplomacy_state> offered_diplomacy_states;
+	domain_map<const consulate *> consulates;
+	domain_map<int> base_opinions;
+	domain_map<opinion_modifier_map<int>> opinion_modifiers;
 	QImage diplomatic_map_image;
 	QImage selected_diplomatic_map_image;
 	std::map<diplomatic_map_mode, QImage> diplomatic_map_mode_images;

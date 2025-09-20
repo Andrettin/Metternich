@@ -2595,7 +2595,7 @@ void domain_game_data::decrement_scripted_modifiers()
 	}
 
 	//decrement opinion modifiers
-	country_map<std::vector<const opinion_modifier *>> opinion_modifiers_to_remove;
+	domain_map<std::vector<const opinion_modifier *>> opinion_modifiers_to_remove;
 
 	for (auto &[country, opinion_modifier_map] : this->opinion_modifiers) {
 		for (auto &[modifier, duration] : opinion_modifier_map) {

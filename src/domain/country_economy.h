@@ -1,6 +1,6 @@
 #pragma once
 
-#include "domain/country_container.h"
+#include "domain/domain_container.h"
 #include "economy/commodity_container.h"
 #include "economy/resource_container.h"
 #include "infrastructure/building_type_container.h"
@@ -40,7 +40,7 @@ public:
 	domain_game_data *get_game_data() const;
 
 	void do_production();
-	void do_trade(country_map<commodity_map<int>> &country_luxury_demands);
+	void do_trade(domain_map<commodity_map<int>> &country_luxury_demands);
 
 	const resource_map<int> &get_resource_counts() const
 	{

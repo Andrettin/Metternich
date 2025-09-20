@@ -25,12 +25,12 @@ class character;
 class country_ai;
 class country_economy;
 class country_government;
-class country_history;
 class country_military;
 class country_technology;
 class country_turn_data;
 class culture;
 class domain_game_data;
+class domain_history;
 class government_group;
 class government_type;
 class office;
@@ -84,7 +84,7 @@ public:
 	virtual void check() const override;
 	virtual data_entry_history *get_history_base() override;
 
-	country_history *get_history() const
+	domain_history *get_history() const
 	{
 		return this->history.get();
 	}
@@ -213,7 +213,7 @@ private:
 	title_name_map title_names;
 	office_title_name_map office_title_names;
 	std::vector<province *> core_provinces;
-	qunique_ptr<country_history> history;
+	qunique_ptr<domain_history> history;
 	qunique_ptr<domain_game_data> game_data;
 	qunique_ptr<country_turn_data> turn_data;
 	qunique_ptr<country_ai> ai;

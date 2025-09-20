@@ -94,7 +94,7 @@ void country_economy::do_production()
 	}
 }
 
-void country_economy::do_trade(country_map<commodity_map<int>> &country_luxury_demands)
+void country_economy::do_trade(domain_map<commodity_map<int>> &country_luxury_demands)
 {
 	try {
 		if (this->get_game_data()->is_under_anarchy()) {
