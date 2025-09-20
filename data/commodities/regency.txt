@@ -1,0 +1,6 @@
+regency = {
+	name = "Regency"
+	type = resource
+	icon = crown_comital
+	abstract = true
+}

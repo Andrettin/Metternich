@@ -158,6 +158,11 @@ const consulate *engine_interface::get_consulate(const QString &identifier) cons
 	return consulate::try_get(identifier.toStdString());
 }
 
+const commodity *engine_interface::get_commodity(const QString &identifier) const
+{
+	return commodity::try_get(identifier.toStdString());
+}
+
 void engine_interface::add_event_instance(qunique_ptr<event_instance> &&event_instance)
 {
 	metternich::event_instance *event_instance_ptr = event_instance.get();

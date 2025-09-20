@@ -7,10 +7,10 @@ Rectangle {
 	height: 16 * scale_factor
 	clip: true
 	
-	property bool prestige_visible: true
 	readonly property var stored_commodities: metternich.game.player_country.game_data.economy.stored_commodities
 	readonly property var wealth_value: metternich.game.player_country.game_data.economy.stored_commodities.length > 0 ? metternich.game.player_country.game_data.economy.get_stored_commodity(metternich.defines.wealth_commodity) : 0 //refer to the stored commodities to ensure the counter is updated when wealth changes
 	readonly property var wealth_unit: metternich.defines.wealth_commodity.get_unit(wealth_value)
+	readonly property var regency_commodity: metternich.get_commodity("regency")
 	
 	PanelTiledBackground {
 	}
@@ -97,35 +97,35 @@ Rectangle {
 	}
 	
 	Image {
-		id: prestige_icon
-		source: "image://icon/non_aggression_pact_shield"
+		id: regency_icon
+		source: "image://icon/empire_crown"
 		anchors.top: parent.top
 		anchors.topMargin: 3 * scale_factor
 		anchors.left: wealth_label.left
 		anchors.leftMargin: 96 * scale_factor
-		visible: prestige_visible && metternich.defines.prestige_commodity.enabled
+		visible: regency_commodity.enabled
 	}
 
 	SmallText {
-		id: prestige_label
-		text: metternich.game.player_country.game_data.economy.stored_commodities.length > 0 ? number_string(metternich.game.player_country.game_data.economy.get_stored_commodity(metternich.defines.prestige_commodity)) : 0 //refer to the stored commodities to ensure the counter is updated when prestige changes
+		id: regency_label
+		text: metternich.game.player_country.game_data.economy.stored_commodities.length > 0 ? number_string(metternich.game.player_country.game_data.economy.get_stored_commodity(regency_commodity)) : 0 //refer to the stored commodities to ensure the counter is updated when prestige changes
 		anchors.top: parent.top
 		anchors.topMargin: 1 * scale_factor
-		anchors.left: prestige_icon.right
+		anchors.left: regency_icon.right
 		anchors.leftMargin: 2 * scale_factor
-		visible: prestige_visible && metternich.defines.prestige_commodity.enabled
+		visible: regency_commodity.enabled
 	}
 
 	MouseArea {
-		anchors.top: prestige_icon.top
-		anchors.bottom: prestige_icon.bottom
-		anchors.left: prestige_icon.left
-		anchors.right: prestige_label.right
+		anchors.top: regency_icon.top
+		anchors.bottom: regency_icon.bottom
+		anchors.left: regency_icon.left
+		anchors.right: regency_label.right
 		hoverEnabled: true
-		enabled: prestige_visible && metternich.defines.prestige_commodity.enabled
+		enabled: regency_commodity.enabled
 		onEntered: {
 			if (status_text !== undefined) {
-				status_text = "Prestige"
+				status_text = regency_commodity.name
 			}
 		}
 		onExited: {

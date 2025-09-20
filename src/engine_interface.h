@@ -83,6 +83,7 @@ public:
 	Q_INVOKABLE QVariantList get_research_commodities() const;
 	Q_INVOKABLE const metternich::country_tier_data *get_country_tier_data(const metternich::country_tier tier) const;
 	Q_INVOKABLE const consulate *get_consulate(const QString &identifier) const;
+	Q_INVOKABLE const commodity *get_commodity(const QString &identifier) const;
 
 	void add_notification(const QString &title, const QObject *portrait_object, const QString &text)
 	{
