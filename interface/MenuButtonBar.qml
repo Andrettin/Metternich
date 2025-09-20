@@ -30,7 +30,8 @@ Rectangle {
 		
 		IconButton {
 			id: politics_button
-			icon_identifier: "flag"
+			//icon_identifier: "flag"
+			icon_identifier: "rifle_infantry_light_small"
 			
 			onReleased: {
 				menu_stack.push("PoliticsView.qml", {
@@ -40,7 +41,8 @@ Rectangle {
 			
 			onHoveredChanged: {
 				if (hovered) {
-					status_text = "View Politics"
+					//status_text = "View Politics"
+					status_text = "View Court"
 				} else {
 					status_text = ""
 				}

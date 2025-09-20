@@ -18,7 +18,7 @@ ApplicationWindow {
 	readonly property real scale_factor: metternich.scale_factor
 	readonly property color interface_background_color: Qt.rgba(48.0 / 255.0, 48.0 / 255.0, 48.0 / 255.0, 1)
 	
-	property int politics_view_mode: PoliticsView.Advisors
+	property int politics_view_mode: PoliticsView.Court
 	property int technology_view_mode: TechnologyView.Mode.Available
 	property var technology_view_category: null
 	property var technology_view_subcategory: null

@@ -6,10 +6,9 @@ Item {
 	id: politics_view
 	
 	enum Mode {
-		Advisors,
+		Court,
 		Government,
-		Religion,
-		ResearchOrganizations
+		Religion
 	}
 	
 	property var country: null
@@ -27,13 +26,13 @@ Item {
 		frame_count: 8
 	}
 	
-	AdvisorsView {
-		id: advisors_view
+	CourtView {
+		id: court_view
 		anchors.top: top_bar.bottom
 		anchors.bottom: status_bar.top
 		anchors.left: infopanel.right
 		anchors.right: button_panel.left
-		visible: politics_view_mode === PoliticsView.Mode.Advisors
+		visible: politics_view_mode === PoliticsView.Mode.Court
 	}
 	
 	GovernmentView {
@@ -61,7 +60,7 @@ Item {
 		anchors.right: parent.right
 	}
 	
-	AdvisorsInfoPanel {
+	CourtInfoPanel {
 		id: infopanel
 		anchors.top: parent.top
 		anchors.bottom: parent.bottom

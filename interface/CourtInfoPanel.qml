@@ -7,8 +7,6 @@ Rectangle {
 	width: 64 * scale_factor + 8 * scale_factor * 2
 	clip: true
 	
-	readonly property var advisor_commodity: metternich.defines.advisor_commodity
-	
 	PanelTiledBackground {
 	}
 	
@@ -20,16 +18,6 @@ Rectangle {
 		anchors.bottomMargin: 15 * scale_factor
 		anchors.right: parent.right
 		width: 1 * scale_factor
-	}
-	
-	IndustryCounter {
-		id: advisor_commodity_counter
-		anchors.horizontalCenter: parent.horizontalCenter
-		anchors.top: parent.top
-		anchors.topMargin: 16 * scale_factor
-		name: advisor_commodity.name
-		icon_identifier: advisor_commodity.icon.identifier
-		count: country_game_data.economy.stored_commodities.length > 0 ? country_game_data.economy.get_stored_commodity(advisor_commodity) : 0
 	}
 	
 	TextButton {

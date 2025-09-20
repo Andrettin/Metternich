@@ -164,7 +164,6 @@ Item {
 		anchors.top: parent.top
 		anchors.left: left_bar.right
 		anchors.right: infopanel.left
-		prestige_visible: false
 		
 		SmallText {
 			id: completion_conditions_top_label
