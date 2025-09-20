@@ -8,6 +8,7 @@
 #include "character/character_history.h"
 #include "character/character_role.h"
 #include "character/dynasty.h"
+#include "character/monster_type.h"
 #include "character/starting_age_category.h"
 #include "character/character_trait.h"
 #include "character/character_trait_type.h"
@@ -147,6 +148,11 @@ const character *character::generate(const metternich::species *species, const m
 	return game::get()->get_generated_characters().back().get();
 }
 
+const character *character::generate(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_settlement)
+{
+	return character::generate(monster_type->get_species(), monster_type->get_character_class(), monster_type->get_level(), culture, religion, home_settlement);
+}
+
 character::character(const std::string &identifier)
 	: character_base(identifier)
 {
@@ -196,6 +202,16 @@ void character::process_gsml_scope(const gsml_data &scope)
 
 void character::initialize()
 {
+	if (this->get_monster_type() != nullptr) {
+		assert_throw(this->get_species() == nullptr);
+		assert_throw(this->get_character_class() == nullptr);
+		assert_throw(this->get_level() == 0);
+
+		this->species = const_cast<metternich::species *>(this->get_monster_type()->get_species());
+		this->character_class = this->get_monster_type()->get_character_class();
+		this->level = this->get_monster_type()->get_level();
+	}
+
 	if (this->get_deity() != nullptr) {
 		if (this->get_name().empty()) {
 			this->set_name(this->get_deity()->get_name());
@@ -269,16 +285,6 @@ void character::initialize()
 
 void character::check() const
 {
-	if (!this->get_roles().empty()) {
-		if (this->get_character_class() == nullptr) {
-			throw std::runtime_error(std::format("Character \"{}\" has a role, but has no character class.", this->get_identifier()));
-		}
-
-		if (this->get_roles().size() > 1 && this->get_roles() != std::set<character_role>{ character_role::advisor, character_role::civilian }) {
-			throw std::runtime_error(std::format("Character \"{}\" has multiple roles, but those aren't advisor and civilian, the only combination allowed.", this->get_identifier()));
-		}
-	}
-
 	for (const character_role role : this->get_roles()) {
 		switch (role) {
 			case character_role::leader:
