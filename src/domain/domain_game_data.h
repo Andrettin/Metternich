@@ -125,6 +125,7 @@ class domain_game_data final : public QObject
 	Q_PROPERTY(QVariantList appointed_ideas READ get_appointed_ideas_qvariant_list NOTIFY appointed_ideas_changed)
 	Q_PROPERTY(QVariantList available_deity_slots READ get_available_deity_slots_qvariant_list NOTIFY available_idea_slots_changed)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
+	Q_PROPERTY(QVariantList characters READ get_characters_qvariant_list NOTIFY characters_changed)
 	Q_PROPERTY(QVariantList transporters READ get_transporters_qvariant_list NOTIFY transporters_changed)
 	Q_PROPERTY(QVariantList active_journal_entries READ get_active_journal_entries_qvariant_list NOTIFY journal_entries_changed)
 	Q_PROPERTY(QVariantList inactive_journal_entries READ get_inactive_journal_entries_qvariant_list NOTIFY journal_entries_changed)
@@ -773,6 +774,7 @@ public:
 	}
 
 	std::vector<const character *> get_characters() const;
+	QVariantList get_characters_qvariant_list() const;
 	void add_character(const character *character);
 	void remove_character(const character *character);
 	void check_characters();
@@ -1097,6 +1099,7 @@ signals:
 	void appointed_ideas_changed();
 	void available_idea_slots_changed();
 	void scripted_modifiers_changed();
+	void characters_changed();
 	void transporters_changed();
 	void prospected_tiles_changed();
 	void journal_entries_changed();

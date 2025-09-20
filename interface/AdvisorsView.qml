@@ -7,6 +7,7 @@ Item {
 	
 	readonly property var minister_offices: get_minister_offices(country_game_data.government.available_offices)
 	readonly property var offices: filter_offices(country_game_data.government.available_offices)
+	readonly property var characters: country_game_data.characters
 	
 	PortraitGridItem {
 		id: ruler_portrait
@@ -99,6 +100,33 @@ Item {
 		}
 	}
 	
+	PortraitGrid {
+		id: character_portrait_grid
+		anchors.top: office_holder_portrait_grid.visible ? office_holder_portrait_grid.bottom : (minister_portrait_grid.visible ? minister_portrait_grid.bottom : (ruler_portrait.visible ? ruler_portrait.bottom : parent.top))
+		anchors.topMargin: spacing
+		anchors.horizontalCenter: parent.horizontalCenter
+		entries: filter_characters(characters)
+		delegate: PortraitGridItem {
+			portrait_identifier: character.game_data.portrait.identifier
+			
+			readonly property var character: model.modelData
+			
+			onClicked: {
+				character_dialog.office = null
+				character_dialog.character = character
+				character_dialog.open()
+			}
+			
+			onEntered: {
+				status_text = character.full_name
+			}
+			
+			onExited: {
+				status_text = ""
+			}
+		}
+	}
+	
 	OfficeHolderChoiceDialog {
 		id: office_holder_choice_dialog
 	}
@@ -126,6 +154,20 @@ Item {
 			}
 			
 			result.push(office)
+		}
+		
+		return result
+	}
+	
+	function filter_characters(characters) {
+		var result = []
+		
+		for (var character of characters) {
+			if (character.game_data.office !== null) {
+				continue
+			}
+			
+			result.push(character)
 		}
 		
 		return result

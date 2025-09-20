@@ -2640,11 +2640,20 @@ std::vector<const character *> domain_game_data::get_characters() const
 	return this->characters;
 }
 
+QVariantList domain_game_data::get_characters_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_characters());
+}
+
 void domain_game_data::add_character(const character *character)
 {
 	assert_throw(character->get_game_data()->get_domain() == this->domain);
 	assert_throw(!vector::contains(this->get_characters(), character));
 	this->characters.push_back(character);
+
+	if (game::get()->is_running()) {
+		emit characters_changed();
+	}
 }
 
 void domain_game_data::remove_character(const character *character)
@@ -2652,6 +2661,10 @@ void domain_game_data::remove_character(const character *character)
 	assert_throw(character->get_game_data()->get_domain() != this->domain);
 	assert_throw(vector::contains(this->get_characters(), character));
 	std::erase(this->characters, character);
+
+	if (game::get()->is_running()) {
+		emit characters_changed();
+	}
 }
 
 void domain_game_data::check_characters()
