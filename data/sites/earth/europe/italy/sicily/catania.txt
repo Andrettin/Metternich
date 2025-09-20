@@ -2,6 +2,8 @@ catania = {
 	name = "Catania"
 	world = earth
 	geocoordinate = { 15.07999914420 37.49997072250 } #from Natural Earth
+	type = holding
+	holding_type = guild
 	province = sicily
 	
 	history = {
