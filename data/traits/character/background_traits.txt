@@ -73,7 +73,6 @@ professor = {
 		character_class = none
 		or = {
 			character_class = cleric
-			character_class = high_judge
 			character_class = natural_scientist
 			character_class = philosopher
 		}

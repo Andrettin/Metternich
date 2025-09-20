@@ -22,10 +22,8 @@ thrifty_clerk = {
 	icon = chest
 	conditions = {
 		or = {
-			character_class = banker
 			character_class = farmer
 			character_class = merchant
-			character_class = pioneer
 			character_class = treasurer
 		}
 		not = {

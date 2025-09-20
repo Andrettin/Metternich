@@ -7,7 +7,6 @@ scholar = {
 			cultural_group = asian
 		}
 		or = {
-			character_class = architect
 			character_class = artist
 			character_class = bard
 			character_class = philosopher

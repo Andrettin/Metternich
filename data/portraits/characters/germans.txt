@@ -19,10 +19,8 @@ jakob_fugger = {
 			cultural_group = asian
 		}
 		or = {
-			character_class = banker
 			character_class = farmer
 			character_class = merchant
-			character_class = pioneer
 			character_class = treasurer
 		}
 		birth_year < 1800

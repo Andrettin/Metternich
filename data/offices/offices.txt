@@ -5,7 +5,6 @@ chief_builder = {
 		game_rule = offices
 	}
 	holder_conditions = {
-		trait = architect
 	}
 }
 

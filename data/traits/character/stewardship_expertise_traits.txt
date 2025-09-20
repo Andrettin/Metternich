@@ -60,7 +60,6 @@ silver_palm = {
 	conditions = {
 		character_class = none
 		or = {
-			character_class = banker
 			character_class = merchant
 			character_class = treasurer
 		}

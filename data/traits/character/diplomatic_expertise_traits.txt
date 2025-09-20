@@ -39,7 +39,6 @@ negotiator = {
 	conditions = {
 		character_class = none
 		or = {
-			character_class = banker
 			character_class = diplomat
 			character_class = merchant
 			character_class = statesman
