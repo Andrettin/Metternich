@@ -196,7 +196,7 @@ bool journal_entry::check_preconditions(const domain *domain) const
 	}
 
 	for (const character *character : this->get_recruited_characters()) {
-		const metternich::domain *character_domain = character->get_game_data()->get_country();
+		const metternich::domain *character_domain = character->get_game_data()->get_domain();
 		if (character_domain != nullptr && character_domain != domain) {
 			return false;
 		}
@@ -307,7 +307,7 @@ bool journal_entry::check_completion_conditions(const domain *domain, const bool
 	}
 
 	for (const character *character : this->get_recruited_characters()) {
-		const bool recruited = character->get_game_data()->get_country() == domain;
+		const bool recruited = character->get_game_data()->get_domain() == domain;
 
 		if (!recruited) {
 			return false;

@@ -219,7 +219,7 @@ template <typename scope_type>
 const domain *effect<scope_type>::get_scope_country(const scope_type *scope)
 {
 	if constexpr (std::is_same_v<scope_type, const character>) {
-		return scope->get_game_data()->get_country();
+		return scope->get_game_data()->get_domain();
 	} else if constexpr (std::is_same_v<scope_type, const domain>) {
 		return scope;
 	} else if constexpr (std::is_same_v<scope_type, population_unit>) {

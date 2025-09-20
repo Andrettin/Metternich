@@ -148,7 +148,6 @@ public:
 		emit task_completion_turns_changed();
 	}
 
-	void disband(const bool dead);
 	Q_INVOKABLE void disband();
 
 signals:

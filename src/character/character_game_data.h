@@ -40,7 +40,7 @@ class character_game_data final : public QObject
 
 	Q_PROPERTY(QString titled_name READ get_titled_name_qstring NOTIFY titled_name_changed)
 	Q_PROPERTY(const metternich::portrait* portrait READ get_portrait NOTIFY portrait_changed)
-	Q_PROPERTY(const metternich::domain* country READ get_country NOTIFY country_changed)
+	Q_PROPERTY(const metternich::domain* domain READ get_domain NOTIFY domain_changed)
 	Q_PROPERTY(int age READ get_age NOTIFY age_changed)
 	Q_PROPERTY(bool dead READ is_dead NOTIFY dead_changed)
 	Q_PROPERTY(const metternich::character_class* character_class READ get_character_class NOTIFY character_class_changed)
@@ -85,12 +85,12 @@ public:
 	bool is_current_portrait_valid() const;
 	void check_portrait();
 
-	const metternich::domain *get_country() const
+	const metternich::domain *get_domain() const
 	{
 		return this->domain;
 	}
 
-	void set_country(const metternich::domain *domain);
+	void set_domain(const metternich::domain *domain);
 
 	int get_age() const;
 
@@ -402,7 +402,7 @@ public:
 signals:
 	void titled_name_changed();
 	void portrait_changed();
-	void country_changed();
+	void domain_changed();
 	void age_changed();
 	void dead_changed();
 	void character_class_changed();

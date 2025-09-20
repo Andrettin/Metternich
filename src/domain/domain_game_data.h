@@ -773,6 +773,8 @@ public:
 	}
 
 	std::vector<const character *> get_characters() const;
+	void add_character(const character *character);
+	void remove_character(const character *character);
 	void check_characters();
 
 	void generate_ruler();
@@ -1147,6 +1149,7 @@ private:
 	std::map<idea_type, data_entry_map<idea_slot, const idea *>> ideas;
 	std::map<idea_type, data_entry_map<idea_slot, const idea *>> appointed_ideas;
 	scripted_country_modifier_map<int> scripted_modifiers;
+	std::vector<const character *> characters;
 	std::vector<qunique_ptr<civilian_unit>> civilian_units;
 	data_entry_map<civilian_unit_type, int> civilian_unit_recruitment_counts;
 	std::vector<qunique_ptr<transporter>> transporters;

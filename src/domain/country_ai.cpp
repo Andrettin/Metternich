@@ -67,7 +67,7 @@ void country_ai::do_turn()
 			++i;
 		} else {
 			//if the civilian unit is idle, this means that nothing was found for it to do above; in that case, disband it
-			civilian_unit->disband(false);
+			civilian_unit->disband();
 		}
 	}
 

@@ -528,7 +528,7 @@ QVariantList civilian_unit::get_prospectable_tiles_qvariant_list() const
 	return archimedes::map::to_qvariant_list(this->get_prospectable_tiles());
 }
 
-void civilian_unit::disband(const bool dead)
+void civilian_unit::disband()
 {
 	if (this->is_working()) {
 		this->cancel_work();
@@ -541,11 +541,6 @@ void civilian_unit::disband(const bool dead)
 	map::get()->set_tile_civilian_unit(this->get_tile_pos(), nullptr);
 
 	this->get_owner()->get_game_data()->remove_civilian_unit(this);
-}
-
-void civilian_unit::disband()
-{
-	this->disband(false);
 }
 
 }

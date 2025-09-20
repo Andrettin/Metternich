@@ -201,7 +201,6 @@ void country_government::set_office_holder(const office *office, const character
 	if (old_office_holder != nullptr) {
 		old_office_holder->get_game_data()->apply_office_modifier(this->domain, office, -1);
 		old_office_holder->get_game_data()->set_office(nullptr);
-		old_office_holder->get_game_data()->set_country(nullptr);
 	}
 
 	const metternich::office *old_office = character ? character->get_game_data()->get_office() : nullptr;
@@ -218,7 +217,6 @@ void country_government::set_office_holder(const office *office, const character
 	if (character != nullptr) {
 		character->get_game_data()->apply_office_modifier(this->domain, office, 1);
 		character->get_game_data()->set_office(office);
-		character->get_game_data()->set_country(this->domain);
 	}
 
 	if (old_office != nullptr) {
@@ -344,7 +342,7 @@ std::vector<const character *> country_government::get_appointable_office_holder
 
 	std::vector<const character *> potential_holders;
 
-	for (const character *character : character::get_all()) {
+	for (const character *character : this->get_game_data()->get_characters()) {
 		if (!this->can_gain_office_holder(office, character)) {
 			continue;
 		}
@@ -426,11 +424,7 @@ bool country_government::can_have_office_holder(const office *office, const char
 		return false;
 	}
 
-	if (character_game_data->get_country() != nullptr && character_game_data->get_country() != this->domain) {
-		return false;
-	}
-
-	if (character->get_home_settlement() == nullptr || (character_game_data->get_country() != this->domain && character->get_home_settlement()->get_game_data()->get_owner() != this->domain)) {
+	if (character_game_data->get_domain() != this->domain) {
 		return false;
 	}
 
@@ -507,7 +501,7 @@ void country_government::on_office_holder_died(const office *office, const chara
 				//FIXME: allow players to continue playing with player character succession
 				emit game::get()->game_over();
 			} else {
-				engine_interface::get()->add_notification(std::format("{} Retired", office_holder->get_full_name()), interior_minister_portrait, std::format("Your Excellency, after a distinguished career in our service, {} {} has decided to retire.", string::lowered(office->get_name()), office_holder->get_full_name()));
+				engine_interface::get()->add_notification(std::format("{} Died", office_holder->get_full_name()), interior_minister_portrait, std::format("Our {}, {}, has died!", string::lowered(office->get_name()), office_holder->get_full_name()));
 			}
 		}
 

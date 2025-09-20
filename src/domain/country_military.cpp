@@ -26,6 +26,7 @@
 #include "util/map_util.h"
 #include "util/string_util.h"
 #include "util/vector_random_util.h"
+#include "util/vector_util.h"
 
 namespace metternich {
 
@@ -65,6 +66,7 @@ QVariantList country_military::get_leaders_qvariant_list() const
 
 void country_military::add_leader(const character *leader)
 {
+	assert_throw(leader->get_game_data()->get_domain() == this->domain);
 	this->leaders.push_back(leader);
 
 	emit leaders_changed();
@@ -72,7 +74,7 @@ void country_military::add_leader(const character *leader)
 
 void country_military::remove_leader(const character *leader)
 {
-	assert_throw(leader->get_game_data()->get_country() == this->domain);
+	vector::contains(this->leaders, leader);
 
 	std::erase(this->leaders, leader);
 
@@ -118,12 +120,8 @@ bool country_military::create_military_unit(const military_unit_type *military_u
 	if (military_unit_type->get_unit_class()->is_leader()) {
 		std::vector<const metternich::character *> potential_characters;
 
-		for (const metternich::character *character : character::get_all()) {
+		for (const metternich::character *character : this->get_game_data()->get_characters()) {
 			if (character->get_military_unit_category() != military_unit_type->get_category()) {
-				continue;
-			}
-
-			if (character->get_game_data()->get_country() != nullptr && character->get_game_data()->get_country() != this->domain) {
 				continue;
 			}
 
@@ -183,14 +181,10 @@ bool country_military::create_military_unit(const military_unit_type *military_u
 	return true;
 }
 
-void country_military::add_military_unit(qunique_ptr<military_unit> &&military_unit)
+void country_military::add_military_unit(qunique_ptr<metternich::military_unit> &&military_unit)
 {
 	if (military_unit->get_character() != nullptr) {
 		this->add_leader(military_unit->get_character());
-	}
-
-	if (military_unit->get_character() != nullptr) {
-		military_unit->get_character()->get_game_data()->set_country(this->domain);
 	}
 
 	this->get_game_data()->add_unit_name(military_unit->get_name());
@@ -205,11 +199,6 @@ void country_military::remove_military_unit(military_unit *military_unit)
 {
 	if (military_unit->get_character() != nullptr) {
 		this->remove_leader(military_unit->get_character());
-	}
-
-	if (military_unit->get_character() != nullptr) {
-		assert_throw(military_unit->get_character()->get_game_data()->get_country() == this->domain);
-		military_unit->get_character()->get_game_data()->set_country(nullptr);
 	}
 
 	this->get_game_data()->remove_unit_name(military_unit->get_name());

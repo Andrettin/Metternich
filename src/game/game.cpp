@@ -620,10 +620,11 @@ void game::apply_history(const metternich::scenario *scenario)
 
 				character_game_data *office_holder_game_data = office_holder->get_game_data();
 
-				if (office_holder_game_data->get_country() != nullptr && office_holder_game_data->get_country() != domain) {
+				if (office_holder_game_data->get_domain() != nullptr && office_holder_game_data->get_domain() != domain) {
 					throw std::runtime_error(std::format("Cannot set \"{}\" as an office holder for \"{}\", as they are already assigned to another domain.", office_holder->get_identifier(), domain->get_identifier()));
 				}
 
+				office_holder_game_data->set_domain(domain);
 				country_government->set_office_holder(office, office_holder);
 			}
 

@@ -154,6 +154,10 @@ void domain_game_data::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->provinces.push_back(province::get(value));
 		}
+	} else if (tag == "characters") {
+		for (const std::string &value : values) {
+			this->characters.push_back(game::get()->get_character(value));
+		}
 	} else {
 		throw std::runtime_error(std::format("Invalid country game data scope: \"{}\".", tag));
 	}
@@ -179,6 +183,12 @@ gsml_data domain_game_data::to_gsml_data() const
 		provinces_data.add_value(province->get_identifier());
 	}
 	data.add_child(std::move(provinces_data));
+
+	gsml_data characters_data("characters");
+	for (const character *character : this->get_characters()) {
+		characters_data.add_value(character->get_identifier());
+	}
+	data.add_child(std::move(characters_data));
 
 	return data;
 }
@@ -2627,15 +2637,21 @@ void domain_game_data::apply_modifier(const modifier<const metternich::domain> *
 
 std::vector<const character *> domain_game_data::get_characters() const
 {
-	std::vector<const character *> characters;
+	return this->characters;
+}
 
-	for (const auto &[office, office_holder] : this->get_government()->get_office_holders()) {
-		characters.push_back(office_holder);
-	}
+void domain_game_data::add_character(const character *character)
+{
+	assert_throw(character->get_game_data()->get_domain() == this->domain);
+	assert_throw(!vector::contains(this->get_characters(), character));
+	this->characters.push_back(character);
+}
 
-	vector::merge(characters, this->get_military()->get_leaders());
-
-	return characters;
+void domain_game_data::remove_character(const character *character)
+{
+	assert_throw(character->get_game_data()->get_domain() != this->domain);
+	assert_throw(vector::contains(this->get_characters(), character));
+	std::erase(this->characters, character);
 }
 
 void domain_game_data::check_characters()
@@ -2687,6 +2703,7 @@ void domain_game_data::generate_ruler()
 	const character_class *character_class = vector::get_random(potential_classes);
 
 	const character *ruler = character::generate(species, character_class, 1, this->domain->get_culture(), this->get_religion(), this->get_capital());
+	ruler->get_game_data()->set_domain(this->domain);
 	this->get_government()->set_office_holder(defines::get()->get_ruler_office(), ruler);
 }
 

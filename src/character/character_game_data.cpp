@@ -70,6 +70,8 @@ void character_game_data::process_gsml_property(const gsml_property &property)
 
 	if (key == "portrait") {
 		this->portrait = portrait::get(value);
+	} else if (key == "domain") {
+		this->domain = domain::get(value);
 	} else if (key == "dead") {
 		this->dead = string::to_bool(value);
 	} else if (key == "character_class") {
@@ -126,6 +128,11 @@ gsml_data character_game_data::to_gsml_data() const
 	gsml_data data(this->character->get_identifier());
 
 	data.add_property("portrait", this->get_portrait()->get_identifier());
+
+	if (this->get_domain() != nullptr) {
+		data.add_property("domain", this->get_domain()->get_identifier());
+	}
+
 	data.add_property("dead", string::from_bool(this->is_dead()));
 	data.add_property("character_class", this->get_character_class()->get_identifier());
 	data.add_property("level", std::to_string(this->get_level()));
@@ -253,6 +260,8 @@ void character_game_data::apply_history(const QDate &start_date)
 	const metternich::domain *domain = character_history->get_country();
 
 	if (domain != nullptr && !domain->get_game_data()->is_under_anarchy()) {
+		this->set_domain(domain);
+
 		if (this->character->get_military_unit_category() != military_unit_category::none) {
 			const province *deployment_province = character_history->get_deployment_province();
 			if (deployment_province != nullptr) {
@@ -261,6 +270,10 @@ void character_game_data::apply_history(const QDate &start_date)
 				}
 			}
 		}
+	}
+
+	if (this->get_domain() == nullptr && this->character->get_home_settlement() != nullptr) {
+		this->set_domain(this->character->get_home_settlement()->get_game_data()->get_owner());
 	}
 }
 
@@ -304,7 +317,8 @@ void character_game_data::on_setup_finished()
 std::string character_game_data::get_titled_name() const
 {
 	if (this->get_office() != nullptr) {
-		return std::format("{} {}", this->get_country()->get_government()->get_office_title_name(this->get_office()), this->character->get_full_name());
+		assert_throw(this->get_domain() != nullptr);
+		return std::format("{} {}", this->get_domain()->get_government()->get_office_title_name(this->get_office()), this->character->get_full_name());
 	}
 
 	return this->character->get_full_name();
@@ -357,16 +371,24 @@ void character_game_data::check_portrait()
 	this->portrait = vector::get_random(potential_portraits);
 }
 
-void character_game_data::set_country(const metternich::domain *domain)
+void character_game_data::set_domain(const metternich::domain *domain)
 {
-	if (domain == this->get_country()) {
+	if (domain == this->get_domain()) {
 		return;
+	}
+
+	if (this->get_domain() != nullptr) {
+		this->get_domain()->get_game_data()->remove_character(this->character);
 	}
 
 	this->domain = domain;
 
+	if (this->get_domain() != nullptr) {
+		this->get_domain()->get_game_data()->add_character(this->character);
+	}
+
 	if (game::get()->is_running()) {
-		emit country_changed();
+		emit domain_changed();
 	}
 }
 
@@ -403,16 +425,16 @@ void character_game_data::die()
 	this->set_dead(true);
 
 	if (this->get_office() != nullptr) {
-		assert_throw(this->get_country() != nullptr);
-		this->get_country()->get_government()->on_office_holder_died(this->get_office(), this->character);
+		assert_throw(this->get_domain() != nullptr);
+		this->get_domain()->get_government()->on_office_holder_died(this->get_office(), this->character);
 	}
 
 	if (this->get_military_unit() != nullptr) {
-		this->get_country()->get_military()->on_leader_died(this->character);
+		this->get_domain()->get_military()->on_leader_died(this->character);
 	}
 
 	assert_throw(this->get_office() == nullptr);
-	this->set_country(nullptr);
+	this->set_domain(nullptr);
 }
 
 const metternich::character_class *character_game_data::get_character_class() const
@@ -825,10 +847,10 @@ void character_game_data::remove_trait(const character_trait *trait)
 void character_game_data::on_trait_gained(const character_trait *trait, const int multiplier)
 {
 	if (this->get_office() != nullptr) {
-		assert_throw(this->get_country() != nullptr);
+		assert_throw(this->get_domain() != nullptr);
 
 		if (trait->get_office_modifier(this->get_office()) != nullptr || trait->get_scaled_office_modifier(this->get_office()) != nullptr) {
-			this->apply_trait_office_modifier(trait, this->get_country(), this->get_office(), multiplier);
+			this->apply_trait_office_modifier(trait, this->get_domain(), this->get_office(), multiplier);
 		}
 	}
 
@@ -960,7 +982,7 @@ void character_game_data::decrement_scripted_modifiers()
 
 bool character_game_data::is_ruler() const
 {
-	return this->get_country() != nullptr && this->get_country()->get_government()->get_ruler() == this->character;
+	return this->get_domain() != nullptr && this->get_domain()->get_government()->get_ruler() == this->character;
 }
 
 void character_game_data::set_office(const metternich::office *office)
@@ -1058,6 +1080,7 @@ bool character_game_data::is_deployable() const
 void character_game_data::deploy_to_province(const metternich::domain *domain, const province *province)
 {
 	assert_throw(domain != nullptr);
+	assert_throw(domain == this->get_domain());
 	assert_throw(province != nullptr);
 	assert_throw(!this->is_deployed());
 	assert_throw(this->is_deployable());
@@ -1072,7 +1095,7 @@ void character_game_data::deploy_to_province(const metternich::domain *domain, c
 
 	domain->get_military()->add_military_unit(std::move(military_unit));
 
-	assert_throw(this->get_country() != nullptr);
+	assert_throw(this->get_domain() != nullptr);
 }
 
 void character_game_data::undeploy()

@@ -396,7 +396,7 @@ template <typename scope_type>
 const domain *condition<scope_type>::get_scope_country(const scope_type *scope)
 {
 	if constexpr (std::is_same_v<scope_type, character>) {
-		return scope->get_game_data()->get_country();
+		return scope->get_game_data()->get_domain();
 	} else if constexpr (std::is_same_v<scope_type, domain>) {
 		return scope;
 	} else if constexpr (std::is_same_v<scope_type, military_unit> || std::is_same_v<scope_type, population_unit>) {

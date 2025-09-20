@@ -29,7 +29,7 @@ public:
 
 		const domain *domain = nullptr;
 		if constexpr (std::is_same_v<scope_type, character>) {
-			domain = scope->get_game_data()->get_country();
+			domain = scope->get_game_data()->get_domain();
 		} else {
 			domain = scope;
 		}
