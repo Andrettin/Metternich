@@ -61,7 +61,6 @@
 #include "script/condition/improvement_condition.h"
 #include "script/condition/independent_condition.h"
 #include "script/condition/infantry_condition.h"
-#include "script/condition/is_advisor_condition.h"
 #include "script/condition/is_military_unit_category_available_condition.h"
 #include "script/condition/law_condition.h"
 #include "script/condition/military_unit_category_condition.h"
@@ -128,8 +127,6 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			return std::make_unique<character_class_condition>(value, condition_operator);
 		} else if (key == "character_role") {
 			return std::make_unique<character_role_condition>(value, condition_operator);
-		} else if (key == "is_advisor") {
-			return std::make_unique<is_advisor_condition>(value, condition_operator);
 		} else if (key == "primary_attribute") {
 			return std::make_unique<primary_attribute_condition>(value, condition_operator);
 		} else if (key == "trait") {

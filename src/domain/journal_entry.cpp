@@ -180,12 +180,6 @@ void journal_entry::check() const
 			throw std::runtime_error(std::format("Journal entry \"{}\" requires developing resource site \"{}\" to a certain level, but that site is not a resource site.", this->get_identifier(), site->get_identifier()));
 		}
 	}
-
-	for (const character *character : this->get_recruited_characters()) {
-		if (!character->has_role(character_role::advisor) && !character->has_role(character_role::leader) && !character->has_role(character_role::civilian)) {
-			throw std::runtime_error(std::format("Journal entry \"{}\" requires the recruiting \"{}\" character, but that character does not have a recruitable role.", this->get_identifier(), character->get_identifier()));
-		}
-	}
 }
 
 bool journal_entry::check_preconditions(const domain *domain) const
@@ -202,15 +196,9 @@ bool journal_entry::check_preconditions(const domain *domain) const
 		}
 	}
 
-	const bool can_recruit_advisors = domain->get_government()->can_have_appointable_offices();
-
 	for (const character *character : this->get_recruited_characters()) {
 		const metternich::domain *character_domain = character->get_game_data()->get_country();
 		if (character_domain != nullptr && character_domain != domain) {
-			return false;
-		}
-
-		if (character->has_role(character_role::advisor) && !can_recruit_advisors) {
 			return false;
 		}
 	}
@@ -261,7 +249,6 @@ bool journal_entry::check_completion_conditions(const domain *domain, const bool
 	}
 
 	const domain_game_data *domain_game_data = domain->get_game_data();
-	const country_military *country_military = domain->get_military();
 	const country_technology *country_technology = domain->get_technology();
 
 	for (const province *province : this->owned_provinces) {
@@ -321,27 +308,7 @@ bool journal_entry::check_completion_conditions(const domain *domain, const bool
 	}
 
 	for (const character *character : this->get_recruited_characters()) {
-		bool recruited = false;
-
-		for (const character_role role : character->get_roles()) {
-			switch (role) {
-				case character_role::advisor:
-					recruited = character->get_game_data()->get_office() != nullptr && character->get_game_data()->get_country() == domain;
-					break;
-				case character_role::leader:
-					recruited = vector::contains(country_military->get_leaders(), character);
-					break;
-				case character_role::civilian:
-					recruited = domain_game_data->has_civilian_character(character);
-					break;
-				default:
-					break;
-			}
-
-			if (recruited) {
-				break;
-			}
-		}
+		const bool recruited = character->get_game_data()->get_country() == domain;
 
 		if (!recruited) {
 			return false;
@@ -435,9 +402,7 @@ QString journal_entry::get_completion_conditions_string() const
 
 		std::string character_type_name;
 
-		if (character->has_role(character_role::advisor)) {
-			character_type_name = "Advisor";
-		} else if (character->has_role(character_role::leader)) {
+		if (character->has_role(character_role::leader)) {
 			character_type_name = character->get_leader_type_name();
 		} else if (character->has_role(character_role::civilian)) {
 			character_type_name = character->get_civilian_unit_type()->get_name();

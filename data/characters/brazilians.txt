@@ -1,7 +1,6 @@
 bernardo_pereira_de_vasconcelos = {
 	name = "Bernardo"
 	surname = "Pereira de Vasconcelos"
-	role = advisor
 	character_class = statesman
 	culture = brazilian
 	religion = catholic

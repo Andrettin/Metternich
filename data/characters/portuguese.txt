@@ -29,7 +29,6 @@ pedro_alvares_cabral = { #Source: Isaac Asimov, "Cronologia das Ciências e das 
 ferdinand_magellan = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 203.
 	name = "Ferdinand"
 	surname = "Magellan"
-	role = advisor
 	character_class = navigator
 	culture = portuguese
 	religion = catholic

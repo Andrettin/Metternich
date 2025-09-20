@@ -21,7 +21,6 @@ franz_georg_von_metternich = { #Source: "Gothaischer Hofkalender zum Nutzen und 
 clemens_wenceslaus_von_metternich = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, pp. 84-85.
 	name = "Clemens Wenceslaus" #"Clemens Wenceslaus Lothar"
 	dynasty = metternich
-	role = advisor
 	character_class = diplomat
 	culture = german #Rhenish
 	religion = catholic

@@ -136,11 +136,6 @@ bool country_military::create_military_unit(const military_unit_type *military_u
 				continue;
 			}
 
-			if (character->has_role(character_role::advisor) && character->get_game_data()->get_country() != this->domain) {
-				//if the character is an advisor, they must already have been recruited by the country as an advisor before being usable as a military unit
-				continue;
-			}
-
 			if (phenotype != nullptr && character->get_phenotype() != phenotype) {
 				continue;
 			}
@@ -199,7 +194,7 @@ void country_military::add_military_unit(qunique_ptr<military_unit> &&military_u
 		this->add_leader(military_unit->get_character());
 	}
 
-	if (military_unit->get_character() != nullptr && !military_unit->get_character()->has_role(character_role::advisor)) {
+	if (military_unit->get_character() != nullptr) {
 		military_unit->get_character()->get_game_data()->set_country(this->domain);
 	}
 
@@ -217,7 +212,7 @@ void country_military::remove_military_unit(military_unit *military_unit)
 		this->remove_leader(military_unit->get_character());
 	}
 
-	if (military_unit->get_character() != nullptr && !military_unit->get_character()->has_role(character_role::advisor)) {
+	if (military_unit->get_character() != nullptr) {
 		assert_throw(military_unit->get_character()->get_game_data()->get_country() == this->domain);
 		military_unit->get_character()->get_game_data()->set_country(nullptr);
 	}

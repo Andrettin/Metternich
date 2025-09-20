@@ -346,12 +346,6 @@ std::vector<const character *> country_government::get_appointable_office_holder
 	std::vector<const character *> potential_holders;
 
 	for (const character *character : character::get_all()) {
-		if (!office->is_ruler()) {
-			if (!character->has_role(character_role::advisor)) {
-				continue;
-			}
-		}
-
 		if (!this->can_gain_office_holder(office, character)) {
 			continue;
 		}
@@ -360,12 +354,6 @@ std::vector<const character *> country_government::get_appointable_office_holder
 	}
 
 	for (const qunique_ptr<character> &character : game::get()->get_generated_characters()) {
-		if (!office->is_ruler()) {
-			if (!character->has_role(character_role::advisor)) {
-				continue;
-			}
-		}
-
 		if (!this->can_gain_office_holder(office, character.get())) {
 			continue;
 		}

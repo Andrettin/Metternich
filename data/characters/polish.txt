@@ -12,7 +12,6 @@ cymburgis_of_masovia = { #Cymburgis of Masovia; Source: Eva Demmerle, "Das Haus 
 nicolaus_copernicus = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, pp. 209-211.
 	name = "Nicolaus"
 	surname = "Copernicus"
-	role = advisor
 	character_class = natural_scientist
 	culture = polish
 	religion = catholic

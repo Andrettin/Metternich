@@ -18,7 +18,6 @@ jan_stephan_van_calcar = { #Source: Isaac Asimov, "Cronologia das Ciências e da
 andreas_vesalius = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 211.
 	name = "Andreas"
 	surname = "Vesalius"
-	role = advisor
 	character_class = natural_scientist
 	culture = flemish #correct?
 	religion = catholic

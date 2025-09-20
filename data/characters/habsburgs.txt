@@ -70,7 +70,6 @@ friedrich_iii_of_the_holy_roman_empire = { #Source: Eva Demmerle, "Das Haus Habs
 sigismund_von_habsburg = {
 	name = "Sigismund"
 	dynasty = habsburg
-	role = advisor
 	character_class = statesman
 	culture = austrian
 	religion = catholic

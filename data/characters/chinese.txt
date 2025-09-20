@@ -1,6 +1,5 @@
 sun_tzu = {
 	name = "Sun Tzu"
-	role = advisor
 	character_class = warrior
 	culture = chinese
 	religion = pagan

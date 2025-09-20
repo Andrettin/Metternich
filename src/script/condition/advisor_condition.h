@@ -28,7 +28,7 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		return this->advisor->has_role(character_role::advisor) && this->advisor->get_game_data()->get_country() == scope && this->advisor->get_game_data()->get_office() != nullptr;
+		return this->advisor->get_game_data()->get_country() == scope && this->advisor->get_game_data()->get_office() != nullptr;
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override

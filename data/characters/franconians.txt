@@ -16,7 +16,6 @@ regiomontanus = { #Source: "Encyclopædia Britannica", 1911, vol. 23, p. 39.
 	name = "Johann"
 	surname = "Muller" #"Müller"
 	nickname = "Regiomontanus"
-	role = advisor
 	character_class = natural_scientist #astronomer
 	culture = german
 	religion = catholic

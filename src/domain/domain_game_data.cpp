@@ -2773,11 +2773,6 @@ bool domain_game_data::create_civilian_unit(const civilian_unit_type *civilian_u
 			continue;
 		}
 
-		if (character->has_role(character_role::advisor) && character->get_game_data()->get_country() != this->domain) {
-			//if the character is an advisor, they must already have been recruited by the country as an advisor before being usable as a civilian unit
-			continue;
-		}
-
 		if (phenotype != nullptr && character->get_phenotype() != phenotype) {
 			continue;
 		}
@@ -2824,7 +2819,7 @@ bool domain_game_data::create_civilian_unit(const civilian_unit_type *civilian_u
 
 void domain_game_data::add_civilian_unit(qunique_ptr<civilian_unit> &&civilian_unit)
 {
-	if (civilian_unit->get_character() != nullptr && !civilian_unit->get_character()->has_role(character_role::advisor)) {
+	if (civilian_unit->get_character() != nullptr) {
 		civilian_unit->get_character()->get_game_data()->set_country(this->domain);
 	}
 
@@ -2836,7 +2831,7 @@ void domain_game_data::remove_civilian_unit(civilian_unit *civilian_unit)
 {
 	assert_throw(civilian_unit != nullptr);
 
-	if (civilian_unit->get_character() != nullptr && !civilian_unit->get_character()->has_role(character_role::advisor)) {
+	if (civilian_unit->get_character() != nullptr) {
 		assert_throw(civilian_unit->get_character()->get_game_data()->get_country() == this->domain);
 		civilian_unit->get_character()->get_game_data()->set_country(nullptr);
 	}

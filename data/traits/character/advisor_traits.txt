@@ -19,10 +19,6 @@ benjamin_franklin = {
 	conditions = {
 		character = benjamin_franklin
 	}
-	advisor_modifier = {
-		statesmanship_per_printing_press = 3
-		statesmanship_per_newspaper = 3
-	}
 }
 
 charles_darwin = {
@@ -34,9 +30,6 @@ charles_darwin = {
 	hidden_name = true
 	conditions = {
 		character = charles_darwin
-	}
-	advisor_effects = {
-		free_technologies = 2
 	}
 }
 
@@ -61,12 +54,6 @@ cyrus_mccormick = {
 	conditions = {
 		character = cyrus_mccormick
 	}
-	advisor_modifier = {
-		grain_bonus_for_tile_threshold = 2
-		potatoes_bonus_for_tile_threshold = 2
-		fruit_bonus_for_tile_threshold = 2
-		sugar_cane_output_modifier = 50
-	}
 }
 
 ferdinand_magellan = {
@@ -82,9 +69,6 @@ ferdinand_magellan = {
 			character = perseus
 		}
 	}
-	advisor_modifier = {
-		ship_movement_modifier = 1
-	}
 }
 
 francisco_de_coronado = {
@@ -96,13 +80,6 @@ francisco_de_coronado = {
 	hidden_name = true
 	conditions = {
 		character = francisco_de_coronado
-	}
-	advisor_modifier = {
-		military_unit_stat = {
-			category = heavy_cavalry
-			stat = movement
-			value = 1
-		}
 	}
 }
 
@@ -116,9 +93,6 @@ giovanni_da_verrazano = {
 	conditions = {
 		character = giovanni_da_verrazano
 	}
-	advisor_effects = {
-		create_transporter = carrack #caravel
-	}
 }
 
 henry_hudson = {
@@ -130,9 +104,6 @@ henry_hudson = {
 	hidden_name = true
 	conditions = {
 		character = henry_hudson
-	}
-	advisor_modifier = {
-		furs_output_modifier = 100
 	}
 }
 
@@ -146,9 +117,6 @@ isaac_newton = {
 	conditions = {
 		character = isaac_newton
 	}
-	advisor_modifier = {
-		capital_research_output_modifier = 100
-	}
 }
 
 jacques_marquette = {
@@ -160,13 +128,6 @@ jacques_marquette = {
 	hidden_name = true
 	conditions = {
 		character = jacques_marquette
-	}
-	advisor_modifier = {
-		military_unit_stat = {
-			category = light_cavalry
-			stat = movement
-			value = 1
-		}
 	}
 }
 
@@ -180,9 +141,6 @@ johann_sebastian_bach = {
 	conditions = {
 		character = johann_sebastian_bach
 	}
-	advisor_modifier = {
-		amenities_per_cathedral = 2
-	}
 }
 
 john_harvard = {
@@ -194,9 +152,6 @@ john_harvard = {
 	hidden_name = true
 	conditions = {
 		character = john_harvard
-	}
-	advisor_modifier = {
-		free_building_class = school
 	}
 }
 
@@ -210,9 +165,6 @@ john_jacob_astor = {
 	conditions = {
 		character = john_jacob_astor
 	}
-	advisor_modifier = {
-		furs_output_modifier = 50
-	}
 }
 
 john_paul_jones = {
@@ -224,9 +176,6 @@ john_paul_jones = {
 	hidden_name = true
 	conditions = {
 		character = john_paul_jones
-	}
-	advisor_effects = {
-		create_military_unit = frigate
 	}
 }
 
@@ -240,12 +189,6 @@ john_winthrop = {
 	conditions = {
 		character = john_winthrop
 	}
-	advisor_modifier = {
-		piety_per_town_hall = 1
-		piety_per_city_hall = 1
-		piety_per_state_house = 1
-		piety_per_capitol = 1
-	}
 }
 
 juan_de_bermudez = {
@@ -257,9 +200,6 @@ juan_de_bermudez = {
 	hidden_name = true
 	conditions = {
 		character = juan_de_bermudez
-	}
-	advisor_modifier = {
-		merchant_ship_movement_modifier = 1
 	}
 }
 
@@ -273,9 +213,6 @@ leonardo_da_vinci = {
 	conditions = {
 		character_class = engineer
 	}
-	advisor_modifier = {
-		unit_upgrade_cost_modifier = -50
-	}
 }
 
 marco_polo = {
@@ -287,9 +224,6 @@ marco_polo = {
 	hidden_name = true
 	conditions = {
 		character = marco_polo
-	}
-	advisor_modifier = {
-		free_consulate = embassy
 	}
 }
 
@@ -314,9 +248,6 @@ nicolaus_copernicus = {
 	conditions = {
 		character = nicolaus_copernicus
 	}
-	advisor_modifier = {
-		capital_research_output_modifier = 50
-	}
 }
 
 patrick_henry = {
@@ -328,13 +259,6 @@ patrick_henry = {
 	hidden_name = true
 	conditions = {
 		character = patrick_henry
-	}
-	advisor_modifier = {
-		statesmanship_per_village_hall = 1
-		statesmanship_per_town_hall = 2
-		statesmanship_per_city_hall = 3
-		statesmanship_per_state_house = 3
-		statesmanship_per_capitol = 3
 	}
 }
 
@@ -358,9 +282,6 @@ sieur_de_la_salle = {
 	hidden_name = true
 	conditions = {
 		character = sieur_de_la_salle
-	}
-	advisor_modifier = {
-		free_building_class = stockade
 	}
 }
 
@@ -407,10 +328,5 @@ washington_irving = {
 	hidden_name = true
 	conditions = {
 		character = washington_irving
-	}
-	advisor_modifier = {
-		statesmanship_per_school = 1
-		statesmanship_per_college = 2
-		statesmanship_per_university = 3
 	}
 }

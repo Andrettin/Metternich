@@ -1,7 +1,6 @@
 janez_v_valvasor = {
 	name = "Janez"
 	surname = "V. Valvasor"
-	role = advisor
 	character_class = natural_scientist
 	culture = slovene
 	religion = catholic
@@ -18,7 +17,6 @@ janez_v_valvasor = {
 jurij_vega = {
 	name = "Jurij"
 	surname = "Vega"
-	role = advisor
 	character_class = natural_scientist
 	culture = slovene
 	religion = catholic

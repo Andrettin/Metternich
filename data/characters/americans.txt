@@ -1,7 +1,6 @@
 benjamin_franklin = {
 	name = "Benjamin"
 	surname = "Franklin"
-	role = advisor
 	character_class = statesman
 	culture = american
 	religion = protestant
@@ -50,7 +49,6 @@ john_adams = {
 patrick_henry = {
 	name = "Patrick"
 	surname = "Henry"
-	role = advisor
 	character_class = statesman
 	culture = american
 	religion = protestant
@@ -66,7 +64,6 @@ patrick_henry = {
 thomas_jefferson = {
 	name = "Thomas"
 	surname = "Jefferson"
-	role = advisor
 	character_class = statesman
 	culture = american
 	religion = protestant
@@ -83,7 +80,6 @@ thomas_jefferson = {
 john_jay = {
 	name = "John"
 	surname = "Jay"
-	role = advisor
 	character_class = statesman
 	culture = american
 	religion = protestant
@@ -100,7 +96,6 @@ john_jay = {
 john_paul_jones = {
 	name = "John Paul"
 	surname = "Jones"
-	role = advisor
 	character_class = warrior #admiral
 	culture = scottish
 	religion = protestant
@@ -117,7 +112,6 @@ john_jacob_astor = {
 	name = "John Jacob"
 	surname = "Astor"
 	roles = {
-		advisor
 		civilian
 	}
 	character_class = merchant
@@ -136,7 +130,6 @@ eli_whitney = {
 	name = "Eli"
 	surname = "Whitney"
 	roles = {
-		advisor
 		civilian
 	}
 	character_class = farmer
@@ -155,7 +148,6 @@ eli_whitney = {
 washington_irving = {
 	name = "Washington"
 	surname = "Irving"
-	role = advisor
 	character_class = statesman
 	culture = american
 	religion = protestant
@@ -187,7 +179,6 @@ abraham_lincoln = {
 cyrus_mccormick = {
 	name = "Cyrus"
 	surname = "McCormick"
-	role = advisor
 	character_class = natural_scientist
 	culture = american
 	religion = protestant

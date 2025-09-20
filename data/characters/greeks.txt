@@ -1,6 +1,5 @@
 perseus = {
 	name = "Perseus"
-	role = advisor
 	character_class = navigator
 	culture = greek
 	religion = pagan
@@ -17,7 +16,6 @@ perseus = {
 
 archimedes = {
 	name = "Archimedes"
-	role = advisor
 	character_class = engineer
 	culture = greek
 	religion = pagan

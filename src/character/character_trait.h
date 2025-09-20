@@ -104,21 +104,6 @@ public:
 		return nullptr;
 	}
 
-	const metternich::modifier<const domain> *get_advisor_modifier() const
-	{
-		return this->advisor_modifier.get();
-	}
-
-	const metternich::modifier<const domain> *get_scaled_advisor_modifier() const
-	{
-		return this->scaled_advisor_modifier.get();
-	}
-
-	const effect_list<const domain> *get_advisor_effects() const
-	{
-		return this->advisor_effects.get();
-	}
-
 	const metternich::modifier<const character> *get_leader_modifier() const
 	{
 		return this->leader_modifier.get();
@@ -148,9 +133,6 @@ private:
 	std::unique_ptr<const metternich::modifier<const character>> modifier;
 	data_entry_map<office, std::unique_ptr<const metternich::modifier<const domain>>> office_modifiers;
 	data_entry_map<office, std::unique_ptr<const metternich::modifier<const domain>>> scaled_office_modifiers;
-	std::unique_ptr<const metternich::modifier<const domain>> advisor_modifier;
-	std::unique_ptr<const metternich::modifier<const domain>> scaled_advisor_modifier;
-	std::unique_ptr<const effect_list<const domain>> advisor_effects;
 	std::unique_ptr<const metternich::modifier<const character>> leader_modifier;
 	std::unique_ptr<const metternich::modifier<const character>> scaled_leader_modifier;
 	std::unique_ptr<const metternich::modifier<military_unit>> military_unit_modifier;
