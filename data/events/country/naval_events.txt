@@ -16,7 +16,7 @@ the_loss_of_the_eurydice = { #Source: "The Times", 1878.3.26.
 	}
 	option = {
 		effects = {
-			prestige -= 1
+			#prestige -= 1
 		}
 	}
 }

@@ -1,7 +1,0 @@
-prestige = {
-	name = "Prestige"
-	type = good
-	icon = heater_shield
-	abstract = true
-	required_game_rule = prestige
-}

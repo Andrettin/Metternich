@@ -22,9 +22,6 @@ classicism = {
 		
 		nationalism #to properly place this in its period
 	}
-	modifier = {
-		prestige_output_modifier = 5
-	}
 }
 
 romanticism = {
@@ -33,13 +30,9 @@ romanticism = {
 	portrait = engineering
 	icon = painting
 	period = 1800_1825
-	shared_prestige = 15
 	cost_commodity = culture
 	prerequisites = {
 		classicism
-	}
-	modifier = {
-		prestige_output_modifier = 5
 	}
 }
 
@@ -49,14 +42,10 @@ realism = {
 	portrait = engineering
 	icon = painting
 	period = 1825_1850
-	shared_prestige = 30
 	cost_commodity = culture
 	required_game_rule = additional_technologies
 	prerequisites = {
 		romanticism
-	}
-	modifier = {
-		prestige_output_modifier = 5
 	}
 }
 
@@ -66,14 +55,10 @@ impressionism = {
 	portrait = engineering
 	icon = painting
 	period = 1850_1875
-	shared_prestige = 45
 	cost_commodity = culture
 	required_game_rule = additional_technologies
 	prerequisites = {
 		realism
-	}
-	modifier = {
-		prestige_output_modifier = 5
 	}
 }
 
@@ -83,14 +68,10 @@ expressionism = {
 	portrait = engineering
 	icon = painting
 	period = 1875_1900
-	shared_prestige = 60
 	cost_commodity = culture
 	required_game_rule = additional_technologies
 	prerequisites = {
 		impressionism
-	}
-	modifier = {
-		prestige_output_modifier = 5
 	}
 }
 
@@ -105,9 +86,6 @@ mass_culture = {
 	prerequisites = {
 		expressionism
 	}
-	modifier = {
-		prestige_output_modifier = 3
-	}
 }
 
 avant_garde_art = {
@@ -116,14 +94,10 @@ avant_garde_art = {
 	portrait = engineering
 	icon = painting
 	period = 1900_1925
-	shared_prestige = 75
 	cost_commodity = culture
 	required_game_rule = additional_technologies
 	prerequisites = {
 		expressionism
-	}
-	modifier = {
-		prestige_output_modifier = 2
 	}
 }
 
@@ -133,7 +107,6 @@ jazz = {
 	portrait = engineering
 	icon = music
 	period = 1900_1925
-	shared_prestige = 25
 	cost_commodity = culture
 	required_game_rule = additional_technologies
 	prerequisites = {
@@ -147,7 +120,6 @@ modern_design = {
 	portrait = engineering
 	icon = painting
 	period = 1900_1925
-	shared_prestige = 25
 	cost_commodity = culture
 	required_game_rule = additional_technologies
 	prerequisites = {
@@ -161,7 +133,6 @@ socialist_realism = {
 	portrait = engineering
 	icon = painting
 	period = 1900_1925
-	shared_prestige = 25
 	cost_commodity = culture
 	required_game_rule = additional_technologies
 	prerequisites = {
@@ -175,7 +146,6 @@ surrealism = {
 	portrait = engineering
 	icon = painting
 	period = 1900_1925
-	shared_prestige = 25
 	cost_commodity = culture
 	required_game_rule = additional_technologies
 	prerequisites = {

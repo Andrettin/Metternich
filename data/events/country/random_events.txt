@@ -12,7 +12,7 @@ beautiful_statuette = {
 		name = "Marvelous!"
 		effects = {
 			wealth += 100gp
-			prestige += 1
+			#prestige += 1
 		}
 	}
 }

@@ -41,7 +41,6 @@ river_settlement_commodity_bonuses = {
 }
 
 wealth_commodity = wealth
-prestige_commodity = prestige
 piety_commodity = piety
 default_research_commodity = research
 advisor_commodity = statesmanship

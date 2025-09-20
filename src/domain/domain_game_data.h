@@ -480,8 +480,6 @@ public:
 	void add_opinion_modifier(const metternich::domain *other, const opinion_modifier *modifier, const int duration);
 	void remove_opinion_modifier(const metternich::domain *other, const opinion_modifier *modifier);
 
-	int get_opinion_weighted_prestige_for(const metternich::domain *other) const;
-
 	std::vector<const metternich::domain *> get_vassals() const;
 	QVariantList get_vassals_qvariant_list() const;
 	QVariantList get_subject_type_counts_qvariant_list() const;

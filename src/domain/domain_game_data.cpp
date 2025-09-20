@@ -1548,15 +1548,6 @@ void domain_game_data::remove_opinion_modifier(const metternich::domain *other, 
 	}
 }
 
-int domain_game_data::get_opinion_weighted_prestige_for(const metternich::domain *other) const
-{
-	const int opinion = this->get_opinion_of(other);
-	const int prestige = std::max(1, other->get_economy()->get_stored_commodity(defines::get()->get_prestige_commodity()));
-
-	const int opinion_weighted_prestige = prestige * (opinion - domain::min_opinion) / (domain::max_opinion - domain::min_opinion);
-	return opinion_weighted_prestige;
-}
-
 std::vector<const metternich::domain *> domain_game_data::get_vassals() const
 {
 	std::vector<const metternich::domain *> vassals;

@@ -112,22 +112,12 @@ void country_economy::do_trade(domain_map<commodity_map<int>> &country_luxury_de
 				return this->get_game_data()->is_any_vassal_of(lhs);
 			}
 
-			if (defines::get()->get_prestige_commodity()->is_enabled()) {
-				//give trade priority by opinion-weighted prestige
-				const int lhs_opinion_weighted_prestige = this->get_game_data()->get_opinion_weighted_prestige_for(lhs);
-				const int rhs_opinion_weighted_prestige = this->get_game_data()->get_opinion_weighted_prestige_for(rhs);
+			//give trade priority by opinion
+			const int lhs_opinion = this->get_game_data()->get_opinion_of(lhs);
+			const int rhs_opinion = this->get_game_data()->get_opinion_of(rhs);
 
-				if (lhs_opinion_weighted_prestige != rhs_opinion_weighted_prestige) {
-					return lhs_opinion_weighted_prestige > rhs_opinion_weighted_prestige;
-				}
-			} else {
-				//give trade priority by opinion
-				const int lhs_opinion = this->get_game_data()->get_opinion_of(lhs);
-				const int rhs_opinion = this->get_game_data()->get_opinion_of(rhs);
-
-				if (lhs_opinion != rhs_opinion) {
-					return lhs_opinion > rhs_opinion;
-				}
+			if (lhs_opinion != rhs_opinion) {
+				return lhs_opinion > rhs_opinion;
 			}
 
 			return lhs->get_identifier() < rhs->get_identifier();

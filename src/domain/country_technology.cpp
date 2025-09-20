@@ -436,10 +436,6 @@ void country_technology::on_technology_researched(const technology *technology)
 		}
 	}
 
-	if (technology->get_shared_prestige() > 0 && defines::get()->get_prestige_commodity()->is_enabled()) {
-		this->domain->get_economy()->change_stored_commodity(defines::get()->get_prestige_commodity(), technology->get_shared_prestige_for_country(this->domain));
-	}
-
 	emit technology_researched(technology);
 }
 

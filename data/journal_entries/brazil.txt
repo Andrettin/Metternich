@@ -13,7 +13,7 @@ barony_of_paty_do_alferes = {
 		paty_do_alferes = 1
 	}
 	completion_effects = {
-		prestige += 1
+		#prestige += 1
 	}
 }
 
@@ -32,6 +32,6 @@ barony_of_vassouras = {
 		vassouras = 1
 	}
 	completion_effects = {
-		prestige += 1
+		#prestige += 1
 	}
 }

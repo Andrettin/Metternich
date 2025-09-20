@@ -1720,16 +1720,6 @@ void game::do_trade()
 	});
 
 	std::sort(trade_countries.begin(), trade_countries.end(), [&](const metternich::domain *lhs, const metternich::domain *rhs) {
-		if (defines::get()->get_prestige_commodity()->is_enabled()) {
-			//give trade priority by prestige
-			const int lhs_prestige = lhs->get_economy()->get_stored_commodity(defines::get()->get_prestige_commodity());
-			const int rhs_prestige = rhs->get_economy()->get_stored_commodity(defines::get()->get_prestige_commodity());
-
-			if (lhs_prestige != rhs_prestige) {
-				return lhs_prestige > rhs_prestige;
-			}
-		}
-
 		return lhs->get_identifier() < rhs->get_identifier();
 	});
 
