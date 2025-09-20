@@ -4,7 +4,7 @@ philippe_de_bourbon_orleans = { #Source: "Gothaischer Hofkalender zum Nutzen und
 	character_class = warrior
 	culture = french
 	religion = catholic
-	home_settlement = orleans
+	home_site = orleans
 	gender = male
 	death_date = 1793.11.6
 	#duke of Orléans
@@ -22,7 +22,7 @@ louise_marie_de_bourbon_orleans = { #Source: "Gothaischer Hofkalender zum Nutzen
 	character_class = warrior #aristocrat
 	culture = french
 	religion = catholic
-	home_settlement = orleans
+	home_site = orleans
 	gender = female
 	birth_date = 1750.7.9
 	#sister of duke Philippe of Orléans
@@ -35,7 +35,7 @@ eugenie_de_bourbon_orleans = { #Eugénie de Bourbon-Orléans; Source: "Gothaisch
 	character_class = warrior #aristocrat
 	culture = french
 	religion = catholic
-	home_settlement = orleans
+	home_site = orleans
 	gender = female
 	father = philippe_de_bourbon_orleans
 	mother = louise_de_penthievre

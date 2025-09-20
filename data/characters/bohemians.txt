@@ -4,7 +4,7 @@ vlatislav_ii_of_bohemia = { #Source: Peter H. Wilson, "The Holy Roman Empire", 2
 	character_class = warrior
 	culture = czech
 	religion = catholic
-	home_settlement = prague #Bohemia
+	home_site = prague #Bohemia
 	gender = male
 	start_date = 1152
 

@@ -4,7 +4,7 @@ louise_de_penthievre = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergn�
 	character_class = warrior #aristocrat
 	culture = french
 	religion = catholic
-	home_settlement = nantes #Penthièvre
+	home_site = nantes #Penthièvre
 	gender = female
 	#daughter of the duke of Penthièvre
 	birth_date = 1753.3.13

@@ -4,7 +4,7 @@ triangel_fuchs = { #Source: Josef Dullinger, "Die Handelskompagnien Oesterreichs
 	character_class = merchant
 	culture = german #Bavarian?
 	religion = catholic
-	home_settlement = vienna
+	home_site = vienna
 	gender = male
 	#German merchant, suffered failures in Vienna
 	start_date = 1664 #was one of the two directors of Austria's oriental company, which was founded in 1664

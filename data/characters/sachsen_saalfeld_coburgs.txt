@@ -4,7 +4,7 @@ franz_von_sachsen_saalfeld_coburg = { #Source: "Gothaischer Hofkalender zum Nutz
 	character_class = warrior
 	culture = german #Thuringian
 	religion = protestant #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 3.
-	home_settlement = erfurt #Saalfeld
+	home_site = erfurt #Saalfeld
 	gender = male
 	death_date = 1806.12.9 #succeeded by his son on 1806.12.9; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 3.
 	
@@ -21,7 +21,7 @@ juliane_von_sachsen_saalfeld_coburg = { #Source: "Almanach de Gotha pour l'anné
 	character_class = warrior #aristocrat
 	culture = german #Thuringian
 	religion = protestant
-	home_settlement = erfurt #Saalfeld
+	home_site = erfurt #Saalfeld
 	gender = female
 	father = franz_von_sachsen_saalfeld_coburg #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 3.
 	mother = auguste_karoline_von_reuss_zu_ebersdorf #Auguste Karoline von Reuss zu Ebersdorf; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 3.

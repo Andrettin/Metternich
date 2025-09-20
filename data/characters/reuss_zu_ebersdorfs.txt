@@ -4,7 +4,7 @@ heinrich_von_reuss_zu_ebersdorf = { #Heinrich von Reuss zu Ebersdorf; Source: "G
 	character_class = warrior
 	culture = german #Thuringian
 	religion = protestant
-	home_settlement = erfurt #Ebersdorf
+	home_site = erfurt #Ebersdorf
 	gender = male
 	#count of Reuss zu Ebersdorf, as Heinrich XXIV
 }
@@ -15,7 +15,7 @@ auguste_karoline_von_reuss_zu_ebersdorf = { #Auguste Karoline von Reuss zu Ebers
 	character_class = warrior #aristocrat
 	culture = german #Thuringian
 	religion = protestant
-	home_settlement = erfurt #Ebersdorf
+	home_site = erfurt #Ebersdorf
 	gender = female
 	father = heinrich_von_reuss_zu_ebersdorf
 	

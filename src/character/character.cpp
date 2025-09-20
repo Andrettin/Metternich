@@ -103,7 +103,7 @@ bool character::skill_compare(const character *lhs, const character *rhs)
 	return lhs->get_identifier() < rhs->get_identifier();
 }
 
-const character *character::generate(const metternich::species *species, const metternich::character_class *character_class, const int level, const metternich::culture *culture, const metternich::religion *religion, const site *home_settlement)
+const character *character::generate(const metternich::species *species, const metternich::character_class *character_class, const int level, const metternich::culture *culture, const metternich::religion *religion, const site *home_site)
 {
 	auto generated_character = make_qunique<character>(QUuid::createUuid().toString(QUuid::WithoutBraces).toStdString());
 	generated_character->moveToThread(QApplication::instance()->thread());
@@ -123,7 +123,7 @@ const character *character::generate(const metternich::species *species, const m
 	} else if (generated_character->get_species()->get_phenotypes().size() == 1) {
 		generated_character->phenotype = generated_character->get_species()->get_phenotypes().at(0);
 	}
-	generated_character->home_settlement = home_settlement;
+	generated_character->home_site = home_site;
 	generated_character->set_start_date(game::get()->get_date());
 
 	const archimedes::gender gender = random::get()->generate(2) == 0 ? gender::male : gender::female;
@@ -147,9 +147,9 @@ const character *character::generate(const metternich::species *species, const m
 	return game::get()->get_generated_characters().back().get();
 }
 
-const character *character::generate(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_settlement)
+const character *character::generate(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site)
 {
-	return character::generate(monster_type->get_species(), monster_type->get_character_class(), monster_type->get_level(), culture, religion, home_settlement);
+	return character::generate(monster_type->get_species(), monster_type->get_character_class(), monster_type->get_level(), culture, religion, home_site);
 }
 
 character::character(const std::string &identifier)
@@ -246,20 +246,12 @@ void character::initialize()
 		}
 	}
 
-	if (this->home_site != nullptr) {
-		if (this->home_site->is_settlement()) {
-			if (this->get_home_settlement() != nullptr) {
-				throw std::runtime_error(std::format("Character \"{}\" has both a home settlement and a home site.", this->get_identifier()));
-			}
-
-			this->home_settlement = this->home_site;
-		} else {
-			if (this->home_site->get_province() == nullptr) {
-				throw std::runtime_error(std::format("Character \"{}\" has a home site (\"{}\") which has no province.", this->get_identifier(), this->home_site->get_identifier()));
-			}
-
-			this->home_settlement = this->home_site->get_province()->get_provincial_capital();
+	if (this->get_home_site() != nullptr && !this->get_home_site()->is_settlement()) {
+		if (this->get_home_site()->get_province() == nullptr) {
+			throw std::runtime_error(std::format("Character \"{}\" has a home site (\"{}\") which has no province.", this->get_identifier(), this->get_home_site()->get_identifier()));
 		}
+
+		this->home_site = this->get_home_site()->get_province()->get_provincial_capital();
 	}
 
 	character_base::initialize();
@@ -299,10 +291,10 @@ void character::check() const
 		throw std::runtime_error(std::format("Character \"{}\" has a species (\"{}\") which is not allowed for its character class (\"{}\").", this->get_identifier(), this->get_species()->get_identifier(), this->get_character_class()->get_identifier()));
 	}
 
-	if (this->get_home_settlement() == nullptr && !this->is_deity()) {
+	if (this->get_home_site() == nullptr && !this->is_deity()) {
 		throw std::runtime_error(std::format("Non-deity character \"{}\" has no home settlement.", this->get_identifier()));
-	} else if (this->get_home_settlement() != nullptr && !this->get_home_settlement()->is_settlement()) {
-		throw std::runtime_error(std::format("Character \"{}\" has \"{}\" set as their home settlement, but it is not a settlement site.", this->get_identifier(), this->get_home_settlement()->get_identifier()));
+	} else if (this->get_home_site() != nullptr && !this->get_home_site()->is_settlement()) {
+		throw std::runtime_error(std::format("Character \"{}\" has \"{}\" set as their home site, but it is neither a holding nor a habitable world.", this->get_identifier(), this->get_home_site()->get_identifier()));
 	}
 
 	character_base::check();
@@ -332,8 +324,8 @@ gsml_data character::to_gsml_data() const
 	if (this->get_phenotype() != nullptr) {
 		data.add_property("phenotype", this->get_phenotype()->get_identifier());
 	}
-	if (this->get_home_settlement() != nullptr) {
-		data.add_property("home_settlement", this->get_home_settlement()->get_identifier());
+	if (this->get_home_site() != nullptr) {
+		data.add_property("home_site", this->get_home_site()->get_identifier());
 	}
 	data.add_property("gender", std::string(magic_enum::enum_name(this->get_gender())));
 	data.add_property("start_date", date::to_string(this->get_start_date()));

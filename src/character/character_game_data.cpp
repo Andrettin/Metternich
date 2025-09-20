@@ -272,8 +272,8 @@ void character_game_data::apply_history(const QDate &start_date)
 		}
 	}
 
-	if (this->get_domain() == nullptr && this->character->get_home_settlement() != nullptr) {
-		this->set_domain(this->character->get_home_settlement()->get_game_data()->get_owner());
+	if (this->get_domain() == nullptr && this->character->get_home_site() != nullptr) {
+		this->set_domain(this->character->get_home_site()->get_game_data()->get_owner());
 	}
 }
 

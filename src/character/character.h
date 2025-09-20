@@ -68,8 +68,7 @@ class character final : public character_base, public data_type<character>
 	Q_PROPERTY(const metternich::phenotype* phenotype MEMBER phenotype READ get_phenotype NOTIFY changed)
 	Q_PROPERTY(const metternich::deity* deity READ get_deity CONSTANT)
 	Q_PROPERTY(metternich::portrait* portrait MEMBER portrait NOTIFY changed)
-	Q_PROPERTY(const metternich::site* home_settlement MEMBER home_settlement NOTIFY changed)
-	Q_PROPERTY(const metternich::site* home_site MEMBER home_site NOTIFY changed)
+	Q_PROPERTY(const metternich::site* home_site MEMBER home_site READ get_home_site NOTIFY changed)
 	Q_PROPERTY(metternich::character* father READ get_father WRITE set_father NOTIFY changed)
 	Q_PROPERTY(metternich::character* mother READ get_mother WRITE set_mother NOTIFY changed)
 	Q_PROPERTY(int skill MEMBER skill READ get_skill NOTIFY changed)
@@ -89,8 +88,8 @@ public:
 
 	static bool skill_compare(const character *lhs, const character *rhs);
 
-	static const character *generate(const metternich::species *species, const metternich::character_class *character_class, const int level, const metternich::culture *culture, const metternich::religion *religion, const site *home_settlement);
-	static const character *generate(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_settlement);
+	static const character *generate(const metternich::species *species, const metternich::character_class *character_class, const int level, const metternich::culture *culture, const metternich::religion *religion, const site *home_site);
+	static const character *generate(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site);
 
 	explicit character(const std::string &identifier);
 	~character();
@@ -195,9 +194,9 @@ public:
 		return this->portrait;
 	}
 
-	const site *get_home_settlement() const
+	const site *get_home_site() const
 	{
-		return this->home_settlement;
+		return this->home_site;
 	}
 
 	character *get_father() const
@@ -254,7 +253,6 @@ private:
 	const metternich::phenotype *phenotype = nullptr;
 	const metternich::deity *deity = nullptr; //the deity which the character is (if it is a deity)
 	metternich::portrait *portrait = nullptr;
-	const site *home_settlement = nullptr;
 	const site *home_site = nullptr;
 	int skill = 0;
 	std::vector<const character_trait *> traits;

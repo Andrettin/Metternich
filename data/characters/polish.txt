@@ -4,7 +4,7 @@ cymburgis_of_masovia = { #Cymburgis of Masovia; Source: Eva Demmerle, "Das Haus 
 	character_class = warrior #aristocrat
 	culture = polish
 	religion = catholic
-	home_settlement = warsaw
+	home_site = warsaw
 	gender = female
 	start_date = 1415 #married Ernst the Iron of Austria, and had her son Friedrich with him in 1415; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
 }
