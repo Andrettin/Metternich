@@ -2,8 +2,9 @@ targoviste = {
 	name = "Targoviste" #"Târgoviște"
 	world = earth
 	geocoordinate = { 25.45900250200 44.93799912850 } #from Natural Earth
-	type = resource
-	resource = sheep
+	type = holding
+	holding_type = estate
+	#resource = sheep
 	province = wallachia
 	
 	history = {

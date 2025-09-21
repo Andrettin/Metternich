@@ -3,6 +3,7 @@ constanta = {
 	world = earth
 	geocoordinate = { 28.60997432320 44.20266237290 } #from Natural Earth
 	type = holding
+	holding_type = estate
 	#resource = grain
 	province = dobruja
 	cultural_names = {
