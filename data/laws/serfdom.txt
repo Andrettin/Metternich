@@ -2,7 +2,7 @@ serfdom = {
 	name = "Serfdom"
 	group = serfdom
 	icon = labor
-	required_technology = feudalism
+	required_technology = dark_ages
 	commodity_costs = {
 		statesmanship = 50
 	}
@@ -19,7 +19,7 @@ free_subjects = {
 	name = "Free Subjects"
 	group = serfdom
 	icon = labor
-	required_technology = feudalism
+	required_technology = dark_ages
 	commodity_costs = {
 		statesmanship = 50
 	}

@@ -8,12 +8,12 @@ sumerian = {
 	history = {
 		-3500 = {
 			#writing was developed in Sumeria around 3500 BC; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, pp. 70-72.
-			technologies += writing
+			#technologies += writing
 		}
 		
 		-1800 = {
 			#the Sumerian/Babylonian numerical system was developed around 1800 BC; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 82.
-			technologies += mathematics
+			#technologies += mathematics
 		}
 	}
 }

@@ -1,8 +1,0 @@
-pottery = {
-	name = "Pottery"
-	subcategory = manufacturing
-	portrait = engineering
-	icon = cog
-	period = copper_age
-	cost_commodity = research
-}

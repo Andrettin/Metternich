@@ -3,7 +3,6 @@ merchant = {
 	unit_class = merchant
 	icon = rifle_infantry_light
 	developer = true
-	required_technology = merchant_companies
 	wealth_cost = 500
 	commodity_costs = {
 		paper = 3

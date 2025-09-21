@@ -4,7 +4,7 @@ steel_mill = {
 	portrait = factory
 	icon = steel
 	provincial = true
-	required_technology = crucible_process
+	required_technology = renaissance
 	holding_types = {
 		town
 		city

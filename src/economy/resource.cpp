@@ -71,16 +71,8 @@ void resource::check() const
 		throw std::runtime_error(std::format("Resource \"{}\" has no tiny icon.", this->get_identifier()));
 	}
 
-	if (this->get_commodity() != nullptr && this->get_improvements().empty()) {
-		throw std::runtime_error(std::format("Resource \"{}\" has a commodity, but no improvements to produce it.", this->get_identifier()));
-	}
-
 	if (this->get_site_types().empty()) {
 		throw std::runtime_error(std::format("Resource \"{}\" has no site types.", this->get_identifier()));
-	}
-
-	if (this->get_improvements().empty() && (this->get_commodity() != nullptr || this->get_improved_modifier() != nullptr)) {
-		throw std::runtime_error(std::format("Resource \"{}\" has a commodity or improved modifier, but has no improvements which can be built on it.", this->get_identifier()));
 	}
 }
 

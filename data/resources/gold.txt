@@ -3,7 +3,6 @@ gold = {
 	commodity = gold
 	tiny_icon = trade_consulate
 	prospectable = true
-	discovery_technology = precious_metals
 	terrain_types = {
 		mountains
 	}

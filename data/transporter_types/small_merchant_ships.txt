@@ -28,7 +28,7 @@ trader = {
 		movement = 4
 	}
 	cargo = 4
-	required_technology = improved_sail_design
+	required_technology = renaissance
 	commodity_costs = {
 		fabric = 2
 		lumber = 4
@@ -48,7 +48,7 @@ clipper = {
 		movement = 7
 	}
 	cargo = 6
-	required_technology = streamlined_hulls
+	required_technology = renaissance
 	commodity_costs = {
 		fabric = 2
 		lumber = 6

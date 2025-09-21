@@ -1,8 +1,0 @@
-wheel = {
-	name = "Wheel"
-	subcategory = cavalry
-	portrait = engineering
-	icon = cog
-	period = copper_age
-	cost_commodity = research
-}

@@ -4,7 +4,6 @@ bronze_foundry = {
 	portrait = factory
 	icon = bronze
 	provincial = true
-	required_technology = bronzeworking
 	holding_types = {
 		town
 		city

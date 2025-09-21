@@ -4,7 +4,6 @@ fur_trading_post = {
 	portrait = trading_post
 	icon = furs
 	provincial = true
-	required_technology = furs
 	holding_types = {
 		town
 		city

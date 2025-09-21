@@ -2,7 +2,6 @@ spices = {
 	name = "Spices"
 	commodity = spices
 	tiny_icon = trade_consulate
-	discovery_technology = spices
 	terrain_types = {
 		plains
 		savannah

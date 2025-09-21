@@ -9,7 +9,6 @@ elven_archers = {
 		defense = 2
 		movement = 4
 	}
-	required_technology = shortbow
 	commodity_costs = {
 		manpower = 1
 	}
@@ -29,7 +28,7 @@ elven_marksmen = {
 		defense = 2
 		movement = 4
 	}
-	required_technology = longbow
+	required_technology = dark_ages
 	commodity_costs = {
 		manpower = 1
 		fabric = 1

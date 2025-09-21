@@ -12,7 +12,7 @@ the_latest_murder = { #Source: "The Olean Democrat", 1889.9.12.
 			country = england
 		}
 		owns_site = london
-		technology = medicine #doctors examinated the evidence to be able to distinguish the two sets of murders
+		technology = renaissance #doctors examinated the evidence to be able to distinguish the two sets of murders
 		month >= september
 	}
 	option = {

@@ -4,7 +4,6 @@ lead_smelter = {
 	portrait = factory
 	icon = iron
 	provincial = true
-	required_technology = ironworking
 	conditions = {
 		game_rule = lead_commodity
 	}

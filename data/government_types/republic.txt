@@ -2,7 +2,6 @@ republic = {
 	name = "Republic"
 	group = republic
 	icon = philosophy
-	required_technology = republic
 	default_laws = {
 		ruling_class = plutocracy
 		serfdom = free_subjects

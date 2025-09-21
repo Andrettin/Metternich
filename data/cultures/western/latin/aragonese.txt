@@ -6,7 +6,7 @@ aragonese = {
 		human
 	}
 	derivation_conditions = {
-		technology = feudalism
+		technology = middle_ages
 		province = {
 			core = aragon
 			not = {

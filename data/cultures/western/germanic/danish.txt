@@ -6,7 +6,7 @@ danish = {
 		human
 	}
 	derivation_conditions = {
-		technology = feudalism
+		technology = dark_ages
 		province = {
 			core = denmark
 		}

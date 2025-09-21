@@ -3,5 +3,4 @@ spices = {
 	type = resource
 	icon = spices
 	wealth_value = 25
-	required_technology = spices
 }

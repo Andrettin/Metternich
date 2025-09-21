@@ -4,7 +4,6 @@ furriers_house = {
 	portrait = factory
 	icon = fur_hats
 	provincial = true
-	required_technology = fur_hat_production
 	holding_types = {
 		village
 		town
@@ -28,7 +27,6 @@ furriers_shop = {
 	icon = fur_hats
 	provincial = true
 	required_building = furriers_house
-	required_technology = fur_hat_production
 	holding_types = {
 		town
 		city
@@ -51,7 +49,6 @@ fur_factory = {
 	icon = fur_hats
 	provincial = true
 	required_building = furriers_shop
-	required_technology = fur_hat_production
 	holding_types = {
 		town
 		city

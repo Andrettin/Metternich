@@ -4,7 +4,6 @@ arena = {
 	portrait = fort
 	icon = architecture
 	provincial = true
-	required_technology = architecture
 	holding_types = {
 		city
 	}

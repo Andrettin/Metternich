@@ -4,7 +4,6 @@ monument = {
 	portrait = aristocratic_palace
 	icon = architecture
 	provincial = true
-	required_technology = mysticism
 	holding_types = {
 		town
 		city

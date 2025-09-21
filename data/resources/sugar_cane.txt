@@ -2,7 +2,6 @@ sugar_cane = {
 	name = "Sugar Cane"
 	commodity = sugar_cane
 	tiny_icon = trade_consulate
-	discovery_technology = sugar_cane
 	terrain_types = {
 		savannah
 	}

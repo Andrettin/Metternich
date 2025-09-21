@@ -7,7 +7,6 @@ axemen = {
 		defense = 5
 		movement = 4
 	}
-	required_technology = handaxe
 	commodity_costs = {
 		manpower = 1
 	}
@@ -25,7 +24,7 @@ swordsmen = {
 		defense = 5
 		movement = 3
 	}
-	required_technology = shortsword
+	required_technology = dark_ages
 	commodity_costs = {
 		manpower = 1
 		fabric = 1
@@ -45,7 +44,7 @@ two_handed_swordsmen = {
 		defense = 6
 		movement = 4
 	}
-	required_technology = bastard_sword
+	required_technology = middle_ages
 	commodity_costs = {
 		manpower = 1
 		fabric = 1

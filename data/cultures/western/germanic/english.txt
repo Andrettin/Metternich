@@ -9,7 +9,7 @@ english = {
 		american
 	}
 	derivation_conditions = {
-		technology = feudalism
+		technology = middle_ages
 		not = {
 			province = {
 				core = scotland
@@ -71,17 +71,17 @@ english = {
 		
 		1249 = {
 			#the Englishman Roger Bacon wrote about gunpowder in 1249; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, pp. 169-170.
-			technologies += gunpowder
+			#technologies += gunpowder
 		}
 		
 		1620 = {
 			#the Englishman Francis Bacon published his "Novum Organum" in 1620, in which he described the scientific method; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 252.
-			technologies += scientific_method
+			#technologies += scientific_method
 		}
 		
 		1701 = {
 			#Jethro Tull patented his seed drill in 1701, in England; Source: Henry Kamen, "Early Modern European Society", 2021, p. 345.
-			technologies += seed_drill
+			#technologies += seed_drill
 		}
 	}
 }

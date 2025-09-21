@@ -1,14 +1,14 @@
-mathematics = {
-	name = "Mathematics"
-	subcategory = philosophy
-	portrait = engineering
-	icon = research
-	period = bronze_age
-	#year = 1535 #cubic equations; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 206.
-	#year = 1545 #negative numbers; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 212.
-	cost_commodity = research
-	prerequisites = {
-		writing
-		masonry
-	}
-}
+#mathematics = {
+#	name = "Mathematics"
+#	subcategory = philosophy
+#	portrait = engineering
+#	icon = research
+#	period = bronze_age
+#	#year = 1535 #cubic equations; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 206.
+#	#year = 1545 #negative numbers; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 212.
+#	cost_commodity = research
+#	prerequisites = {
+#		writing
+#		masonry
+#	}
+#}

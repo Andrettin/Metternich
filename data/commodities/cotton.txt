@@ -3,5 +3,4 @@ cotton = {
 	type = resource
 	icon = cotton
 	base_price = 100
-	required_technology = cotton
 }

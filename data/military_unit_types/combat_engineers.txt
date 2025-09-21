@@ -6,7 +6,7 @@ sappers = {
 		defense = 3
 		movement = 4
 	}
-	required_technology = explosives
+	required_technology = renaissance
 	commodity_costs = {
 		wealth = 5000
 		manpower = 1
@@ -28,7 +28,7 @@ combat_engineers = {
 		defense = 4
 		movement = 4
 	}
-	required_technology = bessemer_converter
+	required_technology = renaissance
 	commodity_costs = {
 		wealth = 7000
 		manpower = 1
@@ -50,7 +50,7 @@ saboteurs = {
 		defense = 10
 		movement = 5
 	}
-	required_technology = machine_gun
+	required_technology = renaissance
 	commodity_costs = {
 		wealth = 9000
 		manpower = 1

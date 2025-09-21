@@ -4,7 +4,6 @@ pipe_maker = {
 	portrait = factory
 	icon = tools
 	provincial = true
-	required_technology = sanitation
 	conditions = {
 		game_rule = lead_commodity
 	}

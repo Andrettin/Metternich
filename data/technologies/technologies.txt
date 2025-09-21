@@ -1,0 +1,53 @@
+#bronze_age = {
+#	name = "Antiquity"
+#	subcategory = technology
+#	portrait = engineering
+#	icon = architecture
+#	period = copper_age
+#	cost_commodity = research
+#}
+
+#antiquity = {
+#	name = "Antiquity"
+#	subcategory = technology
+#	portrait = engineering
+#	icon = architecture
+#	period = antiquity
+#	cost_commodity = research
+#}
+
+dark_ages = {
+	name = "Dark Ages"
+	subcategory = technology
+	portrait = engineering
+	icon = iron
+	period = dark_ages
+	cost_commodity = research
+	prerequisites = {
+		#antiquity
+	}
+}
+
+middle_ages = {
+	name = "Middle Ages"
+	subcategory = technology
+	portrait = engineering
+	icon = iron
+	period = middle_ages
+	cost_commodity = research
+	prerequisites = {
+		dark_ages
+	}
+}
+
+renaissance = {
+	name = "Renaissance"
+	subcategory = technology
+	portrait = engineering
+	icon = iron
+	period = renaissance
+	cost_commodity = research
+	prerequisites = {
+		middle_ages
+	}
+}

@@ -2,7 +2,7 @@ state_press = {
 	name = "State Press"
 	group = press_rights
 	icon = newspaper
-	required_technology = printing_press
+	required_technology = renaissance
 	commodity_costs = {
 		statesmanship = 50
 	}
@@ -17,7 +17,7 @@ censored_press = {
 	name = "Censored Press"
 	group = press_rights
 	icon = newspaper
-	required_technology = printing_press
+	required_technology = renaissance
 	commodity_costs = {
 		statesmanship = 50
 	}
@@ -34,7 +34,7 @@ free_press = {
 	name = "Free Press"
 	group = press_rights
 	icon = newspaper
-	required_technology = printing_press
+	required_technology = renaissance
 	commodity_costs = {
 		statesmanship = 50
 	}

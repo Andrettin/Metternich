@@ -2,7 +2,7 @@ arquebusiers = {
 	name = "Arquebusiers"
 	unit_class = arquebusiers
 	icon = arquebusiers
-	required_technology = arquebus
+	required_technology = renaissance
 	stats = {
 		hit_points = 2
 		movement = 2
@@ -31,7 +31,7 @@ musketeers = {
 		defense = 4
 		movement = 3
 	}
-	required_technology = weapon_craftsmanship
+	required_technology = renaissance
 	commodity_costs = {
 		manpower = 1
 		fabric = 1
@@ -52,7 +52,7 @@ grenadiers = {
 		defense = 5
 		movement = 4
 	}
-	required_technology = explosives
+	required_technology = renaissance
 	commodity_costs = {
 		wealth = 1000
 		manpower = 1
@@ -76,7 +76,7 @@ guards = {
 		defense = 7
 		movement = 4
 	}
-	required_technology = elite_military_training
+	required_technology = renaissance
 	commodity_costs = {
 		wealth = 4000
 		manpower = 1
@@ -100,7 +100,7 @@ machine_gunners = {
 		defense = 20
 		movement = 4
 	}
-	required_technology = machine_gun
+	required_technology = renaissance
 	commodity_costs = {
 		wealth = 7000
 		manpower = 1

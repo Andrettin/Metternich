@@ -4,7 +4,6 @@ alchemists_shop = {
 	portrait = university
 	icon = research
 	provincial = true
-	required_technology = alchemy
 	holding_types = {
 		village
 		town

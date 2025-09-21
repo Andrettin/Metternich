@@ -4,7 +4,6 @@ shrine = {
 	portrait = temple
 	icon = wooden_cross
 	provincial = true
-	required_technology = ceremonial_burial
 	holding_types = {
 		village
 		estate
@@ -21,7 +20,6 @@ temple = {
 	icon = wooden_cross
 	provincial = true
 	required_building = shrine
-	required_technology = ceremonial_burial
 	holding_types = {
 		temple
 		city
@@ -38,7 +36,7 @@ cathedral = {
 	icon = golden_cross_detailed
 	provincial = true
 	required_building = temple
-	required_technology = monotheism
+	required_technology = middle_ages
 	holding_types = {
 		temple
 		city

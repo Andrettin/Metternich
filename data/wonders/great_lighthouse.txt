@@ -2,8 +2,7 @@ great_lighthouse = {
 	name = "Great Lighthouse"
 	portrait = dock
 	building = lighthouse
-	required_technology = cartography
-	obsolescence_technology = magnetism
+	obsolescence_technology = renaissance
 	required_game_rules = {
 		additional_buildings
 	}

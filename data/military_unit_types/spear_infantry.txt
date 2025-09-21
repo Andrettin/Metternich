@@ -7,7 +7,6 @@ spearmen = {
 		defense = 5
 		movement = 4
 	}
-	required_technology = warrior_code
 	commodity_costs = {
 		manpower = 1
 	}
@@ -20,7 +19,7 @@ pikemen = {
 	name = "Pikemen"
 	unit_class = pikemen
 	icon = pikemen
-	required_technology = pike
+	required_technology = middle_ages
 	stats = {
 		hit_points = 2
 		movement = 1
@@ -47,7 +46,7 @@ halberdiers = {
 		defense = 6
 		movement = 4
 	}
-	required_technology = halberd
+	required_technology = renaissance
 	commodity_costs = {
 		manpower = 1
 		fabric = 1

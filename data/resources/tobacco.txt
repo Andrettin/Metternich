@@ -2,7 +2,6 @@ tobacco = {
 	name = "Tobacco"
 	commodity = tobacco
 	tiny_icon = trade_consulate
-	discovery_technology = tobacco
 	terrain_types = {
 		plains
 		savannah

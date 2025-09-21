@@ -2,7 +2,6 @@ cotton = {
 	name = "Cotton"
 	commodity = cotton
 	tiny_icon = trade_consulate
-	discovery_technology = cotton
 	terrain_types = {
 		plains
 	}

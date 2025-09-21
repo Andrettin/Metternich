@@ -4,7 +4,6 @@ lighthouse = {
 	portrait = dock
 	icon = anchor
 	provincial = true
-	required_technology = cartography
 	holding_types = {
 		city
 	}

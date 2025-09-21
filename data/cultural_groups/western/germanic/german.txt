@@ -6,7 +6,7 @@ german = {
 	history = {
 		1438 = {
 			#Johannes Gutenberg of Mainz invented the printing press in 1438; Source: Henry Kamen, "Early Modern European Society", 2021, p. 285.
-			technologies += printing_press
+			#technologies += printing_press
 		}
 	}
 }

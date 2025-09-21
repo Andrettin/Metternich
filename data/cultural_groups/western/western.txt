@@ -27,12 +27,12 @@ western = {
 		
 		1249 = {
 			#the Englishman Roger Bacon wrote about gunpowder in 1249; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, pp. 169-170.
-			technologies += gunpowder
+			#technologies += gunpowder
 		}
 		
 		1480 = {
 			#by 1480 there were printing presses in 100+ European towns; Source: Henry Kamen, "Early Modern European Society", 2021, p. 286.
-			technologies += printing_press
+			#technologies += printing_press
 		}
 		
 		1492 = {
@@ -138,7 +138,7 @@ western = {
 		
 		1530 = {
 			#Potatoes discovered by Spanish explorer Gonzalo Jiménez de Quesada in 1530; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, pp. 205-206.
-			technologies += potatoes
+			#technologies += potatoes
 		}
 		
 		1531 = {
@@ -176,10 +176,10 @@ western = {
 		
 		1543 = {
 			#the Polish astronomer Nicolaus Copernicus published his "De Revolutionibus Orbium Coelestium" in 1543, in which he described the heliocentric model; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, pp. 209-211.
-			technologies += astronomy
+			#technologies += astronomy
 			
 			#Andreas Vesalius published his "De Corporis Humani Fabrica" in 1543, which revolutionized the understanding of anatomy; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 211.
-			technologies += medicine
+			#technologies += medicine
 			
 			#Europeans reached Japan for the first time in 1543; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 211.
 			explored_regions += japan
@@ -193,7 +193,7 @@ western = {
 		
 		1620 = {
 			#the Englishman Francis Bacon published his "Novum Organum" in 1620, in which he described the scientific method; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 252.
-			technologies += scientific_method
+			#technologies += scientific_method
 		}
 		
 		1800 = {

@@ -3,5 +3,4 @@ amber = {
 	type = resource
 	icon = amber
 	wealth_value = 300
-	required_technology = precious_stones
 }

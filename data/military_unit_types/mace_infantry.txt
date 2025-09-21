@@ -7,7 +7,6 @@ clubmen = {
 		defense = 3
 		movement = 4
 	}
-	required_technology = warrior_code
 	commodity_costs = {
 		manpower = 1
 	}
@@ -25,7 +24,7 @@ macemen = {
 		defense = 3
 		movement = 4
 	}
-	required_technology = mace
+	required_technology = middle_ages
 	commodity_costs = {
 		manpower = 1
 		fabric = 1

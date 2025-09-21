@@ -8,7 +8,6 @@ dwarven_guardsmen = {
 		defense = 6
 		movement = 4
 	}
-	required_technology = warrior_code
 	commodity_costs = {
 		manpower = 1
 	}
@@ -27,7 +26,7 @@ dwarven_stalwarts = {
 		defense = 6
 		movement = 3
 	}
-	required_technology = pike
+	required_technology = dark_ages
 	commodity_costs = {
 		manpower = 1
 		fabric = 1
@@ -48,7 +47,7 @@ dwarven_sentinels = {
 		defense = 7
 		movement = 4
 	}
-	required_technology = halberd
+	required_technology = middle_ages
 	commodity_costs = {
 		manpower = 1
 		fabric = 1
@@ -70,7 +69,7 @@ dwarven_thunderers = {
 		defense = 3
 		movement = 2
 	}
-	required_technology = arquebus
+	required_technology = renaissance
 	commodity_costs = {
 		manpower = 1
 		fabric = 1
@@ -92,7 +91,7 @@ dwarven_thunderguards = {
 		defense = 4
 		movement = 3
 	}
-	required_technology = weapon_craftsmanship
+	required_technology = renaissance
 	commodity_costs = {
 		manpower = 1
 		fabric = 1
@@ -114,7 +113,7 @@ dwarven_dragonguards = {
 		defense = 5
 		movement = 4
 	}
-	required_technology = explosives
+	required_technology = renaissance
 	commodity_costs = {
 		wealth = 1000
 		manpower = 1

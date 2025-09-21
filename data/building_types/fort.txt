@@ -23,7 +23,6 @@ fort = {
 	provincial = true
 	fort_level = 2
 	required_building = stockade
-	required_technology = mine_engineering
 	holding_types = {
 		town
 		city
@@ -40,7 +39,7 @@ fortress = {
 	provincial = true
 	fort_level = 3
 	required_building = fort
-	required_technology = modern_fortifications
+	required_technology = middle_ages
 	holding_types = {
 		city
 		estate

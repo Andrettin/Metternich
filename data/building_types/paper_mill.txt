@@ -4,7 +4,6 @@ paper_mill = {
 	portrait = factory
 	icon = paper
 	provincial = true
-	required_technology = papermaking
 	holding_types = {
 		town
 		city

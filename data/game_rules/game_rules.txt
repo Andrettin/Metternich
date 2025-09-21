@@ -76,13 +76,6 @@ additional_holding_types = {
 	hidden = true
 }
 
-additional_technologies = {
-	name = "Additional Technologies"
-	default_value = false
-	description = "Allow additional technologies"
-	hidden = true
-}
-
 additional_population_types = {
 	name = "Additional Population Types"
 	default_value = false

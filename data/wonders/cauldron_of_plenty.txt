@@ -2,7 +2,6 @@ cauldron_of_plenty = {
 	name = "Cauldron of Plenty"
 	portrait = red_potion
 	building = artifact
-	required_technology = pottery
 	required_game_rules = {
 		additional_buildings
 	}

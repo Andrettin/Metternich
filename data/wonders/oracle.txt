@@ -2,8 +2,7 @@ oracle = {
 	name = "Oracle"
 	portrait = temple
 	building = temple
-	required_technology = mysticism
-	obsolescence_technology = theology
+	obsolescence_technology = middle_ages
 	required_game_rules = {
 		additional_buildings
 	}

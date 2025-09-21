@@ -2,7 +2,6 @@ theocracy = {
 	name = "Theocracy"
 	group = theocracy
 	icon = wooden_cross
-	required_technology = fundamentalism
 	conditions = {
 		not = {
 			country_type = clade

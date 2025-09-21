@@ -5,7 +5,6 @@ dock = {
 	icon = anchor
 	provincial = true
 	free_in_capital = true
-	required_technology = seafaring
 	holding_types = {
 		camp
 		hamlet
@@ -40,7 +39,6 @@ shipyard = {
 	provincial = true
 	capital_only = true
 	required_building = dock
-	required_technology = seafaring
 	holding_types = {
 		city
 		guild

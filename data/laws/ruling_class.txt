@@ -2,7 +2,6 @@ aristocracy = {
 	name = "Aristocracy"
 	group = ruling_class
 	icon = crown_baronial
-	required_technology = monarchy
 	commodity_costs = {
 		statesmanship = 50
 	}
@@ -19,7 +18,6 @@ plutocracy = {
 	name = "Plutocracy"
 	group = ruling_class
 	icon = wealth
-	required_technology = republic
 	commodity_costs = {
 		statesmanship = 50
 	}

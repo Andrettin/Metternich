@@ -1,4 +1,5 @@
 technology = {
 	name = "Technology"
+	category = technology
 	icon = cog
 }

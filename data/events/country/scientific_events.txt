@@ -7,9 +7,7 @@ expanding_sun_will_explode_some_day_tesla_predicts = { #Source: "The New York He
 	news = true
 	newspaper = "The New York Herald Tribune"
 	conditions = {
-		technology = astronomy
-		technology = atomic_theory
-		technology = electricity #the experiments involved knowledge about electricity
+		technology = renaissance #the experiments involved knowledge about electricity
 	}
 	option = {
 		effects = {

@@ -1,8 +1,0 @@
-#compass = {
-#	name = "Compass"
-#	category = navy
-#	portrait = unload
-#	prerequisites = {
-#		engineering
-#	}
-#}

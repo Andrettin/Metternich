@@ -8,7 +8,7 @@ galleon = {
 		melee = 7
 		movement = 2
 	}
-	required_technology = convoying
+	required_technology = renaissance
 	commodity_costs = {
 		lumber = 8
 		bronze = 4
@@ -29,7 +29,7 @@ ship_of_the_line = {
 		melee = 6
 		movement = 3
 	}
-	required_technology = ship_of_the_line
+	required_technology = renaissance
 	commodity_costs = {
 		fabric = 3
 		lumber = 8
@@ -53,7 +53,7 @@ ironclad = {
 		melee = 5
 		movement = 5
 	}
-	required_technology = advanced_iron_working
+	required_technology = renaissance
 	commodity_costs = {
 		lumber = 4
 		armament = 6
@@ -78,7 +78,7 @@ advanced_ironclad = {
 		melee = 10
 		movement = 6
 	}
-	required_technology = steel_armor_plate
+	required_technology = renaissance
 	commodity_costs = {
 		lumber = 8
 		armament = 15
@@ -103,7 +103,7 @@ dreadnought = {
 		melee = 20
 		movement = 7
 	}
-	required_technology = improved_range_finding
+	required_technology = renaissance
 	commodity_costs = {
 		armament = 24
 		steel = 30

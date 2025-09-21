@@ -18,7 +18,6 @@ centralization = {
 	name = "Centralization"
 	group = centralization
 	icon = crown_royal
-	required_technology = monarchy
 	commodity_costs = {
 		statesmanship = 50
 	}

@@ -3,5 +3,5 @@ armament = {
 	type = good
 	icon = cannon
 	base_price = 900
-	required_technology = heavy_artillery
+	required_technology = renaissance
 }

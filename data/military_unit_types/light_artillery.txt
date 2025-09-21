@@ -8,7 +8,7 @@ horse_artillery = {
 		defense = 2
 		movement = 3
 	}
-	required_technology = horse_artillery
+	required_technology = renaissance
 	commodity_costs = {
 		manpower = 1
 		fabric = 1
@@ -30,7 +30,7 @@ light_artillery = {
 		defense = 3
 		movement = 5
 	}
-	required_technology = light_artillery_tactics
+	required_technology = renaissance
 	commodity_costs = {
 		wealth = 1000
 		manpower = 1
@@ -55,7 +55,7 @@ field_artillery = {
 		defense = 3
 		movement = 6
 	}
-	required_technology = field_artillery_tactics
+	required_technology = renaissance
 	commodity_costs = {
 		wealth = 5000
 		manpower = 1
@@ -80,7 +80,7 @@ mobile_artillery = {
 		defense = 20
 		movement = 8
 	}
-	required_technology = large_artillery
+	required_technology = renaissance
 	commodity_costs = {
 		wealth = 5000
 		manpower = 1

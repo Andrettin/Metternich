@@ -9,7 +9,7 @@ portuguese = {
 		brazilian
 	}
 	derivation_conditions = {
-		technology = feudalism
+		technology = middle_ages
 		province = {
 			core = portugal
 		}

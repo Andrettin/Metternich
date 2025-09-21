@@ -22,7 +22,7 @@ locomotive = {
 		movement = 2
 	}
 	cargo = 2
-	required_technology = high_pressure_steam_engine
+	required_technology = renaissance
 	commodity_costs = {
 		steel = 2
 		lumber = 2

@@ -4,7 +4,7 @@ spice_factory = {
 	portrait = trading_post
 	icon = spices
 	provincial = true
-	required_technology = colonization
+	required_technology = renaissance
 	holding_types = {
 		town
 		city

@@ -4,7 +4,6 @@ courthouse = {
 	portrait = trading_post
 	icon = courthouse
 	provincial = true
-	required_technology = code_of_laws
 	holding_types = {
 		city
 	}

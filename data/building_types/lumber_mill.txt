@@ -47,7 +47,6 @@ lumber_mill = {
 	icon = lumber
 	provincial = true
 	required_building = sawyers_shop
-	required_technology = saw_mill
 	holding_types = {
 		town
 		city

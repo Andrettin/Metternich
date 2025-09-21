@@ -2,7 +2,6 @@ monarchy = {
 	name = "Monarchy"
 	group = monarchy
 	icon = crown_royal
-	required_technology = monarchy
 	default_laws = {
 		ruling_class = aristocracy
 		press_rights = censored_press

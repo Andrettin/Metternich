@@ -4,7 +4,6 @@ mercury_refinery = {
 	portrait = factory
 	icon = iron
 	provincial = true
-	required_technology = alchemy
 	conditions = {
 		game_rule = mercury_commodity
 	}

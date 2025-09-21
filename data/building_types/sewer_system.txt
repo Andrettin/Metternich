@@ -4,7 +4,6 @@ sewer_system = {
 	portrait = hospital
 	icon = architecture
 	provincial = true
-	required_technology = sanitation
 	holding_types = {
 		city
 	}

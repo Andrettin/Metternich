@@ -2,7 +2,7 @@ departamento_nacional_de_producao_mineral = {
 	name = "Departamento Nacional de Producao Mineral" #"Departamento Nacional de Produção Mineral"
 	portrait = factory
 	skill = 4
-	required_technology = industrial_iron_mining
+	required_technology = renaissance
 	conditions = {
 		country = brazil
 	}

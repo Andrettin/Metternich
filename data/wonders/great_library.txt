@@ -2,8 +2,6 @@ great_library = {
 	name = "Great Library"
 	portrait = university
 	building = library
-	required_technology = literature
-	obsolescence_technology = electricity
 	required_game_rules = {
 		research_commodity
 		additional_buildings

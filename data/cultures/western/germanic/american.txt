@@ -6,7 +6,7 @@ american = {
 		human
 	}
 	derivation_conditions = {
-		technology = colonization
+		technology = renaissance
 		province = {
 			core = united_states
 		}

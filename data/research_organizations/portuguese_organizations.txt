@@ -2,7 +2,7 @@ fabrica_militar_de_santa_clara = {
 	name = "Fabrica Militar de Santa Clara" #"Fábrica Militar de Santa Clara"
 	portrait = factory
 	skill = 3
-	required_technology = siege_engineering
+	required_technology = renaissance
 	conditions = {
 		country = portugal
 	}
@@ -15,7 +15,7 @@ oficinas_gerais_de_material_de_engenharia = {
 	name = "Oficinas Gerais de Material de Engenharia"
 	portrait = factory
 	skill = 3
-	required_technology = mobile_warfare
+	required_technology = renaissance
 	conditions = {
 		country = portugal
 	}

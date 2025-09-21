@@ -3,7 +3,6 @@ gems = {
 	commodity = gems
 	tiny_icon = trade_consulate
 	prospectable = true
-	discovery_technology = precious_stones
 	terrain_types = {
 		mountains
 	}

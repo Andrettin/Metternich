@@ -16,7 +16,7 @@ japanese = {
 	history = {
 		1543 = {
 			#Europeans reached Japan for the first time in 1543, passing knowledge of muskets onto the Japanese; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 211.
-			technologies += weapon_craftsmanship
+			#technologies += weapon_craftsmanship
 		}
 	}
 }

@@ -1,29 +1,11 @@
-astrology = {
-	name = "Astrology"
-	subcategory = philosophy
-	portrait = engineering
-	icon = research
-	period = 1200_1300
-	cost_commodity = research
-	prerequisites = {
-		scholastics
-	}
-}
-
-astronomy = {
-	name = "Astronomy"
-	subcategory = philosophy
-	portrait = engineering
-	icon = research
-	period = 1500_1550
-	year = 1543 #development of the Heliocentric Model; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, pp. 209-211.
-	cost_commodity = research
-	prerequisites = {
-		astrology
-		
-		mathematics
-		mysticism
-		
-		academic_disciplines
-	}
-}
+#astronomy = {
+#	name = "Astronomy"
+#	subcategory = philosophy
+#	portrait = engineering
+#	icon = research
+#	period = 1500_1550
+#	year = 1543 #development of the Heliocentric Model; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, pp. 209-211.
+#	cost_commodity = research
+#	prerequisites = {
+#	}
+#}

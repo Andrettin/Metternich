@@ -4,7 +4,7 @@ bank = {
 	portrait = trading_post
 	icon = wealth
 	provincial = true
-	required_technology = banking
+	required_technology = middle_ages
 	holding_types = {
 		city
 	}

@@ -62,7 +62,7 @@ university = {
 	icon = university
 	provincial = true
 	required_building = college
-	required_technology = university
+	required_technology = middle_ages
 	holding_types = {
 		city
 		guild
@@ -105,7 +105,7 @@ monastic_school = {
 	portrait = university
 	icon = university
 	provincial = true
-	required_technology = monastic_school
+	required_technology = dark_ages
 	holding_types = {
 		temple
 	}
@@ -133,7 +133,7 @@ cathedral_school = {
 	icon = university
 	provincial = true
 	required_building = monastic_school
-	required_technology = cathedral_school
+	required_technology = middle_ages
 	holding_types = {
 		temple
 	}

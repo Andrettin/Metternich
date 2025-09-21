@@ -8,7 +8,6 @@ trireme = {
 		melee = 3
 		movement = 4
 	}
-	required_technology = cartography
 	upgrades = {
 		sloop
 	}
@@ -24,7 +23,7 @@ sloop = {
 		melee = 4
 		movement = 4
 	}
-	required_technology = navigation
+	required_technology = renaissance
 	commodity_costs = {
 		lumber = 3
 		bronze = 2
@@ -45,7 +44,7 @@ frigate = {
 		melee = 3
 		movement = 4
 	}
-	required_technology = advanced_hull_design
+	required_technology = renaissance
 	commodity_costs = {
 		fabric = 2
 		lumber = 5
@@ -69,7 +68,7 @@ raider = {
 		melee = 3
 		movement = 7
 	}
-	required_technology = paddlewheels
+	required_technology = renaissance
 	commodity_costs = {
 		lumber = 6
 		armament = 3
@@ -93,7 +92,7 @@ armored_cruiser = {
 		melee = 6
 		movement = 8
 	}
-	required_technology = marine_engineering
+	required_technology = renaissance
 	commodity_costs = {
 		lumber = 2
 		armament = 8
@@ -118,7 +117,7 @@ battlecruiser = {
 		melee = 18
 		movement = 9
 	}
-	required_technology = improved_range_finding
+	required_technology = renaissance
 	commodity_costs = {
 		armament = 18
 		steel = 22

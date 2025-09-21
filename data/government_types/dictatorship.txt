@@ -2,7 +2,6 @@ dictatorship = {
 	name = "Dictatorship"
 	group = republic
 	icon = saber
-	required_technology = republic
 	default_laws = {
 		ruling_class = plutocracy
 		centralization = centralization

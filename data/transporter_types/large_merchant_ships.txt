@@ -8,7 +8,7 @@ fluyte = {
 		movement = 2
 	}
 	cargo = 4
-	required_technology = superior_hull_design
+	required_technology = renaissance
 	commodity_costs = {
 		lumber = 6
 		cast_iron = 2
@@ -29,7 +29,7 @@ indiaman = {
 		movement = 3
 	}
 	cargo = 8
-	required_technology = large_hulls
+	required_technology = renaissance
 	commodity_costs = {
 		fabric = 3
 		lumber = 7
@@ -49,7 +49,7 @@ paddlewheeler = {
 		movement = 6
 	}
 	cargo = 10
-	required_technology = merchant_steamships
+	required_technology = renaissance
 	commodity_costs = {
 		lumber = 6
 		steel = 2
@@ -70,7 +70,7 @@ freighter = {
 		movement = 7
 	}
 	cargo = 16
-	required_technology = marine_engineering
+	required_technology = renaissance
 	commodity_costs = {
 		steel = 8
 		coal = 20

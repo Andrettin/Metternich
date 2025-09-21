@@ -2,7 +2,6 @@ feudal_monarchy = {
 	name = "Feudal Monarchy"
 	group = monarchy
 	icon = crown_ducal
-	required_technology = feudalism
 	default_laws = {
 		ruling_class = aristocracy
 		centralization = decentralization

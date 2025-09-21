@@ -26,7 +26,7 @@ minutemen = {
 		defense = 4
 		movement = 4
 	}
-	required_technology = conscription
+	required_technology = renaissance
 	upgrades = {
 		militia
 	}
@@ -42,7 +42,7 @@ militia = {
 		defense = 4
 		movement = 4
 	}
-	required_technology = needle_gun
+	required_technology = renaissance
 	upgrades = {
 		conscripts
 	}
@@ -58,5 +58,5 @@ conscripts = {
 		defense = 10
 		movement = 5
 	}
-	required_technology = machine_gun
+	required_technology = renaissance
 }

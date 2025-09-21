@@ -3,5 +3,4 @@ gold = {
 	type = resource
 	icon = gold
 	wealth_value = 200
-	required_technology = precious_metals
 }

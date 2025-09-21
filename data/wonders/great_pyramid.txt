@@ -2,7 +2,6 @@ great_pyramid = {
 	name = "Great Pyramid"
 	portrait = temple
 	building = monument
-	required_technology = masonry
 	required_game_rules = {
 		additional_buildings
 	}
