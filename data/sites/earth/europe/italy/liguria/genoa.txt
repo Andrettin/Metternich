@@ -3,7 +3,6 @@ genoa = {
 	world = earth
 	geocoordinate = { 8.93003861353 44.40998821930 } #from Natural Earth
 	type = holding
-	resource = center_of_trade
 	province = genoa
 	cultural_names = {
 		roman = "Genua" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 34-35.

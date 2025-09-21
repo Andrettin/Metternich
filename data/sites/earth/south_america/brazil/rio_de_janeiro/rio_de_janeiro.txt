@@ -3,7 +3,6 @@ rio_de_janeiro = {
 	world = earth
 	geocoordinate = { -43.22502079420 -22.92502317420 } #from Natural Earth
 	type = holding
-	resource = center_of_trade
 	province = rio_de_janeiro
 	cultural_names = {
 		french = "Henriville"

@@ -3,7 +3,6 @@ florence = {
 	world = earth
 	geocoordinate = { 11.25000036480 43.78000083320 } #from Natural Earth
 	type = holding
-	resource = center_of_trade
 	province = tuscany
 	cultural_names = {
 		roman = "Florentia" #Source: "Ancient Warfare VII.6", 2013, p. 7.

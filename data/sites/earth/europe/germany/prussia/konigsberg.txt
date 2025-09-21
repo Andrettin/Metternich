@@ -3,7 +3,6 @@ konigsberg = {
 	world = earth
 	geocoordinate = { 20.49734289420 54.70000612300 } #from Natural Earth
 	type = holding
-	resource = center_of_trade
 	cultural_names = {
 		russian = "Kaliningrad"
 	}

@@ -3,7 +3,6 @@ strasbourg = {
 	world = earth
 	geocoordinate = { 7.75000728215 48.57996624660 } #from Natural Earth
 	type = holding
-	resource = center_of_trade
 	province = alsace
 	cultural_names = {
 		frankish = "Argentoratum"

@@ -3,7 +3,6 @@ stockholm = {
 	world = earth
 	geocoordinate = { 18.09733473280 59.35075995430 } #from Natural Earth
 	type = holding
-	resource = center_of_trade
 	province = uppland
 	
 	history = {

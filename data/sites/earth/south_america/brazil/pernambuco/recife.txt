@@ -3,6 +3,5 @@ recife = {
 	world = earth
 	geocoordinate = { -34.91560551100 -8.07564532586 } #from Natural Earth
 	type = holding
-	resource = center_of_trade
 	province = pernambuco
 }

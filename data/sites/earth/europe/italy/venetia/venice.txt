@@ -4,7 +4,6 @@ venice = {
 	geocoordinate = { 12.33499873720 45.43865928050 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	resource = center_of_trade
 	
 	history = {
 		919 = {

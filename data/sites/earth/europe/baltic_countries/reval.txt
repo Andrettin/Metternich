@@ -3,7 +3,6 @@ reval = {
 	world = earth
 	geocoordinate = { 24.72804072950 59.43387737950 } #from Natural Earth
 	type = holding
-	resource = center_of_trade
 	province = estonia
 	cultural_names = {
 		estonian = "Tallinn"

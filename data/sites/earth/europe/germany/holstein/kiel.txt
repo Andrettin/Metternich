@@ -3,5 +3,4 @@ kiel = {
 	world = earth
 	geocoordinate = { 10.13001704780 54.33039044100 } #from Natural Earth
 	type = holding
-	resource = center_of_trade
 }

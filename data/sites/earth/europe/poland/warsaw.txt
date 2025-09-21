@@ -3,7 +3,6 @@ warsaw = {
 	world = earth
 	geocoordinate = { 20.99999955110 52.25000062980 } #from Natural Earth
 	type = holding
-	resource = center_of_trade
 	province = warsaw
 	
 	history = {

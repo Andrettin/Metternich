@@ -3,7 +3,6 @@ riga = {
 	world = earth
 	geocoordinate = { 24.09996537140 56.95002382320 } #from Natural Earth
 	type = holding
-	resource = center_of_trade
 	
 	history = {
 		1360 = {

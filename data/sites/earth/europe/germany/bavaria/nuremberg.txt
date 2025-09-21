@@ -3,7 +3,6 @@ nuremberg = {
 	world = earth
 	geocoordinate = { 11.07998490260 49.44999066070 } #from Natural Earth
 	type = holding
-	resource = center_of_trade
 	
 	history = {
 		919 = {

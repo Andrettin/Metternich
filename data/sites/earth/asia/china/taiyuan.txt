@@ -3,5 +3,4 @@ taiyuan = {
 	world = earth
 	geocoordinate = { 112.54505773800 37.87501242990 } #from Natural Earth
 	type = holding
-	resource = center_of_trade
 }

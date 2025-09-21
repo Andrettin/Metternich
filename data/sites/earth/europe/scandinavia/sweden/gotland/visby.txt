@@ -3,7 +3,6 @@ visby = {
 	world = earth
 	geocoordinate = { 18.30000931670 57.63365134600 } #from Natural Earth
 	type = holding
-	resource = center_of_trade
 	province = gotland
 	
 	history = {

@@ -3,6 +3,5 @@ fortaleza = {
 	world = earth
 	geocoordinate = { -38.57998132480 -3.75001788444 } #from Natural Earth
 	type = holding
-	resource = center_of_trade
 	province = ceara
 }
