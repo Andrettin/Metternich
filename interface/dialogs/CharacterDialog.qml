@@ -84,7 +84,7 @@ DialogBase {
 					}
 				}
 				
-				if (status_text !== undefined) {
+				if (typeof status_text !== 'undefined') {
 					if (hovered) {
 						status_text = text
 						middle_status_text = middle_text

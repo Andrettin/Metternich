@@ -102,6 +102,10 @@ public:
 	void set_dead(const bool dead);
 	void die();
 
+	bool exists() const;
+	bool has_ever_existed() const;
+	std::vector<const metternich::character *> get_children() const;
+
 	const metternich::character_class *get_character_class() const;
 	void set_character_class(const metternich::character_class *character_class);
 

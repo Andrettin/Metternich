@@ -22,7 +22,7 @@ int family_tree_model::rowCount(const QModelIndex &parent) const
 		const metternich::character *parent_character = reinterpret_cast<const metternich::character *>(parent.constInternalPointer());
 		assert_throw(parent_character != nullptr);
 
-		return static_cast<int>(parent_character->get_children().size());
+		return static_cast<int>(parent_character->get_game_data()->get_children().size());
 	} else {
 		return 1;
 	}
@@ -69,7 +69,7 @@ QModelIndex family_tree_model::index(const int row, const int column, const QMod
 		const metternich::character *parent_character = reinterpret_cast<const metternich::character *>(parent.constInternalPointer());
 		assert_throw(parent_character != nullptr);
 
-		const metternich::character *row_character = dynamic_cast<const metternich::character *>(parent_character->get_children().at(row));
+		const metternich::character *row_character = parent_character->get_game_data()->get_children().at(row);
 		assert_throw(row_character != nullptr);
 		return this->createIndex(row, column, row_character);
 	} else {
@@ -97,7 +97,7 @@ QModelIndex family_tree_model::parent(const QModelIndex &index) const
 
 	const metternich::character *grandparent_character = this->get_character_family_tree_parent(parent_character);
 	if (grandparent_character != nullptr) {
-		for (const character_base *child : grandparent_character->get_children()) {
+		for (const character_base *child : grandparent_character->get_game_data()->get_children()) {
 			parent_siblings.push_back(static_cast<const metternich::character *>(child));
 		}
 	} else {
@@ -158,7 +158,7 @@ QModelIndex family_tree_model::get_character_model_index(const metternich::chara
 	const metternich::character *parent_character = this->get_character_family_tree_parent(character);
 	assert_throw(parent_character != nullptr);
 
-	const std::vector<character_base *> siblings = parent_character->get_children();
+	const std::vector<const metternich::character *> siblings = parent_character->get_game_data()->get_children();
 
 	for (size_t i = 0; i < siblings.size(); ++i) {
 		if (siblings.at(i) == character) {

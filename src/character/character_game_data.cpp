@@ -437,6 +437,40 @@ void character_game_data::die()
 	this->set_domain(nullptr);
 }
 
+bool character_game_data::exists() const
+{
+	//whether the character exists in the game
+	return this->get_domain() != nullptr;
+}
+
+bool character_game_data::has_ever_existed() const
+{
+	//whether the character exists in the game or the scenario history
+	if (this->exists()) {
+		return true;
+	}
+
+	//if (this->character->get_home_site() != nullptr && !this->character->get_home_site()->get_game_data()->is_on_map()) {
+	//	return false;
+	//}
+
+	return this->is_dead();
+}
+
+std::vector<const metternich::character *> character_game_data::get_children() const
+{
+	std::vector<const metternich::character *> children;
+
+	for (const character_base *child_base : this->character->get_children()) {
+		const metternich::character *child = static_cast<const metternich::character *>(child_base);
+		if (child->get_game_data()->has_ever_existed()) {
+			children.push_back(child);
+		}
+	}
+
+	return children;
+}
+
 const metternich::character_class *character_game_data::get_character_class() const
 {
 	return this->character_class;

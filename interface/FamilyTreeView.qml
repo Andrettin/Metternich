@@ -30,7 +30,7 @@ TreeView {
 				text = model.character.full_name
 			}
 			
-			if (status_text !== undefined) {
+			if (typeof status_text !== 'undefined') {
 				if (hovered) {
 					status_text = text
 				} else {
