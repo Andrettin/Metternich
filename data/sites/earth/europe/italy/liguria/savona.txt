@@ -2,7 +2,8 @@ savona = {
 	name = "Savona"
 	world = earth
 	geocoordinate = { 8.4810166666667 44.307975 }
-	type = resource
-	resource = fish
+	type = holding
+	holding_type = guild
+	#resource = fish
 	province = genoa
 }

@@ -2,8 +2,9 @@ novara = {
 	name = "Novara"
 	world = earth
 	geocoordinate = { 8.61998001978 45.45000225740 } #from Natural Earth
-	type = resource
-	resource = cattle
+	type = holding
+	holding_type = estate
+	#resource = cattle
 	province = piedmont
 	
 	history = {

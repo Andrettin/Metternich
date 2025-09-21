@@ -2,8 +2,9 @@ alessandria = {
 	name = "Alessandria"
 	world = earth
 	geocoordinate = { 8.62 44.913330555556 }
-	type = resource
-	resource = fruit
+	type = holding
+	holding_type = estate
+	#resource = fruit
 	province = piedmont
 	
 	history = {

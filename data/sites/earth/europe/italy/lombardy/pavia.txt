@@ -1,9 +1,10 @@
 pavia = {
 	name = "Pavia"
 	world = earth
-	#geocoordinate = { 9.155 45.185280555556 }
-	type = resource
-	resource = grain
+	geocoordinate = { 9.155 45.185280555556 }
+	type = holding
+	holding_type = estate
+	#resource = grain
 	province = lombardy
 	
 	history = {

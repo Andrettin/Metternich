@@ -2,6 +2,8 @@ ivrea = {
 	name = "Ivrea"
 	world = earth
 	geocoordinate = { 7.874797 45.467379 }
+	type = holding
+	holding_type = guild
 	province = piedmont
 	
 	history = {

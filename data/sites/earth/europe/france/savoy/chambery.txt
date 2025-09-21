@@ -3,11 +3,12 @@ chambery = {
 	world = earth
 	geocoordinate = { 5.9208333333333 45.566388888889 }
 	type = holding
+	holding_type = guild
 	province = savoy
 	
 	history = {
 		1280 = {
-			holding_type = town #existed in the 1280-1748 period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 130.
+			developed = true #existed in the 1280-1748 period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 130.
 		}
 		
 		1836 = {
