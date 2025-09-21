@@ -545,6 +545,19 @@ void game::apply_history(const metternich::scenario *scenario)
 				const domain *owner = province_history->get_owner();
 				province_game_data->set_owner(owner);
 
+				const culture *culture = province_game_data->get_culture();
+				if (culture != nullptr) {
+					const culture_history *culture_history = culture->get_history();
+					culture_history->apply_to_province(province);
+
+					const cultural_group *cultural_group = culture->get_group();
+					while (cultural_group != nullptr) {
+						const metternich::culture_history *cultural_group_history = culture->get_history();
+						cultural_group_history->apply_to_province(province);
+						cultural_group = cultural_group->get_upper_group();
+					}
+				}
+
 				if (owner == nullptr) {
 					log::log_error(std::format("Province \"{}\" has no owner for scenario \"{}\".", province->get_identifier(), scenario->get_identifier()));
 				}
@@ -561,7 +574,7 @@ void game::apply_history(const metternich::scenario *scenario)
 					continue;
 				}
 
-				culture_history->apply_to_country(domain);
+				culture_history->apply_to_domain(domain);
 			}
 		}
 
@@ -573,7 +586,7 @@ void game::apply_history(const metternich::scenario *scenario)
 					continue;
 				}
 
-				culture_history->apply_to_country(domain);
+				culture_history->apply_to_domain(domain);
 			}
 		}
 
@@ -709,7 +722,7 @@ void game::apply_history(const metternich::scenario *scenario)
 							tile->set_direction_pathway(direction, route_pathway);
 
 							if (tile->has_river() && tile->get_owner() != nullptr && route_pathway->get_river_crossing_required_technology() != nullptr && tile->is_river_crossing_direction(direction)) {
-								tile->get_owner()->get_technology()->add_technology_with_prerequisites(route_pathway->get_river_crossing_required_technology());
+								tile->get_province()->get_game_data()->add_technology_with_prerequisites(route_pathway->get_river_crossing_required_technology());
 							}
 						}
 					}
@@ -719,12 +732,12 @@ void game::apply_history(const metternich::scenario *scenario)
 					//add prerequisites for the tile's pathway to its owner's researched technologies
 					if (tile->get_owner() != nullptr) {
 						if (route_pathway->get_required_technology() != nullptr) {
-							tile->get_owner()->get_technology()->add_technology_with_prerequisites(route_pathway->get_required_technology());
+							tile->get_province()->get_game_data()->add_technology_with_prerequisites(route_pathway->get_required_technology());
 						}
 
 						const technology *terrain_required_technology = route_pathway->get_terrain_required_technology(tile->get_terrain());
 						if (terrain_required_technology != nullptr) {
-							tile->get_owner()->get_technology()->add_technology_with_prerequisites(terrain_required_technology);
+							tile->get_province()->get_game_data()->add_technology_with_prerequisites(terrain_required_technology);
 						}
 					}
 				}
@@ -779,7 +792,6 @@ void game::apply_history(const metternich::scenario *scenario)
 				assert_throw(owner != nullptr);
 
 				domain_game_data *owner_game_data = owner->get_game_data();
-				country_technology *owner_technology = owner->get_technology();
 
 				assert_throw(owner_game_data->is_alive());
 
@@ -791,7 +803,7 @@ void game::apply_history(const metternich::scenario *scenario)
 				assert_throw(type != nullptr);
 
 				if (type->get_required_technology() != nullptr) {
-					owner_technology->add_technology_with_prerequisites(type->get_required_technology());
+					site->get_game_data()->get_province()->get_game_data()->add_technology_with_prerequisites(type->get_required_technology());
 				}
 
 				const phenotype *phenotype = historical_civilian_unit->get_phenotype();
@@ -831,7 +843,6 @@ void game::apply_history(const metternich::scenario *scenario)
 
 				domain_game_data *domain_game_data = domain->get_game_data();
 				country_military *country_military = domain->get_military();
-				country_technology *country_technology = domain->get_technology();
 
 				assert_throw(domain_game_data->is_alive());
 
@@ -839,7 +850,7 @@ void game::apply_history(const metternich::scenario *scenario)
 				assert_throw(type != nullptr);
 
 				if (type->get_required_technology() != nullptr) {
-					country_technology->add_technology_with_prerequisites(type->get_required_technology());
+					province->get_game_data()->add_technology_with_prerequisites(type->get_required_technology());
 				}
 
 				const phenotype *phenotype = historical_military_unit->get_phenotype();
@@ -1037,7 +1048,7 @@ void game::apply_sites()
 
 					//add prerequisites for the tile's improvement to its owner's researched technologies
 					if (improvement->get_required_technology() != nullptr && tile->get_owner() != nullptr) {
-						tile->get_owner()->get_technology()->add_technology_with_prerequisites(improvement->get_required_technology());
+						tile->get_province()->get_game_data()->add_technology_with_prerequisites(improvement->get_required_technology());
 					}
 				}
 			}
@@ -1090,7 +1101,6 @@ void game::apply_site_buildings(const site *site)
 
 	const domain *owner = settlement_game_data->get_owner();
 	domain_game_data *owner_game_data = owner ? owner->get_game_data() : nullptr;
-	country_technology *owner_technology = owner ? owner->get_technology() : nullptr;
 
 	for (auto [building_slot_type, building] : site_history->get_buildings()) {
 		building_slot *building_slot = nullptr;
@@ -1137,7 +1147,7 @@ void game::apply_site_buildings(const site *site)
 		}
 
 		if (building->get_required_technology() != nullptr && owner_game_data != nullptr) {
-			owner_technology->add_technology_with_prerequisites(building->get_required_technology());
+			site_province->get_game_data()->add_technology_with_prerequisites(building->get_required_technology());
 		}
 	}
 
@@ -1167,7 +1177,7 @@ void game::apply_site_buildings(const site *site)
 		building_slot->set_wonder(wonder);
 
 		if (wonder->get_required_technology() != nullptr && owner_game_data != nullptr) {
-			owner_technology->add_technology_with_prerequisites(wonder->get_required_technology());
+			site_province->get_game_data()->add_technology_with_prerequisites(wonder->get_required_technology());
 		}
 	}
 }

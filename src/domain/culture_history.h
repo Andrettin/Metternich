@@ -63,7 +63,8 @@ public:
 		std::erase(this->explored_regions, region);
 	}
 
-	void apply_to_country(const domain *domain) const;
+	void apply_to_domain(const domain *domain) const;
+	void apply_to_province(const province *province) const;
 
 private:
 	std::vector<technology *> technologies;

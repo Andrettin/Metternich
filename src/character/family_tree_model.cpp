@@ -3,6 +3,7 @@
 #include "character/family_tree_model.h"
 
 #include "character/character.h"
+#include "character/character_game_data.h"
 #include "util/assert_util.h"
 #include "util/exception_util.h"
 

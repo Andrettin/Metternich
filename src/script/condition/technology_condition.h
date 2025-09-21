@@ -28,13 +28,17 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		const domain *domain = condition<scope_type>::get_scope_country(scope);
+		if constexpr (std::is_same_v<scope_type, province>) {
+			return scope->get_game_data()->has_technology(this->technology);
+		} else {
+			const domain *domain = condition<scope_type>::get_scope_country(scope);
 
-		if (domain == nullptr) {
-			return false;
+			if (domain == nullptr) {
+				return false;
+			}
+
+			return domain->get_technology()->has_technology(this->technology);
 		}
-
-		return domain->get_technology()->has_technology(this->technology);
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override

@@ -30,27 +30,19 @@ public:
 
 	void do_research();
 
-	const technology_set &get_technologies() const
-	{
-		return this->technologies;
-	}
-
+	const technology_set &get_technologies() const;
 	QVariantList get_technologies_qvariant_list() const;
 
-	bool has_technology(const technology *technology) const
+	Q_INVOKABLE bool has_technology(const metternich::technology *technology) const
 	{
 		return this->get_technologies().contains(technology);
 	}
 
-	Q_INVOKABLE bool has_technology(metternich::technology *technology) const
-	{
-		const metternich::technology *const_technology = technology;
-		return this->has_technology(const_technology);
-	}
-
 	void add_technology(const technology *technology);
 	void add_technology_with_prerequisites(const technology *technology);
+	void on_technology_added(const technology *technology);
 	void remove_technology(const technology *technology);
+	void on_technology_lost(const technology *technology);
 	void check_technologies();
 
 	bool can_gain_technology(const technology *technology) const;
@@ -164,7 +156,6 @@ signals:
 
 private:
 	const metternich::domain *domain = nullptr;
-	technology_set technologies;
 	technology_set current_researches;
 	int free_technology_count = 0;
 	centesimal_int technology_cost_modifier;

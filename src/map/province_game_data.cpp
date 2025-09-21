@@ -43,6 +43,7 @@
 #include "script/context.h"
 #include "script/modifier.h"
 #include "script/scripted_province_modifier.h"
+#include "technology/technology.h"
 #include "ui/icon.h"
 #include "ui/icon_container.h"
 #include "ui/portrait.h"
@@ -885,6 +886,16 @@ QVariantList province_game_data::get_visible_sites_qvariant_list() const
 	return container::to_qvariant_list(this->get_visible_sites());
 }
 
+const resource_map<int> &province_game_data::get_resource_counts() const
+{
+	return this->province->get_map_data()->get_resource_counts();
+}
+
+const terrain_type_map<int> &province_game_data::get_tile_terrain_counts() const
+{
+	return this->province->get_map_data()->get_tile_terrain_counts();
+}
+
 bool province_game_data::produces_commodity(const commodity *commodity) const
 {
 	for (const QPoint &tile_pos : this->get_resource_tiles()) {
@@ -908,16 +919,60 @@ bool province_game_data::produces_commodity(const commodity *commodity) const
 	return false;
 }
 
-const resource_map<int> &province_game_data::get_resource_counts() const
+QVariantList province_game_data::get_technologies_qvariant_list() const
 {
-	return this->province->get_map_data()->get_resource_counts();
+	return container::to_qvariant_list(this->get_technologies());
 }
 
-const terrain_type_map<int> &province_game_data::get_tile_terrain_counts() const
+void province_game_data::add_technology(const technology *technology)
 {
-	return this->province->get_map_data()->get_tile_terrain_counts();
+	if (this->has_technology(technology)) {
+		return;
+	}
+
+	this->technologies.insert(technology);
+
+	if (this->get_owner() != nullptr && this->is_capital()) {
+		this->get_owner()->get_technology()->on_technology_added(technology);
+	}
+
+	if (game::get()->is_running()) {
+		emit technologies_changed();
+	}
 }
 
+void province_game_data::add_technology_with_prerequisites(const technology *technology)
+{
+	this->add_technology(technology);
+
+	for (const metternich::technology *prerequisite : technology->get_prerequisites()) {
+		this->add_technology_with_prerequisites(prerequisite);
+	}
+}
+
+void province_game_data::remove_technology(const technology *technology)
+{
+	assert_throw(technology != nullptr);
+
+	if (!this->has_technology(technology)) {
+		return;
+	}
+
+	this->technologies.erase(technology);
+
+	if (this->get_owner() != nullptr && this->is_capital()) {
+		this->get_owner()->get_technology()->on_technology_lost(technology);
+	}
+
+	//remove any technologies requiring this one as well
+	for (const metternich::technology *requiring_technology : technology->get_leads_to()) {
+		this->remove_technology(requiring_technology);
+	}
+
+	if (game::get()->is_running()) {
+		emit technologies_changed();
+	}
+}
 QVariantList province_game_data::get_scripted_modifiers_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_scripted_modifiers());

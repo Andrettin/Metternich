@@ -17,6 +17,7 @@
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
+#include "map/site.h"
 #include "map/tile.h"
 #include "script/modifier.h"
 #include "technology/technology.h"
@@ -69,6 +70,18 @@ void country_technology::do_research()
 	}
 }
 
+const technology_set &country_technology::get_technologies() const
+{
+	if (this->get_game_data()->get_capital_province() != nullptr) {
+		return this->get_game_data()->get_capital_province()->get_game_data()->get_technologies();
+	} else if (this->domain->get_default_capital()->get_province()->get_game_data()->is_on_map()) {
+		return this->domain->get_default_capital()->get_province()->get_game_data()->get_technologies();
+	}
+
+	static const technology_set empty_set;
+	return empty_set;
+}
+
 QVariantList country_technology::get_technologies_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_technologies());
@@ -76,14 +89,24 @@ QVariantList country_technology::get_technologies_qvariant_list() const
 
 void country_technology::add_technology(const technology *technology)
 {
-	if (this->has_technology(technology)) {
-		return;
+	if (this->get_game_data()->get_capital_province() != nullptr) {
+		this->get_game_data()->get_capital_province()->get_game_data()->add_technology(technology);
+	} else if (this->domain->get_default_capital()->get_province()->get_game_data()->is_on_map()) {
+		this->domain->get_default_capital()->get_province()->get_game_data()->add_technology(technology);
 	}
+}
 
-	assert_throw(technology->is_available_for_country(this->domain));
+void country_technology::add_technology_with_prerequisites(const technology *technology)
+{
+	this->add_technology(technology);
 
-	this->technologies.insert(technology);
+	for (const metternich::technology *prerequisite : technology->get_prerequisites()) {
+		this->add_technology_with_prerequisites(prerequisite);
+	}
+}
 
+void country_technology::on_technology_added(const technology *technology)
+{
 	if (technology->get_modifier() != nullptr) {
 		technology->get_modifier()->apply(this->domain, 1);
 	}
@@ -210,25 +233,15 @@ void country_technology::add_technology(const technology *technology)
 	}
 }
 
-void country_technology::add_technology_with_prerequisites(const technology *technology)
-{
-	this->add_technology(technology);
-
-	for (const metternich::technology *prerequisite : technology->get_prerequisites()) {
-		this->add_technology_with_prerequisites(prerequisite);
-	}
-}
-
 void country_technology::remove_technology(const technology *technology)
 {
 	assert_throw(technology != nullptr);
 
-	if (!this->has_technology(technology)) {
-		return;
-	}
+	this->get_game_data()->get_capital_province()->get_game_data()->remove_technology(technology);
+}
 
-	this->technologies.erase(technology);
-
+void country_technology::on_technology_lost(const technology *technology)
+{
 	if (technology->get_modifier() != nullptr) {
 		technology->get_modifier()->apply(this->domain, -1);
 	}
@@ -247,11 +260,6 @@ void country_technology::remove_technology(const technology *technology)
 
 	if (!technology->get_enabled_laws().empty()) {
 		this->domain->get_government()->check_laws();
-	}
-
-	//remove any technologies requiring this one as well
-	for (const metternich::technology *requiring_technology : technology->get_leads_to()) {
-		this->remove_technology(requiring_technology);
 	}
 
 	if (game::get()->is_running()) {

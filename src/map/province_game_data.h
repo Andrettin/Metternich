@@ -7,6 +7,7 @@
 #include "map/terrain_type_container.h"
 #include "religion/religion_container.h"
 #include "script/scripted_modifier_container.h"
+#include "technology/technology_container.h"
 #include "unit/military_unit_type_container.h"
 #include "util/centesimal_int.h"
 #include "util/qunique_ptr.h"
@@ -204,6 +205,22 @@ public:
 	QVariantList get_visible_sites_qvariant_list() const;
 
 	bool produces_commodity(const commodity *commodity) const;
+
+	const technology_set &get_technologies() const
+	{
+		return this->technologies;
+	}
+
+	QVariantList get_technologies_qvariant_list() const;
+
+	bool has_technology(const metternich::technology *technology) const
+	{
+		return this->get_technologies().contains(technology);
+	}
+
+	void add_technology(const technology *technology);
+	void add_technology_with_prerequisites(const technology *technology);
+	void remove_technology(const technology *technology);
 
 	const scripted_province_modifier_map<int> &get_scripted_modifiers() const
 	{
@@ -504,6 +521,7 @@ signals:
 	void provincial_capital_changed();
 	void map_image_changed();
 	void visible_sites_changed();
+	void technologies_changed();
 	void scripted_modifiers_changed();
 	void population_units_changed();
 	void military_units_changed();
@@ -524,6 +542,7 @@ private:
 	QRect map_image_rect;
 	QRect text_rect;
 	int settlement_count = 0; //only includes built settlements
+	technology_set technologies;
 	scripted_province_modifier_map<int> scripted_modifiers;
 	std::vector<population_unit *> population_units;
 	qunique_ptr<metternich::population> population;

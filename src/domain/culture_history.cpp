@@ -11,14 +11,9 @@
 
 namespace metternich {
 
-void culture_history::apply_to_country(const domain *domain) const
+void culture_history::apply_to_domain(const domain *domain) const
 {
 	domain_game_data *domain_game_data = domain->get_game_data();
-	country_technology *country_technology = domain->get_technology();
-
-	for (const technology *technology : this->get_technologies()) {
-		country_technology->add_technology_with_prerequisites(technology);
-	}
 
 	for (const province *province : this->get_explored_provinces()) {
 		if (!province->get_game_data()->is_on_map()) {
@@ -36,6 +31,15 @@ void culture_history::apply_to_country(const domain *domain) const
 
 			domain_game_data->explore_province(province);
 		}
+	}
+}
+
+void culture_history::apply_to_province(const province *province) const
+{
+	province_game_data *province_game_data = province->get_game_data();
+
+	for (const technology *technology : this->get_technologies()) {
+		province_game_data->add_technology_with_prerequisites(technology);
 	}
 }
 
