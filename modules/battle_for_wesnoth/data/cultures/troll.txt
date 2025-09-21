@@ -1,0 +1,64 @@
+troll += {
+	personal_names = {
+		male = {
+			"Ag" #"Äg"; from Battle for Wesnoth
+			"Agh" #from Battle for Wesnoth
+			"Bog Ah" #"Bog Äh" from Battle for Wesnoth
+			"Borb" #from Battle for Wesnoth
+			"Brag" #from Battle for Wesnoth
+			"Brag Goh" #from Battle for Wesnoth
+			"Brok" #from Battle for Wesnoth
+			"Dak" #from Battle for Wesnoth
+			"Drog" #from Battle for Wesnoth
+			"Frok" #from Battle for Wesnoth
+			"Ga" #from Battle for Wesnoth
+			"Gah" #from Battle for Wesnoth
+			"Gark" #from Battle for Wesnoth
+			"Gnarf" #from Battle for Wesnoth
+			"Grar" #from Battle for Wesnoth
+			"Grokk" #from Battle for Wesnoth
+			"Grumph" #from Battle for Wesnoth
+			"Gulk" #from Battle for Wesnoth
+			"Hak" #from Battle for Wesnoth
+			"Hask" #from Battle for Wesnoth
+			"Hoth" #from Battle for Wesnoth
+			"Hug Bah" #from Battle for Wesnoth
+			"Hu Kah" #from Battle for Wesnoth
+			"Kak" #from Battle for Wesnoth
+			"Krak" #from Battle for Wesnoth
+			"Krug" #from Battle for Wesnoth
+			"Kub" #from Battle for Wesnoth
+			"Kuh" #from Battle for Wesnoth
+			"Lok" #from Battle for Wesnoth
+			"Luk" #from Battle for Wesnoth
+			"Nak" #from Battle for Wesnoth
+			"Nuk Kar" #from Battle for Wesnoth
+			"Pag" #from Battle for Wesnoth
+			"Reck" #from Battle for Wesnoth
+			"Rok" #from Battle for Wesnoth
+			"Ruk" #from Battle for Wesnoth
+			"Sark" #from Battle for Wesnoth
+			"Shak" #from Battle for Wesnoth
+			"Shuf" #from Battle for Wesnoth
+			"Stuh" #from Battle for Wesnoth
+			"Targ" #from Battle for Wesnoth
+			"Thog" #from Battle for Wesnoth
+			"Thruf" #from Battle for Wesnoth
+			"Thur" #from Battle for Wesnoth
+			"Tohg" #from Battle for Wesnoth
+			"Torg" #from Battle for Wesnoth
+			"Trok" #from Battle for Wesnoth
+			"Tsok" #from Battle for Wesnoth
+			"Tuh" #from Battle for Wesnoth
+			"Tuk Ruh" #from Battle for Wesnoth
+			"Ugg" #from Battle for Wesnoth
+			"Uh" #"Üh"; from Battle for Wesnoth
+			"Urg" #from Battle for Wesnoth
+			"Urgh" #from Battle for Wesnoth
+			"Urk" #from Battle for Wesnoth
+			"Vak" #from Battle for Wesnoth
+			"Zog" #from Battle for Wesnoth
+			"Zuug" #from Battle for Wesnoth
+		}
+	}
+}

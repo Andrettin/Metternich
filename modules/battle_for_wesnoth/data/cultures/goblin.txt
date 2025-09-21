@@ -1,0 +1,27 @@
+goblin += {
+	personal_names = {
+		male = {
+			"Dran"
+			"Erdog"
+			"Gashnok"
+			"Grogor-Tuk"
+			"Hrugt"
+			"Kardur"
+			"Kartrog"
+			"Odrun"
+			"Orhtib"
+			"Ozdul"
+			"Panok"
+			"Pruol"
+			"Sbrak"
+			"Sdrul"
+			"Uhmit"
+			"Urdum"
+			"Utrub"
+			"Vrag"
+			"Vrunt"
+			"Zhuk"
+			"Zuzerd"
+		}
+	}
+}
