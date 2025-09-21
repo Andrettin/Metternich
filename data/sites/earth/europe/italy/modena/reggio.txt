@@ -2,11 +2,14 @@ reggio = {
 	name = "Reggio"
 	world = earth
 	geocoordinate = { 10.633333333333 44.7 }
+	type = holding
+	holding_type = temple
 	province = modena
 	
 	history = {
 		1250 = {
-			buildings += university #University existent in Reggio in 1250; Source: "Atlas de História Mundial", 2001, p. 144.
+			#buildings += university #University existent in Reggio in 1250; Source: "Atlas de História Mundial", 2001, p. 144.
+			developed = true
 		}
 	}
 }

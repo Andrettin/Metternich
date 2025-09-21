@@ -2,8 +2,9 @@ perugia = {
 	name = "Perugia"
 	world = earth
 	geocoordinate = { 12.38998246120 43.11037762360 } #from Natural Earth
-	type = resource
-	resource = fruit
+	type = holding
+	holding_type = guild
+	#resource = fruit
 	province = romagna
 	
 	history = {

@@ -3,6 +3,7 @@ bologna = {
 	world = earth
 	geocoordinate = { 11.34002070990 44.50042197580 } #from Natural Earth
 	type = holding
+	holding_type = guild
 	#resource = timber
 	province = romagna
 	cultural_names = {
@@ -12,7 +13,6 @@ bologna = {
 	history = {
 		1250 = {
 			buildings += university #University existent in Bologna in 1250; Source: "Atlas de História Mundial", 2001, p. 144.
-			holding_type = city
 		}
 		
 		1360 = {
