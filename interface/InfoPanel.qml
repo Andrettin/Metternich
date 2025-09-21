@@ -282,7 +282,7 @@ Rectangle {
 		anchors.right: parent.right
 		anchors.rightMargin: 8 * scale_factor
 		visible: selected_province !== null && !selected_garrison
-		sites: selected_province ? selected_province.map_data.sites : []
+		sites: selected_province ? selected_province.game_data.visible_sites : []
 	}
 	
 	SmallText {

@@ -64,6 +64,7 @@ class province_game_data final : public QObject
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect CONSTANT)
 	Q_PROPERTY(const metternich::site* provincial_capital READ get_provincial_capital NOTIFY provincial_capital_changed)
 	Q_PROPERTY(QPoint center_tile_pos READ get_center_tile_pos CONSTANT)
+	Q_PROPERTY(QVariantList visible_sites READ get_visible_sites_qvariant_list NOTIFY visible_sites_changed)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(metternich::population* population READ get_population CONSTANT)
 	Q_PROPERTY(QVariantList military_units READ get_military_units_qvariant_list NOTIFY military_units_changed)
@@ -198,6 +199,9 @@ public:
 
 	const resource_map<int> &get_resource_counts() const;
 	const terrain_type_map<int> &get_tile_terrain_counts() const;
+
+	std::vector<const site *> get_visible_sites() const;
+	QVariantList get_visible_sites_qvariant_list() const;
 
 	bool produces_commodity(const commodity *commodity) const;
 
@@ -499,6 +503,7 @@ signals:
 	void level_changed();
 	void provincial_capital_changed();
 	void map_image_changed();
+	void visible_sites_changed();
 	void scripted_modifiers_changed();
 	void population_units_changed();
 	void military_units_changed();

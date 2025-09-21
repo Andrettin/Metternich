@@ -71,6 +71,8 @@ province_game_data::province_game_data(const metternich::province *province)
 	this->population = make_qunique<metternich::population>();
 	connect(this->get_population(), &population::main_culture_changed, this, &province_game_data::on_population_main_culture_changed);
 	connect(this->get_population(), &population::main_religion_changed, this, &province_game_data::on_population_main_religion_changed);
+
+	connect(this, &province_game_data::provincial_capital_changed, this, &province_game_data::visible_sites_changed);
 }
 
 province_game_data::~province_game_data()
@@ -853,6 +855,34 @@ void province_game_data::calculate_text_rect()
 			changed = true;
 		}
 	}
+}
+
+std::vector<const site *> province_game_data::get_visible_sites() const
+{
+	std::vector<const site *> visible_sites = this->province->get_map_data()->get_sites();
+
+	std::erase_if(visible_sites, [](const site *site) {
+		if (site->get_type() == site_type::holding) {
+			return false;
+		}
+
+		return !site->get_game_data()->is_built();
+	});
+
+	std::sort(visible_sites.begin(), visible_sites.end(), [](const site *lhs, const site *rhs) {
+		if (lhs->get_game_data()->is_provincial_capital() != rhs->get_game_data()->is_provincial_capital()) {
+			return lhs->get_game_data()->is_provincial_capital();
+		}
+
+		return lhs->get_identifier() < rhs->get_identifier();
+	});
+
+	return visible_sites;
+}
+
+QVariantList province_game_data::get_visible_sites_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_visible_sites());
 }
 
 bool province_game_data::produces_commodity(const commodity *commodity) const
