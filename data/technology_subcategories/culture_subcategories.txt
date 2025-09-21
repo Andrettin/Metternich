@@ -1,9 +1,3 @@
-aesthetics = {
-	name = "Aesthetics"
-	category = culture
-	icon = painting
-}
-
 architecture = {
 	name = "Architecture"
 	category = culture
