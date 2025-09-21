@@ -1,7 +1,7 @@
 chuquisaca = {
 	name = "Chuquisaca"
 	color = { 212 37 241 }
-	provincial_capital = sucre
+	default_provincial_capital = sucre
 	regions = {
 		bolivia
 	}

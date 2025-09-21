@@ -1,7 +1,7 @@
 parana = {
 	name = "Parana" #"Paraná"
 	color = { 0 54 137 }
-	provincial_capital = curitiba
+	default_provincial_capital = curitiba
 	regions = {
 		brazil
 	}

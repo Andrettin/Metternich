@@ -1,7 +1,7 @@
 wallachia = {
 	name = "Wallachia"
 	color = { 177 111 178 }
-	provincial_capital = bucharest
+	default_provincial_capital = bucharest
 	regions = {
 		romania
 	}

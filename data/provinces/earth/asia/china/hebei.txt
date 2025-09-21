@@ -1,7 +1,7 @@
 hebei = {
 	name = "Hebei"
 	color = { 25 112 17 }
-	provincial_capital = beijing
+	default_provincial_capital = beijing
 	regions = {
 		asia
 	}

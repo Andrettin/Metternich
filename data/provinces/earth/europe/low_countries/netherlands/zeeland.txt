@@ -1,7 +1,7 @@
 zeeland = {
 	name = "Zeeland"
 	color = { 1 192 160 }
-	provincial_capital = middelburg
+	default_provincial_capital = middelburg
 	regions = {
 		netherlands
 	}

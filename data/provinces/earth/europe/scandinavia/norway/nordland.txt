@@ -1,7 +1,7 @@
 nordland = {
 	name = "Nordland"
 	color = { 192 192 192 }
-	provincial_capital = bodo
+	default_provincial_capital = bodo
 	regions = {
 		norway
 	}

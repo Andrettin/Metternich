@@ -1,7 +1,7 @@
 orel = {
 	name = "Orel"
 	color = { 84 120 59 }
-	provincial_capital = orel
+	default_provincial_capital = orel
 	regions = {
 		european_russia
 	}

@@ -1,7 +1,7 @@
 ingria = {
 	name = "Ingria"
 	color = { 180 242 65 }
-	provincial_capital = saint_petersburg
+	default_provincial_capital = saint_petersburg
 	cultural_names = {
 		swedish = "Ingermanland"
 	}

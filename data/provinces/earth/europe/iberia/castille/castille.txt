@@ -1,7 +1,7 @@
 castille = {
 	name = "Castille"
 	color = { 48 32 128 }
-	provincial_capital = madrid
+	default_provincial_capital = madrid
 	regions = {
 		spain
 	}

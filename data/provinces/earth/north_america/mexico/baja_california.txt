@@ -1,7 +1,7 @@
 baja_california = {
 	name = "Baja California"
 	color = { 75 247 180 }
-	provincial_capital = mexicali
+	default_provincial_capital = mexicali
 	regions = {
 		mexico
 	}

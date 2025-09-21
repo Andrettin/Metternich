@@ -1,7 +1,7 @@
 karachay_cherkess = {
 	name = "Karachay-Cherkess"
 	color = { 76 61 11 }
-	provincial_capital = cherkessk
+	default_provincial_capital = cherkessk
 	regions = {
 		european_russia
 	}

@@ -1,7 +1,7 @@
 utah = {
 	name = "Utah"
 	color = { 120 30 245 }
-	provincial_capital = salt_lake_city
+	default_provincial_capital = salt_lake_city
 	regions = {
 		united_states
 	}

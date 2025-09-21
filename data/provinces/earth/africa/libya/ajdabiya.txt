@@ -1,7 +1,7 @@
 ajdabiya = {
 	name = "Ajdabiya"
 	color = { 213 152 88 }
-	provincial_capital = ajdabiya
+	default_provincial_capital = ajdabiya
 	regions = {
 		libya
 	}

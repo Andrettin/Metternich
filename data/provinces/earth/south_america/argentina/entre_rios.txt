@@ -1,7 +1,7 @@
 entre_rios = {
 	name = "Entre Rios" #"Entre Ríos"
 	color = { 185 245 67 }
-	provincial_capital = parana
+	default_provincial_capital = parana
 	regions = {
 		argentina
 	}

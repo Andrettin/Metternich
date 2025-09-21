@@ -1,7 +1,7 @@
 aragon = {
 	name = "Aragon"
 	color = { 80 96 64 }
-	provincial_capital = zaragoza
+	default_provincial_capital = zaragoza
 	regions = {
 		spain
 	}

@@ -1,7 +1,7 @@
 eastern_rumelia = {
 	name = "Eastern Rumelia"
 	color = { 225 194 148 }
-	provincial_capital = philippopolis
+	default_provincial_capital = philippopolis
 	regions = {
 		bulgaria
 	}

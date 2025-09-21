@@ -1,7 +1,7 @@
 northwest_territories = {
 	name = "Northwest Territories"
 	color = { 161 101 115 }
-	provincial_capital = yellowknife
+	default_provincial_capital = yellowknife
 	regions = {
 		canada
 	}

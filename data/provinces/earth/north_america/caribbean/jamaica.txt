@@ -1,7 +1,7 @@
 jamaica = {
 	name = "Jamaica"
 	color = { 122 95 199 }
-	provincial_capital = kingston
+	default_provincial_capital = kingston
 	cultural_names = {
 		castillian = "Santiago"
 	}

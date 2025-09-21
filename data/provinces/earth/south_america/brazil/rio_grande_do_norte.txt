@@ -1,7 +1,7 @@
 rio_grande_do_norte = {
 	name = "Rio Grande do Norte"
 	color = { 96 65 144 }
-	provincial_capital = natal
+	default_provincial_capital = natal
 	regions = {
 		brazil
 	}

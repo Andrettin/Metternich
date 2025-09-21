@@ -1,7 +1,7 @@
 troms = {
 	name = "Troms"
 	color = { 126 114 224 }
-	provincial_capital = tromso
+	default_provincial_capital = tromso
 	regions = {
 		norway
 	}

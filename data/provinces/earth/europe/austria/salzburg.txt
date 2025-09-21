@@ -1,7 +1,7 @@
 salzburg = {
 	name = "Salzburg"
 	color = { 240 97 192 }
-	provincial_capital = salzburg
+	default_provincial_capital = salzburg
 	cultural_names = {
 		roman = "Iuvavum"
 	}

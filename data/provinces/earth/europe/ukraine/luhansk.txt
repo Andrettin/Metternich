@@ -1,7 +1,7 @@
 luhansk = {
 	name = "Luhansk"
 	color = { 113 97 224 }
-	provincial_capital = luhansk
+	default_provincial_capital = luhansk
 	regions = {
 		ukraine
 	}

@@ -1,7 +1,7 @@
 smyrna = {
 	name = "Smyrna"
 	color = { 18 181 43 }
-	provincial_capital = smyrna
+	default_provincial_capital = smyrna
 	regions = {
 		anatolia
 	}

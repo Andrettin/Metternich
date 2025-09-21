@@ -1,7 +1,7 @@
 texas = {
 	name = "Texas"
 	color = { 0 176 64 }
-	provincial_capital = austin
+	default_provincial_capital = austin
 	regions = {
 		united_states
 	}

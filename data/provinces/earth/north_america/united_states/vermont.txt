@@ -1,7 +1,7 @@
 vermont = {
 	name = "Vermont"
 	color = { 176 192 64 }
-	provincial_capital = burlington
+	default_provincial_capital = burlington
 	regions = {
 		thirteen_colonies
 		united_states

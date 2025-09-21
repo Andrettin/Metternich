@@ -1,7 +1,7 @@
 cyrenaica = {
 	name = "Cyrenaica"
 	color = { 51 112 67 }
-	provincial_capital = cyrene
+	default_provincial_capital = cyrene
 	regions = {
 		libya
 	}

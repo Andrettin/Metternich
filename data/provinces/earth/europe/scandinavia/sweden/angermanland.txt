@@ -1,7 +1,7 @@
 angermanland = {
 	name = "Angermanland"
 	color = { 168 27 82 }
-	provincial_capital = harnosand
+	default_provincial_capital = harnosand
 	regions = {
 		sweden
 	}

@@ -1,7 +1,7 @@
 budweis = {
 	name = "Budweis"
 	color = { 240 224 65 }
-	provincial_capital = budweis
+	default_provincial_capital = budweis
 	cultural_names = {
 		czech = "Budejovice" #Budějovice
 	}

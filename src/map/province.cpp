@@ -72,14 +72,14 @@ void province::process_gsml_scope(const gsml_data &scope)
 
 void province::initialize()
 {
-	if (this->get_provincial_capital() != nullptr) {
-		assert_throw(this->get_provincial_capital()->get_province() == nullptr || this->get_provincial_capital()->get_province() == this);
+	if (this->get_default_provincial_capital() != nullptr) {
+		assert_throw(this->get_default_provincial_capital()->get_province() == nullptr || this->get_default_provincial_capital()->get_province() == this);
 
-		this->provincial_capital->set_province(this);
+		this->default_provincial_capital->set_province(this);
 
-		if (this->provincial_capital->is_initialized()) {
+		if (this->default_provincial_capital->is_initialized()) {
 			//site is already initialized, so it won't add itself to this province's site list
-			this->add_site(this->provincial_capital);
+			this->add_site(this->default_provincial_capital);
 		}
 	}
 
@@ -108,14 +108,14 @@ void province::initialize()
 
 void province::check() const
 {
-	if (this->get_provincial_capital() == nullptr && !this->is_water_zone()) {
-		throw std::runtime_error(std::format("Province \"{}\" has no provincial capital.", this->get_identifier()));
-	} else if (this->get_provincial_capital() != nullptr && this->is_water_zone()) {
-		throw std::runtime_error(std::format("Water zone \"{}\" has a provincial capital.", this->get_identifier()));
+	if (this->get_default_provincial_capital() == nullptr && !this->is_water_zone()) {
+		throw std::runtime_error(std::format("Province \"{}\" has no default provincial capital.", this->get_identifier()));
+	} else if (this->get_default_provincial_capital() != nullptr && this->is_water_zone()) {
+		throw std::runtime_error(std::format("Water zone \"{}\" has a default provincial capital.", this->get_identifier()));
 	}
 
-	if (this->get_provincial_capital() != nullptr && !this->get_provincial_capital()->is_settlement()) {
-		throw std::runtime_error(std::format("Province \"{}\" has a provincial capital (\"{}\") which is not a settlement.", this->get_identifier(), this->get_provincial_capital()->get_identifier()));
+	if (this->get_default_provincial_capital() != nullptr && !this->get_default_provincial_capital()->is_settlement()) {
+		throw std::runtime_error(std::format("Province \"{}\" has a default provincial capital (\"{}\") which is not a settlement.", this->get_identifier(), this->get_default_provincial_capital()->get_identifier()));
 	}
 
 	if (this->get_primary_star() != nullptr && !this->get_primary_star()->is_celestial_body()) {
@@ -151,8 +151,8 @@ void province::reset_game_data()
 
 const geocoordinate &province::get_geocoordinate() const
 {
-	if (this->get_provincial_capital() != nullptr) {
-		return this->get_provincial_capital()->get_geocoordinate();
+	if (this->get_default_provincial_capital() != nullptr) {
+		return this->get_default_provincial_capital()->get_geocoordinate();
 	}
 
 	return this->geocoordinate;

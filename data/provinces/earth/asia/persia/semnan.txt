@@ -1,7 +1,7 @@
 semnan = {
 	name = "Semnan"
 	color = { 200 57 222 }
-	provincial_capital = semnan
+	default_provincial_capital = semnan
 	regions = {
 		persia
 	}

@@ -1,7 +1,7 @@
 cochabamba = {
 	name = "Cochabamba"
 	color = { 1 157 11 }
-	provincial_capital = cochabamba
+	default_provincial_capital = cochabamba
 	regions = {
 		bolivia
 	}

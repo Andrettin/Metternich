@@ -1,7 +1,7 @@
 para = {
 	name = "Para" #"Pará"
 	color = { 218 188 202 }
-	provincial_capital = belem
+	default_provincial_capital = belem
 	regions = {
 		amazon_basin
 		brazil

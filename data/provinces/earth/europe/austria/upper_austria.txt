@@ -1,7 +1,7 @@
 upper_austria = {
 	name = "Upper Austria"
 	color = { 144 1 160 }
-	provincial_capital = linz
+	default_provincial_capital = linz
 	regions = {
 		austria
 		imperial_austria_1806

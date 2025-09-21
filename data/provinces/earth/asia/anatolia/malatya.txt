@@ -1,7 +1,7 @@
 malatya = {
 	name = "Malatya"
 	color = { 193 5 165 }
-	provincial_capital = malatya
+	default_provincial_capital = malatya
 	regions = {
 		anatolia
 	}

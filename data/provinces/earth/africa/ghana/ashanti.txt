@@ -1,7 +1,7 @@
 ashanti = {
 	name = "Ashanti"
 	color = { 230 22 101 }
-	provincial_capital = kumasi
+	default_provincial_capital = kumasi
 	regions = {
 		africa
 	}

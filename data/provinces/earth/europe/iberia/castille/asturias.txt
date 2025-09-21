@@ -1,7 +1,7 @@
 asturias = {
 	name = "Asturias"
 	color = { 80 96 192 }
-	provincial_capital = oviedo
+	default_provincial_capital = oviedo
 	regions = {
 		spain
 	}

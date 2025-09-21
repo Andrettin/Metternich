@@ -1,7 +1,7 @@
 new_york = {
 	name = "New York"
 	color = { 176 128 128 }
-	provincial_capital = new_york
+	default_provincial_capital = new_york
 	regions = {
 		thirteen_colonies
 		united_states

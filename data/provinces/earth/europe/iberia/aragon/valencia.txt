@@ -1,7 +1,7 @@
 valencia = {
 	name = "Valencia"
 	color = { 143 223 128 }
-	provincial_capital = valencia
+	default_provincial_capital = valencia
 	cultural_names = {
 		roman = "Valentia" #Source: "Ancient Warfare VII.6", 2013, p. 7.
 	}

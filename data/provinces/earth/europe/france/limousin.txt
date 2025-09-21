@@ -1,7 +1,7 @@
 limousin = {
 	name = "Limousin"
 	color = { 48 96 0 }
-	provincial_capital = limoges
+	default_provincial_capital = limoges
 	regions = {
 		france
 	}

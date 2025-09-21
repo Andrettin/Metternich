@@ -1,7 +1,7 @@
 madeira = {
 	name = "Madeira"
 	color = { 56 87 25 }
-	provincial_capital = funchal
+	default_provincial_capital = funchal
 	regions = {
 		portugal
 	}

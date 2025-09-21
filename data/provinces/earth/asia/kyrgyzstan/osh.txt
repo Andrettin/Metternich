@@ -1,7 +1,7 @@
 osh = {
 	name = "Osh"
 	color = { 71 33 28 }
-	provincial_capital = osh
+	default_provincial_capital = osh
 	regions = {
 		kyrgyzstan
 	}

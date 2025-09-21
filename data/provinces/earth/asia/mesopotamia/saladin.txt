@@ -1,7 +1,7 @@
 saladin = {
 	name = "Saladin"
 	color = { 19 215 110 }
-	provincial_capital = assur
+	default_provincial_capital = assur
 	regions = {
 		asia
 		middle_east

@@ -1,7 +1,7 @@
 smolensk = {
 	name = "Smolensk"
 	color = { 54 9 109 }
-	provincial_capital = smolensk
+	default_provincial_capital = smolensk
 	regions = {
 		european_russia
 	}

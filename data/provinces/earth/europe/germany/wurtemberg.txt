@@ -1,7 +1,7 @@
 wurtemberg = {
 	name = "Wurtemberg"
 	color = { 17 128 96 }
-	provincial_capital = stuttgart
+	default_provincial_capital = stuttgart
 	regions = {
 		germany
 	}

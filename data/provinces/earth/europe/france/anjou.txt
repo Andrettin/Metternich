@@ -1,7 +1,7 @@
 anjou = {
 	name = "Anjou"
 	color = { 80 160 64 }
-	provincial_capital = angers
+	default_provincial_capital = angers
 	regions = {
 		france
 	}

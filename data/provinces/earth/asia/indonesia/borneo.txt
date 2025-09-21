@@ -1,7 +1,7 @@
 borneo = {
 	name = "Borneo"
 	color = { 190 162 153 }
-	provincial_capital = brunei
+	default_provincial_capital = brunei
 	regions = {
 		asia
 		indonesia

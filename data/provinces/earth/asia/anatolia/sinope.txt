@@ -1,7 +1,7 @@
 sinope = {
 	name = "Sinope"
 	color = { 156 1 211 }
-	provincial_capital = sinope
+	default_provincial_capital = sinope
 	regions = {
 		anatolia
 	}

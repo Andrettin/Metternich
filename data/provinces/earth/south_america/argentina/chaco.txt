@@ -1,7 +1,7 @@
 chaco = {
 	name = "Chaco"
 	color = { 162 128 84 }
-	provincial_capital = resistencia
+	default_provincial_capital = resistencia
 	regions = {
 		argentina
 	}

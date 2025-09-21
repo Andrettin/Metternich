@@ -1,7 +1,7 @@
 mordovia = {
 	name = "Mordovia"
 	color = { 155 193 89 }
-	provincial_capital = saransk
+	default_provincial_capital = saransk
 	regions = {
 		european_russia
 	}

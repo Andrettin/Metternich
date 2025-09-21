@@ -1,7 +1,7 @@
 kashmir = {
 	name = "Kashmir"
 	color = { 181 54 213 }
-	provincial_capital = leh
+	default_provincial_capital = leh
 	regions = {
 		asia
 	}

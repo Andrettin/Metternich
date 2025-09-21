@@ -1,7 +1,7 @@
 nova_scotia = {
 	name = "Nova Scotia"
 	color = { 240 64 64 }
-	provincial_capital = halifax
+	default_provincial_capital = halifax
 	regions = {
 		canada
 	}

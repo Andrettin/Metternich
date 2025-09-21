@@ -1,7 +1,7 @@
 ostergotland = {
 	name = "Ostergotland" #"Östergötland"
 	color = { 220 168 183 }
-	provincial_capital = linkoping
+	default_provincial_capital = linkoping
 	regions = {
 		sweden
 	}

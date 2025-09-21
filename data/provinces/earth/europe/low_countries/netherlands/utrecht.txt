@@ -1,7 +1,7 @@
 utrecht = {
 	name = "Utrecht"
 	color = { 192 64 33 }
-	provincial_capital = utrecht
+	default_provincial_capital = utrecht
 	regions = {
 		netherlands
 	}

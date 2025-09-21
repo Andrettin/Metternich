@@ -1,7 +1,7 @@
 rhineland = {
 	name = "Rhineland"
 	color = { 81 128 33 }
-	provincial_capital = cologne
+	default_provincial_capital = cologne
 	regions = {
 		germany
 	}

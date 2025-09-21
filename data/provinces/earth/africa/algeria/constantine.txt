@@ -1,7 +1,7 @@
 constantine = {
 	name = "Constantine"
 	color = { 215 207 203 }
-	provincial_capital = constantine
+	default_provincial_capital = constantine
 	regions = {
 		algeria
 	}

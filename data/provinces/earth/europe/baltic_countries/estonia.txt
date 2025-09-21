@@ -1,7 +1,7 @@
 estonia = {
 	name = "Estonia"
 	color = { 128 160 33 }
-	provincial_capital = reval
+	default_provincial_capital = reval
 	regions = {
 		estonia
 	}

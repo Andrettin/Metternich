@@ -1,7 +1,7 @@
 novgorod = {
 	name = "Novgorod"
 	color = { 244 102 125 }
-	provincial_capital = novgorod
+	default_provincial_capital = novgorod
 	regions = {
 		european_russia
 	}

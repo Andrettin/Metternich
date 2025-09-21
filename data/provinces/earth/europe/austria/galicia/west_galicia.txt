@@ -1,7 +1,7 @@
 west_galicia = {
 	name = "West Galicia"
 	color = { 144 96 96 }
-	provincial_capital = cracow
+	default_provincial_capital = cracow
 	regions = {
 		galicia
 		poland

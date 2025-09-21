@@ -1,7 +1,7 @@
 wisconsin = {
 	name = "Wisconsin"
 	color = { 144 0 64 }
-	provincial_capital = madison
+	default_provincial_capital = madison
 	regions = {
 		mississippi_basin
 		united_states

@@ -1,7 +1,7 @@
 ayacucho = {
 	name = "Ayacucho"
 	color = { 176 151 34 }
-	provincial_capital = ayacucho
+	default_provincial_capital = ayacucho
 	regions = {
 		peru
 	}

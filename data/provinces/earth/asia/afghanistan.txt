@@ -1,7 +1,7 @@
 afghanistan = {
 	name = "Afghanistan"
 	color = { 194 33 232 }
-	provincial_capital = kabul
+	default_provincial_capital = kabul
 	regions = {
 		asia
 	}

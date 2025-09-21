@@ -1,7 +1,7 @@
 western_gold_coast = {
 	name = "Western Gold Coast"
 	color = { 177 221 74 }
-	provincial_capital = sekondi
+	default_provincial_capital = sekondi
 	regions = {
 		africa
 	}

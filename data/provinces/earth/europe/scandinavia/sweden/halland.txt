@@ -1,7 +1,7 @@
 halland = {
 	name = "Halland"
 	color = { 168 9 37 }
-	provincial_capital = halmstad
+	default_provincial_capital = halmstad
 	regions = {
 		sweden
 	}

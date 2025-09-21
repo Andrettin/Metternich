@@ -1,7 +1,7 @@
 ghadamis = {
 	name = "Ghadamis"
 	color = { 0 213 8 }
-	provincial_capital = ghadamis
+	default_provincial_capital = ghadamis
 	regions = {
 		libya
 	}

@@ -1,7 +1,7 @@
 ohio = {
 	name = "Ohio"
 	color = { 112 64 0 }
-	provincial_capital = columbus
+	default_provincial_capital = columbus
 	regions = {
 		united_states
 	}

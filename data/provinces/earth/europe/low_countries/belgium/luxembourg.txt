@@ -1,7 +1,7 @@
 luxembourg = {
 	name = "Luxembourg"
 	color = { 81 128 160 }
-	provincial_capital = luxembourg
+	default_provincial_capital = luxembourg
 	regions = {
 		low_countries
 	}

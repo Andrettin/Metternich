@@ -1,7 +1,7 @@
 rio_de_janeiro = {
 	name = "Rio de Janeiro"
 	color = { 31 205 137 }
-	provincial_capital = rio_de_janeiro
+	default_provincial_capital = rio_de_janeiro
 	regions = {
 		brazil
 	}

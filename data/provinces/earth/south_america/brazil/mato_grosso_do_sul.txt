@@ -1,7 +1,7 @@
 mato_grosso_do_sul = {
 	name = "Mato Grosso do Sul"
 	color = { 242 4 215 }
-	provincial_capital = campo_grande
+	default_provincial_capital = campo_grande
 	regions = {
 		brazil
 	}

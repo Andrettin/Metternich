@@ -1,7 +1,7 @@
 leon = {
 	name = "Leon"
 	color = { 208 96 192 }
-	provincial_capital = leon
+	default_provincial_capital = leon
 	cultural_names = {
 		roman = "Castra Legionis" #Source: "Ancient Warfare VII.6", 2013, p. 7.
 	}

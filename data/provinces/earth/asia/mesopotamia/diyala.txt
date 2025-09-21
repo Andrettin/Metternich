@@ -1,7 +1,7 @@
 diyala = {
 	name = "Diyala"
 	color = { 45 38 86 }
-	provincial_capital = baghdad
+	default_provincial_capital = baghdad
 	regions = {
 		asia
 		middle_east

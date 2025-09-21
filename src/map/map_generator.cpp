@@ -1277,12 +1277,12 @@ void map_generator::generate_sites()
 		}
 
 		//place capital settlement
-		if (province->get_provincial_capital() != nullptr) {
-			this->generate_site(province->get_provincial_capital(), zone);
+		if (province->get_default_provincial_capital() != nullptr) {
+			this->generate_site(province->get_default_provincial_capital(), zone);
 
-			assert_throw(province->get_provincial_capital()->get_map_data()->is_on_map());
+			assert_throw(province->get_default_provincial_capital()->get_map_data()->is_on_map());
 
-			const QPoint &tile_pos = province->get_provincial_capital()->get_map_data()->get_tile_pos();
+			const QPoint &tile_pos = province->get_default_provincial_capital()->get_map_data()->get_tile_pos();
 
 			if (!province->is_star_system()) {
 				//change non-flatlands or forested terrain to unforested flatlands for settlements

@@ -1,7 +1,7 @@
 upper_saxony = {
 	name = "Upper Saxony"
 	color = { 121 83 104 }
-	provincial_capital = dresden
+	default_provincial_capital = dresden
 	regions = {
 		germany
 	}

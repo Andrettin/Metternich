@@ -195,7 +195,7 @@ bool site_game_data::is_provincial_capital() const
 		return false;
 	}
 
-	return this->get_province()->get_provincial_capital() == this->site;
+	return this->get_province()->get_game_data()->get_provincial_capital() == this->site;
 }
 
 bool site_game_data::is_capital() const

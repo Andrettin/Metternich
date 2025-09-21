@@ -1,7 +1,7 @@
 cosenza = {
 	name = "Cosenza"
 	color = { 128 3 14 }
-	provincial_capital = cosenza
+	default_provincial_capital = cosenza
 	regions = {
 		italy
 	}

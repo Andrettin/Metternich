@@ -1,7 +1,7 @@
 kharkov = {
 	name = "Kharkov"
 	color = { 240 97 224 }
-	provincial_capital = kharkov
+	default_provincial_capital = kharkov
 	regions = {
 		ukraine
 	}

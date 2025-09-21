@@ -1,7 +1,7 @@
 labrador = {
 	name = "Labrador"
 	color = { 84 51 136 }
-	provincial_capital = happy_valley
+	default_provincial_capital = happy_valley
 	regions = {
 		canada
 	}

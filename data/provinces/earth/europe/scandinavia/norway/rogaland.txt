@@ -1,7 +1,7 @@
 rogaland = {
 	name = "Rogaland"
 	color = { 3 80 255 }
-	provincial_capital = stavanger
+	default_provincial_capital = stavanger
 	regions = {
 		norway
 	}

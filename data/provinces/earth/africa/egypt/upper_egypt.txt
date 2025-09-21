@@ -1,7 +1,7 @@
 upper_egypt = {
 	name = "Upper Egypt"
 	color = { 146 51 56 }
-	provincial_capital = luxor
+	default_provincial_capital = luxor
 	regions = {
 		egypt
 	}

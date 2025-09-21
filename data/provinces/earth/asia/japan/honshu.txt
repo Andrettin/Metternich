@@ -1,7 +1,7 @@
 honshu = {
 	name = "Honshu"
 	color = { 139 215 107 }
-	provincial_capital = tokyo
+	default_provincial_capital = tokyo
 	regions = {
 		japan
 	}

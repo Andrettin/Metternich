@@ -1,7 +1,7 @@
 ayrshire = {
 	name = "Ayrshire"
 	color = { 228 160 173 }
-	provincial_capital = ayr
+	default_provincial_capital = ayr
 	regions = {
 		scotland
 	}

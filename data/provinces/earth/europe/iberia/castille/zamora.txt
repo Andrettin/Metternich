@@ -1,7 +1,7 @@
 zamora = {
 	name = "Zamora"
 	color = { 140 80 36 }
-	provincial_capital = zamora
+	default_provincial_capital = zamora
 	regions = {
 		spain
 	}

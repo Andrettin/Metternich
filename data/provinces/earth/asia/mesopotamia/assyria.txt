@@ -1,7 +1,7 @@
 assyria = {
 	name = "Assyria"
 	color = { 201 204 84 }
-	provincial_capital = nineveh
+	default_provincial_capital = nineveh
 	regions = {
 		asia
 		middle_east

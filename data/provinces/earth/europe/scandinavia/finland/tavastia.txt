@@ -1,7 +1,7 @@
 tavastia = {
 	name = "Tavastia"
 	color = { 151 180 107 }
-	provincial_capital = hameenlinna
+	default_provincial_capital = hameenlinna
 	regions = {
 		finland
 	}

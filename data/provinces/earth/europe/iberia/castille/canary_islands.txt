@@ -1,7 +1,7 @@
 canary_islands = {
 	name = "Canary Islands"
 	color = { 32 239 1 }
-	provincial_capital = las_palmas
+	default_provincial_capital = las_palmas
 	regions = {
 		spain
 	}

@@ -1,7 +1,7 @@
 tierra_del_fuego = {
 	name = "Tierra del Fuego"
 	color = { 239 96 144 }
-	provincial_capital = ushuaia
+	default_provincial_capital = ushuaia
 	regions = {
 		argentina
 	}

@@ -1,7 +1,7 @@
 algarve = {
 	name = "Algarve"
 	color = { 233 129 162 }
-	provincial_capital = faro
+	default_provincial_capital = faro
 	regions = {
 		portugal
 	}

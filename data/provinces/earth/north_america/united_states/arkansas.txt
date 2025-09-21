@@ -1,7 +1,7 @@
 arkansas = {
 	name = "Arkansas"
 	color = { 87 66 136 }
-	provincial_capital = little_rock
+	default_provincial_capital = little_rock
 	regions = {
 		mississippi_basin
 		united_states

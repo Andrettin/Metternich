@@ -1,7 +1,7 @@
 lancashire = {
 	name = "Lancashire"
 	color = { 96 224 0 }
-	provincial_capital = liverpool
+	default_provincial_capital = liverpool
 	regions = {
 		england
 	}

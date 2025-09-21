@@ -1,7 +1,7 @@
 san_luis = {
 	name = "San Luis"
 	color = { 0 128 54 }
-	provincial_capital = san_luis
+	default_provincial_capital = san_luis
 	regions = {
 		argentina
 	}

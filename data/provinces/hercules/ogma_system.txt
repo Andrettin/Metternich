@@ -1,7 +1,7 @@
 ogma_system = {
 	name = "Ogma System"
 	primary_star = ogma
-	provincial_capital = smertrios
+	default_provincial_capital = smertrios
 	
 	history = {
 		owner = terran_federation

@@ -1,7 +1,7 @@
 vasterbotten = {
 	name = "Vasterbotten"
 	color = { 97 1 128 }
-	provincial_capital = umea
+	default_provincial_capital = umea
 	regions = {
 		sweden
 	}

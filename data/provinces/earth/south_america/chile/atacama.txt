@@ -1,7 +1,7 @@
 atacama = {
 	name = "Atacama"
 	color = { 123 112 64 }
-	provincial_capital = copiapo
+	default_provincial_capital = copiapo
 	regions = {
 		chile
 	}

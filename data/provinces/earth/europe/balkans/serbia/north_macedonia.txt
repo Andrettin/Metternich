@@ -1,7 +1,7 @@
 north_macedonia = {
 	name = "North Macedonia"
 	color = { 241 217 108 }
-	provincial_capital = skopje
+	default_provincial_capital = skopje
 	regions = {
 		yugoslavia
 	}

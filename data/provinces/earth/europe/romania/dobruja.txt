@@ -1,7 +1,7 @@
 dobruja = {
 	name = "Dobruja"
 	color = { 181 231 157 }
-	provincial_capital = constanta
+	default_provincial_capital = constanta
 	regions = {
 		romania
 	}

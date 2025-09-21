@@ -1,7 +1,7 @@
 xinjiang = {
 	name = "Xinjiang"
 	color = { 223 147 134 }
-	provincial_capital = urumqi
+	default_provincial_capital = urumqi
 	regions = {
 		asia
 	}

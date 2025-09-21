@@ -1,7 +1,7 @@
 catamarca = {
 	name = "Catamarca"
 	color = { 193 45 68 }
-	provincial_capital = catamarca
+	default_provincial_capital = catamarca
 	regions = {
 		argentina
 	}

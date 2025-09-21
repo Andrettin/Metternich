@@ -1,7 +1,7 @@
 groningen = {
 	name = "Groningen"
 	color = { 192 192 33 }
-	provincial_capital = groningen
+	default_provincial_capital = groningen
 	regions = {
 		netherlands
 	}

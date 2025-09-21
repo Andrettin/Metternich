@@ -1,7 +1,7 @@
 westphalia = {
 	name = "Westphalia"
 	color = { 1 128 224 }
-	provincial_capital = munster
+	default_provincial_capital = munster
 	regions = {
 		germany
 	}

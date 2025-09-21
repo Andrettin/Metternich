@@ -1,7 +1,7 @@
 kalmykia = {
 	name = "Kalmykia"
 	color = { 81 216 100 }
-	provincial_capital = elista
+	default_provincial_capital = elista
 	regions = {
 		european_russia
 	}

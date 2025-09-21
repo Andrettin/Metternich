@@ -1,7 +1,7 @@
 babylon = {
 	name = "Babylon"
 	color = { 110 155 24 }
-	provincial_capital = babylon
+	default_provincial_capital = babylon
 	regions = {
 		asia
 		middle_east

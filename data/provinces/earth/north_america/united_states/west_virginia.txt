@@ -1,7 +1,7 @@
 west_virginia = {
 	name = "West Virginia"
 	color = { 226 240 64 }
-	provincial_capital = charleston
+	default_provincial_capital = charleston
 	regions = {
 		thirteen_colonies
 		united_states

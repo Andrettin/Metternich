@@ -1,7 +1,7 @@
 bursa = {
 	name = "Bursa"
 	color = { 59 166 11 }
-	provincial_capital = bursa
+	default_provincial_capital = bursa
 	regions = {
 		anatolia
 	}

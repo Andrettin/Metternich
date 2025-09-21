@@ -1,7 +1,7 @@
 tataouine = {
 	name = "Tataouine"
 	color = { 153 119 104 }
-	provincial_capital = tataouine
+	default_provincial_capital = tataouine
 	regions = {
 		tunisia
 	}

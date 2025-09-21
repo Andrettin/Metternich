@@ -1,7 +1,7 @@
 la_rioja = {
 	name = "La Rioja"
 	color = { 111 0 25 }
-	provincial_capital = la_rioja
+	default_provincial_capital = la_rioja
 	regions = {
 		argentina
 	}

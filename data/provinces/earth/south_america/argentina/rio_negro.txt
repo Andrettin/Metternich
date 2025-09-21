@@ -1,7 +1,7 @@
 rio_negro = {
 	name = "Rio Negro" #"Río Negro"
 	color = { 176 128 144 }
-	provincial_capital = viedma
+	default_provincial_capital = viedma
 	regions = {
 		argentina
 	}

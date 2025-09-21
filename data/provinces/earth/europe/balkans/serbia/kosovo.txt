@@ -1,7 +1,7 @@
 kosovo = {
 	name = "Kosovo"
 	color = { 246 90 197 }
-	provincial_capital = pristina
+	default_provincial_capital = pristina
 	regions = {
 		yugoslavia
 	}

@@ -1,7 +1,7 @@
 missouri = {
 	name = "Missouri"
 	color = { 22 48 17 }
-	provincial_capital = jefferson_city
+	default_provincial_capital = jefferson_city
 	regions = {
 		mississippi_basin
 		united_states

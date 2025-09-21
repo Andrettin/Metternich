@@ -1,7 +1,7 @@
 yorkshire = {
 	name = "Yorkshire"
 	color = { 163 138 0 }
-	provincial_capital = york
+	default_provincial_capital = york
 	regions = {
 		england
 	}

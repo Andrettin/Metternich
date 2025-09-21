@@ -1,7 +1,7 @@
 pskov = {
 	name = "Pskov"
 	color = { 77 163 105 }
-	provincial_capital = pskov
+	default_provincial_capital = pskov
 	regions = {
 		european_russia
 	}

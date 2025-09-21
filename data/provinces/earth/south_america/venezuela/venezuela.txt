@@ -1,7 +1,7 @@
 venezuela = {
 	name = "Venezuela"
 	color = { 187 163 101 }
-	provincial_capital = caracas
+	default_provincial_capital = caracas
 	regions = {
 		venezuela
 	}

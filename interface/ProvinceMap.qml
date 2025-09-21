@@ -78,7 +78,7 @@ Flickable {
 				select_province(null)
 			} else {
 				if (metternich.selected_military_units.length > 0) {
-					metternich.move_selected_military_units_to(province.provincial_capital.map_data.tile_pos)
+					metternich.move_selected_military_units_to(province.game_data.provincial_capital.map_data.tile_pos)
 					selected_civilian_unit = null
 					selected_site = null
 					selected_province = null

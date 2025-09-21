@@ -1,7 +1,7 @@
 palatinate = {
 	name = "Palatinate"
 	color = { 130 219 54 }
-	provincial_capital = mainz
+	default_provincial_capital = mainz
 	regions = {
 		germany
 	}

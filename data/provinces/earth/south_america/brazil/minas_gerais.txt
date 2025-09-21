@@ -1,7 +1,7 @@
 minas_gerais = {
 	name = "Minas Gerais"
 	color = { 132 153 248 }
-	provincial_capital = ouro_preto
+	default_provincial_capital = ouro_preto
 	regions = {
 		brazil
 	}

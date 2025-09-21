@@ -1,7 +1,7 @@
 belize = {
 	name = "Belize"
 	color = { 253 125 139 }
-	provincial_capital = belmopan
+	default_provincial_capital = belmopan
 	regions = {
 		central_america
 	}

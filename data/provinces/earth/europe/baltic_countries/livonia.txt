@@ -1,7 +1,7 @@
 livonia = {
 	name = "Livonia"
 	color = { 0 160 160 }
-	provincial_capital = riga
+	default_provincial_capital = riga
 	regions = {
 		latvia
 		poland_lithuania

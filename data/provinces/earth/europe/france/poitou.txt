@@ -1,7 +1,7 @@
 poitou = {
 	name = "Poitou"
 	color = { 208 32 192 }
-	provincial_capital = poitiers
+	default_provincial_capital = poitiers
 	regions = {
 		france
 	}

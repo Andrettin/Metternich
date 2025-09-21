@@ -1,7 +1,7 @@
 bechar = {
 	name = "Bechar"
 	color = { 128 90 169 }
-	provincial_capital = bechar
+	default_provincial_capital = bechar
 	regions = {
 		algeria
 	}

@@ -1,7 +1,7 @@
 kufra = {
 	name = "Kufra"
 	color = { 253 208 165 }
-	provincial_capital = al_jawf
+	default_provincial_capital = al_jawf
 	regions = {
 		libya
 	}

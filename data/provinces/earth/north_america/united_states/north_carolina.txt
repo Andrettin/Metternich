@@ -1,7 +1,7 @@
 north_carolina = {
 	name = "North Carolina"
 	color = { 0 112 64 }
-	provincial_capital = raleigh
+	default_provincial_capital = raleigh
 	regions = {
 		thirteen_colonies
 		united_states

@@ -1,7 +1,7 @@
 burdur = {
 	name = "Burdur"
 	color = { 174 135 64 }
-	provincial_capital = burdur
+	default_provincial_capital = burdur
 	regions = {
 		anatolia
 	}

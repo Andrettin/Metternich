@@ -1,7 +1,7 @@
 epirus = {
 	name = "Epirus"
 	color = { 172 132 96 }
-	provincial_capital = ioanina
+	default_provincial_capital = ioanina
 	regions = {
 		greece
 	}

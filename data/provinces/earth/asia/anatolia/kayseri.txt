@@ -1,7 +1,7 @@
 kayseri = {
 	name = "Kayseri"
 	color = { 218 129 14 }
-	provincial_capital = kayseri
+	default_provincial_capital = kayseri
 	regions = {
 		anatolia
 	}

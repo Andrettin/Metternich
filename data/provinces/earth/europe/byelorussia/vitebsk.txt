@@ -1,7 +1,7 @@
 vitebsk = {
 	name = "Vitebsk"
 	color = { 192 160 224 }
-	provincial_capital = vitebsk
+	default_provincial_capital = vitebsk
 	regions = {
 		byelorussia
 		poland_lithuania

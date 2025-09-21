@@ -1,7 +1,7 @@
 loreto = {
 	name = "Loreto"
 	color = { 52 246 68 }
-	provincial_capital = iquitos
+	default_provincial_capital = iquitos
 	regions = {
 		amazon_basin
 		peru

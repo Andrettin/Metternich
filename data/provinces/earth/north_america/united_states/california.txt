@@ -1,7 +1,7 @@
 california = {
 	name = "California"
 	color = { 144 128 0 }
-	provincial_capital = sacramento
+	default_provincial_capital = sacramento
 	regions = {
 		united_states
 	}

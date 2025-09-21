@@ -1,7 +1,7 @@
 casablanca = {
 	name = "Casablanca"
 	color = { 242 3 111 }
-	provincial_capital = casablanca
+	default_provincial_capital = casablanca
 	regions = {
 		morocco
 	}

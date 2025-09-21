@@ -1,7 +1,7 @@
 andalusia = {
 	name = "Andalusia"
 	color = { 128 16 32 }
-	provincial_capital = seville
+	default_provincial_capital = seville
 	regions = {
 		spain
 	}

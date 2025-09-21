@@ -1,7 +1,7 @@
 durango = {
 	name = "Durango"
 	color = { 251 110 253 }
-	provincial_capital = durango
+	default_provincial_capital = durango
 	regions = {
 		mexico
 	}

@@ -1,7 +1,7 @@
 nizhegorod = {
 	name = "Nizhegorod"
 	color = { 81 19 61 }
-	provincial_capital = nizhny_novgorod
+	default_provincial_capital = nizhny_novgorod
 	regions = {
 		european_russia
 	}

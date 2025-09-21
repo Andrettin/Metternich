@@ -1,7 +1,7 @@
 vinnitsa = {
 	name = "Vinnitsa"
 	color = { 240 224 33 }
-	provincial_capital = vinnitsa
+	default_provincial_capital = vinnitsa
 	regions = {
 		poland_lithuania
 		ukraine

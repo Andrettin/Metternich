@@ -1,7 +1,7 @@
 cuba = {
 	name = "Cuba"
 	color = { 143 89 118 }
-	provincial_capital = havana
+	default_provincial_capital = havana
 	regions = {
 		caribbean
 	}

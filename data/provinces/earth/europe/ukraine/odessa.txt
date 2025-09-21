@@ -1,7 +1,7 @@
 odessa = {
 	name = "Odessa"
 	color = { 113 97 33 }
-	provincial_capital = odessa
+	default_provincial_capital = odessa
 	regions = {
 		ukraine
 	}

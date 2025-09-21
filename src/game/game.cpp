@@ -931,23 +931,27 @@ void game::apply_sites()
 		}
 	}
 
-	//ensure provincial capitals always have a settlement
+	//ensure provinces always have a built provincial capital
 	for (const province *province : map::get()->get_provinces()) {
 		if (province->is_water_zone()) {
 			continue;
 		}
 
-		const site *provincial_capital = province->get_provincial_capital();
+		province->get_game_data()->choose_provincial_capital();
 
-		if (!provincial_capital->get_map_data()->is_on_map()) {
+		if (province->get_game_data()->get_provincial_capital() != nullptr) {
 			continue;
 		}
 
-		site_game_data *provincial_capital_game_data = provincial_capital->get_game_data();
+		//if no holding is built in the province, then ensure the default provincial capital is built
+		const site *default_provincial_capital = province->get_default_provincial_capital();
 
-		if (provincial_capital_game_data->is_built()) {
+		if (!default_provincial_capital->get_map_data()->is_on_map()) {
 			continue;
 		}
+
+		site_game_data *default_provincial_capital_game_data = default_provincial_capital->get_game_data();
+		assert_throw(!default_provincial_capital_game_data->is_built());
 
 		const holding_type *best_holding_type = nullptr;
 		for (const holding_type *holding_type : holding_type::get_all()) {
@@ -955,11 +959,11 @@ void game::apply_sites()
 				continue;
 			}
 
-			if (holding_type->get_conditions() != nullptr && !holding_type->get_conditions()->check(provincial_capital, read_only_context(provincial_capital))) {
+			if (holding_type->get_conditions() != nullptr && !holding_type->get_conditions()->check(default_provincial_capital, read_only_context(default_provincial_capital))) {
 				continue;
 			}
 
-			if (holding_type->get_build_conditions() != nullptr && !holding_type->get_build_conditions()->check(provincial_capital, read_only_context(provincial_capital))) {
+			if (holding_type->get_build_conditions() != nullptr && !holding_type->get_build_conditions()->check(default_provincial_capital, read_only_context(default_provincial_capital))) {
 				continue;
 			}
 
@@ -968,7 +972,9 @@ void game::apply_sites()
 		}
 
 		assert_throw(best_holding_type != nullptr);
-		provincial_capital_game_data->set_holding_type(best_holding_type);
+		default_provincial_capital_game_data->set_holding_type(best_holding_type);
+		province->get_game_data()->choose_provincial_capital();
+		assert_throw(province->get_game_data()->get_provincial_capital() != nullptr);
 	}
 
 	//set the capitals here, so that building requirements that require a capital can be fulfilled
@@ -1056,7 +1062,7 @@ void game::apply_site_buildings(const site *site)
 		site_province = tile->get_province();
 	}
 
-	const metternich::site *settlement = site->is_settlement() && tile != nullptr ? site : site_province->get_provincial_capital();
+	const metternich::site *settlement = site->is_settlement() && tile != nullptr ? site : site_province->get_game_data()->get_provincial_capital();
 
 	if (settlement == nullptr || !settlement->get_map_data()->is_on_map()) {
 		return;
@@ -1246,7 +1252,7 @@ void game::apply_population_history()
 			}
 		}
 
-		const site *provincial_capital = province->get_provincial_capital();
+		const site *provincial_capital = province->get_default_provincial_capital();
 		assert_throw(provincial_capital != nullptr);
 
 		for (const auto &[group_key, population] : remaining_province_populations) {

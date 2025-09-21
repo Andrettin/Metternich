@@ -1,7 +1,7 @@
 adrar = {
 	name = "Adrar"
 	color = { 215 249 33 }
-	provincial_capital = adrar
+	default_provincial_capital = adrar
 	regions = {
 		algeria
 	}

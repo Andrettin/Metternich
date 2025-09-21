@@ -1,7 +1,7 @@
 vichada = {
 	name = "Vichada"
 	color = { 193 196 122 }
-	provincial_capital = puerto_carreno
+	default_provincial_capital = puerto_carreno
 	regions = {
 		colombia
 	}

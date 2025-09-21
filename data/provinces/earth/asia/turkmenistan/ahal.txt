@@ -1,7 +1,7 @@
 ahal = {
 	name = "Ahal"
 	color = { 245 72 177 }
-	provincial_capital = ashgabat
+	default_provincial_capital = ashgabat
 	regions = {
 		turkmenistan
 	}

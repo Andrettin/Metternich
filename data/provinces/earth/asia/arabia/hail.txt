@@ -1,7 +1,7 @@
 hail = {
 	name = "Hail"
 	color = { 112 246 94 }
-	provincial_capital = hail
+	default_provincial_capital = hail
 	regions = {
 		asia
 		middle_east

@@ -1,7 +1,7 @@
 kyiv = {
 	name = "Kyiv"
 	color = { 1 224 224 }
-	provincial_capital = kyiv
+	default_provincial_capital = kyiv
 	cultural_names = {
 		russian = "Kiev"
 	}

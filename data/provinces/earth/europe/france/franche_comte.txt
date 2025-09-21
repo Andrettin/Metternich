@@ -1,7 +1,7 @@
 franche_comte = {
 	name = "Franche-Comte" #"Franche-Comté"
 	color = { 162 225 129 }
-	provincial_capital = besancon
+	default_provincial_capital = besancon
 	regions = {
 		france
 	}

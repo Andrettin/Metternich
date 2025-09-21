@@ -1,7 +1,7 @@
 voronezh = {
 	name = "Voronezh"
 	color = { 234 125 69 }
-	provincial_capital = voronezh
+	default_provincial_capital = voronezh
 	regions = {
 		european_russia
 	}

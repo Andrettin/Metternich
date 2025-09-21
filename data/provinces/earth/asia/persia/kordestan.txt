@@ -1,7 +1,7 @@
 kordestan = {
 	name = "Kordestan"
 	color = { 191 201 73 }
-	provincial_capital = sanandaj
+	default_provincial_capital = sanandaj
 	regions = {
 		persia
 	}

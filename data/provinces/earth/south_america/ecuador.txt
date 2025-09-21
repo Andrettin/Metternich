@@ -1,7 +1,7 @@
 ecuador = {
 	name = "Ecuador"
 	color = { 69 239 113 }
-	provincial_capital = quito
+	default_provincial_capital = quito
 	regions = {
 		south_america
 	}

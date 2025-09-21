@@ -104,8 +104,8 @@ void site::check() const
 			break;
 		case site_type::habitable_world:
 			if (this->get_province() != nullptr) {
-				if (this->get_province()->get_provincial_capital() != this) {
-					log::log_error(std::format("Habitable world \"{}\" is not the provincial capital of its province.", this->get_identifier()));
+				if (this->get_province()->get_default_provincial_capital() != this) {
+					log::log_error(std::format("Habitable world \"{}\" is not the default provincial capital of its province.", this->get_identifier()));
 				}
 			} else {
 				log::log_error(std::format("Habitable world \"{}\" has no province.", this->get_identifier()));

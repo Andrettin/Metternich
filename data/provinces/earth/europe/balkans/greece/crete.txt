@@ -1,7 +1,7 @@
 crete = {
 	name = "Crete"
 	color = { 93 56 165 }
-	provincial_capital = knossos
+	default_provincial_capital = knossos
 	regions = {
 		greece
 	}

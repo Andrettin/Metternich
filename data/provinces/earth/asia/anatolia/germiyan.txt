@@ -1,7 +1,7 @@
 germiyan = {
 	name = "Germiyan"
 	color = { 248 117 209 }
-	provincial_capital = kutahya
+	default_provincial_capital = kutahya
 	regions = {
 		anatolia
 	}

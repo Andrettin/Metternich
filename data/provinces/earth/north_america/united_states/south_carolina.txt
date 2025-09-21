@@ -1,7 +1,7 @@
 south_carolina = {
 	name = "South Carolina"
 	color = { 0 112 192 }
-	provincial_capital = columbia
+	default_provincial_capital = columbia
 	regions = {
 		thirteen_colonies
 		united_states

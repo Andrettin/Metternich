@@ -1,7 +1,7 @@
 santa_cruz_bolivia = {
 	name = "Santa Cruz"
 	color = { 156 115 21 }
-	provincial_capital = santa_cruz_de_la_sierra
+	default_provincial_capital = santa_cruz_de_la_sierra
 	regions = {
 		bolivia
 	}

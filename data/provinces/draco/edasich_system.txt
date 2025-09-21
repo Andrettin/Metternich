@@ -1,7 +1,7 @@
 edasich_system = {
 	name = "Edasich System"
 	primary_star = edasich
-	provincial_capital = hypatia
+	default_provincial_capital = hypatia
 	
 	history = {
 		owner = terran_federation

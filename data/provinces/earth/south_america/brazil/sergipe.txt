@@ -1,7 +1,7 @@
 sergipe = {
 	name = "Sergipe"
 	color = { 192 160 112 }
-	provincial_capital = aracaju
+	default_provincial_capital = aracaju
 	regions = {
 		brazil
 	}

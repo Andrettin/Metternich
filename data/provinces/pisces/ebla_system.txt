@@ -1,7 +1,7 @@
 ebla_system = {
 	name = "Ebla System"
 	primary_star = ebla_star
-	provincial_capital = ugarit_world
+	default_provincial_capital = ugarit_world
 	
 	history = {
 		owner = terran_federation

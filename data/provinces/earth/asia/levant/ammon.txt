@@ -1,7 +1,7 @@
 ammon = {
 	name = "Ammon"
 	color = { 206 35 30 }
-	provincial_capital = ammon
+	default_provincial_capital = ammon
 	cultural_names = {
 		arabic = "Amman"
 	}

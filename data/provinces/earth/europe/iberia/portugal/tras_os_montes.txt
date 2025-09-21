@@ -1,7 +1,7 @@
 tras_os_montes = {
 	name = "Tras-os-Montes" #"Trás-os-Montes"
 	color = { 33 112 128 }
-	provincial_capital = braganza
+	default_provincial_capital = braganza
 	regions = {
 		portugal
 	}

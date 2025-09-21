@@ -1,7 +1,7 @@
 yaroslavl = {
 	name = "Yaroslavl"
 	color = { 194 1 164 }
-	provincial_capital = yaroslavl
+	default_provincial_capital = yaroslavl
 	regions = {
 		european_russia
 	}

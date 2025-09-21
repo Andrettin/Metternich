@@ -1,7 +1,7 @@
 sinaloa = {
 	name = "Sinaloa"
 	color = { 94 45 41 }
-	provincial_capital = culiacan
+	default_provincial_capital = culiacan
 	regions = {
 		mexico
 	}

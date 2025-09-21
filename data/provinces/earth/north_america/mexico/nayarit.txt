@@ -1,7 +1,7 @@
 nayarit = {
 	name = "Nayarit"
 	color = { 243 139 3 }
-	provincial_capital = tepic
+	default_provincial_capital = tepic
 	regions = {
 		mexico
 	}

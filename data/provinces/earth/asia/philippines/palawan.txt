@@ -1,7 +1,7 @@
 palawan = {
 	name = "Palawan"
 	color = { 34 77 16 }
-	provincial_capital = puerto_princesa
+	default_provincial_capital = puerto_princesa
 	regions = {
 		asia
 	}

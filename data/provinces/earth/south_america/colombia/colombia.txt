@@ -1,7 +1,7 @@
 colombia = {
 	name = "Colombia"
 	color = { 228 215 255 }
-	provincial_capital = bogota
+	default_provincial_capital = bogota
 	regions = {
 		colombia
 	}

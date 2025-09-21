@@ -1,7 +1,7 @@
 aqaba = {
 	name = "Aqaba"
 	color = { 211 20 110 }
-	provincial_capital = aqaba
+	default_provincial_capital = aqaba
 	regions = {
 		asia
 		middle_east

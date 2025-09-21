@@ -1,7 +1,7 @@
 tatarstan = {
 	name = "Tatarstan"
 	color = { 97 158 13 }
-	provincial_capital = kazan
+	default_provincial_capital = kazan
 	regions = {
 		european_russia
 	}

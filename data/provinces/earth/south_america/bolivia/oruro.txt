@@ -1,7 +1,7 @@
 oruro = {
 	name = "Oruro"
 	color = { 131 111 56 }
-	provincial_capital = oruro
+	default_provincial_capital = oruro
 	regions = {
 		bolivia
 	}

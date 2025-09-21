@@ -1,7 +1,7 @@
 manitoba = {
 	name = "Manitoba"
 	color = { 110 240 100 }
-	provincial_capital = winnipeg
+	default_provincial_capital = winnipeg
 	regions = {
 		canada
 	}

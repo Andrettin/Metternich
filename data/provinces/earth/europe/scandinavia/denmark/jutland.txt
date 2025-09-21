@@ -1,7 +1,7 @@
 jutland = {
 	name = "Jutland"
 	color = { 128 65 224 }
-	provincial_capital = aarhus
+	default_provincial_capital = aarhus
 	regions = {
 		denmark
 	}

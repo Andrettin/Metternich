@@ -1,7 +1,7 @@
 lebanon = {
 	name = "Lebanon"
 	color = { 245 81 77 }
-	provincial_capital = tyre
+	default_provincial_capital = tyre
 	cultural_names = {
 		carthaginian = "Phoenicia"
 		phoenician = "Phoenicia"

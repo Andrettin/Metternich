@@ -1,7 +1,7 @@
 guyenne = {
 	name = "Guyenne"
 	color = { 240 160 128 }
-	provincial_capital = bordeaux
+	default_provincial_capital = bordeaux
 	regions = {
 		france
 	}

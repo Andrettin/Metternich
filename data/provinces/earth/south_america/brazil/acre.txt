@@ -1,7 +1,7 @@
 acre = {
 	name = "Acre"
 	color = { 222 110 202 }
-	provincial_capital = rio_branco
+	default_provincial_capital = rio_branco
 	regions = {
 		brazil
 	}

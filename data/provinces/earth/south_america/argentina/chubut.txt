@@ -1,7 +1,7 @@
 chubut = {
 	name = "Chubut"
 	color = { 176 32 80 }
-	provincial_capital = rawson
+	default_provincial_capital = rawson
 	regions = {
 		argentina
 	}

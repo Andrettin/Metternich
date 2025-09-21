@@ -1,7 +1,7 @@
 murmansk = {
 	name = "Murmansk"
 	color = { 172 179 160 }
-	provincial_capital = murmansk
+	default_provincial_capital = murmansk
 	regions = {
 		european_russia
 	}

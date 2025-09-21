@@ -1,7 +1,7 @@
 van = {
 	name = "Van"
 	color = { 181 25 183 }
-	provincial_capital = van
+	default_provincial_capital = van
 	regions = {
 		anatolia
 	}

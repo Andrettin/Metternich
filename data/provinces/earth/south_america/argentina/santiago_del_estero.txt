@@ -1,7 +1,7 @@
 santiago_del_estero = {
 	name = "Santiago del Estero"
 	color = { 232 37 130 }
-	provincial_capital = santiago_del_estero
+	default_provincial_capital = santiago_del_estero
 	regions = {
 		argentina
 	}

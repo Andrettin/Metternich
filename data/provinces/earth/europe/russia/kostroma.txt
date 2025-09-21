@@ -1,7 +1,7 @@
 kostroma = {
 	name = "Kostroma"
 	color = { 44 251 55 }
-	provincial_capital = kostroma
+	default_provincial_capital = kostroma
 	regions = {
 		european_russia
 	}

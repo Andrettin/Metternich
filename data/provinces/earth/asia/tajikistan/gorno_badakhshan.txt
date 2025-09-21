@@ -1,7 +1,7 @@
 gorno_badakhshan = {
 	name = "Gorno-Badakhshan"
 	color = { 103 29 100 }
-	provincial_capital = khorugh
+	default_provincial_capital = khorugh
 	regions = {
 		tajikistan
 	}

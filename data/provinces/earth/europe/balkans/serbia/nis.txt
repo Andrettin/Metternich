@@ -1,7 +1,7 @@
 nis = {
 	name = "Nis" #"Niš"; also known as Nissa
 	color = { 213 134 20 }
-	provincial_capital = nis
+	default_provincial_capital = nis
 	regions = {
 		serbia
 	}

@@ -1,7 +1,7 @@
 ivanovo = {
 	name = "Ivanovo"
 	color = { 241 254 26 }
-	provincial_capital = ivanovo
+	default_provincial_capital = ivanovo
 	regions = {
 		european_russia
 	}

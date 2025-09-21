@@ -1,7 +1,7 @@
 antofagasta = {
 	name = "Antofagasta"
 	color = { 141 122 160 }
-	provincial_capital = antofagasta
+	default_provincial_capital = antofagasta
 	regions = {
 		chile
 	}

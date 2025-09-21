@@ -1,7 +1,7 @@
 canton = {
 	name = "Canton"
 	color = { 179 192 48 }
-	provincial_capital = canton
+	default_provincial_capital = canton
 	regions = {
 		asia
 	}

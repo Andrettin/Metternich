@@ -1,7 +1,7 @@
 western_cape = {
 	name = "Western Cape"
 	color = { 195 47 117 }
-	provincial_capital = cape_town
+	default_provincial_capital = cape_town
 	regions = {
 		africa
 	}

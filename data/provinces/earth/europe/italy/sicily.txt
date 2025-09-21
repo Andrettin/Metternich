@@ -1,7 +1,7 @@
 sicily = {
 	name = "Sicily"
 	color = { 192 144 160 }
-	provincial_capital = palermo
+	default_provincial_capital = palermo
 	regions = {
 		italy
 	}

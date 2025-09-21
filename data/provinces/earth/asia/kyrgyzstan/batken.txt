@@ -1,7 +1,7 @@
 batken = {
 	name = "Batken"
 	color = { 161 114 101 }
-	provincial_capital = batken
+	default_provincial_capital = batken
 	regions = {
 		kyrgyzstan
 	}

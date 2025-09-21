@@ -1,7 +1,7 @@
 galicia = {
 	name = "Galicia"
 	color = { 84 45 206 }
-	provincial_capital = santiago_de_compostela
+	default_provincial_capital = santiago_de_compostela
 	regions = {
 		spain
 	}

@@ -1,7 +1,7 @@
 north_dakota = {
 	name = "North Dakota"
 	color = { 133 70 165 }
-	provincial_capital = bismarck
+	default_provincial_capital = bismarck
 	regions = {
 		united_states
 	}

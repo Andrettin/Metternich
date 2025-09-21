@@ -1,7 +1,7 @@
 franconia = {
 	name = "Franconia"
 	color = { 202 229 25 }
-	provincial_capital = nuremberg
+	default_provincial_capital = nuremberg
 	regions = {
 		germany
 	}

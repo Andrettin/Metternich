@@ -1,7 +1,7 @@
 nunavut = {
 	name = "Nunavut"
 	color = { 207 17 66 }
-	provincial_capital = iqaluit
+	default_provincial_capital = iqaluit
 	regions = {
 		canada
 	}

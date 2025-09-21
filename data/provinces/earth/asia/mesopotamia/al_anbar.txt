@@ -1,7 +1,7 @@
 al_anbar = {
 	name = "Al Anbar"
 	color = { 123 82 229 }
-	provincial_capital = ramadi
+	default_provincial_capital = ramadi
 	regions = {
 		asia
 		middle_east

@@ -1,7 +1,7 @@
 marash = {
 	name = "Marash"
 	color = { 182 200 83 }
-	provincial_capital = marash
+	default_provincial_capital = marash
 	regions = {
 		anatolia
 	}

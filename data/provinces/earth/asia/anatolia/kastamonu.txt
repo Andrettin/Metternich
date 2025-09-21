@@ -1,7 +1,7 @@
 kastamonu = {
 	name = "Kastamonu"
 	color = { 255 208 194 }
-	provincial_capital = kastamonu
+	default_provincial_capital = kastamonu
 	regions = {
 		anatolia
 	}

@@ -1,7 +1,7 @@
 veracruz = {
 	name = "Veracruz"
 	color = { 177 187 154 }
-	provincial_capital = veracruz
+	default_provincial_capital = veracruz
 	regions = {
 		mexico
 	}

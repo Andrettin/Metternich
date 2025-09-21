@@ -1,7 +1,7 @@
 cantabria = {
 	name = "Cantabria"
 	color = { 82 47 191 }
-	provincial_capital = santander
+	default_provincial_capital = santander
 	regions = {
 		spain
 	}

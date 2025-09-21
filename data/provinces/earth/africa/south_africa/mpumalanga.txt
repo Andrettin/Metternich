@@ -1,7 +1,7 @@
 mpumalanga = {
 	name = "Mpumalanga"
 	color = { 29 142 16 }
-	provincial_capital = mbombela
+	default_provincial_capital = mbombela
 	regions = {
 		africa
 	}

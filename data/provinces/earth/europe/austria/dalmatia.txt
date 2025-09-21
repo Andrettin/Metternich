@@ -1,7 +1,7 @@
 dalmatia = {
 	name = "Dalmatia"
 	color = { 201 182 138 }
-	provincial_capital = zara
+	default_provincial_capital = zara
 	regions = {
 		cisleithania
 		croatia

@@ -1,7 +1,7 @@
 maine = {
 	name = "Maine"
 	color = { 110 117 123 }
-	provincial_capital = augusta
+	default_provincial_capital = augusta
 	regions = {
 		thirteen_colonies
 		united_states

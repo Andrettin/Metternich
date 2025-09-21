@@ -1,7 +1,7 @@
 mendoza = {
 	name = "Mendoza"
 	color = { 140 219 56 }
-	provincial_capital = mendoza
+	default_provincial_capital = mendoza
 	regions = {
 		argentina
 	}

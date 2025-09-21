@@ -1,7 +1,7 @@
 savonia = {
 	name = "Savonia"
 	color = { 249 185 248 }
-	provincial_capital = kuopio
+	default_provincial_capital = kuopio
 	regions = {
 		finland
 	}

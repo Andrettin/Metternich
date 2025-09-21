@@ -1,7 +1,7 @@
 chernigov = {
 	name = "Chernigov"
 	color = { 224 128 97 }
-	provincial_capital = chernigov
+	default_provincial_capital = chernigov
 	regions = {
 		ukraine
 	}

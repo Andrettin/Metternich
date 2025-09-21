@@ -1,7 +1,7 @@
 east_azarbaijan = {
 	name = "East Azarbaijan"
 	color = { 91 132 63 }
-	provincial_capital = tabriz
+	default_provincial_capital = tabriz
 	regions = {
 		persia
 	}

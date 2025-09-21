@@ -1,7 +1,7 @@
 overijssel = {
 	name = "Overijssel"
 	color = { 192 65 160 }
-	provincial_capital = zwolle
+	default_provincial_capital = zwolle
 	regions = {
 		netherlands
 	}

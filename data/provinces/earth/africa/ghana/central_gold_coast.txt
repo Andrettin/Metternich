@@ -1,7 +1,7 @@
 central_gold_coast = {
 	name = "Central Gold Coast"
 	color = { 222 167 181 }
-	provincial_capital = cape_coast
+	default_provincial_capital = cape_coast
 	regions = {
 		africa
 	}

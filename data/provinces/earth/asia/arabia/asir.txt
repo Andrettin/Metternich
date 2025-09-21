@@ -1,7 +1,7 @@
 asir = {
 	name = "Asir"
 	color = { 197 205 201 }
-	provincial_capital = abha
+	default_provincial_capital = abha
 	regions = {
 		asia
 		middle_east

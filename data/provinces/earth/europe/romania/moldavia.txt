@@ -1,7 +1,7 @@
 moldavia = {
 	name = "Moldavia"
 	color = { 176 160 224 }
-	provincial_capital = iasi
+	default_provincial_capital = iasi
 	regions = {
 		romania
 	}

@@ -1,7 +1,7 @@
 mato_grosso = {
 	name = "Mato Grosso"
 	color = { 12 169 0 }
-	provincial_capital = cuiaba
+	default_provincial_capital = cuiaba
 	regions = {
 		brazil
 	}

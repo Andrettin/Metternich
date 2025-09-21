@@ -1,7 +1,7 @@
 valparaiso = {
 	name = "Valparaiso" #"Valparaíso"
 	color = { 107 91 233 }
-	provincial_capital = santiago_de_chile
+	default_provincial_capital = santiago_de_chile
 	regions = {
 		chile
 	}

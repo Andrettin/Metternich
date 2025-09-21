@@ -1,7 +1,7 @@
 michigan = {
 	name = "Michigan"
 	color = { 148 215 186 }
-	provincial_capital = lansing
+	default_provincial_capital = lansing
 	regions = {
 		united_states
 	}

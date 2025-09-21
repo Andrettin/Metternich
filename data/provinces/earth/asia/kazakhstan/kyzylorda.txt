@@ -1,7 +1,7 @@
 kyzylorda = {
 	name = "Kyzylorda"
 	color = { 231 192 117 }
-	provincial_capital = kyzylorda
+	default_provincial_capital = kyzylorda
 	regions = {
 		kazakhstan
 	}

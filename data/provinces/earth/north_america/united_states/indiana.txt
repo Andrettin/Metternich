@@ -1,7 +1,7 @@
 indiana = {
 	name = "Indiana"
 	color = { 240 64 128 }
-	provincial_capital = indianapolis
+	default_provincial_capital = indianapolis
 	regions = {
 		united_states
 	}

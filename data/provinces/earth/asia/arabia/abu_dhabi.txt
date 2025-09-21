@@ -1,7 +1,7 @@
 abu_dhabi = {
 	name = "Abu Dhabi"
 	color = { 25 7 32 }
-	provincial_capital = abu_dhabi
+	default_provincial_capital = abu_dhabi
 	regions = {
 		asia
 		middle_east

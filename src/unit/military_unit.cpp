@@ -577,8 +577,8 @@ void military_unit::attack(military_unit *target, const bool ranged)
 
 	const metternich::province *province = target->get_province();
 	const terrain_type *terrain = nullptr;
-	if (province != nullptr) {
-		terrain = province->get_provincial_capital()->get_game_data()->get_tile()->get_terrain();
+	if (province != nullptr && province->get_game_data()->get_provincial_capital() != nullptr) {
+		terrain = province->get_game_data()->get_provincial_capital()->get_game_data()->get_tile()->get_terrain();
 	}
 
 	centesimal_int attack;

@@ -1,7 +1,7 @@
 warsaw = {
 	name = "Warsaw"
 	color = { 65 97 160 }
-	provincial_capital = warsaw
+	default_provincial_capital = warsaw
 	regions = {
 		poland
 		poland_lithuania

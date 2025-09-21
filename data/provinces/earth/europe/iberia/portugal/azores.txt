@@ -1,7 +1,7 @@
 azores = {
 	name = "Azores"
 	color = { 144 160 128 }
-	provincial_capital = ponta_delgada
+	default_provincial_capital = ponta_delgada
 	regions = {
 		portugal
 	}

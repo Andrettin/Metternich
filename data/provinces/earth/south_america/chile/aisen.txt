@@ -1,7 +1,7 @@
 aisen = {
 	name = "Aisen" #"Aisén"
 	color = { 92 253 87 }
-	provincial_capital = puerto_aisen
+	default_provincial_capital = puerto_aisen
 	regions = {
 		chile
 	}

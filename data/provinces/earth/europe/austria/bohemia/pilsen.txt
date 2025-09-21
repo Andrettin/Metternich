@@ -1,7 +1,7 @@
 pilsen = {
 	name = "Pilsen"
 	color = { 240 97 65 }
-	provincial_capital = pilsen
+	default_provincial_capital = pilsen
 	cultural_names = {
 		czech = "Plzen"
 	}

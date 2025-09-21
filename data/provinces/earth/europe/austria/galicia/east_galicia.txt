@@ -1,7 +1,7 @@
 east_galicia = {
 	name = "East Galicia"
 	color = { 17 160 33 }
-	provincial_capital = lemberg
+	default_provincial_capital = lemberg
 	regions = {
 		galicia
 		poland_lithuania

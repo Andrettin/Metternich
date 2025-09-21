@@ -1,7 +1,7 @@
 derbyshire = {
 	name = "Derbyshire"
 	color = { 135 77 166 }
-	provincial_capital = derby
+	default_provincial_capital = derby
 	regions = {
 		england
 	}

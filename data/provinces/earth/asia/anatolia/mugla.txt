@@ -1,7 +1,7 @@
 mugla = {
 	name = "Mugla"
 	color = { 132 80 153 }
-	provincial_capital = mugla
+	default_provincial_capital = mugla
 	regions = {
 		anatolia
 	}

@@ -1,7 +1,7 @@
 alberta = {
 	name = "Alberta"
 	color = { 204 179 161 }
-	provincial_capital = edmonton
+	default_provincial_capital = edmonton
 	regions = {
 		canada
 	}

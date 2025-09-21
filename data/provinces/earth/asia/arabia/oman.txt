@@ -1,7 +1,7 @@
 oman = {
 	name = "Oman"
 	color = { 240 78 161 }
-	provincial_capital = muscat
+	default_provincial_capital = muscat
 	regions = {
 		asia
 		middle_east

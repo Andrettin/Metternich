@@ -90,6 +90,8 @@ void province_game_data::process_gsml_property(const gsml_property &property)
 		this->religion = religion::get(value);
 	} else if (key == "level") {
 		this->level = std::stoi(value);
+	} else if (key == "provincial_capital") {
+		this->provincial_capital = site::get(value);
 	} else {
 		throw std::runtime_error(std::format("Invalid province game data property: \"{}\".", key));
 	}
@@ -120,6 +122,10 @@ gsml_data province_game_data::to_gsml_data() const
 
 	if (this->get_level() != 0) {
 		data.add_property("level", std::to_string(this->get_level()));
+	}
+
+	if (this->get_provincial_capital() != 0) {
+		data.add_property("provincial_capital", provincial_capital->get_identifier());
 	}
 
 	return data;
@@ -463,6 +469,52 @@ bool province_game_data::is_country_border_province() const
 	return false;
 }
 
+const site *province_game_data::get_provincial_capital() const
+{
+	return this->provincial_capital;
+}
+
+void province_game_data::set_provincial_capital(const site *site)
+{
+	if (site == this->get_provincial_capital()) {
+		return;
+	}
+
+	this->provincial_capital = site;
+
+	if (game::get()->is_running()) {
+		emit provincial_capital_changed();
+	}
+}
+
+void province_game_data::choose_provincial_capital()
+{
+	std::vector<const site *> potential_provincial_capitals;
+	bool found_default_provincial_capital = false;
+
+	for (const site *site : this->province->get_map_data()->get_settlement_sites()) {
+		if (!site->get_game_data()->is_built()) {
+			continue;
+		}
+
+		if (this->get_owner() != nullptr && site == this->get_owner()->get_default_capital()) {
+			potential_provincial_capitals = { site };
+			break;
+		} else if (site == this->province->get_default_provincial_capital()) {
+			potential_provincial_capitals = { site };
+			found_default_provincial_capital = true;
+		} else if (!found_default_provincial_capital) {
+			potential_provincial_capitals.push_back(site);
+		}
+	}
+
+	if (!potential_provincial_capitals.empty()) {
+		this->set_provincial_capital(vector::get_random(potential_provincial_capitals));
+	} else {
+		this->set_provincial_capital(nullptr);
+	}
+}
+
 const QPoint &province_game_data::get_center_tile_pos() const
 {
 	return this->province->get_map_data()->get_center_tile_pos();
@@ -699,8 +751,8 @@ void province_game_data::calculate_text_rect()
 
 	const map *map = map::get();
 
-	if (map->get_tile(center_pos)->get_province() != this->province && this->province->get_provincial_capital() != nullptr && this->province->get_provincial_capital()->get_map_data()->is_on_map()) {
-		center_pos = this->province->get_provincial_capital()->get_game_data()->get_tile_pos();
+	if (map->get_tile(center_pos)->get_province() != this->province && this->province->get_default_provincial_capital() != nullptr && this->province->get_default_provincial_capital()->get_map_data()->is_on_map()) {
+		center_pos = this->province->get_default_provincial_capital()->get_game_data()->get_tile_pos();
 
 		if (map->get_tile(center_pos)->get_province() != this->province) {
 			return;
@@ -813,8 +865,14 @@ bool province_game_data::produces_commodity(const commodity *commodity) const
 		}
 	}
 
-	if (this->province->get_provincial_capital() != nullptr && this->province->get_provincial_capital()->get_game_data()->produces_commodity(commodity)) {
-		return true;
+	for (const site *site : this->province->get_map_data()->get_settlement_sites()) {
+		if (!site->get_game_data()->is_built()) {
+			continue;
+		}
+
+		if (site->get_game_data()->produces_commodity(commodity)) {
+			return true;
+		}
 	}
 
 	return false;

@@ -1,7 +1,7 @@
 idaho = {
 	name = "Idaho"
 	color = { 209 1 11 }
-	provincial_capital = boise
+	default_provincial_capital = boise
 	regions = {
 		united_states
 	}

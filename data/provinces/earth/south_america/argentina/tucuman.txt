@@ -1,7 +1,7 @@
 tucuman = {
 	name = "Tucuman" #"Tucumán"
 	color = { 224 166 219 }
-	provincial_capital = tucuman
+	default_provincial_capital = tucuman
 	regions = {
 		argentina
 	}

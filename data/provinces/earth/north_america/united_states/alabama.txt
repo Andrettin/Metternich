@@ -1,7 +1,7 @@
 alabama = {
 	name = "Alabama"
 	color = { 32 176 0 }
-	provincial_capital = montgomery
+	default_provincial_capital = montgomery
 	regions = {
 		united_states
 	}

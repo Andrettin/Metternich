@@ -1,7 +1,7 @@
 sinai = {
 	name = "Sinai"
 	color = { 88 149 3 }
-	provincial_capital = al_arish
+	default_provincial_capital = al_arish
 	regions = {
 		egypt
 	}

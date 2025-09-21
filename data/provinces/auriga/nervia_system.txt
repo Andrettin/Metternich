@@ -1,7 +1,7 @@
 nervia_system = {
 	name = "Nervia System"
 	primary_star = nervia
-	provincial_capital = eburonia
+	default_provincial_capital = eburonia
 	
 	history = {
 		owner = terran_federation

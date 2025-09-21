@@ -1,7 +1,7 @@
 tupi_system = {
 	name = "Tupi System"
 	primary_star = tupi
-	provincial_capital = guarani
+	default_provincial_capital = guarani
 	
 	history = {
 		owner = terran_federation

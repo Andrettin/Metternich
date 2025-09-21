@@ -1,7 +1,7 @@
 hesse = {
 	name = "Hesse"
 	color = { 17 65 160 }
-	provincial_capital = frankfurt
+	default_provincial_capital = frankfurt
 	regions = {
 		germany
 	}

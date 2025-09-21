@@ -1,7 +1,7 @@
 geneva = {
 	name = "Geneva"
 	color = { 208 128 96 }
-	provincial_capital = geneva
+	default_provincial_capital = geneva
 	regions = {
 		switzerland
 	}

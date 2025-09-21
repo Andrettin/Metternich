@@ -1,7 +1,7 @@
 guelmim = {
 	name = "Guelmim"
 	color = { 236 245 80 }
-	provincial_capital = guelmim
+	default_provincial_capital = guelmim
 	regions = {
 		morocco
 	}

@@ -1,7 +1,7 @@
 cordoba_argentina = {
 	name = "Cordoba" #"Córdoba"
 	color = { 149 170 120 }
-	provincial_capital = cordoba_argentina
+	default_provincial_capital = cordoba_argentina
 	regions = {
 		argentina
 	}

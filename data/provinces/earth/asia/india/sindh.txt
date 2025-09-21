@@ -1,7 +1,7 @@
 sindh = {
 	name = "Sindh"
 	color = { 123 198 91 }
-	provincial_capital = karachi
+	default_provincial_capital = karachi
 	regions = {
 		asia
 	}

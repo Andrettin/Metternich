@@ -1,7 +1,7 @@
 chiapas = {
 	name = "Chiapas"
 	color = { 187 34 123 }
-	provincial_capital = tuxtla_gutierrez
+	default_provincial_capital = tuxtla_gutierrez
 	regions = {
 		mexico
 	}

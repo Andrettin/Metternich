@@ -1,7 +1,7 @@
 mexico = {
 	name = "Mexico"
 	color = { 215 42 255 }
-	provincial_capital = mexico_city
+	default_provincial_capital = mexico_city
 	regions = {
 		mexico
 	}

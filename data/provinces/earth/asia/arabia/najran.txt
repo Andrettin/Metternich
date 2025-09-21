@@ -1,7 +1,7 @@
 najran = {
 	name = "Najran"
 	color = { 234 23 188 }
-	provincial_capital = sharawrah
+	default_provincial_capital = sharawrah
 	regions = {
 		asia
 		middle_east

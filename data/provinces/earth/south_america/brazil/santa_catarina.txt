@@ -1,7 +1,7 @@
 santa_catarina = {
 	name = "Santa Catarina"
 	color = { 165 114 56 }
-	provincial_capital = florianopolis
+	default_provincial_capital = florianopolis
 	regions = {
 		brazil
 	}

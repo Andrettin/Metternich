@@ -1,7 +1,7 @@
 san_luis_potosi = {
 	name = "San Luis Potosi" #"San Luis Potosí"
 	color = { 90 146 78 }
-	provincial_capital = san_luis_potosi
+	default_provincial_capital = san_luis_potosi
 	regions = {
 		mexico
 	}

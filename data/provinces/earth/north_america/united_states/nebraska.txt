@@ -1,7 +1,7 @@
 nebraska = {
 	name = "Nebraska"
 	color = { 50 207 38 }
-	provincial_capital = lincoln_usa
+	default_provincial_capital = lincoln_usa
 	regions = {
 		united_states
 	}

@@ -1,7 +1,7 @@
 bosnia = {
 	name = "Bosnia"
 	color = { 141 109 152 }
-	provincial_capital = sarajevo
+	default_provincial_capital = sarajevo
 	regions = {
 		bosnia
 	}

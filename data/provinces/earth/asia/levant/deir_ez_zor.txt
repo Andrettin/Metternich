@@ -1,7 +1,7 @@
 deir_ez_zor = {
 	name = "Deir ez-Zor"
 	color = { 231 202 149 }
-	provincial_capital = deir_ez_zor
+	default_provincial_capital = deir_ez_zor
 	regions = {
 		asia
 		middle_east

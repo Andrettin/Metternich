@@ -1,7 +1,7 @@
 jujuy = {
 	name = "Jujuy"
 	color = { 180 116 20 }
-	provincial_capital = san_salvador_de_jujuy
+	default_provincial_capital = san_salvador_de_jujuy
 	regions = {
 		argentina
 	}

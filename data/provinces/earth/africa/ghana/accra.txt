@@ -1,7 +1,7 @@
 accra = {
 	name = "Accra"
 	color = { 230 217 208 }
-	provincial_capital = accra
+	default_provincial_capital = accra
 	regions = {
 		africa
 	}

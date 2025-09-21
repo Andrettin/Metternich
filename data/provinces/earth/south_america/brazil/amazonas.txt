@@ -1,7 +1,7 @@
 amazonas = {
 	name = "Amazonas"
 	color = { 90 26 161 }
-	provincial_capital = manaus
+	default_provincial_capital = manaus
 	regions = {
 		amazon_basin
 		brazil

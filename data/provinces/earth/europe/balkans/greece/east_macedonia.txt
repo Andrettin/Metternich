@@ -1,7 +1,7 @@
 east_macedonia = {
 	name = "East Macedonia"
 	color = { 241 143 205 }
-	provincial_capital = komatini
+	default_provincial_capital = komatini
 	regions = {
 		greece
 	}

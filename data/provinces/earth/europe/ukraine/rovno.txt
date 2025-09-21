@@ -1,7 +1,7 @@
 rovno = {
 	name = "Rovno"
 	color = { 113 224 160 }
-	provincial_capital = rovno
+	default_provincial_capital = rovno
 	regions = {
 		poland_lithuania
 		ukraine

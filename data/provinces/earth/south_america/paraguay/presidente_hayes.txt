@@ -1,7 +1,7 @@
 presidente_hayes = {
 	name = "Presidente Hayes"
 	color = { 137 91 166 }
-	provincial_capital = pozo_colorado
+	default_provincial_capital = pozo_colorado
 	regions = {
 		paraguay
 	}

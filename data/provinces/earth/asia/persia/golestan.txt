@@ -1,7 +1,7 @@
 golestan = {
 	name = "Golestan"
 	color = { 174 229 107 }
-	provincial_capital = gorgan
+	default_provincial_capital = gorgan
 	regions = {
 		persia
 	}

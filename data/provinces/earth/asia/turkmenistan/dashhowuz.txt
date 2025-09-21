@@ -1,7 +1,7 @@
 dashhowuz = {
 	name = "Dashhowuz"
 	color = { 206 189 140 }
-	provincial_capital = dashhowuz
+	default_provincial_capital = dashhowuz
 	regions = {
 		turkmenistan
 	}

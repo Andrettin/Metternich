@@ -1,7 +1,7 @@
 moselle = {
 	name = "Moselle"
 	color = { 248 197 32 }
-	provincial_capital = metz
+	default_provincial_capital = metz
 	regions = {
 		lorraine
 	}

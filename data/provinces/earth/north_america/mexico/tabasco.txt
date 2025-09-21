@@ -1,7 +1,7 @@
 tabasco = {
 	name = "Tabasco"
 	color = { 183 127 51 }
-	provincial_capital = villahermosa
+	default_provincial_capital = villahermosa
 	regions = {
 		mexico
 	}

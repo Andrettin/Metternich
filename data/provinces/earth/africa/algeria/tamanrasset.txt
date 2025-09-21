@@ -1,7 +1,7 @@
 tamanrasset = {
 	name = "Tamanrasset"
 	color = { 181 163 124 }
-	provincial_capital = tamanrasset
+	default_provincial_capital = tamanrasset
 	regions = {
 		algeria
 	}

@@ -1,7 +1,7 @@
 pest = {
 	name = "Pest"
 	color = { 81 224 224 }
-	provincial_capital = pest
+	default_provincial_capital = pest
 	regions = {
 		hungary
 	}

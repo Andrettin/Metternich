@@ -1,7 +1,7 @@
 swaziland = {
 	name = "Swaziland"
 	color = { 242 116 143 }
-	provincial_capital = mbabane
+	default_provincial_capital = mbabane
 	regions = {
 		africa
 	}

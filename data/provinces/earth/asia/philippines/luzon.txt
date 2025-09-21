@@ -1,7 +1,7 @@
 luzon = {
 	name = "Luzon"
 	color = { 186 58 71 }
-	provincial_capital = manila
+	default_provincial_capital = manila
 	regions = {
 		asia
 	}

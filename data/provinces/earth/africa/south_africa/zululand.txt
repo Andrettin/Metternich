@@ -1,7 +1,7 @@
 zululand = {
 	name = "Zululand"
 	color = { 118 41 204 }
-	provincial_capital = ulundi
+	default_provincial_capital = ulundi
 	regions = {
 		africa
 	}

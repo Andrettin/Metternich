@@ -1,7 +1,7 @@
 kerman = {
 	name = "Kerman"
 	color = { 125 41 53 }
-	provincial_capital = kerman
+	default_provincial_capital = kerman
 	regions = {
 		persia
 	}

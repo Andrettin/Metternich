@@ -1,7 +1,7 @@
 samara = {
 	name = "Samara"
 	color = { 127 73 251 }
-	provincial_capital = samara
+	default_provincial_capital = samara
 	regions = {
 		european_russia
 	}

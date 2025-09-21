@@ -1,7 +1,7 @@
 holstein = {
 	name = "Holstein"
 	color = { 128 65 96 }
-	provincial_capital = kiel
+	default_provincial_capital = kiel
 	regions = {
 		germany
 	}

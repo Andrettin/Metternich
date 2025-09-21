@@ -1,7 +1,7 @@
 najaf = {
 	name = "Najaf"
 	color = { 244 17 79 }
-	provincial_capital = najaf
+	default_provincial_capital = najaf
 	regions = {
 		asia
 		middle_east

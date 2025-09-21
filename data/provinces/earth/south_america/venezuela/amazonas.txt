@@ -1,7 +1,7 @@
 amazonas_venezuela = {
 	name = "Amazonas"
 	color = { 177 17 21 }
-	provincial_capital = puerto_ayacucho
+	default_provincial_capital = puerto_ayacucho
 	regions = {
 		venezuela
 	}

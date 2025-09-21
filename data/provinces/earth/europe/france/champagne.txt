@@ -1,7 +1,7 @@
 champagne = {
 	name = "Champagne"
 	color = { 239 0 223 }
-	provincial_capital = troyes
+	default_provincial_capital = troyes
 	regions = {
 		france
 	}

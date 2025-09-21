@@ -1,7 +1,7 @@
 istria = {
 	name = "Istria"
 	color = { 144 0 33 }
-	provincial_capital = trieste
+	default_provincial_capital = trieste
 	regions = {
 		cisleithania
 		croatia

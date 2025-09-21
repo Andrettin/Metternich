@@ -1,7 +1,7 @@
 nicaragua = {
 	name = "Nicaragua"
 	color = { 80 25 46 }
-	provincial_capital = managua
+	default_provincial_capital = managua
 	regions = {
 		central_america
 	}

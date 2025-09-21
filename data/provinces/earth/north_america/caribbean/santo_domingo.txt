@@ -1,7 +1,7 @@
 santo_domingo = {
 	name = "Santo Domingo"
 	color = { 74 221 63 }
-	provincial_capital = santo_domingo
+	default_provincial_capital = santo_domingo
 	regions = {
 		caribbean
 	}

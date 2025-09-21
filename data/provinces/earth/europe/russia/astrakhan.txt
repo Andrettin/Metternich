@@ -1,7 +1,7 @@
 astrakhan = {
 	name = "Astrakhan"
 	color = { 196 47 116 }
-	provincial_capital = sarai
+	default_provincial_capital = sarai
 	regions = {
 		european_russia
 	}

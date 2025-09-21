@@ -1,7 +1,7 @@
 thuringia = {
 	name = "Thuringia"
 	color = { 97 128 97 }
-	provincial_capital = erfurt
+	default_provincial_capital = erfurt
 	regions = {
 		germany
 	}

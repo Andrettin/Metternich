@@ -1,7 +1,7 @@
 formosa = {
 	name = "Formosa"
 	color = { 167 22 58 }
-	provincial_capital = formosa
+	default_provincial_capital = formosa
 	regions = {
 		argentina
 	}

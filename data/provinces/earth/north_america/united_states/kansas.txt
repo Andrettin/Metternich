@@ -1,7 +1,7 @@
 kansas = {
 	name = "Kansas"
 	color = { 9 176 91 }
-	provincial_capital = topeka
+	default_provincial_capital = topeka
 	regions = {
 		united_states
 	}

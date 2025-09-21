@@ -1,7 +1,7 @@
 west_macedonia = {
 	name = "West Macedonia"
 	color = { 161 235 105 }
-	provincial_capital = kozani
+	default_provincial_capital = kozani
 	regions = {
 		greece
 	}

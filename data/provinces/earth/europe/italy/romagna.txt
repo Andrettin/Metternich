@@ -1,7 +1,7 @@
 romagna = {
 	name = "Romagna"
 	color = { 112 0 160 }
-	provincial_capital = bologna
+	default_provincial_capital = bologna
 	regions = {
 		italy
 	}

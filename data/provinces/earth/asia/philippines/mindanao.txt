@@ -1,7 +1,7 @@
 mindanao = {
 	name = "Mindanao"
 	color = { 187 114 32 }
-	provincial_capital = davao
+	default_provincial_capital = davao
 	regions = {
 		asia
 	}

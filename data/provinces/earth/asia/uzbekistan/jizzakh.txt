@@ -1,7 +1,7 @@
 jizzakh = {
 	name = "Jizzakh"
 	color = { 3 39 46 }
-	provincial_capital = jizzakh
+	default_provincial_capital = jizzakh
 	regions = {
 		uzbekistan
 	}

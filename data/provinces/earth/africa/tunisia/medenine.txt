@@ -1,7 +1,7 @@
 medenine = {
 	name = "Medenine"
 	color = { 247 205 101 }
-	provincial_capital = medenine
+	default_provincial_capital = medenine
 	regions = {
 		tunisia
 	}

@@ -1,7 +1,7 @@
 gascony = {
 	name = "Gascony"
 	color = { 24 124 255 }
-	provincial_capital = auch
+	default_provincial_capital = auch
 	regions = {
 		france
 	}

@@ -1,7 +1,7 @@
 bolivar = {
 	name = "Bolivar" #"Bolívar"
 	color = { 110 84 136 }
-	provincial_capital = ciudad_bolivar
+	default_provincial_capital = ciudad_bolivar
 	regions = {
 		venezuela
 	}

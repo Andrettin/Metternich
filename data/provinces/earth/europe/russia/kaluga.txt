@@ -1,7 +1,7 @@
 kaluga = {
 	name = "Kaluga"
 	color = { 35 212 109 }
-	provincial_capital = kaluga
+	default_provincial_capital = kaluga
 	regions = {
 		european_russia
 	}

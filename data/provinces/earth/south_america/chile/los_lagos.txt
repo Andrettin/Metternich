@@ -1,7 +1,7 @@
 los_lagos = {
 	name = "Los Lagos"
 	color = { 223 217 97 }
-	provincial_capital = puerto_montt
+	default_provincial_capital = puerto_montt
 	regions = {
 		chile
 	}

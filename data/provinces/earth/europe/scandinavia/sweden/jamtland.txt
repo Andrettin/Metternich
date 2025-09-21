@@ -1,7 +1,7 @@
 jamtland = {
 	name = "Jamtland"
 	color = { 65 192 192 }
-	provincial_capital = ostersund
+	default_provincial_capital = ostersund
 	regions = {
 		sweden
 	}

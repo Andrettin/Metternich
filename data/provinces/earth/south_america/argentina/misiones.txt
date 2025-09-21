@@ -1,7 +1,7 @@
 misiones = {
 	name = "Misiones"
 	color = { 28 70 2 }
-	provincial_capital = posadas
+	default_provincial_capital = posadas
 	regions = {
 		argentina
 	}

@@ -1,7 +1,7 @@
 leinster = {
 	name = "Leinster"
 	color = { 243 211 122 }
-	provincial_capital = dublin
+	default_provincial_capital = dublin
 	regions = {
 		ireland
 	}

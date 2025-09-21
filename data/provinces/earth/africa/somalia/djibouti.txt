@@ -1,7 +1,7 @@
 djibouti = {
 	name = "Djibouti"
 	color = { 135 64 144 }
-	provincial_capital = djibouti
+	default_provincial_capital = djibouti
 	regions = {
 		africa
 	}

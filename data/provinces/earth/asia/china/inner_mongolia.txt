@@ -1,7 +1,7 @@
 inner_mongolia = {
 	name = "Inner Mongolia"
 	color = { 196 208 41 }
-	provincial_capital = hohhot
+	default_provincial_capital = hohhot
 	regions = {
 		asia
 	}

@@ -1,7 +1,7 @@
 penza = {
 	name = "Penza"
 	color = { 210 107 181 }
-	provincial_capital = penza
+	default_provincial_capital = penza
 	regions = {
 		european_russia
 	}

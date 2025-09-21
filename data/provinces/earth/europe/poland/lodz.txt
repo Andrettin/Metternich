@@ -1,7 +1,7 @@
 lodz = {
 	name = "Lodz" #"Łódź"
 	color = { 192 97 160 }
-	provincial_capital = lodz
+	default_provincial_capital = lodz
 	regions = {
 		poland
 		poland_lithuania

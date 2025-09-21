@@ -1,7 +1,7 @@
 latium = {
 	name = "Latium"
 	color = { 176 192 160 }
-	provincial_capital = rome
+	default_provincial_capital = rome
 	regions = {
 		italy
 	}

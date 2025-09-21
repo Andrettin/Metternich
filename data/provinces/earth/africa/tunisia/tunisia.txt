@@ -1,7 +1,7 @@
 tunisia = {
 	name = "Tunisia"
 	color = { 168 87 58 }
-	provincial_capital = tunis
+	default_provincial_capital = tunis
 	regions = {
 		tunisia
 	}

@@ -1,7 +1,7 @@
 slavonia = {
 	name = "Slavonia"
 	color = { 61 252 109 }
-	provincial_capital = esseg
+	default_provincial_capital = esseg
 	regions = {
 		croatia
 		hungary_croatia_slavonia

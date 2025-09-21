@@ -1,7 +1,7 @@
 georgia = {
 	name = "Georgia"
 	color = { 64 112 64 }
-	provincial_capital = atlanta
+	default_provincial_capital = atlanta
 	regions = {
 		thirteen_colonies
 		united_states

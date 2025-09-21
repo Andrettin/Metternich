@@ -1,7 +1,7 @@
 togo = {
 	name = "Togo"
 	color = { 224 187 246 }
-	provincial_capital = lome
+	default_provincial_capital = lome
 	regions = {
 		africa
 	}

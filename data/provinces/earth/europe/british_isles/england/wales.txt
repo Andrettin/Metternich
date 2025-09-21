@@ -1,7 +1,7 @@
 wales = {
 	name = "Wales"
 	color = { 143 77 6 }
-	provincial_capital = cardiff
+	default_provincial_capital = cardiff
 	regions = {
 		wales
 	}

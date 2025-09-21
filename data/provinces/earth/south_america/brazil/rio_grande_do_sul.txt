@@ -1,7 +1,7 @@
 rio_grande_do_sul = {
 	name = "Rio Grande do Sul"
 	color = { 68 199 176 }
-	provincial_capital = porto_alegre
+	default_provincial_capital = porto_alegre
 	regions = {
 		brazil
 	}

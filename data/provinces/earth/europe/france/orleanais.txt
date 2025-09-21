@@ -1,7 +1,7 @@
 orleanais = {
 	name = "Orleanais"
 	color = { 16 223 0 }
-	provincial_capital = orleans
+	default_provincial_capital = orleans
 	regions = {
 		france
 	}

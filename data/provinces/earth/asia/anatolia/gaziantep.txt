@@ -1,7 +1,7 @@
 gaziantep = {
 	name = "Gaziantep"
 	color = { 252 159 0 }
-	provincial_capital = gaziantep
+	default_provincial_capital = gaziantep
 	regions = {
 		anatolia
 	}

@@ -1,7 +1,7 @@
 estremadura = {
 	name = "Estremadura"
 	color = { 208 160 128 }
-	provincial_capital = lisbon
+	default_provincial_capital = lisbon
 	regions = {
 		portugal
 	}

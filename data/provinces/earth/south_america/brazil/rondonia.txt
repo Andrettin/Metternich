@@ -1,7 +1,7 @@
 rondonia = {
 	name = "Rondonia" #"Rondônia"
 	color = { 253 209 179 }
-	provincial_capital = porto_velho
+	default_provincial_capital = porto_velho
 	regions = {
 		brazil
 	}

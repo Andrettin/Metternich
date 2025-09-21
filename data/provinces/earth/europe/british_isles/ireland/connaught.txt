@@ -1,7 +1,7 @@
 connaught = {
 	name = "Connaught"
 	color = { 221 125 239 }
-	provincial_capital = roscommon
+	default_provincial_capital = roscommon
 	regions = {
 		ireland
 	}

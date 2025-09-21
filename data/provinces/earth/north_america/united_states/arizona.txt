@@ -1,7 +1,7 @@
 arizona = {
 	name = "Arizona"
 	color = { 16 64 128 }
-	provincial_capital = phoenix
+	default_provincial_capital = phoenix
 	regions = {
 		united_states
 	}

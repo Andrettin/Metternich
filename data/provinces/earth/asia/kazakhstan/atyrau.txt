@@ -1,7 +1,7 @@
 atyrau = {
 	name = "Atyrau"
 	color = { 79 80 45 }
-	provincial_capital = atyrau
+	default_provincial_capital = atyrau
 	regions = {
 		kazakhstan
 	}

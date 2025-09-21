@@ -1,7 +1,7 @@
 minsk = {
 	name = "Minsk"
 	color = { 1 97 224 }
-	provincial_capital = minsk
+	default_provincial_capital = minsk
 	regions = {
 		byelorussia
 		poland_lithuania

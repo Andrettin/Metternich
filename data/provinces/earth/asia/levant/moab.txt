@@ -1,7 +1,7 @@
 moab = {
 	name = "Moab"
 	color = { 95 84 61 }
-	provincial_capital = karak
+	default_provincial_capital = karak
 	regions = {
 		asia
 		middle_east

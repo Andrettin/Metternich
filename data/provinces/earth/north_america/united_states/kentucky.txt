@@ -1,7 +1,7 @@
 kentucky = {
 	name = "Kentucky"
 	color = { 240 0 64 }
-	provincial_capital = frankfort
+	default_provincial_capital = frankfort
 	regions = {
 		mississippi_basin
 		united_states

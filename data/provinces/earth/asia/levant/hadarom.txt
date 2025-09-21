@@ -1,7 +1,7 @@
 hadarom = {
 	name = "Hadarom"
 	color = { 210 162 55 }
-	provincial_capital = beersheba
+	default_provincial_capital = beersheba
 	regions = {
 		asia
 		middle_east

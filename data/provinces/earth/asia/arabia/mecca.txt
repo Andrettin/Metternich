@@ -1,7 +1,7 @@
 mecca = {
 	name = "Mecca"
 	color = { 137 141 237 }
-	provincial_capital = mecca
+	default_provincial_capital = mecca
 	regions = {
 		asia
 		middle_east

@@ -1,7 +1,7 @@
 minnesota = {
 	name = "Minnesota"
 	color = { 37 178 12 }
-	provincial_capital = minneapolis
+	default_provincial_capital = minneapolis
 	regions = {
 		mississippi_basin
 		united_states

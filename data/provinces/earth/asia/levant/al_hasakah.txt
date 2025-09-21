@@ -1,7 +1,7 @@
 al_hasakah = {
 	name = "Al-Hasakah"
 	color = { 158 170 74 }
-	provincial_capital = al_hasakah
+	default_provincial_capital = al_hasakah
 	regions = {
 		asia
 		middle_east

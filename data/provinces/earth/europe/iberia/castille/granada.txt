@@ -1,7 +1,7 @@
 granada = {
 	name = "Granada"
 	color = { 160 176 64 }
-	provincial_capital = granada
+	default_provincial_capital = granada
 	regions = {
 		spain
 	}

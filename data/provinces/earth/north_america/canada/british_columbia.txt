@@ -1,7 +1,7 @@
 british_columbia = {
 	name = "British Columbia"
 	color = { 201 169 171 }
-	provincial_capital = victoria
+	default_provincial_capital = victoria
 	regions = {
 		canada
 	}

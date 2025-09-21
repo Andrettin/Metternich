@@ -1,7 +1,7 @@
 sumer = {
 	name = "Sumer"
 	color = { 100 170 57 }
-	provincial_capital = ur
+	default_provincial_capital = ur
 	regions = {
 		asia
 		middle_east

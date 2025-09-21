@@ -1,7 +1,7 @@
 vologda = {
 	name = "Vologda"
 	color = { 143 47 105 }
-	provincial_capital = vologda
+	default_provincial_capital = vologda
 	regions = {
 		european_russia
 	}

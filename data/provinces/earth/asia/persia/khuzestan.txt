@@ -1,7 +1,7 @@
 khuzestan = {
 	name = "Khuzestan"
 	color = { 127 230 41 }
-	provincial_capital = susa
+	default_provincial_capital = susa
 	regions = {
 		persia
 	}

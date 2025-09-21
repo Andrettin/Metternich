@@ -1,7 +1,7 @@
 ceara = {
 	name = "Ceara" #"Ceará"
 	color = { 131 92 31 }
-	provincial_capital = fortaleza
+	default_provincial_capital = fortaleza
 	regions = {
 		brazil
 	}

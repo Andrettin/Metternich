@@ -20,8 +20,8 @@ void province_map_data::on_map_created()
 {
 	this->calculate_territory_rect_center();
 
-	if (this->province->get_provincial_capital() != nullptr && this->province->get_provincial_capital()->get_map_data()->get_province() == this->province) {
-		this->center_tile_pos = this->province->get_provincial_capital()->get_map_data()->get_tile_pos();
+	if (this->province->get_default_provincial_capital() != nullptr && this->province->get_default_provincial_capital()->get_map_data()->get_province() == this->province) {
+		this->center_tile_pos = this->province->get_default_provincial_capital()->get_map_data()->get_tile_pos();
 	} else {
 		this->center_tile_pos = this->get_territory_rect_center();
 	}

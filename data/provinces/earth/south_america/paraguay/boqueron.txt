@@ -1,7 +1,7 @@
 boqueron = {
 	name = "Boqueron" #"Boquerón"
 	color = { 232 131 19 }
-	provincial_capital = mariscal_estigarribia
+	default_provincial_capital = mariscal_estigarribia
 	regions = {
 		paraguay
 	}

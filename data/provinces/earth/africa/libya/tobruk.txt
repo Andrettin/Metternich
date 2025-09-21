@@ -1,7 +1,7 @@
 tobruk = {
 	name = "Tobruk"
 	color = { 79 232 82 }
-	provincial_capital = tobruk
+	default_provincial_capital = tobruk
 	regions = {
 		libya
 	}

@@ -1,7 +1,7 @@
 kujalleq = {
 	name = "Kujalleq"
 	color = { 68 197 102 }
-	provincial_capital = qaqortoq
+	default_provincial_capital = qaqortoq
 	regions = {
 		greenland
 	}

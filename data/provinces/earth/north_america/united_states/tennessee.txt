@@ -1,7 +1,7 @@
 tennessee = {
 	name = "Tennessee"
 	color = { 94 107 77 }
-	provincial_capital = nashville
+	default_provincial_capital = nashville
 	regions = {
 		mississippi_basin
 		united_states

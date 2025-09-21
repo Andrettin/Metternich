@@ -1,7 +1,7 @@
 hordaland = {
 	name = "Hordaland"
 	color = { 224 128 32 }
-	provincial_capital = bergen
+	default_provincial_capital = bergen
 	regions = {
 		norway
 	}

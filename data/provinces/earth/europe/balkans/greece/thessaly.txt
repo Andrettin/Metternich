@@ -1,7 +1,7 @@
 thessaly = {
 	name = "Thessaly"
 	color = { 176 147 141 }
-	provincial_capital = larissa
+	default_provincial_capital = larissa
 	regions = {
 		greece
 	}

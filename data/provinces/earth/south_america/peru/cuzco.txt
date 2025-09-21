@@ -1,7 +1,7 @@
 cuzco = {
 	name = "Cuzco"
 	color = { 231 106 125 }
-	provincial_capital = cuzco
+	default_provincial_capital = cuzco
 	regions = {
 		peru
 	}

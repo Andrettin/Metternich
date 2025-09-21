@@ -1,7 +1,7 @@
 ramadan = {
 	name = "Ramadan"
 	color = { 180 178 61 }
-	provincial_capital = adana
+	default_provincial_capital = adana
 	regions = {
 		anatolia
 	}

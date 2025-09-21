@@ -1,7 +1,7 @@
 coquimbo = {
 	name = "Coquimbo"
 	color = { 224 64 203 }
-	provincial_capital = la_serena
+	default_provincial_capital = la_serena
 	regions = {
 		chile
 	}

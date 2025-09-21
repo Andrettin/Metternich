@@ -1,7 +1,7 @@
 nevada = {
 	name = "Nevada"
 	color = { 240 216 148 }
-	provincial_capital = carson_city
+	default_provincial_capital = carson_city
 	regions = {
 		united_states
 	}

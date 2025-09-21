@@ -1,7 +1,7 @@
 mari_el = {
 	name = "Mari El"
 	color = { 143 11 11 }
-	provincial_capital = yoshkar_ola
+	default_provincial_capital = yoshkar_ola
 	regions = {
 		european_russia
 	}

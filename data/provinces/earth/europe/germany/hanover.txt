@@ -1,7 +1,7 @@
 hanover = {
 	name = "Hanover"
 	color = { 105 75 145 }
-	provincial_capital = hanover
+	default_provincial_capital = hanover
 	regions = {
 		germany
 	}

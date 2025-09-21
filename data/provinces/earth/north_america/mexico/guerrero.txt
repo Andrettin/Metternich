@@ -1,7 +1,7 @@
 guerrero = {
 	name = "Guerrero"
 	color = { 158 123 41 }
-	provincial_capital = chilpancingo
+	default_provincial_capital = chilpancingo
 	regions = {
 		mexico
 	}

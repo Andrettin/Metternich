@@ -1,7 +1,7 @@
 isfahan = {
 	name = "Isfahan"
 	color = { 35 188 35 }
-	provincial_capital = isfahan
+	default_provincial_capital = isfahan
 	regions = {
 		persia
 	}

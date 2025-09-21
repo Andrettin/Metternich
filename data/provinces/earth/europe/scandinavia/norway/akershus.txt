@@ -1,7 +1,7 @@
 akershus = {
 	name = "Akershus"
 	color = { 192 65 224 }
-	provincial_capital = oslo
+	default_provincial_capital = oslo
 	regions = {
 		norway
 	}

@@ -1,7 +1,7 @@
 oaxaca = {
 	name = "Oaxaca"
 	color = { 214 118 14 }
-	provincial_capital = oaxaca
+	default_provincial_capital = oaxaca
 	regions = {
 		mexico
 	}

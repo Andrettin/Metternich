@@ -1,7 +1,7 @@
 karaman = {
 	name = "Karaman"
 	color = { 70 0 137 }
-	provincial_capital = karaman
+	default_provincial_capital = karaman
 	regions = {
 		anatolia
 	}

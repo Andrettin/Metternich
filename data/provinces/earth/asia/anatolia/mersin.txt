@@ -1,7 +1,7 @@
 mersin = {
 	name = "Mersin"
 	color = { 127 26 206 }
-	provincial_capital = tarsus
+	default_provincial_capital = tarsus
 	regions = {
 		anatolia
 	}

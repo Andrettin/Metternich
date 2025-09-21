@@ -1,7 +1,7 @@
 east_anglia = {
 	name = "East Anglia"
 	color = { 85 93 61 }
-	provincial_capital = norwich
+	default_provincial_capital = norwich
 	regions = {
 		england
 	}

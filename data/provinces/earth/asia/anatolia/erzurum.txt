@@ -1,7 +1,7 @@
 erzurum = {
 	name = "Erzurum"
 	color = { 167 126 101 }
-	provincial_capital = erzurum
+	default_provincial_capital = erzurum
 	regions = {
 		anatolia
 	}

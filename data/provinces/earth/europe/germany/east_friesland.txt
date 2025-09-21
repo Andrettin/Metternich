@@ -1,7 +1,7 @@
 east_friesland = {
 	name = "East Friesland"
 	color = { 217 49 83 }
-	provincial_capital = emden
+	default_provincial_capital = emden
 	regions = {
 		germany
 	}

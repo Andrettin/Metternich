@@ -1,7 +1,7 @@
 satakunta = {
 	name = "Satakunta"
 	color = { 168 197 105 }
-	provincial_capital = pori
+	default_provincial_capital = pori
 	regions = {
 		finland
 	}

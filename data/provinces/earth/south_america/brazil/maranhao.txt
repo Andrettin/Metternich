@@ -1,7 +1,7 @@
 maranhao = {
 	name = "Maranhao" #"Maranhão"
 	color = { 33 192 17 }
-	provincial_capital = sao_luis
+	default_provincial_capital = sao_luis
 	regions = {
 		brazil
 	}

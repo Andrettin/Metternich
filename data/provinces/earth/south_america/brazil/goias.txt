@@ -1,7 +1,7 @@
 goias = {
 	name = "Goias" #"Goiás"
 	color = { 174 212 82 }
-	provincial_capital = goiania
+	default_provincial_capital = goiania
 	regions = {
 		brazil
 	}

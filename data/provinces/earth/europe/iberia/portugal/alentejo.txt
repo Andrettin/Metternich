@@ -1,7 +1,7 @@
 alentejo = {
 	name = "Alentejo"
 	color = { 235 169 53 }
-	provincial_capital = evora
+	default_provincial_capital = evora
 	regions = {
 		portugal
 	}

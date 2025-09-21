@@ -1,7 +1,7 @@
 new_brunswick = {
 	name = "New Brunswick"
 	color = { 240 192 64 }
-	provincial_capital = fredericton
+	default_provincial_capital = fredericton
 	regions = {
 		canada
 	}

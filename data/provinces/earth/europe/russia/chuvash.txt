@@ -1,7 +1,7 @@
 chuvash = {
 	name = "Chuvash"
 	color = { 143 236 113 }
-	provincial_capital = cheboksary
+	default_provincial_capital = cheboksary
 	regions = {
 		european_russia
 	}

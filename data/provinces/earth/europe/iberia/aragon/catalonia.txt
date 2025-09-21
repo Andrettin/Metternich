@@ -1,7 +1,7 @@
 catalonia = {
 	name = "Catalonia"
 	color = { 224 192 32 }
-	provincial_capital = barcelona
+	default_provincial_capital = barcelona
 	regions = {
 		spain
 	}

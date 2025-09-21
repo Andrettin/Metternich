@@ -1,7 +1,7 @@
 eastern_cape = {
 	name = "Eastern Cape"
 	color = { 179 58 142 }
-	provincial_capital = bhisho
+	default_provincial_capital = bhisho
 	regions = {
 		africa
 	}

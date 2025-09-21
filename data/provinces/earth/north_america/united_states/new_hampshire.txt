@@ -1,7 +1,7 @@
 new_hampshire = {
 	name = "New Hampshire"
 	color = { 48 192 64 }
-	provincial_capital = concord
+	default_provincial_capital = concord
 	regions = {
 		thirteen_colonies
 		united_states

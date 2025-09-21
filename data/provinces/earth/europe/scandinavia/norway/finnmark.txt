@@ -1,7 +1,7 @@
 finnmark = {
 	name = "Finnmark"
 	color = { 97 128 128 }
-	provincial_capital = hammerfest
+	default_provincial_capital = hammerfest
 	regions = {
 		norway
 	}

@@ -1,7 +1,7 @@
 mizda = {
 	name = "Mizda"
 	color = { 253 63 236 }
-	provincial_capital = mizda
+	default_provincial_capital = mizda
 	regions = {
 		libya
 	}

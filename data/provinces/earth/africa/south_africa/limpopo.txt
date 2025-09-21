@@ -1,7 +1,7 @@
 limpopo = {
 	name = "Limpopo"
 	color = { 156 107 205 }
-	provincial_capital = polokwane
+	default_provincial_capital = polokwane
 	regions = {
 		africa
 	}

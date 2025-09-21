@@ -1,7 +1,7 @@
 paraiba = {
 	name = "Paraiba" #"Paraíba"
 	color = { 160 1 80 }
-	provincial_capital = joao_pessoa
+	default_provincial_capital = joao_pessoa
 	regions = {
 		brazil
 	}

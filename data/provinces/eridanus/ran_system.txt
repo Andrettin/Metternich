@@ -1,7 +1,7 @@
 ran_system = {
 	name = "Ran System"
 	primary_star = ran
-	provincial_capital = aegir
+	default_provincial_capital = aegir
 	
 	history = {
 		owner = ran

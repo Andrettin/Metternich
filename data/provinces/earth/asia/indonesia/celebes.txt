@@ -1,7 +1,7 @@
 celebes = {
 	name = "Celebes"
 	color = { 158 21 22 }
-	provincial_capital = makassar
+	default_provincial_capital = makassar
 	regions = {
 		asia
 		indonesia

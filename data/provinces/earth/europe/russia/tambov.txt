@@ -1,7 +1,7 @@
 tambov = {
 	name = "Tambov"
 	color = { 156 132 226 }
-	provincial_capital = tambov
+	default_provincial_capital = tambov
 	regions = {
 		european_russia
 	}

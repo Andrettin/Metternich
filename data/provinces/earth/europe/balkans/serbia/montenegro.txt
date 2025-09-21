@@ -1,7 +1,7 @@
 montenegro = {
 	name = "Montenegro"
 	color = { 64 223 9 }
-	provincial_capital = podgorica
+	default_provincial_capital = podgorica
 	regions = {
 		yugoslavia
 	}

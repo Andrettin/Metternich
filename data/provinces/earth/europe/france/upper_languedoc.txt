@@ -1,7 +1,7 @@
 upper_languedoc = {
 	name = "Upper Languedoc"
 	color = { 48 96 128 }
-	provincial_capital = toulouse
+	default_provincial_capital = toulouse
 	regions = {
 		france
 	}

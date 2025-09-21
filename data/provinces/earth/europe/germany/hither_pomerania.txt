@@ -1,7 +1,7 @@
 hither_pomerania = {
 	name = "Hither Pomerania"
 	color = { 25 174 25 }
-	provincial_capital = stettin
+	default_provincial_capital = stettin
 	regions = {
 		germany
 		pomerania

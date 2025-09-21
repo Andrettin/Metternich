@@ -1,7 +1,7 @@
 markazi = {
 	name = "Markazi"
 	color = { 245 252 138 }
-	provincial_capital = arak
+	default_provincial_capital = arak
 	regions = {
 		persia
 	}

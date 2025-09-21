@@ -1,7 +1,7 @@
 taiwan = {
 	name = "Taiwan"
 	color = { 225 193 35 }
-	provincial_capital = taipei
+	default_provincial_capital = taipei
 	cultural_names = {
 		portuguese = "Formosa"
 	}

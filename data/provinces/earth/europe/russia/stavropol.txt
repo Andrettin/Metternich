@@ -1,7 +1,7 @@
 stavropol = {
 	name = "Stavropol"
 	color = { 57 176 15 }
-	provincial_capital = stavropol
+	default_provincial_capital = stavropol
 	regions = {
 		european_russia
 	}

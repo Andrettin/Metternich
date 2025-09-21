@@ -1,7 +1,7 @@
 krivoy_rog = {
 	name = "Krivoy Rog"
 	color = { 240 224 160 }
-	provincial_capital = krivoy_rog
+	default_provincial_capital = krivoy_rog
 	regions = {
 		ukraine
 	}

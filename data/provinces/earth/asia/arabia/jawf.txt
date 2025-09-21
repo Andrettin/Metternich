@@ -1,7 +1,7 @@
 jawf = {
 	name = "Jawf"
 	color = { 190 200 10 }
-	provincial_capital = kaf
+	default_provincial_capital = kaf
 	regions = {
 		asia
 		middle_east

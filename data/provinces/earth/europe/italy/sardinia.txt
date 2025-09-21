@@ -1,7 +1,7 @@
 sardinia = {
 	name = "Sardinia"
 	color = { 128 208 32 }
-	provincial_capital = cagliari
+	default_provincial_capital = cagliari
 	regions = {
 		italy
 	}

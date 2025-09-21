@@ -1,7 +1,7 @@
 zhejiang = {
 	name = "Zhejiang"
 	color = { 220 58 60 }
-	provincial_capital = hangzhou
+	default_provincial_capital = hangzhou
 	regions = {
 		asia
 	}

@@ -1,7 +1,7 @@
 shaanxi = {
 	name = "Shaanxi"
 	color = { 115 175 78 }
-	provincial_capital = xian
+	default_provincial_capital = xian
 	regions = {
 		asia
 	}

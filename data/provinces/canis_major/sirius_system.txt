@@ -1,7 +1,7 @@
 sirius_system = {
 	name = "Sirius System"
 	primary_star = sirius
-	provincial_capital = kairet
+	default_provincial_capital = kairet
 	
 	history = {
 		owner = terran_federation

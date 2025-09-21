@@ -1,7 +1,7 @@
 flegetonte_system = {
 	name = "Flegetonte System"
 	primary_star = flegetonte
-	provincial_capital = lete
+	default_provincial_capital = lete
 	
 	history = {
 		owner = terran_federation

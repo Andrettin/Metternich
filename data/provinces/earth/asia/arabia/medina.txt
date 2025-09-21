@@ -1,7 +1,7 @@
 medina = {
 	name = "Medina"
 	color = { 77 166 63 }
-	provincial_capital = medina
+	default_provincial_capital = medina
 	regions = {
 		asia
 		middle_east

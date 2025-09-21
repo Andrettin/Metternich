@@ -1,7 +1,7 @@
 pando = {
 	name = "Pando"
 	color = { 170 27 92 }
-	provincial_capital = cobija
+	default_provincial_capital = cobija
 	regions = {
 		bolivia
 	}

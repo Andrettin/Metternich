@@ -1,7 +1,7 @@
 fafnir_system = {
 	name = "Fafnir System"
 	primary_star = fafnir
-	provincial_capital = orbitar
+	default_provincial_capital = orbitar
 	
 	history = {
 		owner = fafnir

@@ -1,7 +1,7 @@
 lower_silesia = {
 	name = "Lower Silesia"
 	color = { 110 97 127 }
-	provincial_capital = breslau
+	default_provincial_capital = breslau
 	regions = {
 		poland
 	}

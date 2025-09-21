@@ -1,7 +1,7 @@
 provence = {
 	name = "Provence"
 	color = { 49 192 223 }
-	provincial_capital = marseilles
+	default_provincial_capital = marseilles
 	regions = {
 		france
 	}

@@ -1,7 +1,7 @@
 bohemia = {
 	name = "Bohemia"
 	color = { 113 224 65 }
-	provincial_capital = prague
+	default_provincial_capital = prague
 	regions = {
 		bohemia
 	}

@@ -1,7 +1,7 @@
 bavaria = {
 	name = "Bavaria"
 	color = { 176 1 33 }
-	provincial_capital = munich
+	default_provincial_capital = munich
 	regions = {
 		germany
 	}

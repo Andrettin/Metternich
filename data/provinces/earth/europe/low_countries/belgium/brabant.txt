@@ -1,7 +1,7 @@
 brabant = {
 	name = "Brabant"
 	color = { 1 128 97 }
-	provincial_capital = brussels
+	default_provincial_capital = brussels
 	regions = {
 		belgium
 	}

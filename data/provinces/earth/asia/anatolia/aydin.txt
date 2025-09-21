@@ -1,7 +1,7 @@
 aydin = {
 	name = "Aydin"
 	color = { 191 4 28 }
-	provincial_capital = aydin
+	default_provincial_capital = aydin
 	regions = {
 		anatolia
 	}

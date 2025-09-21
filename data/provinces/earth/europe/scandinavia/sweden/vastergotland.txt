@@ -1,7 +1,7 @@
 vastergotland = {
 	name = "Vastergotland" #"Västergötland"
 	color = { 127 241 71 }
-	provincial_capital = gothenburg
+	default_provincial_capital = gothenburg
 	regions = {
 		sweden
 	}

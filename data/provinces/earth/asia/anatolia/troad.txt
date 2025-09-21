@@ -1,7 +1,7 @@
 troad = {
 	name = "Troad"
 	color = { 131 135 138 }
-	provincial_capital = troy
+	default_provincial_capital = troy
 	cultural_names = {
 		turkish = "Canakkale" #"Çanakkale"
 	}

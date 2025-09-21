@@ -1,7 +1,7 @@
 trebizond = {
 	name = "Trebizond"
 	color = { 228 165 197 }
-	provincial_capital = trebizond
+	default_provincial_capital = trebizond
 	regions = {
 		anatolia
 	}

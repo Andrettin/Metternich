@@ -1,7 +1,7 @@
 hunan = {
 	name = "Hunan"
 	color = { 136 170 10 }
-	provincial_capital = changsha
+	default_provincial_capital = changsha
 	regions = {
 		asia
 	}

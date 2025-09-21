@@ -1,7 +1,7 @@
 djelfa = {
 	name = "Djelfa"
 	color = { 163 214 3 }
-	provincial_capital = djelfa
+	default_provincial_capital = djelfa
 	regions = {
 		algeria
 	}

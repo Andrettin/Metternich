@@ -1,7 +1,7 @@
 delaware = {
 	name = "Delaware"
 	color = { 112 128 0 }
-	provincial_capital = dover_delaware
+	default_provincial_capital = dover_delaware
 	regions = {
 		thirteen_colonies
 		united_states

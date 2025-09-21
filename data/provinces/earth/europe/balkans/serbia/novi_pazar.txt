@@ -1,7 +1,7 @@
 novi_pazar = {
 	name = "Novi Pazar"
 	color = { 136 13 124 }
-	provincial_capital = novi_pazar
+	default_provincial_capital = novi_pazar
 	regions = {
 		serbia
 	}

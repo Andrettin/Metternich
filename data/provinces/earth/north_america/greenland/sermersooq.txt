@@ -1,7 +1,7 @@
 sermersooq = {
 	name = "Sermersooq"
 	color = { 242 139 32 }
-	provincial_capital = nuuk
+	default_provincial_capital = nuuk
 	regions = {
 		greenland
 	}

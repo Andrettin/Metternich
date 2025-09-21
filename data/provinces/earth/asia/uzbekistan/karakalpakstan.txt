@@ -1,7 +1,7 @@
 karakalpakstan = {
 	name = "Karakalpakstan"
 	color = { 85 240 7 }
-	provincial_capital = nukus
+	default_provincial_capital = nukus
 	regions = {
 		uzbekistan
 	}

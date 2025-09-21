@@ -1,7 +1,7 @@
 lorraine = {
 	name = "Lorraine"
 	color = { 176 128 224 }
-	provincial_capital = nancy
+	default_provincial_capital = nancy
 	regions = {
 		lorraine
 	}

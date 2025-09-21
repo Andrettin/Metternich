@@ -1,7 +1,7 @@
 saskatchewan = {
 	name = "Saskatchewan"
 	color = { 127 57 86 }
-	provincial_capital = regina
+	default_provincial_capital = regina
 	regions = {
 		canada
 	}

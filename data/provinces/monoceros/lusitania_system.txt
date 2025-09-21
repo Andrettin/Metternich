@@ -1,7 +1,7 @@
 lusitania_system = {
 	name = "Lusitania System"
 	primary_star = lusitania
-	provincial_capital = viriato
+	default_provincial_capital = viriato
 	
 	history = {
 		owner = lusitania_space

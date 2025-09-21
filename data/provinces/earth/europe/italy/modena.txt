@@ -1,7 +1,7 @@
 modena = {
 	name = "Modena"
 	color = { 168 134 150 }
-	provincial_capital = modena
+	default_provincial_capital = modena
 	regions = {
 		italy
 	}

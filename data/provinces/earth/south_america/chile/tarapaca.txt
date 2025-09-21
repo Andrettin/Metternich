@@ -1,7 +1,7 @@
 tarapaca = {
 	name = "Tarapaca" #"Tarapacá"
 	color = { 10 202 83 }
-	provincial_capital = iquique
+	default_provincial_capital = iquique
 	regions = {
 		chile
 	}

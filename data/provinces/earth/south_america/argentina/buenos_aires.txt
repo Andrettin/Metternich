@@ -1,7 +1,7 @@
 buenos_aires = {
 	name = "Buenos Aires"
 	color = { 176 192 144 }
-	provincial_capital = buenos_aires
+	default_provincial_capital = buenos_aires
 	regions = {
 		argentina
 	}

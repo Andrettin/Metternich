@@ -1,7 +1,7 @@
 rostov = {
 	name = "Rostov"
 	color = { 177 191 157 }
-	provincial_capital = rostov
+	default_provincial_capital = rostov
 	regions = {
 		european_russia
 	}

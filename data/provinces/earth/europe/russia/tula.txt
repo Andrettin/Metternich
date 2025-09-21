@@ -1,7 +1,7 @@
 tula = {
 	name = "Tula"
 	color = { 122 33 103 }
-	provincial_capital = tula
+	default_provincial_capital = tula
 	regions = {
 		european_russia
 	}

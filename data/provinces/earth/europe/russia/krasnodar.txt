@@ -1,7 +1,7 @@
 krasnodar = {
 	name = "Krasnodar"
 	color = { 154 59 122 }
-	provincial_capital = krasnodar
+	default_provincial_capital = krasnodar
 	regions = {
 		european_russia
 	}

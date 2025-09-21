@@ -1,7 +1,7 @@
 junin = {
 	name = "Junin" #"Junín"
 	color = { 89 60 12 }
-	provincial_capital = huancayo
+	default_provincial_capital = huancayo
 	regions = {
 		peru
 	}

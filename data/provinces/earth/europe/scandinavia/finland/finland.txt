@@ -1,7 +1,7 @@
 finland = {
 	name = "Finland"
 	color = { 44 80 36 }
-	provincial_capital = turku
+	default_provincial_capital = turku
 	regions = {
 		finland
 	}

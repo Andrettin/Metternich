@@ -1,7 +1,7 @@
 maryland = {
 	name = "Maryland"
 	color = { 240 128 0 }
-	provincial_capital = baltimore
+	default_provincial_capital = baltimore
 	regions = {
 		thirteen_colonies
 		united_states

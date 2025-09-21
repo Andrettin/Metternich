@@ -1,7 +1,7 @@
 gilan = {
 	name = "Gilan"
 	color = { 246 132 89 }
-	provincial_capital = rasht
+	default_provincial_capital = rasht
 	regions = {
 		persia
 	}

@@ -1,7 +1,7 @@
 hamadan = {
 	name = "Hamadan"
 	color = { 255 152 92 }
-	provincial_capital = hamadan
+	default_provincial_capital = hamadan
 	regions = {
 		persia
 	}

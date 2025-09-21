@@ -1,7 +1,7 @@
 tver = {
 	name = "Tver"
 	color = { 223 180 18 }
-	provincial_capital = tver
+	default_provincial_capital = tver
 	regions = {
 		european_russia
 	}

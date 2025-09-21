@@ -1,7 +1,7 @@
 fujian = {
 	name = "Fujian"
 	color = { 222 119 2 }
-	provincial_capital = fuzhou
+	default_provincial_capital = fuzhou
 	regions = {
 		asia
 	}

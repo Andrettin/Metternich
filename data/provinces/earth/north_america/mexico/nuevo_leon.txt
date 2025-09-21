@@ -1,7 +1,7 @@
 nuevo_leon = {
 	name = "Nuevo Leon" #"Nuevo León"
 	color = { 201 175 208 }
-	provincial_capital = monterrey
+	default_provincial_capital = monterrey
 	regions = {
 		mexico
 	}

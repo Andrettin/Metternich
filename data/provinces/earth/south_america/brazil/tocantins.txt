@@ -1,7 +1,7 @@
 tocantins = {
 	name = "Tocantins"
 	color = { 188 31 76 }
-	provincial_capital = palmas
+	default_provincial_capital = palmas
 	regions = {
 		brazil
 	}

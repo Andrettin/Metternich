@@ -1,7 +1,7 @@
 parma = {
 	name = "Parma"
 	color = { 112 1 32 }
-	provincial_capital = parma
+	default_provincial_capital = parma
 	regions = {
 		italy
 	}

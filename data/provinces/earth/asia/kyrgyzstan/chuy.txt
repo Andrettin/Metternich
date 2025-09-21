@@ -1,7 +1,7 @@
 chuy = {
 	name = "Chuy"
 	color = { 76 53 92 }
-	provincial_capital = bishkek
+	default_provincial_capital = bishkek
 	regions = {
 		kyrgyzstan
 	}

@@ -1,7 +1,7 @@
 vladimir = {
 	name = "Vladimir"
 	color = { 42 20 43 }
-	provincial_capital = vladimir
+	default_provincial_capital = vladimir
 	regions = {
 		european_russia
 	}

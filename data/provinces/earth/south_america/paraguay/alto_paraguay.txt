@@ -1,7 +1,7 @@
 alto_paraguay = {
 	name = "Alto Paraguay"
 	color = { 170 36 134 }
-	provincial_capital = capitan_pablo_lagerenza
+	default_provincial_capital = capitan_pablo_lagerenza
 	regions = {
 		paraguay
 	}

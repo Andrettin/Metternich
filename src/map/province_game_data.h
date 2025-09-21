@@ -20,6 +20,7 @@ Q_MOC_INCLUDE("ui/icon.h")
 
 namespace archimedes {
 	class gsml_data;
+	class gsml_property;
 }
 
 namespace metternich {
@@ -61,6 +62,7 @@ class province_game_data final : public QObject
 	Q_PROPERTY(QString current_cultural_name READ get_current_cultural_name_qstring NOTIFY culture_changed)
 	Q_PROPERTY(bool coastal READ is_coastal CONSTANT)
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect CONSTANT)
+	Q_PROPERTY(const metternich::site* provincial_capital READ get_provincial_capital NOTIFY provincial_capital_changed)
 	Q_PROPERTY(QPoint center_tile_pos READ get_center_tile_pos CONSTANT)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(metternich::population* population READ get_population CONSTANT)
@@ -137,6 +139,9 @@ public:
 
 	bool is_country_border_province() const;
 
+	const site *get_provincial_capital() const;
+	void set_provincial_capital(const site *site);
+	void choose_provincial_capital();
 	const QPoint &get_center_tile_pos() const;
 
 	const std::vector<QPoint> &get_border_tiles() const;
@@ -492,6 +497,7 @@ signals:
 	void culture_changed();
 	void religion_changed();
 	void level_changed();
+	void provincial_capital_changed();
 	void map_image_changed();
 	void scripted_modifiers_changed();
 	void population_units_changed();
@@ -506,6 +512,7 @@ private:
 	const metternich::culture *culture = nullptr;
 	const metternich::religion *religion = nullptr;
 	int level = 0;
+	const site *provincial_capital = nullptr;
 	QImage map_image;
 	QImage selected_map_image;
 	std::map<diplomatic_map_mode, QImage> map_mode_images;

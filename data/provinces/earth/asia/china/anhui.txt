@@ -1,7 +1,7 @@
 anhui = {
 	name = "Anhui"
 	color = { 60 121 59 }
-	provincial_capital = hefei
+	default_provincial_capital = hefei
 	regions = {
 		asia
 	}

@@ -1,7 +1,7 @@
 bryansk = {
 	name = "Bryansk"
 	color = { 173 107 57 }
-	provincial_capital = bryansk
+	default_provincial_capital = bryansk
 	regions = {
 		european_russia
 	}

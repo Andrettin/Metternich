@@ -1,7 +1,7 @@
 gauteng = {
 	name = "Gauteng"
 	color = { 4 206 4 }
-	provincial_capital = johannesburg
+	default_provincial_capital = johannesburg
 	regions = {
 		africa
 	}

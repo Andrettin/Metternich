@@ -1,7 +1,7 @@
 palestine = {
 	name = "Palestine"
 	color = { 113 221 147 }
-	provincial_capital = jerusalem
+	default_provincial_capital = jerusalem
 	regions = {
 		asia
 		middle_east

@@ -1,7 +1,7 @@
 cyprus = {
 	name = "Cyprus"
 	color = { 142 146 118 }
-	provincial_capital = nicosia
+	default_provincial_capital = nicosia
 	regions = {
 		asia
 		middle_east

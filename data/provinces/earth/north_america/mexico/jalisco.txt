@@ -1,7 +1,7 @@
 jalisco = {
 	name = "Jalisco"
 	color = { 72 190 21 }
-	provincial_capital = guadalajara
+	default_provincial_capital = guadalajara
 	regions = {
 		mexico
 	}

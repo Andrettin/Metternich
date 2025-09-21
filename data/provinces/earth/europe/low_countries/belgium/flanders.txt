@@ -1,7 +1,7 @@
 flanders = {
 	name = "Flanders"
 	color = { 128 0 96 }
-	provincial_capital = ghent
+	default_provincial_capital = ghent
 	regions = {
 		belgium
 	}

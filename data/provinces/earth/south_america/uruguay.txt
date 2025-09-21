@@ -1,7 +1,7 @@
 uruguay = {
 	name = "Uruguay"
 	color = { 187 199 73 }
-	provincial_capital = montevideo
+	default_provincial_capital = montevideo
 	regions = {
 		south_america
 	}

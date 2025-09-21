@@ -1,7 +1,7 @@
 corsica = {
 	name = "Corsica"
 	color = { 239 64 32 }
-	provincial_capital = ajaccio
+	default_provincial_capital = ajaccio
 	regions = {
 		france
 	}

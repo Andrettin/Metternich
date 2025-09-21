@@ -1,7 +1,7 @@
 lublin = {
 	name = "Lublin"
 	color = { 81 160 224 }
-	provincial_capital = lublin
+	default_provincial_capital = lublin
 	regions = {
 		galicia_and_west_galicia
 		poland

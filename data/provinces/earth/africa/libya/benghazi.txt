@@ -1,7 +1,7 @@
 benghazi = {
 	name = "Benghazi"
 	color = { 51 26 49 }
-	provincial_capital = benghazi
+	default_provincial_capital = benghazi
 	regions = {
 		libya
 	}

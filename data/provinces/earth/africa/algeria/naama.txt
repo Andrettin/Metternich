@@ -1,7 +1,7 @@
 naama = {
 	name = "Naama"
 	color = { 108 9 31 }
-	provincial_capital = sefra
+	default_provincial_capital = sefra
 	regions = {
 		algeria
 	}

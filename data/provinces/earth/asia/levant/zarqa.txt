@@ -1,7 +1,7 @@
 zarqa = {
 	name = "Zarqa"
 	color = { 242 117 181 }
-	provincial_capital = zarqa
+	default_provincial_capital = zarqa
 	regions = {
 		asia
 		middle_east
