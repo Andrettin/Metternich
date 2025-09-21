@@ -271,10 +271,37 @@ Rectangle {
 		}
 	}
 	
-	SitePortraitGrid {
-		id: site_portrait_grid
+	PortraitButton {
+		id: provincial_capital_portrait
 		anchors.top: province_info_text.bottom
 		anchors.topMargin: 8 * scale_factor
+		anchors.horizontalCenter: parent.horizontalCenter
+		portrait_identifier: provincial_capital && provincial_capital.game_data.portrait ? provincial_capital.game_data.portrait.identifier : "building_slot"
+		visible: site_portrait_grid.visible && provincial_capital !== null
+		
+		readonly property var provincial_capital: selected_province ? (selected_province.game_data.provincial_capital ? selected_province.game_data.provincial_capital : selected_province.default_provincial_capital) : null
+		
+		onHoveredChanged: {
+			if (hovered) {
+				if (provincial_capital !== null) {
+					if (provincial_capital.game_data.holding_type !== null) {
+						status_text = provincial_capital.game_data.holding_type.name + " of " + provincial_capital.game_data.current_cultural_name
+					} else if (provincial_capital.holding_type !== null) {
+						status_text = provincial_capital.game_data.current_cultural_name + " (" + provincial_capital.holding_type.name + " Slot)"
+					} else {
+						status_text = provincial_capital.game_data.current_cultural_name
+					}
+				}
+			} else {
+				status_text = ""
+			}
+		}
+	}
+	
+	SitePortraitGrid {
+		id: site_portrait_grid
+		anchors.top: provincial_capital_portrait.bottom
+		anchors.topMargin: 16 * scale_factor
 		anchors.bottom: end_turn_button_internal.top
 		anchors.bottomMargin: 16 * scale_factor
 		anchors.left: parent.left
@@ -282,7 +309,9 @@ Rectangle {
 		anchors.right: parent.right
 		anchors.rightMargin: 8 * scale_factor
 		visible: selected_province !== null && !selected_garrison
-		sites: selected_province ? selected_province.map_data.sites : []
+		sites: province_sites.filter(function(value, array_index) { return value !== provincial_capital_portrait.provincial_capital })
+		
+		readonly property var province_sites: selected_province ? selected_province.map_data.sites : []
 	}
 	
 	SmallText {
