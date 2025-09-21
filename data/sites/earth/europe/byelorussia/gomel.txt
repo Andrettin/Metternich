@@ -3,5 +3,6 @@ gomel = {
 	world = earth
 	geocoordinate = { 31.00000931670 52.43001548170 } #from Natural Earth
 	type = holding
+	holding_type = temple
 	province = gomel
 }

@@ -2,8 +2,9 @@ pinsk = {
 	name = "Pinsk"
 	world = earth
 	geocoordinate = { 26.09405554070 52.12786338210 } #from Natural Earth
-	type = resource
-	resource = grain
+	type = holding
+	holding_type = estate
+	#resource = grain
 	province = brest
 	
 	history = {

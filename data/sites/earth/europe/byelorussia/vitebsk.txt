@@ -3,11 +3,12 @@ vitebsk = {
 	world = earth
 	geocoordinate = { 30.18533036170 55.18871014310 } #from Natural Earth
 	type = holding
+	holding_type = estate
 	province = vitebsk
 	
 	history = {
 		1360 = {
-			holding_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 	}
 }
