@@ -6,6 +6,7 @@
 #include "character/character_game_data.h"
 #include "character/character_trait_type.h"
 #include "character/dynasty.h"
+#include "character/family_tree_model.h"
 #include "character/starting_age_category.h"
 #include "database/database.h"
 #include "database/database_enum_util.h"
@@ -232,6 +233,7 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<wonder>("", 1);
 
 		qmlRegisterType<character_data_model>("character_data_model", 1, 0, "CharacterDataModel");
+		qmlRegisterType<family_tree_model>("family_tree_model", 1, 0, "FamilyTreeModel");
 		qmlRegisterType<map_country_model>("map_country_model", 1, 0, "MapCountryModel");
 		qmlRegisterType<map_grid_model>("map_grid_model", 1, 0, "MapGridModel");
 		qmlRegisterType<map_province_model>("map_province_model", 1, 0, "MapProvinceModel");

@@ -29,6 +29,7 @@ set(character_SRCS
 	src/character/character_history.cpp
 	src/character/character_trait.cpp
 	src/character/dynasty.cpp
+	src/character/family_tree_model.cpp
 	src/character/monster_type.cpp
 )
 source_group(character FILES ${character_SRCS})
@@ -347,6 +348,7 @@ set(character_HDRS
 	src/character/character_trait.h
 	src/character/character_trait_type.h
 	src/character/dynasty.h
+	src/character/family_tree_model.h
 	src/character/monster_type.h
 	src/character/starting_age_category.h
 )

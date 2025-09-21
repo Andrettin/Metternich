@@ -42,6 +42,7 @@ DialogBase {
 		height: Math.min(256 * scale_factor, contentHeight)
 		boundsBehavior: Flickable.StopAtBounds
 		clip: true
+		enabled: character_dialog.activeFocus
 		model: CharacterDataModel {
 			character: character_dialog.character
 			
@@ -126,6 +127,16 @@ DialogBase {
 					office_holder_choice_dialog.office = office
 					office_holder_choice_dialog.open()
 				}
+			}
+		}
+		
+		TextButton {
+			id: family_tree_button
+			text: "Family Tree"
+			visible: character !== null && (character.father !== null || character.mother !== null)
+			onClicked: {
+				family_tree_dialog.character = character
+				family_tree_dialog.open()
 			}
 		}
 		
