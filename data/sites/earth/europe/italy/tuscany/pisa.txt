@@ -1,7 +1,9 @@
 pisa = {
 	name = "Pisa"
 	world = earth
-	#geocoordinate = { 10.40002640650 43.72046958320 } #from Natural Earth
+	geocoordinate = { 10.40002640650 43.72046958320 } #from Natural Earth
+	type = holding
+	holding_type = guild
 	province = tuscany
 	
 	history = {

@@ -2,6 +2,8 @@ arezzo = {
 	name = "Arezzo"
 	world = earth
 	geocoordinate = { 11.87497513700 43.46172568670 } #from Natural Earth
+	type = holding
+	holding_type = guild
 	province = tuscany
 	
 	history = {
