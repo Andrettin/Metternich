@@ -7,7 +7,7 @@ import ".."
 DialogBase {
 	id: character_dialog
 	width: 320 * scale_factor
-	height: ok_button.y + ok_button.height + 8 * scale_factor
+	height: button_column.y + button_column.height + 8 * scale_factor
 	title: character ? character.game_data.titled_name : ""
 	
 	property var character: null
@@ -107,36 +107,39 @@ DialogBase {
 		height: 1 * scale_factor
 	}
 	
-	TextButton {
-		id: appoint_button
+	Column {
+		id: button_column
 		anchors.top: character_data_tree_view_bottom_divisor.bottom
 		anchors.topMargin: 16 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
-		text: is_appointee ? "Unappoint" : "Appoint"
-		visible: office !== null && office.appointable
-		onClicked: {
-			if (is_appointee) {
-				metternich.game.player_country.game_data.government.set_appointed_office_holder(office, null)
-				character_dialog.close()
-			} else {
-				office_holder_choice_dialog.office = office
-				office_holder_choice_dialog.open()
+		spacing: 8 * scale_factor
+		
+		TextButton {
+			id: appoint_button
+			text: is_appointee ? "Unappoint" : "Appoint"
+			visible: office !== null && office.appointable
+			onClicked: {
+				if (is_appointee) {
+					metternich.game.player_country.game_data.government.set_appointed_office_holder(office, null)
+					character_dialog.close()
+				} else {
+					office_holder_choice_dialog.office = office
+					office_holder_choice_dialog.open()
+				}
 			}
 		}
-	}
-	
-	TextButton {
-		id: ok_button
-		anchors.top: appoint_button.visible ? appoint_button.bottom : character_data_tree_view_bottom_divisor.bottom
-		anchors.topMargin: 16 * scale_factor + (256 * scale_factor - character_data_tree_view.height)
-		anchors.horizontalCenter: parent.horizontalCenter
-		text: "OK"
-		onClicked: {
-			character_dialog.close()
+		
+		TextButton {
+			id: ok_button
+			text: "OK"
+			onClicked: {
+				character_dialog.close()
+			}
 		}
 	}
 	
 	onClosed: {
 		character = null
+		office = null
 	}
 }
