@@ -874,6 +874,10 @@ std::vector<const site *> province_game_data::get_visible_sites() const
 			return lhs->get_game_data()->is_provincial_capital();
 		}
 
+		if (lhs->get_type() != rhs->get_type()) {
+			return lhs->get_type() < rhs->get_type();
+		}
+
 		return lhs->get_identifier() < rhs->get_identifier();
 	});
 
