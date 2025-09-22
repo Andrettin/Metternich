@@ -552,7 +552,7 @@ void game::apply_history(const metternich::scenario *scenario)
 
 					const cultural_group *cultural_group = culture->get_group();
 					while (cultural_group != nullptr) {
-						const metternich::culture_history *cultural_group_history = culture->get_history();
+						const metternich::culture_history *cultural_group_history = cultural_group->get_history();
 						cultural_group_history->apply_to_province(province);
 						cultural_group = cultural_group->get_upper_group();
 					}
