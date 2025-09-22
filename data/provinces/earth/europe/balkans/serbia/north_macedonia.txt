@@ -4,6 +4,7 @@ north_macedonia = {
 	default_provincial_capital = skopje
 	regions = {
 		yugoslavia
+		balkans
 	}
 	
 	history = {

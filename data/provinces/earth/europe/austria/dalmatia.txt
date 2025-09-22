@@ -5,6 +5,7 @@ dalmatia = {
 	regions = {
 		cisleithania
 		croatia
+		balkans
 	}
 	
 	history = {

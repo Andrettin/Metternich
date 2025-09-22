@@ -4,6 +4,7 @@ serbia = {
 	default_provincial_capital = belgrade
 	regions = {
 		serbia
+		balkans
 	}
 	
 	history = {

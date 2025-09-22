@@ -4,6 +4,7 @@ nis = {
 	default_provincial_capital = nis
 	regions = {
 		serbia
+		balkans
 	}
 	
 	history = {

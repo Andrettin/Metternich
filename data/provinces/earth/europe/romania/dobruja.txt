@@ -4,6 +4,7 @@ dobruja = {
 	default_provincial_capital = constanta
 	regions = {
 		romania
+		balkans
 	}
 	
 	history = {

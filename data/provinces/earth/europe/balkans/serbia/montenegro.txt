@@ -4,6 +4,7 @@ montenegro = {
 	default_provincial_capital = podgorica
 	regions = {
 		yugoslavia
+		balkans
 	}
 	
 	history = {

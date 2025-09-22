@@ -4,6 +4,7 @@ kosovo = {
 	default_provincial_capital = pristina
 	regions = {
 		yugoslavia
+		balkans
 	}
 	
 	history = {

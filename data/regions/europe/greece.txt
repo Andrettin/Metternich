@@ -2,6 +2,7 @@ greece = {
 	superregions = {
 		europe
 		west_and_central_europe
+		balkans
 	}
 	
 	history = {

@@ -6,6 +6,7 @@ croatia = {
 		croatia
 		hungary_croatia_slavonia
 		royal_hungary
+		balkans
 	}
 	
 	history = {

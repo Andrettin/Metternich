@@ -3,7 +3,7 @@ thrace = {
 	color = { 240 160 32 }
 	default_provincial_capital = constantinople
 	regions = {
-		europe
+		balkans
 		turkey
 	}
 	
