@@ -22,7 +22,6 @@
 #include "game/game.h"
 #include "game/province_event.h"
 #include "infrastructure/building_type.h"
-#include "infrastructure/holding_type.h"
 #include "infrastructure/improvement.h"
 #include "infrastructure/settlement_building_slot.h"
 #include "map/diplomatic_map_mode.h"
@@ -863,7 +862,7 @@ std::vector<const site *> province_game_data::get_visible_sites() const
 	std::vector<const site *> visible_sites = this->province->get_map_data()->get_sites();
 
 	std::erase_if(visible_sites, [](const site *site) {
-		if (site->get_type() == site_type::holding) {
+		if (site->get_type() == site_type::holding || (site->get_type() == site_type::dungeon && site->get_game_data()->get_dungeon() != nullptr)) {
 			return false;
 		}
 

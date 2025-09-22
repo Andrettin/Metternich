@@ -6,6 +6,7 @@
 #include "util/qunique_ptr.h"
 
 Q_MOC_INCLUDE("domain/domain.h")
+Q_MOC_INCLUDE("infrastructure/dungeon.h")
 Q_MOC_INCLUDE("infrastructure/holding_type.h")
 Q_MOC_INCLUDE("infrastructure/improvement.h")
 Q_MOC_INCLUDE("map/province.h")
@@ -22,6 +23,7 @@ class building_class;
 class building_type;
 class culture;
 class domain;
+class dungeon;
 class holding_type;
 class improvement;
 class pathway;
@@ -50,6 +52,7 @@ class site_game_data final : public QObject
 	Q_PROPERTY(const metternich::domain* owner READ get_owner NOTIFY owner_changed)
 	Q_PROPERTY(QString current_cultural_name READ get_current_cultural_name_qstring NOTIFY culture_changed)
 	Q_PROPERTY(const metternich::holding_type* holding_type READ get_holding_type NOTIFY holding_type_changed)
+	Q_PROPERTY(const metternich::dungeon* dungeon READ get_dungeon NOTIFY dungeon_changed)
 	Q_PROPERTY(const metternich::improvement* improvement READ get_main_improvement NOTIFY improvements_changed)
 	Q_PROPERTY(const metternich::improvement* resource_improvement READ get_resource_improvement NOTIFY improvements_changed)
 	Q_PROPERTY(const metternich::portrait* portrait READ get_portrait NOTIFY portrait_changed)
@@ -154,6 +157,14 @@ public:
 	{
 		this->resource_discovered = discovered;
 	}
+
+	const metternich::dungeon *get_dungeon() const
+	{
+		return this->dungeon;
+	}
+
+	void set_dungeon(const metternich::dungeon *dungeon);
+	bool can_have_dungeon(const metternich::dungeon *dungeon) const;
 
 	const improvement *get_improvement(const improvement_slot slot) const
 	{
@@ -426,6 +437,7 @@ signals:
 	void religion_changed();
 	void improvements_changed();
 	void holding_type_changed();
+	void dungeon_changed();
 	void portrait_changed();
 	void scripted_modifiers_changed();
 	void population_units_changed();
@@ -439,6 +451,7 @@ private:
 	const metternich::culture *culture = nullptr;
 	const metternich::religion *religion = nullptr;
 	const metternich::holding_type *holding_type = nullptr;
+	const metternich::dungeon *dungeon = nullptr;
 	std::map<improvement_slot, const improvement *> improvements;
 	bool resource_discovered = false;
 	std::vector<qunique_ptr<settlement_building_slot>> building_slots;

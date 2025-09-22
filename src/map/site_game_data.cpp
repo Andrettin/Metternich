@@ -23,6 +23,7 @@
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot_type.h"
 #include "infrastructure/building_type.h"
+#include "infrastructure/dungeon.h"
 #include "infrastructure/holding_type.h"
 #include "infrastructure/improvement.h"
 #include "infrastructure/improvement_slot.h"
@@ -84,6 +85,7 @@ site_game_data::site_game_data(const metternich::site *site) : site(site)
 	connect(this, &site_game_data::religion_changed, this, &site_game_data::title_name_changed);
 
 	connect(this, &site_game_data::holding_type_changed, this, &site_game_data::portrait_changed);
+	connect(this, &site_game_data::dungeon_changed, this, &site_game_data::portrait_changed);
 }
 
 void site_game_data::process_gsml_property(const gsml_property &property)
@@ -93,6 +95,8 @@ void site_game_data::process_gsml_property(const gsml_property &property)
 
 	if (key == "holding_type") {
 		this->holding_type = holding_type::get(value);
+	} else if (key == "dungeon") {
+		this->dungeon = dungeon::get(value);
 	} else {
 		throw std::runtime_error(std::format("Invalid site game data property: \"{}\".", key));
 	}
@@ -120,6 +124,10 @@ gsml_data site_game_data::to_gsml_data() const
 
 	if (this->get_holding_type() != nullptr) {
 		data.add_property("holding_type", this->get_holding_type()->get_identifier());
+	}
+
+	if (this->get_dungeon() != nullptr) {
+		data.add_property("dungeon", this->get_dungeon()->get_identifier());
 	}
 
 	return data;
@@ -542,6 +550,45 @@ const resource *site_game_data::get_resource() const
 	return this->site->get_map_data()->get_resource();
 }
 
+void site_game_data::set_dungeon(const metternich::dungeon *dungeon)
+{
+	if (dungeon == this->get_dungeon()) {
+		return;
+	}
+
+	if (dungeon != nullptr) {
+		assert_throw(this->get_holding_type() == nullptr);
+		assert_throw(this->can_have_dungeon(dungeon));
+	}
+
+	this->dungeon = dungeon;
+
+	if (game::get()->is_running()) {
+		emit dungeon_changed();
+	}
+}
+
+bool site_game_data::can_have_dungeon(const metternich::dungeon *dungeon) const
+{
+	if (this->site->get_type() != site_type::dungeon && this->site->get_type() != site_type::holding) {
+		return false;
+	}
+
+	if (this->get_holding_type() != nullptr) {
+		return false;
+	}
+
+	if (this->get_dungeon() != nullptr && this->get_dungeon() != dungeon) {
+		return false;
+	}
+
+	if (dungeon->get_conditions() != nullptr && !dungeon->get_conditions()->check(this->site, read_only_context(this->site))) {
+		return false;
+	}
+
+	return true;
+}
+
 const improvement *site_game_data::get_main_improvement() const
 {
 	const improvement *main_improvement = this->get_improvement(improvement_slot::main);
@@ -610,6 +657,10 @@ const portrait *site_game_data::get_portrait() const
 {
 	if (this->get_holding_type() != nullptr) {
 		return this->get_holding_type()->get_portrait();
+	}
+
+	if (this->get_dungeon() != nullptr) {
+		return this->get_dungeon()->get_portrait();
 	}
 
 	return nullptr;

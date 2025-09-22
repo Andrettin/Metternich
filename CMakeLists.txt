@@ -113,6 +113,7 @@ set(infrastructure_SRCS
 	src/infrastructure/building_slot_type_container.cpp
 	src/infrastructure/building_type.cpp
 	src/infrastructure/building_type_container.cpp
+	src/infrastructure/dungeon.cpp
 	src/infrastructure/holding_type.cpp
 	src/infrastructure/improvement.cpp
 	src/infrastructure/improvement_container.cpp
@@ -443,6 +444,7 @@ set(infrastructure_HDRS
 	src/infrastructure/building_slot_type_container.h
 	src/infrastructure/building_type.h
 	src/infrastructure/building_type_container.h
+	src/infrastructure/dungeon.h
 	src/infrastructure/holding_type.h
 	src/infrastructure/improvement.h
 	src/infrastructure/improvement_container.h
@@ -593,6 +595,7 @@ set(script_condition_HDRS
 	src/script/condition/culture_condition.h
 	src/script/condition/discovered_province_condition.h
 	src/script/condition/discovered_region_condition.h
+	src/script/condition/dungeon_condition.h
 	src/script/condition/event_condition.h
 	src/script/condition/game_rule_condition.h
 	src/script/condition/government_type_condition.h

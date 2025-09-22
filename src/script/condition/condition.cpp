@@ -42,6 +42,7 @@
 #include "script/condition/culture_condition.h"
 #include "script/condition/discovered_province_condition.h"
 #include "script/condition/discovered_region_condition.h"
+#include "script/condition/dungeon_condition.h"
 #include "script/condition/event_condition.h"
 #include "script/condition/game_rule_condition.h"
 #include "script/condition/government_type_condition.h"
@@ -195,6 +196,8 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			return std::make_unique<adjacent_terrain_condition>(value, condition_operator);
 		} else if (key == "can_gain_building_class") {
 			return std::make_unique<can_gain_building_class_condition>(value, condition_operator);
+		} else if (key == "dungeon") {
+			return std::make_unique<dungeon_condition>(value, condition_operator);
 		} else if (key == "has_pathway") {
 			return std::make_unique<has_pathway_condition>(value, condition_operator);
 		} else if (key == "has_route") {

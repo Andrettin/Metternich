@@ -6,6 +6,7 @@ enum class site_type {
 	none,
 	holding,
 	resource,
+	dungeon,
 	habitable_world,
 	celestial_body
 };

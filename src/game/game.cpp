@@ -923,6 +923,8 @@ void game::apply_sites()
 			const site_history *site_history = site->get_history();
 
 			if (site->get_holding_type() != nullptr && site_history->is_developed()) {
+				assert_throw(site_history->get_dungeon() == nullptr);
+
 				site_game_data->set_holding_type(site->get_holding_type());
 
 				if (tile->get_resource() != nullptr) {
@@ -933,11 +935,15 @@ void game::apply_sites()
 					throw std::runtime_error(std::format("Site \"{}\" has a holding type in history, but is not a holding.", site->get_identifier()));
 				}
 
+				assert_throw(site_history->get_dungeon() == nullptr);
+
 				site_game_data->set_holding_type(site_history->get_holding_type());
 
 				if (tile->get_resource() != nullptr) {
 					map::get()->set_tile_resource_discovered(site_game_data->get_tile_pos(), true);
 				}
+			} else if (site_history->get_dungeon() != nullptr) {
+				site_game_data->set_dungeon(site_history->get_dungeon());
 			}
 		}
 	}

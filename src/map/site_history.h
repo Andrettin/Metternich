@@ -6,12 +6,14 @@
 #include "util/centesimal_int.h"
 
 Q_MOC_INCLUDE("domain/culture.h")
+Q_MOC_INCLUDE("infrastructure/dungeon.h")
 Q_MOC_INCLUDE("infrastructure/holding_type.h")
 Q_MOC_INCLUDE("religion/religion.h")
 
 namespace metternich {
 
 class building_type;
+class dungeon;
 class holding_type;
 class improvement;
 class site;
@@ -27,7 +29,8 @@ class site_history final : public data_entry_history
 	Q_PROPERTY(bool developed MEMBER developed)
 	Q_PROPERTY(int development_level MEMBER development_level)
 	Q_PROPERTY(site_tier tier READ get_tier WRITE set_tier)
-	Q_PROPERTY(metternich::holding_type* holding_type MEMBER holding_type)
+	Q_PROPERTY(const metternich::holding_type* holding_type MEMBER holding_type)
+	Q_PROPERTY(const metternich::dungeon* dungeon MEMBER dungeon)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture)
 	Q_PROPERTY(metternich::religion* religion MEMBER religion)
 	Q_PROPERTY(int population READ get_population WRITE set_population)
@@ -73,6 +76,11 @@ public:
 	const metternich::holding_type *get_holding_type() const
 	{
 		return this->holding_type;
+	}
+
+	const metternich::dungeon *get_dungeon() const
+	{
+		return this->dungeon;
 	}
 
 	const std::map<improvement_slot, const improvement *> &get_improvements() const
@@ -197,7 +205,8 @@ private:
 	bool resource_discovered = false;
 	bool developed = false;
 	int development_level = 0;
-	metternich::holding_type *holding_type = nullptr;
+	const metternich::holding_type *holding_type = nullptr;
+	const metternich::dungeon *dungeon = nullptr;
 	metternich::culture *culture = nullptr;
 	metternich::religion *religion = nullptr;
 	std::map<improvement_slot, const improvement *> improvements;
