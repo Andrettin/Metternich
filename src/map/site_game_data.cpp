@@ -565,6 +565,10 @@ void site_game_data::set_dungeon(const metternich::dungeon *dungeon)
 
 	if (game::get()->is_running()) {
 		emit dungeon_changed();
+
+		if (this->get_province() != nullptr) {
+			emit this->get_province()->get_game_data()->visible_sites_changed();
+		}
 	}
 }
 
