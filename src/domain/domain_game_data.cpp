@@ -2662,6 +2662,15 @@ void domain_game_data::remove_character(const character *character)
 
 void domain_game_data::check_characters()
 {
+	for (const character *character : this->get_characters()) {
+		character_game_data *character_game_data = character->get_game_data();
+		if (character_game_data->get_hit_points() < character_game_data->get_max_hit_points()) {
+			assert_throw(character_game_data->get_hit_points() > 0);
+			//recover hit points
+			character_game_data->set_hit_points(character_game_data->get_max_hit_points());
+		}
+	}
+
 	const std::vector<const character *> characters = this->get_characters();
 	const QDate &current_date = game::get()->get_next_date();
 	for (const character *character : characters) {
