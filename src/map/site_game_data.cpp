@@ -457,6 +457,8 @@ void site_game_data::set_holding_type(const metternich::holding_type *holding_ty
 	}
 
 	if (this->get_holding_type() != nullptr) {
+		assert_throw(this->get_dungeon() == nullptr);
+
 		if (this->get_holding_type()->get_modifier() != nullptr) {
 			this->get_holding_type()->get_modifier()->apply(this->site, 1);
 		}
