@@ -30,6 +30,8 @@ Flickable {
 						if (site.game_data.province.game_data.provincial_capital === site) {
 							status_text += " (Provincial Capital)"
 						}
+					} else if (site.game_data.dungeon !== null) {
+						status_text = site.game_data.dungeon.name + " (Dungeon)"
 					} else if (site.holding_type !== null) {
 						status_text = site.game_data.current_cultural_name + " (" + site.holding_type.name + " Slot)"
 					} else {
