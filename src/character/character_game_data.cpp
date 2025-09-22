@@ -8,6 +8,7 @@
 #include "character/character_history.h"
 #include "character/character_trait.h"
 #include "character/character_trait_type.h"
+#include "character/monster_type.h"
 #include "database/defines.h"
 #include "domain/country_government.h"
 #include "domain/country_military.h"
@@ -602,6 +603,16 @@ int64_t character_game_data::get_experience_for_level(const int level) const
 	}
 
 	return experience;
+}
+
+int64_t character_game_data::get_experience_award() const
+{
+	if (this->character->get_monster_type() != nullptr) {
+		return this->character->get_monster_type()->get_experience_award();
+	}
+
+	//FIXME: award experience for defeating characters without a monster type
+	return 0;
 }
 
 void character_game_data::change_attribute_value(const character_attribute *attribute, const int change)

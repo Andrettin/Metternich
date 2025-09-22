@@ -103,7 +103,7 @@ bool character::skill_compare(const character *lhs, const character *rhs)
 	return lhs->get_identifier() < rhs->get_identifier();
 }
 
-const character *character::generate(const metternich::species *species, const metternich::character_class *character_class, const int level, const metternich::culture *culture, const metternich::religion *religion, const site *home_site)
+const character *character::generate(const metternich::species *species, const metternich::character_class *character_class, const int level, const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site)
 {
 	auto generated_character = make_qunique<character>(QUuid::createUuid().toString(QUuid::WithoutBraces).toStdString());
 	generated_character->moveToThread(QApplication::instance()->thread());
@@ -112,6 +112,7 @@ const character *character::generate(const metternich::species *species, const m
 	generated_character->character_class = character_class;
 	generated_character->get_game_data()->set_character_class(character_class);
 	generated_character->level = level;
+	generated_character->monster_type = monster_type;
 	if (culture != nullptr) {
 		generated_character->culture = const_cast<metternich::culture *>(culture);
 	} else if (!generated_character->get_species()->get_cultures().empty()) {
@@ -149,7 +150,7 @@ const character *character::generate(const metternich::species *species, const m
 
 const character *character::generate(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site)
 {
-	return character::generate(monster_type->get_species(), monster_type->get_character_class(), monster_type->get_level(), culture, religion, home_site);
+	return character::generate(monster_type->get_species(), monster_type->get_character_class(), monster_type->get_level(), monster_type, culture, religion, home_site);
 }
 
 character::character(const std::string &identifier)

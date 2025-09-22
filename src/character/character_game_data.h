@@ -127,6 +127,7 @@ public:
 
 	void change_experience(const int64_t change);
 	int64_t get_experience_for_level(const int level) const;
+	int64_t get_experience_award() const;
 
 	const data_entry_map<character_attribute, int> &get_attribute_values() const
 	{

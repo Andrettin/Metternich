@@ -2302,6 +2302,8 @@ void game::do_combat_round(const std::vector<const character *> &characters, std
 
 	assert_throw(!enemy_characters.empty());
 
+	int64_t experience_award = 0;
+
 	for (const character *character : characters) {
 		const metternich::character *chosen_enemy = vector::get_random(enemy_characters);
 
@@ -2319,7 +2321,15 @@ void game::do_combat_round(const std::vector<const character *> &characters, std
 		chosen_enemy->get_game_data()->change_hit_points(-damage);
 
 		if (chosen_enemy->get_game_data()->is_dead()) {
+			experience_award += chosen_enemy->get_game_data()->get_experience_award();
 			std::erase(enemy_characters, chosen_enemy);
+		}
+	}
+
+	if (experience_award > 0) {
+		const int64_t experience_award_per_character = experience_award / static_cast<int64_t>(characters.size());
+		for (const character *character : characters) {
+			character->get_game_data()->change_experience(experience_award_per_character);
 		}
 	}
 }
