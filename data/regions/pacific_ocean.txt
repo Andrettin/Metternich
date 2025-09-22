@@ -1,4 +1,5 @@
 pacific_ocean = {
 	name = "Pacific Ocean"
 	ocean = true
+	world = earth
 }

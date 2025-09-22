@@ -1,6 +1,7 @@
 atlantic_ocean = {
 	name = "Atlantic Ocean"
 	ocean = true
+	world = earth
 }
 
 baltic_sea = {

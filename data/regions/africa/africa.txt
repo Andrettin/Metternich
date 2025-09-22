@@ -1,4 +1,6 @@
 africa = {
+	world = earth
+	
 	history = {
 		-10000 = {
 			population = 241900 #Africa had a population of c. 241,900 in 10000 BC; Source: http://themasites.pbl.nl/tridion/en/themasites/hyde/basicdrivingfactors/population/index-2.html

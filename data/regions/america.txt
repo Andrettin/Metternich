@@ -1,3 +1,4 @@
 america = {
 	name = "America"
+	world = earth
 }

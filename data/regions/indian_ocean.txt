@@ -1,4 +1,5 @@
 indian_ocean = {
 	name = "Indian Ocean"
 	ocean = true
+	world = earth
 }
