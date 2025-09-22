@@ -16,6 +16,18 @@ middle_eastern = {
 		explored_provinces += djibouti
 		explored_provinces += somaliland
 		
+		450 = {
+			technologies += dark_ages
+		}
+		
+		1100 = {
+			technologies += middle_ages
+		}
+		
+		1450 = {
+			technologies += renaissance
+		}
+
 		1815 = {
 			explored_regions += atlantic_ocean
 			explored_regions += europe
