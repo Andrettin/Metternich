@@ -8,4 +8,8 @@ druid = {
 		half_elf
 		human
 	}
+	min_attribute_values = {
+		wisdom = 12
+		charisma = 15
+	}
 }

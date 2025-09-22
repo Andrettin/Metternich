@@ -9,4 +9,9 @@ bard = {
 		half_elf
 		human
 	}
+	min_attribute_values = {
+		dexterity = 12
+		intelligence = 13
+		charisma = 15
+	}
 }

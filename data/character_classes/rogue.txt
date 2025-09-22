@@ -12,6 +12,9 @@ rogue = {
 		halfling
 		human
 	}
+	min_attribute_values = {
+		dexterity = 9
+	}
 	experience_per_level = {
 		1 = 0
 		2 = 1250

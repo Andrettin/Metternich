@@ -10,4 +10,10 @@ ranger = {
 		halfling
 		human
 	}
+	min_attribute_values = {
+		strength = 13
+		dexterity = 13
+		constitution = 14
+		wisdom = 14
+	}
 }

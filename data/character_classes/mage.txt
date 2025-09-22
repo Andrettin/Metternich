@@ -9,6 +9,9 @@ mage = {
 		half_elf
 		human
 	}
+	min_attribute_values = {
+		intelligence = 9
+	}
 	experience_per_level = {
 		1 = 0
 		2 = 2500

@@ -8,4 +8,10 @@ paladin = {
 	allowed_species = {
 		human
 	}
+	min_attribute_values = {
+		strength = 12
+		constitution = 9
+		wisdom = 13
+		charisma = 17
+	}
 }

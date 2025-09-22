@@ -10,6 +10,9 @@ cleric = {
 		halfling
 		human
 	}
+	min_attribute_values = {
+		wisdom = 9
+	}
 	experience_per_level = {
 		1 = 0
 		2 = 1500

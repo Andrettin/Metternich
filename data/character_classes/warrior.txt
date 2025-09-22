@@ -12,6 +12,9 @@ warrior = {
 		halfling
 		human
 	}
+	min_attribute_values = {
+		strength = 9
+	}
 	experience_per_level = {
 		1 = 0
 		2 = 2000
