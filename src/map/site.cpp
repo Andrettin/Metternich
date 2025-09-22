@@ -67,7 +67,7 @@ void site::process_gsml_scope(const gsml_data &scope)
 
 void site::initialize()
 {
-	assert_throw(this->world != nullptr || this->is_celestial_body());
+	assert_throw(this->world != nullptr || this->is_celestial_body() || !this->get_generation_regions().empty());
 	if (this->world != nullptr) {
 		this->world->add_site(this);
 	}
