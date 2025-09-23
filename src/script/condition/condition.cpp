@@ -18,6 +18,7 @@
 #include "script/condition/any_known_country_condition.h"
 #include "script/condition/any_neighbor_country_condition.h"
 #include "script/condition/any_settlement_condition.h"
+#include "script/condition/any_site_condition.h"
 #include "script/condition/any_subject_country_condition.h"
 #include "script/condition/artillery_condition.h"
 #include "script/condition/attacking_commander_condition.h"
@@ -48,6 +49,7 @@
 #include "script/condition/government_type_condition.h"
 #include "script/condition/has_building_condition.h"
 #include "script/condition/has_building_class_condition.h"
+#include "script/condition/has_character_condition.h"
 #include "script/condition/has_flag_condition.h"
 #include "script/condition/has_pathway_condition.h"
 #include "script/condition/has_population_culture_condition.h"
@@ -149,6 +151,8 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			return std::make_unique<discovered_region_condition>(value, condition_operator);
 		} else if (key == "government_type") {
 			return std::make_unique<government_type_condition>(value, condition_operator);
+		} else if (key == "has_character") {
+			return std::make_unique<has_character_condition>(value, condition_operator);
 		} else if (key == "has_flag") {
 			return std::make_unique<has_flag_condition>(value, condition_operator);
 		} else if (key == "independent") {
@@ -360,6 +364,8 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 	if constexpr (std::is_same_v<scope_type, domain> || std::is_same_v<scope_type, province>) {
 		if (tag == "any_settlement") {
 			condition = std::make_unique<any_settlement_condition<scope_type>>(condition_operator);
+		} else if (tag == "any_site") {
+			condition = std::make_unique<any_site_condition<scope_type>>(condition_operator);
 		} else if (tag == "ruler") {
 			condition = std::make_unique<ruler_scope_condition<scope_type>>(condition_operator);
 		}

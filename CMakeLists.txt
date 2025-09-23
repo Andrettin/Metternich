@@ -571,6 +571,7 @@ set(script_condition_HDRS
 	src/script/condition/any_known_country_condition.h
 	src/script/condition/any_neighbor_country_condition.h
 	src/script/condition/any_settlement_condition.h
+	src/script/condition/any_site_condition.h
 	src/script/condition/any_subject_country_condition.h
 	src/script/condition/artillery_condition.h
 	src/script/condition/attacking_commander_condition.h
@@ -601,6 +602,7 @@ set(script_condition_HDRS
 	src/script/condition/government_type_condition.h
 	src/script/condition/has_building_class_condition.h
 	src/script/condition/has_building_condition.h
+	src/script/condition/has_character_condition.h
 	src/script/condition/has_flag_condition.h
 	src/script/condition/has_pathway_condition.h
 	src/script/condition/has_population_culture_condition.h
