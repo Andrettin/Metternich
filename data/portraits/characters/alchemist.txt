@@ -8,6 +8,7 @@ alchemist = {
 		}
 		or = {
 			character_class = engineer
+			character_class = mage
 			character_class = natural_scientist
 		}
 	}
