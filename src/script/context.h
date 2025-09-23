@@ -101,6 +101,18 @@ struct context_base
 		return nullptr;
 	}
 
+	const std::string &get_saved_string(const std::string &name) const
+	{
+		const auto find_iterator = this->saved_strings.find(name);
+
+		if (find_iterator != this->saved_strings.end()) {
+			return find_iterator->second;
+		}
+
+		static const std::string empty_str;
+		return empty_str;
+	}
+
 	scope_variant_type root_scope = std::monostate();
 	scope_variant_type source_scope = std::monostate();
 	scope_variant_type previous_scope = std::monostate();
@@ -109,6 +121,7 @@ struct context_base
 	std::map<std::string, population_unit_ptr> saved_population_unit_scopes;
 	std::map<std::string, const province *> saved_province_scopes;
 	std::map<std::string, const site *> saved_site_scopes;
+	std::map<std::string, std::string> saved_strings;
 	army_ptr attacking_army = nullptr;
 	army_ptr defending_army = nullptr;
 	party_ptr party;
@@ -166,6 +179,7 @@ public:
 		this->saved_domain_scopes = ctx.saved_domain_scopes;
 		this->saved_province_scopes = ctx.saved_province_scopes;
 		this->saved_site_scopes = ctx.saved_site_scopes;
+		this->saved_strings = ctx.saved_strings;
 
 		this->attacking_army = ctx.attacking_army;
 		this->defending_army = ctx.defending_army;

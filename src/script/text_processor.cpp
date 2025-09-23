@@ -43,6 +43,9 @@ std::string text_processor::process_tokens(std::queue<std::string> &&tokens, con
 	} else if (front_subtoken == "saved_site_scope") {
 		const std::string scope_name = queue::take(subtokens);
 		str = this->process_site_tokens(this->context.get_saved_scope<const site>(scope_name), tokens);
+	} else if (front_subtoken == "saved_string") {
+		const std::string name = queue::take(subtokens);
+		str = this->context.get_saved_string(name);
 	} else {
 		throw std::runtime_error("Failed to process token \"" + token + "\".");
 	}

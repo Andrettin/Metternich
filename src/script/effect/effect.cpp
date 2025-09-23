@@ -43,6 +43,7 @@
 #include "script/effect/random_neighbor_country_effect.h"
 #include "script/effect/random_settlement_effect.h"
 #include "script/effect/save_scope_as_effect.h"
+#include "script/effect/save_string_as_effect.h"
 #include "script/effect/saved_scope_effect.h"
 #include "script/effect/scripted_effect_effect.h"
 #include "script/effect/scripted_modifiers_effect.h"
@@ -193,6 +194,8 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 		effect = std::make_unique<random_effect<scope_type>>(effect_operator);
 	} else if (effect_identifier == "random_list") {
 		effect = std::make_unique<random_list_effect<scope_type>>(effect_operator);
+	} else if (effect_identifier == "save_string_as") {
+		effect = std::make_unique<save_string_as_effect<scope_type>>(effect_operator);
 	} else if (effect_identifier == "saved_character_scope") {
 		effect = std::make_unique<saved_scope_effect<scope_type, const character>>(effect_operator);
 	} else if (effect_identifier == "saved_country_scope") {
