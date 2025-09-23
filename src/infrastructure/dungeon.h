@@ -13,9 +13,6 @@ class site;
 template <typename scope_type>
 class and_condition;
 
-template <typename scope_type>
-class modifier;
-
 class dungeon final : public named_data_entry, public data_type<dungeon>
 {
 	Q_OBJECT

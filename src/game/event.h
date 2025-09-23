@@ -18,7 +18,7 @@ class event : public named_data_entry
 {
 	Q_OBJECT
 
-	Q_PROPERTY(metternich::portrait* portrait MEMBER portrait NOTIFY changed)
+	Q_PROPERTY(const metternich::portrait* portrait READ get_portrait WRITE set_portrait NOTIFY changed)
 	Q_PROPERTY(bool circular_portrait MEMBER circular_portrait READ has_circular_portrait NOTIFY changed)
 	Q_PROPERTY(QString description READ get_description_qstring NOTIFY changed)
 	Q_PROPERTY(metternich::event_trigger trigger MEMBER trigger READ get_trigger)
@@ -39,6 +39,16 @@ public:
 	virtual void initialize() override;
 
 	virtual std::string_view get_event_type_string() const = 0;
+
+	const metternich::portrait *get_portrait() const
+	{
+		return this->portrait;
+	}
+
+	void set_portrait(const metternich::portrait *portrait)
+	{
+		this->portrait = portrait;
+	}
 
 	bool has_circular_portrait() const
 	{
@@ -129,7 +139,7 @@ signals:
 	void changed();
 
 private:
-	metternich::portrait *portrait = nullptr;
+	const metternich::portrait *portrait = nullptr;
 	bool circular_portrait = false;
 	std::string description;
 	event_trigger trigger;
