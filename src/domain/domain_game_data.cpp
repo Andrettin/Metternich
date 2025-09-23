@@ -2754,7 +2754,7 @@ void domain_game_data::add_character(const character *character)
 
 void domain_game_data::remove_character(const character *character)
 {
-	assert_throw(character->get_game_data()->get_domain() != this->domain);
+	assert_throw(character->get_game_data()->get_domain() == this->domain);
 	assert_throw(vector::contains(this->get_characters(), character));
 	std::erase(this->characters, character);
 
