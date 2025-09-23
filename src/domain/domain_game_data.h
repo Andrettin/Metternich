@@ -317,7 +317,7 @@ public:
 
 	bool is_alive() const
 	{
-		return !this->get_provinces().empty() && !this->get_sites().empty();
+		return !this->get_provinces().empty() || !this->get_sites().empty();
 	}
 
 	bool is_under_anarchy() const
