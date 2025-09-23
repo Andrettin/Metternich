@@ -4,6 +4,7 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
+#include "character/party.h"
 #include "database/defines.h"
 #include "database/gsml_data.h"
 #include "database/gsml_property.h"
@@ -17,12 +18,14 @@
 #include "economy/commodity.h"
 #include "economy/resource.h"
 #include "engine_interface.h"
+#include "game/domain_event.h"
 #include "game/event_trigger.h"
 #include "game/game.h"
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot_type.h"
 #include "infrastructure/building_type.h"
 #include "infrastructure/dungeon.h"
+#include "infrastructure/dungeon_area.h"
 #include "infrastructure/holding_type.h"
 #include "infrastructure/improvement.h"
 #include "infrastructure/improvement_slot.h"
@@ -565,6 +568,8 @@ void site_game_data::set_dungeon(const metternich::dungeon *dungeon)
 	}
 
 	this->dungeon = dungeon;
+
+	this->explored_dungeon_areas.clear();
 
 	if (game::get()->is_running()) {
 		emit dungeon_changed();
@@ -1431,8 +1436,59 @@ QVariantList site_game_data::get_visiting_armies_qvariant_list() const
 	return container::to_qvariant_list(this->get_visiting_armies());
 }
 
-void site_game_data::visit(const std::vector<const character *> &characters)
+void site_game_data::explore_dungeon(const std::shared_ptr<party> &party)
 {
+	assert_throw(!party->get_characters().empty());
+
+	const std::vector<const dungeon_area *> potential_dungeon_areas = this->get_potential_dungeon_areas();
+
+	if (potential_dungeon_areas.empty()) {
+		//the dungeon has been fully explored
+		this->set_dungeon(nullptr);
+		return;
+	}
+
+	const dungeon_area *dungeon_area = vector::get_random(potential_dungeon_areas);
+
+	context ctx(party->get_domain());
+	ctx.root_scope = party->get_domain();
+	ctx.source_scope = this->site;
+	ctx.party = party;
+	ctx.dungeon_area = dungeon_area;
+
+	dungeon_area->get_event()->fire(party->get_domain(), ctx);
+}
+
+std::vector<const dungeon_area *> site_game_data::get_potential_dungeon_areas() const
+{
+	bool needs_entrance = true;
+	for (const dungeon_area *dungeon_area : this->explored_dungeon_areas) {
+		if (dungeon_area->is_entrance()) {
+			needs_entrance = false;
+			break;
+		}
+	}
+
+	std::vector<const dungeon_area *> potential_dungeon_areas;
+
+	for (const dungeon_area *dungeon_area : dungeon_area::get_all()) {
+		if (dungeon_area->is_entrance() != needs_entrance) {
+			continue;
+		}
+
+		if (dungeon_area->get_conditions() != nullptr && !dungeon_area->get_conditions()->check(this->site, read_only_context(this->site))) {
+			continue;
+		}
+
+		potential_dungeon_areas.push_back(dungeon_area);
+	}
+
+	return potential_dungeon_areas;
+}
+
+void site_game_data::add_explored_dungeon_area(const dungeon_area *dungeon_area)
+{
+	this->explored_dungeon_areas.insert(dungeon_area);
 }
 
 }

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "database/data_entry_container.h"
 #include "economy/commodity_container.h"
 #include "infrastructure/building_slot_type_container.h"
 #include "script/scripted_modifier_container.h"
@@ -26,6 +27,7 @@ class domain;
 class dungeon;
 class holding_type;
 class improvement;
+class party;
 class pathway;
 class phenotype;
 class population;
@@ -430,7 +432,9 @@ public:
 		emit visiting_armies_changed();
 	}
 
-	void visit(const std::vector<const character *> &characters);
+	void explore_dungeon(const std::shared_ptr<party> &party);
+	std::vector<const dungeon_area *> get_potential_dungeon_areas() const;
+	void add_explored_dungeon_area(const dungeon_area *dungeon_area);
 
 signals:
 	void title_name_changed();
@@ -454,6 +458,7 @@ private:
 	const metternich::religion *religion = nullptr;
 	const metternich::holding_type *holding_type = nullptr;
 	const metternich::dungeon *dungeon = nullptr;
+	data_entry_set<dungeon_area> explored_dungeon_areas;
 	std::map<improvement_slot, const improvement *> improvements;
 	bool resource_discovered = false;
 	std::vector<qunique_ptr<settlement_building_slot>> building_slots;

@@ -28,6 +28,7 @@
 #include "script/effect/else_effect.h"
 #include "script/effect/event_effect.h"
 #include "script/effect/experience_effect.h"
+#include "script/effect/explore_dungeon_effect.h"
 #include "script/effect/free_technologies_effect.h"
 #include "script/effect/gain_spell_scroll_effect.h"
 #include "script/effect/hidden_effect.h"
@@ -76,6 +77,8 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 			return std::make_unique<create_military_unit_effect>(value, effect_operator);
 		} else if (key == "create_transporter") {
 			return std::make_unique<create_transporter_effect>(value, effect_operator);
+		} else if (key == "explore_dungeon") {
+			return std::make_unique<explore_dungeon_effect>(value, effect_operator);
 		} else if (key == "free_technologies") {
 			return std::make_unique<free_technologies_effect>(value, effect_operator);
 		} else if (key == "gain_spell_scroll") {

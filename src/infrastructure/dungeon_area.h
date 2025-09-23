@@ -77,7 +77,7 @@ private:
 	std::string description;
 	bool entrance = false;
 	std::unique_ptr<const and_condition<site>> conditions;
-	const domain_event *event = nullptr;
+	domain_event *event = nullptr;
 };
 
 }

@@ -11,6 +11,7 @@ namespace metternich {
 class army;
 class character;
 class domain;
+class dungeon_area;
 class military_unit;
 class party;
 class population_unit;
@@ -111,6 +112,7 @@ struct context_base
 	army_ptr attacking_army = nullptr;
 	army_ptr defending_army = nullptr;
 	party_ptr party;
+	const dungeon_area *dungeon_area = nullptr;
 };
 
 extern template struct context_base<false>;
@@ -169,6 +171,7 @@ public:
 		this->defending_army = ctx.defending_army;
 
 		this->party = ctx.party;
+		this->dungeon_area = ctx.dungeon_area;
 
 		for (const auto &[str, population_unit] : ctx.saved_population_unit_scopes) {
 			this->saved_population_unit_scopes[str] = population_unit;
