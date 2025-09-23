@@ -31,6 +31,7 @@ set(character_SRCS
 	src/character/dynasty.cpp
 	src/character/family_tree_model.cpp
 	src/character/monster_type.cpp
+	src/character/party.cpp
 )
 source_group(character FILES ${character_SRCS})
 set_source_files_properties(${character_SRCS} PROPERTIES UNITY_GROUP "character")
@@ -352,6 +353,7 @@ set(character_HDRS
 	src/character/dynasty.h
 	src/character/family_tree_model.h
 	src/character/monster_type.h
+	src/character/party.h
 	src/character/starting_age_category.h
 )
 source_group(character FILES ${character_HDRS})
