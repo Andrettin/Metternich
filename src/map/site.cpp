@@ -98,8 +98,8 @@ void site::check() const
 
 	switch (this->get_type()) {
 		case site_type::holding:
-			if (this->get_province() == nullptr) {
-				log::log_error(std::format("Holding site \"{}\" has no province.", this->get_identifier()));
+			if (this->get_province() == nullptr && this->get_generation_regions().empty()) {
+				log::log_error(std::format("Holding site \"{}\" has neither a province nor generation regions.", this->get_identifier()));
 			}
 			break;
 		case site_type::habitable_world:
