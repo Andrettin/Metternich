@@ -66,7 +66,7 @@ public:
 		if constexpr (std::is_same_v<scope_type, const character>) {
 			return this->character_events;
 		} else if constexpr (std::is_same_v<scope_type, const domain>) {
-			return this->country_events;
+			return this->domain_events;
 		} else if constexpr (std::is_same_v<scope_type, const province>) {
 			return this->province_events;
 		} else if constexpr (std::is_same_v<scope_type, const site>) {
@@ -81,7 +81,7 @@ public:
 
 	void add_event(const scoped_event_base<const domain> *event)
 	{
-		this->country_events.push_back(event);
+		this->domain_events.push_back(event);
 	}
 
 	void add_event(const scoped_event_base<const province> *event)
@@ -100,7 +100,7 @@ private:
 	int delay = 0;
 	int delay_days = 0;
 	std::vector<const scoped_event_base<const character> *> character_events;
-	std::vector<const scoped_event_base<const domain> *> country_events;
+	std::vector<const scoped_event_base<const domain> *> domain_events;
 	std::vector<const scoped_event_base<const province> *> province_events;
 	std::vector<const scoped_event_base<const site> *> site_events;
 };

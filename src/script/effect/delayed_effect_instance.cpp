@@ -7,7 +7,7 @@
 #include "database/gsml_data.h"
 #include "database/gsml_property.h"
 #include "game/character_event.h"
-#include "game/country_event.h"
+#include "game/domain_event.h"
 #include "game/province_event.h"
 #include "game/site_event.h"
 #include "script/effect/scripted_effect.h"
@@ -59,7 +59,7 @@ void delayed_effect_instance<scope_type>::process_gsml_property(const gsml_prope
 		if constexpr (std::is_same_v<scope_type, const character>) {
 			this->event = character_event::get(value);
 		} else if constexpr (std::is_same_v<scope_type, const domain>) {
-			this->event = country_event::get(value);
+			this->event = domain_event::get(value);
 		} else if constexpr (std::is_same_v<scope_type, const province>) {
 			this->event = province_event::get(value);
 		} else if constexpr (std::is_same_v<scope_type, const site>) {

@@ -18,7 +18,7 @@
 #include "domain/law_group.h"
 #include "domain/office.h"
 #include "engine_interface.h"
-#include "game/country_event.h"
+#include "game/domain_event.h"
 #include "game/event_trigger.h"
 #include "game/game.h"
 #include "game/game_rules.h"
@@ -508,7 +508,7 @@ void country_government::on_office_holder_died(const office *office, const chara
 		if (office->is_ruler()) {
 			context ctx(this->domain);
 			ctx.source_scope = office_holder;
-			country_event::check_events_for_scope(this->domain, event_trigger::ruler_death, ctx);
+			domain_event::check_events_for_scope(this->domain, event_trigger::ruler_death, ctx);
 		}
 	}
 

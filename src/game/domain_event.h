@@ -7,14 +7,14 @@ namespace metternich {
 
 class domain;
 
-class country_event final : public event, public data_type<country_event>, public scoped_event_base<const domain>
+class domain_event final : public event, public data_type<domain_event>, public scoped_event_base<const domain>
 {
 	Q_OBJECT
 
 public:
-	static constexpr const char class_identifier[] = "country_event";
-	static constexpr const char property_class_identifier[] = "metternich::country_event*";
-	static constexpr const char database_folder[] = "events/country";
+	static constexpr const char class_identifier[] = "domain_event";
+	static constexpr const char property_class_identifier[] = "metternich::domain_event*";
+	static constexpr const char database_folder[] = "events/domain";
 
 	static void clear()
 	{
@@ -22,7 +22,7 @@ public:
 		scoped_event_base::clear();
 	}
 
-	explicit country_event(const std::string &identifier) : event(identifier)
+	explicit domain_event(const std::string &identifier) : event(identifier)
 	{
 	}
 
@@ -62,7 +62,7 @@ public:
 
 	virtual std::string_view get_event_type_string() const override
 	{
-		return "country";
+		return "domain";
 	}
 
 	virtual event_trigger get_trigger() const override

@@ -2,7 +2,7 @@
 
 #include "database/defines.h"
 #include "game/character_event.h"
-#include "game/country_event.h"
+#include "game/domain_event.h"
 #include "game/game.h"
 #include "game/province_event.h"
 #include "game/site_event.h"
@@ -55,7 +55,7 @@ public:
 			if constexpr (std::is_same_v<scope_type, const character>) {
 				this->event = character_event::get(value);
 			} else if constexpr (std::is_same_v<scope_type, const domain>) {
-				this->event = country_event::get(value);
+				this->event = domain_event::get(value);
 			} else if constexpr (std::is_same_v<scope_type, const province>) {
 				this->event = province_event::get(value);
 			} else if constexpr (std::is_same_v<scope_type, const site>) {

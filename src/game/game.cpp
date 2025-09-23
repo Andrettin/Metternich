@@ -33,7 +33,7 @@
 #include "economy/resource.h"
 #include "engine_interface.h"
 #include "game/character_event.h"
-#include "game/country_event.h"
+#include "game/domain_event.h"
 #include "game/game_rules.h"
 #include "game/province_event.h"
 #include "game/scenario.h"
@@ -226,8 +226,8 @@ void game::process_gsml_scope(const gsml_data &scope)
 				const metternich::event *event = nullptr;
 				if (event_type_string == "character") {
 					event = character_event::get(child_value);
-				} else if (event_type_string == "country") {
-					event = country_event::get(child_value);
+				} else if (event_type_string == "domain") {
+					event = domain_event::get(child_value);
 				} else if (event_type_string == "province") {
 					event = province_event::get(child_value);
 				} else if (event_type_string == "site") {

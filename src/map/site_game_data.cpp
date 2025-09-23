@@ -17,7 +17,6 @@
 #include "economy/commodity.h"
 #include "economy/resource.h"
 #include "engine_interface.h"
-#include "game/country_event.h"
 #include "game/event_trigger.h"
 #include "game/game.h"
 #include "infrastructure/building_class.h"

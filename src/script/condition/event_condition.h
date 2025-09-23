@@ -1,7 +1,7 @@
 #pragma once
 
 #include "game/character_event.h"
-#include "game/country_event.h"
+#include "game/domain_event.h"
 #include "game/province_event.h"
 #include "game/site_event.h"
 #include "script/condition/condition.h"
@@ -19,7 +19,7 @@ public:
 		if constexpr (std::is_same_v<scope_type, character>) {
 			this->event = character_event::get(value);
 		} else if constexpr (std::is_same_v<scope_type, domain>) {
-			this->event = country_event::get(value);
+			this->event = domain_event::get(value);
 		} else if constexpr (std::is_same_v<scope_type, province>) {
 			this->event = province_event::get(value);
 		} else if constexpr (std::is_same_v<scope_type, site>) {

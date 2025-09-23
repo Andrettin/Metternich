@@ -21,7 +21,7 @@ void event_random_group::initialize()
 	if (this->get_none_weight() > 0) {
 		for (int i = 0; i < this->get_none_weight(); ++i) {
 			this->character_events.push_back(nullptr);
-			this->country_events.push_back(nullptr);
+			this->domain_events.push_back(nullptr);
 			this->province_events.push_back(nullptr);
 			this->site_events.push_back(nullptr);
 		}

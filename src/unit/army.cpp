@@ -6,7 +6,7 @@
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
 #include "engine_interface.h"
-#include "game/country_event.h"
+#include "game/domain_event.h"
 #include "game/event_trigger.h"
 #include "game/game.h"
 #include "infrastructure/improvement.h"
@@ -121,7 +121,7 @@ void army::do_turn()
 		context ctx(this->get_country());
 		ctx.source_scope = target_site;
 		ctx.attacking_army = this;
-		country_event::check_events_for_scope(domain, event_trigger::site_visited, ctx);
+		domain_event::check_events_for_scope(domain, event_trigger::site_visited, ctx);
 
 		target_site_game_data->set_improvement(improvement_slot::main, nullptr);
 	}

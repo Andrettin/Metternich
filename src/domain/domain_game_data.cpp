@@ -34,7 +34,7 @@
 #include "economy/income_transaction_type.h"
 #include "economy/resource.h"
 #include "engine_interface.h"
-#include "game/country_event.h"
+#include "game/domain_event.h"
 #include "game/event_trigger.h"
 #include "game/game.h"
 #include "game/game_rules.h"
@@ -478,15 +478,15 @@ void domain_game_data::do_events()
 
 	const bool is_last_turn_of_year = game::get()->get_year() != game::get()->get_next_date().year();
 	if (is_last_turn_of_year) {
-		country_event::check_events_for_scope(this->domain, event_trigger::yearly_pulse);
+		domain_event::check_events_for_scope(this->domain, event_trigger::yearly_pulse);
 	}
 
 	const bool is_last_turn_of_quarter = is_last_turn_of_year || (game::get()->get_date().month() - 1) / 4 != (game::get()->get_next_date().month() - 1) / 4;
 	if (is_last_turn_of_quarter) {
-		country_event::check_events_for_scope(this->domain, event_trigger::quarterly_pulse);
+		domain_event::check_events_for_scope(this->domain, event_trigger::quarterly_pulse);
 	}
 
-	country_event::check_events_for_scope(this->domain, event_trigger::per_turn_pulse);
+	domain_event::check_events_for_scope(this->domain, event_trigger::per_turn_pulse);
 }
 
 bool domain_game_data::is_ai() const

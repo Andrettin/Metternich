@@ -8,7 +8,7 @@
 #include "domain/diplomacy_state.h"
 #include "economy/commodity.h"
 #include "game/character_event.h"
-#include "game/country_event.h"
+#include "game/domain_event.h"
 #include "game/event_trigger.h"
 #include "game/province_event.h"
 #include "map/direction.h"
@@ -185,7 +185,7 @@ void defines::initialize()
 
 	for (const auto &[event_trigger, random_weight] : this->get_event_trigger_none_random_weights()) {
 		character_event::add_trigger_none_random_weight(event_trigger, random_weight);
-		country_event::add_trigger_none_random_weight(event_trigger, random_weight);
+		domain_event::add_trigger_none_random_weight(event_trigger, random_weight);
 		province_event::add_trigger_none_random_weight(event_trigger, random_weight);
 	}
 
