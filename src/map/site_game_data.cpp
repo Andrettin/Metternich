@@ -218,7 +218,9 @@ bool site_game_data::is_capital() const
 
 bool site_game_data::can_be_capital() const
 {
-	assert_throw(this->site->is_settlement());
+	if (!this->site->is_settlement()) {
+		return false;
+	}
 
 	if (!this->is_built()) {
 		return false;
@@ -289,7 +291,7 @@ void site_game_data::set_owner(const domain *owner)
 			}
 		}
 
-		old_owner->get_game_data()->on_site_gained(this->site, -1);
+		old_owner->get_game_data()->remove_site(this->site);
 
 		for (const auto &[commodity, output] : this->get_commodity_outputs()) {
 			if (commodity->is_local()) {
@@ -345,7 +347,7 @@ void site_game_data::set_owner(const domain *owner)
 			}
 		}
 
-		this->get_owner()->get_game_data()->on_site_gained(this->site, 1);
+		this->get_owner()->get_game_data()->add_site(this->site);
 	}
 
 	if (this->site->is_settlement() && this->is_built()) {

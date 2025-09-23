@@ -101,6 +101,7 @@ class domain_game_data final : public QObject
 	Q_PROPERTY(const metternich::subject_type* subject_type READ get_subject_type NOTIFY subject_type_changed)
 	Q_PROPERTY(const metternich::government_type *government_type READ get_government_type NOTIFY government_type_changed)
 	Q_PROPERTY(QVariantList provinces READ get_provinces_qvariant_list NOTIFY provinces_changed)
+	Q_PROPERTY(QVariantList sites READ get_sites_qvariant_list NOTIFY sites_changed)
 	Q_PROPERTY(const metternich::site* capital READ get_capital NOTIFY capital_changed)
 	Q_PROPERTY(bool coastal READ is_coastal NOTIFY provinces_changed)
 	Q_PROPERTY(bool anarchy READ is_under_anarchy NOTIFY provinces_changed)
@@ -282,6 +283,14 @@ public:
 		return static_cast<int>(this->get_provinces().size());
 	}
 
+	const std::vector<const site *> &get_sites() const
+	{
+		return this->sites;
+	}
+
+	QVariantList get_sites_qvariant_list() const;
+	void add_site(const site *site);
+	void remove_site(const site *site);
 	void on_site_gained(const site *site, const int multiplier);
 
 	const site *get_capital() const
@@ -308,7 +317,7 @@ public:
 
 	bool is_alive() const
 	{
-		return !this->get_provinces().empty();
+		return !this->get_provinces().empty() && !this->get_sites().empty();
 	}
 
 	bool is_under_anarchy() const
@@ -1082,6 +1091,7 @@ signals:
 	void offered_diplomacy_states_changed();
 	void consulates_changed();
 	void provinces_changed();
+	void sites_changed();
 	void capital_changed();
 	void diplomatic_map_image_changed();
 	void score_changed();
@@ -1112,6 +1122,7 @@ private:
 	const metternich::domain *overlord = nullptr;
 	const metternich::government_type *government_type = nullptr;
 	std::vector<const province *> provinces;
+	std::vector<const site *> sites;
 	const site *capital = nullptr;
 	int settlement_count = 0; //only includes built settlements
 	std::vector<const province *> border_provinces;

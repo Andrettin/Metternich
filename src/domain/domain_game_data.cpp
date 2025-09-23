@@ -120,6 +120,8 @@ domain_game_data::domain_game_data(metternich::domain *domain)
 
 	connect(this, &domain_game_data::provinces_changed, this, &domain_game_data::income_changed);
 	connect(this, &domain_game_data::provinces_changed, this, &domain_game_data::maintenance_cost_changed);
+	connect(this, &domain_game_data::sites_changed, this, &domain_game_data::income_changed);
+	connect(this, &domain_game_data::sites_changed, this, &domain_game_data::maintenance_cost_changed);
 	connect(this->get_military(), &country_military::military_units_changed, this, &domain_game_data::maintenance_cost_changed);
 }
 
@@ -154,6 +156,10 @@ void domain_game_data::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->provinces.push_back(province::get(value));
 		}
+	} else if (tag == "sites") {
+		for (const std::string &value : values) {
+			this->sites.push_back(site::get(value));
+		}
 	} else if (tag == "characters") {
 		for (const std::string &value : values) {
 			this->characters.push_back(game::get()->get_character(value));
@@ -183,6 +189,12 @@ gsml_data domain_game_data::to_gsml_data() const
 		provinces_data.add_value(province->get_identifier());
 	}
 	data.add_child(std::move(provinces_data));
+
+	gsml_data sites_data("sites");
+	for (const site *site : this->get_sites()) {
+		sites_data.add_value(site->get_identifier());
+	}
+	data.add_child(std::move(sites_data));
 
 	gsml_data characters_data("characters");
 	for (const character *character : this->get_characters()) {
@@ -753,6 +765,8 @@ QVariantList domain_game_data::get_provinces_qvariant_list() const
 
 void domain_game_data::add_province(const province *province)
 {
+	const bool was_alive = this->is_alive();
+
 	this->explore_province(province);
 
 	this->provinces.push_back(province);
@@ -811,7 +825,7 @@ void domain_game_data::add_province(const province *province)
 
 	this->calculate_territory_rect();
 
-	if (this->get_provinces().size() == 1) {
+	if (this->is_alive() && !was_alive) {
 		game::get()->add_country(this->domain);
 	}
 
@@ -900,12 +914,20 @@ void domain_game_data::remove_province(const province *province)
 			}
 		}
 
-		if (!known_province) {
+		bool known_site = false;
+		for (const metternich::site *loop_site : this->get_sites()) {
+			if (domain->get_game_data()->is_province_discovered(loop_site->get_map_data()->get_province())) {
+				known_site = true;
+				break;
+			}
+		}
+
+		if (!known_province && !known_site) {
 			domain->get_game_data()->remove_known_country(this->domain);
 		}
 	}
 
-	if (this->get_provinces().empty()) {
+	if (!this->is_alive()) {
 		game::get()->remove_country(this->domain);
 	}
 
@@ -946,6 +968,89 @@ void domain_game_data::on_province_gained(const province *province, const int mu
 		for (const auto &[threshold, value] : threshold_map) {
 			province_game_data->change_commodity_bonus_for_tile_threshold(commodity, threshold, value * multiplier);
 		}
+	}
+}
+
+QVariantList domain_game_data::get_sites_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_sites());
+}
+
+void domain_game_data::add_site(const site *site)
+{
+	const bool was_alive = this->is_alive();
+
+	this->explore_province(site->get_map_data()->get_province());
+
+	this->sites.push_back(site);
+
+	if (this->is_alive() && !was_alive) {
+		game::get()->add_country(this->domain);
+	}
+
+	this->on_site_gained(site, 1);
+
+	if (this->get_capital() == nullptr) {
+		this->choose_capital();
+	}
+
+	if (game::get()->is_running()) {
+		emit sites_changed();
+	}
+}
+
+void domain_game_data::remove_site(const site *site)
+{
+	std::erase(this->sites, site);
+
+	if (this->get_capital() == site) {
+		this->choose_capital();
+	}
+
+	this->on_site_gained(site, -1);
+
+	//remove this as a known country for other countries, if they no longer have explored tiles in this country's territory
+	for (const metternich::domain *domain : game::get()->get_countries()) {
+		if (domain == this->domain) {
+			continue;
+		}
+
+		if (!domain->get_game_data()->is_country_known(this->domain)) {
+			continue;
+		}
+
+		if (!domain->get_game_data()->is_province_discovered(site->get_map_data()->get_province())) {
+			//the other country didn't have this province discovered, so its removal from this country's territory couldn't have impacted its knowability to them anyway
+			continue;
+		}
+
+		bool known_province = false;
+		for (const metternich::province *loop_province : this->get_provinces()) {
+			if (domain->get_game_data()->is_province_discovered(loop_province)) {
+				known_province = true;
+				break;
+			}
+		}
+
+		bool known_site = false;
+		for (const metternich::site *loop_site : this->get_sites()) {
+			if (domain->get_game_data()->is_province_discovered(loop_site->get_map_data()->get_province())) {
+				known_site = true;
+				break;
+			}
+		}
+
+		if (!known_province && !known_site) {
+			domain->get_game_data()->remove_known_country(this->domain);
+		}
+	}
+
+	if (!this->is_alive()) {
+		game::get()->remove_country(this->domain);
+	}
+
+	if (game::get()->is_running()) {
+		emit sites_changed();
 	}
 }
 
@@ -1031,26 +1136,24 @@ void domain_game_data::choose_capital()
 
 	const site *best_capital = nullptr;
 
-	for (const metternich::province *province : this->get_provinces()) {
-		for (const site *settlement : province->get_game_data()->get_settlement_sites()) {
-			const site_game_data *settlement_game_data = settlement->get_game_data();
+	for (const site *site : this->get_sites()) {
+		const site_game_data *site_game_data = site->get_game_data();
 
-			if (!settlement_game_data->can_be_capital()) {
+		if (!site_game_data->can_be_capital()) {
+			continue;
+		}
+
+		if (best_capital != nullptr) {
+			if (best_capital->get_game_data()->is_provincial_capital() && !site_game_data->is_provincial_capital()) {
 				continue;
 			}
 
-			if (best_capital != nullptr) {
-				if (best_capital->get_game_data()->is_provincial_capital() && !settlement_game_data->is_provincial_capital()) {
-					continue;
-				}
-
-				if (best_capital->get_game_data()->get_holding_type()->get_level() >= settlement_game_data->get_holding_type()->get_level()) {
-					continue;
-				}
+			if (best_capital->get_game_data()->get_holding_type()->get_level() >= site_game_data->get_holding_type()->get_level()) {
+				continue;
 			}
-
-			best_capital = settlement;
 		}
+
+		best_capital = site;
 	}
 
 	this->set_capital(best_capital);
@@ -3335,6 +3438,14 @@ void domain_game_data::explore_province(const province *province)
 		this->add_known_country(province_owner);
 	}
 
+	for (const site *site : province_game_data->get_sites()) {
+		const metternich::domain *site_owner = site->get_game_data()->get_owner();
+
+		if (site_owner != nullptr && site_owner != this->domain && !this->is_country_known(site_owner)) {
+			this->add_known_country(site_owner);
+		}
+	}
+
 	const province_map_data *province_map_data = province->get_map_data();
 
 	if (!this->explored_tiles.empty()) {
@@ -3606,14 +3717,12 @@ void domain_game_data::set_free_building_class_count(const building_class *build
 	} else if (old_value == 0) {
 		this->free_building_class_counts[building_class] = value;
 
-		for (const province *province : this->get_provinces()) {
-			for (const site *settlement : province->get_game_data()->get_settlement_sites()) {
-				if (!settlement->get_game_data()->is_built()) {
-					continue;
-				}
-
-				settlement->get_game_data()->check_free_buildings();
+		for (const site *site : this->get_sites()) {
+			if (!site->is_settlement() || !site->get_game_data()->is_built()) {
+				continue;
 			}
+
+			site->get_game_data()->check_free_buildings();
 		}
 	}
 }
