@@ -430,6 +430,8 @@ public:
 		emit visiting_armies_changed();
 	}
 
+	void visit(const std::vector<const character *> &characters);
+
 signals:
 	void title_name_changed();
 	void owner_changed();

@@ -24,6 +24,13 @@ Flickable {
 				
 				readonly property var site: model.modelData
 				
+				onClicked: {
+					if (site.game_data.dungeon !== null) {
+						dungeon_dialog.site = site
+						dungeon_dialog.open()
+					}
+				}
+				
 				onEntered: {
 					if (site.game_data.holding_type !== null) {
 						status_text = site.game_data.holding_type.name + " of " + site.game_data.current_cultural_name

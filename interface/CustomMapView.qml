@@ -112,6 +112,10 @@ Item {
 		id: military_unit_recruiment_dialog
 	}
 	
+	DungeonDialog {
+		id: dungeon_dialog
+	}
+	
 	SaveGameDialog {
 		id: save_game_dialog
 	}

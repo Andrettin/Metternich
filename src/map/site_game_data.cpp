@@ -1431,4 +1431,8 @@ QVariantList site_game_data::get_visiting_armies_qvariant_list() const
 	return container::to_qvariant_list(this->get_visiting_armies());
 }
 
+void site_game_data::visit(const std::vector<const character *> &characters)
+{
+}
+
 }
