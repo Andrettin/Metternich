@@ -12,6 +12,7 @@ class army;
 class character;
 class domain;
 class military_unit;
+class party;
 class population_unit;
 class province;
 class site;
@@ -22,6 +23,7 @@ struct context_base
 {
 	using army_ptr = std::conditional_t<read_only, const army *, army *>;
 	using military_unit_ptr = std::conditional_t<read_only, const military_unit *, military_unit *>;
+	using party_ptr = std::conditional_t<read_only, std::shared_ptr<const party>, std::shared_ptr<party>>;
 	using population_unit_type = std::conditional_t<read_only, const population_unit, population_unit>;
 	using population_unit_ptr = population_unit_type *;
 	using scope_variant_type = std::variant<std::monostate, const character *, const domain *, military_unit_ptr, population_unit_ptr, const province *, const site *>;
@@ -108,6 +110,7 @@ struct context_base
 	std::map<std::string, const site *> saved_site_scopes;
 	army_ptr attacking_army = nullptr;
 	army_ptr defending_army = nullptr;
+	party_ptr party;
 };
 
 extern template struct context_base<false>;
@@ -164,6 +167,8 @@ public:
 
 		this->attacking_army = ctx.attacking_army;
 		this->defending_army = ctx.defending_army;
+
+		this->party = ctx.party;
 
 		for (const auto &[str, population_unit] : ctx.saved_population_unit_scopes) {
 			this->saved_population_unit_scopes[str] = population_unit;
