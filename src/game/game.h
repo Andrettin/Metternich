@@ -19,6 +19,7 @@ class character;
 class domain;
 class event;
 class game_rules;
+class party;
 class province;
 class scenario;
 class site;
@@ -43,6 +44,12 @@ class game final : public QObject, public singleton<game>
 	Q_PROPERTY(const metternich::game_rules* rules READ get_rules CONSTANT)
 
 public:
+	struct combat_result final
+	{
+		bool attacker_victory = false;
+		int64_t experience_award = 0;
+	};
+
 	static QDate normalize_date(const QDate &date);
 
 	game();
@@ -276,8 +283,12 @@ public:
 	void add_fired_event(const metternich::event *event);
 
 	bool do_battle(army *attacking_army, army *defending_army);
-	bool do_combat(const std::vector<const character *> &attackers, const std::vector<const character *> &defenders);
-	void do_combat_round(const std::vector<const character *> &characters, std::vector<const character *> &enemy_characters);
+
+	[[nodiscard]]
+	combat_result do_combat(party *attacking_party, party *defending_party);
+
+	[[nodiscard]]
+	int64_t do_combat_round(metternich::party *party, metternich::party *enemy_party);
 
 signals:
 	void running_changed();

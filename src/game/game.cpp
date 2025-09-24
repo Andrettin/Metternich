@@ -5,6 +5,7 @@
 #include "character/character.h"
 #include "character/character_class.h"
 #include "character/character_game_data.h"
+#include "character/party.h"
 #include "database/database.h"
 #include "database/defines.h"
 #include "database/gsml_data.h"
@@ -2265,16 +2266,15 @@ bool game::do_battle(army *attacking_army, army *defending_army)
 	return attack_success;
 }
 
-bool game::do_combat(const std::vector<const character *> &attackers, const std::vector<const character *> &defenders)
+game::combat_result game::do_combat(party *attacking_party, party *defending_party)
 {
-	//this function returns true if the attackers won, or false otherwise
-
 	static constexpr dice initiative_dice(1, 10);
 
-	std::vector<const character *> surviving_attackers = attackers;
-	std::vector<const character *> surviving_defenders = defenders;
+	combat_result result;
+	int64_t attacker_experience_award = 0;
+	int64_t defender_experience_award = 0;
 
-	while (!surviving_attackers.empty() && !surviving_defenders.empty()) {
+	while (!attacking_party->get_characters().empty() && !defending_party->get_characters().empty()) {
 		int attacker_initiative = 0;
 		int defender_initiative = 0;
 		while (attacker_initiative == defender_initiative) {
@@ -2283,29 +2283,39 @@ bool game::do_combat(const std::vector<const character *> &attackers, const std:
 		}
 
 		if (attacker_initiative < defender_initiative) {
-			this->do_combat_round(surviving_attackers, surviving_defenders);
-			this->do_combat_round(surviving_defenders, surviving_attackers);
+			attacker_experience_award += this->do_combat_round(attacking_party, defending_party);
+			defender_experience_award += this->do_combat_round(defending_party, attacking_party);
 		} else {
-			this->do_combat_round(surviving_defenders, surviving_attackers);
-			this->do_combat_round(surviving_attackers, surviving_defenders);
+			defender_experience_award += this->do_combat_round(defending_party, attacking_party);
+			attacker_experience_award += this->do_combat_round(attacking_party, defending_party);
 		}
 	}
 
-	return surviving_defenders.empty();
-}
+	result.attacker_victory = defending_party->get_characters().empty();
 
-void game::do_combat_round(const std::vector<const character *> &characters, std::vector<const character *> &enemy_characters)
-{
-	if (characters.empty()) {
-		return;
+	if (result.attacker_victory) {
+		attacking_party->gain_experience(attacker_experience_award);
+		result.experience_award = attacker_experience_award;
+	} else {
+		defending_party->gain_experience(defender_experience_award);
+		result.experience_award = defender_experience_award;
 	}
 
-	assert_throw(!enemy_characters.empty());
+	return result;
+}
+
+int64_t game::do_combat_round(metternich::party *party, metternich::party *enemy_party)
+{
+	if (party->get_characters().empty()) {
+		return 0;
+	}
+
+	assert_throw(!enemy_party->get_characters().empty());
 
 	int64_t experience_award = 0;
 
-	for (const character *character : characters) {
-		const metternich::character *chosen_enemy = vector::get_random(enemy_characters);
+	for (const character *character : party->get_characters()) {
+		const metternich::character *chosen_enemy = vector::get_random(enemy_party->get_characters());
 
 		static constexpr dice to_hit_dice(1, 20);
 		const int to_hit = 20 - character->get_game_data()->get_to_hit_bonus();
@@ -2322,16 +2332,11 @@ void game::do_combat_round(const std::vector<const character *> &characters, std
 
 		if (chosen_enemy->get_game_data()->is_dead()) {
 			experience_award += chosen_enemy->get_game_data()->get_experience_award();
-			std::erase(enemy_characters, chosen_enemy);
+			enemy_party->remove_character(chosen_enemy);
 		}
 	}
 
-	if (experience_award > 0) {
-		const int64_t experience_award_per_character = experience_award / static_cast<int64_t>(characters.size());
-		for (const character *character : characters) {
-			character->get_game_data()->change_experience(experience_award_per_character);
-		}
-	}
+	return experience_award;
 }
 
 }
