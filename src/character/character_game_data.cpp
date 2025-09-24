@@ -135,7 +135,9 @@ gsml_data character_game_data::to_gsml_data() const
 	}
 
 	data.add_property("dead", string::from_bool(this->is_dead()));
-	data.add_property("character_class", this->get_character_class()->get_identifier());
+	if (this->get_character_class() != nullptr) {
+		data.add_property("character_class", this->get_character_class()->get_identifier());
+	}
 	data.add_property("level", std::to_string(this->get_level()));
 	data.add_property("experience", std::to_string(this->get_experience()));
 
@@ -202,7 +204,7 @@ void character_game_data::apply_species_and_class(const int level)
 		static constexpr dice attribute_dice(3, 6);
 		const int minimum_possible_result = attribute_dice.get_minimum_result() + this->get_attribute_value(attribute);
 		const int maximum_possible_result = attribute_dice.get_maximum_result() + this->get_attribute_value(attribute);
-		if (maximum_possible_result < min_result || minimum_possible_result > max_result) {
+		if ((maximum_possible_result < min_result || minimum_possible_result > max_result) && character_class != nullptr) {
 			throw std::runtime_error(std::format("Character \"{}\" of species \"{}\" cannot be generated with character class \"{}\", since it cannot possibly fulfill the attribute requirements.", this->character->get_identifier(), species->get_identifier(), character_class->get_identifier()));
 		}
 
@@ -507,6 +509,7 @@ void character_game_data::set_level(const int level)
 
 	//characters losing levels is not supported
 	assert_throw(level > old_level);
+	assert_throw(this->get_character_class() != nullptr);
 
 	this->level = level;
 
@@ -540,6 +543,7 @@ void character_game_data::on_level_gained(const int affected_level, const int mu
 	assert_throw(affected_level >= 1);
 
 	const metternich::character_class *character_class = this->get_character_class();
+	assert_throw(character_class != nullptr);
 
 	if (game::get()->is_running() && this->character == game::get()->get_player_character()) {
 		const std::string level_effects_string = character_class->get_level_effects_string(affected_level, this->character);
@@ -565,6 +569,9 @@ void character_game_data::on_level_gained(const int affected_level, const int mu
 void character_game_data::check_level_experience()
 {
 	const metternich::character_class *character_class = this->get_character_class();
+	if (character_class == nullptr) {
+		return;
+	}
 
 	while (this->get_experience() >= this->get_experience_for_level(this->get_level() + 1)) {
 		if (this->get_level() == character_class->get_max_level()) {

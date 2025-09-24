@@ -105,6 +105,8 @@ bool character::skill_compare(const character *lhs, const character *rhs)
 
 const character *character::generate(const metternich::species *species, const metternich::character_class *character_class, const int level, const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site)
 {
+	assert_throw(species != nullptr);
+
 	auto generated_character = make_qunique<character>(QUuid::createUuid().toString(QUuid::WithoutBraces).toStdString());
 	generated_character->moveToThread(QApplication::instance()->thread());
 
@@ -119,7 +121,7 @@ const character *character::generate(const metternich::species *species, const m
 		generated_character->culture = const_cast<metternich::culture *>(vector::get_random(generated_character->get_species()->get_cultures()));
 	}
 	generated_character->religion = religion;
-	if (generated_character->get_culture() != nullptr && generated_character->get_culture()->get_default_phenotype()->get_species() == generated_character->get_species()) {
+	if (generated_character->get_culture() != nullptr && generated_character->get_culture()->get_default_phenotype() != nullptr && generated_character->get_culture()->get_default_phenotype()->get_species() == generated_character->get_species()) {
 		generated_character->phenotype = generated_character->get_culture()->get_default_phenotype();
 	} else if (generated_character->get_species()->get_phenotypes().size() == 1) {
 		generated_character->phenotype = generated_character->get_species()->get_phenotypes().at(0);
@@ -130,10 +132,13 @@ const character *character::generate(const metternich::species *species, const m
 	const archimedes::gender gender = random::get()->generate(2) == 0 ? gender::male : gender::female;
 	generated_character->set_gender(gender);
 	if (generated_character->get_culture() != nullptr) {
-		generated_character->set_name(generated_character->get_culture()->get_personal_name_generator(gender)->generate_name());
-		const archimedes::name_generator *surname_generator = generated_character->get_culture()->get_surname_generator(gender);
-		if (surname_generator != nullptr) {
-			generated_character->set_surname(surname_generator->generate_name());
+		const archimedes::name_generator *personal_name_generator = generated_character->get_culture()->get_personal_name_generator(gender);
+		if (personal_name_generator != nullptr) {
+			generated_character->set_name(personal_name_generator->generate_name());
+			const archimedes::name_generator *surname_generator = generated_character->get_culture()->get_surname_generator(gender);
+			if (surname_generator != nullptr) {
+				generated_character->set_surname(surname_generator->generate_name());
+			}
 		}
 	} else {
 		generated_character->set_name(generated_character->get_species()->get_given_name_generator(gender)->generate_name());
@@ -264,8 +269,8 @@ void character::check() const
 		throw std::runtime_error(std::format("Character \"{}\" has no species.", this->get_identifier()));
 	}
 
-	if (this->get_character_class() == nullptr) {
-		throw std::runtime_error(std::format("Character \"{}\" has no character class.", this->get_identifier()));
+	if (this->get_character_class() == nullptr && this->get_monster_type() == nullptr) {
+		throw std::runtime_error(std::format("Character \"{}\" has neither a character class nor a monster type.", this->get_identifier()));
 	}
 
 	if (this->get_culture() == nullptr) {
@@ -288,7 +293,7 @@ void character::check() const
 		throw std::runtime_error(std::format("Character \"{}\" has a species (\"{}\") which is not allowed for its culture (\"{}\").", this->get_identifier(), this->get_species()->get_identifier(), this->get_culture()->get_identifier()));
 	}
 
-	if (!this->get_character_class()->is_allowed_for_species(this->get_species())) {
+	if (this->get_character_class() != nullptr && !this->get_character_class()->is_allowed_for_species(this->get_species())) {
 		throw std::runtime_error(std::format("Character \"{}\" has a species (\"{}\") which is not allowed for its character class (\"{}\").", this->get_identifier(), this->get_species()->get_identifier(), this->get_character_class()->get_identifier()));
 	}
 
@@ -314,8 +319,13 @@ gsml_data character::to_gsml_data() const
 	if (!this->get_surname().empty()) {
 		data.add_property("surname", this->get_surname());
 	}
-	data.add_property("character_class", this->get_character_class()->get_identifier());
-	data.add_property("level", std::to_string(this->get_level()));
+	if (this->get_character_class() != nullptr) {
+		data.add_property("character_class", this->get_character_class()->get_identifier());
+		data.add_property("level", std::to_string(this->get_level()));
+	}
+	if (this->get_monster_type() != nullptr) {
+		data.add_property("monster_type", this->get_monster_type()->get_identifier());
+	}
 	if (this->get_culture() != nullptr) {
 		data.add_property("culture", this->get_culture()->get_identifier());
 	}
