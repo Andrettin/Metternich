@@ -1476,6 +1476,10 @@ std::vector<const dungeon_area *> site_game_data::get_potential_dungeon_areas() 
 			continue;
 		}
 
+		if (this->explored_dungeon_areas.contains(dungeon_area)) {
+			continue;
+		}
+
 		if (dungeon_area->get_conditions() != nullptr && !dungeon_area->get_conditions()->check(this->site, read_only_context(this->site))) {
 			continue;
 		}
