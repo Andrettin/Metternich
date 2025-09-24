@@ -27,6 +27,7 @@ set(character_SRCS
 	src/character/character_data_model.cpp
 	src/character/character_game_data.cpp
 	src/character/character_history.cpp
+	src/character/character_reference.cpp
 	src/character/character_trait.cpp
 	src/character/dynasty.cpp
 	src/character/family_tree_model.cpp
@@ -348,6 +349,7 @@ set(character_HDRS
 	src/character/character_data_model.h
 	src/character/character_game_data.h
 	src/character/character_history.h
+	src/character/character_reference.h
 	src/character/character_trait.h
 	src/character/character_trait_type.h
 	src/character/dynasty.h

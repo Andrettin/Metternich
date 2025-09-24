@@ -29,6 +29,7 @@ class character_attribute;
 class character_class;
 class character_game_data;
 class character_history;
+class character_reference;
 class character_trait;
 class civilian_unit_class;
 class civilian_unit_type;
@@ -88,8 +89,9 @@ public:
 
 	static bool skill_compare(const character *lhs, const character *rhs);
 
-	static const character *generate(const metternich::species *species, const metternich::character_class *character_class, const int level, const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site);
-	static const character *generate(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site);
+	static character *generate(const metternich::species *species, const metternich::character_class *character_class, const int level, const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const bool temporary = false);
+	static character *generate(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const bool temporary = false);
+	static std::shared_ptr<character_reference> generate_temporary(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site);
 
 	explicit character(const std::string &identifier);
 	~character();
@@ -238,6 +240,11 @@ public:
 		return QString::fromStdString(std::string(this->get_leader_type_name()));
 	}
 
+	bool is_temporary() const
+	{
+		return this->temporary;
+	}
+
 signals:
 	void changed();
 	void game_data_changed() const;
@@ -259,6 +266,7 @@ private:
 	std::unique_ptr<const and_condition<domain>> conditions;
 	qunique_ptr<character_history> history;
 	qunique_ptr<character_game_data> game_data;
+	bool temporary = false;
 };
 
 }

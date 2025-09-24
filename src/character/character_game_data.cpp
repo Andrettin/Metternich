@@ -360,7 +360,7 @@ bool character_game_data::is_current_portrait_valid() const
 
 void character_game_data::check_portrait()
 {
-	if (this->is_current_portrait_valid()) {
+	if (this->is_current_portrait_valid() || this->character->is_temporary()) {
 		return;
 	}
 

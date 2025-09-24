@@ -103,12 +103,14 @@ bool character::skill_compare(const character *lhs, const character *rhs)
 	return lhs->get_identifier() < rhs->get_identifier();
 }
 
-const character *character::generate(const metternich::species *species, const metternich::character_class *character_class, const int level, const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site)
+character *character::generate(const metternich::species *species, const metternich::character_class *character_class, const int level, const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const bool temporary)
 {
 	assert_throw(species != nullptr);
 
 	auto generated_character = make_qunique<character>(QUuid::createUuid().toString(QUuid::WithoutBraces).toStdString());
 	generated_character->moveToThread(QApplication::instance()->thread());
+
+	generated_character->temporary = temporary;
 
 	generated_character->species = const_cast<metternich::species *>(species);
 	generated_character->character_class = character_class;
@@ -153,9 +155,15 @@ const character *character::generate(const metternich::species *species, const m
 	return game::get()->get_generated_characters().back().get();
 }
 
-const character *character::generate(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site)
+character *character::generate(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const bool temporary)
 {
-	return character::generate(monster_type->get_species(), monster_type->get_character_class(), monster_type->get_level(), monster_type, culture, religion, home_site);
+	return character::generate(monster_type->get_species(), monster_type->get_character_class(), monster_type->get_level(), monster_type, culture, religion, home_site, temporary);
+}
+
+std::shared_ptr<character_reference> character::generate_temporary(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site)
+{
+	metternich::character *character = character::generate(monster_type, culture, religion, home_site, true);
+	return std::make_shared<character_reference>(character);
 }
 
 character::character(const std::string &identifier)
@@ -277,7 +285,7 @@ void character::check() const
 		throw std::runtime_error(std::format("Character \"{}\" has no culture.", this->get_identifier()));
 	}
 
-	if (this->get_religion() == nullptr) {
+	if (this->get_religion() == nullptr && !this->is_temporary()) {
 		throw std::runtime_error(std::format("Character \"{}\" has no religion.", this->get_identifier()));
 	}
 
@@ -297,8 +305,8 @@ void character::check() const
 		throw std::runtime_error(std::format("Character \"{}\" has a species (\"{}\") which is not allowed for its character class (\"{}\").", this->get_identifier(), this->get_species()->get_identifier(), this->get_character_class()->get_identifier()));
 	}
 
-	if (this->get_home_site() == nullptr && !this->is_deity()) {
-		throw std::runtime_error(std::format("Non-deity character \"{}\" has no home settlement.", this->get_identifier()));
+	if (this->get_home_site() == nullptr && !this->is_deity() && !this->is_temporary()) {
+		throw std::runtime_error(std::format("Non-deity, non-temporary character \"{}\" has no home site.", this->get_identifier()));
 	} else if (this->get_home_site() != nullptr && !this->get_home_site()->is_settlement()) {
 		throw std::runtime_error(std::format("Character \"{}\" has \"{}\" set as their home site, but it is neither a holding nor a habitable world.", this->get_identifier(), this->get_home_site()->get_identifier()));
 	}
