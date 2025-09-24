@@ -604,6 +604,7 @@ set(script_condition_HDRS
 	src/script/condition/discovered_region_condition.h
 	src/script/condition/dungeon_condition.h
 	src/script/condition/event_condition.h
+	src/script/condition/explored_dungeon_area_condition.h
 	src/script/condition/game_rule_condition.h
 	src/script/condition/government_type_condition.h
 	src/script/condition/has_building_class_condition.h

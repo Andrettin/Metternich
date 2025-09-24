@@ -1476,7 +1476,7 @@ std::vector<const dungeon_area *> site_game_data::get_potential_dungeon_areas() 
 			continue;
 		}
 
-		if (this->explored_dungeon_areas.contains(dungeon_area)) {
+		if (this->get_explored_dungeon_areas().contains(dungeon_area)) {
 			continue;
 		}
 
@@ -1488,6 +1488,11 @@ std::vector<const dungeon_area *> site_game_data::get_potential_dungeon_areas() 
 	}
 
 	return potential_dungeon_areas;
+}
+
+const data_entry_set<dungeon_area> &site_game_data::get_explored_dungeon_areas() const
+{
+	return this->explored_dungeon_areas;
 }
 
 void site_game_data::add_explored_dungeon_area(const dungeon_area *dungeon_area)
