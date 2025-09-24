@@ -1,0 +1,11 @@
+gnoll = {
+	name = "Gnoll"
+	species = gnoll
+	hit_dice = 2d8
+	damage_dice = 1d8
+	experience_award = 35
+	modifier = {
+		armor_class = 5
+		to_hit_bonus = 1
+	}
+}
