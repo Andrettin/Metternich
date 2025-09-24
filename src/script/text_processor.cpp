@@ -2,6 +2,8 @@
 
 #include "script/text_processor.h"
 
+#include "character/character.h"
+#include "character/party.h"
 #include "domain/culture.h"
 #include "infrastructure/holding_type.h"
 #include "map/province.h"
@@ -10,6 +12,7 @@
 #include "map/site_game_data.h"
 #include "population/population_type.h"
 #include "population/population_unit.h"
+#include "species/species.h"
 #include "util/assert_util.h"
 #include "util/queue_util.h"
 #include "util/string_util.h"
@@ -33,7 +36,21 @@ std::string text_processor::process_tokens(std::queue<std::string> &&tokens, con
 
 	std::string str;
 
-	if (front_subtoken == "root") {
+	if (front_subtoken == "party_species_name") {
+		assert_throw(this->context.party != nullptr && !this->context.party->get_characters().empty());
+		const character *character = this->context.party->get_characters().at(0);
+		const std::string &species_name = character->get_species()->get_name();
+
+		if (this->context.party->get_characters().size() > 1) {
+			str = string::get_plural_form(species_name);
+		} else {
+			str = species_name;
+		}
+	} else if (front_subtoken == "party_species_name_plural") {
+		assert_throw(this->context.party != nullptr && !this->context.party->get_characters().empty());
+		const character *character = this->context.party->get_characters().at(0);
+		str = string::get_plural_form(character->get_species()->get_name());
+	} else if (front_subtoken == "root") {
 		str = this->process_scope_variant_tokens(this->context.root_scope, tokens);
 	} else if (front_subtoken == "source") {
 		str = this->process_scope_variant_tokens(this->context.source_scope, tokens);
