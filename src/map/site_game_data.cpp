@@ -1452,8 +1452,8 @@ void site_game_data::explore_dungeon(const std::shared_ptr<party> &party)
 
 	context ctx(party->get_domain());
 	ctx.root_scope = party->get_domain();
-	ctx.source_scope = this->site;
 	ctx.party = party;
+	ctx.dungeon_site = this->site;
 	ctx.dungeon_area = dungeon_area;
 
 	dungeon_area->get_event()->fire(party->get_domain(), ctx);

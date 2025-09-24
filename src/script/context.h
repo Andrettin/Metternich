@@ -125,6 +125,7 @@ struct context_base
 	army_ptr attacking_army = nullptr;
 	army_ptr defending_army = nullptr;
 	party_ptr party;
+	const site *dungeon_site = nullptr;
 	const dungeon_area *dungeon_area = nullptr;
 };
 
@@ -185,6 +186,7 @@ public:
 		this->defending_army = ctx.defending_army;
 
 		this->party = ctx.party;
+		this->dungeon_site = ctx.dungeon_site;
 		this->dungeon_area = ctx.dungeon_area;
 
 		for (const auto &[str, population_unit] : ctx.saved_population_unit_scopes) {

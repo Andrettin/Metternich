@@ -7,11 +7,12 @@
 
 namespace metternich {
 
-class dungeon_condition final : public condition<site>
+template <typename scope_type>
+class dungeon_condition final : public condition<scope_type>
 {
 public:
 	explicit dungeon_condition(const std::string &value, const gsml_operator condition_operator)
-		: condition<site>(condition_operator)
+		: condition<scope_type>(condition_operator)
 	{
 		this->dungeon = dungeon::get(value);
 	}
@@ -22,11 +23,17 @@ public:
 		return class_identifier;
 	}
 
-	virtual bool check_assignment(const site *scope, const read_only_context &ctx) const override
+	virtual bool check_assignment(const scope_type *scope, const read_only_context &ctx) const override
 	{
-		Q_UNUSED(ctx);
+		if constexpr (std::is_same_v<scope_type, site>) {
+			return scope->get_game_data()->get_dungeon() == this->dungeon;
+		} else {
+			if (ctx.dungeon_site != nullptr) {
+				return ctx.dungeon_site->get_game_data()->get_dungeon() == this->dungeon;
+			}
 
-		return scope->get_game_data()->get_dungeon() == this->dungeon;
+			return false;
+		}
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override

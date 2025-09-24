@@ -200,8 +200,6 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			return std::make_unique<adjacent_terrain_condition>(value, condition_operator);
 		} else if (key == "can_gain_building_class") {
 			return std::make_unique<can_gain_building_class_condition>(value, condition_operator);
-		} else if (key == "dungeon") {
-			return std::make_unique<dungeon_condition>(value, condition_operator);
 		} else if (key == "has_pathway") {
 			return std::make_unique<has_pathway_condition>(value, condition_operator);
 		} else if (key == "has_route") {
@@ -299,6 +297,8 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 		return std::make_unique<cultural_group_condition<scope_type>>(value, condition_operator);
 	} else if (key == "culture") {
 		return std::make_unique<culture_condition<scope_type>>(value, condition_operator);
+	} else if (key == "dungeon") {
+		return std::make_unique<dungeon_condition<scope_type>>(value, condition_operator);
 	} else if (key == "event") {
 		return std::make_unique<event_condition<scope_type>>(value, condition_operator);
 	} else if (key == "game_rule") {
