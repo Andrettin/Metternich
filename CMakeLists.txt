@@ -675,6 +675,7 @@ set(script_effect_HDRS
 	src/script/effect/capital_effect.h
 	src/script/effect/change_opinion_effect.h
 	src/script/effect/clear_flag_effect.h
+	src/script/effect/combat_effect.h
 	src/script/effect/commodity_effect.h
 	src/script/effect/commodity_percent_effect.h
 	src/script/effect/country_effect.h
