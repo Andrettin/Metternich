@@ -186,6 +186,17 @@ void character_game_data::apply_species_and_class(const int level)
 		culture->get_character_modifier()->apply(this->character);
 	}
 
+	const monster_type *monster_type = this->character->get_monster_type();
+	if (monster_type != nullptr) {
+		if (!monster_type->get_hit_dice().is_null()) {
+			this->apply_hit_dice(monster_type->get_hit_dice());
+		}
+
+		if (monster_type->get_modifier() != nullptr) {
+			monster_type->get_modifier()->apply(this->character);
+		}
+	}
+
 	const metternich::character_class *character_class = this->get_character_class();
 	for (const character_attribute *attribute : character_attribute::get_all()) {
 		int min_result = 1;
@@ -552,6 +563,7 @@ void character_game_data::on_level_gained(const int affected_level, const int mu
 	}
 
 	const dice class_hit_dice = character_class->get_hit_dice();
+	assert_throw(class_hit_dice.get_count() == 1);
 	this->apply_hit_dice(class_hit_dice);
 
 	const modifier<const metternich::character> *level_modifier = character_class->get_level_modifier(affected_level);
@@ -669,9 +681,7 @@ data_entry_set<character_attribute> character_game_data::get_main_attributes() c
 
 void character_game_data::apply_hit_dice(const dice &hit_dice)
 {
-	assert_throw(hit_dice.get_count() == 1);
-
-	this->change_hit_dice_count(1);
+	this->change_hit_dice_count(hit_dice.get_count());
 
 	const int hit_point_increase = random::get()->roll_dice(hit_dice);
 	this->change_max_hit_points(hit_point_increase);
@@ -786,6 +796,10 @@ const dice &character_game_data::get_damage_dice() const
 
 		assert_throw(!items.empty());
 		return items.at(0)->get_type()->get_damage_dice();
+	}
+
+	if (this->character->get_monster_type() != nullptr) {
+		return this->character->get_monster_type()->get_damage_dice();
 	}
 
 	static constexpr dice null_dice;
