@@ -1499,7 +1499,7 @@ std::vector<const dungeon_area *> site_game_data::get_potential_dungeon_areas() 
 
 std::vector<const dungeon_area *> site_game_data::get_potential_dungeon_areas(const dungeon_area *additional_explored_area)
 {
-	if (additional_explored_area == nullptr) {
+	if (additional_explored_area == nullptr || this->get_explored_dungeon_areas().contains(additional_explored_area)) {
 		return this->get_potential_dungeon_areas();
 	}
 
