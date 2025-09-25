@@ -1444,6 +1444,13 @@ void site_game_data::explore_dungeon(const std::shared_ptr<party> &party)
 
 	if (potential_dungeon_areas.empty()) {
 		//the dungeon has been fully explored
+
+		if (party->get_domain() == game::get()->get_player_country()) {
+			const portrait *war_minister_portrait = party->get_domain()->get_government()->get_war_minister_portrait();
+
+			engine_interface::get()->add_notification("Dungeon Cleared", war_minister_portrait, std::format("You have cleared the {} dungeon!", this->get_dungeon()->get_name()));
+		}
+
 		this->set_dungeon(nullptr);
 		return;
 	}
