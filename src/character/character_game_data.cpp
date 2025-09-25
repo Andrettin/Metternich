@@ -231,9 +231,9 @@ void character_game_data::apply_species_and_class(const int level)
 		}
 	}
 
-	this->set_level(std::min(level, character_class->get_max_level()));
-
 	if (character_class != nullptr) {
+		this->set_level(std::min(level, character_class->get_max_level()));
+
 		data_entry_set<item_slot> filled_item_slots;
 		for (const qunique_ptr<item> &item : this->get_items()) {
 			if (item->get_slot() != nullptr) {
