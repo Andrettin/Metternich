@@ -3807,4 +3807,22 @@ int domain_game_data::get_maintenance_cost() const
 	return maintenance_cost;
 }
 
+bool domain_game_data::can_visit_site(const metternich::site *site) const
+{
+	//a site can be visited if either this domain owns the site or its province, or if it owns any site within the province
+
+	const province *site_province = site->get_game_data()->get_province();
+	if (site->get_game_data()->get_owner() == this->domain || site_province->get_game_data()->get_owner() == this->domain) {
+		return true;
+	}
+
+	for (const metternich::site *province_site : site_province->get_game_data()->get_sites()) {
+		if (province_site->get_game_data()->get_owner() == this->domain) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
 }

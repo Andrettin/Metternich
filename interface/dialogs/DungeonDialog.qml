@@ -10,6 +10,7 @@ DialogBase {
 	
 	property var site: null
 	property var dungeon: site ? site.game_data.dungeon : null
+	readonly property bool can_visit_dungeon: site && dungeon && metternich.game.player_country.game_data.can_visit_site(site)
 	
 	PortraitButton {
 		id: dungeon_portrait
@@ -24,8 +25,10 @@ DialogBase {
 		anchors.top: dungeon_portrait.bottom
 		anchors.topMargin: 16 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
-		text: dungeon ? format_text("Do you wish to explore " + dungeon.name + "?"
-			+ (dungeon.level !== 0 ? ("\n\nDungeon Level: " + dungeon.level) : "")
+		text: dungeon ? format_text(
+			can_visit_dungeon ? ("Do you wish to explore " + dungeon.name + "?"
+				+ (dungeon.level !== 0 ? ("\n\nDungeon Level: " + dungeon.level) : "")
+			) : (dungeon.level !== 0 ? ("Dungeon Level: " + dungeon.level) : "")
 		) : ""
 		wrapMode: Text.WordWrap
 		width: Math.min(text_label_proxy.contentWidth, parent.width - 16 * scale_factor)
@@ -48,6 +51,7 @@ DialogBase {
 		TextButton {
 			id: yes_button
 			text: "Yes"
+			visible: can_visit_dungeon
 			onClicked: {
 				metternich.game.player_country.game_data.visit_target_site = site
 				dungeon_dialog.close()
@@ -57,10 +61,20 @@ DialogBase {
 		TextButton {
 			id: no_button
 			text: "No"
+			visible: can_visit_dungeon
 			onClicked: {
 				if (metternich.game.player_country.game_data.visit_target_site === site) {
 					metternich.game.player_country.game_data.visit_target_site = null
 				}
+				dungeon_dialog.close()
+			}
+		}
+		
+		TextButton {
+			id: ok_button
+			text: "OK"
+			visible: !can_visit_dungeon
+			onClicked: {
 				dungeon_dialog.close()
 			}
 		}

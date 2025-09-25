@@ -1080,6 +1080,8 @@ public:
 		this->flags.erase(flag);
 	}
 
+	Q_INVOKABLE bool can_visit_site(const metternich::site *site) const;
+
 	const site *get_visit_target_site() const
 	{
 		return this->visit_target_site;
