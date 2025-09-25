@@ -23,6 +23,16 @@ Flickable {
 				portrait_identifier: site.game_data.portrait ? site.game_data.portrait.identifier : "building_slot"
 				
 				readonly property var site: model.modelData
+				readonly property bool is_visit_target: metternich.game.player_country.game_data.visit_target_site === site
+				
+				Image {
+					id: visiting_icon
+					anchors.horizontalCenter: parent.horizontalCenter
+					anchors.verticalCenter: parent.verticalCenter
+					source: "image://icon/flag"
+					fillMode: Image.Pad
+					visible: is_visit_target
+				}
 				
 				onClicked: {
 					if (site.game_data.dungeon !== null) {
@@ -39,6 +49,9 @@ Flickable {
 						}
 					} else if (site.game_data.dungeon !== null) {
 						status_text = site.game_data.dungeon.name + " (Dungeon)"
+						if (is_visit_target) {
+							status_text += " (Visiting)"
+						}
 					} else if (site.holding_type !== null) {
 						status_text = site.game_data.current_cultural_name + " (" + site.holding_type.name + " Slot)"
 					} else {
