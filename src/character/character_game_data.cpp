@@ -231,7 +231,7 @@ void character_game_data::apply_species_and_class(const int level)
 		}
 	}
 
-	this->set_level(level);
+	this->set_level(std::min(level, character_class->get_max_level()));
 
 	if (character_class != nullptr) {
 		data_entry_set<item_slot> filled_item_slots;
@@ -521,6 +521,7 @@ void character_game_data::set_level(const int level)
 	//characters losing levels is not supported
 	assert_throw(level > old_level);
 	assert_throw(this->get_character_class() != nullptr);
+	assert_throw(level <= this->get_character_class()->get_max_level());
 
 	this->level = level;
 
