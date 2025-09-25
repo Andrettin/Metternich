@@ -2315,6 +2315,10 @@ int64_t game::do_combat_round(metternich::party *party, metternich::party *enemy
 	int64_t experience_award = 0;
 
 	for (const character *character : party->get_characters()) {
+		if (enemy_party->get_characters().empty()) {
+			break;
+		}
+
 		const metternich::character *chosen_enemy = vector::get_random(enemy_party->get_characters());
 
 		static constexpr dice to_hit_dice(1, 20);
