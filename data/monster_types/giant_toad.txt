@@ -1,0 +1,11 @@
+giant_toad = {
+	name = "Giant Toad"
+	species = giant_toad
+	hit_dice = 2d8+4
+	damage_dice = 2d4
+	experience_award = 120
+	modifier = {
+		armor_class = 4
+		to_hit_bonus = 1
+	}
+}

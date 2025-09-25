@@ -1,0 +1,9 @@
+giant_toad = {
+	name = "Giant Toad"
+	supertaxon = amphibia
+	era = holocene
+	pre_evolutions = { #same as the Frog
+		peltobatrachus
+		platyhystrix
+	}
+}
