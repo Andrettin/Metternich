@@ -127,7 +127,19 @@ public:
 
 	virtual std::string get_assignment_string(const domain *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override
 	{
-		std::string str = "Combat against:";
+		assert_throw(ctx.party != nullptr);
+
+		std::string str = "Party:";
+		for (const character *party_character : ctx.party->get_characters()) {
+			std::string character_class_string;
+			const character_class *character_class = party_character->get_game_data()->get_character_class();
+			if (character_class != nullptr) {
+				character_class_string += std::format(" {} {}", character_class->get_name(), party_character->get_game_data()->get_level());
+			}
+			str += "\n" + std::string(indent + 1, '\t') + std::format("{} ({}{} HP {}/{})", party_character->get_full_name(), party_character->get_species()->get_name(), character_class_string, party_character->get_game_data()->get_hit_points(), party_character->get_game_data()->get_max_hit_points());
+		}
+
+		str += "\n" + std::string(indent, '\t') + "Does combat against:";
 
 		for (const auto &[monster_type, quantity] : this->enemies) {
 			str += "\n" + std::string(indent + 1, '\t') + std::to_string(quantity) + "x" + monster_type->get_name();
@@ -138,8 +150,7 @@ public:
 			std::string character_class_string;
 			const character_class *character_class = character->get_game_data()->get_character_class();
 			if (character_class != nullptr) {
-				character_class_string += " " + character_class->get_name() + " ";
-				character_class_string += character->get_game_data()->get_level();
+				character_class_string += std::format(" {} {}", character_class->get_name(), character->get_game_data()->get_level());
 			}
 			str += "\n" + std::string(indent + 1, '\t') + std::format("{} ({}{})", character->get_full_name(), character->get_species()->get_name(), character_class_string);
 		}
