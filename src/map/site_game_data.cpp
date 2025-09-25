@@ -1497,6 +1497,23 @@ std::vector<const dungeon_area *> site_game_data::get_potential_dungeon_areas() 
 	return potential_dungeon_areas;
 }
 
+std::vector<const dungeon_area *> site_game_data::get_potential_dungeon_areas(const dungeon_area *additional_explored_area)
+{
+	if (additional_explored_area == nullptr) {
+		return this->get_potential_dungeon_areas();
+	}
+
+	assert_throw(!this->get_explored_dungeon_areas().contains(additional_explored_area));
+
+	this->explored_dungeon_areas.insert(additional_explored_area);
+
+	std::vector<const dungeon_area *> potential_dungeon_areas = this->get_potential_dungeon_areas();
+
+	this->explored_dungeon_areas.erase(additional_explored_area);
+
+	return potential_dungeon_areas;
+}
+
 const data_entry_set<dungeon_area> &site_game_data::get_explored_dungeon_areas() const
 {
 	return this->explored_dungeon_areas;

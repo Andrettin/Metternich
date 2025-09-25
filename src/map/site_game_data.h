@@ -434,6 +434,7 @@ public:
 
 	void explore_dungeon(const std::shared_ptr<party> &party);
 	std::vector<const dungeon_area *> get_potential_dungeon_areas() const;
+	std::vector<const dungeon_area *> get_potential_dungeon_areas(const dungeon_area *additional_explored_area);
 	const data_entry_set<dungeon_area> &get_explored_dungeon_areas() const;
 	void add_explored_dungeon_area(const dungeon_area *dungeon_area);
 

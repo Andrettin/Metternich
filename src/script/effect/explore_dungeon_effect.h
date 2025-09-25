@@ -50,12 +50,7 @@ public:
 		if (this->value) {
 			assert_throw(ctx.dungeon_site != nullptr);
 
-			std::vector<const dungeon_area *> potential_dungeon_areas = ctx.dungeon_site->get_game_data()->get_potential_dungeon_areas();
-			if (ctx.dungeon_area != nullptr && !ctx.dungeon_area->is_entrance()) {
-				std::erase_if(potential_dungeon_areas, [&ctx](const dungeon_area *dungeon_area) {
-					return dungeon_area == ctx.dungeon_area;
-				});
-			}
+			const std::vector<const dungeon_area *> potential_dungeon_areas = ctx.dungeon_site->get_game_data()->get_potential_dungeon_areas(ctx.dungeon_area);
 
 			if (!potential_dungeon_areas.empty()) {
 				return "Explore the dungeon further";
