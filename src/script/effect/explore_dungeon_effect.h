@@ -32,11 +32,11 @@ public:
 
 		assert_throw(ctx.dungeon_site != nullptr);
 
-		if (ctx.dungeon_area != nullptr) {
-			ctx.dungeon_site->get_game_data()->add_explored_dungeon_area(ctx.dungeon_area);
-		}
-
 		if (this->value) {
+			if (ctx.dungeon_area != nullptr) {
+				ctx.dungeon_site->get_game_data()->add_explored_dungeon_area(ctx.dungeon_area);
+			}
+
 			ctx.dungeon_site->get_game_data()->explore_dungeon(ctx.party);
 		}
 	}
