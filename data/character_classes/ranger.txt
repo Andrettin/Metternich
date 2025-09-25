@@ -2,7 +2,6 @@ ranger = {
 	name = "Ranger"
 	attribute = dexterity
 	max_level = 3
-	hit_dice = 1d8 #as Cleric
 	starting_age_category = self_taught
 	allowed_species = {
 		elf
@@ -19,5 +18,16 @@ ranger = {
 	rank_levels = {
 		ranger_knight = 9
 		ranger_lord = 10
+	}
+	level_effects = {
+		1 = {
+			hit_dice += 1d8 #as Cleric
+		}
+		2 = {
+			hit_dice += 1d8
+		}
+		3 = {
+			hit_dice += 1d8
+		}
 	}
 }

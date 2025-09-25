@@ -563,10 +563,6 @@ void character_game_data::on_level_gained(const int affected_level, const int mu
 		engine_interface::get()->add_notification("Level Up", this->get_portrait(), std::format("You have gained a level!\n\n{}", level_effects_string));
 	}
 
-	const dice class_hit_dice = character_class->get_hit_dice();
-	assert_throw(class_hit_dice.get_count() == 1);
-	this->apply_hit_dice(class_hit_dice);
-
 	const modifier<const metternich::character> *level_modifier = character_class->get_level_modifier(affected_level);
 	if (level_modifier != nullptr) {
 		level_modifier->apply(this->character);

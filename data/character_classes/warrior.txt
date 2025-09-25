@@ -3,7 +3,6 @@ warrior = {
 	attribute = strength
 	military_unit_category = general
 	max_level = 3
-	hit_dice = 1d10
 	starting_age_category = self_taught
 	allowed_species = {
 		dwarf
@@ -34,6 +33,17 @@ warrior = {
 		}
 		3 = {
 			to_hit_bonus = 1
+		}
+	}
+	level_effects = {
+		1 = {
+			hit_dice += 1d10
+		}
+		2 = {
+			hit_dice += 1d10
+		}
+		3 = {
+			hit_dice += 1d10
 		}
 	}
 	starting_items = {

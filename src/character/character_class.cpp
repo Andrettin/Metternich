@@ -91,14 +91,6 @@ void character_class::check() const
 		throw std::runtime_error(std::format("Character class \"{}\" has no max level.", this->get_identifier()));
 	}
 
-	if (this->get_hit_dice().is_null()) {
-		throw std::runtime_error(std::format("Character class \"{}\" has null hit dice.", this->get_identifier()));
-	}
-
-	if (this->get_hit_dice().get_count() != 1) {
-		throw std::runtime_error(std::format("Character class \"{}\" has hit dice with a dice count different than 1.", this->get_identifier()));
-	}
-
 	if (this->get_starting_age_category() == starting_age_category::none) {
 		throw std::runtime_error(std::format("Character class \"{}\" has no starting age category.", this->get_identifier()));
 	}
@@ -137,16 +129,24 @@ int64_t character_class::get_experience_for_level(const int level) const
 
 std::string character_class::get_level_effects_string(const int level, const metternich::character *character) const
 {
-	std::string str = std::format("Hit Points: +{}", this->get_hit_dice().to_display_string());
+	std::string str;
 
 	const modifier<const metternich::character> *level_modifier = this->get_level_modifier(level);
 	if (level_modifier != nullptr) {
-		str += "\n" + level_modifier->get_string(character);
+		if (!str.empty()) {
+			str += "\n";
+		}
+
+		str += level_modifier->get_string(character);
 	}
 
 	const effect_list<const metternich::character> *level_effects = this->get_level_effects(level);
 	if (level_effects != nullptr) {
-		str += "\n" + level_effects->get_effects_string(character, read_only_context(character));
+		if (!str.empty()) {
+			str += "\n";
+		}
+
+		str += level_effects->get_effects_string(character, read_only_context(character));
 	}
 
 	return str;

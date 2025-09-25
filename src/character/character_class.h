@@ -33,7 +33,6 @@ class character_class final : public named_data_entry, public data_type<characte
 	Q_PROPERTY(metternich::military_unit_category military_unit_category MEMBER military_unit_category READ get_military_unit_category NOTIFY changed)
 	Q_PROPERTY(const metternich::civilian_unit_class* civilian_unit_class MEMBER civilian_unit_class READ get_civilian_unit_class NOTIFY changed)
 	Q_PROPERTY(int max_level MEMBER max_level READ get_max_level NOTIFY changed)
-	Q_PROPERTY(archimedes::dice hit_dice MEMBER hit_dice READ get_hit_dice NOTIFY changed)
 	Q_PROPERTY(metternich::starting_age_category starting_age_category MEMBER starting_age_category READ get_starting_age_category NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(metternich::technology* obsolescence_technology MEMBER obsolescence_technology NOTIFY changed)
@@ -67,11 +66,6 @@ public:
 	int get_max_level() const
 	{
 		return this->max_level;
-	}
-
-	const dice &get_hit_dice() const
-	{
-		return this->hit_dice;
 	}
 
 	metternich::starting_age_category get_starting_age_category() const
@@ -150,7 +144,6 @@ private:
 	metternich::military_unit_category military_unit_category;
 	const metternich::civilian_unit_class *civilian_unit_class = nullptr;
 	int max_level = 0;
-	dice hit_dice;
 	metternich::starting_age_category starting_age_category{};
 	technology *required_technology = nullptr;
 	technology *obsolescence_technology = nullptr;

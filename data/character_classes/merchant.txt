@@ -3,6 +3,16 @@ merchant = {
 	attribute = intelligence
 	civilian_unit_class = merchant
 	max_level = 3
-	hit_dice = 1d6 #as Rogue
 	starting_age_category = self_taught
+	level_effects = {
+		1 = {
+			hit_dice += 1d6 #as Rogue
+		}
+		2 = {
+			hit_dice += 1d6
+		}
+		3 = {
+			hit_dice += 1d6
+		}
+	}
 }

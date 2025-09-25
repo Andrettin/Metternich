@@ -3,7 +3,6 @@ rogue = {
 	attribute = dexterity
 	civilian_unit_class = spy
 	max_level = 3
-	hit_dice = 1d6
 	starting_age_category = intuitive
 	allowed_species = {
 		dwarf
@@ -27,6 +26,17 @@ rogue = {
 	level_modifiers = {
 		3 = {
 			to_hit_bonus = 1
+		}
+	}
+	level_effects = {
+		1 = {
+			hit_dice += 1d6 #as Rogue
+		}
+		2 = {
+			hit_dice += 1d6
+		}
+		3 = {
+			hit_dice += 1d6
 		}
 	}
 	starting_items = {

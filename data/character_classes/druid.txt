@@ -2,7 +2,6 @@ druid = {
 	name = "Druid"
 	attribute = wisdom
 	max_level = 3
-	hit_dice = 1d8 #as Cleric
 	starting_age_category = trained
 	allowed_species = {
 		half_elf
@@ -17,5 +16,16 @@ druid = {
 		ovate = 2
 		archdruid = 13
 		great_druid = 14
+	}
+	level_effects = {
+		1 = {
+			hit_dice += 1d8 #as Cleric
+		}
+		2 = {
+			hit_dice += 1d8
+		}
+		3 = {
+			hit_dice += 1d8
+		}
 	}
 }

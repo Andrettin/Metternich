@@ -2,7 +2,6 @@ bard = {
 	name = "Bard"
 	attribute = charisma
 	max_level = 3
-	hit_dice = 1d8 #as Cleric
 	starting_age_category = self_taught
 	allowed_species = {
 		elf
@@ -13,5 +12,16 @@ bard = {
 		dexterity = 12
 		intelligence = 13
 		charisma = 15
+	}
+	level_effects = {
+		1 = {
+			hit_dice += 1d8 #as Cleric
+		}
+		2 = {
+			hit_dice += 1d8
+		}
+		3 = {
+			hit_dice += 1d8
+		}
 	}
 }

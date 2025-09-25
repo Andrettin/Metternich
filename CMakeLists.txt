@@ -693,6 +693,7 @@ set(script_effect_HDRS
 	src/script/effect/free_technologies_effect.h
 	src/script/effect/gain_spell_scroll_effect.h
 	src/script/effect/hidden_effect.h
+	src/script/effect/hit_dice_effect.h
 	src/script/effect/if_effect.h
 	src/script/effect/location_effect.h
 	src/script/effect/office_holder_effect.h
@@ -748,6 +749,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/free_infantry_promotion_modifier_effect.h
 	src/script/modifier_effect/free_warship_promotion_modifier_effect.h
 	src/script/modifier_effect/gain_technologies_known_by_others_modifier_effect.h
+	src/script/modifier_effect/hit_points_modifier_effect.h
 	src/script/modifier_effect/industrial_output_modifier_effect.h
 	src/script/modifier_effect/infantry_cost_modifier_effect.h
 	src/script/modifier_effect/law_cost_modifier_effect.h

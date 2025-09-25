@@ -3,7 +3,6 @@ paladin = {
 	attribute = strength
 	military_unit_category = general
 	max_level = 3
-	hit_dice = 1d10 #as warrior
 	starting_age_category = self_taught
 	allowed_species = {
 		human
@@ -13,5 +12,16 @@ paladin = {
 		constitution = 9
 		wisdom = 13
 		charisma = 17
+	}
+	level_effects = {
+		1 = {
+			hit_dice += 1d10 #as Warrior
+		}
+		2 = {
+			hit_dice += 1d10
+		}
+		3 = {
+			hit_dice += 1d10
+		}
 	}
 }

@@ -2,7 +2,6 @@ cleric = {
 	name = "Cleric"
 	attribute = wisdom
 	max_level = 3
-	hit_dice = 1d8
 	starting_age_category = trained
 	allowed_species = {
 		dwarf
@@ -27,6 +26,17 @@ cleric = {
 		2 = 1500
 		3 = 3000
 		4 = 6000
+	}
+	level_effects = {
+		1 = {
+			hit_dice += 1d8
+		}
+		2 = {
+			hit_dice += 1d8
+		}
+		3 = {
+			hit_dice += 1d8
+		}
 	}
 	starting_items = {
 		mace
