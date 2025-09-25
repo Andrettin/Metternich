@@ -1,0 +1,8 @@
+mouse = {
+	name = "Mouse"
+	supertaxon = rodentia
+	era = holocene
+	pre_evolutions = {
+		megacricetodon #earlier rodent
+	}
+}

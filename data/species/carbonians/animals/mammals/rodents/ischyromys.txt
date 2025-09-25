@@ -1,0 +1,12 @@
+ischyromys = { #Source: http://fossilworks.org/bridge.pl?a=taxonInfo&taxon_no=41399
+	name = "Ischyromys"
+	supertaxon = ischyromys
+	era = oligocene
+	pre_evolutions = {
+		alphadon
+		crusafontia
+		leptictidium
+		megazostrodon
+		zalambdalestes
+	}
+}

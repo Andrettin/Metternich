@@ -1,0 +1,9 @@
+salamander = {
+	name = "Salamander"
+	supertaxon = amphibia
+	era = holocene
+	pre_evolutions = {
+		peltobatrachus
+		platyhystrix
+	}
+}

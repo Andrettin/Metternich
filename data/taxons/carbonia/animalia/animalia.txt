@@ -3,4 +3,14 @@ animalia = { #Source: http://www.itis.gov/servlet/SingleRpt/SingleRpt?search_top
 	common_name = "Animal"
 	rank = kingdom
 	supertaxon = carbonia
+	adulthood_age = 15 #as Human
+	middle_age = 35
+	old_age = 53
+	venerable_age = 70
+	maximum_age_modifier = 2d20
+	starting_age_modifiers = {
+		intuitive = 1d4
+		self_taught = 1d6
+		trained = 2d6
+	}
 }

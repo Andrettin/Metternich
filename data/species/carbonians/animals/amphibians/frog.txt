@@ -1,0 +1,9 @@
+frog = {
+	name = "Frog"
+	supertaxon = amphibia
+	era = holocene
+	pre_evolutions = {
+		peltobatrachus
+		platyhystrix
+	}
+}
