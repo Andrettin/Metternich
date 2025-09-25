@@ -103,7 +103,7 @@ karl_vi_of_the_holy_roman_empire = { #Emperor Karl VI of the Holy Roman Empire; 
 maria_theresia_of_austria = { #Empress Maria Theresia of the Holy Roman Empire; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 249.
 	name = "Maria Theresia"
 	dynasty = habsburg
-	character_class = statesman
+	character_class = warrior
 	culture = austrian
 	religion = catholic
 	portrait = maria_theresia
@@ -114,8 +114,15 @@ maria_theresia_of_austria = { #Empress Maria Theresia of the Holy Roman Empire; 
 	start_date = 1740
 	death_date = 1780 #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 249.
 	
-	#became queen of Bohemia and Hungary on 1740; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 249.
-	#became empress of the HRE in 1745; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 249.
+	history = {
+		1740 = {
+			rank = lord #Maria Theresia became queen of Bohemia and Hungary on 1740; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 249.
+		}
+		
+		1745 = {
+			#became empress of the HRE in 1745; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 249.
+		}
+	}
 }
 
 leopold_ii_of_the_holy_roman_empire = { #Emperor Leopold II of the Holy Roman Empire; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 11.
@@ -157,6 +164,10 @@ franz_i_of_austria = { #Franz von Habsburg, Emperor Franz II of the Holy Roman E
 	history = {
 		1791.12.12 = { #marriage date unknown, but their daughter Marie Louise was born on 1791.12.12
 			#spouse = maria_theresa_de_bourbon
+		}
+		
+		1804.8.11 = {
+			rank = lord #Empire of Austria founded on 1804.8.11; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 10.
 		}
 		
 		1816.10.29 = { #married by procuration on 1816.10.29 and in person on 1816.11.10

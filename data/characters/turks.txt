@@ -8,13 +8,18 @@ selim_i_of_the_ottoman_empire = { #Source: Isaac Asimov, "Cronologia das Ciênci
 	gender = male
 	birth_date = 1467
 	death_date = 1520
-	#became Sultan of the Ottoman Empire in 1512
+	
+	history = {
+		1512 = {
+			rank = lord #became Sultan of the Ottoman Empire in 1512
+		}
+	}
 }
 
 suleiman_i_of_the_ottoman_empire = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 205.
 	name = "Suleiman" #"Süleyman"
 	epithet = "I"
-	character_class = statesman
+	character_class = warrior
 	culture = turkish
 	religion = sunni
 	home_site = trebizond
@@ -26,6 +31,11 @@ suleiman_i_of_the_ottoman_empire = { #Source: Isaac Asimov, "Cronologia das Ciê
 		imperialistic
 	}
 	
+	history = {
+		1520 = {
+			rank = lord #became Sultan of the Ottoman Empire in 1520
+		}
+	}
+	
 	#known as the Magnificent
-	#became Sultan of the Ottoman Empire in 1520
 }

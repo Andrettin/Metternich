@@ -97,14 +97,13 @@ pope_paul_iii = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobe
 	name = "Paul"
 	epithet = "II"
 	character_class = cleric
+	rank = patriarch #pope
 	culture = italian
 	religion = catholic
 	home_site = rome
 	gender = male
 	birth_date = 1468
 	death_date = 1549
-	
-	#pope
 }
 
 giovanni_da_verrazano = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 205.

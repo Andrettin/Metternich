@@ -24,5 +24,9 @@ atahualpa = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas
 	birth_date = 1502
 	death_date = 1533
 	
-	#became emperor of the Incas in 1530
+	history = {
+		1530 = {
+			rank = lord #became emperor of the Incas in 1530
+		}
+	}
 }

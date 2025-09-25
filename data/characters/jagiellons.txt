@@ -2,7 +2,7 @@ zygmunt_ii_of_poland = {
 	name = "Zygmunt"
 	epithet = "II"
 	dynasty = jagiellon
-	character_class = statesman
+	character_class = warrior
 	culture = polish
 	religion = catholic
 	home_site = warsaw
@@ -11,5 +11,11 @@ zygmunt_ii_of_poland = {
 	death_date = 1572.7.7
 	traits = {
 		industrious
+	}
+	
+	history = {
+		1548.4.2 = {
+			rank = lord
+		}
 	}
 }

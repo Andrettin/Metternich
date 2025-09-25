@@ -13,5 +13,9 @@ gustav_i_of_sweden = { #Source: Isaac Asimov, "Cronologia das Ciências e das De
 		industrious
 	}
 	
-	#became king of Sweden in 1523; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 205.
+	history = {
+		1523 = {
+			rank = lord #became king of Sweden in 1523; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 205.
+		}
+	}
 }

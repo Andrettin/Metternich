@@ -8,8 +8,14 @@ basil_iii_of_russia = { #Source: Isaac Asimov, "Cronologia das Ciências e das D
 	gender = male
 	birth_date = 1479
 	death_date = 1533
+	
+	history = {
+		1505 = {
+			rank = lord #became Czar of Russia in 1505
+		}
+	}
+	
 	#son of Ivan III of Russia
-	#became Czar of Russia in 1505
 }
 
 peter_the_great_of_russia = {

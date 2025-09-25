@@ -2,7 +2,7 @@ friedrich_ii_of_saxony = {
 	name = "Friedrich"
 	epithet = "II"
 	dynasty = wettin
-	character_class = statesman
+	character_class = warrior
 	culture = german #Thuringian
 	religion = catholic
 	home_site = dresden
@@ -12,13 +12,19 @@ friedrich_ii_of_saxony = {
 	traits = {
 		industrious
 	}
+	
+	history = {
+		1428.1.4 = {
+			rank = lord
+		}
+	}
 }
 
 august_iii_of_poland = {
 	name = "August"
 	epithet = "III"
 	dynasty = wettin
-	character_class = statesman
+	character_class = warrior
 	culture = german #Thuringian
 	religion = catholic
 	home_site = dresden
@@ -27,6 +33,12 @@ august_iii_of_poland = {
 	death_date = 1763.10.5
 	traits = {
 		industrious
+	}
+	
+	history = {
+		1733.2.1 = {
+			rank = lord
+		}
 	}
 }
 
