@@ -182,7 +182,7 @@ void character_game_data::apply_species_and_class(const int level)
 	}
 
 	const culture *culture = this->character->get_culture();
-	if (culture->get_character_modifier() != nullptr) {
+	if (culture != nullptr && culture->get_character_modifier() != nullptr) {
 		culture->get_character_modifier()->apply(this->character);
 	}
 

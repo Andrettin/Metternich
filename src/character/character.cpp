@@ -288,11 +288,11 @@ void character::check() const
 		throw std::runtime_error(std::format("Character \"{}\" has neither a character class nor a monster type.", this->get_identifier()));
 	}
 
-	if (this->get_culture() == nullptr) {
+	if (this->get_culture() == nullptr && this->get_species()->is_sapient()) {
 		throw std::runtime_error(std::format("Character \"{}\" has no culture.", this->get_identifier()));
 	}
 
-	if (this->get_religion() == nullptr && !this->is_temporary()) {
+	if (this->get_religion() == nullptr && this->get_species()->is_sapient() && !this->is_temporary()) {
 		throw std::runtime_error(std::format("Character \"{}\" has no religion.", this->get_identifier()));
 	}
 
@@ -304,7 +304,7 @@ void character::check() const
 		throw std::runtime_error(std::format("Character \"{}\" has a species (\"{}\") which is different than its phenotype's species (\"{}\").", this->get_identifier(), this->get_species()->get_identifier(), this->get_phenotype()->get_species()->get_identifier()));
 	}
 
-	if (!vector::contains(this->get_culture()->get_species(), this->get_species())) {
+	if (this->get_culture() != nullptr && !vector::contains(this->get_culture()->get_species(), this->get_species())) {
 		throw std::runtime_error(std::format("Character \"{}\" has a species (\"{}\") which is not allowed for its culture (\"{}\").", this->get_identifier(), this->get_species()->get_identifier(), this->get_culture()->get_identifier()));
 	}
 
