@@ -15,6 +15,9 @@ rogue = {
 	min_attribute_values = {
 		dexterity = 9
 	}
+	rank_levels = {
+		master_thief = 10
+	}
 	experience_per_level = {
 		1 = 0
 		2 = 1250

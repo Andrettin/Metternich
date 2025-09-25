@@ -208,6 +208,13 @@ void character::initialize()
 		this->level = this->get_monster_type()->get_level();
 	}
 
+	if (!this->rank.empty()) {
+		assert_throw(this->get_level() == 0);
+		assert_throw(this->get_character_class() != nullptr);
+		this->level = this->get_character_class()->get_rank_level(this->rank);
+		this->rank.clear();
+	}
+
 	if (this->get_deity() != nullptr) {
 		if (this->get_name().empty()) {
 			this->set_name(this->get_deity()->get_name());

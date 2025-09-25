@@ -42,6 +42,13 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 
 			this->min_attribute_values[character_attribute::get(key)] = std::stoi(value);
 		});
+	} else if (tag == "rank_levels") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+
+			this->rank_levels[key] = std::stoi(value);
+		});
 	} else if (tag == "experience_per_level") {
 		scope.for_each_property([&](const gsml_property &property) {
 			const int level = std::stoi(property.get_key());

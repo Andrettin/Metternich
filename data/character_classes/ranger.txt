@@ -16,4 +16,8 @@ ranger = {
 		constitution = 14
 		wisdom = 14
 	}
+	rank_levels = {
+		ranger_knight = 9
+		ranger_lord = 10
+	}
 }

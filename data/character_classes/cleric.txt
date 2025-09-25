@@ -13,6 +13,15 @@ cleric = {
 	min_attribute_values = {
 		wisdom = 9
 	}
+	rank_levels = {
+		acolyte = 1
+		adept = 2
+		priest = 3
+		curate = 4
+		canon = 6
+		patriarch = 8
+		high_priest = 9
+	}
 	experience_per_level = {
 		1 = 0
 		2 = 1500

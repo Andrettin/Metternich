@@ -102,6 +102,17 @@ public:
 		return 0;
 	}
 
+	int get_rank_level(const std::string &rank) const
+	{
+		const auto find_iterator = this->rank_levels.find(rank);
+
+		if (find_iterator != this->rank_levels.end()) {
+			return find_iterator->second;
+		}
+
+		throw std::runtime_error(std::format("Invalid rank for class \"{}\": \"{}\".", this->get_identifier(), rank));
+	}
+
 	int64_t get_experience_for_level(const int level) const;
 
 	const modifier<const character> *get_level_modifier(const int level) const
@@ -145,6 +156,7 @@ private:
 	technology *obsolescence_technology = nullptr;
 	std::vector<const species *> allowed_species;
 	data_entry_map<character_attribute, int> min_attribute_values;
+	std::map<std::string, int> rank_levels; //names for particular levels
 	std::map<int, int64_t> experience_per_level;
 	std::map<int, std::unique_ptr<const modifier<const character>>> level_modifiers;
 	std::map<int, std::unique_ptr<const effect_list<const character>>> level_effects;

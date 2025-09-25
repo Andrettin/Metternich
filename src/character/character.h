@@ -63,6 +63,7 @@ class character final : public character_base, public data_type<character>
 	Q_PROPERTY(metternich::species* species MEMBER species NOTIFY changed)
 	Q_PROPERTY(const metternich::character_class* character_class MEMBER character_class READ get_character_class NOTIFY changed)
 	Q_PROPERTY(int level MEMBER level READ get_level NOTIFY changed)
+	Q_PROPERTY(std::string rank MEMBER rank NOTIFY changed)
 	Q_PROPERTY(const metternich::monster_type* monster_type MEMBER monster_type READ get_monster_type NOTIFY changed)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
 	Q_PROPERTY(const metternich::religion* religion MEMBER religion NOTIFY changed)
@@ -254,6 +255,7 @@ private:
 	metternich::species *species = nullptr;
 	const metternich::character_class *character_class = nullptr;
 	int level = 0;
+	std::string rank;
 	const metternich::monster_type *monster_type = nullptr;
 	metternich::culture *culture = nullptr;
 	const metternich::religion *religion = nullptr;

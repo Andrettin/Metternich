@@ -15,6 +15,10 @@ warrior = {
 	min_attribute_values = {
 		strength = 9
 	}
+	rank_levels = {
+		champion = 7
+		lord = 9
+	}
 	experience_per_level = {
 		1 = 0
 		2 = 2000

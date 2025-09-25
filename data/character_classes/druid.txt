@@ -12,4 +12,10 @@ druid = {
 		wisdom = 12
 		charisma = 15
 	}
+	rank_levels = {
+		aspirant = 1
+		ovate = 2
+		archdruid = 13
+		great_druid = 14
+	}
 }
