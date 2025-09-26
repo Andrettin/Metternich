@@ -43,6 +43,7 @@
 #include "script/modifier_effect/population_type_bonus_modifier_effect.h"
 #include "script/modifier_effect/resource_output_modifier_effect.h"
 #include "script/modifier_effect/ship_stat_modifier_effect.h"
+#include "script/modifier_effect/saving_throw_modifier_effect.h"
 #include "script/modifier_effect/species_armor_class_bonus_modifier_effect.h"
 #include "script/modifier_effect/storage_capacity_modifier_effect.h"
 #include "script/modifier_effect/technology_cost_modifier_effect.h"
@@ -73,6 +74,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<to_hit_bonus_modifier_effect>(value);
 		} else if (character_attribute::try_get(key) != nullptr) {
 			return std::make_unique<character_attribute_modifier_effect>(character_attribute::get(key), value);
+		} else if (saving_throw_type::try_get(key) != nullptr) {
+			return std::make_unique<saving_throw_modifier_effect>(saving_throw_type::get(key), value);
 		}
 	} else if constexpr (std::is_same_v<scope_type, const domain>) {
 		static const std::string capital_commodity_bonus_prefix = "capital_";

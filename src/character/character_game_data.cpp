@@ -9,6 +9,7 @@
 #include "character/character_trait.h"
 #include "character/character_trait_type.h"
 #include "character/monster_type.h"
+#include "character/saving_throw_type.h"
 #include "database/defines.h"
 #include "domain/country_government.h"
 #include "domain/country_military.h"
@@ -108,6 +109,10 @@ void character_game_data::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([&](const gsml_property &property) {
 			this->species_armor_class_bonuses[species::get(property.get_key())] = std::stoi(property.get_value());
 		});
+	} else if (tag == "saving_throw_bonuses") {
+		scope.for_each_property([&](const gsml_property &property) {
+			this->saving_throw_bonuses[saving_throw_type::get(property.get_key())] = std::stoi(property.get_value());
+		});
 	} else if (tag == "items") {
 		scope.for_each_child([&](const gsml_data &child_scope) {
 			auto item = make_qunique<metternich::item>(child_scope);
@@ -161,6 +166,14 @@ gsml_data character_game_data::to_gsml_data() const
 			species_armor_class_bonuses_data.add_property(species->get_identifier(), std::to_string(bonus));
 		}
 		data.add_child(std::move(species_armor_class_bonuses_data));
+	}
+
+	if (!this->saving_throw_bonuses.empty()) {
+		gsml_data saving_throw_bonuses_data("saving_throw_bonuses");
+		for (const auto &[saving_throw_type, bonus] : this->saving_throw_bonuses) {
+			saving_throw_bonuses_data.add_property(saving_throw_type->get_identifier(), std::to_string(bonus));
+		}
+		data.add_child(std::move(saving_throw_bonuses_data));
 	}
 
 	if (!this->items.empty()) {
@@ -782,6 +795,27 @@ void character_game_data::set_to_hit_bonus(const int bonus)
 void character_game_data::change_to_hit_bonus(const int change)
 {
 	this->set_to_hit_bonus(this->get_to_hit_bonus() + change);
+}
+
+QVariantList character_game_data::get_saving_throw_bonuses_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_saving_throw_bonuses());
+}
+
+void character_game_data::change_saving_throw_bonus(const saving_throw_type *type, const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const int new_value = (this->saving_throw_bonuses[type] += change);
+	if (new_value == 0) {
+		this->saving_throw_bonuses.erase(type);
+	}
+
+	if (game::get()->is_running()) {
+		emit saving_throw_bonuses_changed();
+	}
 }
 
 const dice &character_game_data::get_damage_dice() const

@@ -71,6 +71,7 @@ public:
 	void create_to_hit_bonus_rows();
 	void create_damage_row();
 	void update_damage_row();
+	void create_saving_throw_rows();
 	void create_item_rows();
 	void create_equipment_rows();
 	void create_inventory_rows();

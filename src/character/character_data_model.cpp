@@ -6,6 +6,7 @@
 #include "character/character_attribute.h"
 #include "character/character_class.h"
 #include "character/character_game_data.h"
+#include "character/saving_throw_type.h"
 #include "domain/culture.h"
 #include "item/item.h"
 #include "item/item_slot.h"
@@ -194,6 +195,7 @@ void character_data_model::reset_model()
 		this->create_armor_class_rows();
 		this->create_to_hit_bonus_rows();
 		this->create_damage_row();
+		this->create_saving_throw_rows();
 
 		if (!character_game_data->get_items().empty()) {
 			this->create_item_rows();
@@ -269,6 +271,24 @@ void character_data_model::update_damage_row()
 
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
 	this->damage_row->value = character_game_data->get_damage_dice().to_display_string();
+}
+
+void character_data_model::create_saving_throw_rows()
+{
+	const character_game_data *character_game_data = this->get_character()->get_game_data();
+
+	if (character_game_data->get_saving_throw_bonuses().empty()) {
+		return;
+	}
+
+	auto top_row = std::make_unique<character_data_row>("Saving Throws");
+
+	for (const auto &[saving_throw_type, bonus] : character_game_data->get_saving_throw_bonuses()) {
+		auto row = std::make_unique<character_data_row>(saving_throw_type->get_name(), number::to_signed_string(bonus), top_row.get());
+		top_row->child_rows.push_back(std::move(row));
+	}
+
+	this->top_rows.push_back(std::move(top_row));
 }
 
 void character_data_model::create_item_rows()
