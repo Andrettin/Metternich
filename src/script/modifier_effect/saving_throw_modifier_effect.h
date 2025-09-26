@@ -15,6 +15,11 @@ public:
 	{
 	}
 
+	explicit saving_throw_modifier_effect(const std::string &value)
+		: modifier_effect<const character>(value), type(nullptr)
+	{
+	}
+
 	virtual const std::string &get_identifier() const override
 	{
 		static const std::string identifier = "saving_throw";
@@ -23,12 +28,22 @@ public:
 
 	virtual void apply(const character *scope, const centesimal_int &multiplier) const override
 	{
-		scope->get_game_data()->change_saving_throw_bonus(this->type, (this->value * multiplier).to_int());
+		if (this->type == nullptr) {
+			for (const saving_throw_type *saving_throw_type : saving_throw_type::get_all()) {
+				scope->get_game_data()->change_saving_throw_bonus(saving_throw_type, (this->value * multiplier).to_int());
+			}
+		} else {
+			scope->get_game_data()->change_saving_throw_bonus(this->type, (this->value * multiplier).to_int());
+		}
 	}
 
 	virtual std::string get_base_string(const character *scope) const override
 	{
 		Q_UNUSED(scope);
+
+		if (this->type == nullptr) {
+			return "Saving Throw Bonus";
+		}
 
 		return this->type->get_name();
 	}

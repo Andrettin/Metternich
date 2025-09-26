@@ -6,5 +6,6 @@ kobold = {
 	experience_award = 7
 	modifier = {
 		armor_class = 3
+		saving_throw_bonus = 1
 	}
 }

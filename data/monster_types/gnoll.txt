@@ -7,5 +7,6 @@ gnoll = {
 	modifier = {
 		armor_class = 5
 		to_hit_bonus = 1
+		saving_throw_bonus = 3
 	}
 }
