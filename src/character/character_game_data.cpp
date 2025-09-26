@@ -650,6 +650,8 @@ void character_game_data::change_attribute_value(const character_attribute *attr
 		return;
 	}
 
+	const int old_value = this->get_attribute_value(attribute);
+
 	if (this->get_office() != nullptr) {
 		this->apply_office_modifier(this->domain, this->get_office(), -1);
 	}
@@ -662,6 +664,22 @@ void character_game_data::change_attribute_value(const character_attribute *attr
 
 	if (this->get_office() != nullptr) {
 		this->apply_office_modifier(this->domain, this->get_office(), 1);
+	}
+
+	if (change > 0) {
+		for (int i = old_value + 1; i <= new_value; ++i) {
+			const modifier<const metternich::character> *value_modifier = attribute->get_value_modifier(i);
+			if (value_modifier != nullptr) {
+				value_modifier->apply(this->character);
+			}
+		}
+	} else {
+		for (int i = old_value; i > new_value; --i) {
+			const modifier<const metternich::character> *value_modifier = attribute->get_value_modifier(i);
+			if (value_modifier != nullptr) {
+				value_modifier->remove(this->character);
+			}
+		}
 	}
 }
 

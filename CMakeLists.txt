@@ -21,6 +21,7 @@ include_directories(
 
 set(character_SRCS
 	src/character/character.cpp
+	src/character/character_attribute.cpp
 	src/character/character_class.cpp
 	src/character/character_class_container.cpp
 	src/character/character_container.cpp
