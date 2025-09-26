@@ -19,6 +19,7 @@ class dungeon final : public named_data_entry, public data_type<dungeon>
 
 	Q_PROPERTY(const metternich::portrait* portrait MEMBER portrait READ get_portrait NOTIFY changed)
 	Q_PROPERTY(int level MEMBER level READ get_level NOTIFY changed)
+	Q_PROPERTY(int max_areas MEMBER max_areas READ get_max_areas NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "dungeon";
@@ -41,6 +42,11 @@ public:
 		return this->level;
 	}
 
+	int get_max_areas() const
+	{
+		return this->max_areas;
+	}
+
 	const and_condition<site> *get_conditions() const
 	{
 		return this->conditions.get();
@@ -52,6 +58,7 @@ signals:
 private:
 	const metternich::portrait *portrait = nullptr;
 	int level = 0; //expected level of characters to take on this dungeon
+	int max_areas = 0; //how many areas the dungeon may have at maximum
 	std::unique_ptr<const and_condition<site>> conditions;
 };
 

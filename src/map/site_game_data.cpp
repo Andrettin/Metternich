@@ -1468,8 +1468,14 @@ void site_game_data::explore_dungeon(const std::shared_ptr<party> &party)
 
 std::vector<const dungeon_area *> site_game_data::get_potential_dungeon_areas() const
 {
+	assert_throw(this->get_dungeon() != nullptr);
+
+	if (this->get_dungeon()->get_max_areas() != 0 && static_cast<int>(this->get_explored_dungeon_areas().size()) >= this->get_dungeon()->get_max_areas()) {
+		return {};
+	}
+
 	bool needs_entrance = true;
-	for (const dungeon_area *dungeon_area : this->explored_dungeon_areas) {
+	for (const dungeon_area *dungeon_area : this->get_explored_dungeon_areas()) {
 		if (dungeon_area->is_entrance()) {
 			needs_entrance = false;
 			break;
