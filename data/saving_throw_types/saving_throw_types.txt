@@ -1,0 +1,11 @@
+fortitude = {
+	name = "Fortitude"
+}
+
+reflex = {
+	name = "Reflex"
+}
+
+will = {
+	name = "Will"
+}

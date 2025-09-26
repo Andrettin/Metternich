@@ -212,7 +212,7 @@ void character_data_model::create_attribute_rows()
 
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
 	for (const auto &[attribute, value] : character_game_data->get_attribute_values()) {
-		auto row = std::make_unique<character_data_row>(attribute->get_name(), std::to_string(value), top_row.get());
+		auto row = std::make_unique<character_data_row>(attribute->get_name() + ":", std::to_string(value), top_row.get());
 		top_row->child_rows.push_back(std::move(row));
 	}
 
@@ -284,7 +284,7 @@ void character_data_model::create_saving_throw_rows()
 	auto top_row = std::make_unique<character_data_row>("Saving Throws");
 
 	for (const auto &[saving_throw_type, bonus] : character_game_data->get_saving_throw_bonuses()) {
-		auto row = std::make_unique<character_data_row>(saving_throw_type->get_name(), number::to_signed_string(bonus), top_row.get());
+		auto row = std::make_unique<character_data_row>(saving_throw_type->get_name() + ":", number::to_signed_string(bonus), top_row.get());
 		top_row->child_rows.push_back(std::move(row));
 	}
 

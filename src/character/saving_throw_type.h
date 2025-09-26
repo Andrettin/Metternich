@@ -11,8 +11,6 @@ class saving_throw_type final : public named_data_entry, public data_type<saving
 {
 	Q_OBJECT
 
-	Q_PROPERTY(const metternich::character_attribute* attribute MEMBER attribute READ get_attribute NOTIFY changed)
-
 public:
 	static constexpr const char class_identifier[] = "saving_throw_type";
 	static constexpr const char property_class_identifier[] = "metternich::saving_throw_type*";
@@ -24,16 +22,8 @@ public:
 
 	virtual void check() const override;
 
-	const character_attribute *get_attribute() const
-	{
-		return this->attribute;
-	}
-
 signals:
 	void changed();
-
-private:
-	const character_attribute *attribute = nullptr;
 };
 
 }
