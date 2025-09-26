@@ -2,4 +2,5 @@ ruined_castle = {
 	name = "Ruined Castle"
 	portrait = aristocratic_palace
 	level = 1
+	max_areas = 13
 }
