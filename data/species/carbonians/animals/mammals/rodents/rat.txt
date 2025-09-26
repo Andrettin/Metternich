@@ -1,0 +1,9 @@
+rat = { #Source: http://www.itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&search_value=180363
+	name = "Rat"
+	supertaxon = rattus
+	specific_name = "norvegicus"
+	era = holocene
+	pre_evolutions = {
+		megacricetodon #earlier rodent
+	}
+}

@@ -1,0 +1,8 @@
+giant_rat = {
+	name = "Giant Rat"
+	supertaxon = rattus
+	era = holocene
+	pre_evolutions = {
+		megacricetodon #earlier rodent
+	}
+}
