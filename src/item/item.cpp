@@ -22,6 +22,9 @@ item::item(const item_type *type, const item_material *material, const metternic
 item::item(const gsml_data &scope)
 {
 	scope.process(this);
+
+	assert_throw(this->get_type() != nullptr);
+
 	this->update_name();
 }
 
@@ -68,29 +71,34 @@ gsml_data item::to_gsml_data() const
 	return data;
 }
 
-void item::update_name()
+std::string item::create_name(const item_type *type, const item_material *material, const metternich::enchantment *enchantment)
 {
-	std::string name = this->get_type()->get_name();
+	std::string name = type->get_name();
 
-	if (this->get_material() != nullptr) {
-		name = this->get_material()->get_name() + " " + name;
+	if (material != nullptr) {
+		name = material->get_name() + " " + name;
 	}
 
-	if (this->get_enchantment() != nullptr) {
-		switch (this->get_enchantment()->get_affix_type()) {
+	if (enchantment != nullptr) {
+		switch (enchantment->get_affix_type()) {
 			case affix_type::prefix:
-				name = this->get_enchantment()->get_name() + " " + name;
+				name = enchantment->get_name() + " " + name;
 				break;
 			case affix_type::suffix:
-				name += " " + this->get_enchantment()->get_name();
+				name += " " + enchantment->get_name();
 				break;
 			case affix_type::stem:
-				name = this->get_enchantment()->get_name();
+				name = enchantment->get_name();
 				break;
 		}
 	}
 
-	this->set_name(name);
+	return name;
+}
+
+void item::update_name()
+{
+	this->set_name(item::create_name(this->get_type(), this->get_material(), this->get_enchantment()));
 }
 
 const item_slot *item::get_slot() const

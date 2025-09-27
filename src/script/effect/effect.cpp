@@ -31,6 +31,7 @@
 #include "script/effect/experience_effect.h"
 #include "script/effect/explore_dungeon_effect.h"
 #include "script/effect/free_technologies_effect.h"
+#include "script/effect/gain_item_effect.h"
 #include "script/effect/gain_spell_scroll_effect.h"
 #include "script/effect/hidden_effect.h"
 #include "script/effect/hit_dice_effect.h"
@@ -110,6 +111,8 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 	if constexpr (std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, const domain>) {
 		if (key == "event") {
 			return std::make_unique<event_effect<scope_type>>(value, effect_operator);
+		} else if (key == "gain_item_effect") {
+			return std::make_unique<gain_item_effect<scope_type>>(value, effect_operator);
 		}
 	}
 
@@ -179,6 +182,8 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 	if constexpr (std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, const domain>) {
 		if (effect_identifier == "delayed") {
 			effect = std::make_unique<delayed_effect<scope_type>>(effect_operator);
+		} else if (effect_identifier == "gain_item") {
+			effect = std::make_unique<gain_item_effect<scope_type>>(effect_operator);
 		}
 	}
 

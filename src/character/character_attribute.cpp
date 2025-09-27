@@ -45,5 +45,4 @@ void character_attribute::process_gsml_scope(const gsml_data &scope)
 	}
 }
 
-
 }

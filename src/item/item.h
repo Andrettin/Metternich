@@ -30,6 +30,8 @@ class item final : public QObject
 	Q_PROPERTY(bool equipped READ is_equipped NOTIFY equipped_changed)
 
 public:
+	static std::string create_name(const item_type *type, const item_material *material, const metternich::enchantment *enchantment);
+
 	explicit item(const item_type *type, const item_material *material, const metternich::enchantment *enchantment);
 	explicit item(const gsml_data &scope);
 
