@@ -1,0 +1,5 @@
+find_disarm_traps = {
+	name = "Find/Disarm Traps"
+	icon = cog
+	check_dice = 1d100
+}
