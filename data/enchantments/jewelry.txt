@@ -1,0 +1,11 @@
+of_protection_1 = {
+	name = "of Protection +1"
+	affix_type = suffix
+	item_types = {
+		ring
+	}
+	modifier = {
+		armor_class = 1
+		saving_throw_bonus = 1
+	}
+}

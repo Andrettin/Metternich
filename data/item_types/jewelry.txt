@@ -1,0 +1,6 @@
+ring = {
+	name = "Ring"
+	item_class = ring
+	icon = crown_baronial
+	price = 1gp #?gp
+}
