@@ -72,6 +72,7 @@ public:
 	void create_damage_row();
 	void update_damage_row();
 	void create_saving_throw_rows();
+	void update_saving_throw_rows();
 	void create_item_rows();
 	void create_equipment_rows();
 	void create_inventory_rows();
@@ -88,6 +89,7 @@ private:
 	std::vector<std::unique_ptr<const character_data_row>> top_rows;
 	character_data_row *armor_class_row = nullptr;
 	character_data_row *damage_row = nullptr;
+	character_data_row *saving_throw_row = nullptr;
 	character_data_row *equipment_row = nullptr;
 	character_data_row *inventory_row = nullptr;
 	bool resetting_model = false;

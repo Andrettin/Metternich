@@ -126,6 +126,7 @@ void character_data_model::set_character(const metternich::character *character)
 	if (this->character != nullptr) {
 		disconnect(this->character->get_game_data(), &character_game_data::armor_class_bonus_changed, this, &character_data_model::update_armor_class_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::species_armor_class_bonuses_changed, this, &character_data_model::update_armor_class_rows);
+		disconnect(this->character->get_game_data(), &character_game_data::saving_throw_bonuses_changed, this, &character_data_model::update_saving_throw_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::update_damage_row);
 		disconnect(this->character->get_game_data(), &character_game_data::items_changed, this, &character_data_model::create_inventory_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::create_item_rows);
@@ -138,6 +139,7 @@ void character_data_model::set_character(const metternich::character *character)
 	if (character != nullptr) {
 		connect(this->character->get_game_data(), &character_game_data::armor_class_bonus_changed, this, &character_data_model::update_armor_class_rows);
 		connect(this->character->get_game_data(), &character_game_data::species_armor_class_bonuses_changed, this, &character_data_model::update_armor_class_rows);
+		connect(this->character->get_game_data(), &character_game_data::saving_throw_bonuses_changed, this, &character_data_model::update_saving_throw_rows);
 		connect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::update_damage_row);
 		connect(character->get_game_data(), &character_game_data::items_changed, this, &character_data_model::create_inventory_rows);
 		connect(character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::create_item_rows);
@@ -154,6 +156,7 @@ void character_data_model::reset_model()
 	this->top_rows.clear();
 	this->armor_class_row = nullptr;
 	this->damage_row = nullptr;
+	this->saving_throw_row = nullptr;
 	this->equipment_row = nullptr;
 	this->inventory_row = nullptr;
 
@@ -275,20 +278,27 @@ void character_data_model::update_damage_row()
 
 void character_data_model::create_saving_throw_rows()
 {
+	auto row = std::make_unique<character_data_row>("Saving Throws");
+	this->saving_throw_row = row.get();
+	this->top_rows.push_back(std::move(row));
+
+	this->update_saving_throw_rows();
+}
+
+void character_data_model::update_saving_throw_rows()
+{
+	assert_throw(this->saving_throw_row != nullptr);
+
+	this->clear_child_rows(this->saving_throw_row);
+
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
 
-	if (character_game_data->get_saving_throw_bonuses().empty()) {
-		return;
-	}
-
-	auto top_row = std::make_unique<character_data_row>("Saving Throws");
-
 	for (const auto &[saving_throw_type, bonus] : character_game_data->get_saving_throw_bonuses()) {
-		auto row = std::make_unique<character_data_row>(saving_throw_type->get_name() + ":", number::to_signed_string(bonus), top_row.get());
-		top_row->child_rows.push_back(std::move(row));
+		auto row = std::make_unique<character_data_row>(saving_throw_type->get_name() + ":", number::to_signed_string(bonus), this->saving_throw_row);
+		this->saving_throw_row->child_rows.push_back(std::move(row));
 	}
 
-	this->top_rows.push_back(std::move(top_row));
+	this->on_child_rows_inserted(this->saving_throw_row);
 }
 
 void character_data_model::create_item_rows()
