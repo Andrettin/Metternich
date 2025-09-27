@@ -899,6 +899,29 @@ void character_game_data::change_skill_value(const skill *skill, const int chang
 	}
 }
 
+bool character_game_data::do_skill_check(const skill *skill, const int roll_modifier) const
+{
+	if (!this->is_skill_trained(skill)) {
+		return false;
+	}
+
+	const int roll_result = random::get()->roll_dice(skill->get_check_dice());
+
+	//there should always be at least a 5% chance of failure
+	if (skill->get_check_dice().get_sides() == 100) {
+		if (roll_result >= 96) {
+			return false;
+		}
+	} else if (roll_result == skill->get_check_dice().get_sides()) {
+		//e.g. if a 20 is rolled for a d20 roll
+		return false;
+	}
+
+	const int skill_value = this->get_skill_value(skill);
+	const int modified_skill_value = skill_value + roll_modifier;
+	return roll_result <= modified_skill_value;
+}
+
 const dice &character_game_data::get_damage_dice() const
 {
 	for (const auto &[slot, items] : this->equipped_items) {

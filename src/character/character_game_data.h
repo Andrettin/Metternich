@@ -258,6 +258,8 @@ public:
 
 	void change_skill_value(const skill *skill, const int change);
 
+	bool do_skill_check(const skill *skill, const int roll_modifier) const;
+
 	const std::vector<const character_trait *> &get_traits() const
 	{
 		return this->traits;
