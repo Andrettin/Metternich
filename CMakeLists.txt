@@ -35,6 +35,7 @@ set(character_SRCS
 	src/character/monster_type.cpp
 	src/character/party.cpp
 	src/character/saving_throw_type.cpp
+	src/character/skill.cpp
 )
 source_group(character FILES ${character_SRCS})
 set_source_files_properties(${character_SRCS} PROPERTIES UNITY_GROUP "character")
@@ -359,6 +360,7 @@ set(character_HDRS
 	src/character/monster_type.h
 	src/character/party.h
 	src/character/saving_throw_type.h
+	src/character/skill.h
 	src/character/starting_age_category.h
 )
 source_group(character FILES ${character_HDRS})
