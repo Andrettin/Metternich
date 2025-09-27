@@ -5,6 +5,7 @@
 #include "character/character_attribute.h"
 #include "character/monster_type.h"
 #include "character/saving_throw_type.h"
+#include "character/skill.h"
 #include "domain/cultural_group.h"
 #include "domain/idea_slot.h"
 #include "domain/office.h"
@@ -41,6 +42,7 @@ template struct data_entry_compare<monster_type>;
 template struct data_entry_compare<named_data_entry>;
 template struct data_entry_compare<office>;
 template struct data_entry_compare<saving_throw_type>;
+template struct data_entry_compare<skill>;
 template struct data_entry_compare<species>;
 template struct data_entry_compare<technology_category>;
 template struct data_entry_compare<technology_subcategory>;

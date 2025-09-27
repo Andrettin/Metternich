@@ -27,6 +27,7 @@ class portrait;
 class province;
 class saving_throw_type;
 class scripted_character_modifier;
+class skill;
 class species;
 class spell;
 enum class character_trait_type;
@@ -237,6 +238,26 @@ public:
 
 	void change_saving_throw_bonus(const saving_throw_type *type, const int change);
 
+	bool is_skill_trained(const skill *skill) const;
+	void change_skill_training(const skill *skill, const int change);
+
+	const data_entry_map<skill, int> &get_skill_values() const
+	{
+		return this->skill_values;
+	}
+
+	int get_skill_value(const skill *skill) const
+	{
+		const auto find_iterator = this->skill_values.find(skill);
+		if (find_iterator != this->skill_values.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void change_skill_value(const skill *skill, const int change);
+
 	const std::vector<const character_trait *> &get_traits() const
 	{
 		return this->traits;
@@ -440,6 +461,8 @@ signals:
 	void species_armor_class_bonuses_changed();
 	void to_hit_bonus_changed();
 	void saving_throw_bonuses_changed();
+	void skill_trainings_changed();
+	void skill_values_changed();
 	void traits_changed();
 	void scripted_modifiers_changed();
 	void ruler_changed();
@@ -464,6 +487,8 @@ private:
 	data_entry_map<species, int> species_armor_class_bonuses; //armor class bonuses when attacked by certain species
 	int to_hit_bonus = 0;
 	data_entry_map<saving_throw_type, int> saving_throw_bonuses;
+	data_entry_map<skill, int> skill_trainings;
+	data_entry_map<skill, int> skill_values;
 	std::vector<const character_trait *> traits;
 	scripted_character_modifier_map<int> scripted_modifiers;
 	const metternich::office *office = nullptr;

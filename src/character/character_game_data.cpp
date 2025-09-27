@@ -10,6 +10,7 @@
 #include "character/character_trait_type.h"
 #include "character/monster_type.h"
 #include "character/saving_throw_type.h"
+#include "character/skill.h"
 #include "database/defines.h"
 #include "domain/country_government.h"
 #include "domain/country_military.h"
@@ -113,6 +114,14 @@ void character_game_data::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([&](const gsml_property &property) {
 			this->saving_throw_bonuses[saving_throw_type::get(property.get_key())] = std::stoi(property.get_value());
 		});
+	} else if (tag == "skill_trainings") {
+		scope.for_each_property([&](const gsml_property &property) {
+			this->skill_trainings[skill::get(property.get_key())] = std::stoi(property.get_value());
+		});
+	} else if (tag == "skill_values") {
+		scope.for_each_property([&](const gsml_property &property) {
+			this->skill_values[skill::get(property.get_key())] = std::stoi(property.get_value());
+		});
 	} else if (tag == "items") {
 		scope.for_each_child([&](const gsml_data &child_scope) {
 			auto item = make_qunique<metternich::item>(child_scope);
@@ -174,6 +183,22 @@ gsml_data character_game_data::to_gsml_data() const
 			saving_throw_bonuses_data.add_property(saving_throw_type->get_identifier(), std::to_string(bonus));
 		}
 		data.add_child(std::move(saving_throw_bonuses_data));
+	}
+
+	if (!this->skill_trainings.empty()) {
+		gsml_data skill_trainings_data("skill_trainings");
+		for (const auto &[skill, training] : this->skill_trainings) {
+			skill_trainings_data.add_property(skill->get_identifier(), std::to_string(training));
+		}
+		data.add_child(std::move(skill_trainings_data));
+	}
+
+	if (!this->skill_values.empty()) {
+		gsml_data skill_values_data("skill_values");
+		for (const auto &[skill, value] : this->skill_values) {
+			skill_values_data.add_property(skill->get_identifier(), std::to_string(value));
+		}
+		data.add_child(std::move(skill_values_data));
 	}
 
 	if (!this->items.empty()) {
@@ -833,6 +858,44 @@ void character_game_data::change_saving_throw_bonus(const saving_throw_type *typ
 
 	if (game::get()->is_running()) {
 		emit saving_throw_bonuses_changed();
+	}
+}
+
+bool character_game_data::is_skill_trained(const skill *skill) const
+{
+	return this->skill_trainings.contains(skill);
+}
+
+void character_game_data::change_skill_training(const skill *skill, const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const int new_value = (this->skill_trainings[skill] += change);
+	assert_throw(new_value >= 0);
+	if (new_value == 0) {
+		this->skill_trainings.erase(skill);
+	}
+
+	if (game::get()->is_running()) {
+		emit skill_trainings_changed();
+	}
+}
+
+void character_game_data::change_skill_value(const skill *skill, const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const int new_value = (this->skill_values[skill] += change);
+	if (new_value == 0) {
+		this->skill_values.erase(skill);
+	}
+
+	if (game::get()->is_running()) {
+		emit skill_values_changed();
 	}
 }
 
