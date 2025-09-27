@@ -9,34 +9,9 @@ dexterity = {
 		1 = {
 			reflex = -5
 		}
+	}
+	recurring_value_modifiers = {
 		2 = {
-			reflex = 1
-		}
-		4 = {
-			reflex = 1
-		}
-		6 = {
-			reflex = 1
-		}
-		8 = {
-			reflex = 1
-		}
-		10 = {
-			reflex = 1
-		}
-		12 = {
-			reflex = 1
-		}
-		14 = {
-			reflex = 1
-		}
-		16 = {
-			reflex = 1
-		}
-		18 = {
-			reflex = 1
-		}
-		20 = {
 			reflex = 1
 		}
 	}
@@ -49,34 +24,9 @@ constitution = {
 		1 = {
 			fortitude = -5
 		}
+	}
+	recurring_value_modifiers = {
 		2 = {
-			fortitude = 1
-		}
-		4 = {
-			fortitude = 1
-		}
-		6 = {
-			fortitude = 1
-		}
-		8 = {
-			fortitude = 1
-		}
-		10 = {
-			fortitude = 1
-		}
-		12 = {
-			fortitude = 1
-		}
-		14 = {
-			fortitude = 1
-		}
-		16 = {
-			fortitude = 1
-		}
-		18 = {
-			fortitude = 1
-		}
-		20 = {
 			fortitude = 1
 		}
 	}
@@ -93,34 +43,9 @@ wisdom = {
 		1 = {
 			will = -5
 		}
+	}
+	recurring_value_modifiers = {
 		2 = {
-			will = 1
-		}
-		4 = {
-			will = 1
-		}
-		6 = {
-			will = 1
-		}
-		8 = {
-			will = 1
-		}
-		10 = {
-			will = 1
-		}
-		12 = {
-			will = 1
-		}
-		14 = {
-			will = 1
-		}
-		16 = {
-			will = 1
-		}
-		18 = {
-			will = 1
-		}
-		20 = {
 			will = 1
 		}
 	}

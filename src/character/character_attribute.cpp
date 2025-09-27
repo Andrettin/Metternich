@@ -21,10 +21,24 @@ void character_attribute::process_gsml_scope(const gsml_data &scope)
 	if (tag == "value_modifiers") {
 		scope.for_each_child([&](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
-			const int level = std::stoi(child_tag);
-			auto modifier = std::make_unique<metternich::modifier<const character>>();
-			modifier->process_gsml_data(child_scope);
-			this->value_modifiers[level] = std::move(modifier);
+			const int value = std::stoi(child_tag);
+			if (!this->value_modifiers.contains(value)) {
+				this->value_modifiers[value] = std::make_unique<metternich::modifier<const character>>();
+			}
+			this->value_modifiers[value]->process_gsml_data(child_scope);
+		});
+	} else if (tag == "recurring_value_modifiers") {
+		static constexpr int max_value = std::numeric_limits<uint8_t>::max();
+
+		scope.for_each_child([&](const gsml_data &child_scope) {
+			const std::string &child_tag = child_scope.get_tag();
+			const int value_interval = std::stoi(child_tag);
+			for (int i = value_interval; i <= max_value; i += value_interval) {
+				if (!this->value_modifiers.contains(i)) {
+					this->value_modifiers[i] = std::make_unique<metternich::modifier<const character>>();
+				}
+				this->value_modifiers[i]->process_gsml_data(child_scope);
+			}
 		});
 	} else {
 		data_entry::process_gsml_scope(scope);

@@ -38,7 +38,7 @@ signals:
 	void changed();
 
 private:
-	std::map<int, std::unique_ptr<const modifier<const character>>> value_modifiers; //the character modifiers applied for each value; these are cumulative
+	std::map<int, std::unique_ptr<modifier<const character>>> value_modifiers; //the character modifiers applied for each value; these are cumulative
 };
 
 }
