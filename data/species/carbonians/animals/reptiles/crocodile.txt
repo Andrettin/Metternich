@@ -1,0 +1,8 @@
+crocodile = {
+	name = "Crocodile"
+	supertaxon = reptilia
+	era = holocene
+	pre_evolutions = {
+		deinosuchus
+	}
+}

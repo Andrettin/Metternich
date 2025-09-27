@@ -1,0 +1,7 @@
+deinosuchus = {
+	name = "Deinosuchus"
+	supertaxon = reptilia
+	pre_evolutions = {
+		gracilisuchus
+	}
+}

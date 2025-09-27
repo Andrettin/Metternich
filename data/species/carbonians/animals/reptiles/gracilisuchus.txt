@@ -1,0 +1,8 @@
+gracilisuchus = {
+	name = "Gracilisuchus"
+	supertaxon = reptilia
+	pre_evolutions = {
+		ornithosuchus
+		ticinosuchus
+	}
+}

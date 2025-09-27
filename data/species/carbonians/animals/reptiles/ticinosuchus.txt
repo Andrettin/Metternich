@@ -1,0 +1,11 @@
+ticinosuchus = {
+	name = "Ticinosuchus"
+	supertaxon = reptilia
+	pre_evolutions = {
+		hylonomus
+		pareiasaurus
+		petrolacosaurus
+		sphenacodon
+		thadeosaurus
+	}
+}

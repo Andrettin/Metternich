@@ -1,0 +1,9 @@
+lizard = {
+	name = "Lizard"
+	supertaxon = reptilia
+	era = holocene
+	pre_evolutions = {
+		petrolacosaurus
+		thadeosaurus
+	}
+}
