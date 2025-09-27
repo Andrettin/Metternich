@@ -1,11 +1,10 @@
 #pragma once
 
-Q_MOC_INCLUDE("domain/domain.h")
-
 namespace metternich {
 
 class character;
 class domain;
+class skill;
 
 //group of characters who are engaging in combat or visiting a site
 class party final
@@ -28,6 +27,8 @@ public:
 	void remove_character(const character *character);
 
 	void gain_experience(const int64_t experience);
+
+	const character *get_best_skill_character(const skill *skill) const;
 
 private:
 	const metternich::domain *domain = nullptr;

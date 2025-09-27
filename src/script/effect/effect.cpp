@@ -52,6 +52,7 @@
 #include "script/effect/scripted_effect_effect.h"
 #include "script/effect/scripted_modifiers_effect.h"
 #include "script/effect/set_flag_effect.h"
+#include "script/effect/skill_check_effect.h"
 #include "script/effect/source_site_effect.h"
 #include "script/effect/tooltip_effect.h"
 #include "script/effect/traits_effect.h"
@@ -114,7 +115,7 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 	if constexpr (std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, const domain>) {
 		if (key == "event") {
 			return std::make_unique<event_effect<scope_type>>(value, effect_operator);
-		} else if (key == "gain_item_effect") {
+		} else if (key == "gain_item") {
 			return std::make_unique<gain_item_effect<scope_type>>(value, effect_operator);
 		}
 	}
@@ -187,6 +188,8 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 			effect = std::make_unique<delayed_effect<scope_type>>(effect_operator);
 		} else if (effect_identifier == "gain_item") {
 			effect = std::make_unique<gain_item_effect<scope_type>>(effect_operator);
+		} else if (effect_identifier == "skill_check") {
+			effect = std::make_unique<skill_check_effect<scope_type>>(effect_operator);
 		}
 	}
 
