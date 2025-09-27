@@ -23,6 +23,7 @@ Flickable {
 				portrait_identifier: site.game_data.portrait ? site.game_data.portrait.identifier : "building_slot"
 				
 				readonly property var site: model.modelData
+				readonly property var dungeon: site.game_data.dungeon
 				readonly property bool is_visit_target: metternich.game.player_country.game_data.visit_target_site === site
 				
 				Image {
@@ -35,7 +36,7 @@ Flickable {
 				}
 				
 				onClicked: {
-					if (site.game_data.dungeon !== null) {
+					if (dungeon !== null) {
 						dungeon_dialog.site = site
 						dungeon_dialog.open()
 					}
@@ -47,8 +48,12 @@ Flickable {
 						if (site.game_data.province.game_data.provincial_capital === site) {
 							status_text += " (Provincial Capital)"
 						}
-					} else if (site.game_data.dungeon !== null) {
-						status_text = site.game_data.dungeon.name + " (Dungeon)"
+					} else if (dungeon !== null) {
+						status_text = dungeon.name
+						if (dungeon.random) {
+							status_text += " of " + site.game_data.current_cultural_name
+						}
+						status_text += " (Dungeon)"
 						if (is_visit_target) {
 							status_text += " (Visiting)"
 						}

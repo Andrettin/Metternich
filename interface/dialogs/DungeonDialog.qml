@@ -6,10 +6,11 @@ import ".."
 DialogBase {
 	id: dungeon_dialog
 	height: button_column.y + button_column.height + 8 * scale_factor
-	title: dungeon ? dungeon.name : ""
+	title: dungeon_name
 	
 	property var site: null
 	property var dungeon: site ? site.game_data.dungeon : null
+	readonly property string dungeon_name: dungeon ? (dungeon.random ? (dungeon.name + " of " + site.game_data.current_cultural_name) : dungeon.name) : ""
 	readonly property bool can_visit_dungeon: site && dungeon && metternich.game.player_country.game_data.can_visit_site(site)
 	
 	PortraitButton {
@@ -26,7 +27,7 @@ DialogBase {
 		anchors.topMargin: 16 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
 		text: dungeon ? format_text(
-			can_visit_dungeon ? ("Do you wish to explore " + dungeon.name + "?"
+			can_visit_dungeon ? ("Do you wish to explore " + (dungeon.random ? "the " : "") + dungeon_name + "?"
 				+ (dungeon.level !== 0 ? ("\n\nDungeon Level: " + dungeon.level) : "")
 			) : (dungeon.level !== 0 ? ("Dungeon Level: " + dungeon.level) : "")
 		) : ""
