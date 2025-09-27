@@ -33,6 +33,7 @@
 #include "script/effect/free_technologies_effect.h"
 #include "script/effect/gain_item_effect.h"
 #include "script/effect/gain_spell_scroll_effect.h"
+#include "script/effect/healing_effect.h"
 #include "script/effect/hidden_effect.h"
 #include "script/effect/hit_dice_effect.h"
 #include "script/effect/if_effect.h"
@@ -68,6 +69,8 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 	if constexpr (std::is_same_v<scope_type, const character>) {
 		if (key == "experience") {
 			return std::make_unique<experience_effect>(value, effect_operator);
+		} else if (key == "healing") {
+			return std::make_unique<healing_effect>(value, effect_operator);
 		} else if (key == "hit_dice") {
 			return std::make_unique<hit_dice_effect>(value, effect_operator);
 		} else if (key == "traits") {
