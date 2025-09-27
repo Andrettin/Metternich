@@ -151,8 +151,8 @@ private:
 	data_entry_map<character_attribute, int> min_attribute_values;
 	std::map<std::string, int> rank_levels; //names for particular levels
 	std::map<int, int64_t> experience_per_level;
-	std::map<int, std::unique_ptr<const modifier<const character>>> level_modifiers;
-	std::map<int, std::unique_ptr<const effect_list<const character>>> level_effects;
+	std::map<int, std::unique_ptr<modifier<const character>>> level_modifiers;
+	std::map<int, std::unique_ptr<effect_list<const character>>> level_effects;
 	std::vector<const item_type *> starting_items;
 };
 

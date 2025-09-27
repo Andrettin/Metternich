@@ -60,17 +60,45 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_child([&](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
 			const int level = std::stoi(child_tag);
-			auto modifier = std::make_unique<metternich::modifier<const character>>();
-			modifier->process_gsml_data(child_scope);
-			this->level_modifiers[level] = std::move(modifier);
+			if (!this->level_modifiers.contains(level)) {
+				this->level_modifiers[level] = std::make_unique<metternich::modifier<const character>>();
+			}
+			this->level_modifiers[level]->process_gsml_data(child_scope);
+		});
+	} else if (tag == "recurring_level_modifiers") {
+		assert_throw(this->get_max_level() != 0);
+
+		scope.for_each_child([&](const gsml_data &child_scope) {
+			const std::string &child_tag = child_scope.get_tag();
+			const int level_interval = std::stoi(child_tag);
+			for (int i = level_interval; i <= this->get_max_level(); i += level_interval) {
+				if (!this->level_modifiers.contains(i)) {
+					this->level_modifiers[i] = std::make_unique<metternich::modifier<const character>>();
+				}
+				this->level_modifiers[i]->process_gsml_data(child_scope);
+			}
 		});
 	} else if (tag == "level_effects") {
 		scope.for_each_child([&](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
 			const int level = std::stoi(child_tag);
-			auto effect_list = std::make_unique<metternich::effect_list<const character>>();
-			effect_list->process_gsml_data(child_scope);
-			this->level_effects[level] = std::move(effect_list);
+			if (!this->level_effects.contains(level)) {
+				this->level_effects[level] = std::make_unique<metternich::effect_list<const character>>();
+			}
+			this->level_effects[level]->process_gsml_data(child_scope);
+		});
+	} else if (tag == "recurring_level_effects") {
+		assert_throw(this->get_max_level() != 0);
+
+		scope.for_each_child([&](const gsml_data &child_scope) {
+			const std::string &child_tag = child_scope.get_tag();
+			const int level_interval = std::stoi(child_tag);
+			for (int i = level_interval; i <= this->get_max_level(); i += level_interval) {
+				if (!this->level_effects.contains(i)) {
+					this->level_effects[i] = std::make_unique<metternich::effect_list<const character>>();
+				}
+				this->level_effects[i]->process_gsml_data(child_scope);
+			}
 		});
 	} else if (tag == "starting_items") {
 		for (const std::string &value : values) {
