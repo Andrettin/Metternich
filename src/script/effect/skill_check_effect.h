@@ -48,9 +48,15 @@ public:
 		if (tag == "on_success") {
 			this->success_effects = std::make_unique<effect_list<scope_type>>();
 			this->success_effects->process_gsml_data(scope);
+		} else if (tag == "on_success_character") {
+			this->character_success_effects = std::make_unique<effect_list<const character>>();
+			this->character_success_effects->process_gsml_data(scope);
 		} else if (tag == "on_failure") {
 			this->failure_effects = std::make_unique<effect_list<scope_type>>();
 			this->failure_effects->process_gsml_data(scope);
+		} else if (tag == "on_failure_character") {
+			this->character_failure_effects = std::make_unique<effect_list<const character>>();
+			this->character_failure_effects->process_gsml_data(scope);
 		} else {
 			effect<scope_type>::process_gsml_scope(scope);
 		}
@@ -69,9 +75,17 @@ public:
 			if (this->success_effects != nullptr) {
 				this->success_effects->do_effects(scope, ctx);
 			}
+
+			if (this->character_success_effects != nullptr) {
+				this->character_success_effects->do_effects(roll_character, ctx);
+			}
 		} else {
 			if (this->failure_effects != nullptr) {
 				this->failure_effects->do_effects(scope, ctx);
+			}
+
+			if (this->character_failure_effects != nullptr) {
+				this->character_failure_effects->do_effects(roll_character, ctx);
 			}
 		}
 	}
@@ -86,18 +100,32 @@ public:
 			str += "\n" + std::string(indent + 1, '\t') + std::format("Roll Modifier: {}{}", number::to_signed_string(this->roll_modifier), this->skill->get_value_suffix());
 		}
 
+		std::string success_effects_string;
 		if (this->success_effects != nullptr) {
-			const std::string effects_string = this->success_effects->get_effects_string(scope, ctx, indent + 1, prefix);
-			if (!effects_string.empty()) {
-				str += "\n" + std::string(indent, '\t') + "If successful:\n" + effects_string;
+			success_effects_string = this->success_effects->get_effects_string(scope, ctx, indent + 1, prefix);
+		}
+		if (this->character_success_effects != nullptr) {
+			if (!success_effects_string.empty()) {
+				success_effects_string += "\n";
 			}
+			success_effects_string += std::format("{}{}:\n", std::string(indent + 1, '\t'), roll_character->get_full_name()) + this->character_success_effects->get_effects_string(roll_character, ctx, indent + 2, prefix);
+		}
+		if (!success_effects_string.empty()) {
+			str += "\n" + std::string(indent, '\t') + "If successful:\n" + success_effects_string;
 		}
 
+		std::string failure_effects_string;
 		if (this->failure_effects != nullptr) {
-			const std::string effects_string = this->failure_effects->get_effects_string(scope, ctx, indent + 1, prefix);
-			if (!effects_string.empty()) {
-				str += "\n" + std::string(indent, '\t') + "If failed:\n" + effects_string;
+			failure_effects_string = this->failure_effects->get_effects_string(scope, ctx, indent + 1, prefix);
+		}
+		if (this->character_failure_effects != nullptr) {
+			if (!failure_effects_string.empty()) {
+				failure_effects_string += "\n";
 			}
+			failure_effects_string += std::format("{}{}:\n", std::string(indent + 1, '\t'), roll_character->get_full_name()) + this->character_failure_effects->get_effects_string(roll_character, ctx, indent + 2, prefix);
+		}
+		if (!failure_effects_string.empty()) {
+			str += "\n" + std::string(indent, '\t') + "If failed:\n" + failure_effects_string;
 		}
 
 		return str;
@@ -123,7 +151,9 @@ private:
 	const metternich::skill *skill = nullptr;
 	int roll_modifier = 0;
 	std::unique_ptr<effect_list<scope_type>> success_effects;
+	std::unique_ptr<effect_list<const character>> character_success_effects;
 	std::unique_ptr<effect_list<scope_type>> failure_effects;
+	std::unique_ptr<effect_list<const character>> character_failure_effects;
 };
 
 }
