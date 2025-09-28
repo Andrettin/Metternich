@@ -1,10 +1,10 @@
 lizardfolk = {
 	name = "Lizardfolk"
 	species = lizardfolk
-	hit_dice = 2d8+1
 	damage_dice = 2d4 #bastard sword
 	experience_award = 65
 	modifier = {
+		hit_dice = 2d8+1
 		armor_class = 5
 		to_hit_bonus = 1
 		saving_throw_bonus = 3

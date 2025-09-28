@@ -23,7 +23,6 @@ class monster_type final : public named_data_entry, public data_type<monster_typ
 	Q_PROPERTY(const metternich::species* species MEMBER species READ get_species NOTIFY changed)
 	Q_PROPERTY(const metternich::character_class* character_class MEMBER character_class READ get_character_class NOTIFY changed)
 	Q_PROPERTY(int level MEMBER level READ get_level NOTIFY changed)
-	Q_PROPERTY(archimedes::dice hit_dice MEMBER hit_dice READ get_hit_dice NOTIFY changed)
 	Q_PROPERTY(archimedes::dice damage_dice MEMBER damage_dice READ get_damage_dice NOTIFY changed)
 	Q_PROPERTY(int64_t experience_award MEMBER experience_award READ get_experience_award NOTIFY changed)
 
@@ -53,11 +52,6 @@ public:
 		return this->level;
 	}
 
-	const dice &get_hit_dice() const
-	{
-		return this->hit_dice;
-	}
-
 	const dice &get_damage_dice() const
 	{
 		return this->damage_dice;
@@ -80,7 +74,6 @@ private:
 	const metternich::species *species = nullptr;
 	const metternich::character_class *character_class = nullptr;
 	int level = 0;
-	dice hit_dice;
 	dice damage_dice;
 	int64_t experience_award = 0; //the experience award for defeating the monster
 	std::unique_ptr<const modifier<const character>> modifier;

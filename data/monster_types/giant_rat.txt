@@ -1,10 +1,10 @@
 giant_rat = {
 	name = "Giant Rat"
 	species = giant_rat
-	hit_dice = 1d4
 	damage_dice = 1d3
 	experience_award = 15
 	modifier = {
+		hit_dice = 1d4
 		armor_class = 3
 		saving_throw_bonus = 1
 	}

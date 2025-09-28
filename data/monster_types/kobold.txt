@@ -1,10 +1,10 @@
 kobold = {
 	name = "Kobold"
 	species = kobold
-	hit_dice = 1d4
 	damage_dice = 1d6
 	experience_award = 7
 	modifier = {
+		hit_dice = 1d4
 		armor_class = 3
 		saving_throw_bonus = 1
 	}
