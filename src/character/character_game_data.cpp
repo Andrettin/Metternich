@@ -248,10 +248,6 @@ void character_game_data::apply_species_and_class(const int level)
 
 	const monster_type *monster_type = this->character->get_monster_type();
 	if (monster_type != nullptr) {
-		if (!monster_type->get_hit_dice().is_null()) {
-			this->apply_hit_dice(monster_type->get_hit_dice());
-		}
-
 		if (monster_type->get_modifier() != nullptr) {
 			monster_type->get_modifier()->apply(this->character);
 		}
