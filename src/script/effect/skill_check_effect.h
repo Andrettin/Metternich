@@ -81,10 +81,9 @@ public:
 		const character *roll_character = this->get_roll_character(scope, ctx);
 
 		std::string str = std::format("{} ({}{}) Check", this->skill->get_name(), roll_character->get_game_data()->is_skill_trained(this->skill) ? roll_character->get_game_data()->get_skill_value(this->skill) : 0, this->skill->get_value_suffix());
-		str += "\n" + std::string(indent + 1, '\t');
 
 		if (this->roll_modifier != 0) {
-			str += std::format("Roll Modifier: {}{}", number::to_signed_string(this->roll_modifier), this->skill->get_value_suffix());
+			str += "\n" + std::string(indent + 1, '\t') + std::format("Roll Modifier: {}{}", number::to_signed_string(this->roll_modifier), this->skill->get_value_suffix());
 		}
 
 		if (this->success_effects != nullptr) {
