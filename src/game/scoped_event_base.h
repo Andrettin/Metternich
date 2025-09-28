@@ -141,6 +141,8 @@ public:
 		return static_cast<int>(this->get_options().size());
 	}
 
+	void add_option(std::unique_ptr<event_option<scope_type>> &&option);
+
 	bool is_option_available(const int option_index, const read_only_context &ctx) const;
 	const std::string &get_option_name(const int option_index) const;
 	std::string get_option_tooltip(const int option_index, const read_only_context &ctx) const;

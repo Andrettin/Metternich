@@ -21,6 +21,7 @@ class dungeon_area final : public named_data_entry, public data_type<dungeon_are
 	Q_PROPERTY(const metternich::portrait* portrait MEMBER portrait READ get_portrait NOTIFY changed)
 	Q_PROPERTY(QString description READ get_description_qstring NOTIFY changed)
 	Q_PROPERTY(bool entrance MEMBER entrance READ is_entrance NOTIFY changed)
+	Q_PROPERTY(bool allow_retreat MEMBER allow_retreat READ allows_retreat NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "dungeon_area";
@@ -59,6 +60,11 @@ public:
 		return this->entrance;
 	}
 
+	bool allows_retreat() const
+	{
+		return this->allow_retreat;
+	}
+
 	const and_condition<site> *get_conditions() const
 	{
 		return this->conditions.get();
@@ -76,6 +82,7 @@ private:
 	const metternich::portrait *portrait = nullptr;
 	std::string description;
 	bool entrance = false;
+	bool allow_retreat = true;
 	std::unique_ptr<const and_condition<site>> conditions;
 	domain_event *event = nullptr;
 };

@@ -19,6 +19,9 @@ template <typename scope_type>
 class and_condition;
 
 template <typename scope_type>
+class effect;
+
+template <typename scope_type>
 class effect_list;
 
 template <typename scope_type> 
@@ -37,6 +40,11 @@ public:
 		return this->name;
 	}
 
+	void set_name(const std::string &name)
+	{
+		this->name = name;
+	}
+
 	std::string get_tooltip(const read_only_context &ctx) const;
 
 	int get_ai_weight() const
@@ -49,6 +57,7 @@ public:
 		return this->conditions.get();
 	}
 
+	void add_effect(std::unique_ptr<effect<scope_type>> &&effect);
 	std::string get_effects_string(const read_only_context &ctx) const;
 	void do_effects(scope_type *scope, context &ctx) const;
 

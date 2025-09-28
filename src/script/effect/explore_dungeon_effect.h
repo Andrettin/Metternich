@@ -13,10 +13,15 @@ namespace metternich {
 class explore_dungeon_effect final : public effect<const domain>
 {
 public:
-	explicit explore_dungeon_effect(const std::string &value, const gsml_operator effect_operator)
+	explicit explore_dungeon_effect(const bool value, const gsml_operator effect_operator)
 		: effect(effect_operator)
 	{
-		this->value = string::to_bool(value);
+		this->value = value;
+	}
+
+	explicit explore_dungeon_effect(const std::string &value, const gsml_operator effect_operator)
+		: explore_dungeon_effect(string::to_bool(value), effect_operator)
+	{
 	}
 
 	virtual const std::string &get_class_identifier() const override

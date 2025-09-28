@@ -196,7 +196,7 @@ bool scoped_event_base<scope_type>::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "option") {
 		auto option = std::make_unique<event_option<scope_type>>();
 		scope.process(option.get());
-		this->options.push_back(std::move(option));
+		this->add_option(std::move(option));
 		return true;
 	} else {
 		return false;
@@ -220,7 +220,7 @@ void scoped_event_base<scope_type>::initialize()
 
 	if (this->get_option_count() == 0) {
 		//add an empty option
-		this->options.push_back(std::make_unique<event_option<scope_type>>());
+		this->add_option(std::make_unique<event_option<scope_type>>());
 	}
 }
 
@@ -286,6 +286,12 @@ void scoped_event_base<scope_type>::do_immediate_effects(scope_type *scope, cont
 	if (this->immediate_effects != nullptr) {
 		this->immediate_effects->do_effects(scope, ctx);
 	}
+}
+
+template <typename scope_type>
+void scoped_event_base<scope_type>::add_option(std::unique_ptr<event_option<scope_type>> &&option)
+{
+	this->options.push_back(std::move(option));
 }
 
 template <typename scope_type>

@@ -96,6 +96,16 @@ std::string event_option<scope_type>::get_tooltip(const read_only_context &ctx) 
 }
 
 template <typename scope_type>
+void event_option<scope_type>::add_effect(std::unique_ptr<effect<scope_type>> &&effect)
+{
+	if (this->effects == nullptr) {
+		this->effects = std::make_unique<effect_list<scope_type>>();
+	}
+
+	this->effects->add_effect(std::move(effect));
+}
+
+template <typename scope_type>
 std::string event_option<scope_type>::get_effects_string(const read_only_context &ctx) const
 {
 	if (this->effects != nullptr) {
