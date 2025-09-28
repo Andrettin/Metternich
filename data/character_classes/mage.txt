@@ -17,15 +17,15 @@ mage = {
 		3 = 5000
 		4 = 10000
 	}
-	level_effects = {
+	level_modifiers = {
 		1 = {
-			hit_dice += 1d4
+			hit_dice = 1d4
 		}
 		2 = {
-			hit_dice += 1d4
+			hit_dice = 1d4
 		}
 		3 = {
-			hit_dice += 1d4
+			hit_dice = 1d4
 		}
 	}
 	starting_items = {

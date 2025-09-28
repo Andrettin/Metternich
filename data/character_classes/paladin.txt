@@ -13,15 +13,15 @@ paladin = {
 		wisdom = 13
 		charisma = 17
 	}
-	level_effects = {
+	level_modifiers = {
 		1 = {
-			hit_dice += 1d10 #as Warrior
+			hit_dice = 1d10 #as Warrior
 		}
 		2 = {
-			hit_dice += 1d10
+			hit_dice = 1d10
 		}
 		3 = {
-			hit_dice += 1d10
+			hit_dice = 1d10
 		}
 	}
 }

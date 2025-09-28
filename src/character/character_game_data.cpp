@@ -106,6 +106,16 @@ void character_game_data::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([&](const gsml_property &attribute_property) {
 			this->attribute_values[character_attribute::get(attribute_property.get_key())] = std::stoi(attribute_property.get_value());
 		});
+	} else if (tag == "hit_dice_roll_results") {
+		scope.for_each_child([&](const gsml_data &child_scope) {
+			const std::string &child_tag = child_scope.get_tag();
+			const std::vector<std::string> &child_values = child_scope.get_values();
+
+			const dice hit_dice(child_tag);
+			for (const std::string &child_value : child_values) {
+				this->hit_dice_roll_results[hit_dice].push_back(std::stoi(child_value));
+			}
+		});
 	} else if (tag == "species_armor_class_bonuses") {
 		scope.for_each_property([&](const gsml_property &property) {
 			this->species_armor_class_bonuses[species::get(property.get_key())] = std::stoi(property.get_value());
@@ -168,6 +178,18 @@ gsml_data character_game_data::to_gsml_data() const
 	data.add_property("max_hit_points", std::to_string(this->get_max_hit_points()));
 	data.add_property("armor_class_bonus", std::to_string(this->get_armor_class_bonus()));
 	data.add_property("to_hit_bonus", std::to_string(this->get_to_hit_bonus()));
+
+	if (!this->hit_dice_roll_results.empty()) {
+		gsml_data hit_dice_roll_results_data("hit_dice_roll_results");
+		for (const auto &[hit_dice, roll_results] : this->hit_dice_roll_results) {
+			gsml_data hit_dice_data(hit_dice.to_string());
+			for (const int roll_result : roll_results) {
+				hit_dice_data.add_value(std::to_string(roll_result));
+			}
+			hit_dice_roll_results_data.add_child(std::move(hit_dice_data));
+		}
+		data.add_child(std::move(hit_dice_roll_results_data));
+	}
 
 	if (!this->species_armor_class_bonuses.empty()) {
 		gsml_data species_armor_class_bonuses_data("species_armor_class_bonuses");
@@ -739,6 +761,27 @@ void character_game_data::apply_hit_dice(const dice &hit_dice)
 	const int hit_point_increase = random::get()->roll_dice(hit_dice);
 	this->change_max_hit_points(hit_point_increase);
 	this->change_hit_points(hit_point_increase);
+
+	this->hit_dice_roll_results[hit_dice].push_back(hit_point_increase);
+}
+
+void character_game_data::remove_hit_dice(const dice &hit_dice)
+{
+	this->change_hit_dice_count(-hit_dice.get_count());
+
+	const auto find_iterator = this->hit_dice_roll_results.find(hit_dice);
+	assert_throw(find_iterator != this->hit_dice_roll_results.end());
+
+	std::vector<int> &roll_results = find_iterator->second;
+	assert_throw(!roll_results.empty());
+	
+	const int last_roll_result = roll_results.back();
+	this->change_max_hit_points(-last_roll_result);
+
+	roll_results.pop_back();
+	if (roll_results.empty()) {
+		this->hit_dice_roll_results.erase(hit_dice);
+	}
 }
 
 void character_game_data::set_hit_points(int hit_points)

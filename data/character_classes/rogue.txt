@@ -28,15 +28,15 @@ rogue = {
 			to_hit_bonus = 1
 		}
 	}
-	level_effects = {
+	level_modifiers = {
 		1 = {
-			hit_dice += 1d6 #as Rogue
+			hit_dice = 1d6 #as Rogue
 		}
 		2 = {
-			hit_dice += 1d6
+			hit_dice = 1d6
 		}
 		3 = {
-			hit_dice += 1d6
+			hit_dice = 1d6
 		}
 	}
 	starting_items = {

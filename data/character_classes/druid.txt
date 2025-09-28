@@ -17,15 +17,15 @@ druid = {
 		archdruid = 13
 		great_druid = 14
 	}
-	level_effects = {
+	level_modifiers = {
 		1 = {
-			hit_dice += 1d8 #as Cleric
+			hit_dice = 1d8 #as Cleric
 		}
 		2 = {
-			hit_dice += 1d8
+			hit_dice = 1d8
 		}
 		3 = {
-			hit_dice += 1d8
+			hit_dice = 1d8
 		}
 	}
 }

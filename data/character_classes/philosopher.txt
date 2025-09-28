@@ -3,15 +3,15 @@ philosopher = {
 	attribute = intelligence
 	max_level = 3
 	starting_age_category = trained
-	level_effects = {
+	level_modifiers = {
 		1 = {
-			hit_dice += 1d4 #as Mage
+			hit_dice = 1d4 #as Mage
 		}
 		2 = {
-			hit_dice += 1d4
+			hit_dice = 1d4
 		}
 		3 = {
-			hit_dice += 1d4
+			hit_dice = 1d4
 		}
 	}
 }

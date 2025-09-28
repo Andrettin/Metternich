@@ -167,6 +167,7 @@ public:
 	}
 
 	void apply_hit_dice(const dice &hit_dice);
+	void remove_hit_dice(const dice &hit_dice);
 
 	int get_hit_points() const
 	{
@@ -485,6 +486,7 @@ private:
 	int hit_dice_count = 0;
 	int hit_points = 0;
 	int max_hit_points = 0;
+	std::map<dice, std::vector<int>> hit_dice_roll_results;
 	int armor_class_bonus = 0;
 	data_entry_map<species, int> species_armor_class_bonuses; //armor class bonuses when attacked by certain species
 	int to_hit_bonus = 0;
