@@ -100,11 +100,14 @@ public:
 
 		delay = std::max(1, delay);
 
+		context ctx_copy = ctx;
+		ctx_copy.in_combat = false;
+
 		std::unique_ptr<delayed_effect_instance<scope_type>> delayed_effect;
 		if (this->scripted_effect != nullptr) {
-			delayed_effect = std::make_unique<delayed_effect_instance<scope_type>>(this->scripted_effect, scope, ctx, delay);
+			delayed_effect = std::make_unique<delayed_effect_instance<scope_type>>(this->scripted_effect, scope, ctx_copy, delay);
 		} else {
-			delayed_effect = std::make_unique<delayed_effect_instance<scope_type>>(this->event, scope, ctx, delay);
+			delayed_effect = std::make_unique<delayed_effect_instance<scope_type>>(this->event, scope, ctx_copy, delay);
 		}
 
 		game::get()->add_delayed_effect(std::move(delayed_effect));

@@ -34,6 +34,7 @@ class office;
 class saving_throw_type;
 class skill;
 class species;
+class status_effect;
 class technology_category;
 class technology_subcategory;
 
@@ -54,6 +55,7 @@ extern template struct data_entry_compare<office>;
 extern template struct data_entry_compare<saving_throw_type>;
 extern template struct data_entry_compare<skill>;
 extern template struct data_entry_compare<species>;
+extern template struct data_entry_compare<status_effect>;
 extern template struct data_entry_compare<technology_category>;
 extern template struct data_entry_compare<technology_subcategory>;
 

@@ -11,6 +11,7 @@
 #include "character/monster_type.h"
 #include "character/saving_throw_type.h"
 #include "character/skill.h"
+#include "character/status_effect.h"
 #include "database/defines.h"
 #include "domain/country_government.h"
 #include "domain/country_military.h"
@@ -900,6 +901,18 @@ void character_game_data::change_saving_throw_bonus(const saving_throw_type *typ
 	}
 }
 
+bool character_game_data::do_saving_throw(const saving_throw_type *saving_throw_type, const int roll_modifier) const
+{
+	static constexpr dice saving_throw_dice(1, 20);
+
+	const int roll_result = random::get()->roll_dice(saving_throw_dice);
+	const int modified_roll_result = roll_result + roll_modifier;
+
+	const int saving_throw_value = 20 - this->get_saving_throw_bonus(saving_throw_type);
+
+	return modified_roll_result >= saving_throw_value;
+}
+
 bool character_game_data::is_skill_trained(const skill *skill) const
 {
 	return this->skill_trainings.contains(skill);
@@ -1573,6 +1586,34 @@ void character_game_data::set_commanded_military_unit_type_stat_modifier(const m
 		}
 	} else {
 		this->commanded_military_unit_type_stat_modifiers[type][stat] = value;
+	}
+}
+
+void character_game_data::set_status_effect_rounds(const status_effect *status_effect, const int rounds)
+{
+	if (rounds == this->get_status_effect_rounds(status_effect)) {
+		return;
+	}
+
+	if (rounds == 0) {
+		this->status_effect_rounds.erase(status_effect);
+	} else {
+		this->status_effect_rounds[status_effect] = rounds;
+	}
+}
+
+void character_game_data::decrement_status_effect_rounds()
+{
+	const std::vector<const status_effect *> status_effects = archimedes::map::get_keys(this->status_effect_rounds);
+
+	for (const status_effect *status_effect : status_effects) {
+		this->change_status_effect_rounds(status_effect, -1);
+
+		if (this->get_status_effect_rounds(status_effect) == 0 && status_effect->get_end_effects() != nullptr) {
+			context ctx(this->character);
+			ctx.in_combat = true; //must be in combat for status effect rounds to be decremented
+			status_effect->get_end_effects()->do_effects(this->character, ctx);
+		}
 	}
 }
 

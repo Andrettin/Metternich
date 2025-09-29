@@ -30,6 +30,7 @@ class scripted_character_modifier;
 class skill;
 class species;
 class spell;
+class status_effect;
 enum class character_trait_type;
 enum class military_unit_stat;
 
@@ -238,6 +239,7 @@ public:
 	}
 
 	void change_saving_throw_bonus(const saving_throw_type *type, const int change);
+	bool do_saving_throw(const saving_throw_type *saving_throw_type, const int roll_modifier = 0) const;
 
 	bool is_skill_trained(const skill *skill) const;
 	void change_skill_training(const skill *skill, const int change);
@@ -258,7 +260,6 @@ public:
 	}
 
 	void change_skill_value(const skill *skill, const int change);
-
 	bool do_skill_check(const skill *skill, const int roll_modifier) const;
 
 	const std::vector<const character_trait *> &get_traits() const
@@ -449,6 +450,31 @@ public:
 		this->set_commanded_military_unit_type_stat_modifier(type, stat, this->get_commanded_military_unit_type_stat_modifier(type, stat) + change);
 	}
 
+	bool has_status_effect(const status_effect *status_effect) const
+	{
+		return this->get_status_effect_rounds(status_effect) > 0;
+	}
+
+	int get_status_effect_rounds(const status_effect *status_effect) const
+	{
+		const auto find_iterator = this->status_effect_rounds.find(status_effect);
+
+		if (find_iterator != this->status_effect_rounds.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void set_status_effect_rounds(const status_effect *status_effect, const int rounds);
+
+	void change_status_effect_rounds(const status_effect *status_effect, const int change)
+	{
+		this->set_status_effect_rounds(status_effect, this->get_status_effect_rounds(status_effect) + change);
+	}
+
+	void decrement_status_effect_rounds();
+
 signals:
 	void titled_name_changed();
 	void portrait_changed();
@@ -503,6 +529,7 @@ private:
 	data_entry_map<item_slot, std::vector<item *>> equipped_items;
 	std::map<military_unit_stat, centesimal_int> commanded_military_unit_stat_modifiers;
 	military_unit_type_map<std::map<military_unit_stat, centesimal_int>> commanded_military_unit_type_stat_modifiers;
+	data_entry_map<status_effect, int> status_effect_rounds; //doesn't need to be saved since the game cannot be saved from within combat
 };
 
 }

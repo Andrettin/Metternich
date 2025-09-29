@@ -2289,6 +2289,12 @@ game::combat_result game::do_combat(party *attacking_party, party *defending_par
 			defender_experience_award += this->do_combat_round(defending_party, attacking_party);
 			attacker_experience_award += this->do_combat_round(attacking_party, defending_party);
 		}
+
+		std::vector<const character *> all_characters = attacking_party->get_characters();
+		vector::merge(all_characters, defending_party->get_characters());
+		for (const character *character : all_characters) {
+			character->get_game_data()->decrement_status_effect_rounds();
+		}
 	}
 
 	result.attacker_victory = defending_party->get_characters().empty();

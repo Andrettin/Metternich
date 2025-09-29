@@ -127,6 +127,7 @@ struct context_base
 	party_ptr party;
 	const site *dungeon_site = nullptr;
 	const dungeon_area *dungeon_area = nullptr;
+	bool in_combat = false;
 };
 
 extern template struct context_base<false>;
@@ -188,6 +189,7 @@ public:
 		this->party = ctx.party;
 		this->dungeon_site = ctx.dungeon_site;
 		this->dungeon_area = ctx.dungeon_area;
+		this->in_combat = ctx.in_combat;
 
 		for (const auto &[str, population_unit] : ctx.saved_population_unit_scopes) {
 			this->saved_population_unit_scopes[str] = population_unit;

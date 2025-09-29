@@ -12,6 +12,7 @@
 #include "population/population_unit.h"
 #include "script/special_target_type.h"
 #include "util/assert_util.h"
+#include "util/string_conversion_util.h"
 
 namespace metternich {
 
@@ -41,6 +42,8 @@ void context_base<read_only>::process_gsml_property(const gsml_property &propert
 		this->dungeon_site = site::get(value);
 	} else if (key == "dungeon_area") {
 		this->dungeon_area = dungeon_area::get(value);
+	} else if (key == "in_combat") {
+		this->in_combat = string::to_bool(value);
 	} else {
 		throw std::runtime_error("Invalid context property: \"" + key + "\".");
 	}
@@ -87,6 +90,10 @@ gsml_data context_base<read_only>::to_gsml_data(const std::string &tag) const
 
 	if (this->dungeon_area != nullptr) {
 		data.add_property("dungeon_area", this->dungeon_area->get_identifier());
+	}
+
+	if (this->in_combat) {
+		data.add_property("in_combat", string::from_bool(this->in_combat));
 	}
 
 	return data;

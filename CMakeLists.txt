@@ -36,6 +36,7 @@ set(character_SRCS
 	src/character/party.cpp
 	src/character/saving_throw_type.cpp
 	src/character/skill.cpp
+	src/character/status_effect.cpp
 )
 source_group(character FILES ${character_SRCS})
 set_source_files_properties(${character_SRCS} PROPERTIES UNITY_GROUP "character")
@@ -362,6 +363,7 @@ set(character_HDRS
 	src/character/saving_throw_type.h
 	src/character/skill.h
 	src/character/starting_age_category.h
+	src/character/status_effect.h
 )
 source_group(character FILES ${character_HDRS})
 
@@ -722,6 +724,7 @@ set(script_effect_HDRS
 	src/script/effect/set_flag_effect.h
 	src/script/effect/skill_check_effect.h
 	src/script/effect/source_site_effect.h
+	src/script/effect/status_effect_effect.h
 	src/script/effect/tooltip_effect.h
 	src/script/effect/traits_effect.h
 )

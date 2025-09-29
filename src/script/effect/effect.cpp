@@ -54,6 +54,7 @@
 #include "script/effect/set_flag_effect.h"
 #include "script/effect/skill_check_effect.h"
 #include "script/effect/source_site_effect.h"
+#include "script/effect/status_effect_effect.h"
 #include "script/effect/tooltip_effect.h"
 #include "script/effect/traits_effect.h"
 #include "util/assert_util.h"
@@ -74,6 +75,8 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 			return std::make_unique<experience_effect>(value, effect_operator);
 		} else if (key == "healing") {
 			return std::make_unique<healing_effect>(value, effect_operator);
+		} else if (key == "status_effect") {
+			return std::make_unique<status_effect_effect>(value, effect_operator);
 		} else if (key == "traits") {
 			return std::make_unique<traits_effect>(value, effect_operator);
 		}

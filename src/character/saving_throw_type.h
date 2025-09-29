@@ -5,8 +5,6 @@
 
 namespace metternich {
 
-class character_attribute;
-
 class saving_throw_type final : public named_data_entry, public data_type<saving_throw_type>
 {
 	Q_OBJECT
