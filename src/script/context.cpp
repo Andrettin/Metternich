@@ -6,6 +6,7 @@
 #include "database/gsml_data.h"
 #include "domain/domain.h"
 #include "game/game.h"
+#include "infrastructure/dungeon_area.h"
 #include "map/province.h"
 #include "map/site.h"
 #include "population/population_unit.h"
@@ -36,6 +37,10 @@ void context_base<read_only>::process_gsml_property(const gsml_property &propert
 		this->source_scope = province::get(value);
 	} else if (key == "source_site") {
 		this->source_scope = site::get(value);
+	} else if (key == "dungeon_site") {
+		this->dungeon_site = site::get(value);
+	} else if (key == "dungeon_area") {
+		this->dungeon_area = dungeon_area::get(value);
 	} else {
 		throw std::runtime_error("Invalid context property: \"" + key + "\".");
 	}
@@ -74,6 +79,14 @@ gsml_data context_base<read_only>::to_gsml_data(const std::string &tag) const
 		data.add_property("source_site", std::get<const site *>(this->source_scope)->get_identifier());
 	} else {
 		assert_throw(false);
+	}
+
+	if (this->dungeon_site != nullptr) {
+		data.add_property("dungeon_site", this->dungeon_site->get_identifier());
+	}
+
+	if (this->dungeon_area != nullptr) {
+		data.add_property("dungeon_area", this->dungeon_area->get_identifier());
 	}
 
 	return data;
