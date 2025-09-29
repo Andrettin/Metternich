@@ -318,6 +318,22 @@ void character_game_data::apply_species_and_class(const int level)
 			this->add_item(std::move(item));
 		}
 	}
+
+	if (this->character->get_hit_points() != 0) {
+		int min_hp = 0;
+		int max_hp = 0;
+
+		for (const auto &[hit_dice, roll_results] : this->hit_dice_roll_results) {
+			min_hp += hit_dice.get_minimum_result() * static_cast<int>(roll_results.size());
+			max_hp += hit_dice.get_maximum_result() * static_cast<int>(roll_results.size());
+		}
+
+		assert_throw(this->character->get_hit_points() >= min_hp);
+		assert_throw(this->character->get_hit_points() <= max_hp);
+
+		this->set_max_hit_points(this->character->get_hit_points());
+		this->set_hit_points(this->character->get_hit_points());
+	}
 }
 
 void character_game_data::apply_history(const QDate &start_date)

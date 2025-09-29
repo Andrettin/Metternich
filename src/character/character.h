@@ -77,6 +77,7 @@ class character final : public character_base, public data_type<character>
 	Q_PROPERTY(metternich::character* contemporary_character READ get_contemporary_character WRITE set_contemporary_character NOTIFY changed)
 	Q_PROPERTY(int skill MEMBER skill READ get_skill NOTIFY changed)
 	Q_PROPERTY(archimedes::centesimal_int skill_multiplier READ get_skill_multiplier WRITE set_skill_multiplier NOTIFY changed)
+	Q_PROPERTY(int hit_points MEMBER hit_points READ get_hit_points NOTIFY changed)
 	Q_PROPERTY(QString leader_type_name READ get_leader_type_name_qstring NOTIFY changed)
 	Q_PROPERTY(metternich::character_game_data* game_data READ get_game_data NOTIFY game_data_changed)
 
@@ -231,6 +232,11 @@ public:
 
 	std::optional<std::pair<int, int>> get_attribute_range(const character_attribute *attribute) const;
 
+	int get_hit_points() const
+	{
+		return this->hit_points;
+	}
+
 	const std::vector<const character_trait *> &get_traits() const
 	{
 		return this->traits;
@@ -275,6 +281,7 @@ private:
 	int skill = 0;
 	data_entry_map<character_attribute, std::string> attribute_ratings;
 	data_entry_map<character_attribute, std::pair<int, int>> attribute_ranges;
+	int hit_points = 0;
 	std::vector<const character_trait *> traits;
 	std::unique_ptr<const and_condition<domain>> conditions;
 	qunique_ptr<character_history> history;
