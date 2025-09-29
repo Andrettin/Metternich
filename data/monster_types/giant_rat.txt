@@ -3,6 +3,9 @@ giant_rat = {
 	species = giant_rat
 	damage_dice = 1d3
 	experience_award = 15
+	attribute_ratings = {
+		intelligence = semi
+	}
 	modifier = {
 		hit_dice = 1d4
 		armor_class = 3

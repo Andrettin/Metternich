@@ -3,6 +3,9 @@ gnoll = {
 	species = gnoll
 	damage_dice = 1d8
 	experience_award = 35
+	attribute_ratings = {
+		intelligence = low
+	}
 	modifier = {
 		armor_class = 5
 		hit_dice = 2d8

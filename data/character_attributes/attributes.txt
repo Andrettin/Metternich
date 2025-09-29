@@ -34,6 +34,17 @@ constitution = {
 
 intelligence = {
 	name = "Intelligence"
+	rating_ranges = {
+		none = 0
+		animal = 1
+		semi = 2-4
+		low = 5-7
+		average = 8-10
+		very = 11-12
+		high = 13-14
+		exceptional = 15-16
+		genius = 17-18
+	}
 }
 
 wisdom = {

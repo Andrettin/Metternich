@@ -3,6 +3,9 @@ ogre = {
 	species = ogre
 	damage_dice = 1d8+2 #club
 	experience_award = 270
+	attribute_ratings = {
+		intelligence = low
+	}
 	modifier = {
 		armor_class = 5
 		hit_dice = 4d8+1

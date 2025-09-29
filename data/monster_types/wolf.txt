@@ -3,6 +3,9 @@ wolf = {
 	species = wolf
 	damage_dice = 1d4+1
 	experience_award = 65
+	attribute_ratings = {
+		intelligence = low
+	}
 	modifier = {
 		hit_dice = 2d8+2
 		armor_class = 3

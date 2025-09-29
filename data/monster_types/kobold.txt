@@ -3,6 +3,9 @@ kobold = {
 	species = kobold
 	damage_dice = 1d6
 	experience_award = 7
+	attribute_ratings = {
+		intelligence = average
+	}
 	modifier = {
 		hit_dice = 1d4
 		armor_class = 3

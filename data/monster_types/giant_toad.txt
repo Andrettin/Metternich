@@ -3,6 +3,9 @@ giant_toad = {
 	species = giant_toad
 	damage_dice = 2d4
 	experience_award = 120
+	attribute_ratings = {
+		intelligence = animal
+	}
 	modifier = {
 		hit_dice = 2d8+4
 		armor_class = 4

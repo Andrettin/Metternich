@@ -3,6 +3,9 @@ lizardfolk = {
 	species = lizardfolk
 	damage_dice = 2d4 #bastard sword
 	experience_award = 65
+	attribute_ratings = {
+		intelligence = low
+	}
 	modifier = {
 		hit_dice = 2d8+1
 		armor_class = 5
