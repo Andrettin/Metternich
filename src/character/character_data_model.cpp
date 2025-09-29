@@ -181,13 +181,13 @@ void character_data_model::reset_model()
 
 		this->top_rows.push_back(std::make_unique<character_data_row>("Age:", number::to_formatted_string(character_game_data->get_age())));
 
-		if (character->get_culture() != nullptr) {
+		if (this->character->get_culture() != nullptr) {
 			this->top_rows.push_back(std::make_unique<character_data_row>("Culture:", this->character->get_culture()->get_name()));
 		}
 
-		if (character->is_deity()) {
+		if (this->character->is_deity()) {
 			this->top_rows.push_back(std::make_unique<character_data_row>("Pantheon:", this->character->get_deity()->get_pantheon()->get_name()));
-		} else {
+		} else if (this->character->get_religion() != nullptr) {
 			this->top_rows.push_back(std::make_unique<character_data_row>("Religion:", this->character->get_religion()->get_name()));
 		}
 
