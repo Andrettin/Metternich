@@ -1,0 +1,21 @@
+armor_1 = {
+	name = "+1"
+	affix_type = suffix
+	item_types = {
+		shield
+	}
+	modifier = {
+		armor_class = 1
+	}
+}
+
+armor_2 = {
+	name = "+2"
+	affix_type = suffix
+	item_types = {
+		chain_mail
+	}
+	modifier = {
+		armor_class = 2
+	}
+}
