@@ -1,0 +1,12 @@
+ogre = {
+	name = "Ogre"
+	species = ogre
+	damage_dice = 1d8+2 #club
+	experience_award = 270
+	modifier = {
+		armor_class = 5
+		hit_dice = 4d8+1
+		to_hit_bonus = 3
+		saving_throw_bonus = 4
+	}
+}
