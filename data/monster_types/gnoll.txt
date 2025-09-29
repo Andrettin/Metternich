@@ -4,8 +4,8 @@ gnoll = {
 	damage_dice = 1d8
 	experience_award = 35
 	modifier = {
-		hit_dice = 2d8
 		armor_class = 5
+		hit_dice = 2d8
 		to_hit_bonus = 1
 		saving_throw_bonus = 3
 	}

@@ -1,0 +1,12 @@
+hobgoblin = {
+	name = "Hobgoblin"
+	species = hobgoblin
+	damage_dice = 1d8 #long sword
+	experience_award = 35
+	modifier = {
+		armor_class = 5
+		hit_dice = 1d8+1
+		to_hit_bonus = 1
+		saving_throw_bonus = 3
+	}
+}
