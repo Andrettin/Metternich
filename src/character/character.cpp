@@ -275,6 +275,10 @@ void character::initialize()
 		}
 	}
 
+	if (this->get_gender() == gender::none && this->get_species() != nullptr && !this->get_species()->is_sapient()) {
+		this->set_gender(static_cast<archimedes::gender>(random::get()->generate_in_range(static_cast<int>(gender::none) + 1, static_cast<int>(gender::count) - 1)));
+	}
+
 	if (this->get_home_site() != nullptr && !this->get_home_site()->is_settlement()) {
 		if (this->get_home_site()->get_province() == nullptr) {
 			throw std::runtime_error(std::format("Character \"{}\" has a home site (\"{}\") which has no province.", this->get_identifier(), this->get_home_site()->get_identifier()));
