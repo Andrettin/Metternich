@@ -265,6 +265,14 @@ void character::initialize()
 		if (this->get_phenotype() != nullptr) {
 			this->culture->change_phenotype_weight(this->get_phenotype(), 1);
 		}
+	} else if (this->get_species() != nullptr && !this->get_species()->is_sapient()) {
+		if (!this->get_species()->is_initialized()) {
+			this->species->initialize();
+		}
+
+		if (this->has_name_variant()) {
+			this->species->add_given_name(this->get_gender(), this->get_name_variant());
+		}
 	}
 
 	if (this->get_home_site() != nullptr && !this->get_home_site()->is_settlement()) {
