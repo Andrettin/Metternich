@@ -16,6 +16,14 @@ item::item(const item_type *type, const item_material *material, const metternic
 {
 	assert_throw(this->get_type() != nullptr);
 
+	if (this->get_enchantment() != nullptr) {
+		assert_throw(this->get_enchantment()->is_allowed_for_item_type(this->get_type()));
+	}
+
+	if (this->get_material() != nullptr) {
+		assert_throw(this->get_material()->is_allowed_for_item_type(this->get_type()));
+	}
+
 	this->update_name();
 }
 

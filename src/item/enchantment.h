@@ -36,6 +36,8 @@ public:
 		return this->affix_type;
 	}
 
+	bool is_allowed_for_item_type(const item_type *item_type) const;
+
 	const data_entry_set<item_class> &get_item_classes() const
 	{
 		return this->item_classes;

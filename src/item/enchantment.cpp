@@ -54,4 +54,9 @@ void enchantment::check() const
 	}
 }
 
+bool enchantment::is_allowed_for_item_type(const item_type *item_type) const
+{
+	return this->get_item_types().contains(item_type) || (item_type->get_item_class() != nullptr && this->get_item_classes().contains(item_type->get_item_class()));
+}
+
 }
