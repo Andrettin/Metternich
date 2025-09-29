@@ -1,0 +1,10 @@
+osteoborus = { #Source: http://fossilworks.org/bridge.pl?a=taxonInfo&taxon_no=41196
+	name = "Osteoborus"
+	supertaxon = osteoborus
+	era = pliocene #Late Miocene and Early Pliocene
+	pre_evolutions = {
+		amphicyon
+		hemicyon
+		miacis
+	}
+}

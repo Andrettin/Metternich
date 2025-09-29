@@ -1,0 +1,9 @@
+wolf = {
+	name = "Wolf"
+	supertaxon = canidae
+	era = holocene
+	#ecological_niche = predator
+	pre_evolutions = {
+		osteoborus
+	}
+}
