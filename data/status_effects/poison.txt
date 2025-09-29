@@ -1,0 +1,8 @@
+poison = {
+	name = "Poison"
+	saving_throw_type = fortitude
+	duration_rounds_dice = 1d20+10
+	end_effects = {
+		damage = 15
+	}
+}
