@@ -256,6 +256,8 @@ void character_game_data::apply_species_and_class(const int level)
 
 	const metternich::character_class *character_class = this->get_character_class();
 	for (const character_attribute *attribute : character_attribute::get_all()) {
+		const std::optional<std::pair<int, int>> attribute_range = this->character->get_attribute_range(attribute);
+
 		int min_result = 1;
 		min_result = std::max(species->get_min_attribute_value(attribute), min_result);
 		if (character_class != nullptr) {
@@ -265,6 +267,13 @@ void character_game_data::apply_species_and_class(const int level)
 		int max_result = std::numeric_limits<int>::max();
 		if (species->get_max_attribute_value(attribute) != 0) {
 			max_result = std::min(species->get_max_attribute_value(attribute), max_result);
+		}
+
+		if (attribute_range.has_value()) {
+			const int attribute_range_min = attribute_range.value().first;
+			const int attribute_range_max = attribute_range.value().second;
+			min_result = std::max(attribute_range_min, min_result);
+			max_result = std::min(attribute_range_max, max_result);
 		}
 
 		assert_throw(max_result >= min_result);

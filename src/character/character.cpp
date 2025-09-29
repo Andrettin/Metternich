@@ -181,7 +181,14 @@ void character::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "traits") {
+	if (tag == "attribute_ratings") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+
+			this->attribute_ratings[character_attribute::get(key)] = value;
+		});
+	} else if (tag == "traits") {
 		for (const std::string &value : values) {
 			this->traits.push_back(character_trait::get(value));
 		}
@@ -213,6 +220,10 @@ void character::initialize()
 		assert_throw(this->get_character_class() != nullptr);
 		this->level = this->get_character_class()->get_rank_level(this->rank);
 		this->rank.clear();
+	}
+
+	for (const auto &[attribute, rating] : this->attribute_ratings) {
+		this->attribute_ranges[attribute] = attribute->get_rating_range(rating);
 	}
 
 	if (this->get_deity() != nullptr) {
@@ -568,6 +579,20 @@ void character::set_skill_multiplier(const centesimal_int &skill_multiplier)
 {
 	assert_throw(defines::get()->get_max_character_skill() > 0);
 	this->skill = (skill_multiplier * defines::get()->get_max_character_skill()).to_int();
+}
+
+std::optional<std::pair<int, int>> character::get_attribute_range(const character_attribute *attribute) const
+{
+	const auto find_iterator = this->attribute_ranges.find(attribute);
+	if (find_iterator != this->attribute_ranges.end()) {
+		return find_iterator->second;
+	}
+
+	if (this->get_monster_type() != nullptr) {
+		return this->get_monster_type()->get_attribute_range(attribute);
+	}
+
+	return std::nullopt;
 }
 
 bool character::is_admiral() const

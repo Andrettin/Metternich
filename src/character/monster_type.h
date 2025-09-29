@@ -10,6 +10,7 @@ Q_MOC_INCLUDE("species/species.h")
 
 namespace metternich {
 
+class character_attribute;
 class character_class;
 class species;
 
@@ -35,6 +36,7 @@ public:
 	~monster_type();
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
+	virtual void initialize() override;
 	virtual void check() const override;
 
 	const metternich::species *get_species() const
@@ -62,6 +64,16 @@ public:
 		return this->experience_award;
 	}
 
+	std::optional<std::pair<int, int>> get_attribute_range(const character_attribute *attribute) const
+	{
+		const auto find_iterator = this->attribute_ranges.find(attribute);
+		if (find_iterator != this->attribute_ranges.end()) {
+			return find_iterator->second;
+		}
+
+		return std::nullopt;
+	}
+
 	const modifier<const character> *get_modifier() const
 	{
 		return this->modifier.get();
@@ -76,6 +88,8 @@ private:
 	int level = 0;
 	dice damage_dice;
 	int64_t experience_award = 0; //the experience award for defeating the monster
+	data_entry_map<character_attribute, std::string> attribute_ratings;
+	data_entry_map<character_attribute, std::pair<int, int>> attribute_ranges;
 	std::unique_ptr<const modifier<const character>> modifier;
 };
 

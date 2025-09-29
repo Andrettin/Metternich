@@ -2,6 +2,7 @@
 
 #include "character/monster_type.h"
 
+#include "character/character_attribute.h"
 #include "character/character_class.h"
 #include "script/modifier.h"
 #include "species/species.h"
@@ -21,13 +22,29 @@ void monster_type::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 
-	if (tag == "modifier") {
+	if (tag == "attribute_ratings") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+
+			this->attribute_ratings[character_attribute::get(key)] = value;
+		});
+	} else if (tag == "modifier") {
 		auto modifier = std::make_unique<metternich::modifier<const character>>();
 		modifier->process_gsml_data(scope);
 		this->modifier = std::move(modifier);
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
+}
+
+void monster_type::initialize()
+{
+	for (const auto &[attribute, rating] : this->attribute_ratings) {
+		this->attribute_ranges[attribute] = attribute->get_rating_range(rating);
+	}
+
+	named_data_entry::initialize();
 }
 
 void monster_type::check() const

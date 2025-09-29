@@ -1,6 +1,7 @@
 #pragma once
 
 #include "character/character_base.h"
+#include "database/data_entry_container.h"
 #include "database/data_type.h"
 #include "util/centesimal_int.h"
 #include "util/qunique_ptr.h"
@@ -228,6 +229,8 @@ public:
 	centesimal_int get_skill_multiplier() const;
 	void set_skill_multiplier(const centesimal_int &skill_multiplier);
 
+	std::optional<std::pair<int, int>> get_attribute_range(const character_attribute *attribute) const;
+
 	const std::vector<const character_trait *> &get_traits() const
 	{
 		return this->traits;
@@ -270,6 +273,8 @@ private:
 	metternich::portrait *portrait = nullptr;
 	const site *home_site = nullptr;
 	int skill = 0;
+	data_entry_map<character_attribute, std::string> attribute_ratings;
+	data_entry_map<character_attribute, std::pair<int, int>> attribute_ranges;
 	std::vector<const character_trait *> traits;
 	std::unique_ptr<const and_condition<domain>> conditions;
 	qunique_ptr<character_history> history;
