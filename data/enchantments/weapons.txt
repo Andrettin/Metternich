@@ -1,0 +1,22 @@
+weapon_1 = {
+	name = "+1"
+	affix_type = suffix
+	item_types = {
+		dagger
+		long_sword
+	}
+	modifier = {
+		to_hit_bonus = 1
+	}
+}
+
+weapon_2 = {
+	name = "+2"
+	affix_type = suffix
+	item_types = {
+		short_sword
+	}
+	modifier = {
+		to_hit_bonus = 2
+	}
+}
