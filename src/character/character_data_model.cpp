@@ -168,15 +168,15 @@ void character_data_model::reset_model()
 		const character_class *character_class = character_game_data->get_character_class();
 		if (character_class != nullptr) {
 			this->top_rows.push_back(std::make_unique<character_data_row>("Class:", character_class->get_name()));
-		}
 
-		const int level = character_game_data->get_level();
-		this->top_rows.push_back(std::make_unique<character_data_row>("Level:", std::to_string(level)));
+			const int level = character_game_data->get_level();
+			this->top_rows.push_back(std::make_unique<character_data_row>("Level:", std::to_string(level)));
 
-		if (character_class != nullptr && character_game_data->get_level() < character_class->get_max_level()) {
-			this->top_rows.push_back(std::make_unique<character_data_row>("Experience:", std::format("{}/{}", number::to_formatted_string(character_game_data->get_experience()), number::to_formatted_string(character_game_data->get_experience_for_level(level + 1)))));
-		} else {
-			this->top_rows.push_back(std::make_unique<character_data_row>("Experience:", number::to_formatted_string(character_game_data->get_experience())));
+			if (character_game_data->get_level() < character_class->get_max_level()) {
+				this->top_rows.push_back(std::make_unique<character_data_row>("Experience:", std::format("{}/{}", number::to_formatted_string(character_game_data->get_experience()), number::to_formatted_string(character_game_data->get_experience_for_level(level + 1)))));
+			} else {
+				this->top_rows.push_back(std::make_unique<character_data_row>("Experience:", number::to_formatted_string(character_game_data->get_experience())));
+			}
 		}
 
 		this->top_rows.push_back(std::make_unique<character_data_row>("Age:", number::to_formatted_string(character_game_data->get_age())));
