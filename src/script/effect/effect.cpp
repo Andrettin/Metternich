@@ -25,6 +25,7 @@
 #include "script/effect/country_effect.h"
 #include "script/effect/create_military_unit_effect.h"
 #include "script/effect/create_transporter_effect.h"
+#include "script/effect/damage_effect.h"
 #include "script/effect/delayed_effect.h"
 #include "script/effect/else_effect.h"
 #include "script/effect/event_effect.h"
@@ -67,7 +68,9 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 	const std::string &value = property.get_value();
 
 	if constexpr (std::is_same_v<scope_type, const character>) {
-		if (key == "experience") {
+		if (key == "damage") {
+			return std::make_unique<damage_effect>(value, effect_operator);
+		} else if (key == "experience") {
 			return std::make_unique<experience_effect>(value, effect_operator);
 		} else if (key == "healing") {
 			return std::make_unique<healing_effect>(value, effect_operator);

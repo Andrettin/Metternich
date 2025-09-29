@@ -687,6 +687,7 @@ set(script_effect_HDRS
 	src/script/effect/country_effect.h
 	src/script/effect/create_military_unit_effect.h
 	src/script/effect/create_transporter_effect.h
+	src/script/effect/damage_effect.h
 	src/script/effect/delayed_effect.h
 	src/script/effect/delayed_effect_instance.h
 	src/script/effect/effect.h
