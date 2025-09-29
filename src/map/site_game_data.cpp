@@ -571,6 +571,14 @@ void site_game_data::set_dungeon(const metternich::dungeon *dungeon)
 
 	this->explored_dungeon_areas.clear();
 
+	if (this->get_dungeon() != nullptr) {
+		//dungeons cannot have owners
+		this->set_owner(nullptr);
+	} else {
+		//when sites are cleared of a dungeon, they can be owned
+		this->set_owner(this->get_province()->get_game_data()->get_owner());
+	}
+
 	if (game::get()->is_running()) {
 		emit dungeon_changed();
 

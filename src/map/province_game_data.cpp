@@ -266,6 +266,11 @@ void province_game_data::set_owner(const domain *domain)
 	this->owner = domain;
 
 	for (const site *site : this->get_sites()) {
+		if (site->get_game_data()->get_dungeon() != nullptr) {
+			//dungeon sites cannot have owners
+			continue;
+		}
+
 		if (site->get_game_data()->get_owner() == old_owner) {
 			site->get_game_data()->set_owner(domain);
 		}
