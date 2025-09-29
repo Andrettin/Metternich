@@ -43,16 +43,16 @@ public:
 	}
 };
 
-class country_scripted_condition final : public data_entry, public data_type<country_scripted_condition>, public scripted_condition_base<domain, read_only_context, condition<domain>>
+class domain_scripted_condition final : public data_entry, public data_type<domain_scripted_condition>, public scripted_condition_base<domain, read_only_context, condition<domain>>
 {
 	Q_OBJECT
 
 public:
-	static constexpr const char class_identifier[] = "country_scripted_condition";
-	static constexpr const char property_class_identifier[] = "metternich::country_scripted_condition*";
-	static constexpr const char database_folder[] = "scripted_conditions/country";
+	static constexpr const char class_identifier[] = "domain_scripted_condition";
+	static constexpr const char property_class_identifier[] = "metternich::domain_scripted_condition*";
+	static constexpr const char database_folder[] = "scripted_conditions/domain";
 
-	explicit country_scripted_condition(const std::string &identifier) : data_entry(identifier)
+	explicit domain_scripted_condition(const std::string &identifier) : data_entry(identifier)
 	{
 	}
 

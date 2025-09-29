@@ -80,16 +80,16 @@ public:
 	}
 };
 
-class country_scripted_effect final : public data_entry, public data_type<country_scripted_effect>, public scripted_effect_base<const domain>
+class domain_scripted_effect final : public data_entry, public data_type<domain_scripted_effect>, public scripted_effect_base<const domain>
 {
 	Q_OBJECT
 
 public:
-	static constexpr const char class_identifier[] = "country_scripted_effect";
-	static constexpr const char property_class_identifier[] = "metternich::country_scripted_effect*";
-	static constexpr const char database_folder[] = "scripted_effects/country";
+	static constexpr const char class_identifier[] = "domain_scripted_effect";
+	static constexpr const char property_class_identifier[] = "metternich::domain_scripted_effect*";
+	static constexpr const char database_folder[] = "scripted_effects/domain";
 
-	explicit country_scripted_effect(const std::string &identifier) : data_entry(identifier)
+	explicit domain_scripted_effect(const std::string &identifier) : data_entry(identifier)
 	{
 	}
 

@@ -45,7 +45,7 @@ void delayed_effect_instance<scope_type>::process_gsml_property(const gsml_prope
 		if constexpr (std::is_same_v<scope_type, const character>) {
 			this->scripted_effect = character_scripted_effect::get(value);
 		} else if constexpr (std::is_same_v<scope_type, const domain>) {
-			this->scripted_effect = country_scripted_effect::get(value);
+			this->scripted_effect = domain_scripted_effect::get(value);
 		} else if constexpr (std::is_same_v<scope_type, population_unit>) {
 			this->scripted_effect = population_unit_scripted_effect::get(value);
 		} else if constexpr (std::is_same_v<scope_type, const province>) {

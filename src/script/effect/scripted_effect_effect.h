@@ -18,7 +18,7 @@ public:
 		if constexpr (std::is_same_v<scope_type, const character>) {
 			this->scripted_effect = character_scripted_effect::get(effect_identifier);
 		} else if constexpr (std::is_same_v<scope_type, const domain>) {
-			this->scripted_effect = country_scripted_effect::get(effect_identifier);
+			this->scripted_effect = domain_scripted_effect::get(effect_identifier);
 		} else if constexpr (std::is_same_v<scope_type, population_unit>) {
 			this->scripted_effect = population_unit_scripted_effect::get(effect_identifier);
 		} else if constexpr (std::is_same_v<scope_type, const province>) {
