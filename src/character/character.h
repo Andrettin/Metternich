@@ -73,6 +73,7 @@ class character final : public character_base, public data_type<character>
 	Q_PROPERTY(const metternich::site* home_site MEMBER home_site READ get_home_site NOTIFY changed)
 	Q_PROPERTY(metternich::character* father READ get_father WRITE set_father NOTIFY changed)
 	Q_PROPERTY(metternich::character* mother READ get_mother WRITE set_mother NOTIFY changed)
+	Q_PROPERTY(metternich::character* contemporary_character READ get_contemporary_character WRITE set_contemporary_character NOTIFY changed)
 	Q_PROPERTY(int skill MEMBER skill READ get_skill NOTIFY changed)
 	Q_PROPERTY(archimedes::centesimal_int skill_multiplier READ get_skill_multiplier WRITE set_skill_multiplier NOTIFY changed)
 	Q_PROPERTY(QString leader_type_name READ get_leader_type_name_qstring NOTIFY changed)
@@ -210,6 +211,11 @@ public:
 	character *get_mother() const
 	{
 		return static_cast<character *>(character_base::get_mother());
+	}
+
+	character *get_contemporary_character() const
+	{
+		return static_cast<character *>(character_base::get_contemporary_character());
 	}
 
 	const character_attribute *get_primary_attribute() const;
