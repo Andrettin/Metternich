@@ -278,6 +278,14 @@ void character_game_data::apply_species_and_class(const int level)
 
 		assert_throw(max_result >= min_result);
 
+		if (min_result == max_result) {
+			const int result = min_result + this->get_attribute_value(attribute);
+			const bool valid_result = result >= min_result && result <= max_result;
+			assert_throw(valid_result);
+			this->change_attribute_value(attribute, min_result);
+			continue;
+		}
+
 		static constexpr dice attribute_dice(3, 6);
 		const int minimum_possible_result = attribute_dice.get_minimum_result() + this->get_attribute_value(attribute);
 		const int maximum_possible_result = attribute_dice.get_maximum_result() + this->get_attribute_value(attribute);
