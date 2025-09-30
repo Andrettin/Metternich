@@ -258,7 +258,7 @@ void character_game_data::apply_species_and_class(const int level)
 	for (const character_attribute *attribute : character_attribute::get_all()) {
 		const std::optional<std::pair<int, int>> attribute_range = this->character->get_attribute_range(attribute);
 
-		int min_result = 1;
+		int min_result = 0;
 		min_result = std::max(species->get_min_attribute_value(attribute), min_result);
 		if (character_class != nullptr) {
 			min_result = std::max(character_class->get_min_attribute_value(attribute), min_result);
