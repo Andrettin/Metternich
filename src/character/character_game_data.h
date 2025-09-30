@@ -111,6 +111,21 @@ public:
 	bool has_ever_existed() const;
 	std::vector<const metternich::character *> get_children() const;
 
+	const QDate &get_birth_date() const
+	{
+		return this->birth_date;
+	}
+
+	const QDate &get_death_date() const
+	{
+		return this->death_date;
+	}
+
+	const QDate &get_start_date() const
+	{
+		return this->start_date;
+	}
+
 	const metternich::character_class *get_character_class() const;
 	void set_character_class(const metternich::character_class *character_class);
 
@@ -515,6 +530,9 @@ private:
 	const metternich::portrait *portrait = nullptr;
 	const metternich::domain *domain = nullptr;
 	bool dead = false;
+	QDate birth_date;
+	QDate death_date;
+	QDate start_date;
 	const character_class *character_class = nullptr;
 	int level = 0;
 	int64_t experience = 0;
