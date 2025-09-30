@@ -281,8 +281,8 @@ void character_game_data::apply_species_and_class(const int level)
 		static constexpr dice attribute_dice(3, 6);
 		const int minimum_possible_result = attribute_dice.get_minimum_result() + this->get_attribute_value(attribute);
 		const int maximum_possible_result = attribute_dice.get_maximum_result() + this->get_attribute_value(attribute);
-		if ((maximum_possible_result < min_result || minimum_possible_result > max_result) && character_class != nullptr) {
-			throw std::runtime_error(std::format("Character \"{}\" of species \"{}\" cannot be generated with character class \"{}\", since it cannot possibly fulfill the attribute requirements.", this->character->get_identifier(), species->get_identifier(), character_class->get_identifier()));
+		if ((maximum_possible_result < min_result || minimum_possible_result > max_result)) {
+			throw std::runtime_error(std::format("Character \"{}\" of species \"{}\" cannot be generated{}, since it cannot possibly fulfill the attribute requirements.", this->character->get_identifier(), species->get_identifier(), this->character_class != nullptr ? std::format(" with character class \"{}\"", character_class->get_identifier()) : ""));
 		}
 
 		bool valid_result = false;
