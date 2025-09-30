@@ -429,11 +429,11 @@ bool country_government::can_have_office_holder(const office *office, const char
 	}
 
 	//FIXME: instead of checking the character dates, have a list of characters in the game object, and add characters to it as appropriate
-	if (game::get()->get_date() < character->get_start_date()) {
+	if (game::get()->get_date() < character->get_game_data()->get_start_date()) {
 		return false;
 	}
 
-	if (character->get_death_date().isValid() && game::get()->get_date() >= character->get_death_date()) {
+	if (character->get_game_data()->get_death_date().isValid() && game::get()->get_date() >= character->get_game_data()->get_death_date()) {
 		return false;
 	}
 

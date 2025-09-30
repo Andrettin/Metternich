@@ -627,8 +627,8 @@ void game::apply_history(const metternich::scenario *scenario)
 			}
 
 			for (const auto &[office, office_holder] : domain_history->get_office_holders()) {
-				assert_throw(scenario->get_start_date() >= office_holder->get_start_date());
-				if (office_holder->get_death_date().isValid() && scenario->get_start_date() >= office_holder->get_death_date()) {
+				assert_throw(scenario->get_start_date() >= office_holder->get_game_data()->get_start_date());
+				if (office_holder->get_game_data()->get_death_date().isValid() && scenario->get_start_date() >= office_holder->get_game_data()->get_death_date()) {
 					continue;
 				}
 

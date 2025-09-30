@@ -46,6 +46,7 @@
 #include "unit/military_unit_category.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
+#include "util/date_util.h"
 #include "util/gender.h"
 #include "util/log_util.h"
 #include "util/map_util.h"
@@ -65,6 +66,9 @@ character_game_data::character_game_data(const metternich::character *character)
 	connect(this, &character_game_data::office_changed, this, &character_game_data::titled_name_changed);
 
 	this->portrait = this->character->get_portrait();
+	this->birth_date = this->character->get_birth_date();
+	this->death_date = this->character->get_death_date();
+	this->start_date = this->character->get_start_date();
 }
 
 void character_game_data::process_gsml_property(const gsml_property &property)
@@ -78,6 +82,12 @@ void character_game_data::process_gsml_property(const gsml_property &property)
 		this->domain = domain::get(value);
 	} else if (key == "dead") {
 		this->dead = string::to_bool(value);
+	} else if (key == "birth_date") {
+		this->birth_date = string::to_date(value);
+	} else if (key == "death_date") {
+		this->death_date = string::to_date(value);
+	} else if (key == "start_date") {
+		this->start_date = string::to_date(value);
 	} else if (key == "character_class") {
 		this->character_class = character_class::get(value);
 	} else if (key == "level") {
@@ -162,6 +172,9 @@ gsml_data character_game_data::to_gsml_data() const
 	}
 
 	data.add_property("dead", string::from_bool(this->is_dead()));
+	data.add_property("start_date", date::to_string(this->get_start_date()));
+	data.add_property("birth_date", date::to_string(this->get_birth_date()));
+	data.add_property("death_date", date::to_string(this->get_death_date()));
 	if (this->get_character_class() != nullptr) {
 		data.add_property("character_class", this->get_character_class()->get_identifier());
 	}
@@ -355,11 +368,11 @@ void character_game_data::apply_history(const QDate &start_date)
 	const int level = std::max(character_history->get_level(), 1);
 	this->apply_species_and_class(level);
 
-	if (start_date < this->character->get_start_date()) {
+	if (start_date < this->get_start_date()) {
 		return;
 	}
 
-	if (this->character->get_death_date().isValid() && start_date >= this->character->get_death_date()) {
+	if (this->get_death_date().isValid() && start_date >= this->get_death_date()) {
 		this->set_dead(true);
 		return;
 	}
@@ -501,7 +514,7 @@ void character_game_data::set_domain(const metternich::domain *domain)
 
 int character_game_data::get_age() const
 {
-	const QDate &birth_date = this->character->get_birth_date();
+	const QDate &birth_date = this->get_birth_date();
 	const QDate &current_date = game::get()->get_date();
 
 	int age = current_date.year() - birth_date.year() - 1;

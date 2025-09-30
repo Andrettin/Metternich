@@ -2795,9 +2795,9 @@ void domain_game_data::check_characters()
 			continue;
 		}
 
-		assert_throw(character->get_death_date().isValid());
+		assert_throw(character->get_game_data()->get_death_date().isValid());
 
-		if (character->get_death_date() > current_date) {
+		if (character->get_game_data()->get_death_date() > current_date) {
 			continue;
 		}
 

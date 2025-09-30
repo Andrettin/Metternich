@@ -114,7 +114,6 @@ character *character::generate(const metternich::species *species, const mettern
 
 	generated_character->species = const_cast<metternich::species *>(species);
 	generated_character->character_class = character_class;
-	generated_character->get_game_data()->set_character_class(character_class);
 	generated_character->level = level;
 	generated_character->monster_type = monster_type;
 	if (culture != nullptr) {
@@ -148,6 +147,9 @@ character *character::generate(const metternich::species *species, const mettern
 
 	generated_character->initialize_dates();
 	generated_character->check();
+
+	generated_character->reset_game_data();
+	generated_character->get_game_data()->set_character_class(character_class);
 	generated_character->get_game_data()->apply_species_and_class(level);
 	generated_character->get_game_data()->on_setup_finished();
 
