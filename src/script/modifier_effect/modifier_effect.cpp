@@ -23,6 +23,7 @@
 #include "script/modifier_effect/commodity_demand_modifier_effect.h"
 #include "script/modifier_effect/commodity_output_modifier_effect.h"
 #include "script/modifier_effect/commodity_throughput_modifier_effect.h"
+#include "script/modifier_effect/damage_bonus_modifier_effect.h"
 #include "script/modifier_effect/deployment_limit_modifier_effect.h"
 #include "script/modifier_effect/diplomatic_penalty_for_expansion_modifier_effect.h"
 #include "script/modifier_effect/free_artillery_promotion_modifier_effect.h"
@@ -69,6 +70,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 	if constexpr (std::is_same_v<scope_type, const character>) {
 		if (key == "armor_class") {
 			return std::make_unique<armor_class_modifier_effect>(value);
+		} else if (key == "damage_bonus") {
+			return std::make_unique<damage_bonus_modifier_effect>(value);
 		} else if (key == "hit_dice") {
 			return std::make_unique<hit_dice_modifier_effect>(value);
 		} else if (key == "hit_points") {

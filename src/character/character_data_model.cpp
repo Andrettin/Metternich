@@ -127,6 +127,7 @@ void character_data_model::set_character(const metternich::character *character)
 		disconnect(this->character->get_game_data(), &character_game_data::armor_class_bonus_changed, this, &character_data_model::update_armor_class_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::species_armor_class_bonuses_changed, this, &character_data_model::update_armor_class_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::to_hit_bonus_changed, this, &character_data_model::update_to_hit_bonus_rows);
+		disconnect(this->character->get_game_data(), &character_game_data::damage_bonus_changed, this, &character_data_model::update_damage_row);
 		disconnect(this->character->get_game_data(), &character_game_data::saving_throw_bonuses_changed, this, &character_data_model::update_saving_throw_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::update_damage_row);
 		disconnect(this->character->get_game_data(), &character_game_data::items_changed, this, &character_data_model::create_inventory_rows);
@@ -141,6 +142,7 @@ void character_data_model::set_character(const metternich::character *character)
 		connect(this->character->get_game_data(), &character_game_data::armor_class_bonus_changed, this, &character_data_model::update_armor_class_rows);
 		connect(this->character->get_game_data(), &character_game_data::species_armor_class_bonuses_changed, this, &character_data_model::update_armor_class_rows);
 		connect(this->character->get_game_data(), &character_game_data::to_hit_bonus_changed, this, &character_data_model::update_to_hit_bonus_rows);
+		connect(this->character->get_game_data(), &character_game_data::damage_bonus_changed, this, &character_data_model::update_damage_row);
 		connect(this->character->get_game_data(), &character_game_data::saving_throw_bonuses_changed, this, &character_data_model::update_saving_throw_rows);
 		connect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::update_damage_row);
 		connect(character->get_game_data(), &character_game_data::items_changed, this, &character_data_model::create_inventory_rows);
@@ -284,7 +286,10 @@ void character_data_model::update_damage_row()
 	assert_throw(this->damage_row != nullptr);
 
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
-	this->damage_row->value = character_game_data->get_damage_dice().to_display_string();
+
+	dice damage_dice = character_game_data->get_damage_dice();
+	damage_dice.change_modifier(character_game_data->get_damage_bonus());
+	this->damage_row->value = damage_dice.to_display_string();
 }
 
 void character_data_model::create_saving_throw_rows()

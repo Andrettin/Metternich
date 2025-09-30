@@ -94,6 +94,8 @@ void character_game_data::process_gsml_property(const gsml_property &property)
 		this->armor_class_bonus = std::stoi(value);
 	} else if (key == "to_hit_bonus") {
 		this->to_hit_bonus = std::stoi(value);
+	} else if (key == "damage_bonus") {
+		this->damage_bonus = std::stoi(value);
 	} else {
 		throw std::runtime_error(std::format("Invalid character game data property: \"{}\".", key));
 	}
@@ -179,6 +181,7 @@ gsml_data character_game_data::to_gsml_data() const
 	data.add_property("max_hit_points", std::to_string(this->get_max_hit_points()));
 	data.add_property("armor_class_bonus", std::to_string(this->get_armor_class_bonus()));
 	data.add_property("to_hit_bonus", std::to_string(this->get_to_hit_bonus()));
+	data.add_property("damage_bonus", std::to_string(this->get_damage_bonus()));
 
 	if (!this->hit_dice_roll_results.empty()) {
 		gsml_data hit_dice_roll_results_data("hit_dice_roll_results");
@@ -913,6 +916,43 @@ void character_game_data::change_to_hit_bonus(const int change)
 	this->set_to_hit_bonus(this->get_to_hit_bonus() + change);
 }
 
+const dice &character_game_data::get_damage_dice() const
+{
+	for (const auto &[slot, items] : this->equipped_items) {
+		if (!slot->is_weapon()) {
+			continue;
+		}
+
+		assert_throw(!items.empty());
+		return items.at(0)->get_type()->get_damage_dice();
+	}
+
+	if (this->character->get_monster_type() != nullptr) {
+		return this->character->get_monster_type()->get_damage_dice();
+	}
+
+	static constexpr dice null_dice;
+	return null_dice;
+}
+
+void character_game_data::set_damage_bonus(const int bonus)
+{
+	if (bonus == this->get_damage_bonus()) {
+		return;
+	}
+
+	this->damage_bonus = bonus;
+
+	if (game::get()->is_running()) {
+		emit damage_bonus_changed();
+	}
+}
+
+void character_game_data::change_damage_bonus(const int change)
+{
+	this->set_damage_bonus(this->get_damage_bonus() + change);
+}
+
 QVariantList character_game_data::get_saving_throw_bonuses_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_saving_throw_bonuses());
@@ -1005,25 +1045,6 @@ bool character_game_data::do_skill_check(const skill *skill, const int roll_modi
 	const int skill_value = this->get_skill_value(skill);
 	const int modified_skill_value = skill_value + roll_modifier;
 	return roll_result <= modified_skill_value;
-}
-
-const dice &character_game_data::get_damage_dice() const
-{
-	for (const auto &[slot, items] : this->equipped_items) {
-		if (!slot->is_weapon()) {
-			continue;
-		}
-
-		assert_throw(!items.empty());
-		return items.at(0)->get_type()->get_damage_dice();
-	}
-
-	if (this->character->get_monster_type() != nullptr) {
-		return this->character->get_monster_type()->get_damage_dice();
-	}
-
-	static constexpr dice null_dice;
-	return null_dice;
 }
 
 QVariantList character_game_data::get_traits_qvariant_list() const

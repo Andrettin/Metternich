@@ -751,6 +751,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/commodity_demand_modifier_effect.h
 	src/script/modifier_effect/commodity_output_modifier_effect.h
 	src/script/modifier_effect/commodity_throughput_modifier_effect.h
+	src/script/modifier_effect/damage_bonus_modifier_effect.h
 	src/script/modifier_effect/deployment_limit_modifier_effect.h
 	src/script/modifier_effect/diplomatic_penalty_for_expansion_modifier_effect.h
 	src/script/modifier_effect/free_artillery_promotion_modifier_effect.h

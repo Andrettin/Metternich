@@ -2337,7 +2337,7 @@ int64_t game::do_combat_round(metternich::party *party, metternich::party *enemy
 			continue;
 		}
 
-		const int damage = random::get()->roll_dice(character->get_game_data()->get_damage_dice());
+		const int damage = random::get()->roll_dice(character->get_game_data()->get_damage_dice()) + character->get_game_data()->get_damage_bonus();
 		chosen_enemy->get_game_data()->change_hit_points(-damage);
 
 		if (chosen_enemy->get_game_data()->is_dead()) {
