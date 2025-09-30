@@ -69,6 +69,7 @@ public:
 	void create_armor_class_rows();
 	void update_armor_class_rows();
 	void create_to_hit_bonus_rows();
+	void update_to_hit_bonus_rows();
 	void create_damage_row();
 	void update_damage_row();
 	void create_saving_throw_rows();
@@ -88,6 +89,7 @@ private:
 	const metternich::character *character = nullptr;
 	std::vector<std::unique_ptr<const character_data_row>> top_rows;
 	character_data_row *armor_class_row = nullptr;
+	character_data_row *to_hit_bonus_row = nullptr;
 	character_data_row *damage_row = nullptr;
 	character_data_row *saving_throw_row = nullptr;
 	character_data_row *equipment_row = nullptr;

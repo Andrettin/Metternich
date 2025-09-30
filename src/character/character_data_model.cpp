@@ -126,6 +126,7 @@ void character_data_model::set_character(const metternich::character *character)
 	if (this->character != nullptr) {
 		disconnect(this->character->get_game_data(), &character_game_data::armor_class_bonus_changed, this, &character_data_model::update_armor_class_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::species_armor_class_bonuses_changed, this, &character_data_model::update_armor_class_rows);
+		disconnect(this->character->get_game_data(), &character_game_data::to_hit_bonus_changed, this, &character_data_model::update_to_hit_bonus_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::saving_throw_bonuses_changed, this, &character_data_model::update_saving_throw_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::update_damage_row);
 		disconnect(this->character->get_game_data(), &character_game_data::items_changed, this, &character_data_model::create_inventory_rows);
@@ -139,6 +140,7 @@ void character_data_model::set_character(const metternich::character *character)
 	if (character != nullptr) {
 		connect(this->character->get_game_data(), &character_game_data::armor_class_bonus_changed, this, &character_data_model::update_armor_class_rows);
 		connect(this->character->get_game_data(), &character_game_data::species_armor_class_bonuses_changed, this, &character_data_model::update_armor_class_rows);
+		connect(this->character->get_game_data(), &character_game_data::to_hit_bonus_changed, this, &character_data_model::update_to_hit_bonus_rows);
 		connect(this->character->get_game_data(), &character_game_data::saving_throw_bonuses_changed, this, &character_data_model::update_saving_throw_rows);
 		connect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::update_damage_row);
 		connect(character->get_game_data(), &character_game_data::items_changed, this, &character_data_model::create_inventory_rows);
@@ -155,6 +157,7 @@ void character_data_model::reset_model()
 
 	this->top_rows.clear();
 	this->armor_class_row = nullptr;
+	this->to_hit_bonus_row = nullptr;
 	this->damage_row = nullptr;
 	this->saving_throw_row = nullptr;
 	this->equipment_row = nullptr;
@@ -252,11 +255,19 @@ void character_data_model::update_armor_class_rows()
 
 void character_data_model::create_to_hit_bonus_rows()
 {
+	auto row = std::make_unique<character_data_row>("To Hit Bonus:");
+	this->to_hit_bonus_row = row.get();
+	this->top_rows.push_back(std::move(row));
+
+	this->update_to_hit_bonus_rows();
+}
+
+void character_data_model::update_to_hit_bonus_rows()
+{
+	assert_throw(this->to_hit_bonus_row != nullptr);
+
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
-
-	auto to_hit_bonus_row = std::make_unique<character_data_row>("To Hit Bonus:", number::to_signed_string(character_game_data->get_to_hit_bonus()));
-
-	this->top_rows.push_back(std::move(to_hit_bonus_row));
+	this->to_hit_bonus_row->value = number::to_signed_string(character_game_data->get_to_hit_bonus());
 }
 
 void character_data_model::create_damage_row()
