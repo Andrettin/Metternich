@@ -1,0 +1,40 @@
+cleric_save_vs_poison_bonus = {
+	1 = 5
+	2 = 0
+	3 = 0
+}
+
+mage_save_vs_poison_bonus = {
+	1 = 8
+	2 = 0
+	3 = 0
+}
+
+rogue_save_vs_poison_bonus = {
+	1 = 5
+	2 = 0
+	3 = 0
+}
+
+warrior_save_vs_poison_bonus = {
+	1 = 6
+	2 = 0
+	3 = 1
+	4 = 0
+	5 = 2
+	6 = 0
+	7 = 1
+	8 = 0
+	9 = 2
+	10 = 0
+	11 = 1
+	12 = 0
+	13 = 2
+	14 = 0
+	15 = 1
+	16 = 0
+	17 = 1
+	18 = 0
+	19 = 0
+	20 = 0
+}

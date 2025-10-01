@@ -4,6 +4,10 @@ warrior = {
 	military_unit_category = general
 	max_level = 20
 	starting_age_category = self_taught
+	to_hit_bonus_table = warrior_to_hit_bonus
+	saving_throw_bonus_tables = {
+		save_vs_poison = warrior_save_vs_poison_bonus
+	}
 	allowed_species = {
 		dwarf
 		elf
@@ -44,91 +48,63 @@ warrior = {
 		1 = {
 			hit_dice = 1d10
 			#fortitude = 2
-			save_vs_poison = 6
 		}
 		2 = {
 			hit_dice = 1d10
-			to_hit_bonus = 1
 		}
 		3 = {
 			hit_dice = 1d10
-			to_hit_bonus = 1
-			save_vs_poison = 1
 		}
 		4 = {
 			hit_dice = 1d10
-			to_hit_bonus = 1
 		}
 		5 = {
 			hit_dice = 1d10
-			to_hit_bonus = 1
-			save_vs_poison = 2
 		}
 		6 = {
 			hit_dice = 1d10
-			to_hit_bonus = 1
 		}
 		7 = {
 			hit_dice = 1d10
-			to_hit_bonus = 1
-			save_vs_poison = 1
 		}
 		8 = {
 			hit_dice = 1d10
-			to_hit_bonus = 1
 		}
 		9 = {
 			hit_dice = 1d10
-			to_hit_bonus = 1
-			save_vs_poison = 2
 		}
 		10 = {
 			hit_points = 3
-			to_hit_bonus = 1
 		}
 		11 = {
 			hit_points = 3
-			to_hit_bonus = 1
-			save_vs_poison = 1
 		}
 		12 = {
 			hit_points = 3
-			to_hit_bonus = 1
 		}
 		13 = {
 			hit_points = 3
-			to_hit_bonus = 1
-			save_vs_poison = 2
 		}
 		14 = {
 			hit_points = 3
-			to_hit_bonus = 1
 		}
 		15 = {
 			hit_points = 3
-			to_hit_bonus = 1
-			save_vs_poison = 1
 		}
 		16 = {
 			hit_points = 3
-			to_hit_bonus = 1
 		}
 		17 = {
 			hit_points = 3
-			to_hit_bonus = 1
-			save_vs_poison = 1
 		}
 		18 = {
 			hit_points = 3
-			to_hit_bonus = 1
 		}
 		19 = {
 			hit_points = 3
-			to_hit_bonus = 1
 		}
 		20 = {
 			hit_points = 3
-			to_hit_bonus = 1
 		}
 	}
 	recurring_level_modifiers = {

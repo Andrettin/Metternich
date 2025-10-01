@@ -4,6 +4,10 @@ navigator = {
 	military_unit_category = light_warship
 	max_level = 3
 	starting_age_category = self_taught
+	to_hit_bonus_table = rogue_to_hit_bonus
+	saving_throw_bonus_tables = {
+		save_vs_poison = rogue_save_vs_poison_bonus
+	}
 	level_modifiers = {
 		1 = {
 			hit_dice = 1d6 #as Rogue

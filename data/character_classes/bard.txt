@@ -3,6 +3,10 @@ bard = {
 	attribute = charisma
 	max_level = 3
 	starting_age_category = self_taught
+	to_hit_bonus_table = cleric_to_hit_bonus
+	saving_throw_bonus_tables = {
+		save_vs_poison = cleric_save_vs_poison_bonus
+	}
 	allowed_species = {
 		elf
 		half_elf

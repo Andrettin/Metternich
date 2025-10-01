@@ -4,6 +4,10 @@ paladin = {
 	military_unit_category = general
 	max_level = 3
 	starting_age_category = self_taught
+	to_hit_bonus_table = warrior_to_hit_bonus
+	saving_throw_bonus_tables = {
+		save_vs_poison = warrior_save_vs_poison_bonus
+	}
 	allowed_species = {
 		human
 	}
