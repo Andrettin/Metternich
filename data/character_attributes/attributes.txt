@@ -7,12 +7,12 @@ dexterity = {
 	
 	value_modifiers = {
 		1 = {
-			reflex = -5
+			#reflex = -5
 		}
 	}
 	recurring_value_modifiers = {
 		2 = {
-			reflex = 1
+			#reflex = 1
 		}
 	}
 }
@@ -22,12 +22,12 @@ constitution = {
 	
 	value_modifiers = {
 		1 = {
-			fortitude = -5
+			#fortitude = -5
 		}
 	}
 	recurring_value_modifiers = {
 		2 = {
-			fortitude = 1
+			#fortitude = 1
 		}
 	}
 }
@@ -52,12 +52,12 @@ wisdom = {
 	
 	value_modifiers = {
 		1 = {
-			will = -5
+			#will = -5
 		}
 	}
 	recurring_value_modifiers = {
 		2 = {
-			will = 1
+			#will = 1
 		}
 	}
 }

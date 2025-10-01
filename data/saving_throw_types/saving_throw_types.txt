@@ -9,3 +9,7 @@ reflex = {
 will = {
 	name = "Will"
 }
+
+save_vs_poison = {
+	name = "Save vs. Poison"
+}
