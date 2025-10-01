@@ -1,7 +1,7 @@
 marco_polo = {
 	name = "Marco"
 	surname = "Polo"
-	character_class = merchant
+	character_class = rogue #merchant
 	culture = italian
 	religion = catholic
 	home_site = venice
@@ -169,7 +169,7 @@ geronimo_cardano = { #Source: Isaac Asimov, "Cronologia das Ciências e das Desc
 lelio_de_luca = { #Source: Josef Dullinger, "Die Handelskompagnien Oesterreichs nach dem Oriente und nach Ostindien in der ersten Hälfte des 18. Jahrhunderts", 1900, pp. 50-51.
 	name = "Lelio"
 	surname = "de Luca"
-	character_class = merchant
+	character_class = rogue #merchant
 	culture = italian #correct?
 	religion = catholic
 	home_site = vienna #correct?

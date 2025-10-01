@@ -5,7 +5,7 @@ merchant = {
 	}
 	icon = wealth
 	conditions = {
-		character_class = merchant
+		character_class = rogue #merchant
 	}
 }
 

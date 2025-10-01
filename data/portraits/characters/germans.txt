@@ -20,7 +20,7 @@ jakob_fugger = {
 		}
 		or = {
 			character_class = farmer
-			character_class = merchant
+			character_class = rogue #merchant
 			character_class = treasurer
 		}
 		birth_year < 1800

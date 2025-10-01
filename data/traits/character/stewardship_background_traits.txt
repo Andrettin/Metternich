@@ -23,7 +23,7 @@ thrifty_clerk = {
 	conditions = {
 		or = {
 			character_class = farmer
-			character_class = merchant
+			character_class = rogue #merchant
 			character_class = treasurer
 		}
 		not = {

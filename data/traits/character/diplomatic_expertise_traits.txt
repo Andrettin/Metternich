@@ -40,7 +40,7 @@ negotiator = {
 		character_class = none
 		or = {
 			character_class = diplomat
-			character_class = merchant
+			character_class = rogue #merchant
 			character_class = statesman
 			character_class = treasurer
 		}
