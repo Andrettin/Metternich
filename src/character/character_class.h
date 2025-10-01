@@ -5,6 +5,7 @@
 #include "database/named_data_entry.h"
 #include "util/dice.h"
 
+Q_MOC_INCLUDE("character/level_bonus_table.h")
 Q_MOC_INCLUDE("technology/technology.h")
 Q_MOC_INCLUDE("unit/civilian_unit_class.h")
 
@@ -14,6 +15,7 @@ class character_attribute;
 class civilian_unit_class;
 class domain;
 class item_type;
+class level_bonus_table;
 class species;
 class technology;
 enum class military_unit_category;
@@ -36,6 +38,7 @@ class character_class final : public named_data_entry, public data_type<characte
 	Q_PROPERTY(metternich::starting_age_category starting_age_category MEMBER starting_age_category READ get_starting_age_category NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(metternich::technology* obsolescence_technology MEMBER obsolescence_technology NOTIFY changed)
+	Q_PROPERTY(const metternich::level_bonus_table* to_hit_bonus_table MEMBER to_hit_bonus_table READ get_to_hit_bonus_table NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "character_class";
@@ -81,6 +84,16 @@ public:
 	technology *get_obsolescence_technology() const
 	{
 		return this->obsolescence_technology;
+	}
+
+	const level_bonus_table *get_to_hit_bonus_table() const
+	{
+		return this->to_hit_bonus_table;
+	}
+
+	const data_entry_map<saving_throw_type, const level_bonus_table *> &get_saving_throw_bonus_tables() const
+	{
+		return this->saving_throw_bonus_tables;
 	}
 
 	bool is_allowed_for_species(const species *species) const;
@@ -147,6 +160,8 @@ private:
 	metternich::starting_age_category starting_age_category{};
 	technology *required_technology = nullptr;
 	technology *obsolescence_technology = nullptr;
+	const level_bonus_table *to_hit_bonus_table = nullptr;
+	data_entry_map<saving_throw_type, const level_bonus_table *> saving_throw_bonus_tables;
 	std::vector<const species *> allowed_species;
 	data_entry_map<character_attribute, int> min_attribute_values;
 	std::map<std::string, int> rank_levels; //names for particular levels

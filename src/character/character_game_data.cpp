@@ -8,6 +8,7 @@
 #include "character/character_history.h"
 #include "character/character_trait.h"
 #include "character/character_trait_type.h"
+#include "character/level_bonus_table.h"
 #include "character/monster_type.h"
 #include "character/saving_throw_type.h"
 #include "character/skill.h"
@@ -667,6 +668,14 @@ void character_game_data::on_level_gained(const int affected_level, const int mu
 		const std::string level_effects_string = character_class->get_level_effects_string(affected_level, this->character);
 
 		engine_interface::get()->add_notification("Level Up", this->get_portrait(), std::format("You have gained a level!\n\n{}", level_effects_string));
+	}
+
+	if (character_class->get_to_hit_bonus_table() != nullptr) {
+		this->change_to_hit_bonus(character_class->get_to_hit_bonus_table()->get_bonus_per_level(affected_level) * multiplier);
+	}
+
+	for (const auto &[saving_throw_type, saving_throw_bonus_table] : character_class->get_saving_throw_bonus_tables()) {
+		this->change_saving_throw_bonus(saving_throw_type, saving_throw_bonus_table->get_bonus_per_level(affected_level) * multiplier);
 	}
 
 	const modifier<const metternich::character> *level_modifier = character_class->get_level_modifier(affected_level);

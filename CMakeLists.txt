@@ -32,6 +32,7 @@ set(character_SRCS
 	src/character/character_trait.cpp
 	src/character/dynasty.cpp
 	src/character/family_tree_model.cpp
+	src/character/level_bonus_table.cpp
 	src/character/monster_type.cpp
 	src/character/party.cpp
 	src/character/saving_throw_type.cpp
@@ -358,6 +359,7 @@ set(character_HDRS
 	src/character/character_trait_type.h
 	src/character/dynasty.h
 	src/character/family_tree_model.h
+	src/character/level_bonus_table.h
 	src/character/monster_type.h
 	src/character/party.h
 	src/character/saving_throw_type.h

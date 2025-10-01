@@ -3,6 +3,8 @@
 #include "character/character_class.h"
 
 #include "character/character_attribute.h"
+#include "character/level_bonus_table.h"
+#include "character/saving_throw_type.h"
 #include "character/starting_age_category.h"
 #include "database/defines.h"
 #include "item/item_type.h"
@@ -31,7 +33,14 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "allowed_species") {
+	if (tag == "saving_throw_bonus_tables") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+
+			this->saving_throw_bonus_tables[saving_throw_type::get(key)] = level_bonus_table::get(value);
+		});
+	} else if (tag == "allowed_species") {
 		for (const std::string &value : values) {
 			this->allowed_species.push_back(species::get(value));
 		}
@@ -123,6 +132,14 @@ void character_class::check() const
 		throw std::runtime_error(std::format("Character class \"{}\" has no starting age category.", this->get_identifier()));
 	}
 
+	if (this->get_to_hit_bonus_table() == nullptr) {
+		throw std::runtime_error(std::format("Character class \"{}\" has no to hit bonus table.", this->get_identifier()));
+	}
+
+	if (this->get_saving_throw_bonus_tables().empty()) {
+		throw std::runtime_error(std::format("Character class \"{}\" has no saving throw bonus tables.", this->get_identifier()));
+	}
+
 	for (const species *species : this->allowed_species) {
 		if (species->get_character_class_level_limit(this) == 0) {
 			throw std::runtime_error(std::format("Species \"{}\" is allowed for character class \"{}\", but has no level limit for it.", species->get_identifier(), this->get_identifier()));
@@ -158,6 +175,18 @@ int64_t character_class::get_experience_for_level(const int level) const
 std::string character_class::get_level_effects_string(const int level, const metternich::character *character) const
 {
 	std::string str;
+
+	const int to_hit_bonus = this->get_to_hit_bonus_table()->get_bonus_per_level(level);
+	if (to_hit_bonus != 0) {
+		str += std::format("\nTo Hit Bonus: +{}", to_hit_bonus);
+	}
+
+	for (const auto &[saving_throw_type, saving_throw_bonus_table] : this->get_saving_throw_bonus_tables()) {
+		const int saving_throw_bonus = saving_throw_bonus_table->get_bonus_per_level(level);
+		if (saving_throw_bonus != 0) {
+			str += std::format("\n{}: +{}", saving_throw_type->get_name(), saving_throw_bonus);
+		}
+	}
 
 	const modifier<const metternich::character> *level_modifier = this->get_level_modifier(level);
 	if (level_modifier != nullptr) {
