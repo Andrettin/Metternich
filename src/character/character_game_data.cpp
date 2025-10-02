@@ -849,7 +849,7 @@ void character_game_data::set_hit_points(int hit_points)
 
 	this->hit_points = hit_points;
 
-	if (this->get_hit_points() < 0 && this->get_max_hit_points() > 0) {
+	if (this->get_hit_points() <= 0 && this->get_max_hit_points() > 0) {
 		this->die();
 	}
 
