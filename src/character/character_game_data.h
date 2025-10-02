@@ -116,14 +116,29 @@ public:
 		return this->birth_date;
 	}
 
+	void set_birth_date(const QDate &date)
+	{
+		this->birth_date = date;
+	}
+
 	const QDate &get_death_date() const
 	{
 		return this->death_date;
 	}
 
+	void set_death_date(const QDate &date)
+	{
+		this->death_date = date;
+	}
+
 	const QDate &get_start_date() const
 	{
 		return this->start_date;
+	}
+
+	void set_start_date(const QDate &date)
+	{
+		this->start_date = date;
 	}
 
 	const metternich::character_class *get_character_class() const;

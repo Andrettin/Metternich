@@ -23,6 +23,7 @@
 #include "script/effect/commodity_effect.h"
 #include "script/effect/commodity_percent_effect.h"
 #include "script/effect/country_effect.h"
+#include "script/effect/create_character_effect.h"
 #include "script/effect/create_military_unit_effect.h"
 #include "script/effect/create_transporter_effect.h"
 #include "script/effect/damage_effect.h"
@@ -165,6 +166,8 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 			effect = std::make_unique<change_opinion_effect<scope_type>>(effect_operator);
 		} else if (effect_identifier == "combat") {
 			effect = std::make_unique<combat_effect>(effect_operator);
+		} else if (effect_identifier == "create_character") {
+			effect = std::make_unique<create_character_effect>(effect_operator);
 		} else if (effect_identifier == "create_military_unit") {
 			effect = std::make_unique<create_military_unit_effect>(effect_operator);
 		} else if (effect_identifier == "create_transporter") {
