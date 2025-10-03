@@ -953,7 +953,7 @@ const dice &character_game_data::get_damage_dice() const
 		return this->character->get_monster_type()->get_damage_dice();
 	}
 
-	static constexpr dice null_dice;
+	static constexpr dice null_dice(0, 0, 0, 0);
 	return null_dice;
 }
 

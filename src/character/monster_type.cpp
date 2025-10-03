@@ -40,6 +40,8 @@ void monster_type::process_gsml_scope(const gsml_data &scope)
 
 void monster_type::initialize()
 {
+	this->damage_dice.set_min_value(0);
+
 	for (const auto &[attribute, rating] : this->attribute_ratings) {
 		this->attribute_ranges[attribute] = attribute->get_rating_range(rating);
 	}

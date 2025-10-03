@@ -43,6 +43,13 @@ void item_type::process_gsml_scope(const gsml_data &scope)
 	}
 }
 
+void item_type::initialize()
+{
+	this->damage_dice.set_min_value(0);
+
+	named_data_entry::initialize();
+}
+
 void item_type::check() const
 {
 	if (this->get_item_class() == nullptr) {
