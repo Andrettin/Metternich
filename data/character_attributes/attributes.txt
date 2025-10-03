@@ -65,7 +65,41 @@ dexterity = {
 	
 	value_modifiers = {
 		1 = {
+			armor_class = -5
 			#reflex = -5
+		}
+		3 = {
+			armor_class = 1
+		}
+		4 = {
+			armor_class = 1
+		}
+		5 = {
+			armor_class = 1
+		}
+		6 = {
+			armor_class = 1
+		}
+		7 = {
+			armor_class = 1
+		}
+		15 = {
+			armor_class = 1
+		}
+		16 = {
+			armor_class = 1
+		}
+		17 = {
+			armor_class = 1
+		}
+		18 = {
+			armor_class = 1
+		}
+		21 = {
+			armor_class = 1
+		}
+		24 = {
+			armor_class = 1
 		}
 	}
 	recurring_value_modifiers = {
