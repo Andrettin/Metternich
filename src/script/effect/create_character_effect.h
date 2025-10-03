@@ -91,6 +91,7 @@ public:
 			return std::format("{} {} will join your domain", string::get_indefinite_article(this->monster_type->get_name()), this->monster_type->get_name());
 		} else {
 			assert_throw(false);
+			return {};
 		}
 	}
 
