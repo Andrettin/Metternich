@@ -1,3 +1,11 @@
+battle_axe = {
+	name = "Battle Axe"
+	item_class = weapon
+	icon = saber
+	price = 5gp
+	damage_dice = 1d8
+}
+
 bow = {
 	name = "Bow"
 	item_class = weapon
