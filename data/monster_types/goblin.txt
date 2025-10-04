@@ -1,0 +1,14 @@
+goblin = {
+	name = "Goblin"
+	species = goblin
+	damage_dice = 1d6+1 #mace
+	experience_award = 15
+	attribute_ratings = {
+		intelligence = low
+	}
+	modifier = {
+		hit_dice = 1d8-1
+		armor_class = 3
+		saving_throw_bonus = 1
+	}
+}
