@@ -285,7 +285,7 @@ public:
 	bool do_battle(army *attacking_army, army *defending_army);
 
 	[[nodiscard]]
-	combat_result do_combat(party *attacking_party, party *defending_party);
+	combat_result do_combat(party *attacking_party, party *defending_party, const bool surprise);
 
 	[[nodiscard]]
 	int64_t do_combat_round(metternich::party *party, metternich::party *enemy_party);

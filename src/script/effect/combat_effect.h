@@ -44,6 +44,8 @@ public:
 
 		if (key == "attacker") {
 			this->attacker = string::to_bool(property.get_value());
+		} else if (key == "surprise") {
+			this->surprise = string::to_bool(property.get_value());
 		} else {
 			effect::process_gsml_property(property);
 		}
@@ -88,7 +90,7 @@ public:
 
 		party enemy_party(enemy_characters);
 
-		const game::combat_result result = this->attacker ? game::get()->do_combat(ctx.party.get(), &enemy_party) : game::get()->do_combat(&enemy_party, ctx.party.get());
+		const game::combat_result result = this->attacker ? game::get()->do_combat(ctx.party.get(), &enemy_party, this->surprise) : game::get()->do_combat(&enemy_party, ctx.party.get(), this->surprise);
 
 		const bool success = this->attacker ? result.attacker_victory : !result.attacker_victory;
 
@@ -129,7 +131,7 @@ public:
 	{
 		assert_throw(ctx.party != nullptr);
 
-		std::string str = "Party:";
+		std::string str = std::format("Party{}:", !this->attacker && this->surprise ? " (surprised)" : "");
 		for (const character *party_character : ctx.party->get_characters()) {
 			std::string character_class_string;
 			const character_class *character_class = party_character->get_game_data()->get_character_class();
@@ -139,7 +141,7 @@ public:
 			str += "\n" + std::string(indent + 1, '\t') + std::format("{} ({}{} HP {}/{})", party_character->get_full_name(), party_character->get_species()->get_name(), character_class_string, party_character->get_game_data()->get_hit_points(), party_character->get_game_data()->get_max_hit_points());
 		}
 
-		str += "\n" + std::string(indent, '\t') + "Does combat against:";
+		str += "\n" + std::string(indent, '\t') + std::format("Does combat against{}:", this->attacker && this->surprise ? " (surprised)" : "");
 
 		for (const auto &[monster_type, quantity] : this->enemies) {
 			str += "\n" + std::string(indent + 1, '\t') + std::to_string(quantity) + "x" + monster_type->get_name();
@@ -207,6 +209,7 @@ public:
 
 private:
 	bool attacker = true;
+	bool surprise = false;
 	data_entry_map<monster_type, int> enemies;
 	std::vector<target_variant<const character>> enemy_characters;
 	std::unique_ptr<effect_list<const domain>> victory_effects;

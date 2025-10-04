@@ -2266,7 +2266,7 @@ bool game::do_battle(army *attacking_army, army *defending_army)
 	return attack_success;
 }
 
-game::combat_result game::do_combat(party *attacking_party, party *defending_party)
+game::combat_result game::do_combat(party *attacking_party, party *defending_party, bool surprise)
 {
 	static constexpr dice initiative_dice(1, 10);
 
@@ -2284,9 +2284,17 @@ game::combat_result game::do_combat(party *attacking_party, party *defending_par
 
 		if (attacker_initiative < defender_initiative) {
 			attacker_experience_award += this->do_combat_round(attacking_party, defending_party);
-			defender_experience_award += this->do_combat_round(defending_party, attacking_party);
+			if (!surprise) {
+				defender_experience_award += this->do_combat_round(defending_party, attacking_party);
+			} else {
+				surprise = false;
+			}
 		} else {
-			defender_experience_award += this->do_combat_round(defending_party, attacking_party);
+			if (!surprise) {
+				defender_experience_award += this->do_combat_round(defending_party, attacking_party);
+			} else {
+				surprise = false;
+			}
 			attacker_experience_award += this->do_combat_round(attacking_party, defending_party);
 		}
 
