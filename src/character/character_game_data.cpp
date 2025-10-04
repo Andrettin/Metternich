@@ -326,10 +326,7 @@ void character_game_data::generate_attributes()
 		assert_throw(max_result >= min_result);
 
 		if (min_result == max_result) {
-			const int result = min_result + this->get_attribute_value(attribute);
-			const bool valid_result = result >= min_result && result <= max_result;
-			assert_throw(valid_result);
-			this->change_attribute_value(attribute, min_result);
+			this->change_attribute_value(attribute, min_result - this->get_attribute_value(attribute));
 			continue;
 		}
 
