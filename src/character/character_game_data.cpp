@@ -384,7 +384,15 @@ void character_game_data::add_starting_items(const std::vector<const item_type *
 		auto item = make_qunique<metternich::item>(starting_item_type, nullptr, nullptr);
 		if (item->get_slot() != nullptr) {
 			new_filled_item_slots.insert(item->get_slot());
-			//FIXME: if the item is a two-handed weapon, it should also add mark the shield slot as filled
+
+			//if the item is a two-handed weapon, it should also add mark the shield slot as filled
+			if (item->get_type()->is_two_handed()) {
+				for (const item_slot *slot : item_slot::get_all()) {
+					if (slot->is_off_hand()) {
+						new_filled_item_slots.insert(slot);
+					}
+				}
+			}
 		}
 		this->add_item(std::move(item));
 	}
