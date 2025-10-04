@@ -12,9 +12,6 @@ naive_appeaser = {
 			trait = grey_eminence
 		}
 	}
-	attribute_bonuses = {
-		charisma = 2
-	}
 }
 
 underhanded_rogue = {
@@ -30,9 +27,6 @@ underhanded_rogue = {
 			trait = charismatic_negotiator
 			trait = grey_eminence
 		}
-	}
-	attribute_bonuses = {
-		charisma = 4
 	}
 }
 
@@ -50,11 +44,6 @@ charismatic_negotiator = {
 			trait = grey_eminence
 		}
 	}
-	attribute_bonuses = {
-		charisma = 6
-		intelligence = 1
-		wisdom = 1
-	}
 }
 
 grey_eminence = {
@@ -70,10 +59,5 @@ grey_eminence = {
 			trait = underhanded_rogue
 			trait = grey_eminence
 		}
-	}
-	attribute_bonuses = {
-		charisma = 8
-		intelligence = 2
-		wisdom = 2
 	}
 }

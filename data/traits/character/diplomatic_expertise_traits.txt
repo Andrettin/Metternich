@@ -7,9 +7,6 @@ falconer = {
 	conditions = {
 		primary_attribute = charisma
 	}
-	attribute_bonuses = {
-		charisma = 1
-	}
 }
 
 game_master = {
@@ -23,10 +20,6 @@ game_master = {
 			primary_attribute = charisma
 			primary_attribute = intelligence
 		}
-	}
-	attribute_bonuses = {
-		charisma = 2
-		intelligence = 1
 	}
 }
 
@@ -75,9 +68,6 @@ poet = {
 	conditions = {
 		primary_attribute = charisma
 	}
-	attribute_bonuses = {
-		charisma = 1
-	}
 }
 
 socializer = {
@@ -88,8 +78,5 @@ socializer = {
 	icon = music
 	conditions = {
 		primary_attribute = charisma
-	}
-	attribute_bonuses = {
-		charisma = 3
 	}
 }

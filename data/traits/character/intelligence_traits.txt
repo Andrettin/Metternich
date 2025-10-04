@@ -4,9 +4,6 @@ intelligent = {
 		personality
 	}
 	icon = research
-	attribute_bonuses = {
-		intelligence = 3
-	}
 }
 
 genius = {
@@ -15,9 +12,6 @@ genius = {
 		personality
 	}
 	icon = research
-	attribute_bonuses = {
-		intelligence = 5
-	}
 }
 
 stupid = {
@@ -26,9 +20,6 @@ stupid = {
 		personality
 	}
 	icon = research
-	attribute_bonuses = {
-		intelligence = -3
-	}
 }
 
 imbecile = {
@@ -37,7 +28,4 @@ imbecile = {
 		personality
 	}
 	icon = research
-	attribute_bonuses = {
-		intelligence = -5
-	}
 }
