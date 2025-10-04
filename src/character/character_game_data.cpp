@@ -271,7 +271,37 @@ void character_game_data::apply_species_and_class(const int level)
 		}
 	}
 
+	this->generate_attributes();
+
 	const metternich::character_class *character_class = this->get_character_class();
+	if (character_class != nullptr) {
+		this->set_level(std::min(level, character_class->get_max_level()));
+	}
+
+	this->add_starting_items();
+
+	if (this->character->get_hit_points() != 0) {
+		int min_hp = 0;
+		int max_hp = 0;
+
+		for (const auto &[hit_dice, roll_results] : this->hit_dice_roll_results) {
+			min_hp += hit_dice.get_minimum_result() * static_cast<int>(roll_results.size());
+			max_hp += hit_dice.get_maximum_result() * static_cast<int>(roll_results.size());
+		}
+
+		assert_throw(this->character->get_hit_points() >= min_hp);
+		assert_throw(this->character->get_hit_points() <= max_hp);
+
+		this->set_max_hit_points(this->character->get_hit_points());
+		this->set_hit_points(this->character->get_hit_points());
+	}
+}
+
+void character_game_data::generate_attributes()
+{
+	const species *species = this->character->get_species();
+	const metternich::character_class *character_class = this->get_character_class();
+
 	for (const character_attribute *attribute : character_attribute::get_all()) {
 		const std::optional<std::pair<int, int>> attribute_range = this->character->get_attribute_range(attribute);
 
@@ -307,7 +337,7 @@ void character_game_data::apply_species_and_class(const int level)
 		const int minimum_possible_result = attribute_dice.get_minimum_result() + this->get_attribute_value(attribute);
 		const int maximum_possible_result = attribute_dice.get_maximum_result() + this->get_attribute_value(attribute);
 		if ((maximum_possible_result < min_result || minimum_possible_result > max_result)) {
-			throw std::runtime_error(std::format("Character \"{}\" of species \"{}\" cannot be generated{}, since it cannot possibly fulfill the attribute requirements.", this->character->get_identifier(), species->get_identifier(), this->character_class != nullptr ? std::format(" with character class \"{}\"", character_class->get_identifier()) : ""));
+			throw std::runtime_error(std::format("Character \"{}\" of species \"{}\" cannot be generated{}, since it cannot possibly fulfill the attribute requirements.", this->character->get_identifier(), species->get_identifier(), character_class != nullptr ? std::format(" with character class \"{}\"", character_class->get_identifier()) : ""));
 		}
 
 		bool valid_result = false;
@@ -321,44 +351,45 @@ void character_game_data::apply_species_and_class(const int level)
 			}
 		}
 	}
+}
+
+void character_game_data::add_starting_items()
+{
+	const metternich::character_class *character_class = this->get_character_class();
+
+	data_entry_set<item_slot> filled_item_slots;
+
+	if (!this->character->get_starting_items().empty()) {
+		this->add_starting_items(this->character->get_starting_items(), filled_item_slots);
+	}
 
 	if (character_class != nullptr) {
-		this->set_level(std::min(level, character_class->get_max_level()));
+		this->add_starting_items(character_class->get_starting_items(), filled_item_slots);
+	}
+}
 
-		data_entry_set<item_slot> filled_item_slots;
-		for (const qunique_ptr<item> &item : this->get_items()) {
-			if (item->get_slot() != nullptr) {
-				filled_item_slots.insert(item->get_slot());
-
-				//FIXME: if the item is a two-handed weapon, it should also add mark the shield slot as filled
-			}
-		}
-
-		for (const item_type *starting_item_type : character_class->get_starting_items()) {
-			if (starting_item_type->get_slot() != nullptr && filled_item_slots.contains(starting_item_type->get_slot())) {
-				continue;
-			}
-
-			auto item = make_qunique<metternich::item>(starting_item_type, nullptr, nullptr);
-			this->add_item(std::move(item));
-		}
+void character_game_data::add_starting_items(const std::vector<const item_type *> &starting_items, data_entry_set<item_slot> &filled_item_slots)
+{
+	if (starting_items.empty()) {
+		return;
 	}
 
-	if (this->character->get_hit_points() != 0) {
-		int min_hp = 0;
-		int max_hp = 0;
+	data_entry_set<item_slot> new_filled_item_slots = filled_item_slots;
 
-		for (const auto &[hit_dice, roll_results] : this->hit_dice_roll_results) {
-			min_hp += hit_dice.get_minimum_result() * static_cast<int>(roll_results.size());
-			max_hp += hit_dice.get_maximum_result() * static_cast<int>(roll_results.size());
+	for (const item_type *starting_item_type : starting_items) {
+		if (starting_item_type->get_slot() != nullptr && filled_item_slots.contains(starting_item_type->get_slot())) {
+			continue;
 		}
 
-		assert_throw(this->character->get_hit_points() >= min_hp);
-		assert_throw(this->character->get_hit_points() <= max_hp);
-
-		this->set_max_hit_points(this->character->get_hit_points());
-		this->set_hit_points(this->character->get_hit_points());
+		auto item = make_qunique<metternich::item>(starting_item_type, nullptr, nullptr);
+		if (item->get_slot() != nullptr) {
+			new_filled_item_slots.insert(item->get_slot());
+			//FIXME: if the item is a two-handed weapon, it should also add mark the shield slot as filled
+		}
+		this->add_item(std::move(item));
 	}
+
+	filled_item_slots = new_filled_item_slots;
 }
 
 void character_game_data::apply_history(const QDate &start_date)

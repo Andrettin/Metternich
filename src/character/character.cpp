@@ -15,6 +15,7 @@
 #include "domain/culture.h"
 #include "domain/domain.h"
 #include "game/game.h"
+#include "item/item_type.h"
 #include "language/name_generator.h"
 #include "map/province.h"
 #include "map/site.h"
@@ -190,9 +191,21 @@ void character::process_gsml_scope(const gsml_data &scope)
 
 			this->attribute_ratings[character_attribute::get(key)] = value;
 		});
+	} else if (tag == "attributes") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+			const int value_int = std::stoi(value);
+
+			this->attribute_ranges[character_attribute::get(key)] = std::make_pair(value_int, value_int);
+		});
 	} else if (tag == "traits") {
 		for (const std::string &value : values) {
 			this->traits.push_back(character_trait::get(value));
+		}
+	} else if (tag == "starting_items") {
+		for (const std::string &value : values) {
+			this->starting_items.push_back(item_type::get(value));
 		}
 	} else if (tag == "conditions") {
 		auto conditions = std::make_unique<and_condition<domain>>();

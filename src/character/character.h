@@ -38,6 +38,7 @@ class culture;
 class deity;
 class domain;
 class dynasty;
+class item_type;
 class monster_type;
 class phenotype;
 class portrait;
@@ -242,6 +243,11 @@ public:
 		return this->traits;
 	}
 
+	const std::vector<const item_type *> &get_starting_items() const
+	{
+		return this->starting_items;
+	}
+
 	const and_condition<domain> *get_conditions() const
 	{
 		return this->conditions.get();
@@ -283,6 +289,7 @@ private:
 	data_entry_map<character_attribute, std::pair<int, int>> attribute_ranges;
 	int hit_points = 0;
 	std::vector<const character_trait *> traits;
+	std::vector<const item_type *> starting_items;
 	std::unique_ptr<const and_condition<domain>> conditions;
 	qunique_ptr<character_history> history;
 	qunique_ptr<character_game_data> game_data;

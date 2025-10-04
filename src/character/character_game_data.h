@@ -20,6 +20,7 @@ class domain;
 class enchantment;
 class item;
 class item_slot;
+class item_type;
 class military_unit;
 class military_unit_type;
 class office;
@@ -72,6 +73,9 @@ public:
 	gsml_data to_gsml_data() const;
 
 	void apply_species_and_class(const int level);
+	void generate_attributes();
+	void add_starting_items();
+	void add_starting_items(const std::vector<const item_type *> &starting_items, data_entry_set<item_slot> &filled_item_slots);
 	void apply_history(const QDate &start_date);
 	void on_setup_finished();
 
