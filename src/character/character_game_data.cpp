@@ -813,7 +813,9 @@ void character_game_data::apply_hit_dice(const dice &hit_dice)
 {
 	this->change_hit_dice_count(hit_dice.get_count());
 
-	const int hit_point_increase = random::get()->roll_dice(hit_dice);
+	int hit_point_increase = random::get()->roll_dice(hit_dice);
+	hit_point_increase = std::max(hit_point_increase, 1);
+
 	this->change_max_hit_points(hit_point_increase);
 	this->change_hit_points(hit_point_increase);
 
