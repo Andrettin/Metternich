@@ -1,0 +1,9 @@
+bat = {
+	name = "Bat"
+	supertaxon = mammalia
+	era = holocene
+	pre_evolutions = {
+		leptictidium
+		zalambdalestes
+	}
+}

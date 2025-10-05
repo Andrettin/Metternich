@@ -1,0 +1,14 @@
+giant_bat = {
+	name = "Giant Bat"
+	species = giant_bat
+	damage_dice = 1d2
+	experience_award = 35
+	attribute_ratings = {
+		intelligence = animal
+	}
+	modifier = {
+		hit_dice = 1d4
+		armor_class = 2
+		saving_throw_bonus = 1
+	}
+}

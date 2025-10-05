@@ -1,0 +1,9 @@
+giant_bat = {
+	name = "Giant Bat"
+	supertaxon = mammalia
+	era = holocene
+	pre_evolutions = {
+		leptictidium
+		zalambdalestes
+	}
+}
