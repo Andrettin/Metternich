@@ -101,6 +101,8 @@ void character_game_data::process_gsml_property(const gsml_property &property)
 		this->hit_points = std::stoi(value);
 	} else if (key == "max_hit_points") {
 		this->max_hit_points = std::stoi(value);
+	} else if (key == "hit_point_bonus_per_hit_dice") {
+		this->hit_point_bonus_per_hit_dice = std::stoi(value);
 	} else if (key == "armor_class_bonus") {
 		this->armor_class_bonus = std::stoi(value);
 	} else if (key == "to_hit_bonus") {
@@ -193,6 +195,7 @@ gsml_data character_game_data::to_gsml_data() const
 	data.add_property("hit_dice_count", std::to_string(this->get_hit_dice_count()));
 	data.add_property("hit_points", std::to_string(this->get_hit_points()));
 	data.add_property("max_hit_points", std::to_string(this->get_max_hit_points()));
+	data.add_property("hit_point_bonus_per_hit_dice", std::to_string(this->get_hit_point_bonus_per_hit_dice()));
 	data.add_property("armor_class_bonus", std::to_string(this->get_armor_class_bonus()));
 	data.add_property("to_hit_bonus", std::to_string(this->get_to_hit_bonus()));
 	data.add_property("damage_bonus", std::to_string(this->get_damage_bonus()));
@@ -285,8 +288,8 @@ void character_game_data::apply_species_and_class(const int level)
 		int max_hp = 0;
 
 		for (const auto &[hit_dice, roll_results] : this->hit_dice_roll_results) {
-			min_hp += hit_dice.get_minimum_result() * static_cast<int>(roll_results.size());
-			max_hp += hit_dice.get_maximum_result() * static_cast<int>(roll_results.size());
+			min_hp += std::max(hit_dice.get_minimum_result() + this->get_hit_point_bonus_per_hit_dice(), 1) * static_cast<int>(roll_results.size());
+			max_hp += std::max(hit_dice.get_maximum_result() + this->get_hit_point_bonus_per_hit_dice(), 1) * static_cast<int>(roll_results.size());
 		}
 
 		assert_throw(this->character->get_hit_points() >= min_hp);
@@ -849,13 +852,13 @@ void character_game_data::apply_hit_dice(const dice &hit_dice)
 {
 	this->change_hit_dice_count(hit_dice.get_count());
 
-	int hit_point_increase = random::get()->roll_dice(hit_dice);
-	hit_point_increase = std::max(hit_point_increase, 1);
+	const int roll_result = std::max(random::get()->roll_dice(hit_dice), 1);
+	const int hit_point_increase = std::max(roll_result + this->get_hit_point_bonus_per_hit_dice(), 1);
 
 	this->change_max_hit_points(hit_point_increase);
 	this->change_hit_points(hit_point_increase);
 
-	this->hit_dice_roll_results[hit_dice].push_back(hit_point_increase);
+	this->hit_dice_roll_results[hit_dice].push_back(roll_result);
 }
 
 void character_game_data::remove_hit_dice(const dice &hit_dice)
@@ -869,7 +872,8 @@ void character_game_data::remove_hit_dice(const dice &hit_dice)
 	assert_throw(!roll_results.empty());
 	
 	const int last_roll_result = roll_results.back();
-	this->change_max_hit_points(-last_roll_result);
+	const int last_hit_point_increase = std::max(last_roll_result + this->get_hit_point_bonus_per_hit_dice(), 1);
+	this->change_max_hit_points(-last_hit_point_increase);
 
 	roll_results.pop_back();
 	if (roll_results.empty()) {
@@ -921,6 +925,39 @@ void character_game_data::set_max_hit_points(const int hit_points)
 void character_game_data::change_max_hit_points(const int change)
 {
 	this->set_max_hit_points(this->get_max_hit_points() + change);
+}
+
+void character_game_data::set_hit_point_bonus_per_hit_dice(const int bonus)
+{
+	if (bonus == this->get_hit_point_bonus_per_hit_dice()) {
+		return;
+	}
+
+	const int old_bonus = this->get_hit_point_bonus_per_hit_dice();
+
+	this->hit_point_bonus_per_hit_dice = bonus;
+
+	if (this->get_hit_dice_count() > 0) {
+		int hit_point_change = 0;
+
+		for (const auto &[hit_dice, roll_results] : this->hit_dice_roll_results) {
+			for (const int roll_result : roll_results) {
+				const int old_hit_point_change = std::max(roll_result + old_bonus, 1);
+				const int new_hit_point_change = std::max(roll_result + bonus, 1);
+				hit_point_change += new_hit_point_change - old_hit_point_change;
+			}
+		}
+
+		if (hit_point_change != 0) {
+			this->change_max_hit_points(hit_point_change);
+			this->change_hit_points(hit_point_change);
+		}
+	}
+}
+
+void character_game_data::change_hit_point_bonus_per_hit_dice(const int change)
+{
+	this->set_hit_point_bonus_per_hit_dice(this->get_hit_point_bonus_per_hit_dice() + change);
 }
 
 void character_game_data::set_armor_class_bonus(const int bonus)
