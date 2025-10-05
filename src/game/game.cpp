@@ -2266,13 +2266,15 @@ bool game::do_battle(army *attacking_army, army *defending_army)
 	return attack_success;
 }
 
-game::combat_result game::do_combat(party *attacking_party, party *defending_party, bool surprise)
+game::combat_result game::do_combat(party *attacking_party, party *defending_party, const combat_parameters &parameters)
 {
 	static constexpr dice initiative_dice(1, 10);
 
 	combat_result result;
 	int64_t attacker_experience_award = 0;
 	int64_t defender_experience_award = 0;
+
+	bool surprise = parameters.surprise;
 
 	while (!attacking_party->get_characters().empty() && !defending_party->get_characters().empty()) {
 		int attacker_initiative = 0;
@@ -2283,19 +2285,19 @@ game::combat_result game::do_combat(party *attacking_party, party *defending_par
 		}
 
 		if (attacker_initiative < defender_initiative) {
-			attacker_experience_award += this->do_combat_round(attacking_party, defending_party);
+			attacker_experience_award += this->do_combat_round(attacking_party, defending_party, parameters.attacker_to_hit_modifier);
 			if (!surprise) {
-				defender_experience_award += this->do_combat_round(defending_party, attacking_party);
+				defender_experience_award += this->do_combat_round(defending_party, attacking_party, parameters.defender_to_hit_modifier);
 			} else {
 				surprise = false;
 			}
 		} else {
 			if (!surprise) {
-				defender_experience_award += this->do_combat_round(defending_party, attacking_party);
+				defender_experience_award += this->do_combat_round(defending_party, attacking_party, parameters.defender_to_hit_modifier);
 			} else {
 				surprise = false;
 			}
-			attacker_experience_award += this->do_combat_round(attacking_party, defending_party);
+			attacker_experience_award += this->do_combat_round(attacking_party, defending_party, parameters.attacker_to_hit_modifier);
 		}
 
 		std::vector<const character *> all_characters = attacking_party->get_characters();
@@ -2318,7 +2320,7 @@ game::combat_result game::do_combat(party *attacking_party, party *defending_par
 	return result;
 }
 
-int64_t game::do_combat_round(metternich::party *party, metternich::party *enemy_party)
+int64_t game::do_combat_round(metternich::party *party, metternich::party *enemy_party, const int to_hit_modifier)
 {
 	if (party->get_characters().empty()) {
 		return 0;
@@ -2336,7 +2338,7 @@ int64_t game::do_combat_round(metternich::party *party, metternich::party *enemy
 		const metternich::character *chosen_enemy = vector::get_random(enemy_party->get_characters());
 
 		static constexpr dice to_hit_dice(1, 20);
-		const int to_hit = 20 - character->get_game_data()->get_to_hit_bonus();
+		const int to_hit = 20 - character->get_game_data()->get_to_hit_bonus() - to_hit_modifier;
 		const int to_hit_result = to_hit - random::get()->roll_dice(to_hit_dice);
 
 		const int armor_class_bonus = chosen_enemy->get_game_data()->get_armor_class_bonus() + chosen_enemy->get_game_data()->get_species_armor_class_bonus(character->get_species());
