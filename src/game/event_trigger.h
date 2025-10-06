@@ -9,7 +9,7 @@ enum class event_trigger {
 	yearly_pulse,
 	ruler_death,
 	site_visited,
-	area_visited
+	dungeon_cleared
 };
 
 inline std::string_view get_event_trigger_name(const event_trigger event_trigger)
@@ -25,8 +25,8 @@ inline std::string_view get_event_trigger_name(const event_trigger event_trigger
 			return "Ruler Death";
 		case event_trigger::site_visited:
 			return "Site Visited";
-		case event_trigger::area_visited:
-			return "Area Visited";
+		case event_trigger::dungeon_cleared:
+			return "Dungeon Cleared";
 		default:
 			break;
 	}
