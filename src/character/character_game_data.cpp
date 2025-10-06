@@ -288,8 +288,8 @@ void character_game_data::apply_species_and_class(const int level)
 		int max_hp = 0;
 
 		for (const auto &[hit_dice, roll_results] : this->hit_dice_roll_results) {
-			min_hp += std::max(hit_dice.get_minimum_result() + this->get_hit_point_bonus_per_hit_dice(), 1) * static_cast<int>(roll_results.size());
-			max_hp += std::max(hit_dice.get_maximum_result() + this->get_hit_point_bonus_per_hit_dice(), 1) * static_cast<int>(roll_results.size());
+			min_hp += std::max(hit_dice.get_minimum_result() + this->get_hit_point_bonus_per_hit_dice(), hit_dice.get_count()) * static_cast<int>(roll_results.size());
+			max_hp += std::max(hit_dice.get_maximum_result() + this->get_hit_point_bonus_per_hit_dice(), hit_dice.get_count()) * static_cast<int>(roll_results.size());
 		}
 
 		assert_throw(this->character->get_hit_points() >= min_hp);
@@ -852,8 +852,8 @@ void character_game_data::apply_hit_dice(const dice &hit_dice)
 {
 	this->change_hit_dice_count(hit_dice.get_count());
 
-	const int roll_result = std::max(random::get()->roll_dice(hit_dice), 1);
-	const int hit_point_increase = std::max(roll_result + this->get_hit_point_bonus_per_hit_dice(), 1);
+	const int roll_result = std::max(random::get()->roll_dice(hit_dice), hit_dice.get_count());
+	const int hit_point_increase = std::max(roll_result + this->get_hit_point_bonus_per_hit_dice(), hit_dice.get_count());
 
 	this->change_max_hit_points(hit_point_increase);
 	this->change_hit_points(hit_point_increase);
@@ -872,7 +872,7 @@ void character_game_data::remove_hit_dice(const dice &hit_dice)
 	assert_throw(!roll_results.empty());
 	
 	const int last_roll_result = roll_results.back();
-	const int last_hit_point_increase = std::max(last_roll_result + this->get_hit_point_bonus_per_hit_dice(), 1);
+	const int last_hit_point_increase = std::max(last_roll_result + this->get_hit_point_bonus_per_hit_dice(), hit_dice.get_count());
 	this->change_max_hit_points(-last_hit_point_increase);
 
 	roll_results.pop_back();
@@ -942,8 +942,8 @@ void character_game_data::set_hit_point_bonus_per_hit_dice(const int bonus)
 
 		for (const auto &[hit_dice, roll_results] : this->hit_dice_roll_results) {
 			for (const int roll_result : roll_results) {
-				const int old_hit_point_change = std::max(roll_result + old_bonus, 1);
-				const int new_hit_point_change = std::max(roll_result + bonus, 1);
+				const int old_hit_point_change = std::max(roll_result + old_bonus, hit_dice.get_count());
+				const int new_hit_point_change = std::max(roll_result + bonus, hit_dice.get_count());
 				hit_point_change += new_hit_point_change - old_hit_point_change;
 			}
 		}
