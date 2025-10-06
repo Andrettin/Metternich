@@ -8,8 +8,8 @@ the_latest_murder = { #Source: "The Olean Democrat", 1889.9.12.
 	newspaper = "The Olean Democrat"
 	conditions = {
 		or = {
-			country = great_britain
-			country = england
+			domain = great_britain
+			domain = england
 		}
 		owns_site = london
 		technology = renaissance #doctors examinated the evidence to be able to distinguish the two sets of murders

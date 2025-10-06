@@ -221,7 +221,7 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 		effect = std::make_unique<save_string_as_effect<scope_type>>(effect_operator);
 	} else if (effect_identifier == "saved_character_scope") {
 		effect = std::make_unique<saved_scope_effect<scope_type, const character>>(effect_operator);
-	} else if (effect_identifier == "saved_country_scope") {
+	} else if (effect_identifier == "saved_domain_scope") {
 		effect = std::make_unique<saved_scope_effect<scope_type, const domain>>(effect_operator);
 	} else if (effect_identifier == "saved_population_unit_scope") {
 		effect = std::make_unique<saved_scope_effect<scope_type, population_unit>>(effect_operator);
@@ -245,7 +245,7 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 }
 
 template <typename scope_type>
-const domain *effect<scope_type>::get_scope_country(const scope_type *scope)
+const domain *effect<scope_type>::get_scope_domain(const scope_type *scope)
 {
 	if constexpr (std::is_same_v<scope_type, const character>) {
 		return scope->get_game_data()->get_domain();

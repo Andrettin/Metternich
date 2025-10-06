@@ -23,7 +23,7 @@ public:
 	
 	virtual const domain *get_scope(const upper_scope_type *upper_scope) const override
 	{
-		return effect<upper_scope_type>::get_scope_country(upper_scope);
+		return effect<upper_scope_type>::get_scope_domain(upper_scope);
 	}
 };
 

@@ -35,9 +35,6 @@ antonio_bonfini = {
 	birth_date = 1428
 	death_date = 1503.6.6
 	skill_multiplier = 0.5
-	conditions = {
-		country = hungary
-	}
 	traits = {
 		philosopher
 	}

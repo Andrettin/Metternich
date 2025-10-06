@@ -8,10 +8,10 @@
 namespace metternich {
 
 template <typename scope_type>
-class country_condition final : public condition<scope_type>
+class domain_condition final : public condition<scope_type>
 {
 public:
-	explicit country_condition(const std::string &value, const gsml_operator condition_operator)
+	explicit domain_condition(const std::string &value, const gsml_operator condition_operator)
 		: condition<scope_type>(condition_operator)
 	{
 		this->domain_target = string_to_target_variant<const domain>(value);
@@ -19,13 +19,13 @@ public:
 
 	virtual const std::string &get_class_identifier() const override
 	{
-		static const std::string class_identifier = "country";
+		static const std::string class_identifier = "domain";
 		return class_identifier;
 	}
 
 	virtual bool check_assignment(const scope_type *scope, const read_only_context &ctx) const override
 	{
-		const domain *domain = condition<scope_type>::get_scope_country(scope);
+		const domain *domain = condition<scope_type>::get_scope_domain(scope);
 
 		return domain == this->get_domain(ctx);
 	}
@@ -68,7 +68,7 @@ public:
 					assert_throw(false);
 					return nullptr;
 				} else {
-					return condition<target_scope_type>::get_scope_country(target_scope);
+					return condition<target_scope_type>::get_scope_domain(target_scope);
 				}
 			}, target_scope_variant);
 		}

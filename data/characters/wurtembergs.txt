@@ -8,12 +8,6 @@ ferdinand_august_von_wurtemberg = { #Source: "Almanach de Gotha pour l'année 18
 	gender = male
 	birth_date = 1763.10.22
 	death_date = 1834.1.20
-	conditions = {
-		or = {
-			country = austria
-			country = wurtemberg
-		}
-	}
 	
 	history = {
 		1817.2.23 = {

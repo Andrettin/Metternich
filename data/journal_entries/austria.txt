@@ -2,7 +2,7 @@ austrian_netherlands = {
 	name = "Austrian Netherlands"
 	portrait = dock
 	preconditions = {
-		country = austria
+		domain = austria
 	}
 	owned_provinces = {
 		brabant
@@ -18,7 +18,7 @@ duchy_of_milan = {
 	name = "Duchy of Milan"
 	portrait = ducal_crown
 	preconditions = {
-		country = austria
+		domain = austria
 	}
 	owned_provinces = {
 		lombardy
@@ -32,7 +32,7 @@ duchy_of_silesia = {
 	name = "Duchy of Silesia"
 	portrait = ducal_crown
 	preconditions = {
-		country = austria
+		domain = austria
 	}
 	conditions = {
 		owns_province = bohemia
@@ -54,7 +54,7 @@ grand_principality_of_transylvania = {
 	name = "Grand Principality of Transylvania"
 	portrait = grand_ducal_crown
 	preconditions = {
-		country = austria
+		domain = austria
 	}
 	conditions = {
 		owns_province = buda
@@ -75,7 +75,7 @@ kingdom_of_bohemia = {
 	name = "Kingdom of Bohemia"
 	portrait = grand_ducal_crown
 	preconditions = {
-		country = austria
+		domain = austria
 	}
 	owned_provinces = {
 		bohemia
@@ -93,7 +93,7 @@ kingdom_of_croatia = {
 	name = "Kingdom of Croatia"
 	portrait = grand_ducal_crown
 	preconditions = {
-		country = austria
+		domain = austria
 	}
 	conditions = {
 		owns_province = buda
@@ -115,7 +115,7 @@ kingdom_of_galicia_and_lodomeria = {
 	name = "Kingdom of Galicia and Lodomeria"
 	portrait = grand_ducal_crown
 	preconditions = {
-		country = austria
+		domain = austria
 	}
 	conditions = {
 		owns_province = bohemia
@@ -137,7 +137,7 @@ kingdom_of_hungary = {
 	name = "Kingdom of Hungary"
 	portrait = grand_ducal_crown
 	preconditions = {
-		country = austria
+		domain = austria
 	}
 	owned_provinces = {
 		buda

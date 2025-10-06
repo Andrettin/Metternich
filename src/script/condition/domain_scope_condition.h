@@ -7,17 +7,17 @@ namespace metternich {
 class domain;
 
 template <typename upper_scope_type>
-class country_scope_condition final : public scope_condition<upper_scope_type, domain, read_only_context, condition<domain>>
+class domain_scope_condition final : public scope_condition<upper_scope_type, domain, read_only_context, condition<domain>>
 {
 public:
-	explicit country_scope_condition(const gsml_operator condition_operator)
+	explicit domain_scope_condition(const gsml_operator condition_operator)
 		: scope_condition<upper_scope_type, domain, read_only_context, condition<domain>>(condition_operator)
 	{
 	}
 
 	virtual const std::string &get_class_identifier() const override
 	{
-		static const std::string class_identifier = "country";
+		static const std::string class_identifier = "domain";
 		return class_identifier;
 	}
 
@@ -25,7 +25,7 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		return condition<upper_scope_type>::get_scope_country(upper_scope);
+		return condition<upper_scope_type>::get_scope_domain(upper_scope);
 	}
 
 	virtual std::string get_scope_name() const override

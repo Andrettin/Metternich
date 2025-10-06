@@ -10,12 +10,6 @@ ulrich_von_cilli = { #Source: "Encyclopædia Britannica", 1911, vol. 6, p. 366.
 	birth_date = 1406
 	death_date = 1456.11.9 #died at Belgrade on 1456.11.9
 	skill_multiplier = 0.5
-	conditions = {
-		or = {
-			country = austria
-			country = hungary
-		}
-	}
 	traits = {
 		statesman
 	}
@@ -49,9 +43,6 @@ georg_peurbach = { #Source: "Encyclopædia Britannica", 1911, vol. 23, p. 39.
 	birth_date = 1423
 	death_date = 1461
 	skill_multiplier = 0.33
-	conditions = {
-		country = austria
-	}
 	traits = {
 		natural_scientist
 	}
@@ -81,9 +72,6 @@ andreas_stoberl = {
 	birth_date = 1465
 	death_date = 1515
 	skill_multiplier = 0.33
-	conditions = {
-		country = austria
-	}
 	traits = {
 		natural_scientist
 	}
@@ -100,9 +88,6 @@ johannes_cuspinianus = {
 	birth_date = 1473
 	death_date = 1529
 	skill_multiplier = 0.33
-	conditions = {
-		country = austria
-	}
 	traits = {
 		natural_scientist
 	}
@@ -119,9 +104,6 @@ georg_tannstetter = {
 	birth_date = 1482
 	death_date = 1535.3.26
 	skill_multiplier = 0.33
-	conditions = {
-		country = austria
-	}
 	traits = {
 		natural_scientist
 	}
@@ -138,9 +120,6 @@ conrad_haas = {
 	birth_date = 1509
 	death_date = 1576
 	skill_multiplier = 0.67
-	conditions = {
-		country = austria
-	}
 	traits = {
 		army_reformer
 	}
@@ -156,9 +135,6 @@ rheticus = {
 	birth_date = 1514
 	death_date = 1574
 	skill_multiplier = 0.17
-	conditions = {
-		country = austria
-	}
 	traits = {
 		naval_reformer
 	}
@@ -175,9 +151,6 @@ wolfgang_von_rumpf = {
 	birth_date = 1550.11.30
 	death_date = 1607
 	skill_multiplier = 0.33
-	conditions = {
-		country = austria
-	}
 	traits = {
 		statesman
 	}
@@ -194,9 +167,6 @@ hans_von_eggenberg = {
 	birth_date = 1568
 	death_date = 1634
 	skill_multiplier = 0.33
-	conditions = {
-		country = austria
-	}
 	traits = {
 		statesman
 	}
@@ -213,9 +183,6 @@ katharina_galler = {
 	birth_date = 1607
 	death_date = 1672.2.12
 	skill_multiplier = 0.33
-	conditions = {
-		country = austria
-	}
 	traits = {
 		treasurer
 	}
@@ -232,9 +199,6 @@ philipp_von_hornigk = {
 	birth_date = 1640
 	death_date = 1714.10.23
 	skill_multiplier = 0.33
-	conditions = {
-		country = austria
-	}
 	traits = {
 		treasurer
 	}
@@ -251,10 +215,6 @@ johann_von_eggenberg = {
 	birth_date = 1641
 	death_date = 1710.12.14
 	skill_multiplier = 0.33
-	conditions = {
-		game_rule = trade_commodity
-		country = austria
-	}
 	traits = {
 		merchant
 	}
@@ -271,9 +231,6 @@ franz_ferdinand_von_rummel = {
 	birth_date = 1644
 	death_date = 1716.3.15
 	skill_multiplier = 0.33
-	conditions = {
-		country = austria
-	}
 	traits = {
 		philosopher
 	}
@@ -290,9 +247,6 @@ joseph_harrach = {
 	birth_date = 1678
 	death_date = 1764.8.8
 	skill_multiplier = 0.33
-	conditions = {
-		country = austria
-	}
 	traits = {
 		statesman
 	}
@@ -309,9 +263,6 @@ josef_wenzel = {
 	birth_date = 1696.8.9
 	death_date = 1772.2.10
 	skill_multiplier = 0.5
-	conditions = {
-		country = austria
-	}
 	traits = {
 		army_reformer
 	}
@@ -328,9 +279,6 @@ gerard_van_swieten = {
 	birth_date = 1700.5.7
 	death_date = 1772.6.18
 	skill_multiplier = 0.33
-	conditions = {
-		country = austria
-	}
 	traits = {
 		natural_scientist
 	}
@@ -347,9 +295,6 @@ wenzel_anton_kaunitz = {
 	birth_date = 1711.2.2
 	death_date = 1794.6.27
 	skill_multiplier = 0.83
-	conditions = {
-		country = austria
-	}
 	traits = {
 		statesman
 	}
@@ -366,9 +311,6 @@ leopold_auenbrugger = {
 	birth_date = 1722.11.19
 	death_date = 1809.5.17
 	skill_multiplier = 0.5
-	conditions = {
-		country = austria
-	}
 	traits = {
 		natural_scientist
 	}
@@ -385,9 +327,6 @@ franz_mesmer = {
 	birth_date = 1734.5.23
 	death_date = 1815.3.5
 	skill_multiplier = 0.5
-	conditions = {
-		country = austria
-	}
 	traits = {
 		natural_scientist
 	}
@@ -404,9 +343,6 @@ joseph_eckhel = {
 	birth_date = 1735
 	death_date = 1798.5.16
 	skill_multiplier = 0.17
-	conditions = {
-		country = austria
-	}
 	traits = {
 		treasurer
 	}

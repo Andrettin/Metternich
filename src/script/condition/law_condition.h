@@ -28,13 +28,13 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		const domain *country = condition<scope_type>::get_scope_country(scope);
+		const domain *domain = condition<scope_type>::get_scope_domain(scope);
 
-		if (country == nullptr) {
+		if (domain == nullptr) {
 			return false;
 		}
 
-		return country->get_government()->has_law(this->law);
+		return domain->get_government()->has_law(this->law);
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override

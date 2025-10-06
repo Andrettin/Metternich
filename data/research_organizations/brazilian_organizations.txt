@@ -4,7 +4,7 @@ departamento_nacional_de_producao_mineral = {
 	skill = 4
 	required_technology = renaissance
 	conditions = {
-		country = brazil
+		domain = brazil
 	}
 	traits = {
 		industrial_company

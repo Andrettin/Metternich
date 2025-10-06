@@ -31,7 +31,7 @@ public:
 		if constexpr (std::is_same_v<scope_type, province>) {
 			return scope->get_game_data()->has_technology(this->technology);
 		} else {
-			const domain *domain = condition<scope_type>::get_scope_country(scope);
+			const domain *domain = condition<scope_type>::get_scope_domain(scope);
 
 			if (domain == nullptr) {
 				return false;

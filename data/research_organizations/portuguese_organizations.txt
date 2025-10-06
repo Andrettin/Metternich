@@ -4,7 +4,7 @@ fabrica_militar_de_santa_clara = {
 	skill = 3
 	required_technology = renaissance
 	conditions = {
-		country = portugal
+		domain = portugal
 	}
 	traits = {
 		artillery_designer
@@ -17,7 +17,7 @@ oficinas_gerais_de_material_de_engenharia = {
 	skill = 3
 	required_technology = renaissance
 	conditions = {
-		country = portugal
+		domain = portugal
 	}
 	traits = {
 		industrial_company

@@ -52,9 +52,6 @@ karl_philipp_zu_schwarzenberg = { #Source: "Encyclopædia Britannica", 1911, vol
 	gender = male
 	birth_date = 1771.4.15
 	death_date = 1820.10.15 #died of a (second) stroke
-	conditions = {
-		country = austria
-	}
 	
 	#prince of Schwarzenberg
 	#had a sister, Caroline

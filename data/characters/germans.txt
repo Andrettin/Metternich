@@ -72,12 +72,6 @@ martin_luther = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobe
 	birth_date = 1483
 	death_date = 1546
 	skill_multiplier = 1
-	conditions = {
-		or = {
-			country = prussia
-			country = germany
-		}
-	}
 	traits = {
 		theologian
 	}
@@ -112,12 +106,6 @@ peter_bennewitz = { #also known as Petrus Apianus; Source: Isaac Asimov, "Cronol
 	gender = male
 	birth_date = 1501
 	death_date = 1552
-	conditions = {
-		or = {
-			country = prussia
-			country = germany
-		}
-	}
 	traits = {
 		#natural_scientist
 	}
@@ -163,12 +151,6 @@ johann_sebastian_bach = {
 	gender = male
 	birth_date = 1685
 	death_date = 1750
-	conditions = {
-		or = {
-			country = prussia
-			country = germany
-		}
-	}
 	traits = {
 		johann_sebastian_bach
 	}

@@ -56,9 +56,6 @@ ambroise_pare = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobe
 	birth_date = 1510
 	death_date = 1590
 	skill_multiplier = 0.67
-	conditions = {
-		country = france
-	}
 	traits = {
 		natural_scientist
 	}

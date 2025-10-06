@@ -18,7 +18,7 @@ gazette_de_france = { #Source: Henry Kamen, "Early Modern European Society", 202
 	portrait = trading_post
 	description = "The ~<Gazette de France~> was a weekly newspaper founded by Theophraste Renaudot in 1631, intended to reflect official views."
 	preconditions = {
-		country = france
+		domain = france
 		owns_site = paris
 	}
 	built_settlement_buildings = {

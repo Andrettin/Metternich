@@ -35,14 +35,14 @@
 #include "script/condition/commodity_condition.h"
 #include "script/condition/condition_base.ipp"
 #include "script/condition/core_condition.h"
-#include "script/condition/country_condition.h"
-#include "script/condition/country_scope_condition.h"
 #include "script/condition/country_type_condition.h"
 #include "script/condition/cultural_group_condition.h"
 #include "script/condition/culture_condition.h"
 #include "script/condition/discovered_province_condition.h"
 #include "script/condition/discovered_region_condition.h"
+#include "script/condition/domain_condition.h"
 #include "script/condition/domain_exists_condition.h"
+#include "script/condition/domain_scope_condition.h"
 #include "script/condition/dungeon_condition.h"
 #include "script/condition/event_condition.h"
 #include "script/condition/explored_dungeon_area_condition.h"
@@ -290,12 +290,12 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 		}
 	}
 
-	if (key == "country") {
-		return std::make_unique<country_condition<scope_type>>(value, condition_operator);
-	} else if (key == "cultural_group") {
+	if (key == "cultural_group") {
 		return std::make_unique<cultural_group_condition<scope_type>>(value, condition_operator);
 	} else if (key == "culture") {
 		return std::make_unique<culture_condition<scope_type>>(value, condition_operator);
+	} else if (key == "domain") {
+		return std::make_unique<domain_condition<scope_type>>(value, condition_operator);
 	} else if (key == "domain_exists") {
 		return std::make_unique<domain_exists_condition<scope_type>>(value, condition_operator);
 	} else if (key == "dungeon") {
@@ -382,11 +382,11 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 
 	if (tag == "attacking_commander") {
 		condition = std::make_unique<attacking_commander_condition<scope_type>>(condition_operator);
-	} else if (tag == "country") {
-		condition = std::make_unique<country_scope_condition<scope_type>>(condition_operator);
+	} else if (tag == "domain") {
+		condition = std::make_unique<domain_scope_condition<scope_type>>(condition_operator);
 	} else if (tag == "saved_character_scope") {
 		condition = std::make_unique<saved_scope_condition<scope_type, character, read_only_context, metternich::condition<character>>>(condition_operator);
-	} else if (tag == "saved_country_scope") {
+	} else if (tag == "saved_domain_scope") {
 		condition = std::make_unique<saved_scope_condition<scope_type, domain, read_only_context, metternich::condition<domain>>>(condition_operator);
 	} else if (tag == "saved_province_scope") {
 		condition = std::make_unique<saved_scope_condition<scope_type, province, read_only_context, metternich::condition<province>>>(condition_operator);
@@ -405,7 +405,7 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 }
 
 template <typename scope_type>
-const domain *condition<scope_type>::get_scope_country(const scope_type *scope)
+const domain *condition<scope_type>::get_scope_domain(const scope_type *scope)
 {
 	if constexpr (std::is_same_v<scope_type, character>) {
 		return scope->get_game_data()->get_domain();

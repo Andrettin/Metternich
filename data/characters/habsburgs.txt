@@ -187,9 +187,6 @@ karl_von_habsburg = { #Archduke Karl; Source: "Almanach de Gotha pour l'année 1
 	father = leopold_ii_of_the_holy_roman_empire
 	mother = maria_luisa_de_bourbon #Maria Luisa, daughter of king Charles III of Spain
 	birth_date = 1771.9.5
-	conditions = {
-		country = austria
-	}
 	
 	history = {
 		#resigned as Grand Master of the Teutonic Order on 1804.6.30

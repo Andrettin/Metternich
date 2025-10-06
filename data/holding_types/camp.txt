@@ -7,10 +7,10 @@ camp = {
 	}
 	build_conditions = {
 		or = {
-			country = {
+			domain = {
 				scripted_condition = is_tribe
 			}
-			country = none
+			domain = none
 		}
 	}
 }

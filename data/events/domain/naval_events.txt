@@ -8,8 +8,8 @@ the_loss_of_the_eurydice = { #Source: "The Times", 1878.3.26.
 	newspaper = "The Times"
 	conditions = {
 		or = {
-			country = great_britain
-			country = england
+			domain = great_britain
+			domain = england
 		}
 		technology = renaissance #the Eurydice was a frigate
 		discovered_region = caribbean #because of the mention of the West Indies

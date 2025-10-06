@@ -9,7 +9,7 @@ hamlet = {
 		expert_workers
 	}
 	build_conditions = {
-		country = {
+		domain = {
 			not = {
 				scripted_condition = is_tribe
 			}

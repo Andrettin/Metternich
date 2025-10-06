@@ -9,9 +9,6 @@ tamas_bakocz = { #Source: "Encyclopædia Britannica", 1911, vol. 3, p. 230.
 	birth_date = 1442
 	death_date = 1521
 	skill_multiplier = 0.5
-	conditions = {
-		country = hungary
-	}
 	traits = {
 		statesman
 	}

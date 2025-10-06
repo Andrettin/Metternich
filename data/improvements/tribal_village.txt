@@ -16,7 +16,7 @@ tribal_village = {
 	#		resource = oil
 	#	}
 	#	random_chance = 5
-	#	country = {
+	#	domain = {
 	#		or = {
 	#			scripted_condition = is_tribe
 	#			subject_type = colony

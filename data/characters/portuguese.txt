@@ -36,11 +36,6 @@ ferdinand_magellan = { #Source: Isaac Asimov, "Cronologia das Ciências e das De
 	gender = male
 	birth_date = 1480
 	death_date = 1521
-	conditions = {
-		not = {
-			culture = greek
-		}
-	}
 	traits = {
 		ferdinand_magellan
 	}

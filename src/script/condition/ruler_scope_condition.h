@@ -26,7 +26,7 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		const domain *domain = condition<upper_scope_type>::get_scope_country(upper_scope);
+		const domain *domain = condition<upper_scope_type>::get_scope_domain(upper_scope);
 
 		if (domain == nullptr) {
 			return nullptr;
