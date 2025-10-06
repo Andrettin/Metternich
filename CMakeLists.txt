@@ -604,13 +604,13 @@ set(script_condition_HDRS
 	src/script/condition/condition.h
 	src/script/condition/core_condition.h
 	src/script/condition/country_condition.h
-	src/script/condition/country_exists_condition.h
 	src/script/condition/country_scope_condition.h
 	src/script/condition/country_type_condition.h
 	src/script/condition/cultural_group_condition.h
 	src/script/condition/culture_condition.h
 	src/script/condition/discovered_province_condition.h
 	src/script/condition/discovered_region_condition.h
+	src/script/condition/domain_exists_condition.h
 	src/script/condition/dungeon_condition.h
 	src/script/condition/event_condition.h
 	src/script/condition/explored_dungeon_area_condition.h

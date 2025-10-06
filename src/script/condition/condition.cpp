@@ -36,13 +36,13 @@
 #include "script/condition/condition_base.ipp"
 #include "script/condition/core_condition.h"
 #include "script/condition/country_condition.h"
-#include "script/condition/country_exists_condition.h"
 #include "script/condition/country_scope_condition.h"
 #include "script/condition/country_type_condition.h"
 #include "script/condition/cultural_group_condition.h"
 #include "script/condition/culture_condition.h"
 #include "script/condition/discovered_province_condition.h"
 #include "script/condition/discovered_region_condition.h"
+#include "script/condition/domain_exists_condition.h"
 #include "script/condition/dungeon_condition.h"
 #include "script/condition/event_condition.h"
 #include "script/condition/explored_dungeon_area_condition.h"
@@ -292,12 +292,12 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 
 	if (key == "country") {
 		return std::make_unique<country_condition<scope_type>>(value, condition_operator);
-	} else if (key == "country_exists") {
-		return std::make_unique<country_exists_condition<scope_type>>(value, condition_operator);
 	} else if (key == "cultural_group") {
 		return std::make_unique<cultural_group_condition<scope_type>>(value, condition_operator);
 	} else if (key == "culture") {
 		return std::make_unique<culture_condition<scope_type>>(value, condition_operator);
+	} else if (key == "domain_exists") {
+		return std::make_unique<domain_exists_condition<scope_type>>(value, condition_operator);
 	} else if (key == "dungeon") {
 		return std::make_unique<dungeon_condition<scope_type>>(value, condition_operator);
 	} else if (key == "event") {

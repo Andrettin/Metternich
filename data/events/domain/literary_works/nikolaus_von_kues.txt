@@ -24,7 +24,7 @@ crebratio_alcorani = { #Source: "Encyclopædia Britannica", 1911, vol. 7, p. 666
 	random_weight = 1000
 	conditions = {
 		advisor = nikolaus_von_kues
-		country_exists = ottoman_empire
+		domain_exists = ottoman_empire
 	}
 	option = {
 		effects = {
