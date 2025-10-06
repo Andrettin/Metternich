@@ -1,6 +1,7 @@
 undead = {
 	name = "Undead"
 	species = {
+		shadow
 		vampire
 	}
 }

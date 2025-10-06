@@ -1,0 +1,6 @@
+shadow = {
+	name = "Shadow"
+	supertaxon = undead
+	era = holocene
+	sapient = true
+}
