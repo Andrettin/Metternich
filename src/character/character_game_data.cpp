@@ -675,11 +675,6 @@ void character_game_data::set_level(const int level)
 		this->on_level_gained(i, 1);
 	}
 
-	const int64_t level_experience = this->get_experience_for_level(this->get_level());
-	if (this->get_experience() < level_experience) {
-		this->set_experience(level_experience);
-	}
-
 	if (game::get()->is_running()) {
 		emit level_changed();
 	}
@@ -741,6 +736,7 @@ void character_game_data::check_level_experience()
 			break;
 		}
 
+		this->change_experience(-this->get_experience_for_level(this->get_level() + 1));
 		this->change_level(1);
 	}
 }
@@ -764,6 +760,9 @@ int64_t character_game_data::get_experience_for_level(const int level) const
 {
 	assert_throw(this->get_character_class() != nullptr);
 	int64_t experience = this->get_character_class()->get_experience_for_level(level);
+	if (level > 1) {
+		experience -= this->get_character_class()->get_experience_for_level(level - 1);
+	}
 
 	const int level_limit = this->character->get_species()->get_character_class_level_limit(this->get_character_class());
 	assert_throw(level_limit > 0);
