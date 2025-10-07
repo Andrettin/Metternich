@@ -29,7 +29,6 @@ set(character_SRCS
 	src/character/character_game_data.cpp
 	src/character/character_history.cpp
 	src/character/character_reference.cpp
-	src/character/character_trait.cpp
 	src/character/dynasty.cpp
 	src/character/family_tree_model.cpp
 	src/character/level_bonus_table.cpp
@@ -38,6 +37,7 @@ set(character_SRCS
 	src/character/saving_throw_type.cpp
 	src/character/skill.cpp
 	src/character/status_effect.cpp
+	src/character/trait.cpp
 	src/character/trait_type.cpp
 )
 source_group(character FILES ${character_SRCS})
@@ -353,7 +353,6 @@ set(character_HDRS
 	src/character/character_game_data.h
 	src/character/character_history.h
 	src/character/character_reference.h
-	src/character/character_trait.h
 	src/character/dynasty.h
 	src/character/family_tree_model.h
 	src/character/level_bonus_table.h
@@ -363,6 +362,7 @@ set(character_HDRS
 	src/character/skill.h
 	src/character/starting_age_category.h
 	src/character/status_effect.h
+	src/character/trait.h
 	src/character/trait_type.h
 )
 source_group(character FILES ${character_HDRS})

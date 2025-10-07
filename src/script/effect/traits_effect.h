@@ -2,7 +2,7 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
-#include "character/character_trait.h"
+#include "character/trait.h"
 #include "script/effect/effect.h"
 
 namespace metternich {
@@ -13,7 +13,7 @@ public:
 	explicit traits_effect(const std::string &value, const gsml_operator effect_operator)
 		: effect<const character>(effect_operator)
 	{
-		this->trait = character_trait::get(value);
+		this->trait = trait::get(value);
 	}
 
 	virtual const std::string &get_class_identifier() const override
@@ -43,7 +43,7 @@ public:
 	}
 
 private:
-	const metternich::character_trait *trait = nullptr;
+	const metternich::trait *trait = nullptr;
 };
 
 }

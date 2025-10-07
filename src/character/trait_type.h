@@ -6,7 +6,7 @@
 namespace metternich {
 
 class character;
-class character_trait;
+class trait;
 
 template <typename scope_type>
 class and_condition;
@@ -46,12 +46,12 @@ public:
 		return this->modifier.get();
 	}
 
-	const std::vector<const character_trait *> &get_traits() const
+	const std::vector<const trait *> &get_traits() const
 	{
 		return this->traits;
 	}
 
-	void add_trait(const character_trait *trait)
+	void add_trait(const trait *trait)
 	{
 		this->traits.push_back(trait);
 	}
@@ -63,7 +63,7 @@ private:
 	int max_traits = 0; //the maximum amount of traits of this type a character can acquire
 	std::unique_ptr<const and_condition<character>> gain_conditions;
 	std::unique_ptr<const modifier<const character>> modifier;
-	std::vector<const character_trait *> traits;
+	std::vector<const trait *> traits;
 };
 
 }

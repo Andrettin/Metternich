@@ -3,7 +3,7 @@
 #include "game/event_option.h"
 
 #include "character/character.h"
-#include "character/character_trait.h"
+#include "character/trait.h"
 #include "database/gsml_data.h"
 #include "database/gsml_property.h"
 #include "game/event.h"
@@ -41,7 +41,7 @@ void event_option<scope_type>::process_gsml_property(const gsml_property &proper
 	} else if (key == "tooltip") {
 		this->tooltip = value;
 	} else if (key == "tooltip_info_trait") {
-		this->tooltip_info_trait = character_trait::get(value);
+		this->tooltip_info_trait = trait::get(value);
 	} else if (key == "ai_weight") {
 		this->ai_weight = std::stoi(value);
 	} else {

@@ -1,6 +1,6 @@
 #include "metternich.h"
 
-#include "character/character_trait.h"
+#include "character/trait.h"
 
 #include "character/character_attribute.h"
 #include "character/trait_type.h"
@@ -12,16 +12,16 @@
 
 namespace metternich {
 
-character_trait::character_trait(const std::string &identifier)
+trait::trait(const std::string &identifier)
 	: named_data_entry(identifier)
 {
 }
 
-character_trait::~character_trait()
+trait::~trait()
 {
 }
 
-void character_trait::process_gsml_scope(const gsml_data &scope)
+void trait::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
@@ -74,7 +74,7 @@ void character_trait::process_gsml_scope(const gsml_data &scope)
 	}
 }
 
-void character_trait::check() const
+void trait::check() const
 {
 	if (this->get_icon() == nullptr) {
 		throw std::runtime_error(std::format("Trait \"{}\" has no icon.", this->get_identifier()));
@@ -91,7 +91,7 @@ void character_trait::check() const
 	named_data_entry::check();
 }
 
-QString character_trait::get_modifier_string() const
+QString trait::get_modifier_string() const
 {
 	if (this->get_modifier() == nullptr) {
 		return QString();
@@ -100,7 +100,7 @@ QString character_trait::get_modifier_string() const
 	return QString::fromStdString(this->get_modifier()->get_string(nullptr));
 }
 
-QString character_trait::get_military_unit_modifier_string() const
+QString trait::get_military_unit_modifier_string() const
 {
 	if (this->get_military_unit_modifier() == nullptr) {
 		return QString();

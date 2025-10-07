@@ -6,13 +6,13 @@
 #include "character/character_attribute.h"
 #include "character/character_class.h"
 #include "character/character_history.h"
-#include "character/character_trait.h"
-#include "character/trait_type.h"
 #include "character/level_bonus_table.h"
 #include "character/monster_type.h"
 #include "character/saving_throw_type.h"
 #include "character/skill.h"
 #include "character/status_effect.h"
+#include "character/trait.h"
+#include "character/trait_type.h"
 #include "database/defines.h"
 #include "domain/country_government.h"
 #include "domain/country_military.h"
@@ -437,7 +437,7 @@ void character_game_data::apply_history(const QDate &start_date)
 
 void character_game_data::on_setup_finished()
 {
-	for (const character_trait *trait : this->character->get_traits()) {
+	for (const trait *trait : this->character->get_traits()) {
 		this->add_trait(trait);
 	}
 
@@ -808,7 +808,7 @@ data_entry_set<character_attribute> character_game_data::get_main_attributes() c
 		attributes.insert(this->character->get_primary_attribute());
 	}
 
-	for (const character_trait *trait : this->get_traits()) {
+	for (const trait *trait : this->get_traits()) {
 		if (trait->get_attribute() != nullptr) {
 			attributes.insert(trait->get_attribute());
 		}
@@ -1118,11 +1118,11 @@ QVariantList character_game_data::get_traits_qvariant_list() const
 	return container::to_qvariant_list(this->get_traits());
 }
 
-std::vector<const character_trait *> character_game_data::get_traits_of_type(const trait_type *trait_type) const
+std::vector<const trait *> character_game_data::get_traits_of_type(const trait_type *trait_type) const
 {
-	std::vector<const character_trait *> traits;
+	std::vector<const trait *> traits;
 
-	for (const character_trait *trait : this->get_traits()) {
+	for (const trait *trait : this->get_traits()) {
 		if (!vector::contains(trait->get_types(), trait_type)) {
 			continue;
 		}
@@ -1139,7 +1139,7 @@ QVariantList character_game_data::get_traits_of_type(const QString &trait_type_s
 	return container::to_qvariant_list(this->get_traits_of_type(type));
 }
 
-bool character_game_data::can_have_trait(const character_trait *trait) const
+bool character_game_data::can_have_trait(const trait *trait) const
 {
 	if (trait->get_conditions() != nullptr && !trait->get_conditions()->check(this->character, read_only_context(this->character))) {
 		return false;
@@ -1148,7 +1148,7 @@ bool character_game_data::can_have_trait(const character_trait *trait) const
 	return true;
 }
 
-bool character_game_data::can_gain_trait(const character_trait *trait) const
+bool character_game_data::can_gain_trait(const trait *trait) const
 {
 	if (this->has_trait(trait)) {
 		return false;
@@ -1175,12 +1175,12 @@ bool character_game_data::can_gain_trait(const character_trait *trait) const
 	return true;
 }
 
-bool character_game_data::has_trait(const character_trait *trait) const
+bool character_game_data::has_trait(const trait *trait) const
 {
 	return vector::contains(this->get_traits(), trait);
 }
 
-void character_game_data::add_trait(const character_trait *trait)
+void character_game_data::add_trait(const trait *trait)
 {
 	if (this->has_trait(trait)) {
 		log::log_error(std::format("Tried to add trait \"{}\" to character \"{}\", but they already have the trait.", trait->get_identifier(), this->character->get_identifier()));
@@ -1203,7 +1203,7 @@ void character_game_data::add_trait(const character_trait *trait)
 	}
 }
 
-void character_game_data::remove_trait(const character_trait *trait)
+void character_game_data::remove_trait(const trait *trait)
 {
 	//remove modifiers that this character is applying on other scopes so that we reapply them later, as the trait change can affect them
 	std::erase(this->traits, trait);
@@ -1217,7 +1217,7 @@ void character_game_data::remove_trait(const character_trait *trait)
 	}
 }
 
-void character_game_data::on_trait_gained(const character_trait *trait, const int multiplier)
+void character_game_data::on_trait_gained(const trait *trait, const int multiplier)
 {
 	if (this->get_office() != nullptr) {
 		assert_throw(this->get_domain() != nullptr);
@@ -1242,10 +1242,10 @@ void character_game_data::on_trait_gained(const character_trait *trait, const in
 
 bool character_game_data::generate_trait(const trait_type *trait_type, const character_attribute *target_attribute, const int target_attribute_bonus)
 {
-	std::vector<const character_trait *> potential_traits;
+	std::vector<const trait *> potential_traits;
 	int best_attribute_bonus = 0;
 
-	for (const character_trait *trait : character_trait::get_all()) {
+	for (const trait *trait : trait::get_all()) {
 		if (!vector::contains(trait->get_types(), trait_type)) {
 			continue;
 		}
@@ -1290,7 +1290,7 @@ bool character_game_data::generate_initial_trait(const trait_type *trait_type)
 
 void character_game_data::sort_traits()
 {
-	std::sort(this->traits.begin(), this->traits.end(), [](const character_trait *lhs, const character_trait *rhs) {
+	std::sort(this->traits.begin(), this->traits.end(), [](const trait *lhs, const trait *rhs) {
 		if (*lhs->get_types().begin() != *rhs->get_types().begin()) {
 			return *lhs->get_types().begin() < *rhs->get_types().begin();
 		}
@@ -1381,7 +1381,7 @@ std::string character_game_data::get_office_modifier_string(const metternich::do
 
 	std::string str;
 
-	for (const character_trait *trait : this->get_traits()) {
+	for (const trait *trait : this->get_traits()) {
 		if (trait->get_office_modifier(office) == nullptr && trait->get_scaled_office_modifier(office) == nullptr) {
 			continue;
 		}
@@ -1425,12 +1425,12 @@ void character_game_data::apply_office_modifier(const metternich::domain *domain
 	assert_throw(domain != nullptr);
 	assert_throw(office != nullptr);
 
-	for (const character_trait *trait : this->get_traits()) {
+	for (const trait *trait : this->get_traits()) {
 		this->apply_trait_office_modifier(trait, domain, office, multiplier);
 	}
 }
 
-void character_game_data::apply_trait_office_modifier(const character_trait *trait, const metternich::domain *domain, const metternich::office *office, const int multiplier) const
+void character_game_data::apply_trait_office_modifier(const trait *trait, const metternich::domain *domain, const metternich::office *office, const int multiplier) const
 {
 	if (trait->get_office_modifier(office) != nullptr) {
 		trait->get_office_modifier(office)->apply(domain, multiplier);
@@ -1487,7 +1487,7 @@ void character_game_data::apply_modifier(const modifier<const metternich::charac
 
 void character_game_data::apply_military_unit_modifier(metternich::military_unit *military_unit, const int multiplier)
 {
-	for (const character_trait *trait : this->get_traits()) {
+	for (const trait *trait : this->get_traits()) {
 		if (trait->get_military_unit_modifier() != nullptr) {
 			trait->get_military_unit_modifier()->apply(military_unit, multiplier);
 		}

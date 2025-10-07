@@ -15,7 +15,6 @@ namespace metternich {
 
 class character;
 class character_attribute;
-class character_trait;
 class domain;
 class enchantment;
 class item;
@@ -32,6 +31,7 @@ class skill;
 class species;
 class spell;
 class status_effect;
+class trait;
 class trait_type;
 enum class military_unit_stat;
 
@@ -313,14 +313,14 @@ public:
 	void change_skill_value(const skill *skill, const int change);
 	bool do_skill_check(const skill *skill, const int roll_modifier) const;
 
-	const std::vector<const character_trait *> &get_traits() const
+	const std::vector<const trait *> &get_traits() const
 	{
 		return this->traits;
 	}
 
 	QVariantList get_traits_qvariant_list() const;
 
-	std::vector<const character_trait *> get_traits_of_type(const trait_type *trait_type) const;
+	std::vector<const trait *> get_traits_of_type(const trait_type *trait_type) const;
 	Q_INVOKABLE QVariantList get_traits_of_type(const QString &trait_type_str) const;
 
 	int get_trait_count_for_type(const trait_type *trait_type) const
@@ -328,12 +328,12 @@ public:
 		return static_cast<int>(this->get_traits_of_type(trait_type).size());
 	}
 
-	bool can_have_trait(const character_trait *trait) const;
-	bool can_gain_trait(const character_trait *trait) const;
-	bool has_trait(const character_trait *trait) const;
-	void add_trait(const character_trait *trait);
-	void remove_trait(const character_trait *trait);
-	void on_trait_gained(const character_trait *trait, const int multiplier);
+	bool can_have_trait(const trait *trait) const;
+	bool can_gain_trait(const trait *trait) const;
+	bool has_trait(const trait *trait) const;
+	void add_trait(const trait *trait);
+	void remove_trait(const trait *trait);
+	void on_trait_gained(const trait *trait, const int multiplier);
 	[[nodiscard]] bool generate_trait(const trait_type *trait_type, const character_attribute *target_attribute, const int target_attribute_bonus);
 	[[nodiscard]] bool generate_initial_trait(const trait_type *trait_type);
 	void sort_traits();
@@ -365,7 +365,7 @@ public:
 	}
 
 	void apply_office_modifier(const metternich::domain *domain, const metternich::office *office, const int multiplier) const;
-	void apply_trait_office_modifier(const character_trait *trait, const metternich::domain *domain, const metternich::office *office, const int multiplier) const;
+	void apply_trait_office_modifier(const trait *trait, const metternich::domain *domain, const metternich::office *office, const int multiplier) const;
 
 	metternich::military_unit *get_military_unit() const
 	{
@@ -576,7 +576,7 @@ private:
 	data_entry_map<saving_throw_type, int> saving_throw_bonuses;
 	data_entry_map<skill, int> skill_trainings;
 	data_entry_map<skill, int> skill_values;
-	std::vector<const character_trait *> traits;
+	std::vector<const trait *> traits;
 	scripted_character_modifier_map<int> scripted_modifiers;
 	const metternich::office *office = nullptr;
 	metternich::military_unit *military_unit = nullptr;

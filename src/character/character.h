@@ -31,7 +31,6 @@ class character_class;
 class character_game_data;
 class character_history;
 class character_reference;
-class character_trait;
 class civilian_unit_class;
 class civilian_unit_type;
 class culture;
@@ -46,6 +45,7 @@ class province;
 class religion;
 class site;
 class species;
+class trait;
 enum class military_unit_category;
 
 template <typename scope_type>
@@ -238,7 +238,7 @@ public:
 		return this->hit_points;
 	}
 
-	const std::vector<const character_trait *> &get_traits() const
+	const std::vector<const trait *> &get_traits() const
 	{
 		return this->traits;
 	}
@@ -288,7 +288,7 @@ private:
 	data_entry_map<character_attribute, std::string> attribute_ratings;
 	data_entry_map<character_attribute, std::pair<int, int>> attribute_ranges;
 	int hit_points = 0;
-	std::vector<const character_trait *> traits;
+	std::vector<const trait *> traits;
 	std::vector<const item_type *> starting_items;
 	std::unique_ptr<const and_condition<domain>> conditions;
 	qunique_ptr<character_history> history;

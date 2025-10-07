@@ -9,7 +9,7 @@
 #include "character/dynasty.h"
 #include "character/monster_type.h"
 #include "character/starting_age_category.h"
-#include "character/character_trait.h"
+#include "character/trait.h"
 #include "database/defines.h"
 #include "domain/culture.h"
 #include "domain/domain.h"
@@ -200,7 +200,7 @@ void character::process_gsml_scope(const gsml_data &scope)
 		});
 	} else if (tag == "traits") {
 		for (const std::string &value : values) {
-			this->traits.push_back(character_trait::get(value));
+			this->traits.push_back(trait::get(value));
 		}
 	} else if (tag == "starting_items") {
 		for (const std::string &value : values) {
