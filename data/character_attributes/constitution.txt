@@ -1,0 +1,30 @@
+constitution = {
+	name = "Constitution"
+	
+	value_modifiers = {
+		1 = {
+			hit_points_per_hit_dice = -3
+			#fortitude = -5
+		}
+		2 = {
+			hit_points_per_hit_dice = 1
+		}
+		4 = {
+			hit_points_per_hit_dice = 1
+		}
+		7 = {
+			hit_points_per_hit_dice = 1
+		}
+		15 = {
+			hit_points_per_hit_dice = 1
+		}
+		16 = {
+			hit_points_per_hit_dice = 1
+		}
+	}
+	recurring_value_modifiers = {
+		2 = {
+			#fortitude = 1
+		}
+	}
+}

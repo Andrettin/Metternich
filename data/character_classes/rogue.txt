@@ -30,6 +30,8 @@ rogue = {
 	level_modifiers = {
 		1 = {
 			hit_dice = 1d6
+			skill_training = find_disarm_traps
+			find_disarm_traps = 5
 		}
 		2 = {
 			hit_dice = 1d6

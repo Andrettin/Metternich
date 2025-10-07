@@ -1,0 +1,61 @@
+strength = {
+	name = "Strength"
+	value_modifiers = {
+		1 = {
+			to_hit_bonus = -5
+			damage_bonus = -4
+		}
+		2 = {
+			to_hit_bonus = 2
+			damage_bonus = 2
+		}
+		3 = {
+			damage_bonus = 1
+		}
+		4 = {
+			to_hit_bonus = 1
+		}
+		6 = {
+			to_hit_bonus = 1
+			damage_bonus = 1
+		}
+		8 = {
+			to_hit_bonus = 1
+		}
+		16 = {
+			damage_bonus = 1
+		}
+		17 = {
+			to_hit_bonus = 1
+		}
+		18 = {
+			damage_bonus = 1
+		}
+		19 = {
+			to_hit_bonus = 2
+			damage_bonus = 5
+		}
+		20 = {
+			damage_bonus = 1
+		}
+		21 = {
+			to_hit_bonus = 1
+			damage_bonus = 1
+		}
+		22 = {
+			damage_bonus = 1
+		}
+		23 = {
+			to_hit_bonus = 1
+			damage_bonus = 1
+		}
+		24 = {
+			to_hit_bonus = 1
+			damage_bonus = 1
+		}
+		25 = {
+			to_hit_bonus = 1
+			damage_bonus = 2
+		}
+	}
+}
