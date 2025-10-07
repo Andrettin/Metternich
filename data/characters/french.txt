@@ -148,7 +148,7 @@ louis_xiv_of_france = {
 }
 
 josephine = { #Source: "Almanach de Gotha pour l'année 1813", 1813, p. 4.
-	name = "Joséphine"
+	name = "Josephine" #"Joséphine"
 	character_class = warrior #aristocrat?
 	culture = french
 	religion = catholic
