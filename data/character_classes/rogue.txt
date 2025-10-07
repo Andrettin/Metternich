@@ -31,13 +31,15 @@ rogue = {
 		1 = {
 			hit_dice = 1d6
 			skill_training = find_disarm_traps
-			find_disarm_traps = 5
+			find_disarm_traps = 20 #5% base + 15%
 		}
 		2 = {
 			hit_dice = 1d6
+			find_disarm_traps = 5
 		}
 		3 = {
 			hit_dice = 1d6
+			find_disarm_traps = 5
 		}
 	}
 	starting_items = {
