@@ -146,3 +146,25 @@ louis_xiv_of_france = {
 		industrious
 	}
 }
+
+josephine = { #Source: "Almanach de Gotha pour l'année 1813", 1813, p. 4.
+	name = "Joséphine"
+	character_class = warrior #aristocrat?
+	culture = french
+	religion = catholic
+	home_site = paris #correct?
+	gender = female
+	birth_date = 1768.6.24 #Source: "Almanach de Gotha pour l'année 1813", 1813, p. 4.
+}
+
+antoinette = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, pp. 24-25.
+	name = "Antoinette"
+	character_class = warrior #aristocrat?
+	culture = french
+	religion = catholic
+	home_site = paris #correct?
+	gender = female
+	start_date = 1768.6.24 #married on 1808.2.4 to Karl Anton von Hohenzollern-Sigmaringen
+	
+	#niece of Joachim Napoléon, king of Naples
+}
