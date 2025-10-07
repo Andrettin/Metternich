@@ -164,7 +164,7 @@ antoinette = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf d
 	religion = catholic
 	home_site = paris #correct?
 	gender = female
-	start_date = 1768.6.24 #married on 1808.2.4 to Karl Anton von Hohenzollern-Sigmaringen
+	start_date = 1808.2.4 #married on 1808.2.4 to Karl Anton von Hohenzollern-Sigmaringen
 	
 	#niece of Joachim Napoléon, king of Naples
 }
