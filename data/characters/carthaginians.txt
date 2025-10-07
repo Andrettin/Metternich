@@ -9,7 +9,7 @@ hannibal = {
 	birth_date = -247
 	death_date = -181
 	traits = {
-		financial
-		charismatic
+		#financial
+		#charismatic
 	}
 }

@@ -1123,8 +1123,7 @@ void character_game_data::change_trait_count(const trait *trait, const int chang
 
 	if (change > 0 && old_value == 0) {
 		if (!this->can_gain_trait(trait)) {
-			log::log_error(std::format("Tried to add trait \"{}\" to character \"{}\", who cannot gain it.", trait->get_identifier(), this->character->get_identifier()));
-			return;
+			throw std::runtime_error(std::format("Tried to add trait \"{}\" to character \"{}\", who cannot gain it.", trait->get_identifier(), this->character->get_identifier()));
 		}
 	}
 

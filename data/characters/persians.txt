@@ -9,7 +9,7 @@ darius_i_of_persia = {
 	birth_date = -550
 	death_date = -486
 	traits = {
-		financial
+		#financial
 		organized
 	}
 }

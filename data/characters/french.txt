@@ -9,7 +9,7 @@ philip_the_fair = {
 	birth_date = 1268.6.8
 	death_date = 1314.11.29
 	traits = {
-		dutiful_cleric
+		#dutiful_cleric
 		temperate
 	}
 }
@@ -143,7 +143,7 @@ louis_xiv_of_france = {
 	death_date = 1715
 	traits = {
 		creative
-		industrious
+		#industrious
 	}
 }
 

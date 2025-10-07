@@ -27,7 +27,7 @@ george_washington = {
 	skill = 10 #Disciplined: -50% Infantry Cost
 	traits = {
 		disciplined
-		expansive
+		#expansive
 	}
 }
 
@@ -165,8 +165,8 @@ abraham_lincoln = {
 	birth_date = 1809
 	death_date = 1865
 	traits = {
-		philosophical
-		charismatic
+		#philosophical
+		#charismatic
 	}
 }
 

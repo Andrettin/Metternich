@@ -24,7 +24,7 @@ isabella_i_of_castille = {
 	birth_date = 1451.4.22
 	death_date = 1504.11.26
 	traits = {
-		expansive
+		#expansive
 		spiritual
 	}
 }

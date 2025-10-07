@@ -29,8 +29,8 @@ peter_the_great_of_russia = {
 	birth_date = 1672
 	death_date = 1725
 	traits = {
-		expansive
-		philosophical
+		#expansive
+		#philosophical
 	}
 }
 

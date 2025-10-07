@@ -160,6 +160,9 @@ franz_i_of_austria = { #Franz von Habsburg, Emperor Franz II of the Holy Roman E
 	birth_date = 1768.2.12
 	death_date = 1835.3.2
 	skill_multiplier = 0.67
+	traits = {
+		careful
+	}
 	
 	history = {
 		1791.12.12 = { #marriage date unknown, but their daughter Marie Louise was born on 1791.12.12

@@ -10,7 +10,7 @@ zygmunt_ii_of_poland = {
 	birth_date = 1520.8.1
 	death_date = 1572.7.7
 	traits = {
-		industrious
+		#industrious
 	}
 	
 	history = {

@@ -8,6 +8,6 @@ cunhambebe = {
 	gender = male
 	death_date = 1555
 	traits = {
-		indulgent
+		#indulgent
 	}
 }

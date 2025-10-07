@@ -10,6 +10,6 @@ shaka = {
 	death_date = 1828.9.24
 	traits = {
 		aggressive
-		expansive
+		#expansive
 	}
 }

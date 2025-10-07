@@ -9,7 +9,7 @@ joao_ii_of_portugal = {
 	birth_date = 1455.3.3
 	death_date = 1495.10.25
 	traits = {
-		expansive
+		#expansive
 		imperialistic
 	}
 }

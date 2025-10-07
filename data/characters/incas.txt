@@ -9,8 +9,8 @@ huayna_capac = {
 	birth_date = 1464
 	death_date = 1527
 	traits = {
-		financial
-		industrious
+		#financial
+		#industrious
 	}
 }
 

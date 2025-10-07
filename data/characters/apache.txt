@@ -9,6 +9,6 @@ mangas_coloradas = {
 	death_date = 1863
 	traits = {
 		impressionable
-		indulgent
+		#indulgent
 	}
 }

@@ -10,7 +10,7 @@ gustav_i_of_sweden = { #Source: Isaac Asimov, "Cronologia das Ciências e das De
 	birth_date = 1496
 	death_date = 1560
 	traits = {
-		industrious
+		#industrious
 	}
 	
 	history = {

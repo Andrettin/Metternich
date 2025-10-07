@@ -10,6 +10,6 @@ william_the_silent_of_the_netherlands = {
 	death_date = 1584
 	traits = {
 		creative
-		financial
+		#financial
 	}
 }

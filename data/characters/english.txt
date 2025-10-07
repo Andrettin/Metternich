@@ -81,8 +81,8 @@ elizabeth_i_of_england = {
 	birth_date = 1533
 	death_date = 1603
 	traits = {
-		financial
-		philosophical
+		#financial
+		#philosophical
 	}
 }
 
@@ -275,7 +275,7 @@ victoria_i_of_great_britain = {
 	birth_date = 1819
 	death_date = 1901
 	traits = {
-		financial
+		#financial
 		imperialistic
 	}
 }
