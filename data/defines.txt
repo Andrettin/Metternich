@@ -103,17 +103,6 @@ domain_maintenance_cost_per_province_count = {
 	76 = 30 #gb
 }
 
-min_character_traits_per_type = {
-	background = 1
-	personality = 1
-	expertise = 0
-}
-
-max_character_traits_per_type = {
-	background = 1
-	personality = 1
-}
-
 max_character_skill = 10 #used for calculating character skill based on skill multipliers; this is not a hard cap
 ruler_office = ruler
 interior_minister_office = steward

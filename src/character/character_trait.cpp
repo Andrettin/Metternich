@@ -3,14 +3,12 @@
 #include "character/character_trait.h"
 
 #include "character/character_attribute.h"
-#include "character/character_trait_type.h"
+#include "character/trait_type.h"
 #include "domain/office.h"
 #include "script/condition/and_condition.h"
 #include "script/effect/effect_list.h"
 #include "script/modifier.h"
 #include "util/assert_util.h"
-
-#include <magic_enum/magic_enum.hpp>
 
 namespace metternich {
 
@@ -30,7 +28,9 @@ void character_trait::process_gsml_scope(const gsml_data &scope)
 
 	if (tag == "types") {
 		for (const std::string &value : values) {
-			this->types.insert(magic_enum::enum_cast<character_trait_type>(value).value());
+			trait_type *trait_type = trait_type::get(value);
+			trait_type->add_trait(this);
+			this->types.push_back(trait_type);
 		}
 	} else if (tag == "attribute_bonuses") {
 		scope.for_each_property([&](const gsml_property &property) {

@@ -12,7 +12,7 @@ class domain;
 class military_unit;
 class office;
 class province;
-enum class character_trait_type;
+class trait_type;
 
 template <typename scope_type>
 class and_condition;
@@ -42,7 +42,7 @@ public:
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;
 
-	const std::set<character_trait_type> &get_types() const
+	const std::vector<const trait_type *> &get_types() const
 	{
 		return this->types;
 	}
@@ -115,7 +115,7 @@ signals:
 	void changed();
 
 private:
-	std::set<character_trait_type> types;
+	std::vector<const trait_type *> types;
 	const character_attribute *attribute = nullptr;
 	data_entry_map<character_attribute, int> attribute_bonuses;
 	std::unique_ptr<const and_condition<character>> conditions;

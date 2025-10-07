@@ -10,7 +10,6 @@
 #include "character/monster_type.h"
 #include "character/starting_age_category.h"
 #include "character/character_trait.h"
-#include "character/character_trait_type.h"
 #include "database/defines.h"
 #include "domain/culture.h"
 #include "domain/domain.h"

@@ -7,7 +7,7 @@
 #include "character/character_class.h"
 #include "character/character_history.h"
 #include "character/character_trait.h"
-#include "character/character_trait_type.h"
+#include "character/trait_type.h"
 #include "character/level_bonus_table.h"
 #include "character/monster_type.h"
 #include "character/saving_throw_type.h"
@@ -55,8 +55,6 @@
 #include "util/string_util.h"
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
-
-#include <magic_enum/magic_enum.hpp>
 
 namespace metternich {
 
@@ -441,34 +439,6 @@ void character_game_data::on_setup_finished()
 {
 	for (const character_trait *trait : this->character->get_traits()) {
 		this->add_trait(trait);
-	}
-
-	std::vector<character_trait_type> generated_trait_types{ character_trait_type::background, character_trait_type::personality, character_trait_type::expertise };
-
-	bool success = true;
-	for (const character_trait_type trait_type : generated_trait_types) {
-		success = true;
-		while (this->get_trait_count_for_type(trait_type) < defines::get()->get_min_character_traits_for_type(trait_type) && success) {
-			success = this->generate_initial_trait(trait_type);
-		}
-	}
-
-	success = true;
-	const character_attribute *target_attribute = this->character->get_skill() != 0 ? this->character->get_primary_attribute() : nullptr;
-	const int target_attribute_value = this->character->get_skill();
-	while (target_attribute != nullptr && success) {
-		for (const character_trait_type trait_type : generated_trait_types) {
-			success = false;
-
-			const int target_attribute_bonus = target_attribute_value - this->get_attribute_value(target_attribute);
-			if (target_attribute_bonus == 0) {
-				break;
-			}
-
-			if (this->get_trait_count_for_type(trait_type) < defines::get()->get_max_character_traits_for_type(trait_type)) {
-				success = this->generate_initial_trait(trait_type);
-			}
-		}
 	}
 
 	this->check_portrait();
@@ -1148,12 +1118,12 @@ QVariantList character_game_data::get_traits_qvariant_list() const
 	return container::to_qvariant_list(this->get_traits());
 }
 
-std::vector<const character_trait *> character_game_data::get_traits_of_type(const character_trait_type trait_type) const
+std::vector<const character_trait *> character_game_data::get_traits_of_type(const trait_type *trait_type) const
 {
 	std::vector<const character_trait *> traits;
 
 	for (const character_trait *trait : this->get_traits()) {
-		if (!trait->get_types().contains(trait_type)) {
+		if (!vector::contains(trait->get_types(), trait_type)) {
 			continue;
 		}
 
@@ -1165,7 +1135,7 @@ std::vector<const character_trait *> character_game_data::get_traits_of_type(con
 
 QVariantList character_game_data::get_traits_of_type(const QString &trait_type_str) const
 {
-	const character_trait_type type = magic_enum::enum_cast<character_trait_type>(trait_type_str.toStdString()).value();
+	const trait_type *type = trait_type::get(trait_type_str.toStdString());
 	return container::to_qvariant_list(this->get_traits_of_type(type));
 }
 
@@ -1188,8 +1158,8 @@ bool character_game_data::can_gain_trait(const character_trait *trait) const
 		return false;
 	}
 
-	for (const character_trait_type trait_type : trait->get_types()) {
-		if (this->get_trait_count_for_type(trait_type) >= defines::get()->get_max_character_traits_for_type(trait_type)) {
+	for (const trait_type *trait_type : trait->get_types()) {
+		if (this->get_trait_count_for_type(trait_type) >= trait_type->get_max_traits()) {
 			return false;
 		}
 	}
@@ -1270,13 +1240,13 @@ void character_game_data::on_trait_gained(const character_trait *trait, const in
 	}
 }
 
-bool character_game_data::generate_trait(const character_trait_type trait_type, const character_attribute *target_attribute, const int target_attribute_bonus)
+bool character_game_data::generate_trait(const trait_type *trait_type, const character_attribute *target_attribute, const int target_attribute_bonus)
 {
 	std::vector<const character_trait *> potential_traits;
 	int best_attribute_bonus = 0;
 
 	for (const character_trait *trait : character_trait::get_all()) {
-		if (!trait->get_types().contains(trait_type)) {
+		if (!vector::contains(trait->get_types(), trait_type)) {
 			continue;
 		}
 
@@ -1309,7 +1279,7 @@ bool character_game_data::generate_trait(const character_trait_type trait_type, 
 	return true;
 }
 
-bool character_game_data::generate_initial_trait(const character_trait_type trait_type)
+bool character_game_data::generate_initial_trait(const trait_type *trait_type)
 {
 	const character_attribute *target_attribute = this->character->get_skill() != 0 ? this->character->get_primary_attribute() : nullptr;
 	const int target_attribute_value = target_attribute ? this->character->get_skill() : 0;

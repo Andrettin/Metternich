@@ -32,7 +32,7 @@ class skill;
 class species;
 class spell;
 class status_effect;
-enum class character_trait_type;
+class trait_type;
 enum class military_unit_stat;
 
 template <typename scope_type>
@@ -320,10 +320,10 @@ public:
 
 	QVariantList get_traits_qvariant_list() const;
 
-	std::vector<const character_trait *> get_traits_of_type(const character_trait_type trait_type) const;
+	std::vector<const character_trait *> get_traits_of_type(const trait_type *trait_type) const;
 	Q_INVOKABLE QVariantList get_traits_of_type(const QString &trait_type_str) const;
 
-	int get_trait_count_for_type(const character_trait_type trait_type) const
+	int get_trait_count_for_type(const trait_type *trait_type) const
 	{
 		return static_cast<int>(this->get_traits_of_type(trait_type).size());
 	}
@@ -334,8 +334,8 @@ public:
 	void add_trait(const character_trait *trait);
 	void remove_trait(const character_trait *trait);
 	void on_trait_gained(const character_trait *trait, const int multiplier);
-	[[nodiscard]] bool generate_trait(const character_trait_type trait_type, const character_attribute *target_attribute, const int target_attribute_bonus);
-	[[nodiscard]] bool generate_initial_trait(const character_trait_type trait_type);
+	[[nodiscard]] bool generate_trait(const trait_type *trait_type, const character_attribute *target_attribute, const int target_attribute_bonus);
+	[[nodiscard]] bool generate_initial_trait(const trait_type *trait_type);
 	void sort_traits();
 
 	const scripted_character_modifier_map<int> &get_scripted_modifiers() const

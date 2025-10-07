@@ -4,10 +4,10 @@
 #include "character/character_attribute.h"
 #include "character/character_data_model.h"
 #include "character/character_game_data.h"
-#include "character/character_trait_type.h"
 #include "character/dynasty.h"
 #include "character/family_tree_model.h"
 #include "character/starting_age_category.h"
+#include "character/trait_type.h"
 #include "database/database.h"
 #include "database/database_enum_util.h"
 #include "database/defines.h"
@@ -160,7 +160,6 @@ int main(int argc, char **argv)
 		enum_converter<log_level>();
 
 		database_util::register_enum<affix_type>();
-		database_util::register_enum<character_trait_type>();
 		database_util::register_enum<commodity_type>();
 		database_util::register_enum<country_tier>();
 		database_util::register_enum<country_type>();
@@ -230,6 +229,7 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<site_game_data>("", 1);
 		qmlRegisterAnonymousType<technology>("", 1);
 		qmlRegisterAnonymousType<technology_category>("", 1);
+		qmlRegisterAnonymousType<trait_type>("", 1);
 		qmlRegisterAnonymousType<wonder>("", 1);
 
 		qmlRegisterType<character_data_model>("character_data_model", 1, 0, "CharacterDataModel");

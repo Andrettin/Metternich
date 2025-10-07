@@ -38,6 +38,7 @@ set(character_SRCS
 	src/character/saving_throw_type.cpp
 	src/character/skill.cpp
 	src/character/status_effect.cpp
+	src/character/trait_type.cpp
 )
 source_group(character FILES ${character_SRCS})
 set_source_files_properties(${character_SRCS} PROPERTIES UNITY_GROUP "character")
@@ -356,7 +357,6 @@ set(character_HDRS
 	src/character/character_history.h
 	src/character/character_reference.h
 	src/character/character_trait.h
-	src/character/character_trait_type.h
 	src/character/dynasty.h
 	src/character/family_tree_model.h
 	src/character/level_bonus_table.h
@@ -366,6 +366,7 @@ set(character_HDRS
 	src/character/skill.h
 	src/character/starting_age_category.h
 	src/character/status_effect.h
+	src/character/trait_type.h
 )
 source_group(character FILES ${character_HDRS})
 

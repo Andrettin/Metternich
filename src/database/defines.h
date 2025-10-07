@@ -33,7 +33,6 @@ class pathway;
 class population_class;
 class portrait;
 class terrain_type;
-enum class character_trait_type;
 enum class diplomacy_state;
 enum class event_trigger;
 
@@ -268,26 +267,6 @@ public:
 		return this->treasure_fleet_icon;
 	}
 
-	int get_min_character_traits_for_type(const character_trait_type type) const
-	{
-		const auto find_iterator = this->min_character_traits_per_type.find(type);
-		if (find_iterator != this->min_character_traits_per_type.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
-	int get_max_character_traits_for_type(const character_trait_type type) const
-	{
-		const auto find_iterator = this->max_character_traits_per_type.find(type);
-		if (find_iterator != this->max_character_traits_per_type.end()) {
-			return find_iterator->second;
-		}
-
-		return std::numeric_limits<int>::max();
-	}
-
 	int get_max_character_skill() const
 	{
 		return this->max_character_skill;
@@ -450,8 +429,6 @@ private:
 	const commodity *advisor_commodity = nullptr;
 	const icon *tariff_icon = nullptr;
 	const icon *treasure_fleet_icon = nullptr;
-	std::map<character_trait_type, int> min_character_traits_per_type;
-	std::map<character_trait_type, int> max_character_traits_per_type;
 	int max_character_skill = 0;
 	const office *ruler_office = nullptr;
 	const office *interior_minister_office = nullptr;

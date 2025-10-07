@@ -5,7 +5,6 @@
 #include "character/character.h"
 #include "character/character_game_data.h"
 #include "character/character_trait.h"
-#include "character/character_trait_type.h"
 #include "database/defines.h"
 #include "domain/country_economy.h"
 #include "domain/country_technology.h"
