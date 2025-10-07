@@ -38,6 +38,7 @@ class status_effect;
 class technology_category;
 class technology_subcategory;
 class trait;
+class trait_type;
 
 extern template struct data_entry_compare<character_attribute>;
 extern template struct data_entry_compare<character_class>;
@@ -60,5 +61,6 @@ extern template struct data_entry_compare<status_effect>;
 extern template struct data_entry_compare<technology_category>;
 extern template struct data_entry_compare<technology_subcategory>;
 extern template struct data_entry_compare<trait>;
+extern template struct data_entry_compare<trait_type>;
 
 }

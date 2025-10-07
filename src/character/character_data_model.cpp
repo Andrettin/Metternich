@@ -8,6 +8,8 @@
 #include "character/character_game_data.h"
 #include "character/saving_throw_type.h"
 #include "character/skill.h"
+#include "character/trait.h"
+#include "character/trait_type.h"
 #include "domain/culture.h"
 #include "item/item.h"
 #include "item/item_slot.h"
@@ -132,6 +134,7 @@ void character_data_model::set_character(const metternich::character *character)
 		disconnect(this->character->get_game_data(), &character_game_data::saving_throw_bonuses_changed, this, &character_data_model::update_saving_throw_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::skill_trainings_changed, this, &character_data_model::update_skill_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::skill_values_changed, this, &character_data_model::update_skill_rows);
+		disconnect(this->character->get_game_data(), &character_game_data::traits_changed, this, &character_data_model::update_trait_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::update_damage_row);
 		disconnect(this->character->get_game_data(), &character_game_data::items_changed, this, &character_data_model::create_inventory_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::create_item_rows);
@@ -147,8 +150,9 @@ void character_data_model::set_character(const metternich::character *character)
 		connect(this->character->get_game_data(), &character_game_data::to_hit_bonus_changed, this, &character_data_model::update_to_hit_bonus_rows);
 		connect(this->character->get_game_data(), &character_game_data::damage_bonus_changed, this, &character_data_model::update_damage_row);
 		connect(this->character->get_game_data(), &character_game_data::saving_throw_bonuses_changed, this, &character_data_model::update_saving_throw_rows);
-		connect(this->character->get_game_data(), &character_game_data::skill_values_changed, this, &character_data_model::update_skill_rows);
 		connect(this->character->get_game_data(), &character_game_data::skill_trainings_changed, this, &character_data_model::update_skill_rows);
+		connect(this->character->get_game_data(), &character_game_data::skill_values_changed, this, &character_data_model::update_skill_rows);
+		connect(this->character->get_game_data(), &character_game_data::traits_changed, this, &character_data_model::update_trait_rows);
 		connect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::update_damage_row);
 		connect(character->get_game_data(), &character_game_data::items_changed, this, &character_data_model::create_inventory_rows);
 		connect(character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::create_item_rows);
@@ -168,6 +172,7 @@ void character_data_model::reset_model()
 	this->damage_row = nullptr;
 	this->saving_throw_row = nullptr;
 	this->skill_row = nullptr;
+	this->trait_row = nullptr;
 	this->equipment_row = nullptr;
 	this->inventory_row = nullptr;
 
@@ -211,6 +216,7 @@ void character_data_model::reset_model()
 		this->create_damage_row();
 		this->create_saving_throw_rows();
 		this->create_skill_rows();
+		this->create_trait_rows();
 
 		if (!character_game_data->get_items().empty()) {
 			this->create_item_rows();
@@ -351,6 +357,44 @@ void character_data_model::update_skill_rows()
 	}
 
 	this->on_child_rows_inserted(this->skill_row);
+}
+
+void character_data_model::create_trait_rows()
+{
+	auto row = std::make_unique<character_data_row>("Traits");
+	this->trait_row = row.get();
+	this->top_rows.push_back(std::move(row));
+
+	this->update_trait_rows();
+}
+
+void character_data_model::update_trait_rows()
+{
+	assert_throw(this->trait_row != nullptr);
+
+	this->clear_child_rows(this->trait_row);
+
+	const character_game_data *character_game_data = this->get_character()->get_game_data();
+
+	data_entry_map<trait_type, std::vector<const trait *>> traits_by_type;
+
+	for (const auto &[trait, count] : character_game_data->get_trait_counts()) {
+		traits_by_type[trait->get_types().at(0)].push_back(trait);
+	}
+
+	for (const auto &[trait_type, traits] : traits_by_type) {
+		auto trait_type_row = std::make_unique<character_data_row>(trait_type->get_name(), "", this->trait_row);
+
+		for (const trait *trait : traits) {
+			const int trait_count = character_game_data->get_trait_count(trait);
+			auto row = std::make_unique<character_data_row>(trait->get_name(), (trait->is_unlimited() && trait_count > 1 ? std::format("(x{})", trait_count) : ""), trait_type_row.get());
+			trait_type_row->child_rows.push_back(std::move(row));
+		}
+
+		this->trait_row->child_rows.push_back(std::move(trait_type_row));
+	}
+
+	this->on_child_rows_inserted(this->trait_row);
 }
 
 void character_data_model::create_item_rows()
