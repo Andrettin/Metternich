@@ -202,3 +202,22 @@ karl_von_habsburg = { #Archduke Karl; Source: "Almanach de Gotha pour l'année 1
 		}
 	}
 }
+
+marie_luise_von_habsburg = { #Source: "Almanach de Gotha pour l'année 1813", 1813, p. 3; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 10-11.
+	name = "Marie Luise"
+	dynasty = habsburg
+	character_class = warrior #aristocrat
+	culture = austrian
+	religion = catholic
+	home_site = vienna #correct?
+	gender = female
+	father = franz_i_of_austria #Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 10-11.
+	mother = maria_theresa_de_bourbon #Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 10-11.
+	birth_date = 1791.12.12 #born on 1791.12.12; Source: "Almanach de Gotha pour l'année 1813", 1813, p. 3; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 10-11.
+	
+	history = {
+		1810.3.11 = { #married by procuration on 1810.3.11 and in person on 1810.4.2 to Napoleon; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 10-11.
+			#spouse = napoleon_i_of_france
+		}
+	}
+}

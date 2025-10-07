@@ -1,0 +1,35 @@
+napoleon_i_of_france = { #Source: "Almanach de Gotha pour l'année 1813", 1813, pp. 3-4.
+	name = "Napoleon" #"Napoléon"
+	epithet = "I"
+	dynasty = bonaparte
+	character_class = warrior
+	culture = french
+	religion = catholic
+	home_site = paris #correct?
+	gender = male
+	mother = marie_laetitia #Source: "Almanach de Gotha pour l'année 1813", 1813, pp. 3-4.
+	birth_date = 1769.8.15 #born on 1769.8.15; Source: "Almanach de Gotha pour l'année 1813", 1813, p. 3.
+	
+	history = {
+		1810.3.11 = { #married by procuration on 1810.3.11 and in person on 1810.4.2 to Marie Louise von Habsburg; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 10-11.
+			#spouse = marie_luise_von_habsburg
+		}
+	}
+	
+	#Emperor Napoléon I of France
+}
+
+napoleon_ii = { #Source: "Almanach de Gotha pour l'année 1813", 1813, p. 3.
+	name = "Napoleon" #"Napoléon"
+	dynasty = bonaparte
+	character_class = warrior #aristocrat
+	culture = french
+	religion = catholic
+	home_site = paris #correct?
+	gender = male
+	father = napoleon_i_of_france #Source: "Almanach de Gotha pour l'année 1813", 1813, p. 3.
+	mother = marie_luise_von_habsburg #Source: "Almanach de Gotha pour l'année 1813", 1813, p. 3.
+	birth_date = 1811.3.20 #born on 1811.3.20; Source: "Almanach de Gotha pour l'année 1813", 1813, p. 3.
+	
+	#king of Rome as of 1813; Source: "Almanach de Gotha pour l'année 1813", 1813, p. 3.
+}

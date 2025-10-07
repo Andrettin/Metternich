@@ -147,6 +147,16 @@ louis_xiv_of_france = {
 	}
 }
 
+marie_laetitia = { #Source: "Almanach de Gotha pour l'année 1813", 1813, p. 4.
+	name = "Marie-Laetitia"
+	character_class = warrior #aristocrat?
+	culture = french
+	religion = catholic
+	home_site = paris #correct?
+	gender = female
+	birth_date = 1750.8.24 #born on 1750.8.24; Source: "Almanach de Gotha pour l'année 1813", 1813, p. 4.
+}
+
 josephine = { #Source: "Almanach de Gotha pour l'année 1813", 1813, p. 4.
 	name = "Josephine" #"Joséphine"
 	character_class = warrior #aristocrat?
