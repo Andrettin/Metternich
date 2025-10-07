@@ -4,7 +4,6 @@ cartographer = {
 		expertise
 	}
 	icon = globe
-	max_scaling = 8
 	conditions = {
 		or = {
 			character_class = navigator

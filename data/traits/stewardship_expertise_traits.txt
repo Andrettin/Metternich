@@ -4,7 +4,6 @@ administrator = {
 		expertise
 	}
 	icon = chest
-	max_scaling = 3
 	conditions = {
 		or = {
 			primary_attribute = intelligence

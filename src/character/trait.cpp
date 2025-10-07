@@ -58,13 +58,6 @@ void trait::process_gsml_scope(const gsml_data &scope)
 			modifier->process_gsml_data(child_scope);
 			this->office_modifiers[office] = std::move(modifier);
 		});
-	} else if (tag == "scaled_office_modifiers") {
-		scope.for_each_child([&](const gsml_data &child_scope) {
-			const office *office = office::get(child_scope.get_tag());
-			auto modifier = std::make_unique<metternich::modifier<const domain>>();
-			modifier->process_gsml_data(child_scope);
-			this->scaled_office_modifiers[office] = std::move(modifier);
-		});
 	} else if (tag == "military_unit_modifier") {
 		auto modifier = std::make_unique<metternich::modifier<military_unit>>();
 		modifier->process_gsml_data(scope);
@@ -82,10 +75,6 @@ void trait::check() const
 
 	if (this->get_types().empty()) {
 		throw std::runtime_error(std::format("Character trait \"{}\" has no type.", this->get_identifier()));
-	}
-
-	if (!this->scaled_office_modifiers.empty() && this->get_attribute() == nullptr) {
-		throw std::runtime_error(std::format("Character trait \"{}\" with scaled office modifier has no attribute.", this->get_identifier()));
 	}
 
 	named_data_entry::check();

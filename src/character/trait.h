@@ -30,10 +30,8 @@ class trait final : public named_data_entry, public data_type<trait>
 	Q_OBJECT
 
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
-	Q_PROPERTY(const metternich::character_attribute* attribute MEMBER attribute READ get_attribute NOTIFY changed)
 	Q_PROPERTY(int level MEMBER level READ get_level NOTIFY changed)
 	Q_PROPERTY(bool hidden_name MEMBER hidden_name READ has_hidden_name NOTIFY changed)
-	Q_PROPERTY(int max_scaling MEMBER max_scaling READ get_max_scaling NOTIFY changed)
 	Q_PROPERTY(QString modifier_string READ get_modifier_string CONSTANT)
 	Q_PROPERTY(QString military_unit_modifier_string READ get_military_unit_modifier_string CONSTANT)
 
@@ -58,11 +56,6 @@ public:
 		return this->types;
 	}
 
-	const character_attribute *get_attribute() const
-	{
-		return this->attribute;
-	}
-
 	int get_level() const
 	{
 		return this->level;
@@ -71,11 +64,6 @@ public:
 	bool has_hidden_name() const
 	{
 		return this->hidden_name;
-	}
-
-	int get_max_scaling() const
-	{
-		return this->max_scaling;
 	}
 
 	const data_entry_map<character_attribute, int> &get_attribute_bonuses() const
@@ -120,16 +108,6 @@ public:
 		return nullptr;
 	}
 
-	const metternich::modifier<const domain> *get_scaled_office_modifier(const office *office) const
-	{
-		const auto find_iterator = this->scaled_office_modifiers.find(office);
-		if (find_iterator != this->scaled_office_modifiers.end()) {
-			return find_iterator->second.get();
-		}
-
-		return nullptr;
-	}
-
 	const metternich::modifier<military_unit> *get_military_unit_modifier() const
 	{
 		return this->military_unit_modifier.get();
@@ -143,16 +121,13 @@ signals:
 private:
 	const metternich::icon *icon = nullptr;
 	std::vector<const trait_type *> types;
-	const character_attribute *attribute = nullptr;
 	int level = 1;
 	bool hidden_name = false;
-	int max_scaling = std::numeric_limits<int>::max();
 	data_entry_map<character_attribute, int> attribute_bonuses;
 	std::unique_ptr<const and_condition<character>> conditions;
 	std::unique_ptr<const and_condition<character>> generation_conditions;
 	std::unique_ptr<const metternich::modifier<const character>> modifier;
 	data_entry_map<office, std::unique_ptr<const metternich::modifier<const domain>>> office_modifiers;
-	data_entry_map<office, std::unique_ptr<const metternich::modifier<const domain>>> scaled_office_modifiers;
 	std::unique_ptr<const metternich::modifier<military_unit>> military_unit_modifier;
 };
 

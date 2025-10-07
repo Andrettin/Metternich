@@ -4,7 +4,6 @@ cavalry_leader = {
 		expertise
 	}
 	icon = horses
-	max_scaling = 4
 	conditions = {
 		military_unit_category = general
 	}
@@ -16,7 +15,6 @@ drillmaster = {
 		expertise
 	}
 	icon = horses
-	max_scaling = 4
 	conditions = {
 		military_unit_category = general
 	}
@@ -43,7 +41,6 @@ heavy_infantry_leader = {
 		expertise
 	}
 	icon = saber
-	max_scaling = 4
 	conditions = {
 		military_unit_category = general
 	}
@@ -69,7 +66,6 @@ light_infantry_leader = {
 		expertise
 	}
 	icon = saber
-	max_scaling = 4
 	conditions = {
 		military_unit_category = general
 	}

@@ -808,12 +808,6 @@ data_entry_set<character_attribute> character_game_data::get_main_attributes() c
 		attributes.insert(this->character->get_primary_attribute());
 	}
 
-	for (const trait *trait : this->get_traits()) {
-		if (trait->get_attribute() != nullptr) {
-			attributes.insert(trait->get_attribute());
-		}
-	}
-
 	return attributes;
 }
 
@@ -1222,7 +1216,7 @@ void character_game_data::on_trait_gained(const trait *trait, const int multipli
 	if (this->get_office() != nullptr) {
 		assert_throw(this->get_domain() != nullptr);
 
-		if (trait->get_office_modifier(this->get_office()) != nullptr || trait->get_scaled_office_modifier(this->get_office()) != nullptr) {
+		if (trait->get_office_modifier(this->get_office()) != nullptr) {
 			this->apply_trait_office_modifier(trait, this->get_domain(), this->get_office(), multiplier);
 		}
 	}
@@ -1382,7 +1376,7 @@ std::string character_game_data::get_office_modifier_string(const metternich::do
 	std::string str;
 
 	for (const trait *trait : this->get_traits()) {
-		if (trait->get_office_modifier(office) == nullptr && trait->get_scaled_office_modifier(office) == nullptr) {
+		if (trait->get_office_modifier(office) == nullptr) {
 			continue;
 		}
 
@@ -1392,10 +1386,6 @@ std::string character_game_data::get_office_modifier_string(const metternich::do
 
 		if (trait->get_office_modifier(office) != nullptr) {
 			trait_modifier_str = trait->get_office_modifier(office)->get_string(domain, 1, indent);
-		}
-
-		if (trait->get_scaled_office_modifier(office) != nullptr) {
-			trait_modifier_str = trait->get_scaled_office_modifier(office)->get_string(domain, std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()), indent);
 		}
 
 		if (trait_modifier_str.empty()) {
@@ -1434,10 +1424,6 @@ void character_game_data::apply_trait_office_modifier(const trait *trait, const 
 {
 	if (trait->get_office_modifier(office) != nullptr) {
 		trait->get_office_modifier(office)->apply(domain, multiplier);
-	}
-
-	if (trait->get_scaled_office_modifier(office) != nullptr) {
-		trait->get_scaled_office_modifier(office)->apply(domain, std::min(this->get_attribute_value(trait->get_attribute()), trait->get_max_scaling()) * multiplier);
 	}
 }
 
