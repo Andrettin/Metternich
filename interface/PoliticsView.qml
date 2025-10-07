@@ -84,4 +84,8 @@ Item {
 	CharacterDialog {
 		id: character_dialog
 	}
+	
+	FamilyTreeDialog {
+		id: family_tree_dialog
+	}
 }
