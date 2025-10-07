@@ -24,12 +24,12 @@ public:
 
 	virtual void do_addition_effect(const character *scope) const override
 	{
-		scope->get_game_data()->add_trait(this->trait);
+		scope->get_game_data()->change_trait_count(this->trait, 1);
 	}
 
 	virtual void do_subtraction_effect(const character *scope) const override
 	{
-		scope->get_game_data()->remove_trait(this->trait);
+		scope->get_game_data()->change_trait_count(this->trait, -1);
 	}
 
 	virtual std::string get_addition_string() const override

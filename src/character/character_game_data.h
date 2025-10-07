@@ -313,10 +313,23 @@ public:
 	void change_skill_value(const skill *skill, const int change);
 	bool do_skill_check(const skill *skill, const int roll_modifier) const;
 
-	const std::vector<const trait *> &get_traits() const
+	const data_entry_map<trait, int> &get_trait_counts() const
 	{
-		return this->traits;
+		return this->trait_counts;
 	}
+
+	int get_trait_count(const trait *trait) const
+	{
+		const auto find_iterator = this->trait_counts.find(trait);
+
+		if (find_iterator != this->trait_counts.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void change_trait_count(const trait *trait, const int change);
 
 	QVariantList get_traits_qvariant_list() const;
 
@@ -331,12 +344,9 @@ public:
 	bool can_have_trait(const trait *trait) const;
 	bool can_gain_trait(const trait *trait) const;
 	bool has_trait(const trait *trait) const;
-	void add_trait(const trait *trait);
-	void remove_trait(const trait *trait);
 	void on_trait_gained(const trait *trait, const int multiplier);
 	[[nodiscard]] bool generate_trait(const trait_type *trait_type, const character_attribute *target_attribute, const int target_attribute_bonus);
 	[[nodiscard]] bool generate_initial_trait(const trait_type *trait_type);
-	void sort_traits();
 
 	const scripted_character_modifier_map<int> &get_scripted_modifiers() const
 	{
@@ -576,7 +586,7 @@ private:
 	data_entry_map<saving_throw_type, int> saving_throw_bonuses;
 	data_entry_map<skill, int> skill_trainings;
 	data_entry_map<skill, int> skill_values;
-	std::vector<const trait *> traits;
+	data_entry_map<trait, int> trait_counts;
 	scripted_character_modifier_map<int> scripted_modifiers;
 	const metternich::office *office = nullptr;
 	metternich::military_unit *military_unit = nullptr;

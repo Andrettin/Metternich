@@ -438,7 +438,7 @@ void character_game_data::apply_history(const QDate &start_date)
 void character_game_data::on_setup_finished()
 {
 	for (const trait *trait : this->character->get_traits()) {
-		this->add_trait(trait);
+		this->change_trait_count(trait, 1);
 	}
 
 	this->check_portrait();
@@ -1107,16 +1107,59 @@ bool character_game_data::do_skill_check(const skill *skill, const int roll_modi
 	return roll_result <= modified_skill_value;
 }
 
+void character_game_data::change_trait_count(const trait *trait, const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	if (change > 0) {
+		if (!this->can_have_trait(trait)) {
+			throw std::runtime_error(std::format("Tried to add trait \"{}\" to character \"{}\", for which the trait's conditions are not fulfilled.", trait->get_identifier(), this->character->get_identifier()));
+		}
+	}
+
+	const int old_value = this->get_trait_count(trait);
+
+	if (change > 0 && old_value == 0) {
+		if (!this->can_gain_trait(trait)) {
+			log::log_error(std::format("Tried to add trait \"{}\" to character \"{}\", who cannot gain it.", trait->get_identifier(), this->character->get_identifier()));
+			return;
+		}
+	}
+
+	const int new_value = (this->trait_counts[trait] += change);
+	if (new_value == 0) {
+		this->trait_counts.erase(trait);
+	}
+
+	assert_throw(new_value >= 0);
+
+	if (trait->is_unlimited()) {
+		this->on_trait_gained(trait, change);
+	} else {
+		if (old_value == 0 && new_value > 0) {
+			this->on_trait_gained(trait, 1);
+		} else if (new_value == 0 && old_value > 0) {
+			this->on_trait_gained(trait, -1);
+		}
+	}
+
+	if (game::get()->is_running()) {
+		emit traits_changed();
+	}
+}
+
 QVariantList character_game_data::get_traits_qvariant_list() const
 {
-	return container::to_qvariant_list(this->get_traits());
+	return container::to_qvariant_list(archimedes::map::get_keys(this->get_trait_counts()));
 }
 
 std::vector<const trait *> character_game_data::get_traits_of_type(const trait_type *trait_type) const
 {
 	std::vector<const trait *> traits;
 
-	for (const trait *trait : this->get_traits()) {
+	for (const auto &[trait, count] : this->get_trait_counts()) {
 		if (!vector::contains(trait->get_types(), trait_type)) {
 			continue;
 		}
@@ -1144,7 +1187,7 @@ bool character_game_data::can_have_trait(const trait *trait) const
 
 bool character_game_data::can_gain_trait(const trait *trait) const
 {
-	if (this->has_trait(trait)) {
+	if (this->has_trait(trait) && !trait->is_unlimited()) {
 		return false;
 	}
 
@@ -1171,44 +1214,7 @@ bool character_game_data::can_gain_trait(const trait *trait) const
 
 bool character_game_data::has_trait(const trait *trait) const
 {
-	return vector::contains(this->get_traits(), trait);
-}
-
-void character_game_data::add_trait(const trait *trait)
-{
-	if (this->has_trait(trait)) {
-		log::log_error(std::format("Tried to add trait \"{}\" to character \"{}\", but they already have the trait.", trait->get_identifier(), this->character->get_identifier()));
-		return;
-	}
-
-	if (!this->can_gain_trait(trait)) {
-		log::log_error(std::format("Tried to add trait \"{}\" to character \"{}\", who cannot gain it.", trait->get_identifier(), this->character->get_identifier()));
-		return;
-	}
-
-	this->traits.push_back(trait);
-
-	this->on_trait_gained(trait, 1);
-
-	this->sort_traits();
-
-	if (game::get()->is_running()) {
-		emit traits_changed();
-	}
-}
-
-void character_game_data::remove_trait(const trait *trait)
-{
-	//remove modifiers that this character is applying on other scopes so that we reapply them later, as the trait change can affect them
-	std::erase(this->traits, trait);
-
-	this->on_trait_gained(trait, -1);
-
-	this->sort_traits();
-
-	if (game::get()->is_running()) {
-		emit traits_changed();
-	}
+	return this->get_trait_counts().contains(trait);
 }
 
 void character_game_data::on_trait_gained(const trait *trait, const int multiplier)
@@ -1269,7 +1275,7 @@ bool character_game_data::generate_trait(const trait_type *trait_type, const cha
 		return false;
 	}
 
-	this->add_trait(vector::get_random(potential_traits));
+	this->change_trait_count(vector::get_random(potential_traits), 1);
 	return true;
 }
 
@@ -1280,17 +1286,6 @@ bool character_game_data::generate_initial_trait(const trait_type *trait_type)
 	const int target_attribute_bonus = target_attribute ? (target_attribute_value - this->get_attribute_value(target_attribute)) : 0;
 
 	return this->generate_trait(trait_type, target_attribute, target_attribute_bonus);
-}
-
-void character_game_data::sort_traits()
-{
-	std::sort(this->traits.begin(), this->traits.end(), [](const trait *lhs, const trait *rhs) {
-		if (*lhs->get_types().begin() != *rhs->get_types().begin()) {
-			return *lhs->get_types().begin() < *rhs->get_types().begin();
-		}
-
-		return lhs->get_identifier() < rhs->get_identifier();
-	});
 }
 
 QVariantList character_game_data::get_scripted_modifiers_qvariant_list() const
@@ -1375,7 +1370,7 @@ std::string character_game_data::get_office_modifier_string(const metternich::do
 
 	std::string str;
 
-	for (const trait *trait : this->get_traits()) {
+	for (const auto &[trait, count] : this->get_trait_counts()) {
 		if (trait->get_office_modifier(office) == nullptr) {
 			continue;
 		}
@@ -1385,7 +1380,7 @@ std::string character_game_data::get_office_modifier_string(const metternich::do
 		std::string trait_modifier_str;
 
 		if (trait->get_office_modifier(office) != nullptr) {
-			trait_modifier_str = trait->get_office_modifier(office)->get_string(domain, 1, indent);
+			trait_modifier_str = trait->get_office_modifier(office)->get_string(domain, trait->is_unlimited() ? count : 1, indent);
 		}
 
 		if (trait_modifier_str.empty()) {
@@ -1415,8 +1410,8 @@ void character_game_data::apply_office_modifier(const metternich::domain *domain
 	assert_throw(domain != nullptr);
 	assert_throw(office != nullptr);
 
-	for (const trait *trait : this->get_traits()) {
-		this->apply_trait_office_modifier(trait, domain, office, multiplier);
+	for (const auto &[trait, count] : this->get_trait_counts()) {
+		this->apply_trait_office_modifier(trait, domain, office, (trait->is_unlimited() ? count : 1) * multiplier);
 	}
 }
 
@@ -1473,9 +1468,9 @@ void character_game_data::apply_modifier(const modifier<const metternich::charac
 
 void character_game_data::apply_military_unit_modifier(metternich::military_unit *military_unit, const int multiplier)
 {
-	for (const trait *trait : this->get_traits()) {
+	for (const auto &[trait, count] : this->get_trait_counts()) {
 		if (trait->get_military_unit_modifier() != nullptr) {
-			trait->get_military_unit_modifier()->apply(military_unit, multiplier);
+			trait->get_military_unit_modifier()->apply(military_unit, (trait->is_unlimited() ? count : 1) * multiplier);
 		}
 	}
 }
