@@ -2,16 +2,18 @@
 
 #include "database/data_entry_container.h"
 #include "database/data_type.h"
-#include "trait_base.h"
+#include "database/named_data_entry.h"
+
+Q_MOC_INCLUDE("ui/icon.h")
 
 namespace metternich {
 
 class character;
 class character_attribute;
 class domain;
+class icon;
 class military_unit;
 class office;
-class province;
 class trait_type;
 
 template <typename scope_type>
@@ -23,11 +25,15 @@ class effect_list;
 template <typename scope_type>
 class modifier;
 
-class character_trait final : public trait_base, public data_type<character_trait>
+class character_trait final : public named_data_entry, public data_type<character_trait>
 {
 	Q_OBJECT
 
+	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
 	Q_PROPERTY(const metternich::character_attribute* attribute MEMBER attribute READ get_attribute NOTIFY changed)
+	Q_PROPERTY(int level MEMBER level READ get_level NOTIFY changed)
+	Q_PROPERTY(bool hidden_name MEMBER hidden_name READ has_hidden_name NOTIFY changed)
+	Q_PROPERTY(int max_scaling MEMBER max_scaling READ get_max_scaling NOTIFY changed)
 	Q_PROPERTY(QString modifier_string READ get_modifier_string CONSTANT)
 	Q_PROPERTY(QString military_unit_modifier_string READ get_military_unit_modifier_string CONSTANT)
 
@@ -42,6 +48,11 @@ public:
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;
 
+	const metternich::icon *get_icon() const
+	{
+		return this->icon;
+	}
+
 	const std::vector<const trait_type *> &get_types() const
 	{
 		return this->types;
@@ -50,6 +61,21 @@ public:
 	const character_attribute *get_attribute() const
 	{
 		return this->attribute;
+	}
+
+	int get_level() const
+	{
+		return this->level;
+	}
+
+	bool has_hidden_name() const
+	{
+		return this->hidden_name;
+	}
+
+	int get_max_scaling() const
+	{
+		return this->max_scaling;
 	}
 
 	const data_entry_map<character_attribute, int> &get_attribute_bonuses() const
@@ -115,8 +141,12 @@ signals:
 	void changed();
 
 private:
+	const metternich::icon *icon = nullptr;
 	std::vector<const trait_type *> types;
 	const character_attribute *attribute = nullptr;
+	int level = 1;
+	bool hidden_name = false;
+	int max_scaling = std::numeric_limits<int>::max();
 	data_entry_map<character_attribute, int> attribute_bonuses;
 	std::unique_ptr<const and_condition<character>> conditions;
 	std::unique_ptr<const and_condition<character>> generation_conditions;

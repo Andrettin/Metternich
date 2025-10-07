@@ -46,9 +46,9 @@ helios = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 
 	religions = {
 		hellenic
 	}
-	traits = {
-		sun_god
-	}
+	#traits = {
+	#	sun_god
+	#}
 	character = {
 		species = titan
 		character_class = warrior

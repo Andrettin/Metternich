@@ -9,7 +9,6 @@
 #include "domain/domain_game_data.h"
 #include "domain/idea_type.h"
 #include "religion/deity_slot.h"
-#include "religion/deity_trait.h"
 #include "religion/religion.h"
 #include "technology/technology.h"
 #include "util/vector_util.h"
@@ -55,10 +54,6 @@ void deity::process_gsml_scope(const gsml_data &scope)
 			const cultural_group *cultural_group = cultural_group::get(property.get_key());
 			this->cultural_group_names[cultural_group] = property.get_value();
 		});
-	} else if (tag == "traits") {
-		for (const std::string &value : values) {
-			this->add_trait(deity_trait::get(value));
-		}
 	} else if (tag == "character") {
 		this->character->process_gsml_data(scope);
 	} else {

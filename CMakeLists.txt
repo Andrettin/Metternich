@@ -76,7 +76,6 @@ set(domain_SRCS
 	src/domain/government_type_container.cpp
 	src/domain/idea.cpp
 	src/domain/idea_slot.cpp
-	src/domain/idea_trait.cpp
 	src/domain/journal_entry.cpp
 	src/domain/law.cpp
 	src/domain/law_group.cpp
@@ -202,7 +201,6 @@ set_source_files_properties(${population_SRCS} PROPERTIES UNITY_GROUP "populatio
 set(religion_SRCS
 	src/religion/deity.cpp
 	src/religion/deity_slot.cpp
-	src/religion/deity_trait.cpp
 	src/religion/religion.cpp
 	src/religion/religion_base.cpp
 	src/religion/religion_container.cpp
@@ -343,7 +341,6 @@ set(metternich_SRCS
 	${unit_SRCS}
 	${xbrz_SRCS}
 	src/engine_interface.cpp
-	src/trait_base.cpp
 )
 
 set(character_HDRS
@@ -406,7 +403,6 @@ set(domain_HDRS
 	src/domain/government_type_container.h
 	src/domain/idea.h
 	src/domain/idea_slot.h
-	src/domain/idea_trait.h
 	src/domain/idea_type.h
 	src/domain/journal_entry.h
 	src/domain/law.h
@@ -548,7 +544,6 @@ source_group(population FILES ${population_HDRS})
 set(religion_HDRS
 	src/religion/deity.h
 	src/religion/deity_slot.h
-	src/religion/deity_trait.h
 	src/religion/pantheon.h
 	src/religion/religion.h
 	src/religion/religion_base.h
@@ -899,7 +894,6 @@ set(metternich_HDRS
 	${xbrz_HDRS}
 	src/engine_interface.h
 	src/metternich.h
-	src/trait_base.h
 )
 
 set(metternich_main_SRCS

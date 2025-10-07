@@ -25,7 +25,6 @@
 #include "map/site_game_data.h"
 #include "map/terrain_type.h"
 #include "religion/deity.h"
-#include "religion/deity_trait.h"
 #include "religion/religion.h"
 #include "religion/religious_group.h"
 #include "script/condition/and_condition.h"
@@ -643,17 +642,6 @@ std::vector<const deity *> technology::get_enabled_deities_for_country(const dom
 			continue;
 		}
 
-		bool traits_allowed = true;
-		for (const idea_trait *trait : deity->get_traits()) {
-			if (trait->get_conditions() != nullptr && !trait->get_conditions()->check(domain, read_only_context(domain))) {
-				traits_allowed = false;
-				break;
-			}
-		}
-		if (!traits_allowed) {
-			continue;
-		}
-
 		deities.push_back(deity);
 	}
 
@@ -666,17 +654,6 @@ std::vector<const deity *> technology::get_disabled_deities_for_country(const do
 
 	for (const deity *deity : this->get_disabled_deities()) {
 		if (deity->get_conditions() != nullptr && !deity->get_conditions()->check(domain, read_only_context(domain))) {
-			continue;
-		}
-
-		bool traits_allowed = true;
-		for (const idea_trait *trait : deity->get_traits()) {
-			if (trait->get_conditions() != nullptr && !trait->get_conditions()->check(domain, read_only_context(domain))) {
-				traits_allowed = false;
-				break;
-			}
-		}
-		if (!traits_allowed) {
 			continue;
 		}
 

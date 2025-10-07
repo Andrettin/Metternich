@@ -37,9 +37,9 @@ artemis = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp.
 	religions = {
 		hellenic
 	}
-	traits = {
-		goddess_of_the_hunt
-	}
+	#traits = {
+	#	goddess_of_the_hunt
+	#}
 	character = {
 		species = archon
 		character_class = warrior
@@ -123,9 +123,9 @@ poseidon = {
 	cultural_group_names = {
 		latin = "Neptune"
 	}
-	traits = {
-		god_of_the_sea
-	}
+	#traits = {
+	#	god_of_the_sea
+	#}
 	character = {
 		species = triton
 		character_class = warrior

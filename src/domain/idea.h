@@ -10,7 +10,6 @@ namespace metternich {
 class domain;
 class portrait;
 class idea_slot;
-class idea_trait;
 class technology;
 enum class idea_type;
 
@@ -76,7 +75,7 @@ public:
 
 	bool is_available() const
 	{
-		return !this->get_traits().empty();
+		return false;
 	}
 
 	virtual bool is_available_for_country_slot(const domain *domain, const idea_slot *slot) const;
@@ -84,16 +83,6 @@ public:
 	const and_condition<domain> *get_conditions() const
 	{
 		return this->conditions.get();
-	}
-
-	const std::vector<const idea_trait *> &get_traits() const
-	{
-		return this->traits;
-	}
-
-	void add_trait(const idea_trait *trait)
-	{
-		this->traits.push_back(trait);
 	}
 
 	std::string get_modifier_string(const domain *domain) const;
@@ -104,7 +93,6 @@ public:
 	}
 
 	void apply_modifier(const domain *domain, const int multiplier) const;
-	void apply_trait_modifier(const idea_trait *trait, const domain *domain, const int multiplier) const;
 
 signals:
 	void changed();
@@ -114,7 +102,6 @@ private:
 	technology *required_technology = nullptr;
 	technology *obsolescence_technology = nullptr;
 	std::unique_ptr<const and_condition<domain>> conditions;
-	std::vector<const idea_trait *> traits;
 };
 
 }

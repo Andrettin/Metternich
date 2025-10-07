@@ -13,7 +13,7 @@
 namespace metternich {
 
 character_trait::character_trait(const std::string &identifier)
-	: trait_base(identifier)
+	: named_data_entry(identifier)
 {
 }
 
@@ -70,12 +70,16 @@ void character_trait::process_gsml_scope(const gsml_data &scope)
 		modifier->process_gsml_data(scope);
 		this->military_unit_modifier = std::move(modifier);
 	} else {
-		trait_base::process_gsml_scope(scope);
+		named_data_entry::process_gsml_scope(scope);
 	}
 }
 
 void character_trait::check() const
 {
+	if (this->get_icon() == nullptr) {
+		throw std::runtime_error(std::format("Trait \"{}\" has no icon.", this->get_identifier()));
+	}
+
 	if (this->get_types().empty()) {
 		throw std::runtime_error(std::format("Character trait \"{}\" has no type.", this->get_identifier()));
 	}
@@ -84,7 +88,7 @@ void character_trait::check() const
 		throw std::runtime_error(std::format("Character trait \"{}\" with scaled office modifier has no attribute.", this->get_identifier()));
 	}
 
-	trait_base::check();
+	named_data_entry::check();
 }
 
 QString character_trait::get_modifier_string() const

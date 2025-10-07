@@ -21,9 +21,9 @@ gaia = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 20
 	religions = {
 		hellenic
 	}
-	traits = {
-		earth_mother
-	}
+	#traits = {
+	#	earth_mother
+	#}
 	character = {
 		species = earth_elemental #Protogenoi
 		character_class = warrior

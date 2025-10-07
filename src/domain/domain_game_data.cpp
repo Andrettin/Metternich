@@ -26,7 +26,6 @@
 #include "domain/government_type.h"
 #include "domain/idea.h"
 #include "domain/idea_slot.h"
-#include "domain/idea_trait.h"
 #include "domain/idea_type.h"
 #include "domain/journal_entry.h"
 #include "domain/subject_type.h"

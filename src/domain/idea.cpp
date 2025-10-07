@@ -4,7 +4,6 @@
 
 #include "domain/country_technology.h"
 #include "domain/domain.h"
-#include "domain/idea_trait.h"
 #include "domain/idea_slot.h"
 #include "domain/idea_type.h"
 #include "script/condition/and_condition.h"
@@ -42,18 +41,6 @@ void idea::check() const
 		throw std::runtime_error(std::format("Idea \"{}\" of type \"{}\" is available, but has no portrait.", this->get_identifier(), magic_enum::enum_name(this->get_idea_type())));
 	}
 
-	if (this->get_traits().empty()) {
-		//throw std::runtime_error(std::format("Idea \"{}\" of type \"{}\" has no traits.", this->get_identifier(), magic_enum::enum_name(this->get_idea_type())));
-	}
-
-	if (this->get_skill() == 0) {
-		for (const idea_trait *trait : this->get_traits()) {
-			if (trait->get_scaled_modifier() != nullptr) {
-				throw std::runtime_error(std::format("Idea \"{}\" of type \"{}\" has a trait with a scaled modifier, but no skill value.", this->get_identifier(), magic_enum::enum_name(this->get_idea_type())));
-			}
-		}
-	}
-
 	if (this->get_conditions() != nullptr) {
 		this->get_conditions()->check_validity();
 	}
@@ -83,68 +70,22 @@ bool idea::is_available_for_country_slot(const domain *domain, const idea_slot *
 		return false;
 	}
 
-	for (const idea_trait *trait : this->get_traits()) {
-		if (trait->get_conditions() != nullptr && !trait->get_conditions()->check(domain, read_only_context(domain))) {
-			return false;
-		}
-	}
-
 	return true;
 }
 
 std::string idea::get_modifier_string(const domain *domain) const
 {
+	Q_UNUSED(domain);
+
 	std::string str;
-
-	for (const idea_trait *trait : this->get_traits()) {
-		if (trait->get_modifier() == nullptr && trait->get_scaled_modifier() == nullptr) {
-			continue;
-		}
-
-		if (!str.empty()) {
-			str += "\n";
-		}
-
-		if (!trait->has_hidden_name()) {
-			if (!str.empty()) {
-				str += "\n";
-			}
-
-			str += string::highlight(trait->get_name());
-		}
-
-		const size_t indent = trait->has_hidden_name() ? 0 : 1;
-
-		if (trait->get_modifier() != nullptr) {
-			str += "\n" + trait->get_modifier()->get_string(domain, 1, indent);
-		}
-
-		if (trait->get_scaled_modifier() != nullptr) {
-			str += "\n" + trait->get_scaled_modifier()->get_string(domain, std::min(this->get_skill(), trait->get_max_scaling()), indent);
-		}
-	}
-
 	return str;
 }
 
 void idea::apply_modifier(const domain *domain, const int multiplier) const
 {
+	Q_UNUSED(multiplier);
+
 	assert_throw(domain != nullptr);
-
-	for (const idea_trait *trait : this->get_traits()) {
-		this->apply_trait_modifier(trait, domain, multiplier);
-	}
-}
-
-void idea::apply_trait_modifier(const idea_trait *trait, const domain *domain, const int multiplier) const
-{
-	if (trait->get_modifier() != nullptr) {
-		trait->get_modifier()->apply(domain, multiplier);
-	}
-
-	if (trait->get_scaled_modifier() != nullptr) {
-		trait->get_scaled_modifier()->apply(domain, std::min(this->get_skill(), trait->get_max_scaling()) * multiplier);
-	}
 }
 
 }
