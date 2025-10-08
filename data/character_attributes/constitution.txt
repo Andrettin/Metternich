@@ -1,6 +1,5 @@
 constitution = {
-	name = "Constitution"
-	
+	name = "Constitution"	
 	value_modifiers = {
 		1 = {
 			hit_points_per_hit_dice = -3

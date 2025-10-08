@@ -1,0 +1,15 @@
+charisma = {
+	name = "Charisma"
+	value_modifiers = {
+		1 = {
+			disguise = -1
+			leadership = -1
+		}
+	}
+	recurring_value_modifiers = {
+		1 = {
+			disguise = 1
+			leadership = 1
+		}
+	}
+}

@@ -1,0 +1,59 @@
+administration = {
+	name = "Administration"
+	icon = chest
+	check_dice = 1d20
+}
+
+agriculture = {
+	name = "Agriculture"
+	icon = grain
+	check_dice = 1d20
+}
+
+diplomacy = {
+	name = "Diplomacy"
+	icon = treaty
+	check_dice = 1d20
+}
+
+disguise = {
+	name = "Disguise"
+	icon = dagger
+	check_dice = 1d20
+}
+
+heraldry = {
+	name = "Heraldry"
+	icon = heater_shield
+	check_dice = 1d20
+}
+
+intrigue = {
+	name = "Intrigue"
+	icon = dagger
+	check_dice = 1d20
+}
+
+law = {
+	name = "Law"
+	icon = treaty
+	check_dice = 1d20
+}
+
+leadership = {
+	name = "Leadership"
+	icon = flag
+	check_dice = 1d20
+}
+
+siegecraft = {
+	name = "Siegecraft"
+	icon = cannon
+	check_dice = 1d20
+}
+
+strategy = {
+	name = "Strategy"
+	icon = crossed_sabers
+	check_dice = 1d20
+}

@@ -11,4 +11,21 @@ intelligence = {
 		exceptional = 15-16
 		genius = 17-18
 	}
+	value_modifiers = {
+		1 = {
+			administration = -2
+			law = -1
+			strategy = -2
+		}
+	}
+	recurring_value_modifiers = {
+		1 = {
+			administration = 1
+			agriculture = 1
+			heraldry = 1
+			law = 1
+			siegecraft = 1
+			strategy = 1
+		}
+	}
 }

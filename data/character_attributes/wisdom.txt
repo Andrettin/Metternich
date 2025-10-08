@@ -1,18 +1,18 @@
 wisdom = {
-	name = "Wisdom"
-	
+	name = "Wisdom"	
 	value_modifiers = {
 		1 = {
 			#will = -5
+			diplomacy = -1
 		}
 	}
 	recurring_value_modifiers = {
+		1 = {
+			diplomacy = 1
+			intrigue = 1
+		}
 		2 = {
 			#will = 1
 		}
 	}
-}
-
-charisma = {
-	name = "Charisma"
 }

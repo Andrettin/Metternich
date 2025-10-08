@@ -1,6 +1,5 @@
 dexterity = {
 	name = "Dexterity"
-	
 	value_modifiers = {
 		1 = {
 			armor_class = -5

@@ -1,0 +1,134 @@
+administration = {
+	name = "Administration"
+	icon = chest
+	types = {
+		proficiency
+		mage_proficiency
+		priest_proficiency
+		rogue_proficiency
+		warrior_proficiency
+	}
+	modifier = {
+		skill_training = administration
+	}
+}
+
+agriculture = {
+	name = "Agriculture"
+	icon = grain
+	types = {
+		proficiency
+		mage_proficiency
+		priest_proficiency
+		rogue_proficiency
+		warrior_proficiency
+	}
+	modifier = {
+		skill_training = agriculture
+	}
+}
+
+diplomacy = {
+	name = "Diplomacy"
+	icon = treaty
+	types = {
+		proficiency
+		priest_proficiency
+	}
+	modifier = {
+		skill_training = diplomacy
+	}
+}
+
+disguise = {
+	name = "Disguise"
+	icon = dagger
+	types = {
+		proficiency
+		rogue_proficiency
+	}
+	modifier = {
+		skill_training = disguise
+	}
+}
+
+heraldry = {
+	name = "Heraldry"
+	icon = heater_shield
+	types = {
+		proficiency
+		mage_proficiency
+		priest_proficiency
+		rogue_proficiency
+		warrior_proficiency
+	}
+	modifier = {
+		skill_training = heraldry
+	}
+}
+
+intrigue = {
+	name = "Intrigue"
+	icon = dagger
+	types = {
+		proficiency
+		rogue_proficiency
+	}
+	modifier = {
+		skill_training = intrigue
+	}
+}
+
+law = {
+	name = "Law"
+	icon = treaty
+	types = {
+		proficiency
+		mage_proficiency
+		priest_proficiency
+		rogue_proficiency
+		warrior_proficiency
+	}
+	modifier = {
+		skill_training = law
+	}
+}
+
+leadership = {
+	name = "Leadership"
+	icon = flag
+	types = {
+		proficiency
+		mage_proficiency
+		priest_proficiency
+		rogue_proficiency
+		warrior_proficiency
+	}
+	modifier = {
+		skill_training = leadership
+	}
+}
+
+siegecraft = {
+	name = "Siegecraft"
+	icon = cannon
+	types = {
+		proficiency
+		warrior_proficiency
+	}
+	modifier = {
+		skill_training = siegecraft
+	}
+}
+
+strategy = {
+	name = "Strategy"
+	icon = crossed_sabers
+	types = {
+		proficiency
+		warrior_proficiency
+	}
+	modifier = {
+		skill_training = strategy
+	}
+}
