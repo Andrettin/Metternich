@@ -48,6 +48,9 @@ warrior = {
 		1 = {
 			hit_dice = 1d10
 			#fortitude = 2
+			trait_of_type = warrior_proficiency
+			trait_of_type = warrior_proficiency
+			trait_of_type = warrior_proficiency
 		}
 		2 = {
 			hit_dice = 1d10
@@ -114,6 +117,7 @@ warrior = {
 		3 = {
 			#reflex = 1
 			#will = 1
+			trait_of_type = warrior_proficiency
 		}
 	}
 	starting_items = {
