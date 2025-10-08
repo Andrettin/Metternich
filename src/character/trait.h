@@ -23,6 +23,9 @@ template <typename scope_type>
 class effect_list;
 
 template <typename scope_type>
+class factor;
+
+template <typename scope_type>
 class modifier;
 
 class trait final : public named_data_entry, public data_type<trait>
@@ -44,6 +47,7 @@ public:
 	explicit trait(const std::string &identifier);
 	~trait();
 
+	virtual void process_gsml_property(const gsml_property &property) override;
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;
 
@@ -121,6 +125,11 @@ public:
 
 	QString get_military_unit_modifier_string() const;
 
+	const factor<character> *get_weight_factor() const
+	{
+		return this->weight_factor.get();
+	}
+
 signals:
 	void changed();
 
@@ -136,6 +145,7 @@ private:
 	std::unique_ptr<const metternich::modifier<const character>> modifier;
 	data_entry_map<office, std::unique_ptr<const metternich::modifier<const domain>>> office_modifiers;
 	std::unique_ptr<const metternich::modifier<military_unit>> military_unit_modifier;
+	std::unique_ptr<factor<character>> weight_factor;
 };
 
 }

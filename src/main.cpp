@@ -7,6 +7,7 @@
 #include "character/dynasty.h"
 #include "character/family_tree_model.h"
 #include "character/starting_age_category.h"
+#include "character/trait.h"
 #include "character/trait_type.h"
 #include "database/database.h"
 #include "database/database_enum_util.h"
@@ -229,7 +230,10 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<site_game_data>("", 1);
 		qmlRegisterAnonymousType<technology>("", 1);
 		qmlRegisterAnonymousType<technology_category>("", 1);
+		qmlRegisterAnonymousType<trait>("", 1);
+		qmlRegisterAnonymousType<const trait>("", 1);
 		qmlRegisterAnonymousType<trait_type>("", 1);
+		qmlRegisterAnonymousType<const trait_type>("", 1);
 		qmlRegisterAnonymousType<wonder>("", 1);
 
 		qmlRegisterType<character_data_model>("character_data_model", 1, 0, "CharacterDataModel");

@@ -345,8 +345,12 @@ public:
 	bool can_gain_trait(const trait *trait) const;
 	bool has_trait(const trait *trait) const;
 	void on_trait_gained(const trait *trait, const int multiplier);
+	void add_trait_of_type(const trait_type *trait_type);
+	void remove_trait_of_type(const trait_type *trait_type);
 	[[nodiscard]] bool generate_trait(const trait_type *trait_type, const character_attribute *target_attribute, const int target_attribute_bonus);
 	[[nodiscard]] bool generate_initial_trait(const trait_type *trait_type);
+	Q_INVOKABLE void on_trait_chosen(const metternich::trait *trait, const metternich::trait_type *trait_type);
+	std::vector<const trait *> get_potential_traits_from_list(const std::vector<const trait *> &traits) const;
 
 	const scripted_character_modifier_map<int> &get_scripted_modifiers() const
 	{
@@ -587,6 +591,7 @@ private:
 	data_entry_map<skill, int> skill_trainings;
 	data_entry_map<skill, int> skill_values;
 	data_entry_map<trait, int> trait_counts;
+	data_entry_map<trait_type, std::vector<const trait *>> trait_choices;
 	scripted_character_modifier_map<int> scripted_modifiers;
 	const metternich::office *office = nullptr;
 	metternich::military_unit *military_unit = nullptr;

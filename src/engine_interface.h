@@ -23,6 +23,7 @@ class map_template;
 class military_unit;
 class preferences;
 class province;
+class trait_type;
 class world;
 enum class country_tier;
 enum class military_unit_category;
@@ -138,6 +139,7 @@ signals:
 	void event_closed(const event_instance *event_instance);
 	void free_technology_choosable(const QVariantList &potential_technologies);
 	void next_advisor_choosable(const QVariantList &potential_advisors);
+	void trait_choosable(const character *character, const trait_type *trait_type, const QVariantList &potential_feats);
 	void selected_military_units_changed();
 
 private:

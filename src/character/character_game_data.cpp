@@ -38,6 +38,7 @@
 #include "map/tile.h"
 #include "script/condition/and_condition.h"
 #include "script/effect/effect_list.h"
+#include "script/factor.h"
 #include "script/modifier.h"
 #include "script/scripted_character_modifier.h"
 #include "species/species.h"
@@ -146,6 +147,20 @@ void character_game_data::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([&](const gsml_property &property) {
 			this->skill_values[skill::get(property.get_key())] = std::stoi(property.get_value());
 		});
+	} else if (tag == "trait_counts") {
+		scope.for_each_property([&](const gsml_property &property) {
+			this->trait_counts[trait::get(property.get_key())] = std::stoi(property.get_value());
+		});
+	} else if (tag == "trait_choices") {
+		scope.for_each_child([&](const gsml_data &child_scope) {
+			const std::string &child_tag = child_scope.get_tag();
+			const std::vector<std::string> &child_values = child_scope.get_values();
+
+			const trait_type *trait_type = trait_type::get(child_tag);
+			for (const std::string &child_value : child_values) {
+				this->trait_choices[trait_type].push_back(trait::get(child_value));
+			}
+		});
 	} else if (tag == "items") {
 		scope.for_each_child([&](const gsml_data &child_scope) {
 			auto item = make_qunique<metternich::item>(child_scope);
@@ -240,6 +255,26 @@ gsml_data character_game_data::to_gsml_data() const
 			skill_values_data.add_property(skill->get_identifier(), std::to_string(value));
 		}
 		data.add_child(std::move(skill_values_data));
+	}
+
+	if (!this->trait_counts.empty()) {
+		gsml_data trait_counts_data("trait_counts");
+		for (const auto &[trait, count] : this->trait_counts) {
+			trait_counts_data.add_property(trait->get_identifier(), std::to_string(count));
+		}
+		data.add_child(std::move(trait_counts_data));
+	}
+
+	if (!this->trait_choices.empty()) {
+		gsml_data trait_choices_data("trait_choices");
+		for (const auto &[trait_type, traits] : this->trait_choices) {
+			gsml_data trait_type_data(trait_type->get_identifier());
+			for (const trait *trait : traits) {
+				trait_type_data.add_value(trait->get_identifier());
+			}
+			trait_choices_data.add_child(std::move(trait_type_data));
+		}
+		data.add_child(std::move(trait_choices_data));
 	}
 
 	if (!this->items.empty()) {
@@ -668,12 +703,6 @@ void character_game_data::on_level_gained(const int affected_level, const int mu
 	const metternich::character_class *character_class = this->get_character_class();
 	assert_throw(character_class != nullptr);
 
-	if (game::get()->is_running() && this->character == game::get()->get_player_character()) {
-		const std::string level_effects_string = character_class->get_level_effects_string(affected_level, this->character);
-
-		engine_interface::get()->add_notification("Level Up", this->get_portrait(), std::format("You have gained a level!\n\n{}", level_effects_string));
-	}
-
 	if (character_class->get_to_hit_bonus_table() != nullptr) {
 		this->change_to_hit_bonus(character_class->get_to_hit_bonus_table()->get_bonus_per_level(affected_level) * multiplier);
 	}
@@ -691,6 +720,12 @@ void character_game_data::on_level_gained(const int affected_level, const int mu
 	if (effects != nullptr) {
 		context ctx(this->character);
 		effects->do_effects(this->character, ctx);
+	}
+
+	if (game::get()->is_running() && this->character == game::get()->get_player_character()) {
+		const std::string level_effects_string = character_class->get_level_effects_string(affected_level, this->character);
+
+		engine_interface::get()->add_notification("Level Up", this->get_portrait(), std::format("You have gained a level!\n\n{}", level_effects_string));
 	}
 }
 
@@ -735,7 +770,7 @@ int64_t character_game_data::get_experience_for_level(const int level) const
 	}
 
 	const int level_limit = this->character->get_species()->get_character_class_level_limit(this->get_character_class());
-	assert_throw(level_limit > 0);
+	//assert_throw(level_limit > 0);
 	if (level > level_limit) {
 		//multiply experience required by 4 for levels beyond the species level limit for the class
 		experience *= 4;
@@ -1195,7 +1230,12 @@ bool character_game_data::can_gain_trait(const trait *trait) const
 	}
 
 	for (const trait_type *trait_type : trait->get_types()) {
-		if (this->get_trait_count_for_type(trait_type) >= trait_type->get_max_traits()) {
+		if (trait_type->get_max_traits() > 0 && this->get_trait_count_for_type(trait_type) >= trait_type->get_max_traits()) {
+			return false;
+		}
+
+
+		if (trait_type->get_gain_conditions() != nullptr && !trait_type->get_gain_conditions()->check(this->character, read_only_context(this->character))) {
 			return false;
 		}
 	}
@@ -1236,6 +1276,46 @@ void character_game_data::on_trait_gained(const trait *trait, const int multipli
 
 	if (trait->get_military_unit_modifier() != nullptr && this->get_military_unit() != nullptr) {
 		this->apply_military_unit_modifier(this->get_military_unit(), multiplier);
+	}
+}
+
+void character_game_data::add_trait_of_type(const trait_type *trait_type)
+{
+	try {
+		std::vector<const trait *> potential_traits = this->get_potential_traits_from_list(trait_type->get_traits());
+
+		//there should always be enough choosable traits
+		assert_throw(!potential_traits.empty());
+
+		if (this->character == game::get()->get_player_character()) {
+			std::sort(potential_traits.begin(), potential_traits.end(), [](const trait *lhs, const trait *rhs) {
+				return lhs->get_identifier() < rhs->get_identifier();
+			});
+
+			emit engine_interface::get()->trait_choosable(this->character, trait_type, container::to_qvariant_list(potential_traits));
+		} else {
+			const trait *chosen_trait = vector::get_random(potential_traits);
+			this->on_trait_chosen(chosen_trait, trait_type);
+		}
+	} catch (...) {
+		std::throw_with_nested(std::runtime_error(std::format("Failed to add trait of type \"{}\" for character \"{}\".", trait_type->get_identifier(), this->character->get_identifier())));
+	}
+}
+
+void character_game_data::remove_trait_of_type(const trait_type *trait_type)
+{
+	try {
+		std::vector<const trait *> &chosen_traits = this->trait_choices[trait_type];
+		assert_throw(!chosen_traits.empty());
+
+		this->change_trait_count(chosen_traits.back(), -1);
+		chosen_traits.pop_back();
+
+		if (chosen_traits.empty()) {
+			this->trait_choices.erase(trait_type);
+		}
+	} catch (...) {
+		std::throw_with_nested(std::runtime_error(std::format("Failed to remove trait of type \"{}\" for character \"{}\".", trait_type->get_identifier(), this->character->get_identifier())));
 	}
 }
 
@@ -1285,6 +1365,44 @@ bool character_game_data::generate_initial_trait(const trait_type *trait_type)
 	const int target_attribute_bonus = target_attribute ? (target_attribute_value - this->get_attribute_value(target_attribute)) : 0;
 
 	return this->generate_trait(trait_type, target_attribute, target_attribute_bonus);
+}
+
+void character_game_data::on_trait_chosen(const trait *trait, const trait_type *trait_type)
+{
+	this->trait_choices[trait_type].push_back(trait);
+
+	this->change_trait_count(trait, 1);
+}
+
+std::vector<const trait *> character_game_data::get_potential_traits_from_list(const std::vector<const trait *> &traits) const
+{
+	std::vector<const trait *> potential_traits;
+	bool found_unacquired_trait = false;
+
+	for (const trait *trait : traits) {
+		if (!this->can_gain_trait(trait)) {
+			continue;
+		}
+
+		if (this->character == game::get()->get_player_character()) {
+			potential_traits.push_back(trait);
+		} else {
+			if (!found_unacquired_trait && !this->has_trait(trait)) {
+				potential_traits.clear();
+				found_unacquired_trait = true;
+			} else if (found_unacquired_trait && this->has_trait(trait)) {
+				continue;
+			}
+
+			const int weight = trait->get_weight_factor() != nullptr ? trait->get_weight_factor()->calculate(this->character).to_int() : 1;
+
+			for (int i = 0; i < weight; ++i) {
+				potential_traits.push_back(trait);
+			}
+		}
+	}
+
+	return potential_traits;
 }
 
 QVariantList character_game_data::get_scripted_modifiers_qvariant_list() const

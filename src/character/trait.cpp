@@ -7,6 +7,7 @@
 #include "domain/office.h"
 #include "script/condition/and_condition.h"
 #include "script/effect/effect_list.h"
+#include "script/factor.h"
 #include "script/modifier.h"
 #include "util/assert_util.h"
 
@@ -19,6 +20,19 @@ trait::trait(const std::string &identifier)
 
 trait::~trait()
 {
+}
+
+void trait::process_gsml_property(const gsml_property &property)
+{
+	const std::string &key = property.get_key();
+	const std::string &value = property.get_value();
+
+	if (key == "weight") {
+		const int factor = std::stoi(value);
+		this->weight_factor = std::make_unique<metternich::factor<character>>(factor);
+	} else {
+		data_entry::process_gsml_property(property);
+	}
 }
 
 void trait::process_gsml_scope(const gsml_data &scope)
@@ -62,6 +76,9 @@ void trait::process_gsml_scope(const gsml_data &scope)
 		auto modifier = std::make_unique<metternich::modifier<military_unit>>();
 		modifier->process_gsml_data(scope);
 		this->military_unit_modifier = std::move(modifier);
+	} else if (tag == "weight_factor") {
+		this->weight_factor = std::make_unique<factor<character>>();
+		this->weight_factor->process_gsml_data(scope);
 	} else {
 		named_data_entry::process_gsml_scope(scope);
 	}

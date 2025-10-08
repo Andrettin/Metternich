@@ -29,6 +29,7 @@ Item {
 	property bool tile_detail_mode: false
 	
 	readonly property var event_dialog_component: Qt.createComponent("dialogs/EventDialog.qml")
+	readonly property var trait_choice_dialog_component: Qt.createComponent("dialogs/TraitChoiceDialog.qml")
 	
 	Rectangle {
 		id: map_view_background
@@ -176,6 +177,21 @@ Item {
 			research_choice_dialog.potential_technologies = potential_technologies
 			research_choice_dialog.free_technology = true
 			research_choice_dialog.open()
+		}
+		
+		function onTrait_choosable(character, type, potential_traits) {
+			if (trait_choice_dialog_component.status == Component.Error) {
+				console.error(trait_choice_dialog_component.errorString())
+				return
+			}
+			
+			var trait_choice_dialog = trait_choice_dialog_component.createObject(map_view, {
+				character: character,
+				trait_type: type,
+				potential_traits: potential_traits
+			})
+			
+			trait_choice_dialog.open()
 		}
 	}
 		

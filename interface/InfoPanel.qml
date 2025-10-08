@@ -189,7 +189,7 @@ Rectangle {
 				)
 			)
 		) : (selected_civilian_unit ? selected_civilian_unit.name
-			: (!selected_province && metternich.game.player_character ? ("Level " + metternich.game.player_character.game_data.level + " " + metternich.game.player_character.game_data.character_class.name) : "")))
+			: (!selected_province && metternich.game.player_character && metternich.game.player_character.game_data.character_class ? ("Level " + metternich.game.player_character.game_data.level + " " + metternich.game.player_character.game_data.character_class.name) : "")))
 		visible: !population_info_text.visible && text.length > 0
 		
 		readonly property string site_title_name: selected_site_game_data ? selected_site_game_data.title_name : ""
