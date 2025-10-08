@@ -54,6 +54,8 @@
 #include "script/modifier_effect/technology_cost_modifier_effect.h"
 #include "script/modifier_effect/throughput_modifier_effect.h"
 #include "script/modifier_effect/to_hit_bonus_modifier_effect.h"
+#include "script/modifier_effect/trait_modifier_effect.h"
+#include "script/modifier_effect/trait_of_type_modifier_effect.h"
 #include "script/modifier_effect/unit_upgrade_cost_modifier_effect.h"
 #include "script/modifier_effect/warship_cost_modifier_effect.h"
 #include "script/modifier_effect/wonder_cost_efficiency_modifier_effect.h"
@@ -87,6 +89,10 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<saving_throw_modifier_effect>(value);
 		} else if (key == "skill_training") {
 			return std::make_unique<skill_training_modifier_effect>(value);
+		} else if (key == "trait") {
+			return std::make_unique<trait_modifier_effect>(value);
+		} else if (key == "trait_of_type") {
+			return std::make_unique<trait_of_type_modifier_effect>(value);
 		} else if (character_attribute::try_get(key) != nullptr) {
 			return std::make_unique<character_attribute_modifier_effect>(character_attribute::get(key), value);
 		} else if (saving_throw_type::try_get(key) != nullptr) {

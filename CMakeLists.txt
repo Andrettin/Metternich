@@ -781,6 +781,8 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/technology_cost_modifier_effect.h
 	src/script/modifier_effect/throughput_modifier_effect.h
 	src/script/modifier_effect/to_hit_bonus_modifier_effect.h
+	src/script/modifier_effect/trait_modifier_effect.h
+	src/script/modifier_effect/trait_of_type_modifier_effect.h
 	src/script/modifier_effect/unit_upgrade_cost_modifier_effect.h
 	src/script/modifier_effect/warship_cost_modifier_effect.h
 	src/script/modifier_effect/wonder_cost_efficiency_modifier_effect.h
