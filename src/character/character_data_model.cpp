@@ -383,7 +383,7 @@ void character_data_model::update_trait_rows()
 	}
 
 	for (const auto &[trait_type, traits] : traits_by_type) {
-		auto trait_type_row = std::make_unique<character_data_row>(trait_type->get_name(), "", this->trait_row);
+		auto trait_type_row = std::make_unique<character_data_row>(string::get_plural_form(trait_type->get_name()), "", this->trait_row);
 
 		for (const trait *trait : traits) {
 			const int trait_count = character_game_data->get_trait_count(trait);
