@@ -206,6 +206,17 @@ void character::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->starting_items.push_back(item_type::get(value));
 		}
+
+		scope.for_each_property([&](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+			const item_type *item_type = item_type::get(key);
+			const int quantity = std::stoi(value);
+
+			for (int i = 0; i < quantity; ++i) {
+				this->starting_items.push_back(item_type);
+			}
+		});
 	} else if (tag == "conditions") {
 		auto conditions = std::make_unique<and_condition<domain>>();
 		conditions->process_gsml_data(scope);
