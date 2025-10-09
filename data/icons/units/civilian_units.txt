@@ -29,3 +29,7 @@ rancher = {
 rancher_small = {
 	filepath = "icons/units/civilians/rancher_small.png"
 }
+
+spy = {
+	filepath = "icons/units/civilians/spy.png"
+}
