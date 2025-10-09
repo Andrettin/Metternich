@@ -1,6 +1,6 @@
 ruined_castle = {
 	name = "Ruined Castle"
-	portrait = aristocratic_palace
+	portrait = ruined_castle
 	level = 1
 	random = true
 	max_areas = 13
