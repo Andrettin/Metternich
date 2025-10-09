@@ -1,0 +1,7 @@
+haunted_mansion = {
+	name = "Haunted Mansion"
+	portrait = ruined_castle
+	level = 2
+	random = true
+	max_areas = 12
+}
