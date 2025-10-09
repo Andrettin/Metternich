@@ -55,5 +55,6 @@ halfling = {
 		wisdom = 1
 		strength = -2
 		find_disarm_traps = 5
+		open_locks = 5
 	}
 }

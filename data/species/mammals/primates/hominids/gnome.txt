@@ -18,6 +18,7 @@ gnome = {
 	}
 	modifier = {
 		find_disarm_traps = 10
+		open_locks = 5
 	}
 	#in prehistoric times, the ancestors of dwarves and gnomes were transported to Nidavellir by the magic of the Aesir
 }

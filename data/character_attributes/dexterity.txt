@@ -4,6 +4,7 @@ dexterity = {
 		1 = {
 			armor_class = -5
 			find_disarm_traps = -10
+			open_locks = -10
 			#reflex = -5
 		}
 		3 = {
@@ -21,8 +22,12 @@ dexterity = {
 		7 = {
 			armor_class = 1
 		}
+		10 = {
+			open_locks = 5
+		}
 		11 = {
 			find_disarm_traps = 5
+			open_locks = 5
 		}
 		12 = {
 			find_disarm_traps = 5
@@ -32,16 +37,20 @@ dexterity = {
 		}
 		16 = {
 			armor_class = 1
+			open_locks = 5
 		}
 		17 = {
 			armor_class = 1
+			open_locks = 5
 		}
 		18 = {
 			armor_class = 1
 			find_disarm_traps = 5
+			open_locks = 5
 		}
 		19 = {
 			find_disarm_traps = 5
+			open_locks = 5
 		}
 		21 = {
 			armor_class = 1
