@@ -1,14 +1,14 @@
-fortitude = {
-	name = "Fortitude"
-}
+#fortitude = {
+#	name = "Fortitude"
+#}
 
-reflex = {
-	name = "Reflex"
-}
+#reflex = {
+#	name = "Reflex"
+#}
 
-will = {
-	name = "Will"
-}
+#will = {
+#	name = "Will"
+#}
 
 save_vs_poison = {
 	name = "Save vs. Poison"
