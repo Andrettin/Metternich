@@ -27,7 +27,7 @@ public:
 
 	virtual void do_assignment_effect(const character *scope, context &ctx) const override
 	{
-		const bool saving_throw_successful = scope->get_game_data()->do_saving_throw(this->status_effect->get_saving_throw_type());
+		const bool saving_throw_successful = scope->get_game_data()->do_saving_throw(this->status_effect->get_saving_throw_type(), this->status_effect->get_saving_throw_modifier());
 		if (saving_throw_successful) {
 			return;
 		}
@@ -48,7 +48,7 @@ public:
 		Q_UNUSED(indent);
 		Q_UNUSED(prefix);
 
-		return std::format("Affected by {} (Saving Throw: {} {})", this->status_effect->get_name(), this->status_effect->get_saving_throw_type()->get_name(), number::to_signed_string(scope->get_game_data()->get_saving_throw_bonus(this->status_effect->get_saving_throw_type())));
+		return std::format("Affected by {} (Saving Throw: {} {})", this->status_effect->get_name(), this->status_effect->get_saving_throw_type()->get_name(), number::to_signed_string(scope->get_game_data()->get_saving_throw_bonus(this->status_effect->get_saving_throw_type()) + this->status_effect->get_saving_throw_modifier()));
 	}
 
 private:

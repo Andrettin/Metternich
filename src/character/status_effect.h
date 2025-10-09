@@ -18,6 +18,7 @@ class status_effect final : public named_data_entry, public data_type<status_eff
 	Q_OBJECT
 
 	Q_PROPERTY(const metternich::saving_throw_type* saving_throw_type MEMBER saving_throw_type READ get_saving_throw_type NOTIFY changed)
+	Q_PROPERTY(int saving_throw_modifier MEMBER saving_throw_modifier READ get_saving_throw_modifier NOTIFY changed)
 	Q_PROPERTY(archimedes::dice duration_rounds_dice MEMBER duration_rounds_dice READ get_duration_rounds_dice NOTIFY changed)
 
 public:
@@ -36,6 +37,11 @@ public:
 		return this->saving_throw_type;
 	}
 
+	int get_saving_throw_modifier() const
+	{
+		return this->saving_throw_modifier;
+	}
+
 	const dice &get_duration_rounds_dice() const
 	{
 		return this->duration_rounds_dice;
@@ -51,6 +57,7 @@ signals:
 
 private:
 	const metternich::saving_throw_type *saving_throw_type = nullptr;
+	int saving_throw_modifier = 0;
 	dice duration_rounds_dice;
 	std::unique_ptr<effect_list<const character>> end_effects; //effects after the duration has passed
 };

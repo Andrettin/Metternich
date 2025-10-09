@@ -6,3 +6,13 @@ poison = {
 		damage = 15
 	}
 }
+
+weak_poison = {
+	name = "Weak Poison"
+	saving_throw_type = save_vs_poison
+	saving_throw_modifier = 2
+	duration_rounds_dice = 1d20+10
+	end_effects = {
+		damage = 1d6
+	}
+}
