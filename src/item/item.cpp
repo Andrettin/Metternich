@@ -119,4 +119,13 @@ const icon *item::get_icon() const
 	return this->get_type()->get_icon();
 }
 
+void item::change_quantity(const int change)
+{
+	assert_throw(this->get_type()->is_stackable());
+
+	this->quantity += change;
+	
+	assert_throw(this->quantity >= 0);
+}
+
 }

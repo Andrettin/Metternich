@@ -25,6 +25,7 @@ class item_type final : public named_data_entry, public data_type<item_type>
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
 	Q_PROPERTY(archimedes::dice damage_dice MEMBER damage_dice READ get_damage_dice NOTIFY changed)
 	Q_PROPERTY(bool two_handed MEMBER two_handed READ is_two_handed NOTIFY changed)
+	Q_PROPERTY(bool stackable MEMBER stackable READ is_stackable NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "item_type";
@@ -83,6 +84,11 @@ public:
 		return this->two_handed;
 	}
 
+	bool is_stackable() const
+	{
+		return this->stackable;
+	}
+
 	const metternich::modifier<const character> *get_modifier() const
 	{
 		return this->modifier.get();
@@ -97,6 +103,7 @@ private:
 	int price = 0;
 	dice damage_dice;
 	bool two_handed = false;
+	bool stackable = false;
 	std::unique_ptr<const metternich::modifier<const character>> modifier;
 };
 

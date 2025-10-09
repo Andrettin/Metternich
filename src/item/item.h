@@ -92,6 +92,13 @@ public:
 		emit equipped_changed();
 	}
 
+	int get_quantity() const
+	{
+		return this->quantity;
+	}
+
+	void change_quantity(const int change);
+
 signals:
 	void name_changed();
 	void equipped_changed();
@@ -102,6 +109,7 @@ private:
 	const item_material *material = nullptr;
 	const metternich::enchantment *enchantment = nullptr;
 	bool equipped = false;
+	int quantity = 1;
 };
 
 }

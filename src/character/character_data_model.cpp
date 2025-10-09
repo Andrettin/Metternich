@@ -450,7 +450,7 @@ void character_data_model::create_equipment_rows()
 				slot_name = item_slot->get_name() + ":";
 			}
 
-			auto row = std::make_unique<character_data_row>(slot_name, slot_equipped_items[i]->get_name(), this->equipment_row);
+			auto row = std::make_unique<character_data_row>(slot_name, slot_equipped_items[i]->get_name() + (slot_equipped_items[i]->get_quantity() > 1 ? std::format(" (x{})", slot_equipped_items[i]->get_quantity()) : ""), this->equipment_row);
 			row->item = slot_equipped_items[i];
 			this->equipment_row->child_rows.push_back(std::move(row));
 		}
@@ -494,7 +494,7 @@ void character_data_model::create_inventory_rows()
 			continue;
 		}
 
-		auto row = std::make_unique<character_data_row>(item->get_name(), std::string(), this->inventory_row);
+		auto row = std::make_unique<character_data_row>(item->get_name(), item->get_quantity() > 1 ? std::format("(x{})", item->get_quantity()) : "", this->inventory_row);
 		row->item = item.get();
 		this->inventory_row->child_rows.push_back(std::move(row));
 	}

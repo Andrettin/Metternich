@@ -1633,6 +1633,16 @@ bool character_game_data::has_item(const item_type *item_type) const
 
 void character_game_data::add_item(qunique_ptr<item> &&item)
 {
+	if (item->get_type()->is_stackable()) {
+		for (const qunique_ptr<metternich::item> &loop_item : this->get_items()) {
+			if (loop_item->get_type() == item->get_type() && loop_item->get_material() == item->get_material() && loop_item->get_enchantment() == item->get_enchantment()) {
+				loop_item->change_quantity(1);
+				emit items_changed();
+				return;
+			}
+		}
+	}
+
 	metternich::item *item_ptr = item.get();
 	this->items.push_back(std::move(item));
 	emit items_changed();
@@ -1644,6 +1654,14 @@ void character_game_data::add_item(qunique_ptr<item> &&item)
 
 void character_game_data::remove_item(item *item)
 {
+	if (item->get_type()->is_stackable()) {
+		item->change_quantity(-1);
+		if (item->get_quantity() > 0) {
+			emit items_changed();
+			return;
+		}
+	}
+
 	if (item->is_equipped()) {
 		this->deequip_item(item);
 	}
