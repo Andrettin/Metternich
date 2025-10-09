@@ -16,7 +16,11 @@ item_class::~item_class()
 
 bool item_class::is_weapon() const
 {
-	return this->get_slot()->is_weapon();
+	if (this->get_slot() != nullptr) {
+		return this->get_slot()->is_weapon();
+	}
+
+	return false;
 }
 
 }
