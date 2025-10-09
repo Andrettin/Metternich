@@ -39,6 +39,7 @@
 #include "script/effect/hidden_effect.h"
 #include "script/effect/if_effect.h"
 #include "script/effect/location_effect.h"
+#include "script/effect/lose_item_effect.h"
 #include "script/effect/office_holder_effect.h"
 #include "script/effect/opinion_modifiers_effect.h"
 #include "script/effect/population_scaled_commodity_effect.h"
@@ -121,6 +122,8 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 			return std::make_unique<event_effect<scope_type>>(value, effect_operator);
 		} else if (key == "gain_item") {
 			return std::make_unique<gain_item_effect<scope_type>>(value, effect_operator);
+		} else if (key == "lose_item") {
+			return std::make_unique<lose_item_effect<scope_type>>(value, effect_operator);
 		}
 	}
 
@@ -194,6 +197,8 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 			effect = std::make_unique<delayed_effect<scope_type>>(effect_operator);
 		} else if (effect_identifier == "gain_item") {
 			effect = std::make_unique<gain_item_effect<scope_type>>(effect_operator);
+		} else if (effect_identifier == "lose_item") {
+			effect = std::make_unique<lose_item_effect<scope_type>>(effect_operator);
 		} else if (effect_identifier == "skill_check") {
 			effect = std::make_unique<skill_check_effect<scope_type>>(effect_operator);
 		}

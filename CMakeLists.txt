@@ -629,6 +629,7 @@ set(script_condition_HDRS
 	src/script/condition/independent_condition.h
 	src/script/condition/infantry_condition.h
 	src/script/condition/is_military_unit_category_available_condition.h
+	src/script/condition/item_condition.h
 	src/script/condition/law_condition.h
 	src/script/condition/military_unit_category_condition.h
 	src/script/condition/military_unit_domain_condition.h
@@ -704,6 +705,7 @@ set(script_effect_HDRS
 	src/script/effect/hidden_effect.h
 	src/script/effect/if_effect.h
 	src/script/effect/location_effect.h
+	src/script/effect/lose_item_effect.h
 	src/script/effect/office_holder_effect.h
 	src/script/effect/opinion_modifiers_effect.h
 	src/script/effect/population_scaled_commodity_effect.h

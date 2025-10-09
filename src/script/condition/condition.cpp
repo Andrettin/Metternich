@@ -65,6 +65,7 @@
 #include "script/condition/independent_condition.h"
 #include "script/condition/infantry_condition.h"
 #include "script/condition/is_military_unit_category_available_condition.h"
+#include "script/condition/item_condition.h"
 #include "script/condition/law_condition.h"
 #include "script/condition/military_unit_category_condition.h"
 #include "script/condition/military_unit_domain_condition.h"
@@ -221,7 +222,9 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 	}
 	
 	if constexpr (std::is_same_v<scope_type, character> || std::is_same_v<scope_type, domain>) {
-		if (key == "war") {
+		if (key == "item") {
+			return std::make_unique<item_condition<scope_type>>(value, condition_operator);
+		} else if (key == "war") {
 			return std::make_unique<war_condition<scope_type>>(value, condition_operator);
 		}
 	}

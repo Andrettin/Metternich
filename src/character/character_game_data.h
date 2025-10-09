@@ -18,6 +18,7 @@ class character_attribute;
 class domain;
 class enchantment;
 class item;
+class item_material;
 class item_slot;
 class item_type;
 class military_unit;
@@ -447,8 +448,10 @@ public:
 	}
 
 	QVariantList get_items_qvariant_list() const;
+	bool has_item(const item_type *item_type) const;
 	void add_item(qunique_ptr<item> &&item);
 	void remove_item(item *item);
+	void remove_item(const item_type *item_type, const item_material *material, const enchantment *enchantment);
 
 	const std::vector<item *> &get_equipped_items(const item_slot *slot) const
 	{

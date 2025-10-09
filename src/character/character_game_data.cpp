@@ -1620,6 +1620,17 @@ QVariantList character_game_data::get_items_qvariant_list() const
 	return container::to_qvariant_list(this->get_items());
 }
 
+bool character_game_data::has_item(const item_type *item_type) const
+{
+	for (const qunique_ptr<item> &item : this->get_items()) {
+		if (item->get_type() == item_type) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
 void character_game_data::add_item(qunique_ptr<item> &&item)
 {
 	metternich::item *item_ptr = item.get();
@@ -1639,6 +1650,16 @@ void character_game_data::remove_item(item *item)
 
 	vector::remove(this->items, item);
 	emit items_changed();
+}
+
+void character_game_data::remove_item(const item_type *item_type, const item_material *material, const enchantment *enchantment)
+{
+	for (const qunique_ptr<item> &item : this->get_items()) {
+		if (item->get_type() == item_type && item->get_material() == material && item->get_enchantment() == enchantment) {
+			this->remove_item(item.get());
+			return;
+		}
+	}
 }
 
 bool character_game_data::can_equip_item(const item *item, const bool ignore_already_equipped) const
