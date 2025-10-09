@@ -220,6 +220,7 @@
 /graphics/portraits/buildings/fort_full.png (by Jinn) (licensed under the CC0) (reference: São João Fortress in Rio de Janeiro)
 /graphics/portraits/buildings/hospital.png (by Jinn) (licensed under the CC0)
 /graphics/portraits/buildings/hospital_full.png (by Jinn) (licensed under the CC0) (reference: The Cancer Hospital, Brompton)
+/graphics/portraits/buildings/ruined_castle.png (by Jinn) (licensed under the CC0)
 /graphics/portraits/buildings/temple.png (by Jinn) (licensed under the CC0)
 /graphics/portraits/buildings/temple_full.png (by Jinn) (licensed under the CC0) (reference: the Hagia Sophia)
 /graphics/portraits/buildings/temple_muslim.png (by Jinn) (licensed under the CC0)
