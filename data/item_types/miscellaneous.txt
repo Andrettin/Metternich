@@ -1,0 +1,6 @@
+torch = {
+	name = "Torch"
+	item_class = miscellaneous
+	icon = saber
+	price = 1gp #0gp
+}

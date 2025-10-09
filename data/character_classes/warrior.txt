@@ -124,5 +124,6 @@ warrior = {
 		long_sword
 		shield
 		chain_mail
+		torch = 6
 	}
 }

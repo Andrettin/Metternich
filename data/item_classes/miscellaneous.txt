@@ -22,3 +22,7 @@ helmet = {
 	name = "Helmet"
 	slot = helmet
 }
+
+miscellaneous = {
+	name = "Miscellaneous"
+}
