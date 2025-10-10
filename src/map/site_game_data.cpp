@@ -1498,10 +1498,13 @@ std::vector<const dungeon_area *> site_game_data::get_potential_dungeon_areas() 
 	}
 
 	std::vector<const dungeon_area *> potential_dungeon_areas;
+	bool found_entrance = false;
 
 	for (const dungeon_area *dungeon_area : dungeon_area::get_all()) {
 		if (dungeon_area->is_entrance() != needs_entrance) {
-			continue;
+			if ((needs_entrance && found_entrance) || !needs_entrance) {
+				continue;
+			}
 		}
 
 		if (this->get_explored_dungeon_areas().contains(dungeon_area)) {
@@ -1510,6 +1513,11 @@ std::vector<const dungeon_area *> site_game_data::get_potential_dungeon_areas() 
 
 		if (dungeon_area->get_conditions() != nullptr && !dungeon_area->get_conditions()->check(this->site, read_only_context(this->site))) {
 			continue;
+		}
+
+		if (needs_entrance && !found_entrance && dungeon_area->is_entrance()) {
+			found_entrance = true;
+			potential_dungeon_areas.clear();
 		}
 
 		potential_dungeon_areas.push_back(dungeon_area);
