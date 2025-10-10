@@ -48,7 +48,7 @@ clipper = {
 		movement = 7
 	}
 	cargo = 6
-	required_technology = renaissance
+	required_technology = modern_era
 	commodity_costs = {
 		fabric = 2
 		lumber = 6

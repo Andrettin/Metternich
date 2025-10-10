@@ -53,7 +53,7 @@ ironclad = {
 		melee = 5
 		movement = 5
 	}
-	required_technology = renaissance
+	required_technology = modern_era
 	commodity_costs = {
 		lumber = 4
 		armament = 6
@@ -78,7 +78,7 @@ advanced_ironclad = {
 		melee = 10
 		movement = 6
 	}
-	required_technology = renaissance
+	required_technology = modern_era
 	commodity_costs = {
 		lumber = 8
 		armament = 15
@@ -103,7 +103,7 @@ dreadnought = {
 		melee = 20
 		movement = 7
 	}
-	required_technology = renaissance
+	required_technology = modern_era
 	commodity_costs = {
 		armament = 24
 		steel = 30

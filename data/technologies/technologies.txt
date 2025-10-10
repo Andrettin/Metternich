@@ -44,10 +44,22 @@ renaissance = {
 	name = "Renaissance"
 	subcategory = technology
 	portrait = engineering
-	icon = iron
+	icon = painting
 	period = renaissance
 	cost_commodity = research
 	prerequisites = {
 		middle_ages
+	}
+}
+
+modern_era = {
+	name = "Modern Era"
+	subcategory = technology
+	portrait = engineering
+	icon = rifle
+	period = modern_era
+	cost_commodity = research
+	prerequisites = {
+		renaissance
 	}
 }

@@ -49,7 +49,7 @@ paddlewheeler = {
 		movement = 6
 	}
 	cargo = 10
-	required_technology = renaissance
+	required_technology = modern_era
 	commodity_costs = {
 		lumber = 6
 		steel = 2
@@ -70,7 +70,7 @@ freighter = {
 		movement = 7
 	}
 	cargo = 16
-	required_technology = renaissance
+	required_technology = modern_era
 	commodity_costs = {
 		steel = 8
 		coal = 20

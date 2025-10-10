@@ -68,7 +68,7 @@ raider = {
 		melee = 3
 		movement = 7
 	}
-	required_technology = renaissance
+	required_technology = modern_era
 	commodity_costs = {
 		lumber = 6
 		armament = 3
@@ -92,7 +92,7 @@ armored_cruiser = {
 		melee = 6
 		movement = 8
 	}
-	required_technology = renaissance
+	required_technology = modern_era
 	commodity_costs = {
 		lumber = 2
 		armament = 8
@@ -117,7 +117,7 @@ battlecruiser = {
 		melee = 18
 		movement = 9
 	}
-	required_technology = renaissance
+	required_technology = modern_era
 	commodity_costs = {
 		armament = 18
 		steel = 22

@@ -19,5 +19,11 @@ middle_ages = {
 renaissance = {
 	parent_period = middle_ages
 	start_year = 1450
-	end_year = 1600
+	end_year = 1850
+}
+
+modern_era = {
+	parent_period = renaissance
+	start_year = 1850
+	end_year = 2000
 }

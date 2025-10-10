@@ -28,7 +28,7 @@ combat_engineers = {
 		defense = 4
 		movement = 4
 	}
-	required_technology = renaissance
+	required_technology = modern_era
 	commodity_costs = {
 		wealth = 7000
 		manpower = 1
@@ -50,7 +50,7 @@ saboteurs = {
 		defense = 10
 		movement = 5
 	}
-	required_technology = renaissance
+	required_technology = modern_era
 	commodity_costs = {
 		wealth = 9000
 		manpower = 1

@@ -31,7 +31,7 @@ rifle_infantry = {
 		defense = 7
 		movement = 4
 	}
-	required_technology = renaissance
+	required_technology = modern_era
 	commodity_costs = {
 		wealth = 3000
 		manpower = 1
@@ -55,7 +55,7 @@ infantry = {
 		defense = 20
 		movement = 5
 	}
-	required_technology = renaissance
+	required_technology = modern_era
 	commodity_costs = {
 		wealth = 5000
 		manpower = 1

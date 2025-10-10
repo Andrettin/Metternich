@@ -99,7 +99,7 @@ siege_artillery = {
 		defense = 3
 		movement = 3
 	}
-	required_technology = renaissance
+	required_technology = modern_era
 	commodity_costs = {
 		wealth = 5000
 		manpower = 1
@@ -123,7 +123,7 @@ railroad_guns = {
 		defense = 20
 		movement = 3
 	}
-	required_technology = renaissance
+	required_technology = modern_era
 	commodity_costs = {
 		wealth = 9000
 		manpower = 1

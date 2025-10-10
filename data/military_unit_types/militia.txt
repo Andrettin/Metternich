@@ -42,7 +42,7 @@ militia = {
 		defense = 4
 		movement = 4
 	}
-	required_technology = renaissance
+	required_technology = modern_era
 	upgrades = {
 		conscripts
 	}
@@ -58,5 +58,5 @@ conscripts = {
 		defense = 10
 		movement = 5
 	}
-	required_technology = renaissance
+	required_technology = modern_era
 }

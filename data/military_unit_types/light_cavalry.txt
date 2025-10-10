@@ -80,7 +80,7 @@ scouts = {
 		defense = 7
 		movement = 11
 	}
-	required_technology = renaissance
+	required_technology = modern_era
 	commodity_costs = {
 		wealth = 2000
 		manpower = 1
@@ -105,7 +105,7 @@ mechanized_infantry = {
 		defense = 10
 		movement = 11
 	}
-	required_technology = renaissance
+	required_technology = modern_era
 	commodity_costs = {
 		wealth = 5000
 		manpower = 1

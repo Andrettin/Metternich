@@ -76,7 +76,7 @@ guards = {
 		defense = 7
 		movement = 4
 	}
-	required_technology = renaissance
+	required_technology = modern_era
 	commodity_costs = {
 		wealth = 4000
 		manpower = 1
@@ -100,7 +100,7 @@ machine_gunners = {
 		defense = 20
 		movement = 4
 	}
-	required_technology = renaissance
+	required_technology = modern_era
 	commodity_costs = {
 		wealth = 7000
 		manpower = 1

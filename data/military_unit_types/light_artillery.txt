@@ -55,7 +55,7 @@ field_artillery = {
 		defense = 3
 		movement = 6
 	}
-	required_technology = renaissance
+	required_technology = modern_era
 	commodity_costs = {
 		wealth = 5000
 		manpower = 1
@@ -80,7 +80,7 @@ mobile_artillery = {
 		defense = 20
 		movement = 8
 	}
-	required_technology = renaissance
+	required_technology = modern_era
 	commodity_costs = {
 		wealth = 5000
 		manpower = 1
