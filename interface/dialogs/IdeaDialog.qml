@@ -27,6 +27,7 @@ ModifierDialog {
 			} else {
 				idea_choice_dialog.idea_slot = idea_slot
 				idea_choice_dialog.open()
+				idea_choice_dialog.receive_focus()
 			}
 		}
 	}

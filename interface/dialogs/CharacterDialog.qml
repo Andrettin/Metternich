@@ -137,6 +137,7 @@ DialogBase {
 			onClicked: {
 				family_tree_dialog.character = character
 				family_tree_dialog.open()
+				family_tree_dialog.receive_focus()
 			}
 		}
 		

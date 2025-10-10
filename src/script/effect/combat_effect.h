@@ -101,16 +101,6 @@ public:
 
 		const bool success = this->attacker ? result.attacker_victory : !result.attacker_victory;
 
-		if (success) {
-			if (this->victory_effects != nullptr) {
-				this->victory_effects->do_effects(scope, ctx);
-			}
-		} else {
-			if (this->defeat_effects != nullptr) {
-				this->defeat_effects->do_effects(scope, ctx);
-			}
-		}
-
 		if (scope == game::get()->get_player_country()) {
 			const portrait *war_minister_portrait = scope->get_government()->get_war_minister_portrait();
 
@@ -130,6 +120,16 @@ public:
 				}
 
 				engine_interface::get()->add_notification("Defeat!", war_minister_portrait, std::format("You have lost a combat!{}", !effects_string.empty() ? ("\n\n" + effects_string) : ""));
+			}
+		}
+
+		if (success) {
+			if (this->victory_effects != nullptr) {
+				this->victory_effects->do_effects(scope, ctx);
+			}
+		} else {
+			if (this->defeat_effects != nullptr) {
+				this->defeat_effects->do_effects(scope, ctx);
 			}
 		}
 	}
