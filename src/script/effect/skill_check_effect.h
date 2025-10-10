@@ -71,6 +71,26 @@ public:
 		const character *roll_character = this->get_roll_character(scope, ctx);
 		const bool success = roll_character->get_game_data()->do_skill_check(this->skill, this->roll_modifier);
 
+		bool is_player = false;
+		if constexpr (std::is_same_v<scope_type, const character>) {
+			is_player = scope == game::get()->get_player_character();
+		} else if constexpr (std::is_same_v<scope_type, const domain>) {
+			is_player = scope == game::get()->get_player_country();
+		}
+
+		if (is_player) {
+			const domain *domain = effect<scope_type>::get_scope_domain(scope);
+			const portrait *interior_minister_portrait = domain->get_government()->get_interior_minister_portrait();
+
+			const std::string effects_string = success ? this->get_success_effects_string(scope, ctx, 0, "") : this->get_failure_effects_string(scope, ctx, 0, "");
+
+			if (success) {
+				engine_interface::get()->add_notification("Skill Check Successful!", interior_minister_portrait, std::format("You have succeeded in a {} skill check!{}", this->skill->get_name(), !effects_string.empty() ? ("\n\n" + effects_string) : ""));
+			} else {
+				engine_interface::get()->add_notification("Skill Check Failed!", interior_minister_portrait, std::format("You have failed a {} skill check!{}", this->skill->get_name(), !effects_string.empty() ? ("\n\n" + effects_string) : ""));
+			}
+		}
+
 		if (success) {
 			if (this->success_effects != nullptr) {
 				this->success_effects->do_effects(scope, ctx);
@@ -100,35 +120,57 @@ public:
 			str += "\n" + std::string(indent + 1, '\t') + std::format("Roll Modifier: {}{}", number::to_signed_string(this->roll_modifier), this->skill->get_value_suffix());
 		}
 
-		std::string success_effects_string;
-		if (this->success_effects != nullptr) {
-			success_effects_string = this->success_effects->get_effects_string(scope, ctx, indent + 1, prefix);
-		}
-		if (this->character_success_effects != nullptr) {
-			if (!success_effects_string.empty()) {
-				success_effects_string += "\n";
-			}
-			success_effects_string += std::format("{}{}:\n", std::string(indent + 1, '\t'), roll_character->get_full_name()) + this->character_success_effects->get_effects_string(roll_character, ctx, indent + 2, prefix);
-		}
+		const std::string success_effects_string = this->get_success_effects_string(scope, ctx, indent + 1, prefix);
 		if (!success_effects_string.empty()) {
 			str += "\n" + std::string(indent, '\t') + "If successful:\n" + success_effects_string;
 		}
 
-		std::string failure_effects_string;
-		if (this->failure_effects != nullptr) {
-			failure_effects_string = this->failure_effects->get_effects_string(scope, ctx, indent + 1, prefix);
-		}
-		if (this->character_failure_effects != nullptr) {
-			if (!failure_effects_string.empty()) {
-				failure_effects_string += "\n";
-			}
-			failure_effects_string += std::format("{}{}:\n", std::string(indent + 1, '\t'), roll_character->get_full_name()) + this->character_failure_effects->get_effects_string(roll_character, ctx, indent + 2, prefix);
-		}
+		const std::string failure_effects_string = this->get_failure_effects_string(scope, ctx, indent + 1, prefix);
 		if (!failure_effects_string.empty()) {
 			str += "\n" + std::string(indent, '\t') + "If failed:\n" + failure_effects_string;
 		}
 
 		return str;
+	}
+
+	std::string get_success_effects_string(scope_type *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const
+	{
+		std::string success_effects_string;
+
+		if (this->success_effects != nullptr) {
+			success_effects_string = this->success_effects->get_effects_string(scope, ctx, indent, prefix);
+		}
+
+		if (this->character_success_effects != nullptr) {
+			if (!success_effects_string.empty()) {
+				success_effects_string += "\n";
+			}
+
+			const character *roll_character = this->get_roll_character(scope, ctx);
+			success_effects_string += std::format("{}{}:\n", std::string(indent, '\t'), roll_character->get_full_name()) + this->character_success_effects->get_effects_string(roll_character, ctx, indent + 1, prefix);
+		}
+
+		return success_effects_string;
+	}
+
+	std::string get_failure_effects_string(scope_type *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const
+	{
+		std::string failure_effects_string;
+
+		if (this->failure_effects != nullptr) {
+			failure_effects_string = this->failure_effects->get_effects_string(scope, ctx, indent, prefix);
+		}
+
+		if (this->character_failure_effects != nullptr) {
+			if (!failure_effects_string.empty()) {
+				failure_effects_string += "\n";
+			}
+
+			const character *roll_character = this->get_roll_character(scope, ctx);
+			failure_effects_string += std::format("{}{}:\n", std::string(indent, '\t'), roll_character->get_full_name()) + this->character_failure_effects->get_effects_string(roll_character, ctx, indent + 1, prefix);
+		}
+
+		return failure_effects_string;
 	}
 
 	const character *get_roll_character(scope_type *scope, const read_only_context &ctx) const

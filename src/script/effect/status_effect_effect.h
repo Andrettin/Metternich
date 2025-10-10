@@ -28,16 +28,25 @@ public:
 	virtual void do_assignment_effect(const character *scope, context &ctx) const override
 	{
 		const bool saving_throw_successful = scope->get_game_data()->do_saving_throw(this->status_effect->get_saving_throw_type(), this->status_effect->get_saving_throw_modifier());
-		if (saving_throw_successful) {
-			return;
+
+		if (scope == game::get()->get_player_character()) {
+			const portrait *war_minister_portrait = scope->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
+
+			if (saving_throw_successful) {
+				engine_interface::get()->add_notification("Saving Throw Successful!", war_minister_portrait, std::format("You have succeeded in a {} saving throw, and managed to avoid being affected by {}!", this->status_effect->get_saving_throw_type()->get_name(), this->status_effect->get_name()));
+			} else {
+				engine_interface::get()->add_notification("Saving Throw Failed!", war_minister_portrait, std::format("You have failed a {} saving throw, and are now affected by {}!", this->status_effect->get_saving_throw_type()->get_name(), this->status_effect->get_name()));
+			}
 		}
 
-		if (ctx.in_combat) {
-			scope->get_game_data()->set_status_effect_rounds(this->status_effect, random::get()->roll_dice(this->status_effect->get_duration_rounds_dice()));
-		} else {
-			//if we are out of combat, resolve the status effect immediately
-			if (this->status_effect->get_end_effects() != nullptr) {
-				this->status_effect->get_end_effects()->do_effects(scope, ctx);
+		if (!saving_throw_successful) {
+			if (ctx.in_combat) {
+				scope->get_game_data()->set_status_effect_rounds(this->status_effect, random::get()->roll_dice(this->status_effect->get_duration_rounds_dice()));
+			} else {
+				//if we are out of combat, resolve the status effect immediately
+				if (this->status_effect->get_end_effects() != nullptr) {
+					this->status_effect->get_end_effects()->do_effects(scope, ctx);
+				}
 			}
 		}
 	}
