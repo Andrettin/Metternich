@@ -21,6 +21,7 @@
 #include "species/species.h"
 #include "ui/portrait.h"
 #include "util/number_util.h"
+#include "util/random.h"
 #include "util/string_conversion_util.h"
 
 namespace metternich {
@@ -64,9 +65,11 @@ public:
 				const monster_type *monster_type = monster_type::get(key);
 
 				const std::string &value = property.get_value();
-				const int quantity = std::stoi(value);
-
-				this->enemies[monster_type] = quantity;
+				if (string::is_number(value)) {
+					this->enemies[monster_type] = std::stoi(value);
+				} else {
+					this->enemies[monster_type] = dice(value);
+				}
 			});
 		} else if (tag == "enemy_characters") {
 			for (const std::string &value : values) {
@@ -150,8 +153,16 @@ public:
 
 		str += "\n" + std::string(indent, '\t') + std::format("Does combat against{}:", this->attacker && this->surprise ? " (surprised)" : "");
 
-		for (const auto &[monster_type, quantity] : this->enemies) {
-			str += "\n" + std::string(indent + 1, '\t') + std::to_string(quantity) + "x" + monster_type->get_name();
+		for (const auto &[monster_type, quantity_variant] : this->enemies) {
+			std::string quantity_string;
+			if (std::holds_alternative<int>(quantity_variant)) {
+				quantity_string = std::to_string(std::get<int>(quantity_variant));
+			} else {
+				const dice damage_dice = std::get<dice>(quantity_variant);
+				quantity_string = damage_dice.to_display_string();
+			}
+
+			str += "\n" + std::string(indent + 1, '\t') + quantity_string + "x" + monster_type->get_name();
 		}
 
 		for (const target_variant<const character> &enemy_character : this->enemy_characters) {
@@ -185,7 +196,15 @@ public:
 	{
 		std::vector<const character *> enemy_characters;
 
-		for (const auto &[monster_type, quantity] : this->enemies) {
+		for (const auto &[monster_type, quantity_variant] : this->enemies) {
+			int quantity = 0;
+			if (std::holds_alternative<int>(quantity_variant)) {
+				quantity = std::get<int>(quantity_variant);
+			} else {
+				const dice quantity_dice = std::get<dice>(quantity_variant);
+				quantity = random::get()->roll_dice(quantity_dice);
+			}
+
 			for (int i = 0; i < quantity; ++i) {
 				std::shared_ptr<character_reference> enemy_character = character::generate_temporary(monster_type, nullptr, nullptr, nullptr);
 				enemy_characters.push_back(enemy_character->get_character());
@@ -218,7 +237,7 @@ private:
 	bool attacker = true;
 	bool surprise = false;
 	int to_hit_modifier = 0;
-	data_entry_map<monster_type, int> enemies;
+	data_entry_map<monster_type, std::variant<int, dice>> enemies;
 	std::vector<target_variant<const character>> enemy_characters;
 	std::unique_ptr<effect_list<const domain>> victory_effects;
 	std::unique_ptr<effect_list<const domain>> defeat_effects;
