@@ -2,11 +2,12 @@ rottenburg = {
 	name = "Rottenburg"
 	world = earth
 	geocoordinate = { 11.7981 47.3844 }
+	type = dungeon
 	province = tyrol
 	
 	history = {
 		1411 = {
-			#improvements += ruins
+			dungeon = ruined_castle
 		}
 	}
 }
