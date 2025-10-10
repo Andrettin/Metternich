@@ -1,0 +1,65 @@
+goblin_warriors = {
+	name = "Goblin Warriors"
+	portrait = ruined_castle
+	description = "You encounter goblin warriors!"
+	weight = 10
+	conditions = {
+		dungeon = ruined_castle
+	}
+	option = {
+		effects = {
+			combat = {
+				enemies = {
+					goblin = 1d3+1
+				}
+				on_victory = {
+					explore_dungeon = true
+				}
+			}
+		}
+	}
+}
+
+kobold_warriors = {
+	name = "Kobold Warriors"
+	portrait = ruined_castle
+	description = "You encounter kobold warriors!"
+	weight = 10
+	conditions = {
+		dungeon = ruined_castle
+	}
+	option = {
+		effects = {
+			combat = {
+				enemies = {
+					kobold = 1d4+2
+				}
+				on_victory = {
+					explore_dungeon = true
+				}
+			}
+		}
+	}
+}
+
+orc_warriors = {
+	name = "Orc Warriors"
+	portrait = ruined_castle
+	description = "You encounter orc warriors!"
+	weight = 9
+	conditions = {
+		dungeon = ruined_castle
+	}
+	option = {
+		effects = {
+			combat = {
+				enemies = {
+					orc = 1d3
+				}
+				on_victory = {
+					explore_dungeon = true
+				}
+			}
+		}
+	}
+}
