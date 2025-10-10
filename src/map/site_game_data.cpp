@@ -1520,7 +1520,9 @@ std::vector<const dungeon_area *> site_game_data::get_potential_dungeon_areas() 
 			potential_dungeon_areas.clear();
 		}
 
-		potential_dungeon_areas.push_back(dungeon_area);
+		for (int i = 0; i < dungeon_area->get_weight(); ++i) {
+			potential_dungeon_areas.push_back(dungeon_area);
+		}
 	}
 
 	return potential_dungeon_areas;

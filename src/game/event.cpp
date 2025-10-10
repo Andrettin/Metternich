@@ -22,7 +22,7 @@ void event::process_gsml_property(const gsml_property &property)
 
 	if (key == "random_weight") {
 		if (gsml_operator != gsml_operator::assignment) {
-			throw std::runtime_error("Invalid operator for property \"" + key + "\".");
+			throw std::runtime_error(std::format("Invalid operator for property \"{}\".", key));
 		}
 
 		this->set_random_weight(std::stoi(value));
