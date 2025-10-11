@@ -68,6 +68,7 @@
 #include "script/condition/is_military_unit_category_available_condition.h"
 #include "script/condition/item_condition.h"
 #include "script/condition/law_condition.h"
+#include "script/condition/level_condition.h"
 #include "script/condition/military_unit_category_condition.h"
 #include "script/condition/military_unit_domain_condition.h"
 #include "script/condition/military_unit_type_condition.h"
@@ -96,6 +97,7 @@
 #include "script/condition/scripted_modifier_condition.h"
 #include "script/condition/site_condition.h"
 #include "script/condition/site_scope_condition.h"
+#include "script/condition/skill_training_condition.h"
 #include "script/condition/source_character_condition.h"
 #include "script/condition/source_site_condition.h"
 #include "script/condition/source_site_scope_condition.h"
@@ -132,8 +134,12 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			return std::make_unique<character_class_condition>(value, condition_operator);
 		} else if (key == "class_skill") {
 			return std::make_unique<class_skill_condition>(value, condition_operator);
+		} else if (key == "level") {
+			return std::make_unique<level_condition>(value, condition_operator);
 		} else if (key == "primary_attribute") {
 			return std::make_unique<primary_attribute_condition>(value, condition_operator);
+		} else if (key == "skill_training") {
+			return std::make_unique<skill_training_condition>(value, condition_operator);
 		} else if (key == "trait") {
 			return std::make_unique<trait_condition>(value, condition_operator);
 		} else if (character_attribute::try_get(key) != nullptr) {
