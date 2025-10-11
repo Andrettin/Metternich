@@ -1290,6 +1290,12 @@ void character_game_data::on_trait_gained(const trait *trait, const int multipli
 		this->apply_modifier(trait->get_modifier(), multiplier);
 	}
 
+	for (const trait_type *trait_type : trait->get_types()) {
+		if (trait_type->get_modifier() != nullptr) {
+			this->apply_modifier(trait_type->get_modifier(), multiplier);
+		}
+	}
+
 	if (trait->get_military_unit_modifier() != nullptr && this->get_military_unit() != nullptr) {
 		this->apply_military_unit_modifier(this->get_military_unit(), multiplier);
 	}
