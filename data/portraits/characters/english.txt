@@ -30,7 +30,7 @@ henry_hudson = {
 			cultural_group = african
 			cultural_group = asian
 		}
-		character_class = navigator
+		character_class = rogue #navigator
 	}
 }
 

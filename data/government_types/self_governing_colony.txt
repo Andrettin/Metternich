@@ -11,8 +11,7 @@ self_governing_colony = {
 		}
 	}
 	ruler_character_classes = {
-		statesman
-		treasurer
+		rogue
 		warrior
 	}
 	title_names = {

@@ -1,7 +1,7 @@
 tamas_bakocz = { #Source: "Encyclopædia Britannica", 1911, vol. 3, p. 230.
 	name = "Tamas" #"Tamás"
 	surname = "Bakocz" #"Bakócz"
-	character_class = statesman
+	character_class = cleric #statesman
 	culture = magyar
 	religion = catholic
 	home_site = gyor
@@ -23,14 +23,17 @@ tamas_bakocz = { #Source: "Encyclopædia Britannica", 1911, vol. 3, p. 230.
 		#became bishop of Eger under Wladislaus II
 		#became archbishop of Esztergom in 1497
 		#became cardinal in 1500
-		#became titular patriarch of Constantinople in 1510
+		
+		1510 = {
+			rank = patriarch #became titular patriarch of Constantinople in 1510
+		}
 	}
 }
 
 istvan_bathory = {
 	name = "Istvan" #"István"
 	surname = "Bathory" #"Báthory"
-	character_class = statesman
+	character_class = warrior #statesman
 	culture = magyar
 	religion = catholic
 	home_site = pecs
@@ -46,7 +49,7 @@ istvan_bathory = {
 juraj_thurzo = {
 	name = "Juraj"
 	surname = "Thurzo"
-	character_class = statesman
+	character_class = warrior #statesman
 	culture = magyar
 	religion = catholic
 	home_site = laibach
@@ -62,7 +65,7 @@ juraj_thurzo = {
 palffy_janos_iv = {
 	name = "Palffy Janos" #"Pálffy János"
 	epithet = "IV"
-	character_class = statesman
+	character_class = warrior #statesman
 	culture = magyar
 	religion = catholic
 	home_site = varazdin
@@ -78,7 +81,7 @@ palffy_janos_iv = {
 franciszek_rakoczy = {
 	name = "Franciszek"
 	surname = "Rakoczy"
-	character_class = statesman
+	character_class = warrior #statesman
 	culture = magyar
 	religion = catholic
 	home_site = pecs

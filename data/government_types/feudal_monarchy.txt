@@ -21,8 +21,6 @@ feudal_monarchy = {
 		}
 	}
 	ruler_character_classes = {
-		statesman
-		treasurer
 		warrior
 	}
 }

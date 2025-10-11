@@ -1,7 +1,7 @@
 darius_i_of_persia = {
 	name = "Darius"
 	epithet = "I"
-	character_class = treasurer
+	character_class = warrior
 	culture = persian
 	religion = pagan
 	home_site = shiraz #Persepolis; correct?

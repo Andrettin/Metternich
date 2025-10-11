@@ -21,8 +21,6 @@ dictatorship = {
 	}
 	ruler_character_classes = {
 		rogue
-		statesman
-		treasurer
 		warrior
 	}
 	office_title_names = {

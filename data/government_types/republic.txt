@@ -16,8 +16,6 @@ republic = {
 	}
 	ruler_character_classes = {
 		rogue
-		statesman
-		treasurer
 		warrior
 	}
 }

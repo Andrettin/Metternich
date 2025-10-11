@@ -7,6 +7,6 @@ henry_the_navigator = {
 			culture = brazilian
 			cultural_group = middle_eastern
 		}
-		character_class = navigator
+		character_class = rogue #navigator
 	}
 }

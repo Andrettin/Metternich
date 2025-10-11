@@ -44,7 +44,7 @@ peasant_leader = {
 	icon = grain
 	conditions = {
 		character_class = none
-		character_class = statesman
+		character_class = warrior
 	}
 }
 
@@ -56,10 +56,7 @@ pirate = {
 	icon = skull
 	conditions = {
 		character_class = none
-		or = {
-			character_class = navigator
-			character_class = rogue
-		}
+		character_class = rogue
 	}
 }
 
@@ -73,8 +70,7 @@ professor = {
 		character_class = none
 		or = {
 			character_class = cleric
-			character_class = natural_scientist
-			character_class = philosopher
+			character_class = mage
 		}
 	}
 }

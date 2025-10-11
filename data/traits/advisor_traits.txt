@@ -29,7 +29,10 @@ cotton_planter = {
 	}
 	icon = cotton
 	conditions = {
-		character_class = farmer
+		or = {
+			character_class = rogue
+			character_class = warrior
+		}
 	}
 }
 
@@ -200,7 +203,7 @@ leonardo_da_vinci = {
 	icon = cog
 	hidden_name = true
 	conditions = {
-		character_class = engineer
+		character_class = mage
 	}
 }
 
@@ -223,7 +226,10 @@ natural_scientist = {
 	}
 	icon = research
 	conditions = {
-		character_class = natural_scientist
+		or = {
+			character_class = cleric
+			character_class = mage
+		}
 	}
 }
 
@@ -258,7 +264,7 @@ philosopher = {
 	}
 	icon = philosophy
 	conditions = {
-		character_class = philosopher
+		character_class = mage
 	}
 }
 
@@ -304,7 +310,10 @@ tobacco_planter = {
 	}
 	icon = tobacco
 	conditions = {
-		character_class = farmer
+		or = {
+			character_class = rogue
+			character_class = warrior
+		}
 	}
 }
 

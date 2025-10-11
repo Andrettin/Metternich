@@ -60,7 +60,6 @@ silver_palm = {
 		character_class = none
 		or = {
 			character_class = rogue #merchant
-			character_class = treasurer
 		}
 	}
 }

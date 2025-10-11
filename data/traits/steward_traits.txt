@@ -16,6 +16,6 @@ treasurer = {
 	}
 	icon = chest
 	conditions = {
-		character_class = treasurer
+		character_class = rogue #treasurer
 	}
 }

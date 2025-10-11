@@ -16,11 +16,7 @@ jp_morgan = {
 			cultural_group = african
 			cultural_group = asian
 		}
-		or = {
-			character_class = farmer
-			character_class = rogue #merchant
-			character_class = treasurer
-		}
+		character_class = rogue #merchant
 		birth_year >= 1800
 	}
 }

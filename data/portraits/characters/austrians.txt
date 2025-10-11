@@ -5,10 +5,7 @@ maria_theresia = {
 		not = {
 			cultural_group = african
 		}
-		or = {
-			character_class = statesman
-			character_class = warrior #aristocrat
-		}
+		character_class = warrior #aristocrat
 	}
 }
 
@@ -20,10 +17,7 @@ franz_i_of_austria = {
 			cultural_group = african
 			cultural_group = asian
 		}
-		or = {
-			character_class = statesman
-			character_class = warrior #aristocrat
-		}
+		character_class = warrior #aristocrat
 	}
 }
 
@@ -35,10 +29,6 @@ metternich = {
 			cultural_group = african
 			cultural_group = asian
 		}
-		or = {
-			character_class = diplomat
-			character_class = statesman
-			character_class = warrior #aristocrat
-		}
+		character_class = warrior #aristocrat
 	}
 }

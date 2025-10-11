@@ -32,10 +32,8 @@ negotiator = {
 	conditions = {
 		character_class = none
 		or = {
-			character_class = diplomat
 			character_class = rogue #merchant
-			character_class = statesman
-			character_class = treasurer
+			character_class = warrior
 		}
 		not = {
 			trait = charismatic_negotiator
@@ -52,9 +50,8 @@ persuasive = {
 	conditions = {
 		character_class = none
 		or = {
-			character_class = diplomat
 			character_class = rogue
-			character_class = statesman
+			character_class = warrior
 		}
 	}
 }

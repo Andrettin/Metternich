@@ -20,8 +20,6 @@ enlightened_despotism = {
 		}
 	}
 	ruler_character_classes = {
-		statesman
-		treasurer
 		warrior
 	}
 }

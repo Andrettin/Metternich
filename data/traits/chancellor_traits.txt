@@ -5,7 +5,10 @@ diplomat = {
 	}
 	icon = treaty
 	conditions = {
-		character_class = diplomat
+		or = {
+			character_class = rogue
+			character_class = warrior
+		}
 	}
 }
 
@@ -16,6 +19,10 @@ statesman = {
 	}
 	icon = bell
 	conditions = {
-		character_class = statesman
+		or = {
+			character_class = cleric
+			character_class = rogue
+			character_class = warrior
+		}
 	}
 }

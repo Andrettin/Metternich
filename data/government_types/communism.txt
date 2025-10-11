@@ -11,8 +11,7 @@ communism = {
 		}
 	}
 	ruler_character_classes = {
-		statesman
-		treasurer
+		rogue
 		warrior
 	}
 	office_title_names = {

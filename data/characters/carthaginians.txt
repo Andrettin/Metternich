@@ -1,7 +1,7 @@
 hannibal = {
 	name = "Hannibal"
 	surname = "Barca"
-	character_class = statesman
+	character_class = warrior #statesman
 	culture = carthaginian
 	religion = pagan
 	home_site = carthage

@@ -1,7 +1,7 @@
 janez_v_valvasor = {
 	name = "Janez"
 	surname = "V. Valvasor"
-	character_class = natural_scientist
+	character_class = mage #natural scientist
 	culture = slovene
 	religion = catholic
 	home_site = laibach
@@ -17,7 +17,7 @@ janez_v_valvasor = {
 jurij_vega = {
 	name = "Jurij"
 	surname = "Vega"
-	character_class = natural_scientist
+	character_class = mage #natural scientist
 	culture = slovene
 	religion = catholic
 	home_site = laibach

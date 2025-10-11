@@ -1,7 +1,7 @@
 huayna_capac = {
 	name = "Huayna"
 	surname = "Capac"
-	character_class = statesman
+	character_class = warrior #statesman
 	culture = inca
 	religion = pagan
 	home_site = cuzco

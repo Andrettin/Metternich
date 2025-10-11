@@ -21,11 +21,7 @@ thrifty_clerk = {
 	}
 	icon = chest
 	conditions = {
-		or = {
-			character_class = farmer
-			character_class = rogue #merchant
-			character_class = treasurer
-		}
+		character_class = rogue #merchant
 		not = {
 			trait = indulgent_wastrel
 			trait = fortune_builder
