@@ -1241,6 +1241,10 @@ bool character_game_data::can_gain_trait(const trait *trait) const
 		return false;
 	}
 
+	if (trait->get_gain_conditions() != nullptr && !trait->get_gain_conditions()->check(this->character, read_only_context(this->character))) {
+		return false;
+	}
+
 	for (const trait_type *trait_type : trait->get_types()) {
 		if (trait_type->get_max_traits() > 0 && this->get_trait_count_for_type(trait_type) >= trait_type->get_max_traits()) {
 			return false;

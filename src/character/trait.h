@@ -87,9 +87,9 @@ public:
 		return this->conditions.get();
 	}
 
-	const and_condition<character> *get_generation_conditions() const
+	const and_condition<character> *get_gain_conditions() const
 	{
-		return this->generation_conditions.get();
+		return this->gain_conditions.get();
 	}
 
 	const metternich::modifier<const character> *get_modifier() const
@@ -131,7 +131,7 @@ private:
 	bool unlimited = false;
 	data_entry_map<character_attribute, int> attribute_bonuses;
 	std::unique_ptr<const and_condition<character>> conditions;
-	std::unique_ptr<const and_condition<character>> generation_conditions;
+	std::unique_ptr<const and_condition<character>> gain_conditions;
 	std::unique_ptr<const metternich::modifier<const character>> modifier;
 	data_entry_map<office, std::unique_ptr<const metternich::modifier<const domain>>> office_modifiers;
 	std::unique_ptr<const metternich::modifier<military_unit>> military_unit_modifier;
