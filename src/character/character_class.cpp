@@ -10,7 +10,6 @@
 #include "database/defines.h"
 #include "item/item_type.h"
 #include "script/condition/and_condition.h"
-#include "script/effect/effect_list.h"
 #include "script/modifier.h"
 #include "species/species.h"
 #include "ui/portrait.h"
@@ -90,28 +89,6 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 					this->level_modifiers[i] = std::make_unique<metternich::modifier<const character>>();
 				}
 				this->level_modifiers[i]->process_gsml_data(child_scope);
-			}
-		});
-	} else if (tag == "level_effects") {
-		scope.for_each_child([&](const gsml_data &child_scope) {
-			const std::string &child_tag = child_scope.get_tag();
-			const int level = std::stoi(child_tag);
-			if (!this->level_effects.contains(level)) {
-				this->level_effects[level] = std::make_unique<metternich::effect_list<const character>>();
-			}
-			this->level_effects[level]->process_gsml_data(child_scope);
-		});
-	} else if (tag == "recurring_level_effects") {
-		assert_throw(this->get_max_level() != 0);
-
-		scope.for_each_child([&](const gsml_data &child_scope) {
-			const std::string &child_tag = child_scope.get_tag();
-			const int level_interval = std::stoi(child_tag);
-			for (int i = level_interval; i <= this->get_max_level(); i += level_interval) {
-				if (!this->level_effects.contains(i)) {
-					this->level_effects[i] = std::make_unique<metternich::effect_list<const character>>();
-				}
-				this->level_effects[i]->process_gsml_data(child_scope);
 			}
 		});
 	} else if (tag == "starting_items") {
@@ -216,7 +193,7 @@ int64_t character_class::get_experience_for_level(const int level) const
 	return defines::get()->get_experience_for_level(level);
 }
 
-std::string character_class::get_level_effects_string(const int level, const metternich::character *character) const
+std::string character_class::get_level_modifier_string(const int level, const metternich::character *character) const
 {
 	std::string str;
 
@@ -248,15 +225,6 @@ std::string character_class::get_level_effects_string(const int level, const met
 		}
 
 		str += level_modifier->get_string(character);
-	}
-
-	const effect_list<const metternich::character> *level_effects = this->get_level_effects(level);
-	if (level_effects != nullptr) {
-		if (!str.empty()) {
-			str += "\n";
-		}
-
-		str += level_effects->get_effects_string(character, read_only_context(character));
 	}
 
 	return str;

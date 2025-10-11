@@ -22,9 +22,6 @@ enum class military_unit_category;
 enum class starting_age_category;
 
 template <typename scope_type>
-class effect_list;
-
-template <typename scope_type>
 class modifier;
 
 class character_class final : public named_data_entry, public data_type<character_class>
@@ -198,21 +195,7 @@ public:
 		return nullptr;
 	}
 
-	const effect_list<const character> *get_level_effects(const int level) const
-	{
-		const auto find_iterator = this->level_effects.find(level);
-		if (find_iterator != this->level_effects.end()) {
-			return find_iterator->second.get();
-		}
-
-		if (this->get_base_class() != nullptr) {
-			return this->get_base_class()->get_level_effects(level);
-		}
-
-		return nullptr;
-	}
-
-	std::string get_level_effects_string(const int level, const metternich::character *character) const;
+	std::string get_level_modifier_string(const int level, const metternich::character *character) const;
 
 	const std::vector<const item_type *> &get_starting_items() const
 	{
@@ -247,7 +230,6 @@ private:
 	std::map<std::string, int> rank_levels; //names for particular levels
 	std::map<int, int64_t> experience_per_level;
 	std::map<int, std::unique_ptr<modifier<const character>>> level_modifiers;
-	std::map<int, std::unique_ptr<effect_list<const character>>> level_effects;
 	std::vector<const item_type *> starting_items;
 };
 

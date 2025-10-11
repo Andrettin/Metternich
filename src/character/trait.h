@@ -20,9 +20,6 @@ template <typename scope_type>
 class and_condition;
 
 template <typename scope_type>
-class effect_list;
-
-template <typename scope_type>
 class factor;
 
 template <typename scope_type>

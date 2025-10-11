@@ -717,16 +717,10 @@ void character_game_data::on_level_gained(const int affected_level, const int mu
 		level_modifier->apply(this->character);
 	}
 
-	const effect_list<const metternich::character> *effects = character_class->get_level_effects(affected_level);
-	if (effects != nullptr) {
-		context ctx(this->character);
-		effects->do_effects(this->character, ctx);
-	}
-
 	if (game::get()->is_running() && this->character == game::get()->get_player_character()) {
-		const std::string level_effects_string = character_class->get_level_effects_string(affected_level, this->character);
+		const std::string level_modifier_string = character_class->get_level_modifier_string(affected_level, this->character);
 
-		engine_interface::get()->add_notification("Level Up", this->get_portrait(), std::format("You have gained a level!\n\n{}", level_effects_string));
+		engine_interface::get()->add_notification("Level Up", this->get_portrait(), std::format("You have gained a level!\n\n{}", level_modifier_string));
 	}
 }
 
