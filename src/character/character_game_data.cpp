@@ -312,7 +312,17 @@ void character_game_data::apply_species_and_class(const int level)
 	const metternich::character_class *character_class = this->get_character_class();
 	if (character_class != nullptr) {
 		this->set_level(std::min(level, character_class->get_max_level()));
+
+		while (!this->target_traits.empty()) {
+			if (this->get_level() == character_class->get_max_level()) {
+				break;
+			}
+
+			this->change_level(1);
+		}
 	}
+
+	assert_throw(this->target_traits.empty());
 
 	this->add_starting_items();
 
@@ -438,6 +448,7 @@ void character_game_data::apply_history(const QDate &start_date)
 	const character_history *character_history = this->character->get_history();
 
 	this->character_class = this->character->get_character_class();
+	this->set_target_traits(character_history->get_traits());
 	const int level = std::max(character_history->get_level(), 1);
 	this->apply_species_and_class(level);
 
@@ -1164,6 +1175,12 @@ void character_game_data::change_trait_count(const trait *trait, const int chang
 
 	assert_throw(new_value >= 0);
 
+	if (change > 0) {
+		if (vector::contains(this->target_traits, trait)) {
+			vector::remove_one(this->target_traits, trait);
+		}
+	}
+
 	if (trait->is_unlimited()) {
 		this->on_trait_gained(trait, change);
 	} else {
@@ -1277,7 +1294,11 @@ void character_game_data::on_trait_gained(const trait *trait, const int multipli
 void character_game_data::add_trait_of_type(const trait_type *trait_type)
 {
 	try {
-		std::vector<const trait *> potential_traits = this->get_potential_traits_from_list(trait_type->get_traits());
+		std::vector<const trait *> potential_traits = this->get_potential_traits_from_list(vector::intersected(this->target_traits, trait_type->get_traits()));
+
+		if (potential_traits.empty()) {
+			potential_traits = this->get_potential_traits_from_list(trait_type->get_traits());
+		}
 
 		//there should always be enough choosable traits
 		assert_throw(!potential_traits.empty());
@@ -1487,7 +1508,7 @@ std::string character_game_data::get_office_modifier_string(const metternich::do
 			continue;
 		}
 
-		const size_t indent = trait->has_hidden_name() ? 0 : 1;
+		const size_t indent = 1;
 
 		std::string trait_modifier_str;
 
@@ -1503,13 +1524,11 @@ std::string character_game_data::get_office_modifier_string(const metternich::do
 			str += "\n";
 		}
 
-		if (!trait->has_hidden_name()) {
-			if (!str.empty()) {
-				str += "\n";
-			}
-
-			str += string::highlight(trait->get_name());
+		if (!str.empty()) {
+			str += "\n";
 		}
+
+		str += string::highlight(trait->get_name());
 
 		str += "\n" + trait_modifier_str;
 	}

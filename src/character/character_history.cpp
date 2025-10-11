@@ -4,6 +4,7 @@
 
 #include "character/character.h"
 #include "character/character_class.h"
+#include "character/trait.h"
 #include "util/assert_util.h"
 
 namespace metternich {
@@ -11,6 +12,7 @@ namespace metternich {
 character_history::character_history(const metternich::character *character) : character(character)
 {
 	this->level = character->get_level();
+	this->traits = character->get_traits();
 }
 
 void character_history::process_gsml_property(const gsml_property &property)
@@ -21,6 +23,9 @@ void character_history::process_gsml_property(const gsml_property &property)
 	if (key == "rank") {
 		assert_throw(this->character->get_character_class() != nullptr);
 		this->level = this->character->get_character_class()->get_rank_level(value);
+	} else if (key == "trait") {
+		const trait *trait = trait::get(value);
+		this->traits.push_back(trait);
 	} else {
 		data_entry_history::process_gsml_property(property);
 	}

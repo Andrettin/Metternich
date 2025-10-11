@@ -4,6 +4,7 @@
 
 #include "character/character_attribute.h"
 #include "character/character_class.h"
+#include "character/trait.h"
 #include "script/modifier.h"
 #include "species/species.h"
 
@@ -21,6 +22,7 @@ monster_type::~monster_type()
 void monster_type::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
+	const std::vector<std::string> &values = scope.get_values();
 
 	if (tag == "attribute_ratings") {
 		scope.for_each_property([&](const gsml_property &property) {
@@ -29,6 +31,10 @@ void monster_type::process_gsml_scope(const gsml_data &scope)
 
 			this->attribute_ratings[character_attribute::get(key)] = value;
 		});
+	} else if (tag == "traits") {
+		for (const std::string &value : values) {
+			this->traits.push_back(trait::get(value));
+		}
 	} else if (tag == "modifier") {
 		auto modifier = std::make_unique<metternich::modifier<const character>>();
 		modifier->process_gsml_data(scope);

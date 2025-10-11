@@ -518,6 +518,11 @@ public:
 		this->set_commanded_military_unit_type_stat_modifier(type, stat, this->get_commanded_military_unit_type_stat_modifier(type, stat) + change);
 	}
 
+	void set_target_traits(const std::vector<const trait *> &traits)
+	{
+		this->target_traits = traits;
+	}
+
 	bool has_status_effect(const status_effect *status_effect) const
 	{
 		return this->get_status_effect_rounds(status_effect) > 0;
@@ -604,6 +609,7 @@ private:
 	data_entry_map<item_slot, std::vector<item *>> equipped_items;
 	std::map<military_unit_stat, centesimal_int> commanded_military_unit_stat_modifiers;
 	military_unit_type_map<std::map<military_unit_stat, centesimal_int>> commanded_military_unit_type_stat_modifiers;
+	std::vector<const trait *> target_traits;
 	data_entry_map<status_effect, int> status_effect_rounds; //doesn't need to be saved since the game cannot be saved from within combat
 };
 

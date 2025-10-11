@@ -12,6 +12,7 @@ class character;
 class domain;
 class province;
 class site;
+class trait;
 
 class character_history final : public data_entry_history
 {
@@ -36,6 +37,11 @@ public:
 		return this->level;
 	}
 
+	const std::vector<const trait *> &get_traits() const
+	{
+		return this->traits;
+	}
+
 	const province *get_deployment_province() const
 	{
 		return this->deployment_province;
@@ -45,6 +51,7 @@ private:
 	const metternich::character *character = nullptr;
 	const metternich::domain *domain = nullptr;
 	int level = 0;
+	std::vector<const trait *> traits;
 	const province *deployment_province = nullptr;
 };
 

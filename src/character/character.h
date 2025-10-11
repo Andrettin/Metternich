@@ -52,9 +52,6 @@ template <typename scope_type>
 class and_condition;
 
 template <typename scope_type>
-class effect_list;
-
-template <typename scope_type>
 class modifier;
 
 class character final : public character_base, public data_type<character>
@@ -94,7 +91,7 @@ public:
 
 	static bool skill_compare(const character *lhs, const character *rhs);
 
-	static character *generate(const metternich::species *species, const metternich::character_class *character_class, const int level, const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const bool temporary = false);
+	static character *generate(const metternich::species *species, const metternich::character_class *character_class, const int level, const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const std::vector<const trait *> &traits, const bool temporary = false);
 	static character *generate(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const bool temporary = false);
 	static std::shared_ptr<character_reference> generate_temporary(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site);
 

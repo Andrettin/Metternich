@@ -13,6 +13,7 @@ namespace metternich {
 class character_attribute;
 class character_class;
 class species;
+class trait;
 
 template <typename scope_type>
 class modifier;
@@ -74,6 +75,11 @@ public:
 		return std::nullopt;
 	}
 
+	const std::vector<const trait *> &get_traits() const
+	{
+		return this->traits;
+	}
+
 	const modifier<const character> *get_modifier() const
 	{
 		return this->modifier.get();
@@ -90,6 +96,7 @@ private:
 	int64_t experience_award = 0; //the experience award for defeating the monster
 	data_entry_map<character_attribute, std::string> attribute_ratings;
 	data_entry_map<character_attribute, std::pair<int, int>> attribute_ranges;
+	std::vector<const trait *> traits;
 	std::unique_ptr<const modifier<const character>> modifier;
 };
 

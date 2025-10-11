@@ -22,7 +22,6 @@
 #include "religion/deity.h"
 #include "religion/religion.h"
 #include "script/condition/and_condition.h"
-#include "script/effect/effect_list.h"
 #include "script/modifier.h"
 #include "species/phenotype.h"
 #include "species/species.h"
@@ -103,7 +102,7 @@ bool character::skill_compare(const character *lhs, const character *rhs)
 	return lhs->get_identifier() < rhs->get_identifier();
 }
 
-character *character::generate(const metternich::species *species, const metternich::character_class *character_class, const int level, const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const bool temporary)
+character *character::generate(const metternich::species *species, const metternich::character_class *character_class, const int level, const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const std::vector<const trait *> &traits, const bool temporary)
 {
 	assert_throw(species != nullptr);
 
@@ -150,6 +149,7 @@ character *character::generate(const metternich::species *species, const mettern
 
 	generated_character->reset_game_data();
 	generated_character->get_game_data()->set_character_class(character_class);
+	generated_character->get_game_data()->set_target_traits(traits);
 	generated_character->get_game_data()->apply_species_and_class(level);
 	generated_character->get_game_data()->on_setup_finished();
 
@@ -159,7 +159,7 @@ character *character::generate(const metternich::species *species, const mettern
 
 character *character::generate(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const bool temporary)
 {
-	return character::generate(monster_type->get_species(), monster_type->get_character_class(), monster_type->get_level(), monster_type, culture, religion, home_site, temporary);
+	return character::generate(monster_type->get_species(), monster_type->get_character_class(), monster_type->get_level(), monster_type, culture, religion, home_site, monster_type->get_traits(), temporary);
 }
 
 std::shared_ptr<character_reference> character::generate_temporary(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site)
