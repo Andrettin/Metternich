@@ -31,12 +31,21 @@ mage = {
 	level_modifiers = {
 		1 = {
 			hit_dice = 1d4
+			trait_of_type = proficiency
+			trait_of_type = proficiency
+			trait_of_type = proficiency
+			trait_of_type = proficiency
 		}
 		2 = {
 			hit_dice = 1d4
 		}
 		3 = {
 			hit_dice = 1d4
+		}
+	}
+	recurring_level_modifiers = {
+		3 = {
+			trait_of_type = proficiency
 		}
 	}
 	starting_items = {

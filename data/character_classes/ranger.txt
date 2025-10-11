@@ -36,12 +36,20 @@ ranger = {
 	level_modifiers = {
 		1 = {
 			hit_dice = 1d8 #as Cleric
+			trait_of_type = proficiency
+			trait_of_type = proficiency
+			trait_of_type = proficiency
 		}
 		2 = {
 			hit_dice = 1d8
 		}
 		3 = {
 			hit_dice = 1d8
+		}
+	}
+	recurring_level_modifiers = {
+		3 = {
+			trait_of_type = proficiency
 		}
 	}
 }
