@@ -5,6 +5,7 @@
 #include "character/character_attribute.h"
 #include "character/level_bonus_table.h"
 #include "character/saving_throw_type.h"
+#include "character/skill.h"
 #include "character/starting_age_category.h"
 #include "database/defines.h"
 #include "item/item_type.h"
@@ -40,6 +41,10 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 
 			this->saving_throw_bonus_tables[saving_throw_type::get(key)] = level_bonus_table::get(value);
 		});
+	} else if (tag == "class_skills") {
+		for (const std::string &value : values) {
+			this->class_skills.insert(skill::get(value));
+		}
 	} else if (tag == "allowed_species") {
 		for (const std::string &value : values) {
 			this->allowed_species.push_back(species::get(value));
@@ -152,6 +157,10 @@ void character_class::check() const
 		if (saving_throw_bonus_table == nullptr) {
 			throw std::runtime_error(std::format("Character class \"{}\" has no saving throw bonus table for saving throw type \"{}\".", this->get_identifier(), saving_throw_type->get_identifier()));
 		}
+	}
+
+	if (this->get_class_skills().empty()) {
+		throw std::runtime_error(std::format("Character class \"{}\" has no class skills.", this->get_identifier()));
 	}
 
 	for (const species *species : this->allowed_species) {

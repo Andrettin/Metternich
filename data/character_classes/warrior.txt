@@ -8,6 +8,16 @@ warrior = {
 	saving_throw_bonus_tables = {
 		save_vs_poison = warrior_save_vs_poison_bonus
 	}
+	class_skills = {
+		administration
+		agriculture
+		heraldry
+		law
+		leadership
+		
+		siegecraft
+		strategy
+	}
 	allowed_species = {
 		dwarf
 		elf
@@ -48,9 +58,9 @@ warrior = {
 		1 = {
 			hit_dice = 1d10
 			#fortitude = 2
-			trait_of_type = warrior_proficiency
-			trait_of_type = warrior_proficiency
-			trait_of_type = warrior_proficiency
+			trait_of_type = proficiency
+			trait_of_type = proficiency
+			trait_of_type = proficiency
 		}
 		2 = {
 			hit_dice = 1d10
@@ -117,7 +127,7 @@ warrior = {
 		3 = {
 			#reflex = 1
 			#will = 1
-			trait_of_type = warrior_proficiency
+			trait_of_type = proficiency
 		}
 	}
 	starting_items = {

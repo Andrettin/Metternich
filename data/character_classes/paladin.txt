@@ -8,6 +8,16 @@ paladin = {
 	saving_throw_bonus_tables = {
 		save_vs_poison = warrior_save_vs_poison_bonus
 	}
+	class_skills = {
+		administration
+		agriculture
+		heraldry
+		law
+		leadership
+		
+		siegecraft
+		strategy
+	}
 	allowed_species = {
 		human
 	}

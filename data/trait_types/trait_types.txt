@@ -15,19 +15,3 @@ expertise = {
 proficiency = {
 	name = "Proficiency"
 }
-
-mage_proficiency = {
-	name = "Proficiency"
-}
-
-priest_proficiency = {
-	name = "Proficiency"
-}
-
-rogue_proficiency = {
-	name = "Proficiency"
-}
-
-warrior_proficiency = {
-	name = "Proficiency"
-}

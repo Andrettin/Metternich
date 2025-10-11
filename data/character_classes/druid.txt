@@ -7,6 +7,15 @@ druid = {
 	saving_throw_bonus_tables = {
 		save_vs_poison = cleric_save_vs_poison_bonus
 	}
+	class_skills = {
+		administration
+		agriculture
+		heraldry
+		law
+		leadership
+		
+		diplomacy
+	}
 	allowed_species = {
 		half_elf
 		human

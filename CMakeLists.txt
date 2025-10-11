@@ -595,6 +595,7 @@ set(script_condition_HDRS
 	src/script/condition/character_condition.h
 	src/script/condition/character_attribute_condition.h
 	src/script/condition/character_class_condition.h
+	src/script/condition/class_skill_condition.h
 	src/script/condition/coastal_condition.h
 	src/script/condition/commodity_condition.h
 	src/script/condition/condition.h

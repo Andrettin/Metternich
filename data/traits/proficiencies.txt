@@ -3,10 +3,9 @@ administration = {
 	icon = chest
 	types = {
 		proficiency
-		mage_proficiency
-		priest_proficiency
-		rogue_proficiency
-		warrior_proficiency
+	}
+	conditions = {
+		class_skill = administration
 	}
 	modifier = {
 		skill_training = administration
@@ -18,10 +17,9 @@ agriculture = {
 	icon = grain
 	types = {
 		proficiency
-		mage_proficiency
-		priest_proficiency
-		rogue_proficiency
-		warrior_proficiency
+	}
+	conditions = {
+		class_skill = agriculture
 	}
 	modifier = {
 		skill_training = agriculture
@@ -33,7 +31,9 @@ diplomacy = {
 	icon = treaty
 	types = {
 		proficiency
-		priest_proficiency
+	}
+	conditions = {
+		class_skill = diplomacy
 	}
 	modifier = {
 		skill_training = diplomacy
@@ -45,7 +45,9 @@ disguise = {
 	icon = dagger
 	types = {
 		proficiency
-		rogue_proficiency
+	}
+	conditions = {
+		class_skill = disguise
 	}
 	modifier = {
 		skill_training = disguise
@@ -57,10 +59,9 @@ heraldry = {
 	icon = heater_shield
 	types = {
 		proficiency
-		mage_proficiency
-		priest_proficiency
-		rogue_proficiency
-		warrior_proficiency
+	}
+	conditions = {
+		class_skill = heraldry
 	}
 	modifier = {
 		skill_training = heraldry
@@ -72,7 +73,9 @@ intrigue = {
 	icon = dagger
 	types = {
 		proficiency
-		rogue_proficiency
+	}
+	conditions = {
+		class_skill = intrigue
 	}
 	modifier = {
 		skill_training = intrigue
@@ -84,10 +87,9 @@ law = {
 	icon = treaty
 	types = {
 		proficiency
-		mage_proficiency
-		priest_proficiency
-		rogue_proficiency
-		warrior_proficiency
+	}
+	conditions = {
+		class_skill = law
 	}
 	modifier = {
 		skill_training = law
@@ -99,10 +101,9 @@ leadership = {
 	icon = flag
 	types = {
 		proficiency
-		mage_proficiency
-		priest_proficiency
-		rogue_proficiency
-		warrior_proficiency
+	}
+	conditions = {
+		class_skill = leadership
 	}
 	modifier = {
 		skill_training = leadership
@@ -114,7 +115,9 @@ siegecraft = {
 	icon = cannon
 	types = {
 		proficiency
-		warrior_proficiency
+	}
+	conditions = {
+		class_skill = siegecraft
 	}
 	modifier = {
 		skill_training = siegecraft
@@ -126,7 +129,9 @@ strategy = {
 	icon = crossed_sabers
 	types = {
 		proficiency
-		warrior_proficiency
+	}
+	conditions = {
+		class_skill = strategy
 	}
 	modifier = {
 		skill_training = strategy

@@ -132,6 +132,24 @@ public:
 		return nullptr;
 	}
 
+	const data_entry_set<skill> &get_class_skills() const
+	{
+		if (!this->class_skills.empty()) {
+			return this->class_skills;
+		}
+
+		if (this->get_base_class() != nullptr) {
+			return this->get_base_class()->get_class_skills();
+		}
+
+		return this->class_skills;
+	}
+
+	bool has_class_skill(const skill *skill) const
+	{
+		return this->get_class_skills().contains(skill);
+	}
+
 	bool is_allowed_for_species(const species *species) const;
 	void add_allowed_species(const species *species);
 
@@ -223,6 +241,7 @@ private:
 	technology *obsolescence_technology = nullptr;
 	const level_bonus_table *to_hit_bonus_table = nullptr;
 	data_entry_map<saving_throw_type, const level_bonus_table *> saving_throw_bonus_tables;
+	data_entry_set<skill> class_skills;
 	std::vector<const species *> allowed_species;
 	data_entry_map<character_attribute, int> min_attribute_values;
 	std::map<std::string, int> rank_levels; //names for particular levels
