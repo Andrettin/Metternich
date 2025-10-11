@@ -707,7 +707,8 @@ void character_game_data::on_level_gained(const int affected_level, const int mu
 		this->change_to_hit_bonus(character_class->get_to_hit_bonus_table()->get_bonus_per_level(affected_level) * multiplier);
 	}
 
-	for (const auto &[saving_throw_type, saving_throw_bonus_table] : character_class->get_saving_throw_bonus_tables()) {
+	for (const saving_throw_type *saving_throw_type : saving_throw_type::get_all()) {
+		const level_bonus_table *saving_throw_bonus_table = character_class->get_saving_throw_bonus_table(saving_throw_type);
 		this->change_saving_throw_bonus(saving_throw_type, saving_throw_bonus_table->get_bonus_per_level(affected_level) * multiplier);
 	}
 

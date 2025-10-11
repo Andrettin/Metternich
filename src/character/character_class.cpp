@@ -147,8 +147,11 @@ void character_class::check() const
 		throw std::runtime_error(std::format("Character class \"{}\" has no to hit bonus table.", this->get_identifier()));
 	}
 
-	if (this->get_saving_throw_bonus_tables().empty()) {
-		throw std::runtime_error(std::format("Character class \"{}\" has no saving throw bonus tables.", this->get_identifier()));
+	for (const saving_throw_type *saving_throw_type : saving_throw_type::get_all()) {
+		const level_bonus_table *saving_throw_bonus_table = this->get_saving_throw_bonus_table(saving_throw_type);
+		if (saving_throw_bonus_table == nullptr) {
+			throw std::runtime_error(std::format("Character class \"{}\" has no saving throw bonus table for saving throw type \"{}\".", this->get_identifier(), saving_throw_type->get_identifier()));
+		}
 	}
 
 	for (const species *species : this->allowed_species) {
@@ -158,10 +161,27 @@ void character_class::check() const
 	}
 }
 
+metternich::starting_age_category character_class::get_starting_age_category() const
+{
+	if (this->starting_age_category != starting_age_category::none) {
+		return this->starting_age_category;
+	}
+
+	if (this->get_base_class() != nullptr) {
+		return this->get_base_class()->get_starting_age_category();
+	}
+
+	return starting_age_category::none;
+}
+
 bool character_class::is_allowed_for_species(const species *species) const
 {
-	//FIXME: remove this once all character classes have a list of allowed species
 	if (this->allowed_species.empty()) {
+		if (this->get_base_class() != nullptr) {
+			return this->get_base_class()->is_allowed_for_species(species);
+		}
+
+		//FIXME: remove this once all character classes have a list of allowed species
 		return true;
 	}
 
@@ -180,6 +200,10 @@ int64_t character_class::get_experience_for_level(const int level) const
 		return find_iterator->second;
 	}
 
+	if (this->get_base_class() != nullptr) {
+		return this->get_base_class()->get_experience_for_level(level);
+	}
+
 	return defines::get()->get_experience_for_level(level);
 }
 
@@ -189,13 +213,22 @@ std::string character_class::get_level_effects_string(const int level, const met
 
 	const int to_hit_bonus = this->get_to_hit_bonus_table()->get_bonus_per_level(level);
 	if (to_hit_bonus != 0) {
-		str += std::format("\nTo Hit Bonus: +{}", to_hit_bonus);
+		if (!str.empty()) {
+			str += "\n";
+		}
+
+		str += std::format("To Hit Bonus: +{}", to_hit_bonus);
 	}
 
-	for (const auto &[saving_throw_type, saving_throw_bonus_table] : this->get_saving_throw_bonus_tables()) {
+	for (const saving_throw_type *saving_throw_type : saving_throw_type::get_all()) {
+		const level_bonus_table *saving_throw_bonus_table = this->get_saving_throw_bonus_table(saving_throw_type);
 		const int saving_throw_bonus = saving_throw_bonus_table->get_bonus_per_level(level);
 		if (saving_throw_bonus != 0) {
-			str += std::format("\n{}: +{}", saving_throw_type->get_name(), saving_throw_bonus);
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += std::format("{}: +{}", saving_throw_type->get_name(), saving_throw_bonus);
 		}
 	}
 

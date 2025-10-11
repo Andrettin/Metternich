@@ -31,6 +31,7 @@ class character_class final : public named_data_entry, public data_type<characte
 {
 	Q_OBJECT
 
+	Q_PROPERTY(const metternich::character_class* base_class MEMBER base_class READ get_base_class NOTIFY changed)
 	Q_PROPERTY(const metternich::character_attribute* attribute MEMBER attribute READ get_attribute NOTIFY changed)
 	Q_PROPERTY(metternich::military_unit_category military_unit_category MEMBER military_unit_category READ get_military_unit_category NOTIFY changed)
 	Q_PROPERTY(const metternich::civilian_unit_class* civilian_unit_class MEMBER civilian_unit_class READ get_civilian_unit_class NOTIFY changed)
@@ -51,9 +52,22 @@ public:
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;
 
+	const character_class *get_base_class() const
+	{
+		return this->base_class;
+	}
+
 	const character_attribute *get_attribute() const
 	{
-		return this->attribute;
+		if (this->attribute != nullptr) {
+			return this->attribute;
+		}
+
+		if (this->get_base_class() != nullptr) {
+			return this->get_base_class()->get_attribute();
+		}
+
+		return nullptr;
 	}
 
 	metternich::military_unit_category get_military_unit_category() const
@@ -68,13 +82,18 @@ public:
 
 	int get_max_level() const
 	{
-		return this->max_level;
+		if (this->max_level != 0) {
+			return this->max_level;
+		}
+
+		if (this->get_base_class() != nullptr) {
+			return this->get_base_class()->get_max_level();
+		}
+
+		return 0;
 	}
 
-	metternich::starting_age_category get_starting_age_category() const
-	{
-		return this->starting_age_category;
-	}
+	metternich::starting_age_category get_starting_age_category() const;
 
 	technology *get_required_technology() const
 	{
@@ -88,12 +107,29 @@ public:
 
 	const level_bonus_table *get_to_hit_bonus_table() const
 	{
-		return this->to_hit_bonus_table;
+		if (this->to_hit_bonus_table != nullptr) {
+			return this->to_hit_bonus_table;
+		}
+
+		if (this->get_base_class() != nullptr) {
+			return this->get_base_class()->get_to_hit_bonus_table();
+		}
+
+		return nullptr;
 	}
 
-	const data_entry_map<saving_throw_type, const level_bonus_table *> &get_saving_throw_bonus_tables() const
+	const level_bonus_table *get_saving_throw_bonus_table(const saving_throw_type *saving_throw_type) const
 	{
-		return this->saving_throw_bonus_tables;
+		const auto find_iterator = this->saving_throw_bonus_tables.find(saving_throw_type);
+		if (find_iterator != this->saving_throw_bonus_tables.end()) {
+			return find_iterator->second;
+		}
+
+		if (this->get_base_class() != nullptr) {
+			return this->get_base_class()->get_saving_throw_bonus_table(saving_throw_type);
+		}
+
+		return nullptr;
 	}
 
 	bool is_allowed_for_species(const species *species) const;
@@ -106,6 +142,10 @@ public:
 			return find_iterator->second;
 		}
 
+		if (this->get_base_class() != nullptr) {
+			return this->get_base_class()->get_min_attribute_value(attribute);
+		}
+
 		return 0;
 	}
 
@@ -115,6 +155,10 @@ public:
 
 		if (find_iterator != this->rank_levels.end()) {
 			return find_iterator->second;
+		}
+
+		if (this->get_base_class() != nullptr) {
+			return this->get_base_class()->get_rank_level(rank);
 		}
 
 		throw std::runtime_error(std::format("Invalid rank for class \"{}\": \"{}\".", this->get_identifier(), rank));
@@ -129,6 +173,10 @@ public:
 			return find_iterator->second.get();
 		}
 
+		if (this->get_base_class() != nullptr) {
+			return this->get_base_class()->get_level_modifier(level);
+		}
+
 		return nullptr;
 	}
 
@@ -139,6 +187,10 @@ public:
 			return find_iterator->second.get();
 		}
 
+		if (this->get_base_class() != nullptr) {
+			return this->get_base_class()->get_level_effects(level);
+		}
+
 		return nullptr;
 	}
 
@@ -146,6 +198,14 @@ public:
 
 	const std::vector<const item_type *> &get_starting_items() const
 	{
+		if (!this->starting_items.empty()) {
+			return this->starting_items;
+		}
+
+		if (this->get_base_class() != nullptr) {
+			return this->get_base_class()->get_starting_items();
+		}
+
 		return this->starting_items;
 	}
 
@@ -153,6 +213,7 @@ signals:
 	void changed();
 
 private:
+	const character_class *base_class = nullptr;
 	const character_attribute *attribute = nullptr;
 	metternich::military_unit_category military_unit_category;
 	const metternich::civilian_unit_class *civilian_unit_class = nullptr;
