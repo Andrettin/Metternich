@@ -1,0 +1,11 @@
+vulnerable = {
+	name = "Vulnerable"
+	icon = skull
+	types = {
+		flaw
+		proficiency
+	}
+	modifier = {
+		armor_class = -1
+	}
+}
