@@ -126,7 +126,7 @@ felix_zu_schwarzenberg = { #Source: "Encyclopædia Britannica", 1911, vol. 24, p
 	death_date = 1852
 	skill_multiplier = 0.5
 	traits = {
-		statesman
+		#statesman
 	}
 	
 	#nephew of Karl Philipp zu Schwarzenberg

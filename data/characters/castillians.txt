@@ -8,9 +8,6 @@ juan_de_bermudez = {
 	gender = male
 	birth_date = 1450
 	death_date = 1520
-	traits = {
-		juan_de_bermudez
-	}
 }
 
 isabella_i_of_castille = {
@@ -25,7 +22,7 @@ isabella_i_of_castille = {
 	death_date = 1504.11.26
 	traits = {
 		#expansive
-		spiritual
+		#spiritual
 	}
 }
 
@@ -102,8 +99,8 @@ bartolome_de_las_casas = {
 	death_date = 1566
 	skill_multiplier = 0.5
 	traits = {
-		theologian
-		compassionate
+		#theologian
+		#compassionate
 	}
 }
 
@@ -143,7 +140,7 @@ juan_de_sepulveda = {
 	death_date = 1573
 	skill_multiplier = 0.5
 	traits = {
-		theologian
+		#theologian
 	}
 }
 
@@ -187,7 +184,4 @@ francisco_de_coronado = {
 	gender = male
 	birth_date = 1510
 	death_date = 1544
-	traits = {
-		francisco_de_coronado
-	}
 }

@@ -10,7 +10,7 @@ vilem_rozmberk = {
 	death_date = 1592
 	skill_multiplier = 0.17
 	traits = {
-		treasurer
+		#treasurer
 	}
 }
 
@@ -26,7 +26,7 @@ karel_starsi = {
 	death_date = 1636.11.9
 	skill_multiplier = 0.33
 	traits = {
-		statesman
+		#statesman
 	}
 }
 
@@ -41,7 +41,7 @@ zdenko_adalbert = {
 	death_date = 1628.7.16
 	skill_multiplier = 0.17
 	traits = {
-		statesman
+		#statesman
 	}
 }
 
@@ -57,7 +57,7 @@ jaroslav_borsita = {
 	death_date = 1649.11.21
 	skill_multiplier = 0.17
 	traits = {
-		treasurer
+		#treasurer
 	}
 }
 
@@ -74,7 +74,7 @@ jan_amos_komensky = {
 	death_date = 1670.11.15
 	skill_multiplier = 0.17
 	traits = {
-		philosopher
+		#philosopher
 	}
 }
 
@@ -90,6 +90,6 @@ francis_kinsky = {
 	death_date = 1741
 	skill_multiplier = 0.5
 	traits = {
-		statesman
+		#statesman
 	}
 }

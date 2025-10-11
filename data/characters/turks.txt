@@ -28,7 +28,7 @@ suleiman_i_of_the_ottoman_empire = { #Source: Isaac Asimov, "Cronologia das Ciê
 	death_date = 1566
 	traits = {
 		#philosophical
-		imperialistic
+		#imperialistic
 	}
 	
 	history = {

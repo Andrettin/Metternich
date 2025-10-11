@@ -8,9 +8,6 @@ marco_polo = {
 	gender = male
 	birth_date = 1254.9.15
 	death_date = 1324.1.9
-	traits = {
-		marco_polo
-	}
 }
 
 viridis_visconti = { #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
@@ -36,7 +33,7 @@ antonio_bonfini = {
 	death_date = 1503.6.6
 	skill_multiplier = 0.5
 	traits = {
-		philosopher
+		#philosopher
 	}
 }
 
@@ -50,14 +47,6 @@ leonardo_da_vinci = {
 	gender = male
 	birth_date = 1450.4.15
 	death_date = 1519.5.2
-	conditions = {
-		not = {
-			culture = greek
-		}
-	}
-	traits = {
-		leonardo_da_vinci
-	}
 }
 
 amerigo_vespucci = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 199.
@@ -86,7 +75,7 @@ mercurino_gattinara = {
 	death_date = 1530
 	skill_multiplier = 0.83
 	traits = {
-		statesman
+		#statesman
 	}
 }
 
@@ -113,9 +102,6 @@ giovanni_da_verrazano = { #Source: Isaac Asimov, "Cronologia das Ciências e das
 	gender = male
 	birth_date = 1485
 	death_date = 1528
-	traits = {
-		giovanni_da_verrazano
-	}
 	
 	#explored the North American eastern coast in 1524, and discovered New York Bay
 }
@@ -131,11 +117,8 @@ niccolo_tartaglia = { #Source: Isaac Asimov, "Cronologia das Ciências e das Des
 	birth_date = 1499
 	death_date = 1557
 	skill_multiplier = 0.33
-	conditions = {
-		culture = italian
-	}
 	traits = {
-		philosopher
+		#philosopher
 	}
 	
 	#inventor of method to solve cubic equations
@@ -152,11 +135,8 @@ geronimo_cardano = { #Source: Isaac Asimov, "Cronologia das Ciências e das Desc
 	birth_date = 1501
 	death_date = 1576
 	skill_multiplier = 0.67
-	conditions = {
-		culture = italian
-	}
 	traits = {
-		philosopher
+		#philosopher
 	}
 	
 	#developed the concept of negative numbers

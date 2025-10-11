@@ -10,7 +10,7 @@ joao_ii_of_portugal = {
 	death_date = 1495.10.25
 	traits = {
 		#expansive
-		imperialistic
+		#imperialistic
 	}
 }
 
@@ -36,9 +36,6 @@ ferdinand_magellan = { #Source: Isaac Asimov, "Cronologia das Ciências e das De
 	gender = male
 	birth_date = 1480
 	death_date = 1521
-	traits = {
-		ferdinand_magellan
-	}
 	
 	history = {
 		1519.9.20 = {

@@ -10,7 +10,7 @@ janez_v_valvasor = {
 	death_date = 1693.9.16
 	skill_multiplier = 0.5
 	traits = {
-		natural_scientist
+		#natural_scientist
 	}
 }
 
@@ -26,6 +26,6 @@ jurij_vega = {
 	death_date = 1802.9.26
 	skill_multiplier = 0.33
 	traits = {
-		natural_scientist
+		#natural_scientist
 	}
 }

@@ -10,7 +10,7 @@ montezuma_ii = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descober
 	birth_date = 1466
 	death_date = 1520
 	traits = {
-		aggressive
+		#aggressive
 	}
 	
 	#emperor of the Aztecs

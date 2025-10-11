@@ -56,7 +56,7 @@ friedrich_iii_of_the_holy_roman_empire = { #Source: Eva Demmerle, "Das Haus Habs
 	birth_date = 1415.9.21 #Source: Eva Demmerle, "Das Haus Habsburg", 2011, pp. 47, 245.
 	death_date = 1493 #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
 	traits = {
-		careful
+		#careful
 	}
 	
 	history = {
@@ -78,7 +78,7 @@ sigismund_von_habsburg = {
 	death_date = 1496.3.4
 	skill_multiplier = 0.67
 	traits = {
-		statesman
+		#statesman
 	}
 }
 

@@ -6,12 +6,6 @@ perseus = {
 	home_site = mycenae
 	gender = male
 	start_date = -1550 #possible year of the foundation of Mycenae
-	conditions = {
-		culture = greek
-	}
-	traits = {
-		ferdinand_magellan
-	}
 }
 
 archimedes = {
@@ -23,10 +17,4 @@ archimedes = {
 	gender = male
 	birth_date = -287
 	death_date = -212
-	conditions = {
-		culture = greek
-	}
-	traits = {
-		leonardo_da_vinci
-	}
 }

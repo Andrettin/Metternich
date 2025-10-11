@@ -8,9 +8,6 @@ benjamin_franklin = {
 	gender = male
 	birth_date = 1706
 	death_date = 1790
-	traits = {
-		benjamin_franklin
-	}
 }
 
 george_washington = {
@@ -26,7 +23,7 @@ george_washington = {
 	death_date = 1799
 	skill = 10 #Disciplined: -50% Infantry Cost
 	traits = {
-		disciplined
+		#disciplined
 		#expansive
 	}
 }
@@ -42,7 +39,7 @@ john_adams = {
 	birth_date = 1735
 	death_date = 1826
 	traits = {
-		libertarian
+		#libertarian
 	}
 }
 
@@ -56,9 +53,6 @@ patrick_henry = {
 	gender = male
 	birth_date = 1736
 	death_date = 1799
-	traits = {
-		patrick_henry
-	}
 }
 
 thomas_jefferson = {
@@ -73,7 +67,7 @@ thomas_jefferson = {
 	death_date = 1826
 	skill = 10 #+50% Statesmanship
 	traits = {
-		statesman
+		#statesman
 	}
 }
 
@@ -89,7 +83,7 @@ john_jay = {
 	death_date = 1829
 	skill = 5 #+25% Statesmanship
 	traits = {
-		statesman
+		#statesman
 	}
 }
 
@@ -103,9 +97,6 @@ john_paul_jones = {
 	gender = male
 	birth_date = 1747
 	death_date = 1792
-	traits = {
-		john_paul_jones
-	}
 }
 
 john_jacob_astor = {
@@ -118,9 +109,6 @@ john_jacob_astor = {
 	gender = male
 	birth_date = 1763
 	death_date = 1848
-	traits = {
-		john_jacob_astor
-	}
 }
 
 eli_whitney = {
@@ -135,7 +123,7 @@ eli_whitney = {
 	death_date = 1825
 	skill = 10 #+50% Cotton
 	traits = {
-		cotton_planter
+		#cotton_planter
 	}
 }
 
@@ -149,9 +137,6 @@ washington_irving = {
 	gender = male
 	birth_date = 1783
 	death_date = 1859
-	traits = {
-		washington_irving
-	}
 }
 
 abraham_lincoln = {
@@ -180,7 +165,4 @@ cyrus_mccormick = {
 	gender = male
 	birth_date = 1809
 	death_date = 1884
-	traits = {
-		cyrus_mccormick
-	}
 }

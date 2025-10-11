@@ -11,7 +11,7 @@ ulrich_von_cilli = { #Source: "Encyclopædia Britannica", 1911, vol. 6, p. 366.
 	death_date = 1456.11.9 #died at Belgrade on 1456.11.9
 	skill_multiplier = 0.5
 	traits = {
-		statesman
+		#statesman
 	}
 	
 	#count of Cilli
@@ -44,7 +44,7 @@ georg_peurbach = { #Source: "Encyclopædia Britannica", 1911, vol. 23, p. 39.
 	death_date = 1461
 	skill_multiplier = 0.33
 	traits = {
-		natural_scientist
+		#natural_scientist
 	}
 	
 	#text based on that of the Encyclopædia Britannica, in the public domain
@@ -73,7 +73,7 @@ andreas_stoberl = {
 	death_date = 1515
 	skill_multiplier = 0.33
 	traits = {
-		natural_scientist
+		#natural_scientist
 	}
 }
 
@@ -89,7 +89,7 @@ johannes_cuspinianus = {
 	death_date = 1529
 	skill_multiplier = 0.33
 	traits = {
-		natural_scientist
+		#natural_scientist
 	}
 }
 
@@ -105,7 +105,7 @@ georg_tannstetter = {
 	death_date = 1535.3.26
 	skill_multiplier = 0.33
 	traits = {
-		natural_scientist
+		#natural_scientist
 	}
 }
 
@@ -121,7 +121,7 @@ conrad_haas = {
 	death_date = 1576
 	skill_multiplier = 0.67
 	traits = {
-		army_reformer
+		#army_reformer
 	}
 }
 
@@ -136,7 +136,7 @@ rheticus = {
 	death_date = 1574
 	skill_multiplier = 0.17
 	traits = {
-		naval_reformer
+		#naval_reformer
 	}
 }
 
@@ -152,7 +152,7 @@ wolfgang_von_rumpf = {
 	death_date = 1607
 	skill_multiplier = 0.33
 	traits = {
-		statesman
+		#statesman
 	}
 }
 
@@ -168,7 +168,7 @@ hans_von_eggenberg = {
 	death_date = 1634
 	skill_multiplier = 0.33
 	traits = {
-		statesman
+		#statesman
 	}
 }
 
@@ -184,7 +184,7 @@ katharina_galler = {
 	death_date = 1672.2.12
 	skill_multiplier = 0.33
 	traits = {
-		treasurer
+		#treasurer
 	}
 }
 
@@ -200,7 +200,7 @@ philipp_von_hornigk = {
 	death_date = 1714.10.23
 	skill_multiplier = 0.33
 	traits = {
-		treasurer
+		#treasurer
 	}
 }
 
@@ -216,7 +216,7 @@ johann_von_eggenberg = {
 	death_date = 1710.12.14
 	skill_multiplier = 0.33
 	traits = {
-		merchant
+		#merchant
 	}
 }
 
@@ -232,7 +232,7 @@ franz_ferdinand_von_rummel = {
 	death_date = 1716.3.15
 	skill_multiplier = 0.33
 	traits = {
-		philosopher
+		#philosopher
 	}
 }
 
@@ -248,7 +248,7 @@ joseph_harrach = {
 	death_date = 1764.8.8
 	skill_multiplier = 0.33
 	traits = {
-		statesman
+		#statesman
 	}
 }
 
@@ -264,7 +264,7 @@ josef_wenzel = {
 	death_date = 1772.2.10
 	skill_multiplier = 0.5
 	traits = {
-		army_reformer
+		#army_reformer
 	}
 }
 
@@ -280,7 +280,7 @@ gerard_van_swieten = {
 	death_date = 1772.6.18
 	skill_multiplier = 0.33
 	traits = {
-		natural_scientist
+		#natural_scientist
 	}
 }
 
@@ -296,7 +296,7 @@ wenzel_anton_kaunitz = {
 	death_date = 1794.6.27
 	skill_multiplier = 0.83
 	traits = {
-		statesman
+		#statesman
 	}
 }
 
@@ -312,7 +312,7 @@ leopold_auenbrugger = {
 	death_date = 1809.5.17
 	skill_multiplier = 0.5
 	traits = {
-		natural_scientist
+		#natural_scientist
 	}
 }
 
@@ -328,7 +328,7 @@ franz_mesmer = {
 	death_date = 1815.3.5
 	skill_multiplier = 0.5
 	traits = {
-		natural_scientist
+		#natural_scientist
 	}
 }
 
@@ -344,6 +344,6 @@ joseph_eckhel = {
 	death_date = 1798.5.16
 	skill_multiplier = 0.17
 	traits = {
-		treasurer
+		#treasurer
 	}
 }

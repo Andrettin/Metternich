@@ -10,7 +10,7 @@ philip_the_fair = {
 	death_date = 1314.11.29
 	traits = {
 		#dutiful_cleric
-		temperate
+		#temperate
 	}
 }
 
@@ -41,7 +41,7 @@ jean_calvin = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobert
 	death_date = 1564
 	skill_multiplier = 1
 	traits = {
-		theologian
+		#theologian
 	}
 }
 
@@ -57,7 +57,7 @@ ambroise_pare = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobe
 	death_date = 1590
 	skill_multiplier = 0.67
 	traits = {
-		natural_scientist
+		#natural_scientist
 	}
 	
 	#considered the father of rational surgery
@@ -98,9 +98,6 @@ jacques_marquette = {
 	gender = male
 	birth_date = 1637
 	death_date = 1675
-	traits = {
-		jacques_marquette
-	}
 	
 	history = {
 		1673 = {
@@ -119,9 +116,6 @@ sieur_de_la_salle = {
 	gender = male
 	birth_date = 1643
 	death_date = 1687
-	traits = {
-		sieur_de_la_salle
-	}
 	
 	history = {
 		1682 = {
@@ -142,7 +136,7 @@ louis_xiv_of_france = {
 	birth_date = 1638
 	death_date = 1715
 	traits = {
-		creative
+		#creative
 		#industrious
 	}
 }

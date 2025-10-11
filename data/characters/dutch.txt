@@ -9,7 +9,7 @@ william_the_silent_of_the_netherlands = {
 	birth_date = 1533
 	death_date = 1584
 	traits = {
-		creative
+		#creative
 		#financial
 	}
 }

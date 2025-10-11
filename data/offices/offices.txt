@@ -16,8 +16,8 @@ court_scholar = {
 	}
 	holder_conditions = {
 		or = {
-			trait = natural_scientist
-			trait = philosopher
+			character_class = cleric
+			character_class = mage
 		}
 	}
 }

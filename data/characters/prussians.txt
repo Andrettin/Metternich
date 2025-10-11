@@ -10,7 +10,7 @@ frederick_the_great_of_prussia = {
 	birth_date = 1712
 	death_date = 1786
 	traits = {
-		organized
+		#organized
 		#philosophical
 	}
 }

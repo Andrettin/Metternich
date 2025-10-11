@@ -25,7 +25,7 @@ regiomontanus = { #Source: "Encyclopædia Britannica", 1911, vol. 23, p. 39.
 	death_date = 1476.7.6 #died in Rome on 1476.7.6
 	skill_multiplier = 0.5
 	traits = {
-		natural_scientist
+		#natural_scientist
 	}
 	
 	#text based on that of the Encyclopædia Britannica, in the public domain

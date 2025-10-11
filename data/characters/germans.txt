@@ -11,7 +11,7 @@ nikolaus_von_kues = { #Source: "Encyclopædia Britannica", 1911, vol. 7, pp. 665
 	death_date = 1464.8.11 #died at Lodi in Umbria on 1464.8.11
 	skill_multiplier = 0.83
 	traits = {
-		natural_scientist
+		#natural_scientist
 	}
 	
 	#text based on that of the Encyclopædia Britannica, in the public domain
@@ -43,7 +43,7 @@ johann_widman = {
 	death_date = 1498
 	skill_multiplier = 0.17
 	traits = {
-		natural_scientist
+		#natural_scientist
 	}
 }
 
@@ -73,7 +73,7 @@ martin_luther = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobe
 	death_date = 1546
 	skill_multiplier = 1
 	traits = {
-		theologian
+		#theologian
 	}
 	#monk
 	
@@ -92,7 +92,7 @@ anton_fugger = {
 	death_date = 1560.9.14
 	skill_multiplier = 0.67
 	traits = {
-		treasurer
+		#treasurer
 	}
 }
 
@@ -137,7 +137,7 @@ franz_dietrichstein = {
 	death_date = 1636.9.19
 	skill_multiplier = 0.33
 	traits = {
-		treasurer
+		#treasurer
 	}
 }
 
@@ -151,9 +151,6 @@ johann_sebastian_bach = {
 	gender = male
 	birth_date = 1685
 	death_date = 1750
-	traits = {
-		johann_sebastian_bach
-	}
 }
 
 maximilian_hell = {
@@ -168,7 +165,7 @@ maximilian_hell = {
 	death_date = 1792.4.14
 	skill_multiplier = 0.5
 	traits = {
-		natural_scientist
+		#natural_scientist
 	}
 }
 
@@ -183,7 +180,7 @@ franz_joseph_gall = {
 	death_date = 1828.8.22
 	skill_multiplier = 0.67
 	traits = {
-		natural_scientist
+		#natural_scientist
 	}
 }
 
@@ -199,6 +196,6 @@ johann_spurzheim = {
 	death_date = 1832
 	skill_multiplier = 0.33
 	traits = {
-		natural_scientist
+		#natural_scientist
 	}
 }

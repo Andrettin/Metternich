@@ -10,7 +10,7 @@ tamas_bakocz = { #Source: "Encyclopædia Britannica", 1911, vol. 3, p. 230.
 	death_date = 1521
 	skill_multiplier = 0.5
 	traits = {
-		statesman
+		#statesman
 	}
 	
 	#text based on that of the Encyclopædia Britannica, in the public domain
@@ -42,7 +42,7 @@ istvan_bathory = {
 	death_date = 1534
 	skill_multiplier = 0.33
 	traits = {
-		statesman
+		#statesman
 	}
 }
 
@@ -58,7 +58,7 @@ juraj_thurzo = {
 	death_date = 1616
 	skill_multiplier = 0.33
 	traits = {
-		statesman
+		#statesman
 	}
 }
 
@@ -74,7 +74,7 @@ palffy_janos_iv = {
 	death_date = 1750.3.24
 	skill_multiplier = 0.5
 	traits = {
-		statesman
+		#statesman
 	}
 }
 
@@ -90,6 +90,6 @@ franciszek_rakoczy = {
 	death_date = 1738
 	skill_multiplier = 0.33
 	traits = {
-		statesman
+		#statesman
 	}
 }

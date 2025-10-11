@@ -33,7 +33,7 @@ clemens_wenceslaus_von_metternich = { #Source: "Gothaischer Hofkalender zum Nutz
 	start_date = 1795.9.27 #married
 	skill_multiplier = 1
 	traits = {
-		diplomat
+		#diplomat
 	}
 	
 	history = {

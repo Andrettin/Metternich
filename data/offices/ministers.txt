@@ -7,8 +7,8 @@ chancellor = {
 	}
 	holder_conditions = {
 		or = {
-			trait = diplomat
-			trait = statesman
+			character_class = rogue
+			character_class = warrior
 		}
 	}
 }
@@ -22,9 +22,8 @@ high_admiral = {
 	}
 	holder_conditions = {
 		or = {
-			trait = grand_admiral
-			trait = naval_reformer
-			trait = privateer
+			character_class = rogue
+			character_class = warrior
 		}
 	}
 }
@@ -38,10 +37,9 @@ marshal = {
 	}
 	holder_conditions = {
 		or = {
-			trait = army_organizer
-			trait = army_reformer
-			trait = commandant
-			trait = grand_captain
+			character_class = paladin
+			character_class = ranger
+			character_class = warrior
 		}
 	}
 }
@@ -54,9 +52,6 @@ steward = {
 		game_rule = offices
 	}
 	holder_conditions = {
-		or = {
-			trait = merchant
-			trait = treasurer
-		}
+		character_class = rogue
 	}
 }

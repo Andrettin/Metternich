@@ -7,7 +7,4 @@ sun_tzu = {
 	gender = male
 	birth_date = -771
 	death_date = -256
-	traits = {
-		sun_tzu
-	}
 }

@@ -98,7 +98,7 @@ edward_kelley = {
 	death_date = 1597
 	skill_multiplier = 0.17
 	traits = {
-		merchant
+		#merchant
 	}
 }
 
@@ -114,7 +114,7 @@ francis_bacon = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobe
 	death_date = 1626
 	skill_multiplier = 0.83
 	traits = {
-		philosopher
+		#philosopher
 	}
 	
 	#developed the scientific method
@@ -137,9 +137,6 @@ henry_hudson = {
 	gender = male
 	birth_date = 1565
 	death_date = 1611
-	traits = {
-		henry_hudson
-	}
 }
 
 francis_drake = {
@@ -155,7 +152,7 @@ francis_drake = {
 	death_date = 1596
 	skill = 10 #+50% Light Warship Damage Bonus
 	traits = {
-		privateer
+		#privateer
 	}
 }
 
@@ -183,7 +180,7 @@ john_rolfe = {
 	death_date = 1622
 	skill = 5 #+25% Tobacco
 	traits = {
-		tobacco_planter
+		#tobacco_planter
 	}
 }
 
@@ -197,9 +194,6 @@ john_winthrop = {
 	gender = male
 	birth_date = 1587
 	death_date = 1649
-	traits = {
-		john_winthrop
-	}
 }
 
 john_harvard = {
@@ -212,9 +206,6 @@ john_harvard = {
 	gender = male
 	birth_date = 1607
 	death_date = 1638
-	traits = {
-		john_harvard
-	}
 }
 
 william_penn = {
@@ -230,7 +221,7 @@ william_penn = {
 	death_date = 1718
 	skill = 10 #+50% Piety
 	traits = {
-		theologian
+		#theologian
 	}
 }
 
@@ -244,9 +235,6 @@ isaac_newton = {
 	gender = male
 	birth_date = 1669
 	death_date = 1727.3.31
-	traits = {
-		isaac_newton
-	}
 }
 
 charles_darwin = {
@@ -259,9 +247,6 @@ charles_darwin = {
 	gender = male
 	birth_date = 1809
 	death_date = 1882
-	traits = {
-		charles_darwin
-	}
 }
 
 victoria_i_of_great_britain = {
@@ -276,6 +261,6 @@ victoria_i_of_great_britain = {
 	death_date = 1901
 	traits = {
 		#financial
-		imperialistic
+		#imperialistic
 	}
 }

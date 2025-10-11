@@ -1,17 +1,3 @@
-background = {
-	name = "Background"
-	max_traits = 1
-}
-
-personality = {
-	name = "Personality"
-	max_traits = 1
-}
-
-expertise = {
-	name = "Expertise"
-}
-
 proficiency = {
 	name = "Proficiency"
 }

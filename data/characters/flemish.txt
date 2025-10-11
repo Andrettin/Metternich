@@ -34,7 +34,7 @@ andreas_vesalius = { #Source: Isaac Asimov, "Cronologia das Ciências e das Desc
 		}
 	}
 	traits = {
-		natural_scientist
+		#natural_scientist
 	}
 	
 	#revolutionized the understanding of anatomy

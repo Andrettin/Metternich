@@ -10,6 +10,6 @@ tokugawa_ieyasu = {
 	birth_date = 1543.1.31
 	death_date = 1616.6.1
 	traits = {
-		aggressive
+		#aggressive
 	}
 }
