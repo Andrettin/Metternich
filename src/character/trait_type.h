@@ -19,6 +19,7 @@ class trait_type final : public named_data_entry, public data_type<trait_type>
 	Q_OBJECT
 
 	Q_PROPERTY(int max_traits MEMBER max_traits READ get_max_traits NOTIFY changed)
+	Q_PROPERTY(int none_weight MEMBER none_weight READ get_none_weight NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "trait_type";
@@ -34,6 +35,11 @@ public:
 	int get_max_traits() const
 	{
 		return this->max_traits;
+	}
+
+	int get_none_weight() const
+	{
+		return this->none_weight;
 	}
 
 	const and_condition<character> *get_gain_conditions() const
@@ -61,6 +67,7 @@ signals:
 
 private:
 	int max_traits = 0; //the maximum amount of traits of this type a character can acquire
+	int none_weight = 0;
 	std::unique_ptr<const and_condition<character>> gain_conditions;
 	std::unique_ptr<const modifier<const character>> modifier;
 	std::vector<const trait *> traits;

@@ -52,9 +52,9 @@ DialogBase {
 				
 				TextButton {
 					id: trait_button
-					text: format_text(trait.name)
+					text: format_text(trait ? trait.name : "None")
 					width: trait_choice_dialog.width - 16 * scale_factor
-					tooltip: format_text(small_text(trait.modifier_string))
+					tooltip: trait ? format_text(small_text(trait.modifier_string)) : ""
 					
 					readonly property var trait: model.modelData
 					

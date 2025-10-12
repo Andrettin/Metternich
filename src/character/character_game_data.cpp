@@ -1308,6 +1308,14 @@ void character_game_data::add_trait_of_type(const trait_type *trait_type)
 
 		if (potential_traits.empty()) {
 			potential_traits = this->get_potential_traits_from_list(trait_type->get_traits());
+
+			if (this->character == game::get()->get_player_character()) {
+				potential_traits.push_back(nullptr);
+			} else {
+				for (int i = 0; i < trait_type->get_none_weight(); ++i) {
+					potential_traits.push_back(nullptr);
+				}
+			}
 		}
 
 		//there should always be enough choosable traits
@@ -1315,7 +1323,13 @@ void character_game_data::add_trait_of_type(const trait_type *trait_type)
 
 		if (this->character == game::get()->get_player_character()) {
 			std::sort(potential_traits.begin(), potential_traits.end(), [](const trait *lhs, const trait *rhs) {
-				return lhs->get_identifier() < rhs->get_identifier();
+				if (lhs != nullptr && rhs != nullptr) {
+					return lhs->get_identifier() < rhs->get_identifier();
+				} else if ((lhs == nullptr) != (rhs == nullptr)) {
+					return lhs != nullptr;
+				}
+
+				return false;
 			});
 
 			emit engine_interface::get()->trait_choosable(this->character, trait_type, container::to_qvariant_list(potential_traits));
@@ -1334,7 +1348,9 @@ void character_game_data::remove_trait_of_type(const trait_type *trait_type)
 		std::vector<const trait *> &chosen_traits = this->trait_choices[trait_type];
 		assert_throw(!chosen_traits.empty());
 
-		this->change_trait_count(chosen_traits.back(), -1);
+		if (chosen_traits.back() != nullptr) {
+			this->change_trait_count(chosen_traits.back(), -1);
+		}
 		chosen_traits.pop_back();
 
 		if (chosen_traits.empty()) {
@@ -1397,7 +1413,9 @@ void character_game_data::on_trait_chosen(const trait *trait, const trait_type *
 {
 	this->trait_choices[trait_type].push_back(trait);
 
-	this->change_trait_count(trait, 1);
+	if (trait != nullptr) {
+		this->change_trait_count(trait, 1);
+	}
 }
 
 std::vector<const trait *> character_game_data::get_potential_traits_from_list(const std::vector<const trait *> &traits) const
@@ -1406,6 +1424,11 @@ std::vector<const trait *> character_game_data::get_potential_traits_from_list(c
 	bool found_unacquired_trait = false;
 
 	for (const trait *trait : traits) {
+		if (trait == nullptr) {
+			potential_traits.push_back(trait);
+			continue;
+		}
+
 		if (!this->can_gain_trait(trait)) {
 			continue;
 		}
