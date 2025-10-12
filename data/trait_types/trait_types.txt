@@ -13,3 +13,8 @@ flaw = {
 		trait_of_type = proficiency
 	}
 }
+
+past_experience = {
+	name = "Past Experience"
+	none_weight = 11
+}

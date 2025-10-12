@@ -50,6 +50,7 @@ rogue = {
 			skill_training = open_locks
 			find_disarm_traps = 20 #5% base + 15%
 			open_locks = 25 #10% base + 15%
+			trait_of_type = past_experience
 			trait_of_type = proficiency
 			trait_of_type = proficiency
 			trait_of_type = proficiency

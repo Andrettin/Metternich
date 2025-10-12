@@ -36,6 +36,7 @@ druid = {
 	level_modifiers = {
 		1 = {
 			hit_dice = 1d8 #as Cleric
+			trait_of_type = past_experience
 			trait_of_type = proficiency
 			trait_of_type = proficiency
 			trait_of_type = proficiency

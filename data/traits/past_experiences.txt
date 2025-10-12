@@ -1,0 +1,149 @@
+complete_dedication = {
+	name = "Complete Dedication"
+	icon = labor
+	weight = 1
+	types = {
+		past_experience
+	}
+	conditions = {
+		character_class = warrior
+	}
+	gain_conditions = {
+		strength < 16
+		constitution < 16
+	}
+	modifier = {
+		strength = 1
+		constitution = 1
+	}
+}
+
+hard_training = {
+	name = "Hard Training"
+	icon = labor
+	weight = 1
+	types = {
+		past_experience
+	}
+	conditions = {
+		character_class = warrior
+	}
+	gain_conditions = {
+		strength < 15
+		constitution < 15
+	}
+	modifier = {
+		strength = 1
+		constitution = 1
+	}
+}
+
+training_accident = {
+	name = "Training Accident"
+	icon = skull
+	weight = 1
+	types = {
+		past_experience
+	}
+	conditions = {
+		not = {
+			character_class = mage
+		}
+	}
+	gain_conditions = {
+		dexterity > 1
+	}
+	modifier = {
+		dexterity = -1
+	}
+}
+
+patient_practice = {
+	name = "Patient Practice"
+	icon = cog
+	weight = 1
+	types = {
+		past_experience
+	}
+	conditions = {
+		not = {
+			character_class = mage
+		}
+	}
+	gain_conditions = {
+		dexterity < 16
+	}
+	modifier = {
+		dexterity = 1
+	}
+}
+
+good_advisor = {
+	name = "Good Advisor"
+	icon = research
+	weight = 1
+	types = {
+		past_experience
+	}
+	gain_conditions = {
+		wisdom < 15
+	}
+	modifier = {
+		wisdom = 1
+	}
+}
+
+good_health_good_environment = {
+	name = "Good Health, Good Environment"
+	icon = heart
+	weight = 1
+	types = {
+		past_experience
+	}
+	conditions = {
+		not = {
+			character_class = warrior
+		}
+	}
+	modifier = {
+		strength = 1
+	}
+}
+
+learned_bad_habits = {
+	name = "Learned Bad Habits"
+	icon = skull
+	weight = 1
+	types = {
+		past_experience
+	}
+	conditions = {
+		not = {
+			character_class = warrior
+		}
+	}
+	gain_conditions = {
+		intelligence > 12
+	}
+	modifier = {
+		intelligence = -1
+	}
+}
+
+had_access_to_good_library = {
+	name = "Had Access to Good Library"
+	icon = book
+	weight = 1
+	types = {
+		past_experience
+	}
+	conditions = {
+		character_class = mage
+	}
+	gain_conditions = {
+		intelligence < 15
+	}
+	modifier = {
+		intelligence = 1
+	}
+}

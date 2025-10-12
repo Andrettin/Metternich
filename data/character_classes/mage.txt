@@ -34,6 +34,7 @@ mage = {
 	level_modifiers = {
 		1 = {
 			hit_dice = 1d4
+			trait_of_type = past_experience
 			trait_of_type = proficiency
 			trait_of_type = proficiency
 			trait_of_type = proficiency

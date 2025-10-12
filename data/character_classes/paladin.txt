@@ -33,6 +33,7 @@ paladin = {
 	level_modifiers = {
 		1 = {
 			hit_dice = 1d10 #as Warrior
+			trait_of_type = past_experience
 			trait_of_type = proficiency
 			trait_of_type = proficiency
 			trait_of_type = proficiency
