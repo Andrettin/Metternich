@@ -1,27 +1,27 @@
-nimble_fingers = {
-	name = "Nimble Fingers"
-	icon = dagger
-	types = {
-		proficiency
-	}
-	conditions = {
-		skill_training = find_disarm_traps
-		skill_training = open_locks
-	}
-	modifier = {
-		find_disarm_traps = 10
-		open_locks = 10
-	}
-}
+#nimble_fingers = {
+#	name = "Nimble Fingers"
+#	icon = dagger
+#	types = {
+#		proficiency
+#	}
+#	conditions = {
+#		skill_training = find_disarm_traps
+#		skill_training = open_locks
+#	}
+#	modifier = {
+#		find_disarm_traps = 10
+#		open_locks = 10
+#	}
+#}
 
-toughness = {
-	name = "Toughness"
-	icon = labor
-	unlimited = true
-	types = {
-		proficiency
-	}
-	modifier = {
-		hit_points = 3
-	}
-}
+#toughness = {
+#	name = "Toughness"
+#	icon = labor
+#	unlimited = true
+#	types = {
+#		proficiency
+#	}
+#	modifier = {
+#		hit_points = 3
+#	}
+#}
