@@ -26,6 +26,48 @@ agriculture = {
 	}
 }
 
+animal_handling = {
+	name = "Animal Handling"
+	icon = horses
+	types = {
+		proficiency
+	}
+	conditions = {
+		class_skill = animal_handling
+	}
+	modifier = {
+		skill_training = animal_handling
+	}
+}
+
+animal_training = {
+	name = "Animal Training"
+	icon = horses
+	types = {
+		proficiency
+	}
+	conditions = {
+		class_skill = animal_training
+	}
+	modifier = {
+		skill_training = animal_training
+	}
+}
+
+artistic_ability = {
+	name = "Artistic Ability"
+	icon = painting
+	types = {
+		proficiency
+	}
+	conditions = {
+		class_skill = artistic_ability
+	}
+	modifier = {
+		skill_training = artistic_ability
+	}
+}
+
 diplomacy = {
 	name = "Diplomacy"
 	icon = treaty

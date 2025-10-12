@@ -11,6 +11,9 @@ rogue = {
 	class_skills = {
 		administration
 		agriculture
+		animal_handling
+		animal_training
+		artistic_ability
 		heraldry
 		law
 		leadership

@@ -10,6 +10,24 @@ agriculture = {
 	check_dice = 1d20
 }
 
+animal_handling = {
+	name = "Animal Handling"
+	icon = horses
+	check_dice = 1d20
+}
+
+animal_training = {
+	name = "Animal Training"
+	icon = horses
+	check_dice = 1d20
+}
+
+artistic_ability = {
+	name = "Artistic Ability"
+	icon = painting
+	check_dice = 1d20
+}
+
 diplomacy = {
 	name = "Diplomacy"
 	icon = treaty

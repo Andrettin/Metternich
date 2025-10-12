@@ -3,11 +3,15 @@ wisdom = {
 	value_modifiers = {
 		1 = {
 			#will = -5
+			animal_handling = -1
 			diplomacy = -1
 		}
 	}
 	recurring_value_modifiers = {
 		1 = {
+			animal_handling = 1
+			animal_training = 1
+			artistic_ability = 1
 			diplomacy = 1
 			intrigue = 1
 		}
