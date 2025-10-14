@@ -44,19 +44,6 @@ class game final : public QObject, public singleton<game>
 	Q_PROPERTY(const metternich::game_rules* rules READ get_rules CONSTANT)
 
 public:
-	struct combat_parameters final
-	{
-		bool surprise = false;
-		int attacker_to_hit_modifier = 0;
-		int defender_to_hit_modifier = 0;
-	};
-
-	struct combat_result final
-	{
-		bool attacker_victory = false;
-		int64_t experience_award = 0;
-	};
-
 	static QDate normalize_date(const QDate &date);
 
 	game();
@@ -290,13 +277,6 @@ public:
 	void add_fired_event(const metternich::event *event);
 
 	bool do_battle(army *attacking_army, army *defending_army);
-
-	[[nodiscard]]
-	combat_result do_combat(party *attacking_party, party *defending_party, const combat_parameters &parameters);
-
-	[[nodiscard]]
-	int64_t do_combat_round(metternich::party *party, metternich::party *enemy_party, const int to_hit_modifier);
-
 signals:
 	void running_changed();
 	void setup_finished();

@@ -13,7 +13,7 @@
 #include "domain/country_government.h"
 #include "domain/domain.h"
 #include "engine_interface.h"
-#include "game/game.h"
+#include "game/combat.h"
 #include "script/context.h"
 #include "script/effect/effect.h"
 #include "script/effect/effect_list.h"
@@ -95,12 +95,12 @@ public:
 
 		party enemy_party(enemy_characters);
 
-		game::combat_parameters parameters;
-		parameters.surprise = this->surprise;
-		parameters.attacker_to_hit_modifier = this->attacker ? this->to_hit_modifier : 0;
-		parameters.defender_to_hit_modifier = this->attacker ? 0 : this->to_hit_modifier;
+		combat combat(this->attacker ? ctx.party.get() : &enemy_party, this->attacker ? &enemy_party : ctx.party.get());
+		combat.set_surprise(this->surprise);
+		combat.set_attacker_to_hit_modifier(this->attacker ? this->to_hit_modifier : 0);
+		combat.set_defender_to_hit_modifier(this->attacker ? 0 : this->to_hit_modifier);
 
-		const game::combat_result result = this->attacker ? game::get()->do_combat(ctx.party.get(), &enemy_party, parameters) : game::get()->do_combat(&enemy_party, ctx.party.get(), parameters);
+		const combat::result result = combat.run();
 
 		const bool success = this->attacker ? result.attacker_victory : !result.attacker_victory;
 
