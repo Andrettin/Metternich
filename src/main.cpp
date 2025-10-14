@@ -48,6 +48,7 @@
 #include "infrastructure/wonder.h"
 #include "item/affix_type.h"
 #include "item/item.h"
+#include "map/combat_map_grid_model.h"
 #include "map/diplomatic_map_image_provider.h"
 #include "map/elevation_type.h"
 #include "map/forestation_type.h"
@@ -237,6 +238,7 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<wonder>("", 1);
 
 		qmlRegisterType<character_data_model>("character_data_model", 1, 0, "CharacterDataModel");
+		qmlRegisterType<combat_map_grid_model>("combat_map_grid_model", 1, 0, "CombatMapGridModel");
 		qmlRegisterType<family_tree_model>("family_tree_model", 1, 0, "FamilyTreeModel");
 		qmlRegisterType<map_country_model>("map_country_model", 1, 0, "MapCountryModel");
 		qmlRegisterType<map_grid_model>("map_grid_model", 1, 0, "MapGridModel");
