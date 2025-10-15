@@ -111,6 +111,8 @@ public:
 		combat->set_victory_effects(this->victory_effects.get());
 		combat->set_defeat_effects(this->defeat_effects.get());
 
+		combat->initialize();
+
 		if (scope == game::get()->get_player_country()) {
 			game::get()->set_current_combat(std::move(combat));
 		} else {

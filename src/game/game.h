@@ -43,6 +43,7 @@ class game final : public QObject, public singleton<game>
 	Q_PROPERTY(const metternich::character* player_character READ get_player_character WRITE set_player_character NOTIFY player_character_changed)
 	Q_PROPERTY(const metternich::domain* player_country READ get_player_country WRITE set_player_country NOTIFY player_country_changed)
 	Q_PROPERTY(bool combat_running READ is_combat_running NOTIFY combat_running_changed)
+	Q_PROPERTY(const metternich::combat* current_combat READ get_current_combat NOTIFY current_combat_changed)
 	Q_PROPERTY(const metternich::game_rules* rules READ get_rules CONSTANT)
 
 public:
@@ -300,6 +301,7 @@ signals:
 	void player_character_changed();
 	void player_country_changed();
 	void combat_running_changed();
+	void current_combat_changed();
 	void game_over();
 
 private:

@@ -8,6 +8,7 @@ Item {
 	property string middle_status_text: ""
 	property string right_status_text: ""
 	readonly property int tile_size: metternich.defines.tile_size.width * scale_factor
+	readonly property var combat: metternich.game.current_combat
 	
 	Rectangle {
 		id: combat_map_background

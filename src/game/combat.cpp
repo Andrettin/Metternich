@@ -12,8 +12,10 @@
 #include "script/effect/effect_list.h"
 #include "ui/portrait.h"
 #include "util/assert_util.h"
+#include "util/container_util.h"
 #include "util/dice.h"
 #include "util/number_util.h"
+#include "util/point_util.h"
 #include "util/random.h"
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
@@ -32,6 +34,63 @@ combat::~combat()
 void combat::set_generated_party(std::unique_ptr<party> &&generated_party)
 {
 	this->generated_party = std::move(generated_party);
+}
+
+QVariantList combat::get_character_infos_qvariant_list() const
+{
+	return container::to_qvariant_list(this->character_infos);
+}
+
+void combat::remove_character_info(const character *character)
+{
+	for (size_t i = 0; i < this->character_infos.size(); ++i) {
+		if (this->character_infos[i]->get_character() == character) {
+			this->character_infos.erase(this->character_infos.begin() + i);
+			return;
+		}
+	}
+}
+
+void combat::initialize()
+{
+	static constexpr QPoint attacker_start_pos(1, combat::map_height / 2);
+	static constexpr QPoint defender_start_pos(combat::map_width - 2, combat::map_height / 2);
+
+	this->deploy_characters(this->attacking_party->get_characters(), attacker_start_pos);
+	this->deploy_characters(this->defending_party->get_characters(), defender_start_pos);
+}
+
+void combat::deploy_characters(const std::vector<const character *> &characters, const QPoint &start_pos)
+{
+	std::vector<QPoint> tiles_to_check{ start_pos };
+	size_t last_check_index = 0;
+
+	for (const character *character : characters) {
+		for (size_t i = last_check_index; i < tiles_to_check.size(); ++i) {
+			const QPoint &tile_pos = tiles_to_check.at(i);
+
+			if (this->is_tile_attacker_escape(tile_pos) || this->is_tile_defender_escape(tile_pos)) {
+				continue;
+			}
+
+			combat_tile &tile = this->get_tile(tile_pos);
+			if (tile.character != nullptr) {
+				point::for_each_adjacent(tile_pos, [&](const QPoint &adjacent_pos) {
+					if (!vector::contains(tiles_to_check, adjacent_pos)) {
+						tiles_to_check.push_back(adjacent_pos);
+					}
+				});
+
+				continue;
+			}
+
+			last_check_index = i;
+			tile.character = character;
+			auto character_info = make_qunique<combat_character_info>(character, tile_pos);
+			this->character_infos.push_back(std::move(character_info));
+			break;
+		}
+	}
 }
 
 void combat::start()
@@ -118,6 +177,7 @@ int64_t combat::do_party_round(metternich::party *party, metternich::party *enem
 		if (chosen_enemy->get_game_data()->is_dead()) {
 			experience_award += chosen_enemy->get_game_data()->get_experience_award();
 			enemy_party->remove_character(chosen_enemy);
+			this->remove_character_info(chosen_enemy);
 		}
 	}
 

@@ -128,6 +128,7 @@ QDate game::normalize_date(const QDate &date)
 
 game::game()
 {
+	connect(this, &game::current_combat_changed, this, &game::combat_running_changed);
 }
 
 game::~game()
@@ -2270,7 +2271,7 @@ void game::set_current_combat(qunique_ptr<combat> &&combat)
 {
 	this->current_combat = std::move(combat);
 
-	emit combat_running_changed();
+	emit current_combat_changed();
 }
 
 }

@@ -2,18 +2,57 @@
 
 #include "script/context.h"
 #include "util/dice.h"
+#include "util/qunique_ptr.h"
+
+Q_MOC_INCLUDE("character/character.h")
 
 namespace metternich {
 
+class character;
 class character_reference;
 class party;
 
 template <typename scope_type>
 class effect_list;
 
+struct combat_tile final
+{
+	const metternich::character *character = nullptr;
+};
+
+class combat_character_info final : public QObject
+{
+	Q_OBJECT
+
+		Q_PROPERTY(const metternich::character *character READ get_character CONSTANT)
+		Q_PROPERTY(const QPoint tile_pos READ get_tile_pos CONSTANT)
+
+public:
+	explicit combat_character_info(const metternich::character *character, const QPoint &tile_pos)
+		: character(character), tile_pos(tile_pos)
+	{
+	}
+
+	const metternich::character *get_character() const
+	{
+		return this->character;
+	}
+
+	const QPoint &get_tile_pos() const
+	{
+		return this->tile_pos;
+	}
+
+private:
+	const metternich::character *character = nullptr;
+	QPoint tile_pos;
+};
+
 class combat final : public QObject
 {
 	Q_OBJECT
+
+	Q_PROPERTY(QVariantList character_infos READ get_character_infos_qvariant_list NOTIFY character_infos_changed)
 
 public:
 	static constexpr int map_width = 16;
@@ -71,6 +110,11 @@ public:
 		this->defeat_effects = defeat_effects;
 	}
 
+	QVariantList get_character_infos_qvariant_list() const;
+	void remove_character_info(const character *character);
+
+	void initialize();
+	void deploy_characters(const std::vector<const character *> &characters, const QPoint &start_pos);
 	void start();
 	void do_round();
 
@@ -79,7 +123,23 @@ public:
 
 	void process_result();
 
+	combat_tile &get_tile(const QPoint &tile_pos)
+	{
+		return this->tiles.at(tile_pos.x()).at(tile_pos.y());
+	}
+
+	bool is_tile_attacker_escape(const QPoint &tile_pos) const
+	{
+		return tile_pos.x() == 0;
+	}
+
+	bool is_tile_defender_escape(const QPoint &tile_pos) const
+	{
+		return tile_pos.x() == combat::map_width - 1;
+	}
+
 signals:
+	void character_infos_changed();
 
 private:
 	party *attacking_party = nullptr;
@@ -96,6 +156,8 @@ private:
 	context ctx;
 	const effect_list<const domain> *victory_effects = nullptr;
 	const effect_list<const domain> *defeat_effects = nullptr;
+	std::array<std::array<combat_tile, combat::map_height>, combat::map_width> tiles;
+	std::vector<qunique_ptr<combat_character_info>> character_infos;
 };
 
 }

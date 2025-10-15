@@ -16,6 +16,22 @@ TableView {
 	model: CombatMapGridModel {}
 	delegate: CombatTileView {}
 	
+	Repeater {
+		model: combat ? combat.character_infos : []
+		
+		Image {
+			id: character_icon
+			x: tile_pos.x * tile_size + Math.floor((tile_size - character_icon.width) / 2)
+			y: tile_pos.y * tile_size + Math.floor((tile_size - character_icon.height) / 2)
+			source: "image://icon/" + "longswordsmen"//character.game_data.icon.identifier
+			z: 100
+			
+			readonly property var character_info: model.modelData
+			readonly property var character: character_info.character
+			readonly property var tile_pos: character_info.tile_pos
+		}
+	}
+	
 	function pixel_to_tile_pos(pixel_x, pixel_y) {
 		var tile_x = Math.floor(pixel_x / tile_size)
 		var tile_y = Math.floor(pixel_y / tile_size)
