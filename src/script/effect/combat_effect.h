@@ -111,7 +111,11 @@ public:
 		combat->set_victory_effects(this->victory_effects.get());
 		combat->set_defeat_effects(this->defeat_effects.get());
 
-		combat->start();
+		if (scope == game::get()->get_player_country()) {
+			game::get()->set_current_combat(std::move(combat));
+		} else {
+			combat->start();
+		}
 	}
 
 	virtual std::string get_assignment_string(const domain *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override

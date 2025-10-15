@@ -2266,4 +2266,11 @@ bool game::do_battle(army *attacking_army, army *defending_army)
 	return attack_success;
 }
 
+void game::set_current_combat(qunique_ptr<combat> &&combat)
+{
+	this->current_combat = std::move(combat);
+
+	emit combat_running_changed();
+}
+
 }

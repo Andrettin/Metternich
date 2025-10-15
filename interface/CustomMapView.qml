@@ -44,7 +44,7 @@ Item {
 		anchors.left: infopanel.right
 		anchors.right: right_bar.left
 	}
-	
+		
 	RightBar {
 		id: right_bar
 		anchors.top: parent.top
@@ -194,13 +194,19 @@ Item {
 			trait_choice_dialog.open()
 		}
 	}
-		
+	
 	Connections {
 		target: metternich.game
 		
 		function onTurn_changed() {
 			//FIXME: add preference to display the balance book every turn
 			//menu_stack.push("TradeView.qml")
+		}
+		
+		function onCombat_running_changed() {
+			if (metternich.game.combat_running) {
+				menu_stack.push("CombatView.qml")
+			}
 		}
 		
 		function onGame_over() {
