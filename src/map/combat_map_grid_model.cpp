@@ -7,6 +7,7 @@
 #include "domain/domain_game_data.h"
 #include "economy/commodity.h"
 #include "economy/resource.h"
+#include "game/combat.h"
 #include "game/game.h"
 #include "infrastructure/holding_type.h"
 #include "infrastructure/improvement.h"
@@ -48,14 +49,14 @@ int combat_map_grid_model::rowCount(const QModelIndex &parent) const
 {
 	Q_UNUSED(parent);
 
-	return combat_map_grid_model::map_height;
+	return combat::map_height;
 }
 
 int combat_map_grid_model::columnCount(const QModelIndex &parent) const
 {
 	Q_UNUSED(parent);
 
-	return combat_map_grid_model::map_width;
+	return combat::map_width;
 }
 
 QVariant combat_map_grid_model::data(const QModelIndex &index, const int role) const

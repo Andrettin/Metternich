@@ -28,9 +28,6 @@ public:
 
 	static QString build_image_source(const terrain_type *terrain, const short tile_frame);
 
-	static constexpr int map_width = 16;
-	static constexpr int map_height = 15;
-
 	combat_map_grid_model();
 
 	virtual int rowCount(const QModelIndex &parent = QModelIndex()) const override final;

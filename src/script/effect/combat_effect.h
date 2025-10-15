@@ -14,13 +14,16 @@
 #include "domain/domain.h"
 #include "engine_interface.h"
 #include "game/combat.h"
+#include "game/game.h"
 #include "script/context.h"
 #include "script/effect/effect.h"
 #include "script/effect/effect_list.h"
 #include "script/target_variant.h"
 #include "species/species.h"
 #include "ui/portrait.h"
+#include "util/assert_util.h"
 #include "util/number_util.h"
+#include "util/qunique_ptr.h"
 #include "util/random.h"
 #include "util/string_conversion_util.h"
 
@@ -93,48 +96,22 @@ public:
 		std::vector<std::shared_ptr<character_reference>> generated_characters;
 		const std::vector<const character *> enemy_characters = this->get_enemy_characters(ctx, generated_characters);
 
-		party enemy_party(enemy_characters);
+		auto enemy_party = std::make_unique<party>(enemy_characters);
 
-		combat combat(this->attacker ? ctx.party.get() : &enemy_party, this->attacker ? &enemy_party : ctx.party.get());
-		combat.set_surprise(this->surprise);
-		combat.set_attacker_to_hit_modifier(this->attacker ? this->to_hit_modifier : 0);
-		combat.set_defender_to_hit_modifier(this->attacker ? 0 : this->to_hit_modifier);
+		auto combat = make_qunique<metternich::combat>(this->attacker ? ctx.party.get() : enemy_party.get(), this->attacker ? enemy_party.get() : ctx.party.get());
+		combat->set_surprise(this->surprise);
+		combat->set_attacker_to_hit_modifier(this->attacker ? this->to_hit_modifier : 0);
+		combat->set_defender_to_hit_modifier(this->attacker ? 0 : this->to_hit_modifier);
 
-		const combat::result result = combat.run();
+		combat->set_generated_characters(generated_characters);
+		combat->set_generated_party(std::move(enemy_party));
 
-		const bool success = this->attacker ? result.attacker_victory : !result.attacker_victory;
+		combat->set_scope(scope);
+		combat->set_context(ctx);
+		combat->set_victory_effects(this->victory_effects.get());
+		combat->set_defeat_effects(this->defeat_effects.get());
 
-		if (scope == game::get()->get_player_country()) {
-			const portrait *war_minister_portrait = scope->get_government()->get_war_minister_portrait();
-
-			if (success) {
-				std::string effects_string = std::format("Experience: {}", number::to_signed_string(result.experience_award));
-				if (this->victory_effects != nullptr) {
-					const std::string victory_effects_string = this->victory_effects->get_effects_string(scope, ctx);
-					effects_string += "\n" + victory_effects_string;
-				}
-
-				engine_interface::get()->add_notification("Victory!", war_minister_portrait, std::format("You have won a combat!\n\n{}", effects_string));
-			} else {
-				std::string effects_string;
-				if (this->defeat_effects != nullptr) {
-					const std::string defeat_effects_string = this->defeat_effects->get_effects_string(scope, ctx);
-					effects_string += "\n" + defeat_effects_string;
-				}
-
-				engine_interface::get()->add_notification("Defeat!", war_minister_portrait, std::format("You have lost a combat!{}", !effects_string.empty() ? ("\n\n" + effects_string) : ""));
-			}
-		}
-
-		if (success) {
-			if (this->victory_effects != nullptr) {
-				this->victory_effects->do_effects(scope, ctx);
-			}
-		} else {
-			if (this->defeat_effects != nullptr) {
-				this->defeat_effects->do_effects(scope, ctx);
-			}
-		}
+		combat->start();
 	}
 
 	virtual std::string get_assignment_string(const domain *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override

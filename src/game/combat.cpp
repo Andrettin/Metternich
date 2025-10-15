@@ -5,8 +5,15 @@
 #include "character/character.h"
 #include "character/character_game_data.h"
 #include "character/party.h"
+#include "domain/country_government.h"
+#include "domain/domain.h"
+#include "engine_interface.h"
+#include "game/game.h"
+#include "script/effect/effect_list.h"
+#include "ui/portrait.h"
 #include "util/assert_util.h"
 #include "util/dice.h"
+#include "util/number_util.h"
 #include "util/random.h"
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
@@ -18,58 +25,64 @@ combat::combat(party *attacking_party, party *defending_party)
 {
 }
 
-combat::result combat::run()
+combat::~combat()
 {
-	static constexpr dice initiative_dice(1, 10);
+}
 
-	result result;
-	int64_t attacker_experience_award = 0;
-	int64_t defender_experience_award = 0;
+void combat::set_generated_party(std::unique_ptr<party> &&generated_party)
+{
+	this->generated_party = std::move(generated_party);
+}
 
-	bool surprise = this->surprise;
-
+void combat::start()
+{
 	while (!this->attacking_party->get_characters().empty() && !this->defending_party->get_characters().empty()) {
-		int attacker_initiative = 0;
-		int defender_initiative = 0;
-		while (attacker_initiative == defender_initiative) {
-			attacker_initiative = random::get()->roll_dice(initiative_dice);
-			defender_initiative = random::get()->roll_dice(initiative_dice);
-		}
-
-		if (attacker_initiative < defender_initiative) {
-			attacker_experience_award += this->do_party_round(this->attacking_party, this->defending_party, this->attacker_to_hit_modifier);
-			if (!surprise) {
-				defender_experience_award += this->do_party_round(this->defending_party, this->attacking_party, this->defender_to_hit_modifier);
-			} else {
-				surprise = false;
-			}
-		} else {
-			if (!surprise) {
-				defender_experience_award += this->do_party_round(this->defending_party, this->attacking_party, this->defender_to_hit_modifier);
-			} else {
-				surprise = false;
-			}
-			attacker_experience_award += this->do_party_round(this->attacking_party, this->defending_party, this->attacker_to_hit_modifier);
-		}
-
-		std::vector<const character *> all_characters = this->attacking_party->get_characters();
-		vector::merge(all_characters, this->defending_party->get_characters());
-		for (const character *character : all_characters) {
-			character->get_game_data()->decrement_status_effect_rounds();
-		}
+		this->do_round();
 	}
 
-	result.attacker_victory = this->defending_party->get_characters().empty();
+	this->result.attacker_victory = this->defending_party->get_characters().empty();
 
-	if (result.attacker_victory) {
-		this->attacking_party->gain_experience(attacker_experience_award);
-		result.experience_award = attacker_experience_award;
+	if (this->result.attacker_victory) {
+		this->attacking_party->gain_experience(this->attacker_experience_award);
+		this->result.experience_award = this->attacker_experience_award;
 	} else {
-		this->defending_party->gain_experience(defender_experience_award);
-		result.experience_award = defender_experience_award;
+		this->defending_party->gain_experience(this->defender_experience_award);
+		this->result.experience_award = this->defender_experience_award;
 	}
 
-	return result;
+	this->process_result();
+}
+
+void combat::do_round()
+{
+	int attacker_initiative = 0;
+	int defender_initiative = 0;
+	while (attacker_initiative == defender_initiative) {
+		attacker_initiative = random::get()->roll_dice(combat::initiative_dice);
+		defender_initiative = random::get()->roll_dice(combat::initiative_dice);
+	}
+
+	if (attacker_initiative < defender_initiative) {
+		this->attacker_experience_award += this->do_party_round(this->attacking_party, this->defending_party, this->attacker_to_hit_modifier);
+		if (!this->surprise) {
+			this->defender_experience_award += this->do_party_round(this->defending_party, this->attacking_party, this->defender_to_hit_modifier);
+		} else {
+			this->surprise = false;
+		}
+	} else {
+		if (!this->surprise) {
+			this->defender_experience_award += this->do_party_round(this->defending_party, this->attacking_party, this->defender_to_hit_modifier);
+		} else {
+			this->surprise = false;
+		}
+		this->attacker_experience_award += this->do_party_round(this->attacking_party, this->defending_party, this->attacker_to_hit_modifier);
+	}
+
+	std::vector<const character *> all_characters = this->attacking_party->get_characters();
+	vector::merge(all_characters, this->defending_party->get_characters());
+	for (const character *character : all_characters) {
+		character->get_game_data()->decrement_status_effect_rounds();
+	}
 }
 
 int64_t combat::do_party_round(metternich::party *party, metternich::party *enemy_party, const int to_hit_modifier)
@@ -109,6 +122,43 @@ int64_t combat::do_party_round(metternich::party *party, metternich::party *enem
 	}
 
 	return experience_award;
+}
+
+void combat::process_result()
+{
+	const bool success = this->attacking_party->get_domain() == this->scope ? this->result.attacker_victory : !this->result.attacker_victory;
+
+	if (this->scope == game::get()->get_player_country()) {
+		const portrait *war_minister_portrait = this->scope->get_government()->get_war_minister_portrait();
+
+		if (success) {
+			std::string effects_string = std::format("Experience: {}", number::to_signed_string(this->result.experience_award));
+			if (this->victory_effects != nullptr) {
+				const std::string victory_effects_string = this->victory_effects->get_effects_string(this->scope, this->ctx);
+				effects_string += "\n" + victory_effects_string;
+			}
+
+			engine_interface::get()->add_notification("Victory!", war_minister_portrait, std::format("You have won a combat!\n\n{}", effects_string));
+		} else {
+			std::string effects_string;
+			if (this->defeat_effects != nullptr) {
+				const std::string defeat_effects_string = this->defeat_effects->get_effects_string(this->scope, this->ctx);
+				effects_string += "\n" + defeat_effects_string;
+			}
+
+			engine_interface::get()->add_notification("Defeat!", war_minister_portrait, std::format("You have lost a combat!{}", !effects_string.empty() ? ("\n\n" + effects_string) : ""));
+		}
+	}
+
+	if (success) {
+		if (this->victory_effects != nullptr) {
+			this->victory_effects->do_effects(this->scope, this->ctx);
+		}
+	} else {
+		if (this->defeat_effects != nullptr) {
+			this->defeat_effects->do_effects(this->scope, this->ctx);
+		}
+	}
 }
 
 }
