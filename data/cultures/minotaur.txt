@@ -1,0 +1,7 @@
+minotaur = {
+	name = "Minotaur"
+	group = giant
+	species = {
+		minotaur
+	}
+}

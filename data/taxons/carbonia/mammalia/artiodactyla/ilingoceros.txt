@@ -1,0 +1,5 @@
+ilingoceros = { #Source: http://fossilworks.org/bridge.pl?a=taxonInfo&taxon_no=42728
+	name = "Ilingoceros"
+	rank = genus
+	supertaxon = antilocapridae
+}

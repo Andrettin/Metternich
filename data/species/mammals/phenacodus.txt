@@ -1,0 +1,8 @@
+phenacodus = {
+	name = "Phenacodus"
+	supertaxon = mammalia
+	pre_evolutions = {
+		alphadon
+		zalambdalestes
+	}
+}

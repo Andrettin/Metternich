@@ -1,0 +1,8 @@
+hyopsodus = {
+	name = "Hyopsodus"
+	supertaxon = mammalia
+	pre_evolutions = {
+		leptictidium
+		zalambdalestes
+	}
+}

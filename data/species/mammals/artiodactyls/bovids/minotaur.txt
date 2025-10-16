@@ -1,0 +1,9 @@
+minotaur = {
+	name = "Minotaur"
+	supertaxon = bovidae
+	era = holocene
+	sapient = true
+	pre_evolutions = {
+		ilingoceros #shares a common ancestor with cows
+	}
+}

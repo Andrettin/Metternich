@@ -1,0 +1,11 @@
+ilingoceros = { #Source: http://fossilworks.org/bridge.pl?a=taxonInfo&taxon_no=42728
+	name = "Ilingoceros"
+	supertaxon = ilingoceros
+	specific_name = "alexandrae" #type species of the Ilingoceros genus
+	era = miocene
+	pre_evolutions = {
+		diacodexis
+	}
+	
+	#ground dwelling browser-grazer
+}

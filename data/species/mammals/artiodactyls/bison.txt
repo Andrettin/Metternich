@@ -1,0 +1,8 @@
+bison = {
+	name = "Bison"
+	supertaxon = artiodactyla
+	era = holocene
+	pre_evolutions = {
+		ilingoceros
+	}
+}

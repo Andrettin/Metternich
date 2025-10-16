@@ -1,0 +1,5 @@
+antilocapridae = { #Source: http://www.itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&search_value=552305
+	name = "Antilocapridae"
+	rank = family
+	supertaxon = artiodactyla
+}
