@@ -345,6 +345,9 @@ void character_game_data::apply_species_and_class(const int level)
 		this->set_max_hit_points(this->character->get_hit_points());
 		this->set_hit_points(this->character->get_hit_points());
 	}
+
+	//ensure characters start with their hit point maximum
+	this->set_hit_points(this->get_max_hit_points());
 }
 
 void character_game_data::generate_attributes()
