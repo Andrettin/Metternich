@@ -78,6 +78,7 @@ class character final : public character_base, public data_type<character>
 	Q_PROPERTY(int hit_points MEMBER hit_points READ get_hit_points NOTIFY changed)
 	Q_PROPERTY(QString leader_type_name READ get_leader_type_name_qstring NOTIFY changed)
 	Q_PROPERTY(metternich::character_game_data* game_data READ get_game_data NOTIFY game_data_changed)
+	Q_PROPERTY(bool temporary READ is_temporary CONSTANT)
 
 public:
 	static constexpr const char class_identifier[] = "character";

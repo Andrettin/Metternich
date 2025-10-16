@@ -30,6 +30,23 @@ TableView {
 			readonly property var character_info: model.modelData
 			readonly property var character: character_info.character
 			readonly property var tile_pos: character_info.tile_pos
+			readonly property string type_name: character.monster_type ? character.monster_type.name : (character.game_data.character_class ? (character.game_data.character_class.name + " " + character.game_data.level) : character.species.name)
+			readonly property string text: "(" + tile_pos.x + ", " + tile_pos.y + ") " + (character.full_name.length > 0 ? (character.full_name + " (" + type_name + ")") : type_name)
+			
+			MouseArea {
+				anchors.fill: parent
+				hoverEnabled: true
+				
+				onEntered: {
+					status_text = text
+				}
+				
+				onExited: {
+					if (status_text === text) {
+						status_text = ""
+					}
+				}
+			}
 		}
 	}
 	

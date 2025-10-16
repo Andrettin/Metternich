@@ -88,11 +88,13 @@ Item {
 		border.width: 1 * scale_factor
 		visible: tile_selected
 	}
+	*/
 	
 	MouseArea {
 		anchors.fill: parent
 		hoverEnabled: true
 		
+		/*
 		onReleased: {
 			var explored = metternich.game.player_country.game_data.is_tile_explored(tile_pos)
 			
@@ -160,11 +162,13 @@ Item {
 				}
 			}
 		}
+		*/
 		
 		onEntered: {
-			var text = "(" + column + ", " + row + ") "
+			var text = "(" + column + ", " + row + ")"
 			
-			text += "("
+			/*
+			text += " ("
 			
 			var explored = metternich.game.player_country.game_data.is_tile_explored(tile_pos)
 			
@@ -228,10 +232,12 @@ Item {
 					}
 				}
 			}
+			*/
 			
 			status_text = text
 			saved_status_text = text
 		}
+		
 		onExited: {
 			//only clear the status text on exit if it was actually still the text set by this
 			if (status_text === saved_status_text) {
@@ -240,5 +246,4 @@ Item {
 			}
 		}
 	}
-	*/
 }
