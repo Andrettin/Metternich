@@ -4,4 +4,5 @@ haunted_mansion = {
 	level = 2
 	random = true
 	max_areas = 12
+	terrain = cave
 }

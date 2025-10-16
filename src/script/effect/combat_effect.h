@@ -15,6 +15,10 @@
 #include "engine_interface.h"
 #include "game/combat.h"
 #include "game/game.h"
+#include "infrastructure/dungeon.h"
+#include "infrastructure/dungeon_area.h"
+#include "map/site.h"
+#include "map/site_game_data.h"
 #include "script/context.h"
 #include "script/effect/effect.h"
 #include "script/effect/effect_list.h"
@@ -99,6 +103,13 @@ public:
 		auto enemy_party = std::make_unique<party>(enemy_characters);
 
 		auto combat = make_qunique<metternich::combat>(this->attacker ? ctx.party.get() : enemy_party.get(), this->attacker ? enemy_party.get() : ctx.party.get());
+
+		if (ctx.dungeon_area != nullptr && ctx.dungeon_area->get_terrain() != nullptr) {
+			combat->set_base_terrain(ctx.dungeon_area->get_terrain());
+		} else if (ctx.dungeon_site != nullptr && ctx.dungeon_site->get_game_data()->get_dungeon()->get_terrain() != nullptr) {
+			combat->set_base_terrain(ctx.dungeon_site->get_game_data()->get_dungeon()->get_terrain());
+		}
+
 		combat->set_surprise(this->surprise);
 		combat->set_attacker_to_hit_modifier(this->attacker ? this->to_hit_modifier : 0);
 		combat->set_defender_to_hit_modifier(this->attacker ? 0 : this->to_hit_modifier);

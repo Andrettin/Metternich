@@ -3,6 +3,7 @@
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 
+Q_MOC_INCLUDE("map/terrain_type.h")
 Q_MOC_INCLUDE("ui/portrait.h")
 
 namespace metternich {
@@ -10,6 +11,7 @@ namespace metternich {
 class domain_event;
 class portrait;
 class site;
+class terrain_type;
 
 template <typename scope_type>
 class and_condition;
@@ -23,6 +25,7 @@ class dungeon_area final : public named_data_entry, public data_type<dungeon_are
 	Q_PROPERTY(bool entrance MEMBER entrance READ is_entrance NOTIFY changed)
 	Q_PROPERTY(int weight MEMBER weight READ get_weight NOTIFY changed)
 	Q_PROPERTY(bool allow_retreat MEMBER allow_retreat READ allows_retreat NOTIFY changed)
+	Q_PROPERTY(const metternich::terrain_type* terrain MEMBER terrain READ get_terrain NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "dungeon_area";
@@ -71,6 +74,11 @@ public:
 		return this->allow_retreat;
 	}
 
+	const terrain_type *get_terrain() const
+	{
+		return this->terrain;
+	}
+
 	const and_condition<site> *get_conditions() const
 	{
 		return this->conditions.get();
@@ -90,6 +98,7 @@ private:
 	bool entrance = false;
 	int weight = 1;
 	bool allow_retreat = true;
+	const terrain_type *terrain = nullptr;
 	std::unique_ptr<const and_condition<site>> conditions;
 	domain_event *event = nullptr;
 };
