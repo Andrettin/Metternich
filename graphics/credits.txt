@@ -313,6 +313,7 @@
 /graphics/tiles/settlements/town.png (by Jinn) (licensed under the CC0)
 /graphics/tiles/settlements/village.png (by Jinn) (licensed under the CC0)
 /graphics/tiles/terrain/barren_hills.png (by Jinn) (licensed under the CC0)
+/graphics/tiles/terrain/cave_floor.png (by Jinn) (licensed under the CC0)
 /graphics/tiles/terrain/conifer_forest.png (by Jinn) (licensed under the CC0)
 /graphics/tiles/terrain/dark_plains.png (by Jinn) (licensed under the CC0)
 /graphics/tiles/terrain/desert.png (by Jinn) (licensed under the CC0)
