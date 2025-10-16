@@ -11,12 +11,20 @@ namespace metternich {
 class character;
 class character_reference;
 class party;
+class terrain_type;
 
 template <typename scope_type>
 class effect_list;
 
 struct combat_tile final
 {
+	explicit combat_tile(const terrain_type *base_terrain, const terrain_type *terrain);
+
+	const terrain_type *terrain = nullptr;
+	short base_tile_frame = 0;
+	std::array<short, 4> base_subtile_frames;
+	short tile_frame = 0;
+	std::array<short, 4> subtile_frames;
 	const metternich::character *character = nullptr;
 };
 
@@ -146,6 +154,7 @@ public:
 	void process_result();
 
 	combat_tile &get_tile(const QPoint &tile_pos);
+	const combat_tile &get_tile(const QPoint &tile_pos) const;
 
 	bool is_tile_attacker_escape(const QPoint &tile_pos) const
 	{

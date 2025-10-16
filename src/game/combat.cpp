@@ -5,10 +5,12 @@
 #include "character/character.h"
 #include "character/character_game_data.h"
 #include "character/party.h"
+#include "database/defines.h"
 #include "domain/country_government.h"
 #include "domain/domain.h"
 #include "engine_interface.h"
 #include "game/game.h"
+#include "map/terrain_type.h"
 #include "script/effect/effect_list.h"
 #include "ui/portrait.h"
 #include "util/assert_util.h"
@@ -26,7 +28,12 @@ combat::combat(party *attacking_party, party *defending_party)
 	: attacking_party(attacking_party), defending_party(defending_party)
 {
 	this->map_rect = QRect(QPoint(0, 0), QSize(combat::map_width, combat::map_height));
-	this->tiles.resize(this->get_map_width() * this->get_map_height());
+	const size_t tile_count = static_cast<size_t>(this->get_map_width() * this->get_map_height());
+	this->tiles.reserve(tile_count);
+
+	for (size_t i = 0; i < tile_count; ++i) {
+		this->tiles.emplace_back(defines::get()->get_default_base_terrain(), defines::get()->get_default_base_terrain());
+	}
 }
 
 combat::~combat()
@@ -230,6 +237,32 @@ void combat::process_result()
 combat_tile &combat::get_tile(const QPoint &tile_pos)
 {
 	return this->tiles.at(point::to_index(tile_pos, this->get_map_width()));
+}
+
+const combat_tile &combat::get_tile(const QPoint &tile_pos) const
+{
+	return this->tiles.at(point::to_index(tile_pos, this->get_map_width()));
+}
+
+combat_tile::combat_tile(const terrain_type *base_terrain, const terrain_type *terrain)
+{
+	this->terrain = terrain;
+
+	if (!base_terrain->get_subtiles().empty()) {
+		std::array<const std::vector<int> *, 4> terrain_subtiles{};
+
+		for (size_t i = 0; i < terrain_subtiles.size(); ++i) {
+			terrain_subtiles[i] = &base_terrain->get_subtiles();
+		}
+
+		for (size_t i = 0; i < terrain_subtiles.size(); ++i) {
+			const short terrain_subtile = static_cast<short>(vector::get_random(*terrain_subtiles[i]));
+
+			this->base_subtile_frames[i] = terrain_subtile;
+		}
+	} else {
+		this->base_tile_frame = static_cast<short>(vector::get_random(base_terrain->get_tiles()));
+	}
 }
 
 }

@@ -11,19 +11,6 @@ Item {
 	property string saved_status_text: ""
 	
 	Repeater {
-		model: 4
-		
-		TileImage {
-			id: base_terrain_image
-			tile_image_source: "image://tile/terrain/plains/17"
-			can_be_subtile: true
-			x: (index === 1 || index === 3) ? 32 * scale_factor : 0
-			y: index >= 2 ? 32 * scale_factor : 0
-		}
-	}
-	
-	/*
-	Repeater {
 		model: base_image_sources
 		
 		TileImage {
@@ -35,18 +22,7 @@ Item {
 		}
 	}
 	
-	Repeater {
-		model: underlay_image_sources
-		
-		TileImage {
-			id: underlay_image
-			tile_image_source: "image://" + modelData
-			can_be_subtile: true
-			x: (index === 1 || index === 3) ? 32 * scale_factor : 0
-			y: index >= 2 ? 32 * scale_factor : 0
-		}
-	}
-	
+	/*
 	Repeater {
 		model: image_sources
 		

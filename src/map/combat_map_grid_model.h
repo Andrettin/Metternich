@@ -16,14 +16,8 @@ public:
 	enum class role {
 		base_image_sources = Qt::UserRole,
 		image_sources,
-		underlay_image_sources,
 		overlay_image_sources,
-		object_image_sources,
-		terrain,
-		improvement,
-		pathway,
-		civilian_unit,
-		upper_label
+		terrain
 	};
 
 	static QString build_image_source(const terrain_type *terrain, const short tile_frame);
@@ -58,22 +52,11 @@ public:
 
 		role_names.insert(static_cast<int>(role::base_image_sources), "base_image_sources");
 		role_names.insert(static_cast<int>(role::image_sources), "image_sources");
-		role_names.insert(static_cast<int>(role::underlay_image_sources), "underlay_image_sources");
 		role_names.insert(static_cast<int>(role::overlay_image_sources), "overlay_image_sources");
-		role_names.insert(static_cast<int>(role::object_image_sources), "object_image_sources");
 		role_names.insert(static_cast<int>(role::terrain), "terrain");
-		role_names.insert(static_cast<int>(role::improvement), "improvement");
-		role_names.insert(static_cast<int>(role::pathway), "pathway");
-		role_names.insert(static_cast<int>(role::civilian_unit), "civilian_unit");
-		role_names.insert(static_cast<int>(role::upper_label), "upper_label");
 
 		return role_names;
 	}
-
-	void on_tile_terrain_changed(const QPoint &tile_pos);
-	void on_tile_holding_type_changed(const QPoint &tile_pos);
-	void on_tile_improvement_changed(const QPoint &tile_pos);
-	void on_tile_civilian_unit_changed(const QPoint &tile_pos);
 };
 
 }
