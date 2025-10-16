@@ -25,6 +25,8 @@ namespace metternich {
 combat::combat(party *attacking_party, party *defending_party)
 	: attacking_party(attacking_party), defending_party(defending_party)
 {
+	this->map_rect = QRect(QPoint(0, 0), QSize(combat::map_width, combat::map_height));
+	this->tiles.resize(this->get_map_width() * this->get_map_height());
 }
 
 combat::~combat()
@@ -223,6 +225,11 @@ void combat::process_result()
 			this->defeat_effects->do_effects(this->scope, this->ctx);
 		}
 	}
+}
+
+combat_tile &combat::get_tile(const QPoint &tile_pos)
+{
+	return this->tiles.at(point::to_index(tile_pos, this->get_map_width()));
 }
 
 }

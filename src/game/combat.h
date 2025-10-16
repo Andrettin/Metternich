@@ -75,6 +75,21 @@ public:
 	explicit combat(party *attacking_party, party *defending_party);
 	~combat();
 
+	const QRect &get_map_rect() const
+	{
+		return this->map_rect;
+	}
+
+	int get_map_width() const
+	{
+		return this->get_map_rect().width();
+	}
+
+	int get_map_height() const
+	{
+		return this->get_map_rect().height();
+	}
+
 	void set_surprise(const bool surprise)
 	{
 		this->surprise = surprise;
@@ -130,10 +145,7 @@ public:
 
 	void process_result();
 
-	combat_tile &get_tile(const QPoint &tile_pos)
-	{
-		return this->tiles.at(tile_pos.x()).at(tile_pos.y());
-	}
+	combat_tile &get_tile(const QPoint &tile_pos);
 
 	bool is_tile_attacker_escape(const QPoint &tile_pos) const
 	{
@@ -142,13 +154,14 @@ public:
 
 	bool is_tile_defender_escape(const QPoint &tile_pos) const
 	{
-		return tile_pos.x() == combat::map_width - 1;
+		return tile_pos.x() == (this->get_map_width() - 1);
 	}
 
 signals:
 	void character_infos_changed();
 
 private:
+	QRect map_rect;
 	party *attacking_party = nullptr;
 	party *defending_party = nullptr;
 	bool surprise = false;
@@ -163,7 +176,7 @@ private:
 	context ctx;
 	const effect_list<const domain> *victory_effects = nullptr;
 	const effect_list<const domain> *defeat_effects = nullptr;
-	std::array<std::array<combat_tile, combat::map_height>, combat::map_width> tiles;
+	std::vector<combat_tile> tiles;
 	std::vector<qunique_ptr<combat_character_info>> character_infos;
 };
 

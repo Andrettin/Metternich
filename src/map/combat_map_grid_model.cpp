@@ -5,8 +5,6 @@
 #include "database/defines.h"
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
-#include "economy/commodity.h"
-#include "economy/resource.h"
 #include "game/combat.h"
 #include "game/game.h"
 #include "infrastructure/holding_type.h"
