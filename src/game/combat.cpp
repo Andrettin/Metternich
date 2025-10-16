@@ -133,6 +133,10 @@ void combat::start()
 	}
 
 	this->process_result();
+
+	if (game::get()->get_current_combat() == this) {
+		game::get()->set_current_combat(nullptr);
+	}
 }
 
 void combat::do_round()

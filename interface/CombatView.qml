@@ -15,7 +15,7 @@ Item {
 		anchors.top: top_bar.bottom
 		anchors.bottom: status_bar.top
 		anchors.left: left_bar.right
-		anchors.right: right_bar.left
+		anchors.right: infopanel.left
 		color: Qt.rgba(0.0 / 255.0, 0.0 / 255.0, 0.0 / 255.0, 1)
 	}
 	
@@ -34,8 +34,8 @@ Item {
 		anchors.left: parent.left
 	}
 	
-	RightBar {
-		id: right_bar
+	CombatInfoPanel {
+		id: infopanel
 		anchors.top: parent.top
 		anchors.bottom: parent.bottom
 		anchors.right: parent.right
@@ -45,14 +45,14 @@ Item {
 		id: status_bar
 		anchors.bottom: parent.bottom
 		anchors.left: left_bar.right
-		anchors.right: right_bar.left
+		anchors.right: infopanel.left
 	}
 	
 	TopBar {
 		id: top_bar
 		anchors.top: parent.top
 		anchors.left: left_bar.right
-		anchors.right: right_bar.left
+		anchors.right: infopanel.left
 	}
 	
 	Connections {

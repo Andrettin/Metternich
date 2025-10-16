@@ -152,7 +152,7 @@ public:
 
 	void initialize();
 	void deploy_characters(const std::vector<const character *> &characters, const QPoint &start_pos, const bool defenders);
-	void start();
+	Q_INVOKABLE void start();
 	void do_round();
 
 	[[nodiscard]]

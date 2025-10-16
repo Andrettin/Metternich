@@ -30,23 +30,6 @@ TableView {
 			readonly property var character_info: model.modelData
 			readonly property var character: character_info.character
 			readonly property var tile_pos: character_info.tile_pos
-			
-			/*
-			MouseArea {
-				anchors.fill: parent
-				hoverEnabled: true
-				
-				onEntered: {
-					status_text = text
-				}
-				
-				onExited: {
-					if (status_text === text) {
-						status_text = ""
-					}
-				}
-			}
-			*/
 		}
 	}
 	
