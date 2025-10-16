@@ -1,0 +1,10 @@
+orcish += {
+	personal_names = {
+		"Roka" #Saint Roka the Messiah (unique orc of indeterminate gender)
+		
+		female = {
+			"Nergalle" #Nergalle, Lorekeeper of the Fallen (unique female orc)
+			"Urug" #Urug the Orcish Ballista (unique female orc)
+		}
+	}
+}
