@@ -2,7 +2,6 @@
 
 #include "map/combat_map_grid_model.h"
 
-#include "database/defines.h"
 #include "game/combat.h"
 #include "game/game.h"
 #include "map/terrain_type.h"
@@ -61,12 +60,12 @@ QVariant combat_map_grid_model::data(const QModelIndex &index, const int role) c
 			case role::base_image_sources: {
 				QStringList image_sources;
 
-				if (!defines::get()->get_default_base_terrain()->get_subtiles().empty()) {
+				if (!combat->get_base_terrain()->get_subtiles().empty()) {
 					for (const short subtile : tile.base_subtile_frames) {
-						image_sources.push_back(combat_map_grid_model::build_image_source(defines::get()->get_default_base_terrain(), subtile));
+						image_sources.push_back(combat_map_grid_model::build_image_source(combat->get_base_terrain(), subtile));
 					}
 				} else {
-					image_sources.push_back(combat_map_grid_model::build_image_source(defines::get()->get_default_base_terrain(), tile.base_tile_frame));
+					image_sources.push_back(combat_map_grid_model::build_image_source(combat->get_base_terrain(), tile.base_tile_frame));
 				}
 
 				return image_sources;

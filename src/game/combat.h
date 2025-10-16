@@ -71,7 +71,7 @@ class combat final : public QObject
 
 public:
 	static constexpr int map_width = 16;
-	static constexpr int map_height = 15;
+	static constexpr int map_height = 12;
 	static constexpr dice initiative_dice = dice(1, 10);
 
 	struct result final
@@ -97,6 +97,13 @@ public:
 	{
 		return this->get_map_rect().height();
 	}
+
+	const terrain_type *get_base_terrain() const
+	{
+		return this->base_terrain;
+	}
+
+	void set_base_terrain(const terrain_type *terrain);
 
 	void set_surprise(const bool surprise)
 	{
@@ -171,6 +178,7 @@ signals:
 
 private:
 	QRect map_rect;
+	const terrain_type *base_terrain = nullptr;
 	party *attacking_party = nullptr;
 	party *defending_party = nullptr;
 	bool surprise = false;

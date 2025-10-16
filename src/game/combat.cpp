@@ -28,16 +28,19 @@ combat::combat(party *attacking_party, party *defending_party)
 	: attacking_party(attacking_party), defending_party(defending_party)
 {
 	this->map_rect = QRect(QPoint(0, 0), QSize(combat::map_width, combat::map_height));
-	const size_t tile_count = static_cast<size_t>(this->get_map_width() * this->get_map_height());
-	this->tiles.reserve(tile_count);
 
-	for (size_t i = 0; i < tile_count; ++i) {
-		this->tiles.emplace_back(defines::get()->get_default_base_terrain(), defines::get()->get_default_base_terrain());
-	}
+	this->base_terrain = defines::get()->get_default_base_terrain();
 }
 
 combat::~combat()
 {
+}
+
+void combat::set_base_terrain(const terrain_type *terrain)
+{
+	assert_throw(terrain != nullptr);
+
+	this->base_terrain = terrain;
 }
 
 void combat::set_generated_party(std::unique_ptr<party> &&generated_party)
@@ -62,6 +65,13 @@ void combat::remove_character_info(const character *character)
 
 void combat::initialize()
 {
+	const size_t tile_count = static_cast<size_t>(this->get_map_width() * this->get_map_height());
+	this->tiles.reserve(tile_count);
+
+	for (size_t i = 0; i < tile_count; ++i) {
+		this->tiles.emplace_back(this->base_terrain, this->base_terrain);
+	}
+
 	const QPoint attacker_start_pos(1, this->get_map_height() / 2);
 	const QPoint defender_start_pos(this->get_map_width() - 2, this->get_map_height() / 2);
 
