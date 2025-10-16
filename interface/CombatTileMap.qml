@@ -30,6 +30,35 @@ TableView {
 			readonly property var character_info: model.modelData
 			readonly property var character: character_info.character
 			readonly property var tile_pos: character_info.tile_pos
+			
+			Rectangle {
+				id: hp_bar_shadow
+				anchors.bottom: parent.bottom
+				anchors.bottomMargin: 1 * scale_factor
+				anchors.horizontalCenter: parent.horizontalCenter
+				anchors.horizontalCenterOffset: 1 * scale_factor
+				color: "black"
+				width: 24 * scale_factor
+				height: 3 * scale_factor
+			}
+			
+			Rectangle {
+				id: hp_bar
+				anchors.bottom: parent.bottom
+				anchors.bottomMargin: 2 * scale_factor
+				anchors.horizontalCenter: parent.horizontalCenter
+				color: Qt.rgba(250.0 / 255.0, 5.0 / 255.0, 0.0 / 255.0, 1)
+				width: 24 * scale_factor
+				height: 3 * scale_factor
+				
+				Rectangle {
+					anchors.top: parent.top
+					anchors.bottom: parent.bottom
+					anchors.left: parent.left
+					color: Qt.rgba(95.0 / 255.0, 186.0 / 255.0, 75.0 / 255.0, 1)
+					width: Math.floor(parent.width * character.game_data.hit_points / character.game_data.max_hit_points)
+				}
+			}
 		}
 	}
 	
