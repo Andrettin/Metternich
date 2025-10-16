@@ -53,14 +53,14 @@ void combat::remove_character_info(const character *character)
 
 void combat::initialize()
 {
-	static constexpr QPoint attacker_start_pos(1, combat::map_height / 2);
-	static constexpr QPoint defender_start_pos(combat::map_width - 2, combat::map_height / 2);
+	const QPoint attacker_start_pos(1, this->get_map_height() / 2);
+	const QPoint defender_start_pos(this->get_map_width() - 2, this->get_map_height() / 2);
 
-	this->deploy_characters(this->attacking_party->get_characters(), attacker_start_pos);
-	this->deploy_characters(this->defending_party->get_characters(), defender_start_pos);
+	this->deploy_characters(this->attacking_party->get_characters(), attacker_start_pos, false);
+	this->deploy_characters(this->defending_party->get_characters(), defender_start_pos, true);
 }
 
-void combat::deploy_characters(const std::vector<const character *> &characters, const QPoint &start_pos)
+void combat::deploy_characters(const std::vector<const character *> &characters, const QPoint &start_pos, const bool defenders)
 {
 	std::vector<QPoint> tiles_to_check{ start_pos };
 	size_t last_check_index = 0;
@@ -76,6 +76,10 @@ void combat::deploy_characters(const std::vector<const character *> &characters,
 			combat_tile &tile = this->get_tile(tile_pos);
 			if (tile.character != nullptr) {
 				point::for_each_adjacent(tile_pos, [&](const QPoint &adjacent_pos) {
+					if (!this->get_map_rect().contains(adjacent_pos)) {
+						return;
+					}
+
 					if (!vector::contains(tiles_to_check, adjacent_pos)) {
 						tiles_to_check.push_back(adjacent_pos);
 					}
@@ -86,7 +90,7 @@ void combat::deploy_characters(const std::vector<const character *> &characters,
 
 			last_check_index = i;
 			tile.character = character;
-			auto character_info = make_qunique<combat_character_info>(character, tile_pos);
+			auto character_info = make_qunique<combat_character_info>(character, tile_pos, defenders);
 			this->character_infos.push_back(std::move(character_info));
 			break;
 		}

@@ -26,10 +26,11 @@ class combat_character_info final : public QObject
 
 		Q_PROPERTY(const metternich::character *character READ get_character CONSTANT)
 		Q_PROPERTY(const QPoint tile_pos READ get_tile_pos CONSTANT)
+		Q_PROPERTY(bool defender READ is_defender CONSTANT)
 
 public:
-	explicit combat_character_info(const metternich::character *character, const QPoint &tile_pos)
-		: character(character), tile_pos(tile_pos)
+	explicit combat_character_info(const metternich::character *character, const QPoint &tile_pos, const bool defender)
+		: character(character), tile_pos(tile_pos), defender(defender)
 	{
 	}
 
@@ -43,9 +44,15 @@ public:
 		return this->tile_pos;
 	}
 
+	bool is_defender() const
+	{
+		return this->defender;
+	}
+
 private:
 	const metternich::character *character = nullptr;
 	QPoint tile_pos;
+	bool defender = false;
 };
 
 class combat final : public QObject
