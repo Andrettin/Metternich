@@ -2,6 +2,7 @@
 
 #include "map/combat_map_grid_model.h"
 
+#include "character/character.h"
 #include "game/combat.h"
 #include "game/game.h"
 #include "map/terrain_type.h"
@@ -89,6 +90,8 @@ QVariant combat_map_grid_model::data(const QModelIndex &index, const int role) c
 			}
 			case role::terrain:
 				return QVariant::fromValue(tile.terrain);
+			case role::character:
+				return QVariant::fromValue(tile.character);
 			default:
 				throw std::runtime_error("Invalid combat map grid model role: " + std::to_string(role) + ".");
 		}

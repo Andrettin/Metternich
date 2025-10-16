@@ -6,7 +6,7 @@ Item {
 	implicitWidth: tile_size
 	implicitHeight: tile_size
 	
-	//readonly property bool tile_selected: site !== null && selected_site === site && !selected_garrison
+	readonly property bool tile_hovered: tile_mouse_area.containsMouse
 	readonly property point tile_pos: Qt.point(column, row)
 	property string saved_status_text: ""
 	
@@ -55,18 +55,88 @@ Item {
 			tile_image_source: "image://" + modelData
 		}
 	}
-	
-	Rectangle {
-		id: selection_rectangle
-		anchors.fill: parent
-		color: "transparent"
-		border.color: "white"
-		border.width: 1 * scale_factor
-		visible: tile_selected
-	}
 	*/
 	
+	Item {
+		id: selection_rectangle_area
+		anchors.fill: parent
+		visible: tile_hovered
+		
+		Rectangle {
+			anchors.top: parent.top
+			anchors.left: parent.left
+			color: "white"
+			width: 1 * scale_factor
+			height: 8 * scale_factor
+		}
+		
+		Rectangle {
+			anchors.bottom: parent.bottom
+			anchors.left: parent.left
+			color: "white"
+			width: 1 * scale_factor
+			height: 8 * scale_factor
+		}
+		
+		Rectangle {
+			anchors.top: parent.top
+			anchors.right: parent.right
+			color: "white"
+			width: 1 * scale_factor
+			height: 8 * scale_factor
+		}
+		
+		Rectangle {
+			anchors.bottom: parent.bottom
+			anchors.right: parent.right
+			color: "white"
+			width: 1 * scale_factor
+			height: 8 * scale_factor
+		}
+		
+		Rectangle {
+			anchors.top: parent.top
+			anchors.left: parent.left
+			color: "white"
+			width: 1 * scale_factor
+			height: 8 * scale_factor
+		}
+		
+		Rectangle {
+			anchors.top: parent.top
+			anchors.left: parent.left
+			color: "white"
+			width: 8 * scale_factor
+			height: 1 * scale_factor
+		}
+		
+		Rectangle {
+			anchors.bottom: parent.bottom
+			anchors.left: parent.left
+			color: "white"
+			width: 8 * scale_factor
+			height: 1 * scale_factor
+		}
+		
+		Rectangle {
+			anchors.top: parent.top
+			anchors.right: parent.right
+			color: "white"
+			width: 8 * scale_factor
+			height: 1 * scale_factor
+		}
+		
+		Rectangle {
+			anchors.bottom: parent.bottom
+			anchors.right: parent.right
+			color: "white"
+			width: 8 * scale_factor
+			height: 1 * scale_factor
+		}
+	}
+	
 	MouseArea {
+		id: tile_mouse_area
 		anchors.fill: parent
 		hoverEnabled: true
 		
@@ -142,6 +212,11 @@ Item {
 		
 		onEntered: {
 			var text = "(" + column + ", " + row + ")"
+			
+			if (character !== null) {
+				var type_name = character.monster_type ? character.monster_type.name : (character.game_data.character_class ? (character.game_data.character_class.name + " " + character.game_data.level) : character.species.name)
+				text += " " + (character.full_name.length > 0 ? (character.full_name + " (" + type_name + ")") : type_name)
+			}
 			
 			/*
 			text += " ("

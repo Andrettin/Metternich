@@ -17,7 +17,8 @@ public:
 		base_image_sources = Qt::UserRole,
 		image_sources,
 		overlay_image_sources,
-		terrain
+		terrain,
+		character
 	};
 
 	static QString build_image_source(const terrain_type *terrain, const short tile_frame);
@@ -54,6 +55,7 @@ public:
 		role_names.insert(static_cast<int>(role::image_sources), "image_sources");
 		role_names.insert(static_cast<int>(role::overlay_image_sources), "overlay_image_sources");
 		role_names.insert(static_cast<int>(role::terrain), "terrain");
+		role_names.insert(static_cast<int>(role::character), "character");
 
 		return role_names;
 	}
