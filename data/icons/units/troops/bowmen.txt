@@ -1,5 +1,8 @@
 archers = {
 	filepath = "icons/units/troops/archers.png"
+	character_conditions = {
+		character_class = ranger
+	}
 }
 
 crossbowmen = {

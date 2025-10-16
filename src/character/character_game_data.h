@@ -9,6 +9,7 @@
 
 Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("domain/office.h")
+Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("ui/portrait.h")
 
 namespace metternich {
@@ -45,6 +46,7 @@ class character_game_data final : public QObject
 
 	Q_PROPERTY(QString titled_name READ get_titled_name_qstring NOTIFY titled_name_changed)
 	Q_PROPERTY(const metternich::portrait* portrait READ get_portrait NOTIFY portrait_changed)
+	Q_PROPERTY(const metternich::icon* icon READ get_icon NOTIFY icon_changed)
 	Q_PROPERTY(const metternich::domain* domain READ get_domain NOTIFY domain_changed)
 	Q_PROPERTY(int age READ get_age NOTIFY age_changed)
 	Q_PROPERTY(bool dead READ is_dead NOTIFY dead_changed)
@@ -94,6 +96,14 @@ public:
 
 	bool is_current_portrait_valid() const;
 	void check_portrait();
+
+	const metternich::icon *get_icon() const
+	{
+		return this->icon;
+	}
+
+	bool is_current_icon_valid() const;
+	void check_icon();
 
 	const metternich::domain *get_domain() const
 	{
@@ -551,6 +561,7 @@ public:
 signals:
 	void titled_name_changed();
 	void portrait_changed();
+	void icon_changed();
 	void domain_changed();
 	void age_changed();
 	void dead_changed();
@@ -577,6 +588,7 @@ signals:
 private:
 	const metternich::character *character = nullptr;
 	const metternich::portrait *portrait = nullptr;
+	const metternich::icon *icon = nullptr;
 	const metternich::domain *domain = nullptr;
 	bool dead = false;
 	QDate birth_date;

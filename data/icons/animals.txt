@@ -1,5 +1,11 @@
 beaver = {
 	filepath = "icons/animals/beaver.png"
+	character_conditions = {
+		or = {
+			species = giant_bat
+			species = giant_rat
+		}
+	}
 }
 
 cow = {
@@ -12,8 +18,18 @@ deer = {
 
 frog = {
 	filepath = "icons/animals/frog.png"
+	character_conditions = {
+		or = {
+			species = giant_toad
+			taxon = arthropoda
+			taxon = ooze
+		}
+	}
 }
 
 lion = {
 	filepath = "icons/animals/lion.png"
+	character_conditions = {
+		species = wolf
+	}
 }

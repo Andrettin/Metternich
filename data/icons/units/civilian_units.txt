@@ -1,5 +1,11 @@
 engineer = {
 	filepath = "icons/units/civilians/engineer.png"
+	character_conditions = {
+		or = {
+			character_class = cleric
+			character_class = mage
+		}
+	}
 }
 
 engineer_small = {
@@ -8,6 +14,9 @@ engineer_small = {
 
 forester = {
 	filepath = "icons/units/civilians/forester.png"
+	character_conditions = {
+		character_class = druid
+	}
 }
 
 forester_small = {
@@ -32,4 +41,11 @@ rancher_small = {
 
 spy = {
 	filepath = "icons/units/civilians/spy.png"
+	character_conditions = {
+		or = {
+			character_class = bard
+			character_class = rogue
+			species = shadow
+		}
+	}
 }

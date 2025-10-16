@@ -23,7 +23,7 @@ TableView {
 			id: character_icon
 			x: tile_pos.x * tile_size + Math.floor((tile_size - character_icon.width) / 2)
 			y: tile_pos.y * tile_size + Math.floor((tile_size - character_icon.height) / 2)
-			source: "image://icon/" + "longswordsmen"//character.game_data.icon.identifier
+			source: "image://icon/" + character.game_data.icon.identifier
 			mirror: character_info.defender
 			z: 100
 			

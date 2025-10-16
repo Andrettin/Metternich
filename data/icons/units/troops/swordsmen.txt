@@ -1,3 +1,15 @@
 longswordsmen = {
 	filepath = "icons/units/troops/longswordsmen.png"
+	character_conditions = {
+		or = {
+			character_class = paladin
+			character_class = warrior
+			species = gnoll
+			species = goblin
+			species = kobold
+			species = lizardfolk
+			species = ogre
+			species = orc
+		}
+	}
 }
