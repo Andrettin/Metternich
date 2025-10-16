@@ -1,5 +1,6 @@
 ogre = {
 	name = "Ogre"
+	group = giant
 	species = {
 		ogre
 	}

@@ -1,5 +1,6 @@
 troll = {
 	name = "Troll"
+	group = giant
 	species = {
 		troll
 	}

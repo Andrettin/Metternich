@@ -1,5 +1,6 @@
 cyclops = {
 	name = "Cyclops"
+	group = giant
 	species = {
 		cyclops
 	}

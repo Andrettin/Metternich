@@ -1,5 +1,6 @@
 giant = {
 	name = "Giant"
+	group = giant
 	species = {
 		frost_giant
 	}

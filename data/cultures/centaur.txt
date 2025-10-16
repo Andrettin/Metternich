@@ -1,5 +1,6 @@
 centaur = {
 	name = "Centaur"
+	group = sylvan
 	species = {
 		centaur
 	}

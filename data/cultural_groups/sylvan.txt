@@ -1,0 +1,4 @@
+sylvan = {
+	name = "Sylvan"
+	rank = group
+}

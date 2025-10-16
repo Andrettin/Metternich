@@ -1,0 +1,4 @@
+giant = {
+	name = "Giant"
+	rank = group
+}
