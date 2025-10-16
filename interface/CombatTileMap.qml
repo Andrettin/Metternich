@@ -40,11 +40,22 @@ TableView {
 		return Qt.point(tile_x, tile_y)
 	}
 	
+	function tile_to_pixel_pos(tile_x, tile_y) {
+		var pixel_x = tile_x * tile_size - map.width / 2
+		var pixel_y = tile_y * tile_size - map.height / 2
+		
+		return Qt.point(pixel_x, pixel_y)
+	}
+	
 	function center_on_tile(tile_x, tile_y) {
 		var pixel_x = tile_x * tile_size - map.width / 2
 		var pixel_y = tile_y * tile_size - map.height / 2
 		
 		map.contentX = Math.min(Math.max(pixel_x, 0), map.contentWidth - map.width)
 		map.contentY = Math.min(Math.max(pixel_y, 0), map.contentHeight - map.height)
+	}
+	
+	Component.onCompleted: {
+		map.center_on_tile(0, Math.floor(model.rowCount() / 2))
 	}
 }
