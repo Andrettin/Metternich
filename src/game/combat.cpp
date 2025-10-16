@@ -77,7 +77,7 @@ void combat::deploy_characters(const std::vector<const character *> &characters,
 
 			combat_tile &tile = this->get_tile(tile_pos);
 			if (tile.character != nullptr) {
-				point::for_each_adjacent(tile_pos, [&](const QPoint &adjacent_pos) {
+				point::for_each_cardinally_adjacent(tile_pos, [&](const QPoint &adjacent_pos) {
 					if (!this->get_map_rect().contains(adjacent_pos)) {
 						return;
 					}
@@ -85,7 +85,7 @@ void combat::deploy_characters(const std::vector<const character *> &characters,
 					if (!vector::contains(tiles_to_check, adjacent_pos)) {
 						tiles_to_check.push_back(adjacent_pos);
 					}
-				});
+				}, false, !defenders);
 
 				continue;
 			}
