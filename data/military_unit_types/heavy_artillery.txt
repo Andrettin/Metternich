@@ -28,7 +28,7 @@ culverin = {
 	stats = {
 		hit_points = 2
 		movement = 1
-		defense = 1
+		defense = 2
 		melee = 1
 		missile = 5
 	}
@@ -51,7 +51,7 @@ royal_artillery = {
 	stats = {
 		hit_points = 2
 		movement = 1
-		defense = 1
+		defense = 2
 		melee = 1
 		missile = 5
 	}
@@ -74,7 +74,7 @@ artillery = {
 	stats = {
 		hit_points = 2
 		movement = 1
-		defense = 1
+		defense = 2
 		melee = 1
 		missile = 5
 	}
