@@ -8,8 +8,8 @@ TableView {
 	rightMargin: 0
 	topMargin: 0
 	bottomMargin: 0
-	contentWidth: tile_size * model.rowCount()
-	contentHeight: tile_size * model.columnCount()
+	contentWidth: tile_size * model.columnCount()
+	contentHeight: tile_size * model.rowCount()
 	boundsBehavior: Flickable.StopAtBounds
 	clip: true
 	visible: true
