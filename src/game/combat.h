@@ -152,11 +152,22 @@ public:
 
 	void initialize();
 	void deploy_characters(const std::vector<const character *> &characters, const QPoint &start_pos, const bool defenders);
-	Q_INVOKABLE void start();
-	void do_round();
+
+	Q_INVOKABLE QCoro::QmlTask start()
+	{
+		return this->start_coro();
+	}
 
 	[[nodiscard]]
-	int64_t do_party_round(metternich::party *party, metternich::party *enemy_party, const int to_hit_modifier);
+	QCoro::Task<void> start_coro();
+
+	[[nodiscard]]
+	QCoro::Task<void> do_round();
+
+	[[nodiscard]]
+	QCoro::Task<int64_t> do_party_round(metternich::party *party, metternich::party *enemy_party, const int to_hit_modifier);
+
+	int64_t do_character_attack(const character *character, const metternich::character *enemy, party *enemy_party, const int to_hit_modifier);
 
 	void process_result();
 
@@ -172,6 +183,8 @@ public:
 	{
 		return tile_pos.x() == (this->get_map_width() - 1);
 	}
+
+	Q_INVOKABLE void set_target(const QPoint &tile_pos);
 
 signals:
 	void character_infos_changed();
@@ -195,6 +208,7 @@ private:
 	const effect_list<const domain> *defeat_effects = nullptr;
 	std::vector<combat_tile> tiles;
 	std::vector<qunique_ptr<combat_character_info>> character_infos;
+	std::unique_ptr<QPromise<QPoint>> target_promise;
 };
 
 }

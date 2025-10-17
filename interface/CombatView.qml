@@ -64,4 +64,8 @@ Item {
 			}
 		}
 	}
+	
+	Component.onCompleted: {
+		metternich.game.current_combat.start()
+	}
 }

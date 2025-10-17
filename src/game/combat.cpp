@@ -57,7 +57,9 @@ void combat::remove_character_info(const character *character)
 {
 	for (size_t i = 0; i < this->character_infos.size(); ++i) {
 		if (this->character_infos[i]->get_character() == character) {
+			this->get_tile(this->character_infos[i]->get_tile_pos()).character = nullptr;
 			this->character_infos.erase(this->character_infos.begin() + i);
+			emit character_infos_changed();
 			return;
 		}
 	}
@@ -116,10 +118,10 @@ void combat::deploy_characters(const std::vector<const character *> &characters,
 	}
 }
 
-void combat::start()
+QCoro::Task<void> combat::start_coro()
 {
 	while (!this->attacking_party->get_characters().empty() && !this->defending_party->get_characters().empty()) {
-		this->do_round();
+		co_await this->do_round();
 	}
 
 	this->result.attacker_victory = this->defending_party->get_characters().empty();
@@ -139,7 +141,7 @@ void combat::start()
 	}
 }
 
-void combat::do_round()
+QCoro::Task<void> combat::do_round()
 {
 	int attacker_initiative = 0;
 	int defender_initiative = 0;
@@ -149,19 +151,19 @@ void combat::do_round()
 	}
 
 	if (attacker_initiative < defender_initiative) {
-		this->attacker_experience_award += this->do_party_round(this->attacking_party, this->defending_party, this->attacker_to_hit_modifier);
+		this->attacker_experience_award += co_await this->do_party_round(this->attacking_party, this->defending_party, this->attacker_to_hit_modifier);
 		if (!this->surprise) {
-			this->defender_experience_award += this->do_party_round(this->defending_party, this->attacking_party, this->defender_to_hit_modifier);
+			this->defender_experience_award += co_await this->do_party_round(this->defending_party, this->attacking_party, this->defender_to_hit_modifier);
 		} else {
 			this->surprise = false;
 		}
 	} else {
 		if (!this->surprise) {
-			this->defender_experience_award += this->do_party_round(this->defending_party, this->attacking_party, this->defender_to_hit_modifier);
+			this->defender_experience_award += co_await this->do_party_round(this->defending_party, this->attacking_party, this->defender_to_hit_modifier);
 		} else {
 			this->surprise = false;
 		}
-		this->attacker_experience_award += this->do_party_round(this->attacking_party, this->defending_party, this->attacker_to_hit_modifier);
+		this->attacker_experience_award += co_await this->do_party_round(this->attacking_party, this->defending_party, this->attacker_to_hit_modifier);
 	}
 
 	std::vector<const character *> all_characters = this->attacking_party->get_characters();
@@ -171,10 +173,10 @@ void combat::do_round()
 	}
 }
 
-int64_t combat::do_party_round(metternich::party *party, metternich::party *enemy_party, const int to_hit_modifier)
+QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich::party *enemy_party, const int to_hit_modifier)
 {
 	if (party->get_characters().empty()) {
-		return 0;
+		co_return 0;
 	}
 
 	assert_throw(!enemy_party->get_characters().empty());
@@ -186,29 +188,49 @@ int64_t combat::do_party_round(metternich::party *party, metternich::party *enem
 			break;
 		}
 
-		const metternich::character *chosen_enemy = vector::get_random(enemy_party->get_characters());
+		if (party->get_domain() == game::get()->get_player_country()) {
+			this->target_promise = std::make_unique<QPromise<QPoint>>();
+			const QFuture<QPoint> target_future = this->target_promise->future();
+			this->target_promise->start();
 
-		static constexpr dice to_hit_dice(1, 20);
-		const int to_hit = 20 - character->get_game_data()->get_to_hit_bonus() - to_hit_modifier;
-		const int to_hit_result = to_hit - random::get()->roll_dice(to_hit_dice);
-
-		const int armor_class_bonus = chosen_enemy->get_game_data()->get_armor_class_bonus() + chosen_enemy->get_game_data()->get_species_armor_class_bonus(character->get_species());
-		const int armor_class = 10 - armor_class_bonus;
-		if (to_hit_result > armor_class) {
-			continue;
-		}
-
-		const int damage = random::get()->roll_dice(character->get_game_data()->get_damage_dice()) + character->get_game_data()->get_damage_bonus();
-		chosen_enemy->get_game_data()->change_hit_points(-damage);
-
-		if (chosen_enemy->get_game_data()->is_dead()) {
-			experience_award += chosen_enemy->get_game_data()->get_experience_award();
-			enemy_party->remove_character(chosen_enemy);
-			this->remove_character_info(chosen_enemy);
+			const QPoint target_pos = co_await target_future;
+			const combat_tile &tile = this->get_tile(target_pos);
+			if (tile.character != nullptr && vector::contains(enemy_party->get_characters(), tile.character)) {
+				experience_award += this->do_character_attack(character, tile.character, enemy_party, to_hit_modifier);
+			}
+		} else {
+			const metternich::character *chosen_enemy = vector::get_random(enemy_party->get_characters());
+			experience_award += this->do_character_attack(character, chosen_enemy, enemy_party, to_hit_modifier);
 		}
 	}
 
-	return experience_award;
+	co_return experience_award;
+}
+
+int64_t combat::do_character_attack(const character *character, const metternich::character *enemy, party *enemy_party, const int to_hit_modifier)
+{
+	static constexpr dice to_hit_dice(1, 20);
+	const int to_hit = 20 - character->get_game_data()->get_to_hit_bonus() - to_hit_modifier;
+	const int to_hit_result = to_hit - random::get()->roll_dice(to_hit_dice);
+
+	const int armor_class_bonus = enemy->get_game_data()->get_armor_class_bonus() + enemy->get_game_data()->get_species_armor_class_bonus(character->get_species());
+	const int armor_class = 10 - armor_class_bonus;
+	if (to_hit_result > armor_class) {
+		return 0;
+	}
+
+	const int damage = random::get()->roll_dice(character->get_game_data()->get_damage_dice()) + character->get_game_data()->get_damage_bonus();
+	enemy->get_game_data()->change_hit_points(-damage);
+
+	if (enemy->get_game_data()->is_dead()) {
+		const int64_t experience_award = enemy->get_game_data()->get_experience_award();
+		enemy_party->remove_character(enemy);
+		this->remove_character_info(enemy);
+
+		return experience_award;
+	}
+
+	return 0;
 }
 
 void combat::process_result()
@@ -277,6 +299,16 @@ combat_tile::combat_tile(const terrain_type *base_terrain, const terrain_type *t
 	} else {
 		this->base_tile_frame = static_cast<short>(vector::get_random(base_terrain->get_tiles()));
 	}
+}
+
+void combat::set_target(const QPoint &tile_pos)
+{
+	if (this->target_promise == nullptr) {
+		return;
+	}
+
+	this->target_promise->addResult(tile_pos);
+	this->target_promise->finish();
 }
 
 }

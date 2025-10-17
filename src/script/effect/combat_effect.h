@@ -127,7 +127,9 @@ public:
 		if (scope == game::get()->get_player_country()) {
 			game::get()->set_current_combat(std::move(combat));
 		} else {
-			combat->start();
+			QTimer::singleShot(0, [combat = std::move(combat)]() -> QCoro::Task<void> {
+				co_await combat->start_coro();
+			});
 		}
 	}
 

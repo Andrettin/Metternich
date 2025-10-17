@@ -59,6 +59,8 @@ public:
 
 		return role_names;
 	}
+
+	void on_characters_changed();
 };
 
 }
