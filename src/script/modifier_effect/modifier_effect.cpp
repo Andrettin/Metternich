@@ -42,6 +42,7 @@
 #include "script/modifier_effect/leader_cost_modifier_effect.h"
 #include "script/modifier_effect/merchant_ship_stat_modifier_effect.h"
 #include "script/modifier_effect/military_unit_stat_modifier_effect.h"
+#include "script/modifier_effect/movement_modifier_effect.h"
 #include "script/modifier_effect/output_modifier_effect.h"
 #include "script/modifier_effect/population_type_bonus_modifier_effect.h"
 #include "script/modifier_effect/resource_output_modifier_effect.h"
@@ -83,6 +84,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<hit_points_modifier_effect>(value);
 		} else if (key == "hit_points_per_hit_dice") {
 			return std::make_unique<hit_points_per_hit_dice_modifier_effect>(value);
+		} else if (key == "movement") {
+			return std::make_unique<movement_modifier_effect>(value);
 		} else if (key == "to_hit_bonus") {
 			return std::make_unique<to_hit_bonus_modifier_effect>(value);
 		} else if (key == "saving_throw_bonus") {

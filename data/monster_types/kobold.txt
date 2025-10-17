@@ -10,5 +10,6 @@ kobold = {
 		hit_dice = 1d4
 		armor_class = 3
 		saving_throw_bonus = 1
+		movement = 6
 	}
 }

@@ -10,5 +10,6 @@ goblin = {
 		hit_dice = 1d8-1
 		armor_class = 3
 		saving_throw_bonus = 1
+		movement = 6
 	}
 }

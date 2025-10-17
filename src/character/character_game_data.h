@@ -58,6 +58,8 @@ class character_game_data final : public QObject
 	Q_PROPERTY(int armor_class_bonus READ get_armor_class_bonus NOTIFY armor_class_bonus_changed)
 	Q_PROPERTY(int to_hit_bonus READ get_to_hit_bonus NOTIFY to_hit_bonus_changed)
 	Q_PROPERTY(int damage_bonus READ get_damage_bonus NOTIFY damage_bonus_changed)
+	Q_PROPERTY(int movement READ get_movement NOTIFY movement_changed)
+	Q_PROPERTY(int combat_movement READ get_combat_movement NOTIFY movement_changed)
 	Q_PROPERTY(QVariantList saving_throw_bonuses READ get_saving_throw_bonuses_qvariant_list NOTIFY saving_throw_bonuses_changed)
 	Q_PROPERTY(QVariantList traits READ get_traits_qvariant_list NOTIFY traits_changed)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
@@ -282,6 +284,15 @@ public:
 
 	void set_damage_bonus(const int bonus);
 	void change_damage_bonus(const int change);
+
+	int get_movement() const
+	{
+		return this->movement;
+	}
+
+	void set_movement(const int movement);
+	void change_movement(const int change);
+	int get_combat_movement() const;
 
 	const data_entry_map<saving_throw_type, int> &get_saving_throw_bonuses() const
 	{
@@ -574,6 +585,7 @@ signals:
 	void species_armor_class_bonuses_changed();
 	void to_hit_bonus_changed();
 	void damage_bonus_changed();
+	void movement_changed();
 	void saving_throw_bonuses_changed();
 	void skill_trainings_changed();
 	void skill_values_changed();
@@ -607,6 +619,7 @@ private:
 	data_entry_map<species, int> species_armor_class_bonuses; //armor class bonuses when attacked by certain species
 	int to_hit_bonus = 0;
 	int damage_bonus = 0;
+	int movement = 0;
 	data_entry_map<saving_throw_type, int> saving_throw_bonuses;
 	data_entry_map<skill, int> skill_trainings;
 	data_entry_map<skill, int> skill_values;

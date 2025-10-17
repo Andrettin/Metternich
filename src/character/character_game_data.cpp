@@ -111,6 +111,8 @@ void character_game_data::process_gsml_property(const gsml_property &property)
 		this->to_hit_bonus = std::stoi(value);
 	} else if (key == "damage_bonus") {
 		this->damage_bonus = std::stoi(value);
+	} else if (key == "movement") {
+		this->movement = std::stoi(value);
 	} else {
 		throw std::runtime_error(std::format("Invalid character game data property: \"{}\".", key));
 	}
@@ -216,6 +218,7 @@ gsml_data character_game_data::to_gsml_data() const
 	data.add_property("armor_class_bonus", std::to_string(this->get_armor_class_bonus()));
 	data.add_property("to_hit_bonus", std::to_string(this->get_to_hit_bonus()));
 	data.add_property("damage_bonus", std::to_string(this->get_damage_bonus()));
+	data.add_property("movement", std::to_string(this->get_movement()));
 
 	if (!this->hit_dice_roll_results.empty()) {
 		gsml_data hit_dice_roll_results_data("hit_dice_roll_results");
@@ -1102,6 +1105,35 @@ void character_game_data::set_damage_bonus(const int bonus)
 void character_game_data::change_damage_bonus(const int change)
 {
 	this->set_damage_bonus(this->get_damage_bonus() + change);
+}
+
+void character_game_data::set_movement(const int movement)
+{
+	if (movement == this->get_movement()) {
+		return;
+	}
+
+	this->movement = movement;
+
+	if (game::get()->is_running()) {
+		emit movement_changed();
+	}
+}
+
+void character_game_data::change_movement(const int change)
+{
+	this->set_movement(this->get_movement() + change);
+}
+
+int character_game_data::get_combat_movement() const
+{
+	int movement = this->get_movement();
+
+	if (movement > 0) {
+		movement = std::max(movement / 2, 1);
+	}
+
+	return movement;
 }
 
 QVariantList character_game_data::get_saving_throw_bonuses_qvariant_list() const

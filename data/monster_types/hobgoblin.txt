@@ -11,5 +11,6 @@ hobgoblin = {
 		hit_dice = 1d8+1
 		to_hit_bonus = 1
 		saving_throw_bonus = 3
+		movement = 9
 	}
 }
