@@ -58,6 +58,37 @@ Item {
 	*/
 	
 	Item {
+		id: tile_movable_area
+		anchors.fill: parent
+		visible: movable_to
+		
+		Rectangle {
+			anchors.horizontalCenter: parent.horizontalCenter
+			anchors.bottom: tile_movable_rectangle.bottom
+			color: "black"
+			width: 4 * scale_factor
+			height: 1 * scale_factor
+		}
+		
+		Rectangle {
+			anchors.horizontalCenter: parent.horizontalCenter
+			anchors.top: tile_movable_rectangle.bottom
+			color: "black"
+			width: 2 * scale_factor
+			height: 1 * scale_factor
+		}
+		
+		Rectangle {
+			id: tile_movable_rectangle
+			anchors.horizontalCenter: parent.horizontalCenter
+			anchors.verticalCenter: parent.verticalCenter
+			color: Qt.rgba(95.0 / 255.0, 186.0 / 255.0, 75.0 / 255.0, 1)
+			width: 2 * scale_factor
+			height: 2 * scale_factor
+		}
+	}
+	
+	Item {
 		id: selection_rectangle_area
 		anchors.fill: parent
 		visible: tile_hovered

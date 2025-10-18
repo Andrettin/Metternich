@@ -23,9 +23,9 @@ struct combat_tile final
 
 	const terrain_type *terrain = nullptr;
 	short base_tile_frame = 0;
-	std::array<short, 4> base_subtile_frames;
+	std::array<short, 4> base_subtile_frames {};
 	short tile_frame = 0;
-	std::array<short, 4> subtile_frames;
+	std::array<short, 4> subtile_frames {};
 	const metternich::character *character = nullptr;
 };
 
@@ -36,6 +36,7 @@ class combat_character_info final : public QObject
 		Q_PROPERTY(const metternich::character *character READ get_character CONSTANT)
 		Q_PROPERTY(const QPoint tile_pos READ get_tile_pos NOTIFY tile_pos_changed)
 		Q_PROPERTY(bool defender READ is_defender CONSTANT)
+		Q_PROPERTY(int remaining_movement READ get_remaining_movement NOTIFY remaining_movement_changed)
 
 public:
 	explicit combat_character_info(const metternich::character *character, const QPoint &tile_pos, const bool defender)
@@ -68,13 +69,34 @@ public:
 		return this->defender;
 	}
 
+	int get_remaining_movement() const
+	{
+		return this->remaining_movement;
+	}
+
+	void set_remaining_movement(const int movement)
+	{
+		if (movement == this->get_remaining_movement()) {
+			return;
+		}
+
+		this->remaining_movement = movement;
+	}
+
+	void change_remaining_movement(const int change)
+	{
+		this->set_remaining_movement(this->get_remaining_movement() + change);
+	}
+
 signals:
 	void tile_pos_changed();
+	void remaining_movement_changed();
 
 private:
 	const metternich::character *character = nullptr;
 	QPoint tile_pos;
 	bool defender = false;
+	int remaining_movement = 0;
 };
 
 class combat final : public QObject
@@ -203,9 +225,12 @@ public:
 
 	Q_INVOKABLE void set_target(const QPoint &tile_pos);
 
+	bool is_tile_movable_to(const QPoint &tile_pos) const;
+
 signals:
 	void character_infos_changed();
 	void tile_character_changed(const QPoint &tile_pos);
+	void movable_tiles_changed();
 
 private:
 	QRect map_rect;
@@ -227,6 +252,7 @@ private:
 	std::vector<combat_tile> tiles;
 	character_map<qunique_ptr<combat_character_info>> character_infos;
 	std::unique_ptr<QPromise<QPoint>> target_promise;
+	const character *selected_character = nullptr;
 };
 
 }

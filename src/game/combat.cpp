@@ -196,14 +196,19 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 
 		if (party->get_domain() == game::get()->get_player_country()) {
 			bool attacked = false;
-			int remaining_movement = character->get_game_data()->get_combat_movement();
+			combat_character_info *character_info = this->get_character_info(character);
+			character_info->set_remaining_movement(character->get_game_data()->get_combat_movement());
 
-			while (!attacked && remaining_movement > 0) {
+			this->selected_character = character;
+
+			while (!attacked && character_info->get_remaining_movement() > 0) {
+				emit movable_tiles_changed();
+
 				this->target_promise = std::make_unique<QPromise<QPoint>>();
 				const QFuture<QPoint> target_future = this->target_promise->future();
 				this->target_promise->start();
 
-				const combat_character_info *character_info = this->get_character_info(character);
+				combat_character_info *character_info = this->get_character_info(character);
 				const QPoint current_tile_pos = character_info->get_tile_pos();
 
 				const QPoint target_pos = co_await target_future;
@@ -215,8 +220,8 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 						experience_award += this->do_character_attack(character, tile.character, enemy_party, to_hit_modifier);
 						attacked = true;
 					}
-				} else if (distance <= remaining_movement) {
-					remaining_movement -= distance;
+				} else if (this->is_tile_movable_to(target_pos)) {
+					character_info->change_remaining_movement(-distance);
 					this->move_character_to(character, target_pos);
 				}
 			}
@@ -224,6 +229,11 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 			const metternich::character *chosen_enemy = vector::get_random(enemy_party->get_characters());
 			experience_award += this->do_character_attack(character, chosen_enemy, enemy_party, to_hit_modifier);
 		}
+	}
+
+	if (this->selected_character != nullptr) {
+		this->selected_character = nullptr;
+		emit movable_tiles_changed();
 	}
 
 	co_return experience_award;
@@ -302,27 +312,6 @@ const combat_tile &combat::get_tile(const QPoint &tile_pos) const
 	return this->tiles.at(point::to_index(tile_pos, this->get_map_width()));
 }
 
-combat_tile::combat_tile(const terrain_type *base_terrain, const terrain_type *terrain)
-{
-	this->terrain = terrain;
-
-	if (!base_terrain->get_subtiles().empty()) {
-		std::array<const std::vector<int> *, 4> terrain_subtiles{};
-
-		for (size_t i = 0; i < terrain_subtiles.size(); ++i) {
-			terrain_subtiles[i] = &base_terrain->get_subtiles();
-		}
-
-		for (size_t i = 0; i < terrain_subtiles.size(); ++i) {
-			const short terrain_subtile = static_cast<short>(vector::get_random(*terrain_subtiles[i]));
-
-			this->base_subtile_frames[i] = terrain_subtile;
-		}
-	} else {
-		this->base_tile_frame = static_cast<short>(vector::get_random(base_terrain->get_tiles()));
-	}
-}
-
 void combat::move_character_to(const character *character, const QPoint &tile_pos)
 {
 	combat_tile &tile = this->get_tile(tile_pos);
@@ -350,6 +339,46 @@ void combat::set_target(const QPoint &tile_pos)
 
 	this->target_promise->addResult(tile_pos);
 	this->target_promise->finish();
+}
+
+bool combat::is_tile_movable_to(const QPoint &tile_pos) const
+{
+	if (this->selected_character == nullptr) {
+		return false;
+	}
+
+	const combat_character_info *character_info = this->get_character_info(this->selected_character);
+	const QPoint current_tile_pos = character_info->get_tile_pos();
+
+	const combat_tile &tile = this->get_tile(tile_pos);
+	const int distance = point::distance_to(current_tile_pos, tile_pos);
+
+	if (distance > character_info->get_remaining_movement()) {
+		return false;
+	}
+
+	return true;
+}
+
+combat_tile::combat_tile(const terrain_type *base_terrain, const terrain_type *terrain)
+{
+	this->terrain = terrain;
+
+	if (!base_terrain->get_subtiles().empty()) {
+		std::array<const std::vector<int> *, 4> terrain_subtiles{};
+
+		for (size_t i = 0; i < terrain_subtiles.size(); ++i) {
+			terrain_subtiles[i] = &base_terrain->get_subtiles();
+		}
+
+		for (size_t i = 0; i < terrain_subtiles.size(); ++i) {
+			const short terrain_subtile = static_cast<short>(vector::get_random(*terrain_subtiles[i]));
+
+			this->base_subtile_frames[i] = terrain_subtile;
+		}
+	} else {
+		this->base_tile_frame = static_cast<short>(vector::get_random(base_terrain->get_tiles()));
+	}
 }
 
 }

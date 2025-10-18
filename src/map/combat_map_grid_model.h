@@ -18,7 +18,8 @@ public:
 		image_sources,
 		overlay_image_sources,
 		terrain,
-		character
+		character,
+		movable_to
 	};
 
 	static QString build_image_source(const terrain_type *terrain, const short tile_frame);
@@ -56,11 +57,13 @@ public:
 		role_names.insert(static_cast<int>(role::overlay_image_sources), "overlay_image_sources");
 		role_names.insert(static_cast<int>(role::terrain), "terrain");
 		role_names.insert(static_cast<int>(role::character), "character");
+		role_names.insert(static_cast<int>(role::movable_to), "movable_to");
 
 		return role_names;
 	}
 
 	void on_tile_character_changed(const QPoint &tile_pos);
+	void on_movable_tiles_changed();
 };
 
 }
