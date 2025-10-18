@@ -88,8 +88,16 @@ void combat::initialize()
 	this->deploy_characters(this->defending_party->get_characters(), defender_start_pos, true);
 }
 
-void combat::deploy_characters(const std::vector<const character *> &characters, const QPoint &start_pos, const bool defenders)
+void combat::deploy_characters(std::vector<const character *> characters, const QPoint &start_pos, const bool defenders)
 {
+	std::sort(characters.begin(), characters.end(), [](const character *lhs, const character *rhs) {
+		if (lhs->get_game_data()->get_movement() != rhs->get_game_data()->get_movement()) {
+			return lhs->get_game_data()->get_movement() < rhs->get_game_data()->get_movement();
+		}
+
+		return lhs->get_identifier() < rhs->get_identifier();
+	});
+
 	std::vector<QPoint> tiles_to_check{ start_pos };
 	size_t last_check_index = 0;
 

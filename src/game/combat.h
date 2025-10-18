@@ -206,7 +206,7 @@ public:
 	void remove_character_info(const character *character);
 
 	void initialize();
-	void deploy_characters(const std::vector<const character *> &characters, const QPoint &start_pos, const bool defenders);
+	void deploy_characters(std::vector<const character *> characters, const QPoint &start_pos, const bool defenders);
 
 	Q_INVOKABLE QCoro::QmlTask start()
 	{
