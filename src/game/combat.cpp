@@ -195,18 +195,30 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 		}
 
 		if (party->get_domain() == game::get()->get_player_country()) {
-			this->target_promise = std::make_unique<QPromise<QPoint>>();
-			const QFuture<QPoint> target_future = this->target_promise->future();
-			this->target_promise->start();
+			bool attacked = false;
+			int remaining_movement = character->get_game_data()->get_combat_movement();
 
-			const QPoint target_pos = co_await target_future;
-			const combat_tile &tile = this->get_tile(target_pos);
-			if (tile.character != nullptr) {
-				if (vector::contains(enemy_party->get_characters(), tile.character)) {
-					experience_award += this->do_character_attack(character, tile.character, enemy_party, to_hit_modifier);
+			while (!attacked && remaining_movement > 0) {
+				this->target_promise = std::make_unique<QPromise<QPoint>>();
+				const QFuture<QPoint> target_future = this->target_promise->future();
+				this->target_promise->start();
+
+				const combat_character_info *character_info = this->get_character_info(character);
+				const QPoint current_tile_pos = character_info->get_tile_pos();
+
+				const QPoint target_pos = co_await target_future;
+				const combat_tile &tile = this->get_tile(target_pos);
+				const int distance = point::distance_to(current_tile_pos, target_pos);
+
+				if (tile.character != nullptr) {
+					if (distance <= 1 && vector::contains(enemy_party->get_characters(), tile.character)) {
+						experience_award += this->do_character_attack(character, tile.character, enemy_party, to_hit_modifier);
+						attacked = true;
+					}
+				} else if (distance <= remaining_movement) {
+					remaining_movement -= distance;
+					this->move_character_to(character, target_pos);
 				}
-			} else {
-				this->move_character_to(character, target_pos);
 			}
 		} else {
 			const metternich::character *chosen_enemy = vector::get_random(enemy_party->get_characters());
