@@ -15,7 +15,7 @@ namespace metternich {
 
 combat_map_grid_model::combat_map_grid_model()
 {
-	connect(game::get()->get_current_combat(), &combat::character_infos_changed, this, &combat_map_grid_model::on_characters_changed);
+	connect(game::get()->get_current_combat(), &combat::tile_character_changed, this, &combat_map_grid_model::on_tile_character_changed);
 }
 
 QString combat_map_grid_model::build_image_source(const terrain_type *terrain, const short tile_frame)
@@ -103,11 +103,10 @@ QVariant combat_map_grid_model::data(const QModelIndex &index, const int role) c
 	return QVariant();
 }
 
-void combat_map_grid_model::on_characters_changed()
+void combat_map_grid_model::on_tile_character_changed(const QPoint &tile_pos)
 {
-	const QModelIndex start_index = this->index(0, 0);
-	const QModelIndex end_index = this->index(game::get()->get_current_combat()->get_map_height() - 1, game::get()->get_current_combat()->get_map_width() - 1);
-	emit dataChanged(start_index, end_index, {
+	const QModelIndex index = this->index(tile_pos.y(), tile_pos.x());
+	emit dataChanged(index, index, {
 		static_cast<int>(role::character)
 	});
 }

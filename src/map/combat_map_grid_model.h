@@ -60,7 +60,7 @@ public:
 		return role_names;
 	}
 
-	void on_characters_changed();
+	void on_tile_character_changed(const QPoint &tile_pos);
 };
 
 }

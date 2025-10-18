@@ -14,8 +14,8 @@
 #include "script/effect/effect_list.h"
 #include "ui/portrait.h"
 #include "util/assert_util.h"
-#include "util/container_util.h"
 #include "util/dice.h"
+#include "util/map_util.h"
 #include "util/number_util.h"
 #include "util/point_util.h"
 #include "util/random.h"
@@ -50,19 +50,25 @@ void combat::set_generated_party(std::unique_ptr<party> &&generated_party)
 
 QVariantList combat::get_character_infos_qvariant_list() const
 {
-	return container::to_qvariant_list(this->character_infos);
+	return archimedes::map::to_qvariant_list(this->character_infos);
+}
+
+combat_character_info *combat::get_character_info(const character *character) const
+{
+	const auto find_iterator = this->character_infos.find(character);
+	assert_throw(find_iterator != this->character_infos.end());
+	return find_iterator->second.get();
 }
 
 void combat::remove_character_info(const character *character)
 {
-	for (size_t i = 0; i < this->character_infos.size(); ++i) {
-		if (this->character_infos[i]->get_character() == character) {
-			this->get_tile(this->character_infos[i]->get_tile_pos()).character = nullptr;
-			this->character_infos.erase(this->character_infos.begin() + i);
-			emit character_infos_changed();
-			return;
-		}
-	}
+	const combat_character_info *character_info = this->get_character_info(character);
+	const QPoint tile_pos = character_info->get_tile_pos();
+	this->get_tile(tile_pos).character = nullptr;
+	this->character_infos.erase(character);
+
+	emit tile_character_changed(tile_pos);
+	emit character_infos_changed();
 }
 
 void combat::initialize()
@@ -112,7 +118,7 @@ void combat::deploy_characters(const std::vector<const character *> &characters,
 			last_check_index = i;
 			tile.character = character;
 			auto character_info = make_qunique<combat_character_info>(character, tile_pos, defenders);
-			this->character_infos.push_back(std::move(character_info));
+			this->character_infos[character] = std::move(character_info);
 			break;
 		}
 	}
@@ -195,8 +201,12 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 
 			const QPoint target_pos = co_await target_future;
 			const combat_tile &tile = this->get_tile(target_pos);
-			if (tile.character != nullptr && vector::contains(enemy_party->get_characters(), tile.character)) {
-				experience_award += this->do_character_attack(character, tile.character, enemy_party, to_hit_modifier);
+			if (tile.character != nullptr) {
+				if (vector::contains(enemy_party->get_characters(), tile.character)) {
+					experience_award += this->do_character_attack(character, tile.character, enemy_party, to_hit_modifier);
+				}
+			} else {
+				this->move_character_to(character, target_pos);
 			}
 		} else {
 			const metternich::character *chosen_enemy = vector::get_random(enemy_party->get_characters());
@@ -299,6 +309,25 @@ combat_tile::combat_tile(const terrain_type *base_terrain, const terrain_type *t
 	} else {
 		this->base_tile_frame = static_cast<short>(vector::get_random(base_terrain->get_tiles()));
 	}
+}
+
+void combat::move_character_to(const character *character, const QPoint &tile_pos)
+{
+	combat_tile &tile = this->get_tile(tile_pos);
+	assert_throw(tile.character == nullptr);
+
+	combat_character_info *character_info = this->get_character_info(character);
+
+	const QPoint old_tile_pos = character_info->get_tile_pos();
+	combat_tile &old_tile = this->get_tile(old_tile_pos);
+	assert_throw(old_tile.character == character);
+	old_tile.character = nullptr;
+
+	character_info->set_tile_pos(tile_pos);
+	tile.character = character;
+
+	emit tile_character_changed(old_tile_pos);
+	emit tile_character_changed(tile_pos);
 }
 
 void combat::set_target(const QPoint &tile_pos)

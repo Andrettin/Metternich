@@ -1,5 +1,6 @@
 #pragma once
 
+#include "character/character_container.h"
 #include "script/context.h"
 #include "util/dice.h"
 #include "util/qunique_ptr.h"
@@ -33,7 +34,7 @@ class combat_character_info final : public QObject
 	Q_OBJECT
 
 		Q_PROPERTY(const metternich::character *character READ get_character CONSTANT)
-		Q_PROPERTY(const QPoint tile_pos READ get_tile_pos CONSTANT)
+		Q_PROPERTY(const QPoint tile_pos READ get_tile_pos NOTIFY tile_pos_changed)
 		Q_PROPERTY(bool defender READ is_defender CONSTANT)
 
 public:
@@ -52,10 +53,23 @@ public:
 		return this->tile_pos;
 	}
 
+	void set_tile_pos(const QPoint &tile_pos)
+	{
+		if (tile_pos == this->get_tile_pos()) {
+			return;
+		}
+
+		this->tile_pos = tile_pos;
+		emit tile_pos_changed();
+	}
+
 	bool is_defender() const
 	{
 		return this->defender;
 	}
+
+signals:
+	void tile_pos_changed();
 
 private:
 	const metternich::character *character = nullptr;
@@ -148,6 +162,7 @@ public:
 	}
 
 	QVariantList get_character_infos_qvariant_list() const;
+	combat_character_info *get_character_info(const character *character) const;
 	void remove_character_info(const character *character);
 
 	void initialize();
@@ -184,10 +199,13 @@ public:
 		return tile_pos.x() == (this->get_map_width() - 1);
 	}
 
+	void move_character_to(const character *character, const QPoint &tile_pos);
+
 	Q_INVOKABLE void set_target(const QPoint &tile_pos);
 
 signals:
 	void character_infos_changed();
+	void tile_character_changed(const QPoint &tile_pos);
 
 private:
 	QRect map_rect;
@@ -207,7 +225,7 @@ private:
 	const effect_list<const domain> *victory_effects = nullptr;
 	const effect_list<const domain> *defeat_effects = nullptr;
 	std::vector<combat_tile> tiles;
-	std::vector<qunique_ptr<combat_character_info>> character_infos;
+	character_map<qunique_ptr<combat_character_info>> character_infos;
 	std::unique_ptr<QPromise<QPoint>> target_promise;
 };
 

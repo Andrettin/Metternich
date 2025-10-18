@@ -27,8 +27,8 @@ TableView {
 			mirror: character_info.defender
 			z: 100
 			
-			readonly property var character_info: model.modelData
-			readonly property var character: character_info.character
+			readonly property var character: model.modelData.key
+			readonly property var character_info: model.modelData.value
 			readonly property var tile_pos: character_info.tile_pos
 			
 			Rectangle {
