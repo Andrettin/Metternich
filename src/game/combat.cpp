@@ -19,6 +19,7 @@
 #include "util/number_util.h"
 #include "util/point_util.h"
 #include "util/random.h"
+#include "util/size_util.h"
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
 
@@ -208,7 +209,6 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 				const QFuture<QPoint> target_future = this->target_promise->future();
 				this->target_promise->start();
 
-				combat_character_info *character_info = this->get_character_info(character);
 				const QPoint current_tile_pos = character_info->get_tile_pos();
 
 				const QPoint target_pos = co_await target_future;
@@ -222,7 +222,7 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 					}
 				} else if (this->is_tile_movable_to(target_pos)) {
 					character_info->change_remaining_movement(-distance);
-					this->move_character_to(character, target_pos);
+					co_await this->move_character_to(character, target_pos);
 				}
 			}
 		} else {
@@ -312,14 +312,35 @@ const combat_tile &combat::get_tile(const QPoint &tile_pos) const
 	return this->tiles.at(point::to_index(tile_pos, this->get_map_width()));
 }
 
-void combat::move_character_to(const character *character, const QPoint &tile_pos)
+[[nodiscard]]
+QCoro::Task<void> combat::move_character_to(const character *character, const QPoint tile_pos)
 {
+	combat_character_info *character_info = this->get_character_info(character);
+	const QPoint old_tile_pos = character_info->get_tile_pos();
+
+	if (this->scope == game::get()->get_player_country()) {
+		static constexpr int milliseconds_per_tile = 200;
+
+		const int distance = point::distance_to(old_tile_pos, tile_pos);
+		const int animation_ms = distance * milliseconds_per_tile;
+		const QPoint pixel_difference = (tile_pos - old_tile_pos) * size::to_point(defines::get()->get_scaled_tile_size());
+
+		static constexpr int timer_interval_ms = 10;
+		QTimer timer;
+		timer.setInterval(std::chrono::milliseconds(timer_interval_ms));
+		timer.start();
+
+		for (int ms = 0; ms < animation_ms; ms += timer_interval_ms) {
+			co_await timer;
+
+			const QPoint pixel_offset = pixel_difference * ms / animation_ms;
+			character_info->set_pixel_offset(pixel_offset);
+		}
+	}
+
 	combat_tile &tile = this->get_tile(tile_pos);
 	assert_throw(tile.character == nullptr);
 
-	combat_character_info *character_info = this->get_character_info(character);
-
-	const QPoint old_tile_pos = character_info->get_tile_pos();
 	combat_tile &old_tile = this->get_tile(old_tile_pos);
 	assert_throw(old_tile.character == character);
 	old_tile.character = nullptr;
@@ -350,7 +371,6 @@ bool combat::is_tile_movable_to(const QPoint &tile_pos) const
 	const combat_character_info *character_info = this->get_character_info(this->selected_character);
 	const QPoint current_tile_pos = character_info->get_tile_pos();
 
-	const combat_tile &tile = this->get_tile(tile_pos);
 	const int distance = point::distance_to(current_tile_pos, tile_pos);
 
 	if (distance > character_info->get_remaining_movement()) {

@@ -34,7 +34,8 @@ class combat_character_info final : public QObject
 	Q_OBJECT
 
 		Q_PROPERTY(const metternich::character *character READ get_character CONSTANT)
-		Q_PROPERTY(const QPoint tile_pos READ get_tile_pos NOTIFY tile_pos_changed)
+		Q_PROPERTY(const QPoint tile_pos READ get_tile_pos NOTIFY pos_changed)
+		Q_PROPERTY(const QPoint pixel_offset READ get_pixel_offset NOTIFY pos_changed)
 		Q_PROPERTY(bool defender READ is_defender CONSTANT)
 		Q_PROPERTY(int remaining_movement READ get_remaining_movement NOTIFY remaining_movement_changed)
 
@@ -61,7 +62,23 @@ public:
 		}
 
 		this->tile_pos = tile_pos;
-		emit tile_pos_changed();
+		this->pixel_offset = QPoint(0, 0);
+		emit pos_changed();
+	}
+
+	const QPoint &get_pixel_offset() const
+	{
+		return this->pixel_offset;
+	}
+
+	void set_pixel_offset(const QPoint &pixel_offset)
+	{
+		if (pixel_offset == this->get_pixel_offset()) {
+			return;
+		}
+
+		this->pixel_offset = pixel_offset;
+		emit pos_changed();
 	}
 
 	bool is_defender() const
@@ -89,12 +106,13 @@ public:
 	}
 
 signals:
-	void tile_pos_changed();
+	void pos_changed();
 	void remaining_movement_changed();
 
 private:
 	const metternich::character *character = nullptr;
 	QPoint tile_pos;
+	QPoint pixel_offset = QPoint(0, 0);
 	bool defender = false;
 	int remaining_movement = 0;
 };
@@ -221,7 +239,8 @@ public:
 		return tile_pos.x() == (this->get_map_width() - 1);
 	}
 
-	void move_character_to(const character *character, const QPoint &tile_pos);
+	[[nodiscard]]
+	QCoro::Task<void> move_character_to(const character *character, const QPoint tile_pos);
 
 	Q_INVOKABLE void set_target(const QPoint &tile_pos);
 

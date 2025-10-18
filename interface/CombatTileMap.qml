@@ -21,8 +21,8 @@ TableView {
 		
 		Image {
 			id: character_icon
-			x: tile_pos.x * tile_size + Math.floor((tile_size - character_icon.width) / 2)
-			y: tile_pos.y * tile_size + (tile_size - character_icon.height)
+			x: tile_pos.x * tile_size + Math.floor((tile_size - character_icon.width) / 2) + pixel_offset.x
+			y: tile_pos.y * tile_size + (tile_size - character_icon.height) + pixel_offset.y
 			source: "image://icon/" + character.game_data.icon.identifier
 			mirror: character_info.defender
 			z: 100
@@ -30,6 +30,7 @@ TableView {
 			readonly property var character: model.modelData.key
 			readonly property var character_info: model.modelData.value
 			readonly property var tile_pos: character_info.tile_pos
+			readonly property var pixel_offset: character_info.pixel_offset
 			
 			Rectangle {
 				id: hp_bar_shadow
