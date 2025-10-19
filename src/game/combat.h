@@ -244,7 +244,8 @@ public:
 
 	Q_INVOKABLE void set_target(const QPoint &tile_pos);
 
-	bool is_tile_movable_to(const QPoint &tile_pos) const;
+	bool can_current_character_move_to(const QPoint &tile_pos) const;
+	bool can_current_character_retreat_at(const QPoint &tile_pos) const;
 
 signals:
 	void character_infos_changed();
@@ -271,7 +272,7 @@ private:
 	std::vector<combat_tile> tiles;
 	character_map<qunique_ptr<combat_character_info>> character_infos;
 	std::unique_ptr<QPromise<QPoint>> target_promise;
-	const character *selected_character = nullptr;
+	const character *current_character = nullptr;
 };
 
 }

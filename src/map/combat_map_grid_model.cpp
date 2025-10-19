@@ -95,9 +95,11 @@ QVariant combat_map_grid_model::data(const QModelIndex &index, const int role) c
 			case role::character:
 				return QVariant::fromValue(tile.character);
 			case role::movable_to:
-				return combat->is_tile_movable_to(tile_pos);
+				return combat->can_current_character_move_to(tile_pos);
+			case role::retreatable_at:
+				return combat->can_current_character_retreat_at(tile_pos);
 			default:
-				throw std::runtime_error("Invalid combat map grid model role: " + std::to_string(role) + ".");
+				throw std::runtime_error(std::format("Invalid combat map grid model role: {}.", role));
 		}
 	} catch (...) {
 		exception::report(std::current_exception());
@@ -119,7 +121,8 @@ void combat_map_grid_model::on_movable_tiles_changed()
 	const QModelIndex start_index = this->index(0, 0);
 	const QModelIndex end_index = this->index(game::get()->get_current_combat()->get_map_height() - 1, game::get()->get_current_combat()->get_map_width() - 1);
 	emit dataChanged(start_index, end_index, {
-		static_cast<int>(role::movable_to)
+		static_cast<int>(role::movable_to),
+		static_cast<int>(role::retreatable_at)
 	});
 }
 

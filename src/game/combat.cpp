@@ -212,7 +212,7 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 			combat_character_info *character_info = this->get_character_info(character);
 			character_info->set_remaining_movement(character->get_game_data()->get_combat_movement());
 
-			this->selected_character = character;
+			this->current_character = character;
 
 			while (!attacked && character_info->get_remaining_movement() > 0) {
 				emit movable_tiles_changed();
@@ -232,9 +232,15 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 						experience_award += this->do_character_attack(character, tile.character, enemy_party, to_hit_modifier);
 						attacked = true;
 					}
-				} else if (this->is_tile_movable_to(target_pos)) {
+				} else if (this->can_current_character_move_to(target_pos)) {
 					character_info->change_remaining_movement(-distance);
 					co_await this->move_character_to(character, target_pos);
+
+					if (this->can_current_character_retreat_at(target_pos)) {
+						party->remove_character(character);
+						this->remove_character_info(character);
+						break;
+					}
 				}
 			}
 		} else {
@@ -243,8 +249,8 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 		}
 	}
 
-	if (this->selected_character != nullptr) {
-		this->selected_character = nullptr;
+	if (this->current_character != nullptr) {
+		this->current_character = nullptr;
 		emit movable_tiles_changed();
 	}
 
@@ -374,13 +380,13 @@ void combat::set_target(const QPoint &tile_pos)
 	this->target_promise->finish();
 }
 
-bool combat::is_tile_movable_to(const QPoint &tile_pos) const
+bool combat::can_current_character_move_to(const QPoint &tile_pos) const
 {
-	if (this->selected_character == nullptr) {
+	if (this->current_character == nullptr) {
 		return false;
 	}
 
-	const combat_character_info *character_info = this->get_character_info(this->selected_character);
+	const combat_character_info *character_info = this->get_character_info(this->current_character);
 	const QPoint current_tile_pos = character_info->get_tile_pos();
 
 	const int distance = point::distance_to(current_tile_pos, tile_pos);
@@ -390,6 +396,20 @@ bool combat::is_tile_movable_to(const QPoint &tile_pos) const
 	}
 
 	return true;
+}
+
+bool combat::can_current_character_retreat_at(const QPoint &tile_pos) const
+{
+	if (this->current_character == nullptr) {
+		return false;
+	}
+
+	const combat_character_info *character_info = this->get_character_info(this->current_character);
+	if (character_info->is_defender()) {
+		return this->is_tile_defender_escape(tile_pos);
+	} else {
+		return this->is_tile_attacker_escape(tile_pos);
+	}
 }
 
 combat_tile::combat_tile(const terrain_type *base_terrain, const terrain_type *terrain)

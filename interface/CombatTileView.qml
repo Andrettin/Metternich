@@ -82,7 +82,7 @@ Item {
 			id: tile_movable_rectangle
 			anchors.horizontalCenter: parent.horizontalCenter
 			anchors.verticalCenter: parent.verticalCenter
-			color: Qt.rgba(95.0 / 255.0, 186.0 / 255.0, 75.0 / 255.0, 1)
+			color: retreatable_at ? "white" : Qt.rgba(95.0 / 255.0, 186.0 / 255.0, 75.0 / 255.0, 1)
 			width: 2 * scale_factor
 			height: 2 * scale_factor
 		}
