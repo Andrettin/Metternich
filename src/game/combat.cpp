@@ -238,7 +238,7 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 				if (distance_to_enemy <= character->get_game_data()->get_range()) {
 					target_pos = chosen_enemy_tile_pos;
 				} else {
-					int best_distance = std::numeric_limits<int>::max();
+					int best_square_distance = std::numeric_limits<int>::max();
 					std::vector<QPoint> potential_tiles;
 
 					point::for_each_adjacent(current_tile_pos, [&](const QPoint &adjacent_pos) {
@@ -254,14 +254,14 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 							return;
 						}
 
-						const int distance = point::distance_to(adjacent_pos, chosen_enemy_tile_pos);
+						const int square_distance = point::square_distance_to(adjacent_pos, chosen_enemy_tile_pos);
 
-						if (distance < best_distance) {
-							best_distance = distance;
+						if (square_distance < best_square_distance) {
+							best_square_distance = square_distance;
 							potential_tiles.clear();
 						}
 
-						if (distance <= best_distance) {
+						if (square_distance <= best_square_distance) {
 							potential_tiles.push_back(adjacent_pos);
 						}
 					});
