@@ -612,6 +612,7 @@ set(script_condition_HDRS
 	src/script/condition/domain_condition.h
 	src/script/condition/domain_exists_condition.h
 	src/script/condition/domain_scope_condition.h
+	src/script/condition/dungeon_area_condition.h
 	src/script/condition/dungeon_condition.h
 	src/script/condition/event_condition.h
 	src/script/condition/explored_dungeon_area_condition.h
