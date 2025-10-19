@@ -202,7 +202,9 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 		co_return 0;
 	}
 
-	assert_throw(!enemy_party->get_characters().empty());
+	if (enemy_party->get_characters().empty()) {
+		co_return 0;
+	}
 
 	int64_t experience_award = 0;
 
