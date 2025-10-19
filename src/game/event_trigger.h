@@ -9,7 +9,8 @@ enum class event_trigger {
 	yearly_pulse,
 	ruler_death,
 	site_visited,
-	dungeon_cleared
+	dungeon_cleared,
+	combat_started
 };
 
 inline std::string_view get_event_trigger_name(const event_trigger event_trigger)
