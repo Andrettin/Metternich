@@ -211,45 +211,87 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 			break;
 		}
 
-		if (party->get_domain() == game::get()->get_player_country()) {
-			bool attacked = false;
-			combat_character_info *character_info = this->get_character_info(character);
-			character_info->set_remaining_movement(character->get_game_data()->get_combat_movement());
+		bool attacked = false;
+		combat_character_info *character_info = this->get_character_info(character);
+		character_info->set_remaining_movement(character->get_game_data()->get_combat_movement());
 
-			this->current_character = character;
+		this->current_character = character;
 
-			while (!attacked && character_info->get_remaining_movement() > 0) {
+		while (!attacked && character_info->get_remaining_movement() > 0) {
+			const QPoint current_tile_pos = character_info->get_tile_pos();
+
+			QPoint target_pos(-1, -1);
+
+			if (party->get_domain() == game::get()->get_player_country()) {
 				emit movable_tiles_changed();
 
 				this->target_promise = std::make_unique<QPromise<QPoint>>();
 				const QFuture<QPoint> target_future = this->target_promise->future();
 				this->target_promise->start();
 
-				const QPoint current_tile_pos = character_info->get_tile_pos();
+				target_pos = co_await target_future;
+			} else {
+				const metternich::character *chosen_enemy = vector::get_random(enemy_party->get_characters());
+				const combat_character_info *chosen_enemy_info = this->get_character_info(chosen_enemy);
+				const QPoint chosen_enemy_tile_pos = chosen_enemy_info->get_tile_pos();
+				const int distance_to_enemy = point::distance_to(current_tile_pos, chosen_enemy_tile_pos);
+				if (distance_to_enemy <= character->get_game_data()->get_range()) {
+					target_pos = chosen_enemy_tile_pos;
+				} else {
+					int best_distance = std::numeric_limits<int>::max();
+					std::vector<QPoint> potential_tiles;
 
-				const QPoint target_pos = co_await target_future;
-				const combat_tile &tile = this->get_tile(target_pos);
-				const int distance = point::distance_to(current_tile_pos, target_pos);
+					point::for_each_adjacent(current_tile_pos, [&](const QPoint &adjacent_pos) {
+						if (!this->get_map_rect().contains(adjacent_pos)) {
+							return;
+						}
 
-				if (tile.character != nullptr) {
-					if (distance <= character->get_game_data()->get_range() && vector::contains(enemy_party->get_characters(), tile.character)) {
-						experience_award += this->do_character_attack(character, tile.character, enemy_party, to_hit_modifier);
-						attacked = true;
-					}
-				} else if (this->can_current_character_move_to(target_pos)) {
-					character_info->change_remaining_movement(-distance);
-					co_await this->move_character_to(character, target_pos);
+						if (!this->can_current_character_move_to(adjacent_pos)) {
+							return;
+						}
 
-					if (this->can_current_character_retreat_at(target_pos)) {
-						party->remove_character(character);
-						this->remove_character_info(character);
-						break;
-					}
+						if (this->can_current_character_retreat_at(adjacent_pos)) {
+							return;
+						}
+
+						const int distance = point::distance_to(adjacent_pos, chosen_enemy_tile_pos);
+
+						if (distance < best_distance) {
+							best_distance = distance;
+							potential_tiles.clear();
+						}
+
+						if (distance <= best_distance) {
+							potential_tiles.push_back(adjacent_pos);
+						}
+					});
+
+					target_pos = vector::get_random(potential_tiles);
+				}
+
+				if (target_pos == QPoint(-1, -1)) {
+					break;
 				}
 			}
-		} else {
-			const metternich::character *chosen_enemy = vector::get_random(enemy_party->get_characters());
-			experience_award += this->do_character_attack(character, chosen_enemy, enemy_party, to_hit_modifier);
+
+			const combat_tile &tile = this->get_tile(target_pos);
+			const int distance = point::distance_to(current_tile_pos, target_pos);
+
+			if (tile.character != nullptr) {
+				if (distance <= character->get_game_data()->get_range() && vector::contains(enemy_party->get_characters(), tile.character)) {
+					experience_award += this->do_character_attack(character, tile.character, enemy_party, to_hit_modifier);
+					attacked = true;
+				}
+			} else if (this->can_current_character_move_to(target_pos)) {
+				character_info->change_remaining_movement(-distance);
+				co_await this->move_character_to(character, target_pos);
+
+				if (this->can_current_character_retreat_at(target_pos)) {
+					party->remove_character(character);
+					this->remove_character_info(character);
+					break;
+				}
+			}
 		}
 	}
 
@@ -387,6 +429,10 @@ void combat::set_target(const QPoint &tile_pos)
 bool combat::can_current_character_move_to(const QPoint &tile_pos) const
 {
 	if (this->current_character == nullptr) {
+		return false;
+	}
+
+	if (!this->get_map_rect().contains(tile_pos)) {
 		return false;
 	}
 
