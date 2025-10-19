@@ -6,11 +6,11 @@ DialogBase {
 	id: event_dialog
 	panel: 5
 	width: Math.max(max_button_width, default_width)
-	height: Math.max(content_height, default_height)
+	height: content_height
 	title: event_instance ? (event_instance.event.news ? event_instance.event.newspaper : event_instance.name) : ""
 	
 	readonly property int max_button_width: calculate_max_button_width(option_column) + 8 * scale_factor * 2
-	readonly property int content_height: description.y + description.contentHeight + 16 * scale_factor + option_column.height + 8 * scale_factor
+	readonly property int content_height: option_column.y + option_column.height + 8 * scale_factor
 	
 	property var event_instance: null
 	readonly property var option_names: event_instance ? event_instance.option_names : []
@@ -50,16 +50,14 @@ DialogBase {
 		anchors.leftMargin: 8 * scale_factor
 		anchors.right: parent.right
 		anchors.rightMargin: 8 * scale_factor
-		anchors.bottom: option_column.top
-		anchors.bottomMargin: 16 * scale_factor
 		text: event_instance ? format_text(event_instance.description) : ""
 		wrapMode: Text.WordWrap
 	}
 	
 	Column {
 		id: option_column
-		anchors.bottom: parent.bottom
-		anchors.bottomMargin: 8 * scale_factor
+		anchors.top: description.bottom
+		anchors.topMargin: 16 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
 		spacing: 8 * scale_factor
 		
