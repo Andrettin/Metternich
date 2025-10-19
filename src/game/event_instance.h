@@ -19,6 +19,7 @@ class event_instance final : public QObject
 	Q_PROPERTY(QString description READ get_description CONSTANT)
 	Q_PROPERTY(QStringList option_names READ get_option_names CONSTANT)
 	Q_PROPERTY(QStringList option_tooltips READ get_option_tooltips CONSTANT)
+	Q_PROPERTY(bool in_combat READ is_in_combat CONSTANT)
 
 public:
 	explicit event_instance(const metternich::event *event, const QString &name, const QString &description, const context &ctx);
@@ -49,6 +50,8 @@ public:
 	}
 
 	Q_INVOKABLE void choose_option(const int displayed_option_index);
+
+	bool is_in_combat() const;
 
 private:
 	const metternich::event *event = nullptr;

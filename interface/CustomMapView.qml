@@ -165,6 +165,10 @@ Item {
 				return
 			}
 			
+			if (event_instance.in_combat) {
+				return
+			}
+			
 			var event_dialog = event_dialog_component.createObject(map_view, {
 				event_instance: event_instance,
 				interface_style: map_view.interface_style

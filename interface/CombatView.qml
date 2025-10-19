@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Controls
+import "./dialogs"
 
 Item {
 	id: combat_view
@@ -9,6 +10,7 @@ Item {
 	property string right_status_text: ""
 	readonly property int tile_size: metternich.defines.tile_size.width * scale_factor
 	readonly property var combat: metternich.game.current_combat
+	readonly property var event_dialog_component: Qt.createComponent("dialogs/EventDialog.qml")
 	
 	Rectangle {
 		id: combat_map_background
@@ -53,6 +55,27 @@ Item {
 		anchors.top: parent.top
 		anchors.left: left_bar.right
 		anchors.right: infopanel.left
+	}
+	
+	Connections {
+		target: metternich
+		
+		function onEvent_fired(event_instance) {
+			if (event_dialog_component.status == Component.Error) {
+				console.error(event_dialog_component.errorString())
+				return
+			}
+			
+			if (!event_instance.in_combat) {
+				return
+			}
+			
+			var event_dialog = event_dialog_component.createObject(combat_view, {
+				event_instance: event_instance
+			})
+			
+			event_dialog.open()
+		}
 	}
 	
 	Connections {

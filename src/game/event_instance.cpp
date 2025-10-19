@@ -46,4 +46,9 @@ void event_instance::choose_option(const int displayed_option_index)
 	}
 }
 
+bool event_instance::is_in_combat() const
+{
+	return this->ctx.in_combat;
+}
+
 }
