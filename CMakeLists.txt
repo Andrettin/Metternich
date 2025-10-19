@@ -782,6 +782,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/movement_modifier_effect.h
 	src/script/modifier_effect/output_modifier_effect.h
 	src/script/modifier_effect/population_type_bonus_modifier_effect.h
+	src/script/modifier_effect/range_modifier_effect.h
 	src/script/modifier_effect/resource_output_modifier_effect.h
 	src/script/modifier_effect/saving_throw_modifier_effect.h
 	src/script/modifier_effect/ship_stat_modifier_effect.h

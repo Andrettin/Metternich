@@ -97,6 +97,10 @@ void combat::deploy_characters(std::vector<const character *> characters, const 
 			return lhs->get_game_data()->get_movement() < rhs->get_game_data()->get_movement();
 		}
 
+		if (lhs->get_game_data()->get_range() != rhs->get_game_data()->get_range()) {
+			return lhs->get_game_data()->get_range() > rhs->get_game_data()->get_range();
+		}
+
 		return lhs->get_identifier() < rhs->get_identifier();
 	});
 
@@ -228,7 +232,7 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 				const int distance = point::distance_to(current_tile_pos, target_pos);
 
 				if (tile.character != nullptr) {
-					if (distance <= 1 && vector::contains(enemy_party->get_characters(), tile.character)) {
+					if (distance <= character->get_game_data()->get_range() && vector::contains(enemy_party->get_characters(), tile.character)) {
 						experience_award += this->do_character_attack(character, tile.character, enemy_party, to_hit_modifier);
 						attacked = true;
 					}
@@ -392,6 +396,11 @@ bool combat::can_current_character_move_to(const QPoint &tile_pos) const
 	const int distance = point::distance_to(current_tile_pos, tile_pos);
 
 	if (distance > character_info->get_remaining_movement()) {
+		return false;
+	}
+
+	const combat_tile &tile = this->get_tile(tile_pos);
+	if (tile.character != nullptr) {
 		return false;
 	}
 

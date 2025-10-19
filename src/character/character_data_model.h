@@ -72,6 +72,8 @@ public:
 	void update_to_hit_bonus_rows();
 	void create_damage_row();
 	void update_damage_row();
+	void create_range_row();
+	void update_range_row();
 	void create_movement_row();
 	void update_movement_row();
 	void create_saving_throw_rows();
@@ -97,6 +99,7 @@ private:
 	character_data_row *armor_class_row = nullptr;
 	character_data_row *to_hit_bonus_row = nullptr;
 	character_data_row *damage_row = nullptr;
+	character_data_row *range_row = nullptr;
 	character_data_row *movement_row = nullptr;
 	character_data_row *saving_throw_row = nullptr;
 	character_data_row *skill_row = nullptr;

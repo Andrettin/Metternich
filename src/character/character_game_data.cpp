@@ -113,6 +113,8 @@ void character_game_data::process_gsml_property(const gsml_property &property)
 		this->damage_bonus = std::stoi(value);
 	} else if (key == "movement") {
 		this->movement = std::stoi(value);
+	} else if (key == "range") {
+		this->range = std::stoi(value);
 	} else {
 		throw std::runtime_error(std::format("Invalid character game data property: \"{}\".", key));
 	}
@@ -219,6 +221,7 @@ gsml_data character_game_data::to_gsml_data() const
 	data.add_property("to_hit_bonus", std::to_string(this->get_to_hit_bonus()));
 	data.add_property("damage_bonus", std::to_string(this->get_damage_bonus()));
 	data.add_property("movement", std::to_string(this->get_movement()));
+	data.add_property("range", std::to_string(this->get_range()));
 
 	if (!this->hit_dice_roll_results.empty()) {
 		gsml_data hit_dice_roll_results_data("hit_dice_roll_results");
@@ -1105,6 +1108,24 @@ void character_game_data::set_damage_bonus(const int bonus)
 void character_game_data::change_damage_bonus(const int change)
 {
 	this->set_damage_bonus(this->get_damage_bonus() + change);
+}
+
+void character_game_data::set_range(const int range)
+{
+	if (range == this->get_range()) {
+		return;
+	}
+
+	this->range = range;
+
+	if (game::get()->is_running()) {
+		emit range_changed();
+	}
+}
+
+void character_game_data::change_range(const int change)
+{
+	this->set_range(this->get_range() + change);
 }
 
 void character_game_data::set_movement(const int movement)
