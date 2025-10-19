@@ -9,6 +9,8 @@
 #include "domain/country_government.h"
 #include "domain/domain.h"
 #include "engine_interface.h"
+#include "game/domain_event.h"
+#include "game/event_trigger.h"
 #include "game/game.h"
 #include "map/terrain_type.h"
 #include "script/effect/effect_list.h"
@@ -135,6 +137,8 @@ void combat::deploy_characters(std::vector<const character *> characters, const 
 
 QCoro::Task<void> combat::start_coro()
 {
+	domain_event::check_events_for_scope(this->scope, event_trigger::combat_started, this->ctx);
+
 	while (!this->attacking_party->get_characters().empty() && !this->defending_party->get_characters().empty()) {
 		co_await this->do_round();
 	}
