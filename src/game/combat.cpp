@@ -459,12 +459,42 @@ bool combat::can_current_character_retreat_at(const QPoint &tile_pos) const
 		return false;
 	}
 
+	if (!this->get_map_rect().contains(tile_pos)) {
+		return false;
+	}
+
 	const combat_character_info *character_info = this->get_character_info(this->current_character);
 	if (character_info->is_defender()) {
 		return this->defender_retreat_allowed && this->is_tile_defender_escape(tile_pos);
 	} else {
 		return this->attacker_retreat_allowed && this->is_tile_attacker_escape(tile_pos);
 	}
+}
+
+bool combat::is_current_character_in_enemy_range_at(const QPoint &tile_pos) const
+{
+	if (this->current_character == nullptr) {
+		return false;
+	}
+
+	if (!this->get_map_rect().contains(tile_pos)) {
+		return false;
+	}
+
+	const combat_character_info *character_info = this->get_character_info(this->current_character);
+	const party *enemy_party = character_info->is_defender() ? this->attacking_party : this->defending_party;
+
+	for (const character *enemy : enemy_party->get_characters()) {
+		const combat_character_info *enemy_info = this->get_character_info(enemy);
+		const QPoint enemy_tile_pos = enemy_info->get_tile_pos();
+		const int distance = point::distance_to(enemy_tile_pos, tile_pos);
+
+		if (distance <= enemy->get_game_data()->get_range()) {
+			return true;
+		}
+	}
+
+	return false;
 }
 
 combat_tile::combat_tile(const terrain_type *base_terrain, const terrain_type *terrain)

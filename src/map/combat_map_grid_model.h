@@ -20,7 +20,8 @@ public:
 		terrain,
 		character,
 		movable_to,
-		retreatable_at
+		retreatable_at,
+		in_enemy_range_at
 	};
 
 	static QString build_image_source(const terrain_type *terrain, const short tile_frame);
@@ -60,6 +61,7 @@ public:
 		role_names.insert(static_cast<int>(role::character), "character");
 		role_names.insert(static_cast<int>(role::movable_to), "movable_to");
 		role_names.insert(static_cast<int>(role::retreatable_at), "retreatable_at");
+		role_names.insert(static_cast<int>(role::in_enemy_range_at), "in_enemy_range_at");
 
 		return role_names;
 	}
