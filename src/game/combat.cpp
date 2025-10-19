@@ -406,9 +406,9 @@ bool combat::can_current_character_retreat_at(const QPoint &tile_pos) const
 
 	const combat_character_info *character_info = this->get_character_info(this->current_character);
 	if (character_info->is_defender()) {
-		return this->is_tile_defender_escape(tile_pos);
+		return this->defender_retreat_allowed && this->is_tile_defender_escape(tile_pos);
 	} else {
-		return this->is_tile_attacker_escape(tile_pos);
+		return this->attacker_retreat_allowed && this->is_tile_attacker_escape(tile_pos);
 	}
 }
 

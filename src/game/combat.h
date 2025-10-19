@@ -174,6 +174,16 @@ public:
 		this->defender_to_hit_modifier = modifier;
 	}
 
+	void set_attacker_retreat_allowed(const bool allowed)
+	{
+		this->attacker_retreat_allowed = allowed;
+	}
+
+	void set_defender_retreat_allowed(const bool allowed)
+	{
+		this->defender_retreat_allowed = allowed;
+	}
+
 	void set_generated_characters(const std::vector<std::shared_ptr<character_reference>> &generated_characters)
 	{
 		this->generated_characters = generated_characters;
@@ -260,6 +270,8 @@ private:
 	bool surprise = false;
 	int attacker_to_hit_modifier = 0;
 	int defender_to_hit_modifier = 0;
+	bool attacker_retreat_allowed = true;
+	bool defender_retreat_allowed = true;
 	combat::result result;
 	int64_t attacker_experience_award = 0;
 	int64_t defender_experience_award = 0;

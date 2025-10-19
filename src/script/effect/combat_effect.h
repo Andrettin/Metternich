@@ -56,6 +56,8 @@ public:
 			this->surprise = string::to_bool(property.get_value());
 		} else if (key == "to_hit_modifier") {
 			this->to_hit_modifier = std::stoi(property.get_value());
+		} else if (key == "retreat_allowed") {
+			this->retreat_allowed = string::to_bool(property.get_value());
 		} else {
 			effect::process_gsml_property(property);
 		}
@@ -113,6 +115,8 @@ public:
 		combat->set_surprise(this->surprise);
 		combat->set_attacker_to_hit_modifier(this->attacker ? this->to_hit_modifier : 0);
 		combat->set_defender_to_hit_modifier(this->attacker ? 0 : this->to_hit_modifier);
+		combat->set_attacker_retreat_allowed(this->attacker ? this->retreat_allowed : false);
+		combat->set_defender_retreat_allowed(this->attacker ? false : this->retreat_allowed);
 
 		combat->set_generated_characters(generated_characters);
 		combat->set_generated_party(std::move(enemy_party));
@@ -236,6 +240,7 @@ private:
 	bool attacker = true;
 	bool surprise = false;
 	int to_hit_modifier = 0;
+	bool retreat_allowed = true;
 	data_entry_map<monster_type, std::variant<int, dice>> enemies;
 	std::vector<target_variant<const character>> enemy_characters;
 	std::unique_ptr<effect_list<const domain>> victory_effects;
