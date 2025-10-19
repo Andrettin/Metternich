@@ -118,7 +118,10 @@ public:
 		combat->set_generated_party(std::move(enemy_party));
 
 		combat->set_scope(scope);
-		combat->set_context(ctx);
+
+		context combat_ctx = ctx;
+		combat_ctx.in_combat = true;
+		combat->set_context(combat_ctx);
 		combat->set_victory_effects(this->victory_effects.get());
 		combat->set_defeat_effects(this->defeat_effects.get());
 
