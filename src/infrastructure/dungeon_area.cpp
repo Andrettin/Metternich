@@ -3,9 +3,7 @@
 #include "infrastructure/dungeon_area.h"
 
 #include "game/domain_event.h"
-#include "game/event_option.h"
 #include "script/condition/and_condition.h"
-#include "script/effect/explore_dungeon_effect.h"
 
 namespace metternich {
 
@@ -40,14 +38,6 @@ void dungeon_area::initialize()
 	this->event->set_name(this->get_name());
 	this->event->set_portrait(this->get_portrait());
 	this->event->set_description(this->get_description());
-
-	if (this->allows_retreat()) {
-		auto retreat_option = std::make_unique<event_option<const domain>>();
-		retreat_option->set_name("Retreat");
-		auto retreat_effect = std::make_unique<explore_dungeon_effect>(false, gsml_operator::assignment);
-		retreat_option->add_effect(std::move(retreat_effect));
-		this->event->add_option(std::move(retreat_option));
-	}
 
 	named_data_entry::initialize();
 }
