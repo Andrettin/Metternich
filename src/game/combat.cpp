@@ -339,13 +339,16 @@ void combat::process_result()
 {
 	const bool success = this->attacking_party->get_domain() == this->scope ? this->result.attacker_victory : !this->result.attacker_victory;
 
+	context ctx = this->ctx;
+	ctx.in_combat = false;
+
 	if (this->scope == game::get()->get_player_country()) {
 		const portrait *war_minister_portrait = this->scope->get_government()->get_war_minister_portrait();
 
 		if (success) {
 			std::string effects_string = std::format("Experience: {}", number::to_signed_string(this->result.experience_award));
 			if (this->victory_effects != nullptr) {
-				const std::string victory_effects_string = this->victory_effects->get_effects_string(this->scope, this->ctx);
+				const std::string victory_effects_string = this->victory_effects->get_effects_string(this->scope, ctx);
 				effects_string += "\n" + victory_effects_string;
 			}
 
@@ -353,7 +356,7 @@ void combat::process_result()
 		} else {
 			std::string effects_string;
 			if (this->defeat_effects != nullptr) {
-				const std::string defeat_effects_string = this->defeat_effects->get_effects_string(this->scope, this->ctx);
+				const std::string defeat_effects_string = this->defeat_effects->get_effects_string(this->scope, ctx);
 				effects_string += "\n" + defeat_effects_string;
 			}
 
@@ -363,11 +366,11 @@ void combat::process_result()
 
 	if (success) {
 		if (this->victory_effects != nullptr) {
-			this->victory_effects->do_effects(this->scope, this->ctx);
+			this->victory_effects->do_effects(this->scope, ctx);
 		}
 	} else {
 		if (this->defeat_effects != nullptr) {
-			this->defeat_effects->do_effects(this->scope, this->ctx);
+			this->defeat_effects->do_effects(this->scope, ctx);
 		}
 	}
 }
