@@ -6,6 +6,7 @@ longswordsmen = {
 			character_class = warrior
 			species = gnoll
 			species = goblin
+			species = hobgoblin
 			species = kobold
 			species = lizardfolk
 			species = ogre
