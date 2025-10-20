@@ -13,3 +13,22 @@ longswordsmen = {
 		}
 	}
 }
+
+longswordsmen_green = {
+	filepath = "icons/units/troops/longswordsmen.png"
+	hue_rotation = -90
+	hue_ignored_colors = {
+		{ 78 56 5 }
+		{ 94 63 12 }
+		{ 123 80 26 }
+		{ 126 91 47 }
+		{ 143 105 56 }
+		{ 143 108 65 }
+		{ 152 113 64 }
+		{ 169 128 76 }
+		{ 180 139 86 }
+		{ 200 156 99 }
+		{ 219 170 107 }
+		{ 234 187 130 }
+	}
+}
