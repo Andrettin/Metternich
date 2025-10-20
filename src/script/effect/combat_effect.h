@@ -68,7 +68,9 @@ public:
 		const std::string &tag = scope.get_tag();
 		const std::vector<std::string> &values = scope.get_values();
 
-		if (tag == "enemies") {
+		if (tag == "map_size") {
+			this->map_size = scope.to_size();
+		} else if (tag == "enemies") {
 			scope.for_each_property([&](const gsml_property &property) {
 				const std::string &key = property.get_key();
 				const monster_type *monster_type = monster_type::get(key);
@@ -104,7 +106,7 @@ public:
 
 		auto enemy_party = std::make_unique<party>(enemy_characters);
 
-		auto combat = make_qunique<metternich::combat>(this->attacker ? ctx.party.get() : enemy_party.get(), this->attacker ? enemy_party.get() : ctx.party.get());
+		auto combat = make_qunique<metternich::combat>(this->attacker ? ctx.party.get() : enemy_party.get(), this->attacker ? enemy_party.get() : ctx.party.get(), this->map_size);
 
 		if (ctx.dungeon_area != nullptr && ctx.dungeon_area->get_terrain() != nullptr) {
 			combat->set_base_terrain(ctx.dungeon_area->get_terrain());
@@ -241,6 +243,7 @@ private:
 	bool surprise = false;
 	int to_hit_modifier = 0;
 	bool retreat_allowed = true;
+	QSize map_size;
 	data_entry_map<monster_type, std::variant<int, dice>> enemies;
 	std::vector<target_variant<const character>> enemy_characters;
 	std::unique_ptr<effect_list<const domain>> victory_effects;

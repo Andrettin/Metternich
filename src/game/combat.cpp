@@ -27,10 +27,12 @@
 
 namespace metternich {
 
-combat::combat(party *attacking_party, party *defending_party)
+combat::combat(party *attacking_party, party *defending_party, const QSize &map_size)
 	: attacking_party(attacking_party), defending_party(defending_party)
 {
-	this->map_rect = QRect(QPoint(0, 0), QSize(combat::map_width, combat::map_height));
+	const QSize min_map_size = (QGuiApplication::primaryScreen()->size() / defines::get()->get_scaled_tile_size()) - QSize(1, 0);
+
+	this->map_rect = QRect(QPoint(0, 0), QSize(std::max(map_size.width(), min_map_size.width()), std::max(map_size.height(), min_map_size.height())));
 
 	this->base_terrain = defines::get()->get_default_base_terrain();
 }

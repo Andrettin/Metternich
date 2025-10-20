@@ -125,8 +125,6 @@ class combat final : public QObject
 	Q_PROPERTY(bool autoplay_enabled READ is_autoplay_enabled WRITE set_autoplay_enabled NOTIFY autoplay_enabled_changed)
 
 public:
-	static constexpr int map_width = 16;
-	static constexpr int map_height = 12;
 	static constexpr dice initiative_dice = dice(1, 10);
 
 	struct result final
@@ -135,7 +133,7 @@ public:
 		int64_t experience_award = 0;
 	};
 
-	explicit combat(party *attacking_party, party *defending_party);
+	explicit combat(party *attacking_party, party *defending_party, const QSize &map_size);
 	~combat();
 
 	const QRect &get_map_rect() const
