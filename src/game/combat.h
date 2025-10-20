@@ -122,6 +122,7 @@ class combat final : public QObject
 	Q_OBJECT
 
 	Q_PROPERTY(QVariantList character_infos READ get_character_infos_qvariant_list NOTIFY character_infos_changed)
+	Q_PROPERTY(bool autoplay_enabled READ is_autoplay_enabled WRITE set_autoplay_enabled NOTIFY autoplay_enabled_changed)
 
 public:
 	static constexpr int map_width = 16;
@@ -258,10 +259,22 @@ public:
 	bool can_current_character_retreat_at(const QPoint &tile_pos) const;
 	bool is_current_character_in_enemy_range_at(const QPoint &tile_pos) const;
 
+	bool is_autoplay_enabled() const
+	{
+		return this->autoplay_enabled;
+	}
+
+	void set_autoplay_enabled(const bool enabled)
+	{
+		this->autoplay_enabled = enabled;
+		emit autoplay_enabled_changed();
+	}
+
 signals:
 	void character_infos_changed();
 	void tile_character_changed(const QPoint &tile_pos);
 	void movable_tiles_changed();
+	void autoplay_enabled_changed();
 
 private:
 	QRect map_rect;
@@ -286,6 +299,7 @@ private:
 	character_map<qunique_ptr<combat_character_info>> character_infos;
 	std::unique_ptr<QPromise<QPoint>> target_promise;
 	const character *current_character = nullptr;
+	bool autoplay_enabled = false;
 };
 
 }

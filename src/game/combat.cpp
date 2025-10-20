@@ -224,7 +224,7 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 
 			QPoint target_pos(-1, -1);
 
-			if (party->get_domain() == game::get()->get_player_country()) {
+			if (party->get_domain() == game::get()->get_player_country() && !autoplay_enabled) {
 				emit movable_tiles_changed();
 
 				this->target_promise = std::make_unique<QPromise<QPoint>>();
@@ -232,6 +232,10 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 				this->target_promise->start();
 
 				target_pos = co_await target_future;
+
+				if (autoplay_enabled) {
+					continue;
+				}
 			} else {
 				const metternich::character *chosen_enemy = vector::get_random(enemy_party->get_characters());
 				const combat_character_info *chosen_enemy_info = this->get_character_info(chosen_enemy);

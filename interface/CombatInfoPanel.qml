@@ -28,7 +28,12 @@ Rectangle {
 		portrait_identifier: metternich.defines.war_minister_portrait.identifier
 		
 		onClicked: {
-			metternich.game.current_combat.start()
+			if (metternich.game.current_combat.autoplay_enabled) {
+				metternich.game.current_combat.autoplay_enabled = false
+			} else {
+				metternich.game.current_combat.autoplay_enabled = true
+				metternich.game.current_combat.set_target(Qt.point(-1, -1))
+			}
 		}
 		
 		onHoveredChanged: {
