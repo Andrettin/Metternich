@@ -24,7 +24,7 @@ TableView {
 			x: tile_pos.x * tile_size + Math.floor((tile_size - character_icon.width) / 2) + pixel_offset.x
 			y: tile_pos.y * tile_size + (tile_size - character_icon.height) + pixel_offset.y
 			source: "image://icon/" + character.game_data.icon.identifier
-			mirror: character_info.defender
+			mirror: character_info.defender != character.game_data.icon.left_facing
 			z: 100
 			
 			readonly property var character: model.modelData.key

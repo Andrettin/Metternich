@@ -41,6 +41,7 @@ rancher_small = {
 
 spy = {
 	filepath = "icons/units/civilians/spy.png"
+	left_facing = true
 	character_conditions = {
 		or = {
 			character_class = bard

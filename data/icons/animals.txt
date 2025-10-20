@@ -29,6 +29,7 @@ frog = {
 
 lion = {
 	filepath = "icons/animals/lion.png"
+	left_facing = true
 	character_conditions = {
 		species = wolf
 	}
