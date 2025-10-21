@@ -226,7 +226,7 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 
 			QPoint target_pos(-1, -1);
 
-			if (party->get_domain() == game::get()->get_player_country() && !autoplay_enabled) {
+			if (party->get_domain() == game::get()->get_player_country() && !this->is_autoplay_enabled()) {
 				emit movable_tiles_changed();
 
 				this->target_promise = std::make_unique<QPromise<QPoint>>();
@@ -235,7 +235,7 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 
 				target_pos = co_await target_future;
 
-				if (autoplay_enabled) {
+				if (this->is_autoplay_enabled()) {
 					continue;
 				}
 			} else {
@@ -246,6 +246,7 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 				if (distance_to_enemy <= character->get_game_data()->get_range()) {
 					target_pos = chosen_enemy_tile_pos;
 				} else {
+					const int current_square_distance = point::square_distance_to(current_tile_pos, chosen_enemy_tile_pos);
 					int best_square_distance = std::numeric_limits<int>::max();
 					std::vector<QPoint> potential_tiles;
 
@@ -264,6 +265,10 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 
 						const int square_distance = point::square_distance_to(adjacent_pos, chosen_enemy_tile_pos);
 
+						if (square_distance >= current_square_distance) {
+							return;
+						}
+
 						if (square_distance < best_square_distance) {
 							best_square_distance = square_distance;
 							potential_tiles.clear();
@@ -274,7 +279,9 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 						}
 					});
 
-					target_pos = vector::get_random(potential_tiles);
+					if (!potential_tiles.empty()) {
+						target_pos = vector::get_random(potential_tiles);
+					}
 				}
 
 				if (target_pos == QPoint(-1, -1)) {
