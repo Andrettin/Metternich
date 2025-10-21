@@ -26,6 +26,7 @@ Rectangle {
 		anchors.bottomMargin: 16 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
 		portrait_identifier: metternich.defines.war_minister_portrait.identifier
+		highlighted: metternich.game.current_combat.autoplay_enabled
 		
 		onClicked: {
 			if (metternich.game.current_combat.autoplay_enabled) {
