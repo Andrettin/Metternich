@@ -135,16 +135,17 @@ std::string event_option<scope_type>::get_effects_string(const read_only_context
 
 		const std::string effects_str = this->effects->get_effects_string(scope, ctx, indent);
 
-		if (effects_str.empty()) {
-			return effect_list<scope_type>::no_effect_string;
+		if (!effects_str.empty()) {
+			str += effects_str;
+			return str;
 		}
-
-		str += effects_str;
-
-		return str;
 	}
 
-	return effect_list<scope_type>::no_effect_string;
+	if (ctx.in_combat) {
+		return "Back to combat";
+	} else {
+		return effect_list<scope_type>::no_effect_string;
+	}
 }
 
 template <typename scope_type>
