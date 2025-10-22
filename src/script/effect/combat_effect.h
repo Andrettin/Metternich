@@ -17,6 +17,7 @@
 #include "game/game.h"
 #include "infrastructure/dungeon.h"
 #include "infrastructure/dungeon_area.h"
+#include "item/item_type.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "script/context.h"
@@ -45,11 +46,22 @@ public:
 				this->hit_points = std::stoi(property.get_value());
 			}
 		}, [&](const gsml_data &child_scope) {
-			/*
-			if (child_scope.get_tag() == "modifier") {
-				this->weight_factor->process_gsml_scope(child_scope);
+			if (child_scope.get_tag() == "items") {
+				for (const std::string &value : child_scope.get_values()) {
+					this->items.push_back(item_type::get(value));
+				}
+
+				child_scope.for_each_property([&](const gsml_property &property) {
+					const std::string &key = property.get_key();
+					const std::string &value = property.get_value();
+					const item_type *item_type = item_type::get(key);
+					const int quantity = std::stoi(value);
+
+					for (int i = 0; i < quantity; ++i) {
+						this->items.push_back(item_type);
+					}
+				});
 			}
-			*/
 		});
 	}
 
@@ -63,9 +75,15 @@ public:
 		return this->hit_points;
 	}
 
+	const std::vector<const item_type *> &get_items() const
+	{
+		return this->items;
+	}
+
 private:
 	const metternich::monster_type *monster_type = nullptr;
 	int hit_points = 0;
+	std::vector<const item_type *> items;
 };
 
 class combat_effect final : public effect<const domain>
@@ -261,14 +279,14 @@ public:
 			}
 
 			for (int i = 0; i < quantity; ++i) {
-				std::shared_ptr<character_reference> enemy_character = character::generate_temporary(monster_type, nullptr, nullptr, nullptr, 0);
+				std::shared_ptr<character_reference> enemy_character = character::generate_temporary(monster_type, nullptr, nullptr, nullptr, 0, {});
 				enemy_characters.push_back(enemy_character->get_character());
 				generated_characters.push_back(enemy_character);
 			}
 		}
 
 		for (const std::unique_ptr<enemy> &enemy : this->enemies) {
-			std::shared_ptr<character_reference> enemy_character = character::generate_temporary(enemy->get_monster_type(), nullptr, nullptr, nullptr, enemy->get_hit_points());
+			std::shared_ptr<character_reference> enemy_character = character::generate_temporary(enemy->get_monster_type(), nullptr, nullptr, nullptr, enemy->get_hit_points(), enemy->get_items());
 			enemy_characters.push_back(enemy_character->get_character());
 			generated_characters.push_back(enemy_character);
 		}
