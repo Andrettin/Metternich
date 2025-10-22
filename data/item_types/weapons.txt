@@ -31,6 +31,14 @@ mace = {
 	damage_dice = 1d6+1
 }
 
+morning_star = {
+	name = "Morning Star"
+	item_class = weapon
+	icon = saber
+	price = 8gp #? gp
+	damage_dice = 2d4
+}
+
 quarterstaff = {
 	name = "Quarterstaff"
 	item_class = weapon
