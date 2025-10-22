@@ -13,6 +13,18 @@ gnoll = {
 		self_taught = 1d6
 		trained = 2d6
 	}
+	item_slots = {
+		weapon = 1
+		shield = 1
+		armor = 1
+		helmet = 1
+		amulet = 1
+		belt = 1
+		cloak = 1
+		gloves = 1
+		ring = 2
+		boots = 1
+	}
 	pre_evolutions = {
 		protictitherium #common ancestor with hyenas
 	}
