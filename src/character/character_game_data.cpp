@@ -419,6 +419,10 @@ void character_game_data::add_starting_items()
 		this->add_starting_items(this->character->get_starting_items(), filled_item_slots);
 	}
 
+	if (this->character->get_monster_type() != nullptr) {
+		this->add_starting_items(this->character->get_monster_type()->get_items(), filled_item_slots);
+	}
+
 	if (character_class != nullptr) {
 		this->add_starting_items(character_class->get_starting_items(), filled_item_slots);
 	}

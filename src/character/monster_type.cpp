@@ -5,6 +5,7 @@
 #include "character/character_attribute.h"
 #include "character/character_class.h"
 #include "character/trait.h"
+#include "item/item_type.h"
 #include "script/modifier.h"
 #include "species/species.h"
 
@@ -39,6 +40,21 @@ void monster_type::process_gsml_scope(const gsml_data &scope)
 		auto modifier = std::make_unique<metternich::modifier<const character>>();
 		modifier->process_gsml_data(scope);
 		this->modifier = std::move(modifier);
+	} else if (tag == "items") {
+		for (const std::string &value : values) {
+			this->items.push_back(item_type::get(value));
+		}
+
+		scope.for_each_property([&](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+			const item_type *item_type = item_type::get(key);
+			const int quantity = std::stoi(value);
+
+			for (int i = 0; i < quantity; ++i) {
+				this->items.push_back(item_type);
+			}
+		});
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
@@ -66,8 +82,8 @@ void monster_type::check() const
 	}
 
 	if (this->get_character_class() == nullptr) {
-		if (this->get_damage_dice().is_null()) {
-			throw std::runtime_error(std::format("Monster type \"{}\" has null damage dice, and no character class.", this->get_identifier()));
+		if (this->get_damage_dice().is_null() && this->get_items().empty()) {
+			throw std::runtime_error(std::format("Monster type \"{}\" has null damage dice, and no character class or items.", this->get_identifier()));
 		}
 	}
 }

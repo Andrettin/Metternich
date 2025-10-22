@@ -12,6 +12,7 @@ namespace metternich {
 
 class character_attribute;
 class character_class;
+class item_type;
 class species;
 class trait;
 
@@ -85,6 +86,11 @@ public:
 		return this->modifier.get();
 	}
 
+	const std::vector<const item_type *> &get_items() const
+	{
+		return this->items;
+	}
+
 signals:
 	void changed();
 
@@ -98,6 +104,7 @@ private:
 	data_entry_map<character_attribute, std::pair<int, int>> attribute_ranges;
 	std::vector<const trait *> traits;
 	std::unique_ptr<const modifier<const character>> modifier;
+	std::vector<const item_type *> items;
 };
 
 }
