@@ -62,7 +62,7 @@ public:
 
 			created_character = this->character;
 		} else if (this->monster_type != nullptr) {
-			created_character = character::generate(this->monster_type, nullptr, nullptr, nullptr, false);
+			created_character = character::generate(this->monster_type, nullptr, nullptr, nullptr, 0, false);
 		} else {
 			assert_throw(false);
 		}

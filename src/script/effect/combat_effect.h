@@ -33,6 +33,41 @@
 
 namespace metternich {
 
+class enemy final
+{
+public:
+	explicit enemy(const gsml_data &scope)
+	{
+		this->monster_type = monster_type::get(scope.get_tag());
+
+		scope.for_each_element([&](const gsml_property &property) {
+			if (property.get_key() == "hit_points") {
+				this->hit_points = std::stoi(property.get_value());
+			}
+		}, [&](const gsml_data &child_scope) {
+			/*
+			if (child_scope.get_tag() == "modifier") {
+				this->weight_factor->process_gsml_scope(child_scope);
+			}
+			*/
+		});
+	}
+
+	const metternich::monster_type *get_monster_type() const
+	{
+		return this->monster_type;
+	}
+
+	int get_hit_points()
+	{
+		return this->hit_points;
+	}
+
+private:
+	const metternich::monster_type *monster_type = nullptr;
+	int hit_points = 0;
+};
+
 class combat_effect final : public effect<const domain>
 {
 public:
@@ -71,16 +106,22 @@ public:
 		if (tag == "map_size") {
 			this->map_size = scope.to_size();
 		} else if (tag == "enemies") {
-			scope.for_each_property([&](const gsml_property &property) {
+			scope.for_each_element([&](const gsml_property &property) {
 				const std::string &key = property.get_key();
 				const monster_type *monster_type = monster_type::get(key);
 
 				const std::string &value = property.get_value();
 				if (string::is_number(value)) {
-					this->enemies[monster_type] = std::stoi(value);
+					this->enemy_counts[monster_type] = std::stoi(value);
 				} else {
-					this->enemies[monster_type] = dice(value);
+					this->enemy_counts[monster_type] = dice(value);
 				}
+			}, [&](const gsml_data &child_scope) {
+				auto enemy = std::make_unique<metternich::enemy>(child_scope);
+				if (!this->enemy_counts.contains(enemy->get_monster_type())) {
+					this->enemy_counts[enemy->get_monster_type()] = 0;
+				}
+				this->enemies.push_back(std::move(enemy));
 			});
 		} else if (tag == "enemy_characters") {
 			for (const std::string &value : values) {
@@ -158,13 +199,22 @@ public:
 
 		str += "\n" + std::string(indent, '\t') + std::format("Does combat against{}:", this->attacker && this->surprise ? " (surprised)" : "");
 
-		for (const auto &[monster_type, quantity_variant] : this->enemies) {
+		for (const auto &[monster_type, quantity_variant] : this->enemy_counts) {
+			int additional_quantity = 0;
+			for (const std::unique_ptr<enemy> &enemy : this->enemies) {
+				if (enemy->get_monster_type() == monster_type) {
+					++additional_quantity;
+				}
+			}
+
 			std::string quantity_string;
 			if (std::holds_alternative<int>(quantity_variant)) {
-				quantity_string = std::to_string(std::get<int>(quantity_variant));
+				const int quantity = std::get<int>(quantity_variant) + additional_quantity;
+				quantity_string = std::to_string(quantity);
 			} else {
-				const dice damage_dice = std::get<dice>(quantity_variant);
-				quantity_string = damage_dice.to_display_string();
+				dice quantity_dice = std::get<dice>(quantity_variant);
+				quantity_dice.change_modifier(additional_quantity);
+				quantity_string = quantity_dice.to_display_string();
 			}
 
 			str += "\n" + std::string(indent + 1, '\t') + quantity_string + "x" + monster_type->get_name();
@@ -201,7 +251,7 @@ public:
 	{
 		std::vector<const character *> enemy_characters;
 
-		for (const auto &[monster_type, quantity_variant] : this->enemies) {
+		for (const auto &[monster_type, quantity_variant] : this->enemy_counts) {
 			int quantity = 0;
 			if (std::holds_alternative<int>(quantity_variant)) {
 				quantity = std::get<int>(quantity_variant);
@@ -211,10 +261,16 @@ public:
 			}
 
 			for (int i = 0; i < quantity; ++i) {
-				std::shared_ptr<character_reference> enemy_character = character::generate_temporary(monster_type, nullptr, nullptr, nullptr);
+				std::shared_ptr<character_reference> enemy_character = character::generate_temporary(monster_type, nullptr, nullptr, nullptr, 0);
 				enemy_characters.push_back(enemy_character->get_character());
 				generated_characters.push_back(enemy_character);
 			}
+		}
+
+		for (const std::unique_ptr<enemy> &enemy : this->enemies) {
+			std::shared_ptr<character_reference> enemy_character = character::generate_temporary(enemy->get_monster_type(), nullptr, nullptr, nullptr, enemy->get_hit_points());
+			enemy_characters.push_back(enemy_character->get_character());
+			generated_characters.push_back(enemy_character);
 		}
 
 		for (const target_variant<const character> &enemy_character : this->enemy_characters) {
@@ -244,7 +300,8 @@ private:
 	int to_hit_modifier = 0;
 	bool retreat_allowed = true;
 	QSize map_size;
-	data_entry_map<monster_type, std::variant<int, dice>> enemies;
+	data_entry_map<monster_type, std::variant<int, dice>> enemy_counts;
+	std::vector<std::unique_ptr<enemy>> enemies;
 	std::vector<target_variant<const character>> enemy_characters;
 	std::unique_ptr<effect_list<const domain>> victory_effects;
 	std::unique_ptr<effect_list<const domain>> defeat_effects;
