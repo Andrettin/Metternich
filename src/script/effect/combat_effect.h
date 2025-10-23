@@ -19,6 +19,7 @@
 #include "infrastructure/dungeon.h"
 #include "infrastructure/dungeon_area.h"
 #include "item/item_type.h"
+#include "item/object_type.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "script/context.h"
@@ -104,6 +105,42 @@ private:
 class combat_effect final : public effect<const domain>
 {
 public:
+
+	class object final
+	{
+	public:
+		explicit object(const gsml_data &scope)
+		{
+			this->object_type = object_type::get(scope.get_tag());
+
+			scope.for_each_element([&](const gsml_property &property) {
+				Q_UNUSED(property);
+				assert_throw(false);
+			}, [&](const gsml_data &child_scope) {
+				if (child_scope.get_tag() == "on_used") {
+					this->use_effects = std::make_unique<effect_list<const character>>();
+					this->use_effects->process_gsml_data(child_scope);
+				} else {
+					assert_throw(false);
+				}
+			});
+		}
+
+		const metternich::object_type *get_object_type() const
+		{
+			return this->object_type;
+		}
+
+		const effect_list<const character> *get_use_effects() const
+		{
+			return this->use_effects.get();
+		}
+
+	private:
+		const metternich::object_type *object_type = nullptr;
+		std::unique_ptr<effect_list<const character>> use_effects;
+	};
+
 	explicit combat_effect(const gsml_operator effect_operator) : effect<const domain>(effect_operator)
 	{
 	}
@@ -160,6 +197,12 @@ public:
 			for (const std::string &value : values) {
 				this->enemy_characters.push_back(string_to_target_variant<const character>(value));
 			}
+		} else if (tag == "objects") {
+			scope.for_each_child([&](const gsml_data &child_scope) {
+				auto object = std::make_unique<combat_effect::object>(child_scope);
+				++this->object_counts[object->get_object_type()];
+				this->objects.push_back(std::move(object));
+			});
 		} else if (tag == "on_victory") {
 			this->victory_effects = std::make_unique<effect_list<const domain>>();
 			this->victory_effects->process_gsml_data(scope);
@@ -182,6 +225,10 @@ public:
 		auto enemy_party = std::make_unique<party>(enemy_characters);
 
 		auto combat = make_qunique<metternich::combat>(this->attacker ? ctx.party.get() : enemy_party.get(), this->attacker ? enemy_party.get() : ctx.party.get(), this->map_size);
+
+		for (const std::unique_ptr<object> &object : this->objects) {
+			combat->add_object(object->get_object_type(), object->get_use_effects());
+		}
 
 		if (ctx.dungeon_area != nullptr && ctx.dungeon_area->get_terrain() != nullptr) {
 			combat->set_base_terrain(ctx.dungeon_area->get_terrain());
@@ -265,6 +312,10 @@ public:
 			str += "\n" + std::string(indent + 1, '\t') + std::format("{} ({}{})", character->get_full_name(), character->get_species()->get_name(), character_class_string);
 		}
 
+		for (const auto &[object_type, quantity] : this->object_counts) {
+			str += "\n" + std::string(indent + 1, '\t') + std::to_string(quantity) + "x" + object_type->get_name();
+		}
+
 		if (this->victory_effects != nullptr) {
 			const std::string effects_string = this->victory_effects->get_effects_string(scope, ctx, indent + 1, prefix);
 			if (!effects_string.empty()) {
@@ -342,6 +393,8 @@ private:
 	data_entry_map<monster_type, std::variant<int, dice>> enemy_counts;
 	std::vector<std::unique_ptr<enemy>> enemies;
 	std::vector<target_variant<const character>> enemy_characters;
+	std::vector<std::unique_ptr<object>> objects;
+	data_entry_map<object_type, int> object_counts;
 	std::unique_ptr<effect_list<const domain>> victory_effects;
 	std::unique_ptr<effect_list<const domain>> defeat_effects;
 };

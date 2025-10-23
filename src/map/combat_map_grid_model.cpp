@@ -16,6 +16,7 @@ namespace metternich {
 combat_map_grid_model::combat_map_grid_model()
 {
 	connect(game::get()->get_current_combat(), &combat::tile_character_changed, this, &combat_map_grid_model::on_tile_character_changed);
+	connect(game::get()->get_current_combat(), &combat::tile_object_changed, this, &combat_map_grid_model::on_tile_object_changed);
 	connect(game::get()->get_current_combat(), &combat::movable_tiles_changed, this, &combat_map_grid_model::on_movable_tiles_changed);
 }
 
@@ -94,6 +95,8 @@ QVariant combat_map_grid_model::data(const QModelIndex &index, const int role) c
 				return QVariant::fromValue(tile.terrain);
 			case role::character:
 				return QVariant::fromValue(tile.character);
+			case role::object:
+				return QVariant::fromValue(tile.object);
 			case role::movable_to:
 				return combat->can_current_character_move_to(tile_pos);
 			case role::retreatable_at:
@@ -115,6 +118,14 @@ void combat_map_grid_model::on_tile_character_changed(const QPoint &tile_pos)
 	const QModelIndex index = this->index(tile_pos.y(), tile_pos.x());
 	emit dataChanged(index, index, {
 		static_cast<int>(role::character)
+	});
+}
+
+void combat_map_grid_model::on_tile_object_changed(const QPoint &tile_pos)
+{
+	const QModelIndex index = this->index(tile_pos.y(), tile_pos.x());
+	emit dataChanged(index, index, {
+		static_cast<int>(role::object)
 	});
 }
 

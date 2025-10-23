@@ -13,6 +13,7 @@
 #include "game/domain_event.h"
 #include "game/event_trigger.h"
 #include "game/game.h"
+#include "item/object_type.h"
 #include "map/terrain_type.h"
 #include "script/effect/effect_list.h"
 #include "ui/portrait.h"
@@ -87,6 +88,35 @@ void combat::remove_character_info(const character *character)
 	emit character_infos_changed();
 }
 
+QVariantList combat::get_objects_qvariant_list() const
+{
+	return container::to_qvariant_list(this->objects);
+}
+
+void combat::add_object(const object_type *object_type, const effect_list<const character> *use_effects)
+{
+	auto object = make_qunique<combat_object>(object_type, use_effects);
+	this->objects.push_back(std::move(object));
+}
+
+void combat::remove_object(const combat_object *object)
+{
+	assert_throw(object != nullptr);
+
+	const QPoint tile_pos = object->get_tile_pos();
+	this->get_tile(tile_pos).object = nullptr;
+
+	for (size_t i = 0; i < this->objects.size(); ++i) {
+		if (this->objects[i].get() == object) {
+			this->objects.erase(this->objects.begin() + i);
+			break;
+		}
+	}
+
+	emit tile_object_changed(tile_pos);
+	emit objects_changed();
+}
+
 void combat::initialize()
 {
 	const size_t tile_count = static_cast<size_t>(this->get_map_width() * this->get_map_height());
@@ -99,8 +129,47 @@ void combat::initialize()
 	const QPoint attacker_start_pos(1, this->get_map_height() / 2);
 	const QPoint defender_start_pos(this->get_map_width() - 2, this->get_map_height() / 2);
 
+	this->deploy_objects(defender_start_pos);
 	this->deploy_characters(this->attacking_party->get_characters(), attacker_start_pos, false);
 	this->deploy_characters(this->defending_party->get_characters(), defender_start_pos, true);
+}
+
+void combat::deploy_objects(const QPoint &start_pos)
+{
+	vector::shuffle(this->objects);
+
+	std::vector<QPoint> tiles_to_check{ start_pos };
+	size_t last_check_index = 0;
+
+	for (const qunique_ptr<combat_object> &object : this->objects) {
+		for (size_t i = last_check_index; i < tiles_to_check.size(); ++i) {
+			const QPoint &tile_pos = tiles_to_check.at(i);
+
+			if (this->is_tile_attacker_escape(tile_pos) || this->is_tile_defender_escape(tile_pos)) {
+				continue;
+			}
+
+			combat_tile &tile = this->get_tile(tile_pos);
+			if (tile.is_occupied()) {
+				point::for_each_cardinally_adjacent(tile_pos, [&](const QPoint &adjacent_pos) {
+					if (!this->get_map_rect().contains(adjacent_pos)) {
+						return;
+					}
+
+					if (!vector::contains(tiles_to_check, adjacent_pos)) {
+						tiles_to_check.push_back(adjacent_pos);
+					}
+				}, false, false);
+
+				continue;
+			}
+
+			last_check_index = i;
+			object->set_tile_pos(tile_pos);
+			tile.object = object.get();
+			break;
+		}
+	}
 }
 
 void combat::deploy_characters(std::vector<const character *> characters, const QPoint &start_pos, const bool defenders)
@@ -129,7 +198,7 @@ void combat::deploy_characters(std::vector<const character *> characters, const 
 			}
 
 			combat_tile &tile = this->get_tile(tile_pos);
-			if (tile.character != nullptr) {
+			if (tile.is_occupied()) {
 				point::for_each_cardinally_adjacent(tile_pos, [&](const QPoint &adjacent_pos) {
 					if (!this->get_map_rect().contains(adjacent_pos)) {
 						return;
@@ -156,7 +225,7 @@ QCoro::Task<void> combat::start_coro()
 {
 	domain_event::check_events_for_scope(this->scope, event_trigger::combat_started, this->ctx);
 
-	while (!this->attacking_party->get_characters().empty() && !this->defending_party->get_characters().empty()) {
+	while (!this->attacking_party->get_characters().empty() && (!this->defending_party->get_characters().empty() || !this->objects.empty())) {
 		co_await this->do_round();
 	}
 
@@ -215,14 +284,14 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 		co_return 0;
 	}
 
-	if (enemy_party->get_characters().empty()) {
+	if (enemy_party->get_characters().empty() && (party == this->defending_party || this->objects.empty())) {
 		co_return 0;
 	}
 
 	int64_t experience_award = 0;
 
 	for (const character *character : party->get_characters()) {
-		if (enemy_party->get_characters().empty()) {
+		if (enemy_party->get_characters().empty() && (party == this->defending_party || this->objects.empty())) {
 			break;
 		}
 
@@ -250,14 +319,25 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 					continue;
 				}
 			} else {
-				const metternich::character *chosen_enemy = vector::get_random(enemy_party->get_characters());
-				const combat_character_info *chosen_enemy_info = this->get_character_info(chosen_enemy);
-				const QPoint chosen_enemy_tile_pos = chosen_enemy_info->get_tile_pos();
-				const int distance_to_enemy = point::distance_to(current_tile_pos, chosen_enemy_tile_pos);
-				if (distance_to_enemy <= character->get_game_data()->get_range()) {
-					target_pos = chosen_enemy_tile_pos;
+				QPoint chosen_target_tile_pos(-1, -1);
+
+				if (!enemy_party->get_characters().empty()) {
+					const metternich::character *chosen_enemy = vector::get_random(enemy_party->get_characters());
+					const combat_character_info *chosen_enemy_info = this->get_character_info(chosen_enemy);
+					chosen_target_tile_pos = chosen_enemy_info->get_tile_pos();
 				} else {
-					const int current_square_distance = point::square_distance_to(current_tile_pos, chosen_enemy_tile_pos);
+					assert_throw(!this->objects.empty());
+					const qunique_ptr<combat_object> &chosen_object = vector::get_random(this->objects);
+					chosen_target_tile_pos = chosen_object->get_tile_pos();
+				}
+
+				assert_throw(chosen_target_tile_pos != QPoint(-1, -1));
+
+				const int distance_to_target = point::distance_to(current_tile_pos, chosen_target_tile_pos);
+				if (distance_to_target <= character->get_game_data()->get_range()) {
+					target_pos = chosen_target_tile_pos;
+				} else {
+					const int current_square_distance = point::square_distance_to(current_tile_pos, chosen_target_tile_pos);
 					int best_square_distance = std::numeric_limits<int>::max();
 					std::vector<QPoint> potential_tiles;
 
@@ -274,7 +354,7 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 							return;
 						}
 
-						const int square_distance = point::square_distance_to(adjacent_pos, chosen_enemy_tile_pos);
+						const int square_distance = point::square_distance_to(adjacent_pos, chosen_target_tile_pos);
 
 						if (square_distance >= current_square_distance) {
 							return;
@@ -306,6 +386,25 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 			if (tile.character != nullptr) {
 				if (distance <= character->get_game_data()->get_range() && vector::contains(enemy_party->get_characters(), tile.character)) {
 					experience_award += this->do_character_attack(character, tile.character, enemy_party, to_hit_modifier);
+					attacked = true;
+				}
+			} else if (tile.object != nullptr) {
+				if (distance <= 1) {
+					if (tile.object->get_use_effects() != nullptr) {
+						context ctx = this->ctx;
+						ctx.root_scope = character;
+
+						if (character->get_game_data()->get_domain() == game::get()->get_player_country()) {
+							const portrait *war_minister_portrait = character->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
+							const std::string effects_string = tile.object->get_use_effects()->get_effects_string(character, ctx);
+
+							engine_interface::get()->add_combat_notification(std::format("{} Used", tile.object->get_object_type()->get_name()), war_minister_portrait, effects_string);
+						}
+
+						tile.object->get_use_effects()->do_effects(character, ctx);
+					}
+
+					this->remove_object(tile.object);
 					attacked = true;
 				}
 			} else if (this->can_current_character_move_to(target_pos)) {
@@ -449,7 +548,7 @@ QCoro::Task<void> combat::move_character_to(const character *character, const QP
 	}
 
 	combat_tile &tile = this->get_tile(tile_pos);
-	assert_throw(tile.character == nullptr);
+	assert_throw(!tile.is_occupied());
 
 	combat_tile &old_tile = this->get_tile(old_tile_pos);
 	assert_throw(old_tile.character == character);
@@ -492,7 +591,7 @@ bool combat::can_current_character_move_to(const QPoint &tile_pos) const
 	}
 
 	const combat_tile &tile = this->get_tile(tile_pos);
-	if (tile.character != nullptr) {
+	if (tile.is_occupied()) {
 		return false;
 	}
 

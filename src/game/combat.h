@@ -6,11 +6,14 @@
 #include "util/qunique_ptr.h"
 
 Q_MOC_INCLUDE("character/character.h")
+Q_MOC_INCLUDE("item/object_type.h")
 
 namespace metternich {
 
 class character;
 class character_reference;
+class combat_object;
+class object_type;
 class party;
 class terrain_type;
 
@@ -21,12 +24,18 @@ struct combat_tile final
 {
 	explicit combat_tile(const terrain_type *base_terrain, const terrain_type *terrain);
 
+	bool is_occupied() const
+	{
+		return this->character != nullptr || this->object != nullptr;
+	}
+
 	const terrain_type *terrain = nullptr;
 	short base_tile_frame = 0;
 	std::array<short, 4> base_subtile_frames {};
 	short tile_frame = 0;
 	std::array<short, 4> subtile_frames {};
 	const metternich::character *character = nullptr;
+	const combat_object *object = nullptr;
 };
 
 class combat_character_info final : public QObject
@@ -117,11 +126,59 @@ private:
 	int remaining_movement = 0;
 };
 
+class combat_object final : public QObject
+{
+	Q_OBJECT
+
+	Q_PROPERTY(const metternich::object_type* object_type READ get_object_type CONSTANT)
+	Q_PROPERTY(const QPoint tile_pos READ get_tile_pos NOTIFY tile_pos_changed)
+
+public:
+	explicit combat_object(const metternich::object_type *object_type, const effect_list<const character> *use_effects)
+		: object_type(object_type), use_effects(use_effects)
+	{
+	}
+
+	const metternich::object_type *get_object_type() const
+	{
+		return this->object_type;
+	}
+
+	const QPoint &get_tile_pos() const
+	{
+		return this->tile_pos;
+	}
+
+	void set_tile_pos(const QPoint &tile_pos)
+	{
+		if (tile_pos == this->get_tile_pos()) {
+			return;
+		}
+
+		this->tile_pos = tile_pos;
+		emit tile_pos_changed();
+	}
+
+	const effect_list<const character> *get_use_effects() const
+	{
+		return this->use_effects;
+	}
+
+signals:
+	void tile_pos_changed();
+
+private:
+	const metternich::object_type *object_type = nullptr;
+	QPoint tile_pos = QPoint(-1, -1);
+	const effect_list<const character> *use_effects = nullptr;
+};
+
 class combat final : public QObject
 {
 	Q_OBJECT
 
 	Q_PROPERTY(QVariantList character_infos READ get_character_infos_qvariant_list NOTIFY character_infos_changed)
+	Q_PROPERTY(QVariantList objects READ get_objects_qvariant_list NOTIFY objects_changed)
 	Q_PROPERTY(bool autoplay_enabled READ is_autoplay_enabled WRITE set_autoplay_enabled NOTIFY autoplay_enabled_changed)
 
 public:
@@ -219,7 +276,12 @@ public:
 	combat_character_info *get_character_info(const character *character) const;
 	void remove_character_info(const character *character);
 
+	QVariantList get_objects_qvariant_list() const;
+	void add_object(const object_type *object_type, const effect_list<const character> *use_effects);
+	void remove_object(const combat_object *object);
+
 	void initialize();
+	void deploy_objects(const QPoint &start_pos);
 	void deploy_characters(std::vector<const character *> characters, const QPoint &start_pos, const bool defenders);
 
 	Q_INVOKABLE QCoro::QmlTask start()
@@ -275,7 +337,9 @@ public:
 
 signals:
 	void character_infos_changed();
+	void objects_changed();
 	void tile_character_changed(const QPoint &tile_pos);
+	void tile_object_changed(const QPoint &tile_pos);
 	void movable_tiles_changed();
 	void autoplay_enabled_changed();
 
@@ -301,6 +365,7 @@ private:
 	const effect_list<const domain> *defeat_effects = nullptr;
 	std::vector<combat_tile> tiles;
 	character_map<qunique_ptr<combat_character_info>> character_infos;
+	std::vector<qunique_ptr<combat_object>> objects;
 	std::unique_ptr<QPromise<QPoint>> target_promise;
 	const character *current_character = nullptr;
 	bool autoplay_enabled = false;

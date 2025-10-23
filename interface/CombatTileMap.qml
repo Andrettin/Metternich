@@ -63,6 +63,22 @@ TableView {
 		}
 	}
 	
+	Repeater {
+		model: combat ? combat.objects : []
+		
+		Image {
+			id: object_icon
+			x: tile_pos.x * tile_size + Math.floor((tile_size - object_icon.width) / 2)
+			y: tile_pos.y * tile_size + (tile_size - object_icon.height)
+			source: "image://icon/" + object.object_type.icon.identifier
+			mirror: !object.object_type.icon.left_facing
+			z: 100
+			
+			readonly property var object: model.modelData
+			readonly property var tile_pos: object.tile_pos
+		}
+	}
+	
 	function pixel_to_tile_pos(pixel_x, pixel_y) {
 		var tile_x = Math.floor(pixel_x / tile_size)
 		var tile_y = Math.floor(pixel_y / tile_size)
