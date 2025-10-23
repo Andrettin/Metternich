@@ -1,0 +1,4 @@
+chest = {
+	name = "Chest"
+	icon = chest
+}

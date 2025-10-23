@@ -1,3 +1,4 @@
 chest = {
 	filepath = "icons/chest.png"
+	left_facing = true
 }
