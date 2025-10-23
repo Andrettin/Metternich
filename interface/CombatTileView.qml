@@ -169,7 +169,7 @@ Item {
 	MouseArea {
 		id: tile_mouse_area
 		anchors.fill: parent
-		hoverEnabled: true
+		hoverEnabled: metternich.game.current_combat !== null
 		
 		onReleased: {
 			metternich.game.current_combat.set_target(tile_pos)
