@@ -24,6 +24,7 @@
 #include "util/point_util.h"
 #include "util/random.h"
 #include "util/size_util.h"
+#include "util/string_util.h"
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
 
@@ -388,25 +389,33 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 					experience_award += this->do_character_attack(character, tile.character, enemy_party, to_hit_modifier);
 					attacked = true;
 				}
-			} else if (tile.object != nullptr && enemy_party->get_characters().empty()) {
+			} else if (tile.object != nullptr) {
 				//can only use objects (e.g. chests) if the enemy has been wiped out
 				if (distance <= 1) {
-					if (tile.object->get_use_effects() != nullptr) {
-						context ctx = this->ctx;
-						ctx.root_scope = character;
+					if (enemy_party->get_characters().empty()) {
+						if (tile.object->get_use_effects() != nullptr) {
+							context ctx = this->ctx;
+							ctx.root_scope = character;
 
-						if (character->get_game_data()->get_domain() == game::get()->get_player_country()) {
-							const portrait *war_minister_portrait = character->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
-							const std::string effects_string = tile.object->get_use_effects()->get_effects_string(character, ctx);
+							if (character->get_game_data()->get_domain() == game::get()->get_player_country()) {
+								const portrait *war_minister_portrait = character->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
+								const std::string effects_string = tile.object->get_use_effects()->get_effects_string(character, ctx);
 
-							engine_interface::get()->add_combat_notification(std::format("{} Used", tile.object->get_object_type()->get_name()), war_minister_portrait, effects_string);
+								engine_interface::get()->add_combat_notification(std::format("{} Used", tile.object->get_object_type()->get_name()), war_minister_portrait, effects_string);
+							}
+
+							tile.object->get_use_effects()->do_effects(character, ctx);
 						}
 
-						tile.object->get_use_effects()->do_effects(character, ctx);
-					}
+						this->remove_object(tile.object);
+						attacked = true;
+					} else {
+						if (character->get_game_data()->get_domain() == game::get()->get_player_country()) {
+							const portrait *war_minister_portrait = character->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
 
-					this->remove_object(tile.object);
-					attacked = true;
+							engine_interface::get()->add_combat_notification(std::format("Cannot Use {}", tile.object->get_object_type()->get_name()), war_minister_portrait, std::format("Your Excellency, the {} can only be used once all enemies have been defeated.", string::lowered(tile.object->get_object_type()->get_name())));
+						}
+					}
 				}
 			} else if (this->can_current_character_move_to(target_pos)) {
 				character_info->change_remaining_movement(-distance);
