@@ -103,6 +103,10 @@ Popup {
 				open_dialogs.splice(dialog_index, 1)
 			}
 		}
+		
+		if (parent.on_popup_closed) {
+			parent.on_popup_closed()
+		}
 	}
 	
 	function give_up_focus() {
