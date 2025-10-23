@@ -388,7 +388,8 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 					experience_award += this->do_character_attack(character, tile.character, enemy_party, to_hit_modifier);
 					attacked = true;
 				}
-			} else if (tile.object != nullptr) {
+			} else if (tile.object != nullptr && enemy_party->get_characters().empty()) {
+				//can only use objects (e.g. chests) if the enemy has been wiped out
 				if (distance <= 1) {
 					if (tile.object->get_use_effects() != nullptr) {
 						context ctx = this->ctx;
@@ -519,6 +520,17 @@ combat_tile &combat::get_tile(const QPoint &tile_pos)
 const combat_tile &combat::get_tile(const QPoint &tile_pos) const
 {
 	return this->tiles.at(point::to_index(tile_pos, this->get_map_width()));
+}
+
+bool combat::is_tile_attacker_escape(const QPoint &tile_pos) const
+{
+	//can only retreat if the enemy is still present; this is to prevent a retreat from happening while opening chests, leading to potentially opening the same chest multiple times
+	return tile_pos.x() == 0 && !this->defending_party->get_characters().empty();
+}
+
+bool combat::is_tile_defender_escape(const QPoint &tile_pos) const
+{
+	return tile_pos.x() == (this->get_map_width() - 1) && !this->attacking_party->get_characters().empty();
 }
 
 [[nodiscard]]

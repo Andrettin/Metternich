@@ -304,16 +304,8 @@ public:
 
 	combat_tile &get_tile(const QPoint &tile_pos);
 	const combat_tile &get_tile(const QPoint &tile_pos) const;
-
-	bool is_tile_attacker_escape(const QPoint &tile_pos) const
-	{
-		return tile_pos.x() == 0;
-	}
-
-	bool is_tile_defender_escape(const QPoint &tile_pos) const
-	{
-		return tile_pos.x() == (this->get_map_width() - 1);
-	}
+	bool is_tile_attacker_escape(const QPoint &tile_pos) const;
+	bool is_tile_defender_escape(const QPoint &tile_pos) const;
 
 	[[nodiscard]]
 	QCoro::Task<void> move_character_to(const character *character, const QPoint tile_pos);
