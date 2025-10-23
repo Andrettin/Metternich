@@ -32,6 +32,7 @@
 #include "util/qunique_ptr.h"
 #include "util/random.h"
 #include "util/string_conversion_util.h"
+#include "util/vector_random_util.h"
 
 namespace metternich {
 
@@ -315,7 +316,7 @@ public:
 			enemy_characters.push_back(this->get_enemy_character(enemy_character, ctx));
 		}
 
-		return enemy_characters;
+		return vector::shuffled(enemy_characters);
 	}
 
 	const character *get_enemy_character(const target_variant<const character> &target_variant, const read_only_context &ctx) const
