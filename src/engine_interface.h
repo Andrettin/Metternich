@@ -96,6 +96,16 @@ public:
 		this->add_notification(QString::fromStdString(title), portrait_object, QString::fromStdString(text));
 	}
 
+	void add_combat_notification(const QString &title, const QObject *portrait_object, const QString &text)
+	{
+		emit combat_notification_added(title, portrait_object, text);
+	}
+
+	void add_combat_notification(const std::string &title, const QObject *portrait_object, const std::string &text)
+	{
+		this->add_combat_notification(QString::fromStdString(title), portrait_object, QString::fromStdString(text));
+	}
+
 	void add_event_instance(qunique_ptr<event_instance> &&event_instance);
 	void remove_event_instance(event_instance *event_instance);
 
@@ -135,6 +145,7 @@ signals:
 	void running_changed();
 	void scale_factor_changed();
 	void notification_added(const QString &title, const QObject *portrait_object, const QString &text);
+	void combat_notification_added(const QString &title, const QObject *portrait_object, const QString &text);
 	void event_fired(const event_instance *event_instance);
 	void event_closed(const event_instance *event_instance);
 	void free_technology_choosable(const QVariantList &potential_technologies);

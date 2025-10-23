@@ -371,7 +371,7 @@ void combat::process_result()
 				effects_string += "\n" + victory_effects_string;
 			}
 
-			engine_interface::get()->add_notification("Victory!", war_minister_portrait, std::format("You have won a combat!\n\n{}", effects_string));
+			engine_interface::get()->add_combat_notification("Victory!", war_minister_portrait, std::format("You have won a combat!\n\n{}", effects_string));
 		} else {
 			std::string effects_string;
 			if (this->defeat_effects != nullptr) {
@@ -379,7 +379,7 @@ void combat::process_result()
 				effects_string += "\n" + defeat_effects_string;
 			}
 
-			engine_interface::get()->add_notification("Defeat!", war_minister_portrait, std::format("You have lost a combat!{}", !effects_string.empty() ? ("\n\n" + effects_string) : ""));
+			engine_interface::get()->add_combat_notification("Defeat!", war_minister_portrait, std::format("You have lost a combat!{}", !effects_string.empty() ? ("\n\n" + effects_string) : ""));
 		}
 	}
 

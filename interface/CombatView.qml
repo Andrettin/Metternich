@@ -61,6 +61,11 @@ Item {
 	Connections {
 		target: metternich
 		
+		function onCombat_notification_added(title, portrait_object, text) {
+			add_notification(title, portrait_object, text, combat_view)
+			popup_count += 1
+		}
+		
 		function onEvent_fired(event_instance) {
 			if (event_dialog_component.status == Component.Error) {
 				console.error(event_dialog_component.errorString())
