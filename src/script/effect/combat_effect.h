@@ -2,6 +2,7 @@
 
 #include "character/character.h"
 #include "character/character_class.h"
+#include "character/character_container.h"
 #include "character/character_game_data.h"
 #include "character/character_reference.h"
 #include "character/party.h"
@@ -44,6 +45,8 @@ public:
 		scope.for_each_element([&](const gsml_property &property) {
 			if (property.get_key() == "hit_points") {
 				this->hit_points = std::stoi(property.get_value());
+			} else {
+				assert_throw(false);
 			}
 		}, [&](const gsml_data &child_scope) {
 			if (child_scope.get_tag() == "items") {
@@ -61,6 +64,11 @@ public:
 						this->items.push_back(item_type);
 					}
 				});
+			} else if (child_scope.get_tag() == "on_killed") {
+				this->kill_effects = std::make_unique<effect_list<const domain>>();
+				this->kill_effects->process_gsml_data(child_scope);
+			} else {
+				assert_throw(false);
 			}
 		});
 	}
@@ -80,10 +88,16 @@ public:
 		return this->items;
 	}
 
+	const effect_list<const domain> *get_kill_effects() const
+	{
+		return this->kill_effects.get();
+	}
+
 private:
 	const metternich::monster_type *monster_type = nullptr;
 	int hit_points = 0;
 	std::vector<const item_type *> items;
+	std::unique_ptr<effect_list<const domain>> kill_effects;
 };
 
 class combat_effect final : public effect<const domain>
@@ -161,7 +175,8 @@ public:
 		assert_throw(ctx.party != nullptr);
 
 		std::vector<std::shared_ptr<character_reference>> generated_characters;
-		const std::vector<const character *> enemy_characters = this->get_enemy_characters(ctx, generated_characters);
+		character_map<const effect_list<const domain> *> character_kill_effects;
+		const std::vector<const character *> enemy_characters = this->get_enemy_characters(ctx, generated_characters, character_kill_effects);
 
 		auto enemy_party = std::make_unique<party>(enemy_characters);
 
@@ -187,6 +202,7 @@ public:
 		context combat_ctx = ctx;
 		combat_ctx.in_combat = true;
 		combat->set_context(combat_ctx);
+		combat->set_character_kill_effects(character_kill_effects);
 		combat->set_victory_effects(this->victory_effects.get());
 		combat->set_defeat_effects(this->defeat_effects.get());
 
@@ -265,7 +281,7 @@ public:
 		return str;
 	}
 
-	std::vector<const character *> get_enemy_characters(const read_only_context &ctx, std::vector<std::shared_ptr<character_reference>> &generated_characters) const
+	std::vector<const character *> get_enemy_characters(const read_only_context &ctx, std::vector<std::shared_ptr<character_reference>> &generated_characters, character_map<const effect_list<const domain> *> &character_kill_effects) const
 	{
 		std::vector<const character *> enemy_characters;
 
@@ -289,6 +305,10 @@ public:
 			std::shared_ptr<character_reference> enemy_character = character::generate_temporary(enemy->get_monster_type(), nullptr, nullptr, nullptr, enemy->get_hit_points(), enemy->get_items());
 			enemy_characters.push_back(enemy_character->get_character());
 			generated_characters.push_back(enemy_character);
+
+			if (enemy->get_kill_effects() != nullptr) {
+				character_kill_effects[enemy_character->get_character()] = enemy->get_kill_effects();
+			}
 		}
 
 		for (const target_variant<const character> &enemy_character : this->enemy_characters) {

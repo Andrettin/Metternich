@@ -200,6 +200,11 @@ public:
 		this->ctx = ctx;
 	}
 
+	void set_character_kill_effects(const character_map<const effect_list<const domain> *> &character_kill_effects)
+	{
+		this->character_kill_effects = character_kill_effects;
+	}
+
 	void set_victory_effects(const effect_list<const domain> *victory_effects)
 	{
 		this->victory_effects = victory_effects;
@@ -291,6 +296,7 @@ private:
 	std::unique_ptr<party> generated_party;
 	const domain *scope = nullptr;
 	context ctx;
+	character_map<const effect_list<const domain> *> character_kill_effects;
 	const effect_list<const domain> *victory_effects = nullptr;
 	const effect_list<const domain> *defeat_effects = nullptr;
 	std::vector<combat_tile> tiles;

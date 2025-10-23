@@ -4,6 +4,7 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
+#include "character/monster_type.h"
 #include "character/party.h"
 #include "database/defines.h"
 #include "domain/country_government.h"
@@ -344,6 +345,23 @@ int64_t combat::do_character_attack(const character *character, const metternich
 	enemy->get_game_data()->change_hit_points(-damage);
 
 	if (enemy->get_game_data()->is_dead()) {
+		if (character->get_game_data()->get_domain() != nullptr) {
+			const auto find_iterator = this->character_kill_effects.find(enemy);
+			if (find_iterator != this->character_kill_effects.end()) {
+				context ctx = this->ctx;
+				ctx.root_scope = character->get_game_data()->get_domain();
+
+				if (character->get_game_data()->get_domain() == game::get()->get_player_country()) {
+					const portrait *war_minister_portrait = character->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
+					const std::string effects_string = find_iterator->second->get_effects_string(character->get_game_data()->get_domain(), ctx);
+
+					engine_interface::get()->add_combat_notification(std::format("{} Killed", enemy->is_temporary() && enemy->get_monster_type() != nullptr ? enemy->get_monster_type()->get_name() : enemy->get_full_name()), war_minister_portrait, effects_string);
+				}
+
+				find_iterator->second->do_effects(character->get_game_data()->get_domain(), ctx);
+			}
+		}
+
 		const int64_t experience_award = enemy->get_game_data()->get_experience_award();
 		enemy_party->remove_character(enemy);
 		this->remove_character_info(enemy);
