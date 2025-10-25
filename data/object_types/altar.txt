@@ -1,4 +1,5 @@
 altar = {
 	name = "Altar"
 	icon = wooden_cross
+	usage_adjective = "Touched"
 }

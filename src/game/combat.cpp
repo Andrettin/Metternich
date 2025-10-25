@@ -450,7 +450,7 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 							const portrait *war_minister_portrait = character->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
 							const std::string effects_string = tile.object->get_use_effects()->get_effects_string(character, ctx);
 
-							engine_interface::get()->add_combat_notification(std::format("{} Used", tile.object->get_object_type()->get_name()), war_minister_portrait, effects_string);
+							engine_interface::get()->add_combat_notification(std::format("{} {}", tile.object->get_object_type()->get_name(), tile.object->get_object_type()->get_usage_adjective()), war_minister_portrait, effects_string);
 						}
 
 						tile.object->get_use_effects()->do_effects(character, ctx);

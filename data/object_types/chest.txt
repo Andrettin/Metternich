@@ -1,4 +1,5 @@
 chest = {
 	name = "Chest"
 	icon = chest
+	usage_adjective = "Opened"
 }
