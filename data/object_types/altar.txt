@@ -1,0 +1,4 @@
+altar = {
+	name = "Altar"
+	icon = wooden_cross
+}
