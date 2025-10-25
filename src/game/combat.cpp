@@ -625,6 +625,10 @@ QCoro::Task<void> combat::move_character_to(const character *character, const QP
 			return;
 		}
 
+		if (!this->can_character_use_object(character, adjacent_tile.object)) {
+			return;
+		}
+
 		if (adjacent_tile.object->get_trap() == nullptr) {
 			return;
 		}
