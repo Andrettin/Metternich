@@ -50,6 +50,8 @@ combat::combat(party *attacking_party, party *defending_party, const QSize &map_
 	this->map_rect = QRect(QPoint(0, 0), QSize(std::max(map_size.width(), min_map_size.width()), std::max(map_size.height(), min_map_size.height())));
 
 	this->base_terrain = defines::get()->get_default_base_terrain();
+
+	connect(this, &combat::current_character_changed, this, &combat::movable_tiles_changed);
 }
 
 combat::~combat()
@@ -304,6 +306,7 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 		character_info->set_remaining_movement(character->get_game_data()->get_combat_movement());
 
 		this->current_character = character;
+		emit current_character_changed();
 
 		while (!attacked && character_info->get_remaining_movement() > 0) {
 			const QPoint current_tile_pos = character_info->get_tile_pos();
@@ -468,7 +471,7 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 
 	if (this->current_character != nullptr) {
 		this->current_character = nullptr;
-		emit movable_tiles_changed();
+		emit current_character_changed();
 	}
 
 	co_return experience_award;
@@ -770,6 +773,18 @@ combat_tile::combat_tile(const terrain_type *base_terrain, const terrain_type *t
 	} else {
 		this->base_tile_frame = static_cast<short>(vector::get_random(base_terrain->get_tiles()));
 	}
+}
+
+int combat_object::get_disarm_chance(const metternich::character *character) const
+{
+	assert_throw(character != nullptr);
+	assert_throw(this->get_trap() != nullptr);
+
+	if (skill::get_disarm_traps_skill() == nullptr) {
+		return 0;
+	}
+
+	return character->get_game_data()->get_skill_check_chance(skill::get_disarm_traps_skill(), this->get_trap()->get_disarm_modifier());
 }
 
 }

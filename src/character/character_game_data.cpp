@@ -1255,6 +1255,23 @@ bool character_game_data::do_skill_check(const skill *skill, const int roll_modi
 	return roll_result <= modified_skill_value;
 }
 
+int character_game_data::get_skill_check_chance(const skill *skill, const int roll_modifier) const
+{
+	assert_throw(skill != nullptr);
+
+	int chance = this->get_skill_value(skill);
+	chance += roll_modifier;
+
+	if (skill->get_check_dice().get_sides() != 100) {
+		chance *= 100;
+		chance /= skill->get_check_dice().get_sides();
+	}
+
+	chance = std::min(chance, 95);
+
+	return chance;
+}
+
 void character_game_data::change_trait_count(const trait *trait, const int change)
 {
 	if (change == 0) {

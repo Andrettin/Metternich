@@ -185,7 +185,11 @@ Item {
 				text += " " + object.object_type.name
 				
 				if (object.trap !== null && object.trap_found) {
-					text += " (Trap: " + object.trap.name + ")"
+					text += " (Trap: " + object.trap.name
+					if (metternich.game.current_combat.current_character !== null) {
+						text += " - " + object.get_disarm_chance(metternich.game.current_combat.current_character) + "% Disarm Chance"
+					}
+					text += ")"
 				}
 			}
 			

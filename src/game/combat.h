@@ -195,6 +195,8 @@ public:
 		emit trap_found_changed();
 	}
 
+	Q_INVOKABLE int get_disarm_chance(const metternich::character *character) const;
+
 signals:
 	void tile_pos_changed();
 	void trap_changed();
@@ -214,6 +216,7 @@ class combat final : public QObject
 
 	Q_PROPERTY(QVariantList character_infos READ get_character_infos_qvariant_list NOTIFY character_infos_changed)
 	Q_PROPERTY(QVariantList objects READ get_objects_qvariant_list NOTIFY objects_changed)
+	Q_PROPERTY(const metternich::character* current_character READ get_current_character NOTIFY current_character_changed)
 	Q_PROPERTY(bool autoplay_enabled READ is_autoplay_enabled WRITE set_autoplay_enabled NOTIFY autoplay_enabled_changed)
 
 public:
@@ -347,6 +350,11 @@ public:
 
 	Q_INVOKABLE void set_target(const QPoint &tile_pos);
 
+	const character *get_current_character() const
+	{
+		return this->current_character;
+	}
+
 	bool can_current_character_move_to(const QPoint &tile_pos) const;
 	bool can_current_character_retreat_at(const QPoint &tile_pos) const;
 	bool is_current_character_in_enemy_range_at(const QPoint &tile_pos) const;
@@ -369,6 +377,7 @@ signals:
 	void objects_changed();
 	void tile_character_changed(const QPoint &tile_pos);
 	void tile_object_changed(const QPoint &tile_pos);
+	void current_character_changed();
 	void movable_tiles_changed();
 	void autoplay_enabled_changed();
 
