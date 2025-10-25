@@ -69,6 +69,7 @@ class character_game_data final : public QObject
 	Q_PROPERTY(QVariantList spells READ get_spells_qvariant_list NOTIFY spells_changed)
 	Q_PROPERTY(QVariantList items READ get_items_qvariant_list NOTIFY items_changed)
 	Q_PROPERTY(bool deployable READ is_deployable NOTIFY spells_changed)
+	Q_PROPERTY(QVariantList status_effects READ get_status_effects_qvariant_list NOTIFY status_effect_rounds_changed)
 
 public:
 	explicit character_game_data(const metternich::character *character);
@@ -564,6 +565,8 @@ public:
 		return this->get_status_effect_rounds(status_effect) > 0;
 	}
 
+	QVariantList get_status_effects_qvariant_list() const;
+
 	int get_status_effect_rounds(const status_effect *status_effect) const
 	{
 		const auto find_iterator = this->status_effect_rounds.find(status_effect);
@@ -612,6 +615,7 @@ signals:
 	void spells_changed();
 	void items_changed();
 	void equipped_items_changed();
+	void status_effect_rounds_changed();
 
 private:
 	const metternich::character *character = nullptr;

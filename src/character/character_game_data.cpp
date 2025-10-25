@@ -2017,6 +2017,11 @@ void character_game_data::set_commanded_military_unit_type_stat_modifier(const m
 	}
 }
 
+QVariantList character_game_data::get_status_effects_qvariant_list() const
+{
+	return container::to_qvariant_list(archimedes::map::get_keys(this->status_effect_rounds));
+}
+
 void character_game_data::set_status_effect_rounds(const status_effect *status_effect, const int rounds)
 {
 	if (rounds == this->get_status_effect_rounds(status_effect)) {
@@ -2027,6 +2032,10 @@ void character_game_data::set_status_effect_rounds(const status_effect *status_e
 		this->status_effect_rounds.erase(status_effect);
 	} else {
 		this->status_effect_rounds[status_effect] = rounds;
+	}
+
+	if (game::get()->is_running()) {
+		emit status_effect_rounds_changed();
 	}
 }
 

@@ -181,6 +181,10 @@ Item {
 			if (character !== null) {
 				var type_name = character.monster_type ? character.monster_type.name : (character.game_data.character_class ? (character.game_data.character_class.name + " " + character.game_data.level) : character.species.name)
 				text += " " + (character.full_name.length > 0 ? (character.full_name + " (" + type_name + ")") : type_name)
+				
+				for (var status_effect of character.game_data.status_effects) {
+					text += " (" + status_effect.name + ")"
+				}
 			} else if (object !== null) {
 				text += " " + object.object_type.name
 				
