@@ -394,65 +394,63 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 				}
 			} else if (tile.object != nullptr) {
 				//can only use objects (e.g. chests) if the enemy has been wiped out
-				if (distance <= 1) {
-					if (enemy_party->get_characters().empty()) {
-						if (tile.object->get_trap() != nullptr) {
-							bool disarmed = false;
-							if (tile.object->get_trap_found() && skill::get_disarm_traps_skill() != nullptr) {
-								disarmed = character->get_game_data()->do_skill_check(skill::get_disarm_traps_skill(), 0);
-							}
-
-							if (disarmed) {
-								if (character->get_game_data()->get_domain() == game::get()->get_player_country()) {
-									const portrait *war_minister_portrait = character->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
-
-									engine_interface::get()->add_combat_notification(std::format("{} Disarmed", tile.object->get_trap()->get_name()), war_minister_portrait, std::format("You have disarmed the {} trap!", tile.object->get_trap()->get_name()));
-								}
-							} else if (tile.object->get_trap()->get_trigger_effects() != nullptr) {
-								context ctx = this->ctx;
-								ctx.root_scope = character;
-
-								if (character->get_game_data()->get_domain() == game::get()->get_player_country()) {
-									const portrait *war_minister_portrait = character->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
-									const std::string effects_string = tile.object->get_trap()->get_trigger_effects()->get_effects_string(character, ctx);
-
-									engine_interface::get()->add_combat_notification(std::format("{} Triggered", tile.object->get_trap()->get_name()), war_minister_portrait, effects_string);
-								}
-
-								tile.object->get_trap()->get_trigger_effects()->do_effects(character, ctx);
-							}
-
-							tile.object->remove_trap();
+				if (distance <= 1 && this->can_current_character_use_object(tile.object)) {
+					if (tile.object->get_trap() != nullptr) {
+						bool disarmed = false;
+						if (tile.object->get_trap_found() && skill::get_disarm_traps_skill() != nullptr) {
+							disarmed = character->get_game_data()->do_skill_check(skill::get_disarm_traps_skill(), tile.object->get_trap()->get_disarm_modifier());
 						}
 
-						if (character->get_game_data()->is_dead()) {
-							party->remove_character(character);
-							this->remove_character_info(character);
-							break;
-						}
+						if (disarmed) {
+							if (character->get_game_data()->get_domain() == game::get()->get_player_country()) {
+								const portrait *war_minister_portrait = character->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
 
-						if (tile.object->get_use_effects() != nullptr) {
+								engine_interface::get()->add_combat_notification(std::format("{} Disarmed", tile.object->get_trap()->get_name()), war_minister_portrait, std::format("You have disarmed the {} trap!", tile.object->get_trap()->get_name()));
+							}
+						} else if (tile.object->get_trap()->get_trigger_effects() != nullptr) {
 							context ctx = this->ctx;
 							ctx.root_scope = character;
 
 							if (character->get_game_data()->get_domain() == game::get()->get_player_country()) {
 								const portrait *war_minister_portrait = character->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
-								const std::string effects_string = tile.object->get_use_effects()->get_effects_string(character, ctx);
+								const std::string effects_string = tile.object->get_trap()->get_trigger_effects()->get_effects_string(character, ctx);
 
-								engine_interface::get()->add_combat_notification(std::format("{} Used", tile.object->get_object_type()->get_name()), war_minister_portrait, effects_string);
+								engine_interface::get()->add_combat_notification(std::format("{} Triggered", tile.object->get_trap()->get_name()), war_minister_portrait, effects_string);
 							}
 
-							tile.object->get_use_effects()->do_effects(character, ctx);
+							tile.object->get_trap()->get_trigger_effects()->do_effects(character, ctx);
 						}
 
-						this->remove_object(tile.object);
-						attacked = true;
-					} else {
+						tile.object->remove_trap();
+					}
+
+					if (character->get_game_data()->is_dead()) {
+						party->remove_character(character);
+						this->remove_character_info(character);
+						break;
+					}
+
+					if (tile.object->get_use_effects() != nullptr) {
+						context ctx = this->ctx;
+						ctx.root_scope = character;
+
 						if (character->get_game_data()->get_domain() == game::get()->get_player_country()) {
 							const portrait *war_minister_portrait = character->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
+							const std::string effects_string = tile.object->get_use_effects()->get_effects_string(character, ctx);
 
-							engine_interface::get()->add_combat_notification(std::format("Cannot Use {}", tile.object->get_object_type()->get_name()), war_minister_portrait, std::format("Your Excellency, the {} can only be used once all enemies have been defeated.", string::lowered(tile.object->get_object_type()->get_name())));
+							engine_interface::get()->add_combat_notification(std::format("{} Used", tile.object->get_object_type()->get_name()), war_minister_portrait, effects_string);
 						}
+
+						tile.object->get_use_effects()->do_effects(character, ctx);
+					}
+
+					this->remove_object(tile.object);
+					attacked = true;
+				} else {
+					if (character->get_game_data()->get_domain() == game::get()->get_player_country()) {
+						const portrait *war_minister_portrait = character->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
+
+						engine_interface::get()->add_combat_notification(std::format("Cannot Use {}", tile.object->get_object_type()->get_name()), war_minister_portrait, std::format("Your Excellency, the {} can only be used once all enemies have been defeated.", string::lowered(tile.object->get_object_type()->get_name())));
 					}
 				}
 			} else if (this->can_current_character_move_to(target_pos)) {
@@ -632,7 +630,7 @@ QCoro::Task<void> combat::move_character_to(const character *character, const QP
 		}
 
 		if (!adjacent_tile.object->get_trap_found() && skill::get_find_traps_skill() != nullptr) {
-			const bool found = character->get_game_data()->do_skill_check(skill::get_find_traps_skill(), 0);
+			const bool found = character->get_game_data()->do_skill_check(skill::get_find_traps_skill(), adjacent_tile.object->get_trap()->get_find_modifier());
 			if (found) {
 				adjacent_tile.object->set_trap_found(found);
 			}
@@ -722,6 +720,31 @@ bool combat::is_current_character_in_enemy_range_at(const QPoint &tile_pos) cons
 	}
 
 	return false;
+}
+
+bool combat::can_character_use_object(const character *character, const combat_object *object) const
+{
+	assert_throw(character != nullptr);
+	assert_throw(object != nullptr);
+
+	if (!vector::contains(this->attacking_party->get_characters(), character)) {
+		return false;
+	}
+
+	if (!this->defending_party->get_characters().empty()) {
+		return false;
+	}
+
+	return true;
+}
+
+bool combat::can_current_character_use_object(const combat_object *object) const
+{
+	if (this->current_character == nullptr) {
+		return false;
+	}
+
+	return this->can_character_use_object(this->current_character, object);
 }
 
 combat_tile::combat_tile(const terrain_type *base_terrain, const terrain_type *terrain)

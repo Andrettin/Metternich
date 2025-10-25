@@ -45,8 +45,8 @@ class combat_character_info final : public QObject
 	Q_OBJECT
 
 		Q_PROPERTY(const metternich::character *character READ get_character CONSTANT)
-		Q_PROPERTY(const QPoint tile_pos READ get_tile_pos NOTIFY pos_changed)
-		Q_PROPERTY(const QPoint pixel_offset READ get_pixel_offset NOTIFY pos_changed)
+		Q_PROPERTY(QPoint tile_pos READ get_tile_pos NOTIFY pos_changed)
+		Q_PROPERTY(QPoint pixel_offset READ get_pixel_offset NOTIFY pos_changed)
 		Q_PROPERTY(bool defender READ is_defender CONSTANT)
 		Q_PROPERTY(int remaining_movement READ get_remaining_movement NOTIFY remaining_movement_changed)
 
@@ -133,7 +133,7 @@ class combat_object final : public QObject
 	Q_OBJECT
 
 	Q_PROPERTY(const metternich::object_type* object_type READ get_object_type CONSTANT)
-	Q_PROPERTY(const QPoint tile_pos READ get_tile_pos NOTIFY tile_pos_changed)
+	Q_PROPERTY(QPoint tile_pos READ get_tile_pos NOTIFY tile_pos_changed)
 	Q_PROPERTY(const metternich::trap_type* trap READ get_trap NOTIFY trap_changed)
 	Q_PROPERTY(bool trap_found READ get_trap_found NOTIFY trap_found_changed)
 
@@ -350,6 +350,8 @@ public:
 	bool can_current_character_move_to(const QPoint &tile_pos) const;
 	bool can_current_character_retreat_at(const QPoint &tile_pos) const;
 	bool is_current_character_in_enemy_range_at(const QPoint &tile_pos) const;
+	bool can_character_use_object(const character *character, const combat_object *object) const;
+	bool can_current_character_use_object(const combat_object *object) const;
 
 	bool is_autoplay_enabled() const
 	{
