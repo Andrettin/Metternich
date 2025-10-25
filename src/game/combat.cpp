@@ -246,6 +246,15 @@ QCoro::Task<void> combat::start_coro()
 
 	this->process_result();
 
+	//resolve all remaining status effects
+	std::vector<const character *> all_characters = this->attacking_party->get_characters();
+	vector::merge(all_characters, this->defending_party->get_characters());
+	for (const character *character : all_characters) {
+		while (character->get_game_data()->has_any_status_effect()) {
+			character->get_game_data()->decrement_status_effect_rounds();
+		}
+	}
+
 	if (game::get()->get_current_combat() == this) {
 		game::get()->set_current_combat(nullptr);
 	}

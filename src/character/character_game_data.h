@@ -554,6 +554,11 @@ public:
 		this->target_traits = traits;
 	}
 
+	bool has_any_status_effect() const
+	{
+		return !this->status_effect_rounds.empty();
+	}
+
 	bool has_status_effect(const status_effect *status_effect) const
 	{
 		return this->get_status_effect_rounds(status_effect) > 0;
