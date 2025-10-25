@@ -1,0 +1,6 @@
+poison_needle = {
+	name = "Poison Needle"
+	on_triggered = {
+		status_effect = poison
+	}
+}
