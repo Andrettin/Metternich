@@ -17,6 +17,7 @@ class status_effect final : public named_data_entry, public data_type<status_eff
 {
 	Q_OBJECT
 
+	Q_PROPERTY(QString adjective READ get_adjective_qstring NOTIFY changed)
 	Q_PROPERTY(const metternich::saving_throw_type* saving_throw_type MEMBER saving_throw_type READ get_saving_throw_type NOTIFY changed)
 	Q_PROPERTY(int saving_throw_modifier MEMBER saving_throw_modifier READ get_saving_throw_modifier NOTIFY changed)
 	Q_PROPERTY(archimedes::dice duration_rounds_dice MEMBER duration_rounds_dice READ get_duration_rounds_dice NOTIFY changed)
@@ -31,6 +32,21 @@ public:
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;
+
+	const std::string &get_adjective() const
+	{
+		return this->adjective;
+	}
+
+	Q_INVOKABLE void set_adjective(const std::string &adjective)
+	{
+		this->adjective = adjective;
+	}
+
+	QString get_adjective_qstring() const
+	{
+		return QString::fromStdString(this->get_adjective());
+	}
 
 	const metternich::saving_throw_type *get_saving_throw_type() const
 	{
@@ -56,6 +72,7 @@ signals:
 	void changed();
 
 private:
+	std::string adjective;
 	const metternich::saving_throw_type *saving_throw_type = nullptr;
 	int saving_throw_modifier = 0;
 	dice duration_rounds_dice;

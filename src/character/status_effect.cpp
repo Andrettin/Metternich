@@ -28,6 +28,10 @@ void status_effect::process_gsml_scope(const gsml_data &scope)
 
 void status_effect::check() const
 {
+	if (this->get_adjective().empty()) {
+		throw std::runtime_error(std::format("Status effect \"{}\" has no adjective.", this->get_identifier()));
+	}
+
 	if (this->get_saving_throw_type() == nullptr) {
 		throw std::runtime_error(std::format("Status effect \"{}\" has no saving throw type.", this->get_identifier()));
 	}

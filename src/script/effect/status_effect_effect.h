@@ -33,9 +33,9 @@ public:
 			const portrait *war_minister_portrait = scope->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
 
 			if (saving_throw_successful) {
-				engine_interface::get()->add_notification("Saving Throw Successful!", war_minister_portrait, std::format("You have succeeded in a {} saving throw, and managed to avoid being affected by {}!", this->status_effect->get_saving_throw_type()->get_name(), this->status_effect->get_name()));
+				engine_interface::get()->add_notification("Saving Throw Successful!", war_minister_portrait, std::format("You have succeeded in a {} saving throw, and managed to avoid being {}!", this->status_effect->get_saving_throw_type()->get_name(), string::lowered(this->status_effect->get_adjective())));
 			} else {
-				engine_interface::get()->add_notification("Saving Throw Failed!", war_minister_portrait, std::format("You have failed a {} saving throw, and are now affected by {}!", this->status_effect->get_saving_throw_type()->get_name(), this->status_effect->get_name()));
+				engine_interface::get()->add_notification("Saving Throw Failed!", war_minister_portrait, std::format("You have failed a {} saving throw, and are now {}!", this->status_effect->get_saving_throw_type()->get_name(), string::lowered(this->status_effect->get_adjective())));
 			}
 		}
 
@@ -57,7 +57,7 @@ public:
 		Q_UNUSED(indent);
 		Q_UNUSED(prefix);
 
-		return std::format("Affected by {} (Saving Throw: {} {})", this->status_effect->get_name(), this->status_effect->get_saving_throw_type()->get_name(), number::to_signed_string(scope->get_game_data()->get_saving_throw_bonus(this->status_effect->get_saving_throw_type()) + this->status_effect->get_saving_throw_modifier()));
+		return std::format("{} (Saving Throw: {} {})", this->status_effect->get_adjective(), this->status_effect->get_saving_throw_type()->get_name(), number::to_signed_string(scope->get_game_data()->get_saving_throw_bonus(this->status_effect->get_saving_throw_type()) + this->status_effect->get_saving_throw_modifier()));
 	}
 
 private:

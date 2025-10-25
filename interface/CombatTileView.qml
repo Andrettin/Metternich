@@ -183,7 +183,7 @@ Item {
 				text += " " + (character.full_name.length > 0 ? (character.full_name + " (" + type_name + ")") : type_name)
 				
 				for (var status_effect of character.game_data.status_effects) {
-					text += " (" + status_effect.name + ")"
+					text += " (" + status_effect.adjective + ")"
 				}
 			} else if (object !== null) {
 				text += " " + object.object_type.name
