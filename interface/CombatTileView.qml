@@ -183,6 +183,10 @@ Item {
 				text += " " + (character.full_name.length > 0 ? (character.full_name + " (" + type_name + ")") : type_name)
 			} else if (object !== null) {
 				text += " " + object.object_type.name
+				
+				if (object.trap !== null && object.trap_found) {
+					text += " (Trap: " + object.trap.name + ")"
+				}
 			}
 			
 			status_text = text

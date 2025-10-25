@@ -20,6 +20,7 @@
 #include "infrastructure/dungeon_area.h"
 #include "item/item_type.h"
 #include "item/object_type.h"
+#include "item/trap_type.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "script/context.h"
@@ -114,8 +115,11 @@ public:
 			this->object_type = object_type::get(scope.get_tag());
 
 			scope.for_each_element([&](const gsml_property &property) {
-				Q_UNUSED(property);
-				assert_throw(false);
+				if (property.get_key() == "trap") {
+					this->trap = trap_type::get(property.get_value());
+				} else {
+					assert_throw(false);
+				}
 			}, [&](const gsml_data &child_scope) {
 				if (child_scope.get_tag() == "on_used") {
 					this->use_effects = std::make_unique<effect_list<const character>>();
@@ -131,6 +135,11 @@ public:
 			return this->object_type;
 		}
 
+		const trap_type *get_trap() const
+		{
+			return this->trap;
+		}
+
 		const effect_list<const character> *get_use_effects() const
 		{
 			return this->use_effects.get();
@@ -138,6 +147,7 @@ public:
 
 	private:
 		const metternich::object_type *object_type = nullptr;
+		const trap_type *trap = nullptr;
 		std::unique_ptr<effect_list<const character>> use_effects;
 	};
 
@@ -227,7 +237,7 @@ public:
 		auto combat = make_qunique<metternich::combat>(this->attacker ? ctx.party.get() : enemy_party.get(), this->attacker ? enemy_party.get() : ctx.party.get(), this->map_size);
 
 		for (const std::unique_ptr<object> &object : this->objects) {
-			combat->add_object(object->get_object_type(), object->get_use_effects());
+			combat->add_object(object->get_object_type(), object->get_use_effects(), object->get_trap());
 		}
 
 		if (ctx.dungeon_area != nullptr && ctx.dungeon_area->get_terrain() != nullptr) {

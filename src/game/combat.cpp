@@ -6,6 +6,7 @@
 #include "character/character_game_data.h"
 #include "character/monster_type.h"
 #include "character/party.h"
+#include "character/skill.h"
 #include "database/defines.h"
 #include "domain/country_government.h"
 #include "domain/domain.h"
@@ -14,6 +15,7 @@
 #include "game/event_trigger.h"
 #include "game/game.h"
 #include "item/object_type.h"
+#include "item/trap_type.h"
 #include "map/terrain_type.h"
 #include "script/effect/effect_list.h"
 #include "ui/portrait.h"
@@ -94,9 +96,9 @@ QVariantList combat::get_objects_qvariant_list() const
 	return container::to_qvariant_list(this->objects);
 }
 
-void combat::add_object(const object_type *object_type, const effect_list<const character> *use_effects)
+void combat::add_object(const object_type *object_type, const effect_list<const character> *use_effects, const trap_type *trap)
 {
-	auto object = make_qunique<combat_object>(object_type, use_effects);
+	auto object = make_qunique<combat_object>(object_type, use_effects, trap);
 	this->objects.push_back(std::move(object));
 }
 
@@ -291,7 +293,8 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 
 	int64_t experience_award = 0;
 
-	for (const character *character : party->get_characters()) {
+	const std::vector<const character *> party_characters = party->get_characters();
+	for (const character *character : party_characters) {
 		if (enemy_party->get_characters().empty() && (party == this->defending_party || this->objects.empty())) {
 			break;
 		}
@@ -393,6 +396,41 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 				//can only use objects (e.g. chests) if the enemy has been wiped out
 				if (distance <= 1) {
 					if (enemy_party->get_characters().empty()) {
+						if (tile.object->get_trap() != nullptr) {
+							bool disarmed = false;
+							if (tile.object->get_trap_found() && skill::get_disarm_traps_skill() != nullptr) {
+								disarmed = character->get_game_data()->do_skill_check(skill::get_disarm_traps_skill(), 0);
+							}
+
+							if (disarmed) {
+								if (character->get_game_data()->get_domain() == game::get()->get_player_country()) {
+									const portrait *war_minister_portrait = character->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
+
+									engine_interface::get()->add_combat_notification(std::format("{} Disarmed", tile.object->get_trap()->get_name()), war_minister_portrait, std::format("You have disarmed the {} trap!", tile.object->get_trap()->get_name()));
+								}
+							} else if (tile.object->get_trap()->get_trigger_effects() != nullptr) {
+								context ctx = this->ctx;
+								ctx.root_scope = character;
+
+								if (character->get_game_data()->get_domain() == game::get()->get_player_country()) {
+									const portrait *war_minister_portrait = character->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
+									const std::string effects_string = tile.object->get_trap()->get_trigger_effects()->get_effects_string(character, ctx);
+
+									engine_interface::get()->add_combat_notification(std::format("{} Triggered", tile.object->get_trap()->get_name()), war_minister_portrait, effects_string);
+								}
+
+								tile.object->get_trap()->get_trigger_effects()->do_effects(character, ctx);
+							}
+
+							tile.object->remove_trap();
+						}
+
+						if (character->get_game_data()->is_dead()) {
+							party->remove_character(character);
+							this->remove_character_info(character);
+							break;
+						}
+
 						if (tile.object->get_use_effects() != nullptr) {
 							context ctx = this->ctx;
 							ctx.root_scope = character;
@@ -577,6 +615,29 @@ QCoro::Task<void> combat::move_character_to(const character *character, const QP
 
 	character_info->set_tile_pos(tile_pos);
 	tile.character = character;
+
+	//check for traps in adjacent tiles
+	point::for_each_adjacent(tile_pos, [&](const QPoint &adjacent_pos) {
+		if (!this->get_map_rect().contains(adjacent_pos)) {
+			return;
+		}
+
+		const combat_tile &adjacent_tile = this->get_tile(adjacent_pos);
+		if (adjacent_tile.object == nullptr) {
+			return;
+		}
+
+		if (adjacent_tile.object->get_trap() == nullptr) {
+			return;
+		}
+
+		if (!adjacent_tile.object->get_trap_found() && skill::get_find_traps_skill() != nullptr) {
+			const bool found = character->get_game_data()->do_skill_check(skill::get_find_traps_skill(), 0);
+			if (found) {
+				adjacent_tile.object->set_trap_found(found);
+			}
+		}
+	});
 
 	emit tile_character_changed(old_tile_pos);
 	emit tile_character_changed(tile_pos);

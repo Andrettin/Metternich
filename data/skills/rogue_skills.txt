@@ -2,6 +2,8 @@ find_disarm_traps = {
 	name = "Find/Disarm Traps"
 	icon = cog
 	check_dice = 1d100
+	find_traps = true
+	disarm_traps = true
 }
 
 open_locks = {

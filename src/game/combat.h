@@ -7,6 +7,7 @@
 
 Q_MOC_INCLUDE("character/character.h")
 Q_MOC_INCLUDE("item/object_type.h")
+Q_MOC_INCLUDE("item/trap_type.h")
 
 namespace metternich {
 
@@ -16,6 +17,7 @@ class combat_object;
 class object_type;
 class party;
 class terrain_type;
+class trap_type;
 
 template <typename scope_type>
 class effect_list;
@@ -35,7 +37,7 @@ struct combat_tile final
 	short tile_frame = 0;
 	std::array<short, 4> subtile_frames {};
 	const metternich::character *character = nullptr;
-	const combat_object *object = nullptr;
+	combat_object *object = nullptr;
 };
 
 class combat_character_info final : public QObject
@@ -132,10 +134,12 @@ class combat_object final : public QObject
 
 	Q_PROPERTY(const metternich::object_type* object_type READ get_object_type CONSTANT)
 	Q_PROPERTY(const QPoint tile_pos READ get_tile_pos NOTIFY tile_pos_changed)
+	Q_PROPERTY(const metternich::trap_type* trap READ get_trap NOTIFY trap_changed)
+	Q_PROPERTY(bool trap_found READ get_trap_found NOTIFY trap_found_changed)
 
 public:
-	explicit combat_object(const metternich::object_type *object_type, const effect_list<const character> *use_effects)
-		: object_type(object_type), use_effects(use_effects)
+	explicit combat_object(const metternich::object_type *object_type, const effect_list<const character> *use_effects, const trap_type *trap)
+		: object_type(object_type), use_effects(use_effects), trap(trap)
 	{
 	}
 
@@ -164,13 +168,44 @@ public:
 		return this->use_effects;
 	}
 
+	const trap_type *get_trap() const
+	{
+		return this->trap;
+	}
+
+	void remove_trap()
+	{
+		this->trap = nullptr;
+		this->set_trap_found(false);
+		emit trap_changed();
+	}
+
+	bool get_trap_found() const
+	{
+		return this->trap_found;
+	}
+
+	void set_trap_found(const bool found)
+	{
+		if (found == this->get_trap_found()) {
+			return;
+		}
+
+		this->trap_found = found;
+		emit trap_found_changed();
+	}
+
 signals:
 	void tile_pos_changed();
+	void trap_changed();
+	void trap_found_changed();
 
 private:
 	const metternich::object_type *object_type = nullptr;
 	QPoint tile_pos = QPoint(-1, -1);
 	const effect_list<const character> *use_effects = nullptr;
+	const trap_type *trap = nullptr;
+	bool trap_found = false;
 };
 
 class combat final : public QObject
@@ -277,7 +312,7 @@ public:
 	void remove_character_info(const character *character);
 
 	QVariantList get_objects_qvariant_list() const;
-	void add_object(const object_type *object_type, const effect_list<const character> *use_effects);
+	void add_object(const object_type *object_type, const effect_list<const character> *use_effects, const trap_type *trap);
 	void remove_object(const combat_object *object);
 
 	void initialize();

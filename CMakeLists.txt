@@ -141,6 +141,7 @@ set(item_SRCS
 	src/item/item_material.cpp
 	src/item/item_type.cpp
 	src/item/object_type.cpp
+	src/item/trap_type.cpp
 )
 source_group(item FILES ${item_SRCS})
 set_source_files_properties(${item_SRCS} PROPERTIES UNITY_GROUP "item")
@@ -481,6 +482,7 @@ set(item_HDRS
 	src/item/item_slot.h
 	src/item/item_type.h
 	src/item/object_type.h
+	src/item/trap_type.h
 )
 source_group(item FILES ${item_HDRS})
 

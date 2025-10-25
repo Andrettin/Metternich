@@ -2,7 +2,24 @@
 
 #include "character/skill.h"
 
+#include "util/assert_util.h"
+
 namespace metternich {
+
+void skill::initialize()
+{
+	if (this->find_traps) {
+		assert_throw(skill::find_traps_skill == nullptr);
+		skill::find_traps_skill = this;
+	}
+
+	if (this->disarm_traps) {
+		assert_throw(skill::disarm_traps_skill == nullptr);
+		skill::disarm_traps_skill = this;
+	}
+
+	named_data_entry::initialize();
+}
 
 void skill::check() const
 {
