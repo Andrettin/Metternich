@@ -1,0 +1,5 @@
+fountain = {
+	name = "Fountain"
+	icon = architecture
+	usage_adjective = "Searched"
+}
