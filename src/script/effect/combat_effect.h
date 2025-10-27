@@ -323,10 +323,6 @@ public:
 		for (const target_variant<const character> &enemy_character : this->enemy_characters) {
 			const character *character = this->get_enemy_character(enemy_character, ctx);
 
-			if (character->get_game_data()->is_dead()) {
-				continue;
-			}
-
 			std::string character_class_string;
 			const character_class *character_class = character->get_game_data()->get_character_class();
 			if (character_class != nullptr) {
@@ -388,9 +384,10 @@ public:
 
 		for (const target_variant<const character> &enemy_character_variant : this->enemy_characters) {
 			const character *enemy_character = this->get_enemy_character(enemy_character_variant, ctx);
-			if (enemy_character->get_game_data()->is_dead()) {
-				continue;
-			}
+
+			//ensure the enemy character's HP is completely recovered
+			enemy_character->get_game_data()->set_hit_points(enemy_character->get_game_data()->get_max_hit_points());
+
 			enemy_characters.push_back(enemy_character);
 		}
 
