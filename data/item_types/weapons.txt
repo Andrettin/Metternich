@@ -23,6 +23,14 @@ bow = {
 	two_handed = true
 }
 
+club = {
+	name = "Club"
+	item_class = weapon
+	icon = saber
+	price = 1gp #0gp
+	damage_dice = 1d6
+}
+
 dagger = {
 	name = "Dagger"
 	item_class = weapon
@@ -53,6 +61,14 @@ morning_star = {
 	icon = saber
 	price = 8gp #? gp
 	damage_dice = 2d4
+}
+
+ogre_club = {
+	name = "Ogre Club"
+	item_class = weapon
+	icon = saber
+	price = 1gp #0gp
+	damage_dice = 1d8+2
 }
 
 quarterstaff = {

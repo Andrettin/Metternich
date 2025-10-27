@@ -1,7 +1,6 @@
 ogre = {
 	name = "Ogre"
 	species = ogre
-	damage_dice = 1d8+2 #club
 	experience_award = 270
 	attribute_ratings = {
 		intelligence = low
@@ -12,5 +11,8 @@ ogre = {
 		to_hit_bonus = 3
 		saving_throw_bonus = 4
 		movement = 9
+	}
+	items = {
+		ogre_club
 	}
 }

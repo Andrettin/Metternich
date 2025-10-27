@@ -3,5 +3,17 @@ ogre = {
 	supertaxon = giant
 	era = holocene
 	sapient = true
+	item_slots = {
+		weapon = 1
+		shield = 1
+		armor = 1
+		helmet = 1
+		amulet = 1
+		belt = 1
+		cloak = 1
+		gloves = 1
+		ring = 2
+		boots = 1
+	}
 	#ogres, ettins and cyclopses should have a common ancestor
 }
