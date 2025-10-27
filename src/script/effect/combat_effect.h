@@ -322,6 +322,11 @@ public:
 
 		for (const target_variant<const character> &enemy_character : this->enemy_characters) {
 			const character *character = this->get_enemy_character(enemy_character, ctx);
+
+			if (character->get_game_data()->is_dead()) {
+				continue;
+			}
+
 			std::string character_class_string;
 			const character_class *character_class = character->get_game_data()->get_character_class();
 			if (character_class != nullptr) {
@@ -381,8 +386,12 @@ public:
 			}
 		}
 
-		for (const target_variant<const character> &enemy_character : this->enemy_characters) {
-			enemy_characters.push_back(this->get_enemy_character(enemy_character, ctx));
+		for (const target_variant<const character> &enemy_character_variant : this->enemy_characters) {
+			const character *enemy_character = this->get_enemy_character(enemy_character_variant, ctx);
+			if (enemy_character->get_game_data()->is_dead()) {
+				continue;
+			}
+			enemy_characters.push_back(enemy_character);
 		}
 
 		return vector::shuffled(enemy_characters);
