@@ -1,3 +1,11 @@
+bastard_sword = {
+	name = "Bastard Sword"
+	item_class = weapon
+	icon = saber
+	price = 15gp #? gp
+	damage_dice = 2d4
+}
+
 battle_axe = {
 	name = "Battle Axe"
 	item_class = weapon
@@ -21,6 +29,14 @@ dagger = {
 	icon = dagger
 	price = 2gp
 	damage_dice = 1d4
+}
+
+long_sword = {
+	name = "Long Sword"
+	item_class = weapon
+	icon = saber
+	price = 15gp
+	damage_dice = 1d8
 }
 
 mace = {
@@ -56,10 +72,10 @@ short_sword = {
 	damage_dice = 1d6
 }
 
-long_sword = {
-	name = "Long Sword"
+torture_implement = {
+	name = "Torture Implement"
 	item_class = weapon
 	icon = saber
-	price = 15gp
-	damage_dice = 1d8
+	price = 1gp #? gp
+	damage_dice = 1d4
 }
