@@ -17,6 +17,7 @@ rogue = {
 		heraldry
 		law
 		leadership
+		swimming
 		
 		disguise
 		intrigue

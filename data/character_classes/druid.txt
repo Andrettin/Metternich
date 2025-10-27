@@ -16,6 +16,7 @@ druid = {
 		heraldry
 		law
 		leadership
+		swimming
 		
 		diplomacy
 	}

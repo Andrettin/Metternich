@@ -16,6 +16,7 @@ mage = {
 		heraldry
 		law
 		leadership
+		swimming
 	}
 	allowed_species = {
 		elf

@@ -16,6 +16,7 @@ cleric = {
 		heraldry
 		law
 		leadership
+		swimming
 		
 		diplomacy
 	}

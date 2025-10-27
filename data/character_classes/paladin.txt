@@ -17,6 +17,7 @@ paladin = {
 		heraldry
 		law
 		leadership
+		swimming
 		
 		siegecraft
 		strategy

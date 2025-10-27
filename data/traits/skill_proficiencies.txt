@@ -179,3 +179,17 @@ strategy = {
 		skill_training = strategy
 	}
 }
+
+swimming = {
+	name = "Swimming"
+	icon = anchor
+	types = {
+		proficiency
+	}
+	conditions = {
+		class_skill = swimming
+	}
+	modifier = {
+		skill_training = swimming
+	}
+}

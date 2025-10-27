@@ -16,6 +16,7 @@ bard = {
 		heraldry
 		law
 		leadership
+		swimming
 		
 		disguise
 		intrigue

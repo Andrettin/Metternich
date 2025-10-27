@@ -75,3 +75,9 @@ strategy = {
 	icon = crossed_sabers
 	check_dice = 1d20
 }
+
+swimming = {
+	name = "Swimming"
+	icon = anchor
+	check_dice = 1d20
+}
