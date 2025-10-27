@@ -13,7 +13,7 @@
 #include "population/population_unit.h"
 #include "script/effect/add_building_class_effect.h"
 #include "script/effect/add_improvement_effect.h"
-#include "script/effect/any_known_country_effect.h"
+#include "script/effect/any_known_domain_effect.h"
 #include "script/effect/any_neighbor_country_effect.h"
 #include "script/effect/battle_effect.h"
 #include "script/effect/capital_effect.h"
@@ -22,12 +22,12 @@
 #include "script/effect/combat_effect.h"
 #include "script/effect/commodity_effect.h"
 #include "script/effect/commodity_percent_effect.h"
-#include "script/effect/country_effect.h"
 #include "script/effect/create_character_effect.h"
 #include "script/effect/create_military_unit_effect.h"
 #include "script/effect/create_transporter_effect.h"
 #include "script/effect/damage_effect.h"
 #include "script/effect/delayed_effect.h"
+#include "script/effect/domain_effect.h"
 #include "script/effect/else_effect.h"
 #include "script/effect/event_effect.h"
 #include "script/effect/experience_effect.h"
@@ -44,7 +44,7 @@
 #include "script/effect/opinion_modifiers_effect.h"
 #include "script/effect/population_scaled_commodity_effect.h"
 #include "script/effect/random_effect.h"
-#include "script/effect/random_known_country_effect.h"
+#include "script/effect/random_known_domain_effect.h"
 #include "script/effect/random_list_effect.h"
 #include "script/effect/random_neighbor_country_effect.h"
 #include "script/effect/random_settlement_effect.h"
@@ -159,8 +159,8 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 	std::unique_ptr<effect> effect;
 
 	if constexpr (std::is_same_v<scope_type, const domain>) {
-		if (effect_identifier == "any_known_country") {
-			effect = std::make_unique<any_known_country_effect>(effect_operator);
+		if (effect_identifier == "any_known_domain") {
+			effect = std::make_unique<any_known_domain_effect>(effect_operator);
 		} else if (effect_identifier == "any_neighbor_country") {
 			effect = std::make_unique<any_neighbor_country_effect>(effect_operator);
 		} else if (effect_identifier == "battle") {
@@ -177,8 +177,8 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 			effect = std::make_unique<create_transporter_effect>(effect_operator);
 		} else if (effect_identifier == "opinion_modifiers") {
 			effect = std::make_unique<opinion_modifiers_effect<scope_type>>(effect_operator);
-		} else if (effect_identifier == "random_known_country") {
-			effect = std::make_unique<random_known_country_effect>(effect_operator);
+		} else if (effect_identifier == "random_known_domain") {
+			effect = std::make_unique<random_known_domain_effect>(effect_operator);
 		} else if (effect_identifier == "random_neighbor_country") {
 			effect = std::make_unique<random_neighbor_country_effect>(effect_operator);
 		} else if (effect_identifier == "random_settlement") {
@@ -210,8 +210,8 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 		}
 	}
 
-	if (effect_identifier == "country") {
-		effect = std::make_unique<country_effect<scope_type>>(effect_operator);
+	if (effect_identifier == "domain") {
+		effect = std::make_unique<domain_effect<scope_type>>(effect_operator);
 	} else if (effect_identifier == "hidden") {
 		effect = std::make_unique<hidden_effect<scope_type>>(effect_operator);
 	} else if (effect_identifier == "if") {

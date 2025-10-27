@@ -7,17 +7,17 @@ namespace metternich {
 class domain;
 
 template <typename upper_scope_type>
-class country_effect final : public scope_effect<upper_scope_type, const domain>
+class domain_effect final : public scope_effect<upper_scope_type, const domain>
 {
 public:
-	explicit country_effect(const gsml_operator effect_operator)
+	explicit domain_effect(const gsml_operator effect_operator)
 		: scope_effect<upper_scope_type, const domain>(effect_operator)
 	{
 	}
 
 	virtual const std::string &get_class_identifier() const override
 	{
-		static const std::string class_identifier = "country";
+		static const std::string class_identifier = "domain";
 		return class_identifier;
 	}
 	

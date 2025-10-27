@@ -9,17 +9,17 @@ namespace metternich {
 
 class domain;
 
-class any_known_country_effect final : public scope_effect_base<const domain, const domain>
+class any_known_domain_effect final : public scope_effect_base<const domain, const domain>
 {
 public:
-	explicit any_known_country_effect(const gsml_operator effect_operator)
+	explicit any_known_domain_effect(const gsml_operator effect_operator)
 		: scope_effect_base<const domain, const domain>(effect_operator)
 	{
 	}
 
 	virtual const std::string &get_class_identifier() const override
 	{
-		static const std::string class_identifier = "any_known_country";
+		static const std::string class_identifier = "any_known_domain";
 		return class_identifier;
 	}
 
@@ -47,7 +47,7 @@ public:
 
 	virtual std::string get_scope_name() const override
 	{
-		return "Any known country";
+		return "Any known domain";
 	}
 
 	virtual std::string get_conditions_string(const size_t indent) const override

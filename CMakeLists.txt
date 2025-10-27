@@ -688,7 +688,7 @@ source_group(script\\condition FILES ${script_condition_HDRS})
 set(script_effect_HDRS
 	src/script/effect/add_building_class_effect.h
 	src/script/effect/add_improvement_effect.h
-	src/script/effect/any_known_country_effect.h
+	src/script/effect/any_known_domain_effect.h
 	src/script/effect/any_neighbor_country_effect.h
 	src/script/effect/battle_effect.h
 	src/script/effect/capital_effect.h
@@ -697,13 +697,13 @@ set(script_effect_HDRS
 	src/script/effect/combat_effect.h
 	src/script/effect/commodity_effect.h
 	src/script/effect/commodity_percent_effect.h
-	src/script/effect/country_effect.h
 	src/script/effect/create_character_effect.h
 	src/script/effect/create_military_unit_effect.h
 	src/script/effect/create_transporter_effect.h
 	src/script/effect/damage_effect.h
 	src/script/effect/delayed_effect.h
 	src/script/effect/delayed_effect_instance.h
+	src/script/effect/domain_effect.h
 	src/script/effect/effect.h
 	src/script/effect/effect_list.h
 	src/script/effect/else_effect.h
@@ -722,7 +722,7 @@ set(script_effect_HDRS
 	src/script/effect/opinion_modifiers_effect.h
 	src/script/effect/population_scaled_commodity_effect.h
 	src/script/effect/random_effect.h
-	src/script/effect/random_known_country_effect.h
+	src/script/effect/random_known_domain_effect.h
 	src/script/effect/random_list_effect.h
 	src/script/effect/random_neighbor_country_effect.h
 	src/script/effect/random_settlement_effect.h
