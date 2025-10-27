@@ -1,0 +1,5 @@
+sack = {
+	name = "Sack"
+	icon = chest
+	usage_adjective = "Opened"
+}

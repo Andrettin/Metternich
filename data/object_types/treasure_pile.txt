@@ -1,0 +1,5 @@
+treasure_pile = {
+	name = "Treasure Pile"
+	icon = wealth
+	usage_adjective = "Searched"
+}
