@@ -1,5 +1,6 @@
 architecture = {
 	filepath = "icons/technologies/architecture.png"
+	left_facing = true
 }
 
 philosophy = {
