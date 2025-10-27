@@ -1,0 +1,5 @@
+pile_of_furs = {
+	name = "Pile of Furs"
+	icon = furs
+	usage_adjective = "Searched"
+}
