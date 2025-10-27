@@ -345,8 +345,8 @@ void character_game_data::apply_species_and_class(const int level)
 			max_hp += std::max(hit_dice.get_maximum_result() + this->get_hit_point_bonus_per_hit_dice(), hit_dice.get_count()) * static_cast<int>(roll_results.size());
 		}
 
-		assert_throw(this->character->get_hit_points() >= min_hp);
-		assert_throw(this->character->get_hit_points() <= max_hp);
+		assert_log(this->character->get_hit_points() >= min_hp);
+		assert_log(this->character->get_hit_points() <= max_hp);
 
 		this->set_max_hit_points(this->character->get_hit_points());
 		this->set_hit_points(this->character->get_hit_points());
