@@ -1,7 +1,6 @@
 lizardfolk = {
 	name = "Lizardfolk"
 	species = lizardfolk
-	damage_dice = 2d4 #bastard sword
 	experience_award = 65
 	attribute_ratings = {
 		intelligence = low
@@ -12,5 +11,8 @@ lizardfolk = {
 		to_hit_bonus = 1
 		saving_throw_bonus = 3
 		movement = 6
+	}
+	items = {
+		bastard_sword
 	}
 }
