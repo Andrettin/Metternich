@@ -138,8 +138,8 @@ class combat_object final : public QObject
 	Q_PROPERTY(bool trap_found READ get_trap_found NOTIFY trap_found_changed)
 
 public:
-	explicit combat_object(const metternich::object_type *object_type, const effect_list<const character> *use_effects, const trap_type *trap)
-		: object_type(object_type), use_effects(use_effects), trap(trap)
+	explicit combat_object(const metternich::object_type *object_type, const effect_list<const character> *use_effects, const trap_type *trap, const std::string &description)
+		: object_type(object_type), use_effects(use_effects), trap(trap), description(description)
 	{
 	}
 
@@ -197,6 +197,11 @@ public:
 
 	Q_INVOKABLE int get_disarm_chance(const metternich::character *character) const;
 
+	const std::string &get_description() const
+	{
+		return this->description;
+	}
+
 signals:
 	void tile_pos_changed();
 	void trap_changed();
@@ -208,6 +213,7 @@ private:
 	const effect_list<const character> *use_effects = nullptr;
 	const trap_type *trap = nullptr;
 	bool trap_found = false;
+	std::string description;
 };
 
 class combat final : public QObject
@@ -315,7 +321,7 @@ public:
 	void remove_character_info(const character *character);
 
 	QVariantList get_objects_qvariant_list() const;
-	void add_object(const object_type *object_type, const effect_list<const character> *use_effects, const trap_type *trap);
+	void add_object(const object_type *object_type, const effect_list<const character> *use_effects, const trap_type *trap, const std::string &description);
 	void remove_object(const combat_object *object);
 
 	void initialize();

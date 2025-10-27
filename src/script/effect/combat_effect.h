@@ -115,7 +115,9 @@ public:
 			this->object_type = object_type::get(scope.get_tag());
 
 			scope.for_each_element([&](const gsml_property &property) {
-				if (property.get_key() == "trap") {
+				if (property.get_key() == "description") {
+					this->description = property.get_value();
+				} else if (property.get_key() == "trap") {
 					this->trap = trap_type::get(property.get_value());
 				} else {
 					assert_throw(false);
@@ -135,6 +137,11 @@ public:
 			return this->object_type;
 		}
 
+		const std::string &get_description() const
+		{
+			return this->description;
+		}
+
 		const trap_type *get_trap() const
 		{
 			return this->trap;
@@ -147,6 +154,7 @@ public:
 
 	private:
 		const metternich::object_type *object_type = nullptr;
+		std::string description;
 		const trap_type *trap = nullptr;
 		std::unique_ptr<effect_list<const character>> use_effects;
 	};
@@ -237,7 +245,7 @@ public:
 		auto combat = make_qunique<metternich::combat>(this->attacker ? ctx.party.get() : enemy_party.get(), this->attacker ? enemy_party.get() : ctx.party.get(), this->map_size);
 
 		for (const std::unique_ptr<object> &object : this->objects) {
-			combat->add_object(object->get_object_type(), object->get_use_effects(), object->get_trap());
+			combat->add_object(object->get_object_type(), object->get_use_effects(), object->get_trap(), object->get_description());
 		}
 
 		if (ctx.dungeon_area != nullptr && ctx.dungeon_area->get_terrain() != nullptr) {

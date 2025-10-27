@@ -98,9 +98,9 @@ QVariantList combat::get_objects_qvariant_list() const
 	return container::to_qvariant_list(this->objects);
 }
 
-void combat::add_object(const object_type *object_type, const effect_list<const character> *use_effects, const trap_type *trap)
+void combat::add_object(const object_type *object_type, const effect_list<const character> *use_effects, const trap_type *trap, const std::string &description)
 {
-	auto object = make_qunique<combat_object>(object_type, use_effects, trap);
+	auto object = make_qunique<combat_object>(object_type, use_effects, trap, description);
 	this->objects.push_back(std::move(object));
 }
 
@@ -447,10 +447,15 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 						ctx.root_scope = character;
 
 						if (character->get_game_data()->get_domain() == game::get()->get_player_country()) {
-							const portrait *war_minister_portrait = character->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
-							const std::string effects_string = tile.object->get_use_effects()->get_effects_string(character, ctx);
+							std::string text = tile.object->get_description();
 
-							engine_interface::get()->add_combat_notification(std::format("{} {}", tile.object->get_object_type()->get_name(), tile.object->get_object_type()->get_usage_adjective()), war_minister_portrait, effects_string);
+							const std::string effects_string = tile.object->get_use_effects()->get_effects_string(character, ctx);
+							if (!text.empty()) {
+								text += "\n\n";
+							}
+							text += effects_string;
+
+							engine_interface::get()->add_combat_notification(std::format("{} {}", tile.object->get_object_type()->get_name(), tile.object->get_object_type()->get_usage_adjective()), nullptr, text);
 						}
 
 						tile.object->get_use_effects()->do_effects(character, ctx);
