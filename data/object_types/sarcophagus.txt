@@ -1,0 +1,5 @@
+sarcophagus = {
+	name = "Sarcophagus"
+	icon = skull
+	usage_adjective = "Opened"
+}

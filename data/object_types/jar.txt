@@ -1,0 +1,5 @@
+jar = {
+	name = "Jar"
+	icon = glass
+	usage_adjective = "Searched"
+}
