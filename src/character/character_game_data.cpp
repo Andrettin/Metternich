@@ -1259,6 +1259,10 @@ int character_game_data::get_skill_check_chance(const skill *skill, const int ro
 {
 	assert_throw(skill != nullptr);
 
+	if (!this->is_skill_trained(skill)) {
+		return 0;
+	}
+
 	int chance = this->get_skill_value(skill);
 	chance += roll_modifier;
 
