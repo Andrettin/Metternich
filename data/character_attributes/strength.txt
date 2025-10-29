@@ -58,9 +58,4 @@ strength = {
 			damage_bonus = 2
 		}
 	}
-	recurring_value_modifiers = {
-		1 = {
-			swimming = 1
-		}
-	}
 }
