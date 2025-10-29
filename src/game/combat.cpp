@@ -148,9 +148,9 @@ void combat::initialize()
 
 void combat::deploy_objects()
 {
-	const QPoint left_start_pos(1, this->get_map_height() / 2);
-	const QPoint right_start_pos(this->get_map_width() - 2, this->get_map_height() / 2);
-	const QPoint center_start_pos(this->get_map_width() / 2, this->get_map_height() / 2);
+	const QPoint left_start_pos(1, (this->get_map_height() - 1) / 2);
+	const QPoint right_start_pos(this->get_map_width() - 2, (this->get_map_height() - 1) / 2);
+	const QPoint center_start_pos((this->get_map_width() - 1) / 2, (this->get_map_height() - 1) / 2);
 
 	vector::shuffle(this->objects);
 
@@ -204,9 +204,9 @@ void combat::deploy_objects()
 
 void combat::deploy_characters(std::vector<const character *> characters, const bool defenders)
 {
-	const QPoint left_start_pos(1, this->get_map_height() / 2);
-	const QPoint right_start_pos(this->get_map_width() - 2, this->get_map_height() / 2);
-	const QPoint center_start_pos(this->get_map_width() / 2, this->get_map_height() / 2);
+	const QPoint left_start_pos(1, (this->get_map_height() - 1) / 2);
+	const QPoint right_start_pos(this->get_map_width() - 2, (this->get_map_height() - 1) / 2);
+	const QPoint center_start_pos((this->get_map_width() - 1) / 2, (this->get_map_height() - 1) / 2);
 
 	std::sort(characters.begin(), characters.end(), [](const character *lhs, const character *rhs) {
 		if (lhs->get_game_data()->get_movement() != rhs->get_game_data()->get_movement()) {
