@@ -23,6 +23,7 @@
 #include "util/dice.h"
 #include "util/map_util.h"
 #include "util/number_util.h"
+#include "util/point_container.h"
 #include "util/point_util.h"
 #include "util/random.h"
 #include "util/size_util.h"
@@ -98,9 +99,9 @@ QVariantList combat::get_objects_qvariant_list() const
 	return container::to_qvariant_list(this->objects);
 }
 
-void combat::add_object(const object_type *object_type, const effect_list<const character> *use_effects, const trap_type *trap, const std::string &description)
+void combat::add_object(const object_type *object_type, const effect_list<const character> *use_effects, const trap_type *trap, const std::string &description, const combat_placement placement, const QPoint &placement_offset)
 {
-	auto object = make_qunique<combat_object>(object_type, use_effects, trap, description);
+	auto object = make_qunique<combat_object>(object_type, use_effects, trap, description, placement, placement_offset);
 	this->objects.push_back(std::move(object));
 }
 
@@ -134,20 +135,39 @@ void combat::initialize()
 	const QPoint attacker_start_pos(1, this->get_map_height() / 2);
 	const QPoint defender_start_pos(this->get_map_width() - 2, this->get_map_height() / 2);
 
-	this->deploy_objects(defender_start_pos);
+	this->deploy_objects();
 	this->deploy_characters(this->attacking_party->get_characters(), attacker_start_pos, false);
 	this->deploy_characters(this->defending_party->get_characters(), defender_start_pos, true);
 }
 
-void combat::deploy_objects(const QPoint &start_pos)
+void combat::deploy_objects()
 {
+	const QPoint left_start_pos(1, this->get_map_height() / 2);
+	const QPoint right_start_pos(this->get_map_width() - 2, this->get_map_height() / 2);
+	const QPoint center_start_pos(this->get_map_width() / 2, this->get_map_height() / 2);
+
 	vector::shuffle(this->objects);
 
-	std::vector<QPoint> tiles_to_check{ start_pos };
-	size_t last_check_index = 0;
-
 	for (const qunique_ptr<combat_object> &object : this->objects) {
-		for (size_t i = last_check_index; i < tiles_to_check.size(); ++i) {
+		QPoint start_tile_pos;
+
+		switch (object->get_placement()) {
+			case combat_placement::left:
+				start_tile_pos = left_start_pos;
+				break;
+			case combat_placement::right:
+				start_tile_pos = right_start_pos;
+				break;
+			case combat_placement::center:
+				start_tile_pos = center_start_pos;
+				break;
+		}
+
+		start_tile_pos += object->get_placement_offset();
+
+		std::vector<QPoint> tiles_to_check = { start_tile_pos };
+
+		for (size_t i = 0; i < tiles_to_check.size(); ++i) {
 			const QPoint &tile_pos = tiles_to_check.at(i);
 
 			if (this->is_tile_attacker_escape(tile_pos) || this->is_tile_defender_escape(tile_pos)) {
@@ -169,7 +189,6 @@ void combat::deploy_objects(const QPoint &start_pos)
 				continue;
 			}
 
-			last_check_index = i;
 			object->set_tile_pos(tile_pos);
 			tile.object = object.get();
 			break;

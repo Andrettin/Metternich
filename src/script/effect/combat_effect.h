@@ -119,11 +119,15 @@ public:
 					this->description = property.get_value();
 				} else if (property.get_key() == "trap") {
 					this->trap = trap_type::get(property.get_value());
+				} else if (property.get_key() == "placement") {
+					this->placement = magic_enum::enum_cast<combat_placement>(property.get_value()).value();
 				} else {
 					assert_throw(false);
 				}
 			}, [&](const gsml_data &child_scope) {
-				if (child_scope.get_tag() == "on_used") {
+				if (child_scope.get_tag() == "placement_offset") {
+					this->placement_offset = child_scope.to_point();
+				} else if (child_scope.get_tag() == "on_used") {
 					this->use_effects = std::make_unique<effect_list<const character>>();
 					this->use_effects->process_gsml_data(child_scope);
 				} else {
@@ -147,6 +151,16 @@ public:
 			return this->trap;
 		}
 
+		const combat_placement get_placement() const
+		{
+			return this->placement;
+		}
+
+		const QPoint &get_placement_offset() const
+		{
+			return this->placement_offset;
+		}
+
 		const effect_list<const character> *get_use_effects() const
 		{
 			return this->use_effects.get();
@@ -156,6 +170,8 @@ public:
 		const metternich::object_type *object_type = nullptr;
 		std::string description;
 		const trap_type *trap = nullptr;
+		combat_placement placement = combat_placement::right;
+		QPoint placement_offset = QPoint(0, 0);
 		std::unique_ptr<effect_list<const character>> use_effects;
 	};
 
@@ -245,7 +261,7 @@ public:
 		auto combat = make_qunique<metternich::combat>(this->attacker ? ctx.party.get() : enemy_party.get(), this->attacker ? enemy_party.get() : ctx.party.get(), this->map_size);
 
 		for (const std::unique_ptr<object> &object : this->objects) {
-			combat->add_object(object->get_object_type(), object->get_use_effects(), object->get_trap(), object->get_description());
+			combat->add_object(object->get_object_type(), object->get_use_effects(), object->get_trap(), object->get_description(), object->get_placement(), object->get_placement_offset());
 		}
 
 		if (ctx.dungeon_area != nullptr && ctx.dungeon_area->get_terrain() != nullptr) {

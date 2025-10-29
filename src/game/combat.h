@@ -22,6 +22,12 @@ class trap_type;
 template <typename scope_type>
 class effect_list;
 
+enum class combat_placement {
+	left,
+	center,
+	right
+};
+
 struct combat_tile final
 {
 	explicit combat_tile(const terrain_type *base_terrain, const terrain_type *terrain);
@@ -138,8 +144,8 @@ class combat_object final : public QObject
 	Q_PROPERTY(bool trap_found READ get_trap_found NOTIFY trap_found_changed)
 
 public:
-	explicit combat_object(const metternich::object_type *object_type, const effect_list<const character> *use_effects, const trap_type *trap, const std::string &description)
-		: object_type(object_type), use_effects(use_effects), trap(trap), description(description)
+	explicit combat_object(const metternich::object_type *object_type, const effect_list<const character> *use_effects, const trap_type *trap, const std::string &description, const combat_placement placement, const QPoint &placement_offset)
+		: object_type(object_type), use_effects(use_effects), trap(trap), description(description), placement(placement), placement_offset(placement_offset)
 	{
 	}
 
@@ -202,6 +208,16 @@ public:
 		return this->description;
 	}
 
+	combat_placement get_placement() const
+	{
+		return this->placement;
+	}
+
+	const QPoint &get_placement_offset() const
+	{
+		return this->placement_offset;
+	}
+
 signals:
 	void tile_pos_changed();
 	void trap_changed();
@@ -214,6 +230,8 @@ private:
 	const trap_type *trap = nullptr;
 	bool trap_found = false;
 	std::string description;
+	combat_placement placement = combat_placement::right;
+	QPoint placement_offset = QPoint(0, 0);
 };
 
 class combat final : public QObject
@@ -321,11 +339,11 @@ public:
 	void remove_character_info(const character *character);
 
 	QVariantList get_objects_qvariant_list() const;
-	void add_object(const object_type *object_type, const effect_list<const character> *use_effects, const trap_type *trap, const std::string &description);
+	void add_object(const object_type *object_type, const effect_list<const character> *use_effects, const trap_type *trap, const std::string &description, const combat_placement placement, const QPoint &placement_offset);
 	void remove_object(const combat_object *object);
 
 	void initialize();
-	void deploy_objects(const QPoint &start_pos);
+	void deploy_objects();
 	void deploy_characters(std::vector<const character *> characters, const QPoint &start_pos, const bool defenders);
 
 	Q_INVOKABLE QCoro::QmlTask start()
