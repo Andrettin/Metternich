@@ -2,12 +2,17 @@
 
 #include "character/skill.h"
 
+#include "character/character_attribute.h"
 #include "util/assert_util.h"
 
 namespace metternich {
 
 void skill::initialize()
 {
+	if (this->base_attribute != nullptr) {
+		this->base_attribute->add_derived_skill(this);
+	}
+
 	if (this->find_traps) {
 		assert_throw(skill::find_traps_skill == nullptr);
 		skill::find_traps_skill = this;

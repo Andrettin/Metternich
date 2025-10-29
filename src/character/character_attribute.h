@@ -6,6 +6,7 @@
 namespace metternich {
 
 class character;
+class skill;
 
 template <typename scope_type>
 class modifier;
@@ -45,12 +46,23 @@ public:
 		return nullptr;
 	}
 
+	const std::vector<const skill *> &get_derived_skills() const
+	{
+		return this->derived_skills;
+	}
+	
+	void add_derived_skill(const skill *skill)
+	{
+		this->derived_skills.push_back(skill);
+	}
+
 signals:
 	void changed();
 
 private:
 	std::map<std::string, std::pair<int, int>> rating_ranges; //names for particular ranges
 	std::map<int, std::unique_ptr<modifier<const character>>> value_modifiers; //the character modifiers applied for each value; these are cumulative
+	std::vector<const skill *> derived_skills;
 };
 
 }

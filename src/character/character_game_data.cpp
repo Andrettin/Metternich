@@ -70,6 +70,10 @@ character_game_data::character_game_data(const metternich::character *character)
 	this->birth_date = this->character->get_birth_date();
 	this->death_date = this->character->get_death_date();
 	this->start_date = this->character->get_start_date();
+
+	for (const skill *skill : skill::get_all()) {
+		this->change_skill_value(skill, skill->get_base_value());
+	}
 }
 
 void character_game_data::process_gsml_property(const gsml_property &property)
@@ -871,6 +875,10 @@ void character_game_data::change_attribute_value(const character_attribute *attr
 
 	if (new_value == 0) {
 		this->attribute_values.erase(attribute);
+	}
+
+	for (const skill *skill : attribute->get_derived_skills()) {
+		this->change_skill_value(skill, change);
 	}
 
 	if (this->get_office() != nullptr) {

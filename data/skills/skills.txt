@@ -2,82 +2,103 @@ administration = {
 	name = "Administration"
 	icon = chest
 	check_dice = 1d20
+	base_attribute = intelligence
+	base_value = -2
 }
 
 agriculture = {
 	name = "Agriculture"
 	icon = grain
 	check_dice = 1d20
+	base_attribute = intelligence
 }
 
 animal_handling = {
 	name = "Animal Handling"
 	icon = horses
 	check_dice = 1d20
+	base_attribute = wisdom
+	base_value = -1
 }
 
 animal_training = {
 	name = "Animal Training"
 	icon = horses
 	check_dice = 1d20
+	base_attribute = wisdom
 }
 
 artistic_ability = {
 	name = "Artistic Ability"
 	icon = painting
 	check_dice = 1d20
+	base_attribute = wisdom
 }
 
 diplomacy = {
 	name = "Diplomacy"
 	icon = treaty
 	check_dice = 1d20
+	base_attribute = wisdom
+	base_value = -1
 }
 
 disguise = {
 	name = "Disguise"
 	icon = dagger
 	check_dice = 1d20
+	base_attribute = charisma
+	base_value = -1
 }
 
 heraldry = {
 	name = "Heraldry"
 	icon = heater_shield
 	check_dice = 1d20
+	base_attribute = intelligence
 }
 
 intrigue = {
 	name = "Intrigue"
 	icon = dagger
 	check_dice = 1d20
+	base_attribute = wisdom
 }
 
 law = {
 	name = "Law"
 	icon = treaty
 	check_dice = 1d20
+	base_attribute = intelligence
+	base_value = -1
 }
 
 leadership = {
 	name = "Leadership"
 	icon = flag
 	check_dice = 1d20
+	base_attribute = charisma
+	base_value = -1
 }
 
 siegecraft = {
 	name = "Siegecraft"
 	icon = cannon
 	check_dice = 1d20
+	base_attribute = intelligence
 }
 
 strategy = {
 	name = "Strategy"
 	icon = crossed_sabers
 	check_dice = 1d20
+	base_attribute = intelligence
+	base_value = -2
 }
 
 swimming = {
 	name = "Swimming"
 	icon = anchor
 	check_dice = 1d20
+	base_attribute = strength
 }
