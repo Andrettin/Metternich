@@ -57,14 +57,34 @@ class combat_character_info final : public QObject
 		Q_PROPERTY(int remaining_movement READ get_remaining_movement NOTIFY remaining_movement_changed)
 
 public:
-	explicit combat_character_info(const metternich::character *character, const QPoint &tile_pos, const bool defender)
-		: character(character), tile_pos(tile_pos), defender(defender)
+	explicit combat_character_info(const metternich::character *character, const bool defender)
+		: character(character), defender(defender), placement(defender ? combat_placement::right : combat_placement::left)
 	{
 	}
 
 	const metternich::character *get_character() const
 	{
 		return this->character;
+	}
+
+	combat_placement get_placement() const
+	{
+		return this->placement;
+	}
+
+	void set_placement(const combat_placement placement)
+	{
+		this->placement = placement;
+	}
+
+	const QPoint &get_placement_offset() const
+	{
+		return this->placement_offset;
+	}
+
+	void set_placement_offset(const QPoint &offset)
+	{
+		this->placement_offset = offset;
 	}
 
 	const QPoint &get_tile_pos() const
@@ -122,16 +142,29 @@ public:
 		this->set_remaining_movement(this->get_remaining_movement() + change);
 	}
 
+	const effect_list<const domain> *get_kill_effects() const
+	{
+		return this->kill_effects;
+	}
+
+	void set_kill_effects(const effect_list<const domain> *kill_effects)
+	{
+		this->kill_effects = kill_effects;
+	}
+
 signals:
 	void pos_changed();
 	void remaining_movement_changed();
 
 private:
 	const metternich::character *character = nullptr;
+	combat_placement placement = combat_placement::right;
+	QPoint placement_offset = QPoint(0, 0);
 	QPoint tile_pos;
 	QPoint pixel_offset = QPoint(0, 0);
 	bool defender = false;
 	int remaining_movement = 0;
+	const effect_list<const domain> *kill_effects = nullptr;
 };
 
 class combat_object final : public QObject
@@ -319,11 +352,6 @@ public:
 		this->ctx = ctx;
 	}
 
-	void set_character_kill_effects(const character_map<const effect_list<const domain> *> &character_kill_effects)
-	{
-		this->character_kill_effects = character_kill_effects;
-	}
-
 	void set_victory_effects(const effect_list<const domain> *victory_effects)
 	{
 		this->victory_effects = victory_effects;
@@ -344,7 +372,7 @@ public:
 
 	void initialize();
 	void deploy_objects();
-	void deploy_characters(std::vector<const character *> characters, const QPoint &start_pos, const bool defenders);
+	void deploy_characters(std::vector<const character *> characters, const bool defenders);
 
 	Q_INVOKABLE QCoro::QmlTask start()
 	{
@@ -422,7 +450,6 @@ private:
 	std::unique_ptr<party> generated_party;
 	const domain *scope = nullptr;
 	context ctx;
-	character_map<const effect_list<const domain> *> character_kill_effects;
 	const effect_list<const domain> *victory_effects = nullptr;
 	const effect_list<const domain> *defeat_effects = nullptr;
 	std::vector<combat_tile> tiles;

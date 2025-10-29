@@ -48,11 +48,15 @@ public:
 		scope.for_each_element([&](const gsml_property &property) {
 			if (property.get_key() == "hit_points") {
 				this->hit_points = std::stoi(property.get_value());
+			} else if (property.get_key() == "placement") {
+				this->placement = magic_enum::enum_cast<combat_placement>(property.get_value()).value();
 			} else {
 				assert_throw(false);
 			}
 		}, [&](const gsml_data &child_scope) {
-			if (child_scope.get_tag() == "items") {
+			if (child_scope.get_tag() == "placement_offset") {
+				this->placement_offset = child_scope.to_point();
+			} else if (child_scope.get_tag() == "items") {
 				for (const std::string &value : child_scope.get_values()) {
 					this->items.push_back(item_type::get(value));
 				}
@@ -86,6 +90,16 @@ public:
 		return this->hit_points;
 	}
 
+	const combat_placement get_placement() const
+	{
+		return this->placement;
+	}
+
+	const QPoint &get_placement_offset() const
+	{
+		return this->placement_offset;
+	}
+
 	const std::vector<const item_type *> &get_items() const
 	{
 		return this->items;
@@ -99,6 +113,8 @@ public:
 private:
 	const metternich::monster_type *monster_type = nullptr;
 	int hit_points = 0;
+	combat_placement placement = combat_placement::right;
+	QPoint placement_offset = QPoint(0, 0);
 	std::vector<const item_type *> items;
 	std::unique_ptr<effect_list<const domain>> kill_effects;
 };
@@ -253,8 +269,8 @@ public:
 		assert_throw(ctx.party != nullptr);
 
 		std::vector<std::shared_ptr<character_reference>> generated_characters;
-		character_map<const effect_list<const domain> *> character_kill_effects;
-		const std::vector<const character *> enemy_characters = this->get_enemy_characters(ctx, generated_characters, character_kill_effects);
+		character_map<const enemy *> character_enemy_infos;
+		const std::vector<const character *> enemy_characters = this->get_enemy_characters(ctx, generated_characters, character_enemy_infos);
 
 		auto enemy_party = std::make_unique<party>(enemy_characters);
 
@@ -284,9 +300,17 @@ public:
 		context combat_ctx = ctx;
 		combat_ctx.in_combat = true;
 		combat->set_context(combat_ctx);
-		combat->set_character_kill_effects(character_kill_effects);
 		combat->set_victory_effects(this->victory_effects.get());
 		combat->set_defeat_effects(this->defeat_effects.get());
+
+		for (const auto &[character, enemy] : character_enemy_infos) {
+			combat_character_info *character_info = combat->get_character_info(character);
+			assert_throw(character_info != nullptr);
+
+			character_info->set_placement(enemy->get_placement());
+			character_info->set_placement_offset(enemy->get_placement_offset());
+			character_info->set_kill_effects(enemy->get_kill_effects());
+		}
 
 		combat->initialize();
 
@@ -368,7 +392,7 @@ public:
 		return str;
 	}
 
-	std::vector<const character *> get_enemy_characters(const read_only_context &ctx, std::vector<std::shared_ptr<character_reference>> &generated_characters, character_map<const effect_list<const domain> *> &character_kill_effects) const
+	std::vector<const character *> get_enemy_characters(const read_only_context &ctx, std::vector<std::shared_ptr<character_reference>> &generated_characters, character_map<const enemy *> &character_enemy_infos) const
 	{
 		std::vector<const character *> enemy_characters;
 
@@ -393,9 +417,7 @@ public:
 			enemy_characters.push_back(enemy_character->get_character());
 			generated_characters.push_back(enemy_character);
 
-			if (enemy->get_kill_effects() != nullptr) {
-				character_kill_effects[enemy_character->get_character()] = enemy->get_kill_effects();
-			}
+			character_enemy_infos[enemy_character->get_character()] = enemy.get();
 		}
 
 		for (const target_variant<const character> &enemy_character_variant : this->enemy_characters) {

@@ -53,6 +53,15 @@ combat::combat(party *attacking_party, party *defending_party, const QSize &map_
 	this->base_terrain = defines::get()->get_default_base_terrain();
 
 	connect(this, &combat::current_character_changed, this, &combat::movable_tiles_changed);
+
+	for (const character *character : this->attacking_party->get_characters()) {
+		auto character_info = make_qunique<combat_character_info>(character, false);
+		this->character_infos[character] = std::move(character_info);
+	}
+	for (const character *character : this->defending_party->get_characters()) {
+		auto character_info = make_qunique<combat_character_info>(character, true);
+		this->character_infos[character] = std::move(character_info);
+	}
 }
 
 combat::~combat()
@@ -132,12 +141,9 @@ void combat::initialize()
 		this->tiles.emplace_back(this->base_terrain, this->base_terrain);
 	}
 
-	const QPoint attacker_start_pos(1, this->get_map_height() / 2);
-	const QPoint defender_start_pos(this->get_map_width() - 2, this->get_map_height() / 2);
-
 	this->deploy_objects();
-	this->deploy_characters(this->attacking_party->get_characters(), attacker_start_pos, false);
-	this->deploy_characters(this->defending_party->get_characters(), defender_start_pos, true);
+	this->deploy_characters(this->attacking_party->get_characters(), false);
+	this->deploy_characters(this->defending_party->get_characters(), true);
 }
 
 void combat::deploy_objects()
@@ -196,8 +202,12 @@ void combat::deploy_objects()
 	}
 }
 
-void combat::deploy_characters(std::vector<const character *> characters, const QPoint &start_pos, const bool defenders)
+void combat::deploy_characters(std::vector<const character *> characters, const bool defenders)
 {
+	const QPoint left_start_pos(1, this->get_map_height() / 2);
+	const QPoint right_start_pos(this->get_map_width() - 2, this->get_map_height() / 2);
+	const QPoint center_start_pos(this->get_map_width() / 2, this->get_map_height() / 2);
+
 	std::sort(characters.begin(), characters.end(), [](const character *lhs, const character *rhs) {
 		if (lhs->get_game_data()->get_movement() != rhs->get_game_data()->get_movement()) {
 			return lhs->get_game_data()->get_movement() < rhs->get_game_data()->get_movement();
@@ -210,11 +220,29 @@ void combat::deploy_characters(std::vector<const character *> characters, const 
 		return lhs->get_identifier() < rhs->get_identifier();
 	});
 
-	std::vector<QPoint> tiles_to_check{ start_pos };
-	size_t last_check_index = 0;
-
 	for (const character *character : characters) {
-		for (size_t i = last_check_index; i < tiles_to_check.size(); ++i) {
+		combat_character_info *character_info = this->get_character_info(character);
+		assert_throw(character_info != nullptr);
+
+		QPoint start_tile_pos;
+
+		switch (character_info->get_placement()) {
+			case combat_placement::left:
+				start_tile_pos = left_start_pos;
+				break;
+			case combat_placement::right:
+				start_tile_pos = right_start_pos;
+				break;
+			case combat_placement::center:
+				start_tile_pos = center_start_pos;
+				break;
+		}
+
+		start_tile_pos += character_info->get_placement_offset();
+
+		std::vector<QPoint> tiles_to_check = { start_tile_pos };
+
+		for (size_t i = 0; i < tiles_to_check.size(); ++i) {
 			const QPoint &tile_pos = tiles_to_check.at(i);
 
 			if (this->is_tile_attacker_escape(tile_pos) || this->is_tile_defender_escape(tile_pos)) {
@@ -236,10 +264,8 @@ void combat::deploy_characters(std::vector<const character *> characters, const 
 				continue;
 			}
 
-			last_check_index = i;
 			tile.character = character;
-			auto character_info = make_qunique<combat_character_info>(character, tile_pos, defenders);
-			this->character_infos[character] = std::move(character_info);
+			character_info->set_tile_pos(tile_pos);
 			break;
 		}
 	}
@@ -529,19 +555,20 @@ int64_t combat::do_character_attack(const character *character, const metternich
 
 	if (enemy->get_game_data()->is_dead()) {
 		if (character->get_game_data()->get_domain() != nullptr) {
-			const auto find_iterator = this->character_kill_effects.find(enemy);
-			if (find_iterator != this->character_kill_effects.end()) {
+			const combat_character_info *enemy_info = this->get_character_info(enemy);
+			assert_throw(enemy_info != nullptr);
+			if (enemy_info->get_kill_effects() != nullptr) {
 				context ctx = this->ctx;
 				ctx.root_scope = character->get_game_data()->get_domain();
 
 				if (character->get_game_data()->get_domain() == game::get()->get_player_country()) {
 					const portrait *war_minister_portrait = character->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
-					const std::string effects_string = find_iterator->second->get_effects_string(character->get_game_data()->get_domain(), ctx);
+					const std::string effects_string = enemy_info->get_kill_effects()->get_effects_string(character->get_game_data()->get_domain(), ctx);
 
 					engine_interface::get()->add_combat_notification(std::format("{} Killed", enemy->is_temporary() && enemy->get_monster_type() != nullptr ? enemy->get_monster_type()->get_name() : enemy->get_full_name()), war_minister_portrait, effects_string);
 				}
 
-				find_iterator->second->do_effects(character->get_game_data()->get_domain(), ctx);
+				enemy_info->get_kill_effects()->do_effects(character->get_game_data()->get_domain(), ctx);
 			}
 		}
 
