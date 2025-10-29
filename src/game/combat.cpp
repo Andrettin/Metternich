@@ -383,12 +383,14 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 				QPoint chosen_target_tile_pos(-1, -1);
 
 				if (!enemy_party->get_characters().empty()) {
-					const metternich::character *chosen_enemy = vector::get_random(enemy_party->get_characters());
+					const metternich::character *chosen_enemy = this->choose_enemy(character, enemy_party->get_characters());
+					assert_throw(chosen_enemy != nullptr);
 					const combat_character_info *chosen_enemy_info = this->get_character_info(chosen_enemy);
 					chosen_target_tile_pos = chosen_enemy_info->get_tile_pos();
 				} else {
 					assert_throw(!this->objects.empty());
-					const qunique_ptr<combat_object> &chosen_object = vector::get_random(this->objects);
+					const combat_object *chosen_object = this->choose_target_object(character);
+					assert_throw(chosen_object != nullptr);
 					chosen_target_tile_pos = chosen_object->get_tile_pos();
 				}
 
@@ -536,6 +538,63 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 	}
 
 	co_return experience_award;
+}
+
+const character *combat::choose_enemy(const character *character, const std::vector<const metternich::character *> &enemies) const
+{
+	std::vector<const metternich::character *> potential_enemies;
+	int best_distance = std::numeric_limits<int>::max();
+
+	const combat_character_info *character_info = this->get_character_info(character);
+	const QPoint tile_pos = character_info->get_tile_pos();
+
+	for (const metternich::character *enemy : enemies) {
+		const combat_character_info *enemy_info = this->get_character_info(enemy);
+		const QPoint enemy_tile_pos = enemy_info->get_tile_pos();
+		const int distance = point::distance_to(tile_pos, enemy_tile_pos);
+		if (distance < best_distance) {
+			potential_enemies.clear();
+			best_distance = distance;
+		}
+
+		if (distance <= best_distance) {
+			potential_enemies.push_back(enemy);
+		}
+	}
+
+	if (potential_enemies.empty()) {
+		return nullptr;
+	}
+
+	return vector::get_random(potential_enemies);
+}
+
+const combat_object *combat::choose_target_object(const character *character) const
+{
+	std::vector<const combat_object *> potential_objects;
+	int best_distance = std::numeric_limits<int>::max();
+
+	const combat_character_info *character_info = this->get_character_info(character);
+	const QPoint tile_pos = character_info->get_tile_pos();
+
+	for (const qunique_ptr<combat_object> &object : this->objects) {
+		const QPoint object_tile_pos = object->get_tile_pos();
+		const int distance = point::distance_to(tile_pos, object_tile_pos);
+		if (distance < best_distance) {
+			potential_objects.clear();
+			best_distance = distance;
+		}
+
+		if (distance <= best_distance) {
+			potential_objects.push_back(object.get());
+		}
+	}
+
+	if (potential_objects.empty()) {
+		return nullptr;
+	}
+
+	return vector::get_random(potential_objects);
 }
 
 int64_t combat::do_character_attack(const character *character, const metternich::character *enemy, party *enemy_party, const int to_hit_modifier)
