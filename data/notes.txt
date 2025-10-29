@@ -1,4 +1,4 @@
-Note on Combat Distances:
+Notes on Combat Distances:
 Dungeon Area Map Size is given in feet (each tile = 5 feet)
 Movement is given in feet (each tile = 10 feet)
 Range is given in yards (each tile = 10 yards)
