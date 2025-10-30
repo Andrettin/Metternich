@@ -2,3 +2,6 @@ Notes on Combat Distances:
 Dungeon Area Map Size is given in feet (each tile = 5 feet)
 Movement is given in feet (each tile = 10 feet)
 Range is given in yards (each tile = 10 yards)
+
+Notes on Combat Placement:
+When delineating the placing of elements in predefined dungeon rooms, prefer to place objects/enemies aligned to the right/end of the combat map, with the offset being defined in relation to it. In effect, this means that any extra space than there would be for the predefined dungeon room represents the adventuring party getting closer to the room (and its contents).
