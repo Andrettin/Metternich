@@ -378,6 +378,9 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 
 				if (this->is_autoplay_enabled()) {
 					continue;
+				} else if (target_pos == QPoint(-1, -1)) {
+					//end unit's turn
+					break;
 				}
 			} else {
 				QPoint chosen_target_tile_pos(-1, -1);

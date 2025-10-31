@@ -20,6 +20,26 @@ Rectangle {
 		width: 1 * scale_factor
 	}
 	
+	IconButton {
+		id: end_units_turn_button
+		anchors.top: parent.top
+		anchors.topMargin: 192 * scale_factor
+		anchors.horizontalCenter: parent.horizontalCenter
+		icon_identifier: "bell"
+		
+		onClicked: {
+			metternich.game.current_combat.set_target(Qt.point(-1, -1))
+		}
+		
+		onHoveredChanged: {
+			if (hovered) {
+				status_text = "End Unit's Turn"
+			} else {
+				status_text = ""
+			}
+		}
+	}
+	
 	PortraitButton {
 		id: autoplay_portrait
 		anchors.bottom: parent.bottom
