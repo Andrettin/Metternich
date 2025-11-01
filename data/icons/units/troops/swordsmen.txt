@@ -4,13 +4,6 @@ longswordsmen = {
 		or = {
 			character_class = paladin
 			character_class = warrior
-			species = gnoll
-			species = goblin
-			species = hobgoblin
-			species = kobold
-			species = lizardfolk
-			species = ogre
-			species = orc
 		}
 	}
 }

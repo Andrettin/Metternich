@@ -1,0 +1,6 @@
+gnoll = {
+	filepath = "icons/units/troops/gnoll.png"
+	character_conditions = {
+		species = gnoll
+	}
+}

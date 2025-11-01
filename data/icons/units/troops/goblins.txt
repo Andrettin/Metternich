@@ -1,0 +1,13 @@
+goblin = {
+	filepath = "icons/units/troops/goblin.png"
+	character_conditions = {
+		or = {
+			species = goblin
+			species = hobgoblin
+			species = kobold
+			species = lizardfolk
+			species = ogre
+			species = orc
+		}
+	}
+}
