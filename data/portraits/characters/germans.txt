@@ -14,6 +14,13 @@ jakob_fugger = {
 	filepath = "portraits/characters/jakob_fugger.png"
 	character_conditions = {
 		gender = male
+		or = {
+			species = archon
+			species = human
+			species = elf
+			species = half_elf
+			species = halfling
+		}
 		not = {
 			cultural_group = african
 			cultural_group = asian
@@ -27,6 +34,12 @@ wilhelmine_von_sagan = {
 	filepath = "portraits/characters/wilhelmine_von_sagan.png"
 	character_conditions = {
 		gender = female
+		or = {
+			species = human
+			species = elf
+			species = half_elf
+			species = halfling
+		}
 		not = {
 			cultural_group = african
 		}
@@ -37,6 +50,16 @@ otto_von_bismarck = {
 	filepath = "portraits/characters/otto_von_bismarck.png"
 	character_conditions = {
 		gender = male
+		or = {
+			species = air_elemental
+			species = archon
+			species = human
+			species = elf
+			species = half_elf
+			species = halfling
+			species = titan
+			species = triton
+		}
 		not = {
 			cultural_group = african
 			cultural_group = asian

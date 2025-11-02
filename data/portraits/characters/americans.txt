@@ -12,6 +12,12 @@ jp_morgan = {
 	filepath = "portraits/characters/jp_morgan.png"
 	character_conditions = {
 		gender = male
+		or = {
+			species = human
+			species = elf
+			species = half_elf
+			species = halfling
+		}
 		not = {
 			cultural_group = african
 			cultural_group = asian

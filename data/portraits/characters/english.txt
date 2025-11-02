@@ -2,6 +2,12 @@ elizabeth_i_of_england = {
 	filepath = "portraits/characters/elizabeth_i_of_england.png"
 	character_conditions = {
 		gender = female
+		or = {
+			species = human
+			species = elf
+			species = half_elf
+			species = halfling
+		}
 		not = {
 			cultural_group = african
 		}
@@ -14,6 +20,13 @@ francis_drake = {
 	filepath = "portraits/characters/francis_drake.png"
 	character_conditions = {
 		gender = male
+		or = {
+			species = archon
+			species = human
+			species = elf
+			species = half_elf
+			species = halfling
+		}
 		not = {
 			cultural_group = african
 			cultural_group = asian
@@ -26,6 +39,14 @@ henry_hudson = {
 	filepath = "portraits/characters/henry_hudson.png"
 	character_conditions = {
 		gender = male
+		or = {
+			species = archon
+			species = human
+			species = elf
+			species = half_elf
+			species = halfling
+			species = triton
+		}
 		not = {
 			cultural_group = african
 			cultural_group = asian
@@ -38,6 +59,13 @@ william_penn = {
 	filepath = "portraits/characters/william_penn.png"
 	character_conditions = {
 		gender = male
+		or = {
+			species = archon
+			species = human
+			species = elf
+			species = half_elf
+			species = halfling
+		}
 		not = {
 			cultural_group = african
 			cultural_group = asian

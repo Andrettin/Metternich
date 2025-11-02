@@ -1,5 +1,16 @@
 athena = {
 	filepath = "portraits/characters/athena.png"
+	character_conditions = {
+		gender = female
+		or = {
+			species = air_elemental
+			species = archon
+			species = earth_elemental
+			species = nymph
+			species = titan
+			species = triton
+		}
+	}
 }
 
 athena_short_hair = {

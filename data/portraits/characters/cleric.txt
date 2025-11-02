@@ -2,6 +2,13 @@ frankish_cleric = {
 	filepath = "portraits/characters/frankish_cleric.png"
 	character_conditions = {
 		gender = male
+		or = {
+			species = archon
+			species = human
+			species = elf
+			species = half_elf
+			species = halfling
+		}
 		not = {
 			cultural_group = african
 			cultural_group = asian

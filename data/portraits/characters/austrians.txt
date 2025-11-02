@@ -2,6 +2,12 @@ maria_theresia = {
 	filepath = "portraits/characters/maria_theresia.png"
 	character_conditions = {
 		gender = female
+		or = {
+			species = human
+			species = elf
+			species = half_elf
+			species = halfling
+		}
 		not = {
 			cultural_group = african
 		}
@@ -13,6 +19,13 @@ franz_i_of_austria = {
 	filepath = "portraits/characters/franz_i_of_austria.png"
 	character_conditions = {
 		gender = male
+		or = {
+			species = archon
+			species = human
+			species = elf
+			species = half_elf
+			species = halfling
+		}
 		not = {
 			cultural_group = african
 			cultural_group = asian
@@ -25,6 +38,13 @@ metternich = {
 	filepath = "portraits/characters/metternich.png"
 	character_conditions = {
 		gender = male
+		or = {
+			species = archon
+			species = human
+			species = elf
+			species = half_elf
+			species = halfling
+		}
 		not = {
 			cultural_group = african
 			cultural_group = asian
