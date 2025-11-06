@@ -10,6 +10,10 @@ alliance = {
 	filepath = "icons/diplomacy/alliance.png"
 }
 
+alliance_ring = {
+	filepath = "icons/diplomacy/alliance_ring.png"
+}
+
 empire = {
 	filepath = "icons/diplomacy/empire.png"
 }

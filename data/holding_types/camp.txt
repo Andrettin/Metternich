@@ -1,5 +1,6 @@
 camp = {
 	name = "Camp"
+	icon = garrison
 	portrait = town
 	image_filepath = "tiles/settlements/hamlet.png"
 	population_classes = {

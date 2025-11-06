@@ -3,10 +3,12 @@
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 
+Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("ui/portrait.h")
 
 namespace metternich {
 
+class icon;
 class population_class;
 class population_type;
 class portrait;
@@ -22,6 +24,7 @@ class holding_type final : public named_data_entry, public data_type<holding_typ
 {
 	Q_OBJECT
 
+	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
 	Q_PROPERTY(const metternich::portrait* portrait MEMBER portrait READ get_portrait NOTIFY changed)
 	Q_PROPERTY(std::filesystem::path image_filepath MEMBER image_filepath WRITE set_image_filepath NOTIFY changed)
 
@@ -36,6 +39,11 @@ public:
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
 	virtual void check() const override;
+
+	const metternich::icon *get_icon() const
+	{
+		return this->icon;
+	}
 
 	const metternich::portrait *get_portrait() const
 	{
@@ -92,6 +100,7 @@ signals:
 	void changed();
 
 private:
+	const metternich::icon *icon = nullptr;
 	const metternich::portrait *portrait = nullptr;
 	std::filesystem::path image_filepath;
 	std::vector<const holding_type *> base_holding_types;

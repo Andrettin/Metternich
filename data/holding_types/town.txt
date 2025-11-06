@@ -1,5 +1,6 @@
 hamlet = {
 	name = "Hamlet"
+	icon = embassy
 	portrait = town
 	image_filepath = "tiles/settlements/hamlet.png"
 	population_classes = {
@@ -19,6 +20,7 @@ hamlet = {
 
 village = {
 	name = "Village"
+	icon = embassy
 	portrait = town
 	image_filepath = "tiles/settlements/village.png"
 	base_holding_types = {
@@ -38,6 +40,7 @@ village = {
 
 town = {
 	name = "Town"
+	icon = embassy
 	portrait = town
 	image_filepath = "tiles/settlements/town.png"
 	base_holding_types = {
@@ -85,6 +88,7 @@ town = {
 
 city = {
 	name = "City"
+	icon = embassy
 	portrait = city
 	image_filepath = "tiles/settlements/city.png"
 	base_holding_types = {

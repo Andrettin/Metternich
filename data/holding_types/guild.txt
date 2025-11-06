@@ -1,5 +1,6 @@
 guild = {
 	name = "Guild"
+	icon = trade_consulate
 	portrait = trading_post
 	image_filepath = "tiles/settlements/town.png"
 	population_classes = {

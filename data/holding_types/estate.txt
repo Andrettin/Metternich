@@ -1,5 +1,6 @@
 estate = {
 	name = "Estate"
+	icon = non_aggression_pact_shield
 	portrait = aristocratic_palace
 	image_filepath = "tiles/settlements/town.png"
 	population_classes = {

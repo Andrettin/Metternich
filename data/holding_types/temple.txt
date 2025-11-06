@@ -1,5 +1,6 @@
 temple = {
 	name = "Temple"
+	icon = alliance_ring
 	portrait = temple
 	image_filepath = "tiles/settlements/town.png"
 	population_classes = {
