@@ -47,6 +47,7 @@ spy = {
 			character_class = bard
 			character_class = rogue
 			species = shadow
+			taxon = undead
 		}
 	}
 }
