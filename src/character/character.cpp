@@ -141,7 +141,10 @@ character *character::generate(const metternich::species *species, const mettern
 			}
 		}
 	} else {
-		generated_character->set_name(generated_character->get_species()->get_given_name_generator(gender)->generate_name());
+		const archimedes::name_generator *name_generator = generated_character->get_species()->get_given_name_generator(gender);
+		if (name_generator != nullptr) {
+			generated_character->set_name(name_generator->generate_name());
+		}
 	}
 
 	if (hit_points != 0) {
