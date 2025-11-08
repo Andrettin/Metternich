@@ -51,7 +51,7 @@ Rectangle {
 		id: minimap_mode_column
 		anchors.right: parent.right
 		anchors.rightMargin: 4 * scale_factor
-		anchors.top: parent.top
+		anchors.verticalCenter: parent.verticalCenter
 		spacing: 4 * scale_factor
 		
 		IconButton {

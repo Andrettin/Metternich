@@ -100,6 +100,10 @@ Flickable {
 					text += ", " + province.game_data.owner.name
 				}
 				
+				if (province_map.mode === ProvinceMap.Mode.Cultural && province.game_data.culture !== null) {
+					text += " (" + province.game_data.culture.name + ")"
+				}
+				
 				status_text = text
 			} else {
 				status_text = ""
