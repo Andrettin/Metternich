@@ -73,6 +73,24 @@ Rectangle {
 		}
 		
 		IconButton {
+			id: site_map_mode_button
+			icon_identifier: "settlement"
+			highlighted: province_map.mode === ProvinceMap.Mode.Site
+			
+			onClicked: {
+				province_map.mode = ProvinceMap.Mode.Site
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Site Map Mode"
+				} else {
+					status_text = ""
+				}
+			}
+		}
+		
+		IconButton {
 			id: cultural_map_mode_button
 			icon_identifier: "music"
 			highlighted: province_map.mode === ProvinceMap.Mode.Cultural

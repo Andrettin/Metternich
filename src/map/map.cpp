@@ -228,6 +228,7 @@ void map::initialize()
 	this->process_site_tiles();
 
 	province_set provinces;
+	std::vector<const site *> sites;
 
 	for (int x = 0; x < this->get_width(); ++x) {
 		for (int y = 0; y < this->get_height(); ++y) {
@@ -235,15 +236,18 @@ void map::initialize()
 			tile *tile = this->get_tile(tile_pos);
 			const province *tile_province = tile->get_province();
 
-			if (tile_province == nullptr) {
-				continue;
+			if (tile_province != nullptr) {
+				provinces.insert(tile_province);
 			}
 
-			provinces.insert(tile_province);
+			if (tile->get_site() != nullptr) {
+				sites.push_back(tile->get_site());
+			}
 		}
 	}
 
 	this->provinces = container::to_vector(provinces);
+	this->sites = std::move(sites);
 
 	for (const province *province : this->get_provinces()) {
 		province->get_map_data()->on_map_created();
@@ -252,6 +256,7 @@ void map::initialize()
 	this->initialize_diplomatic_map();
 
 	emit provinces_changed();
+	emit sites_changed();
 }
 
 void map::process_border_tiles()
@@ -345,6 +350,7 @@ void map::clear()
 	}
 
 	this->provinces.clear();
+	this->sites.clear();
 	this->tiles.reset();
 	this->ocean_diplomatic_map_image = QImage();
 }
@@ -1050,6 +1056,11 @@ std::optional<QPoint> map::get_nearest_available_tile_pos_for_civilian_unit(cons
 QVariantList map::get_provinces_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_provinces());
+}
+
+QVariantList map::get_sites_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_sites());
 }
 
 void map::initialize_diplomatic_map()

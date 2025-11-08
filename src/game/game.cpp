@@ -180,6 +180,8 @@ void game::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_child([&](const gsml_data &child_scope) {
 			const site *site = site::get(child_scope.get_tag());
 			child_scope.process(site->get_game_data());
+
+			map::get()->add_site(site);
 		});
 
 		map::get()->process_site_tiles();

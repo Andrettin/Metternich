@@ -3,6 +3,7 @@
 #include "util/singleton.h"
 
 namespace archimedes {
+	class gsml_data;
 	enum class direction;
 }
 
@@ -25,6 +26,7 @@ class map final : public QObject, public singleton<map>
 	Q_PROPERTY(int width READ get_width NOTIFY size_changed)
 	Q_PROPERTY(int height READ get_height NOTIFY size_changed)
 	Q_PROPERTY(QVariantList provinces READ get_provinces_qvariant_list NOTIFY provinces_changed)
+	Q_PROPERTY(QVariantList sites READ get_sites_qvariant_list NOTIFY sites_changed)
 	Q_PROPERTY(QSize diplomatic_map_image_size READ get_diplomatic_map_image_size NOTIFY diplomatic_map_image_size_changed)
 	Q_PROPERTY(int diplomatic_map_tile_pixel_size READ get_diplomatic_map_tile_pixel_size NOTIFY diplomatic_map_image_size_changed)
 
@@ -118,6 +120,18 @@ public:
 		this->provinces.push_back(province);
 	}
 
+	const std::vector<const site *> &get_sites() const
+	{
+		return this->sites;
+	}
+
+	QVariantList get_sites_qvariant_list() const;
+
+	void add_site(const site *site)
+	{
+		this->sites.push_back(site);
+	}
+
 	void initialize_diplomatic_map();
 
 	const QImage &get_ocean_diplomatic_map_image() const
@@ -157,12 +171,14 @@ signals:
 	void tile_pathway_changed(const QPoint &tile_pos);
 	void tile_civilian_unit_changed(const QPoint &tile_pos);
 	void provinces_changed();
+	void sites_changed();
 	void diplomatic_map_image_size_changed();
 
 private:
 	QSize size;
 	std::unique_ptr<std::vector<tile>> tiles;
 	std::vector<const province *> provinces; //the provinces which are on the map
+	std::vector<const site *> sites; //the sites which are on the map
 	QImage ocean_diplomatic_map_image;
 	QSize diplomatic_map_image_size;
 	int diplomatic_map_tile_pixel_size = 1;

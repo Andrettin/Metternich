@@ -11,12 +11,14 @@ Flickable {
 	
 	enum Mode {
 		Political,
+		Site,
 		Terrain,
 		Cultural
 	}
 	
 	property int mode: ProvinceMap.Mode.Political
 	readonly property var reference_country: selected_province ? selected_province.game_data.owner : (metternich.game.player_country ? metternich.game.player_country : null)
+	property var hovered_site: null
 	
 	Repeater {
 		model: metternich.map.provinces
@@ -52,7 +54,7 @@ Flickable {
 			y: Math.floor(text_rect.y * metternich.map.diplomatic_map_tile_pixel_size * scale_factor)
 			width: Math.floor(text_rect_width)
 			height: Math.floor(text_rect_height)
-			//visible: contentWidth <= width// && (diplomatic_map.mode === DiplomaticMap.Mode.Political || diplomatic_map.mode === DiplomaticMap.Mode.Diplomatic)
+			visible: province_map.mode !== ProvinceMap.Mode.Site
 			wrapMode: Text.WordWrap
 			horizontalAlignment: contentWidth <= width ? Text.AlignHCenter : (province.game_data.map_image_rect.x === 0 ? Text.AlignLeft : ((province.game_data.map_image_rect.x + province.game_data.map_image_rect.width) >= metternich.map.diplomatic_map_image_size.width * scale_factor ? Text.AlignRight : Text.AlignHCenter))
 			verticalAlignment: contentHeight <= height ? Text.AlignVCenter : (province.game_data.map_image_rect.y === 0 ? Text.AlignTop : ((province.game_data.map_image_rect.y + province.game_data.map_image_rect.height) >= metternich.map.diplomatic_map_image_size.height * scale_factor ? Text.AlignBottom : Text.AlignVCenter))
@@ -106,8 +108,72 @@ Flickable {
 		}
 		
 		onContainsMouseChanged: {
-			if (!containsMouse) {
+			if (!containsMouse && hovered_site === null) {
 				status_text = ""
+			}
+		}
+	}
+	
+	Repeater {
+		model: metternich.map.sites
+		
+		Image {
+			id: site_icon
+			x: site.game_data.tile_pos.x * metternich.map.diplomatic_map_tile_pixel_size * scale_factor - Math.floor(width / 2)
+			y: site.game_data.tile_pos.y * metternich.map.diplomatic_map_tile_pixel_size * scale_factor - Math.floor(height / 2)
+			source: "image://icon/" + (holding_type ? holding_type.icon.identifier : "garrison")
+			visible: province_map.mode === ProvinceMap.Mode.Site
+			
+			readonly property var site: model.modelData
+			readonly property var tile_pos: site.map_data.tile_pos
+			readonly property var holding_type: site.game_data.holding_type
+			readonly property var dungeon: site.game_data.dungeon
+			readonly property bool is_visit_target: metternich.game.player_country.game_data.visit_target_site === site
+			
+			MouseArea {
+				anchors.fill: parent
+				hoverEnabled: true
+				
+				onClicked: {
+					//FIXME: implement site selection
+				}
+				
+				onContainsMouseChanged: {
+					var text = ""
+					
+					if (site.game_data.holding_type !== null) {
+						text = site.game_data.holding_type.name + " of " + site.game_data.current_cultural_name
+						if (site.game_data.province.game_data.provincial_capital === site) {
+							text += " (Provincial Capital)"
+						}
+					} else if (dungeon !== null) {
+						text = dungeon.name
+						if (dungeon.random) {
+							text += " of " + site.game_data.current_cultural_name
+						}
+						text += " (Dungeon)"
+						if (is_visit_target) {
+							text += " (Visiting)"
+						}
+					} else if (site.holding_type !== null) {
+						text = site.game_data.current_cultural_name + " (" + site.holding_type.name + " Slot)"
+					} else {
+						text = site.game_data.current_cultural_name
+					}
+					
+					if (containsMouse) {
+						hovered_site = site
+						status_text = text
+					} else {
+						if (status_text === text) {
+							status_text = ""
+						}
+						
+						if (hovered_site === site) {
+							hovered_site = null
+						}
+					}
+				}
 			}
 		}
 	}
@@ -192,6 +258,7 @@ Flickable {
 	function get_map_mode_suffix(mode, province) {
 		switch (mode) {
 			case ProvinceMap.Mode.Political:
+			case ProvinceMap.Mode.Site:
 				return "/political"
 			case ProvinceMap.Mode.Terrain:
 				return "/terrain"
