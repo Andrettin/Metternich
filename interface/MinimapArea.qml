@@ -42,7 +42,52 @@ Rectangle {
 	
 	Minimap {
 		id: minimap
-		anchors.horizontalCenter: parent.horizontalCenter
+		anchors.left: parent.left
+		anchors.leftMargin: 3 * scale_factor
 		anchors.verticalCenter: parent.verticalCenter
+	}
+	
+	Column {
+		id: minimap_mode_column
+		anchors.right: parent.right
+		anchors.rightMargin: 4 * scale_factor
+		anchors.top: parent.top
+		spacing: 4 * scale_factor
+		
+		IconButton {
+			id: political_map_mode_button
+			icon_identifier: "flag"
+			highlighted: province_map.mode === ProvinceMap.Mode.Political
+			
+			onClicked: {
+				province_map.mode = ProvinceMap.Mode.Political
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Political Map Mode"
+				} else {
+					status_text = ""
+				}
+			}
+		}
+		
+		IconButton {
+			id: cultural_map_mode_button
+			icon_identifier: "music"
+			highlighted: province_map.mode === ProvinceMap.Mode.Cultural
+			
+			onClicked: {
+				province_map.mode = ProvinceMap.Mode.Cultural
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Cultural Map Mode"
+				} else {
+					status_text = ""
+				}
+			}
+		}
 	}
 }

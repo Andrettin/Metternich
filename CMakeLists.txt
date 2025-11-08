@@ -512,6 +512,7 @@ set(map_HDRS
 	src/map/province_history.h
 	src/map/province_map_data.h
 	src/map/province_map_image_provider.h
+	src/map/province_map_mode.h
 	src/map/region.h
 	src/map/region_history.h
 	src/map/route.h

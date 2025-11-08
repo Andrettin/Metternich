@@ -11,13 +11,11 @@ Flickable {
 	
 	enum Mode {
 		Political,
-		Treaty,
 		Terrain,
-		Cultural,
-		Religious
+		Cultural
 	}
 	
-	property int mode: DiplomaticMap.Mode.Political
+	property int mode: ProvinceMap.Mode.Political
 	readonly property var reference_country: selected_province ? selected_province.game_data.owner : (metternich.game.player_country ? metternich.game.player_country : null)
 	
 	Repeater {
@@ -131,6 +129,7 @@ Flickable {
 		}
 	}
 	
+	/*
 	Repeater {
 		model: reference_country ? reference_country.game_data.consulates : []
 		
@@ -162,6 +161,7 @@ Flickable {
 			}
 		}
 	}
+	*/
 	
 	function select_province(province) {
 		selected_province = province
@@ -191,19 +191,12 @@ Flickable {
 	
 	function get_map_mode_suffix(mode, province) {
 		switch (mode) {
-			case DiplomaticMap.Mode.Political:
+			case ProvinceMap.Mode.Political:
 				return "/political"
-			case DiplomaticMap.Mode.Treaty:
-				if (reference_country !== null && province.game_data.owner !== null) {
-					return "/diplomatic/" + reference_country.game_data.get_diplomacy_state_diplomatic_map_suffix(province.game_data.owner)
-				}
-				break
-			case DiplomaticMap.Mode.Terrain:
+			case ProvinceMap.Mode.Terrain:
 				return "/terrain"
-			case DiplomaticMap.Mode.Cultural:
+			case ProvinceMap.Mode.Cultural:
 				return "/cultural"
-			case DiplomaticMap.Mode.Religious:
-				return "/religious"
 		}
 		
 		return ""
