@@ -213,6 +213,8 @@ public:
 	void generate_additional_sites() const;
 	void generate_site(const site *site) const;
 
+	bool is_pos_available_for_site(const QPoint &tile_pos, const std::vector<const site *> &tile_sites) const;
+
 signals:
 	void changed();
 
