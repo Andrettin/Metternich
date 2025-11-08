@@ -56,6 +56,8 @@ public:
 
 	static const std::set<std::string> database_dependencies;
 
+	static constexpr QSize site_tile_size = QSize(5, 5);
+
 	static bool is_site_in_province(const site *site, const province *province, const province_geodata_map_type &province_geodata_map);
 
 	explicit map_template(const std::string &identifier) : named_data_entry(identifier)

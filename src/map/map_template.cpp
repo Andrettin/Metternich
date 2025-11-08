@@ -35,6 +35,7 @@
 #include "util/point_util.h"
 #include "util/rect_util.h"
 #include "util/set_util.h"
+#include "util/size_util.h"
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
 
@@ -173,7 +174,7 @@ void map_template::initialize()
 
 			this->sites_by_position[tile_pos] = site;
 
-			const QRect site_rect(tile_pos - QPoint(3, 3), QSize(8, 8));
+			const QRect site_rect(tile_pos - (size::to_point(map_template::site_tile_size) / 2 - QPoint(1, 1)), map_template::site_tile_size);
 			rect::for_each_point(site_rect, [this, &map_rect, &tile_sites, site](const QPoint &rect_pos) {
 				if (!map_rect.contains(rect_pos)) {
 					return;
@@ -1017,7 +1018,7 @@ void map_template::generate_site(const site *site) const
 
 bool map_template::is_pos_available_for_site(const QPoint &tile_pos, const std::vector<const site *> &tile_sites) const
 {
-	const QRect site_rect(tile_pos - QPoint(3, 3), QSize(8, 8));
+	const QRect site_rect(tile_pos - (size::to_point(map_template::site_tile_size) / 2 - QPoint(1, 1)), map_template::site_tile_size);
 
 	const QRect map_rect(QPoint(0, 0), this->get_size());
 	bool available = true;
