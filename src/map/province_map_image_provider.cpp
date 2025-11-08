@@ -4,10 +4,10 @@
 
 #include "domain/diplomacy_state.h"
 #include "game/game.h"
-#include "map/diplomatic_map_mode.h"
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
+#include "map/province_map_mode.h"
 #include "util/assert_util.h"
 #include "util/string_util.h"
 
@@ -39,11 +39,9 @@ QImage province_map_image_provider::requestImage(const QString &id, QSize *size,
 		if (mode_identifier == "selected") {
 			image = &province_game_data->get_selected_map_image();
 		} else if (mode_identifier == "terrain") {
-			image = &province_game_data->get_map_mode_image(diplomatic_map_mode::terrain);
+			image = &province_game_data->get_map_mode_image(province_map_mode::terrain);
 		} else if (mode_identifier == "cultural") {
-			image = &province_game_data->get_map_mode_image(diplomatic_map_mode::cultural);
-		} else if (mode_identifier == "religious") {
-			image = &province_game_data->get_map_mode_image(diplomatic_map_mode::religious);
+			image = &province_game_data->get_map_mode_image(province_map_mode::cultural);
 		} else {
 			image = &province_game_data->get_map_image();
 		}

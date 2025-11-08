@@ -44,8 +44,8 @@ class scripted_province_modifier;
 class site;
 class tile;
 class wonder;
-enum class diplomatic_map_mode;
 enum class military_unit_category;
+enum class province_map_mode;
 
 template <typename scope_type>
 class modifier;
@@ -171,10 +171,10 @@ public:
 		return this->selected_map_image;
 	}
 
-	const QImage &get_map_mode_image(const diplomatic_map_mode mode) const;
+	const QImage &get_map_mode_image(const province_map_mode mode) const;
 
 	[[nodiscard]]
-	QCoro::Task<void> create_map_mode_image(const diplomatic_map_mode mode);
+	QCoro::Task<void> create_map_mode_image(const province_map_mode mode);
 
 	const QRect &get_map_image_rect() const
 	{
@@ -538,7 +538,7 @@ private:
 	const site *provincial_capital = nullptr;
 	QImage map_image;
 	QImage selected_map_image;
-	std::map<diplomatic_map_mode, QImage> map_mode_images;
+	std::map<province_map_mode, QImage> map_mode_images;
 	QRect map_image_rect;
 	QRect text_rect;
 	int settlement_count = 0; //only includes built settlements
