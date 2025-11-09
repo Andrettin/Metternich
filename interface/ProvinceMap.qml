@@ -123,8 +123,8 @@ Flickable {
 		
 		Image {
 			id: site_icon
-			x: site.game_data.tile_pos.x * metternich.map.diplomatic_map_tile_pixel_size * scale_factor - Math.floor(width / 2)
-			y: site.game_data.tile_pos.y * metternich.map.diplomatic_map_tile_pixel_size * scale_factor - Math.floor(height / 2)
+			x: site.game_data.tile_pos.x * metternich.map.diplomatic_map_tile_pixel_size * scale_factor - (Math.floor(width / 2) - 1)
+			y: site.game_data.tile_pos.y * metternich.map.diplomatic_map_tile_pixel_size * scale_factor - (Math.floor(height / 2) - 1)
 			source: "image://icon/" + (holding_type ? holding_type.icon.identifier : "garrison")
 			visible: province_map.mode === ProvinceMap.Mode.Site
 			
