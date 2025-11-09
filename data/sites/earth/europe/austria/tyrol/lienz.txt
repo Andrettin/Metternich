@@ -3,7 +3,7 @@ lienz = {
 	world = earth
 	geocoordinate = { 12.769722222222 46.829722222222 }
 	type = holding
-	holding_type = estate
+	holding_type = manor
 	#resource = timber
 	province = carinthia
 	

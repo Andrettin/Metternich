@@ -7,7 +7,7 @@ monument = {
 	holding_types = {
 		town
 		city
-		estate
+		manor
 		temple
 	}
 	conditions = {

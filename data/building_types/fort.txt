@@ -9,8 +9,8 @@ stockade = {
 		village
 		town
 		city
-		estate
 		guild
+		manor
 		temple
 	}
 }
@@ -26,8 +26,8 @@ fort = {
 	holding_types = {
 		town
 		city
-		estate
 		guild
+		manor
 	}
 }
 
@@ -42,7 +42,7 @@ fortress = {
 	required_technology = middle_ages
 	holding_types = {
 		city
-		estate
 		guild
+		manor
 	}
 }

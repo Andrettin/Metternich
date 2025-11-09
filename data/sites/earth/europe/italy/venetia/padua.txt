@@ -3,7 +3,7 @@ padua = {
 	world = earth
 	geocoordinate = { 11.877777777778 45.406388888889 }
 	type = holding
-	holding_type = estate
+	holding_type = manor
 	#resource = fruit
 	province = venetia
 	

@@ -3,7 +3,7 @@ bergamo = {
 	world = earth
 	geocoordinate = { 9.66999344752 45.70040041000 } #from Natural Earth
 	type = holding
-	holding_type = estate
+	holding_type = manor
 	#resource = cattle
 	province = lombardy
 	

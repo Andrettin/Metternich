@@ -1,8 +1,11 @@
-estate = {
-	name = "Estate"
+manor = {
+	name = "Manor"
 	icon = non_aggression_pact_shield
 	portrait = aristocratic_palace
 	image_filepath = "tiles/settlements/town.png"
+	level_names = {
+		4 = "Palace"
+	}
 	population_classes = {
 		slaves
 		untrained_workers

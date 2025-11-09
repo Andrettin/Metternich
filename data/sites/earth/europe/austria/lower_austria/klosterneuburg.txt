@@ -3,7 +3,7 @@ klosterneuburg = {
 	world = earth
 	geocoordinate = { 16.316666666667 48.304166666667 }
 	type = holding
-	holding_type = estate
+	holding_type = manor
 	province = lower_austria
 	
 	history = {

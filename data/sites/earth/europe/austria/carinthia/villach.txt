@@ -3,7 +3,7 @@ villach = {
 	world = earth
 	geocoordinate = { 13.833333333333 46.616666666667 }
 	type = holding
-	holding_type = estate
+	holding_type = manor
 	province = carinthia
 	
 	history = {

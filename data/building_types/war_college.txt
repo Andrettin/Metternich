@@ -7,7 +7,7 @@ war_college = {
 	provincial_capital_only = true
 	holding_types = {
 		city
-		estate
+		manor
 	}
 	settlement_modifier = {
 		housing_bonus = 1

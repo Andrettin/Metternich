@@ -3,7 +3,7 @@ grado = {
 	world = earth
 	geocoordinate = { 13.4 45.683333 }
 	type = holding
-	holding_type = estate
+	holding_type = manor
 	province = venetia
 	
 	history = {

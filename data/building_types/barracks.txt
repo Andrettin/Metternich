@@ -6,7 +6,7 @@ barracks = {
 	provincial = true
 	holding_types = {
 		city
-		estate
+		manor
 	}
 	recruited_military_unit_categories = {
 		mace_infantry

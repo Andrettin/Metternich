@@ -3,7 +3,7 @@ targoviste = {
 	world = earth
 	geocoordinate = { 25.45900250200 44.93799912850 } #from Natural Earth
 	type = holding
-	holding_type = estate
+	holding_type = manor
 	#resource = sheep
 	province = wallachia
 	

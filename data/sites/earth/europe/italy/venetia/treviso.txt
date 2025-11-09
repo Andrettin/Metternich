@@ -3,7 +3,7 @@ treviso = {
 	world = earth
 	geocoordinate = { 12.24001745470 45.67001466780 } #from Natural Earth
 	type = holding
-	holding_type = estate
+	holding_type = manor
 	#resource = iron_ore
 	province = venetia
 	

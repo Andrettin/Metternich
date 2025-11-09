@@ -12,7 +12,7 @@ warehouse = {
 		village
 		town
 		city
-		estate
+		manor
 		temple
 	}
 	country_modifier = {

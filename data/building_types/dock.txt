@@ -11,8 +11,8 @@ dock = {
 		village
 		town
 		city
-		estate
 		guild
+		manor
 		temple
 	}
 	wealth_cost = 3000

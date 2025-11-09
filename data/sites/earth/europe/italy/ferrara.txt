@@ -3,7 +3,7 @@ ferrara = {
 	world = earth
 	geocoordinate = { 11.60992671580 44.85042645170 } #from Natural Earth
 	type = holding
-	holding_type = estate
+	holding_type = manor
 	#resource = grain
 	province = romagna
 	

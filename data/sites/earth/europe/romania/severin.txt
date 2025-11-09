@@ -3,7 +3,7 @@ severin = {
 	world = earth
 	geocoordinate = { 22.66589269890 44.64589113270 } #from Natural Earth
 	type = holding
-	holding_type = estate
+	holding_type = manor
 	province = oltenia
 	
 	history = {

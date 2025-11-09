@@ -3,7 +3,7 @@ pest = {
 	world = earth
 	geocoordinate = { 19.1 47.5 }
 	type = holding
-	holding_type = estate
+	holding_type = manor
 	province = pest
 	
 	history = {

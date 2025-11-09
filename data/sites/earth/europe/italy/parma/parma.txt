@@ -3,6 +3,6 @@ parma = {
 	world = earth
 	geocoordinate = { 10.32003128930 44.81042889310 } #from Natural Earth
 	type = holding
-	holding_type = estate
+	holding_type = manor
 	province = parma
 }

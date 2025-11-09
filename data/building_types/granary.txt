@@ -8,7 +8,7 @@ granary = {
 		camp
 		hamlet
 		village
-		estate
+		manor
 		temple
 		town
 		city
