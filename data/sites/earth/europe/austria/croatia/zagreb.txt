@@ -3,6 +3,7 @@ zagreb = {
 	world = earth
 	geocoordinate = { 15.99999466820 45.80000673330 } #from Natural Earth
 	type = holding
+	holding_type = manor
 	#resource = timber
 	province = croatia
 	cultural_names = {
@@ -14,7 +15,7 @@ zagreb = {
 	
 	history = {
 		1360 = {
-			holding_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 		
 		1815 = {
@@ -26,8 +27,7 @@ zagreb = {
 		}
 		
 		1874 = {
-			buildings += university #University founded in Zagreb in 1874; Source: A.J.P. Taylor, "The Habsburg Monarchy, 1809-1918", 1964,
-			holding_type = city
+			#buildings += university #University founded in Zagreb in 1874; Source: A.J.P. Taylor, "The Habsburg Monarchy, 1809-1918", 1964,
 		}
 	}
 }
