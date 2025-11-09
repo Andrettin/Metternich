@@ -1,9 +1,13 @@
-stanislavov = {
-	name = "Stanislavov" #also known as Ivano-Frankivsk
+stanislawow = {
+	name = "Stanislawow" #also known as Ivano-Frankivsk
 	world = earth
 	geocoordinate = { 24.70938553740 48.93475079250 } #from Natural Earth
 	type = resource
 	resource = grain
+	cultural_names = {
+		russian = "Stanislavov"
+		ukrainian = "Stanislaviv"
+	}
 	
 	history = {
 		1815 = {

@@ -26,7 +26,7 @@ slavs = {
 		minsk
 		mogilev
 		posen
-		rovno
+		rivne
 		upper_silesia
 		west_prussia
 	}

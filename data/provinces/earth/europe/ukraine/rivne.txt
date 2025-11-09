@@ -1,7 +1,10 @@
-rovno = {
-	name = "Rovno"
+rivne = {
+	name = "Rivne"
 	color = { 113 224 160 }
-	default_provincial_capital = rovno
+	default_provincial_capital = rivne
+	cultural_names = {
+		russian = "Rovno"
+	}
 	regions = {
 		poland_lithuania
 		ukraine

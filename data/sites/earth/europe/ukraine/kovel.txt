@@ -1,0 +1,14 @@
+kovel = {
+	name = "Kovel"
+	world = earth
+	geocoordinate = { 24.71662023790 51.21706626290 } #from Natural Earth
+	type = holding
+	holding_type = temple
+	province = rivne
+	
+	history = {
+		1815 = {
+			developed = true #existed in the 1815-1866 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+	}
+}

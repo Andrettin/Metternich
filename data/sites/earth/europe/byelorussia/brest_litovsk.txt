@@ -3,5 +3,15 @@ brest_litovsk = {
 	world = earth
 	geocoordinate = { 23.69998978550 52.09998394680 } #from Natural Earth
 	type = holding
+	holding_type = estate
 	province = brest
+	cultural_names = {
+		polish = "Brzesc"
+	}
+	
+	history = {
+		1815 = {
+			developed = true #existed in the 1815-1866 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+	}
 }

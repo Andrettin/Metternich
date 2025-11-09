@@ -1,0 +1,14 @@
+slonim = {
+	name = "Slonim"
+	world = earth
+	geocoordinate = { 25.316666666667 53.083333333333 }
+	type = holding
+	holding_type = guild
+	province = grodno
+	
+	history = {
+		1815 = {
+			developed = true #existed in the 1815-1866 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+	}
+}

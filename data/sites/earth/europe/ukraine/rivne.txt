@@ -1,6 +1,9 @@
-rovno = {
-	name = "Rovno"
+rivne = {
+	name = "Rivne"
 	world = earth
 	geocoordinate = { 26.25280554070 50.61658611970 } #from Natural Earth
 	type = holding
+	cultural_names = {
+		russian = "Rovno"
+	}
 }

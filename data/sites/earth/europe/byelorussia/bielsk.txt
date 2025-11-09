@@ -1,0 +1,14 @@
+bielsk = {
+	name = "Bielsk"
+	world = earth
+	geocoordinate = { 23.1902 52.7641 }
+	type = holding
+	holding_type = temple
+	province = warsaw
+	
+	history = {
+		1815 = {
+			developed = true #existed in the 1815-1866 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+	}
+}
