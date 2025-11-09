@@ -502,6 +502,10 @@ void site_game_data::set_holding_type(const metternich::holding_type *holding_ty
 	this->holding_type = holding_type;
 
 	if (old_holding_type == nullptr && this->get_holding_type() != nullptr) {
+		if (this->get_holding_level() == 0) {
+			this->set_holding_level(1);
+		}
+
 		this->on_settlement_built(1);
 
 		if (this->get_owner() != nullptr) {

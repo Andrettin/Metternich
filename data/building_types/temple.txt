@@ -8,9 +8,6 @@ shrine = {
 		temple
 		city
 	}
-	settlement_modifier = {
-		holding_level = 1
-	}
 }
 
 temple = {
@@ -25,7 +22,7 @@ temple = {
 		city
 	}
 	settlement_modifier = {
-		holding_level = 2
+		holding_level = 1
 	}
 }
 
@@ -42,6 +39,6 @@ cathedral = {
 		city
 	}
 	settlement_modifier = {
-		holding_level = 4
+		holding_level = 3
 	}
 }
