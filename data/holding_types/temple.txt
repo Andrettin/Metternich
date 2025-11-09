@@ -3,6 +3,11 @@ temple = {
 	icon = alliance_ring
 	portrait = temple
 	image_filepath = "tiles/settlements/town.png"
+	level_names = {
+		1 = "Shrine"
+		2 = "Temple"
+		4 = "Cathedral"
+	}
 	population_classes = {
 		slaves
 		untrained_workers
