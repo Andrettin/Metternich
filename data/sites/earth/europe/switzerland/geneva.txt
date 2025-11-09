@@ -3,23 +3,24 @@ geneva = {
 	world = earth
 	geocoordinate = { 6.14002803409 46.21000754710 } #from Natural Earth
 	type = holding
+	holding_type = estate
 	
 	history = {
 		395 = {
-			buildings += cathedral #Geneva was the seat of a bishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
-			holding_type = city
+			#buildings += cathedral #Geneva was the seat of a bishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
+			developed = true
 		}
 		
 		919 = {
-			holding_type = city #important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			#important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
 		}
 		
 		1360 = {
-			#holding_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			#existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 		
 		1365 = {
-			buildings += university #University founded in Geneva in 1365; Source: "Atlas de História Mundial", p. 144.
+			#buildings += university #University founded in Geneva in 1365; Source: "Atlas de História Mundial", p. 144.
 		}
 	
 		1559 = {
