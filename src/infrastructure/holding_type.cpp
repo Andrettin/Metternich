@@ -109,7 +109,9 @@ const std::string &holding_type::get_level_name(const int level) const
 {
 	if (!this->level_names.empty()) {
 		const auto find_iterator = this->level_names.upper_bound(level);
-		return std::prev(find_iterator)->second;
+		if (find_iterator != this->level_names.begin()) {
+			return std::prev(find_iterator)->second;
+		}
 	}
 
 	return this->get_name();
