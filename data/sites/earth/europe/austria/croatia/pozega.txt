@@ -2,8 +2,10 @@ pozega = {
 	name = "Pozega"
 	world = earth
 	geocoordinate = { 17.674444444444 45.331388888889 }
-	type = resource
-	resource = fruit
+	type = holding
+	holding_type = manor
+	#resource = fruit
+	province = slavonia
 	
 	history = {
 		1815 = {
