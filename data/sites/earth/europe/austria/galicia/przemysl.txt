@@ -2,9 +2,13 @@ przemysl = {
 	name = "Przemysl"
 	world = earth
 	geocoordinate = { 22.78424 49.78345 }
-	type = resource
-	resource = coal
+	type = holding
+	holding_type = manor
+	#resource = coal
 	province = west_galicia
+	cultural_names = {
+		ukrainian = "Peremyshl"
+	}
 	
 	history = {
 		1360 = {
