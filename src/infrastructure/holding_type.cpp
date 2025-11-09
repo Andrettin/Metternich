@@ -107,9 +107,9 @@ void holding_type::set_image_filepath(const std::filesystem::path &filepath)
 
 const std::string &holding_type::get_level_name(const int level) const
 {
-	const auto find_iterator = this->level_names.lower_bound(level);
-	if (find_iterator != this->level_names.end()) {
-		return find_iterator->second;
+	if (!this->level_names.empty()) {
+		const auto find_iterator = this->level_names.upper_bound(level);
+		return std::prev(find_iterator)->second;
 	}
 
 	return this->get_name();
