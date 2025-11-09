@@ -4,10 +4,12 @@
 #include "database/named_data_entry.h"
 
 Q_MOC_INCLUDE("map/terrain_type.h")
+Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("ui/portrait.h")
 
 namespace metternich {
 
+class icon;
 class portrait;
 class site;
 class terrain_type;
@@ -19,6 +21,7 @@ class dungeon final : public named_data_entry, public data_type<dungeon>
 {
 	Q_OBJECT
 
+	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
 	Q_PROPERTY(const metternich::portrait* portrait MEMBER portrait READ get_portrait NOTIFY changed)
 	Q_PROPERTY(int level MEMBER level READ get_level NOTIFY changed)
 	Q_PROPERTY(bool random MEMBER random READ is_random NOTIFY changed)
@@ -35,6 +38,11 @@ public:
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;
+
+	const metternich::icon *get_icon() const
+	{
+		return this->icon;
+	}
 
 	const metternich::portrait *get_portrait() const
 	{
@@ -70,6 +78,7 @@ signals:
 	void changed();
 
 private:
+	const metternich::icon *icon = nullptr;
 	const metternich::portrait *portrait = nullptr;
 	int level = 0; //expected level of characters to take on this dungeon
 	bool random = false; //whether this is a random dungeon

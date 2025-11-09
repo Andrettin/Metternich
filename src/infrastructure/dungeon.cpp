@@ -29,6 +29,10 @@ void dungeon::process_gsml_scope(const gsml_data &scope)
 
 void dungeon::check() const
 {
+	if (this->get_icon() == nullptr) {
+		throw std::runtime_error(std::format("Dungeon \"{}\" has no icon.", this->get_identifier()));
+	}
+
 	if (this->get_portrait() == nullptr) {
 		throw std::runtime_error(std::format("Dungeon \"{}\" has no portrait.", this->get_identifier()));
 	}

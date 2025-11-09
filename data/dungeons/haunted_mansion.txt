@@ -1,5 +1,6 @@
 haunted_mansion = {
 	name = "Haunted Mansion"
+	icon = non_aggression_pact
 	portrait = ruined_castle
 	level = 2
 	random = true

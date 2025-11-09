@@ -1,5 +1,6 @@
 ruined_castle = {
 	name = "Ruined Castle"
+	icon = non_aggression_pact
 	portrait = ruined_castle
 	level = 1
 	random = true
