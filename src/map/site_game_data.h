@@ -172,6 +172,11 @@ public:
 
 	void set_holding_level(const int level);
 
+	void change_holding_level(const int change)
+	{
+		this->set_holding_level(this->get_holding_level() + change);
+	}
+
 	Q_INVOKABLE bool is_built() const;
 
 	const resource *get_resource() const;

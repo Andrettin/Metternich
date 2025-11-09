@@ -36,6 +36,7 @@
 #include "script/modifier_effect/hit_dice_modifier_effect.h"
 #include "script/modifier_effect/hit_points_modifier_effect.h"
 #include "script/modifier_effect/hit_points_per_hit_dice_modifier_effect.h"
+#include "script/modifier_effect/holding_level_modifier_effect.h"
 #include "script/modifier_effect/industrial_output_modifier_effect.h"
 #include "script/modifier_effect/infantry_cost_modifier_effect.h"
 #include "script/modifier_effect/law_cost_modifier_effect.h"
@@ -205,7 +206,9 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			}
 		}
 	} else if constexpr (std::is_same_v<scope_type, const site>) {
-		if (key.ends_with(bonus_suffix)) {
+		if (key == "holding_level") {
+			return std::make_unique<holding_level_modifier_effect>(value);
+		} else if (key.ends_with(bonus_suffix)) {
 			const size_t commodity_identifier_size = key.size() - bonus_suffix.size();
 			const commodity *commodity = commodity::get(key.substr(0, commodity_identifier_size));
 
