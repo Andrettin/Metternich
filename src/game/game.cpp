@@ -46,7 +46,6 @@
 #include "infrastructure/improvement.h"
 #include "infrastructure/improvement_slot.h"
 #include "infrastructure/pathway.h"
-#include "infrastructure/settlement_building_slot.h"
 #include "infrastructure/wonder.h"
 #include "map/direction.h"
 #include "map/map.h"
@@ -1162,7 +1161,7 @@ void game::apply_site_buildings(const site *site)
 			throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have wonder \"{}\", but its holding type of \"{}\" is not appropriate for the wonder's building type of \"{}\".", settlement->get_identifier(), wonder->get_identifier(), holding_type->get_identifier(), wonder->get_building()->get_identifier()));
 		}
 
-		settlement_building_slot *building_slot = settlement_game_data->get_building_slot(building_slot_type);
+		building_slot *building_slot = settlement_game_data->get_building_slot(building_slot_type);
 
 		if (building_slot == nullptr) {
 			throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have wonder \"{}\", but does not have its building slot available.", settlement->get_identifier(), wonder->get_identifier()));

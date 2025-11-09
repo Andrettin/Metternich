@@ -23,6 +23,7 @@ namespace metternich {
 
 class army;
 class building_class;
+class building_slot;
 class building_type;
 class culture;
 class domain;
@@ -40,7 +41,6 @@ class province;
 class religion;
 class resource;
 class scripted_site_modifier;
-class settlement_building_slot;
 class site;
 class tile;
 enum class improvement_slot;
@@ -218,7 +218,7 @@ public:
 
 	const portrait *get_portrait() const;
 
-	const std::vector<qunique_ptr<settlement_building_slot>> &get_building_slots() const
+	const std::vector<qunique_ptr<building_slot>> &get_building_slots() const
 	{
 		return this->building_slots;
 	}
@@ -226,7 +226,7 @@ public:
 	QVariantList get_building_slots_qvariant_list() const;
 	void initialize_building_slots();
 
-	settlement_building_slot *get_building_slot(const building_slot_type *slot_type) const
+	building_slot *get_building_slot(const building_slot_type *slot_type) const
 	{
 		const auto find_iterator = this->building_slot_map.find(slot_type);
 
@@ -498,8 +498,8 @@ private:
 	data_entry_set<dungeon_area> explored_dungeon_areas;
 	std::map<improvement_slot, const improvement *> improvements;
 	bool resource_discovered = false;
-	std::vector<qunique_ptr<settlement_building_slot>> building_slots;
-	building_slot_type_map<settlement_building_slot *> building_slot_map;
+	std::vector<qunique_ptr<building_slot>> building_slots;
+	building_slot_type_map<building_slot *> building_slot_map;
 	scripted_site_modifier_map<int> scripted_modifiers;
 	std::vector<qunique_ptr<population_unit>> population_units;
 	qunique_ptr<metternich::population> population;

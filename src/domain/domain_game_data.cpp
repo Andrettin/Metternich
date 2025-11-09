@@ -39,12 +39,12 @@
 #include "game/game.h"
 #include "game/game_rules.h"
 #include "infrastructure/building_class.h"
+#include "infrastructure/building_slot.h"
 #include "infrastructure/building_slot_type.h"
 #include "infrastructure/building_type.h"
 #include "infrastructure/holding_type.h"
 #include "infrastructure/improvement.h"
 #include "infrastructure/improvement_slot.h"
-#include "infrastructure/settlement_building_slot.h"
 #include "infrastructure/wonder.h"
 #include "map/diplomatic_map_mode.h"
 #include "map/map.h"
@@ -1074,7 +1074,7 @@ void domain_game_data::on_site_gained(const site *site, const int multiplier)
 	if (site->is_settlement() && site_game_data->is_built()) {
 		this->change_settlement_count(1 * multiplier);
 
-		for (const qunique_ptr<settlement_building_slot> &building_slot : site_game_data->get_building_slots()) {
+		for (const qunique_ptr<building_slot> &building_slot : site_game_data->get_building_slots()) {
 			const building_type *building = building_slot->get_building();
 			if (building != nullptr) {
 				this->change_settlement_building_count(building, 1 * multiplier);

@@ -22,6 +22,7 @@
 #include "game/event_trigger.h"
 #include "game/game.h"
 #include "infrastructure/building_class.h"
+#include "infrastructure/building_slot.h"
 #include "infrastructure/building_slot_type.h"
 #include "infrastructure/building_type.h"
 #include "infrastructure/dungeon.h"
@@ -30,7 +31,6 @@
 #include "infrastructure/improvement.h"
 #include "infrastructure/improvement_slot.h"
 #include "infrastructure/pathway.h"
-#include "infrastructure/settlement_building_slot.h"
 #include "infrastructure/wonder.h"
 #include "map/diplomatic_map_mode.h"
 #include "map/map.h"
@@ -568,7 +568,7 @@ std::vector<const metternich::holding_type *> site_game_data::get_best_holding_t
 		}
 
 		int preserved_building_count = 0;
-		for (const qunique_ptr<settlement_building_slot> &building_slot : this->building_slots) {
+		for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
 			if (building_slot->get_building() == nullptr) {
 				continue;
 			}
@@ -772,9 +772,9 @@ const portrait *site_game_data::get_portrait() const
 
 QVariantList site_game_data::get_building_slots_qvariant_list() const
 {
-	std::vector<const settlement_building_slot *> available_building_slots;
+	std::vector<const building_slot *> available_building_slots;
 
-	for (const qunique_ptr<settlement_building_slot> &building_slot : this->building_slots) {
+	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
 		if (!building_slot->is_available()) {
 			continue;
 		}
@@ -794,7 +794,7 @@ void site_game_data::initialize_building_slots()
 	vector::shuffle(building_slot_types);
 
 	for (const building_slot_type *building_slot_type : building_slot_types) {
-		this->building_slots.push_back(make_qunique<settlement_building_slot>(building_slot_type, this->site));
+		this->building_slots.push_back(make_qunique<building_slot>(building_slot_type, this->site));
 		this->building_slot_map[building_slot_type] = this->building_slots.back().get();
 	}
 }
@@ -904,7 +904,7 @@ void site_game_data::add_building(const building_type *building)
 
 void site_game_data::clear_buildings()
 {
-	for (const qunique_ptr<settlement_building_slot> &building_slot : this->building_slots) {
+	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
 		building_slot->set_wonder(nullptr);
 		building_slot->set_building(nullptr);
 	}
@@ -914,7 +914,7 @@ void site_game_data::check_building_conditions()
 {
 	assert_throw(this->site->is_settlement());
 
-	for (const qunique_ptr<settlement_building_slot> &building_slot : this->building_slots) {
+	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
 		const building_type *building = building_slot->get_building();
 
 		if (building == nullptr) {
@@ -1044,7 +1044,7 @@ bool site_game_data::check_free_building(const building_type *building)
 		return false;
 	}
 
-	settlement_building_slot *building_slot = this->get_building_slot(building->get_slot_type());
+	building_slot *building_slot = this->get_building_slot(building->get_slot_type());
 
 	if (building_slot == nullptr) {
 		return false;

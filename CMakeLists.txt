@@ -128,7 +128,6 @@ set(infrastructure_SRCS
 	src/infrastructure/improvement_container.cpp
 	src/infrastructure/pathway.cpp
 	src/infrastructure/pathway_container.cpp
-	src/infrastructure/settlement_building_slot.cpp
 	src/infrastructure/wonder.cpp
 )
 source_group(infrastructure FILES ${infrastructure_SRCS})
@@ -468,7 +467,6 @@ set(infrastructure_HDRS
 	src/infrastructure/improvement_slot.h
 	src/infrastructure/pathway.h
 	src/infrastructure/pathway_container.h
-	src/infrastructure/settlement_building_slot.h
 	src/infrastructure/wonder.h
 )
 source_group(infrastructure FILES ${infrastructure_HDRS})

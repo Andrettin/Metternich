@@ -23,7 +23,6 @@
 #include "game/province_event.h"
 #include "infrastructure/building_type.h"
 #include "infrastructure/improvement.h"
-#include "infrastructure/settlement_building_slot.h"
 #include "map/diplomatic_map_mode.h"
 #include "map/map.h"
 #include "map/province.h"
