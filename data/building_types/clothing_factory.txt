@@ -3,13 +3,12 @@ tailors_house = {
 	building_class = tailors_house
 	portrait = factory
 	icon = clothing
-	provincial = true
 	holding_types = {
 		village
 		town
 		city
 	}
-	settlement_conditions = {
+	conditions = {
 		province = {
 			or = {
 				capital = true
@@ -30,13 +29,12 @@ tailors_shop = {
 	building_class = tailors_shop
 	portrait = factory
 	icon = clothing
-	provincial = true
 	required_building = tailors_house
 	holding_types = {
 		town
 		city
 	}
-	settlement_conditions = {
+	conditions = {
 		province = {
 			or = {
 				capital = true
@@ -57,13 +55,12 @@ clothing_factory = {
 	building_class = clothing_factory
 	portrait = factory
 	icon = clothing
-	provincial = true
 	required_building = tailors_shop
 	holding_types = {
 		town
 		city
 	}
-	settlement_conditions = {
+	conditions = {
 		province = {
 			or = {
 				capital = true

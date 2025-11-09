@@ -3,14 +3,11 @@ lighthouse = {
 	building_class = lighthouse
 	portrait = dock
 	icon = anchor
-	provincial = true
 	holding_types = {
 		city
 	}
 	conditions = {
 		game_rule = additional_buildings
-	}
-	settlement_conditions = {
 		coastal = true
 	}
 	province_modifier = {

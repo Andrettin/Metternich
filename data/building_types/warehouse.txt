@@ -3,7 +3,6 @@ warehouse = {
 	building_class = warehouse
 	portrait = trading_post
 	icon = chest
-	provincial = true
 	warehouse = true
 	free_in_capital = true
 	holding_types = {

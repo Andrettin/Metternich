@@ -3,7 +3,6 @@ printing_press = {
 	building_class = printing_press
 	portrait = trading_post
 	icon = newspaper
-	provincial = true
 	required_technology = renaissance
 	holding_types = {
 		guild
@@ -30,7 +29,6 @@ newspaper = {
 	building_class = newspaper
 	portrait = trading_post
 	icon = newspaper
-	provincial = true
 	required_building = printing_press
 	required_technology = renaissance
 	holding_types = {

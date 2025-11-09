@@ -72,13 +72,9 @@ void building_type::process_gsml_scope(const gsml_data &scope)
 		factor->process_gsml_data(scope);
 		this->cost_factor = std::move(factor);
 	} else if (tag == "conditions") {
-		auto conditions = std::make_unique<and_condition<domain>>();
-		conditions->process_gsml_data(scope);
-		this->conditions = std::move(conditions);
-	} else if (tag == "settlement_conditions") {
 		auto conditions = std::make_unique<and_condition<site>>();
 		conditions->process_gsml_data(scope);
-		this->settlement_conditions = std::move(conditions);
+		this->conditions = std::move(conditions);
 	} else if (tag == "build_conditions") {
 		auto conditions = std::make_unique<and_condition<site>>();
 		conditions->process_gsml_data(scope);
@@ -135,19 +131,19 @@ void building_type::initialize()
 	}
 
 	if (this->is_capital_only()) {
-		if (this->get_settlement_conditions() == nullptr) {
-			this->settlement_conditions = std::make_unique<and_condition<site>>();
+		if (this->get_conditions() == nullptr) {
+			this->conditions = std::make_unique<and_condition<site>>();
 		}
 
-		this->settlement_conditions->add_condition(std::make_unique<capital_condition<site>>(true));
+		this->conditions->add_condition(std::make_unique<capital_condition<site>>(true));
 	}
 
 	if (this->is_provincial_capital_only()) {
-		if (this->get_settlement_conditions() == nullptr) {
-			this->settlement_conditions = std::make_unique<and_condition<site>>();
+		if (this->get_conditions() == nullptr) {
+			this->conditions = std::make_unique<and_condition<site>>();
 		}
 
-		this->settlement_conditions->add_condition(std::make_unique<provincial_capital_condition<site>>(true));
+		this->conditions->add_condition(std::make_unique<provincial_capital_condition<site>>(true));
 	}
 
 	if (this->is_capitol()) {
@@ -178,13 +174,6 @@ void building_type::check() const
 		this->get_conditions()->check_validity();
 	}
 
-	if (this->get_settlement_conditions() != nullptr) {
-		if (!this->is_provincial()) {
-			throw std::runtime_error(std::format("Building type \"{}\" has settlement conditions, but is not a provincial building.", this->get_identifier()));
-		}
-		this->get_settlement_conditions()->check_validity();
-	}
-
 	if (this->get_build_conditions() != nullptr) {
 		this->get_build_conditions()->check_validity();
 	}
@@ -197,20 +186,8 @@ void building_type::check() const
 		throw std::runtime_error(std::format("Building type \"{}\" requires itself.", this->get_identifier()));
 	}
 
-	if (this->is_provincial() && this->get_holding_types().empty()) {
-		throw std::runtime_error(std::format("Building type \"{}\" is provincial, but does not have any holding types listed for it.", this->get_identifier()));
-	}
-
-	if (!this->is_provincial() && !this->get_holding_types().empty()) {
-		throw std::runtime_error(std::format("Building type \"{}\" is not provincial, but does have holding types listed for it.", this->get_identifier()));
-	}
-
-	if (this->get_province_modifier() != nullptr && !this->is_provincial()) {
-		throw std::runtime_error(std::format("Building type \"{}\" has a province modifier, but is not a provincial building.", this->get_identifier()));
-	}
-
-	if (this->get_weighted_country_modifier() != nullptr && !this->is_provincial()) {
-		throw std::runtime_error(std::format("Building type \"{}\" has a weighted country modifier, but is not a provincial building.", this->get_identifier()));
+	if (this->get_holding_types().empty()) {
+		throw std::runtime_error(std::format("Building type \"{}\" does not have any holding types listed for it.", this->get_identifier()));
 	}
 }
 

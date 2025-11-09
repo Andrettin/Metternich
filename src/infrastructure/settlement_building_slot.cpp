@@ -56,10 +56,6 @@ void settlement_building_slot::set_building(const building_type *building)
 
 bool settlement_building_slot::can_have_building(const building_type *building) const
 {
-	if (!building->is_provincial()) {
-		return false;
-	}
-
 	const site_game_data *settlement_game_data = this->get_settlement()->get_game_data();
 
 	if (settlement_game_data->get_culture()->get_building_class_type(building->get_building_class()) != building) {
@@ -70,8 +66,8 @@ bool settlement_building_slot::can_have_building(const building_type *building) 
 		return false;
 	}
 
-	if (building->get_settlement_conditions() != nullptr) {
-		if (!building->get_settlement_conditions()->check(this->get_settlement(), read_only_context(this->get_settlement()))) {
+	if (building->get_conditions() != nullptr) {
+		if (!building->get_conditions()->check(this->get_settlement(), read_only_context(this->get_settlement()))) {
 			return false;
 		}
 	}
@@ -288,8 +284,6 @@ QString settlement_building_slot::get_modifier_string() const
 	if (this->get_building() == nullptr) {
 		return QString();
 	}
-
-	assert_throw(this->get_building()->is_provincial());
 
 	std::string str;
 

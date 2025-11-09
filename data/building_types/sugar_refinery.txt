@@ -3,13 +3,12 @@ sugar_refinery = {
 	building_class = sugar_refinery
 	portrait = factory
 	icon = refined_sugar
-	provincial = true
 	required_technology = renaissance
 	holding_types = {
 		town
 		city
 	}
-	settlement_conditions = {
+	conditions = {
 		province = {
 			or = {
 				capital = true

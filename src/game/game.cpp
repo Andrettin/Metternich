@@ -1113,17 +1113,11 @@ void game::apply_site_buildings(const site *site)
 	domain_game_data *owner_game_data = owner ? owner->get_game_data() : nullptr;
 
 	for (auto [building_slot_type, building] : site_history->get_buildings()) {
-		building_slot *building_slot = nullptr;
-		if (building->is_provincial()) {
-			building_slot = settlement_game_data->get_building_slot(building_slot_type);
-		} else {
-			continue;
-		}
-
+		building_slot *building_slot = settlement_game_data->get_building_slot(building_slot_type);
 		assert_throw(building_slot != nullptr);
 
 		while (building != nullptr) {
-			if (building->is_provincial() && settlement == site) {
+			if (settlement == site) {
 				if (holding_type == nullptr) {
 					throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have building \"{}\", but has no holding type.", settlement->get_identifier(), building->get_identifier()));
 				}
@@ -1144,13 +1138,7 @@ void game::apply_site_buildings(const site *site)
 			continue;
 		}
 
-		const building_type *slot_building = nullptr;
-
-		if (building->is_provincial()) {
-			slot_building = settlement_game_data->get_slot_building(building_slot_type);
-		} else {
-			continue;
-		}
+		const building_type *slot_building = settlement_game_data->get_slot_building(building_slot_type);
 
 		if (slot_building == nullptr || slot_building->get_level() < building->get_level()) {
 			settlement_game_data->set_slot_building(building_slot_type, building);
@@ -1622,10 +1610,6 @@ QCoro::Task<void> game::on_setup_finished()
 				}
 
 				for (const building_type *building : building_type::get_all()) {
-					if (!building->is_provincial()) {
-						continue;
-					}
-
 					if (building->get_free_on_start_conditions() == nullptr) {
 						continue;
 					}

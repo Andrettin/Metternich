@@ -3,7 +3,6 @@ arena = {
 	building_class = arena
 	portrait = fort
 	icon = architecture
-	provincial = true
 	holding_types = {
 		city
 	}

@@ -28,13 +28,6 @@ DialogBase {
 		spacing: 16 * scale_factor
 		
 		SmallText {
-			id: built_label
-			anchors.horizontalCenter: parent.horizontalCenter
-			text: building && building.provincial ? ("Built: " + get_settlement_building_count(building) + "/" + country_game_data.provinces.length) : ""
-			visible: false//building && building.provincial
-		}
-		
-		SmallText {
 			id: modifier_label
 			anchors.horizontalCenter: parent.horizontalCenter
 			text: format_text(modifier_string)

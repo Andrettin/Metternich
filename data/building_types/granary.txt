@@ -3,7 +3,6 @@ granary = {
 	building_class = granary
 	portrait = trading_post
 	icon = grain
-	provincial = true
 	holding_types = {
 		camp
 		hamlet
@@ -15,8 +14,6 @@ granary = {
 	}
 	conditions = {
 		game_rule = additional_buildings
-	}
-	settlement_conditions = {
 		province = {
 			has_resource = grain
 		}

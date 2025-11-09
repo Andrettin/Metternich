@@ -3,7 +3,6 @@ alchemists_shop = {
 	building_class = alchemists_shop
 	portrait = university
 	icon = research
-	provincial = true
 	holding_types = {
 		village
 		town
@@ -17,8 +16,6 @@ alchemists_shop = {
 		game_rule = research_commodity
 		game_rule = mercury_commodity
 		game_rule = additional_buildings
-	}
-	settlement_conditions = {
 		province = {
 			produces_commodity = cinnabar
 		}

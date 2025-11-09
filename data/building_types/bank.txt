@@ -3,7 +3,6 @@ bank = {
 	building_class = bank
 	portrait = trading_post
 	icon = wealth
-	provincial = true
 	required_technology = middle_ages
 	holding_types = {
 		city
@@ -11,14 +10,12 @@ bank = {
 	conditions = {
 		game_rule = trade_commodity
 		game_rule = additional_buildings
-	}
-	build_conditions = {
-		has_building_class = market
-	}
-	settlement_conditions = {
 		province = {
 			produces_commodity = trade
 		}
+	}
+	build_conditions = {
+		has_building_class = market
 	}
 	settlement_modifier = {
 		trade_output_modifier = 50

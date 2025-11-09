@@ -3,7 +3,6 @@ village_hall = {
 	building_class = village_hall
 	portrait = town
 	icon = flag
-	provincial = true
 	holding_types = {
 		village
 		town
@@ -25,7 +24,6 @@ town_hall = {
 	building_class = town_hall
 	portrait = town
 	icon = flag
-	provincial = true
 	required_building = village_hall
 	holding_types = {
 		town
@@ -47,7 +45,6 @@ city_hall = {
 	building_class = city_hall
 	portrait = city
 	icon = flag
-	provincial = true
 	required_building = town_hall
 	holding_types = {
 		city
@@ -68,7 +65,6 @@ state_house = {
 	building_class = state_house
 	portrait = city
 	icon = flag
-	provincial = true
 	provincial_capitol = true
 	required_building = city_hall
 	holding_types = {
@@ -90,7 +86,6 @@ capitol = {
 	building_class = capitol
 	portrait = city
 	icon = flag
-	provincial = true
 	capitol = true
 	required_building = state_house
 	holding_types = {

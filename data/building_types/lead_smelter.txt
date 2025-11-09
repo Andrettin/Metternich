@@ -3,15 +3,12 @@ lead_smelter = {
 	building_class = lead_smelter
 	portrait = factory
 	icon = iron
-	provincial = true
-	conditions = {
-		game_rule = lead_commodity
-	}
 	holding_types = {
 		town
 		city
 	}
-	settlement_conditions = {
+	conditions = {
+		game_rule = lead_commodity
 		province = {
 			or = {
 				capital = true

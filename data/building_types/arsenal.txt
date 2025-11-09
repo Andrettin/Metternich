@@ -3,13 +3,12 @@ armory = {
 	building_class = armory
 	portrait = factory
 	icon = tools
-	provincial = true
 	holding_types = {
 		village
 		town
 		city
 	}
-	settlement_conditions = {
+	conditions = {
 		province = {
 			or = {
 				capital = true
@@ -31,13 +30,12 @@ magazine = {
 	building_class = magazine
 	portrait = factory
 	icon = tools
-	provincial = true
 	required_building = armory
 	holding_types = {
 		town
 		city
 	}
-	settlement_conditions = {
+	conditions = {
 		province = {
 			or = {
 				capital = true
@@ -59,13 +57,12 @@ arsenal = {
 	building_class = arsenal
 	portrait = factory
 	icon = tools
-	provincial = true
 	required_building = magazine
 	holding_types = {
 		town
 		city
 	}
-	settlement_conditions = {
+	conditions = {
 		province = {
 			or = {
 				capital = true

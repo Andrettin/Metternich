@@ -3,7 +3,6 @@ aqueduct = {
 	building_class = aqueduct
 	portrait = hospital
 	icon = architecture
-	provincial = true
 	holding_types = {
 		town
 		city

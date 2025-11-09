@@ -3,7 +3,6 @@ spice_factory = {
 	building_class = spice_factory
 	portrait = trading_post
 	icon = spices
-	provincial = true
 	required_technology = renaissance
 	holding_types = {
 		town
@@ -11,8 +10,6 @@ spice_factory = {
 	}
 	conditions = {
 		game_rule = trade_commodity
-	}
-	settlement_conditions = {
 		province = {
 			produces_commodity = spices
 		}

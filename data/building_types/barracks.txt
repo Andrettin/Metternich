@@ -3,7 +3,6 @@ barracks = {
 	building_class = barracks
 	portrait = fort
 	icon = crossed_sabers
-	provincial = true
 	holding_types = {
 		city
 		manor

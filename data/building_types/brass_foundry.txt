@@ -3,12 +3,11 @@ brass_foundry = {
 	building_class = brass_foundry
 	portrait = factory
 	icon = bronze
-	provincial = true
 	holding_types = {
 		town
 		city
 	}
-	settlement_conditions = {
+	conditions = {
 		province = {
 			or = {
 				capital = true

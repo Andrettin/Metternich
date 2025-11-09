@@ -89,10 +89,6 @@ void wonder::check() const
 		throw std::runtime_error(std::format("Wonder \"{}\" has no building type.", this->get_identifier()));
 	}
 
-	if (!this->get_building()->is_provincial()) {
-		throw std::runtime_error(std::format("Wonder \"{}\" has a non-provincial building type.", this->get_identifier()));
-	}
-
 	if (this->get_conditions() != nullptr) {
 		this->get_conditions()->check_validity();
 	}

@@ -3,13 +3,12 @@ food_processing_center = {
 	building_class = food_processing_center
 	portrait = factory
 	icon = canned_food
-	provincial = true
 	required_technology = renaissance
 	holding_types = {
 		town
 		city
 	}
-	settlement_conditions = {
+	conditions = {
 		province = {
 			or = {
 				capital = true

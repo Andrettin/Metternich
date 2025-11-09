@@ -1077,7 +1077,6 @@ void domain_game_data::on_site_gained(const site *site, const int multiplier)
 		for (const qunique_ptr<settlement_building_slot> &building_slot : site_game_data->get_building_slots()) {
 			const building_type *building = building_slot->get_building();
 			if (building != nullptr) {
-				assert_throw(building->is_provincial());
 				this->change_settlement_building_count(building, 1 * multiplier);
 			}
 

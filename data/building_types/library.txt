@@ -3,7 +3,6 @@ library = {
 	building_class = library
 	portrait = university
 	icon = book
-	provincial = true
 	holding_types = {
 		city
 	}

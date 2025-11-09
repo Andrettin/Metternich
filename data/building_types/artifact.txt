@@ -3,7 +3,6 @@ artifact = {
 	building_class = artifact
 	portrait = oil_lamp
 	icon = bell
-	provincial = true
 	wonder_only = true
 	holding_types = {
 		camp

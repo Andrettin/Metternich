@@ -3,7 +3,6 @@ shrine = {
 	building_class = shrine
 	portrait = temple
 	icon = wooden_cross
-	provincial = true
 	holding_types = {
 		temple
 		city
@@ -15,7 +14,6 @@ temple = {
 	building_class = temple
 	portrait = temple
 	icon = wooden_cross
-	provincial = true
 	required_building = shrine
 	holding_types = {
 		temple
@@ -31,7 +29,6 @@ cathedral = {
 	building_class = cathedral
 	portrait = temple
 	icon = golden_cross_detailed
-	provincial = true
 	required_building = temple
 	required_technology = middle_ages
 	holding_types = {

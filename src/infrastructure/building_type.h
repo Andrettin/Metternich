@@ -50,7 +50,6 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(metternich::cultural_group* cultural_group MEMBER cultural_group NOTIFY changed)
 	Q_PROPERTY(const metternich::portrait* portrait MEMBER portrait READ get_portrait NOTIFY changed)
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
-	Q_PROPERTY(bool provincial MEMBER provincial READ is_provincial NOTIFY changed)
 	Q_PROPERTY(QVariantList recruited_civilian_unit_types READ get_recruited_civilian_unit_types_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList recruited_military_unit_categories READ get_recruited_military_unit_categories_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList recruited_transporter_categories READ get_recruited_transporter_categories_qvariant_list NOTIFY changed)
@@ -104,11 +103,6 @@ public:
 	const metternich::icon *get_icon() const
 	{
 		return this->icon;
-	}
-
-	bool is_provincial() const
-	{
-		return this->provincial;
 	}
 
 	int get_level() const
@@ -235,14 +229,9 @@ public:
 		return this->cost_factor.get();
 	}
 
-	const and_condition<domain> *get_conditions() const
+	const and_condition<site> *get_conditions() const
 	{
 		return this->conditions.get();
-	}
-
-	const and_condition<site> *get_settlement_conditions() const
-	{
-		return this->settlement_conditions.get();
 	}
 
 	const and_condition<site> *get_build_conditions() const
@@ -291,7 +280,6 @@ private:
 	metternich::cultural_group *cultural_group = nullptr;
 	const metternich::portrait *portrait = nullptr;
 	const metternich::icon *icon = nullptr;
-	bool provincial = false;
 	int level = 0;
 	std::vector<const holding_type *> holding_types;
 	std::vector<const civilian_unit_type *> recruited_civilian_unit_types;
@@ -311,8 +299,7 @@ private:
 	int wealth_cost = 0;
 	commodity_map<int> commodity_costs;
 	std::unique_ptr<const factor<domain>> cost_factor;
-	std::unique_ptr<const and_condition<domain>> conditions;
-	std::unique_ptr<and_condition<site>> settlement_conditions;
+	std::unique_ptr<and_condition<site>> conditions;
 	std::unique_ptr<const and_condition<site>> build_conditions;
 	std::unique_ptr<const and_condition<site>> free_on_start_conditions;
 	std::unique_ptr<modifier<const site>> settlement_modifier;

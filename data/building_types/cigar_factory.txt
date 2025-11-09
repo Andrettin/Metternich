@@ -3,13 +3,12 @@ tobacconists_house = {
 	building_class = tobacconists_house
 	portrait = factory
 	icon = tobacco
-	provincial = true
 	holding_types = {
 		village
 		town
 		city
 	}
-	settlement_conditions = {
+	conditions = {
 		province = {
 			or = {
 				capital = true
@@ -24,13 +23,12 @@ tobacconists_shop = {
 	building_class = tobacconists_shop
 	portrait = factory
 	icon = tobacco
-	provincial = true
 	required_building = tobacconists_house
 	holding_types = {
 		town
 		city
 	}
-	settlement_conditions = {
+	conditions = {
 		province = {
 			or = {
 				capital = true
@@ -45,13 +43,12 @@ cigar_factory = {
 	building_class = cigar_factory
 	portrait = factory
 	icon = tobacco
-	provincial = true
 	required_building = tobacconists_shop
 	holding_types = {
 		town
 		city
 	}
-	settlement_conditions = {
+	conditions = {
 		province = {
 			or = {
 				capital = true

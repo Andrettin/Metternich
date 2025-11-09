@@ -3,14 +3,13 @@ school = {
 	building_class = school
 	portrait = university
 	icon = university
-	provincial = true
 	holding_types = {
 		village
 		town
 		city
 		guild
 	}
-	settlement_conditions = {
+	conditions = {
 		or = {
 			capital = true
 			game_rule = research_commodity
@@ -32,13 +31,12 @@ college = {
 	building_class = college
 	portrait = university
 	icon = university
-	provincial = true
 	required_building = school
 	holding_types = {
 		city
 		guild
 	}
-	settlement_conditions = {
+	conditions = {
 		or = {
 			capital = true
 			game_rule = research_commodity
@@ -60,14 +58,13 @@ university = {
 	building_class = university
 	portrait = university
 	icon = university
-	provincial = true
 	required_building = college
 	required_technology = middle_ages
 	holding_types = {
 		city
 		guild
 	}
-	settlement_conditions = {
+	conditions = {
 		or = {
 			capital = true
 			game_rule = research_commodity
@@ -104,12 +101,11 @@ monastic_school = {
 	building_class = monastic_school
 	portrait = university
 	icon = university
-	provincial = true
 	required_technology = dark_ages
 	holding_types = {
 		temple
 	}
-	settlement_conditions = {
+	conditions = {
 		or = {
 			capital = true
 			game_rule = research_commodity
@@ -131,13 +127,12 @@ cathedral_school = {
 	building_class = cathedral_school
 	portrait = university
 	icon = university
-	provincial = true
 	required_building = monastic_school
 	required_technology = middle_ages
 	holding_types = {
 		temple
 	}
-	settlement_conditions = {
+	conditions = {
 		or = {
 			capital = true
 			game_rule = research_commodity

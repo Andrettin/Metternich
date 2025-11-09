@@ -3,15 +3,12 @@ mercury_refinery = {
 	building_class = mercury_refinery
 	portrait = factory
 	icon = iron
-	provincial = true
-	conditions = {
-		game_rule = mercury_commodity
-	}
 	holding_types = {
 		town
 		city
 	}
-	settlement_conditions = {
+	conditions = {
+		game_rule = mercury_commodity
 		province = {
 			or = {
 				capital = true

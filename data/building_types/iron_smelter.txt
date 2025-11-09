@@ -3,12 +3,11 @@ iron_smelter = {
 	building_class = iron_smelter
 	portrait = factory
 	icon = iron
-	provincial = true
 	holding_types = {
 		town
 		city
 	}
-	settlement_conditions = {
+	conditions = {
 		province = {
 			or = {
 				capital = true

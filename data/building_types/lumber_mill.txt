@@ -3,13 +3,12 @@ sawyers_house = {
 	building_class = sawyers_house
 	portrait = factory
 	icon = lumber
-	provincial = true
 	holding_types = {
 		village
 		town
 		city
 	}
-	settlement_conditions = {
+	conditions = {
 		province = {
 			or = {
 				capital = true
@@ -24,13 +23,12 @@ sawyers_shop = {
 	building_class = sawyers_shop
 	portrait = factory
 	icon = lumber
-	provincial = true
 	required_building = sawyers_house
 	holding_types = {
 		town
 		city
 	}
-	settlement_conditions = {
+	conditions = {
 		province = {
 			or = {
 				capital = true
@@ -45,13 +43,12 @@ lumber_mill = {
 	building_class = lumber_mill
 	portrait = factory
 	icon = lumber
-	provincial = true
 	required_building = sawyers_shop
 	holding_types = {
 		town
 		city
 	}
-	settlement_conditions = {
+	conditions = {
 		province = {
 			or = {
 				capital = true

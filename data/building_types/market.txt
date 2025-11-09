@@ -3,7 +3,6 @@ market = {
 	building_class = market
 	portrait = trading_post
 	icon = wealth
-	provincial = true
 	holding_types = {
 		village
 		town
@@ -12,8 +11,6 @@ market = {
 	conditions = {
 		game_rule = trade_commodity
 		game_rule = additional_buildings
-	}
-	settlement_conditions = {
 		province = {
 			produces_commodity = trade
 		}

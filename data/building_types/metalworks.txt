@@ -3,13 +3,12 @@ blacksmiths_house = {
 	building_class = blacksmiths_house
 	portrait = factory
 	icon = tools
-	provincial = true
 	holding_types = {
 		village
 		town
 		city
 	}
-	settlement_conditions = {
+	conditions = {
 		province = {
 			or = {
 				capital = true
@@ -31,13 +30,12 @@ blacksmiths_shop = {
 	building_class = blacksmiths_shop
 	portrait = factory
 	icon = tools
-	provincial = true
 	required_building = blacksmiths_house
 	holding_types = {
 		town
 		city
 	}
-	settlement_conditions = {
+	conditions = {
 		province = {
 			or = {
 				capital = true
@@ -59,13 +57,12 @@ metalworks = {
 	building_class = metalworks
 	portrait = factory
 	icon = tools
-	provincial = true
 	required_building = blacksmiths_shop
 	holding_types = {
 		town
 		city
 	}
-	settlement_conditions = {
+	conditions = {
 		province = {
 			or = {
 				capital = true

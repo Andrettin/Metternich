@@ -54,15 +54,7 @@ void building_slot::set_under_construction_building(const building_type *buildin
 
 bool building_slot::can_have_building(const building_type *building) const
 {
-	if (building->get_conditions() != nullptr) {
-		if (this->get_country() == nullptr) {
-			return false;
-		}
-
-		if (!building->get_conditions()->check(this->get_country(), read_only_context(this->get_country()))) {
-			return false;
-		}
-	}
+	Q_UNUSED(building);
 
 	return true;
 }

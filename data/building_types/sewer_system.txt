@@ -3,7 +3,6 @@ sewer_system = {
 	building_class = sewer_system
 	portrait = hospital
 	icon = architecture
-	provincial = true
 	holding_types = {
 		city
 	}

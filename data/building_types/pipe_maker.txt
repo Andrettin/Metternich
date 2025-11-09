@@ -3,15 +3,12 @@ pipe_maker = {
 	building_class = pipe_maker
 	portrait = factory
 	icon = tools
-	provincial = true
-	conditions = {
-		game_rule = lead_commodity
-	}
 	holding_types = {
 		town
 		city
 	}
-	settlement_conditions = {
+	conditions = {
+		game_rule = lead_commodity
 		province = {
 			or = {
 				capital = true

@@ -3,7 +3,6 @@ stock_exchange = {
 	building_class = stock_exchange
 	portrait = trading_post
 	icon = wealth
-	provincial = true
 	required_technology = renaissance
 	holding_types = {
 		city
@@ -11,14 +10,12 @@ stock_exchange = {
 	conditions = {
 		game_rule = trade_commodity
 		game_rule = additional_buildings
-	}
-	build_conditions = {
-		has_building_class = bank
-	}
-	settlement_conditions = {
 		province = {
 			produces_commodity = trade
 		}
+	}
+	build_conditions = {
+		has_building_class = bank
 	}
 	settlement_modifier = {
 		trade_output_modifier = 50

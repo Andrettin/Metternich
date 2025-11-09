@@ -3,12 +3,11 @@ paper_mill = {
 	building_class = paper_mill
 	portrait = factory
 	icon = paper
-	provincial = true
 	holding_types = {
 		town
 		city
 	}
-	settlement_conditions = {
+	conditions = {
 		province = {
 			or = {
 				capital = true

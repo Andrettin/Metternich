@@ -3,13 +3,12 @@ carpenters_house = {
 	building_class = carpenters_house
 	portrait = factory
 	icon = furniture
-	provincial = true
 	holding_types = {
 		village
 		town
 		city
 	}
-	settlement_conditions = {
+	conditions = {
 		province = {
 			or = {
 				capital = true
@@ -28,13 +27,12 @@ carpenters_shop = {
 	building_class = carpenters_shop
 	portrait = factory
 	icon = furniture
-	provincial = true
 	required_building = carpenters_house
 	holding_types = {
 		town
 		city
 	}
-	settlement_conditions = {
+	conditions = {
 		province = {
 			or = {
 				capital = true
@@ -53,13 +51,12 @@ furniture_factory = {
 	building_class = furniture_factory
 	portrait = factory
 	icon = furniture
-	provincial = true
 	required_building = carpenters_shop
 	holding_types = {
 		town
 		city
 	}
-	settlement_conditions = {
+	conditions = {
 		province = {
 			or = {
 				capital = true

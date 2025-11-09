@@ -3,7 +3,6 @@ monument = {
 	building_class = monument
 	portrait = aristocratic_palace
 	icon = architecture
-	provincial = true
 	holding_types = {
 		town
 		city

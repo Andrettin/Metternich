@@ -3,7 +3,6 @@ dock = {
 	building_class = dock
 	portrait = dock
 	icon = anchor
-	provincial = true
 	free_in_capital = true
 	holding_types = {
 		camp
@@ -20,7 +19,7 @@ dock = {
 		lumber = 5
 		cast_iron = 5
 	}
-	settlement_conditions = {
+	conditions = {
 		near_water = true
 	}
 	free_on_start_conditions = {
@@ -36,7 +35,6 @@ shipyard = {
 	building_class = shipyard
 	portrait = dock
 	icon = anchor
-	provincial = true
 	capital_only = true
 	required_building = dock
 	holding_types = {
@@ -51,7 +49,7 @@ shipyard = {
 		light_warship
 		heavy_warship
 	}
-	settlement_conditions = {
+	conditions = {
 		near_water = true
 	}
 	free_on_start_conditions = {

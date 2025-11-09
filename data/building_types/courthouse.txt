@@ -3,14 +3,11 @@ courthouse = {
 	building_class = courthouse
 	portrait = trading_post
 	icon = courthouse
-	provincial = true
 	holding_types = {
 		city
 	}
 	conditions = {
 		game_rule = additional_buildings
-	}
-	settlement_conditions = {
 		province = {
 			produces_commodity = statesmanship
 		}

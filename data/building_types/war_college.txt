@@ -3,7 +3,6 @@ war_college = {
 	building_class = war_college
 	portrait = fort
 	icon = wall
-	provincial = true
 	provincial_capital_only = true
 	holding_types = {
 		city

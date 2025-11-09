@@ -3,14 +3,13 @@ weavers_house = {
 	building_class = weavers_house
 	portrait = factory
 	icon = fabric
-	provincial = true
 	holding_types = {
 		village
 		town
 		city
 		guild
 	}
-	settlement_conditions = {
+	conditions = {
 		province = {
 			or = {
 				capital = true
@@ -31,14 +30,13 @@ weavers_shop = {
 	building_class = weavers_shop
 	portrait = factory
 	icon = fabric
-	provincial = true
 	required_building = weavers_house
 	holding_types = {
 		town
 		city
 		guild
 	}
-	settlement_conditions = {
+	conditions = {
 		province = {
 			or = {
 				capital = true
@@ -59,14 +57,13 @@ textile_mill = {
 	building_class = textile_mill
 	portrait = factory
 	icon = fabric
-	provincial = true
 	required_building = weavers_shop
 	holding_types = {
 		town
 		city
 		guild
 	}
-	settlement_conditions = {
+	conditions = {
 		province = {
 			or = {
 				capital = true
