@@ -97,6 +97,8 @@ void site_game_data::process_gsml_property(const gsml_property &property)
 
 	if (key == "holding_type") {
 		this->holding_type = holding_type::get(value);
+	} else if (key == "holding_level") {
+		this->holding_level = std::stoi(value);
 	} else if (key == "dungeon") {
 		this->dungeon = dungeon::get(value);
 	} else {
@@ -126,6 +128,10 @@ gsml_data site_game_data::to_gsml_data() const
 
 	if (this->get_holding_type() != nullptr) {
 		data.add_property("holding_type", this->get_holding_type()->get_identifier());
+	}
+
+	if (this->get_holding_level() != 0) {
+		data.add_property("holding_level", std::to_string(this->get_holding_level()));
 	}
 
 	if (this->get_dungeon() != nullptr) {
@@ -443,6 +449,10 @@ void site_game_data::set_holding_type(const metternich::holding_type *holding_ty
 	this->holding_type = holding_type;
 
 	if (old_holding_type == nullptr && this->get_holding_type() != nullptr) {
+		if (this->get_holding_level() == 0) {
+			this->set_holding_level(1);
+		}
+
 		this->on_settlement_built(1);
 
 		if (this->get_owner() != nullptr) {
@@ -540,6 +550,27 @@ std::vector<const metternich::holding_type *> site_game_data::get_best_holding_t
 	}
 
 	return potential_holding_types;
+}
+
+void site_game_data::set_holding_level(const int level)
+{
+	assert_throw(this->site->is_settlement());
+
+	if (level == this->get_holding_level()) {
+		return;
+	}
+
+	this->holding_level = level;
+
+	if (level > 0) {
+		assert_throw(this->get_holding_type() != nullptr);
+	} else {
+		assert_throw(this->get_holding_type() == nullptr);
+	}
+
+	if (game::get()->is_running()) {
+		emit holding_level_changed();
+	}
 }
 
 bool site_game_data::is_built() const

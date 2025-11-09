@@ -4,6 +4,7 @@
 #include "economy/commodity_container.h"
 #include "infrastructure/building_slot_type_container.h"
 #include "script/scripted_modifier_container.h"
+#include "util/centesimal_int.h"
 #include "util/qunique_ptr.h"
 
 Q_MOC_INCLUDE("domain/domain.h")
@@ -15,6 +16,7 @@ Q_MOC_INCLUDE("population/population.h")
 
 namespace archimedes {
 	class gsml_data;
+	class gsml_property;
 }
 
 namespace metternich {
@@ -54,6 +56,7 @@ class site_game_data final : public QObject
 	Q_PROPERTY(const metternich::domain* owner READ get_owner NOTIFY owner_changed)
 	Q_PROPERTY(QString current_cultural_name READ get_current_cultural_name_qstring NOTIFY culture_changed)
 	Q_PROPERTY(const metternich::holding_type* holding_type READ get_holding_type NOTIFY holding_type_changed)
+	Q_PROPERTY(int holding_level READ get_holding_level NOTIFY holding_level_changed)
 	Q_PROPERTY(const metternich::dungeon* dungeon READ get_dungeon NOTIFY dungeon_changed)
 	Q_PROPERTY(const metternich::improvement* improvement READ get_main_improvement NOTIFY improvements_changed)
 	Q_PROPERTY(const metternich::improvement* resource_improvement READ get_resource_improvement NOTIFY improvements_changed)
@@ -145,6 +148,13 @@ public:
 	void set_holding_type(const metternich::holding_type *holding_type);
 	void check_holding_type();
 	std::vector<const metternich::holding_type *> get_best_holding_types(const std::vector<const metternich::holding_type *> &holding_types) const;
+
+	int get_holding_level() const
+	{
+		return this->holding_level;
+	}
+
+	void set_holding_level(const int level);
 
 	Q_INVOKABLE bool is_built() const;
 
@@ -445,6 +455,7 @@ signals:
 	void religion_changed();
 	void improvements_changed();
 	void holding_type_changed();
+	void holding_level_changed();
 	void dungeon_changed();
 	void portrait_changed();
 	void scripted_modifiers_changed();
@@ -459,6 +470,7 @@ private:
 	const metternich::culture *culture = nullptr;
 	const metternich::religion *religion = nullptr;
 	const metternich::holding_type *holding_type = nullptr;
+	int holding_level = 0;
 	const metternich::dungeon *dungeon = nullptr;
 	data_entry_set<dungeon_area> explored_dungeon_areas;
 	std::map<improvement_slot, const improvement *> improvements;
