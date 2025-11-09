@@ -4,7 +4,8 @@ temple = {
 	portrait = temple
 	image_filepath = "tiles/settlements/town.png"
 	level_names = {
-		1 = "Shrine"
+		#1 = "Shrine"
+		0 = "Shrine"
 		2 = "Temple"
 		4 = "Cathedral"
 	}

@@ -5,11 +5,11 @@ shrine = {
 	icon = wooden_cross
 	provincial = true
 	holding_types = {
-		village
-		estate
 		temple
-		town
 		city
+	}
+	settlement_modifier = {
+		holding_level = 1
 	}
 }
 
@@ -25,7 +25,7 @@ temple = {
 		city
 	}
 	settlement_modifier = {
-		amenities_bonus = 1
+		holding_level = 2
 	}
 }
 
@@ -42,6 +42,6 @@ cathedral = {
 		city
 	}
 	settlement_modifier = {
-		amenities_bonus = 4
+		holding_level = 4
 	}
 }
