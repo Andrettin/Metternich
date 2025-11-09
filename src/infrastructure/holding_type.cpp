@@ -26,7 +26,14 @@ void holding_type::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "base_holding_types") {
+	if (tag == "level_names") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+
+			this->level_names[std::stoi(key)] = value;
+		});
+	} else if (tag == "base_holding_types") {
 		for (const std::string &value : values) {
 			holding_type *holding_type = holding_type::get(value);
 			this->base_holding_types.push_back(holding_type);
@@ -96,6 +103,16 @@ void holding_type::set_image_filepath(const std::filesystem::path &filepath)
 	}
 
 	this->image_filepath = database::get()->get_graphics_path(this->get_module()) / filepath;
+}
+
+const std::string &holding_type::get_level_name(const int level) const
+{
+	const auto find_iterator = this->level_names.lower_bound(level);
+	if (find_iterator != this->level_names.end()) {
+		return find_iterator->second;
+	}
+
+	return this->get_name();
 }
 
 void holding_type::calculate_level()

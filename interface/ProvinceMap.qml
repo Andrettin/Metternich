@@ -143,27 +143,7 @@ Flickable {
 				}
 				
 				onContainsMouseChanged: {
-					var text = ""
-					
-					if (site.game_data.holding_type !== null) {
-						text = site.game_data.holding_type.name + " of " + site.game_data.current_cultural_name
-						if (site.game_data.province.game_data.provincial_capital === site) {
-							text += " (Provincial Capital)"
-						}
-					} else if (dungeon !== null) {
-						text = dungeon.name
-						if (dungeon.random) {
-							text += " of " + site.game_data.current_cultural_name
-						}
-						text += " (Dungeon)"
-						if (is_visit_target) {
-							text += " (Visiting)"
-						}
-					} else if (site.holding_type !== null) {
-						text = site.game_data.current_cultural_name + " (" + site.holding_type.name + " Slot)"
-					} else {
-						text = site.game_data.current_cultural_name
-					}
+					var text = site.game_data.display_text
 					
 					if (containsMouse) {
 						hovered_site = site

@@ -57,6 +57,8 @@ public:
 
 	void set_image_filepath(const std::filesystem::path &filepath);
 
+	const std::string &get_level_name(const int level) const;
+
 	const std::vector<const holding_type *> &get_base_holding_types() const
 	{
 		return this->base_holding_types;
@@ -103,6 +105,7 @@ private:
 	const metternich::icon *icon = nullptr;
 	const metternich::portrait *portrait = nullptr;
 	std::filesystem::path image_filepath;
+	std::map<int, std::string> level_names;
 	std::vector<const holding_type *> base_holding_types;
 	std::vector<const holding_type *> upgraded_holding_types;
 	int level = 0;

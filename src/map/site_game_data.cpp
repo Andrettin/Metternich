@@ -55,6 +55,7 @@
 #include "util/gender.h"
 #include "util/log_util.h"
 #include "util/map_util.h"
+#include "util/string_util.h"
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
 
@@ -85,6 +86,13 @@ site_game_data::site_game_data(const metternich::site *site) : site(site)
 	connect(this, &site_game_data::owner_changed, this, &site_game_data::title_name_changed);
 	connect(this, &site_game_data::culture_changed, this, &site_game_data::title_name_changed);
 	connect(this, &site_game_data::religion_changed, this, &site_game_data::title_name_changed);
+
+	connect(this, &site_game_data::holding_type_changed, this, &site_game_data::type_name_changed);
+	connect(this, &site_game_data::holding_level_changed, this, &site_game_data::type_name_changed);
+	connect(this, &site_game_data::dungeon_changed, this, &site_game_data::type_name_changed);
+
+	connect(this, &site_game_data::type_name_changed, this, &site_game_data::display_text_changed);
+	connect(this, &site_game_data::culture_changed, this, &site_game_data::display_text_changed);
 
 	connect(this, &site_game_data::holding_type_changed, this, &site_game_data::portrait_changed);
 	connect(this, &site_game_data::dungeon_changed, this, &site_game_data::portrait_changed);
@@ -259,6 +267,51 @@ const std::string &site_game_data::get_title_name() const
 {
 	const site_tier tier = this->get_tier();
 	return this->site->get_title_name(this->get_owner() ? this->get_owner()->get_game_data()->get_government_type() : nullptr, tier, this->get_culture());
+}
+
+const std::string &site_game_data::get_type_name() const
+{
+	if (this->get_holding_type() != nullptr) {
+		return this->get_holding_type()->get_level_name(this->get_holding_level());
+	} else if (this->get_dungeon() != nullptr && this->get_dungeon()->is_random()) {
+		return this->get_dungeon()->get_name();
+	}
+
+	return string::empty_str;
+}
+
+std::string site_game_data::get_display_text() const
+{
+	std::string text;
+
+	const std::string &type_name = this->get_type_name();
+	if (!type_name.empty()) {
+		text = type_name + " of ";
+	}
+
+	if (this->get_dungeon() != nullptr && !this->get_dungeon()->is_random()) {
+		text = this->get_dungeon()->get_name();
+	} else {
+		text += this->get_current_cultural_name();
+	}
+
+	if (this->get_holding_type() != nullptr) {
+		text += std::format(" (Level {})", this->get_holding_level());
+
+		if (this->is_provincial_capital()) {
+			text += " (Provincial Capital)";
+		}
+	} else if (this->get_dungeon() != nullptr) {
+		text += " (Dungeon)";
+
+		if (game::get()->get_player_country()->get_game_data()->get_visit_target_site() == this->site) {
+			text += " (Visiting)";
+		}
+	} else if (this->site->get_holding_type() != nullptr) {
+		text += " (" + this->site->get_holding_type()->get_name() + " Slot)";
+	}
+
+	return text;
 }
 
 void site_game_data::set_owner(const domain *owner)
