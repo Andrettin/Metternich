@@ -30,6 +30,7 @@
 #include "util/exception_util.h"
 #include "util/geoshape_util.h"
 #include "util/log_util.h"
+#include "util/map_util.h"
 #include "util/number_util.h"
 #include "util/path_util.h"
 #include "util/point_util.h"
@@ -889,6 +890,14 @@ void map_template::apply_provinces() const
 		}
 	}
 
+	std::map<const province *, int> province_holding_counts;
+	for (const auto &[tile_pos, site] : this->sites_by_position) {
+		assert_throw(site->get_province() != nullptr);
+		if (site->is_settlement()) {
+			++province_holding_counts[site->get_province()];
+		}
+	}
+
 	static constexpr int min_province_tile_count = 96;
 
 	for (int x = 0; x < map->get_width(); ++x) {
@@ -904,6 +913,11 @@ void map_template::apply_provinces() const
 
 			if (province_tile_counts.find(province)->second < min_province_tile_count) {
 				//do not place provinces if they would be too small
+				continue;
+			}
+
+			if (!province->is_water_zone() && !province_holding_counts.contains(province)) {
+				//do not place land provinces if they would have no holdings
 				continue;
 			}
 
