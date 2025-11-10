@@ -974,21 +974,25 @@ void game::apply_sites()
 		assert_throw(!default_provincial_capital_game_data->is_built());
 
 		const holding_type *best_holding_type = nullptr;
-		for (const holding_type *holding_type : holding_type::get_all()) {
-			if (!holding_type->get_base_holding_types().empty()) {
-				continue;
-			}
+		if (default_provincial_capital->get_holding_type() != nullptr) {
+			best_holding_type = default_provincial_capital->get_holding_type();
+		} else {
+			for (const holding_type *holding_type : holding_type::get_all()) {
+				if (!holding_type->get_base_holding_types().empty()) {
+					continue;
+				}
 
-			if (holding_type->get_conditions() != nullptr && !holding_type->get_conditions()->check(default_provincial_capital, read_only_context(default_provincial_capital))) {
-				continue;
-			}
+				if (holding_type->get_conditions() != nullptr && !holding_type->get_conditions()->check(default_provincial_capital, read_only_context(default_provincial_capital))) {
+					continue;
+				}
 
-			if (holding_type->get_build_conditions() != nullptr && !holding_type->get_build_conditions()->check(default_provincial_capital, read_only_context(default_provincial_capital))) {
-				continue;
-			}
+				if (holding_type->get_build_conditions() != nullptr && !holding_type->get_build_conditions()->check(default_provincial_capital, read_only_context(default_provincial_capital))) {
+					continue;
+				}
 
-			best_holding_type = holding_type;
-			break;
+				best_holding_type = holding_type;
+				break;
+			}
 		}
 
 		assert_throw(best_holding_type != nullptr);
