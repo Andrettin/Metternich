@@ -1,0 +1,8 @@
+turenne = {
+	name = "Turenne"
+	world = earth
+	geocoordinate = { 1.5825 45.054166666667 }
+	type = holding
+	holding_type = manor
+	province = limousin
+}

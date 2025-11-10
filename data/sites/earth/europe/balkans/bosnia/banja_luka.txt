@@ -2,5 +2,13 @@ banja_luka = {
 	name = "Banja Luka"
 	world = earth
 	geocoordinate = { 17.17997432320 44.78040488590 } #from Natural Earth
+	type = holding
+	holding_type = manor
 	province = bosnia
+	
+	history = {
+		1815 = {
+			developed = true #Banialuka existed in the 1815-1866 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+	}
 }

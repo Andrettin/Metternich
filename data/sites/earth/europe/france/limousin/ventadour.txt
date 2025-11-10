@@ -1,0 +1,8 @@
+ventadour = {
+	name = "Ventadour"
+	world = earth
+	geocoordinate = { 2.1166666666667 45.392222222222 }
+	type = holding
+	holding_type = manor
+	province = limousin
+}

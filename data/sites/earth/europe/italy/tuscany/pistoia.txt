@@ -1,0 +1,8 @@
+pistoia = {
+	name = "Pistoia"
+	world = earth
+	geocoordinate = { 10.916666666667 43.933333333333 }
+	type = holding
+	holding_type = guild
+	province = tuscany
+}

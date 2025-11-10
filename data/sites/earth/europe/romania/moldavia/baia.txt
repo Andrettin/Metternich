@@ -1,0 +1,8 @@
+baia = {
+	name = "Baia"
+	world = earth
+	geocoordinate = { 26.219004 47.418317 }
+	type = holding
+	holding_type = manor
+	province = moldavia
+}

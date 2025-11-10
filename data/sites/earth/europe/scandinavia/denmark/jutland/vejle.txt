@@ -1,0 +1,12 @@
+vejle = {
+	name = "Vejle"
+	world = earth
+	geocoordinate = { 9.53499649845 55.70900102840 } #from Natural Earth
+	province = jutland
+	
+	history = {
+		1815 = {
+			developed = true #Veile existed in the 1815-1866 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+	}
+}

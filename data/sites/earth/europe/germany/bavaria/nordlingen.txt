@@ -2,6 +2,8 @@ nordlingen = {
 	name = "Nordlingen" #"Nördlingen"
 	world = earth
 	geocoordinate = { 10.5 48.85 }
+	type = holding
+	holding_type = manor
 	province = augsburg
 	
 	history = {

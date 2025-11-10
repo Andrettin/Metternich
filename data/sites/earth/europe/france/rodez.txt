@@ -2,8 +2,9 @@ rodez = {
 	name = "Rodez"
 	world = earth
 	geocoordinate = { 2.5741666666667 44.35 }
-	type = resource
-	resource = cattle
+	type = holding
+	holding_type = manor
+	#resource = cattle
 	province = guyenne
 	
 	history = {

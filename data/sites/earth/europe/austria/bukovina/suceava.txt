@@ -2,7 +2,8 @@ suceava = {
 	name = "Suceava"
 	world = earth
 	geocoordinate = { 26.25931677120 47.63769818020 } #from Natural Earth
-	type = resource
-	resource = cattle
+	type = holding
+	holding_type = manor
+	#resource = cattle
 	province = bukovina
 }
