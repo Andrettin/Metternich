@@ -551,7 +551,8 @@ Rectangle {
 		anchors.bottom: parent.bottom
 		anchors.bottomMargin: 4 * scale_factor
 		icon_identifier: "craftsmen_light_small"
-		visible: selected_site !== null && selected_site.game_data.can_have_population() && selected_site.game_data.is_built() && !selected_garrison && !viewing_population
+		//visible: selected_site !== null && selected_site.game_data.can_have_population() && selected_site.game_data.is_built() && !selected_garrison && !viewing_population
+		visible: false
 		
 		onClicked: {
 			viewing_population = true
@@ -640,7 +641,8 @@ Rectangle {
 		anchors.bottom: parent.bottom
 		anchors.bottomMargin: 4 * scale_factor
 		icon_identifier: "cog"
-		visible: selected_site !== null && selected_site.settlement && selected_site.game_data.holding_type !== null && !selected_garrison && !viewing_settlement_info
+		//visible: selected_site !== null && selected_site.settlement && selected_site.game_data.holding_type !== null && !selected_garrison && !viewing_settlement_info
+		visible: false
 		
 		onClicked: {
 			viewing_settlement_info = true
@@ -678,21 +680,26 @@ Rectangle {
 		}
 	}
 	IconButton {
-		id: garrison_back_button
+		id: back_to_province_button
 		anchors.right: end_turn_button_internal.left
 		anchors.rightMargin: 8 * scale_factor
 		anchors.bottom: parent.bottom
 		anchors.bottomMargin: 4 * scale_factor
 		icon_identifier: "mountains"
-		visible: selected_province !== null && selected_garrison
+		visible: (selected_province !== null && selected_garrison) || selected_site !== null
 		
 		onClicked: {
 			selected_garrison = false
+			if (selected_site !== null) {
+				selected_civilian_unit = null
+				selected_province = selected_site.game_data.province
+				selected_site = null
+			}
 		}
 		
 		onHoveredChanged: {
 			if (hovered) {
-				status_text = "Back to Province"
+				status_text = selected_site !== null ? "To Province" : "Back to Province"
 			} else {
 				status_text = ""
 			}

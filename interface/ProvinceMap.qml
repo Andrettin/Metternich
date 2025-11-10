@@ -31,7 +31,7 @@ Flickable {
 			cache: false
 			
 			readonly property var province: model.modelData
-			readonly property var selected: selected_province === province
+			readonly property var selected: selected_province === province || (selected_site !== null && selected_site.game_data.province === province && province_map.mode !== ProvinceMap.Mode.Site)
 			property int change_count: 0
 			
 			Connections {
@@ -79,9 +79,7 @@ Flickable {
 			} else {
 				if (metternich.selected_military_units.length > 0) {
 					metternich.move_selected_military_units_to(province.game_data.provincial_capital.map_data.tile_pos)
-					selected_civilian_unit = null
-					selected_site = null
-					selected_province = null
+					select_province(null)
 					metternich.clear_selected_military_units()
 					return
 				}
@@ -125,7 +123,7 @@ Flickable {
 			id: site_icon
 			x: site.game_data.tile_pos.x * metternich.map.diplomatic_map_tile_pixel_size * scale_factor - (Math.floor(width / 2) - 1)
 			y: site.game_data.tile_pos.y * metternich.map.diplomatic_map_tile_pixel_size * scale_factor - (Math.floor(height / 2) - 1)
-			source: "image://icon/" + (holding_type ? holding_type.icon.identifier : (dungeon ? dungeon.icon.identifier : "garrison"))
+			source: "image://icon/" + (holding_type ? holding_type.icon.identifier : (dungeon ? dungeon.icon.identifier : "garrison")) + (site === selected_site ? "/selected" : "")
 			visible: province_map.mode === ProvinceMap.Mode.Site
 			
 			readonly property var site: model.modelData
@@ -139,7 +137,13 @@ Flickable {
 				hoverEnabled: true
 				
 				onClicked: {
-					//FIXME: implement site selection
+					selected_civilian_unit = null
+					selected_province = null
+					if (selected_site === site) {
+						selected_site = null
+					} else {
+						selected_site = site
+					}
 				}
 				
 				onContainsMouseChanged: {
@@ -214,6 +218,8 @@ Flickable {
 	*/
 	
 	function select_province(province) {
+		selected_civilian_unit = null
+		selected_site = null
 		selected_province = province
 	}
 	

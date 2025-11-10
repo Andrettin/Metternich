@@ -39,6 +39,10 @@ Flickable {
 					if (dungeon !== null) {
 						dungeon_dialog.site = site
 						dungeon_dialog.open()
+					} else {
+						selected_civilian_unit = null
+						selected_site = site
+						selected_province = null
 					}
 				}
 				
