@@ -83,16 +83,14 @@ site_game_data::site_game_data(const metternich::site *site) : site(site)
 		this->get_population()->add_upper_population(this->get_province()->get_game_data()->get_population());
 	}
 
-	connect(this, &site_game_data::owner_changed, this, &site_game_data::title_name_changed);
-	connect(this, &site_game_data::culture_changed, this, &site_game_data::title_name_changed);
-	connect(this, &site_game_data::religion_changed, this, &site_game_data::title_name_changed);
+	connect(this, &site_game_data::holding_type_changed, this, &site_game_data::title_name_changed);
+	connect(this, &site_game_data::holding_level_changed, this, &site_game_data::title_name_changed);
+	connect(this, &site_game_data::dungeon_changed, this, &site_game_data::title_name_changed);
 
-	connect(this, &site_game_data::holding_type_changed, this, &site_game_data::type_name_changed);
-	connect(this, &site_game_data::holding_level_changed, this, &site_game_data::type_name_changed);
-	connect(this, &site_game_data::dungeon_changed, this, &site_game_data::type_name_changed);
+	connect(this, &site_game_data::title_name_changed, this, &site_game_data::titled_name_changed);
+	connect(this, &site_game_data::culture_changed, this, &site_game_data::titled_name_changed);
 
-	connect(this, &site_game_data::type_name_changed, this, &site_game_data::display_text_changed);
-	connect(this, &site_game_data::culture_changed, this, &site_game_data::display_text_changed);
+	connect(this, &site_game_data::titled_name_changed, this, &site_game_data::display_text_changed);
 
 	connect(this, &site_game_data::holding_type_changed, this, &site_game_data::portrait_changed);
 	connect(this, &site_game_data::dungeon_changed, this, &site_game_data::portrait_changed);
@@ -265,12 +263,6 @@ site_tier site_game_data::get_tier() const
 
 const std::string &site_game_data::get_title_name() const
 {
-	const site_tier tier = this->get_tier();
-	return this->site->get_title_name(this->get_owner() ? this->get_owner()->get_game_data()->get_government_type() : nullptr, tier, this->get_culture());
-}
-
-const std::string &site_game_data::get_type_name() const
-{
 	if (this->get_holding_type() != nullptr) {
 		return this->get_holding_type()->get_level_name(this->get_holding_level());
 	} else if (this->get_dungeon() != nullptr && this->get_dungeon()->is_random()) {
@@ -280,20 +272,27 @@ const std::string &site_game_data::get_type_name() const
 	return string::empty_str;
 }
 
-std::string site_game_data::get_display_text() const
+std::string site_game_data::get_titled_name() const
 {
-	std::string text;
+	std::string titled_name;
 
-	const std::string &type_name = this->get_type_name();
-	if (!type_name.empty()) {
-		text = type_name + " of ";
+	const std::string &title_name = this->get_title_name();
+	if (!title_name.empty()) {
+		titled_name = title_name + " of ";
 	}
 
 	if (this->get_dungeon() != nullptr && !this->get_dungeon()->is_random()) {
-		text = this->get_dungeon()->get_name();
+		titled_name = this->get_dungeon()->get_name();
 	} else {
-		text += this->get_current_cultural_name();
+		titled_name += this->get_current_cultural_name();
 	}
+
+	return titled_name;
+}
+
+std::string site_game_data::get_display_text() const
+{
+	std::string text = this->get_titled_name();
 
 	if (this->get_holding_type() != nullptr) {
 		text += std::format(" (Level {})", this->get_holding_level());

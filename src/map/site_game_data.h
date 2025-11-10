@@ -53,7 +53,7 @@ class site_game_data final : public QObject
 	Q_PROPERTY(QPoint tile_pos READ get_tile_pos CONSTANT)
 	Q_PROPERTY(const metternich::province* province READ get_province CONSTANT)
 	Q_PROPERTY(QString title_name READ get_title_name_qstring NOTIFY title_name_changed)
-	Q_PROPERTY(QString type_name READ get_type_name_qstring NOTIFY type_name_changed)
+	Q_PROPERTY(QString titled_name READ get_titled_name_qstring NOTIFY titled_name_changed)
 	Q_PROPERTY(QString display_text READ get_display_text_qstring NOTIFY display_text_changed)
 	Q_PROPERTY(const metternich::domain* owner READ get_owner NOTIFY owner_changed)
 	Q_PROPERTY(QString current_cultural_name READ get_current_cultural_name_qstring NOTIFY culture_changed)
@@ -112,11 +112,11 @@ public:
 		return QString::fromStdString(this->get_title_name());
 	}
 
-	const std::string &get_type_name() const;
+	std::string get_titled_name() const;
 
-	QString get_type_name_qstring() const
+	QString get_titled_name_qstring() const
 	{
-		return QString::fromStdString(this->get_type_name());
+		return QString::fromStdString(this->get_titled_name());
 	}
 
 	std::string get_display_text() const;
@@ -471,7 +471,7 @@ public:
 
 signals:
 	void title_name_changed();
-	void type_name_changed();
+	void titled_name_changed();
 	void display_text_changed();
 	void owner_changed();
 	void culture_changed();

@@ -123,7 +123,7 @@ Rectangle {
 		anchors.rightMargin: 8 * scale_factor
 		horizontalAlignment: Text.AlignHCenter
 		wrapMode: Text.WordWrap
-		text: selected_site ? selected_site.game_data.current_cultural_name
+		text: selected_site ? selected_site.game_data.titled_name
 				: (selected_civilian_unit ? selected_civilian_unit.type.name
 					: (selected_province ? selected_province.game_data.current_cultural_name
 						: (metternich.game.player_character ? metternich.game.player_character.game_data.titled_name : "")
