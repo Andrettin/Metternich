@@ -173,6 +173,16 @@ Rectangle {
 		visible: !selected_site && !selected_garrison && !selected_civilian_unit && !selected_province
 	}
 	
+	PortraitButton {
+		id: portrait
+		anchors.top: title.bottom
+		anchors.topMargin: 16 * scale_factor
+		anchors.horizontalCenter: parent.horizontalCenter
+		portrait_identifier: selected_site && selected_site.game_data.dungeon !== null ? selected_site.game_data.portrait.identifier : ""
+		visible: selected_site && selected_site.game_data.dungeon !== null
+		enabled: false
+	}
+	
 	SmallText {
 		id: subtitle
 		anchors.top: icon.visible ? icon.bottom : (character_portrait.visible ? character_portrait.bottom : title.bottom)
@@ -300,15 +310,18 @@ Rectangle {
 	
 	SmallText {
 		id: site_info_text
-		anchors.top: subtitle.bottom
+		anchors.top: portrait.visible ? portrait.bottom : title.bottom
 		anchors.topMargin: 16 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
 		text: format_text(
 			selected_site_game_data ? (
-				(selected_site_game_data.commodity_outputs.length > 0 ? get_commodity_outputs_string(selected_site_game_data.commodity_outputs) : "")
+				(dungeon && dungeon.level !== 0 ? ("Dungeon Level: " + dungeon.level) : "")
+				+ (selected_site_game_data.commodity_outputs.length > 0 ? get_commodity_outputs_string(selected_site_game_data.commodity_outputs) : "")
 			) : ""
 		)
-		visible: selected_site && !selected_garrison && !selected_site.settlement && !viewing_population
+		visible: selected_site && !selected_garrison && selected_site_game_data.holding_type === null && !viewing_population
+		
+		readonly property var dungeon: selected_site_game_data ? selected_site_game_data.dungeon : null
 		
 		function get_commodity_outputs_string(commodity_outputs) {
 			var str = ""
