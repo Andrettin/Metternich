@@ -1,0 +1,8 @@
+hradec_nad_moravici = {
+	name = "Hradec nad Moravici"
+	world = earth
+	geocoordinate = { 17.875865633487 49.871004700938 }
+	type = holding
+	holding_type = manor
+	province = moravia
+}

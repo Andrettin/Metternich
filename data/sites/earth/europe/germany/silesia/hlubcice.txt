@@ -1,0 +1,8 @@
+hlubcice = {
+	name = "Hlubcice"
+	world = earth
+	geocoordinate = { 17.833333333333 50.2 } #Głubczyce
+	type = holding
+	holding_type = guild
+	province = upper_silesia
+}

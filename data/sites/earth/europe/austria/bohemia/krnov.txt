@@ -1,0 +1,8 @@
+krnov = {
+	name = "Krnov"
+	world = earth
+	geocoordinate = { 17.703908920138 50.089666916291 }
+	type = holding
+	holding_type = guild
+	province = moravia
+}

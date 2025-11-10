@@ -2,8 +2,10 @@ troppau = {
 	name = "Troppau"
 	world = earth
 	geocoordinate = { 17.904444444444 49.938055555556 }
-	type = resource
-	resource = coal
+	type = holding
+	holding_type = manor
+	#resource = coal
+	province = moravia
 	cultural_names = {
 		czech = "Opava"
 	}

@@ -1,0 +1,8 @@
+bruntal = {
+	name = "Bruntal"
+	world = earth
+	geocoordinate = { 17.464759014801 49.988449251745 }
+	type = holding
+	holding_type = temple
+	province = moravia
+}
