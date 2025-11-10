@@ -1,0 +1,8 @@
+zabreh = {
+	name = "Zabreh"
+	world = earth
+	geocoordinate = { 16.872280013113 49.882620486561 }
+	type = holding
+	holding_type = guild
+	province = moravia
+}

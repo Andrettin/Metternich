@@ -1,0 +1,8 @@
+velehrad = {
+	name = "Velehrad"
+	world = earth
+	geocoordinate = { 17.394271564616 49.1054368463 }
+	type = holding
+	holding_type = temple
+	province = moravia
+}

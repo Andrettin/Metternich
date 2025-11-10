@@ -1,0 +1,8 @@
+unicov = {
+	name = "Unicov"
+	world = earth
+	geocoordinate = { 17.121482256516 49.770928637031 }
+	type = holding
+	holding_type = guild
+	province = moravia
+}

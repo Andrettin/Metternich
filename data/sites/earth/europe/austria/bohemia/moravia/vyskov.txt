@@ -1,0 +1,8 @@
+vyskov = {
+	name = "Vyskov"
+	world = earth
+	geocoordinate = { 16.998993221633 49.277487239217 } #Vyškov
+	type = holding
+	holding_type = manor
+	province = brunn
+}

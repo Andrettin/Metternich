@@ -1,0 +1,8 @@
+svaty_kopecek = {
+	name = "Svaty Kopecek"
+	world = earth
+	geocoordinate = { 17.340555555556 49.629722222222 } #Svatý Kopeček (Olomouc)
+	type = holding
+	holding_type = temple
+	province = moravia
+}
