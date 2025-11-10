@@ -2,6 +2,8 @@ melk = {
 	name = "Melk"
 	world = earth
 	geocoordinate = { 15.343888888889 48.226944444444 }
+	type = holding
+	holding_type = guild
 	province = lower_austria
 	
 	history = {

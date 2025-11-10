@@ -2,9 +2,10 @@ sankt_polten = {
 	name = "Sankt Polten" #"Sankt Pölten"
 	world = earth
 	geocoordinate = { 15.616666666667 48.2 }
-	type = resource
+	type = holding
+	holding_type = guild
 	#resource = grain #Crop cultivation with livestock; Source: Map No. 77706 of the Perry-Castañeda Library Map Collection, 1969.
-	resource = coal
+	#resource = coal
 	province = lower_austria
 	
 	history = {

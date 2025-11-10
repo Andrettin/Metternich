@@ -1,0 +1,8 @@
+zelking = {
+	name = "Zelking"
+	world = earth
+	geocoordinate = { 15.25679 48.18368 }
+	type = holding
+	holding_type = manor
+	province = lower_austria
+}

@@ -1,0 +1,8 @@
+freistadt = {
+	name = "Freistadt"
+	world = earth
+	geocoordinate = { 14.506111111111 48.511666666667 }
+	type = holding
+	holding_type = guild
+	province = upper_austria
+}

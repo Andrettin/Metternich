@@ -1,7 +1,10 @@
 pitten = {
 	name = "Pitten"
 	world = earth
-	#geocoordinate = { 16.186388888889 47.716111111111 }
+	geocoordinate = { 16.186388888889 47.716111111111 }
+	type = holding
+	holding_type = manor
+	province = lower_austria
 	
 	history = {
 		919 = {

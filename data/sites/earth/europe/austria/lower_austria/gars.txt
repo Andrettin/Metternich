@@ -1,0 +1,8 @@
+gars = {
+	name = "Gars"
+	world = earth
+	geocoordinate = { 15.663333333333 48.599166666667 } #Gars am Kamp
+	type = holding
+	holding_type = manor
+	province = lower_austria
+}
