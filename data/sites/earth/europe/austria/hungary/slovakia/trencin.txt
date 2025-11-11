@@ -2,8 +2,13 @@ trencin = {
 	name = "Trencin"
 	world = earth
 	geocoordinate = { 18.040555555556 48.894166666667 }
-	type = resource
-	resource = grain
+	type = holding
+	holding_type = manor
+	#resource = grain
+	province = pressburg
+	cultural_names = {
+		magyar = "Trencsen"
+	}
 	
 	history = {
 		919 = {

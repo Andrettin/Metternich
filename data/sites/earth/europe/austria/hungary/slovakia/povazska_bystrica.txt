@@ -1,0 +1,8 @@
+povazska_bystrica = {
+	name = "Povazska Bystrica"
+	world = earth
+	geocoordinate = { 18.45 49.116666666667 }
+	type = holding
+	holding_type = manor
+	province = pressburg
+}

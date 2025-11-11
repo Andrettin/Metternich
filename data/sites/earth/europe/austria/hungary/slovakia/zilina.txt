@@ -1,0 +1,8 @@
+zilina = {
+	name = "Zilina"
+	world = earth
+	geocoordinate = { 18.733333333333 49.216666666667 }
+	type = holding
+	holding_type = guild
+	province = pressburg
+}
