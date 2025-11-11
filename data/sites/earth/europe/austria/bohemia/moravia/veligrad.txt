@@ -1,0 +1,8 @@
+veligrad = {
+	name = "Veligrad"
+	world = earth
+	geocoordinate = { 17.0868 48.8041 } #Mikulčice Archaeopark
+	type = holding
+	holding_type = manor
+	province = brunn
+}

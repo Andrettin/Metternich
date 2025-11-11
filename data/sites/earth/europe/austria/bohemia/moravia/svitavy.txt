@@ -1,0 +1,8 @@
+svitavy = {
+	name = "Svitavy"
+	world = earth
+	geocoordinate = { 16.468338539525 49.755965917692 }
+	type = holding
+	holding_type = manor
+	province = moravia
+}

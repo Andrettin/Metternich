@@ -1,0 +1,8 @@
+boskovice = {
+	name = "Boskovice"
+	world = earth
+	geocoordinate = { 16.660002080035 49.487537313637 }
+	type = holding
+	holding_type = guild
+	province = brunn
+}

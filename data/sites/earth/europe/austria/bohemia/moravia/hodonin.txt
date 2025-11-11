@@ -1,0 +1,8 @@
+hodonin = {
+	name = "Hodonin"
+	world = earth
+	geocoordinate = { 17.132439069118 48.848950584361 }
+	type = holding
+	holding_type = guild
+	province = brunn
+}

@@ -1,0 +1,8 @@
+pernstejn = {
+	name = "Pernstejn"
+	world = earth
+	geocoordinate = { 16.318888888889 49.450833333333 } #Pernštejn Castle
+	type = holding
+	holding_type = manor
+	province = brunn
+}

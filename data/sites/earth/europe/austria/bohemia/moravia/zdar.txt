@@ -1,0 +1,8 @@
+zdar = {
+	name = "Zdar"
+	world = earth
+	geocoordinate = { 16.697806071594 49.421600254087 } #Žďár (Blansko)
+	type = holding
+	holding_type = temple
+	province = brunn
+}

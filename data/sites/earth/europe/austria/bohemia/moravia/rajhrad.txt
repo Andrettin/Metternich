@@ -1,0 +1,8 @@
+rajhrad = {
+	name = "Rajhrad"
+	world = earth
+	geocoordinate = { 16.603886389526 49.090238953107 }
+	type = holding
+	holding_type = temple
+	province = brunn
+}
