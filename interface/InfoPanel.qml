@@ -178,8 +178,8 @@ Rectangle {
 		anchors.top: title.bottom
 		anchors.topMargin: 16 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
-		portrait_identifier: selected_site && selected_site.game_data.dungeon !== null ? selected_site.game_data.portrait.identifier : ""
-		visible: selected_site && selected_site.game_data.dungeon !== null
+		portrait_identifier: selected_site && selected_site.game_data.holding_type === null ? (selected_site.game_data.portrait ? selected_site.game_data.portrait.identifier : "building_slot") : ""
+		visible: selected_site && selected_site.game_data.holding_type === null
 		enabled: false
 	}
 	
