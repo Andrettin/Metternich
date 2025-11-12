@@ -49,13 +49,14 @@ Rectangle {
 	
 	Column {
 		id: minimap_mode_column
+		anchors.left: minimap_borders.right
 		anchors.right: parent.right
-		anchors.rightMargin: 4 * scale_factor
 		anchors.verticalCenter: parent.verticalCenter
 		spacing: 4 * scale_factor
 		
 		IconButton {
 			id: political_map_mode_button
+			anchors.horizontalCenter: parent.horizontalCenter
 			icon_identifier: "flag"
 			highlighted: province_map.mode === ProvinceMap.Mode.Political
 			
@@ -74,6 +75,7 @@ Rectangle {
 		
 		IconButton {
 			id: site_map_mode_button
+			anchors.horizontalCenter: parent.horizontalCenter
 			icon_identifier: "settlement"
 			highlighted: province_map.mode === ProvinceMap.Mode.Site
 			
@@ -92,6 +94,7 @@ Rectangle {
 		
 		IconButton {
 			id: cultural_map_mode_button
+			anchors.horizontalCenter: parent.horizontalCenter
 			icon_identifier: "music"
 			highlighted: province_map.mode === ProvinceMap.Mode.Cultural
 			
