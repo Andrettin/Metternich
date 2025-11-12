@@ -8,7 +8,9 @@ enum class site_tier {
 	viscounty = 2,
 	county = 3,
 	marquisate = 4,
-	duchy = 5
+	bishopric = 4,
+	duchy = 5,
+	archbishopric = 5
 };
 
 }

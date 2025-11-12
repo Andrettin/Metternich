@@ -198,7 +198,7 @@ private:
 	metternich::terrain_type *terrain_type = nullptr;
 	metternich::resource *resource = nullptr;
 	metternich::province *province = nullptr;
-	site_tier max_tier{};
+	site_tier max_tier {};
 	std::vector<const metternich::terrain_type *> terrain_types;
 	std::map<const culture *, std::string> cultural_names;
 	std::map<const cultural_group *, std::string> cultural_group_names;
