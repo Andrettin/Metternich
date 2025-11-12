@@ -56,8 +56,6 @@ public:
 
 	static const std::set<std::string> database_dependencies;
 
-	static constexpr QSize site_tile_size = QSize(5, 5);
-
 	static bool is_site_in_province(const site *site, const province *province, const province_geodata_map_type &province_geodata_map);
 
 	explicit map_template(const std::string &identifier) : named_data_entry(identifier)
@@ -215,7 +213,7 @@ public:
 	void generate_additional_sites() const;
 	void generate_site(const site *site) const;
 
-	bool is_pos_available_for_site(const QPoint &tile_pos, const province *site_province, const std::vector<const site *> &tile_sites, const QImage &province_image) const;
+	bool is_pos_available_for_site(const QPoint &tile_pos, const province *site_province, const QImage &province_image) const;
 
 signals:
 	void changed();

@@ -78,9 +78,6 @@ void map_template::initialize()
 
 		const QImage province_image = QImage(path::to_qstring(this->get_province_image_filepath()));
 
-		std::vector<const site *> tile_sites;
-		tile_sites.resize(this->get_size().width() * this->get_size().height(), nullptr);
-
 		for (const site *site : this->get_world()->get_sites()) {
 			assert_throw(site->get_geocoordinate().is_valid());
 
@@ -112,7 +109,7 @@ void map_template::initialize()
 			}
 
 			//if the site is not placed in its province, nudge its position to be in the nearest point in its province; also nudge sites if they are too close to other sites
-			const bool is_pos_valid = (site_province == tile_province || province_image.isNull()) && this->is_pos_available_for_site(tile_pos, site_province, tile_sites, province_image);
+			const bool is_pos_valid = (site_province == tile_province || province_image.isNull()) && this->is_pos_available_for_site(tile_pos, site_province, province_image);
 			if (!is_pos_valid) {
 				bool found_pos = false;
 				int64_t best_distance = std::numeric_limits<int64_t>::max();
@@ -135,12 +132,12 @@ void map_template::initialize()
 							return;
 						}
 
-						if (!this->is_pos_available_for_site(checked_pos, site_province, tile_sites, province_image)) {
+						if (!this->is_pos_available_for_site(checked_pos, site_province, province_image)) {
 							return;
 						}
 
 						const geocoordinate checked_pos_geocoordinate = this->get_pos_geocoordinate(checked_pos);
-						const int64_t distance = number::distance_between(checked_pos_geocoordinate.get_longitude().get_value(), checked_pos_geocoordinate.get_latitude().get_value(), site->get_geocoordinate().get_longitude().get_value(), site->get_geocoordinate().get_latitude().get_value());
+						const int64_t distance = point::square_distance_to(tile_pos, checked_pos);
 						if (distance < best_distance) {
 							best_distance = distance;
 							tile_pos = checked_pos;
@@ -171,15 +168,6 @@ void map_template::initialize()
 			}
 
 			this->sites_by_position[tile_pos] = site;
-
-			const QRect site_rect(tile_pos - (size::to_point(map_template::site_tile_size) / 2 - QPoint(1, 1)), map_template::site_tile_size);
-			rect::for_each_point(site_rect, [this, &map_rect, &tile_sites, site](const QPoint &rect_pos) {
-				if (!map_rect.contains(rect_pos)) {
-					return;
-				}
-
-				tile_sites.at(point::to_index(rect_pos, this->get_size().width())) = site;
-			});
 		}
 	}
 
@@ -1027,19 +1015,16 @@ void map_template::generate_site(const site *site) const
 	}
 }
 
-bool map_template::is_pos_available_for_site(const QPoint &tile_pos, const province *site_province, const std::vector<const site *> &tile_sites, const QImage &province_image) const
+bool map_template::is_pos_available_for_site(const QPoint &tile_pos, const province *site_province, const QImage &province_image) const
 {
-	const QRect site_rect(tile_pos - (size::to_point(map_template::site_tile_size) / 2 - QPoint(1, 1)), map_template::site_tile_size);
-
 	const QRect map_rect(QPoint(0, 0), this->get_size());
 	bool available = true;
-	rect::for_each_point_until(site_rect, [this, &map_rect, &available, site_province, &tile_sites, &province_image](const QPoint &rect_pos) {
-		if (!map_rect.contains(rect_pos)) {
-			available = false;
-			return true;
-		}
 
-		if (tile_sites.at(point::to_index(rect_pos, this->get_size().width())) != nullptr) {
+	static constexpr int tile_check_range = 1;
+	const QRect tile_check_rect(tile_pos - QPoint(tile_check_range, tile_check_range), tile_pos + QPoint(tile_check_range, tile_check_range));
+
+	rect::for_each_point_until(tile_check_rect, [this, &map_rect, &available, site_province, &province_image](const QPoint &rect_pos) {
+		if (!map_rect.contains(rect_pos)) {
 			available = false;
 			return true;
 		}
@@ -1050,6 +1035,22 @@ bool map_template::is_pos_available_for_site(const QPoint &tile_pos, const provi
 				available = false;
 				return true;
 			}
+		}
+
+		return false;
+	});
+
+	if (!available) {
+		return false;
+	}
+
+	static constexpr int site_check_range = 4;
+	const QRect site_check_rect(tile_pos - QPoint(site_check_range, site_check_range), tile_pos + QPoint(site_check_range, site_check_range));
+
+	rect::for_each_point_until(site_check_rect, [this, &map_rect, &available, site_province, &province_image](const QPoint &rect_pos) {
+		if (this->sites_by_position.contains(rect_pos)) {
+			available = false;
+			return true;
 		}
 
 		return false;
