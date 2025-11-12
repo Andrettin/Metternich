@@ -215,14 +215,13 @@ Rectangle {
 	
 	Flickable {
 		id: portrait_grid_flickable
-		anchors.top: scripted_modifier_row.visible ? scripted_modifier_row.bottom : title.bottom
-		anchors.topMargin: scripted_modifier_row.visible ? 8 * scale_factor : 16 * scale_factor
-		anchors.bottom: end_turn_button_internal.top
+		anchors.bottom: garrison_details_button.top
 		anchors.bottomMargin: 16 * scale_factor
 		anchors.left: parent.left
 		anchors.leftMargin: 8 * scale_factor
 		anchors.right: parent.right
 		anchors.rightMargin: 8 * scale_factor
+		height: ((64 + 2) * 3 + 12 * 2) * scale_factor
 		contentHeight: contentItem.childrenRect.height
 		boundsBehavior: Flickable.StopAtBounds
 		clip: true
@@ -232,7 +231,7 @@ Rectangle {
 			id: portrait_grid
 			anchors.horizontalCenter: parent.horizontalCenter
 			columns: 2
-			spacing: 16 * scale_factor
+			spacing: 12 * scale_factor
 			
 			Repeater {
 				model: selected_site !== null && selected_site.settlement ? selected_site_game_data.building_slots : []
@@ -282,14 +281,11 @@ Rectangle {
 	
 	SitePortraitGrid {
 		id: site_portrait_grid
-		anchors.top: province_info_text.bottom
-		anchors.topMargin: 8 * scale_factor
-		anchors.bottom: end_turn_button_internal.top
+		anchors.bottom: garrison_details_button.top
 		anchors.bottomMargin: 16 * scale_factor
 		anchors.left: parent.left
-		anchors.leftMargin: 8 * scale_factor
 		anchors.right: parent.right
-		anchors.rightMargin: 8 * scale_factor
+		height: ((64 + 2) * 2 + 12) * scale_factor
 		visible: selected_province !== null && !selected_garrison
 		sites: selected_province ? selected_province.game_data.visible_sites : []
 	}

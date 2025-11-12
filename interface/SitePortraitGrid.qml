@@ -14,7 +14,7 @@ Flickable {
 		id: portrait_grid
 		anchors.horizontalCenter: parent.horizontalCenter
 		columns: 2
-		spacing: 16 * scale_factor
+		spacing: 12 * scale_factor
 		
 		Repeater {
 			model: sites
