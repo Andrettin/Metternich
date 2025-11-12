@@ -1,7 +1,7 @@
 rise_of_rome = {
 	name = "Rise of Rome"
 	start_date = -304.10.1
-	map_template = earth
+	map_template = central_europe
 	hidden = true
 	default_countries = {
 		rome

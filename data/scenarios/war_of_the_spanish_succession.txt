@@ -2,6 +2,6 @@ war_of_the_spanish_succession = {
 	name = "War of the Spanish Succession"
 	parent_scenario = age_of_discovery
 	start_date = 1701
-	map_template = earth
+	map_template = central_europe
 	hidden = true
 }

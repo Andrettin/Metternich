@@ -2,7 +2,7 @@ crimean_war = {
 	name = "Crimean War"
 	parent_scenario = restoration_of_europe
 	start_date = 1853
-	map_template = earth
+	map_template = central_europe
 	hidden = true
 	default_countries = {
 		france

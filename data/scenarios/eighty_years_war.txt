@@ -2,7 +2,7 @@ eighty_years_war = {
 	name = "Eighty Years' War"
 	parent_scenario = age_of_discovery
 	start_date = 1568
-	map_template = earth
+	map_template = central_europe
 	hidden = true
 	default_countries = {
 		netherlands

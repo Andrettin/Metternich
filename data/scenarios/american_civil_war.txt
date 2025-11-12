@@ -2,7 +2,7 @@ american_civil_war = {
 	name = "American Civil War"
 	parent_scenario = restoration_of_europe
 	start_date = 1861
-	map_template = earth
+	map_template = central_europe
 	hidden = true
 	default_countries = {
 		united_states

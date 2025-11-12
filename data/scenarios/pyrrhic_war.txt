@@ -2,7 +2,7 @@ pyrrhic_war = {
 	name = "Pyrrhic War"
 	parent_scenario = rise_of_rome
 	start_date = -280
-	map_template = earth
+	map_template = central_europe
 	hidden = true
 	default_countries = {
 		rome

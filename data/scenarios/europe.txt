@@ -1,7 +1,7 @@
 europe_1360 = {
 	name = "Europe"
 	start_date = 1360
-	map_template = earth
+	map_template = central_europe
 	hidden = true
 	default_countries = {
 		byzantium
