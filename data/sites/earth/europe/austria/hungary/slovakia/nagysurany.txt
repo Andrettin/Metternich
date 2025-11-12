@@ -1,0 +1,8 @@
+nagysurany = {
+	name = "Nagysurany"
+	world = earth
+	geocoordinate = { 18.18611111111111 48.08722222222222 } #Šurany
+	type = holding
+	holding_type = manor
+	province = pressburg
+}

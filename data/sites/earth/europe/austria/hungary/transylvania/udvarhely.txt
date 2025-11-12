@@ -4,6 +4,7 @@ udvarhely = {
 	geocoordinate = { 25.301666666667 46.313888888889 }
 	type = resource
 	resource = sheep
+	province = transylvania
 	cultural_names = {
 		romanian = "Odorhei"
 	}

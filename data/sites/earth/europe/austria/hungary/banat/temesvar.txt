@@ -5,6 +5,7 @@ temesvar = {
 	type = holding
 	holding_type = manor
 	#resource = grain
+	province = banat
 	cultural_names = {
 		romanian = "Timisoara" #"Timișoara"
 	}

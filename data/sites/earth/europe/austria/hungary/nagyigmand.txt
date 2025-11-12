@@ -1,0 +1,8 @@
+nagyigmand = {
+	name = "Nagyigmand"
+	world = earth
+	geocoordinate = { 18.055688888889 47.632530555556 }
+	type = holding
+	holding_type = manor
+	province = buda
+}

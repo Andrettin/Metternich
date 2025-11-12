@@ -1,0 +1,8 @@
+nagyszombat = {
+	name = "Nagyszombat"
+	world = earth
+	geocoordinate = { 17.60000036490 48.36659425770 } #from Natural Earth (Trnava)
+	type = holding
+	holding_type = temple
+	province = pressburg
+}

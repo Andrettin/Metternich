@@ -1,0 +1,8 @@
+dunaszerdahely = {
+	name = "Dunaszerdahely"
+	world = earth
+	geocoordinate = { 17.614722222222 47.996111111111 } #Dunajská Streda
+	type = holding
+	holding_type = guild
+	province = pressburg
+}

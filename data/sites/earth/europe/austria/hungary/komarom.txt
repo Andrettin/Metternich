@@ -1,0 +1,8 @@
+komarom = {
+	name = "Komarom"
+	world = earth
+	geocoordinate = { 18.121666666667 47.74 }
+	type = holding
+	holding_type = manor
+	province = buda
+}

@@ -1,0 +1,8 @@
+bazin = {
+	name = "Bazin"
+	world = earth
+	geocoordinate = { 17.266111111111112 48.29194444444445 } #Pezinok
+	type = holding
+	holding_type = guild
+	province = pressburg
+}

@@ -1,0 +1,8 @@
+galanta = {
+	name = "Galanta"
+	world = earth
+	geocoordinate = { 17.730833333333 48.191388888889 }
+	type = holding
+	holding_type = manor
+	province = pressburg
+}

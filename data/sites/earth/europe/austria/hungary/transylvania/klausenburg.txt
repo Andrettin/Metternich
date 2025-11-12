@@ -4,6 +4,7 @@ klausenburg = {
 	geocoordinate = { 23.59844559600 46.78842185370 } #from Natural Earth
 	type = holding
 	#resource = grain
+	province = transylvania
 	cultural_names = {
 		romanian = "Cluj"
 	}

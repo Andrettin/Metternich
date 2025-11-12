@@ -4,6 +4,7 @@ nagyszeben = {
 	geocoordinate = { 24.13712072620 45.79711285310 } #from Natural Earth
 	type = resource
 	resource = cattle
+	province = transylvania
 	cultural_names = {
 		romanian = "Sibiu"
 	}

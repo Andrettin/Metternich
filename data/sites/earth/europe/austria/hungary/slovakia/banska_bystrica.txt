@@ -4,4 +4,5 @@ banska_bystrica = {
 	geocoordinate = { 19.14998327500 48.73329022120 } #from Natural Earth
 	type = resource
 	resource = grain
+	province = pressburg
 }

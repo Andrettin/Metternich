@@ -1,0 +1,8 @@
+somorja = {
+	name = "Somorja"
+	world = earth
+	geocoordinate = { 17.311666666666667 48.026666666666664 } #Šamorín
+	type = holding
+	holding_type = manor
+	province = pressburg
+}

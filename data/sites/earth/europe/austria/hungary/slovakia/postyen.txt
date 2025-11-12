@@ -1,0 +1,8 @@
+postyen = {
+	name = "Postyen"
+	world = earth
+	geocoordinate = { 17.833333333333 48.583333333333 } #Piešťany
+	type = holding
+	holding_type = manor
+	province = pressburg
+}

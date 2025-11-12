@@ -1,0 +1,8 @@
+galgoc = {
+	name = "Galgoc"
+	world = earth
+	geocoordinate = { 17.803055555556 48.431111111111 } #Hlohovec
+	type = holding
+	holding_type = manor
+	province = pressburg
+}
