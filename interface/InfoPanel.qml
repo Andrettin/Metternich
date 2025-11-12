@@ -213,70 +213,16 @@ Rectangle {
 		visible: selected_site && !selected_garrison && selected_site.game_data.scripted_modifiers.length > 0
 	}
 	
-	Flickable {
-		id: portrait_grid_flickable
+	BuildingPortraitGrid {
+		id: building_portrait_grid
 		anchors.bottom: garrison_details_button.top
 		anchors.bottomMargin: 16 * scale_factor
 		anchors.left: parent.left
 		anchors.leftMargin: 8 * scale_factor
 		anchors.right: parent.right
 		anchors.rightMargin: 8 * scale_factor
-		height: ((64 + 2) * 3 + 12 * 2) * scale_factor
-		contentHeight: contentItem.childrenRect.height
-		boundsBehavior: Flickable.StopAtBounds
-		clip: true
 		visible: selected_site !== null && selected_site.settlement && !selected_garrison && !viewing_population && !viewing_settlement_info
-		
-		Grid {
-			id: portrait_grid
-			anchors.horizontalCenter: parent.horizontalCenter
-			columns: 2
-			spacing: 12 * scale_factor
-			
-			Repeater {
-				model: selected_site !== null && selected_site.settlement ? selected_site_game_data.building_slots : []
-				
-				PortraitGridItem {
-					portrait_identifier: wonder ? wonder.portrait.identifier : (building ? building.portrait.identifier : "building_slot")
-					
-					readonly property var building_slot: model.modelData
-					readonly property var building: building_slot.building
-					readonly property var wonder: building_slot.wonder
-					
-					Image {
-						id: under_construction_icon
-						anchors.horizontalCenter: parent.horizontalCenter
-						anchors.verticalCenter: parent.verticalCenter
-						source: "image://icon/cog"
-						visible: building_slot.under_construction_building !== null || building_slot.under_construction_wonder !== null
-					}
-					
-					onClicked: {
-						if (building !== null && building_slot.modifier_string.length > 0) {
-							modifier_dialog.title = wonder ? wonder.name : building.name
-							modifier_dialog.modifier_string = building_slot.modifier_string
-							modifier_dialog.open()
-						}
-					}
-					
-					onEntered: {
-						if (wonder !== null) {
-							status_text = wonder.name
-						} else if (building !== null) {
-							status_text = building.name
-						} else {
-							status_text = building_slot.type.name + " Slot"
-							middle_status_text = ""
-						}
-					}
-					
-					onExited: {
-						status_text = ""
-						middle_status_text = ""
-					}
-				}
-			}
-		}
+		building_slots: selected_site !== null && selected_site.settlement ? selected_site_game_data.building_slots : []
 	}
 	
 	SitePortraitGrid {
@@ -285,7 +231,7 @@ Rectangle {
 		anchors.bottomMargin: 16 * scale_factor
 		anchors.left: parent.left
 		anchors.right: parent.right
-		height: ((64 + 2) * 2 + 12) * scale_factor
+		visible_rows: 2
 		visible: selected_province !== null && !selected_garrison
 		sites: selected_province ? selected_province.game_data.visible_sites : []
 	}

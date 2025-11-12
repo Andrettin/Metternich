@@ -4,10 +4,12 @@ import "./dialogs"
 
 Flickable {
 	id: portrait_grid_flickable
+	height: ((64 + 2) * visible_rows * scale_factor) + portrait_grid.spacing * (visible_rows - 1)
 	contentHeight: contentItem.childrenRect.height
 	boundsBehavior: Flickable.StopAtBounds
 	clip: true
 	
+	property int visible_rows: 2
 	property var sites: []
 	
 	Grid {
