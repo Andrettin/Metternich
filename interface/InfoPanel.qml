@@ -30,8 +30,7 @@ Rectangle {
 		id: button_row
 		anchors.top: parent.top
 		anchors.topMargin: 6 * scale_factor
-		anchors.left: parent.left
-		anchors.leftMargin: 6 * scale_factor
+		anchors.horizontalCenter: parent.horizontalCenter
 		spacing: 4 * scale_factor
 		
 		IconButton {
