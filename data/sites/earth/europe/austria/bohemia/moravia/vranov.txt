@@ -1,0 +1,8 @@
+vranov = {
+	name = "Vranov"
+	world = earth
+	geocoordinate = { 15.812699435802 48.894745738546 } #Vranov nad Dyjí
+	type = holding
+	holding_type = manor
+	province = brunn
+}

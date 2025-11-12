@@ -1,0 +1,8 @@
+mikulov = {
+	name = "Mikulov"
+	world = earth
+	geocoordinate = { 16.637789181722 48.805586996193 }
+	type = holding
+	holding_type = guild
+	province = brunn
+}

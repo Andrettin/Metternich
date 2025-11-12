@@ -1,0 +1,8 @@
+lundenburg = {
+	name = "Lundenburg"
+	world = earth
+	geocoordinate = { 16.882020775128 48.758991122507 } #Břeclav
+	type = holding
+	holding_type = manor
+	province = brunn
+}

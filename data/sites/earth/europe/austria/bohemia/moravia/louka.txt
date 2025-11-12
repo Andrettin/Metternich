@@ -1,0 +1,8 @@
+louka = {
+	name = "Louka"
+	world = earth
+	geocoordinate = { 16.431079109547 49.529199651918 } #Louka u Olešnice
+	type = holding
+	holding_type = temple
+	province = brunn
+}

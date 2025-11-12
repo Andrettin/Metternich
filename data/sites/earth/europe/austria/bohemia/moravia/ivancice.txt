@@ -1,0 +1,11 @@
+ivancice = {
+	name = "Ivancice"
+	world = earth
+	geocoordinate = { 16.377529198529 49.101477851144 }
+	type = holding
+	holding_type = manor
+	province = brunn
+	cultural_group_names = {
+		german = "Eibenschutz" #"Eibenschütz"
+	}
+}

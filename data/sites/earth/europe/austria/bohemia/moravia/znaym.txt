@@ -2,6 +2,9 @@ znaym = {
 	name = "Znaym"
 	world = earth
 	geocoordinate = { 16.048796054219 48.855540667876 }
+	type = holding
+	holding_type = manor
+	province = brunn
 	cultural_names = {
 		czech = "Znojmo"
 	}

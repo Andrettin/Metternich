@@ -1,0 +1,8 @@
+pohansko = {
+	name = "Pohansko"
+	world = earth
+	geocoordinate = { 16.8966417 48.7289817 }
+	type = holding
+	holding_type = manor
+	province = brunn
+}

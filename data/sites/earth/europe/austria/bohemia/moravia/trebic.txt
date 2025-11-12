@@ -1,0 +1,8 @@
+trebic = {
+	name = "Trebic"
+	world = earth
+	geocoordinate = { 15.881675935311 49.214967400263 }
+	type = holding
+	holding_type = temple #or guild
+	province = brunn
+}
