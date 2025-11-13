@@ -2,8 +2,9 @@ sopron = {
 	name = "Sopron"
 	world = earth
 	geocoordinate = { 16.583333333333 47.683333333333 }
-	type = resource
-	resource = fruit
+	type = holding
+	holding_type = manor
+	#resource = fruit
 	cultural_group_names = {
 		german = "Odenburg" #"Ödenburg"; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
 	}

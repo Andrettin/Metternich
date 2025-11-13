@@ -1,0 +1,8 @@
+kapuvar = {
+	name = "Kapuvar"
+	world = earth
+	geocoordinate = { 17.033055555556 47.6 }
+	type = holding
+	holding_type = manor
+	province = buda
+}

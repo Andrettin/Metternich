@@ -1,0 +1,8 @@
+csorna = {
+	name = "Csorna"
+	world = earth
+	geocoordinate = { 17.25 47.6167 }
+	type = holding
+	holding_type = guild
+	province = buda
+}

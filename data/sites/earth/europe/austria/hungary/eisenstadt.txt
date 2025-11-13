@@ -2,7 +2,11 @@ eisenstadt = {
 	name = "Eisenstadt"
 	world = earth
 	geocoordinate = { 16.53329746760 47.83329907870 } #from Natural Earth
-	type = resource
-	resource = grain
+	type = holding
+	holding_type = guild
+	#resource = grain
 	province = buda
+	cultural_names = {
+		magyar = "Kismarton"
+	}
 }
