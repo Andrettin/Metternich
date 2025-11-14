@@ -1,0 +1,18 @@
+elven_archer = {
+	filepath = "icons/units/troops/elven_archer.png"
+	character_conditions = {
+		or = {
+			species = air_elemental
+			species = archon
+			species = elf
+			species = nymph
+			and = {
+				species = half_elf
+				or = {
+					character_class = ranger
+					character_class = warrior
+				}
+			}
+		}
+	}
+}

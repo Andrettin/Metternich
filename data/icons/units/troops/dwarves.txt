@@ -1,0 +1,10 @@
+dwarven_warrior = {
+	filepath = "icons/units/troops/dwarven_warrior.png"
+	character_conditions = {
+		or = {
+			species = dwarf
+			species = earth_elemental
+			species = gnome
+		}
+	}
+}

@@ -1,6 +1,13 @@
 archers = {
 	filepath = "icons/units/troops/archers.png"
 	character_conditions = {
+		or = {
+			species = half_elf
+			species = human
+			species = halfling
+			species = titan
+			species = triton
+		}
 		character_class = ranger
 	}
 }

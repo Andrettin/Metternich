@@ -147,6 +147,8 @@
 /graphics/icons/units/troops/crossbowmen.png (by Jinn) (licensed under the CC0)
 /graphics/icons/units/troops/cuirassiers.png (by Jinn) (licensed under the CC0)
 /graphics/icons/units/troops/cuirassiers_ranged.png (by Jinn) (licensed under the CC0)
+/graphics/icons/units/troops/dwarven_warrior.png (by Jinn) (licensed under the CC0)
+/graphics/icons/units/troops/elven_archer.png (by Jinn) (licensed under the CC0)
 /graphics/icons/units/troops/general_napoleonic.png (by Jinn) (licensed under the CC0)
 /graphics/icons/units/troops/gnoll.png (by Jinn) (licensed under the CC0)
 /graphics/icons/units/troops/goblin.png (by Jinn) (licensed under the CC0)
