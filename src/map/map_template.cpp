@@ -1009,6 +1009,10 @@ void map_template::generate_site(const site *site) const
 				}
 			}
 
+			if (!this->is_pos_available_for_site_generation(tile_pos, province)) {
+				continue;
+			}
+
 			map->set_tile_site(tile_pos, site);
 			return;
 		}
@@ -1047,8 +1051,60 @@ bool map_template::is_pos_available_for_site(const QPoint &tile_pos, const provi
 	static constexpr int site_check_range = 4;
 	const QRect site_check_rect(tile_pos - QPoint(site_check_range, site_check_range), tile_pos + QPoint(site_check_range, site_check_range));
 
-	rect::for_each_point_until(site_check_rect, [this, &map_rect, &available, site_province, &province_image](const QPoint &rect_pos) {
+	rect::for_each_point_until(site_check_rect, [this, &map_rect, &available, site_province](const QPoint &rect_pos) {
+		if (!map_rect.contains(rect_pos)) {
+			return false;
+		}
+
 		if (this->sites_by_position.contains(rect_pos)) {
+			available = false;
+			return true;
+		}
+
+		return false;
+	});
+
+	return available;
+}
+
+bool map_template::is_pos_available_for_site_generation(const QPoint &tile_pos, const province *site_province) const
+{
+	const QRect map_rect(QPoint(0, 0), map::get()->get_size());
+	bool available = true;
+
+	static constexpr int tile_check_range = 1;
+	const QRect tile_check_rect(tile_pos - QPoint(tile_check_range, tile_check_range), tile_pos + QPoint(tile_check_range, tile_check_range));
+
+	rect::for_each_point_until(tile_check_rect, [this, &map_rect, &available, site_province](const QPoint &rect_pos) {
+		if (!map_rect.contains(rect_pos)) {
+			available = false;
+			return true;
+		}
+
+		const tile *tile = map::get()->get_tile(rect_pos);
+		const province *tile_province = tile->get_province();
+		if (site_province != tile_province) {
+			available = false;
+			return true;
+		}
+
+		return false;
+	});
+
+	if (!available) {
+		return false;
+	}
+
+	static constexpr int site_check_range = 4;
+	const QRect site_check_rect(tile_pos - QPoint(site_check_range, site_check_range), tile_pos + QPoint(site_check_range, site_check_range));
+
+	rect::for_each_point_until(site_check_rect, [this, &map_rect, &available, site_province](const QPoint &rect_pos) {
+		if (!map_rect.contains(rect_pos)) {
+			return false;
+		}
+
+		const tile *tile = map::get()->get_tile(rect_pos);
+		if (tile->get_site() != nullptr) {
 			available = false;
 			return true;
 		}

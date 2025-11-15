@@ -214,6 +214,7 @@ public:
 	void generate_site(const site *site) const;
 
 	bool is_pos_available_for_site(const QPoint &tile_pos, const province *site_province, const QImage &province_image) const;
+	bool is_pos_available_for_site_generation(const QPoint &tile_pos, const province *site_province) const;
 
 signals:
 	void changed();
