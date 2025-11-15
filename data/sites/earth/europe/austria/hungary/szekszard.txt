@@ -1,0 +1,8 @@
+szekszard = {
+	name = "Szekszard"
+	world = earth
+	geocoordinate = { 18.71299858160 46.34399711480 } #from Natural Earth
+	type = holding
+	holding_type = manor
+	province = buda
+}

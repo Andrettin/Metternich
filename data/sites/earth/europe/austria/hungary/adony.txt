@@ -1,0 +1,8 @@
+adony = {
+	name = "Adony"
+	world = earth
+	geocoordinate = { 18.865380555556 47.11895 }
+	type = holding
+	holding_type = temple
+	province = buda
+}

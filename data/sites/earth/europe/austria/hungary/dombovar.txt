@@ -1,0 +1,8 @@
+dombovar = {
+	name = "Dombovar"
+	world = earth
+	geocoordinate = { 18.131007 46.376888 }
+	type = holding
+	holding_type = manor
+	province = buda
+}

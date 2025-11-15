@@ -1,0 +1,8 @@
+mor = {
+	name = "Mor"
+	world = earth
+	geocoordinate = { 18.208611111111 47.371666666667 } #Mór
+	type = holding
+	holding_type = guild
+	province = buda
+}
