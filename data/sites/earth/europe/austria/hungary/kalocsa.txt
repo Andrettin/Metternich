@@ -2,6 +2,8 @@ kalocsa = {
 	name = "Kalocsa"
 	world = earth
 	geocoordinate = { 18.985555555556 46.533333333333 }
+	type = holding
+	holding_type = temple
 	province = pest
 	
 	history = {
