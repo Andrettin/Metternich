@@ -634,6 +634,11 @@ bool site_game_data::is_built() const
 	}
 }
 
+bool site_game_data::is_used() const
+{
+	return this->is_built() || this->get_dungeon() != nullptr;
+}
+
 const resource *site_game_data::get_resource() const
 {
 	return this->site->get_map_data()->get_resource();

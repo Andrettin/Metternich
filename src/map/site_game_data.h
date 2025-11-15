@@ -178,6 +178,7 @@ public:
 	}
 
 	Q_INVOKABLE bool is_built() const;
+	bool is_used() const;
 
 	const resource *get_resource() const;
 
