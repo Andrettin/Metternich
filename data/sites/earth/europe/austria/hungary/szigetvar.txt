@@ -1,0 +1,8 @@
+szigetvar = {
+	name = "Szigetvar"
+	world = earth
+	geocoordinate = { 17.799444444444443 46.0475 }
+	type = holding
+	holding_type = manor
+	province = buda
+}
