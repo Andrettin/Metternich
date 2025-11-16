@@ -1,0 +1,8 @@
+dobsina = {
+	name = "Dobsina"
+	world = earth
+	geocoordinate = { 20.3675 48.820555555556 }
+	type = holding
+	holding_type = guild
+	province = kesmark
+}

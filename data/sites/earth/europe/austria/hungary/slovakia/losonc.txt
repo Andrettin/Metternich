@@ -1,0 +1,8 @@
+losonc = {
+	name = "Losonc"
+	world = earth
+	geocoordinate = { 19.670833333333 48.331388888889 } #Lučenec/Losonc
+	type = holding
+	holding_type = temple
+	province = pressburg
+}

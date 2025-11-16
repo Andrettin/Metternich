@@ -1,0 +1,8 @@
+balassagyarmat = {
+	name = "Balassagyarmat"
+	world = earth
+	geocoordinate = { 19.293722222222 48.071194444444 }
+	type = holding
+	holding_type = guild
+	province = pest
+}
