@@ -1,0 +1,8 @@
+liptovsky_mikulas = {
+	name = "Liptovsky Mikulas"
+	world = earth
+	geocoordinate = { 19.618055555556 49.081111111111 }
+	type = holding
+	holding_type = temple
+	province = pressburg
+}

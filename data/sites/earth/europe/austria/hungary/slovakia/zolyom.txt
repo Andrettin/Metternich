@@ -1,0 +1,20 @@
+zolyom = {
+	name = "Zolyom"
+	world = earth
+	geocoordinate = { 19.13324011100 48.58373862620 } #from Natural Earth (Zvolen)
+	type = holding
+	holding_type = manor
+	province = pressburg
+	cultural_names = {
+		slovak = "Zvolen"
+	}
+	cultural_group_names = {
+		german = "Altsohl"
+	}
+	
+	history = {
+		1815 = {
+			developed = true #existed in the 1815-1866 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+	}
+}

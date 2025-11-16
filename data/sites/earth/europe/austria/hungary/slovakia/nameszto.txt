@@ -1,0 +1,8 @@
+nameszto = {
+	name = "Nameszto"
+	world = earth
+	geocoordinate = { 19.48 49.41 } #Námestovo
+	type = holding
+	holding_type = guild
+	province = pressburg
+}
