@@ -1,0 +1,8 @@
+kormend = {
+	name = "Kormend"
+	world = earth
+	geocoordinate = { 16.60596 47.01096 }
+	type = holding
+	holding_type = manor
+	province = buda
+}
