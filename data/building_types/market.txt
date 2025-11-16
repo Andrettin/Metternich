@@ -4,9 +4,7 @@ market = {
 	portrait = trading_post
 	icon = wealth
 	holding_types = {
-		village
-		town
-		city
+		guild
 	}
 	conditions = {
 		game_rule = trade_commodity

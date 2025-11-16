@@ -5,7 +5,7 @@ stock_exchange = {
 	icon = wealth
 	required_technology = renaissance
 	holding_types = {
-		city
+		guild
 	}
 	conditions = {
 		game_rule = trade_commodity

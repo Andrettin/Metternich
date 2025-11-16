@@ -5,7 +5,7 @@ bank = {
 	icon = wealth
 	required_technology = middle_ages
 	holding_types = {
-		city
+		guild
 	}
 	conditions = {
 		game_rule = trade_commodity
