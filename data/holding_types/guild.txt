@@ -3,6 +3,12 @@ guild = {
 	icon = trade_consulate
 	portrait = trading_post
 	image_filepath = "tiles/settlements/town.png"
+	tier_levels = {
+		hamlet = 1
+		village = 2
+		town = 3
+		city = 4
+	}
 	population_classes = {
 		slaves
 		untrained_workers

@@ -522,7 +522,6 @@ set(map_HDRS
 	src/map/site_game_data.h
 	src/map/site_history.h
 	src/map/site_map_data.h
-	src/map/site_tier.h
 	src/map/site_type.h
 	src/map/temperature_type.h
 	src/map/terrain_adjacency.h

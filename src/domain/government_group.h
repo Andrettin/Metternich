@@ -10,7 +10,6 @@ namespace archimedes {
 namespace metternich {
 
 enum class country_tier;
-enum class site_tier;
 
 class government_group final : public named_data_entry, public data_type<government_group>
 {
@@ -22,7 +21,7 @@ class government_group final : public named_data_entry, public data_type<governm
 
 public:
 	using title_name_map = std::map<country_tier, std::string>;
-	using site_title_name_map = std::map<site_tier, std::string>;
+	using site_title_name_map = std::map<int, std::string>;
 	using office_title_name_map = data_entry_map<office, std::map<country_tier, std::map<gender, std::string>>>;
 
 	static constexpr const char class_identifier[] = "government_group";
@@ -51,7 +50,7 @@ public:
 	}
 
 	const std::string &get_title_name(const country_tier tier) const;
-	const std::string &get_site_title_name(const site_tier tier) const;
+	const std::string &get_site_title_name(const int tier) const;
 	const std::string &get_office_title_name(const office *office, const country_tier tier, const gender gender) const;
 
 signals:

@@ -6,6 +6,18 @@ manor = {
 	level_names = {
 		4 = "Palace"
 	}
+	tier_levels = {
+		barony = 1
+		viscounty = 2
+		county = 3
+		marquisate = 4
+		duchy = 5
+		
+		hamlet = 1
+		village = 2
+		town = 3
+		city = 4
+	}
 	population_classes = {
 		slaves
 		untrained_workers

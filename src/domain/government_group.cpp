@@ -7,7 +7,6 @@
 #include "domain/government_type.h"
 #include "domain/office.h"
 #include "database/defines.h"
-#include "map/site_tier.h"
 #include "util/assert_util.h"
 #include "util/gender.h"
 #include "util/string_util.h"
@@ -39,7 +38,7 @@ const std::string &government_group::get_title_name(const country_tier tier) con
 	return country_tier_data::get(tier)->get_name();
 }
 
-const std::string &government_group::get_site_title_name(const site_tier tier) const
+const std::string &government_group::get_site_title_name(const int tier) const
 {
 	const auto find_iterator = this->site_title_names.find(tier);
 	if (find_iterator != this->site_title_names.end()) {

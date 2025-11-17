@@ -6,6 +6,7 @@
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot_type.h"
 #include "infrastructure/building_type.h"
+#include "infrastructure/holding_type.h"
 #include "infrastructure/improvement.h"
 #include "infrastructure/improvement_slot.h"
 #include "infrastructure/wonder.h"
@@ -22,7 +23,14 @@ void site_history::process_gsml_property(const gsml_property &property)
 	const std::string &key = property.get_key();
 	const std::string &value = property.get_value();
 
-	if (key == "improvements") {
+	if (key == "tier") {
+		const metternich::holding_type *holding_type = this->get_holding_type() ? this->get_holding_type() : this->site->get_holding_type();
+		assert_log(holding_type != nullptr);
+		assert_throw(property.get_operator() == gsml_operator::assignment);
+		if (holding_type != nullptr) {
+			this->development_level = holding_type->get_tier_level(value);
+		}
+	} else if (key == "improvements") {
 		const improvement *improvement = improvement::get(value);
 		const improvement_slot slot = improvement->get_slot();
 

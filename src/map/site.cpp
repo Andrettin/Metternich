@@ -6,13 +6,13 @@
 #include "domain/culture.h"
 #include "domain/government_type.h"
 #include "economy/resource.h"
+#include "infrastructure/holding_type.h"
 #include "map/province.h"
 #include "map/province_history.h"
 #include "map/region.h"
 #include "map/site_game_data.h"
 #include "map/site_history.h"
 #include "map/site_map_data.h"
-#include "map/site_tier.h"
 #include "map/site_type.h"
 #include "map/terrain_type.h"
 #include "map/tile.h"
@@ -25,7 +25,13 @@
 
 namespace metternich {
 
-site::site(const std::string &identifier) : named_data_entry(identifier), type(site_type::none), max_tier(site_tier::none)
+const std::set<std::string> site::database_dependencies = {
+	//so that holding type tiers are present
+	holding_type::class_identifier
+};
+
+site::site(const std::string &identifier)
+	: named_data_entry(identifier), type(site_type::none)
 {
 	this->reset_map_data();
 	this->reset_game_data();
@@ -33,6 +39,22 @@ site::site(const std::string &identifier) : named_data_entry(identifier), type(s
 
 site::~site()
 {
+}
+
+void site::process_gsml_property(const gsml_property &property)
+{
+	const std::string &key = property.get_key();
+	const std::string &value = property.get_value();
+
+	if (key == "max_tier") {
+		assert_log(this->get_holding_type() != nullptr);
+		assert_throw(property.get_operator() == gsml_operator::assignment);
+		if (this->get_holding_type() != nullptr) {
+			this->max_tier = this->get_holding_type()->get_tier_level(value);
+		}
+	} else {
+		named_data_entry::process_gsml_property(property);
+	}
 }
 
 void site::process_gsml_scope(const gsml_data &scope)
@@ -200,7 +222,7 @@ const std::string &site::get_cultural_name(const cultural_group *cultural_group)
 	return this->get_name();
 }
 
-const std::string &site::get_title_name(const government_type *government_type, const site_tier tier, const culture *culture) const
+const std::string &site::get_title_name(const government_type *government_type, const int tier, const culture *culture) const
 {
 	auto find_iterator = this->title_names.find(government_type);
 	if (find_iterator == this->title_names.end()) {
@@ -210,7 +232,7 @@ const std::string &site::get_title_name(const government_type *government_type, 
 	if (find_iterator != this->title_names.end()) {
 		auto sub_find_iterator = find_iterator->second.find(tier);
 		if (sub_find_iterator == find_iterator->second.end()) {
-			sub_find_iterator = find_iterator->second.find(site_tier::none);
+			sub_find_iterator = find_iterator->second.find(0);
 		}
 
 		if (sub_find_iterator != find_iterator->second.end()) {

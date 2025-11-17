@@ -19,7 +19,6 @@ class improvement;
 class site;
 class wonder;
 enum class improvement_slot;
-enum class site_tier;
 
 class site_history final : public data_entry_history
 {
@@ -28,7 +27,6 @@ class site_history final : public data_entry_history
 	Q_PROPERTY(bool resource_discovered MEMBER resource_discovered READ is_resource_discovered)
 	Q_PROPERTY(bool developed MEMBER developed)
 	Q_PROPERTY(int development_level MEMBER development_level)
-	Q_PROPERTY(site_tier tier READ get_tier WRITE set_tier)
 	Q_PROPERTY(const metternich::holding_type* holding_type MEMBER holding_type)
 	Q_PROPERTY(const metternich::dungeon* dungeon MEMBER dungeon)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture)
@@ -63,14 +61,14 @@ public:
 		return this->development_level;
 	}
 
-	site_tier get_tier() const
+	int get_tier() const
 	{
-		return static_cast<site_tier>(this->development_level);
+		return this->development_level;
 	}
 
-	void set_tier(const site_tier tier)
+	void set_tier(const int tier)
 	{
-		this->development_level = static_cast<int>(tier);
+		this->development_level = tier;
 	}
 
 	const metternich::holding_type *get_holding_type() const

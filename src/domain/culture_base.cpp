@@ -11,7 +11,6 @@
 #include "language/fallback_name_generator.h"
 #include "language/gendered_name_generator.h"
 #include "language/name_generator.h"
-#include "map/site_tier.h"
 #include "population/population_class.h"
 #include "population/population_type.h"
 #include "unit/civilian_unit_class.h"
@@ -275,7 +274,7 @@ const std::string &culture_base::get_title_name(const government_type *governmen
 	return string::empty_str;
 }
 
-const std::string &culture_base::get_site_title_name(const government_type *government_type, const site_tier tier) const
+const std::string &culture_base::get_site_title_name(const government_type *government_type, const int tier) const
 {
 	auto find_iterator = this->site_title_names.find(government_type);
 	if (find_iterator == this->site_title_names.end()) {
@@ -285,7 +284,7 @@ const std::string &culture_base::get_site_title_name(const government_type *gove
 	if (find_iterator != this->site_title_names.end()) {
 		auto sub_find_iterator = find_iterator->second.find(tier);
 		if (sub_find_iterator == find_iterator->second.end()) {
-			sub_find_iterator = find_iterator->second.find(site_tier::none);
+			sub_find_iterator = find_iterator->second.find(0);
 		}
 
 		if (sub_find_iterator != find_iterator->second.end()) {

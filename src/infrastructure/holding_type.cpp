@@ -33,6 +33,13 @@ void holding_type::process_gsml_scope(const gsml_data &scope)
 
 			this->level_names[std::stoi(key)] = value;
 		});
+	} else if (tag == "tier_levels") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+
+			this->tier_levels[key] = std::stoi(value);
+		});
 	} else if (tag == "base_holding_types") {
 		for (const std::string &value : values) {
 			holding_type *holding_type = holding_type::get(value);

@@ -8,7 +8,6 @@
 #include "domain/law.h"
 #include "domain/law_group.h"
 #include "domain/office.h"
-#include "map/site_tier.h"
 #include "script/condition/and_condition.h"
 #include "script/modifier.h"
 #include "technology/technology.h"
@@ -75,7 +74,7 @@ void government_type::process_site_title_name_scope(std::map<government_variant,
 			government_variant = government_type::get(key);
 		}
 
-		title_names[government_variant][site_tier::none] = value;
+		title_names[government_variant][0] = value;
 	});
 
 	scope.for_each_child([&](const gsml_data &child_scope) {
@@ -96,7 +95,7 @@ void government_type::process_site_title_name_scope(site_title_name_map &title_n
 	scope.for_each_property([&](const gsml_property &property) {
 		const std::string &key = property.get_key();
 		const std::string &value = property.get_value();
-		const site_tier tier = magic_enum::enum_cast<site_tier>(key).value();
+		const int tier = std::stoi(key);
 		title_names[tier] = value;
 	});
 }
@@ -260,7 +259,7 @@ const std::string &government_type::get_title_name(const country_tier tier) cons
 	return this->get_group()->get_title_name(tier);
 }
 
-const std::string &government_type::get_site_title_name(const site_tier tier) const
+const std::string &government_type::get_site_title_name(const int tier) const
 {
 	const auto find_iterator = this->site_title_names.find(tier);
 	if (find_iterator != this->site_title_names.end()) {

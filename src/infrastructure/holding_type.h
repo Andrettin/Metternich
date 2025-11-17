@@ -59,6 +59,17 @@ public:
 
 	const std::string &get_level_name(const int level) const;
 
+	int get_tier_level(const std::string &tier) const
+	{
+		const auto find_iterator = this->tier_levels.find(tier);
+
+		if (find_iterator != this->tier_levels.end()) {
+			return find_iterator->second;
+		}
+
+		throw std::runtime_error(std::format("Invalid tier for holding type \"{}\": \"{}\".", this->get_identifier(), tier));
+	}
+
 	const std::vector<const holding_type *> &get_base_holding_types() const
 	{
 		return this->base_holding_types;
@@ -106,6 +117,7 @@ private:
 	const metternich::portrait *portrait = nullptr;
 	std::filesystem::path image_filepath;
 	std::map<int, std::string> level_names;
+	std::map<std::string, int> tier_levels; //identifiers for particular levels
 	std::vector<const holding_type *> base_holding_types;
 	std::vector<const holding_type *> upgraded_holding_types;
 	int level = 0;

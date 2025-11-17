@@ -4,6 +4,7 @@ salzburg = {
 	geocoordinate = { 13.04002030300 47.81047833160 } #from Natural Earth
 	type = holding
 	holding_type = temple
+	max_tier = archbishopric
 	province = salzburg
 	cultural_names = {
 		roman = "Iuvavum"
@@ -11,19 +12,20 @@ salzburg = {
 	
 	history = {
 		739 = {
-			buildings += cathedral #Salzburg became a bishopric in 739; Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 169.
+			tier = bishopric #Salzburg became a bishopric in 739; Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 169.
+			buildings += cathedral
 		}
 		
 		768 = {
-			#archbishopric existent in Salzburg during 768-814 AD; Source: "Medieval Warfare V.2", 2013, pp. 8-9.
+			tier = archbishopric #archbishopric existent in Salzburg during 768-814 AD; Source: "Medieval Warfare V.2", 2013, pp. 8-9.
 		}
 		
 		919 = {
-			#important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			developed = true #important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
 		}
 		
 		1360 = {
-			#existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 		
 		1815 = {

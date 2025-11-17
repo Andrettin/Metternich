@@ -38,7 +38,6 @@
 #include "map/province_game_data.h"
 #include "map/site.h"
 #include "map/site_map_data.h"
-#include "map/site_tier.h"
 #include "map/site_type.h"
 #include "map/tile.h"
 #include "population/population.h"
@@ -244,14 +243,14 @@ bool site_game_data::can_be_capital() const
 	return true;
 }
 
-site_tier site_game_data::get_tier() const
+int site_game_data::get_tier() const
 {
-	site_tier tier = site_tier::none;
+	int tier = 0;
 
 	if (this->get_holding_type() != nullptr) {
-		tier = static_cast<site_tier>(this->get_holding_type()->get_level());
+		tier = this->get_holding_type()->get_level();
 	} else if (this->get_resource_improvement() != nullptr) {
-		tier = static_cast<site_tier>(this->get_resource_improvement()->get_level());
+		tier = this->get_resource_improvement()->get_level();
 	}
 
 	if (tier > this->site->get_max_tier()) {

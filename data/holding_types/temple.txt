@@ -8,6 +8,10 @@ temple = {
 		2 = "Temple"
 		4 = "Cathedral"
 	}
+	tier_levels = {
+		bishopric = 4
+		archbishopric = 5
+	}
 	population_classes = {
 		slaves
 		untrained_workers

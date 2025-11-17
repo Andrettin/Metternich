@@ -64,7 +64,6 @@
 #include "map/province_map_image_provider.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
-#include "map/site_tier.h"
 #include "map/site_type.h"
 #include "map/temperature_type.h"
 #include "map/tile_image_provider.h"
@@ -177,7 +176,6 @@ int main(int argc, char **argv)
 		database_util::register_enum<military_unit_category>();
 		database_util::register_enum<military_unit_domain>();
 		database_util::register_enum<moisture_type>();
-		database_util::register_enum<site_tier>();
 		database_util::register_enum<site_type>();
 		database_util::register_enum<spell_target>();
 		database_util::register_enum<starting_age_category>();

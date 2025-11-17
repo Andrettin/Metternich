@@ -4,7 +4,7 @@ krumau = {
 	geocoordinate = { 14.31520771066 48.810990441614 }
 	type = resource
 	resource = gold
-	max_tier = marquisate #Duchy
+	max_tier = duchy
 	cultural_names = {
 		czech = "Krumlov"
 	}

@@ -34,7 +34,6 @@ class site_history;
 class site_map_data;
 class terrain_type;
 class world;
-enum class site_tier;
 enum class site_type;
 
 class site final : public named_data_entry, public data_type<site>
@@ -54,23 +53,25 @@ class site final : public named_data_entry, public data_type<site>
 	Q_PROPERTY(metternich::terrain_type* terrain_type MEMBER terrain_type)
 	Q_PROPERTY(metternich::resource* resource MEMBER resource NOTIFY changed)
 	Q_PROPERTY(metternich::province* province MEMBER province NOTIFY changed)
-	Q_PROPERTY(metternich::site_tier max_tier MEMBER max_tier READ get_max_tier)
 	Q_PROPERTY(metternich::site_map_data* map_data READ get_map_data NOTIFY changed)
 	Q_PROPERTY(metternich::site_game_data* game_data READ get_game_data NOTIFY changed)
 
 public:
 	using government_variant = std::variant<const government_type *, const government_group *>;
-	using site_title_name_map = std::map<government_variant, std::map<site_tier, std::string>>;
+	using site_title_name_map = std::map<government_variant, std::map<int, std::string>>;
 
 	static constexpr const char class_identifier[] = "site";
 	static constexpr const char property_class_identifier[] = "metternich::site*";
 	static constexpr const char database_folder[] = "sites";
 	static constexpr bool history_enabled = true;
 
+	static const std::set<std::string> database_dependencies;
+
 public:
 	explicit site(const std::string &identifier);
 	~site();
 
+	virtual void process_gsml_property(const gsml_property &property) override;
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
 	virtual void check() const override;
@@ -160,7 +161,7 @@ public:
 		this->province = province;
 	}
 
-	site_tier get_max_tier() const
+	int get_max_tier() const
 	{
 		return this->max_tier;
 	}
@@ -174,7 +175,7 @@ public:
 	const std::string &get_cultural_name(const culture *culture) const;
 	const std::string &get_cultural_name(const cultural_group *cultural_group) const;
 
-	const std::string &get_title_name(const government_type *government_type, const site_tier tier, const culture *culture) const;
+	const std::string &get_title_name(const government_type *government_type, const int tier, const culture *culture) const;
 
 	const std::vector<const region *> &get_generation_regions() const
 	{
@@ -198,7 +199,7 @@ private:
 	metternich::terrain_type *terrain_type = nullptr;
 	metternich::resource *resource = nullptr;
 	metternich::province *province = nullptr;
-	site_tier max_tier {};
+	int max_tier = 1;
 	std::vector<const metternich::terrain_type *> terrain_types;
 	std::map<const culture *, std::string> cultural_names;
 	std::map<const cultural_group *, std::string> cultural_group_names;
