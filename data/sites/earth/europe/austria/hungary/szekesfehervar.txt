@@ -6,4 +6,13 @@ szekesfehervar = {
 	holding_type = manor
 	#resource = grain
 	province = buda
+	cultural_group_names = {
+		german = "Stuhlweissenburg"
+	}
+	
+	history = {
+		1815 = {
+			buildings += fortress #Stuhlweissenburg had a fortress in the 1815-1866 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+	}
 }

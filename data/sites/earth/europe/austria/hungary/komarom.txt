@@ -5,4 +5,13 @@ komarom = {
 	type = holding
 	holding_type = manor
 	province = buda
+	cultural_group_names = {
+		german = "Komorn"
+	}
+	
+	history = {
+		1815 = {
+			buildings += fortress #Komorn had a fortress in the 1815-1866 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+	}
 }

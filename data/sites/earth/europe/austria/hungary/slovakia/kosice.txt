@@ -5,4 +5,13 @@ kosice = {
 	type = resource
 	resource = coal
 	province = kesmark
+	cultural_group_names = {
+		german = "Kaschau"
+	}
+	
+	history = {
+		1815 = {
+			developed = true #Kaschau existed in the 1815-1866 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+	}
 }

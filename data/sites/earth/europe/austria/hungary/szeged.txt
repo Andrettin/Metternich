@@ -4,4 +4,13 @@ szeged = {
 	geocoordinate = { 20.15002559270 46.25039267890 } #from Natural Earth
 	type = resource
 	resource = fruit
+	cultural_group_names = {
+		german = "Szegedin"
+	}
+	
+	history = {
+		1815 = {
+			developed = true #Szegedin existed in the 1815-1866 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+	}
 }

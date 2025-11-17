@@ -8,4 +8,10 @@ jihlava = {
 	cultural_group_names = {
 		german = "Iglau"
 	}
-}
+	
+	history = {
+		1815 = {
+			developed = true #Iglau existed in the 1815-1866 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+	}
+}}

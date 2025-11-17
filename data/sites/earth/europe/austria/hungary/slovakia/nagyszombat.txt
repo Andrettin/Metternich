@@ -5,4 +5,13 @@ nagyszombat = {
 	type = holding
 	holding_type = temple
 	province = pressburg
+	cultural_group_names = {
+		german = "Tyrnau"
+	}
+	
+	history = {
+		1815 = {
+			developed = true #Tyrnau existed in the 1815-1866 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+	}
 }

@@ -4,4 +4,13 @@ novi_sad = {
 	geocoordinate = { 19.84994055040 45.25037619940 } #from Natural Earth
 	type = resource
 	resource = sheep
+	cultural_group_names = {
+		german = "Neusatz"
+	}
+	
+	history = {
+		1815 = {
+			developed = true #Neusatz existed in the 1815-1866 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+	}
 }

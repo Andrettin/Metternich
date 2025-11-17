@@ -21,6 +21,10 @@ buda = {
 			buildings += university #University founded in Buda in 1389; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
 		}
 		
+		1815 = {
+			buildings += fortress #Buda/Ofen had a fortress in the 1815-1866 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+		
 		1896 = {
 			#Eötvos College founded in Budapest in 1896; Source: John Lukacs, "Budapest 1900: a historical portrait of a city and its culture", pp. 175-176.
 			#it is located in Budapest west of the Danube
