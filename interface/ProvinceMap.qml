@@ -124,7 +124,7 @@ Flickable {
 			x: site.game_data.tile_pos.x * metternich.map.diplomatic_map_tile_pixel_size * scale_factor - Math.floor(width / 2)
 			y: site.game_data.tile_pos.y * metternich.map.diplomatic_map_tile_pixel_size * scale_factor - Math.floor(height / 2)
 			source: "image://icon/" + (holding_type ? holding_type.icon.identifier : (dungeon ? dungeon.icon.identifier : "garrison")) + (site === selected_site ? "/selected" : "")
-			visible: province_map.mode === ProvinceMap.Mode.Site
+			visible: province_map.mode === ProvinceMap.Mode.Site && (site.settlement || dungeon !== null)
 			
 			readonly property var site: model.modelData
 			readonly property var tile_pos: site.map_data.tile_pos
