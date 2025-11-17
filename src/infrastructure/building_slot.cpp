@@ -44,16 +44,23 @@ void building_slot::set_building(const building_type *building)
 		assert_throw(building->get_slot_type() == this->get_type());
 	}
 
+	int holding_level_change = 0;
 	const building_type *old_building = this->get_building();
 
 	if (old_building != nullptr) {
 		this->on_building_gained(old_building, -1);
+		holding_level_change -= old_building->get_holding_level();
 	}
 
 	this->building = building;
 
 	if (this->get_building() != nullptr) {
 		this->on_building_gained(this->get_building(), 1);
+		holding_level_change += this->get_building()->get_holding_level();
+	}
+
+	if (holding_level_change != 0) {
+		this->get_settlement()->get_game_data()->change_holding_level(holding_level_change);
 	}
 
 	if (game::get()->is_running()) {
@@ -495,6 +502,15 @@ QString building_slot::get_modifier_string() const
 
 			str += this->get_wonder()->get_province_modifier()->get_string(province);
 		}
+	}
+
+	if (this->get_building()->get_holding_level() != 0) {
+		if (!str.empty()) {
+			str += "\n";
+		}
+
+		const QColor &number_color = this->get_building()->get_holding_level() < 0 ? defines::get()->get_red_text_color() : defines::get()->get_green_text_color();
+		str += std::format("Holding Level: {}", string::colored(number::to_signed_string(this->get_building()->get_holding_level()), number_color));
 	}
 
 	std::string settlement_modifier_str;

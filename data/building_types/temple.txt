@@ -3,6 +3,7 @@ shrine = {
 	building_class = shrine
 	portrait = temple
 	icon = wooden_cross
+	holding_level = 1
 	holding_types = {
 		temple
 		city
@@ -14,13 +15,11 @@ temple = {
 	building_class = temple
 	portrait = temple
 	icon = wooden_cross
+	holding_level = 2
 	required_building = shrine
 	holding_types = {
 		temple
 		city
-	}
-	settlement_modifier = {
-		holding_level = 1
 	}
 }
 
@@ -29,13 +28,11 @@ cathedral = {
 	building_class = cathedral
 	portrait = temple
 	icon = golden_cross_detailed
+	holding_level = 4
 	required_building = temple
 	required_technology = middle_ages
 	holding_types = {
 		temple
 		city
-	}
-	settlement_modifier = {
-		holding_level = 3
 	}
 }

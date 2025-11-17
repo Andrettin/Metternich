@@ -501,10 +501,6 @@ void site_game_data::set_holding_type(const metternich::holding_type *holding_ty
 	this->holding_type = holding_type;
 
 	if (old_holding_type == nullptr && this->get_holding_type() != nullptr) {
-		if (this->get_holding_level() == 0) {
-			this->set_holding_level(1);
-		}
-
 		this->on_settlement_built(1);
 
 		if (this->get_owner() != nullptr) {
@@ -622,6 +618,33 @@ void site_game_data::set_holding_level(const int level)
 
 	if (game::get()->is_running()) {
 		emit holding_level_changed();
+	}
+}
+
+void site_game_data::set_holding_level_from_buildings(const int level)
+{
+	bool changed = true;
+	while (level > this->get_holding_level() && changed) {
+		changed = false;
+
+		std::vector<const building_type *> potential_buildings;
+
+		for (const building_type *building : building_type::get_all()) {
+			if (building->get_holding_level() <= 0) {
+				continue;
+			}
+
+			if (!this->can_gain_free_building(building)) {
+				continue;
+			}
+
+			potential_buildings.push_back(building);
+		}
+
+		if (!potential_buildings.empty()) {
+			this->add_building(vector::get_random(potential_buildings));
+			changed = true;
+		}
 	}
 }
 
@@ -1038,7 +1061,7 @@ void site_game_data::check_free_buildings()
 	}
 }
 
-bool site_game_data::check_free_building(const building_type *building)
+bool site_game_data::can_gain_free_building(const building_type *building) const
 {
 	if (building != this->get_culture()->get_building_class_type(building->get_building_class())) {
 		return false;
@@ -1066,7 +1089,19 @@ bool site_game_data::check_free_building(const building_type *building)
 		return false;
 	}
 
+	return true;
+}
+
+bool site_game_data::check_free_building(const building_type *building)
+{
+	if (!this->can_gain_free_building(building)) {
+		return false;
+	}
+
+	building_slot *building_slot = this->get_building_slot(building->get_slot_type());
+	assert_throw(building_slot != nullptr);
 	building_slot->set_building(building);
+
 	return true;
 }
 

@@ -1181,6 +1181,11 @@ void game::apply_site_buildings(const site *site)
 			site_province->get_game_data()->add_technology_with_prerequisites(wonder->get_required_technology());
 		}
 	}
+
+	const int holding_level = site_history->get_development_level();
+	if (site_game_data->get_holding_type() != nullptr && holding_level != 0 && site_game_data->get_holding_level() < holding_level) {
+		site_game_data->set_holding_level_from_buildings(holding_level);
+	}
 }
 
 void game::apply_population_history()
@@ -1227,7 +1232,7 @@ void game::apply_population_history()
 		if (province->get_history()->get_population() > 0) {
 			const int province_level = defines::get()->get_province_level_for_population(province->get_history()->get_population());
 			static constexpr int max_province_level = 2;
-			province_game_data->set_level(std::min(std::max(province_level, 1), max_province_level));
+			province_game_data->set_level(std::max(province_game_data->get_level(), std::min(std::max(province_level, 1), max_province_level)));
 		}
 
 		if (province_game_data->get_settlement_count() == 0) {

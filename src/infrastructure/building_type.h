@@ -60,6 +60,7 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(bool capital_only MEMBER capital_only READ is_capital_only NOTIFY changed)
 	Q_PROPERTY(bool provincial_capital_only MEMBER provincial_capital_only READ is_provincial_capital_only NOTIFY changed)
 	Q_PROPERTY(bool wonder_only MEMBER wonder_only READ is_wonder_only NOTIFY changed)
+	Q_PROPERTY(int holding_level MEMBER holding_level READ get_holding_level NOTIFY changed)
 	Q_PROPERTY(int fort_level MEMBER fort_level READ get_fort_level NOTIFY changed)
 	Q_PROPERTY(metternich::building_type* required_building MEMBER required_building NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
@@ -171,6 +172,11 @@ public:
 	bool is_wonder_only() const
 	{
 		return this->wonder_only;
+	}
+
+	int get_holding_level() const
+	{
+		return this->holding_level;
 	}
 
 	int get_fort_level() const
@@ -292,6 +298,7 @@ private:
 	bool capital_only = false;
 	bool provincial_capital_only = false;
 	bool wonder_only = false;
+	int holding_level = 0;
 	int fort_level = 0;
 	building_type *required_building = nullptr;
 	std::vector<const building_type *> requiring_buildings; //buildings which require this one
