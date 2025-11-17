@@ -632,6 +632,7 @@ set(script_condition_HDRS
 	src/script/condition/has_resource_condition.h
 	src/script/condition/has_route_condition.h
 	src/script/condition/has_terrain_condition.h
+	src/script/condition/holding_level_condition.h
 	src/script/condition/holding_type_condition.h
 	src/script/condition/housing_condition.h
 	src/script/condition/improvement_condition.h
