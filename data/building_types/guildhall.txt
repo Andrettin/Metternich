@@ -1,0 +1,13 @@
+guildhall = {
+	name = "Guildhall"
+	building_class = guildhall
+	portrait = trading_post
+	icon = wealth
+	holding_level = 1
+	holding_types = {
+		guild
+	}
+	build_conditions = {
+		holding_level >= 1
+	}
+}

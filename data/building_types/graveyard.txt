@@ -1,0 +1,13 @@
+graveyard = {
+	name = "Graveyard"
+	building_class = graveyard
+	portrait = temple
+	icon = skull
+	holding_level = 1
+	holding_types = {
+		temple
+	}
+	build_conditions = {
+		holding_level >= 2
+	}
+}

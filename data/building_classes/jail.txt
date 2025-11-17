@@ -1,0 +1,4 @@
+jail = {
+	name = "Jail"
+	slot_type = jail
+}

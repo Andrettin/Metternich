@@ -1,0 +1,13 @@
+jail = {
+	name = "Jail"
+	building_class = jail
+	portrait = fort
+	icon = skull
+	holding_level = 1
+	holding_types = {
+		manor
+	}
+	build_conditions = {
+		holding_level >= 1
+	}
+}

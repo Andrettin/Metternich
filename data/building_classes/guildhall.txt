@@ -1,0 +1,4 @@
+guildhall = {
+	name = "Guildhall"
+	slot_type = guildhall
+}

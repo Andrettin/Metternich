@@ -1,0 +1,13 @@
+herbalist = {
+	name = "Herbalist"
+	building_class = herbalist
+	portrait = university
+	icon = tobacco
+	holding_level = 1
+	holding_types = {
+		temple
+	}
+	build_conditions = {
+		holding_level >= 2
+	}
+}

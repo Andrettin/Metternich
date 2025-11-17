@@ -1,0 +1,4 @@
+graveyard = {
+	name = "Graveyard"
+	slot_type = graveyard
+}

@@ -1,0 +1,13 @@
+garrison = {
+	name = "Garrison"
+	building_class = garrison
+	portrait = fort
+	icon = crossed_sabers
+	holding_level = 1
+	holding_types = {
+		manor
+	}
+	build_conditions = {
+		has_building_class = barracks
+	}
+}
