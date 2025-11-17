@@ -1,0 +1,11 @@
+eperjes = {
+	name = "Eperjes"
+	world = earth
+	geocoordinate = { 21.23936478550 48.99973390610 } #from Natural Earth (Prešov)
+	type = holding
+	holding_type = guild
+	province = kesmark
+	cultural_names = {
+		slovak = "Presov" #"Prešov"
+	}
+}

@@ -1,0 +1,8 @@
+bartfa = {
+	name = "Bartfa"
+	world = earth
+	geocoordinate = { 21.2756031 49.2926871 } #Bardejov
+	type = holding
+	holding_type = guild
+	province = kesmark
+}

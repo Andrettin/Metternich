@@ -1,0 +1,8 @@
+kisszeben = {
+	name = "Kisszeben"
+	world = earth
+	geocoordinate = { 21.1 49.1 } #Sabinov
+	type = holding
+	holding_type = temple
+	province = kesmark
+}

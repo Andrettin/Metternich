@@ -1,0 +1,8 @@
+hethars = {
+	name = "Hethars"
+	world = earth
+	geocoordinate = { 20.961944444444 49.152777777778 } #Lipany
+	type = holding
+	holding_type = manor
+	province = kesmark
+}
