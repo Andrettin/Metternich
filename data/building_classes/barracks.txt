@@ -2,3 +2,8 @@ barracks = {
 	name = "Barracks"
 	slot_type = barracks
 }
+
+garrison = {
+	name = "Garrison"
+	slot_type = barracks
+}
