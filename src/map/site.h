@@ -166,6 +166,8 @@ public:
 		return this->max_tier;
 	}
 
+	int get_max_holding_level() const;
+
 	const std::vector<const metternich::terrain_type *> &get_terrain_types() const
 	{
 		return this->terrain_types;

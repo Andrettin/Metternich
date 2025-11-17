@@ -185,6 +185,15 @@ bool site::is_celestial_body() const
 	return this->get_type() == site_type::celestial_body || this->get_type() == site_type::habitable_world;
 }
 
+int site::get_max_holding_level() const
+{
+	if (this->get_type() != site_type::holding) {
+		return 0;
+	}
+
+	return this->get_max_tier();
+}
+
 std::string site::get_scope_name() const
 {
 	return this->get_game_data()->get_current_cultural_name();
