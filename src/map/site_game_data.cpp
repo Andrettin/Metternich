@@ -1113,6 +1113,12 @@ bool site_game_data::can_gain_free_building(const building_type *building) const
 		return false;
 	}
 
+	if (building->get_build_conditions() != nullptr) {
+		if (!building->get_build_conditions()->check(this->site, read_only_context(this->site))) {
+			return false;
+		}
+	}
+
 	return true;
 }
 
