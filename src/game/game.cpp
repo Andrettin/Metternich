@@ -54,6 +54,7 @@
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/province_history.h"
+#include "map/province_map_data.h"
 #include "map/region.h"
 #include "map/region_history.h"
 #include "map/route.h"
@@ -1073,6 +1074,31 @@ void game::apply_sites()
 		} catch (...) {
 			std::throw_with_nested(std::runtime_error(std::format("Failed to apply history for site \"{}\".", site->get_identifier())));
 		}
+	}
+
+	//set province ratings based on holding levels
+	for (const province *province : map::get()->get_provinces()) {
+		if (province->is_water_zone()) {
+			continue;
+		}
+
+		std::map<const holding_type *, int> holding_type_levels;
+
+		for (const site *holding_site : province->get_map_data()->get_settlement_sites()) {
+			if (!holding_site->get_game_data()->is_built()) {
+				continue;
+			}
+
+			holding_type_levels[holding_site->get_game_data()->get_holding_type()] += holding_site->get_game_data()->get_holding_level();
+		}
+
+		int highest_holding_level = 0;
+		for (const auto &[holding_type, holding_level] : holding_type_levels) {
+			assert_throw(holding_type != nullptr);
+			highest_holding_level = std::max(highest_holding_level, holding_level);
+		}
+
+		province->get_game_data()->set_level(std::max(highest_holding_level, province->get_game_data()->get_level()));
 	}
 }
 
