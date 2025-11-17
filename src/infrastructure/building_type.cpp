@@ -33,6 +33,11 @@
 
 namespace metternich {
 
+const std::set<std::string> building_type::database_dependencies = {
+	//so that commodity units are present
+	commodity::class_identifier
+};
+
 building_type::building_type(const std::string &identifier) : named_data_entry(identifier)
 {
 }

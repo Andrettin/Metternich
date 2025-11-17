@@ -71,6 +71,8 @@ public:
 	static constexpr const char property_class_identifier[] = "metternich::building_type*";
 	static constexpr const char database_folder[] = "building_types";
 
+	static const std::set<std::string> database_dependencies;
+
 public:
 	explicit building_type(const std::string &identifier);
 	~building_type();
