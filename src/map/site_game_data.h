@@ -176,6 +176,7 @@ public:
 		this->set_holding_level(this->get_holding_level() + change);
 	}
 
+	int get_building_holding_level_change(const building_type *building) const;
 	void set_holding_level_from_buildings(const int level);
 
 	Q_INVOKABLE bool is_built() const;

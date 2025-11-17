@@ -620,16 +620,37 @@ void site_game_data::set_holding_level(const int level)
 	}
 }
 
+int site_game_data::get_building_holding_level_change(const building_type *building) const
+{
+	assert_throw(building != nullptr);
+
+	const building_slot *building_slot = this->get_building_slot(building->get_slot_type());
+	assert_throw(building_slot != nullptr);
+
+	int holding_level_change = building->get_holding_level();
+
+	if (building_slot->get_building() != nullptr) {
+		holding_level_change -= building_slot->get_building()->get_holding_level();
+	}
+
+	return holding_level_change;
+}
+
 void site_game_data::set_holding_level_from_buildings(const int level)
 {
 	bool changed = true;
 	while (level > this->get_holding_level() && changed) {
 		changed = false;
 
+		const int holding_level_difference = level - this->get_holding_level();
 		std::vector<const building_type *> potential_buildings;
 
 		for (const building_type *building : building_type::get_all()) {
 			if (building->get_holding_level() <= 0) {
+				continue;
+			}
+
+			if (this->get_building_holding_level_change(building) > holding_level_difference) {
 				continue;
 			}
 
@@ -644,6 +665,10 @@ void site_game_data::set_holding_level_from_buildings(const int level)
 			this->add_building(vector::get_random(potential_buildings));
 			changed = true;
 		}
+	}
+
+	if (level != this->get_holding_level()) {
+		log::log_error(std::format("Failed to set holding level {} from buildings for site \"{}\".", level, this->site->get_identifier()));
 	}
 }
 

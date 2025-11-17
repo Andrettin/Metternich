@@ -44,19 +44,18 @@ void building_slot::set_building(const building_type *building)
 		assert_throw(building->get_slot_type() == this->get_type());
 	}
 
-	int holding_level_change = 0;
+	const int holding_level_change = this->get_settlement()->get_game_data()->get_building_holding_level_change(building);
+
 	const building_type *old_building = this->get_building();
 
 	if (old_building != nullptr) {
 		this->on_building_gained(old_building, -1);
-		holding_level_change -= old_building->get_holding_level();
 	}
 
 	this->building = building;
 
 	if (this->get_building() != nullptr) {
 		this->on_building_gained(this->get_building(), 1);
-		holding_level_change += this->get_building()->get_holding_level();
 	}
 
 	if (holding_level_change != 0) {
