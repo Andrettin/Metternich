@@ -1,0 +1,13 @@
+smithy = {
+	name = "Smithy"
+	building_class = smithy
+	portrait = factory
+	icon = tools
+	holding_level = 1
+	holding_types = {
+		guild
+	}
+	build_conditions = {
+		holding_level >= 1
+	}
+}
