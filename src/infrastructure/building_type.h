@@ -230,7 +230,7 @@ public:
 		return this->commodity_costs;
 	}
 
-	commodity_map<int> get_commodity_costs_for_country(const domain *domain) const;
+	commodity_map<int> get_commodity_costs_for_site(const site *site) const;
 
 	const factor<domain> *get_cost_factor() const
 	{

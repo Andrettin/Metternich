@@ -255,28 +255,45 @@ int building_type::get_wealth_cost_for_country(const domain *domain) const
 	return cost;
 }
 
-commodity_map<int> building_type::get_commodity_costs_for_country(const domain *domain) const
+commodity_map<int> building_type::get_commodity_costs_for_site(const site *site) const
 {
 	commodity_map<int> costs = this->get_commodity_costs();
 
-	for (auto &[commodity, cost] : costs) {
-		if (cost > 0) {
-			if (domain->get_game_data()->get_building_cost_efficiency_modifier() != 0) {
-				const int cost_efficiency_modifier = domain->get_game_data()->get_building_cost_efficiency_modifier() + domain->get_game_data()->get_building_class_cost_efficiency_modifier(this->get_building_class());
-				if (cost_efficiency_modifier >= 0) {
-					cost *= 100;
-					cost /= 100 + cost_efficiency_modifier;
-				} else {
-					cost *= 100 + std::abs(cost_efficiency_modifier);
-					cost /= 100;
+	if (this->get_holding_level() > 0) {
+		assert_throw(site->get_game_data()->get_holding_type() != nullptr);
+		const int holding_level_change = site->get_game_data()->get_building_holding_level_change(this);
+		for (int i = 0; i < holding_level_change; ++i) {
+			for (const auto &[commodity, level_cost] : site->get_game_data()->get_holding_type()->get_level_commodity_costs()) {
+				costs[commodity] += level_cost;
+			}
+
+			for (const auto &[commodity, level_cost_per_level] : site->get_game_data()->get_holding_type()->get_level_commodity_costs_per_level()) {
+				costs[commodity] += level_cost_per_level * (site->get_game_data()->get_holding_level() + 1 + i);
+			}
+		}
+	}
+
+	const domain *domain = site->get_game_data()->get_owner();
+	if (domain != nullptr) {
+		for (auto &[commodity, cost] : costs) {
+			if (cost > 0) {
+				if (domain->get_game_data()->get_building_cost_efficiency_modifier() != 0) {
+					const int cost_efficiency_modifier = domain->get_game_data()->get_building_cost_efficiency_modifier() + domain->get_game_data()->get_building_class_cost_efficiency_modifier(this->get_building_class());
+					if (cost_efficiency_modifier >= 0) {
+						cost *= 100;
+						cost /= 100 + cost_efficiency_modifier;
+					} else {
+						cost *= 100 + std::abs(cost_efficiency_modifier);
+						cost /= 100;
+					}
 				}
-			}
 
-			if (this->get_cost_factor() != nullptr) {
-				cost = this->get_cost_factor()->calculate(domain, centesimal_int(cost)).to_int();
-			}
+				if (this->get_cost_factor() != nullptr) {
+					cost = this->get_cost_factor()->calculate(domain, centesimal_int(cost)).to_int();
+				}
 
-			cost = std::max(1, cost);
+				cost = std::max(1, cost);
+			}
 		}
 	}
 

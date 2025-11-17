@@ -2,6 +2,7 @@
 
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
+#include "economy/commodity_container.h"
 
 Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("ui/portrait.h")
@@ -33,6 +34,8 @@ public:
 	static constexpr const char property_class_identifier[] = "metternich::holding_type*";
 	static constexpr const char database_folder[] = "holding_types";
 
+	static const std::set<std::string> database_dependencies;
+
 	explicit holding_type(const std::string &identifier);
 	~holding_type();
 
@@ -56,6 +59,16 @@ public:
 	}
 
 	void set_image_filepath(const std::filesystem::path &filepath);
+
+	const commodity_map<int> &get_level_commodity_costs() const
+	{
+		return this->level_commodity_costs;
+	}
+
+	const commodity_map<int> &get_level_commodity_costs_per_level() const
+	{
+		return this->level_commodity_costs_per_level;
+	}
 
 	const std::string &get_level_name(const int level) const;
 
@@ -116,6 +129,8 @@ private:
 	const metternich::icon *icon = nullptr;
 	const metternich::portrait *portrait = nullptr;
 	std::filesystem::path image_filepath;
+	commodity_map<int> level_commodity_costs;
+	commodity_map<int> level_commodity_costs_per_level;
 	std::map<int, std::string> level_names;
 	std::map<std::string, int> tier_levels; //identifiers for particular levels
 	std::vector<const holding_type *> base_holding_types;

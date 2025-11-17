@@ -3,6 +3,12 @@ guild = {
 	icon = trade_consulate
 	portrait = trading_post
 	image_filepath = "tiles/settlements/town.png"
+	level_commodity_costs = {
+		wealth = 1gb
+	}
+	level_commodity_costs_per_level = {
+		regency = 1
+	}
 	tier_levels = {
 		hamlet = 1
 		village = 2

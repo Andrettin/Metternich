@@ -3,6 +3,12 @@ temple = {
 	icon = alliance_ring
 	portrait = temple
 	image_filepath = "tiles/settlements/town.png"
+	level_commodity_costs = {
+		wealth = 1gb
+	}
+	level_commodity_costs_per_level = {
+		regency = 1
+	}
 	level_names = {
 		1 = "Shrine"
 		2 = "Temple"

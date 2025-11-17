@@ -3,6 +3,7 @@
 #include "infrastructure/holding_type.h"
 
 #include "database/database.h"
+#include "economy/commodity.h"
 #include "map/tile_image_provider.h"
 #include "population/population_class.h"
 #include "population/population_type.h"
@@ -12,6 +13,11 @@
 #include "util/vector_util.h"
 
 namespace metternich {
+
+const std::set<std::string> holding_type::database_dependencies = {
+	//so that commodity units are present
+	commodity::class_identifier
+};
 
 holding_type::holding_type(const std::string &identifier) : named_data_entry(identifier)
 {
@@ -26,7 +32,17 @@ void holding_type::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "level_names") {
+	if (tag == "level_commodity_costs") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const commodity *commodity = commodity::get(property.get_key());
+			this->level_commodity_costs[commodity] = commodity->string_to_value(property.get_value());
+		});
+	} else if (tag == "level_commodity_costs_per_level") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const commodity *commodity = commodity::get(property.get_key());
+			this->level_commodity_costs_per_level[commodity] = commodity->string_to_value(property.get_value());
+		});
+	} else if (tag == "level_names") {
 		scope.for_each_property([&](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
