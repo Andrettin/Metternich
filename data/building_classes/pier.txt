@@ -1,0 +1,9 @@
+pier = {
+	name = "Pier"
+	slot_type = pier
+}
+
+waterfront = {
+	name = "Waterfront"
+	slot_type = pier
+}

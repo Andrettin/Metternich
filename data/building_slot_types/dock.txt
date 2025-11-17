@@ -1,3 +1,0 @@
-dock = {
-	name = "Dock"
-}

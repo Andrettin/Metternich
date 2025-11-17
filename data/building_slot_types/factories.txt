@@ -1,7 +1,3 @@
-food_processing_center = {
-	name = "Food Processing Center"
-}
-
 arsenal = {
 	name = "Arsenal"
 }

@@ -1,4 +1,0 @@
-food_processing_center = {
-	name = "Food Processing Center"
-	slot_type = food_processing_center
-}

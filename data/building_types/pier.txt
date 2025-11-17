@@ -1,0 +1,40 @@
+dock = {
+	name = "Pier"
+	building_class = pier
+	portrait = dock
+	icon = anchor
+	holding_level = 1
+	holding_types = {
+		guild
+	}
+	conditions = {
+		province = {
+			near_water = true
+		}
+	}
+}
+
+waterfront = {
+	name = "Waterfront"
+	building_class = waterfront
+	portrait = dock
+	icon = anchor
+	required_building = dock
+	holding_level = 2
+	holding_types = {
+		guild
+	}
+	recruited_transporter_categories = {
+		small_merchant_ship
+		large_merchant_ship
+	}
+	recruited_military_unit_categories = {
+		light_warship
+		heavy_warship
+	}
+	conditions = {
+		province = {
+			near_water = true
+		}
+	}
+}
