@@ -1,0 +1,22 @@
+mansion = {
+	name = "Mansion"
+	building_class = mansion
+	portrait = aristocratic_palace
+	icon = heater_shield
+	holding_level = 1
+	holding_types = {
+		manor
+	}
+}
+
+noble_villa = {
+	name = "Noble Villa"
+	building_class = noble_villa
+	portrait = aristocratic_palace
+	icon = heater_shield
+	holding_level = 2
+	required_building = mansion
+	holding_types = {
+		manor
+	}
+}

@@ -1,0 +1,9 @@
+mansion = {
+	name = "Mansion"
+	slot_type = mansion
+}
+
+noble_villa = {
+	name = "Noble Villa"
+	slot_type = mansion
+}

@@ -1,0 +1,3 @@
+mansion = {
+	name = "Mansion"
+}
