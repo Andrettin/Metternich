@@ -1,103 +1,13 @@
-village_hall = {
-	name = "Village Hall"
-	building_class = village_hall
-	portrait = town
-	icon = flag
-	holding_types = {
-		village
-		town
-		city
-	}
-	country_modifier = {
-		commodity_demand = {
-			commodity = furniture
-			value = 1
-		}
-	}
-	free_on_start_conditions = {
-		capital = true
-	}
-}
-
 town_hall = {
 	name = "Town Hall"
 	building_class = town_hall
 	portrait = town
 	icon = flag
-	required_building = village_hall
+	holding_level = 1
 	holding_types = {
-		town
-		city
+		manor
 	}
-	country_modifier = {
-		commodity_demand = {
-			commodity = furniture
-			value = 1
-		}
-	}
-	free_on_start_conditions = {
-		capital = true
-	}
-}
-
-city_hall = {
-	name = "City Hall"
-	building_class = city_hall
-	portrait = city
-	icon = flag
-	required_building = town_hall
-	holding_types = {
-		city
-	}
-	country_modifier = {
-		commodity_demand = {
-			commodity = furniture
-			value = 1
-		}
-	}
-	free_on_start_conditions = {
-		capital = true
-	}
-}
-
-state_house = {
-	name = "State House"
-	building_class = state_house
-	portrait = city
-	icon = flag
-	provincial_capitol = true
-	required_building = city_hall
-	holding_types = {
-		city
-	}
-	country_modifier = {
-		commodity_demand = {
-			commodity = furniture
-			value = 1
-		}
-	}
-	free_on_start_conditions = {
-		capital = true
-	}
-}
-
-capitol = {
-	name = "Capitol"
-	building_class = capitol
-	portrait = city
-	icon = flag
-	capitol = true
-	required_building = state_house
-	holding_types = {
-		city
-	}
-	country_modifier = {
-		commodity_demand = {
-			commodity = furniture
-			value = 1
-		}
-	}
-	free_on_start_conditions = {
-		capital = true
+	build_conditions = {
+		holding_level >= 1
 	}
 }

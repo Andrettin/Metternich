@@ -3,17 +3,8 @@ market = {
 	building_class = market
 	portrait = trading_post
 	icon = wealth
+	holding_level = 1
 	holding_types = {
 		guild
-	}
-	conditions = {
-		game_rule = trade_commodity
-		game_rule = additional_buildings
-		province = {
-			produces_commodity = trade
-		}
-	}
-	settlement_modifier = {
-		trade_output_modifier = 50
 	}
 }

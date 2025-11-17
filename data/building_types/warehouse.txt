@@ -11,8 +11,6 @@ warehouse = {
 		village
 		town
 		city
-		manor
-		temple
 	}
 	country_modifier = {
 		storage_capacity = 100

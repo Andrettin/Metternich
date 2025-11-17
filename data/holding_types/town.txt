@@ -74,10 +74,7 @@ town = {
 		capitalists
 	}
 	build_conditions = {
-		or = {
-			has_building_class = village_hall
-			has_building_class = market
-		}
+		has_building_class = market
 	}
 	conditions = {
 		not = {

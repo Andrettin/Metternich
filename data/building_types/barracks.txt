@@ -3,8 +3,8 @@ barracks = {
 	building_class = barracks
 	portrait = fort
 	icon = crossed_sabers
+	holding_level = 1
 	holding_types = {
-		city
 		manor
 	}
 	recruited_military_unit_categories = {
@@ -23,10 +23,7 @@ barracks = {
 		combat_engineers
 		general
 	}
-	settlement_modifier = {
-		housing_bonus = 1
-	}
-	free_on_start_conditions = {
-		capital = true
+	build_conditions = {
+		holding_level >= 1
 	}
 }
