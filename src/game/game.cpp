@@ -1156,7 +1156,7 @@ void game::apply_site_buildings(const site *site)
 				}
 			}
 
-			if (building_slot->can_have_building(building)) {
+			if (building_slot->can_gain_building(building)) {
 				break;
 			}
 
