@@ -1,0 +1,13 @@
+military_academy = {
+	name = "Military Academy"
+	building_class = military_academy
+	portrait = fort
+	icon = wall
+	holding_level = 1
+	holding_types = {
+		manor
+	}
+	build_conditions = {
+		holding_level >= 4
+	}
+}

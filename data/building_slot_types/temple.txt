@@ -1,3 +1,7 @@
 temple = {
 	name = "Temple"
 }
+
+monastery = {
+	name = "Monastery"
+}

@@ -12,3 +12,8 @@ cathedral = {
 	name = "Cathedral"
 	slot_type = temple
 }
+
+monastery = {
+	name = "Monastery"
+	slot_type = monastery
+}

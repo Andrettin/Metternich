@@ -28,11 +28,28 @@ cathedral = {
 	building_class = cathedral
 	portrait = temple
 	icon = golden_cross_detailed
-	holding_level = 4
+	holding_level = 3
 	required_building = temple
 	required_technology = middle_ages
 	holding_types = {
 		temple
 		city
+	}
+	build_conditions = {
+		holding_level >= 3
+	}
+}
+
+monastery = {
+	name = "Monastery"
+	building_class = monastery
+	portrait = temple
+	icon = wooden_cross
+	holding_level = 1
+	holding_types = {
+		temple
+	}
+	build_conditions = {
+		holding_level >= 2
 	}
 }

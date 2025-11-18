@@ -7,3 +7,8 @@ noble_villa = {
 	name = "Noble Villa"
 	slot_type = mansion
 }
+
+palace = {
+	name = "Palace"
+	slot_type = mansion
+}
