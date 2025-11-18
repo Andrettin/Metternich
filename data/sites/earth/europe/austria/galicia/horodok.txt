@@ -1,0 +1,8 @@
+horodok = {
+	name = "Horodok"
+	world = earth
+	geocoordinate = { 23.643611111111 49.782222222222 }
+	type = holding
+	holding_type = manor
+	province = east_galicia
+}

@@ -1,0 +1,8 @@
+zvenyhorod = {
+	name = "Zvenyhorod"
+	world = earth
+	geocoordinate = { 24.246944444444 49.732777777778 }
+	type = holding
+	holding_type = manor
+	province = east_galicia
+}

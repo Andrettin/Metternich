@@ -1,0 +1,8 @@
+butsk = {
+	name = "Butsk"
+	world = earth
+	geocoordinate = { 24.616666666667 49.966666666667 } #Busk, Lviv
+	type = holding
+	holding_type = temple
+	province = east_galicia
+}

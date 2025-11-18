@@ -1,0 +1,8 @@
+sambir = {
+	name = "Sambir"
+	world = earth
+	geocoordinate = { 23.2 49.516666666667 }
+	type = holding
+	holding_type = manor
+	province = east_galicia
+}

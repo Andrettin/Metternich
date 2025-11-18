@@ -1,0 +1,8 @@
+rogozhyn = {
+	name = "Rogozhyn"
+	world = earth
+	geocoordinate = { 23.063611111111 49.629166666667 } #Rogizno, Sambir, Lviv (correct?)
+	type = holding
+	holding_type = manor
+	province = east_galicia
+}
