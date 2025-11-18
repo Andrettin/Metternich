@@ -1,0 +1,11 @@
+rasiv = {
+	name = "Rasiv"
+	world = earth
+	geocoordinate = { 22.00004186880 50.07046958320 } #from Natural Earth (Rzeszów)
+	type = holding
+	holding_type = manor
+	province = west_galicia
+	cultural_names = {
+		polish = "Rzeszow" #"Rzeszów"
+	}
+}

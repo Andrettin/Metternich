@@ -1,0 +1,11 @@
+ustryky_dolishni = {
+	name = "Ustryky Dolishni"
+	world = earth
+	geocoordinate = { 22.6 49.433333333333 } #Ustrzyki Dolne
+	type = holding
+	holding_type = manor
+	province = west_galicia
+	cultural_names = {
+		polish = "Ustrzyki Dolne"
+	}
+}

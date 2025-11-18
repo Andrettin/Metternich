@@ -1,0 +1,8 @@
+sanok = {
+	name = "Sanok"
+	world = earth
+	geocoordinate = { 22.216666666667 49.55 }
+	type = holding
+	holding_type = guild
+	province = west_galicia
+}

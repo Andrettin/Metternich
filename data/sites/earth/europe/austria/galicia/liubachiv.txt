@@ -1,0 +1,11 @@
+liubachiv = {
+	name = "Liubachiv"
+	world = earth
+	geocoordinate = { 23.122991388889 50.155600888889 } #Lubaczów
+	type = holding
+	holding_type = manor
+	province = west_galicia
+	cultural_names = {
+		polish = "Lubaczow"
+	}
+}
