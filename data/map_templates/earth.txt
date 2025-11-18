@@ -43,7 +43,7 @@ europe = {
 
 central_europe = {
 	name = "Central Europe"
-	size = { 546 358 }
+	size = { 1092 716 }
 	world = earth
 	map_projection = miller
 	min_longitude = 2
