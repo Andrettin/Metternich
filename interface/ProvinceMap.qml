@@ -4,8 +4,8 @@ import MaskedMouseArea 1.0
 
 Flickable {
 	id: province_map
-	contentWidth: metternich.map.diplomatic_map_image_size.width * scale_factor
-	contentHeight: metternich.map.diplomatic_map_image_size.height * scale_factor
+	contentWidth: metternich.map.province_map_image_size.width * scale_factor
+	contentHeight: metternich.map.province_map_image_size.height * scale_factor
 	boundsBehavior: Flickable.StopAtBounds
 	clip: true
 	
@@ -50,19 +50,19 @@ Flickable {
 		TinyText {
 			id: province_label
 			text: province.game_data.current_cultural_name
-			x: Math.floor(text_rect.x * metternich.map.diplomatic_map_tile_pixel_size * scale_factor)
-			y: Math.floor(text_rect.y * metternich.map.diplomatic_map_tile_pixel_size * scale_factor)
+			x: Math.floor(text_rect.x * metternich.map.province_map_tile_pixel_size * scale_factor)
+			y: Math.floor(text_rect.y * metternich.map.province_map_tile_pixel_size * scale_factor)
 			width: Math.floor(text_rect_width)
 			height: Math.floor(text_rect_height)
 			visible: province_map.mode !== ProvinceMap.Mode.Site
 			wrapMode: Text.WordWrap
-			horizontalAlignment: contentWidth <= width ? Text.AlignHCenter : (province.game_data.map_image_rect.x === 0 ? Text.AlignLeft : ((province.game_data.map_image_rect.x + province.game_data.map_image_rect.width) >= metternich.map.diplomatic_map_image_size.width * scale_factor ? Text.AlignRight : Text.AlignHCenter))
-			verticalAlignment: contentHeight <= height ? Text.AlignVCenter : (province.game_data.map_image_rect.y === 0 ? Text.AlignTop : ((province.game_data.map_image_rect.y + province.game_data.map_image_rect.height) >= metternich.map.diplomatic_map_image_size.height * scale_factor ? Text.AlignBottom : Text.AlignVCenter))
+			horizontalAlignment: contentWidth <= width ? Text.AlignHCenter : (province.game_data.map_image_rect.x === 0 ? Text.AlignLeft : ((province.game_data.map_image_rect.x + province.game_data.map_image_rect.width) >= metternich.map.province_map_image_size.width * scale_factor ? Text.AlignRight : Text.AlignHCenter))
+			verticalAlignment: contentHeight <= height ? Text.AlignVCenter : (province.game_data.map_image_rect.y === 0 ? Text.AlignTop : ((province.game_data.map_image_rect.y + province.game_data.map_image_rect.height) >= metternich.map.province_map_image_size.height * scale_factor ? Text.AlignBottom : Text.AlignVCenter))
 			
 			readonly property var province: model.modelData
 			readonly property var text_rect: province.game_data.text_rect
-			readonly property int text_rect_width: text_rect.width * metternich.map.diplomatic_map_tile_pixel_size * scale_factor
-			readonly property int text_rect_height: text_rect.height * metternich.map.diplomatic_map_tile_pixel_size * scale_factor
+			readonly property int text_rect_width: text_rect.width * metternich.map.province_map_tile_pixel_size * scale_factor
+			readonly property int text_rect_height: text_rect.height * metternich.map.province_map_tile_pixel_size * scale_factor
 		}
 	}
 	
@@ -72,7 +72,7 @@ Flickable {
 		hoverEnabled: true
 		
 		onClicked: function (mouse) {
-			var province = metternich.map.get_tile_province(Qt.point(Math.floor(mouse.x / metternich.map.diplomatic_map_tile_pixel_size / scale_factor), Math.floor(mouse.y / metternich.map.diplomatic_map_tile_pixel_size / scale_factor)))
+			var province = metternich.map.get_tile_province(Qt.point(Math.floor(mouse.x / metternich.map.province_map_tile_pixel_size / scale_factor), Math.floor(mouse.y / metternich.map.province_map_tile_pixel_size / scale_factor)))
 			
 			if (province === null || selected_province === province || province.water_zone) {
 				select_province(null)
@@ -89,7 +89,7 @@ Flickable {
 		}
 		
 		onPositionChanged: function (mouse) {
-			var province = metternich.map.get_tile_province(Qt.point(Math.floor(mouse.x / metternich.map.diplomatic_map_tile_pixel_size / scale_factor), Math.floor(mouse.y / metternich.map.diplomatic_map_tile_pixel_size / scale_factor)))
+			var province = metternich.map.get_tile_province(Qt.point(Math.floor(mouse.x / metternich.map.province_map_tile_pixel_size / scale_factor), Math.floor(mouse.y / metternich.map.province_map_tile_pixel_size / scale_factor)))
 			
 			if (province !== null) {
 				var text = province.game_data.current_cultural_name
@@ -121,8 +121,8 @@ Flickable {
 		
 		Image {
 			id: site_icon
-			x: site.game_data.tile_pos.x * metternich.map.diplomatic_map_tile_pixel_size * scale_factor - Math.floor(width / 2)
-			y: site.game_data.tile_pos.y * metternich.map.diplomatic_map_tile_pixel_size * scale_factor - Math.floor(height / 2)
+			x: site.game_data.tile_pos.x * metternich.map.province_map_tile_pixel_size * scale_factor - Math.floor(width / 2)
+			y: site.game_data.tile_pos.y * metternich.map.province_map_tile_pixel_size * scale_factor - Math.floor(height / 2)
 			source: "image://icon/" + (holding_type ? holding_type.icon.identifier : (dungeon ? dungeon.icon.identifier : "garrison")) + (site === selected_site ? "/selected" : "")
 			visible: province_map.mode === ProvinceMap.Mode.Site && (site.settlement || dungeon !== null)
 			
@@ -189,8 +189,8 @@ Flickable {
 		
 		Image {
 			id: consulate_icon
-			x: other_country_capital ? (other_country_capital.game_data.tile_pos.x * metternich.map.diplomatic_map_tile_pixel_size * scale_factor - width / 2) : 0
-			y: other_country_capital ? (other_country_capital.game_data.tile_pos.y * metternich.map.diplomatic_map_tile_pixel_size * scale_factor - height / 2) : 0
+			x: other_country_capital ? (other_country_capital.game_data.tile_pos.x * metternich.map.province_map_tile_pixel_size * scale_factor - width / 2) : 0
+			y: other_country_capital ? (other_country_capital.game_data.tile_pos.y * metternich.map.province_map_tile_pixel_size * scale_factor - height / 2) : 0
 			source: "image://icon/" + consulate.icon.identifier
 			visible: !reference_country.game_data.anarchy && !other_country.game_data.anarchy && province_map.mode === DiplomaticMap.Mode.Treaty
 			
@@ -224,8 +224,8 @@ Flickable {
 	}
 	
 	function center_on_tile(tile_x, tile_y) {
-		var pixel_x = Math.round(tile_x * metternich.map.diplomatic_map_tile_pixel_size * scale_factor - province_map.width / 2)
-		var pixel_y = Math.round(tile_y * metternich.map.diplomatic_map_tile_pixel_size * scale_factor - province_map.height / 2)
+		var pixel_x = Math.round(tile_x * metternich.map.province_map_tile_pixel_size * scale_factor - province_map.width / 2)
+		var pixel_y = Math.round(tile_y * metternich.map.province_map_tile_pixel_size * scale_factor - province_map.height / 2)
 		
 		province_map.contentX = Math.min(Math.max(pixel_x, 0), province_map.contentWidth - province_map.width)
 		province_map.contentY = Math.min(Math.max(pixel_y, 0), province_map.contentHeight - province_map.height)

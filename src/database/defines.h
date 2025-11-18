@@ -84,6 +84,7 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(std::filesystem::path province_border_image_filepath MEMBER province_border_image_filepath WRITE set_province_border_image_filepath)
 	Q_PROPERTY(QString default_menu_background_filepath READ get_default_menu_background_filepath_qstring NOTIFY changed)
 	Q_PROPERTY(int min_diplomatic_map_tile_scale MEMBER min_diplomatic_map_tile_scale READ get_min_diplomatic_map_tile_scale NOTIFY changed)
+	Q_PROPERTY(int min_province_map_tile_scale MEMBER min_province_map_tile_scale READ get_min_province_map_tile_scale NOTIFY changed)
 
 public:
 	using singleton<defines>::get;
@@ -386,6 +387,11 @@ public:
 		return this->min_diplomatic_map_tile_scale;
 	}
 
+	int get_min_province_map_tile_scale() const
+	{
+		return this->min_province_map_tile_scale;
+	}
+
 	int get_province_population_for_level(const int level) const;
 	int get_province_level_for_population(const int population) const;
 	const dice &get_province_taxation_for_level(const int level) const;
@@ -449,6 +455,7 @@ private:
 	std::map<event_trigger, int> event_trigger_none_random_weights; //the weight for no event happening for a given event trigger's random event selection
 	std::filesystem::path default_menu_background_filepath;
 	int min_diplomatic_map_tile_scale = 2;
+	int min_province_map_tile_scale = 2;
 	std::map<int, int> province_population_per_level;
 	std::map<int, dice> province_taxation_per_level;
 	std::map<int, int> domain_maintenance_cost_per_province_count;

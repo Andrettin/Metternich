@@ -1754,13 +1754,15 @@ QCoro::Task<QImage> domain_game_data::finalize_diplomatic_map_image(QImage &&ima
 
 	const int tile_pixel_size = map::get()->get_diplomatic_map_tile_pixel_size();
 
-	co_await QtConcurrent::run([tile_pixel_size, &image, &scaled_image]() {
-		scaled_image = image::scale<QImage::Format_ARGB32>(image, centesimal_int(tile_pixel_size), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
-			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+	if (tile_pixel_size > 1) {
+		co_await QtConcurrent::run([tile_pixel_size, &image, &scaled_image]() {
+			scaled_image = image::scale<QImage::Format_ARGB32>(image, centesimal_int(tile_pixel_size), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+				xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+			});
 		});
-	});
 
-	image = std::move(scaled_image);
+		image = std::move(scaled_image);
+	}
 
 	std::vector<QPoint> border_pixels;
 

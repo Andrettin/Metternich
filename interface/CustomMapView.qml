@@ -16,10 +16,10 @@ Item {
 	property string right_status_text: ""
 	property string interface_style: "dwarven"
 	readonly property int tile_size: metternich.defines.tile_size.width * scale_factor
-	readonly property real map_area_start_x: province_map.contentX / (metternich.map.diplomatic_map_tile_pixel_size * scale_factor)
-	readonly property real map_area_start_y: province_map.contentY / (metternich.map.diplomatic_map_tile_pixel_size * scale_factor)
-	readonly property real map_area_tile_width: province_map.width / (metternich.map.diplomatic_map_tile_pixel_size * scale_factor)
-	readonly property real map_area_tile_height: province_map.height / (metternich.map.diplomatic_map_tile_pixel_size * scale_factor)
+	readonly property real map_area_start_x: province_map.contentX / (metternich.map.province_map_tile_pixel_size * scale_factor)
+	readonly property real map_area_start_y: province_map.contentY / (metternich.map.province_map_tile_pixel_size * scale_factor)
+	readonly property real map_area_tile_width: province_map.width / (metternich.map.province_map_tile_pixel_size * scale_factor)
+	readonly property real map_area_tile_height: province_map.height / (metternich.map.province_map_tile_pixel_size * scale_factor)
 	
 	property var selected_civilian_unit: null
 	property var selected_site: null

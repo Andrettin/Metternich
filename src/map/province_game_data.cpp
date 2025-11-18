@@ -575,7 +575,7 @@ QCoro::Task<QImage> province_game_data::finalize_map_image(QImage &&image) const
 {
 	QImage scaled_image;
 
-	const int tile_pixel_size = map::get()->get_diplomatic_map_tile_pixel_size();
+	const int tile_pixel_size = map::get()->get_province_map_tile_pixel_size();
 
 	co_await QtConcurrent::run([tile_pixel_size, &image, &scaled_image]() {
 		scaled_image = image::scale<QImage::Format_ARGB32>(image, centesimal_int(tile_pixel_size), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
@@ -661,7 +661,7 @@ QCoro::Task<void> province_game_data::create_map_image()
 	this->map_image = co_await this->finalize_map_image(std::move(diplomatic_map_image));
 	this->selected_map_image = co_await this->finalize_map_image(std::move(selected_diplomatic_map_image));
 
-	const int tile_pixel_size = map->get_diplomatic_map_tile_pixel_size();
+	const int tile_pixel_size = map->get_province_map_tile_pixel_size();
 	this->map_image_rect = QRect(this->province->get_map_data()->get_territory_rect().topLeft() * tile_pixel_size * preferences::get()->get_scale_factor(), this->map_image.size());
 
 	co_await this->create_map_mode_image(province_map_mode::terrain);
