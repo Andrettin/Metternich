@@ -29,7 +29,7 @@ void province_map_data::on_map_created()
 
 	assert_throw(this->get_center_tile_pos() != QPoint(-1, -1));
 
-	static constexpr size_t max_holdings_per_province = 7;
+	static constexpr size_t max_holdings_per_province = 8;
 	if (this->get_settlement_sites().size() > max_holdings_per_province) {
 		log::log_error(std::format("Province \"{}\" has {} holding sites, more than the maximum of {}.", this->province->get_identifier(), this->get_settlement_sites().size(), max_holdings_per_province));
 	}
