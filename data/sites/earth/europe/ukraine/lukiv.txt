@@ -1,0 +1,8 @@
+lukiv = {
+	name = "Lukiv"
+	world = earth
+	geocoordinate = { 24.3475 51.233333333333 }
+	type = holding
+	holding_type = guild
+	province = rivne
+}

@@ -1,0 +1,8 @@
+lutsk = {
+	name = "Lutsk"
+	world = earth
+	geocoordinate = { 25.33337845730 50.74719830230 } #from Natural Earth
+	type = holding
+	holding_type = manor
+	province = rivne
+}

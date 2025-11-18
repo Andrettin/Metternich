@@ -1,0 +1,8 @@
+luboml = {
+	name = "Luboml"
+	world = earth
+	geocoordinate = { 24.040833333333 51.215833333333 }
+	type = holding
+	holding_type = guild
+	province = rivne
+}

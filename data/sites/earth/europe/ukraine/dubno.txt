@@ -1,0 +1,8 @@
+dubno = {
+	name = "Dubno"
+	world = earth
+	geocoordinate = { 25.735 50.393055555556 }
+	type = holding
+	holding_type = guild
+	province = rivne
+}

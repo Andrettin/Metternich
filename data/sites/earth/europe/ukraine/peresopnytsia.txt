@@ -1,0 +1,8 @@
+peresopnytsia = {
+	name = "Peresopnytsia"
+	world = earth
+	geocoordinate = { 25.993055555556 50.668611111111 }
+	type = holding
+	holding_type = temple
+	province = rivne
+}

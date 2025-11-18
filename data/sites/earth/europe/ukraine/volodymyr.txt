@@ -1,0 +1,11 @@
+volodymyr = {
+	name = "Volodymyr"
+	world = earth
+	geocoordinate = { 24.322222 50.848056 }
+	type = holding
+	holding_type = manor
+	province = rivne
+	cultural_names = {
+		russian = "Vladimir Volynsky"
+	}
+}
