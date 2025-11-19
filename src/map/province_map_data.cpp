@@ -15,10 +15,27 @@ namespace metternich {
 
 province_map_data::province_map_data(const metternich::province *province) : province(province)
 {
+	if (province->get_terrain() != nullptr) {
+		this->terrain = province->get_terrain();
+	}
 }
 
 void province_map_data::on_map_created()
 {
+	if (this->get_terrain() == nullptr) {
+		const terrain_type *best_terrain = nullptr;
+		int best_terrain_count = 0;
+		for (const auto &[tile_terrain, count] : this->get_tile_terrain_counts()) {
+			if (count > best_terrain_count) {
+				best_terrain = tile_terrain;
+				best_terrain_count = count;
+			}
+		}
+
+		this->terrain = best_terrain;
+		assert_throw(this->get_terrain() != nullptr);
+	}
+
 	this->calculate_territory_rect_center();
 
 	if (this->province->get_default_provincial_capital() != nullptr && this->province->get_default_provincial_capital()->get_map_data()->get_province() == this->province) {

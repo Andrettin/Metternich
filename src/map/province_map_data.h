@@ -7,11 +7,13 @@ namespace metternich {
 
 class province;
 class site;
+class terrain_type;
 
 class province_map_data final : public QObject
 {
 	Q_OBJECT
 
+	Q_PROPERTY(const metternich::terrain_type* terrain READ get_terrain CONSTANT)
 	Q_PROPERTY(bool coastal READ is_coastal CONSTANT)
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect NOTIFY territory_changed)
 	Q_PROPERTY(QVariantList sites READ get_sites_qvariant_list CONSTANT)
@@ -24,6 +26,11 @@ public:
 	bool is_on_map() const
 	{
 		return !this->get_tiles().empty();
+	}
+
+	const terrain_type *get_terrain() const
+	{
+		return this->terrain;
 	}
 
 	const QPoint &get_center_tile_pos() const
@@ -107,6 +114,7 @@ signals:
 
 private:
 	const metternich::province *province = nullptr;
+	const terrain_type *terrain = nullptr;
 	QPoint center_tile_pos = QPoint(-1, -1);
 	bool coastal = false;
 	bool has_river = false;

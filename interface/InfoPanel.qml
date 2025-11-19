@@ -244,6 +244,7 @@ Rectangle {
 		text: format_text(
 			selected_province ? (
 				("Province Level: " + selected_province.game_data.level)
+				+ ("\nTerrain: " + selected_province.map_data.terrain.name)
 			) : ""
 		)
 		visible: selected_province && !selected_garrison
