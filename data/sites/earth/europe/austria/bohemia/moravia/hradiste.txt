@@ -4,5 +4,5 @@ hradiste = {
 	geocoordinate = { 17.459691353499 49.069757549526 } #Uherské Hradiště
 	type = holding
 	holding_type = guild
-	province = moravia
+	province = olmutz
 }

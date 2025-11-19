@@ -4,5 +4,5 @@ oldrisov = {
 	geocoordinate = { 17.960794213547 49.991290485531 }
 	type = holding
 	holding_type = guild
-	province = moravia
+	province = troppau
 }

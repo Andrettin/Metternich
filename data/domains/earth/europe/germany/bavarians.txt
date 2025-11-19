@@ -17,7 +17,7 @@ bavarians = {
 		budweis
 		lower_austria
 		lower_silesia
-		moravia
+		olmutz
 		pilsen
 		salzburg
 		upper_austria

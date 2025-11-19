@@ -38,12 +38,13 @@ duchy_of_silesia = {
 		owns_province = bohemia
 		owns_province = brunn
 		owns_province = budweis
-		owns_province = moravia
+		owns_province = olmutz
 		owns_province = pilsen
 	}
 	owned_provinces = {
 		lower_silesia
 		upper_silesia
+		troppau
 	}
 	completion_effects = {
 		wealth += 1000
@@ -81,7 +82,7 @@ kingdom_of_bohemia = {
 		bohemia
 		brunn
 		budweis
-		moravia
+		olmutz
 		pilsen
 	}
 	completion_effects = {
@@ -121,8 +122,9 @@ kingdom_of_galicia_and_lodomeria = {
 		owns_province = bohemia
 		owns_province = brunn
 		owns_province = budweis
-		owns_province = moravia
+		owns_province = olmutz
 		owns_province = pilsen
+		owns_province = troppau
 	}
 	owned_provinces = {
 		west_galicia

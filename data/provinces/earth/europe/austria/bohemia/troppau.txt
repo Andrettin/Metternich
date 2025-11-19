@@ -1,20 +1,20 @@
-moravia = {
-	name = "Moravia"
-	color = { 113 224 128 }
-	default_provincial_capital = olmutz
+troppau = {
+	name = "Troppau"
+	color = { 113 149 102 }
+	default_provincial_capital = troppau
+	cultural_names = {
+		czech = "Opava"
+	}
 	regions = {
-		moravia
+		cisleithania
+		czechoslovakia
+		imperial_austria_1806
 	}
 	
 	history = {
 		owner = gaul
 		culture = gaulish
 		religion = pagan
-		
-		526 = {
-			owner = bavarians #territory of the Bavarians in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
-			culture = suebi
-		}
 		
 		919 = {
 			owner = bohemia #part of the Duchy of Bohemia in the 919-1003 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.

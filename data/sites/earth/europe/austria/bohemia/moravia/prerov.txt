@@ -4,5 +4,5 @@ prerov = {
 	geocoordinate = { 17.451111111111 49.455555555556 }
 	type = holding
 	holding_type = manor
-	province = moravia
+	province = olmutz
 }

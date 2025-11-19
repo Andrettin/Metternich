@@ -4,5 +4,5 @@ holasovice = {
 	geocoordinate = { 17.80852392866 49.998424576549 }
 	type = holding
 	holding_type = manor
-	province = moravia
+	province = troppau
 }

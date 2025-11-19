@@ -16,8 +16,8 @@ bohemia = {
 		bohemia
 		budweis
 		pilsen
-		moravia
 		brunn
+		olmutz
 	}
 	
 	history = {

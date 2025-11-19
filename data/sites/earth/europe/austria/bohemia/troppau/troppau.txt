@@ -5,7 +5,7 @@ troppau = {
 	type = holding
 	holding_type = manor
 	#resource = coal
-	province = moravia
+	province = troppau
 	cultural_names = {
 		czech = "Opava"
 	}

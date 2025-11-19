@@ -5,7 +5,7 @@ olmutz = {
 	type = holding
 	holding_type = manor
 	#resource = coal
-	province = moravia
+	province = olmutz
 	cultural_names = {
 		czech = "Olomouc"
 	}
