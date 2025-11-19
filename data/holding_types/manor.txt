@@ -1,4 +1,4 @@
-manor = {
+manor = { #administrative center
 	name = "Manor"
 	icon = non_aggression_pact_shield
 	portrait = aristocratic_palace
