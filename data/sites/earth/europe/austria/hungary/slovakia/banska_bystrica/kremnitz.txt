@@ -1,0 +1,15 @@
+kremnitz = {
+	name = "Kremnitz"
+	world = earth
+	geocoordinate = { 18.918333333333 48.704444444444 }
+	province = banska_bystrica
+	cultural_names = {
+		slovak = "Kremnica"
+	}
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

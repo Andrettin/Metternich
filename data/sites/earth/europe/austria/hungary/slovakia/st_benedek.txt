@@ -1,8 +1,0 @@
-st_benedek = {
-	name = "St. Benedek"
-	world = earth
-	geocoordinate = { 18.55583333 48.34416667 } #Hronský Beňadik
-	type = holding
-	holding_type = temple
-	province = pressburg
-}

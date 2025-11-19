@@ -1,8 +1,0 @@
-trsztena = {
-	name = "Trsztena"
-	world = earth
-	geocoordinate = { 19.616666666667 49.366666666667 } #Trstená
-	type = holding
-	holding_type = manor
-	province = pressburg
-}

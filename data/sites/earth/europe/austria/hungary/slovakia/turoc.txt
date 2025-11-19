@@ -1,8 +1,0 @@
-turoc = {
-	name = "Turoc"
-	world = earth
-	geocoordinate = { 18.921388888889 49.063611111111 } #Turócszentmárton/Martin
-	type = holding
-	holding_type = temple
-	province = pressburg
-}

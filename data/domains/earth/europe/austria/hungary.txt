@@ -14,11 +14,14 @@ hungary = {
 	}
 	core_provinces = {
 		pest
-		buda
-		pressburg
-		kesmark
 		banat
+		banska_bystrica
+		buda
+		kesmark
+		nitra
+		pressburg
 		transylvania
+		trencin
 	}
 	
 	history = {

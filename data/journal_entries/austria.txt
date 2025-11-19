@@ -59,11 +59,14 @@ grand_principality_of_transylvania = {
 		domain = austria
 	}
 	conditions = {
+		owns_province = banat
+		owns_province = banska_bystrica
 		owns_province = buda
 		owns_province = kesmark
+		owns_province = nitra
 		owns_province = pest
 		owns_province = pressburg
-		owns_province = banat
+		owns_province = trencin
 	}
 	owned_provinces = {
 		transylvania
@@ -99,11 +102,14 @@ kingdom_of_croatia = {
 		domain = austria
 	}
 	conditions = {
+		owns_province = banat
+		owns_province = banska_bystrica
 		owns_province = buda
 		owns_province = kesmark
+		owns_province = nitra
 		owns_province = pest
 		owns_province = pressburg
-		owns_province = banat
+		owns_province = trencin
 	}
 	owned_provinces = {
 		croatia
@@ -145,11 +151,14 @@ kingdom_of_hungary = {
 		domain = austria
 	}
 	owned_provinces = {
+		banat
+		banska_bystrica
 		buda
 		kesmark
+		nitra
 		pest
 		pressburg
-		banat
+		trencin
 	}
 	completion_effects = {
 		wealth += 1000

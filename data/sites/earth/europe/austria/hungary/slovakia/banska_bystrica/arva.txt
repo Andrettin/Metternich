@@ -1,0 +1,8 @@
+arva = {
+	name = "Arva"
+	world = earth
+	geocoordinate = { 19.358055555556 49.261666666667 } #Orava Castle
+	type = holding
+	holding_type = manor
+	province = banska_bystrica
+}

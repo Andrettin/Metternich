@@ -1,8 +1,0 @@
-nagytapolcsany = {
-	name = "Nagytapolcsany"
-	world = earth
-	geocoordinate = { 18.183333333333 48.55 } #Topoľčany/Nagytapolcsány
-	type = holding
-	holding_type = guild
-	province = pressburg
-}

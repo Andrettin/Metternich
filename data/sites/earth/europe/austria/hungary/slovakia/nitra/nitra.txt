@@ -1,0 +1,12 @@
+nitra = {
+	name = "Nitra"
+	world = earth
+	geocoordinate = { 18.0875 48.314722222222 }
+	type = holding
+	holding_type = manor
+	#resource = grain
+	province = nitra
+	cultural_names = {
+		magyar = "Nyitra"
+	}
+}

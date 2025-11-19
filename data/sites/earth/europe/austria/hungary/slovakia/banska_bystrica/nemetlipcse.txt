@@ -1,0 +1,8 @@
+nemetlipcse = {
+	name = "Nemetlipcse"
+	world = earth
+	geocoordinate = { 19.436388888889 49.065 } #Partizánska Ľupča
+	type = holding
+	holding_type = manor
+	province = banska_bystrica
+}

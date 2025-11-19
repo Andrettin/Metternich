@@ -1,0 +1,8 @@
+rozsahegy = {
+	name = "Rozsahegy"
+	world = earth
+	geocoordinate = { 19.308333333333 49.078611111111 } #Ružomberok
+	type = holding
+	holding_type = guild
+	province = banska_bystrica
+}

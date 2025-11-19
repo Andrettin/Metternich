@@ -1,0 +1,8 @@
+puho = {
+	name = "Puho"
+	world = earth
+	geocoordinate = { 18.330555555556 49.12 } #Púchov
+	type = holding
+	holding_type = manor
+	province = trencin
+}

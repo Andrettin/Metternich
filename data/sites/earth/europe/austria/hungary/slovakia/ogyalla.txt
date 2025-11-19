@@ -1,8 +1,0 @@
-ogyalla = {
-	name = "Ogyalla"
-	world = earth
-	geocoordinate = { 18.1915894 47.8726639 } #Hurbanovo/Ógyalla
-	type = holding
-	holding_type = guild
-	province = pressburg
-}

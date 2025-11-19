@@ -1,8 +1,0 @@
-nagyroce = {
-	name = "Nagyroce"
-	world = earth
-	geocoordinate = { 20.116666666667 48.683333333333 } #Revúca
-	type = holding
-	holding_type = manor
-	province = pressburg
-}

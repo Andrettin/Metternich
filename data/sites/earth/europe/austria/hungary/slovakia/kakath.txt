@@ -1,8 +1,0 @@
-kakath = {
-	name = "Kakath"
-	world = earth
-	geocoordinate = { 18.718055555556 47.799166666667 } #Štúrovo
-	type = holding
-	holding_type = guild
-	province = pressburg
-}

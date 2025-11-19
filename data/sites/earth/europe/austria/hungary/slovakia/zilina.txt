@@ -1,8 +1,0 @@
-zilina = {
-	name = "Zilina"
-	world = earth
-	geocoordinate = { 18.74938757190 49.21982383130 } #from Natural Earth
-	type = holding
-	holding_type = guild
-	province = pressburg
-}
