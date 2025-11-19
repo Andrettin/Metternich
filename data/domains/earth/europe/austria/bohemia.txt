@@ -17,6 +17,7 @@ bohemia = {
 		budweis
 		pilsen
 		brunn
+		iglau
 		olmutz
 	}
 	

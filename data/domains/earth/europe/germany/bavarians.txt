@@ -15,6 +15,7 @@ bavarians = {
 		brunn
 		buda
 		budweis
+		iglau
 		lower_austria
 		lower_silesia
 		olmutz

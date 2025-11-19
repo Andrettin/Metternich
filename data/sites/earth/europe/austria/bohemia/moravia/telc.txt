@@ -4,5 +4,5 @@ telc = {
 	geocoordinate = { 15.452771068011 49.184229941699 } #Telč
 	type = holding
 	holding_type = guild
-	province = brunn
+	province = iglau
 }

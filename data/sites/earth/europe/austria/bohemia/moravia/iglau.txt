@@ -1,12 +1,12 @@
-jihlava = {
-	name = "Jihlava"
+iglau = {
+	name = "Iglau"
 	world = earth
-	geocoordinate = { 15.58332759470 49.40038128570 } #from Natural Earth
+	geocoordinate = { 15.58332759470 49.40038128570 } #from Natural Earth (Jihlava)
 	type = holding
 	holding_type = guild #or manor
-	province = brunn
-	cultural_group_names = {
-		german = "Iglau"
+	province = iglau
+	cultural_names = {
+		czech = "Jihlava"
 	}
 	
 	history = {
@@ -14,4 +14,4 @@ jihlava = {
 			developed = true #Iglau existed in the 1815-1866 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
 		}
 	}
-}}
+}
