@@ -17,11 +17,17 @@ hungary = {
 		banat
 		banska_bystrica
 		buda
+		burgenland
+		gyor
+		kaposvar
 		kesmark
 		nitra
+		pecs
 		pressburg
+		szekesfehervar
 		transylvania
 		trencin
+		zalaegerszeg
 	}
 	
 	history = {

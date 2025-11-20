@@ -62,11 +62,17 @@ grand_principality_of_transylvania = {
 		owns_province = banat
 		owns_province = banska_bystrica
 		owns_province = buda
+		owns_province = burgenland
+		owns_province = gyor
+		owns_province = kaposvar
 		owns_province = kesmark
 		owns_province = nitra
+		owns_province = pecs
 		owns_province = pest
 		owns_province = pressburg
+		owns_province = szekesfehervar
 		owns_province = trencin
+		owns_province = zalaegerszeg
 	}
 	owned_provinces = {
 		transylvania
@@ -105,11 +111,17 @@ kingdom_of_croatia = {
 		owns_province = banat
 		owns_province = banska_bystrica
 		owns_province = buda
+		owns_province = burgenland
+		owns_province = gyor
+		owns_province = kaposvar
 		owns_province = kesmark
 		owns_province = nitra
+		owns_province = pecs
 		owns_province = pest
 		owns_province = pressburg
+		owns_province = szekesfehervar
 		owns_province = trencin
+		owns_province = zalaegerszeg
 	}
 	owned_provinces = {
 		croatia
@@ -154,11 +166,17 @@ kingdom_of_hungary = {
 		banat
 		banska_bystrica
 		buda
+		burgenland
+		gyor
+		kaposvar
 		kesmark
 		nitra
+		pecs
 		pest
 		pressburg
+		szekesfehervar
 		trencin
+		zalaegerszeg
 	}
 	completion_effects = {
 		wealth += 1000
