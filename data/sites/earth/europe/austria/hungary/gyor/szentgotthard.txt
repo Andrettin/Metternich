@@ -1,0 +1,8 @@
+szentgotthard = {
+	name = "Szentgotthard"
+	world = earth
+	geocoordinate = { 16.273611111111 46.9525 }
+	type = holding
+	holding_type = temple
+	province = gyor
+}

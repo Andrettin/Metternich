@@ -1,0 +1,8 @@
+szentlorinc = {
+	name = "Szentlorinc"
+	world = earth
+	geocoordinate = { 17.985555555556 46.042222222222 }
+	type = holding
+	holding_type = guild
+	province = pecs
+}

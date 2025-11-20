@@ -1,0 +1,8 @@
+val = {
+	name = "Val"
+	world = earth
+	geocoordinate = { 18.675319444444 47.363688888889 } #Vál
+	type = holding
+	holding_type = manor
+	province = szekesfehervar
+}

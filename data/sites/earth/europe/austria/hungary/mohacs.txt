@@ -1,8 +1,0 @@
-mohacs = {
-	name = "Mohacs"
-	world = earth
-	geocoordinate = { 18.679722222222 45.995833333333 }
-	type = holding
-	holding_type = guild
-	province = buda
-}

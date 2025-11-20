@@ -1,8 +1,0 @@
-koszeg = {
-	name = "Koszeg"
-	world = earth
-	geocoordinate = { 16.540727 47.388794 }
-	type = holding
-	holding_type = guild
-	province = buda
-}

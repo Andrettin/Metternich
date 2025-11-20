@@ -1,0 +1,17 @@
+szombathely = {
+	name = "Szombathely"
+	world = earth
+	geocoordinate = { 16.62874181990 47.22534608870 } #from Natural Earth
+	type = holding
+	holding_type = manor
+	province = gyor
+	cultural_group_names = {
+		german = "Steinamanger"
+	}
+	
+	history = {
+		1815 = {
+			developed = true #Steinamanger existed in the 1815-1866 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+	}
+}

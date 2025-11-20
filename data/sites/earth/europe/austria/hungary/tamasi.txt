@@ -1,8 +1,0 @@
-tamasi = {
-	name = "Tamasi"
-	world = earth
-	geocoordinate = { 18.3 46.616666666667 }
-	type = holding
-	holding_type = manor
-	province = buda
-}

@@ -1,8 +1,0 @@
-marcali = {
-	name = "Marcali"
-	world = earth
-	geocoordinate = { 17.406388888889 46.583055555556 }
-	type = holding
-	holding_type = manor
-	province = buda
-}

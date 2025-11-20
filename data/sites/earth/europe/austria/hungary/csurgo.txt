@@ -1,8 +1,0 @@
-csurgo = {
-	name = "Csurgo"
-	world = earth
-	geocoordinate = { 17.1 46.266666666667 }
-	type = holding
-	holding_type = temple
-	province = buda
-}

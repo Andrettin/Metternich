@@ -1,8 +1,0 @@
-gyorszentmarton = {
-	name = "Gyorszentmarton"
-	world = earth
-	geocoordinate = { 17.748333333333 47.548611111111 } #Pannonhalma/Győrszentmárton
-	type = holding
-	holding_type = temple
-	province = buda
-}

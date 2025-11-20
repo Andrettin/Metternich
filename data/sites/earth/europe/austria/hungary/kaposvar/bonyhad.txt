@@ -1,0 +1,8 @@
+bonyhad = {
+	name = "Bonyhad"
+	world = earth
+	geocoordinate = { 18.53 46.3 }
+	type = holding
+	holding_type = manor
+	province = kaposvar
+}

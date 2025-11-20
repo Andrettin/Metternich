@@ -1,0 +1,8 @@
+pecsvarad = {
+	name = "Pecsvarad"
+	world = earth
+	geocoordinate = { 18.421944444444 46.158055555556 }
+	type = holding
+	holding_type = manor
+	province = pecs
+}

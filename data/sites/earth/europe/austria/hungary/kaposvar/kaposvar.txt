@@ -1,0 +1,9 @@
+kaposvar = {
+	name = "Kaposvar"
+	world = earth
+	geocoordinate = { 17.79998815780 46.36702638660 } #from Natural Earth
+	type = holding
+	holding_type = guild
+	#resource = cattle
+	province = kaposvar
+}

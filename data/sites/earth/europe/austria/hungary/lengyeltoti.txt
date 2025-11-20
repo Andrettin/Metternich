@@ -1,8 +1,0 @@
-lengyeltoti = {
-	name = "Lengyeltoti"
-	world = earth
-	geocoordinate = { 17.636061111111 46.668288888889 }
-	type = holding
-	holding_type = manor
-	province = buda
-}

@@ -1,8 +1,0 @@
-barcs = {
-	name = "Barcs"
-	world = earth
-	geocoordinate = { 17.46 45.96 }
-	type = holding
-	holding_type = manor
-	province = buda
-}

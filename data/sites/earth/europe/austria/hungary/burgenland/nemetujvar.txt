@@ -1,0 +1,8 @@
+nemetujvar = {
+	name = "Nemetujvar"
+	world = earth
+	geocoordinate = { 16.323055555556 47.059166666667 } #Güssing/Németújvár
+	type = holding
+	holding_type = manor
+	province = burgenland
+}

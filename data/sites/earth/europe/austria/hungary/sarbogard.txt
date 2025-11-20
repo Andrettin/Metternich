@@ -1,8 +1,0 @@
-sarbogard = {
-	name = "Sarbogard"
-	world = earth
-	geocoordinate = { 18.619319444444 46.887761111111 }
-	type = holding
-	holding_type = manor
-	province = buda
-}

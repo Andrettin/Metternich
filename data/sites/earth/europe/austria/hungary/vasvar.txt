@@ -1,8 +1,0 @@
-vasvar = {
-	name = "Vasvar"
-	world = earth
-	geocoordinate = { 16.798333333333 47.050833333333 }
-	type = holding
-	holding_type = guild
-	province = buda
-}
