@@ -1024,7 +1024,7 @@ bool map_template::is_pos_available_for_site(const QPoint &tile_pos, const provi
 	const QRect map_rect(QPoint(0, 0), this->get_size());
 	bool available = true;
 
-	static constexpr int tile_check_range = 1;
+	static constexpr int tile_check_range = 2;
 	const QRect tile_check_rect(tile_pos - QPoint(tile_check_range, tile_check_range), tile_pos + QPoint(tile_check_range, tile_check_range));
 
 	rect::for_each_point_until(tile_check_rect, [this, &map_rect, &available, site_province, &province_image](const QPoint &rect_pos) {
@@ -1072,7 +1072,7 @@ bool map_template::is_pos_available_for_site_generation(const QPoint &tile_pos, 
 	const QRect map_rect(QPoint(0, 0), map::get()->get_size());
 	bool available = true;
 
-	static constexpr int tile_check_range = 1;
+	static constexpr int tile_check_range = 2;
 	const QRect tile_check_rect(tile_pos - QPoint(tile_check_range, tile_check_range), tile_pos + QPoint(tile_check_range, tile_check_range));
 
 	rect::for_each_point_until(tile_check_rect, [this, &map_rect, &available, site_province](const QPoint &rect_pos) {
