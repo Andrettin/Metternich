@@ -218,9 +218,8 @@ Rectangle {
 		anchors.bottom: garrison_details_button.top
 		anchors.bottomMargin: 16 * scale_factor
 		anchors.left: parent.left
-		anchors.leftMargin: 8 * scale_factor
 		anchors.right: parent.right
-		anchors.rightMargin: 8 * scale_factor
+		visible_rows: 2
 		visible: selected_site !== null && selected_site.settlement && !selected_garrison && !viewing_population && !viewing_settlement_info
 		building_slots: selected_site !== null && selected_site.settlement ? selected_site_game_data.building_slots : []
 	}
@@ -257,12 +256,14 @@ Rectangle {
 		anchors.horizontalCenter: parent.horizontalCenter
 		text: format_text(
 			selected_site_game_data ? (
-				(dungeon && dungeon.level !== 0 ? ("Dungeon Level: " + dungeon.level) : "")
+				(holding_type !== null ? ("Holding Level: " + selected_site_game_data.holding_level + "/" + selected_site.max_holding_level) : "")
+				+ (dungeon && dungeon.level !== 0 ? ("Dungeon Level: " + dungeon.level) : "")
 				+ (selected_site_game_data.commodity_outputs.length > 0 ? get_commodity_outputs_string(selected_site_game_data.commodity_outputs) : "")
 			) : ""
 		)
-		visible: selected_site && !selected_garrison && selected_site_game_data.holding_type === null && !viewing_population
+		visible: selected_site && !selected_garrison && !viewing_population
 		
+		readonly property var holding_type: selected_site_game_data ? selected_site_game_data.holding_type : null
 		readonly property var dungeon: selected_site_game_data ? selected_site_game_data.dungeon : null
 		
 		function get_commodity_outputs_string(commodity_outputs) {
