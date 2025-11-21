@@ -3,6 +3,8 @@ strasbourg = {
 	world = earth
 	geocoordinate = { 7.75000728215 48.57996624660 } #from Natural Earth
 	type = holding
+	holding_type = temple
+	max_tier = bishopric
 	province = alsace
 	cultural_names = {
 		frankish = "Argentoratum"
@@ -15,12 +17,12 @@ strasbourg = {
 	
 	history = {
 		395 = {
-			buildings += cathedral #Strassburg was the seat of a bishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
-			holding_type = city
+			tier = bishopric #Strassburg was the seat of a bishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
+			buildings += cathedral
 		}
 		
 		919 = {
-			holding_type = city #important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			#important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
 		}
 		
 		1360 = {
@@ -28,21 +30,21 @@ strasbourg = {
 		}
 		
 		1538 = {
-			buildings += college #Education establishment founded in Strasbourg in 1538; Source: Henry Kamen, "Early Modern European Society", 2021, p. 292.
+			#buildings += college #Education establishment founded in Strasbourg in 1538; Source: Henry Kamen, "Early Modern European Society", 2021, p. 292.
 		}
 		
 		1609 = {
-			buildings += newspaper #the newspaper "Relation" was founded in Strasbourg in 1609; Source: Henry Kamen, "Early Modern European Society", 2021, p. 308.
+			#buildings += newspaper #the newspaper "Relation" was founded in Strasbourg in 1609; Source: Henry Kamen, "Early Modern European Society", 2021, p. 308.
 		}
 		
 		1621 = {
-			buildings += university #Education establishment in Strasbourg elevated to a university in 1621; Source: Henry Kamen, "Early Modern European Society", 2021, p. 292.
+			#buildings += university #Education establishment in Strasbourg elevated to a university in 1621; Source: Henry Kamen, "Early Modern European Society", 2021, p. 292.
 		}
 		
 		1789 = {
 			#Bureau de finance and chambre du domaine existent in Strasbourg in 1789. Source: William R. Shepherd, Historical Atlas, 1911, p. 147.
 			#Prévôt des maréchaux existent in Strasbourg in 1789. Source: William R. Shepherd, Historical Atlas, 1911, p. 147.
-			buildings += courthouse
+			#buildings += courthouse
 		}
 		
 		1836 = {
