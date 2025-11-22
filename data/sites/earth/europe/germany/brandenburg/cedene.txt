@@ -1,0 +1,8 @@
+cedene = {
+	name = "Cedene"
+	world = earth
+	geocoordinate = { 14.2025 52.879444444444445 } #Cedynia
+	type = holding
+	holding_type = guild
+	province = brandenburg
+}

@@ -1,0 +1,8 @@
+soldin = {
+	name = "Soldin"
+	world = earth
+	geocoordinate = { 14.866666666666667 52.925 } #Myślibórz
+	type = holding
+	holding_type = manor
+	province = brandenburg
+}

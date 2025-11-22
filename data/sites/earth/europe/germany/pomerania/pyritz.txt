@@ -2,6 +2,9 @@ pyritz = {
 	name = "Pyritz"
 	world = earth
 	geocoordinate = { 14.891666666666667 53.141666666666666 }
+	type = holding
+	holding_type = manor
+	province = farther_pomerania
 	cultural_names = {
 		polish = "Pyrzyce"
 	}

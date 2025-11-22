@@ -1,0 +1,8 @@
+stargard = {
+	name = "Stargard"
+	world = earth
+	geocoordinate = { 15.04475 53.338719 }
+	type = holding
+	holding_type = manor
+	province = farther_pomerania
+}
