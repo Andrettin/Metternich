@@ -1,0 +1,8 @@
+muncheberg = {
+	name = "Muncheberg" #"Müncheberg"
+	world = earth
+	geocoordinate = { 14.139854 52.503749 }
+	type = holding
+	holding_type = manor
+	province = brandenburg
+}

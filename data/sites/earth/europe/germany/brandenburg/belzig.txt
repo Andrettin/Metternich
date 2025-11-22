@@ -1,0 +1,8 @@
+belzig = {
+	name = "Belzig"
+	world = earth
+	geocoordinate = { 12.595555555556 52.142222222222 } #Bad Belzig
+	type = holding
+	holding_type = temple
+	province = brandenburg
+}

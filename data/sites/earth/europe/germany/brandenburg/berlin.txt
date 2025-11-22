@@ -3,10 +3,12 @@ berlin = {
 	world = earth
 	geocoordinate = { 13.40154862330 52.52181866360 } #from Natural Earth
 	type = holding
+	holding_type = guild
+	province = brandenburg
 	
 	history = {
 		1360 = {
-			holding_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 		
 		1815 = {
