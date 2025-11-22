@@ -212,6 +212,7 @@ void domain_game_data::do_turn()
 			province->get_game_data()->do_turn();
 		}
 
+		this->collect_regency();
 		this->get_economy()->do_production();
 		this->collect_wealth();
 		this->pay_maintenance();
@@ -263,6 +264,49 @@ void domain_game_data::do_turn()
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error(std::format("Failed to process turn for country \"{}\".", this->domain->get_identifier())));
 	}
+}
+
+void domain_game_data::collect_regency()
+{
+	assert_throw(defines::get()->get_regency_commodity() != nullptr);
+
+	if (this->get_government()->get_ruler() == nullptr) {
+		return;
+	}
+
+	int collected_regency = 0;
+
+	for (const province *province : this->get_provinces()) {
+		collected_regency += province->get_game_data()->get_level();
+	}
+
+	data_entry_map<holding_type, int> total_holding_type_levels;
+	for (const site *site : this->get_sites()) {
+		if (!site->is_settlement() || site->get_holding_type() == nullptr) {
+			continue;
+		}
+
+		total_holding_type_levels[site->get_holding_type()] += site->get_game_data()->get_holding_level();
+	}
+
+	const character_class *ruler_character_class = this->get_government()->get_ruler()->get_game_data()->get_character_class();
+	if (ruler_character_class != nullptr) {
+		for (const auto &[holding_type, total_level] : total_holding_type_levels) {
+			if (ruler_character_class->is_holding_type_favored(holding_type)) {
+				collected_regency += total_level;
+			} else if (ruler_character_class->is_holding_type_allowed(holding_type)) {
+				collected_regency += total_level / 2;
+			}
+		}
+	}
+
+	if (collected_regency == 0) {
+		return;
+	}
+
+	//FIXME: limit the regency gain to the bloodline score (with a minimum of 1 regency gained)
+
+	this->get_economy()->change_stored_commodity(defines::get()->get_regency_commodity(), collected_regency);
 }
 
 void domain_game_data::collect_wealth()
