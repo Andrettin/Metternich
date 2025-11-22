@@ -16,8 +16,7 @@
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
-#include "map/site.h"
-#include "map/site_game_data.h"
+#include "map/province_map_data.h"
 #include "map/terrain_type.h"
 #include "map/tile.h"
 #include "script/condition/and_condition.h"
@@ -577,8 +576,8 @@ void military_unit::attack(military_unit *target, const bool ranged)
 
 	const metternich::province *province = target->get_province();
 	const terrain_type *terrain = nullptr;
-	if (province != nullptr && province->get_game_data()->get_provincial_capital() != nullptr) {
-		terrain = province->get_game_data()->get_provincial_capital()->get_game_data()->get_tile()->get_terrain();
+	if (province != nullptr && province->get_map_data()->get_terrain() != nullptr) {
+		terrain = province->get_map_data()->get_terrain();
 	}
 
 	centesimal_int attack;
