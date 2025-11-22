@@ -24,6 +24,12 @@ druid = {
 		half_elf
 		human
 	}
+	favored_holding_types = {
+		temple
+	}
+	allowed_holding_types = {
+		manor
+	}
 	min_attribute_values = {
 		wisdom = 12
 		charisma = 15

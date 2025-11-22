@@ -29,6 +29,9 @@ warrior = {
 		halfling
 		human
 	}
+	favored_holding_types = {
+		manor
+	}
 	min_attribute_values = {
 		strength = 9
 	}

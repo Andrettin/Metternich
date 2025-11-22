@@ -8,6 +8,7 @@
 #include "character/skill.h"
 #include "character/starting_age_category.h"
 #include "database/defines.h"
+#include "infrastructure/holding_type.h"
 #include "item/item_type.h"
 #include "script/condition/and_condition.h"
 #include "script/modifier.h"
@@ -47,6 +48,16 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "allowed_species") {
 		for (const std::string &value : values) {
 			this->allowed_species.push_back(species::get(value));
+		}
+	} else if (tag == "allowed_holding_types") {
+		for (const std::string &value : values) {
+			this->allowed_holding_types.push_back(holding_type::get(value));
+		}
+	} else if (tag == "favored_holding_types") {
+		for (const std::string &value : values) {
+			const holding_type *holding_type = holding_type::get(value);
+			this->favored_holding_types.push_back(holding_type);
+			this->allowed_holding_types.push_back(holding_type);
 		}
 	} else if (tag == "min_attribute_values") {
 		scope.for_each_property([&](const gsml_property &property) {
@@ -177,6 +188,28 @@ bool character_class::is_allowed_for_species(const species *species) const
 void character_class::add_allowed_species(const species *species)
 {
 	this->allowed_species.push_back(species);
+}
+
+bool character_class::is_holding_type_allowed(const holding_type *holding_type) const
+{
+	if (this->allowed_holding_types.empty()) {
+		if (this->get_base_class() != nullptr) {
+			return this->get_base_class()->is_holding_type_allowed(holding_type);
+		}
+	}
+
+	return vector::contains(this->allowed_holding_types, holding_type);
+}
+
+bool character_class::is_holding_type_favored(const holding_type *holding_type) const
+{
+	if (this->favored_holding_types.empty() && this->allowed_holding_types.empty()) {
+		if (this->get_base_class() != nullptr) {
+			return this->get_base_class()->is_holding_type_favored(holding_type);
+		}
+	}
+
+	return vector::contains(this->favored_holding_types, holding_type);
 }
 
 int64_t character_class::get_experience_for_level(const int level) const

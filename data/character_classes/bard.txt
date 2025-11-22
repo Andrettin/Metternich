@@ -26,6 +26,9 @@ bard = {
 		half_elf
 		human
 	}
+	allowed_holding_types = {
+		guild
+	}
 	min_attribute_values = {
 		dexterity = 12
 		intelligence = 13

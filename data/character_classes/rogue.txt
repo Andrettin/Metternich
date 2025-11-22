@@ -32,6 +32,12 @@ rogue = {
 		halfling
 		human
 	}
+	favored_holding_types = {
+		guild
+	}
+	allowed_holding_types = {
+		manor
+	}
 	min_attribute_values = {
 		dexterity = 9
 	}

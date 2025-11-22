@@ -14,6 +14,7 @@ namespace metternich {
 class character_attribute;
 class civilian_unit_class;
 class domain;
+class holding_type;
 class item_type;
 class level_bonus_table;
 class species;
@@ -150,6 +151,9 @@ public:
 	bool is_allowed_for_species(const species *species) const;
 	void add_allowed_species(const species *species);
 
+	bool is_holding_type_allowed(const holding_type *holding_type) const;
+	bool is_holding_type_favored(const holding_type *holding_type) const;
+
 	int get_min_attribute_value(const character_attribute *attribute) const
 	{
 		const auto find_iterator = this->min_attribute_values.find(attribute);
@@ -226,6 +230,8 @@ private:
 	data_entry_map<saving_throw_type, const level_bonus_table *> saving_throw_bonus_tables;
 	data_entry_set<skill> class_skills;
 	std::vector<const species *> allowed_species;
+	std::vector<const holding_type *> allowed_holding_types;
+	std::vector<const holding_type *> favored_holding_types;
 	data_entry_map<character_attribute, int> min_attribute_values;
 	std::map<std::string, int> rank_levels; //names for particular levels
 	std::map<int, int64_t> experience_per_level;

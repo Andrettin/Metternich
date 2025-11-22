@@ -25,6 +25,10 @@ paladin = {
 	allowed_species = {
 		human
 	}
+	favored_holding_types = {
+		manor
+		temple
+	}
 	min_attribute_values = {
 		strength = 12
 		constitution = 9

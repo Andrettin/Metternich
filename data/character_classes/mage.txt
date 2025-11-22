@@ -23,6 +23,9 @@ mage = {
 		half_elf
 		human
 	}
+	favored_holding_types = {
+		magic_source
+	}
 	min_attribute_values = {
 		intelligence = 9
 	}

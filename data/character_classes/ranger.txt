@@ -27,6 +27,10 @@ ranger = {
 		halfling
 		human
 	}
+	favored_holding_types = {
+		guild
+		manor
+	}
 	min_attribute_values = {
 		strength = 13
 		dexterity = 13
