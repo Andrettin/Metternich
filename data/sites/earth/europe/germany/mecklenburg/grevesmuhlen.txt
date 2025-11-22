@@ -1,0 +1,8 @@
+grevesmuhlen = {
+	name = "Grevesmuhlen"
+	world = earth
+	geocoordinate = { 11.19089 53.86446 }
+	type = holding
+	holding_type = manor
+	province = mecklenburg
+}

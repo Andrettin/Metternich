@@ -1,0 +1,8 @@
+gevezin = {
+	name = "Gevezin"
+	world = earth
+	geocoordinate = { 13.1104 53.5642 }
+	type = holding
+	holding_type = temple
+	province = mecklenburg
+}
