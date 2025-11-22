@@ -1,0 +1,18 @@
+magic_source = {
+	name = "Magic Source"
+	icon = alliance
+	portrait = university
+	image_filepath = "tiles/settlements/town.png"
+	level_commodity_costs = {
+		wealth = 1gb
+	}
+	level_commodity_costs_per_level = {
+		regency = 1
+	}
+	population_classes = {
+		slaves
+		untrained_workers
+		trained_workers
+		expert_workers
+	}
+}
