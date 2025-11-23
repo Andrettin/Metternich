@@ -15,13 +15,13 @@
 #include "domain/country_military.h"
 #include "domain/country_rank.h"
 #include "domain/country_technology.h"
-#include "domain/country_tier.h"
-#include "domain/country_tier_data.h"
 #include "domain/country_turn_data.h"
 #include "domain/country_type.h"
 #include "domain/culture.h"
 #include "domain/diplomacy_state.h"
 #include "domain/domain.h"
+#include "domain/domain_tier.h"
+#include "domain/domain_tier_data.h"
 #include "domain/government_group.h"
 #include "domain/government_type.h"
 #include "domain/idea.h"
@@ -103,7 +103,7 @@
 namespace metternich {
 
 domain_game_data::domain_game_data(metternich::domain *domain)
-	: domain(domain), tier(country_tier::none), religion(domain->get_default_religion())
+	: domain(domain), tier(domain_tier::none), religion(domain->get_default_religion())
 {
 	this->economy = make_qunique<country_economy>(domain, this);
 	this->government = make_qunique<country_government>(domain, this);
@@ -135,7 +135,7 @@ void domain_game_data::process_gsml_property(const gsml_property &property)
 	const std::string &value = property.get_value();
 
 	if (key == "tier") {
-		this->tier = magic_enum::enum_cast<country_tier>(value).value();
+		this->tier = magic_enum::enum_cast<domain_tier>(value).value();
 	} else if (key == "religion") {
 		this->religion = religion::get(value);
 	} else if (key == "government_type") {
@@ -143,7 +143,7 @@ void domain_game_data::process_gsml_property(const gsml_property &property)
 	} else if (key == "capital") {
 		this->capital = site::get(value);
 	} else {
-		throw std::runtime_error(std::format("Invalid country game data property: \"{}\".", key));
+		throw std::runtime_error(std::format("Invalid domain game data property: \"{}\".", key));
 	}
 }
 
@@ -165,7 +165,7 @@ void domain_game_data::process_gsml_scope(const gsml_data &scope)
 			this->characters.push_back(game::get()->get_character(value));
 		}
 	} else {
-		throw std::runtime_error(std::format("Invalid country game data scope: \"{}\".", tag));
+		throw std::runtime_error(std::format("Invalid domain game data scope: \"{}\".", tag));
 	}
 }
 
@@ -568,7 +568,7 @@ country_ai *domain_game_data::get_ai() const
 	return this->domain->get_ai();
 }
 
-void domain_game_data::set_tier(const country_tier tier)
+void domain_game_data::set_tier(const domain_tier tier)
 {
 	if (tier == this->get_tier()) {
 		return;
@@ -577,8 +577,8 @@ void domain_game_data::set_tier(const country_tier tier)
 	assert_throw(tier >= this->domain->get_min_tier());
 	assert_throw(tier <= this->domain->get_max_tier());
 
-	if (this->get_tier() != country_tier::none) {
-		const country_tier_data *tier_data = country_tier_data::get(this->get_tier());
+	if (this->get_tier() != domain_tier::none) {
+		const domain_tier_data *tier_data = domain_tier_data::get(this->get_tier());
 		if (tier_data->get_modifier() != nullptr) {
 			tier_data->get_modifier()->remove(this->domain);
 		}
@@ -586,8 +586,8 @@ void domain_game_data::set_tier(const country_tier tier)
 
 	this->tier = tier;
 
-	if (this->get_tier() != country_tier::none) {
-		const country_tier_data *tier_data = country_tier_data::get(this->get_tier());
+	if (this->get_tier() != domain_tier::none) {
+		const domain_tier_data *tier_data = domain_tier_data::get(this->get_tier());
 		if (tier_data->get_modifier() != nullptr) {
 			tier_data->get_modifier()->apply(this->domain);
 		}

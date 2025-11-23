@@ -6,10 +6,10 @@
 #include "util/qunique_ptr.h"
 
 Q_MOC_INCLUDE("domain/country_ai.h")
-Q_MOC_INCLUDE("domain/country_tier.h")
 Q_MOC_INCLUDE("domain/country_turn_data.h")
 Q_MOC_INCLUDE("domain/culture.h")
 Q_MOC_INCLUDE("domain/domain_game_data.h")
+Q_MOC_INCLUDE("domain/domain_tier.h")
 Q_MOC_INCLUDE("domain/government_type.h")
 Q_MOC_INCLUDE("map/site.h")
 Q_MOC_INCLUDE("religion/religion.h")
@@ -38,8 +38,8 @@ class population_class;
 class province;
 class religion;
 class site;
-enum class country_tier;
 enum class country_type;
+enum class domain_tier;
 
 class domain final : public named_data_entry, public data_type<domain>
 {
@@ -49,9 +49,9 @@ class domain final : public named_data_entry, public data_type<domain>
 	Q_PROPERTY(bool tribe READ is_tribe CONSTANT)
 	Q_PROPERTY(bool clade READ is_clade CONSTANT)
 	Q_PROPERTY(QColor color MEMBER color READ get_color NOTIFY changed)
-	Q_PROPERTY(metternich::country_tier default_tier MEMBER default_tier READ get_default_tier)
-	Q_PROPERTY(metternich::country_tier min_tier MEMBER min_tier READ get_min_tier)
-	Q_PROPERTY(metternich::country_tier max_tier MEMBER max_tier READ get_max_tier)
+	Q_PROPERTY(metternich::domain_tier default_tier MEMBER default_tier READ get_default_tier)
+	Q_PROPERTY(metternich::domain_tier min_tier MEMBER min_tier READ get_min_tier)
+	Q_PROPERTY(metternich::domain_tier max_tier MEMBER max_tier READ get_max_tier)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
 	Q_PROPERTY(metternich::religion* default_religion MEMBER default_religion NOTIFY changed)
 	Q_PROPERTY(metternich::government_type* default_government_type MEMBER default_government_type NOTIFY changed)
@@ -65,8 +65,8 @@ class domain final : public named_data_entry, public data_type<domain>
 
 public:
 	using government_variant = std::variant<const government_type *, const government_group *>;
-	using title_name_map = std::map<government_variant, std::map<country_tier, std::string>>;
-	using office_title_name_map = data_entry_map<office, std::map<government_variant, std::map<country_tier, std::map<gender, std::string>>>>;
+	using title_name_map = std::map<government_variant, std::map<domain_tier, std::string>>;
+	using office_title_name_map = data_entry_map<office, std::map<government_variant, std::map<domain_tier, std::map<gender, std::string>>>>;
 
 	static constexpr const char class_identifier[] = "domain";
 	static constexpr const char property_class_identifier[] = "metternich::domain*";
@@ -128,27 +128,27 @@ public:
 
 	const QColor &get_color() const;
 
-	country_tier get_default_tier() const
+	domain_tier get_default_tier() const
 	{
 		return this->default_tier;
 	}
 
-	country_tier get_min_tier() const
+	domain_tier get_min_tier() const
 	{
 		return this->min_tier;
 	}
 
-	country_tier get_max_tier() const
+	domain_tier get_max_tier() const
 	{
 		return this->max_tier;
 	}
 
 	using named_data_entry::get_name;
 
-	const std::string &get_name(const government_type *government_type, const country_tier tier) const;
-	std::string get_titled_name(const government_type *government_type, const country_tier tier, const religion *religion) const;
-	const std::string &get_title_name(const government_type *government_type, const country_tier tier, const religion *religion) const;
-	const std::string &get_office_title_name(const office *office, const government_type *government_type, const country_tier tier, const gender gender, const religion *religion) const;
+	const std::string &get_name(const government_type *government_type, const domain_tier tier) const;
+	std::string get_titled_name(const government_type *government_type, const domain_tier tier, const religion *religion) const;
+	const std::string &get_title_name(const government_type *government_type, const domain_tier tier, const religion *religion) const;
+	const std::string &get_office_title_name(const office *office, const government_type *government_type, const domain_tier tier, const gender gender, const religion *religion) const;
 
 	const metternich::culture *get_culture() const
 	{
@@ -199,9 +199,9 @@ signals:
 private:
 	country_type type{};
 	QColor color;
-	country_tier default_tier{};
-	country_tier min_tier{};
-	country_tier max_tier{};
+	domain_tier default_tier{};
+	domain_tier min_tier{};
+	domain_tier max_tier{};
 	metternich::culture *culture = nullptr;
 	religion *default_religion = nullptr;
 	government_type *default_government_type = nullptr;

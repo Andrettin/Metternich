@@ -23,8 +23,8 @@ Q_MOC_INCLUDE("domain/country_economy.h")
 Q_MOC_INCLUDE("domain/country_government.h")
 Q_MOC_INCLUDE("domain/country_military.h")
 Q_MOC_INCLUDE("domain/country_technology.h")
-Q_MOC_INCLUDE("domain/country_tier.h")
 Q_MOC_INCLUDE("domain/domain.h")
+Q_MOC_INCLUDE("domain/domain_tier.h")
 Q_MOC_INCLUDE("domain/government_type.h")
 Q_MOC_INCLUDE("domain/journal_entry.h")
 Q_MOC_INCLUDE("domain/subject_type.h")
@@ -71,9 +71,9 @@ class subject_type;
 class transporter;
 class transporter_type;
 class wonder;
-enum class country_tier;
 enum class diplomacy_state;
 enum class diplomatic_map_mode;
+enum class domain_tier;
 enum class event_trigger;
 enum class idea_type;
 enum class transporter_category;
@@ -91,7 +91,7 @@ class domain_game_data final : public QObject
 	Q_PROPERTY(metternich::country_government* government READ get_government CONSTANT)
 	Q_PROPERTY(metternich::country_military* military READ get_military CONSTANT)
 	Q_PROPERTY(metternich::country_technology* technology READ get_technology CONSTANT)
-	Q_PROPERTY(metternich::country_tier tier READ get_tier NOTIFY tier_changed)
+	Q_PROPERTY(metternich::domain_tier tier READ get_tier NOTIFY tier_changed)
 	Q_PROPERTY(QString name READ get_name_qstring NOTIFY title_name_changed)
 	Q_PROPERTY(QString titled_name READ get_titled_name_qstring NOTIFY title_name_changed)
 	Q_PROPERTY(QString title_name READ get_title_name_qstring NOTIFY title_name_changed)
@@ -185,12 +185,12 @@ public:
 	bool is_ai() const;
 	country_ai *get_ai() const;
 
-	country_tier get_tier() const
+	domain_tier get_tier() const
 	{
 		return this->tier;
 	}
 
-	void set_tier(const country_tier tier);
+	void set_tier(const domain_tier tier);
 
 	const std::string &get_name() const;
 
@@ -1137,7 +1137,7 @@ signals:
 
 private:
 	metternich::domain *domain = nullptr;
-	country_tier tier{};
+	domain_tier tier{};
 	const metternich::religion *religion = nullptr;
 	const metternich::domain *overlord = nullptr;
 	const metternich::government_type *government_type = nullptr;

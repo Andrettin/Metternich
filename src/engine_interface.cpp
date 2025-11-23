@@ -7,9 +7,9 @@
 #include "database/preferences.h"
 #include "domain/consulate.h"
 #include "domain/country_military.h"
-#include "domain/country_tier.h"
-#include "domain/country_tier_data.h"
 #include "domain/domain.h"
+#include "domain/domain_tier.h"
+#include "domain/domain_tier_data.h"
 #include "domain/law_group.h"
 #include "economy/commodity.h"
 #include "game/event_instance.h"
@@ -142,10 +142,10 @@ QVariantList engine_interface::get_research_commodities() const
 	return container::to_qvariant_list(technology::get_research_commodities());
 }
 
-const country_tier_data *engine_interface::get_country_tier_data(const metternich::country_tier tier) const
+const domain_tier_data *engine_interface::get_domain_tier_data(const metternich::domain_tier tier) const
 {
 	try {
-		return country_tier_data::get(tier);
+		return domain_tier_data::get(tier);
 	} catch (...) {
 		exception::report(std::current_exception());
 		QApplication::exit(EXIT_FAILURE);

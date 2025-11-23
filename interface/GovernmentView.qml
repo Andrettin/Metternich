@@ -27,7 +27,7 @@ Item {
 	}
 	
 	SmallText {
-		id: country_tier_label
+		id: domain_tier_label
 		text: "Tier"
 		anchors.top: government_type_icon.bottom
 		anchors.topMargin: 16 * scale_factor
@@ -35,22 +35,22 @@ Item {
 	}
 	
 	CustomIconImage {
-		id: country_tier_icon
-		anchors.top: country_tier_label.bottom
+		id: domain_tier_icon
+		anchors.top: domain_tier_label.bottom
 		anchors.topMargin: 8 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
-		icon_identifier: country_tier_data.icon.identifier
-		name: country_tier_data.name
-		tooltip: country_tier_data.name + (modifier_string.length > 0 ? format_text(small_text("\n"
+		icon_identifier: domain_tier_data.icon.identifier
+		name: domain_tier_data.name
+		tooltip: domain_tier_data.name + (modifier_string.length > 0 ? format_text(small_text("\n"
 			+ "\n" + modifier_string)) : "")
 			
-		readonly property var country_tier_data: metternich.get_country_tier_data(country_game_data.tier)
-		readonly property string modifier_string: country_tier_data.get_modifier_string(country)
+		readonly property var domain_tier_data: metternich.get_domain_tier_data(country_game_data.tier)
+		readonly property string modifier_string: domain_tier_data.get_modifier_string(country)
 	}
 	
 	Column {
 		id: law_groups_column
-		anchors.top: country_tier_icon.bottom
+		anchors.top: domain_tier_icon.bottom
 		anchors.topMargin: 16 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
 		spacing: 8 * scale_factor

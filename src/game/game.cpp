@@ -18,7 +18,6 @@
 #include "domain/country_military.h"
 #include "domain/country_rank.h"
 #include "domain/country_technology.h"
-#include "domain/country_tier.h"
 #include "domain/country_turn_data.h"
 #include "domain/cultural_group.h"
 #include "domain/culture.h"
@@ -27,6 +26,7 @@
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
 #include "domain/domain_history.h"
+#include "domain/domain_tier.h"
 #include "domain/government_type.h"
 #include "domain/law.h"
 #include "domain/office.h"
@@ -601,7 +601,7 @@ void game::apply_history(const metternich::scenario *scenario)
 			country_government *country_government = domain->get_government();
 			country_technology *country_technology = domain->get_technology();
 
-			if (domain_history->get_tier() != country_tier::none) {
+			if (domain_history->get_tier() != domain_tier::none) {
 				domain->get_game_data()->set_tier(domain_history->get_tier());
 			}
 

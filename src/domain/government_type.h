@@ -21,7 +21,7 @@ class law;
 class law_group;
 class office;
 class technology;
-enum class country_tier;
+enum class domain_tier;
 
 template <typename scope_type>
 class and_condition;
@@ -39,9 +39,9 @@ class government_type final : public named_data_entry, public data_type<governme
 
 public:
 	using government_variant = std::variant<const government_type *, const government_group *>;
-	using title_name_map = std::map<country_tier, std::string>;
+	using title_name_map = std::map<domain_tier, std::string>;
 	using site_title_name_map = std::map<int, std::string>;
-	using office_title_inner_name_map = std::map<country_tier, std::map<gender, std::string>>;
+	using office_title_inner_name_map = std::map<domain_tier, std::map<gender, std::string>>;
 	using office_title_name_map = data_entry_map<office, office_title_inner_name_map>;
 
 	static constexpr const char class_identifier[] = "government_type";
@@ -65,9 +65,9 @@ public:
 	virtual void initialize() override;
 	virtual void check() const override;
 
-	const std::string &get_title_name(const country_tier tier) const;
+	const std::string &get_title_name(const domain_tier tier) const;
 	const std::string &get_site_title_name(const int tier) const;
-	const std::string &get_office_title_name(const office *office, const country_tier tier, const gender gender) const;
+	const std::string &get_office_title_name(const office *office, const domain_tier tier, const gender gender) const;
 
 	const government_group *get_group() const
 	{

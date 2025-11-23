@@ -2,8 +2,8 @@
 
 #include "domain/government_group.h"
 
-#include "domain/country_tier.h"
-#include "domain/country_tier_data.h"
+#include "domain/domain_tier.h"
+#include "domain/domain_tier_data.h"
 #include "domain/government_type.h"
 #include "domain/office.h"
 #include "database/defines.h"
@@ -28,14 +28,14 @@ void government_group::process_gsml_scope(const gsml_data &scope)
 	}
 }
 
-const std::string &government_group::get_title_name(const country_tier tier) const
+const std::string &government_group::get_title_name(const domain_tier tier) const
 {
 	const auto find_iterator = this->title_names.find(tier);
 	if (find_iterator != this->title_names.end()) {
 		return find_iterator->second;
 	}
 
-	return country_tier_data::get(tier)->get_name();
+	return domain_tier_data::get(tier)->get_name();
 }
 
 const std::string &government_group::get_site_title_name(const int tier) const
@@ -48,7 +48,7 @@ const std::string &government_group::get_site_title_name(const int tier) const
 	return string::empty_str;
 }
 
-const std::string &government_group::get_office_title_name(const metternich::office *office, const country_tier tier, const gender gender) const
+const std::string &government_group::get_office_title_name(const metternich::office *office, const domain_tier tier, const gender gender) const
 {
 	const auto office_find_iterator = this->office_title_names.find(office);
 	if (office_find_iterator != this->office_title_names.end()) {
@@ -68,7 +68,7 @@ const std::string &government_group::get_office_title_name(const metternich::off
 
 	if (office->is_ruler()) {
 		switch (tier) {
-			case country_tier::barony:
+			case domain_tier::barony:
 				if (gender == gender::female) {
 					static const std::string str = "Baroness";
 					return str;
@@ -76,7 +76,7 @@ const std::string &government_group::get_office_title_name(const metternich::off
 					static const std::string str = "Baron";
 					return str;
 				}
-			case country_tier::county:
+			case domain_tier::county:
 				if (gender == gender::female) {
 					static const std::string str = "Countess";
 					return str;
@@ -84,7 +84,7 @@ const std::string &government_group::get_office_title_name(const metternich::off
 					static const std::string str = "Count";
 					return str;
 				}
-			case country_tier::duchy:
+			case domain_tier::duchy:
 				if (gender == gender::female) {
 					static const std::string str = "Duchess";
 					return str;
@@ -92,7 +92,7 @@ const std::string &government_group::get_office_title_name(const metternich::off
 					static const std::string str = "Duke";
 					return str;
 				}
-			case country_tier::kingdom:
+			case domain_tier::kingdom:
 				if (gender == gender::female) {
 					static const std::string str = "Queen";
 					return str;
@@ -100,7 +100,7 @@ const std::string &government_group::get_office_title_name(const metternich::off
 					static const std::string str = "King";
 					return str;
 				}
-			case country_tier::empire:
+			case domain_tier::empire:
 				if (gender == gender::female) {
 					static const std::string str = "Empress";
 					return str;

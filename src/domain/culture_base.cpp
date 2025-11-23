@@ -2,9 +2,9 @@
 
 #include "domain/culture_base.h"
 
-#include "domain/country_tier.h"
 #include "domain/cultural_group.h"
 #include "domain/culture_history.h"
+#include "domain/domain_tier.h"
 #include "domain/government_type.h"
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_type.h"
@@ -249,7 +249,7 @@ bool culture_base::is_part_of_group(const cultural_group *group) const
 	return this->get_group()->is_part_of_group(group);
 }
 
-const std::string &culture_base::get_title_name(const government_type *government_type, const country_tier tier) const
+const std::string &culture_base::get_title_name(const government_type *government_type, const domain_tier tier) const
 {
 	auto find_iterator = this->title_names.find(government_type);
 	if (find_iterator == this->title_names.end()) {
@@ -259,7 +259,7 @@ const std::string &culture_base::get_title_name(const government_type *governmen
 	if (find_iterator != this->title_names.end()) {
 		auto sub_find_iterator = find_iterator->second.find(tier);
 		if (sub_find_iterator == find_iterator->second.end()) {
-			sub_find_iterator = find_iterator->second.find(country_tier::none);
+			sub_find_iterator = find_iterator->second.find(domain_tier::none);
 		}
 
 		if (sub_find_iterator != find_iterator->second.end()) {
@@ -299,7 +299,7 @@ const std::string &culture_base::get_site_title_name(const government_type *gove
 	return string::empty_str;
 }
 
-const std::string &culture_base::get_office_title_name(const office *office, const government_type *government_type, const country_tier tier, const gender gender) const
+const std::string &culture_base::get_office_title_name(const office *office, const government_type *government_type, const domain_tier tier, const gender gender) const
 {
 	const auto office_find_iterator = this->office_title_names.find(office);
 	if (office_find_iterator != this->office_title_names.end()) {
@@ -311,7 +311,7 @@ const std::string &culture_base::get_office_title_name(const office *office, con
 		if (find_iterator != office_find_iterator->second.end()) {
 			auto sub_find_iterator = find_iterator->second.find(tier);
 			if (sub_find_iterator == find_iterator->second.end()) {
-				sub_find_iterator = find_iterator->second.find(country_tier::none);
+				sub_find_iterator = find_iterator->second.find(domain_tier::none);
 			}
 
 			if (sub_find_iterator != find_iterator->second.end()) {

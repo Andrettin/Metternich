@@ -8,7 +8,7 @@
 #include "util/centesimal_int.h"
 
 Q_MOC_INCLUDE("character/character.h")
-Q_MOC_INCLUDE("domain/country_tier.h")
+Q_MOC_INCLUDE("domain/domain_tier.h")
 Q_MOC_INCLUDE("domain/government_type.h")
 Q_MOC_INCLUDE("religion/religion.h")
 
@@ -23,14 +23,14 @@ class office;
 class religion;
 class subject_type;
 class technology;
-enum class country_tier;
 enum class diplomacy_state;
+enum class domain_tier;
 
 class domain_history final : public data_entry_history
 {
 	Q_OBJECT
 
-	Q_PROPERTY(metternich::country_tier tier MEMBER tier)
+	Q_PROPERTY(metternich::domain_tier tier MEMBER tier)
 	Q_PROPERTY(const metternich::religion* religion MEMBER religion READ get_religion)
 	Q_PROPERTY(const metternich::government_type* government_type MEMBER government_type READ get_government_type)
 	Q_PROPERTY(archimedes::centesimal_int literacy_rate MEMBER literacy_rate READ get_literacy_rate)
@@ -42,7 +42,7 @@ public:
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 
-	country_tier get_tier() const
+	domain_tier get_tier() const
 	{
 		return this->tier;
 	}
@@ -116,7 +116,7 @@ public:
 
 private:
 	const metternich::domain *domain = nullptr;
-	country_tier tier{};
+	domain_tier tier{};
 	const metternich::religion *religion = nullptr;
 	const metternich::government_type *government_type = nullptr;
 	data_entry_map<office, const character *> office_holders;

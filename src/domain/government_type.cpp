@@ -3,7 +3,7 @@
 #include "domain/government_type.h"
 
 #include "character/character_class.h"
-#include "domain/country_tier.h"
+#include "domain/domain_tier.h"
 #include "domain/government_group.h"
 #include "domain/law.h"
 #include "domain/law_group.h"
@@ -34,7 +34,7 @@ void government_type::process_title_name_scope(std::map<government_variant, titl
 			government_variant = government_type::get(key);
 		}
 
-		title_names[government_variant][country_tier::none] = value;
+		title_names[government_variant][domain_tier::none] = value;
 	});
 
 	scope.for_each_child([&](const gsml_data &child_scope) {
@@ -55,7 +55,7 @@ void government_type::process_title_name_scope(title_name_map &title_names, cons
 	scope.for_each_property([&](const gsml_property &property) {
 		const std::string &key = property.get_key();
 		const std::string &value = property.get_value();
-		const country_tier tier = magic_enum::enum_cast<country_tier>(key).value();
+		const domain_tier tier = magic_enum::enum_cast<domain_tier>(key).value();
 		title_names[tier] = value;
 	});
 }
@@ -138,17 +138,17 @@ void government_type::process_office_title_name_scope(office_title_inner_name_ma
 	scope.for_each_property([&](const gsml_property &property) {
 		const std::string &key = property.get_key();
 		const std::string &value = property.get_value();
-		if (magic_enum::enum_contains<country_tier>(key)) {
-			const country_tier tier = magic_enum::enum_cast<country_tier>(key).value();
+		if (magic_enum::enum_contains<domain_tier>(key)) {
+			const domain_tier tier = magic_enum::enum_cast<domain_tier>(key).value();
 			office_title_names[tier][gender::none] = value;
 		} else {
 			const gender gender = enum_converter<archimedes::gender>::to_enum(key);
-			office_title_names[country_tier::none][gender] = value;
+			office_title_names[domain_tier::none][gender] = value;
 		}
 	});
 
 	scope.for_each_child([&](const gsml_data &child_scope) {
-		const country_tier tier = magic_enum::enum_cast<country_tier>(child_scope.get_tag()).value();
+		const domain_tier tier = magic_enum::enum_cast<domain_tier>(child_scope.get_tag()).value();
 
 		government_type::process_office_title_name_scope(office_title_names[tier], child_scope);
 	});
@@ -249,7 +249,7 @@ void government_type::check() const
 	}
 }
 
-const std::string &government_type::get_title_name(const country_tier tier) const
+const std::string &government_type::get_title_name(const domain_tier tier) const
 {
 	const auto find_iterator = this->title_names.find(tier);
 	if (find_iterator != this->title_names.end()) {
@@ -269,7 +269,7 @@ const std::string &government_type::get_site_title_name(const int tier) const
 	return this->get_group()->get_site_title_name(tier);
 }
 
-const std::string &government_type::get_office_title_name(const office *office, const country_tier tier, const gender gender) const
+const std::string &government_type::get_office_title_name(const office *office, const domain_tier tier, const gender gender) const
 {
 	const auto office_find_iterator = this->office_title_names.find(office);
 	if (office_find_iterator != this->office_title_names.end()) {

@@ -5,13 +5,13 @@
 #include "database/defines.h"
 #include "domain/country_ai.h"
 #include "domain/country_government.h"
-#include "domain/country_tier.h"
-#include "domain/country_tier_data.h"
 #include "domain/country_turn_data.h"
 #include "domain/country_type.h"
 #include "domain/culture.h"
 #include "domain/domain_game_data.h"
 #include "domain/domain_history.h"
+#include "domain/domain_tier.h"
+#include "domain/domain_tier_data.h"
 #include "domain/government_group.h"
 #include "domain/government_type.h"
 #include "domain/office.h"
@@ -30,7 +30,7 @@
 namespace metternich {
 
 domain::domain(const std::string &identifier)
-	: named_data_entry(identifier), type(country_type::polity), default_tier(country_tier::none), min_tier(country_tier::none), max_tier(country_tier::none)
+	: named_data_entry(identifier), type(country_type::polity), default_tier(domain_tier::none), min_tier(domain_tier::none), max_tier(domain_tier::none)
 {
 	this->reset_game_data();
 }
@@ -65,11 +65,11 @@ void domain::process_gsml_scope(const gsml_data &scope)
 
 void domain::initialize()
 {
-	if (this->get_min_tier() == country_tier::none) {
+	if (this->get_min_tier() == domain_tier::none) {
 		this->min_tier = this->get_default_tier();
 	}
 
-	if (this->get_max_tier() == country_tier::none) {
+	if (this->get_max_tier() == domain_tier::none) {
 		this->max_tier = this->get_default_tier();
 	}
 
@@ -86,15 +86,15 @@ void domain::initialize()
 
 void domain::check() const
 {
-	if (this->get_default_tier() == country_tier::none) {
+	if (this->get_default_tier() == domain_tier::none) {
 		throw std::runtime_error(std::format("Country \"{}\" has no default tier.", this->get_identifier()));
 	}
 
-	if (this->get_min_tier() == country_tier::none) {
+	if (this->get_min_tier() == domain_tier::none) {
 		throw std::runtime_error(std::format("Country \"{}\" has no min tier.", this->get_identifier()));
 	}
 
-	if (this->get_max_tier() == country_tier::none) {
+	if (this->get_max_tier() == domain_tier::none) {
 		throw std::runtime_error(std::format("Country \"{}\" has no max tier.", this->get_identifier()));
 	}
 
@@ -198,7 +198,7 @@ const QColor &domain::get_color() const
 	return this->color;
 }
 
-const std::string &domain::get_name(const government_type *government_type, const country_tier tier) const
+const std::string &domain::get_name(const government_type *government_type, const domain_tier tier) const
 {
 	if (government_type == nullptr) {
 		return this->get_name();
@@ -212,7 +212,7 @@ const std::string &domain::get_name(const government_type *government_type, cons
 	if (find_iterator != this->short_names.end()) {
 		auto sub_find_iterator = find_iterator->second.find(tier);
 		if (sub_find_iterator == find_iterator->second.end()) {
-			sub_find_iterator = find_iterator->second.find(country_tier::none);
+			sub_find_iterator = find_iterator->second.find(domain_tier::none);
 		}
 
 		if (sub_find_iterator != find_iterator->second.end()) {
@@ -223,7 +223,7 @@ const std::string &domain::get_name(const government_type *government_type, cons
 	return this->get_name();
 }
 
-std::string domain::get_titled_name(const government_type *government_type, const country_tier tier, const religion *religion) const
+std::string domain::get_titled_name(const government_type *government_type, const domain_tier tier, const religion *religion) const
 {
 	auto find_iterator = this->short_names.find(government_type);
 	if (find_iterator == this->short_names.end()) {
@@ -233,7 +233,7 @@ std::string domain::get_titled_name(const government_type *government_type, cons
 	if (find_iterator != this->short_names.end()) {
 		auto sub_find_iterator = find_iterator->second.find(tier);
 		if (sub_find_iterator == find_iterator->second.end()) {
-			sub_find_iterator = find_iterator->second.find(country_tier::none);
+			sub_find_iterator = find_iterator->second.find(domain_tier::none);
 		}
 
 		if (sub_find_iterator != find_iterator->second.end()) {
@@ -254,10 +254,10 @@ std::string domain::get_titled_name(const government_type *government_type, cons
 	}
 }
 
-const std::string &domain::get_title_name(const government_type *government_type, const country_tier tier, const religion *religion) const
+const std::string &domain::get_title_name(const government_type *government_type, const domain_tier tier, const religion *religion) const
 {
 	if (government_type == nullptr) {
-		return country_tier_data::get(tier)->get_name();
+		return domain_tier_data::get(tier)->get_name();
 	}
 
 	auto find_iterator = this->title_names.find(government_type);
@@ -268,7 +268,7 @@ const std::string &domain::get_title_name(const government_type *government_type
 	if (find_iterator != this->title_names.end()) {
 		auto sub_find_iterator = find_iterator->second.find(tier);
 		if (sub_find_iterator == find_iterator->second.end()) {
-			sub_find_iterator = find_iterator->second.find(country_tier::none);
+			sub_find_iterator = find_iterator->second.find(domain_tier::none);
 		}
 
 		if (sub_find_iterator != find_iterator->second.end()) {
@@ -293,7 +293,7 @@ const std::string &domain::get_title_name(const government_type *government_type
 	return government_type->get_title_name(tier);
 }
 
-const std::string &domain::get_office_title_name(const office *office, const government_type *government_type, const country_tier tier, const gender gender, const religion *religion) const
+const std::string &domain::get_office_title_name(const office *office, const government_type *government_type, const domain_tier tier, const gender gender, const religion *religion) const
 {
 	const auto office_find_iterator = this->office_title_names.find(office);
 	if (office_find_iterator != this->office_title_names.end()) {
@@ -305,7 +305,7 @@ const std::string &domain::get_office_title_name(const office *office, const gov
 		if (find_iterator != office_find_iterator->second.end()) {
 			auto sub_find_iterator = find_iterator->second.find(tier);
 			if (sub_find_iterator == find_iterator->second.end()) {
-				sub_find_iterator = find_iterator->second.find(country_tier::none);
+				sub_find_iterator = find_iterator->second.find(domain_tier::none);
 			}
 
 			if (sub_find_iterator != find_iterator->second.end()) {

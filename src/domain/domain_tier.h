@@ -2,7 +2,7 @@
 
 namespace metternich {
 
-enum class country_tier {
+enum class domain_tier {
 	none,
 	barony,
 	county,
@@ -13,4 +13,4 @@ enum class country_tier {
 
 }
 
-Q_DECLARE_METATYPE(metternich::country_tier)
+Q_DECLARE_METATYPE(metternich::domain_tier)

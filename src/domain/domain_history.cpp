@@ -4,9 +4,9 @@
 
 #include "character/character.h"
 #include "domain/consulate.h"
-#include "domain/country_tier.h"
 #include "domain/diplomacy_state.h"
 #include "domain/domain.h"
+#include "domain/domain_tier.h"
 #include "domain/law.h"
 #include "domain/law_group.h"
 #include "domain/office.h"
@@ -19,7 +19,7 @@
 namespace metternich {
 
 domain_history::domain_history(const metternich::domain *domain)
-	: domain(domain), tier(country_tier::none)
+	: domain(domain), tier(domain_tier::none)
 {
 }
 

@@ -33,7 +33,7 @@ void religion::check() const
 	assert_throw(this->get_color().isValid());
 }
 
-const std::string &religion::get_title_name(const government_type *government_type, const country_tier tier) const
+const std::string &religion::get_title_name(const government_type *government_type, const domain_tier tier) const
 {
 	const std::string &title_name = religion_base::get_title_name(government_type, tier);
 	if (!title_name.empty()) {
@@ -47,7 +47,7 @@ const std::string &religion::get_title_name(const government_type *government_ty
 	return string::empty_str;
 }
 
-const std::string &religion::get_office_title_name(const office *office, const government_type *government_type, const country_tier tier, const gender gender) const
+const std::string &religion::get_office_title_name(const office *office, const government_type *government_type, const domain_tier tier, const gender gender) const
 {
 	const std::string &office_title_name = religion_base::get_office_title_name(office, government_type, tier, gender);
 	if (!office_title_name.empty()) {

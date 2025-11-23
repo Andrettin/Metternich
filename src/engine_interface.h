@@ -14,8 +14,8 @@ Q_MOC_INCLUDE("map/world.h")
 namespace metternich {
 
 class consulate;
-class country_tier_data;
 class defines;
+class domain_tier_data;
 class event_instance;
 class game;
 class map;
@@ -25,7 +25,7 @@ class preferences;
 class province;
 class trait_type;
 class world;
-enum class country_tier;
+enum class domain_tier;
 enum class military_unit_category;
 
 //interface for the engine, to be used in the context of QML
@@ -82,7 +82,7 @@ public:
 	Q_INVOKABLE QVariantList get_technologies() const;
 	Q_INVOKABLE QVariantList get_technology_categories() const;
 	Q_INVOKABLE QVariantList get_research_commodities() const;
-	Q_INVOKABLE const metternich::country_tier_data *get_country_tier_data(const metternich::country_tier tier) const;
+	Q_INVOKABLE const metternich::domain_tier_data *get_domain_tier_data(const metternich::domain_tier tier) const;
 	Q_INVOKABLE const consulate *get_consulate(const QString &identifier) const;
 	Q_INVOKABLE const commodity *get_commodity(const QString &identifier) const;
 
