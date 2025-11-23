@@ -619,6 +619,7 @@ set(script_condition_HDRS
 	src/script/condition/event_condition.h
 	src/script/condition/explored_dungeon_area_condition.h
 	src/script/condition/game_rule_condition.h
+	src/script/condition/government_group_condition.h
 	src/script/condition/government_type_condition.h
 	src/script/condition/has_building_class_condition.h
 	src/script/condition/has_building_condition.h
@@ -678,6 +679,7 @@ set(script_condition_HDRS
 	src/script/condition/taxon_condition.h
 	src/script/condition/technology_condition.h
 	src/script/condition/terrain_condition.h
+	src/script/condition/tier_condition.h
 	src/script/condition/trait_condition.h
 	src/script/condition/war_condition.h
 	src/script/condition/year_condition.h

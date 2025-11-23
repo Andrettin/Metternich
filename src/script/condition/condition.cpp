@@ -49,6 +49,7 @@
 #include "script/condition/event_condition.h"
 #include "script/condition/explored_dungeon_area_condition.h"
 #include "script/condition/game_rule_condition.h"
+#include "script/condition/government_group_condition.h"
 #include "script/condition/government_type_condition.h"
 #include "script/condition/has_building_condition.h"
 #include "script/condition/has_building_class_condition.h"
@@ -108,6 +109,7 @@
 #include "script/condition/taxon_condition.h"
 #include "script/condition/technology_condition.h"
 #include "script/condition/terrain_condition.h"
+#include "script/condition/tier_condition.h"
 #include "script/condition/trait_condition.h"
 #include "script/condition/war_condition.h"
 #include "script/condition/year_condition.h"
@@ -162,6 +164,8 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			return std::make_unique<discovered_province_condition>(value, condition_operator);
 		} else if (key == "discovered_region") {
 			return std::make_unique<discovered_region_condition>(value, condition_operator);
+		} else if (key == "government_group") {
+			return std::make_unique<government_group_condition>(value, condition_operator);
 		} else if (key == "government_type") {
 			return std::make_unique<government_type_condition>(value, condition_operator);
 		} else if (key == "has_character") {
@@ -182,6 +186,8 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			return std::make_unique<ruler_condition>(value, condition_operator);
 		} else if (key == "subject_type") {
 			return std::make_unique<subject_type_condition>(value, condition_operator);
+		} else if (key == "tier") {
+			return std::make_unique<tier_condition>(value, condition_operator);
 		} else if (key.starts_with(population_scaled_commodity_prefix) && commodity::try_get(key.substr(population_scaled_commodity_prefix.size(), key.size() - population_scaled_commodity_prefix.size())) != nullptr) {
 			const commodity *commodity = commodity::get(key.substr(population_scaled_commodity_prefix.size(), key.size() - population_scaled_commodity_prefix.size()));
 			return std::make_unique<population_scaled_commodity_condition>(commodity, value, condition_operator);
