@@ -179,6 +179,13 @@ public:
 	int get_building_holding_level_change(const building_type *building) const;
 	void set_holding_level_from_buildings(const int level);
 
+	const std::string &get_holding_type_name() const
+	{
+		return this->holding_type_name;
+	}
+
+	void update_holding_type_name();
+
 	Q_INVOKABLE bool is_built() const;
 	bool is_used() const;
 
@@ -483,6 +490,7 @@ signals:
 	void improvements_changed();
 	void holding_type_changed();
 	void holding_level_changed();
+	void holding_type_name_changed();
 	void dungeon_changed();
 	void portrait_changed();
 	void scripted_modifiers_changed();
@@ -498,6 +506,7 @@ private:
 	const metternich::religion *religion = nullptr;
 	const metternich::holding_type *holding_type = nullptr;
 	int holding_level = 0;
+	std::string holding_type_name;
 	const metternich::dungeon *dungeon = nullptr;
 	data_entry_set<dungeon_area> explored_dungeon_areas;
 	std::map<improvement_slot, const improvement *> improvements;

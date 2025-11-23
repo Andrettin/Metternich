@@ -9,10 +9,17 @@ temple = {
 	level_commodity_costs_per_level = {
 		regency = 1
 	}
-	level_names = {
-		1 = "Shrine"
-		2 = "Temple"
-		4 = "Cathedral"
+	conditional_names = {
+		"Shrine" = {
+			holding_level <= 1
+		}
+		"Cathedral" = {
+			holding_level >= 4
+			holding_level <= 5
+		}
+		"Grand Cathedral" = {
+			holding_level >= 6
+		}
 	}
 	tier_levels = {
 		bishopric = 4

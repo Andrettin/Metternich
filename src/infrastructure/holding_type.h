@@ -70,7 +70,10 @@ public:
 		return this->level_commodity_costs_per_level;
 	}
 
-	const std::string &get_level_name(const int level) const;
+	const std::map<std::string, std::unique_ptr<const and_condition<site>>> &get_conditional_names() const
+	{
+		return this->conditional_names;
+	}
 
 	int get_tier_level(const std::string &tier) const
 	{
@@ -131,7 +134,7 @@ private:
 	std::filesystem::path image_filepath;
 	commodity_map<int> level_commodity_costs;
 	commodity_map<int> level_commodity_costs_per_level;
-	std::map<int, std::string> level_names;
+	std::map<std::string, std::unique_ptr<const and_condition<site>>> conditional_names;
 	std::map<std::string, int> tier_levels; //identifiers for particular levels
 	std::vector<const holding_type *> base_holding_types;
 	std::vector<const holding_type *> upgraded_holding_types;

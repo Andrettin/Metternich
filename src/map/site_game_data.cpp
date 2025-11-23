@@ -82,8 +82,7 @@ site_game_data::site_game_data(const metternich::site *site) : site(site)
 		this->get_population()->add_upper_population(this->get_province()->get_game_data()->get_population());
 	}
 
-	connect(this, &site_game_data::holding_type_changed, this, &site_game_data::title_name_changed);
-	connect(this, &site_game_data::holding_level_changed, this, &site_game_data::title_name_changed);
+	connect(this, &site_game_data::holding_type_name_changed, this, &site_game_data::title_name_changed);
 	connect(this, &site_game_data::dungeon_changed, this, &site_game_data::title_name_changed);
 
 	connect(this, &site_game_data::title_name_changed, this, &site_game_data::titled_name_changed);
@@ -104,6 +103,8 @@ void site_game_data::process_gsml_property(const gsml_property &property)
 		this->holding_type = holding_type::get(value);
 	} else if (key == "holding_level") {
 		this->holding_level = std::stoi(value);
+	} else if (key == "holding_type_name") {
+		this->holding_type_name = value;
 	} else if (key == "dungeon") {
 		this->dungeon = dungeon::get(value);
 	} else {
@@ -133,6 +134,7 @@ gsml_data site_game_data::to_gsml_data() const
 
 	if (this->get_holding_type() != nullptr) {
 		data.add_property("holding_type", this->get_holding_type()->get_identifier());
+		data.add_property("holding_type_name", this->get_holding_type_name());
 	}
 
 	if (this->get_holding_level() != 0) {
@@ -248,7 +250,7 @@ int site_game_data::get_tier() const
 	int tier = 0;
 
 	if (this->get_holding_type() != nullptr) {
-		tier = this->get_holding_type()->get_level();
+		tier = this->get_holding_level();
 	} else if (this->get_resource_improvement() != nullptr) {
 		tier = this->get_resource_improvement()->get_level();
 	}
@@ -263,7 +265,7 @@ int site_game_data::get_tier() const
 const std::string &site_game_data::get_title_name() const
 {
 	if (this->get_holding_type() != nullptr) {
-		return this->get_holding_type()->get_level_name(this->get_holding_level());
+		return this->get_holding_type_name();
 	} else if (this->get_dungeon() != nullptr && this->get_dungeon()->is_random()) {
 		return this->get_dungeon()->get_name();
 	}
@@ -528,6 +530,8 @@ void site_game_data::set_holding_type(const metternich::holding_type *holding_ty
 		this->check_free_buildings();
 	}
 
+	this->update_holding_type_name();
+
 	if (game::get()->is_running()) {
 		emit holding_type_changed();
 		emit map::get()->tile_holding_type_changed(this->get_tile_pos());
@@ -615,6 +619,8 @@ void site_game_data::set_holding_level(const int level)
 		assert_throw(this->get_holding_type() == nullptr);
 	}
 
+	this->update_holding_type_name();
+
 	if (game::get()->is_running()) {
 		emit holding_level_changed();
 	}
@@ -669,6 +675,29 @@ void site_game_data::set_holding_level_from_buildings(const int level)
 
 	if (level != this->get_holding_level()) {
 		log::log_error(std::format("Failed to set holding level {} from buildings for site \"{}\".", level, this->site->get_identifier()));
+	}
+}
+
+void site_game_data::update_holding_type_name()
+{
+	std::string name;
+
+	if (this->get_holding_type() != nullptr) {
+		name = this->get_holding_type()->get_name();
+
+		for (const auto &[conditional_name, conditions] : this->get_holding_type()->get_conditional_names()) {
+			assert_throw(conditions != nullptr);
+
+			if (conditions->check(this->site, read_only_context(this->site))) {
+				name = conditional_name;
+				break;
+			}
+		}
+	}
+
+	if (name != this->get_holding_type_name()) {
+		this->holding_type_name = name;
+		emit holding_type_name_changed();
 	}
 }
 

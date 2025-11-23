@@ -42,12 +42,12 @@ void holding_type::process_gsml_scope(const gsml_data &scope)
 			const commodity *commodity = commodity::get(property.get_key());
 			this->level_commodity_costs_per_level[commodity] = commodity->string_to_value(property.get_value());
 		});
-	} else if (tag == "level_names") {
-		scope.for_each_property([&](const gsml_property &property) {
-			const std::string &key = property.get_key();
-			const std::string &value = property.get_value();
-
-			this->level_names[std::stoi(key)] = value;
+	} else if (tag == "conditional_names") {
+		scope.for_each_child([&](const gsml_data &child_scope) {
+			const std::string &child_tag = child_scope.get_tag();
+			auto conditions = std::make_unique<and_condition<site>>();
+			conditions->process_gsml_data(child_scope);
+			this->conditional_names[child_tag] = std::move(conditions);
 		});
 	} else if (tag == "tier_levels") {
 		scope.for_each_property([&](const gsml_property &property) {
@@ -126,18 +126,6 @@ void holding_type::set_image_filepath(const std::filesystem::path &filepath)
 	}
 
 	this->image_filepath = database::get()->get_graphics_path(this->get_module()) / filepath;
-}
-
-const std::string &holding_type::get_level_name(const int level) const
-{
-	if (!this->level_names.empty()) {
-		const auto find_iterator = this->level_names.upper_bound(level);
-		if (find_iterator != this->level_names.begin()) {
-			return std::prev(find_iterator)->second;
-		}
-	}
-
-	return this->get_name();
 }
 
 void holding_type::calculate_level()
