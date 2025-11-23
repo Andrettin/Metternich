@@ -10,8 +10,38 @@ manor = { #administrative center
 		regency = 1
 	}
 	conditional_names = {
+		"Castle" = {
+			has_building_class = fortress
+		}
 		"Palace" = {
 			holding_level >= 4
+			not = {
+				has_building_class = fortress
+				domain = {
+					government_group = monarchy
+					tier >= kingdom
+				}
+			}
+		}
+		"Royal Palace" = {
+			holding_level >= 4
+			not = {
+				has_building_class = fortress
+			}
+			domain = {
+				government_group = monarchy
+				tier == kingdom
+			}
+		}
+		"Imperial Palace" = {
+			holding_level >= 4
+			not = {
+				has_building_class = fortress
+			}
+			domain = {
+				government_group = monarchy
+				tier == empire
+			}
 		}
 	}
 	tier_levels = {
