@@ -1,0 +1,8 @@
+montfort_l_amaury = {
+	name = "Montfort-l'Amaury"
+	world = earth
+	geocoordinate = { 1.8091666666667 48.777222222222 }
+	type = holding
+	holding_type = manor
+	province = ile_de_france
+}

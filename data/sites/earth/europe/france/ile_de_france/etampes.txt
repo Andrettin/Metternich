@@ -1,0 +1,8 @@
+etampes = {
+	name = "Etampes" #"Étampes"
+	world = earth
+	geocoordinate = { 2.1622222222222 48.435 }
+	type = holding
+	holding_type = manor
+	province = ile_de_france
+}

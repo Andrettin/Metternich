@@ -1,0 +1,8 @@
+corbeil = {
+	name = "Corbeil"
+	world = earth
+	geocoordinate = { 2.4747222222222 48.610277777778 } #Corbeil-Essonnes
+	type = holding
+	holding_type = guild
+	province = ile_de_france
+}

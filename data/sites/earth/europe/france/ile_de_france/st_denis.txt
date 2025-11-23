@@ -1,0 +1,8 @@
+st_denis = {
+	name = "St. Denis"
+	world = earth
+	geocoordinate = { 2.3538888888889 48.935555555556 } #Saint-Denis
+	type = holding
+	holding_type = temple
+	province = ile_de_france
+}

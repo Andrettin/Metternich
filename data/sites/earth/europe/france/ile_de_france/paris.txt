@@ -3,6 +3,7 @@ paris = {
 	world = earth
 	geocoordinate = { 2.33333532574 48.86669293120 } #from Natural Earth
 	type = holding
+	holding_type = guild
 	#resource = grain
 	province = ile_de_france
 	cultural_names = {
@@ -13,7 +14,7 @@ paris = {
 	
 	history = {
 		919 = {
-			holding_type = city #important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			developed = true #important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
 		}
 		
 		1250 = {
@@ -21,7 +22,7 @@ paris = {
 		}
 		
 		1360 = {
-			holding_type = city #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			developed = true #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 		
 		1500 = {
@@ -43,7 +44,7 @@ paris = {
 		1789 = {
 			population = 500000 #Paris had a population of 500,000 in 1789; Source: Eric J. Hobsbawm, "The Age of Revolution, Europe 1789-1848", p. 28.
 			
-			buildings += courthouse #Parlement or conseil souverain, cour des aides, cambre des comptes, court of admiralty, cour des monnaies, prévôt des maréchaux and chief court of the salt tax existent in Paris in 1789; Source: William R. Shepherd, "Historical Atlas", 1911, p. 147.
+			#buildings += courthouse #Parlement or conseil souverain, cour des aides, cambre des comptes, court of admiralty, cour des monnaies, prévôt des maréchaux and chief court of the salt tax existent in Paris in 1789; Source: William R. Shepherd, "Historical Atlas", 1911, p. 147.
 		}
 		
 		1815 = {
