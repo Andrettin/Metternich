@@ -2,8 +2,9 @@ dordrecht = {
 	name = "Dordrecht"
 	world = earth
 	geocoordinate = { 4.678333333333334 51.795833333333334 }
-	type = resource
-	resource = cattle #Cattle raising or mixed use with pasture dominant; Source: Map No. 76863 of the Perry-Castañeda Library Map Collection, 1970.
+	type = holding
+	holding_type = guild
+	#resource = cattle #Cattle raising or mixed use with pasture dominant; Source: Map No. 76863 of the Perry-Castañeda Library Map Collection, 1970.
 	province = holland
 	
 	history = {

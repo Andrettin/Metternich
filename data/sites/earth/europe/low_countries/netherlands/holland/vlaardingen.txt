@@ -1,7 +1,9 @@
 vlaardingen = {
 	name = "Vlaardingen"
 	world = earth
-	#geocoordinate = { 4.35 51.916666666667 }
+	geocoordinate = { 4.35 51.916666666667 }
+	type = holding
+	holding_type = manor
 	province = holland
 	
 	history = {

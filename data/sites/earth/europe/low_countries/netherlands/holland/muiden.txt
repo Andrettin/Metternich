@@ -1,0 +1,8 @@
+muiden = {
+	name = "Muiden"
+	world = earth
+	geocoordinate = { 5.0714 52.3292 }
+	type = holding
+	holding_type = manor
+	province = holland
+}
