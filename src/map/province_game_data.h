@@ -511,6 +511,8 @@ public:
 	int get_min_income() const;
 	int get_max_income() const;
 
+	Q_INVOKABLE const metternich::domain *get_trade_zone_domain() const;
+
 	province_game_data &operator =(const province_game_data &other) = delete;
 
 signals:

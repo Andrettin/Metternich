@@ -3,6 +3,7 @@ guild = {
 	icon = trade_consulate
 	portrait = trading_post
 	image_filepath = "tiles/settlements/town.png"
+	economic = true
 	level_commodity_costs = {
 		wealth = 1gb
 	}

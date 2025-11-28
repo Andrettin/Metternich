@@ -666,6 +666,7 @@ QCoro::Task<void> province_game_data::create_map_image()
 
 	co_await this->create_map_mode_image(province_map_mode::terrain);
 	co_await this->create_map_mode_image(province_map_mode::cultural);
+	co_await this->create_map_mode_image(province_map_mode::trade_zone);
 
 	this->calculate_text_rect();
 
@@ -690,6 +691,26 @@ QCoro::Task<void> province_game_data::create_map_mode_image(const province_map_m
 
 	QImage image = this->prepare_map_image();
 
+	QColor province_color = this->get_map_color();
+	switch (mode) {
+		case province_map_mode::cultural: {
+			const metternich::culture *culture = this->get_culture();
+			if (culture != nullptr) {
+				province_color = culture->get_color();
+			}
+			break;
+		}
+		case province_map_mode::trade_zone: {
+			const domain *trade_zone_domain = this->get_trade_zone_domain();
+			if (trade_zone_domain != nullptr) {
+				province_color = trade_zone_domain->get_color();
+			}
+			break;
+		}
+		default:
+			break;
+	}
+
 	for (int x = 0; x < this->get_territory_rect().width(); ++x) {
 		for (int y = 0; y < this->get_territory_rect().height(); ++y) {
 			const QPoint relative_tile_pos = QPoint(x, y);
@@ -705,15 +726,10 @@ QCoro::Task<void> province_game_data::create_map_mode_image(const province_map_m
 				case province_map_mode::terrain:
 					color = &tile->get_terrain()->get_color();
 					break;
-				case province_map_mode::cultural: {
-					const metternich::culture *culture = this->get_culture();
-					if (culture != nullptr) {
-						color = &culture->get_color();
-					} else {
-						color = &this->get_map_color();
-					}
+				case province_map_mode::cultural:
+				case province_map_mode::trade_zone:
+					color = &province_color;
 					break;
-				}
 				default:
 					assert_throw(false);
 					break;
@@ -1516,6 +1532,37 @@ int province_game_data::get_max_income() const
 {
 	const dice &taxation_dice = defines::get()->get_province_taxation_for_level(this->get_level());
 	return taxation_dice.get_maximum_result() * 200000;
+}
+
+const domain *province_game_data::get_trade_zone_domain() const
+{
+	domain_map<int> domain_economic_holding_levels;
+	for (const site *holding_site : this->get_settlement_sites()) {
+		if (holding_site->get_game_data()->get_owner() == nullptr) {
+			continue;
+		}
+
+		if (holding_site->get_game_data()->get_holding_type() == nullptr || !holding_site->get_game_data()->get_holding_type()->is_economic()) {
+			continue;
+		}
+
+		domain_economic_holding_levels[holding_site->get_game_data()->get_owner()] += holding_site->get_game_data()->get_holding_level();
+	}
+
+	int best_holding_level = -1;
+	const domain *best_domain = nullptr;
+	for (const auto &[domain, holding_level] : domain_economic_holding_levels) {
+		if (holding_level > best_holding_level) {
+			best_holding_level = holding_level;
+			best_domain = domain;
+		}
+	}
+
+	if (best_domain != nullptr) {
+		return best_domain;
+	}
+
+	return this->get_owner();
 }
 
 }
