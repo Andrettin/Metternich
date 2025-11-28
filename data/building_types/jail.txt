@@ -7,6 +7,9 @@ jail = {
 	holding_types = {
 		manor
 	}
+	conditions = {
+		game_rule = additional_buildings
+	}
 	build_conditions = {
 		holding_level >= 1
 	}

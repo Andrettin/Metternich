@@ -28,15 +28,12 @@ cathedral = {
 	building_class = cathedral
 	portrait = temple
 	icon = golden_cross_detailed
-	holding_level = 3
+	holding_level = 4
 	required_building = temple
 	required_technology = middle_ages
 	holding_types = {
 		temple
 		city
-	}
-	build_conditions = {
-		holding_level >= 3
 	}
 }
 
@@ -48,6 +45,9 @@ monastery = {
 	holding_level = 1
 	holding_types = {
 		temple
+	}
+	conditions = {
+		game_rule = additional_buildings
 	}
 	build_conditions = {
 		holding_level >= 2

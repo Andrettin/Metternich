@@ -1,13 +1,22 @@
-guildhall = {
-	name = "Guildhall"
-	building_class = guildhall
+trade_shop = {
+	name = "Trade Shop"
+	building_class = trade_shop
 	portrait = trading_post
 	icon = wealth
 	holding_level = 1
 	holding_types = {
 		guild
 	}
-	build_conditions = {
-		holding_level >= 1
+}
+
+guildhall = {
+	name = "Guildhall"
+	building_class = guildhall
+	portrait = trading_post
+	icon = wealth
+	holding_level = 3
+	required_building = trade_shop
+	holding_types = {
+		guild
 	}
 }

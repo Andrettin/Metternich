@@ -26,12 +26,9 @@ palace = {
 	building_class = palace
 	portrait = aristocratic_palace
 	icon = heater_shield
-	holding_level = 3
+	holding_level = 4
 	required_building = noble_villa
 	holding_types = {
 		manor
-	}
-	build_conditions = {
-		holding_level >= 3
 	}
 }

@@ -1,3 +1,8 @@
+shop = {
+	name = "Shop"
+	slot_type = market
+}
+
 market = {
 	name = "Market"
 	slot_type = market

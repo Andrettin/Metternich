@@ -1,3 +1,8 @@
+trade_shop = {
+	name = "Trade Shop"
+	slot_type = guildhall
+}
+
 guildhall = {
 	name = "Guildhall"
 	slot_type = guildhall

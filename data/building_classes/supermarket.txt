@@ -1,4 +1,0 @@
-supermarket = {
-	name = "Supermarket"
-	slot_type = supermarket
-}

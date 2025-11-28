@@ -7,7 +7,10 @@ smithy = {
 	holding_types = {
 		guild
 	}
+	conditions = {
+		game_rule = additional_buildings
+	}
 	build_conditions = {
-		holding_level >= 1
+		holding_level >= 2
 	}
 }

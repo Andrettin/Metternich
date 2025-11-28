@@ -14,6 +14,7 @@ school = {
 			capital = true
 			game_rule = research_commodity
 		}
+		game_rule = additional_buildings
 	}
 	country_modifier = {
 		commodity_demand = {
@@ -41,6 +42,7 @@ college = {
 			capital = true
 			game_rule = research_commodity
 		}
+		game_rule = additional_buildings
 	}
 	country_modifier = {
 		commodity_demand = {
@@ -69,6 +71,7 @@ university = {
 			capital = true
 			game_rule = research_commodity
 		}
+		game_rule = additional_buildings
 	}
 	recruited_civilian_unit_types = {
 		miner
@@ -110,6 +113,7 @@ monastic_school = {
 			capital = true
 			game_rule = research_commodity
 		}
+		game_rule = additional_buildings
 	}
 	country_modifier = {
 		commodity_demand = {
@@ -137,6 +141,7 @@ cathedral_school = {
 			capital = true
 			game_rule = research_commodity
 		}
+		game_rule = additional_buildings
 	}
 	country_modifier = {
 		commodity_demand = {

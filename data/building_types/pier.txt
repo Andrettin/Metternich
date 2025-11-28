@@ -1,4 +1,4 @@
-dock = {
+pier = {
 	name = "Pier"
 	building_class = pier
 	portrait = dock
@@ -12,6 +12,12 @@ dock = {
 			near_water = true
 		}
 	}
+	conditions = {
+		game_rule = additional_buildings
+	}
+	build_conditions = {
+		holding_level >= 2
+	}
 }
 
 waterfront = {
@@ -19,7 +25,7 @@ waterfront = {
 	building_class = waterfront
 	portrait = dock
 	icon = anchor
-	required_building = dock
+	required_building = pier
 	holding_level = 2
 	holding_types = {
 		guild
@@ -36,5 +42,9 @@ waterfront = {
 		province = {
 			near_water = true
 		}
+		game_rule = additional_buildings
+	}
+	build_conditions = {
+		holding_level >= 2
 	}
 }

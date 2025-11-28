@@ -8,6 +8,9 @@ bank = {
 	holding_types = {
 		guild
 	}
+	conditions = {
+		game_rule = additional_buildings
+	}
 	build_conditions = {
 		has_building_class = market
 	}

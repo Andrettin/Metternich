@@ -7,6 +7,9 @@ graveyard = {
 	holding_types = {
 		temple
 	}
+	conditions = {
+		game_rule = additional_buildings
+	}
 	build_conditions = {
 		holding_level >= 2
 	}
