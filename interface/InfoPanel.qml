@@ -5,7 +5,7 @@ import "./dialogs"
 Rectangle {
 	id: infopanel
 	color: interface_background_color
-	width: 176 * scale_factor
+	width: 224 * scale_factor
 	clip: true
 	
 	readonly property var end_turn_button: end_turn_button_internal
@@ -26,6 +26,7 @@ Rectangle {
 		width: 1 * scale_factor
 	}
 	
+	/*
 	Row {
 		id: button_row
 		anchors.top: parent.top
@@ -73,49 +74,13 @@ Rectangle {
 				}
 			}
 		}
-		
-		IconButton {
-			id: trade_button
-			icon_identifier: "wealth"
-			
-			onReleased: {
-				menu_stack.push("TradeView.qml")
-			}
-			
-			onHoveredChanged: {
-				if (hovered) {
-					status_text = "View Trade"
-				} else {
-					status_text = ""
-				}
-			}
-		}
-		
-		IconButton {
-			id: diplomatic_map_button
-			icon_identifier: "globe"
-			
-			onReleased: {
-				menu_stack.push("DiplomaticView.qml", {
-					start_tile_x: map_area_start_x + map_area_tile_width / 2,
-					start_tile_y: map_area_start_y + map_area_tile_height / 2
-				})
-			}
-			
-			onHoveredChanged: {
-				if (hovered) {
-					status_text = "View Diplomatic Map"
-				} else {
-					status_text = ""
-				}
-			}
-		}
 	}
+	*/
 	
 	NormalText {
 		id: title
-		anchors.top: button_row.bottom
-		anchors.topMargin: 8 * scale_factor
+		anchors.top: parent.top
+		anchors.topMargin: 16 * scale_factor
 		anchors.left: parent.left
 		anchors.leftMargin: 8 * scale_factor
 		anchors.right: parent.right

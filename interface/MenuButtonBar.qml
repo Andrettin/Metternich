@@ -4,7 +4,7 @@ import QtQuick.Controls
 Rectangle {
 	id: menu_button_bar
 	color: interface_background_color
-	width: 176 * scale_factor
+	width: infopanel.width
 	height: 50 * scale_factor
 	clip: true
 	
@@ -25,6 +25,7 @@ Rectangle {
 		anchors.bottom: parent.bottom
 		anchors.bottomMargin: 6 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
+		anchors.horizontalCenterOffset: Math.floor(-1 * scale_factor / 2)
 		spacing: 4 * scale_factor
 		
 		IconButton {
@@ -82,6 +83,45 @@ Rectangle {
 			}
 		}
 		
+		/*
+		IconButton {
+			id: trade_button
+			icon_identifier: "wealth"
+			
+			onReleased: {
+				menu_stack.push("TradeView.qml")
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "View Trade"
+				} else {
+					status_text = ""
+				}
+			}
+		}
+		*/
+		
+		IconButton {
+			id: diplomatic_map_button
+			icon_identifier: "globe"
+			
+			onReleased: {
+				menu_stack.push("DiplomaticView.qml", {
+					start_tile_x: map_area_start_x + map_area_tile_width / 2,
+					start_tile_y: map_area_start_y + map_area_tile_height / 2
+				})
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "View Diplomatic Map"
+				} else {
+					status_text = ""
+				}
+			}
+		}
+
 		IconButton {
 			id: menu_button
 			icon_identifier: "cog"

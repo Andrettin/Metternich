@@ -4,7 +4,7 @@ import QtQuick.Controls
 Rectangle {
 	id: minimap_area
 	color: interface_background_color
-	width: 176 * scale_factor
+	width: infopanel.width
 	height: 128 * scale_factor + 2 * scale_factor
 	clip: true
 	
@@ -42,21 +42,19 @@ Rectangle {
 	
 	Minimap {
 		id: minimap
-		anchors.left: parent.left
-		anchors.leftMargin: 3 * scale_factor
+		anchors.horizontalCenter: parent.horizontalCenter
 		anchors.verticalCenter: parent.verticalCenter
 	}
 	
 	Column {
-		id: minimap_mode_column
-		anchors.left: minimap_borders.right
-		anchors.right: parent.right
+		id: minimap_mode_left_column
+		anchors.right: minimap_borders.left
+		anchors.rightMargin: 4 * scale_factor
 		anchors.verticalCenter: parent.verticalCenter
 		spacing: 4 * scale_factor
 		
 		IconButton {
 			id: political_map_mode_button
-			anchors.horizontalCenter: parent.horizontalCenter
 			icon_identifier: "flag"
 			highlighted: province_map.mode === ProvinceMap.Mode.Political
 			
@@ -75,7 +73,6 @@ Rectangle {
 		
 		IconButton {
 			id: site_map_mode_button
-			anchors.horizontalCenter: parent.horizontalCenter
 			icon_identifier: "settlement"
 			highlighted: province_map.mode === ProvinceMap.Mode.Site
 			
@@ -94,7 +91,6 @@ Rectangle {
 		
 		IconButton {
 			id: cultural_map_mode_button
-			anchors.horizontalCenter: parent.horizontalCenter
 			icon_identifier: "music"
 			highlighted: province_map.mode === ProvinceMap.Mode.Cultural
 			
