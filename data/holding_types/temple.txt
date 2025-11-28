@@ -23,8 +23,10 @@ temple = {
 		}
 	}
 	tier_levels = {
+		parish = 2
 		bishopric = 4
-		archbishopric = 5
+		archbishopric = 4
+		patriarchate = 4
 	}
 	population_classes = {
 		slaves
