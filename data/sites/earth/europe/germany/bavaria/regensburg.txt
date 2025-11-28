@@ -2,16 +2,21 @@ regensburg = {
 	name = "Regensburg" #also known as Ratisbon
 	world = earth
 	geocoordinate = { 12.12002477890 49.02040447910 } #from Natural Earth
-	type = resource
-	resource = coal
+	type = holding
+	holding_type = temple #bishopric
+	#resource = coal
+	max_tier = bishopric
 	province = bavaria
 	cultural_names = {
 		roman = "Regina Castra"
 	}
 	
+	#important market or fair in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
+	
 	history = {
 		739 = {
-			buildings += cathedral #Regensburg became a bishopric in 739; Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 169.
+			tier = bishopric #Regensburg became a bishopric in 739; Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 169.
+			buildings += cathedral
 		}
 		
 		919 = {

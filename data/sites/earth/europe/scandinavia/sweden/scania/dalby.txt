@@ -1,0 +1,8 @@
+dalby = {
+	name = "Dalby"
+	world = earth
+	geocoordinate = { 13.356142338884 55.664461091206 }
+	type = holding
+	holding_type = guild
+	province = scania
+}

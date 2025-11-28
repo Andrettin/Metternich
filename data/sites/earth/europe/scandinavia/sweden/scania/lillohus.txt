@@ -1,0 +1,8 @@
+lillohus = {
+	name = "Lillohus"
+	world = earth
+	geocoordinate = { 14.1222 56.0383 } #Lillö
+	type = holding
+	holding_type = manor
+	province = scania
+}

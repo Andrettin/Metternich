@@ -3,18 +3,24 @@ seville = {
 	world = earth
 	geocoordinate = { -5.98000736635 37.40501527820 } #from Natural Earth
 	type = holding
+	holding_type = guild
+	max_tier = market
 	cultural_names = {
 		roman = "Hispalis"
 	}
 	
 	history = {
+		high_middle_ages = {
+			tier = market #important market or fair in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
+			buildings += market
+		}
+		
 		1360 = {
-			holding_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 		
 		1504 = {
 			buildings += university #Major university founded in Seville in 1504; Source: "The Cambridge Modern History Atlas", 1912, p. 9; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
-			holding_type = city
 		}
 		
 		1565 = {

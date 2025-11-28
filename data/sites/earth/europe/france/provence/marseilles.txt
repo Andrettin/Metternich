@@ -3,7 +3,9 @@ marseilles = {
 	world = earth
 	geocoordinate = { 5.37501013044 43.28997906400 } #from Natural Earth
 	type = holding
+	holding_type = guild
 	#resource = fruit
+	max_tier = market
 	province = provence
 	cultural_names = {
 		frankish = "Massilia"
@@ -14,12 +16,17 @@ marseilles = {
 	
 	history = {
 		395 = {
-			buildings += cathedral #Marseilles was the seat of a bishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
-			holding_type = city
+			#buildings += cathedral #Marseilles was the seat of a bishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
+			developed = true
+		}
+		
+		high_middle_ages = {
+			tier = market #important market or fair in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
+			buildings += market
 		}
 		
 		1360 = {
-			#holding_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 		
 		1836 = {

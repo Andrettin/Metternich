@@ -1,0 +1,16 @@
+chalon = {
+	name = "Chalon"
+	world = earth
+	geocoordinate = { 4.8538888888889 46.781111111111 } #Chalon-sur-Saône
+	type = holding
+	holding_type = guild
+	max_tier = market
+	province = burgundy
+	
+	history = {
+		high_middle_ages = {
+			tier = market #important market or fair in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
+			buildings += market
+		}
+	}
+}

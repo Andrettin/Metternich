@@ -3,4 +3,11 @@ kiel = {
 	world = earth
 	geocoordinate = { 10.13001704780 54.33039044100 } #from Natural Earth
 	type = holding
+	holding_type = manor
+	
+	history = {
+		1815 = {
+			developed = true #important settlement in the 1815-1866 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+	}
 }

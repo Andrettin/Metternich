@@ -5,6 +5,7 @@ vienna = {
 	type = holding
 	holding_type = guild
 	terrain_type = plains
+	max_tier = market
 	province = lower_austria
 	cultural_names = {
 		gaulish = "Vindobona"
@@ -14,6 +15,11 @@ vienna = {
 	history = {
 		919 = {
 			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		high_middle_ages = {
+			tier = market #important market or fair in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
+			buildings += market
 		}
 		
 		1160 = {

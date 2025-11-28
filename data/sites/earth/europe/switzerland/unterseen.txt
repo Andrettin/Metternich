@@ -1,0 +1,8 @@
+unterseen = {
+	name = "Unterseen"
+	world = earth
+	geocoordinate = { 7.8497 46.6872 }
+	type = holding
+	holding_type = manor
+	province = bern
+}

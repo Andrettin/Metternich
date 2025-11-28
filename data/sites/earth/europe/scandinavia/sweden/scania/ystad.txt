@@ -1,0 +1,8 @@
+ystad = {
+	name = "Ystad"
+	world = earth
+	geocoordinate = { 13.825365282235 55.434619741448 }
+	type = holding
+	holding_type = guild
+	province = scania
+}

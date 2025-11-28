@@ -2,8 +2,9 @@ brunswick = {
 	name = "Brunswick" #"Braunschweig" in German
 	world = earth
 	geocoordinate = { 10.50002030300 52.24997479160 } #from Natural Earth
-	type = resource
-	resource = fruit
+	type = holding
+	holding_type = guild #important market or fair, and center of the Hanseatic League in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
+	#resource = fruit
 	province = hanover
 	
 	history = {

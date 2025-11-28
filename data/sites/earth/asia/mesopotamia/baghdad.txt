@@ -3,12 +3,19 @@ baghdad = {
 	world = earth
 	geocoordinate = { 44.39386877320 33.33864849750 } #from Natural Earth
 	type = holding
+	holding_type = guild
 	#resource = holy_site
+	max_tier = market
 	province = diyala
 	
 	history = {
+		high_middle_ages = {
+			tier = market #important market or fair in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
+			buildings += market
+		}
+		
 		1360 = {
-			holding_type = city #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			developed = true #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 	}
 }

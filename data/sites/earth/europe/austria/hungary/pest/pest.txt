@@ -3,10 +3,17 @@ pest = {
 	world = earth
 	geocoordinate = { 19.1 47.5 }
 	type = holding
-	holding_type = manor
+	holding_type = guild
+	#holding_type = manor
+	max_tier = market
 	province = pest
 	
 	history = {
+		high_middle_ages = {
+			tier = market #important market or fair in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
+			buildings += market
+		}
+		
 		1360 = {
 			developed = true #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}

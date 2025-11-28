@@ -3,6 +3,7 @@ london = {
 	world = earth
 	geocoordinate = { -0.11672184386 51.49999472970 } #from Natural Earth
 	type = holding
+	holding_type = guild #important market or fair, and had a foreign office of the Hanseatic League in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
 	cultural_names = {
 		anglo_saxon = "Lunden" #Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 732.
 		briton = "Londinion"
@@ -11,16 +12,16 @@ london = {
 	
 	history = {
 		604 = {
-			buildings += temple #a church was built in London in 604 AD; Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 109.
-			holding_type = temple
+			#buildings += temple #a church was built in London in 604 AD; Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 109.
+			developed = true
 		}
 		
 		704 = {
-			buildings += cathedral #London possessed a bishopric as of 704; Source: Frank Stenton, "Anglo-Saxon England", 1971, pp. 142, 179.
+			#buildings += cathedral #London possessed a bishopric as of 704; Source: Frank Stenton, "Anglo-Saxon England", 1971, pp. 142, 179.
 		}
 		
 		1360 = {
-			holding_type = city #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			developed = true #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 		
 		1500 = {

@@ -3,8 +3,9 @@ thorn = {
 	world = earth
 	geocoordinate = { 18.616666666667 53.016666666667 }
 	province = west_prussia
-	type = resource
-	resource = grain
+	type = holding
+	holding_type = guild #city belonging to the Hanseatic League in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
+	#resource = grain
 	cultural_names = {
 		polish = "Torun" #"Toruń"
 	}

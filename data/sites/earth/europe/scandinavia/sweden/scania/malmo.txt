@@ -3,6 +3,7 @@ malmo = {
 	world = earth
 	geocoordinate = { 13.03330236680 55.58333721830 } #from Natural Earth
 	type = holding
+	holding_type = guild
 	#resource = grain
 	province = scania
 }

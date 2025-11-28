@@ -4,9 +4,15 @@ pisa = {
 	geocoordinate = { 10.40002640650 43.72046958320 } #from Natural Earth
 	type = holding
 	holding_type = guild
+	max_tier = market
 	province = tuscany
 	
 	history = {
+		high_middle_ages = {
+			tier = market #important market or fair in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
+			buildings += market
+		}
+		
 		1348 = {
 			buildings += university #University founded in Pisa in 1348; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
 		}

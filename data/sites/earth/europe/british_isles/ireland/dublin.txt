@@ -3,20 +3,26 @@ dublin = {
 	world = earth
 	geocoordinate = { -6.24890568178 53.33306113600 } #from Natural Earth
 	type = holding
+	holding_type = guild
+	max_tier = market
 	province = leinster
 	
 	history = {
 		802 = {
-			holding_type = village #existed c. 802 AD; Source: William R. Shepherd, "Historical Atlas", 1911, p. 60.
+			developed = true #existed c. 802 AD; Source: William R. Shepherd, "Historical Atlas", 1911, p. 60.
+		}
+		
+		high_middle_ages = {
+			tier = market #important market or fair in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
+			buildings += market
 		}
 		
 		1312 = {
 			buildings += university #University founded in Dublin in 1312; Source: "Atlas de História Mundial", p. 144.
-			holding_type = city
 		}
 		
 		1360 = {
-			holding_type = city #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			developed = true #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 		
 		1591 = {

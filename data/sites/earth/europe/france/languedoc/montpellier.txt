@@ -3,13 +3,19 @@ montpellier = {
 	world = earth
 	geocoordinate = { 3.86998571637 43.61039878240 } #from Natural Earth
 	type = holding
+	holding_type = guild
 	#resource = cattle
+	max_tier = market
 	province = lower_languedoc
 	
-	history = {
+	history = {		
+		high_middle_ages = {
+			tier = market #important market or fair in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
+			buildings += market
+		}
+		
 		1250 = {
 			buildings += university #University existent in Montpellier in 1250; Source: "Atlas de História Mundial", 2001, p. 144.
-			holding_type = city
 		}
 		
 		1836 = {

@@ -2,6 +2,8 @@ hamburg = {
 	name = "Hamburg"
 	world = earth
 	geocoordinate = { 9.99999914413 53.55002463690 } #from Natural Earth
+	type = holding
+	holding_type = guild #important market or fair, and center of the Hanseatic League in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
 	province = holstein
 	
 	history = {

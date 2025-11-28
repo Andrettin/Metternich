@@ -3,23 +3,31 @@ constantinople = {
 	world = earth
 	geocoordinate = { 29.01000158560 41.10499615380 } #from Natural Earth
 	type = holding
+	holding_type = guild
 	#resource = holy_site
+	max_tier = market
 	cultural_names = {
 		turkish = "Istanbul"
 	}
 	
 	history = {
 		395 = {
-			buildings += cathedral #Constantinople was the seat of a patriarchate in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
-			holding_type = city
+			#tier = patriarchate #Constantinople was the seat of a patriarchate in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
+			#buildings += cathedral
+			developed = true
 		}
 		
 		526 = {
-			holding_type = city #important settlement in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			developed = true #important settlement in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+		}
+		
+		high_middle_ages = {
+			tier = market #important market or fair in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
+			buildings += market
 		}
 		
 		1360 = {
-			holding_type = city #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			developed = true #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 	}
 }

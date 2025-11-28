@@ -1,0 +1,8 @@
+helsingborg = {
+	name = "Helsingborg"
+	world = earth
+	geocoordinate = { 12.70004105500 56.05049216630 } #from Natural Earth
+	type = holding
+	holding_type = manor
+	province = scania
+}

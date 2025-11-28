@@ -2,11 +2,18 @@ kairouan = {
 	name = "Kairouan" #also known as Kairwan
 	world = earth
 	geocoordinate = { 10.09999304060 35.68039186510 } #from Natural Earth
-	type = resource
-	resource = fruit
+	type = holding
+	holding_type = guild
+	max_tier = market
+	#resource = fruit
 	province = tunisia
 	
 	history = {
+		high_middle_ages = {
+			tier = market #important market or fair in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
+			buildings += market
+		}
+		
 		1360 = {
 			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}

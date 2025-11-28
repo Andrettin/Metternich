@@ -1,0 +1,16 @@
+villalon = {
+	name = "Villalon"
+	world = earth
+	geocoordinate = { -5.03429396 42.09853942 } #Villalón de Campos
+	type = holding
+	holding_type = guild
+	max_tier = market
+	province = valladolid
+	
+	history = {
+		high_middle_ages = {
+			tier = market #important market or fair in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
+			buildings += market
+		}
+	}
+}

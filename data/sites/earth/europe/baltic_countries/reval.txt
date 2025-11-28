@@ -3,6 +3,7 @@ reval = {
 	world = earth
 	geocoordinate = { 24.72804072950 59.43387737950 } #from Natural Earth
 	type = holding
+	holding_type = guild #city belonging to the Hanseatic League in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
 	province = estonia
 	cultural_names = {
 		estonian = "Tallinn"

@@ -2,6 +2,8 @@ bruges = {
 	name = "Bruges" #also known as Brugge
 	world = earth
 	geocoordinate = { 3.23002477887 51.22037355460 } #from Natural Earth
+	type = holding
+	holding_type = guild #important market or fair, and had a foreign office of the Hanseatic League in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
 	province = flanders
 	
 	history = {

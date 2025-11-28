@@ -1,0 +1,8 @@
+thun = {
+	name = "Thun"
+	world = earth
+	geocoordinate = { 7.63 46.759 }
+	type = holding
+	holding_type = temple
+	province = bern
+}

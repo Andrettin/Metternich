@@ -3,7 +3,9 @@ alexandria = {
 	world = earth
 	geocoordinate = { 29.94999588900 31.20001934710 } #from Natural Earth
 	type = holding
+	holding_type = guild
 	#resource = holy_site
+	max_tier = market
 	province = alexandria
 	cultural_names = {
 		#arabic = "Al-Iskandariyah"
@@ -11,11 +13,16 @@ alexandria = {
 	
 	history = {
 		-336 = {
-			holding_type = city #important settlement in the 336-323 BC period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 18-19.
+			developed = true #important settlement in the 336-323 BC period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 18-19.
 		}
 		
 		-250 = {
 			wonders += great_library
+		}
+		
+		high_middle_ages = {
+			tier = market #important market or fair in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
+			buildings += market
 		}
 		
 		1815 = {

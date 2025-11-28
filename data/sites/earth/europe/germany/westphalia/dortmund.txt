@@ -2,6 +2,8 @@ dortmund = {
 	name = "Dortmund"
 	world = earth
 	geocoordinate = { 7.45002559269 51.52996706040 } #from Natural Earth
+	type = holding
+	holding_type = guild #city belonging to the Hanseatic League in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
 	province = westphalia
 	
 	history = {

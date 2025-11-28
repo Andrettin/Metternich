@@ -2,6 +2,8 @@ lucerne = {
 	name = "Lucerne" #also known as Luzern
 	world = earth
 	geocoordinate = { 8.28000077173 47.05042136540 } #from Natural Earth
+	type = holding
+	holding_type = guild
 	province = bern
 	
 	history = {

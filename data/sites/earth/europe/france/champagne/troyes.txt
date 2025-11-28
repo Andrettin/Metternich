@@ -3,7 +3,9 @@ troyes = {
 	world = earth
 	geocoordinate = { 4.08335770531 48.34039430650 } #from Natural Earth
 	type = holding
+	holding_type = guild
 	#resource = timber
+	max_tier = market
 	province = champagne
 	cultural_names = {
 		frankish = "Trecae"
@@ -11,12 +13,17 @@ troyes = {
 	
 	history = {
 		782 = {
-			buildings += temple #Alcuin moved from England to the court of Charlemagne in 782, and received the abbey of St. Lupus at Troyes; Source: Frank Stenton, "Anglo-Saxon England", 1971, pp. 188-189.
-			holding_type = temple
+			#buildings += temple #Alcuin moved from England to the court of Charlemagne in 782, and received the abbey of St. Lupus at Troyes; Source: Frank Stenton, "Anglo-Saxon England", 1971, pp. 188-189.
+			developed = true
 		}
 		
 		919 = {
-			#existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		high_middle_ages = {
+			tier = market #important market or fair in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
+			buildings += market
 		}
 		
 		1360 = {

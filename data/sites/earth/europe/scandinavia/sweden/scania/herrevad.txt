@@ -1,0 +1,8 @@
+herrevad = {
+	name = "Herrevad"
+	world = earth
+	geocoordinate = { 13.232478 56.087982 } #Herrevad Abbey
+	type = holding
+	holding_type = temple
+	province = scania
+}

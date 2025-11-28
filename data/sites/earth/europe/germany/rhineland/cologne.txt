@@ -3,31 +3,35 @@ cologne = {
 	world = earth
 	geocoordinate = { 6.95000443383 50.93000368150 } #from Natural Earth
 	type = holding
+	holding_type = temple #bishopric
 	#resource = holy_site
+	max_tier = archbishopric
 	cultural_names = {
 		roman = "Colonia Agrippina" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 38-39; Source: "Ancient Warfare VII.6", 2013, p. 7.
 	}
 	
+	#important market or fair, and center of the Hanseatic League in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
+	
 	history = {
 		395 = {
-			buildings += cathedral #Cologne was the seat of a bishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
-			holding_type = city
+			tier = bishopric #Cologne was the seat of a bishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
+			buildings += cathedral
 		}
 		
 		768 = {
-			#archbishopric existent in Cologne during 768-814 AD; Source: "Medieval Warfare V.2", 2013, pp. 8-9.
+			tier = archbishopric #archbishopric existent in Cologne during 768-814 AD; Source: "Medieval Warfare V.2", 2013, pp. 8-9.
 		}
 		
 		919 = {
-			holding_type = city #important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			developed = true #important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
 		}
 		
 		1360 = {
-			#holding_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 		
 		1388 = {
-			buildings += university #University founded in Cologne in 1388; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+			#buildings += university #University founded in Cologne in 1388; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
 		}
 	}
 }

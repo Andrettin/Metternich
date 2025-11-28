@@ -1,7 +1,9 @@
 lund = {
 	name = "Lund"
 	world = earth
-	#geocoordinate = { 13.199164196669 55.708313018551 }
+	geocoordinate = { 13.199164196669 55.708313018551 }
+	type = holding
+	holding_type = temple
 	province = scania
 	
 	history = {

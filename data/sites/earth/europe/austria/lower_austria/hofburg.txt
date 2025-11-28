@@ -1,0 +1,15 @@
+hofburg = {
+	name = "Hofburg"
+	world = earth
+	geocoordinate = { 16.365277777777777 48.20638888888889 }
+	type = holding
+	holding_type = manor
+	max_tier = royal_palace
+	province = lower_austria
+	
+	history = {
+		1198 = {
+			developed = true #Leopold, Duke of Austria, laid the foundations of the Hofburg; he ruled from 1198 until 1230; Source: "Historische Beschreibung und kurz gefaßte Nachricht von der Römisch-Kaiserlich und Königlichen Residenzstadt Wien", 1770, p. 2.
+		}
+	}
+}

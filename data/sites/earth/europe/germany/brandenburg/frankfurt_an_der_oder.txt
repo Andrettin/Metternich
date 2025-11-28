@@ -2,6 +2,8 @@ frankfurt_an_der_oder = {
 	name = "Frankfurt an der Oder"
 	world = earth
 	geocoordinate = { 14.551666666666666 52.342083333333335 }
+	type = holding
+	holding_type = guild #city belonging to the Hanseatic League in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
 	province = brandenburg
 	
 	history = {

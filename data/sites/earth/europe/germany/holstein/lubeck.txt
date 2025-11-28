@@ -2,6 +2,8 @@ lubeck = {
 	name = "Lubeck" #"Lübeck"
 	world = earth
 	geocoordinate = { 10.66998408880 53.87039267890 } #from Natural Earth
+	type = holding
+	holding_type = guild #important market or fair, and center of the Hanseatic League in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
 	province = holstein
 	
 	history = {

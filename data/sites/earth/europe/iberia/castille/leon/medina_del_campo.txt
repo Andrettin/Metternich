@@ -1,0 +1,16 @@
+medina_del_campo = {
+	name = "Medina del Campo"
+	world = earth
+	geocoordinate = { -4.9150523 41.3085254 }
+	type = holding
+	holding_type = guild
+	max_tier = market
+	province = valladolid
+	
+	history = {
+		high_middle_ages = {
+			tier = market #important market or fair in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
+			buildings += market
+		}
+	}
+}

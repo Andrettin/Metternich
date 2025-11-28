@@ -2,6 +2,8 @@ soest = {
 	name = "Soest"
 	world = earth
 	geocoordinate = { 8.1091666666667 51.571111111111 }
+	type = holding
+	holding_type = guild #city belonging to the Hanseatic League in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
 	province = westphalia
 	
 	history = {

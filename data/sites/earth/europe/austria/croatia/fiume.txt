@@ -7,7 +7,7 @@ fiume = {
 	#resource = fruit
 	province = croatia
 	cultural_names = {
-		croatian = "Rijeka"
+		croatian = "Rijeka" #Source: Ivan Erceg, "Außenhandel der Nordadriatischen Seestädte als Faktor im Entstehen der kapitalistischen Beziehungen in Österreich im 18. und 19. Jahrhundert", 1968, p. 464.
 	}
 	
 	history = {

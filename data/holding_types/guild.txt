@@ -11,6 +11,8 @@ guild = {
 		regency = 1
 	}
 	tier_levels = {
+		market = 2
+		
 		hamlet = 1
 		village = 2
 		town = 3

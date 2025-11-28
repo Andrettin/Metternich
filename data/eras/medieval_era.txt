@@ -2,3 +2,8 @@ medieval_era = {
 	name = "Medieval Era"
 	start_date = 476
 }
+
+high_middle_ages = {
+	name = "High Middle Ages"
+	start_date = 1066
+}

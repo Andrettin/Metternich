@@ -5,6 +5,7 @@ paris = {
 	type = holding
 	holding_type = guild
 	#resource = grain
+	max_tier = market
 	province = ile_de_france
 	cultural_names = {
 		frankish = "Parisii"
@@ -15,6 +16,11 @@ paris = {
 	history = {
 		919 = {
 			developed = true #important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		high_middle_ages = {
+			tier = market #important market or fair in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
+			buildings += market
 		}
 		
 		1250 = {

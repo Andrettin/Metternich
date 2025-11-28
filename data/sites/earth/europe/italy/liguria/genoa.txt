@@ -4,6 +4,7 @@ genoa = {
 	geocoordinate = { 8.93003861353 44.40998821930 } #from Natural Earth
 	type = holding
 	holding_type = guild
+	max_tier = market
 	province = genoa
 	cultural_names = {
 		roman = "Genua" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 34-35.
@@ -13,6 +14,11 @@ genoa = {
 		395 = {
 			#buildings += cathedral #Genoa was the seat of a bishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
 			developed = true
+		}
+		
+		high_middle_ages = {
+			tier = market #important market or fair in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
+			buildings += market
 		}
 		
 		1360 = {

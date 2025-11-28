@@ -1,0 +1,8 @@
+uppakra = {
+	name = "Uppakra"
+	world = earth
+	geocoordinate = { 13.1709 55.667 } #Uppåkra
+	type = holding
+	holding_type = guild
+	province = scania
+}

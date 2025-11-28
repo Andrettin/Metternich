@@ -3,11 +3,12 @@ novgorod = {
 	world = earth
 	geocoordinate = { 31.33001501340 58.49998089510 } #from Natural Earth
 	type = holding
+	holding_type = guild #important market or fair, and had a foreign office of the Hanseatic League in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
 	province = novgorod
 	
 	history = {
 		1360 = {
-			holding_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 	}
 }

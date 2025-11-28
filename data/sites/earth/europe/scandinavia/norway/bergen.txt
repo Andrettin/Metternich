@@ -3,6 +3,7 @@ bergen = {
 	world = earth
 	geocoordinate = { 5.32452225609 60.39100242020 } #from Natural Earth
 	type = holding
+	holding_type = guild #important market or fair, and had a foreign office of the Hanseatic League in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
 	#resource = fish
 	province = hordaland
 }
