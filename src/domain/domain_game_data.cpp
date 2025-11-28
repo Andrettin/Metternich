@@ -142,6 +142,8 @@ void domain_game_data::process_gsml_property(const gsml_property &property)
 		this->government_type = government_type::get(value);
 	} else if (key == "capital") {
 		this->capital = site::get(value);
+	} else if (key == "size") {
+		this->size = std::stoi(value);
 	} else {
 		throw std::runtime_error(std::format("Invalid domain game data property: \"{}\".", key));
 	}
@@ -183,6 +185,8 @@ gsml_data domain_game_data::to_gsml_data() const
 	if (this->get_capital() != nullptr) {
 		data.add_property("capital", this->get_capital()->get_identifier());
 	}
+
+	data.add_property("size", std::to_string(this->get_size()));
 
 	gsml_data provinces_data("provinces");
 	for (const province *province : this->get_provinces()) {
@@ -997,6 +1001,8 @@ void domain_game_data::on_province_gained(const province *province, const int mu
 {
 	province_game_data *province_game_data = province->get_game_data();
 
+	this->change_size(province_game_data->get_level() * multiplier);
+
 	if (province_game_data->is_coastal()) {
 		this->coastal_province_count += 1 * multiplier;
 	}
@@ -1116,6 +1122,7 @@ void domain_game_data::on_site_gained(const site *site, const int multiplier)
 	const site_game_data *site_game_data = site->get_game_data();
 
 	if (site->is_settlement() && site_game_data->is_built()) {
+		this->change_size(site_game_data->get_holding_level() * multiplier);
 		this->change_settlement_count(1 * multiplier);
 
 		for (const qunique_ptr<building_slot> &building_slot : site_game_data->get_building_slots()) {
@@ -1222,6 +1229,19 @@ const province *domain_game_data::get_capital_province() const
 	}
 
 	return nullptr;
+}
+
+void domain_game_data::change_size(const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	this->size += change;
+
+	if (game::get()->is_running()) {
+		emit size_changed();
+	}
 }
 
 void domain_game_data::change_settlement_count(const int change)

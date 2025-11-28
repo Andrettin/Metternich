@@ -103,6 +103,7 @@ class domain_game_data final : public QObject
 	Q_PROPERTY(QVariantList provinces READ get_provinces_qvariant_list NOTIFY provinces_changed)
 	Q_PROPERTY(QVariantList sites READ get_sites_qvariant_list NOTIFY sites_changed)
 	Q_PROPERTY(const metternich::site* capital READ get_capital NOTIFY capital_changed)
+	Q_PROPERTY(int size READ get_size NOTIFY size_changed)
 	Q_PROPERTY(bool coastal READ is_coastal NOTIFY provinces_changed)
 	Q_PROPERTY(bool anarchy READ is_under_anarchy NOTIFY provinces_changed)
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect NOTIFY provinces_changed)
@@ -304,6 +305,13 @@ public:
 	void choose_capital();
 
 	const province *get_capital_province() const;
+
+	int get_size() const
+	{
+		return this->size;
+	}
+
+	void change_size(const int change);
 
 	int get_settlement_count() const
 	{
@@ -1112,6 +1120,7 @@ signals:
 	void provinces_changed();
 	void sites_changed();
 	void capital_changed();
+	void size_changed();
 	void diplomatic_map_image_changed();
 	void score_changed();
 	void score_rank_changed();
@@ -1137,13 +1146,14 @@ signals:
 
 private:
 	metternich::domain *domain = nullptr;
-	domain_tier tier{};
+	domain_tier tier {};
 	const metternich::religion *religion = nullptr;
 	const metternich::domain *overlord = nullptr;
 	const metternich::government_type *government_type = nullptr;
 	std::vector<const province *> provinces;
 	std::vector<const site *> sites;
 	const site *capital = nullptr;
+	int size = 0; //the sum of all province levels and holding levels
 	int settlement_count = 0; //only includes built settlements
 	std::vector<const province *> border_provinces;
 	int coastal_province_count = 0;
