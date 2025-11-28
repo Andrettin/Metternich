@@ -29,6 +29,7 @@ class holding_type final : public named_data_entry, public data_type<holding_typ
 	Q_PROPERTY(const metternich::portrait* portrait MEMBER portrait READ get_portrait NOTIFY changed)
 	Q_PROPERTY(std::filesystem::path image_filepath MEMBER image_filepath WRITE set_image_filepath NOTIFY changed)
 	Q_PROPERTY(bool economic MEMBER economic READ is_economic NOTIFY changed)
+	Q_PROPERTY(bool religious MEMBER religious READ is_religious NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "holding_type";
@@ -64,6 +65,11 @@ public:
 	bool is_economic() const
 	{
 		return this->economic;
+	}
+
+	bool is_religious() const
+	{
+		return this->religious;
 	}
 
 	const commodity_map<int> &get_level_commodity_costs() const
@@ -139,6 +145,7 @@ private:
 	const metternich::portrait *portrait = nullptr;
 	std::filesystem::path image_filepath;
 	bool economic = false;
+	bool religious = false;
 	commodity_map<int> level_commodity_costs;
 	commodity_map<int> level_commodity_costs_per_level;
 	std::map<std::string, std::unique_ptr<const and_condition<site>>> conditional_names;

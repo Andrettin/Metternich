@@ -3,6 +3,7 @@ temple = {
 	icon = alliance_ring
 	portrait = temple
 	image_filepath = "tiles/settlements/town.png"
+	religious = true
 	level_commodity_costs = {
 		wealth = 1gb
 	}
