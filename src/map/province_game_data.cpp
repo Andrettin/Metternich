@@ -22,6 +22,7 @@
 #include "game/game.h"
 #include "game/province_event.h"
 #include "infrastructure/building_type.h"
+#include "infrastructure/holding_type.h"
 #include "infrastructure/improvement.h"
 #include "map/diplomatic_map_mode.h"
 #include "map/map.h"
@@ -410,6 +411,7 @@ const std::string &province_game_data::get_current_cultural_name() const
 void province_game_data::set_level(const int level)
 {
 	assert_throw(level >= 0);
+	assert_throw(level <= this->get_max_level());
 
 	if (level == this->get_level()) {
 		return;
@@ -440,6 +442,11 @@ void province_game_data::set_level(const int level)
 void province_game_data::change_level(const int change)
 {
 	this->set_level(this->get_level() + change);
+}
+
+int province_game_data::get_max_level() const
+{
+	return this->province->get_map_data()->get_max_level();
 }
 
 bool province_game_data::is_coastal() const

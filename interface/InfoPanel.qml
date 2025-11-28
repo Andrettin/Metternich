@@ -207,7 +207,7 @@ Rectangle {
 		anchors.horizontalCenter: parent.horizontalCenter
 		text: format_text(
 			selected_province ? (
-				("Province Level: " + selected_province.game_data.level)
+				("Province Level: " + selected_province.game_data.level + "/" + selected_province.game_data.max_level)
 				+ ("\nTerrain: " + selected_province.map_data.terrain.name)
 			) : ""
 		)
@@ -221,7 +221,7 @@ Rectangle {
 		anchors.horizontalCenter: parent.horizontalCenter
 		text: format_text(
 			selected_site_game_data ? (
-				(holding_type !== null ? ("Holding Level: " + selected_site_game_data.holding_level + "/" + selected_site.max_holding_level) : "")
+				((selected_site.max_holding_level > 0 && dungeon === null) ? ("Holding Level: " + selected_site_game_data.holding_level + "/" + selected_site.max_holding_level) : "")
 				+ (dungeon && dungeon.level !== 0 ? ("Dungeon Level: " + dungeon.level) : "")
 				+ (selected_site_game_data.commodity_outputs.length > 0 ? get_commodity_outputs_string(selected_site_game_data.commodity_outputs) : "")
 			) : ""

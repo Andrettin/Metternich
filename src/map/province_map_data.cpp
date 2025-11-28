@@ -2,6 +2,7 @@
 
 #include "map/province_map_data.h"
 
+#include "database/data_entry_container.h"
 #include "map/map.h"
 #include "map/province.h"
 #include "map/site.h"
@@ -34,6 +35,25 @@ void province_map_data::on_map_created()
 
 		this->terrain = best_terrain;
 		assert_throw(this->get_terrain() != nullptr);
+	}
+
+	if (!this->get_settlement_sites().empty()) {
+		data_entry_map<holding_type, int> holding_type_max_levels;
+		for (const site *holding_site : this->get_settlement_sites()) {
+			if (holding_site->get_holding_type() == nullptr) {
+				continue;
+			}
+
+			holding_type_max_levels[holding_site->get_holding_type()] += holding_site->get_max_holding_level();
+		}
+
+		int highest_max_holding_level = 0;
+		for (const auto &[holding_type, max_holding_level] : holding_type_max_levels) {
+			assert_throw(holding_type != nullptr);
+			highest_max_holding_level = std::max(highest_max_holding_level, max_holding_level);
+		}
+
+		this->max_level = std::max(highest_max_holding_level, 1);
 	}
 
 	this->calculate_territory_rect_center();
