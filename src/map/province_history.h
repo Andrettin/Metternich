@@ -20,8 +20,9 @@ class province_history final : public data_entry_history
 {
 	Q_OBJECT
 
-	Q_PROPERTY(metternich::domain* owner MEMBER owner)
-	Q_PROPERTY(metternich::religion* religion MEMBER religion)
+	Q_PROPERTY(const metternich::domain* owner MEMBER owner)
+	Q_PROPERTY(const metternich::domain* trade_zone MEMBER trade_zone)
+	Q_PROPERTY(const metternich::religion* religion MEMBER religion)
 	Q_PROPERTY(int population READ get_population WRITE set_population)
 	Q_PROPERTY(archimedes::centesimal_int literacy_rate MEMBER literacy_rate READ get_literacy_rate)
 
@@ -36,6 +37,11 @@ public:
 	const domain *get_owner() const
 	{
 		return this->owner;
+	}
+
+	const domain *get_trade_zone() const
+	{
+		return this->trade_zone;
 	}
 
 	const culture_map<int64_t> &get_culture_weights() const
@@ -135,9 +141,10 @@ public:
 
 private:
 	const metternich::province *province = nullptr;
-	domain *owner = nullptr;
+	const domain *owner = nullptr;
+	const domain *trade_zone = nullptr;
 	culture_map<int64_t> culture_weights;
-	metternich::religion *religion = nullptr;
+	const metternich::religion *religion = nullptr;
 	phenotype_map<int64_t> phenotype_weights;
 	population_group_map<int> population_groups;
 	population_group_map<int> lower_bound_population_groups;

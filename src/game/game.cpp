@@ -949,6 +949,11 @@ void game::apply_sites()
 			} else if (site_history->get_dungeon() != nullptr) {
 				site_game_data->set_dungeon(site_history->get_dungeon());
 			}
+
+			const province_history *province_history = site_province->get_history();
+			if (province_history->get_trade_zone() != nullptr && site_game_data->get_holding_type() != nullptr && site_game_data->get_holding_type()->is_economic()) {
+				site_game_data->set_owner(province_history->get_trade_zone());
+			}
 		}
 	}
 
