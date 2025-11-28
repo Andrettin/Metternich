@@ -514,6 +514,10 @@ void province_game_data::choose_provincial_capital()
 			continue;
 		}
 
+		if (site->get_game_data()->get_owner() != this->get_owner()) {
+			continue;
+		}
+
 		if (this->get_owner() != nullptr && site == this->get_owner()->get_default_capital()) {
 			potential_provincial_capitals = { site };
 			break;

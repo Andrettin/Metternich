@@ -415,6 +415,10 @@ void site_game_data::set_owner(const domain *owner)
 	if (this->site->is_settlement() && this->is_built()) {
 		this->check_building_conditions();
 		this->check_free_buildings();
+
+		if (this->is_provincial_capital()) {
+			this->get_province()->get_game_data()->choose_provincial_capital();
+		}
 	}
 
 	if (game::get()->is_running()) {

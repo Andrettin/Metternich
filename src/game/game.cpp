@@ -976,6 +976,10 @@ void game::apply_sites()
 			continue;
 		}
 
+		if (default_provincial_capital->get_game_data()->get_owner() != province->get_game_data()->get_owner()) {
+			continue;
+		}
+
 		site_game_data *default_provincial_capital_game_data = default_provincial_capital->get_game_data();
 		assert_throw(!default_provincial_capital_game_data->is_built());
 
@@ -1261,9 +1265,9 @@ void game::apply_population_history()
 		province_game_data *province_game_data = province->get_game_data();
 
 		if (province->get_history()->get_population() > 0) {
-			const int province_level = defines::get()->get_province_level_for_population(province->get_history()->get_population());
-			static constexpr int max_province_level = 2;
-			province_game_data->set_level(std::max(province_game_data->get_level(), std::min(std::max(province_level, 1), max_province_level)));
+			//const int province_level = defines::get()->get_province_level_for_population(province->get_history()->get_population());
+			//static constexpr int max_province_level = 2;
+			//province_game_data->set_level(std::max(province_game_data->get_level(), std::min(std::max(province_level, 1), max_province_level)));
 		}
 
 		if (province_game_data->get_settlement_count() == 0) {
@@ -1611,7 +1615,7 @@ QCoro::Task<void> game::on_setup_finished()
 
 	for (const domain *domain : this->get_countries()) {
 		domain_game_data *domain_game_data = domain->get_game_data();
-		country_economy *country_economy = domain->get_economy();
+		//country_economy *country_economy = domain->get_economy();
 		country_government *country_government = domain->get_government();
 
 		domain_game_data->check_government_type();
@@ -1663,9 +1667,11 @@ QCoro::Task<void> game::on_setup_finished()
 		}
 
 		//decrease population if there's too much for the starting food output
+		/*
 		while ((country_economy->get_food_output() - domain_game_data->get_net_food_consumption()) < 0) {
 			domain_game_data->decrease_population(false);
 		}
+		*/
 
 		emit domain->game_data_changed();
 	}

@@ -145,6 +145,10 @@ void site::check() const
 			break;
 	}
 
+	if (this->get_holding_type() != nullptr && this->get_type() != site_type::holding) {
+		throw std::runtime_error(std::format("Site \"{}\" has a holding type, but it is not a holding.", this->get_identifier()));
+	}
+
 	if (this->get_resource() != nullptr && !this->get_resource()->get_site_types().contains(this->get_type())) {
 		throw std::runtime_error(std::format("Site \"{}\" has resource \"{}\", but the latter cannot be set for the site's type (\"{}\").", this->get_identifier(), this->get_resource()->get_identifier(), magic_enum::enum_name(this->get_type())));
 	}
