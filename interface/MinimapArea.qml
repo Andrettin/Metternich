@@ -107,4 +107,30 @@ Rectangle {
 			}
 		}
 	}
+	
+	Column {
+		id: minimap_mode_right_column
+		anchors.left: minimap_borders.right
+		anchors.leftMargin: 4 * scale_factor
+		anchors.verticalCenter: parent.verticalCenter
+		spacing: 4 * scale_factor
+		
+		IconButton {
+			id: trade_zone_map_mode_button
+			icon_identifier: "chest"
+			highlighted: province_map.mode === ProvinceMap.Mode.TradeZone
+			
+			onClicked: {
+				province_map.mode = ProvinceMap.Mode.TradeZone
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Trade Zone Map Mode"
+				} else {
+					status_text = ""
+				}
+			}
+		}
+	}
 }
