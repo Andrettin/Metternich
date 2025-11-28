@@ -1167,7 +1167,7 @@ void domain_game_data::set_capital(const site *capital)
 
 	if (capital != nullptr) {
 		assert_throw(capital->is_settlement());
-		assert_throw(capital->get_game_data()->get_province()->get_game_data()->get_owner() == this->domain);
+		assert_throw(this->get_provinces().empty() || capital->get_game_data()->get_province()->get_game_data()->get_owner() == this->domain);
 		assert_throw(capital->get_game_data()->is_built());
 	}
 
@@ -1879,6 +1879,10 @@ QCoro::Task<QImage> domain_game_data::finalize_diplomatic_map_image(QImage &&ima
 
 QCoro::Task<void> domain_game_data::create_diplomatic_map_image()
 {
+	if (this->get_provinces().empty()) {
+		co_return;
+	}
+
 	const map *map = map::get();
 
 	QImage diplomatic_map_image = this->prepare_diplomatic_map_image();

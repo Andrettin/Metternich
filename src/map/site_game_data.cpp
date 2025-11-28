@@ -298,7 +298,13 @@ std::string site_game_data::get_display_text() const
 	if (this->get_holding_type() != nullptr) {
 		text += std::format(" (Level {})", this->get_holding_level());
 
-		if (this->is_provincial_capital()) {
+		if (this->get_owner() != nullptr && this->get_owner() != this->get_province()->get_game_data()->get_owner()) {
+			text += std::format(" ({})", this->get_owner()->get_name());
+		}
+
+		if (this->is_capital()) {
+			text += " (Capital)";
+		} else if (this->is_provincial_capital()) {
 			text += " (Provincial Capital)";
 		}
 	} else if (this->get_dungeon() != nullptr) {

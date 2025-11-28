@@ -45,8 +45,9 @@ Flickable {
 			id: country_image
 			x: country.game_data.diplomatic_map_image_rect.x
 			y: country.game_data.diplomatic_map_image_rect.y
-			source: "image://diplomatic_map/" + country.identifier + (selected ? "/selected" : get_map_mode_suffix(diplomatic_map.mode, country)) + "/" + country_suffix
+			source: visible ? ("image://diplomatic_map/" + country.identifier + (selected ? "/selected" : get_map_mode_suffix(diplomatic_map.mode, country)) + "/" + country_suffix) : "image://empty/"
 			cache: false
+			visible: country.game_data.provinces.length > 0
 			
 			readonly property var country: model.modelData
 			readonly property var selected: selected_country === country
