@@ -29,6 +29,7 @@ void site_history::process_gsml_property(const gsml_property &property)
 		assert_throw(property.get_operator() == gsml_operator::assignment);
 		if (holding_type != nullptr) {
 			this->development_level = holding_type->get_tier_level(value);
+			assert_throw(this->development_level <= this->site->get_max_holding_level());
 		}
 	} else if (key == "improvements") {
 		const improvement *improvement = improvement::get(value);
