@@ -569,22 +569,22 @@ QString building_slot::get_modifier_string() const
 		str += this->get_building()->get_province_modifier()->get_string(province);
 	}
 
-	if (this->get_building()->get_country_modifier() != nullptr || this->get_building()->get_weighted_country_modifier() != nullptr) {
+	if (this->get_building()->get_country_modifier() != nullptr) {
 		if (!str.empty()) {
-			str += "\n\n";
+			str += "\n";
 		}
 
-		str += "Country";
+		str += this->get_building()->get_country_modifier()->get_string(this->get_country());
+	}
 
-		if (this->get_building()->get_country_modifier() != nullptr) {
-			str += "\n" + this->get_building()->get_country_modifier()->get_string(this->get_country(), 1, 1);
+	if (this->get_building()->get_weighted_country_modifier() != nullptr) {
+		if (!str.empty()) {
+			str += "\n";
 		}
 
-		if (this->get_building()->get_weighted_country_modifier() != nullptr) {
-			const domain_game_data *domain_game_data = this->get_country()->get_game_data();
-			const centesimal_int multiplier = centesimal_int(1) / domain_game_data->get_settlement_count();
-			str += "\n" + this->get_building()->get_weighted_country_modifier()->get_string(this->get_country(), multiplier, 1, false);
-		}
+		const domain_game_data *domain_game_data = this->get_country()->get_game_data();
+		const centesimal_int multiplier = centesimal_int(1) / domain_game_data->get_settlement_count();
+		str += this->get_building()->get_weighted_country_modifier()->get_string(this->get_country(), multiplier, 0, false);
 	}
 
 	return QString::fromStdString(str);

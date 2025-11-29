@@ -42,6 +42,7 @@
 #include "script/condition/discovered_province_condition.h"
 #include "script/condition/discovered_region_condition.h"
 #include "script/condition/domain_condition.h"
+#include "script/condition/domain_attribute_condition.h"
 #include "script/condition/domain_exists_condition.h"
 #include "script/condition/domain_scope_condition.h"
 #include "script/condition/dungeon_condition.h"
@@ -188,6 +189,8 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			return std::make_unique<subject_type_condition>(value, condition_operator);
 		} else if (key == "tier") {
 			return std::make_unique<tier_condition>(value, condition_operator);
+		} else if (domain_attribute::try_get(key) != nullptr) {
+			return std::make_unique<domain_attribute_condition>(domain_attribute::get(key), value, condition_operator);
 		} else if (key.starts_with(population_scaled_commodity_prefix) && commodity::try_get(key.substr(population_scaled_commodity_prefix.size(), key.size() - population_scaled_commodity_prefix.size())) != nullptr) {
 			const commodity *commodity = commodity::get(key.substr(population_scaled_commodity_prefix.size(), key.size() - population_scaled_commodity_prefix.size()));
 			return std::make_unique<population_scaled_commodity_condition>(commodity, value, condition_operator);

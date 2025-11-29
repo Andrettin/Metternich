@@ -19,6 +19,7 @@
 #include "domain/cultural_group_rank.h"
 #include "domain/diplomacy_state.h"
 #include "domain/domain.h"
+#include "domain/domain_attribute.h"
 #include "domain/domain_game_data.h"
 #include "domain/domain_tier.h"
 #include "domain/domain_tier_data.h"
@@ -195,6 +196,7 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<country_turn_data>("", 1);
 		qmlRegisterAnonymousType<defines>("", 1);
 		qmlRegisterAnonymousType<domain>("", 1);
+		qmlRegisterAnonymousType<domain_attribute>("", 1);
 		qmlRegisterAnonymousType<domain_game_data>("", 1);
 		qmlRegisterAnonymousType<domain_tier_data>("", 1);
 		qmlRegisterAnonymousType<dynasty>("", 1);

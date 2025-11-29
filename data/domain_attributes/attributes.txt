@@ -1,0 +1,11 @@
+economy = {
+	name = "Economy"
+}
+
+loyalty = {
+	name = "Loyalty"
+}
+
+stability = {
+	name = "Stability"
+}

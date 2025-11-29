@@ -26,6 +26,7 @@
 #include "script/modifier_effect/damage_bonus_modifier_effect.h"
 #include "script/modifier_effect/deployment_limit_modifier_effect.h"
 #include "script/modifier_effect/diplomatic_penalty_for_expansion_modifier_effect.h"
+#include "script/modifier_effect/domain_attribute_modifier_effect.h"
 #include "script/modifier_effect/free_artillery_promotion_modifier_effect.h"
 #include "script/modifier_effect/free_building_class_modifier_effect.h"
 #include "script/modifier_effect/free_cavalry_promotion_modifier_effect.h"
@@ -162,6 +163,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<warship_cost_modifier_effect>(value);
 		} else if (key == "wonder_cost_efficiency") {
 			return std::make_unique<wonder_cost_efficiency_modifier_effect>(value);
+		} else if (domain_attribute::try_get(key) != nullptr) {
+			return std::make_unique<domain_attribute_modifier_effect>(domain_attribute::get(key), value);
 		} else if (key.starts_with(capital_commodity_bonus_prefix) && key.ends_with(bonus_suffix) && commodity::try_get(key.substr(capital_commodity_bonus_prefix.size(), key.size() - capital_commodity_bonus_prefix.size() - bonus_suffix.size())) != nullptr) {
 			const commodity *commodity = commodity::get(key.substr(capital_commodity_bonus_prefix.size(), key.size() - capital_commodity_bonus_prefix.size() - bonus_suffix.size()));
 			return std::make_unique<capital_commodity_bonus_modifier_effect>(commodity, value);

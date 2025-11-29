@@ -108,6 +108,7 @@ Rectangle {
 			+ (selected_country_game_data.anarchy ? "\nAnarchy" : "")
 			+ (!selected_country_game_data.anarchy ? ("\nScore: " + number_string(selected_country_game_data.score) + " (#" + (selected_country_game_data.score_rank + 1) + ")") : "")
 			+ "\nSize: " + number_string(selected_country_game_data.size)
+			+ (selected_country_game_data.attribute_values.length > 0 ? ("\n" + object_counts_to_string(selected_country_game_data.attribute_values)) : "")
 			//+ "\nPopulation: " + number_string(selected_country_game_data.population.size)
 			//+ "\nPopulation Growth: " + selected_country_game_data.population_growth + "/" + metternich.defines.population_growth_threshold
 			//+ "\nLiteracy: " + selected_country_game_data.population.literacy_rate + "%"

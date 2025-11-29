@@ -292,6 +292,23 @@ ApplicationWindow {
 		return str
 	}
 	
+	function object_counts_to_string(object_counts) {
+		var str = ""
+		
+		for (var i = 0; i < object_counts.length; i++) {
+			var object = object_counts[i].key
+			var count = object_counts[i].value
+			
+			if (str.length > 0) {
+				str += "\n"
+			}
+			
+			str += object.name + ": " + number_string(count)
+		}
+		
+		return str
+	}
+	
 	function get_plural_form(str) {
 		if (str.endsWith("y")) {
 			return str.substr(0, str.length - 1) + "ies"

@@ -20,6 +20,7 @@
 #include "domain/culture.h"
 #include "domain/diplomacy_state.h"
 #include "domain/domain.h"
+#include "domain/domain_attribute.h"
 #include "domain/domain_tier.h"
 #include "domain/domain_tier_data.h"
 #include "domain/government_group.h"
@@ -154,7 +155,11 @@ void domain_game_data::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "provinces") {
+	if (tag == "attributes") {
+		scope.for_each_property([&](const gsml_property &attribute_property) {
+			this->attribute_values[domain_attribute::get(attribute_property.get_key())] = std::stoi(attribute_property.get_value());
+		});
+	} else if (tag == "provinces") {
 		for (const std::string &value : values) {
 			this->provinces.push_back(province::get(value));
 		}
@@ -187,6 +192,14 @@ gsml_data domain_game_data::to_gsml_data() const
 	}
 
 	data.add_property("size", std::to_string(this->get_size()));
+
+	if (!this->attribute_values.empty()) {
+		gsml_data attributes_data("attributes");
+		for (const auto &[attribute, value] : this->attribute_values) {
+			attributes_data.add_property(attribute->get_identifier(), std::to_string(value));
+		}
+		data.add_child(std::move(attributes_data));
+	}
 
 	gsml_data provinces_data("provinces");
 	for (const province *province : this->get_provinces()) {
@@ -2019,6 +2032,82 @@ QCoro::Task<void> domain_game_data::create_diplomacy_state_diplomatic_map_image(
 	}
 
 	this->diplomacy_state_diplomatic_map_images[state] = co_await this->finalize_diplomatic_map_image(std::move(image));
+}
+
+QVariantList domain_game_data::get_attribute_values_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_attribute_values());
+}
+
+void domain_game_data::change_attribute_value(const domain_attribute *attribute, const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const int old_value = this->get_attribute_value(attribute);
+
+	const int new_value = (this->attribute_values[attribute] += change);
+
+	if (new_value == 0) {
+		this->attribute_values.erase(attribute);
+	}
+
+	if (change > 0) {
+		for (int i = old_value + 1; i <= new_value; ++i) {
+			const modifier<const metternich::domain> *value_modifier = attribute->get_value_modifier(i);
+			if (value_modifier != nullptr) {
+				value_modifier->apply(this->domain);
+			}
+		}
+	} else {
+		for (int i = old_value; i > new_value; --i) {
+			const modifier<const metternich::domain> *value_modifier = attribute->get_value_modifier(i);
+			if (value_modifier != nullptr) {
+				value_modifier->remove(this->domain);
+			}
+		}
+	}
+
+	if (game::get()->is_running()) {
+		emit attribute_values_changed();
+	}
+}
+
+bool domain_game_data::do_attribute_check(const domain_attribute *attribute, const int roll_modifier) const
+{
+	static constexpr dice check_dice(1, 20);
+
+	const int roll_result = random::get()->roll_dice(check_dice);
+
+	//there should always be at least a 5% chance of failure
+	if (roll_result == check_dice.get_sides()) {
+		//e.g. if a 20 is rolled for a d20 roll
+		return false;
+	}
+
+	const int attribute_value = this->get_attribute_value(attribute);
+	const int modified_attribute_value = attribute_value + roll_modifier;
+	return roll_result <= modified_attribute_value;
+}
+
+int domain_game_data::get_attribute_check_chance(const domain_attribute *attribute, const int roll_modifier) const
+{
+	assert_throw(attribute != nullptr);
+
+	static constexpr dice check_dice(1, 20);
+
+	int chance = this->get_attribute_value(attribute);
+	chance += roll_modifier;
+
+	if (check_dice.get_sides() != 100) {
+		chance *= 100;
+		chance /= check_dice.get_sides();
+	}
+
+	chance = std::min(chance, 95);
+
+	return chance;
 }
 
 void domain_game_data::change_score(const int change)

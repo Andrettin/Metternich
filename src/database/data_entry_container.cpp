@@ -10,6 +10,7 @@
 #include "character/trait.h"
 #include "character/trait_type.h"
 #include "domain/cultural_group.h"
+#include "domain/domain_attribute.h"
 #include "domain/idea_slot.h"
 #include "domain/office.h"
 #include "economy/commodity_unit.h"
@@ -37,6 +38,7 @@ template struct data_entry_compare<character_attribute>;
 template struct data_entry_compare<civilian_unit_type>;
 template struct data_entry_compare<commodity_unit>;
 template struct data_entry_compare<cultural_group>;
+template struct data_entry_compare<domain_attribute>;
 template struct data_entry_compare<dungeon_area>;
 template struct data_entry_compare<game_rule>;
 template struct data_entry_compare<holding_type>;
