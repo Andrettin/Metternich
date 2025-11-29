@@ -8,6 +8,13 @@ shrine = {
 		temple
 		city
 	}
+	commodity_costs = {
+		wealth = 8gb
+	}
+	country_modifier = {
+		loyalty = 1
+		#unrest = -1
+	}
 }
 
 temple = {
@@ -20,6 +27,14 @@ temple = {
 	holding_types = {
 		temple
 		city
+	}
+	commodity_costs = {
+		wealth = 24gb
+	}
+	country_modifier = {
+		loyalty = 2
+		stability = 2
+		#unrest = -2
 	}
 }
 
@@ -35,6 +50,15 @@ cathedral = {
 		temple
 		city
 	}
+	commodity_costs = {
+		wealth = 26gb
+	}
+	country_modifier = {
+		loyalty = 4
+		stability = 4
+		#unrest = -4
+		#fame = 1
+	}
 }
 
 monastery = {
@@ -42,14 +66,16 @@ monastery = {
 	building_class = monastery
 	portrait = temple
 	icon = wooden_cross
-	holding_level = 1
 	holding_types = {
 		temple
 	}
-	conditions = {
-		game_rule = additional_buildings
-	}
 	build_conditions = {
-		holding_level >= 2
+		has_building_class = temple
+	}
+	commodity_costs = {
+		wealth = 16gb
+	}
+	country_modifier = {
+		stability = 1
 	}
 }
