@@ -47,6 +47,7 @@
 #include "script/modifier_effect/movement_modifier_effect.h"
 #include "script/modifier_effect/output_modifier_effect.h"
 #include "script/modifier_effect/population_type_bonus_modifier_effect.h"
+#include "script/modifier_effect/province_attribute_modifier_effect.h"
 #include "script/modifier_effect/range_modifier_effect.h"
 #include "script/modifier_effect/resource_output_modifier_effect.h"
 #include "script/modifier_effect/ship_stat_modifier_effect.h"
@@ -207,6 +208,10 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 
 				return std::make_unique<merchant_ship_stat_modifier_effect>(magic_enum::enum_cast<transporter_stat>(stat_name).value(), value);
 			}
+		}
+	} else if constexpr (std::is_same_v<scope_type, const province>) {
+		if (province_attribute::try_get(key) != nullptr) {
+			return std::make_unique<province_attribute_modifier_effect>(province_attribute::get(key), value);
 		}
 	} else if constexpr (std::is_same_v<scope_type, const site>) {
 		if (key == "holding_level") {

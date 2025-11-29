@@ -39,6 +39,7 @@ class phenotype;
 class population;
 class population_unit;
 class province;
+class province_attribute;
 class religion;
 class scripted_province_modifier;
 class site;
@@ -66,6 +67,7 @@ class province_game_data final : public QObject
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect CONSTANT)
 	Q_PROPERTY(const metternich::site* provincial_capital READ get_provincial_capital NOTIFY provincial_capital_changed)
 	Q_PROPERTY(QPoint center_tile_pos READ get_center_tile_pos CONSTANT)
+	Q_PROPERTY(QVariantList attribute_values READ get_attribute_values_qvariant_list NOTIFY attribute_values_changed)
 	Q_PROPERTY(QVariantList visible_sites READ get_visible_sites_qvariant_list NOTIFY visible_sites_changed)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(metternich::population* population READ get_population CONSTANT)
@@ -189,6 +191,27 @@ public:
 	}
 
 	void calculate_text_rect();
+
+	const data_entry_map<province_attribute, int> &get_attribute_values() const
+	{
+		return this->attribute_values;
+	}
+
+	QVariantList get_attribute_values_qvariant_list() const;
+
+	int get_attribute_value(const province_attribute *attribute) const
+	{
+		const auto find_iterator = this->attribute_values.find(attribute);
+		if (find_iterator != this->attribute_values.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void change_attribute_value(const province_attribute *attribute, const int change);
+	bool do_attribute_check(const province_attribute *attribute, const int roll_modifier) const;
+	int get_attribute_check_chance(const province_attribute *attribute, const int roll_modifier) const;
 
 	int get_settlement_count() const
 	{
@@ -524,6 +547,7 @@ signals:
 	void level_changed();
 	void provincial_capital_changed();
 	void map_image_changed();
+	void attribute_values_changed();
 	void visible_sites_changed();
 	void technologies_changed();
 	void scripted_modifiers_changed();
@@ -545,6 +569,7 @@ private:
 	std::map<province_map_mode, QImage> map_mode_images;
 	QRect map_image_rect;
 	QRect text_rect;
+	data_entry_map<province_attribute, int> attribute_values;
 	int settlement_count = 0; //only includes built settlements
 	technology_set technologies;
 	scripted_province_modifier_map<int> scripted_modifiers;

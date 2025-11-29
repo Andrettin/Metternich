@@ -86,6 +86,7 @@
 #include "script/condition/primary_attribute_condition.h"
 #include "script/condition/promotion_condition.h"
 #include "script/condition/province_condition.h"
+#include "script/condition/province_attribute_condition.h"
 #include "script/condition/province_count_condition.h"
 #include "script/condition/provincial_capital_condition.h"
 #include "script/condition/random_chance_condition.h"
@@ -216,6 +217,8 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 	} else if constexpr (std::is_same_v<scope_type, province>) {
 		if (key == "core") {
 			return std::make_unique<core_condition>(value, condition_operator);
+		} else if (province_attribute::try_get(key) != nullptr) {
+			return std::make_unique<province_attribute_condition>(province_attribute::get(key), value, condition_operator);
 		}
 	} else if constexpr (std::is_same_v<scope_type, site>) {
 		if (key == "adjacent_terrain") {

@@ -1,0 +1,23 @@
+corruption = {
+	name = "Corruption"
+}
+
+crime = {
+	name = "Crime"
+}
+
+law = {
+	name = "Law"
+}
+
+lore = {
+	name = "Lore"
+}
+
+productivity = {
+	name = "Productivity"
+}
+
+society = {
+	name = "Society"
+}

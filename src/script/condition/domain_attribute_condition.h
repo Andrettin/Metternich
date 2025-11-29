@@ -1,8 +1,8 @@
 #pragma once
 
 #include "domain/domain.h"
-#include "domain/domain_game_data.h"
 #include "domain/domain_attribute.h"
+#include "domain/domain_game_data.h"
 #include "script/condition/numerical_condition.h"
 
 namespace metternich {
