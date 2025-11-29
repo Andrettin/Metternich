@@ -147,7 +147,7 @@ bool building_slot::can_gain_building(const building_type *building) const
 
 	if (building->get_fortification_level() > 0) {
 		const int total_fortification_level = this->get_settlement()->get_game_data()->get_fortification_level() + this->get_settlement()->get_game_data()->get_building_fortification_level_change(building);
-		if (total_fortification_level > this->get_settlement()->get_game_data()->get_holding_level()) {
+		if (total_fortification_level > this->get_settlement()->get_max_holding_level()) {
 			return false;
 		}
 	}
@@ -178,6 +178,13 @@ bool building_slot::can_build_building(const building_type *building) const
 {
 	if (building->get_required_building() != nullptr && this->get_building() != building->get_required_building()) {
 		return false;
+	}
+
+	if (building->get_fortification_level() > 0) {
+		const int total_fortification_level = this->get_settlement()->get_game_data()->get_fortification_level() + this->get_settlement()->get_game_data()->get_building_fortification_level_change(building);
+		if (total_fortification_level > this->get_settlement()->get_game_data()->get_holding_level()) {
+			return false;
+		}
 	}
 
 	if (building->get_build_conditions() != nullptr) {
