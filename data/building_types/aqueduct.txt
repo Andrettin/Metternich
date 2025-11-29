@@ -10,7 +10,7 @@ aqueduct = {
 	conditions = {
 		game_rule = additional_buildings
 	}
-	settlement_modifier = {
+	modifier = {
 		housing_bonus = 2
 	}
 }

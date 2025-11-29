@@ -15,7 +15,7 @@ observatory = {
 			adjacent_terrain = mountains
 		}
 	}
-	settlement_modifier = {
+	modifier = {
 		research_bonus = 1
 	}
 }

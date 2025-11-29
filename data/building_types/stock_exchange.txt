@@ -17,7 +17,7 @@ stock_exchange = {
 	build_conditions = {
 		has_building_class = bank
 	}
-	settlement_modifier = {
+	modifier = {
 		trade_output_modifier = 50
 	}
 }

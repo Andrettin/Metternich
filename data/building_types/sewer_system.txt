@@ -15,7 +15,7 @@ sewer_system = {
 			value = 1
 		}
 	}
-	settlement_modifier = {
+	modifier = {
 		housing_bonus = 2
 	}
 }

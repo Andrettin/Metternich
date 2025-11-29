@@ -1243,8 +1243,8 @@ void site_game_data::on_building_gained(const building_type *building, const int
 		building->get_province_modifier()->apply(this->get_province(), multiplier);
 	}
 
-	if (building->get_settlement_modifier() != nullptr) {
-		building->get_settlement_modifier()->apply(this->site, multiplier);
+	if (building->get_modifier() != nullptr) {
+		building->get_modifier()->apply(this->site, multiplier);
 	}
 
 	if (multiplier > 0 && building->get_effects() != nullptr) {

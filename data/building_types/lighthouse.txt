@@ -13,7 +13,7 @@ lighthouse = {
 	province_modifier = {
 		fish_bonus_for_tile_threshold = 1
 	}
-	settlement_modifier = {
+	modifier = {
 		housing_bonus = 3
 	}
 }

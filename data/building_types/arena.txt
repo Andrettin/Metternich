@@ -9,7 +9,7 @@ arena = {
 	conditions = {
 		game_rule = additional_buildings
 	}
-	settlement_modifier = {
+	modifier = {
 		amenities_bonus = 3
 	}
 }

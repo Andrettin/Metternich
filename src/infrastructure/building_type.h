@@ -252,9 +252,9 @@ public:
 		return this->free_on_start_conditions.get();
 	}
 
-	const modifier<const site> *get_settlement_modifier() const
+	const modifier<const site> *get_modifier() const
 	{
-		return this->settlement_modifier.get();
+		return this->modifier.get();
 	}
 
 	const modifier<const province> *get_province_modifier() const
@@ -311,10 +311,10 @@ private:
 	std::unique_ptr<and_condition<site>> conditions;
 	std::unique_ptr<const and_condition<site>> build_conditions;
 	std::unique_ptr<const and_condition<site>> free_on_start_conditions;
-	std::unique_ptr<modifier<const site>> settlement_modifier;
-	std::unique_ptr<modifier<const province>> province_modifier;
-	std::unique_ptr<modifier<const domain>> domain_modifier;
-	std::unique_ptr<modifier<const domain>> weighted_domain_modifier;
+	std::unique_ptr<metternich::modifier<const site>> modifier;
+	std::unique_ptr<metternich::modifier<const province>> province_modifier;
+	std::unique_ptr<metternich::modifier<const domain>> domain_modifier;
+	std::unique_ptr<metternich::modifier<const domain>> weighted_domain_modifier;
 	std::unique_ptr<effect_list<const site>> effects;
 };
 

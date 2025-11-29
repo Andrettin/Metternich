@@ -519,46 +519,46 @@ QString building_slot::get_modifier_string() const
 		str += std::format("Holding Level: {}", string::colored(number::to_signed_string(this->get_building()->get_holding_level()), number_color));
 	}
 
-	std::string settlement_modifier_str;
-	if (this->get_building()->get_settlement_modifier() != nullptr) {
-		settlement_modifier_str += this->get_building()->get_settlement_modifier()->get_string(this->get_settlement());
+	std::string site_modifier_str;
+	if (this->get_building()->get_modifier() != nullptr) {
+		site_modifier_str += this->get_building()->get_modifier()->get_string(this->get_settlement());
 	}
 
 	const commodity_map<int> building_commodity_bonuses = this->get_country()->get_economy()->get_building_commodity_bonuses(this->get_building());
 	for (const auto &[commodity, bonus] : building_commodity_bonuses) {
 		const std::string base_string = commodity->is_storable() ? std::format("{} Output: ", commodity->get_name()) : std::format("{}: ", commodity->get_name());
 
-		const size_t find_pos = settlement_modifier_str.find(base_string);
+		const size_t find_pos = site_modifier_str.find(base_string);
 		if (find_pos != std::string::npos) {
-			const size_t number_start_pos = settlement_modifier_str.find('>', find_pos) + 2;
-			const size_t number_end_pos = settlement_modifier_str.find('<', number_start_pos);
+			const size_t number_start_pos = site_modifier_str.find('>', find_pos) + 2;
+			const size_t number_end_pos = site_modifier_str.find('<', number_start_pos);
 
-			if (settlement_modifier_str.at(number_end_pos - 1) != '%') {
-				const std::string number_str = settlement_modifier_str.substr(number_start_pos, number_end_pos - number_start_pos);
+			if (site_modifier_str.at(number_end_pos - 1) != '%') {
+				const std::string number_str = site_modifier_str.substr(number_start_pos, number_end_pos - number_start_pos);
 				const int new_number = std::stoi(number_str) + bonus;
-				settlement_modifier_str.replace(number_start_pos, number_end_pos - number_start_pos, std::to_string(new_number));
+				site_modifier_str.replace(number_start_pos, number_end_pos - number_start_pos, std::to_string(new_number));
 
 				continue;
 			}
 		}
 
-		if (!settlement_modifier_str.empty()) {
-			settlement_modifier_str += "\n";
+		if (!site_modifier_str.empty()) {
+			site_modifier_str += "\n";
 		}
 
 		const std::string number_str = number::to_signed_string(bonus);
 		const QColor &number_color = bonus < 0 ? defines::get()->get_red_text_color() : defines::get()->get_green_text_color();
 		const std::string colored_number_str = string::colored(number_str, number_color);
 
-		settlement_modifier_str += base_string + colored_number_str;
+		site_modifier_str += base_string + colored_number_str;
 	}
 
-	if (!settlement_modifier_str.empty()) {
+	if (!site_modifier_str.empty()) {
 		if (!str.empty()) {
 			str += "\n";
 		}
 
-		str += settlement_modifier_str;
+		str += site_modifier_str;
 	}
 
 	if (this->get_building()->get_province_modifier() != nullptr) {
