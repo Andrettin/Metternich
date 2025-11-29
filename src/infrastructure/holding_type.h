@@ -82,6 +82,11 @@ public:
 		return this->level_commodity_costs_per_level;
 	}
 
+	const commodity_map<int> &get_fortification_level_commodity_costs() const
+	{
+		return this->fortification_level_commodity_costs;
+	}
+
 	const std::map<std::string, std::unique_ptr<const and_condition<site>>> &get_conditional_names() const
 	{
 		return this->conditional_names;
@@ -148,6 +153,7 @@ private:
 	bool religious = false;
 	commodity_map<int> level_commodity_costs;
 	commodity_map<int> level_commodity_costs_per_level;
+	commodity_map<int> fortification_level_commodity_costs;
 	std::map<std::string, std::unique_ptr<const and_condition<site>>> conditional_names;
 	std::map<std::string, int> tier_levels; //identifiers for particular levels
 	std::vector<const holding_type *> base_holding_types;

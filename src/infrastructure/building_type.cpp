@@ -2,6 +2,7 @@
 
 #include "infrastructure/building_type.h"
 
+#include "database/defines.h"
 #include "domain/cultural_group.h"
 #include "domain/culture.h"
 #include "domain/domain.h"
@@ -270,6 +271,18 @@ commodity_map<int> building_type::get_commodity_costs_for_site(const site *site)
 			for (const auto &[commodity, level_cost_per_level] : site->get_game_data()->get_holding_type()->get_level_commodity_costs_per_level()) {
 				costs[commodity] += level_cost_per_level * (site->get_game_data()->get_holding_level() + 1 + i);
 			}
+		}
+	}
+
+	if (this->get_fortification_level() > 0) {
+		assert_throw(site->get_game_data()->get_holding_type() != nullptr);
+		const int fortification_level_change = site->get_game_data()->get_building_fortification_level_change(this);
+		for (const auto &[commodity, level_cost] : site->get_game_data()->get_holding_type()->get_fortification_level_commodity_costs()) {
+			int fortification_cost = level_cost * fortification_level_change;
+			if (site->get_game_data()->is_provincial_capital() && commodity == defines::get()->get_wealth_commodity()) {
+				fortification_cost *= 2;
+			}
+			costs[commodity] += fortification_cost;
 		}
 	}
 

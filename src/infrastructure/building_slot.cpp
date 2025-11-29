@@ -45,6 +45,7 @@ void building_slot::set_building(const building_type *building)
 	}
 
 	const int holding_level_change = this->get_settlement()->get_game_data()->get_building_holding_level_change(building);
+	const int fortification_level_change = this->get_settlement()->get_game_data()->get_building_fortification_level_change(building);
 
 	const building_type *old_building = this->get_building();
 
@@ -60,6 +61,10 @@ void building_slot::set_building(const building_type *building)
 
 	if (holding_level_change != 0) {
 		this->get_settlement()->get_game_data()->change_holding_level(holding_level_change);
+	}
+
+	if (fortification_level_change != 0) {
+		this->get_settlement()->get_game_data()->change_fortification_level(fortification_level_change);
 	}
 
 	if (game::get()->is_running()) {
@@ -140,12 +145,19 @@ bool building_slot::can_gain_building(const building_type *building) const
 		}
 	}
 
+	if (building->get_fortification_level() > 0) {
+		const int total_fortification_level = this->get_settlement()->get_game_data()->get_fortification_level() + this->get_settlement()->get_game_data()->get_building_fortification_level_change(building);
+		if (total_fortification_level > this->get_settlement()->get_game_data()->get_holding_level()) {
+			return false;
+		}
+	}
+
 	if (this->get_building() != nullptr) {
 		if (building == this->get_building()) {
 			return false;
 		}
 
-		if (building->get_fort_level() < this->get_building()->get_fort_level()) {
+		if (building->get_fortification_level() < this->get_building()->get_fortification_level()) {
 			return false;
 		}
 
@@ -517,6 +529,15 @@ QString building_slot::get_modifier_string() const
 
 		const QColor &number_color = this->get_building()->get_holding_level() < 0 ? defines::get()->get_red_text_color() : defines::get()->get_green_text_color();
 		str += std::format("Holding Level: {}", string::colored(number::to_signed_string(this->get_building()->get_holding_level()), number_color));
+	}
+
+	if (this->get_building()->get_fortification_level() != 0) {
+		if (!str.empty()) {
+			str += "\n";
+		}
+
+		const QColor &number_color = this->get_building()->get_fortification_level() < 0 ? defines::get()->get_red_text_color() : defines::get()->get_green_text_color();
+		str += std::format("Fortification Level: {}", string::colored(number::to_signed_string(this->get_building()->get_fortification_level()), number_color));
 	}
 
 	std::string site_modifier_str;

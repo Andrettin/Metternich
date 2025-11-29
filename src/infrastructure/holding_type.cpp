@@ -42,6 +42,11 @@ void holding_type::process_gsml_scope(const gsml_data &scope)
 			const commodity *commodity = commodity::get(property.get_key());
 			this->level_commodity_costs_per_level[commodity] = commodity->string_to_value(property.get_value());
 		});
+	} else if (tag == "fortification_level_commodity_costs") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const commodity *commodity = commodity::get(property.get_key());
+			this->fortification_level_commodity_costs[commodity] = commodity->string_to_value(property.get_value());
+		});
 	} else if (tag == "conditional_names") {
 		scope.for_each_child([&](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();

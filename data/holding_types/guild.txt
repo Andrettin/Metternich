@@ -10,6 +10,10 @@ guild = {
 	level_commodity_costs_per_level = {
 		regency = 1
 	}
+	fortification_level_commodity_costs = {
+		wealth = 4gb
+		regency = 1
+	}
 	tier_levels = {
 		trading_post = 1
 		market = 2

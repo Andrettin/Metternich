@@ -58,6 +58,7 @@ class site_game_data final : public QObject
 	Q_PROPERTY(QString current_cultural_name READ get_current_cultural_name_qstring NOTIFY culture_changed)
 	Q_PROPERTY(const metternich::holding_type* holding_type READ get_holding_type NOTIFY holding_type_changed)
 	Q_PROPERTY(int holding_level READ get_holding_level NOTIFY holding_level_changed)
+	Q_PROPERTY(int fortification_level READ get_fortification_level NOTIFY fortification_level_changed)
 	Q_PROPERTY(const metternich::dungeon* dungeon READ get_dungeon NOTIFY dungeon_changed)
 	Q_PROPERTY(const metternich::improvement* improvement READ get_main_improvement NOTIFY improvements_changed)
 	Q_PROPERTY(const metternich::improvement* resource_improvement READ get_resource_improvement NOTIFY improvements_changed)
@@ -178,6 +179,20 @@ public:
 
 	int get_building_holding_level_change(const building_type *building) const;
 	void set_holding_level_from_buildings(const int level);
+
+	int get_fortification_level() const
+	{
+		return this->fortification_level;
+	}
+
+	void set_fortification_level(const int level);
+
+	void change_fortification_level(const int change)
+	{
+		this->set_fortification_level(this->get_fortification_level() + change);
+	}
+
+	int get_building_fortification_level_change(const building_type *building) const;
 
 	const std::string &get_holding_type_name() const
 	{
@@ -490,6 +505,7 @@ signals:
 	void improvements_changed();
 	void holding_type_changed();
 	void holding_level_changed();
+	void fortification_level_changed();
 	void holding_type_name_changed();
 	void dungeon_changed();
 	void portrait_changed();
@@ -506,6 +522,7 @@ private:
 	const metternich::religion *religion = nullptr;
 	const metternich::holding_type *holding_type = nullptr;
 	int holding_level = 0;
+	int fortification_level = 0;
 	std::string holding_type_name;
 	const metternich::dungeon *dungeon = nullptr;
 	data_entry_set<dungeon_area> explored_dungeon_areas;
