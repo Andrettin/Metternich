@@ -18,14 +18,14 @@ manor = { #administrative center
 			not = {
 				has_building_class = mansion
 				has_building_class = palace
-				has_building_class = fortress
+				has_building_class = castle
 			}
 		}
 		"Castle" = {
 			not = {
 				has_building_class = palace
 			}
-			has_building_class = fortress
+			has_building_class = castle
 		}
 		"Palace" = {
 			has_building_class = palace

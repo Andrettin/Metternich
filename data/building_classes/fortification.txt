@@ -12,3 +12,18 @@ fortress = {
 	name = "Fortress"
 	slot_type = fort
 }
+
+city_wall = {
+	name = "City Wall"
+	slot_type = fortification
+}
+
+watchtower = {
+	name = "Watchtower"
+	slot_type = fortification
+}
+
+castle = {
+	name = "Castle"
+	slot_type = fortification
+}

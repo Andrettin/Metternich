@@ -42,3 +42,71 @@ fortress = {
 		temple
 	}
 }
+
+city_wall = {
+	name = "City Wall"
+	building_class = city_wall
+	portrait = fort
+	icon = wall
+	fortification_level = 1
+	holding_types = {
+		guild
+		magic_source
+		manor
+		temple
+	}
+	commodity_costs = {
+		wealth = 2gb
+	}
+	domain_modifier = {
+		#unrest = -2
+	}
+}
+
+watchtower = {
+	name = "Watchtower"
+	building_class = watchtower
+	portrait = fort
+	icon = wall
+	fortification_level = 2
+	required_building = city_wall
+	holding_types = {
+		guild
+		magic_source
+		manor
+		temple
+	}
+	commodity_costs = {
+		wealth = 10gb
+	}
+	domain_modifier = {
+		stability = 1
+		#unrest = -2
+	}
+}
+
+castle = {
+	name = "Castle"
+	building_class = castle
+	portrait = fort
+	icon = wall
+	fortification_level = 3
+	required_building = watchtower
+	required_technology = middle_ages
+	holding_types = {
+		guild
+		magic_source
+		manor
+		temple
+	}
+	commodity_costs = {
+		wealth = 42gb
+	}
+	domain_modifier = {
+		economy = 2
+		loyalty = 2
+		stability = 2
+		#unrest = -4
+		#fame = 1
+	}
+}

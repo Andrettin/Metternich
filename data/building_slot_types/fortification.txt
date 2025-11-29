@@ -1,3 +1,7 @@
 fort = {
 	name = "Fort"
 }
+
+fortification = {
+	name = "Fortification"
+}
