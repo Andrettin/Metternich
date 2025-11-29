@@ -25,6 +25,10 @@ farther_pomerania = {
 			culture = pomeranian
 		}
 		
+		high_middle_ages = {
+			trade_zone = hanseatic_league #Hanseatic presence in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
+		}
+		
 		1477 = {
 			owner = pomerania #part of the Duchy of Pomerania c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
 			culture = german

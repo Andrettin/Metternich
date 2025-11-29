@@ -13,6 +13,10 @@ pskov = {
 			culture = slavic
 		}
 		
+		high_middle_ages = {
+			trade_zone = hanseatic_league #Hanseatic presence in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
+		}
+		
 		1360 = {
 			owner = russia #part of the Russian States in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 			culture = russian

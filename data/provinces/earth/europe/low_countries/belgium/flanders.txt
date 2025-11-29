@@ -28,6 +28,10 @@ flanders = {
 			owner = france #part of the Kingdom of France in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
 		}
 		
+		high_middle_ages = {
+			trade_zone = hanseatic_league #Hanseatic presence in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
+		}
+		
 		1328 = {
 			owner = france #part of France in 1328; Source: William R. Shepherd, "Historical Atlas", 1911, p. 76.
 			culture = flemish
