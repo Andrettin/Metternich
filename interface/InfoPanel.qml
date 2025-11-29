@@ -209,6 +209,7 @@ Rectangle {
 			selected_province ? (
 				("Province Level: " + selected_province.game_data.level + "/" + selected_province.game_data.max_level)
 				+ ("\nTerrain: " + selected_province.map_data.terrain.name)
+				+ (selected_province.game_data.attribute_values.length > 0 ? ("\n" + object_counts_to_string(selected_province.game_data.attribute_values)) : "")
 			) : ""
 		)
 		visible: selected_province && !selected_garrison
