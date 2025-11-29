@@ -23,11 +23,14 @@ barracks = {
 		combat_engineers
 		general
 	}
-	conditions = {
-		game_rule = additional_buildings
+	commodity_costs = {
+		wealth = 6gb
 	}
-	build_conditions = {
-		holding_level >= 1
+	province_modifier = {
+		law = 1
+	}
+	domain_modifier = {
+		#unrest = -1
 	}
 }
 
@@ -41,7 +44,18 @@ garrison = {
 	holding_types = {
 		manor
 	}
-	conditions = {
-		game_rule = additional_buildings
+	build_conditions = {
+		has_building_class = jail
+	}
+	commodity_costs = {
+		wealth = 22gb
+	}
+	province_modifier = {
+		law = 1
+	}
+	domain_modifier = {
+		loyalty = 2
+		stability = 2
+		#unrest = -2
 	}
 }

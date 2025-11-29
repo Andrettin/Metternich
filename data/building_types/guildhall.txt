@@ -24,7 +24,7 @@ guildhall = {
 	building_class = guildhall
 	portrait = trading_post
 	icon = wealth
-	holding_level = 3
+	holding_level = 2
 	required_building = trade_shop
 	holding_types = {
 		guild

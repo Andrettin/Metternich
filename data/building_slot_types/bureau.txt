@@ -1,0 +1,3 @@
+bureau = {
+	name = "Bureau"
+}

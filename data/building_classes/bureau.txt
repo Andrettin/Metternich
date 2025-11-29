@@ -1,0 +1,4 @@
+bureau = {
+	name = "Bureau"
+	slot_type = bureau
+}

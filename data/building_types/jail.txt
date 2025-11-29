@@ -7,10 +7,19 @@ jail = {
 	holding_types = {
 		manor
 	}
-	conditions = {
-		game_rule = additional_buildings
-	}
 	build_conditions = {
-		holding_level >= 1
+		has_building_class = barracks
+	}
+	commodity_costs = {
+		wealth = 14gb
+	}
+	province_modifier = {
+		crime = -1
+		law = 1
+	}
+	domain_modifier = {
+		loyalty = 2
+		stability = 2
+		#unrest = -2
 	}
 }

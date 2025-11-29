@@ -3,7 +3,6 @@ mansion = {
 	building_class = mansion
 	portrait = aristocratic_palace
 	icon = heater_shield
-	holding_level = 1
 	holding_types = {
 		manor
 	}
@@ -24,7 +23,6 @@ noble_villa = {
 	building_class = noble_villa
 	portrait = aristocratic_palace
 	icon = heater_shield
-	holding_level = 2
 	required_building = mansion
 	holding_types = {
 		manor
@@ -49,9 +47,25 @@ palace = {
 	building_class = palace
 	portrait = aristocratic_palace
 	icon = heater_shield
-	holding_level = 4
+	holding_level = 1
 	required_building = noble_villa
 	holding_types = {
 		manor
+	}
+	build_conditions = {
+		has_building_class = bureau
+	}
+	commodity_costs = {
+		wealth = 84gb
+	}
+	province_modifier = {
+		law = 2
+		society = 1
+	}
+	domain_modifier = {
+		economy = 2
+		loyalty = 6
+		stability = 2
+		#fame = 1
 	}
 }

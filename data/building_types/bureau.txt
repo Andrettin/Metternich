@@ -1,0 +1,29 @@
+bureau = {
+	name = "Bureau"
+	building_class = bureau
+	portrait = trading_post
+	icon = courthouse
+	holding_level = 1
+	holding_types = {
+		guild
+		manor
+	}
+	build_conditions = {
+		or = {
+			has_building_class = town_hall
+			has_building_class = guildhall
+		}
+	}
+	commodity_costs = {
+		wealth = 10gb
+	}
+	province_modifier = {
+		corruption = 1
+		law = 1
+	}
+	domain_modifier = {
+		economy = 1
+		loyalty = -1
+		stability = 1
+	}
+}

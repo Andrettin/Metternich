@@ -7,10 +7,18 @@ town_hall = {
 	holding_types = {
 		manor
 	}
-	conditions = {
-		game_rule = additional_buildings
-	}
 	build_conditions = {
-		holding_level >= 2
+		has_building_class = garrison
+	}
+	commodity_costs = {
+		wealth = 22gb
+	}
+	province_modifier = {
+		law = 1
+	}
+	domain_modifier = {
+		economy = 1
+		loyalty = 1
+		stability = 1
 	}
 }
