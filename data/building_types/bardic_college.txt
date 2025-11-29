@@ -1,0 +1,18 @@
+bardic_college = {
+	name = "Bardic College"
+	building_class = bardic_college
+	portrait = university
+	icon = music
+	holding_types = {
+		guild
+	}
+	commodity_costs = {
+		wealth = 40gb
+	}
+	domain_modifier = {
+		economy = 1
+		loyalty = 3
+		stability = 1
+		#fame = 1
+	}
+}

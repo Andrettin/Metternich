@@ -1,0 +1,4 @@
+bardic_college = {
+	name = "Bardic College"
+	slot_type = bardic_college
+}
