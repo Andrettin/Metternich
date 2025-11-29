@@ -3,7 +3,6 @@ pier = {
 	building_class = pier
 	portrait = dock
 	icon = anchor
-	holding_level = 1
 	holding_types = {
 		guild
 	}
@@ -12,11 +11,15 @@ pier = {
 			near_water = true
 		}
 	}
-	conditions = {
-		game_rule = additional_buildings
+	commodity_costs = {
+		wealth = 16gb
 	}
-	build_conditions = {
-		holding_level >= 2
+	province_modifier = {
+		crime = 1
+	}
+	domain_modifier = {
+		economy = 1
+		stability = 1
 	}
 }
 
@@ -26,7 +29,6 @@ waterfront = {
 	portrait = dock
 	icon = anchor
 	required_building = pier
-	holding_level = 2
 	holding_types = {
 		guild
 	}
@@ -42,9 +44,19 @@ waterfront = {
 		province = {
 			near_water = true
 		}
-		game_rule = additional_buildings
 	}
 	build_conditions = {
-		holding_level >= 2
+		holding_level >= 4
+	}
+	commodity_costs = {
+		wealth = 74gb
+	}
+	province_modifier = {
+		crime = 1
+		productivity = 2
+	}
+	domain_modifier = {
+		economy = 4
+		stability = 1
 	}
 }
