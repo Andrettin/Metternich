@@ -4,12 +4,18 @@ library = {
 	portrait = university
 	icon = book
 	holding_types = {
-		city
+		guild
+		magic_source
+		temple
 	}
-	conditions = {
-		game_rule = research_commodity
+	commodity_costs = {
+		wealth = 6gb
 	}
 	province_modifier = {
-		research_output_modifier = 50
+		lore = 1
+	}
+	domain_modifier = {
+		economy = 1
+		loyalty = 1
 	}
 }
