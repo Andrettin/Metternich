@@ -29,7 +29,7 @@ london = {
 		}
 		
 		1596 = {
-			buildings += college #Gresham College founded in London in 1596; Source: Henry Kamen, "Early Modern European Society", 2021, p. 294.
+			buildings += academy #Gresham College founded in London in 1596; Source: Henry Kamen, "Early Modern European Society", 2021, p. 294.
 		}
 		
 		1600 = {

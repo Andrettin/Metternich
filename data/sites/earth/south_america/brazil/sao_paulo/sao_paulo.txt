@@ -7,7 +7,7 @@ sao_paulo = {
 	
 	history = {
 		1827 = {
-			buildings += college #Law college existent in São Paulo in 1827; Source: Otávio Tarquínio de Sousa, "Bernardo Pereira de Vasconcelos", p. 66.
+			buildings += academy #Law college existent in São Paulo in 1827; Source: Otávio Tarquínio de Sousa, "Bernardo Pereira de Vasconcelos", p. 66.
 			holding_type = city
 		}
 	}

@@ -6,7 +6,7 @@ mariana = {
 	
 	history = {
 		1750 = {
-			buildings += college #Seminary founded in Mariana in 1750; Source: Keila Grinberg; Ricardo Salles, "O Brasil Imperial", vol. I, 2009, p. 296.
+			buildings += academy #Seminary founded in Mariana in 1750; Source: Keila Grinberg; Ricardo Salles, "O Brasil Imperial", vol. I, 2009, p. 296.
 		}
 	}
 }

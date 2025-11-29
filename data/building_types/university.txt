@@ -1,27 +1,26 @@
-college = {
-	name = "College"
-	building_class = college
+academy = {
+	name = "Academy"
+	building_class = academy
 	portrait = university
 	icon = university
 	holding_types = {
 		city
 		guild
 	}
-	conditions = {
-		or = {
-			capital = true
-			game_rule = research_commodity
-		}
-		game_rule = additional_buildings
+	build_conditions = {
+		has_building_class = library
 	}
-	domain_modifier = {
-		commodity_demand = {
-			commodity = paper
-			value = 1
-		}
+	commodity_costs = {
+		wealth = 52gb
 	}
 	province_modifier = {
-		research_output_modifier = 25
+		lore = 2
+		productivity = 1
+		society = 2
+	}
+	domain_modifier = {
+		economy = 2
+		loyalty = 2
 	}
 }
 
@@ -30,18 +29,11 @@ university = {
 	building_class = university
 	portrait = university
 	icon = university
-	required_building = college
+	required_building = academy
 	required_technology = middle_ages
 	holding_types = {
 		city
 		guild
-	}
-	conditions = {
-		or = {
-			capital = true
-			game_rule = research_commodity
-		}
-		game_rule = additional_buildings
 	}
 	recruited_civilian_unit_types = {
 		miner
@@ -55,16 +47,17 @@ university = {
 		#spy
 		#merchant
 	}
-	domain_modifier = {
-		commodity_demand = {
-			commodity = paper
-			value = 1
-		}
-	}
-	modifier = {
-		housing_bonus = 1
+	commodity_costs = {
+		wealth = 26gb
 	}
 	province_modifier = {
-		research_output_modifier = 50
+		lore = 4
+		productivity = 1
+		society = 3
+	}
+	domain_modifier = {
+		economy = 3
+		loyalty = 3
+		#fame = 1
 	}
 }

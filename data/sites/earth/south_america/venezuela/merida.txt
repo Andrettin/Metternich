@@ -6,7 +6,7 @@ merida_venezuela = {
 	
 	history = {
 		1807 = {
-			buildings += college #College or seminary founded in Mérida in 1807; Source: Enrique Martínez Ruiz; Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 226.
+			buildings += academy #College or seminary founded in Mérida in 1807; Source: Enrique Martínez Ruiz; Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 226.
 		}
 	}
 }

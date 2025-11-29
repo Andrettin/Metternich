@@ -6,7 +6,7 @@ chemnitz = {
 	
 	history = {
 		1846 = {
-			buildings += college #Bergakademie Freiberg existent in Chemnitz in 1846; Source: Silvia Fernanda de Mendonça Figueirôa, "Ciência e tecnologia no Brasil Imperial: Guilherme Schüch, Barão de Capanema (1824-1908)", 2005, p. 443.
+			buildings += academy #Bergakademie Freiberg existent in Chemnitz in 1846; Source: Silvia Fernanda de Mendonça Figueirôa, "Ciência e tecnologia no Brasil Imperial: Guilherme Schüch, Barão de Capanema (1824-1908)", 2005, p. 443.
 		}
 	}
 }

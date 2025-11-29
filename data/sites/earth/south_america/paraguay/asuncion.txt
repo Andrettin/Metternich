@@ -6,7 +6,7 @@ asuncion = {
 	
 	history = {
 		1776 = {
-			buildings += college #College or seminary founded in Asuncion in 1776. Source: Enrique Martínez Ruiz; Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 226.
+			buildings += academy #College or seminary founded in Asuncion in 1776. Source: Enrique Martínez Ruiz; Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 226.
 			holding_type = city
 		}
 	}

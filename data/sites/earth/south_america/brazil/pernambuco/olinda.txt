@@ -7,7 +7,7 @@ olinda = {
 	
 	history = {
 		1828 = {
-			buildings += college #Law college founded in Olinda in 1828. Source: Jeffrey D. Needell, "Party Formation and State-Making: The Conservative Party and the Reconstruction of the Brazilian State, 1831-1840", Hispanic American Historical Review, vol. 81, 2001, p. 293.
+			buildings += academy #Law college founded in Olinda in 1828. Source: Jeffrey D. Needell, "Party Formation and State-Making: The Conservative Party and the Reconstruction of the Brazilian State, 1831-1840", Hispanic American Historical Review, vol. 81, 2001, p. 293.
 		}
 	}
 }

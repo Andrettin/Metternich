@@ -6,7 +6,7 @@ ayacucho = {
 	
 	history = {
 		1680 = {
-			buildings += college #College or seminary founded in Huamanga in 1680; Source: Enrique Martínez Ruiz; Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 226.
+			buildings += academy #College or seminary founded in Huamanga in 1680; Source: Enrique Martínez Ruiz; Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 226.
 			holding_type = city
 		}
 	}

@@ -1,5 +1,5 @@
-college = {
-	name = "College"
+academy = {
+	name = "Academy"
 	slot_type = university
 }
 
