@@ -67,6 +67,7 @@ set(domain_SRCS
 	src/domain/culture_container.cpp
 	src/domain/culture_history.cpp
 	src/domain/domain.cpp
+	src/domain/domain_attribute.cpp
 	src/domain/domain_container.cpp
 	src/domain/domain_game_data.cpp
 	src/domain/domain_history.cpp
@@ -396,6 +397,7 @@ set(domain_HDRS
 	src/domain/culture_history.h
 	src/domain/diplomacy_state.h
 	src/domain/domain.h
+	src/domain/domain_attribute.h
 	src/domain/domain_container.h
 	src/domain/domain_game_data.h
 	src/domain/domain_history.h
@@ -611,6 +613,7 @@ set(script_condition_HDRS
 	src/script/condition/culture_condition.h
 	src/script/condition/discovered_province_condition.h
 	src/script/condition/discovered_region_condition.h
+	src/script/condition/domain_attribute_condition.h
 	src/script/condition/domain_condition.h
 	src/script/condition/domain_exists_condition.h
 	src/script/condition/domain_scope_condition.h
@@ -768,6 +771,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/damage_bonus_modifier_effect.h
 	src/script/modifier_effect/deployment_limit_modifier_effect.h
 	src/script/modifier_effect/diplomatic_penalty_for_expansion_modifier_effect.h
+	src/script/modifier_effect/domain_attribute_modifier_effect.h
 	src/script/modifier_effect/free_artillery_promotion_modifier_effect.h
 	src/script/modifier_effect/free_building_class_modifier_effect.h
 	src/script/modifier_effect/free_cavalry_promotion_modifier_effect.h
