@@ -1,24 +1,8 @@
-stockade = {
-	name = "Stockade"
-	building_class = stockade
-	portrait = fort
-	icon = wall
-	holding_types = {
-		village
-		town
-		city
-		guild
-		manor
-		temple
-	}
-}
-
 fort = {
 	name = "Fort"
 	building_class = fort
 	portrait = fort
 	icon = wall
-	required_building = stockade
 	holding_types = {
 		town
 		city

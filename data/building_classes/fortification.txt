@@ -1,8 +1,3 @@
-stockade = {
-	name = "Stockade"
-	slot_type = fort
-}
-
 fort = {
 	name = "Fort"
 	slot_type = fort
