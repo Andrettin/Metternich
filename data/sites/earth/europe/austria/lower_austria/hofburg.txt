@@ -10,6 +10,7 @@ hofburg = {
 	history = {
 		1198 = {
 			developed = true #Leopold, Duke of Austria, laid the foundations of the Hofburg; he ruled from 1198 until 1230; Source: "Historische Beschreibung und kurz gefaßte Nachricht von der Römisch-Kaiserlich und Königlichen Residenzstadt Wien", 1770, p. 2.
+			buildings += noble_villa
 		}
 	}
 }
