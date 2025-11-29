@@ -10,12 +10,21 @@ manor = { #administrative center
 		regency = 1
 	}
 	conditional_names = {
+		"Constabulary" = {
+			not = {
+				has_building_class = mansion
+				has_building_class = palace
+				has_building_class = fortress
+			}
+		}
 		"Castle" = {
-			holding_level < 4
+			not = {
+				has_building_class = palace
+			}
 			has_building_class = fortress
 		}
 		"Palace" = {
-			holding_level >= 4
+			has_building_class = palace
 			not = {
 				domain = {
 					government_group = monarchy
@@ -24,14 +33,14 @@ manor = { #administrative center
 			}
 		}
 		"Royal Palace" = {
-			holding_level >= 4
+			has_building_class = palace
 			domain = {
 				government_group = monarchy
 				tier == kingdom
 			}
 		}
 		"Imperial Palace" = {
-			holding_level >= 4
+			has_building_class = palace
 			domain = {
 				government_group = monarchy
 				tier == empire
@@ -43,9 +52,9 @@ manor = { #administrative center
 		viscounty = 2
 		county = 3
 		marquisate = 4
-		duchy = 4
+		duchy = 5
 		
-		royal_palace = 4
+		royal_palace = 6
 	}
 	population_classes = {
 		slaves
