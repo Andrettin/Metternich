@@ -22,7 +22,7 @@ class building_slot final : public QObject
 	Q_PROPERTY(const metternich::building_type* under_construction_building READ get_under_construction_building WRITE set_under_construction_building NOTIFY under_construction_building_changed)
 	Q_PROPERTY(const metternich::wonder* wonder READ get_wonder NOTIFY wonder_changed)
 	Q_PROPERTY(const metternich::wonder* under_construction_wonder READ get_under_construction_wonder WRITE set_under_construction_wonder NOTIFY under_construction_wonder_changed)
-	Q_PROPERTY(QString modifier_string READ get_modifier_string NOTIFY country_modifier_changed)
+	Q_PROPERTY(QString modifier_string READ get_modifier_string NOTIFY domain_modifier_changed)
 	Q_PROPERTY(const metternich::domain* country READ get_country CONSTANT)
 
 public:
@@ -94,7 +94,7 @@ signals:
 	void under_construction_building_changed();
 	void wonder_changed();
 	void under_construction_wonder_changed();
-	void country_modifier_changed();
+	void domain_modifier_changed();
 
 private:
 	const building_slot_type *type = nullptr;

@@ -20,7 +20,7 @@ alchemists_shop = {
 			produces_commodity = cinnabar
 		}
 	}
-	country_modifier = {
+	domain_modifier = {
 		commodity_demand = {
 			commodity = mercury
 			value = 1

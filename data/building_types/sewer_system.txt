@@ -9,7 +9,7 @@ sewer_system = {
 	conditions = {
 		game_rule = additional_buildings
 	}
-	country_modifier = {
+	domain_modifier = {
 		commodity_demand = {
 			commodity = lead_pipes
 			value = 1

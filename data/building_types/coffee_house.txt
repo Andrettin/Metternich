@@ -15,7 +15,7 @@ coffee_house = {
 			has_resource = coffee
 		}
 	}
-	country_modifier = {
+	domain_modifier = {
 		commodity_demand = {
 			commodity = coffee
 			value = 1

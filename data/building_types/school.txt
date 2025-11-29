@@ -16,7 +16,7 @@ school = {
 		}
 		game_rule = additional_buildings
 	}
-	country_modifier = {
+	domain_modifier = {
 		commodity_demand = {
 			commodity = paper
 			value = 1
@@ -44,7 +44,7 @@ college = {
 		}
 		game_rule = additional_buildings
 	}
-	country_modifier = {
+	domain_modifier = {
 		commodity_demand = {
 			commodity = paper
 			value = 1
@@ -85,7 +85,7 @@ university = {
 		#spy
 		#merchant
 	}
-	country_modifier = {
+	domain_modifier = {
 		commodity_demand = {
 			commodity = paper
 			value = 1
@@ -115,7 +115,7 @@ monastic_school = {
 		}
 		game_rule = additional_buildings
 	}
-	country_modifier = {
+	domain_modifier = {
 		commodity_demand = {
 			commodity = paper
 			value = 1
@@ -143,7 +143,7 @@ cathedral_school = {
 		}
 		game_rule = additional_buildings
 	}
-	country_modifier = {
+	domain_modifier = {
 		commodity_demand = {
 			commodity = paper
 			value = 1

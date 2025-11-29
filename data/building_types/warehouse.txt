@@ -12,7 +12,7 @@ warehouse = {
 		town
 		city
 	}
-	country_modifier = {
+	domain_modifier = {
 		storage_capacity = 100
 	}
 }

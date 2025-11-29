@@ -1268,16 +1268,16 @@ void domain_game_data::change_settlement_count(const int change)
 	this->settlement_count += change;
 
 	for (const auto &[building, count] : this->settlement_building_counts) {
-		if (building->get_weighted_country_modifier() != nullptr) {
-			building->get_weighted_country_modifier()->apply(this->domain, centesimal_int(-count) / old_settlement_count);
+		if (building->get_weighted_domain_modifier() != nullptr) {
+			building->get_weighted_domain_modifier()->apply(this->domain, centesimal_int(-count) / old_settlement_count);
 		}
 	}
 
 	if (this->get_settlement_count() != 0) {
 		for (const auto &[building, count] : this->settlement_building_counts) {
-			if (building->get_weighted_country_modifier() != nullptr) {
+			if (building->get_weighted_domain_modifier() != nullptr) {
 				//reapply the settlement building's weighted country modifier with the updated settlement count
-				building->get_weighted_country_modifier()->apply(this->domain, centesimal_int(count) / this->get_settlement_count());
+				building->get_weighted_domain_modifier()->apply(this->domain, centesimal_int(count) / this->get_settlement_count());
 			}
 		}
 	}
@@ -2439,14 +2439,14 @@ void domain_game_data::change_settlement_building_count(const building_type *bui
 		this->settlement_building_counts.erase(building);
 	}
 
-	if (building->get_weighted_country_modifier() != nullptr && this->get_settlement_count() != 0) {
+	if (building->get_weighted_domain_modifier() != nullptr && this->get_settlement_count() != 0) {
 		//reapply the settlement building's weighted country modifier with the updated count
-		building->get_weighted_country_modifier()->apply(this->domain, centesimal_int(-old_count) / this->get_settlement_count());
-		building->get_weighted_country_modifier()->apply(this->domain, centesimal_int(count) / this->get_settlement_count());
+		building->get_weighted_domain_modifier()->apply(this->domain, centesimal_int(-old_count) / this->get_settlement_count());
+		building->get_weighted_domain_modifier()->apply(this->domain, centesimal_int(count) / this->get_settlement_count());
 	}
 
-	if (building->get_country_modifier() != nullptr) {
-		building->get_country_modifier()->apply(this->domain, change);
+	if (building->get_domain_modifier() != nullptr) {
+		building->get_domain_modifier()->apply(this->domain, change);
 	}
 
 	if (game::get()->is_running()) {

@@ -11,7 +11,7 @@ shrine = {
 	commodity_costs = {
 		wealth = 8gb
 	}
-	country_modifier = {
+	domain_modifier = {
 		loyalty = 1
 		#unrest = -1
 	}
@@ -31,7 +31,7 @@ temple = {
 	commodity_costs = {
 		wealth = 24gb
 	}
-	country_modifier = {
+	domain_modifier = {
 		loyalty = 2
 		stability = 2
 		#unrest = -2
@@ -53,7 +53,7 @@ cathedral = {
 	commodity_costs = {
 		wealth = 26gb
 	}
-	country_modifier = {
+	domain_modifier = {
 		loyalty = 4
 		stability = 4
 		#unrest = -4
@@ -75,7 +75,7 @@ monastery = {
 	commodity_costs = {
 		wealth = 16gb
 	}
-	country_modifier = {
+	domain_modifier = {
 		stability = 1
 	}
 }

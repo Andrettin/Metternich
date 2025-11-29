@@ -12,7 +12,7 @@ printing_press = {
 	conditions = {
 		game_rule = additional_buildings
 	}
-	country_modifier = {
+	domain_modifier = {
 		commodity_demand = {
 			commodity = paper
 			value = 1
@@ -38,7 +38,7 @@ newspaper = {
 	conditions = {
 		game_rule = additional_buildings
 	}
-	country_modifier = {
+	domain_modifier = {
 		commodity_demand = {
 			commodity = paper
 			value = 1

@@ -94,12 +94,12 @@ void building_type::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "province_modifier") {
 		this->province_modifier = std::make_unique<modifier<const province>>();
 		this->province_modifier->process_gsml_data(scope);
-	} else if (tag == "country_modifier") {
-		this->country_modifier = std::make_unique<modifier<const domain>>();
-		this->country_modifier->process_gsml_data(scope);
-	} else if (tag == "weighted_country_modifier") {
-		this->weighted_country_modifier = std::make_unique<modifier<const domain>>();
-		this->weighted_country_modifier->process_gsml_data(scope);
+	} else if (tag == "domain_modifier") {
+		this->domain_modifier = std::make_unique<modifier<const domain>>();
+		this->domain_modifier->process_gsml_data(scope);
+	} else if (tag == "weighted_domain_modifier") {
+		this->weighted_domain_modifier = std::make_unique<modifier<const domain>>();
+		this->weighted_domain_modifier->process_gsml_data(scope);
 	} else if (tag == "effects") {
 		auto effect_list = std::make_unique<metternich::effect_list<const site>>();
 		effect_list->process_gsml_data(scope);

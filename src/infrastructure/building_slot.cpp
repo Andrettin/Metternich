@@ -31,7 +31,7 @@ building_slot::building_slot(const building_slot_type *type, const site *settlem
 	assert_throw(this->get_type() != nullptr);
 	assert_throw(this->get_settlement() != nullptr);
 
-	connect(this, &building_slot::building_changed, this, &building_slot::country_modifier_changed);
+	connect(this, &building_slot::building_changed, this, &building_slot::domain_modifier_changed);
 }
 
 void building_slot::set_building(const building_type *building)
@@ -569,22 +569,22 @@ QString building_slot::get_modifier_string() const
 		str += this->get_building()->get_province_modifier()->get_string(province);
 	}
 
-	if (this->get_building()->get_country_modifier() != nullptr) {
+	if (this->get_building()->get_domain_modifier() != nullptr) {
 		if (!str.empty()) {
 			str += "\n";
 		}
 
-		str += this->get_building()->get_country_modifier()->get_string(this->get_country());
+		str += this->get_building()->get_domain_modifier()->get_string(this->get_country());
 	}
 
-	if (this->get_building()->get_weighted_country_modifier() != nullptr) {
+	if (this->get_building()->get_weighted_domain_modifier() != nullptr) {
 		if (!str.empty()) {
 			str += "\n";
 		}
 
 		const domain_game_data *domain_game_data = this->get_country()->get_game_data();
 		const centesimal_int multiplier = centesimal_int(1) / domain_game_data->get_settlement_count();
-		str += this->get_building()->get_weighted_country_modifier()->get_string(this->get_country(), multiplier, 0, false);
+		str += this->get_building()->get_weighted_domain_modifier()->get_string(this->get_country(), multiplier, 0, false);
 	}
 
 	return QString::fromStdString(str);

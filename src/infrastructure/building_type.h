@@ -262,14 +262,14 @@ public:
 		return this->province_modifier.get();
 	}
 
-	const modifier<const domain> *get_country_modifier() const
+	const modifier<const domain> *get_domain_modifier() const
 	{
-		return this->country_modifier.get();
+		return this->domain_modifier.get();
 	}
 
-	const modifier<const domain> *get_weighted_country_modifier() const
+	const modifier<const domain> *get_weighted_domain_modifier() const
 	{
-		return this->weighted_country_modifier.get();
+		return this->weighted_domain_modifier.get();
 	}
 
 	Q_INVOKABLE QString get_effects_string(metternich::site *site) const;
@@ -313,8 +313,8 @@ private:
 	std::unique_ptr<const and_condition<site>> free_on_start_conditions;
 	std::unique_ptr<modifier<const site>> settlement_modifier;
 	std::unique_ptr<modifier<const province>> province_modifier;
-	std::unique_ptr<modifier<const domain>> country_modifier;
-	std::unique_ptr<modifier<const domain>> weighted_country_modifier;
+	std::unique_ptr<modifier<const domain>> domain_modifier;
+	std::unique_ptr<modifier<const domain>> weighted_domain_modifier;
 	std::unique_ptr<effect_list<const site>> effects;
 };
 
