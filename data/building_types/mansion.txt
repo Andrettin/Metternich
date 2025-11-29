@@ -7,6 +7,16 @@ mansion = {
 	holding_types = {
 		manor
 	}
+	commodity_costs = {
+		wealth = 10gb
+	}
+	province_modifier = {
+		law = 1
+		society = 1
+	}
+	domain_modifier = {
+		stability = 1
+	}
 }
 
 noble_villa = {
@@ -18,6 +28,19 @@ noble_villa = {
 	required_building = mansion
 	holding_types = {
 		manor
+	}
+	commodity_costs = {
+		wealth = 14gb
+	}
+	province_modifier = {
+		law = 1
+		society = 1
+	}
+	domain_modifier = {
+		economy = 1
+		loyalty = 1
+		stability = 1
+		#fame = 1
 	}
 }
 

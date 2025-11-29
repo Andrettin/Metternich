@@ -43,15 +43,21 @@ cathedral = {
 	building_class = cathedral
 	portrait = temple
 	icon = golden_cross_detailed
-	holding_level = 4
+	holding_level = 3
 	required_building = temple
 	required_technology = middle_ages
 	holding_types = {
 		temple
 		city
 	}
+	build_conditions = {
+		has_building_class = graveyard
+	}
 	commodity_costs = {
 		wealth = 26gb
+	}
+	province_modifier = {
+		law = 2
 	}
 	domain_modifier = {
 		loyalty = 4
@@ -74,6 +80,10 @@ monastery = {
 	}
 	commodity_costs = {
 		wealth = 16gb
+	}
+	province_modifier = {
+		law = 1
+		lore = 1
 	}
 	domain_modifier = {
 		stability = 1

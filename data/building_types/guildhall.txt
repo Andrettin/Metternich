@@ -7,6 +7,16 @@ trade_shop = {
 	holding_types = {
 		guild
 	}
+	commodity_costs = {
+		wealth = 10gb
+	}
+	province_modifier = {
+		productivity = 1
+	}
+	domain_modifier = {
+		economy = 1
+		stability = 1
+	}
 }
 
 guildhall = {
@@ -18,5 +28,20 @@ guildhall = {
 	required_building = trade_shop
 	holding_types = {
 		guild
+	}
+	build_conditions = {
+		has_building_class = market
+	}
+	commodity_costs = {
+		wealth = 24gb
+	}
+	province_modifier = {
+		law = 1
+		productivity = 2
+	}
+	domain_modifier = {
+		economy = 2
+		loyalty = 2
+		stability = 1
 	}
 }

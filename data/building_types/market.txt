@@ -3,12 +3,17 @@ shop = {
 	building_class = shop
 	portrait = trading_post
 	icon = wealth
-	holding_level = 1
 	holding_types = {
 		guild
 	}
-	conditions = {
-		game_rule = additional_buildings
+	commodity_costs = {
+		wealth = 8gb
+	}
+	province_modifier = {
+		productivity = 1
+	}
+	domain_modifier = {
+		economy = 1
 	}
 }
 
@@ -18,11 +23,21 @@ market = {
 	portrait = trading_post
 	icon = wealth
 	holding_level = 1
-	#required_building = shop
+	required_building = shop
 	holding_types = {
 		guild
 	}
 	build_conditions = {
 		has_building_class = trade_shop
+	}
+	commodity_costs = {
+		wealth = 40gb
+	}
+	province_modifier = {
+		productivity = 1
+	}
+	domain_modifier = {
+		economy = 2
+		stability = 2
 	}
 }

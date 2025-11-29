@@ -7,10 +7,13 @@ graveyard = {
 	holding_types = {
 		temple
 	}
-	conditions = {
-		game_rule = additional_buildings
-	}
 	build_conditions = {
-		holding_level >= 2
+		has_building_class = temple
+	}
+	commodity_costs = {
+		wealth = 4gb
+	}
+	domain_modifier = {
+		loyalty = 1
 	}
 }

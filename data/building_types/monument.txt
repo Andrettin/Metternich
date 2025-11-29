@@ -4,16 +4,16 @@ monument = {
 	portrait = aristocratic_palace
 	icon = architecture
 	holding_types = {
-		town
-		city
-		manor
 		temple
 	}
-	conditions = {
-		game_rule = culture_commodity
-		game_rule = additional_buildings
+	build_conditions = {
+		has_building_class = temple
 	}
-	modifier = {
-		culture_bonus = 2
+	commodity_costs = {
+		wealth = 6gb
+	}
+	domain_modifier = {
+		loyalty = 1
+		#unrest = -1
 	}
 }
