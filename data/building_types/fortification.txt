@@ -12,21 +12,6 @@ fort = {
 	}
 }
 
-fortress = {
-	name = "Fortress"
-	building_class = fortress
-	portrait = fort
-	icon = wall
-	required_building = fort
-	required_technology = middle_ages
-	holding_types = {
-		city
-		guild
-		manor
-		temple
-	}
-}
-
 city_wall = {
 	name = "City Wall"
 	building_class = city_wall

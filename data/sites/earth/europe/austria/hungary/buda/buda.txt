@@ -29,7 +29,7 @@ buda = {
 		}
 		
 		1815 = {
-			buildings += fortress #Buda/Ofen had a fortress in the 1815-1866 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+			buildings += castle #Buda/Ofen had a fortress in the 1815-1866 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
 		}
 		
 		1896 = {

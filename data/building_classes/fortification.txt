@@ -3,11 +3,6 @@ fort = {
 	slot_type = fort
 }
 
-fortress = {
-	name = "Fortress"
-	slot_type = fort
-}
-
 city_wall = {
 	name = "City Wall"
 	slot_type = fortification
