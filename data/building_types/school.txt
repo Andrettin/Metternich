@@ -1,38 +1,8 @@
-school = {
-	name = "School"
-	building_class = school
-	portrait = university
-	icon = university
-	holding_types = {
-		village
-		town
-		city
-		guild
-	}
-	conditions = {
-		or = {
-			capital = true
-			game_rule = research_commodity
-		}
-		game_rule = additional_buildings
-	}
-	domain_modifier = {
-		commodity_demand = {
-			commodity = paper
-			value = 1
-		}
-	}
-	province_modifier = {
-		research_output_modifier = 12.5
-	}
-}
-
 college = {
 	name = "College"
 	building_class = college
 	portrait = university
 	icon = university
-	required_building = school
 	holding_types = {
 		city
 		guild
@@ -96,60 +66,5 @@ university = {
 	}
 	province_modifier = {
 		research_output_modifier = 50
-	}
-}
-
-monastic_school = {
-	name = "Monastic School"
-	building_class = monastic_school
-	portrait = university
-	icon = university
-	required_technology = dark_ages
-	holding_types = {
-		temple
-	}
-	conditions = {
-		or = {
-			capital = true
-			game_rule = research_commodity
-		}
-		game_rule = additional_buildings
-	}
-	domain_modifier = {
-		commodity_demand = {
-			commodity = paper
-			value = 1
-		}
-	}
-	province_modifier = {
-		research_output_modifier = 12.5
-	}
-}
-
-cathedral_school = {
-	name = "Cathedral School"
-	building_class = cathedral_school
-	portrait = university
-	icon = university
-	required_building = monastic_school
-	required_technology = middle_ages
-	holding_types = {
-		temple
-	}
-	conditions = {
-		or = {
-			capital = true
-			game_rule = research_commodity
-		}
-		game_rule = additional_buildings
-	}
-	domain_modifier = {
-		commodity_demand = {
-			commodity = paper
-			value = 1
-		}
-	}
-	province_modifier = {
-		research_output_modifier = 25
 	}
 }

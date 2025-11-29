@@ -1,0 +1,14 @@
+college = {
+	name = "College"
+	slot_type = university
+}
+
+university = {
+	name = "University"
+	slot_type = university
+}
+
+bardic_college = {
+	name = "Bardic College"
+	slot_type = bardic_college
+}
