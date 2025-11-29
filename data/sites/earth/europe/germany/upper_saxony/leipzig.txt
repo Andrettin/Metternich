@@ -10,7 +10,7 @@ leipzig = {
 	
 	history = {
 		919 = {
-			buildings += fort #burgward in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			buildings += castle #burgward in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
 		}
 		
 		high_middle_ages = {

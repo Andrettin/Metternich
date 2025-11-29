@@ -1,17 +1,3 @@
-fort = {
-	name = "Fort"
-	building_class = fort
-	portrait = fort
-	icon = wall
-	holding_types = {
-		town
-		city
-		guild
-		manor
-		temple
-	}
-}
-
 city_wall = {
 	name = "City Wall"
 	building_class = city_wall
