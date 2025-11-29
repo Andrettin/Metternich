@@ -2,15 +2,24 @@ military_academy = {
 	name = "Military Academy"
 	building_class = military_academy
 	portrait = fort
-	icon = wall
-	holding_level = 1
+	icon = crossed_sabers
 	holding_types = {
 		manor
 	}
-	conditions = {
-		game_rule = additional_buildings
-	}
 	build_conditions = {
-		holding_level >= 4
+		has_building_class = barracks
+		has_building_class = garrison
+	}
+	commodity_costs = {
+		wealth = 36gb
+	}
+	province_modifier = {
+		law = 1
+		lore = 1
+	}
+	domain_modifier = {
+		loyalty = 2
+		stability = 1
+		#fame = 1
 	}
 }
