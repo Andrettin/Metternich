@@ -3,15 +3,17 @@ bank = {
 	building_class = bank
 	portrait = trading_post
 	icon = wealth
-	holding_level = 1
 	required_technology = middle_ages
 	holding_types = {
 		guild
 	}
-	conditions = {
-		game_rule = additional_buildings
-	}
 	build_conditions = {
-		has_building_class = market
+		has_building_class = guildhall
+	}
+	commodity_costs = {
+		wealth = 28gb
+	}
+	domain_modifier = {
+		economy = 4
 	}
 }
