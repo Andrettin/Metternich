@@ -5,3 +5,7 @@ university = {
 bardic_college = {
 	name = "Bardic College"
 }
+
+magical_academy = {
+	name = "Magical Academy"
+}

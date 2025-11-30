@@ -1,0 +1,3 @@
+casters_tower = {
+	name = "Caster's Tower"
+}

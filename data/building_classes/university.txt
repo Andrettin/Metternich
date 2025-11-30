@@ -12,3 +12,8 @@ bardic_college = {
 	name = "Bardic College"
 	slot_type = bardic_college
 }
+
+magical_academy = {
+	name = "Magical Academy"
+	slot_type = magical_academy
+}

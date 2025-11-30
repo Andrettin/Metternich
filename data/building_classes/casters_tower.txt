@@ -1,0 +1,4 @@
+casters_tower = {
+	name = "Caster's Tower"
+	slot_type = casters_tower
+}

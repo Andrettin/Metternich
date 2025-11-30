@@ -1,0 +1,17 @@
+casters_tower = {
+	name = "Caster's Tower"
+	building_class = casters_tower
+	portrait = temple
+	icon = wall
+	holding_level = 1
+	holding_types = {
+		magic_source
+	}
+	commodity_costs = {
+		wealth = 30gb
+	}
+	domain_modifier = {
+		economy = 1
+		loyalty = 1
+	}
+}
