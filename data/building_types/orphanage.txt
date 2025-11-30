@@ -1,0 +1,19 @@
+orphanage = {
+	name = "Orphanage"
+	building_class = orphanage
+	portrait = temple
+	icon = wooden_cross
+	holding_types = {
+		temple
+	}
+	build_conditions = {
+		has_building_class = temple
+	}
+	commodity_costs = {
+		wealth = 6gb
+	}
+	domain_modifier = {
+		stability = 1
+		#unrest = -1
+	}
+}
