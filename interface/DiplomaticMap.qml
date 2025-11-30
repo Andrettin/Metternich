@@ -123,11 +123,11 @@ Flickable {
 			y: Math.floor(text_rect.y * metternich.map.diplomatic_map_tile_pixel_size * scale_factor)
 			width: Math.floor(text_rect_width)
 			height: Math.floor(text_rect_height)
-			visible: diplomatic_map.mode === DiplomaticMap.Mode.Political || diplomatic_map.mode === DiplomaticMap.Mode.Diplomatic
 			wrapMode: Text.WordWrap
 			horizontalAlignment: contentWidth <= width ? Text.AlignHCenter : (country.game_data.diplomatic_map_image_rect.x === 0 ? Text.AlignLeft : ((country.game_data.diplomatic_map_image_rect.x + country.game_data.diplomatic_map_image_rect.width) >= metternich.map.diplomatic_map_image_size.width * scale_factor ? Text.AlignRight : Text.AlignHCenter))
 			verticalAlignment: contentHeight <= height ? Text.AlignVCenter : (country.game_data.diplomatic_map_image_rect.y === 0 ? Text.AlignTop : ((country.game_data.diplomatic_map_image_rect.y + country.game_data.diplomatic_map_image_rect.height) >= metternich.map.diplomatic_map_image_size.height * scale_factor ? Text.AlignBottom : Text.AlignVCenter))
 			font.pixelSize: Math.min(Math.max(Math.floor(width * 3 / 4 / text.length), 8 * scale_factor), 12 * scale_factor)
+			visible: country.game_data.provinces.length > 0 && (diplomatic_map.mode === DiplomaticMap.Mode.Political || diplomatic_map.mode === DiplomaticMap.Mode.Diplomatic)
 					
 			readonly property var country: model.modelData
 			readonly property var text_rect: country.game_data.text_rect
