@@ -1,16 +1,15 @@
-barren_hills = {
-	name = "Barren Hills"
-	color = { 65 42 17 }
-	character = h
+high_mountains = {
+	name = "High Mountains"
+	color = { 255 255 255 }
+	character = M
 	icon = mountains
-	image_filepath = "tiles/terrain/barren_hills.png"
-	hills = true
-	elevation_type = hills
-	tiles = { 129 132 135 138 141 }
+	image_filepath = "tiles/terrain/mountains.png"
+	mountains = true
+	tiles = { 129 }
 	fallback_terrains = {
 		mountains
+		barren_hills
 		plains
-		savannah
 		conifer_forest
 	}
 	adjacency_tiles = {
@@ -213,7 +212,6 @@ barren_hills = {
 			northeast = any
 			southwest = any
 			southeast = any
-			variations = { 132 135 138 141 }
 		}
 		144 = {
 			north = same

@@ -1,6 +1,6 @@
 plains = {
 	name = "Plains"
-	color = { 224 224 128 }
+	color = { 86 124 27 }
 	character = p
 	icon = mountains
 	image_filepath = "tiles/terrain/semi_dry_grass.png"
