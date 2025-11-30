@@ -3,14 +3,14 @@ smithy = {
 	building_class = smithy
 	portrait = factory
 	icon = tools
-	holding_level = 1
 	holding_types = {
 		guild
 	}
-	conditions = {
-		game_rule = additional_buildings
+	commodity_costs = {
+		wealth = 6gb
 	}
-	build_conditions = {
-		holding_level >= 2
+	domain_modifier = {
+		economy = 1
+		stability = 1
 	}
 }
