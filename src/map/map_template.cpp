@@ -79,17 +79,19 @@ void map_template::initialize()
 		const QImage province_image = QImage(path::to_qstring(this->get_province_image_filepath()));
 
 		for (const site *site : this->get_world()->get_sites()) {
-			assert_throw(site->get_geocoordinate().is_valid());
+			QPoint tile_pos = site->get_pos();
 
-			if (site->get_geocoordinate().is_null()) {
-				continue;
+			if (tile_pos == point::invalid_point) {
+				assert_throw(site->get_geocoordinate().is_valid());
+
+				if (!site->get_geocoordinate().is_null() && this->get_georectangle().contains(site->get_geocoordinate())) {
+					tile_pos = this->get_geocoordinate_pos(site->get_geocoordinate()) + site->get_pos_offset();
+				}
 			}
 
-			if (!this->get_georectangle().contains(site->get_geocoordinate())) {
+			if (tile_pos == point::invalid_point) {
 				continue;
 			}
-
-			QPoint tile_pos = this->get_geocoordinate_pos(site->get_geocoordinate()) + site->get_pos_offset();
 
 			if (!map_rect.contains(tile_pos)) {
 				continue;
@@ -136,7 +138,6 @@ void map_template::initialize()
 							return;
 						}
 
-						const geocoordinate checked_pos_geocoordinate = this->get_pos_geocoordinate(checked_pos);
 						const int64_t distance = point::square_distance_to(tile_pos, checked_pos);
 						if (distance < best_distance) {
 							best_distance = distance;

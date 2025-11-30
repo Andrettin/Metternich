@@ -42,6 +42,7 @@ class site final : public named_data_entry, public data_type<site>
 
 	Q_PROPERTY(metternich::world* world MEMBER world)
 	Q_PROPERTY(archimedes::geocoordinate geocoordinate MEMBER geocoordinate READ get_geocoordinate)
+	Q_PROPERTY(QPoint pos MEMBER pos READ get_pos)
 	Q_PROPERTY(QPoint pos_offset MEMBER pos_offset READ get_pos_offset)
 	Q_PROPERTY(archimedes::geocoordinate astrocoordinate MEMBER astrocoordinate READ get_astrocoordinate)
 	Q_PROPERTY(std::optional<archimedes::centesimal_int> astrodistance MEMBER astrodistance READ get_astrodistance)
@@ -107,6 +108,11 @@ public:
 	const archimedes::geocoordinate &get_geocoordinate() const
 	{
 		return this->geocoordinate;
+	}
+
+	const QPoint &get_pos() const
+	{
+		return this->pos;
 	}
 
 	const QPoint &get_pos_offset() const
@@ -193,6 +199,7 @@ signals:
 private:
 	metternich::world *world = nullptr;
 	archimedes::geocoordinate geocoordinate;
+	QPoint pos = QPoint(-1, -1);
 	QPoint pos_offset = QPoint(0, 0);
 	archimedes::geocoordinate astrocoordinate; //the site's position as an astrocoordinate
 	std::optional<centesimal_int> astrodistance; //the site's distance from its map template's center (in light-years)
