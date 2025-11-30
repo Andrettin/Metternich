@@ -1,6 +1,6 @@
 desert = {
 	name = "Desert"
-	color = { 255 255 0 }
+	color = { 206 169 99 }
 	character = d
 	icon = mountains
 	image_filepath = "tiles/terrain/desert_sand.png"

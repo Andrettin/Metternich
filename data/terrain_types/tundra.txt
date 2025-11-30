@@ -1,6 +1,6 @@
 tundra = {
 	name = "Tundra"
-	color = { 192 192 192 }
+	color = { 13 96 62 }
 	character = t
 	icon = mountains
 	image_filepath = "tiles/terrain/plains.png"
