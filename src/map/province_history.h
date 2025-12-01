@@ -23,6 +23,7 @@ class province_history final : public data_entry_history
 	Q_PROPERTY(const metternich::domain* owner MEMBER owner)
 	Q_PROPERTY(const metternich::domain* trade_zone MEMBER trade_zone)
 	Q_PROPERTY(const metternich::religion* religion MEMBER religion)
+	Q_PROPERTY(int level MEMBER level READ get_level)
 	Q_PROPERTY(int population READ get_population WRITE set_population)
 	Q_PROPERTY(archimedes::centesimal_int literacy_rate MEMBER literacy_rate READ get_literacy_rate)
 
@@ -72,6 +73,11 @@ public:
 	}
 
 	std::vector<const phenotype *> get_weighted_phenotypes_for_culture(const metternich::culture *culture) const;
+
+	int get_level() const
+	{
+		return this->level;
+	}
 
 	int get_population() const
 	{
@@ -146,6 +152,7 @@ private:
 	culture_map<int64_t> culture_weights;
 	const metternich::religion *religion = nullptr;
 	phenotype_map<int64_t> phenotype_weights;
+	int level = 0;
 	population_group_map<int> population_groups;
 	population_group_map<int> lower_bound_population_groups;
 	centesimal_int literacy_rate;

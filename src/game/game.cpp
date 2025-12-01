@@ -1270,7 +1270,9 @@ void game::apply_population_history()
 
 		province_game_data *province_game_data = province->get_game_data();
 
-		if (province->get_history()->get_population() > 0) {
+		if (province->get_history()->get_level() != 0) {
+			province_game_data->set_level(province->get_history()->get_level());
+		} else if (province->get_history()->get_population() > 0) {
 			//const int province_level = defines::get()->get_province_level_for_population(province->get_history()->get_population());
 			//static constexpr int max_province_level = 2;
 			//province_game_data->set_level(std::max(province_game_data->get_level(), std::min(std::max(province_level, 1), max_province_level)));
