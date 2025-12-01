@@ -1,5 +1,6 @@
 dwarven = {
 	name = "Dwarven"
+	color = { 178 114 25 }
 	species = {
 		dwarf
 		#hill_dwarf
