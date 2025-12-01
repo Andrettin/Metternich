@@ -81,68 +81,22 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 		switch (model_role) {
 			case role::base_image_sources: {
 				QStringList image_sources;
-
-				if (!defines::get()->get_default_base_terrain()->get_subtiles().empty()) {
-					for (const short subtile : tile->get_base_subtiles()) {
-						image_sources.push_back(map_grid_model::build_image_source(defines::get()->get_default_base_terrain(), subtile));
-					}
-				} else {
-					image_sources.push_back(map_grid_model::build_image_source(defines::get()->get_default_base_terrain(), tile->get_base_tile()));
-				}
-
 				return image_sources;
 			}
 			case role::image_sources: {
 				QStringList image_sources;
-
-				if (!tile->get_terrain()->get_subtiles().empty()) {
-					for (const short subtile : tile->get_subtiles()) {
-						image_sources.push_back(map_grid_model::build_image_source(tile->get_terrain(), subtile));
-					}
-				} else {
-					image_sources.push_back(map_grid_model::build_image_source(tile->get_terrain(), tile->get_tile()));
-				}
-
 				return image_sources;
 			}
 			case role::underlay_image_sources: {
 				QStringList underlay_image_sources;
-
-				if (tile->has_river() && tile->get_terrain()->is_water()) {
-					for (const short river_subtile_frame : tile->get_river_subtile_frames()) {
-						QString river_image_source = "tile/";
-						river_image_source += "river";
-						river_image_source += "/" + QString::number(river_subtile_frame);
-						underlay_image_sources.push_back(std::move(river_image_source));
-					}
-				}
-
 				return underlay_image_sources;
 			}
 			case role::overlay_image_sources: {
 				QStringList overlay_image_sources;
-
-				if (tile->has_river() && !tile->get_terrain()->is_water()) {
-					for (const short river_subtile_frame : tile->get_river_subtile_frames()) {
-						QString river_image_source = "tile/";
-						river_image_source += "river";
-						river_image_source += "/" + QString::number(river_subtile_frame);
-						overlay_image_sources.push_back(std::move(river_image_source));
-					}
-				}
-
 				return overlay_image_sources;
 			}
 			case role::object_image_sources: {
 				QStringList object_image_sources;
-
-				if (tile->has_route()) {
-					for (const auto &[pathway, frame] : tile->get_pathway_frames()) {
-						QString pathway_image_source = "tile/pathway/" + pathway->get_identifier_qstring();
-						pathway_image_source += "/" + QString::number(frame);
-						object_image_sources.push_back(std::move(pathway_image_source));
-					}
-				}
 
 				if (tile->get_province() != nullptr && !tile->get_province()->is_water_zone()) {
 					for (const direction direction : tile->get_border_directions()) {
