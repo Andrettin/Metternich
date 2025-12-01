@@ -3,6 +3,6 @@ wychwood_forest = {
 	world = earth
 	geocoordinate = { -1.513 51.851 }
 	type = resource
-	terrain_type = conifer_forest
+	terrain_type = forest
 	resource = timber
 }

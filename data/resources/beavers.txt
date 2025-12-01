@@ -4,7 +4,7 @@ beavers = {
 	commodity = furs
 	tiny_icon = garrison
 	terrain_types = {
-		conifer_forest
+		forest
 	}
 	site_types = {
 		resource

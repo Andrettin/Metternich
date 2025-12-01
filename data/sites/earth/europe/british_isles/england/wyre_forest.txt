@@ -3,6 +3,6 @@ wyre_forest = {
 	world = earth
 	geocoordinate = { -2.3686111111111 52.385 }
 	type = resource
-	terrain_type = conifer_forest
+	terrain_type = forest
 	resource = timber
 }

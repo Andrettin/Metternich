@@ -3,8 +3,8 @@ ivory = {
 	commodity = ivory
 	tiny_icon = garrison
 	terrain_types = {
-		conifer_forest
 		desert
+		forest
 		#glacier
 		hills
 		plains

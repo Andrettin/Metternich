@@ -3,7 +3,7 @@ timber = {
 	commodity = timber
 	tiny_icon = garrison
 	terrain_types = {
-		conifer_forest
+		forest
 		scrub_forest
 	}
 	site_types = {

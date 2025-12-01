@@ -3,7 +3,7 @@ black_forest = {
 	world = earth
 	geocoordinate = { 8.15 48.3 }
 	type = resource
-	terrain_type = conifer_forest
+	terrain_type = forest
 	resource = timber
 	province = baden
 }

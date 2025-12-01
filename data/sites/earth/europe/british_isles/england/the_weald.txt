@@ -3,6 +3,6 @@ the_weald = {
 	world = earth
 	geocoordinate = { 0.4 51 }
 	type = resource
-	terrain_type = conifer_forest
+	terrain_type = forest
 	resource = timber
 }

@@ -9,7 +9,7 @@ plains = {
 		savannah
 		swamp
 		desert
-		conifer_forest
+		forest
 		hills
 		mountains
 	}

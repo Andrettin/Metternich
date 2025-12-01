@@ -3,6 +3,6 @@ bromswold_forest = {
 	world = earth
 	geocoordinate = { -0.543 52.2787 }
 	type = resource
-	terrain_type = conifer_forest
+	terrain_type = forest
 	resource = timber
 }

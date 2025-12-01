@@ -10,7 +10,7 @@ high_mountains = {
 		mountains
 		hills
 		plains
-		conifer_forest
+		forest
 	}
 	adjacency_tiles = {
 		0 = {

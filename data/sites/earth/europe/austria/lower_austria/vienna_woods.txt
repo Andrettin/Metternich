@@ -3,7 +3,7 @@ vienna_woods = {
 	world = earth
 	geocoordinate = { 15.91194 48.08722 }
 	type = resource
-	terrain_type = conifer_forest
+	terrain_type = forest
 	resource = timber
 	province = lower_austria
 }

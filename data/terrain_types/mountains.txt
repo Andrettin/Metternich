@@ -10,7 +10,7 @@ mountains = {
 	fallback_terrains = {
 		hills
 		plains
-		conifer_forest
+		forest
 	}
 	adjacency_tiles = {
 		0 = {

@@ -1,5 +1,5 @@
-conifer_forest = {
-	name = "Conifer Forest"
+forest = {
+	name = "Forest"
 	color = { 0 86 6 }
 	character = f
 	icon = pine_tree

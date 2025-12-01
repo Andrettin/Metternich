@@ -11,7 +11,7 @@ hills = {
 		mountains
 		plains
 		savannah
-		conifer_forest
+		forest
 	}
 	adjacency_tiles = {
 		0 = {
