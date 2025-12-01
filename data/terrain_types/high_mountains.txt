@@ -8,7 +8,7 @@ high_mountains = {
 	tiles = { 129 }
 	fallback_terrains = {
 		mountains
-		barren_hills
+		hills
 		plains
 		conifer_forest
 	}

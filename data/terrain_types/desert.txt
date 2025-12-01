@@ -9,7 +9,7 @@ desert = {
 	moisture_type = arid
 	fallback_terrains = {
 		plains
-		barren_hills
+		hills
 		mountains
 	}
 	subtiles = { 17 20 23 }

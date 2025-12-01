@@ -5,7 +5,7 @@ lead = {
 	prospectable = true
 	required_game_rule = lead_commodity
 	terrain_types = {
-		barren_hills #correct?
+		hills #correct?
 		mountains #correct?
 	}
 	site_types = {

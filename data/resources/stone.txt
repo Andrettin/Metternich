@@ -4,8 +4,8 @@ stone = {
 	tiny_icon = trade_consulate
 	prospectable = true
 	terrain_types = {
-		barren_hills
 		desert
+		hills
 	}
 	site_types = {
 		resource

@@ -10,7 +10,7 @@ plains = {
 		swamp
 		desert
 		conifer_forest
-		barren_hills
+		hills
 		mountains
 	}
 	subtiles = { 17 20 23 }

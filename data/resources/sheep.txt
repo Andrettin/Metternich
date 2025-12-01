@@ -3,7 +3,7 @@ sheep = {
 	commodity = wool
 	tiny_icon = garrison
 	terrain_types = {
-		barren_hills #should be fertile hills
+		hills
 	}
 	site_types = {
 		resource

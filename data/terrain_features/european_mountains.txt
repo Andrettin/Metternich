@@ -12,7 +12,7 @@ apennine_mountains = {
 
 ardennes = {
 	name = "Ardennes"
-	terrain_type = barren_hills
+	terrain_type = hills
 	color = { 131 190 134 }
 }
 
@@ -42,7 +42,7 @@ cambrian_mountains = { #Source: "Philip's International School Atlas", 2006, p. 
 
 carpathian_mountains = {
 	name = "Carpathian Mountains"
-	terrain_type = barren_hills
+	terrain_type = hills
 	color = { 197 36 157 }
 }
 

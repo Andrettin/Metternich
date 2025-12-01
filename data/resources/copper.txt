@@ -4,7 +4,7 @@ copper = {
 	tiny_icon = trade_consulate
 	prospectable = true
 	terrain_types = {
-		barren_hills
+		hills
 		mountains
 	}
 	site_types = {

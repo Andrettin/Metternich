@@ -6,8 +6,8 @@ railroad = {
 	required_technology = renaissance
 	river_crossing_required_technology = renaissance
 	terrain_required_technologies = {
-		barren_hills = renaissance
-		mountains = renaissance
+		hills = renaissance
+		mountains = modern_era
 		swamp = renaissance
 	}
 }

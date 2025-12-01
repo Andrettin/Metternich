@@ -5,7 +5,7 @@ cinnabar = {
 	prospectable = true
 	required_game_rule = mercury_commodity
 	terrain_types = {
-		barren_hills #correct?
+		hills #correct?
 	}
 	site_types = {
 		resource

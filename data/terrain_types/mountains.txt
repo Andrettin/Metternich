@@ -8,7 +8,7 @@ mountains = {
 	elevation_type = mountains
 	tiles = { 129 }
 	fallback_terrains = {
-		barren_hills
+		hills
 		plains
 		conifer_forest
 	}

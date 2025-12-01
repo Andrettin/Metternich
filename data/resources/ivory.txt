@@ -3,10 +3,10 @@ ivory = {
 	commodity = ivory
 	tiny_icon = garrison
 	terrain_types = {
-		barren_hills
 		conifer_forest
 		desert
 		#glacier
+		hills
 		plains
 	}
 	site_types = {

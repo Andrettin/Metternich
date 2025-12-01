@@ -7,7 +7,7 @@ holy_site = {
 		plains
 		savannah
 		desert
-		barren_hills
+		hills
 		mountains
 	}
 	site_types = {
