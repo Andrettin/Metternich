@@ -92,7 +92,7 @@ public:
 	}
 
 private:
-	static inline color_map<terrain_type *> terrain_types_by_color;
+	static inline color_unordered_map<terrain_type *> terrain_types_by_color;
 	static inline std::map<char, terrain_type *> terrain_types_by_character;
 	static inline std::map<elevation_type, std::map<temperature_type, std::map<moisture_type, std::map<forestation_type, terrain_type *>>>> terrain_types_by_biome;
 
