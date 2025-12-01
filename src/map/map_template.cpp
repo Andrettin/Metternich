@@ -93,6 +93,10 @@ void map_template::initialize()
 				continue;
 			}
 
+			if (tile_pos.y() < 0) {
+				tile_pos.setY(this->get_size().height() - 1 + tile_pos.y());
+			}
+
 			if (!map_rect.contains(tile_pos)) {
 				continue;
 			}
