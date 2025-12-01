@@ -251,21 +251,21 @@ bool site_game_data::can_be_capital() const
 	return true;
 }
 
-int site_game_data::get_tier() const
+int site_game_data::get_level() const
 {
-	int tier = 0;
+	int level = 0;
 
 	if (this->get_holding_type() != nullptr) {
-		tier = this->get_holding_level();
+		level = this->get_holding_level();
 	} else if (this->get_resource_improvement() != nullptr) {
-		tier = this->get_resource_improvement()->get_level();
+		level = this->get_resource_improvement()->get_level();
 	}
 
-	if (tier > this->site->get_max_tier()) {
-		tier = this->site->get_max_tier();
+	if (level > this->site->get_max_level()) {
+		level = this->site->get_max_level();
 	}
 
-	return tier;
+	return level;
 }
 
 const std::string &site_game_data::get_title_name() const

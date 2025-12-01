@@ -50,7 +50,7 @@ void site::process_gsml_property(const gsml_property &property)
 		assert_log(this->get_holding_type() != nullptr);
 		assert_throw(property.get_operator() == gsml_operator::assignment);
 		if (this->get_holding_type() != nullptr) {
-			this->max_tier = this->get_holding_type()->get_tier_level(value);
+			this->max_level = this->get_holding_type()->get_tier_level(value);
 		}
 	} else {
 		named_data_entry::process_gsml_property(property);
@@ -195,7 +195,7 @@ int site::get_max_holding_level() const
 		return 0;
 	}
 
-	return this->get_max_tier();
+	return this->get_max_level();
 }
 
 std::string site::get_scope_name() const

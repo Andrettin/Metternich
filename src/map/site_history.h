@@ -61,16 +61,6 @@ public:
 		return this->development_level;
 	}
 
-	int get_tier() const
-	{
-		return this->development_level;
-	}
-
-	void set_tier(const int tier)
-	{
-		this->development_level = tier;
-	}
-
 	const metternich::holding_type *get_holding_type() const
 	{
 		return this->holding_type;

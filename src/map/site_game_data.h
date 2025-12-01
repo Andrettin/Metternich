@@ -103,7 +103,7 @@ public:
 	bool is_capital() const;
 	bool can_be_capital() const;
 
-	int get_tier() const;
+	int get_level() const;
 
 	const std::string &get_title_name() const;
 

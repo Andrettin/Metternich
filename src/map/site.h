@@ -54,6 +54,7 @@ class site final : public named_data_entry, public data_type<site>
 	Q_PROPERTY(metternich::terrain_type* terrain_type MEMBER terrain_type)
 	Q_PROPERTY(metternich::resource* resource MEMBER resource NOTIFY changed)
 	Q_PROPERTY(metternich::province* province MEMBER province NOTIFY changed)
+	Q_PROPERTY(int max_level MEMBER max_level READ get_max_level NOTIFY changed)
 	Q_PROPERTY(int max_holding_level READ get_max_holding_level NOTIFY changed)
 	Q_PROPERTY(metternich::site_map_data* map_data READ get_map_data NOTIFY changed)
 	Q_PROPERTY(metternich::site_game_data* game_data READ get_game_data NOTIFY changed)
@@ -168,9 +169,9 @@ public:
 		this->province = province;
 	}
 
-	int get_max_tier() const
+	int get_max_level() const
 	{
-		return this->max_tier;
+		return this->max_level;
 	}
 
 	int get_max_holding_level() const;
@@ -209,7 +210,7 @@ private:
 	metternich::terrain_type *terrain_type = nullptr;
 	metternich::resource *resource = nullptr;
 	metternich::province *province = nullptr;
-	int max_tier = 1;
+	int max_level = 1;
 	std::vector<const metternich::terrain_type *> terrain_types;
 	std::map<const culture *, std::string> cultural_names;
 	std::map<const cultural_group *, std::string> cultural_group_names;
