@@ -72,6 +72,7 @@
 #include "religion/religion.h"
 #include "script/condition/and_condition.h"
 #include "script/effect/delayed_effect_instance.h"
+#include "time/calendar.h"
 #include "time/era.h"
 #include "ui/portrait.h"
 #include "unit/army.h"
@@ -392,7 +393,7 @@ QCoro::QmlTask game::load(const QUrl &filepath)
 	return this->load(path::from_qurl(filepath));
 }
 
-QCoro::Task<void> game::setup_scenario_coro(metternich::scenario *scenario)
+QCoro::Task<void> game::setup_scenario_coro(const metternich::scenario *scenario)
 {
 	try {
 		const metternich::scenario *old_scenario = this->scenario;
@@ -400,9 +401,14 @@ QCoro::Task<void> game::setup_scenario_coro(metternich::scenario *scenario)
 		this->clear();
 		this->scenario = scenario;
 
-		this->date = game::normalize_date(scenario->get_start_date());
+		QDate start_date = scenario->get_start_date();
+		if (scenario->get_start_date_calendar() != nullptr) {
+			start_date = start_date.addYears(scenario->get_start_date_calendar()->get_year_offset());
+		}
 
-		database::get()->load_history(scenario->get_start_date(), scenario->get_timeline(), this->get_rules());
+		this->date = game::normalize_date(start_date);
+
+		database::get()->load_history(start_date, scenario->get_timeline(), this->get_rules());
 
 		if (old_scenario == nullptr || old_scenario->get_map_template() != scenario->get_map_template() || scenario->get_map_template()->is_randomly_generated()) {
 			scenario->get_map_template()->apply();
@@ -412,7 +418,7 @@ QCoro::Task<void> game::setup_scenario_coro(metternich::scenario *scenario)
 			this->reset_game_data();
 		}
 
-		this->apply_history(scenario);
+		this->apply_history(start_date);
 
 		co_await this->on_setup_finished();
 	} catch (...) {
@@ -531,7 +537,7 @@ void game::reset_game_data()
 	this->generated_characters.clear();
 }
 
-void game::apply_history(const metternich::scenario *scenario)
+void game::apply_history(const QDate &start_date)
 {
 	try {
 		for (const province *province : map::get()->get_provinces()) {
@@ -563,7 +569,7 @@ void game::apply_history(const metternich::scenario *scenario)
 				}
 
 				if (owner == nullptr) {
-					log::log_error(std::format("Province \"{}\" has no owner for scenario \"{}\".", province->get_identifier(), scenario->get_identifier()));
+					log::log_error(std::format("Province \"{}\" has no owner for scenario \"{}\".", province->get_identifier(), this->scenario->get_identifier()));
 				}
 			} catch (...) {
 				std::throw_with_nested(std::runtime_error(std::format("Failed to apply history for province \"{}\".", province->get_identifier())));
@@ -630,8 +636,8 @@ void game::apply_history(const metternich::scenario *scenario)
 			}
 
 			for (const auto &[office, office_holder] : domain_history->get_office_holders()) {
-				assert_throw(scenario->get_start_date() >= office_holder->get_game_data()->get_start_date());
-				if (office_holder->get_game_data()->get_death_date().isValid() && scenario->get_start_date() >= office_holder->get_game_data()->get_death_date()) {
+				assert_throw(start_date >= office_holder->get_game_data()->get_start_date());
+				if (office_holder->get_game_data()->get_death_date().isValid() && start_date >= office_holder->get_game_data()->get_death_date()) {
 					continue;
 				}
 
@@ -768,7 +774,7 @@ void game::apply_history(const metternich::scenario *scenario)
 
 		for (const character *character : character::get_all()) {
 			character_game_data *character_game_data = character->get_game_data();
-			character_game_data->apply_history(scenario->get_start_date());
+			character_game_data->apply_history(start_date);
 		}
 
 		for (const historical_civilian_unit *historical_civilian_unit : historical_civilian_unit::get_all()) {
@@ -904,7 +910,7 @@ void game::apply_history(const metternich::scenario *scenario)
 			}
 		}
 	} catch (...) {
-		std::throw_with_nested(std::runtime_error(std::format("Failed to apply history for scenario \"{}\".", scenario->get_identifier())));
+		std::throw_with_nested(std::runtime_error(std::format("Failed to apply history for scenario \"{}\".", this->scenario->get_identifier())));
 	}
 }
 

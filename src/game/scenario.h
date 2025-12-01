@@ -23,9 +23,9 @@ class scenario final : public named_data_entry, public data_type<scenario>
 	Q_PROPERTY(metternich::scenario* parent_scenario MEMBER parent_scenario NOTIFY changed)
 	Q_PROPERTY(QDate start_date MEMBER start_date READ get_start_date NOTIFY changed)
 	Q_PROPERTY(int start_year READ get_start_year NOTIFY changed)
-	Q_PROPERTY(archimedes::calendar* start_date_calendar MEMBER start_date_calendar)
-	Q_PROPERTY(archimedes::timeline* timeline MEMBER timeline NOTIFY changed)
-	Q_PROPERTY(metternich::map_template* map_template MEMBER map_template NOTIFY changed)
+	Q_PROPERTY(const archimedes::calendar* start_date_calendar MEMBER start_date_calendar READ get_start_date_calendar)
+	Q_PROPERTY(const archimedes::timeline* timeline MEMBER timeline READ get_timeline NOTIFY changed)
+	Q_PROPERTY(const metternich::map_template* map_template MEMBER map_template READ get_map_template NOTIFY changed)
 	Q_PROPERTY(bool hidden MEMBER hidden READ is_hidden NOTIFY changed)
 	Q_PROPERTY(QString description READ get_description_qstring NOTIFY changed)
 	Q_PROPERTY(QVariantList default_countries READ get_default_countries_qvariant_list NOTIFY changed)
@@ -74,6 +74,11 @@ public:
 		return this->get_start_date().year();
 	}
 
+	const calendar *get_start_date_calendar() const
+	{
+		return this->start_date_calendar;
+	}
+
 	const archimedes::timeline *get_timeline() const
 	{
 		return this->timeline;
@@ -113,9 +118,9 @@ private:
 	scenario *parent_scenario = nullptr;
 	std::vector<const scenario *> child_scenarios;
 	QDate start_date;
-	calendar *start_date_calendar = nullptr; //the calendar for the start date
-	archimedes::timeline *timeline = nullptr; //the timeline in which the scenario is set
-	metternich::map_template *map_template = nullptr;
+	const calendar *start_date_calendar = nullptr; //the calendar for the start date
+	const archimedes::timeline *timeline = nullptr; //the timeline in which the scenario is set
+	const metternich::map_template *map_template = nullptr;
 	bool hidden = false;
 	std::string description;
 	std::vector<const domain *> default_countries;

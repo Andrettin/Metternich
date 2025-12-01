@@ -97,7 +97,7 @@ public:
 	}
 
 	[[nodiscard]]
-	QCoro::Task<void> setup_scenario_coro(metternich::scenario *scenario);
+	QCoro::Task<void> setup_scenario_coro(const metternich::scenario *scenario);
 
 	Q_INVOKABLE QCoro::QmlTask start()
 	{
@@ -112,7 +112,7 @@ public:
 	void clear();
 	void reset_game_data();
 
-	void apply_history(const metternich::scenario *scenario);
+	void apply_history(const QDate &start_date);
 	void apply_sites();
 	void apply_site_buildings(const site *site);
 	void apply_population_history();

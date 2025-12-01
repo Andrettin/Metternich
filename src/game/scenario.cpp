@@ -55,15 +55,6 @@ void scenario::initialize()
 		}
 	}
 
-	if (this->start_date_calendar != nullptr) {
-		if (!this->start_date_calendar->is_initialized()) {
-			this->start_date_calendar->initialize();
-		}
-
-		this->start_date = this->start_date.addYears(this->start_date_calendar->get_year_offset());
-		this->start_date_calendar = nullptr;
-	}
-
 	named_data_entry::initialize();
 }
 
