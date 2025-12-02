@@ -1,5 +1,6 @@
 halfling = {
 	name = "Halfling"
+	color = { 25 191 25 }
 	species = {
 		halfling
 		#lightfoot_halfling

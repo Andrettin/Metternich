@@ -1,6 +1,7 @@
 giant = {
 	name = "Giant"
 	group = giant
+	color = { 25 153 153 }
 	species = {
 		frost_giant
 	}

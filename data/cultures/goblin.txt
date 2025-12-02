@@ -1,6 +1,7 @@
 goblin = {
 	name = "Goblin"
 	group = goblinoid
+	color = { 127 127 12 }
 	species = {
 		goblin
 	}

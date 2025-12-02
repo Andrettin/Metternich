@@ -1,5 +1,6 @@
 elven = {
 	name = "Elven"
+	color = { 76 242 76 }
 	species = {
 		elf
 		#high_elf
