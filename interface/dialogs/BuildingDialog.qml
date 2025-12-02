@@ -272,16 +272,4 @@ DialogBase {
 			}
 		}
 	}
-	
-	function get_settlement_building_count(building) {
-		var count = country_game_data.get_settlement_building_count(building)
-		
-		//also count the best non-capital building immediately below the capital-specific one
-		while (building && (building.capital_only || building.provincial_capital_only)) {
-			building = building.required_building
-			count += country_game_data.get_settlement_building_count(building)
-		}
-		
-		return count
-	}
 }
