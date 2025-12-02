@@ -1,0 +1,11 @@
+sack_1 = {
+	filepath = "icons/items/sack_1.png"
+}
+
+sack_2 = {
+	filepath = "icons/items/sack_2.png"
+}
+
+sack_3 = {
+	filepath = "icons/items/sack_3.png"
+}
