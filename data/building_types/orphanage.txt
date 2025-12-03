@@ -3,6 +3,7 @@ orphanage = {
 	building_class = orphanage
 	portrait = temple
 	icon = wooden_cross
+	size = 1
 	holding_types = {
 		temple
 	}

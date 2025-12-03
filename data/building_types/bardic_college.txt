@@ -3,6 +3,7 @@ bardic_college = {
 	building_class = bardic_college
 	portrait = university
 	icon = music
+	size = 2
 	holding_types = {
 		guild
 	}

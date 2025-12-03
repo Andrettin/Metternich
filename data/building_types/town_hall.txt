@@ -4,6 +4,7 @@ town_hall = {
 	portrait = town
 	icon = flag
 	holding_level = 1
+	size = 2
 	holding_types = {
 		manor
 	}

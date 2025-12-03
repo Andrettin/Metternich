@@ -4,6 +4,7 @@ trade_shop = {
 	portrait = trading_post
 	icon = wealth
 	holding_level = 1
+	size = 1
 	holding_types = {
 		guild
 	}
@@ -25,6 +26,7 @@ guildhall = {
 	portrait = trading_post
 	icon = wealth
 	holding_level = 2
+	size = 2
 	required_building = trade_shop
 	holding_types = {
 		guild

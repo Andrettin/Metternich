@@ -3,6 +3,7 @@ monument = {
 	building_class = monument
 	portrait = aristocratic_palace
 	icon = architecture
+	size = 1
 	holding_types = {
 		temple
 	}

@@ -3,6 +3,7 @@ library = {
 	building_class = library
 	portrait = university
 	icon = book
+	size = 1
 	holding_types = {
 		guild
 		magic_source

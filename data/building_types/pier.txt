@@ -3,6 +3,7 @@ pier = {
 	building_class = pier
 	portrait = dock
 	icon = anchor
+	size = 1
 	holding_types = {
 		guild
 	}
@@ -28,6 +29,7 @@ waterfront = {
 	building_class = waterfront
 	portrait = dock
 	icon = anchor
+	size = 4
 	required_building = pier
 	holding_types = {
 		guild

@@ -62,6 +62,7 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(bool wonder_only MEMBER wonder_only READ is_wonder_only NOTIFY changed)
 	Q_PROPERTY(int holding_level MEMBER holding_level READ get_holding_level NOTIFY changed)
 	Q_PROPERTY(int fortification_level MEMBER fortification_level READ get_fortification_level NOTIFY changed)
+	Q_PROPERTY(int size MEMBER size READ get_size NOTIFY changed)
 	Q_PROPERTY(metternich::building_type* required_building MEMBER required_building NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(int wealth_cost MEMBER wealth_cost READ get_wealth_cost NOTIFY changed)
@@ -186,6 +187,11 @@ public:
 		return this->fortification_level;
 	}
 
+	int get_size() const
+	{
+		return this->size;
+	}
+
 	const building_type *get_required_building() const
 	{
 		return this->required_building;
@@ -302,6 +308,7 @@ private:
 	bool wonder_only = false;
 	int holding_level = 0;
 	int fortification_level = 0;
+	int size = 1;
 	building_type *required_building = nullptr;
 	std::vector<const building_type *> requiring_buildings; //buildings which require this one
 	technology *required_technology = nullptr;

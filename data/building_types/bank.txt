@@ -3,6 +3,7 @@ bank = {
 	building_class = bank
 	portrait = trading_post
 	icon = wealth
+	size = 1
 	required_technology = middle_ages
 	holding_types = {
 		guild

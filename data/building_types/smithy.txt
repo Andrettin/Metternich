@@ -3,6 +3,7 @@ smithy = {
 	building_class = smithy
 	portrait = factory
 	icon = tools
+	size = 1
 	holding_types = {
 		guild
 	}

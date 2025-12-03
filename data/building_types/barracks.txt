@@ -4,6 +4,7 @@ barracks = {
 	portrait = fort
 	icon = crossed_sabers
 	holding_level = 1
+	size = 1
 	holding_types = {
 		manor
 	}
@@ -40,6 +41,7 @@ garrison = {
 	portrait = fort
 	icon = crossed_sabers
 	holding_level = 2
+	size = 2
 	required_building = barracks
 	holding_types = {
 		manor

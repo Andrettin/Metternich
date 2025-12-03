@@ -3,6 +3,7 @@ military_academy = {
 	building_class = military_academy
 	portrait = fort
 	icon = crossed_sabers
+	size = 2
 	holding_types = {
 		manor
 	}

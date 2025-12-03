@@ -3,6 +3,7 @@ herbalist = {
 	building_class = herbalist
 	portrait = university
 	icon = tobacco
+	size = 1
 	holding_types = {
 		temple
 	}
