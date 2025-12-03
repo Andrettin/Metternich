@@ -14,13 +14,6 @@ manor = { #administrative center
 		regency = 1
 	}
 	conditional_names = {
-		"Constabulary" = {
-			not = {
-				has_building_class = mansion
-				has_building_class = palace
-				has_building_class = castle
-			}
-		}
 		"Castle" = {
 			not = {
 				has_building_class = palace
