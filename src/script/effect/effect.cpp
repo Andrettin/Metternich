@@ -15,6 +15,7 @@
 #include "script/effect/add_improvement_effect.h"
 #include "script/effect/any_known_domain_effect.h"
 #include "script/effect/any_neighbor_country_effect.h"
+#include "script/effect/attribute_check_effect.h"
 #include "script/effect/battle_effect.h"
 #include "script/effect/capital_effect.h"
 #include "script/effect/change_opinion_effect.h"
@@ -193,7 +194,9 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 	}
 
 	if constexpr (std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, const domain>) {
-		if (effect_identifier == "delayed") {
+		if (effect_identifier == "attribute_check") {
+			effect = std::make_unique<attribute_check_effect<scope_type>>(effect_operator);
+		} else if (effect_identifier == "delayed") {
 			effect = std::make_unique<delayed_effect<scope_type>>(effect_operator);
 		} else if (effect_identifier == "gain_item") {
 			effect = std::make_unique<gain_item_effect<scope_type>>(effect_operator);

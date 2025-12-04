@@ -200,8 +200,9 @@ public:
 
 	void change_attribute_value(const character_attribute *attribute, const int change);
 	int get_primary_attribute_value() const;
-
 	data_entry_set<character_attribute> get_main_attributes() const;
+	bool do_attribute_check(const character_attribute *attribute, const int roll_modifier) const;
+	int get_attribute_check_chance(const character_attribute *attribute, const int roll_modifier) const;
 
 	int get_hit_dice_count() const
 	{

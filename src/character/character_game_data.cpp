@@ -920,6 +920,46 @@ data_entry_set<character_attribute> character_game_data::get_main_attributes() c
 	return attributes;
 }
 
+bool character_game_data::do_attribute_check(const character_attribute *attribute, const int roll_modifier) const
+{
+	static constexpr dice check_dice(1, 20);
+
+	const int roll_result = random::get()->roll_dice(check_dice);
+
+	//there should always be at least a 5% chance of failure
+	if (check_dice.get_sides() == 100) {
+		if (roll_result >= 96) {
+			return false;
+		}
+	} else if (roll_result == check_dice.get_sides()) {
+		//e.g. if a 20 is rolled for a d20 roll
+		return false;
+	}
+
+	const int attribute_value = this->get_attribute_value(attribute);
+	const int modified_attribute_value = attribute_value + roll_modifier;
+	return roll_result <= modified_attribute_value;
+}
+
+int character_game_data::get_attribute_check_chance(const character_attribute *attribute, const int roll_modifier) const
+{
+	assert_throw(attribute != nullptr);
+
+	int chance = this->get_attribute_value(attribute);
+	chance += roll_modifier;
+
+	static constexpr dice check_dice(1, 20);
+
+	if (check_dice.get_sides() != 100) {
+		chance *= 100;
+		chance /= check_dice.get_sides();
+	}
+
+	chance = std::min(chance, 95);
+
+	return chance;
+}
+
 void character_game_data::apply_hit_dice(const dice &hit_dice)
 {
 	this->change_hit_dice_count(hit_dice.get_count());
