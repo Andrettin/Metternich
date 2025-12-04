@@ -68,6 +68,7 @@ class site_game_data final : public QObject
 	Q_PROPERTY(metternich::population* population READ get_population CONSTANT)
 	Q_PROPERTY(int population_unit_count READ get_population_unit_count NOTIFY population_units_changed)
 	Q_PROPERTY(int housing READ get_housing_int NOTIFY housing_changed)
+	Q_PROPERTY(int total_building_size READ get_total_building_size NOTIFY total_building_size_changed)
 	Q_PROPERTY(QVariantList commodity_outputs READ get_commodity_outputs_qvariant_list NOTIFY commodity_outputs_changed)
 	Q_PROPERTY(QVariantList visiting_armies READ get_visiting_armies_qvariant_list NOTIFY visiting_armies_changed)
 
@@ -350,6 +351,13 @@ public:
 		this->free_food_consumption += change;
 	}
 
+	int get_total_building_size() const
+	{
+		return this->total_building_size;
+	}
+
+	void change_total_building_size(const int change);
+
 	const commodity_map<centesimal_int> &get_base_commodity_outputs() const
 	{
 		return this->base_commodity_outputs;
@@ -512,6 +520,7 @@ signals:
 	void scripted_modifiers_changed();
 	void population_units_changed();
 	void housing_changed();
+	void total_building_size_changed();
 	void commodity_outputs_changed();
 	void visiting_armies_changed();
 
@@ -535,6 +544,7 @@ private:
 	qunique_ptr<metternich::population> population;
 	centesimal_int housing;
 	int free_food_consumption = 0;
+	int total_building_size = 0;
 	commodity_map<centesimal_int> base_commodity_outputs;
 	commodity_map<centesimal_int> commodity_outputs;
 	centesimal_int output_modifier;

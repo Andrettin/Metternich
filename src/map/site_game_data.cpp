@@ -1292,6 +1292,8 @@ void site_game_data::on_building_gained(const building_type *building, const int
 		context effects_ctx(this->site);
 		building->get_effects()->do_effects(this->site, effects_ctx);
 	}
+
+	this->change_total_building_size(building->get_size() * multiplier);
 }
 
 void site_game_data::on_wonder_gained(const wonder *wonder, const int multiplier)
@@ -1533,6 +1535,17 @@ void site_game_data::change_housing(const centesimal_int &change)
 	}
 
 	emit housing_changed();
+}
+
+void site_game_data::change_total_building_size(const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	this->total_building_size += change;
+
+	emit total_building_size_changed();
 }
 
 void site_game_data::change_base_commodity_output(const commodity *commodity, const centesimal_int &change)
