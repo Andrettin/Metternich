@@ -122,6 +122,7 @@ class domain_game_data final : public QObject
 	Q_PROPERTY(QVariantList consulates READ get_consulates_qvariant_list NOTIFY consulates_changed)
 	Q_PROPERTY(QRect diplomatic_map_image_rect READ get_diplomatic_map_image_rect NOTIFY diplomatic_map_image_changed)
 	Q_PROPERTY(QVariantList attribute_values READ get_attribute_values_qvariant_list NOTIFY attribute_values_changed)
+	Q_PROPERTY(int unrest READ get_unrest NOTIFY unrest_changed)
 	Q_PROPERTY(int score READ get_score NOTIFY score_changed)
 	Q_PROPERTY(int score_rank READ get_score_rank NOTIFY score_rank_changed)
 	Q_PROPERTY(int population_unit_count READ get_population_unit_count NOTIFY population_units_changed)
@@ -582,6 +583,19 @@ public:
 	void change_attribute_value(const domain_attribute *attribute, const int change);
 	bool do_attribute_check(const domain_attribute *attribute, const int roll_modifier) const;
 	int get_attribute_check_chance(const domain_attribute *attribute, const int roll_modifier) const;
+	int get_attribute_check_control_modifier() const;
+
+	int get_unrest() const
+	{
+		return this->unrest;
+	}
+
+	void set_unrest(const int unrest);
+
+	void change_unrest(const int change)
+	{
+		this->set_unrest(this->get_unrest() + change);
+	}
 
 	int get_score() const
 	{
@@ -1150,6 +1164,7 @@ signals:
 	void size_changed();
 	void diplomatic_map_image_changed();
 	void attribute_values_changed();
+	void unrest_changed();
 	void score_changed();
 	void score_rank_changed();
 	void rank_changed();
@@ -1206,6 +1221,7 @@ private:
 	std::map<diplomacy_state, QImage> diplomacy_state_diplomatic_map_images;
 	QRect diplomatic_map_image_rect;
 	data_entry_map<domain_attribute, int> attribute_values;
+	int unrest = 0;
 	int score = 0;
 	const country_rank *rank = nullptr;
 	int score_rank = 0;

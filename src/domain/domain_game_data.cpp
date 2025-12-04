@@ -145,6 +145,8 @@ void domain_game_data::process_gsml_property(const gsml_property &property)
 		this->capital = site::get(value);
 	} else if (key == "size") {
 		this->size = std::stoi(value);
+	} else if (key == "unrest") {
+		this->unrest = std::stoi(value);
 	} else {
 		throw std::runtime_error(std::format("Invalid domain game data property: \"{}\".", key));
 	}
@@ -192,6 +194,7 @@ gsml_data domain_game_data::to_gsml_data() const
 	}
 
 	data.add_property("size", std::to_string(this->get_size()));
+	data.add_property("unrest", std::to_string(this->get_unrest()));
 
 	if (!this->attribute_values.empty()) {
 		gsml_data attributes_data("attributes");
@@ -2089,7 +2092,7 @@ bool domain_game_data::do_attribute_check(const domain_attribute *attribute, con
 	}
 
 	const int attribute_value = this->get_attribute_value(attribute);
-	const int modified_attribute_value = attribute_value + roll_modifier;
+	const int modified_attribute_value = attribute_value + roll_modifier + this->get_attribute_check_control_modifier() - this->get_unrest();
 	return roll_result <= modified_attribute_value;
 }
 
@@ -2100,7 +2103,7 @@ int domain_game_data::get_attribute_check_chance(const domain_attribute *attribu
 	static constexpr dice check_dice(1, 20);
 
 	int chance = this->get_attribute_value(attribute);
-	chance += roll_modifier;
+	chance += roll_modifier + this->get_attribute_check_control_modifier() - this->get_unrest();
 
 	if (check_dice.get_sides() != 100) {
 		chance *= 100;
@@ -2111,6 +2114,26 @@ int domain_game_data::get_attribute_check_chance(const domain_attribute *attribu
 	chance = std::max(chance, 5);
 
 	return chance;
+}
+
+int domain_game_data::get_attribute_check_control_modifier() const
+{
+	return -this->get_size();
+}
+
+void domain_game_data::set_unrest(const int unrest)
+{
+	if (unrest < 0) {
+		this->set_unrest(0);
+		return;
+	}
+
+	if (unrest == this->get_unrest()) {
+		return;
+	}
+
+	this->unrest = unrest;
+	emit unrest_changed();
 }
 
 void domain_game_data::change_score(const int change)
