@@ -91,7 +91,7 @@ province_taxation_per_level = { #light taxation
 #	10 = 2d8+2
 #}
 
-domain_maintenance_cost_per_province_count = {
+domain_maintenance_cost_per_domain_size = {
 	1 = 0 #gb
 	3 = 1 #gb
 	7 = 2 #gb

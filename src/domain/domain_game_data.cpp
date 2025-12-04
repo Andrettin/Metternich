@@ -3942,9 +3942,10 @@ int domain_game_data::get_max_income() const
 
 int domain_game_data::get_domain_maintenance_cost() const
 {
-	const int province_count = this->get_province_count();
-	assert_throw(province_count > 0);
-	return defines::get()->get_domain_maintenance_cost_for_province_count(province_count);
+	const int domain_size = this->get_province_count() + this->get_settlement_count();
+	assert_throw(domain_size > 0);
+
+	return defines::get()->get_domain_maintenance_cost_for_domain_size(domain_size);
 }
 
 int domain_game_data::get_maintenance_cost() const
