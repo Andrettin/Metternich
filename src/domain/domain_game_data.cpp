@@ -460,7 +460,7 @@ void domain_game_data::do_population_growth()
 		}
 
 		if (this->get_population_growth() < 0) {
-			this->do_starvation();
+			//this->do_starvation();
 		}
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error(std::format("Error doing population growth for country \"{}\".", this->domain->get_identifier())));
