@@ -2080,10 +2080,12 @@ bool domain_game_data::do_attribute_check(const domain_attribute *attribute, con
 
 	const int roll_result = random::get()->roll_dice(check_dice);
 
-	//there should always be at least a 5% chance of failure
+	//there should always be at least a 5% chance of failure and a 5% chance of success
 	if (roll_result == check_dice.get_sides()) {
 		//e.g. if a 20 is rolled for a d20 roll
 		return false;
+	} else if (roll_result == 1) {
+		return true;
 	}
 
 	const int attribute_value = this->get_attribute_value(attribute);
@@ -2106,6 +2108,7 @@ int domain_game_data::get_attribute_check_chance(const domain_attribute *attribu
 	}
 
 	chance = std::min(chance, 95);
+	chance = std::max(chance, 5);
 
 	return chance;
 }

@@ -35,6 +35,10 @@ Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("ui/portrait.h")
 Q_MOC_INCLUDE("unit/transporter_type.h")
 
+namespace archimedes {
+	class gsml_data;
+}
+
 namespace metternich {
 
 class building_type;
