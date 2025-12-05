@@ -8,8 +8,23 @@ temple = {
 	slot_type = temple
 }
 
+large_temple = {
+	name = "Large Temple"
+	slot_type = temple
+}
+
 cathedral = {
 	name = "Cathedral"
+	slot_type = temple
+}
+
+large_cathedral = {
+	name = "Large Cathedral"
+	slot_type = temple
+}
+
+grand_cathedral = {
+	name = "Grand Cathedral"
 	slot_type = temple
 }
 

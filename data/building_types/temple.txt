@@ -40,14 +40,33 @@ temple = {
 	}
 }
 
+large_temple = {
+	name = "Large Temple"
+	building_class = large_temple
+	portrait = temple
+	icon = wooden_cross
+	holding_level = 3
+	size = 2
+	required_building = temple
+	holding_types = {
+		temple
+		city
+	}
+	domain_modifier = {
+		loyalty = 2
+		stability = 2
+		#unrest = -2
+	}
+}
+
 cathedral = {
 	name = "Cathedral"
 	building_class = cathedral
 	portrait = temple
 	icon = golden_cross_detailed
-	holding_level = 3
+	holding_level = 4
 	size = 4
-	required_building = temple
+	required_building = large_temple
 	required_technology = middle_ages
 	holding_types = {
 		temple
@@ -58,6 +77,52 @@ cathedral = {
 	}
 	commodity_costs = {
 		wealth = 26gb
+	}
+	province_modifier = {
+		law = 2
+	}
+	domain_modifier = {
+		loyalty = 4
+		stability = 4
+		#unrest = -4
+		#fame = 1
+	}
+}
+
+large_cathedral = {
+	name = "Large Cathedral"
+	building_class = large_cathedral
+	portrait = temple
+	icon = golden_cross_detailed
+	holding_level = 5
+	size = 4
+	required_building = cathedral
+	required_technology = middle_ages
+	holding_types = {
+		temple
+	}
+	province_modifier = {
+		law = 2
+	}
+	domain_modifier = {
+		loyalty = 4
+		stability = 4
+		#unrest = -4
+		#fame = 1
+	}
+}
+
+grand_cathedral = {
+	name = "Grand Cathedral"
+	building_class = grand_cathedral
+	portrait = temple
+	icon = golden_cross_detailed
+	holding_level = 6
+	size = 4
+	required_building = large_cathedral
+	required_technology = middle_ages
+	holding_types = {
+		temple
 	}
 	province_modifier = {
 		law = 2
