@@ -3,6 +3,6 @@ dombovar = {
 	world = earth
 	geocoordinate = { 18.131007 46.376888 }
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = kaposvar
 }

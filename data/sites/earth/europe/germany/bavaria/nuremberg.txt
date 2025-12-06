@@ -4,7 +4,7 @@ nuremberg = {
 	geocoordinate = { 11.07998490260 49.44999066070 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	#holding_type = manor
+	#holding_type = castle
 	max_tier = market
 	
 	history = {

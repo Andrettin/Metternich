@@ -5,7 +5,7 @@ mansion = {
 	icon = heater_shield
 	size = 1
 	holding_types = {
-		manor
+		castle
 	}
 	commodity_costs = {
 		wealth = 10gb
@@ -27,7 +27,7 @@ noble_villa = {
 	size = 2
 	required_building = mansion
 	holding_types = {
-		manor
+		castle
 	}
 	commodity_costs = {
 		wealth = 14gb
@@ -52,7 +52,7 @@ palace = {
 	size = 4
 	required_building = noble_villa
 	holding_types = {
-		manor
+		castle
 	}
 	build_conditions = {
 		has_building_class = bureau

@@ -3,6 +3,6 @@ darda = {
 	world = earth
 	geocoordinate = { 18.692513888889 45.626080555556 }
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = slavonia
 }

@@ -3,6 +3,6 @@ zabokreky = {
 	world = earth
 	geocoordinate = { 18.30277778 48.62638889 } #Žabokreky nad Nitrou
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = trencin
 }

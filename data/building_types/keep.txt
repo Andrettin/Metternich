@@ -6,7 +6,7 @@ donjon = {
 	holding_level = 1
 	size = 1
 	holding_types = {
-		manor
+		castle
 	}
 }
 
@@ -19,7 +19,7 @@ keep = {
 	size = 1
 	required_building = donjon
 	holding_types = {
-		manor
+		castle
 	}
 	commodity_costs = {
 		wealth = 24gb
@@ -39,7 +39,7 @@ expanded_keep = {
 	size = 1
 	required_building = keep
 	holding_types = {
-		manor
+		castle
 	}
 	domain_modifier = {
 		loyalty = 1
@@ -56,7 +56,7 @@ large_keep = {
 	size = 1
 	required_building = expanded_keep
 	holding_types = {
-		manor
+		castle
 	}
 	domain_modifier = {
 		loyalty = 1
@@ -73,7 +73,7 @@ great_keep = {
 	size = 1
 	required_building = large_keep
 	holding_types = {
-		manor
+		castle
 	}
 	domain_modifier = {
 		loyalty = 1
@@ -90,7 +90,7 @@ epic_keep = {
 	size = 1
 	required_building = great_keep
 	holding_types = {
-		manor
+		castle
 	}
 	domain_modifier = {
 		loyalty = 1

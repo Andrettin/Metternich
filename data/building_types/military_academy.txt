@@ -5,7 +5,7 @@ military_academy = {
 	icon = crossed_sabers
 	size = 2
 	holding_types = {
-		manor
+		castle
 	}
 	build_conditions = {
 		has_building_class = barracks

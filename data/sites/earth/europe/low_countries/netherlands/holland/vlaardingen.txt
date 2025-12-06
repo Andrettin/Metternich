@@ -3,7 +3,7 @@ vlaardingen = {
 	world = earth
 	geocoordinate = { 4.35 51.916666666667 }
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = holland
 	
 	history = {

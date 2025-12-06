@@ -3,6 +3,6 @@ udech = {
 	world = earth
 	geocoordinate = { 24.133333333333 49.383333333333 } #Zhydachiv
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = east_galicia
 }

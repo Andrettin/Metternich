@@ -3,6 +3,6 @@ biel = {
 	world = earth
 	geocoordinate = { 7.25003779972 47.16658998520 } #from Natural Earth
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = bern
 }

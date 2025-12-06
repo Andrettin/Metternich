@@ -3,6 +3,6 @@ tatabanya = {
 	world = earth
 	geocoordinate = { 18.43299956830 47.54999717710 } #from Natural Earth
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = buda
 }

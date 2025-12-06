@@ -3,6 +3,6 @@ borsmonostor = {
 	world = earth
 	geocoordinate = { 16.56472222 47.42305556 } #Klostermarienberg (Mannersdorf an der Rabnitz)
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = burgenland
 }

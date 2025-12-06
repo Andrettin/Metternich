@@ -3,6 +3,6 @@ skalitz = {
 	world = earth
 	geocoordinate = { 17.226388888888888 48.84361111111111 } #Skalica
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = pressburg
 }

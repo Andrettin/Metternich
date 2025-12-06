@@ -5,8 +5,8 @@ bureau = {
 	icon = courthouse
 	size = 2
 	holding_types = {
+		castle
 		guild
-		manor
 	}
 	build_conditions = {
 		or = {

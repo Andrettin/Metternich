@@ -3,6 +3,6 @@ nyustya = {
 	world = earth
 	geocoordinate = { 19.953055555556 48.573611111111 } #Hnúšťa
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = banska_bystrica
 }

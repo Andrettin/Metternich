@@ -3,6 +3,6 @@ tuzla = {
 	world = earth
 	geocoordinate = { 18.68003779980 44.55047060050 } #from Natural Earth
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = bosnia
 }

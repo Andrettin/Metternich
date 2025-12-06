@@ -3,7 +3,7 @@ rodez = {
 	world = earth
 	geocoordinate = { 2.5741666666667 44.35 }
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	#resource = cattle
 	province = guyenne
 	

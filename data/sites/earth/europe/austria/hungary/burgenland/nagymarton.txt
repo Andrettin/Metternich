@@ -3,6 +3,6 @@ nagymarton = {
 	world = earth
 	geocoordinate = { 16.396944444444 47.738055555556 } #Mattersburg
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = burgenland
 }

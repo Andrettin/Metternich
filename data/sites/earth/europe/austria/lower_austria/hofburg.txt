@@ -3,7 +3,7 @@ hofburg = {
 	world = earth
 	geocoordinate = { 16.365277777777777 48.20638888888889 }
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	max_tier = royal_palace
 	province = lower_austria
 	

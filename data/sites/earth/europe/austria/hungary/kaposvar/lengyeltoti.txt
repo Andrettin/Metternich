@@ -3,6 +3,6 @@ lengyeltoti = {
 	world = earth
 	geocoordinate = { 17.636061111111 46.668288888889 }
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = kaposvar
 }

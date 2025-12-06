@@ -3,6 +3,6 @@ hagenow = {
 	world = earth
 	geocoordinate = { 11.193055555556 53.431666666667 }
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = mecklenburg
 }

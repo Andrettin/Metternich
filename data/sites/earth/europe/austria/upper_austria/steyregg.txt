@@ -3,6 +3,6 @@ steyregg = {
 	world = earth
 	geocoordinate = { 14.366666666667 48.283611111111 }
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = upper_austria
 }

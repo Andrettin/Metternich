@@ -7,7 +7,7 @@ artifact = {
 	holding_types = {
 		camp
 		hamlet
-		manor
+		castle
 		temple
 		town
 		city

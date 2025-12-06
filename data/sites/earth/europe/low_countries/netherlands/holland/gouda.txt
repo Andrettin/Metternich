@@ -3,6 +3,6 @@ gouda = {
 	world = earth
 	geocoordinate = { 4.705555555555556 52.018055555555556 }
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = holland
 }

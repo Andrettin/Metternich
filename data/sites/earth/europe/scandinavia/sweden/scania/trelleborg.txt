@@ -3,6 +3,6 @@ trelleborg = {
 	world = earth
 	geocoordinate = { 13.181197587195 55.372346268872 }
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = scania
 }

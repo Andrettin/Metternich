@@ -3,6 +3,6 @@ nemesocsa = {
 	world = earth
 	geocoordinate = { 17.864652 47.808779 } #Zemianska Olča
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = nitra
 }

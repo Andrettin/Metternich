@@ -3,6 +3,6 @@ lutzow = {
 	world = earth
 	geocoordinate = { 11.166666666667 53.633333333333 }
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = mecklenburg
 }

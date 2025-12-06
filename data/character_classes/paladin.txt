@@ -26,7 +26,7 @@ paladin = {
 		human
 	}
 	favored_holding_types = {
-		manor
+		castle
 		temple
 	}
 	min_attribute_values = {

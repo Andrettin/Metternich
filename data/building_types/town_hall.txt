@@ -5,7 +5,7 @@ town_hall = {
 	icon = flag
 	size = 2
 	holding_types = {
-		manor
+		castle
 	}
 	build_conditions = {
 		has_building_class = garrison

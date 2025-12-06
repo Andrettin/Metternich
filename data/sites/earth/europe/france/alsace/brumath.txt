@@ -3,6 +3,6 @@ brumath = {
 	world = earth
 	geocoordinate = { 7.7083333333333 48.731944444444 }
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = alsace
 }

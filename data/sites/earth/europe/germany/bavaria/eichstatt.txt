@@ -3,7 +3,7 @@ eichstatt = {
 	world = earth
 	geocoordinate = { 11.18388888888889 48.89194444444445 }
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = bavaria
 	
 	history = {

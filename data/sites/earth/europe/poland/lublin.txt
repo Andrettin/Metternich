@@ -3,7 +3,7 @@ lublin = {
 	world = earth
 	geocoordinate = { 22.57272009140 51.25039756170 } #from Natural Earth
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = lublin
 	
 	history = {

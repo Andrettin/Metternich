@@ -3,6 +3,6 @@ soldin = {
 	world = earth
 	geocoordinate = { 14.866666666666667 52.925 } #Myślibórz
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = brandenburg
 }

@@ -3,6 +3,6 @@ spis = {
 	world = earth
 	geocoordinate = { 20.768333333333 49.000555555556 } #Spiš Castle
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = kesmark
 }

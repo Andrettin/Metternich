@@ -3,6 +3,6 @@ baia = {
 	world = earth
 	geocoordinate = { 26.219004 47.418317 }
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = moldavia
 }

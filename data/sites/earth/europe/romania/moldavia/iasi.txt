@@ -3,7 +3,7 @@ iasi = {
 	world = earth
 	geocoordinate = { 27.57494706090 47.16834698390 } #from Natural Earth
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	#resource = fruit
 	province = moldavia
 	

@@ -3,6 +3,6 @@ puho = {
 	world = earth
 	geocoordinate = { 18.330555555556 49.12 } #Púchov
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = trencin
 }

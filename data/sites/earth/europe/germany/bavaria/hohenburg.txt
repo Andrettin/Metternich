@@ -3,7 +3,7 @@ hohenburg = {
 	world = earth
 	geocoordinate = { 11.797688888888889 49.29546111111111 }
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = bavaria
 	
 	history = {

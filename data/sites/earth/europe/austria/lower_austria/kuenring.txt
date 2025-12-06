@@ -3,6 +3,6 @@ kuenring = {
 	world = earth
 	geocoordinate = { 15.784722222222 48.633888888889 } #Kühnring
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = lower_austria
 }

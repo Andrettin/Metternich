@@ -3,7 +3,7 @@ pitten = {
 	world = earth
 	geocoordinate = { 16.186388888889 47.716111111111 }
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = lower_austria
 	
 	history = {

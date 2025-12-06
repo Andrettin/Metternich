@@ -3,6 +3,6 @@ sarvar = {
 	world = earth
 	geocoordinate = { 16.935277777778 47.253888888889 } #Sárvár
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = gyor
 }

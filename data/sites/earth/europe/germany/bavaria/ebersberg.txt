@@ -3,7 +3,7 @@ ebersberg = {
 	world = earth
 	geocoordinate = { 11.966666666666667 48.083333333333336 }
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = bavaria
 	
 	history = {

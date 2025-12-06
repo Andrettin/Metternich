@@ -3,7 +3,7 @@ nordlingen = {
 	world = earth
 	geocoordinate = { 10.5 48.85 }
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = augsburg
 	
 	history = {

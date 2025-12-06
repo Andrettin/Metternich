@@ -3,6 +3,6 @@ muncheberg = {
 	world = earth
 	geocoordinate = { 14.139854 52.503749 }
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = brandenburg
 }

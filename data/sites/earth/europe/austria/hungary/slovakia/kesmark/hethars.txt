@@ -3,6 +3,6 @@ hethars = {
 	world = earth
 	geocoordinate = { 20.961944444444 49.152777777778 } #Lipany
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = kesmark
 }

@@ -3,7 +3,7 @@ alessandria = {
 	world = earth
 	geocoordinate = { 8.62 44.913330555556 }
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	#resource = fruit
 	province = piedmont
 	

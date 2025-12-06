@@ -3,6 +3,6 @@ zelking = {
 	world = earth
 	geocoordinate = { 15.25679 48.18368 }
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = lower_austria
 }

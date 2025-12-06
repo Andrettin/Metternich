@@ -3,6 +3,6 @@ scyuidnyk = {
 	world = earth
 	geocoordinate = { 21.567777777778 49.305555555556 } #Svidník
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = kesmark
 }

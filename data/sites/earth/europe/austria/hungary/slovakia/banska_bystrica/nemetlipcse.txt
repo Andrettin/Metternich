@@ -3,6 +3,6 @@ nemetlipcse = {
 	world = earth
 	geocoordinate = { 19.436388888889 49.065 } #Partizánska Ľupča
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = banska_bystrica
 }

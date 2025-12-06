@@ -3,6 +3,6 @@ etampes = {
 	world = earth
 	geocoordinate = { 2.1622222222222 48.435 }
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = ile_de_france
 }

@@ -3,6 +3,6 @@ oranienburg = {
 	world = earth
 	geocoordinate = { 13.236944444444 52.754444444444 }
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = brandenburg
 }

@@ -3,7 +3,7 @@ pavia = {
 	world = earth
 	geocoordinate = { 9.155 45.185280555556 }
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	#resource = grain
 	province = lombardy
 	

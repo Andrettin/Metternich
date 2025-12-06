@@ -3,7 +3,7 @@ minsk = {
 	world = earth
 	geocoordinate = { 27.56662715530 53.89997743640 } #from Natural Earth
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = minsk
 	
 	history = {

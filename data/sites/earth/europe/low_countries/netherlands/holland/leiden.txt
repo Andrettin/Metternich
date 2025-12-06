@@ -3,7 +3,7 @@ leiden = {
 	world = earth
 	geocoordinate = { 4.49 52.16 }
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	#resource = cattle #Cattle raising or mixed use with pasture dominant; Source: Map No. 76863 of the Perry-Castañeda Library Map Collection, 1970.
 	province = holland
 	

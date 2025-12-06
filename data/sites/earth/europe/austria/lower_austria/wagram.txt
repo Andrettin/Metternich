@@ -3,6 +3,6 @@ wagram = {
 	world = earth
 	geocoordinate = { 16.564444444444 48.299444444444 }
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = lower_austria
 }

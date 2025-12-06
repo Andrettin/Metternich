@@ -5,7 +5,7 @@ barracks = {
 	icon = crossed_sabers
 	size = 1
 	holding_types = {
-		manor
+		castle
 	}
 	recruited_military_unit_categories = {
 		mace_infantry
@@ -42,7 +42,7 @@ garrison = {
 	size = 2
 	required_building = barracks
 	holding_types = {
-		manor
+		castle
 	}
 	build_conditions = {
 		has_building_class = jail

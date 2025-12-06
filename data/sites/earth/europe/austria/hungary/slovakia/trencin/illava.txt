@@ -3,6 +3,6 @@ illava = {
 	world = earth
 	geocoordinate = { 18.236111111111 48.999444444444 } #Ilava
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = trencin
 }

@@ -3,7 +3,7 @@ vilnius = {
 	world = earth
 	geocoordinate = { 25.31663529330 54.68336631180 } #from Natural Earth
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = lithuania
 	
 	history = {

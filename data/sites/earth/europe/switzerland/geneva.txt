@@ -3,7 +3,7 @@ geneva = {
 	world = earth
 	geocoordinate = { 6.14002803409 46.21000754710 } #from Natural Earth
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	
 	history = {
 		395 = {

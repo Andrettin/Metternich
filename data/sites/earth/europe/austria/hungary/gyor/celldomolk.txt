@@ -3,6 +3,6 @@ celldomolk = {
 	world = earth
 	geocoordinate = { 17.1525 47.2575 }
 	type = holding
-	holding_type = manor
+	holding_type = castle
 	province = gyor
 }
