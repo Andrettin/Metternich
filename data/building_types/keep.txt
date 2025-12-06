@@ -1,0 +1,99 @@
+donjon = {
+	name = "Donjon"
+	building_class = donjon
+	portrait = fort
+	icon = wall
+	holding_level = 1
+	size = 1
+	holding_types = {
+		manor
+	}
+}
+
+keep = {
+	name = "Keep"
+	building_class = keep
+	portrait = fort
+	icon = wall
+	holding_level = 2
+	size = 1
+	required_building = donjon
+	holding_types = {
+		manor
+	}
+	commodity_costs = {
+		wealth = 24gb
+	}
+	domain_modifier = {
+		loyalty = 1
+		stability = 1
+	}
+}
+
+expanded_keep = {
+	name = "Expanded Keep"
+	building_class = expanded_keep
+	portrait = fort
+	icon = wall
+	holding_level = 3
+	size = 1
+	required_building = keep
+	holding_types = {
+		manor
+	}
+	domain_modifier = {
+		loyalty = 1
+		stability = 1
+	}
+}
+
+large_keep = {
+	name = "Large Keep"
+	building_class = large_keep
+	portrait = fort
+	icon = wall
+	holding_level = 4
+	size = 1
+	required_building = expanded_keep
+	holding_types = {
+		manor
+	}
+	domain_modifier = {
+		loyalty = 1
+		stability = 1
+	}
+}
+
+great_keep = {
+	name = "Great Keep"
+	building_class = great_keep
+	portrait = fort
+	icon = wall
+	holding_level = 5
+	size = 1
+	required_building = large_keep
+	holding_types = {
+		manor
+	}
+	domain_modifier = {
+		loyalty = 1
+		stability = 1
+	}
+}
+
+epic_keep = {
+	name = "Epic Keep"
+	building_class = epic_keep
+	portrait = fort
+	icon = wall
+	holding_level = 6
+	size = 1
+	required_building = great_keep
+	holding_types = {
+		manor
+	}
+	domain_modifier = {
+		loyalty = 1
+		stability = 1
+	}
+}

@@ -1,0 +1,29 @@
+donjon = {
+	name = "Donjon"
+	slot_type = keep
+}
+
+keep = {
+	name = "Keep"
+	slot_type = keep
+}
+
+expanded_keep = {
+	name = "Expanded Keep"
+	slot_type = keep
+}
+
+large_keep = {
+	name = "Large Keep"
+	slot_type = keep
+}
+
+great_keep = {
+	name = "Great Keep"
+	slot_type = keep
+}
+
+epic_keep = {
+	name = "Epic Keep"
+	slot_type = keep
+}
