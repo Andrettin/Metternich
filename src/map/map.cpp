@@ -153,62 +153,64 @@ void map::create_tiles()
 
 void map::initialize()
 {
-	bool changed = true;
-	while (changed) {
-		changed = false;
+	//assign tiles without provinces to the most-adjacent province
+	std::vector<QPoint> tiles_to_check;
+	for (int x = 0; x < this->get_width(); ++x) {
+		for (int y = 0; y < this->get_height(); ++y) {
+			tiles_to_check.push_back(QPoint(x, y));
+		}
+	}
+	vector::shuffle(tiles_to_check);
+	for (size_t i = 0; i < tiles_to_check.size(); ++i) {
+		const QPoint tile_pos = tiles_to_check.at(i);
 
-		//assign tiles without provinces to the most-adjacent province
-		for (int x = 0; x < this->get_width(); ++x) {
-			for (int y = 0; y < this->get_height(); ++y) {
-				const QPoint tile_pos(x, y);
-
-				try {
-					const tile *tile = this->get_tile(tile_pos);
-					if (tile->get_province() != nullptr) {
-						continue;
-					}
-
-					province_map<int> adjacent_province_counts;
-					point::for_each_adjacent(tile_pos, [this, tile, &adjacent_province_counts](const QPoint &adjacent_pos) {
-						if (!this->contains(adjacent_pos)) {
-							return;
-						}
-
-						const metternich::tile *adjacent_tile = this->get_tile(adjacent_pos);
-
-						if (tile->get_terrain()->is_water() != adjacent_tile->get_terrain()->is_water()) {
-							return;
-						}
-
-						if (adjacent_tile->get_province() == nullptr) {
-							return;
-						}
-
-						adjacent_province_counts[adjacent_tile->get_province()]++;
-					});
-
-					int best_count = 0;
-					std::vector<const province *> best_provinces;
-
-					for (const auto &[province, province_count] : adjacent_province_counts) {
-						if (province_count > best_count) {
-							best_provinces.clear();
-							best_count = province_count;
-						} else if (province_count < best_count) {
-							continue;
-						}
-
-						best_provinces.push_back(province);
-					}
-
-					if (!best_provinces.empty()) {
-						this->set_tile_province(tile_pos, vector::get_random(best_provinces));
-						changed = true;
-					}
-				} catch (...) {
-					exception::report(std::current_exception());
-				}
+		try {
+			const tile *tile = this->get_tile(tile_pos);
+			if (tile->get_province() != nullptr) {
+				continue;
 			}
+
+			province_map<int> adjacent_province_counts;
+			std::vector<QPoint> adjacent_without_province;
+			point::for_each_adjacent(tile_pos, [this, tile, &adjacent_province_counts, &adjacent_without_province](const QPoint &adjacent_pos) {
+				if (!this->contains(adjacent_pos)) {
+					return;
+				}
+
+				const metternich::tile *adjacent_tile = this->get_tile(adjacent_pos);
+
+				if (tile->get_terrain()->is_water() != adjacent_tile->get_terrain()->is_water()) {
+					return;
+				}
+
+				if (adjacent_tile->get_province() == nullptr) {
+					adjacent_without_province.push_back(adjacent_pos);
+					return;
+				}
+
+				adjacent_province_counts[adjacent_tile->get_province()]++;
+			});
+
+			int best_count = 0;
+			std::vector<const province *> best_provinces;
+
+			for (const auto &[province, province_count] : adjacent_province_counts) {
+				if (province_count > best_count) {
+					best_provinces.clear();
+					best_count = province_count;
+				} else if (province_count < best_count) {
+					continue;
+				}
+
+				best_provinces.push_back(province);
+			}
+
+			if (!best_provinces.empty()) {
+				this->set_tile_province(tile_pos, vector::get_random(best_provinces));
+				vector::merge(tiles_to_check, std::move(adjacent_without_province));
+			}
+		} catch (...) {
+			exception::report(std::current_exception());
 		}
 	}
 
