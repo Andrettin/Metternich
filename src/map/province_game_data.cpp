@@ -4,6 +4,7 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
+#include "character/skill.h"
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "domain/country_economy.h"
@@ -1647,6 +1648,11 @@ int province_game_data::get_skill_modifier(const skill *skill) const
 		if (attribute->affects_skill(skill)) {
 			modifier += value;
 		}
+	}
+
+	if (skill->get_check_dice().get_sides() != 20) {
+		modifier *= skill->get_check_dice().get_sides();
+		modifier /= 20;
 	}
 
 	return modifier;

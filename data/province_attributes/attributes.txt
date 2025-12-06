@@ -8,6 +8,9 @@ crime = {
 
 law = {
 	name = "Law"
+	affected_skills = {
+		law
+	}
 }
 
 lore = {
@@ -16,8 +19,14 @@ lore = {
 
 productivity = {
 	name = "Productivity"
+	affected_skills = {
+		agriculture
+	}
 }
 
 society = {
 	name = "Society"
+	affected_skills = {
+		disguise
+	}
 }
