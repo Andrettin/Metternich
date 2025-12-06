@@ -69,7 +69,7 @@ public:
 	virtual void do_assignment_effect(scope_type *scope, context &ctx) const override
 	{
 		const character *roll_character = this->get_roll_character(scope, ctx);
-		const bool success = roll_character->get_game_data()->do_skill_check(this->skill, this->roll_modifier);
+		const bool success = roll_character->get_game_data()->do_skill_check(this->skill, this->roll_modifier, this->get_location(roll_character, ctx));
 
 		bool is_player = false;
 		if constexpr (std::is_same_v<scope_type, const character>) {
@@ -114,7 +114,7 @@ public:
 	{
 		const character *roll_character = this->get_roll_character(scope, ctx);
 
-		std::string str = std::format("{} Check ({}% Chance)", this->skill->get_name(), roll_character->get_game_data()->get_skill_check_chance(this->skill, this->roll_modifier));
+		std::string str = std::format("{} Check ({}% Chance)", this->skill->get_name(), roll_character->get_game_data()->get_skill_check_chance(this->skill, this->roll_modifier, this->get_location(roll_character, ctx)));
 
 		if (this->roll_modifier != 0) {
 			str += "\n" + std::string(indent + 1, '\t') + std::format("Roll Modifier: {}{}", number::to_signed_string(this->roll_modifier), this->skill->get_value_suffix());
@@ -187,6 +187,16 @@ public:
 		assert_throw(roll_character != nullptr);
 
 		return roll_character;
+	}
+
+	const province *get_location(const character *roll_character, const read_only_context &ctx) const
+	{
+		assert_throw(ctx.dungeon_site != nullptr || roll_character->get_game_data()->get_domain() != nullptr);
+		if (ctx.dungeon_site != nullptr) {
+			return ctx.dungeon_site->get_game_data()->get_province();
+		}
+
+		return roll_character->get_game_data()->get_location();
 	}
 
 private:

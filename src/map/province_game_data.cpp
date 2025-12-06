@@ -1639,6 +1639,19 @@ int province_game_data::get_max_income() const
 	return taxation_dice.get_maximum_result() * 200000;
 }
 
+int province_game_data::get_skill_modifier(const skill *skill) const
+{
+	int modifier = 0;
+
+	for (const auto &[attribute, value] : this->get_attribute_values()) {
+		if (attribute->affects_skill(skill)) {
+			modifier += value;
+		}
+	}
+
+	return modifier;
+}
+
 const domain *province_game_data::get_trade_zone_domain() const
 {
 	domain_map<int> domain_economic_holding_levels;

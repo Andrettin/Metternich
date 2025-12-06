@@ -43,6 +43,7 @@ class province_attribute;
 class religion;
 class scripted_province_modifier;
 class site;
+class skill;
 class tile;
 class wonder;
 enum class military_unit_category;
@@ -535,6 +536,8 @@ public:
 
 	int get_min_income() const;
 	int get_max_income() const;
+
+	int get_skill_modifier(const skill *skill) const;
 
 	Q_INVOKABLE const metternich::domain *get_trade_zone_domain() const;
 

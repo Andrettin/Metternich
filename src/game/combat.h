@@ -13,9 +13,11 @@ namespace metternich {
 
 class character;
 class character_reference;
+class combat;
 class combat_object;
 class object_type;
 class party;
+class province;
 class terrain_type;
 class trap_type;
 
@@ -177,8 +179,8 @@ class combat_object final : public QObject
 	Q_PROPERTY(bool trap_found READ get_trap_found NOTIFY trap_found_changed)
 
 public:
-	explicit combat_object(const metternich::object_type *object_type, const effect_list<const character> *use_effects, const trap_type *trap, const std::string &description, const combat_placement placement, const QPoint &placement_offset)
-		: object_type(object_type), use_effects(use_effects), trap(trap), description(description), placement(placement), placement_offset(placement_offset)
+	explicit combat_object(const metternich::combat *combat, const metternich::object_type *object_type, const effect_list<const character> *use_effects, const trap_type *trap, const std::string &description, const combat_placement placement, const QPoint &placement_offset)
+		: combat(combat), object_type(object_type), use_effects(use_effects), trap(trap), description(description), placement(placement), placement_offset(placement_offset)
 	{
 	}
 
@@ -257,6 +259,7 @@ signals:
 	void trap_found_changed();
 
 private:
+	const metternich::combat *combat = nullptr;
 	const metternich::object_type *object_type = nullptr;
 	QPoint tile_pos = QPoint(-1, -1);
 	const effect_list<const character> *use_effects = nullptr;
@@ -425,6 +428,8 @@ public:
 		this->autoplay_enabled = enabled;
 		emit autoplay_enabled_changed();
 	}
+
+	const province *get_location() const;
 
 signals:
 	void character_infos_changed();

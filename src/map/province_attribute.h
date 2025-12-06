@@ -24,6 +24,8 @@ public:
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 
+	bool affects_skill(const skill *skill) const;
+
 	const modifier<const province> *get_value_modifier(const int value) const
 	{
 		const auto find_iterator = this->value_modifiers.find(value);
@@ -38,6 +40,7 @@ signals:
 	void changed();
 
 private:
+	std::vector<const skill *> affected_skills; //character skills which are affected by this attribute (i.e. the attribute's value is applied as a modifier when a character uses the skill in the province)
 	std::map<int, std::unique_ptr<modifier<const province>>> value_modifiers; //the province modifiers applied for each value; these are cumulative
 };
 

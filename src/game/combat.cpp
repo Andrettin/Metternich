@@ -10,12 +10,15 @@
 #include "database/defines.h"
 #include "domain/country_government.h"
 #include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "engine_interface.h"
 #include "game/domain_event.h"
 #include "game/event_trigger.h"
 #include "game/game.h"
 #include "item/object_type.h"
 #include "item/trap_type.h"
+#include "map/site.h"
+#include "map/site_game_data.h"
 #include "map/terrain_type.h"
 #include "script/effect/effect_list.h"
 #include "ui/portrait.h"
@@ -110,7 +113,7 @@ QVariantList combat::get_objects_qvariant_list() const
 
 void combat::add_object(const object_type *object_type, const effect_list<const character> *use_effects, const trap_type *trap, const std::string &description, const combat_placement placement, const QPoint &placement_offset)
 {
-	auto object = make_qunique<combat_object>(object_type, use_effects, trap, description, placement, placement_offset);
+	auto object = make_qunique<combat_object>(this, object_type, use_effects, trap, description, placement, placement_offset);
 	this->objects.push_back(std::move(object));
 }
 
@@ -461,7 +464,7 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 						if (tile.object->get_trap() != nullptr) {
 							bool disarmed = false;
 							if (tile.object->get_trap_found() && skill::get_disarm_traps_skill() != nullptr) {
-								disarmed = character->get_game_data()->do_skill_check(skill::get_disarm_traps_skill(), tile.object->get_trap()->get_disarm_modifier());
+								disarmed = character->get_game_data()->do_skill_check(skill::get_disarm_traps_skill(), tile.object->get_trap()->get_disarm_modifier(), this->get_location());
 							}
 
 							if (disarmed) {
@@ -761,7 +764,7 @@ QCoro::Task<void> combat::move_character_to(const character *character, const QP
 		}
 
 		if (!adjacent_tile.object->get_trap_found() && skill::get_find_traps_skill() != nullptr) {
-			const bool found = character->get_game_data()->do_skill_check(skill::get_find_traps_skill(), adjacent_tile.object->get_trap()->get_find_modifier());
+			const bool found = character->get_game_data()->do_skill_check(skill::get_find_traps_skill(), adjacent_tile.object->get_trap()->get_find_modifier(), this->get_location());
 			if (found) {
 				adjacent_tile.object->set_trap_found(found);
 			}
@@ -878,6 +881,17 @@ bool combat::can_current_character_use_object(const combat_object *object) const
 	return this->can_character_use_object(this->current_character, object);
 }
 
+const province *combat::get_location() const
+{
+	assert_throw(ctx.dungeon_site != nullptr || this->scope != nullptr);
+
+	if (ctx.dungeon_site != nullptr) {
+		return ctx.dungeon_site->get_game_data()->get_province();
+	}
+
+	return this->scope->get_game_data()->get_capital_province();
+}
+
 combat_tile::combat_tile(const terrain_type *base_terrain, const terrain_type *terrain)
 {
 	this->terrain = terrain;
@@ -908,7 +922,7 @@ int combat_object::get_disarm_chance(const metternich::character *character) con
 		return 0;
 	}
 
-	return character->get_game_data()->get_skill_check_chance(skill::get_disarm_traps_skill(), this->get_trap()->get_disarm_modifier());
+	return character->get_game_data()->get_skill_check_chance(skill::get_disarm_traps_skill(), this->get_trap()->get_disarm_modifier(), this->combat->get_location());
 }
 
 }

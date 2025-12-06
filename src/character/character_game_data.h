@@ -344,8 +344,8 @@ public:
 	}
 
 	void change_skill_value(const skill *skill, const int change);
-	bool do_skill_check(const skill *skill, const int roll_modifier) const;
-	int get_skill_check_chance(const skill *skill, const int roll_modifier) const;
+	bool do_skill_check(const skill *skill, const int roll_modifier, const province *location) const;
+	int get_skill_check_chance(const skill *skill, const int roll_modifier, const province *location) const;
 
 	const data_entry_map<trait, int> &get_trait_counts() const
 	{
@@ -587,6 +587,8 @@ public:
 	}
 
 	void decrement_status_effect_rounds();
+	
+	const province *get_location() const;
 
 signals:
 	void titled_name_changed();
