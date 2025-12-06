@@ -188,6 +188,10 @@ void map::initialize()
 					return;
 				}
 
+				if (tile->get_terrain()->is_water() != adjacent_tile->get_province()->is_water_zone()) {
+					return;
+				}
+
 				adjacent_province_counts[adjacent_tile->get_province()]++;
 			});
 
