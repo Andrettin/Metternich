@@ -4,6 +4,7 @@ gnomish_herbalist = {
 		gender = male
 		or = {
 			species = gnome
+			species = goblin
 			species = dwarf
 		}
 	}

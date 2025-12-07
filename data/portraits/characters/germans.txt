@@ -37,6 +37,7 @@ wilhelmine_von_sagan = {
 		or = {
 			species = dwarf
 			species = gnome
+			species = goblin
 			species = human
 			species = elf
 			species = half_elf

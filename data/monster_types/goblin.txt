@@ -8,7 +8,6 @@ goblin = {
 	modifier = {
 		hit_dice = 1d8-1
 		saving_throw_bonus = 1
-		movement = 6
 	}
 	items = {
 		mace

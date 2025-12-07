@@ -13,6 +13,36 @@ goblin = {
 		self_taught = 1d6
 		trained = 2d6
 	}
+	min_attribute_values = {
+		strength = 4
+		dexterity = 4
+		constitution = 5
+		intelligence = 3
+		wisdom = 3
+		charisma = 3
+	}
+	max_attribute_values = {
+		strength = 15
+		dexterity = 17
+		constitution = 16
+		intelligence = 18
+		wisdom = 18
+		charisma = 12
+	}
+	allowed_character_classes = {
+		cleric
+		rogue
+		#shaman
+		warrior
+		#witch_doctor
+	}
+	character_class_level_limits = {
+		cleric = 9
+		rogue = 12
+		#shaman = 7
+		warrior = 10
+		#witch_doctor = 7
+	}
 	item_slots = {
 		weapon = 1
 		shield = 1
@@ -24,5 +54,10 @@ goblin = {
 		gloves = 1
 		ring = 2
 		boots = 1
+	}
+	modifier = {
+		strength = -1
+		charisma = -1
+		movement = 6
 	}
 }
