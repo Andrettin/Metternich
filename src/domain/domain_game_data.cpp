@@ -143,8 +143,8 @@ void domain_game_data::process_gsml_property(const gsml_property &property)
 		this->government_type = government_type::get(value);
 	} else if (key == "capital") {
 		this->capital = site::get(value);
-	} else if (key == "size") {
-		this->size = std::stoi(value);
+	} else if (key == "holding_count") {
+		this->holding_count = std::stoi(value);
 	} else if (key == "unrest") {
 		this->unrest = std::stoi(value);
 	} else {
@@ -193,7 +193,7 @@ gsml_data domain_game_data::to_gsml_data() const
 		data.add_property("capital", this->get_capital()->get_identifier());
 	}
 
-	data.add_property("size", std::to_string(this->get_size()));
+	data.add_property("holding_count", std::to_string(this->get_holding_count()));
 	data.add_property("unrest", std::to_string(this->get_unrest()));
 
 	if (!this->attribute_values.empty()) {
@@ -1017,8 +1017,6 @@ void domain_game_data::on_province_gained(const province *province, const int mu
 {
 	province_game_data *province_game_data = province->get_game_data();
 
-	this->change_size(province_game_data->get_level() * multiplier);
-
 	if (province_game_data->is_coastal()) {
 		this->coastal_province_count += 1 * multiplier;
 	}
@@ -1138,8 +1136,7 @@ void domain_game_data::on_site_gained(const site *site, const int multiplier)
 	const site_game_data *site_game_data = site->get_game_data();
 
 	if (site->is_settlement() && site_game_data->is_built()) {
-		this->change_size(site_game_data->get_holding_level() * multiplier);
-		this->change_settlement_count(1 * multiplier);
+		this->change_holding_count(1 * multiplier);
 
 		for (const qunique_ptr<building_slot> &building_slot : site_game_data->get_building_slots()) {
 			const building_type *building = building_slot->get_building();
@@ -1247,42 +1244,33 @@ const province *domain_game_data::get_capital_province() const
 	return nullptr;
 }
 
-void domain_game_data::change_size(const int change)
+void domain_game_data::change_holding_count(const int change)
 {
 	if (change == 0) {
 		return;
 	}
 
-	this->size += change;
+	const int old_holding_count = this->get_holding_count();
 
-	if (game::get()->is_running()) {
-		emit size_changed();
-	}
-}
-
-void domain_game_data::change_settlement_count(const int change)
-{
-	if (change == 0) {
-		return;
-	}
-
-	const int old_settlement_count = this->get_settlement_count();
-
-	this->settlement_count += change;
+	this->holding_count += change;
 
 	for (const auto &[building, count] : this->settlement_building_counts) {
 		if (building->get_weighted_domain_modifier() != nullptr) {
-			building->get_weighted_domain_modifier()->apply(this->domain, centesimal_int(-count) / old_settlement_count);
+			building->get_weighted_domain_modifier()->apply(this->domain, centesimal_int(-count) / old_holding_count);
 		}
 	}
 
-	if (this->get_settlement_count() != 0) {
+	if (this->get_holding_count() != 0) {
 		for (const auto &[building, count] : this->settlement_building_counts) {
 			if (building->get_weighted_domain_modifier() != nullptr) {
 				//reapply the settlement building's weighted country modifier with the updated settlement count
-				building->get_weighted_domain_modifier()->apply(this->domain, centesimal_int(count) / this->get_settlement_count());
+				building->get_weighted_domain_modifier()->apply(this->domain, centesimal_int(count) / this->get_holding_count());
 			}
 		}
+	}
+
+	if (game::get()->is_running()) {
+		emit holding_count_changed();
 	}
 }
 
@@ -2118,7 +2106,8 @@ int domain_game_data::get_attribute_check_chance(const domain_attribute *attribu
 
 int domain_game_data::get_attribute_check_control_modifier() const
 {
-	return -this->get_size();
+	const int domain_size = this->get_province_count() + this->get_holding_count();
+	return -domain_size;
 }
 
 void domain_game_data::set_unrest(const int unrest)
@@ -2465,10 +2454,10 @@ void domain_game_data::change_settlement_building_count(const building_type *bui
 		this->settlement_building_counts.erase(building);
 	}
 
-	if (building->get_weighted_domain_modifier() != nullptr && this->get_settlement_count() != 0) {
+	if (building->get_weighted_domain_modifier() != nullptr && this->get_holding_count() != 0) {
 		//reapply the settlement building's weighted country modifier with the updated count
-		building->get_weighted_domain_modifier()->apply(this->domain, centesimal_int(-old_count) / this->get_settlement_count());
-		building->get_weighted_domain_modifier()->apply(this->domain, centesimal_int(count) / this->get_settlement_count());
+		building->get_weighted_domain_modifier()->apply(this->domain, centesimal_int(-old_count) / this->get_holding_count());
+		building->get_weighted_domain_modifier()->apply(this->domain, centesimal_int(count) / this->get_holding_count());
 	}
 
 	if (building->get_domain_modifier() != nullptr) {
@@ -3965,7 +3954,7 @@ int domain_game_data::get_max_income() const
 
 int domain_game_data::get_domain_maintenance_cost() const
 {
-	const int domain_size = this->get_province_count() + this->get_settlement_count();
+	const int domain_size = this->get_province_count() + this->get_holding_count();
 	assert_throw(domain_size > 0);
 
 	return defines::get()->get_domain_maintenance_cost_for_domain_size(domain_size);

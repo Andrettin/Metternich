@@ -627,8 +627,6 @@ void site_game_data::set_holding_level(const int level)
 		return;
 	}
 
-	const int old_level = this->get_holding_level();
-
 	this->holding_level = level;
 
 	if (level > 0) {
@@ -638,10 +636,6 @@ void site_game_data::set_holding_level(const int level)
 	}
 
 	this->update_holding_type_name();
-
-	if (this->get_owner() != nullptr) {
-		this->get_owner()->get_game_data()->change_size(level - old_level);
-	}
 
 	if (game::get()->is_running()) {
 		emit holding_level_changed();
@@ -1266,7 +1260,7 @@ void site_game_data::on_settlement_built(const int multiplier)
 	this->get_province()->get_game_data()->change_settlement_count(multiplier);
 
 	if (this->get_owner() != nullptr) {
-		this->get_owner()->get_game_data()->change_settlement_count(multiplier);
+		this->get_owner()->get_game_data()->change_holding_count(multiplier);
 	}
 
 	if (this->get_province() != nullptr) {

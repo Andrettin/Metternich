@@ -619,7 +619,7 @@ QString building_slot::get_modifier_string() const
 		}
 
 		const domain_game_data *domain_game_data = this->get_country()->get_game_data();
-		const centesimal_int multiplier = centesimal_int(1) / domain_game_data->get_settlement_count();
+		const centesimal_int multiplier = centesimal_int(1) / domain_game_data->get_holding_count();
 		str += this->get_building()->get_weighted_domain_modifier()->get_string(this->get_country(), multiplier, 0, false);
 	}
 

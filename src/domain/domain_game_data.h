@@ -108,7 +108,7 @@ class domain_game_data final : public QObject
 	Q_PROPERTY(QVariantList provinces READ get_provinces_qvariant_list NOTIFY provinces_changed)
 	Q_PROPERTY(QVariantList sites READ get_sites_qvariant_list NOTIFY sites_changed)
 	Q_PROPERTY(const metternich::site* capital READ get_capital NOTIFY capital_changed)
-	Q_PROPERTY(int size READ get_size NOTIFY size_changed)
+	Q_PROPERTY(int holding_count READ get_holding_count NOTIFY holding_count_changed)
 	Q_PROPERTY(bool coastal READ is_coastal NOTIFY provinces_changed)
 	Q_PROPERTY(bool anarchy READ is_under_anarchy NOTIFY provinces_changed)
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect NOTIFY provinces_changed)
@@ -313,19 +313,12 @@ public:
 
 	const province *get_capital_province() const;
 
-	int get_size() const
+	int get_holding_count() const
 	{
-		return this->size;
+		return this->holding_count;
 	}
 
-	void change_size(const int change);
-
-	int get_settlement_count() const
-	{
-		return this->settlement_count;
-	}
-
-	void change_settlement_count(const int change);
+	void change_holding_count(const int change);
 
 	const std::vector<const province *> &get_border_provinces() const
 	{
@@ -1161,7 +1154,7 @@ signals:
 	void provinces_changed();
 	void sites_changed();
 	void capital_changed();
-	void size_changed();
+	void holding_count_changed();
 	void diplomatic_map_image_changed();
 	void attribute_values_changed();
 	void unrest_changed();
@@ -1196,8 +1189,7 @@ private:
 	std::vector<const province *> provinces;
 	std::vector<const site *> sites;
 	const site *capital = nullptr;
-	int size = 0; //the sum of all province levels and holding levels
-	int settlement_count = 0; //only includes built settlements
+	int holding_count = 0; //only includes built holdings
 	std::vector<const province *> border_provinces;
 	int coastal_province_count = 0;
 	QRect territory_rect;
