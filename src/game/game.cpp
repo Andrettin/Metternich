@@ -436,7 +436,15 @@ QCoro::Task<void> game::start_coro()
 		}
 
 		map::get()->create_minimap_image();
-		co_await this->create_exploration_diplomatic_map_image();
+
+		std::vector<QCoro::Task<void>> tasks;
+		tasks.push_back(this->create_exploration_diplomatic_map_image());
+		for (const province *province : map::get()->get_provinces()) {
+			tasks.push_back(province->get_game_data()->create_map_image());
+		}
+		for (QCoro::Task<void> &task : tasks) {
+			co_await task;
+		}
 
 		for (const site *site : site::get_all()) {
 			if (!site->get_game_data()->is_on_map()) {
@@ -2026,10 +2034,6 @@ void game::set_price(const commodity *commodity, const int value)
 QCoro::Task<void> game::create_map_images()
 {
 	co_await this->create_diplomatic_map_image();
-
-	for (const province *province : map::get()->get_provinces()) {
-		co_await province->get_game_data()->create_map_image();
-	}
 }
 
 QCoro::Task<void> game::create_diplomatic_map_image()
