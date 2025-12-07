@@ -38,8 +38,8 @@ temple = {
 		parish = 2
 		deanery = 3
 		bishopric = 4
-		archbishopric = 4
-		patriarchate = 4
+		archbishopric = 5
+		patriarchate = 6
 	}
 	population_classes = {
 		slaves
