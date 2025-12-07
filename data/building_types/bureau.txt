@@ -4,15 +4,10 @@ bureau = {
 	portrait = trading_post
 	icon = courthouse
 	size = 2
+	min_holding_level = 4
 	holding_types = {
 		castle
 		guild
-	}
-	build_conditions = {
-		or = {
-			has_building_class = town_hall
-			has_building_class = guildhall
-		}
 	}
 	commodity_costs = {
 		wealth = 10gb

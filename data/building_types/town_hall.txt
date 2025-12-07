@@ -4,11 +4,9 @@ town_hall = {
 	portrait = town
 	icon = flag
 	size = 2
+	min_holding_level = 5
 	holding_types = {
 		castle
-	}
-	build_conditions = {
-		has_building_class = garrison
 	}
 	commodity_costs = {
 		wealth = 22gb
