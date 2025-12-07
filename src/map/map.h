@@ -46,7 +46,7 @@ public:
 	gsml_data to_gsml_data() const;
 
 	void create_tiles();
-	void initialize();
+	void initialize(const bool province_post_processing_enabled);
 	void process_border_tiles();
 	void process_site_tiles();
 	void clear();

@@ -412,7 +412,7 @@ QCoro::Task<void> game::setup_scenario_coro(const metternich::scenario *scenario
 
 		if (old_scenario == nullptr || old_scenario->get_map_template() != scenario->get_map_template() || scenario->get_map_template()->is_randomly_generated()) {
 			scenario->get_map_template()->apply();
-			map::get()->initialize();
+			map::get()->initialize(scenario->get_map_template()->is_province_post_processing_enabled());
 
 			//reset the game data for provinces and sites, since their constructors rely on the map having been initialized before
 			this->reset_game_data();
