@@ -174,9 +174,11 @@ void defines::initialize()
 		province_event::add_trigger_none_random_weight(event_trigger, random_weight);
 	}
 
-	tile_image_provider::get()->load_image("borders/province_border");
-	tile_image_provider::get()->load_image("river/0");
-	tile_image_provider::get()->load_image("rivermouth/0");
+	QTimer::singleShot(0, []() -> QCoro::Task<void> {
+		co_await tile_image_provider::get()->load_image("borders/province_border");
+		co_await tile_image_provider::get()->load_image("river/0");
+		co_await tile_image_provider::get()->load_image("rivermouth/0");
+	});
 }
 
 void defines::check() const

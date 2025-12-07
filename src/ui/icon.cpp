@@ -30,7 +30,9 @@ void icon::process_gsml_scope(const gsml_data &scope)
 
 void icon::initialize()
 {
-	icon_image_provider::get()->load_image(this->get_identifier());
+	QTimer::singleShot(0, [this]() -> QCoro::Task<void> {
+		co_await icon_image_provider::get()->load_image(this->get_identifier());
+	});
 
 	if (this->is_character_icon()) {
 		icon::character_icons.push_back(this);

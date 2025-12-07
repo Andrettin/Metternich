@@ -49,7 +49,9 @@ void pathway::initialize()
 		this->river_crossing_required_technology->add_enabled_river_crossing_pathway(this);
 	}
 
-	tile_image_provider::get()->load_image("pathway/" + this->get_identifier() + "/0");
+	QTimer::singleShot(0, [this]() -> QCoro::Task<void> {
+		co_await tile_image_provider::get()->load_image("pathway/" + this->get_identifier() + "/0");
+	});
 
 	named_data_entry::initialize();
 }

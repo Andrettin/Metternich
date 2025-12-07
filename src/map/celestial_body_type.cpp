@@ -18,7 +18,9 @@ celestial_body_type::~celestial_body_type()
 void celestial_body_type::initialize()
 {
 	if (!this->get_image_filepath().empty()) {
-		tile_image_provider::get()->load_image("celestial_body/" + this->get_identifier() + "/0");
+		QTimer::singleShot(0, [this]() -> QCoro::Task<void> {
+			co_await tile_image_provider::get()->load_image("celestial_body/" + this->get_identifier() + "/0");
+		});
 	}
 
 	named_data_entry::initialize();

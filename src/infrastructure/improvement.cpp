@@ -91,11 +91,15 @@ void improvement::initialize()
 	}
 
 	if (!this->get_image_filepath().empty()) {
-		tile_image_provider::get()->load_image("improvement/" + this->get_identifier() + "/0");
+		QTimer::singleShot(0, [this]() -> QCoro::Task<void> {
+			co_await tile_image_provider::get()->load_image("improvement/" + this->get_identifier() + "/0");
+		});
 	}
 
 	for (const auto &[terrain, filepath] : this->terrain_image_filepaths) {
-		tile_image_provider::get()->load_image("improvement/" + this->get_identifier() + "/" + terrain->get_identifier() + "/0");
+		QTimer::singleShot(0, [this, terrain]() -> QCoro::Task<void> {
+			co_await tile_image_provider::get()->load_image("improvement/" + this->get_identifier() + "/" + terrain->get_identifier() + "/0");
+		});
 	}
 
 	this->calculate_level();

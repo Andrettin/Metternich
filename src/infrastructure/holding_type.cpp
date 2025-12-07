@@ -90,7 +90,9 @@ void holding_type::process_gsml_scope(const gsml_data &scope)
 
 void holding_type::initialize()
 {
-	tile_image_provider::get()->load_image("settlement/" + this->get_identifier() + "/0");
+	QTimer::singleShot(0, [this]() -> QCoro::Task<void> {
+		co_await tile_image_provider::get()->load_image("settlement/" + this->get_identifier() + "/0");
+	});
 
 	this->calculate_level();
 

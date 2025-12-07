@@ -30,7 +30,9 @@ void portrait::process_gsml_scope(const gsml_data &scope)
 
 void portrait::initialize()
 {
-	portrait_image_provider::get()->load_image(this->get_identifier());
+	QTimer::singleShot(0, [this]() -> QCoro::Task<void> {
+		co_await portrait_image_provider::get()->load_image(this->get_identifier());
+	});
 
 	if (this->is_character_portrait()) {
 		portrait::character_portraits.push_back(this);

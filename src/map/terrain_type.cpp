@@ -163,7 +163,9 @@ void terrain_type::initialize()
 		assign_to_biome(this->get_elevation_type(), this->get_temperature_type(), this->get_moisture_type(), this->get_forestation_type());
 	}
 
-	tile_image_provider::get()->load_image("terrain/" + this->get_identifier() + "/0");
+	QTimer::singleShot(0, [this]() -> QCoro::Task<void> {
+		co_await tile_image_provider::get()->load_image("terrain/" + this->get_identifier() + "/0");
+	});
 
 	named_data_entry::initialize();
 }
