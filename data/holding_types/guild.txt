@@ -15,6 +15,10 @@ guild = {
 		regency = 1
 	}
 	tier_levels = {
+		minor_guild = 1
+		medium_guild = 2
+		major_guild = 4
+		
 		trading_post = 1
 		market = 2
 		
