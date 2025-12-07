@@ -93,6 +93,10 @@ bool building_slot::can_have_building(const building_type *building) const
 		return false;
 	}
 
+	if (building->get_min_holding_level() > 0 && this->get_settlement()->get_max_holding_level() < building->get_min_holding_level()) {
+		return false;
+	}
+
 	if (!vector::contains(building->get_holding_types(), settlement_game_data->get_holding_type())) {
 		return false;
 	}
@@ -185,6 +189,10 @@ bool building_slot::can_build_building(const building_type *building) const
 		if (total_fortification_level > this->get_settlement()->get_game_data()->get_holding_level()) {
 			return false;
 		}
+	}
+
+	if (building->get_min_holding_level() > 0 && this->get_settlement()->get_game_data()->get_holding_level() < building->get_min_holding_level()) {
+		return false;
 	}
 
 	if (building->get_build_conditions() != nullptr) {

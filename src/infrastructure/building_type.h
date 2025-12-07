@@ -65,6 +65,7 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(int size MEMBER size READ get_size NOTIFY changed)
 	Q_PROPERTY(metternich::building_type* required_building MEMBER required_building NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
+	Q_PROPERTY(int min_holding_level MEMBER min_holding_level READ get_min_holding_level NOTIFY changed)
 	Q_PROPERTY(int wealth_cost MEMBER wealth_cost READ get_wealth_cost NOTIFY changed)
 
 public:
@@ -224,6 +225,11 @@ public:
 		return this->required_technology;
 	}
 
+	int get_min_holding_level() const
+	{
+		return this->min_holding_level;
+	}
+
 	int get_wealth_cost() const
 	{
 		return this->wealth_cost;
@@ -312,6 +318,7 @@ private:
 	building_type *required_building = nullptr;
 	std::vector<const building_type *> requiring_buildings; //buildings which require this one
 	technology *required_technology = nullptr;
+	int min_holding_level = 0;
 	int wealth_cost = 0;
 	commodity_map<int> commodity_costs;
 	std::unique_ptr<const factor<domain>> cost_factor;
