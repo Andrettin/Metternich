@@ -186,7 +186,7 @@ Rectangle {
 		anchors.right: parent.right
 		visible_rows: 2
 		visible: selected_site !== null && selected_site.settlement && !selected_garrison && !viewing_population && !viewing_settlement_info
-		building_slots: selected_site !== null && selected_site.settlement ? selected_site_game_data.building_slots : []
+		building_slots: selected_site !== null && selected_site.settlement ? selected_site_game_data.visible_building_slots : []
 	}
 	
 	SitePortraitGrid {

@@ -909,17 +909,12 @@ const portrait *site_game_data::get_portrait() const
 
 QVariantList site_game_data::get_building_slots_qvariant_list() const
 {
-	std::vector<const building_slot *> available_building_slots;
-
+	std::vector<const building_slot *> building_slots;
 	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
-		if (!building_slot->is_available()) {
-			continue;
-		}
-
-		available_building_slots.push_back(building_slot.get());
+		building_slots.push_back(building_slot.get());
 	}
 
-	return container::to_qvariant_list(available_building_slots);
+	return container::to_qvariant_list(building_slots);
 }
 
 void site_game_data::initialize_building_slots()
@@ -934,6 +929,36 @@ void site_game_data::initialize_building_slots()
 		this->building_slots.push_back(make_qunique<building_slot>(building_slot_type, this->site));
 		this->building_slot_map[building_slot_type] = this->building_slots.back().get();
 	}
+}
+
+std::vector<const building_slot *> site_game_data::get_visible_building_slots() const
+{
+	std::vector<const building_slot *> visible_building_slots;
+	std::map<const building_slot *, size_t> building_slots_indexes;
+	for (size_t i = 0; i < this->get_building_slots().size(); ++i) {
+		const qunique_ptr<building_slot> &building_slot = this->get_building_slots().at(i);
+		visible_building_slots.push_back(building_slot.get());
+		building_slots_indexes[building_slot.get()] = i;
+	}
+
+	std::erase_if(visible_building_slots, [](const building_slot *building_slot) {
+		return !building_slot->is_available();
+	});
+
+	std::sort(visible_building_slots.begin(), visible_building_slots.end(), [&building_slots_indexes](const building_slot *lhs, const building_slot *rhs) {
+		if ((lhs->get_building() != nullptr) != (rhs->get_building() != nullptr)) {
+			return lhs->get_building() != nullptr;
+		}
+
+		return building_slots_indexes[lhs] < building_slots_indexes[rhs];
+	});
+
+	return visible_building_slots;
+}
+
+QVariantList site_game_data::get_visible_building_slots_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_visible_building_slots());
 }
 
 const building_type *site_game_data::get_slot_building(const building_slot_type *slot_type) const
