@@ -5,6 +5,7 @@ bank = {
 	icon = wealth
 	size = 1
 	required_technology = middle_ages
+	min_holding_level = 4
 	holding_types = {
 		guild
 	}

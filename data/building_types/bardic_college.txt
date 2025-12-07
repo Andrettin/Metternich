@@ -4,6 +4,7 @@ bardic_college = {
 	portrait = university
 	icon = music
 	size = 2
+	min_holding_level = 4
 	holding_types = {
 		guild
 	}

@@ -4,6 +4,7 @@ graveyard = {
 	portrait = temple
 	icon = skull
 	size = 1
+	min_holding_level = 2
 	holding_types = {
 		temple
 	}
