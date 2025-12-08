@@ -3,6 +3,7 @@ orleans = {
 	world = earth
 	geocoordinate = { 1.90002844098 47.90042116200 } #from Natural Earth
 	type = holding
+	holding_type = castle
 	#resource = timber
 	province = orleanais
 	cultural_names = {
@@ -11,12 +12,12 @@ orleans = {
 	
 	history = {
 		1305 = {
-			buildings += university #University founded in Orléans in 1305; Source: "Atlas de História Mundial", 2001, p. 144.
-			holding_type = city
+			#buildings += university #University founded in Orléans in 1305; Source: "Atlas de História Mundial", 2001, p. 144.
+			developed = true
 		}
 		
 		1360 = {
-			#existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 		
 		1789 = {

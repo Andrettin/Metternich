@@ -1,0 +1,8 @@
+sully = {
+	name = "Sully"
+	world = earth
+	geocoordinate = { 2.3752777777778 47.765 } #Sully-sur-Loire
+	type = holding
+	holding_type = guild
+	province = orleanais
+}

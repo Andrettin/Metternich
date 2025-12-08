@@ -1,0 +1,8 @@
+le_puiset = {
+	name = "Le Puiset"
+	world = earth
+	geocoordinate = { 1.8652777777778 48.208333333333 }
+	type = holding
+	holding_type = castle
+	province = orleanais
+}

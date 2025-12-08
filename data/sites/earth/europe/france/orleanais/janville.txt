@@ -1,0 +1,8 @@
+janville = {
+	name = "Janville"
+	world = earth
+	geocoordinate = { 1.8822222222222 48.200555555556 } #Janville (Eure-et-Loir)
+	type = holding
+	holding_type = castle
+	province = orleanais
+}

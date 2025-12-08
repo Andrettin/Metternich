@@ -1,0 +1,8 @@
+jargeau = {
+	name = "Jargeau"
+	world = earth
+	geocoordinate = { 2.125 47.864722222222 }
+	type = holding
+	holding_type = guild
+	province = orleanais
+}

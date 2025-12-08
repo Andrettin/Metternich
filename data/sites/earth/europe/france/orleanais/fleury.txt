@@ -1,0 +1,8 @@
+fleury = {
+	name = "Fleury"
+	world = earth
+	geocoordinate = { 2.3056 47.8094 } #Fleury Abbey
+	type = holding
+	holding_type = temple
+	province = orleanais
+}

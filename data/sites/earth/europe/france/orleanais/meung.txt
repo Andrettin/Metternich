@@ -1,0 +1,8 @@
+meung = {
+	name = "Meung"
+	world = earth
+	geocoordinate = { 1.6983333333333 47.828611111111 } #Meung-sur-Loire
+	type = holding
+	holding_type = temple
+	province = orleanais
+}
