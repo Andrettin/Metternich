@@ -125,11 +125,12 @@ Flickable {
 	Repeater {
 		model: metternich.map.sites
 		
-		Image {
-			id: site_icon
+		Item {
+			id: site_icon_area
 			x: site.game_data.tile_pos.x * metternich.map.province_map_tile_pixel_size * scale_factor - Math.floor(width / 2)
 			y: site.game_data.tile_pos.y * metternich.map.province_map_tile_pixel_size * scale_factor - Math.floor(height / 2)
-			source: "image://icon/" + (holding_type ? holding_type.icon.identifier : (dungeon ? dungeon.icon.identifier : "garrison")) + (site === selected_site ? "/selected" : "")
+			width: site_icon.width + 4 * scale_factor
+			height: site_icon.height + 4 * scale_factor
 			visible: province_map.mode === ProvinceMap.Mode.Site && (site.settlement || dungeon !== null)
 			
 			readonly property var site: model.modelData
@@ -137,6 +138,22 @@ Flickable {
 			readonly property var holding_type: site.game_data.holding_type
 			readonly property var dungeon: site.game_data.dungeon
 			readonly property bool is_visit_target: metternich.game.player_country.game_data.visit_target_site === site
+			
+			Rectangle {
+				id: site_domain_color_circle
+				width: site_icon_area.width
+				height: site_icon_area.height
+				radius: width / 2
+				color: site.game_data.owner ? site.game_data.owner.color : "transparent"
+				visible: site.game_data.owner !== null && site.game_data.owner !== site.game_data.province.game_data.owner
+			}
+			
+			Image {
+				id: site_icon
+				anchors.verticalCenter: parent.verticalCenter
+				anchors.horizontalCenter: parent.horizontalCenter
+				source: "image://icon/" + (holding_type ? holding_type.icon.identifier : (dungeon ? dungeon.icon.identifier : "garrison")) + (site === selected_site ? "/selected" : "")
+			}
 			
 			MouseArea {
 				anchors.fill: parent
@@ -211,7 +228,7 @@ Flickable {
 				maskSource: parent.source
 				
 				onClicked: {
-					select_province(other_country.game_data.capital.province)
+					select_province(other_country.game_data.capital.game_data.province)
 				}
 			}
 			
