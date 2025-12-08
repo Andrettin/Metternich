@@ -1002,8 +1002,8 @@ bool site_game_data::has_building_or_better(const building_type *building) const
 		return true;
 	}
 
-	for (const building_type *requiring_building : building->get_requiring_buildings()) {
-		if (this->has_building_or_better(requiring_building)) {
+	for (const building_type *derived_building : building->get_derived_buildings()) {
+		if (this->has_building_or_better(derived_building)) {
 			return true;
 		}
 	}
@@ -1131,12 +1131,12 @@ void site_game_data::check_building_conditions()
 			for (int i = building->get_level() + 1; i <= building_level; ++i) {
 				std::vector<const building_type *> potential_buildings;
 
-				for (const building_type *requiring_building : building->get_requiring_buildings()) {
-					if (!building_slot->can_maintain_building(requiring_building)) {
+				for (const building_type *derived_building : building->get_derived_buildings()) {
+					if (!building_slot->can_maintain_building(derived_building)) {
 						continue;
 					}
 
-					potential_buildings.push_back(requiring_building);
+					potential_buildings.push_back(derived_building);
 				}
 
 				if (potential_buildings.empty()) {

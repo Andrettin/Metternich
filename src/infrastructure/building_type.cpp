@@ -129,7 +129,7 @@ void building_type::initialize()
 	}
 
 	if (this->required_building != nullptr) {
-		this->required_building->requiring_buildings.push_back(this);
+		this->required_building->derived_buildings.push_back(this);
 	}
 
 	if (this->required_technology != nullptr) {

@@ -2427,8 +2427,8 @@ bool domain_game_data::has_building_or_better(const building_type *building) con
 		return true;
 	}
 
-	for (const building_type *requiring_building : building->get_requiring_buildings()) {
-		if (this->has_building_or_better(requiring_building)) {
+	for (const building_type *derived_building : building->get_derived_buildings()) {
+		if (this->has_building_or_better(derived_building)) {
 			return true;
 		}
 	}

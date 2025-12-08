@@ -215,9 +215,9 @@ public:
 		return this->get_required_building()->is_any_required_building(building);
 	}
 
-	const std::vector<const building_type *> &get_requiring_buildings() const
+	const std::vector<const building_type *> &get_derived_buildings() const
 	{
-		return this->requiring_buildings;
+		return this->derived_buildings;
 	}
 
 	const technology *get_required_technology() const
@@ -316,7 +316,7 @@ private:
 	int fortification_level = 0;
 	int size = 1;
 	building_type *required_building = nullptr;
-	std::vector<const building_type *> requiring_buildings; //buildings which require this one
+	std::vector<const building_type *> derived_buildings; //buildings which are based on this one
 	technology *required_technology = nullptr;
 	int min_holding_level = 0;
 	int wealth_cost = 0;
