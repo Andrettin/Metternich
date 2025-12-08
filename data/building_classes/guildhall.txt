@@ -1,5 +1,15 @@
-trade_shop = {
-	name = "Trade Shop"
+small_merchant_enclave = {
+	name = "Small Merchant Enclave"
+	slot_type = guildhall
+}
+
+merchant_enclave = {
+	name = "Merchant Enclave"
+	slot_type = guildhall
+}
+
+large_merchant_enclave = {
+	name = "Large Merchant Enclave"
 	slot_type = guildhall
 }
 

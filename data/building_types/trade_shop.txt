@@ -1,0 +1,20 @@
+trade_shop = {
+	name = "Trade Shop"
+	building_class = trade_shop
+	portrait = trading_post
+	icon = wealth
+	size = 1
+	holding_types = {
+		guild
+	}
+	commodity_costs = {
+		wealth = 10gb
+	}
+	province_modifier = {
+		productivity = 1
+	}
+	domain_modifier = {
+		economy = 1
+		stability = 1
+	}
+}

@@ -1,6 +1,6 @@
-trade_shop = {
-	name = "Trade Shop"
-	building_class = trade_shop
+small_merchant_enclave = {
+	name = "Small Merchant Enclave"
+	building_class = small_merchant_enclave
 	portrait = trading_post
 	icon = wealth
 	holding_level = 1
@@ -8,15 +8,31 @@ trade_shop = {
 	holding_types = {
 		guild
 	}
-	commodity_costs = {
-		wealth = 10gb
+}
+
+merchant_enclave = {
+	name = "Merchant Enclave"
+	building_class = merchant_enclave
+	portrait = trading_post
+	icon = wealth
+	holding_level = 2
+	size = 1
+	base_building = small_merchant_enclave
+	holding_types = {
+		guild
 	}
-	province_modifier = {
-		productivity = 1
-	}
-	domain_modifier = {
-		economy = 1
-		stability = 1
+}
+
+large_merchant_enclave = {
+	name = "Large Merchant Enclave"
+	building_class = large_merchant_enclave
+	portrait = trading_post
+	icon = wealth
+	holding_level = 3
+	size = 1
+	base_building = merchant_enclave
+	holding_types = {
+		guild
 	}
 }
 
@@ -25,9 +41,9 @@ guildhall = {
 	building_class = guildhall
 	portrait = trading_post
 	icon = wealth
-	holding_level = 2
+	holding_level = 4
 	size = 2
-	base_building = trade_shop
+	base_building = large_merchant_enclave
 	holding_types = {
 		guild
 	}
@@ -35,7 +51,7 @@ guildhall = {
 		market
 	}
 	commodity_costs = {
-		wealth = 24gb
+		wealth = 34gb
 	}
 	province_modifier = {
 		law = 1
@@ -44,6 +60,5 @@ guildhall = {
 	domain_modifier = {
 		economy = 2
 		loyalty = 2
-		stability = 1
 	}
 }

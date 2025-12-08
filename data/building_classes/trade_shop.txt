@@ -1,0 +1,4 @@
+trade_shop = {
+	name = "Trade Shop"
+	slot_type = trade_shop
+}
