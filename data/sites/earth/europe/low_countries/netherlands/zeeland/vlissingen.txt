@@ -1,0 +1,8 @@
+vlissingen = {
+	name = "Vlissingen"
+	world = earth
+	geocoordinate = { 3.5833333333333 51.45 }
+	type = holding
+	holding_type = guild
+	province = zeeland
+}

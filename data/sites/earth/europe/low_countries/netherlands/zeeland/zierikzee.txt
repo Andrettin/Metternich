@@ -1,0 +1,8 @@
+zierikzee = {
+	name = "Zierikzee"
+	world = earth
+	geocoordinate = { 3.9164 51.6497 }
+	type = holding
+	holding_type = guild
+	province = zeeland
+}

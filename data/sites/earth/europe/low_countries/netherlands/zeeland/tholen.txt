@@ -1,0 +1,8 @@
+tholen = {
+	name = "Tholen"
+	world = earth
+	geocoordinate = { 4.2206 51.5322 }
+	type = holding
+	holding_type = temple
+	province = zeeland
+}

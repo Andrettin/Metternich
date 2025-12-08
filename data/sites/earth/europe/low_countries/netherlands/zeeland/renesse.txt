@@ -1,0 +1,8 @@
+renesse = {
+	name = "Renesse"
+	world = earth
+	geocoordinate = { 3.7731 51.7322 }
+	type = holding
+	holding_type = castle
+	province = zeeland
+}

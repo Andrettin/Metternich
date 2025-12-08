@@ -1,0 +1,8 @@
+borsele = {
+	name = "Borsele"
+	world = earth
+	geocoordinate = { 3.8 51.466666666667 }
+	type = holding
+	holding_type = castle
+	province = zeeland
+}

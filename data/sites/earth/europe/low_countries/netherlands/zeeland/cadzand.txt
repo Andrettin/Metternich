@@ -1,0 +1,8 @@
+cadzand = {
+	name = "Cadzand"
+	world = earth
+	geocoordinate = { 3.4081 51.3678 }
+	type = holding
+	holding_type = castle
+	province = zeeland
+}
