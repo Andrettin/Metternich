@@ -4,6 +4,7 @@ trieste = {
 	geocoordinate = { 13.80002559270 45.65037762360 } #from Natural Earth
 	type = holding
 	holding_type = guild
+	max_tier = seaport
 	province = istria
 	cultural_names = {
 		roman = "Tergeste" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 38-39.
@@ -16,6 +17,7 @@ trieste = {
 		
 		1719 = {
 			buildings += waterfront #Karl VI of the Holy Roman Empire made Trieste a free port ("Freihafen") in 1719; Source: Ivan Erceg, "Außenhandel der Nordadriatischen Seestädte als Faktor im Entstehen der kapitalistischen Beziehungen in Österreich im 18. und 19. Jahrhundert", 1968, p. 464.
+			tier = seaport
 		}
 		
 		1758 = {

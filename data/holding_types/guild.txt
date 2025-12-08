@@ -22,6 +22,8 @@ guild = {
 		trading_post = 1
 		market = 2
 		
+		seaport = 4
+		
 		hamlet = 1
 		village = 2
 		town = 3

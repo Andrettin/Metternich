@@ -31,6 +31,7 @@ waterfront = {
 	icon = anchor
 	size = 4
 	required_building = pier
+	min_holding_level = 4
 	holding_types = {
 		guild
 	}
@@ -46,9 +47,6 @@ waterfront = {
 		province = {
 			near_water = true
 		}
-	}
-	build_conditions = {
-		holding_level >= 4
 	}
 	commodity_costs = {
 		wealth = 74gb
