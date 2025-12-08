@@ -132,5 +132,23 @@ Rectangle {
 				}
 			}
 		}
+		
+		IconButton {
+			id: temple_map_mode_button
+			icon_identifier: "wooden_cross"
+			highlighted: province_map.mode === ProvinceMap.Mode.Temple
+			
+			onClicked: {
+				province_map.mode = ProvinceMap.Mode.Temple
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Temple Map Mode"
+				} else {
+					status_text = ""
+				}
+			}
+		}
 	}
 }

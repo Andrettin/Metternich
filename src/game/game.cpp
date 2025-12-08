@@ -966,6 +966,9 @@ void game::apply_sites()
 			if (province_history->get_trade_zone() != nullptr && site_game_data->get_holding_type() != nullptr && site_game_data->get_holding_type()->is_economic()) {
 				site_game_data->set_owner(province_history->get_trade_zone());
 			}
+			if (province_history->get_temple_domain() != nullptr && site_game_data->get_holding_type() != nullptr && site_game_data->get_holding_type()->is_religious()) {
+				site_game_data->set_owner(province_history->get_temple_domain());
+			}
 		}
 	}
 

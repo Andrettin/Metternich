@@ -14,7 +14,8 @@ Flickable {
 		Site,
 		Terrain,
 		Cultural,
-		TradeZone
+		TradeZone,
+		Temple
 	}
 	
 	property int mode: ProvinceMap.Mode.Political
@@ -105,6 +106,11 @@ Flickable {
 					var trade_zone_domain = province.game_data.get_trade_zone_domain()
 					if (trade_zone_domain !== null) {
 						text += " (" + trade_zone_domain.name + ")"
+					}
+				} else if (province_map.mode === ProvinceMap.Mode.Temple) {
+					var temple_domain = province.game_data.get_temple_domain()
+					if (temple_domain !== null) {
+						text += " (" + temple_domain.name + ")"
 					}
 				}
 				
@@ -279,6 +285,8 @@ Flickable {
 				return "/cultural"
 			case ProvinceMap.Mode.TradeZone:
 				return "/trade_zone"
+			case ProvinceMap.Mode.Temple:
+				return "/temple"
 		}
 		
 		return ""

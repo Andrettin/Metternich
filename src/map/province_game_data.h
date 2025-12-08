@@ -540,6 +540,7 @@ public:
 	int get_skill_modifier(const skill *skill) const;
 
 	Q_INVOKABLE const metternich::domain *get_trade_zone_domain() const;
+	Q_INVOKABLE const metternich::domain *get_temple_domain() const;
 
 	province_game_data &operator =(const province_game_data &other) = delete;
 

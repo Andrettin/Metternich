@@ -44,6 +44,8 @@ QImage province_map_image_provider::requestImage(const QString &id, QSize *size,
 			image = &province_game_data->get_map_mode_image(province_map_mode::cultural);
 		} else if (mode_identifier == "trade_zone") {
 			image = &province_game_data->get_map_mode_image(province_map_mode::trade_zone);
+		} else if (mode_identifier == "temple") {
+			image = &province_game_data->get_map_mode_image(province_map_mode::temple);
 		} else {
 			image = &province_game_data->get_map_image();
 		}

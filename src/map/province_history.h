@@ -22,6 +22,7 @@ class province_history final : public data_entry_history
 
 	Q_PROPERTY(const metternich::domain* owner MEMBER owner)
 	Q_PROPERTY(const metternich::domain* trade_zone MEMBER trade_zone)
+	Q_PROPERTY(const metternich::domain* temple_domain MEMBER temple_domain)
 	Q_PROPERTY(const metternich::religion* religion MEMBER religion)
 	Q_PROPERTY(int level MEMBER level READ get_level)
 	Q_PROPERTY(int population READ get_population WRITE set_population)
@@ -43,6 +44,11 @@ public:
 	const domain *get_trade_zone() const
 	{
 		return this->trade_zone;
+	}
+
+	const domain *get_temple_domain() const
+	{
+		return this->temple_domain;
 	}
 
 	const culture_map<int64_t> &get_culture_weights() const
@@ -149,6 +155,7 @@ private:
 	const metternich::province *province = nullptr;
 	const domain *owner = nullptr;
 	const domain *trade_zone = nullptr;
+	const domain *temple_domain = nullptr;
 	culture_map<int64_t> culture_weights;
 	const metternich::religion *religion = nullptr;
 	phenotype_map<int64_t> phenotype_weights;
