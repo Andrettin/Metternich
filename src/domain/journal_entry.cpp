@@ -461,8 +461,8 @@ std::vector<const building_type *> journal_entry::get_built_buildings_with_requi
 	for (size_t i = 0; i < buildings.size(); ++i) {
 		const building_type *building = buildings[i];
 
-		if (building->get_required_building() != nullptr) {
-			buildings.push_back(building->get_required_building());
+		if (building->get_base_building() != nullptr) {
+			buildings.push_back(building->get_base_building());
 		}
 	}
 
@@ -477,8 +477,8 @@ site_map<std::vector<const building_type *>> journal_entry::get_built_settlement
 		for (size_t i = 0; i < buildings.size(); ++i) {
 			const building_type *building = buildings[i];
 
-			if (building->get_required_building() != nullptr) {
-				buildings.push_back(building->get_required_building());
+			if (building->get_base_building() != nullptr) {
+				buildings.push_back(building->get_base_building());
 			}
 		}
 	}

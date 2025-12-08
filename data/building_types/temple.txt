@@ -25,7 +25,7 @@ temple = {
 	icon = wooden_cross
 	holding_level = 2
 	size = 2
-	required_building = shrine
+	base_building = shrine
 	holding_types = {
 		temple
 		city
@@ -47,7 +47,7 @@ large_temple = {
 	icon = wooden_cross
 	holding_level = 3
 	size = 2
-	required_building = temple
+	base_building = temple
 	holding_types = {
 		temple
 		city
@@ -66,7 +66,7 @@ cathedral = {
 	icon = golden_cross_detailed
 	holding_level = 4
 	size = 4
-	required_building = large_temple
+	base_building = large_temple
 	required_technology = middle_ages
 	holding_types = {
 		temple
@@ -96,7 +96,7 @@ large_cathedral = {
 	icon = golden_cross_detailed
 	holding_level = 5
 	size = 4
-	required_building = cathedral
+	base_building = cathedral
 	required_technology = middle_ages
 	holding_types = {
 		temple
@@ -119,7 +119,7 @@ grand_cathedral = {
 	icon = golden_cross_detailed
 	holding_level = 6
 	size = 4
-	required_building = large_cathedral
+	base_building = large_cathedral
 	required_technology = middle_ages
 	holding_types = {
 		temple

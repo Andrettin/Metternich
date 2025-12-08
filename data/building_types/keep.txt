@@ -17,7 +17,7 @@ keep = {
 	icon = wall
 	holding_level = 2
 	size = 1
-	required_building = donjon
+	base_building = donjon
 	holding_types = {
 		castle
 	}
@@ -37,7 +37,7 @@ expanded_keep = {
 	icon = wall
 	holding_level = 3
 	size = 1
-	required_building = keep
+	base_building = keep
 	holding_types = {
 		castle
 	}
@@ -54,7 +54,7 @@ large_keep = {
 	icon = wall
 	holding_level = 4
 	size = 1
-	required_building = expanded_keep
+	base_building = expanded_keep
 	holding_types = {
 		castle
 	}
@@ -71,7 +71,7 @@ great_keep = {
 	icon = wall
 	holding_level = 5
 	size = 1
-	required_building = large_keep
+	base_building = large_keep
 	holding_types = {
 		castle
 	}
@@ -88,7 +88,7 @@ epic_keep = {
 	icon = wall
 	holding_level = 6
 	size = 1
-	required_building = great_keep
+	base_building = great_keep
 	holding_types = {
 		castle
 	}

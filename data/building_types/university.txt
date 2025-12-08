@@ -31,7 +31,7 @@ university = {
 	portrait = university
 	icon = university
 	size = 4
-	required_building = academy
+	base_building = academy
 	required_technology = middle_ages
 	holding_types = {
 		city

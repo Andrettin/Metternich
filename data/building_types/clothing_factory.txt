@@ -29,7 +29,7 @@ tailors_shop = {
 	building_class = tailors_shop
 	portrait = factory
 	icon = clothing
-	required_building = tailors_house
+	base_building = tailors_house
 	holding_types = {
 		town
 		city
@@ -55,7 +55,7 @@ clothing_factory = {
 	building_class = clothing_factory
 	portrait = factory
 	icon = clothing
-	required_building = tailors_shop
+	base_building = tailors_shop
 	holding_types = {
 		town
 		city

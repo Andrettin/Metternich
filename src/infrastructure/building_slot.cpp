@@ -180,7 +180,7 @@ bool building_slot::can_gain_building(const building_type *building) const
 
 bool building_slot::can_build_building(const building_type *building) const
 {
-	if (building->get_required_building() != nullptr && this->get_building() != building->get_required_building()) {
+	if (building->get_base_building() != nullptr && this->get_building() != building->get_base_building()) {
 		return false;
 	}
 
@@ -243,7 +243,7 @@ void building_slot::set_wonder(const metternich::wonder *wonder)
 	if (this->get_wonder() != nullptr) {
 		settlement_game_data->on_wonder_gained(this->get_wonder(), 1);
 
-		if (this->get_building() == nullptr || this->get_wonder()->get_building()->is_any_required_building(this->get_building())) {
+		if (this->get_building() == nullptr || this->get_wonder()->get_building()->is_any_base_building(this->get_building())) {
 			this->set_building(this->get_wonder()->get_building());
 		}
 	}
@@ -316,7 +316,7 @@ bool building_slot::can_gain_wonder(const metternich::wonder *wonder) const
 
 bool building_slot::can_build_wonder(const metternich::wonder *wonder) const
 {
-	if (wonder->get_building()->get_required_building() != nullptr && this->get_building() != wonder->get_building()->get_required_building() && !this->get_building()->is_any_required_building(wonder->get_building())) {
+	if (wonder->get_building()->get_base_building() != nullptr && this->get_building() != wonder->get_building()->get_base_building() && !this->get_building()->is_any_base_building(wonder->get_building())) {
 		return false;
 	}
 
@@ -465,7 +465,7 @@ bool building_slot::is_available() const
 	}
 
 	for (const building_type *building : this->get_type()->get_building_types()) {
-		if (building->get_required_building() != nullptr) {
+		if (building->get_base_building() != nullptr) {
 			continue;
 		}
 

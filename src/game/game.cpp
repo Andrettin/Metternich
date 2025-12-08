@@ -1181,7 +1181,7 @@ void game::apply_site_buildings(const site *site)
 				break;
 			}
 
-			building = building->get_required_building();
+			building = building->get_base_building();
 		}
 
 		if (building == nullptr) {

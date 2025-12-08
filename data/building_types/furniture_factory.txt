@@ -27,7 +27,7 @@ carpenters_shop = {
 	building_class = carpenters_shop
 	portrait = factory
 	icon = furniture
-	required_building = carpenters_house
+	base_building = carpenters_house
 	holding_types = {
 		town
 		city
@@ -51,7 +51,7 @@ furniture_factory = {
 	building_class = furniture_factory
 	portrait = factory
 	icon = furniture
-	required_building = carpenters_shop
+	base_building = carpenters_shop
 	holding_types = {
 		town
 		city

@@ -1031,7 +1031,7 @@ bool site_game_data::has_building_class_or_better(const building_class *building
 			return true;
 		}
 
-		slot_building = slot_building->get_required_building();
+		slot_building = slot_building->get_base_building();
 	}
 
 	return false;
@@ -1103,7 +1103,7 @@ void site_game_data::check_building_conditions()
 				break;
 			}
 
-			building = building->get_required_building();
+			building = building->get_base_building();
 		}
 
 		//try to place a building of equivalent level for the same slot which has its conditions fulfilled
@@ -1111,7 +1111,7 @@ void site_game_data::check_building_conditions()
 			std::vector<const building_type *> potential_buildings;
 
 			for (const building_type *slot_building : building_slot->get_type()->get_building_types()) {
-				if (slot_building->get_required_building() != nullptr) {
+				if (slot_building->get_base_building() != nullptr) {
 					continue;
 				}
 
@@ -1223,7 +1223,7 @@ bool site_game_data::can_gain_free_building(const building_type *building) const
 		return false;
 	}
 
-	if (building->get_required_building() != nullptr && building_slot->get_building() != building->get_required_building()) {
+	if (building->get_base_building() != nullptr && building_slot->get_building() != building->get_base_building()) {
 		return false;
 	}
 

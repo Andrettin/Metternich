@@ -128,8 +128,8 @@ void building_type::initialize()
 		this->building_class->set_default_building_type(this);
 	}
 
-	if (this->required_building != nullptr) {
-		this->required_building->derived_buildings.push_back(this);
+	if (this->base_building != nullptr) {
+		this->base_building->derived_buildings.push_back(this);
 	}
 
 	if (this->required_technology != nullptr) {
@@ -188,8 +188,8 @@ void building_type::check() const
 		this->get_free_on_start_conditions()->check_validity();
 	}
 
-	if (this->get_required_building() == this) {
-		throw std::runtime_error(std::format("Building type \"{}\" requires itself.", this->get_identifier()));
+	if (this->get_base_building() == this) {
+		throw std::runtime_error(std::format("Building type \"{}\" is based on itself.", this->get_identifier()));
 	}
 
 	if (this->get_holding_types().empty()) {
@@ -204,12 +204,12 @@ const building_slot_type *building_type::get_slot_type() const
 
 void building_type::calculate_level()
 {
-	if (this->required_building != nullptr) {
-		if (this->required_building->get_level() == 0) {
-			this->required_building->initialize();
+	if (this->base_building != nullptr) {
+		if (this->base_building->get_level() == 0) {
+			this->base_building->initialize();
 		}
 
-		this->level = this->required_building->get_level() + 1;
+		this->level = this->base_building->get_level() + 1;
 	} else {
 		this->level = 1;
 	}

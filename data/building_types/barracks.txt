@@ -40,7 +40,7 @@ garrison = {
 	portrait = fort
 	icon = crossed_sabers
 	size = 2
-	required_building = barracks
+	base_building = barracks
 	holding_types = {
 		castle
 	}

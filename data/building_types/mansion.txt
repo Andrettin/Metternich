@@ -25,7 +25,7 @@ noble_villa = {
 	portrait = aristocratic_palace
 	icon = heater_shield
 	size = 2
-	required_building = mansion
+	base_building = mansion
 	holding_types = {
 		castle
 	}
@@ -50,7 +50,7 @@ palace = {
 	portrait = aristocratic_palace
 	icon = heater_shield
 	size = 4
-	required_building = noble_villa
+	base_building = noble_villa
 	holding_types = {
 		castle
 	}

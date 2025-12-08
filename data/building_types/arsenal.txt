@@ -30,7 +30,7 @@ magazine = {
 	building_class = magazine
 	portrait = factory
 	icon = tools
-	required_building = armory
+	base_building = armory
 	holding_types = {
 		town
 		city
@@ -57,7 +57,7 @@ arsenal = {
 	building_class = arsenal
 	portrait = factory
 	icon = tools
-	required_building = magazine
+	base_building = magazine
 	holding_types = {
 		town
 		city

@@ -63,7 +63,7 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(int holding_level MEMBER holding_level READ get_holding_level NOTIFY changed)
 	Q_PROPERTY(int fortification_level MEMBER fortification_level READ get_fortification_level NOTIFY changed)
 	Q_PROPERTY(int size MEMBER size READ get_size NOTIFY changed)
-	Q_PROPERTY(metternich::building_type* required_building MEMBER required_building NOTIFY changed)
+	Q_PROPERTY(metternich::building_type* base_building MEMBER base_building NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(int min_holding_level MEMBER min_holding_level READ get_min_holding_level NOTIFY changed)
 	Q_PROPERTY(int wealth_cost MEMBER wealth_cost READ get_wealth_cost NOTIFY changed)
@@ -193,26 +193,26 @@ public:
 		return this->size;
 	}
 
-	const building_type *get_required_building() const
+	const building_type *get_base_building() const
 	{
-		return this->required_building;
+		return this->base_building;
 	}
 
-	bool is_any_required_building(const building_type *building) const
+	bool is_any_base_building(const building_type *building) const
 	{
 		if (building == nullptr) {
 			return false;
 		}
 
-		if (this->get_required_building() == nullptr) {
+		if (this->get_base_building() == nullptr) {
 			return false;
 		}
 
-		if (building == this->get_required_building()) {
+		if (building == this->get_base_building()) {
 			return true;
 		}
 
-		return this->get_required_building()->is_any_required_building(building);
+		return this->get_base_building()->is_any_base_building(building);
 	}
 
 	const std::vector<const building_type *> &get_derived_buildings() const
@@ -315,7 +315,7 @@ private:
 	int holding_level = 0;
 	int fortification_level = 0;
 	int size = 1;
-	building_type *required_building = nullptr;
+	building_type *base_building = nullptr;
 	std::vector<const building_type *> derived_buildings; //buildings which are based on this one
 	technology *required_technology = nullptr;
 	int min_holding_level = 0;

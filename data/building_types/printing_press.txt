@@ -29,7 +29,7 @@ newspaper = {
 	building_class = newspaper
 	portrait = trading_post
 	icon = newspaper
-	required_building = printing_press
+	base_building = printing_press
 	required_technology = renaissance
 	holding_types = {
 		guild

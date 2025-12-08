@@ -27,7 +27,7 @@ guildhall = {
 	icon = wealth
 	holding_level = 2
 	size = 2
-	required_building = trade_shop
+	base_building = trade_shop
 	holding_types = {
 		guild
 	}

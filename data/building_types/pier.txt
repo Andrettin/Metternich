@@ -30,7 +30,7 @@ waterfront = {
 	portrait = dock
 	icon = anchor
 	size = 4
-	required_building = pier
+	base_building = pier
 	min_holding_level = 4
 	holding_types = {
 		guild

@@ -24,7 +24,7 @@ furriers_shop = {
 	building_class = furriers_shop
 	portrait = factory
 	icon = fur_hats
-	required_building = furriers_house
+	base_building = furriers_house
 	holding_types = {
 		town
 		city
@@ -45,7 +45,7 @@ fur_factory = {
 	building_class = fur_factory
 	portrait = factory
 	icon = fur_hats
-	required_building = furriers_shop
+	base_building = furriers_shop
 	holding_types = {
 		town
 		city

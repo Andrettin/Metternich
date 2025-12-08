@@ -23,7 +23,7 @@ sawyers_shop = {
 	building_class = sawyers_shop
 	portrait = factory
 	icon = lumber
-	required_building = sawyers_house
+	base_building = sawyers_house
 	holding_types = {
 		town
 		city
@@ -43,7 +43,7 @@ lumber_mill = {
 	building_class = lumber_mill
 	portrait = factory
 	icon = lumber
-	required_building = sawyers_shop
+	base_building = sawyers_shop
 	holding_types = {
 		town
 		city

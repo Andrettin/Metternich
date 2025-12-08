@@ -23,7 +23,7 @@ tobacconists_shop = {
 	building_class = tobacconists_shop
 	portrait = factory
 	icon = tobacco
-	required_building = tobacconists_house
+	base_building = tobacconists_house
 	holding_types = {
 		town
 		city
@@ -43,7 +43,7 @@ cigar_factory = {
 	building_class = cigar_factory
 	portrait = factory
 	icon = tobacco
-	required_building = tobacconists_shop
+	base_building = tobacconists_shop
 	holding_types = {
 		town
 		city

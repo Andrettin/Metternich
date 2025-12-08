@@ -31,7 +31,7 @@ weavers_shop = {
 	building_class = weavers_shop
 	portrait = factory
 	icon = fabric
-	required_building = weavers_house
+	base_building = weavers_house
 	holding_types = {
 		town
 		city
@@ -59,7 +59,7 @@ textile_mill = {
 	building_class = textile_mill
 	portrait = factory
 	icon = fabric
-	required_building = weavers_shop
+	base_building = weavers_shop
 	holding_types = {
 		town
 		city
