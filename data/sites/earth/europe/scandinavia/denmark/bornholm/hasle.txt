@@ -1,0 +1,8 @@
+hasle = {
+	name = "Hasle"
+	world = earth
+	geocoordinate = { 14.7055 55.1845 }
+	type = holding
+	holding_type = castle
+	province = bornholm
+}

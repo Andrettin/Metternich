@@ -1,0 +1,8 @@
+nexo = {
+	name = "Nexo"
+	world = earth
+	geocoordinate = { 15.131944444444 55.0625 } #Nexø
+	type = holding
+	holding_type = guild
+	province = bornholm
+}

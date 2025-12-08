@@ -1,0 +1,8 @@
+knudsker = {
+	name = "Knudsker"
+	world = earth
+	geocoordinate = { 14.752 55.107 } #Knudsker Parish
+	type = holding
+	holding_type = temple
+	province = bornholm
+}

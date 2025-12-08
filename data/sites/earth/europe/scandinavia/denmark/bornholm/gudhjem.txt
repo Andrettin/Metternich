@@ -1,0 +1,8 @@
+gudhjem = {
+	name = "Gudhjem"
+	world = earth
+	geocoordinate = { 14.9722 55.2067 }
+	type = holding
+	holding_type = temple
+	province = bornholm
+}

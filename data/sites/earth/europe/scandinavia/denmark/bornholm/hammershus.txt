@@ -1,0 +1,8 @@
+hammershus = {
+	name = "Hammershus"
+	world = earth
+	geocoordinate = { 14.755814574273 55.271150759805 }
+	type = holding
+	holding_type = castle
+	province = bornholm
+}

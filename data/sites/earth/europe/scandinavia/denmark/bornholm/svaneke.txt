@@ -1,0 +1,8 @@
+svaneke = {
+	name = "Svaneke"
+	world = earth
+	geocoordinate = { 15.1422 55.1361 }
+	type = holding
+	holding_type = castle
+	province = bornholm
+}

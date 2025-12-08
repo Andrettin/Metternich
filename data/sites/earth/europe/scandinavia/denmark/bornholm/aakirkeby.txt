@@ -1,0 +1,8 @@
+aakirkeby = {
+	name = "Aakirkeby"
+	world = earth
+	geocoordinate = { 14.92 55.0697 }
+	type = holding
+	holding_type = castle
+	province = bornholm
+}
