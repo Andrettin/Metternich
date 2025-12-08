@@ -1097,7 +1097,7 @@ bool map_template::is_pos_available_for_site_generation(const QPoint &tile_pos, 
 	const QRect map_rect(QPoint(0, 0), map::get()->get_size());
 	bool available = true;
 
-	static constexpr int coast_check_range = 2;
+	static constexpr int coast_check_range = 1;
 	const QRect coast_check_rect(tile_pos - QPoint(coast_check_range, coast_check_range), tile_pos + QPoint(coast_check_range, coast_check_range));
 
 	rect::for_each_point_until(coast_check_rect, [this, &map_rect, &available, site_province](const QPoint &rect_pos) {
