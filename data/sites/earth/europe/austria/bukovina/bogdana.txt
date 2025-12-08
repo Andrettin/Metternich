@@ -1,0 +1,8 @@
+bogdana = {
+	name = "Bogdana"
+	world = earth
+	geocoordinate = { 25.91741389 47.8426 } #Bogdana Monastery (Suceava)
+	type = holding
+	holding_type = temple
+	province = bukovina
+}

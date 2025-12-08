@@ -1,0 +1,8 @@
+putna = {
+	name = "Putna"
+	world = earth
+	geocoordinate = { 25.616667 47.866667 } #Putna (Suceava)
+	type = holding
+	holding_type = castle
+	province = bukovina
+}

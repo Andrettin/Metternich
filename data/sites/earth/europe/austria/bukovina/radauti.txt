@@ -1,0 +1,8 @@
+radauti = {
+	name = "Radauti"
+	world = earth
+	geocoordinate = { 25.919166666667 47.8425 } #Rădăuți
+	type = holding
+	holding_type = guild
+	province = bukovina
+}
