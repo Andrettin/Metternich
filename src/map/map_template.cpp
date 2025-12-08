@@ -1029,10 +1029,10 @@ bool map_template::is_pos_available_for_site(const QPoint &tile_pos, const provi
 	const QRect map_rect(QPoint(0, 0), this->get_size());
 	bool available = true;
 
-	static constexpr int tile_check_range = 2;
-	const QRect tile_check_rect(tile_pos - QPoint(tile_check_range, tile_check_range), tile_pos + QPoint(tile_check_range, tile_check_range));
+	static constexpr int coast_check_range = 1;
+	const QRect coast_check_rect(tile_pos - QPoint(coast_check_range, coast_check_range), tile_pos + QPoint(coast_check_range, coast_check_range));
 
-	rect::for_each_point_until(tile_check_rect, [this, &map_rect, &available, site_province, &province_image](const QPoint &rect_pos) {
+	rect::for_each_point_until(coast_check_rect, [this, &map_rect, &available, site_province, &province_image](const QPoint &rect_pos) {
 		if (!map_rect.contains(rect_pos)) {
 			available = false;
 			return true;
@@ -1040,7 +1040,27 @@ bool map_template::is_pos_available_for_site(const QPoint &tile_pos, const provi
 
 		if (!province_image.isNull()) {
 			const province *tile_province = province::try_get_by_color(province_image.pixelColor(rect_pos));
-			if (site_province != tile_province) {
+			if (tile_province != nullptr && tile_province->is_water_zone() && site_province != tile_province) {
+				available = false;
+				return true;
+			}
+		}
+
+		return false;
+	});
+
+	static constexpr int province_check_range = 2;
+	const QRect province_check_rect(tile_pos - QPoint(province_check_range, province_check_range), tile_pos + QPoint(province_check_range, province_check_range));
+
+	rect::for_each_point_until(province_check_rect, [this, &map_rect, &available, site_province, &province_image](const QPoint &rect_pos) {
+		if (!map_rect.contains(rect_pos)) {
+			available = false;
+			return true;
+		}
+
+		if (!province_image.isNull()) {
+			const province *tile_province = province::try_get_by_color(province_image.pixelColor(rect_pos));
+			if (tile_province != nullptr && !tile_province->is_water_zone() && site_province != tile_province) {
 				available = false;
 				return true;
 			}
@@ -1077,10 +1097,10 @@ bool map_template::is_pos_available_for_site_generation(const QPoint &tile_pos, 
 	const QRect map_rect(QPoint(0, 0), map::get()->get_size());
 	bool available = true;
 
-	static constexpr int tile_check_range = 2;
-	const QRect tile_check_rect(tile_pos - QPoint(tile_check_range, tile_check_range), tile_pos + QPoint(tile_check_range, tile_check_range));
+	static constexpr int coast_check_range = 2;
+	const QRect coast_check_rect(tile_pos - QPoint(coast_check_range, coast_check_range), tile_pos + QPoint(coast_check_range, coast_check_range));
 
-	rect::for_each_point_until(tile_check_rect, [this, &map_rect, &available, site_province](const QPoint &rect_pos) {
+	rect::for_each_point_until(coast_check_rect, [this, &map_rect, &available, site_province](const QPoint &rect_pos) {
 		if (!map_rect.contains(rect_pos)) {
 			available = false;
 			return true;
@@ -1088,7 +1108,26 @@ bool map_template::is_pos_available_for_site_generation(const QPoint &tile_pos, 
 
 		const tile *tile = map::get()->get_tile(rect_pos);
 		const province *tile_province = tile->get_province();
-		if (site_province != tile_province) {
+		if (tile_province != nullptr && tile_province->is_water_zone() && site_province != tile_province) {
+			available = false;
+			return true;
+		}
+
+		return false;
+	});
+
+	static constexpr int province_check_range = 2;
+	const QRect province_check_rect(tile_pos - QPoint(province_check_range, province_check_range), tile_pos + QPoint(province_check_range, province_check_range));
+
+	rect::for_each_point_until(province_check_rect, [this, &map_rect, &available, site_province](const QPoint &rect_pos) {
+		if (!map_rect.contains(rect_pos)) {
+			available = false;
+			return true;
+		}
+
+		const tile *tile = map::get()->get_tile(rect_pos);
+		const province *tile_province = tile->get_province();
+		if (tile_province != nullptr && !tile_province->is_water_zone() && site_province != tile_province) {
 			available = false;
 			return true;
 		}
