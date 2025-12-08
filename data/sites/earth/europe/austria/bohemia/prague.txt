@@ -18,7 +18,7 @@ prague = {
 		}
 		
 		1231 = {
-			#buildings += temple #Agnes Přemyslovna founded the St. Agnes' Cloister (in Prague) in 1231; Source: Alena Ježková, "77 Prague Legends", 2006, p. 36.
+			#buildings += monastery #Agnes Přemyslovna founded the St. Agnes' Cloister (in Prague) in 1231; Source: Alena Ježková, "77 Prague Legends", 2006, p. 36.
 		}
 		
 		1347 = {

@@ -141,7 +141,6 @@ monastery = {
 	portrait = temple
 	icon = wooden_cross
 	size = 2
-	min_holding_level = 2
 	holding_types = {
 		temple
 	}

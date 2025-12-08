@@ -11,6 +11,7 @@ bank = {
 	}
 	required_buildings = {
 		guildhall
+		market
 	}
 	commodity_costs = {
 		wealth = 28gb
