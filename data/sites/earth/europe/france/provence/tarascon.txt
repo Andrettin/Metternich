@@ -1,0 +1,8 @@
+tarascon = {
+	name = "Tarascon"
+	world = earth
+	geocoordinate = { 4.6594444444444 43.805 }
+	type = holding
+	holding_type = castle
+	province = provence
+}

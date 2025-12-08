@@ -1,0 +1,8 @@
+grimaud = {
+	name = "Grimaud"
+	world = earth
+	geocoordinate = { 6.5216666666667 43.273333333333 }
+	type = holding
+	holding_type = castle
+	province = provence
+}

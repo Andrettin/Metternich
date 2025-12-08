@@ -2,8 +2,9 @@ frejus = {
 	name = "Frejus" #"Fréjus"
 	world = earth
 	geocoordinate = { 6.7355555555556 43.433055555556 }
-	type = resource
-	resource = silk
+	type = holding
+	holding_type = temple
+	#resource = silk
 	province = provence
 	
 	history = {
