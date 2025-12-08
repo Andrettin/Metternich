@@ -3,22 +3,20 @@ courthouse = {
 	building_class = courthouse
 	portrait = trading_post
 	icon = courthouse
+	min_holding_level = 5
 	holding_types = {
 		city
+		castle
 	}
-	conditions = {
-		game_rule = additional_buildings
-		province = {
-			produces_commodity = statesmanship
-		}
-	}
-	domain_modifier = {
-		commodity_demand = {
-			commodity = furniture
-			value = 1
-		}
+	commodity_costs = {
+		wealth = 16gb
 	}
 	province_modifier = {
-		statesmanship_output_modifier = 25
+		corruption = -1
+		crime = -1
+		law = 2
+	}
+	domain_modifier = {
+		loyalty = 2
 	}
 }
