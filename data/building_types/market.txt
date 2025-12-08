@@ -25,6 +25,7 @@ market = {
 	icon = wealth
 	size = 2
 	base_building = shop
+	min_holding_level = 2
 	holding_types = {
 		guild
 	}

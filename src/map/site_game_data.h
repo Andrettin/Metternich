@@ -281,7 +281,7 @@ public:
 	void clear_buildings();
 	void check_building_conditions();
 	void check_free_buildings();
-	bool can_gain_free_building(const building_type *building) const;
+	bool can_gain_free_building(const building_type *building, const bool check_required_buildings) const;
 	bool check_free_building(const building_type *building);
 	bool check_free_improvement(const improvement *improvement);
 

@@ -677,7 +677,7 @@ void site_game_data::set_holding_level_from_buildings(const int level)
 				continue;
 			}
 
-			if (!this->can_gain_free_building(building)) {
+			if (!this->can_gain_free_building(building, false)) {
 				continue;
 			}
 
@@ -1218,7 +1218,7 @@ void site_game_data::check_free_buildings()
 	}
 }
 
-bool site_game_data::can_gain_free_building(const building_type *building) const
+bool site_game_data::can_gain_free_building(const building_type *building, const bool check_required_buildings) const
 {
 	if (building != this->get_culture()->get_building_class_type(building->get_building_class())) {
 		return false;
@@ -1242,9 +1242,11 @@ bool site_game_data::can_gain_free_building(const building_type *building) const
 		return false;
 	}
 
-	for (const building_type *required_building : building->get_required_buildings()) {
-		if (!this->has_building_or_better(required_building)) {
-			return false;
+	if (check_required_buildings) {
+		for (const building_type *required_building : building->get_required_buildings()) {
+			if (!this->has_building_or_better(required_building)) {
+				return false;
+			}
 		}
 	}
 
@@ -1263,7 +1265,7 @@ bool site_game_data::can_gain_free_building(const building_type *building) const
 
 bool site_game_data::check_free_building(const building_type *building)
 {
-	if (!this->can_gain_free_building(building)) {
+	if (!this->can_gain_free_building(building, true)) {
 		return false;
 	}
 
