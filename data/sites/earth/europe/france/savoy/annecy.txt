@@ -2,7 +2,6 @@ annecy = {
 	name = "Annecy"
 	world = earth
 	geocoordinate = { 6.11667028670 45.89997479150 } #from Natural Earth
-	pos_offset = { 0 -1 } #to not conflict with Chambéry's position
 	type = resource
 	resource = coal
 	province = savoy

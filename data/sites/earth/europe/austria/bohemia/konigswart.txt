@@ -2,7 +2,6 @@ konigswart = { #estate
 	name = "Konigswart" #"Königswart"
 	world = earth
 	geocoordinate = { 12.60558333 50.00430556 }
-	pos_offset = { 1 0 }
 	type = resource
 	resource = sheep #the estate possessed sheep farms, as well as a plethora of other economic activities; Source: Wolfram Siemann, "Metternich: Strategist and Visionary", 2019, p. 29.
 	
