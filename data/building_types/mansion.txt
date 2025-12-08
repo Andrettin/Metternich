@@ -54,8 +54,8 @@ palace = {
 	holding_types = {
 		castle
 	}
-	build_conditions = {
-		has_building_class = bureau
+	required_buildings = {
+		bureau
 	}
 	commodity_costs = {
 		wealth = 84gb

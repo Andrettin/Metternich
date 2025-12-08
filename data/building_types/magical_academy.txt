@@ -9,8 +9,8 @@ magical_academy = {
 	holding_types = {
 		magic_source
 	}
-	build_conditions = {
-		has_building_class = casters_tower
+	required_buildings = {
+		casters_tower
 	}
 	commodity_costs = {
 		wealth = 58gb

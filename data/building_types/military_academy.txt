@@ -8,9 +8,9 @@ military_academy = {
 	holding_types = {
 		castle
 	}
-	build_conditions = {
-		has_building_class = barracks
-		has_building_class = garrison
+	required_buildings = {
+		barracks
+		garrison
 	}
 	commodity_costs = {
 		wealth = 36gb

@@ -56,6 +56,11 @@ void building_type::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->holding_types.push_back(holding_type::get(value));
 		}
+	} else if (tag == "required_buildings") {
+		for (const std::string &value : values) {
+			const building_type *required_building = building_type::get(value);
+			this->required_buildings.push_back(required_building);
+		}
 	} else if (tag == "recruited_civilian_unit_types") {
 		for (const std::string &value : values) {
 			this->recruited_civilian_unit_types.push_back(civilian_unit_type::get(value));
@@ -190,6 +195,10 @@ void building_type::check() const
 
 	if (this->get_base_building() == this) {
 		throw std::runtime_error(std::format("Building type \"{}\" is based on itself.", this->get_identifier()));
+	}
+
+	if (vector::contains(this->get_required_buildings(), this)) {
+		throw std::runtime_error(std::format("Building type \"{}\" requires itself.", this->get_identifier()));
 	}
 
 	if (this->get_holding_types().empty()) {

@@ -44,8 +44,8 @@ garrison = {
 	holding_types = {
 		castle
 	}
-	build_conditions = {
-		has_building_class = jail
+	required_buildings = {
+		jail
 	}
 	commodity_costs = {
 		wealth = 22gb

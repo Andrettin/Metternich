@@ -31,8 +31,8 @@ guildhall = {
 	holding_types = {
 		guild
 	}
-	build_conditions = {
-		has_building_class = market
+	required_buildings = {
+		market
 	}
 	commodity_costs = {
 		wealth = 24gb

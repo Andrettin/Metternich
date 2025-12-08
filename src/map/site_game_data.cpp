@@ -622,6 +622,7 @@ std::vector<const metternich::holding_type *> site_game_data::get_best_holding_t
 void site_game_data::set_holding_level(const int level)
 {
 	assert_throw(this->site->is_settlement());
+	assert_throw(level <= this->site->get_max_holding_level());
 
 	if (level == this->get_holding_level()) {
 		return;
@@ -684,7 +685,7 @@ void site_game_data::set_holding_level_from_buildings(const int level)
 		}
 
 		if (!potential_buildings.empty()) {
-			this->add_building(vector::get_random(potential_buildings));
+			this->add_building_with_prerequisites(vector::get_random(potential_buildings));
 			changed = true;
 		}
 	}
@@ -1055,17 +1056,31 @@ bool site_game_data::can_gain_building_class(const building_class *building_clas
 
 void site_game_data::add_building(const building_type *building)
 {
+	if (this->has_building_or_better(building)) {
+		return;
+	}
+
 	this->get_building_slot(building->get_slot_type())->set_building(building);
 }
 
 void site_game_data::add_building_with_prerequisites(const building_type *building)
 {
-	if (building->get_required_technology() != nullptr && this->get_province() != nullptr) {
-		this->get_province()->get_game_data()->add_technology_with_prerequisites(building->get_required_technology());
-	}
+	assert_throw(building != nullptr);
 
 	if (building->get_min_holding_level() > 0 && building->get_min_holding_level() > this->get_holding_level()) {
 		this->set_holding_level_from_buildings(building->get_min_holding_level());
+	}
+
+	for (const building_type *required_building : building->get_required_buildings()) {
+		if (this->has_building_or_better(required_building)) {
+			continue;
+		}
+
+		this->add_building_with_prerequisites(required_building);
+	}
+
+	if (building->get_required_technology() != nullptr && this->get_province() != nullptr) {
+		this->get_province()->get_game_data()->add_technology_with_prerequisites(building->get_required_technology());
 	}
 
 	this->add_building(building);
@@ -1225,6 +1240,12 @@ bool site_game_data::can_gain_free_building(const building_type *building) const
 
 	if (building->get_base_building() != nullptr && building_slot->get_building() != building->get_base_building()) {
 		return false;
+	}
+
+	for (const building_type *required_building : building->get_required_buildings()) {
+		if (!this->has_building_or_better(required_building)) {
+			return false;
+		}
 	}
 
 	if (building->get_required_technology() != nullptr && (this->get_owner() == nullptr || !this->get_owner()->get_technology()->has_technology(building->get_required_technology()))) {

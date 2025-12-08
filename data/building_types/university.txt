@@ -8,8 +8,8 @@ academy = {
 		city
 		guild
 	}
-	build_conditions = {
-		has_building_class = library
+	required_buildings = {
+		library
 	}
 	commodity_costs = {
 		wealth = 52gb

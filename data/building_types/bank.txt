@@ -9,8 +9,8 @@ bank = {
 	holding_types = {
 		guild
 	}
-	build_conditions = {
-		has_building_class = guildhall
+	required_buildings = {
+		guildhall
 	}
 	commodity_costs = {
 		wealth = 28gb

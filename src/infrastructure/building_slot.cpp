@@ -87,6 +87,8 @@ void building_slot::set_under_construction_building(const building_type *buildin
 
 bool building_slot::can_have_building(const building_type *building) const
 {
+	assert_throw(building != nullptr);
+
 	const site_game_data *settlement_game_data = this->get_settlement()->get_game_data();
 
 	if (settlement_game_data->get_culture()->get_building_class_type(building->get_building_class()) != building) {
@@ -97,8 +99,22 @@ bool building_slot::can_have_building(const building_type *building) const
 		return false;
 	}
 
+	if (building->get_holding_level() > 0 && this->get_settlement()->get_max_holding_level() < building->get_holding_level()) {
+		return false;
+	}
+
 	if (!vector::contains(building->get_holding_types(), settlement_game_data->get_holding_type())) {
 		return false;
+	}
+
+	if (building->get_base_building() != nullptr && !this->can_have_building(building->get_base_building())) {
+		return false;
+	}
+
+	for (const building_type *required_building : building->get_required_buildings()) {
+		if (!this->can_have_building(required_building)) {
+			return false;
+		}
 	}
 
 	if (building->get_conditions() != nullptr) {
@@ -182,6 +198,12 @@ bool building_slot::can_build_building(const building_type *building) const
 {
 	if (building->get_base_building() != nullptr && this->get_building() != building->get_base_building()) {
 		return false;
+	}
+
+	for (const building_type *required_building : building->get_required_buildings()) {
+		if (!this->get_settlement()->get_game_data()->has_building_or_better(required_building)) {
+			return false;
+		}
 	}
 
 	if (building->get_fortification_level() > 0) {

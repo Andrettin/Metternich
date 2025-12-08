@@ -4,11 +4,9 @@ monument = {
 	portrait = aristocratic_palace
 	icon = architecture
 	size = 1
+	min_holding_level = 2
 	holding_types = {
 		temple
-	}
-	build_conditions = {
-		has_building_class = temple
 	}
 	commodity_costs = {
 		wealth = 6gb

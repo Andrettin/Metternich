@@ -29,8 +29,8 @@ market = {
 	holding_types = {
 		guild
 	}
-	build_conditions = {
-		has_building_class = trade_shop
+	required_buildings = {
+		trade_shop
 	}
 	commodity_costs = {
 		wealth = 40gb

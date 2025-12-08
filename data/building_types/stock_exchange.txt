@@ -14,8 +14,8 @@ stock_exchange = {
 			produces_commodity = trade
 		}
 	}
-	build_conditions = {
-		has_building_class = bank
+	required_buildings = {
+		bank
 	}
 	modifier = {
 		trade_output_modifier = 50

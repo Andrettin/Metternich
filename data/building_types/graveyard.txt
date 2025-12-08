@@ -8,8 +8,8 @@ graveyard = {
 	holding_types = {
 		temple
 	}
-	build_conditions = {
-		has_building_class = temple
+	required_buildings = {
+		temple
 	}
 	commodity_costs = {
 		wealth = 4gb

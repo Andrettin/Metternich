@@ -220,6 +220,11 @@ public:
 		return this->derived_buildings;
 	}
 
+	const std::vector<const building_type *> &get_required_buildings() const
+	{
+		return this->required_buildings;
+	}
+
 	const technology *get_required_technology() const
 	{
 		return this->required_technology;
@@ -317,6 +322,7 @@ private:
 	int size = 1;
 	building_type *base_building = nullptr;
 	std::vector<const building_type *> derived_buildings; //buildings which are based on this one
+	std::vector<const building_type *> required_buildings;
 	technology *required_technology = nullptr;
 	int min_holding_level = 0;
 	int wealth_cost = 0;
