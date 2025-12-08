@@ -1058,6 +1058,19 @@ void site_game_data::add_building(const building_type *building)
 	this->get_building_slot(building->get_slot_type())->set_building(building);
 }
 
+void site_game_data::add_building_with_prerequisites(const building_type *building)
+{
+	if (building->get_required_technology() != nullptr && this->get_province() != nullptr) {
+		this->get_province()->get_game_data()->add_technology_with_prerequisites(building->get_required_technology());
+	}
+
+	if (building->get_min_holding_level() > 0 && building->get_min_holding_level() > this->get_holding_level()) {
+		this->set_holding_level_from_buildings(building->get_min_holding_level());
+	}
+
+	this->add_building(building);
+}
+
 void site_game_data::clear_buildings()
 {
 	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {

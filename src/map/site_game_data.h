@@ -277,6 +277,7 @@ public:
 	bool can_gain_building(const building_type *building) const;
 	bool can_gain_building_class(const building_class *building_class) const;
 	void add_building(const building_type *building);
+	void add_building_with_prerequisites(const building_type *building);
 	void clear_buildings();
 	void check_building_conditions();
 	void check_free_buildings();

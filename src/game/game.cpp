@@ -1191,11 +1191,7 @@ void game::apply_site_buildings(const site *site)
 		const building_type *slot_building = settlement_game_data->get_slot_building(building_slot_type);
 
 		if (slot_building == nullptr || slot_building->get_level() < building->get_level()) {
-			settlement_game_data->set_slot_building(building_slot_type, building);
-		}
-
-		if (building->get_required_technology() != nullptr && owner_game_data != nullptr) {
-			site_province->get_game_data()->add_technology_with_prerequisites(building->get_required_technology());
+			settlement_game_data->add_building_with_prerequisites(building);
 		}
 	}
 
