@@ -2,6 +2,7 @@ ronne = {
 	name = "Ronne" #"Rønne"
 	world = earth
 	geocoordinate = { 14.7 55.1 }
-	type = resource
-	resource = fish
+	type = holding
+	holding_type = guild
+	province = bornholm
 }
