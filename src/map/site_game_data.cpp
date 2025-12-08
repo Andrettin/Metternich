@@ -628,7 +628,15 @@ void site_game_data::set_holding_level(const int level)
 		return;
 	}
 
+	if (this->get_owner() != nullptr) {
+		this->get_owner()->get_game_data()->change_score(-this->get_holding_level() * 50);
+	}
+
 	this->holding_level = level;
+
+	if (this->get_owner() != nullptr) {
+		this->get_owner()->get_game_data()->change_score(this->get_holding_level() * 50);
+	}
 
 	if (level > 0) {
 		assert_throw(this->get_holding_type() != nullptr);

@@ -1137,6 +1137,7 @@ void domain_game_data::on_site_gained(const site *site, const int multiplier)
 
 	if (site->is_settlement() && site_game_data->is_built()) {
 		this->change_holding_count(1 * multiplier);
+		this->change_score(site_game_data->get_holding_level() * 50 * multiplier);
 
 		for (const qunique_ptr<building_slot> &building_slot : site_game_data->get_building_slots()) {
 			const building_type *building = building_slot->get_building();
@@ -2043,6 +2044,8 @@ void domain_game_data::change_attribute_value(const domain_attribute *attribute,
 	if (new_value == 0) {
 		this->attribute_values.erase(attribute);
 	}
+
+	this->change_score(change * 10);
 
 	if (change > 0) {
 		for (int i = old_value + 1; i <= new_value; ++i) {

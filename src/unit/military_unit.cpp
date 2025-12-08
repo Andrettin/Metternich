@@ -657,7 +657,7 @@ int military_unit::get_score() const
 		if (is_percent_military_unit_stat(stat)) {
 			score += stat_value.to_int() / 10;
 		} else {
-			score += (stat_value * 10).to_int();
+			score += (stat_value * 25).to_int();
 		}
 	}
 
