@@ -2,6 +2,7 @@ wallachia = {
 	name = "Wallachia"
 	type = polity
 	color = { 161 126 128 }
+	flag = wallachia
 	culture = romanian
 	default_religion = orthodox
 	default_tier = duchy
