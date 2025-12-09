@@ -2,13 +2,15 @@ nice = {
 	name = "Nice"
 	world = earth
 	geocoordinate = { 7.26502396509 43.71501771960 } #from Natural Earth
-	type = resource
+	type = holding
+	holding_type = temple
 	#resource = fruit #Market gardening (fruits, vegetables, flowers); Source: Map No. 500197 of the Perry-Castañeda Library Map Collection, 1972.
-	resource = grain
+	#resource = grain
 	province = provence
 	cultural_names = {
 		frankish = "Nicea"
 		gaulish = "Nicaea"
+		italian = "Nizza"
 		roman = "Nicaea"
 	}
 	

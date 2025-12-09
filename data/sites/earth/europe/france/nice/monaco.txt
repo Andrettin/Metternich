@@ -1,0 +1,8 @@
+monaco = {
+	name = "Monaco"
+	world = earth
+	geocoordinate = { 7.40691317347 43.73964568790 } #from Natural Earth
+	type = holding
+	holding_type = castle
+	province = provence
+}

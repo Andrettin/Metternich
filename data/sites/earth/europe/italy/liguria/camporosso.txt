@@ -1,0 +1,8 @@
+camporosso = {
+	name = "Camporosso"
+	world = earth
+	geocoordinate = { 7.6284333333333 43.815127777778 }
+	type = holding
+	holding_type = castle
+	province = genoa
+}
