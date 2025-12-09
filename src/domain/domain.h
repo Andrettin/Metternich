@@ -41,6 +41,9 @@ class site;
 enum class country_type;
 enum class domain_tier;
 
+template <typename scope_type>
+class and_condition;
+
 class domain final : public named_data_entry, public data_type<domain>
 {
 	Q_OBJECT
@@ -49,6 +52,7 @@ class domain final : public named_data_entry, public data_type<domain>
 	Q_PROPERTY(bool tribe READ is_tribe CONSTANT)
 	Q_PROPERTY(bool clade READ is_clade CONSTANT)
 	Q_PROPERTY(QColor color MEMBER color READ get_color NOTIFY changed)
+	Q_PROPERTY(QString flag READ get_flag_qstring NOTIFY changed)
 	Q_PROPERTY(metternich::domain_tier default_tier MEMBER default_tier READ get_default_tier)
 	Q_PROPERTY(metternich::domain_tier min_tier MEMBER min_tier READ get_min_tier)
 	Q_PROPERTY(metternich::domain_tier max_tier MEMBER max_tier READ get_max_tier)
@@ -128,6 +132,21 @@ public:
 
 	const QColor &get_color() const;
 
+	const std::string &get_flag() const
+	{
+		return this->flag;
+	}
+
+	Q_INVOKABLE void set_flag(const std::string &flag)
+	{
+		this->flag = flag;
+	}
+
+	QString get_flag_qstring() const
+	{
+		return QString::fromStdString(this->get_flag());
+	}
+
 	domain_tier get_default_tier() const
 	{
 		return this->default_tier;
@@ -175,6 +194,11 @@ public:
 		return this->short_name;
 	}
 
+	const std::map<std::string, std::unique_ptr<const and_condition<domain>>> &get_conditional_flags() const
+	{
+		return this->conditional_flags;
+	}
+
 	const std::vector<const era *> &get_eras() const
 	{
 		return this->eras;
@@ -199,6 +223,7 @@ signals:
 private:
 	country_type type{};
 	QColor color;
+	std::string flag;
 	domain_tier default_tier{};
 	domain_tier min_tier{};
 	domain_tier max_tier{};
@@ -208,6 +233,7 @@ private:
 	site *default_capital = nullptr;
 	bool short_name = false;
 	bool definite_article = false;
+	std::map<std::string, std::unique_ptr<const and_condition<domain>>> conditional_flags;
 	std::vector<const era *> eras; //eras this country appears in at start, for random maps
 	title_name_map short_names;
 	title_name_map title_names;

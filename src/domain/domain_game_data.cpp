@@ -633,6 +633,19 @@ const std::string &domain_game_data::get_title_name() const
 	return this->domain->get_title_name(this->get_government_type(), this->get_tier(), this->get_religion());
 }
 
+const std::string &domain_game_data::get_flag() const
+{
+	for (const auto &[conditional_flag, conditions] : this->domain->get_conditional_flags()) {
+		assert_throw(conditions != nullptr);
+
+		if (conditions->check(this->domain, read_only_context(this->domain))) {
+			return conditional_flag;
+		}
+	}
+
+	return this->domain->get_flag();
+}
+
 void domain_game_data::set_religion(const metternich::religion *religion)
 {
 	if (religion == this->get_religion()) {

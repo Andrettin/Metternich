@@ -2,6 +2,7 @@
 
 #include "domain/domain.h"
 
+#include "database/database.h"
 #include "database/defines.h"
 #include "domain/country_ai.h"
 #include "domain/country_government.h"
@@ -18,6 +19,7 @@
 #include "map/province.h"
 #include "map/site.h"
 #include "religion/religion.h"
+#include "script/condition/and_condition.h"
 #include "technology/technology.h"
 #include "technology/technology_container.h"
 #include "time/era.h"
@@ -44,7 +46,14 @@ void domain::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "eras") {
+	if (tag == "conditional_flags") {
+		scope.for_each_child([&](const gsml_data &child_scope) {
+			const std::string &child_tag = child_scope.get_tag();
+			auto conditions = std::make_unique<and_condition<domain>>();
+			conditions->process_gsml_data(child_scope);
+			this->conditional_flags[child_tag] = std::move(conditions);
+		});
+	} else if (tag == "eras") {
 		for (const std::string &value : values) {
 			this->eras.push_back(era::get(value));
 		}
@@ -86,36 +95,52 @@ void domain::initialize()
 
 void domain::check() const
 {
+	if (!this->get_flag().empty()) {
+		const std::filesystem::path flag_filepath = database::get()->get_graphics_path(this->get_module()) / "flags" / (this->get_flag() + ".svg");
+		if (!std::filesystem::exists(flag_filepath)) {
+			throw std::runtime_error(std::format("Flag \"{}\" does not exist.", this->get_flag()));
+		}
+	} else {
+		log::log_error(std::format("Domain \"{}\" has no flag.", this->get_identifier()));
+	}
+
+	for (const auto &[conditional_flag, conditions] : this->get_conditional_flags()) {
+		const std::filesystem::path flag_filepath = database::get()->get_graphics_path(this->get_module()) / "flags" / (conditional_flag + ".svg");
+		if (!std::filesystem::exists(flag_filepath)) {
+			throw std::runtime_error(std::format("Flag \"{}\" does not exist.", conditional_flag));
+		}
+	}
+
 	if (this->get_default_tier() == domain_tier::none) {
-		throw std::runtime_error(std::format("Country \"{}\" has no default tier.", this->get_identifier()));
+		throw std::runtime_error(std::format("Domain \"{}\" has no default tier.", this->get_identifier()));
 	}
 
 	if (this->get_min_tier() == domain_tier::none) {
-		throw std::runtime_error(std::format("Country \"{}\" has no min tier.", this->get_identifier()));
+		throw std::runtime_error(std::format("Domain \"{}\" has no min tier.", this->get_identifier()));
 	}
 
 	if (this->get_max_tier() == domain_tier::none) {
-		throw std::runtime_error(std::format("Country \"{}\" has no max tier.", this->get_identifier()));
+		throw std::runtime_error(std::format("Domain \"{}\" has no max tier.", this->get_identifier()));
 	}
 
 	if (this->get_culture() == nullptr) {
-		throw std::runtime_error(std::format("Country \"{}\" has no culture.", this->get_identifier()));
+		throw std::runtime_error(std::format("Domain \"{}\" has no culture.", this->get_identifier()));
 	}
 
 	if (this->get_default_religion() == nullptr) {
-		throw std::runtime_error(std::format("Country \"{}\" has no default religion.", this->get_identifier()));
+		throw std::runtime_error(std::format("Domain \"{}\" has no default religion.", this->get_identifier()));
 	}
 
 	if (this->get_default_government_type() == nullptr) {
-		throw std::runtime_error(std::format("Country \"{}\" has no default government type.", this->get_identifier()));
+		throw std::runtime_error(std::format("Domain \"{}\" has no default government type.", this->get_identifier()));
 	}
 
 	if (this->get_default_capital() == nullptr) {
-		throw std::runtime_error(std::format("Country \"{}\" has no default capital.", this->get_identifier()));
+		throw std::runtime_error(std::format("Domain \"{}\" has no default capital.", this->get_identifier()));
 	}
 
 	if (!this->get_default_capital()->is_settlement()) {
-		throw std::runtime_error(std::format("The default capital for country \"{}\" (\"{}\") is not a settlement.", this->get_identifier(), this->get_default_capital()->get_identifier()));
+		throw std::runtime_error(std::format("The default capital for domain \"{}\" (\"{}\") is not a settlement.", this->get_identifier(), this->get_default_capital()->get_identifier()));
 	}
 
 	assert_throw(this->get_color().isValid());

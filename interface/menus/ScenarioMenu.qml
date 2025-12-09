@@ -37,7 +37,7 @@ MenuBase {
 		anchors.rightMargin: 16 * scale_factor
 		anchors.top: title_item.bottom
 		anchors.topMargin: 32 * scale_factor
-		anchors.bottom: country_text_area.top
+		anchors.bottom: domain_name_area.top
 		anchors.bottomMargin: 16 * scale_factor
 		width: 512 * scale_factor
 		visible: map_template_loaded
@@ -141,6 +141,33 @@ MenuBase {
 		wrapMode: Text.WordWrap
 	}
 	
+	Item {
+		id: domain_name_area
+		anchors.left: country_text_area.left
+		anchors.right: country_text_area.right
+		anchors.bottom: country_text_area.top
+		anchors.bottomMargin: 6 * scale_factor
+		height: 26 * scale_factor
+		visible: selected_country !== null
+		
+		FlagButton {
+			id: domain_flag
+			anchors.top: parent.top
+			anchors.left: parent.left
+			flag: selected_country ? selected_country.game_data.flag : ""
+			enabled: false
+			visible: flag.length > 0
+		}
+		
+		SmallText {
+			id: domain_name
+			anchors.verticalCenter: parent.verticalCenter
+			anchors.left: domain_flag.visible ? domain_flag.right : parent.left
+			anchors.leftMargin: domain_flag.visible ? 6 * scale_factor : 0
+			text: selected_country ? selected_country.game_data.name : ""
+		}
+	}
+	
 	Flickable {
 		id: country_text_area
 		anchors.left: diplomatic_map.left
@@ -148,7 +175,7 @@ MenuBase {
 		anchors.right: population_type_chart_label.left
 		anchors.bottom: parent.bottom
 		anchors.bottomMargin: 4 * scale_factor
-		height: 128 * scale_factor
+		height: 96 * scale_factor
 		contentWidth: contentItem.childrenRect.width
 		contentHeight: contentItem.childrenRect.height
 		boundsBehavior: Flickable.StopAtBounds
@@ -157,9 +184,7 @@ MenuBase {
 		SmallText {
 			id: country_text
 			text: selected_country ? format_text(
-				selected_country.game_data.name
-				+ "\n"
-				+ "\n" + selected_country.game_data.type_name
+				selected_country.game_data.type_name
 				+ (selected_country.game_data.overlord ? (
 					"\n" + selected_country.game_data.subject_type.name + " of " + (selected_country.game_data.overlord.definite_article ? "the " : "") + selected_country.game_data.overlord.name
 				) : "")
@@ -214,7 +239,7 @@ MenuBase {
 	
 	SmallText {
 		id: ruler_label
-		anchors.top: country_text_area.top
+		anchors.verticalCenter: domain_name_area.verticalCenter
 		anchors.horizontalCenter: ruler_portrait.horizontalCenter
 		text: "Ruler"
 		visible: ruler_portrait.visible
@@ -222,8 +247,7 @@ MenuBase {
 	
 	PortraitButton {
 		id: ruler_portrait
-		anchors.top: ruler_label.bottom
-		anchors.topMargin: 4 * scale_factor
+		anchors.top: country_text_area.top
 		anchors.right: population_type_chart.left
 		anchors.rightMargin: 32 * scale_factor
 		portrait_identifier: portrait ? portrait.identifier : ""
