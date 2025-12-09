@@ -155,8 +155,8 @@ Rectangle {
 	CharacterPortraitButton {
 		id: ruler_portrait
 		anchors.top: country_text.top
-		anchors.right: population_type_chart.left
-		anchors.rightMargin: 32 * scale_factor
+		anchors.left: country_text.left
+		anchors.leftMargin: 256 * scale_factor
 		character: selected_country_ruler
 		tooltip: selected_country_ruler ? selected_country_ruler.game_data.titled_name : ""
 	}
