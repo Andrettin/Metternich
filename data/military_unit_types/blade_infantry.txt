@@ -19,16 +19,18 @@ swordsmen = {
 	name = "Swordsmen"
 	unit_class = swordsmen
 	icon = longswordsmen
-	stats = {
-		melee = 5
-		defense = 5
-		movement = 3
-	}
 	required_technology = dark_ages
+	stats = {
+		hit_points = 2
+		movement = 1
+		defense = 3
+		melee = 3
+	}
 	commodity_costs = {
-		manpower = 1
-		fabric = 1
-		cast_iron = 1
+		wealth = 2gb
+	}
+	maintenance_commodity_costs = {
+		wealth = 1gb
 	}
 	upgrades = {
 		two_handed_swordsmen
