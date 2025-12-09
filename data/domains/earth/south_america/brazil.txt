@@ -1,12 +1,19 @@
 brazil = {
 	name = "Brazil"
 	type = polity
+	flag = brazil_imperial
 	culture = brazilian
 	default_religion = catholic
 	default_tier = empire
 	min_tier = kingdom
 	default_government_type = monarchy
 	default_capital = rio_de_janeiro
+	conditional_flags = {
+		brazil_royal = {
+			government_group = monarchy
+			tier <= kingdom
+		}
+	}
 	eras = {
 		industrial_era
 	}

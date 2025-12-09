@@ -2,6 +2,7 @@ wurtemberg = {
 	name = "Wurtemberg"
 	type = polity
 	color = { 111 162 128 }
+	flag = wurtemberg
 	culture = german
 	default_religion = protestant
 	default_tier = duchy
@@ -9,6 +10,11 @@ wurtemberg = {
 	default_capital = stuttgart
 	min_tier = county
 	max_tier = kingdom
+	conditional_flags = {
+		wurtemberg_royal = {
+			tier >= kingdom
+		}
+	}
 	eras = {
 		medieval_era
 		renaissance_era

@@ -2,6 +2,7 @@ austria = {
 	name = "Austria"
 	type = polity
 	color = { 244 121 126 }
+	flag = austria
 	culture = austrian
 	default_religion = catholic
 	default_tier = duchy
@@ -9,6 +10,12 @@ austria = {
 	default_capital = vienna
 	#min_tier = marquisate
 	max_tier = empire
+	conditional_flags = {
+		austria_imperial = {
+			government_group = monarchy
+			tier >= empire
+		}
+	}
 	eras = {
 		medieval_era
 		renaissance_era
