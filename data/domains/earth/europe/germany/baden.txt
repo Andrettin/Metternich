@@ -2,6 +2,7 @@ baden = {
 	name = "Baden"
 	type = polity
 	color = { 118 229 215 }
+	flag = baden
 	culture = german
 	default_religion = protestant
 	default_tier = duchy

@@ -2,6 +2,7 @@ prussia = {
 	name = "Prussia"
 	type = polity
 	color = { 245 167 97 }
+	flag = prussia
 	culture = german
 	default_religion = protestant
 	default_tier = kingdom

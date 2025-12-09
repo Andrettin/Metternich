@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1050"
+   height="700"
+   version="1.0"
+   id="svg4750"
+   sodipodi:docname="National Flag of the Kingdom of Sardinia (1816-1848).svg"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
+  <metadata
+     id="metadata4756">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs4754" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1024"
+     inkscape:window-height="548"
+     id="namedview4752"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="0.36758347"
+     inkscape:cx="452.50798"
+     inkscape:cy="300.34226"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg4750" />
+  <path
+     d="M 0,0 H 1050 V 700 H 0 Z"
+     id="path4744"
+     inkscape:connector-curvature="0"
+     style="fill:#0031a5;stroke-width:1.75" />
+  <path
+     d="M 0,0 H 525 V 350 H 0 Z"
+     id="path4746"
+     inkscape:connector-curvature="0"
+     style="fill:#d10008;stroke-width:1.75" />
+  <path
+     d="M 212.505,0 V 125.005 H 0 M 312.495,0 V 125.005 H 525 M 212.505,350 V 224.995 H 0 M 312.495,350 V 224.995 H 525 M 245.835,43 h 33.33 V 158.335 H 482 v 33.33 H 279.165 V 307 h -33.33 V 191.665 H 43 v -33.33 h 202.835 z"
+     id="path4748"
+     inkscape:connector-curvature="0"
+     style="fill:none;stroke:#ffffff;stroke-width:17.5"
+     sodipodi:nodetypes="ccccccccccccccccccccccccc" />
+</svg>

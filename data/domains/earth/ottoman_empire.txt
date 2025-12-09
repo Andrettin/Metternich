@@ -2,6 +2,7 @@ ottoman_empire = {
 	name = "Ottoman Empire"
 	type = polity
 	color = { 170 148 214 }
+	flag = ottoman_empire
 	culture = turkish
 	default_religion = sunni
 	default_tier = empire

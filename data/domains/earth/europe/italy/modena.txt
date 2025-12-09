@@ -2,6 +2,7 @@ modena = {
 	name = "Modena"
 	type = polity
 	color = { 241 252 151 }
+	flag = modena
 	culture = italian
 	default_religion = catholic
 	default_tier = duchy

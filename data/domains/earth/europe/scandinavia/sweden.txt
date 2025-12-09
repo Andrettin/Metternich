@@ -2,6 +2,7 @@ sweden = {
 	name = "Sweden"
 	type = polity
 	color = { 0 173 198 }
+	flag = sweden
 	culture = swedish
 	default_religion = protestant
 	default_tier = kingdom

@@ -2,12 +2,18 @@ france = {
 	name = "France"
 	type = polity
 	color = { 87 139 166 }
+	flag = france
 	culture = french
 	default_religion = catholic
 	default_tier = kingdom
 	default_government_type = monarchy
 	default_capital = paris
 	max_tier = empire
+	conditional_flags = {
+		france_royal = {
+			government_group = monarchy
+		}
+	}
 	eras = {
 		medieval_era
 		renaissance_era

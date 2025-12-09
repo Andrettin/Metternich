@@ -2,6 +2,7 @@ parma = {
 	name = "Parma"
 	type = polity
 	color = { 128 202 129 }
+	flag = parma
 	culture = italian
 	default_religion = catholic
 	default_tier = duchy

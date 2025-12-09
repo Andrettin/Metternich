@@ -2,6 +2,7 @@ saxe_wittenberg = {
 	name = "Saxe-Wittenberg"
 	type = polity
 	color = { 155 147 180 }
+	flag = saxony_royal
 	culture = german
 	default_religion = protestant
 	default_tier = duchy

@@ -2,6 +2,7 @@ sardinia = {
 	name = "Sardinia"
 	type = polity
 	color = { 142 167 80 }
+	flag = sardinia_piedmont
 	culture = italian
 	default_religion = catholic
 	default_tier = kingdom

@@ -2,6 +2,7 @@ russia = {
 	name = "Russia"
 	type = polity
 	color = { 111 177 210 }
+	flag = russia
 	culture = russian
 	default_religion = orthodox
 	default_tier = empire
