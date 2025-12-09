@@ -95,12 +95,36 @@ Rectangle {
 		}
 	}
 	
+	Item {
+		id: domain_name_area
+		anchors.left: country_text.left
+		anchors.top: bottom_panel.top
+		anchors.topMargin: 16 * scale_factor
+		height: 26 * scale_factor
+		visible: selected_country !== null
+		
+		FlagButton {
+			id: domain_flag
+			anchors.top: parent.top
+			anchors.left: parent.left
+			flag: selected_country ? selected_country.game_data.flag : ""
+			enabled: false
+			visible: flag.length > 0
+		}
+		
+		SmallText {
+			id: domain_name
+			anchors.verticalCenter: parent.verticalCenter
+			anchors.left: domain_flag.visible ? domain_flag.right : parent.left
+			anchors.leftMargin: domain_flag.visible ? 6 * scale_factor : 0
+			text: selected_country ? selected_country.game_data.name : ""
+		}
+	}
+	
 	SmallText {
 		id: country_text
 		text: format_text(selected_country && selected_country_game_data ? (
-			selected_country_game_data.name
-			+ "\n"
-			+ "\n" + selected_country_game_data.type_name
+			selected_country_game_data.type_name
 			+ (selected_country_game_data.overlord ? (
 				"\n" + selected_country_game_data.subject_type.name + " of " + selected_country_game_data.overlord.name
 			) : "")
@@ -116,13 +140,13 @@ Rectangle {
 		) : "")
 		anchors.left: bottom_panel.left
 		anchors.leftMargin: 16 * scale_factor
-		anchors.top: bottom_panel.top
-		anchors.topMargin: 16 * scale_factor
+		anchors.top: domain_name_area.bottom
+		anchors.topMargin: 6 * scale_factor
 	}
 	
 	SmallText {
 		id: ruler_label
-		anchors.top: country_text.top
+		anchors.verticalCenter: domain_name_area.verticalCenter
 		anchors.horizontalCenter: ruler_portrait.horizontalCenter
 		text: "Ruler"
 		visible: ruler_portrait.visible
@@ -130,8 +154,7 @@ Rectangle {
 	
 	CharacterPortraitButton {
 		id: ruler_portrait
-		anchors.top: ruler_label.bottom
-		anchors.topMargin: 4 * scale_factor
+		anchors.top: country_text.top
 		anchors.right: population_type_chart.left
 		anchors.rightMargin: 32 * scale_factor
 		character: selected_country_ruler
