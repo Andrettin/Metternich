@@ -45,7 +45,7 @@ paris_knights = {
 
 paris_regulars = {
 	type = regulars
-	country = france
+	domain = france
 	quantity = 2
 	
 	history = {
@@ -57,7 +57,7 @@ paris_regulars = {
 
 paris_artillery = {
 	type = artillery
-	country = france
+	domain = france
 	quantity = 1
 	
 	history = {

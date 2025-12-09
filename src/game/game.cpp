@@ -846,7 +846,7 @@ void game::apply_history(const QDate &start_date)
 					continue;
 				}
 
-				const domain *domain = historical_military_unit->get_country();
+				const domain *domain = historical_military_unit->get_domain();
 				if (domain != nullptr && !domain->get_game_data()->is_alive()) {
 					continue;
 				}

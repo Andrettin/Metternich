@@ -1,6 +1,6 @@
 lithuanian_artillery = {
 	type = artillery
-	country = russia
+	domain = russia
 	quantity = 1
 	
 	history = {
@@ -12,7 +12,7 @@ lithuanian_artillery = {
 
 lithuanian_hussars = {
 	type = hussars
-	country = russia
+	domain = russia
 	quantity = 1
 	
 	history = {
@@ -24,7 +24,7 @@ lithuanian_hussars = {
 
 kovno_regulars = {
 	type = regulars
-	country = russia
+	domain = russia
 	quantity = 1
 	
 	history = {
@@ -36,7 +36,7 @@ kovno_regulars = {
 
 moscow_regulars = {
 	type = regulars
-	country = russia
+	domain = russia
 	quantity = 2
 	
 	history = {
@@ -48,7 +48,7 @@ moscow_regulars = {
 
 moscow_cuirassiers = {
 	type = cuirassiers
-	country = russia
+	domain = russia
 	quantity = 1
 	
 	history = {
@@ -60,7 +60,7 @@ moscow_cuirassiers = {
 
 moscow_artillery = {
 	type = artillery
-	country = russia
+	domain = russia
 	quantity = 1
 	
 	history = {
@@ -72,7 +72,7 @@ moscow_artillery = {
 
 kievan_regulars = {
 	type = regulars
-	country = russia
+	domain = russia
 	quantity = 1
 	
 	history = {
@@ -84,7 +84,7 @@ kievan_regulars = {
 
 chernigov_hussars = {
 	type = hussars
-	country = russia
+	domain = russia
 	quantity = 1
 	
 	history = {
@@ -96,7 +96,7 @@ chernigov_hussars = {
 
 krivoy_rog_hussars = {
 	type = hussars
-	country = russia
+	domain = russia
 	quantity = 1
 	
 	history = {
@@ -108,7 +108,7 @@ krivoy_rog_hussars = {
 
 bessarabian_regulars = {
 	type = regulars
-	country = russia
+	domain = russia
 	quantity = 1
 	
 	history = {
@@ -120,7 +120,7 @@ bessarabian_regulars = {
 
 bessarabian_artillery = {
 	type = artillery
-	country = russia
+	domain = russia
 	quantity = 1
 	
 	history = {
@@ -132,7 +132,7 @@ bessarabian_artillery = {
 
 odessa_hussars = {
 	type = hussars
-	country = russia
+	domain = russia
 	quantity = 1
 	
 	history = {
@@ -144,7 +144,7 @@ odessa_hussars = {
 
 vinnitsa_regulars = {
 	type = regulars
-	country = russia
+	domain = russia
 	quantity = 1
 	
 	history = {
@@ -156,7 +156,7 @@ vinnitsa_regulars = {
 
 belostok_regulars = {
 	type = regulars
-	#country = russia
+	#domain = russia
 	quantity = 1
 	
 	history = {
@@ -168,7 +168,7 @@ belostok_regulars = {
 
 vilna_hussars = {
 	type = hussars
-	country = russia
+	domain = russia
 	quantity = 1
 	
 	history = {
@@ -180,7 +180,7 @@ vilna_hussars = {
 
 minsk_hussars = {
 	type = hussars
-	country = russia
+	domain = russia
 	quantity = 1
 	
 	history = {
@@ -192,7 +192,7 @@ minsk_hussars = {
 
 belorussian_hussars = {
 	type = hussars
-	country = russia
+	domain = russia
 	quantity = 1
 	
 	history = {
@@ -204,7 +204,7 @@ belorussian_hussars = {
 
 kharkov_hussars = {
 	type = hussars
-	country = russia
+	domain = russia
 	quantity = 1
 	
 	history = {
@@ -216,7 +216,7 @@ kharkov_hussars = {
 
 voronezh_hussars = {
 	type = hussars
-	country = russia
+	domain = russia
 	quantity = 1
 	
 	history = {
@@ -228,7 +228,7 @@ voronezh_hussars = {
 
 grodno_regulars = {
 	type = regulars
-	country = russia
+	domain = russia
 	quantity = 1
 	
 	history = {
@@ -240,7 +240,7 @@ grodno_regulars = {
 
 north_belorussian_hussars = {
 	type = hussars
-	country = russia
+	domain = russia
 	quantity = 1
 	
 	history = {

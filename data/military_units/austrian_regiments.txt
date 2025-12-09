@@ -1,6 +1,6 @@
 trieste_regulars = {
 	type = regulars
-	country = austria
+	domain = austria
 	quantity = 2
 	
 	history = {
@@ -12,7 +12,7 @@ trieste_regulars = {
 
 trieste_artillery = {
 	type = artillery
-	country = austria
+	domain = austria
 	quantity = 1
 	
 	history = {
@@ -24,7 +24,7 @@ trieste_artillery = {
 
 galician_regulars = {
 	type = regulars
-	country = austria
+	domain = austria
 	quantity = 2
 	
 	history = {
@@ -36,7 +36,7 @@ galician_regulars = {
 
 buda_hussars = {
 	type = hussars
-	country = austria
+	domain = austria
 	quantity = 1
 	
 	history = {
@@ -48,7 +48,7 @@ buda_hussars = {
 
 pest_hussars = {
 	type = hussars
-	country = austria
+	domain = austria
 	quantity = 1
 	
 	history = {
@@ -60,7 +60,7 @@ pest_hussars = {
 
 venetian_regulars = {
 	type = regulars
-	country = austria
+	domain = austria
 	quantity = 1
 	
 	history = {
@@ -72,7 +72,7 @@ venetian_regulars = {
 
 lombard_regulars = {
 	type = regulars
-	country = austria
+	domain = austria
 	quantity = 1
 	
 	history = {
@@ -84,7 +84,7 @@ lombard_regulars = {
 
 austrian_3rd_infantry_regiment = { #Source: "Almanach de Gotha pour l'année 1847", 1847, p. 11.
 	type = regulars
-	country = austria
+	domain = austria
 	
 	history = {
 		1847 = { #existed as of 1847
@@ -95,7 +95,7 @@ austrian_3rd_infantry_regiment = { #Source: "Almanach de Gotha pour l'année 184
 
 austrian_4th_infantry_regiment = { #Source: "Almanach de Gotha pour l'année 1847", 1847, p. 13.
 	type = regulars
-	country = austria
+	domain = austria
 	
 	history = {
 		1847 = { #existed as of 1847
@@ -106,7 +106,7 @@ austrian_4th_infantry_regiment = { #Source: "Almanach de Gotha pour l'année 184
 
 austrian_3rd_dragoons_regiment = { #Source: "Almanach de Gotha pour l'année 1847", 1847, p. 11.
 	type = cuirassiers
-	country = austria
+	domain = austria
 	
 	history = {
 		1847 = { #existed as of 1847
@@ -117,7 +117,7 @@ austrian_3rd_dragoons_regiment = { #Source: "Almanach de Gotha pour l'année 184
 
 austrian_3rd_ulans_regiment = { #Source: "Almanach de Gotha pour l'année 1847", 1847, p. 11.
 	type = hussars
-	country = austria
+	domain = austria
 	
 	history = {
 		1847 = { #existed as of 1847

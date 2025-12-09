@@ -1,6 +1,6 @@
 ottoman_dardanelles_frigates = {
 	type = frigate
-	country = ottoman_empire
+	domain = ottoman_empire
 	quantity = 1
 	
 	history = {

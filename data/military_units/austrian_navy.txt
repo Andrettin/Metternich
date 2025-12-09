@@ -1,6 +1,6 @@
 austrian_gulf_of_venice_frigates = {
 	type = frigate
-	country = austria
+	domain = austria
 	quantity = 2
 	
 	history = {

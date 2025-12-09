@@ -1,6 +1,6 @@
 sardinian_tyrrhenian_sea_frigates = {
 	type = frigate
-	country = sardinia
+	domain = sardinia
 	quantity = 2
 	
 	history = {
