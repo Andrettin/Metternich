@@ -1,6 +1,7 @@
 brunswick = {
 	name = "Brunswick"
 	type = polity
+	flag = brunswick
 	culture = german
 	default_religion = protestant
 	default_tier = duchy

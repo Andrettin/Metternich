@@ -2,6 +2,7 @@ savoy = {
 	name = "Savoy"
 	type = polity
 	color = { 142 167 80 }
+	flag = savoy
 	culture = italian
 	default_religion = catholic
 	default_tier = county

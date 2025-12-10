@@ -1,6 +1,7 @@
 strasbourg = {
 	name = "Strasbourg"
 	type = polity
+	flag = strasbourg
 	culture = alsatian
 	default_religion = catholic
 	default_tier = county #bishopric

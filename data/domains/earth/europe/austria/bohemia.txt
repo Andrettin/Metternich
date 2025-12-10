@@ -2,6 +2,7 @@ bohemia = {
 	name = "Bohemia"
 	type = polity
 	color = { 161 139 40 }
+	flag = bohemia
 	culture = czech
 	default_religion = catholic
 	default_tier = kingdom
