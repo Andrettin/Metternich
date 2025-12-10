@@ -1,6 +1,7 @@
 genoa = {
 	name = "Genoa"
 	type = polity
+	flag = genoa
 	culture = italian
 	default_religion = catholic
 	default_tier = duchy

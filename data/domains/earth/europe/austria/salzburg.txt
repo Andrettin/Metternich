@@ -1,6 +1,7 @@
 salzburg = {
 	name = "Salzburg"
 	type = polity
+	flag = salzburg
 	culture = austrian
 	default_religion = catholic
 	default_tier = duchy #archbishopric

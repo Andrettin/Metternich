@@ -2,6 +2,7 @@ venice = {
 	name = "Venice"
 	type = polity
 	color = { 54 167 156 }
+	flag = venetia
 	culture = italian
 	default_religion = catholic
 	default_tier = duchy

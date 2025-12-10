@@ -1,6 +1,7 @@
 lorraine = {
 	name = "Lorraine"
 	type = polity
+	flag = lorraine
 	culture = french
 	default_religion = catholic
 	default_tier = duchy
