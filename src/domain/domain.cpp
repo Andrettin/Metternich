@@ -101,7 +101,7 @@ void domain::check() const
 			throw std::runtime_error(std::format("Flag \"{}\" does not exist.", this->get_flag()));
 		}
 	} else {
-		log::log_error(std::format("Domain \"{}\" has no flag.", this->get_identifier()));
+		//log::log_error(std::format("Domain \"{}\" has no flag.", this->get_identifier()));
 	}
 
 	for (const auto &[conditional_flag, conditions] : this->get_conditional_flags()) {
