@@ -521,7 +521,7 @@ void province_game_data::choose_provincial_capital()
 {
 	std::vector<const site *> potential_provincial_capitals;
 	bool found_default_provincial_capital = false;
-	int best_holding_level = 0;
+	int best_max_holding_level = 0;
 
 	for (const site *site : this->province->get_map_data()->get_settlement_sites()) {
 		if (!site->get_game_data()->is_built()) {
@@ -539,14 +539,17 @@ void province_game_data::choose_provincial_capital()
 		if (this->get_owner() != nullptr && site == this->get_owner()->get_default_capital()) {
 			potential_provincial_capitals = { site };
 			break;
+		} else if (this->get_owner() != nullptr && site == this->get_owner()->get_game_data()->get_capital()) {
+			potential_provincial_capitals = { site };
+			break;
 		} else if (site == this->province->get_default_provincial_capital()) {
 			potential_provincial_capitals = { site };
 			found_default_provincial_capital = true;
 		} else if (!found_default_provincial_capital) {
-			if (site->get_game_data()->get_holding_level() > best_holding_level) {
+			if (site->get_max_holding_level() > best_max_holding_level) {
 				potential_provincial_capitals.clear();
-				best_holding_level = site->get_game_data()->get_holding_level();
-			} else if (site->get_game_data()->get_holding_level() < best_holding_level) {
+				best_max_holding_level = site->get_max_holding_level();
+			} else if (site->get_max_holding_level() < best_max_holding_level) {
 				continue;
 			}
 

@@ -1225,6 +1225,12 @@ void domain_game_data::choose_capital()
 		return;
 	}
 
+	const province *default_capital_province = default_capital->get_game_data()->get_province();
+	if (default_capital_province != nullptr && default_capital_province->get_game_data()->get_owner() == this->domain && default_capital_province->get_game_data()->get_provincial_capital() != nullptr && default_capital_province->get_game_data()->get_provincial_capital()->get_game_data()->can_be_capital()) {
+		this->set_capital(default_capital_province->get_game_data()->get_provincial_capital());
+		return;
+	}
+
 	const site *best_capital = nullptr;
 
 	for (const site *site : this->get_sites()) {
