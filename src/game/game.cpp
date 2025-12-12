@@ -988,6 +988,7 @@ void game::apply_sites()
 		const site *provincial_capital_slot = province->get_game_data()->get_best_provincial_capital_slot();
 
 		if (provincial_capital_slot == nullptr) {
+			log::log_error(std::format("Province \"{}\" has no suitable provincial capital slot.", province->get_identifier()));
 			continue;
 		}
 
