@@ -28,6 +28,7 @@ class holding_type final : public named_data_entry, public data_type<holding_typ
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
 	Q_PROPERTY(const metternich::portrait* portrait MEMBER portrait READ get_portrait NOTIFY changed)
 	Q_PROPERTY(std::filesystem::path image_filepath MEMBER image_filepath WRITE set_image_filepath NOTIFY changed)
+	Q_PROPERTY(bool political MEMBER political READ is_political NOTIFY changed)
 	Q_PROPERTY(bool economic MEMBER economic READ is_economic NOTIFY changed)
 	Q_PROPERTY(bool religious MEMBER religious READ is_religious NOTIFY changed)
 
@@ -61,6 +62,11 @@ public:
 	}
 
 	void set_image_filepath(const std::filesystem::path &filepath);
+
+	bool is_political() const
+	{
+		return this->political;
+	}
 
 	bool is_economic() const
 	{
@@ -149,6 +155,7 @@ private:
 	const metternich::icon *icon = nullptr;
 	const metternich::portrait *portrait = nullptr;
 	std::filesystem::path image_filepath;
+	bool political = false;
 	bool economic = false;
 	bool religious = false;
 	commodity_map<int> level_commodity_costs;
