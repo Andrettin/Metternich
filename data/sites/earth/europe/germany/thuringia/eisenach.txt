@@ -1,0 +1,8 @@
+eisenach = {
+	name = "Eisenach"
+	world = earth
+	geocoordinate = { 10.324444444444 50.974722222222 }
+	type = holding
+	holding_type = castle
+	province = thuringia
+}

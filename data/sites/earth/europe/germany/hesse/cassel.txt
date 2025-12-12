@@ -2,8 +2,9 @@ cassel = {
 	name = "Cassel" #also known as Kassel
 	world = earth
 	geocoordinate = { 9.50002966171 51.30000693670 } #from Natural Earth
-	type = resource
-	resource = coal
+	type = holding
+	holding_type = guild
+	#resource = coal
 	province = hesse
 	
 	history = {

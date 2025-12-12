@@ -2,15 +2,17 @@ paderborn = {
 	name = "Paderborn"
 	world = earth
 	geocoordinate = { 8.766666666666667 51.71666666666667 }
+	type = holding
+	holding_type = temple
 	province = westphalia
 	
 	history = {
 		919 = {
-			#important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			developed = true #important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
 		}
 		
 		1614 = {
-			buildings += university #University founded in Paderborn in 1614; Source: "The Cambridge Modern History Atlas", 1912, p. 9.
+			#buildings += university #University founded in Paderborn in 1614; Source: "The Cambridge Modern History Atlas", 1912, p. 9.
 		}
 	}
 }

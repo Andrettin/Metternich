@@ -1,0 +1,8 @@
+corvey = {
+	name = "Corvey"
+	world = earth
+	geocoordinate = { 9.41 51.777778 } #Princely Abbey of Corvey
+	type = holding
+	holding_type = temple
+	province = westphalia
+}
