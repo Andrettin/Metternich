@@ -1219,8 +1219,9 @@ void domain_game_data::set_capital(const site *capital)
 
 void domain_game_data::choose_capital()
 {
-	if (this->domain->get_default_capital()->get_game_data()->get_owner() == this->domain && this->domain->get_default_capital()->get_game_data()->can_be_capital()) {
-		this->set_capital(this->domain->get_default_capital());
+	const site *default_capital = this->domain->get_default_capital();
+	if (default_capital->get_game_data()->get_owner() == this->domain && default_capital->get_game_data()->can_be_capital()) {
+		this->set_capital(default_capital);
 		return;
 	}
 

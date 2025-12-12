@@ -248,6 +248,16 @@ bool site_game_data::can_be_capital() const
 		return false;
 	}
 
+	if (this->get_owner() == nullptr) {
+		return false;
+	}
+
+	if (!this->get_owner()->get_game_data()->get_provinces().empty()) {
+		if (!this->get_holding_type()->is_political()) {
+			return false;
+		}
+	}
+
 	return true;
 }
 
