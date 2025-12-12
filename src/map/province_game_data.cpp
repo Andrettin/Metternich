@@ -561,6 +561,56 @@ void province_game_data::choose_provincial_capital()
 	}
 }
 
+const site *province_game_data::get_best_provincial_capital_slot() const
+{
+	assert_throw(this->get_provincial_capital() == nullptr);
+
+	std::vector<const site *> potential_provincial_capitals;
+	bool found_default_provincial_capital = false;
+	int best_max_holding_level = 0;
+
+	for (const site *site : this->province->get_map_data()->get_settlement_sites()) {
+		if (site->get_game_data()->is_built()) {
+			continue;
+		}
+
+		if (site->get_holding_type() == nullptr) {
+			continue;
+		}
+
+		if (!site->get_holding_type()->is_political()) {
+			continue;
+		}
+
+		if (site->get_game_data()->get_owner() != this->get_owner()) {
+			continue;
+		}
+
+		if (this->get_owner() != nullptr && site == this->get_owner()->get_default_capital()) {
+			potential_provincial_capitals = { site };
+			break;
+		} else if (site == this->province->get_default_provincial_capital()) {
+			potential_provincial_capitals = { site };
+			found_default_provincial_capital = true;
+		} else if (!found_default_provincial_capital) {
+			if (site->get_max_holding_level() > best_max_holding_level) {
+				potential_provincial_capitals.clear();
+				best_max_holding_level = site->get_max_holding_level();
+			} else if (site->get_max_holding_level() < best_max_holding_level) {
+				continue;
+			}
+
+			potential_provincial_capitals.push_back(site);
+		}
+	}
+
+	if (!potential_provincial_capitals.empty()) {
+		return vector::get_random(potential_provincial_capitals);
+	} else {
+		return nullptr;
+	}
+}
+
 const QPoint &province_game_data::get_center_tile_pos() const
 {
 	return this->province->get_map_data()->get_center_tile_pos();

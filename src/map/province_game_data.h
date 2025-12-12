@@ -149,6 +149,7 @@ public:
 	const site *get_provincial_capital() const;
 	void set_provincial_capital(const site *site);
 	void choose_provincial_capital();
+	const site *get_best_provincial_capital_slot() const;
 	const QPoint &get_center_tile_pos() const;
 
 	const std::vector<QPoint> &get_border_tiles() const;
