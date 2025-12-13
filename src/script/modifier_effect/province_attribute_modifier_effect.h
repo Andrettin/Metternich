@@ -7,11 +7,12 @@
 
 namespace metternich {
 
-class province_attribute_modifier_effect final : public modifier_effect<const province>
+template <typename scope_type>
+class province_attribute_modifier_effect final : public modifier_effect<scope_type>
 {
 public:
 	explicit province_attribute_modifier_effect(const province_attribute *attribute, const std::string &value)
-		: modifier_effect<const province>(value), attribute(attribute)
+		: modifier_effect<scope_type>(value), attribute(attribute)
 	{
 	}
 
@@ -21,12 +22,16 @@ public:
 		return identifier;
 	}
 
-	virtual void apply(const province *scope, const centesimal_int &multiplier) const override
+	virtual void apply(const scope_type *scope, const centesimal_int &multiplier) const override
 	{
-		scope->get_game_data()->change_attribute_value(this->attribute, (this->value * multiplier).to_int());
+		if constexpr (std::is_same_v<scope_type, const province>) {
+			scope->get_game_data()->change_attribute_value(this->attribute, (this->value * multiplier).to_int());
+		} else {
+			scope->get_game_data()->change_province_attribute_value(this->attribute, (this->value * multiplier).to_int());
+		}
 	}
 
-	virtual std::string get_base_string(const province *scope) const override
+	virtual std::string get_base_string(const scope_type *scope) const override
 	{
 		Q_UNUSED(scope);
 

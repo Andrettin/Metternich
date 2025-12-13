@@ -68,6 +68,7 @@ class population_type;
 class population_unit;
 class portrait;
 class province;
+class province_attribute;
 class region;
 class religion;
 class scripted_country_modifier;
@@ -123,6 +124,7 @@ class domain_game_data final : public QObject
 	Q_PROPERTY(QVariantList consulates READ get_consulates_qvariant_list NOTIFY consulates_changed)
 	Q_PROPERTY(QRect diplomatic_map_image_rect READ get_diplomatic_map_image_rect NOTIFY diplomatic_map_image_changed)
 	Q_PROPERTY(QVariantList attribute_values READ get_attribute_values_qvariant_list NOTIFY attribute_values_changed)
+	Q_PROPERTY(QVariantList province_attribute_values READ get_province_attribute_values_qvariant_list NOTIFY province_attribute_values_changed)
 	Q_PROPERTY(int unrest READ get_unrest NOTIFY unrest_changed)
 	Q_PROPERTY(int score READ get_score NOTIFY score_changed)
 	Q_PROPERTY(int score_rank READ get_score_rank NOTIFY score_rank_changed)
@@ -585,6 +587,25 @@ public:
 	bool do_attribute_check(const domain_attribute *attribute, const int roll_modifier) const;
 	int get_attribute_check_chance(const domain_attribute *attribute, const int roll_modifier) const;
 	int get_attribute_check_control_modifier() const;
+
+	const data_entry_map<province_attribute, int> &get_province_attribute_values() const
+	{
+		return this->province_attribute_values;
+	}
+
+	QVariantList get_province_attribute_values_qvariant_list() const;
+
+	int get_province_attribute_value(const province_attribute *attribute) const
+	{
+		const auto find_iterator = this->province_attribute_values.find(attribute);
+		if (find_iterator != this->province_attribute_values.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void change_province_attribute_value(const province_attribute *attribute, const int change);
 
 	int get_unrest() const
 	{
@@ -1165,6 +1186,7 @@ signals:
 	void holding_count_changed();
 	void diplomatic_map_image_changed();
 	void attribute_values_changed();
+	void province_attribute_values_changed();
 	void unrest_changed();
 	void score_changed();
 	void score_rank_changed();
@@ -1221,6 +1243,7 @@ private:
 	std::map<diplomacy_state, QImage> diplomacy_state_diplomatic_map_images;
 	QRect diplomatic_map_image_rect;
 	data_entry_map<domain_attribute, int> attribute_values;
+	data_entry_map<province_attribute, int> province_attribute_values;
 	int unrest = 0;
 	int score = 0;
 	const country_rank *rank = nullptr;

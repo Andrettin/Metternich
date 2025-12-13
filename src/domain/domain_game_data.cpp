@@ -50,6 +50,7 @@
 #include "map/diplomatic_map_mode.h"
 #include "map/map.h"
 #include "map/province.h"
+#include "map/province_attribute.h"
 #include "map/province_game_data.h"
 #include "map/province_map_data.h"
 #include "map/region.h"
@@ -161,6 +162,10 @@ void domain_game_data::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([&](const gsml_property &attribute_property) {
 			this->attribute_values[domain_attribute::get(attribute_property.get_key())] = std::stoi(attribute_property.get_value());
 		});
+	} else if (tag == "province_attributes") {
+		scope.for_each_property([&](const gsml_property &attribute_property) {
+			this->province_attribute_values[province_attribute::get(attribute_property.get_key())] = std::stoi(attribute_property.get_value());
+		});
 	} else if (tag == "provinces") {
 		for (const std::string &value : values) {
 			this->provinces.push_back(province::get(value));
@@ -199,6 +204,14 @@ gsml_data domain_game_data::to_gsml_data() const
 	if (!this->attribute_values.empty()) {
 		gsml_data attributes_data("attributes");
 		for (const auto &[attribute, value] : this->attribute_values) {
+			attributes_data.add_property(attribute->get_identifier(), std::to_string(value));
+		}
+		data.add_child(std::move(attributes_data));
+	}
+
+	if (!this->province_attribute_values.empty()) {
+		gsml_data attributes_data("province_attributes");
+		for (const auto &[attribute, value] : this->province_attribute_values) {
 			attributes_data.add_property(attribute->get_identifier(), std::to_string(value));
 		}
 		data.add_child(std::move(attributes_data));
@@ -1058,6 +1071,10 @@ void domain_game_data::on_province_gained(const province *province, const int mu
 		for (const auto &[threshold, value] : threshold_map) {
 			province_game_data->change_commodity_bonus_for_tile_threshold(commodity, threshold, value * multiplier);
 		}
+	}
+
+	for (const auto &[attribute, value] : this->get_province_attribute_values()) {
+		province_game_data->change_attribute_value(attribute, value * multiplier);
 	}
 }
 
@@ -2131,6 +2148,32 @@ int domain_game_data::get_attribute_check_control_modifier() const
 {
 	const int domain_size = this->get_province_count() + this->get_holding_count();
 	return -domain_size;
+}
+
+QVariantList domain_game_data::get_province_attribute_values_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_province_attribute_values());
+}
+
+void domain_game_data::change_province_attribute_value(const province_attribute *attribute, const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const int new_value = (this->province_attribute_values[attribute] += change);
+
+	if (new_value == 0) {
+		this->province_attribute_values.erase(attribute);
+	}
+
+	for (const province *province : this->get_provinces()) {
+		province->get_game_data()->change_attribute_value(attribute, change);
+	}
+
+	if (game::get()->is_running()) {
+		emit province_attribute_values_changed();
+	}
 }
 
 void domain_game_data::set_unrest(const int unrest)

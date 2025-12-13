@@ -209,10 +209,6 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 				return std::make_unique<merchant_ship_stat_modifier_effect>(magic_enum::enum_cast<transporter_stat>(stat_name).value(), value);
 			}
 		}
-	} else if constexpr (std::is_same_v<scope_type, const province>) {
-		if (province_attribute::try_get(key) != nullptr) {
-			return std::make_unique<province_attribute_modifier_effect>(province_attribute::get(key), value);
-		}
 	} else if constexpr (std::is_same_v<scope_type, const site>) {
 		if (key == "holding_level") {
 			return std::make_unique<holding_level_modifier_effect>(value);
@@ -234,7 +230,9 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 		static const std::string commodity_bonus_for_tile_threshold_suffix = "_bonus_for_tile_threshold";
 		static const std::string commodity_per_improved_resource_infix = "_per_improved_";
 
-		if (key.ends_with(commodity_bonus_for_tile_threshold_suffix)) {
+		if (province_attribute::try_get(key) != nullptr) {
+			return std::make_unique<province_attribute_modifier_effect<scope_type>>(province_attribute::get(key), value);
+		} else if (key.ends_with(commodity_bonus_for_tile_threshold_suffix)) {
 			const size_t commodity_identifier_size = key.size() - commodity_bonus_for_tile_threshold_suffix.size();
 			const commodity *commodity = commodity::get(key.substr(0, commodity_identifier_size));
 
