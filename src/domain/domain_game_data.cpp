@@ -2204,7 +2204,7 @@ int domain_game_data::get_attribute_check_chance(const domain_attribute *attribu
 
 int domain_game_data::get_attribute_check_control_modifier() const
 {
-	const int domain_size = this->get_province_count() + this->get_holding_count();
+	const int domain_size = this->get_holding_count();
 	return -domain_size;
 }
 
