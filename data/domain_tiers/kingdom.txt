@@ -1,4 +1,6 @@
 kingdom = {
 	name = "Kingdom"
 	icon = crown_royal
+	min_domain_size = 101
+	max_domain_size = 200
 }

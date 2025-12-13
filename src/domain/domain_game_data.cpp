@@ -294,6 +294,7 @@ void domain_game_data::do_turn()
 		this->check_government_type();
 		this->check_characters();
 		this->check_ideas();
+		this->check_tier();
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error(std::format("Failed to process turn for country \"{}\".", this->domain->get_identifier())));
 	}
@@ -628,6 +629,51 @@ void domain_game_data::set_tier(const domain_tier tier)
 
 	if (game::get()->is_running()) {
 		emit tier_changed();
+	}
+}
+
+void domain_game_data::check_tier()
+{
+	if (this->is_under_anarchy()) {
+		return;
+	}
+
+	const domain_tier current_tier = this->get_tier();
+	const domain_tier_data *current_tier_data = domain_tier_data::get(current_tier);
+	const int domain_size = this->get_province_count() + this->get_holding_count();
+	if (domain_size >= current_tier_data->get_min_domain_size() && domain_size <= current_tier_data->get_max_domain_size()) {
+		return;
+	}
+
+	domain_tier new_tier = domain_tier::none;
+
+	magic_enum::enum_for_each<domain_tier>([this, domain_size, &new_tier](const domain_tier tier) {
+		if (tier == domain_tier::none) {
+			return;
+		}
+
+		const domain_tier_data *tier_data = domain_tier_data::get(tier);
+		if (domain_size >= tier_data->get_min_domain_size() && domain_size <= tier_data->get_max_domain_size()) {
+			new_tier = tier;
+		}
+	});
+
+	assert_throw(new_tier != domain_tier::none);
+	assert_throw(new_tier != current_tier);
+
+	new_tier = std::max(new_tier, this->domain->get_min_tier());
+	new_tier = std::min(new_tier, this->domain->get_max_tier());
+
+	if (new_tier == current_tier) {
+		return;
+	}
+
+	this->set_tier(new_tier);
+
+	if (this->domain == game::get()->get_player_country()) {
+		const portrait *interior_minister_portrait = this->get_government()->get_interior_minister_portrait();
+
+		engine_interface::get()->add_notification(this->get_titled_name(), interior_minister_portrait, std::format("Your Excellency, due to its recent change in size, our domain is now known as {} {}!", string::get_indefinite_article(this->get_title_name()), this->get_title_name()));
 	}
 }
 

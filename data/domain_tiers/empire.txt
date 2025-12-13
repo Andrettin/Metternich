@@ -1,4 +1,5 @@
 empire = {
 	name = "Empire"
 	icon = crown_imperial
+	min_domain_size = 201
 }

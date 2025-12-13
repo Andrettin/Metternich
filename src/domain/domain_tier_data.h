@@ -16,6 +16,8 @@ class domain_tier_data final : public named_data_entry, public enum_data_type<do
 	Q_OBJECT
 
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
+	Q_PROPERTY(int min_domain_size MEMBER min_domain_size READ get_min_domain_size NOTIFY changed)
+	Q_PROPERTY(int max_domain_size MEMBER max_domain_size READ get_max_domain_size NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "domain_tier";
@@ -33,6 +35,16 @@ public:
 		return this->icon;
 	}
 
+	int get_min_domain_size() const
+	{
+		return this->min_domain_size;
+	}
+
+	int get_max_domain_size() const
+	{
+		return this->max_domain_size;
+	}
+
 	const modifier<const domain> *get_modifier() const
 	{
 		return this->modifier.get();
@@ -45,6 +57,8 @@ signals:
 
 private:
 	const metternich::icon *icon = nullptr;
+	int min_domain_size = 0;
+	int max_domain_size = std::numeric_limits<int>::max();
 	std::unique_ptr<const modifier<const domain>> modifier;
 };
 

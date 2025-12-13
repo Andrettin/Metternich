@@ -1622,6 +1622,7 @@ QCoro::Task<void> game::on_setup_finished()
 		}
 
 		domain_game_data->check_ideas();
+		domain_game_data->check_tier();
 
 		for (const QPoint &border_tile_pos : domain_game_data->get_border_tiles()) {
 			map::get()->calculate_tile_country_border_directions(border_tile_pos);

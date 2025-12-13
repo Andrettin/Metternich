@@ -202,6 +202,7 @@ public:
 	}
 
 	void set_tier(const domain_tier tier);
+	void check_tier();
 
 	const std::string &get_name() const;
 

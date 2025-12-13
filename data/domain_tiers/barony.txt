@@ -1,4 +1,5 @@
 barony = {
 	name = "Barony"
 	icon = crown_baronial
+	max_domain_size = 25
 }
