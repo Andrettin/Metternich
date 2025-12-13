@@ -1,0 +1,8 @@
+petershagen = {
+	name = "Petershagen"
+	world = earth
+	geocoordinate = { 8.966666666666667 52.38333333333333 }
+	type = holding
+	holding_type = temple
+	province = westphalia
+}

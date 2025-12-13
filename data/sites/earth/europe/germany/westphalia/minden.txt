@@ -2,13 +2,18 @@ minden = {
 	name = "Minden"
 	world = earth
 	geocoordinate = { 8.916666666666666 52.288333333333334 }
-	type = resource
-	resource = cattle
+	type = holding
+	holding_type = temple
+	#resource = cattle
 	province = westphalia
 	
 	history = {
 		919 = {
 			developed = true #important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1815 = {
+			buildings += castle #had a fortress in the 1815-1866 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
 		}
 	}
 }

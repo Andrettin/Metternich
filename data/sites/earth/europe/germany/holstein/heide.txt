@@ -1,0 +1,8 @@
+heide = {
+	name = "Heide"
+	world = earth
+	geocoordinate = { 9.0933333333333 54.196111111111 }
+	type = holding
+	holding_type = guild
+	province = holstein
+}

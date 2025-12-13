@@ -1,0 +1,8 @@
+auburg = {
+	name = "Auburg"
+	world = earth
+	geocoordinate = { 8.57861 52.5586 }
+	type = holding
+	holding_type = castle
+	province = hanover
+}

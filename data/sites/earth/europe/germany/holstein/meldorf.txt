@@ -2,6 +2,8 @@ meldorf = {
 	name = "Meldorf"
 	world = earth
 	geocoordinate = { 9.066666666666666 54.083333333333336 }
+	type = holding
+	holding_type = temple
 	province = holstein
 	
 	history = {
