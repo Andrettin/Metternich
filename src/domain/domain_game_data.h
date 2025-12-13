@@ -330,6 +330,7 @@ public:
 	}
 
 	void change_holding_count(const int change);
+	int get_holding_count_with_vassals() const;
 
 	const std::vector<const province *> &get_border_provinces() const
 	{

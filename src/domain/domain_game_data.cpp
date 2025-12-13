@@ -640,7 +640,7 @@ void domain_game_data::check_tier()
 
 	const domain_tier current_tier = this->get_tier();
 	const domain_tier_data *current_tier_data = domain_tier_data::get(current_tier);
-	const int domain_size = this->get_province_count() + this->get_holding_count();
+	const int domain_size = this->get_holding_count_with_vassals();
 	if (domain_size >= current_tier_data->get_min_domain_size() && domain_size <= current_tier_data->get_max_domain_size()) {
 		return;
 	}
@@ -1356,6 +1356,18 @@ void domain_game_data::change_holding_count(const int change)
 	if (game::get()->is_running()) {
 		emit holding_count_changed();
 	}
+}
+
+int domain_game_data::get_holding_count_with_vassals() const
+{
+	int holding_count = this->get_holding_count();
+
+	const std::vector<const metternich::domain *> vassals = this->get_vassals();
+	for (const metternich::domain *vassal : this->get_vassals()) {
+		holding_count += vassal->get_game_data()->get_holding_count_with_vassals();
+	}
+
+	return holding_count;
 }
 
 void domain_game_data::calculate_territory_rect()
