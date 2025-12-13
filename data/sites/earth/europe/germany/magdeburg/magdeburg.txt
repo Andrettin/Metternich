@@ -3,7 +3,7 @@ magdeburg = {
 	world = earth
 	geocoordinate = { 11.62000362010 52.13042136550 } #from Natural Earth
 	type = holding
-	holding_type = guild #important market or fair, and center of the Hanseatic League in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
+	holding_type = castle
 	province = magdeburg
 	
 	history = {
@@ -11,5 +11,7 @@ magdeburg = {
 			developed = true #important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
 			buildings += castle #burgward in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
 		}
+		
+		#important market or fair, and center of the Hanseatic League in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
 	}
 }

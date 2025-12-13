@@ -1,0 +1,8 @@
+haldensleben = {
+	name = "Haldensleben"
+	world = earth
+	geocoordinate = { 11.416666666666666 52.28333333333333 }
+	type = holding
+	holding_type = castle #or guild
+	province = magdeburg
+}

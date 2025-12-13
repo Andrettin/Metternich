@@ -2,6 +2,8 @@ verden = {
 	name = "Verden"
 	world = earth
 	geocoordinate = { 9.2305555555556 52.921111111111 }
+	type = holding
+	holding_type = temple
 	province = bremen
 	
 	history = {

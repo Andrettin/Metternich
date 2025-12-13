@@ -1,7 +1,9 @@
 mansfeld = {
 	name = "Mansfeld"
 	world = earth
-	#geocoordinate = { 11.454722222222 51.594166666667 }
+	geocoordinate = { 11.454722222222 51.594166666667 }
+	type = holding
+	holding_type = guild
 	province = magdeburg
 	
 	history = {

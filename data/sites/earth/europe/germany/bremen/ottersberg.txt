@@ -1,0 +1,8 @@
+ottersberg = {
+	name = "Ottersberg"
+	world = earth
+	geocoordinate = { 9.15 53.1 }
+	type = holding
+	holding_type = temple
+	province = bremen
+}
