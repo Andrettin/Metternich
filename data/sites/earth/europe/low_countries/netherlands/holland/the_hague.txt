@@ -6,4 +6,10 @@ the_hague = {
 	holding_type = castle
 	#resource = cattle #Cattle raising or mixed use with pasture dominant; Source: Map No. 76863 of the Perry-Castañeda Library Map Collection, 1970.
 	province = holland
+	
+	history = {
+		1815 = {
+			developed = true #existed in the 1815-1866 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+	}
 }

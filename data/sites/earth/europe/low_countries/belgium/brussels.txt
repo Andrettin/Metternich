@@ -6,7 +6,12 @@ brussels = {
 	holding_type = guild
 	province = brabant
 	
+	
 	history = {
+		1815 = {
+			developed = true #existed in the 1815-1866 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+		
 		1836 = {
 			population_groups = {
 				aristocrats.flemish.catholic = 6000
