@@ -1,0 +1,8 @@
+wolfenbuttel = {
+	name = "Wolfenbuttel" #"Wolfenbüttel"
+	world = earth
+	geocoordinate = { 10.536944444444 52.162222222222 }
+	type = holding
+	holding_type = castle
+	province = hanover
+}
