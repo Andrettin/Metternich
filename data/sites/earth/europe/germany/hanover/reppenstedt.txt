@@ -1,0 +1,8 @@
+reppenstedt = {
+	name = "Reppenstedt"
+	world = earth
+	geocoordinate = { 10.353055555556 53.25 }
+	type = holding
+	holding_type = castle
+	province = hanover
+}

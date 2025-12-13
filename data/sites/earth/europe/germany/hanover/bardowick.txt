@@ -1,7 +1,9 @@
-bardowiek = {
-	name = "Bardowiek" #also known as Bardowick
+bardowick = {
+	name = "Bardowick" #also known as Bardowiek
 	world = earth
-	#geocoordinate = { 10.3921 53.2877 }
+	geocoordinate = { 10.3921 53.2877 }
+	type = holding
+	holding_type = guild
 	province = hanover
 	
 	history = {

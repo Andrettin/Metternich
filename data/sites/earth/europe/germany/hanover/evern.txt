@@ -1,0 +1,8 @@
+evern = {
+	name = "Evern"
+	world = earth
+	geocoordinate = { 10.023611111111 52.316944444444 }
+	type = holding
+	holding_type = castle
+	province = hanover
+}

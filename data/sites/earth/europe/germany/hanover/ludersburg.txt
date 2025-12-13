@@ -1,0 +1,8 @@
+ludersburg = {
+	name = "Ludersburg" #"Lüdersburg"
+	world = earth
+	geocoordinate = { 10.566666666667 53.316666666667 }
+	type = holding
+	holding_type = castle
+	province = hanover
+}

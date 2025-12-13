@@ -1,0 +1,8 @@
+uelzen = {
+	name = "Uelzen"
+	world = earth
+	geocoordinate = { 10.565833333333 52.964722222222 }
+	type = holding
+	holding_type = castle
+	province = hanover
+}

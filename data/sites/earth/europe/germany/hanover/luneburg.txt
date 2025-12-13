@@ -2,6 +2,8 @@ luneburg = {
 	name = "Luneburg" #"Lüneburg"
 	world = earth
 	geocoordinate = { 10.414444444444 53.2525 }
+	type = holding
+	holding_type = castle
 	province = hanover
 	
 	history = {
