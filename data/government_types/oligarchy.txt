@@ -1,7 +1,7 @@
-theocracy = {
-	name = "Theocracy"
-	group = theocracy
-	icon = wooden_cross
+oligarchy = {
+	name = "Oligarchy"
+	group = republic
+	icon = chest
 	conditions = {
 		not = {
 			country_type = clade
@@ -10,12 +10,13 @@ theocracy = {
 		}
 	}
 	ruler_character_classes = {
-		cleric
+		rogue
+		warrior
 	}
 	modifier = {
-		corruption = -1
-		law = 1
-		lore = 1
-		society = -1
+		corruption = 1
+		law = -1
+		lore = -1
+		society = 1
 	}
 }

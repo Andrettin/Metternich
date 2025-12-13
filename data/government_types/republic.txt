@@ -18,4 +18,10 @@ republic = {
 		rogue
 		warrior
 	}
+	modifier = {
+		crime = -1
+		law = -1
+		productivity = 1
+		society = 1
+	}
 }

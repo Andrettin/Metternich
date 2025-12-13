@@ -1,16 +1,16 @@
-enlightened_despotism = {
-	name = "Enlightened Despotism"
-	group = monarchy
-	icon = crown_imperial
-	required_technology = renaissance
+overlordship = {
+	name = "Overlordship"
+	group = republic
+	icon = saber
 	default_laws = {
-		ruling_class = aristocracy
+		ruling_class = plutocracy
 		centralization = centralization
 		serfdom = free_subjects
-		press_rights = free_press
+		press_rights = censored_press
 	}
 	forbidden_laws = {
 		decentralization
+		free_press
 	}
 	conditions = {
 		not = {
@@ -20,6 +20,13 @@ enlightened_despotism = {
 		}
 	}
 	ruler_character_classes = {
+		rogue
 		warrior
+	}
+	modifier = {
+		corruption = 1
+		crime = -1
+		law = 1
+		society = -1
 	}
 }
