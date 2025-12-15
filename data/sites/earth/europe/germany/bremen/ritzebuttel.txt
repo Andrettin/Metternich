@@ -1,0 +1,8 @@
+ritzebuttel = {
+	name = "Ritzebuttel" #"Ritzebüttel"
+	world = earth
+	geocoordinate = { 8.701429 53.856172 }
+	type = holding
+	holding_type = castle
+	province = bremen
+}

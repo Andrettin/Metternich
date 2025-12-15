@@ -1,0 +1,8 @@
+beverstedt = {
+	name = "Beverstedt"
+	world = earth
+	geocoordinate = { 8.818347222222222 53.43403055555556 }
+	type = holding
+	holding_type = guild
+	province = bremen
+}

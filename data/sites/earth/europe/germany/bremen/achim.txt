@@ -1,0 +1,8 @@
+achim = {
+	name = "Achim"
+	world = earth
+	geocoordinate = { 9.033031 53.01301 }
+	type = holding
+	holding_type = castle
+	province = bremen
+}

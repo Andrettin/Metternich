@@ -1,0 +1,8 @@
+hoya = {
+	name = "Hoya"
+	world = earth
+	geocoordinate = { 9.135964 52.80645 }
+	type = holding
+	holding_type = castle
+	province = hanover
+}
