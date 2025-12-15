@@ -1,0 +1,8 @@
+kniphausen = {
+	name = "Kniphausen"
+	world = earth
+	geocoordinate = { 8.05269 53.5508 } #Burg Kniphausen
+	type = holding
+	holding_type = castle
+	province = oldenburg
+}

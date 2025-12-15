@@ -3,4 +3,11 @@ oldenburg = {
 	world = earth
 	geocoordinate = { 8.22000443384 53.12999859530 } #from Natural Earth
 	type = holding
+	holding_type = castle
+	
+	history = {
+		1815 = {
+			developed = true #existed in the 1815-1866 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+	}
 }

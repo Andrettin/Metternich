@@ -1,0 +1,8 @@
+cloppenburg = {
+	name = "Cloppenburg"
+	world = earth
+	geocoordinate = { 8.0438888888889 52.847777777778 }
+	type = holding
+	holding_type = castle
+	province = oldenburg
+}

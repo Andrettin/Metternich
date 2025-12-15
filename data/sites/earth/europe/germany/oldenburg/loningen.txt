@@ -1,0 +1,8 @@
+loningen = {
+	name = "Loningen" #"Löningen"
+	world = earth
+	geocoordinate = { 7.7579 52.736 }
+	type = holding
+	holding_type = castle
+	province = oldenburg
+}

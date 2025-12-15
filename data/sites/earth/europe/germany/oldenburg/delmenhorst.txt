@@ -1,0 +1,8 @@
+delmenhorst = {
+	name = "Delmenhorst"
+	world = earth
+	geocoordinate = { 8.6316666666667 53.050555555556 }
+	type = holding
+	holding_type = guild
+	province = oldenburg
+}

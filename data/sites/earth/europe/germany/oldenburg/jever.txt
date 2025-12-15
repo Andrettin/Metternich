@@ -1,0 +1,8 @@
+jever = {
+	name = "Jever"
+	world = earth
+	geocoordinate = { 7.9008333333333 53.574444444444 }
+	type = holding
+	holding_type = temple
+	province = oldenburg
+}

@@ -1,0 +1,8 @@
+varel = {
+	name = "Varel"
+	world = earth
+	geocoordinate = { 8.1361111111111 53.396944444444 }
+	type = holding
+	holding_type = castle
+	province = oldenburg
+}

@@ -1,0 +1,8 @@
+nordenham = {
+	name = "Nordenham"
+	world = earth
+	geocoordinate = { 8.4666666666667 53.5 }
+	type = holding
+	holding_type = castle
+	province = oldenburg
+}
