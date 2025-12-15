@@ -17,12 +17,16 @@ castle = { #administrative center
 	conditional_names = {
 		"Manor" = {
 			not = {
+				has_building_class = donjon
 				has_building_class = castle
 				has_building_class = palace
 			}
 		}
 		"Castle" = {
-			has_building_class = castle
+			or = {
+				has_building_class = donjon
+				has_building_class = castle
+			}
 			not = {
 				has_building_class = palace
 			}
