@@ -28,10 +28,6 @@ temple = {
 		}
 		"Cathedral" = {
 			has_building_class = cathedral
-			holding_level <= 5
-		}
-		"Grand Cathedral" = {
-			holding_level >= 6
 		}
 	}
 	tier_levels = {
