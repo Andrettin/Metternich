@@ -15,6 +15,18 @@ castle = { #administrative center
 		regency = 1
 	}
 	conditional_names = {
+		"Manor" = {
+			not = {
+				has_building_class = castle
+				has_building_class = palace
+			}
+		}
+		"Castle" = {
+			has_building_class = castle
+			not = {
+				has_building_class = palace
+			}
+		}
 		"Palace" = {
 			has_building_class = palace
 			not = {
