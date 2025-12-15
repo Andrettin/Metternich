@@ -1268,13 +1268,17 @@ void domain_game_data::set_capital(const site *capital)
 	if (capital != nullptr) {
 		capital->get_game_data()->calculate_commodity_outputs();
 		capital->get_game_data()->check_building_conditions();
-		capital->get_map_data()->get_province()->get_game_data()->choose_provincial_capital();
+		if (!capital->get_game_data()->is_provincial_capital()) {
+			capital->get_map_data()->get_province()->get_game_data()->choose_provincial_capital();
+		}
 	}
 
 	if (old_capital != nullptr) {
 		old_capital->get_game_data()->calculate_commodity_outputs();
 		old_capital->get_game_data()->check_building_conditions();
-		old_capital->get_map_data()->get_province()->get_game_data()->choose_provincial_capital();
+		if (old_capital->get_game_data()->is_provincial_capital()) {
+			old_capital->get_map_data()->get_province()->get_game_data()->choose_provincial_capital();
+		}
 	}
 
 	emit capital_changed();
