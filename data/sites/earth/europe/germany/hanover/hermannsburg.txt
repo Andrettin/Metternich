@@ -1,0 +1,8 @@
+hermannsburg = {
+	name = "Hermannsburg"
+	world = earth
+	geocoordinate = { 10.09 52.831666666667 }
+	type = holding
+	holding_type = castle
+	province = hanover
+}

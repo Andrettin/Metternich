@@ -1,0 +1,8 @@
+ravensberg = {
+	name = "Ravensberg"
+	world = earth
+	geocoordinate = { 8.57071 52.0922 } #County of Ravensberg
+	type = holding
+	holding_type = castle
+	province = westphalia
+}

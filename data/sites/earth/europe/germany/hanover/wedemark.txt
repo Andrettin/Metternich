@@ -1,0 +1,8 @@
+wedemark = {
+	name = "Wedemark"
+	world = earth
+	geocoordinate = { 9.7166666666667 52.533333333333 }
+	type = holding
+	holding_type = castle
+	province = hanover
+}

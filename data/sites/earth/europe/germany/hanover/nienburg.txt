@@ -1,0 +1,8 @@
+nienburg_weser = {
+	name = "Nienburg"
+	world = earth
+	geocoordinate = { 9.2208333333333 52.646111111111 } #Nienburg/Weser
+	type = holding
+	holding_type = castle
+	province = hanover
+}
