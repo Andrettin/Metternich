@@ -1,0 +1,8 @@
+steinfurt = {
+	name = "Steinfurt"
+	world = earth
+	geocoordinate = { 7.33664 52.15045 }
+	type = holding
+	holding_type = castle
+	province = westphalia
+}

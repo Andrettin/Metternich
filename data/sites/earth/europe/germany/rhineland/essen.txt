@@ -1,0 +1,8 @@
+essen = {
+	name = "Essen"
+	world = earth
+	geocoordinate = { 7.01661535506 51.44999778150 } #from Natural Earth
+	type = holding
+	holding_type = castle
+	province = rhineland
+}

@@ -1,0 +1,8 @@
+greven = {
+	name = "Greven"
+	world = earth
+	geocoordinate = { 7.6083333333333 52.091666666667 }
+	type = holding
+	holding_type = castle
+	province = westphalia
+}

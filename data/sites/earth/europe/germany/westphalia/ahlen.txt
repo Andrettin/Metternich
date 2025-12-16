@@ -1,0 +1,8 @@
+ahlen = {
+	name = "Ahlen"
+	world = earth
+	geocoordinate = { 7.8911111111111 51.763333333333 }
+	type = holding
+	holding_type = castle
+	province = westphalia
+}

@@ -1,0 +1,8 @@
+gutersloh = {
+	name = "Gutersloh" #"Gütersloh"
+	world = earth
+	geocoordinate = { 8.3833333333333 51.9 }
+	type = holding
+	holding_type = castle
+	province = westphalia
+}
