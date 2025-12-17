@@ -1,0 +1,25 @@
+goblin_infantry = {
+	name = "Goblin Infantry"
+	unit_class = spearmen
+	culture = goblin
+	icon = goblin
+	stats = {
+		hit_points = 2
+		movement = 1
+		defense = 2
+		melee = 2
+		missile = 1
+		#melee_vs_pikes = 1
+		#melee_vs_irregulars = 1
+	}
+	commodity_costs = {
+		wealth = 1gb
+	}
+	maintenance_commodity_costs = {
+		wealth = 1gb
+	}
+	#recruit_conditions = {
+	#	province_level = 2
+	#	culture = goblin
+	#}
+}
