@@ -1,0 +1,7 @@
+dwarven_warrior = {
+	filepath = "portraits/characters/dwarven_warrior.png"
+	character_conditions = {
+		gender = male
+		species = dwarf
+	}
+}

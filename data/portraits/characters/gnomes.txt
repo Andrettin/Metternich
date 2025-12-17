@@ -5,7 +5,6 @@ gnomish_herbalist = {
 		or = {
 			species = gnome
 			species = goblin
-			species = dwarf
 		}
 	}
 }

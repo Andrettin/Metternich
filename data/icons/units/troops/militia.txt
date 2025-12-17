@@ -1,0 +1,3 @@
+peasant_levy = {
+	filepath = "icons/units/troops/peasant_levy.png"
+}

@@ -1,7 +1,7 @@
 peasant_levies = {
 	name = "Peasant Levies"
 	unit_class = peasant_levies
-	icon = pikemen
+	icon = peasant_levy
 	stats = {
 		melee = 3
 		defense = 3
