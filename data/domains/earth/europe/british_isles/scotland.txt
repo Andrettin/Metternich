@@ -1,23 +1,10 @@
-alba = {
-	name = "Alba"
-	type = polity
-	culture = highlander
-	default_religion = catholic
-	default_tier = kingdom
-	default_government_type = monarchy
-	default_capital = edinburgh
-	eras = {
-		medieval_era
-	}
-	core_provinces = {
-		highlands
-	}
-}
-
 scotland = {
 	name = "Scotland"
 	type = polity
-	culture = scottish
+	cultures = {
+		highlander
+		scottish
+	}
 	default_religion = protestant
 	default_tier = kingdom
 	default_government_type = monarchy
@@ -29,5 +16,11 @@ scotland = {
 		lothian
 		highlands
 		ayrshire
+	}
+	
+	history = {
+		renaissance_era = {
+			culture = scottish
+		}
 	}
 }

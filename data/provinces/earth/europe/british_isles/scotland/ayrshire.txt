@@ -25,7 +25,7 @@ ayrshire = {
 		}
 		
 		1360 = {
-			owner = alba #part of Scotland in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			owner = scotland #part of Scotland in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 			culture = highlander
 			religion = catholic
 		}
