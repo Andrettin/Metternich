@@ -84,6 +84,10 @@ void domain::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->core_provinces.push_back(province::get(value));
 		}
+	} else if (tag == "core_holdings") {
+		for (const std::string &value : values) {
+			this->core_holdings.push_back(site::get(value));
+		}
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}

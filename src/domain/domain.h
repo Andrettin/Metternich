@@ -217,6 +217,11 @@ public:
 		return this->core_provinces;
 	}
 
+	const std::vector<const site *> &get_core_holdings() const
+	{
+		return this->core_holdings;
+	}
+
 	bool can_declare_war() const;
 
 	std::vector<const technology *> get_available_technologies() const;
@@ -247,6 +252,7 @@ private:
 	title_name_map title_names;
 	office_title_name_map office_title_names;
 	std::vector<province *> core_provinces;
+	std::vector<const site *> core_holdings;
 	qunique_ptr<domain_history> history;
 	qunique_ptr<domain_game_data> game_data;
 	qunique_ptr<country_turn_data> turn_data;
