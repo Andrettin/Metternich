@@ -1,0 +1,11 @@
+roll_domain_event = {
+	name = "Roll Domain Event"
+	trigger = quarterly_pulse
+	hidden = true
+	immediate_effects = {
+		random_list = {
+			36 = { #no event
+			}
+		}
+	}
+}
