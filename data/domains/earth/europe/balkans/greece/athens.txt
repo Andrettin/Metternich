@@ -2,47 +2,27 @@ athens = {
 	name = "Athens"
 	type = polity
 	color = { 19 139 244 }
-	culture = greek
+	cultures = {
+		greek
+		catalan #the Catalan Duchy of Athens (Athenes)
+		french #the French Duchy of Athens (Atenes)
+	}
 	default_religion = pagan
 	default_tier = duchy
 	default_government_type = republic
 	default_capital = athens
 	eras = {
 		ancient_era
-	}
-	core_provinces = {
-		attica
-	}
-}
-
-athenes = { #the French Duchy of Athens
-	name = "Athenes"
-	type = polity
-	culture = french
-	default_religion = catholic
-	default_tier = duchy
-	default_government_type = monarchy
-	default_capital = athens
-	eras = {
 		medieval_era
 	}
 	core_provinces = {
 		attica
 	}
-}
-
-atenes = { #the Catalan Duchy of Athens
-	name = "Atenes"
-	type = polity
-	culture = catalan
-	default_religion = catholic
-	default_tier = duchy
-	default_government_type = monarchy
-	default_capital = athens
-	eras = {
-		medieval_era
-	}
-	core_provinces = {
-		attica
+	
+	history = {
+		1360 = {
+			culture = catalan #the Duchy of Athens existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			religion = catholic
+		}
 	}
 }
