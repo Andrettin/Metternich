@@ -1,7 +1,9 @@
-lingen = {
-	name = "Lingen"
+bentheim = {
+	name = "Bentheim"
 	world = earth
-	geocoordinate = { 7.3172222222222 52.523333333333 }
+	geocoordinate = { 7.1597222222222 52.303055555556 } #Bad Bentheim
+	type = holding
+	holding_type = castle
 	province = east_friesland
 	
 	history = {

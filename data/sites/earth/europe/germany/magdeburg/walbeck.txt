@@ -1,8 +1,10 @@
-bentheim = {
-	name = "Bentheim"
+walbeck = {
+	name = "Walbeck"
 	world = earth
-	#geocoordinate = { 7.1597222222222 52.303055555556 }
-	province = east_friesland
+	geocoordinate = { 11.067222222222 52.281666666667 }
+	type = holding
+	holding_type = guild
+	province = magdeburg
 	
 	history = {
 		919 = {

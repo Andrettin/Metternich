@@ -1,0 +1,8 @@
+quackenbruck = {
+	name = "Quackenbruck" #"Quackenbrück"
+	world = earth
+	geocoordinate = { 7.9575 52.677222222222 }
+	type = holding
+	holding_type = castle
+	province = east_friesland
+}

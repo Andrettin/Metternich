@@ -3,7 +3,7 @@ minden = {
 	world = earth
 	geocoordinate = { 8.916666666666666 52.288333333333334 }
 	type = holding
-	holding_type = temple
+	holding_type = temple #or castle
 	#resource = cattle
 	province = westphalia
 	

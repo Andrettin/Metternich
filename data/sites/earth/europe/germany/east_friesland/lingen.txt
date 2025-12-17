@@ -1,8 +1,10 @@
-walbeck = {
-	name = "Walbeck"
+lingen = {
+	name = "Lingen"
 	world = earth
-	geocoordinate = { 11.067222222222 52.281666666667 }
-	province = magdeburg
+	geocoordinate = { 7.3172222222222 52.523333333333 }
+	type = holding
+	holding_type = guild
+	province = east_friesland
 	
 	history = {
 		919 = {

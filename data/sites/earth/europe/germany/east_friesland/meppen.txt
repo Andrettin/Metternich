@@ -1,0 +1,8 @@
+meppen = {
+	name = "Meppen"
+	world = earth
+	geocoordinate = { 7.29097 52.69064 }
+	type = holding
+	holding_type = castle
+	province = east_friesland
+}

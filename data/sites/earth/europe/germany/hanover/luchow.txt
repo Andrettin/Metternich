@@ -1,0 +1,8 @@
+luchow = {
+	name = "Luchow" #"Lüchow"
+	world = earth
+	geocoordinate = { 11.15 52.966666666667 }
+	type = holding
+	holding_type = castle
+	province = hanover
+}

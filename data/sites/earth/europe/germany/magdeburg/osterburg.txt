@@ -1,0 +1,8 @@
+osterburg = {
+	name = "Osterburg"
+	world = earth
+	geocoordinate = { 11.766666666667 52.783333333333 }
+	type = holding
+	holding_type = castle
+	province = magdeburg
+}
