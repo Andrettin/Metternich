@@ -91,7 +91,7 @@ public:
 		if (this->type != nullptr) {
 			return this->type;
 		} else if (this->unit_class != nullptr) {
-			return scope->get_culture()->get_military_class_unit_type(this->unit_class);
+			return scope->get_game_data()->get_culture()->get_military_class_unit_type(this->unit_class);
 		} else if (this->category != military_unit_category::none) {
 			return scope->get_military()->get_best_military_unit_category_type(this->category);
 		} else {

@@ -208,7 +208,7 @@ const icon *military_unit::get_icon() const
 const metternich::culture *military_unit::get_culture() const
 {
 	if (this->get_country() != nullptr) {
-		return this->get_country()->get_culture();
+		return this->get_country()->get_game_data()->get_culture();
 	}
 
 	if (this->get_type()->get_culture() != nullptr) {

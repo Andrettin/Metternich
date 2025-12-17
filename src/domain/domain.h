@@ -7,7 +7,6 @@
 
 Q_MOC_INCLUDE("domain/country_ai.h")
 Q_MOC_INCLUDE("domain/country_turn_data.h")
-Q_MOC_INCLUDE("domain/culture.h")
 Q_MOC_INCLUDE("domain/domain_game_data.h")
 Q_MOC_INCLUDE("domain/domain_tier.h")
 Q_MOC_INCLUDE("domain/government_type.h")
@@ -56,7 +55,6 @@ class domain final : public named_data_entry, public data_type<domain>
 	Q_PROPERTY(metternich::domain_tier default_tier MEMBER default_tier READ get_default_tier)
 	Q_PROPERTY(metternich::domain_tier min_tier MEMBER min_tier READ get_min_tier)
 	Q_PROPERTY(metternich::domain_tier max_tier MEMBER max_tier READ get_max_tier)
-	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
 	Q_PROPERTY(metternich::religion* default_religion MEMBER default_religion NOTIFY changed)
 	Q_PROPERTY(metternich::government_type* default_government_type MEMBER default_government_type NOTIFY changed)
 	Q_PROPERTY(metternich::site* default_capital MEMBER default_capital NOTIFY changed)
@@ -83,6 +81,7 @@ public:
 	explicit domain(const std::string &identifier);
 	~domain();
 
+	virtual void process_gsml_property(const gsml_property &property) override;
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
 	virtual void check() const override;
@@ -165,13 +164,22 @@ public:
 	using named_data_entry::get_name;
 
 	const std::string &get_name(const government_type *government_type, const domain_tier tier) const;
-	std::string get_titled_name(const government_type *government_type, const domain_tier tier, const religion *religion) const;
-	const std::string &get_title_name(const government_type *government_type, const domain_tier tier, const religion *religion) const;
-	const std::string &get_office_title_name(const office *office, const government_type *government_type, const domain_tier tier, const gender gender, const religion *religion) const;
+	std::string get_titled_name(const government_type *government_type, const domain_tier tier, const culture *culture, const religion *religion) const;
+	const std::string &get_title_name(const government_type *government_type, const domain_tier tier, const culture *culture, const religion *religion) const;
+	const std::string &get_office_title_name(const office *office, const government_type *government_type, const domain_tier tier, const gender gender, const culture *culture, const religion *religion) const;
 
-	const metternich::culture *get_culture() const
+	const std::vector<const culture *> &get_cultures() const
 	{
-		return this->culture;
+		return this->cultures;
+	}
+
+	const culture *get_default_culture() const
+	{
+		if (this->get_cultures().empty()) {
+			return nullptr;
+		}
+
+		return this->get_cultures().at(0);
 	}
 
 	const religion *get_default_religion() const
@@ -227,7 +235,7 @@ private:
 	domain_tier default_tier{};
 	domain_tier min_tier{};
 	domain_tier max_tier{};
-	metternich::culture *culture = nullptr;
+	std::vector<const culture *> cultures;
 	religion *default_religion = nullptr;
 	government_type *default_government_type = nullptr;
 	site *default_capital = nullptr;

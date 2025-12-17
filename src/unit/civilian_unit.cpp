@@ -144,7 +144,7 @@ const icon *civilian_unit::get_icon() const
 const metternich::culture *civilian_unit::get_culture() const
 {
 	if (this->get_owner() != nullptr) {
-		return this->get_owner()->get_culture();
+		return this->get_owner()->get_game_data()->get_culture();
 	}
 
 	if (this->get_type()->get_culture() != nullptr) {

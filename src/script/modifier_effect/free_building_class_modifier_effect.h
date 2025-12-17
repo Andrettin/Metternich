@@ -32,7 +32,7 @@ public:
 
 	virtual std::string get_base_string(const domain *scope) const override
 	{
-		const building_type *building = scope->get_culture()->get_building_class_type(this->building_class);
+		const building_type *building = scope->get_game_data()->get_culture()->get_building_class_type(this->building_class);
 
 		return std::format("Free Building: {}", building ? building->get_name() : this->building_class->get_name());
 	}

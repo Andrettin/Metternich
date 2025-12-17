@@ -264,12 +264,12 @@ bool technology::is_available_for_country(const domain *domain) const
 	}
 
 	if (!this->cultures.empty() || !this->cultural_groups.empty()) {
-		if (this->cultures.contains(domain->get_culture())) {
+		if (this->cultures.contains(domain->get_game_data()->get_culture())) {
 			return true;
 		}
 
 		for (const cultural_group *cultural_group : this->cultural_groups) {
-			if (domain->get_culture()->is_part_of_group(cultural_group)) {
+			if (domain->get_game_data()->get_culture()->is_part_of_group(cultural_group)) {
 				return true;
 			}
 		}
@@ -708,7 +708,7 @@ QString technology::get_effects_string(const metternich::domain *domain) const
 		}
 	}
 
-	const std::vector<const building_type *> buildings = this->get_enabled_buildings_for_culture(domain->get_culture());
+	const std::vector<const building_type *> buildings = this->get_enabled_buildings_for_culture(domain->get_game_data()->get_culture());
 	if (!buildings.empty()) {
 		for (const building_type *building : buildings) {
 			if (!str.empty()) {
@@ -783,7 +783,7 @@ QString technology::get_effects_string(const metternich::domain *domain) const
 		}
 	}
 
-	const std::vector<const civilian_unit_type *> civilian_units = this->get_enabled_civilian_units_for_culture(domain->get_culture());
+	const std::vector<const civilian_unit_type *> civilian_units = this->get_enabled_civilian_units_for_culture(domain->get_game_data()->get_culture());
 	if (!civilian_units.empty()) {
 		for (const civilian_unit_type *civilian_unit : civilian_units) {
 			if (!str.empty()) {
@@ -794,7 +794,7 @@ QString technology::get_effects_string(const metternich::domain *domain) const
 		}
 	}
 
-	const std::vector<const military_unit_type *> military_units = get_enabled_military_units_for_culture(domain->get_culture());
+	const std::vector<const military_unit_type *> military_units = get_enabled_military_units_for_culture(domain->get_game_data()->get_culture());
 	if (!military_units.empty()) {
 		for (const military_unit_type *military_unit : military_units) {
 			if (!str.empty()) {
@@ -805,7 +805,7 @@ QString technology::get_effects_string(const metternich::domain *domain) const
 		}
 	}
 
-	const std::vector<const transporter_type *> transporters = get_enabled_transporters_for_culture(domain->get_culture());
+	const std::vector<const transporter_type *> transporters = get_enabled_transporters_for_culture(domain->get_game_data()->get_culture());
 	if (!transporters.empty()) {
 		for (const transporter_type *transporter : transporters) {
 			if (!str.empty()) {

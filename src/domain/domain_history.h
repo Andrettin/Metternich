@@ -8,6 +8,7 @@
 #include "util/centesimal_int.h"
 
 Q_MOC_INCLUDE("character/character.h")
+Q_MOC_INCLUDE("domain/culture.h")
 Q_MOC_INCLUDE("domain/domain_tier.h")
 Q_MOC_INCLUDE("domain/government_type.h")
 Q_MOC_INCLUDE("religion/religion.h")
@@ -16,6 +17,7 @@ namespace metternich {
 
 class character;
 class consulate;
+class culture;
 class domain;
 class government_type;
 class law;
@@ -31,6 +33,7 @@ class domain_history final : public data_entry_history
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::domain_tier tier MEMBER tier)
+	Q_PROPERTY(const metternich::culture* culture MEMBER culture READ get_culture)
 	Q_PROPERTY(const metternich::religion* religion MEMBER religion READ get_religion)
 	Q_PROPERTY(const metternich::government_type* government_type MEMBER government_type READ get_government_type)
 	Q_PROPERTY(archimedes::centesimal_int literacy_rate MEMBER literacy_rate READ get_literacy_rate)
@@ -45,6 +48,11 @@ public:
 	domain_tier get_tier() const
 	{
 		return this->tier;
+	}
+
+	const metternich::culture *get_culture() const
+	{
+		return this->culture;
 	}
 
 	const metternich::religion *get_religion() const
@@ -117,6 +125,7 @@ public:
 private:
 	const metternich::domain *domain = nullptr;
 	domain_tier tier{};
+	const metternich::culture *culture = nullptr;
 	const metternich::religion *religion = nullptr;
 	const metternich::government_type *government_type = nullptr;
 	data_entry_map<office, const character *> office_holders;

@@ -105,7 +105,7 @@
 namespace metternich {
 
 domain_game_data::domain_game_data(metternich::domain *domain)
-	: domain(domain), tier(domain_tier::none), religion(domain->get_default_religion())
+	: domain(domain), tier(domain_tier::none), culture(domain->get_default_culture()), religion(domain->get_default_religion())
 {
 	this->economy = make_qunique<country_economy>(domain, this);
 	this->government = make_qunique<country_government>(domain, this);
@@ -114,6 +114,7 @@ domain_game_data::domain_game_data(metternich::domain *domain)
 
 	connect(this, &domain_game_data::tier_changed, this, &domain_game_data::title_name_changed);
 	connect(this, &domain_game_data::government_type_changed, this, &domain_game_data::title_name_changed);
+	connect(this, &domain_game_data::culture_changed, this, &domain_game_data::title_name_changed);
 	connect(this, &domain_game_data::religion_changed, this, &domain_game_data::title_name_changed);
 	connect(this, &domain_game_data::rank_changed, this, &domain_game_data::type_name_changed);
 
@@ -138,6 +139,8 @@ void domain_game_data::process_gsml_property(const gsml_property &property)
 
 	if (key == "tier") {
 		this->tier = magic_enum::enum_cast<domain_tier>(value).value();
+	} else if (key == "culture") {
+		this->culture = culture::get(value);
 	} else if (key == "religion") {
 		this->religion = religion::get(value);
 	} else if (key == "government_type") {
@@ -188,6 +191,7 @@ gsml_data domain_game_data::to_gsml_data() const
 	gsml_data data(this->domain->get_identifier());
 
 	data.add_property("tier", std::string(magic_enum::enum_name(this->get_tier())));
+	data.add_property("culture", this->get_culture()->get_identifier());
 	data.add_property("religion", this->get_religion()->get_identifier());
 
 	if (this->get_government_type() != nullptr) {
@@ -554,7 +558,7 @@ void domain_game_data::do_cultural_change()
 		for (const metternich::culture *culture : potential_cultures) {
 			int chance = base_cultural_derivation_chance;
 
-			if (this->domain->get_culture() == culture) {
+			if (this->get_culture() == culture) {
 				chance *= 2;
 			}
 
@@ -684,12 +688,12 @@ const std::string &domain_game_data::get_name() const
 
 std::string domain_game_data::get_titled_name() const
 {
-	return this->domain->get_titled_name(this->get_government_type(), this->get_tier(), this->get_religion());
+	return this->domain->get_titled_name(this->get_government_type(), this->get_tier(), this->get_culture(), this->get_religion());
 }
 
 const std::string &domain_game_data::get_title_name() const
 {
-	return this->domain->get_title_name(this->get_government_type(), this->get_tier(), this->get_religion());
+	return this->domain->get_title_name(this->get_government_type(), this->get_tier(), this->get_culture(), this->get_religion());
 }
 
 const std::string &domain_game_data::get_flag() const
@@ -703,6 +707,29 @@ const std::string &domain_game_data::get_flag() const
 	}
 
 	return this->domain->get_flag();
+}
+
+void domain_game_data::set_culture(const metternich::culture *culture)
+{
+	if (culture == this->get_culture()) {
+		return;
+	}
+
+	assert_throw(vector::contains(this->domain->get_cultures(), culture));
+
+	this->culture = culture;
+
+	for (const province *province : this->get_provinces()) {
+		if (province->get_game_data()->get_population()->get_main_culture() == nullptr) {
+			province->get_game_data()->set_culture(this->get_culture());
+		}
+	}
+
+	this->get_technology()->check_technologies();
+
+	if (game::get()->is_running()) {
+		emit culture_changed();
+	}
 }
 
 void domain_game_data::set_religion(const metternich::religion *religion)
@@ -2059,7 +2086,7 @@ QCoro::Task<void> domain_game_data::create_diplomatic_map_mode_image(const diplo
 					color = &tile->get_terrain()->get_color();
 					break;
 				case diplomatic_map_mode::cultural: {
-					const culture *culture = nullptr;
+					const metternich::culture *culture = nullptr;
 
 					if (tile->get_site() != nullptr && tile->get_site()->get_game_data()->can_have_population() && tile->get_site()->get_game_data()->get_culture() != nullptr) {
 						culture = tile->get_site()->get_game_data()->get_culture();
@@ -2343,10 +2370,10 @@ void domain_game_data::on_population_type_count_changed(const population_type *t
 
 std::vector<const phenotype *> domain_game_data::get_weighted_phenotypes() const
 {
-	std::vector<const phenotype *> weighted_phenotypes = this->get_population()->get_weighted_phenotypes_for_culture(this->domain->get_culture());
+	std::vector<const phenotype *> weighted_phenotypes = this->get_population()->get_weighted_phenotypes_for_culture(this->get_culture());
 
 	if (weighted_phenotypes.empty()) {
-		weighted_phenotypes = this->domain->get_culture()->get_weighted_phenotypes();
+		weighted_phenotypes = this->get_culture()->get_weighted_phenotypes();
 	}
 
 	return weighted_phenotypes;
@@ -2673,7 +2700,7 @@ void domain_game_data::set_idea(const idea_slot *slot, const idea *idea)
 
 			switch (slot->get_idea_type()) {
 				case idea_type::deity:
-					engine_interface::get()->add_notification(std::format("{} Worshiped", idea->get_cultural_name(this->domain->get_culture())), interior_minister_portrait, std::format("The cult of {} has become widespread in our nation!\n\n{}", idea->get_cultural_name(this->domain->get_culture()), idea->get_modifier_string(this->domain)));
+					engine_interface::get()->add_notification(std::format("{} Worshiped", idea->get_cultural_name(this->get_culture())), interior_minister_portrait, std::format("The cult of {} has become widespread in our nation!\n\n{}", idea->get_cultural_name(this->get_culture()), idea->get_modifier_string(this->domain)));
 					break;
 				default:
 					assert_throw(false);
@@ -2757,7 +2784,7 @@ void domain_game_data::check_idea(const idea_slot *slot)
 
 				switch (slot->get_idea_type()) {
 					case idea_type::deity:
-						engine_interface::get()->add_notification(std::format("{} No Longer Worshiped", old_idea->get_cultural_name(this->domain->get_culture())), interior_minister_portrait, std::format("Your Excellency, despite a long and proud history of being worshiped in our nation, the cult of {} has lost favor amongst our people, and declined to nothingness.", old_idea->get_cultural_name(this->domain->get_culture())));
+						engine_interface::get()->add_notification(std::format("{} No Longer Worshiped", old_idea->get_cultural_name(this->get_culture())), interior_minister_portrait, std::format("Your Excellency, despite a long and proud history of being worshiped in our nation, the cult of {} has lost favor amongst our people, and declined to nothingness.", old_idea->get_cultural_name(this->get_culture())));
 						break;
 					default:
 						assert_throw(false);
@@ -3106,7 +3133,7 @@ void domain_game_data::generate_ruler()
 	const metternich::government_type *government_type = this->get_government_type();
 	assert_throw(government_type != nullptr);
 
-	std::vector<const species *> species_list = this->domain->get_culture()->get_species();
+	std::vector<const species *> species_list = this->get_culture()->get_species();
 	assert_throw(!species_list.empty());
 
 	const species *species = nullptr;
@@ -3128,7 +3155,7 @@ void domain_game_data::generate_ruler()
 
 	const character_class *character_class = vector::get_random(potential_classes);
 
-	const character *ruler = character::generate(species, character_class, 1, nullptr, this->domain->get_culture(), this->get_religion(), this->get_capital(), {}, 0, {});
+	const character *ruler = character::generate(species, character_class, 1, nullptr, this->get_culture(), this->get_religion(), this->get_capital(), {}, 0, {});
 	ruler->get_game_data()->set_domain(this->domain);
 	this->get_government()->set_office_holder(defines::get()->get_ruler_office(), ruler);
 }
@@ -3207,7 +3234,7 @@ bool domain_game_data::can_gain_civilian_unit(const civilian_unit_type *civilian
 		return false;
 	}
 
-	if (this->domain->get_culture()->get_civilian_class_unit_type(civilian_unit_type->get_unit_class()) != civilian_unit_type) {
+	if (this->get_culture()->get_civilian_class_unit_type(civilian_unit_type->get_unit_class()) != civilian_unit_type) {
 		return false;
 	}
 
@@ -3505,7 +3532,7 @@ QVariantList domain_game_data::get_transporter_type_commodity_costs_qvariant_lis
 	return archimedes::map::to_qvariant_list(this->get_transporter_type_commodity_costs(transporter_type, quantity));
 }
 
-const transporter_type *domain_game_data::get_best_transporter_category_type(const transporter_category category, const culture *culture) const
+const transporter_type *domain_game_data::get_best_transporter_category_type(const transporter_category category, const metternich::culture *culture) const
 {
 	const transporter_type *best_type = nullptr;
 	int best_score = -1;
@@ -3555,7 +3582,7 @@ const transporter_type *domain_game_data::get_best_transporter_category_type(con
 
 const transporter_type *domain_game_data::get_best_transporter_category_type(const transporter_category category) const
 {
-	return this->get_best_transporter_category_type(category, this->domain->get_culture());
+	return this->get_best_transporter_category_type(category, this->get_culture());
 }
 
 void domain_game_data::set_transporter_type_stat_modifier(const transporter_type *type, const transporter_stat stat, const centesimal_int &value)

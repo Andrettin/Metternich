@@ -23,6 +23,7 @@ Q_MOC_INCLUDE("domain/country_economy.h")
 Q_MOC_INCLUDE("domain/country_government.h")
 Q_MOC_INCLUDE("domain/country_military.h")
 Q_MOC_INCLUDE("domain/country_technology.h")
+Q_MOC_INCLUDE("domain/culture.h")
 Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("domain/domain_tier.h")
 Q_MOC_INCLUDE("domain/government_type.h")
@@ -102,6 +103,7 @@ class domain_game_data final : public QObject
 	Q_PROPERTY(QString titled_name READ get_titled_name_qstring NOTIFY title_name_changed)
 	Q_PROPERTY(QString title_name READ get_title_name_qstring NOTIFY title_name_changed)
 	Q_PROPERTY(QString flag READ get_flag_qstring NOTIFY title_name_changed)
+	Q_PROPERTY(const metternich::culture* culture READ get_culture NOTIFY culture_changed)
 	Q_PROPERTY(const metternich::religion* religion READ get_religion NOTIFY religion_changed)
 	Q_PROPERTY(const metternich::domain* overlord READ get_overlord NOTIFY overlord_changed)
 	Q_PROPERTY(QString type_name READ get_type_name_qstring NOTIFY type_name_changed)
@@ -231,6 +233,13 @@ public:
 	{
 		return QString::fromStdString(this->get_flag());
 	}
+
+	const metternich::culture *get_culture() const
+	{
+		return this->culture;
+	}
+
+	void set_culture(const metternich::culture *culture);
 
 	const metternich::religion *get_religion() const
 	{
@@ -1174,6 +1183,7 @@ public:
 signals:
 	void tier_changed();
 	void title_name_changed();
+	void culture_changed();
 	void religion_changed();
 	void overlord_changed();
 	void type_name_changed();
@@ -1215,6 +1225,7 @@ signals:
 private:
 	metternich::domain *domain = nullptr;
 	domain_tier tier {};
+	const metternich::culture *culture = nullptr;
 	const metternich::religion *religion = nullptr;
 	const metternich::domain *overlord = nullptr;
 	const metternich::government_type *government_type = nullptr;

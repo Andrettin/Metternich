@@ -120,7 +120,7 @@ const icon *transporter::get_icon() const
 const metternich::culture_base *transporter::get_culture() const
 {
 	if (this->get_country() != nullptr) {
-		return this->get_country()->get_culture();
+		return this->get_country()->get_game_data()->get_culture();
 	}
 
 	if (this->get_type()->get_culture() != nullptr) {

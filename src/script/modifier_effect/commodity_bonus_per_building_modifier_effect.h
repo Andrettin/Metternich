@@ -46,7 +46,7 @@ public:
 
 	virtual std::string get_string(const scope_type *scope, const centesimal_int &multiplier, const bool ignore_decimals) const override
 	{
-		if (scope->get_culture()->get_building_class_type(this->building->get_building_class()) != this->building && scope->get_game_data()->get_settlement_building_count(this->building) == 0) {
+		if (scope->get_game_data()->get_culture()->get_building_class_type(this->building->get_building_class()) != this->building && scope->get_game_data()->get_settlement_building_count(this->building) == 0) {
 			return std::string();
 		}
 

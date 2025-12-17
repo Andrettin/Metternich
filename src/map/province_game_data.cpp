@@ -301,7 +301,7 @@ void province_game_data::set_owner(const domain *domain)
 		this->get_owner()->get_game_data()->add_province(this->province);
 
 		if (this->get_population()->get_main_culture() == nullptr) {
-			this->set_culture(this->get_owner()->get_culture());
+			this->set_culture(this->get_owner()->get_game_data()->get_culture());
 		}
 
 		if (this->get_population()->get_main_religion() == nullptr) {
@@ -375,7 +375,7 @@ void province_game_data::on_population_main_culture_changed(const metternich::cu
 	if (culture != nullptr) {
 		this->set_culture(culture);
 	} else if (this->get_owner() != nullptr) {
-		this->set_culture(this->get_owner()->get_culture());
+		this->set_culture(this->get_owner()->get_game_data()->get_culture());
 	} else {
 		this->set_culture(nullptr);
 	}

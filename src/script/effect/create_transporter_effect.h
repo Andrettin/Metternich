@@ -90,7 +90,7 @@ public:
 		if (this->type != nullptr) {
 			return this->type;
 		} else if (this->transporter_class != nullptr) {
-			return scope->get_culture()->get_transporter_class_type(this->transporter_class);
+			return scope->get_game_data()->get_culture()->get_transporter_class_type(this->transporter_class);
 		} else if (this->category != transporter_category::none) {
 			return scope->get_game_data()->get_best_transporter_category_type(this->category);
 		} else {

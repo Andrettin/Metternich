@@ -584,30 +584,6 @@ void game::apply_history(const QDate &start_date)
 			}
 		}
 
-		for (const cultural_group *cultural_group : cultural_group::get_all()) {
-			const culture_history *culture_history = cultural_group->get_history();
-
-			for (const domain *domain : this->get_countries()) {
-				if (!domain->get_culture()->is_part_of_group(cultural_group)) {
-					continue;
-				}
-
-				culture_history->apply_to_domain(domain);
-			}
-		}
-
-		for (const culture *culture : culture::get_all()) {
-			const culture_history *culture_history = culture->get_history();
-
-			for (const domain *domain : this->get_countries()) {
-				if (domain->get_culture() != culture) {
-					continue;
-				}
-
-				culture_history->apply_to_domain(domain);
-			}
-		}
-
 		for (const domain *domain : this->get_countries()) {
 			const domain_history *domain_history = domain->get_history();
 			domain_game_data *domain_game_data = domain->get_game_data();
@@ -617,6 +593,10 @@ void game::apply_history(const QDate &start_date)
 
 			if (domain_history->get_tier() != domain_tier::none) {
 				domain->get_game_data()->set_tier(domain_history->get_tier());
+			}
+
+			if (domain_history->get_culture() != nullptr) {
+				domain_game_data->set_culture(domain_history->get_culture());
 			}
 
 			if (domain_history->get_religion() != nullptr) {
@@ -694,6 +674,30 @@ void game::apply_history(const QDate &start_date)
 
 				domain_game_data->set_consulate(other_country, consulate);
 				other_country->get_game_data()->set_consulate(domain, consulate);
+			}
+		}
+
+		for (const cultural_group *cultural_group : cultural_group::get_all()) {
+			const culture_history *culture_history = cultural_group->get_history();
+
+			for (const domain *domain : this->get_countries()) {
+				if (!domain->get_game_data()->get_culture()->is_part_of_group(cultural_group)) {
+					continue;
+				}
+
+				culture_history->apply_to_domain(domain);
+			}
+		}
+
+		for (const culture *culture : culture::get_all()) {
+			const culture_history *culture_history = culture->get_history();
+
+			for (const domain *domain : this->get_countries()) {
+				if (domain->get_game_data()->get_culture() != culture) {
+					continue;
+				}
+
+				culture_history->apply_to_domain(domain);
 			}
 		}
 

@@ -315,7 +315,7 @@ const military_unit_type *country_military::get_best_military_unit_category_type
 
 const military_unit_type *country_military::get_best_military_unit_category_type(const military_unit_category category) const
 {
-	return this->get_best_military_unit_category_type(category, this->domain->get_culture());
+	return this->get_best_military_unit_category_type(category, this->domain->get_game_data()->get_culture());
 }
 
 void country_military::add_army(qunique_ptr<army> &&army)

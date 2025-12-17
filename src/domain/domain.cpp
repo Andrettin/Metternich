@@ -41,12 +41,29 @@ domain::~domain()
 {
 }
 
+void domain::process_gsml_property(const gsml_property &property)
+{
+	const std::string &key = property.get_key();
+	const std::string &value = property.get_value();
+
+	if (key == "culture") {
+		assert_throw(property.get_operator() == gsml_operator::assignment);
+		this->cultures = { culture::get(value) };
+	} else {
+		named_data_entry::process_gsml_property(property);
+	}
+}
+
 void domain::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "conditional_flags") {
+	if (tag == "cultures") {
+		for (const std::string &value : values) {
+			this->cultures.push_back(culture::get(value));
+		}
+	} else if (tag == "conditional_flags") {
 		scope.for_each_child([&](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
 			auto conditions = std::make_unique<and_condition<domain>>();
@@ -123,8 +140,8 @@ void domain::check() const
 		throw std::runtime_error(std::format("Domain \"{}\" has no max tier.", this->get_identifier()));
 	}
 
-	if (this->get_culture() == nullptr) {
-		throw std::runtime_error(std::format("Domain \"{}\" has no culture.", this->get_identifier()));
+	if (this->get_cultures().empty()) {
+		throw std::runtime_error(std::format("Domain \"{}\" has no cultures.", this->get_identifier()));
 	}
 
 	if (this->get_default_religion() == nullptr) {
@@ -248,7 +265,7 @@ const std::string &domain::get_name(const government_type *government_type, cons
 	return this->get_name();
 }
 
-std::string domain::get_titled_name(const government_type *government_type, const domain_tier tier, const religion *religion) const
+std::string domain::get_titled_name(const government_type *government_type, const domain_tier tier, const culture *culture, const religion *religion) const
 {
 	auto find_iterator = this->short_names.find(government_type);
 	if (find_iterator == this->short_names.end()) {
@@ -270,7 +287,7 @@ std::string domain::get_titled_name(const government_type *government_type, cons
 		return this->get_name();
 	}
 
-	const std::string title_name = this->get_title_name(government_type, tier, religion);
+	const std::string title_name = this->get_title_name(government_type, tier, culture, religion);
 	const std::string country_name = this->get_name();
 	if (this->definite_article) {
 		return std::format("{} of the {}", title_name, country_name);
@@ -279,7 +296,7 @@ std::string domain::get_titled_name(const government_type *government_type, cons
 	}
 }
 
-const std::string &domain::get_title_name(const government_type *government_type, const domain_tier tier, const religion *religion) const
+const std::string &domain::get_title_name(const government_type *government_type, const domain_tier tier, const culture *culture, const religion *religion) const
 {
 	if (government_type == nullptr) {
 		return domain_tier_data::get(tier)->get_name();
@@ -302,13 +319,16 @@ const std::string &domain::get_title_name(const government_type *government_type
 	}
 
 	if (government_type->get_group()->is_religious()) {
+		assert_throw(religion != nullptr);
+
 		const std::string &religion_title_name = religion->get_title_name(government_type, tier);
 		if (!religion_title_name.empty()) {
 			return religion_title_name;
 		}
 	}
 
-	const std::string &culture_title_name = this->get_culture()->get_title_name(government_type, tier);
+	assert_throw(culture != nullptr);
+	const std::string &culture_title_name = culture->get_title_name(government_type, tier);
 	if (!culture_title_name.empty()) {
 		return culture_title_name;
 	}
@@ -318,7 +338,7 @@ const std::string &domain::get_title_name(const government_type *government_type
 	return government_type->get_title_name(tier);
 }
 
-const std::string &domain::get_office_title_name(const office *office, const government_type *government_type, const domain_tier tier, const gender gender, const religion *religion) const
+const std::string &domain::get_office_title_name(const office *office, const government_type *government_type, const domain_tier tier, const gender gender, const culture *culture, const religion *religion) const
 {
 	const auto office_find_iterator = this->office_title_names.find(office);
 	if (office_find_iterator != this->office_title_names.end()) {
@@ -347,13 +367,15 @@ const std::string &domain::get_office_title_name(const office *office, const gov
 	}
 
 	if (government_type->get_group()->is_religious() && office->is_ruler()) {
+		assert_throw(religion != nullptr);
 		const std::string &religion_office_title_name = religion->get_office_title_name(office, government_type, tier, gender);
 		if (!religion_office_title_name.empty()) {
 			return religion_office_title_name;
 		}
 	}
 
-	const std::string &culture_office_title_name = this->get_culture()->get_office_title_name(office, government_type, tier, gender);
+	assert_throw(culture != nullptr);
+	const std::string &culture_office_title_name = culture->get_office_title_name(office, government_type, tier, gender);
 	if (!culture_office_title_name.empty()) {
 		return culture_office_title_name;
 	}

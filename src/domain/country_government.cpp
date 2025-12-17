@@ -58,7 +58,7 @@ const std::string &country_government::get_office_title_name(const office *offic
 {
 	const character *office_holder = this->get_office_holder(office);
 	const gender gender = office_holder != nullptr ? office_holder->get_gender() : gender::male;
-	return this->domain->get_office_title_name(office, this->get_game_data()->get_government_type(), this->get_game_data()->get_tier(), gender, this->get_game_data()->get_religion());
+	return this->domain->get_office_title_name(office, this->get_game_data()->get_government_type(), this->get_game_data()->get_tier(), gender, this->get_game_data()->get_culture(), this->get_game_data()->get_religion());
 }
 
 QVariantList country_government::get_laws_qvariant_list() const
