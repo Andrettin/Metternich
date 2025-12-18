@@ -240,6 +240,7 @@ public:
 	}
 
 	void set_culture(const metternich::culture *culture);
+	void check_culture();
 
 	const metternich::religion *get_religion() const
 	{

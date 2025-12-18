@@ -299,6 +299,7 @@ void domain_game_data::do_turn()
 		this->check_characters();
 		this->check_ideas();
 		this->check_tier();
+		this->check_culture();
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error(std::format("Failed to process turn for country \"{}\".", this->domain->get_identifier())));
 	}
@@ -750,6 +751,51 @@ void domain_game_data::set_culture(const metternich::culture *culture)
 
 	if (game::get()->is_running()) {
 		emit culture_changed();
+	}
+}
+
+void domain_game_data::check_culture()
+{
+	std::vector<const metternich::culture *> potential_cultures;
+
+	if (this->get_government()->get_ruler() != nullptr && this->domain->is_culture_allowed(this->get_government()->get_ruler()->get_culture())) {
+		//use the ruler's culture for the domain if it is allowed for it
+		potential_cultures = { this->get_government()->get_ruler()->get_culture() };
+	} else {
+		//get the allowed culture with most population
+		int best_count = 0;
+
+		for (const auto &[culture, count] : this->get_population()->get_culture_counts()) {
+			if (!this->domain->is_culture_allowed(culture)) {
+				continue;
+			}
+
+			if (count < best_count) {
+				continue;
+			} else if (count > best_count) {
+				potential_cultures.clear();
+				best_count = count;
+			}
+
+			potential_cultures.push_back(culture);
+		}
+	}
+
+	if (potential_cultures.empty()) {
+		return;
+	}
+
+	const metternich::culture *chosen_culture = vector::get_random(potential_cultures);
+	if (chosen_culture == this->get_culture()) {
+		return;
+	}
+
+	this->set_culture(chosen_culture);
+
+	if (this->domain == game::get()->get_player_country()) {
+		const portrait *interior_minister_portrait = this->get_government()->get_interior_minister_portrait();
+
+		engine_interface::get()->add_notification("New State Culture", interior_minister_portrait, std::format("Your Excellency, the {} culture has taken hold of our institutions, becoming our new state culture!", chosen_culture->get_name()));
 	}
 }
 
