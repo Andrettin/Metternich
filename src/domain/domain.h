@@ -173,6 +173,8 @@ public:
 		return this->cultures;
 	}
 
+	bool is_culture_allowed(const culture *culture) const;
+
 	const culture *get_default_culture() const
 	{
 		if (this->get_cultures().empty()) {

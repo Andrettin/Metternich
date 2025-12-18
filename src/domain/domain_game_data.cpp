@@ -715,7 +715,9 @@ void domain_game_data::set_culture(const metternich::culture *culture)
 		return;
 	}
 
-	assert_throw(vector::contains(this->domain->get_cultures(), culture));
+	if (!this->domain->is_culture_allowed(culture)) {
+		throw std::runtime_error(std::format("Tried to set culture \"{}\" for domain \"{}\", which does not have that culture as an allowed one.", culture->get_identifier(), this->domain->get_identifier()));
+	}
 
 	this->culture = culture;
 

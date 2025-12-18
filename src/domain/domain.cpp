@@ -28,6 +28,7 @@
 #include "util/gender.h"
 #include "util/log_util.h"
 #include "util/string_util.h"
+#include "util/vector_util.h"
 
 namespace metternich {
 
@@ -142,10 +143,6 @@ void domain::check() const
 
 	if (this->get_max_tier() == domain_tier::none) {
 		throw std::runtime_error(std::format("Domain \"{}\" has no max tier.", this->get_identifier()));
-	}
-
-	if (this->get_cultures().empty()) {
-		throw std::runtime_error(std::format("Domain \"{}\" has no cultures.", this->get_identifier()));
 	}
 
 	if (this->get_default_religion() == nullptr) {
@@ -391,6 +388,15 @@ const std::string &domain::get_office_title_name(const office *office, const gov
 	assert_throw(government_type != nullptr);
 
 	return government_type->get_office_title_name(office, tier, gender);
+}
+
+bool domain::is_culture_allowed(const culture *culture) const
+{
+	if (this->get_cultures().empty()) {
+		return true;
+	}
+
+	return vector::contains(this->get_cultures(), culture);
 }
 
 bool domain::can_declare_war() const
