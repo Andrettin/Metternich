@@ -219,10 +219,14 @@ public:
 		return this->core_provinces;
 	}
 
+	std::vector<const province *> get_core_provinces_for_tier(const domain_tier tier) const;
+
 	const std::vector<const site *> &get_core_holdings() const
 	{
 		return this->core_holdings;
 	}
+
+	std::vector<const site *> get_core_holdings_for_tier(const domain_tier tier) const;
 
 	bool can_declare_war() const;
 
@@ -255,6 +259,8 @@ private:
 	office_title_name_map office_title_names;
 	std::vector<province *> core_provinces;
 	std::vector<const site *> core_holdings;
+	std::map<domain_tier, std::vector<const province *>> tier_core_provinces;
+	std::map<domain_tier, std::vector<const site *>> tier_core_holdings;
 	qunique_ptr<domain_history> history;
 	qunique_ptr<domain_game_data> game_data;
 	qunique_ptr<country_turn_data> turn_data;

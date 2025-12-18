@@ -65,7 +65,7 @@ void domain::process_gsml_scope(const gsml_data &scope)
 			this->cultures.push_back(culture::get(value));
 		}
 	} else if (tag == "conditional_flags") {
-		scope.for_each_child([&](const gsml_data &child_scope) {
+		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
 			auto conditions = std::make_unique<and_condition<domain>>();
 			conditions->process_gsml_data(child_scope);
@@ -89,6 +89,28 @@ void domain::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->core_holdings.push_back(site::get(value));
 		}
+	} else if (tag == "tier_core_provinces") {
+		scope.for_each_child([this](const gsml_data &child_scope) {
+			const std::string &child_tag = child_scope.get_tag();
+			const domain_tier tier = magic_enum::enum_cast<domain_tier>(child_tag).value();
+
+			const std::vector<std::string> &child_values = child_scope.get_values();
+			std::vector<const province *> &tier_core_provinces = this->tier_core_provinces[tier];
+			for (const std::string &value : child_values) {
+				tier_core_provinces.push_back(province::get(value));
+			}
+		});
+	} else if (tag == "tier_core_holdings") {
+		scope.for_each_child([this](const gsml_data &child_scope) {
+			const std::string &child_tag = child_scope.get_tag();
+			const domain_tier tier = magic_enum::enum_cast<domain_tier>(child_tag).value();
+
+			const std::vector<std::string> &child_values = child_scope.get_values();
+			std::vector<const site *> &tier_core_holdings = this->tier_core_holdings[tier];
+			for (const std::string &value : child_values) {
+				tier_core_holdings.push_back(site::get(value));
+			}
+		});
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
@@ -163,6 +185,12 @@ void domain::check() const
 
 	for (const site *site : this->get_core_holdings()) {
 		throw std::runtime_error(std::format("Domain \"{}\" has site \"{}\" set as a core holding for it, but that site is not a holding site.", this->get_identifier(), site->get_identifier()));
+	}
+
+	for (const auto &[tier, holdings] : this->tier_core_holdings) {
+		for (const site *site : holdings) {
+			throw std::runtime_error(std::format("Domain \"{}\" has site \"{}\" set as a tier core holding for it, but that site is not a holding site.", this->get_identifier(), site->get_identifier()));
+		}
 	}
 
 	assert_throw(this->get_color().isValid());
@@ -399,6 +427,36 @@ bool domain::is_culture_allowed(const culture *culture) const
 	}
 
 	return vector::contains(this->get_cultures(), culture);
+}
+
+std::vector<const province *> domain::get_core_provinces_for_tier(const domain_tier tier) const
+{
+	std::vector<const province *> core_provinces;
+	vector::merge(core_provinces, this->get_core_provinces());
+
+	for (int i = 0; i <= static_cast<int>(tier); ++i) {
+		const auto find_iterator = this->tier_core_provinces.find(static_cast<domain_tier>(i));
+		if (find_iterator != this->tier_core_provinces.end()) {
+			vector::merge(core_provinces, find_iterator->second);
+		}
+	}
+
+	return core_provinces;
+}
+
+std::vector<const site *> domain::get_core_holdings_for_tier(const domain_tier tier) const
+{
+	std::vector<const site *> core_holdings;
+	vector::merge(core_holdings, this->get_core_holdings());
+
+	for (int i = 0; i <= static_cast<int>(tier); ++i) {
+		const auto find_iterator = this->tier_core_holdings.find(static_cast<domain_tier>(i));
+		if (find_iterator != this->tier_core_holdings.end()) {
+			vector::merge(core_holdings, find_iterator->second);
+		}
+	}
+
+	return core_holdings;
 }
 
 bool domain::can_declare_war() const
