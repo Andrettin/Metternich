@@ -392,6 +392,8 @@ const std::string &domain::get_office_title_name(const office *office, const gov
 
 bool domain::is_culture_allowed(const culture *culture) const
 {
+	assert_throw(culture != nullptr);
+
 	if (this->get_cultures().empty()) {
 		return true;
 	}

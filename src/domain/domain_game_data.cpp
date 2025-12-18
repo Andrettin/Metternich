@@ -651,15 +651,34 @@ void domain_game_data::check_tier()
 
 	domain_tier new_tier = domain_tier::none;
 
-	magic_enum::enum_for_each<domain_tier>([this, domain_size, &new_tier](const domain_tier tier) {
+	magic_enum::enum_for_each<domain_tier>([this, domain_size, &new_tier, current_tier](const domain_tier tier) {
 		if (tier == domain_tier::none) {
 			return;
 		}
 
 		const domain_tier_data *tier_data = domain_tier_data::get(tier);
-		if (domain_size >= tier_data->get_min_domain_size() && domain_size <= tier_data->get_max_domain_size()) {
-			new_tier = tier;
+		if (domain_size < tier_data->get_min_domain_size() || domain_size > tier_data->get_max_domain_size()) {
+			return;
 		}
+
+		if (tier > current_tier) {
+			//if the tier is higher than the current tier, require the domain to have the appropriate tier core provinces/holdings
+			const std::vector<const province *> tier_core_provinces = this->domain->get_core_provinces_for_tier(tier);
+			for (const province *core_province : tier_core_provinces) {
+				if (core_province->get_game_data()->get_owner() != this->domain) {
+					return;
+				}
+			}
+
+			const std::vector<const site *> tier_core_holdings = this->domain->get_core_holdings_for_tier(tier);
+			for (const site *core_holding : tier_core_holdings) {
+				if (core_holding->get_game_data()->get_owner() != this->domain) {
+					return;
+				}
+			}
+		}
+
+		new_tier = tier;
 	});
 
 	assert_throw(new_tier != domain_tier::none);

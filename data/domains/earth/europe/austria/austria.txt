@@ -24,12 +24,51 @@ austria = {
 	core_provinces = {
 		lower_austria
 		upper_austria
-		styria
-		carinthia
-		tyrol
-		salzburg
-		carniola
-		istria
+	}
+	tier_core_provinces = {
+		kingdom = {
+			carinthia
+			carniola
+			istria
+			salzburg
+			south_tyrol
+			styria
+			tyrol
+		}
+		empire = {
+			#Bohemia
+			bohemia
+			budweis
+			pilsen
+			brunn
+			iglau
+			olmutz
+			#Hungary
+			banat
+			banska_bystrica
+			buda
+			burgenland
+			gyor
+			kaposvar
+			kesmark
+			nitra
+			pecs
+			pest
+			pressburg
+			szekesfehervar
+			transylvania
+			trencin
+			zalaegerszeg
+			#Croatia
+			croatia
+			slavonia
+			#Galicia
+			bukovina
+			east_galicia
+			west_galicia
+			#Illyria
+			dalmatia
+		}
 	}
 	
 	history = {

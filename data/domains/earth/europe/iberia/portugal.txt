@@ -15,12 +15,10 @@ portugal = {
 	}
 	core_provinces = {
 		estremadura
+		alentejo
 		beira
 		minho
 		tras_os_montes
-		alentejo
-		madeira
-		azores
 	}
 	
 	history = {

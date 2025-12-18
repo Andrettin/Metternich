@@ -7,6 +7,7 @@ spain = {
 	default_tier = kingdom
 	default_government_type = monarchy
 	default_capital = madrid
+	max_tier = empire
 	eras = {
 		renaissance_era
 		industrial_era
@@ -24,5 +25,15 @@ spain = {
 		aragon
 		catalonia
 		valencia
+	}
+	tier_core_provinces = {
+		empire = {
+			#Portugal
+			alentejo
+			beira
+			estremadura
+			minho
+			tras_os_montes
+		}
 	}
 }
