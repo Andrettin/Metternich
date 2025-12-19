@@ -1,0 +1,8 @@
+lokstedt = {
+	name = "Lokstedt"
+	world = earth
+	geocoordinate = { 9.95638889 53.60305556 }
+	type = holding
+	holding_type = castle
+	province = holstein
+}
