@@ -132,7 +132,7 @@ Rectangle {
 			+ (selected_country_game_data.anarchy ? "\nAnarchy" : "")
 			+ (!selected_country_game_data.anarchy ? ("\nScore: " + number_string(selected_country_game_data.score) + " (#" + (selected_country_game_data.score_rank + 1) + ")") : "")
 			+ (selected_country_game_data.attribute_values.length > 0 ? ("\n" + object_counts_to_string(selected_country_game_data.attribute_values)) : "")
-			//+ "\nPopulation: " + number_string(selected_country_game_data.population.size)
+			+ "\nPopulation: " + number_string(selected_country_game_data.population.size)
 			//+ "\nPopulation Growth: " + selected_country_game_data.population_growth + "/" + metternich.defines.population_growth_threshold
 			//+ "\nLiteracy: " + selected_country_game_data.population.literacy_rate + "%"
 			+ "\n" + number_string(selected_country_game_data.provinces.length) + " " + (selected_country_game_data.provinces.length > 1 ? "Provinces" : "Province")

@@ -192,7 +192,7 @@ MenuBase {
 				+ (selected_country.game_data.anarchy ? "\nAnarchy" : "")
 				+ (!selected_country.game_data.anarchy ? ("\nScore: " + number_string(selected_country.game_data.score) + " (#" + (selected_country.game_data.score_rank + 1) + ")") : "")
 				+ (selected_country.game_data.attribute_values.length > 0 ? ("\n" + object_counts_to_string(selected_country.game_data.attribute_values)) : "")
-				//+ "\nPopulation: " + number_string(selected_country.game_data.population.size)
+				+ "\nPopulation: " + number_string(selected_country.game_data.population.size)
 				+ get_subject_type_counts_string(selected_country.game_data.subject_type_counts)
 				+ "\n" + number_string(selected_country.game_data.provinces.length) + " " + (selected_country.game_data.provinces.length > 1 ? "Provinces" : "Province")
 				+ "\n" + number_string(selected_country.game_data.holding_count) + " " + (selected_country.game_data.holding_count > 1 ? "Holdings" : "Holding")
