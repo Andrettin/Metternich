@@ -1285,6 +1285,10 @@ void game::apply_population_history()
 				continue;
 			}
 
+			if (!site_game_data->is_built()) {
+				continue;
+			}
+
 			site_history *site_history = site->get_history();
 
 			site_history->initialize_population();
@@ -1300,6 +1304,12 @@ void game::apply_population_history()
 					//add the remaining population to remaining population data for the province
 					remaining_province_populations[group_key] += remaining_population;
 				}
+			}
+
+			if (site_game_data->get_population_units().empty()) {
+				//ensure holdings have at least one population unit
+				const int population = 10000; //a bit of population to start with
+				this->apply_historical_population_group_to_site(population_group_key(), population, site);
 			}
 		}
 
@@ -1317,12 +1327,6 @@ void game::apply_population_history()
 				//add the remaining population to remaining population data for the owner
 				country_populations[provincial_capital->get_game_data()->get_owner()][group_key] += remaining_population;
 			}
-		}
-
-		if (provincial_capital->get_game_data()->get_population_units().empty()) {
-			//ensure provincial capital settlements have at least one population unit
-			const int population = 100; //a bit of population to start with
-			this->apply_historical_population_group_to_site(population_group_key(), population, provincial_capital);
 		}
 	}
 
