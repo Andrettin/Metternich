@@ -329,6 +329,25 @@ public:
 	const population_class *get_default_population_class() const;
 	const population_class *get_default_literate_population_class() const;
 
+	int64_t get_population_type_capacity(const population_type *population_type) const
+	{
+		const auto find_iterator = this->population_type_capacities.find(population_type);
+		if (find_iterator != this->population_type_capacities.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void set_population_type_capacity(const population_type *population_type, const int64_t capacity);
+
+	void change_population_type_capacity(const population_type *population_type, const int64_t change)
+	{
+		this->set_population_type_capacity(population_type, this->get_population_type_capacity(population_type) + change);
+	}
+
+	int64_t get_available_population_type_capacity(const population_type *population_type) const;
+
 	const centesimal_int &get_housing() const
 	{
 		return this->housing;
@@ -547,6 +566,7 @@ private:
 	scripted_site_modifier_map<int> scripted_modifiers;
 	std::vector<qunique_ptr<population_unit>> population_units;
 	qunique_ptr<metternich::population> population;
+	population_type_map<int64_t> population_type_capacities;
 	centesimal_int housing;
 	int free_food_consumption = 0;
 	int total_building_size = 0;

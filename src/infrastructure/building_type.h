@@ -7,6 +7,7 @@
 Q_MOC_INCLUDE("domain/cultural_group.h")
 Q_MOC_INCLUDE("domain/culture.h")
 Q_MOC_INCLUDE("infrastructure/building_class.h")
+Q_MOC_INCLUDE("population/population_type.h")
 Q_MOC_INCLUDE("technology/technology.h")
 Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("ui/portrait.h")
@@ -63,6 +64,7 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(int holding_level MEMBER holding_level READ get_holding_level NOTIFY changed)
 	Q_PROPERTY(int fortification_level MEMBER fortification_level READ get_fortification_level NOTIFY changed)
 	Q_PROPERTY(int size MEMBER size READ get_size NOTIFY changed)
+	Q_PROPERTY(const metternich::population_type* population_type MEMBER population_type READ get_population_type NOTIFY changed)
 	Q_PROPERTY(metternich::building_type* base_building MEMBER base_building NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(int min_holding_level MEMBER min_holding_level READ get_min_holding_level NOTIFY changed)
@@ -74,6 +76,8 @@ public:
 	static constexpr const char database_folder[] = "building_types";
 
 	static const std::set<std::string> database_dependencies;
+
+	static constexpr int64_t population_capacity_per_size = 250;
 
 public:
 	explicit building_type(const std::string &identifier);
@@ -191,6 +195,16 @@ public:
 	int get_size() const
 	{
 		return this->size;
+	}
+
+	int64_t get_population_capacity() const
+	{
+		return this->get_size() * building_type::population_capacity_per_size;
+	}
+
+	const population_type *get_population_type() const
+	{
+		return this->population_type;
 	}
 
 	const building_type *get_base_building() const
@@ -320,6 +334,7 @@ private:
 	int holding_level = 0;
 	int fortification_level = 0;
 	int size = 1;
+	const metternich::population_type *population_type = nullptr;
 	building_type *base_building = nullptr;
 	std::vector<const building_type *> derived_buildings; //buildings which are based on this one
 	std::vector<const building_type *> required_buildings;

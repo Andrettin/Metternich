@@ -1367,6 +1367,10 @@ void site_game_data::on_building_gained(const building_type *building, const int
 	}
 
 	this->change_total_building_size(building->get_size() * multiplier);
+
+	if (building->get_population_type() != nullptr) {
+		this->change_population_type_capacity(building->get_population_type(), building->get_population_capacity() * multiplier);
+	}
 }
 
 void site_game_data::on_wonder_gained(const wonder *wonder, const int multiplier)
@@ -1593,6 +1597,26 @@ const population_class *site_game_data::get_default_literate_population_class() 
 	}
 
 	return nullptr;
+}
+
+void site_game_data::set_population_type_capacity(const population_type *population_type, const int64_t capacity)
+{
+	if (capacity == this->get_population_type_capacity(population_type)) {
+		return;
+	}
+
+	if (capacity == 0) {
+		this->population_type_capacities.erase(population_type);
+	} else {
+		this->population_type_capacities[population_type] = capacity;
+	}
+}
+
+int64_t site_game_data::get_available_population_type_capacity(const population_type *population_type) const
+{
+	const int64_t available_capacity = this->get_population_type_capacity(population_type) - this->get_population()->get_type_size(population_type);
+	assert_throw(available_capacity >= 0);
+	return available_capacity;
 }
 
 void site_game_data::change_housing(const centesimal_int &change)
