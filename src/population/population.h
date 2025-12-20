@@ -209,6 +209,7 @@ signals:
 	void population_unit_count_changed();
 	void size_changed();
 	void type_sizes_changed();
+	void type_size_changed(const population_type *population_type, const int64_t change);
 	void culture_sizes_changed();
 	void main_culture_changed(const culture *culture);
 	void religion_sizes_changed();

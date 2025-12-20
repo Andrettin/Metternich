@@ -25,6 +25,8 @@
 namespace metternich {
 
 const std::set<std::string> population_type::database_dependencies = {
+	//so that commodity units are present
+	commodity::class_identifier,
 	//population types need to be defined after species, so they can refer to automatically-created species phenotypes
 	species::class_identifier
 };
@@ -35,6 +37,20 @@ population_type::population_type(const std::string &identifier) : named_data_ent
 
 population_type::~population_type()
 {
+}
+
+void population_type::process_gsml_property(const gsml_property &property)
+{
+	const std::string &key = property.get_key();
+	const std::string &value = property.get_value();
+
+	if (key == "output_value") {
+		assert_throw(property.get_operator() == gsml_operator::assignment);
+		assert_throw(this->get_output_commodity() != nullptr);
+		this->output_value = this->get_output_commodity()->string_to_value(value);
+	} else {
+		named_data_entry::process_gsml_property(property);
+	}
 }
 
 void population_type::process_gsml_scope(const gsml_data &scope)
@@ -48,7 +64,7 @@ void population_type::process_gsml_scope(const gsml_data &scope)
 			const std::string &value = property.get_value();
 
 			const commodity *commodity = commodity::get(key);
-			const decimillesimal_int demand(value);
+			decimillesimal_int demand(value);
 			this->commodity_demands[commodity] = std::move(demand);
 		});
 	} else if (tag == "country_modifier") {
@@ -111,6 +127,10 @@ void population_type::check() const
 	assert_throw(this->get_color().isValid());
 	assert_throw(this->get_icon() != nullptr);
 	assert_throw(this->get_small_icon() != nullptr);
+
+	if (this->get_output_commodity() != nullptr && this->get_output_value() == 0) {
+		throw std::runtime_error(std::format("Population type \"{}\" has an output commodity, but has no output value.", this->get_identifier()));
+	}
 
 	if (this->get_country_modifier() != nullptr) {
 		if (this->get_max_modifier_multiplier() == 0) {

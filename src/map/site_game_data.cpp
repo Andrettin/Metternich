@@ -75,7 +75,7 @@ site_game_data::site_game_data(const metternich::site *site) : site(site)
 	}
 
 	this->population = make_qunique<metternich::population>();
-	connect(this->get_population(), &population::population_unit_gained, this, &site_game_data::on_population_unit_gained);
+	connect(this->get_population(), &population::type_size_changed, this, &site_game_data::on_population_type_size_changed);
 	connect(this->get_population(), &population::main_culture_changed, this, &site_game_data::on_population_main_culture_changed);
 	connect(this->get_population(), &population::main_religion_changed, this, &site_game_data::on_population_main_religion_changed);
 	if (this->get_province() != nullptr) {
@@ -1562,10 +1562,16 @@ void site_game_data::create_population_unit(const population_type *type, const m
 	this->add_population_unit(std::move(population_unit));
 }
 
-void site_game_data::on_population_unit_gained(const population_unit *population_unit, const int multiplier)
+void site_game_data::on_population_type_size_changed(const population_type *population_type, const int64_t change)
 {
-	if (population_unit->get_type()->get_output_commodity() != nullptr) {
-		this->change_base_commodity_output(population_unit->get_type()->get_output_commodity(), centesimal_int(population_unit->get_type()->get_output_value()) * multiplier);
+	if (population_type->get_output_commodity() != nullptr) {
+		const int64_t new_population_type_size = this->get_population()->get_type_size(population_type);
+		const int64_t old_population_type_size = new_population_type_size - change;
+		const int64_t old_output = population_type->get_output_value() * old_population_type_size * (100 + population_type->get_output_modifier()) / 100;
+		const int64_t new_output = population_type->get_output_value() * new_population_type_size * (100 + population_type->get_output_modifier()) / 100;
+		const int64_t output_change = new_output - old_output;
+
+		this->change_base_commodity_output(population_type->get_output_commodity(), centesimal_int(output_change));
 	}
 }
 

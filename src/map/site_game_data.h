@@ -3,6 +3,7 @@
 #include "database/data_entry_container.h"
 #include "economy/commodity_container.h"
 #include "infrastructure/building_slot_type_container.h"
+#include "population/population_type_container.h"
 #include "script/scripted_modifier_container.h"
 #include "util/centesimal_int.h"
 #include "util/qunique_ptr.h"
@@ -324,7 +325,7 @@ public:
 		return this->population.get();
 	}
 
-	void on_population_unit_gained(const population_unit *population_unit, const int multiplier);
+	void on_population_type_size_changed(const population_type *population_type, const int64_t change);
 
 	const population_class *get_default_population_class() const;
 	const population_class *get_default_literate_population_class() const;
