@@ -317,14 +317,14 @@ public:
 	void add_population_unit(qunique_ptr<population_unit> &&population_unit);
 	qunique_ptr<population_unit> pop_population_unit(population_unit *population_unit);
 	void clear_population_units();
-	void create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype);
+	void create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const int64_t size);
 
 	metternich::population *get_population() const
 	{
 		return this->population.get();
 	}
 
-	void on_population_type_count_changed(const population_type *type, const int change);
+	void on_population_unit_gained(const population_unit *population_unit, const int multiplier);
 
 	const population_class *get_default_population_class() const;
 	const population_class *get_default_literate_population_class() const;

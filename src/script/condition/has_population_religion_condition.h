@@ -26,7 +26,7 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		return scope->get_game_data()->get_population()->get_religion_counts().contains(this->religion);
+		return scope->get_game_data()->get_population()->get_religion_sizes().contains(this->religion);
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override

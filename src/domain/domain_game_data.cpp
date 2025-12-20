@@ -119,7 +119,7 @@ domain_game_data::domain_game_data(metternich::domain *domain)
 	connect(this, &domain_game_data::rank_changed, this, &domain_game_data::type_name_changed);
 
 	this->population = make_qunique<metternich::population>();
-	connect(this->get_population(), &population::type_count_changed, this, &domain_game_data::on_population_type_count_changed);
+	connect(this->get_population(), &population::population_unit_gained, this, &domain_game_data::on_population_unit_gained);
 
 	connect(this, &domain_game_data::provinces_changed, this, &domain_game_data::income_changed);
 	connect(this, &domain_game_data::provinces_changed, this, &domain_game_data::maintenance_cost_changed);
@@ -763,18 +763,18 @@ void domain_game_data::check_culture()
 		potential_cultures = { this->get_government()->get_ruler()->get_culture() };
 	} else {
 		//get the allowed culture with most population
-		int best_count = 0;
+		int64_t best_size = 0;
 
-		for (const auto &[culture, count] : this->get_population()->get_culture_counts()) {
+		for (const auto &[culture, size] : this->get_population()->get_culture_sizes()) {
 			if (!this->domain->is_culture_allowed(culture)) {
 				continue;
 			}
 
-			if (count < best_count) {
+			if (size < best_size) {
 				continue;
-			} else if (count > best_count) {
+			} else if (size > best_size) {
 				potential_cultures.clear();
-				best_count = count;
+				best_size = size;
 			}
 
 			potential_cultures.push_back(culture);
@@ -2415,15 +2415,16 @@ void domain_game_data::remove_population_unit(population_unit *population_unit)
 	}
 }
 
-void domain_game_data::on_population_type_count_changed(const population_type *type, const int change)
+void domain_game_data::on_population_unit_gained(const population_unit *population_unit, const int multiplier)
 {
 	//countries generate demand in the world market depending on population commodity demand
-	for (const auto &[commodity, value] : type->get_commodity_demands()) {
-		this->get_economy()->change_commodity_demand(commodity, value * change);
+	for (const auto &[commodity, value] : population_unit->get_type()->get_commodity_demands()) {
+		this->get_economy()->change_commodity_demand(commodity, value * multiplier);
 	}
 
-	this->change_food_consumption(change);
+	this->change_food_consumption(multiplier);
 
+	/*
 	if (type->get_country_modifier() != nullptr) {
 		const int population_type_count = this->get_population()->get_type_count(type);
 		const int old_population_type_count = population_type_count - change;
@@ -2433,6 +2434,7 @@ void domain_game_data::on_population_type_count_changed(const population_type *t
 		type->get_country_modifier()->apply(this->domain, -centesimal_int::min(old_population_type_count * type_modifier_multiplier, max_total_modifier_multiplier));
 		type->get_country_modifier()->apply(this->domain, centesimal_int::min(population_type_count * type_modifier_multiplier, max_total_modifier_multiplier));
 	}
+	*/
 }
 
 std::vector<const phenotype *> domain_game_data::get_weighted_phenotypes() const
@@ -2452,11 +2454,7 @@ void domain_game_data::set_population_growth(const int growth)
 		return;
 	}
 
-	const int change = growth - this->get_population_growth();
-
 	this->population_growth = growth;
-
-	this->get_population()->change_size(change * defines::get()->get_population_per_unit() / defines::get()->get_population_growth_threshold());
 
 	if (game::get()->is_running()) {
 		emit population_growth_changed();
@@ -2516,7 +2514,8 @@ void domain_game_data::grow_population()
 
 	const population_type *population_type = culture->get_population_class_type(site->get_game_data()->get_default_population_class());
 
-	site->get_game_data()->create_population_unit(population_type, culture, religion, phenotype);
+	const int64_t population_size = 100;
+	site->get_game_data()->create_population_unit(population_type, culture, religion, phenotype, population_size);
 
 	this->change_population_growth(-defines::get()->get_population_growth_threshold());
 }
@@ -3696,11 +3695,11 @@ void domain_game_data::set_population_type_modifier_multiplier(const population_
 		this->population_type_modifier_multipliers[type] = value;
 	}
 
-	const int population_type_count = this->get_population()->get_type_count(type);
-	const centesimal_int &max_modifier_multiplier = type->get_max_modifier_multiplier();
+	//const int population_type_count = this->get_population()->get_type_count(type);
+	//const centesimal_int &max_modifier_multiplier = type->get_max_modifier_multiplier();
 
-	type->get_country_modifier()->apply(this->domain, -centesimal_int::min(population_type_count * old_value, max_modifier_multiplier));
-	type->get_country_modifier()->apply(this->domain, centesimal_int::min(population_type_count * value, max_modifier_multiplier));
+	//type->get_country_modifier()->apply(this->domain, -centesimal_int::min(population_type_count * old_value, max_modifier_multiplier));
+	//type->get_country_modifier()->apply(this->domain, centesimal_int::min(population_type_count * value, max_modifier_multiplier));
 }
 
 void domain_game_data::set_building_class_cost_efficiency_modifier(const building_class *building_class, const int value)

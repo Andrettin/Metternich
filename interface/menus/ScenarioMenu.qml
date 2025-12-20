@@ -514,10 +514,10 @@ MenuBase {
 			ruler_portrait.portrait = ruler_portrait.ruler.game_data.portrait
 		}
 		
-		population_type_chart.population_data = country ? country.game_data.population.type_counts : null
-		culture_chart.population_data = country ? country.game_data.population.culture_counts : null
-		religion_chart.population_data = country ? country.game_data.population.religion_counts : null
-		phenotype_chart.population_data = country ? country.game_data.population.phenotype_counts : null
+		population_type_chart.population_data = country ? country.game_data.population.type_sizes : null
+		culture_chart.population_data = country ? country.game_data.population.culture_sizes : null
+		religion_chart.population_data = country ? country.game_data.population.religion_sizes : null
+		phenotype_chart.population_data = country ? country.game_data.population.phenotype_sizes : null
 	}
 	
 	onSelected_countryChanged: {

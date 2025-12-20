@@ -78,7 +78,7 @@ public:
 		this->phenotype_weights = weights;
 	}
 
-	std::vector<const phenotype *> get_weighted_phenotypes_for_culture(const metternich::culture *culture) const;
+	phenotype_map<int64_t> get_phenotype_weights_for_culture(const metternich::culture *culture) const;
 
 	int get_level() const
 	{

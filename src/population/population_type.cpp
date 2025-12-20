@@ -131,11 +131,13 @@ QString population_type::get_country_modifier_string(const metternich::domain *d
 		return QString();
 	}
 
-	const domain_game_data *domain_game_data = domain->get_game_data();
-	const int population_type_count = domain_game_data->get_population()->get_type_count(this);
+	Q_UNUSED(domain)
+	//const domain_game_data *domain_game_data = domain->get_game_data();
+	//const int population_type_count = domain_game_data->get_population()->get_type_count(this);
 
 	std::string str;
 
+	/*
 	if (this->get_output_commodity() != nullptr) {
 		str += std::format("{}: {}", this->get_output_commodity()->get_name(), string::colored(number::to_signed_string(population_type_count * this->get_output_value()), defines::get()->get_green_text_color()));
 	}
@@ -150,6 +152,7 @@ QString population_type::get_country_modifier_string(const metternich::domain *d
 			str += modifier_str;
 		}
 	}
+	*/
 
 	return QString::fromStdString(str);
 }

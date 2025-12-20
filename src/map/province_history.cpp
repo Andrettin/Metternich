@@ -108,7 +108,7 @@ const culture *province_history::get_main_culture() const
 	return best_culture;
 }
 
-std::vector<const phenotype *> province_history::get_weighted_phenotypes_for_culture(const metternich::culture *culture) const
+phenotype_map<int64_t> province_history::get_phenotype_weights_for_culture(const metternich::culture *culture) const
 {
 	assert_throw(culture != nullptr);
 
@@ -119,7 +119,7 @@ std::vector<const phenotype *> province_history::get_weighted_phenotypes_for_cul
 		return !vector::contains(culture->get_species(), key->get_species());
 	});
 
-	return archimedes::map::to_weighted_vector(phenotype_weights);
+	return phenotype_weights;
 }
 
 void province_history::initialize_population()

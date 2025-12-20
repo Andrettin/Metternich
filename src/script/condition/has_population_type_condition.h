@@ -26,7 +26,7 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		return scope->get_game_data()->get_population()->get_type_counts().contains(this->type);
+		return scope->get_game_data()->get_population()->get_type_sizes().contains(this->type);
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override

@@ -31,7 +31,7 @@ Rectangle {
 		boundsBehavior: Flickable.StopAtBounds
 		spacing: 8 * scale_factor
 		clip: true
-		model: country_game_data.population.type_counts
+		model: country_game_data.population.type_sizes
 		delegate: IndustryCounter {
 			name: population_type.name
 			icon_identifier: country_game_data.get_population_type_small_icon(population_type).identifier

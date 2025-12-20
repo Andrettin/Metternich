@@ -75,7 +75,7 @@ site_game_data::site_game_data(const metternich::site *site) : site(site)
 	}
 
 	this->population = make_qunique<metternich::population>();
-	connect(this->get_population(), &population::type_count_changed, this, &site_game_data::on_population_type_count_changed);
+	connect(this->get_population(), &population::population_unit_gained, this, &site_game_data::on_population_unit_gained);
 	connect(this->get_population(), &population::main_culture_changed, this, &site_game_data::on_population_main_culture_changed);
 	connect(this->get_population(), &population::main_religion_changed, this, &site_game_data::on_population_main_religion_changed);
 	if (this->get_province() != nullptr) {
@@ -1545,23 +1545,23 @@ void site_game_data::clear_population_units()
 	this->population_units.clear();
 }
 
-void site_game_data::create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype)
+void site_game_data::create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const int64_t size)
 {
 	assert_throw(type != nullptr);
 	assert_throw(type->is_enabled());
 	assert_throw(this->can_have_population());
 	assert_throw(this->is_built());
 
-	auto population_unit = make_qunique<metternich::population_unit>(type, culture, religion, phenotype, this->site);
+	auto population_unit = make_qunique<metternich::population_unit>(type, culture, religion, phenotype, size, this->site);
 	this->get_province()->get_game_data()->add_population_unit(population_unit.get());
 
 	this->add_population_unit(std::move(population_unit));
 }
 
-void site_game_data::on_population_type_count_changed(const population_type *type, const int change)
+void site_game_data::on_population_unit_gained(const population_unit *population_unit, const int multiplier)
 {
-	if (type->get_output_commodity() != nullptr) {
-		this->change_base_commodity_output(type->get_output_commodity(), centesimal_int(type->get_output_value()) * change);
+	if (population_unit->get_type()->get_output_commodity() != nullptr) {
+		this->change_base_commodity_output(population_unit->get_type()->get_output_commodity(), centesimal_int(population_unit->get_type()->get_output_value()) * multiplier);
 	}
 }
 

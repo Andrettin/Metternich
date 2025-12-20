@@ -80,7 +80,7 @@ void culture::check() const
 
 std::vector<const phenotype *> culture::get_weighted_phenotypes() const
 {
-	phenotype_map<int> phenotype_weights = this->get_phenotype_weights();
+	phenotype_map<int64_t> phenotype_weights = this->get_phenotype_weights();
 
 	std::erase_if(phenotype_weights, [this](const auto &element) {
 		const auto &[key, value] = element;

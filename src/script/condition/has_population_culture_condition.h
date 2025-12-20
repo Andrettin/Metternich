@@ -30,7 +30,7 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		return scope->get_game_data()->get_population()->get_culture_counts().contains(this->culture);
+		return scope->get_game_data()->get_population()->get_culture_sizes().contains(this->culture);
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override

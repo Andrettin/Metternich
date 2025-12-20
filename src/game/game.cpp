@@ -1321,7 +1321,8 @@ void game::apply_population_history()
 
 		if (provincial_capital->get_game_data()->get_population_units().empty()) {
 			//ensure provincial capital settlements have at least one population unit
-			this->apply_historical_population_units_to_site(population_group_key(), 1, provincial_capital);
+			const int population = 100; //a bit of population to start with
+			this->apply_historical_population_group_to_site(population_group_key(), population, provincial_capital);
 		}
 	}
 
@@ -1397,11 +1398,6 @@ void game::apply_population_history()
 				assert_throw(group_find_iterator != population_groups.end());
 				group_find_iterator->second += remaining_population;
 			}
-
-			if (remaining_population != 0 && group_key.is_empty()) {
-				//if this is general population data, then add the remaining population to the stored population growth
-				country->get_game_data()->change_population_growth(remaining_population * defines::get()->get_population_growth_threshold() / defines::get()->get_population_per_unit());
-			}
 		}
 	}
 }
@@ -1418,11 +1414,12 @@ int64_t game::apply_historical_population_group_to_site(const population_group_k
 		return population;
 	}
 
-	if (group_key.type != nullptr && !site_game_data->can_have_population_type(group_key.type)) {
+	const population_type *population_type = group_key.type;
+	if (population_type != nullptr && !site_game_data->can_have_population_type(population_type)) {
 		return population;
 	}
 
-	log_trace(std::format("Applying historical population group of type \"{}\", culture \"{}\", religion \"{}\" and size {} for settlement \"{}\".", group_key.type ? group_key.type->get_identifier() : "none", group_key.culture ? group_key.culture->get_identifier() : "none", group_key.religion ? group_key.religion->get_identifier() : "none", population, site->get_identifier()));
+	log_trace(std::format("Applying historical population group of type \"{}\", culture \"{}\", religion \"{}\" and size {} for settlement \"{}\".", population_type ? population_type->get_identifier() : "none", group_key.culture ? group_key.culture->get_identifier() : "none", group_key.religion ? group_key.religion->get_identifier() : "none", population, site->get_identifier()));
 
 	const domain *domain = site_game_data->get_owner();
 
@@ -1430,52 +1427,17 @@ int64_t game::apply_historical_population_group_to_site(const population_group_k
 		return 0;
 	}
 
-	int population_unit_count = population / defines::get()->get_population_per_unit();
-
-	this->apply_historical_population_units_to_site(group_key, population_unit_count, site);
-
-	int64_t remaining_population = population - (population_unit_count * defines::get()->get_population_per_unit());
-	remaining_population = std::max<int64_t>(0, remaining_population);
-
-	log_trace(std::format("Remaining population: {}.", remaining_population));
-
-	return remaining_population;
-}
-
-void game::apply_historical_population_units_to_site(const population_group_key &group_key, int population_unit_count, const site *site)
-{
-	if (population_unit_count <= 0) {
-		return;
-	}
-
-	site_game_data *site_game_data = site->get_game_data();
-
-	if (!site_game_data->is_built()) {
-		return;
-	}
-
-	const population_type *population_type = group_key.type;
-
-	if (population_type != nullptr && !site_game_data->can_have_population_type(population_type)) {
-		return;
-	}
-
 	site_history *site_history = site->get_history();
 
 	const province *province = site->get_game_data()->get_province();
 	province_history *province_history = province->get_history();
 
-	const domain *domain = site_game_data->get_owner();
-
-	if (domain == nullptr) {
-		return;
-	}
-
 	const culture *site_culture = site_history->get_culture();
+
+	int remaining_population = population;
 
 	const culture *culture = group_key.culture;
 	culture_map<int64_t> culture_weights;
-	std::vector<const metternich::culture *> weighted_cultures;
 	if (culture == nullptr) {
 		if (site_culture != nullptr) {
 			culture = site_culture;
@@ -1483,15 +1445,45 @@ void game::apply_historical_population_units_to_site(const population_group_key 
 			culture_weights = province_history->get_culture_weights();
 			if (culture_weights.size() == 1) {
 				culture = culture_weights.begin()->first;
-			} else {
-				weighted_cultures = archimedes::map::to_weighted_vector(culture_weights);
 			}
 		} else {
 			log::log_error(std::format("Province \"{}\" has no culture weights.", province->get_identifier()));
-			return;
+			return 0;
 		}
 	}
-	assert_throw(culture != nullptr || !weighted_cultures.empty());
+	assert_throw(culture != nullptr || !culture_weights.empty());
+
+	if (culture == nullptr) {
+		assert_throw(!culture_weights.empty());
+
+		int new_remaining_population = remaining_population;
+		const int64_t total_weight = archimedes::map::get_total_value(culture_weights);
+
+		for (const auto &[weighted_culture, weight] : culture_weights) {
+			population_group_key group_key_copy = group_key;
+			group_key_copy.culture = weighted_culture;
+
+			const int culture_population = static_cast<int>(remaining_population * weight / total_weight);
+			this->apply_historical_population_group_to_site(group_key_copy, culture_population, site);
+			new_remaining_population -= culture_population;
+		}
+
+		remaining_population = new_remaining_population;
+
+		if (remaining_population > 0) {
+			//apply any remaining population to the biggest culture
+			int64_t best_weight = 0;
+			for (const auto &[weighted_culture, weight] : culture_weights) {
+				if (weight > best_weight) {
+					best_weight = weight;
+					culture = weighted_culture;
+				}
+			}
+		} else {
+			return 0;
+		}
+	}
+	assert_throw(culture != nullptr);
 
 	const religion *site_religion = site_history->get_religion();
 	const religion *province_religion = province_history->get_religion();
@@ -1504,107 +1496,80 @@ void game::apply_historical_population_units_to_site(const population_group_key 
 			religion = province_religion;
 		} else {
 			log::log_error(std::format("Province \"{}\" has no religion.", province->get_identifier()));
-			return;
+			return 0;
 		}
 	}
 	assert_throw(religion != nullptr);
 
 	const phenotype *phenotype = group_key.phenotype;
-	culture_map<std::vector<const metternich::phenotype *>> culture_weighted_phenotypes;
+	phenotype_map<int64_t> phenotype_weights;
 	if (phenotype == nullptr) {
-		if (culture != nullptr) {
-			std::vector<const metternich::phenotype *> weighted_phenotypes;
+		assert_throw(culture != nullptr);
 
-			if (!province_history->get_phenotype_weights().empty()) {
-				weighted_phenotypes = province_history->get_weighted_phenotypes_for_culture(culture);
+		if (!province_history->get_phenotype_weights().empty()) {
+			phenotype_weights = province_history->get_phenotype_weights_for_culture(culture);
+		}
+
+		if (phenotype_weights.empty()) {
+			phenotype_weights = culture->get_phenotype_weights();
+		}
+
+		assert_throw(!phenotype_weights.empty());
+
+		if (phenotype_weights.size() == 1) {
+			phenotype = phenotype_weights.begin()->first;
+		}
+	}
+	assert_throw(phenotype != nullptr || !phenotype_weights.empty());
+
+	if (phenotype == nullptr) {
+		assert_throw(!phenotype_weights.empty());
+
+		int new_remaining_population = remaining_population;
+		const int64_t total_weight = archimedes::map::get_total_value(phenotype_weights);
+
+		for (const auto &[weighted_phenotype, weight] : phenotype_weights) {
+			population_group_key group_key_copy = group_key;
+			group_key_copy.phenotype = weighted_phenotype;
+
+			const int phenotype_population = static_cast<int>(remaining_population * weight / total_weight);
+			this->apply_historical_population_group_to_site(group_key_copy, phenotype_population, site);
+			new_remaining_population -= phenotype_population;
+		}
+
+		remaining_population = new_remaining_population;
+
+		if (remaining_population > 0) {
+			//apply any remaining population to the biggest phenotype
+			int64_t best_weight = 0;
+			for (const auto &[weighted_phenotype, weight] : phenotype_weights) {
+				if (weight > best_weight) {
+					best_weight = weight;
+					phenotype = weighted_phenotype;
+				}
 			}
-
-			if (weighted_phenotypes.empty()) {
-				weighted_phenotypes = culture->get_weighted_phenotypes();
-			}
-
-			assert_throw(!weighted_phenotypes.empty());
-			culture_weighted_phenotypes[culture] = std::move(weighted_phenotypes);
 		} else {
-			for (const auto &[potential_culture, weight] : culture_weights) {
-				std::vector<const metternich::phenotype *> weighted_phenotypes;
-
-				if (!province_history->get_phenotype_weights().empty()) {
-					weighted_phenotypes = province_history->get_weighted_phenotypes_for_culture(potential_culture);
-				}
-
-				if (weighted_phenotypes.empty()) {
-					weighted_phenotypes = potential_culture->get_weighted_phenotypes();
-				}
-
-				assert_throw(!weighted_phenotypes.empty());
-				culture_weighted_phenotypes[potential_culture] = std::move(weighted_phenotypes);
-			}
-		}
-
-		assert_throw(!culture_weighted_phenotypes.empty());
-	}
-
-	if (population_type == nullptr) {
-		const population_class *literate_population_class = site->get_game_data()->get_default_literate_population_class();
-		if (literate_population_class != nullptr) {
-			centesimal_int literacy_rate = site_history->get_literacy_rate();
-			if (literacy_rate == 0) {
-				literacy_rate = province_history->get_literacy_rate();
-			}
-			if (literacy_rate == 0) {
-				literacy_rate = domain->get_history()->get_literacy_rate();
-			}
-
-			if (literacy_rate != 0) {
-				const int literate_population_unit_count = (population_unit_count * literacy_rate / 100).to_int();
-
-				for (int i = 0; i < literate_population_unit_count; ++i) {
-					const metternich::culture *population_unit_culture = culture;
-					if (population_unit_culture == nullptr && !weighted_cultures.empty()) {
-						population_unit_culture = vector::get_random(weighted_cultures);
-					}
-
-					const metternich::population_type *unit_population_type = population_unit_culture->get_population_class_type(literate_population_class);
-
-					if (!unit_population_type->is_enabled()) {
-						continue;
-					}
-
-					const metternich::phenotype *population_unit_phenotype = phenotype;
-					if (population_unit_phenotype == nullptr && !culture_weighted_phenotypes[population_unit_culture].empty()) {
-						population_unit_phenotype = vector::get_random(culture_weighted_phenotypes[population_unit_culture]);
-					}
-
-					site_game_data->create_population_unit(unit_population_type, population_unit_culture, religion, population_unit_phenotype);
-
-					--population_unit_count;
-				}
-			}
+			return 0;
 		}
 	}
+	assert_throw(phenotype != nullptr);
 
 	const population_class *population_class = site->get_game_data()->get_default_population_class();
 
-	for (int i = 0; i < population_unit_count; ++i) {
-		const metternich::culture *population_unit_culture = culture;
-		if (population_unit_culture == nullptr && !weighted_cultures.empty()) {
-			population_unit_culture = vector::get_random(weighted_cultures);
-		}
+	assert_throw(culture != nullptr);
+	assert_throw(religion != nullptr);
 
-		const metternich::population_type *unit_population_type = population_type;
-		if (population_type == nullptr) {
-			unit_population_type = population_unit_culture->get_population_class_type(population_class);
-		}
-		assert_throw(unit_population_type != nullptr);
-
-		const metternich::phenotype *population_unit_phenotype = phenotype;
-		if (population_unit_phenotype == nullptr && !culture_weighted_phenotypes[population_unit_culture].empty()) {
-			population_unit_phenotype = vector::get_random(culture_weighted_phenotypes[population_unit_culture]);
-		}
-
-		site_game_data->create_population_unit(unit_population_type, population_unit_culture, religion, population_unit_phenotype);
+	const metternich::population_type *unit_population_type = population_type;
+	if (population_type == nullptr) {
+		unit_population_type = culture->get_population_class_type(population_class);
 	}
+	assert_throw(unit_population_type != nullptr);
+
+	assert_throw(phenotype != nullptr);
+
+	site_game_data->create_population_unit(unit_population_type, culture, religion, phenotype, remaining_population);
+
+	return 0;
 }
 
 QCoro::Task<void> game::on_setup_finished()

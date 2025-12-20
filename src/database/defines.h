@@ -60,7 +60,6 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(metternich::population_class* default_population_class MEMBER default_population_class)
 	Q_PROPERTY(metternich::population_class* default_tribal_population_class MEMBER default_tribal_population_class)
 	Q_PROPERTY(metternich::population_class* default_literate_population_class MEMBER default_literate_population_class)
-	Q_PROPERTY(int population_per_unit MEMBER population_per_unit READ get_population_per_unit)
 	Q_PROPERTY(int population_growth_threshold MEMBER population_growth_threshold READ get_population_growth_threshold NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity* wealth_commodity MEMBER wealth_commodity READ get_wealth_commodity NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity* regency_commodity MEMBER regency_commodity READ get_regency_commodity NOTIFY changed)
@@ -217,11 +216,6 @@ public:
 	const population_class *get_default_literate_population_class() const
 	{
 		return this->default_literate_population_class;
-	}
-
-	int get_population_per_unit() const
-	{
-		return this->population_per_unit;
 	}
 
 	int get_population_growth_threshold() const
@@ -431,7 +425,6 @@ private:
 	population_class *default_population_class = nullptr;
 	population_class *default_tribal_population_class = nullptr;
 	population_class *default_literate_population_class = nullptr;
-	int population_per_unit = 10000;
 	int population_growth_threshold = 100;
 	commodity_map<int> settlement_commodity_bonuses;
 	commodity_map<int> river_settlement_commodity_bonuses;

@@ -113,8 +113,8 @@ public:
 
 	void add_names_from(const culture_base *other);
 
-	const phenotype_map<int> &get_phenotype_weights() const;
-	void change_phenotype_weight(const phenotype *phenotype, const int change);
+	const phenotype_map<int64_t> &get_phenotype_weights() const;
+	void change_phenotype_weight(const phenotype *phenotype, const int64_t change);
 
 signals:
 	void changed();
@@ -135,7 +135,7 @@ private:
 	military_unit_class_map<std::unique_ptr<name_generator>> military_unit_class_name_generators;
 	transporter_class_map<std::unique_ptr<name_generator>> transporter_class_name_generators;
 	std::unique_ptr<name_generator> ship_name_generator;
-	phenotype_map<int> phenotype_weights;
+	phenotype_map<int64_t> phenotype_weights;
 	qunique_ptr<culture_history> history;
 };
 

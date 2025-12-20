@@ -47,133 +47,131 @@ void population::change_size(const int64_t change)
 	}
 }
 
-QVariantList population::get_type_counts_qvariant_list() const
+QVariantList population::get_type_sizes_qvariant_list() const
 {
-	return archimedes::map::to_qvariant_list(this->get_type_counts());
+	return archimedes::map::to_qvariant_list(this->get_type_sizes());
 }
 
-void population::change_type_count(const population_type *type, const int change)
+void population::change_type_size(const population_type *type, const int64_t change)
 {
 	if (change == 0) {
 		return;
 	}
 
-	const int count = (this->type_counts[type] += change);
+	const int64_t size = (this->type_sizes[type] += change);
 
-	assert_throw(count >= 0);
+	assert_throw(size >= 0);
 
-	if (count == 0) {
-		this->type_counts.erase(type);
+	if (size == 0) {
+		this->type_sizes.erase(type);
 	}
 
 	if (type->is_literate()) {
-		this->literate_count += change;
+		this->literate_size += change;
 	}
 
 	for (population *upper_population : this->upper_populations) {
-		upper_population->change_type_count(type, change);
+		upper_population->change_type_size(type, change);
 	}
-
-	emit type_count_changed(type, change);
 
 	if (game::get()->is_running()) {
-		emit type_counts_changed();
+		emit type_sizes_changed();
 	}
 }
 
-QVariantList population::get_culture_counts_qvariant_list() const
+QVariantList population::get_culture_sizes_qvariant_list() const
 {
-	QVariantList counts = archimedes::map::to_qvariant_list(this->get_culture_counts());
-	std::sort(counts.begin(), counts.end(), [](const QVariant &lhs, const QVariant &rhs) {
-		return lhs.toMap().value("value").toInt() > rhs.toMap().value("value").toInt();
+	QVariantList sizes = archimedes::map::to_qvariant_list(this->get_culture_sizes());
+	std::sort(sizes.begin(), sizes.end(), [](const QVariant &lhs, const QVariant &rhs) {
+		return lhs.toMap().value("value").toLongLong() > rhs.toMap().value("value").toLongLong();
 	});
-	return counts;
+	return sizes;
 }
 
-void population::change_culture_count(const culture *culture, const int change)
+void population::change_culture_size(const culture *culture, const int64_t change)
 {
 	if (change == 0) {
 		return;
 	}
 
-	const int count = (this->culture_counts[culture] += change);
+	const int64_t size = (this->culture_sizes[culture] += change);
 
-	assert_throw(count >= 0);
+	assert_throw(size >= 0);
 
-	if (count == 0) {
-		this->culture_counts.erase(culture);
+	if (size == 0) {
+		this->culture_sizes.erase(culture);
 	}
 
 	for (population *upper_population : this->upper_populations) {
-		upper_population->change_culture_count(culture, change);
+		upper_population->change_culture_size(culture, change);
 	}
 
 	this->calculate_main_culture();
 
 	if (game::get()->is_running()) {
-		emit culture_counts_changed();
+		emit culture_sizes_changed();
 	}
 }
 
-QVariantList population::get_religion_counts_qvariant_list() const
+QVariantList population::get_religion_sizes_qvariant_list() const
 {
-	QVariantList counts = archimedes::map::to_qvariant_list(this->get_religion_counts());
-	std::sort(counts.begin(), counts.end(), [](const QVariant &lhs, const QVariant &rhs) {
-		return lhs.toMap().value("value").toInt() > rhs.toMap().value("value").toInt();
+	QVariantList sizes = archimedes::map::to_qvariant_list(this->get_religion_sizes());
+	std::sort(sizes.begin(), sizes.end(), [](const QVariant &lhs, const QVariant &rhs) {
+		return lhs.toMap().value("value").toLongLong() > rhs.toMap().value("value").toLongLong();
 	});
-	return counts;
+	return sizes;
 }
 
-void population::change_religion_count(const metternich::religion *religion, const int change)
+void population::change_religion_size(const metternich::religion *religion, const int64_t change)
 {
 	if (change == 0) {
 		return;
 	}
 
-	const int count = (this->religion_counts[religion] += change);
+	const int64_t size = (this->religion_sizes[religion] += change);
 
-	assert_throw(count >= 0);
+	assert_throw(size >= 0);
 
-	if (count == 0) {
-		this->religion_counts.erase(religion);
+	if (size == 0) {
+		this->religion_sizes.erase(religion);
 	}
 
 	for (population *upper_population : this->upper_populations) {
-		upper_population->change_religion_count(religion, change);
+		upper_population->change_religion_size(religion, change);
 	}
 
 	this->calculate_main_religion();
 
 	if (game::get()->is_running()) {
-		emit religion_counts_changed();
+		emit religion_sizes_changed();
 	}
 }
 
-QVariantList population::get_phenotype_counts_qvariant_list() const
+QVariantList population::get_phenotype_sizes_qvariant_list() const
 {
-	return archimedes::map::to_qvariant_list(this->get_phenotype_counts());
+	return archimedes::map::to_qvariant_list(this->get_phenotype_sizes());
 }
 
-void population::change_phenotype_count(const phenotype *phenotype, const int change)
+void population::change_phenotype_size(const phenotype *phenotype, const int64_t change)
 {
 	if (change == 0) {
 		return;
 	}
 
-	const int count = (this->phenotype_counts[phenotype] += change);
+	const int64_t size = (this->phenotype_sizes[phenotype] += change);
 
-	assert_throw(count >= 0);
+	assert_throw(size >= 0);
 
-	if (count == 0) {
-		this->phenotype_counts.erase(phenotype);
+	if (size == 0) {
+		this->phenotype_sizes.erase(phenotype);
 	}
 
 	for (population *upper_population : this->upper_populations) {
-		upper_population->change_phenotype_count(phenotype, change);
+		upper_population->change_phenotype_size(phenotype, change);
 	}
 
 	if (game::get()->is_running()) {
-		emit phenotype_counts_changed();
+		emit phenotype_sizes_changed();
 	}
 }
 
@@ -181,25 +179,29 @@ std::vector<const phenotype *> population::get_weighted_phenotypes_for_culture(c
 {
 	assert_throw(culture != nullptr);
 
-	phenotype_map<int> phenotype_counts = this->get_phenotype_counts();
+	phenotype_map<int64_t> phenotype_sizes = this->get_phenotype_sizes();
 
-	std::erase_if(phenotype_counts, [culture](const auto &element) {
+	std::erase_if(phenotype_sizes, [culture](const auto &element) {
 		const auto &[key, value] = element;
 		return !vector::contains(culture->get_species(), key->get_species());
 	});
 
-	return archimedes::map::to_weighted_vector(phenotype_counts);
+	return archimedes::map::to_weighted_vector(phenotype_sizes);
 }
 
 void population::on_population_unit_gained(const population_unit *population_unit, const int multiplier)
 {
 	this->change_population_unit_count(multiplier);
-	this->change_size(static_cast<int64_t>(defines::get()->get_population_per_unit()) * multiplier);
 
-	this->change_type_count(population_unit->get_type(), multiplier);
-	this->change_culture_count(population_unit->get_culture(), multiplier);
-	this->change_religion_count(population_unit->get_religion(), multiplier);
-	this->change_phenotype_count(population_unit->get_phenotype(), multiplier);
+	const int64_t size = population_unit->get_size();
+	this->change_size(size * multiplier);
+
+	this->change_type_size(population_unit->get_type(), size * multiplier);
+	this->change_culture_size(population_unit->get_culture(), size * multiplier);
+	this->change_religion_size(population_unit->get_religion(), size * multiplier);
+	this->change_phenotype_size(population_unit->get_phenotype(), size * multiplier);
+
+	emit population_unit_gained(population_unit, multiplier);
 }
 
 }

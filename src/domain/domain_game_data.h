@@ -702,7 +702,7 @@ public:
 		return this->population.get();
 	}
 
-	void on_population_type_count_changed(const population_type *type, const int change);
+	void on_population_unit_gained(const population_unit *population_unit, const int multiplier);
 
 	std::vector<const phenotype *> get_weighted_phenotypes() const;
 

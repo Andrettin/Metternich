@@ -35,9 +35,10 @@ class population_unit final : public QObject
 	Q_PROPERTY(const metternich::domain* country READ get_country NOTIFY country_changed)
 	Q_PROPERTY(const metternich::province* province READ get_province NOTIFY province_changed)
 	Q_PROPERTY(const metternich::site* site READ get_site NOTIFY site_changed)
+	Q_PROPERTY(qint64 size READ get_size NOTIFY size_changed)
 
 public:
-	explicit population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const site *site);
+	explicit population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const int64_t size, const site *site);
 
 	std::string get_scope_name() const;
 
@@ -90,6 +91,18 @@ public:
 
 	void set_site(const site *site);
 
+	int64_t get_size() const
+	{
+		return this->size;
+	}
+
+	void set_size(const int64_t size);
+
+	void change_size(const int64_t change)
+	{
+		this->set_size(this->get_size() + change);
+	}
+
 	bool is_food_producer() const;
 
 signals:
@@ -101,6 +114,7 @@ signals:
 	void country_changed();
 	void province_changed();
 	void site_changed();
+	void size_changed();
 
 private:
 	const population_type *type = nullptr;
@@ -108,7 +122,8 @@ private:
 	const metternich::religion *religion = nullptr;
 	const metternich::phenotype *phenotype = nullptr;
 	const metternich::domain *domain = nullptr;
-	const site *site = nullptr;
+	const metternich::site *site = nullptr;
+	int64_t size = 0; //number of individuals in this population unit
 };
 
 }

@@ -17,12 +17,12 @@ class population final : public QObject
 
 	Q_PROPERTY(int population_unit_count READ get_population_unit_count NOTIFY population_unit_count_changed)
 	Q_PROPERTY(qint64 size READ get_size NOTIFY size_changed)
-	Q_PROPERTY(QVariantList type_counts READ get_type_counts_qvariant_list NOTIFY type_counts_changed)
-	Q_PROPERTY(QVariantList culture_counts READ get_culture_counts_qvariant_list NOTIFY culture_counts_changed)
-	Q_PROPERTY(QVariantList religion_counts READ get_religion_counts_qvariant_list NOTIFY religion_counts_changed)
-	Q_PROPERTY(QVariantList phenotype_counts READ get_phenotype_counts_qvariant_list NOTIFY phenotype_counts_changed)
-	Q_PROPERTY(int literacy_rate READ get_literacy_rate NOTIFY type_counts_changed)
-	Q_PROPERTY(int literate_count READ get_literate_count NOTIFY type_counts_changed)
+	Q_PROPERTY(QVariantList type_sizes READ get_type_sizes_qvariant_list NOTIFY type_sizes_changed)
+	Q_PROPERTY(QVariantList culture_sizes READ get_culture_sizes_qvariant_list NOTIFY culture_sizes_changed)
+	Q_PROPERTY(QVariantList religion_sizes READ get_religion_sizes_qvariant_list NOTIFY religion_sizes_changed)
+	Q_PROPERTY(QVariantList phenotype_sizes READ get_phenotype_sizes_qvariant_list NOTIFY phenotype_sizes_changed)
+	Q_PROPERTY(int literacy_rate READ get_literacy_rate NOTIFY type_sizes_changed)
+	Q_PROPERTY(int literate_size READ get_literate_size NOTIFY type_sizes_changed)
 
 public:
 	int get_population_unit_count() const
@@ -39,32 +39,32 @@ public:
 
 	void change_size(const int64_t change);
 
-	const population_type_map<int> &get_type_counts() const
+	const population_type_map<int64_t> &get_type_sizes() const
 	{
-		return this->type_counts;
+		return this->type_sizes;
 	}
 
-	QVariantList get_type_counts_qvariant_list() const;
+	QVariantList get_type_sizes_qvariant_list() const;
 
-	Q_INVOKABLE int get_type_count(const metternich::population_type *type) const
+	Q_INVOKABLE qint64 get_type_size(const metternich::population_type *type) const
 	{
-		const auto find_iterator = this->get_type_counts().find(type);
-		if (find_iterator != this->get_type_counts().end()) {
+		const auto find_iterator = this->get_type_sizes().find(type);
+		if (find_iterator != this->get_type_sizes().end()) {
 			return find_iterator->second;
 		}
 
 		return 0;
 	}
 
-	void change_type_count(const population_type *type, const int change);
+	void change_type_size(const population_type *type, const int64_t change);
 
-	const culture_map<int> &get_culture_counts() const
+	const culture_map<int64_t> &get_culture_sizes() const
 	{
-		return this->culture_counts;
+		return this->culture_sizes;
 	}
 
-	QVariantList get_culture_counts_qvariant_list() const;
-	void change_culture_count(const culture *culture, const int change);
+	QVariantList get_culture_sizes_qvariant_list() const;
+	void change_culture_size(const culture *culture, const int64_t change);
 
 	const culture *get_main_culture() const
 	{
@@ -84,25 +84,25 @@ public:
 	void calculate_main_culture()
 	{
 		const culture *main_culture = nullptr;
-		int best_count = 0;
+		int64_t best_size = 0;
 
-		for (const auto &[culture, count] : this->get_culture_counts()) {
-			if (count > best_count) {
+		for (const auto &[culture, size] : this->get_culture_sizes()) {
+			if (size > best_size) {
 				main_culture = culture;
-				best_count = count;
+				best_size = size;
 			}
 		}
 
 		this->set_main_culture(main_culture);
 	}
 
-	const religion_map<int> &get_religion_counts() const
+	const religion_map<int64_t> &get_religion_sizes() const
 	{
-		return this->religion_counts;
+		return this->religion_sizes;
 	}
 
-	QVariantList get_religion_counts_qvariant_list() const;
-	void change_religion_count(const religion *religion, const int change);
+	QVariantList get_religion_sizes_qvariant_list() const;
+	void change_religion_size(const religion *religion, const int64_t change);
 
 	const religion *get_main_religion() const
 	{
@@ -122,31 +122,31 @@ public:
 	void calculate_main_religion()
 	{
 		const religion *main_religion = nullptr;
-		int best_count = 0;
+		int64_t best_size = 0;
 
-		for (const auto &[religion, count] : this->get_religion_counts()) {
-			if (count > best_count) {
+		for (const auto &[religion, size] : this->get_religion_sizes()) {
+			if (size > best_size) {
 				main_religion = religion;
-				best_count = count;
+				best_size = size;
 			}
 		}
 
 		this->set_main_religion(main_religion);
 	}
 
-	const phenotype_map<int> &get_phenotype_counts() const
+	const phenotype_map<int64_t> &get_phenotype_sizes() const
 	{
-		return this->phenotype_counts;
+		return this->phenotype_sizes;
 	}
 
-	QVariantList get_phenotype_counts_qvariant_list() const;
-	void change_phenotype_count(const phenotype *phenotype, const int change);
+	QVariantList get_phenotype_sizes_qvariant_list() const;
+	void change_phenotype_size(const phenotype *phenotype, const int64_t change);
 
 	std::vector<const phenotype *> get_weighted_phenotypes_for_culture(const culture *culture) const;
 
-	int get_literate_count() const
+	int64_t get_literate_size() const
 	{
-		return this->literate_count;
+		return this->literate_size;
 	}
 
 	int get_literacy_rate() const
@@ -155,7 +155,7 @@ public:
 			return 0;
 		}
 
-		return this->get_literate_count() * 100 / this->get_population_unit_count();
+		return static_cast<int>(this->get_literate_size() * 100 / this->get_size());
 	}
 
 	void add_upper_population(population *upper_population)
@@ -181,20 +181,20 @@ public:
 		this->change_population_unit_count(other_population->get_population_unit_count() * change);
 		this->change_size(other_population->get_size() * change);
 
-		for (const auto &[type, count] : other_population->get_type_counts()) {
-			this->change_type_count(type, count * change);
+		for (const auto &[type, size] : other_population->get_type_sizes()) {
+			this->change_type_size(type, size * change);
 		}
 
-		for (const auto &[culture, count] : other_population->get_culture_counts()) {
-			this->change_culture_count(culture, count * change);
+		for (const auto &[culture, size] : other_population->get_culture_sizes()) {
+			this->change_culture_size(culture, size * change);
 		}
 
-		for (const auto &[religion, count] : other_population->get_religion_counts()) {
-			this->change_religion_count(religion, count * change);
+		for (const auto &[religion, size] : other_population->get_religion_sizes()) {
+			this->change_religion_size(religion, size * change);
 		}
 
-		for (const auto &[phenotype, count] : other_population->get_phenotype_counts()) {
-			this->change_phenotype_count(phenotype, count * change);
+		for (const auto &[phenotype, size] : other_population->get_phenotype_sizes()) {
+			this->change_phenotype_size(phenotype, size * change);
 		}
 	}
 
@@ -208,24 +208,24 @@ public:
 signals:
 	void population_unit_count_changed();
 	void size_changed();
-	void type_counts_changed();
-	void type_count_changed(const population_type *type, const int change);
-	void culture_counts_changed();
+	void type_sizes_changed();
+	void culture_sizes_changed();
 	void main_culture_changed(const culture *culture);
-	void religion_counts_changed();
+	void religion_sizes_changed();
 	void main_religion_changed(const religion *religion);
-	void phenotype_counts_changed();
+	void phenotype_sizes_changed();
+	void population_unit_gained(const population_unit *population_unit, const int multiplier);
 
 private:
 	int population_unit_count = 0;
 	int64_t size = 0;
-	population_type_map<int> type_counts;
-	culture_map<int> culture_counts;
+	population_type_map<int64_t> type_sizes;
+	culture_map<int64_t> culture_sizes;
 	const culture *main_culture = nullptr;
-	religion_map<int> religion_counts;
+	religion_map<int64_t> religion_sizes;
 	const religion *main_religion = nullptr;
-	phenotype_map<int> phenotype_counts;
-	int literate_count = 0;
+	phenotype_map<int64_t> phenotype_sizes;
+	int64_t literate_size = 0;
 	std::vector<population *> upper_populations;
 };
 

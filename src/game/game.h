@@ -117,7 +117,6 @@ public:
 	void apply_site_buildings(const site *site);
 	void apply_population_history();
 	int64_t apply_historical_population_group_to_site(const population_group_key &group_key, const int population, const site *site);
-	void apply_historical_population_units_to_site(const population_group_key &group_key, const int population_unit_count, const site *site);
 
 	QCoro::Task<void> on_setup_finished();
 
