@@ -9,7 +9,7 @@ PopulationChart {
 		target: chart.data_source
 		ignoreUnknownSignals: true //as there may be no selected data source
 		
-		function onType_counts_changed() {
+		function onType_sizes_changed() {
 			chart.update_chart()
 		}
 	}
@@ -21,7 +21,7 @@ PopulationChart {
 			return
 		}
 
-		var population_per_type = chart.population_data ? chart.population_data : chart.data_source.type_counts
+		var population_per_type = chart.population_data ? chart.population_data : chart.data_source.type_sizes
 		for (var i = 0; i < population_per_type.length; i++) {
 			var population_type = population_per_type[i].key
 			var count = population_per_type[i].value

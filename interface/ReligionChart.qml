@@ -9,7 +9,7 @@ PopulationChart {
 		target: chart.data_source
 		ignoreUnknownSignals: true //as there may be no selected data source
 		
-		function onReligion_counts_changed() {
+		function onReligion_sizes_changed() {
 			chart.update_chart()
 		}
 	}
@@ -21,7 +21,7 @@ PopulationChart {
 			return
 		}
 
-		var population_per_religion = chart.population_data ? chart.population_data : chart.data_source.religion_counts
+		var population_per_religion = chart.population_data ? chart.population_data : chart.data_source.religion_sizes
 		for (var i = 0; i < population_per_religion.length; i++) {
 			var religion = population_per_religion[i].key
 			var count = population_per_religion[i].value

@@ -163,7 +163,7 @@ Rectangle {
 	
 	SmallText {
 		id: population_type_chart_label
-		anchors.top: country_text.top
+		anchors.top: ruler_label.top
 		anchors.horizontalCenter: population_type_chart.horizontalCenter
 		text: "Population Type"
 		visible: population_type_chart.visible
@@ -174,13 +174,12 @@ Rectangle {
 		anchors.top: culture_chart.top
 		anchors.right: culture_chart.left
 		anchors.rightMargin: 16 * scale_factor
-		visible: false//selected_country !== null
 		data_source: selected_country_game_data ? selected_country_game_data.population : null
 	}
 	
 	SmallText {
 		id: culture_chart_label
-		anchors.top: country_text.top
+		anchors.top: ruler_label.top
 		anchors.horizontalCenter: culture_chart.horizontalCenter
 		text: "Culture"
 		visible: culture_chart.visible
@@ -192,13 +191,12 @@ Rectangle {
 		anchors.topMargin: 4 * scale_factor
 		anchors.right: religion_chart.left
 		anchors.rightMargin: 16 * scale_factor
-		visible: false//selected_country !== null
 		data_source: selected_country_game_data ? selected_country_game_data.population : null
 	}
 	
 	SmallText {
 		id: religion_chart_label
-		anchors.top: country_text.top
+		anchors.top: ruler_label.top
 		anchors.horizontalCenter: religion_chart.horizontalCenter
 		text: "Religion"
 		visible: religion_chart.visible
@@ -209,7 +207,6 @@ Rectangle {
 		anchors.top: population_type_chart.top
 		anchors.right: religious_map_mode_button.left
 		anchors.rightMargin: 16 * scale_factor
-		visible: false//selected_country !== null
 		data_source: selected_country_game_data ? selected_country_game_data.population : null
 	}
 	

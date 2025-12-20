@@ -265,7 +265,7 @@ MenuBase {
 	
 	SmallText {
 		id: population_type_chart_label
-		anchors.top: country_text_area.top
+		anchors.top: ruler_label.top
 		anchors.horizontalCenter: population_type_chart.horizontalCenter
 		text: "Population Type"
 		visible: population_type_chart.visible
@@ -276,12 +276,11 @@ MenuBase {
 		anchors.top: culture_chart.top
 		anchors.right: culture_chart.left
 		anchors.rightMargin: 16 * scale_factor
-		visible: false//selected_country !== null
 	}
 	
 	SmallText {
 		id: culture_chart_label
-		anchors.top: country_text_area.top
+		anchors.top: ruler_label.top
 		anchors.horizontalCenter: culture_chart.horizontalCenter
 		text: "Culture"
 		visible: culture_chart.visible
@@ -293,12 +292,11 @@ MenuBase {
 		anchors.topMargin: 4 * scale_factor
 		anchors.right: religion_chart.left
 		anchors.rightMargin: 16 * scale_factor
-		visible: false//selected_country !== null
 	}
 	
 	SmallText {
 		id: religion_chart_label
-		anchors.top: country_text_area.top
+		anchors.top: ruler_label.top
 		anchors.horizontalCenter: religion_chart.horizontalCenter
 		text: "Religion"
 		visible: religion_chart.visible
@@ -306,15 +304,14 @@ MenuBase {
 	
 	ReligionChart {
 		id: religion_chart
-		anchors.top: population_type_chart.top
+		anchors.top: culture_chart.top
 		anchors.right: phenotype_chart.left
 		anchors.rightMargin: 16 * scale_factor
-		visible: false//selected_country !== null
 	}
 	
 	SmallText {
 		id: phenotype_chart_label
-		anchors.top: country_text_area.top
+		anchors.top: ruler_label.top
 		anchors.horizontalCenter: phenotype_chart.horizontalCenter
 		text: "Phenotype"
 		visible: phenotype_chart.visible
@@ -322,10 +319,9 @@ MenuBase {
 	
 	PhenotypeChart {
 		id: phenotype_chart
-		anchors.top: population_type_chart.top
+		anchors.top: culture_chart.top
 		anchors.right: diplomatic_map_background.right
 		anchors.rightMargin: 4 * scale_factor
-		visible: false//selected_country !== null
 	}
 	
 	Rectangle {
