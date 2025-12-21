@@ -8,6 +8,7 @@ hamlet = {
 		untrained_workers
 		trained_workers
 		expert_workers
+		laborers
 	}
 	build_conditions = {
 		domain = {
@@ -32,6 +33,7 @@ village = {
 		untrained_workers
 		trained_workers
 		expert_workers
+		laborers
 	}
 	build_conditions = {
 		has_building_class = warehouse
@@ -51,6 +53,7 @@ town = {
 		untrained_workers
 		trained_workers
 		expert_workers
+		laborers
 		apprentice_blacksmiths
 		journeyman_blacksmiths
 		master_blacksmiths
@@ -96,6 +99,7 @@ city = {
 		untrained_workers
 		trained_workers
 		expert_workers
+		laborers
 		soldiers
 		apprentice_blacksmiths
 		journeyman_blacksmiths

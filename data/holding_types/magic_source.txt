@@ -18,5 +18,6 @@ magic_source = {
 		untrained_workers
 		trained_workers
 		expert_workers
+		laborers
 	}
 }

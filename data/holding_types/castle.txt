@@ -69,6 +69,7 @@ castle = { #administrative center
 		untrained_workers
 		trained_workers
 		expert_workers
+		laborers
 		soldiers
 		officers
 	}

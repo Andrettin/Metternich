@@ -42,6 +42,7 @@ temple = {
 		untrained_workers
 		trained_workers
 		expert_workers
+		laborers
 		clergymen
 		firebrand_preachers
 	}
