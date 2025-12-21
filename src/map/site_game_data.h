@@ -330,6 +330,11 @@ public:
 	const population_class *get_default_population_class() const;
 	const population_class *get_default_literate_population_class() const;
 
+	const population_type_map<int64_t> &get_population_type_capacities() const
+	{
+		return this->population_type_capacities;
+	}
+
 	int64_t get_population_type_capacity(const population_type *population_type) const
 	{
 		const auto find_iterator = this->population_type_capacities.find(population_type);

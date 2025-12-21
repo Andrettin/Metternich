@@ -764,8 +764,6 @@ void game::apply_history(const QDate &start_date)
 			}
 		}
 
-		this->apply_population_history();
-
 		for (const province *province : map::get()->get_provinces()) {
 			for (const site *settlement : province->get_game_data()->get_settlement_sites()) {
 				site_game_data *settlement_game_data = settlement->get_game_data();
@@ -774,6 +772,8 @@ void game::apply_history(const QDate &start_date)
 				}
 			}
 		}
+
+		this->apply_population_history();
 
 		//set stored commodities from history after the initial buildings have been constructed, so that buildings granting storage capacity (e.g. warehouses) will already be present
 		for (const domain *domain : this->get_countries()) {
@@ -1253,7 +1253,7 @@ void game::apply_population_history()
 		region->get_history()->distribute_population();
 	}
 
-	domain_map<population_group_map<int>> country_populations;
+	domain_map<population_group_map<int64_t>> country_populations;
 
 	for (const province *province : map::get()->get_provinces()) {
 		if (province->is_water_zone()) {
@@ -1276,7 +1276,7 @@ void game::apply_population_history()
 
 		province->get_history()->distribute_population();
 
-		population_group_map<int> remaining_province_populations;
+		population_group_map<int64_t> remaining_province_populations;
 
 		for (const site *site : province_game_data->get_sites()) {
 			site_game_data *site_game_data = site->get_game_data();
@@ -1308,7 +1308,7 @@ void game::apply_population_history()
 
 			if (site_game_data->get_population_units().empty()) {
 				//ensure holdings have at least one population unit
-				const int population = 10000; //a bit of population to start with
+				const int64_t population = 10000; //a bit of population to start with
 				this->apply_historical_population_group_to_site(population_group_key(), population, site);
 			}
 		}
@@ -1342,7 +1342,7 @@ void game::apply_population_history()
 
 		//initialize entries for groups with less defined properties, since we might need to use them
 		population_groups[population_group_key()];
-		const population_group_map<int> population_groups_copy = population_groups;
+		const population_group_map<int64_t> population_groups_copy = population_groups;
 		for (const auto &[group_key, population] : population_groups_copy) {
 			if (group_key.type != nullptr) {
 				population_groups[population_group_key(group_key.type, group_key.culture, nullptr, nullptr)];
@@ -1406,7 +1406,7 @@ void game::apply_population_history()
 	}
 }
 
-int64_t game::apply_historical_population_group_to_site(const population_group_key &group_key, const int population, const site *site)
+int64_t game::apply_historical_population_group_to_site(const population_group_key &group_key, const int64_t population, const site *site)
 {
 	if (population <= 0) {
 		return 0;
@@ -1419,7 +1419,7 @@ int64_t game::apply_historical_population_group_to_site(const population_group_k
 	}
 
 	const population_type *population_type = group_key.type;
-	if (population_type != nullptr && !site_game_data->can_have_population_type(population_type)) {
+	if (population_type != nullptr && (!site_game_data->can_have_population_type(population_type) || site_game_data->get_available_population_type_capacity(population_type) == 0)) {
 		return population;
 	}
 
@@ -1438,7 +1438,7 @@ int64_t game::apply_historical_population_group_to_site(const population_group_k
 
 	const culture *site_culture = site_history->get_culture();
 
-	int remaining_population = population;
+	int64_t remaining_population = population;
 
 	const culture *culture = group_key.culture;
 	culture_map<int64_t> culture_weights;
@@ -1467,8 +1467,8 @@ int64_t game::apply_historical_population_group_to_site(const population_group_k
 			population_group_key group_key_copy = group_key;
 			group_key_copy.culture = weighted_culture;
 
-			const int culture_population = static_cast<int>(remaining_population * weight / total_weight);
-			this->apply_historical_population_group_to_site(group_key_copy, culture_population, site);
+			int64_t culture_population = remaining_population * weight / total_weight;
+			culture_population -= this->apply_historical_population_group_to_site(group_key_copy, culture_population, site);
 			new_remaining_population -= culture_population;
 		}
 
@@ -1529,15 +1529,15 @@ int64_t game::apply_historical_population_group_to_site(const population_group_k
 	if (phenotype == nullptr) {
 		assert_throw(!phenotype_weights.empty());
 
-		int new_remaining_population = remaining_population;
+		int64_t new_remaining_population = remaining_population;
 		const int64_t total_weight = archimedes::map::get_total_value(phenotype_weights);
 
 		for (const auto &[weighted_phenotype, weight] : phenotype_weights) {
 			population_group_key group_key_copy = group_key;
 			group_key_copy.phenotype = weighted_phenotype;
 
-			const int phenotype_population = static_cast<int>(remaining_population * weight / total_weight);
-			this->apply_historical_population_group_to_site(group_key_copy, phenotype_population, site);
+			int64_t phenotype_population = remaining_population * weight / total_weight;
+			phenotype_population -= this->apply_historical_population_group_to_site(group_key_copy, phenotype_population, site);
 			new_remaining_population -= phenotype_population;
 		}
 
@@ -1558,22 +1558,47 @@ int64_t game::apply_historical_population_group_to_site(const population_group_k
 	}
 	assert_throw(phenotype != nullptr);
 
-	const population_class *population_class = site->get_game_data()->get_default_population_class();
-
 	assert_throw(culture != nullptr);
 	assert_throw(religion != nullptr);
-
-	const metternich::population_type *unit_population_type = population_type;
-	if (population_type == nullptr) {
-		unit_population_type = culture->get_population_class_type(population_class);
-	}
-	assert_throw(unit_population_type != nullptr);
-
 	assert_throw(phenotype != nullptr);
 
-	site_game_data->create_population_unit(unit_population_type, culture, religion, phenotype, remaining_population);
+	if (population_type == nullptr) {
+		std::vector<const metternich::population_type *> available_population_types = archimedes::map::get_keys(site_game_data->get_population_type_capacities());
+		std::sort(available_population_types.begin(), available_population_types.end(), [&](const metternich::population_type *lhs, const metternich::population_type *rhs) {
+			const int64_t lhs_available_capacity = site_game_data->get_available_population_type_capacity(lhs);
+			const int64_t rhs_available_capacity = site_game_data->get_available_population_type_capacity(rhs);
+			if (lhs_available_capacity != rhs_available_capacity) {
+				return lhs_available_capacity > rhs_available_capacity;
+			}
 
-	return 0;
+			return lhs->get_identifier() < rhs->get_identifier();
+		});
+
+		for (const metternich::population_type *available_population_type : available_population_types) {
+			const int64_t available_capacity = site_game_data->get_available_population_type_capacity(available_population_type);
+
+			if (available_capacity == 0) {
+				continue;
+			}
+
+			population_group_key group_key_copy = group_key;
+			group_key_copy.type = available_population_type;
+
+			int64_t type_population = std::min(remaining_population, available_capacity);
+			type_population -= this->apply_historical_population_group_to_site(group_key_copy, type_population, site);
+			remaining_population -= type_population;
+		}
+
+		if (remaining_population > 0) {
+			return remaining_population;
+		}
+	}
+	assert_throw(population_type != nullptr);
+
+	const int64_t population_for_unit = std::min(remaining_population, site_game_data->get_available_population_type_capacity(population_type));
+	site_game_data->create_population_unit(population_type, culture, religion, phenotype, remaining_population);
+
+	return remaining_population - population_for_unit;
 }
 
 QCoro::Task<void> game::on_setup_finished()

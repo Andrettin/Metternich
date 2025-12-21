@@ -1555,6 +1555,7 @@ void site_game_data::create_population_unit(const population_type *type, const m
 	assert_throw(type->is_enabled());
 	assert_throw(this->can_have_population());
 	assert_throw(this->is_built());
+	assert_throw(this->can_have_population_type(type));
 
 	auto population_unit = make_qunique<metternich::population_unit>(type, culture, religion, phenotype, size, this->site);
 	this->get_province()->get_game_data()->add_population_unit(population_unit.get());
@@ -1621,8 +1622,7 @@ void site_game_data::set_population_type_capacity(const population_type *populat
 int64_t site_game_data::get_available_population_type_capacity(const population_type *population_type) const
 {
 	const int64_t available_capacity = this->get_population_type_capacity(population_type) - this->get_population()->get_type_size(population_type);
-	assert_throw(available_capacity >= 0);
-	return available_capacity;
+	return std::max(0ll, available_capacity);
 }
 
 void site_game_data::change_housing(const centesimal_int &change)

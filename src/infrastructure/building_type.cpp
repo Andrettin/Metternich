@@ -204,6 +204,14 @@ void building_type::check() const
 	if (this->get_holding_types().empty()) {
 		throw std::runtime_error(std::format("Building type \"{}\" does not have any holding types listed for it.", this->get_identifier()));
 	}
+
+	if (this->get_population_type() != nullptr) {
+		for (const holding_type *holding_type : this->get_holding_types()) {
+			if (!holding_type->can_have_population_type(this->get_population_type())) {
+				throw std::runtime_error(std::format("Building type \"{}\" increases capacity for population type \"{}\", but it is buildable in holding type \"{}\", which cannot have that population type.", this->get_identifier(), this->get_population_type()->get_identifier(), holding_type->get_identifier()));
+			}
+		}
+	}
 }
 
 const building_slot_type *building_type::get_slot_type() const
