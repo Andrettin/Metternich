@@ -1,0 +1,3 @@
+merchants = {
+	name = "Merchants"
+}

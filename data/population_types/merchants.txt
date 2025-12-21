@@ -1,0 +1,20 @@
+merchants = {
+	name = "Merchants"
+	population_class = merchants
+	color = { 240 240 240 }
+	icon = prospector
+	small_icon = prospector_small
+	output_commodity = wealth
+	output_value = 7sp
+	output_modifier = 50
+	commodity_demands = {
+		clothing = 0.125
+		furniture = 0.125
+		tools = 0.125
+		brass_lamps = 0.0625
+		coffee = 0.125
+		opium = 0.0625
+		salt = 0.125
+		tea = 0.125
+	}
+}

@@ -34,6 +34,7 @@ guild = {
 		untrained_workers
 		trained_workers
 		expert_workers
+		craftsmen
 		apprentice_blacksmiths
 		journeyman_blacksmiths
 		master_blacksmiths
@@ -54,6 +55,7 @@ guild = {
 		master_weavers
 		bureaucrats
 		elder_statesmen
+		merchants
 		capitalists
 	}
 }

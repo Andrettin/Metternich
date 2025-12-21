@@ -4,6 +4,7 @@ smithy = {
 	portrait = factory
 	icon = tools
 	size = 1
+	population_type = craftsmen
 	holding_types = {
 		guild
 	}

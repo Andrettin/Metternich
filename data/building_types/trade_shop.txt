@@ -4,6 +4,7 @@ trade_shop = {
 	portrait = trading_post
 	icon = wealth
 	size = 1
+	population_type = craftsmen
 	holding_types = {
 		guild
 	}
