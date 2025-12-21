@@ -16,6 +16,7 @@
 #include "infrastructure/wonder.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
+#include "population/population_type.h"
 #include "script/condition/and_condition.h"
 #include "script/modifier.h"
 #include "util/assert_util.h"
@@ -643,6 +644,15 @@ QString building_slot::get_modifier_string() const
 		const domain_game_data *domain_game_data = this->get_country()->get_game_data();
 		const centesimal_int multiplier = centesimal_int(1) / domain_game_data->get_holding_count();
 		str += this->get_building()->get_weighted_domain_modifier()->get_string(this->get_country(), multiplier, 0, false);
+	}
+
+	if (this->get_building()->get_population_type() != nullptr) {
+		if (!str.empty()) {
+			str += "\n";
+		}
+
+		const QColor &number_color = defines::get()->get_green_text_color();
+		str += std::format("{} Capacity: {}", this->get_building()->get_population_type()->get_name(), string::colored(number::to_signed_string(this->get_building()->get_population_capacity() * std::max(1, this->get_settlement()->get_game_data()->get_holding_level())), number_color));
 	}
 
 	return QString::fromStdString(str);

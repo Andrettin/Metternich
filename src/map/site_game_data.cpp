@@ -638,6 +638,8 @@ void site_game_data::set_holding_level(const int level)
 		return;
 	}
 
+	const int old_level = this->get_holding_level();
+
 	if (this->get_owner() != nullptr) {
 		this->get_owner()->get_game_data()->change_score(-this->get_holding_level() * 50);
 	}
@@ -652,6 +654,15 @@ void site_game_data::set_holding_level(const int level)
 		assert_throw(this->get_holding_type() != nullptr);
 	} else {
 		assert_throw(this->get_holding_type() == nullptr);
+	}
+
+	const int old_population_capacity_multiplier = std::max(old_level, 1);
+	const int new_population_capacity_multiplier = std::max(level, 1);
+	if (new_population_capacity_multiplier != old_population_capacity_multiplier) {
+		for (auto &[population_type, capacity] : this->population_type_capacities) {
+			capacity *= new_population_capacity_multiplier;
+			capacity /= old_population_capacity_multiplier;
+		}
 	}
 
 	this->update_holding_type_name();
@@ -1369,7 +1380,7 @@ void site_game_data::on_building_gained(const building_type *building, const int
 	this->change_total_building_size(building->get_size() * multiplier);
 
 	if (building->get_population_type() != nullptr) {
-		this->change_population_type_capacity(building->get_population_type(), building->get_population_capacity() * multiplier);
+		this->change_population_type_capacity(building->get_population_type(), building->get_population_capacity() * std::max(1, this->get_holding_level()) * multiplier);
 	}
 }
 
