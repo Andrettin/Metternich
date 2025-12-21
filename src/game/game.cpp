@@ -1589,9 +1589,7 @@ int64_t game::apply_historical_population_group_to_site(const population_group_k
 			remaining_population -= type_population;
 		}
 
-		if (remaining_population > 0) {
-			return remaining_population;
-		}
+		return remaining_population;
 	}
 	assert_throw(population_type != nullptr);
 
