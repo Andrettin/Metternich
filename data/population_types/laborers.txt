@@ -4,6 +4,8 @@ laborers = {
 	color = { 189 57 36 }
 	icon = miners
 	small_icon = miners_small
+	output_commodity = wealth
+	output_value = 7sp
 	equivalent_population_types = {
 		farmers
 		soldiers
