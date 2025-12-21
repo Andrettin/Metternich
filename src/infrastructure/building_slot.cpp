@@ -652,7 +652,7 @@ QString building_slot::get_modifier_string() const
 		}
 
 		const QColor &number_color = defines::get()->get_green_text_color();
-		str += std::format("{} Capacity: {}", this->get_building()->get_population_type()->get_name(), string::colored(number::to_signed_string(this->get_building()->get_population_capacity() * std::max(1, this->get_settlement()->get_game_data()->get_holding_level())), number_color));
+		str += std::format("{} Capacity: {}", this->get_building()->get_population_type()->get_name(), string::colored(number::to_signed_string(this->get_building()->get_population_capacity_for_holding_level(this->get_settlement()->get_game_data()->get_holding_level())), number_color));
 	}
 
 	return QString::fromStdString(str);

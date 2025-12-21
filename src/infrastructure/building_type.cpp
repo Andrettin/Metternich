@@ -247,6 +247,11 @@ QVariantList building_type::get_recruited_transporter_categories_qvariant_list()
 	return container::to_qvariant_list(this->get_recruited_transporter_categories());
 }
 
+int64_t building_type::get_population_capacity_for_holding_level(const int holding_level) const
+{
+	return this->get_population_capacity() * std::max(1, holding_level);
+}
+
 int building_type::get_wealth_cost_for_country(const domain *domain) const
 {
 	int cost = this->get_wealth_cost();

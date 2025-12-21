@@ -1380,7 +1380,7 @@ void site_game_data::on_building_gained(const building_type *building, const int
 	this->change_total_building_size(building->get_size() * multiplier);
 
 	if (building->get_population_type() != nullptr) {
-		this->change_population_type_capacity(building->get_population_type(), building->get_population_capacity() * std::max(1, this->get_holding_level()) * multiplier);
+		this->change_population_type_capacity(building->get_population_type(), building->get_population_capacity_for_holding_level(this->get_holding_level()) * multiplier);
 	}
 }
 
