@@ -5,6 +5,7 @@ small_merchant_enclave = {
 	icon = wealth
 	holding_level = 1
 	size = 1
+	population_type = merchants
 	holding_types = {
 		guild
 	}
@@ -17,6 +18,7 @@ merchant_enclave = {
 	icon = wealth
 	holding_level = 2
 	size = 1
+	population_type = merchants
 	base_building = small_merchant_enclave
 	holding_types = {
 		guild
@@ -30,6 +32,7 @@ large_merchant_enclave = {
 	icon = wealth
 	holding_level = 3
 	size = 1
+	population_type = merchants
 	base_building = merchant_enclave
 	holding_types = {
 		guild
@@ -43,6 +46,7 @@ guildhall = {
 	icon = wealth
 	holding_level = 4
 	size = 2
+	population_type = merchants
 	base_building = large_merchant_enclave
 	holding_types = {
 		guild
