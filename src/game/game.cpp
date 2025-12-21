@@ -773,6 +773,7 @@ void game::apply_history(const QDate &start_date)
 			}
 		}
 
+		this->apply_free_on_start_buildings();
 		this->apply_population_history();
 
 		//set stored commodities from history after the initial buildings have been constructed, so that buildings granting storage capacity (e.g. warehouses) will already be present
@@ -1221,6 +1222,32 @@ void game::apply_site_buildings(const site *site)
 	}
 }
 
+void game::apply_free_on_start_buildings()
+{
+	//build free on start buildings
+	for (const site *site : map::get()->get_sites()) {
+		if (!site->is_settlement()) {
+			continue;
+		}
+
+		if (!site->get_game_data()->is_built()) {
+			continue;
+		}
+
+		for (const building_type *building : building_type::get_all()) {
+			if (building->get_free_on_start_conditions() == nullptr) {
+				continue;
+			}
+
+			if (!building->get_free_on_start_conditions()->check(site, read_only_context(site))) {
+				continue;
+			}
+
+			site->get_game_data()->check_free_building(building);
+		}
+	}
+}
+
 void game::apply_population_history()
 {
 	for (const province *province : map::get()->get_provinces()) {
@@ -1639,25 +1666,6 @@ QCoro::Task<void> game::on_setup_finished()
 					site->get_game_data()->check_free_improvement(improvement);
 				}
 			}
-
-			//build free on start buildings
-			for (const site *settlement : province->get_game_data()->get_settlement_sites()) {
-				if (!settlement->get_game_data()->is_built()) {
-					continue;
-				}
-
-				for (const building_type *building : building_type::get_all()) {
-					if (building->get_free_on_start_conditions() == nullptr) {
-						continue;
-					}
-
-					if (!building->get_free_on_start_conditions()->check(settlement, read_only_context(settlement))) {
-						continue;
-					}
-
-					settlement->get_game_data()->check_free_building(building);
-				}
-			}
 		}
 
 		//decrease population if there's too much for the starting food output
@@ -1669,6 +1677,8 @@ QCoro::Task<void> game::on_setup_finished()
 
 		emit domain->game_data_changed();
 	}
+
+	this->apply_free_on_start_buildings();
 
 	this->calculate_country_ranks();
 
