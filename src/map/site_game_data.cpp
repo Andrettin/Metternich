@@ -1636,6 +1636,73 @@ int64_t site_game_data::get_available_population_type_capacity(const population_
 	return std::max(0ll, available_capacity);
 }
 
+int64_t site_game_data::get_available_population_capacity() const
+{
+	int64_t available_capacity = 0;
+
+	for (const auto &[population_type, capacity] : this->get_population_type_capacities()) {
+		available_capacity += capacity - this->get_population()->get_type_size(population_type);
+	}
+
+	return std::max(0ll, available_capacity);
+}
+
+void site_game_data::set_available_population_type_capacity_from_buildings(const population_type *population_type, const int64_t capacity)
+{
+	assert_throw(population_type != nullptr);
+
+	bool changed = true;
+	while (capacity > this->get_available_population_type_capacity(population_type) && changed) {
+		changed = false;
+
+		std::vector<const building_type *> potential_buildings;
+
+		for (const building_type *building : building_type::get_all()) {
+			if (building->get_population_type() != population_type && building->get_holding_level() == 0) {
+				continue;
+			}
+
+			if (!this->can_gain_free_building(building, true)) {
+				continue;
+			}
+
+			potential_buildings.push_back(building);
+		}
+
+		if (!potential_buildings.empty()) {
+			this->add_building_with_prerequisites(vector::get_random(potential_buildings));
+			changed = true;
+		}
+	}
+}
+
+void site_game_data::set_available_population_capacity_from_buildings(const int64_t capacity)
+{
+	bool changed = true;
+	while (capacity > this->get_available_population_capacity() && changed) {
+		changed = false;
+
+		std::vector<const building_type *> potential_buildings;
+
+		for (const building_type *building : building_type::get_all()) {
+			if (building->get_population_type() == nullptr && building->get_holding_level() == 0) {
+				continue;
+			}
+
+			if (!this->can_gain_free_building(building, true)) {
+				continue;
+			}
+
+			potential_buildings.push_back(building);
+		}
+
+		if (!potential_buildings.empty()) {
+			this->add_building_with_prerequisites(vector::get_random(potential_buildings));
+			changed = true;
+		}
+	}
+}
+
 void site_game_data::change_housing(const centesimal_int &change)
 {
 	if (change == 0) {

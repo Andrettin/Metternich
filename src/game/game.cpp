@@ -1446,8 +1446,26 @@ int64_t game::apply_historical_population_group_to_site(const population_group_k
 	}
 
 	const population_type *population_type = group_key.type;
-	if (population_type != nullptr && (!site_game_data->can_have_population_type(population_type) || site_game_data->get_available_population_type_capacity(population_type) == 0)) {
-		return population;
+	if (population_type != nullptr) {
+		if (!site_game_data->can_have_population_type(population_type)) {
+			return population;
+		}
+
+		if (site_game_data->get_available_population_type_capacity(population_type) == 0) {
+			site_game_data->set_available_population_type_capacity_from_buildings(population_type, population);
+
+			if (site_game_data->get_available_population_type_capacity(population_type) == 0) {
+				return population;
+			}
+		}
+	} else {
+		if (site_game_data->get_available_population_capacity() == 0) {
+			site_game_data->set_available_population_capacity_from_buildings(population);
+
+			if (site_game_data->get_available_population_capacity() == 0) {
+				return population;
+			}
+		}
 	}
 
 	log_trace(std::format("Applying historical population group of type \"{}\", culture \"{}\", religion \"{}\" and size {} for settlement \"{}\".", population_type ? population_type->get_identifier() : "none", group_key.culture ? group_key.culture->get_identifier() : "none", group_key.religion ? group_key.religion->get_identifier() : "none", population, site->get_identifier()));
