@@ -656,13 +656,16 @@ void site_game_data::set_holding_level(const int level)
 		assert_throw(this->get_holding_type() == nullptr);
 	}
 
-	const int old_population_capacity_multiplier = std::max(old_level, 1);
-	const int new_population_capacity_multiplier = std::max(level, 1);
-	if (new_population_capacity_multiplier != old_population_capacity_multiplier) {
-		for (auto &[population_type, capacity] : this->population_type_capacities) {
-			capacity *= new_population_capacity_multiplier;
-			capacity /= old_population_capacity_multiplier;
+	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
+		const building_type *building = building_slot->get_building();
+
+		if (building == nullptr || building->get_population_type() == nullptr) {
+			continue;
 		}
+
+		const int64_t old_population_capacity = building->get_population_capacity_for_holding_level(old_level);
+		const int64_t new_population_capacity = building->get_population_capacity_for_holding_level(level);
+		this->change_population_type_capacity(building->get_population_type(), new_population_capacity - old_population_capacity);
 	}
 
 	this->update_holding_type_name();
