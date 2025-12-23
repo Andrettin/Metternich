@@ -1452,19 +1452,11 @@ int64_t game::apply_historical_population_group_to_site(const population_group_k
 		}
 
 		if (site_game_data->get_available_population_type_capacity(population_type) == 0) {
-			site_game_data->set_available_population_type_capacity_from_buildings(population_type, population);
-
-			if (site_game_data->get_available_population_type_capacity(population_type) == 0) {
-				return population;
-			}
+			return population;
 		}
 	} else {
 		if (site_game_data->get_available_population_capacity() == 0) {
-			site_game_data->set_available_population_capacity_from_buildings(population);
-
-			if (site_game_data->get_available_population_capacity() == 0) {
-				return population;
-			}
+			return population;
 		}
 	}
 

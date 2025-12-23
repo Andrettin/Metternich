@@ -4,9 +4,9 @@ craftsmen = {
 	color = { 12 157 162 }
 	icon = craftsmen_light
 	small_icon = craftsmen_light_small
-	output_commodity = wealth
-	output_value = 7sp
-	output_modifier = 25
+	#output_commodity = wealth
+	#output_value = 7sp
+	#output_modifier = 25
 	equivalent_population_types = {
 		farmers
 		soldiers

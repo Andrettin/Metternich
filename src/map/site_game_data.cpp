@@ -638,8 +638,6 @@ void site_game_data::set_holding_level(const int level)
 		return;
 	}
 
-	const int old_level = this->get_holding_level();
-
 	if (this->get_owner() != nullptr) {
 		this->get_owner()->get_game_data()->change_score(-this->get_holding_level() * 50);
 	}
@@ -654,18 +652,6 @@ void site_game_data::set_holding_level(const int level)
 		assert_throw(this->get_holding_type() != nullptr);
 	} else {
 		assert_throw(this->get_holding_type() == nullptr);
-	}
-
-	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
-		const building_type *building = building_slot->get_building();
-
-		if (building == nullptr || building->get_population_type() == nullptr) {
-			continue;
-		}
-
-		const int64_t old_population_capacity = building->get_population_capacity_for_holding_level(old_level);
-		const int64_t new_population_capacity = building->get_population_capacity_for_holding_level(level);
-		this->change_population_type_capacity(building->get_population_type(), new_population_capacity - old_population_capacity);
 	}
 
 	this->update_holding_type_name();
@@ -1383,7 +1369,11 @@ void site_game_data::on_building_gained(const building_type *building, const int
 	this->change_total_building_size(building->get_size() * multiplier);
 
 	if (building->get_population_type() != nullptr) {
-		this->change_population_type_capacity(building->get_population_type(), building->get_population_capacity_for_holding_level(this->get_holding_level()) * multiplier);
+		this->change_population_type_capacity(building->get_population_type(), building->get_population_capacity() * multiplier);
+	}
+
+	if (building->get_holding_level() > 0) {
+		this->change_population_type_capacity(this->get_culture()->get_population_class_type(defines::get()->get_default_population_class()), building->get_population_capacity_for_province_level(this->get_province()->get_game_data()->get_level()) * multiplier);
 	}
 }
 
@@ -1648,62 +1638,6 @@ int64_t site_game_data::get_available_population_capacity() const
 	}
 
 	return std::max(0ll, available_capacity);
-}
-
-void site_game_data::set_available_population_type_capacity_from_buildings(const population_type *population_type, const int64_t capacity)
-{
-	assert_throw(population_type != nullptr);
-
-	bool changed = true;
-	while (capacity > this->get_available_population_type_capacity(population_type) && changed) {
-		changed = false;
-
-		std::vector<const building_type *> potential_buildings;
-
-		for (const building_type *building : building_type::get_all()) {
-			if (building->get_population_type() != population_type && building->get_holding_level() == 0) {
-				continue;
-			}
-
-			if (!this->can_gain_free_building(building, true)) {
-				continue;
-			}
-
-			potential_buildings.push_back(building);
-		}
-
-		if (!potential_buildings.empty()) {
-			this->add_building_with_prerequisites(vector::get_random(potential_buildings));
-			changed = true;
-		}
-	}
-}
-
-void site_game_data::set_available_population_capacity_from_buildings(const int64_t capacity)
-{
-	bool changed = true;
-	while (capacity > this->get_available_population_capacity() && changed) {
-		changed = false;
-
-		std::vector<const building_type *> potential_buildings;
-
-		for (const building_type *building : building_type::get_all()) {
-			if (building->get_population_type() == nullptr && building->get_holding_level() == 0) {
-				continue;
-			}
-
-			if (!this->can_gain_free_building(building, true)) {
-				continue;
-			}
-
-			potential_buildings.push_back(building);
-		}
-
-		if (!potential_buildings.empty()) {
-			this->add_building_with_prerequisites(vector::get_random(potential_buildings));
-			changed = true;
-		}
-	}
 }
 
 void site_game_data::change_housing(const centesimal_int &change)

@@ -197,12 +197,8 @@ public:
 		return this->size;
 	}
 
-	int64_t get_population_capacity() const
-	{
-		return this->get_size() * building_type::population_capacity_per_size;
-	}
-
-	int64_t get_population_capacity_for_holding_level(const int holding_level) const;
+	int64_t get_population_capacity() const;
+	int64_t get_population_capacity_for_province_level(const int province_level) const;
 
 	const population_type *get_population_type() const
 	{

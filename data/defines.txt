@@ -27,7 +27,7 @@ months_per_turn_from_year = { #months per turn after a certain year has been rea
 	1800 = 3
 }
 
-default_population_class = untrained_workers
+default_population_class = laborers
 default_tribal_population_class = tribesmen
 default_literate_population_class = trained_workers
 population_growth_threshold = 100

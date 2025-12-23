@@ -22,6 +22,7 @@
 #include "game/event_trigger.h"
 #include "game/game.h"
 #include "game/province_event.h"
+#include "infrastructure/building_slot.h"
 #include "infrastructure/building_type.h"
 #include "infrastructure/holding_type.h"
 #include "infrastructure/improvement.h"
@@ -433,6 +434,8 @@ void province_game_data::set_level(const int level)
 		return;
 	}
 
+	const int old_level = this->get_level();
+
 	if (this->get_owner() != nullptr) {
 		this->get_owner()->get_game_data()->change_economic_score(-this->get_level() * 100);
 	}
@@ -441,6 +444,24 @@ void province_game_data::set_level(const int level)
 
 	if (this->get_owner() != nullptr) {
 		this->get_owner()->get_game_data()->change_economic_score(this->get_level() * 100);
+	}
+
+	for (const site *holding_site : this->get_settlement_sites()) {
+		if (!holding_site->get_game_data()->is_built()) {
+			continue;
+		}
+
+		for (const qunique_ptr<building_slot> &building_slot : holding_site->get_game_data()->get_building_slots()) {
+			const building_type *building = building_slot->get_building();
+
+			if (building == nullptr || building->get_holding_level() == 0) {
+				continue;
+			}
+
+			const int64_t old_population_capacity = building->get_population_capacity_for_province_level(old_level);
+			const int64_t new_population_capacity = building->get_population_capacity_for_province_level(level);
+			holding_site->get_game_data()->change_population_type_capacity(holding_site->get_game_data()->get_culture()->get_population_class_type(defines::get()->get_default_population_class()), new_population_capacity - old_population_capacity);
+		}
 	}
 
 	if (game::get()->is_running()) {

@@ -354,8 +354,6 @@ public:
 
 	int64_t get_available_population_type_capacity(const population_type *population_type) const;
 	int64_t get_available_population_capacity() const;
-	void set_available_population_type_capacity_from_buildings(const population_type *population_type, const int64_t capacity);
-	void set_available_population_capacity_from_buildings(const int64_t capacity);
 
 	const centesimal_int &get_housing() const
 	{

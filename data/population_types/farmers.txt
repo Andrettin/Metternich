@@ -4,8 +4,8 @@ farmers = {
 	color = { 75 193 237 }
 	icon = slaves_light
 	small_icon = slaves_light_small
-	output_commodity = wealth
-	output_value = 7sp
+	#output_commodity = wealth
+	#output_value = 7sp
 	equivalent_population_types = {
 		laborers
 		soldiers

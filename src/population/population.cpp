@@ -76,8 +76,9 @@ void population::change_type_size(const population_type *type, const int64_t cha
 
 	if (game::get()->is_running()) {
 		emit type_sizes_changed();
-		emit type_size_changed(type, change);
 	}
+
+	emit type_size_changed(type, change);
 }
 
 QVariantList population::get_culture_sizes_qvariant_list() const

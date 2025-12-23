@@ -81,13 +81,11 @@ void defines::process_gsml_scope(const gsml_data &scope)
 			this->event_trigger_none_random_weights[trigger] = weight;
 		});
 	} else if (tag == "province_population_per_level") {
-		static constexpr int multiplier = 32;
-
 		scope.for_each_property([&](const gsml_property &property) {
 			const int level = std::stoi(property.get_key());
 			const int population = std::stoi(property.get_value());
 
-			this->province_population_per_level[level] = population * multiplier;
+			this->province_population_per_level[level] = population;
 		});
 	} else if (tag == "province_taxation_per_level") {
 		scope.for_each_property([&](const gsml_property &property) {
