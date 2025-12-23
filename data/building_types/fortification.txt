@@ -29,6 +29,7 @@ watchtower = {
 	icon = wall
 	fortification_level = 2
 	size = 1
+	population_type = laborers
 	base_building = city_wall
 	holding_types = {
 		castle
@@ -52,6 +53,7 @@ castle = {
 	icon = wall
 	fortification_level = 4
 	size = 4
+	population_type = laborers
 	base_building = watchtower
 	required_technology = middle_ages
 	holding_types = {

@@ -4,6 +4,7 @@ graveyard = {
 	portrait = temple
 	icon = skull
 	size = 1
+	population_type = laborers
 	holding_types = {
 		temple
 	}

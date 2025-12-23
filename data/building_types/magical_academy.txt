@@ -4,6 +4,7 @@ magical_academy = {
 	portrait = university
 	icon = university
 	size = 2
+	population_type = laborers
 	required_technology = middle_ages
 	holding_types = {
 		magic_source

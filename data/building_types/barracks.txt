@@ -4,6 +4,7 @@ barracks = {
 	portrait = fort
 	icon = crossed_sabers
 	size = 1
+	population_type = laborers
 	holding_types = {
 		castle
 	}
@@ -40,6 +41,7 @@ garrison = {
 	portrait = fort
 	icon = crossed_sabers
 	size = 2
+	population_type = laborers
 	base_building = barracks
 	holding_types = {
 		castle

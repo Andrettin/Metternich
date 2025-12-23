@@ -5,6 +5,7 @@ shrine = {
 	icon = wooden_cross
 	holding_level = 1
 	size = 1
+	population_type = laborers
 	holding_types = {
 		temple
 		city
@@ -25,6 +26,7 @@ temple = {
 	icon = wooden_cross
 	holding_level = 2
 	size = 2
+	population_type = laborers
 	base_building = shrine
 	holding_types = {
 		temple
@@ -47,6 +49,7 @@ large_temple = {
 	icon = wooden_cross
 	holding_level = 3
 	size = 2
+	population_type = laborers
 	base_building = temple
 	holding_types = {
 		temple
@@ -66,6 +69,7 @@ cathedral = {
 	icon = golden_cross_detailed
 	holding_level = 4
 	size = 4
+	population_type = laborers
 	base_building = large_temple
 	required_technology = middle_ages
 	holding_types = {
@@ -96,6 +100,7 @@ large_cathedral = {
 	icon = golden_cross_detailed
 	holding_level = 5
 	size = 4
+	population_type = laborers
 	base_building = cathedral
 	required_technology = middle_ages
 	holding_types = {
@@ -119,6 +124,7 @@ grand_cathedral = {
 	icon = golden_cross_detailed
 	holding_level = 6
 	size = 4
+	population_type = laborers
 	base_building = large_cathedral
 	required_technology = middle_ages
 	holding_types = {
@@ -141,6 +147,7 @@ monastery = {
 	portrait = temple
 	icon = wooden_cross
 	size = 2
+	population_type = laborers
 	holding_types = {
 		temple
 	}

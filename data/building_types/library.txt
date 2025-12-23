@@ -4,6 +4,7 @@ library = {
 	portrait = university
 	icon = book
 	size = 1
+	population_type = laborers
 	holding_types = {
 		guild
 		magic_source

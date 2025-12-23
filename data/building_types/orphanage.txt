@@ -4,6 +4,7 @@ orphanage = {
 	portrait = temple
 	icon = wooden_cross
 	size = 1
+	population_type = laborers
 	holding_types = {
 		temple
 	}
