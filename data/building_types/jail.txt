@@ -8,9 +8,6 @@ jail = {
 	holding_types = {
 		castle
 	}
-	required_buildings = {
-		barracks
-	}
 	commodity_costs = {
 		wealth = 14gb
 	}

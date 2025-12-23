@@ -76,9 +76,6 @@ cathedral = {
 		temple
 		city
 	}
-	required_buildings = {
-		graveyard
-	}
 	commodity_costs = {
 		wealth = 26gb
 	}
