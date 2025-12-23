@@ -3,23 +3,20 @@ granary = {
 	building_class = granary
 	portrait = trading_post
 	icon = grain
+	size = 1
+	population_type = laborers
 	holding_types = {
-		camp
-		hamlet
-		village
 		castle
-		temple
-		town
-		city
+		guild
 	}
-	conditions = {
-		game_rule = additional_buildings
-		province = {
-			has_resource = grain
-		}
+	commodity_costs = {
+		wealth = 12gb
 	}
-	province_modifier = {
-		grain_per_improved_grain = 1
-		housing_per_improved_grain = 1
+	domain_modifier = {
+		loyalty = 1
+		stability = 1
+	}
+	free_on_start_conditions = {
+		has_building_class = garrison
 	}
 }
