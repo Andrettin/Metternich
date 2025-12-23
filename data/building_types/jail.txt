@@ -22,4 +22,7 @@ jail = {
 		stability = 2
 		#unrest = -2
 	}
+	free_on_start_conditions = {
+		has_building_class = garrison
+	}
 }

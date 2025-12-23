@@ -17,6 +17,9 @@ city_wall = {
 	domain_modifier = {
 		#unrest = -2
 	}
+	free_on_start_conditions = {
+		has_building_class = garrison
+	}
 }
 
 watchtower = {

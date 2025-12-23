@@ -42,6 +42,9 @@ noble_villa = {
 		stability = 1
 		#fame = 1
 	}
+	free_on_start_conditions = {
+		has_building_class = castle
+	}
 }
 
 palace = {

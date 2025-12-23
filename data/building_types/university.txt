@@ -23,6 +23,9 @@ academy = {
 		economy = 2
 		loyalty = 2
 	}
+	free_on_start_conditions = {
+		has_building_class = cathedral
+	}
 }
 
 university = {

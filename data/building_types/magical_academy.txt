@@ -22,4 +22,7 @@ magical_academy = {
 		economy = 2
 		#fame = 1
 	}
+	free_on_start_conditions = {
+		has_building_class = university
+	}
 }

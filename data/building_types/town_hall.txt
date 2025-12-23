@@ -19,4 +19,7 @@ town_hall = {
 		loyalty = 1
 		stability = 1
 	}
+	free_on_start_conditions = {
+		has_building_class = castle
+	}
 }
