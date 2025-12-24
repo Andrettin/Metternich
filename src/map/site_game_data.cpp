@@ -1640,21 +1640,6 @@ int64_t site_game_data::get_available_population_capacity() const
 	return std::max(0ll, available_capacity);
 }
 
-void site_game_data::change_housing(const centesimal_int &change)
-{
-	if (change == 0) {
-		return;
-	}
-
-	this->housing += change;
-
-	if (this->get_owner() != nullptr) {
-		this->get_owner()->get_game_data()->change_housing(change);
-	}
-
-	emit housing_changed();
-}
-
 void site_game_data::change_total_building_size(const int change)
 {
 	if (change == 0) {
@@ -1713,10 +1698,6 @@ void site_game_data::set_commodity_output(const commodity *commodity, const cent
 		if (this->get_owner() != nullptr) {
 			this->get_owner()->get_economy()->change_commodity_output(commodity, output_change);
 		}
-	}
-
-	if (commodity->is_housing()) {
-		this->change_housing(output_change);
 	}
 
 	emit commodity_outputs_changed();

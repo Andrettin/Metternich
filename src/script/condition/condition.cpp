@@ -23,7 +23,6 @@
 #include "script/condition/artillery_condition.h"
 #include "script/condition/attacking_commander_condition.h"
 #include "script/condition/available_food_condition.h"
-#include "script/condition/available_housing_condition.h"
 #include "script/condition/can_gain_building_class_condition.h"
 #include "script/condition/can_gain_trait_condition.h"
 #include "script/condition/capital_condition.h"
@@ -65,7 +64,6 @@
 #include "script/condition/has_terrain_condition.h"
 #include "script/condition/holding_level_condition.h"
 #include "script/condition/holding_type_condition.h"
-#include "script/condition/housing_condition.h"
 #include "script/condition/improvement_condition.h"
 #include "script/condition/independent_condition.h"
 #include "script/condition/infantry_condition.h"
@@ -299,14 +297,6 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			return std::make_unique<has_population_religion_condition<scope_type>>(value, condition_operator);
 		} else if (key == "has_population_type") {
 			return std::make_unique<has_population_type_condition<scope_type>>(value, condition_operator);
-		}
-	}
-
-	if constexpr (std::is_same_v<scope_type, domain> || std::is_same_v<scope_type, site>) {
-		if (key == "available_housing") {
-			return std::make_unique<available_housing_condition<scope_type>>(value, condition_operator);
-		} else if (key == "housing") {
-			return std::make_unique<housing_condition<scope_type>>(value, condition_operator);
 		}
 	}
 

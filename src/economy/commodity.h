@@ -33,7 +33,6 @@ class commodity final : public named_data_entry, public data_type<commodity>
 	Q_PROPERTY(bool local MEMBER local READ is_local NOTIFY changed)
 	Q_PROPERTY(bool provincial MEMBER provincial READ is_provincial NOTIFY changed)
 	Q_PROPERTY(bool negative_allowed MEMBER negative_allowed READ is_negative_allowed NOTIFY changed)
-	Q_PROPERTY(bool housing MEMBER housing READ is_housing NOTIFY changed)
 	Q_PROPERTY(int wealth_value MEMBER wealth_value READ get_wealth_value NOTIFY changed)
 	Q_PROPERTY(int base_price MEMBER base_price READ get_base_price NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
@@ -100,11 +99,6 @@ public:
 		return this->negative_allowed;
 	}
 
-	bool is_housing() const
-	{
-		return this->housing;
-	}
-
 	int get_wealth_value() const
 	{
 		return this->wealth_value;
@@ -162,7 +156,6 @@ private:
 	bool local = false;
 	bool provincial = false;
 	bool negative_allowed = false;
-	bool housing = false;
 	int wealth_value = 0;
 	int base_price = 0;
 	technology *required_technology = nullptr;

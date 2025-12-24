@@ -461,11 +461,10 @@ void domain_game_data::do_population_growth()
 		}
 
 		const int available_food = this->get_available_food();
-		const int available_housing = std::max(0, this->get_available_housing().to_int());
 
 		int food_consumption = this->get_net_food_consumption();
 
-		const int population_growth_change = std::min(available_food, available_housing);
+		const int population_growth_change = available_food;
 		this->change_population_growth(population_growth_change);
 
 		if (population_growth_change > 0) {
@@ -1320,8 +1319,6 @@ void domain_game_data::on_site_gained(const site *site, const int multiplier)
 				this->on_wonder_gained(wonder, multiplier);
 			}
 		}
-
-		this->change_housing(site_game_data->get_housing() * multiplier);
 	}
 
 	const resource *site_resource = site->get_game_data()->get_resource();
@@ -2469,19 +2466,6 @@ void domain_game_data::grow_population()
 
 	std::vector<population_unit *> potential_base_population_units = this->population_units;
 
-	std::erase_if(potential_base_population_units, [this](const population_unit *population_unit) {
-		if (population_unit->get_site()->get_game_data()->get_available_housing() <= 0) {
-			return true;
-		}
-
-		return false;
-	});
-
-	if (potential_base_population_units.empty()) {
-		//this could happen if the settlements with available housing have no population
-		potential_base_population_units = this->population_units;
-	}
-
 	assert_throw(!potential_base_population_units.empty());
 
 	const population_unit *population_unit = vector::get_random(potential_base_population_units);
@@ -2490,27 +2474,6 @@ void domain_game_data::grow_population()
 	const phenotype *phenotype = population_unit->get_phenotype();
 
 	const site *site = population_unit->get_site();
-	if (site->get_game_data()->get_available_housing() <= 0) {
-		//if the population unit's site has no available housing, but there are empty populatable sites, grow the population in one of them
-		std::vector<const metternich::site *> potential_sites;
-		for (const province *province : this->get_provinces()) {
-			for (const metternich::site *province_site : province->get_game_data()->get_sites()) {
-				if (!province_site->get_game_data()->can_have_population() || !province_site->get_game_data()->is_built()) {
-					continue;
-				}
-
-				if (province_site->get_game_data()->get_available_housing() <= 0) {
-					continue;
-				}
-
-				potential_sites.push_back(province_site);
-			}
-		}
-
-		assert_throw(!potential_sites.empty());
-
-		site = vector::get_random(potential_sites);
-	}
 
 	const population_type *population_type = culture->get_population_class_type(site->get_game_data()->get_default_population_class());
 

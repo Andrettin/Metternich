@@ -15,7 +15,4 @@ sewer_system = {
 			value = 1
 		}
 	}
-	modifier = {
-		housing_bonus = 2
-	}
 }

@@ -29,9 +29,6 @@ cerro_de_potosi = {
 	site_types = {
 		resource
 	}
-	improved_modifier = {
-		housing_output_modifier = 400
-	}
 }
 
 krakatoa = {

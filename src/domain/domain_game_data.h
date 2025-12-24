@@ -133,7 +133,6 @@ class domain_game_data final : public QObject
 	Q_PROPERTY(int population_unit_count READ get_population_unit_count NOTIFY population_units_changed)
 	Q_PROPERTY(metternich::population* population READ get_population CONSTANT)
 	Q_PROPERTY(int population_growth READ get_population_growth NOTIFY population_growth_changed)
-	Q_PROPERTY(int housing READ get_housing_int NOTIFY housing_changed)
 	Q_PROPERTY(QColor diplomatic_map_color READ get_diplomatic_map_color NOTIFY overlord_changed)
 	Q_PROPERTY(QVariantList ideas READ get_ideas_qvariant_list NOTIFY ideas_changed)
 	Q_PROPERTY(QVariantList appointed_ideas READ get_appointed_ideas_qvariant_list NOTIFY appointed_ideas_changed)
@@ -724,32 +723,6 @@ public:
 
 	Q_INVOKABLE const icon *get_population_type_small_icon(const metternich::population_type *type) const;
 
-	const centesimal_int &get_housing() const
-	{
-		return this->housing;
-	}
-
-	int get_housing_int() const
-	{
-		return this->get_housing().to_int();
-	}
-
-	void change_housing(const centesimal_int &change)
-	{
-		if (change == 0) {
-			return;
-		}
-
-		this->housing += change;
-
-		emit housing_changed();
-	}
-
-	centesimal_int get_available_housing() const
-	{
-		return this->get_housing() - this->get_population_unit_count();
-	}
-
 	int get_food_consumption() const
 	{
 		return this->food_consumption;
@@ -1206,7 +1179,6 @@ signals:
 	void rank_changed();
 	void population_units_changed();
 	void population_growth_changed();
-	void housing_changed();
 	void population_type_inputs_changed();
 	void population_type_outputs_changed();
 	void settlement_building_counts_changed();
@@ -1267,7 +1239,6 @@ private:
 	std::vector<population_unit *> population_units;
 	qunique_ptr<metternich::population> population;
 	int population_growth = 0; //population growth counter
-	centesimal_int housing;
 	int food_consumption = 0;
 	building_type_map<int> settlement_building_counts;
 	std::map<idea_type, data_entry_map<idea_slot, const idea *>> ideas;

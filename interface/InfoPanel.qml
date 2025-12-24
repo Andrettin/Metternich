@@ -242,10 +242,6 @@ Rectangle {
 				var commodity = kv_pair.key
 				var output = kv_pair.value
 				
-				if (commodity.housing) {
-					continue
-				}
-				
 				if (str.length > 0) {
 					str += "\n"
 				}
@@ -287,7 +283,6 @@ Rectangle {
 		anchors.leftMargin: 16 * scale_factor
 		text: selected_site_game_data ? format_text(
 			"Population: " + number_string(selected_site_game_data.population.size)
-			 + "\nHousing: " + selected_site_game_data.population_unit_count + "/" + selected_site_game_data.housing
 			 + "\nLiteracy: " + selected_site_game_data.population.literacy_rate + "%"
 		) : ""
 		visible: selected_site !== null && selected_site.game_data.can_have_population() && selected_site.game_data.is_built() && !selected_garrison && viewing_population
