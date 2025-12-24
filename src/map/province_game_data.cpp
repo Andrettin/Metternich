@@ -438,12 +438,14 @@ void province_game_data::set_level(const int level)
 
 	if (this->get_owner() != nullptr) {
 		this->get_owner()->get_game_data()->change_economic_score(-this->get_level() * 100);
+		this->get_owner()->get_game_data()->change_domain_power(-this->get_level());
 	}
 
 	this->level = level;
 
 	if (this->get_owner() != nullptr) {
 		this->get_owner()->get_game_data()->change_economic_score(this->get_level() * 100);
+		this->get_owner()->get_game_data()->change_domain_power(this->get_level());
 	}
 
 	for (const site *holding_site : this->get_settlement_sites()) {

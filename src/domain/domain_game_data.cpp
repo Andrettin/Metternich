@@ -151,6 +151,8 @@ void domain_game_data::process_gsml_property(const gsml_property &property)
 		this->holding_count = std::stoi(value);
 	} else if (key == "unrest") {
 		this->unrest = std::stoi(value);
+	} else if (key == "domain_power") {
+		this->domain_power = std::stoi(value);
 	} else {
 		throw std::runtime_error(std::format("Invalid domain game data property: \"{}\".", key));
 	}
@@ -204,6 +206,7 @@ gsml_data domain_game_data::to_gsml_data() const
 
 	data.add_property("holding_count", std::to_string(this->get_holding_count()));
 	data.add_property("unrest", std::to_string(this->get_unrest()));
+	data.add_property("domain_power", std::to_string(this->get_domain_power()));
 
 	if (!this->attribute_values.empty()) {
 		gsml_data attributes_data("attributes");
@@ -1187,6 +1190,7 @@ void domain_game_data::on_province_gained(const province *province, const int mu
 	}
 
 	this->change_economic_score(province_game_data->get_level() * 100 * multiplier);
+	this->change_domain_power(province_game_data->get_level() * multiplier);
 
 	for (const auto &[resource, count] : province_game_data->get_resource_counts()) {
 		this->get_economy()->change_resource_count(resource, count * multiplier);
@@ -1306,7 +1310,8 @@ void domain_game_data::on_site_gained(const site *site, const int multiplier)
 
 	if (site->is_settlement() && site_game_data->is_built()) {
 		this->change_holding_count(1 * multiplier);
-		this->change_score(site_game_data->get_holding_level() * 50 * multiplier);
+		this->change_score(site_game_data->get_holding_level() * 100 * multiplier);
+		this->change_domain_power(site_game_data->get_level() * multiplier);
 
 		for (const qunique_ptr<building_slot> &building_slot : site_game_data->get_building_slots()) {
 			const building_type *building = building_slot->get_building();
@@ -2383,6 +2388,19 @@ void domain_game_data::change_military_score(const int change)
 	this->military_score += change;
 
 	this->change_score(change);
+}
+
+void domain_game_data::change_domain_power(const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	this->domain_power += change;
+
+	if (game::get()->is_running()) {
+		emit domain_power_changed();
+	}
 }
 
 const population_class *domain_game_data::get_default_population_class() const
