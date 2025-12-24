@@ -130,9 +130,9 @@ Rectangle {
 			) : "")
 			+ "\n" + selected_country_game_data.title_name
 			+ (selected_country_game_data.anarchy ? "\nAnarchy" : "")
-			+ (!selected_country_game_data.anarchy ? ("\nScore: " + number_string(selected_country_game_data.score) + " (#" + (selected_country_game_data.score_rank + 1) + ")") : "")
 			+ "\n" + number_string(selected_country_game_data.provinces.length) + " " + (selected_country_game_data.provinces.length > 1 ? "Provinces" : "Province")
 			+ "\n" + number_string(selected_country_game_data.holding_count) + " " + (selected_country_game_data.holding_count > 1 ? "Holdings" : "Holding")
+			+ (!selected_country_game_data.anarchy ? ("\nScore: " + number_string(selected_country_game_data.score) + " (#" + (selected_country_game_data.score_rank + 1) + ")") : "")
 			+ (selected_country_game_data.attribute_values.length > 0 ? ("\n" + object_counts_to_string(selected_country_game_data.attribute_values)) : "")
 			+ ("\nDomain Power: " + number_string(selected_country_game_data.domain_power))
 			+ (population_visible ? ("\nPopulation: " + number_string(selected_country_game_data.population.size)) : "")
