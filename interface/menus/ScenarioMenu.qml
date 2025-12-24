@@ -192,7 +192,7 @@ MenuBase {
 				+ (selected_country.game_data.anarchy ? "\nAnarchy" : "")
 				+ (!selected_country.game_data.anarchy ? ("\nScore: " + number_string(selected_country.game_data.score) + " (#" + (selected_country.game_data.score_rank + 1) + ")") : "")
 				+ (selected_country.game_data.attribute_values.length > 0 ? ("\n" + object_counts_to_string(selected_country.game_data.attribute_values)) : "")
-				+ "\nPopulation: " + number_string(selected_country.game_data.population.size)
+				+ (population_visible ? ("\nPopulation: " + number_string(selected_country.game_data.population.size)) : "")
 				+ get_subject_type_counts_string(selected_country.game_data.subject_type_counts)
 				+ "\n" + number_string(selected_country.game_data.provinces.length) + " " + (selected_country.game_data.provinces.length > 1 ? "Provinces" : "Province")
 				+ "\n" + number_string(selected_country.game_data.holding_count) + " " + (selected_country.game_data.holding_count > 1 ? "Holdings" : "Holding")
@@ -276,6 +276,7 @@ MenuBase {
 		anchors.top: culture_chart.top
 		anchors.right: culture_chart.left
 		anchors.rightMargin: 16 * scale_factor
+		visible: population_visible
 	}
 	
 	SmallText {
@@ -292,6 +293,7 @@ MenuBase {
 		anchors.topMargin: 4 * scale_factor
 		anchors.right: religion_chart.left
 		anchors.rightMargin: 16 * scale_factor
+		visible: population_visible
 	}
 	
 	SmallText {
@@ -307,6 +309,7 @@ MenuBase {
 		anchors.top: culture_chart.top
 		anchors.right: phenotype_chart.left
 		anchors.rightMargin: 16 * scale_factor
+		visible: population_visible
 	}
 	
 	SmallText {
@@ -322,6 +325,7 @@ MenuBase {
 		anchors.top: culture_chart.top
 		anchors.right: diplomatic_map_background.right
 		anchors.rightMargin: 4 * scale_factor
+		visible: population_visible
 	}
 	
 	Rectangle {

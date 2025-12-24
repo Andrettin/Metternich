@@ -209,7 +209,7 @@ Rectangle {
 			selected_province ? (
 				("Province Level: " + selected_province.game_data.level + "/" + selected_province.game_data.max_level)
 				+ ("\nTerrain: " + selected_province.map_data.terrain.name)
-				+ ("\nPopulation: " + number_string(selected_province.game_data.population.size))
+				+ (population_visible ? ("\nPopulation: " + number_string(selected_province.game_data.population.size)) : "")
 				+ (selected_province.game_data.attribute_values.length > 0 ? ("\n" + object_counts_to_string(selected_province.game_data.attribute_values)) : "")
 			) : ""
 		)
@@ -225,7 +225,7 @@ Rectangle {
 			selected_site_game_data ? (
 				((selected_site.max_holding_level > 0 && dungeon === null) ? ("Holding Level: " + selected_site_game_data.holding_level + "/" + selected_site.max_holding_level) : "")
 				+ ((selected_site.max_holding_level > 0 && dungeon === null) ? ("\nFortification Level: " + selected_site_game_data.fortification_level) : "")
-				+ (holding_type !== null ? ("\nPopulation: " + number_string(selected_site_game_data.population.size)) : "")
+				+ (holding_type !== null && population_visible ? ("\nPopulation: " + number_string(selected_site_game_data.population.size)) : "")
 				+ (dungeon && dungeon.level !== 0 ? ("Dungeon Level: " + dungeon.level) : "")
 				+ (selected_site_game_data.commodity_outputs.length > 0 ? get_commodity_outputs_string(selected_site_game_data.commodity_outputs) : "")
 			) : ""
