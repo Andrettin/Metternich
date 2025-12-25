@@ -92,6 +92,8 @@ site_game_data::site_game_data(const metternich::site *site) : site(site)
 
 	connect(this, &site_game_data::holding_type_changed, this, &site_game_data::portrait_changed);
 	connect(this, &site_game_data::dungeon_changed, this, &site_game_data::portrait_changed);
+
+	connect(this, &site_game_data::holding_level_changed, this, &site_game_data::income_changed);
 }
 
 void site_game_data::process_gsml_property(const gsml_property &property)

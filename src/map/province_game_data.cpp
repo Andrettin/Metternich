@@ -77,6 +77,8 @@ province_game_data::province_game_data(const metternich::province *province)
 	connect(this->get_population(), &population::main_religion_changed, this, &province_game_data::on_population_main_religion_changed);
 
 	connect(this, &province_game_data::provincial_capital_changed, this, &province_game_data::visible_sites_changed);
+
+	connect(this, &province_game_data::level_changed, this, &province_game_data::income_changed);
 }
 
 province_game_data::~province_game_data()
@@ -464,6 +466,8 @@ void province_game_data::set_level(const int level)
 			const int64_t new_population_capacity = building->get_population_capacity_for_province_level(level);
 			holding_site->get_game_data()->change_population_type_capacity(holding_site->get_game_data()->get_culture()->get_population_class_type(defines::get()->get_default_population_class()), new_population_capacity - old_population_capacity);
 		}
+
+		emit holding_site->get_game_data()->income_changed();
 	}
 
 	if (game::get()->is_running()) {
@@ -1731,7 +1735,7 @@ int province_game_data::get_min_income() const
 int province_game_data::get_max_income() const
 {
 	const dice &taxation_dice = defines::get()->get_province_taxation_for_level(this->get_level());
-	return taxation_dice.get_maximum_result() * 200000;
+	return taxation_dice.get_maximum_result() * defines::get()->get_domain_income_unit_value();
 }
 
 int province_game_data::get_skill_modifier(const skill *skill) const

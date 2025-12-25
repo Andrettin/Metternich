@@ -71,6 +71,8 @@ class site_game_data final : public QObject
 	Q_PROPERTY(int population_unit_count READ get_population_unit_count NOTIFY population_units_changed)
 	Q_PROPERTY(int total_building_size READ get_total_building_size NOTIFY total_building_size_changed)
 	Q_PROPERTY(QVariantList commodity_outputs READ get_commodity_outputs_qvariant_list NOTIFY commodity_outputs_changed)
+	Q_PROPERTY(int min_income READ get_min_income NOTIFY income_changed)
+	Q_PROPERTY(int max_income READ get_max_income NOTIFY income_changed)
 	Q_PROPERTY(QVariantList visiting_armies READ get_visiting_armies_qvariant_list NOTIFY visiting_armies_changed)
 
 public:
@@ -538,6 +540,7 @@ signals:
 	void population_units_changed();
 	void total_building_size_changed();
 	void commodity_outputs_changed();
+	void income_changed();
 	void visiting_armies_changed();
 
 private:

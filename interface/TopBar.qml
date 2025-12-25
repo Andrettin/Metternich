@@ -94,11 +94,10 @@ Rectangle {
 					readonly property var commodity_unit: commodity.get_unit(commodity_value)
 					readonly property int min_income: is_wealth ? metternich.game.player_country.game_data.min_income : 0
 					readonly property int max_income: is_wealth ? metternich.game.player_country.game_data.max_income : 0
-					readonly property var income_unit: commodity.get_unit(max_income)
-					readonly property int income_unit_value: income_unit ? commodity.get_unit_value(income_unit) : 0
+					readonly property string income_string: get_income_range_string(min_income, max_income)
 					readonly property int maintenance_cost: is_wealth ? metternich.game.player_country.game_data.maintenance_cost : 0
 					readonly property string commodity_status_text: (commodity_unit ? get_plural_form(commodity_unit.name) : commodity.name)
-						+ (is_wealth ? format_text("\t\tIncome: " + number_string(Math.floor(min_income / income_unit_value)) + "-" + number_string(Math.floor(max_income / income_unit_value)) + " " + income_unit.suffix) : "")
+						+ (is_wealth && income_string.length > 0 ? format_text("\t\tIncome: " + income_string) : "")
 						+ (is_wealth ? format_text("\t\tMaintenance Cost: " + commodity.value_to_qstring(maintenance_cost)) : "")
 						+ (commodity_unit ? format_text("\t\t" + commodity.get_units_tooltip()) : "")
 					
