@@ -15,17 +15,17 @@ default_space_terrain = space
 route_pathway = route
 
 default_start_date = 1815.11.20
-default_months_per_turn = 3
-months_per_turn_from_year = { #months per turn after a certain year has been reached
-	-419200000 = 12000000
-	-4000 = 480
-	-1000 = 300
-	500 = 240
-	1000 = 120
-	1500 = 12
-	1600 = 6
-	1800 = 3
-}
+default_months_per_turn = 1
+#months_per_turn_from_year = { #months per turn after a certain year has been reached
+#	-419200000 = 12000000
+#	-4000 = 480
+#	-1000 = 300
+#	500 = 240
+#	1000 = 120
+#	1500 = 12
+#	1600 = 6
+#	1800 = 1
+#}
 
 default_population_class = laborers
 default_tribal_population_class = tribesmen
