@@ -3,6 +3,7 @@
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 #include "economy/commodity_container.h"
+#include "util/dice.h"
 
 Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("ui/portrait.h")
@@ -133,6 +134,8 @@ public:
 
 	bool can_have_population_type(const population_type *population_type) const;
 
+	const dice &get_income(const int level, const int province_level) const;
+
 	const and_condition<site> *get_conditions() const
 	{
 		return this->conditions.get();
@@ -167,6 +170,7 @@ private:
 	std::vector<const holding_type *> upgraded_holding_types;
 	int level = 0;
 	std::vector<const population_class *> population_classes;
+	std::map<int, std::map<int, dice>> income_per_level_and_province_level;
 	std::unique_ptr<const and_condition<site>> conditions;
 	std::unique_ptr<const and_condition<site>> build_conditions;
 	std::unique_ptr<modifier<const site>> modifier;

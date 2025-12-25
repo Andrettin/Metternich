@@ -272,7 +272,6 @@ int defines::get_domain_maintenance_cost_for_domain_size(const int domain_size) 
 	}
 
 	const auto find_iterator = this->domain_maintenance_cost_per_domain_size.upper_bound(domain_size);
-	assert_throw(find_iterator != this->domain_maintenance_cost_per_domain_size.end());
 	assert_throw(find_iterator != this->domain_maintenance_cost_per_domain_size.begin());
 	return std::prev(find_iterator)->second * 200000;
 }

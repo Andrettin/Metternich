@@ -85,6 +85,7 @@ public:
 
 	void initialize_resource();
 	void do_turn();
+	int collect_income();
 
 	const QPoint &get_tile_pos() const;
 	tile *get_tile() const;
@@ -488,6 +489,9 @@ public:
 	{
 		return this->get_commodity_outputs().contains(commodity);
 	}
+
+	int get_min_income() const;
+	int get_max_income() const;
 
 	bool can_be_visited() const;
 

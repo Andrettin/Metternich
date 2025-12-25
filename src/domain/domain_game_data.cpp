@@ -354,12 +354,20 @@ void domain_game_data::collect_regency()
 void domain_game_data::collect_wealth()
 {
 	int collected_taxes = 0;
-
 	for (const province *province : this->get_provinces()) {
 		collected_taxes += province->get_game_data()->collect_taxes();
 	}
-
 	this->domain->get_turn_data()->add_income_transaction(income_transaction_type::taxation, collected_taxes, nullptr, 0, this->domain);
+
+	int holding_income = 0;
+	for (const site *holding_site : this->get_sites()) {
+		if (!holding_site->is_settlement() || !holding_site->get_game_data()->is_built()) {
+			continue;
+		}
+
+		holding_income += holding_site->get_game_data()->collect_income();
+	}
+	this->domain->get_turn_data()->add_income_transaction(income_transaction_type::holding_income, holding_income, nullptr, 0, this->domain);
 }
 
 void domain_game_data::pay_maintenance()
@@ -4140,6 +4148,14 @@ int domain_game_data::get_min_income() const
 		min_income += province->get_game_data()->get_min_income();
 	}
 
+	for (const site *holding_site : this->get_sites()) {
+		if (!holding_site->is_settlement() || !holding_site->get_game_data()->is_built()) {
+			continue;
+		}
+
+		min_income += holding_site->get_game_data()->get_min_income();
+	}
+
 	return min_income;
 }
 
@@ -4149,6 +4165,14 @@ int domain_game_data::get_max_income() const
 
 	for (const province *province : this->get_provinces()) {
 		max_income += province->get_game_data()->get_max_income();
+	}
+
+	for (const site *holding_site : this->get_sites()) {
+		if (!holding_site->is_settlement() || !holding_site->get_game_data()->is_built()) {
+			continue;
+		}
+
+		max_income += holding_site->get_game_data()->get_max_income();
 	}
 
 	return max_income;

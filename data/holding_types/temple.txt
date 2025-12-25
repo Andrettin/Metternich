@@ -46,4 +46,40 @@ temple = {
 		clergymen
 		firebrand_preachers
 	}
+	income_per_level_and_province_level = {
+		1 = { #holding level
+			1 = 1d3-2 #province level
+			2 = 1d2-1
+			3 = 1d2-1
+			4 = 1d2
+			5 = 1d2
+			6 = 1d2
+			7 = 1d3
+		}
+		2 = {
+			2 = 1d2
+			3 = 1d3
+			4 = 1d3
+			5 = 1d3
+			6 = 1d3
+			7 = 1d2+1
+		}
+		3 = {
+			3 = 1d4
+			4 = 1d4
+			5 = 1d4
+			6 = 2d2
+			7 = 1d4+1
+		}
+		4 = {
+			4 = 1d6
+			5 = 1d6
+			6 = 2d3
+			7 = 1d6+1
+		}
+		6 = {
+			6 = 2d4+1
+			7 = 2d4+2
+		}
+	}
 }

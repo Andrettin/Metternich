@@ -72,6 +72,19 @@ void holding_type::process_gsml_scope(const gsml_data &scope)
 			const population_class *population_class = population_class::get(value);
 			this->population_classes.push_back(population_class);
 		}
+	} else if (tag == "income_per_level_and_province_level") {
+		scope.for_each_child([this](const gsml_data &child_scope) {
+			const std::string &child_tag = child_scope.get_tag();
+			const int level = std::stoi(child_tag);
+
+			child_scope.for_each_property([this, level](const gsml_property &property) {
+				const std::string &key = property.get_key();
+				const std::string &value = property.get_value();
+				const int province_level = std::stoi(key);
+
+				this->income_per_level_and_province_level[level][province_level] = dice(value);
+			});
+		});
 	} else if (tag == "conditions") {
 		auto conditions = std::make_unique<and_condition<site>>();
 		conditions->process_gsml_data(scope);
@@ -157,6 +170,24 @@ bool holding_type::can_have_population_type(const population_type *population_ty
 	assert_throw(population_type != nullptr);
 
 	return vector::contains(this->get_population_classes(), population_type->get_population_class());
+}
+
+const dice &holding_type::get_income(const int level, const int province_level) const
+{
+	if (this->income_per_level_and_province_level.empty()) {
+		static constexpr dice null_dice(0, 0);
+		return null_dice;
+	}
+
+	auto find_iterator = this->income_per_level_and_province_level.upper_bound(level);
+	assert_throw(find_iterator != this->income_per_level_and_province_level.begin());
+	--find_iterator;
+
+	auto sub_find_iterator = find_iterator->second.upper_bound(province_level);
+	assert_throw(sub_find_iterator != find_iterator->second.begin());
+	--sub_find_iterator;
+
+	return sub_find_iterator->second;
 }
 
 }

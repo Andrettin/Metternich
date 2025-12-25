@@ -171,6 +171,33 @@ void site_game_data::do_turn()
 	this->decrement_scripted_modifiers();
 }
 
+int site_game_data::collect_income()
+{
+	assert_throw(this->site->is_settlement());
+	assert_throw(this->is_built());
+	assert_throw(this->get_owner() != nullptr);
+
+	if (this->get_holding_level() == 0 || this->get_province()->get_game_data()->get_level() == 0) {
+		return 0;
+	}
+
+	const dice &income_dice = this->get_holding_type()->get_income(this->get_holding_level(), this->get_province()->get_game_data()->get_level());
+
+	if (income_dice.is_null()) {
+		return 0;
+	}
+
+	const int income = random::get()->roll_dice(income_dice) * 200000;
+	if (income < 0) {
+		//ignore negative results
+		return 0;
+	}
+
+	this->get_owner()->get_game_data()->get_economy()->change_stored_commodity(defines::get()->get_wealth_commodity(), income);
+
+	return income;
+}
+
 const QPoint &site_game_data::get_tile_pos() const
 {
 	return this->site->get_map_data()->get_tile_pos();
@@ -1784,6 +1811,44 @@ void site_game_data::calculate_commodity_outputs()
 
 		this->set_commodity_output(commodity, output);
 	}
+}
+
+int site_game_data::get_min_income() const
+{
+	assert_throw(this->site->is_settlement());
+	assert_throw(this->is_built());
+	assert_throw(this->get_owner() != nullptr);
+
+	if (this->get_holding_level() == 0 || this->get_province()->get_game_data()->get_level() == 0) {
+		return 0;
+	}
+
+	const dice &income_dice = this->get_holding_type()->get_income(this->get_holding_level(), this->get_province()->get_game_data()->get_level());
+
+	if (income_dice.is_null()) {
+		return 0;
+	}
+
+	return std::max(0, income_dice.get_minimum_result() * 200000);
+}
+
+int site_game_data::get_max_income() const
+{
+	assert_throw(this->site->is_settlement());
+	assert_throw(this->is_built());
+	assert_throw(this->get_owner() != nullptr);
+
+	if (this->get_holding_level() == 0 || this->get_province()->get_game_data()->get_level() == 0) {
+		return 0;
+	}
+
+	const dice &income_dice = this->get_holding_type()->get_income(this->get_holding_level(), this->get_province()->get_game_data()->get_level());
+
+	if (income_dice.is_null()) {
+		return 0;
+	}
+
+	return income_dice.get_maximum_result() * 200000;
 }
 
 bool site_game_data::can_be_visited() const

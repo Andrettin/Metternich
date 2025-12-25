@@ -138,11 +138,9 @@ public:
 	int get_months_per_turn(const int current_year) const
 	{
 		auto find_iterator = this->months_per_turn_from_year.upper_bound(current_year);
-		if (find_iterator != this->months_per_turn_from_year.end()) {
-			if (find_iterator != this->months_per_turn_from_year.begin()) {
-				--find_iterator; //get the one just before
-				return find_iterator->second;
-			}
+		if (find_iterator != this->months_per_turn_from_year.begin()) {
+			--find_iterator; //get the one just before
+			return find_iterator->second;
 		}
 
 		return this->default_months_per_turn;
