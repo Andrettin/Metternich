@@ -208,6 +208,10 @@ QString commodity::get_units_tooltip() const
 	const commodity_unit *previous_unit = nullptr;
 	int previous_unit_value = 0;
 	for (const auto &[unit_value, unit] : this->units) {
+		if (!unit->is_displayed()) {
+			continue;
+		}
+
 		if (previous_unit != nullptr) {
 			if (!str.empty()) {
 				str += ", ";
