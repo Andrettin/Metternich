@@ -12,6 +12,10 @@ Q_MOC_INCLUDE("domain/office.h")
 Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("ui/portrait.h")
 
+namespace archimedes {
+	class gsml_property;
+}
+
 namespace metternich {
 
 class character;
@@ -29,6 +33,7 @@ class portrait;
 class province;
 class saving_throw_type;
 class scripted_character_modifier;
+class site;
 class skill;
 class species;
 class spell;
@@ -344,8 +349,8 @@ public:
 	}
 
 	void change_skill_value(const skill *skill, const int change);
-	bool do_skill_check(const skill *skill, const int roll_modifier, const province *location) const;
-	int get_skill_check_chance(const skill *skill, const int roll_modifier, const province *location) const;
+	bool do_skill_check(const skill *skill, const int roll_modifier, const site *location) const;
+	int get_skill_check_chance(const skill *skill, const int roll_modifier, const site *location) const;
 
 	const data_entry_map<trait, int> &get_trait_counts() const
 	{
@@ -588,7 +593,7 @@ public:
 
 	void decrement_status_effect_rounds();
 	
-	const province *get_location() const;
+	const site *get_location() const;
 
 signals:
 	void titled_name_changed();

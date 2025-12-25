@@ -429,7 +429,7 @@ public:
 		emit autoplay_enabled_changed();
 	}
 
-	const province *get_location() const;
+	const site *get_location() const;
 
 signals:
 	void character_infos_changed();

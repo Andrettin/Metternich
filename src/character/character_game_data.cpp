@@ -1280,7 +1280,7 @@ void character_game_data::change_skill_value(const skill *skill, const int chang
 	}
 }
 
-bool character_game_data::do_skill_check(const skill *skill, const int roll_modifier, const province *location) const
+bool character_game_data::do_skill_check(const skill *skill, const int roll_modifier, const site *location) const
 {
 	assert_throw(skill != nullptr);
 	assert_throw(location != nullptr);
@@ -1302,11 +1302,11 @@ bool character_game_data::do_skill_check(const skill *skill, const int roll_modi
 	}
 
 	const int skill_value = this->get_skill_value(skill);
-	const int modified_skill_value = skill_value + roll_modifier + location->get_game_data()->get_skill_modifier(skill);
+	const int modified_skill_value = skill_value + roll_modifier + location->get_game_data()->get_province()->get_game_data()->get_skill_modifier(skill);
 	return roll_result <= modified_skill_value;
 }
 
-int character_game_data::get_skill_check_chance(const skill *skill, const int roll_modifier, const province *location) const
+int character_game_data::get_skill_check_chance(const skill *skill, const int roll_modifier, const site *location) const
 {
 	assert_throw(skill != nullptr);
 	assert_throw(location != nullptr);
@@ -1317,7 +1317,7 @@ int character_game_data::get_skill_check_chance(const skill *skill, const int ro
 
 	int chance = this->get_skill_value(skill);
 	chance += roll_modifier;
-	chance += location->get_game_data()->get_skill_modifier(skill);
+	chance += location->get_game_data()->get_province()->get_game_data()->get_skill_modifier(skill);
 
 	if (skill->get_check_dice().get_sides() != 100) {
 		chance *= 100;
@@ -2111,10 +2111,10 @@ void character_game_data::decrement_status_effect_rounds()
 	}
 }
 
-const province *character_game_data::get_location() const
+const site *character_game_data::get_location() const
 {
 	if (this->get_domain() != nullptr) {
-		return this->get_domain()->get_game_data()->get_capital_province();
+		return this->get_domain()->get_game_data()->get_capital();
 	}
 
 	return nullptr;

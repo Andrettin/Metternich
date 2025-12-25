@@ -881,15 +881,15 @@ bool combat::can_current_character_use_object(const combat_object *object) const
 	return this->can_character_use_object(this->current_character, object);
 }
 
-const province *combat::get_location() const
+const site *combat::get_location() const
 {
 	assert_throw(ctx.dungeon_site != nullptr || this->scope != nullptr);
 
 	if (ctx.dungeon_site != nullptr) {
-		return ctx.dungeon_site->get_game_data()->get_province();
+		return ctx.dungeon_site;
 	}
 
-	return this->scope->get_game_data()->get_capital_province();
+	return this->scope->get_game_data()->get_capital();
 }
 
 combat_tile::combat_tile(const terrain_type *base_terrain, const terrain_type *terrain)
