@@ -36,8 +36,28 @@ castle = { #administrative center
 			not = {
 				domain = {
 					government_group = monarchy
-					tier >= kingdom
 				}
+			}
+		}
+		"Baronial Palace" = {
+			has_building_class = palace
+			domain = {
+				government_group = monarchy
+				tier == barony
+			}
+		}
+		"Comital Palace" = {
+			has_building_class = palace
+			domain = {
+				government_group = monarchy
+				tier == county
+			}
+		}
+		"Ducal Palace" = {
+			has_building_class = palace
+			domain = {
+				government_group = monarchy
+				tier == duchy
 			}
 		}
 		"Royal Palace" = {
