@@ -1875,6 +1875,16 @@ QDate game::get_next_date() const
 	return this->get_date().addMonths(this->get_current_months_per_turn());
 }
 
+bool game::is_last_turn_of_year() const
+{
+	return this->get_year() != this->get_next_date().year();
+}
+
+bool game::is_last_turn_of_quarter() const
+{
+	return this->is_last_turn_of_year() || (this->get_date().month() - 1) / 4 != (this->get_next_date().month() - 1) / 4;
+}
+
 void game::increment_turn()
 {
 	const QDate old_date = this->get_date();

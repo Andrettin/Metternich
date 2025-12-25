@@ -141,6 +141,8 @@ public:
 
 	int get_current_months_per_turn() const;
 	QDate get_next_date() const;
+	bool is_last_turn_of_year() const;
+	bool is_last_turn_of_quarter() const;
 
 	int get_turn() const
 	{
