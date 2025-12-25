@@ -252,10 +252,13 @@ void domain_game_data::do_turn()
 			province->get_game_data()->do_turn();
 		}
 
-		this->collect_regency();
-		this->get_economy()->do_production();
-		this->collect_wealth();
-		this->pay_maintenance();
+		if (game::get()->is_last_turn_of_quarter()) {
+			this->collect_regency();
+			this->get_economy()->do_production();
+			this->collect_wealth();
+			this->pay_maintenance();
+		}
+
 		this->do_transporter_recruitment();
 		this->do_civilian_unit_recruitment();
 		this->get_military()->do_military_unit_recruitment();
