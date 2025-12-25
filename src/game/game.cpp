@@ -1882,7 +1882,11 @@ bool game::is_last_turn_of_year() const
 
 bool game::is_last_turn_of_quarter() const
 {
-	return this->is_last_turn_of_year() || (this->get_date().month() - 1) / 4 != (this->get_next_date().month() - 1) / 4;
+	if (this->is_last_turn_of_year()) {
+		return true;
+	}
+
+	return (this->get_date().month() - 1) / 3 != (this->get_next_date().month() - 1) / 3;
 }
 
 void game::increment_turn()
