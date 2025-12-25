@@ -1,5 +1,6 @@
 economy = {
 	name = "Economy"
+	taxable = true
 }
 
 loyalty = {

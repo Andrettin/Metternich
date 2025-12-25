@@ -597,7 +597,7 @@ public:
 	}
 
 	void change_attribute_value(const domain_attribute *attribute, const int change);
-	bool do_attribute_check(const domain_attribute *attribute, const int roll_modifier) const;
+	bool do_attribute_check(const domain_attribute *attribute, const int roll_modifier, int *roll_result_output = nullptr) const;
 	int get_attribute_check_chance(const domain_attribute *attribute, const int roll_modifier) const;
 	int get_attribute_check_control_modifier() const;
 

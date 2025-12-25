@@ -353,12 +353,14 @@ void domain_game_data::collect_regency()
 
 void domain_game_data::collect_wealth()
 {
+	//collect taxes from provinces
 	int collected_taxes = 0;
 	for (const province *province : this->get_provinces()) {
 		collected_taxes += province->get_game_data()->collect_taxes();
 	}
 	this->domain->get_turn_data()->add_income_transaction(income_transaction_type::taxation, collected_taxes, nullptr, 0, this->domain);
 
+	//collect income from holdings
 	int holding_income = 0;
 	for (const site *holding_site : this->get_sites()) {
 		if (!holding_site->is_settlement() || !holding_site->get_game_data()->is_built()) {
@@ -368,6 +370,29 @@ void domain_game_data::collect_wealth()
 		holding_income += holding_site->get_game_data()->collect_income();
 	}
 	this->domain->get_turn_data()->add_income_transaction(income_transaction_type::holding_income, holding_income, nullptr, 0, this->domain);
+
+	//collect income from attributes
+	for (const auto &[attribute, attribute_value] : this->get_attribute_values()) {
+		if (!attribute->is_taxable()) {
+			continue;
+		}
+
+		int result = 0;
+		const bool success = this->do_attribute_check(attribute, 0, &result);
+		if (!success) {
+			continue;
+		}
+
+		result += attribute_value;
+		result -= this->get_unrest();
+		result /= 3;
+
+		const commodity *wealth_commodity = defines::get()->get_wealth_commodity();
+		const int attribute_income = result * defines::get()->get_domain_income_unit_value();
+
+		this->get_economy()->change_stored_commodity(wealth_commodity, attribute_income);
+		this->domain->get_turn_data()->add_income_transaction(income_transaction_type::income, attribute_income, nullptr, 0, this->domain);
+	}
 }
 
 void domain_game_data::pay_maintenance()
@@ -2271,11 +2296,15 @@ void domain_game_data::change_attribute_value(const domain_attribute *attribute,
 	}
 }
 
-bool domain_game_data::do_attribute_check(const domain_attribute *attribute, const int roll_modifier) const
+bool domain_game_data::do_attribute_check(const domain_attribute *attribute, const int roll_modifier, int *roll_result_output) const
 {
 	static constexpr dice check_dice(1, 20);
 
 	const int roll_result = random::get()->roll_dice(check_dice);
+
+	if (roll_result_output != nullptr) {
+		*roll_result_output = roll_result;
+	}
 
 	//there should always be at least a 5% chance of failure and a 5% chance of success
 	if (roll_result == check_dice.get_sides()) {
@@ -2287,6 +2316,7 @@ bool domain_game_data::do_attribute_check(const domain_attribute *attribute, con
 
 	const int attribute_value = this->get_attribute_value(attribute);
 	const int modified_attribute_value = attribute_value + roll_modifier + this->get_attribute_check_control_modifier() - this->get_unrest();
+
 	return roll_result <= modified_attribute_value;
 }
 
@@ -4173,6 +4203,15 @@ int domain_game_data::get_max_income() const
 		}
 
 		max_income += holding_site->get_game_data()->get_max_income();
+	}
+
+	for (const auto &[attribute, attribute_value] : this->get_attribute_values()) {
+		if (!attribute->is_taxable()) {
+			continue;
+		}
+
+		const int max_result = (20 + attribute_value - this->get_unrest()) / 3;
+		max_income += max_result * defines::get()->get_domain_income_unit_value();
 	}
 
 	return max_income;
