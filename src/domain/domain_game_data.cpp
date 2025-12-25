@@ -358,7 +358,9 @@ void domain_game_data::collect_wealth()
 	for (const province *province : this->get_provinces()) {
 		collected_taxes += province->get_game_data()->collect_taxes();
 	}
-	this->domain->get_turn_data()->add_income_transaction(income_transaction_type::taxation, collected_taxes, nullptr, 0, this->domain);
+	if (collected_taxes > 0) {
+		this->domain->get_turn_data()->add_income_transaction(income_transaction_type::taxation, collected_taxes, nullptr, 0, this->domain);
+	}
 
 	//collect income from holdings
 	int holding_income = 0;
@@ -369,7 +371,9 @@ void domain_game_data::collect_wealth()
 
 		holding_income += holding_site->get_game_data()->collect_income();
 	}
-	this->domain->get_turn_data()->add_income_transaction(income_transaction_type::holding_income, holding_income, nullptr, 0, this->domain);
+	if (holding_income > 0) {
+		this->domain->get_turn_data()->add_income_transaction(income_transaction_type::holding_income, holding_income, nullptr, 0, this->domain);
+	}
 
 	//collect income from attributes
 	for (const auto &[attribute, attribute_value] : this->get_attribute_values()) {
@@ -386,6 +390,10 @@ void domain_game_data::collect_wealth()
 		result += attribute_value;
 		result -= this->get_unrest();
 		result /= 3;
+
+		if (result <= 0) {
+			continue;
+		}
 
 		const commodity *wealth_commodity = defines::get()->get_wealth_commodity();
 		const int attribute_income = result * defines::get()->get_domain_income_unit_value();
