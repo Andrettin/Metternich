@@ -46,6 +46,8 @@ advisor_commodity = statesmanship
 tariff_icon = wealth
 treasure_fleet_icon = chest
 
+domain_income_unit = gb
+
 province_population_per_level = {
 	0 = 1000
 	1 = 2000

@@ -214,7 +214,7 @@ int province_game_data::collect_taxes()
 	assert_throw(this->get_owner() != nullptr);
 
 	const dice &taxation_dice = defines::get()->get_province_taxation_for_level(this->get_level());
-	const int taxation = random::get()->roll_dice(taxation_dice) * 200000;
+	const int taxation = random::get()->roll_dice(taxation_dice) * defines::get()->get_domain_income_unit_value();
 	if (taxation < 0) {
 		//ignore negative results
 		return 0;
@@ -1725,7 +1725,7 @@ bool province_game_data::can_produce_commodity(const commodity *commodity) const
 int province_game_data::get_min_income() const
 {
 	const dice &taxation_dice = defines::get()->get_province_taxation_for_level(this->get_level());
-	return std::max(0, taxation_dice.get_minimum_result() * 200000);
+	return std::max(0, taxation_dice.get_minimum_result() * defines::get()->get_domain_income_unit_value());
 }
 
 int province_game_data::get_max_income() const

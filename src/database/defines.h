@@ -9,6 +9,7 @@
 
 Q_MOC_INCLUDE("domain/office.h")
 Q_MOC_INCLUDE("economy/commodity.h")
+Q_MOC_INCLUDE("economy/commodity_unit.h")
 Q_MOC_INCLUDE("game/game_rule.h")
 Q_MOC_INCLUDE("infrastructure/pathway.h")
 Q_MOC_INCLUDE("map/terrain_type.h")
@@ -26,6 +27,7 @@ namespace metternich {
 
 class building_class;
 class commodity;
+class commodity_unit;
 class cursor;
 class icon;
 class office;
@@ -85,6 +87,7 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(QString default_menu_background_filepath READ get_default_menu_background_filepath_qstring NOTIFY changed)
 	Q_PROPERTY(int min_diplomatic_map_tile_scale MEMBER min_diplomatic_map_tile_scale READ get_min_diplomatic_map_tile_scale NOTIFY changed)
 	Q_PROPERTY(int min_province_map_tile_scale MEMBER min_province_map_tile_scale READ get_min_province_map_tile_scale NOTIFY changed)
+	Q_PROPERTY(const metternich::commodity_unit* domain_income_unit MEMBER domain_income_unit READ get_domain_income_unit NOTIFY changed)
 
 public:
 	using singleton<defines>::get;
@@ -390,6 +393,13 @@ public:
 		return this->min_province_map_tile_scale;
 	}
 
+	const commodity_unit *get_domain_income_unit() const
+	{
+		return this->domain_income_unit;
+	}
+
+	int get_domain_income_unit_value() const;
+
 	int get_province_population_for_level(const int level) const;
 	int get_province_level_for_population(const int population) const;
 	const dice &get_province_taxation_for_level(const int level) const;
@@ -454,6 +464,7 @@ private:
 	std::filesystem::path default_menu_background_filepath;
 	int min_diplomatic_map_tile_scale = 2;
 	int min_province_map_tile_scale = 2;
+	const commodity_unit *domain_income_unit = nullptr;
 	std::map<int, int> province_population_per_level;
 	std::map<int, dice> province_taxation_per_level;
 	std::map<int, int> domain_maintenance_cost_per_domain_size;

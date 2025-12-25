@@ -6,6 +6,7 @@
 #include "database/preferences.h"
 #include "domain/diplomacy_state.h"
 #include "economy/commodity.h"
+#include "economy/commodity_unit.h"
 #include "game/character_event.h"
 #include "game/domain_event.h"
 #include "game/event_trigger.h"
@@ -181,6 +182,13 @@ void defines::initialize()
 
 void defines::check() const
 {
+	if (this->get_domain_income_unit() == nullptr) {
+		throw std::runtime_error("No domain income unit has been defined.");
+	}
+
+	if (!this->get_wealth_commodity()->has_unit(this->get_domain_income_unit())) {
+		throw std::runtime_error("The wealth commodity does not have the domain income unit as a commodity unit for it.");
+	}
 }
 
 QSize defines::get_scaled_tile_size() const
@@ -235,6 +243,11 @@ void defines::set_default_menu_background_filepath(const std::filesystem::path &
 	this->default_menu_background_filepath = database::get()->get_graphics_filepath(filepath);
 }
 
+int defines::get_domain_income_unit_value() const
+{
+	return this->get_wealth_commodity()->get_unit_value(this->get_domain_income_unit());
+}
+
 int defines::get_province_population_for_level(const int level) const
 {
 	const auto find_iterator = this->province_population_per_level.find(level);
@@ -268,12 +281,12 @@ int defines::get_domain_maintenance_cost_for_domain_size(const int domain_size) 
 {
 	if (domain_size > 100) {
 		//special case for province counts above 100
-		return 200000 * domain_size / 3;
+		return this->get_domain_income_unit_value() * domain_size / 3;
 	}
 
 	const auto find_iterator = this->domain_maintenance_cost_per_domain_size.upper_bound(domain_size);
 	assert_throw(find_iterator != this->domain_maintenance_cost_per_domain_size.begin());
-	return std::prev(find_iterator)->second * 200000;
+	return std::prev(find_iterator)->second * this->get_domain_income_unit_value();
 }
 
 const std::vector<int> &defines::get_river_adjacency_subtiles(const terrain_adjacency &adjacency) const

@@ -187,7 +187,7 @@ int site_game_data::collect_income()
 		return 0;
 	}
 
-	const int income = random::get()->roll_dice(income_dice) * 200000;
+	const int income = random::get()->roll_dice(income_dice) * defines::get()->get_domain_income_unit_value();
 	if (income < 0) {
 		//ignore negative results
 		return 0;
@@ -1829,7 +1829,7 @@ int site_game_data::get_min_income() const
 		return 0;
 	}
 
-	return std::max(0, income_dice.get_minimum_result() * 200000);
+	return std::max(0, income_dice.get_minimum_result() * defines::get()->get_domain_income_unit_value());
 }
 
 int site_game_data::get_max_income() const
@@ -1848,7 +1848,7 @@ int site_game_data::get_max_income() const
 		return 0;
 	}
 
-	return income_dice.get_maximum_result() * 200000;
+	return income_dice.get_maximum_result() * defines::get()->get_domain_income_unit_value();
 }
 
 bool site_game_data::can_be_visited() const
