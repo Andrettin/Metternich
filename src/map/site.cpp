@@ -10,6 +10,7 @@
 #include "map/province.h"
 #include "map/province_history.h"
 #include "map/region.h"
+#include "map/site_feature.h"
 #include "map/site_game_data.h"
 #include "map/site_history.h"
 #include "map/site_map_data.h"
@@ -76,6 +77,10 @@ void site::process_gsml_scope(const gsml_data &scope)
 			const cultural_group *cultural_group = cultural_group::get(property.get_key());
 			this->cultural_group_names[cultural_group] = property.get_value();
 		});
+	} else if (tag == "features") {
+		for (const std::string &value : values) {
+			this->features.push_back(site_feature::get(value));
+		}
 	} else if (tag == "title_names") {
 		government_type::process_site_title_name_scope(this->title_names, scope);
 	} else if (tag == "generation_regions") {
@@ -176,7 +181,7 @@ void site::reset_map_data()
 void site::reset_game_data()
 {
 	this->game_data = make_qunique<site_game_data>(this);
-	this->get_game_data()->initialize_resource();
+	this->get_game_data()->initialize();
 }
 
 bool site::is_settlement() const

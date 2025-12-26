@@ -29,6 +29,7 @@ class holding_type;
 class province;
 class region;
 class resource;
+class site_feature;
 class site_game_data;
 class site_history;
 class site_map_data;
@@ -185,6 +186,11 @@ public:
 	const std::string &get_cultural_name(const culture *culture) const;
 	const std::string &get_cultural_name(const cultural_group *cultural_group) const;
 
+	const std::vector<const site_feature *> &get_features() const
+	{
+		return this->features;
+	}
+
 	const std::string &get_title_name(const government_type *government_type, const int tier, const culture *culture) const;
 
 	const std::vector<const region *> &get_generation_regions() const
@@ -214,6 +220,7 @@ private:
 	std::vector<const metternich::terrain_type *> terrain_types;
 	std::map<const culture *, std::string> cultural_names;
 	std::map<const cultural_group *, std::string> cultural_group_names;
+	std::vector<const site_feature *> features;
 	site_title_name_map title_names;
 	std::vector<const region *> generation_regions; //regions other than its own province where this site can be generated; this is used if the map's world is not the site's own world
 	qunique_ptr<site_history> history;

@@ -1,0 +1,13 @@
+academic = {
+	name = "Academic"
+	modifier = {
+		lore = 1
+	}
+}
+
+holy_site = {
+	name = "Holy Site"
+	modifier = {
+		corruption = -2
+	}
+}

@@ -39,6 +39,7 @@
 #include "map/province_game_data.h"
 #include "map/site.h"
 #include "map/site_attribute.h"
+#include "map/site_feature.h"
 #include "map/site_map_data.h"
 #include "map/site_type.h"
 #include "map/tile.h"
@@ -121,11 +122,16 @@ void site_game_data::process_gsml_property(const gsml_property &property)
 void site_game_data::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
+	const std::vector<std::string> &values = scope.get_values();
 
 	if (tag == "tile_pos") {
 		const QPoint tile_pos = scope.to_point();
 		this->site->get_map_data()->set_tile_pos(tile_pos);
 		map::get()->set_tile_site(tile_pos, this->site);
+	} else if (tag == "features") {
+		for (const std::string &value : values) {
+			this->features.insert(site_feature::get(value));
+		}
 	} else if (tag == "attributes") {
 		scope.for_each_property([&](const gsml_property &attribute_property) {
 			this->attribute_values[site_attribute::get(attribute_property.get_key())] = std::stoi(attribute_property.get_value());
@@ -159,9 +165,17 @@ gsml_data site_game_data::to_gsml_data() const
 		data.add_property("dungeon", this->get_dungeon()->get_identifier());
 	}
 
-	if (!this->attribute_values.empty()) {
+	if (!this->get_features().empty()) {
+		gsml_data features_data("features");
+		for (const site_feature *feature : this->get_features()) {
+			features_data.add_value(feature->get_identifier());
+		}
+		data.add_child(std::move(features_data));
+	}
+
+	if (!this->get_attribute_values().empty()) {
 		gsml_data attributes_data("attributes");
-		for (const auto &[attribute, value] : this->attribute_values) {
+		for (const auto &[attribute, value] : this->get_attribute_values()) {
 			attributes_data.add_property(attribute->get_identifier(), std::to_string(value));
 		}
 		data.add_child(std::move(attributes_data));
@@ -170,15 +184,15 @@ gsml_data site_game_data::to_gsml_data() const
 	return data;
 }
 
-void site_game_data::initialize_resource()
+void site_game_data::initialize()
 {
 	const resource *resource = this->get_resource();
-	if (resource == nullptr) {
-		return;
+	if (resource != nullptr && resource->get_modifier() != nullptr) {
+		resource->get_modifier()->apply(this->site);
 	}
 
-	if (resource->get_modifier() != nullptr) {
-		resource->get_modifier()->apply(this->site);
+	for (const site_feature *feature : this->site->get_features()) {
+		this->add_feature(feature);
 	}
 }
 
@@ -963,6 +977,41 @@ const portrait *site_game_data::get_portrait() const
 	}
 
 	return nullptr;
+}
+
+QVariantList site_game_data::get_features_qvariant_list() const
+{
+	return archimedes::container::to_qvariant_list(this->get_features());
+}
+
+void site_game_data::add_feature(const site_feature *feature)
+{
+	assert_throw(!this->has_feature(feature));
+
+	this->features.insert(feature);
+
+	if (feature->get_modifier() != nullptr) {
+		feature->get_modifier()->apply(this->site);
+	}
+
+	if (game::get()->is_running()) {
+		emit features_changed();
+	}
+}
+
+void site_game_data::remove_feature(const site_feature *feature)
+{
+	assert_throw(this->has_feature(feature));
+
+	this->features.erase(feature);
+
+	if (feature->get_modifier() != nullptr) {
+		feature->get_modifier()->remove(this->site);
+	}
+
+	if (game::get()->is_running()) {
+		emit features_changed();
+	}
 }
 
 QVariantList site_game_data::get_attribute_values_qvariant_list() const

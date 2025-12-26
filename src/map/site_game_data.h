@@ -44,6 +44,7 @@ class resource;
 class scripted_site_modifier;
 class site;
 class site_attribute;
+class site_feature;
 class tile;
 enum class improvement_slot;
 
@@ -65,6 +66,7 @@ class site_game_data final : public QObject
 	Q_PROPERTY(const metternich::improvement* improvement READ get_main_improvement NOTIFY improvements_changed)
 	Q_PROPERTY(const metternich::improvement* resource_improvement READ get_resource_improvement NOTIFY improvements_changed)
 	Q_PROPERTY(const metternich::portrait* portrait READ get_portrait NOTIFY portrait_changed)
+	Q_PROPERTY(QVariantList features READ get_features_qvariant_list NOTIFY features_changed)
 	Q_PROPERTY(QVariantList attribute_values READ get_attribute_values_qvariant_list NOTIFY attribute_values_changed)
 	Q_PROPERTY(QVariantList building_slots READ get_building_slots_qvariant_list CONSTANT)
 	Q_PROPERTY(QVariantList visible_building_slots READ get_visible_building_slots_qvariant_list CONSTANT)
@@ -87,7 +89,7 @@ public:
 
 	gsml_data to_gsml_data() const;
 
-	void initialize_resource();
+	void initialize();
 	void do_turn();
 	int collect_income();
 
@@ -249,6 +251,21 @@ public:
 	void set_improvement(const improvement_slot slot, const improvement *improvement);
 
 	const portrait *get_portrait() const;
+
+	const data_entry_set<site_feature> &get_features() const
+	{
+		return this->features;
+	}
+
+	QVariantList get_features_qvariant_list() const;
+
+	bool has_feature(const site_feature *feature) const
+	{
+		return this->get_features().contains(feature);
+	}
+
+	void add_feature(const site_feature *feature);
+	void remove_feature(const site_feature *feature);
 
 	const data_entry_map<site_attribute, int> &get_attribute_values() const
 	{
@@ -561,6 +578,7 @@ signals:
 	void holding_type_name_changed();
 	void dungeon_changed();
 	void portrait_changed();
+	void features_changed();
 	void attribute_values_changed();
 	void scripted_modifiers_changed();
 	void population_units_changed();
@@ -582,6 +600,7 @@ private:
 	data_entry_set<dungeon_area> explored_dungeon_areas;
 	std::map<improvement_slot, const improvement *> improvements;
 	bool resource_discovered = false;
+	data_entry_set<site_feature> features;
 	data_entry_map<site_attribute, int> attribute_values;
 	std::vector<qunique_ptr<building_slot>> building_slots;
 	building_slot_type_map<building_slot *> building_slot_map;

@@ -176,6 +176,7 @@ set(map_SRCS
 	src/map/site.cpp
 	src/map/site_attribute.cpp
 	src/map/site_container.cpp
+	src/map/site_feature.cpp
 	src/map/site_game_data.cpp
 	src/map/site_history.cpp
 	src/map/site_map_data.cpp
@@ -523,6 +524,7 @@ set(map_HDRS
 	src/map/site.h
 	src/map/site_attribute.h
 	src/map/site_container.h
+	src/map/site_feature.h
 	src/map/site_game_data.h
 	src/map/site_history.h
 	src/map/site_map_data.h
@@ -622,6 +624,7 @@ set(script_condition_HDRS
 	src/script/condition/dungeon_condition.h
 	src/script/condition/event_condition.h
 	src/script/condition/explored_dungeon_area_condition.h
+	src/script/condition/feature_condition.h
 	src/script/condition/game_rule_condition.h
 	src/script/condition/government_group_condition.h
 	src/script/condition/government_type_condition.h
