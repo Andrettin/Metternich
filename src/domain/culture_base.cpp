@@ -22,6 +22,7 @@
 #include "util/assert_util.h"
 #include "util/gender.h"
 #include "util/string_util.h"
+#include "util/vector_util.h"
 
 namespace metternich {
 
@@ -164,6 +165,10 @@ void culture_base::initialize()
 		}
 
 		this->group->add_names_from(this);
+
+		for (const domain *domain : this->get_domains()) {
+			this->group->add_domain(domain);
+		}
 	}
 
 	if (this->personal_name_generator != nullptr) {
@@ -737,6 +742,15 @@ void culture_base::change_phenotype_weight(const phenotype *phenotype, const int
 
 	if (this->group != nullptr) {
 		this->group->change_phenotype_weight(phenotype, change);
+	}
+}
+
+void culture_base::add_domain(const domain *domain)
+{
+	this->domains.insert(domain);
+
+	if (this->group != nullptr) {
+		this->group->add_domain(domain);
 	}
 }
 

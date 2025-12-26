@@ -52,6 +52,7 @@ class domain final : public named_data_entry, public data_type<domain>
 	Q_PROPERTY(bool clade READ is_clade CONSTANT)
 	Q_PROPERTY(QColor color MEMBER color READ get_color NOTIFY changed)
 	Q_PROPERTY(QString flag READ get_flag_qstring NOTIFY changed)
+	Q_PROPERTY(bool random_flag MEMBER random_flag READ has_random_flag NOTIFY changed)
 	Q_PROPERTY(metternich::domain_tier default_tier MEMBER default_tier READ get_default_tier)
 	Q_PROPERTY(metternich::domain_tier min_tier MEMBER min_tier READ get_min_tier)
 	Q_PROPERTY(metternich::domain_tier max_tier MEMBER max_tier READ get_max_tier)
@@ -145,6 +146,13 @@ public:
 	{
 		return QString::fromStdString(this->get_flag());
 	}
+
+	bool has_random_flag() const
+	{
+		return this->random_flag;
+	}
+
+	void choose_random_flag();
 
 	domain_tier get_default_tier() const
 	{
@@ -243,6 +251,8 @@ private:
 	country_type type{};
 	QColor color;
 	std::string flag;
+	bool random_flag = false;
+	const archimedes::data_module *flag_module = nullptr;
 	domain_tier default_tier{};
 	domain_tier min_tier{};
 	domain_tier max_tier{};

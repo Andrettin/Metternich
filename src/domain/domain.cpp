@@ -8,6 +8,7 @@
 #include "domain/country_government.h"
 #include "domain/country_turn_data.h"
 #include "domain/country_type.h"
+#include "domain/cultural_group.h"
 #include "domain/culture.h"
 #include "domain/domain_game_data.h"
 #include "domain/domain_history.h"
@@ -28,6 +29,7 @@
 #include "util/gender.h"
 #include "util/log_util.h"
 #include "util/string_util.h"
+#include "util/vector_random_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -49,7 +51,9 @@ void domain::process_gsml_property(const gsml_property &property)
 
 	if (key == "culture") {
 		assert_throw(property.get_operator() == gsml_operator::assignment);
-		this->cultures = { culture::get(value) };
+		culture *culture = culture::get(value);
+		this->cultures = { culture };
+		culture->add_domain(this);
 	} else {
 		named_data_entry::process_gsml_property(property);
 	}
@@ -62,7 +66,9 @@ void domain::process_gsml_scope(const gsml_data &scope)
 
 	if (tag == "cultures") {
 		for (const std::string &value : values) {
-			this->cultures.push_back(culture::get(value));
+			culture *culture = culture::get(value);
+			this->cultures.push_back(culture);
+			culture->add_domain(this);
 		}
 	} else if (tag == "conditional_flags") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
@@ -134,22 +140,28 @@ void domain::initialize()
 		province->add_core_country(this);
 	}
 
+	if (this->has_random_flag()) {
+		this->choose_random_flag();
+	} else {
+		this->flag_module = this->get_module();
+	}
+
 	named_data_entry::initialize();
 }
 
 void domain::check() const
 {
 	if (!this->get_flag().empty()) {
-		const std::filesystem::path flag_filepath = database::get()->get_graphics_path(this->get_module()) / "flags" / (this->get_flag() + ".svg");
+		const std::filesystem::path flag_filepath = database::get()->get_graphics_path(this->flag_module) / "flags" / (this->get_flag() + ".svg");
 		if (!std::filesystem::exists(flag_filepath)) {
 			throw std::runtime_error(std::format("Flag \"{}\" does not exist.", this->get_flag()));
 		}
 	} else {
-		//log::log_error(std::format("Domain \"{}\" has no flag.", this->get_identifier()));
+		log::log_error(std::format("Domain \"{}\" has no flag.", this->get_identifier()));
 	}
 
 	for (const auto &[conditional_flag, conditions] : this->get_conditional_flags()) {
-		const std::filesystem::path flag_filepath = database::get()->get_graphics_path(this->get_module()) / "flags" / (conditional_flag + ".svg");
+		const std::filesystem::path flag_filepath = database::get()->get_graphics_path(this->flag_module) / "flags" / (conditional_flag + ".svg");
 		if (!std::filesystem::exists(flag_filepath)) {
 			throw std::runtime_error(std::format("Flag \"{}\" does not exist.", conditional_flag));
 		}
@@ -271,6 +283,31 @@ const QColor &domain::get_color() const
 	}
 
 	return this->color;
+}
+
+void domain::choose_random_flag()
+{
+	std::vector<const domain *> potential_flag_domains;
+
+	const culture_base *culture = this->get_default_culture();
+	while (culture != nullptr && potential_flag_domains.empty()) {
+
+		for (const domain *domain : culture->get_domains()) {
+			if (domain->has_random_flag() || domain->get_flag().empty()) {
+				continue;
+			}
+
+			potential_flag_domains.push_back(domain);
+		}
+
+		culture = culture->get_group();
+	}
+
+	if (!potential_flag_domains.empty()) {
+		const domain *flag_domain = vector::get_random(potential_flag_domains);
+		this->flag = flag_domain->get_flag();
+		this->flag_module = flag_domain->get_module();
+	}
 }
 
 const std::string &domain::get_name(const government_type *government_type, const domain_tier tier) const

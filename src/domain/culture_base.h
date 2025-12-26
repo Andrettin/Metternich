@@ -2,6 +2,7 @@
 
 #include "database/data_entry_container.h"
 #include "database/named_data_entry.h"
+#include "domain/domain_container.h"
 #include "infrastructure/building_class_container.h"
 #include "language/name_variant.h"
 #include "population/population_class_container.h"
@@ -25,6 +26,7 @@ class building_type;
 class civilian_unit_type;
 class cultural_group;
 class culture_history;
+class domain;
 class government_group;
 class government_type;
 class military_unit_type;
@@ -63,13 +65,11 @@ public:
 
 	virtual void reset_history() override;
 
-protected:
 	const cultural_group *get_group() const
 	{
 		return this->group;
 	}
 
-public:
 	bool is_part_of_group(const cultural_group *group) const;
 
 	phenotype *get_default_phenotype() const;
@@ -116,6 +116,13 @@ public:
 	const phenotype_map<int64_t> &get_phenotype_weights() const;
 	void change_phenotype_weight(const phenotype *phenotype, const int64_t change);
 
+	const domain_set &get_domains() const
+	{
+		return this->domains;
+	}
+
+	void add_domain(const domain *domain);
+
 signals:
 	void changed();
 
@@ -136,6 +143,7 @@ private:
 	transporter_class_map<std::unique_ptr<name_generator>> transporter_class_name_generators;
 	std::unique_ptr<name_generator> ship_name_generator;
 	phenotype_map<int64_t> phenotype_weights;
+	domain_set domains;
 	qunique_ptr<culture_history> history;
 };
 
