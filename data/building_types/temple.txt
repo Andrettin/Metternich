@@ -76,6 +76,9 @@ cathedral = {
 		temple
 		city
 	}
+	conditions = {
+		feature = holy_site
+	}
 	commodity_costs = {
 		wealth = 26gb
 	}
@@ -103,6 +106,9 @@ large_cathedral = {
 	holding_types = {
 		temple
 	}
+	conditions = {
+		feature = holy_site
+	}
 	modifier = {
 		law = 2
 	}
@@ -126,6 +132,9 @@ grand_cathedral = {
 	required_technology = middle_ages
 	holding_types = {
 		temple
+	}
+	conditions = {
+		feature = holy_site
 	}
 	modifier = {
 		law = 2
