@@ -5,6 +5,7 @@
 #include "character/character.h"
 #include "character/character_game_data.h"
 #include "character/party.h"
+#include "character/skill.h"
 #include "database/defines.h"
 #include "database/gsml_data.h"
 #include "database/gsml_property.h"
@@ -37,6 +38,7 @@
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/site.h"
+#include "map/site_attribute.h"
 #include "map/site_map_data.h"
 #include "map/site_type.h"
 #include "map/tile.h"
@@ -124,6 +126,10 @@ void site_game_data::process_gsml_scope(const gsml_data &scope)
 		const QPoint tile_pos = scope.to_point();
 		this->site->get_map_data()->set_tile_pos(tile_pos);
 		map::get()->set_tile_site(tile_pos, this->site);
+	} else if (tag == "attributes") {
+		scope.for_each_property([&](const gsml_property &attribute_property) {
+			this->attribute_values[site_attribute::get(attribute_property.get_key())] = std::stoi(attribute_property.get_value());
+		});
 	} else {
 		throw std::runtime_error(std::format("Invalid site game data scope: \"{}\".", tag));
 	}
@@ -151,6 +157,14 @@ gsml_data site_game_data::to_gsml_data() const
 
 	if (this->get_dungeon() != nullptr) {
 		data.add_property("dungeon", this->get_dungeon()->get_identifier());
+	}
+
+	if (!this->attribute_values.empty()) {
+		gsml_data attributes_data("attributes");
+		for (const auto &[attribute, value] : this->attribute_values) {
+			attributes_data.add_property(attribute->get_identifier(), std::to_string(value));
+		}
+		data.add_child(std::move(attributes_data));
 	}
 
 	return data;
@@ -951,6 +965,82 @@ const portrait *site_game_data::get_portrait() const
 	return nullptr;
 }
 
+QVariantList site_game_data::get_attribute_values_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_attribute_values());
+}
+
+void site_game_data::change_attribute_value(const site_attribute *attribute, const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const int old_value = this->get_attribute_value(attribute);
+
+	const int new_value = (this->attribute_values[attribute] += change);
+
+	if (new_value == 0) {
+		this->attribute_values.erase(attribute);
+	}
+
+	if (change > 0) {
+		for (int i = old_value + 1; i <= new_value; ++i) {
+			const modifier<const metternich::site> *value_modifier = attribute->get_value_modifier(i);
+			if (value_modifier != nullptr) {
+				value_modifier->apply(this->site);
+			}
+		}
+	} else {
+		for (int i = old_value; i > new_value; --i) {
+			const modifier<const metternich::site> *value_modifier = attribute->get_value_modifier(i);
+			if (value_modifier != nullptr) {
+				value_modifier->remove(this->site);
+			}
+		}
+	}
+
+	if (game::get()->is_running()) {
+		emit attribute_values_changed();
+	}
+}
+
+bool site_game_data::do_attribute_check(const site_attribute *attribute, const int roll_modifier) const
+{
+	static constexpr dice check_dice(1, 20);
+
+	const int roll_result = random::get()->roll_dice(check_dice);
+
+	//there should always be at least a 5% chance of failure
+	if (roll_result == check_dice.get_sides()) {
+		//e.g. if a 20 is rolled for a d20 roll
+		return false;
+	}
+
+	const int attribute_value = this->get_attribute_value(attribute);
+	const int modified_attribute_value = attribute_value + roll_modifier;
+	return roll_result <= modified_attribute_value;
+}
+
+int site_game_data::get_attribute_check_chance(const site_attribute *attribute, const int roll_modifier) const
+{
+	assert_throw(attribute != nullptr);
+
+	static constexpr dice check_dice(1, 20);
+
+	int chance = this->get_attribute_value(attribute);
+	chance += roll_modifier;
+
+	if (check_dice.get_sides() != 100) {
+		chance *= 100;
+		chance /= check_dice.get_sides();
+	}
+
+	chance = std::min(chance, 95);
+
+	return chance;
+}
+
 QVariantList site_game_data::get_building_slots_qvariant_list() const
 {
 	std::vector<const building_slot *> building_slots;
@@ -1346,6 +1436,10 @@ void site_game_data::on_settlement_built(const int multiplier)
 
 	if (this->get_owner() != nullptr) {
 		this->get_owner()->get_game_data()->change_holding_count(multiplier);
+
+		for (const auto &[attribute, value] : this->get_owner()->get_game_data()->get_site_attribute_values()) {
+			this->change_attribute_value(attribute, value * multiplier);
+		}
 	}
 
 	if (this->get_province() != nullptr) {
@@ -1973,6 +2067,24 @@ const data_entry_set<dungeon_area> &site_game_data::get_explored_dungeon_areas()
 void site_game_data::add_explored_dungeon_area(const dungeon_area *dungeon_area)
 {
 	this->explored_dungeon_areas.insert(dungeon_area);
+}
+
+int site_game_data::get_skill_modifier(const skill *skill) const
+{
+	int modifier = 0;
+
+	for (const auto &[attribute, value] : this->get_attribute_values()) {
+		if (attribute->affects_skill(skill)) {
+			modifier += value;
+		}
+	}
+
+	if (skill->get_check_dice().get_sides() != 20) {
+		modifier *= skill->get_check_dice().get_sides();
+		modifier /= 20;
+	}
+
+	return modifier;
 }
 
 }

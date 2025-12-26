@@ -12,7 +12,7 @@ bureau = {
 	commodity_costs = {
 		wealth = 10gb
 	}
-	province_modifier = {
+	modifier = {
 		corruption = 1
 		law = 1
 	}

@@ -11,7 +11,7 @@ mansion = {
 	commodity_costs = {
 		wealth = 10gb
 	}
-	province_modifier = {
+	modifier = {
 		law = 1
 		society = 1
 	}
@@ -34,7 +34,7 @@ noble_villa = {
 	commodity_costs = {
 		wealth = 14gb
 	}
-	province_modifier = {
+	modifier = {
 		law = 1
 		society = 1
 	}
@@ -66,7 +66,7 @@ palace = {
 	commodity_costs = {
 		wealth = 84gb
 	}
-	province_modifier = {
+	modifier = {
 		law = 2
 		society = 1
 	}

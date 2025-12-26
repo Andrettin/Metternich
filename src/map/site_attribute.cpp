@@ -1,6 +1,6 @@
 #include "metternich.h"
 
-#include "map/province_attribute.h"
+#include "map/site_attribute.h"
 
 #include "character/skill.h"
 #include "script/modifier.h"
@@ -8,15 +8,15 @@
 
 namespace metternich {
 
-province_attribute::province_attribute(const std::string &identifier) : named_data_entry(identifier)
+site_attribute::site_attribute(const std::string &identifier) : named_data_entry(identifier)
 {
 }
 
-province_attribute::~province_attribute()
+site_attribute::~site_attribute()
 {
 }
 
-void province_attribute::process_gsml_scope(const gsml_data &scope)
+void site_attribute::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
@@ -30,7 +30,7 @@ void province_attribute::process_gsml_scope(const gsml_data &scope)
 			const std::string &child_tag = child_scope.get_tag();
 			const int value = std::stoi(child_tag);
 			if (!this->value_modifiers.contains(value)) {
-				this->value_modifiers[value] = std::make_unique<metternich::modifier<const province>>();
+				this->value_modifiers[value] = std::make_unique<metternich::modifier<const site>>();
 			}
 			this->value_modifiers[value]->process_gsml_data(child_scope);
 		});
@@ -42,7 +42,7 @@ void province_attribute::process_gsml_scope(const gsml_data &scope)
 			const int value_interval = std::stoi(child_tag);
 			for (int i = value_interval; i <= max_value; i += value_interval) {
 				if (!this->value_modifiers.contains(i)) {
-					this->value_modifiers[i] = std::make_unique<metternich::modifier<const province>>();
+					this->value_modifiers[i] = std::make_unique<metternich::modifier<const site>>();
 				}
 				this->value_modifiers[i]->process_gsml_data(child_scope);
 			}
@@ -52,7 +52,7 @@ void province_attribute::process_gsml_scope(const gsml_data &scope)
 	}
 }
 
-bool province_attribute::affects_skill(const skill *skill) const
+bool site_attribute::affects_skill(const skill *skill) const
 {
 	return vector::contains(this->affected_skills, skill);
 }

@@ -61,10 +61,10 @@
 #include "map/map_template.h"
 #include "map/moisture_type.h"
 #include "map/province.h"
-#include "map/province_attribute.h"
 #include "map/province_game_data.h"
 #include "map/province_map_image_provider.h"
 #include "map/site.h"
+#include "map/site_attribute.h"
 #include "map/site_game_data.h"
 #include "map/site_type.h"
 #include "map/temperature_type.h"
@@ -225,11 +225,11 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<portrait>("", 1);
 		qmlRegisterAnonymousType<preferences>("", 1);
 		qmlRegisterAnonymousType<province>("", 1);
-		qmlRegisterAnonymousType<province_attribute>("", 1);
 		qmlRegisterAnonymousType<province_game_data>("", 1);
 		qmlRegisterAnonymousType<scenario>("", 1);
 		qmlRegisterAnonymousType<scripted_character_modifier>("", 1);
 		qmlRegisterAnonymousType<site>("", 1);
+		qmlRegisterAnonymousType<site_attribute>("", 1);
 		qmlRegisterAnonymousType<site_game_data>("", 1);
 		qmlRegisterAnonymousType<technology>("", 1);
 		qmlRegisterAnonymousType<technology_category>("", 1);

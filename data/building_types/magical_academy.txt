@@ -15,7 +15,7 @@ magical_academy = {
 	commodity_costs = {
 		wealth = 58gb
 	}
-	province_modifier = {
+	modifier = {
 		lore = 2
 		society = 1
 	}

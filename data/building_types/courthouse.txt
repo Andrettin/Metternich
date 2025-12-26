@@ -11,7 +11,7 @@ courthouse = {
 	commodity_costs = {
 		wealth = 16gb
 	}
-	province_modifier = {
+	modifier = {
 		corruption = -1
 		crime = -1
 		law = 2

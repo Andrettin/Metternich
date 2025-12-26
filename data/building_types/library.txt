@@ -13,7 +13,7 @@ library = {
 	commodity_costs = {
 		wealth = 6gb
 	}
-	province_modifier = {
+	modifier = {
 		lore = 1
 	}
 	domain_modifier = {

@@ -27,7 +27,7 @@ barracks = {
 	commodity_costs = {
 		wealth = 6gb
 	}
-	province_modifier = {
+	modifier = {
 		law = 1
 	}
 	domain_modifier = {
@@ -49,7 +49,7 @@ garrison = {
 	commodity_costs = {
 		wealth = 22gb
 	}
-	province_modifier = {
+	modifier = {
 		law = 1
 	}
 	domain_modifier = {

@@ -11,7 +11,7 @@ shop = {
 	commodity_costs = {
 		wealth = 8gb
 	}
-	province_modifier = {
+	modifier = {
 		productivity = 1
 	}
 	domain_modifier = {
@@ -34,7 +34,7 @@ market = {
 	commodity_costs = {
 		wealth = 40gb
 	}
-	province_modifier = {
+	modifier = {
 		productivity = 1
 	}
 	domain_modifier = {

@@ -15,7 +15,7 @@ pier = {
 	commodity_costs = {
 		wealth = 16gb
 	}
-	province_modifier = {
+	modifier = {
 		crime = 1
 	}
 	domain_modifier = {
@@ -51,7 +51,7 @@ waterfront = {
 	commodity_costs = {
 		wealth = 74gb
 	}
-	province_modifier = {
+	modifier = {
 		crime = 1
 		productivity = 2
 	}

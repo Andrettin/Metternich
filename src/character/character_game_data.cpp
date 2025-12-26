@@ -1302,7 +1302,7 @@ bool character_game_data::do_skill_check(const skill *skill, const int roll_modi
 	}
 
 	const int skill_value = this->get_skill_value(skill);
-	const int modified_skill_value = skill_value + roll_modifier + location->get_game_data()->get_province()->get_game_data()->get_skill_modifier(skill);
+	const int modified_skill_value = skill_value + roll_modifier + location->get_game_data()->get_skill_modifier(skill);
 	return roll_result <= modified_skill_value;
 }
 
@@ -1317,7 +1317,7 @@ int character_game_data::get_skill_check_chance(const skill *skill, const int ro
 
 	int chance = this->get_skill_value(skill);
 	chance += roll_modifier;
-	chance += location->get_game_data()->get_province()->get_game_data()->get_skill_modifier(skill);
+	chance += location->get_game_data()->get_skill_modifier(skill);
 
 	if (skill->get_check_dice().get_sides() != 100) {
 		chance *= 100;

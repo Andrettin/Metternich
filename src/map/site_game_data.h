@@ -43,6 +43,7 @@ class religion;
 class resource;
 class scripted_site_modifier;
 class site;
+class site_attribute;
 class tile;
 enum class improvement_slot;
 
@@ -64,6 +65,7 @@ class site_game_data final : public QObject
 	Q_PROPERTY(const metternich::improvement* improvement READ get_main_improvement NOTIFY improvements_changed)
 	Q_PROPERTY(const metternich::improvement* resource_improvement READ get_resource_improvement NOTIFY improvements_changed)
 	Q_PROPERTY(const metternich::portrait* portrait READ get_portrait NOTIFY portrait_changed)
+	Q_PROPERTY(QVariantList attribute_values READ get_attribute_values_qvariant_list NOTIFY attribute_values_changed)
 	Q_PROPERTY(QVariantList building_slots READ get_building_slots_qvariant_list CONSTANT)
 	Q_PROPERTY(QVariantList visible_building_slots READ get_visible_building_slots_qvariant_list CONSTANT)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
@@ -247,6 +249,27 @@ public:
 	void set_improvement(const improvement_slot slot, const improvement *improvement);
 
 	const portrait *get_portrait() const;
+
+	const data_entry_map<site_attribute, int> &get_attribute_values() const
+	{
+		return this->attribute_values;
+	}
+
+	QVariantList get_attribute_values_qvariant_list() const;
+
+	int get_attribute_value(const site_attribute *attribute) const
+	{
+		const auto find_iterator = this->attribute_values.find(attribute);
+		if (find_iterator != this->attribute_values.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void change_attribute_value(const site_attribute *attribute, const int change);
+	bool do_attribute_check(const site_attribute *attribute, const int roll_modifier) const;
+	int get_attribute_check_chance(const site_attribute *attribute, const int roll_modifier) const;
 
 	const std::vector<qunique_ptr<building_slot>> &get_building_slots() const
 	{
@@ -522,6 +545,8 @@ public:
 	const data_entry_set<dungeon_area> &get_explored_dungeon_areas() const;
 	void add_explored_dungeon_area(const dungeon_area *dungeon_area);
 
+	int get_skill_modifier(const skill *skill) const;
+
 signals:
 	void title_name_changed();
 	void titled_name_changed();
@@ -536,6 +561,7 @@ signals:
 	void holding_type_name_changed();
 	void dungeon_changed();
 	void portrait_changed();
+	void attribute_values_changed();
 	void scripted_modifiers_changed();
 	void population_units_changed();
 	void total_building_size_changed();
@@ -556,6 +582,7 @@ private:
 	data_entry_set<dungeon_area> explored_dungeon_areas;
 	std::map<improvement_slot, const improvement *> improvements;
 	bool resource_discovered = false;
+	data_entry_map<site_attribute, int> attribute_values;
 	std::vector<qunique_ptr<building_slot>> building_slots;
 	building_slot_type_map<building_slot *> building_slot_map;
 	scripted_site_modifier_map<int> scripted_modifiers;

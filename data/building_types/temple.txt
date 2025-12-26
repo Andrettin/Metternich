@@ -79,7 +79,7 @@ cathedral = {
 	commodity_costs = {
 		wealth = 26gb
 	}
-	province_modifier = {
+	modifier = {
 		law = 2
 	}
 	domain_modifier = {
@@ -103,7 +103,7 @@ large_cathedral = {
 	holding_types = {
 		temple
 	}
-	province_modifier = {
+	modifier = {
 		law = 2
 	}
 	domain_modifier = {
@@ -127,7 +127,7 @@ grand_cathedral = {
 	holding_types = {
 		temple
 	}
-	province_modifier = {
+	modifier = {
 		law = 2
 	}
 	domain_modifier = {
@@ -154,7 +154,7 @@ monastery = {
 	commodity_costs = {
 		wealth = 16gb
 	}
-	province_modifier = {
+	modifier = {
 		law = 1
 		lore = 1
 	}

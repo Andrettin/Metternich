@@ -11,7 +11,7 @@ trade_shop = {
 	commodity_costs = {
 		wealth = 10gb
 	}
-	province_modifier = {
+	modifier = {
 		productivity = 1
 	}
 	domain_modifier = {

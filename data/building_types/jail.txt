@@ -11,7 +11,7 @@ jail = {
 	commodity_costs = {
 		wealth = 14gb
 	}
-	province_modifier = {
+	modifier = {
 		crime = -1
 		law = 1
 	}

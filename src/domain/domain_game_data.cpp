@@ -50,11 +50,11 @@
 #include "map/diplomatic_map_mode.h"
 #include "map/map.h"
 #include "map/province.h"
-#include "map/province_attribute.h"
 #include "map/province_game_data.h"
 #include "map/province_map_data.h"
 #include "map/region.h"
 #include "map/site.h"
+#include "map/site_attribute.h"
 #include "map/site_game_data.h"
 #include "map/site_map_data.h"
 #include "map/site_type.h"
@@ -167,9 +167,9 @@ void domain_game_data::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([&](const gsml_property &attribute_property) {
 			this->attribute_values[domain_attribute::get(attribute_property.get_key())] = std::stoi(attribute_property.get_value());
 		});
-	} else if (tag == "province_attributes") {
+	} else if (tag == "site_attributes") {
 		scope.for_each_property([&](const gsml_property &attribute_property) {
-			this->province_attribute_values[province_attribute::get(attribute_property.get_key())] = std::stoi(attribute_property.get_value());
+			this->site_attribute_values[site_attribute::get(attribute_property.get_key())] = std::stoi(attribute_property.get_value());
 		});
 	} else if (tag == "provinces") {
 		for (const std::string &value : values) {
@@ -216,9 +216,9 @@ gsml_data domain_game_data::to_gsml_data() const
 		data.add_child(std::move(attributes_data));
 	}
 
-	if (!this->province_attribute_values.empty()) {
-		gsml_data attributes_data("province_attributes");
-		for (const auto &[attribute, value] : this->province_attribute_values) {
+	if (!this->site_attribute_values.empty()) {
+		gsml_data attributes_data("site_attributes");
+		for (const auto &[attribute, value] : this->site_attribute_values) {
 			attributes_data.add_property(attribute->get_identifier(), std::to_string(value));
 		}
 		data.add_child(std::move(attributes_data));
@@ -1259,10 +1259,6 @@ void domain_game_data::on_province_gained(const province *province, const int mu
 			province_game_data->change_commodity_bonus_for_tile_threshold(commodity, threshold, value * multiplier);
 		}
 	}
-
-	for (const auto &[attribute, value] : this->get_province_attribute_values()) {
-		province_game_data->change_attribute_value(attribute, value * multiplier);
-	}
 }
 
 QVariantList domain_game_data::get_sites_qvariant_list() const
@@ -1356,6 +1352,10 @@ void domain_game_data::on_site_gained(const site *site, const int multiplier)
 		this->change_holding_count(1 * multiplier);
 		this->change_score(site_game_data->get_holding_level() * 100 * multiplier);
 		this->change_domain_power(site_game_data->get_level() * multiplier);
+
+		for (const auto &[attribute, value] : this->get_site_attribute_values()) {
+			site->get_game_data()->change_attribute_value(attribute, value * multiplier);
+		}
 
 		for (const qunique_ptr<building_slot> &building_slot : site_game_data->get_building_slots()) {
 			const building_type *building = building_slot->get_building();
@@ -2357,29 +2357,33 @@ int domain_game_data::get_attribute_check_control_modifier() const
 	return -domain_size;
 }
 
-QVariantList domain_game_data::get_province_attribute_values_qvariant_list() const
+QVariantList domain_game_data::get_site_attribute_values_qvariant_list() const
 {
-	return archimedes::map::to_qvariant_list(this->get_province_attribute_values());
+	return archimedes::map::to_qvariant_list(this->get_site_attribute_values());
 }
 
-void domain_game_data::change_province_attribute_value(const province_attribute *attribute, const int change)
+void domain_game_data::change_site_attribute_value(const site_attribute *attribute, const int change)
 {
 	if (change == 0) {
 		return;
 	}
 
-	const int new_value = (this->province_attribute_values[attribute] += change);
+	const int new_value = (this->site_attribute_values[attribute] += change);
 
 	if (new_value == 0) {
-		this->province_attribute_values.erase(attribute);
+		this->site_attribute_values.erase(attribute);
 	}
 
-	for (const province *province : this->get_provinces()) {
-		province->get_game_data()->change_attribute_value(attribute, change);
+	for (const site *site : this->get_sites()) {
+		if (!site->is_settlement() || !site->get_game_data()->is_built()) {
+			continue;
+		}
+
+		site->get_game_data()->change_attribute_value(attribute, change);
 	}
 
 	if (game::get()->is_running()) {
-		emit province_attribute_values_changed();
+		emit site_attribute_values_changed();
 	}
 }
 

@@ -164,7 +164,6 @@ set(map_SRCS
 	src/map/map_site_model.cpp
 	src/map/map_template.cpp
 	src/map/province.cpp
-	src/map/province_attribute.cpp
 	src/map/province_container.cpp
 	src/map/province_game_data.cpp
 	src/map/province_history.cpp
@@ -175,6 +174,7 @@ set(map_SRCS
 	src/map/route.cpp
 	src/map/route_container.cpp
 	src/map/site.cpp
+	src/map/site_attribute.cpp
 	src/map/site_container.cpp
 	src/map/site_game_data.cpp
 	src/map/site_history.cpp
@@ -508,7 +508,6 @@ set(map_HDRS
 	src/map/map_template.h
 	src/map/moisture_type.h
 	src/map/province.h
-	src/map/province_attribute.h
 	src/map/province_container.h
 	src/map/province_game_data.h
 	src/map/province_history.h
@@ -522,6 +521,7 @@ set(map_HDRS
 	src/map/route_game_data.h
 	src/map/route_history.h
 	src/map/site.h
+	src/map/site_attribute.h
 	src/map/site_container.h
 	src/map/site_game_data.h
 	src/map/site_history.h
@@ -657,7 +657,6 @@ set(script_condition_HDRS
 	src/script/condition/primary_attribute_condition.h
 	src/script/condition/produces_commodity_condition.h
 	src/script/condition/promotion_condition.h
-	src/script/condition/province_attribute_condition.h
 	src/script/condition/province_condition.h
 	src/script/condition/province_count_condition.h
 	src/script/condition/provincial_capital_condition.h
@@ -672,6 +671,7 @@ set(script_condition_HDRS
 	src/script/condition/scripted_condition.h
 	src/script/condition/scripted_condition_condition.h
 	src/script/condition/scripted_modifier_condition.h
+	src/script/condition/site_attribute_condition.h
 	src/script/condition/site_condition.h
 	src/script/condition/site_scope_condition.h
 	src/script/condition/skill_training_condition.h
@@ -795,11 +795,11 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/movement_modifier_effect.h
 	src/script/modifier_effect/output_modifier_effect.h
 	src/script/modifier_effect/population_type_bonus_modifier_effect.h
-	src/script/modifier_effect/province_attribute_modifier_effect.h
 	src/script/modifier_effect/range_modifier_effect.h
 	src/script/modifier_effect/resource_output_modifier_effect.h
 	src/script/modifier_effect/saving_throw_modifier_effect.h
 	src/script/modifier_effect/ship_stat_modifier_effect.h
+	src/script/modifier_effect/site_attribute_modifier_effect.h
 	src/script/modifier_effect/skill_modifier_effect.h
 	src/script/modifier_effect/skill_training_modifier_effect.h
 	src/script/modifier_effect/species_armor_class_bonus_modifier_effect.h

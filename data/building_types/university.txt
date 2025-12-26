@@ -15,7 +15,7 @@ academy = {
 	commodity_costs = {
 		wealth = 52gb
 	}
-	province_modifier = {
+	modifier = {
 		lore = 2
 		productivity = 1
 		society = 2
@@ -57,7 +57,7 @@ university = {
 	commodity_costs = {
 		wealth = 26gb
 	}
-	province_modifier = {
+	modifier = {
 		lore = 4
 		productivity = 1
 		society = 3

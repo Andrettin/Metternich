@@ -4,7 +4,6 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
-#include "character/skill.h"
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "domain/country_economy.h"
@@ -29,7 +28,6 @@
 #include "map/diplomatic_map_mode.h"
 #include "map/map.h"
 #include "map/province.h"
-#include "map/province_attribute.h"
 #include "map/province_map_data.h"
 #include "map/province_map_mode.h"
 #include "map/site.h"
@@ -109,13 +107,7 @@ void province_game_data::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 
-	if (tag == "attributes") {
-		scope.for_each_property([&](const gsml_property &attribute_property) {
-			this->attribute_values[province_attribute::get(attribute_property.get_key())] = std::stoi(attribute_property.get_value());
-		});
-	} else {
-		throw std::runtime_error(std::format("Invalid province game data scope: \"{}\".", tag));
-	}
+	throw std::runtime_error(std::format("Invalid province game data scope: \"{}\".", tag));
 }
 
 gsml_data province_game_data::to_gsml_data() const
@@ -140,14 +132,6 @@ gsml_data province_game_data::to_gsml_data() const
 
 	if (this->get_provincial_capital() != 0) {
 		data.add_property("provincial_capital", provincial_capital->get_identifier());
-	}
-
-	if (!this->attribute_values.empty()) {
-		gsml_data attributes_data("attributes");
-		for (const auto &[attribute, value] : this->attribute_values) {
-			attributes_data.add_property(attribute->get_identifier(), std::to_string(value));
-		}
-		data.add_child(std::move(attributes_data));
 	}
 
 	return data;
@@ -984,82 +968,6 @@ void province_game_data::calculate_text_rect()
 	}
 }
 
-QVariantList province_game_data::get_attribute_values_qvariant_list() const
-{
-	return archimedes::map::to_qvariant_list(this->get_attribute_values());
-}
-
-void province_game_data::change_attribute_value(const province_attribute *attribute, const int change)
-{
-	if (change == 0) {
-		return;
-	}
-
-	const int old_value = this->get_attribute_value(attribute);
-
-	const int new_value = (this->attribute_values[attribute] += change);
-
-	if (new_value == 0) {
-		this->attribute_values.erase(attribute);
-	}
-
-	if (change > 0) {
-		for (int i = old_value + 1; i <= new_value; ++i) {
-			const modifier<const metternich::province> *value_modifier = attribute->get_value_modifier(i);
-			if (value_modifier != nullptr) {
-				value_modifier->apply(this->province);
-			}
-		}
-	} else {
-		for (int i = old_value; i > new_value; --i) {
-			const modifier<const metternich::province> *value_modifier = attribute->get_value_modifier(i);
-			if (value_modifier != nullptr) {
-				value_modifier->remove(this->province);
-			}
-		}
-	}
-
-	if (game::get()->is_running()) {
-		emit attribute_values_changed();
-	}
-}
-
-bool province_game_data::do_attribute_check(const province_attribute *attribute, const int roll_modifier) const
-{
-	static constexpr dice check_dice(1, 20);
-
-	const int roll_result = random::get()->roll_dice(check_dice);
-
-	//there should always be at least a 5% chance of failure
-	if (roll_result == check_dice.get_sides()) {
-		//e.g. if a 20 is rolled for a d20 roll
-		return false;
-	}
-
-	const int attribute_value = this->get_attribute_value(attribute);
-	const int modified_attribute_value = attribute_value + roll_modifier;
-	return roll_result <= modified_attribute_value;
-}
-
-int province_game_data::get_attribute_check_chance(const province_attribute *attribute, const int roll_modifier) const
-{
-	assert_throw(attribute != nullptr);
-
-	static constexpr dice check_dice(1, 20);
-
-	int chance = this->get_attribute_value(attribute);
-	chance += roll_modifier;
-
-	if (check_dice.get_sides() != 100) {
-		chance *= 100;
-		chance /= check_dice.get_sides();
-	}
-
-	chance = std::min(chance, 95);
-
-	return chance;
-}
-
 std::vector<const site *> province_game_data::get_visible_sites() const
 {
 	std::vector<const site *> visible_sites = this->province->get_map_data()->get_sites();
@@ -1736,24 +1644,6 @@ int province_game_data::get_max_income() const
 {
 	const dice &taxation_dice = defines::get()->get_province_taxation_for_level(this->get_level());
 	return taxation_dice.get_maximum_result() * defines::get()->get_domain_income_unit_value();
-}
-
-int province_game_data::get_skill_modifier(const skill *skill) const
-{
-	int modifier = 0;
-
-	for (const auto &[attribute, value] : this->get_attribute_values()) {
-		if (attribute->affects_skill(skill)) {
-			modifier += value;
-		}
-	}
-
-	if (skill->get_check_dice().get_sides() != 20) {
-		modifier *= skill->get_check_dice().get_sides();
-		modifier /= 20;
-	}
-
-	return modifier;
 }
 
 const domain *province_game_data::get_trade_zone_domain() const

@@ -57,7 +57,7 @@ guildhall = {
 	commodity_costs = {
 		wealth = 34gb
 	}
-	province_modifier = {
+	modifier = {
 		law = 1
 		productivity = 2
 	}

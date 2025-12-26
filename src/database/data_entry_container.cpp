@@ -21,7 +21,7 @@
 #include "item/item_slot.h"
 #include "item/item_type.h"
 #include "item/object_type.h"
-#include "map/province_attribute.h"
+#include "map/site_attribute.h"
 #include "species/species.h"
 #include "technology/technology_category.h"
 #include "technology/technology_subcategory.h"
@@ -51,8 +51,8 @@ template struct data_entry_compare<monster_type>;
 template struct data_entry_compare<named_data_entry>;
 template struct data_entry_compare<object_type>;
 template struct data_entry_compare<office>;
-template struct data_entry_compare<province_attribute>;
 template struct data_entry_compare<saving_throw_type>;
+template struct data_entry_compare<site_attribute>;
 template struct data_entry_compare<skill>;
 template struct data_entry_compare<species>;
 template struct data_entry_compare<status_effect>;

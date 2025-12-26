@@ -16,7 +16,7 @@ military_academy = {
 	commodity_costs = {
 		wealth = 36gb
 	}
-	province_modifier = {
+	modifier = {
 		law = 1
 		lore = 1
 	}
