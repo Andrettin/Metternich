@@ -26,4 +26,22 @@ void site_feature::process_gsml_scope(const gsml_data &scope)
 	}
 }
 
+void site_feature::check() const
+{
+	if (this->get_icon() == nullptr) {
+		throw std::runtime_error(std::format("Site feature \"{}\" has no icon.", this->get_identifier()));
+	}
+
+	named_data_entry::check();
+}
+
+QString site_feature::get_modifier_string(const metternich::site *site) const
+{
+	if (this->get_modifier() == nullptr) {
+		return QString();
+	}
+
+	return QString::fromStdString(this->get_modifier()->get_string(site, 1, 0, ", "));
+}
+
 }

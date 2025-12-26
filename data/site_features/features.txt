@@ -1,5 +1,6 @@
 academic = {
 	name = "Academic"
+	icon = university
 	modifier = {
 		lore = 1
 	}
@@ -7,6 +8,7 @@ academic = {
 
 holy_site = {
 	name = "Holy Site"
+	icon = wooden_cross
 	modifier = {
 		corruption = -2
 	}

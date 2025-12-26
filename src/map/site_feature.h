@@ -28,6 +28,7 @@ public:
 	~site_feature();
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
+	virtual void check() const override;
 
 	const metternich::icon *get_icon() const
 	{
@@ -38,6 +39,8 @@ public:
 	{
 		return this->modifier.get();
 	}
+
+	Q_INVOKABLE QString get_modifier_string(const metternich::site *site) const;
 
 signals:
 	void changed();

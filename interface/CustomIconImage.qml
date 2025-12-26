@@ -8,6 +8,7 @@ Image {
 	property string name: ""
 	property string icon_identifier: ""
 	property string tooltip: ""
+	property string description: ""
 	
 	MouseArea {
 		id: icon_mouse_area
@@ -16,10 +17,12 @@ Image {
 		
 		onEntered: {
 			status_text = name
+			middle_status_text = description
 		}
 		
 		onExited: {
 			status_text = ""
+			middle_status_text = ""
 		}
 	}
 	

@@ -169,6 +169,15 @@ Rectangle {
 		readonly property string site_title_name: selected_site_game_data ? selected_site_game_data.title_name : ""
 	}
 	
+	FeatureRow {
+		id: feature_row
+		anchors.bottom: building_portrait_grid.top
+		anchors.bottomMargin: 8 * scale_factor
+		anchors.horizontalCenter: parent.horizontalCenter
+		site: selected_site
+		visible: selected_site && !selected_garrison && selected_site.game_data.features.length > 0
+	}
+	
 	ScriptedModifierRow {
 		id: scripted_modifier_row
 		anchors.top: title.bottom
@@ -181,7 +190,7 @@ Rectangle {
 	BuildingPortraitGrid {
 		id: building_portrait_grid
 		anchors.bottom: garrison_details_button.top
-		anchors.bottomMargin: 16 * scale_factor
+		anchors.bottomMargin: 8 * scale_factor
 		anchors.left: parent.left
 		anchors.right: parent.right
 		visible_rows: 2
@@ -192,7 +201,7 @@ Rectangle {
 	SitePortraitGrid {
 		id: site_portrait_grid
 		anchors.bottom: garrison_details_button.top
-		anchors.bottomMargin: 16 * scale_factor
+		anchors.bottomMargin: 8 * scale_factor
 		anchors.left: parent.left
 		anchors.right: parent.right
 		visible_rows: 2

@@ -58,7 +58,7 @@ void modifier<scope_type>::remove(scope_type *scope, const int multiplier) const
 }
 
 template <typename scope_type>
-std::string modifier<scope_type>::get_string(const scope_type *scope, const centesimal_int &multiplier, const size_t indent, const bool ignore_decimals) const
+std::string modifier<scope_type>::get_string(const scope_type *scope, const centesimal_int &multiplier, const size_t indent, const bool ignore_decimals, const std::string &separator) const
 {
 	std::string str;
 	for (const std::unique_ptr<modifier_effect<scope_type>> &modifier_effect : this->modifier_effects) {
@@ -67,7 +67,7 @@ std::string modifier<scope_type>::get_string(const scope_type *scope, const cent
 		}
 
 		if (!str.empty()) {
-			str += "\n";
+			str += separator;
 		}
 
 		if (indent > 0) {
@@ -80,9 +80,9 @@ std::string modifier<scope_type>::get_string(const scope_type *scope, const cent
 }
 
 template <typename scope_type>
-std::string modifier<scope_type>::get_string(const scope_type *scope, const int multiplier, const size_t indent) const
+std::string modifier<scope_type>::get_string(const scope_type *scope, const int multiplier, const size_t indent, const std::string &separator) const
 {
-	return this->get_string(scope, centesimal_int(multiplier), indent);
+	return this->get_string(scope, centesimal_int(multiplier), indent, true, separator);
 }
 
 template <typename scope_type>
