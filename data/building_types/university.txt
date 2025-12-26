@@ -12,6 +12,9 @@ academy = {
 	required_buildings = {
 		library
 	}
+	conditions = {
+		feature = academic
+	}
 	commodity_costs = {
 		wealth = 52gb
 	}
@@ -53,6 +56,9 @@ university = {
 		driller
 		#spy
 		#merchant
+	}
+	conditions = {
+		feature = academic
 	}
 	commodity_costs = {
 		wealth = 26gb

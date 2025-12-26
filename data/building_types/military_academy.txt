@@ -5,13 +5,15 @@ military_academy = {
 	icon = crossed_sabers
 	size = 2
 	population_type = laborers
-	min_holding_level = 4
 	holding_types = {
 		castle
 	}
 	required_buildings = {
 		barracks
 		garrison
+	}
+	conditions = {
+		feature = academic
 	}
 	commodity_costs = {
 		wealth = 36gb
