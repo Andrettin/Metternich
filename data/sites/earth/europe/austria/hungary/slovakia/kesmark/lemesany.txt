@@ -3,6 +3,6 @@ lemesany = {
 	world = earth
 	geocoordinate = { 21.27166666666667 48.85138888888889 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = kesmark
 }

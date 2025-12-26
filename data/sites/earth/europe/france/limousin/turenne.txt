@@ -3,6 +3,6 @@ turenne = {
 	world = earth
 	geocoordinate = { 1.5825 45.054166666667 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = limousin
 }

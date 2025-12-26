@@ -3,6 +3,6 @@ sursee = {
 	world = earth
 	geocoordinate = { 8.1080555555556 47.174166666667 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = bern
 }

@@ -6,7 +6,7 @@ twiel = {
 	
 	history = {
 		919 = {
-			#holding_type = castle #had a castle or stronghold in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			#holding_type = law #had a castle or stronghold in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
 			buildings += castle
 		}
 	}

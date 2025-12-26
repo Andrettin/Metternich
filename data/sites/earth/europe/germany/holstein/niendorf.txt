@@ -3,6 +3,6 @@ niendorf = {
 	world = earth
 	geocoordinate = { 9.95032 53.61769 } #Niendorf (Hamburg)
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = holstein
 }

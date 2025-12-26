@@ -3,6 +3,6 @@ wolfenbuttel = {
 	world = earth
 	geocoordinate = { 10.536944444444 52.162222222222 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = hanover
 }

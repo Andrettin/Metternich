@@ -3,6 +3,6 @@ putna = {
 	world = earth
 	geocoordinate = { 25.616667 47.866667 } #Putna (Suceava)
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = bukovina
 }

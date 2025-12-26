@@ -3,6 +3,6 @@ celle = {
 	world = earth
 	geocoordinate = { 10.0825 52.625555555556 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = hanover
 }

@@ -3,6 +3,6 @@ kapuvar = {
 	world = earth
 	geocoordinate = { 17.033055555556 47.6 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = gyor
 }

@@ -3,6 +3,6 @@ turdossin = {
 	world = earth
 	geocoordinate = { 19.5551 49.3336 } #Tvrdošín
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = banska_bystrica
 }

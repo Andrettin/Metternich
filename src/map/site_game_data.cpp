@@ -388,7 +388,7 @@ std::string site_game_data::get_display_text() const
 			text += " (Visiting)";
 		}
 	} else if (this->site->get_holding_type() != nullptr) {
-		text += " (" + this->site->get_holding_type()->get_name() + " Slot)";
+		text += " (" + this->site->get_holding_type()->get_name() + " Holding Slot)";
 	}
 
 	return text;

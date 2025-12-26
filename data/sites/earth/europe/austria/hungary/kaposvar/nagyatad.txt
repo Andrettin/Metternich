@@ -3,6 +3,6 @@ nagyatad = {
 	world = earth
 	geocoordinate = { 17.3575 46.229444444444 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = kaposvar
 }

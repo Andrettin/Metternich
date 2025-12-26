@@ -3,6 +3,6 @@ nienburg_weser = {
 	world = earth
 	geocoordinate = { 9.2208333333333 52.646111111111 } #Nienburg/Weser
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = hanover
 }

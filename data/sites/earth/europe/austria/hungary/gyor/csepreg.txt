@@ -3,6 +3,6 @@ csepreg = {
 	world = earth
 	geocoordinate = { 16.708055555556 47.401388888889 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = gyor
 }

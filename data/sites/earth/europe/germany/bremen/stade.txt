@@ -3,7 +3,7 @@ stade = {
 	world = earth
 	geocoordinate = { 9.4763888888889 53.600833333333 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = bremen
 	
 	history = {

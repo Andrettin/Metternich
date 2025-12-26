@@ -3,6 +3,6 @@ hradec_nad_moravici = {
 	world = earth
 	geocoordinate = { 17.875865633487 49.871004700938 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = troppau
 }

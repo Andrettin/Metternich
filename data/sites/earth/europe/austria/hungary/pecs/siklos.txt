@@ -3,6 +3,6 @@ siklos = {
 	world = earth
 	geocoordinate = { 18.298611111111 45.851944444444 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = pecs
 }

@@ -3,6 +3,6 @@ postyen = {
 	world = earth
 	geocoordinate = { 17.833333333333 48.583333333333 } #Piešťany
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = pressburg
 }

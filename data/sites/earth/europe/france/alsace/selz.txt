@@ -3,6 +3,6 @@ selz = {
 	world = earth
 	geocoordinate = { 8.1069444444444 48.894166666667 } #Seltz
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = alsace
 }

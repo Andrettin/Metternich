@@ -3,6 +3,6 @@ gronau = {
 	world = earth
 	geocoordinate = { 7.0416666666667 52.2125 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = westphalia
 }

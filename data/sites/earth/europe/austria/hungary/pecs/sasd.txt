@@ -3,6 +3,6 @@ sasd = {
 	world = earth
 	geocoordinate = { 18.105833333333 46.254444444444 } #Sásd
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = pecs
 }

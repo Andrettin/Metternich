@@ -3,6 +3,6 @@ modor = {
 	world = earth
 	geocoordinate = { 17.306944444444 48.333055555556 } #Modra
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = pressburg
 }

@@ -3,6 +3,6 @@ bonyhad = {
 	world = earth
 	geocoordinate = { 18.53 46.3 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = kaposvar
 }

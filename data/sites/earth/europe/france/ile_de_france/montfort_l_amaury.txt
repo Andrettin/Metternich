@@ -3,6 +3,6 @@ montfort_l_amaury = {
 	world = earth
 	geocoordinate = { 1.8091666666667 48.777222222222 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = ile_de_france
 }

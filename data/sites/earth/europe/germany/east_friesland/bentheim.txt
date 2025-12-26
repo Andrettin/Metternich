@@ -3,7 +3,7 @@ bentheim = {
 	world = earth
 	geocoordinate = { 7.1597222222222 52.303055555556 } #Bad Bentheim
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = east_friesland
 	
 	history = {

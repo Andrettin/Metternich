@@ -3,6 +3,6 @@ jolsva = {
 	world = earth
 	geocoordinate = { 20.241388888889 48.626388888889 } #Jelšava
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = banska_bystrica
 }

@@ -3,7 +3,7 @@ wildeshausen = {
 	world = earth
 	geocoordinate = { 8.4313888888889 52.893055555556 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = oldenburg
 	
 	history = {

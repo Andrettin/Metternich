@@ -3,6 +3,6 @@ bitov = {
 	world = earth
 	geocoordinate = { 15.728977197222 48.936342827462 } #Bítov (Znojmo)
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = brunn
 }

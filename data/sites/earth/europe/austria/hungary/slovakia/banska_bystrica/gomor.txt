@@ -3,6 +3,6 @@ gomor = {
 	world = earth
 	geocoordinate = { 20.315555555555555 48.449444444444445 } #Gemer
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = banska_bystrica
 }

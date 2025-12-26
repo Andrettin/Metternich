@@ -3,6 +3,6 @@ nemetujvar = {
 	world = earth
 	geocoordinate = { 16.323055555556 47.059166666667 } #Güssing/Németújvár
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = burgenland
 }

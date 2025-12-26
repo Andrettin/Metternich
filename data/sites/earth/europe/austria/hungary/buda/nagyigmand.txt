@@ -3,6 +3,6 @@ nagyigmand = {
 	world = earth
 	geocoordinate = { 18.055688888889 47.632530555556 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = buda
 }

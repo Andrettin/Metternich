@@ -3,7 +3,7 @@ nevers = {
 	world = earth
 	geocoordinate = { 3.16666947288 46.98373292960 } #from Natural Earth
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = berry
 	
 	history = {

@@ -3,6 +3,6 @@ veere = {
 	world = earth
 	geocoordinate = { 3.6666666666667 51.55 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = zeeland
 }

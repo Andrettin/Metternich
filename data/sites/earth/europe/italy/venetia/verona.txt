@@ -3,7 +3,7 @@ verona = {
 	world = earth
 	geocoordinate = { 10.99001623400 45.44039044100 } #from Natural Earth
 	type = holding
-	holding_type = castle
+	holding_type = law
 	#resource = silk
 	province = venetia
 	

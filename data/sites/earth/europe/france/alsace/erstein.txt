@@ -3,7 +3,7 @@ erstein = {
 	world = earth
 	geocoordinate = { 7.6611111111111 48.421944444444 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = alsace
 	
 	history = {

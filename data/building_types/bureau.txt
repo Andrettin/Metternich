@@ -6,8 +6,8 @@ bureau = {
 	size = 2
 	min_holding_level = 4
 	holding_types = {
-		castle
 		guild
+		law
 	}
 	commodity_costs = {
 		wealth = 10gb

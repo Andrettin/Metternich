@@ -3,6 +3,6 @@ osterburg = {
 	world = earth
 	geocoordinate = { 11.766666666667 52.783333333333 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = magdeburg
 }

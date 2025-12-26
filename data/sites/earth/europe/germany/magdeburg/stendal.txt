@@ -3,6 +3,6 @@ stendal = {
 	world = earth
 	geocoordinate = { 11.85 52.6 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = magdeburg
 }

@@ -3,6 +3,6 @@ congsberg = {
 	world = earth
 	geocoordinate = { 18.783333333333 49.3 } #Kysucké Nové Mesto
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = banska_bystrica
 }

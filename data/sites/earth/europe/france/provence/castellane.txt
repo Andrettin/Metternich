@@ -3,6 +3,6 @@ castellane = {
 	world = earth
 	geocoordinate = { 6.5133333333333 43.846666666667 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = provence
 }

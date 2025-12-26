@@ -3,6 +3,6 @@ quackenbruck = {
 	world = earth
 	geocoordinate = { 7.9575 52.677222222222 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = east_friesland
 }

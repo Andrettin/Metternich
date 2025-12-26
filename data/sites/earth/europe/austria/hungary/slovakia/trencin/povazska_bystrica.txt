@@ -3,6 +3,6 @@ povazska_bystrica = {
 	world = earth
 	geocoordinate = { 18.45 49.116666666667 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = trencin
 }

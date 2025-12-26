@@ -3,6 +3,6 @@ kormend = {
 	world = earth
 	geocoordinate = { 16.60596 47.01096 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = gyor
 }

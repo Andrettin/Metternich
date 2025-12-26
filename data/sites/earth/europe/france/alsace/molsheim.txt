@@ -3,7 +3,7 @@ molsheim = {
 	world = earth
 	geocoordinate = { 7.4922222222222 48.542777777778 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = alsace
 	features = {
 		academic #historical university

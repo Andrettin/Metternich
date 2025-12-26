@@ -3,6 +3,6 @@ marcali = {
 	world = earth
 	geocoordinate = { 17.406388888889 46.583055555556 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = kaposvar
 }

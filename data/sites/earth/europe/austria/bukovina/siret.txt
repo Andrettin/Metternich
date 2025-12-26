@@ -3,6 +3,6 @@ siret = {
 	world = earth
 	geocoordinate = { 26.06 47.95 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = bukovina
 }

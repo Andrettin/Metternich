@@ -3,7 +3,7 @@ posen = {
 	world = earth
 	geocoordinate = { 16.89993973660 52.40575339670 } #from Natural Earth
 	type = holding
-	holding_type = castle
+	holding_type = law
 	cultural_names = {
 		polish = "Poznan" #"Poznań"
 	}

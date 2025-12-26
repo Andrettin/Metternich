@@ -3,6 +3,6 @@ essen = {
 	world = earth
 	geocoordinate = { 7.01661535506 51.44999778150 } #from Natural Earth
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = rhineland
 }

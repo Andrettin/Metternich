@@ -3,6 +3,6 @@ contes = {
 	world = earth
 	geocoordinate = { 7.3138888888889 43.811944444444 } #Contes (Alpes-Maritimes)
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = provence
 }

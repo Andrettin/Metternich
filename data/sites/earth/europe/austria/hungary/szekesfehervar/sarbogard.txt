@@ -3,6 +3,6 @@ sarbogard = {
 	world = earth
 	geocoordinate = { 18.619319444444 46.887761111111 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = szekesfehervar
 }

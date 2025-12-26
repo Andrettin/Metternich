@@ -3,6 +3,6 @@ egisheim = {
 	world = earth
 	geocoordinate = { 7.3058333333333 48.043055555556 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = alsace
 }

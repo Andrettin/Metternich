@@ -7,7 +7,7 @@ donjon = {
 	size = 1
 	population_type = laborers
 	holding_types = {
-		castle
+		law
 	}
 }
 
@@ -21,7 +21,7 @@ keep = {
 	population_type = laborers
 	base_building = donjon
 	holding_types = {
-		castle
+		law
 	}
 	commodity_costs = {
 		wealth = 24gb
@@ -42,7 +42,7 @@ expanded_keep = {
 	population_type = laborers
 	base_building = keep
 	holding_types = {
-		castle
+		law
 	}
 	domain_modifier = {
 		loyalty = 1
@@ -60,7 +60,7 @@ large_keep = {
 	population_type = laborers
 	base_building = expanded_keep
 	holding_types = {
-		castle
+		law
 	}
 	domain_modifier = {
 		loyalty = 1
@@ -78,7 +78,7 @@ great_keep = {
 	population_type = laborers
 	base_building = large_keep
 	holding_types = {
-		castle
+		law
 	}
 	domain_modifier = {
 		loyalty = 1
@@ -96,7 +96,7 @@ epic_keep = {
 	population_type = laborers
 	base_building = great_keep
 	holding_types = {
-		castle
+		law
 	}
 	domain_modifier = {
 		loyalty = 1

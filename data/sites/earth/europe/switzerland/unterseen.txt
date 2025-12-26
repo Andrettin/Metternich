@@ -3,6 +3,6 @@ unterseen = {
 	world = earth
 	geocoordinate = { 7.8497 46.6872 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = bern
 }

@@ -3,6 +3,6 @@ lantosque = {
 	world = earth
 	geocoordinate = { 7.3125 43.973333333333 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = provence
 }

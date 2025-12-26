@@ -3,6 +3,6 @@ barcs = {
 	world = earth
 	geocoordinate = { 17.46 45.96 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = kaposvar
 }

@@ -3,7 +3,7 @@ gottingen = {
 	world = earth
 	geocoordinate = { 9.92000402695 51.52043275870 } #from Natural Earth
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = hanover
 	
 	history = {

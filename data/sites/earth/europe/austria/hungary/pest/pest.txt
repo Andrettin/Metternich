@@ -4,7 +4,7 @@ pest = {
 	geocoordinate = { 19.1 47.5 }
 	type = holding
 	holding_type = guild
-	#holding_type = castle
+	#holding_type = law
 	max_tier = market
 	province = pest
 	

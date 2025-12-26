@@ -3,6 +3,6 @@ ruppin = {
 	world = earth
 	geocoordinate = { 12.8 52.922222222222 } #Neuruppin
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = brandenburg
 }

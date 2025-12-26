@@ -3,6 +3,6 @@ meppen = {
 	world = earth
 	geocoordinate = { 7.29097 52.69064 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = east_friesland
 }

@@ -30,7 +30,7 @@ cleric = {
 		temple
 	}
 	allowed_holding_types = {
-		castle
+		law
 	}
 	min_attribute_values = {
 		wisdom = 9

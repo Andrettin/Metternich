@@ -3,6 +3,6 @@ loningen = {
 	world = earth
 	geocoordinate = { 7.7579 52.736 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = oldenburg
 }

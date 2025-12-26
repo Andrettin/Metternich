@@ -6,8 +6,8 @@ granary = {
 	size = 1
 	population_type = laborers
 	holding_types = {
-		castle
 		guild
+		law
 	}
 	commodity_costs = {
 		wealth = 12gb

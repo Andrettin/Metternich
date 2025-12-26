@@ -3,7 +3,7 @@ vitebsk = {
 	world = earth
 	geocoordinate = { 30.18533036170 55.18871014310 } #from Natural Earth
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = vitebsk
 	
 	history = {

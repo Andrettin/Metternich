@@ -3,6 +3,6 @@ szentgyorgy = {
 	world = earth
 	geocoordinate = { 17.215555555556 48.251944444444 } #Svätý Jur
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = pressburg
 }

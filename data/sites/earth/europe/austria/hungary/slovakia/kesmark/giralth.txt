@@ -3,6 +3,6 @@ giralth = {
 	world = earth
 	geocoordinate = { 21.516666666666666 49.111666666666665 } #Giraltovce
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = kesmark
 }

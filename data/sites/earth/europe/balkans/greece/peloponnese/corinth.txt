@@ -3,6 +3,6 @@ corinth = {
 	world = earth
 	geocoordinate = { 22.927222222222223 37.93861111111111 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = peloponnese
 }

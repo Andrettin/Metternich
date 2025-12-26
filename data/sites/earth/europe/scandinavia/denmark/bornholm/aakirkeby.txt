@@ -3,6 +3,6 @@ aakirkeby = {
 	world = earth
 	geocoordinate = { 14.92 55.0697 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = bornholm
 }

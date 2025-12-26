@@ -3,6 +3,6 @@ ludersburg = {
 	world = earth
 	geocoordinate = { 10.566666666667 53.316666666667 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = hanover
 }

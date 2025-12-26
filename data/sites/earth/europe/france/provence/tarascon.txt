@@ -3,6 +3,6 @@ tarascon = {
 	world = earth
 	geocoordinate = { 4.6594444444444 43.805 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = provence
 }

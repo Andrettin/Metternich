@@ -3,6 +3,6 @@ muiden = {
 	world = earth
 	geocoordinate = { 5.0714 52.3292 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = holland
 }

@@ -3,7 +3,7 @@ salzwedel = {
 	world = earth
 	geocoordinate = { 11.1525 52.854444444444 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = magdeburg
 	
 	history = {

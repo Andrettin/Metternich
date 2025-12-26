@@ -3,7 +3,7 @@ biel = {
 	world = earth
 	geocoordinate = { 7.25003779972 47.16658998520 } #from Natural Earth
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = bern
 	
 	history = {

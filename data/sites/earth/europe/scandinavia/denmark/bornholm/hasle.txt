@@ -3,6 +3,6 @@ hasle = {
 	world = earth
 	geocoordinate = { 14.7055 55.1845 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = bornholm
 }

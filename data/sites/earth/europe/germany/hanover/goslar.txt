@@ -3,7 +3,7 @@ goslar = {
 	world = earth
 	geocoordinate = { 10.429163 51.906003 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = hanover
 	
 	history = {

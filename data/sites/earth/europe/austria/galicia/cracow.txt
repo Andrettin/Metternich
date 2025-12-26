@@ -4,7 +4,7 @@ cracow = {
 	geocoordinate = { 19.96001135120 50.05997926750 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	#holding_type = castle
+	#holding_type = law
 	max_tier = market
 	features = {
 		academic #historical university

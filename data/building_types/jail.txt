@@ -6,7 +6,7 @@ jail = {
 	size = 1
 	population_type = laborers
 	holding_types = {
-		castle
+		law
 	}
 	commodity_costs = {
 		wealth = 14gb

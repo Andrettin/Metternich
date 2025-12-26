@@ -3,7 +3,7 @@ horsens = {
 	world = earth
 	geocoordinate = { 9.8519444444444 55.861944444444 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = jutland
 	
 	history = {

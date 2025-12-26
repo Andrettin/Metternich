@@ -3,7 +3,7 @@ itzehoe = {
 	world = earth
 	geocoordinate = { 9.5163888888889 53.925 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = holstein
 	
 	history = {

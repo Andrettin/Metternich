@@ -3,6 +3,6 @@ ban = {
 	world = earth
 	geocoordinate = { 18.258055555556 48.718611111111 } #Bánovce nad Bebravou
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = trencin
 }

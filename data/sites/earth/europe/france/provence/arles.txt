@@ -3,6 +3,6 @@ arles = {
 	world = earth
 	geocoordinate = { 4.6286111111111 43.676944444444 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = provence
 }

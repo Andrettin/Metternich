@@ -6,7 +6,7 @@ mansion = {
 	size = 1
 	population_type = laborers
 	holding_types = {
-		castle
+		law
 	}
 	commodity_costs = {
 		wealth = 10gb
@@ -29,7 +29,7 @@ noble_villa = {
 	population_type = laborers
 	base_building = mansion
 	holding_types = {
-		castle
+		law
 	}
 	commodity_costs = {
 		wealth = 14gb
@@ -58,7 +58,7 @@ palace = {
 	population_type = laborers
 	base_building = noble_villa
 	holding_types = {
-		castle
+		law
 	}
 	required_buildings = {
 		bureau

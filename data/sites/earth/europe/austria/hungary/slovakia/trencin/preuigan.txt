@@ -3,6 +3,6 @@ preuigan = {
 	world = earth
 	geocoordinate = { 18.624166666667 48.771388888889 } #Prievidza
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = trencin
 }

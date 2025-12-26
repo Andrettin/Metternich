@@ -3,7 +3,7 @@ brandenburg = {
 	world = earth
 	geocoordinate = { 12.554083333333333 52.414138888888886 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = brandenburg
 	
 	history = {

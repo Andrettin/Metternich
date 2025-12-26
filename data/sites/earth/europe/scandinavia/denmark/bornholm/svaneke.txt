@@ -3,6 +3,6 @@ svaneke = {
 	world = earth
 	geocoordinate = { 15.1422 55.1361 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = bornholm
 }

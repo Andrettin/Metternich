@@ -36,7 +36,7 @@ rogue = {
 		guild
 	}
 	allowed_holding_types = {
-		castle
+		law
 	}
 	min_attribute_values = {
 		dexterity = 9

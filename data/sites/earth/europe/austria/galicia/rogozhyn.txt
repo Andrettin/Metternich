@@ -3,6 +3,6 @@ rogozhyn = {
 	world = earth
 	geocoordinate = { 23.063611111111 49.629166666667 } #Rogizno, Sambir, Lviv (correct?)
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = east_galicia
 }

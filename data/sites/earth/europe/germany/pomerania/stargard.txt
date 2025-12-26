@@ -3,7 +3,7 @@ stargard = {
 	world = earth
 	geocoordinate = { 15.04475 53.338719 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = farther_pomerania
 	
 	history = {

@@ -3,6 +3,6 @@ wittingen = {
 	world = earth
 	geocoordinate = { 10.7391 52.72805 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = hanover
 }

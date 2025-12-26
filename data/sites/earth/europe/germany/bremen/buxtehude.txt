@@ -3,7 +3,7 @@ buxtehude = {
 	world = earth
 	geocoordinate = { 9.7011111111111 53.476944444444 }
 	type = holding
-	holding_type = castle
+	holding_type = law
 	province = bremen
 	
 	history = {

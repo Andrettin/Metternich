@@ -3,7 +3,7 @@ melun = {
 	world = earth
 	geocoordinate = { 2.66664831403 48.53330242830 } #from Natural Earth
 	type = holding
-	holding_type = castle
+	holding_type = law
 	#resource = grain
 	province = ile_de_france
 	
