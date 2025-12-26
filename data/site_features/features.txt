@@ -13,3 +13,47 @@ holy_site = {
 		corruption = -2
 	}
 }
+
+insular = {
+	name = "Insular"
+	icon = wall
+	modifier = {
+		law = 1
+		crime = -1
+	}
+}
+
+notorious = { #notorious for crime
+	name = "Notorious"
+	icon = dagger
+	modifier = {
+		crime = 1
+		law = -1
+	}
+}
+
+prosperous = {
+	name = "Prosperous"
+	icon = chest
+	modifier = {
+		productivity = 1
+	}
+}
+
+strategic_location = {
+	name = "Strategic Location"
+	icon = globe
+	modifier = {
+		productivity = 1
+	}
+}
+
+superstitious = {
+	name = "Superstitious"
+	icon = skull
+	modifier = {
+		crime = -4
+		law = 2
+		society = 2
+	}
+}
