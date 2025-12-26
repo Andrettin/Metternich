@@ -3,6 +3,9 @@ chemnitz = {
 	world = earth
 	geocoordinate = { 12.91997595080 50.82998394680 } #from Natural Earth
 	province = upper_saxony
+	features = {
+		academic #historical college
+	}
 	
 	history = {
 		1846 = {

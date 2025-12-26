@@ -3,6 +3,9 @@ liverpool = {
 	world = earth
 	geocoordinate = { -2.91799788554 53.41600180980 } #from Natural Earth
 	type = holding
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1903 = {

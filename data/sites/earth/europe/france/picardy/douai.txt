@@ -3,6 +3,9 @@ douai = {
 	world = earth
 	geocoordinate = { 3.0791666666667 50.370833333333 }
 	province = picardy
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1562 = {

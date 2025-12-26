@@ -8,6 +8,9 @@ nantes = {
 	cultural_names = {
 		frankish = "Namnetes"
 	}
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		395 = {

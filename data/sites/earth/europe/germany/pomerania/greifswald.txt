@@ -3,6 +3,9 @@ greifswald = {
 	world = earth
 	geocoordinate = { 13.383333333333 54.083333333333 }
 	province = hither_pomerania
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1456 = {

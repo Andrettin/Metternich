@@ -3,6 +3,9 @@ orihuela = {
 	world = earth
 	geocoordinate = { -0.94694444444444 38.085555555556 }
 	province = valencia
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1552 = {

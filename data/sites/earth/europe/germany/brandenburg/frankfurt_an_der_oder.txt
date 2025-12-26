@@ -5,6 +5,9 @@ frankfurt_an_der_oder = {
 	type = holding
 	holding_type = guild #city belonging to the Hanseatic League in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
 	province = brandenburg
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1506 = {

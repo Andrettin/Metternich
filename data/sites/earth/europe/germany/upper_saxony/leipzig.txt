@@ -7,6 +7,9 @@ leipzig = {
 	#resource = coal
 	max_tier = market
 	province = upper_saxony
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		919 = {

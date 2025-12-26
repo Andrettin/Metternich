@@ -3,6 +3,9 @@ dole = {
 	world = earth
 	geocoordinate = { 5.4897222222222 47.092222222222 }
 	province = franche_comte
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1422 = {

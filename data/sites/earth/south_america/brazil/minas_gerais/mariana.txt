@@ -3,6 +3,9 @@ mariana = {
 	world = earth
 	#geocoordinate = { -43.416472222222 -20.378347222222 }
 	province = minas_gerais
+	features = {
+		academic #historical college
+	}
 	
 	history = {
 		1750 = {

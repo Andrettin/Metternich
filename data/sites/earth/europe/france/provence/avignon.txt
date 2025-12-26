@@ -6,6 +6,9 @@ avignon = {
 	cultural_names = {
 		frankish = "Avinio"
 	}
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1303 = {

@@ -8,6 +8,9 @@ klausenburg = {
 	cultural_names = {
 		romanian = "Cluj"
 	}
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1580 = {

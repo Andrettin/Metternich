@@ -5,6 +5,9 @@ palma = {
 	type = resource
 	resource = cattle
 	province = valencia
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1360 = {

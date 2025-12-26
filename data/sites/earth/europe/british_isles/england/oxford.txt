@@ -5,6 +5,9 @@ oxford = {
 	type = resource
 	resource = grain
 	province = warwickshire
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1250 = {

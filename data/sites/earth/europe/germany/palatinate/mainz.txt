@@ -7,6 +7,9 @@ mainz = {
 		french = "Mayence"
 		roman = "Mogontiacum" #Source: "Ancient Warfare VII.6", 2013, p. 7.
 	}
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		395 = {

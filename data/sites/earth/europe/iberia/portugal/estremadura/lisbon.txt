@@ -7,6 +7,9 @@ lisbon = {
 	cultural_names = {
 		roman = "Olisipo" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 34-35.
 	}
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1360 = {

@@ -3,6 +3,9 @@ merida_venezuela = {
 	world = earth
 	geocoordinate = { -71.13001001150 8.39998984673 } #from Natural Earth
 	province = venezuela
+	features = {
+		academic #historical college
+	}
 	
 	history = {
 		1807 = {

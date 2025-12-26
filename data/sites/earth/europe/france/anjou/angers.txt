@@ -4,6 +4,9 @@ angers = {
 	geocoordinate = { -0.53002994933 47.48000754710 } #from Natural Earth
 	type = holding
 	province = anjou
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1250 = {

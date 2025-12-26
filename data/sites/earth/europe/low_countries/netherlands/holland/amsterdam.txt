@@ -5,6 +5,9 @@ amsterdam = {
 	type = holding
 	holding_type = guild
 	province = holland
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1600 = {

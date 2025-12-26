@@ -5,6 +5,9 @@ wittenberg = {
 	type = resource
 	resource = sheep
 	province = magdeburg
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1360 = {

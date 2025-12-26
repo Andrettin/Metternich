@@ -6,6 +6,9 @@ lucca = {
 	holding_type = castle
 	#resource = grain
 	province = tuscany
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1369 = {

@@ -8,6 +8,9 @@ seville = {
 	cultural_names = {
 		roman = "Hispalis"
 	}
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		high_middle_ages = {

@@ -3,6 +3,9 @@ neustadt_an_der_weinstrasse = {
 	world = earth
 	geocoordinate = { 8.13607 49.353621 }
 	province = palatinate
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1578 = {

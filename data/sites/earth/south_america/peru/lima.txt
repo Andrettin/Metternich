@@ -3,6 +3,9 @@ lima = {
 	world = earth
 	geocoordinate = { -77.05006209480 -12.04801267610 } #from Natural Earth
 	type = holding
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1551 = {

@@ -9,6 +9,9 @@ naples = {
 		greek = "Neapolis"
 		roman = "Neapolis" #Source: "Ancient Warfare VII.6", 2013, p. 7.
 	}
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1224 = {

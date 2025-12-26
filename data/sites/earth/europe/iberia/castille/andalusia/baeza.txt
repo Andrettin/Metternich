@@ -3,6 +3,9 @@ baeza = {
 	world = earth
 	geocoordinate = { -3.47103 37.99384 }
 	province = andalusia
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1542 = {

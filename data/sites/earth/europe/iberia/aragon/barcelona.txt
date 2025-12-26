@@ -7,6 +7,9 @@ barcelona = {
 	#resource = cattle
 	max_tier = market
 	province = catalonia
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		395 = {

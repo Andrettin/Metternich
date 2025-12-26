@@ -3,6 +3,9 @@ quito = {
 	world = earth
 	geocoordinate = { -78.50005110850 -0.21498818065 } #from Natural Earth
 	type = holding
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1769 = {

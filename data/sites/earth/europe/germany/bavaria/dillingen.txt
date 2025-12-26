@@ -3,6 +3,9 @@ dillingen = {
 	world = earth
 	geocoordinate = { 10.42 48.58 }
 	province = augsburg
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1554 = {

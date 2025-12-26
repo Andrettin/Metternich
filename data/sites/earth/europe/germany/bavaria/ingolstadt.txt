@@ -3,6 +3,9 @@ ingolstadt = {
 	world = earth
 	geocoordinate = { 11.44998815780 48.77041973780 } #from Natural Earth
 	province = bavaria
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1459 = {

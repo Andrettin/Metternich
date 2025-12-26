@@ -9,6 +9,9 @@ london = {
 		briton = "Londinion"
 		roman = "Londinium" #Source: William R. Shepherd, "Historical Atlas", 1911, p. 51.
 	}
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		604 = {

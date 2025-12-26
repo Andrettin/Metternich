@@ -6,6 +6,9 @@ tortosa = {
 	cultural_names = {
 		roman = "Dertosa"
 	}
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1645 = {

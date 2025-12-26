@@ -3,6 +3,9 @@ franeker = {
 	world = earth
 	#geocoordinate = { 5.54 53.1875 }
 	province = friesland
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1585 = {

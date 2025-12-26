@@ -8,6 +8,9 @@ rome = {
 	#resource = holy_site
 	max_tier = seaport
 	province = latium
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		-192 = {

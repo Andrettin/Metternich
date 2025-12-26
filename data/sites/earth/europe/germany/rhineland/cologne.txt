@@ -9,6 +9,9 @@ cologne = {
 	cultural_names = {
 		roman = "Colonia Agrippina" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 38-39; Source: "Ancient Warfare VII.6", 2013, p. 7.
 	}
+	features = {
+		academic #historical university
+	}
 	
 	#important market or fair, and center of the Hanseatic League in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
 	

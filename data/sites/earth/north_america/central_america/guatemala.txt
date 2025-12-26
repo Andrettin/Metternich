@@ -3,6 +3,9 @@ guatemala = {
 	world = earth
 	geocoordinate = { -90.52696557790 14.62113466280 } #from Natural Earth
 	type = holding
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1676 = {

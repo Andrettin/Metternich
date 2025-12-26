@@ -7,6 +7,9 @@ montpellier = {
 	#resource = cattle
 	max_tier = market
 	province = lower_languedoc
+	features = {
+		academic #historical university
+	}
 	
 	history = {		
 		high_middle_ages = {

@@ -5,6 +5,9 @@ lerida = {
 	type = resource
 	resource = fruit
 	province = catalonia
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1300 = {

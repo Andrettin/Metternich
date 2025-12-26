@@ -6,6 +6,9 @@ perpignan = {
 	#resource = fruit #Market gardening (fruits, vegetables, flowers); Source: Map No. 500197 of the Perry-Castañeda Library Map Collection, 1972.
 	resource = grain
 	province = lower_languedoc
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1349 = {

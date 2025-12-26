@@ -5,6 +5,9 @@ huesca = {
 	type = resource
 	resource = sheep
 	province = aragon
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1354 = {

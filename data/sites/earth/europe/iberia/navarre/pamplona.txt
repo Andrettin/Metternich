@@ -5,6 +5,9 @@ pamplona = {
 	type = holding
 	#resource = fruit
 	province = navarre
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1360 = {

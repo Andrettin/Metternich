@@ -9,6 +9,9 @@ olmutz = {
 	cultural_names = {
 		czech = "Olomouc"
 	}
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		919 = {

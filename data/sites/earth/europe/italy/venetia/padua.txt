@@ -6,6 +6,9 @@ padua = {
 	holding_type = castle
 	#resource = fruit
 	province = venetia
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1222 = {

@@ -5,6 +5,9 @@ vicenza = {
 	type = holding
 	holding_type = guild
 	province = venetia
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1204 = {

@@ -3,6 +3,9 @@ murcia = {
 	world = earth
 	geocoordinate = { -1.12996749003 37.97999310210 } #from Natural Earth
 	type = holding
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1360 = {

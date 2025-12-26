@@ -6,6 +6,9 @@ durham = {
 	cultural_names = {
 		anglo_saxon = "Dunholm" #Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 732.
 	}
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1360 = {

@@ -3,6 +3,9 @@ tubingen = {
 	world = earth
 	geocoordinate = { 9.0555555555556 48.52 }
 	province = wurtemberg
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		919 = {

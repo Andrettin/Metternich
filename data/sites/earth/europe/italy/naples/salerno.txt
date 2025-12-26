@@ -5,6 +5,9 @@ salerno = {
 	type = resource
 	resource = fruit
 	province = naples
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1250 = {

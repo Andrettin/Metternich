@@ -6,6 +6,9 @@ pisa = {
 	holding_type = guild
 	max_tier = market
 	province = tuscany
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		high_middle_ages = {

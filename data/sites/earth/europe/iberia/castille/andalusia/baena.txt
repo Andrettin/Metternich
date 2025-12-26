@@ -3,6 +3,9 @@ baena = {
 	world = earth
 	geocoordinate = { -4.3260458 37.6194451 }
 	province = andalusia
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1553 = {

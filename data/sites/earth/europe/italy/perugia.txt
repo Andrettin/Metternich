@@ -6,6 +6,9 @@ perugia = {
 	holding_type = guild
 	#resource = fruit
 	province = romagna
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1308 = {

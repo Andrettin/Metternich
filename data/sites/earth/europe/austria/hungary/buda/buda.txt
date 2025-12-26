@@ -9,6 +9,9 @@ buda = {
 	cultural_group_names = {
 		german = "Ofen" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
 	}
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		919 = {

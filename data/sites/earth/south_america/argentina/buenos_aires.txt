@@ -3,6 +3,9 @@ buenos_aires = {
 	world = earth
 	geocoordinate = { -58.39753137370 -34.60250160850 } #from Natural Earth
 	type = holding
+	features = {
+		academic #historical college
+	}
 	
 	history = {
 		1535 = {

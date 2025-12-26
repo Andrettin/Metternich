@@ -3,6 +3,9 @@ copenhagen = {
 	world = earth
 	geocoordinate = { 12.56348574730 55.67856419040 } #from Natural Earth
 	type = holding
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1360 = {

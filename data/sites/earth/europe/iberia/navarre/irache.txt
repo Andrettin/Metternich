@@ -3,6 +3,9 @@ irache = {
 	world = earth
 	geocoordinate = { -2.05611111 42.64472222 }
 	province = navarre
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1605 = {

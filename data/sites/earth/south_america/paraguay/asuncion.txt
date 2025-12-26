@@ -3,6 +3,9 @@ asuncion = {
 	world = earth
 	geocoordinate = { -57.64150516930 -25.29640297570 } #from Natural Earth
 	type = holding
+	features = {
+		academic #historical college
+	}
 	
 	history = {
 		1776 = {

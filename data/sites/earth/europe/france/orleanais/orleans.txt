@@ -9,6 +9,9 @@ orleans = {
 	cultural_names = {
 		frankish = "Aurehani"
 	}
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1305 = {

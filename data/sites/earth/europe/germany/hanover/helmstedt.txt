@@ -5,6 +5,9 @@ helmstedt = {
 	type = holding
 	holding_type = castle
 	province = hanover
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1569 = {

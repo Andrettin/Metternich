@@ -5,6 +5,9 @@ valladolid = {
 	type = holding
 	#resource = cattle
 	province = valladolid
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1346 = {

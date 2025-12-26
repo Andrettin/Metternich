@@ -3,6 +3,9 @@ rostock = {
 	world = earth
 	geocoordinate = { 12.14999710960 54.07038047190 } #from Natural Earth
 	province = mecklenburg
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1419 = {

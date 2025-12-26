@@ -3,6 +3,9 @@ oporto = {
 	world = earth
 	geocoordinate = { -8.62000126284 41.15000632640 } #from Natural Earth
 	type = holding
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1360 = {

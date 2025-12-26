@@ -4,6 +4,9 @@ olinda = {
 	#geocoordinate = { -34.84995060380 -7.99999102899 } #from Natural Earth
 	province = pernambuco
 	max_tier = marquisate
+	features = {
+		academic #historical college
+	}
 	
 	history = {
 		1828 = {

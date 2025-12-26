@@ -3,6 +3,9 @@ almagro = {
 	world = earth
 	geocoordinate = { -3.7118218 38.888238 }
 	province = castille
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1553 = {

@@ -5,6 +5,9 @@ turin = {
 	type = holding
 	holding_type = guild
 	province = piedmont
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1360 = {

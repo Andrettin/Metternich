@@ -9,6 +9,9 @@ palermo = {
 		greek = "Panormus"
 		roman = "Panormus" #Source: William R. Shepherd, "Historical Atlas", 1911, p. 12.
 	}
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1360 = {

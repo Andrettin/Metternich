@@ -4,6 +4,9 @@ groningen = {
 	geocoordinate = { 6.58000117862 53.22040651360 } #from Natural Earth
 	type = holding
 	province = groningen
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		919 = {

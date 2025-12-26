@@ -6,6 +6,9 @@ treviso = {
 	holding_type = castle
 	#resource = iron_ore
 	province = venetia
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		919 = {

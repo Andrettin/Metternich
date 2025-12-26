@@ -3,6 +3,9 @@ onate = {
 	world = earth
 	geocoordinate = { -2.411667 43.032778 }
 	province = navarre
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1542 = {

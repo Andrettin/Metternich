@@ -3,6 +3,9 @@ merida_yucatan = {
 	world = earth
 	geocoordinate = { -89.61663354670 20.96663881330 } #from Natural Earth
 	type = holding
+	features = {
+		academic #historical college
+	}
 	
 	history = {
 		1778 = {

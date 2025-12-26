@@ -3,6 +3,9 @@ jena = {
 	world = earth
 	geocoordinate = { 11.58000606150 50.93044293120 } #from Natural Earth
 	province = thuringia
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1558 = {

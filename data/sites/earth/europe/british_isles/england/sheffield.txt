@@ -5,6 +5,9 @@ sheffield = {
 	type = resource
 	resource = coal
 	province = yorkshire
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1905 = {

@@ -6,6 +6,9 @@ zaragoza = {
 	cultural_names = {
 		roman = "Caesaraugusta"
 	}
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		395 = {

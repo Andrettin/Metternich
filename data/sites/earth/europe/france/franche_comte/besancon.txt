@@ -10,6 +10,9 @@ besancon = {
 	cultural_names = {
 		frankish = "Vesontio"
 	}
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		395 = {

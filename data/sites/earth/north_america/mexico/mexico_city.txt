@@ -7,6 +7,9 @@ mexico_city = {
 	cultural_names = {
 		aztec = "Tenochtitlan"
 	}
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1521 = {

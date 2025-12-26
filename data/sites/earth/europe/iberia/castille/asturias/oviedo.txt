@@ -5,6 +5,9 @@ oviedo = {
 	type = holding
 	#resource = coal
 	province = asturias
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1360 = {

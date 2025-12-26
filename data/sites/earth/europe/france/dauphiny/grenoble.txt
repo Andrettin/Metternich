@@ -5,6 +5,9 @@ grenoble = {
 	type = holding
 	#resource = tobacco
 	province = dauphiny
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1339 = {

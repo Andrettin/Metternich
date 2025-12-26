@@ -3,6 +3,9 @@ erfurt = {
 	world = earth
 	geocoordinate = { 11.02996211610 50.97005291660 } #from Natural Earth
 	type = holding
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		919 = {

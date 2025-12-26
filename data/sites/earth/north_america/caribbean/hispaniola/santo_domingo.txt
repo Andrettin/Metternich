@@ -5,6 +5,9 @@ santo_domingo = {
 	type = holding
 	#resource = tobacco
 	province = santo_domingo
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1538 = {

@@ -3,6 +3,9 @@ st_andrews = {
 	world = earth
 	#geocoordinate = { -2.7988888888889 56.338888888889 }
 	province = highlands
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1413 = {

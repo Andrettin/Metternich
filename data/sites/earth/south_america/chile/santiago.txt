@@ -3,6 +3,9 @@ santiago_de_chile = {
 	world = earth
 	geocoordinate = { -70.66704085460 -33.45001381550 } #from Natural Earth
 	type = holding
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1738 = {

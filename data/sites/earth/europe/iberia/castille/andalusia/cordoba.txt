@@ -8,6 +8,9 @@ cordoba = {
 	cultural_names = {
 		roman = "Corduba" #Source: "Ancient Warfare VII.6", 2013, p. 7.
 	}
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1360 = {

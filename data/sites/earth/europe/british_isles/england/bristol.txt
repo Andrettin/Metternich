@@ -8,6 +8,9 @@ bristol = {
 	cultural_names = {
 		anglo_saxon = "Brycgstow" #Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 731.
 	}
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1909 = {

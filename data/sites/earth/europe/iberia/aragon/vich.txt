@@ -3,6 +3,9 @@ vich = {
 	world = earth
 	geocoordinate = { 2.254575 41.930379 }
 	province = catalonia
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1599 = {

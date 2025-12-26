@@ -9,6 +9,9 @@ trier = {
 		frankish = "Treveri"
 		french = "Treves" #"Trèves"
 	}
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		395 = {

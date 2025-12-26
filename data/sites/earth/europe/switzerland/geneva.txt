@@ -4,6 +4,9 @@ geneva = {
 	geocoordinate = { 6.14002803409 46.21000754710 } #from Natural Earth
 	type = holding
 	holding_type = castle
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		395 = {

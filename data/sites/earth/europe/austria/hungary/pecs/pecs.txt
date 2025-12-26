@@ -9,6 +9,9 @@ pecs = {
 	cultural_group_names = {
 		german = "Funfkirchen" #"Fünfkirchen"
 	}
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1360 = {

@@ -3,6 +3,9 @@ vercelli = {
 	world = earth
 	geocoordinate = { 8.4166666666667 45.316666666667 }
 	province = piedmont
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1228 = {

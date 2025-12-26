@@ -5,6 +5,9 @@ arezzo = {
 	type = holding
 	holding_type = guild
 	province = tuscany
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1215 = {

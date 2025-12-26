@@ -6,6 +6,9 @@ cracow = {
 	holding_type = guild
 	#holding_type = castle
 	max_tier = market
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		919 = {
@@ -22,7 +25,7 @@ cracow = {
 		}
 		
 		1364 = {
-			#buildings += university #University founded in Krakow in 1364; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+			buildings += university #University founded in Krakow in 1364; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
 		}
 	}
 }

@@ -5,6 +5,9 @@ manchester = {
 	type = resource
 	resource = coal
 	province = lancashire
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1851 = {

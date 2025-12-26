@@ -5,6 +5,9 @@ birmingham = {
 	type = resource
 	resource = coal
 	province = warwickshire
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1900 = {

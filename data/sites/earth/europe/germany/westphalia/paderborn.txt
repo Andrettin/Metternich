@@ -5,6 +5,9 @@ paderborn = {
 	type = holding
 	holding_type = temple
 	province = westphalia
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		919 = {

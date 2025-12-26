@@ -6,6 +6,9 @@ ferrara = {
 	holding_type = castle
 	#resource = grain
 	province = romagna
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1391 = {

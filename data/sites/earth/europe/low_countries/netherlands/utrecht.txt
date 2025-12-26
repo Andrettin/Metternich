@@ -4,6 +4,9 @@ utrecht = {
 	geocoordinate = { 5.12003861351 52.10034568190 } #from Natural Earth
 	type = holding
 	province = utrecht
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		919 = {

@@ -6,6 +6,9 @@ dublin = {
 	holding_type = guild
 	max_tier = market
 	province = leinster
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		802 = {

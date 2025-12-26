@@ -8,6 +8,9 @@ bourges = {
 	cultural_names = {
 		frankish = "Bituricae"
 	}
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		395 = {

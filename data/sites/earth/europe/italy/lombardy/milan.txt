@@ -11,6 +11,9 @@ milan = {
 	cultural_group_names = {
 		#german = "Mailand"
 	}
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		395 = {

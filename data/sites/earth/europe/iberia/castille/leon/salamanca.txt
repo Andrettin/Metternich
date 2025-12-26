@@ -7,6 +7,9 @@ salamanca = {
 	cultural_names = {
 		roman = "Salmantica"
 	}
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1230 = {

@@ -5,6 +5,9 @@ havana = {
 	type = holding
 	#resource = tobacco
 	province = cuba
+	features = {
+		academic #historical college
+	}
 	
 	history = {
 		1721 = {

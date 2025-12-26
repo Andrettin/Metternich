@@ -5,6 +5,9 @@ aberdeen = {
 	type = resource
 	resource = sheep
 	province = highlands
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1360 = {

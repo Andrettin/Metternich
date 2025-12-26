@@ -5,6 +5,9 @@ graz = {
 	type = holding
 	holding_type = castle
 	province = styria
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1360 = {

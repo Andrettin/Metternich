@@ -5,6 +5,9 @@ uppsala = {
 	type = resource
 	resource = timber
 	province = uppland
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1164 = {

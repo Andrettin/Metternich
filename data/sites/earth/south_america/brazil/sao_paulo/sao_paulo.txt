@@ -4,6 +4,9 @@ sao_paulo = {
 	geocoordinate = { -46.62501998040 -23.55867958700 } #from Natural Earth
 	type = holding
 	province = sao_paulo
+	features = {
+		academic #historical college
+	}
 	
 	history = {
 		1827 = {

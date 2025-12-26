@@ -5,6 +5,9 @@ cahors = {
 	type = resource
 	resource = timber
 	province = guyenne
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1332 = {

@@ -5,6 +5,9 @@ avila = {
 	type = resource
 	resource = grain
 	province = castille
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1550 = {

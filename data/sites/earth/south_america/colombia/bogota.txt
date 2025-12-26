@@ -3,6 +3,9 @@ bogota = {
 	world = earth
 	geocoordinate = { -74.08334395520 4.59642356253 } #from Natural Earth
 	type = holding
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1626 = {

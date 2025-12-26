@@ -3,6 +3,9 @@ edinburgh = {
 	world = earth
 	geocoordinate = { -3.21909061829 55.94832785960 } #from Natural Earth
 	type = holding
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1360 = {

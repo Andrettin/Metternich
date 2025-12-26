@@ -3,6 +3,9 @@ osma = {
 	world = earth
 	geocoordinate = { -3.0672222222222 41.586666666667 }
 	province = castille
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1550 = {

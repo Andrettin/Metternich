@@ -3,6 +3,9 @@ caracas = {
 	world = earth
 	geocoordinate = { -66.91703719240 10.50099855440 } #from Natural Earth
 	type = holding
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1721 = {

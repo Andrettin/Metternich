@@ -5,6 +5,9 @@ glasgow = {
 	type = resource
 	resource = coal
 	province = ayrshire
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1360 = {

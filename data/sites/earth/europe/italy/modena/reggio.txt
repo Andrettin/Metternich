@@ -5,6 +5,9 @@ reggio = {
 	type = holding
 	holding_type = temple
 	province = modena
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1250 = {

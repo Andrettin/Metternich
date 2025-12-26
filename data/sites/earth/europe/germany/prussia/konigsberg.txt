@@ -7,6 +7,9 @@ konigsberg = {
 	cultural_names = {
 		russian = "Kaliningrad"
 	}
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1360 = {

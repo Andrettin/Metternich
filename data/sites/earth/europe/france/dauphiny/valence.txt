@@ -8,6 +8,9 @@ valence = {
 	cultural_names = {
 		frankish = "Valentia"
 	}
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1459 = {

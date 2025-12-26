@@ -5,6 +5,9 @@ catania = {
 	type = holding
 	holding_type = guild
 	province = sicily
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1444 = {

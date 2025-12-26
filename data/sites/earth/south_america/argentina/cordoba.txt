@@ -3,6 +3,9 @@ cordoba_argentina = {
 	world = earth
 	geocoordinate = { -64.18229455730 -31.39995807010 } #from Natural Earth
 	type = holding
+	features = {
+		academic #historical college
+	}
 	
 	history = {
 		1700 = {

@@ -8,6 +8,9 @@ piacenza = {
 	cultural_names = {
 		roman = "Placentia" #Source: William R. Shepherd, "Historical Atlas", 1911, p. 29.
 	}
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1248 = {

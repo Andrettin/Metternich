@@ -3,6 +3,9 @@ cuzco = {
 	world = earth
 	geocoordinate = { -71.97215499030 -13.52502846390 } #from Natural Earth
 	type = holding
+	features = {
+		academic #historical college
+	}
 	
 	history = {
 		1692 = {

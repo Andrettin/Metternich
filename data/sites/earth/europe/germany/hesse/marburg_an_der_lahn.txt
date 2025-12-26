@@ -3,6 +3,9 @@ marburg_an_der_lahn = {
 	world = earth
 	#geocoordinate = { 8.7666666666667 50.816666666667 }
 	province = hesse
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1527 = {

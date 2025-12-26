@@ -4,6 +4,9 @@ guadalajara = {
 	geocoordinate = { -103.33003422200 20.67001609190 } #from Natural Earth
 	type = holding
 	#resource = grain #Corn and beans; Source: Map No. 503497 of the Perry-Castañeda Library Map Collection, 1978.
+	features = {
+		academic #historical college
+	}
 	
 	history = {
 		1791 = {

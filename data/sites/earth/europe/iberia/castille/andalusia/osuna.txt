@@ -3,6 +3,9 @@ osuna = {
 	world = earth
 	geocoordinate = { -5.1030555555556 37.237222222222 }
 	province = andalusia
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1548 = {

@@ -5,6 +5,9 @@ siguenza = {
 	type = resource
 	resource = grain
 	province = castille
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1489 = {

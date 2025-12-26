@@ -5,6 +5,9 @@ messina = {
 	type = resource
 	resource = fish
 	province = sicily
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1360 = {

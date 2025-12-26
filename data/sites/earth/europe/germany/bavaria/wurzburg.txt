@@ -5,6 +5,9 @@ wurzburg = {
 	type = resource
 	resource = fruit
 	province = franconia
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		919 = {

@@ -8,6 +8,9 @@ kulm = {
 	cultural_names = {
 		polish = "Chelmno" #"Chełmno"
 	}
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1366 = {

@@ -4,6 +4,9 @@ palencia = {
 	geocoordinate = { -4.5333333333333 42.016666666667 }
 	type = holding
 	province = palencia
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1212 = {

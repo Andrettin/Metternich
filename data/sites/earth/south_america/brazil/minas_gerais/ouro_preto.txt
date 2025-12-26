@@ -5,6 +5,9 @@ ouro_preto = {
 	type = holding
 	#resource = coffee
 	province = minas_gerais
+	features = {
+		academic #historical college
+	}
 	
 	history = {
 		1839 = {

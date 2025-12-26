@@ -8,6 +8,9 @@ pressburg = {
 	cultural_names = {
 		slovak = "Bratislava"
 	}
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		919 = {

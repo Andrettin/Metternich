@@ -3,6 +3,9 @@ alcala_de_henares = {
 	world = earth
 	geocoordinate = { -3.364305 40.481815 }
 	province = castille
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1499 = {

@@ -12,6 +12,9 @@ zagreb = {
 	cultural_group_names = {
 		german = "Agram"
 	}
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1360 = {

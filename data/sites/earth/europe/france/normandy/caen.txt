@@ -5,6 +5,9 @@ caen = {
 	type = resource
 	resource = cotton
 	province = normandy
+	features = {
+		academic #historical university
+	}
 	
 	history = {
 		1360 = {
