@@ -648,6 +648,7 @@ QString building_slot::get_modifier_string() const
 		str += this->get_building()->get_weighted_domain_modifier()->get_string(this->get_country(), multiplier, 0, false);
 	}
 
+	/*
 	population_type_map<int64_t> population_type_capacities;
 	if (this->get_building()->get_population_type() != nullptr) {
 		population_type_capacities[this->get_building()->get_population_type()] += this->get_building()->get_population_capacity();
@@ -667,6 +668,7 @@ QString building_slot::get_modifier_string() const
 		const QColor &number_color = defines::get()->get_green_text_color();
 		str += std::format("{} Capacity: {}", population_type->get_name(), string::colored(number::to_signed_string(population_capacity), number_color));
 	}
+	*/
 
 	return QString::fromStdString(str);
 }
