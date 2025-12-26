@@ -32,7 +32,7 @@ public:
 			return false;
 		}
 
-		return scope->get_game_data()->get_tile()->get_terrain() == this->terrain;
+		return scope->get_game_data()->get_terrain() == this->terrain;
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override

@@ -37,6 +37,7 @@
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
+#include "map/province_map_data.h"
 #include "map/site.h"
 #include "map/site_attribute.h"
 #include "map/site_feature.h"
@@ -503,6 +504,11 @@ void site_game_data::set_owner(const domain *owner)
 	if (game::get()->is_running()) {
 		emit owner_changed();
 	}
+}
+
+const terrain_type *site_game_data::get_terrain() const
+{
+	return this->get_province()->get_map_data()->get_terrain();
 }
 
 const std::string &site_game_data::get_current_cultural_name() const

@@ -59,6 +59,7 @@ class site_game_data final : public QObject
 	Q_PROPERTY(QString display_text READ get_display_text_qstring NOTIFY display_text_changed)
 	Q_PROPERTY(const metternich::domain* owner READ get_owner NOTIFY owner_changed)
 	Q_PROPERTY(QString current_cultural_name READ get_current_cultural_name_qstring NOTIFY culture_changed)
+	Q_PROPERTY(const metternich::terrain_type* terrain READ get_terrain CONSTANT)
 	Q_PROPERTY(const metternich::holding_type* holding_type READ get_holding_type NOTIFY holding_type_changed)
 	Q_PROPERTY(int holding_level READ get_holding_level NOTIFY holding_level_changed)
 	Q_PROPERTY(int fortification_level READ get_fortification_level NOTIFY fortification_level_changed)
@@ -141,6 +142,8 @@ public:
 	}
 
 	void set_owner(const domain *owner);
+
+	const terrain_type *get_terrain() const;
 
 	const metternich::culture *get_culture() const
 	{
