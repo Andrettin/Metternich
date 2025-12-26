@@ -10,6 +10,9 @@ rouen = {
 	cultural_names = {
 		frankish = "Rotomagus"
 	}
+	features = {
+		#holy_site #historical cathedral
+	}
 	
 	history = {
 		768 = {

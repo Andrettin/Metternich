@@ -8,6 +8,9 @@ laibach = {
 		roman = "Emona" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 38-39.
 		slovene = "Ljubljana"
 	}
+	features = {
+		holy_site #historical cathedral
+	}
 	
 	history = {
 		395 = {

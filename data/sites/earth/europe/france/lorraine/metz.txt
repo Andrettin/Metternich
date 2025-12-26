@@ -8,6 +8,9 @@ metz = {
 	cultural_names = {
 		frankish = "Mettis"
 	}
+	features = {
+		holy_site #historical cathedral
+	}
 	
 	history = {
 		395 = {

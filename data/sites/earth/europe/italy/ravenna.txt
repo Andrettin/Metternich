@@ -7,6 +7,9 @@ ravenna = {
 	#resource = sheep
 	max_tier = archbishopric
 	province = romagna
+	features = {
+		holy_site #historical cathedral
+	}
 	
 	history = {
 		768 = {

@@ -3,6 +3,9 @@ faro = {
 	world = earth
 	geocoordinate = { -7.93327315412 37.01708030090 } #from Natural Earth
 	type = holding
+	features = {
+		holy_site #historical cathedral
+	}
 	
 	history = {
 		395 = {

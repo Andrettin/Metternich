@@ -10,6 +10,9 @@ regensburg = {
 	cultural_names = {
 		roman = "Regina Castra"
 	}
+	features = {
+		holy_site #historical cathedral
+	}
 	
 	#important market or fair in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
 	

@@ -6,6 +6,9 @@ bergamo = {
 	holding_type = castle
 	#resource = cattle
 	province = lombardy
+	features = {
+		#holy_site #historical cathedral
+	}
 	
 	history = {
 		395 = {

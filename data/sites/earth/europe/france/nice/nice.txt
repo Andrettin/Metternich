@@ -13,6 +13,9 @@ nice = {
 		italian = "Nizza"
 		roman = "Nicaea"
 	}
+	features = {
+		holy_site #historical cathedral
+	}
 	
 	history = {
 		395 = {

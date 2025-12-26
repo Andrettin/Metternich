@@ -10,6 +10,9 @@ cartagena = {
 		phoenician = "New Carthage"
 		roman = "New Carthage"
 	}
+	features = {
+		holy_site #historical cathedral
+	}
 	
 	history = {
 		395 = {

@@ -9,6 +9,9 @@ salzburg = {
 	cultural_names = {
 		roman = "Iuvavum"
 	}
+	features = {
+		holy_site #historical cathedral
+	}
 	
 	history = {
 		739 = {

@@ -7,6 +7,9 @@ ankara = {
 	cultural_names = {
 		greek = "Ancyra"
 	}
+	features = {
+		holy_site #historical cathedral
+	}
 	
 	history = {
 		395 = {

@@ -9,6 +9,9 @@ genoa = {
 	cultural_names = {
 		roman = "Genua" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 34-35.
 	}
+	features = {
+		#holy_site #historical cathedral
+	}
 	
 	history = {
 		395 = {

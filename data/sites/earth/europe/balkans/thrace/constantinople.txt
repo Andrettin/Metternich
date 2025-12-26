@@ -4,10 +4,12 @@ constantinople = {
 	geocoordinate = { 29.01000158560 41.10499615380 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	#resource = holy_site
 	max_tier = market
 	cultural_names = {
 		turkish = "Istanbul"
+	}
+	features = {
+		#holy_site #historical cathedral
 	}
 	
 	history = {

@@ -9,6 +9,7 @@ mainz = {
 	}
 	features = {
 		academic #historical university
+		holy_site #historical cathedral
 	}
 	
 	history = {

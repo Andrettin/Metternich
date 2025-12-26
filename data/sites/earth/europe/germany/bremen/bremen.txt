@@ -5,6 +5,9 @@ bremen = {
 	type = holding
 	holding_type = temple #bishopric
 	max_tier = bishopric
+	features = {
+		holy_site #historical cathedral
+	}
 	
 	#important market or fair, and center of the Hanseatic League in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
 	

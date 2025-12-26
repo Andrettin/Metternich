@@ -6,6 +6,9 @@ brescia = {
 	holding_type = guild
 	#resource = silk
 	province = lombardy
+	features = {
+		#holy_site #historical cathedral
+	}
 	
 	history = {
 		395 = {

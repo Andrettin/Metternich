@@ -8,6 +8,9 @@ tarragona = {
 	cultural_names = {
 		roman = "Tarraco" #Source: "Ancient Warfare VII.6", 2013, p. 7.
 	}
+	features = {
+		holy_site #historical cathedral
+	}
 	
 	history = {
 		395 = {

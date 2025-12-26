@@ -8,6 +8,9 @@ adrianople = {
 	cultural_names = {
 		turkish = "Edirne"
 	}
+	features = {
+		holy_site #historical cathedral
+	}
 	
 	history = {
 		395 = {
