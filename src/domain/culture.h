@@ -3,6 +3,10 @@
 #include "database/data_type.h"
 #include "domain/culture_base.h"
 
+namespace archimedes {
+	class language;
+}
+
 namespace metternich {
 
 class character;
@@ -21,6 +25,7 @@ class culture final : public culture_base, public data_type<culture>
 	Q_OBJECT
 
 	Q_PROPERTY(QColor color MEMBER color READ get_color NOTIFY changed)
+	Q_PROPERTY(const archimedes::language* language MEMBER language READ get_language NOTIFY changed)
 	Q_PROPERTY(bool surname_first MEMBER surname_first READ is_surname_first NOTIFY changed)
 
 public:
@@ -41,6 +46,11 @@ public:
 	const QColor &get_color() const
 	{
 		return this->color;
+	}
+
+	const language *get_language() const
+	{
+		return this->language;
 	}
 
 	bool is_surname_first() const
@@ -75,6 +85,7 @@ signals:
 
 private:
 	QColor color;
+	const archimedes::language *language = nullptr;
 	bool surname_first = false;
 	std::vector<const metternich::species *> species; //species which can have this culture
 	std::vector<const culture *> derived_cultures;
