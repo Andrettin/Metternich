@@ -2,7 +2,7 @@ gadrauhts = { #Source: Carl D. Buck, "Words for 'Battle,' 'War,' 'Army,' and 'So
 	name = "Gadrauhts"
 	language = gothic
 	type = noun
-	meanings = {
-		"Soldier"
+	meaning_words = {
+		soldier
 	}
 }

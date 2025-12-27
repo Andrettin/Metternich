@@ -3,7 +3,7 @@ boka = { #Source: Winfred P. Lehmann, "A Grammar of Proto-Germanic", 2005, Chapt
 	language = gothic
 	type = noun
 	etymon = boks
-	meanings = {
-		"Book" #derived from Proto-Germanic "Bōks"; the source has the meaning for that word as "'tablet' > 'book'", but it is not clear if it means that the meaning became book in the child languages of Proto-Germanic, or within the timespan of the language itself
+	meaning_words = {
+		book #derived from Proto-Germanic "Bōks"; the source has the meaning for that word as "'tablet' > 'book'", but it is not clear if it means that the meaning became book in the child languages of Proto-Germanic, or within the timespan of the language itself
 	}
 }

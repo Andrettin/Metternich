@@ -1,0 +1,14 @@
+smid_old_high_german = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, pp. 263-264.
+	name = "Smid"
+	language = old_high_german
+	type = noun
+	gender = masculine
+	etymon = smithu
+	meaning_words = {
+		#source gives the German "Schmied, (kunstfertiger) Arbeiter in Metall"
+		schmied
+	}
+	meanings = {
+		"Skilled Metalworker"
+	}
+}

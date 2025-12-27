@@ -1,0 +1,13 @@
+smith_old_english = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 263.
+	name = "Smiþ"
+	language = old_english
+	type = noun
+	etymon = smithu #Proto-Germanic
+	meaning_words = {
+		#source gives the German "Schmied, Rademacher"
+		schmied
+	}
+	meanings = {
+		"Wheelwright"
+	}
+}

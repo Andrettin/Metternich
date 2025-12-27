@@ -1,0 +1,9 @@
+soudoier_middle_english = { #source also gives the alternative forms "soudier", "sauder", "souldier" and "sougeour"; Source: Carl D. Buck, "Words for 'Battle,' 'War,' 'Army,' and 'Soldier'", 1919, p. 17.
+	name = "Soudoier"
+	language = middle_english
+	type = noun
+	etymon = soudoier_old_french
+	meaning_words = {
+		soldier
+	}
+}

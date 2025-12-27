@@ -1,0 +1,9 @@
+soudoier_old_french = { #source also gives the alternative forms "soldoier", "sodoier", "saudoier" and "soldeier"; Source: Carl D. Buck, "Words for 'Battle,' 'War,' 'Army,' and 'Soldier'", 1919, p. 17.
+	name = "Soudoier"
+	language = old_french
+	type = noun
+	etymon = solidatarius #Latin
+	meaning_words = {
+		soldier
+	}
+}

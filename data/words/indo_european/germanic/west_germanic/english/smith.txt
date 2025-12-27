@@ -1,0 +1,10 @@
+smith = {
+	name = "Smith"
+	language = english
+	type = noun
+	etymon = smith_old_english #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, pp. 263-264.
+	df_word = SMITH
+	meanings = {
+		"Smith"
+	}
+}

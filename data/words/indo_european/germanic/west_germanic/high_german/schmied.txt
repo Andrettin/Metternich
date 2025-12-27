@@ -1,0 +1,10 @@
+schmied = {
+	name = "Schmied"
+	language = high_german
+	type = noun
+	gender = masculine
+	etymon = smit_middle_high_german #presumably
+	meaning_words = {
+		smith
+	}
+}

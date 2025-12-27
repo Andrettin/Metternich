@@ -1,0 +1,10 @@
+book = {
+	name = "Book"
+	language = english
+	type = noun
+	gender = neuter
+	df_word = BOOK
+	meanings = {
+		"Book"
+	}
+}
