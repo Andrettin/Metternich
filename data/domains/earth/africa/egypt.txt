@@ -2,32 +2,16 @@ egypt = {
 	name = "Egypt"
 	type = polity
 	color = { 143 141 128 }
-	culture = egyptian
+	cultures = {
+		egyptian
+		arabic
+	}
 	default_religion = pagan
 	default_tier = kingdom
 	default_government_type = monarchy
 	default_capital = cairo
 	eras = {
 		ancient_era
-	}
-	core_provinces = {
-		cairo
-		alexandria
-		suez
-		upper_egypt
-		sinai
-	}
-}
-
-egypt_arabic = {
-	name = "Egypt"
-	type = polity
-	culture = arabic
-	default_religion = sunni
-	default_tier = kingdom
-	default_government_type = monarchy
-	default_capital = cairo
-	eras = {
 		medieval_era
 		renaissance_era
 		industrial_era
@@ -38,5 +22,12 @@ egypt_arabic = {
 		suez
 		upper_egypt
 		sinai
+	}
+	
+	history = {
+		1360 = {
+			culture = arabic #the Mameluke Sultanates existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			religion = sunni
+		}
 	}
 }
