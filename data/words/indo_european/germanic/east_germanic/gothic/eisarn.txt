@@ -4,7 +4,7 @@ eisarn = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Sprac
 	type = noun
 	gender = neuter
 	etymon = isarna
-	meanings = {
-		"Iron" #source gives the German "Eisen"
+	meaning_words = {
+		eisen #source gives the German "Eisen"
 	}
 }

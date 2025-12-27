@@ -4,7 +4,7 @@ silubr = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Sprac
 	type = noun
 	gender = neuter
 	etymon = silubra
-	meanings = {
-		"Silver" #source gives the German "Silber"
+	meaning_words = {
+		silber_high_german #source gives the German "Silber"
 	}
 }

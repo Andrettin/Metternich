@@ -4,7 +4,7 @@ stains = { #Source: Winfred P. Lehmann, "A Grammar of Proto-Germanic", 2005, 2.7
 	type = noun
 	gender = masculine #as given by Fick
 	etymon = staynas #as given by both Lehmann and Fick
-	meanings = {
-		"Stone" #as given by Lehmann
+	meaning_words = {
+		stone_noun #as given by Lehmann
 	}
 }
