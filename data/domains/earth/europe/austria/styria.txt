@@ -2,6 +2,7 @@ styria = {
 	name = "Styria"
 	type = polity
 	color = { 59 126 59 }
+	flag = styria
 	culture = austrian
 	default_religion = catholic
 	default_tier = duchy
