@@ -1,0 +1,11 @@
+church = {
+	name = "Church"
+	language = english
+	type = noun
+	gender = neuter
+	etymon = cirice #presumably
+	df_word = CHURCH
+	meanings = {
+		"Church"
+	}
+}

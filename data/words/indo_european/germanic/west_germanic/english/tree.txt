@@ -1,0 +1,10 @@
+tree = {
+	name = "Tree"
+	language = english
+	type = noun
+	gender = neuter
+	df_word = TREE
+	meanings = {
+		"Tree"
+	}
+}

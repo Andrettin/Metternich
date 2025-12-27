@@ -1,0 +1,9 @@
+kirika = { #Source: D. H. Green, "From Germania to Europe: the Evidence of Language and History", 1997, p. xxxvi.
+	name = "Kirika"
+	language = west_germanic
+	type = noun
+	etymon = kyriakon
+	meaning_words = {
+		church
+	}
+}

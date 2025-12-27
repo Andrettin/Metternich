@@ -4,7 +4,7 @@ bagms = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Sprach
 	type = noun
 	gender = masculine
 	etymon = bagma
-	meanings = {
-		"Tree" #source gives the German "Baum"
+	meaning_words = {
+		baum #source gives the German "Baum"
 	}
 }

@@ -2,7 +2,7 @@ krnam = { #Source: Winfred P. Lehmann, "A Grammar of Proto-Germanic", 2005, Chap
 	name = "Kŕnam"
 	language = proto_germanic
 	type = noun
-	meanings = {
-		"Grain"
+	meaning_words = {
+		grain
 	}
 }

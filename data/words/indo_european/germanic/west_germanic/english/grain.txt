@@ -1,0 +1,10 @@
+grain = {
+	name = "Grain"
+	language = english
+	type = noun
+	gender = neuter
+	df_word = GRAIN
+	meanings = {
+		"Grain"
+	}
+}

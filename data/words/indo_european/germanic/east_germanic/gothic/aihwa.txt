@@ -3,7 +3,7 @@ aihwa = { #Source: Winfred P. Lehmann, "A Grammar of Proto-Germanic", 2005, Chap
 	language = gothic
 	type = noun
 	etymon = ekwos
-	meanings = {
-		"Horse"
+	meaning_words = {
+		horse
 	}
 }

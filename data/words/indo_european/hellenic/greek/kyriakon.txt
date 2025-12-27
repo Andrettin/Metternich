@@ -1,0 +1,12 @@
+kyriakon = { #Source: D. H. Green, "From Germania to Europe: the Evidence of Language and History", 1997, p. xxxv.
+	name = "Kyriakón"
+	language = greek
+	type = noun
+	meanings = {
+		"That which belongs to the Lord"
+		"That House of the Lord"
+	}
+	meaning_words = {
+		church
+	}
+}

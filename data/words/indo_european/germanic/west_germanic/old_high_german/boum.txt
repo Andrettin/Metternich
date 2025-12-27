@@ -1,0 +1,10 @@
+boum_old_high_german = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 134.
+	name = "Boum"
+	language = old_high_german
+	type = noun
+	gender = masculine
+	etymon = bagma
+	meaning_words = {
+		baum #source gives the German "Baum" as the meaning
+	}
+}

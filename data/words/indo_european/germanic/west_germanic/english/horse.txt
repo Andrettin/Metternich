@@ -1,0 +1,10 @@
+horse = {
+	name = "Horse"
+	language = english
+	type = noun
+	gender = neuter
+	df_word = HORSE
+	meanings = {
+		"Horse"
+	}
+}

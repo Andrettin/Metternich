@@ -1,0 +1,9 @@
+cirice = { #Source: D. H. Green, "From Germania to Europe: the Evidence of Language and History", 1997, p. xxxvi.
+	name = "Cirice"
+	language = old_english
+	type = noun
+	etymon = kirika
+	meaning_words = {
+		church
+	}
+}
