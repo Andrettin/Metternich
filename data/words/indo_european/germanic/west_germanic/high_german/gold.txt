@@ -4,7 +4,7 @@ gold_high_german = {
 	type = noun
 	gender = neuter
 	etymon = golt #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 73.
-	meanings = {
-		"Gold"
+	meaning_words = {
+		gold
 	}
 }

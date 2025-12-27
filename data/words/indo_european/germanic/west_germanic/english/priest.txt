@@ -1,0 +1,9 @@
+priest = {
+	name = "Priest"
+	language = english
+	type = noun
+	df_word = PRIEST
+	meanings = {
+		"Priest"
+	}
+}

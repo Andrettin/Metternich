@@ -4,7 +4,7 @@ gulth = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Sprach
 	type = noun
 	gender = neuter
 	etymon = gultha
-	meanings = {
-		"Gold" #source gives the German "Gold"
+	meaning_words = {
+		gold_high_german #source gives the German "Gold"
 	}
 }

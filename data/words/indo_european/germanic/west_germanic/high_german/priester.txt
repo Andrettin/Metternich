@@ -1,0 +1,9 @@
+priester = {
+	name = "Priester"
+	language = high_german
+	type = noun
+	gender = masculine
+	meaning_words = {
+		priest
+	}
+}
