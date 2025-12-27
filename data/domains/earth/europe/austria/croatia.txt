@@ -2,6 +2,7 @@ croatia = {
 	name = "Croatia"
 	type = polity
 	color = { 174 227 95 }
+	flag = croatia
 	culture = croatian
 	default_religion = catholic
 	default_tier = kingdom

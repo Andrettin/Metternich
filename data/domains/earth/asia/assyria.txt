@@ -2,6 +2,7 @@ assyria = {
 	name = "Assyria"
 	type = polity
 	color = { 31 198 35 }
+	flag = assyria
 	culture = assyrian
 	default_religion = pagan
 	default_tier = kingdom

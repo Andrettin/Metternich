@@ -2,6 +2,7 @@ portugal = {
 	name = "Portugal"
 	type = polity
 	color = { 0 66 24 }
+	flag = portugal
 	culture = portuguese
 	default_religion = catholic
 	default_tier = kingdom

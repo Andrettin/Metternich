@@ -1,6 +1,7 @@
 kent = {
 	name = "Kent"
 	type = polity
+	flag = kent
 	culture = anglo_saxon
 	default_religion = catholic
 	default_tier = kingdom

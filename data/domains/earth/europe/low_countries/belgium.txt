@@ -1,6 +1,7 @@
 belgium = {
 	name = "Belgium"
 	type = polity
+	flag = belgium
 	culture = walloon
 	default_religion = catholic
 	default_tier = kingdom

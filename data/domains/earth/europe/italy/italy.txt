@@ -2,6 +2,7 @@ italy = {
 	name = "Italy"
 	type = polity
 	color = { 142 167 80 }
+	flag = italy
 	culture = italian
 	default_religion = catholic
 	default_tier = kingdom

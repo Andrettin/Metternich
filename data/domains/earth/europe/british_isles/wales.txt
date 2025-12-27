@@ -1,6 +1,7 @@
 wales = {
 	name = "Wales"
 	type = polity
+	flag = wales
 	culture = welsh
 	default_religion = protestant
 	default_tier = duchy #principality

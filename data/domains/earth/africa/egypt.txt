@@ -2,6 +2,7 @@ egypt = {
 	name = "Egypt"
 	type = polity
 	color = { 143 141 128 }
+	flag = egypt
 	cultures = {
 		egyptian
 		arabic

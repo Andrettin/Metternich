@@ -2,6 +2,7 @@ greece = {
 	name = "Greece"
 	type = polity
 	color = { 122 180 210 }
+	flag = greece
 	culture = greek
 	default_religion = orthodox
 	default_tier = kingdom
