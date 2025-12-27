@@ -1,0 +1,4 @@
+faroese = {
+	name = "Faroese"
+	family = germanic
+}

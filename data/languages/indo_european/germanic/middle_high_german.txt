@@ -1,0 +1,4 @@
+middle_high_german = {
+	name = "Middle High German"
+	family = germanic
+}

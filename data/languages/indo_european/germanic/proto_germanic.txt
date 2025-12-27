@@ -1,0 +1,4 @@
+proto_germanic = {
+	name = "Proto-Germanic"
+	family = germanic
+}

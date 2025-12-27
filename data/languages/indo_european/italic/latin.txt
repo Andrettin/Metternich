@@ -1,0 +1,4 @@
+latin = {
+	name = "Latin"
+	family = italic
+}

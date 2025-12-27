@@ -1,0 +1,4 @@
+elfdalian = {
+	name = "Elfdalian"
+	family = germanic
+}

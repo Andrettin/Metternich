@@ -1,0 +1,4 @@
+modern_welsh = {
+	name = "Modern Welsh"
+	family = celtic
+}

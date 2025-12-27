@@ -1,0 +1,4 @@
+old_frankish = {
+	name = "Old Frankish"
+	family = germanic
+}

@@ -1,0 +1,4 @@
+latvian = {
+	name = "Latvian"
+	family = baltic
+}

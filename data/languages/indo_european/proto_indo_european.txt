@@ -1,0 +1,4 @@
+proto_indo_european = {
+	name = "Proto-Indo-European"
+	family = indo_european
+}

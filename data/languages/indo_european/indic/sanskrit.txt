@@ -1,0 +1,4 @@
+sanskrit = {
+	name = "Sanskrit"
+	family = indic
+}

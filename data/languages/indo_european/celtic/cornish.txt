@@ -1,0 +1,4 @@
+cornish = {
+	name = "Cornish"
+	family = celtic
+}
