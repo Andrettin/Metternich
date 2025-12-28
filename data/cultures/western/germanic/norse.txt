@@ -2,6 +2,10 @@ norse = {
 	name = "Norse"
 	group = scandinavian
 	color = { 76 140 204 }
+	language = old_norse
+	given_name_markov_chain_size = 2
+	surname_markov_chain_size = 2
+	use_language_data_for_markov_generation = true
 	species = {
 		human
 		half_elf
