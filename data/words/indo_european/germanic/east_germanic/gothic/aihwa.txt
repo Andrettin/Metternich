@@ -2,7 +2,7 @@ aihwa = { #Source: Winfred P. Lehmann, "A Grammar of Proto-Germanic", 2005, Chap
 	name = "Aihʷa"
 	language = gothic
 	type = noun
-	etymon = ekwos
+	etymon = proto_indo_european:ekwos
 	meaning_words = {
 		horse
 	}

@@ -3,7 +3,7 @@ eisarn = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Sprac
 	language = gothic
 	type = noun
 	gender = neuter
-	etymon = isarna
+	etymon = proto_germanic:isarna
 	meaning_words = {
 		eisen #source gives the German "Eisen"
 	}

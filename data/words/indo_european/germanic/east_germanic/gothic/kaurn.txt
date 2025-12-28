@@ -2,7 +2,7 @@ kaurn = { #Source: Winfred P. Lehmann, "A Grammar of Proto-Germanic", 2005, Chap
 	name = "Kaúrn"
 	language = gothic
 	type = noun
-	etymon = krnam
+	etymon = proto_germanic:krnam
 	meaning_words = {
 		grain #derived from Proto-Germanic "Kŕnam", which has the meaning of "grain"
 	}

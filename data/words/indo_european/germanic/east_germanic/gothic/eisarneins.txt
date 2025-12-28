@@ -2,7 +2,7 @@ eisarneins = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen S
 	name = "Eisarneins"
 	language = gothic
 	type = adjective
-	etymon = isarna
+	etymon = proto_germanic:isarna
 	meaning_words = {
 		eisern #source gives the German "Eisern"
 	}

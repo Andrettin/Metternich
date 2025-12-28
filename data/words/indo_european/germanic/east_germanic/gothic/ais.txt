@@ -2,7 +2,7 @@ ais = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Sprachei
 	name = "Ais"
 	language = gothic
 	type = noun
-	etymon = aiza
+	etymon = proto_germanic:aiza
 	meanings = {
 		#source gives the German "Erz, Geld"
 		"Ore"

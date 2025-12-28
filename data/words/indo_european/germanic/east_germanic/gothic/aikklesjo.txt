@@ -2,7 +2,7 @@ aikklesjo = { #Source: D. H. Green, "From Germania to Europe: the Evidence of La
 	name = "Aíkklēsjo"
 	language = gothic
 	type = noun
-	etymon = ekklesia
+	etymon = greek:ekklesia
 	meanings = {
 		"Assembly"
 		"Congregation"

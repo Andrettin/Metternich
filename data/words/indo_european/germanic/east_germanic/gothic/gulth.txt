@@ -3,7 +3,7 @@ gulth = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Sprach
 	language = gothic
 	type = noun
 	gender = neuter
-	etymon = gultha
+	etymon = proto_germanic:gultha
 	meaning_words = {
 		gold_high_german #source gives the German "Gold"
 	}

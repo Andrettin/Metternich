@@ -2,7 +2,7 @@ skildus = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spra
 	name = "Skildus"
 	language = gothic
 	type = noun
-	etymon = skeldu
+	etymon = proto_germanic:skeldu
 	meaning_words = {
 		schild #source gives the German "Schild"
 	}
