@@ -3,6 +3,7 @@ soldier = {
 	language = english
 	type = noun
 	etymon = soudoier_middle_english #Source: Carl D. Buck, "Words for 'Battle,' 'War,' 'Army,' and 'Soldier'", 1919, p. 17.
+	df_word = SOLDIER
 	meanings = {
 		"Soldier"
 	}

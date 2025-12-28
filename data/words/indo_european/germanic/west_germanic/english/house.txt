@@ -1,0 +1,10 @@
+house = {
+	name = "House"
+	language = english
+	type = noun
+	gender = neuter
+	df_word = HOUSE
+	meanings = {
+		"House"
+	}
+}

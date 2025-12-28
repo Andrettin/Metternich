@@ -4,8 +4,10 @@ land_high_german = {
 	type = noun
 	gender = neuter
 	etymon = lant_middle_high_german #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 184.
+	meaning_words = {
+		land_english
+	}
 	meanings = {
-		"Land"
 		"Country"
 	}
 	
