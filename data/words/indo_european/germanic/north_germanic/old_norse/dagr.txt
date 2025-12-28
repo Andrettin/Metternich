@@ -1,6 +1,5 @@
 dagr = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 106.
 	name = "Dagr"
-	anglicized_name = "Dag"
 	language = old_norse
 	type = noun
 	gender = masculine
