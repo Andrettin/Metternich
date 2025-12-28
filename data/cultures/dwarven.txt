@@ -7,7 +7,7 @@ dwarven = {
 		#mountain_dwarf
 	}
 	
-	personal_names = {
+	given_names = {
 		male = {
 			"Ai" #dwarf from Norse mythology who was a settler of Joruvellir
 			"Alberich" #dwarf from German sagas

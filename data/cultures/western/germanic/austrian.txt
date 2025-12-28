@@ -12,7 +12,7 @@ austrian = {
 		}
 	}
 	
-	personal_names = {
+	given_names = {
 		female = {
 			"Bertha" #Source: Sheridan Le Fanu, "Carmilla".
 			"Carmilla" #Mircalla's alias; Source: Sheridan Le Fanu, "Carmilla".

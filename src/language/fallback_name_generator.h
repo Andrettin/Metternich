@@ -19,8 +19,8 @@ public:
 	fallback_name_generator();
 	~fallback_name_generator();
 
-	const name_generator *get_personal_name_generator(const gender gender) const;
-	void add_personal_names(const std::unique_ptr<gendered_name_generator> &source_name_generator);
+	const name_generator *get_given_name_generator(const gender gender) const;
+	void add_given_names(const std::unique_ptr<gendered_name_generator> &source_name_generator);
 
 	const name_generator *get_surname_generator(const gender gender) const;
 	void add_surnames(const std::unique_ptr<gendered_name_generator> &source_name_generator);
@@ -35,7 +35,7 @@ public:
 
 private:
 	//name generation lists containing all names (i.e. from each culture)
-	std::unique_ptr<gendered_name_generator> personal_name_generator;
+	std::unique_ptr<gendered_name_generator> given_name_generator;
 	std::unique_ptr<gendered_name_generator> surname_generator;
 	military_unit_class_map<std::unique_ptr<name_generator>> military_unit_class_name_generators;
 	transporter_class_map<std::unique_ptr<name_generator>> transporter_class_name_generators;

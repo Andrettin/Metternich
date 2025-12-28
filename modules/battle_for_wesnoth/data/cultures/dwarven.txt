@@ -1,5 +1,5 @@
 dwarven += {
-	personal_names = {
+	given_names = {
 		male = {
 			"Aigaithas" #from Battle for Wesnoth
 			"Aigaithil" #from Battle for Wesnoth

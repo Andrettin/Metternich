@@ -6,7 +6,7 @@ giant = {
 		frost_giant
 	}
 	
-	personal_names = {
+	given_names = {
 		male = {
 			"Baugi" #giant from Norse mythology; Source: Kevin Crossley-Holland, "The Norse Myths", 1980, p. 240.
 			"Bergelmir" #giant from Norse mythology; Source: Kevin Crossley-Holland, "The Norse Myths", 1980, p. 240.

@@ -19,22 +19,22 @@ fallback_name_generator::~fallback_name_generator()
 {
 }
 
-const name_generator *fallback_name_generator::get_personal_name_generator(const gender gender) const
+const name_generator *fallback_name_generator::get_given_name_generator(const gender gender) const
 {
-	if (this->personal_name_generator != nullptr) {
-		return this->personal_name_generator->get_name_generator(gender);
+	if (this->given_name_generator != nullptr) {
+		return this->given_name_generator->get_name_generator(gender);
 	}
 
 	return nullptr;
 }
 
-void fallback_name_generator::add_personal_names(const std::unique_ptr<gendered_name_generator> &source_name_generator)
+void fallback_name_generator::add_given_names(const std::unique_ptr<gendered_name_generator> &source_name_generator)
 {
-	if (this->personal_name_generator == nullptr) {
-		this->personal_name_generator = std::make_unique<gendered_name_generator>();
+	if (this->given_name_generator == nullptr) {
+		this->given_name_generator = std::make_unique<gendered_name_generator>();
 	}
 
-	this->personal_name_generator->add_names_from(source_name_generator);
+	this->given_name_generator->add_names_from(source_name_generator);
 }
 
 const name_generator *fallback_name_generator::get_surname_generator(const gender gender) const

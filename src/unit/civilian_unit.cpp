@@ -129,7 +129,7 @@ void civilian_unit::generate_name()
 		return;
 	}
 
-	this->name = culture->generate_personal_name(gender::male, used_name_counts);
+	this->name = culture->generate_given_name(gender::male, used_name_counts);
 
 	if (!this->get_name().empty()) {
 		log_trace(std::format("Generated name \"{}\" for civilian unit of type \"{}\" and culture \"{}\".", this->get_name(), this->get_type()->get_identifier(), culture->get_identifier()));

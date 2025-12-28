@@ -1,5 +1,5 @@
 goblin += {
-	personal_names = {
+	given_names = {
 		female = {
 			"Ijyb" #Ijyb the Twisted Goblin (unique female goblin)
 		}

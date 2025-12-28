@@ -5,7 +5,7 @@ cyclops = {
 		cyclops
 	}
 
-	personal_names = {
+	given_names = {
 		male = {
 			"Arges" #the name means "Vivid"
 			"Brontes" #the name means "Thunderer"

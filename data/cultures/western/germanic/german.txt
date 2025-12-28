@@ -23,7 +23,7 @@ german = {
 		}
 	}
 	
-	personal_names = {
+	given_names = {
 		male = {
 			"Adalbert"
 			"Albert"

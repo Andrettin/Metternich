@@ -5,7 +5,7 @@ gnomish = {
 		#rock_gnome
 	}
 	
-	personal_names = {
+	given_names = {
 		male = {
 			"Rubezahl" #could also be a giant instead
 		}

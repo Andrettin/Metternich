@@ -1,5 +1,5 @@
 minotaur += {
-	personal_names = {
+	given_names = {
 		male = {
 			"Asterion" #Asterion the Fallen King (unique male minotaur)
 		}

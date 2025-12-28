@@ -6,7 +6,7 @@ czech = {
 		human
 	}
 	
-	personal_names = {
+	given_names = {
 		male = {
 			"Boleslav" #Boleslav I of Bohemia; ruled over Bohemia in 929-967; Source: James Westfall Thompson, "Medieval German Expansion in Bohemia", 1926, p. 615.
 			"Boleslav" #Boleslav II of Bohemia; duke of Bohemia until 999, when he died; massacred House Slavnik in 995; Source: James Westfall Thompson, "Medieval German Expansion in Bohemia", 1926, pp. 616-617.

@@ -75,7 +75,7 @@ void taxon_base::initialize()
 	}
 
 	if (this->given_name_generator != nullptr) {
-		fallback_name_generator::get()->add_personal_names(this->given_name_generator);
+		fallback_name_generator::get()->add_given_names(this->given_name_generator);
 		this->given_name_generator->propagate_ungendered_names();
 	}
 

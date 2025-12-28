@@ -6,7 +6,7 @@ iberian = {
 		human
 	}
 	
-	personal_names = {
+	given_names = {
 		male = {
 			"Budar"
 			"Busadines"

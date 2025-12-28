@@ -5,7 +5,7 @@ kobold = {
 		kobold
 	}
 	
-	personal_names = {
+	given_names = {
 		male = {
 			"Hodeke" #Source: Jacob Grimm, "Deutsche Mythologie", pp. 392, 1049, 1080.
 			"Hoidike" #Source: Jacob Grimm, "Deutsche Mythologie", p. 392.

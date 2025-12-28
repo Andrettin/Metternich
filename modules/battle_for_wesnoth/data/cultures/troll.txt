@@ -1,5 +1,5 @@
 troll += {
-	personal_names = {
+	given_names = {
 		male = {
 			"Ag" #"Äg"; from Battle for Wesnoth
 			"Agh" #from Battle for Wesnoth

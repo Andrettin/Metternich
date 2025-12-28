@@ -6,7 +6,7 @@ gaulish = {
 		human
 	}
 	
-	personal_names = {
+	given_names = {
 		male = {
 			"Ambiorix"
 			"Brennus"

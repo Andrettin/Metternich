@@ -1,5 +1,5 @@
 kobold += {
-	personal_names = {
+	given_names = {
 		male = {
 			"Pikel" #Pikel the Slaver (unique male kobold)
 		}

@@ -12,7 +12,7 @@ suebi = {
 		german
 	}
 
-	personal_names = {
+	given_names = {
 		male = {
 			#Suebi kings in Hispania
 			"Andeka"

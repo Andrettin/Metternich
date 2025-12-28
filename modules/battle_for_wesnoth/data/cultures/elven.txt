@@ -1,5 +1,5 @@
 elven += {
-	personal_names = {
+	given_names = {
 		male = {
 			"Aendan"
 			"Amadrieriand" #from Battle for Wesnoth

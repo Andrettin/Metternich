@@ -8,7 +8,7 @@ gothic = {
 		half_elf
 	}
 	
-	personal_names = {
+	given_names = {
 		male = {
 			#Burgundian names
 			"Hanhualdus" #presumably a male name; Source: Winfred P. Lehmann, "A Grammar of Proto-Germanic", 2005, 2.7.3.

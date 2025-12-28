@@ -11,7 +11,7 @@ briton = {
 		}
 	}
 	
-	personal_names = {
+	given_names = {
 		male = {
 			"Caratacos"
 			#"Cassivellaunus" #ancient Celt; Source: Bernhard Maier (trans.), "Das Sagenbuch der Walisischen Kelten", 1999, p. 137.

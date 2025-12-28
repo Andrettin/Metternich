@@ -1,5 +1,5 @@
 orcish += {
-	personal_names = {
+	given_names = {
 		male = {
 			"Badush" #from Battle for Wesnoth
 			"Bagar" #from Battle for Wesnoth

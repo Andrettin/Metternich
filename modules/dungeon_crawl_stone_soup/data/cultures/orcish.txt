@@ -1,5 +1,5 @@
 orcish += {
-	personal_names = {
+	given_names = {
 		"Roka" #Saint Roka the Messiah (unique orc of indeterminate gender)
 		
 		female = {

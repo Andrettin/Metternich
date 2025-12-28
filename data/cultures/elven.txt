@@ -10,7 +10,7 @@ elven = {
 		half_elf
 	}
 	
-	personal_names = {
+	given_names = {
 		male = {
 			"Egil" #elven archer from Norse mythology brother of Slagfid and Volund
 			"Slagfid" #from Norse mythology brother of Egil and Volund

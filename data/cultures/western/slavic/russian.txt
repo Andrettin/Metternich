@@ -16,7 +16,7 @@ russian = {
 		}
 	}
 	
-	personal_names = {
+	given_names = {
 		male = {
 			#Novgorodian names
 			"Onfim"

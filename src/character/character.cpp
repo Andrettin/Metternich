@@ -132,9 +132,9 @@ character *character::generate(const metternich::species *species, const mettern
 	const archimedes::gender gender = random::get()->generate(2) == 0 ? gender::male : gender::female;
 	generated_character->set_gender(gender);
 	if (generated_character->get_culture() != nullptr) {
-		const archimedes::name_generator *personal_name_generator = generated_character->get_culture()->get_personal_name_generator(gender);
-		if (personal_name_generator != nullptr) {
-			generated_character->set_name(personal_name_generator->generate_name());
+		const archimedes::name_generator *given_name_generator = generated_character->get_culture()->get_given_name_generator(gender);
+		if (given_name_generator != nullptr) {
+			generated_character->set_name(given_name_generator->generate_name());
 			const archimedes::name_generator *surname_generator = generated_character->get_culture()->get_surname_generator(gender);
 			if (surname_generator != nullptr) {
 				generated_character->set_surname(surname_generator->generate_name());
@@ -300,7 +300,7 @@ void character::initialize()
 		}
 
 		if (this->has_name_variant()) {
-			this->culture->add_personal_name(this->get_gender(), this->get_name_variant());
+			this->culture->add_given_name(this->get_gender(), this->get_name_variant());
 		}
 
 		if (!this->get_surname().empty()) {

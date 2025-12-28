@@ -105,12 +105,12 @@ public:
 	const transporter_type *get_transporter_class_type(const transporter_class *transporter_class) const;
 	void set_transporter_class_type(const transporter_class *transporter_class, const transporter_type *transporter_type);
 
-	std::string generate_personal_name(const gender gender, const std::map<std::string, int> &used_name_counts) const;
+	std::string generate_given_name(const gender gender, const std::map<std::string, int> &used_name_counts) const;
 	std::string generate_military_unit_name(const military_unit_type *type, const std::map<std::string, int> &used_name_counts) const;
 	std::string generate_transporter_name(const transporter_type *type, const std::map<std::string, int> &used_name_counts) const;
 
-	const name_generator *get_personal_name_generator(const gender gender) const;
-	void add_personal_name(const gender gender, const name_variant &name);
+	const name_generator *get_given_name_generator(const gender gender) const;
+	void add_given_name(const gender gender, const name_variant &name);
 
 	const name_generator *get_surname_generator(const gender gender) const;
 	void add_surname(const gender gender, const name_variant &surname);
@@ -150,7 +150,7 @@ private:
 	civilian_unit_class_map<const civilian_unit_type *> civilian_class_unit_types;
 	military_unit_class_map<const military_unit_type *> military_class_unit_types;
 	transporter_class_map<const transporter_type *> transporter_class_types;
-	std::unique_ptr<gendered_name_generator> personal_name_generator;
+	std::unique_ptr<gendered_name_generator> given_name_generator;
 	std::unique_ptr<gendered_name_generator> surname_generator;
 	military_unit_class_map<std::unique_ptr<name_generator>> military_unit_class_name_generators;
 	transporter_class_map<std::unique_ptr<name_generator>> transporter_class_name_generators;

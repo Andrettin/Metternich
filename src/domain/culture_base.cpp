@@ -42,12 +42,12 @@ void culture_base::process_gsml_property(const gsml_property &property)
 	const std::string &key = property.get_key();
 	const std::string &value = property.get_value();
 
-	if (key == "personal_name_markov_chain_size") {
+	if (key == "given_name_markov_chain_size") {
 		assert_throw(property.get_operator() == gsml_operator::assignment);
-		if (this->personal_name_generator == nullptr) {
-			this->personal_name_generator = std::make_unique<gendered_name_generator>();
+		if (this->given_name_generator == nullptr) {
+			this->given_name_generator = std::make_unique<gendered_name_generator>();
 		}
-		this->personal_name_generator->set_markov_chain_size(std::stoull(value));
+		this->given_name_generator->set_markov_chain_size(std::stoull(value));
 	} else if (key == "surname_markov_chain_size") {
 		assert_throw(property.get_operator() == gsml_operator::assignment);
 		if (this->surname_generator == nullptr) {
@@ -115,13 +115,13 @@ void culture_base::process_gsml_scope(const gsml_data &scope)
 			const transporter_type *transporter_type = transporter_type::get(value);
 			this->set_transporter_class_type(transporter_class, transporter_type);
 		});
-	} else if (tag == "personal_names") {
-		if (this->personal_name_generator == nullptr) {
-			this->personal_name_generator = std::make_unique<gendered_name_generator>();
+	} else if (tag == "given_names") {
+		if (this->given_name_generator == nullptr) {
+			this->given_name_generator = std::make_unique<gendered_name_generator>();
 		}
 
 		if (!values.empty()) {
-			this->personal_name_generator->add_names(gender::none, values);
+			this->given_name_generator->add_names(gender::none, values);
 		}
 
 		scope.for_each_child([&](const gsml_data &child_scope) {
@@ -129,7 +129,7 @@ void culture_base::process_gsml_scope(const gsml_data &scope)
 
 			const gender gender = enum_converter<archimedes::gender>::to_enum(tag);
 
-			this->personal_name_generator->add_names(gender, child_scope.get_values());
+			this->given_name_generator->add_names(gender, child_scope.get_values());
 		});
 	} else if (tag == "surnames") {
 		if (this->surname_generator == nullptr) {
@@ -196,31 +196,31 @@ void culture_base::initialize()
 		}
 	}
 
-	if (this->personal_name_generator != nullptr) {
-		fallback_name_generator::get()->add_personal_names(this->personal_name_generator);
+	if (this->given_name_generator != nullptr) {
+		fallback_name_generator::get()->add_given_names(this->given_name_generator);
 
 		//add words from the language for Markov generation
-		if (this->get_language() != nullptr && this->personal_name_generator->uses_markov_generation() && this->uses_language_data_for_markov_generation()) {
+		if (this->get_language() != nullptr && this->given_name_generator->uses_markov_generation() && this->uses_language_data_for_markov_generation()) {
 			for (const word *word : this->get_language()->get_words()) {
 				std::string word_str = word->get_name();
 				string::anglicize(word_str);
 				
 				switch (word->get_gender()) {
 					case grammatical_gender::masculine:
-						this->personal_name_generator->add_name(gender::male, word);
+						this->given_name_generator->add_name(gender::male, word);
 						break;
 					case grammatical_gender::feminine:
-						this->personal_name_generator->add_name(gender::female, word);
+						this->given_name_generator->add_name(gender::female, word);
 						break;
 					case grammatical_gender::neuter:
 					case grammatical_gender::none:
-						this->personal_name_generator->add_name(gender::none, word);
+						this->given_name_generator->add_name(gender::none, word);
 						break;
 				}
 			}
 		}
 
-		this->personal_name_generator->propagate_ungendered_names();
+		this->given_name_generator->propagate_ungendered_names();
 	}
 
 	if (this->surname_generator != nullptr) {
@@ -506,9 +506,9 @@ void culture_base::set_transporter_class_type(const transporter_class *transport
 	this->transporter_class_types[transporter_class] = transporter_type;
 }
 
-std::string culture_base::generate_personal_name(const gender gender, const std::map<std::string, int> &used_name_counts) const
+std::string culture_base::generate_given_name(const gender gender, const std::map<std::string, int> &used_name_counts) const
 {
-	const name_generator *name_generator = this->get_personal_name_generator(gender);
+	const name_generator *name_generator = this->get_given_name_generator(gender);
 	const archimedes::name_generator *surname_generator = this->get_surname_generator(gender);
 
 	if (name_generator != nullptr) {
@@ -535,7 +535,7 @@ std::string culture_base::generate_military_unit_name(const military_unit_type *
 	const military_unit_class *unit_class = type->get_unit_class();
 
 	if (unit_class->is_leader()) {
-		return this->generate_personal_name(gender::male, used_name_counts);
+		return this->generate_given_name(gender::male, used_name_counts);
 	} else {
 		const name_generator *name_generator = this->get_military_unit_class_name_generator(unit_class);
 
@@ -560,12 +560,12 @@ std::string culture_base::generate_transporter_name(const transporter_type *type
 	return std::string();
 }
 
-const name_generator *culture_base::get_personal_name_generator(const gender gender) const
+const name_generator *culture_base::get_given_name_generator(const gender gender) const
 {
 	const name_generator *name_generator = nullptr;
 
-	if (this->personal_name_generator != nullptr) {
-		name_generator = this->personal_name_generator->get_name_generator(gender);
+	if (this->given_name_generator != nullptr) {
+		name_generator = this->given_name_generator->get_name_generator(gender);
 	}
 
 	if (name_generator != nullptr && name_generator->has_enough_data()) {
@@ -573,27 +573,27 @@ const name_generator *culture_base::get_personal_name_generator(const gender gen
 	}
 
 	if (this->get_group() != nullptr) {
-		return this->get_group()->get_personal_name_generator(gender);
+		return this->get_group()->get_given_name_generator(gender);
 	}
 
 	return name_generator;
 }
 
-void culture_base::add_personal_name(const gender gender, const name_variant &name)
+void culture_base::add_given_name(const gender gender, const name_variant &name)
 {
-	if (this->personal_name_generator == nullptr) {
-		this->personal_name_generator = std::make_unique<gendered_name_generator>();
+	if (this->given_name_generator == nullptr) {
+		this->given_name_generator = std::make_unique<gendered_name_generator>();
 	}
 
-	this->personal_name_generator->add_name(gender, name);
+	this->given_name_generator->add_name(gender, name);
 
 	if (gender == gender::none) {
-		this->personal_name_generator->add_name(gender::male, name);
-		this->personal_name_generator->add_name(gender::female, name);
+		this->given_name_generator->add_name(gender::male, name);
+		this->given_name_generator->add_name(gender::female, name);
 	}
 
 	if (this->group != nullptr) {
-		this->group->add_personal_name(gender, name);
+		this->group->add_given_name(gender, name);
 	}
 }
 
@@ -711,12 +711,12 @@ void culture_base::add_ship_name(const name_variant &ship_name)
 
 void culture_base::add_names_from(const culture_base *other)
 {
-	if (other->personal_name_generator != nullptr) {
-		if (this->personal_name_generator == nullptr) {
-			this->personal_name_generator = std::make_unique<gendered_name_generator>();
+	if (other->given_name_generator != nullptr) {
+		if (this->given_name_generator == nullptr) {
+			this->given_name_generator = std::make_unique<gendered_name_generator>();
 		}
 
-		this->personal_name_generator->add_names_from(other->personal_name_generator);
+		this->given_name_generator->add_names_from(other->given_name_generator);
 	}
 
 	if (other->surname_generator != nullptr) {

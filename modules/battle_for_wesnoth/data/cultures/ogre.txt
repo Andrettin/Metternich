@@ -1,5 +1,5 @@
 ogre += {
-	personal_names = {
+	given_names = {
 		male = {
 			"Akoark" #from Battle for Wesnoth
 			"Akort" #from Battle for Wesnoth
