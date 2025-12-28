@@ -10,7 +10,10 @@
 #include "infrastructure/building_type.h"
 #include "language/fallback_name_generator.h"
 #include "language/gendered_name_generator.h"
+#include "language/grammatical_gender.h"
+#include "language/language.h"
 #include "language/name_generator.h"
+#include "language/word.h"
 #include "population/population_class.h"
 #include "population/population_type.h"
 #include "unit/civilian_unit_class.h"
@@ -195,6 +198,28 @@ void culture_base::initialize()
 
 	if (this->personal_name_generator != nullptr) {
 		fallback_name_generator::get()->add_personal_names(this->personal_name_generator);
+
+		//add words from the language for Markov generation
+		if (this->get_language() != nullptr && this->personal_name_generator->uses_markov_generation() && this->uses_language_data_for_markov_generation()) {
+			for (const word *word : this->get_language()->get_words()) {
+				std::string word_str = word->get_name();
+				string::anglicize(word_str);
+				
+				switch (word->get_gender()) {
+					case grammatical_gender::masculine:
+						this->personal_name_generator->add_name(gender::male, word);
+						break;
+					case grammatical_gender::feminine:
+						this->personal_name_generator->add_name(gender::female, word);
+						break;
+					case grammatical_gender::neuter:
+					case grammatical_gender::none:
+						this->personal_name_generator->add_name(gender::none, word);
+						break;
+				}
+			}
+		}
+
 		this->personal_name_generator->propagate_ungendered_names();
 	}
 

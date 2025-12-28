@@ -42,6 +42,7 @@ class culture_base : public named_data_entry
 
 	Q_PROPERTY(metternich::cultural_group* group MEMBER group NOTIFY changed)
 	Q_PROPERTY(metternich::cultural_group* upper_group MEMBER group NOTIFY changed)
+	Q_PROPERTY(bool use_language_data_for_markov_generation MEMBER use_language_data_for_markov_generation READ uses_language_data_for_markov_generation NOTIFY changed)
 	Q_PROPERTY(metternich::phenotype* default_phenotype MEMBER default_phenotype)
 
 public:
@@ -72,6 +73,16 @@ public:
 	}
 
 	bool is_part_of_group(const cultural_group *group) const;
+
+	virtual const language *get_language() const
+	{
+		return nullptr;
+	}
+
+	bool uses_language_data_for_markov_generation() const
+	{
+		return this->use_language_data_for_markov_generation;
+	}
 
 	phenotype *get_default_phenotype() const;
 
@@ -129,6 +140,7 @@ signals:
 
 private:
 	cultural_group *group = nullptr;
+	bool use_language_data_for_markov_generation = false;
 	phenotype *default_phenotype = nullptr;
 	title_name_map title_names;
 	site_title_name_map site_title_names;

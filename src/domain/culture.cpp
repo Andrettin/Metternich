@@ -56,7 +56,7 @@ void culture::process_gsml_scope(const gsml_data &scope)
 void culture::initialize()
 {
 	if (!this->color.isValid()) {
-		log::log_error("Culture \"" + this->get_identifier() + "\" has no color. A random one will be generated for it.");
+		log::log_error(std::format("Culture \"{}\" has no color. A random one will be generated for it.", this->get_identifier()));
 		this->color = random::get()->generate_color();
 	}
 

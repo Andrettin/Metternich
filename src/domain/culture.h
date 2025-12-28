@@ -48,7 +48,7 @@ public:
 		return this->color;
 	}
 
-	const language *get_language() const
+	virtual const language *get_language() const override
 	{
 		return this->language;
 	}
