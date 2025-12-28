@@ -1,0 +1,9 @@
+cyning = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 27.
+	name = "Cyning"
+	language = old_english
+	type = noun
+	etymon = proto_germanic:kuninga
+	meaning_words = {
+		konig #source (apparently) gives the German "König" as the meaning
+	}
+}

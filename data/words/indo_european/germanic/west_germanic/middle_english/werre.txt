@@ -1,0 +1,8 @@
+werre = { #Source: Carl D. Buck, "Words for 'Battle,' 'War,' 'Army,' and 'Soldier'", 1919, p. 8.
+	name = "Werre"
+	language = middle_english
+	type = noun
+	meaning_words = {
+		war
+	}
+}

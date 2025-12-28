@@ -1,0 +1,10 @@
+konig = {
+	name = "König"
+	language = high_german
+	type = noun
+	gender = masculine
+	etymon = middle_high_german:kunec #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 27.
+	meaning_words = {
+		king
+	}
+}

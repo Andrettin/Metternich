@@ -1,0 +1,11 @@
+king = {
+	name = "King"
+	language = english
+	type = noun
+	gender = masculine
+	etymon = old_english:cyning #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 27.
+	df_word = KING
+	meanings = {
+		"King"
+	}
+}

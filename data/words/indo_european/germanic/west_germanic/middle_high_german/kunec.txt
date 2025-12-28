@@ -1,0 +1,9 @@
+kunec = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 27.
+	name = "Künec"
+	language = middle_high_german
+	type = noun
+	etymon = old_high_german:kuning
+	meaning_words = {
+		konig #source gives the German "König" as the meaning
+	}
+}

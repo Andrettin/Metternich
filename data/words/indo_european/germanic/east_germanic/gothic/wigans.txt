@@ -1,0 +1,9 @@
+wigans = { #Source: Carl D. Buck, "Words for 'Battle,' 'War,' 'Army,' and 'Soldier'", 1919, p. 4.
+	name = "Wigans"
+	language = gothic
+	type = noun
+	meaning_words = {
+		battle
+		war
+	}
+}

@@ -1,0 +1,9 @@
+bataille = { #Source: Carl D. Buck, "Words for 'Battle,' 'War,' 'Army,' and 'Soldier'", 1919, p. 3.
+	name = "Bataille"
+	language = french
+	type = noun
+	etymon = latin:battalia
+	meaning_words = {
+		battle
+	}
+}

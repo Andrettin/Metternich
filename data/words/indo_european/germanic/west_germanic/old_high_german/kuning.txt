@@ -1,0 +1,9 @@
+kuning = { #source also gives the alternative form "chuninc"; Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 27.
+	name = "Kuning"
+	language = old_high_german
+	type = noun
+	etymon = proto_germanic:kuninga
+	meaning_words = {
+		konig #source gives the German "König" as the meaning
+	}
+}

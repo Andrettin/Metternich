@@ -1,0 +1,8 @@
+thiudans = { #Source: D. H. Green, "From Germania to Europe: the Evidence of Language and History", 1997, p. xxxi.
+	name = "Þiudans"
+	language = gothic
+	type = noun
+	meaning_words = {
+		king
+	}
+}
