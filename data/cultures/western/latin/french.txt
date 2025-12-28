@@ -17,7 +17,7 @@ french = {
 		}
 	}
 
-	personal_names = {
+	given_names = {
 		male = {
 			"Bellaud" #Source: http://www.cnrtl.fr/definition/lourdaud//1
 			"Bonnaud" #Source: http://www.cnrtl.fr/definition/lourdaud//1

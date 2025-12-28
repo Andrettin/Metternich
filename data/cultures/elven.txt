@@ -1,6 +1,7 @@
 elven = {
 	name = "Elven"
 	color = { 76 242 76 }
+	given_name_markov_chain_size = 2
 	species = {
 		elf
 		#high_elf

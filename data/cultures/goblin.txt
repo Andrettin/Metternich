@@ -2,6 +2,7 @@ goblin = {
 	name = "Goblin"
 	group = goblinoid
 	color = { 127 127 12 }
+	given_name_markov_chain_size = 2
 	species = {
 		goblin
 	}
