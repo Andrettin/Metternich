@@ -1,0 +1,8 @@
+alds = { #Source: Winfred P. Lehmann, "A Grammar of Proto-Germanic", 2005, 2.9.2b.
+	name = "Alds"
+	language = gothic
+	type = noun
+	meaning_words = {
+		age
+	}
+}

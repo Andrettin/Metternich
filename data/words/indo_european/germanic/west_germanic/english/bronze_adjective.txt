@@ -1,0 +1,8 @@
+bronze_adjective = {
+	name = "Bronze"
+	language = english
+	type = adjective
+	meanings = {
+		"Bronze"
+	}
+}

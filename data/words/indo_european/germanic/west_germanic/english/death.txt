@@ -1,0 +1,10 @@
+death = {
+	name = "Death"
+	language = english
+	type = noun
+	gender = neuter
+	df_word = DEATH
+	meanings = {
+		"Death"
+	}
+}

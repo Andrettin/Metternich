@@ -1,0 +1,11 @@
+bronze_noun = {
+	name = "Bronze"
+	language = english
+	type = noun
+	gender = neuter
+	uncountable = true
+	df_word = BRONZE
+	meanings = {
+		"Bronze"
+	}
+}

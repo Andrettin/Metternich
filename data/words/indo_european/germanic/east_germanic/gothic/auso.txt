@@ -1,0 +1,8 @@
+auso = { #Source: Richard M. Runge, "The Phonetic Realization of Proto-Germanic /r/", 1973, p. 242.
+	name = "Auso"
+	language = gothic
+	type = noun
+	meaning_words = {
+		ear #seemingly etymologically, if not actually
+	}
+}

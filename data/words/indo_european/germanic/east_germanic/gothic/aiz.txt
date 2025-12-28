@@ -1,0 +1,8 @@
+aiz = { #Source: Richard M. Runge, "The Phonetic Realization of Proto-Germanic /r/", 1973, p. 242.
+	name = "Aiz"
+	language = gothic
+	type = noun
+	meaning_words = {
+		bronze_noun
+	}
+}

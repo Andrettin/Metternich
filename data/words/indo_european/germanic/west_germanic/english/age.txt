@@ -1,0 +1,10 @@
+age = {
+	name = "Age"
+	language = english
+	type = noun
+	gender = neuter
+	df_word = AGE
+	meanings = {
+		"Age"
+	}
+}

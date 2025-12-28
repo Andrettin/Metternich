@@ -1,0 +1,10 @@
+ear = {
+	name = "Ear"
+	language = english
+	type = noun
+	gender = neuter
+	df_word = EAR
+	meanings = {
+		"Ear"
+	}
+}
