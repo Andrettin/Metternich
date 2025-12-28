@@ -321,7 +321,7 @@ set_source_files_properties(${unit_SRCS} PROPERTIES UNITY_GROUP "unit")
 set(xbrz_SRCS
 	src/third_party/xbrz/xbrz.cpp
 )
-source_group(xbrz FILES ${xbrz_SRCS})
+source_group(third_party\\xbrz FILES ${xbrz_SRCS})
 set_source_files_properties(${xbrz_SRCS} PROPERTIES UNITY_GROUP "xbrz")
 
 set(metternich_SRCS
@@ -899,7 +899,7 @@ set(xbrz_HDRS
 	src/third_party/xbrz/xbrz_config.h
 	src/third_party/xbrz/xbrz_tools.h
 )
-source_group(xbrz FILES ${xbrz_HDRS})
+source_group(third_party\\xbrz FILES ${xbrz_HDRS})
 
 set(metternich_HDRS
 	${character_HDRS}

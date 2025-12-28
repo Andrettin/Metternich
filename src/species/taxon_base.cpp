@@ -238,7 +238,7 @@ const name_generator *taxon_base::get_given_name_generator(const gender gender) 
 		name_generator = this->given_name_generator->get_name_generator(gender);
 	}
 
-	if (name_generator != nullptr && name_generator->get_name_count() >= name_generator::minimum_name_count) {
+	if (name_generator != nullptr && name_generator->has_enough_data()) {
 		return name_generator;
 	}
 

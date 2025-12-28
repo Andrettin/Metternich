@@ -34,6 +34,28 @@ culture_base::~culture_base()
 {
 }
 
+void culture_base::process_gsml_property(const gsml_property &property)
+{
+	const std::string &key = property.get_key();
+	const std::string &value = property.get_value();
+
+	if (key == "personal_name_markov_chain_size") {
+		assert_throw(property.get_operator() == gsml_operator::assignment);
+		if (this->personal_name_generator == nullptr) {
+			this->personal_name_generator = std::make_unique<gendered_name_generator>();
+		}
+		this->personal_name_generator->set_markov_chain_size(std::stoull(value));
+	} else if (key == "surname_markov_chain_size") {
+		assert_throw(property.get_operator() == gsml_operator::assignment);
+		if (this->surname_generator == nullptr) {
+			this->surname_generator = std::make_unique<gendered_name_generator>();
+		}
+		this->surname_generator->set_markov_chain_size(std::stoull(value));
+	} else {
+		named_data_entry::process_gsml_property(property);
+	}
+}
+
 void culture_base::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
@@ -521,11 +543,8 @@ const name_generator *culture_base::get_personal_name_generator(const gender gen
 		name_generator = this->personal_name_generator->get_name_generator(gender);
 	}
 
-	if (name_generator != nullptr) {
-		const size_t name_count = name_generator->get_name_count();
-		if (name_count >= name_generator::minimum_name_count) {
-			return name_generator;
-		}
+	if (name_generator != nullptr && name_generator->has_enough_data()) {
+		return name_generator;
 	}
 
 	if (this->get_group() != nullptr) {
@@ -561,11 +580,8 @@ const name_generator *culture_base::get_surname_generator(const gender gender) c
 		name_generator = this->surname_generator->get_name_generator(gender);
 	}
 
-	if (name_generator != nullptr) {
-		const size_t name_count = name_generator->get_name_count();
-		if (name_count >= name_generator::minimum_name_count) {
-			return name_generator;
-		}
+	if (name_generator != nullptr && name_generator->has_enough_data()) {
+		return name_generator;
 	}
 
 	if (this->get_group() != nullptr) {
@@ -596,11 +612,11 @@ void culture_base::add_surname(const gender gender, const name_variant &surname)
 const name_generator *culture_base::get_military_unit_class_name_generator(const military_unit_class *unit_class) const
 {
 	const auto find_iterator = this->military_unit_class_name_generators.find(unit_class);
-	if (find_iterator != this->military_unit_class_name_generators.end() && find_iterator->second->get_name_count() >= name_generator::minimum_name_count) {
+	if (find_iterator != this->military_unit_class_name_generators.end() && find_iterator->second->has_enough_data()) {
 		return find_iterator->second.get();
 	}
 
-	if (unit_class->is_ship() && this->ship_name_generator != nullptr && this->ship_name_generator->get_name_count() >= name_generator::minimum_name_count) {
+	if (unit_class->is_ship() && this->ship_name_generator != nullptr && this->ship_name_generator->has_enough_data()) {
 		return this->ship_name_generator.get();
 	}
 
@@ -627,11 +643,11 @@ void culture_base::add_military_unit_class_name(const military_unit_class *unit_
 const name_generator *culture_base::get_transporter_class_name_generator(const transporter_class *transporter_class) const
 {
 	const auto find_iterator = this->transporter_class_name_generators.find(transporter_class);
-	if (find_iterator != this->transporter_class_name_generators.end() && find_iterator->second->get_name_count() >= name_generator::minimum_name_count) {
+	if (find_iterator != this->transporter_class_name_generators.end() && find_iterator->second->has_enough_data()) {
 		return find_iterator->second.get();
 	}
 
-	if (transporter_class->is_ship() && this->ship_name_generator != nullptr && this->ship_name_generator->get_name_count() >= name_generator::minimum_name_count) {
+	if (transporter_class->is_ship() && this->ship_name_generator != nullptr && this->ship_name_generator->has_enough_data()) {
 		return this->ship_name_generator.get();
 	}
 
