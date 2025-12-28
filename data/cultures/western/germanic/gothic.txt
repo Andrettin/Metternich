@@ -3,6 +3,9 @@ gothic = {
 	group = east_germanic
 	color = { 204 102 204 }
 	language = gothic
+	given_name_markov_chain_size = 2
+	surname_markov_chain_size = 2
+	use_language_data_for_markov_generation = true
 	species = {
 		human
 		half_elf

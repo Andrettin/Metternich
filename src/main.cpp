@@ -49,6 +49,7 @@
 #include "infrastructure/wonder.h"
 #include "item/affix_type.h"
 #include "item/item.h"
+#include "language/grammatical_gender.h"
 #include "map/combat_map_grid_model.h"
 #include "map/diplomatic_map_image_provider.h"
 #include "map/elevation_type.h"
@@ -173,6 +174,7 @@ int main(int argc, char **argv)
 		database_util::register_enum<food_type>();
 		database_util::register_enum<forestation_type>();
 		database_util::register_enum<geological_era>();
+		database_util::register_enum<grammatical_gender>();
 		database_util::register_enum<idea_type>();
 		database_util::register_enum<improvement_slot>();
 		database_util::register_enum<military_unit_category>();
