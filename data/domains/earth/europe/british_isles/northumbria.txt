@@ -14,4 +14,12 @@ northumbria = {
 		northumberland
 		cumberland
 	}
+	
+	history = {
+		729 = {
+			offices = {
+				ruler = ceolwulf_of_northumbria #Ceolwulf became king of Northumbria in 729; Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 91.
+			}
+		}
+	}
 }

@@ -2,6 +2,7 @@ anglo_saxon = {
 	name = "Anglo-Saxon"
 	group = anglo_saxon
 	color = { 204 76 76 }
+	language = old_english
 	species = {
 		human
 		half_elf

@@ -2,6 +2,9 @@ anglian = {
 	name = "Anglian"
 	group = west_germanic
 	color = { 140 37 40 }
+	language = old_english
+	given_name_markov_chain_size = 2
+	surname_markov_chain_size = 2
 	species = {
 		human
 		half_elf

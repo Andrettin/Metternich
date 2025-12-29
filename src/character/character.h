@@ -21,6 +21,7 @@ Q_MOC_INCLUDE("ui/portrait.h")
 
 namespace archimedes {
 	class calendar;
+	class word;
 	enum class gender;
 }
 
@@ -58,6 +59,8 @@ class character final : public character_base, public data_type<character>
 {
 	Q_OBJECT
 
+	Q_PROPERTY(archimedes::word* name_front_compound_element MEMBER name_front_compound_element WRITE set_name_front_compound_element NOTIFY changed)
+	Q_PROPERTY(archimedes::word* name_rear_compound_element MEMBER name_rear_compound_element WRITE set_name_rear_compound_element NOTIFY changed)
 	Q_PROPERTY(metternich::dynasty* dynasty MEMBER dynasty NOTIFY changed)
 	Q_PROPERTY(metternich::species* species MEMBER species NOTIFY changed)
 	Q_PROPERTY(const metternich::character_class* character_class MEMBER character_class READ get_character_class NOTIFY changed)
@@ -122,6 +125,9 @@ public:
 
 	bool initialize_dates_from_children();
 	bool initialize_dates_from_parents();
+
+	void set_name_front_compound_element(word *word);
+	void set_name_rear_compound_element(word *word);
 
 	const dynasty *get_dynasty() const
 	{
@@ -270,6 +276,8 @@ signals:
 	void game_data_changed() const;
 
 private:
+	word *name_front_compound_element = nullptr;
+	word *name_rear_compound_element = nullptr;
 	metternich::dynasty *dynasty = nullptr;
 	metternich::species *species = nullptr;
 	const metternich::character_class *character_class = nullptr;

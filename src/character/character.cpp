@@ -16,6 +16,7 @@
 #include "game/game.h"
 #include "item/item_type.h"
 #include "language/name_generator.h"
+#include "language/word.h"
 #include "map/province.h"
 #include "map/site.h"
 #include "map/site_type.h"
@@ -337,6 +338,16 @@ void character::initialize()
 
 void character::check() const
 {
+	if (this->name_front_compound_element != nullptr) {
+		assert_throw(this->get_culture() != nullptr);
+		assert_throw(this->name_front_compound_element->get_language() == this->get_culture()->get_language());
+	}
+
+	if (this->name_rear_compound_element != nullptr) {
+		assert_throw(this->get_culture() != nullptr);
+		assert_throw(this->name_rear_compound_element->get_language() == this->get_culture()->get_language());
+	}
+
 	if (this->get_species() == nullptr) {
 		throw std::runtime_error(std::format("Character \"{}\" has no species.", this->get_identifier()));
 	}
@@ -531,6 +542,18 @@ bool character::initialize_dates_from_parents()
 	log_trace(std::format("Set birth date for character \"{}\": {}.", this->get_identifier(), date::to_string(birth_date)));
 
 	return true;
+}
+
+void character::set_name_front_compound_element(word *word)
+{
+	this->name_front_compound_element = word;
+	word->set_name_front_compound_element(true);
+}
+
+void character::set_name_rear_compound_element(word *word)
+{
+	this->name_rear_compound_element = word;
+	word->set_name_rear_compound_element(true);
 }
 
 bool character::is_surname_first() const

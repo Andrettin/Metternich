@@ -1,0 +1,17 @@
+ceolwulf_of_northumbria = { #Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 91.
+	name = "Ceolwulf"
+	name_rear_compound_element = wulf_old_english #presumably
+	character_class = warrior #king
+	culture = anglo_saxon
+	religion = catholic
+	home_site = york #Northumbria
+	gender = male
+	start_date = 729 #was king of Northumbria between 729 and 737
+	death_date = 737
+	
+	history = {
+		729 = {
+			rank = lord
+		}
+	}
+}
