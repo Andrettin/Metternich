@@ -1,0 +1,21 @@
+theodoric_the_great = { #Source: F. E. Sandbach, "The Heroic Saga-Cycle of Dietrich of Bern", 1906, pp. 6-7, 9.
+	name = "Theodoric"
+	name_front_compound_element = thiuda #presumably
+	character_class = warrior #king
+	culture = gothic
+	religion = catholic #Arian Christianity
+	home_site = ravenna #Kingdom of the Ostrogoths
+	gender = male
+	birth_date = 454 #born in 454 AD (was 8 years old in 462 AD)
+	death_date = 526 #died in 526 AD; he was put in a magnificent marble tomb in Ravenna
+	
+	#king of the Ostrogoths from 474
+	#Dietrich von Bern in the German sagas
+	#was given as a hostage by Walamer to the Romans, and thus stayed for 10 years (until 472 AD) in the Byzantine court
+	
+	history = {
+		474 = {
+			rank = lord
+		}
+	}
+}
