@@ -203,8 +203,18 @@ void culture_base::process_gsml_scope(const gsml_data &scope)
 
 void culture_base::initialize()
 {
-	if (this->get_language() != nullptr) {
+	if (this->get_language() != nullptr && (this->given_name_generator == nullptr || !this->given_name_generator->has_enough_data())) {
 		assert_throw(this->get_language()->is_initialized());
+
+		std::set<gender> enough_data_genders;
+		if (this->given_name_generator != nullptr) {
+			if (this->given_name_generator->has_enough_data(gender::female)) {
+				enough_data_genders.insert(gender::female);
+			}
+			if (this->given_name_generator->has_enough_data(gender::male)) {
+				enough_data_genders.insert(gender::male);
+			}
+		}
 
 		for (const word *front_compound_element : this->get_language()->get_name_front_compound_elements()) {
 			for (const word *rear_compound_element : this->get_language()->get_name_rear_compound_elements()) {
@@ -217,6 +227,11 @@ void culture_base::initialize()
 				}
 
 				const gender gender = grammatical_gender_to_gender(rear_compound_element->get_gender());
+
+				if (enough_data_genders.contains(gender)) {
+					continue;
+				}
+
 				this->given_name_generator->add_name(gender, front_compound_element->get_anglicized_name() + string::lowered(rear_compound_element->get_anglicized_name()));
 			}
 		}
