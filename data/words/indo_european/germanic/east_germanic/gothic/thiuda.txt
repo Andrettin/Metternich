@@ -1,0 +1,11 @@
+thiuda = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 99.
+	name = "Þiuda"
+	language = gothic
+	type = noun
+	gender = feminine
+	etymon = proto_germanic:theudo
+	name_front_compound_element = true #as in Old English
+	meaning_words = {
+		volk #source gives the German "Volk" as the meaning
+	}
+}

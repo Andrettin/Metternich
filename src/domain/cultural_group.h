@@ -19,6 +19,8 @@ public:
 	static constexpr const char database_folder[] = "cultural_groups";
 	static constexpr bool history_enabled = true;
 
+	using culture_base::database_dependencies;
+
 	explicit cultural_group(const std::string &identifier);
 
 	virtual void check() const override;

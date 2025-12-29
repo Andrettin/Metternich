@@ -27,7 +27,16 @@
 #include "util/string_util.h"
 #include "util/vector_util.h"
 
+#include <magic_enum/magic_enum.hpp>
+#include <magic_enum/magic_enum_utility.hpp>
+
 namespace metternich {
+
+const std::set<std::string> culture_base::database_dependencies = {
+	//so that languages and words are fully initialized when initializing cultures
+	language::class_identifier,
+	word::class_identifier
+};
 
 culture_base::culture_base(const std::string &identifier) : named_data_entry(identifier)
 {
@@ -194,6 +203,25 @@ void culture_base::process_gsml_scope(const gsml_data &scope)
 
 void culture_base::initialize()
 {
+	if (this->get_language() != nullptr) {
+		assert_throw(this->get_language()->is_initialized());
+
+		for (const word *front_compound_element : this->get_language()->get_name_front_compound_elements()) {
+			for (const word *rear_compound_element : this->get_language()->get_name_rear_compound_elements()) {
+				if (rear_compound_element == front_compound_element) {
+					continue;
+				}
+
+				if (this->given_name_generator == nullptr) {
+					this->given_name_generator = std::make_unique<gendered_name_generator>();
+				}
+
+				const gender gender = grammatical_gender_to_gender(rear_compound_element->get_gender());
+				this->given_name_generator->add_name(gender, front_compound_element->get_anglicized_name() + string::lowered(rear_compound_element->get_anglicized_name()));
+			}
+		}
+	}
+
 	if (!this->get_patronyms().empty() && this->given_name_generator != nullptr && this->given_name_generator->get_name_generator(gender::male) != nullptr) {
 		magic_enum::enum_for_each<gender>([this](const gender gender) {
 			const std::string &patronym = this->get_patronym(gender);

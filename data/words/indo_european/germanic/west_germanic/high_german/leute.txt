@@ -1,0 +1,8 @@
+leute = {
+	name = "Leute"
+	language = high_german
+	type = noun
+	meanings = {
+		"People"
+	}
+}

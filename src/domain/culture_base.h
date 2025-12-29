@@ -51,6 +51,8 @@ public:
 	using site_title_name_map = std::map<government_variant, std::map<int, std::string>>;
 	using office_title_name_map = data_entry_map<office, std::map<government_variant, std::map<domain_tier, std::map<gender, std::string>>>>;
 
+	static const std::set<std::string> database_dependencies;
+
 	explicit culture_base(const std::string &identifier);
 	~culture_base();
 

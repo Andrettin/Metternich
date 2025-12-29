@@ -1,0 +1,8 @@
+volk = {
+	name = "Volk"
+	language = high_german
+	type = noun
+	meanings = {
+		"People"
+	}
+}

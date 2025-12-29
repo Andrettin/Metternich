@@ -34,6 +34,8 @@ public:
 	static constexpr const char database_folder[] = "cultures";
 	static constexpr bool history_enabled = true;
 
+	using culture_base::database_dependencies;
+
 	explicit culture(const std::string &identifier);
 	~culture();
 
