@@ -17,4 +17,8 @@ anglo_saxon = {
 			core = great_britain
 		}
 	}
+	patronyms = {
+		male = "sson"
+		female = "sdohtor"
+	}
 }

@@ -14,4 +14,8 @@ saxon = {
 		anglo_saxon
 		german
 	}
+	patronyms = {
+		male = "sson"
+		female = "sdohtor"
+	}
 }

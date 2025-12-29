@@ -84,6 +84,13 @@ public:
 		return this->use_language_data_for_markov_generation;
 	}
 
+	const std::map<gender, std::string> get_patronyms() const
+	{
+		return this->patronyms;
+	}
+
+	const std::string &get_patronym(const gender gender) const;
+
 	phenotype *get_default_phenotype() const;
 
 	const std::string &get_title_name(const government_type *government_type, const domain_tier tier) const;
@@ -141,6 +148,7 @@ signals:
 private:
 	cultural_group *group = nullptr;
 	bool use_language_data_for_markov_generation = false;
+	std::map<gender, std::string> patronyms;
 	phenotype *default_phenotype = nullptr;
 	title_name_map title_names;
 	site_title_name_map site_title_names;

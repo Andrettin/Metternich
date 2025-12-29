@@ -54,6 +54,9 @@ void culture_base::process_gsml_property(const gsml_property &property)
 			this->surname_generator = std::make_unique<gendered_name_generator>();
 		}
 		this->surname_generator->set_markov_chain_size(std::stoull(value));
+	} else if (key == "patronym") {
+		assert_throw(property.get_operator() == gsml_operator::assignment);
+		this->patronyms[gender::none] = value;
 	} else {
 		named_data_entry::process_gsml_property(property);
 	}
@@ -64,7 +67,14 @@ void culture_base::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "title_names") {
+	if (tag == "patronyms") {
+		scope.for_each_property([this](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+
+			this->patronyms[magic_enum::enum_cast<gender>(key).value()] = value;
+		});
+	} else if (tag == "title_names") {
 		government_type::process_title_name_scope(this->title_names, scope);
 	} else if (tag == "site_title_names") {
 		government_type::process_site_title_name_scope(this->site_title_names, scope);
@@ -184,6 +194,28 @@ void culture_base::process_gsml_scope(const gsml_data &scope)
 
 void culture_base::initialize()
 {
+	if (!this->get_patronyms().empty() && this->given_name_generator != nullptr && this->given_name_generator->get_name_generator(gender::male) != nullptr) {
+		magic_enum::enum_for_each<gender>([this](const gender gender) {
+			const std::string &patronym = this->get_patronym(gender);
+			if (patronym.empty()) {
+				return;
+			}
+
+			if (this->surname_generator != nullptr && this->surname_generator->get_name_generator(gender) != nullptr && this->surname_generator->get_name_generator(gender)->has_enough_data()) {
+				return;
+			}
+
+			if (this->surname_generator == nullptr) {
+				this->surname_generator = std::make_unique<gendered_name_generator>();
+			}
+
+			for (const auto &name_variant : this->given_name_generator->get_name_generator(gender::male)->get_names()) {
+				const std::string male_name = get_name_variant_string(name_variant);
+				this->surname_generator->add_name(gender, male_name + patronym);
+			}
+		});
+	}
+
 	if (this->group != nullptr) {
 		if (!this->group->is_initialized()) {
 			this->group->initialize();
@@ -266,6 +298,16 @@ data_entry_history *culture_base::get_history_base()
 void culture_base::reset_history()
 {
 	this->history = make_qunique<culture_history>();
+}
+
+const std::string &culture_base::get_patronym(const gender gender) const
+{
+	const auto find_iterator = this->patronyms.find(gender);
+	if (find_iterator != this->patronyms.end()) {
+		return find_iterator->second;
+	}
+
+	return string::empty_str;
 }
 
 phenotype *culture_base::get_default_phenotype() const

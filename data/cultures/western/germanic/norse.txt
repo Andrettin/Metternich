@@ -16,6 +16,10 @@ norse = {
 		norwegian
 		swedish
 	}
+	patronyms = {
+		male = "sson"
+		female = "sdottir"
+	}
 	office_title_names = {
 		ruler = {
 			despotism = "Warlord"

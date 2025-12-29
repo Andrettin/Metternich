@@ -15,4 +15,8 @@ frisian = {
 		flemish
 		german
 	}
+	patronyms = {
+		male = "sson"
+		female = "sdohtor"
+	}
 }
