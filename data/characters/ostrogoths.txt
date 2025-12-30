@@ -1,6 +1,7 @@
 theodoric_the_great = { #Source: F. E. Sandbach, "The Heroic Saga-Cycle of Dietrich of Bern", 1906, pp. 6-7, 9.
 	name = "Theodoric"
 	name_front_compound_element = thiuda #presumably
+	name_rear_compound_element = reiks #presumably
 	character_class = warrior #king
 	culture = gothic
 	religion = catholic #Arian Christianity
@@ -22,8 +23,8 @@ theodoric_the_great = { #Source: F. E. Sandbach, "The Heroic Saga-Cycle of Dietr
 
 wolfhart_of_the_ostrogoths = { #Source: F. E. Sandbach, "The Heroic Saga-Cycle of Dietrich of Bern", 1906, pp. 28-29, 63.
 	name = "Wolfhart"
-	name_front_compound_element = vulfs #presumably
-	#name_rear_compound_element = hardus #presumably
+	name_front_compound_element = vulfs #tentative rendering of the name element in Gothic, based on the cognate of the original German name element
+	name_rear_compound_element = hardus #tentative rendering of the name element in Gothic, based on the cognate of the original German name element
 	character_class = warrior
 	culture = gothic
 	religion = catholic #Arian Christianity

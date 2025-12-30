@@ -1,0 +1,9 @@
+reiks = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 174.
+	name = "Reiks"
+	language = gothic
+	type = noun
+	etymon = proto_germanic:rika_noun
+	meanings = {
+		"Ruler" #source gives the German "Herrscher" as the meaning
+	}
+}
