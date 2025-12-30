@@ -273,31 +273,11 @@ void culture_base::initialize()
 
 	if (this->given_name_generator != nullptr) {
 		fallback_name_generator::get()->add_given_names(this->given_name_generator);
-
-		//add words from the language for Markov generation
-		if (this->get_language() != nullptr && this->given_name_generator->uses_markov_generation() && this->uses_language_data_for_markov_generation()) {
-			for (const word *word : this->get_language()->get_words()) {
-				const std::string word_str = word->get_anglicized_name();
-				const gender gender = grammatical_gender_to_gender(word->get_gender());
-				this->given_name_generator->add_name(gender, word);
-			}
-		}
-
 		this->given_name_generator->propagate_ungendered_names();
 	}
 
 	if (this->surname_generator != nullptr) {
 		fallback_name_generator::get()->add_surnames(this->surname_generator);
-
-		//add words from the language for Markov generation
-		if (this->get_language() != nullptr && this->surname_generator->uses_markov_generation() && this->uses_language_data_for_markov_generation()) {
-			for (const word *word : this->get_language()->get_words()) {
-				const std::string word_str = word->get_anglicized_name();
-				const gender gender = grammatical_gender_to_gender(word->get_gender());
-				this->surname_generator->add_name(gender, word);
-			}
-		}
-
 		this->surname_generator->propagate_ungendered_names();
 	}
 

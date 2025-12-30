@@ -19,3 +19,17 @@ theodoric_the_great = { #Source: F. E. Sandbach, "The Heroic Saga-Cycle of Dietr
 		}
 	}
 }
+
+wolfhart_of_the_ostrogoths = { #Source: F. E. Sandbach, "The Heroic Saga-Cycle of Dietrich of Bern", 1906, pp. 28-29, 63.
+	name = "Wolfhart"
+	name_front_compound_element = vulfs #presumably
+	#name_rear_compound_element = hardus #presumably
+	character_class = warrior
+	culture = gothic
+	religion = catholic #Arian Christianity
+	home_site = ravenna #Kingdom of the Ostrogoths
+	gender = male
+	contemporary_character = theodoric_the_great
+	
+	#follower of Dietrich (= Theoderic, ostrogothic king) in the Dietrich Saga; hot-headed (source pp. 28-29); young and ever thirsting for the fray (source p. 63)
+}
