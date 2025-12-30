@@ -1,0 +1,8 @@
+largentiere = {
+	name = "Largentiere" #"Largentière"
+	world = earth
+	geocoordinate = { 4.2933333333333 44.542777777778 }
+	type = holding
+	holding_type = guild
+	province = lower_languedoc
+}

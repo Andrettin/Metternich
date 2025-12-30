@@ -1,0 +1,8 @@
+privas = {
+	name = "Privas"
+	world = earth
+	geocoordinate = { 4.5991666666667 44.735 }
+	type = holding
+	holding_type = law
+	province = lower_languedoc
+}

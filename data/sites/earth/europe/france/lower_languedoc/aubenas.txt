@@ -1,0 +1,8 @@
+aubenas = {
+	name = "Aubenas"
+	world = earth
+	geocoordinate = { 4.3902777777778 44.619722222222 }
+	type = holding
+	holding_type = law
+	province = lower_languedoc
+}

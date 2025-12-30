@@ -1,0 +1,8 @@
+viviers = {
+	name = "Viviers"
+	world = earth
+	geocoordinate = { 4.6888888888889 44.482777777778 }
+	type = holding
+	holding_type = temple
+	province = lower_languedoc
+}

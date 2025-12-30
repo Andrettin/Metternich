@@ -1,0 +1,8 @@
+joyeuse = {
+	name = "Joyeuse"
+	world = earth
+	geocoordinate = { 4.2377777777778 44.479444444444 }
+	type = holding
+	holding_type = law
+	province = lower_languedoc
+}
