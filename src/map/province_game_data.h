@@ -1,6 +1,6 @@
 #pragma once
 
-#include "domain/culture_container.h"
+#include "culture/culture_container.h"
 #include "economy/commodity_container.h"
 #include "economy/resource_container.h"
 #include "infrastructure/building_type_container.h"
@@ -13,7 +13,7 @@
 #include "util/qunique_ptr.h"
 
 Q_MOC_INCLUDE("character/character.h")
-Q_MOC_INCLUDE("domain/culture.h")
+Q_MOC_INCLUDE("culture/culture.h")
 Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("population/population.h")
 Q_MOC_INCLUDE("religion/religion.h")

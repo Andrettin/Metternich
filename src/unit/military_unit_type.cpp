@@ -2,10 +2,10 @@
 
 #include "unit/military_unit_type.h"
 
+#include "culture/cultural_group.h"
+#include "culture/culture.h"
 #include "domain/domain.h"
 #include "domain/country_military.h"
-#include "domain/cultural_group.h"
-#include "domain/culture.h"
 #include "economy/commodity.h"
 #include "technology/technology.h"
 #include "unit/military_unit_category.h"

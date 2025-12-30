@@ -3,9 +3,9 @@
 #include "infrastructure/building_slot.h"
 
 #include "database/defines.h"
+#include "culture/culture.h"
 #include "domain/country_economy.h"
 #include "domain/country_technology.h"
-#include "domain/culture.h"
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
 #include "economy/commodity.h"

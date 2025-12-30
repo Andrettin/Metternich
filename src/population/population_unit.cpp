@@ -2,7 +2,7 @@
 
 #include "population/population_unit.h"
 
-#include "domain/culture.h"
+#include "culture/culture.h"
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
 #include "economy/commodity.h"

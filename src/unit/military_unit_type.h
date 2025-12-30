@@ -6,8 +6,8 @@
 #include "unit/military_unit_type_container.h"
 #include "util/centesimal_int.h"
 
-Q_MOC_INCLUDE("domain/cultural_group.h")
-Q_MOC_INCLUDE("domain/culture.h")
+Q_MOC_INCLUDE("culture/cultural_group.h")
+Q_MOC_INCLUDE("culture/culture.h")
 Q_MOC_INCLUDE("technology/technology.h")
 Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("unit/military_unit_class.h")

@@ -1,8 +1,8 @@
 #include "metternich.h"
 
-#include "domain/culture_container.h"
+#include "culture/culture_container.h"
 
-#include "domain/culture.h"
+#include "culture/culture.h"
 
 namespace metternich {
 

@@ -2,8 +2,8 @@
 
 #include "map/site.h"
 
-#include "domain/cultural_group.h"
-#include "domain/culture.h"
+#include "culture/cultural_group.h"
+#include "culture/culture.h"
 #include "domain/government_type.h"
 #include "economy/resource.h"
 #include "infrastructure/holding_type.h"

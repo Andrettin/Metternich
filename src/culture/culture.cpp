@@ -1,8 +1,8 @@
 #include "metternich.h"
 
-#include "domain/culture.h"
+#include "culture/culture.h"
 
-#include "domain/cultural_group.h"
+#include "culture/cultural_group.h"
 #include "infrastructure/building_class.h"
 #include "population/population_class.h"
 #include "script/condition/and_condition.h"

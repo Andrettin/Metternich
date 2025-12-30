@@ -1,9 +1,9 @@
 #pragma once
 
+#include "culture/culture_container.h"
 #include "database/data_entry_container.h"
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
-#include "domain/culture_container.h"
 #include "economy/commodity_container.h"
 #include "infrastructure/pathway_container.h"
 #include "religion/religion_container.h"

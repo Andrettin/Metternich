@@ -3,8 +3,8 @@
 #include "religion/deity.h"
 
 #include "character/character.h"
-#include "domain/cultural_group.h"
-#include "domain/culture.h"
+#include "culture/cultural_group.h"
+#include "culture/culture.h"
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
 #include "domain/idea_type.h"

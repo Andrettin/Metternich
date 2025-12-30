@@ -1,6 +1,6 @@
 #pragma once
 
-#include "domain/culture.h"
+#include "culture/culture.h"
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
 #include "database/defines.h"

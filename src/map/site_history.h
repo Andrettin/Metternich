@@ -5,7 +5,7 @@
 #include "population/population_group_map.h"
 #include "util/centesimal_int.h"
 
-Q_MOC_INCLUDE("domain/culture.h")
+Q_MOC_INCLUDE("culture/culture.h")
 Q_MOC_INCLUDE("infrastructure/dungeon.h")
 Q_MOC_INCLUDE("infrastructure/holding_type.h")
 Q_MOC_INCLUDE("religion/religion.h")

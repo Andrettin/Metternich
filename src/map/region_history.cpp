@@ -2,7 +2,7 @@
 
 #include "map/region_history.h"
 
-#include "domain/culture.h"
+#include "culture/culture.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/province_history.h"

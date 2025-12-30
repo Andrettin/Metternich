@@ -4,7 +4,7 @@
 
 #include "character/character.h"
 #include "character/party.h"
-#include "domain/culture.h"
+#include "culture/culture.h"
 #include "infrastructure/holding_type.h"
 #include "map/province.h"
 #include "map/province_game_data.h"

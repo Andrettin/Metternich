@@ -1,7 +1,7 @@
 #pragma once
 
+#include "culture/culture_base.h"
 #include "database/data_type.h"
-#include "domain/culture_base.h"
 
 namespace archimedes {
 	class language;

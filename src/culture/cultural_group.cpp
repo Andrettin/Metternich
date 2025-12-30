@@ -1,8 +1,8 @@
 #include "metternich.h"
 
-#include "domain/cultural_group.h"
+#include "culture/cultural_group.h"
 
-#include "domain/cultural_group_rank.h"
+#include "culture/cultural_group_rank.h"
 
 namespace metternich {
 

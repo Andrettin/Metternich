@@ -1,9 +1,9 @@
 #include "metternich.h"
 
-#include "domain/culture_base.h"
+#include "culture/culture_base.h"
 
-#include "domain/cultural_group.h"
-#include "domain/culture_history.h"
+#include "culture/cultural_group.h"
+#include "culture/culture_history.h"
 #include "domain/domain_tier.h"
 #include "domain/government_type.h"
 #include "infrastructure/building_class.h"

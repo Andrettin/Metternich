@@ -4,6 +4,7 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
+#include "culture/culture.h"
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "domain/country_economy.h"
@@ -11,7 +12,6 @@
 #include "domain/country_military.h"
 #include "domain/country_technology.h"
 #include "domain/country_turn_data.h"
-#include "domain/culture.h"
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
 #include "economy/commodity.h"

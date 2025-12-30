@@ -2,8 +2,8 @@
 
 #include "map/map_generator.h"
 
+#include "culture/culture.h"
 #include "database/defines.h"
-#include "domain/culture.h"
 #include "domain/domain.h"
 #include "domain/domain_container.h"
 #include "economy/resource.h"

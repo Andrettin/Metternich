@@ -8,7 +8,7 @@
 #include "util/centesimal_int.h"
 
 Q_MOC_INCLUDE("character/character.h")
-Q_MOC_INCLUDE("domain/culture.h")
+Q_MOC_INCLUDE("culture/culture.h")
 Q_MOC_INCLUDE("domain/domain_tier.h")
 Q_MOC_INCLUDE("domain/government_type.h")
 Q_MOC_INCLUDE("religion/religion.h")

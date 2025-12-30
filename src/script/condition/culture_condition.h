@@ -1,6 +1,6 @@
 #pragma once
 
-#include "domain/culture.h"
+#include "culture/culture.h"
 #include "script/condition/condition.h"
 
 namespace metternich {

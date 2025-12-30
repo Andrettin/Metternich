@@ -2,14 +2,14 @@
 
 #include "domain/domain.h"
 
+#include "culture/cultural_group.h"
+#include "culture/culture.h"
 #include "database/database.h"
 #include "database/defines.h"
 #include "domain/country_ai.h"
 #include "domain/country_government.h"
 #include "domain/country_turn_data.h"
 #include "domain/country_type.h"
-#include "domain/cultural_group.h"
-#include "domain/culture.h"
 #include "domain/domain_game_data.h"
 #include "domain/domain_history.h"
 #include "domain/domain_tier.h"

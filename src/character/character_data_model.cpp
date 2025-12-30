@@ -10,7 +10,7 @@
 #include "character/skill.h"
 #include "character/trait.h"
 #include "character/trait_type.h"
-#include "domain/culture.h"
+#include "culture/culture.h"
 #include "item/item.h"
 #include "item/item_slot.h"
 #include "religion/deity.h"

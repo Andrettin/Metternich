@@ -43,6 +43,16 @@ set(character_SRCS
 source_group(character FILES ${character_SRCS})
 set_source_files_properties(${character_SRCS} PROPERTIES UNITY_GROUP "character")
 
+set(culture_SRCS
+	src/culture/cultural_group.cpp
+	src/culture/culture.cpp
+	src/culture/culture_base.cpp
+	src/culture/culture_container.cpp
+	src/culture/culture_history.cpp
+)
+source_group(culture FILES ${culture_SRCS})
+set_source_files_properties(${culture_SRCS} PROPERTIES UNITY_GROUP "culture")
+
 set(database_SRCS
 	src/database/data_entry_container.cpp
 	src/database/defines.cpp
@@ -61,11 +71,6 @@ set(domain_SRCS
 	src/domain/country_rank.cpp
 	src/domain/country_technology.cpp
 	src/domain/country_turn_data.cpp
-	src/domain/cultural_group.cpp
-	src/domain/culture.cpp
-	src/domain/culture_base.cpp
-	src/domain/culture_container.cpp
-	src/domain/culture_history.cpp
 	src/domain/domain.cpp
 	src/domain/domain_attribute.cpp
 	src/domain/domain_container.cpp
@@ -326,6 +331,7 @@ set_source_files_properties(${xbrz_SRCS} PROPERTIES UNITY_GROUP "xbrz")
 
 set(metternich_SRCS
 	${character_SRCS}
+	${culture_SRCS}
 	${database_SRCS}
 	${domain_SRCS}
 	${economy_SRCS}
@@ -373,6 +379,16 @@ set(character_HDRS
 )
 source_group(character FILES ${character_HDRS})
 
+set(culture_HDRS
+	src/culture/cultural_group.h
+	src/culture/cultural_group_rank.h
+	src/culture/culture.h
+	src/culture/culture_base.h
+	src/culture/culture_container.h
+	src/culture/culture_history.h
+)
+source_group(culture FILES ${culture_HDRS})
+
 set(database_HDRS
 	src/database/data_entry_container.h
 	src/database/defines.h
@@ -391,12 +407,6 @@ set(domain_HDRS
 	src/domain/country_technology.h
 	src/domain/country_turn_data.h
 	src/domain/country_type.h
-	src/domain/cultural_group.h
-	src/domain/cultural_group_rank.h
-	src/domain/culture.h
-	src/domain/culture_base.h
-	src/domain/culture_container.h
-	src/domain/culture_history.h
 	src/domain/diplomacy_state.h
 	src/domain/domain.h
 	src/domain/domain_attribute.h
@@ -903,6 +913,7 @@ source_group(third_party\\xbrz FILES ${xbrz_HDRS})
 
 set(metternich_HDRS
 	${character_HDRS}
+	${culture_HDRS}
 	${database_HDRS}
 	${domain_HDRS}
 	${economy_HDRS}

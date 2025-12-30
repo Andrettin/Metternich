@@ -2,8 +2,8 @@
 
 #include "population/population.h"
 
+#include "culture/culture.h"
 #include "database/defines.h"
-#include "domain/culture.h"
 #include "game/game.h"
 #include "population/population_type.h"
 #include "population/population_unit.h"

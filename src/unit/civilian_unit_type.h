@@ -6,8 +6,8 @@
 #include "economy/resource_container.h"
 #include "infrastructure/pathway_container.h"
 
-Q_MOC_INCLUDE("domain/cultural_group.h")
-Q_MOC_INCLUDE("domain/culture.h")
+Q_MOC_INCLUDE("culture/cultural_group.h")
+Q_MOC_INCLUDE("culture/culture.h")
 Q_MOC_INCLUDE("technology/technology.h")
 Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("unit/civilian_unit_class.h")

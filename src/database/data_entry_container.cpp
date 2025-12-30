@@ -9,7 +9,7 @@
 #include "character/status_effect.h"
 #include "character/trait.h"
 #include "character/trait_type.h"
-#include "domain/cultural_group.h"
+#include "culture/cultural_group.h"
 #include "domain/domain_attribute.h"
 #include "domain/idea_slot.h"
 #include "domain/office.h"

@@ -4,9 +4,9 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
+#include "culture/cultural_group.h"
+#include "culture/culture.h"
 #include "domain/country_military.h"
-#include "domain/cultural_group.h"
-#include "domain/culture.h"
 #include "domain/diplomacy_state.h"
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"

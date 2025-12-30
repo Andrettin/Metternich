@@ -4,8 +4,8 @@
 #include "database/named_data_entry.h"
 #include "economy/commodity_container.h"
 
-Q_MOC_INCLUDE("domain/cultural_group.h")
-Q_MOC_INCLUDE("domain/culture.h")
+Q_MOC_INCLUDE("culture/cultural_group.h")
+Q_MOC_INCLUDE("culture/culture.h")
 Q_MOC_INCLUDE("infrastructure/building_class.h")
 Q_MOC_INCLUDE("population/population_type.h")
 Q_MOC_INCLUDE("technology/technology.h")

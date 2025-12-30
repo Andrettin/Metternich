@@ -19,11 +19,11 @@
 #include "util/qunique_ptr.h"
 
 Q_MOC_INCLUDE("character/character.h")
+Q_MOC_INCLUDE("culture/culture.h")
 Q_MOC_INCLUDE("domain/country_economy.h")
 Q_MOC_INCLUDE("domain/country_government.h")
 Q_MOC_INCLUDE("domain/country_military.h")
 Q_MOC_INCLUDE("domain/country_technology.h")
-Q_MOC_INCLUDE("domain/culture.h")
 Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("domain/domain_tier.h")
 Q_MOC_INCLUDE("domain/government_type.h")
