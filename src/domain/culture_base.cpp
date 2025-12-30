@@ -244,10 +244,6 @@ void culture_base::initialize()
 				return;
 			}
 
-			if (this->surname_generator != nullptr && this->surname_generator->get_name_generator(gender) != nullptr && this->surname_generator->get_name_generator(gender)->has_enough_data()) {
-				return;
-			}
-
 			if (this->surname_generator == nullptr) {
 				this->surname_generator = std::make_unique<gendered_name_generator>();
 			}
