@@ -21,7 +21,7 @@ theodoric_the_great = { #Source: F. E. Sandbach, "The Heroic Saga-Cycle of Dietr
 	}
 }
 
-wolfhart_of_the_ostrogoths = { #Source: F. E. Sandbach, "The Heroic Saga-Cycle of Dietrich of Bern", 1906, pp. 28-29, 63.
+wolfhart = { #Source: F. E. Sandbach, "The Heroic Saga-Cycle of Dietrich of Bern", 1906, pp. 28-29, 63.
 	name = "Wolfhart"
 	name_front_compound_element = vulfs #tentative rendering of the name element in Gothic, based on the cognate of the original German name element
 	name_rear_compound_element = hardus #tentative rendering of the name element in Gothic, based on the cognate of the original German name element
