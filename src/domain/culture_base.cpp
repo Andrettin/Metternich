@@ -203,7 +203,7 @@ void culture_base::process_gsml_scope(const gsml_data &scope)
 
 void culture_base::initialize()
 {
-	if (this->get_language() != nullptr && (this->given_name_generator == nullptr || !this->given_name_generator->has_enough_data())) {
+	if (this->get_language() != nullptr && this->uses_language_data_for_name_generation()) {
 		assert_throw(this->get_language()->is_initialized());
 
 		std::set<gender> enough_data_genders;
