@@ -651,6 +651,19 @@ void culture_base::add_given_name(const gender gender, const name_variant &name)
 		this->given_name_generator->add_name(gender::female, name);
 	}
 
+	if (!this->get_patronyms().empty()) {
+		if (gender == gender::male || gender == gender::none) {
+			magic_enum::enum_for_each<archimedes::gender>([this, &name](const archimedes::gender surname_gender) {
+				const std::string &patronym = this->get_patronym(surname_gender);
+				if (patronym.empty()) {
+					return;
+				}
+
+				this->add_surname(surname_gender, get_name_variant_string(name) + patronym);
+			});
+		}
+	}
+
 	if (this->group != nullptr) {
 		this->group->add_given_name(gender, name);
 	}
