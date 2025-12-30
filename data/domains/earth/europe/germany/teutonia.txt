@@ -1,6 +1,7 @@
 teutonia = {
 	name = "Teutonia"
 	type = polity
+	color = { 175 175 90 }
 	culture = teutonian
 	default_religion = pagan
 	default_tier = duchy

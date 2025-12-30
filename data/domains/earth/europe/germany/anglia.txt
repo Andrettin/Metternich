@@ -1,6 +1,7 @@
 anglia = {
 	name = "Anglia"
 	type = polity
+	color = { 140 37 40 }
 	culture = anglian
 	default_religion = pagan
 	default_tier = duchy
