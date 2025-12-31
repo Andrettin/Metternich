@@ -1,9 +1,15 @@
-reiks = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 174.
+reiks = { #Source: Guus Kroonen, "Etymological Dictionary of Proto-Germanic", 2013, p. 412; Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 174.
 	name = "Reiks"
 	language = gothic
 	type = noun
-	etymon = proto_germanic:rika_noun
+	gender = masculine #as given by Kroonen
+	etymon = proto_germanic:rika_noun #as given by both Fick and Kroonen
 	meanings = {
-		"Ruler" #source gives the German "Herrscher" as the meaning
+		#Fick gives the German "Herrscher" as the meaning
+		#Kroonen gives "ruler, king" as the meaning
+		"Ruler" #as given by Kroonen
+	}
+	meaning_words = {
+		king #as given by Kroonen
 	}
 }

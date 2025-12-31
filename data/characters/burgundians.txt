@@ -1,0 +1,37 @@
+gibica = { #Source: Norman Davies, "Vanished Kingdoms", 2012, p. 91; Source: Kevin Crossley-Holland, "The Norse Myths", 1980, p. 102; Source: Henry Adams Bellows (transl.), "The Poetic Edda", 1936, p. 226.
+	name = "Gibica" #known as Gjuki in the Norse myths
+	character_class = warrior
+	culture = gothic #Burgundian
+	religion = catholic #Christian
+	home_site = worms #Kingdom of the Burgundians
+	gender = male
+	death_date = 411
+	
+	#married to Grimhild
+	#king of the Burgundians
+}
+
+grimhild = { #Source: Kevin Crossley-Holland, "The Norse Myths", 1980, p. 102; Source: Henry Adams Bellows (transl.), "The Poetic Edda", 1936, pp. 226, 519.
+	name = "Grimhild" #also known as Kriemhild
+	character_class = warrior
+	culture = gothic #Burgundian
+	religion = catholic #Christian
+	home_site = worms #Kingdom of the Burgundians
+	gender = female
+	contemporary_character = gibica
+	
+	#married to Gibica/Gjuki
+}
+
+gudrun = { #Source: Norman Davies, "Vanished Kingdoms", 2012, p. 94; Source: Source: Kevin Crossley-Holland, "The Norse Myths", 1980, p. 102; Source: Henry Adams Bellows (transl.), "The Poetic Edda", 1936, p. 226.
+	name = "Gudrun" #also known as Kriemhild in the Nibelungenlied
+	character_class = warrior
+	culture = gothic #Burgundian
+	religion = catholic #Christian
+	home_site = worms #Kingdom of the Burgundians
+	gender = female
+	father = gibica
+	mother = grimhild
+	
+	#Gundahar's sister in the Norse myths, in which she would first marry Siegfried (Sigurd), and then Attila (Atli)
+}

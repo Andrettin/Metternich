@@ -1,12 +1,69 @@
+walamer_amelung = { #Source: F. E. Sandbach, "The Heroic Saga-Cycle of Dietrich of Bern", 1906, p. 6.
+	name = "Walamer"
+	dynasty = amelung
+	character_class = warrior #king
+	culture = gothic
+	religion = catholic #Christian
+	home_site = ravenna #Kingdom of the Ostrogoths
+	gender = male
+	start_date = 453 #ruled over the Ostrogoths when Attila died and his Hunnic empire collapsed in 453 AD
+	death_date = 472
+	
+	#king of the Ostrogoths; invaded Illyria in 462 AD
+	
+	history = {
+		453 = {
+			rank = lord
+		}
+	}
+}
+
+theodemer_amelung = { #Source: F. E. Sandbach, "The Heroic Saga-Cycle of Dietrich of Bern", 1906, pp. 6-7.
+	name = "Theodemer"
+	name_front_compound_element = thiuda #presumably
+	dynasty = amelung
+	character_class = warrior
+	culture = gothic
+	religion = catholic #Christian
+	home_site = ravenna #Kingdom of the Ostrogoths
+	gender = male
+	start_date = 472 #by 472 AD Theodemer has become king of the Ostrogoths; Source: F. E. Sandbach, "The Heroic Saga-Cycle of Dietrich of Bern", 1906, pp. 6-7.
+	death_date = 474
+	
+	#brother of Walamer
+	
+	history = {
+		472 = {
+			rank = lord
+		}
+	}
+}
+
+widemer_amelung = { #Source: F. E. Sandbach, "The Heroic Saga-Cycle of Dietrich of Bern", 1906, p. 6.
+	name = "Widemer"
+	name_front_compound_element = thiuda #presumably
+	dynasty = amelung
+	character_class = warrior
+	culture = gothic
+	religion = catholic #Christian
+	home_site = ravenna #Kingdom of the Ostrogoths
+	gender = male
+	contemporary_character = walamer_amelung
+	
+	#brother of Walamer
+}
+
 theodoric_the_great = { #Source: F. E. Sandbach, "The Heroic Saga-Cycle of Dietrich of Bern", 1906, pp. 6-7, 9.
 	name = "Theodoric"
 	name_front_compound_element = thiuda #presumably
 	name_rear_compound_element = reiks #presumably
+	dynasty = amelung
 	character_class = warrior #king
 	culture = gothic
 	religion = catholic #Arian Christianity
 	home_site = ravenna #Kingdom of the Ostrogoths
 	gender = male
+	father = theodemer_amelung
 	birth_date = 454 #born in 454 AD (was 8 years old in 462 AD)
 	death_date = 526 #died in 526 AD; he was put in a magnificent marble tomb in Ravenna
 	

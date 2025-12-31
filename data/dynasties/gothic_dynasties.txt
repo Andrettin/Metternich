@@ -1,0 +1,4 @@
+amelung = {
+	name = "Amelung"
+	culture = gothic
+}
