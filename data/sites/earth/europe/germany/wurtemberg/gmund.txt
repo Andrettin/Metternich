@@ -1,0 +1,8 @@
+schwabisch_gmund = {
+	name = "Gmund" #"Gmünd"
+	world = earth
+	geocoordinate = { 9.8 48.8 } #Schwäbisch Gmünd
+	type = holding
+	holding_type = law
+	province = wurtemberg
+}

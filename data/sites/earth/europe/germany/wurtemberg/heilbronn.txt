@@ -1,0 +1,8 @@
+heilbronn = {
+	name = "Heilbronn"
+	world = earth
+	geocoordinate = { 9.217953 49.140428 }
+	type = holding
+	holding_type = temple
+	province = wurtemberg
+}

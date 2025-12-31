@@ -1,0 +1,8 @@
+asperg = {
+	name = "Asperg"
+	world = earth
+	geocoordinate = { 9.1413888888889 48.906388888889 }
+	type = holding
+	holding_type = law
+	province = wurtemberg
+}

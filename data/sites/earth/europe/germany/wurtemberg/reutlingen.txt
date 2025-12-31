@@ -1,0 +1,8 @@
+reutlingen = {
+	name = "Reutlingen"
+	world = earth
+	geocoordinate = { 9.2166666666667 48.483333333333 }
+	type = holding
+	holding_type = guild
+	province = wurtemberg
+}
