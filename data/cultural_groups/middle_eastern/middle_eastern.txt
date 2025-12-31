@@ -2,6 +2,8 @@ middle_eastern = {
 	name = "Middle Eastern"
 	rank = supergroup
 	default_phenotype = middle_eastern
+	given_name_markov_chain_size = 2
+	surname_markov_chain_size = 2
 	
 	history = {
 		explored_regions += middle_east

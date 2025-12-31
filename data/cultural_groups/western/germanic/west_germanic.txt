@@ -2,4 +2,6 @@ west_germanic = {
 	name = "West Germanic"
 	rank = subgroup
 	upper_group = germanic
+	given_name_markov_chain_size = 2
+	surname_markov_chain_size = 2
 }

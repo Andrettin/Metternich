@@ -2,4 +2,6 @@ latin = {
 	name = "Latin"
 	rank = group
 	upper_group = western
+	given_name_markov_chain_size = 2
+	surname_markov_chain_size = 2
 }
