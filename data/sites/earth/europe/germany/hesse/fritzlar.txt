@@ -2,6 +2,8 @@ fritzlar = {
 	name = "Fritzlar"
 	world = earth
 	geocoordinate = { 9.266666666666667 51.13333333333333 }
+	type = holding
+	holding_type = guild
 	province = hesse
 	
 	history = {

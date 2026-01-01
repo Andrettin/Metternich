@@ -1,4 +1,4 @@
-falkenstein = {
+falkenstein_baden = {
 	name = "Falkenstein"
 	world = earth
 	geocoordinate = { 8.38083 48.2129 }

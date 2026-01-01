@@ -1,0 +1,8 @@
+fulda = {
+	name = "Fulda"
+	world = earth
+	geocoordinate = { 9.6775 50.552777777778 }
+	type = holding
+	holding_type = temple
+	province = hesse
+}

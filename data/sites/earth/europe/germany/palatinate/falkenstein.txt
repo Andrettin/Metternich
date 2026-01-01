@@ -1,0 +1,8 @@
+falkenstein = {
+	name = "Falkenstein"
+	world = earth
+	geocoordinate = { 7.8738888888889 49.6075 }
+	type = holding
+	holding_type = law
+	province = palatinate
+}

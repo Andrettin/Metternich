@@ -1,0 +1,8 @@
+isenburg = {
+	name = "Isenburg"
+	world = earth
+	geocoordinate = { 7.5897222222222 50.477222222222 }
+	type = holding
+	holding_type = law
+	province = rhineland
+}
