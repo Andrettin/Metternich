@@ -2,6 +2,9 @@ muhlhausen = {
 	name = "Muhlhausen" #"Mühlhausen"
 	world = earth
 	geocoordinate = { 10.45 51.216666666667 }
+	type = holding
+	holding_type = temple
+	province = thuringia
 	
 	history = {
 		919 = {

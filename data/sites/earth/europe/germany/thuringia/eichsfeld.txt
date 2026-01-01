@@ -1,0 +1,8 @@
+eichsfeld = {
+	name = "Eichsfeld"
+	world = earth
+	geocoordinate = { 10.25 51.33 } #Landkreis Eichsfeld
+	type = holding
+	holding_type = law
+	province = thuringia
+}

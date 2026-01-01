@@ -1,0 +1,8 @@
+schmalkalden = {
+	name = "Schmalkalden"
+	world = earth
+	geocoordinate = { 10.45 50.716666666667 }
+	type = holding
+	holding_type = law
+	province = thuringia
+}

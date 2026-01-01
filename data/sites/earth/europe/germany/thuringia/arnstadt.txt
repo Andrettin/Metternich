@@ -2,6 +2,9 @@ arnstadt = {
 	name = "Arnstadt"
 	world = earth
 	geocoordinate = { 10.946388888889 50.834166666667 }
+	type = holding
+	holding_type = guild
+	province = thuringia
 	
 	history = {
 		919 = {
