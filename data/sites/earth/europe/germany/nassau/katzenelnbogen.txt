@@ -1,0 +1,8 @@
+katzenelnbogen = {
+	name = "Katzenelnbogen"
+	world = earth
+	geocoordinate = { 7.9775 50.268055555556 }
+	type = holding
+	holding_type = guild
+	province = nassau
+}

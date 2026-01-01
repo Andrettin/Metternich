@@ -3,7 +3,8 @@ frankfurt = {
 	world = earth
 	geocoordinate = { 8.67501542017 50.09997682610 } #from Natural Earth
 	type = holding
-	holding_type = guild
+	holding_type = guild #important market or fair in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
+	#holding_type = temple
 	max_tier = market
 	
 	history = {
