@@ -1,0 +1,8 @@
+pforzheim = {
+	name = "Pforzheim"
+	world = earth
+	geocoordinate = { 8.7029532 48.8908846 }
+	type = holding
+	holding_type = guild
+	province = baden
+}

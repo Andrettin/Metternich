@@ -1,0 +1,8 @@
+neuhausen = {
+	name = "Neuhausen"
+	world = earth
+	geocoordinate = { 8.7786111111111 48.793333333333 } #Neuhausen (Enz)
+	type = holding
+	holding_type = law
+	province = baden
+}

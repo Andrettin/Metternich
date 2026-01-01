@@ -1,0 +1,8 @@
+rastatt = {
+	name = "Rastatt"
+	world = earth
+	geocoordinate = { 8.2030555555556 48.857222222222 }
+	type = holding
+	holding_type = guild
+	province = baden
+}

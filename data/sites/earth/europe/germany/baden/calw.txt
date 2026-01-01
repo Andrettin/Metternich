@@ -2,7 +2,9 @@ calw = {
 	name = "Calw" #also known as Kalw
 	world = earth
 	geocoordinate = { 8.7375 48.714444444444 }
-	province = wurtemberg
+	type = holding
+	holding_type = law
+	province = baden
 	
 	history = {
 		919 = {

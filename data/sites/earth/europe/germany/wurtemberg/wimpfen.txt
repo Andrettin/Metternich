@@ -1,7 +1,9 @@
 wimpfen = {
 	name = "Wimpfen"
 	world = earth
-	#geocoordinate = { 9.1630555555556 49.230555555556 }
+	geocoordinate = { 9.1630555555556 49.230555555556 }
+	type = holding
+	holding_type = temple
 	province = wurtemberg
 	
 	history = {

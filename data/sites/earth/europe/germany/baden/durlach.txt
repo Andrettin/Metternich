@@ -1,0 +1,8 @@
+durlach = {
+	name = "Durlach"
+	world = earth
+	geocoordinate = { 8.4667 49 }
+	type = holding
+	holding_type = law
+	province = baden
+}
