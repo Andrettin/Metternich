@@ -2,10 +2,13 @@ strehla = {
 	name = "Strehla"
 	world = earth
 	geocoordinate = { 13.225833333333 51.353055555556 }
+	type = holding
+	holding_type = law
+	province = upper_saxony
 	
 	history = {
 		919 = {
-			#holding_type = law #burgward in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			developed = true #burgward in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
 			buildings += castle
 		}
 	}

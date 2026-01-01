@@ -1,0 +1,8 @@
+rabenau = {
+	name = "Rabenau"
+	world = earth
+	geocoordinate = { 13.633333333333 50.966666666667 }
+	type = holding
+	holding_type = law
+	province = upper_saxony
+}

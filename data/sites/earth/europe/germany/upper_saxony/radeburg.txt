@@ -1,0 +1,8 @@
+radeburg = {
+	name = "Radeburg"
+	world = earth
+	geocoordinate = { 13.725555555556 51.2125 }
+	type = holding
+	holding_type = guild
+	province = upper_saxony
+}
