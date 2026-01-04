@@ -1,0 +1,8 @@
+aranyosszek = {
+	name = "Aranyosszek" #"Aranyosszék"
+	world = earth
+	geocoordinate = { 23.816666666666666 46.4 } #Aranyos Seat
+	type = holding
+	holding_type = temple
+	province = transylvania
+}

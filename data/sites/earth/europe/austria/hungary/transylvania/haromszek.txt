@@ -1,0 +1,8 @@
+haromszek = {
+	name = "Haromszek" #"Háromszék"
+	world = earth
+	geocoordinate = { 25.78333333 45.86666667 } #Háromszék County
+	type = holding
+	holding_type = guild
+	province = transylvania
+}

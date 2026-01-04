@@ -1,0 +1,8 @@
+csik = {
+	name = "Csik"
+	world = earth
+	geocoordinate = { 25.8 46.36666667 } #Csík County
+	type = holding
+	holding_type = law
+	province = transylvania
+}

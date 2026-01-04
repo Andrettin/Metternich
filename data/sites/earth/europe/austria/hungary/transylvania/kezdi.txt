@@ -1,0 +1,8 @@
+kezdi = {
+	name = "Kezdi" #"Kézdi"
+	world = earth
+	geocoordinate = { 26.1375 46 } #Târgu Secuiesc/Kézdivásárhely
+	type = holding
+	holding_type = law
+	province = transylvania
+}

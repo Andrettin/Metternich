@@ -1,9 +1,10 @@
 udvarhely = {
-	name = "Udvarhely"
+	name = "Udvarhely" #also known as Székelyudvarhely
 	world = earth
 	geocoordinate = { 25.301666666667 46.313888888889 }
-	type = resource
-	resource = sheep
+	type = holding
+	holding_type = law
+	#resource = sheep
 	province = transylvania
 	cultural_names = {
 		romanian = "Odorhei"

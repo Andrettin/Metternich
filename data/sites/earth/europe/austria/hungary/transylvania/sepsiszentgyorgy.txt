@@ -1,0 +1,8 @@
+sepsiszentgyorgy = {
+	name = "Sepsiszentgyorgy" #"Sepsiszentgyörgy"
+	world = earth
+	geocoordinate = { 25.79300148100 45.86799611140 } #from Natural Earth (Sfântu Gheorghe)
+	type = holding
+	holding_type = law
+	province = transylvania
+}

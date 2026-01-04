@@ -2,7 +2,11 @@ targu_mures = {
 	name = "Targu Mures"
 	world = earth
 	geocoordinate = { 24.55781856150 46.55820334790 } #from Natural Earth
-	type = resource
-	resource = grain
+	type = holding
+	holding_type = law
+	#resource = grain
 	province = transylvania
+	cultural_names = {
+		magyar = "Marosvasarhely" #"Marosvásárhely"
+	}
 }

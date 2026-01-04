@@ -1,0 +1,8 @@
+maros = {
+	name = "Maros"
+	world = earth
+	geocoordinate = { 24.61 46.59 } #Mureș County
+	type = holding
+	holding_type = law
+	province = transylvania
+}
