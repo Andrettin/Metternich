@@ -963,7 +963,7 @@ void map::create_minimap_image()
 
 void map::update_minimap_rect(const QRect &tile_rect)
 {
-	static const centesimal_int &minimap_tile_scale = defines::get()->get_minimap_tile_scale();
+	static const decimillesimal_int &minimap_tile_scale = defines::get()->get_minimap_tile_scale();
 
 	const int start_x = (tile_rect.x() * minimap_tile_scale).to_int();
 	const int start_y = (tile_rect.y() * minimap_tile_scale).to_int();
