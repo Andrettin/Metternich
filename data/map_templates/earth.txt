@@ -28,15 +28,15 @@
 
 #europe = {
 #	name = "Europe"
-#	size = { 1024 857 }
+#	size = { 2730 1715 }
 #	world = earth
 #	map_projection = miller
 #	min_longitude = -15
-#	max_longitude = 30
+#	max_longitude = 45
 #	min_latitude = 30
 #	max_latitude = 60
 #	terrain_image_filepath = "earth/terrain_europe.png"
-#	river_image_filepath = "earth/rivers_europe.png"
+#	#river_image_filepath = "earth/rivers_europe.png"
 #	#route_image_filepath = "earth/routes.png"
 #	province_image_filepath = "earth/provinces_europe.png"
 #}
