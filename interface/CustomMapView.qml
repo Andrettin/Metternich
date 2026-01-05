@@ -1,6 +1,5 @@
 import QtQuick
 import QtQuick.Controls
-import QtLocation
 import QtPositioning
 import map_country_model 1.0
 import map_grid_model 1.0
