@@ -1,0 +1,8 @@
+szalard = {
+	name = "Szalard" #"Szalárd"
+	world = earth
+	geocoordinate = { 22.040851 47.216228 } #Sălard
+	type = holding
+	holding_type = law
+	province = pest
+}

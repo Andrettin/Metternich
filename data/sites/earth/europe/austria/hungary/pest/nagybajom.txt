@@ -1,0 +1,8 @@
+nagybajom = {
+	name = "Nagybajom"
+	world = earth
+	geocoordinate = { 21.233333333333 47.216666666667 } #Biharnagybajom
+	type = holding
+	holding_type = law
+	province = pest
+}

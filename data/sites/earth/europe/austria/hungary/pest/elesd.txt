@@ -1,0 +1,8 @@
+elesd = {
+	name = "Elesd" #"Élesd"
+	world = earth
+	geocoordinate = { 22.396944444444 47.057222222222 } #Aleșd
+	type = holding
+	holding_type = law
+	province = pest
+}
