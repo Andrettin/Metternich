@@ -16,6 +16,7 @@ class world final : public named_data_entry, public data_type<world>
 	Q_OBJECT
 
 	Q_PROPERTY(std::filesystem::path province_image_filepath MEMBER province_image_filepath WRITE set_province_image_filepath)
+	Q_PROPERTY(QVariantList province_geoshapes READ get_province_geoshapes NOTIFY changed)
 
 public:
 	using province_geodata_map_type = province_map<std::vector<std::unique_ptr<QGeoShape>>>;
@@ -30,6 +31,8 @@ public:
 	explicit world(const std::string &identifier) : named_data_entry(identifier)
 	{
 	}
+
+	virtual void initialize() override;
 
 	const std::vector<const site *> &get_sites() const
 	{
@@ -49,12 +52,20 @@ public:
 
 	void set_province_image_filepath(const std::filesystem::path &filepath);
 	Q_INVOKABLE void write_province_image(const double min_geoshape_width, const double max_geoshape_width);
+
+	void load_province_geodata();
 	province_geodata_map_type parse_provinces_geojson_folder() const;
+
+	QVariantList get_province_geoshapes() const;
+
+signals:
+	void changed();
 
 private:
 	std::filesystem::path province_image_filepath;
 	std::vector<const site *> sites;
 	std::map<geocoordinate, const site *> sites_by_geocoordinate;
+	province_geodata_map_type province_geoshapes;
 };
 
 }

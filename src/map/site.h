@@ -43,6 +43,7 @@ class site final : public named_data_entry, public data_type<site>
 
 	Q_PROPERTY(metternich::world* world MEMBER world)
 	Q_PROPERTY(archimedes::geocoordinate geocoordinate MEMBER geocoordinate READ get_geocoordinate)
+	Q_PROPERTY(QGeoCoordinate qgeocoordinate READ get_qgeocoordinate NOTIFY changed)
 	Q_PROPERTY(QPoint pos MEMBER pos READ get_pos)
 	Q_PROPERTY(QPoint pos_offset MEMBER pos_offset READ get_pos_offset)
 	Q_PROPERTY(archimedes::geocoordinate astrocoordinate MEMBER astrocoordinate READ get_astrocoordinate)
@@ -110,6 +111,11 @@ public:
 	const archimedes::geocoordinate &get_geocoordinate() const
 	{
 		return this->geocoordinate;
+	}
+
+	QGeoCoordinate get_qgeocoordinate() const
+	{
+		return this->get_geocoordinate().to_qgeocoordinate();
 	}
 
 	const QPoint &get_pos() const

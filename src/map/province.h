@@ -34,6 +34,7 @@ class province final : public named_data_entry, public data_type<province>
 	Q_PROPERTY(const metternich::world* world MEMBER world READ get_world NOTIFY changed)
 	Q_PROPERTY(QColor color READ get_color WRITE set_color NOTIFY changed)
 	Q_PROPERTY(archimedes::geocoordinate geocoordinate MEMBER geocoordinate NOTIFY changed)
+	Q_PROPERTY(QVariantList geoshapes READ get_geoshapes NOTIFY changed)
 	Q_PROPERTY(bool sea MEMBER sea READ is_sea NOTIFY changed)
 	Q_PROPERTY(bool bay MEMBER bay READ is_bay NOTIFY changed)
 	Q_PROPERTY(bool lake MEMBER lake READ is_lake NOTIFY changed)
@@ -246,6 +247,13 @@ public:
 		this->sites.push_back(site);
 	}
 
+	QVariantList get_geoshapes() const;
+
+	void add_geoshape(std::unique_ptr<QGeoShape> &&geoshape)
+	{
+		this->geoshapes.push_back(std::move(geoshape));
+	}
+
 signals:
 	void changed();
 
@@ -269,6 +277,7 @@ private:
 	province_map<const terrain_feature *> border_rivers;
 	std::vector<const metternich::world *> generation_worlds; //worlds other than its own where this province can be generated
 	std::vector<const site *> sites; //sites located in this province, used for map generation
+	std::vector<std::unique_ptr<QGeoShape>> geoshapes;
 	qunique_ptr<province_history> history;
 	qunique_ptr<province_map_data> map_data;
 	qunique_ptr<province_game_data> game_data;

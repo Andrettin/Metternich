@@ -14,11 +14,19 @@
 #include "util/geojson_util.h"
 #include "util/georectangle.h"
 #include "util/geoshape_util.h"
+#include "util/map_util.h"
 #include "util/number_util.h"
 #include "util/path_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
+
+void world::initialize()
+{
+	this->load_province_geodata();
+
+	named_data_entry::initialize();
+}
 
 void world::add_site(const site *site)
 {
@@ -142,6 +150,11 @@ void world::write_province_image(const double min_geoshape_width, const double m
 	}
 }
 
+void world::load_province_geodata()
+{
+	this->province_geoshapes = this->parse_provinces_geojson_folder();
+}
+
 world::province_geodata_map_type world::parse_provinces_geojson_folder() const
 {
 	using province_geodata_map = province_map<std::vector<std::unique_ptr<QGeoShape>>>;
@@ -153,6 +166,24 @@ world::province_geodata_map_type world::parse_provinces_geojson_folder() const
 		const province *province = province::get(province_identifier.toStdString());
 		return province;
 	}, nullptr);
+}
+
+QVariantList world::get_province_geoshapes() const
+{
+	QVariantList qvariant_list;
+
+	for (const auto &[province, geoshapes] : this->province_geoshapes) {
+		for (const std::unique_ptr<QGeoShape> &geoshape : geoshapes) {
+			QVariantMap qvariant_map;
+
+			qvariant_map["key"] = qvariant::from_value<const metternich::province *>(province);
+			qvariant_map["value"] = qvariant::from_value<QGeoPolygon>(*static_cast<QGeoPolygon *>(geoshape.get()));
+
+			qvariant_list.push_back(std::move(qvariant_map));
+		}
+	}
+
+	return qvariant_list;
 }
 
 }
