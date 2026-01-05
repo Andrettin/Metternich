@@ -43,17 +43,7 @@ Item {
 		anchors.left: infopanel.right
 		anchors.right: right_bar.left
 	}
-	
-	GeoProvinceMap {
-		id: geoprovince_map
-		anchors.top: top_bar.bottom
-		anchors.bottom: status_bar.top
-		anchors.left: infopanel.right
-		anchors.right: right_bar.left
-		z: province_map.z + 1
-		visible: true
-	}
-	
+		
 	RightBar {
 		id: right_bar
 		anchors.top: parent.top
