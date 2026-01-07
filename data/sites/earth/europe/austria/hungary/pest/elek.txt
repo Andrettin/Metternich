@@ -1,0 +1,8 @@
+elek = {
+	name = "Elek"
+	world = earth
+	geocoordinate = { 21.246944444444 46.527777777778 }
+	type = holding
+	holding_type = law
+	province = pest
+}

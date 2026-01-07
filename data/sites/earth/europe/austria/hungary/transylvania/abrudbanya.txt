@@ -1,0 +1,8 @@
+abrudbanya = {
+	name = "Abrudbanya" #"Abrudbánya"
+	world = earth
+	geocoordinate = { 23.05 46.273888888889 } #Abrud
+	type = holding
+	holding_type = law
+	province = transylvania
+}

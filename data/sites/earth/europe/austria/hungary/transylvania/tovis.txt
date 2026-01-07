@@ -1,0 +1,8 @@
+tovis = {
+	name = "Tovis" #"Tövis"
+	world = earth
+	geocoordinate = { 23.68 46.2 } #Teiuș
+	type = holding
+	holding_type = law
+	province = transylvania
+}

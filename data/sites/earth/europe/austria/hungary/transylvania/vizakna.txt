@@ -1,0 +1,8 @@
+vizakna = {
+	name = "Vizakna"
+	world = earth
+	geocoordinate = { 24.066666666667 45.874722222222 } #Ocna Sibiului
+	type = holding
+	holding_type = law
+	province = transylvania
+}

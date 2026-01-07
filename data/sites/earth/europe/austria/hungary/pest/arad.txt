@@ -2,6 +2,8 @@ arad = {
 	name = "Arad"
 	world = earth
 	geocoordinate = { 21.31998001980 46.17000998850 } #from Natural Earth
+	type = holding
+	holding_type = temple
 	province = pest
 	
 	history = {
