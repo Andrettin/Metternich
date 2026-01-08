@@ -68,6 +68,20 @@ artistic_ability = {
 	}
 }
 
+astrology = {
+	name = "Astrology"
+	icon = research
+	types = {
+		proficiency
+	}
+	conditions = {
+		class_skill = astrology
+	}
+	modifier = {
+		skill_training = astrology
+	}
+}
+
 diplomacy = {
 	name = "Diplomacy"
 	icon = treaty

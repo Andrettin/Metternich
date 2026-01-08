@@ -50,6 +50,17 @@ artistic_ability = {
 	}
 }
 
+astrology = {
+	name = "Astrology"
+	icon = research
+	check_dice = 1d20
+	base_attribute = intelligence
+	groups = {
+		mage
+		priest
+	}
+}
+
 diplomacy = {
 	name = "Diplomacy"
 	icon = treaty
