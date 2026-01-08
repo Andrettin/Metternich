@@ -36,6 +36,7 @@ set(character_SRCS
 	src/character/party.cpp
 	src/character/saving_throw_type.cpp
 	src/character/skill.cpp
+	src/character/skill_group.cpp
 	src/character/status_effect.cpp
 	src/character/trait.cpp
 	src/character/trait_type.cpp
@@ -372,6 +373,7 @@ set(character_HDRS
 	src/character/party.h
 	src/character/saving_throw_type.h
 	src/character/skill.h
+	src/character/skill_group.h
 	src/character/starting_age_category.h
 	src/character/status_effect.h
 	src/character/trait.h

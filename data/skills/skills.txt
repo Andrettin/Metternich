@@ -4,6 +4,9 @@ administration = {
 	check_dice = 1d20
 	base_attribute = intelligence
 	base_value = -2
+	groups = {
+		general
+	}
 }
 
 agriculture = {
@@ -11,6 +14,9 @@ agriculture = {
 	icon = grain
 	check_dice = 1d20
 	base_attribute = intelligence
+	groups = {
+		general
+	}
 }
 
 animal_handling = {
@@ -19,6 +25,9 @@ animal_handling = {
 	check_dice = 1d20
 	base_attribute = wisdom
 	base_value = -1
+	groups = {
+		general
+	}
 }
 
 animal_training = {
@@ -26,6 +35,9 @@ animal_training = {
 	icon = horses
 	check_dice = 1d20
 	base_attribute = wisdom
+	groups = {
+		general
+	}
 }
 
 artistic_ability = {
@@ -33,6 +45,9 @@ artistic_ability = {
 	icon = painting
 	check_dice = 1d20
 	base_attribute = wisdom
+	groups = {
+		general
+	}
 }
 
 diplomacy = {
@@ -41,6 +56,9 @@ diplomacy = {
 	check_dice = 1d20
 	base_attribute = wisdom
 	base_value = -1
+	groups = {
+		priest
+	}
 }
 
 disguise = {
@@ -49,6 +67,9 @@ disguise = {
 	check_dice = 1d20
 	base_attribute = charisma
 	base_value = -1
+	groups = {
+		rogue
+	}
 }
 
 heraldry = {
@@ -56,6 +77,9 @@ heraldry = {
 	icon = heater_shield
 	check_dice = 1d20
 	base_attribute = intelligence
+	groups = {
+		general
+	}
 }
 
 intrigue = {
@@ -63,6 +87,9 @@ intrigue = {
 	icon = dagger
 	check_dice = 1d20
 	base_attribute = wisdom
+	groups = {
+		rogue
+	}
 }
 
 law = {
@@ -71,6 +98,9 @@ law = {
 	check_dice = 1d20
 	base_attribute = intelligence
 	base_value = -1
+	groups = {
+		general
+	}
 }
 
 leadership = {
@@ -79,6 +109,9 @@ leadership = {
 	check_dice = 1d20
 	base_attribute = charisma
 	base_value = -1
+	groups = {
+		general
+	}
 }
 
 siegecraft = {
@@ -86,6 +119,9 @@ siegecraft = {
 	icon = cannon
 	check_dice = 1d20
 	base_attribute = intelligence
+	groups = {
+		warrior
+	}
 }
 
 strategy = {
@@ -94,6 +130,9 @@ strategy = {
 	check_dice = 1d20
 	base_attribute = intelligence
 	base_value = -2
+	groups = {
+		warrior
+	}
 }
 
 swimming = {
@@ -101,4 +140,7 @@ swimming = {
 	icon = anchor
 	check_dice = 1d20
 	base_attribute = strength
+	groups = {
+		general
+	}
 }

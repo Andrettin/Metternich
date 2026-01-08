@@ -7,16 +7,9 @@ mage = {
 	saving_throw_bonus_tables = {
 		save_vs_poison = mage_save_vs_poison_bonus
 	}
-	class_skills = {
-		administration
-		agriculture
-		animal_handling
-		animal_training
-		artistic_ability
-		heraldry
-		law
-		leadership
-		swimming
+	class_skill_groups = {
+		general
+		mage
 	}
 	allowed_species = {
 		elf

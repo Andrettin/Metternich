@@ -8,22 +8,9 @@ rogue = {
 	saving_throw_bonus_tables = {
 		save_vs_poison = rogue_save_vs_poison_bonus
 	}
-	class_skills = {
-		administration
-		agriculture
-		animal_handling
-		animal_training
-		artistic_ability
-		heraldry
-		law
-		leadership
-		swimming
-		
-		disguise
-		intrigue
-		
-		find_disarm_traps
-		open_locks
+	class_skill_groups = {
+		general
+		rogue
 	}
 	allowed_species = {
 		dwarf

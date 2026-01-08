@@ -17,6 +17,7 @@ class domain;
 class holding_type;
 class item_type;
 class level_bonus_table;
+class skill_group;
 class species;
 class technology;
 enum class military_unit_category;
@@ -48,6 +49,7 @@ public:
 	~character_class();
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
+	virtual void initialize() override;
 	virtual void check() const override;
 
 	const character_class *get_base_class() const
@@ -229,6 +231,7 @@ private:
 	const level_bonus_table *to_hit_bonus_table = nullptr;
 	data_entry_map<saving_throw_type, const level_bonus_table *> saving_throw_bonus_tables;
 	data_entry_set<skill> class_skills;
+	std::vector<const skill_group *> class_skill_groups;
 	std::vector<const species *> allowed_species;
 	std::vector<const holding_type *> allowed_holding_types;
 	std::vector<const holding_type *> favored_holding_types;

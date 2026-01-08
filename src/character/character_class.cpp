@@ -6,6 +6,7 @@
 #include "character/level_bonus_table.h"
 #include "character/saving_throw_type.h"
 #include "character/skill.h"
+#include "character/skill_group.h"
 #include "character/starting_age_category.h"
 #include "database/defines.h"
 #include "infrastructure/holding_type.h"
@@ -44,6 +45,10 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "class_skills") {
 		for (const std::string &value : values) {
 			this->class_skills.insert(skill::get(value));
+		}
+	} else if (tag == "class_skill_groups") {
+		for (const std::string &value : values) {
+			this->class_skill_groups.push_back(skill_group::get(value));
 		}
 	} else if (tag == "allowed_species") {
 		for (const std::string &value : values) {
@@ -120,6 +125,17 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
+}
+
+void character_class::initialize()
+{
+	for (const skill_group *skill_group : this->class_skill_groups) {
+		for (const skill *group_skill : skill_group->get_skills()) {
+			this->class_skills.insert(group_skill);
+		}
+	}
+
+	named_data_entry::initialize();
 }
 
 void character_class::check() const

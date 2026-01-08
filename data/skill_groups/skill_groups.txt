@@ -1,0 +1,19 @@
+general = {
+	name = "General"
+}
+
+mage = {
+	name = "Mage"
+}
+
+priest = {
+	name = "Priest"
+}
+
+rogue = {
+	name = "Rogue"
+}
+
+warrior = {
+	name = "Warrior"
+}

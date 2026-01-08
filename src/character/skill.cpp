@@ -3,9 +3,25 @@
 #include "character/skill.h"
 
 #include "character/character_attribute.h"
+#include "character/skill_group.h"
 #include "util/assert_util.h"
 
 namespace metternich {
+
+void skill::process_gsml_scope(const gsml_data &scope)
+{
+	const std::string &tag = scope.get_tag();
+	const std::vector<std::string> &values = scope.get_values();
+
+	if (tag == "groups") {
+		for (const std::string &value : values) {
+			skill_group *group = skill_group::get(value);
+			group->add_skill(this);
+		}
+	} else {
+		named_data_entry::process_gsml_scope(scope);
+	}
+}
 
 void skill::initialize()
 {
