@@ -1,11 +1,15 @@
 etruria = {
 	name = "Etruria"
 	type = polity
+	color = { 48 30 180 }
 	culture = etruscan
 	default_religion = pagan
 	default_tier = kingdom
 	default_government_type = tribal_despotism
 	default_capital = florence
+	short_names = {
+		tribe = "Etruscans"
+	}
 	eras = {
 		ancient_era
 	}
