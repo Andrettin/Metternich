@@ -1,11 +1,15 @@
-phrygians = {
-	name = "Phrygians"
-	type = tribe
+phrygia = {
+	name = "Phrygia"
+	type = polity
+	color = { 246 223 15 }
 	culture = phrygian
 	default_religion = pagan
 	default_tier = duchy
 	default_government_type = tribal_despotism
 	default_capital = afyon
+	short_names = {
+		tribe = "Phrygians"
+	}
 	eras = {
 		ancient_era
 	}
