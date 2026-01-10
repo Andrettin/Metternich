@@ -1,6 +1,7 @@
 aeduia = {
 	name = "Aeduia"
 	type = polity
+	color = { 121 9 9 }
 	culture = haedui
 	default_religion = pagan
 	default_tier = duchy

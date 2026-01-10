@@ -7,12 +7,12 @@ msila = {
 	}
 	
 	history = {
-		owner = mauretanians
+		owner = mauretania
 		culture = maurian
 		religion = pagan
 		
 		526 = {
-			owner = mauretanians #territory of the Mauretanians in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			owner = mauretania #territory of the Mauretanians in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 			culture = maurian
 		}
 		

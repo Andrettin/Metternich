@@ -1,6 +1,7 @@
 sequania = {
 	name = "Sequania"
 	type = polity
+	color = { 15 90 53 }
 	culture = helvetian
 	default_religion = pagan
 	default_tier = duchy

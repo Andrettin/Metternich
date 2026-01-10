@@ -1,6 +1,7 @@
 arvernia = {
 	name = "Arvernia"
 	type = polity
+	color = { 11 12 150 }
 	culture = arverni
 	default_religion = pagan
 	default_tier = duchy

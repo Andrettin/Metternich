@@ -1,11 +1,15 @@
-mauretanians = {
-	name = "Mauretanians"
-	type = tribe
+mauretania = {
+	name = "Mauretania"
+	type = polity
+	color = { 180 209 205 }
 	culture = maurian
 	default_religion = pagan
 	default_tier = duchy
 	default_government_type = tribal_despotism
 	default_capital = biskra
+	short_names = {
+		tribe = "Mauretanians"
+	}
 	eras = {
 		medieval_era
 	}
