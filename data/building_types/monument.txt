@@ -6,6 +6,7 @@ monument = {
 	size = 1
 	min_holding_level = 2
 	holding_types = {
+		guild #for the Colossus of Rhodes
 		temple
 	}
 	commodity_costs = {

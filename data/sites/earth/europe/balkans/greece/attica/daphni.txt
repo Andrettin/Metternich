@@ -1,0 +1,8 @@
+daphni = {
+	name = "Daphni"
+	world = earth
+	geocoordinate = { 23.635833333333 38.013055555556 } #Daphni Monastery
+	type = holding
+	holding_type = law
+	province = attica
+}

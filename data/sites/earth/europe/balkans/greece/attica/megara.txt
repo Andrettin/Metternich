@@ -1,0 +1,8 @@
+megara = {
+	name = "Megara"
+	world = earth
+	geocoordinate = { 23.3423 37.9949 }
+	type = holding
+	holding_type = guild #or law
+	province = attica
+}

@@ -1,0 +1,8 @@
+karydi = {
+	name = "Karydi"
+	world = earth
+	geocoordinate = { 23.3721 38.1449 } #Mandra-Eidyllia Municipality (supposedly the site of Mount Karydi)
+	type = holding
+	holding_type = law
+	province = attica
+}

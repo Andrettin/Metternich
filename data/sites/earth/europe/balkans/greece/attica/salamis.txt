@@ -1,0 +1,8 @@
+salamis = {
+	name = "Salamis"
+	world = earth
+	geocoordinate = { 23.499266 37.964944 } #Salamina
+	type = holding
+	holding_type = law
+	province = attica
+}

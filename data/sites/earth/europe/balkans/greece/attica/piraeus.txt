@@ -1,0 +1,8 @@
+piraeus = {
+	name = "Piraeus"
+	world = earth
+	geocoordinate = { 23.69998978550 37.95002077130 } #from Natural Earth
+	type = holding
+	holding_type = temple
+	province = attica
+}

@@ -1,0 +1,8 @@
+marathon = {
+	name = "Marathon"
+	world = earth
+	geocoordinate = { 23.961944444444445 38.153333333333336 }
+	type = holding
+	holding_type = law
+	province = attica
+}

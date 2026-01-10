@@ -1,0 +1,8 @@
+salona = {
+	name = "Salona" #also known as Soula
+	world = earth
+	geocoordinate = { 22.375277777778 38.525277777778 } #Amfissa
+	type = holding
+	holding_type = law
+	province = attica
+}
