@@ -8,6 +8,18 @@ perseus = {
 	start_date = -1550 #possible year of the foundation of Mycenae
 }
 
+odysseus = {
+	name = "Odysseus"
+	species = human
+	character_class = warrior #warrior/rogue
+	level = 16
+	culture = greek
+	religion = pagan
+	home_site = ithaca
+	gender = male
+	contemporary_character = priam
+}
+
 archimedes = {
 	name = "Archimedes"
 	character_class = mage #engineer
