@@ -1,0 +1,8 @@
+veligosti = {
+	name = "Veligosti"
+	world = earth
+	geocoordinate = { 22.1167 37.3167 }
+	type = holding
+	holding_type = law
+	province = peloponnese
+}

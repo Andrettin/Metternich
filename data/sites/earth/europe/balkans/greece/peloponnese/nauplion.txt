@@ -1,0 +1,8 @@
+nauplion = {
+	name = "Nauplion"
+	world = earth
+	geocoordinate = { 22.8 37.56583333333333 } #Nafplio
+	type = holding
+	holding_type = temple
+	province = peloponnese
+}

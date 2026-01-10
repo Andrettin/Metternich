@@ -1,0 +1,8 @@
+passava = {
+	name = "Passava"
+	world = earth
+	geocoordinate = { 22.50444444 36.7275 } #Las
+	type = holding
+	holding_type = law
+	province = peloponnese
+}
