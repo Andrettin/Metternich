@@ -52,6 +52,12 @@ void character::initialize_all()
 {
 	data_type::initialize_all();
 
+	character::initialize_all_vital_dates();
+	character::initialize_all_home_sites();
+}
+
+void character::initialize_all_vital_dates()
+{
 	std::vector<character *> dateless_characters = character::get_all();
 	std::erase_if(dateless_characters, [](const character *character) {
 		return character->has_vital_dates();
@@ -90,6 +96,48 @@ void character::initialize_all()
 
 		std::erase_if(dateless_characters, [](const character *character) {
 			return character->has_vital_dates();
+		});
+	}
+}
+
+void character::initialize_all_home_sites()
+{
+	std::vector<character *> siteless_characters = character::get_all();
+	std::erase_if(siteless_characters, [](const character *character) {
+		return character->get_home_site() != nullptr || character->is_deity();
+	});
+
+	bool changed = true;
+	while (changed) {
+		while (changed) {
+			changed = false;
+
+			for (character *character : siteless_characters) {
+				if (character->get_home_site() != nullptr) {
+					continue;
+				}
+
+				const bool success = character->initialize_home_site_from_children();
+				if (success) {
+					changed = true;
+				}
+			}
+
+			std::erase_if(siteless_characters, [](const character *character) {
+				return character->get_home_site() != nullptr;
+			});
+		}
+
+		changed = false;
+		for (character *character : siteless_characters) {
+			const bool success = character->initialize_home_site_from_parents();
+			if (success) {
+				changed = true;
+			}
+		}
+
+		std::erase_if(siteless_characters, [](const character *character) {
+			return character->get_home_site() != nullptr;
 		});
 	}
 }
@@ -540,6 +588,75 @@ bool character::initialize_dates_from_parents()
 	birth_date = birth_date.addYears(random::get()->generate_in_range(adulthood_age, middle_age));
 	this->set_birth_date(birth_date);
 	log_trace(std::format("Set birth date for character \"{}\": {}.", this->get_identifier(), date::to_string(birth_date)));
+
+	return true;
+}
+
+bool character::initialize_home_site_from_children()
+{
+	assert_throw(this->get_home_site() == nullptr);
+
+	if (this->get_children().empty()) {
+		return false;
+	}
+
+	std::vector<const site *> potential_sites;
+
+	for (character_base *child_base : this->get_children()) {
+		character *child = static_cast<character *>(child_base);
+		if (child->get_home_site() == nullptr) {
+			child->initialize_home_site_from_children();
+		}
+
+		if (child->get_home_site() == nullptr) {
+			continue;
+		}
+
+		potential_sites.push_back(child->get_home_site());
+	}
+
+	if (potential_sites.empty()) {
+		return false;
+	}
+
+	this->home_site = vector::get_random(potential_sites);
+	log_trace(std::format("Set home site for character \"{}\": {}.", this->get_identifier(), this->get_home_site()->get_identifier()));
+
+	return true;
+}
+
+bool character::initialize_home_site_from_parents()
+{
+	assert_throw(this->get_home_site() == nullptr);
+
+	std::vector<const character *> parents;
+	if (this->get_father() != nullptr) {
+		parents.push_back(this->get_father());
+	}
+	if (this->get_mother() != nullptr) {
+		parents.push_back(this->get_mother());
+	}
+
+	if (parents.empty()) {
+		return false;
+	}
+
+	std::vector<const site *> potential_sites;
+
+	for (const character *parent : parents) {
+		if (parent->get_home_site() == nullptr) {
+			continue;
+		}
+
+		potential_sites.push_back(parent->get_home_site());
+	}
+
+	if (potential_sites.empty()) {
+		return false;
+	}
+
+	this->home_site = vector::get_random(potential_sites);
+	log_trace(std::format("Set home site for character \"{}\": {}.", this->get_identifier(), this->get_home_site()->get_identifier()));
 
 	return true;
 }

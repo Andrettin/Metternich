@@ -4,7 +4,6 @@ electra = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp.
 	character_class = warrior
 	culture = fey
 	religion = hellenic
-	home_site = troy
 	gender = female
 	father = atlas
 	mother = pleione

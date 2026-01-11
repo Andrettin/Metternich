@@ -70,6 +70,7 @@ character_game_data::character_game_data(const metternich::character *character)
 	this->birth_date = this->character->get_birth_date();
 	this->death_date = this->character->get_death_date();
 	this->start_date = this->character->get_start_date();
+	this->home_site = this->character->get_home_site();
 
 	for (const skill *skill : skill::get_all()) {
 		this->change_skill_value(skill, skill->get_base_value());
@@ -95,6 +96,8 @@ void character_game_data::process_gsml_property(const gsml_property &property)
 		this->death_date = string::to_date(value);
 	} else if (key == "start_date") {
 		this->start_date = string::to_date(value);
+	} else if (key == "home_site") {
+		this->home_site = site::get(value);
 	} else if (key == "character_class") {
 		this->character_class = character_class::get(value);
 	} else if (key == "level") {
@@ -203,6 +206,9 @@ gsml_data character_game_data::to_gsml_data() const
 	data.add_property("start_date", date::to_string(this->get_start_date()));
 	data.add_property("birth_date", date::to_string(this->get_birth_date()));
 	data.add_property("death_date", date::to_string(this->get_death_date()));
+	if (this->get_home_site() != nullptr) {
+		data.add_property("home_site", this->get_home_site()->get_identifier());
+	}
 	if (this->get_character_class() != nullptr) {
 		data.add_property("character_class", this->get_character_class()->get_identifier());
 	}
@@ -497,8 +503,8 @@ void character_game_data::apply_history(const QDate &start_date)
 		}
 	}
 
-	if (this->get_domain() == nullptr && this->character->get_home_site() != nullptr) {
-		this->set_domain(this->character->get_home_site()->get_game_data()->get_owner());
+	if (this->get_domain() == nullptr && this->get_home_site() != nullptr) {
+		this->set_domain(this->get_home_site()->get_game_data()->get_owner());
 	}
 }
 
@@ -690,7 +696,7 @@ bool character_game_data::has_ever_existed() const
 		return true;
 	}
 
-	//if (this->character->get_home_site() != nullptr && !this->character->get_home_site()->get_game_data()->is_on_map()) {
+	//if (this->get_home_site() != nullptr && !this->get_home_site()->get_game_data()->is_on_map()) {
 	//	return false;
 	//}
 

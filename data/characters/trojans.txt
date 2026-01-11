@@ -4,7 +4,6 @@ scamander = {
 	character_class = warrior
 	culture = lydian #Trojan
 	religion = hellenic
-	home_site = troy
 	gender = male
 }
 
@@ -14,7 +13,6 @@ idaea = {
 	character_class = warrior
 	culture = lydian #Trojan
 	religion = hellenic
-	home_site = troy
 	gender = female
 }
 
@@ -24,7 +22,6 @@ teucer = {
 	character_class = warrior
 	culture = lydian #Trojan
 	religion = hellenic
-	home_site = troy
 	gender = male
 	father = scamander #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 508.
 	mother = idaea #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 508.
@@ -36,7 +33,6 @@ dardanus = {
 	character_class = warrior
 	culture = lydian #Trojan
 	religion = hellenic
-	home_site = troy
 	gender = male
 	father = zeus #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 508.
 	mother = electra #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 508.
@@ -48,7 +44,6 @@ bateia = {
 	character_class = warrior
 	culture = lydian #Trojan
 	religion = hellenic
-	home_site = troy
 	gender = female
 	father = teucer #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 508.
 }
@@ -59,7 +54,6 @@ erichthonius = {
 	character_class = warrior
 	culture = lydian #Trojan
 	religion = hellenic
-	home_site = troy
 	gender = male
 	father = dardanus #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 508.
 	mother = bateia #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 508.
@@ -71,7 +65,6 @@ tros = {
 	character_class = warrior
 	culture = lydian #Trojan
 	religion = hellenic
-	home_site = troy
 	gender = male
 	father = erichthonius #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 508.
 }
@@ -82,7 +75,6 @@ ilus = {
 	character_class = warrior
 	culture = lydian #Trojan
 	religion = hellenic
-	home_site = troy
 	gender = male
 	father = tros #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 508.
 }
@@ -93,7 +85,6 @@ laomedon = {
 	character_class = warrior
 	culture = lydian #Trojan
 	religion = hellenic
-	home_site = troy
 	gender = male
 	father = ilus #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 508.
 }

@@ -92,6 +92,8 @@ public:
 	static const std::set<std::string> database_dependencies;
 
 	static void initialize_all();
+	static void initialize_all_vital_dates();
+	static void initialize_all_home_sites();
 
 	static bool skill_compare(const character *lhs, const character *rhs);
 
@@ -125,6 +127,9 @@ public:
 
 	bool initialize_dates_from_children();
 	bool initialize_dates_from_parents();
+
+	bool initialize_home_site_from_children();
+	bool initialize_home_site_from_parents();
 
 	void set_name_front_compound_element(word *word);
 	void set_name_rear_compound_element(word *word);

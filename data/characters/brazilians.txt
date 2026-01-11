@@ -19,7 +19,6 @@ belchior_goncalves = { #Source: Barão de Vasconcellos, "Archivo Nobiliarchico B
 	character_class = warrior
 	culture = brazilian
 	religion = catholic
-	home_site = sao_joao_del_rei #his grandson was born there
 	gender = male
 	
 	history = {
@@ -33,7 +32,6 @@ helena_teixeira = { #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Bras
 	character_class = warrior
 	culture = brazilian
 	religion = catholic
-	home_site = sao_joao_del_rei #her grandson was born there
 	gender = female
 }
 
@@ -43,7 +41,6 @@ manuel_martins_de_carvalho = { #Source: Barão de Vasconcellos, "Archivo Nobilia
 	character_class = warrior
 	culture = brazilian
 	religion = catholic
-	home_site = sao_joao_del_rei #his grandson was born there
 	gender = male
 	
 	history = {
@@ -57,7 +54,6 @@ josepha_de_souza_monteiro = { #Source: Barão de Vasconcellos, "Archivo Nobiliar
 	character_class = warrior
 	culture = brazilian
 	religion = catholic
-	home_site = sao_joao_del_rei #her grandson was born there
 	gender = female
 }
 
@@ -67,7 +63,6 @@ francisco_jose_teixeira_father = { #Source: Barão de Vasconcellos, "Archivo Nob
 	character_class = warrior #captain
 	culture = brazilian
 	religion = catholic
-	home_site = sao_joao_del_rei #his son was born there
 	gender = male
 	father = belchior_goncalves
 	mother = helena_teixeira
@@ -85,7 +80,6 @@ anna_josepha_de_souza = { #Source: Barão de Vasconcellos, "Archivo Nobiliarchic
 	character_class = warrior
 	culture = brazilian
 	religion = catholic
-	home_site = sao_joao_del_rei #her son was born there
 	gender = female
 	father = manuel_martins_de_carvalho
 	mother = josepha_de_souza_monteiro
@@ -120,7 +114,6 @@ francisca_bernardina_do_sacramento_leite_ribeiro = { #Source: Barão de Vasconce
 	character_class = warrior #aristocrat
 	culture = brazilian
 	religion = catholic
-	home_site = sao_joao_del_rei #her husband was born there
 	gender = female
 	father = jose_leite_ribeiro
 	mother = escholastica_maria_de_jesus

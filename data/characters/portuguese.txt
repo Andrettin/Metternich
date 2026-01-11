@@ -88,7 +88,6 @@ francisco_leite = { #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Bras
 	character_class = warrior
 	culture = portuguese #his son was Portuguese
 	religion = catholic
-	home_site = sao_joao_del_rei #his granddaughter's husband was born there
 	gender = male
 	
 	history = {
@@ -102,7 +101,6 @@ isabel_ferreira = { #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Bras
 	character_class = warrior
 	culture = portuguese #her son was Portuguese
 	religion = catholic
-	home_site = sao_joao_del_rei #her granddaughter's husband was born there
 	gender = female
 }
 
@@ -112,7 +110,6 @@ lourenco_correia = { #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Bra
 	character_class = warrior
 	culture = portuguese #his daughter's husband was Portuguese
 	religion = catholic
-	home_site = sao_joao_del_rei #his granddaughter's husband was born there
 	gender = male
 	
 	history = {
@@ -126,7 +123,6 @@ maria_de_assumpcao_moraes = { #Source: Barão de Vasconcellos, "Archivo Nobiliar
 	character_class = warrior
 	culture = portuguese #her daughter's husband was Portuguese
 	religion = catholic
-	home_site = sao_joao_del_rei #her granddaughter's husband was born there
 	gender = female
 }
 
@@ -136,7 +132,6 @@ jose_leite_ribeiro = { #Source: Barão de Vasconcellos, "Archivo Nobiliarchico B
 	character_class = warrior
 	culture = portuguese
 	religion = catholic
-	home_site = sao_joao_del_rei #his daughter's husband was born there
 	gender = male
 	father = francisco_leite
 	mother = isabel_ferreira
@@ -156,7 +151,6 @@ escholastica_maria_de_jesus = { #Source: Barão de Vasconcellos, "Archivo Nobili
 	character_class = warrior
 	culture = portuguese #her husband was Portuguese
 	religion = catholic
-	home_site = sao_joao_del_rei #her daughter's husband was born there
 	gender = female
 	father = lourenco_correia
 	mother = maria_de_assumpcao_moraes

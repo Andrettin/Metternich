@@ -13,6 +13,7 @@ Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("ui/portrait.h")
 
 namespace archimedes {
+	class gsml_data;
 	class gsml_property;
 }
 
@@ -163,6 +164,11 @@ public:
 	void set_start_date(const QDate &date)
 	{
 		this->start_date = date;
+	}
+
+	const site *get_home_site() const
+	{
+		return this->home_site;
 	}
 
 	const metternich::character_class *get_character_class() const;
@@ -634,6 +640,7 @@ private:
 	QDate birth_date;
 	QDate death_date;
 	QDate start_date;
+	const site *home_site = nullptr;
 	const character_class *character_class = nullptr;
 	int level = 0;
 	int64_t experience = 0;
