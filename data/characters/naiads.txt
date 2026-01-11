@@ -1,0 +1,10 @@
+zeuxippe = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 500.
+	name = "Zeuxippe"
+	species = nymph #Naiad
+	character_class = warrior
+	culture = fey
+	religion = hellenic
+	gender = female
+	
+	#wife and aunt of Pandion, king of Athens
+}

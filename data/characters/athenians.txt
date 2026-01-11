@@ -1,0 +1,110 @@
+erichthonius_of_athens = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 507.
+	name = "Erichthonius"
+	character_class = warrior #aristocrat
+	culture = greek
+	religion = pagan
+	home_site = athens
+	gender = male
+}
+
+pandion = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 500.
+	name = "Pandion"
+	character_class = warrior #aristocrat
+	culture = greek
+	religion = pagan
+	home_site = athens
+	gender = male
+	father = erichthonius_of_athens #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 507.
+	
+	#sixth king of Athens
+	#husband of Zeuxippe, and her nephew
+}
+
+erechtheus = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 500.
+	name = "Erechtheus"
+	character_class = warrior #aristocrat
+	culture = greek
+	religion = pagan
+	home_site = athens
+	gender = male
+	father = pandion
+	mother = zeuxippe
+	
+	#king of Athens
+}
+
+butes = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 500.
+	name = "Butes"
+	character_class = warrior #aristocrat
+	culture = greek
+	religion = pagan
+	home_site = athens
+	gender = male
+	father = pandion
+	mother = zeuxippe
+}
+
+procne = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 500.
+	name = "Procne"
+	character_class = warrior #aristocrat
+	culture = greek
+	religion = pagan
+	home_site = athens
+	gender = female
+	father = pandion
+	mother = zeuxippe
+}
+
+philomela = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 500.
+	name = "Philomela"
+	character_class = warrior #aristocrat
+	culture = greek
+	religion = pagan
+	home_site = athens
+	gender = female
+	father = pandion
+	mother = zeuxippe
+}
+
+cecrops = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 507.
+	name = "Cecrops"
+	character_class = warrior #aristocrat
+	culture = greek
+	religion = pagan
+	home_site = athens
+	gender = male
+	father = erechtheus
+}
+
+pandion_ii = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 507.
+	name = "Pandion"
+	character_class = warrior #aristocrat
+	culture = greek
+	religion = pagan
+	home_site = athens
+	gender = male
+	father = cecrops
+}
+
+aegeus = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 507.
+	name = "Aegeus"
+	character_class = warrior #aristocrat
+	culture = greek
+	religion = pagan
+	home_site = athens
+	gender = male
+	father = pandion_ii
+}
+
+theseus = {
+	name = "Theseus"
+	species = human
+	character_class = warrior #warrior/bard
+	level = 16
+	culture = greek
+	religion = pagan
+	home_site = athens
+	gender = male
+	father = aegeus #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 507.
+	contemporary_character = priam
+}
