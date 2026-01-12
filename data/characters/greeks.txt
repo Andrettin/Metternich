@@ -8,6 +8,44 @@ perseus = {
 	start_date = -1550 #possible year of the foundation of Mycenae
 }
 
+arceisius = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 280.
+	name = "Arceisius"
+	species = human
+	character_class = warrior #aristocrat
+	culture = greek
+	religion = pagan
+	gender = male
+}
+
+autolycus = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 339.
+	name = "Autolycus"
+	species = human
+	character_class = warrior #aristocrat
+	culture = greek
+	religion = pagan
+	gender = male
+}
+
+laertes = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 280.
+	name = "Laertes"
+	species = human
+	character_class = warrior #aristocrat
+	culture = greek
+	religion = pagan
+	gender = male
+	father = arceisius
+}
+
+anticleia = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 339.
+	name = "Anticleia"
+	species = human
+	character_class = warrior #aristocrat
+	culture = greek
+	religion = pagan
+	gender = female
+	father = autolycus
+}
+
 odysseus = {
 	name = "Odysseus"
 	species = human
@@ -17,7 +55,20 @@ odysseus = {
 	religion = pagan
 	home_site = ithaca
 	gender = male
+	father = laertes #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 339.
+	mother = anticleia #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 339.
 	contemporary_character = priam
+}
+
+ctimene = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 280.
+	name = "Ctimene"
+	species = human
+	character_class = warrior #aristocrat
+	culture = greek
+	religion = pagan
+	gender = female
+	father = laertes
+	mother = anticleia
 }
 
 archimedes = {
