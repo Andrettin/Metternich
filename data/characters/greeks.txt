@@ -8,6 +8,29 @@ perseus = {
 	start_date = -1550 #possible year of the foundation of Mycenae
 }
 
+daedalion = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 126, 146.
+	name = "Daedalion"
+	species = human
+	character_class = warrior #aristocrat
+	culture = greek
+	religion = pagan
+	gender = male
+	
+	#son of Phosphorus (the Morning Star)
+}
+
+chione_of_daedalion = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 126.
+	name = "Chione"
+	species = human
+	character_class = warrior #aristocrat
+	culture = greek
+	religion = pagan
+	gender = female
+	father = daedalion
+	
+	#mother of Philammon by Apollo
+}
+
 arceisius = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 280.
 	name = "Arceisius"
 	species = human
@@ -17,13 +40,24 @@ arceisius = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p
 	gender = male
 }
 
-autolycus = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 339.
+autolycus = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 95.
 	name = "Autolycus"
+	species = human
+	character_class = rogue #thief
+	culture = greek
+	religion = pagan
+	gender = male
+	father = hermes
+	mother = chione_of_daedalion
+}
+
+amphithea = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 95.
+	name = "Amphithea"
 	species = human
 	character_class = warrior #aristocrat
 	culture = greek
 	religion = pagan
-	gender = male
+	gender = female
 }
 
 laertes = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 280.
@@ -36,7 +70,7 @@ laertes = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 
 	father = arceisius
 }
 
-anticleia = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 339.
+anticleia = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 57.
 	name = "Anticleia"
 	species = human
 	character_class = warrior #aristocrat
@@ -44,6 +78,19 @@ anticleia = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p
 	religion = pagan
 	gender = female
 	father = autolycus
+	mother = amphithea #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 95.
+}
+
+polymede = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 95.
+	name = "Polymede"
+	species = human
+	character_class = warrior #aristocrat
+	culture = greek
+	religion = pagan
+	gender = female
+	father = autolycus
+	
+	#mother of Jason, and wife of Aeson
 }
 
 odysseus = {
@@ -60,7 +107,7 @@ odysseus = {
 	contemporary_character = priam
 }
 
-ctimene = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 280.
+ctimene = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 57, 280.
 	name = "Ctimene"
 	species = human
 	character_class = warrior #aristocrat
