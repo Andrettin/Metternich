@@ -568,6 +568,7 @@ source_group(population FILES ${population_HDRS})
 set(religion_HDRS
 	src/religion/deity.h
 	src/religion/deity_slot.h
+	src/religion/divine_domain.h
 	src/religion/pantheon.h
 	src/religion/religion.h
 	src/religion/religion_base.h

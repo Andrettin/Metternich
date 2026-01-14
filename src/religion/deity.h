@@ -12,6 +12,7 @@ namespace metternich {
 
 class character;
 class cultural_group;
+class divine_domain;
 class pantheon;
 class religion;
 
@@ -62,6 +63,16 @@ public:
 		return this->character;
 	}
 
+	const std::vector<const divine_domain *> &get_major_domains() const
+	{
+		return this->major_domains;
+	}
+
+	const std::vector<const divine_domain *> &get_minor_domains() const
+	{
+		return this->minor_domains;
+	}
+
 	virtual bool is_available_for_country_slot(const domain *domain, const idea_slot *slot) const override;
 
 signals:
@@ -72,6 +83,8 @@ private:
 	bool major = false;
 	std::vector<const religion *> religions;
 	metternich::character *character = nullptr;
+	std::vector<const divine_domain *> major_domains;
+	std::vector<const divine_domain *> minor_domains;
 	culture_map<std::string> cultural_names;
 	data_entry_map<cultural_group, std::string> cultural_group_names;
 };

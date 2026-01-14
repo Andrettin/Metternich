@@ -9,6 +9,7 @@
 #include "domain/domain_game_data.h"
 #include "domain/idea_type.h"
 #include "religion/deity_slot.h"
+#include "religion/divine_domain.h"
 #include "religion/religion.h"
 #include "technology/technology.h"
 #include "util/vector_util.h"
@@ -43,6 +44,16 @@ void deity::process_gsml_scope(const gsml_data &scope)
 			religion *religion = religion::get(value);
 			religion->add_deity(this);
 			this->religions.push_back(religion);
+		}
+	} else if (tag == "major_domains") {
+		for (const std::string &value : values) {
+			const divine_domain *domain = divine_domain::get(value);
+			this->major_domains.push_back(domain);
+		}
+	} else if (tag == "minor_domains") {
+		for (const std::string &value : values) {
+			const divine_domain *domain = divine_domain::get(value);
+			this->minor_domains.push_back(domain);
 		}
 	} else if (tag == "cultural_names") {
 		scope.for_each_property([&](const gsml_property &property) {
@@ -83,6 +94,11 @@ void deity::check() const
 	if (this->get_religions().empty()) {
 		throw std::runtime_error(std::format("Deity \"{}\" is not worshipped by any religions.", this->get_identifier()));
 	}
+
+	if (this->get_major_domains().empty()) {
+		throw std::runtime_error(std::format("Deity \"{}\" has no major domains.", this->get_identifier()));
+	}
+
 
 	idea::check();
 }
