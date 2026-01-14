@@ -24,6 +24,16 @@ gaia = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 20
 	#traits = {
 	#	earth_mother
 	#}
+	major_domains = {
+		animal
+		elemental
+		healing
+		plant
+		weather
+	}
+	minor_domains = {
+		divination
+	}
 	character = {
 		species = earth_elemental #Protogenoi
 		character_class = warrior
@@ -40,6 +50,15 @@ uranus = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 4
 	major = true
 	religions = {
 		hellenic
+	}
+	major_domains = {
+		astral
+		combat
+		protection
+	}
+	minor_domains = {
+		divination
+		healing
 	}
 	character = {
 		species = air_elemental #Protogenoi

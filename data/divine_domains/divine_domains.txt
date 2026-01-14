@@ -1,0 +1,99 @@
+air = {
+	name = "Air"
+}
+
+animal = {
+	name = "Animal"
+}
+
+astral = {
+	name = "Astral"
+}
+
+chaos = {
+	name = "Chaos"
+}
+
+charm = {
+	name = "Charm"
+}
+
+combat = {
+	name = "Combat"
+}
+
+creation = {
+	name = "Creation"
+}
+
+divination = {
+	name = "Divination"
+}
+
+earth = {
+	name = "Earth"
+}
+
+elemental = {
+	name = "Elemental"
+}
+
+fire = {
+	name = "Fire"
+}
+
+guardian = {
+	name = "Guardian"
+}
+
+healing = {
+	name = "Healing"
+}
+
+law = {
+	name = "Law"
+}
+
+necromantic = {
+	name = "Necromantic"
+}
+
+numbers = {
+	name = "Numbers"
+}
+
+plant = {
+	name = "Plant"
+}
+
+protection = {
+	name = "Protection"
+}
+
+summoning = {
+	name = "Summoning"
+}
+
+sun = {
+	name = "Sun"
+}
+
+thought = {
+	name = "Thought"
+}
+
+travelers = {
+	name = "Travelers"
+}
+
+war = {
+	name = "War"
+}
+
+water = {
+	name = "Water"
+}
+
+weather = {
+	name = "Weather"
+}

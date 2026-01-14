@@ -4,6 +4,14 @@ aphrodite = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p
 	religions = {
 		hellenic
 	}
+	major_domains = {
+		charm
+		guardian
+		healing
+	}
+	minor_domains = {
+		creation
+	}
 	character = {
 		species = archon #Olympian
 		character_class = warrior
@@ -19,6 +27,14 @@ apollo = {
 	pantheon = olympian
 	religions = {
 		hellenic
+	}
+	major_domains = {
+		divination
+		healing
+		sun
+	}
+	minor_domains = {
+		charm
 	}
 	character = {
 		species = archon
@@ -40,6 +56,16 @@ artemis = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp.
 	#traits = {
 	#	goddess_of_the_hunt
 	#}
+	major_domains = {
+		animal
+		elemental
+		healing
+		plant
+		weather
+	}
+	minor_domains = {
+		divination
+	}
 	character = {
 		species = archon
 		character_class = warrior
@@ -55,6 +81,13 @@ athena = {
 	pantheon = olympian
 	religions = {
 		hellenic
+	}
+	major_domains = {
+		charm
+		combat
+		divination
+		healing
+		protection
 	}
 	character = {
 		species = archon
@@ -74,6 +107,15 @@ hera = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 23
 	}
 	cultural_group_names = {
 		latin = "Juno"
+	}
+	major_domains = {
+		charm
+		divination
+		healing
+		protection
+	}
+	minor_domains = {
+		combat
 	}
 	character = {
 		species = archon
@@ -97,6 +139,15 @@ hermes = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 
 	}
 	cultural_group_names = {
 		latin = "Mercury"
+	}
+	major_domains = {
+		charm
+		healing
+		protection
+		summoning
+	}
+	minor_domains = {
+		divination
 	}
 	character = {
 		species = archon
@@ -126,6 +177,16 @@ poseidon = {
 	#traits = {
 	#	god_of_the_sea
 	#}
+	major_domains = {
+		healing
+		plant
+		water
+		weather
+	}
+	minor_domains = {
+		animal
+		divination
+	}
 	character = {
 		species = triton
 		character_class = warrior
@@ -142,6 +203,17 @@ zeus = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 28
 	major = true
 	religions = {
 		hellenic
+	}
+	major_domains = {
+		combat
+		healing
+		protection
+		weather
+	}
+	minor_domains = {
+		animal
+		divination
+		elemental
 	}
 	character = {
 		species = archon #Olympian

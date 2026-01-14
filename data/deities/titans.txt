@@ -141,6 +141,17 @@ rhea = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 42
 	cultural_group_names = {
 		latin = "Ops"
 	}
+	major_domains = {
+		animal
+		charm
+		guardian
+		healing
+		plant
+		protection
+	}
+	minor_domains = {
+		creation
+	}
 	character = {
 		species = titan
 		character_class = warrior
