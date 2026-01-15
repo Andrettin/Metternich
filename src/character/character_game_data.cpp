@@ -2,6 +2,7 @@
 
 #include "character/character_game_data.h"
 
+#include "character/bloodline.h"
 #include "character/character.h"
 #include "character/character_attribute.h"
 #include "character/character_class.h"
@@ -104,6 +105,10 @@ void character_game_data::process_gsml_property(const gsml_property &property)
 		this->level = std::stoi(value);
 	} else if (key == "experience") {
 		this->experience = std::stoll(value);
+	} else if (key == "bloodline") {
+		this->bloodline = bloodline::get(value);
+	} else if (key == "bloodline_strength") {
+		this->bloodline_strength = std::stoi(value);
 	} else if (key == "hit_dice_count") {
 		this->hit_dice_count = std::stoi(value);
 	} else if (key == "hit_points") {
@@ -214,6 +219,10 @@ gsml_data character_game_data::to_gsml_data() const
 	}
 	data.add_property("level", std::to_string(this->get_level()));
 	data.add_property("experience", std::to_string(this->get_experience()));
+	if (this->get_bloodline() != nullptr) {
+		data.add_property("bloodline", this->get_bloodline()->get_identifier());
+		data.add_property("bloodline_strength", std::to_string(this->get_bloodline_strength()));
+	}
 
 	if (!this->attribute_values.empty()) {
 		gsml_data attributes_data("attributes");
@@ -328,6 +337,9 @@ void character_game_data::apply_species_and_class(const int level)
 	}
 
 	this->generate_attributes();
+
+	this->set_bloodline(this->character->get_bloodline());
+	this->set_bloodline_strength(this->character->get_bloodline_strength());
 
 	const metternich::character_class *character_class = this->get_character_class();
 	if (character_class != nullptr) {
@@ -863,6 +875,37 @@ int64_t character_game_data::get_experience_award() const
 
 	//FIXME: award experience for defeating characters without a monster type
 	return 0;
+}
+
+void character_game_data::set_bloodline(const metternich::bloodline *bloodline)
+{
+	if (bloodline == this->get_bloodline()) {
+		return;
+	}
+
+	this->bloodline = bloodline;
+
+	if (game::get()->is_running()) {
+		emit bloodline_changed();
+	}
+}
+
+void character_game_data::set_bloodline_strength(const int bloodline_strength)
+{
+	if (bloodline_strength == this->get_bloodline_strength()) {
+		return;
+	}
+
+	//the bloodline must always be set before the bloodline strength
+	assert_throw(this->get_bloodline() != nullptr);
+
+	this->bloodline_strength = bloodline_strength;
+
+	//FIXME: apply bloodline effects
+
+	if (game::get()->is_running()) {
+		emit bloodline_strength_changed();
+	}
 }
 
 void character_game_data::change_attribute_value(const character_attribute *attribute, const int change)

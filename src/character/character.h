@@ -6,6 +6,7 @@
 #include "util/centesimal_int.h"
 #include "util/qunique_ptr.h"
 
+Q_MOC_INCLUDE("character/bloodline.h")
 Q_MOC_INCLUDE("character/character_class.h")
 Q_MOC_INCLUDE("character/character_game_data.h")
 Q_MOC_INCLUDE("character/dynasty.h")
@@ -27,6 +28,7 @@ namespace archimedes {
 
 namespace metternich {
 
+class bloodline;
 class character_attribute;
 class character_class;
 class character_game_data;
@@ -71,6 +73,8 @@ class character final : public character_base, public data_type<character>
 	Q_PROPERTY(const metternich::religion* religion MEMBER religion NOTIFY changed)
 	Q_PROPERTY(const metternich::phenotype* phenotype MEMBER phenotype READ get_phenotype NOTIFY changed)
 	Q_PROPERTY(const metternich::deity* deity READ get_deity CONSTANT)
+	Q_PROPERTY(const metternich::bloodline* bloodline MEMBER bloodline READ get_bloodline NOTIFY changed)
+	Q_PROPERTY(int bloodline_strength MEMBER bloodline_strength READ get_bloodline_strength NOTIFY changed)
 	Q_PROPERTY(metternich::portrait* portrait MEMBER portrait NOTIFY changed)
 	Q_PROPERTY(const metternich::site* home_site MEMBER home_site READ get_home_site NOTIFY changed)
 	Q_PROPERTY(metternich::character* father READ get_father WRITE set_father NOTIFY changed)
@@ -195,6 +199,34 @@ public:
 		return this->get_deity() != nullptr;
 	}
 
+	const metternich::bloodline *get_bloodline() const
+	{
+		return this->bloodline;
+	}
+
+	void set_bloodline(const metternich::bloodline *bloodline)
+	{
+		if (bloodline == this->get_bloodline()) {
+			return;
+		}
+
+		this->bloodline = bloodline;
+	}
+
+	int get_bloodline_strength() const
+	{
+		return this->bloodline_strength;
+	}
+
+	void set_bloodline_strength(const int bloodline_strength)
+	{
+		if (bloodline_strength == this->get_bloodline_strength()) {
+			return;
+		}
+
+		this->bloodline_strength = bloodline_strength;
+	}
+
 	virtual int get_adulthood_age() const override;
 	virtual int get_venerable_age() const override;
 	virtual const dice &get_maximum_age_modifier() const override;
@@ -293,6 +325,8 @@ private:
 	const metternich::religion *religion = nullptr;
 	const metternich::phenotype *phenotype = nullptr;
 	const metternich::deity *deity = nullptr; //the deity which the character is (if it is a deity)
+	const metternich::bloodline *bloodline = nullptr;
+	int bloodline_strength = 0;
 	metternich::portrait *portrait = nullptr;
 	const site *home_site = nullptr;
 	int skill = 0;

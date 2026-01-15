@@ -2,6 +2,7 @@
 
 #include "character/character_data_model.h"
 
+#include "character/bloodline.h"
 #include "character/character.h"
 #include "character/character_attribute.h"
 #include "character/character_class.h"
@@ -199,6 +200,10 @@ void character_data_model::reset_model()
 			} else {
 				this->top_rows.push_back(std::make_unique<character_data_row>("Experience:", number::to_formatted_string(character_game_data->get_experience())));
 			}
+		}
+
+		if (character_game_data->get_bloodline() != nullptr) {
+			this->top_rows.push_back(std::make_unique<character_data_row>("Bloodline:", std::format("{} ({})", character_game_data->get_bloodline()->get_name(), character_game_data->get_bloodline_strength())));
 		}
 
 		this->top_rows.push_back(std::make_unique<character_data_row>("Age:", number::to_formatted_string(character_game_data->get_age())));

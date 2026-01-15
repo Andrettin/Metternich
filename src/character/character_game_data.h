@@ -19,6 +19,7 @@ namespace archimedes {
 
 namespace metternich {
 
+class bloodline;
 class character;
 class character_attribute;
 class domain;
@@ -59,6 +60,8 @@ class character_game_data final : public QObject
 	Q_PROPERTY(const metternich::character_class* character_class READ get_character_class NOTIFY character_class_changed)
 	Q_PROPERTY(int level READ get_level NOTIFY level_changed)
 	Q_PROPERTY(qint64 experience READ get_experience NOTIFY experience_changed)
+	Q_PROPERTY(const metternich::bloodline* bloodline READ get_bloodline NOTIFY bloodline_changed)
+	Q_PROPERTY(int bloodline_strength READ get_bloodline_strength NOTIFY bloodline_strength_changed)
 	Q_PROPERTY(int hit_points READ get_hit_points NOTIFY hit_points_changed)
 	Q_PROPERTY(int max_hit_points READ get_max_hit_points NOTIFY max_hit_points_changed)
 	Q_PROPERTY(int armor_class_bonus READ get_armor_class_bonus NOTIFY armor_class_bonus_changed)
@@ -193,6 +196,20 @@ public:
 	void change_experience(const int64_t change);
 	int64_t get_experience_for_level(const int level) const;
 	int64_t get_experience_award() const;
+
+	const metternich::bloodline *get_bloodline() const
+	{
+		return this->bloodline;
+	}
+
+	void set_bloodline(const metternich::bloodline *bloodline);
+
+	int get_bloodline_strength() const
+	{
+		return this->bloodline_strength;
+	}
+
+	void set_bloodline_strength(const int bloodline_strength);
 
 	const data_entry_map<character_attribute, int> &get_attribute_values() const
 	{
@@ -611,6 +628,8 @@ signals:
 	void character_class_changed();
 	void level_changed();
 	void experience_changed();
+	void bloodline_changed();
+	void bloodline_strength_changed();
 	void hit_points_changed();
 	void max_hit_points_changed();
 	void armor_class_bonus_changed();
@@ -641,9 +660,11 @@ private:
 	QDate death_date;
 	QDate start_date;
 	const site *home_site = nullptr;
-	const character_class *character_class = nullptr;
+	const metternich::character_class *character_class = nullptr;
 	int level = 0;
 	int64_t experience = 0;
+	const metternich::bloodline *bloodline = nullptr;
+	int bloodline_strength = 0;
 	data_entry_map<character_attribute, int> attribute_values;
 	int hit_dice_count = 0;
 	int hit_points = 0;

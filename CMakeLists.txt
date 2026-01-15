@@ -20,6 +20,7 @@ include_directories(
 )
 
 set(character_SRCS
+	src/character/bloodline.cpp
 	src/character/character.cpp
 	src/character/character_attribute.cpp
 	src/character/character_class.cpp
@@ -357,6 +358,7 @@ set(metternich_SRCS
 )
 
 set(character_HDRS
+	src/character/bloodline.h
 	src/character/character.h
 	src/character/character_attribute.h
 	src/character/character_class.h
