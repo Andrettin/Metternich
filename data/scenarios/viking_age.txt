@@ -1,6 +1,6 @@
 viking_age = {
 	name = "Viking Age"
 	start_date = 867
-	map_template = central_europe
+	map_template = europe
 	hidden = true
 }
