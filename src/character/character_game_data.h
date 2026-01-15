@@ -6,6 +6,7 @@
 #include "spell/spell_container.h"
 #include "unit/military_unit_type_container.h"
 #include "util/centesimal_int.h"
+#include "util/qunique_ptr.h"
 
 Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("domain/office.h")
@@ -13,6 +14,7 @@ Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("ui/portrait.h")
 
 namespace archimedes {
+	class dice;
 	class gsml_data;
 	class gsml_property;
 }
@@ -196,6 +198,7 @@ public:
 	void change_experience(const int64_t change);
 	int64_t get_experience_for_level(const int level) const;
 	int64_t get_experience_award() const;
+	void change_experience_award(const int64_t change);
 
 	const metternich::bloodline *get_bloodline() const
 	{
@@ -663,6 +666,7 @@ private:
 	const metternich::character_class *character_class = nullptr;
 	int level = 0;
 	int64_t experience = 0;
+	int64_t experience_award = 0; //the experience award for defeating the character
 	const metternich::bloodline *bloodline = nullptr;
 	int bloodline_strength = 0;
 	data_entry_map<character_attribute, int> attribute_values;

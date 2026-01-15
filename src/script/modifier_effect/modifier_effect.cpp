@@ -27,6 +27,7 @@
 #include "script/modifier_effect/deployment_limit_modifier_effect.h"
 #include "script/modifier_effect/diplomatic_penalty_for_expansion_modifier_effect.h"
 #include "script/modifier_effect/domain_attribute_modifier_effect.h"
+#include "script/modifier_effect/experience_award_modifier_effect.h"
 #include "script/modifier_effect/free_artillery_promotion_modifier_effect.h"
 #include "script/modifier_effect/free_building_class_modifier_effect.h"
 #include "script/modifier_effect/free_cavalry_promotion_modifier_effect.h"
@@ -82,6 +83,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<armor_class_modifier_effect>(value);
 		} else if (key == "damage_bonus") {
 			return std::make_unique<damage_bonus_modifier_effect>(value);
+		} else if (key == "experience_award") {
+			return std::make_unique<experience_award_modifier_effect>(value);
 		} else if (key == "hit_dice") {
 			return std::make_unique<hit_dice_modifier_effect>(value);
 		} else if (key == "hit_points") {
