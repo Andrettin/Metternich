@@ -98,6 +98,7 @@ public:
 	static void initialize_all();
 	static void initialize_all_vital_dates();
 	static void initialize_all_home_sites();
+	static void initialize_all_bloodlines();
 
 	static bool skill_compare(const character *lhs, const character *rhs);
 
@@ -134,6 +135,8 @@ public:
 
 	bool initialize_home_site_from_children();
 	bool initialize_home_site_from_parents();
+
+	void initialize_bloodline_from_parents();
 
 	void set_name_front_compound_element(word *word);
 	void set_name_rear_compound_element(word *word);
@@ -327,6 +330,7 @@ private:
 	const metternich::deity *deity = nullptr; //the deity which the character is (if it is a deity)
 	const metternich::bloodline *bloodline = nullptr;
 	int bloodline_strength = 0;
+	bool bloodline_initialized = false;
 	metternich::portrait *portrait = nullptr;
 	const site *home_site = nullptr;
 	int skill = 0;

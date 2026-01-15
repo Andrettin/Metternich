@@ -2,6 +2,7 @@
 
 #include "character/character.h"
 
+#include "character/bloodline.h"
 #include "character/character_attribute.h"
 #include "character/character_class.h"
 #include "character/character_game_data.h"
@@ -54,6 +55,7 @@ void character::initialize_all()
 
 	character::initialize_all_vital_dates();
 	character::initialize_all_home_sites();
+	character::initialize_all_bloodlines();
 }
 
 void character::initialize_all_vital_dates()
@@ -139,6 +141,22 @@ void character::initialize_all_home_sites()
 		std::erase_if(siteless_characters, [](const character *character) {
 			return character->get_home_site() != nullptr;
 		});
+	}
+}
+
+void character::initialize_all_bloodlines()
+{
+	std::vector<character *> bloodlineless_characters = character::get_all();
+	std::erase_if(bloodlineless_characters, [](const character *character) {
+		return character->get_bloodline() != nullptr;
+	});
+
+	for (character *character : bloodlineless_characters) {
+		if (character->get_bloodline() != nullptr) {
+			continue;
+		}
+
+		character->initialize_bloodline_from_parents();
 	}
 }
 
@@ -381,6 +399,10 @@ void character::initialize()
 		this->home_site = this->get_home_site()->get_province()->get_default_provincial_capital();
 	}
 
+	if (this->get_bloodline() != nullptr) {
+		this->bloodline_initialized = true;
+	}
+
 	character_base::initialize();
 }
 
@@ -432,6 +454,10 @@ void character::check() const
 		throw std::runtime_error(std::format("Non-deity, non-temporary character \"{}\" has no home site.", this->get_identifier()));
 	} else if (this->get_home_site() != nullptr && !this->get_home_site()->is_settlement() && this->get_home_site()->get_type() != site_type::dungeon) {
 		throw std::runtime_error(std::format("Character \"{}\" has \"{}\" set as their home site, but it is neither a holding, nor a habitable world, nor a dungeon.", this->get_identifier(), this->get_home_site()->get_identifier()));
+	}
+
+	if (this->get_bloodline() != nullptr && this->get_bloodline_strength() == 0) {
+		throw std::runtime_error(std::format("Character \"{}\" has a bloodline, but no bloodline strength.", this->get_identifier()));
 	}
 
 	character_base::check();
@@ -659,6 +685,62 @@ bool character::initialize_home_site_from_parents()
 	log_trace(std::format("Set home site for character \"{}\": {}.", this->get_identifier(), this->get_home_site()->get_identifier()));
 
 	return true;
+}
+
+void character::initialize_bloodline_from_parents()
+{
+	assert_throw(this->get_bloodline() == nullptr);
+
+	std::vector<character *> parents;
+	if (this->get_father() != nullptr) {
+		parents.push_back(this->get_father());
+	}
+	if (this->get_mother() != nullptr) {
+		parents.push_back(this->get_mother());
+	}
+
+	if (parents.empty()) {
+		return;
+	}
+
+	std::vector<const metternich::bloodline *> potential_bloodlines;
+	int best_bloodline_strength = 0;
+	int bloodline_strength = 0;
+
+	for (character *parent : parents) {
+		if (parent->get_bloodline() == nullptr && !parent->bloodline_initialized) {
+			parent->initialize_bloodline_from_parents();
+		}
+
+		if (parent->get_bloodline() == nullptr) {
+			continue;
+		}
+
+		bloodline_strength += parent->get_bloodline_strength();
+
+		if (parent->get_bloodline_strength() < best_bloodline_strength) {
+			continue;
+		}
+
+		if (parent->get_bloodline_strength() > best_bloodline_strength) {
+			potential_bloodlines.clear();
+			best_bloodline_strength = parent->get_bloodline_strength();
+		}
+
+		potential_bloodlines.push_back(parent->get_bloodline());
+	}
+
+	if (potential_bloodlines.empty()) {
+		return;
+	}
+
+	bloodline_strength /= 2;
+
+	this->bloodline = vector::get_random(potential_bloodlines);
+	this->bloodline_strength = std::max(bloodline_strength, 1);
+	log_trace(std::format("Set bloodline for character \"{}\": {}.", this->get_identifier(), this->get_bloodline()->get_identifier()));
+
+	this->bloodline_initialized = true;
 }
 
 void character::set_name_front_compound_element(word *word)
