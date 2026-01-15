@@ -12,6 +12,7 @@
 #include "religion/divine_domain.h"
 #include "religion/religion.h"
 #include "technology/technology.h"
+#include "util/log_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -96,7 +97,7 @@ void deity::check() const
 	}
 
 	if (this->get_major_domains().empty()) {
-		throw std::runtime_error(std::format("Deity \"{}\" has no major domains.", this->get_identifier()));
+		log::log_error(std::format("Deity \"{}\" has no major domains.", this->get_identifier()));
 	}
 
 
