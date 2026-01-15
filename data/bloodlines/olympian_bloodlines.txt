@@ -1,0 +1,19 @@
+aphrodite = {
+	name = "Aphrodite"
+	founder = aphrodite
+}
+
+apollo = {
+	name = "Apollo"
+	founder = apollo
+}
+
+hermes = {
+	name = "Hermes"
+	founder = hermes
+}
+
+zeus = {
+	name = "Zeus"
+	founder = zeus
+}
