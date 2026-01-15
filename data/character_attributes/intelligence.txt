@@ -10,5 +10,7 @@ intelligence = {
 		high = 13-14
 		exceptional = 15-16
 		genius = 17-18
+		supra_genius = 19-20
+		godlike = 21 #21+
 	}
 }
