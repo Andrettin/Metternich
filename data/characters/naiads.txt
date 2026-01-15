@@ -1,7 +1,6 @@
 zeuxippe = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 500.
 	name = "Zeuxippe"
-	species = nymph #Naiad
-	character_class = warrior
+	monster_type = nymph #Naiad
 	culture = fey
 	religion = hellenic
 	gender = female

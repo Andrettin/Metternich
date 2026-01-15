@@ -1,0 +1,6 @@
+archon = {
+	name = "Archon"
+	common_name = "Archon"
+	rank = phylum
+	supertaxon = celestial
+}

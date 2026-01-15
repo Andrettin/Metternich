@@ -1,7 +1,6 @@
 pleione = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 338, 403.
 	name = "Pleione"
-	species = nymph
-	character_class = warrior
+	monster_type = nymph
 	culture = fey
 	religion = hellenic
 	gender = female
