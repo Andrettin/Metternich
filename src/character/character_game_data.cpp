@@ -1304,6 +1304,10 @@ bool character_game_data::do_saving_throw(const saving_throw_type *saving_throw_
 
 bool character_game_data::is_skill_trained(const skill *skill) const
 {
+	if (!skill->is_trained_only()) {
+		return true;
+	}
+
 	return this->skill_trainings.contains(skill);
 }
 

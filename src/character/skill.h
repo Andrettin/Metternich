@@ -19,6 +19,7 @@ class skill final : public named_data_entry, public data_type<skill>
 	Q_PROPERTY(archimedes::dice check_dice MEMBER check_dice READ get_check_dice NOTIFY changed)
 	Q_PROPERTY(metternich::character_attribute* base_attribute MEMBER base_attribute NOTIFY changed)
 	Q_PROPERTY(int base_value MEMBER base_value READ get_base_value NOTIFY changed)
+	Q_PROPERTY(bool trained_only MEMBER trained_only READ is_trained_only NOTIFY changed)
 	Q_PROPERTY(bool find_traps MEMBER find_traps NOTIFY changed)
 	Q_PROPERTY(bool disarm_traps MEMBER disarm_traps NOTIFY changed)
 
@@ -65,6 +66,11 @@ public:
 
 	std::string_view get_value_suffix() const;
 
+	bool is_trained_only() const
+	{
+		return this->trained_only;
+	}
+
 signals:
 	void changed();
 
@@ -73,6 +79,7 @@ private:
 	dice check_dice;
 	character_attribute *base_attribute = nullptr;
 	int base_value = 0;
+	bool trained_only = true;
 	bool find_traps = false;
 	bool disarm_traps = false;
 };
