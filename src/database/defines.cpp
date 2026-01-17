@@ -2,6 +2,7 @@
 
 #include "database/defines.h"
 
+#include "character/bloodline_strength_category.h"
 #include "database/database.h"
 #include "database/preferences.h"
 #include "domain/diplomacy_state.h"
@@ -67,6 +68,25 @@ void defines::process_gsml_scope(const gsml_data &scope)
 			const int64_t experience = std::stoll(property.get_value());
 
 			this->experience_per_level[level] = experience;
+		});
+	} else if (tag == "bloodline_strength_category_weights") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const bloodline_strength_category category = magic_enum::enum_cast<bloodline_strength_category>(property.get_key()).value();
+			const int weight = std::stoi(property.get_value());
+
+			this->bloodline_strength_category_weights[category] = weight;
+
+			this->weighted_bloodline_strength_categories.reserve(this->weighted_bloodline_strength_categories.size() + static_cast<size_t>(weight));
+			for (int i = 0; i < weight; ++i) {
+				this->weighted_bloodline_strength_categories.push_back(category);
+			}
+		});
+	} else if (tag == "bloodline_strength_per_category") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const bloodline_strength_category category = magic_enum::enum_cast<bloodline_strength_category>(property.get_key()).value();
+			dice dice(property.get_value());
+
+			this->bloodline_strength_per_category[category] = std::move(dice);
 		});
 	} else if (tag == "diplomacy_state_colors") {
 		scope.for_each_child([&](const gsml_data &child_scope) {
@@ -204,6 +224,31 @@ int defines::get_scaled_tile_width() const
 int defines::get_scaled_tile_height() const
 {
 	return (this->get_tile_height() * preferences::get()->get_scale_factor()).to_int();
+}
+
+int defines::get_bloodline_strength_category_weight(const bloodline_strength_category category) const
+{
+	const auto find_iterator = this->bloodline_strength_category_weights.find(category);
+	if (find_iterator != this->bloodline_strength_category_weights.end()) {
+		return find_iterator->second;
+	}
+
+	return 0;
+}
+
+const std::vector<bloodline_strength_category> &defines::get_weighted_bloodline_strength_categories() const
+{
+	return this->weighted_bloodline_strength_categories;
+}
+
+const dice &defines::get_bloodline_strength_for_category(const bloodline_strength_category category) const
+{
+	const auto find_iterator = this->bloodline_strength_per_category.find(category);
+	if (find_iterator != this->bloodline_strength_per_category.end()) {
+		return find_iterator->second;
+	}
+
+	throw std::runtime_error(std::format("No bloodline strength dice is given for category {}.", magic_enum::enum_name(category)));
 }
 
 void defines::set_river_image_filepath(const std::filesystem::path &filepath)

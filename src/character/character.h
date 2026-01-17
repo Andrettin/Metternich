@@ -49,6 +49,7 @@ class religion;
 class site;
 class species;
 class trait;
+enum class bloodline_strength_category;
 enum class military_unit_category;
 
 template <typename scope_type>
@@ -75,6 +76,7 @@ class character final : public character_base, public data_type<character>
 	Q_PROPERTY(const metternich::deity* deity READ get_deity CONSTANT)
 	Q_PROPERTY(const metternich::bloodline* bloodline MEMBER bloodline READ get_bloodline NOTIFY changed)
 	Q_PROPERTY(int bloodline_strength MEMBER bloodline_strength READ get_bloodline_strength NOTIFY changed)
+	Q_PROPERTY(metternich::bloodline_strength_category bloodline_strength_category MEMBER bloodline_strength_category NOTIFY changed)
 	Q_PROPERTY(metternich::portrait* portrait MEMBER portrait NOTIFY changed)
 	Q_PROPERTY(const metternich::site* home_site MEMBER home_site READ get_home_site NOTIFY changed)
 	Q_PROPERTY(metternich::character* father READ get_father WRITE set_father NOTIFY changed)
@@ -330,6 +332,7 @@ private:
 	const metternich::deity *deity = nullptr; //the deity which the character is (if it is a deity)
 	const metternich::bloodline *bloodline = nullptr;
 	int bloodline_strength = 0;
+	metternich::bloodline_strength_category bloodline_strength_category {};
 	bool bloodline_initialized = false;
 	metternich::portrait *portrait = nullptr;
 	const site *home_site = nullptr;

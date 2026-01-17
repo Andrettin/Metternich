@@ -3,6 +3,7 @@
 #include "character/character.h"
 
 #include "character/bloodline.h"
+#include "character/bloodline_strength_category.h"
 #include "character/character_attribute.h"
 #include "character/character_class.h"
 #include "character/character_game_data.h"
@@ -400,6 +401,16 @@ void character::initialize()
 	}
 
 	if (this->get_bloodline() != nullptr) {
+		if (this->get_bloodline_strength() == 0) {
+			if (this->bloodline_strength_category == bloodline_strength_category::none) {
+				this->bloodline_strength_category = vector::get_random(defines::get()->get_weighted_bloodline_strength_categories());
+			}
+
+			assert_throw(this->bloodline_strength_category != bloodline_strength_category::none);
+
+			this->bloodline_strength = random::get()->roll_dice(defines::get()->get_bloodline_strength_for_category(this->bloodline_strength_category));
+		}
+
 		this->bloodline_initialized = true;
 	}
 
@@ -736,9 +747,11 @@ void character::initialize_bloodline_from_parents()
 
 	bloodline_strength /= 2;
 
-	this->bloodline = vector::get_random(potential_bloodlines);
-	this->bloodline_strength = std::max(bloodline_strength, 1);
-	log_trace(std::format("Set bloodline for character \"{}\": {}.", this->get_identifier(), this->get_bloodline()->get_identifier()));
+	if (bloodline_strength > 0) {
+		this->bloodline = vector::get_random(potential_bloodlines);
+		this->bloodline_strength = std::max(bloodline_strength, 1);
+		log_trace(std::format("Set bloodline for character \"{}\": {}.", this->get_identifier(), this->get_bloodline()->get_identifier()));
+	}
 
 	this->bloodline_initialized = true;
 }

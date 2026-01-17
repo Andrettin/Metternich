@@ -359,6 +359,7 @@ set(metternich_SRCS
 
 set(character_HDRS
 	src/character/bloodline.h
+	src/character/bloodline_strength_category.h
 	src/character/character.h
 	src/character/character_attribute.h
 	src/character/character_class.h

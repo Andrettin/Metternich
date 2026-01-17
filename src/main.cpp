@@ -1,5 +1,6 @@
 #include "metternich.h"
 
+#include "character/bloodline_strength_category.h"
 #include "character/character.h"
 #include "character/character_attribute.h"
 #include "character/character_data_model.h"
@@ -164,6 +165,7 @@ int main(int argc, char **argv)
 		enum_converter<log_level>();
 
 		database_util::register_enum<affix_type>();
+		database_util::register_enum<bloodline_strength_category>();
 		database_util::register_enum<commodity_type>();
 		database_util::register_enum<country_type>();
 		database_util::register_enum<cultural_group_rank>();

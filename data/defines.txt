@@ -133,6 +133,20 @@ experience_per_level = {
 	20 = 3600000
 }
 
+bloodline_strength_category_weights = {
+	tainted = 25
+	minor = 40
+	major = 30
+	great = 5
+}
+
+bloodline_strength_per_category = {
+	tainted = 4d4
+	minor = 5d6
+	major = 8d6
+	great = 8d8
+}
+
 minor_nation_color = { 221 216 181 }
 country_border_color = { 0 0 0 }
 selected_country_color = { 255 255 0 }

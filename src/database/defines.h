@@ -36,6 +36,7 @@ class pathway;
 class population_class;
 class portrait;
 class terrain_type;
+enum class bloodline_strength_category;
 enum class diplomacy_state;
 enum class event_trigger;
 
@@ -317,6 +318,10 @@ public:
 		return (previous_level_experience - this->get_experience_for_level(level - 2)) * 2 + previous_level_experience;
 	}
 
+	int get_bloodline_strength_category_weight(const bloodline_strength_category category) const;
+	const std::vector<bloodline_strength_category> &get_weighted_bloodline_strength_categories() const;
+	const dice &get_bloodline_strength_for_category(const bloodline_strength_category category) const;
+
 	const QColor &get_minor_nation_color() const
 	{
 		return this->minor_nation_color;
@@ -453,6 +458,9 @@ private:
 	const portrait *interior_minister_portrait = nullptr;
 	const portrait *war_minister_portrait = nullptr;
 	std::map<int, int64_t> experience_per_level;
+	std::map<bloodline_strength_category, int> bloodline_strength_category_weights;
+	std::vector<bloodline_strength_category> weighted_bloodline_strength_categories;
+	std::map<bloodline_strength_category, dice> bloodline_strength_per_category;
 	QColor minor_nation_color;
 	QColor country_border_color;
 	QColor selected_country_color;
