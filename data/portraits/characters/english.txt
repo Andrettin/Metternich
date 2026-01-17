@@ -11,7 +11,10 @@ elizabeth_i_of_england = {
 		not = {
 			cultural_group = african
 		}
-		character_class = warrior #aristocrat
+		or = {
+			character_class = warrior #aristocrat
+			character_class = paladin
+		}
 		birth_year < 1700
 	}
 }

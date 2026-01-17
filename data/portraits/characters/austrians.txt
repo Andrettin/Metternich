@@ -11,7 +11,10 @@ maria_theresia = {
 		not = {
 			cultural_group = african
 		}
-		character_class = warrior #aristocrat
+		or = {
+			character_class = warrior #aristocrat
+			character_class = paladin
+		}
 	}
 }
 
@@ -30,7 +33,10 @@ franz_i_of_austria = {
 			cultural_group = african
 			cultural_group = asian
 		}
-		character_class = warrior #aristocrat
+		or = {
+			character_class = warrior #aristocrat
+			character_class = paladin
+		}
 	}
 }
 

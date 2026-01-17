@@ -7,6 +7,9 @@ philip_ii_of_spain = {
 			culture = austrian
 			culture = persian
 		}
-		character_class = warrior
+		or = {
+			character_class = warrior
+			character_class = paladin
+		}
 	}
 }
