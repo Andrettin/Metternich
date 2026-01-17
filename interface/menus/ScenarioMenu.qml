@@ -402,9 +402,9 @@ MenuBase {
 			text: qsTr("Start Game")
 			width: 96 * scale_factor
 			height: 24 * scale_factor
-			enabled: !loading_scenario && selected_country !== null && !selected_country.game_data.anarchy
+			enabled: !loading_scenario && selected_country !== null && selected_country.game_data.playable
 			tooltip: enabled ? "" : small_text(
-				selected_country === null ? "You must select a country to play" : "You cannot play as a country under anarchy"
+				selected_country === null ? "You must select a domain to play" : selected_country.game_data.get_unplayable_reason()
 			)
 			
 			onClicked: {

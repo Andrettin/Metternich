@@ -1516,6 +1516,44 @@ int domain_game_data::get_holding_count_with_vassals() const
 	return holding_count;
 }
 
+bool domain_game_data::is_playable() const
+{
+	if (this->get_government()->get_ruler() == nullptr) {
+		return false;
+	}
+
+	if (this->get_government()->get_ruler()->get_game_data()->get_bloodline() == nullptr) {
+		return false;
+	}
+
+	if (this->is_under_anarchy()) {
+		return false;
+	}
+
+	return this->domain->get_type() == country_type::polity;
+}
+
+QString domain_game_data::get_unplayable_reason() const
+{
+	if (this->get_government()->get_ruler() == nullptr) {
+		return "You cannot play as a domain without a ruler";
+	}
+
+	if (this->get_government()->get_ruler()->get_game_data()->get_bloodline() == nullptr) {
+		return "You cannot play as an unblooded ruler";
+	}
+
+	if (this->is_under_anarchy()) {
+		return "You cannot play as a domain under anarchy";
+	}
+
+	if (this->domain->get_type() != country_type::polity) {
+		return "You cannot play as a non-polity domain";
+	}
+
+	return QString();
+}
+
 void domain_game_data::calculate_territory_rect()
 {
 	QRect territory_rect;

@@ -126,7 +126,6 @@ public:
 		return this->type;
 	}
 
-	bool is_playable() const;
 	bool is_tribe() const;
 	bool is_clade() const;
 

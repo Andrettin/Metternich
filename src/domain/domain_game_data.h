@@ -116,6 +116,7 @@ class domain_game_data final : public QObject
 	Q_PROPERTY(int holding_count READ get_holding_count NOTIFY holding_count_changed)
 	Q_PROPERTY(bool coastal READ is_coastal NOTIFY provinces_changed)
 	Q_PROPERTY(bool anarchy READ is_under_anarchy NOTIFY provinces_changed)
+	Q_PROPERTY(bool playable READ is_playable NOTIFY provinces_changed)
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect NOTIFY provinces_changed)
 	Q_PROPERTY(QPoint territory_rect_center READ get_territory_rect_center NOTIFY provinces_changed)
 	Q_PROPERTY(QVariantList contiguous_territory_rects READ get_contiguous_territory_rects_qvariant_list NOTIFY provinces_changed)
@@ -357,6 +358,9 @@ public:
 	{
 		return this->get_capital() == nullptr;
 	}
+
+	bool is_playable() const;
+	Q_INVOKABLE QString get_unplayable_reason() const;
 
 	bool is_coastal() const
 	{

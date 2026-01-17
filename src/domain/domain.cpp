@@ -261,11 +261,6 @@ void domain::reset_ai()
 	emit ai_changed();
 }
 
-bool domain::is_playable() const
-{
-	return this->get_type() == country_type::polity;
-}
-
 bool domain::is_tribe() const
 {
 	return this->get_type() == country_type::tribe;
