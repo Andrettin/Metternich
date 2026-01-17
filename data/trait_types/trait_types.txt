@@ -2,17 +2,17 @@ proficiency = {
 	name = "Proficiency"
 }
 
-#flaw = {
-#	name = "Flaw"
-#	max_traits = 2
-#	gain_conditions = {
-#		level == 1
-#	}
-#	modifier = {
-#		trait_of_type = proficiency
-#		trait_of_type = proficiency
-#	}
-#}
+flaw = {
+	name = "Flaw"
+	max_traits = 2
+	gain_conditions = {
+		level == 1
+	}
+	modifier = {
+		trait_of_type = proficiency
+		trait_of_type = proficiency
+	}
+}
 
 past_experience = {
 	name = "Past Experience"
