@@ -260,20 +260,20 @@ void character::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "attribute_ratings") {
-		scope.for_each_property([&](const gsml_property &property) {
-			const std::string &key = property.get_key();
-			const std::string &value = property.get_value();
-
-			this->attribute_ratings[character_attribute::get(key)] = value;
-		});
-	} else if (tag == "attributes") {
+	if (tag == "attributes") {
 		scope.for_each_property([&](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 			const int value_int = std::stoi(value);
 
 			this->attribute_ranges[character_attribute::get(key)] = std::make_pair(value_int, value_int);
+		});
+	} else if (tag == "attribute_ratings") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+
+			this->attribute_ratings[character_attribute::get(key)] = value;
 		});
 	} else if (tag == "traits") {
 		for (const std::string &value : values) {

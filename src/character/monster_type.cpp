@@ -8,6 +8,8 @@
 #include "item/item_type.h"
 #include "script/modifier.h"
 #include "species/species.h"
+#include "util/assert_util.h"
+#include "util/string_util.h"
 
 namespace metternich {
 
@@ -29,9 +31,19 @@ void monster_type::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([&](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
-			const int value_int = std::stoi(value);
 
-			this->attribute_ranges[character_attribute::get(key)] = std::make_pair(value_int, value_int);
+			const std::vector<std::string> range_values = string::split(value, '-');
+			assert_throw(range_values.size() >= 1 && range_values.size() <= 2);
+
+			std::pair<int, int> range{};
+			range.first = std::stoi(range_values.at(0));
+			if (range_values.size() == 2) {
+				range.second = std::stoi(range_values.at(1));
+			} else {
+				range.second = range.first;
+			}
+
+			this->attribute_ranges[character_attribute::get(key)] = std::move(range);
 		});
 	} else if (tag == "attribute_ratings") {
 		scope.for_each_property([&](const gsml_property &property) {
