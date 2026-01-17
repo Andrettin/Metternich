@@ -1,0 +1,15 @@
+trumpet_archon = {
+	name = "Trumpet Archon"
+	species = trumpet_archon
+	damage_dice = 1d10
+	experience_award = 15000
+	attributes = {
+		intelligence = 15
+	}
+	modifier = {
+		hit_dice = 11d8
+		armor_class = 13
+		to_hit_bonus = 9
+		movement = 12
+	}
+}

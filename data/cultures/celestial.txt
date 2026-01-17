@@ -1,6 +1,6 @@
 celestial = {
 	name = "Celestial"
 	species = {
-		archon
+		trumpet_archon
 	}
 }

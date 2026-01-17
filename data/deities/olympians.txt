@@ -13,8 +13,7 @@ aphrodite = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p
 		creation
 	}
 	character = {
-		species = archon #Olympian
-		character_class = warrior
+		monster_type = trumpet_archon #Olympian
 		culture = celestial
 		religion = hellenic
 		gender = female
@@ -37,8 +36,7 @@ apollo = {
 		charm
 	}
 	character = {
-		species = archon
-		character_class = warrior
+		monster_type = trumpet_archon
 		culture = celestial
 		religion = hellenic
 		gender = male
@@ -67,8 +65,7 @@ artemis = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp.
 		divination
 	}
 	character = {
-		species = archon
-		character_class = warrior
+		monster_type = trumpet_archon
 		culture = celestial
 		religion = hellenic
 		gender = female
@@ -90,8 +87,7 @@ athena = {
 		protection
 	}
 	character = {
-		species = archon
-		character_class = warrior
+		monster_type = trumpet_archon
 		culture = celestial
 		religion = hellenic
 		gender = female
@@ -118,8 +114,7 @@ hera = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 23
 		combat
 	}
 	character = {
-		species = archon
-		character_class = warrior
+		monster_type = trumpet_archon
 		culture = celestial
 		religion = hellenic
 		gender = female
@@ -150,8 +145,7 @@ hermes = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 
 		divination
 	}
 	character = {
-		species = archon
-		character_class = warrior
+		monster_type = trumpet_archon
 		culture = celestial
 		religion = hellenic
 		gender = male
@@ -216,8 +210,7 @@ zeus = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 28
 		elemental
 	}
 	character = {
-		species = archon #Olympian
-		character_class = warrior
+		monster_type = trumpet_archon #Olympian
 		culture = celestial
 		religion = hellenic
 		gender = male

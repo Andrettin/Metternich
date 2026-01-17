@@ -11,6 +11,7 @@ longswordsmen = {
 		or = {
 			character_class = paladin
 			character_class = warrior
+			species = titan
 		}
 	}
 }

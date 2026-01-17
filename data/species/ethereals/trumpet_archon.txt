@@ -1,0 +1,6 @@
+trumpet_archon = {
+	name = "Trumpet Archon"
+	supertaxon = archon
+	era = holocene
+	sapient = true
+}

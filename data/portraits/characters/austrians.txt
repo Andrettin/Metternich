@@ -23,11 +23,11 @@ franz_i_of_austria = {
 	character_conditions = {
 		gender = male
 		or = {
-			species = archon
 			species = human
 			species = elf
 			species = half_elf
 			species = halfling
+			taxon = archon
 		}
 		not = {
 			cultural_group = african
@@ -45,11 +45,11 @@ metternich = {
 	character_conditions = {
 		gender = male
 		or = {
-			species = archon
 			species = human
 			species = elf
 			species = half_elf
 			species = halfling
+			taxon = archon
 		}
 		not = {
 			cultural_group = african

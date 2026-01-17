@@ -15,11 +15,11 @@ jakob_fugger = {
 	character_conditions = {
 		gender = male
 		or = {
-			species = archon
 			species = human
 			species = elf
 			species = half_elf
 			species = halfling
+			taxon = archon
 		}
 		not = {
 			cultural_group = african
@@ -55,13 +55,13 @@ otto_von_bismarck = {
 		gender = male
 		or = {
 			species = air_elemental
-			species = archon
 			species = human
 			species = elf
 			species = half_elf
 			species = halfling
 			species = titan
 			species = triton
+			taxon = archon
 		}
 		not = {
 			cultural_group = african

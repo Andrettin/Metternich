@@ -4,11 +4,11 @@ athena = {
 		gender = female
 		or = {
 			species = air_elemental
-			species = archon
 			species = earth_elemental
 			species = nymph
 			species = titan
 			species = triton
+			taxon = archon
 		}
 	}
 }
