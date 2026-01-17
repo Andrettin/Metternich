@@ -12,5 +12,9 @@ titan = {
 		armor_class = 10
 		to_hit_bonus = 15
 		movement = 36
+		
+		#attribute modifiers to make the given attribute ranges possible
+		strength = 7
+		intelligence = 3
 	}
 }
