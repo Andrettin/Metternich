@@ -32,7 +32,7 @@ class trait final : public named_data_entry, public data_type<trait>
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
 	Q_PROPERTY(int level MEMBER level READ get_level NOTIFY changed)
 	Q_PROPERTY(bool unlimited MEMBER unlimited READ is_unlimited NOTIFY changed)
-	Q_PROPERTY(QString modifier_string READ get_modifier_string CONSTANT)
+	Q_PROPERTY(QString modifier_string READ get_modifier_qstring CONSTANT)
 	Q_PROPERTY(QString military_unit_modifier_string READ get_military_unit_modifier_string CONSTANT)
 
 public:
@@ -97,7 +97,8 @@ public:
 		return this->modifier.get();
 	}
 
-	QString get_modifier_string() const;
+	std::string get_modifier_string(const int multiplier, const bool single_line) const;
+	QString get_modifier_qstring() const;
 
 	const metternich::modifier<const domain> *get_office_modifier(const office *office) const
 	{

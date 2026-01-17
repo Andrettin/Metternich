@@ -86,6 +86,12 @@ std::string modifier<scope_type>::get_string(const scope_type *scope, const int 
 }
 
 template <typename scope_type>
+std::string modifier<scope_type>::get_single_line_string(const scope_type *scope, const int multiplier) const
+{
+	return this->get_string(scope, multiplier, 0, ", ");
+}
+
+template <typename scope_type>
 void modifier<scope_type>::add_modifier_effect(std::unique_ptr<modifier_effect<scope_type>> &&modifier_effect)
 {
 	this->modifier_effects.push_back(std::move(modifier_effect));

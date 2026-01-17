@@ -68,6 +68,8 @@ QVariant character_data_model::data(const QModelIndex &index, const int role) co
 				} else {
 					return QString::fromStdString(row_data->name);
 				}
+			case role::tooltip:
+				return QString::fromStdString(row_data->tooltip);
 			case role::item:
 				return QVariant::fromValue(row_data->item);
 			default:
@@ -437,6 +439,7 @@ void character_data_model::update_trait_rows()
 		for (const trait *trait : traits) {
 			const int trait_count = character_game_data->get_trait_count(trait);
 			auto row = std::make_unique<character_data_row>(trait->get_name(), (trait->is_unlimited() && trait_count > 1 ? std::format("(x{})", trait_count) : ""), trait_type_row.get());
+			row->tooltip = trait->get_modifier_string(trait_count, true);
 			trait_type_row->child_rows.push_back(std::move(row));
 		}
 

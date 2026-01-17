@@ -23,7 +23,8 @@ class character_data_model : public QAbstractItemModel
 public:
 	enum role
 	{
-		item = Qt::UserRole
+		tooltip = Qt::UserRole,
+		item
 	};
 
 	struct character_data_row final
@@ -37,6 +38,7 @@ public:
 		std::string value;
 		const character_data_row *parent_row = nullptr;
 		std::vector<std::unique_ptr<character_data_row>> child_rows;
+		std::string tooltip;
 		metternich::item *item = nullptr;
 	};
 
@@ -52,6 +54,7 @@ public:
 	{
 		QHash<int, QByteArray> role_names = QAbstractItemModel::roleNames();
 
+		role_names.insert(static_cast<int>(role::tooltip), "tooltip");
 		role_names.insert(static_cast<int>(role::item), "item");
 
 		return role_names;

@@ -96,13 +96,26 @@ void trait::check() const
 	named_data_entry::check();
 }
 
-QString trait::get_modifier_string() const
+std::string trait::get_modifier_string(const int multiplier, const bool single_line) const
+{
+	if (this->get_modifier() == nullptr) {
+		return std::string();
+	}
+
+	if (single_line) {
+		return this->get_modifier()->get_single_line_string(nullptr, multiplier);
+	} else {
+		return this->get_modifier()->get_string(nullptr, multiplier);
+	}
+}
+
+QString trait::get_modifier_qstring() const
 {
 	if (this->get_modifier() == nullptr) {
 		return QString();
 	}
 
-	return QString::fromStdString(this->get_modifier()->get_string(nullptr));
+	return QString::fromStdString(this->get_modifier_string(1, false));
 }
 
 QString trait::get_military_unit_modifier_string() const

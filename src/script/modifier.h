@@ -38,6 +38,7 @@ public:
 	void remove(scope_type *scope, const int multiplier = 1) const;
 	std::string get_string(const scope_type *scope, const centesimal_int &multiplier, const size_t indent = 0, const bool ignore_decimals = true, const std::string &separator = "\n") const;
 	std::string get_string(const scope_type *scope, const int multiplier = 1, const size_t indent = 0, const std::string &separator = "\n") const;
+	std::string get_single_line_string(const scope_type *scope, const int multiplier = 1) const;
 
 	void add_modifier_effect(std::unique_ptr<modifier_effect<scope_type>> &&modifier_effect);
 

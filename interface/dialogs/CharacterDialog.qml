@@ -82,6 +82,8 @@ DialogBase {
 							middle_text = "Click to equip"
 						}
 					}
+				} else {
+					text = model.tooltip
 				}
 				
 				if (typeof status_text !== 'undefined') {

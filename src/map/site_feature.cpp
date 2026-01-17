@@ -41,7 +41,7 @@ QString site_feature::get_modifier_string(const metternich::site *site) const
 		return QString();
 	}
 
-	return QString::fromStdString(this->get_modifier()->get_string(site, 1, 0, ", "));
+	return QString::fromStdString(this->get_modifier()->get_single_line_string(site, 1));
 }
 
 }
