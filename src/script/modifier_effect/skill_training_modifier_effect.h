@@ -37,6 +37,14 @@ public:
 		return std::format("{} Training", this->skill->get_name());
 	}
 
+	virtual std::string get_string(const character *scope, const centesimal_int &multiplier, const bool ignore_decimals) const override
+	{
+		Q_UNUSED(multiplier);
+		Q_UNUSED(ignore_decimals);
+
+		return this->get_base_string(scope);
+	}
+
 private:
 	const metternich::skill *skill = nullptr;
 };
