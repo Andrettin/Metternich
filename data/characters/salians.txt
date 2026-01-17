@@ -1,0 +1,23 @@
+heinrich_iv = { #Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
+	name = "Heinrich"
+	epithet = "IV"
+	dynasty = salian #Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
+	character_class = warrior #king
+	rank = lord
+	culture = german
+	religion = catholic
+	gender = male
+}
+
+agnes_of_waiblingen = { #Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
+	name = "Agnes"
+	surname = "von Waiblingen"
+	dynasty = salian #same as her father
+	character_class = warrior #aristocrat
+	culture = german
+	religion = catholic
+	home_site = waiblingen #given her appelation
+	gender = female
+	father = heinrich_iv #Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
+	death_date = 1143 #Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
+}

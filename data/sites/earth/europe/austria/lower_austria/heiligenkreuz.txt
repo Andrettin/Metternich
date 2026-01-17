@@ -1,0 +1,13 @@
+heiligenkreuz = {
+	name = "Heiligenkreuz"
+	world = earth
+	geocoordinate = { 16.129166666667 48.056388888889 }
+	province = lower_austria
+	
+	history = {
+		1133 = {
+			developed = true #monastery of Heiligenkreuz founded in 1133 by margrave Leopold III; Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 315.
+			#buildings += monastery
+		}
+	}
+}

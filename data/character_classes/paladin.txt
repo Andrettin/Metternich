@@ -26,6 +26,10 @@ paladin = {
 		wisdom = 13
 		charisma = 17
 	}
+	rank_levels = {
+		chevalier = 7
+		paladin = 9
+	}
 	level_modifiers = {
 		1 = {
 			hit_dice = 1d10 #as Warrior

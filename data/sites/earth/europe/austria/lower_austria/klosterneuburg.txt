@@ -7,6 +7,11 @@ klosterneuburg = {
 	province = lower_austria
 	
 	history = {
+		1114 = {
+			developed = true #monastery of Klosterneuburg founded in 1114 by margrave Leopold III; Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
+			#buildings += monastery
+		}
+		
 		1900 = {
 			population = 11595 #Klosterneuburg had a population of 11,595 in 1900; Source: "Encyclopædia Britannica", 1911, vol. 3, p. 2.
 		}

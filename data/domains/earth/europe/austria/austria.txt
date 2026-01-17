@@ -72,6 +72,12 @@ austria = {
 	}
 	
 	history = {
+		1095 = {
+			offices = {
+				ruler = leopold_iii_von_babenberg #Leopold III became margrave of Austria in 1095/1096; Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
+			}
+		}
+		
 		1156 = {
 			tier = duchy #Austria became a duchy in 1156; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
 			government_type = monarchy
@@ -86,7 +92,7 @@ austria = {
 		
 		1740 = {
 			offices = {
-				ruler = maria_theresia_of_austria #Maria Theresia became queen of Bohemia and Hungary on 1740; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 249.
+				ruler = maria_theresia_of_austria #Maria Theresia became queen of Bohemia and Hungary in 1740; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 249.
 			}
 		}
 		

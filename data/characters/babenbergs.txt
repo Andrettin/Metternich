@@ -1,0 +1,60 @@
+leopold_iii_von_babenberg = { #Margrave Leopold III of Austria, of the House of Babenberg
+	name = "Leopold"
+	epithet = "III"
+	dynasty = babenberg
+	character_class = paladin #margrave and saint
+	culture = austrian
+	religion = catholic
+	home_site = vienna
+	gender = male
+	start_date = 1095 #Leopold III became margrave of Austria in 1095/1096; Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
+	death_date = 1136 #Leopold III died in 1136; Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
+	traits = {
+		#charitable
+	}
+	
+	history = {
+		1095 = {
+			rank = chevalier #margrave
+		}
+		
+		#canonized by pope Innocence VIII in 1485; Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
+	}
+}
+
+adalbert_von_babenberg = { #Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
+	name = "Adalbert"
+	dynasty = babenberg
+	character_class = warrior
+	culture = austrian
+	religion = catholic
+	gender = male
+	father = leopold_iii_von_babenberg #first son of Leopold III; Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
+	mother = agnes_of_waiblingen #most likely, according to genetics testing; Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 315.
+	death_date = 1138 #Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
+}
+
+leopold_iv_von_babenberg = { #Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
+	name = "Leopold"
+	epithet = "IV"
+	dynasty = babenberg
+	character_class = warrior #margrave
+	culture = austrian
+	religion = catholic
+	gender = male
+	father = leopold_iii_von_babenberg #Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
+	mother = agnes_of_waiblingen #Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
+	death_date = 1141 #Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
+}
+
+ernst_von_babenberg = { #Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
+	name = "Ernst"
+	dynasty = babenberg
+	character_class = warrior
+	culture = austrian
+	religion = catholic
+	gender = male
+	father = leopold_iii_von_babenberg #Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
+	mother = agnes_of_waiblingen #Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
+	death_date = 1137 #Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
+}
