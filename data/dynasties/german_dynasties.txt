@@ -1,3 +1,9 @@
+babenberg = {
+	name = "Babenberg"
+	prefix = "von"
+	culture = german
+}
+
 habsburg = {
 	name = "Habsburg"
 	prefix = "von"
@@ -20,6 +26,11 @@ metternich = {
 	name = "Metternich"
 	prefix = "von"
 	culture = german #Rhenish
+}
+
+salian = {
+	name = "Salian"
+	culture = german
 }
 
 schwarzenberg = { #Source: "Encyclopædia Britannica", 1911, vol. 24, p. 390.
