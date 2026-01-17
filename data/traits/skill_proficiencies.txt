@@ -110,6 +110,20 @@ disguise = {
 	}
 }
 
+forgery = {
+	name = "Forgery"
+	icon = treaty
+	types = {
+		proficiency
+	}
+	conditions = {
+		class_skill = forgery
+	}
+	modifier = {
+		skill_training = forgery
+	}
+}
+
 heraldry = {
 	name = "Heraldry"
 	icon = heater_shield

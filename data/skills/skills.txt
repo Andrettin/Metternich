@@ -83,6 +83,17 @@ disguise = {
 	}
 }
 
+forgery = {
+	name = "Forgery"
+	icon = treaty
+	check_dice = 1d20
+	base_attribute = dexterity
+	base_value = -1
+	groups = {
+		rogue
+	}
+}
+
 heraldry = {
 	name = "Heraldry"
 	icon = heater_shield
