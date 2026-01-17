@@ -349,7 +349,9 @@ void domain_game_data::collect_regency()
 		return;
 	}
 
-	//FIXME: limit the regency gain to the bloodline score (with a minimum of 1 regency gained)
+	//limit the regency gain to the bloodline score (with a minimum of 1 regency gained)
+	collected_regency = std::min(collected_regency, this->get_government()->get_ruler()->get_game_data()->get_bloodline_strength());
+	collected_regency = std::max(collected_regency, 1);
 
 	this->get_economy()->change_stored_commodity(defines::get()->get_regency_commodity(), collected_regency);
 }
