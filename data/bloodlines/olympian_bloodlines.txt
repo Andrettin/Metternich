@@ -8,6 +8,11 @@ apollo = {
 	founder = apollo
 }
 
+hephaestus = {
+	name = "Hephaestus"
+	founder = hephaestus
+}
+
 hermes = {
 	name = "Hermes"
 	founder = hermes

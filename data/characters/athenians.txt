@@ -1,15 +1,49 @@
-erichthonius_of_athens = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 507.
-	name = "Erichthonius"
-	character_class = warrior #aristocrat
+cranaus = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 135.
+	name = "Cranaus"
+	character_class = warrior #king
+	rank = lord
 	culture = greek
 	religion = pagan
 	home_site = athens
 	gender = male
+	
+	#third king of Athens
+	#in the myths, he was born from the earth of Attica
+}
+
+atthis = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 94.
+	name = "Atthis"
+	character_class = warrior #aristocrat
+	culture = greek
+	religion = pagan
+	home_site = athens
+	gender = female
+	father = cranaus
+	mother = pedias #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 135.
+	
+	#in the myths, Attica was named after her
+}
+
+erichthonius_of_athens = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 180-181, 507.
+	name = "Erichthonius"
+	character_class = warrior #king
+	rank = lord
+	culture = greek
+	religion = pagan
+	home_site = athens
+	gender = male
+	father = hephaestus
+	mother = atthis #in another version of the legend, he was a son of Gaia/Athena
+	
+	#fifth king of Athens
+	#mythical inventor of the four-horse chariot
+	#became the constellation Auriga (the Charioteer) upon his death
 }
 
 pandion = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 500.
 	name = "Pandion"
-	character_class = warrior #aristocrat
+	character_class = warrior #king
+	rank = lord
 	culture = greek
 	religion = pagan
 	home_site = athens
@@ -22,7 +56,8 @@ pandion = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 
 
 erechtheus = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 500.
 	name = "Erechtheus"
-	character_class = warrior #aristocrat
+	character_class = warrior #king
+	rank = lord
 	culture = greek
 	religion = pagan
 	home_site = athens

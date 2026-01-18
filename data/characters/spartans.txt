@@ -1,0 +1,10 @@
+pedias = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 135.
+	name = "Pedias"
+	character_class = warrior #aristocrat
+	culture = greek
+	religion = pagan
+	home_site = sparta #Spartan
+	gender = female
+	
+	#wife of king Cranaus of Athens
+}
