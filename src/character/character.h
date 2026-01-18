@@ -77,6 +77,7 @@ class character final : public character_base, public data_type<character>
 	Q_PROPERTY(const metternich::bloodline* bloodline MEMBER bloodline READ get_bloodline NOTIFY changed)
 	Q_PROPERTY(int bloodline_strength MEMBER bloodline_strength READ get_bloodline_strength NOTIFY changed)
 	Q_PROPERTY(metternich::bloodline_strength_category bloodline_strength_category MEMBER bloodline_strength_category NOTIFY changed)
+	Q_PROPERTY(bool generated_bloodline MEMBER generated_bloodline NOTIFY changed)
 	Q_PROPERTY(metternich::portrait* portrait MEMBER portrait NOTIFY changed)
 	Q_PROPERTY(const metternich::site* home_site MEMBER home_site READ get_home_site NOTIFY changed)
 	Q_PROPERTY(metternich::character* father READ get_father WRITE set_father NOTIFY changed)
@@ -232,6 +233,8 @@ public:
 		this->bloodline_strength = bloodline_strength;
 	}
 
+	void generate_bloodline();
+
 	virtual int get_adulthood_age() const override;
 	virtual int get_venerable_age() const override;
 	virtual const dice &get_maximum_age_modifier() const override;
@@ -345,6 +348,7 @@ private:
 	const metternich::bloodline *bloodline = nullptr;
 	int bloodline_strength = 0;
 	metternich::bloodline_strength_category bloodline_strength_category {};
+	bool generated_bloodline = false;
 	bool bloodline_initialized = false;
 	metternich::portrait *portrait = nullptr;
 	const site *home_site = nullptr;

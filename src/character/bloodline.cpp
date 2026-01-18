@@ -3,8 +3,23 @@
 #include "character/bloodline.h"
 
 #include "character/character.h"
+#include "culture/culture.h"
 
 namespace metternich {
+
+void bloodline::process_gsml_scope(const gsml_data &scope)
+{
+	const std::string &tag = scope.get_tag();
+	const std::vector<std::string> &values = scope.get_values();
+
+	if (tag == "cultures") {
+		for (const std::string &value : values) {
+			this->cultures.insert(culture::get(value));
+		}
+	} else {
+		data_entry::process_gsml_scope(scope);
+	}
+}
 
 void bloodline::check() const
 {

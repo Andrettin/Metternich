@@ -1,4 +1,8 @@
 saint_leopold = {
 	name = "Saint Leopold"
 	founder = leopold_iii_von_babenberg
+	cultures = {
+		austrian
+		german
+	}
 }

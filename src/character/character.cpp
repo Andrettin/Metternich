@@ -400,6 +400,10 @@ void character::initialize()
 		this->home_site = this->get_home_site()->get_province()->get_default_provincial_capital();
 	}
 
+	if (this->generated_bloodline) {
+		this->generate_bloodline();
+	}
+
 	if (this->get_bloodline() != nullptr) {
 		if (this->get_bloodline_strength() == 0) {
 			if (this->bloodline_strength_category == bloodline_strength_category::none) {
@@ -785,6 +789,32 @@ const civilian_unit_type *character::get_civilian_unit_type() const
 	}
 
 	return nullptr;
+}
+
+void character::generate_bloodline()
+{
+	assert_throw(this->get_bloodline() == nullptr);
+	assert_throw(this->get_culture() != nullptr);
+
+	std::vector<const metternich::bloodline *> potential_bloodlines;
+
+	for (const metternich::bloodline *bloodline : bloodline::get_all()) {
+		if (!bloodline->get_cultures().contains(this->get_culture())) {
+			continue;
+		}
+
+		if (bloodline->get_founder() != nullptr && bloodline->get_founder()->get_start_date().isValid() && this->get_birth_date().isValid() && bloodline->get_founder()->get_start_date() > this->get_birth_date()) {
+			continue;
+		}
+
+		for (int i = 0; i < bloodline->get_weight(); ++i) {
+			potential_bloodlines.push_back(bloodline);
+		}
+	}
+
+	if (!potential_bloodlines.empty()) {
+		this->set_bloodline(vector::get_random(potential_bloodlines));
+	}
 }
 
 int character::get_adulthood_age() const
