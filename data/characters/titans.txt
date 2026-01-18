@@ -1,0 +1,13 @@
+theia = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 466.
+	name = "Theia"
+	monster_type = titan
+	culture = abyssal #Titan
+	religion = hellenic
+	gender = female
+	father = uranus
+	mother = gaia
+	
+	#married to Hyperion
+	#mother of Selene
+}
+

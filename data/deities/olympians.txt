@@ -76,6 +76,7 @@ artemis = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp.
 athena = {
 	name = "Athena"
 	pantheon = olympian
+	portrait = athena
 	religions = {
 		hellenic
 	}
