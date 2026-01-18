@@ -44,6 +44,30 @@ apollo = {
 	}
 }
 
+ares = {
+	name = "Ares"
+	pantheon = olympian
+	religions = {
+		hellenic
+	}
+	major_domains = {
+		combat
+		healing
+		weather
+	}
+	minor_domains = {
+		elemental
+	}
+	character = {
+		monster_type = trumpet_archon
+		culture = celestial
+		religion = hellenic
+		gender = male
+		father = zeus #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 504.
+		mother = hera #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 504.
+	}
+}
+
 artemis = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 287-288.
 	name = "Artemis"
 	pantheon = olympian
@@ -93,6 +117,107 @@ athena = {
 		religion = hellenic
 		gender = female
 		father = zeus #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 504.
+	}
+}
+
+demeter = {
+	name = "Demeter"
+	pantheon = olympian
+	religions = {
+		hellenic
+	}
+	major_domains = {
+		animal
+		elemental
+		healing
+		plant
+		weather
+	}
+	minor_domains = {
+		divination
+	}
+	character = {
+		monster_type = trumpet_archon
+		culture = celestial
+		religion = hellenic
+		gender = female
+		father = cronus #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 504.
+		mother = rhea #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 504.
+	}
+}
+
+dionysus = {
+	name = "Dionysus"
+	pantheon = olympian
+	religions = {
+		hellenic
+	}
+	major_domains = {
+		charm
+		creation
+		healing
+		plant
+	}
+	minor_domains = {
+		weather
+	}
+	character = {
+		monster_type = trumpet_archon
+		culture = celestial
+		religion = hellenic
+		gender = male
+		father = zeus #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 504.
+	}
+}
+
+hades = {
+	name = "Hades"
+	pantheon = olympian
+	religions = {
+		hellenic
+	}
+	major_domains = {
+		charm
+		creation
+		divination
+		healing
+		necromantic
+		protection
+		summoning
+	}
+	character = {
+		monster_type = trumpet_archon
+		culture = celestial
+		religion = hellenic
+		gender = male
+		father = cronus #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 504.
+		mother = rhea #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 504.
+	}
+}
+
+hephaestus = {
+	name = "Hephaestus"
+	pantheon = olympian
+	religions = {
+		hellenic
+	}
+	major_domains = {
+		combat
+		creation
+		divination
+		elemental
+		guardian
+		healing
+		sun
+		weather
+	}
+	character = {
+		monster_type = trumpet_archon
+		culture = celestial
+		religion = hellenic
+		gender = male
+		father = zeus #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 504.
+		mother = hera #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 504.
 	}
 }
 
