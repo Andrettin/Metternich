@@ -731,8 +731,8 @@ void character::initialize_bloodline_from_parents()
 
 	if (bloodline_strength > 0) {
 		this->bloodline = vector::get_random(potential_bloodlines);
-		this->bloodline_strength = std::max(bloodline_strength, 1);
-		log_trace(std::format("Set bloodline for character \"{}\": {}.", this->get_identifier(), this->get_bloodline()->get_identifier()));
+		this->bloodline_strength = bloodline_strength;
+		log_trace(std::format("Set bloodline for character \"{}\": {} ({}).", this->get_identifier(), this->get_bloodline()->get_identifier(), bloodline_strength));
 	}
 
 	this->bloodline_initialized = true;
