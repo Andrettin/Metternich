@@ -62,6 +62,7 @@ otto_von_bismarck = {
 			species = halfling
 			species = titan
 			species = triton
+			species = water_elemental
 			taxon = archon
 		}
 		not = {

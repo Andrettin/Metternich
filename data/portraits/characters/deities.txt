@@ -8,6 +8,7 @@ athena = {
 			species = nymph
 			species = titan
 			species = triton
+			species = water_elemental
 			taxon = archon
 		}
 	}

@@ -2,5 +2,6 @@ aquan = {
 	name = "Aquan"
 	species = {
 		triton
+		water_elemental
 	}
 }

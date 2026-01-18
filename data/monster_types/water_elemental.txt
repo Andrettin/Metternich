@@ -1,0 +1,31 @@
+large_water_elemental = {
+	name = "Large Water Elemental"
+	species = water_elemental
+	damage_dice = 5d6
+	experience_award = 2000
+	attributes = {
+		intelligence = 5-7
+	}
+	modifier = {
+		hit_dice = 8d8
+		armor_class = 8
+		to_hit_bonus = 8
+		movement = 6
+	}
+}
+
+huge_water_elemental = {
+	name = "Huge Water Elemental"
+	species = water_elemental
+	damage_dice = 5d6
+	experience_award = 10000
+	attributes = {
+		intelligence = 5-7
+	}
+	modifier = {
+		hit_dice = 16d8
+		armor_class = 8
+		to_hit_bonus = 13
+		movement = 6
+	}
+}

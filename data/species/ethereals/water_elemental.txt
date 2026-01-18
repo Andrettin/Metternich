@@ -1,0 +1,6 @@
+water_elemental = {
+	name = "Water Elemental"
+	supertaxon = aquan
+	era = holocene
+	sapient = true
+}

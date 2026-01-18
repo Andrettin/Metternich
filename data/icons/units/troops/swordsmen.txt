@@ -7,11 +7,13 @@ longswordsmen = {
 			species = halfling
 			species = titan
 			species = triton
+			species = water_elemental
 		}
 		or = {
 			character_class = paladin
 			character_class = warrior
 			species = titan
+			species = water_elemental
 		}
 	}
 }
