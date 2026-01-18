@@ -580,13 +580,7 @@ bool character::initialize_dates_from_parents()
 {
 	assert_throw(!this->has_vital_dates());
 
-	std::vector<const character *> parents;
-	if (this->get_father() != nullptr) {
-		parents.push_back(this->get_father());
-	}
-	if (this->get_mother() != nullptr) {
-		parents.push_back(this->get_mother());
-	}
+	const std::vector<character *> parents = this->get_parents();
 
 	if (parents.empty()) {
 		return false;
@@ -666,13 +660,7 @@ bool character::initialize_home_site_from_parents()
 {
 	assert_throw(this->get_home_site() == nullptr);
 
-	std::vector<const character *> parents;
-	if (this->get_father() != nullptr) {
-		parents.push_back(this->get_father());
-	}
-	if (this->get_mother() != nullptr) {
-		parents.push_back(this->get_mother());
-	}
+	const std::vector<character *> parents = this->get_parents();
 
 	if (parents.empty()) {
 		return false;
@@ -702,13 +690,7 @@ void character::initialize_bloodline_from_parents()
 {
 	assert_throw(this->get_bloodline() == nullptr);
 
-	std::vector<character *> parents;
-	if (this->get_father() != nullptr) {
-		parents.push_back(this->get_father());
-	}
-	if (this->get_mother() != nullptr) {
-		parents.push_back(this->get_mother());
-	}
+	const std::vector<character *> parents = this->get_parents();
 
 	if (parents.empty()) {
 		return;

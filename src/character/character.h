@@ -262,6 +262,18 @@ public:
 		return static_cast<character *>(character_base::get_mother());
 	}
 
+	std::vector<character *> get_parents() const
+	{
+		std::vector<character *> parents;
+		if (this->get_father() != nullptr) {
+			parents.push_back(this->get_father());
+		}
+		if (this->get_mother() != nullptr) {
+			parents.push_back(this->get_mother());
+		}
+		return parents;
+	}
+
 	character *get_contemporary_character() const
 	{
 		return static_cast<character *>(character_base::get_contemporary_character());
