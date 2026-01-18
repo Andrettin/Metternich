@@ -1,0 +1,31 @@
+large_earth_elemental = {
+	name = "Large Earth Elemental"
+	species = earth_elemental
+	damage_dice = 4d8
+	experience_award = 2000
+	attributes = {
+		intelligence = 5-7
+	}
+	modifier = {
+		hit_dice = 8d8
+		armor_class = 8
+		to_hit_bonus = 7
+		movement = 6
+	}
+}
+
+huge_earth_elemental = {
+	name = "Huge Earth Elemental"
+	species = earth_elemental
+	damage_dice = 4d8
+	experience_award = 10000
+	attributes = {
+		intelligence = 5-7
+	}
+	modifier = {
+		hit_dice = 16d8
+		armor_class = 8
+		to_hit_bonus = 15
+		movement = 6
+	}
+}

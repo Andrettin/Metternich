@@ -1,0 +1,31 @@
+large_air_elemental = {
+	name = "Large Air Elemental"
+	species = air_elemental
+	damage_dice = 2d10
+	experience_award = 3000
+	attributes = {
+		intelligence = 5-7
+	}
+	modifier = {
+		hit_dice = 8d8
+		armor_class = 8
+		to_hit_bonus = 7
+		movement = 36 #flying
+	}
+}
+
+huge_air_elemental = {
+	name = "Huge Air Elemental"
+	species = air_elemental
+	damage_dice = 2d10
+	experience_award = 11000
+	attributes = {
+		intelligence = 5-7
+	}
+	modifier = {
+		hit_dice = 16d8
+		armor_class = 8
+		to_hit_bonus = 15
+		movement = 36 #flying
+	}
+}

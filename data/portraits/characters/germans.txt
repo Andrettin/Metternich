@@ -55,6 +55,7 @@ otto_von_bismarck = {
 		gender = male
 		or = {
 			species = air_elemental
+			species = earth_elemental
 			species = human
 			species = elf
 			species = half_elf
@@ -67,6 +68,11 @@ otto_von_bismarck = {
 			cultural_group = african
 			cultural_group = asian
 		}
-		character_class = warrior #aristocrat
+		or = {
+			character_class = warrior #aristocrat
+			species = air_elemental
+			species = earth_elemental
+			species = water_elemental
+		}
 	}
 }
