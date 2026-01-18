@@ -701,6 +701,10 @@ void character_game_data::die()
 bool character_game_data::exists() const
 {
 	//whether the character exists in the game
+	if (this->character->is_deity()) {
+		return true;
+	}
+
 	return this->get_domain() != nullptr;
 }
 

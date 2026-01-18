@@ -44,6 +44,7 @@ public:
 	void set_character(const metternich::character *character);
 
 	const metternich::character *get_character_family_tree_parent(const metternich::character *character) const;
+	std::vector<const metternich::character *> get_character_family_tree_children(const metternich::character *character) const;
 
 	Q_INVOKABLE QModelIndex get_character_model_index(const metternich::character *character) const;
 
