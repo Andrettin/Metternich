@@ -1,0 +1,9 @@
+gaia = {
+	name = "Gaia"
+	founder = gaia
+}
+
+uranus = {
+	name = "Uranus"
+	founder = uranus
+}
