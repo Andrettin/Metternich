@@ -1,0 +1,16 @@
+nereid = {
+	name = "Nereid"
+	species = nereid
+	experience_award = 975
+	attributes = {
+		intelligence = 12
+	}
+	modifier = {
+		hit_dice = 4d8
+		to_hit_bonus = 3
+		movement = 12
+	}
+	items = {
+		dagger
+	}
+}

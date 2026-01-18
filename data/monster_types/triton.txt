@@ -1,0 +1,17 @@
+triton = {
+	name = "Triton"
+	species = triton
+	experience_award = 270
+	attributes = {
+		intelligence = 13
+	}
+	modifier = {
+		hit_dice = 3d8
+		armor_class = 5
+		to_hit_bonus = 3
+		movement = 15 #swimming
+	}
+	items = {
+		long_sword #trident
+	}
+}

@@ -73,6 +73,7 @@ otto_von_bismarck = {
 			character_class = warrior #aristocrat
 			species = air_elemental
 			species = earth_elemental
+			species = triton
 			species = water_elemental
 		}
 	}

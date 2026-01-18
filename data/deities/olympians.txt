@@ -308,8 +308,7 @@ poseidon = {
 		divination
 	}
 	character = {
-		species = triton
-		character_class = warrior
+		monster_type = triton
 		culture = aquan
 		religion = hellenic
 		gender = male

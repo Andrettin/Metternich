@@ -5,6 +5,7 @@ athena = {
 		or = {
 			species = air_elemental
 			species = earth_elemental
+			species = nereid
 			species = nymph
 			species = titan
 			species = triton

@@ -1,6 +1,7 @@
 aquan = {
 	name = "Aquan"
 	species = {
+		nereid
 		triton
 		water_elemental
 	}
