@@ -8,6 +8,18 @@ perseus = {
 	start_date = -1550 #possible year of the foundation of Mycenae
 }
 
+ceyx = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 122, 400.
+	name = "Ceyx"
+	species = human
+	character_class = warrior #aristocrat
+	culture = greek
+	religion = pagan
+	gender = male
+	father = phosphorus
+	
+	#husband of Alcione
+}
+
 daedalion = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 126, 146.
 	name = "Daedalion"
 	species = human
@@ -15,8 +27,7 @@ daedalion = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p
 	culture = greek
 	religion = pagan
 	gender = male
-	
-	#son of Phosphorus (the Morning Star)
+	father = phosphorus #son of Phosphorus (the Morning Star)
 }
 
 chione_of_daedalion = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 126.

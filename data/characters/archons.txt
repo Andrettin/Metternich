@@ -1,0 +1,24 @@
+eos = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 176.
+	name = "Eos"
+	monster_type = trumpet_archon
+	culture = celestial
+	religion = hellenic
+	gender = female
+	father = hyperion
+	mother = theia
+	
+	#goddess of dawn
+	#known as Aurora by the Romans
+	#mother of Hesperus, Boreas, Eurus, Notus and Zephyrus
+	#mother of Phaethon, Memnon and Emathion
+}
+
+phosphorus = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 400.
+	name = "Phosphorus"
+	monster_type = trumpet_archon
+	culture = celestial
+	religion = hellenic
+	gender = male
+	father = astraeus
+	mother = eos
+}

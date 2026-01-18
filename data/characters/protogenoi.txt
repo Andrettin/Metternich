@@ -1,0 +1,8 @@
+pontus = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 412.
+	name = "Pontus" #the name means "sea"
+	monster_type = huge_water_elemental
+	culture = aquan
+	religion = hellenic
+	gender = male
+	mother = gaia
+}

@@ -1,3 +1,27 @@
+crius = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 139.
+	name = "Crius"
+	monster_type = titan
+	culture = abyssal #Titan
+	religion = hellenic
+	gender = male
+	father = uranus
+	mother = gaia
+	
+	#father of the titans Pallas and Perses
+}
+
+eurybia = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 190.
+	name = "Eurybia"
+	monster_type = titan #not actually a Titan (since she is not descended from Uranus), but made one here since it is what fit her the most
+	culture = abyssal #Titan
+	religion = hellenic
+	gender = female
+	father = pontus
+	mother = gaia
+	
+	#mother of the titans Pallas and Perses
+}
+
 theia = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 466.
 	name = "Theia"
 	monster_type = titan
@@ -11,3 +35,14 @@ theia = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 46
 	#mother of Selene
 }
 
+astraeus = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 84.
+	name = "Astraeus" #the name means "starry"
+	monster_type = titan
+	culture = abyssal #Titan
+	religion = hellenic
+	gender = male
+	father = crius
+	mother = eurybia
+	
+	#father of Boreas, Notus, Eurus and Zephyrus
+}
