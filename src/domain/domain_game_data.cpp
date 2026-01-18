@@ -1526,6 +1526,10 @@ bool domain_game_data::is_playable() const
 		return false;
 	}
 
+	if (this->get_government()->get_ruler()->get_game_data()->get_character_class() == nullptr) {
+		return false;
+	}
+
 	if (this->is_under_anarchy()) {
 		return false;
 	}
@@ -1541,6 +1545,10 @@ QString domain_game_data::get_unplayable_reason() const
 
 	if (this->get_government()->get_ruler()->get_game_data()->get_bloodline() == nullptr) {
 		return "You cannot play as an unblooded ruler";
+	}
+
+	if (this->get_government()->get_ruler()->get_game_data()->get_character_class() == nullptr) {
+		return "You cannot play as a ruler without a character class";
 	}
 
 	if (this->is_under_anarchy()) {
