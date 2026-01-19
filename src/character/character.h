@@ -139,7 +139,7 @@ public:
 	bool initialize_home_site_from_children();
 	bool initialize_home_site_from_parents();
 
-	void initialize_bloodline_strength();
+	void initialize_bloodline();
 	void initialize_bloodline_from_parents();
 
 	void set_name_front_compound_element(word *word);

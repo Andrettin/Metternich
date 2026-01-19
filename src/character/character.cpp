@@ -224,8 +224,8 @@ character *character::generate(const metternich::species *species, const mettern
 	generated_character->initialize_dates();
 
 	if (generate_bloodline) {
-		generated_character->generate_bloodline();
-		generated_character->initialize_bloodline_strength();
+		generated_character->generated_bloodline = true;
+		generated_character->initialize_bloodline();
 	}
 
 	generated_character->check();
@@ -406,11 +406,7 @@ void character::initialize()
 		this->home_site = this->get_home_site()->get_province()->get_default_provincial_capital();
 	}
 
-	if (this->generated_bloodline) {
-		this->generate_bloodline();
-	}
-
-	this->initialize_bloodline_strength();
+	this->initialize_bloodline();
 
 	character_base::initialize();
 }
@@ -684,8 +680,12 @@ bool character::initialize_home_site_from_parents()
 	return true;
 }
 
-void character::initialize_bloodline_strength()
+void character::initialize_bloodline()
 {
+	if (this->generated_bloodline) {
+		this->generate_bloodline();
+	}
+
 	if (this->get_bloodline() != nullptr) {
 		if (this->get_bloodline_strength() == 0) {
 			if (this->bloodline_strength_category == bloodline_strength_category::none) {
