@@ -406,11 +406,6 @@ void character::initialize()
 		this->home_site = this->get_home_site()->get_province()->get_default_provincial_capital();
 	}
 
-	if (this->get_bloodline() == nullptr && this->get_dynasty() != nullptr && this->get_parents().empty()) {
-		//characters with a dynasty but no parents get a bloodline generated for them, if they lack one
-		this->generated_bloodline = true;
-	}
-
 	this->initialize_bloodline();
 
 	character_base::initialize();
