@@ -105,8 +105,8 @@ public:
 
 	static bool skill_compare(const character *lhs, const character *rhs);
 
-	static character *generate(const metternich::species *species, const metternich::character_class *character_class, const int level, const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const std::vector<const trait *> &traits, const int hit_points, const std::vector<const item_type *> &items, const bool temporary = false);
-	static character *generate(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const int hit_points, const std::vector<const item_type *> &items, const bool temporary = false);
+	static character *generate(const metternich::species *species, const metternich::character_class *character_class, const int level, const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const std::vector<const trait *> &traits, const int hit_points, const std::vector<const item_type *> &items, const bool generate_bloodline, const bool temporary = false);
+	static character *generate(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const int hit_points, const std::vector<const item_type *> &items, const bool generate_bloodline, const bool temporary = false);
 	static std::shared_ptr<character_reference> generate_temporary(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const int hit_points, const std::vector<const item_type *> &items);
 
 	explicit character(const std::string &identifier);
@@ -139,6 +139,7 @@ public:
 	bool initialize_home_site_from_children();
 	bool initialize_home_site_from_parents();
 
+	void initialize_bloodline_strength();
 	void initialize_bloodline_from_parents();
 
 	void set_name_front_compound_element(word *word);

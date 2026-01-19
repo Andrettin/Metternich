@@ -170,7 +170,7 @@ bool character::skill_compare(const character *lhs, const character *rhs)
 	return lhs->get_identifier() < rhs->get_identifier();
 }
 
-character *character::generate(const metternich::species *species, const metternich::character_class *character_class, const int level, const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const std::vector<const trait *> &traits, const int hit_points, const std::vector<const item_type *> &items, const bool temporary)
+character *character::generate(const metternich::species *species, const metternich::character_class *character_class, const int level, const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const std::vector<const trait *> &traits, const int hit_points, const std::vector<const item_type *> &items, const bool generate_bloodline, const bool temporary)
 {
 	assert_throw(species != nullptr);
 
@@ -222,6 +222,12 @@ character *character::generate(const metternich::species *species, const mettern
 	generated_character->starting_items = items;
 
 	generated_character->initialize_dates();
+
+	if (generate_bloodline) {
+		generated_character->generate_bloodline();
+		generated_character->initialize_bloodline_strength();
+	}
+
 	generated_character->check();
 
 	generated_character->reset_game_data();
@@ -234,14 +240,14 @@ character *character::generate(const metternich::species *species, const mettern
 	return game::get()->get_generated_characters().back().get();
 }
 
-character *character::generate(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const int hit_points, const std::vector<const item_type *> &items, const bool temporary)
+character *character::generate(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const int hit_points, const std::vector<const item_type *> &items, const bool generate_bloodline, const bool temporary)
 {
-	return character::generate(monster_type->get_species(), monster_type->get_character_class(), monster_type->get_level(), monster_type, culture, religion, home_site, monster_type->get_traits(), hit_points, items, temporary);
+	return character::generate(monster_type->get_species(), monster_type->get_character_class(), monster_type->get_level(), monster_type, culture, religion, home_site, monster_type->get_traits(), hit_points, items, generate_bloodline, temporary);
 }
 
 std::shared_ptr<character_reference> character::generate_temporary(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const int hit_points, const std::vector<const item_type *> &items)
 {
-	metternich::character *character = character::generate(monster_type, culture, religion, home_site, hit_points, items, true);
+	metternich::character *character = character::generate(monster_type, culture, religion, home_site, hit_points, items, false, true);
 	return std::make_shared<character_reference>(character);
 }
 
@@ -404,19 +410,7 @@ void character::initialize()
 		this->generate_bloodline();
 	}
 
-	if (this->get_bloodline() != nullptr) {
-		if (this->get_bloodline_strength() == 0) {
-			if (this->bloodline_strength_category == bloodline_strength_category::none) {
-				this->bloodline_strength_category = vector::get_random(defines::get()->get_weighted_bloodline_strength_categories());
-			}
-
-			assert_throw(this->bloodline_strength_category != bloodline_strength_category::none);
-
-			this->bloodline_strength = random::get()->roll_dice(defines::get()->get_bloodline_strength_for_category(this->bloodline_strength_category));
-		}
-
-		this->bloodline_initialized = true;
-	}
+	this->initialize_bloodline_strength();
 
 	character_base::initialize();
 }
@@ -688,6 +682,23 @@ bool character::initialize_home_site_from_parents()
 	log_trace(std::format("Set home site for character \"{}\": {}.", this->get_identifier(), this->get_home_site()->get_identifier()));
 
 	return true;
+}
+
+void character::initialize_bloodline_strength()
+{
+	if (this->get_bloodline() != nullptr) {
+		if (this->get_bloodline_strength() == 0) {
+			if (this->bloodline_strength_category == bloodline_strength_category::none) {
+				this->bloodline_strength_category = vector::get_random(defines::get()->get_weighted_bloodline_strength_categories());
+			}
+
+			assert_throw(this->bloodline_strength_category != bloodline_strength_category::none);
+
+			this->bloodline_strength = random::get()->roll_dice(defines::get()->get_bloodline_strength_for_category(this->bloodline_strength_category));
+		}
+
+		this->bloodline_initialized = true;
+	}
 }
 
 void character::initialize_bloodline_from_parents()

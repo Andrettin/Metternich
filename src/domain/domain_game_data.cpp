@@ -3303,7 +3303,7 @@ void domain_game_data::generate_ruler()
 
 	const character_class *character_class = vector::get_random(potential_classes);
 
-	const character *ruler = character::generate(species, character_class, 1, nullptr, this->get_culture(), this->get_religion(), this->get_capital(), {}, 0, {});
+	const character *ruler = character::generate(species, character_class, 1, nullptr, this->get_culture(), this->get_religion(), this->get_capital(), {}, 0, {}, true);
 	ruler->get_game_data()->set_domain(this->domain);
 	this->get_government()->set_office_holder(defines::get()->get_ruler_office(), ruler);
 }
