@@ -18,7 +18,7 @@ leopold_iii_von_babenberg = { #Margrave Leopold III of Austria, of the House of 
 			rank = chevalier #margrave
 		}
 		
-		#canonized by pope Innocence VIII in 1485; Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
+		#canonized by pope Innocent VIII in 1485; Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
 	}
 }
 
@@ -87,7 +87,7 @@ heinrich_von_babenberg = {
 	gender = male
 	father = leopold_iii_von_babenberg
 	mother = agnes_of_waiblingen
-	birth_date = 1112.1.2
+	birth_date = 1112
 	death_date = 1177.1.13
 	traits = {
 		#craven
@@ -103,7 +103,7 @@ agnes_von_babenberg = {
 	gender = female
 	father = leopold_iii_von_babenberg
 	mother = agnes_of_waiblingen
-	birth_date = 1111.1.2
+	birth_date = 1111
 	death_date = 1157.1.26
 }
 
@@ -116,7 +116,7 @@ gertrud_von_babenberg = {
 	gender = female
 	father = leopold_iii_von_babenberg
 	mother = agnes_of_waiblingen
-	birth_date = 1117.1.2
+	birth_date = 1117
 	death_date = 1153.1.7
 	traits = {
 		#envious
@@ -132,11 +132,185 @@ jutta_von_babenberg = {
 	gender = female
 	father = leopold_iii_von_babenberg
 	mother = agnes_of_waiblingen
-	birth_date = 1115.1.2
+	birth_date = 1115
 	death_date = 1168.1.3
 	traits = {
 		#chaste
 		#humble
 		#zealous
 	}
+}
+
+leopold_von_babenberg = {
+	name = "Leopold"
+	dynasty = babenberg
+	character_class = warrior
+	culture = austrian
+	religion = catholic
+	gender = male
+	father = heinrich_von_babenberg
+	mother = theodora_komnenos
+	birth_date = 1157
+	death_date = 1194.12.31
+	traits = {
+		#proud
+		#patient
+	}
+}
+
+heinrich_von_babenberg_1158 = {
+	name = "Heinrich"
+	dynasty = babenberg
+	character_class = warrior
+	culture = austrian
+	religion = catholic
+	gender = male
+	father = heinrich_von_babenberg
+	mother = theodora_komnenos
+	birth_date = 1158
+	death_date = 1208
+	traits = {
+		#humble
+	}
+}
+
+agnes_von_babenberg_1154 = {
+	name = "Agnes"
+	dynasty = babenberg
+	character_class = warrior #aristocrat
+	culture = austrian
+	religion = catholic
+	gender = female
+	father = heinrich_von_babenberg
+	mother = theodora_komnenos
+	birth_date = 1154
+	death_date = 1182
+}
+
+friedrich_von_babenberg = {
+	name = "Friedrich"
+	dynasty = babenberg
+	character_class = warrior
+	culture = austrian
+	religion = catholic
+	gender = male
+	father = leopold_von_babenberg
+	mother = helena_arpad
+	birth_date = 1175
+	death_date = 1198.4.16
+	traits = {
+		#patient
+		#stutter
+	}
+}
+
+leopold_von_babenberg_1176 = {
+	name = "Leopold"
+	dynasty = babenberg
+	character_class = paladin
+	culture = austrian
+	religion = catholic
+	gender = male
+	father = leopold_von_babenberg
+	mother = helena_arpad
+	birth_date = 1176
+	death_date = 1230.7.28
+	traits = {
+		#deceitful
+	}
+}
+
+agnes_von_babenberg_1178 = {
+	name = "Agnes"
+	dynasty = babenberg
+	character_class = warrior #aristocrat
+	culture = austrian
+	religion = catholic
+	gender = female
+	father = leopold_von_babenberg
+	mother = helena_arpad
+	birth_date = 1178
+	death_date = 1228
+	traits = {
+		#patient
+	}
+}
+
+margarethe_von_babenberg = {
+	name = "Margarethe"
+	dynasty = babenberg
+	character_class = warrior #aristocrat
+	culture = austrian
+	religion = catholic
+	gender = female
+	father = leopold_von_babenberg_1176
+	birth_date = 1208
+	death_date = 1267.10.2
+	
+	#daughter of Theodora Angelia
+}
+
+konstanza_von_babenberg = {
+	name = "Konstanza"
+	dynasty = babenberg
+	character_class = warrior #aristocrat
+	culture = austrian
+	religion = catholic
+	gender = female
+	father = leopold_von_babenberg_1176
+	mother = theodora_angelos
+	birth_date = 1212.6.5
+	death_date = 1243.6.5
+}
+
+agnes_von_babenberg_1205 = {
+	name = "Agnes"
+	dynasty = babenberg
+	character_class = warrior #aristocrat
+	culture = austrian
+	religion = catholic
+	gender = female
+	father = leopold_von_babenberg_1176
+	mother = theodora_angelos
+	birth_date = 1205.2.19
+	death_date = 1226.8.29
+}
+
+heinrich_von_babenberg_1208 = {
+	name = "Heinrich"
+	dynasty = babenberg
+	character_class = warrior
+	culture = austrian
+	religion = catholic
+	gender = male
+	father = leopold_von_babenberg_1176
+	mother = theodora_angelos
+	birth_date = 1208
+	death_date = 1228.9.26
+}
+
+friedrich_von_babenberg_1211 = {
+	name = "Friedrich"
+	dynasty = babenberg
+	character_class = warrior
+	culture = austrian
+	religion = catholic
+	gender = male
+	father = leopold_von_babenberg_1176
+	mother = theodora_angelos
+	birth_date = 1211.4.25
+	death_date = 1246.6.15
+}
+
+gertrud_von_babenberg_1214 = {
+	name = "Gertrud"
+	dynasty = babenberg
+	character_class = warrior
+	culture = austrian
+	religion = catholic
+	gender = female
+	father = leopold_von_babenberg_1176
+	mother = theodora_angelos
+	birth_date = 1214
+	death_date = 1241
 }

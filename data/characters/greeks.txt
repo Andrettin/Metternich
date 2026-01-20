@@ -139,3 +139,28 @@ archimedes = {
 	birth_date = -287
 	death_date = -212
 }
+
+theodora_komnenos = {
+	name = "Theodora"
+	dynasty = komnenos
+	character_class = warrior #aristocrat
+	culture = greek
+	religion = orthodox
+	gender = female
+	#father = andronikos_komnenos #daughter of Andronikos Komnenos
+	birth_date = 1133
+	death_date = 1184
+}
+
+theodora_angelos = {
+	name = "Theodora"
+	dynasty = angelos
+	character_class = warrior #aristocrat
+	culture = greek
+	religion = orthodox
+	gender = female
+	birth_date = 1180
+	death_date = 1246.6.23
+	
+	#daughter of Isaakios Angelos and Eirene Tornikes
+}

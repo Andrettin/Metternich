@@ -1,0 +1,4 @@
+arpad = {
+	name = "Arpad" #"Árpád"
+	culture = magyar
+}

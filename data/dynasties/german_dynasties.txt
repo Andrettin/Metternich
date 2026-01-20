@@ -10,6 +10,12 @@ habsburg = {
 	culture = german #Swabian/Swiss
 }
 
+hohenstaufen = {
+	name = "Hohenstaufen"
+	prefix = "von"
+	culture = german
+}
+
 kageneck = {
 	name = "Kageneck"
 	prefix = "von"

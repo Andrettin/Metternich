@@ -1,0 +1,14 @@
+angelos = {
+	name = "Angelos"
+	culture = greek
+}
+
+komnenos = {
+	name = "Komnenos"
+	culture = greek
+}
+
+tornikes = {
+	name = "Tornikes"
+	culture = greek
+}

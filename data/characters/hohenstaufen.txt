@@ -1,0 +1,27 @@
+heinrich_von_hohenstaufen = {
+	name = "Heinrich"
+	dynasty = hohenstaufen
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = male
+	mother = margarethe_von_babenberg
+	birth_date = 1228
+	death_date = 1245
+	
+	#son of Heinrich von Hohenstaufen, duke of Swabia
+}
+
+friedrich_von_hohenstaufen = {
+	name = "Friedrich"
+	dynasty = hohenstaufen
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = male
+	mother = margarethe_von_babenberg
+	birth_date = 1230
+	death_date = 1251
+	
+	#son of Heinrich von Hohenstaufen, duke of Swabia
+}

@@ -1,3 +1,19 @@
+helena_arpad = {
+	name = "Helena"
+	dynasty = arpad
+	character_class = warrior #aristocrat
+	culture = magyar
+	religion = catholic
+	gender = female
+	birth_date = 1158
+	death_date = 1208
+	traits = {
+		#temperate
+	}
+	
+	#daughter of Géza Árpád and Yefrosinia Rurikid
+}
+
 tamas_bakocz = { #Source: "Encyclopædia Britannica", 1911, vol. 3, p. 230.
 	name = "Tamas" #"Tamás"
 	surname = "Bakocz" #"Bakócz"
