@@ -20,4 +20,7 @@ agnes_of_waiblingen = { #Source: Christiane Maria Bauer et al., "Molecular genet
 	gender = female
 	father = heinrich_iv #Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
 	death_date = 1143 #Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
+	traits = {
+		#honest
+	}
 }

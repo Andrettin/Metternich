@@ -1,7 +1,7 @@
 philip_the_fair = {
 	name = "Philip"
 	epithet = "the Fair"
-	character_class = warrior #statesman
+	character_class = paladin
 	culture = french
 	religion = catholic
 	home_site = paris
@@ -9,7 +9,6 @@ philip_the_fair = {
 	birth_date = 1268.6.8
 	death_date = 1314.11.29
 	traits = {
-		#dutiful_cleric
 		#temperate
 	}
 }
