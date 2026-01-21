@@ -236,6 +236,20 @@ agnes_von_babenberg_1178 = {
 	}
 }
 
+heinrich_von_babenberg_1183 = {
+	name = "Heinrich"
+	dynasty = babenberg
+	character_class = warrior
+	culture = austrian
+	religion = catholic
+	gender = male
+	father = heinrich_von_babenberg_1158
+	birth_date = 1183
+	death_date = 1233
+	
+	#son of Richeza Premyslid
+}
+
 agnes_von_babenberg_1205 = {
 	name = "Agnes"
 	dynasty = babenberg

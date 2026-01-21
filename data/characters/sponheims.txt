@@ -1,0 +1,59 @@
+ulrich_von_sponheim = {
+	name = "Ulrich"
+	dynasty = sponheim
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = male
+	mother = agnes_von_babenberg_1154
+	birth_date = 1176
+	death_date = 1201.2.2
+	traits = {
+		#proud
+		#harelip
+	}
+	
+	#son of Hermann von Sponheim
+}
+
+bernhard_von_sponheim = {
+	name = "Bernhard"
+	dynasty = sponheim
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = male
+	mother = agnes_von_babenberg_1154
+	birth_date = 1181
+	death_date = 1256.1.4
+	
+	#son of Hermann von Sponheim
+}
+
+philipp_von_sponheim = {
+	name = "Philipp"
+	dynasty = sponheim
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = male
+	father = bernhard_von_sponheim
+	birth_date = 1221
+	death_date = 1257
+	
+	#son of Judita Premyslid
+}
+
+ulrich_von_sponheim_1219 = {
+	name = "Philipp"
+	dynasty = sponheim
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = male
+	father = bernhard_von_sponheim
+	birth_date = 1219
+	death_date = 1269.10.27
+	
+	#son of Judita Premyslid
+}

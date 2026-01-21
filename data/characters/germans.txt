@@ -1,6 +1,6 @@
 jutta_askanien = {
 	name = "Jutta"
-	dynasty = wettin
+	dynasty = askanien
 	character_class = warrior #aristocrat
 	culture = german
 	religion = catholic

@@ -53,6 +53,12 @@ schwarzenberg = { #Source: "Encyclopædia Britannica", 1911, vol. 24, p. 390.
 	#raised to princely rank in 1670
 }
 
+sponheim = {
+	name = "Sponheim"
+	prefix = "von"
+	culture = german
+}
+
 wittelsbach = {
 	name = "Wittelsbach"
 	prefix = "von"
