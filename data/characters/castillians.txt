@@ -9,7 +9,7 @@ sancha_divrea = {
 	birth_date = 1155
 	death_date = 1208.11.9
 	
-	#daughter of Alfonso VII 'el Emperador'
+	#daughter of Alfonso VII "the Emperor" ("el Emperador")
 }
 
 fernando_divrea = {
@@ -23,7 +23,7 @@ fernando_divrea = {
 	birth_date = 1153
 	death_date = 1157.8.21
 	
-	#son of Alfonso VII 'el Emperador'
+	#son of Alfonso VII "the Emperor" ("el Emperador")
 }
 
 juan_de_bermudez = {

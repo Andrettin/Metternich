@@ -11,3 +11,119 @@ dolca_de_barcelona = {
 	
 	#daughter of Raimond-Berenguié de Barcelona
 }
+
+pere_the_catholic = {
+	name = "Pere"
+	epithet = "the Catholic" #"el Catòlic"
+	dynasty = barcelona
+	character_class = warrior
+	culture = catalan
+	religion = catholic
+	gender = male
+	mother = sancha_divrea
+	birth_date = 1174.11.1
+	death_date = 1213.9.14
+	traits = {
+		#zealous
+	}
+	
+	#son of Ramon-Berenguer de Barcelona, also known as Alfons the Chaste ("Cast")
+}
+
+alfons_de_barcelona = {
+	name = "Alfons"
+	dynasty = barcelona
+	character_class = warrior
+	culture = catalan
+	religion = catholic
+	gender = male
+	mother = sancha_divrea
+	birth_date = 1180
+	death_date = 1209.12.1
+	
+	#son of Ramon-Berenguer de Barcelona, also known as Alfons the Chaste ("Cast")
+}
+
+constanca_de_barcelona = {
+	name = "Constanca" #"Constança"
+	dynasty = barcelona
+	character_class = warrior #aristocrat
+	culture = catalan
+	religion = catholic
+	gender = female
+	mother = sancha_divrea
+	birth_date = 1179
+	death_date = 1222.6.23
+	
+	#daughter of Ramon-Berenguer de Barcelona, also known as Alfons the Chaste ("Cast")
+}
+
+elionor_de_barcelona = {
+	name = "Elionor"
+	dynasty = barcelona
+	character_class = warrior #aristocrat
+	culture = catalan
+	religion = catholic
+	gender = female
+	mother = sancha_divrea
+	birth_date = 1182
+	death_date = 1223
+	
+	#daughter of Ramon-Berenguer de Barcelona, also known as Alfons the Chaste ("Cast")
+}
+
+sanca_de_barcelona = {
+	name = "Sanca" #"Sança"
+	dynasty = barcelona
+	character_class = warrior #aristocrat
+	culture = catalan
+	religion = catholic
+	gender = female
+	mother = sancha_divrea
+	birth_date = 1186
+	death_date = 1241
+	
+	#daughter of Ramon-Berenguer de Barcelona, also known as Alfons the Chaste ("Cast")
+}
+
+ramon_berenguer_de_barcelona = {
+	name = "Ramon-Berenguer"
+	dynasty = barcelona
+	character_class = warrior
+	culture = catalan
+	religion = catholic
+	gender = male
+	mother = sancha_divrea
+	birth_date = 1184
+	death_date = 1188
+	
+	#son of Ramon-Berenguer de Barcelona, also known as Alfons the Chaste ("Cast")
+}
+
+ferran_de_barcelona = {
+	name = "Ferran"
+	dynasty = barcelona
+	character_class = cleric
+	culture = catalan
+	religion = catholic
+	gender = male
+	mother = sancha_divrea
+	birth_date = 1190
+	death_date = 1241
+	
+	#son of Ramon-Berenguer de Barcelona, also known as Alfons the Chaste ("Cast")
+}
+
+dolca_de_barcelona_1192 = {
+	name = "Dolca" #"Dolça"
+	dynasty = barcelona
+	character_class = cleric
+	culture = catalan
+	religion = catholic
+	gender = female
+	mother = sancha_divrea
+	birth_date = 1192
+	death_date = 1246
+	
+	#daughter of Ramon-Berenguer de Barcelona, also known as Alfons the Chaste ("Cast")
+}
