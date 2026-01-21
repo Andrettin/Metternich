@@ -1,3 +1,60 @@
+richeza_piast = {
+	name = "Richeza"
+	dynasty = piast
+	character_class = warrior #aristocrat
+	culture = polish
+	religion = catholic
+	gender = female
+	mother = agnes_von_babenberg
+	birth_date = 1130
+	death_date = 1185.1.13
+	
+	#daughter of Wladyslaw Piast
+}
+
+boleslaw_the_tall = {
+	name = "Boleslaw"
+	epithet = "the Tall"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	mother = agnes_von_babenberg
+	birth_date = 1127
+	death_date = 1201.12.7
+	
+	#son of Wladyslaw Piast
+}
+
+mieszko_piast = {
+	name = "Mieszko"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	mother = agnes_von_babenberg
+	birth_date = 1132
+	death_date = 1211.5.16
+	
+	#son of Wladyslaw Piast
+}
+
+konrad_piast = {
+	name = "Konrad"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	mother = agnes_von_babenberg
+	birth_date = 1146
+	death_date = 1190
+	
+	#son of Wladyslaw Piast
+}
+
 cymburgis_of_masovia = { #Cymburgis of Masovia; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
 	name = "Cymburgis"
 	surname = "of Masovia"

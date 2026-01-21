@@ -1,3 +1,8 @@
+divrea = {
+	name = "d'Ivrea"
+	culture = italian
+}
+
 visconti = {
 	name = "Visconti"
 	culture = italian

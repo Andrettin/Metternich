@@ -1,0 +1,5 @@
+barcelona = {
+	name = "Barcelona"
+	prefix = "de"
+	culture = catalan
+}

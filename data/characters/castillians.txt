@@ -1,3 +1,31 @@
+sancha_divrea = {
+	name = "Sancha"
+	dynasty = divrea
+	character_class = warrior #aristocrat
+	culture = castillian
+	religion = catholic
+	gender = female
+	mother = richeza_piast
+	birth_date = 1155
+	death_date = 1208.11.9
+	
+	#daughter of Alfonso VII 'el Emperador'
+}
+
+fernando_divrea = {
+	name = "Fernando"
+	dynasty = divrea
+	character_class = warrior
+	culture = castillian
+	religion = catholic
+	gender = male
+	mother = richeza_piast
+	birth_date = 1153
+	death_date = 1157.8.21
+	
+	#son of Alfonso VII 'el Emperador'
+}
+
 juan_de_bermudez = {
 	name = "Juan"
 	surname = "de Bermudez"

@@ -2,3 +2,8 @@ jagiellon = {
 	name = "Jagiellon"
 	culture = polish
 }
+
+piast = {
+	name = "Piast"
+	culture = polish
+}

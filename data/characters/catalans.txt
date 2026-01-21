@@ -1,0 +1,13 @@
+dolca_de_barcelona = {
+	name = "Dolca" #Dolça
+	dynasty = barcelona
+	character_class = warrior #aristocrat
+	culture = catalan
+	religion = catholic
+	gender = female
+	mother = richeza_piast
+	birth_date = 1163
+	death_date = 1172.12.12
+	
+	#daughter of Raimond-Berenguié de Barcelona
+}
