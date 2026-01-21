@@ -1,0 +1,27 @@
+friedrich_von_zahringen = {
+	name = "Friedrich"
+	dynasty = zahringen
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = male
+	mother = gertrude_von_babenberg
+	birth_date = 1249
+	death_date = 1268.10.29
+	
+	#son of Hermann von Zähringen
+}
+
+agnes_von_zahringen = {
+	name = "Agnes"
+	dynasty = zahringen
+	character_class = warrior #aristocrat
+	culture = german
+	religion = catholic
+	gender = female
+	mother = gertrude_von_babenberg
+	birth_date = 1250
+	death_date = 1295
+	
+	#daughter of Hermann von Zähringen
+}

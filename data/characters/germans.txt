@@ -1,3 +1,17 @@
+jutta_askanien = {
+	name = "Jutta"
+	dynasty = wettin
+	character_class = warrior #aristocrat
+	culture = german
+	religion = catholic
+	gender = female
+	mother = agnes_von_babenberg_1205
+	birth_date = 1223
+	death_date = 1267.2.2
+	
+	#daughter of Albrecht Askanien
+}
+
 nikolaus_von_kues = { #Source: "Encyclopædia Britannica", 1911, vol. 7, pp. 665-666.
 	name = "Nikolaus"
 	surname = "von Kues"

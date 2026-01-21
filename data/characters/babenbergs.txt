@@ -305,7 +305,7 @@ friedrich_von_babenberg_1211 = {
 gertrud_von_babenberg_1214 = {
 	name = "Gertrud"
 	dynasty = babenberg
-	character_class = warrior
+	character_class = warrior #aristocrat
 	culture = austrian
 	religion = catholic
 	gender = female
@@ -313,4 +313,18 @@ gertrud_von_babenberg_1214 = {
 	mother = theodora_angelos
 	birth_date = 1214
 	death_date = 1241
+}
+
+gertrude_von_babenberg = {
+	name = "Gertrude"
+	dynasty = babenberg
+	character_class = warrior #aristocrat
+	culture = austrian
+	religion = catholic
+	gender = female
+	father = heinrich_von_babenberg_1208
+	birth_date = 1226
+	death_date = 1288.4.24
+	
+	#daughter of Agnes Ludowinger
 }

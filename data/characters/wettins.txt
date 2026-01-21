@@ -1,3 +1,134 @@
+albrecht_von_wettin = {
+	name = "Albrecht"
+	dynasty = wettin
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = male
+	mother = konstanza_von_babenberg
+	birth_date = 1240
+	death_date = 1314.11.13
+	
+	#son of Heinrich von Wettin
+}
+
+dietrich_von_wettin = {
+	name = "Dietrich"
+	dynasty = wettin
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = male
+	mother = konstanza_von_babenberg
+	birth_date = 1242
+	death_date = 1285.2.8
+	
+	#son of Heinrich von Wettin
+}
+
+friedrich_von_wettin = {
+	name = "Friedrich"
+	dynasty = wettin
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = male
+	father = albrecht_von_wettin
+	birth_date = 1257
+	death_date = 1323.11.16
+	
+	#son of Margaret von Hohenstaufen
+}
+
+sophie_von_wettin = {
+	name = "Sophie"
+	dynasty = wettin
+	character_class = warrior #aristocrat
+	culture = german
+	religion = catholic
+	gender = female
+	father = dietrich_von_wettin
+	birth_date = 1259
+	death_date = 1318.8.24
+	
+	#daughter of Helene Askanien
+}
+
+dietrich_von_wettin_1260 = {
+	name = "Dietrich"
+	dynasty = wettin
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = male
+	father = albrecht_von_wettin
+	birth_date = 1260
+	death_date = 1307.12.10
+	
+	#son of Margaret von Hohenstaufen
+}
+
+friedrich_tuta = {
+	name = "Friedrich"
+	epithet = "Tuta"
+	dynasty = wettin
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = male
+	father = dietrich_von_wettin
+	birth_date = 1269
+	death_date = 1291.8.16
+	
+	#son of Helene Askanien
+}
+
+friedrich_von_wettin_1310 = {
+	name = "Friedrich"
+	dynasty = wettin
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = male
+	father = friedrich_von_wettin
+	birth_date = 1310
+	death_date = 1360
+	traits = {
+		#lustful
+		#humble
+	}
+}
+
+friedrich_the_lame = {
+	name = "Friedrich"
+	epithet = "the Lame"
+	dynasty = wettin
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = male
+	father = friedrich_von_wettin
+	birth_date = 1293.5.9
+	death_date = 1315.1.13
+	traits = {
+		#clubfooted
+	}
+	
+	#son of Agnes Meinhardiner
+}
+
+elisabeth_von_wettin = {
+	name = "Elisabeth"
+	dynasty = wettin
+	character_class = warrior #aristocrat
+	culture = german
+	religion = catholic
+	gender = female
+	father = friedrich_von_wettin
+	birth_date = 1306
+	death_date = 1367
+}
+
 friedrich_ii_of_saxony = {
 	name = "Friedrich"
 	epithet = "II"

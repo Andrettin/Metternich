@@ -1,3 +1,8 @@
+askanien = {
+	name = "Askanien"
+	culture = german
+}
+
 babenberg = {
 	name = "Babenberg"
 	prefix = "von"
@@ -56,6 +61,12 @@ wittelsbach = {
 
 wurtemberg = {
 	name = "Wurtemberg"
+	prefix = "von"
+	culture = german #Swabian
+}
+
+zahringen = {
+	name = "Zahringen" #"Zähringen"
 	prefix = "von"
 	culture = german #Swabian
 }

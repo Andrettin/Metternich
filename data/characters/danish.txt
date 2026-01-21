@@ -1,0 +1,55 @@
+sofie_estrid = {
+	name = "Sofie"
+	dynasty = estrid
+	character_class = warrior #aristocrat
+	culture = danish
+	religion = catholic
+	gender = female
+	mother = jutta_askanien
+	birth_date = 1240
+	death_date = 1286
+	
+	#daughter of Erik Estrid
+}
+
+ingeborg_estrid = {
+	name = "Ingeborg"
+	dynasty = estrid
+	character_class = warrior #aristocrat
+	culture = danish
+	religion = catholic
+	gender = female
+	mother = jutta_askanien
+	birth_date = 1244
+	death_date = 1287.3.24
+	
+	#daughter of Erik Estrid
+}
+
+jutta_estrid = {
+	name = "Jutta"
+	dynasty = estrid
+	character_class = warrior #aristocrat
+	culture = danish
+	religion = catholic
+	gender = female
+	mother = jutta_askanien
+	birth_date = 1246
+	death_date = 1296
+	
+	#daughter of Erik Estrid
+}
+
+agnes_estrid = {
+	name = "Agnes"
+	dynasty = estrid
+	character_class = warrior #aristocrat
+	culture = danish
+	religion = catholic
+	gender = female
+	mother = jutta_askanien
+	birth_date = 1249
+	death_date = 1296
+	
+	#daughter of Erik Estrid
+}

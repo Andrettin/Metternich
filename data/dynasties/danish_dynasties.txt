@@ -1,0 +1,4 @@
+estrid = {
+	name = "Estrid"
+	culture = danish
+}
