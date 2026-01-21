@@ -141,6 +141,19 @@ jutta_von_babenberg = {
 	}
 }
 
+agnes_von_babenberg_1154 = {
+	name = "Agnes"
+	dynasty = babenberg
+	character_class = warrior #aristocrat
+	culture = austrian
+	religion = catholic
+	gender = female
+	father = heinrich_von_babenberg
+	mother = theodora_komnenos
+	birth_date = 1154
+	death_date = 1182
+}
+
 leopold_von_babenberg = {
 	name = "Leopold"
 	dynasty = babenberg
@@ -172,19 +185,6 @@ heinrich_von_babenberg_1158 = {
 	traits = {
 		#humble
 	}
-}
-
-agnes_von_babenberg_1154 = {
-	name = "Agnes"
-	dynasty = babenberg
-	character_class = warrior #aristocrat
-	culture = austrian
-	religion = catholic
-	gender = female
-	father = heinrich_von_babenberg
-	mother = theodora_komnenos
-	birth_date = 1154
-	death_date = 1182
 }
 
 friedrich_von_babenberg = {
@@ -236,6 +236,19 @@ agnes_von_babenberg_1178 = {
 	}
 }
 
+agnes_von_babenberg_1205 = {
+	name = "Agnes"
+	dynasty = babenberg
+	character_class = warrior #aristocrat
+	culture = austrian
+	religion = catholic
+	gender = female
+	father = leopold_von_babenberg_1176
+	mother = theodora_angelos
+	birth_date = 1205.2.19
+	death_date = 1226.8.29
+}
+
 margarethe_von_babenberg = {
 	name = "Margarethe"
 	dynasty = babenberg
@@ -248,32 +261,6 @@ margarethe_von_babenberg = {
 	death_date = 1267.10.2
 	
 	#daughter of Theodora Angelia
-}
-
-konstanza_von_babenberg = {
-	name = "Konstanza"
-	dynasty = babenberg
-	character_class = warrior #aristocrat
-	culture = austrian
-	religion = catholic
-	gender = female
-	father = leopold_von_babenberg_1176
-	mother = theodora_angelos
-	birth_date = 1212.6.5
-	death_date = 1243.6.5
-}
-
-agnes_von_babenberg_1205 = {
-	name = "Agnes"
-	dynasty = babenberg
-	character_class = warrior #aristocrat
-	culture = austrian
-	religion = catholic
-	gender = female
-	father = leopold_von_babenberg_1176
-	mother = theodora_angelos
-	birth_date = 1205.2.19
-	death_date = 1226.8.29
 }
 
 heinrich_von_babenberg_1208 = {
@@ -300,6 +287,19 @@ friedrich_von_babenberg_1211 = {
 	mother = theodora_angelos
 	birth_date = 1211.4.25
 	death_date = 1246.6.15
+}
+
+konstanza_von_babenberg = {
+	name = "Konstanza"
+	dynasty = babenberg
+	character_class = warrior #aristocrat
+	culture = austrian
+	religion = catholic
+	gender = female
+	father = leopold_von_babenberg_1176
+	mother = theodora_angelos
+	birth_date = 1212.6.5
+	death_date = 1243.6.5
 }
 
 gertrud_von_babenberg_1214 = {
