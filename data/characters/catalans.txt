@@ -127,3 +127,77 @@ dolca_de_barcelona_1192 = {
 	
 	#daughter of Ramon-Berenguer de Barcelona, also known as Alfons the Chaste ("Cast")
 }
+
+jaume_the_conqueror = {
+	name = "Jaume"
+	epithet = "the Conqueror" #"el Conqueridor"
+	dynasty = barcelona
+	character_class = warrior
+	culture = catalan
+	religion = catholic
+	gender = male
+	father = pere_the_catholic
+	birth_date = 1208.2.1
+	death_date = 1276.7.27
+	
+	#son of Maria I de Montpellier
+}
+
+sanca_de_barcelona_1205 = {
+	name = "Sanca" #"Sança"
+	dynasty = barcelona
+	character_class = warrior #aristocrat
+	culture = catalan
+	religion = catholic
+	gender = female
+	father = pere_the_catholic
+	birth_date = 1205
+	death_date = 1206
+	
+	#daughter of Maria I de Montpellier
+}
+
+pere_de_barcelona = {
+	name = "Pere"
+	dynasty = barcelona
+	character_class = cleric
+	culture = catalan
+	religion = catholic
+	gender = male
+	father = pere_the_catholic
+	birth_date = 1196
+	death_date = 1254.9.1
+	traits = {
+		#bastard
+	}
+}
+
+constanca_de_barcelona_1200 = {
+	name = "Constanca" #"Constança"
+	dynasty = barcelona
+	character_class = warrior #aristocrat
+	culture = catalan
+	religion = catholic
+	gender = female
+	father = pere_the_catholic
+	birth_date = 1200
+	death_date = 1250
+	traits = {
+		#bastard
+	}
+}
+
+maria_de_barcelona = {
+	name = "Maria"
+	dynasty = barcelona
+	character_class = warrior #aristocrat
+	culture = catalan
+	religion = catholic
+	gender = female
+	father = pere_the_catholic
+	birth_date = 1204
+	death_date = 1256
+	traits = {
+		#bastard
+	}
+}
