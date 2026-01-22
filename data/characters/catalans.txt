@@ -201,3 +201,270 @@ maria_de_barcelona = {
 		#bastard
 	}
 }
+
+isabel_de_barcelona = {
+	name = "Isabel"
+	dynasty = barcelona
+	character_class = warrior #aristocrat
+	culture = catalan
+	religion = catholic
+	gender = female
+	father = jaume_the_conqueror
+	birth_date = 1243
+	death_date = 1271.1.28
+	traits = {
+		#amateurish_plotter
+	}
+	
+	#daughter of Yolande Arpad
+}
+
+jaume_de_xerica = {
+	name = "Jaume"
+	dynasty = xerica
+	character_class = warrior
+	culture = catalan
+	religion = catholic
+	gender = male
+	father = jaume_the_conqueror
+	birth_date = 1255
+	death_date = 1299
+	traits = {
+		#diligent
+		#bastard
+		#patient
+		#skilled_tactician
+	}
+	
+	#son of Teresa de Vidaure
+}
+
+pere_the_great = {
+	name = "Pere"
+	epithet = "the Great" #"el Gran"
+	dynasty = barcelona
+	character_class = warrior
+	culture = catalan
+	religion = catholic
+	gender = male
+	father = jaume_the_conqueror
+	birth_date = 1239
+	death_date = 1285.11.11
+	traits = {
+		#just
+		#ambitious
+		#brilliant_strategist
+	}
+	
+	#son of Yolande Arpad
+}
+
+jaume_de_barcelona = {
+	name = "Jaume"
+	dynasty = barcelona
+	character_class = warrior
+	culture = catalan
+	religion = catholic
+	gender = male
+	father = jaume_the_conqueror
+	birth_date = 1243.5.31
+	death_date = 1311.5.29
+	traits = {
+		#skilled_tactician
+	}
+	
+	#son of Yolande Arpad
+}
+
+violant_de_barcelona = {
+	name = "Violant"
+	dynasty = barcelona
+	character_class = warrior #aristocrat
+	culture = catalan
+	religion = catholic
+	gender = female
+	father = jaume_the_conqueror
+	birth_date = 1236
+	death_date = 1301
+	
+	#daughter of Yolande Arpad
+}
+
+constanca_de_barcelona_1240 = {
+	name = "Constanca" #"Constança"
+	dynasty = barcelona
+	character_class = warrior #aristocrat
+	culture = catalan
+	religion = catholic
+	gender = female
+	father = jaume_the_conqueror
+	birth_date = 1240
+	death_date = 1266
+	traits = {
+		#honest
+		#zealous
+	}
+	
+	#daughter of Yolande Arpad
+}
+
+alfons_de_barcelona_1228 = {
+	name = "Alfons"
+	dynasty = barcelona
+	character_class = warrior
+	culture = catalan
+	religion = catholic
+	gender = male
+	father = jaume_the_conqueror
+	birth_date = 1228.2.1
+	death_date = 1260.3.26
+	
+	#son of Leonor d'Ivrea
+}
+
+ferran_de_barcelona_1245 = {
+	name = "Ferran"
+	dynasty = barcelona
+	character_class = warrior
+	culture = catalan
+	religion = catholic
+	gender = male
+	father = jaume_the_conqueror
+	birth_date = 1245
+	death_date = 1250
+	
+	#son of Yolande Arpad
+}
+
+sanca_de_barcelona_1246 = {
+	name = "Sanca" #"Sança"
+	dynasty = barcelona
+	character_class = warrior #aristocrat
+	culture = catalan
+	religion = catholic
+	gender = female
+	father = jaume_the_conqueror
+	birth_date = 1246
+	death_date = 1251
+	
+	#daughter of Yolande Arpad
+}
+
+maria_de_barcelona_1248 = {
+	name = "Maria"
+	dynasty = barcelona
+	character_class = cleric
+	culture = catalan
+	religion = catholic
+	gender = female
+	father = jaume_the_conqueror
+	birth_date = 1248
+	death_date = 1267
+	
+	#daughter of Yolande Arpad
+}
+
+sanc_de_barcelona = {
+	name = "Sanc" #"Sanç"
+	dynasty = barcelona
+	character_class = cleric
+	culture = catalan
+	religion = catholic
+	gender = male
+	father = jaume_the_conqueror
+	birth_date = 1250
+	death_date = 1275.10.21
+	
+	#son of Yolande Arpad
+}
+
+elionor_de_barcelona_1251 = {
+	name = "Elionor"
+	dynasty = barcelona
+	character_class = cleric
+	culture = catalan
+	religion = catholic
+	gender = female
+	father = jaume_the_conqueror
+	birth_date = 1251
+	death_date = 1259
+	
+	#daughter of Yolande Arpad
+}
+
+pere_de_ayerbe = {
+	name = "Pere"
+	dynasty = ayerbe
+	character_class = warrior
+	culture = catalan
+	religion = catholic
+	gender = male
+	father = jaume_the_conqueror
+	birth_date = 1259
+	death_date = 1318
+	traits = {
+		#bastard
+	}
+	
+	#son of Teresa de Vidaure
+}
+
+ferran_de_castre = {
+	name = "Ferran"
+	dynasty = castre
+	character_class = warrior
+	culture = catalan
+	religion = catholic
+	gender = male
+	father = jaume_the_conqueror
+	birth_date = 1241
+	death_date = 1275
+	traits = {
+		#bastard
+	}
+}
+
+pere_de_hijar = {
+	name = "Pere"
+	dynasty = hijar
+	character_class = warrior
+	culture = catalan
+	religion = catholic
+	gender = male
+	father = jaume_the_conqueror
+	birth_date = 1245
+	death_date = 1297
+	traits = {
+		#bastard
+	}
+}
+
+pere_de_barcelona_1250 = {
+	name = "Pere"
+	dynasty = barcelona
+	character_class = cleric
+	culture = catalan
+	religion = catholic
+	gender = male
+	father = jaume_the_conqueror
+	birth_date = 1250
+	death_date = 1307
+	traits = {
+		#bastard
+	}
+}
+
+jaume_de_barcelona_1254 = {
+	name = "Jaume"
+	dynasty = barcelona
+	character_class = cleric
+	culture = catalan
+	religion = catholic
+	gender = male
+	father = jaume_the_conqueror
+	birth_date = 1254
+	death_date = 1289
+	traits = {
+		#bastard
+	}
+}

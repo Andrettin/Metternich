@@ -3,3 +3,15 @@ barcelona = {
 	prefix = "de"
 	culture = catalan
 }
+
+castre = {
+	name = "Castre"
+	prefix = "de"
+	culture = catalan
+}
+
+xerica = {
+	name = "Xerica" #"Xérica"
+	prefix = "de"
+	culture = catalan
+}

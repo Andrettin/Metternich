@@ -1,0 +1,11 @@
+ayerbe = {
+	name = "Ayerbe"
+	prefix = "de"
+	culture = castillian
+}
+
+hijar = {
+	name = "Hijar" #"Híjar"
+	prefix = "de"
+	culture = castillian
+}
