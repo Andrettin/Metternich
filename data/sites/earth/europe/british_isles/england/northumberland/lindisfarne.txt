@@ -1,0 +1,6 @@
+lindisfarne = {
+	name = "Lindisfarne"
+	world = earth
+	geocoordinate = { -1.8025 55.68 }
+	province = northumberland
+}

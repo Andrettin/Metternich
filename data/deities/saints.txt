@@ -1,0 +1,35 @@
+saint_cuthbert = { #Source: Frank Stenton, "Anglo-Saxon England", 1971, pp. 126, 138-139.
+	name = "Saint Cuthbert"
+	pantheon = abrahamic
+	apotheosis = true
+	religions = {
+		catholic
+	}
+	major_domains = {
+		destruction
+		law
+		protection
+		strength
+	}
+	character = {
+		name = "Cuthbert"
+		epithet = "of Lindisfarne"
+		species = human
+		culture = anglo_saxon
+		character_class = cleric
+		religion = catholic
+		home_site = lindisfarne
+		gender = male
+		start_date = 651 #became a novice in Melrose in 651
+		death_date = 687.3.20 #died on 687.3.20
+		
+		#became a saint
+		
+		history = {
+			#became a novice in Melrose in 651
+			#moved to Lindisfarne in 664
+			#was elected bishop of Hexham in 684, being consecrated on the 26th of March 685
+			#retired from the world in 687
+		}
+	}
+}

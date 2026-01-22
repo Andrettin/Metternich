@@ -26,6 +26,10 @@ creation = {
 	name = "Creation"
 }
 
+destruction = {
+	name = "Destruction"
+}
+
 divination = {
 	name = "Divination"
 }
@@ -68,6 +72,10 @@ plant = {
 
 protection = {
 	name = "Protection"
+}
+
+strength = {
+	name = "Strength"
 }
 
 summoning = {

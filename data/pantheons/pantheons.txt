@@ -1,3 +1,7 @@
+abrahamic = {
+	name = "Abrahamic"
+}
+
 aesir = {
 	name = "Aesir"
 }
