@@ -10,6 +10,12 @@ castre = {
 	culture = catalan
 }
 
+montcada = {
+	name = "Montcada"
+	prefix = "de"
+	culture = catalan
+}
+
 xerica = {
 	name = "Xerica" #"Xérica"
 	prefix = "de"

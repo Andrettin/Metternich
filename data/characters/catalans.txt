@@ -468,3 +468,17 @@ jaume_de_barcelona_1254 = {
 		#bastard
 	}
 }
+
+pere_de_montcada = {
+	name = "Pere"
+	dynasty = barcelona
+	character_class = warrior
+	culture = catalan
+	religion = catholic
+	gender = male
+	mother = constanca_de_barcelona_1200
+	birth_date = 1217
+	death_date = 1268
+	
+	#son of Guillem-Ramon de Montcada
+}
