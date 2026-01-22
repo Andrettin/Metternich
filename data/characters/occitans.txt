@@ -1,0 +1,27 @@
+raimond_berenguie_de_barcelona = {
+	name = "Raimond-Berenguie" #"Raimond-Berenguié"
+	dynasty = barcelona
+	character_class = warrior
+	culture = occitan
+	religion = catholic
+	gender = male
+	father = alfons_de_barcelona
+	birth_date = 1198
+	death_date = 1245.8.19
+	
+	#son of Gersende de Sabran
+}
+
+garcenda_de_barcelona = {
+	name = "Garcenda"
+	dynasty = barcelona
+	character_class = warrior #aristocrat
+	culture = occitan
+	religion = catholic
+	gender = female
+	father = alfons_de_barcelona
+	birth_date = 1200
+	death_date = 1263
+	
+	#daughter of Gersende de Sabran
+}
