@@ -1,0 +1,17 @@
+occitan = {
+	name = "Occitan"
+	group = french
+	color = { 229 229 102 }
+	species = {
+		human
+	}
+	#derivation_conditions = {
+	#	technology = middle_ages
+	#	province = {
+	#		or = {
+	#			core = aquitaine #correct?
+	#			core = provence #correct?
+	#		}
+	#	}
+	#}
+}
