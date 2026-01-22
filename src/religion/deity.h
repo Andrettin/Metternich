@@ -22,6 +22,7 @@ class deity final : public idea, public data_type<deity>
 
 	Q_PROPERTY(const metternich::pantheon* pantheon MEMBER pantheon READ get_pantheon NOTIFY changed)
 	Q_PROPERTY(bool major MEMBER major READ is_major NOTIFY changed)
+	Q_PROPERTY(bool apotheosis MEMBER apotheosis READ is_apotheotic NOTIFY changed)
 	Q_PROPERTY(const metternich::character* character READ get_character CONSTANT)
 
 public:
@@ -53,6 +54,11 @@ public:
 		return this->major;
 	}
 
+	bool is_apotheotic() const
+	{
+		return this->apotheosis;
+	}
+
 	const std::vector<const religion *> &get_religions() const
 	{
 		return this->religions;
@@ -81,6 +87,7 @@ signals:
 private:
 	const metternich::pantheon *pantheon = nullptr;
 	bool major = false;
+	bool apotheosis = false;
 	std::vector<const religion *> religions;
 	metternich::character *character = nullptr;
 	std::vector<const divine_domain *> major_domains;

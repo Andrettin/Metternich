@@ -37,6 +37,7 @@
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "map/tile.h"
+#include "religion/deity.h"
 #include "script/condition/and_condition.h"
 #include "script/effect/effect_list.h"
 #include "script/factor.h"
@@ -701,7 +702,7 @@ void character_game_data::die()
 bool character_game_data::exists() const
 {
 	//whether the character exists in the game
-	if (this->character->is_deity()) {
+	if (this->character->is_deity() && !this->character->get_deity()->is_apotheotic()) {
 		return true;
 	}
 

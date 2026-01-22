@@ -201,10 +201,7 @@ public:
 		this->deity = deity;
 	}
 
-	bool is_deity() const
-	{
-		return this->get_deity() != nullptr;
-	}
+	bool is_deity() const;
 
 	const metternich::bloodline *get_bloodline() const
 	{
@@ -241,10 +238,7 @@ public:
 	virtual const dice &get_maximum_age_modifier() const override;
 	virtual const dice &get_starting_age_modifier() const override;
 
-	virtual bool is_immortal() const override
-	{
-		return this->is_deity();
-	}
+	virtual bool is_immortal() const override;
 
 	const metternich::portrait *get_portrait() const
 	{
