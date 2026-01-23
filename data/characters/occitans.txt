@@ -25,3 +25,73 @@ garcenda_de_barcelona = {
 	
 	#daughter of Gersende de Sabran
 }
+
+alienor_de_barcelona = {
+	name = "Alienor" #"Aliénor"
+	dynasty = barcelona
+	character_class = warrior #aristocrat
+	culture = occitan
+	religion = catholic
+	gender = female
+	father = raimond_berenguie_de_barcelona
+	birth_date = 1223
+	death_date = 1291.6.25
+	
+	#daughter of Béatrix de Savoie
+}
+
+beatritz_de_barcelona = {
+	name = "Beatritz"
+	dynasty = barcelona
+	character_class = warrior
+	culture = occitan
+	religion = catholic
+	gender = female
+	father = raimond_berenguie_de_barcelona
+	birth_date = 1234
+	death_date = 1267.9.23
+	
+	#daughter of Béatrix de Savoie
+}
+
+margarida_de_barcelona = {
+	name = "Margarida"
+	dynasty = barcelona
+	character_class = warrior #aristocrat
+	culture = occitan
+	religion = catholic
+	gender = female
+	father = raimond_berenguie_de_barcelona
+	birth_date = 1221
+	death_date = 1295.12.21
+	
+	#daughter of Béatrix de Savoie
+}
+
+sanca_de_barcelona_1225 = {
+	name = "Sanca" #"Sança"
+	dynasty = barcelona
+	character_class = warrior #aristocrat
+	culture = occitan
+	religion = catholic
+	gender = female
+	father = raimond_berenguie_de_barcelona
+	birth_date = 1225
+	death_date = 1261.11.9
+	
+	#daughter of Béatrix de Savoie
+}
+
+raimond_berenguie_de_barcelona_1230 = {
+	name = "Raimond-Berenguie" #"Raimond-Berenguié"
+	dynasty = barcelona
+	character_class = warrior
+	culture = occitan
+	religion = catholic
+	gender = male
+	father = raimond_berenguie_de_barcelona
+	birth_date = 1230
+	death_date = 1238
+	
+	#son of Béatrix de Savoie
+}
