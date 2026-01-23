@@ -201,7 +201,7 @@ public:
 		this->deity = deity;
 	}
 
-	bool is_deity() const;
+	bool is_innate_deity() const;
 
 	const metternich::bloodline *get_bloodline() const
 	{

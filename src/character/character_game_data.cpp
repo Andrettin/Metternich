@@ -702,7 +702,7 @@ void character_game_data::die()
 bool character_game_data::exists() const
 {
 	//whether the character exists in the game
-	if (this->character->is_deity() && !this->character->get_deity()->is_apotheotic()) {
+	if (this->character->is_innate_deity()) {
 		return true;
 	}
 
@@ -891,6 +891,19 @@ void character_game_data::change_experience_award(const int64_t change)
 	}
 
 	this->experience_award += change;
+}
+
+bool character_game_data::is_deity() const
+{
+	if (this->character->get_deity() == nullptr) {
+		return false;
+	}
+
+	if (this->character->get_deity()->is_apotheotic()) {
+		return this->is_dead();
+	} else {
+		return true;
+	}
 }
 
 void character_game_data::set_bloodline(const metternich::bloodline *bloodline)

@@ -200,6 +200,8 @@ public:
 	int64_t get_experience_award() const;
 	void change_experience_award(const int64_t change);
 
+	bool is_deity() const;
+
 	const metternich::bloodline *get_bloodline() const
 	{
 		return this->bloodline;

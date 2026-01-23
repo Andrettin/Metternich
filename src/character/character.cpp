@@ -107,7 +107,7 @@ void character::initialize_all_home_sites()
 {
 	std::vector<character *> siteless_characters = character::get_all();
 	std::erase_if(siteless_characters, [](const character *character) {
-		return character->get_home_site() != nullptr || (character->is_deity() && !character->get_deity()->is_apotheotic());
+		return character->get_home_site() != nullptr || character->is_innate_deity();
 	});
 
 	bool changed = true;
@@ -455,8 +455,8 @@ void character::check() const
 		throw std::runtime_error(std::format("Character \"{}\" has a species (\"{}\") which is not allowed for its character class (\"{}\").", this->get_identifier(), this->get_species()->get_identifier(), this->get_character_class()->get_identifier()));
 	}
 
-	if (this->get_home_site() == nullptr && (!this->is_deity() || this->get_deity()->is_apotheotic()) && !this->is_temporary()) {
-		throw std::runtime_error(std::format("Non-deity (or apotheotic deity), non-temporary character \"{}\" has no home site.", this->get_identifier()));
+	if (this->get_home_site() == nullptr && !this->is_innate_deity() && !this->is_temporary()) {
+		throw std::runtime_error(std::format("Character \"{}\" has no home site, but is neither an innate deity, nor temporary.", this->get_identifier()));
 	} else if (this->get_home_site() != nullptr && !this->get_home_site()->is_settlement() && this->get_home_site()->get_type() != site_type::dungeon) {
 		throw std::runtime_error(std::format("Character \"{}\" has \"{}\" set as their home site, but it is neither a holding, nor a habitable world, nor a dungeon.", this->get_identifier(), this->get_home_site()->get_identifier()));
 	}
@@ -802,9 +802,9 @@ const civilian_unit_type *character::get_civilian_unit_type() const
 	return nullptr;
 }
 
-bool character::is_deity() const
+bool character::is_innate_deity() const
 {
-	return this->get_deity() != nullptr;
+	return this->get_deity() != nullptr && !this->get_deity()->is_apotheotic();
 }
 
 void character::generate_bloodline()
@@ -859,7 +859,7 @@ const dice &character::get_starting_age_modifier() const
 
 bool character::is_immortal() const
 {
-	return this->is_deity() && !this->get_deity()->is_apotheotic();
+	return this->is_innate_deity();
 }
 
 const character_attribute *character::get_primary_attribute() const

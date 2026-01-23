@@ -214,7 +214,7 @@ void character_data_model::reset_model()
 			this->top_rows.push_back(std::make_unique<character_data_row>("Culture:", this->character->get_culture()->get_name()));
 		}
 
-		if (this->character->is_deity() && (!this->character->get_deity()->is_apotheotic() || character_game_data->is_dead())) {
+		if (character_game_data->is_deity()) {
 			this->top_rows.push_back(std::make_unique<character_data_row>("Pantheon:", this->character->get_deity()->get_pantheon()->get_name()));
 		} else if (this->character->get_religion() != nullptr) {
 			this->top_rows.push_back(std::make_unique<character_data_row>("Religion:", this->character->get_religion()->get_name()));
