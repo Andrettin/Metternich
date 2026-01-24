@@ -1,3 +1,44 @@
+rudolf_i_of_germany = { #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+	name = "Rudolf"
+	dynasty = habsburg
+	character_class = warrior
+	culture = austrian
+	religion = catholic
+	home_site = vienna
+	gender = male
+	birth_date = 1218 #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+	death_date = 1291 #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+}
+
+albrecht_i_of_austria = { #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+	name = "Albrecht"
+	dynasty = habsburg
+	character_class = warrior
+	culture = austrian
+	religion = catholic
+	home_site = vienna
+	gender = male
+	father = rudolf_i_of_germany
+	birth_date = 1255 #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+	death_date = 1308 #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+}
+
+albrecht_the_wise = { #Albrecht II 'the Wise' of Austria; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+	name = "Albrecht"
+	epithet = "the Wise"
+	dynasty = habsburg
+	character_class = warrior
+	culture = austrian
+	religion = catholic
+	home_site = vienna
+	gender = male
+	father = albrecht_i_of_austria #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+	birth_date = 1298 #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+	death_date = 1358 #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+	
+	#son of Elisabeth von Görz-Tirol
+}
+
 leopold_iii_of_austria = { #Leopold III of Austria; Source: Eva Demmerle, "Das Haus Habsburg", 2011, pp. 244-245.
 	name = "Leopold"
 	epithet = "III"
@@ -7,7 +48,7 @@ leopold_iii_of_austria = { #Leopold III of Austria; Source: Eva Demmerle, "Das H
 	religion = catholic
 	home_site = vienna
 	gender = male
-	#father = albrecht_ii_the_wise_of_austria #Albrecht II 'the Wise' of Austria; Source: Eva Demmerle, "Das Haus Habsburg", 2011, pp. 244-245.
+	father = albrecht_the_wise #Albrecht II 'the Wise' of Austria; Source: Eva Demmerle, "Das Haus Habsburg", 2011, pp. 244-245.
 	#mother = johanna_von_pfirt #Johanna von Pfirt; Source: Eva Demmerle, "Das Haus Habsburg", 2011, pp. 244-245.
 	birth_date = 1351 #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
 	death_date = 1386 #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
@@ -153,6 +194,7 @@ franz_i_of_austria = { #Franz von Habsburg, Emperor Franz II of the Holy Roman E
 	portrait = franz_i_of_austria
 	home_site = vienna
 	gender = male
+	generated_bloodline = true
 	father = leopold_ii_of_the_holy_roman_empire
 	mother = maria_luisa_de_bourbon #Maria Luisa, daughter of king Charles III of Spain
 	birth_date = 1768.2.12

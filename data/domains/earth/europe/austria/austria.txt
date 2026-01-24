@@ -85,6 +85,18 @@ austria = {
 			government_type = monarchy
 		}
 		
+		1282 = {
+			offices = {
+				ruler = albrecht_i_of_austria #Albrecht I became duke of Austria in 1282; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+			}
+		}
+		
+		1330 = {
+			offices = {
+				ruler = albrecht_the_wise #Albrecht the Wise became duke of Austria in 1330; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+			}
+		}
+		
 		1516 = {
 			consulate = { #the Holy Roman Emperor sent an ambassador (Sigismund von Herbestein) to Muscovy in 1516; Source: Henry Kamen, "Early Modern European Society", 2021, p. 2.
 				country = muscovy

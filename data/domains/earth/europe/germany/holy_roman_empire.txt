@@ -1,0 +1,74 @@
+holy_roman_empire = {
+	name = "Holy Roman Empire"
+	type = polity
+	color = { 245 167 97 }
+	culture = german
+	default_religion = catholic
+	default_tier = empire
+	default_government_type = monarchy
+	default_capital = frankfurt
+	short_name = true
+	eras = {
+		medieval_era
+		renaissance_era
+	}
+	core_provinces = {
+		#Germany
+		brandenburg
+		augsburg
+		baden
+		bavaria
+		bremen
+		east_friesland
+		farther_pomerania
+		franconia
+		hanover
+		hesse
+		hither_pomerania
+		holstein
+		lower_silesia
+		magdeburg
+		mecklenburg
+		nassau
+		oldenburg
+		palatinate
+		rhineland
+		schleswig
+		thuringia
+		upper_saxony
+		upper_silesia
+		westphalia
+		wurtemberg
+		
+		#Austria
+		carinthia
+		carniola
+		istria
+		salzburg
+		south_tyrol
+		styria
+		tyrol
+		
+		#Bohemia
+		bohemia
+		budweis
+		pilsen
+		brunn
+		iglau
+		olmutz
+	}
+	
+	history = {
+		1273 = {
+			offices = {
+				ruler = rudolf_i_of_germany #Rudolf I became Roman-German king in 1273; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+			}
+		}
+		
+		1298 = {
+			offices = {
+				ruler = albrecht_i_of_austria #Albrecht I became Roman-German king in 1298; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+			}
+		}
+	}
+}
