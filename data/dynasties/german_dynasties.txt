@@ -9,6 +9,11 @@ babenberg = {
 	culture = german
 }
 
+etichonen = {
+	name = "Etichonen"
+	culture = german
+}
+
 habsburg = {
 	name = "Habsburg"
 	prefix = "von"
@@ -37,6 +42,12 @@ metternich = {
 	name = "Metternich"
 	prefix = "von"
 	culture = german #Rhenish
+}
+
+pfirt = {
+	name = "Pfirt"
+	prefix = "von"
+	culture = german
 }
 
 salian = {

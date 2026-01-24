@@ -1,3 +1,134 @@
+eticho_etichonen = {
+	name = "Eticho"
+	dynasty = etichonen
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = male
+	birth_date = 620
+	death_date = 682
+}
+
+batticho_etichonen = {
+	name = "Batticho"
+	dynasty = etichonen
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = male
+	father = eticho_etichonen
+	birth_date = 665
+	death_date = 723
+}
+
+boro_etichonen = {
+	name = "Boro"
+	dynasty = etichonen
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = male
+	father = batticho_etichonen
+	birth_date = 690
+	death_date = 748
+}
+
+choros_etichonen = {
+	name = "Choros"
+	dynasty = etichonen
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = male
+	father = boro_etichonen
+	birth_date = 720
+	death_date = 780
+}
+
+adalbert_etichonen = {
+	name = "Adalbert"
+	dynasty = etichonen
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = male
+	father = choros_etichonen
+	birth_date = 750
+	death_date = 800
+}
+
+hugo_etichonen = {
+	name = "Hugo"
+	dynasty = etichonen
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = male
+	father = adalbert_etichonen
+	birth_date = 770
+	death_date = 822
+}
+
+eberhard_etichonen = {
+	name = "Eberhard"
+	dynasty = etichonen
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = male
+	father = hugo_etichonen
+	birth_date = 815
+	death_date = 898
+}
+
+hugo_etichonen_870 = {
+	name = "Hugo"
+	dynasty = etichonen
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = male
+	father = eberhard_etichonen
+	birth_date = 870
+	death_date = 940
+}
+
+hildegard_von_pfirt = {
+	name = "Hildegard"
+	dynasty = pfirt
+	character_class = warrior #aristocrat
+	culture = german
+	religion = catholic
+	gender = female
+	birth_date = 885
+	death_date = 940
+}
+
+guntram_etichonen = {
+	name = "Guntram"
+	dynasty = etichonen
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = male
+	father = hugo_etichonen_870
+	mother = hildegard_von_pfirt
+	birth_date = 920
+	death_date = 973.8.9
+}
+
+lanzelin_etichonen = {
+	name = "Lanzelin"
+	dynasty = etichonen
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = male
+	father = guntram_etichonen
+	birth_date = 950
+	death_date = 991
+}
+
 jutta_askanien = {
 	name = "Jutta"
 	dynasty = askanien

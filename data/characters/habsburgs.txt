@@ -1,11 +1,108 @@
+radbot_von_habsburg = {
+	name = "Radbot"
+	dynasty = habsburg
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = male
+	father = lanzelin_etichonen
+	birth_date = 985
+	death_date = 1045
+}
+
+werner_von_habsburg = {
+	name = "Werner"
+	dynasty = habsburg
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = male
+	father = radbot_von_habsburg
+	birth_date = 1025
+	death_date = 1096.11.11
+}
+
+otto_von_habsburg = {
+	name = "Otto"
+	dynasty = habsburg
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = male
+	father = werner_von_habsburg
+	birth_date = 1060
+	death_date = 1111.11.8
+}
+
+werner_von_habsburg_1080 = {
+	name = "Werner"
+	dynasty = habsburg
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = male
+	father = otto_von_habsburg
+	birth_date = 1080
+	death_date = 1169.1.26
+	traits = {
+		#humble
+		#just
+	}
+}
+
+albrecht_von_habsburg = {
+	name = "Albrecht"
+	dynasty = habsburg
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = male
+	father = werner_von_habsburg_1080
+	birth_date = 1130
+	death_date = 1199
+	traits = {
+		#proud
+		#just
+	}
+}
+
+rudolf_von_habsburg = {
+	name = "Rudolf"
+	dynasty = habsburg
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = male
+	father = albrecht_von_habsburg
+	birth_date = 1151
+	death_date = 1232.4.10
+	traits = {
+		#lustful
+		#diligent
+	}
+}
+
+albrecht_von_habsburg_1188 = {
+	name = "Albrecht"
+	dynasty = habsburg
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = male
+	father = rudolf_von_habsburg
+	birth_date = 1188
+	death_date = 1239.12.13
+}
+
 rudolf_i_of_germany = { #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
 	name = "Rudolf"
 	dynasty = habsburg
 	character_class = warrior
-	culture = austrian
+	culture = german
 	religion = catholic
 	home_site = vienna
 	gender = male
+	father = albrecht_von_habsburg_1188
 	birth_date = 1218 #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
 	death_date = 1291 #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
 	traits = {
