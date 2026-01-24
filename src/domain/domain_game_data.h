@@ -165,6 +165,8 @@ public:
 
 	gsml_data to_gsml_data() const;
 
+	void apply_history(const QDate &start_date);
+
 	void do_turn();
 	void collect_regency();
 	void collect_wealth();

@@ -21,6 +21,7 @@
 #include "domain/diplomacy_state.h"
 #include "domain/domain.h"
 #include "domain/domain_attribute.h"
+#include "domain/domain_history.h"
 #include "domain/domain_tier.h"
 #include "domain/domain_tier_data.h"
 #include "domain/government_group.h"
@@ -29,6 +30,7 @@
 #include "domain/idea_slot.h"
 #include "domain/idea_type.h"
 #include "domain/journal_entry.h"
+#include "domain/law.h"
 #include "domain/subject_type.h"
 #include "economy/commodity.h"
 #include "economy/expense_transaction_type.h"
@@ -243,6 +245,99 @@ gsml_data domain_game_data::to_gsml_data() const
 	data.add_child(std::move(characters_data));
 
 	return data;
+}
+
+void domain_game_data::apply_history(const QDate &start_date)
+{
+	const domain_history *domain_history = this->domain->get_history();
+	country_economy *country_economy = this->get_economy();
+	country_government *country_government = this->get_government();
+	country_technology *country_technology = this->get_technology();
+
+	if (domain_history->get_tier() != domain_tier::none) {
+		this->set_tier(domain_history->get_tier());
+	}
+
+	if (domain_history->get_culture() != nullptr) {
+		this->set_culture(domain_history->get_culture());
+	}
+
+	if (domain_history->get_religion() != nullptr) {
+		this->set_religion(domain_history->get_religion());
+	}
+
+	const metternich::subject_type *subject_type = domain_history->get_subject_type();
+	if (subject_type != nullptr) {
+		//disable overlordship for now
+		//this->set_subject_type(subject_type);
+	}
+
+	if (domain_history->get_government_type() != nullptr) {
+		this->set_government_type(domain_history->get_government_type());
+
+		if (domain_history->get_government_type()->get_required_technology() != nullptr) {
+			country_technology->add_technology_with_prerequisites(domain_history->get_government_type()->get_required_technology());
+		}
+	} else if (this->domain->get_default_government_type() != nullptr) {
+		this->set_government_type(this->domain->get_default_government_type());
+
+		if (this->domain->get_default_government_type()->get_required_technology() != nullptr) {
+			country_technology->add_technology_with_prerequisites(this->domain->get_default_government_type()->get_required_technology());
+		}
+	}
+
+	for (const auto &[office, office_holder] : domain_history->get_office_holders()) {
+		assert_throw(start_date >= office_holder->get_game_data()->get_start_date());
+		if (office_holder->get_game_data()->get_death_date().isValid() && start_date >= office_holder->get_game_data()->get_death_date()) {
+			continue;
+		}
+
+		character_game_data *office_holder_game_data = office_holder->get_game_data();
+
+		if (office_holder_game_data->get_domain() != nullptr && office_holder_game_data->get_domain() != this->domain) {
+			throw std::runtime_error(std::format("Cannot set \"{}\" as an office holder for \"{}\", as they are already assigned to another domain.", office_holder->get_identifier(), this->domain->get_identifier()));
+		}
+
+		office_holder_game_data->set_domain(this->domain);
+		country_government->set_office_holder(office, office_holder);
+	}
+
+	for (const metternich::technology *technology : domain_history->get_technologies()) {
+		country_technology->add_technology_with_prerequisites(technology);
+	}
+
+	for (const auto &[law_group, law] : domain_history->get_laws()) {
+		country_government->set_law(law_group, law);
+
+		if (law->get_required_technology() != nullptr) {
+			country_technology->add_technology_with_prerequisites(law->get_required_technology());
+		}
+	}
+
+	country_economy->set_wealth(domain_history->get_wealth());
+
+	for (const auto &[other_country, diplomacy_state] : domain_history->get_diplomacy_states()) {
+		if (!other_country->get_game_data()->is_alive()) {
+			continue;
+		}
+
+		if (is_vassalage_diplomacy_state(diplomacy_state) || is_overlordship_diplomacy_state(diplomacy_state)) {
+			//disable overlordship diplomacy states for now
+			continue;
+		}
+
+		this->set_diplomacy_state(other_country, diplomacy_state);
+		other_country->get_game_data()->set_diplomacy_state(this->domain, get_diplomacy_state_counterpart(diplomacy_state));
+	}
+
+	for (const auto &[other_country, consulate] : domain_history->get_consulates()) {
+		if (!other_country->get_game_data()->is_alive()) {
+			continue;
+		}
+
+		this->set_consulate(other_country, consulate);
+		other_country->get_game_data()->set_consulate(this->domain, consulate);
+	}
 }
 
 void domain_game_data::do_turn()
