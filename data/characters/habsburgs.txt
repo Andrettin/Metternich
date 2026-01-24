@@ -206,7 +206,6 @@ franz_i_of_austria = { #Franz von Habsburg, Emperor Franz II of the Holy Roman E
 	portrait = franz_i_of_austria
 	home_site = vienna
 	gender = male
-	generated_bloodline = true
 	father = leopold_ii_of_the_holy_roman_empire
 	mother = maria_luisa_de_bourbon #Maria Luisa, daughter of king Charles III of Spain
 	birth_date = 1768.2.12
