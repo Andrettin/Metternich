@@ -97,6 +97,12 @@ austria = {
 			}
 		}
 		
+		1370 = {
+			offices = {
+				ruler = leopold_iii_of_austria #Leopold III became duke of Austria in 1370; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
+			}
+		}
+		
 		1516 = {
 			consulate = { #the Holy Roman Emperor sent an ambassador (Sigismund von Herbestein) to Muscovy in 1516; Source: Henry Kamen, "Early Modern European Society", 2021, p. 2.
 				country = muscovy
