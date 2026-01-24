@@ -31,6 +31,23 @@ bela_arpad = {
 	#son of István Árpád
 }
 
+laszlo_arpad = {
+	name = "Laszlo" #"László"
+	dynasty = arpad
+	character_class = warrior
+	culture = magyar
+	religion = catholic
+	gender = male
+	mother = constanca_de_barcelona
+	birth_date = 1199
+	death_date = 1205.5.7
+	traits = {
+		#ill
+	}
+	
+	#son of Imre Árpád
+}
+
 tamas_bakocz = { #Source: "Encyclopædia Britannica", 1911, vol. 3, p. 230.
 	name = "Tamas" #"Tamás"
 	surname = "Bakocz" #"Bakócz"

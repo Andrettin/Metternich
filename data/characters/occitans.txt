@@ -95,3 +95,49 @@ raimond_berenguie_de_barcelona_1230 = {
 	
 	#son of Béatrix de Savoie
 }
+
+gaston_froissard = {
+	name = "Gaston"
+	epithet = "Froissard" #the Quarreller
+	dynasty = montcada
+	character_class = warrior
+	culture = occitan
+	religion = catholic
+	gender = male
+	mother = garcenda_de_barcelona
+	birth_date = 1225
+	death_date = 1290.4.26
+	traits = {
+		#wroth
+	}
+	
+	#son of Guilhèm de Montcada/Guilhem II de Béarn
+}
+
+raimonda_de_montcada = {
+	name = "Raimonda"
+	dynasty = montcada
+	character_class = warrior #aristocrat
+	culture = occitan
+	religion = catholic
+	gender = female
+	mother = garcenda_de_barcelona
+	birth_date = 1227
+	death_date = 1290
+	
+	#daughter of Guilhèm de Montcada/Guilhem II de Béarn
+}
+
+constancia_de_montcada = {
+	name = "Constancia" #"Constància"
+	dynasty = montcada
+	character_class = warrior #aristocrat
+	culture = occitan
+	religion = catholic
+	gender = female
+	mother = garcenda_de_barcelona
+	birth_date = 1223
+	death_date = 1288
+	
+	#daughter of Guilhèm de Montcada/Guilhem II de Béarn
+}

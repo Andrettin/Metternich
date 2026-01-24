@@ -5,11 +5,25 @@ heinrich_von_hohenstaufen = {
 	culture = german
 	religion = catholic
 	gender = male
+	mother = constanca_de_barcelona
+	birth_date = 1211
+	death_date = 1242.2.12
+	
+	#son of Friedrich II of the Holy Roman Empire
+	#duke of Swabia
+}
+
+heinrich_von_hohenstaufen_1228 = {
+	name = "Heinrich"
+	dynasty = hohenstaufen
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = male
+	father = heinrich_von_hohenstaufen
 	mother = margarethe_von_babenberg
 	birth_date = 1228
 	death_date = 1245
-	
-	#son of Heinrich von Hohenstaufen, duke of Swabia
 }
 
 friedrich_von_hohenstaufen = {
@@ -19,9 +33,8 @@ friedrich_von_hohenstaufen = {
 	culture = german
 	religion = catholic
 	gender = male
+	father = heinrich_von_hohenstaufen
 	mother = margarethe_von_babenberg
 	birth_date = 1230
 	death_date = 1251
-	
-	#son of Heinrich von Hohenstaufen, duke of Swabia
 }
