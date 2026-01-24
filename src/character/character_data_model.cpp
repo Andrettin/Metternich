@@ -7,6 +7,7 @@
 #include "character/character_attribute.h"
 #include "character/character_class.h"
 #include "character/character_game_data.h"
+#include "character/dynasty.h"
 #include "character/saving_throw_type.h"
 #include "character/skill.h"
 #include "character/trait.h"
@@ -202,6 +203,10 @@ void character_data_model::reset_model()
 			} else {
 				this->top_rows.push_back(std::make_unique<character_data_row>("Experience:", number::to_formatted_string(character_game_data->get_experience())));
 			}
+		}
+
+		if (this->character->get_dynasty() != nullptr) {
+			this->top_rows.push_back(std::make_unique<character_data_row>("Dynasty:", this->character->get_dynasty()->get_name()));
 		}
 
 		if (character_game_data->get_bloodline() != nullptr) {
