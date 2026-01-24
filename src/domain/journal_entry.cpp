@@ -399,7 +399,7 @@ QString journal_entry::get_completion_conditions_string() const
 			str += "\n";
 		}
 
-		str += std::format("Recruit {}", character->get_full_name());
+		str += std::format("Recruit {}", character->get_game_data()->get_full_name());
 	}
 
 	if (this->get_completion_random_chance() != 0) {

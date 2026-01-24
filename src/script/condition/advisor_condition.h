@@ -34,7 +34,7 @@ public:
 	{
 		Q_UNUSED(indent);
 
-		return this->advisor->get_full_name() + " advisor";
+		return this->advisor->get_game_data()->get_full_name() + " advisor";
 	}
 
 private:

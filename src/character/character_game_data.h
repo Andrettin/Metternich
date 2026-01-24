@@ -53,6 +53,7 @@ class character_game_data final : public QObject
 {
 	Q_OBJECT
 
+	Q_PROPERTY(QString full_name READ get_full_name_qstring NOTIFY full_name_changed)
 	Q_PROPERTY(QString titled_name READ get_titled_name_qstring NOTIFY titled_name_changed)
 	Q_PROPERTY(const metternich::portrait* portrait READ get_portrait NOTIFY portrait_changed)
 	Q_PROPERTY(const metternich::icon* icon READ get_icon NOTIFY icon_changed)
@@ -97,12 +98,21 @@ public:
 	void apply_history(const QDate &start_date);
 	void on_setup_finished();
 
+	std::string get_full_name() const;
+
+	QString get_full_name_qstring() const
+	{
+		return QString::fromStdString(this->get_full_name());
+	}
+
 	std::string get_titled_name() const;
 
 	QString get_titled_name_qstring() const
 	{
 		return QString::fromStdString(this->get_titled_name());
 	}
+
+	std::optional<int> get_regnal_number() const;
 
 	const metternich::portrait *get_portrait() const
 	{
@@ -624,6 +634,7 @@ public:
 	const site *get_location() const;
 
 signals:
+	void full_name_changed();
 	void titled_name_changed();
 	void portrait_changed();
 	void icon_changed();

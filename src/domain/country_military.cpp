@@ -100,7 +100,7 @@ void country_military::on_leader_died(const character *leader)
 
 		const std::string_view leader_type_name = leader->get_leader_type_name();
 
-		engine_interface::get()->add_notification(std::format("{} Retired", leader_type_name), war_minister_portrait, std::format("Your Excellency, after a distinguished career in our service, the {} {} has decided to retire.", string::lowered(leader_type_name), leader->get_full_name()));
+		engine_interface::get()->add_notification(std::format("{} Retired", leader_type_name), war_minister_portrait, std::format("Your Excellency, after a distinguished career in our service, the {} {} has decided to retire.", string::lowered(leader_type_name), leader->get_game_data()->get_full_name()));
 	}
 
 	leader->get_game_data()->get_military_unit()->disband(true);

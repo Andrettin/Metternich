@@ -86,7 +86,7 @@ public:
 		Q_UNUSED(prefix);
 
 		if (this->character != nullptr) {
-			return std::format("{} ({} {} {}) will join your domain", this->character->get_full_name(), this->character->get_species()->get_name(), this->character->get_game_data()->get_character_class()->get_name(), this->character->get_game_data()->get_level());
+			return std::format("{} ({} {} {}) will join your domain", this->character->get_game_data()->get_full_name(), this->character->get_species()->get_name(), this->character->get_game_data()->get_character_class()->get_name(), this->character->get_game_data()->get_level());
 		} else if (this->monster_type != nullptr) {
 			return std::format("{} {} will join your domain", string::get_indefinite_article(this->monster_type->get_name()), this->monster_type->get_name());
 		} else {

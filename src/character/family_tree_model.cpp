@@ -47,7 +47,7 @@ QVariant family_tree_model::data(const QModelIndex &index, const int role) const
 
 		switch (role) {
 			case Qt::DisplayRole:
-				return QString::fromStdString(character->get_full_name());
+				return QString::fromStdString(character->get_game_data()->get_full_name());
 			case static_cast<int>(role::character):
 				return QVariant::fromValue(character);
 			default:

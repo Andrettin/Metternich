@@ -102,7 +102,7 @@ public:
 			return std::string();
 		}
 
-		return "Gain a Scroll of " + string::highlight(this->spell->get_name()) + " (the spell is learned by " + string::highlight(character->get_full_name()) + ")";
+		return "Gain a Scroll of " + string::highlight(this->spell->get_name()) + " (the spell is learned by " + string::highlight(character->get_game_data()->get_full_name()) + ")";
 	}
 
 

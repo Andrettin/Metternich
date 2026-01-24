@@ -147,7 +147,7 @@ public:
 			}
 
 			const character *roll_character = this->get_roll_character(scope, ctx);
-			success_effects_string += std::format("{}{}:\n", std::string(indent, '\t'), roll_character->get_full_name()) + this->character_success_effects->get_effects_string(roll_character, ctx, indent + 1, prefix);
+			success_effects_string += std::format("{}{}:\n", std::string(indent, '\t'), roll_character->get_game_data()->get_full_name()) + this->character_success_effects->get_effects_string(roll_character, ctx, indent + 1, prefix);
 		}
 
 		return success_effects_string;
@@ -167,7 +167,7 @@ public:
 			}
 
 			const character *roll_character = this->get_roll_character(scope, ctx);
-			failure_effects_string += std::format("{}{}:\n", std::string(indent, '\t'), roll_character->get_full_name()) + this->character_failure_effects->get_effects_string(roll_character, ctx, indent + 1, prefix);
+			failure_effects_string += std::format("{}{}:\n", std::string(indent, '\t'), roll_character->get_game_data()->get_full_name()) + this->character_failure_effects->get_effects_string(roll_character, ctx, indent + 1, prefix);
 		}
 
 		return failure_effects_string;

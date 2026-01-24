@@ -82,7 +82,7 @@ military_unit::military_unit(const military_unit_type *type, const metternich::d
 	: military_unit(type, domain, character->get_phenotype())
 {
 	this->character = character;
-	this->name = character->get_full_name();
+	this->name = character->get_game_data()->get_full_name();
 
 	character->get_game_data()->set_military_unit(this);
 	character->get_game_data()->apply_military_unit_modifier(this, 1);

@@ -33,7 +33,7 @@ public:
 	{
 		Q_UNUSED(indent);
 
-		return std::format("{} ruler", this->ruler->get_full_name());
+		return std::format("{} ruler", this->ruler->get_game_data()->get_full_name());
 	}
 
 private:

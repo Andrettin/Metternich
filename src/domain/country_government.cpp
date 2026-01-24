@@ -249,7 +249,7 @@ void country_government::set_office_holder(const office *office, const character
 		if (this->domain == game::get()->get_player_country() && character != nullptr) {
 			const portrait *interior_minister_portrait = this->get_interior_minister_portrait();
 
-			engine_interface::get()->add_notification(std::format("New {}", office->get_name()), interior_minister_portrait, std::format("{} has become our new {}!\n\n{}", character->get_full_name(), string::lowered(office->get_name()), character->get_game_data()->get_office_modifier_string(this->domain, office)));
+			engine_interface::get()->add_notification(std::format("New {}", office->get_name()), interior_minister_portrait, std::format("{} has become our new {}!\n\n{}", character->get_game_data()->get_full_name(), string::lowered(office->get_name()), character->get_game_data()->get_office_modifier_string(this->domain, office)));
 		}
 	}
 }
@@ -508,12 +508,12 @@ void country_government::on_office_holder_died(const office *office, const chara
 			const portrait *interior_minister_portrait = this->get_interior_minister_portrait();
 
 			if (office->is_ruler()) {
-				//engine_interface::get()->add_notification(std::format("{} Died", office_holder->get_full_name()), interior_minister_portrait, std::format("Our {}, {}, has died!", string::lowered(office->get_name()), office_holder->get_full_name()));
+				//engine_interface::get()->add_notification(std::format("{} Died", office_holder->get_game_data()->get_full_name()), interior_minister_portrait, std::format("Our {}, {}, has died!", string::lowered(office->get_name()), office_holder->get_full_name()));
 
 				//FIXME: allow players to continue playing with player character succession
 				emit game::get()->game_over();
 			} else {
-				engine_interface::get()->add_notification(std::format("{} Died", office_holder->get_full_name()), interior_minister_portrait, std::format("Our {}, {}, has died!", string::lowered(office->get_name()), office_holder->get_full_name()));
+				engine_interface::get()->add_notification(std::format("{} Died", office_holder->get_game_data()->get_full_name()), interior_minister_portrait, std::format("Our {}, {}, has died!", string::lowered(office->get_name()), office_holder->get_game_data()->get_full_name()));
 			}
 		}
 

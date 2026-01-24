@@ -30,7 +30,7 @@ QVariantList party::get_characters_qvariant_list() const
 void party::remove_character(const character *character)
 {
 	if (!vector::contains(this->get_characters(), character)) {
-		throw std::runtime_error(std::format("Tried to remove character \"{}\" from a party, but it is not a part of it.", character->get_full_name()));
+		throw std::runtime_error(std::format("Tried to remove character \"{}\" from a party, but it is not a part of it.", character->get_game_data()->get_titled_name()));
 	}
 
 	std::erase(this->characters, character);

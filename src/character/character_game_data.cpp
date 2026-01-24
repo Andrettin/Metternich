@@ -21,6 +21,7 @@
 #include "domain/country_technology.h"
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
+#include "domain/government_type.h"
 #include "domain/office.h"
 #include "engine_interface.h"
 #include "game/character_event.h"
@@ -66,6 +67,7 @@ character_game_data::character_game_data(const metternich::character *character)
 	: character(character)
 {
 	connect(game::get(), &game::turn_changed, this, &character_game_data::age_changed);
+	connect(this, &character_game_data::office_changed, this, &character_game_data::full_name_changed);
 	connect(this, &character_game_data::office_changed, this, &character_game_data::titled_name_changed);
 
 	this->portrait = this->character->get_portrait();
@@ -534,14 +536,50 @@ void character_game_data::on_setup_finished()
 	this->check_icon();
 }
 
+std::string character_game_data::get_full_name() const
+{
+	return this->character->get_full_name(this->get_regnal_number());
+}
+
 std::string character_game_data::get_titled_name() const
 {
 	if (this->get_office() != nullptr) {
 		assert_throw(this->get_domain() != nullptr);
-		return std::format("{} {}", this->get_domain()->get_government()->get_office_title_name(this->get_office()), this->character->get_full_name());
+		return std::format("{} {}", this->get_domain()->get_government()->get_office_title_name(this->get_office()), this->get_full_name());
 	}
 
-	return this->character->get_full_name();
+	return this->get_full_name();
+}
+
+std::optional<int> character_game_data::get_regnal_number() const
+{
+	if (this->get_office() == nullptr) {
+		return std::nullopt;
+	}
+
+	if (!this->get_office()->is_ruler()) {
+		return std::nullopt;
+	}
+
+	assert_throw(this->get_domain() != nullptr);
+
+	if (!this->get_domain()->get_game_data()->get_government_type()->has_regnal_numbering()) {
+		return std::nullopt;
+	}
+
+	int regnal_number = 1;
+
+	for (const auto &[date, historical_monarch] : this->get_domain()->get_game_data()->get_historical_monarchs()) {
+		if (historical_monarch == this->character) {
+			break;
+		}
+
+		if (historical_monarch->get_name() == this->character->get_name()) {
+			++regnal_number;
+		}
+	}
+
+	return regnal_number;
 }
 
 bool character_game_data::is_current_portrait_valid() const

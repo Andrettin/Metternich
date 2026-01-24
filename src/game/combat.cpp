@@ -630,7 +630,7 @@ int64_t combat::do_character_attack(const character *character, const metternich
 					const portrait *war_minister_portrait = character->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
 					const std::string effects_string = enemy_info->get_kill_effects()->get_effects_string(character->get_game_data()->get_domain(), ctx);
 
-					engine_interface::get()->add_combat_notification(std::format("{} Killed", enemy->is_temporary() && enemy->get_monster_type() != nullptr ? enemy->get_monster_type()->get_name() : enemy->get_full_name()), war_minister_portrait, effects_string);
+					engine_interface::get()->add_combat_notification(std::format("{} Killed", enemy->is_temporary() && enemy->get_monster_type() != nullptr ? enemy->get_monster_type()->get_name() : enemy->get_game_data()->get_full_name()), war_minister_portrait, effects_string);
 				}
 
 				enemy_info->get_kill_effects()->do_effects(character->get_game_data()->get_domain(), ctx);

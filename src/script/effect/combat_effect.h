@@ -334,7 +334,7 @@ public:
 			if (character_class != nullptr) {
 				character_class_string += std::format(" {} {}", character_class->get_name(), party_character->get_game_data()->get_level());
 			}
-			str += "\n" + std::string(indent + 1, '\t') + std::format("{} ({}{} HP {}/{})", party_character->get_full_name(), party_character->get_species()->get_name(), character_class_string, party_character->get_game_data()->get_hit_points(), party_character->get_game_data()->get_max_hit_points());
+			str += "\n" + std::string(indent + 1, '\t') + std::format("{} ({}{} HP {}/{})", party_character->get_game_data()->get_full_name(), party_character->get_species()->get_name(), character_class_string, party_character->get_game_data()->get_hit_points(), party_character->get_game_data()->get_max_hit_points());
 		}
 
 		str += "\n" + std::string(indent, '\t') + std::format("Does combat against{}:", this->attacker && this->surprise ? " (surprised)" : "");
@@ -368,7 +368,7 @@ public:
 			if (character_class != nullptr) {
 				character_class_string += std::format(" {} {}", character_class->get_name(), character->get_game_data()->get_level());
 			}
-			str += "\n" + std::string(indent + 1, '\t') + std::format("{} ({}{})", character->get_full_name(), character->get_species()->get_name(), character_class_string);
+			str += "\n" + std::string(indent + 1, '\t') + std::format("{} ({}{})", character->get_game_data()->get_full_name(), character->get_species()->get_name(), character_class_string);
 		}
 
 		for (const auto &[object_type, quantity] : this->object_counts) {
