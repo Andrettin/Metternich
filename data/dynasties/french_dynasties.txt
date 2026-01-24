@@ -45,6 +45,11 @@ rohan_soubise = {
 	culture = french
 }
 
+scarponnois = {
+	name = "Scarponnois"
+	culture = french
+}
+
 valois = {
 	name = "Valois"
 	prefix = "de"

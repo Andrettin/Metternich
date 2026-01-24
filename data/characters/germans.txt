@@ -12,6 +12,24 @@ jutta_askanien = {
 	#daughter of Albrecht Askanien
 }
 
+gertrud_von_hohenberg = { #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+	name = "Gertrud"
+	surname = "von Hohenberg"
+	character_class = warrior #aristocrat
+	culture = german
+	religion = catholic
+	gender = female
+}
+
+johanna_von_pfirt = { #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+	name = "Johanna"
+	surname = "von Pfirt"
+	character_class = warrior #aristocrat
+	culture = german
+	religion = catholic
+	gender = female
+}
+
 nikolaus_von_kues = { #Source: "Encyclopædia Britannica", 1911, vol. 7, pp. 665-666.
 	name = "Nikolaus"
 	surname = "von Kues"
