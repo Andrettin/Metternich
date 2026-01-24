@@ -146,7 +146,6 @@ leopold_ii_of_the_holy_roman_empire = { #Emperor Leopold II of the Holy Roman Em
 
 franz_i_of_austria = { #Franz von Habsburg, Emperor Franz II of the Holy Roman Empire and later Emperor Franz I of Austria; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 10-11.
 	name = "Franz"
-	epithet = "I"
 	dynasty = habsburg
 	character_class = warrior
 	culture = austrian

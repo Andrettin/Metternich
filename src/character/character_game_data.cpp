@@ -606,6 +606,12 @@ std::optional<int> character_game_data::get_regnal_number_for_domain(const mette
 	int regnal_number = 0;
 
 	for (const auto &[date, historical_monarch] : domain->get_game_data()->get_historical_monarchs()) {
+		if (historical_monarch == nullptr) {
+			//a null historical monarch means the regnal numbering was cleared
+			regnal_number = 0;
+			continue;
+		}
+
 		if (historical_monarch->get_name() == this->character->get_name()) {
 			++regnal_number;
 		}

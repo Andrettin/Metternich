@@ -14,6 +14,7 @@
 #include "domain/subject_type.h"
 #include "economy/commodity.h"
 #include "util/map_util.h"
+#include "util/string_conversion_util.h"
 
 #include <magic_enum/magic_enum.hpp>
 
@@ -22,6 +23,30 @@ namespace metternich {
 domain_history::domain_history(const metternich::domain *domain)
 	: domain(domain), tier(domain_tier::none)
 {
+}
+
+void domain_history::process_gsml_property(const gsml_property &property, const QDate &date)
+{
+	const std::string &key = property.get_key();
+	const std::string &value = property.get_value();
+
+	if (key == "clear_regnal_numbering") {
+		const bool clear_regnal_numbering = string::to_bool(value);
+		if (clear_regnal_numbering) {
+			this->historical_monarchs[date] = nullptr;
+		}
+	} else if (key == "titular_ruler") {
+		//a titular ruler, who didn't actually govern, but is present in history
+		const character *ruler = character::get(value);
+
+		this->historical_rulers[date] = ruler;
+
+		if (this->get_government_type() != nullptr && this->get_government_type()->has_regnal_numbering()) {
+			this->historical_monarchs[date] = ruler;
+		}
+	} else {
+		data_entry_history::process_gsml_property(property, date);
+	}
 }
 
 void domain_history::process_gsml_scope(const gsml_data &scope, const QDate &date)

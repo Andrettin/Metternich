@@ -99,6 +99,7 @@ austria = {
 		}
 		
 		1804.8.11 = {
+			clear_regnal_numbering = true
 			tier = empire #Empire of Austria founded on 1804.8.11; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 10.
 			offices = {
 				ruler = franz_i_of_austria
