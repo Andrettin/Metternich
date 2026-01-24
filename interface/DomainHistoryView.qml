@@ -27,6 +27,18 @@ Item {
 				anchors.left: parent.left
 				source: "image://portrait/" + historical_ruler.game_data.portrait.identifier
 				fillMode: Image.Pad
+				
+				MouseArea {
+					anchors.fill: parent
+					onClicked: {
+						if (character_dialog.opened && character_dialog.character === historical_ruler) {
+							return
+						}
+						
+						character_dialog.character = historical_ruler
+						character_dialog.open()
+					}
+				}
 			}
 			
 			Rectangle {
