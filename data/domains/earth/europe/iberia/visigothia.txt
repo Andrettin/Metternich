@@ -28,6 +28,8 @@ visigothia = {
 	
 	history = {
 		700 = {
+			government_type = monarchy
+			
 			#Witiza became king of the Visigoths in 700; Source: Archibald R. Lewis, "The Dukes in the Regnum Francorum, A.D. 550-751", 1976, p. 400.
 			offices = {
 				ruler = witiza

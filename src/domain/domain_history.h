@@ -70,6 +70,16 @@ public:
 		return this->office_holders;
 	}
 
+	const std::map<QDate, const character *> &get_historical_rulers() const
+	{
+		return this->historical_rulers;
+	}
+
+	const std::map<QDate, const character *> &get_historical_monarchs() const
+	{
+		return this->historical_monarchs;
+	}
+
 	const metternich::subject_type *get_subject_type() const
 	{
 		return this->subject_type;
@@ -129,6 +139,8 @@ private:
 	const metternich::religion *religion = nullptr;
 	const metternich::government_type *government_type = nullptr;
 	data_entry_map<office, const character *> office_holders;
+	std::map<QDate, const character *> historical_rulers;
+	std::map<QDate, const character *> historical_monarchs; //used for regnal numbers
 	const metternich::subject_type *subject_type = nullptr;
 	centesimal_int literacy_rate;
 	std::vector<const technology *> technologies;

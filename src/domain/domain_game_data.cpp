@@ -286,6 +286,9 @@ void domain_game_data::apply_history(const QDate &start_date)
 		}
 	}
 
+	this->historical_rulers = domain_history->get_historical_rulers();
+	this->historical_monarchs = domain_history->get_historical_monarchs();
+
 	for (const auto &[office, office_holder] : domain_history->get_office_holders()) {
 		assert_throw(start_date >= office_holder->get_game_data()->get_start_date());
 		if (office_holder->get_game_data()->get_death_date().isValid() && start_date >= office_holder->get_game_data()->get_death_date()) {
@@ -3401,6 +3404,18 @@ void domain_game_data::generate_ruler()
 	const character *ruler = character::generate(species, character_class, 1, nullptr, this->get_culture(), this->get_religion(), this->get_capital(), {}, 0, {}, true);
 	ruler->get_game_data()->set_domain(this->domain);
 	this->get_government()->set_office_holder(defines::get()->get_ruler_office(), ruler);
+}
+
+void domain_game_data::add_historical_ruler(const character *character)
+{
+	assert_throw(character != nullptr);
+
+	const QDate current_date = game::get()->get_date();
+	this->historical_rulers[current_date] = character;
+
+	if (this->get_government_type() != nullptr && this->get_government_type()->has_regnal_numbering()) {
+		this->historical_monarchs[current_date] = character;
+	}
 }
 
 bool domain_game_data::create_civilian_unit(const civilian_unit_type *civilian_unit_type, const site *deployment_site, const phenotype *phenotype)

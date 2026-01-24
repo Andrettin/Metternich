@@ -25,11 +25,11 @@ sweden = {
 	
 	history = {
 		1523 = {
+			government_type = monarchy
+			
 			offices = {
 				ruler = gustav_i_of_sweden #Gustav I became king of Sweden in 1523; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 205.
 			}
-			
-			government_type = monarchy
 		}
 	}
 }

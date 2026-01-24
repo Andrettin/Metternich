@@ -20,11 +20,11 @@ saxe_wittenberg = {
 	
 	history = {
 		1428.1.4 = {
+			government_type = monarchy
+			
 			offices = {
 				ruler = friedrich_ii_of_saxony
 			}
-			
-			government_type = monarchy
 		}
 		
 		1733.2.1 = {

@@ -2,6 +2,7 @@ theocracy = {
 	name = "Theocracy"
 	group = theocracy
 	icon = wooden_cross
+	regnal_numbering = true
 	conditions = {
 		not = {
 			country_type = clade

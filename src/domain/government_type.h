@@ -35,6 +35,7 @@ class government_type final : public named_data_entry, public data_type<governme
 
 	Q_PROPERTY(const metternich::government_group* group MEMBER group READ get_group NOTIFY changed)
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
+	Q_PROPERTY(bool regnal_numbering MEMBER regnal_numbering READ has_regnal_numbering NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 
 public:
@@ -77,6 +78,11 @@ public:
 	const icon *get_icon() const
 	{
 		return this->icon;
+	}
+
+	bool has_regnal_numbering() const
+	{
+		return this->regnal_numbering;
 	}
 
 	const std::vector<const law *> &get_forbidden_laws() const
@@ -128,6 +134,7 @@ signals:
 private:
 	const government_group *group = nullptr;
 	const metternich::icon *icon = nullptr;
+	bool regnal_numbering = false; //whether this government type uses regnal numbers for its rulers
 	std::vector<const law *> forbidden_laws;
 	law_group_map<const law *> default_laws;
 	technology *required_technology = nullptr;

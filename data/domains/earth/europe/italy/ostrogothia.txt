@@ -33,6 +33,8 @@ ostrogothia = {
 		}
 		
 		472 = {
+			government_type = monarchy
+			
 			#by 472 AD Theodemer has become king of the Ostrogoths; Source: F. E. Sandbach, "The Heroic Saga-Cycle of Dietrich of Bern", 1906, pp. 6-7.
 			offices = {
 				ruler = theodemer_amelung

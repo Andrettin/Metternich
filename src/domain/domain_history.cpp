@@ -7,6 +7,7 @@
 #include "domain/diplomacy_state.h"
 #include "domain/domain.h"
 #include "domain/domain_tier.h"
+#include "domain/government_type.h"
 #include "domain/law.h"
 #include "domain/law_group.h"
 #include "domain/office.h"
@@ -33,6 +34,14 @@ void domain_history::process_gsml_scope(const gsml_data &scope, const QDate &dat
 			const character *office_holder = character::get(property.get_value());
 			if (office_holder != nullptr) {
 				this->office_holders[office] = office_holder;
+
+				if (office->is_ruler()) {
+					this->historical_rulers[date] = office_holder;
+
+					if (this->get_government_type() != nullptr && this->get_government_type()->has_regnal_numbering()) {
+						this->historical_monarchs[date] = office_holder;
+					}
+				}
 			} else {
 				this->office_holders.erase(office);
 			}

@@ -2,6 +2,7 @@ monarchy = {
 	name = "Monarchy"
 	group = monarchy
 	icon = crown_royal
+	regnal_numbering = true
 	default_laws = {
 		ruling_class = aristocracy
 		press_rights = censored_press

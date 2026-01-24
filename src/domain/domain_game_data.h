@@ -861,6 +861,18 @@ public:
 
 	void generate_ruler();
 
+	const std::map<QDate, const character *> &get_historical_rulers() const
+	{
+		return this->historical_rulers;
+	}
+
+	void add_historical_ruler(const character *character);
+
+	const std::map<QDate, const character *> &get_historical_monarchs() const
+	{
+		return this->historical_monarchs;
+	}
+
 	const std::vector<qunique_ptr<civilian_unit>> &get_civilian_units() const
 	{
 		return this->civilian_units;
@@ -1262,6 +1274,8 @@ private:
 	std::map<idea_type, data_entry_map<idea_slot, const idea *>> appointed_ideas;
 	scripted_country_modifier_map<int> scripted_modifiers;
 	std::vector<const character *> characters;
+	std::map<QDate, const character *> historical_rulers;
+	std::map<QDate, const character *> historical_monarchs; //used for regnal numbers
 	std::vector<qunique_ptr<civilian_unit>> civilian_units;
 	data_entry_map<civilian_unit_type, int> civilian_unit_recruitment_counts;
 	std::vector<qunique_ptr<transporter>> transporters;

@@ -20,6 +20,8 @@ inca_empire = {
 	
 	history = {
 		1530 = {
+			government_type = monarchy
+			
 			offices = {
 				ruler = atahualpa #Atahualpa became emperor of the Incas in 1530; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 205.
 			}
