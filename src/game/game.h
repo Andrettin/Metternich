@@ -158,6 +158,13 @@ public:
 		return QString::fromStdString(this->get_date_string());
 	}
 
+	std::string year_to_labeled_string(const int year) const;
+
+	Q_INVOKABLE QString year_to_labeled_qstring(const int year) const
+	{
+		return QString::fromStdString(this->year_to_labeled_string(year));
+	}
+
 	const std::vector<domain *> &get_countries() const
 	{
 		return this->countries;

@@ -1815,13 +1815,19 @@ std::string game::get_date_string() const
 {
 	if (this->get_current_months_per_turn() % 12 != 0) {
 		if (this->get_current_months_per_turn() == 3) {
-			return std::format("{}, {}", date::get_month_season_string(this->get_date().month()), date::year_to_labeled_string(this->get_year()));
+			return std::format("{}, {}", date::get_month_season_string(this->get_date().month()), this->year_to_labeled_string(this->get_year()));
 		} else {
-			return std::format("{}, {}", date::get_month_name(this->get_date().month()), date::year_to_labeled_string(this->get_year()));
+			return std::format("{}, {}", date::get_month_name(this->get_date().month()), this->year_to_labeled_string(this->get_year()));
 		}
 	} else {
-		return date::year_to_labeled_string(this->get_year());
+		return this->year_to_labeled_string(this->get_year());
 	}
+}
+
+std::string game::year_to_labeled_string(const int year) const
+{
+	//FIXME: add support for different calendars depending on the domain/culture being played
+	return date::year_to_labeled_string(year);
 }
 
 QVariantList game::get_countries_qvariant_list() const

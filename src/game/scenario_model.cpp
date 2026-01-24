@@ -43,7 +43,7 @@ QVariant scenario_model::data(const QModelIndex &index, const int role) const
 				std::string str = scenario->get_name() + ", ";
 				const calendar *calendar = scenario->get_start_date_calendar();
 				if (calendar != nullptr) {
-					str += std::format("{} {}", std::abs(scenario->get_start_year()), scenario->get_start_year() >= 0 ? calendar->get_year_label() : calendar->get_negative_year_label());
+					str += date::year_to_labeled_string(scenario->get_start_year(), calendar->get_year_label(), calendar->get_negative_year_label());
 				} else {
 					str += date::year_to_labeled_string(scenario->get_start_year());
 				}
