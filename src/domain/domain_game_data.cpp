@@ -314,6 +314,12 @@ void domain_game_data::apply_history(const QDate &start_date)
 
 	this->historical_rulers = domain_history->get_historical_rulers();
 	this->historical_monarchs = domain_history->get_historical_monarchs();
+	for (const auto &[date, historical_ruler] : this->get_historical_rulers()) {
+		historical_ruler->get_game_data()->add_ruled_domain(this->domain);
+	}
+	for (const auto &[date, historical_monarch] : this->get_historical_monarchs()) {
+		historical_monarch->get_game_data()->add_reigned_domain(this->domain);
+	}
 
 	for (const auto &[office, office_holder] : domain_history->get_office_holders()) {
 		assert_throw(start_date >= office_holder->get_game_data()->get_start_date());
@@ -1100,6 +1106,8 @@ void domain_game_data::set_government_type(const metternich::government_type *go
 		return;
 	}
 
+	const metternich::government_type *old_government_type = this->get_government_type();
+
 	if (government_type != nullptr) {
 		if (this->domain->is_tribe() && !government_type->get_group()->is_tribal()) {
 			throw std::runtime_error(std::format("Tried to set a non-tribal government type (\"{}\") for a tribal country (\"{}\").", government_type->get_identifier(), this->domain->get_identifier()));
@@ -1118,6 +1126,10 @@ void domain_game_data::set_government_type(const metternich::government_type *go
 
 	if (this->get_government_type() != nullptr && this->get_government_type()->get_modifier() != nullptr) {
 		this->get_government_type()->get_modifier()->apply(this->domain, 1);
+	}
+
+	if ((old_government_type == nullptr || !old_government_type->has_regnal_numbering()) && this->get_government_type() != nullptr && this->get_government_type()->has_regnal_numbering() && this->get_government()->get_ruler() != nullptr) {
+		this->get_government()->get_ruler()->get_game_data()->add_reigned_domain(this->domain);
 	}
 
 	if (game::get()->is_running()) {
@@ -3443,9 +3455,11 @@ void domain_game_data::add_historical_ruler(const character *character)
 
 	const QDate current_date = game::get()->get_date();
 	this->historical_rulers[current_date] = character;
+	character->get_game_data()->add_ruled_domain(this->domain);
 
 	if (this->get_government_type() != nullptr && this->get_government_type()->has_regnal_numbering()) {
 		this->historical_monarchs[current_date] = character;
+		character->get_game_data()->add_reigned_domain(this->domain);
 	}
 }
 

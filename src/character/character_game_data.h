@@ -2,6 +2,7 @@
 
 #include "character/character_container.h"
 #include "database/data_entry_container.h"
+#include "domain/domain_container.h"
 #include "script/scripted_modifier_container.h"
 #include "spell/spell_container.h"
 #include "unit/military_unit_type_container.h"
@@ -114,6 +115,7 @@ public:
 
 	std::optional<int> get_regnal_number() const;
 	std::optional<int> get_regnal_number_for_domain(const domain *domain) const;
+	std::optional<int> get_best_regnal_number() const;
 
 	const metternich::portrait *get_portrait() const
 	{
@@ -631,6 +633,26 @@ public:
 	}
 
 	void decrement_status_effect_rounds();
+
+	const domain_set &get_ruled_domains() const
+	{
+		return this->ruled_domains;
+	}
+
+	void add_ruled_domain(const metternich::domain *domain)
+	{
+		this->ruled_domains.insert(domain);
+	}
+	
+	const domain_set &get_reigned_domains() const
+	{
+		return this->reigned_domains;
+	}
+
+	void add_reigned_domain(const metternich::domain *domain)
+	{
+		this->reigned_domains.insert(domain);
+	}
 	
 	const site *get_location() const;
 
@@ -711,6 +733,8 @@ private:
 	military_unit_type_map<std::map<military_unit_stat, centesimal_int>> commanded_military_unit_type_stat_modifiers;
 	std::vector<const trait *> target_traits;
 	data_entry_map<status_effect, int> status_effect_rounds; //doesn't need to be saved since the game cannot be saved from within combat
+	domain_set ruled_domains; //domains that this character has ever ruled
+	domain_set reigned_domains; //domains that this character has ever ruled with a regnal number
 };
 
 }

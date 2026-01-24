@@ -21,6 +21,7 @@
 #include "domain/country_technology.h"
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
+#include "domain/domain_tier.h"
 #include "domain/government_type.h"
 #include "domain/office.h"
 #include "engine_interface.h"
@@ -140,6 +141,7 @@ void character_game_data::process_gsml_property(const gsml_property &property)
 void character_game_data::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
+	const std::vector<std::string> &values = scope.get_values();
 
 	if (tag == "attributes") {
 		scope.for_each_property([&](const gsml_property &attribute_property) {
@@ -196,6 +198,14 @@ void character_game_data::process_gsml_scope(const gsml_data &scope)
 				this->equipped_items[item_ptr->get_slot()].push_back(item_ptr);
 			}
 		});
+	} else if (tag == "ruled_domains") {
+		for (const std::string &value : values) {
+			this->ruled_domains.insert(domain::get(value));
+		}
+	} else if (tag == "reigned_domains") {
+		for (const std::string &value : values) {
+			this->reigned_domains.insert(domain::get(value));
+		}
 	} else {
 		throw std::runtime_error(std::format("Invalid character game data scope: \"{}\".", tag));
 	}
@@ -318,6 +328,21 @@ gsml_data character_game_data::to_gsml_data() const
 			items_data.add_child(item->to_gsml_data());
 		}
 		data.add_child(std::move(items_data));
+	}
+
+	if (!this->get_ruled_domains().empty()) {
+		gsml_data ruled_domains_data("ruled_domains");
+		for (const metternich::domain *domain : this->get_ruled_domains()) {
+			ruled_domains_data.add_value(domain->get_identifier());
+		}
+		data.add_child(std::move(ruled_domains_data));
+	}
+	if (!this->get_reigned_domains().empty()) {
+		gsml_data reigned_domains_data("reigned_domains");
+		for (const metternich::domain *domain : this->get_reigned_domains()) {
+			reigned_domains_data.add_value(domain->get_identifier());
+		}
+		data.add_child(std::move(reigned_domains_data));
 	}
 
 	return data;
@@ -553,6 +578,10 @@ std::string character_game_data::get_titled_name() const
 
 std::optional<int> character_game_data::get_regnal_number() const
 {
+	if (this->is_dead()) {
+		return this->get_best_regnal_number();
+	}
+
 	if (this->get_office() == nullptr) {
 		return std::nullopt;
 	}
@@ -591,6 +620,31 @@ std::optional<int> character_game_data::get_regnal_number_for_domain(const mette
 	}
 
 	return regnal_number;
+}
+
+std::optional<int> character_game_data::get_best_regnal_number() const
+{
+	domain_tier best_min_tier = domain_tier::none;
+	domain_tier best_max_tier = domain_tier::none;
+	const metternich::domain *best_domain = nullptr;
+
+	for (const metternich::domain *domain : this->get_reigned_domains()) {
+		if (domain->get_max_tier() > best_max_tier) {
+			best_domain = domain;
+			best_min_tier = domain->get_min_tier();
+			best_max_tier = domain->get_max_tier();
+		} else if (domain->get_max_tier() == best_max_tier && domain->get_min_tier() >= best_min_tier) {
+			best_domain = domain;
+			best_min_tier = domain->get_min_tier();
+			best_max_tier = domain->get_max_tier();
+		}
+	}
+
+	if (best_domain == nullptr) {
+		return std::nullopt;
+	}
+
+	return this->get_regnal_number_for_domain(best_domain);
 }
 
 bool character_game_data::is_current_portrait_valid() const
