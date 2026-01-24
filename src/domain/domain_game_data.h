@@ -142,6 +142,7 @@ class domain_game_data final : public QObject
 	Q_PROPERTY(QVariantList available_deity_slots READ get_available_deity_slots_qvariant_list NOTIFY available_idea_slots_changed)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(QVariantList characters READ get_characters_qvariant_list NOTIFY characters_changed)
+	Q_PROPERTY(QVariantList historical_rulers READ get_historical_rulers_qvariant_list NOTIFY characters_changed)
 	Q_PROPERTY(QVariantList transporters READ get_transporters_qvariant_list NOTIFY transporters_changed)
 	Q_PROPERTY(QVariantList active_journal_entries READ get_active_journal_entries_qvariant_list NOTIFY journal_entries_changed)
 	Q_PROPERTY(QVariantList inactive_journal_entries READ get_inactive_journal_entries_qvariant_list NOTIFY journal_entries_changed)
@@ -865,6 +866,8 @@ public:
 	{
 		return this->historical_rulers;
 	}
+
+	QVariantList get_historical_rulers_qvariant_list() const;
 
 	void add_historical_ruler(const character *character);
 

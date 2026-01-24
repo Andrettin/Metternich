@@ -139,6 +139,8 @@ public:
 
 	Q_INVOKABLE void move_selected_military_units_to(const QPoint &tile_pos);
 
+	Q_INVOKABLE QString date_to_string(const QDate &date) const;
+
 	engine_interface &operator =(const engine_interface &other) = delete;
 
 signals:

@@ -3432,6 +3432,11 @@ void domain_game_data::generate_ruler()
 	this->get_government()->set_office_holder(defines::get()->get_ruler_office(), ruler);
 }
 
+QVariantList domain_game_data::get_historical_rulers_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_historical_rulers());
+}
+
 void domain_game_data::add_historical_ruler(const character *character)
 {
 	assert_throw(character != nullptr);

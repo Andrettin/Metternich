@@ -226,7 +226,7 @@ void country_government::set_office_holder(const office *office, const character
 			game::get()->set_player_character(character);
 		}
 
-		if (character != nullptr) {
+		if (character != nullptr && (this->get_game_data()->get_historical_rulers().empty() || this->get_game_data()->get_historical_rulers().rbegin()->second != character)) {
 			this->get_game_data()->add_historical_ruler(character);
 		}
 	}

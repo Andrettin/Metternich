@@ -26,7 +26,6 @@ Rectangle {
 		anchors.topMargin: 16 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
 		spacing: 4 * scale_factor
-		visible: false
 		
 		IconButton {
 			id: court_button
@@ -50,6 +49,7 @@ Rectangle {
 			id: government_button
 			icon_identifier: "flag"
 			highlighted: politics_view_mode === PoliticsView.Mode.Government
+			visible: false
 			
 			onClicked: {
 				politics_view_mode = PoliticsView.Mode.Government
@@ -68,6 +68,7 @@ Rectangle {
 			id: religion_button
 			icon_identifier: "wooden_cross"
 			highlighted: politics_view_mode === PoliticsView.Mode.Religion
+			visible: false
 			
 			onClicked: {
 				politics_view_mode = PoliticsView.Mode.Religion
@@ -76,6 +77,24 @@ Rectangle {
 			onHoveredChanged: {
 				if (hovered) {
 					status_text = "View Religion"
+				} else {
+					status_text = ""
+				}
+			}
+		}
+		
+		IconButton {
+			id: domain_history_button
+			icon_identifier: "painting"
+			highlighted: politics_view_mode === PoliticsView.Mode.DomainHistory
+			
+			onClicked: {
+				politics_view_mode = PoliticsView.Mode.DomainHistory
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "View Domain History"
 				} else {
 					status_text = ""
 				}

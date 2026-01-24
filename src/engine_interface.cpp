@@ -31,6 +31,7 @@
 #include "unit/military_unit.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
+#include "util/date_util.h"
 #include "util/exception_util.h"
 #include "util/qunique_ptr.h"
 #include "util/vector_util.h"
@@ -282,6 +283,11 @@ void engine_interface::move_selected_military_units_to(const QPoint &tile_pos)
 	}
 
 	this->clear_selected_military_units();
+}
+
+QString engine_interface::date_to_string(const QDate &date) const
+{
+	return QString::fromStdString(date::to_string(date));
 }
 
 }

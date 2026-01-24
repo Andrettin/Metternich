@@ -113,6 +113,7 @@ public:
 	}
 
 	std::optional<int> get_regnal_number() const;
+	std::optional<int> get_regnal_number_for_domain(const domain *domain) const;
 
 	const metternich::portrait *get_portrait() const
 	{

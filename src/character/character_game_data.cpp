@@ -567,16 +567,27 @@ std::optional<int> character_game_data::get_regnal_number() const
 		return std::nullopt;
 	}
 
-	int regnal_number = 1;
+	return this->get_regnal_number_for_domain(this->get_domain());
+}
 
-	for (const auto &[date, historical_monarch] : this->get_domain()->get_game_data()->get_historical_monarchs()) {
-		if (historical_monarch == this->character) {
-			break;
-		}
+std::optional<int> character_game_data::get_regnal_number_for_domain(const metternich::domain *domain) const
+{
+	assert_throw(domain != nullptr);
 
+	int regnal_number = 0;
+
+	for (const auto &[date, historical_monarch] : domain->get_game_data()->get_historical_monarchs()) {
 		if (historical_monarch->get_name() == this->character->get_name()) {
 			++regnal_number;
 		}
+
+		if (historical_monarch == this->character) {
+			break;
+		}
+	}
+
+	if (regnal_number == 0) {
+		return std::nullopt;
 	}
 
 	return regnal_number;

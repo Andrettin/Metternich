@@ -8,7 +8,8 @@ Item {
 	enum Mode {
 		Court,
 		Government,
-		Religion
+		Religion,
+		DomainHistory
 	}
 	
 	property var country: null
@@ -51,6 +52,15 @@ Item {
 		anchors.left: infopanel.right
 		anchors.right: button_panel.left
 		visible: politics_view_mode === PoliticsView.Mode.Religion
+	}
+	
+	DomainHistoryView {
+		id: domain_history_view
+		anchors.top: top_bar.bottom
+		anchors.bottom: status_bar.top
+		anchors.left: infopanel.right
+		anchors.right: button_panel.left
+		visible: politics_view_mode === PoliticsView.Mode.DomainHistory
 	}
 	
 	PoliticsButtonPanel {
