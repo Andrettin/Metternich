@@ -17,7 +17,7 @@
 
 namespace metternich {
 
-void region_history::process_gsml_scope(const gsml_data &scope)
+void region_history::process_gsml_scope(const gsml_data &scope, const QDate &date)
 {
 	const std::string &tag = scope.get_tag();
 
@@ -64,7 +64,7 @@ void region_history::process_gsml_scope(const gsml_data &scope)
 			}
 		});
 	} else {
-		data_entry_history::process_gsml_scope(scope);
+		data_entry_history::process_gsml_scope(scope, date);
 	}
 }
 

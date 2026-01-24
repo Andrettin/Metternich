@@ -15,7 +15,7 @@ character_history::character_history(const metternich::character *character) : c
 	this->traits = character->get_traits();
 }
 
-void character_history::process_gsml_property(const gsml_property &property)
+void character_history::process_gsml_property(const gsml_property &property, const QDate &date)
 {
 	const std::string &key = property.get_key();
 	const std::string &value = property.get_value();
@@ -27,7 +27,7 @@ void character_history::process_gsml_property(const gsml_property &property)
 		const trait *trait = trait::get(value);
 		this->traits.push_back(trait);
 	} else {
-		data_entry_history::process_gsml_property(property);
+		data_entry_history::process_gsml_property(property, date);
 	}
 }
 

@@ -23,7 +23,7 @@ domain_history::domain_history(const metternich::domain *domain)
 {
 }
 
-void domain_history::process_gsml_scope(const gsml_data &scope)
+void domain_history::process_gsml_scope(const gsml_data &scope, const QDate &date)
 {
 	const std::string &tag = scope.get_tag();
 
@@ -128,7 +128,7 @@ void domain_history::process_gsml_scope(const gsml_data &scope)
 
 		this->consulates[other_domain] = consulate;
 	} else {
-		data_entry_history::process_gsml_scope(scope);
+		data_entry_history::process_gsml_scope(scope, date);
 	}
 }
 

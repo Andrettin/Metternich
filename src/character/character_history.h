@@ -25,7 +25,7 @@ class character_history final : public data_entry_history
 public:
 	explicit character_history(const metternich::character *character);
 
-	virtual void process_gsml_property(const gsml_property &property) override;
+	virtual void process_gsml_property(const gsml_property &property, const QDate &date) override;
 
 	const metternich::domain *get_country() const
 	{

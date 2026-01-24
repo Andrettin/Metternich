@@ -43,7 +43,7 @@ class domain_history final : public data_entry_history
 public:
 	explicit domain_history(const metternich::domain *domain);
 
-	virtual void process_gsml_scope(const gsml_data &scope) override;
+	virtual void process_gsml_scope(const gsml_data &scope, const QDate &date) override;
 
 	domain_tier get_tier() const
 	{

@@ -18,7 +18,7 @@
 
 namespace metternich {
 
-void site_history::process_gsml_property(const gsml_property &property)
+void site_history::process_gsml_property(const gsml_property &property, const QDate &date)
 {
 	const std::string &key = property.get_key();
 	const std::string &value = property.get_value();
@@ -86,11 +86,11 @@ void site_history::process_gsml_property(const gsml_property &property)
 				assert_throw(false);
 		}
 	} else {
-		data_entry_history::process_gsml_property(property);
+		data_entry_history::process_gsml_property(property, date);
 	}
 }
 
-void site_history::process_gsml_scope(const gsml_data &scope)
+void site_history::process_gsml_scope(const gsml_data &scope, const QDate &date)
 {
 	const std::string &tag = scope.get_tag();
 
@@ -155,7 +155,7 @@ void site_history::process_gsml_scope(const gsml_data &scope)
 			}
 		});
 	} else {
-		data_entry_history::process_gsml_scope(scope);
+		data_entry_history::process_gsml_scope(scope, date);
 	}
 }
 

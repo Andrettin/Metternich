@@ -33,8 +33,8 @@ public:
 	{
 	}
 
-	virtual void process_gsml_property(const gsml_property &property) override;
-	virtual void process_gsml_scope(const gsml_data &scope) override;
+	virtual void process_gsml_property(const gsml_property &property, const QDate &date) override;
+	virtual void process_gsml_scope(const gsml_data &scope, const QDate &date) override;
 
 	const domain *get_owner() const
 	{

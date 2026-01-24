@@ -22,7 +22,7 @@ public:
 	{
 	}
 
-	virtual void process_gsml_scope(const gsml_data &scope) override;
+	virtual void process_gsml_scope(const gsml_data &scope, const QDate &date) override;
 
 	const culture_map<int64_t> &get_culture_weights() const
 	{
