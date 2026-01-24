@@ -141,3 +141,17 @@ constancia_de_montcada = {
 	
 	#daughter of Guilhèm de Montcada/Guilhem II de Béarn
 }
+
+joana_de_toulouse = {
+	name = "Joana"
+	dynasty = toulouse
+	character_class = warrior #aristocrat
+	culture = occitan
+	religion = catholic
+	gender = female
+	mother = sanca_de_barcelona
+	birth_date = 1220
+	death_date = 1271.8.25
+	
+	#daughter of Raimond de Toulouse
+}

@@ -1,0 +1,5 @@
+toulouse = {
+	name = "Toulouse"
+	prefix = "de"
+	culture = occitan
+}
