@@ -88,6 +88,7 @@
 #include "unit/transporter_type.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
+#include "util/date_util.h"
 #include "util/image_util.h"
 #include "util/map_util.h"
 #include "util/number_util.h"
@@ -95,6 +96,7 @@
 #include "util/qunique_ptr.h"
 #include "util/rect_util.h"
 #include "util/size_util.h"
+#include "util/string_conversion_util.h"
 #include "util/string_util.h"
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
@@ -185,6 +187,14 @@ void domain_game_data::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->characters.push_back(game::get()->get_character(value));
 		}
+	} else if (tag == "historical_rulers") {
+		scope.for_each_property([&](const gsml_property &attribute_property) {
+			this->historical_rulers[string::to_date(attribute_property.get_key())] = game::get()->get_character(attribute_property.get_value());
+		});
+	} else if (tag == "historical_monarchs") {
+		scope.for_each_property([&](const gsml_property &attribute_property) {
+			this->historical_monarchs[string::to_date(attribute_property.get_key())] = game::get()->get_character(attribute_property.get_value());
+		});
 	} else {
 		throw std::runtime_error(std::format("Invalid domain game data scope: \"{}\".", tag));
 	}
@@ -243,6 +253,22 @@ gsml_data domain_game_data::to_gsml_data() const
 		characters_data.add_value(character->get_identifier());
 	}
 	data.add_child(std::move(characters_data));
+
+	if (!this->historical_rulers.empty()) {
+		gsml_data attributes_data("historical_rulers");
+		for (const auto &[date, historical_ruler] : this->historical_rulers) {
+			attributes_data.add_property(date::to_string(date), historical_ruler->get_identifier());
+		}
+		data.add_child(std::move(attributes_data));
+	}
+
+	if (!this->historical_monarchs.empty()) {
+		gsml_data attributes_data("historical_monarchs");
+		for (const auto &[date, historical_monarch] : this->historical_monarchs) {
+			attributes_data.add_property(date::to_string(date), historical_monarch->get_identifier());
+		}
+		data.add_child(std::move(attributes_data));
+	}
 
 	return data;
 }
