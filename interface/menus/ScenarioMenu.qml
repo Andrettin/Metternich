@@ -443,10 +443,6 @@ MenuBase {
 		id: character_dialog
 	}
 	
-	FamilyTreeDialog {
-		id: family_tree_dialog
-	}
-	
 	Connections {
 		target: metternich.game
 		function onSetup_finished() {

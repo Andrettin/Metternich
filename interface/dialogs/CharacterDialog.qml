@@ -13,6 +13,7 @@ DialogBase {
 	property var character: null
 	property var office: null
 	readonly property bool is_appointee: office ? metternich.game.player_country.game_data.government.get_appointed_office_holder(office) === character : false
+	property bool show_family_tree_button: true
 	
 	PortraitButton {
 		id: character_portrait
@@ -135,11 +136,13 @@ DialogBase {
 		TextButton {
 			id: family_tree_button
 			text: "Family Tree"
-			visible: character !== null && (character.father !== null || character.mother !== null)
+			visible: character !== null && (character.father !== null || character.mother !== null) && show_family_tree_button
 			onClicked: {
-				family_tree_dialog.character = character
-				family_tree_dialog.open()
-				family_tree_dialog.receive_focus()
+				var family_tree_character = character_dialog.character
+				character_dialog.close()
+				menu_stack.push("../FamilyTreeView.qml", {
+					character: family_tree_character
+				})
 			}
 		}
 		

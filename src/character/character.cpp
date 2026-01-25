@@ -33,6 +33,7 @@
 #include "unit/civilian_unit_class.h"
 #include "unit/military_unit_category.h"
 #include "util/assert_util.h"
+#include "util/container_util.h"
 #include "util/date_util.h"
 #include "util/gender.h"
 #include "util/log_util.h"
@@ -407,6 +408,12 @@ void character::initialize()
 	}
 
 	this->initialize_bloodline();
+
+	this->top_tree_element = this;
+	while (this->top_tree_element->get_tree_parent() != nullptr) {
+		this->top_tree_element = this->top_tree_element->get_tree_parent();
+	}
+	assert_throw(this->top_tree_element != nullptr);
 
 	character_base::initialize();
 }
@@ -918,6 +925,59 @@ std::string_view character::get_leader_type_name() const
 	}
 
 	return get_military_unit_category_name(this->get_military_unit_category());
+}
+
+named_data_entry *character::get_tree_parent() const
+{
+	if (this->get_mother() != nullptr) {
+		if (this->get_father() == nullptr || (this->get_dynasty() != nullptr && this->get_mother()->get_dynasty() == this->get_dynasty() && this->get_father()->get_dynasty() != this->get_dynasty())) {
+			return this->get_mother();
+		}
+	}
+
+	return this->get_father();
+}
+
+QVariantList character::get_secondary_tree_parents() const
+{
+	QVariantList secondary_tree_parents;
+
+	const named_data_entry *tree_parent = this->get_tree_parent();
+
+	for (character *parent : this->get_parents()) {
+		if (parent == tree_parent) {
+			continue;
+		}
+
+		//secondary_tree_parents.push_back(QVariant::fromValue(parent));
+	}
+
+	return secondary_tree_parents;
+}
+
+std::vector<const named_data_entry *> character::get_top_tree_elements() const
+{
+	return { this->top_tree_element };
+}
+
+bool character::is_hidden_in_tree() const
+{
+	return !this->get_game_data()->has_ever_existed();
+}
+
+QVariantList character::get_tree_characters() const
+{
+	std::vector<const named_data_entry *> tree_characters = { this->top_tree_element };
+
+	for (size_t i = 0; i < tree_characters.size(); ++i) {
+		for (const named_data_entry *child : tree_characters.at(i)->get_tree_children()) {
+			if (!vector::contains(tree_characters, child)) {
+				tree_characters.push_back(child);
+			}
+		}
+	}
+
+	return container::to_qvariant_list(tree_characters);
 }
 
 }

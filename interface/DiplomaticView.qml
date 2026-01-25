@@ -77,10 +77,6 @@ Item {
 		id: character_dialog
 	}
 	
-	FamilyTreeDialog {
-		id: family_tree_dialog
-	}
-	
 	Component.onCompleted: {
 		diplomatic_map.center_on_tile(start_tile_x, start_tile_y)
 	}

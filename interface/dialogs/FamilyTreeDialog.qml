@@ -21,7 +21,7 @@ DialogBase {
 		height: 1 * scale_factor
 	}
 	
-	FamilyTreeView {
+	FamilyTreeTreeView {
 		id: family_tree_view
 		anchors.left: parent.left
 		anchors.leftMargin: 1 * scale_factor

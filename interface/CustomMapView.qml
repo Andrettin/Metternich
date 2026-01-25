@@ -96,10 +96,6 @@ Item {
 		id: character_dialog
 	}
 	
-	FamilyTreeDialog {
-		id: family_tree_dialog
-	}
-	
 	ModifierDialog {
 		id: modifier_dialog
 	}

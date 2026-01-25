@@ -41,7 +41,7 @@ Item {
 		id: portrait_button
 		anchors.horizontalCenter: parent.horizontalCenter
 		anchors.verticalCenter: parent.verticalCenter
-		portrait_identifier: entry.portrait.identifier
+		portrait_identifier: entry.game_data ? entry.game_data.portrait.identifier : entry.portrait.identifier
 		//grayscale: parent.grayscale
 		transparent: parent.transparent
 		//disabled: parent.disabled

@@ -89,6 +89,8 @@ class character final : public character_base, public data_type<character>
 	Q_PROPERTY(QString leader_type_name READ get_leader_type_name_qstring NOTIFY changed)
 	Q_PROPERTY(metternich::character_game_data* game_data READ get_game_data NOTIFY game_data_changed)
 	Q_PROPERTY(bool temporary READ is_temporary CONSTANT)
+	Q_PROPERTY(const QObject* tree_parent READ get_tree_parent CONSTANT)
+	Q_PROPERTY(QVariantList secondary_tree_parents READ get_secondary_tree_parents CONSTANT)
 
 public:
 	static constexpr const char class_identifier[] = "character";
@@ -323,6 +325,22 @@ public:
 		return this->temporary;
 	}
 
+	virtual named_data_entry *get_tree_parent() const override;
+	QVariantList get_secondary_tree_parents() const;
+
+	virtual int get_tree_y() const override
+	{
+		if (this->get_tree_parent() != nullptr) {
+			return this->get_tree_parent()->get_tree_y() + 1;
+		}
+
+		return 0;
+	}
+
+	virtual std::vector<const named_data_entry *> get_top_tree_elements() const override;
+	virtual bool is_hidden_in_tree() const override;
+	Q_INVOKABLE QVariantList get_tree_characters() const;
+
 signals:
 	void changed();
 	void game_data_changed() const;
@@ -357,6 +375,7 @@ private:
 	qunique_ptr<character_history> history;
 	qunique_ptr<character_game_data> game_data;
 	bool temporary = false;
+	const named_data_entry *top_tree_element = nullptr;
 };
 
 }
