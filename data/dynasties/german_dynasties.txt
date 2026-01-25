@@ -87,3 +87,9 @@ zahringen = {
 	prefix = "von"
 	culture = german #Swabian
 }
+
+zollern = {
+	name = "Zollern"
+	prefix = "von"
+	culture = german #Swabian
+}

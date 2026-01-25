@@ -1,0 +1,10 @@
+beatrix_von_zollern = { #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+	name = "Beatrix"
+	dynasty = zollern
+	character_class = warrior #aristocrat
+	culture = german #Swabian
+	religion = catholic
+	gender = female
+	
+	#married Albrecht III of Austria, and had her son Albrecht with him in 1377; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+}

@@ -148,6 +148,45 @@ albrecht_the_wise = { #Albrecht II 'the Wise' of Austria; Source: Eva Demmerle, 
 	#son of Elisabeth von Görz-Tirol; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
 }
 
+rudolf_iv_of_austria = { #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+	name = "Rudolf"
+	epithet = "the Founder" #known as "the Founder" ("der Stifter"); Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+	dynasty = habsburg
+	character_class = warrior
+	culture = austrian
+	religion = catholic
+	home_site = vienna
+	gender = male
+	father = albrecht_the_wise #Albrecht II 'the Wise' of Austria; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+	mother = johanna_von_pfirt #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+	birth_date = 1339 #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+	death_date = 1365 #died in 1365; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+	
+	#married to Katharina von Luxemburg; Source: Eva Demmerle, "Das Haus Habsburg", 2011, pp. 244-245.
+}
+
+albrecht_iii_of_austria = { #Albrecht III of Austria; Source: Eva Demmerle, "Das Haus Habsburg", 2011, pp. 244-245.
+	name = "Albrecht"
+	dynasty = habsburg
+	character_class = warrior
+	culture = austrian
+	religion = catholic
+	home_site = vienna
+	gender = male
+	father = albrecht_the_wise #Albrecht II 'the Wise' of Austria; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+	mother = johanna_von_pfirt #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+	birth_date = 1349 #born in 1349/50; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+	death_date = 1393 #died in 1393; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+	
+	#married to Elisabeth von Luxemburg-Böhmen; Source: Eva Demmerle, "Das Haus Habsburg", 2011, pp. 244-245.
+	
+	history = {
+		1377 = { #married a second time to Beatrix von Zollern, and had his son Albrecht with her in 1377; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+			#spouse = beatrix_von_zollern #Beatrix von Zollern
+		}
+	}
+}
+
 leopold_iii_of_austria = { #Leopold III of Austria; Source: Eva Demmerle, "Das Haus Habsburg", 2011, pp. 244-245.
 	name = "Leopold"
 	epithet = "III"
@@ -165,6 +204,26 @@ leopold_iii_of_austria = { #Leopold III of Austria; Source: Eva Demmerle, "Das H
 	history = {
 		1377 = { #married Viridis Visconti, and had his son Ernst with her in 1377; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
 			#spouse = viridis_visconti #Viridis Visconti
+		}
+	}
+}
+
+albrecht_iv_of_austria = { #Albrecht IV of Austria; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+	name = "Albrecht"
+	dynasty = habsburg
+	character_class = warrior
+	culture = austrian
+	religion = catholic
+	home_site = vienna
+	gender = male
+	father = albrecht_iii_of_austria #Albrecht III of Austria; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+	mother = beatrix_von_zollern #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+	birth_date = 1377 #born in 1377; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+	death_date = 1404 #died in 1404; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+	
+	history = {
+		1397 = { #married Johanna Sophie von Bayern, and had his son Albrecht with her in 1397; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+			#spouse = 10000414 #Johanna Sophie von Bayern
 		}
 	}
 }
@@ -188,6 +247,26 @@ ernst_the_iron_of_austria = { #Source: Eva Demmerle, "Das Haus Habsburg", 2011, 
 		
 		1415 = { #married a second time to Cymburgis of Masovia, and had his son Friedrich with her in 1415; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
 			#spouse = cymburgis_of_masovia #Cymburgis of Masovia
+		}
+	}
+}
+
+albrecht_v_of_austria = { #Albrecht V of Austria; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+	name = "Albrecht"
+	dynasty = habsburg
+	character_class = warrior
+	culture = austrian
+	religion = catholic
+	home_site = vienna
+	gender = male
+	father = albrecht_iv_of_austria #Albrecht IV of Austria; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+	#mother = 10000414 #Johanna Sophie von Bayern; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+	birth_date = 1397 #born in 1397; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+	death_date = 1439 #died in 1439; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+	
+	history = {
+		1439 = { #married Elisabeth von Luxemburg, and had his son Ladislaus with her in 1440; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+			#spouse = 10000416 #Elisabeth von Luxemburg
 		}
 	}
 }
@@ -294,6 +373,21 @@ leopold_ii_of_the_holy_roman_empire = { #Emperor Leopold II of the Holy Roman Em
 	}
 }
 
+marie_christine_von_habsburg = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 5.
+	name = "Marie Christine"
+	dynasty = habsburg
+	character_class = warrior #aristocrat
+	culture = austrian
+	religion = catholic
+	home_site = vienna
+	gender = female
+	mother = maria_theresia_of_austria #Empress Maria Theresia of the Holy Roman Empire (presumably her mother, since her father is Franz I)
+	death_date = 1793.7.24
+	
+	#daughter of Franz I, presumably of the Holy Roman Empire
+	#wife of Albert von Wettin, duke of Sachsen-Teschen
+}
+
 franz_i_of_austria = { #Franz von Habsburg, Emperor Franz II of the Holy Roman Empire and later Emperor Franz I of Austria; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 10-11.
 	name = "Franz"
 	dynasty = habsburg
@@ -349,6 +443,22 @@ karl_von_habsburg = { #Archduke Karl; Source: "Almanach de Gotha pour l'année 1
 			deployment_province = lower_austria
 		}
 	}
+}
+
+ferdinand_iii_of_tuscany = { #Ferdinand III of Tuscany; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 11.
+	name = "Ferdinand"
+	dynasty = habsburg
+	character_class = warrior
+	culture = austrian
+	religion = catholic
+	home_site = florence
+	gender = male
+	father = leopold_ii_of_the_holy_roman_empire
+	mother = maria_luisa_de_bourbon #Maria Luisa, daughter of king Charles III of Spain
+	birth_date = 1769.5.6
+	death_date = 1824.6.18
+	
+	#Grand Duke of Tuscany as Ferdinand III
 }
 
 marie_luise_von_habsburg = { #Source: "Almanach de Gotha pour l'année 1813", 1813, p. 3; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 10-11.

@@ -97,9 +97,33 @@ austria = {
 			}
 		}
 		
+		1358 = {
+			offices = {
+				ruler = rudolf_iv_of_austria #Rudolf IV became duke of Austria in 1358; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+			}
+		}
+		
+		1365 = {
+			offices = {
+				ruler = albrecht_iii_of_austria #Albrecht III became duke of Austria in 1365; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+			}
+		}
+		
 		1370 = {
 			offices = {
 				ruler = leopold_iii_of_austria #Leopold III became duke of Austria in 1370; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
+			}
+		}
+		
+		1395 = {
+			offices = {
+				ruler = albrecht_iv_of_austria #Albrecht IV became duke of Austria in 1395; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+			}
+		}
+		
+		1404 = {
+			offices = {
+				ruler = albrecht_v_of_austria #Albrecht V became duke of (Lower) Austria in 1404; Source: Eva Demmerle, "Das Haus Habsburg", 2011, pp. 48, 244.
 			}
 		}
 		
