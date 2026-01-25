@@ -173,6 +173,13 @@ Item {
 								status_text = ""
 							}
 						}
+						
+						onClicked: {
+							if (secondary_parent.class_name === "metternich::character") {
+								character_dialog.character = secondary_parent
+								character_dialog.open()
+							}
+						}
 					}
 				}
 			}
