@@ -70,6 +70,11 @@ public:
 		return this->rules.get();
 	}
 
+	bool is_loaded() const
+	{
+		return this->loaded;
+	}
+
 	bool is_running() const
 	{
 		return this->running;
@@ -315,6 +320,7 @@ signals:
 
 private:
 	qunique_ptr<game_rules> rules;
+	bool loaded = false;
 	bool running = false;
 	const metternich::scenario *scenario = nullptr;
 	QDate date; //the current date in the game

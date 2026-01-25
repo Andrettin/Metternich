@@ -262,6 +262,8 @@ public:
 		return static_cast<character *>(character_base::get_mother());
 	}
 
+	character *get_dynastic_parent() const;
+
 	std::vector<character *> get_parents() const
 	{
 		std::vector<character *> parents;
@@ -375,7 +377,6 @@ private:
 	qunique_ptr<character_history> history;
 	qunique_ptr<character_game_data> game_data;
 	bool temporary = false;
-	const named_data_entry *top_tree_element = nullptr;
 };
 
 }

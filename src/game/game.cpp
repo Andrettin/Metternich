@@ -1609,6 +1609,8 @@ QCoro::Task<void> game::on_setup_finished()
 		emit character->game_data_changed();
 	}
 
+	this->loaded = true;
+
 	emit setup_finished();
 }
 

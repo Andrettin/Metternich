@@ -71,6 +71,5 @@ Item {
 	
 	CharacterDialog {
 		id: character_dialog
-		show_family_tree_button: false
 	}
 }

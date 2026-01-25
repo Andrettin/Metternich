@@ -409,12 +409,6 @@ void character::initialize()
 
 	this->initialize_bloodline();
 
-	this->top_tree_element = this;
-	while (this->top_tree_element->get_tree_parent() != nullptr) {
-		this->top_tree_element = this->top_tree_element->get_tree_parent();
-	}
-	assert_throw(this->top_tree_element != nullptr);
-
 	character_base::initialize();
 }
 
@@ -869,6 +863,17 @@ bool character::is_immortal() const
 	return this->is_innate_deity();
 }
 
+character *character::get_dynastic_parent() const
+{
+	if (this->get_mother() != nullptr) {
+		if (this->get_father() == nullptr || (this->get_dynasty() != nullptr && this->get_mother()->get_dynasty() == this->get_dynasty() && this->get_father()->get_dynasty() != this->get_dynasty())) {
+			return this->get_mother();
+		}
+	}
+
+	return this->get_father();
+}
+
 const character_attribute *character::get_primary_attribute() const
 {
 	if (this->get_character_class() != nullptr) {
@@ -929,13 +934,13 @@ std::string_view character::get_leader_type_name() const
 
 named_data_entry *character::get_tree_parent() const
 {
-	if (this->get_mother() != nullptr) {
-		if (this->get_father() == nullptr || (this->get_dynasty() != nullptr && this->get_mother()->get_dynasty() == this->get_dynasty() && this->get_father()->get_dynasty() != this->get_dynasty())) {
-			return this->get_mother();
-		}
+	character *dynastic_parent = this->get_dynastic_parent();
+
+	if (dynastic_parent != nullptr && !dynastic_parent->is_hidden_in_tree()) {
+		return dynastic_parent;
 	}
 
-	return this->get_father();
+	return nullptr;
 }
 
 QVariantList character::get_secondary_tree_parents() const
@@ -949,6 +954,10 @@ QVariantList character::get_secondary_tree_parents() const
 			continue;
 		}
 
+		if (parent->is_hidden_in_tree()) {
+			continue;
+		}
+
 		secondary_tree_parents.push_back(QVariant::fromValue(parent));
 	}
 
@@ -957,20 +966,34 @@ QVariantList character::get_secondary_tree_parents() const
 
 std::vector<const named_data_entry *> character::get_top_tree_elements() const
 {
-	return { this->top_tree_element };
+	const named_data_entry *top_tree_element = this;
+	while (top_tree_element->get_tree_parent() != nullptr) {
+		top_tree_element = top_tree_element->get_tree_parent();
+	}
+	assert_throw(top_tree_element != nullptr);
+
+	return { top_tree_element };
 }
 
 bool character::is_hidden_in_tree() const
 {
+	if (!game::get()->is_loaded()) {
+		return false;
+	}
+
 	return !this->get_game_data()->has_ever_existed();
 }
 
 QVariantList character::get_tree_characters() const
 {
-	std::vector<const named_data_entry *> tree_characters = { this->top_tree_element };
+	std::vector<const named_data_entry *> tree_characters = this->get_top_tree_elements();
 
 	for (size_t i = 0; i < tree_characters.size(); ++i) {
 		for (const named_data_entry *child : tree_characters.at(i)->get_tree_children()) {
+			if (child->is_hidden_in_tree()) {
+				continue;
+			}
+
 			if (!vector::contains(tree_characters, child)) {
 				tree_characters.push_back(child);
 			}

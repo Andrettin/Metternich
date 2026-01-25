@@ -177,6 +177,7 @@ Item {
 						onClicked: {
 							if (secondary_parent.class_name === "metternich::character") {
 								character_dialog.character = secondary_parent
+								character_dialog.show_family_tree_button = (tree_item.entries.indexOf(secondary_parent) === -1)
 								character_dialog.open()
 							}
 						}
