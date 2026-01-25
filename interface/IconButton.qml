@@ -24,7 +24,7 @@ ButtonBase {
 		Image {
 			id: icon_image
 			anchors.verticalCenter: parent.verticalCenter
-			anchors.verticalCenterOffset: button.down ? 1 * scale_factor : 0
+			anchors.verticalCenterOffset: (button.down ? 1 * scale_factor : 0) + Math.floor((icon_image.height - 32 * scale_factor) / 2)
 			anchors.horizontalCenter: parent.horizontalCenter
 			anchors.horizontalCenterOffset: button.down ? 1 * scale_factor : 0
 			source: "image://icon/" + icon_identifier

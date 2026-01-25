@@ -35,6 +35,7 @@ Item {
 				}
 				
 				character_dialog.character = portrait_character
+				character_dialog.show_family_tree_button = false
 				character_dialog.open()
 			}
 		}

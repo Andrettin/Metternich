@@ -5,7 +5,7 @@ import QtQuick.Controls.Universal
 Item {
 	readonly property var tree_item: parent.parent
 	readonly property var entry: model.modelData
-	readonly property string name: entry.full_name ? entry.full_name : entry.name
+	readonly property string name: entry.game_data && entry.game_data.full_name ? entry.game_data.full_name : entry.name
 	readonly property int horizontal_padding: 8 * scale_factor
 	readonly property int vertical_padding: 32 * scale_factor
 	readonly property int top_offset: -vertical_padding
@@ -152,23 +152,24 @@ Item {
 				
 				IconButton {
 					id: secondary_parent_icon_button
-					icon_identifier: secondary_parent.icon.identifier
+					icon_identifier: secondary_parent.game_data ? secondary_parent.game_data.icon.identifier : secondary_parent.icon.identifier
 					highlighted: secondary_parent.class_name === "metternich::technology" && metternich.game.player_country.game_data.technology.has_technology(secondary_parent)
 					circle: true
 					
 					readonly property var secondary_parent: model.modelData
+					readonly property string secondary_parent_status_text: secondary_parent.class_name === "metternich::technology" ? ("Prerequisite: " + secondary_parent.name) : (secondary_parent.game_data && secondary_parent.game_data.full_name ? secondary_parent.game_data.full_name : secondary_parent.name)
 					
 					MouseArea {
 						anchors.fill: parent
 						hoverEnabled: true
 						
 						onEntered: {
-							status_text = "Prerequisite: " + secondary_parent.name
+							status_text = secondary_parent_status_text
 						}
 						
 						onExited: {
 							//only clear the status text on exist if it was actually still the text set by this
-							if (status_text === ("Prerequisite: " + secondary_parent.name)) {
+							if (status_text === secondary_parent_status_text) {
 								status_text = ""
 							}
 						}

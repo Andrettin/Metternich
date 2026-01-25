@@ -949,7 +949,7 @@ QVariantList character::get_secondary_tree_parents() const
 			continue;
 		}
 
-		//secondary_tree_parents.push_back(QVariant::fromValue(parent));
+		secondary_tree_parents.push_back(QVariant::fromValue(parent));
 	}
 
 	return secondary_tree_parents;
