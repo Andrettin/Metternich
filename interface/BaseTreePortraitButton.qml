@@ -18,7 +18,7 @@ Item {
 	property int parent_button_width: 1
 	readonly property int parent_x: parent_button_x * width + (parent_button_width - 1) * width / 2 + horizontal_padding
 	readonly property int parent_y: parent_button_y * height + vertical_padding + top_offset
-	property string parent_name: ""
+	property string parent_name: entry.tree_parent ? (entry.game_data && entry.game_data.full_name ? entry.game_data.full_name : entry.name) : ""
 	readonly property int parent_text_height: parent_text_height_reference.contentHeight + 2 * scale_factor * 2
 	property bool tree_line_visible: true
 	property bool grayscale: false

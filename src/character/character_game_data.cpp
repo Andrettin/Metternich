@@ -766,12 +766,12 @@ void character_game_data::set_domain(const metternich::domain *domain)
 int character_game_data::get_age() const
 {
 	const QDate &birth_date = this->get_birth_date();
-	const QDate &current_date = game::get()->get_date();
+	const QDate &end_date = this->is_dead() ? this->get_death_date() : game::get()->get_date();
 
-	int age = current_date.year() - birth_date.year() - 1;
+	int age = end_date.year() - birth_date.year() - 1;
 
-	const QDate current_birthday(current_date.year(), birth_date.month(), birth_date.day());
-	if (current_date >= current_birthday) {
+	const QDate end_birthday(end_date.year(), birth_date.month(), birth_date.day());
+	if (end_date >= end_birthday) {
 		++age;
 	}
 

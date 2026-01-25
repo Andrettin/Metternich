@@ -12,5 +12,5 @@ BaseTreePortraitButton {
 	parent_button_x: entry_parent ? entry_parent.tree_x : 0
 	parent_button_y: entry_parent ? entry_parent.tree_y : 0
 	parent_button_width: entry_parent ? entry_parent.tree_width : 1
-	parent_name: entry_parent ? entry_parent.name : ""
+	parent_name: entry_parent ? (entry_parent.game_data && entry_parent.game_data.full_name ? entry_parent.game_data.full_name : entry_parent.name) : ""
 }

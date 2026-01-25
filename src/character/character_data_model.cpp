@@ -13,6 +13,7 @@
 #include "character/trait.h"
 #include "character/trait_type.h"
 #include "culture/culture.h"
+#include "game/game.h"
 #include "item/item.h"
 #include "item/item_slot.h"
 #include "religion/deity.h"
@@ -213,7 +214,11 @@ void character_data_model::reset_model()
 			this->top_rows.push_back(std::make_unique<character_data_row>("Bloodline:", std::format("{} ({})", character_game_data->get_bloodline()->get_name(), character_game_data->get_bloodline_strength())));
 		}
 
-		this->top_rows.push_back(std::make_unique<character_data_row>("Age:", number::to_formatted_string(character_game_data->get_age())));
+		if (character_game_data->is_dead()) {
+			this->top_rows.push_back(std::make_unique<character_data_row>("Age:", std::format("{} (Died in {})", number::to_formatted_string(character_game_data->get_age()), game::get()->year_to_labeled_string(character_game_data->get_death_date().year()))));
+		} else {
+			this->top_rows.push_back(std::make_unique<character_data_row>("Age:", number::to_formatted_string(character_game_data->get_age())));
+		}
 
 		if (this->character->get_culture() != nullptr) {
 			this->top_rows.push_back(std::make_unique<character_data_row>("Culture:", this->character->get_culture()->get_name()));
