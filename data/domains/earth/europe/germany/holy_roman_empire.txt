@@ -2,7 +2,10 @@ holy_roman_empire = {
 	name = "Holy Roman Empire"
 	type = polity
 	color = { 245 167 97 }
-	culture = german
+	cultures = {
+		german
+		austrian
+	}
 	default_religion = catholic
 	default_tier = empire
 	default_government_type = monarchy
