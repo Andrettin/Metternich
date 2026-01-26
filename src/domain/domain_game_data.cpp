@@ -294,8 +294,7 @@ void domain_game_data::apply_history(const QDate &start_date)
 
 	const metternich::subject_type *subject_type = domain_history->get_subject_type();
 	if (subject_type != nullptr) {
-		//disable overlordship for now
-		//this->set_subject_type(subject_type);
+		this->set_subject_type(subject_type);
 	}
 
 	if (domain_history->get_government_type() != nullptr) {
@@ -353,11 +352,6 @@ void domain_game_data::apply_history(const QDate &start_date)
 
 	for (const auto &[other_country, diplomacy_state] : domain_history->get_diplomacy_states()) {
 		if (!other_country->get_game_data()->is_alive()) {
-			continue;
-		}
-
-		if (is_vassalage_diplomacy_state(diplomacy_state) || is_overlordship_diplomacy_state(diplomacy_state)) {
-			//disable overlordship diplomacy states for now
 			continue;
 		}
 
