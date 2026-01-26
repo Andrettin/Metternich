@@ -17,6 +17,8 @@ Item {
 	readonly property var ruler: country_game_data ? country_game_data.government.ruler : null
 	property string status_text: ""
 	property string middle_status_text: ""
+	property string right_status_text: ""
+	property bool show_buttons: true
 	
 	TiledBackground {
 		anchors.top: top_bar.bottom
@@ -68,6 +70,7 @@ Item {
 		anchors.top: parent.top
 		anchors.bottom: parent.bottom
 		anchors.right: parent.right
+		show_buttons: politics_view.show_buttons
 	}
 	
 	CourtInfoPanel {

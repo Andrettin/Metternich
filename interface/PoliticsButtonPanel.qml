@@ -7,6 +7,8 @@ Rectangle {
 	width: 64 * scale_factor
 	clip: true
 	
+	property bool show_buttons: true
+	
 	PanelTiledBackground {
 	}
 	
@@ -26,6 +28,7 @@ Rectangle {
 		anchors.topMargin: 16 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
 		spacing: 4 * scale_factor
+		visible: button_panel.show_buttons
 		
 		IconButton {
 			id: court_button

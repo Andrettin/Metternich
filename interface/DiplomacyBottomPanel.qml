@@ -162,6 +162,23 @@ Rectangle {
 		tooltip: selected_country_ruler ? selected_country_ruler.game_data.titled_name : ""
 	}
 	
+	TextButton {
+		id: view_domain_history_button
+		anchors.horizontalCenter: ruler_portrait.horizontalCenter
+		anchors.top: ruler_portrait.bottom
+		anchors.topMargin: 16 * scale_factor
+		text: qsTr("View History")
+		visible: ruler_portrait.visible
+		
+		onClicked: {
+			politics_view_mode = PoliticsView.Mode.DomainHistory
+			menu_stack.push("PoliticsView.qml", {
+				country: selected_country,
+				show_buttons: false
+			})
+		}
+	}
+	
 	SmallText {
 		id: population_type_chart_label
 		anchors.top: ruler_label.top

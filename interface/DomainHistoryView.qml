@@ -5,7 +5,7 @@ import "./dialogs"
 Item {
 	id: domain_history_view
 	
-	readonly property var domain: metternich.game.player_country
+	readonly property var domain: politics_view.country
 	readonly property var domain_game_data: domain ? domain.game_data : null
 	
 	ListView {
