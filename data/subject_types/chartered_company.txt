@@ -1,0 +1,5 @@
+chartered_company = {
+	name = "Chartered Company"
+	wealth_tribute_rate = 50
+	regency_tribute_rate = 20
+}

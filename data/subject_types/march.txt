@@ -1,0 +1,5 @@
+march = {
+	name = "March"
+	wealth_tribute_rate = 10
+	regency_tribute_rate = 10
+}

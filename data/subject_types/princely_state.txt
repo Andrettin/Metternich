@@ -1,0 +1,5 @@
+princely_state = { #HRE member state
+	name = "Princely State"
+	wealth_tribute_rate = 10
+	regency_tribute_rate = 10
+}
