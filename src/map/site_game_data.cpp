@@ -17,6 +17,7 @@
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
 #include "economy/commodity.h"
+#include "economy/income_transaction_type.h"
 #include "economy/resource.h"
 #include "engine_interface.h"
 #include "game/domain_event.h"
@@ -202,31 +203,30 @@ void site_game_data::do_turn()
 	this->decrement_scripted_modifiers();
 }
 
-int site_game_data::collect_income()
+void site_game_data::collect_income()
 {
 	assert_throw(this->site->is_settlement());
 	assert_throw(this->is_built());
 	assert_throw(this->get_owner() != nullptr);
 
 	if (this->get_holding_level() == 0 || this->get_province()->get_game_data()->get_level() == 0) {
-		return 0;
+		return;
 	}
 
 	const dice &income_dice = this->get_holding_type()->get_income(this->get_holding_level(), this->get_province()->get_game_data()->get_level());
 
 	if (income_dice.is_null()) {
-		return 0;
+		return;
 	}
 
 	const int income = random::get()->roll_dice(income_dice) * defines::get()->get_domain_income_unit_value();
 	if (income < 0) {
 		//ignore negative results
-		return 0;
+		return;
 	}
 
-	this->get_owner()->get_game_data()->get_economy()->change_stored_commodity(defines::get()->get_wealth_commodity(), income);
-
-	return income;
+	this->get_owner()->get_economy()->add_tributable_commodity(defines::get()->get_wealth_commodity(), income, income_transaction_type::tribute);
+	this->get_owner()->get_turn_data()->add_income_transaction(income_transaction_type::holding_income, income, nullptr, 0, this->get_owner());
 }
 
 const QPoint &site_game_data::get_tile_pos() const

@@ -16,6 +16,7 @@
 #include "domain/domain_game_data.h"
 #include "economy/commodity.h"
 #include "economy/commodity_container.h"
+#include "economy/income_transaction_type.h"
 #include "economy/resource.h"
 #include "engine_interface.h"
 #include "game/event_trigger.h"
@@ -195,7 +196,7 @@ void province_game_data::do_ai_turn()
 	}
 }
 
-int province_game_data::collect_taxes()
+void province_game_data::collect_taxes()
 {
 	assert_throw(this->get_owner() != nullptr);
 
@@ -203,12 +204,11 @@ int province_game_data::collect_taxes()
 	const int taxation = random::get()->roll_dice(taxation_dice) * defines::get()->get_domain_income_unit_value();
 	if (taxation < 0) {
 		//ignore negative results
-		return 0;
+		return;
 	}
 
-	this->get_owner()->get_game_data()->get_economy()->change_stored_commodity(defines::get()->get_wealth_commodity(), taxation);
-
-	return taxation;
+	this->get_owner()->get_economy()->add_tributable_commodity(defines::get()->get_wealth_commodity(), taxation, income_transaction_type::tribute);
+	this->get_owner()->get_turn_data()->add_income_transaction(income_transaction_type::taxation, taxation, nullptr, 0, this->get_owner());
 }
 
 void province_game_data::do_military_unit_recruitment()

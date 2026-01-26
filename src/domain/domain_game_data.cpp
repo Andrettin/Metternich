@@ -483,31 +483,23 @@ void domain_game_data::collect_regency()
 	collected_regency = std::min(collected_regency, this->get_government()->get_ruler()->get_game_data()->get_bloodline_strength());
 	collected_regency = std::max(collected_regency, 1);
 
-	this->get_economy()->change_stored_commodity(defines::get()->get_regency_commodity(), collected_regency);
+	this->get_economy()->add_tributable_commodity(defines::get()->get_regency_commodity(), collected_regency, income_transaction_type::tribute);
 }
 
 void domain_game_data::collect_wealth()
 {
 	//collect taxes from provinces
-	int collected_taxes = 0;
 	for (const province *province : this->get_provinces()) {
-		collected_taxes += province->get_game_data()->collect_taxes();
-	}
-	if (collected_taxes > 0) {
-		this->domain->get_turn_data()->add_income_transaction(income_transaction_type::taxation, collected_taxes, nullptr, 0, this->domain);
+		province->get_game_data()->collect_taxes();
 	}
 
 	//collect income from holdings
-	int holding_income = 0;
 	for (const site *holding_site : this->get_sites()) {
 		if (!holding_site->is_settlement() || !holding_site->get_game_data()->is_built()) {
 			continue;
 		}
 
-		holding_income += holding_site->get_game_data()->collect_income();
-	}
-	if (holding_income > 0) {
-		this->domain->get_turn_data()->add_income_transaction(income_transaction_type::holding_income, holding_income, nullptr, 0, this->domain);
+		holding_site->get_game_data()->collect_income();
 	}
 
 	//collect income from attributes
@@ -533,7 +525,7 @@ void domain_game_data::collect_wealth()
 		const commodity *wealth_commodity = defines::get()->get_wealth_commodity();
 		const int attribute_income = result * defines::get()->get_domain_income_unit_value();
 
-		this->get_economy()->change_stored_commodity(wealth_commodity, attribute_income);
+		this->get_economy()->add_tributable_commodity(wealth_commodity, attribute_income, income_transaction_type::tribute);
 		this->domain->get_turn_data()->add_income_transaction(income_transaction_type::income, attribute_income, nullptr, 0, this->domain);
 	}
 }
@@ -1005,7 +997,7 @@ void domain_game_data::set_overlord(const metternich::domain *overlord)
 	}
 
 	if (this->get_overlord() != nullptr) {
-		this->get_overlord()->get_game_data()->change_economic_score(-this->get_economic_score() * domain_game_data::vassal_tax_rate / 100);
+		this->get_overlord()->get_game_data()->change_economic_score(-this->get_economic_score() * this->get_subject_type()->get_wealth_tribute_rate() / 100);
 
 		for (const auto &[resource, count] : this->get_economy()->get_resource_counts()) {
 			this->get_overlord()->get_economy()->change_vassal_resource_count(resource, -count);
@@ -1015,7 +1007,7 @@ void domain_game_data::set_overlord(const metternich::domain *overlord)
 	this->overlord = overlord;
 
 	if (this->get_overlord() != nullptr) {
-		this->get_overlord()->get_game_data()->change_economic_score(this->get_economic_score() * domain_game_data::vassal_tax_rate / 100);
+		this->get_overlord()->get_game_data()->change_economic_score(this->get_economic_score() * this->get_subject_type()->get_wealth_tribute_rate() / 100);
 
 		for (const auto &[resource, count] : this->get_economy()->get_resource_counts()) {
 			this->get_overlord()->get_economy()->change_vassal_resource_count(resource, count);
@@ -1129,6 +1121,7 @@ void domain_game_data::set_government_type(const metternich::government_type *go
 	}
 
 	if ((old_government_type == nullptr || !old_government_type->has_regnal_numbering()) && this->get_government_type() != nullptr && this->get_government_type()->has_regnal_numbering() && this->get_government()->get_ruler() != nullptr) {
+		this->historical_monarchs[game::get()->get_date()] = this->get_government()->get_ruler();
 		this->get_government()->get_ruler()->get_game_data()->add_reigned_domain(this->domain);
 	}
 
@@ -2604,7 +2597,7 @@ void domain_game_data::change_economic_score(const int change)
 	}
 
 	if (this->get_overlord() != nullptr) {
-		this->get_overlord()->get_game_data()->change_economic_score(-this->get_economic_score() * domain_game_data::vassal_tax_rate / 100);
+		this->get_overlord()->get_game_data()->change_economic_score(-this->get_economic_score() * this->get_subject_type()->get_wealth_tribute_rate() / 100);
 	}
 
 	this->economic_score += change;
@@ -2612,7 +2605,7 @@ void domain_game_data::change_economic_score(const int change)
 	this->change_score(change);
 
 	if (this->get_overlord() != nullptr) {
-		this->get_overlord()->get_game_data()->change_economic_score(this->get_economic_score() * domain_game_data::vassal_tax_rate / 100);
+		this->get_overlord()->get_game_data()->change_economic_score(this->get_economic_score() * this->get_subject_type()->get_wealth_tribute_rate() / 100);
 	}
 }
 

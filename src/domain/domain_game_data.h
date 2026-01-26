@@ -156,7 +156,6 @@ public:
 	static constexpr int first_deity_cost = 10;
 	static constexpr int base_deity_cost = 200;
 	static constexpr int deity_cost_increment = 100;
-	static constexpr int vassal_tax_rate = 50;
 
 	explicit domain_game_data(metternich::domain *domain);
 	~domain_game_data();

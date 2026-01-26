@@ -1,3 +1,5 @@
 vassal = {
 	name = "Vassal"
+	wealth_tribute_rate = 50
+	regency_tribute_rate = 20
 }

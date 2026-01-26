@@ -8,11 +8,7 @@ enum class diplomacy_state {
 	war,
 	non_aggression_pact,
 	vassal,
-	overlord,
-	personal_union_subject,
-	personal_union_overlord,
-	colony,
-	colonial_overlord
+	overlord
 };
 
 inline diplomacy_state get_diplomacy_state_counterpart(const diplomacy_state state)
@@ -46,7 +42,7 @@ inline std::string get_diplomacy_state_name(const diplomacy_state state)
 			break;
 	}
 
-	throw std::runtime_error("Invalid diplomacy state: \"" + std::to_string(static_cast<int>(state)) + "\".");
+	throw std::runtime_error(std::format("Invalid diplomacy state: \"{}\".", static_cast<int>(state)));
 }
 
 inline bool is_overlordship_diplomacy_state(const diplomacy_state state)

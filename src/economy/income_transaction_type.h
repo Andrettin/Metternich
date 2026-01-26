@@ -9,7 +9,8 @@ enum class income_transaction_type {
 	sale,
 	liquidated_riches,
 	tariff,
-	treasure_fleet
+	treasure_fleet,
+	tribute
 };
 
 }

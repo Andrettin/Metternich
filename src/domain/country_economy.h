@@ -82,8 +82,6 @@ public:
 		this->set_wealth(this->get_wealth() + change);
 	}
 
-	void add_taxable_wealth(const int taxable_wealth, const income_transaction_type tax_income_type);
-
 	const commodity_set &get_available_commodities() const
 	{
 		return this->available_commodities;
@@ -151,6 +149,8 @@ public:
 	{
 		this->set_stored_commodity(commodity, this->get_stored_commodity(commodity) + value);
 	}
+
+	void add_tributable_commodity(const commodity *commodity, const int tributable_quantity, const income_transaction_type tribute_income_type);
 
 	int get_stored_food() const;
 

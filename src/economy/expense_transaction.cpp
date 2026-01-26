@@ -18,8 +18,8 @@ QString expense_transaction::get_name() const
 			return "Domain Maintenance";
 		case expense_transaction_type::military_maintenance:
 			return "Military Maintenance";
-		case expense_transaction_type::tax:
-			return "Tax";
+		case expense_transaction_type::tribute:
+			return "Tribute";
 		default:
 			return transaction::get_name();
 	}
@@ -31,7 +31,7 @@ const icon *expense_transaction::get_icon() const
 		case expense_transaction_type::domain_maintenance:
 		case expense_transaction_type::military_maintenance:
 			return defines::get()->get_wealth_commodity()->get_icon();
-		case expense_transaction_type::tax:
+		case expense_transaction_type::tribute:
 			return defines::get()->get_tariff_icon();
 		default:
 			return transaction::get_icon();
@@ -61,8 +61,8 @@ QString expense_transaction::get_description() const
 			}
 			break;
 		}
-		case expense_transaction_type::tax:
-			str = std::format("Paid {} in taxes to {}", amount_str, this->get_country()->get_game_data()->get_name());
+		case expense_transaction_type::tribute:
+			str = std::format("Paid {} in tribute to {}", amount_str, this->get_country()->get_game_data()->get_name());
 			break;
 	}
 

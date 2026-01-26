@@ -103,7 +103,7 @@ void domain_history::process_gsml_scope(const gsml_data &scope, const QDate &dat
 				subject_type = subject_type::get(value);
 				state = diplomacy_state::vassal;
 			} else {
-				throw std::runtime_error("Invalid diplomacy state property: \"" + key + "\".");
+				throw std::runtime_error(std::format("Invalid diplomacy state property: \"{}\".", key));
 			}
 		});
 

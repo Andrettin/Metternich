@@ -6,6 +6,7 @@
 #include "domain/country_turn_data.h"
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
+#include "domain/subject_type.h"
 #include "economy/commodity.h"
 #include "economy/expense_transaction_type.h"
 #include "economy/income_transaction_type.h"
@@ -188,33 +189,6 @@ void country_economy::set_wealth(const int wealth)
 	this->set_stored_commodity(defines::get()->get_wealth_commodity(), wealth);
 }
 
-void country_economy::add_taxable_wealth(const int taxable_wealth, const income_transaction_type tax_income_type)
-{
-	assert_throw(taxable_wealth >= 0);
-	assert_throw(tax_income_type == income_transaction_type::tariff || tax_income_type == income_transaction_type::treasure_fleet);
-
-	if (taxable_wealth == 0) {
-		return;
-	}
-
-	if (this->get_game_data()->get_overlord() == nullptr) {
-		this->change_wealth(taxable_wealth);
-		return;
-	}
-
-	const int tax = taxable_wealth * domain_game_data::vassal_tax_rate / 100;
-	const int taxed_wealth = taxable_wealth - tax;
-
-	this->get_game_data()->get_overlord()->get_economy()->add_taxable_wealth(tax, tax_income_type);
-
-	this->change_wealth(taxed_wealth);
-
-	if (tax != 0) {
-		this->get_game_data()->get_overlord()->get_turn_data()->add_income_transaction(tax_income_type, tax, nullptr, 0, this->domain);
-		this->domain->get_turn_data()->add_expense_transaction(expense_transaction_type::tax, tax, nullptr, 0, this->get_game_data()->get_overlord());
-	}
-}
-
 QVariantList country_economy::get_available_commodities_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_available_commodities());
@@ -257,7 +231,7 @@ void country_economy::set_stored_commodity(const commodity *commodity, const int
 	if (commodity->is_convertible_to_wealth()) {
 		assert_throw(value > 0);
 		const int wealth_conversion_income = commodity->get_wealth_value() * value;
-		this->add_taxable_wealth(wealth_conversion_income, income_transaction_type::treasure_fleet);
+		this->add_tributable_commodity(defines::get()->get_wealth_commodity(), wealth_conversion_income, income_transaction_type::treasure_fleet);
 		this->domain->get_turn_data()->add_income_transaction(income_transaction_type::liquidated_riches, wealth_conversion_income, commodity, value);
 		return;
 	}
@@ -279,6 +253,48 @@ void country_economy::set_stored_commodity(const commodity *commodity, const int
 
 	if (game::get()->is_running()) {
 		emit stored_commodities_changed();
+	}
+}
+
+void country_economy::add_tributable_commodity(const commodity *commodity, const int tributable_quantity, const income_transaction_type tribute_income_type)
+{
+	assert_throw(commodity != nullptr);
+	assert_throw(tributable_quantity >= 0);
+	assert_throw(tribute_income_type == income_transaction_type::tariff || tribute_income_type == income_transaction_type::treasure_fleet || tribute_income_type == income_transaction_type::tribute);
+
+	if (tributable_quantity == 0) {
+		return;
+	}
+
+	if (this->get_game_data()->get_overlord() == nullptr) {
+		this->change_stored_commodity(commodity, tributable_quantity);
+		return;
+	}
+
+	assert_throw(this->get_game_data()->get_subject_type() != nullptr);
+
+	int tribute_rate = 0;
+	if (commodity == defines::get()->get_wealth_commodity()) {
+		tribute_rate = this->get_game_data()->get_subject_type()->get_wealth_tribute_rate();
+	} else if (commodity == defines::get()->get_regency_commodity()) {
+		tribute_rate = this->get_game_data()->get_subject_type()->get_regency_tribute_rate();
+	}
+
+	if (tribute_rate == 0) {
+		this->change_stored_commodity(commodity, tributable_quantity);
+		return;
+	}
+
+	const int tribute = tributable_quantity * tribute_rate / 100;
+	const int tributed_quantity = tributable_quantity - tribute;
+
+	this->get_game_data()->get_overlord()->get_economy()->add_tributable_commodity(commodity, tribute, tribute_income_type);
+
+	this->change_stored_commodity(commodity, tributed_quantity);
+
+	if (tribute != 0 && commodity == defines::get()->get_wealth_commodity()) {
+		this->get_game_data()->get_overlord()->get_turn_data()->add_income_transaction(tribute_income_type, tribute, nullptr, 0, this->domain);
+		this->domain->get_turn_data()->add_expense_transaction(expense_transaction_type::tribute, tribute, nullptr, 0, this->get_game_data()->get_overlord());
 	}
 }
 
@@ -515,7 +531,7 @@ void country_economy::do_sale(const metternich::domain *other_domain, const comm
 
 	const int price = game::get()->get_price(commodity);
 	const int sale_income = price * sold_quantity;
-	this->add_taxable_wealth(sale_income, income_transaction_type::tariff);
+	this->add_tributable_commodity(defines::get()->get_wealth_commodity(), sale_income, income_transaction_type::tariff);
 	this->domain->get_turn_data()->add_income_transaction(income_transaction_type::sale, sale_income, commodity, sold_quantity, other_domain != this->domain ? other_domain : nullptr);
 
 	this->change_offer(commodity, -sold_quantity);

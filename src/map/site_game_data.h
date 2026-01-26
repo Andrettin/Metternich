@@ -92,7 +92,7 @@ public:
 
 	void initialize();
 	void do_turn();
-	int collect_income();
+	void collect_income();
 
 	const QPoint &get_tile_pos() const;
 	tile *get_tile() const;

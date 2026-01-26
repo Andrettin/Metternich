@@ -24,6 +24,8 @@ QString income_transaction::get_name() const
 			return "Tariff";
 		case income_transaction_type::treasure_fleet:
 			return "Treasure Fleet";
+		case income_transaction_type::tribute:
+			return "Tribute";
 		default:
 			return transaction::get_name();
 	}
@@ -40,6 +42,8 @@ const icon *income_transaction::get_icon() const
 			return defines::get()->get_tariff_icon();
 		case income_transaction_type::treasure_fleet:
 			return defines::get()->get_treasure_fleet_icon();
+		case income_transaction_type::tribute:
+			return defines::get()->get_tariff_icon();
 		default:
 			return transaction::get_icon();
 	}
@@ -72,6 +76,9 @@ QString income_transaction::get_description() const
 			break;
 		case income_transaction_type::treasure_fleet:
 			str = std::format("Received treasure fleet worth {} from {}", amount_str, this->get_country()->get_game_data()->get_name());
+			break;
+		case income_transaction_type::tribute:
+			str = std::format("Collected {} in tribute from {}", amount_str, this->get_country()->get_game_data()->get_name());
 			break;
 	}
 
