@@ -23,4 +23,12 @@ bavaria = {
 	core_provinces = {
 		bavaria
 	}
+	
+	history = {
+		1805.12.26 = {
+			offices = {
+				ruler = maximilian_joseph_von_wittelsbach #Maximilian Joseph von Wittelsbach became king of Bavaria on 1805.12.26; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 10.
+			}
+		}
+	}
 }

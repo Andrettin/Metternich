@@ -50,5 +50,11 @@ great_britain = {
 				armament = 2
 			}
 		}
+		
+		1837.6.20 = {
+			offices = {
+				ruler = victoria_i_of_great_britain #Queen Victoria I of the United Kingdom of Great Britain and Ireland succeeded her uncle King William IV on 1837.6.20; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 30.
+			}
+		}
 	}
 }
