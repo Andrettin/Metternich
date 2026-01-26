@@ -136,7 +136,7 @@ DialogBase {
 		TextButton {
 			id: family_tree_button
 			text: "Family Tree"
-			visible: character !== null && (character.father !== null || character.mother !== null) && show_family_tree_button
+			visible: character !== null && (character.father !== null || character.mother !== null || character.game_data.children.length > 0) && show_family_tree_button
 			onClicked: {
 				var family_tree_character = character_dialog.character
 				character_dialog.close()
