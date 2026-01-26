@@ -45,7 +45,7 @@ philipp_von_sponheim = {
 }
 
 ulrich_von_sponheim_1219 = {
-	name = "Philipp"
+	name = "Ulrich"
 	dynasty = sponheim
 	character_class = warrior
 	culture = german
