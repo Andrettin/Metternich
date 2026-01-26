@@ -98,7 +98,7 @@ Item {
 	Rectangle {
 		id: child_line
 		anchors.top: parent_line.bottom
-		anchors.topMargin: parent.x == parent.parent_x && parent_line.height < 0 ? -parent_line.height : 0
+		anchors.topMargin: parent.x === parent.parent_x && parent_line.height < 0 ? -parent_line.height : 0
 		anchors.bottom: portrait_button.top
 		width: 2 * scale_factor
 		color: "gray"

@@ -72,4 +72,28 @@ Item {
 	CharacterDialog {
 		id: character_dialog
 	}
+	
+	readonly property int portrait_button_width: 64 * scale_factor + 2 * scale_factor
+	readonly property int portrait_button_height: 64 * scale_factor + 2 * scale_factor
+	readonly property int horizontal_padding: 8 * scale_factor
+	readonly property int vertical_padding: 32 * scale_factor
+	
+	readonly property int portrait_button_area_width: portrait_button_width + horizontal_padding * 2
+	readonly property int portrait_button_area_height: portrait_button_height + vertical_padding * 2
+	
+	function center_on_character(center_character) {
+		var pixel_x = center_character.tree_x * portrait_button_area_width + (center_character.tree_width - 1) * Math.floor(portrait_button_area_width / 2) + horizontal_padding + Math.floor(portrait_button_area_width / 2) - Math.floor(family_tree.width / 2)
+		var pixel_y = center_character.tree_y * portrait_button_area_height + Math.floor(portrait_button_area_height / 2) - Math.floor(family_tree.height / 2)
+		
+		if (family_tree.contentWidth > family_tree.width) {
+			family_tree.contentX = Math.min(Math.max(pixel_x, 0), family_tree.contentWidth - family_tree.width)
+		}
+		if (family_tree.contentHeight > family_tree.height) {
+			family_tree.contentY = Math.min(Math.max(pixel_y, 0), family_tree.contentHeight - family_tree.height)
+		}
+	}
+	
+	Component.onCompleted: {
+		family_tree_view.center_on_character(family_tree_view.character)
+	}
 }
