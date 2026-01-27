@@ -17,7 +17,7 @@ california = {
 		1585 = {
 			#became a Spanish colony in 1540; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 107-110.
 			diplomacy_state = {
-				country = spain
+				domain = spain
 				subject_type = colony
 			}
 		}

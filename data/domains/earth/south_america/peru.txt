@@ -23,7 +23,7 @@ peru = {
 		1790 = {
 			#Spanish colony c. 1790; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 214-215.
 			diplomacy_state = {
-				country = spain
+				domain = spain
 				subject_type = colony
 			}
 		}
@@ -31,7 +31,7 @@ peru = {
 		1821 = {
 			#became independent in 1821/1824; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 214-215.
 			diplomacy_state = {
-				country = spain
+				domain = spain
 				state = peace
 			}
 			

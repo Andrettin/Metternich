@@ -18,7 +18,7 @@ new_england = {
 		1606 = {
 			#Plymouth Company chartered in 1606; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
 			diplomacy_state = {
-				country = england
+				domain = england
 				subject_type = colony
 			}
 		}

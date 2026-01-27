@@ -18,7 +18,7 @@ new_netherland = {
 		1609 = {
 			#New Amsterdam founded by the Dutch in 1609; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
 			diplomacy_state = {
-				country = netherlands
+				domain = netherlands
 				subject_type = colony
 			}
 		}

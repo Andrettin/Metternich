@@ -17,7 +17,7 @@ togoland = {
 		1897 = {
 			#became a German possession in 1897; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 174-175.
 			diplomacy_state = {
-				country = germany
+				domain = germany
 				subject_type = colony
 			}
 		}

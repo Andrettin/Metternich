@@ -19,7 +19,7 @@ philippines = {
 		1898 = {
 			#became an American possession in 1898; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 198-199.
 			diplomacy_state = {
-				country = united_states
+				domain = united_states
 				subject_type = colony
 			}
 		}

@@ -21,7 +21,7 @@ gold_coast = {
 		1884.11 = {
 			#British possession by 1884.11; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 174-175.
 			diplomacy_state = {
-				country = great_britain
+				domain = great_britain
 				subject_type = colony
 			}
 		}

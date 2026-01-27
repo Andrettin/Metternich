@@ -17,7 +17,7 @@ ruperts_land = {
 		1670 = {
 			#became an English possession in 1670; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
 			diplomacy_state = {
-				country = england
+				domain = england
 				subject_type = colony
 			}
 		}

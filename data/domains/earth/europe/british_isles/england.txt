@@ -30,7 +30,7 @@ england = {
 	history = {
 		1553 = {
 			consulate = { #England sent a trade mission to Muscovy in 1553; Source: Henry Kamen, "Early Modern European Society", 2021, p. 2.
-				country = muscovy
+				domain = muscovy
 				consulate = trade_consulate
 			}
 		}

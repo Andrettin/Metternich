@@ -26,7 +26,7 @@ portugal = {
 		1580 = {
 			#became a Spanish possession in 1580; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 118-119.
 			diplomacy_state = {
-				country = spain
+				domain = spain
 				subject_type = personal_union_subject
 			}
 		}
@@ -34,7 +34,7 @@ portugal = {
 		1640 = {
 			#ceased to be a Spanish possession in 1640; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 118-119.
 			diplomacy_state = {
-				country = spain
+				domain = spain
 				state = peace
 			}
 		}

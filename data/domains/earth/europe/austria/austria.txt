@@ -182,14 +182,14 @@ austria = {
 		
 		1866.6.14 = {
 			diplomacy_state = { #Austro-Prussian War
-				country = prussia
+				domain = prussia
 				state = war
 			}
 		}
 		
 		1866.7.22 = {
 			diplomacy_state = {
-				country = prussia
+				domain = prussia
 				state = peace
 			}
 		}

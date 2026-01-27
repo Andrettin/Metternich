@@ -11,7 +11,7 @@ turconia = {
 		my_country_tis_of_thee = {
 			1920 = {
 				diplomacy_state = { #Source: "Life Magazine", 1916.
-					country = ottoman_empire
+					domain = ottoman_empire
 					subject_type = colony
 				}
 			}

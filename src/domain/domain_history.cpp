@@ -95,7 +95,7 @@ void domain_history::process_gsml_scope(const gsml_data &scope, const QDate &dat
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
-			if (key == "country") {
+			if (key == "domain") {
 				other_domain = domain::get(value);
 			} else if (key == "state") {
 				state = magic_enum::enum_cast<diplomacy_state>(value).value();
@@ -108,7 +108,7 @@ void domain_history::process_gsml_scope(const gsml_data &scope, const QDate &dat
 		});
 
 		if (other_domain == nullptr) {
-			throw std::runtime_error("Diplomacy state has no country.");
+			throw std::runtime_error("Diplomacy state has no domain.");
 		}
 
 		if (!state.has_value()) {
@@ -118,7 +118,7 @@ void domain_history::process_gsml_scope(const gsml_data &scope, const QDate &dat
 		const bool is_vassalage = is_vassalage_diplomacy_state(state.value());
 
 		if (is_vassalage) {
-			//a country can only have one overlord, so remove any other vassalage states
+			//a domain can only have one overlord, so remove any other vassalage states
 			archimedes::map::remove_value_if(this->diplomacy_states, [](const diplomacy_state state) {
 				return is_vassalage_diplomacy_state(state);
 			});
@@ -147,7 +147,7 @@ void domain_history::process_gsml_scope(const gsml_data &scope, const QDate &dat
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
-			if (key == "country") {
+			if (key == "domain") {
 				other_domain = domain::get(value);
 			} else if (key == "consulate") {
 				consulate = consulate::get(value);
@@ -157,7 +157,7 @@ void domain_history::process_gsml_scope(const gsml_data &scope, const QDate &dat
 		});
 
 		if (other_domain == nullptr) {
-			throw std::runtime_error("Consulate history has no country.");
+			throw std::runtime_error("Consulate history has no domain.");
 		}
 
 		this->consulates[other_domain] = consulate;

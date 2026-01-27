@@ -17,7 +17,7 @@ new_sweden = {
 		1638 = {
 			#New Sweden founded by in 1638; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
 			diplomacy_state = {
-				country = sweden
+				domain = sweden
 				subject_type = colony
 			}
 		}
