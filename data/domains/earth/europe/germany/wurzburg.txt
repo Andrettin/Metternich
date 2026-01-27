@@ -13,4 +13,14 @@ wurzburg = {
 	core_provinces = {
 		franconia
 	}
+	
+	history = {
+		1477 = {
+			#part of the Holy Roman Empire c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+			diplomacy_state = {
+				domain = holy_roman_empire
+				subject_type = princely_state
+			}
+		}
+	}
 }
