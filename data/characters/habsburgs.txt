@@ -311,6 +311,40 @@ sigismund_von_habsburg = {
 	}
 }
 
+maximilian_i_of_the_holy_roman_empire = { #Emperor Maximilian I of the Holy Roman Empire
+	name = "Maximilian"
+	dynasty = habsburg
+	character_class = warrior
+	culture = austrian
+	religion = catholic
+	home_site = vienna
+	gender = male
+	father = friedrich_iii_of_the_holy_roman_empire #Friedrich III of the Holy Roman Empire; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245-246.
+	#mother = 10000407 #Leonor of Portugal; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245-246.
+	birth_date = 1459 #born in 1459; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 246.
+	death_date = 1519 #died in 1519; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 246.
+	traits = {
+		#gregarious #extroverted; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 55.
+		#lustful #enjoyed the company of pretty women and had nine children out of wedlock; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 55.
+		#hunter #hunting trips were some of his favorite pastimes; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 55.
+	}
+	
+	history = {
+		#arrived in Ghent on 1477.8.18; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 58.
+		
+		1477.8.19 = { #married Mary of Burgundy on 1477.8.19, and both fell in love with each other; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 58.
+			#spouse = 10000389 #Marie de Bourgogne
+			#effect = {
+			#	add_lover = 10000389 #Marie de Bourgogne
+			#}
+		}
+		
+		1493.1.1 = { #married to Bianca Maria Sforza in 1493; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 61.
+			#spouse = 10000395 #Bianca Maria Sforza
+		}
+	}
+}
+
 karl_vi_of_the_holy_roman_empire = { #Emperor Karl VI of the Holy Roman Empire; Source: Ivan Erceg, "Außenhandel der Nordadriatischen Seestädte als Faktor im Entstehen der kapitalistischen Beziehungen in Österreich im 18. und 19. Jahrhundert", 1968, p. 464; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 249.
 	name = "Karl"
 	epithet = "VI"

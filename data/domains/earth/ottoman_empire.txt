@@ -8,6 +8,7 @@ ottoman_empire = {
 	default_tier = empire
 	default_government_type = monarchy
 	default_capital = constantinople
+	definite_article = true
 	short_name = true
 	eras = {
 		renaissance_era

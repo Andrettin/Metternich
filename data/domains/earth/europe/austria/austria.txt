@@ -91,7 +91,16 @@ austria = {
 			}
 		}
 		
+		1298 = {
+			#Albrecht I became Roman-German king in 1298; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
+			owner = holy_roman_empire
+			offices = {
+				ruler = none
+			}
+		}
+		
 		1330 = {
+			owner = none
 			offices = {
 				ruler = albrecht_the_wise #Albrecht the Wise became duke of Austria in 1330; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
 			}
@@ -127,20 +136,43 @@ austria = {
 			}
 		}
 		
-		1516 = {
-			consulate = { #the Holy Roman Emperor sent an ambassador (Sigismund von Herbestein) to Muscovy in 1516; Source: Henry Kamen, "Early Modern European Society", 2021, p. 2.
-				country = muscovy
-				consulate = embassy
+		1438 = {
+			#Albrecht V of Austria became the ruler of the Holy Roman Empire in 1438; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 41.
+			owner = holy_roman_empire
+			offices = {
+				ruler = none
 			}
 		}
 		
+		1493 = {
+			owner = holy_roman_empire
+			titular_ruler = maximilian_i_of_the_holy_roman_empire #Maximilian I of the Holy Roman Empire inherited his father's position as emperor of the Holy Roman Empire in 1493; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 61.
+		}
+		
+		1711 = {
+			owner = holy_roman_empire
+			titular_ruler = karl_vi_of_the_holy_roman_empire #Karl VI became emperor of the HRE in 1711; Source: Ivan Erceg, "Außenhandel der Nordadriatischen Seestädte als Faktor im Entstehen der kapitalistischen Beziehungen in Österreich im 18. und 19. Jahrhundert", 1968, p. 464; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 249.
+		}
+		
 		1740 = {
+			owner = none
 			offices = {
 				ruler = maria_theresia_of_austria #Maria Theresia became queen of Bohemia and Hungary in 1740; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 249.
 			}
 		}
 		
+		1790 = {
+			owner = holy_roman_empire
+			titular_ruler = leopold_ii_of_the_holy_roman_empire #Leopold II von Habsburg of the Holy Roman Empire became emperor in 1790; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 250.
+		}
+		
+		1792 = {
+			owner = holy_roman_empire
+			titular_ruler = franz_i_of_austria #Franz von Habsburg became Emperor of the Holy Roman Empire in 1792; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 250.
+		}
+		
 		1804.8.11 = {
+			owner = none
 			clear_regnal_numbering = true
 			tier = empire #Empire of Austria founded on 1804.8.11; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 10.
 			offices = {
