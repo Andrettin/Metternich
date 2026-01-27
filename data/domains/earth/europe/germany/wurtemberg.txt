@@ -32,5 +32,12 @@ wurtemberg = {
 				subject_type = princely_state
 			}
 		}
+		
+		1815 = {
+			diplomacy_state = {
+				domain = holy_roman_empire
+				state = peace
+			}
+		}
 	}
 }
