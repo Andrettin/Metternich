@@ -172,7 +172,8 @@ MenuBase {
 		id: country_text_area
 		anchors.left: diplomatic_map.left
 		anchors.leftMargin: 4 * scale_factor
-		anchors.right: population_type_chart_label.left
+		anchors.right: ruler_portrait.left
+		anchors.rightMargin: 4 * scale_factor
 		anchors.bottom: parent.bottom
 		anchors.bottomMargin: 4 * scale_factor
 		height: 96 * scale_factor
@@ -183,6 +184,8 @@ MenuBase {
 		
 		SmallText {
 			id: country_text
+			width: country_text_area.width
+			wrapMode: Text.WordWrap
 			text: selected_country ? format_text(
 				selected_country.game_data.type_name
 				+ (selected_country.game_data.overlord ? (
