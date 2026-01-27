@@ -36,6 +36,7 @@ class domain_history final : public data_entry_history
 	Q_PROPERTY(const metternich::culture* culture MEMBER culture READ get_culture)
 	Q_PROPERTY(const metternich::religion* religion MEMBER religion READ get_religion)
 	Q_PROPERTY(const metternich::government_type* government_type MEMBER government_type READ get_government_type)
+	Q_PROPERTY(const metternich::domain* owner MEMBER owner READ get_owner)
 	Q_PROPERTY(archimedes::centesimal_int literacy_rate MEMBER literacy_rate READ get_literacy_rate)
 	Q_PROPERTY(std::vector<const metternich::technology *> technologies READ get_technologies)
 	Q_PROPERTY(int wealth MEMBER wealth READ get_wealth)
@@ -79,6 +80,11 @@ public:
 	const std::map<QDate, const character *> &get_historical_monarchs() const
 	{
 		return this->historical_monarchs;
+	}
+
+	const metternich::domain *get_owner() const
+	{
+		return this->owner;
 	}
 
 	const metternich::subject_type *get_subject_type() const
@@ -142,6 +148,7 @@ private:
 	data_entry_map<office, const character *> office_holders;
 	std::map<QDate, const character *> historical_rulers;
 	std::map<QDate, const character *> historical_monarchs; //used for regnal numbers
+	const metternich::domain *owner = nullptr;
 	const metternich::subject_type *subject_type = nullptr;
 	centesimal_int literacy_rate;
 	std::vector<const technology *> technologies;

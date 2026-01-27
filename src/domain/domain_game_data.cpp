@@ -280,6 +280,8 @@ void domain_game_data::apply_history(const QDate &start_date)
 	country_government *country_government = this->get_government();
 	country_technology *country_technology = this->get_technology();
 
+	assert_throw(domain_history->get_owner() == nullptr);
+
 	if (domain_history->get_tier() != domain_tier::none) {
 		this->set_tier(domain_history->get_tier());
 	}
