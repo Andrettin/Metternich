@@ -1,3 +1,20 @@
+balder = {
+	name = "Balder"
+	founder = balder
+	cultures = {
+		anglian
+		anglo_saxon
+		danish
+		english
+		icelandic
+		norse
+		norwegian
+		suebi
+		suioni
+		swedish
+	}
+}
+
 heimdall = {
 	name = "Heimdall"
 	founder = heimdall

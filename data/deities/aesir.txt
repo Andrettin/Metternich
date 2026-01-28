@@ -164,7 +164,6 @@ thor = { #Sif's husband; known as the Thunder God and the Charioteer; Source: Ke
 	}
 	cultural_group_names = {
 		anglo_saxon = "Thunor" #Anglo-Saxon name for the deity; Source: Frank Stenton, "Anglo-Saxon England", 1971, pp. 98-99.
-		west_germanic = "Thunor" #Anglo-Saxon name for the deity, used here for lack of a better one
 	}
 	major_domains = {
 		combat
