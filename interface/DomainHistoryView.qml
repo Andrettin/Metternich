@@ -66,6 +66,15 @@ Item {
 					anchors.leftMargin: 8 * scale_factor
 					wrapMode: Text.WordWrap
 				}
+				
+				SmallText {
+					id: historical_ruler_dynasty_label
+					text: historical_ruler.dynasty ? historical_ruler.dynasty.name : ""
+					anchors.verticalCenter: parent.verticalCenter
+					anchors.left: parent.right
+					anchors.leftMargin: -128 * scale_factor
+					wrapMode: Text.WordWrap
+				}
 			}
 			
 			Rectangle {
