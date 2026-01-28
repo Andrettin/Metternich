@@ -2,6 +2,7 @@ goblin = {
 	filepath = "icons/units/troops/goblin.png"
 	character_conditions = {
 		or = {
+			species = frost_giant
 			species = goblin
 			species = hobgoblin
 			species = kobold
