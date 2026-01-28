@@ -62,6 +62,7 @@ class character_game_data final : public QObject
 	Q_PROPERTY(int age READ get_age NOTIFY age_changed)
 	Q_PROPERTY(bool dead READ is_dead NOTIFY dead_changed)
 	Q_PROPERTY(QVariantList children READ get_children_qvariant_list NOTIFY age_changed)
+	Q_PROPERTY(QVariantList dynastic_children READ get_dynastic_children_qvariant_list NOTIFY age_changed)
 	Q_PROPERTY(const metternich::character_class* character_class READ get_character_class NOTIFY character_class_changed)
 	Q_PROPERTY(int level READ get_level NOTIFY level_changed)
 	Q_PROPERTY(qint64 experience READ get_experience NOTIFY experience_changed)
@@ -155,6 +156,8 @@ public:
 	bool has_ever_existed() const;
 	std::vector<const metternich::character *> get_children() const;
 	QVariantList get_children_qvariant_list() const;
+	std::vector<const metternich::character *> get_dynastic_children() const;
+	QVariantList get_dynastic_children_qvariant_list() const;
 
 	const QDate &get_birth_date() const
 	{

@@ -851,6 +851,24 @@ QVariantList character_game_data::get_children_qvariant_list() const
 	return container::to_qvariant_list(this->get_children());
 }
 
+std::vector<const metternich::character *> character_game_data::get_dynastic_children() const
+{
+	std::vector<const metternich::character *> children;
+
+	for (const metternich::character *child : this->get_children()) {
+		if (child->get_dynastic_parent() == this->character) {
+			children.push_back(child);
+		}
+	}
+
+	return children;
+}
+
+QVariantList character_game_data::get_dynastic_children_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_dynastic_children());
+}
+
 const metternich::character_class *character_game_data::get_character_class() const
 {
 	return this->character_class;
