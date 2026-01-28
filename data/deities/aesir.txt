@@ -1,0 +1,191 @@
+balder = { #Source: Kevin Crossley-Holland, "The Norse Myths", 1980, p. 240; Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 75; Source: Carolyne Larrington, "The Norse Myths: A Guide to the Gods and Heroes", 2017, p. 40.
+	name = "Balder"
+	pantheon = aesir
+	religions = {
+		asatru
+	}
+	cultural_group_names = {
+		anglo_saxon = "Baeldaeg" #"Bældæg"; Anglo-Saxon name for the deity
+	}
+	major_domains = {
+		charm
+		divination
+		protection
+		summoning
+	}
+	character = {
+		species = human
+		character_class = warrior
+		culture = norse
+		religion = asatru
+		gender = male
+		father = odin
+		mother = frigg
+	}
+	
+	#due to Loki's mischief, he was killed by Hod
+	#Balder returns after Ragnarok
+}
+
+frigg = { #Source: Kevin Crossley-Holland, "The Norse Myths", 1980, p. 242; Source: Peter Buchholz, "Perspectives for Historical Research in Germanic Religion", 1968, p. 129; Source: Carolyne Larrington, "The Norse Myths: A Guide to the Gods and Heroes", 2017, p. 51.
+	name = "Frigg"
+	pantheon = aesir
+	religions = {
+		asatru
+	}
+	cultural_group_names = {
+		anglo_saxon = "Frig" #"Frig" is the Anglo-Saxon name for the goddess according to Stenton, while Larrington gives "Fricg" instead; Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 98.
+		west_germanic = "Friia" #as given in the second Merseburg charm (which is in Old High German); in the charm Volla is described as being her sister; Source: Peter Buchholz, "Perspectives for Historical Research in Germanic Religion", 1968, p. 129; Source: Susan D. Fuller, "Pagan Charms in Tenth-Century Saxony? The Function of the Merseburg Charms", 1909, p. 162.
+	}
+	major_domains = {
+		charm
+		creation
+		divination
+		plant
+		sun
+		weather
+	}
+	minor_domains = {
+		animal
+	}
+	character = {
+		species = human
+		character_class = warrior #aristocrat
+		culture = norse
+		religion = asatru
+		gender = female
+	}
+	
+	#first among the goddesses
+	#Odin's wife
+	#her hall is Fensalir
+}
+
+jord = { #Source: Kevin Crossley-Holland, "The Norse Myths", 1980, pp. 241-242.
+	name = "Jord" #the name means "Earth"; also known as Fjorgyn
+	pantheon = aesir
+	religions = {
+		asatru
+	}
+	character = {
+		species = human
+		character_class = warrior #correct?
+		culture = norse
+		religion = asatru
+		gender = female
+	}
+}
+
+loki = { #son of two giants; attractive, mischief-making and ambivalent god; known as the Sly One, the Trickster, the Shape Changer or the Sky Traveller; as time wears on he becomes more evil, culminating in him causing the death of Balder, and Loki is then imprisoned until Ragnarok comes; Source: Kevin Crossley-Holland, "The Norse Myths", 1980, p. 247. Source: Carolyne Larrington, "The Norse Myths: A Guide to the Gods and Heroes", 2017, pp. 41-42.
+	name = "Loki"
+	pantheon = aesir
+	religions = {
+		asatru
+	}
+	major_domains = {
+		charm
+		combat
+		creation
+		divination
+		elemental
+		healing
+		plant
+		summoning
+	}
+	character = {
+		species = human
+		character_class = rogue
+		culture = norse
+		religion = asatru
+		gender = male
+		birth_date = -3000
+	}
+}
+
+odin = { #known as Allfather, the Terrible One, One-eyed, Father of Battle; Source: Kevin Crossley-Holland, "The Norse Myths", 1980, p. 248; Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 75; Source: Peter Buchholz, "Perspectives for Historical Research in Germanic Religion", 1968, pp. 128, 132.
+	name = "Odin"
+	pantheon = aesir
+	religions = {
+		asatru
+	}
+	cultural_group_names = {
+		anglo_saxon = "Woden"
+		west_germanic = "Wodan" #Old High German name for the deity, as seen in the second Merseburg charm; Source: Susan D. Fuller, "Pagan Charms in Tenth-Century Saxony? The Function of the Merseburg Charms", 1909, p. 162.
+	}
+	major_domains = {
+		combat
+		divination
+		protection
+		summoning
+	}
+	minor_domains = {
+		animal
+		elemental
+	}
+	character = {
+		species = human
+		character_class = mage
+		culture = norse
+		religion = asatru
+		gender = male
+		birth_date = -3000
+	}
+}
+
+thor = { #Sif's husband; known as the Thunder God and the Charioteer; Source: Kevin Crossley-Holland, "The Norse Myths", 1980, p. 251; Source: Peter Buchholz, "Perspectives for Historical Research in Germanic Religion", 1968, p. 129; Source: Frank Stenton, "Anglo-Saxon England", 1971, pp. 98-99.
+	name = "Thor"
+	pantheon = aesir
+	religions = {
+		asatru
+	}
+	cultural_group_names = {
+		anglo_saxon = "Thunor" #Anglo-Saxon name for the deity; Source: Frank Stenton, "Anglo-Saxon England", 1971, pp. 98-99.
+		west_germanic = "Thunor" #Anglo-Saxon name for the deity, used here for lack of a better one
+	}
+	major_domains = {
+		combat
+		elemental
+		protection
+		sun
+		weather
+	}
+	minor_domains = {
+		charm
+	}
+	character = {
+		species = human
+		character_class = warrior
+		culture = norse
+		religion = asatru
+		gender = male
+		father = odin
+		mother = jord
+	}
+}
+
+tyr = { #Source: Kevin Crossley-Holland, "The Norse Myths", 1980, pp. 34-36, 251; Source: Peter Buchholz, "Perspectives for Historical Research in Germanic Religion", 1968, pp. 115, 133; Source: Carolyne Larrington, "The Norse Myths: A Guide to the Gods and Heroes", 2017, pp. 48-49.
+	name = "Tyr" #"Týr"; Old Norse name of the god; Source: Peter Buchholz, "Perspectives for Historical Research in Germanic Religion", 1968, p. 115.
+	pantheon = aesir
+	religions = {
+		asatru
+	}
+	cultural_group_names = {
+		anglo_saxon = "Tiw" #"Tīw"; Old English name of the god; Source: Peter Buchholz, "Perspectives for Historical Research in Germanic Religion", 1968, p. 115.
+		west_germanic = "Ziu" #Old High German name of the god; Source: Peter Buchholz, "Perspectives for Historical Research in Germanic Religion", 1968, p. 115.
+	}
+	major_domains = {
+		combat
+		divination
+		guardian
+		healing
+		protection
+	}
+	character = {
+		species = human
+		character_class = warrior
+		culture = norse
+		religion = asatru
+		gender = male
+		father = odin
+	}
+}
