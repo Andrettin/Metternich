@@ -814,6 +814,8 @@ void character::generate_bloodline()
 	assert_throw(this->get_culture() != nullptr);
 
 	std::vector<const metternich::bloodline *> potential_bloodlines;
+	bool found_religion_compatible_bloodline = false;
+	bool found_religious_group_compatible_bloodline = false;
 
 	for (const metternich::bloodline *bloodline : bloodline::get_all()) {
 		if (!bloodline->get_cultures().contains(this->get_culture())) {
@@ -822,6 +824,39 @@ void character::generate_bloodline()
 
 		if (bloodline->get_founder() != nullptr && bloodline->get_founder()->get_start_date().isValid() && this->get_birth_date().isValid() && bloodline->get_founder()->get_start_date() > this->get_birth_date()) {
 			continue;
+		}
+
+		const bool has_compatible_religion = bloodline->get_founder()->get_religion() == this->get_religion() || (bloodline->get_founder()->get_deity() != nullptr && vector::contains(bloodline->get_founder()->get_deity()->get_religions(), this->get_religion()));
+		if (has_compatible_religion) {
+			if (!found_religion_compatible_bloodline) {
+				found_religion_compatible_bloodline = true;
+				found_religious_group_compatible_bloodline = true;
+				potential_bloodlines.clear();
+			}
+		} else {
+			if (found_religion_compatible_bloodline) {
+				continue;
+			}
+
+			bool has_compatible_religious_group = bloodline->get_founder()->get_religion()->get_group() == this->get_religion()->get_group();
+			if (!has_compatible_religious_group && bloodline->get_founder()->get_deity() != nullptr) {
+				for (const metternich::religion *religion : bloodline->get_founder()->get_deity()->get_religions()) {
+					if (religion->get_group() == this->get_religion()->get_group()) {
+						has_compatible_religious_group = true;
+						break;
+					}
+				}
+			}
+			if (has_compatible_religious_group) {
+				if (!found_religious_group_compatible_bloodline) {
+					found_religious_group_compatible_bloodline = true;
+					potential_bloodlines.clear();
+				}
+			} else {
+				if (found_religious_group_compatible_bloodline) {
+					continue;
+				}
+			}
 		}
 
 		for (int i = 0; i < bloodline->get_weight(); ++i) {
