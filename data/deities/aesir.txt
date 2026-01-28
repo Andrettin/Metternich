@@ -61,6 +61,30 @@ frigg = { #Source: Kevin Crossley-Holland, "The Norse Myths", 1980, p. 242; Sour
 	#her hall is Fensalir
 }
 
+heimdall = { #the horn Gjall belongs to him; identified with Rig (the progenitor of the three races of man in Norse mythology); Source: Kevin Crossley-Holland, "The Norse Myths", 1980, pp. xxvii-xxviii, 244.
+	name = "Heimdall"
+	pantheon = aesir
+	religions = {
+		asatru
+	}
+	major_domains = {
+		combat
+		divination
+		guardian
+		protection
+		summoning
+		sun
+	}
+	character = {
+		species = human
+		character_class = warrior
+		culture = norse
+		religion = asatru
+		gender = male
+		birth_date = -3000
+	}
+}
+
 jord = { #Source: Kevin Crossley-Holland, "The Norse Myths", 1980, pp. 241-242.
 	name = "Jord" #the name means "Earth"; also known as Fjorgyn
 	pantheon = aesir

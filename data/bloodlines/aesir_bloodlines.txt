@@ -1,3 +1,17 @@
+heimdall = {
+	name = "Heimdall"
+	founder = heimdall
+	cultures = {
+		danish
+		icelandic
+		norse
+		norwegian
+		suebi
+		suioni
+		swedish
+	}
+}
+
 odin = {
 	name = "Odin"
 	founder = odin
