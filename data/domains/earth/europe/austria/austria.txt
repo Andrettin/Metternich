@@ -76,7 +76,7 @@ austria = {
 			government_type = monarchy
 			
 			offices = {
-				ruler = leopold_iii_von_babenberg #Leopold III became margrave of Austria in 1095/1096; Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
+				ruler = saint_leopold #Leopold III became margrave of Austria in 1095/1096; Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
 			}
 		}
 		
