@@ -12,4 +12,12 @@ deira = {
 	core_provinces = {
 		yorkshire
 	}
+	
+	history = {
+		616 = {
+			offices = {
+				ruler = edwin_of_deira #Edwin became king of Deira after the battle against Æthelfrith in 616; Source: Frank Stenton, "Anglo-Saxon England", 1971, pp. 78-81, 113, 116.
+			}
+		}
+	}
 }

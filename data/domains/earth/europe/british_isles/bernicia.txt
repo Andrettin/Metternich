@@ -12,4 +12,14 @@ bernicia = {
 	core_provinces = {
 		northumberland
 	}
+	
+	history = {
+		616 = {
+			#Edwin became king of both Deira and Bernicia after the battle against Æthelfrith in 616; Source: Frank Stenton, "Anglo-Saxon England", 1971, pp. 78-81, 113, 116.
+			diplomacy_state = {
+				domain = deira
+				subject_type = personal_union_subject
+			}
+		}
+	}
 }

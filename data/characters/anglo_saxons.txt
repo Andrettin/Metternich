@@ -1,3 +1,43 @@
+aelle = { #Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 75.
+	name = "Aelle" "Ælle"
+	character_class = warrior #king
+	rank = lord
+	culture = anglo_saxon
+	religion = asatru
+	home_site = york #Deira
+	gender = male
+	death_date = 588 #Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 75.
+	description = "Aelle is the first known king of Deira."
+	
+	#first recorded king of Deira
+}
+
+edwin_of_deira = { #Source: Frank Stenton, "Anglo-Saxon England", 1971, pp. 78-81, 113, 116.
+	name = "Edwin"
+	character_class = warrior #king
+	rank = lord
+	culture = anglo_saxon
+	religion = catholic
+	home_site = york #Deira
+	gender = male
+	father = aelle
+	start_date = 616 #in 616 Rædwald of East Anglia (with whom Edwin had taken refuge), fought and won against Æthelfrith of Bernicia to support Edwin's claim to the Deiran throne
+	death_date = 632.10.12 #died on the 12th of October 632 in battle against Cadwallon of Gwynedd, at Hatfield
+	
+	#married Æthelberg in 625
+}
+
+osfrith = { #Source: Frank Stenton, "Anglo-Saxon England", 1971, pp. 80-81.
+	name = "Osfrith"
+	character_class = warrior
+	culture = anglo_saxon
+	religion = catholic
+	home_site = york #Deira
+	gender = male
+	father = edwin_of_deira
+	death_date = 632 #died in 632 in battle against Cadwallon of Gwynedd
+}
+
 ceolwulf_of_northumbria = { #Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 91.
 	name = "Ceolwulf"
 	name_rear_compound_element = wulf_old_english #presumably
