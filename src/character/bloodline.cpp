@@ -4,6 +4,7 @@
 
 #include "character/character.h"
 #include "culture/culture.h"
+#include "religion/deity.h"
 
 namespace metternich {
 
@@ -26,6 +27,15 @@ void bloodline::check() const
 	if (this->get_founder() == nullptr) {
 		throw std::runtime_error(std::format("Bloodline \"{}\" has no founder.", this->get_identifier()));
 	}
+}
+
+const std::string &bloodline::get_cultural_name(const culture *culture) const
+{
+	if (this->get_founder()->get_deity() != nullptr) {
+		return this->get_founder()->get_deity()->get_cultural_name(culture);
+	}
+
+	return this->get_name();
 }
 
 void bloodline::set_founder(character *founder)

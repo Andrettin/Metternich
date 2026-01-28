@@ -211,7 +211,7 @@ void character_data_model::reset_model()
 		}
 
 		if (character_game_data->get_bloodline() != nullptr) {
-			this->top_rows.push_back(std::make_unique<character_data_row>("Bloodline:", std::format("{} ({})", character_game_data->get_bloodline()->get_name(), character_game_data->get_bloodline_strength())));
+			this->top_rows.push_back(std::make_unique<character_data_row>("Bloodline:", std::format("{} ({})", character_game_data->get_bloodline()->get_cultural_name(this->character->get_culture()), character_game_data->get_bloodline_strength())));
 		}
 
 		if (character_game_data->is_dead()) {
