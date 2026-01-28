@@ -1,0 +1,28 @@
+odin = {
+	name = "Odin"
+	founder = odin
+	cultures = {
+		alsatian
+		anglian
+		anglo_saxon
+		austrian
+		danish
+		dutch
+		english
+		flemish
+		frankish
+		frisian
+		german
+		gothic
+		icelandic
+		lombard
+		norse
+		norwegian
+		saxon
+		suebi
+		suioni
+		swedish
+		teutonian
+		vandal
+	}
+}
