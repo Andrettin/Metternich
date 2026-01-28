@@ -1,0 +1,23 @@
+frey = { #Source: Kevin Crossley-Holland, "The Norse Myths", 1980, p. 242; Source: Peter Buchholz, "Perspectives for Historical Research in Germanic Religion", 1968, p. 135; Source: Richard Cleasby and Gudbrand Vigfusson, "An Icelandic-English Dictionary", 1874, p. 551; Source: Carolyne Larrington, "The Norse Myths: A Guide to the Gods and Heroes", 2017, p. 45.
+	name = "Frey"
+	pantheon = vanir
+	religions = {
+		asatru
+	}
+	major_domains = {
+		animal
+		charm
+		divination
+		protection
+		sun
+		weather
+	}
+	character = {
+		species = elf
+		character_class = warrior
+		culture = elven
+		religion = asatru
+		gender = male
+		birth_date = -3000
+	}
+}

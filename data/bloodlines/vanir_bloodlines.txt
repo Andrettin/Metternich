@@ -1,0 +1,13 @@
+frey = {
+	name = "Frey"
+	founder = frey
+	cultures = {
+		danish
+		icelandic
+		norse
+		norwegian
+		suebi
+		suioni
+		swedish
+	}
+}
