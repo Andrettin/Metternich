@@ -1,6 +1,7 @@
 liege = {
 	name = "Liege" #"Liège"
 	type = polity
+	color = { 149 186 37 }
 	culture = walloon
 	default_religion = catholic
 	default_tier = county #bishopric

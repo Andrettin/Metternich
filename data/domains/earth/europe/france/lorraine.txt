@@ -1,6 +1,7 @@
 lorraine = {
 	name = "Lorraine"
 	type = polity
+	color = { 115 142 205 }
 	flag = lorraine
 	culture = french
 	default_religion = catholic

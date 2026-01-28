@@ -1,6 +1,7 @@
 wurzburg = {
 	name = "Wurzburg" #"Würzburg"
 	type = polity
+	color = { 147 146 106 }
 	culture = german
 	default_religion = catholic
 	default_tier = county #bishopric

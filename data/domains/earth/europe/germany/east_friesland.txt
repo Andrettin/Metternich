@@ -1,6 +1,7 @@
 east_friesland = {
 	name = "East Friesland"
 	type = polity
+	color = { 190 32 16 }
 	culture = german
 	default_religion = protestant
 	default_tier = county

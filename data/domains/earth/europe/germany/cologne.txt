@@ -1,6 +1,7 @@
 cologne = {
 	name = "Cologne"
 	type = polity
+	color = { 84 124 48 }
 	flag = cologne
 	culture = german
 	default_religion = catholic

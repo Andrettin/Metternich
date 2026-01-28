@@ -1,6 +1,7 @@
 palatinate = {
 	name = "Palatinate"
 	type = polity
+	color = { 57 151 142 }
 	culture = german
 	default_religion = catholic
 	default_tier = county

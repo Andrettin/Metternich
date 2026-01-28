@@ -1,6 +1,7 @@
 salzburg = {
 	name = "Salzburg"
 	type = polity
+	color = { 129 109 9 }
 	flag = salzburg
 	culture = austrian
 	default_religion = catholic

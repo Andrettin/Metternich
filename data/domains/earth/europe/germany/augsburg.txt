@@ -1,6 +1,7 @@
 augsburg = {
 	name = "Augsburg"
 	type = polity
+	color = { 20 188 118 }
 	culture = german
 	default_religion = catholic
 	default_tier = county #bishopric

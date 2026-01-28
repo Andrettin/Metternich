@@ -1,6 +1,7 @@
 genoa = {
 	name = "Genoa"
 	type = polity
+	color = { 218 215 56 }
 	flag = genoa
 	culture = italian
 	default_religion = catholic
