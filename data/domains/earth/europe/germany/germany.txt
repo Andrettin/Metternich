@@ -22,7 +22,6 @@ germany = {
 		bavaria
 		bremen
 		east_friesland
-		east_prussia
 		farther_pomerania
 		franconia
 		hanover
@@ -40,7 +39,6 @@ germany = {
 		thuringia
 		upper_saxony
 		upper_silesia
-		west_prussia
 		westphalia
 		wurtemberg
 	}
