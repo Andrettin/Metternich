@@ -1,3 +1,16 @@
+friedrich_barbarossa = { #Friedrich I "Barbarossa" of the Holy Roman Empire; Source: Peter H. Wilson, "The Holy Roman Empire", 2016, pp. 35, 903.
+	name = "Friedrich"
+	epithet = "Barbarossa"
+	dynasty = hohenstaufen
+	character_class = warrior
+	culture = german
+	religion = catholic
+	home_site = stuttgart #Swabia
+	gender = male
+	birth_date = 1122 #born in 1122; Source: Peter H. Wilson, "The Holy Roman Empire", 2016, p. 903.
+	death_date = 1190 #died in 1190; Source: Peter H. Wilson, "The Holy Roman Empire", 2016, p. 903.
+}
+
 heinrich_von_hohenstaufen = {
 	name = "Heinrich"
 	dynasty = hohenstaufen

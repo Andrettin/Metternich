@@ -70,6 +70,19 @@ holy_roman_empire = {
 			}
 		}
 		
+		1152.3.4 = {
+			#Friedrich Barbarossa was crowned king of Germany in 1152, whereupon he also assumed the title of Holy Roman Emperor; Source: Peter H. Wilson, "The Holy Roman Empire", 2016, p. 62.
+			offices = {
+				ruler = friedrich_barbarossa
+			}
+			
+			#Kühn gives the date of Barbarossa's election as 1152.3.4 in his historical fiction book; Source: Franz Kühn, "Barbarossa", 1906, Chapter 2.
+		}
+		
+		1155 = {
+			#Friedrich Barbarossa was crowned Holy Roman Emperor by pope Hadrian IV in 1155; Source: Peter H. Wilson, "The Holy Roman Empire", 2016, p. 35.
+		}
+		
 		1298 = {
 			offices = {
 				ruler = albrecht_i_of_austria #Albrecht I became Roman-German king in 1298; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
@@ -88,13 +101,6 @@ holy_roman_empire = {
 			}
 		}
 		
-		1516 = {
-			consulate = { #the Holy Roman Emperor sent an ambassador (Sigismund von Herbestein) to Muscovy in 1516; Source: Henry Kamen, "Early Modern European Society", 2021, p. 2.
-				domain = muscovy
-				consulate = embassy
-			}
-		}
-		
 		1493 = {
 			offices = {
 				ruler = maximilian_i_of_the_holy_roman_empire #Maximilian I of the Holy Roman Empire inherited his father's position as emperor of the Holy Roman Empire in 1493; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 61.
@@ -103,6 +109,25 @@ holy_roman_empire = {
 		
 		1508 = {
 			#Emperor Maximilian I of the Holy Roman Empire was crowned emperor in 1508; Source: Eva Demmerle, "Das Haus Habsburg", 2011, pp. 246.
+		}
+		
+		1516 = {
+			consulate = { #the Holy Roman Emperor sent an ambassador (Sigismund von Herbestein) to Muscovy in 1516; Source: Henry Kamen, "Early Modern European Society", 2021, p. 2.
+				domain = muscovy
+				consulate = embassy
+			}
+		}
+		
+		1519 = {
+			offices = {
+				ruler = karl_v_of_the_holy_roman_empire #Karl V of the Holy Roman Empire became emperor of the Holy Roman Empire in 1519; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 246.
+			}
+		}
+
+		1556 = {
+			offices = {
+				ruler = ferdinand_i_of_the_holy_roman_empire #Ferdinand I of the Holy Roman Empire became emperor of the Holy Roman Empire in 1556; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 247.
+			}
 		}
 		
 		1711 = {
