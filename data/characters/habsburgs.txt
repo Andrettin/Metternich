@@ -345,6 +345,67 @@ maximilian_i_of_the_holy_roman_empire = { #Emperor Maximilian I of the Holy Roma
 	}
 }
 
+philipp_i_of_castille = { #Philipp I of Castille
+	name = "Philipp"
+	epithet = "the Handsome" #Source: Eva Demmerle, "Das Haus Habsburg", 2011, pp. 62, 246.
+	dynasty = habsburg
+	character_class = warrior
+	culture = austrian
+	religion = catholic
+	home_site = vienna
+	gender = male
+	father = maximilian_i_of_the_holy_roman_empire #Emperor Maximilian I of the Holy Roman Empire; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 246.
+	#mother = 10000389 #Marie de Bourgogne; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 58.
+	birth_date = 1478 #born in 1478; Source: Eva Demmerle, "Das Haus Habsburg", 2011, pp. 58, 246.
+	death_date = 1506 #died in 1506; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 246.
+	traits = {
+		#fair
+	}
+	
+	history = {
+		#was declared to be of age in 1494; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 62.
+		
+		1495.12 = { #married to Juana of Castille and Aragon in the December of 1495; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 62.
+			#spouse = 10000398 #Juana of Castille and Aragon
+		}
+		
+		#became king of Castille in 1504; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 246.
+	}
+}
+
+karl_v_of_the_holy_roman_empire = { #Karl V of the Holy Roman Empire; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 246.
+	name = "Karl"
+	epithet = "V"
+	dynasty = habsburg
+	character_class = warrior
+	culture = austrian
+	religion = catholic
+	home_site = vienna #correct?
+	gender = male
+	father = philipp_i_of_castille #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 246.
+	#mother = 10000398 #Juana of Castille and Aragon; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 246.
+	birth_date = 1500 #born in 1500; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 246.
+	death_date = 1558 #died in 1558; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 246.
+
+	#married to Isabel of Portugal; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 246.
+}
+
+ferdinand_i_of_the_holy_roman_empire = { #Ferdinand I of the Holy Roman Empire; Source: Eva Demmerle, "Das Haus Habsburg", 2011, pp. 246-247.
+	name = "Ferdinand"
+	dynasty = habsburg
+	character_class = warrior
+	culture = austrian
+	religion = catholic
+	home_site = vienna
+	gender = male
+	father = philipp_i_of_castille #Source: Eva Demmerle, "Das Haus Habsburg", 2011, pp. 246-247.
+	#mother = 10000398 #Juana of Castille and Aragon; Source: Eva Demmerle, "Das Haus Habsburg", 2011, pp. 246-247.
+	birth_date = 1503 #born in 1503; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 247.
+	death_date = 1564 #died in 1564; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 247.
+
+	#married to Anna of Hungary and Bohemia; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 247.
+}
+
 karl_vi_of_the_holy_roman_empire = { #Emperor Karl VI of the Holy Roman Empire; Source: Ivan Erceg, "Außenhandel der Nordadriatischen Seestädte als Faktor im Entstehen der kapitalistischen Beziehungen in Österreich im 18. und 19. Jahrhundert", 1968, p. 464; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 249.
 	name = "Karl"
 	epithet = "VI"

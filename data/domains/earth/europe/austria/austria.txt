@@ -149,6 +149,16 @@ austria = {
 			titular_ruler = maximilian_i_of_the_holy_roman_empire #Maximilian I of the Holy Roman Empire inherited his father's position as emperor of the Holy Roman Empire in 1493; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 61.
 		}
 		
+		1519 = {
+			owner = holy_roman_empire
+			titular_ruler = karl_v_of_the_holy_roman_empire #Karl V of the Holy Roman Empire became emperor of the Holy Roman Empire in 1519; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 246.
+		}
+
+		1556 = {
+			owner = holy_roman_empire
+			titular_ruler = ferdinand_i_of_the_holy_roman_empire #Ferdinand I of the Holy Roman Empire became emperor of the Holy Roman Empire in 1556; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 247.
+		}
+		
 		1711 = {
 			owner = holy_roman_empire
 			titular_ruler = karl_vi_of_the_holy_roman_empire #Karl VI became emperor of the HRE in 1711; Source: Ivan Erceg, "Außenhandel der Nordadriatischen Seestädte als Faktor im Entstehen der kapitalistischen Beziehungen in Österreich im 18. und 19. Jahrhundert", 1968, p. 464; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 249.
