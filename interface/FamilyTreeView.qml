@@ -39,6 +39,26 @@ Item {
 				character_dialog.open()
 			}
 		}
+		
+		Repeater {
+			model: family_tree.entries
+			
+			TreePortraitButton {
+				tree_line_visible: false
+				
+				readonly property var portrait_character: model.modelData
+				
+				onClicked: {
+					if (character_dialog.opened && character_dialog.character === portrait_character) {
+						return
+					}
+					
+					character_dialog.character = portrait_character
+					character_dialog.show_family_tree_button = false
+					character_dialog.open()
+				}
+			}
+		}
 	}
 	
 	RightBar {
