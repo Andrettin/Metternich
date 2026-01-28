@@ -561,8 +561,10 @@ void game::apply_history(const QDate &start_date)
 				province_game_data->set_religion(province_history->get_religion());
 
 				const domain *owner = province_history->get_owner();
-				while (owner->get_history()->get_owner() != nullptr) {
-					owner = owner->get_history()->get_owner();
+				if (owner != nullptr) {
+					while (owner->get_history()->get_owner() != nullptr) {
+						owner = owner->get_history()->get_owner();
+					}
 				}
 				province_game_data->set_owner(owner);
 
