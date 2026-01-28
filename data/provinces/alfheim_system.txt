@@ -6,6 +6,6 @@ alfheim_system = {
 	history = {
 		owner = alfheim
 		culture = elven
-		religion = pagan
+		religion = asatru
 	}
 }

@@ -9,12 +9,12 @@ holstein = {
 	history = {
 		owner = teutonia
 		culture = teutonian
-		religion = pagan
+		religion = asatru
 		
 		-264 = {
 			owner = teutonia #territory of the Teutones in the 264 BC - 180 AD period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 34-35.
 			culture = teutonian
-			religion = pagan
+			religion = asatru
 		}
 		
 		919 = {

@@ -8,7 +8,7 @@ jamtland = {
 	
 	history = {
 		culture = norse
-		religion = pagan
+		religion = asatru
 		
 		1560 = {
 			owner = norway #part of Norway c. 1560; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 118-119.

@@ -9,12 +9,12 @@ uppland = {
 	history = {
 		owner = suionia
 		culture = suioni
-		religion = pagan
+		religion = asatru
 		
 		-264 = {
 			owner = suionia #territory of the Suiones in the 264 BC - 180 AD period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 34-35.
 			culture = suioni
-			religion = pagan
+			religion = asatru
 		}
 		
 		high_middle_ages = {

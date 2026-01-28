@@ -9,11 +9,12 @@ hanover = {
 	history = {
 		owner = saxons
 		culture = saxon
-		religion = pagan
+		religion = asatru
 		
 		526 = {
 			owner = saxons #territory of the Saxons in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 			culture = saxon
+			religion = asatru
 		}
 		
 		919 = {

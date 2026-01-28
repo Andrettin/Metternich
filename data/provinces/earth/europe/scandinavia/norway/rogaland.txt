@@ -9,11 +9,12 @@ rogaland = {
 	history = {
 		owner = northmen
 		culture = norse
-		religion = pagan
+		religion = asatru
 		
 		526 = {
 			owner = northmen #territory of the Northmen in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 			culture = norse
+			religion = asatru
 		}
 		
 		1360 = {

@@ -9,7 +9,7 @@ westphalia = {
 	history = {
 		owner = saxons
 		culture = saxon
-		religion = pagan
+		religion = asatru
 		
 		myths_enabled = {
 			-3000 = {
@@ -29,7 +29,7 @@ westphalia = {
 			526 = {
 				owner = saxons #territory of the Saxons in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 				culture = saxon
-				religion = pagan
+				religion = asatru
 			}
 		}
 		

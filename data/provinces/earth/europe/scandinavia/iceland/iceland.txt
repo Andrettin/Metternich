@@ -8,6 +8,6 @@ iceland = {
 	
 	history = {
 		culture = icelandic
-		religion = pagan
+		religion = asatru
 	}
 }

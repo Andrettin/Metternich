@@ -8,6 +8,6 @@ troms = {
 	
 	history = {
 		culture = norse
-		religion = pagan
+		religion = asatru
 	}
 }

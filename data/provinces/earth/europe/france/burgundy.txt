@@ -13,6 +13,7 @@ burgundy = {
 		
 		526 = {
 			owner = burgundians #territory of the Burgundians in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			religion = asatru
 		}
 		
 		919 = {

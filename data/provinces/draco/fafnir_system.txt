@@ -6,6 +6,6 @@ fafnir_system = {
 	history = {
 		owner = fafnir
 		culture = draconic
-		religion = pagan
+		religion = asatru
 	}
 }

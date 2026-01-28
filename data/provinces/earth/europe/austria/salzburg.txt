@@ -33,6 +33,7 @@ salzburg = {
 			526 = {
 				owner = bavarians #territory of the Bavarians in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 				culture = suebi
+				religion = asatru
 			}
 		}
 		

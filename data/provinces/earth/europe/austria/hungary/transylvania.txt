@@ -10,11 +10,12 @@ transylvania = {
 	history = {
 		owner = gepids
 		culture = gothic
-		religion = pagan
+		religion = asatru
 		
 		526 = {
 			owner = gepids #territory of the Gepids in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 			culture = gothic
+			religion = asatru
 		}
 		
 		1000 = {

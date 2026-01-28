@@ -2,7 +2,7 @@ pedias = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 1
 	name = "Pedias"
 	character_class = warrior #aristocrat
 	culture = greek
-	religion = pagan
+	religion = hellenic
 	home_site = sparta #Spartan
 	gender = female
 	

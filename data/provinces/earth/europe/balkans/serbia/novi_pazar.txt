@@ -9,7 +9,7 @@ novi_pazar = {
 	
 	history = {
 		culture = greek
-		religion = pagan
+		religion = hellenic
 		
 		526 = {
 			owner = eastern_rome #part of the East Roman Empire in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.

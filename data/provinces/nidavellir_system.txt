@@ -6,6 +6,6 @@ nidavellir_system = {
 	history = {
 		owner = nidavellir
 		culture = dwarven
-		religion = pagan
+		religion = asatru
 	}
 }

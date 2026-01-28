@@ -14,6 +14,7 @@ corsica = {
 		526 = {
 			owner = vandalia #part of the Kingdom of the Vandals in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 			culture = vandal
+			religion = asatru
 		}
 		
 		1360 = {

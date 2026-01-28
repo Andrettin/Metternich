@@ -7,7 +7,7 @@ athens = {
 		catalan #the Catalan Duchy of Athens (Athenes)
 		french #the French Duchy of Athens (Atenes)
 	}
-	default_religion = pagan
+	default_religion = hellenic
 	default_tier = duchy
 	default_government_type = republic
 	default_capital = athens

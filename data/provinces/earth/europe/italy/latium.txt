@@ -9,11 +9,12 @@ latium = {
 	history = {
 		owner = latins
 		culture = roman
-		religion = pagan
+		religion = hellenic
 		
 		-750 = {
 			owner = latins #Latin territory in the 750-625 BC period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 5.
 			culture = roman
+			religion = hellenic
 		}
 		
 		-500 = {

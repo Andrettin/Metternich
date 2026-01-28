@@ -9,11 +9,12 @@ magdeburg = {
 	history = {
 		owner = thuringians
 		culture = suebi
-		religion = pagan
+			religion = asatru
 		
 		526 = {
 			owner = thuringians #territory of the Thuringians in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 			culture = suebi
+			religion = asatru
 		}
 		
 		919 = {

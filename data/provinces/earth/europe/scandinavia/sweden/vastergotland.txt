@@ -9,11 +9,12 @@ vastergotland = {
 	history = {
 		owner = danes
 		culture = norse
-		religion = pagan
+		religion = asatru
 		
 		526 = {
 			owner = danes #territory of the Danes in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 			culture = norse
+			religion = asatru
 		}
 		
 		1360 = {

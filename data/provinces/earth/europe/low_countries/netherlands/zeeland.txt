@@ -7,16 +7,16 @@ zeeland = {
 	}
 	
 	history = {
-		religion = pagan
-		
 		-4000 = {
 			owner = frisians
 			culture = frisian
+			religion = asatru
 		}
 		
 		526 = {
 			owner = frisians #territory of the Frisians in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 			culture = frisian
+			religion = asatru
 		}
 		
 		919 = {

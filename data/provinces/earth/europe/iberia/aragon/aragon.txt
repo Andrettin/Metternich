@@ -21,6 +21,7 @@ aragon = {
 		526 = {
 			owner = visigothia #part of the Kingdom of the West Goths in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 			culture = gothic
+			religion = asatru
 		}
 		
 		1204 = {

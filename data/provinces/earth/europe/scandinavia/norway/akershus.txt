@@ -8,7 +8,7 @@ akershus = {
 	
 	history = {
 		culture = norse
-		religion = pagan
+		religion = asatru
 		
 		1360 = {
 			owner = norway #part of Norway in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.

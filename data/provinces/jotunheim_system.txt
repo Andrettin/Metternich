@@ -6,6 +6,6 @@ jotunheim_system = {
 	history = {
 		owner = jotunheim
 		culture = giant
-		religion = pagan
+		religion = asatru
 	}
 }
