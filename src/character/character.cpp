@@ -872,6 +872,7 @@ void character::generate_bloodline()
 
 	if (!potential_bloodlines.empty()) {
 		this->set_bloodline(vector::get_random(potential_bloodlines));
+		log_trace(std::format("Generated bloodline for character \"{}\": {}.", this->get_identifier(), this->get_bloodline()->get_identifier()));
 	}
 }
 
