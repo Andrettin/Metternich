@@ -1,6 +1,5 @@
 napoleon_i_of_france = { #Source: "Almanach de Gotha pour l'année 1813", 1813, pp. 3-4.
 	name = "Napoleon" #"Napoléon"
-	epithet = "I"
 	dynasty = bonaparte
 	character_class = warrior
 	culture = french

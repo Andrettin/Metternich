@@ -38,8 +38,21 @@ france = {
 	}
 	
 	history = {
-		1815 = {
+		1804.5.18 = {
 			government_type = monarchy
+			tier = empire
+			
+			offices = {
+				ruler = napoleon_i_of_france #Emperor Napoléon I became Emperor of the French on 1804.5.18; Source: "Almanach de Gotha pour l'année 1813", 1813, p. 3.
+			}
+		}
+
+		1804.12.2 = {
+			#Emperor Napoléon I of France was crowned and blessed Emperor of the French in Paris on 1804.12.2; Source: "Almanach de Gotha pour l'année 1813", 1813, p. 3.
+		}
+		
+		1815 = {
+			tier = kingdom
 			
 			offices = {
 				ruler = louis_xviii_of_france #Louis XVIII was king of France as of 1815; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 15.
