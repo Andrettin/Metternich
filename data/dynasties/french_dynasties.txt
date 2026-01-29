@@ -27,6 +27,11 @@ bourgogne = {
 	culture = french
 }
 
+capet = {
+	name = "Capet"
+	culture = french
+}
+
 nemours = {
 	name = "Nemours"
 	prefix = "de"

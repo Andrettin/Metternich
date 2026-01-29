@@ -7,3 +7,19 @@ saint_leopold = {
 		german
 	}
 }
+
+saint_louis = {
+	name = "Saint Louis"
+	founder = saint_louis
+	cultures = {
+		aragonese
+		castillian
+		catalan
+		french
+		galician
+		italian
+		occitan
+		portuguese
+		walloon
+	}
+}

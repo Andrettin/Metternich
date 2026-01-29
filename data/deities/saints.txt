@@ -65,3 +65,32 @@ saint_leopold = {
 		}
 	}
 }
+
+saint_louis = {
+	name = "Saint Louis"
+	pantheon = abrahamic
+	apotheosis = true
+	religions = {
+		catholic
+	}
+	character = { #Louis IX of France
+		name = "Louis"
+		epithet = "IX"
+		dynasty = capet
+		character_class = paladin #saint
+		rank = chevalier #king
+		culture = austrian
+		religion = catholic
+		home_site = vienna
+		gender = male
+		birth_date = 1214.4.25
+		death_date = 1270.8.25
+		traits = {
+			#brave
+			#chaste
+			#kind
+			#temperate
+			#honest
+		}
+	}
+}
