@@ -566,6 +566,11 @@ std::string character_game_data::get_full_name() const
 	return this->character->get_full_name(this->get_regnal_number());
 }
 
+QString character_game_data::get_full_name_for_domain(const metternich::domain *domain) const
+{
+	return QString::fromStdString(this->character->get_full_name(this->get_regnal_number_for_domain(domain)));
+}
+
 std::string character_game_data::get_titled_name() const
 {
 	if (this->get_office() != nullptr) {
