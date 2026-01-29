@@ -38,6 +38,12 @@ france = {
 	}
 	
 	history = {
+		1815 = {
+			offices = {
+				ruler = louis_xviii_of_france #Louis XVIII was king of France as of 1815; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 15.
+			}
+		}
+		
 		1815 = { #1820 = {
 			commodities = {
 				wealth = 5000gp

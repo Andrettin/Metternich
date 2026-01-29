@@ -1,0 +1,48 @@
+louis_xvi_of_france = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 15.
+	name = "Louis"
+	epithet = "XVI"
+	dynasty = bourbon
+	character_class = warrior #king
+	rank = lord
+	culture = french
+	religion = catholic
+	home_site = paris
+	gender = male
+	
+	#king of France, as Louis XVI
+}
+
+louis_xviii_of_france = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 15.
+	name = "Louis"
+	epithet = "XVIII"
+	dynasty = bourbon
+	character_class = warrior #king
+	rank = lord
+	culture = french
+	religion = catholic
+	home_site = paris
+	gender = male
+	birth_date = 1755.11.17
+	
+	#married to Maria Luisa, daughter of king Victor Amadeus III of Sardinia
+	#widowed of his wife by 1815
+	#king of France as of 1815, as Louis XVIII
+}
+
+marie_therese_de_bourbon = { #Marie Thérèse de Bourbon; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 15.
+	name = "Marie Thérèse" #"Marie Therese"
+	dynasty = bourbon
+	character_class = warrior #aristocrat
+	culture = french
+	religion = catholic
+	home_site = paris
+	gender = female
+	father = louis_xvi_of_france
+	birth_date = 1778.12.19
+	
+	history = {
+		1799.6.10 = { #married on 1799.6.10 to Louis Antoine de Bourbon
+			#spouse = 10000601 #Louis Antoine de Bourbon
+		}
+	}
+}
