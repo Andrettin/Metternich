@@ -22,7 +22,7 @@ belchior_goncalves = { #Source: Barão de Vasconcellos, "Archivo Nobiliarchico B
 	gender = male
 	
 	history = {
-		#spouse = helena_teixeira
+		spouse = helena_teixeira
 	}
 }
 
@@ -44,7 +44,7 @@ manuel_martins_de_carvalho = { #Source: Barão de Vasconcellos, "Archivo Nobilia
 	gender = male
 	
 	history = {
-		#spouse = josepha_de_souza_monteiro
+		spouse = josepha_de_souza_monteiro
 	}
 }
 
@@ -69,7 +69,7 @@ francisco_jose_teixeira_father = { #Source: Barão de Vasconcellos, "Archivo Nob
 	
 	history = {
 		1780.9.6 = { #date that their first child was born
-			#spouse = anna_josepha_de_souza
+			spouse = anna_josepha_de_souza
 		}
 	}
 }
@@ -103,7 +103,7 @@ francisco_jose_teixeira = { #Source: Barão de Vasconcellos, "Archivo Nobiliarch
 	
 	history = {
 		1802.9.13 = {
-			#spouse = francisca_bernardina_do_sacramento_leite_ribeiro
+			spouse = francisca_bernardina_do_sacramento_leite_ribeiro
 		}
 	}
 }

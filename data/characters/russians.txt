@@ -57,11 +57,11 @@ constantin_of_russia = { #Grand Duke Constantin of Russia; Source: "Almanach de 
 	
 	history = {
 		1796.2.26 = {
-			#spouse = juliane_von_sachsen_saalfeld_coburg #married on 1796.2.26 to Juliane von Sachsen-Saalfeld-Coburg
+			spouse = juliane_von_sachsen_saalfeld_coburg #married on 1796.2.26 to Juliane von Sachsen-Saalfeld-Coburg
 		}
 		
 		1820.4.1 = {
-			#spouse = none #divorced on 1820.4.1
+			spouse = none #divorced on 1820.4.1
 		}
 	}
 }

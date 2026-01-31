@@ -11,7 +11,7 @@ ferdinand_august_von_wurtemberg = { #Source: "Almanach de Gotha pour l'année 18
 	
 	history = {
 		1817.2.23 = {
-			#spouse = pauline_von_metternich #married on 1817.2.23 to Pauline, daughter of prince Franz Georg Karl von Metternich
+			spouse = pauline_von_metternich #married on 1817.2.23 to Pauline, daughter of prince Franz Georg Karl von Metternich
 		}
 	}
 	

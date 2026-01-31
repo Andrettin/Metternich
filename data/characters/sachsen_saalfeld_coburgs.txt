@@ -10,7 +10,7 @@ franz_von_sachsen_saalfeld_coburg = { #Source: "Gothaischer Hofkalender zum Nutz
 	
 	history = {
 		1778.8.19 = {
-			#spouse = auguste_karoline_von_reuss_zu_ebersdorf #had his first child on 1778.8.19 with his wife Auguste Karoline von Reuss zu Ebersdorf
+			spouse = auguste_karoline_von_reuss_zu_ebersdorf #had his first child on 1778.8.19 with his wife Auguste Karoline von Reuss zu Ebersdorf
 		}
 	}
 }

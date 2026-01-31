@@ -11,7 +11,7 @@ philippe_de_bourbon_orleans = { #Source: "Gothaischer Hofkalender zum Nutzen und
 	
 	history = {
 		1770.8.23 = { #married to Louise, daughter of the duke of Penthièvre, and they had their first known child on 1770.8.23
-			#spouse = louise_de_penthievre
+			spouse = louise_de_penthievre
 		}
 	}
 }

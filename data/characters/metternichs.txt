@@ -13,7 +13,7 @@ franz_georg_von_metternich = { #Source: "Gothaischer Hofkalender zum Nutzen und 
 	
 	history = {
 		1771.1.9 = { #married on 1771.1.9 to Marie Beatrix von Kageneck
-			#spouse = marie_beatrix_von_kageneck
+			spouse = marie_beatrix_von_kageneck
 		}
 	}
 }
@@ -38,7 +38,7 @@ clemens_wenceslaus_von_metternich = { #Source: "Gothaischer Hofkalender zum Nutz
 	
 	history = {
 		1795.9.27 = { #married on 1795.9.27 to Marie Eleonore, daughter of prince Ernst of Kaunitz-Rietberg
-			#spouse = marie_eleonore_von_kaunitz
+			spouse = marie_eleonore_von_kaunitz
 		}
 	}
 }

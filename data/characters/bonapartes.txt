@@ -11,7 +11,7 @@ napoleon_i_of_france = { #Source: "Almanach de Gotha pour l'année 1813", 1813, 
 	
 	history = {
 		1810.3.11 = { #married by procuration on 1810.3.11 and in person on 1810.4.2 to Marie Louise von Habsburg; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 10-11.
-			#spouse = marie_luise_von_habsburg
+			spouse = marie_luise_von_habsburg
 		}
 	}
 	

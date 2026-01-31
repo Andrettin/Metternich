@@ -91,7 +91,7 @@ francisco_leite = { #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Bras
 	gender = male
 	
 	history = {
-		#spouse = isabel_ferreira
+		spouse = isabel_ferreira
 	}
 }
 
@@ -113,7 +113,7 @@ lourenco_correia = { #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Bra
 	gender = male
 	
 	history = {
-		#spouse = maria_de_assumpcao_moraes
+		spouse = maria_de_assumpcao_moraes
 	}
 }
 
@@ -140,7 +140,7 @@ jose_leite_ribeiro = { #Source: Barão de Vasconcellos, "Archivo Nobiliarchico B
 	
 	history = {
 		1781.6.4 = { #date that their daughter was born
-			#spouse = escholastica_maria_de_jesus
+			spouse = escholastica_maria_de_jesus
 		}
 	}
 }

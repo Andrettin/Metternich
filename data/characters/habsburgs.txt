@@ -182,7 +182,7 @@ albrecht_iii_of_austria = { #Albrecht III of Austria; Source: Eva Demmerle, "Das
 	
 	history = {
 		1377 = { #married a second time to Beatrix von Zollern, and had his son Albrecht with her in 1377; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
-			#spouse = beatrix_von_zollern #Beatrix von Zollern
+			spouse = beatrix_von_zollern #Beatrix von Zollern
 		}
 	}
 }
@@ -203,7 +203,7 @@ leopold_iii_of_austria = { #Leopold III of Austria; Source: Eva Demmerle, "Das H
 	
 	history = {
 		1377 = { #married Viridis Visconti, and had his son Ernst with her in 1377; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
-			#spouse = viridis_visconti #Viridis Visconti
+			spouse = viridis_visconti #Viridis Visconti
 		}
 	}
 }
@@ -246,7 +246,7 @@ ernst_the_iron_of_austria = { #Source: Eva Demmerle, "Das Haus Habsburg", 2011, 
 		#married Margarete von Pommern; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
 		
 		1415 = { #married a second time to Cymburgis of Masovia, and had his son Friedrich with her in 1415; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
-			#spouse = cymburgis_of_masovia #Cymburgis of Masovia
+			spouse = cymburgis_of_masovia #Cymburgis of Masovia
 		}
 	}
 }
@@ -463,7 +463,7 @@ leopold_ii_of_the_holy_roman_empire = { #Emperor Leopold II of the Holy Roman Em
 	
 	history = {
 		1768.2.12 = { #marriage date unknown, but this is the date their first child was born
-			#spouse = maria_luisa_de_bourbon #Maria Luisa, daughter of king Charles III of Spain
+			spouse = maria_luisa_de_bourbon #Maria Luisa, daughter of king Charles III of Spain
 		}
 	}
 }
@@ -500,7 +500,7 @@ franz_i_of_austria = { #Franz von Habsburg, Emperor Franz II of the Holy Roman E
 	
 	history = {
 		1791.12.12 = { #marriage date unknown, but their daughter Marie Louise was born on 1791.12.12
-			#spouse = maria_theresa_de_bourbon
+			spouse = maria_theresa_de_bourbon
 		}
 		
 		1804.8.11 = {
@@ -508,7 +508,7 @@ franz_i_of_austria = { #Franz von Habsburg, Emperor Franz II of the Holy Roman E
 		}
 		
 		1816.10.29 = { #married by procuration on 1816.10.29 and in person on 1816.11.10
-			#spouse = caroline_von_wittelsbach
+			spouse = caroline_von_wittelsbach
 		}
 	}
 }
@@ -570,7 +570,7 @@ marie_luise_von_habsburg = { #Source: "Almanach de Gotha pour l'année 1813", 18
 	
 	history = {
 		1810.3.11 = { #married by procuration on 1810.3.11 and in person on 1810.4.2 to Napoleon; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 10-11.
-			#spouse = napoleon_i_of_france
+			spouse = napoleon_i_of_france
 		}
 	}
 }

@@ -21,7 +21,7 @@ auguste_karoline_von_reuss_zu_ebersdorf = { #Auguste Karoline von Reuss zu Ebers
 	
 	history = {
 		1778.8.19 = {
-			#spouse = franz_von_sachsen_saalfeld_coburg #had her first child on 1778.8.19 with her husband Franz von Sachsen-Saalfeld-Coburg
+			spouse = franz_von_sachsen_saalfeld_coburg #had her first child on 1778.8.19 with her husband Franz von Sachsen-Saalfeld-Coburg
 		}
 	}
 }
