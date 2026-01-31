@@ -31,4 +31,23 @@ void character_history::process_gsml_property(const gsml_property &property, con
 	}
 }
 
+void character_history::set_spouse(const metternich::character *spouse)
+{
+	if (spouse == this->get_spouse()) {
+		return;
+	}
+
+	const metternich::character *old_spouse = this->get_spouse();
+
+	this->spouse = spouse;
+
+	if (old_spouse != nullptr) {
+		old_spouse->get_history()->set_spouse(nullptr);
+	}
+
+	if (spouse != nullptr) {
+		spouse->get_history()->set_spouse(this->character);
+	}
+}
+
 }
