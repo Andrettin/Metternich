@@ -216,7 +216,9 @@ Rectangle {
 		anchors.horizontalCenter: parent.horizontalCenter
 		text: format_text(
 			selected_province ? (
-				("Province Level: " + selected_province.game_data.level + "/" + selected_province.game_data.max_level)
+				(selected_province.game_data.owner !== null ? ("Domain: " + selected_province.game_data.owner.name) : "")
+				+ (selected_province.game_data.owner !== null && selected_province.game_data.owner.game_data.realm !== selected_province.game_data.owner ? ("\nRealm: " + selected_province.game_data.owner.game_data.realm.name) : "")
+				+ ("\nProvince Level: " + selected_province.game_data.level + "/" + selected_province.game_data.max_level)
 				+ ("\nTerrain: " + selected_province.map_data.terrain.name)
 				+ (population_visible ? ("\nPopulation: " + number_string(selected_province.game_data.population.size)) : "")
 				+ (taxation_income_string.length > 0 ? ("\nTaxation Income: " + taxation_income_string) : "")
@@ -234,7 +236,9 @@ Rectangle {
 		anchors.horizontalCenter: parent.horizontalCenter
 		text: format_text(
 			selected_site_game_data ? (
-				((selected_site.max_holding_level > 0 && dungeon === null) ? ("Holding Level: " + selected_site_game_data.holding_level + "/" + selected_site.max_holding_level) : "")
+				(selected_site.game_data.owner !== null ? ("Domain: " + selected_site.game_data.owner.name) : "")
+				+ (selected_site.game_data.owner !== null && selected_site.game_data.owner.game_data.realm !== selected_site.game_data.owner ? ("\nRealm: " + selected_site.game_data.owner.game_data.realm.name) : "")
+				+ ((selected_site.max_holding_level > 0 && dungeon === null) ? ("\nHolding Level: " + selected_site_game_data.holding_level + "/" + selected_site.max_holding_level) : "")
 				+ ((selected_site.max_holding_level > 0 && dungeon === null) ? ("\nFortification Level: " + selected_site_game_data.fortification_level) : "")
 				+ (dungeon && dungeon.level !== 0 ? ("Dungeon Level: " + dungeon.level) : "")
 				+ (holding_type !== null && population_visible ? ("\nPopulation: " + number_string(selected_site_game_data.population.size)) : "")
