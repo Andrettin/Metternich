@@ -709,12 +709,6 @@ void character::initialize_bloodline_from_parents()
 	const std::vector<character *> parents = this->get_parents();
 
 	if (parents.empty()) {
-		if (this->get_dynasty() != nullptr) {
-			//generate a bloodline for characters who belong to a dynasty, but have no parents
-			this->generated_bloodline = true;
-			this->initialize_bloodline();
-		}
-
 		return;
 	}
 
