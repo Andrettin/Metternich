@@ -1369,7 +1369,7 @@ void domain_game_data::on_province_gained(const province *province, const int mu
 		this->coastal_province_count += 1 * multiplier;
 	}
 
-	this->change_economic_score(province_game_data->get_level() * 100 * multiplier);
+	this->change_score(province_game_data->get_level() * 100 * multiplier);
 	this->change_domain_power(province_game_data->get_level() * multiplier);
 
 	for (const auto &[resource, count] : province_game_data->get_resource_counts()) {
