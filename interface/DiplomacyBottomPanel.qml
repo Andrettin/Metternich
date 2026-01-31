@@ -22,76 +22,86 @@ Rectangle {
 		height: 1 * scale_factor
 	}
 	
-	IconButton {
-		id: political_map_mode_button
+	Grid {
+		id: map_mode_button_grid
 		anchors.top: parent.top
 		anchors.topMargin: 8 * scale_factor
 		anchors.right: parent.right
 		anchors.rightMargin: 8 * scale_factor
-		icon_identifier: "flag"
-		highlighted: diplomatic_map.mode === DiplomaticMap.Mode.Political
-		tooltip: "Political Map"
+		rows: 4
+		spacing: 4 * scale_factor
+		flow: Grid.TopToBottom
+		layoutDirection: Qt.RightToLeft
 		
-		onClicked: {
-			diplomatic_map.mode = DiplomaticMap.Mode.Political
+		IconButton {
+			id: realm_map_mode_button
+			icon_identifier: "globe"
+			highlighted: diplomatic_map.mode === DiplomaticMap.Mode.Realm
+			tooltip: "Realm Map"
+			
+			onClicked: {
+				diplomatic_map.mode = DiplomaticMap.Mode.Realm
+				if (diplomatic_map.selected_country !== null && !diplomatic_map.selected_country.game_data.is_independent()) {
+					diplomatic_map.selected_country = null
+				}
+			}
 		}
-	}
-	
-	IconButton {
-		id: diplomatic_map_mode_button
-		anchors.top: political_map_mode_button.bottom
-		anchors.topMargin: 4 * scale_factor
-		anchors.right: political_map_mode_button.right
-		icon_identifier: "treaty"
-		highlighted: diplomatic_map.mode === DiplomaticMap.Mode.Treaty
-		tooltip: "Treaty Map"
 		
-		onClicked: {
-			diplomatic_map.mode = DiplomaticMap.Mode.Treaty
-			diplomatic_map_view.selected_diplomacy_state = -1
-			diplomatic_map_view.selected_consulate = null
+		IconButton {
+			id: political_map_mode_button
+			icon_identifier: "flag"
+			highlighted: diplomatic_map.mode === DiplomaticMap.Mode.Political
+			tooltip: "Political Map"
+			
+			onClicked: {
+				diplomatic_map.mode = DiplomaticMap.Mode.Political
+			}
 		}
-	}
-	
-	IconButton {
-		id: terrain_map_mode_button
-		anchors.top: diplomatic_map_mode_button.bottom
-		anchors.topMargin: 4 * scale_factor
-		anchors.right: political_map_mode_button.right
-		icon_identifier: "mountains"
-		highlighted: diplomatic_map.mode === DiplomaticMap.Mode.Terrain
-		tooltip: "Terrain Map"
 		
-		onClicked: {
-			diplomatic_map.mode = DiplomaticMap.Mode.Terrain
+		IconButton {
+			id: diplomatic_map_mode_button
+			icon_identifier: "treaty"
+			highlighted: diplomatic_map.mode === DiplomaticMap.Mode.Treaty
+			tooltip: "Treaty Map"
+			
+			onClicked: {
+				diplomatic_map.mode = DiplomaticMap.Mode.Treaty
+				diplomatic_map_view.selected_diplomacy_state = -1
+				diplomatic_map_view.selected_consulate = null
+			}
 		}
-	}
-	
-	IconButton {
-		id: cultural_map_mode_button
-		anchors.top: terrain_map_mode_button.bottom
-		anchors.topMargin: 4 * scale_factor
-		anchors.right: political_map_mode_button.right
-		icon_identifier: "music"
-		highlighted: diplomatic_map.mode === DiplomaticMap.Mode.Cultural
-		tooltip: "Cultural Map"
 		
-		onClicked: {
-			diplomatic_map.mode = DiplomaticMap.Mode.Cultural
+		IconButton {
+			id: terrain_map_mode_button
+			icon_identifier: "mountains"
+			highlighted: diplomatic_map.mode === DiplomaticMap.Mode.Terrain
+			tooltip: "Terrain Map"
+			
+			onClicked: {
+				diplomatic_map.mode = DiplomaticMap.Mode.Terrain
+			}
 		}
-	}
-	
-	IconButton {
-		id: religious_map_mode_button
-		anchors.top: cultural_map_mode_button.top
-		anchors.right: cultural_map_mode_button.left
-		anchors.rightMargin: 4 * scale_factor
-		icon_identifier: "wooden_cross"
-		highlighted: diplomatic_map.mode === DiplomaticMap.Mode.Religious
-		tooltip: "Religious Map"
 		
-		onClicked: {
-			diplomatic_map.mode = DiplomaticMap.Mode.Religious
+		IconButton {
+			id: cultural_map_mode_button
+			icon_identifier: "music"
+			highlighted: diplomatic_map.mode === DiplomaticMap.Mode.Cultural
+			tooltip: "Cultural Map"
+			
+			onClicked: {
+				diplomatic_map.mode = DiplomaticMap.Mode.Cultural
+			}
+		}
+		
+		IconButton {
+			id: religious_map_mode_button
+			icon_identifier: "wooden_cross"
+			highlighted: diplomatic_map.mode === DiplomaticMap.Mode.Religious
+			tooltip: "Religious Map"
+			
+			onClicked: {
+				diplomatic_map.mode = DiplomaticMap.Mode.Religious
+			}
 		}
 	}
 	
@@ -225,7 +235,7 @@ Rectangle {
 	ReligionChart {
 		id: religion_chart
 		anchors.top: population_type_chart.top
-		anchors.right: religious_map_mode_button.left
+		anchors.right: map_mode_button_grid.left
 		anchors.rightMargin: 16 * scale_factor
 		data_source: selected_country_game_data ? selected_country_game_data.population : null
 		visible: population_visible

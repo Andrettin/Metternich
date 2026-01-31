@@ -1056,6 +1056,15 @@ bool domain_game_data::is_any_overlord_of(const metternich::domain *domain) cons
 	return false;
 }
 
+const metternich::domain *domain_game_data::get_realm() const
+{
+	if (this->get_overlord() != nullptr) {
+		return this->get_overlord()->get_game_data()->get_realm();
+	}
+
+	return this->domain;
+}
+
 std::string domain_game_data::get_type_name() const
 {
 	switch (this->domain->get_type()) {
@@ -1749,6 +1758,8 @@ void domain_game_data::calculate_territory_rect()
 	if (game::get()->is_running()) {
 		this->domain->get_turn_data()->set_diplomatic_map_dirty(true);
 	}
+
+	this->calculate_realm_territory_rect();
 }
 
 void domain_game_data::calculate_territory_rect_center()
@@ -1787,6 +1798,16 @@ void domain_game_data::calculate_text_rect()
 		return;
 	}
 
+	const map *map = map::get();
+
+	this->text_rect = this->calculate_text_rect(this->main_contiguous_territory_rect, [this, map](const QPoint &tile_pos) {
+		const metternich::tile *tile = map->get_tile(tile_pos);
+		return tile->get_owner() == this->domain;
+	});
+}
+
+QRect domain_game_data::calculate_text_rect(const QRect &main_contiguous_territory_rect, const std::function<bool(const QPoint &)> &can_expand_func) const
+{
 	QPoint center_pos = this->get_territory_rect_center();
 
 	const map *map = map::get();
@@ -1795,104 +1816,183 @@ void domain_game_data::calculate_text_rect()
 		center_pos = this->get_capital()->get_game_data()->get_tile_pos();
 
 		if (map->get_tile(center_pos)->get_owner() != this->domain) {
-			return;
+			return QRect();
 		}
 	}
 
-	this->text_rect = QRect(center_pos, QSize(1, 1));
+	QRect text_rect = QRect(center_pos, QSize(1, 1));
 
 	bool changed = true;
 	while (changed) {
 		changed = false;
 
 		bool can_expand_left = true;
-		const int left_x = this->text_rect.left() - 1;
-		for (int y = this->text_rect.top(); y <= this->text_rect.bottom(); ++y) {
+		const int left_x = text_rect.left() - 1;
+		for (int y = text_rect.top(); y <= text_rect.bottom(); ++y) {
 			const QPoint adjacent_pos(left_x, y);
 
-			if (!this->main_contiguous_territory_rect.contains(adjacent_pos)) {
+			if (!main_contiguous_territory_rect.contains(adjacent_pos)) {
 				can_expand_left = false;
 				break;
 			}
 
-			const metternich::tile *adjacent_tile = map->get_tile(adjacent_pos);
-
-			if (adjacent_tile->get_owner() != this->domain) {
+			if (!can_expand_func(adjacent_pos)) {
 				can_expand_left = false;
 				break;
 			}
 		}
 		if (can_expand_left) {
-			this->text_rect.setLeft(left_x);
+			text_rect.setLeft(left_x);
 			changed = true;
 		}
 
 		bool can_expand_right = true;
-		const int right_x = this->text_rect.right() + 1;
-		for (int y = this->text_rect.top(); y <= this->text_rect.bottom(); ++y) {
+		const int right_x = text_rect.right() + 1;
+		for (int y = text_rect.top(); y <= text_rect.bottom(); ++y) {
 			const QPoint adjacent_pos(right_x, y);
 
-			if (!this->main_contiguous_territory_rect.contains(adjacent_pos)) {
+			if (!main_contiguous_territory_rect.contains(adjacent_pos)) {
 				can_expand_right = false;
 				break;
 			}
 
-			const metternich::tile *adjacent_tile = map->get_tile(adjacent_pos);
-
-			if (adjacent_tile->get_owner() != this->domain) {
+			if (!can_expand_func(adjacent_pos)) {
 				can_expand_right = false;
 				break;
 			}
 		}
 		if (can_expand_right) {
-			this->text_rect.setRight(right_x);
+			text_rect.setRight(right_x);
 			changed = true;
 		}
 
 		bool can_expand_up = true;
-		const int up_y = this->text_rect.top() - 1;
-		for (int x = this->text_rect.left(); x <= this->text_rect.right(); ++x) {
+		const int up_y = text_rect.top() - 1;
+		for (int x = text_rect.left(); x <= text_rect.right(); ++x) {
 			const QPoint adjacent_pos(x, up_y);
 
-			if (!this->main_contiguous_territory_rect.contains(adjacent_pos)) {
+			if (!main_contiguous_territory_rect.contains(adjacent_pos)) {
 				can_expand_up = false;
 				break;
 			}
 
-			const metternich::tile *adjacent_tile = map->get_tile(adjacent_pos);
-
-			if (adjacent_tile->get_owner() != this->domain) {
+			if (!can_expand_func(adjacent_pos)) {
 				can_expand_up = false;
 				break;
 			}
 		}
 		if (can_expand_up) {
-			this->text_rect.setTop(up_y);
+			text_rect.setTop(up_y);
 			changed = true;
 		}
 
 		bool can_expand_down = true;
-		const int down_y = this->text_rect.bottom() + 1;
-		for (int x = this->text_rect.left(); x <= this->text_rect.right(); ++x) {
+		const int down_y = text_rect.bottom() + 1;
+		for (int x = text_rect.left(); x <= text_rect.right(); ++x) {
 			const QPoint adjacent_pos(x, down_y);
 
-			if (!this->main_contiguous_territory_rect.contains(adjacent_pos)) {
+			if (!main_contiguous_territory_rect.contains(adjacent_pos)) {
 				can_expand_down = false;
 				break;
 			}
 
-			const metternich::tile *adjacent_tile = map->get_tile(adjacent_pos);
-
-			if (adjacent_tile->get_owner() != this->domain) {
+			if (!can_expand_func(adjacent_pos)) {
 				can_expand_down = false;
 				break;
 			}
 		}
 		if (can_expand_down) {
-			this->text_rect.setBottom(down_y);
+			text_rect.setBottom(down_y);
 			changed = true;
 		}
 	}
+
+	return text_rect;
+}
+
+void domain_game_data::calculate_realm_territory_rect()
+{
+	QRect territory_rect = this->get_territory_rect();
+	this->realm_contiguous_territory_rects = this->get_contiguous_territory_rects();
+
+	for (const metternich::domain *vassal : this->get_vassals()) {
+		if (vassal->get_game_data()->get_realm_territory_rect().isNull()) {
+			continue;
+		}
+
+		if (territory_rect.isNull()) {
+			territory_rect = vassal->get_game_data()->get_realm_territory_rect();
+		} else {
+			territory_rect = territory_rect.united(vassal->get_game_data()->get_realm_territory_rect());
+		}
+
+		vector::merge(this->realm_contiguous_territory_rects, vassal->get_game_data()->get_realm_contiguous_territory_rects());
+	}
+
+	bool changed = true;
+	while (changed) {
+		changed = false;
+
+		for (size_t i = 0; i < this->realm_contiguous_territory_rects.size(); ++i) {
+			QRect &first_territory_rect = this->realm_contiguous_territory_rects.at(i);
+
+			for (size_t j = i + 1; j < this->realm_contiguous_territory_rects.size();) {
+				const QRect &second_territory_rect = this->realm_contiguous_territory_rects.at(j);
+
+				if (first_territory_rect.intersects(second_territory_rect) || rect::is_adjacent_to(first_territory_rect, second_territory_rect)) {
+					first_territory_rect = first_territory_rect.united(second_territory_rect);
+					this->realm_contiguous_territory_rects.erase(this->realm_contiguous_territory_rects.begin() + j);
+					changed = true;
+				} else {
+					++j;
+				}
+			}
+		}
+	}
+
+	this->realm_territory_rect = territory_rect;
+
+	const QPoint &capital_pos = this->get_capital() ? this->get_capital()->get_game_data()->get_tile_pos() : this->domain->get_default_capital()->get_game_data()->get_tile_pos();
+	int best_distance = std::numeric_limits<int>::max();
+	for (const QRect &contiguous_territory_rect : this->get_realm_contiguous_territory_rects()) {
+		if (contiguous_territory_rect.contains(capital_pos)) {
+			this->main_realm_contiguous_territory_rect = contiguous_territory_rect;
+			break;
+		}
+
+		int distance = rect::distance_to(contiguous_territory_rect, capital_pos);
+
+		if (distance < best_distance) {
+			best_distance = distance;
+			this->main_realm_contiguous_territory_rect = contiguous_territory_rect;
+		}
+	}
+
+	this->calculate_realm_text_rect();
+
+	if (game::get()->is_running() && this->is_independent()) {
+		this->domain->get_turn_data()->set_realm_diplomatic_map_dirty(true);
+	}
+
+	if (this->get_overlord() != nullptr) {
+		this->get_overlord()->get_game_data()->calculate_realm_territory_rect();
+	}
+}
+
+void domain_game_data::calculate_realm_text_rect()
+{
+	this->realm_text_rect = QRect();
+
+	if (!this->is_alive() || !this->is_independent()) {
+		return;
+	}
+
+	const map *map = map::get();
+
+	this->realm_text_rect = this->calculate_text_rect(this->main_realm_contiguous_territory_rect, [this, map](const QPoint &tile_pos) {
+		const metternich::tile *tile = map->get_tile(tile_pos);
+		return tile->get_owner() != nullptr && tile->get_owner()->get_game_data()->get_realm() == this->domain;
+	});
 }
 
 QVariantList domain_game_data::get_tile_terrain_counts_qvariant_list() const
@@ -1962,6 +2062,10 @@ void domain_game_data::set_diplomacy_state(const metternich::domain *other_domai
 	} else {
 		this->diplomacy_states[other_domain] = state;
 		this->change_diplomacy_state_count(state, 1);
+	}
+
+	if (is_overlordship_diplomacy_state(old_state) || is_overlordship_diplomacy_state(state)) {
+		this->calculate_realm_territory_rect();
 	}
 
 	if (game::get()->is_running()) {
@@ -2342,6 +2446,54 @@ QCoro::Task<void> domain_game_data::create_diplomatic_map_image()
 	co_await this->create_diplomatic_map_mode_image(diplomatic_map_mode::religious);
 
 	emit diplomatic_map_image_changed();
+}
+
+QImage domain_game_data::prepare_realm_diplomatic_map_image() const
+{
+	assert_throw(this->realm_territory_rect.width() > 0);
+	assert_throw(this->realm_territory_rect.height() > 0);
+
+	QImage image(this->realm_territory_rect.size(), QImage::Format_RGBA8888);
+	image.fill(Qt::transparent);
+
+	return image;
+}
+
+QCoro::Task<void> domain_game_data::create_realm_diplomatic_map_image()
+{
+	if (!this->is_independent() || this->get_provinces().empty()) {
+		co_return;
+	}
+
+	const map *map = map::get();
+
+	QImage diplomatic_map_image = this->prepare_realm_diplomatic_map_image();
+	QImage selected_diplomatic_map_image = diplomatic_map_image;
+
+	const QColor &color = this->get_diplomatic_map_color();
+	const QColor &selected_color = defines::get()->get_selected_country_color();
+
+	for (int x = 0; x < this->realm_territory_rect.width(); ++x) {
+		for (int y = 0; y < this->realm_territory_rect.height(); ++y) {
+			const QPoint relative_tile_pos = QPoint(x, y);
+			const tile *tile = map->get_tile(this->realm_territory_rect.topLeft() + relative_tile_pos);
+
+			if (tile->get_owner() == nullptr || tile->get_owner()->get_game_data()->get_realm() != this->domain) {
+				continue;
+			}
+
+			diplomatic_map_image.setPixelColor(relative_tile_pos, color);
+			selected_diplomatic_map_image.setPixelColor(relative_tile_pos, selected_color);
+		}
+	}
+
+	this->realm_diplomatic_map_image = co_await this->finalize_diplomatic_map_image(std::move(diplomatic_map_image));
+	this->selected_realm_diplomatic_map_image = co_await this->finalize_diplomatic_map_image(std::move(selected_diplomatic_map_image));
+
+	const int tile_pixel_size = map->get_diplomatic_map_tile_pixel_size();
+	this->realm_diplomatic_map_image_rect = QRect(this->realm_territory_rect.topLeft() * tile_pixel_size * preferences::get()->get_scale_factor(), this->realm_diplomatic_map_image.size());
+
+	emit realm_diplomatic_map_image_changed();
 }
 
 QCoro::Task<void> domain_game_data::create_diplomatic_map_mode_image(const diplomatic_map_mode mode)

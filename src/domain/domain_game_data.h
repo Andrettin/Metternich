@@ -107,6 +107,7 @@ class domain_game_data final : public QObject
 	Q_PROPERTY(const metternich::culture* culture READ get_culture NOTIFY culture_changed)
 	Q_PROPERTY(const metternich::religion* religion READ get_religion NOTIFY religion_changed)
 	Q_PROPERTY(const metternich::domain* overlord READ get_overlord NOTIFY overlord_changed)
+	Q_PROPERTY(const metternich::domain* realm READ get_realm NOTIFY overlord_changed)
 	Q_PROPERTY(QString type_name READ get_type_name_qstring NOTIFY type_name_changed)
 	Q_PROPERTY(const metternich::subject_type* subject_type READ get_subject_type NOTIFY subject_type_changed)
 	Q_PROPERTY(const metternich::government_type *government_type READ get_government_type NOTIFY government_type_changed)
@@ -122,11 +123,14 @@ class domain_game_data final : public QObject
 	Q_PROPERTY(QVariantList contiguous_territory_rects READ get_contiguous_territory_rects_qvariant_list NOTIFY provinces_changed)
 	Q_PROPERTY(QRect main_contiguous_territory_rect READ get_main_contiguous_territory_rect NOTIFY provinces_changed)
 	Q_PROPERTY(QRect text_rect READ get_text_rect NOTIFY provinces_changed)
+	Q_PROPERTY(QRect realm_territory_rect READ get_realm_territory_rect NOTIFY provinces_changed)
+	Q_PROPERTY(QRect realm_text_rect READ get_realm_text_rect NOTIFY provinces_changed)
 	Q_PROPERTY(QVariantList tile_terrain_counts READ get_tile_terrain_counts_qvariant_list NOTIFY provinces_changed)
 	Q_PROPERTY(QVariantList vassals READ get_vassals_qvariant_list NOTIFY diplomacy_states_changed)
 	Q_PROPERTY(QVariantList subject_type_counts READ get_subject_type_counts_qvariant_list NOTIFY diplomacy_states_changed)
 	Q_PROPERTY(QVariantList consulates READ get_consulates_qvariant_list NOTIFY consulates_changed)
 	Q_PROPERTY(QRect diplomatic_map_image_rect READ get_diplomatic_map_image_rect NOTIFY diplomatic_map_image_changed)
+	Q_PROPERTY(QRect realm_diplomatic_map_image_rect READ get_realm_diplomatic_map_image_rect NOTIFY realm_diplomatic_map_image_changed)
 	Q_PROPERTY(QVariantList attribute_values READ get_attribute_values_qvariant_list NOTIFY attribute_values_changed)
 	Q_PROPERTY(QVariantList site_attribute_values READ get_site_attribute_values_qvariant_list NOTIFY site_attribute_values_changed)
 	Q_PROPERTY(int unrest READ get_unrest NOTIFY unrest_changed)
@@ -272,10 +276,12 @@ public:
 	bool is_overlord_of(const metternich::domain *domain) const;
 	bool is_any_overlord_of(const metternich::domain *domain) const;
 
-	bool is_independent() const
+	Q_INVOKABLE bool is_independent() const
 	{
 		return this->get_overlord() == nullptr;
 	}
+
+	const metternich::domain *get_realm() const;
 
 	std::string get_type_name() const;
 
@@ -401,6 +407,31 @@ public:
 	}
 
 	void calculate_text_rect();
+	QRect calculate_text_rect(const QRect &main_contiguous_territory_rect, const std::function<bool(const QPoint &)> &can_expand_func) const;
+
+	const QRect &get_realm_territory_rect() const
+	{
+		return this->realm_territory_rect;
+	}
+
+	void calculate_realm_territory_rect();
+
+	const std::vector<QRect> &get_realm_contiguous_territory_rects() const
+	{
+		return this->realm_contiguous_territory_rects;
+	}
+
+	const QRect &get_main_realm_contiguous_territory_rect() const
+	{
+		return this->main_realm_contiguous_territory_rect;
+	}
+
+	const QRect &get_realm_text_rect() const
+	{
+		return this->realm_text_rect;
+	}
+
+	void calculate_realm_text_rect();
 
 	const std::vector<QPoint> &get_border_tiles() const
 	{
@@ -557,6 +588,26 @@ public:
 	const QImage &get_selected_diplomatic_map_image() const
 	{
 		return this->selected_diplomatic_map_image;
+	}
+
+	const QImage &get_realm_diplomatic_map_image() const
+	{
+		return this->realm_diplomatic_map_image;
+	}
+
+	QImage prepare_realm_diplomatic_map_image() const;
+
+	[[nodiscard]]
+	QCoro::Task<void> create_realm_diplomatic_map_image();
+
+	const QRect &get_realm_diplomatic_map_image_rect() const
+	{
+		return this->realm_diplomatic_map_image_rect;
+	}
+
+	const QImage &get_selected_realm_diplomatic_map_image() const
+	{
+		return this->selected_realm_diplomatic_map_image;
 	}
 
 	const QImage &get_diplomatic_map_mode_image(const diplomatic_map_mode mode) const
@@ -1200,6 +1251,7 @@ signals:
 	void capital_changed();
 	void holding_count_changed();
 	void diplomatic_map_image_changed();
+	void realm_diplomatic_map_image_changed();
 	void attribute_values_changed();
 	void site_attribute_values_changed();
 	void unrest_changed();
@@ -1239,10 +1291,14 @@ private:
 	std::vector<const province *> border_provinces;
 	int coastal_province_count = 0;
 	QRect territory_rect;
+	QPoint territory_rect_center = QPoint(-1, -1);
 	std::vector<QRect> contiguous_territory_rects;
 	QRect main_contiguous_territory_rect;
 	QRect text_rect;
-	QPoint territory_rect_center = QPoint(-1, -1);
+	QRect realm_territory_rect;
+	std::vector<QRect> realm_contiguous_territory_rects;
+	QRect main_realm_contiguous_territory_rect;
+	QRect realm_text_rect;
 	std::vector<QPoint> border_tiles;
 	terrain_type_map<int> tile_terrain_counts;
 	const metternich::subject_type *subject_type = nullptr;
@@ -1255,9 +1311,12 @@ private:
 	domain_map<opinion_modifier_map<int>> opinion_modifiers;
 	QImage diplomatic_map_image;
 	QImage selected_diplomatic_map_image;
+	QImage realm_diplomatic_map_image;
+	QImage selected_realm_diplomatic_map_image;
 	std::map<diplomatic_map_mode, QImage> diplomatic_map_mode_images;
 	std::map<diplomacy_state, QImage> diplomacy_state_diplomatic_map_images;
 	QRect diplomatic_map_image_rect;
+	QRect realm_diplomatic_map_image_rect;
 	data_entry_map<domain_attribute, int> attribute_values;
 	data_entry_map<site_attribute, int> site_attribute_values;
 	int unrest = 0;

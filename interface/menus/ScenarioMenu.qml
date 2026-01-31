@@ -33,7 +33,7 @@ MenuBase {
 		id: diplomatic_map
 		anchors.left: scenario_list.right
 		anchors.leftMargin: 16 * scale_factor
-		anchors.right: political_map_mode_button.left
+		anchors.right: map_mode_button_column.left
 		anchors.rightMargin: 16 * scale_factor
 		anchors.top: title_item.bottom
 		anchors.topMargin: 32 * scale_factor
@@ -52,78 +52,86 @@ MenuBase {
 		visible: loading_scenario && !map_template_loaded
 	}
 	
-	IconButton {
-		id: political_map_mode_button
+	Column {
+		id: map_mode_button_column
 		anchors.top: diplomatic_map_background.top
 		anchors.right: parent.right
 		anchors.rightMargin: 16 * scale_factor
-		icon_identifier: "flag"
-		tooltip: "Political Map"
-		enabled: !loading_scenario
-		highlighted: diplomatic_map.mode === DiplomaticMap.Mode.Political
+		spacing: 4 * scale_factor
 		
-		onClicked: {
-			diplomatic_map.mode = DiplomaticMap.Mode.Political
+		IconButton {
+			id: realm_map_mode_button
+			icon_identifier: "globe"
+			tooltip: "Realm Map"
+			enabled: !loading_scenario
+			highlighted: diplomatic_map.mode === DiplomaticMap.Mode.Realm
+			
+			onClicked: {
+				diplomatic_map.mode = DiplomaticMap.Mode.Realm
+				if (diplomatic_map.selected_country !== null && !diplomatic_map.selected_country.game_data.is_independent()) {
+					diplomatic_map.selected_country = null
+				}
+			}
 		}
-	}
-	
-	IconButton {
-		id: diplomatic_map_mode_button
-		anchors.top: political_map_mode_button.bottom
-		anchors.topMargin: 4 * scale_factor
-		anchors.right: political_map_mode_button.right
-		icon_identifier: "treaty"
-		tooltip: "Treaty Map"
-		enabled: !loading_scenario
-		highlighted: diplomatic_map.mode === DiplomaticMap.Mode.Treaty
 		
-		onClicked: {
-			diplomatic_map.mode = DiplomaticMap.Mode.Treaty
+		IconButton {
+			id: political_map_mode_button
+			icon_identifier: "flag"
+			tooltip: "Political Map"
+			enabled: !loading_scenario
+			highlighted: diplomatic_map.mode === DiplomaticMap.Mode.Political
+			
+			onClicked: {
+				diplomatic_map.mode = DiplomaticMap.Mode.Political
+			}
 		}
-	}
-	
-	IconButton {
-		id: terrain_map_mode_button
-		anchors.top: diplomatic_map_mode_button.bottom
-		anchors.topMargin: 4 * scale_factor
-		anchors.right: political_map_mode_button.right
-		icon_identifier: "mountains"
-		tooltip: "Terrain Map"
-		enabled: !loading_scenario
-		highlighted: diplomatic_map.mode === DiplomaticMap.Mode.Terrain
 		
-		onClicked: {
-			diplomatic_map.mode = DiplomaticMap.Mode.Terrain
+		IconButton {
+			id: diplomatic_map_mode_button
+			icon_identifier: "treaty"
+			tooltip: "Treaty Map"
+			enabled: !loading_scenario
+			highlighted: diplomatic_map.mode === DiplomaticMap.Mode.Treaty
+			
+			onClicked: {
+				diplomatic_map.mode = DiplomaticMap.Mode.Treaty
+			}
 		}
-	}
-	
-	IconButton {
-		id: cultural_map_mode_button
-		anchors.top: terrain_map_mode_button.bottom
-		anchors.topMargin: 4 * scale_factor
-		anchors.right: political_map_mode_button.right
-		icon_identifier: "music"
-		tooltip: "Cultural Map"
-		enabled: !loading_scenario
-		highlighted: diplomatic_map.mode === DiplomaticMap.Mode.Cultural
 		
-		onClicked: {
-			diplomatic_map.mode = DiplomaticMap.Mode.Cultural
+		IconButton {
+			id: terrain_map_mode_button
+			icon_identifier: "mountains"
+			tooltip: "Terrain Map"
+			enabled: !loading_scenario
+			highlighted: diplomatic_map.mode === DiplomaticMap.Mode.Terrain
+			
+			onClicked: {
+				diplomatic_map.mode = DiplomaticMap.Mode.Terrain
+			}
 		}
-	}
-	
-	IconButton {
-		id: religious_map_mode_button
-		anchors.top: cultural_map_mode_button.bottom
-		anchors.topMargin: 4 * scale_factor
-		anchors.right: political_map_mode_button.right
-		icon_identifier: "wooden_cross"
-		tooltip: "Religious Map"
-		enabled: !loading_scenario
-		highlighted: diplomatic_map.mode === DiplomaticMap.Mode.Religious
 		
-		onClicked: {
-			diplomatic_map.mode = DiplomaticMap.Mode.Religious
+		IconButton {
+			id: cultural_map_mode_button
+			icon_identifier: "music"
+			tooltip: "Cultural Map"
+			enabled: !loading_scenario
+			highlighted: diplomatic_map.mode === DiplomaticMap.Mode.Cultural
+			
+			onClicked: {
+				diplomatic_map.mode = DiplomaticMap.Mode.Cultural
+			}
+		}
+		
+		IconButton {
+			id: religious_map_mode_button
+			icon_identifier: "wooden_cross"
+			tooltip: "Religious Map"
+			enabled: !loading_scenario
+			highlighted: diplomatic_map.mode === DiplomaticMap.Mode.Religious
+			
+			onClicked: {
+				diplomatic_map.mode = DiplomaticMap.Mode.Religious
+			}
 		}
 	}
 	

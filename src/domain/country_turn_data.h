@@ -54,6 +54,16 @@ public:
 		this->diplomatic_map_dirty = value;
 	}
 
+	bool is_realm_diplomatic_map_dirty() const
+	{
+		return this->realm_diplomatic_map_dirty;
+	}
+
+	void set_realm_diplomatic_map_dirty(const bool value)
+	{
+		this->realm_diplomatic_map_dirty = value;
+	}
+
 	const std::set<diplomatic_map_mode> &get_dirty_diplomatic_map_modes() const
 	{
 		return this->dirty_diplomatic_map_modes;
@@ -81,6 +91,7 @@ private:
 	std::vector<qunique_ptr<income_transaction>> income_transactions;
 	std::vector<qunique_ptr<expense_transaction>> expense_transactions;
 	bool diplomatic_map_dirty = false;
+	bool realm_diplomatic_map_dirty = false;
 	std::set<diplomatic_map_mode> dirty_diplomatic_map_modes;
 	std::set<diplomacy_state> dirty_diplomatic_map_diplomacy_states;
 };

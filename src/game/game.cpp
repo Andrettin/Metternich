@@ -1677,6 +1677,10 @@ QCoro::Task<void> game::do_turn_coro()
 					co_await domain->get_game_data()->create_diplomacy_state_diplomatic_map_image(state);
 				}
 			}
+
+			if (domain->get_turn_data()->is_realm_diplomatic_map_dirty()) {
+				co_await domain->get_game_data()->create_realm_diplomatic_map_image();
+			}
 		}
 
 		if (this->exploration_changed) {
@@ -1986,8 +1990,15 @@ QCoro::Task<void> game::create_diplomatic_map_image()
 	for (const domain *domain : this->get_countries()) {
 		domain_game_data *domain_game_data = domain->get_game_data();
 
-		QCoro::Task<void> task = domain_game_data->create_diplomatic_map_image();
-		tasks.push_back(std::move(task));
+		{
+			QCoro::Task<void> task = domain_game_data->create_diplomatic_map_image();
+			tasks.push_back(std::move(task));
+		}
+
+		{
+			QCoro::Task<void> task = domain_game_data->create_realm_diplomatic_map_image();
+			tasks.push_back(std::move(task));
+		}
 	}
 
 	for (QCoro::Task<void> &task : tasks) {

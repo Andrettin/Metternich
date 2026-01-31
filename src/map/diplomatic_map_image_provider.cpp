@@ -37,7 +37,13 @@ QImage diplomatic_map_image_provider::requestImage(const QString &id, QSize *siz
 		const domain_game_data *domain_game_data = domain->get_game_data();
 
 		const std::string &mode_identifier = id_list.at(1);
-		if (mode_identifier == "selected") {
+		if (mode_identifier == "realm") {
+			if (id_list.size() >= 3 && id_list.at(2) == "selected") {
+				image = &domain_game_data->get_selected_realm_diplomatic_map_image();
+			} else {
+				image = &domain_game_data->get_realm_diplomatic_map_image();
+			}
+		} else if (mode_identifier == "selected") {
 			image = &domain_game_data->get_selected_diplomatic_map_image();
 		} else if (mode_identifier == "diplomatic") {
 			std::optional<diplomacy_state> diplomacy_state;

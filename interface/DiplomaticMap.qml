@@ -10,6 +10,7 @@ Flickable {
 	clip: true
 	
 	enum Mode {
+		Realm,
 		Political,
 		Treaty,
 		Terrain,
@@ -20,7 +21,7 @@ Flickable {
 	property string ocean_suffix: ""
 	property string country_suffix: "0"
 	property var selected_country: null
-	property int mode: DiplomaticMap.Mode.Political
+	property int mode: DiplomaticMap.Mode.Realm
 	readonly property var reference_country: selected_country ? selected_country : (metternich.game.player_country ? metternich.game.player_country : null)
 	
 	Image {
@@ -43,14 +44,15 @@ Flickable {
 		
 		Image {
 			id: country_image
-			x: country.game_data.diplomatic_map_image_rect.x
-			y: country.game_data.diplomatic_map_image_rect.y
-			source: visible ? ("image://diplomatic_map/" + country.identifier + (selected ? "/selected" : get_map_mode_suffix(diplomatic_map.mode, country)) + "/" + country_suffix) : "image://empty/"
+			x: diplomatic_map_image_rect.x
+			y: diplomatic_map_image_rect.y
+			source: visible ? ("image://diplomatic_map/" + country.identifier + (diplomatic_map.mode === DiplomaticMap.Mode.Realm ? "/realm" : "") + (selected ? "/selected" : get_map_mode_suffix(diplomatic_map.mode, country)) + "/" + country_suffix) : "image://empty/"
 			cache: false
-			visible: country.game_data.provinces.length > 0
+			visible: country.game_data.provinces.length > 0 && (country.game_data.is_independent() || diplomatic_map.mode !== DiplomaticMap.Mode.Realm)
 			
 			readonly property var country: model.modelData
 			readonly property var selected: selected_country === country
+			readonly property var diplomatic_map_image_rect: diplomatic_map.mode === DiplomaticMap.Mode.Realm ? country.game_data.realm_diplomatic_map_image_rect : country.game_data.diplomatic_map_image_rect
 			
 			MaskedMouseArea {
 				id: country_mouse_area
@@ -124,13 +126,14 @@ Flickable {
 			width: Math.floor(text_rect_width)
 			height: Math.floor(text_rect_height)
 			wrapMode: Text.WordWrap
-			horizontalAlignment: contentWidth <= width ? Text.AlignHCenter : (country.game_data.diplomatic_map_image_rect.x === 0 ? Text.AlignLeft : ((country.game_data.diplomatic_map_image_rect.x + country.game_data.diplomatic_map_image_rect.width) >= metternich.map.diplomatic_map_image_size.width * scale_factor ? Text.AlignRight : Text.AlignHCenter))
-			verticalAlignment: contentHeight <= height ? Text.AlignVCenter : (country.game_data.diplomatic_map_image_rect.y === 0 ? Text.AlignTop : ((country.game_data.diplomatic_map_image_rect.y + country.game_data.diplomatic_map_image_rect.height) >= metternich.map.diplomatic_map_image_size.height * scale_factor ? Text.AlignBottom : Text.AlignVCenter))
+			horizontalAlignment: contentWidth <= width ? Text.AlignHCenter : (diplomatic_map_image_rect.x === 0 ? Text.AlignLeft : ((diplomatic_map_image_rect.x + diplomatic_map_image_rect.width) >= metternich.map.diplomatic_map_image_size.width * scale_factor ? Text.AlignRight : Text.AlignHCenter))
+			verticalAlignment: contentHeight <= height ? Text.AlignVCenter : (diplomatic_map_image_rect.y === 0 ? Text.AlignTop : ((diplomatic_map_image_rect.y + diplomatic_map_image_rect.height) >= metternich.map.diplomatic_map_image_size.height * scale_factor ? Text.AlignBottom : Text.AlignVCenter))
 			font.pixelSize: Math.min(Math.max(Math.floor(width * 3 / 4 / text.length), 8 * scale_factor), 12 * scale_factor)
-			visible: country.game_data.provinces.length > 0 && (diplomatic_map.mode === DiplomaticMap.Mode.Political || diplomatic_map.mode === DiplomaticMap.Mode.Diplomatic)
+			visible: country.game_data.provinces.length > 0 && (country.game_data.is_independent() || diplomatic_map.mode !== DiplomaticMap.Mode.Realm) && (diplomatic_map.mode === DiplomaticMap.Mode.Realm || diplomatic_map.mode === DiplomaticMap.Mode.Political || diplomatic_map.mode === DiplomaticMap.Mode.Diplomatic)
 					
 			readonly property var country: model.modelData
-			readonly property var text_rect: country.game_data.text_rect
+			readonly property var diplomatic_map_image_rect: diplomatic_map.mode === DiplomaticMap.Mode.Realm ? country.game_data.realm_diplomatic_map_image_rect : country.game_data.diplomatic_map_image_rect
+			readonly property var text_rect: diplomatic_map.mode === DiplomaticMap.Mode.Realm ? country.game_data.realm_text_rect : country.game_data.text_rect
 			readonly property int text_rect_width: text_rect.width * metternich.map.diplomatic_map_tile_pixel_size * scale_factor
 			readonly property int text_rect_height: text_rect.height * metternich.map.diplomatic_map_tile_pixel_size * scale_factor
 		}
