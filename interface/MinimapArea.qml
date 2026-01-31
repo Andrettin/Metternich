@@ -74,15 +74,25 @@ Rectangle {
 		IconButton {
 			id: site_map_mode_button
 			icon_identifier: "settlement"
-			highlighted: province_map.mode === ProvinceMap.Mode.Site
+			highlighted: province_map.show_sites
 			
 			onClicked: {
-				province_map.mode = ProvinceMap.Mode.Site
+				province_map.show_sites = !province_map.show_sites
+				
+				if (province_map.show_sites) {
+					status_text = "Hide Sites"
+				} else {
+					status_text = "Show Sites"
+				}
 			}
 			
 			onHoveredChanged: {
 				if (hovered) {
-					status_text = "Site Map Mode"
+					if (province_map.show_sites) {
+						status_text = "Hide Sites"
+					} else {
+						status_text = "Show Sites"
+					}
 				} else {
 					status_text = ""
 				}
@@ -145,6 +155,24 @@ Rectangle {
 			onHoveredChanged: {
 				if (hovered) {
 					status_text = "Temple Map Mode"
+				} else {
+					status_text = ""
+				}
+			}
+		}
+		
+		IconButton {
+			id: terrain_map_mode_button
+			icon_identifier: "mountains"
+			highlighted: province_map.mode === ProvinceMap.Mode.Terrain
+			
+			onClicked: {
+				province_map.mode = ProvinceMap.Mode.Terrain
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Terrain Map Mode"
 				} else {
 					status_text = ""
 				}

@@ -11,7 +11,6 @@ Flickable {
 	
 	enum Mode {
 		Political,
-		Site,
 		Terrain,
 		Cultural,
 		TradeZone,
@@ -19,6 +18,7 @@ Flickable {
 	}
 	
 	property int mode: ProvinceMap.Mode.Political
+	property bool show_sites: false
 	readonly property var reference_country: selected_province ? selected_province.game_data.owner : (metternich.game.player_country ? metternich.game.player_country : null)
 	property var hovered_site: null
 	
@@ -33,7 +33,7 @@ Flickable {
 			cache: false
 			
 			readonly property var province: model.modelData
-			readonly property var selected: selected_province === province || (selected_site !== null && selected_site.game_data.province === province && province_map.mode !== ProvinceMap.Mode.Site)
+			readonly property var selected: selected_province === province || (selected_site !== null && selected_site.game_data.province === province && !province_map.show_sites)
 			property int change_count: 0
 			
 			Connections {
@@ -56,7 +56,7 @@ Flickable {
 			y: Math.floor(text_rect.y * metternich.map.province_map_tile_pixel_size * scale_factor)
 			width: Math.floor(text_rect_width)
 			height: Math.floor(text_rect_height)
-			visible: province_map.mode !== ProvinceMap.Mode.Site
+			visible: !province_map.show_sites
 			wrapMode: Text.WordWrap
 			horizontalAlignment: contentWidth <= width ? Text.AlignHCenter : (province.game_data.map_image_rect.x === 0 ? Text.AlignLeft : ((province.game_data.map_image_rect.x + province.game_data.map_image_rect.width) >= metternich.map.province_map_image_size.width * scale_factor ? Text.AlignRight : Text.AlignHCenter))
 			verticalAlignment: contentHeight <= height ? Text.AlignVCenter : (province.game_data.map_image_rect.y === 0 ? Text.AlignTop : ((province.game_data.map_image_rect.y + province.game_data.map_image_rect.height) >= metternich.map.province_map_image_size.height * scale_factor ? Text.AlignBottom : Text.AlignVCenter))
@@ -137,7 +137,7 @@ Flickable {
 			y: site.game_data.tile_pos.y * metternich.map.province_map_tile_pixel_size * scale_factor - Math.floor(height / 2)
 			width: site_icon.width + 4 * scale_factor
 			height: site_icon.height + 4 * scale_factor
-			visible: province_map.mode === ProvinceMap.Mode.Site && (site.settlement || dungeon !== null)
+			visible: province_map.show_sites && (site.settlement || dungeon !== null)
 			
 			readonly property var site: model.modelData
 			readonly property var tile_pos: site.map_data.tile_pos
@@ -277,7 +277,6 @@ Flickable {
 	function get_map_mode_suffix(mode, province) {
 		switch (mode) {
 			case ProvinceMap.Mode.Political:
-			case ProvinceMap.Mode.Site:
 				return "/political"
 			case ProvinceMap.Mode.Terrain:
 				return "/terrain"
