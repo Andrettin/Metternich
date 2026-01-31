@@ -1,0 +1,32 @@
+berry = {
+	name = "Berry"
+	type = polity
+	color = { 85 65 215 }
+	culture = french
+	default_religion = catholic
+	default_tier = duchy
+	default_government_type = monarchy
+	default_capital = bourges
+	eras = {
+		industrial_era
+	}
+	core_provinces = {
+		berry
+	}
+	
+	history = {
+		1815 = {
+			government_type = monarchy
+			
+			#Charles Ferdinand de Bourbon was duke of Berry as of 1815; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 15.
+			offices = {
+				ruler = charles_ferdinand_de_bourbon
+			}
+			
+			diplomacy_state = {
+				domain = france
+				subject_type = vassal
+			}
+		}
+	}
+}
