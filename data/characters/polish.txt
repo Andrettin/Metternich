@@ -41,6 +41,20 @@ mieszko_piast = {
 	#son of Wladyslaw Piast
 }
 
+jaroslaw_piast = {
+	name = "Jaroslaw"
+	dynasty = piast
+	character_class = paladin
+	culture = polish
+	religion = catholic
+	gender = male
+	father = boleslaw_the_tall
+	birth_date = 1143
+	death_date = 1201.3.22
+	
+	#son of Zvenislava Rurikid
+}
+
 konrad_piast = {
 	name = "Konrad"
 	dynasty = piast
@@ -53,6 +67,182 @@ konrad_piast = {
 	death_date = 1190
 	
 	#son of Wladyslaw Piast
+}
+
+olga_piast = {
+	name = "Olga"
+	dynasty = piast
+	character_class = warrior #aristocrat
+	culture = polish
+	religion = catholic
+	gender = female
+	father = boleslaw_the_tall
+	birth_date = 1155
+	death_date = 1175.6.27
+	
+	#daughter of Zvenislava Rurikid
+}
+
+konrad_piast_1164 = {
+	name = "Konrad"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	father = boleslaw_the_tall
+	mother = christina_1147
+	birth_date = 1164
+	death_date = 1190.7.5
+}
+
+boleslaw_piast = {
+	name = "Boleslaw"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	father = boleslaw_the_tall
+	mother = christina_1147
+	birth_date = 1163.10.2
+	death_date = 1181.7.18
+}
+
+jan_piast = {
+	name = "Jan"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	father = boleslaw_the_tall
+	mother = christina_1147
+	birth_date = 1165
+	death_date = 1174.3.10
+}
+
+henryk_piast = {
+	name = "Henryk"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	father = boleslaw_the_tall
+	mother = christina_1147
+	birth_date = 1168
+	death_date = 1238.3.19
+}
+
+wladyslaw_piast = {
+	name = "Wladyslaw"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	father = boleslaw_the_tall
+	mother = christina_1147
+	birth_date = 1181
+	death_date = 1199
+}
+
+berta_piast = {
+	name = "Berta"
+	dynasty = piast
+	character_class = warrior #aristocrat
+	culture = polish
+	religion = catholic
+	gender = female
+	father = boleslaw_the_tall
+	mother = christina_1147
+	birth_date = 1167
+	death_date = 1200.5.7
+}
+
+adelajda_piast = {
+	name = "Adelajda"
+	dynasty = piast
+	character_class = warrior #aristocrat
+	culture = polish
+	religion = catholic
+	gender = female
+	father = boleslaw_the_tall
+	mother = christina_1147
+	birth_date = 1166
+	death_date = 1215.3.29
+}
+
+boleslaw_piast_1191 = {
+	name = "Boleslaw"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	father = henryk_piast
+	birth_date = 1191
+	death_date = 1207.9.10
+	
+	#son of Hedwig von Andechs
+}
+
+konrad_piast_1198 = {
+	name = "Konrad"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	father = henryk_piast
+	birth_date = 1198
+	death_date = 1213.9.4
+	
+	#son of Hedwig von Andechs
+}
+
+henryk_the_pious = {
+	name = "Henryk"
+	epithet = "the Pious"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	father = henryk_piast
+	birth_date = 1196
+	death_date = 1241.4.9
+	
+	#son of Hedwig von Andechs
+}
+
+agnes_piast = {
+	name = "Agnes"
+	dynasty = piast
+	character_class = warrior #aristocrat
+	culture = polish
+	religion = catholic
+	gender = female
+	father = henryk_piast
+	birth_date = 1192
+	death_date = 1214.4.9
+	
+	#daughter of Hedwig von Andechs
+}
+
+gertrud_piast = {
+	name = "Gertrud"
+	dynasty = piast
+	character_class = warrior #aristocrat
+	culture = polish
+	religion = catholic
+	gender = female
+	father = henryk_piast
+	birth_date = 1200
+	death_date = 1268.12.30
+	
+	#daughter of Hedwig von Andechs
 }
 
 cymburgis_of_masovia = { #Cymburgis of Masovia; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
