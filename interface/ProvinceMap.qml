@@ -100,6 +100,10 @@ Flickable {
 					text += ", " + province.game_data.owner.name
 				}
 				
+				if (province.game_data.owner.game_data.realm !== province.game_data.owner) {
+					text += ", " + province.game_data.owner.game_data.realm.name
+				}
+				
 				if (province_map.mode === ProvinceMap.Mode.Cultural && province.game_data.culture !== null) {
 					text += " (" + province.game_data.culture.name + ")"
 				} else if (province_map.mode === ProvinceMap.Mode.TradeZone) {
