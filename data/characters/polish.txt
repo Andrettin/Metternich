@@ -245,6 +245,118 @@ gertrud_piast = {
 	#daughter of Hedwig von Andechs
 }
 
+henryk_piast_1227 = {
+	name = "Henryk"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	father = henryk_the_pious
+	birth_date = 1227
+	death_date = 1266.12.3
+	
+	#son of Anna Premyslid
+}
+
+boleslaw_piast_1223 = {
+	name = "Boleslaw"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	father = henryk_the_pious
+	birth_date = 1223.1.24
+	death_date = 1278.12.25
+	
+	#son of Anna Premyslid
+}
+
+gertruda_piast = {
+	name = "Gertruda"
+	dynasty = piast
+	character_class = warrior #aristocrat
+	culture = polish
+	religion = catholic
+	gender = female
+	father = henryk_the_pious
+	birth_date = 1220
+	death_date = 1247.4.23
+	
+	#daughter of Anna Premyslid
+}
+
+konstancja_piast = {
+	name = "Konstancja"
+	dynasty = piast
+	character_class = warrior #aristocrat
+	culture = polish
+	religion = catholic
+	gender = female
+	father = henryk_the_pious
+	birth_date = 1221
+	death_date = 1257.2.21
+	
+	#daughter of Anna Premyslid
+}
+
+mieszko_piast_1224 = {
+	name = "Mieszko"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	father = henryk_the_pious
+	birth_date = 1224
+	death_date = 1242
+	
+	#son of Anna Premyslid
+}
+
+konrad_piast_1228 = {
+	name = "Konrad"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	father = henryk_the_pious
+	birth_date = 1228
+	death_date = 1274.8.6
+	
+	#son of Anna Premyslid
+}
+
+elzbieta_piast = {
+	name = "Elzbieta"
+	dynasty = piast
+	character_class = warrior #aristocrat
+	culture = polish
+	religion = catholic
+	gender = female
+	father = henryk_the_pious
+	birth_date = 1230
+	death_date = 1265.1.16
+	
+	#daughter of Anna Premyslid
+}
+
+wladyslaw_piast_1237 = {
+	name = "Wladyslaw"
+	dynasty = piast
+	character_class = cleric
+	culture = polish
+	religion = catholic
+	gender = male
+	father = henryk_the_pious
+	birth_date = 1237
+	death_date = 1270.4.27
+	
+	#son of Anna Premyslid
+}
+
 cymburgis_of_masovia = { #Cymburgis of Masovia; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
 	name = "Cymburgis"
 	surname = "of Masovia"
