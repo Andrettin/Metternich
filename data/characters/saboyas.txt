@@ -1,0 +1,97 @@
+vittorio_amadeo_iii_of_sardinia = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 15.
+	name = "Vittorio Amadeo"
+	epithet = "III"
+	dynasty = saboya
+	character_class = warrior
+	rank = lord #king
+	culture = italian
+	religion = catholic
+	home_site = turin
+	gender = male
+	
+	#king of Sardinia, as Vittorio Amadeo III
+}
+
+maria_luisa_de_saboya = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 15.
+	name = "Maria Luisa"
+	dynasty = saboya
+	character_class = warrior #aristocrat
+	culture = italian
+	religion = catholic
+	home_site = turin
+	gender = female
+	father = vittorio_amadeo_iii_of_sardinia
+	
+	#married to king Louis XVIII of France
+	#had died by 1815
+}
+
+maria_teresa_de_saboya = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 15.
+	name = "Maria Teresa"
+	dynasty = saboya
+	character_class = warrior #aristocrat
+	culture = italian
+	religion = catholic
+	home_site = turin
+	gender = female
+	father = vittorio_amadeo_iii_of_sardinia
+	death_date = 1805.6.2
+	
+	history = {
+		1775.8.6 = { #married to Charles Philippe de Bourbon, and they had their first child on 1775.8.6
+			spouse = charles_philippe_de_bourbon
+		}
+	}
+}
+
+francisca_de_saboya = { #Francisca, sister of king Charles-Amédée-Albert of Sardinia; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 12.
+	name = "Francisca" #source gives "Françoise"
+	dynasty = saboya
+	character_class = warrior #aristocrat
+	culture = italian
+	religion = catholic
+	home_site = turin
+	gender = female
+	birth_date = 1800.4.13
+	
+	#married Archduke Reiner on 1820.5.28
+}
+
+maria_anna_de_saboya = { #Source: "Almanach de Gotha pour l'année 1847", 1847, p. 10.
+	name = "Maria Anna" #source gives "Marie-Anne"
+	dynasty = saboya
+	character_class = warrior #aristocrat
+	culture = italian #daughter of king Victor Emmanuel of Sardinia
+	religion = catholic
+	home_site = turin
+	gender = female
+	birth_date = 1803.9.19
+}
+
+teresa_de_saboya = { #Princess Teresa of Sardinia; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 50.
+	name = "Teresa"
+	dynasty = saboya
+	character_class = warrior #aristocrat
+	culture = italian
+	religion = catholic
+	home_site = turin
+	gender = female
+	birth_date = 1803.9.19
+	
+	#daughter of Victor-Emmanuel, king of Sardinia
+}
+
+cristina_de_saboya = { #Princess Cristina of Sardinia; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 23-24.
+	name = "Cristina"
+	dynasty = saboya
+	character_class = warrior #aristocrat
+	culture = italian
+	religion = catholic
+	home_site = turin
+	gender = female
+	birth_date = 1812.11.14
+	death_date = 1836.1.31
+	
+	#daughter of Victor-Emmanuel, king of Sardinia
+	#married on 1832.11.21 to Ferdinand II of the Two Sicilies
+}

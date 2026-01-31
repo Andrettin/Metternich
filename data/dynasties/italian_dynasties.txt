@@ -3,6 +3,12 @@ divrea = {
 	culture = italian
 }
 
+saboya = {
+	name = "Saboya"
+	prefix = "de"
+	culture = italian
+}
+
 visconti = {
 	name = "Visconti"
 	culture = italian

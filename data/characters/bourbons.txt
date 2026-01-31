@@ -29,6 +29,63 @@ louis_xviii_of_france = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergn
 	#king of France as of 1815, as Louis XVIII
 }
 
+charles_philippe_de_bourbon = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 15.
+	name = "Charles Philippe"
+	dynasty = bourbon
+	character_class = warrior
+	culture = french
+	religion = catholic
+	home_site = paris
+	gender = male
+	birth_date = 1757.10.9
+	
+	history = {
+		1775.8.6 = { #married to Maria Teresa, daughter of king Victor Amadeus III of Sardinia, and they had their first child on 1775.8.6
+			spouse = maria_teresa_de_saboya #Maria Teresa de Saboya
+		}
+		
+		#monsieur as of 1815
+	}
+}
+
+louis_antoine_de_bourbon = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 15.
+	name = "Louis Antoine"
+	dynasty = bourbon
+	character_class = warrior
+	culture = french
+	religion = catholic
+	home_site = angouleme
+	gender = male
+	father = charles_philippe_de_bourbon #Charles Philippe de Bourbon
+	mother = maria_teresa_de_saboya #Maria Teresa de Saboya
+	birth_date = 1775.8.6
+	
+	history = {
+		1799.6.10 = { #married on 1799.6.10 to Marie Thérèse, daughter of king Louis XVI of France
+			spouse = marie_therese_de_bourbon
+		}
+		
+		#duke of Angouleme as of 1815
+	}
+}
+
+charles_ferdinand_de_bourbon = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 15.
+	name = "Charles Ferdinand"
+	dynasty = bourbon
+	character_class = warrior
+	culture = french
+	religion = catholic
+	home_site = bourges
+	gender = male
+	father = charles_philippe_de_bourbon #Charles Philippe de Bourbon
+	mother = maria_teresa_de_saboya #Maria Teresa de Saboya
+	birth_date = 1778.1.24
+	
+	history = {
+		#duke of Berry as of 1815
+	}
+}
+
 marie_therese_de_bourbon = { #Marie Thérèse de Bourbon; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 15.
 	name = "Marie Thérèse" #"Marie Therese"
 	dynasty = bourbon
@@ -42,7 +99,7 @@ marie_therese_de_bourbon = { #Marie Thérèse de Bourbon; Source: "Gothaischer H
 	
 	history = {
 		1799.6.10 = { #married on 1799.6.10 to Louis Antoine de Bourbon
-			#spouse = 10000601 #Louis Antoine de Bourbon
+			spouse = louis_antoine_de_bourbon
 		}
 	}
 }
