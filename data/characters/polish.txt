@@ -357,6 +357,23 @@ wladyslaw_piast_1237 = {
 	#son of Anna Premyslid
 }
 
+henryk_piast_1258 = {
+	name = "Henryk"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	father = henryk_piast_1227
+	birth_date = 1258
+	death_date = 1290.6.24
+	traits = {
+		#honest
+	}
+	
+	#son of Judyta Piast
+}
+
 cymburgis_of_masovia = { #Cymburgis of Masovia; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
 	name = "Cymburgis"
 	surname = "of Masovia"
