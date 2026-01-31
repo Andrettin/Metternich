@@ -129,6 +129,16 @@ lanzelin_etichonen = {
 	death_date = 991
 }
 
+christina_1147 = {
+	name = "Christina"
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = female
+	birth_date = 1147.1.17
+	death_date = 1204.2.21
+}
+
 jutta_askanien = {
 	name = "Jutta"
 	dynasty = askanien

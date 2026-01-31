@@ -513,6 +513,24 @@ franz_i_of_austria = { #Franz von Habsburg, Emperor Franz II of the Holy Roman E
 	}
 }
 
+marie_theresie_von_habsburg = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 5.
+	name = "Marie Theresie"
+	dynasty = habsburg
+	character_class = warrior #aristocrat
+	culture = austrian
+	religion = catholic
+	home_site = vienna
+	gender = female
+	father = leopold_ii_of_the_holy_roman_empire #Leopold II of the Holy Roman Empire
+	mother = maria_luisa_de_bourbon #Maria Luisa, daughter of king Charles III of Spain; presumably, since she is also the mother of Leopold II's other children
+	
+	history = {
+		1787.10.18 = { #married on 1787.10.18 to Anton von Wettin
+			spouse = anton_von_wettin
+		}
+	}
+}
+
 karl_von_habsburg = { #Archduke Karl; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 11.
 	name = "Karl"
 	dynasty = habsburg

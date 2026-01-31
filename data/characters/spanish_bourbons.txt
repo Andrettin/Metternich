@@ -13,3 +13,19 @@ maria_luisa_de_bourbon = { #Maria Luisa, daughter of king Carlos III of Spain; S
 	#daughter of king Carlos III of Spain
 	#married to Emperor Leopold II of the Holy Roman Empire
 }
+
+maria_luisa_of_lucca = { #Duchess Maria Luisa of Lucca; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 50.
+	name = "Maria Luisa"
+	dynasty = bourbon
+	character_class = warrior #aristocrat
+	rank = lord #duchess
+	culture = castillian
+	religion = catholic
+	home_site = lucca
+	gender = female
+	birth_date = 1782.7.6
+	death_date = 1824.3.13 #succeeded by her son as duke of Lucca on 1824.3.13
+	
+	#daughter of king Carlos IV of Spain
+	#became widowed of King Lodovico of Etruria on 1803.5.27
+}

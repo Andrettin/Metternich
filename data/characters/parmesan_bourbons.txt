@@ -1,0 +1,30 @@
+ferdinando_of_parma = { #Duke Ferdinand of Parma; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 5.
+	name = "Ferdinando"
+	dynasty = bourbon
+	character_class = warrior
+	rank = lord #duke
+	culture = italian
+	religion = catholic
+	home_site = parma
+	gender = male
+}
+
+carolina_maria_of_parma = { #Princess Carolina Maria Teresa of Parma; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 6.
+	name = "Carolina Maria" #"Carolina Maria Teresa"
+	dynasty = bourbon
+	character_class = warrior #aristocrat
+	culture = italian
+	religion = catholic
+	home_site = parma
+	gender = female
+	father = ferdinando_of_parma #Duke Ferdinand of Parma; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 5.
+	death_date = 1804.3.1
+	
+	#wife of Maximilian von Wettin
+	
+	history = {
+		1794.8.10 = {
+			spouse = maximilian_von_wettin #had her first child with Maximilian von Wettin on 1794.8.10
+		}
+	}
+}

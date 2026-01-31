@@ -186,6 +186,25 @@ friedrich_christian_von_wettin = { #Source: "Gothaischer Hofkalender zum Nutzen 
 	#prince-elector of Saxony
 }
 
+marie_elisabeth_von_wettin = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, pp. 4-5.
+	name = "Marie Elisabeth"
+	dynasty = wettin
+	character_class = warrior #aristocrat
+	culture = german #Thuringian
+	religion = catholic
+	home_site = dresden
+	gender = female
+	birth_date = 1736.2.9 #born on 1736.2.9
+	
+	history = {
+		1815 = {
+			#effect = {
+			#	join_society = order_of_the_starry_cross #"St. C. O. D." as of 1815
+			#}
+		}
+	}
+}
+
 albert_von_wettin = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, pp. 4-5.
 	name = "Albert"
 	dynasty = wettin
@@ -207,10 +226,28 @@ albert_von_wettin = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnüge
 	}
 }
 
+marie_kunigunde_von_wettin = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, pp. 4-5.
+	name = "Marie Kunigunde"
+	dynasty = wettin
+	character_class = cleric
+	culture = german #Thuringian
+	religion = catholic
+	home_site = dresden
+	gender = female
+	birth_date = 1740.11.10
+	
+	history = {
+		1815 = {
+			#traits += nun #abbess of Essen and Thorn as of 1815
+		}
+	}
+}
+
 friedrich_august_von_wettin = { #Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 6-7.
 	name = "Friedrich August"
 	dynasty = wettin
 	character_class = warrior
+	rank = lord #king
 	culture = german #Thuringian
 	religion = catholic
 	home_site = dresden
@@ -225,5 +262,50 @@ friedrich_august_von_wettin = { #Source: "Almanach de Gotha pour l'année 1847",
 		1769.1.17 = { #married by procuration on 1769.1.17 and in person on 1769.1.29 to Maria Amalie Auguste
 			#spouse = 10000337 #Marie Amalie Auguste von Wittelsbach
 		}
+	}
+}
+
+anton_von_wettin = { #King Anton von Wettin of Saxony; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 6.
+	name = "Anton"
+	dynasty = wettin
+	character_class = warrior
+	rank = lord #king
+	culture = german #Thuringian
+	religion = catholic
+	home_site = dresden
+	gender = male
+	father = friedrich_christian_von_wettin #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, pp. 4-5.
+	birth_date = 1755.12.27
+	death_date = 1836.6.6 #succeeded by his nephew on 1836.6.6
+	
+	history = {
+		1787.10.18 = { #married on 1787.10.18 to Marie Theresie von Habsburg; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, pp. 4-5.
+			spouse = marie_theresie_von_habsburg
+		}
+	}
+}
+
+maximilian_von_wettin = { #Duke Maximilian von Wettin; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 6.
+	name = "Maximilian"
+	dynasty = wettin
+	character_class = warrior
+	culture = german #Thuringian
+	religion = catholic
+	home_site = dresden
+	gender = male
+	father = friedrich_christian_von_wettin #Friedrich Christian von Wettin; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, pp. 4-5.
+	birth_date = 1759.4.13
+	death_date = 1838.1.3
+	
+	history = {
+		1794.8.10 = {
+			spouse = carolina_maria_of_parma #had his first child with princess Carolina Maria Teresa of Parma on 1794.8.10
+		}
+		
+		1825.10.15 = {
+			#spouse = 10000334 #married by procuration on 1825.10.15 and in person on 1825.11.7 to Louise Charlotte, sister of the reigning duke of Lucca
+		}
+		
+		#abdicated in favor of his son through the act of 1830.9.13
 	}
 }
