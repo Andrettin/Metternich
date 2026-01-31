@@ -72,7 +72,7 @@ Item {
 					text: historical_ruler.dynasty ? historical_ruler.dynasty.name : ""
 					anchors.verticalCenter: parent.verticalCenter
 					anchors.left: parent.right
-					anchors.leftMargin: -128 * scale_factor
+					anchors.leftMargin: -192 * scale_factor
 					wrapMode: Text.WordWrap
 				}
 			}
