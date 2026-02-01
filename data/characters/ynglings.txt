@@ -2,27 +2,291 @@ fiolner_yngling = { #Source: Snorri Sturlson, "Heimskringla", 1844, vol. 1, pp. 
 	name = "Fiolner" #"Fiölner"
 	dynasty = yngling
 	character_class = warrior #king
-	rank = lord #king
+	rank = lord
 	culture = norse
 	religion = asatru
 	home_site = stockholm
 	gender = male
 	father = frey #in the Ynglinga saga, Fiölner was a son of Yngve
-	start_date = -27 #according to the Grottasongr, King Fjolnir of the Swedes lived around the same time as Augustus came to reign, establishing the Pax Romana
+	#start_date = -27 #according to the Grottasongr, King Fjolnir of the Swedes lived around the same time as Augustus came to reign, establishing the Pax Romana
 	
 	#described as powerful
+}
+
+svegdir_yngling = { #Source: Snorri Sturlson, "Heimskringla", 1844, vol. 1, pp. 227-228; Source: Richard Cleasby and Gudbrand Vigfusson, "An Icelandic-English Dictionary", 1874, p. 608.
+	name = "Svegdir" #"Svegðir"; as given by Cleasby; in the Heimskringla translation it is given as "Swegder" instead
+	dynasty = yngling
+	character_class = warrior #king
+	rank = lord
+	culture = norse
+	religion = asatru
+	home_site = stockholm
+	gender = male
+	father = fiolner_yngling
+	
+	#king of the Swedes
+}
+
+vanland_yngling = { #Source: Snorri Sturlson, "Heimskringla", 1844, vol. 1, pp. 227-228.
+	name = "Vanland"
+	dynasty = yngling
+	character_class = warrior #king
+	rank = lord
+	culture = norse
+	religion = asatru
+	home_site = stockholm
+	gender = male
+	father = svegdir_yngling
+	
+	#king of the Swedes
+}
+
+visbur_yngling = { #Source: Snorri Sturlson, "Heimskringla", 1844, vol. 1, pp. 228-229.
+	name = "Visbur"
+	dynasty = yngling
+	character_class = warrior #king
+	rank = lord
+	culture = norse
+	religion = asatru
+	home_site = stockholm
+	gender = male
+	father = vanland_yngling
+	
+	#king of the Swedes
+	#married the daughter of Aud the Rich
+}
+
+domald_yngling = { #Source: Snorri Sturlson, "Heimskringla", 1844, vol. 1, pp. 229-230.
+	name = "Domald"
+	dynasty = yngling
+	character_class = warrior #king
+	rank = lord
+	culture = norse
+	religion = asatru
+	home_site = stockholm
+	gender = male
+	father = visbur_yngling
+	
+	#king of the Swedes
+}
+
+domar_yngling = { #Source: Snorri Sturlson, "Heimskringla", 1844, vol. 1, pp. 229-230.
+	name = "Domar"
+	dynasty = yngling
+	character_class = warrior #king
+	rank = lord
+	culture = norse
+	religion = asatru
+	home_site = stockholm
+	gender = male
+	father = domald_yngling
+	
+	#king of the Swedes
+}
+
+dyggve_the_brave = { #Source: Snorri Sturlson, "Heimskringla", 1844, vol. 1, pp. 230-231.
+	name = "Dyggve"
+	epithet = "the Brave"
+	dynasty = yngling
+	character_class = warrior #king
+	rank = lord
+	culture = norse
+	religion = asatru
+	home_site = stockholm
+	gender = male
+	father = domar_yngling
+	
+	#king of the Swedes
+	#described as brave and mighty
+}
+
+dag_the_wise = { #Source: Snorri Sturlson, "Heimskringla", 1844, vol. 1, pp. 231-233.
+	name = "Dag"
+	epithet = "the Wise"
+	dynasty = yngling
+	character_class = warrior #king
+	rank = lord
+	culture = norse
+	religion = asatru
+	home_site = stockholm
+	gender = male
+	father = dyggve_the_brave
+	
+	#king of the Swedes
+	#described as wise, brave and mighty
+}
+
+agne_yngling = { #Source: Snorri Sturlson, "Heimskringla", 1844, vol. 1, pp. 233-234.
+	name = "Agne"
+	dynasty = yngling
+	character_class = warrior #king
+	rank = lord
+	culture = norse
+	religion = asatru
+	home_site = stockholm
+	gender = male
+	father = dag_the_wise
+	
+	#king of the Swedes
+	#Skialf was married to Agne after he invaded Finland, killed her father and took her and her brother to Sweden
+	#described as powerful, celebrated and expert
+}
+
+alric_yngling = { #Source: Snorri Sturlson, "Heimskringla", 1844, vol. 1, p. 234.
+	name = "Alric"
+	dynasty = yngling
+	character_class = warrior #king
+	rank = lord
+	culture = norse
+	religion = asatru
+	home_site = stockholm
+	gender = male
+	father = agne_yngling
+	
+	#Swedish king together with his brother Eric, but it was Alric's sons who went on to rule after their death, suggesting that he was the primary ruler
+	#horseriding described as being customary for him
+	#described as powerful and expert at all feats of arms
+}
+
+yngve_yngling = { #Source: Snorri Sturlson, "Heimskringla", 1844, vol. 1, pp. 235-236.
+	name = "Yngve"
+	dynasty = yngling
+	character_class = warrior #king
+	rank = lord
+	culture = norse
+	religion = asatru
+	home_site = stockholm
+	gender = male
+	father = alric_yngling
+	
+	#described as a great warrior, handsome expert in all exercises, strong and very sharp in battle, generous and full of mirth
+	#was king of Sweden together with his brother Alf, but it was Alf's son who succeeded them, suggesting that Alf was the primary ruler
+}
+
+jorund_yngling = { #Source: Snorri Sturlson, "Heimskringla", 1844, vol. 1, pp. 237-238.
+	name = "Jorund"
+	dynasty = yngling
+	character_class = warrior #king
+	rank = lord
+	culture = norse
+	religion = asatru
+	home_site = stockholm
+	gender = male
+	father = yngve_yngling
+}
+
+on_the_old = { #Source: Snorri Sturlson, "Heimskringla", 1844, vol. 1, pp. 239-240.
+	name = "On" #also known as Ane
+	epithet = "the Old"
+	dynasty = yngling
+	character_class = warrior #king
+	rank = lord
+	culture = norse
+	religion = asatru
+	home_site = stockholm
+	gender = male
+	father = jorund_yngling
+	
+	#described as wise and cruel
+	#ruled intermittently at Västergotland when Uppsal was occupied by Danish invaders
+}
+
+egil_yngling = { #Source: Snorri Sturlson, "Heimskringla", 1844, vol. 1, pp. 240-241.
+	name = "Egil"
+	dynasty = yngling
+	character_class = warrior #king
+	rank = lord
+	culture = norse
+	religion = asatru
+	home_site = stockholm
+	gender = male
+	father = on_the_old
+}
+
+ottar_vendelcrow = { #Source: Snorri Sturlson, "Heimskringla", 1844, vol. 1, pp. 242-243.
+	name = "Ottar"
+	epithet = "Vendelcrow" #nickname because of the manner of his death
+	dynasty = yngling
+	character_class = warrior #king
+	rank = lord
+	culture = norse
+	religion = asatru
+	home_site = stockholm
+	gender = male
+	father = egil_yngling
+	
+	#described as brave
+}
+
+adils_yngling = { #Source: Snorri Sturlson, "Heimskringla", 1844, vol. 1, pp. 243-245.
+	name = "Adils"
+	dynasty = yngling
+	character_class = warrior #king
+	rank = lord
+	culture = norse
+	religion = asatru
+	home_site = stockholm
+	gender = male
+	father = ottar_vendelcrow
+	
+	#king of the Swedes
+}
+
+eystein_yngling = { #Source: Snorri Sturlson, "Heimskringla", 1844, vol. 1, p. 246.
+	name = "Eystein"
+	dynasty = yngling
+	character_class = warrior #king
+	rank = lord
+	culture = norse
+	religion = asatru
+	home_site = stockholm
+	gender = male
+	father = adils_yngling
+	
+	#king of the Swedes
+}
+
+yngvar_yngling = { #Source: Snorri Sturlson, "Heimskringla", 1844, vol. 1, pp. 246-247.
+	name = "Yngvar"
+	dynasty = yngling
+	character_class = warrior #king
+	rank = lord
+	culture = norse
+	religion = asatru
+	home_site = stockholm
+	gender = male
+	father = eystein_yngling
+	
+	#king of the Swedes
+}
+
+onund_yngling = { #Source: Snorri Sturlson, "Heimskringla", 1844, vol. 1, pp. 247-248.
+	name = "Onund"
+	dynasty = yngling
+	character_class = warrior #king
+	rank = lord
+	culture = norse
+	religion = asatru
+	home_site = stockholm
+	gender = male
+	father = yngvar_yngling
+	
+	#king of the Swedes
 }
 
 ingiald_the_evil_adviser = { #Source: Snorri Sturlson, "Heimskringla", 1844, vol. 1, pp. 248-254.
 	name = "Ingiald"
 	epithet = "the Evil-Adviser"
 	dynasty = yngling
-	character_class = warrior
+	character_class = warrior #king
+	rank = lord
 	culture = norse
 	religion = asatru
 	home_site = stockholm
 	gender = male
+	father = onund_yngling
 	
+	#king of the Swedes
 	#married to Gauthild
 }
 
@@ -59,7 +323,7 @@ halfdan_huitbein = { #Source: Snorri Sturlson, "Heimskringla", 1844, vol. 1, pp.
 
 eystein_halfdanson = { #Source: Snorri Sturlson, "Heimskringla", 1844, vol. 1, pp. 257-258.
 	name = "Eystein"
-	surname = "Halfdanson" #to differentiate him from the other Eystein Yngling
+	#surname = "Halfdanson" #to differentiate him from the other Eystein Yngling
 	dynasty = yngling
 	character_class = warrior
 	culture = norse
