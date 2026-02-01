@@ -178,7 +178,7 @@ Rectangle {
 		anchors.top: ruler_portrait.bottom
 		anchors.topMargin: 16 * scale_factor
 		text: qsTr("View History")
-		visible: ruler_portrait.visible
+		visible: ruler_portrait.visible && selected_country && selected_country.game_data.historical_rulers.length > 1
 		
 		onClicked: {
 			politics_view_mode = PoliticsView.Mode.DomainHistory
