@@ -374,6 +374,211 @@ henryk_piast_1258 = {
 	#son of Judyta Piast
 }
 
+henryk_the_fat = {
+	name = "Henryk"
+	epithet = "the Fat"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	father = boleslaw_piast_1223
+	birth_date = 1248.1.24
+	death_date = 1296.2.22
+	traits = {
+		#gluttonous
+		#fat
+	}
+	
+	#son of Hedwig Askanien
+}
+
+boleslaw_piast_1252 = {
+	name = "Boleslaw"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	father = boleslaw_piast_1223
+	birth_date = 1252.1.24
+	death_date = 1301.11.9
+	traits = {
+		#just
+		#envious
+	}
+	
+	#son of Hedwig Askanien
+}
+
+agnieszka_piast = {
+	name = "Agnieszka"
+	dynasty = piast
+	character_class = warrior #aristocrat
+	culture = polish
+	religion = catholic
+	gender = female
+	father = boleslaw_piast_1223
+	birth_date = 1243
+	death_date = 1265.3.13
+	
+	#daughter of Hedwig Askanien
+}
+
+jadwiga_piast = {
+	name = "Jadwiga"
+	dynasty = piast
+	character_class = warrior #aristocrat
+	culture = polish
+	religion = catholic
+	gender = female
+	father = boleslaw_piast_1223
+	birth_date = 1250
+	death_date = 1280
+	
+	#daughter of Hedwig Askanien
+}
+
+bernard_piast = {
+	name = "Bernard"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	father = boleslaw_piast_1223
+	birth_date = 1253
+	death_date = 1286.4.25
+	
+	#son of Hedwig Askanien
+}
+
+siemomysl_piast = {
+	name = "Siemomysl"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	mother = konstancja_piast
+	birth_date = 1245
+	death_date = 1287
+	
+	#son of Kazimierz Piast
+}
+
+leszek_piast = {
+	name = "Leszek"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	mother = konstancja_piast
+	birth_date = 1241
+	death_date = 1288.9.30
+	
+	#son of Kazimierz Piast
+}
+
+anna_piast = {
+	name = "Anna"
+	dynasty = piast
+	character_class = warrior #aristocrat
+	culture = polish
+	religion = catholic
+	gender = female
+	father = konrad_piast_1228
+	birth_date = 1250
+	death_date = 1271.6.25
+	
+	#child of Salomea Piast
+}
+
+henryk_piast_1251 = {
+	name = "Henryk"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	father = konrad_piast_1228
+	birth_date = 1251
+	death_date = 1309.12.3
+	
+	#child of Salomea Piast
+}
+
+konrad_piast_1252 = {
+	name = "Konrad"
+	dynasty = piast
+	character_class = cleric
+	culture = polish
+	religion = catholic
+	gender = male
+	father = konrad_piast_1228
+	birth_date = 1252
+	death_date = 1304.10.11
+	
+	#child of Salomea Piast
+}
+
+eufemia_piast = {
+	name = "Eufemia"
+	dynasty = piast
+	character_class = warrior #aristocrat
+	culture = polish
+	religion = catholic
+	gender = female
+	father = konrad_piast_1228
+	birth_date = 1254
+	death_date = 1275
+	
+	#child of Salomea Piast
+}
+
+przemyslaw_piast = {
+	name = "Przemyslaw"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	father = konrad_piast_1228
+	birth_date = 1255
+	death_date = 1289.2.26
+	
+	#child of Salomea Piast
+}
+
+konstancja_piast_1245 = {
+	name = "Konstancja"
+	dynasty = piast
+	character_class = warrior #aristocrat
+	culture = polish
+	religion = catholic
+	gender = female
+	mother = elzbieta_piast
+	birth_date = 1245
+	death_date = 1281.10.8
+	
+	#child of Przemyslaw Piast
+}
+
+przemyslaw_piast_1257 = {
+	name = "Przemyslaw"
+	dynasty = piast
+	character_class = warrior #aristocrat
+	culture = polish
+	religion = catholic
+	gender = male
+	mother = elzbieta_piast
+	birth_date = 1257.5.14
+	death_date = 1296.2.8
+	
+	#child of Przemyslaw Piast
+}
+
 cymburgis_of_masovia = { #Cymburgis of Masovia; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
 	name = "Cymburgis"
 	surname = "of Masovia"
