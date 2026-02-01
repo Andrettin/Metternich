@@ -19,6 +19,56 @@ frey = { #Source: Kevin Crossley-Holland, "The Norse Myths", 1980, p. 242; Sourc
 		culture = elven
 		religion = asatru
 		gender = male
-		birth_date = -3000
+		father = njord
 	}
+}
+
+freyja = { #Source: Peter Buchholz, "Perspectives for Historical Research in Germanic Religion", 1968, p. 135; Source: Carolyne Larrington, "The Norse Myths: A Guide to the Gods and Heroes", 2017, pp. 46-47.
+	name = "Freyja"
+	pantheon = vanir
+	divine_rank = intermediate_deity
+	religions = {
+		asatru
+	}
+	major_domains = {
+		animal
+		charm
+		creation
+		divination
+		healing
+		necromantic
+	}
+	character = {
+		species = elf
+		character_class = warrior
+		culture = elven
+		religion = asatru
+		gender = female
+		father = njord
+	}
+	
+	#fertility goddess, and a goddess of love
+}
+
+njord = { #Source: Kevin Crossley-Holland, "The Norse Myths", 1980, p. 248; Source: Peter Buchholz, "Perspectives for Historical Research in Germanic Religion", 1968, p. 135; Source: Carolyne Larrington, "The Norse Myths: A Guide to the Gods and Heroes", 2017, p. 54.
+	name = "Njord"
+	pantheon = vanir
+	divine_rank = intermediate_deity
+	religions = {
+		asatru
+	}
+	major_domains = {
+		air
+		water
+	}
+	character = {
+		species = elf
+		character_class = warrior
+		culture = elven
+		religion = asatru
+		gender = male
+	}
+	
+	#god of the sea and wind
+	#husband of Skadi
 }
