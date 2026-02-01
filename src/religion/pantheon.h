@@ -5,6 +5,8 @@
 
 namespace metternich {
 
+enum class divine_rank;
+
 class pantheon final : public named_data_entry, public data_type<pantheon>
 {
 	Q_OBJECT
@@ -18,10 +20,15 @@ public:
 	{
 	}
 
+	virtual void process_gsml_scope(const gsml_data &scope) override;
+
+	std::string_view get_divine_rank_name(const divine_rank rank) const;
+
 signals:
 	void changed();
 
 private:
+	std::map<divine_rank, std::string> divine_rank_names;
 };
 
 }

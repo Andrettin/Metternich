@@ -15,13 +15,14 @@ class cultural_group;
 class divine_domain;
 class pantheon;
 class religion;
+enum class divine_rank;
 
 class deity final : public idea, public data_type<deity>
 {
 	Q_OBJECT
 
 	Q_PROPERTY(const metternich::pantheon* pantheon MEMBER pantheon READ get_pantheon NOTIFY changed)
-	Q_PROPERTY(bool major MEMBER major READ is_major NOTIFY changed)
+	Q_PROPERTY(int divine_level MEMBER divine_level READ get_divine_level NOTIFY changed)
 	Q_PROPERTY(bool apotheosis MEMBER apotheosis READ is_apotheotic NOTIFY changed)
 	Q_PROPERTY(const metternich::character* character READ get_character CONSTANT)
 
@@ -35,6 +36,7 @@ public:
 	explicit deity(const std::string &identifier);
 	~deity();
 
+	virtual void process_gsml_property(const gsml_property &property) override;
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
 	virtual void check() const override;
@@ -49,10 +51,13 @@ public:
 		return this->pantheon;
 	}
 
-	bool is_major() const
+	int get_divine_level() const
 	{
-		return this->major;
+		return this->divine_level;
 	}
+
+	divine_rank get_divine_rank() const;
+	std::string_view get_divine_rank_name() const;
 
 	bool is_apotheotic() const
 	{
@@ -86,7 +91,7 @@ signals:
 
 private:
 	const metternich::pantheon *pantheon = nullptr;
-	bool major = false;
+	int divine_level = 0;
 	bool apotheosis = false;
 	std::vector<const religion *> religions;
 	metternich::character *character = nullptr;

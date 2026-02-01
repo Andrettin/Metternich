@@ -1,6 +1,7 @@
 aphrodite = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 60-62.
 	name = "Aphrodite"
 	pantheon = olympian
+	divine_rank = intermediate_deity
 	religions = {
 		hellenic
 	}
@@ -24,6 +25,7 @@ aphrodite = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p
 apollo = {
 	name = "Apollo"
 	pantheon = olympian
+	divine_rank = intermediate_deity
 	religions = {
 		hellenic
 	}
@@ -47,6 +49,7 @@ apollo = {
 ares = {
 	name = "Ares"
 	pantheon = olympian
+	divine_rank = intermediate_deity
 	religions = {
 		hellenic
 	}
@@ -71,7 +74,7 @@ ares = {
 artemis = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 287-288.
 	name = "Artemis"
 	pantheon = olympian
-	portrait = athena
+	divine_rank = intermediate_deity
 	religions = {
 		hellenic
 	}
@@ -100,6 +103,7 @@ artemis = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp.
 athena = {
 	name = "Athena"
 	pantheon = olympian
+	divine_rank = intermediate_deity
 	portrait = athena
 	religions = {
 		hellenic
@@ -115,6 +119,7 @@ athena = {
 		monster_type = trumpet_archon
 		culture = celestial
 		religion = hellenic
+		portrait = athena
 		gender = female
 		father = zeus #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 504.
 	}
@@ -123,6 +128,7 @@ athena = {
 demeter = {
 	name = "Demeter"
 	pantheon = olympian
+	divine_rank = intermediate_deity
 	religions = {
 		hellenic
 	}
@@ -149,6 +155,7 @@ demeter = {
 dionysus = {
 	name = "Dionysus"
 	pantheon = olympian
+	divine_rank = intermediate_deity
 	religions = {
 		hellenic
 	}
@@ -173,6 +180,7 @@ dionysus = {
 hades = {
 	name = "Hades"
 	pantheon = olympian
+	divine_rank = intermediate_deity
 	religions = {
 		hellenic
 	}
@@ -198,6 +206,7 @@ hades = {
 hephaestus = {
 	name = "Hephaestus"
 	pantheon = olympian
+	divine_rank = intermediate_deity
 	religions = {
 		hellenic
 	}
@@ -224,6 +233,7 @@ hephaestus = {
 hera = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 232-234, 426.
 	name = "Hera"
 	pantheon = olympian #one of the twelve main Olympian deities
+	divine_rank = greater_deity
 	religions = {
 		hellenic
 	}
@@ -255,6 +265,7 @@ hera = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 23
 hermes = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 243-246.
 	name = "Hermes"
 	pantheon = olympian
+	divine_rank = intermediate_deity
 	religions = {
 		hellenic
 	}
@@ -286,8 +297,7 @@ hermes = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 
 poseidon = {
 	name = "Poseidon"
 	pantheon = olympian
-	portrait = henry_the_navigator
-	major = true
+	divine_rank = intermediate_deity
 	religions = {
 		hellenic
 	}
@@ -319,7 +329,7 @@ poseidon = {
 zeus = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 287-288.
 	name = "Zeus"
 	pantheon = olympian
-	major = true
+	divine_rank = greater_deity
 	religions = {
 		hellenic
 	}

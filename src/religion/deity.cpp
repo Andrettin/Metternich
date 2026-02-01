@@ -5,15 +5,21 @@
 #include "character/character.h"
 #include "culture/cultural_group.h"
 #include "culture/culture.h"
+#include "database/defines.h"
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
 #include "domain/idea_type.h"
 #include "religion/deity_slot.h"
 #include "religion/divine_domain.h"
+#include "religion/divine_rank.h"
+#include "religion/pantheon.h"
 #include "religion/religion.h"
 #include "technology/technology.h"
+#include "util/assert_util.h"
 #include "util/log_util.h"
 #include "util/vector_util.h"
+
+#include <magic_enum/magic_enum.hpp>
 
 namespace metternich {
 
@@ -34,6 +40,20 @@ deity::deity(const std::string &identifier) : idea(identifier)
 }
 
 deity::~deity() = default;
+
+void deity::process_gsml_property(const gsml_property &property)
+{
+	const std::string &key = property.get_key();
+	const std::string &value = property.get_value();
+
+	if (key == "divine_rank") {
+		assert_throw(property.get_operator() == gsml_operator::assignment);
+		const divine_rank rank = magic_enum::enum_cast<divine_rank>(value).value();
+		this->divine_level = defines::get()->get_divine_rank_level(rank);
+	} else {
+		named_data_entry::process_gsml_property(property);
+	}
+}
 
 void deity::process_gsml_scope(const gsml_data &scope)
 {
@@ -141,6 +161,16 @@ const std::string &deity::get_cultural_name(const cultural_group *cultural_group
 	return this->get_name();
 }
 
+divine_rank deity::get_divine_rank() const
+{
+	return defines::get()->get_divine_level_rank(this->get_divine_level());
+}
+
+std::string_view deity::get_divine_rank_name() const
+{
+	return this->get_pantheon()->get_divine_rank_name(this->get_divine_rank());
+}
+
 bool deity::is_available_for_country_slot(const domain *domain, const idea_slot *slot) const
 {
 	if (!idea::is_available_for_country_slot(domain, slot)) {
@@ -149,7 +179,7 @@ bool deity::is_available_for_country_slot(const domain *domain, const idea_slot 
 
 	const deity_slot *deity_slot = static_cast<const metternich::deity_slot *>(slot);
 
-	if (this->is_major() != deity_slot->is_major()) {
+	if ((this->get_divine_rank() >= divine_rank::greater_deity) != deity_slot->is_major()) {
 		return false;
 	}
 

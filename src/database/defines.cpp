@@ -15,6 +15,7 @@
 #include "map/direction.h"
 #include "map/terrain_adjacency_type.h"
 #include "map/tile_image_provider.h"
+#include "religion/divine_rank.h"
 #include "script/modifier.h"
 #include "ui/icon.h"
 #include "util/assert_util.h"
@@ -87,6 +88,13 @@ void defines::process_gsml_scope(const gsml_data &scope)
 			dice dice(property.get_value());
 
 			this->bloodline_strength_per_category[category] = std::move(dice);
+		});
+	} else if (tag == "divine_rank_levels") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+
+			this->divine_rank_levels[magic_enum::enum_cast<divine_rank>(key).value()] = std::stoi(value);
 		});
 	} else if (tag == "diplomacy_state_colors") {
 		scope.for_each_child([&](const gsml_data &child_scope) {
@@ -249,6 +257,32 @@ const dice &defines::get_bloodline_strength_for_category(const bloodline_strengt
 	}
 
 	throw std::runtime_error(std::format("No bloodline strength dice is given for category {}.", magic_enum::enum_name(category)));
+}
+
+int defines::get_divine_rank_level(const divine_rank rank) const
+{
+	const auto find_iterator = this->divine_rank_levels.find(rank);
+
+	if (find_iterator != this->divine_rank_levels.end()) {
+		return find_iterator->second;
+	}
+
+	throw std::runtime_error(std::format("No divine level is given for divine rank \"{}\".", magic_enum::enum_name(rank)));
+}
+
+divine_rank defines::get_divine_level_rank(const int divine_level) const
+{
+	divine_rank rank = divine_rank::none;
+
+	for (const auto &[divine_rank, rank_level] : this->divine_rank_levels) {
+		if (divine_level >= rank_level) {
+			rank = divine_rank;
+		} else {
+			break;
+		}
+	}
+
+	return rank;
 }
 
 void defines::set_river_image_filepath(const std::filesystem::path &filepath)

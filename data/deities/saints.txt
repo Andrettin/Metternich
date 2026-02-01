@@ -1,6 +1,7 @@
 saint_cuthbert = { #Source: Frank Stenton, "Anglo-Saxon England", 1971, pp. 126, 138-139.
 	name = "Saint Cuthbert"
 	pantheon = abrahamic
+	divine_rank = intermediate_deity
 	apotheosis = true
 	religions = {
 		catholic

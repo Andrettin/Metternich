@@ -15,8 +15,7 @@ chaos = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 12
 gaia = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 200-201.
 	name = "Gaia"
 	pantheon = protogenoi
-	portrait = athena
-	major = true
+	divine_rank = greater_deity
 	religions = {
 		hellenic
 	}
@@ -45,7 +44,7 @@ gaia = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 20
 uranus = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 479.
 	name = "Uranus"
 	pantheon = protogenoi
-	major = true
+	divine_rank = greater_deity
 	religions = {
 		hellenic
 	}

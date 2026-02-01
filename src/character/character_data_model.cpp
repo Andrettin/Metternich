@@ -190,6 +190,14 @@ void character_data_model::reset_model()
 	if (this->character != nullptr) {
 		const character_game_data *character_game_data = this->get_character()->get_game_data();
 
+		if (character_game_data->is_deity()) {
+			const deity *deity = this->character->get_deity();
+
+			this->top_rows.push_back(std::make_unique<character_data_row>("Pantheon:", deity->get_pantheon()->get_name()));
+
+			this->top_rows.push_back(std::make_unique<character_data_row>("Divine Rank:", std::format("{} ({})", deity->get_divine_rank_name(), deity->get_divine_level())));
+		}
+
 		this->top_rows.push_back(std::make_unique<character_data_row>("Species:", this->character->get_species()->get_name()));
 
 		const character_class *character_class = character_game_data->get_character_class();
@@ -224,9 +232,7 @@ void character_data_model::reset_model()
 			this->top_rows.push_back(std::make_unique<character_data_row>("Culture:", this->character->get_culture()->get_name()));
 		}
 
-		if (character_game_data->is_deity()) {
-			this->top_rows.push_back(std::make_unique<character_data_row>("Pantheon:", this->character->get_deity()->get_pantheon()->get_name()));
-		} else if (this->character->get_religion() != nullptr) {
+		if (!character_game_data->is_deity() && this->character->get_religion() != nullptr) {
 			this->top_rows.push_back(std::make_unique<character_data_row>("Religion:", this->character->get_religion()->get_name()));
 		}
 
@@ -264,7 +270,6 @@ void character_data_model::create_attribute_rows()
 
 	this->top_rows.push_back(std::move(top_row));
 }
-
 
 void character_data_model::create_armor_class_rows()
 {

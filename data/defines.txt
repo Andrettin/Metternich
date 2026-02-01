@@ -147,6 +147,15 @@ bloodline_strength_per_category = {
 	great = 8d8
 }
 
+divine_rank_levels = {
+	quasi_deity = 0
+	demigod = 1
+	lesser_deity = 6
+	intermediate_deity = 11
+	greater_deity = 16
+	overdeity = 21
+}
+
 minor_nation_color = { 221 216 181 }
 country_border_color = { 0 0 0 }
 selected_country_color = { 255 255 0 }

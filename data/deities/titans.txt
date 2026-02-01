@@ -19,7 +19,7 @@ atlas = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 9
 cronus = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 139-140, 435, 479.
 	name = "Cronus"
 	pantheon = titan
-	major = true
+	divine_rank = greater_deity
 	religions = {
 		hellenic
 	}
@@ -128,6 +128,7 @@ prometheus = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, 
 rhea = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 429.
 	name = "Rhea"
 	pantheon = titan
+	divine_rank = greater_deity
 	religions = {
 		hellenic
 	}
