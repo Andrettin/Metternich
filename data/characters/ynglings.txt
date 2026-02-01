@@ -1,3 +1,18 @@
+fiolner_yngling = { #Source: Snorri Sturlson, "Heimskringla", 1844, vol. 1, pp. 225-227.
+	name = "Fiolner" #"Fiölner"
+	dynasty = yngling
+	character_class = warrior #king
+	rank = lord #king
+	culture = norse
+	religion = asatru
+	home_site = stockholm
+	gender = male
+	father = frey #in the Ynglinga saga, Fiölner was a son of Yngve
+	start_date = -27 #according to the Grottasongr, King Fjolnir of the Swedes lived around the same time as Augustus came to reign, establishing the Pax Romana
+	
+	#described as powerful
+}
+
 ingiald_the_evil_adviser = { #Source: Snorri Sturlson, "Heimskringla", 1844, vol. 1, pp. 248-254.
 	name = "Ingiald"
 	epithet = "the Evil-Adviser"
