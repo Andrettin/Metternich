@@ -56,5 +56,6 @@ metternich = {
 			cultural_group = asian
 		}
 		character_class = warrior #aristocrat
+		birth_year >= 1750
 	}
 }

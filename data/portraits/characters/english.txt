@@ -15,6 +15,7 @@ elizabeth_i_of_england = {
 			character_class = warrior #aristocrat
 			character_class = paladin
 		}
+		birth_year >= 1500
 		birth_year < 1700
 	}
 }

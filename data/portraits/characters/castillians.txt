@@ -3,8 +3,7 @@ philip_ii_of_spain = {
 	character_conditions = {
 		gender = male
 		or = {
-			culture = castillian
-			culture = austrian
+			cultural_group = western
 			culture = persian
 		}
 		or = {
