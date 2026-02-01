@@ -17,6 +17,7 @@
 #include "item/item.h"
 #include "item/item_slot.h"
 #include "religion/deity.h"
+#include "religion/divine_domain.h"
 #include "religion/pantheon.h"
 #include "religion/religion.h"
 #include "species/species.h"
@@ -196,6 +197,8 @@ void character_data_model::reset_model()
 			this->top_rows.push_back(std::make_unique<character_data_row>("Pantheon:", deity->get_pantheon()->get_name()));
 
 			this->top_rows.push_back(std::make_unique<character_data_row>("Divine Rank:", std::format("{} ({})", deity->get_divine_rank_name(), deity->get_divine_level())));
+
+			this->create_divine_domain_rows();
 		}
 
 		this->top_rows.push_back(std::make_unique<character_data_row>("Species:", this->character->get_species()->get_name()));
@@ -256,6 +259,27 @@ void character_data_model::reset_model()
 
 	this->resetting_model = false;
 	this->endResetModel();
+}
+
+void character_data_model::create_divine_domain_rows()
+{
+	if (this->get_character()->get_deity()->get_major_domains().empty() && this->get_character()->get_deity()->get_minor_domains().empty()) {
+		return;
+	}
+
+	auto top_row = std::make_unique<character_data_row>("Divine Domains");
+
+	for (const divine_domain *domain : this->get_character()->get_deity()->get_major_domains()) {
+		auto row = std::make_unique<character_data_row>(domain->get_name(), "", top_row.get());
+		top_row->child_rows.push_back(std::move(row));
+	}
+
+	for (const divine_domain *domain : this->get_character()->get_deity()->get_minor_domains()) {
+		auto row = std::make_unique<character_data_row>(domain->get_name() + " (Minor)", "", top_row.get());
+		top_row->child_rows.push_back(std::move(row));
+	}
+
+	this->top_rows.push_back(std::move(top_row));
 }
 
 void character_data_model::create_attribute_rows()

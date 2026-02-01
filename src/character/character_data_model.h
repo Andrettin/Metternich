@@ -68,6 +68,7 @@ public:
 	void set_character(const metternich::character *character);
 
 	void reset_model();
+	void create_divine_domain_rows();
 	void create_attribute_rows();
 	void create_armor_class_rows();
 	void update_armor_class_rows();
