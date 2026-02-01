@@ -194,9 +194,9 @@ void character_data_model::reset_model()
 		if (character_game_data->is_deity()) {
 			const deity *deity = this->character->get_deity();
 
-			this->top_rows.push_back(std::make_unique<character_data_row>("Pantheon:", deity->get_pantheon()->get_name()));
-
 			this->top_rows.push_back(std::make_unique<character_data_row>("Divine Rank:", std::format("{} ({})", deity->get_divine_rank_name(), deity->get_divine_level())));
+
+			this->top_rows.push_back(std::make_unique<character_data_row>("Pantheon:", deity->get_pantheon()->get_name()));
 
 			this->create_divine_domain_rows();
 		}
