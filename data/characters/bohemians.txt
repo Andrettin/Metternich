@@ -18,3 +18,69 @@ vlatislav_ii_of_bohemia = { #Source: Peter H. Wilson, "The Holy Roman Empire", 2
 		#Frederick I of the Holy Roman Empire granted a personal elevation to king to Vladislav II of Bohemia in 1158; Source: Peter H. Wilson, "The Holy Roman Empire", 2016, p. 207.
 	}
 }
+
+ludmila_1150 = {
+	name = "Ludmila"
+	character_class = warrior
+	culture = czech
+	religion = catholic
+	gender = female
+	birth_date = 1150
+	death_date = 1211
+}
+
+diepold_premyslid = {
+	name = "Diepold"
+	dynasty = premyslid
+	character_class = cleric
+	culture = czech
+	religion = catholic
+	gender = male
+	mother = adelajda_piast
+	birth_date = 1196.10.2
+	death_date = 1226
+	
+	#child of Diepold Premyslid
+}
+
+boleslav_premyslid = {
+	name = "Boleslav"
+	dynasty = premyslid
+	character_class = warrior
+	culture = czech
+	religion = catholic
+	gender = male
+	mother = adelajda_piast
+	birth_date = 1198
+	death_date = 1241.4.9
+	
+	#child of Diepold Premyslid
+}
+
+sobieslav_premyslid = {
+	name = "Sobieslav"
+	dynasty = premyslid
+	character_class = warrior
+	culture = czech
+	religion = catholic
+	gender = male
+	mother = adelajda_piast
+	birth_date = 1199
+	death_date = 1246
+	
+	#child of Diepold Premyslid
+}
+
+borivoj_premyslid = {
+	name = "Borivoj"
+	dynasty = premyslid
+	character_class = warrior
+	culture = czech
+	religion = catholic
+	gender = male
+	mother = adelajda_piast
+	birth_date = 1200
+	death_date = 1235
+	
+	#child of Diepold Premyslid
+}

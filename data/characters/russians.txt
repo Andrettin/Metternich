@@ -1,3 +1,31 @@
+andrei_rurikid = {
+	name = "Andrei"
+	dynasty = rurikid
+	character_class = warrior
+	culture = russian
+	religion = orthodox
+	gender = male
+	mother = eufemia_piast_1260
+	birth_date = 1287
+	death_date = 1323
+	
+	#son of Yuriy Rurikid
+}
+
+lev_rurikid = {
+	name = "Lev"
+	dynasty = rurikid
+	character_class = warrior
+	culture = russian
+	religion = orthodox
+	gender = male
+	mother = eufemia_piast_1260
+	birth_date = 1288
+	death_date = 1324
+	
+	#son of Yuriy Rurikid
+}
+
 basil_iii_of_russia = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 202.
 	name = "Basil"
 	epithet = "III"

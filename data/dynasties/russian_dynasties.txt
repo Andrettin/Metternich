@@ -2,3 +2,8 @@ romanov = {
 	name = "Romanov"
 	culture = russian
 }
+
+rurikid = {
+	name = "Rurikid"
+	culture = russian
+}

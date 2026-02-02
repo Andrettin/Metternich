@@ -1,0 +1,4 @@
+premyslid = {
+	name = "Premyslid"
+	culture = czech
+}

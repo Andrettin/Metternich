@@ -568,7 +568,7 @@ konstancja_piast_1245 = {
 przemyslaw_piast_1257 = {
 	name = "Przemyslaw"
 	dynasty = piast
-	character_class = warrior #aristocrat
+	character_class = warrior
 	culture = polish
 	religion = catholic
 	gender = male
@@ -577,6 +577,151 @@ przemyslaw_piast_1257 = {
 	death_date = 1296.2.8
 	
 	#child of Przemyslaw Piast
+}
+
+kazimierz_piast = {
+	name = "Kazimierz"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	father = mieszko_piast
+	mother = ludmila_1150
+	birth_date = 1179
+	death_date = 1230.5.13
+}
+
+eufrozyna_piast = {
+	name = "Eufrozyna"
+	dynasty = piast
+	character_class = warrior #aristocrat
+	culture = polish
+	religion = catholic
+	gender = female
+	father = kazimierz_piast
+	birth_date = 1228
+	death_date = 1292.11.4
+}
+
+wladyslaw_piast_1225 = {
+	name = "Wladyslaw"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	father = kazimierz_piast
+	birth_date = 1225
+	death_date = 1282.8.27
+}
+
+mieszko_the_fat = {
+	name = "Mieszko"
+	epithet = "the Fat"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	father = kazimierz_piast
+	birth_date = 1220
+	death_date = 1246.10.22
+	traits = {
+		#gluttonous
+		#fat
+	}
+}
+
+wladyslaw_piast_1261 = {
+	name = "Wladyslaw"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	mother = eufrozyna_piast
+	birth_date = 1261
+	death_date = 1333.3.2
+	traits = {
+		#ambitious
+	}
+	
+	#son of Kazimierz Piast
+}
+
+siemowit_piast = {
+	name = "Siemowit"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	mother = eufrozyna_piast
+	birth_date = 1262
+	death_date = 1314
+	
+	#son of Kazimierz Piast
+}
+
+eufemia_piast_1260 = {
+	name = "Eufemia"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = female
+	mother = eufrozyna_piast
+	birth_date = 1260
+	death_date = 1308.3.18
+	
+	#daughter of Kazimierz Piast
+}
+
+kazimierz_the_great = {
+	name = "Kazimierz"
+	epithet = "the Great"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	father = wladyslaw_piast_1261
+	birth_date = 1310.4.30
+	death_date = 1370.11.5
+	traits = {
+		#genius
+	}
+	
+	#son of Jadwiga Piast
+}
+
+elzbieta_piast_1305 = {
+	name = "Elzbieta"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = female
+	father = wladyslaw_piast_1261
+	birth_date = 1305
+	death_date = 1380
+	
+	#daughter of Jadwiga Piast
+}
+
+kunegunda_piast = {
+	name = "Kunegunda"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = female
+	father = wladyslaw_piast_1261
+	birth_date = 1298
+	death_date = 1331.4.9
+	
+	#daughter of Jadwiga Piast
 }
 
 cymburgis_of_masovia = { #Cymburgis of Masovia; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
