@@ -573,7 +573,7 @@ std::string character_game_data::get_full_name() const
 QString character_game_data::get_full_name_for_domain(const metternich::domain *domain) const
 {
 	if (this->is_deity()) {
-		return QString::fromStdString(this->character->get_deity()->get_name());
+		return QString::fromStdString(this->character->get_deity()->get_cultural_name(domain->get_game_data()->get_culture()));
 	}
 
 	return QString::fromStdString(this->character->get_full_name(this->get_regnal_number_for_domain(domain)));
