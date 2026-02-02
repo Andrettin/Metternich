@@ -35,6 +35,25 @@ saint_cuthbert = { #Source: Frank Stenton, "Anglo-Saxon England", 1971, pp. 126,
 	}
 }
 
+saint_hedwig = {
+	name = "Saint Hedwig"
+	pantheon = abrahamic
+	apotheosis = true
+	religions = {
+		catholic
+	}
+	character = {
+		name = "Hedwig"
+		dynasty = andechs
+		character_class = paladin #aristocrat and saint
+		culture = german
+		religion = catholic
+		gender = female
+		birth_date = 1170
+		death_date = 1243.10.13
+	}
+}
+
 saint_leopold = {
 	name = "Saint Leopold"
 	pantheon = abrahamic

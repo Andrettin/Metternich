@@ -1,3 +1,9 @@
+andechs = {
+	name = "Andechs"
+	prefix = "von"
+	culture = german
+}
+
 askanien = {
 	name = "Askanien"
 	culture = german

@@ -1,3 +1,14 @@
+saint_hedwig = {
+	name = "Saint Hedwig"
+	founder = saint_hedwig
+	cultures = {
+		austrian
+		dutch
+		german
+		polish
+	}
+}
+
 saint_leopold = {
 	name = "Saint Leopold"
 	founder = saint_leopold
