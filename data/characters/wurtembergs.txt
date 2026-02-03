@@ -17,3 +17,37 @@ ferdinand_august_von_wurtemberg = { #Source: "Almanach de Gotha pour l'année 18
 	
 	#fieldmarshal in the Austrian army
 }
+
+ludwig_friedrich_von_wurtemberg = { #Duke Ludwig Friedrich Alexander of Württemberg; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 12, 80-81.
+	name = "Ludwig Friedrich" #"Ludwig Friedrich Alexander"
+	dynasty = wurtemberg
+	character_class = warrior
+	culture = german #Swabian
+	religion = protestant
+	home_site = stuttgart
+	gender = male
+	death_date = 1817.9.20
+	
+	history = {
+		1792.1.16 = {
+			#spouse = 10000271 #had a child by his first wife, Marie Czartoryski, on 1792.1.16
+		}
+		
+		1797.1.28 = { #married on 1797.1.28 to Henriette von Nassau-Weilburg
+			#spouse = 10000267 #Henriette von Nassau-Weilburg
+		}
+	}
+}
+
+maria_dorothee_von_wurtemberg = { #Maria Dorothée Wilhelmina von Württemberg; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 12, 81.
+	name = "Maria Dorothée" #"Maria Dorothée Wilhelmina"
+	dynasty = wurtemberg
+	character_class = warrior
+	culture = german #Swabian
+	religion = protestant
+	home_site = stuttgart
+	gender = female
+	father = ludwig_friedrich_von_wurtemberg #Ludwig Friedrich Alexander von Württemberg
+	#mother = 10000267 #Henriette von Nassau-Weilburg
+	birth_date = 1797.11.1
+}
