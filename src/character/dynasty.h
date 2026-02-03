@@ -5,6 +5,10 @@
 
 Q_MOC_INCLUDE("culture/culture.h")
 
+namespace archimedes {
+	enum class gender;
+}
+
 namespace metternich {
 
 class culture;
@@ -25,6 +29,7 @@ public:
 	{
 	}
 
+	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;
 
 	const std::string &get_prefix() const
@@ -37,10 +42,13 @@ public:
 		return this->culture;
 	}
 
+	std::string get_surname(const gender gender) const;
+
 signals:
 	void changed();
 
 private:
+	std::map<gender, std::string> gendered_names;
 	std::string prefix;
 	metternich::culture *culture = nullptr;
 };

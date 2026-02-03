@@ -360,13 +360,7 @@ void character::initialize()
 	}
 
 	if (this->get_surname().empty() && this->get_dynasty() != nullptr) {
-		std::string surname;
-		if (!this->get_dynasty()->get_prefix().empty()) {
-			surname = this->get_dynasty()->get_prefix() + " ";
-		}
-
-		surname += this->get_dynasty()->get_name();
-		this->set_surname(surname);
+		this->set_surname(this->get_dynasty()->get_surname(this->get_gender()));
 	}
 
 	if (this->get_culture() != nullptr) {
