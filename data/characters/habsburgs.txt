@@ -654,3 +654,39 @@ stefan_franz_von_habsburg = { #Stefan Franz Victor von Habsburg; Source: "Almana
 		#governor-in-chief of the kingdom of Bohemia as of 1847
 	}
 }
+
+elisabeth_von_habsburg = { #Elisabeth von Habsburg; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 12.
+	name = "Elisabeth"
+	dynasty = habsburg
+	character_class = warrior
+	culture = austrian
+	religion = catholic
+	gender = female
+	father = joseph_anton_von_habsburg
+	mother = maria_dorothee_von_wurtemberg
+	birth_date = 1831.1.17
+}
+
+joseph_karl_von_habsburg = { #Joseph Karl Ludwig von Habsburg; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 12.
+	name = "Joseph Karl" #"Joseph Karl Ludwig"
+	dynasty = habsburg
+	character_class = warrior
+	culture = austrian
+	religion = catholic
+	gender = male
+	father = joseph_anton_von_habsburg
+	mother = maria_dorothee_von_wurtemberg
+	birth_date = 1833.3.2
+}
+
+maria_henriette_von_habsburg = { #Maria Henriette Anna von Habsburg; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 12.
+	name = "Maria Henriette" #"Maria Henriette Anna"
+	dynasty = habsburg
+	character_class = warrior
+	culture = austrian
+	religion = catholic
+	gender = female
+	father = joseph_anton_von_habsburg
+	mother = maria_dorothee_von_wurtemberg
+	birth_date = 1836.8.23
+}
