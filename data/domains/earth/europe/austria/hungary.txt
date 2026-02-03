@@ -47,5 +47,12 @@ hungary = {
 				subject_type = vassal
 			}
 		}
+		
+		1847 = {
+			#Archduke Joseph was palatine, governor and captain-general of Hungary, comes et judex Jazygum et Cumanorum as of 1847; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 11-12.
+			offices = {
+				ruler = joseph_anton_von_habsburg
+			}
+		}
 	}
 }

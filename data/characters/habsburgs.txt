@@ -531,6 +531,22 @@ marie_theresie_von_habsburg = { #Source: "Gothaischer Hofkalender zum Nutzen und
 	}
 }
 
+ferdinand_iii_of_tuscany = { #Ferdinand III of Tuscany; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 11.
+	name = "Ferdinand"
+	dynasty = habsburg
+	character_class = warrior
+	culture = austrian
+	religion = catholic
+	home_site = florence
+	gender = male
+	father = leopold_ii_of_the_holy_roman_empire
+	mother = maria_luisa_de_bourbon #Maria Luisa, daughter of king Charles III of Spain
+	birth_date = 1769.5.6
+	death_date = 1824.6.18
+	
+	#Grand Duke of Tuscany as Ferdinand III
+}
+
 karl_von_habsburg = { #Archduke Karl; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 11.
 	name = "Karl"
 	dynasty = habsburg
@@ -558,20 +574,39 @@ karl_von_habsburg = { #Archduke Karl; Source: "Almanach de Gotha pour l'année 1
 	}
 }
 
-ferdinand_iii_of_tuscany = { #Ferdinand III of Tuscany; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 11.
-	name = "Ferdinand"
+joseph_anton_von_habsburg = { #Archduke Joseph Anton Johann; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 11-12, 81.
+	name = "Joseph Anton" #"Joseph Anton Johann"
 	dynasty = habsburg
 	character_class = warrior
 	culture = austrian
 	religion = catholic
-	home_site = florence
+	home_site = buda
 	gender = male
 	father = leopold_ii_of_the_holy_roman_empire
 	mother = maria_luisa_de_bourbon #Maria Luisa, daughter of king Charles III of Spain
-	birth_date = 1769.5.6
-	death_date = 1824.6.18
+	birth_date = 1776.3.9
+	traits = {
+		#tough_soldier
+	}
 	
-	#Grand Duke of Tuscany as Ferdinand III
+	history = {
+		#widow of Alexandrine, daughter of Emperor Paul I of Russia, who died on 1801.3.16
+		#widow of Herminie, daughter of Prince Victor Karl Friedrich of Anhalt-Bernburg-Schaumburg, who died on 1817.9.14
+		
+		1817.9.14 = { #marriage date unknown, this is the date their son Archduke Stefan was born
+			#spouse = 10000045 #Hermine von Anhalt-Bernburg-Schaumburg
+		}
+		
+		1819.8.24 = {
+			spouse = maria_dorothee_von_wurtemberg #Princess Maria Dorothée Wilhelmina of Wurtemberg
+		}
+		
+		1847 = { #field marshal-general and proprietary of the 2nd and 12th hussars regiments as of 1847
+			#traits += cavalry_leader
+			#country = austria
+			#deployment_province = lower_austria
+		}
+	}
 }
 
 marie_luise_von_habsburg = { #Source: "Almanach de Gotha pour l'année 1813", 1813, p. 3; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 10-11.
@@ -590,5 +625,32 @@ marie_luise_von_habsburg = { #Source: "Almanach de Gotha pour l'année 1813", 18
 		1810.3.11 = { #married by procuration on 1810.3.11 and in person on 1810.4.2 to Napoleon; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 10-11.
 			spouse = napoleon_i_of_france
 		}
+	}
+}
+
+stefan_franz_von_habsburg = { #Stefan Franz Victor von Habsburg; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 12.
+	name = "Stefan Franz" #"Stefan Franz Victor" #source gives "Etienne-François-Victor"
+	dynasty = habsburg
+	character_class = warrior
+	culture = austrian
+	religion = catholic
+	home_site = prague
+	gender = male
+	father = joseph_anton_von_habsburg
+	#mother = 10000045 #Hermine von Anhalt-Bernburg-Schaumburg
+	birth_date = 1817.9.14
+	traits = {
+		#tough_soldier
+	}
+	
+	history = {
+		1847 = { #major-general and proprietary of the 58th infantry regiment as of 1847
+			#country = austria
+			#effect = {
+			#	make_commander_effect = yes
+			#}
+		}
+		
+		#governor-in-chief of the kingdom of Bohemia as of 1847
 	}
 }

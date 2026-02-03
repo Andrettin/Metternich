@@ -63,5 +63,12 @@ bohemia = {
 				subject_type = vassal
 			}
 		}
+		
+		1847 = {
+			#Archduke Stefan was governor-in-chief of the kingdom of Bohemia as of 1847; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 12.
+			offices = {
+				ruler = stefan_franz_von_habsburg
+			}
+		}
 	}
 }
