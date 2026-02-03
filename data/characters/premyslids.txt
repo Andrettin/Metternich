@@ -53,3 +53,29 @@ borivoj_premyslid = {
 	
 	#child of Diepold Premyslid
 }
+
+otakar_i_of_bohemia = { #Source: James Westfall Thompson, "Medieval German Expansion in Bohemia", 1926, p. 628.
+	name = "Otakar"
+	dynasty = premyslid #Source: Alena Ježková, "77 Prague Legends", 2006, p. 36.
+	character_class = warrior #king
+	rank = lord
+	culture = czech
+	religion = catholic
+	gender = male
+	start_date = 1198 #reign began
+	death_date = 1230 #reign ended
+	
+	#King Otakar I of Bohemia
+}
+
+agnes_premyslovna = { #Source: Alena Ježková, "77 Prague Legends", 2006, p. 36.
+	name = "Agnes"
+	dynasty = premyslid
+	character_class = cleric #mother superior of a cloister
+	culture = czech
+	religion = catholic
+	home_site = prague
+	gender = female
+	father = otakar_i_of_bohemia #youngest daughter of the Czech king Přemysl Otakar I
+	start_date = 1231 #founded the St. Agnes' Cloister (in Prague) in 1231, and became its mother superior
+}

@@ -1,4 +1,8 @@
 premyslid = {
 	name = "Premyslid"
 	culture = czech
+	gendered_names = {
+		male = "Premysl" #"Přemysl"; Source: Alena Ježková, "77 Prague Legends", 2006, p. 36.
+		female = "Premyslovna" #"Přemyslovna"; Source: Alena Ježková, "77 Prague Legends", 2006, p. 36.
+	}
 }
