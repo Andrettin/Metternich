@@ -34,6 +34,10 @@ namespace metternich {
 template <typename T>
 bool data_entry_compare<T>::operator()(const T *lhs, const T *rhs) const
 {
+	if (lhs == nullptr || rhs == nullptr) {
+		return lhs == nullptr && rhs != nullptr;
+	}
+
 	return lhs->get_identifier() < rhs->get_identifier();
 }
 
