@@ -180,7 +180,7 @@ const std::string &government_type::get_title_name(const title_name_map &title_n
 const std::string &government_type::get_office_title_name(const office_title_inner_name_map &office_title_names, const domain_tier tier, const gender gender)
 {
 	auto tier_find_iterator = office_title_names.find(tier);
-	if (tier_find_iterator != office_title_names.end()) {
+	if (tier_find_iterator == office_title_names.end()) {
 		tier_find_iterator = office_title_names.find(domain_tier::none);
 	}
 
