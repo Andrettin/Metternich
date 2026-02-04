@@ -13,6 +13,7 @@
 #include "domain/domain_attribute.h"
 #include "domain/idea_slot.h"
 #include "domain/office.h"
+#include "domain/subject_type.h"
 #include "economy/commodity_unit.h"
 #include "game/game_rule.h"
 #include "infrastructure/dungeon_area.h"
@@ -58,6 +59,7 @@ template struct data_entry_compare<site_feature>;
 template struct data_entry_compare<skill>;
 template struct data_entry_compare<species>;
 template struct data_entry_compare<status_effect>;
+template struct data_entry_compare<subject_type>;
 template struct data_entry_compare<technology_category>;
 template struct data_entry_compare<technology_subcategory>;
 template struct data_entry_compare<trait>;
