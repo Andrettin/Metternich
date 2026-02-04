@@ -30,9 +30,9 @@ void government_group::process_gsml_scope(const gsml_data &scope)
 
 const std::string &government_group::get_title_name(const domain_tier tier) const
 {
-	const auto find_iterator = this->title_names.find(tier);
-	if (find_iterator != this->title_names.end()) {
-		return find_iterator->second;
+	const std::string &title_name = government_type::get_title_name(this->title_names, tier);
+	if (!title_name.empty()) {
+		return title_name;
 	}
 
 	return domain_tier_data::get(tier)->get_name();
@@ -50,20 +50,9 @@ const std::string &government_group::get_site_title_name(const int tier) const
 
 const std::string &government_group::get_office_title_name(const metternich::office *office, const domain_tier tier, const gender gender) const
 {
-	const auto office_find_iterator = this->office_title_names.find(office);
-	if (office_find_iterator != this->office_title_names.end()) {
-		const auto find_iterator = office_find_iterator->second.find(tier);
-		if (find_iterator != office_find_iterator->second.end()) {
-			auto sub_find_iterator = find_iterator->second.find(gender);
-			if (sub_find_iterator != find_iterator->second.end()) {
-				return sub_find_iterator->second;
-			}
-
-			sub_find_iterator = find_iterator->second.find(gender::none);
-			if (sub_find_iterator != find_iterator->second.end()) {
-				return sub_find_iterator->second;
-			}
-		}
+	const std::string &office_title_name = government_type::get_office_title_name(this->office_title_names, office, tier, gender);
+	if (!office_title_name.empty()) {
+		return office_title_name;
 	}
 
 	if (office->is_ruler()) {

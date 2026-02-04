@@ -30,14 +30,7 @@ const std::string &religion_base::get_title_name(const government_type *governme
 	}
 
 	if (find_iterator != this->title_names.end()) {
-		auto sub_find_iterator = find_iterator->second.find(tier);
-		if (sub_find_iterator == find_iterator->second.end()) {
-			sub_find_iterator = find_iterator->second.find(domain_tier::none);
-		}
-
-		if (sub_find_iterator != find_iterator->second.end()) {
-			return sub_find_iterator->second;
-		}
+		return government_type::get_title_name(find_iterator->second, tier);
 	}
 
 	return string::empty_str;
@@ -47,26 +40,15 @@ const std::string &religion_base::get_office_title_name(const office *office, co
 {
 	const auto office_find_iterator = this->office_title_names.find(office);
 	if (office_find_iterator != this->office_title_names.end()) {
-		auto find_iterator = office_find_iterator->second.find(government_type);
-		if (find_iterator == office_find_iterator->second.end()) {
-			find_iterator = office_find_iterator->second.find(government_type->get_group());
+		auto government_find_iterator = office_find_iterator->second.find(government_type);
+		if (government_find_iterator == office_find_iterator->second.end()) {
+			government_find_iterator = office_find_iterator->second.find(government_type->get_group());
 		}
 
-		if (find_iterator != office_find_iterator->second.end()) {
-			auto sub_find_iterator = find_iterator->second.find(tier);
-			if (sub_find_iterator == find_iterator->second.end()) {
-				sub_find_iterator = find_iterator->second.find(domain_tier::none);
-			}
-
-			if (sub_find_iterator != find_iterator->second.end()) {
-				auto sub_sub_find_iterator = sub_find_iterator->second.find(gender);
-				if (sub_sub_find_iterator == sub_find_iterator->second.end()) {
-					sub_sub_find_iterator = sub_find_iterator->second.find(gender::none);
-				}
-
-				if (sub_sub_find_iterator != sub_find_iterator->second.end()) {
-					return sub_sub_find_iterator->second;
-				}
+		if (government_find_iterator != office_find_iterator->second.end()) {
+			const std::string &office_title_name = government_type::get_office_title_name(government_find_iterator->second, tier, gender);
+			if (!office_title_name.empty()) {
+				return office_title_name;
 			}
 		}
 	}

@@ -59,6 +59,10 @@ public:
 	static void process_office_title_name_scope(office_title_inner_name_map &office_title_names, const gsml_data &scope);
 	static void process_office_title_name_scope(std::map<gender, std::string> &office_title_names, const gsml_data &scope);
 
+	static const std::string &get_title_name(const title_name_map &title_names, const domain_tier tier);
+	static const std::string &get_office_title_name(const office_title_inner_name_map &office_title_names, const domain_tier tier, const gender gender);
+	static const std::string &get_office_title_name(const office_title_name_map &office_title_names, const office *office, const domain_tier tier, const gender gender);
+
 	explicit government_type(const std::string &identifier);
 	~government_type();
 

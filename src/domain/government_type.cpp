@@ -149,7 +149,6 @@ void government_type::process_office_title_name_scope(office_title_inner_name_ma
 
 	scope.for_each_child([&](const gsml_data &child_scope) {
 		const domain_tier tier = magic_enum::enum_cast<domain_tier>(child_scope.get_tag()).value();
-
 		government_type::process_office_title_name_scope(office_title_names[tier], child_scope);
 	});
 }
@@ -162,6 +161,52 @@ void government_type::process_office_title_name_scope(std::map<gender, std::stri
 		const gender gender = enum_converter<archimedes::gender>::to_enum(key);
 		office_title_names[gender] = value;
 	});
+}
+
+const std::string &government_type::get_title_name(const title_name_map &title_names, const domain_tier tier)
+{
+	auto tier_find_iterator = title_names.find(tier);
+	if (tier_find_iterator == title_names.end()) {
+		tier_find_iterator = title_names.find(domain_tier::none);
+	}
+
+	if (tier_find_iterator != title_names.end()) {
+		return tier_find_iterator->second;
+	}
+
+	return string::empty_str;
+}
+
+const std::string &government_type::get_office_title_name(const office_title_inner_name_map &office_title_names, const domain_tier tier, const gender gender)
+{
+	auto tier_find_iterator = office_title_names.find(tier);
+	if (tier_find_iterator != office_title_names.end()) {
+		tier_find_iterator = office_title_names.find(domain_tier::none);
+	}
+
+	if (tier_find_iterator != office_title_names.end()) {
+		auto gender_find_iterator = tier_find_iterator->second.find(gender);
+		if (gender_find_iterator != tier_find_iterator->second.end()) {
+			return gender_find_iterator->second;
+		}
+
+		gender_find_iterator = tier_find_iterator->second.find(gender::none);
+		if (gender_find_iterator != tier_find_iterator->second.end()) {
+			return gender_find_iterator->second;
+		}
+	}
+
+	return string::empty_str;
+}
+
+const std::string &government_type::get_office_title_name(const office_title_name_map &office_title_names, const office *office, const domain_tier tier, const gender gender)
+{
+	const auto office_find_iterator = office_title_names.find(office);
+	if (office_find_iterator != office_title_names.end()) {
+		return government_type::get_office_title_name(office_find_iterator->second, tier, gender);
+	}
+
+	return string::empty_str;
 }
 
 government_type::government_type(const std::string &identifier) : named_data_entry(identifier)
@@ -251,9 +296,9 @@ void government_type::check() const
 
 const std::string &government_type::get_title_name(const domain_tier tier) const
 {
-	const auto find_iterator = this->title_names.find(tier);
-	if (find_iterator != this->title_names.end()) {
-		return find_iterator->second;
+	const std::string &title_name = government_type::get_title_name(this->title_names, tier);
+	if (!title_name.empty()) {
+		return title_name;
 	}
 
 	return this->get_group()->get_title_name(tier);
@@ -271,20 +316,9 @@ const std::string &government_type::get_site_title_name(const int tier) const
 
 const std::string &government_type::get_office_title_name(const office *office, const domain_tier tier, const gender gender) const
 {
-	const auto office_find_iterator = this->office_title_names.find(office);
-	if (office_find_iterator != this->office_title_names.end()) {
-		const auto find_iterator = office_find_iterator->second.find(tier);
-		if (find_iterator != office_find_iterator->second.end()) {
-			auto sub_find_iterator = find_iterator->second.find(gender);
-			if (sub_find_iterator != find_iterator->second.end()) {
-				return sub_find_iterator->second;
-			}
-
-			sub_find_iterator = find_iterator->second.find(gender::none);
-			if (sub_find_iterator != find_iterator->second.end()) {
-				return sub_find_iterator->second;
-			}
-		}
+	const std::string &office_title_name = government_type::get_office_title_name(this->office_title_names, office, tier, gender);
+	if (!office_title_name.empty()) {
+		return office_title_name;
 	}
 
 	return this->get_group()->get_office_title_name(office, tier, gender);
