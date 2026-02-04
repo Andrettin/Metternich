@@ -1,0 +1,13 @@
+ulric_zehnder = { #Ulric Zehnder; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 602-603.
+	name = "Ulric"
+	surname = "Zehnder"
+	character_class = rogue #burgomaster/doctor
+	culture = german #Swiss
+	religion = protestant
+	home_site = zurich
+	gender = male
+	start_date = 1847
+	
+	#was the burgomaster of the directing canton of Zurich and president of the diet of Switzerland as of 1847
+	#had the title of doctor as of 1847
+}

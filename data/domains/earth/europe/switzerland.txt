@@ -17,4 +17,12 @@ switzerland = {
 		zurich
 		geneva
 	}
+	
+	history = {
+		1847 = {
+			offices = {
+				ruler = ulric_zehnder #Ulric Zehnder was the burgomaster of the directing canton of Zurich and president of the diet of Switzerland as of 1847; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 602-603.
+			}
+		}
+	}
 }
