@@ -26,4 +26,10 @@ self_governing_colony = {
 			empire = "Grand Governor General"
 		}
 	}
+	modifier = { #same as Republic
+		crime = -1
+		law = -1
+		productivity = 1
+		society = 1
+	}
 }
