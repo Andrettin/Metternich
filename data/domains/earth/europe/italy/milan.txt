@@ -1,6 +1,7 @@
 milan = {
 	name = "Milan"
 	type = polity
+	flag = milan
 	culture = italian
 	default_religion = catholic
 	default_tier = duchy
