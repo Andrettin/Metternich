@@ -771,7 +771,7 @@ reiner_joseph_von_habsburg = { #Archduke Reiner Joseph Johann von Habsburg; Sour
 		#was (Austrian) viceroy of Lombardy-Venetia in 1847; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 11-12.
 		
 		1847 = { #was general-"feldzeugmestre" and proprietary of the 11th regiment of infantry in 1847; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 11-12.
-			country = austria
+			#country = austria
 			#effect = {
 			#	make_commander_effect = yes
 			#}
@@ -822,6 +822,141 @@ stefan_franz_von_habsburg = { #Stefan Franz Victor von Habsburg; Source: "Almana
 		}
 		
 		#governor-in-chief of the kingdom of Bohemia as of 1847
+	}
+}
+
+adelaide_von_habsburg = { #Adelaide von Habsburg; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 12.
+	name = "Adelaide"
+	dynasty = habsburg
+	character_class = warrior
+	culture = austrian
+	religion = catholic
+	gender = female
+	father = reiner_joseph_von_habsburg #Archduke Reiner Joseph Johann von Habsburg
+	mother = francisca_de_saboya
+	
+	#wife of the royal prince of Sardinia
+}
+
+leopold_ludwig_von_habsburg = { #Leopold Ludwig Maria von Habsburg; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 12-13.
+	name = "Leopold Ludwig" #"Leopold Ludwig Maria"
+	dynasty = habsburg
+	character_class = warrior
+	culture = austrian
+	religion = catholic
+	gender = male
+	father = reiner_joseph_von_habsburg #Archduke Reiner Joseph Johann von Habsburg
+	mother = francisca_de_saboya
+	birth_date = 1823.6.6
+	traits = {
+		#tough_soldier
+	}
+	
+	history = {
+		1847 = { #colonel and proprietary of the 53rd infantry regiment, and colonel of the dragoons of the regiment "King of Bavaria" as of 1847
+			#traits += cavalry_leader
+			country = austria #Emperor Ferdinand I of Austria
+			#effect = {
+			#	make_commander_effect = yes
+			#}
+		}
+	}
+}
+
+ernst_karl_von_habsburg = { #Ernst Karl Felix von Habsburg; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 12-13.
+	name = "Ernst Karl" #"Ernst Karl Felix"
+	dynasty = habsburg
+	character_class = warrior
+	culture = austrian
+	religion = catholic
+	gender = male
+	father = reiner_joseph_von_habsburg #Archduke Reiner Joseph Johann von Habsburg
+	mother = francisca_de_saboya
+	birth_date = 1824.8.8
+	traits = {
+		#tough_soldier
+	}
+	
+	history = {
+		1847 = { #proprietary of the 48th infantry regiment and colonel of the hussars regiment "King of Sardinia", number 5, as of 1847
+			#traits += cavalry_leader
+			country = austria
+			#effect = {
+			#	make_commander_effect = yes
+			#}
+		}
+	}
+}
+
+sigmund_leopold_von_habsburg = { #Sigmund Leopold Reiner von Habsburg; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 12-13.
+	name = "Sigmund Leopold" #"Sigmund Leopold Reiner"
+	dynasty = habsburg
+	character_class = warrior
+	culture = austrian
+	religion = catholic
+	gender = male
+	father = reiner_joseph_von_habsburg #Archduke Reiner Joseph Johann von Habsburg
+	mother = francisca_de_saboya
+	birth_date = 1826.1.7
+	traits = {
+		#tough_soldier
+	}
+	
+	history = {
+		1847 = { #imperial and royal colonel of the 11th infantry regiment as of 1847
+			country = austria #Emperor Ferdinand I of Austria
+			#effect = {
+			#	make_commander_effect = yes
+			#}
+		}
+	}
+}
+
+reiner_ferdinand_von_habsburg = { #Reiner Ferdinand Maria von Habsburg; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 12-13.
+	name = "Reiner Ferdinand" #"Reiner Ferdinand Maria"
+	dynasty = habsburg
+	character_class = warrior
+	culture = austrian
+	religion = catholic
+	gender = male
+	father = reiner_joseph_von_habsburg #Archduke Reiner Joseph Johann von Habsburg
+	mother = francisca_de_saboya
+	birth_date = 1827.1.11
+	traits = {
+		#tough_soldier
+	}
+	
+	history = {
+		1847 = { #imperial and royal colonel of the infantry regiment "The Emperor", number 1, as of 1847
+			country = austria
+			#effect = {
+			#	make_commander_effect = yes
+			#}
+		}
+	}
+}
+
+heinrich_anton_von_habsburg = { #Heinrich Anton Maria von Habsburg; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 12-13.
+	name = "Heinrich Anton" #"Heinrich Anton Maria"
+	dynasty = habsburg
+	character_class = warrior
+	culture = austrian
+	religion = catholic
+	gender = male
+	father = reiner_joseph_von_habsburg #Archduke Reiner Joseph Johann von Habsburg
+	mother = francisca_de_saboya
+	birth_date = 1828.5.9
+	traits = {
+		#tough_soldier
+	}
+	
+	history = {
+		1847 = { #imperial and royal colonel of the regiment "Archduke Karl", number 3, as of 1847
+			country = austria
+			#effect = {
+			#	make_commander_effect = yes
+			#}
+		}
 	}
 }
 
