@@ -1547,6 +1547,9 @@ void domain_game_data::set_capital(const site *capital)
 		if (!capital->get_game_data()->is_provincial_capital()) {
 			capital->get_map_data()->get_province()->get_game_data()->choose_provincial_capital();
 		}
+
+		this->calculate_text_rect();
+		this->calculate_realm_text_rect();
 	}
 
 	if (old_capital != nullptr) {
@@ -1800,16 +1803,22 @@ void domain_game_data::calculate_text_rect()
 
 QRect domain_game_data::calculate_text_rect(const QRect &main_contiguous_territory_rect, const std::function<bool(const QPoint &)> &can_expand_func) const
 {
-	QPoint center_pos = this->get_territory_rect_center();
+	if (this->get_provinces().empty()) {
+		return QRect();
+	}
 
 	const map *map = map::get();
 
-	if (map->get_tile(center_pos)->get_owner() != this->domain && this->get_capital() != nullptr) {
-		center_pos = this->get_capital()->get_game_data()->get_tile_pos();
+	QPoint center_pos = this->get_territory_rect_center();
 
-		if (map->get_tile(center_pos)->get_owner() != this->domain) {
-			return QRect();
-		}
+	if (this->get_capital() != nullptr && map->get_tile(this->get_capital()->get_game_data()->get_tile_pos())->get_owner() == this->domain) {
+		center_pos = this->get_capital()->get_game_data()->get_tile_pos();
+	}
+
+	assert_throw(map->contains(center_pos));
+
+	if (map->get_tile(center_pos)->get_owner() != this->domain) {
+		return QRect();
 	}
 
 	QRect text_rect = QRect(center_pos, QSize(1, 1));
