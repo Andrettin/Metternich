@@ -696,6 +696,33 @@ ferdinand_karl_von_habsburg = { #Archduke Ferdinand Karl Joseph von Habsburg; So
 	}
 }
 
+johann_baptiste_von_habsburg = { #Archduke Johann Baptiste Joseph von Habsburg; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 11-12.
+	name = "Johann Baptiste" #"Johann Baptiste Joseph"
+	dynasty = habsburg
+	character_class = warrior
+	culture = austrian
+	religion = catholic
+	home_site = vienna
+	gender = male
+	father = leopold_ii_of_the_holy_roman_empire
+	mother = maria_luisa_de_bourbon #Maria Luisa, daughter of king Charles III of Spain
+	birth_date = 1782.1.20
+	traits = {
+		#tough_soldier
+	}
+	
+	history = {
+		1847 = { #was fieldmarshal and general director of engineering and fortifications, as well as proprietary of the 1st regiment of dragoons and the 16th Prussian regiment of infantry in 1847; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 11-12.
+			#traits += architect #engineer
+			#traits += siege_leader
+			country = austria #Emperor Ferdinand I of Austria
+			#effect = {
+			#	make_commander_effect = yes
+			#}
+		}
+	}
+}
+
 maximilian_joseph_von_habsburg = { #Archduke Maximilian Joseph Johann von Habsburg; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 13.
 	name = "Maximilian Joseph" #"Maximilian Joseph Johann"
 	dynasty = habsburg
@@ -713,6 +740,37 @@ maximilian_joseph_von_habsburg = { #Archduke Maximilian Joseph Johann von Habsbu
 	history = {
 		1847 = {
 			#general-"feldzeugmestre", proprietary of the 4th infantry regiment and grandmaster of the Teutonic Order within the Empire of Austria as of 1847
+			country = austria
+			#effect = {
+			#	make_commander_effect = yes
+			#}
+		}
+	}
+}
+
+reiner_joseph_von_habsburg = { #Archduke Reiner Joseph Johann von Habsburg; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 11-12.
+	name = "Reiner Joseph" #"Reiner Joseph Johann" #source gives "Reinier-Jos.-Jean-Mich.-François-Jérôme"
+	dynasty = habsburg
+	character_class = warrior
+	culture = austrian
+	religion = catholic
+	home_site = milan #viceroy of Lombardy-Venetia
+	gender = male
+	father = leopold_ii_of_the_holy_roman_empire #Leopold II of the Holy Roman Empire
+	mother = maria_luisa_de_bourbon #Maria Luisa, daughter of king Charles III of Spain
+	birth_date = 1783.9.30
+	traits = {
+		#tough_soldier
+	}
+	
+	history = {
+		1820.5.28 = {
+			spouse = francisca_de_saboya
+		}
+		
+		#was (Austrian) viceroy of Lombardy-Venetia in 1847; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 11-12.
+		
+		1847 = { #was general-"feldzeugmestre" and proprietary of the 11th regiment of infantry in 1847; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 11-12.
 			country = austria
 			#effect = {
 			#	make_commander_effect = yes
