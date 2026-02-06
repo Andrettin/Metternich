@@ -1,0 +1,36 @@
+lombardy_venetia = {
+	name = "Lombardy-Venetia"
+	type = polity
+	color = { 146  108  146 }
+	culture = italian
+	default_religion = catholic
+	default_tier = duchy
+	default_government_type = monarchy
+	default_capital = milan
+	eras = {
+		industrial_era
+	}
+	core_provinces = {
+		lombardy
+		venetia
+	}
+	
+	history = {
+		1815 = {
+			government_type = overlordship
+			
+			#Lombardy and Venetia were part of the the Empire of Austria in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+			diplomacy_state = {
+				domain = austria
+				subject_type = vassal
+			}
+		}
+		
+		1847 = {
+			#Archduke Reiner von Habsburg was (Austrian) viceroy of Lombardy-Venetia in 1847; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 11-12.
+			offices = {
+				ruler = reiner_joseph_von_habsburg
+			}
+		}
+	}
+}
