@@ -783,7 +783,7 @@ std::string character::get_full_name(const metternich::domain *regnal_domain, co
 			full_name += " ";
 		}
 
-		full_name += number::to_roman_numeral(regnal_number.value()) + " of " + (regnal_domain->has_definite_article() ? " the " : "") + regnal_domain->get_name();
+		full_name += number::to_roman_numeral(regnal_number.value()) + " of " + (regnal_domain->has_definite_article() ? "the " : "") + regnal_domain->get_name();
 	} else if (!this->get_surname().empty()) {
 		if (this->is_surname_first()) {
 			if (!full_name.empty()) {
