@@ -103,6 +103,12 @@ void character::initialize_all_vital_dates()
 			return character->has_vital_dates();
 		});
 	}
+
+	for (character *character : character::get_all()) {
+		if (!character->get_children().empty()) {
+			character->sort_children();
+		}
+	}
 }
 
 void character::initialize_all_home_sites()
