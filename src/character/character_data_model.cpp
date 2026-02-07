@@ -133,19 +133,19 @@ QModelIndex character_data_model::parent(const QModelIndex &index) const
 void character_data_model::set_character(const metternich::character *character)
 {
 	if (this->character != nullptr) {
-		disconnect(this->character->get_game_data(), &character_game_data::armor_class_bonus_changed, this, &character_data_model::update_armor_class_rows);
-		disconnect(this->character->get_game_data(), &character_game_data::species_armor_class_bonuses_changed, this, &character_data_model::update_armor_class_rows);
-		disconnect(this->character->get_game_data(), &character_game_data::to_hit_bonus_changed, this, &character_data_model::update_to_hit_bonus_rows);
-		disconnect(this->character->get_game_data(), &character_game_data::damage_bonus_changed, this, &character_data_model::update_damage_row);
-		disconnect(this->character->get_game_data(), &character_game_data::range_changed, this, &character_data_model::update_range_row);
-		disconnect(this->character->get_game_data(), &character_game_data::movement_changed, this, &character_data_model::update_movement_row);
-		disconnect(this->character->get_game_data(), &character_game_data::saving_throw_bonuses_changed, this, &character_data_model::update_saving_throw_rows);
+		//disconnect(this->character->get_game_data(), &character_game_data::armor_class_bonus_changed, this, &character_data_model::update_armor_class_rows);
+		//disconnect(this->character->get_game_data(), &character_game_data::species_armor_class_bonuses_changed, this, &character_data_model::update_armor_class_rows);
+		//disconnect(this->character->get_game_data(), &character_game_data::to_hit_bonus_changed, this, &character_data_model::update_to_hit_bonus_rows);
+		//disconnect(this->character->get_game_data(), &character_game_data::damage_bonus_changed, this, &character_data_model::update_damage_row);
+		//disconnect(this->character->get_game_data(), &character_game_data::range_changed, this, &character_data_model::update_range_row);
+		//disconnect(this->character->get_game_data(), &character_game_data::movement_changed, this, &character_data_model::update_movement_row);
+		//disconnect(this->character->get_game_data(), &character_game_data::saving_throw_bonuses_changed, this, &character_data_model::update_saving_throw_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::skill_trainings_changed, this, &character_data_model::update_skill_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::skill_values_changed, this, &character_data_model::update_skill_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::traits_changed, this, &character_data_model::update_trait_rows);
-		disconnect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::update_damage_row);
-		disconnect(this->character->get_game_data(), &character_game_data::items_changed, this, &character_data_model::create_inventory_rows);
-		disconnect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::create_item_rows);
+		//disconnect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::update_damage_row);
+		//disconnect(this->character->get_game_data(), &character_game_data::items_changed, this, &character_data_model::create_inventory_rows);
+		//disconnect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::create_item_rows);
 	}
 
 	this->character = character;
@@ -153,19 +153,19 @@ void character_data_model::set_character(const metternich::character *character)
 	this->reset_model();
 
 	if (character != nullptr) {
-		connect(this->character->get_game_data(), &character_game_data::armor_class_bonus_changed, this, &character_data_model::update_armor_class_rows);
-		connect(this->character->get_game_data(), &character_game_data::species_armor_class_bonuses_changed, this, &character_data_model::update_armor_class_rows);
-		connect(this->character->get_game_data(), &character_game_data::to_hit_bonus_changed, this, &character_data_model::update_to_hit_bonus_rows);
-		connect(this->character->get_game_data(), &character_game_data::damage_bonus_changed, this, &character_data_model::update_damage_row);
-		connect(this->character->get_game_data(), &character_game_data::range_changed, this, &character_data_model::update_range_row);
-		connect(this->character->get_game_data(), &character_game_data::movement_changed, this, &character_data_model::update_movement_row);
-		connect(this->character->get_game_data(), &character_game_data::saving_throw_bonuses_changed, this, &character_data_model::update_saving_throw_rows);
+		//connect(this->character->get_game_data(), &character_game_data::armor_class_bonus_changed, this, &character_data_model::update_armor_class_rows);
+		//connect(this->character->get_game_data(), &character_game_data::species_armor_class_bonuses_changed, this, &character_data_model::update_armor_class_rows);
+		//connect(this->character->get_game_data(), &character_game_data::to_hit_bonus_changed, this, &character_data_model::update_to_hit_bonus_rows);
+		//connect(this->character->get_game_data(), &character_game_data::damage_bonus_changed, this, &character_data_model::update_damage_row);
+		//connect(this->character->get_game_data(), &character_game_data::range_changed, this, &character_data_model::update_range_row);
+		//connect(this->character->get_game_data(), &character_game_data::movement_changed, this, &character_data_model::update_movement_row);
+		//connect(this->character->get_game_data(), &character_game_data::saving_throw_bonuses_changed, this, &character_data_model::update_saving_throw_rows);
 		connect(this->character->get_game_data(), &character_game_data::skill_trainings_changed, this, &character_data_model::update_skill_rows);
 		connect(this->character->get_game_data(), &character_game_data::skill_values_changed, this, &character_data_model::update_skill_rows);
 		connect(this->character->get_game_data(), &character_game_data::traits_changed, this, &character_data_model::update_trait_rows);
-		connect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::update_damage_row);
-		connect(character->get_game_data(), &character_game_data::items_changed, this, &character_data_model::create_inventory_rows);
-		connect(character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::create_item_rows);
+		//connect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::update_damage_row);
+		//connect(character->get_game_data(), &character_game_data::items_changed, this, &character_data_model::create_inventory_rows);
+		//connect(character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::create_item_rows);
 	}
 
 	emit character_changed();
@@ -241,19 +241,19 @@ void character_data_model::reset_model()
 
 		this->create_attribute_rows();
 
-		this->top_rows.push_back(std::make_unique<character_data_row>("Hit Points:", std::format("{}/{}", character_game_data->get_hit_points(), character_game_data->get_max_hit_points())));
+		//this->top_rows.push_back(std::make_unique<character_data_row>("Hit Points:", std::format("{}/{}", character_game_data->get_hit_points(), character_game_data->get_max_hit_points())));
 
-		this->create_armor_class_rows();
-		this->create_to_hit_bonus_rows();
-		this->create_damage_row();
-		this->create_range_row();
-		this->create_movement_row();
-		this->create_saving_throw_rows();
+		//this->create_armor_class_rows();
+		//this->create_to_hit_bonus_rows();
+		//this->create_damage_row();
+		//this->create_range_row();
+		//this->create_movement_row();
+		//this->create_saving_throw_rows();
 		this->create_skill_rows();
 		this->create_trait_rows();
 
 		if (!character_game_data->get_items().empty()) {
-			this->create_item_rows();
+			//this->create_item_rows();
 		}
 	}
 
