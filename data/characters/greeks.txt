@@ -164,3 +164,31 @@ theodora_angelos = {
 	
 	#daughter of Isaakios Angelos and Eirene Tornikes
 }
+
+theodora_petraliphas = {
+	name = "Theodora"
+	dynasty = petraliphas
+	character_class = warrior
+	culture = greek
+	religion = orthodox
+	gender = female
+	mother = helena_premyslid
+	birth_date = 1186
+	death_date = 1236
+	
+	#daughter of Nikephoros Petraliphas
+}
+
+theodoros_petraliphas = {
+	name = "Theodoros"
+	dynasty = petraliphas
+	character_class = warrior
+	culture = greek
+	religion = orthodox
+	gender = male
+	mother = helena_premyslid
+	birth_date = 1186
+	death_date = 1236
+	
+	#son of Nikephoros Petraliphas
+}

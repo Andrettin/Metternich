@@ -8,6 +8,11 @@ komnenos = {
 	culture = greek
 }
 
+petraliphas = {
+	name = "Petraliphas"
+	culture = greek
+}
+
 tornikes = {
 	name = "Tornikes"
 	culture = greek
