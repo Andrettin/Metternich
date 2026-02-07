@@ -37,6 +37,7 @@
 #include "util/date_util.h"
 #include "util/gender.h"
 #include "util/log_util.h"
+#include "util/number_util.h"
 #include "util/random.h"
 #include "util/string_util.h"
 #include "util/vector_random_util.h"
@@ -758,6 +759,48 @@ void character::set_name_rear_compound_element(word *word)
 {
 	this->name_rear_compound_element = word;
 	word->set_name_rear_compound_element(true);
+}
+
+std::string character::get_full_name(const metternich::domain *regnal_domain, const std::optional<int> &regnal_number) const
+{
+	if (!this->get_nickname().empty()) {
+		return this->get_nickname();
+	}
+
+	const std::string &name = this->get_name();
+	std::string full_name = name;
+
+	if (!this->get_epithet().empty()) {
+		if (!full_name.empty()) {
+			full_name += " ";
+		}
+
+		full_name += this->get_epithet();
+	} else if (regnal_number.has_value()) {
+		assert_throw(regnal_domain != nullptr);
+
+		if (!full_name.empty()) {
+			full_name += " ";
+		}
+
+		full_name += number::to_roman_numeral(regnal_number.value()) + " of " + (regnal_domain->has_definite_article() ? " the " : "") + regnal_domain->get_name();
+	} else if (!this->get_surname().empty()) {
+		if (this->is_surname_first()) {
+			if (!full_name.empty()) {
+				full_name = this->get_surname() + " " + full_name;
+			} else {
+				full_name = this->get_surname();
+			}
+		} else {
+			if (!full_name.empty()) {
+				full_name += " ";
+			}
+
+			full_name += this->get_surname();
+		}
+	}
+
+	return full_name;
 }
 
 bool character::is_surname_first() const

@@ -60,7 +60,7 @@ class domain final : public named_data_entry, public data_type<domain>
 	Q_PROPERTY(metternich::government_type* default_government_type MEMBER default_government_type NOTIFY changed)
 	Q_PROPERTY(metternich::site* default_capital MEMBER default_capital NOTIFY changed)
 	Q_PROPERTY(bool short_name MEMBER short_name READ has_short_name NOTIFY changed)
-	Q_PROPERTY(bool definite_article MEMBER definite_article NOTIFY changed)
+	Q_PROPERTY(bool definite_article MEMBER definite_article READ has_definite_article NOTIFY changed)
 	Q_PROPERTY(QVariantList available_technologies READ get_available_technologies_qvariant_list NOTIFY changed)
 	Q_PROPERTY(metternich::domain_game_data* game_data READ get_game_data NOTIFY game_data_changed)
 	Q_PROPERTY(metternich::country_turn_data* turn_data READ get_turn_data NOTIFY turn_data_changed)
@@ -209,6 +209,11 @@ public:
 	bool has_short_name() const
 	{
 		return this->short_name;
+	}
+
+	bool has_definite_article() const
+	{
+		return this->definite_article;
 	}
 
 	const std::map<std::string, std::unique_ptr<const and_condition<domain>>> &get_conditional_flags() const

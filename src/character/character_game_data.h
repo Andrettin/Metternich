@@ -117,9 +117,9 @@ public:
 		return QString::fromStdString(this->get_titled_name());
 	}
 
-	std::optional<int> get_regnal_number() const;
+	std::optional<std::pair<const domain *, int>> get_regnal_domain_and_number() const;
 	std::optional<int> get_regnal_number_for_domain(const domain *domain) const;
-	std::optional<int> get_best_regnal_number() const;
+	std::optional<std::pair<const domain *, int>> get_best_regnal_domain_and_number() const;
 
 	const metternich::portrait *get_portrait() const
 	{

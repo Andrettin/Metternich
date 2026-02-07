@@ -152,6 +152,13 @@ public:
 		return this->dynasty;
 	}
 
+	std::string get_full_name(const metternich::domain *regnal_domain, const std::optional<int> &regnal_number) const;
+
+	virtual std::string get_full_name() const override
+	{
+		return this->get_full_name(nullptr, std::nullopt);
+	}
+
 	virtual bool is_surname_first() const override;
 
 	const metternich::species *get_species() const

@@ -567,7 +567,12 @@ std::string character_game_data::get_full_name() const
 		return this->character->get_deity()->get_name();
 	}
 
-	return this->character->get_full_name(this->get_regnal_number());
+	const std::optional<std::pair<const metternich::domain *, int>> regnal_domain_and_number = this->get_regnal_domain_and_number();
+	if (regnal_domain_and_number.has_value()) {
+		return this->character->get_full_name(regnal_domain_and_number.value().first, regnal_domain_and_number.value().second);
+	} else {
+		return this->character->get_full_name(nullptr, std::nullopt);
+	}
 }
 
 QString character_game_data::get_full_name_for_domain(const metternich::domain *domain) const
@@ -576,7 +581,7 @@ QString character_game_data::get_full_name_for_domain(const metternich::domain *
 		return QString::fromStdString(this->character->get_deity()->get_cultural_name(domain->get_game_data()->get_culture()));
 	}
 
-	return QString::fromStdString(this->character->get_full_name(this->get_regnal_number_for_domain(domain)));
+	return QString::fromStdString(this->character->get_full_name(domain, this->get_regnal_number_for_domain(domain)));
 }
 
 std::string character_game_data::get_titled_name() const
@@ -589,10 +594,10 @@ std::string character_game_data::get_titled_name() const
 	return this->get_full_name();
 }
 
-std::optional<int> character_game_data::get_regnal_number() const
+std::optional<std::pair<const domain *, int>> character_game_data::get_regnal_domain_and_number() const
 {
 	if (this->is_dead()) {
-		return this->get_best_regnal_number();
+		return this->get_best_regnal_domain_and_number();
 	}
 
 	if (this->get_office() == nullptr) {
@@ -609,7 +614,12 @@ std::optional<int> character_game_data::get_regnal_number() const
 		return std::nullopt;
 	}
 
-	return this->get_regnal_number_for_domain(this->get_domain());
+	const std::optional<int> regnal_number = this->get_regnal_number_for_domain(this->get_domain());
+	if (!regnal_number.has_value()) {
+		return std::nullopt;
+	}
+
+	return std::make_pair(this->get_domain(), regnal_number.value());
 }
 
 std::optional<int> character_game_data::get_regnal_number_for_domain(const metternich::domain *domain) const
@@ -642,7 +652,7 @@ std::optional<int> character_game_data::get_regnal_number_for_domain(const mette
 	return regnal_number;
 }
 
-std::optional<int> character_game_data::get_best_regnal_number() const
+std::optional<std::pair<const domain *, int>> character_game_data::get_best_regnal_domain_and_number() const
 {
 	domain_tier best_min_tier = domain_tier::none;
 	domain_tier best_max_tier = domain_tier::none;
@@ -664,7 +674,12 @@ std::optional<int> character_game_data::get_best_regnal_number() const
 		return std::nullopt;
 	}
 
-	return this->get_regnal_number_for_domain(best_domain);
+	const std::optional<int> regnal_number = this->get_regnal_number_for_domain(best_domain);
+	if (!regnal_number.has_value()) {
+		return std::nullopt;
+	}
+
+	return std::make_pair(best_domain, regnal_number.value());
 }
 
 bool character_game_data::is_current_portrait_valid() const
