@@ -153,6 +153,89 @@ jutta_askanien = {
 	#daughter of Albrecht Askanien
 }
 
+elisabeth_meinhardiner = {
+	name = "Elisabeth"
+	dynasty = meinhardiner
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = female
+	mother = elisabeth_von_wittelsbach
+	birth_date = 1262
+	death_date = 1312.1.29
+	traits = {
+		#proud
+		#amateurish_plotter
+	}
+	
+	#child of Meinhard Meinhardiner
+}
+
+otto_meinhardiner = {
+	name = "Otto"
+	dynasty = meinhardiner
+	character_class = paladin
+	culture = german
+	religion = catholic
+	gender = male
+	mother = elisabeth_von_wittelsbach
+	birth_date = 1263
+	death_date = 1310.1.26
+	traits = {
+		#lustful
+	}
+	
+	#child of Meinhard Meinhardiner
+}
+
+albrecht_meinhardiner = {
+	name = "Albrecht"
+	dynasty = meinhardiner
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = male
+	mother = elisabeth_von_wittelsbach
+	birth_date = 1265
+	death_date = 1335
+	traits = {
+		#temperate
+	}
+	
+	#child of Meinhard Meinhardiner
+}
+
+heinrich_meinhardiner = {
+	name = "Heinrich"
+	dynasty = meinhardiner
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = male
+	mother = elisabeth_von_wittelsbach
+	birth_date = 1265
+	death_date = 1335.4.2
+	traits = {
+		#temperate
+	}
+	
+	#child of Meinhard Meinhardiner
+}
+
+agnes_meinhardiner = {
+	name = "Agnes"
+	dynasty = meinhardiner
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = female
+	mother = elisabeth_von_wittelsbach
+	birth_date = 1266
+	death_date = 1293.5.14
+	
+	#child of Meinhard Meinhardiner
+}
+
 gertrud_von_hohenberg = { #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
 	name = "Gertrud"
 	surname = "von Hohenberg"

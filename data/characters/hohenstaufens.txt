@@ -51,3 +51,21 @@ friedrich_von_hohenstaufen = {
 	birth_date = 1230
 	death_date = 1251
 }
+
+konrad_von_hohenstaufen = {
+	name = "Konrad"
+	dynasty = hohenstaufen
+	character_class = warrior
+	culture = german
+	religion = catholic
+	home_site = stuttgart #Swabia
+	gender = male
+	mother = elisabeth_von_wittelsbach
+	birth_date = 1252
+	death_date = 1268.10.29
+	traits = {
+		#fair
+	}
+	
+	#child of Konrad von Hohenstaufen
+}

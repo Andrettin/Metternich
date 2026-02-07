@@ -44,6 +44,11 @@ kaunitz = {
 	culture = german #German-Bohemian
 }
 
+meinhardiner = {
+	name = "Meinhardiner"
+	culture = german
+}
+
 metternich = {
 	name = "Metternich"
 	prefix = "von"
