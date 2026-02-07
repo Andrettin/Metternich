@@ -719,6 +719,76 @@ kunegunda_piast = {
 	#daughter of Jadwiga Piast
 }
 
+boleslaw_piast_1258 = {
+	name = "Boleslaw"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	father = wladyslaw_piast_1225
+	birth_date = 1258
+	death_date = 1313.5.14
+	
+	#child of Eufemia Piast
+}
+
+mieszko_piast_1252 = {
+	name = "Mieszko"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	father = wladyslaw_piast_1225
+	birth_date = 1252
+	death_date = 1315.6.27
+	
+	#child of Eufemia Piast
+}
+
+kazimierz_piast_1253 = {
+	name = "Kazimierz"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	father = wladyslaw_piast_1225
+	birth_date = 1253
+	death_date = 1312.3.10
+	
+	#child of Eufemia Piast
+}
+
+konstancja_piast_1260 = {
+	name = "Konstancja"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = female
+	father = wladyslaw_piast_1225
+	birth_date = 1260
+	death_date = 1287
+	
+	#child of Eufemia Piast
+}
+
+przemyslaw_piast_1268 = {
+	name = "Przemyslaw"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	father = wladyslaw_piast_1225
+	birth_date = 1268.6.12
+	death_date = 1306.5.7
+	
+	#child of Eufemia Piast
+}
+
 cymburgis_of_masovia = { #Cymburgis of Masovia; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
 	name = "Cymburgis"
 	surname = "of Masovia"
