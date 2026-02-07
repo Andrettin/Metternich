@@ -789,6 +789,182 @@ przemyslaw_piast_1268 = {
 	#child of Eufemia Piast
 }
 
+grzymislawa_1260 = {
+	name = "Grzymislawa"
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = female
+	birth_date = 1260
+	death_date = 1306
+}
+
+boleslaw_piast_1300 = {
+	name = "Boleslaw"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	father = boleslaw_piast_1258
+	mother = grzymislawa_1260
+	birth_date = 1300
+	death_date = 1356
+}
+
+boleslaw_piast_1293 = {
+	name = "Boleslaw"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	father = boleslaw_piast_1258
+	mother = grzymislawa_1260
+	birth_date = 1293
+	death_date = 1365
+}
+
+albert_piast = {
+	name = "Albert"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	father = boleslaw_piast_1258
+	mother = grzymislawa_1260
+	birth_date = 1305
+	death_date = 1375
+}
+
+kazimierz_piast_1280 = {
+	name = "Kazimierz"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	father = mieszko_piast_1252
+	birth_date = 1280
+	death_date = 1358.9.29
+}
+
+wladyslaw_piast_1275 = {
+	name = "Wladyslaw"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	father = mieszko_piast_1252
+	birth_date = 1275
+	death_date = 1324.5.15
+}
+
+elzbieta_piast_1291 = {
+	name = "Elzbieta"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = female
+	father = mieszko_piast_1252
+	birth_date = 1291
+	death_date = 1317.9.21
+	traits = {
+		#fair
+	}
+}
+
+boleslaw_piast_1276 = {
+	name = "Boleslaw"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	father = kazimierz_piast_1253
+	birth_date = 1276
+	death_date = 1329.1.17
+}
+
+wladyslaw_piast_1277 = {
+	name = "Wladyslaw"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	father = kazimierz_piast_1253
+	birth_date = 1277
+	death_date = 1352.1.17
+}
+
+maria_piast = {
+	name = "Maria"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = female
+	father = kazimierz_piast_1253
+	birth_date = 1282
+	death_date = 1315.12.15
+}
+
+siemowit_piast_1292 = {
+	name = "Siemowit"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	father = kazimierz_piast_1253
+	birth_date = 1292
+	death_date = 1342.7.1
+}
+
+mieszko_piast_1305 = {
+	name = "Mieszko"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	father = kazimierz_piast_1253
+	birth_date = 1305
+	death_date = 1344.8.9
+}
+
+leszek_piast_1292 = {
+	name = "Leszek"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = male
+	father = przemyslaw_piast_1268
+	birth_date = 1292
+	death_date = 1336
+	
+	#child of Anna Piast
+}
+
+anna_piast_1293 = {
+	name = "Anna"
+	dynasty = piast
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	gender = female
+	father = przemyslaw_piast_1268
+	birth_date = 1293
+	death_date = 1340
+	
+	#child of Anna Piast
+}
+
 cymburgis_of_masovia = { #Cymburgis of Masovia; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
 	name = "Cymburgis"
 	surname = "of Masovia"
