@@ -1,0 +1,5 @@
+nassau_weilburg = {
+	name = "Nassau-Weilburg"
+	prefix = "von"
+	culture = german #Rhenish
+}

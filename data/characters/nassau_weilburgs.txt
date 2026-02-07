@@ -1,0 +1,46 @@
+karl_von_nassau_weilburg = { #Karl von Nassau-Weilburg; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 80-81.
+	name = "Karl"
+	dynasty = nassau_weilburg
+	character_class = warrior
+	culture = german #Rhenish
+	religion = protestant
+	home_site = weilburg
+	gender = male
+}
+
+friedrich_wilhelm_von_nassau_weilburg = { #Friedrich Wilhelm, Prince of Nassau-Weilburg; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 11.
+	name = "Friedrich Wilhelm"
+	dynasty = nassau_weilburg
+	character_class = warrior
+	culture = german #Rhenish
+	religion = protestant
+	home_site = weilburg
+	gender = male
+}
+
+henriette_von_nassau_weilburg = { #Henriette von Nassau-Weilburg; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 80-81.
+	name = "Henriette"
+	dynasty = nassau_weilburg
+	character_class = warrior
+	culture = german #Rhenish
+	religion = protestant
+	home_site = weilburg
+	gender = female
+	father = karl_von_nassau_weilburg #prince Karl of Nassau-Weilburg
+	birth_date = 1780.4.22
+	
+	#married on 1797.1.28 to duke Ludwig Friedrich Alexander of Wurtemberg
+}
+
+henriette_von_nassau_weilburg_1797 = { #Henriette, daughter of Friedrich Wilhelm, Prince of Nassau-Weilburg; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 11.
+	name = "Henriette"
+	dynasty = nassau_weilburg
+	character_class = warrior
+	culture = german #Rhenish
+	religion = protestant
+	home_site = weilburg
+	gender = female
+	father = friedrich_wilhelm_von_nassau_weilburg #Friedrich Wilhelm, Prince of Nassau-Weilburg
+	birth_date = 1797.10.30
+	death_date = 1829.12.29
+}

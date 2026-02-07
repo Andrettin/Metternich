@@ -585,7 +585,7 @@ ferdinand_iii_of_tuscany = { #Ferdinand III of Tuscany; Source: "Almanach de Got
 karl_von_habsburg = { #Archduke Karl; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 11.
 	name = "Karl"
 	dynasty = habsburg
-	character_class = warrior
+	character_class = paladin #Grand Master of the Teutonic Order
 	culture = austrian
 	religion = catholic
 	home_site = vienna
@@ -596,9 +596,10 @@ karl_von_habsburg = { #Archduke Karl; Source: "Almanach de Gotha pour l'année 1
 	
 	history = {
 		#resigned as Grand Master of the Teutonic Order on 1804.6.30
-		#1815.9.17 = {
-		#	spouse = 10000028 #Henriette, daughter of Friedrich Wilhelm, Prince of Nassau-Weilburg
-		#}
+		
+		1815.9.17 = {
+			spouse = henriette_von_nassau_weilburg_1797 #Henriette, daughter of Friedrich Wilhelm, Prince of Nassau-Weilburg
+		}
 		
 		1847 = {
 			#field marshal-general and proprietary of the 3rd infantry regiment and of the 3rd ulans regiment as of 1847
@@ -715,7 +716,7 @@ johann_baptiste_von_habsburg = { #Archduke Johann Baptiste Joseph von Habsburg; 
 		1847 = { #was fieldmarshal and general director of engineering and fortifications, as well as proprietary of the 1st regiment of dragoons and the 16th Prussian regiment of infantry in 1847; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 11-12.
 			#traits += architect #engineer
 			#traits += siege_leader
-			country = austria #Emperor Ferdinand I of Austria
+			country = austria
 			#effect = {
 			#	make_commander_effect = yes
 			#}
@@ -825,6 +826,32 @@ stefan_franz_von_habsburg = { #Stefan Franz Victor von Habsburg; Source: "Almana
 	}
 }
 
+ferdinand_von_habsburg_1818 = { #Archduke (Karl) Ferdinand; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 11-12.
+	name = "Ferdinand"
+	dynasty = habsburg
+	character_class = warrior
+	religion = catholic
+	culture = austrian
+	home_site = prague
+	gender = male
+	father = karl_von_habsburg #Archduke Karl
+	mother = henriette_von_nassau_weilburg_1797 #Henriette, daughter of Friedrich Wilhelm, Prince of Nassau-Weilburg
+	birth_date = 1818.7.29
+	traits = {
+		#tough_soldier
+	}
+	
+	history = {
+		1847 = { #FMLieut. and commander of the division in Prague, proprietary of the 51st imperial and royal infantry regiment, as well as the Russian ulans regiment of Belgorod as of 1847
+			#traits += cavalry_leader
+			country = austria
+			#effect = {
+			#	make_commander_effect = yes
+			#}
+		}
+	}
+}
+
 adelaide_von_habsburg = { #Adelaide von Habsburg; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 12.
 	name = "Adelaide"
 	dynasty = habsburg
@@ -836,6 +863,31 @@ adelaide_von_habsburg = { #Adelaide von Habsburg; Source: "Almanach de Gotha pou
 	mother = francisca_de_saboya
 	
 	#wife of the royal prince of Sardinia
+}
+
+friedrich_von_habsburg = { #Archduke Friedrich; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 11-12.
+	name = "Friedrich"
+	dynasty = habsburg
+	character_class = warrior
+	culture = austrian
+	religion = catholic
+	home_site = vienna
+	gender = male
+	father = karl_von_habsburg #Archduke Karl
+	mother = henriette_von_nassau_weilburg_1797 #Henriette, daughter of Friedrich Wilhelm, Prince of Nassau-Weilburg
+	birth_date = 1821.5.14
+	traits = {
+		#tough_soldier
+	}
+	
+	history = {
+		1847 = { #FMLieut., vice-admiral and commander-in-chief of the imperial navy, proprietary of the 16th infantry regiment as of 1847
+			country = austria
+			#effect = {
+			#	make_commander_effect = yes
+			#}
+		}
+	}
 }
 
 leopold_ludwig_von_habsburg = { #Leopold Ludwig Maria von Habsburg; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 12-13.
@@ -855,7 +907,7 @@ leopold_ludwig_von_habsburg = { #Leopold Ludwig Maria von Habsburg; Source: "Alm
 	history = {
 		1847 = { #colonel and proprietary of the 53rd infantry regiment, and colonel of the dragoons of the regiment "King of Bavaria" as of 1847
 			#traits += cavalry_leader
-			country = austria #Emperor Ferdinand I of Austria
+			country = austria
 			#effect = {
 			#	make_commander_effect = yes
 			#}
@@ -888,6 +940,25 @@ ernst_karl_von_habsburg = { #Ernst Karl Felix von Habsburg; Source: "Almanach de
 	}
 }
 
+caroline_von_habsburg = { #Archduchess Caroline; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 11-12.
+	name = "Caroline"
+	dynasty = habsburg
+	character_class = cleric
+	culture = austrian
+	religion = catholic
+	home_site = prague
+	gender = female
+	father = karl_von_habsburg #Archduke Karl
+	mother = henriette_von_nassau_weilburg_1797 #Henriette, daughter of Friedrich Wilhelm, Prince of Nassau-Weilburg
+	birth_date = 1825.9.10
+	
+	history = {
+		1847 = {
+			#traits += nun #abbess of the Theresian noble chapter in Prague as of 1847
+		}
+	}
+}
+
 sigmund_leopold_von_habsburg = { #Sigmund Leopold Reiner von Habsburg; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 12-13.
 	name = "Sigmund Leopold" #"Sigmund Leopold Reiner"
 	dynasty = habsburg
@@ -904,7 +975,7 @@ sigmund_leopold_von_habsburg = { #Sigmund Leopold Reiner von Habsburg; Source: "
 	
 	history = {
 		1847 = { #imperial and royal colonel of the 11th infantry regiment as of 1847
-			country = austria #Emperor Ferdinand I of Austria
+			country = austria
 			#effect = {
 			#	make_commander_effect = yes
 			#}
@@ -928,6 +999,30 @@ reiner_ferdinand_von_habsburg = { #Reiner Ferdinand Maria von Habsburg; Source: 
 	
 	history = {
 		1847 = { #imperial and royal colonel of the infantry regiment "The Emperor", number 1, as of 1847
+			country = austria
+			#effect = {
+			#	make_commander_effect = yes
+			#}
+		}
+	}
+}
+
+wilhelm_von_habsburg = { #Archduke Wilhelm; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 11-12.
+	name = "Wilhelm"
+	dynasty = habsburg
+	character_class = warrior
+	culture = austrian
+	religion = catholic
+	gender = male
+	father = karl_von_habsburg #Archduke Karl
+	mother = henriette_von_nassau_weilburg_1797 #Henriette, daughter of Friedrich Wilhelm, Prince of Nassau-Weilburg
+	birth_date = 1827.4.21
+	traits = {
+		#tough_soldier
+	}
+	
+	history = {
+		1847 = { #proprietary of the 12th infantry regiment as of 1847
 			country = austria
 			#effect = {
 			#	make_commander_effect = yes

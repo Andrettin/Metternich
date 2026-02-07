@@ -34,7 +34,7 @@ ludwig_friedrich_von_wurtemberg = { #Duke Ludwig Friedrich Alexander of Württem
 		}
 		
 		1797.1.28 = { #married on 1797.1.28 to Henriette von Nassau-Weilburg
-			#spouse = 10000267 #Henriette von Nassau-Weilburg
+			spouse = henriette_von_nassau_weilburg #Henriette von Nassau-Weilburg
 		}
 	}
 }
@@ -48,6 +48,6 @@ maria_dorothee_von_wurtemberg = { #Maria Dorothée Wilhelmina von Württemberg; 
 	home_site = stuttgart
 	gender = female
 	father = ludwig_friedrich_von_wurtemberg #Ludwig Friedrich Alexander von Württemberg
-	#mother = 10000267 #Henriette von Nassau-Weilburg
+	mother = henriette_von_nassau_weilburg #Henriette von Nassau-Weilburg
 	birth_date = 1797.11.1
 }
