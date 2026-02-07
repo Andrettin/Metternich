@@ -1,3 +1,67 @@
+otto_von_wittelsbach = {
+	name = "Otto"
+	dynasty = wittelsbach
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = male
+	mother = ludmila_premyslid
+	birth_date = 1206.4.7
+	death_date = 1253.11.29
+	traits = {
+		#diligent
+		#charismatic_negotiator
+	}
+	
+	#child of Ludwig von Wittelsbach
+}
+
+elisabeth_von_wittelsbach = {
+	name = "Elisabeth"
+	dynasty = wittelsbach
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = female
+	father = otto_von_wittelsbach
+	birth_date = 1227.1.3
+	death_date = 1273.1.10
+	traits = {
+		#humble
+		#amateurish_plotter
+	}
+}
+
+ludwig_von_wittelsbach = {
+	name = "Ludwig"
+	dynasty = wittelsbach
+	character_class = paladin
+	culture = german
+	religion = catholic
+	gender = male
+	father = otto_von_wittelsbach
+	birth_date = 1229.4.13
+	death_date = 1294.2.2
+	traits = {
+		#cynical
+	}
+}
+
+heinrich_von_wittelsbach = {
+	name = "Heinrich"
+	dynasty = wittelsbach
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = male
+	father = otto_von_wittelsbach
+	birth_date = 1235.11.19
+	death_date = 1290.2.3
+	traits = {
+		#cynical
+	}
+}
+
 friedrich_von_wittelsbach = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 4.
 	name = "Friedrich"
 	dynasty = wittelsbach

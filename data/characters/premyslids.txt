@@ -100,6 +100,102 @@ vladislava_premyslid = {
 	death_date = 1182
 }
 
+zofie_premyslid = {
+	name = "Zofie"
+	dynasty = premyslid
+	character_class = warrior
+	culture = czech
+	religion = catholic
+	gender = female
+	father = bedrich_premyslid
+	birth_date = 1168
+	death_date = 1195
+	traits = {
+		#kind
+		#underhanded_rogue
+	}
+	
+	#child of Erzsebeth Árpád
+}
+
+ludmila_premyslid = {
+	name = "Ludmila"
+	dynasty = premyslid
+	character_class = paladin
+	culture = czech
+	religion = catholic
+	gender = female
+	father = bedrich_premyslid
+	birth_date = 1170
+	death_date = 1240.8.5
+	traits = {
+		#charitable
+		#temperate
+	}
+	
+	#child of Erzsebeth Árpád
+}
+
+helena_premyslid = {
+	name = "Helena"
+	dynasty = premyslid
+	character_class = warrior
+	culture = czech
+	religion = catholic
+	gender = female
+	father = bedrich_premyslid
+	birth_date = 1158
+	death_date = 1221
+	traits = {
+		#patient
+		#flamboyant_schemer
+	}
+	
+	#child of Erzsebeth Árpád
+}
+
+vratislav_premyslid = {
+	name = "Vratislav"
+	dynasty = premyslid
+	character_class = warrior
+	culture = czech
+	religion = catholic
+	gender = male
+	father = bedrich_premyslid
+	birth_date = 1158
+	death_date = 1180
+	
+	#child of Erzsebeth Árpád
+}
+
+olga_premyslid = {
+	name = "Olga"
+	dynasty = premyslid
+	character_class = warrior
+	culture = czech
+	religion = catholic
+	gender = female
+	father = bedrich_premyslid
+	birth_date = 1159
+	death_date = 1163
+	
+	#child of Erzsebeth Árpád
+}
+
+marketa_premyslid = {
+	name = "Marketa" #"Markéta"
+	dynasty = premyslid
+	character_class = warrior
+	culture = czech
+	religion = catholic
+	gender = female
+	father = bedrich_premyslid
+	birth_date = 1178
+	death_date = 1183
+	
+	#child of Erzsebeth Árpád
+}
+
 diepold_premyslid = {
 	name = "Diepold"
 	dynasty = premyslid
