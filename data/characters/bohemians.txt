@@ -1,24 +1,3 @@
-vlatislav_ii_of_bohemia = { #Source: Peter H. Wilson, "The Holy Roman Empire", 2016, p. 207.
-	name = "Vlatislav"
-	surname = "II" #regnal number
-	character_class = warrior
-	culture = czech
-	religion = catholic
-	home_site = prague #Bohemia
-	gender = male
-	start_date = 1152
-
-	#duke (and later king) of Bohemia
-	
-	history = {
-		1152 = {
-			rank = lord
-		}
-		
-		#Frederick I of the Holy Roman Empire granted a personal elevation to king to Vladislav II of Bohemia in 1158; Source: Peter H. Wilson, "The Holy Roman Empire", 2016, p. 207.
-	}
-}
-
 ludmila_1150 = {
 	name = "Ludmila"
 	character_class = warrior

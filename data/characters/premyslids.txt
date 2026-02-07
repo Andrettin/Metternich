@@ -1,3 +1,105 @@
+vlatislav_ii_of_bohemia = { #Source: Peter H. Wilson, "The Holy Roman Empire", 2016, p. 207.
+	name = "Vlatislav"
+	dynasty = premyslid #correct?
+	epithet = "II" #regnal number
+	character_class = warrior
+	culture = czech
+	religion = catholic
+	home_site = prague #Bohemia
+	gender = male
+	start_date = 1152
+
+	#duke (and later king) of Bohemia
+	
+	history = {
+		1152 = {
+			rank = lord
+		}
+		
+		#Frederick I of the Holy Roman Empire granted a personal elevation to king to Vladislav II of Bohemia in 1158; Source: Peter H. Wilson, "The Holy Roman Empire", 2016, p. 207.
+	}
+}
+
+bedrich_premyslid = {
+	name = "Bedrich"
+	dynasty = premyslid
+	character_class = warrior
+	culture = czech
+	religion = catholic
+	gender = male
+	father = vlatislav_ii_of_bohemia
+	mother = gertrud_von_babenberg
+	birth_date = 1141
+	death_date = 1189.3.25
+	traits = {
+		#craven
+		#envious
+		#flamboyant_schemer
+	}
+}
+
+vojtech_premyslid = {
+	name = "Vojtech"
+	dynasty = premyslid
+	character_class = cleric
+	culture = czech
+	religion = catholic
+	gender = male
+	father = vlatislav_ii_of_bohemia
+	mother = gertrud_von_babenberg
+	birth_date = 1145
+	death_date = 1200.4.8
+	traits = {
+		#stutter
+		#temperate
+	}
+}
+
+anezka_premyslid = {
+	name = "Anezka"
+	dynasty = premyslid
+	character_class = cleric
+	culture = czech
+	religion = catholic
+	gender = female
+	father = vlatislav_ii_of_bohemia
+	mother = gertrud_von_babenberg
+	birth_date = 1148
+	death_date = 1228.6.7
+	traits = {
+		#ambitious
+	}
+}
+
+svatopluk_premyslid = {
+	name = "Svatopluk"
+	dynasty = premyslid
+	character_class = warrior
+	culture = czech
+	religion = catholic
+	gender = male
+	father = vlatislav_ii_of_bohemia
+	mother = gertrud_von_babenberg
+	birth_date = 1144
+	death_date = 1170.10.15
+	traits = {
+		#wroth
+	}
+}
+
+vladislava_premyslid = {
+	name = "Vladislava"
+	dynasty = premyslid
+	character_class = paladin
+	culture = czech
+	religion = catholic
+	gender = female
+	father = vlatislav_ii_of_bohemia
+	mother = gertrud_von_babenberg
+	birth_date = 1141
+	death_date = 1182
+}
+
 diepold_premyslid = {
 	name = "Diepold"
 	dynasty = premyslid
