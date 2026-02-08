@@ -38,6 +38,7 @@ saint_cuthbert = { #Source: Frank Stenton, "Anglo-Saxon England", 1971, pp. 126,
 saint_hedwig = {
 	name = "Saint Hedwig"
 	pantheon = abrahamic
+	divine_rank = demigod
 	apotheosis = true
 	religions = {
 		catholic
@@ -57,6 +58,7 @@ saint_hedwig = {
 saint_leopold = {
 	name = "Saint Leopold"
 	pantheon = abrahamic
+	divine_rank = demigod
 	apotheosis = true
 	religions = {
 		catholic
@@ -89,6 +91,7 @@ saint_leopold = {
 saint_louis = {
 	name = "Saint Louis"
 	pantheon = abrahamic
+	divine_rank = demigod
 	apotheosis = true
 	religions = {
 		catholic
