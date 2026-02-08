@@ -2,6 +2,7 @@
 
 #include "character/character_game_data.h"
 
+#include "character/age_category.h"
 #include "character/bloodline.h"
 #include "character/character.h"
 #include "character/character_attribute.h"
@@ -805,6 +806,22 @@ int character_game_data::get_age() const
 	}
 
 	return age;
+}
+
+age_category character_game_data::get_age_category() const
+{
+	const int age = this->get_age();
+	if (age >= this->character->get_species()->get_venerable_age()) {
+		return age_category::venerable;
+	} else if (age >= this->character->get_species()->get_old_age()) {
+		return age_category::old;
+	} else if (age >= this->character->get_species()->get_middle_age()) {
+		return age_category::middle_aged;
+	} else if (age >= this->character->get_species()->get_adulthood_age()) {
+		return age_category::adult;
+	} else {
+		return age_category::child;
+	}
 }
 
 void character_game_data::set_dead(const bool dead)

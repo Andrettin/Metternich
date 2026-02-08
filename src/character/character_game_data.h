@@ -45,6 +45,7 @@ class spell;
 class status_effect;
 class trait;
 class trait_type;
+enum class age_category;
 enum class military_unit_stat;
 
 template <typename scope_type>
@@ -145,6 +146,7 @@ public:
 	void set_domain(const metternich::domain *domain);
 
 	int get_age() const;
+	age_category get_age_category() const;
 
 	bool is_dead() const
 	{

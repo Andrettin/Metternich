@@ -359,6 +359,7 @@ set(metternich_SRCS
 )
 
 set(character_HDRS
+	src/character/age_category.h
 	src/character/bloodline.h
 	src/character/bloodline_strength_category.h
 	src/character/character.h
@@ -605,6 +606,7 @@ source_group(script FILES ${script_HDRS})
 set(script_condition_HDRS
 	src/script/condition/adjacent_terrain_condition.h
 	src/script/condition/advisor_condition.h
+	src/script/condition/age_category_condition.h
 	src/script/condition/age_condition.h
 	src/script/condition/anarchy_condition.h
 	src/script/condition/and_condition.h
