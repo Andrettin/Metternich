@@ -71,6 +71,22 @@ heinrich_ii_von_babenberg = { #Source: Hereford B. George, "Genealogical Tables 
 	death_date = 1177
 }
 
+otto_von_babenberg = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Otto"
+	dynasty = babenberg
+	character_class = cleric #bishop
+	rank = canon
+	culture = austrian
+	religion = catholic
+	home_site = freising
+	gender = male
+	father = saint_leopold
+	mother = agnes_of_waiblingen
+	death_date = 1158
+	
+	#bishop of Freisingen
+}
+
 agnes_von_babenberg = {
 	name = "Agnes"
 	dynasty = babenberg
@@ -131,21 +147,18 @@ agnes_von_babenberg_1154 = {
 	death_date = 1182
 }
 
-leopold_von_babenberg = {
+leopold_v_von_babenberg = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
 	name = "Leopold"
+	epithet = "V"
 	dynasty = babenberg
-	character_class = warrior
+	character_class = warrior #duke
+	rank = lord
 	culture = austrian
 	religion = catholic
 	gender = male
 	father = heinrich_ii_von_babenberg
-	mother = theodora_komnenos
-	birth_date = 1157
-	death_date = 1194.12.31
-	traits = {
-		#proud
-		#patient
-	}
+	start_date = 1177 #became duke of Austria
+	death_date = 1194
 }
 
 heinrich_von_babenberg_1158 = {
@@ -164,37 +177,31 @@ heinrich_von_babenberg_1158 = {
 	}
 }
 
-friedrich_von_babenberg = {
-	name = "Friedrich"
+friedrich_i_von_babenberg = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Friedrich" #source gives "Frederick"
 	dynasty = babenberg
-	character_class = warrior
+	character_class = warrior #duke
+	rank = lord
 	culture = austrian
 	religion = catholic
 	gender = male
-	father = leopold_von_babenberg
-	mother = helena_arpad
-	birth_date = 1175
-	death_date = 1198.4.16
-	traits = {
-		#patient
-		#stutter
-	}
+	father = leopold_v_von_babenberg
+	start_date = 1195 #became duke of Austria
+	death_date = 1198
 }
 
-leopold_von_babenberg_1176 = {
+leopold_vi_von_babenberg = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
 	name = "Leopold"
+	epithet = "VI"
 	dynasty = babenberg
-	character_class = paladin
+	character_class = warrior #duke
+	rank = lord
 	culture = austrian
 	religion = catholic
 	gender = male
-	father = leopold_von_babenberg
-	mother = helena_arpad
-	birth_date = 1176
-	death_date = 1230.7.28
-	traits = {
-		#deceitful
-	}
+	father = leopold_v_von_babenberg
+	start_date = 1198 #became duke of Austria
+	death_date = 1230
 }
 
 agnes_von_babenberg_1178 = {
@@ -204,7 +211,7 @@ agnes_von_babenberg_1178 = {
 	culture = austrian
 	religion = catholic
 	gender = female
-	father = leopold_von_babenberg
+	father = leopold_v_von_babenberg
 	mother = helena_arpad
 	birth_date = 1178
 	death_date = 1228
@@ -234,7 +241,7 @@ agnes_von_babenberg_1205 = {
 	culture = austrian
 	religion = catholic
 	gender = female
-	father = leopold_von_babenberg_1176
+	father = leopold_vi_von_babenberg
 	mother = theodora_angelos
 	birth_date = 1205.2.19
 	death_date = 1226.8.29
@@ -247,7 +254,7 @@ margarethe_von_babenberg = {
 	culture = austrian
 	religion = catholic
 	gender = female
-	father = leopold_von_babenberg_1176
+	father = leopold_vi_von_babenberg
 	birth_date = 1208
 	death_date = 1267.10.2
 	
@@ -261,7 +268,7 @@ heinrich_von_babenberg_1208 = {
 	culture = austrian
 	religion = catholic
 	gender = male
-	father = leopold_von_babenberg_1176
+	father = leopold_vi_von_babenberg
 	mother = theodora_angelos
 	birth_date = 1208
 	death_date = 1228.9.26
@@ -274,7 +281,7 @@ friedrich_von_babenberg_1211 = {
 	culture = austrian
 	religion = catholic
 	gender = male
-	father = leopold_von_babenberg_1176
+	father = leopold_vi_von_babenberg
 	mother = theodora_angelos
 	birth_date = 1211.4.25
 	death_date = 1246.6.15
@@ -287,7 +294,7 @@ konstanza_von_babenberg = {
 	culture = austrian
 	religion = catholic
 	gender = female
-	father = leopold_von_babenberg_1176
+	father = leopold_vi_von_babenberg
 	mother = theodora_angelos
 	birth_date = 1212.6.5
 	death_date = 1243.6.5
@@ -300,7 +307,7 @@ gertrud_von_babenberg_1214 = {
 	culture = austrian
 	religion = catholic
 	gender = female
-	father = leopold_von_babenberg_1176
+	father = leopold_vi_von_babenberg
 	mother = theodora_angelos
 	birth_date = 1214
 	death_date = 1241
