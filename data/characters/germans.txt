@@ -129,6 +129,19 @@ lanzelin_etichonen = {
 	death_date = 991
 }
 
+adalbert_of_bremen = { #Source: Snorri Sturlson, "Heimskringla", 1844, vol. 1, p. 141.
+	name = "Adalbert"
+	character_class = cleric
+	rank = canon #bishop
+	culture = german
+	religion = catholic
+	home_site = bremen
+	gender = male
+	death_date = 1075 #died
+	
+	#archbishop of Bremen; was requested by Norse people (including from Greenland) to send clergymen to them, which he did
+}
+
 christina_1147 = {
 	name = "Christina"
 	character_class = warrior
