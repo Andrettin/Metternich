@@ -29,8 +29,18 @@ public:
 
 	struct character_data_row final
 	{
-		explicit character_data_row(const std::string &name, const std::string &value = "", const character_data_row *parent_row = nullptr)
-			: name(name), value(value), parent_row(parent_row)
+		explicit character_data_row(std::string &&name, std::string &&value = "", const character_data_row *parent_row = nullptr)
+			: name(std::move(name)), value(std::move(value)), parent_row(parent_row)
+		{
+		}
+
+		explicit character_data_row(const std::string &name, std::string &&value = "", const character_data_row *parent_row = nullptr)
+			: character_data_row(std::string(name), std::move(value), parent_row)
+		{
+		}
+
+		explicit character_data_row(std::string &&name, const std::string &value, const character_data_row *parent_row = nullptr)
+			: character_data_row(std::move(name), std::string(value), parent_row)
 		{
 		}
 

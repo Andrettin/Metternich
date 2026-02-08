@@ -1841,6 +1841,12 @@ std::string game::year_to_labeled_string(const int year) const
 	return date::year_to_labeled_string(year);
 }
 
+std::string game::year_range_to_labeled_string(const int start_year, const int end_year) const
+{
+	//FIXME: add support for different calendars depending on the domain/culture being played
+	return date::year_range_to_labeled_string(start_year, end_year);
+}
+
 QVariantList game::get_countries_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_countries());

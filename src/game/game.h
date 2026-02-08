@@ -170,6 +170,8 @@ public:
 		return QString::fromStdString(this->year_to_labeled_string(year));
 	}
 
+	std::string year_range_to_labeled_string(const int start_year, const int end_year) const;
+
 	const std::vector<domain *> &get_countries() const
 	{
 		return this->countries;

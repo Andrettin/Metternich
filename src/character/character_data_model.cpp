@@ -225,11 +225,13 @@ void character_data_model::reset_model()
 			this->top_rows.push_back(std::make_unique<character_data_row>("Bloodline:", std::format("{} ({})", character_game_data->get_bloodline()->get_cultural_name(this->character->get_culture()), character_game_data->get_bloodline_strength())));
 		}
 
+		std::string age_complement_str;
 		if (character_game_data->is_dead()) {
-			this->top_rows.push_back(std::make_unique<character_data_row>("Age:", std::format("{} (Died in {})", number::to_formatted_string(character_game_data->get_age()), game::get()->year_to_labeled_string(character_game_data->get_death_date().year()))));
+			age_complement_str = std::format("Lived {}", game::get()->year_range_to_labeled_string(character_game_data->get_birth_date().year(), character_game_data->get_death_date().year()));
 		} else {
-			this->top_rows.push_back(std::make_unique<character_data_row>("Age:", number::to_formatted_string(character_game_data->get_age())));
+			age_complement_str = std::format("Born in {}", game::get()->year_to_labeled_string(character_game_data->get_birth_date().year()));
 		}
+		this->top_rows.push_back(std::make_unique<character_data_row>("Age:", std::format("{} ({})", number::to_formatted_string(character_game_data->get_age()), age_complement_str)));
 
 		if (this->character->get_culture() != nullptr) {
 			this->top_rows.push_back(std::make_unique<character_data_row>("Culture:", this->character->get_culture()->get_name()));
