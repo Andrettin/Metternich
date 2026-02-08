@@ -117,6 +117,20 @@ guglielmo_lungaspada = {
 	#child of Guglielmo Aleramicci
 }
 
+maria_aleramicci = {
+	name = "Maria"
+	dynasty = aleramicci
+	character_class = warrior
+	culture = italian
+	religion = catholic
+	gender = female
+	father = corrado_aleramicci
+	birth_date = 1192.10.1
+	death_date = 1212
+	
+	#child of Isabelle d'Anjou
+}
+
 marco_polo = {
 	name = "Marco"
 	surname = "Polo"

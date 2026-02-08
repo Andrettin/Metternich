@@ -27,6 +27,12 @@ bourgogne = {
 	culture = french
 }
 
+brienne = {
+	name = "Brienne"
+	prefix = "de"
+	culture = french
+}
+
 capet = {
 	name = "Capet"
 	culture = french
