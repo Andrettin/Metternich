@@ -1,3 +1,122 @@
+corrado_aleramicci = {
+	name = "Corrado"
+	dynasty = aleramicci
+	character_class = warrior
+	culture = italian
+	religion = catholic
+	gender = male
+	mother = jutta_von_babenberg
+	birth_date = 1152
+	death_date = 1192.4.28
+	traits = {
+		#diligent
+		#brave
+		#zealous
+	}
+	
+	#child of Guglielmo Aleramicci
+}
+
+beatrice_aleramicci = {
+	name = "Beatrice"
+	dynasty = aleramicci
+	character_class = warrior
+	culture = italian
+	religion = catholic
+	gender = female
+	mother = jutta_von_babenberg
+	birth_date = 1137
+	death_date = 1192
+	
+	#child of Guglielmo Aleramicci
+}
+
+bonifacio_aleramicci = {
+	name = "Bonifacio"
+	dynasty = aleramicci
+	character_class = paladin
+	culture = italian
+	religion = catholic
+	gender = male
+	mother = jutta_von_babenberg
+	birth_date = 1150
+	death_date = 1207.9.4
+	traits = {
+		#diligent
+		#zealous
+		#brave
+	}
+	
+	#child of Guglielmo Aleramicci
+}
+
+federigo_aleramicci = {
+	name = "Federigo"
+	dynasty = aleramicci
+	character_class = cleric
+	culture = italian
+	religion = catholic
+	gender = male
+	mother = jutta_von_babenberg
+	birth_date = 1155
+	death_date = 1205
+	
+	#child of Guglielmo Aleramicci
+}
+
+alasia_aleramicci = {
+	name = "Alasia"
+	dynasty = aleramicci
+	character_class = paladin
+	culture = italian
+	religion = catholic
+	gender = female
+	mother = jutta_von_babenberg
+	birth_date = 1160
+	death_date = 1210
+	traits = {
+		#diligent
+	}
+	
+	#child of Guglielmo Aleramicci
+}
+
+raniero_ioannes_aleramicci = {
+	name = "Raniero-Ioannes"
+	dynasty = aleramicci
+	character_class = warrior
+	culture = italian
+	religion = catholic
+	gender = male
+	mother = jutta_von_babenberg
+	birth_date = 1163
+	death_date = 1183
+	traits = {
+		#underhanded_rogue
+	}
+	
+	#child of Guglielmo Aleramicci
+}
+
+guglielmo_lungaspada = {
+	name = "Guglielmo"
+	epithet = "Lungaspada"
+	dynasty = aleramicci
+	character_class = paladin
+	culture = italian
+	religion = catholic
+	gender = male
+	mother = jutta_von_babenberg
+	birth_date = 1144
+	death_date = 1177.1.6
+	traits = {
+		#honest
+		#humble
+	}
+	
+	#child of Guglielmo Aleramicci
+}
+
 marco_polo = {
 	name = "Marco"
 	surname = "Polo"

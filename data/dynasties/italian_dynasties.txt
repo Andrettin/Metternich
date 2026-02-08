@@ -1,3 +1,8 @@
+aleramicci = {
+	name = "Aleramicci"
+	culture = italian
+}
+
 divrea = {
 	name = "d'Ivrea"
 	culture = italian
