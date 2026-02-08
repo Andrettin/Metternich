@@ -16,6 +16,7 @@ leopold_iv_von_babenberg = { #Source: Christiane Maria Bauer et al., "Molecular 
 	epithet = "IV"
 	dynasty = babenberg
 	character_class = warrior #margrave
+	rank = lord
 	culture = austrian
 	religion = catholic
 	home_site = vienna
@@ -54,20 +55,20 @@ konrad_von_babenberg = {
 	death_date = 1168
 }
 
-heinrich_von_babenberg = {
-	name = "Heinrich"
+heinrich_ii_von_babenberg = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Heinrich" #the source gives "Henry"
+	epithet = "II"
 	dynasty = babenberg
-	character_class = warrior
+	character_class = warrior #margrave
+	rank = lord
 	culture = austrian
 	religion = catholic
+	home_site = vienna
 	gender = male
 	father = saint_leopold
 	mother = agnes_of_waiblingen
-	birth_date = 1112
-	death_date = 1177.1.13
-	traits = {
-		#craven
-	}
+	start_date = 1141 #became margrave of Austria
+	death_date = 1177
 }
 
 agnes_von_babenberg = {
@@ -124,7 +125,7 @@ agnes_von_babenberg_1154 = {
 	culture = austrian
 	religion = catholic
 	gender = female
-	father = heinrich_von_babenberg
+	father = heinrich_ii_von_babenberg
 	mother = theodora_komnenos
 	birth_date = 1154
 	death_date = 1182
@@ -137,7 +138,7 @@ leopold_von_babenberg = {
 	culture = austrian
 	religion = catholic
 	gender = male
-	father = heinrich_von_babenberg
+	father = heinrich_ii_von_babenberg
 	mother = theodora_komnenos
 	birth_date = 1157
 	death_date = 1194.12.31
@@ -154,7 +155,7 @@ heinrich_von_babenberg_1158 = {
 	culture = austrian
 	religion = catholic
 	gender = male
-	father = heinrich_von_babenberg
+	father = heinrich_ii_von_babenberg
 	mother = theodora_komnenos
 	birth_date = 1158
 	death_date = 1208

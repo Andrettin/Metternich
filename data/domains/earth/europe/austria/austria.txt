@@ -80,9 +80,27 @@ austria = {
 			}
 		}
 		
+		1136 = {
+			offices = {
+				ruler = leopold_iv_von_babenberg #Leopold IV became margrave of Austria in 1136; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+			}
+		}
+		
+		1139 = {
+			owner = bavaria #Leopold IV of Austria became duke of Bavaria in 1139; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+		}
+		
+		1141 = {
+			owner = none
+			offices = {
+				ruler = heinrich_ii_von_babenberg #Henry II became margrave of Austria in 1141; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+			}
+		}
+		
 		1156 = {
-			tier = duchy #Austria became a duchy in 1156; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
-			government_type = monarchy
+			#Austria became a duchy in 1156; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			#Henry II became duke of Austria in 1156; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+			tier = duchy
 		}
 		
 		1282 = {
