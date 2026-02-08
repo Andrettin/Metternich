@@ -3,12 +3,20 @@ philip_ii_of_spain = {
 	character_conditions = {
 		gender = male
 		or = {
-			cultural_group = western
-			culture = persian
+			species = human
+			species = elf
+			species = half_elf
+			species = halfling
+			taxon = archon
+		}
+		not = {
+			cultural_group = african
+			cultural_group = asian
 		}
 		or = {
 			character_class = warrior
 			character_class = paladin
 		}
+		age_category < old
 	}
 }

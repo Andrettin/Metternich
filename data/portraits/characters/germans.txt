@@ -47,6 +47,7 @@ wilhelmine_von_sagan = {
 		not = {
 			cultural_group = african
 		}
+		age_category < old
 	}
 }
 

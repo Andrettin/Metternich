@@ -3,6 +3,9 @@ maria_theresia = {
 	character_conditions = {
 		gender = female
 		or = {
+			species = dwarf
+			species = gnome
+			species = goblin
 			species = human
 			species = elf
 			species = half_elf
@@ -11,10 +14,7 @@ maria_theresia = {
 		not = {
 			cultural_group = african
 		}
-		or = {
-			character_class = warrior #aristocrat
-			character_class = paladin
-		}
+		age_category >= old
 	}
 }
 
@@ -37,6 +37,7 @@ franz_i_of_austria = {
 			character_class = warrior #aristocrat
 			character_class = paladin
 		}
+		age_category >= old
 	}
 }
 
