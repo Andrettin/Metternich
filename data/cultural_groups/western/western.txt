@@ -1,8 +1,6 @@
 western = {
 	name = "Western"
 	rank = supergroup
-	given_name_markov_chain_size = 2
-	surname_markov_chain_size = 2
 	default_phenotype = european
 	
 	history = {
