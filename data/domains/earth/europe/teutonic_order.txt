@@ -6,6 +6,8 @@ teutonic_order = {
 	default_tier = duchy
 	default_government_type = monarchy
 	default_capital = konigsberg
+	definite_article = true
+	short_name = true
 	eras = {
 		medieval_era
 		renaissance_era

@@ -8,6 +8,7 @@ papal_states = {
 	default_tier = kingdom
 	default_government_type = theocracy
 	default_capital = rome
+	definite_article = true
 	short_name = true
 	eras = {
 		medieval_era
