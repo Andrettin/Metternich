@@ -111,13 +111,19 @@ austria = {
 		
 		1195 = {
 			offices = {
-				ruler = friedrich_i_von_babenberg #Friedrich I became duke of Austria in 1195; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+				ruler = friedrich_i_von_babenberg #Frederick I became duke of Austria in 1195; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
 			}
 		}
 		
 		1198 = {
 			offices = {
 				ruler = leopold_vi_von_babenberg #Leopold VI became duke of Austria in 1198; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+			}
+		}
+		
+		1230 = {
+			offices = {
+				ruler = friedrich_ii_von_babenberg #Frederick II became duke of Austria in 1230; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
 			}
 		}
 		

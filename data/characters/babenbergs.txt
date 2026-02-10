@@ -155,6 +155,7 @@ leopold_v_von_babenberg = { #Source: Hereford B. George, "Genealogical Tables Il
 	rank = lord
 	culture = austrian
 	religion = catholic
+	home_site = vienna
 	gender = male
 	father = heinrich_ii_von_babenberg
 	start_date = 1177 #became duke of Austria
@@ -184,6 +185,7 @@ friedrich_i_von_babenberg = { #Source: Hereford B. George, "Genealogical Tables 
 	rank = lord
 	culture = austrian
 	religion = catholic
+	home_site = vienna
 	gender = male
 	father = leopold_v_von_babenberg
 	start_date = 1195 #became duke of Austria
@@ -198,6 +200,7 @@ leopold_vi_von_babenberg = { #Source: Hereford B. George, "Genealogical Tables I
 	rank = lord
 	culture = austrian
 	religion = catholic
+	home_site = vienna
 	gender = male
 	father = leopold_v_von_babenberg
 	start_date = 1198 #became duke of Austria
@@ -247,82 +250,79 @@ agnes_von_babenberg_1205 = {
 	death_date = 1226.8.29
 }
 
-margarethe_von_babenberg = {
-	name = "Margarethe"
+margarete_von_babenberg = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Margarete" #source gives "Margaret"
 	dynasty = babenberg
 	character_class = warrior #aristocrat
 	culture = austrian
 	religion = catholic
+	home_site = vienna
 	gender = female
 	father = leopold_vi_von_babenberg
-	birth_date = 1208
-	death_date = 1267.10.2
 	
-	#daughter of Theodora Angelia
+	#had her first marriage with Henry, son of Emperor Frederick II
+	#had her second marriage with Ottocar of Bohemia
 }
 
-heinrich_von_babenberg_1208 = {
-	name = "Heinrich"
+heinrich_von_babenberg = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Heinrich" #source gives "Henry"
 	dynasty = babenberg
 	character_class = warrior
 	culture = austrian
 	religion = catholic
+	home_site = vienna
 	gender = male
 	father = leopold_vi_von_babenberg
-	mother = theodora_angelos
-	birth_date = 1208
-	death_date = 1228.9.26
+	death_date = 1228
 }
 
-friedrich_von_babenberg_1211 = {
-	name = "Friedrich"
+friedrich_ii_von_babenberg = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Friedrich" #source gives "Frederick"
 	dynasty = babenberg
 	character_class = warrior
 	culture = austrian
 	religion = catholic
+	home_site = vienna
 	gender = male
 	father = leopold_vi_von_babenberg
-	mother = theodora_angelos
-	birth_date = 1211.4.25
-	death_date = 1246.6.15
+	start_date = 1230 #became duke of Austria
+	death_date = 1246
 }
 
-konstanza_von_babenberg = {
-	name = "Konstanza"
+konstanze_von_babenberg = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Konstanze" #source gives "Constance"
 	dynasty = babenberg
 	character_class = warrior #aristocrat
 	culture = austrian
 	religion = catholic
+	home_site = vienna
 	gender = female
 	father = leopold_vi_von_babenberg
-	mother = theodora_angelos
-	birth_date = 1212.6.5
-	death_date = 1243.6.5
-}
-
-gertrud_von_babenberg_1214 = {
-	name = "Gertrud"
-	dynasty = babenberg
-	character_class = warrior #aristocrat
-	culture = austrian
-	religion = catholic
-	gender = female
-	father = leopold_vi_von_babenberg
-	mother = theodora_angelos
-	birth_date = 1214
-	death_date = 1241
-}
-
-gertrude_von_babenberg = {
-	name = "Gertrude"
-	dynasty = babenberg
-	character_class = warrior #aristocrat
-	culture = austrian
-	religion = catholic
-	gender = female
-	father = heinrich_von_babenberg_1208
-	birth_date = 1226
-	death_date = 1288.4.24
 	
-	#daughter of Agnes Ludowinger
+	#married to Henry, the margrave of Meissen
+}
+
+gertrud_von_babenberg_1214 = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Gertrud" #source gives "Gertrude"
+	dynasty = babenberg
+	character_class = warrior #aristocrat
+	culture = austrian
+	religion = catholic
+	home_site = vienna
+	gender = female
+	father = leopold_vi_von_babenberg
+	
+	#married to Henry Raspe
+}
+
+gertrud_von_babenberg_1226 = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Gertrud" #source gives "Gertrude"
+	dynasty = babenberg
+	character_class = warrior #aristocrat
+	culture = austrian
+	religion = catholic
+	gender = female
+	father = heinrich_von_babenberg #daughter of Heinrich von Babenberg, son of Leopold VI
+	
+	#married to Hermann VI of Baden
 }

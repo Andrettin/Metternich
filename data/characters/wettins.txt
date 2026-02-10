@@ -5,7 +5,7 @@ albrecht_von_wettin = {
 	culture = german
 	religion = catholic
 	gender = male
-	mother = konstanza_von_babenberg
+	mother = konstanze_von_babenberg
 	birth_date = 1240
 	death_date = 1314.11.13
 	
@@ -19,7 +19,7 @@ dietrich_von_wettin = {
 	culture = german
 	religion = catholic
 	gender = male
-	mother = konstanza_von_babenberg
+	mother = konstanze_von_babenberg
 	birth_date = 1242
 	death_date = 1285.2.8
 	

@@ -34,7 +34,7 @@ heinrich_von_hohenstaufen_1228 = {
 	religion = catholic
 	gender = male
 	father = heinrich_von_hohenstaufen
-	mother = margarethe_von_babenberg
+	mother = margarete_von_babenberg
 	birth_date = 1228
 	death_date = 1245
 }
@@ -47,7 +47,7 @@ friedrich_von_hohenstaufen = {
 	religion = catholic
 	gender = male
 	father = heinrich_von_hohenstaufen
-	mother = margarethe_von_babenberg
+	mother = margarete_von_babenberg
 	birth_date = 1230
 	death_date = 1251
 }

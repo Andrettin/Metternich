@@ -1,15 +1,27 @@
-friedrich_von_zahringen = {
-	name = "Friedrich"
-	dynasty = zahringen
+hermann_vi_of_baden = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Hermann"
+	epithet = "VI"
+	dynasty = zahringen #correct?
 	character_class = warrior
 	culture = german
 	religion = catholic
+	home_site = karlsruhe #Baden
 	gender = male
-	mother = gertrude_von_babenberg
-	birth_date = 1249
-	death_date = 1268.10.29
 	
-	#son of Hermann von Zähringen
+	#married to Gertrude von Babenberg
+}
+
+friedrich_von_zahringen = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Friedrich" #source gives "Frederick"
+	dynasty = zahringen #correct?
+	character_class = warrior
+	culture = german
+	religion = catholic
+	home_site = karlsruhe #Baden
+	gender = male
+	father = hermann_vi_of_baden
+	mother = gertrud_von_babenberg_1226
+	death_date = 1268
 }
 
 agnes_von_zahringen = {
@@ -19,9 +31,8 @@ agnes_von_zahringen = {
 	culture = german
 	religion = catholic
 	gender = female
-	mother = gertrude_von_babenberg
+	father = hermann_vi_of_baden
+	mother = gertrud_von_babenberg_1226
 	birth_date = 1250
 	death_date = 1295
-	
-	#daughter of Hermann von Zähringen
 }
