@@ -310,6 +310,7 @@
 /graphics/portraits/characters/cardinal_richelieu.png (by Jinn) (licensed under the CC0)
 /graphics/portraits/characters/cunhambebe.png (by Jinn) (licensed under the CC0)
 /graphics/portraits/characters/dwarven_warrior.png (by Jinn) (licensed under the CC0)
+/graphics/portraits/characters/dwarven_warrior_close.png (by Jinn) (licensed under the CC0)
 /graphics/portraits/characters/elizabeth_i_of_england.png (by Jinn) (licensed under the CC0)
 /graphics/portraits/characters/francis_drake.png (by Jinn) (licensed under the CC0)
 /graphics/portraits/characters/frankish_cleric.png (by Jinn) (licensed under the CC0)
