@@ -1,0 +1,21 @@
+heinrich_the_black = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 16a.
+	name = "Heinrich" #the source gives "Henry"
+	epithet = "the Black"
+	dynasty = welf
+	character_class = warrior
+	culture = german
+	religion = catholic
+	home_site = regensburg #Bavaria
+	gender = male
+}
+
+judith_welf = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 16a.
+	name = "Judith"
+	character_class = warrior
+	dynasty = welf
+	culture = german
+	religion = catholic
+	home_site = regensburg #Bavaria
+	gender = female
+	father = heinrich_the_black
+}

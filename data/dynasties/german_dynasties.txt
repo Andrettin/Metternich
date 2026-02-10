@@ -61,6 +61,11 @@ pfirt = {
 	culture = german
 }
 
+saarbrucken = {
+	name = "Saarbrucken" #"Saarbrücken"
+	culture = german
+}
+
 salian = {
 	name = "Salian"
 	culture = german
@@ -78,6 +83,11 @@ schwarzenberg = { #Source: "Encyclopædia Britannica", 1911, vol. 24, p. 390.
 sponheim = {
 	name = "Sponheim"
 	prefix = "von"
+	culture = german
+}
+
+welf = {
+	name = "Welf"
 	culture = german
 }
 

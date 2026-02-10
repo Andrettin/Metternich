@@ -142,6 +142,16 @@ adalbert_of_bremen = { #Source: Snorri Sturlson, "Heimskringla", 1844, vol. 1, p
 	#archbishop of Bremen; was requested by Norse people (including from Greenland) to send clergymen to them, which he did
 }
 
+agnes_von_saarbrucken = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Agnes"
+	character_class = warrior
+	dynasty = saarbrucken
+	culture = german
+	religion = catholic
+	home_site = saarbrucken
+	gender = female
+}
+
 christina_1147 = {
 	name = "Christina"
 	character_class = warrior

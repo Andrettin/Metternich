@@ -13,7 +13,7 @@ friedrich_von_hohenstaufen = { #Source: Hereford B. George, "Genealogical Tables
 
 friedrich_the_one_eyed = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
 	name = "Friedrich" #the source gives "Frederick"
-	epithet = "the One-eyed
+	epithet = "the One-Eyed"
 	dynasty = hohenstaufen
 	character_class = warrior #duke
 	rank = lord
@@ -23,7 +23,7 @@ friedrich_the_one_eyed = { #Source: Hereford B. George, "Genealogical Tables Ill
 	gender = male
 	father = friedrich_von_hohenstaufen
 	mother = agnes_of_waiblingen
-	start_date = 1105 #date his father, a previous duke of Swabia, died, and as such presumably when he succeeded him
+	start_date = 1105 #date his father, a previous duke of Swabia, died, and as such presumably when he succeeded him as duke
 	death_date = 1147
 	
 	#duke of Swabia
@@ -80,10 +80,27 @@ friedrich_barbarossa = { #Friedrich I "Barbarossa" of the Holy Roman Empire; Sou
 	character_class = warrior
 	culture = german
 	religion = catholic
-	home_site = stuttgart #Swabia
+	home_site = hohenstaufen
 	gender = male
+	father = friedrich_the_one_eyed #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	mother = judith_welf #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
 	birth_date = 1122 #born in 1122; Source: Peter H. Wilson, "The Holy Roman Empire", 2016, p. 903.
 	death_date = 1190 #died in 1190; Source: Peter H. Wilson, "The Holy Roman Empire", 2016, p. 903.
+}
+
+konrad_von_hohenstaufen = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Konrad" #the source gives "Conrad"
+	dynasty = hohenstaufen
+	character_class = warrior
+	culture = german
+	religion = catholic
+	home_site = hohenstaufen
+	gender = male
+	father = friedrich_the_one_eyed
+	mother = agnes_von_saarbrucken
+	death_date = 1195
+	
+	#count palatine (Pfalzgraf)
 }
 
 heinrich_von_hohenstaufen = {
@@ -127,7 +144,7 @@ friedrich_von_hohenstaufen_1230 = {
 	death_date = 1251
 }
 
-konrad_von_hohenstaufen = {
+konrad_von_hohenstaufen_1252 = {
 	name = "Konrad"
 	dynasty = hohenstaufen
 	character_class = warrior
