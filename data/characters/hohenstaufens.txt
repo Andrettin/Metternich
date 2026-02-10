@@ -1,3 +1,78 @@
+friedrich_von_hohenstaufen = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Friedrich" #the source gives "Frederick"
+	dynasty = hohenstaufen
+	character_class = warrior #duke
+	rank = lord
+	culture = german
+	religion = catholic
+	home_site = hohenstaufen
+	gender = male
+	start_date = 1080 #became duke of Swabia
+	death_date = 1105
+}
+
+friedrich_the_one_eyed = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Friedrich" #the source gives "Frederick"
+	epithet = "the One-eyed
+	dynasty = hohenstaufen
+	character_class = warrior #duke
+	rank = lord
+	culture = german
+	religion = catholic
+	home_site = hohenstaufen
+	gender = male
+	father = friedrich_von_hohenstaufen
+	mother = agnes_of_waiblingen
+	start_date = 1105 #date his father, a previous duke of Swabia, died, and as such presumably when he succeeded him
+	death_date = 1147
+	
+	#duke of Swabia
+}
+
+konrad_iii_of_the_holy_roman_empire = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Konrad" #the source gives "Conrad"
+	epithet = "III"
+	dynasty = hohenstaufen
+	character_class = warrior #emperor
+	rank = lord
+	culture = german
+	religion = catholic
+	home_site = hohenstaufen
+	gender = male
+	father = friedrich_von_hohenstaufen
+	mother = agnes_of_waiblingen
+	start_date = 1127 #elected emperor in opposition to Lothar
+	death_date = 1152
+	
+	#elected as emperor in 1127 in opposition to Lothar, and was accepted as his successor (from 1137)
+}
+
+heinrich_of_germany = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Heinrich" #the source gives "Henry"
+	dynasty = hohenstaufen
+	character_class = warrior #king
+	rank = lord
+	culture = german
+	religion = catholic
+	home_site = hohenstaufen
+	gender = male
+	father = konrad_iii_of_the_holy_roman_empire
+	start_date = 1147 #became king of Germany (presumably as co-king with his father, who was still alive and ruling until 1152)
+	death_date = 1150
+}
+
+friedrich_von_hohenstaufen_1167 = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Friedrich" #the source gives "Frederick"
+	dynasty = hohenstaufen
+	character_class = warrior
+	culture = german
+	religion = catholic
+	home_site = hohenstaufen
+	gender = male
+	father = konrad_iii_of_the_holy_roman_empire
+	death_date = 1167
+}
+
 friedrich_barbarossa = { #Friedrich I "Barbarossa" of the Holy Roman Empire; Source: Peter H. Wilson, "The Holy Roman Empire", 2016, pp. 35, 903.
 	name = "Friedrich"
 	epithet = "Barbarossa"
@@ -39,7 +114,7 @@ heinrich_von_hohenstaufen_1228 = {
 	death_date = 1245
 }
 
-friedrich_von_hohenstaufen = {
+friedrich_von_hohenstaufen_1230 = {
 	name = "Friedrich"
 	dynasty = hohenstaufen
 	character_class = warrior

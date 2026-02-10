@@ -15,4 +15,22 @@ swabia = {
 		baden
 		augsburg
 	}
+	
+	history = {
+		1080 = {
+			government_type = monarchy
+			
+			offices = {
+				ruler = friedrich_von_hohenstaufen #Frederick of Hohenstaufen became duke of Swabia in 1080; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+			}
+		}
+		
+		1105 = {
+			government_type = monarchy
+			
+			offices = {
+				ruler = friedrich_the_one_eyed #Frederick of Hohenstaufen died in 1105, and his son Frederick the One-eyed was also duke of Swabia, so presumably he succeeded him then; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+			}
+		}
+	}
 }

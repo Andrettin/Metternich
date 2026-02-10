@@ -63,8 +63,15 @@ holy_roman_empire = {
 	}
 	
 	history = {
-		1273 = {
+		1137 = {
 			government_type = monarchy
+			
+			offices = {
+				ruler = konrad_iii_of_the_holy_roman_empire #Conrad III became emperor of the Holy Roman Empire in 1137; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+			}
+		}
+		
+		1273 = {
 			offices = {
 				ruler = rudolf_i_of_germany #Rudolf I became Roman-German king in 1273; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
 			}
