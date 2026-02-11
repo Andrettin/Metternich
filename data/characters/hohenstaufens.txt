@@ -208,27 +208,12 @@ heinrich_von_hohenstaufen = { #Source: Hereford B. George, "Genealogical Tables 
 	religion = catholic
 	home_site = hohenstaufen
 	gender = male
-	mother = constanca_de_barcelona
+	father = friedrich_ii_of_the_holy_roman_empire
+	mother = constanza_de_barcelona
 	death_date = 1242
-	
-	#son of Friedrich II of the Holy Roman Empire
-	#duke of Swabia
 }
 
-heinrich_von_hohenstaufen_1228 = {
-	name = "Heinrich"
-	dynasty = hohenstaufen
-	character_class = warrior
-	culture = german
-	religion = catholic
-	gender = male
-	father = heinrich_von_hohenstaufen
-	mother = margarete_von_babenberg
-	birth_date = 1228
-	death_date = 1245
-}
-
-friedrich_von_hohenstaufen_1230 = {
+friedrich_von_hohenstaufen_1252 = {
 	name = "Friedrich"
 	dynasty = hohenstaufen
 	character_class = warrior
@@ -237,8 +222,19 @@ friedrich_von_hohenstaufen_1230 = {
 	gender = male
 	father = heinrich_von_hohenstaufen
 	mother = margarete_von_babenberg
-	birth_date = 1230
-	death_date = 1251
+	death_date = 1252
+}
+
+heinrich_von_hohenstaufen_1253 = {
+	name = "Heinrich"
+	dynasty = hohenstaufen
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = male
+	father = heinrich_von_hohenstaufen
+	mother = margarete_von_babenberg
+	death_date = 1253
 }
 
 konrad_von_hohenstaufen_1252 = {
@@ -247,7 +243,7 @@ konrad_von_hohenstaufen_1252 = {
 	character_class = warrior
 	culture = german
 	religion = catholic
-	home_site = stuttgart #Swabia
+	home_site = hohenstaufen
 	gender = male
 	mother = elisabeth_von_wittelsbach
 	birth_date = 1252

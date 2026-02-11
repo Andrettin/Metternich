@@ -1,3 +1,31 @@
+alfonso_ii_of_aragon = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 37.
+	name = "Alfonso"
+	dynasty = barcelona
+	character_class = warrior #king
+	rank = lord
+	culture = aragonese
+	religion = catholic
+	gender = male
+	start_date = 1162 #became king of Aragon
+	death_date = 1196
+	
+	#king of Aragon
+}
+
+constanza_de_barcelona = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 37.
+	name = "Constanza" #the source gives "Constance", here we change to the corresponding Aragonese name
+	dynasty = barcelona
+	character_class = warrior #aristocrat
+	culture = aragonese
+	religion = catholic
+	gender = female
+	father = alfonso_ii_of_aragon
+	mother = sancha_divrea #correct?
+	
+	#had her first marriage with Emeric of Hungary
+	#had her second marriage with emperor Frederick II
+}
+
 catherine_of_aragon = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 207.
 	name = "Catherine"
 	surname = "of Aragon"

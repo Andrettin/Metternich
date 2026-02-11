@@ -15,4 +15,14 @@ aragon = {
 		catalonia
 		valencia
 	}
+	
+	history = {
+		1162 = {
+			government_type = monarchy
+			
+			offices = {
+				ruler = alfonso_ii_of_aragon #Alfonso II became king of Aragon in 1162; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 37.
+			}
+		}
+	}
 }

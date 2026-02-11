@@ -44,20 +44,6 @@ alfons_de_barcelona = {
 	#son of Ramon-Berenguer de Barcelona, also known as Alfons the Chaste ("Cast")
 }
 
-constanca_de_barcelona = {
-	name = "Constanca" #"Constança"
-	dynasty = barcelona
-	character_class = warrior #aristocrat
-	culture = catalan
-	religion = catholic
-	gender = female
-	mother = sancha_divrea
-	birth_date = 1179
-	death_date = 1222.6.23
-	
-	#daughter of Ramon-Berenguer de Barcelona, also known as Alfons the Chaste ("Cast")
-}
-
 elionor_de_barcelona = {
 	name = "Elionor"
 	dynasty = barcelona
