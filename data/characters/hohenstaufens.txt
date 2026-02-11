@@ -77,7 +77,8 @@ friedrich_barbarossa = { #Friedrich I "Barbarossa" of the Holy Roman Empire; Sou
 	name = "Friedrich"
 	epithet = "Barbarossa"
 	dynasty = hohenstaufen
-	character_class = warrior
+	character_class = warrior #emperor
+	rank = lord
 	culture = german
 	religion = catholic
 	home_site = hohenstaufen
@@ -91,7 +92,8 @@ friedrich_barbarossa = { #Friedrich I "Barbarossa" of the Holy Roman Empire; Sou
 konrad_von_hohenstaufen = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
 	name = "Konrad" #the source gives "Conrad"
 	dynasty = hohenstaufen
-	character_class = warrior
+	character_class = warrior #count palatine
+	rank = lord
 	culture = german
 	religion = catholic
 	home_site = hohenstaufen
@@ -103,16 +105,111 @@ konrad_von_hohenstaufen = { #Source: Hereford B. George, "Genealogical Tables Il
 	#count palatine (Pfalzgraf)
 }
 
-heinrich_von_hohenstaufen = {
-	name = "Heinrich"
+heinrich_vi_of_the_holy_roman_empire = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Heinrich" #the source gives "Henry"
+	epithet = "VI"
+	dynasty = hohenstaufen
+	character_class = warrior #emperor
+	rank = lord
+	culture = german
+	religion = catholic
+	home_site = hohenstaufen
+	gender = male
+	father = friedrich_barbarossa
+	mother = beatrix_of_burgundy
+	start_date = 1190 #became emperor
+	death_date = 1197
+}
+
+friedrich_vi_of_swabia = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Friedrich" #the source gives "Frederick"
+	dynasty = hohenstaufen
+	character_class = warrior #duke
+	rank = lord
+	culture = german
+	religion = catholic
+	home_site = hohenstaufen
+	gender = male
+	father = friedrich_barbarossa
+	mother = beatrix_of_burgundy
+	start_date = 1170 #became duke
+	death_date = 1191
+	
+	#duke of Swabia
+}
+
+konrad_ii_of_swabia = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Konrad" #the source gives "Conrad"
+	dynasty = hohenstaufen
+	character_class = warrior #duke
+	rank = lord
+	culture = german
+	religion = catholic
+	home_site = hohenstaufen
+	gender = male
+	father = friedrich_barbarossa
+	mother = beatrix_of_burgundy
+	start_date = 1191 #became duke
+	death_date = 1196
+	
+	#duke of Swabia
+}
+
+otto_von_hohenstaufen = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Otto"
+	dynasty = hohenstaufen
+	character_class = warrior #count palatine
+	rank = lord
+	culture = german
+	religion = catholic
+	home_site = hohenstaufen
+	gender = male
+	father = friedrich_barbarossa
+	mother = beatrix_of_burgundy
+	
+	#count palatine of Burgundy
+}
+
+philipp_i_of_the_holy_roman_empire = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Philipp" #the source gives "Philip"
+	dynasty = hohenstaufen
+	character_class = warrior #emperor
+	rank = lord
+	culture = german
+	religion = catholic
+	home_site = hohenstaufen
+	gender = male
+	father = friedrich_barbarossa
+	mother = beatrix_of_burgundy
+	start_date = 1198 #became emperor
+	death_date = 1208
+}
+
+friedrich_ii_of_the_holy_roman_empire = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Friedrich" #the source gives "Frederick"
+	dynasty = hohenstaufen
+	character_class = warrior #emperor
+	rank = lord
+	culture = german
+	religion = catholic
+	home_site = hohenstaufen
+	gender = male
+	father = heinrich_vi_of_the_holy_roman_empire
+	mother = costanza_of_sicily
+	start_date = 1214 #became emperor
+	death_date = 1250
+}
+
+heinrich_von_hohenstaufen = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Heinrich" #the source gives "Henry"
 	dynasty = hohenstaufen
 	character_class = warrior
 	culture = german
 	religion = catholic
+	home_site = hohenstaufen
 	gender = male
 	mother = constanca_de_barcelona
-	birth_date = 1211
-	death_date = 1242.2.12
+	death_date = 1242
 	
 	#son of Friedrich II of the Holy Roman Empire
 	#duke of Swabia

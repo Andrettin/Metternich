@@ -1,3 +1,13 @@
+costanza_of_sicily = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Costanza" #the source gives "Constance"
+	character_class = warrior
+	culture = italian
+	religion = catholic
+	home_site = palermo #Sicily
+	gender = female
+	death_date = 1198
+}
+
 corrado_aleramicci = {
 	name = "Corrado"
 	dynasty = aleramicci

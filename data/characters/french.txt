@@ -1,3 +1,25 @@
+rainald_iii_of_burgundy = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Rainald"
+	epithet = "III"
+	character_class = warrior
+	culture = french
+	religion = catholic
+	home_site = besancon #Franche-Comté
+	gender = male
+	
+	#count of Burgundy
+}
+
+beatrix_of_burgundy = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Beatrix"
+	character_class = warrior
+	culture = french
+	religion = catholic
+	home_site = besancon #Franche-Comté
+	gender = female
+	father = rainald_iii_of_burgundy
+}
+
 philippe_capet = {
 	name = "Philippe"
 	dynasty = capet

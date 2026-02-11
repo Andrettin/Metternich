@@ -26,10 +26,20 @@ swabia = {
 		}
 		
 		1105 = {
-			government_type = monarchy
-			
 			offices = {
 				ruler = friedrich_the_one_eyed #Frederick of Hohenstaufen died in 1105, and his son Frederick the One-eyed was also duke of Swabia, so presumably he succeeded him then; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+			}
+		}
+		
+		1170 = {
+			offices = {
+				ruler = friedrich_vi_of_swabia #Frederick (son of Frederick Barbarossa) became duke of Swabia in 1170; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+			}
+		}
+		
+		1191 = {
+			offices = {
+				ruler = konrad_ii_of_swabia #Konrad (son of Frederick Barbarossa) became duke of Swabia in 1191; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
 			}
 		}
 	}
