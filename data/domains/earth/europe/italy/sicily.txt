@@ -14,4 +14,14 @@ sicily = {
 	core_provinces = {
 		sicily
 	}
+	
+	history = {
+		1254 = {
+			government_type = monarchy
+			
+			offices = {
+				ruler = manfred_i_of_sicily #Manfred became king of Naples and Sicily after Conrad IV (who died in 1254); Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+			}
+		}
+	}
 }

@@ -296,3 +296,33 @@ margarete_von_hohenstaufen = { #Source: Hereford B. George, "Genealogical Tables
 	
 	#married to Albert, Landgrave of Thuringia
 }
+
+enzio_von_hohenstaufen = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Enzio"
+	dynasty = hohenstaufen
+	character_class = warrior
+	culture = german
+	religion = catholic
+	home_site = hohenstaufen
+	gender = male
+	father = friedrich_ii_of_the_holy_roman_empire
+	
+	#illegitimate child
+}
+
+manfred_i_of_sicily = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Manfred"
+	dynasty = hohenstaufen
+	character_class = warrior #king
+	rank = lord
+	culture = german
+	religion = catholic
+	home_site = hohenstaufen
+	gender = male
+	father = friedrich_ii_of_the_holy_roman_empire
+	start_date = 1254 #Conrad IV died at this date, so this is presumably when Manfred became king of Naples and Sicily
+	death_date = 1266
+	
+	#illegitimate child
+	#king of Naples and Sicily after Conrad IV (of the Holy Roman Empire), killed in the battle of Benevento against Charles of Anjou
+}
