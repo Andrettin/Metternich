@@ -1,3 +1,32 @@
+amadeo_iii_of_savoy = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 32.
+	name = "Amadeo" #the source gives "Amadeus"
+	epithet = "III"
+	dynasty = savoia
+	character_class = warrior #count
+	rank = lord
+	culture = italian
+	religion = catholic
+	home_site = chambery
+	gender = male
+	start_date = 1233 #became count
+	death_date = 1253
+	
+	#count of Savoy
+}
+
+beatrice_di_savoia = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 32.
+	name = "Beatrice" #the source gives "Beatrix"
+	dynasty = savoia
+	character_class = warrior
+	culture = italian
+	religion = catholic
+	home_site = chambery
+	gender = female
+	father = amadeo_iii_of_savoy
+	
+	#married to Manfred, king of Sicily
+}
+
 vittorio_amadeo_iii_of_sardinia = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 15.
 	name = "Vittorio Amadeo"
 	epithet = "III"

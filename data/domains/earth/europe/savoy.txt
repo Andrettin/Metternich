@@ -11,4 +11,15 @@ savoy = {
 	eras = {
 		renaissance_era
 	}
+	
+	history = {
+		1233 = {
+			tier = county
+			government_type = monarchy
+			
+			offices = {
+				ruler = amadeo_iii_of_savoy #Amadeo III became count of Savoy in 1233; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 32.
+			}
+		}
+	}
 }

@@ -325,4 +325,60 @@ manfred_i_of_sicily = { #Source: Hereford B. George, "Genealogical Tables Illust
 	
 	#illegitimate child
 	#king of Naples and Sicily after Conrad IV (of the Holy Roman Empire), killed in the battle of Benevento against Charles of Anjou
+	#had his first marriage with Beatrix, daughter of Amadeus III of Savoy
+	#had his second marriage with Helena of Epirus
+}
+
+konstanze_von_hohenstaufen = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Konstanze" #the source gives "Constance"
+	dynasty = hohenstaufen
+	character_class = warrior #aristocrat
+	culture = german
+	religion = catholic
+	home_site = hohenstaufen
+	gender = female
+	father = manfred_i_of_sicily
+	mother = beatrice_di_savoia
+	
+	#married to Peter III of Aragon
+}
+
+friedrich_of_antioch = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Friedrich" #the source gives "Frederick"
+	epithet = "of Antioch"
+	dynasty = hohenstaufen
+	character_class = warrior
+	culture = german
+	religion = catholic
+	home_site = hohenstaufen
+	gender = male
+	father = friedrich_ii_of_the_holy_roman_empire
+	
+	#married to Maria, daughter of Bohemond IV of Antioch
+}
+
+anna_von_hohenstaufen = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Anna"
+	dynasty = hohenstaufen
+	character_class = warrior
+	culture = german
+	religion = catholic
+	home_site = hohenstaufen
+	gender = female
+	father = friedrich_ii_of_the_holy_roman_empire
+	
+	#married to John Ducas Vatatzes, emperor of Nicaea
+}
+
+selvaggia_von_hohenstaufen = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Selvaggia"
+	dynasty = hohenstaufen
+	character_class = warrior
+	culture = german
+	religion = catholic
+	home_site = hohenstaufen
+	gender = female
+	father = friedrich_ii_of_the_holy_roman_empire
+	
+	#married to Eccelin da Romano
 }
