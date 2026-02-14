@@ -152,6 +152,33 @@ theodora_komnenos = {
 	death_date = 1184
 }
 
+isaakios_ii_of_byzantium = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Isaakios" #the source gives "Isaac"
+	epithet = "II"
+	dynasty = angelos
+	character_class = warrior #emperor
+	rank = lord
+	culture = greek
+	religion = orthodox
+	home_site = constantinople
+	gender = male
+	
+	#Eastern Emperor
+}
+
+irene_angelos = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Irene"
+	dynasty = angelos
+	character_class = warrior
+	culture = greek
+	religion = orthodox
+	home_site = constantinople
+	gender = female
+	father = isaakios_ii_of_byzantium
+	
+	#married to emperor Philip of the Holy Roman Empire
+}
+
 theodora_angelos = {
 	name = "Theodora"
 	dynasty = angelos

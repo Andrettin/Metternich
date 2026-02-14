@@ -354,6 +354,7 @@ friedrich_of_antioch = { #Source: Hereford B. George, "Genealogical Tables Illus
 	gender = male
 	father = friedrich_ii_of_the_holy_roman_empire
 	
+	#illegitimate child
 	#married to Maria, daughter of Bohemond IV of Antioch
 }
 
@@ -367,6 +368,7 @@ anna_von_hohenstaufen = { #Source: Hereford B. George, "Genealogical Tables Illu
 	gender = female
 	father = friedrich_ii_of_the_holy_roman_empire
 	
+	#illegitimate child
 	#married to John Ducas Vatatzes, emperor of Nicaea
 }
 
@@ -380,5 +382,62 @@ selvaggia_von_hohenstaufen = { #Source: Hereford B. George, "Genealogical Tables
 	gender = female
 	father = friedrich_ii_of_the_holy_roman_empire
 	
+	#illegitimate child
 	#married to Eccelin da Romano
+}
+
+beatrix_von_hohenstaufen = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Beatrix"
+	dynasty = hohenstaufen
+	character_class = warrior
+	culture = german
+	religion = catholic
+	home_site = hohenstaufen
+	gender = female
+	father = philipp_i_of_the_holy_roman_empire
+	mother = irene_angelos
+	
+	#married to emperor Otto IV of the Holy Roman Empire
+}
+
+kunigunde_von_hohenstaufen = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Kunigunde" #the source gives "Cunigunda"
+	dynasty = hohenstaufen
+	character_class = warrior
+	culture = german
+	religion = catholic
+	home_site = hohenstaufen
+	gender = female
+	father = philipp_i_of_the_holy_roman_empire
+	mother = irene_angelos
+	
+	#married to Wenzel I of Bohemia
+}
+
+ethisa_von_hohenstaufen = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Ethisa" #the source gives "Beatrix (Ethisa)"
+	dynasty = hohenstaufen
+	character_class = warrior
+	culture = german
+	religion = catholic
+	home_site = hohenstaufen
+	gender = female
+	father = philipp_i_of_the_holy_roman_empire
+	mother = irene_angelos
+	
+	#married to Ferdinand III of Castille
+}
+
+maria_von_hohenstaufen = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Maria" #the source gives "Mary"
+	dynasty = hohenstaufen
+	character_class = warrior
+	culture = german
+	religion = catholic
+	home_site = hohenstaufen
+	gender = female
+	father = philipp_i_of_the_holy_roman_empire
+	mother = irene_angelos
+	
+	#married to Henry II of Brabant
 }

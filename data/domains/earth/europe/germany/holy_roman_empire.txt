@@ -96,6 +96,12 @@ holy_roman_empire = {
 			}
 		}
 		
+		1208 = {
+			offices = {
+				ruler = otto_iv_of_the_holy_roman_empire #Otto IV became emperor of the Holy Roman Empire in 1208; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+			}
+		}
+		
 		1214 = {
 			offices = {
 				ruler = friedrich_ii_of_the_holy_roman_empire #Frederick II became emperor of the Holy Roman Empire in 1214; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.

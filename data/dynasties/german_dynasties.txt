@@ -63,6 +63,7 @@ pfirt = {
 
 saarbrucken = {
 	name = "Saarbrucken" #"Saarbrücken"
+	prefix = "von"
 	culture = german
 }
 

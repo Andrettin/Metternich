@@ -19,3 +19,22 @@ judith_welf = { #Source: Hereford B. George, "Genealogical Tables Illustrative o
 	gender = female
 	father = heinrich_the_black
 }
+
+otto_iv_of_the_holy_roman_empire = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Tables 13 and 16a.
+	name = "Otto"
+	epithet = "IV"
+	dynasty = welf
+	character_class = warrior #emperor
+	rank = lord
+	culture = german
+	religion = catholic
+	home_site = brunswick #Saxony
+	gender = male
+	start_date = 1208 #became emperor
+	death_date = 1218 #died in 1218, and ceased being emperor in 1214
+	
+	#elected in opposition to Philip, and was accepted as his successor in 1208
+	#he was ruined by the battle of Bouvines
+	#had his first marriage with Beatrix, daughter of emperor Philip
+	#had his second marriage with Mary, daughter of Henry I of Brabant
+}
