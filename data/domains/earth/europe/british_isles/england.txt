@@ -28,6 +28,14 @@ england = {
 	}
 	
 	history = {
+		1199 = {
+			government_type = monarchy
+			
+			offices = {
+				ruler = john_i_of_england #John became king of England in 1199; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 3.
+			}
+		}
+		
 		1553 = {
 			consulate = { #England sent a trade mission to Muscovy in 1553; Source: Henry Kamen, "Early Modern European Society", 2021, p. 2.
 				domain = muscovy

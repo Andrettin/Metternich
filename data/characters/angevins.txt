@@ -1,0 +1,25 @@
+john_i_of_england = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 3.
+	name = "John"
+	dynasty = angevin
+	character_class = warrior #king
+	rank = lord
+	culture = english
+	religion = catholic
+	home_site = london
+	gender = male
+	start_date = 1199 #became king
+	death_date = 1216
+}
+
+isabella_angevin = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 3.
+	name = "Isabella"
+	dynasty = angevin
+	character_class = warrior
+	culture = english
+	religion = catholic
+	home_site = london
+	gender = female
+	father = john_i_of_england
+	
+	#married to emperor Frederick II
+}

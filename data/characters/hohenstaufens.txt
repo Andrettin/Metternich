@@ -266,3 +266,33 @@ konradin_von_hohenstaufen = { #Source: Hereford B. George, "Genealogical Tables 
 	
 	#executed in Naples by Charles of Anjou after the battle of Tagliacozzo
 }
+
+heinrich_of_jerusalem = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Heinrich" #the source gives "Henry"
+	dynasty = hohenstaufen
+	character_class = warrior #king
+	rank = lord
+	culture = german
+	religion = catholic
+	home_site = hohenstaufen
+	gender = male
+	father = friedrich_ii_of_the_holy_roman_empire
+	mother = isabella_angevin
+	death_date = 1253
+	
+	#king of Jerusalem
+}
+
+margarete_von_hohenstaufen = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Margarete" #the source gives "Margaret"
+	dynasty = hohenstaufen
+	character_class = warrior
+	culture = german
+	religion = catholic
+	home_site = hohenstaufen
+	gender = female
+	father = friedrich_ii_of_the_holy_roman_empire
+	mother = isabella_angevin
+	
+	#married to Albert, Landgrave of Thuringia
+}

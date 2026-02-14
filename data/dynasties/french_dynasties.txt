@@ -1,3 +1,8 @@
+angevin = {
+	name = "Angevin"
+	culture = french
+}
+
 bonaparte = {
 	name = "Bonaparte"
 	culture = french
