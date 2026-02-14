@@ -147,45 +147,73 @@ Item {
 			rowSpacing: 0
 			columnSpacing: 0
 			
-			Repeater {
-				model: entry.secondary_tree_parents
+			readonly property bool has_portrait: entry.class_name === "metternich::character"
+			
+			readonly property Component icon_delegate: IconButton {
+				id: secondary_parent_icon_button
+				icon_identifier: secondary_parent.game_data ? secondary_parent.game_data.icon.identifier : secondary_parent.icon.identifier
+				highlighted: secondary_parent.class_name === "metternich::technology" && metternich.game.player_country.game_data.technology.has_technology(secondary_parent)
+				circle: true
 				
-				IconButtonBase {
-					id: secondary_parent_icon_button
-					source: (has_portrait ? ("image://portrait/" + image_identifier + "/small") : ("image://icon/" + image_identifier))
-					highlighted: secondary_parent.class_name === "metternich::technology" && metternich.game.player_country.game_data.technology.has_technology(secondary_parent)
-					circle: true
-					use_margins: !has_portrait
+				readonly property var secondary_parent: model.modelData
+				readonly property string secondary_parent_status_text: secondary_parent.class_name === "metternich::technology" ? ("Prerequisite: " + secondary_parent.name) : (secondary_parent.game_data && secondary_parent.game_data.full_name ? secondary_parent.game_data.full_name : secondary_parent.name)
+				
+				MouseArea {
+					anchors.fill: parent
+					hoverEnabled: true
 					
-					readonly property bool has_portrait: secondary_parent.class_name === "metternich::character"
-					readonly property string image_identifier: has_portrait ? (secondary_parent.game_data ? secondary_parent.game_data.portrait.identifier : secondary_parent.portrait.identifier) : (secondary_parent.game_data ? secondary_parent.game_data.icon.identifier : secondary_parent.icon.identifier)
-					readonly property var secondary_parent: model.modelData
-					readonly property string secondary_parent_status_text: secondary_parent.class_name === "metternich::technology" ? ("Prerequisite: " + secondary_parent.name) : (secondary_parent.game_data && secondary_parent.game_data.full_name ? secondary_parent.game_data.full_name : secondary_parent.name)
+					onEntered: {
+						status_text = secondary_parent_status_text
+					}
 					
-					MouseArea {
-						anchors.fill: parent
-						hoverEnabled: true
-						
-						onEntered: {
-							status_text = secondary_parent_status_text
+					onExited: {
+						//only clear the status text on exist if it was actually still the text set by this
+						if (status_text === secondary_parent_status_text) {
+							status_text = ""
 						}
-						
-						onExited: {
-							//only clear the status text on exist if it was actually still the text set by this
-							if (status_text === secondary_parent_status_text) {
-								status_text = ""
-							}
-						}
-						
-						onClicked: {
-							if (secondary_parent.class_name === "metternich::character") {
-								character_dialog.character = secondary_parent
-								character_dialog.show_family_tree_button = (tree_item.entries.indexOf(secondary_parent) === -1)
-								character_dialog.open()
-							}
+					}
+					
+					onClicked: {
+						if (secondary_parent.class_name === "metternich::character") {
+							character_dialog.character = secondary_parent
+							character_dialog.show_family_tree_button = (tree_item.entries.indexOf(secondary_parent) === -1)
+							character_dialog.open()
 						}
 					}
 				}
+			}
+			
+			readonly property Component portrait_delegate: PortraitButton {
+				id: secondary_parent_portrait_button
+				portrait_identifier: (secondary_parent.game_data ? secondary_parent.game_data.portrait.identifier : secondary_parent.portrait.identifier) + "/small"
+				circle: true
+				
+				readonly property var secondary_parent: model.modelData
+				readonly property string secondary_parent_status_text: secondary_parent.class_name === "metternich::technology" ? ("Prerequisite: " + secondary_parent.name) : (secondary_parent.game_data && secondary_parent.game_data.full_name ? secondary_parent.game_data.full_name : secondary_parent.name)
+				
+				onHoveredChanged: {
+					if (hovered) {
+						status_text = secondary_parent_status_text
+					} else {
+						//only clear the status text on exist if it was actually still the text set by this
+						if (status_text === secondary_parent_status_text) {
+							status_text = ""
+						}
+					}
+				}
+				
+				onClicked: {
+					if (secondary_parent.class_name === "metternich::character") {
+						character_dialog.character = secondary_parent
+						character_dialog.show_family_tree_button = (tree_item.entries.indexOf(secondary_parent) === -1)
+						character_dialog.open()
+					}
+				}
+			}
+			
+			Repeater {
+				model: entry.secondary_tree_parents
+				delegate: secondary_parents_icon_grid.has_portrait ? secondary_parents_icon_grid.portrait_delegate : secondary_parents_icon_grid.icon_delegate
 			}
 		}
 	}
