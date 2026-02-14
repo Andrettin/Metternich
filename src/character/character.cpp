@@ -529,7 +529,7 @@ bool character::initialize_dates_from_children()
 {
 	assert_throw(!this->has_vital_dates());
 
-	if (this->get_children().empty()) {
+	if (this->get_biological_children().empty()) {
 		return false;
 	}
 
@@ -543,7 +543,7 @@ bool character::initialize_dates_from_children()
 
 	QDate earliest_child_birth_date;
 
-	for (character_base *child_base : this->get_children()) {
+	for (character_base *child_base : this->get_biological_children()) {
 		character *child = static_cast<character *>(child_base);
 		if (!child->has_vital_dates()) {
 			if (child->initialize_dates_from_children()) {
@@ -576,7 +576,7 @@ bool character::initialize_dates_from_parents()
 {
 	assert_throw(!this->has_vital_dates());
 
-	const std::vector<character *> parents = this->get_parents();
+	const std::vector<character *> parents = this->get_all_parents();
 
 	if (parents.empty()) {
 		return false;
@@ -707,7 +707,7 @@ void character::initialize_bloodline_from_parents()
 {
 	assert_throw(this->get_bloodline() == nullptr);
 
-	const std::vector<character *> parents = this->get_parents();
+	const std::vector<character *> parents = this->get_biological_parents();
 
 	if (parents.empty()) {
 		return;

@@ -81,6 +81,7 @@ class character final : public character_base, public data_type<character>
 	Q_PROPERTY(metternich::portrait* portrait MEMBER portrait NOTIFY changed)
 	Q_PROPERTY(const metternich::site* home_site MEMBER home_site READ get_home_site NOTIFY changed)
 	Q_PROPERTY(metternich::character* father READ get_father WRITE set_father NOTIFY changed)
+	Q_PROPERTY(metternich::character* biological_father READ get_biological_father WRITE set_biological_father NOTIFY changed)
 	Q_PROPERTY(metternich::character* mother READ get_mother WRITE set_mother NOTIFY changed)
 	Q_PROPERTY(metternich::character* contemporary_character READ get_contemporary_character WRITE set_contemporary_character NOTIFY changed)
 	Q_PROPERTY(int skill MEMBER skill READ get_skill NOTIFY changed)
@@ -264,6 +265,11 @@ public:
 		return static_cast<character *>(character_base::get_father());
 	}
 
+	character *get_biological_father() const
+	{
+		return static_cast<character *>(character_base::get_biological_father());
+	}
+
 	character *get_mother() const
 	{
 		return static_cast<character *>(character_base::get_mother());
@@ -276,6 +282,33 @@ public:
 		std::vector<character *> parents;
 		if (this->get_father() != nullptr) {
 			parents.push_back(this->get_father());
+		}
+		if (this->get_mother() != nullptr) {
+			parents.push_back(this->get_mother());
+		}
+		return parents;
+	}
+
+	std::vector<character *> get_biological_parents() const
+	{
+		std::vector<character *> parents;
+		if (this->get_biological_father() != nullptr) {
+			parents.push_back(this->get_biological_father());
+		}
+		if (this->get_mother() != nullptr) {
+			parents.push_back(this->get_mother());
+		}
+		return parents;
+	}
+
+	std::vector<character *> get_all_parents() const
+	{
+		std::vector<character *> parents;
+		if (this->get_father() != nullptr) {
+			parents.push_back(this->get_father());
+		}
+		if (this->get_biological_father() != nullptr) {
+			parents.push_back(this->get_biological_father());
 		}
 		if (this->get_mother() != nullptr) {
 			parents.push_back(this->get_mother());
