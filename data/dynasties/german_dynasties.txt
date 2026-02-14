@@ -19,13 +19,22 @@ conradine = {
 	name = "Conradine"
 	culture = german
 	cultural_group_names = {
-		german = "Konradiner"
+		german = {
+			male = "Konradiner"
+			female = "Konradinerin"
+		}
 	}
 }
 
 etichonen = {
 	name = "Etichonen"
 	culture = german
+	cultural_group_names = {
+		german = {
+			male = "Etichoner"
+			female = "Etichonerin"
+		}
+	}
 }
 
 habsburg = {
@@ -56,13 +65,22 @@ liudolfing = {
 	name = "Liudolfing"
 	culture = german
 	cultural_group_names = {
-		german = "Liudolfinger"
+		german = {
+			male = "Liudolfinger"
+			female = "Liudolfingerin"
+		}
 	}
 }
 
 meinhardiner = {
 	name = "Meinhardiner"
 	culture = german
+	cultural_group_names = {
+		german = {
+			male = "Meinhardiner"
+			female = "Meinhardinerin"
+		}
+	}
 }
 
 metternich = {
@@ -87,7 +105,10 @@ salian = {
 	name = "Salian"
 	culture = german
 	cultural_group_names = {
-		german = "Salier"
+		german = {
+			male = "Salier"
+			female = "Salierin"
+		}
 	}
 }
 
