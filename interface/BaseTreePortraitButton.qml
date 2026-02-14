@@ -124,10 +124,12 @@ Item {
 				base_width = parent.x - parent.parent_x
 			}
 			
+			/*
 			if (parent_text_height > vertical_padding) {
 				base_width -= parent_text_height_reference.contentWidth / 2
 				base_width -= 2 * scale_factor
 			}
+			*/
 			
 			return base_width
 		}
