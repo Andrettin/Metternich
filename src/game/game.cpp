@@ -590,7 +590,7 @@ void game::apply_history(const QDate &start_date)
 		}
 
 		for (const domain *domain : domain::get_all()) {
-			domain->get_game_data()->apply_ruler_history(start_date);
+			domain->get_game_data()->apply_ruler_history();
 		}
 
 		for (const domain *domain : this->get_countries()) {

@@ -362,7 +362,7 @@ void domain_game_data::apply_history(const QDate &start_date)
 	}
 }
 
-void domain_game_data::apply_ruler_history(const QDate &start_date)
+void domain_game_data::apply_ruler_history()
 {
 	const domain_history *domain_history = this->domain->get_history();
 

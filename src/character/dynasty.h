@@ -18,6 +18,7 @@ class dynasty final : public named_data_entry, public data_type<dynasty>
 	Q_OBJECT
 
 	Q_PROPERTY(std::string prefix MEMBER prefix NOTIFY changed)
+	Q_PROPERTY(bool contracted_prefix MEMBER contracted_prefix NOTIFY changed)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
 
 public:
@@ -50,6 +51,7 @@ signals:
 private:
 	std::map<gender, std::string> gendered_names;
 	std::string prefix;
+	bool contracted_prefix = false;
 	metternich::culture *culture = nullptr;
 };
 

@@ -34,7 +34,11 @@ std::string dynasty::get_surname(const gender gender) const
 	std::string surname;
 
 	if (!this->get_prefix().empty()) {
-		surname = this->get_prefix() + " ";
+		surname = this->get_prefix();
+
+		if (!this->contracted_prefix) {
+			surname += " ";
+		}
 	}
 
 	const auto find_it = this->gendered_names.find(gender);

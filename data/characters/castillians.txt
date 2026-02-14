@@ -1,6 +1,6 @@
 sancha_divrea = {
 	name = "Sancha"
-	dynasty = divrea
+	dynasty = ivrea
 	character_class = warrior #aristocrat
 	culture = castillian
 	religion = catholic
@@ -14,7 +14,7 @@ sancha_divrea = {
 
 fernando_divrea = {
 	name = "Fernando"
-	dynasty = divrea
+	dynasty = ivrea
 	character_class = warrior
 	culture = castillian
 	religion = catholic

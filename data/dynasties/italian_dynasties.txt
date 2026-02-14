@@ -3,8 +3,9 @@ aleramicci = {
 	culture = italian
 }
 
-divrea = {
-	name = "d'Ivrea"
+ivrea = {
+	name = "Ivrea"
+	prefix = "d'"
 	culture = italian
 }
 
