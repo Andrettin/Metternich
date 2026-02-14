@@ -8,9 +8,9 @@ divrea = {
 	culture = italian
 }
 
-saboya = {
-	name = "Saboya"
-	prefix = "de"
+savoia = {
+	name = "Savoia"
+	prefix = "di"
 	culture = italian
 }
 

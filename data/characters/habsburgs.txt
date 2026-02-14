@@ -765,7 +765,7 @@ reiner_joseph_von_habsburg = { #Archduke Reiner Joseph Johann von Habsburg; Sour
 	
 	history = {
 		1820.5.28 = {
-			spouse = francisca_de_saboya
+			spouse = francisca_di_savoia
 		}
 		
 		#was (Austrian) viceroy of Lombardy-Venetia in 1847; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 11-12.
@@ -859,7 +859,7 @@ adelaide_von_habsburg = { #Adelaide von Habsburg; Source: "Almanach de Gotha pou
 	religion = catholic
 	gender = female
 	father = reiner_joseph_von_habsburg #Archduke Reiner Joseph Johann von Habsburg
-	mother = francisca_de_saboya
+	mother = francisca_di_savoia
 	
 	#wife of the royal prince of Sardinia
 }
@@ -897,7 +897,7 @@ leopold_ludwig_von_habsburg = { #Leopold Ludwig Maria von Habsburg; Source: "Alm
 	religion = catholic
 	gender = male
 	father = reiner_joseph_von_habsburg #Archduke Reiner Joseph Johann von Habsburg
-	mother = francisca_de_saboya
+	mother = francisca_di_savoia
 	birth_date = 1823.6.6
 	traits = {
 		#tough_soldier
@@ -922,7 +922,7 @@ ernst_karl_von_habsburg = { #Ernst Karl Felix von Habsburg; Source: "Almanach de
 	religion = catholic
 	gender = male
 	father = reiner_joseph_von_habsburg #Archduke Reiner Joseph Johann von Habsburg
-	mother = francisca_de_saboya
+	mother = francisca_di_savoia
 	birth_date = 1824.8.8
 	traits = {
 		#tough_soldier
@@ -966,7 +966,7 @@ sigmund_leopold_von_habsburg = { #Sigmund Leopold Reiner von Habsburg; Source: "
 	religion = catholic
 	gender = male
 	father = reiner_joseph_von_habsburg #Archduke Reiner Joseph Johann von Habsburg
-	mother = francisca_de_saboya
+	mother = francisca_di_savoia
 	birth_date = 1826.1.7
 	traits = {
 		#tough_soldier
@@ -990,7 +990,7 @@ reiner_ferdinand_von_habsburg = { #Reiner Ferdinand Maria von Habsburg; Source: 
 	religion = catholic
 	gender = male
 	father = reiner_joseph_von_habsburg #Archduke Reiner Joseph Johann von Habsburg
-	mother = francisca_de_saboya
+	mother = francisca_di_savoia
 	birth_date = 1827.1.11
 	traits = {
 		#tough_soldier
@@ -1038,7 +1038,7 @@ heinrich_anton_von_habsburg = { #Heinrich Anton Maria von Habsburg; Source: "Alm
 	religion = catholic
 	gender = male
 	father = reiner_joseph_von_habsburg #Archduke Reiner Joseph Johann von Habsburg
-	mother = francisca_de_saboya
+	mother = francisca_di_savoia
 	birth_date = 1828.5.9
 	traits = {
 		#tough_soldier

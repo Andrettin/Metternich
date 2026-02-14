@@ -41,7 +41,7 @@ charles_philippe_de_bourbon = { #Source: "Gothaischer Hofkalender zum Nutzen und
 	
 	history = {
 		1775.8.6 = { #married to Maria Teresa, daughter of king Victor Amadeus III of Sardinia, and they had their first child on 1775.8.6
-			spouse = maria_teresa_de_saboya #Maria Teresa de Saboya
+			spouse = maria_teresa_di_savoia
 		}
 		
 		#monsieur as of 1815
@@ -57,7 +57,7 @@ louis_antoine_de_bourbon = { #Source: "Gothaischer Hofkalender zum Nutzen und Ve
 	home_site = angouleme
 	gender = male
 	father = charles_philippe_de_bourbon #Charles Philippe de Bourbon
-	mother = maria_teresa_de_saboya #Maria Teresa de Saboya
+	mother = maria_teresa_di_savoia
 	birth_date = 1775.8.6
 	
 	history = {
@@ -78,7 +78,7 @@ charles_ferdinand_de_bourbon = { #Source: "Gothaischer Hofkalender zum Nutzen un
 	home_site = bourges
 	gender = male
 	father = charles_philippe_de_bourbon #Charles Philippe de Bourbon
-	mother = maria_teresa_de_saboya #Maria Teresa de Saboya
+	mother = maria_teresa_di_savoia
 	birth_date = 1778.1.24
 	
 	history = {
