@@ -367,7 +367,7 @@ void character::initialize()
 	}
 
 	if (this->get_surname().empty() && this->get_dynasty() != nullptr) {
-		this->set_surname(this->get_dynasty()->get_surname(this->get_gender()));
+		this->set_surname(this->get_dynasty()->get_surname(this->get_culture(), this->get_gender()));
 	}
 
 	if (this->get_culture() != nullptr) {

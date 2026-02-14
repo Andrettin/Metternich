@@ -70,6 +70,9 @@ saarbrucken = {
 salian = {
 	name = "Salian"
 	culture = german
+	cultural_group_names = {
+		german = "Salier"
+	}
 }
 
 schwarzenberg = { #Source: "Encyclopædia Britannica", 1911, vol. 24, p. 390.

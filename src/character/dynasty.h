@@ -1,5 +1,6 @@
 #pragma once
 
+#include "database/data_entry_container.h"
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 
@@ -43,13 +44,13 @@ public:
 		return this->culture;
 	}
 
-	std::string get_surname(const gender gender) const;
+	std::string get_surname(const metternich::culture *culture, const gender gender) const;
 
 signals:
 	void changed();
 
 private:
-	std::map<gender, std::string> gendered_names;
+	data_entry_map<culture_base, std::map<gender, std::string>> cultural_names;
 	std::string prefix;
 	bool contracted_prefix = false;
 	metternich::culture *culture = nullptr;
