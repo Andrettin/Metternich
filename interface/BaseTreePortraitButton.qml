@@ -150,12 +150,15 @@ Item {
 			Repeater {
 				model: entry.secondary_tree_parents
 				
-				IconButton {
+				IconButtonBase {
 					id: secondary_parent_icon_button
-					icon_identifier: secondary_parent.game_data ? secondary_parent.game_data.icon.identifier : secondary_parent.icon.identifier
+					source: (has_portrait ? ("image://portrait/" + image_identifier + "/small") : ("image://icon/" + image_identifier))
 					highlighted: secondary_parent.class_name === "metternich::technology" && metternich.game.player_country.game_data.technology.has_technology(secondary_parent)
 					circle: true
+					use_margins: !has_portrait
 					
+					readonly property bool has_portrait: secondary_parent.class_name === "metternich::character"
+					readonly property string image_identifier: has_portrait ? (secondary_parent.game_data ? secondary_parent.game_data.portrait.identifier : secondary_parent.portrait.identifier) : (secondary_parent.game_data ? secondary_parent.game_data.icon.identifier : secondary_parent.icon.identifier)
 					readonly property var secondary_parent: model.modelData
 					readonly property string secondary_parent_status_text: secondary_parent.class_name === "metternich::technology" ? ("Prerequisite: " + secondary_parent.name) : (secondary_parent.game_data && secondary_parent.game_data.full_name ? secondary_parent.game_data.full_name : secondary_parent.name)
 					

@@ -34,7 +34,19 @@ QCoro::Task<void> portrait_image_provider::load_image(const std::string id)
 	assert_throw(!filepath.empty());
 	assert_throw(std::filesystem::exists(filepath));
 
-	const centesimal_int scale_factor = preferences::get()->get_scale_factor();
+	centesimal_int scale_factor = preferences::get()->get_scale_factor();
+	bool is_grayscale = false;
+
+	if (id_list.size() >= 2) {
+		const std::string &state = id_list.back();
+		if (state == "grayscale") {
+			is_grayscale = true;
+		} else if (state == "small") {
+			scale_factor /= 2;
+		} else {
+			assert_throw(false);
+		}
+	}
 
 	const std::pair<std::filesystem::path, centesimal_int> scale_suffix_result = image::get_scale_suffixed_filepath(filepath, scale_factor);
 
@@ -52,14 +64,10 @@ QCoro::Task<void> portrait_image_provider::load_image(const std::string id)
 		image::rotate_hue(image, portrait->get_hue_rotation(), portrait->get_hue_ignored_colors());
 	}
 
-	if (id_list.size() >= 2) {
-		const std::string &state = id_list.back();
-		if (state == "grayscale") {
-			image::apply_grayscale(image);
-		} else {
-			assert_throw(false);
-		}
+	if (is_grayscale) {
+		image::apply_grayscale(image);
 	}
+
 	if (image_scale_factor != scale_factor) {
 		co_await QtConcurrent::run([this, &image, &scale_factor, &image_scale_factor]() {
 			image = image::scale<QImage::Format_ARGB32>(image, scale_factor / image_scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
