@@ -33,6 +33,12 @@ bavaria = {
 			}
 		}
 		
+		1231 = {
+			offices = {
+				ruler = otto_ii_of_bavaria #Otto II became duke of Bavaria in 1231; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+			}
+		}
+		
 		1477 = {
 			#part of the Holy Roman Empire c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
 			diplomacy_state = {

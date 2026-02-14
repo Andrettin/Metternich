@@ -213,8 +213,8 @@ heinrich_von_hohenstaufen = { #Source: Hereford B. George, "Genealogical Tables 
 	death_date = 1242
 }
 
-friedrich_von_hohenstaufen_1252 = {
-	name = "Friedrich"
+friedrich_von_hohenstaufen_1252 = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Friedrich" #the source gives "Frederick"
 	dynasty = hohenstaufen
 	character_class = warrior
 	culture = german
@@ -225,8 +225,8 @@ friedrich_von_hohenstaufen_1252 = {
 	death_date = 1252
 }
 
-heinrich_von_hohenstaufen_1253 = {
-	name = "Heinrich"
+heinrich_von_hohenstaufen_1253 = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Heinrich" #the source gives "Henry"
 	dynasty = hohenstaufen
 	character_class = warrior
 	culture = german
@@ -237,20 +237,32 @@ heinrich_von_hohenstaufen_1253 = {
 	death_date = 1253
 }
 
-konrad_von_hohenstaufen_1252 = {
-	name = "Konrad"
+konrad_iv_of_the_holy_roman_empire = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Konrad" #the source gives "Konrad"
+	epithet = "IV"
+	dynasty = hohenstaufen
+	character_class = warrior #emperor
+	rank = lord
+	culture = german
+	religion = catholic
+	gender = male
+	father = heinrich_von_hohenstaufen
+	mother = iolande_de_brienne
+	start_date = 1250 #became emperor
+	death_date = 1254
+}
+
+konradin_von_hohenstaufen = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Konradin" #the source gives "Conradin"
 	dynasty = hohenstaufen
 	character_class = warrior
 	culture = german
 	religion = catholic
 	home_site = hohenstaufen
 	gender = male
+	father = konrad_iv_of_the_holy_roman_empire
 	mother = elisabeth_von_wittelsbach
-	birth_date = 1252
-	death_date = 1268.10.29
-	traits = {
-		#fair
-	}
+	death_date = 1268
 	
-	#child of Konrad von Hohenstaufen
+	#executed in Naples by Charles of Anjou after the battle of Tagliacozzo
 }

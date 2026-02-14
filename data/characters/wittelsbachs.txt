@@ -1,35 +1,27 @@
-otto_von_wittelsbach = {
+otto_ii_of_bavaria = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 17.
 	name = "Otto"
+	epithet = "II"
 	dynasty = wittelsbach
-	character_class = warrior
+	character_class = warrior #duke
+	rank = lord
 	culture = german
 	religion = catholic
 	gender = male
-	mother = ludmila_premyslid
-	birth_date = 1206.4.7
-	death_date = 1253.11.29
-	traits = {
-		#diligent
-		#charismatic_negotiator
-	}
+	mother = ludmila_premyslid #correct?
+	start_date = 1231 #became duke of Bavaria
+	death_date = 1253
 	
-	#child of Ludwig von Wittelsbach
+	#child of Lewis I of Bavaria
 }
 
-elisabeth_von_wittelsbach = {
-	name = "Elisabeth"
+elisabeth_von_wittelsbach = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 17.
+	name = "Elisabeth" #the source gives "Elizabeth"
 	dynasty = wittelsbach
 	character_class = warrior
 	culture = german
 	religion = catholic
 	gender = female
-	father = otto_von_wittelsbach
-	birth_date = 1227
-	death_date = 1273.1.10
-	traits = {
-		#humble
-		#amateurish_plotter
-	}
+	father = otto_ii_of_bavaria
 }
 
 ludwig_von_wittelsbach = {
@@ -39,7 +31,7 @@ ludwig_von_wittelsbach = {
 	culture = german
 	religion = catholic
 	gender = male
-	father = otto_von_wittelsbach
+	father = otto_ii_of_bavaria
 	birth_date = 1229.4.13
 	death_date = 1294.2.2
 	traits = {
@@ -54,7 +46,7 @@ heinrich_von_wittelsbach = {
 	culture = german
 	religion = catholic
 	gender = male
-	father = otto_von_wittelsbach
+	father = otto_ii_of_bavaria
 	birth_date = 1235.11.19
 	death_date = 1290.2.3
 	traits = {

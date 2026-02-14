@@ -37,19 +37,17 @@ philippe_capet = {
 	}
 }
 
-isabelle_de_brienne = {
-	name = "Isabelle"
+iolande_de_brienne = {
+	name = "Iolande"
 	dynasty = brienne
 	character_class = warrior
 	culture = french
 	religion = catholic
-	home_site = paris
+	home_site = brienne
 	gender = female
-	mother = maria_aleramicci
-	birth_date = 1211
-	death_date = 1228
+	mother = maria_aleramicci #correct?
 	
-	#child of Jean de Brienne
+	#child of Jean de Brienne; correct?
 }
 
 philip_the_fair = {
