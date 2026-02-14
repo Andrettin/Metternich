@@ -313,15 +313,6 @@ void domain_game_data::apply_history(const QDate &start_date)
 		}
 	}
 
-	this->historical_rulers = domain_history->get_historical_rulers();
-	this->historical_monarchs = domain_history->get_historical_monarchs();
-	for (const auto &[date, historical_ruler] : this->get_historical_rulers()) {
-		historical_ruler->get_game_data()->add_ruled_domain(this->domain);
-	}
-	for (const auto &[date, historical_monarch] : this->get_historical_monarchs()) {
-		historical_monarch->get_game_data()->add_reigned_domain(this->domain);
-	}
-
 	for (const auto &[office, office_holder] : domain_history->get_office_holders()) {
 		assert_throw(start_date >= office_holder->get_game_data()->get_start_date());
 		if (office_holder->get_game_data()->get_death_date().isValid() && start_date >= office_holder->get_game_data()->get_death_date()) {
@@ -368,6 +359,20 @@ void domain_game_data::apply_history(const QDate &start_date)
 
 		this->set_consulate(other_country, consulate);
 		other_country->get_game_data()->set_consulate(this->domain, consulate);
+	}
+}
+
+void domain_game_data::apply_ruler_history(const QDate &start_date)
+{
+	const domain_history *domain_history = this->domain->get_history();
+
+	this->historical_rulers = domain_history->get_historical_rulers();
+	this->historical_monarchs = domain_history->get_historical_monarchs();
+	for (const auto &[date, historical_ruler] : this->get_historical_rulers()) {
+		historical_ruler->get_game_data()->add_ruled_domain(this->domain);
+	}
+	for (const auto &[date, historical_monarch] : this->get_historical_monarchs()) {
+		historical_monarch->get_game_data()->add_reigned_domain(this->domain);
 	}
 }
 

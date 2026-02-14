@@ -95,7 +95,7 @@ public:
 
 	virtual void reset_history() override;
 
-	void reset_game_data();
+	void reset_game_data(const bool preserve_ruler_history);
 
 	domain_game_data *get_game_data() const
 	{

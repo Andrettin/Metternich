@@ -535,7 +535,7 @@ void game::reset_game_data()
 	}
 
 	for (domain *domain : domain::get_all()) {
-		domain->reset_game_data();
+		domain->reset_game_data(false);
 	}
 
 	for (character *character : character::get_all()) {
@@ -587,6 +587,10 @@ void game::apply_history(const QDate &start_date)
 			} catch (...) {
 				std::throw_with_nested(std::runtime_error(std::format("Failed to apply history for province \"{}\".", province->get_identifier())));
 			}
+		}
+
+		for (const domain *domain : domain::get_all()) {
+			domain->get_game_data()->apply_ruler_history(start_date);
 		}
 
 		for (const domain *domain : this->get_countries()) {
@@ -1883,7 +1887,7 @@ void game::remove_country(domain *domain)
 		emit countries_changed();
 	}
 
-	domain->reset_game_data();
+	domain->reset_game_data(true);
 }
 
 void game::calculate_country_ranks()

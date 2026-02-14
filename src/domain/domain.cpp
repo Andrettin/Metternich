@@ -37,7 +37,7 @@ namespace metternich {
 domain::domain(const std::string &identifier)
 	: named_data_entry(identifier), type(country_type::polity), default_tier(domain_tier::none), min_tier(domain_tier::none), max_tier(domain_tier::none)
 {
-	this->reset_game_data();
+	this->reset_game_data(false);
 }
 
 domain::~domain()
@@ -218,8 +218,15 @@ void domain::reset_history()
 	this->history = make_qunique<domain_history>(this);
 }
 
-void domain::reset_game_data()
+void domain::reset_game_data(const bool preserve_ruler_history)
 {
+	std::map<QDate, const character *> historical_rulers;
+	std::map<QDate, const character *> historical_monarchs;
+	if (preserve_ruler_history) {
+		historical_rulers = this->get_game_data()->get_historical_rulers();
+		historical_monarchs = this->get_game_data()->get_historical_monarchs();
+	}
+
 	this->game_data = make_qunique<domain_game_data>(this);
 
 	this->reset_turn_data();
@@ -227,6 +234,11 @@ void domain::reset_game_data()
 
 	this->get_game_data()->set_tier(this->get_default_tier());
 	this->get_game_data()->set_government_type(this->get_default_government_type());
+
+	if (preserve_ruler_history) {
+		this->get_game_data()->set_historical_rulers(historical_rulers);
+		this->get_game_data()->set_historical_monarchs(historical_monarchs);
+	}
 }
 
 country_economy *domain::get_economy() const

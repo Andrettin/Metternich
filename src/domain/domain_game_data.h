@@ -170,6 +170,7 @@ public:
 	gsml_data to_gsml_data() const;
 
 	void apply_history(const QDate &start_date);
+	void apply_ruler_history(const QDate &start_date);
 
 	void do_turn();
 	void collect_regency();
@@ -919,11 +920,21 @@ public:
 
 	QVariantList get_historical_rulers_qvariant_list() const;
 
+	void set_historical_rulers(const std::map<QDate, const character *> &historical_rulers)
+	{
+		this->historical_rulers = historical_rulers;
+	}
+
 	void add_historical_ruler(const character *character);
 
 	const std::map<QDate, const character *> &get_historical_monarchs() const
 	{
 		return this->historical_monarchs;
+	}
+
+	void set_historical_monarchs(const std::map<QDate, const character *> &historical_monarchs)
+	{
+		this->historical_monarchs = historical_monarchs;
 	}
 
 	const std::vector<qunique_ptr<civilian_unit>> &get_civilian_units() const
