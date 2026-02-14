@@ -26,7 +26,7 @@ void dynasty::process_gsml_scope(const gsml_data &scope)
 			const std::string &child_tag = child_scope.get_tag();
 			const metternich::culture *culture = culture::get(child_tag);
 
-			scope.for_each_property([&](const gsml_property &property) {
+			child_scope.for_each_property([&](const gsml_property &property) {
 				const std::string &key = property.get_key();
 				const std::string &value = property.get_value();
 
@@ -45,7 +45,7 @@ void dynasty::process_gsml_scope(const gsml_data &scope)
 			const std::string &child_tag = child_scope.get_tag();
 			const metternich::cultural_group *cultural_group = cultural_group::get(child_tag);
 
-			scope.for_each_property([&](const gsml_property &property) {
+			child_scope.for_each_property([&](const gsml_property &property) {
 				const std::string &key = property.get_key();
 				const std::string &value = property.get_value();
 
