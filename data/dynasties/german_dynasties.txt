@@ -15,6 +15,14 @@ babenberg = {
 	culture = german
 }
 
+conradine = {
+	name = "Conradine"
+	culture = german
+	cultural_group_names = {
+		german = "Konradiner"
+	}
+}
+
 etichonen = {
 	name = "Etichonen"
 	culture = german
@@ -42,6 +50,14 @@ kaunitz = {
 	name = "Kaunitz"
 	prefix = "von"
 	culture = german #German-Bohemian
+}
+
+liudolfing = {
+	name = "Liudolfing"
+	culture = german
+	cultural_group_names = {
+		german = "Liudolfinger"
+	}
 }
 
 meinhardiner = {

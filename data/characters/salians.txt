@@ -1,3 +1,72 @@
+werner_salier = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Werner"
+	dynasty = salian
+	character_class = warrior #count
+	rank = lord
+	culture = german
+	religion = catholic
+	home_site = frankfurt #Franconia
+	gender = male
+	
+	#count
+}
+
+konrad_the_red = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Konrad" #the source gives "Conrad"
+	epithet = "the Red"
+	dynasty = salian
+	character_class = warrior
+	culture = german
+	religion = catholic
+	home_site = frankfurt #Franconia
+	gender = male
+	father = werner_salier
+	death_date = 955
+	
+	#killed at Lechfeld in 955
+	#son of a daughter of Conrad I
+}
+
+otto_salier = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Otto"
+	dynasty = salian
+	character_class = warrior
+	culture = german
+	religion = catholic
+	home_site = frankfurt #Franconia
+	gender = male
+	father = konrad_the_red
+	mother = liutgarde_liudolfinger
+}
+
+heinrich_salier = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Heinrich" #the source gives "Henry"
+	dynasty = salian
+	character_class = warrior
+	culture = german
+	religion = catholic
+	home_site = frankfurt #Franconia
+	gender = male
+	father = otto_salier
+}
+
+konrad_the_salic = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Konrad" #the source gives "Conrad"
+	epithet = "the Salic"
+	dynasty = salian
+	character_class = warrior #emperor
+	rank = lord
+	culture = german
+	religion = catholic
+	home_site = frankfurt #Franconia
+	gender = male
+	father = heinrich_salier
+	start_date = 1024 #became emperor
+	death_date = 1039
+	
+	#emperor Conrad II of the Holy Roman Empire
+}
+
 heinrich_iv = { #Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
 	name = "Heinrich"
 	epithet = "IV"

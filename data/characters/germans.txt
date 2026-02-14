@@ -129,6 +129,22 @@ lanzelin_etichonen = {
 	death_date = 991
 }
 
+konrad_i_of_the_holy_roman_empire = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Konrad" #the source gives "Conrad"
+	dynasty = conradine
+	character_class = warrior #emperor
+	rank = lord
+	culture = german
+	religion = catholic
+	home_site = frankfurt #Franconia
+	gender = male
+	start_date = 911 #became emperor
+	death_date = 918
+	
+	#his mother might have been the daughter of emperor Arnulf
+	#had a daughter
+}
+
 adalbert_of_bremen = { #Source: Snorri Sturlson, "Heimskringla", 1844, vol. 1, p. 141.
 	name = "Adalbert"
 	character_class = cleric

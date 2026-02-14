@@ -63,9 +63,21 @@ holy_roman_empire = {
 	}
 	
 	history = {
-		1137 = {
+		911 = {
 			government_type = monarchy
 			
+			offices = {
+				ruler = konrad_i_of_the_holy_roman_empire #Conrad I became emperor of the Holy Roman Empire in 911; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+			}
+		}
+		
+		1024 = {
+			offices = {
+				ruler = konrad_the_salic #Conrad II, the Salic, became emperor of the Holy Roman Empire in 1024; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+			}
+		}
+		
+		1137 = {
 			offices = {
 				ruler = konrad_iii_of_the_holy_roman_empire #Conrad III became emperor of the Holy Roman Empire in 1137; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
 			}

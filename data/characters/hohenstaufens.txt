@@ -31,7 +31,6 @@ friedrich_the_one_eyed = { #Source: Hereford B. George, "Genealogical Tables Ill
 
 konrad_iii_of_the_holy_roman_empire = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
 	name = "Konrad" #the source gives "Conrad"
-	epithet = "III"
 	dynasty = hohenstaufen
 	character_class = warrior #emperor
 	rank = lord
@@ -239,7 +238,6 @@ heinrich_von_hohenstaufen_1253 = { #Source: Hereford B. George, "Genealogical Ta
 
 konrad_iv_of_the_holy_roman_empire = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
 	name = "Konrad" #the source gives "Konrad"
-	epithet = "IV"
 	dynasty = hohenstaufen
 	character_class = warrior #emperor
 	rank = lord

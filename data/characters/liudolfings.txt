@@ -1,0 +1,9 @@
+liutgarde_liudolfinger = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Liutgarde"
+	dynasty = liudolfing
+	character_class = warrior
+	culture = german
+	religion = catholic
+	home_site = brunswick #Saxony
+	gender = female
+}
