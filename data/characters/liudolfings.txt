@@ -1,3 +1,36 @@
+heinrich_i_of_the_holy_roman_empire = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Heinrich" #the source gives "Henry"
+	dynasty = liudolfing
+	character_class = warrior #emperor
+	rank = lord
+	culture = german
+	religion = catholic
+	home_site = brunswick #Saxony
+	gender = male
+	start_date = 918 #became emperor
+	death_date = 936
+	
+	#his mother might have been the daughter of emperor Arnulf
+}
+
+otto_the_great = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Otto"
+	epithet = "the Great"
+	dynasty = liudolfing
+	character_class = warrior #emperor
+	rank = lord
+	culture = german
+	religion = catholic
+	home_site = brunswick #Saxony
+	gender = male
+	father = heinrich_i_of_the_holy_roman_empire
+	start_date = 936 #became emperor
+	death_date = 973
+	
+	#emperor of the Holy Roman Empire
+	#became emperor per se in 962, presumably he was king of Germany before then
+}
+
 liutgarde_liudolfinger = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
 	name = "Liutgarde"
 	dynasty = liudolfing
@@ -6,4 +39,37 @@ liutgarde_liudolfinger = { #Source: Hereford B. George, "Genealogical Tables Ill
 	religion = catholic
 	home_site = brunswick #Saxony
 	gender = female
+	father = otto_the_great
+	mother = eadgyth_of_wessex
+}
+
+ludolf_liudolfinger = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Ludolf"
+	dynasty = liudolfing
+	character_class = warrior #duke
+	rank = lord
+	culture = german
+	religion = catholic
+	home_site = stuttgart #Swabia
+	gender = male
+	father = otto_the_great
+	mother = eadgyth_of_wessex
+	death_date = 957
+	
+	#duke of Swabia
+}
+
+otto_liudolfinger = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Otto"
+	dynasty = liudolfing
+	character_class = warrior #duke
+	rank = lord
+	culture = german
+	religion = catholic
+	home_site = stuttgart #Swabia
+	gender = male
+	father = ludolf_liudolfinger
+	death_date = 982
+	
+	#duke (presumably of Swabia, since his father was duke of it)
 }

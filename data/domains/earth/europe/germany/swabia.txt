@@ -17,9 +17,15 @@ swabia = {
 	}
 	
 	history = {
-		1080 = {
+		957 = {
 			government_type = monarchy
 			
+			offices = {
+				ruler = otto_liudolfinger #Otto was a duke, and his father Ludolf, duke of Swabia, died in 957; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+			}
+		}
+		
+		1080 = {
 			offices = {
 				ruler = friedrich_von_hohenstaufen #Frederick of Hohenstaufen became duke of Swabia in 1080; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
 			}

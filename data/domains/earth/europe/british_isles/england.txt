@@ -3,7 +3,10 @@ england = {
 	type = polity
 	color = { 206 8 8 }
 	flag = england
-	culture = english
+	cultures = {
+		english
+		anglo_saxon
+	}
 	default_religion = protestant
 	default_tier = kingdom
 	default_government_type = monarchy
@@ -28,9 +31,15 @@ england = {
 	}
 	
 	history = {
-		1199 = {
+		901 = {
 			government_type = monarchy
 			
+			offices = {
+				ruler = eadward_i_of_england #Eadward I became king of England in 901; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 1.
+			}
+		}
+		
+		1199 = {
 			offices = {
 				ruler = john_i_of_england #John became king of England in 1199; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 3.
 			}

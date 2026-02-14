@@ -1,0 +1,5 @@
+wessex = {
+	name = "Wessex"
+	prefix = "of"
+	culture = anglo_saxon
+}

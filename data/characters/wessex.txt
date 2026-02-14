@@ -1,0 +1,26 @@
+eadward_i_of_england = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 1.
+	name = "Eadward"
+	epithet = "the Elder" #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	dynasty = wessex
+	character_class = warrior #king
+	rank = lord
+	culture = anglo_saxon
+	religion = catholic
+	home_site = london
+	gender = male
+	start_date = 901 #became king
+	death_date = 924
+}
+
+eadgyth_of_wessex = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 1.
+	name = "Eadgyth"
+	dynasty = wessex
+	character_class = warrior
+	culture = anglo_saxon
+	religion = catholic
+	home_site = london
+	gender = female
+	father = eadward_i_of_england
+	
+	#married to Otto I
+}
