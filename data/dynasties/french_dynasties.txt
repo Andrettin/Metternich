@@ -55,6 +55,12 @@ penthievre = {
 	culture = french
 }
 
+poitiers = {
+	name = "Poitiers"
+	prefix = "de"
+	culture = french
+}
+
 rohan_soubise = {
 	name = "Rohan-Soubise"
 	prefix = "de"

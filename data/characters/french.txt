@@ -1,3 +1,27 @@
+guillaume_of_poitiers = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Guillaume"
+	dynasty = poitiers
+	character_class = warrior #count
+	rank = lord
+	culture = french
+	religion = catholic
+	home_site = poitiers
+	gender = male
+	
+	#count of Poitiers
+}
+
+agnes_de_poitiers = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Agnes"
+	dynasty = poitiers
+	character_class = warrior
+	culture = french
+	religion = catholic
+	home_site = poitiers
+	gender = female
+	father = guillaume_of_poitiers
+}
+
 rainald_iii_of_burgundy = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
 	name = "Rainald"
 	epithet = "III"

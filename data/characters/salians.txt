@@ -50,6 +50,21 @@ heinrich_salier = { #Source: Hereford B. George, "Genealogical Tables Illustrati
 	father = otto_salier
 }
 
+bruno_salier = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Bruno"
+	dynasty = salian
+	character_class = cleric
+	rank = patriarch #pope
+	culture = german
+	religion = catholic
+	home_site = frankfurt #Franconia
+	gender = male
+	father = otto_salier
+	death_date = 999
+	
+	#pope Gregory V
+}
+
 konrad_the_salic = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
 	name = "Konrad" #the source gives "Conrad"
 	epithet = "the Salic"
@@ -67,15 +82,75 @@ konrad_the_salic = { #Source: Hereford B. George, "Genealogical Tables Illustrat
 	#emperor Conrad II of the Holy Roman Empire
 }
 
-heinrich_iv = { #Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
+heinrich_iii_of_the_holy_roman_empire = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Heinrich" #the source gives "Henry"
+	dynasty = salian
+	character_class = warrior #emperor
+	rank = lord
+	culture = german
+	religion = catholic
+	home_site = frankfurt #Franconia
+	gender = male
+	father = konrad_the_salic
+	mother = gisela_konradinerin
+	start_date = 1039 #became emperor
+	death_date = 1056
+}
+
+beatrix_salierin = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Beatrix"
+	dynasty = salian
+	character_class = cleric #abbess
+	culture = german
+	religion = catholic
+	home_site = quedlinburg
+	gender = female
+	father = heinrich_iii_of_the_holy_roman_empire
+	
+	#abbess of Quedlinburg
+	#daughter of Gunhilda, daughter of Cnut
+}
+
+mathilde_salierin = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Mathilde" #the source gives "Matilda"
+	dynasty = salian
+	character_class = warrior
+	culture = german
+	religion = catholic
+	home_site = frankfurt #Franconia
+	gender = female
+	father = heinrich_iii_of_the_holy_roman_empire
+	mother = agnes_de_poitiers
+	
+	#married to Rudolf, duke of Swabia
+}
+
+judith_salierin = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Judith"
+	dynasty = salian
+	character_class = warrior
+	culture = german
+	religion = catholic
+	home_site = frankfurt #Franconia
+	gender = female
+	father = heinrich_iii_of_the_holy_roman_empire
+	mother = agnes_de_poitiers
+	
+	#married to Solomon, king of Hungary
+}
+
+heinrich_iv_of_the_holy_roman_empire = { #Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
 	name = "Heinrich"
-	epithet = "IV"
 	dynasty = salian #Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
-	character_class = warrior #king
+	character_class = warrior #emperor
 	rank = lord
 	culture = german
 	religion = catholic
 	gender = male
+	father = heinrich_iii_of_the_holy_roman_empire #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	mother = agnes_de_poitiers #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	start_date = 1056 #became emperor; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	death_date = 1106 #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
 }
 
 agnes_of_waiblingen = { #Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
@@ -87,7 +162,7 @@ agnes_of_waiblingen = { #Source: Christiane Maria Bauer et al., "Molecular genet
 	religion = catholic
 	home_site = waiblingen #given her appelation
 	gender = female
-	father = heinrich_iv #Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
+	father = heinrich_iv_of_the_holy_roman_empire #Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
 	death_date = 1143 #Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
 	traits = {
 		#honest

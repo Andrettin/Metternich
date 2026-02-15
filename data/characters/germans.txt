@@ -129,6 +129,30 @@ lanzelin_etichonen = {
 	death_date = 991
 }
 
+hermann_ii_of_swabia = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 12.
+	name = "Hermann" #the source gives "Herman"
+	dynasty = conradine #correct?
+	character_class = warrior #duke
+	rank = lord
+	culture = german
+	religion = catholic
+	home_site = stuttgart #Swabia
+	gender = male
+	
+	#duke of Swabia
+}
+
+gisela_konradinerin = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 12.
+	name = "Gisela"
+	dynasty = conradine #correct?
+	character_class = warrior
+	culture = german
+	religion = catholic
+	home_site = stuttgart #Swabia
+	gender = female
+	father = hermann_ii_of_swabia
+}
+
 konrad_i_of_the_holy_roman_empire = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
 	name = "Konrad" #the source gives "Conrad"
 	dynasty = conradine
@@ -143,6 +167,20 @@ konrad_i_of_the_holy_roman_empire = { #Source: Hereford B. George, "Genealogical
 	
 	#his mother might have been the daughter of emperor Arnulf
 	#had a daughter
+}
+
+rudolf_of_swabia = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Rudolf"
+	character_class = warrior #duke
+	rank = lord
+	culture = german
+	religion = catholic
+	home_site = stuttgart #Swabia
+	gender = male
+	death_date = 1080
+	
+	#chosen as king of Germany in opposition to Henry IV
+	#killed at the Elster in 1080
 }
 
 adalbert_of_bremen = { #Source: Snorri Sturlson, "Heimskringla", 1844, vol. 1, p. 141.

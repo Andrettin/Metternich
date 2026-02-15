@@ -107,6 +107,18 @@ holy_roman_empire = {
 			}
 		}
 		
+		1039 = {
+			offices = {
+				ruler = heinrich_iii_of_the_holy_roman_empire #Henry III became emperor of the Holy Roman Empire in 1039; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+			}
+		}
+		
+		1056 = {
+			offices = {
+				ruler = heinrich_iv_of_the_holy_roman_empire #Henry IV became emperor of the Holy Roman Empire in 1056; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+			}
+		}
+		
 		1137 = {
 			offices = {
 				ruler = konrad_iii_of_the_holy_roman_empire #Conrad III became emperor of the Holy Roman Empire in 1137; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
