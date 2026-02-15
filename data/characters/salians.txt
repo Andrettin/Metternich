@@ -36,7 +36,7 @@ otto_salier = { #Source: Hereford B. George, "Genealogical Tables Illustrative o
 	home_site = frankfurt #Franconia
 	gender = male
 	father = konrad_the_red
-	mother = liutgarde_liudolfinger
+	mother = liutgarde_liudolfingerin
 }
 
 heinrich_salier = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.

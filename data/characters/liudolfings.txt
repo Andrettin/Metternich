@@ -31,7 +31,7 @@ otto_the_great = { #Source: Hereford B. George, "Genealogical Tables Illustrativ
 	#became emperor per se in 962, presumably he was king of Germany before then
 }
 
-liutgarde_liudolfinger = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+liutgarde_liudolfingerin = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
 	name = "Liutgarde"
 	dynasty = liudolfing
 	character_class = warrior
@@ -72,4 +72,117 @@ otto_liudolfinger = { #Source: Hereford B. George, "Genealogical Tables Illustra
 	death_date = 982
 	
 	#duke (presumably of Swabia, since his father was duke of it)
+}
+
+otto_ii_of_the_holy_roman_empire = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Otto"
+	dynasty = liudolfing
+	character_class = warrior #emperor
+	rank = lord
+	culture = german
+	religion = catholic
+	home_site = brunswick #Saxony
+	gender = male
+	father = otto_the_great
+	mother = adelaide_welf
+	start_date = 973 #became emperor
+	death_date = 983
+}
+
+otto_iii_of_the_holy_roman_empire = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Otto"
+	dynasty = liudolfing
+	character_class = warrior #emperor
+	rank = lord
+	culture = german
+	religion = catholic
+	home_site = brunswick #Saxony
+	gender = male
+	father = otto_ii_of_the_holy_roman_empire
+	mother = theophano_makedon
+	start_date = 983 #became emperor
+	death_date = 1002
+}
+
+gerberga_liudolfingerin = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Gerberga"
+	dynasty = liudolfing
+	character_class = warrior
+	culture = german
+	religion = catholic
+	home_site = brunswick #Saxony
+	gender = female
+	father = heinrich_i_of_the_holy_roman_empire
+	
+	#married to Lewis (D'Outremer) IV of France
+}
+
+hedwiga_liudolfingerin = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Hedwiga"
+	dynasty = liudolfing
+	character_class = warrior
+	culture = german
+	religion = catholic
+	home_site = brunswick #Saxony
+	gender = female
+	father = heinrich_i_of_the_holy_roman_empire
+	
+	#married to Hugh the Great
+}
+
+heinrich_the_wrangler = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Heinrich" #the source gives "Henry"
+	epithet = "the Wrangler"
+	dynasty = liudolfing
+	character_class = warrior #duke
+	rank = lord
+	culture = german
+	religion = catholic
+	home_site = regensburg #Bavaria
+	gender = male
+	father = heinrich_i_of_the_holy_roman_empire
+	
+	#duke of Bavaria
+}
+
+heinrich_the_wrangler_ii = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Heinrich" #the source gives "Henry"
+	epithet = "the Wrangler"
+	dynasty = liudolfing
+	character_class = warrior
+	culture = german
+	religion = catholic
+	home_site = regensburg #Bavaria
+	gender = male
+	father = heinrich_the_wrangler
+}
+
+gisela_liudolfingerin = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Gisela"
+	dynasty = liudolfing
+	character_class = warrior
+	culture = german
+	religion = catholic
+	home_site = regensburg #Bavaria
+	gender = female
+	father = heinrich_the_wrangler_ii
+	
+	#married to Saint Stephen, king of Hungary
+}
+
+heinrich_ii_of_the_holy_roman_empire = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Heinrich" #the source gives "Henry"
+	dynasty = liudolfing
+	character_class = paladin #emperor and saint
+	rank = chevalier
+	culture = german
+	religion = catholic
+	home_site = regensburg #Bavaria
+	gender = male
+	father = heinrich_the_wrangler_ii
+	start_date = 1002 #became emperor
+	death_date = 1024
+	
+	#married to Cunigunda of Luxemburg
+	#saint
 }

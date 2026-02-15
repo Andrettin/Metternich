@@ -3,6 +3,15 @@ angelos = {
 	culture = greek
 }
 
+basilian = {
+	#name = "Basilian"
+	name = "Macedonian"
+	culture = greek
+	cultural_names = {
+		greek = "Makedon"
+	}
+}
+
 komnenos = {
 	name = "Komnenos"
 	culture = greek

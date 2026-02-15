@@ -77,9 +77,27 @@ holy_roman_empire = {
 			}
 		}
 		
-		918 = {
+		936 = {
 			offices = {
-				ruler = otto_the_great #Otto the Great became emperor of the Holy Roman Empire in 918; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+				ruler = otto_the_great #Otto the Great became emperor of the Holy Roman Empire in 936; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+			}
+		}
+		
+		973 = {
+			offices = {
+				ruler = otto_ii_of_the_holy_roman_empire #Otto II became emperor of the Holy Roman Empire in 973; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+			}
+		}
+		
+		983 = {
+			offices = {
+				ruler = otto_iii_of_the_holy_roman_empire #Otto III became emperor of the Holy Roman Empire in 983; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+			}
+		}
+		
+		1002 = {
+			offices = {
+				ruler = heinrich_ii_of_the_holy_roman_empire #Henry II became emperor of the Holy Roman Empire in 1002; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
 			}
 		}
 		

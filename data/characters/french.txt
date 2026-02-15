@@ -1,7 +1,8 @@
 rainald_iii_of_burgundy = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
 	name = "Rainald"
 	epithet = "III"
-	character_class = warrior
+	character_class = warrior #count
+	rank = lord
 	culture = french
 	religion = catholic
 	home_site = besancon #Franche-Comté

@@ -27,4 +27,26 @@ byzantium = {
 		thessaly
 		west_macedonia
 	}
+	
+	history = {
+		959 = {
+			government_type = monarchy
+			
+			offices = {
+				ruler = romanos_ii_of_byzantium #Romanus II became Eastern Emperor in 959; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 47.
+			}
+		}
+		
+		1185 = {
+			offices = {
+				ruler = isaakios_ii_of_byzantium #Isaac II became Eastern Emperor in 1185; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 47.
+			}
+		}
+		
+		1203 = {
+			offices = {
+				ruler = isaakios_ii_of_byzantium #Isaac II was restored as Eastern Emperor in 1203; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 47.
+			}
+		}
+	}
 }

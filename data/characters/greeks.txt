@@ -140,6 +140,31 @@ archimedes = {
 	death_date = -212
 }
 
+romanos_ii_of_byzantium = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 47.
+	name = "Romanos" #the source gives "Romanus"
+	epithet = "II"
+	dynasty = basilian
+	character_class = warrior #emperor
+	rank = lord
+	culture = greek
+	religion = orthodox
+	home_site = constantinople
+	gender = male
+	start_date = 959 #became emperor
+	death_date = 963
+}
+
+theophano_makedon = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 47.
+	name = "Theophano"
+	dynasty = basilian
+	character_class = warrior
+	culture = greek
+	religion = orthodox
+	home_site = constantinople
+	gender = female
+	father = romanos_ii_of_byzantium
+}
+
 theodora_komnenos = {
 	name = "Theodora"
 	dynasty = komnenos
@@ -152,7 +177,7 @@ theodora_komnenos = {
 	death_date = 1184
 }
 
-isaakios_ii_of_byzantium = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+isaakios_ii_of_byzantium = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 48.
 	name = "Isaakios" #the source gives "Isaac"
 	epithet = "II"
 	dynasty = angelos
@@ -162,11 +187,11 @@ isaakios_ii_of_byzantium = { #Source: Hereford B. George, "Genealogical Tables I
 	religion = orthodox
 	home_site = constantinople
 	gender = male
-	
-	#Eastern Emperor
+	start_date = 1185 #became emperor for the first time
+	death_date = 1204
 }
 
-irene_angelos = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+irene_angelos = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 48.
 	name = "Irene"
 	dynasty = angelos
 	character_class = warrior

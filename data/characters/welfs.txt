@@ -1,3 +1,30 @@
+rudolf_ii_of_burgundy = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Rudolf"
+	epithet = "II"
+	dynasty = welf #correct?
+	character_class = warrior #king
+	rank = lord
+	culture = german
+	religion = catholic
+	home_site = arles #Kingdom of Burgundy
+	gender = male
+	
+	#kingdom of Burgundy
+}
+
+adelaide_welf = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Adelaide"
+	dynasty = welf #correct?
+	character_class = warrior
+	culture = german
+	religion = catholic
+	home_site = arles #Kingdom of Burgundy
+	gender = female
+	father = rudolf_ii_of_burgundy
+	
+	#widow of Lothar, king of Italy
+}
+
 heinrich_the_black = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 16a.
 	name = "Heinrich" #the source gives "Henry"
 	epithet = "the Black"
