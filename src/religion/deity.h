@@ -31,6 +31,8 @@ public:
 	static constexpr const char property_class_identifier[] = "metternich::deity*";
 	static constexpr const char database_folder[] = "deities";
 
+	static const std::set<std::string> database_dependencies;
+
 	static deity *add(const std::string &identifier, const metternich::data_module *data_module);
 
 	explicit deity(const std::string &identifier);

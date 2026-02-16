@@ -3,6 +3,8 @@
 #include "religion/deity.h"
 
 #include "character/character.h"
+#include "character/character_class.h"
+#include "character/mythic_path.h"
 #include "culture/cultural_group.h"
 #include "culture/culture.h"
 #include "database/defines.h"
@@ -22,6 +24,13 @@
 #include <magic_enum/magic_enum.hpp>
 
 namespace metternich {
+
+const std::set<std::string> deity::database_dependencies = {
+	//characters need the character class rank levels to be defined first
+	character_class::class_identifier,
+	//characters need the mythic path rank tiers to be defined first
+	mythic_path::class_identifier
+};
 
 deity *deity::add(const std::string &identifier, const metternich::data_module *data_module)
 {
