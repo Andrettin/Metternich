@@ -18,12 +18,27 @@ public:
 	{
 	}
 
-	virtual void check() const override;
+	virtual void process_gsml_scope(const gsml_data &scope) override;
+
+	int get_rank_tier(const std::string &rank) const
+	{
+		const auto find_iterator = this->rank_tiers.find(rank);
+
+		if (find_iterator != this->rank_tiers.end()) {
+			return find_iterator->second;
+		}
+
+		throw std::runtime_error(std::format("Invalid rank for mythic path \"{}\": \"{}\".", this->get_identifier(), rank));
+	}
+
+	const std::string &get_tier_title_name(const int mythic_tier) const;
 
 signals:
 	void changed();
 
 private:
+	std::map<std::string, int> rank_tiers; //names for particular tiers
+	std::map<int, std::string> tier_title_names; //character title names, available from particular tiers
 };
 
 }

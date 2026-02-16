@@ -70,7 +70,6 @@ class character final : public character_base, public data_type<character>
 	Q_PROPERTY(metternich::species* species MEMBER species NOTIFY changed)
 	Q_PROPERTY(const metternich::character_class* character_class MEMBER character_class READ get_character_class NOTIFY changed)
 	Q_PROPERTY(int level MEMBER level READ get_level NOTIFY changed)
-	Q_PROPERTY(std::string rank MEMBER rank NOTIFY changed)
 	Q_PROPERTY(const metternich::monster_type* monster_type MEMBER monster_type READ get_monster_type NOTIFY changed)
 	Q_PROPERTY(const metternich::mythic_path* mythic_path READ get_mythic_path WRITE set_mythic_path NOTIFY changed)
 	Q_PROPERTY(int mythic_tier MEMBER mythic_tier READ get_mythic_tier NOTIFY changed)
@@ -119,6 +118,7 @@ public:
 	explicit character(const std::string &identifier);
 	~character();
 
+	virtual void process_gsml_property(const gsml_property &property) override;
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
 	virtual void check() const override;
@@ -417,7 +417,6 @@ private:
 	metternich::species *species = nullptr;
 	const metternich::character_class *character_class = nullptr;
 	int level = 0;
-	std::string rank;
 	const metternich::monster_type *monster_type = nullptr;
 	const metternich::mythic_path *mythic_path = nullptr;
 	int mythic_tier = 0;

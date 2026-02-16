@@ -10,6 +10,7 @@
 #include "character/character_history.h"
 #include "character/dynasty.h"
 #include "character/monster_type.h"
+#include "character/mythic_path.h"
 #include "character/starting_age_category.h"
 #include "character/trait.h"
 #include "culture/culture.h"
@@ -50,6 +51,10 @@ namespace metternich {
 const std::set<std::string> character::database_dependencies = {
 	//bloodlines must initialize the bloodline of their founders before characters are initialized
 	bloodline::class_identifier,
+	//characters need the character class rank levels to be defined first
+	character_class::class_identifier,
+	//characters need the mythic path rank tiers to be defined first
+	mythic_path::class_identifier,
 	//characters must be initialized after provinces, as their initialization results in settlements being assigned to their provinces, which is necessary for getting the provinces for home sites
 	province::class_identifier
 };
@@ -271,6 +276,23 @@ character::~character()
 {
 }
 
+void character::process_gsml_property(const gsml_property &property)
+{
+	const std::string &key = property.get_key();
+	const std::string &value = property.get_value();
+
+	if (key == "rank") {
+		assert_throw(this->get_level() == 0);
+		assert_throw(this->get_character_class() != nullptr);
+		this->level = this->get_character_class()->get_rank_level(value);
+	} else if (key == "mythic_rank") {
+		assert_throw(this->get_mythic_path() != nullptr);
+		this->mythic_tier = this->get_mythic_path()->get_rank_tier(value);
+	} else {
+		character_base::process_gsml_property(property);
+	}
+}
+
 void character::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
@@ -317,7 +339,7 @@ void character::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "game_data") {
 		scope.process(this->get_game_data());
 	} else {
-		data_entry::process_gsml_scope(scope);
+		character_base::process_gsml_scope(scope);
 	}
 }
 
@@ -331,13 +353,6 @@ void character::initialize()
 		this->species = const_cast<metternich::species *>(this->get_monster_type()->get_species());
 		this->character_class = this->get_monster_type()->get_character_class();
 		this->level = this->get_monster_type()->get_level();
-	}
-
-	if (!this->rank.empty()) {
-		assert_throw(this->get_level() == 0);
-		assert_throw(this->get_character_class() != nullptr);
-		this->level = this->get_character_class()->get_rank_level(this->rank);
-		this->rank.clear();
 	}
 
 	for (const auto &[attribute, rating] : this->attribute_ratings) {
@@ -776,6 +791,14 @@ std::string character::get_full_name(const metternich::domain *regnal_domain, co
 	}
 
 	const std::string &name = this->get_name();
+
+	if (this->get_mythic_path() != nullptr) {
+		const std::string &mythic_title_name = this->get_mythic_path()->get_tier_title_name(this->get_mythic_tier());
+		if (!mythic_title_name.empty()) {
+			return std::format("{} {}", mythic_title_name, name);
+		}
+	}
+
 	std::string full_name = name;
 
 	if (!this->get_epithet().empty()) {
