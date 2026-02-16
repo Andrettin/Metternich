@@ -1,11 +1,5 @@
 abrahamic = {
 	name = "Abrahamic"
-	divine_rank_names = {
-		quasi_deity = "Blessed"
-		demigod = "Lesser Saint"
-		lesser_deity = "Intermediate Saint"
-		intermediate_deity = "Greater Saint"
-	}
 }
 
 aesir = {

@@ -45,6 +45,29 @@ beatrix_of_burgundy = { #Source: Hereford B. George, "Genealogical Tables Illust
 	father = rainald_iii_of_burgundy
 }
 
+louis_ix_of_france = {
+	name = "Louis"
+	epithet = "IX"
+	dynasty = capet
+	character_class = paladin #saint
+	rank = chevalier #king
+	mythic_path = hierophant
+	mythic_rank = saint
+	culture = austrian
+	religion = catholic
+	home_site = vienna
+	gender = male
+	birth_date = 1214.4.25
+	death_date = 1270.8.25
+	traits = {
+		#brave
+		#chaste
+		#kind
+		#temperate
+		#honest
+	}
+}
+
 philippe_capet = {
 	name = "Philippe"
 	dynasty = capet
@@ -53,7 +76,7 @@ philippe_capet = {
 	religion = catholic
 	home_site = paris
 	gender = male
-	father = saint_louis
+	father = louis_ix_of_france
 	birth_date = 1245.1.31
 	death_date = 1285.10.5
 	traits = {

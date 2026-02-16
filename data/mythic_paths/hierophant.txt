@@ -1,3 +1,12 @@
 hierophant = {
 	name = "Hierophant"
+	rank_tiers = {
+		servant_of_god = 1
+		venerable = 2
+		blessed = 5
+		saint = 10
+	}
+	tier_title_names = {
+		10 = "Saint"
+	}
 }

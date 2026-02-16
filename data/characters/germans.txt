@@ -216,6 +216,19 @@ christina_1147 = {
 	death_date = 1204.2.21
 }
 
+hedwig_von_andechs = {
+	name = "Hedwig"
+	dynasty = andechs
+	character_class = paladin #aristocrat and saint
+	mythic_path = hierophant
+	mythic_rank = saint
+	culture = german
+	religion = catholic
+	gender = female
+	birth_date = 1170
+	death_date = 1243.10.13
+}
+
 jutta_askanien = {
 	name = "Jutta"
 	dynasty = askanien

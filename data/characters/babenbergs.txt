@@ -1,3 +1,29 @@
+leopold_iii_von_babenberg = { #Margrave Leopold III of Austria, of the House of Babenberg
+	name = "Leopold"
+	epithet = "III"
+	dynasty = babenberg
+	character_class = paladin #margrave and saint
+	mythic_path = hierophant
+	mythic_rank = saint
+	culture = austrian
+	religion = catholic
+	home_site = vienna
+	gender = male
+	start_date = 1095 #Leopold III became margrave of Austria in 1095/1096; Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
+	death_date = 1136 #Leopold III died in 1136; Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
+	traits = {
+		#charitable
+	}
+	
+	history = {
+		1095 = {
+			rank = chevalier #margrave
+		}
+		
+		#canonized by pope Innocent VIII in 1485; Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
+	}
+}
+
 adalbert_von_babenberg = { #Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
 	name = "Adalbert"
 	dynasty = babenberg
@@ -6,7 +32,7 @@ adalbert_von_babenberg = { #Source: Christiane Maria Bauer et al., "Molecular ge
 	religion = catholic
 	home_site = vienna
 	gender = male
-	father = saint_leopold #first son of Leopold III; Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
+	father = leopold_iii_von_babenberg #first son of Leopold III; Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
 	mother = agnes_of_waiblingen #most likely, according to genetics testing; Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 315.
 	death_date = 1138 #Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
 }
@@ -21,7 +47,7 @@ leopold_iv_von_babenberg = { #Source: Christiane Maria Bauer et al., "Molecular 
 	religion = catholic
 	home_site = vienna
 	gender = male
-	father = saint_leopold #Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
+	father = leopold_iii_von_babenberg #Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
 	mother = agnes_of_waiblingen #Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
 	death_date = 1141 #Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
 	traits = {
@@ -37,7 +63,7 @@ ernst_von_babenberg = { #Source: Christiane Maria Bauer et al., "Molecular genet
 	religion = catholic
 	home_site = vienna
 	gender = male
-	father = saint_leopold #Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
+	father = leopold_iii_von_babenberg #Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
 	mother = agnes_of_waiblingen #Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
 	death_date = 1137 #Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
 }
@@ -49,7 +75,7 @@ konrad_von_babenberg = {
 	culture = austrian
 	religion = catholic
 	gender = male
-	father = saint_leopold
+	father = leopold_iii_von_babenberg
 	mother = agnes_of_waiblingen
 	birth_date = 1116
 	death_date = 1168
@@ -65,7 +91,7 @@ heinrich_ii_von_babenberg = { #Source: Hereford B. George, "Genealogical Tables 
 	religion = catholic
 	home_site = vienna
 	gender = male
-	father = saint_leopold
+	father = leopold_iii_von_babenberg
 	mother = agnes_of_waiblingen
 	start_date = 1141 #became margrave of Austria
 	death_date = 1177
@@ -80,7 +106,7 @@ otto_von_babenberg = { #Source: Hereford B. George, "Genealogical Tables Illustr
 	religion = catholic
 	home_site = freising
 	gender = male
-	father = saint_leopold
+	father = leopold_iii_von_babenberg
 	mother = agnes_of_waiblingen
 	death_date = 1158
 	
@@ -94,7 +120,7 @@ agnes_von_babenberg = {
 	culture = austrian
 	religion = catholic
 	gender = female
-	father = saint_leopold
+	father = leopold_iii_von_babenberg
 	mother = agnes_of_waiblingen
 	birth_date = 1111
 	death_date = 1157.1.26
@@ -107,7 +133,7 @@ gertrud_von_babenberg = {
 	culture = austrian
 	religion = catholic
 	gender = female
-	father = saint_leopold
+	father = leopold_iii_von_babenberg
 	mother = agnes_of_waiblingen
 	birth_date = 1117
 	death_date = 1153.1.7
@@ -123,7 +149,7 @@ jutta_von_babenberg = {
 	culture = austrian
 	religion = catholic
 	gender = female
-	father = saint_leopold
+	father = leopold_iii_von_babenberg
 	mother = agnes_of_waiblingen
 	birth_date = 1115
 	death_date = 1168.1.3

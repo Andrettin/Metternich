@@ -182,7 +182,7 @@ boleslaw_piast_1191 = {
 	religion = catholic
 	gender = male
 	father = henryk_piast
-	mother = saint_hedwig
+	mother = hedwig_von_andechs
 	birth_date = 1191
 	death_date = 1207.9.10
 }
@@ -195,7 +195,7 @@ konrad_piast_1198 = {
 	religion = catholic
 	gender = male
 	father = henryk_piast
-	mother = saint_hedwig
+	mother = hedwig_von_andechs
 	birth_date = 1198
 	death_date = 1213.9.4
 }
@@ -209,7 +209,7 @@ henryk_the_pious = {
 	religion = catholic
 	gender = male
 	father = henryk_piast
-	mother = saint_hedwig
+	mother = hedwig_von_andechs
 	birth_date = 1196
 	death_date = 1241.4.9
 }
@@ -222,7 +222,7 @@ agnes_piast = {
 	religion = catholic
 	gender = female
 	father = henryk_piast
-	mother = saint_hedwig
+	mother = hedwig_von_andechs
 	birth_date = 1192
 	death_date = 1214.4.9
 }
@@ -235,7 +235,7 @@ gertrud_piast = {
 	religion = catholic
 	gender = female
 	father = henryk_piast
-	mother = saint_hedwig
+	mother = hedwig_von_andechs
 	birth_date = 1200
 	death_date = 1268.12.30
 }

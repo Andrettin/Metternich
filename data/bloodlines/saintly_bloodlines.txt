@@ -1,6 +1,6 @@
 saint_hedwig = {
 	name = "Saint Hedwig"
-	founder = saint_hedwig
+	founder = hedwig_von_andechs
 	cultures = {
 		austrian
 		dutch
@@ -11,7 +11,7 @@ saint_hedwig = {
 
 saint_leopold = {
 	name = "Saint Leopold"
-	founder = saint_leopold
+	founder = leopold_iii_von_babenberg
 	cultures = {
 		austrian
 		dutch
@@ -21,7 +21,7 @@ saint_leopold = {
 
 saint_louis = {
 	name = "Saint Louis"
-	founder = saint_louis
+	founder = louis_ix_of_france
 	cultures = {
 		aragonese
 		castillian
