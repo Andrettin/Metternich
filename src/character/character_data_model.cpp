@@ -8,6 +8,7 @@
 #include "character/character_class.h"
 #include "character/character_game_data.h"
 #include "character/dynasty.h"
+#include "character/mythic_path.h"
 #include "character/saving_throw_type.h"
 #include "character/skill.h"
 #include "character/trait.h"
@@ -215,6 +216,14 @@ void character_data_model::reset_model()
 			} else {
 				this->top_rows.push_back(std::make_unique<character_data_row>("Experience:", number::to_formatted_string(character_game_data->get_experience())));
 			}
+		}
+
+		const mythic_path *mythic_path = this->character->get_mythic_path();
+		if (mythic_path != nullptr) {
+			this->top_rows.push_back(std::make_unique<character_data_row>("Mythic Path:", mythic_path->get_name()));
+
+			const int mythic_tier = this->character->get_mythic_tier();
+			this->top_rows.push_back(std::make_unique<character_data_row>("Mythic Tier:", std::to_string(mythic_tier)));
 		}
 
 		if (this->character->get_dynasty() != nullptr) {
