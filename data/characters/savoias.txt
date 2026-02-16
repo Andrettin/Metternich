@@ -1,3 +1,27 @@
+oddone_of_susa = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Oddone" #the source gives "Otto"
+	dynasty = savoia #correct?
+	character_class = warrior #margrave
+	rank = lord
+	culture = italian
+	religion = catholic
+	home_site = susa_piedmont
+	gender = male
+	
+	#margrave of Susa
+}
+
+berta_di_savoia = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Berta" #the source gives "Bertha"
+	dynasty = savoia #correct?
+	character_class = warrior
+	culture = italian
+	religion = catholic
+	home_site = susa_piedmont
+	gender = female
+	father = oddone_of_susa
+}
+
 amadeo_iii_of_savoy = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 32.
 	name = "Amadeo" #the source gives "Amadeus"
 	epithet = "III"

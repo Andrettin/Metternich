@@ -106,7 +106,6 @@ konrad_von_hohenstaufen = { #Source: Hereford B. George, "Genealogical Tables Il
 
 heinrich_vi_of_the_holy_roman_empire = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
 	name = "Heinrich" #the source gives "Henry"
-	epithet = "VI"
 	dynasty = hohenstaufen
 	character_class = warrior #emperor
 	rank = lord

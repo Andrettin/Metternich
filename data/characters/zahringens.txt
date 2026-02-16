@@ -22,6 +22,8 @@ friedrich_von_zahringen = { #Source: Hereford B. George, "Genealogical Tables Il
 	father = hermann_vi_of_baden
 	mother = gertrud_von_babenberg_1226
 	death_date = 1268
+	
+	#executed in Naples by Charles of Anjou after the battle of Tagliacozzo
 }
 
 agnes_von_zahringen = {

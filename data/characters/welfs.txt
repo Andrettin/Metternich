@@ -49,7 +49,6 @@ judith_welf = { #Source: Hereford B. George, "Genealogical Tables Illustrative o
 
 otto_iv_of_the_holy_roman_empire = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Tables 13 and 16a.
 	name = "Otto"
-	epithet = "IV"
 	dynasty = welf
 	character_class = warrior #emperor
 	rank = lord

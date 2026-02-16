@@ -151,6 +151,43 @@ heinrich_iv_of_the_holy_roman_empire = { #Source: Christiane Maria Bauer et al.,
 	mother = agnes_de_poitiers #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
 	start_date = 1056 #became emperor; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
 	death_date = 1106 #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	
+	#had his first marriage with Bertha, daughter of Otto, margrave of Susa; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	#had his second marriage with Adelaide, a Russian princess; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+}
+
+konrad_salier = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Konrad" #the source gives "Conrad"
+	dynasty = salian
+	character_class = warrior #king
+	rank = lord
+	culture = german
+	religion = catholic
+	home_site = frankfurt #Franconia
+	gender = male
+	father = heinrich_iv_of_the_holy_roman_empire
+	mother = berta_di_savoia
+	death_date = 1101
+	
+	#rebelled against his father; was acknowledged as king of Italy until his death
+	#married to Matilda of Sicily
+}
+
+heinrich_v_of_the_holy_roman_empire = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Heinrich" #the source gives "Henry"
+	dynasty = salian
+	character_class = warrior #emperor
+	rank = lord
+	culture = german
+	religion = catholic
+	home_site = frankfurt #Franconia
+	gender = male
+	father = heinrich_iv_of_the_holy_roman_empire
+	mother = berta_di_savoia
+	start_date = 1106 #became emperor
+	death_date = 1125
+	
+	#married to Matilda, daughter of Henry I of England
 }
 
 agnes_of_waiblingen = { #Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
@@ -163,6 +200,7 @@ agnes_of_waiblingen = { #Source: Christiane Maria Bauer et al., "Molecular genet
 	home_site = waiblingen #given her appelation
 	gender = female
 	father = heinrich_iv_of_the_holy_roman_empire #Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
+	mother = berta_di_savoia #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
 	death_date = 1143 #Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
 	traits = {
 		#honest

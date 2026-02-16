@@ -1,0 +1,6 @@
+susa_piedmont = {
+	name = "Susa"
+	world = earth
+	geocoordinate = { 7.05 45.133333 }
+	province = piedmont
+}
