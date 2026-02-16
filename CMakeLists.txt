@@ -34,6 +34,7 @@ set(character_SRCS
 	src/character/family_tree_model.cpp
 	src/character/level_bonus_table.cpp
 	src/character/monster_type.cpp
+	src/character/mythic_path.cpp
 	src/character/party.cpp
 	src/character/saving_throw_type.cpp
 	src/character/skill.cpp
@@ -375,6 +376,7 @@ set(character_HDRS
 	src/character/family_tree_model.h
 	src/character/level_bonus_table.h
 	src/character/monster_type.h
+	src/character/mythic_path.h
 	src/character/party.h
 	src/character/saving_throw_type.h
 	src/character/skill.h

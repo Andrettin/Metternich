@@ -33,6 +33,7 @@ public:
 	}
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
+	virtual void initialize() override;
 	virtual void check() const override;
 
 	const std::string &get_cultural_name(const culture *culture) const;

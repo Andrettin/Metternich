@@ -11,6 +11,7 @@ Q_MOC_INCLUDE("character/character_class.h")
 Q_MOC_INCLUDE("character/character_game_data.h")
 Q_MOC_INCLUDE("character/dynasty.h")
 Q_MOC_INCLUDE("character/monster_type.h")
+Q_MOC_INCLUDE("character/mythic_path.h")
 Q_MOC_INCLUDE("culture/culture.h")
 Q_MOC_INCLUDE("map/province.h")
 Q_MOC_INCLUDE("map/site.h")
@@ -42,6 +43,7 @@ class domain;
 class dynasty;
 class item_type;
 class monster_type;
+class mythic_path;
 class phenotype;
 class portrait;
 class province;
@@ -70,6 +72,8 @@ class character final : public character_base, public data_type<character>
 	Q_PROPERTY(int level MEMBER level READ get_level NOTIFY changed)
 	Q_PROPERTY(std::string rank MEMBER rank NOTIFY changed)
 	Q_PROPERTY(const metternich::monster_type* monster_type MEMBER monster_type READ get_monster_type NOTIFY changed)
+	Q_PROPERTY(const metternich::mythic_path* mythic_path READ get_mythic_path WRITE set_mythic_path NOTIFY changed)
+	Q_PROPERTY(int mythic_tier MEMBER mythic_tier READ get_mythic_tier NOTIFY changed)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
 	Q_PROPERTY(const metternich::religion* religion MEMBER religion NOTIFY changed)
 	Q_PROPERTY(const metternich::phenotype* phenotype MEMBER phenotype READ get_phenotype NOTIFY changed)
@@ -184,6 +188,25 @@ public:
 	const metternich::monster_type *get_monster_type() const
 	{
 		return this->monster_type;
+	}
+
+	const metternich::mythic_path *get_mythic_path() const
+	{
+		return this->mythic_path;
+	}
+
+	void set_mythic_path(const metternich::mythic_path *mythic_path)
+	{
+		this->mythic_path = mythic_path;
+		
+		if (this->get_mythic_tier() == 0) {
+			this->mythic_tier = 1;
+		}
+	}
+
+	int get_mythic_tier() const
+	{
+		return this->mythic_tier;
 	}
 
 	const metternich::culture *get_culture() const
@@ -396,6 +419,8 @@ private:
 	int level = 0;
 	std::string rank;
 	const metternich::monster_type *monster_type = nullptr;
+	const metternich::mythic_path *mythic_path = nullptr;
+	int mythic_tier = 0;
 	metternich::culture *culture = nullptr;
 	const metternich::religion *religion = nullptr;
 	const metternich::phenotype *phenotype = nullptr;

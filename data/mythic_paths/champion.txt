@@ -1,0 +1,3 @@
+champion = {
+	name = "Champion"
+}
