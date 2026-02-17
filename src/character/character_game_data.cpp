@@ -116,6 +116,8 @@ void character_game_data::process_gsml_property(const gsml_property &property)
 		this->bloodline = bloodline::get(value);
 	} else if (key == "bloodline_strength") {
 		this->bloodline_strength = std::stoi(value);
+	} else if (key == "reputation") {
+		this->reputation = std::stoi(value);
 	} else if (key == "hit_dice_count") {
 		this->hit_dice_count = std::stoi(value);
 	} else if (key == "hit_points") {
@@ -240,6 +242,7 @@ gsml_data character_game_data::to_gsml_data() const
 		data.add_property("bloodline", this->get_bloodline()->get_identifier());
 		data.add_property("bloodline_strength", std::to_string(this->get_bloodline_strength()));
 	}
+	data.add_property("reputation", std::to_string(this->get_reputation()));
 
 	if (!this->attribute_values.empty()) {
 		gsml_data attributes_data("attributes");
@@ -372,6 +375,7 @@ void character_game_data::apply_species_and_class(const int level)
 
 	this->set_bloodline(this->character->get_bloodline());
 	this->set_bloodline_strength(this->character->get_bloodline_strength());
+	this->change_reputation(character::base_reputation);
 
 	const metternich::character_class *character_class = this->get_character_class();
 	if (character_class != nullptr) {
@@ -1107,12 +1111,29 @@ void character_game_data::set_bloodline_strength(const int bloodline_strength)
 	//the bloodline must always be set before the bloodline strength
 	assert_throw(this->get_bloodline() != nullptr);
 
+	const int change = bloodline_strength - this->get_bloodline_strength();
+
 	this->bloodline_strength = bloodline_strength;
 
 	//FIXME: apply bloodline effects
 
+	this->change_reputation(change);
+
 	if (game::get()->is_running()) {
 		emit bloodline_strength_changed();
+	}
+}
+
+void character_game_data::set_reputation(const int reputation)
+{
+	if (reputation == this->get_reputation()) {
+		return;
+	}
+
+	this->reputation = reputation;
+
+	if (game::get()->is_running()) {
+		emit reputation_changed();
 	}
 }
 

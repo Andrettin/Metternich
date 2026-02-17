@@ -500,9 +500,8 @@ void domain_game_data::collect_regency()
 		return;
 	}
 
-	//limit the regency gain to the bloodline score (with a minimum of 1 regency gained)
-	collected_regency = std::min(collected_regency, this->get_government()->get_ruler()->get_game_data()->get_bloodline_strength());
-	collected_regency = std::max(collected_regency, 1);
+	//limit the regency gain to the reputation score
+	collected_regency = std::min(collected_regency, this->get_government()->get_ruler()->get_game_data()->get_reputation());
 
 	this->get_economy()->add_tributable_commodity(defines::get()->get_regency_commodity(), collected_regency, income_transaction_type::tribute);
 }

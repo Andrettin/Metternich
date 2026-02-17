@@ -374,7 +374,7 @@ const character *country_government::get_best_office_holder(const office *office
 
 	std::vector<const character *> potential_holders;
 	int best_attribute_value = 0;
-	int best_bloodline_strength = 0;
+	int best_reputation = 0;
 	bool found_same_dynasty = false;
 
 	for (const character *character : this->get_appointable_office_holders(office)) {
@@ -385,12 +385,12 @@ const character *country_government::get_best_office_holder(const office *office
 		const character_game_data *character_game_data = character->get_game_data();
 
 		if (office->is_ruler()) {
-			if (character->get_game_data()->get_bloodline_strength() > best_bloodline_strength) {
+			if (character->get_game_data()->get_reputation() > best_reputation) {
 				potential_holders.clear();
-				best_bloodline_strength = character->get_game_data()->get_bloodline_strength();
+				best_reputation = character->get_game_data()->get_reputation();
 				best_attribute_value = 0;
 				found_same_dynasty = false;
-			} else if (character->get_game_data()->get_bloodline_strength() < best_bloodline_strength) {
+			} else if (character->get_game_data()->get_reputation() < best_reputation) {
 				continue;
 			}
 

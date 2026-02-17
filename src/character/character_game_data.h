@@ -69,6 +69,7 @@ class character_game_data final : public QObject
 	Q_PROPERTY(qint64 experience READ get_experience NOTIFY experience_changed)
 	Q_PROPERTY(const metternich::bloodline* bloodline READ get_bloodline NOTIFY bloodline_changed)
 	Q_PROPERTY(int bloodline_strength READ get_bloodline_strength NOTIFY bloodline_strength_changed)
+	Q_PROPERTY(int reputation READ get_reputation NOTIFY reputation_changed)
 	Q_PROPERTY(int hit_points READ get_hit_points NOTIFY hit_points_changed)
 	Q_PROPERTY(int max_hit_points READ get_max_hit_points NOTIFY max_hit_points_changed)
 	Q_PROPERTY(int armor_class_bonus READ get_armor_class_bonus NOTIFY armor_class_bonus_changed)
@@ -237,6 +238,18 @@ public:
 	}
 
 	void set_bloodline_strength(const int bloodline_strength);
+
+	int get_reputation() const
+	{
+		return this->reputation;
+	}
+
+	void set_reputation(const int reputation);
+
+	void change_reputation(const int change)
+	{
+		this->set_reputation(this->get_reputation() + change);
+	}
 
 	const data_entry_map<character_attribute, int> &get_attribute_values() const
 	{
@@ -678,6 +691,7 @@ signals:
 	void experience_changed();
 	void bloodline_changed();
 	void bloodline_strength_changed();
+	void reputation_changed();
 	void hit_points_changed();
 	void max_hit_points_changed();
 	void armor_class_bonus_changed();
@@ -714,6 +728,7 @@ private:
 	int64_t experience_award = 0; //the experience award for defeating the character
 	const metternich::bloodline *bloodline = nullptr;
 	int bloodline_strength = 0;
+	int reputation = 0;
 	data_entry_map<character_attribute, int> attribute_values;
 	int hit_dice_count = 0;
 	int hit_points = 0;
