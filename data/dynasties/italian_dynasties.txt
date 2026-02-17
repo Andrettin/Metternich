@@ -13,6 +13,12 @@ savoia = {
 	name = "Savoia"
 	prefix = "di"
 	culture = italian
+	cultural_prefixes = {
+		french = "de"
+	}
+	cultural_names = {
+		french = "Savoie"
+	}
 }
 
 visconti = {

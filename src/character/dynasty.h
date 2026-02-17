@@ -34,10 +34,15 @@ public:
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;
 
+	using named_data_entry::get_name;
+	const std::string &get_name(const metternich::culture *culture, const gender gender) const;
+
 	const std::string &get_prefix() const
 	{
 		return this->prefix;
 	}
+
+	const std::string &get_prefix(const metternich::culture *culture) const;
 
 	const culture *get_culture() const
 	{
@@ -53,6 +58,7 @@ private:
 	data_entry_map<culture_base, std::map<gender, std::string>> cultural_names;
 	std::string prefix;
 	bool contracted_prefix = false;
+	data_entry_map<culture_base, std::string> cultural_prefixes;
 	metternich::culture *culture = nullptr;
 };
 

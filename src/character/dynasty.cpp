@@ -59,6 +59,20 @@ void dynasty::process_gsml_scope(const gsml_data &scope)
 
 			this->cultural_names[nullptr][magic_enum::enum_cast<gender>(key).value()] = value;
 		});
+	} else if (tag == "cultural_prefixes") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+
+			this->cultural_prefixes[culture::get(key)] = value;
+		});
+	} else if (tag == "cultural_group_prefixes") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+
+			this->cultural_prefixes[cultural_group::get(key)] = value;
+		});
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
@@ -71,18 +85,8 @@ void dynasty::check() const
 	}
 }
 
-std::string dynasty::get_surname(const metternich::culture *culture, const gender gender) const
+const std::string &dynasty::get_name(const metternich::culture *culture, const gender gender) const
 {
-	std::string surname;
-
-	if (!this->get_prefix().empty()) {
-		surname = this->get_prefix();
-
-		if (!this->contracted_prefix) {
-			surname += " ";
-		}
-	}
-
 	auto culture_find_it = this->cultural_names.find(culture);
 	const cultural_group *cultural_group = culture->get_group();
 	while (culture_find_it == this->cultural_names.end() && cultural_group != nullptr) {
@@ -98,12 +102,45 @@ std::string dynasty::get_surname(const metternich::culture *culture, const gende
 			gender_find_it = culture_find_it->second.find(gender::none);
 		}
 		if (gender_find_it != culture_find_it->second.end()) {
-			surname += gender_find_it->second;
-			return surname;
+			return gender_find_it->second;
 		}
 	}
 
-	surname += this->get_name();
+	return this->get_name();
+}
+
+const std::string &dynasty::get_prefix(const metternich::culture *culture) const
+{
+	auto culture_find_it = this->cultural_prefixes.find(culture);
+	const cultural_group *cultural_group = culture->get_group();
+	while (culture_find_it == this->cultural_prefixes.end() && cultural_group != nullptr) {
+		culture_find_it = this->cultural_prefixes.find(cultural_group);
+		cultural_group = cultural_group->get_group();
+	}
+	if (culture_find_it == this->cultural_prefixes.end()) {
+		culture_find_it = this->cultural_prefixes.find(nullptr);
+	}
+	if (culture_find_it != this->cultural_prefixes.end()) {
+		return culture_find_it->second;
+	}
+
+	return this->get_prefix();
+}
+
+std::string dynasty::get_surname(const metternich::culture *culture, const gender gender) const
+{
+	std::string surname;
+
+	const std::string &prefix = this->get_prefix(culture);
+	if (!prefix.empty()) {
+		surname = prefix;
+
+		if (!this->contracted_prefix) {
+			surname += " ";
+		}
+	}
+
+	surname += this->get_name(culture, gender);
 	return surname;
 }
 
