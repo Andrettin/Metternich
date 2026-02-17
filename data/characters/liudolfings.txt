@@ -175,6 +175,8 @@ heinrich_ii_of_the_holy_roman_empire = { #Source: Hereford B. George, "Genealogi
 	dynasty = liudolfing
 	character_class = paladin #emperor and saint
 	rank = chevalier
+	mythic_path = hierophant
+	mythic_rank = saint #saint
 	culture = german
 	religion = catholic
 	home_site = regensburg #Bavaria
@@ -184,5 +186,4 @@ heinrich_ii_of_the_holy_roman_empire = { #Source: Hereford B. George, "Genealogi
 	death_date = 1024
 	
 	#married to Cunigunda of Luxemburg
-	#saint
 }
