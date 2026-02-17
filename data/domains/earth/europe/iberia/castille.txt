@@ -23,4 +23,14 @@ castille = {
 		granada
 		navarre
 	}
+	
+	history = {
+		1126 = {
+			government_type = monarchy
+			
+			offices = {
+				ruler = alfonso_vii_of_castille #Alfonso VII became king of Castille in 1126; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 36.
+			}
+		}
+	}
 }

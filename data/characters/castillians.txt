@@ -1,15 +1,31 @@
-sancha_divrea = {
-	name = "Sancha"
-	dynasty = ivrea
+alfonso_vii_of_castille = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 36.
+	name = "Alfonso"
+	epithet = "VII"
+	dynasty = ivrea #correct?
+	character_class = warrior #king
+	rank = lord
+	culture = castillian
+	religion = catholic
+	gender = male
+	start_date = 1126 #became king
+	death_date = 1157
+	
+	#the source gives him as Alfonso VIII of Castille instead, since his father (king consort of Castille) is counted there for regnal numbering
+	#son of Urraca
+	#son of Raimond, son of William, count of Burgundy
+}
+
+sancha_divrea = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 36.
+	name = "Sancha" #the source gives "Sancia"
+	dynasty = ivrea #correct?
 	character_class = warrior #aristocrat
 	culture = castillian
 	religion = catholic
 	gender = female
+	father = alfonso_vii_of_castille
 	mother = richeza_piast
-	birth_date = 1155
-	death_date = 1208.11.9
 	
-	#daughter of Alfonso VII "the Emperor" ("el Emperador")
+	#married to Alfonso II of Aragon
 }
 
 fernando_divrea = {

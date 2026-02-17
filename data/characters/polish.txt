@@ -1,15 +1,13 @@
-richeza_piast = {
-	name = "Richeza"
-	dynasty = piast
+richeza_piast = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 36.
+	name = "Richeza" #the source gives "Richilda"
+	dynasty = piast #correct?
 	character_class = warrior #aristocrat
 	culture = polish
 	religion = catholic
 	gender = female
-	mother = agnes_von_babenberg
-	birth_date = 1130
-	death_date = 1185.1.13
+	mother = agnes_von_babenberg #correct?
 	
-	#daughter of Wladyslaw Piast
+	#daughter of Wladyslaw Piast; correct?
 }
 
 boleslaw_the_tall = {
