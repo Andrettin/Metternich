@@ -1,0 +1,49 @@
+louis_ix_of_france = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 22.
+	name = "Louis"
+	epithet = "IX"
+	dynasty = capet
+	character_class = paladin #saint
+	rank = chevalier #king
+	mythic_path = hierophant
+	mythic_rank = saint
+	culture = french
+	religion = catholic
+	home_site = paris
+	gender = male
+	birth_date = 1226 #became king
+	death_date = 1270
+}
+
+philippe_capet = {
+	name = "Philippe"
+	dynasty = capet
+	character_class = paladin
+	culture = french
+	religion = catholic
+	home_site = paris
+	gender = male
+	father = louis_ix_of_france
+	birth_date = 1245.1.31
+	death_date = 1285.10.5
+	traits = {
+		#envious
+		#humble
+	}
+}
+
+philip_the_fair = {
+	name = "Philip"
+	epithet = "the Fair"
+	dynasty = capet
+	character_class = paladin
+	culture = french
+	religion = catholic
+	home_site = paris
+	gender = male
+	father = philippe_capet
+	birth_date = 1268.6.8
+	death_date = 1314.11.29
+	traits = {
+		#temperate
+	}
+}

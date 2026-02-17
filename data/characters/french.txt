@@ -45,46 +45,6 @@ beatrix_of_burgundy = { #Source: Hereford B. George, "Genealogical Tables Illust
 	father = rainald_iii_of_burgundy
 }
 
-louis_ix_of_france = {
-	name = "Louis"
-	epithet = "IX"
-	dynasty = capet
-	character_class = paladin #saint
-	rank = chevalier #king
-	mythic_path = hierophant
-	mythic_rank = saint
-	culture = austrian
-	religion = catholic
-	home_site = vienna
-	gender = male
-	birth_date = 1214.4.25
-	death_date = 1270.8.25
-	traits = {
-		#brave
-		#chaste
-		#kind
-		#temperate
-		#honest
-	}
-}
-
-philippe_capet = {
-	name = "Philippe"
-	dynasty = capet
-	character_class = paladin
-	culture = french
-	religion = catholic
-	home_site = paris
-	gender = male
-	father = louis_ix_of_france
-	birth_date = 1245.1.31
-	death_date = 1285.10.5
-	traits = {
-		#envious
-		#humble
-	}
-}
-
 iolande_de_brienne = {
 	name = "Iolande"
 	dynasty = brienne
@@ -96,23 +56,6 @@ iolande_de_brienne = {
 	mother = maria_aleramicci #correct?
 	
 	#child of Jean de Brienne; correct?
-}
-
-philip_the_fair = {
-	name = "Philip"
-	epithet = "the Fair"
-	dynasty = capet
-	character_class = paladin
-	culture = french
-	religion = catholic
-	home_site = paris
-	gender = male
-	father = philippe_capet
-	birth_date = 1268.6.8
-	death_date = 1314.11.29
-	traits = {
-		#temperate
-	}
 }
 
 jacques_cartier = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 207.

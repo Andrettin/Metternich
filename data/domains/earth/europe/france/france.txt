@@ -38,12 +38,21 @@ france = {
 	}
 	
 	history = {
+		1226 = {
+			government_type = monarchy
+			tier = kingdom
+			
+			offices = {
+				ruler = louis_ix_of_france #Louis IX became king of France in 1226; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 22.
+			}
+		}
+		
 		1804.5.18 = {
 			government_type = monarchy
 			tier = empire
 			
 			offices = {
-				ruler = napoleon_i_of_france #Emperor Napoléon I became Emperor of the French on 1804.5.18; Source: "Almanach de Gotha pour l'année 1813", 1813, p. 3.
+				ruler = napoleon_i_of_france #Napoléon I became Emperor of the French on 1804.5.18; Source: "Almanach de Gotha pour l'année 1813", 1813, p. 3.
 			}
 		}
 		
