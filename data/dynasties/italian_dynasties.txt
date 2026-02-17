@@ -6,6 +6,7 @@ aleramicci = {
 ivrea = {
 	name = "Ivrea"
 	prefix = "d'"
+	contracted_prefix = true
 	culture = italian
 }
 
