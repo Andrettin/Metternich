@@ -1,3 +1,17 @@
+leopold_the_fair = { #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 410.
+	name = "Leopold"
+	epithet = "the Fair"
+	dynasty = babenberg
+	character_class = warrior #margrave
+	rank = lord
+	culture = austrian
+	religion = catholic
+	home_site = vienna
+	gender = male
+	start_date = 1075 #the previous margrave of Austria died on this date
+	death_date = 1096
+}
+
 leopold_iii_von_babenberg = { #Margrave Leopold III of Austria, of the House of Babenberg
 	name = "Leopold"
 	epithet = "III"
@@ -9,6 +23,8 @@ leopold_iii_von_babenberg = { #Margrave Leopold III of Austria, of the House of 
 	religion = catholic
 	home_site = vienna
 	gender = male
+	father = leopold_the_fair #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 410.
+	mother = itha_salierin #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 410.
 	start_date = 1095 #Leopold III became margrave of Austria in 1095/1096; Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
 	death_date = 1136 #Leopold III died in 1136; Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
 	traits = {

@@ -72,9 +72,15 @@ austria = {
 	}
 	
 	history = {
-		1095 = {
+		1075 = {
 			government_type = monarchy
 			
+			offices = {
+				ruler = leopold_the_fair #Leopold the Fair was margrave of Austria, and the previous margrave died in 1075; Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 410.
+			}
+		}
+		
+		1095 = {
 			offices = {
 				ruler = leopold_iii_von_babenberg #Leopold III became margrave of Austria in 1095/1096; Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
 			}
