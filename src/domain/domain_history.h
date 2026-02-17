@@ -82,6 +82,8 @@ public:
 		return this->historical_monarchs;
 	}
 
+	domain_map<QDate> get_inserted_domain_ruler_histories(const QDate &max_date) const;
+
 	const metternich::domain *get_owner() const
 	{
 		return this->owner;
@@ -148,6 +150,7 @@ private:
 	data_entry_map<office, const character *> office_holders;
 	std::map<QDate, const character *> historical_rulers;
 	std::map<QDate, const character *> historical_monarchs; //used for regnal numbers
+	domain_map<QDate> inserted_domain_ruler_histories;
 	const metternich::domain *owner = nullptr;
 	const metternich::subject_type *subject_type = nullptr;
 	centesimal_int literacy_rate;

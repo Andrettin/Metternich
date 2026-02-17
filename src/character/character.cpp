@@ -808,13 +808,15 @@ std::string character::get_full_name(const metternich::domain *regnal_domain, co
 
 		full_name += this->get_epithet();
 	} else if (regnal_number.has_value()) {
-		assert_throw(regnal_domain != nullptr);
-
 		if (!full_name.empty()) {
 			full_name += " ";
 		}
 
-		full_name += number::to_roman_numeral(regnal_number.value()) + " of " + (regnal_domain->has_definite_article() ? "the " : "") + regnal_domain->get_name();
+		full_name += number::to_roman_numeral(regnal_number.value());
+
+		if (regnal_domain != nullptr) {
+			full_name += std::string(" of ") + (regnal_domain->has_definite_article() ? "the " : "") + regnal_domain->get_name();
+		}
 	} else if (!this->get_surname().empty()) {
 		if (this->is_surname_first()) {
 			if (!full_name.empty()) {

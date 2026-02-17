@@ -170,7 +170,7 @@ public:
 	gsml_data to_gsml_data() const;
 
 	void apply_history(const QDate &start_date);
-	void apply_ruler_history();
+	void apply_ruler_history(const QDate &start_date);
 
 	void do_turn();
 	void collect_regency();

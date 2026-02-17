@@ -362,9 +362,9 @@ void domain_game_data::apply_history(const QDate &start_date)
 	}
 }
 
-void domain_game_data::apply_ruler_history()
+void domain_game_data::apply_ruler_history(const QDate &start_date)
 {
-	const domain_history *domain_history = this->domain->get_history();
+	domain_history *domain_history = this->domain->get_history();
 
 	this->historical_rulers = domain_history->get_historical_rulers();
 	this->historical_monarchs = domain_history->get_historical_monarchs();
@@ -373,6 +373,26 @@ void domain_game_data::apply_ruler_history()
 	}
 	for (const auto &[date, historical_monarch] : this->get_historical_monarchs()) {
 		historical_monarch->get_game_data()->add_reigned_domain(this->domain);
+	}
+
+	//add inserted domain ruler histories to the domain ruler history, but not to ruled domains of the characters
+	for (const auto &[other_domain, insertion_date] : domain_history->get_inserted_domain_ruler_histories(start_date)) {
+		const metternich::domain_history *other_domain_history = other_domain->get_history();
+		for (const auto &[date, historical_ruler] : other_domain_history->get_historical_rulers()) {
+			if (date > insertion_date) {
+				break;
+			}
+
+			this->historical_rulers[date] = historical_ruler;
+		}
+
+		for (const auto &[date, historical_monarch] : other_domain_history->get_historical_monarchs()) {
+			if (date > insertion_date) {
+				break;
+			}
+
+			this->historical_monarchs[date] = historical_monarch;
+		}
 	}
 }
 

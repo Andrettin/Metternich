@@ -44,6 +44,9 @@ void domain_history::process_gsml_property(const gsml_property &property, const 
 		if (this->get_government_type() != nullptr && this->get_government_type()->has_regnal_numbering()) {
 			this->historical_monarchs[date] = ruler;
 		}
+	} else if (key == "insert_domain_ruler_history") {
+		const metternich::domain *domain = domain::get(value);
+		this->inserted_domain_ruler_histories[domain] = date;
 	} else {
 		data_entry_history::process_gsml_property(property, date);
 	}
@@ -164,6 +167,21 @@ void domain_history::process_gsml_scope(const gsml_data &scope, const QDate &dat
 	} else {
 		data_entry_history::process_gsml_scope(scope, date);
 	}
+}
+
+domain_map<QDate> domain_history::get_inserted_domain_ruler_histories(const QDate &max_date) const
+{
+	domain_map<QDate> domain_ruler_histories;
+
+	for (const auto &[other_domain, insertion_date] : this->inserted_domain_ruler_histories) {
+		if (insertion_date <= max_date) {
+			domain_ruler_histories[other_domain] = insertion_date;
+
+			archimedes::map::merge(domain_ruler_histories, other_domain->get_history()->get_inserted_domain_ruler_histories(insertion_date));
+		}
+	}
+
+	return domain_ruler_histories;
 }
 
 diplomacy_state domain_history::get_diplomacy_state(const metternich::domain *other_domain) const
