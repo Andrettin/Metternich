@@ -12,7 +12,6 @@ namespace archimedes {
 
 namespace metternich {
 
-class domain;
 class item;
 
 class character_data_model : public QAbstractItemModel
@@ -25,8 +24,7 @@ public:
 	enum role
 	{
 		tooltip = Qt::UserRole,
-		item,
-		domain
+		item
 	};
 
 	struct character_data_row final
@@ -52,7 +50,6 @@ public:
 		std::vector<std::unique_ptr<character_data_row>> child_rows;
 		std::string tooltip;
 		metternich::item *item = nullptr;
-		const metternich::domain *domain = nullptr;
 	};
 
 	character_data_model();
@@ -69,7 +66,6 @@ public:
 
 		role_names.insert(static_cast<int>(role::tooltip), "tooltip");
 		role_names.insert(static_cast<int>(role::item), "item");
-		role_names.insert(static_cast<int>(role::domain), "domain");
 
 		return role_names;
 	}
@@ -103,7 +99,6 @@ public:
 	void create_item_rows();
 	void create_equipment_rows();
 	void create_inventory_rows();
-	void create_ruled_domain_rows();
 
 	std::optional<size_t> get_top_row_index(const character_data_row *row) const;
 	void clear_child_rows(character_data_row *row);

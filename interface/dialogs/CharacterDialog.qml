@@ -69,19 +69,6 @@ DialogBase {
 				}
 			}
 			
-			onDoubleClicked: {
-				if (model.domain) {
-					var ruled_domain = model.domain
-					character_dialog.close()
-					
-					politics_view_mode = PoliticsView.Mode.DomainHistory
-					menu_stack.push("../PoliticsView.qml", {
-						country: ruled_domain,
-						show_buttons: false
-					})
-				}
-			}
-			
 			onHoveredChanged: {
 				var text = ""
 				var middle_text = ""
@@ -96,8 +83,6 @@ DialogBase {
 							middle_text = "Click to equip"
 						}
 					}
-				} else if (model.domain) {
-					text = "Double-click to see domain history"
 				} else {
 					text = model.tooltip
 				}

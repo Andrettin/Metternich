@@ -14,7 +14,6 @@
 #include "character/trait.h"
 #include "character/trait_type.h"
 #include "culture/culture.h"
-#include "domain/domain.h"
 #include "game/game.h"
 #include "item/item.h"
 #include "item/item_slot.h"
@@ -77,8 +76,6 @@ QVariant character_data_model::data(const QModelIndex &index, const int role) co
 				return QString::fromStdString(row_data->tooltip);
 			case role::item:
 				return QVariant::fromValue(row_data->item);
-			case role::domain:
-				return QVariant::fromValue(row_data->domain);
 			default:
 				throw std::runtime_error(std::format("Invalid character data model role: {}.", role));
 		}
@@ -268,10 +265,6 @@ void character_data_model::reset_model()
 
 		if (!character_game_data->get_items().empty()) {
 			//this->create_item_rows();
-		}
-
-		if (!character_game_data->get_ruled_domains().empty()) {
-			this->create_ruled_domain_rows();
 		}
 	}
 
@@ -624,23 +617,6 @@ void character_data_model::create_inventory_rows()
 	} else {
 		this->on_child_rows_inserted(this->inventory_row);
 	}
-}
-
-void character_data_model::create_ruled_domain_rows()
-{
-	if (this->get_character()->get_game_data()->get_ruled_domains().empty()) {
-		return;
-	}
-
-	auto top_row = std::make_unique<character_data_row>("Ruled Domains");
-
-	for (const metternich::domain *domain : this->get_character()->get_game_data()->get_ruled_domains()) {
-		auto row = std::make_unique<character_data_row>(domain->get_name(), "", top_row.get());
-		row->domain = domain;
-		top_row->child_rows.push_back(std::move(row));
-	}
-
-	this->top_rows.push_back(std::move(top_row));
 }
 
 std::optional<size_t> character_data_model::get_top_row_index(const character_data_row *row) const
