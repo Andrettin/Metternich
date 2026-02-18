@@ -3633,6 +3633,35 @@ void domain_game_data::add_historical_ruler(const character *character)
 	}
 }
 
+QDate domain_game_data::get_historical_ruler_start_date(const character *character) const
+{
+	for (const auto &[date, historical_ruler] : this->historical_rulers) {
+		if (historical_ruler == character) {
+			return date;
+		}
+	}
+
+	assert_throw(false);
+	return QDate();
+}
+
+QDate domain_game_data::get_historical_ruler_end_date(const character *character) const
+{
+	QDate end_date;
+	for (auto it = this->historical_rulers.rbegin(); it != this->historical_rulers.rend(); ++it) {
+		const auto &[date, historical_ruler] = *it;
+
+		if (historical_ruler == character) {
+			return end_date;
+		}
+
+
+		end_date = date;
+	}
+
+	return QDate();
+}
+
 bool domain_game_data::create_civilian_unit(const civilian_unit_type *civilian_unit_type, const site *deployment_site, const phenotype *phenotype)
 {
 	if (this->is_under_anarchy()) {

@@ -372,9 +372,7 @@ void character_game_data::apply_species_and_class(const int level)
 	}
 
 	this->generate_attributes();
-
-	this->set_bloodline(this->character->get_bloodline());
-	this->set_bloodline_strength(this->character->get_bloodline_strength());
+	this->apply_bloodline();
 	this->change_reputation(character::base_reputation);
 
 	const metternich::character_class *character_class = this->get_character_class();
@@ -464,6 +462,67 @@ void character_game_data::generate_attributes()
 				this->change_attribute_value(attribute, base_result);
 			}
 		}
+	}
+}
+
+void character_game_data::apply_bloodline()
+{
+	assert_throw(this->get_bloodline() == nullptr);
+
+	if (this->character->get_bloodline() != nullptr) {
+		assert_throw(this->character->get_bloodline_strength() > 0);
+		this->set_bloodline(this->character->get_bloodline());
+		this->set_bloodline_strength(this->character->get_bloodline_strength());
+		return;
+	}
+
+	this->apply_bloodline_from_parents();
+}
+
+void character_game_data::apply_bloodline_from_parents()
+{
+	assert_throw(this->get_bloodline() == nullptr);
+
+	//if the character does not have a predefined bloodline and bloodline strength, see if it can inherit them from their parents
+	const std::vector<metternich::character *> biological_parents = this->character->get_biological_parents();
+
+	if (biological_parents.empty()) {
+		return;
+	}
+
+	std::vector<const metternich::bloodline *> potential_bloodlines;
+	int best_bloodline_strength = 0;
+	int bloodline_strength = 0;
+
+	for (const metternich::character *parent : biological_parents) {
+		if (parent->get_game_data()->get_bloodline() == nullptr) {
+			continue;
+		}
+
+		bloodline_strength += parent->get_game_data()->get_bloodline_strength();
+
+		if (parent->get_game_data()->get_bloodline_strength() < best_bloodline_strength) {
+			continue;
+		}
+
+		if (parent->get_game_data()->get_bloodline_strength() > best_bloodline_strength) {
+			potential_bloodlines.clear();
+			best_bloodline_strength = parent->get_game_data()->get_bloodline_strength();
+		}
+
+		potential_bloodlines.push_back(parent->get_game_data()->get_bloodline());
+	}
+
+	if (potential_bloodlines.empty()) {
+		return;
+	}
+
+	bloodline_strength /= 2;
+
+	if (bloodline_strength > 0) {
+		this->bloodline = vector::get_random(potential_bloodlines);
+		this->bloodline_strength = bloodline_strength;
+		log_trace(std::format("Set bloodline for character \"{}\": {} ({}).", this->character->get_identifier(), this->get_bloodline()->get_identifier(), bloodline_strength));
 	}
 }
 

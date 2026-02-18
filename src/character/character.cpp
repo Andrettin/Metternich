@@ -65,7 +65,6 @@ void character::initialize_all()
 
 	character::initialize_all_vital_dates();
 	character::initialize_all_home_sites();
-	character::initialize_all_bloodlines();
 }
 
 void character::initialize_all_vital_dates()
@@ -157,22 +156,6 @@ void character::initialize_all_home_sites()
 		std::erase_if(siteless_characters, [](const character *character) {
 			return character->get_home_site() != nullptr;
 		});
-	}
-}
-
-void character::initialize_all_bloodlines()
-{
-	std::vector<character *> bloodlineless_characters = character::get_all();
-	std::erase_if(bloodlineless_characters, [](const character *character) {
-		return character->get_bloodline() != nullptr;
-	});
-
-	for (character *character : bloodlineless_characters) {
-		if (character->get_bloodline() != nullptr) {
-			continue;
-		}
-
-		character->initialize_bloodline_from_parents();
 	}
 }
 
@@ -426,6 +409,8 @@ void character::initialize()
 	}
 
 	this->initialize_bloodline();
+
+	this->calculate_ancestry_depth();
 
 	character_base::initialize();
 }
@@ -715,61 +700,7 @@ void character::initialize_bloodline()
 
 			this->bloodline_strength = random::get()->roll_dice(defines::get()->get_bloodline_strength_for_category(this->bloodline_strength_category));
 		}
-
-		this->bloodline_initialized = true;
 	}
-}
-
-void character::initialize_bloodline_from_parents()
-{
-	assert_throw(this->get_bloodline() == nullptr);
-
-	const std::vector<character *> parents = this->get_biological_parents();
-
-	if (parents.empty()) {
-		return;
-	}
-
-	std::vector<const metternich::bloodline *> potential_bloodlines;
-	int best_bloodline_strength = 0;
-	int bloodline_strength = 0;
-
-	for (character *parent : parents) {
-		if (parent->get_bloodline() == nullptr && !parent->bloodline_initialized) {
-			parent->initialize_bloodline_from_parents();
-		}
-
-		if (parent->get_bloodline() == nullptr) {
-			continue;
-		}
-
-		bloodline_strength += parent->get_bloodline_strength();
-
-		if (parent->get_bloodline_strength() < best_bloodline_strength) {
-			continue;
-		}
-
-		if (parent->get_bloodline_strength() > best_bloodline_strength) {
-			potential_bloodlines.clear();
-			best_bloodline_strength = parent->get_bloodline_strength();
-		}
-
-		potential_bloodlines.push_back(parent->get_bloodline());
-	}
-
-	if (potential_bloodlines.empty()) {
-		return;
-	}
-
-	bloodline_strength /= 2;
-
-	if (bloodline_strength > 0) {
-		this->bloodline = vector::get_random(potential_bloodlines);
-		this->bloodline_strength = bloodline_strength;
-		log_trace(std::format("Set bloodline for character \"{}\": {} ({}).", this->get_identifier(), this->get_bloodline()->get_identifier(), bloodline_strength));
-	}
-
-	this->bloodline_initialized = true;
 }
 
 void character::set_name_front_compound_element(word *word)
@@ -1036,6 +967,28 @@ std::string_view character::get_leader_type_name() const
 	}
 
 	return get_military_unit_category_name(this->get_military_unit_category());
+}
+
+void character::calculate_ancestry_depth()
+{
+	if (this->get_ancestry_depth() > 0) {
+		return;
+	}
+
+	const std::vector<character *> parents = this->get_parents();
+	if (parents.empty()) {
+		return;
+	}
+
+	int depth = 0;
+
+	for (character *parent : parents) {
+		parent->calculate_ancestry_depth();
+
+		depth = std::max(depth, parent->get_ancestry_depth() + 1);
+	}
+
+	this->ancestry_depth = depth;
 }
 
 named_data_entry *character::get_tree_parent() const

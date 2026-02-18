@@ -1555,9 +1555,13 @@ int64_t game::apply_historical_population_group_to_site(const population_group_k
 
 void game::apply_character_history(const QDate &start_date)
 {
-	//sort characters by birth date
+	//sort characters by ancestry depth and birth date
 	std::vector<character *> characters_by_birth_date = character::get_all();
 	std::sort(characters_by_birth_date.begin(), characters_by_birth_date.end(), [](const character *lhs, const character *rhs) {
+		if (lhs->get_ancestry_depth() != rhs->get_ancestry_depth()) {
+			return lhs->get_ancestry_depth() < rhs->get_ancestry_depth();
+		}
+
 		if (lhs->get_game_data()->get_birth_date() != rhs->get_game_data()->get_birth_date()) {
 			return lhs->get_game_data()->get_birth_date() < rhs->get_game_data()->get_birth_date();
 		}

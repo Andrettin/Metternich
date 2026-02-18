@@ -926,6 +926,8 @@ public:
 	}
 
 	void add_historical_ruler(const character *character);
+	QDate get_historical_ruler_start_date(const character *character) const;
+	QDate get_historical_ruler_end_date(const character *character) const;
 
 	const std::map<QDate, const character *> &get_historical_monarchs() const
 	{

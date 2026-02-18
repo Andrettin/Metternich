@@ -109,7 +109,6 @@ public:
 	static void initialize_all();
 	static void initialize_all_vital_dates();
 	static void initialize_all_home_sites();
-	static void initialize_all_bloodlines();
 
 	static bool skill_compare(const character *lhs, const character *rhs);
 
@@ -149,7 +148,6 @@ public:
 	bool initialize_home_site_from_parents();
 
 	void initialize_bloodline();
-	void initialize_bloodline_from_parents();
 
 	void set_name_front_compound_element(word *word);
 	void set_name_rear_compound_element(word *word);
@@ -387,6 +385,13 @@ public:
 		return QString::fromStdString(std::string(this->get_leader_type_name()));
 	}
 
+	int get_ancestry_depth() const
+	{
+		return this->ancestry_depth;
+	}
+
+	void calculate_ancestry_depth();
+
 	bool is_temporary() const
 	{
 		return this->temporary;
@@ -430,7 +435,6 @@ private:
 	int bloodline_strength = 0;
 	metternich::bloodline_strength_category bloodline_strength_category {};
 	bool generated_bloodline = false;
-	bool bloodline_initialized = false;
 	metternich::portrait *portrait = nullptr;
 	const site *home_site = nullptr;
 	int skill = 0;
@@ -442,6 +446,7 @@ private:
 	std::unique_ptr<const and_condition<domain>> conditions;
 	qunique_ptr<character_history> history;
 	qunique_ptr<character_game_data> game_data;
+	int ancestry_depth = 0;
 	bool temporary = false;
 };
 

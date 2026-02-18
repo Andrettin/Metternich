@@ -98,6 +98,8 @@ public:
 
 	void apply_species_and_class(const int level);
 	void generate_attributes();
+	void apply_bloodline();
+	void apply_bloodline_from_parents();
 	void add_starting_items();
 	void add_starting_items(const std::vector<const item_type *> &starting_items, data_entry_set<item_slot> &filled_item_slots);
 	void apply_history(const QDate &start_date);
