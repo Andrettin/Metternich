@@ -477,6 +477,7 @@ void character_game_data::apply_bloodline()
 	}
 
 	this->apply_bloodline_from_parents();
+	this->apply_bloodline_inheritance();
 }
 
 void character_game_data::apply_bloodline_from_parents()
@@ -523,6 +524,62 @@ void character_game_data::apply_bloodline_from_parents()
 		this->bloodline = vector::get_random(potential_bloodlines);
 		this->bloodline_strength = bloodline_strength;
 		log_trace(std::format("Set bloodline for character \"{}\": {} ({}).", this->character->get_identifier(), this->get_bloodline()->get_identifier(), bloodline_strength));
+	}
+}
+
+void character_game_data::apply_bloodline_inheritance()
+{
+	//apply bloodline inheritance from parents (inheritance in the sense of inheriting a domain, not of genetic inheritance)
+
+	//see if we can inherit the bloodline in full from any parent
+	//for this we count regular parents, not necessarily biological ones, since that is more relevant for being a parent's heir
+	if (this->get_ruled_domains().empty()) {
+		//if the character has no ruled domains, they cannot have inherited a domain from a parent
+		return;
+	}
+
+	const std::vector<metternich::character *> parents = this->character->get_parents();
+
+	if (parents.empty()) {
+		return;
+	}
+
+	for (const metternich::character *parent : parents) {
+		if (!parent->get_game_data()->is_dead()) {
+			continue;
+		}
+
+		if (parent->get_game_data()->get_bloodline() == nullptr) {
+			continue;
+		}
+
+		if (parent->get_game_data()->get_bloodline_strength() < this->get_bloodline_strength()) {
+			continue;
+		}
+
+		if (parent->get_game_data()->get_ruled_domains().empty()) {
+			continue;
+		}
+
+		bool is_heir = false;
+		for (const metternich::domain *ruled_domain : this->get_ruled_domains()) {
+			if (!parent->get_game_data()->get_ruled_domains().contains(ruled_domain)) {
+				continue;
+			}
+
+			if (ruled_domain->get_game_data()->get_historical_ruler_start_date(this->character) == ruled_domain->get_game_data()->get_historical_ruler_end_date(parent)) {
+				is_heir = true;
+				break;
+			}
+		}
+
+		if (is_heir) {
+			if (this->get_bloodline() == nullptr) {
+				this->set_bloodline(parent->get_game_data()->get_bloodline());
+			}
+
+			this->set_bloodline_strength(parent->get_game_data()->get_bloodline_strength());
+		}
 	}
 }
 
