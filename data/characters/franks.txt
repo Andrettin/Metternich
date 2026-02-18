@@ -1,0 +1,30 @@
+charlemagne = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 12.
+	name = "Karl" #the source gives "Charles"
+	epithet = "the Great"
+	dynasty = karling
+	character_class = warrior #emperor/king
+	rank = lord
+	mythic_path = marshal
+	mythic_tier = 10
+	culture = frankish
+	religion = catholic
+	home_site = aachen
+	gender = male
+	start_date = 768 #became king
+	death_date = 814
+}
+
+ludwig_the_pious = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 12.
+	name = "Ludwig" #the source gives "Lewis"
+	epithet = "the Pious"
+	dynasty = karling
+	character_class = warrior #emperor
+	rank = lord
+	culture = frankish
+	religion = catholic
+	home_site = aachen
+	gender = male
+	father = charlemagne
+	start_date = 814 #became emperor
+	death_date = 840
+}

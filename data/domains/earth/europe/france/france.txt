@@ -41,6 +41,7 @@ france = {
 		1226 = {
 			government_type = monarchy
 			tier = kingdom
+			insert_domain_ruler_history = francia
 			
 			offices = {
 				ruler = louis_ix_of_france #Louis IX became king of France in 1226; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 22.

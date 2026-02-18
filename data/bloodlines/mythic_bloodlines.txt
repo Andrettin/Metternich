@@ -1,0 +1,12 @@
+charlemagne = {
+	name = "Charlemagne"
+	founder = charlemagne
+	cultures = {
+		austrian
+		dutch
+		french
+		german
+		occitan
+		walloon
+	}
+}

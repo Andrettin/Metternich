@@ -31,4 +31,25 @@ francia = {
 		rhineland
 		utrecht
 	}
+	
+	history = {
+		768 = {
+			government_type = monarchy
+			tier = kingdom
+			
+			offices = {
+				ruler = charlemagne #Charlemagne became king (presumably of Francia) in 768; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 12.
+			}
+		}
+		
+		800 = {
+			tier = empire #Charlemagne became emperor in 800; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 12.
+		}
+		
+		814 = {
+			offices = {
+				ruler = ludwig_the_pious #Lewis the Pious became emperor in 814; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 12.
+			}
+		}
+	}
 }

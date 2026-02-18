@@ -1,0 +1,4 @@
+karling = {
+	name = "Karling"
+	culture = frankish
+}
