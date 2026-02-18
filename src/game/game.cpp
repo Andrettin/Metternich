@@ -703,10 +703,7 @@ void game::apply_history(const QDate &start_date)
 			}
 		}
 
-		for (const character *character : character::get_all()) {
-			character_game_data *character_game_data = character->get_game_data();
-			character_game_data->apply_history(start_date);
-		}
+		this->apply_character_history(start_date);
 
 		for (const historical_civilian_unit *historical_civilian_unit : historical_civilian_unit::get_all()) {
 			try {
@@ -1554,6 +1551,25 @@ int64_t game::apply_historical_population_group_to_site(const population_group_k
 	site_game_data->create_population_unit(population_type, culture, religion, phenotype, remaining_population);
 
 	return remaining_population - population_for_unit;
+}
+
+void game::apply_character_history(const QDate &start_date)
+{
+	//sort characters by birth date
+	std::vector<character *> characters_by_birth_date = character::get_all();
+	std::sort(characters_by_birth_date.begin(), characters_by_birth_date.end(), [](const character *lhs, const character *rhs) {
+		if (lhs->get_game_data()->get_birth_date() != rhs->get_game_data()->get_birth_date()) {
+			return lhs->get_game_data()->get_birth_date() < rhs->get_game_data()->get_birth_date();
+		}
+
+		return lhs->get_identifier() < rhs->get_identifier();
+	});
+
+	//apply character history
+	for (const character *character : characters_by_birth_date) {
+		character_game_data *character_game_data = character->get_game_data();
+		character_game_data->apply_history(start_date);
+	}
 }
 
 QCoro::Task<void> game::on_setup_finished()
