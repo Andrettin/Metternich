@@ -1,3 +1,32 @@
+charles_martel = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 12.
+	name = "Karl" #the source gives "Charles"
+	epithet = "Martel"
+	dynasty = karling
+	character_class = warrior
+	culture = frankish
+	religion = catholic
+	home_site = paris
+	gender = male
+	death_date = 741
+}
+
+pepin_the_short = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 12.
+	name = "Pepin"
+	epithet = "the Short"
+	dynasty = karling
+	character_class = warrior #king
+	rank = lord
+	culture = frankish
+	religion = catholic
+	home_site = paris
+	gender = male
+	father = charles_martel
+	start_date = 752 #became king
+	death_date = 768
+	
+	#became king by deposing the last of the Merovigian kings
+}
+
 charlemagne = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 12.
 	name = "Karl" #the source gives "Charles"
 	epithet = "the Great"
@@ -10,6 +39,7 @@ charlemagne = { #Source: Hereford B. George, "Genealogical Tables Illustrative o
 	religion = catholic
 	home_site = aachen
 	gender = male
+	father = pepin_the_short
 	start_date = 768 #became king
 	death_date = 814
 }

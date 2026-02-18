@@ -33,12 +33,18 @@ francia = {
 	}
 	
 	history = {
-		768 = {
+		752 = {
 			government_type = monarchy
 			tier = kingdom
 			
 			offices = {
-				ruler = charlemagne #Charlemagne became king (presumably of Francia) in 768; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 12.
+				ruler = pepin_the_short #Pepin the Short became king in 752; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 12.
+			}
+		}
+		
+		768 = {
+			offices = {
+				ruler = charlemagne #Charlemagne became king in 768; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 12.
 			}
 		}
 		
