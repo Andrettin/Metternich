@@ -5,6 +5,7 @@
 #include "character/character.h"
 #include "character/character_class.h"
 #include "character/character_game_data.h"
+#include "character/character_history.h"
 #include "character/party.h"
 #include "culture/cultural_group.h"
 #include "culture/culture.h"
@@ -1573,6 +1574,9 @@ void game::apply_character_history(const QDate &start_date)
 	for (const character *character : characters_by_birth_date) {
 		character_game_data *character_game_data = character->get_game_data();
 		character_game_data->apply_history(start_date);
+		if (character_game_data->is_dead()) {
+			character->get_history()->calculate_heir();
+		}
 	}
 }
 

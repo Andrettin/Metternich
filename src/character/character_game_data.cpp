@@ -352,7 +352,7 @@ gsml_data character_game_data::to_gsml_data() const
 	return data;
 }
 
-void character_game_data::apply_species_and_class(const int level)
+void character_game_data::apply_species_and_class(const int level, const bool apply_history)
 {
 	const species *species = this->character->get_species();
 	if (species->get_modifier() != nullptr) {
@@ -372,7 +372,7 @@ void character_game_data::apply_species_and_class(const int level)
 	}
 
 	this->generate_attributes();
-	this->apply_bloodline();
+	this->apply_bloodline(apply_history);
 	this->change_reputation(character::base_reputation);
 
 	const metternich::character_class *character_class = this->get_character_class();
@@ -465,7 +465,7 @@ void character_game_data::generate_attributes()
 	}
 }
 
-void character_game_data::apply_bloodline()
+void character_game_data::apply_bloodline(const bool apply_history)
 {
 	assert_throw(this->get_bloodline() == nullptr);
 
@@ -477,7 +477,10 @@ void character_game_data::apply_bloodline()
 	}
 
 	this->apply_bloodline_from_parents();
-	this->apply_bloodline_inheritance();
+
+	if (apply_history) {
+		this->apply_bloodline_inheritance_investiture();
+	}
 }
 
 void character_game_data::apply_bloodline_from_parents()
@@ -527,59 +530,41 @@ void character_game_data::apply_bloodline_from_parents()
 	}
 }
 
-void character_game_data::apply_bloodline_inheritance()
+void character_game_data::apply_bloodline_inheritance_investiture()
 {
-	//apply bloodline inheritance from parents (inheritance in the sense of inheriting a domain, not of genetic inheritance)
+	//apply bloodline inheritance from predecessors (inheritance in the sense of inheriting a domain, not of genetic inheritance)
 
-	//see if we can inherit the bloodline in full from any parent
+	//see if we can inherit the bloodline in full from any parent or predecessor
 	//for this we count regular parents, not necessarily biological ones, since that is more relevant for being a parent's heir
 	if (this->get_ruled_domains().empty()) {
-		//if the character has no ruled domains, they cannot have inherited a domain from a parent
+		//if the character has no ruled domains, they cannot have inherited a domain from a predecessor
 		return;
 	}
 
-	const std::vector<metternich::character *> parents = this->character->get_parents();
+	const std::vector<const metternich::character *> predecessors = this->character->get_history()->get_predecessors();
 
-	if (parents.empty()) {
+	if (predecessors.empty()) {
 		return;
 	}
 
-	for (const metternich::character *parent : parents) {
-		if (!parent->get_game_data()->is_dead()) {
+	for (const metternich::character *predecessor : predecessors) {
+		if (!predecessor->get_game_data()->is_dead()) {
 			continue;
 		}
 
-		if (parent->get_game_data()->get_bloodline() == nullptr) {
+		if (predecessor->get_game_data()->get_bloodline() == nullptr) {
 			continue;
 		}
 
-		if (parent->get_game_data()->get_bloodline_strength() < this->get_bloodline_strength()) {
+		if (predecessor->get_game_data()->get_bloodline_strength() < this->get_bloodline_strength()) {
 			continue;
 		}
 
-		if (parent->get_game_data()->get_ruled_domains().empty()) {
-			continue;
+		if (this->get_bloodline() == nullptr) {
+			this->set_bloodline(predecessor->get_game_data()->get_bloodline());
 		}
 
-		bool is_heir = false;
-		for (const metternich::domain *ruled_domain : this->get_ruled_domains()) {
-			if (!parent->get_game_data()->get_ruled_domains().contains(ruled_domain)) {
-				continue;
-			}
-
-			if (ruled_domain->get_game_data()->get_historical_ruler_start_date(this->character) == ruled_domain->get_game_data()->get_historical_ruler_end_date(parent)) {
-				is_heir = true;
-				break;
-			}
-		}
-
-		if (is_heir) {
-			if (this->get_bloodline() == nullptr) {
-				this->set_bloodline(parent->get_game_data()->get_bloodline());
-			}
-
-			this->set_bloodline_strength(parent->get_game_data()->get_bloodline_strength());
-		}
+		this->set_bloodline_strength(predecessor->get_game_data()->get_bloodline_strength());
 	}
 }
 
@@ -641,7 +626,7 @@ void character_game_data::apply_history(const QDate &start_date)
 	this->character_class = this->character->get_character_class();
 	this->set_target_traits(character_history->get_traits());
 	const int level = std::max(character_history->get_level(), 1);
-	this->apply_species_and_class(level);
+	this->apply_species_and_class(level, true);
 
 	if (start_date < this->get_start_date()) {
 		return;

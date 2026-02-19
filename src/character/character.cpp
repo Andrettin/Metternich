@@ -231,7 +231,7 @@ character *character::generate(const metternich::species *species, const mettern
 	generated_character->reset_game_data();
 	generated_character->get_game_data()->set_character_class(character_class);
 	generated_character->get_game_data()->set_target_traits(traits);
-	generated_character->get_game_data()->apply_species_and_class(level);
+	generated_character->get_game_data()->apply_species_and_class(level, false);
 	generated_character->get_game_data()->on_setup_finished();
 
 	game::get()->add_generated_character(std::move(generated_character));

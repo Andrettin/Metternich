@@ -21,6 +21,7 @@ class character_history final : public data_entry_history
 	Q_PROPERTY(const metternich::domain* country MEMBER domain)
 	Q_PROPERTY(int level MEMBER level READ get_level)
 	Q_PROPERTY(const metternich::character* spouse READ get_spouse WRITE set_spouse)
+	Q_PROPERTY(const metternich::character* heir READ get_heir WRITE set_heir)
 	Q_PROPERTY(const metternich::province* deployment_province MEMBER deployment_province)
 
 public:
@@ -50,6 +51,29 @@ public:
 
 	void set_spouse(const metternich::character *spouse);
 
+	const metternich::character *get_heir() const
+	{
+		return this->heir;
+	}
+
+	void set_heir(const metternich::character *heir);
+	void calculate_heir();
+
+	const std::vector<const metternich::character *> &get_predecessors() const
+	{
+		return this->predecessors;
+	}
+
+	void add_predecessor(const metternich::character *predecessor)
+	{
+		this->predecessors.push_back(predecessor);
+	}
+
+	void remove_predecessor(const metternich::character *predecessor)
+	{
+		std::erase(this->predecessors, predecessor);
+	}
+
 	const province *get_deployment_province() const
 	{
 		return this->deployment_province;
@@ -61,6 +85,8 @@ private:
 	int level = 0;
 	std::vector<const trait *> traits;
 	const metternich::character *spouse = nullptr;
+	const metternich::character *heir = nullptr;
+	std::vector<const metternich::character *> predecessors;
 	const province *deployment_province = nullptr;
 };
 

@@ -96,11 +96,11 @@ public:
 
 	gsml_data to_gsml_data() const;
 
-	void apply_species_and_class(const int level);
+	void apply_species_and_class(const int level, const bool apply_history);
 	void generate_attributes();
-	void apply_bloodline();
+	void apply_bloodline(const bool apply_history);
 	void apply_bloodline_from_parents();
-	void apply_bloodline_inheritance();
+	void apply_bloodline_inheritance_investiture();
 	void add_starting_items();
 	void add_starting_items(const std::vector<const item_type *> &starting_items, data_entry_set<item_slot> &filled_item_slots);
 	void apply_history(const QDate &start_date);
