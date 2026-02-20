@@ -534,13 +534,7 @@ void character_game_data::apply_bloodline_inheritance_investiture()
 {
 	//apply bloodline inheritance from predecessors (inheritance in the sense of inheriting a domain, not of genetic inheritance)
 
-	//see if we can inherit the bloodline in full from any parent or predecessor
-	//for this we count regular parents, not necessarily biological ones, since that is more relevant for being a parent's heir
-	if (this->get_ruled_domains().empty()) {
-		//if the character has no ruled domains, they cannot have inherited a domain from a predecessor
-		return;
-	}
-
+	//see if we can inherit the bloodline in full from any predecessor
 	const std::vector<const metternich::character *> predecessors = this->character->get_history()->get_predecessors();
 
 	if (predecessors.empty()) {
