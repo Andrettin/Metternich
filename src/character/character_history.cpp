@@ -98,7 +98,7 @@ void character_history::calculate_heir()
 		}
 
 		if (successor != nullptr) {
-			if (successor->get_dynasty() == this->character->get_dynasty() || vector::contains(this->character->get_children(), successor)) {
+			if ((successor->get_dynasty() != nullptr && successor->get_dynasty() == this->character->get_dynasty()) || vector::contains(this->character->get_children(), successor)) {
 				potential_heirs.push_back(successor);
 			}
 		}
