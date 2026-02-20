@@ -1,7 +1,7 @@
 early_middle_ages = {
 	name = "Early Middle Ages"
 	start_date = 769
-	map_template = central_europe
+	map_template = europe
 	hidden = true
 }
 
@@ -9,6 +9,6 @@ charlemagne = {
 	name = "Charlemagne"
 	parent_scenario = early_middle_ages
 	start_date = 769
-	map_template = central_europe
+	map_template = europe
 	hidden = true
 }

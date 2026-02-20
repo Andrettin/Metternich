@@ -1,11 +1,169 @@
+webdig = { #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 593.
+	name = "Webdig" #the source also gives the alternative "Weagdeagus"
+	character_class = warrior
+	culture = anglo_saxon
+	religion = asatru
+	gender = male
+	father = odin
+	mother = frigg
+	
+	history = {
+		heir = sigar
+	}
+}
+
+sigar = { #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 593.
+	name = "Sigar" #the source gives "Sigarus"
+	character_class = warrior
+	culture = anglo_saxon
+	religion = asatru
+	gender = male
+	father = webdig
+	
+	history = {
+		heir = suebded
+	}
+}
+
+suebded = { #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 593.
+	name = "Suebded"
+	character_class = warrior
+	culture = anglo_saxon
+	religion = asatru
+	gender = male
+	father = sigar
+	
+	history = {
+		heir = siggoth
+	}
+}
+
+siggoth = { #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 593.
+	name = "Siggoth"
+	character_class = warrior
+	culture = anglo_saxon
+	religion = asatru
+	gender = male
+	father = suebded
+	
+	history = {
+		heir = seabald
+	}
+}
+
+seabald = { #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 593.
+	name = "Seabald" #the source gives "Seabaldus"
+	character_class = warrior
+	culture = anglo_saxon
+	religion = asatru
+	gender = male
+	father = siggoth
+	
+	history = {
+		heir = sefugel
+	}
+}
+
+sefugel = { #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 593.
+	name = "Sefugel" #the source gives "Sefugelus"
+	character_class = warrior
+	culture = anglo_saxon
+	religion = asatru
+	gender = male
+	father = seabald
+	
+	history = {
+		heir = suartha
+	}
+}
+
+suartha = { #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 593.
+	name = "Suartha"
+	character_class = warrior
+	culture = anglo_saxon
+	religion = asatru
+	gender = male
+	father = sefugel
+	
+	history = {
+		heir = somel
+	}
+}
+
+somel = { #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 593.
+	name = "Somel"
+	character_class = warrior
+	culture = anglo_saxon
+	religion = asatru
+	gender = male
+	father = suartha
+	
+	history = {
+		heir = westerwalchna
+	}
+}
+
+westerwalchna = { #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 593.
+	name = "Westerwalchna"
+	character_class = warrior
+	culture = anglo_saxon
+	religion = asatru
+	gender = male
+	father = somel
+	
+	history = {
+		heir = wilgisel
+	}
+}
+
+wilgisel = { #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 593.
+	name = "Wilgisel"
+	character_class = warrior
+	culture = anglo_saxon
+	religion = asatru
+	gender = male
+	father = westerwalchna
+	
+	history = {
+		heir = wuskfrea
+	}
+}
+
+wuskfrea = { #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 593.
+	name = "Wuskfrea" #the source also gives the alternative "Bascreas"
+	character_class = warrior
+	culture = anglo_saxon
+	religion = asatru
+	gender = male
+	father = wilgisel
+	
+	history = {
+		heir = iffi
+	}
+}
+
+iffi = { #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 593.
+	name = "Iffi" #the source also gives the alternative "Iffius"
+	character_class = warrior
+	culture = anglo_saxon
+	religion = asatru
+	gender = male
+	father = wuskfrea
+	
+	history = {
+		heir = aelle
+	}
+}
+
 aelle = { #Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 75.
-	name = "Aelle" "Ælle"
+	name = "Aelle" #"Ælle"
 	character_class = warrior #king
 	rank = lord
 	culture = anglo_saxon
 	religion = asatru
 	home_site = york #Deira
 	gender = male
+	father = iffi #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 593.
 	death_date = 588 #Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 75.
 	description = "Aelle is the first known king of Deira."
 	

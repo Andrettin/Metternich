@@ -157,7 +157,6 @@ odin = { #known as Allfather, the Terrible One, One-eyed, Father of Battle; Sour
 		culture = norse
 		religion = asatru
 		gender = male
-		birth_date = -3000
 	}
 }
 
