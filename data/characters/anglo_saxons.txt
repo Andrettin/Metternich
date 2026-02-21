@@ -155,6 +155,110 @@ iffi = { #Source: William Betham, "Genealogical Tables of the Sovereigns of the 
 	}
 }
 
+brando = { #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 593.
+	name = "Brando" #the source also gives the alternative "Brandus"
+	character_class = warrior
+	culture = anglo_saxon
+	religion = asatru
+	gender = male
+	father = balder
+	
+	history = {
+		heir = fredegar
+	}
+}
+
+fredegar = { #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 593.
+	name = "Fredegar"
+	character_class = warrior
+	culture = anglo_saxon
+	religion = asatru
+	gender = male
+	father = brando
+	
+	history = {
+		heir = frewin
+	}
+}
+
+frewin = { #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 593.
+	name = "Frewin" #the source also gives the alternative "Friairin"
+	character_class = warrior
+	culture = anglo_saxon
+	religion = asatru
+	gender = male
+	father = fredegar
+	
+	history = {
+		heir = wigga
+	}
+}
+
+wigga = { #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 593.
+	name = "Wigga"
+	character_class = warrior
+	culture = anglo_saxon
+	religion = asatru
+	gender = male
+	father = frewin
+	
+	history = {
+		heir = gerisius
+	}
+}
+
+gerisius = { #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 593.
+	name = "Gerisius"
+	character_class = warrior
+	culture = anglo_saxon
+	religion = asatru
+	gender = male
+	father = wigga
+	
+	history = {
+		heir = esla
+	}
+}
+
+esla = { #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 593.
+	name = "Esla"
+	character_class = warrior
+	culture = anglo_saxon
+	religion = asatru
+	gender = male
+	father = gerisius
+	
+	history = {
+		heir = esla_2
+	}
+}
+
+esla_2 = { #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 593.
+	name = "Esla"
+	character_class = warrior
+	culture = anglo_saxon
+	religion = asatru
+	gender = male
+	father = esla
+	
+	history = {
+		heir = elisius
+	}
+}
+
+elisius = { #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 593.
+	name = "Elisius"
+	character_class = warrior
+	culture = anglo_saxon
+	religion = asatru
+	gender = male
+	father = esla_2
+	
+	history = {
+		heir = cerdic_i_of_wessex
+	}
+}
+
 aelle = { #Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 75.
 	name = "Aelle" #"Ælle"
 	character_class = warrior #king
@@ -214,12 +318,22 @@ ceolwulf_of_northumbria = { #Source: Frank Stenton, "Anglo-Saxon England", 1971,
 	}
 }
 
+redburg = { #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 600.
+	name = "Redburg"
+	character_class = warrior
+	culture = anglo_saxon
+	religion = asatru
+	gender = female
+}
+
 oslac = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 1.
 	name = "Oslac"
 	character_class = warrior
 	culture = anglo_saxon
 	religion = catholic
 	gender = male
+	
+	#great butler of England; Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 600.
 }
 
 osburh = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 1.

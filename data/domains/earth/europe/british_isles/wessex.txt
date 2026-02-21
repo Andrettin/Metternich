@@ -15,4 +15,38 @@ wessex = {
 		devon
 		cornwall
 	}
+	
+	history = {
+		519 = {
+			government_type = monarchy
+			
+			offices = {
+				ruler = cerdic_i_of_wessex #Cerdic became king of Wessex in 519; Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 600.
+			}
+		}
+		
+		534 = {
+			offices = {
+				ruler = kenric_i_of_wessex #Kenric became king of Wessex in 534; Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 600.
+			}
+		}
+		
+		560 = {
+			offices = {
+				ruler = ceolin_i_of_wessex #Ceolin became king of Wessex in 560; Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 600.
+			}
+		}
+		
+		688 = {
+			offices = {
+				ruler = ina_i_of_wessex #Ina became king of Wessex in 688; Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 600.
+			}
+		}
+		
+		802 = {
+			offices = {
+				ruler = ecgberht_i_of_england #Ecgberht became king in 802; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 1.
+			}
+		}
+	}
 }

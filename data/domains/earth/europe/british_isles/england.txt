@@ -31,11 +31,11 @@ england = {
 	}
 	
 	history = {
-		802 = {
+		828 = {
 			government_type = monarchy
 			
 			offices = {
-				ruler = ecgberht_i_of_england #Ecgberht I became king of England in 839; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 1.
+				ruler = ecgberht_i_of_england #Egbert became king of England in 828; Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 601.
 			}
 		}
 		

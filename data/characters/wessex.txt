@@ -1,4 +1,4 @@
-cerdic_of_wessex = { #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Tables 593 and 600.
+cerdic_i_of_wessex = { #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Tables 593 and 600.
 	name = "Cerdic" #the source also gives the alternative "Cherdic"
 	dynasty = wessex
 	character_class = warrior #king
@@ -7,8 +7,159 @@ cerdic_of_wessex = { #Source: William Betham, "Genealogical Tables of the Sovere
 	religion = asatru
 	home_site = winchester
 	gender = male
+	father = elisius
 	start_date = 519 #became king
 	death_date = 534
+}
+
+kenric_i_of_wessex = { #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 600.
+	name = "Kenric" #the source also gives the alternative "Chenric"
+	dynasty = wessex
+	character_class = warrior #king
+	rank = lord
+	culture = anglo_saxon
+	religion = asatru
+	home_site = winchester
+	gender = male
+	father = cerdic_i_of_wessex
+	start_date = 534 #became king
+	death_date = 560
+}
+
+ceolin_i_of_wessex = { #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 600.
+	name = "Ceolin"
+	dynasty = wessex
+	character_class = warrior #king
+	rank = lord
+	culture = anglo_saxon
+	religion = asatru
+	home_site = winchester
+	gender = male
+	father = kenric_i_of_wessex
+	start_date = 560 #became king
+	death_date = 592
+	
+	#king of Wessex and Sussex
+}
+
+cutha_of_wessex = { #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 600.
+	name = "Cutha"
+	dynasty = wessex
+	character_class = warrior
+	culture = anglo_saxon
+	religion = asatru
+	home_site = winchester
+	gender = male
+	father = ceolin_i_of_wessex
+	death_date = 585
+	
+	history = {
+		heir = ceolwald_of_wessex
+	}
+}
+
+ceolwald_of_wessex = { #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 600.
+	name = "Ceolwald"
+	dynasty = wessex
+	character_class = warrior
+	culture = anglo_saxon
+	religion = asatru
+	home_site = winchester
+	gender = male
+	father = cutha_of_wessex
+	
+	history = {
+		heir = kenred_of_wessex
+	}
+}
+
+kenred_of_wessex = { #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 600.
+	name = "Kenred"
+	dynasty = wessex
+	character_class = warrior
+	culture = anglo_saxon
+	religion = asatru
+	home_site = winchester
+	gender = male
+	father = ceolwald_of_wessex
+	
+	history = {
+		heir = ina_i_of_wessex
+	}
+}
+
+ina_i_of_wessex = { #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 600.
+	name = "Ina" #the source also gives the alternative "Hun"
+	dynasty = wessex
+	character_class = warrior #king
+	rank = lord
+	culture = anglo_saxon
+	religion = asatru
+	home_site = winchester
+	gender = male
+	father = kenred_of_wessex
+	start_date = 688 #became king
+	death_date = 727
+}
+
+ingils_of_wessex = { #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 600.
+	name = "Ingils" #the source also gives the alternative "Ingisil"
+	dynasty = wessex
+	character_class = warrior
+	culture = anglo_saxon
+	religion = asatru
+	home_site = winchester
+	gender = male
+	father = kenred_of_wessex
+	
+	history = {
+		heir = eoppa_of_wessex
+	}
+}
+
+eoppa_of_wessex = { #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 600.
+	name = "Eoppa"
+	dynasty = wessex
+	character_class = warrior
+	culture = anglo_saxon
+	religion = asatru
+	home_site = winchester
+	gender = male
+	father = ingils_of_wessex
+	
+	history = {
+		heir = easa_of_wessex
+	}
+}
+
+easa_of_wessex = { #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 600.
+	name = "Easa" #the source also gives the alternative "Esa"
+	dynasty = wessex
+	character_class = warrior
+	culture = anglo_saxon
+	religion = asatru
+	home_site = winchester
+	gender = male
+	father = eoppa_of_wessex
+	
+	history = {
+		heir = alcmund_of_wessex
+	}
+}
+
+alcmund_of_wessex = { #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 600.
+	name = "Alcmund"
+	dynasty = wessex
+	character_class = warrior
+	culture = anglo_saxon
+	religion = asatru
+	home_site = winchester
+	gender = male
+	father = easa_of_wessex
+	
+	history = {
+		heir = ecgberht_i_of_england
+	}
 }
 
 ecgberht_i_of_england = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 1.
@@ -20,6 +171,7 @@ ecgberht_i_of_england = { #Source: Hereford B. George, "Genealogical Tables Illu
 	religion = catholic
 	home_site = winchester
 	gender = male
+	father = alcmund_of_wessex #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 600.
 	start_date = 802 #became king
 	death_date = 839
 }
@@ -33,6 +185,8 @@ aethelwulf_i_of_england = { #Source: Hereford B. George, "Genealogical Tables Il
 	religion = catholic
 	home_site = winchester
 	gender = male
+	father = ecgberht_i_of_england
+	mother = redburg #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 600.
 	start_date = 839 #became king
 	death_date = 857
 }
