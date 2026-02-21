@@ -127,6 +127,29 @@ aelfred_i_of_england = { #Source: Hereford B. George, "Genealogical Tables Illus
 	death_date = 901
 }
 
+aethelm_of_wessex = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 1.
+	name = "Aethelm" #"Æthelm"
+	dynasty = wessex
+	character_class = warrior
+	culture = anglo_saxon
+	religion = catholic
+	home_site = winchester
+	gender = male
+	father = aethelred_i_of_england #according to the source, it is uncertain if his father is Æthelberht I or Æthelred I
+}
+
+aethelwold_of_wessex = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 1.
+	name = "Aethelwold" #"Æthelwold"
+	dynasty = wessex
+	character_class = warrior
+	culture = anglo_saxon
+	religion = catholic
+	home_site = winchester
+	gender = male
+	father = aethelred_i_of_england #according to the source, it is uncertain if his father is Æthelberht I or Æthelred I
+	death_date = 905
+}
+
 eadward_i_of_england = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 1.
 	name = "Eadward"
 	epithet = "the Elder" #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
