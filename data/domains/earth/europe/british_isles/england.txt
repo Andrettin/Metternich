@@ -31,9 +31,39 @@ england = {
 	}
 	
 	history = {
-		901 = {
+		839 = {
 			government_type = monarchy
 			
+			offices = {
+				ruler = aethelwulf_i_of_england #Æthelwulf I became king of England in 839; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 1.
+			}
+		}
+		
+		857 = {
+			offices = {
+				ruler = aethelbald_i_of_england #Æthelbald I became king of England in 857; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 1.
+			}
+		}
+		
+		860 = {
+			offices = {
+				ruler = aethelberht_i_of_england #Æthelberht I became king of England in 860; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 1.
+			}
+		}
+		
+		866 = {
+			offices = {
+				ruler = aethelred_i_of_england #Æthelred I became king of England in 866; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 1.
+			}
+		}
+		
+		871 = {
+			offices = {
+				ruler = aelfred_i_of_england #Ælfred I became king of England in 871; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 1.
+			}
+		}
+		
+		901 = {
 			offices = {
 				ruler = eadward_i_of_england #Eadward I became king of England in 901; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 1.
 			}

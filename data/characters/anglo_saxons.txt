@@ -213,3 +213,20 @@ ceolwulf_of_northumbria = { #Source: Frank Stenton, "Anglo-Saxon England", 1971,
 		}
 	}
 }
+
+oslac = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 1.
+	name = "Oslac"
+	character_class = warrior
+	culture = anglo_saxon
+	religion = catholic
+	gender = male
+}
+
+osburh = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 1.
+	name = "Osburh"
+	character_class = warrior
+	culture = anglo_saxon
+	religion = catholic
+	gender = female
+	father = oslac
+}

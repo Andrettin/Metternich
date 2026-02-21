@@ -1,3 +1,119 @@
+cerdic_of_wessex = { #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Tables 593 and 600.
+	name = "Cerdic" #the source also gives the alternative "Cherdic"
+	dynasty = wessex
+	character_class = warrior #king
+	rank = lord
+	culture = anglo_saxon
+	religion = asatru
+	home_site = winchester
+	gender = male
+	start_date = 519 #became king
+	death_date = 534
+}
+
+aethelwulf_i_of_england = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 1.
+	name = "Aethelwulf" #"Æthelwulf"
+	dynasty = wessex
+	character_class = warrior #king
+	rank = lord
+	culture = anglo_saxon
+	religion = catholic
+	home_site = winchester
+	gender = male
+	start_date = 839 #became king
+	death_date = 857
+}
+
+aethelstan_of_wessex = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 1.
+	name = "Aethelstan" #"Æthelstan"
+	dynasty = wessex
+	character_class = warrior #king
+	rank = lord
+	culture = anglo_saxon
+	religion = catholic
+	home_site = winchester
+	gender = male
+	father = aethelwulf_i_of_england
+	mother = osburh
+	death_date = 854
+	
+	#king of the Southeast of England
+}
+
+aethelbald_i_of_england = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 1.
+	name = "Aethelbald" #"Æthelbald"
+	dynasty = wessex
+	character_class = warrior #king
+	rank = lord
+	culture = anglo_saxon
+	religion = catholic
+	home_site = winchester
+	gender = male
+	father = aethelwulf_i_of_england
+	mother = osburh
+	start_date = 857 #became king
+	death_date = 860
+}
+
+aethelberht_i_of_england = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 1.
+	name = "Aethelberht" #"Æthelberht"
+	dynasty = wessex
+	character_class = warrior #king
+	rank = lord
+	culture = anglo_saxon
+	religion = catholic
+	home_site = winchester
+	gender = male
+	father = aethelwulf_i_of_england
+	mother = osburh
+	start_date = 860 #became king
+	death_date = 866
+}
+
+aethelred_i_of_england = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 1.
+	name = "Aethelred" #"Æthelred"
+	dynasty = wessex
+	character_class = warrior #king
+	rank = lord
+	culture = anglo_saxon
+	religion = catholic
+	home_site = winchester
+	gender = male
+	father = aethelwulf_i_of_england
+	mother = osburh
+	start_date = 866 #became king
+	death_date = 871
+}
+
+aethelswyth_of_wessex = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 1.
+	name = "Aethelswyth" #"Æthelswyth"
+	dynasty = wessex
+	character_class = warrior
+	culture = anglo_saxon
+	religion = catholic
+	home_site = winchester
+	gender = female
+	father = aethelwulf_i_of_england
+	mother = osburh
+	
+	#married to Burhred, king of Mercia
+}
+
+aelfred_i_of_england = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 1.
+	name = "Aelfred" #"Ælfred"
+	dynasty = wessex
+	character_class = warrior #king
+	rank = lord
+	culture = anglo_saxon
+	religion = catholic
+	home_site = winchester
+	gender = male
+	father = aethelwulf_i_of_england
+	mother = osburh
+	start_date = 871 #became king
+	death_date = 901
+}
+
 eadward_i_of_england = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 1.
 	name = "Eadward"
 	epithet = "the Elder" #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
@@ -6,8 +122,9 @@ eadward_i_of_england = { #Source: Hereford B. George, "Genealogical Tables Illus
 	rank = lord
 	culture = anglo_saxon
 	religion = catholic
-	home_site = london
+	home_site = winchester
 	gender = male
+	father = aelfred_i_of_england
 	start_date = 901 #became king
 	death_date = 924
 }
@@ -18,7 +135,7 @@ eadgyth_of_wessex = { #Source: Hereford B. George, "Genealogical Tables Illustra
 	character_class = warrior
 	culture = anglo_saxon
 	religion = catholic
-	home_site = london
+	home_site = winchester
 	gender = female
 	father = eadward_i_of_england
 	
