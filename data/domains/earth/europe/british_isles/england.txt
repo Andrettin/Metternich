@@ -31,9 +31,15 @@ england = {
 	}
 	
 	history = {
-		839 = {
+		802 = {
 			government_type = monarchy
 			
+			offices = {
+				ruler = ecgberht_i_of_england #Ecgberht I became king of England in 839; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 1.
+			}
+		}
+		
+		839 = {
 			offices = {
 				ruler = aethelwulf_i_of_england #Æthelwulf I became king of England in 839; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 1.
 			}

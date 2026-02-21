@@ -11,6 +11,19 @@ cerdic_of_wessex = { #Source: William Betham, "Genealogical Tables of the Sovere
 	death_date = 534
 }
 
+ecgberht_i_of_england = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 1.
+	name = "Ecgberht"
+	dynasty = wessex
+	character_class = warrior #king
+	rank = lord
+	culture = anglo_saxon
+	religion = catholic
+	home_site = winchester
+	gender = male
+	start_date = 802 #became king
+	death_date = 839
+}
+
 aethelwulf_i_of_england = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 1.
 	name = "Aethelwulf" #"Æthelwulf"
 	dynasty = wessex
