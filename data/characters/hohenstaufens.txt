@@ -181,6 +181,10 @@ philipp_i_of_the_holy_roman_empire = { #Source: Hereford B. George, "Genealogica
 	mother = beatrix_of_burgundy
 	start_date = 1198 #became emperor
 	death_date = 1208
+	
+	history = {
+		heir = friedrich_ii_of_the_holy_roman_empire
+	}
 }
 
 friedrich_ii_of_the_holy_roman_empire = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.

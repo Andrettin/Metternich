@@ -37,6 +37,10 @@ otto_salier = { #Source: Hereford B. George, "Genealogical Tables Illustrative o
 	gender = male
 	father = konrad_the_red
 	mother = liutgarde_liudolfingerin
+	
+	history = {
+		heir = heinrich_salier
+	}
 }
 
 heinrich_salier = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
@@ -48,6 +52,10 @@ heinrich_salier = { #Source: Hereford B. George, "Genealogical Tables Illustrati
 	home_site = frankfurt #Franconia
 	gender = male
 	father = otto_salier
+	
+	history = {
+		heir = konrad_the_salic
+	}
 }
 
 bruno_salier = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
@@ -215,5 +223,9 @@ agnes_of_waiblingen = { #Source: Christiane Maria Bauer et al., "Molecular genet
 	death_date = 1143 #Source: Christiane Maria Bauer et al., "Molecular genetic investigations on Austria's patron saint Leopold III", 2012, p. 313.
 	traits = {
 		#honest
+	}
+	
+	history = {
+		heir = konrad_iii_of_the_holy_roman_empire #her child with the highest-ranking title
 	}
 }

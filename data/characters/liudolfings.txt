@@ -41,6 +41,10 @@ liutgarde_liudolfingerin = { #Source: Hereford B. George, "Genealogical Tables I
 	gender = female
 	father = otto_the_great
 	mother = eadgyth_of_wessex
+	
+	history = {
+		heir = otto_salier
+	}
 }
 
 ludolf_liudolfinger = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
