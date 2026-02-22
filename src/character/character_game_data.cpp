@@ -373,7 +373,9 @@ void character_game_data::apply_species_and_class(const int level, const bool ap
 
 	this->generate_attributes();
 	this->apply_bloodline(apply_history);
-	this->change_reputation(character::base_reputation);
+	if (this->get_reputation() < character::base_reputation) {
+		this->set_reputation(character::base_reputation);
+	}
 
 	const metternich::character_class *character_class = this->get_character_class();
 	if (character_class != nullptr) {
@@ -503,15 +505,16 @@ void character_game_data::apply_bloodline_from_parents()
 			continue;
 		}
 
-		bloodline_strength += parent->get_game_data()->get_bloodline_strength();
+		const int parent_bloodline_strength = parent->get_game_data()->get_bloodline_strength();
+		bloodline_strength += parent_bloodline_strength;
 
-		if (parent->get_game_data()->get_bloodline_strength() < best_bloodline_strength) {
+		if (parent_bloodline_strength < best_bloodline_strength) {
 			continue;
 		}
 
-		if (parent->get_game_data()->get_bloodline_strength() > best_bloodline_strength) {
+		if (parent_bloodline_strength > best_bloodline_strength) {
 			potential_bloodlines.clear();
-			best_bloodline_strength = parent->get_game_data()->get_bloodline_strength();
+			best_bloodline_strength = parent_bloodline_strength;
 		}
 
 		potential_bloodlines.push_back(parent->get_game_data()->get_bloodline());
@@ -524,8 +527,8 @@ void character_game_data::apply_bloodline_from_parents()
 	bloodline_strength /= 2;
 
 	if (bloodline_strength > 0) {
-		this->bloodline = vector::get_random(potential_bloodlines);
-		this->bloodline_strength = bloodline_strength;
+		this->set_bloodline(vector::get_random(potential_bloodlines));
+		this->set_bloodline_strength(bloodline_strength);
 		log_trace(std::format("Set bloodline for character \"{}\": {} ({}).", this->character->get_identifier(), this->get_bloodline()->get_identifier(), bloodline_strength));
 	}
 }
