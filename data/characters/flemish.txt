@@ -26,13 +26,6 @@ andreas_vesalius = { #Source: Isaac Asimov, "Cronologia das Ciências e das Desc
 	birth_date = 1514
 	death_date = 1564
 	skill_multiplier = 0.83
-	conditions = {
-		or = {
-			culture = dutch
-			culture = flemish
-			culture = walloon
-		}
-	}
 	traits = {
 		#natural_scientist
 	}

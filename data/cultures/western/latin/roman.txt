@@ -12,6 +12,7 @@ roman = {
 		french
 		galician
 		italian
+		norman
 		portuguese
 		romanian
 		walloon

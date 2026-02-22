@@ -29,6 +29,7 @@ saint_louis = {
 		french
 		galician
 		italian
+		norman
 		occitan
 		portuguese
 		walloon

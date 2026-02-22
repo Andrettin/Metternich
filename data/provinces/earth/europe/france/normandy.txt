@@ -23,7 +23,7 @@ normandy = {
 		
 		1328 = {
 			owner = france #part of France in 1328; Source: William R. Shepherd, "Historical Atlas", 1911, p. 76.
-			culture = french
+			culture = norman
 		}
 		
 		1360 = {

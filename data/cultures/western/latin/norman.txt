@@ -1,0 +1,14 @@
+norman = {
+	name = "Norman"
+	group = french
+	color = { 204 178 25 }
+	species = {
+		human
+	}
+	derivation_conditions = {
+		technology = middle_ages
+		province = {
+			core = normandy
+		}
+	}
+}
