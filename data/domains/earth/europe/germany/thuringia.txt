@@ -14,4 +14,20 @@ thuringia = {
 	core_provinces = {
 		thuringia
 	}
+	
+	history = {
+		1190 = {
+			government_type = monarchy
+			
+			offices = {
+				ruler = hermann_i_of_thuringia #Hermann I became landgrave of Thuringia in 1190; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+			}
+		}
+		
+		1215 = {
+			offices = {
+				ruler = ludwig_iv_of_thuringia #Lewis IV became landgrave of Thuringia in 1215; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+			}
+		}
+	}
 }
