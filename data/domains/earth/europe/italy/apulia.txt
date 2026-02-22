@@ -1,0 +1,37 @@
+apulia = {
+	name = "Apulia"
+	type = polity
+	color = { 167 172 63 }
+	culture = italian
+	default_religion = catholic
+	default_tier = duchy
+	default_government_type = monarchy
+	default_capital = taranto #should be Bari?
+	eras = {
+		medieval_era
+	}
+	core_provinces = {
+		taranto
+	}
+	
+	history = {
+		1085 = {
+			government_type = monarchy
+			
+			offices = {
+				ruler = roger_i_of_apulia #Roger became duke of Apulia in 1085; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+			}
+		}
+		
+		1111 = {
+			offices = {
+				ruler = guillaume_i_of_apulia #William became duke of Apulia in 1111; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+			}
+		}
+		
+		1127 = {
+			owner = sicily
+			titular_ruler = roger_ii_of_sicily #Roger II of Sicily became duke of Apulia in 1127; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+		}
+	}
+}

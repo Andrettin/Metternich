@@ -197,7 +197,7 @@ friedrich_ii_of_the_holy_roman_empire = { #Source: Hereford B. George, "Genealog
 	home_site = hohenstaufen
 	gender = male
 	father = heinrich_vi_of_the_holy_roman_empire
-	mother = costanza_of_sicily
+	mother = constance_i_of_sicily
 	start_date = 1214 #became emperor
 	death_date = 1250
 }

@@ -1,0 +1,5 @@
+navarra = {
+	name = "Navarra"
+	prefix = "de"
+	culture = basque
+}

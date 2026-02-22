@@ -6,6 +6,7 @@ sicily = {
 	default_tier = kingdom
 	default_government_type = monarchy
 	default_capital = palermo
+	min_tier = county
 	eras = {
 		medieval_era
 		renaissance_era
@@ -16,9 +17,32 @@ sicily = {
 	}
 	
 	history = {
-		1254 = {
+		1101 = {
 			government_type = monarchy
+			tier = county
 			
+			offices = {
+				ruler = roger_ii_of_sicily #Roger II became count of Sicily in 1101; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+			}
+		}
+		
+		1130 = {
+			tier = kingdom #Roger II became king of Sicily in 1130; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+		}
+		
+		1154 = {
+			offices = {
+				ruler = guillaume_the_bad #Guillaume I, the Bad, became king of Sicily in 1154; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+			}
+		}
+		
+		1166 = {
+			offices = {
+				ruler = guillaume_the_good #Guillaume II, the Good, became king of Sicily in 1166; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+			}
+		}
+		
+		1254 = {
 			offices = {
 				ruler = manfred_i_of_sicily #Manfred became king of Naples and Sicily after Conrad IV (who died in 1254); Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
 			}

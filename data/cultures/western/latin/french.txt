@@ -9,6 +9,9 @@ french = {
 		technology = middle_ages
 		province = {
 			core = france
+			not = {
+				core = normandy
+			}
 		}
 	}
 	office_title_names = {

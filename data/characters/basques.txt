@@ -1,0 +1,24 @@
+garcia_iv_of_navarre = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Garcia"
+	epithet = "IV"
+	dynasty = navarra
+	character_class = warrior #king
+	rank = lord
+	culture = basque
+	religion = catholic
+	home_site = pamplona #Navarre
+	gender = male
+}
+
+margarita_de_navarra = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Margarita" #the source gives "Margaret"
+	dynasty = navarra
+	character_class = warrior
+	culture = basque
+	religion = catholic
+	home_site = pamplona #Navarre
+	gender = female
+	father = garcia_iv_of_navarre
+	
+	#married to William I, the Bad, of Sicily
+}

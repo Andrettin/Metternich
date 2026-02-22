@@ -1,3 +1,25 @@
+robert_i_of_flanders = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Robert"
+	dynasty = vlaanderen
+	character_class = warrior
+	rank = lord
+	culture = flemish
+	religion = catholic
+	home_site = bruges
+	gender = male
+}
+
+adela_van_vlaanderen = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Adela"
+	dynasty = vlaanderen
+	character_class = warrior
+	culture = flemish
+	religion = catholic
+	home_site = bruges
+	gender = female
+	father = robert_i_of_flanders
+}
+
 jan_stephan_van_calcar = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 211.
 	name = "Jan Stephan"
 	surname = "van Calcar"

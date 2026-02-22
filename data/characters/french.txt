@@ -1,5 +1,5 @@
 guillaume_of_poitiers = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
-	name = "Guillaume"
+	name = "Guillaume" #the source gives "William"
 	dynasty = poitiers
 	character_class = warrior #count
 	rank = lord

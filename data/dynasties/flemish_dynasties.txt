@@ -1,0 +1,5 @@
+vlaanderen = {
+	name = "Vlaanderen"
+	prefix = "van"
+	culture = flemish
+}

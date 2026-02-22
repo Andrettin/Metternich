@@ -1,0 +1,6 @@
+coutances = {
+	name = "Coutances"
+	world = earth
+	geocoordinate = { -1.4452777777778 49.045277777778 }
+	province = normandy
+}

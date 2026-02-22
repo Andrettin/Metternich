@@ -1,0 +1,193 @@
+tancrede_de_hauteville = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Tancrede" #"Tancrède"; the source gives "Tancred"
+	dynasty = hauteville
+	character_class = warrior
+	culture = norman
+	religion = catholic
+	home_site = coutances #Hauteville-la-Guichard; correct?
+	gender = male
+}
+
+guillaume_de_hauteville = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Guillaume" #the source gives "William"
+	dynasty = hauteville
+	character_class = warrior
+	culture = norman
+	religion = catholic
+	gender = male
+	father = tancrede_de_hauteville
+	death_date = 1046
+}
+
+drogo_de_hauteville = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Drogo"
+	dynasty = hauteville
+	character_class = warrior
+	culture = norman
+	religion = catholic
+	gender = male
+	father = tancrede_de_hauteville
+	death_date = 1051
+}
+
+onfroy_de_hauteville = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Onfroy" #the source gives "Humphrey"
+	dynasty = hauteville
+	character_class = warrior
+	culture = norman
+	religion = catholic
+	gender = male
+	father = tancrede_de_hauteville
+	death_date = 1057
+}
+
+robert_guiscard = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Robert"
+	epithet = "Guiscard"
+	dynasty = hauteville
+	character_class = warrior #duke
+	rank = lord
+	culture = norman
+	religion = catholic
+	home_site = bari #Apulia
+	gender = male
+	father = tancrede_de_hauteville
+	death_date = 1085
+	
+	#duke of Apulia
+}
+
+bohemond_i_of_antioch = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Bohemond"
+	dynasty = hauteville
+	character_class = warrior #prince
+	rank = lord
+	culture = norman
+	religion = catholic
+	home_site = antioch
+	gender = male
+	father = robert_guiscard
+	
+	#prince of Antioch
+}
+
+roger_i_of_apulia = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Roger"
+	dynasty = hauteville
+	character_class = warrior #duke
+	rank = lord
+	culture = norman
+	religion = catholic
+	home_site = bari #Apulia
+	gender = male
+	father = robert_guiscard
+	start_date = 1085 #became duke
+	death_date = 1111
+}
+
+guillaume_i_of_apulia = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Guillaume" #the source gives "William"
+	dynasty = hauteville
+	character_class = warrior #duke
+	rank = lord
+	culture = norman
+	religion = catholic
+	home_site = bari #Apulia
+	gender = male
+	father = roger_i_of_apulia
+	mother = adela_van_vlaanderen
+	start_date = 1111 #became duke
+	death_date = 1127
+}
+
+roger_i_of_sicily = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Roger"
+	dynasty = hauteville
+	character_class = warrior #count
+	rank = lord
+	culture = norman
+	religion = catholic
+	home_site = palermo #Sicily
+	gender = male
+	father = tancrede_de_hauteville
+	death_date = 1101
+	
+	#nicknamed "the Great Count"
+}
+
+roger_ii_of_sicily = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Roger"
+	epithet = "II"
+	dynasty = hauteville
+	character_class = warrior #king/duke/count
+	rank = lord
+	culture = norman
+	religion = catholic
+	home_site = palermo #Sicily
+	gender = male
+	father = roger_i_of_sicily
+	start_date = 1101 #became count
+	death_date = 1154
+}
+
+mathilde_de_hauteville = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Mathilde" #the source gives "Matilda"
+	dynasty = hauteville
+	character_class = warrior
+	culture = norman
+	religion = catholic
+	home_site = palermo #Sicily
+	gender = female
+	father = roger_i_of_sicily
+	
+	#married to Conrad, son of emperor Henry IV
+}
+
+guillaume_the_bad = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Guillaume" #the source gives "William"
+	epithet = "the Bad"
+	dynasty = hauteville
+	character_class = warrior #king
+	rank = lord
+	culture = norman
+	religion = catholic
+	home_site = palermo #Sicily
+	gender = male
+	father = roger_ii_of_sicily
+	start_date = 1154 #became king
+	death_date = 1166
+}
+
+guillaume_the_good = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Guillaume" #the source gives "William"
+	epithet = "the Good"
+	dynasty = hauteville
+	character_class = warrior #king
+	rank = lord
+	culture = norman
+	religion = catholic
+	home_site = palermo #Sicily
+	gender = male
+	father = guillaume_the_bad
+	mother = margarita_de_navarra
+	start_date = 1166 #became king
+	death_date = 1189
+	
+	#married to Joanna, daughter of Henry II of England
+}
+
+constance_i_of_sicily = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Constance"
+	dynasty = hauteville
+	character_class = warrior #queen
+	rank = lord
+	culture = norman
+	religion = catholic
+	home_site = palermo #Sicily
+	gender = female
+	father = roger_ii_of_sicily
+	death_date = 1198
+	
+	#queen of Sicily
+	#married to emperor Henry VI
+}
