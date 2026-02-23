@@ -28,5 +28,17 @@ meissen = {
 				ruler = albrecht_of_meissen #Albert became margrave of Meissen in 1288; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
 			}
 		}
+		
+		1314 = {
+			offices = {
+				ruler = friedrich_i_of_meissen #Frederick I became margrave of Meissen in 1314; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+			}
+		}
+		
+		1324 = {
+			offices = {
+				ruler = friedrich_ii_of_meissen #Frederick II became margrave of Meissen in 1324; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+			}
+		}
 	}
 }

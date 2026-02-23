@@ -53,18 +53,19 @@ dietrich_von_wettin = {
 	death_date = 1285.2.8
 }
 
-friedrich_von_wettin = {
-	name = "Friedrich"
+friedrich_i_of_meissen = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+	name = "Friedrich" #the source gives "Frederick"
 	dynasty = wettin
-	character_class = warrior
+	character_class = warrior #margrave
+	rank = lord
 	culture = german
 	religion = catholic
+	home_site = meissen
 	gender = male
 	father = albrecht_of_meissen
-	birth_date = 1257
-	death_date = 1323.11.16
-	
-	#son of Margaret von Hohenstaufen
+	mother = margarete_von_hohenstaufen
+	start_date = 1314 #became margrave
+	death_date = 1324
 }
 
 sophie_von_wettin = {
@@ -89,10 +90,9 @@ dietrich_von_wettin_1260 = {
 	religion = catholic
 	gender = male
 	father = albrecht_of_meissen
+	mother = margarete_von_hohenstaufen
 	birth_date = 1260
 	death_date = 1307.12.10
-	
-	#son of Margaret von Hohenstaufen
 }
 
 friedrich_tuta = {
@@ -110,16 +110,18 @@ friedrich_tuta = {
 	#son of Helene Askanien
 }
 
-friedrich_von_wettin_1310 = {
-	name = "Friedrich"
+friedrich_ii_of_meissen = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+	name = "Friedrich" #the source gives "Frederick"
 	dynasty = wettin
-	character_class = warrior
+	character_class = warrior #margrave
+	rank = lord
 	culture = german
 	religion = catholic
+	home_site = meissen
 	gender = male
-	father = friedrich_von_wettin
-	birth_date = 1310
-	death_date = 1360
+	father = friedrich_i_of_meissen
+	start_date = 1324 #became margrave
+	death_date = 1349
 	traits = {
 		#lustful
 		#humble
@@ -134,7 +136,7 @@ friedrich_the_lame = {
 	culture = german
 	religion = catholic
 	gender = male
-	father = friedrich_von_wettin
+	father = friedrich_i_of_meissen
 	birth_date = 1293.5.9
 	death_date = 1315.1.13
 	traits = {
@@ -151,7 +153,7 @@ elisabeth_von_wettin = {
 	culture = german
 	religion = catholic
 	gender = female
-	father = friedrich_von_wettin
+	father = friedrich_i_of_meissen
 	birth_date = 1306
 	death_date = 1367
 }
