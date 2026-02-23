@@ -10,18 +10,34 @@ dietrich_of_meissen = { #Source: Hereford B. George, "Genealogical Tables Illust
 	death_date = 1221
 }
 
-albrecht_von_wettin = {
-	name = "Albrecht"
+heinrich_of_meissen = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+	name = "Heinrich" #the source gives "Henry"
 	dynasty = wettin
-	character_class = warrior
+	character_class = warrior #margrave
+	rank = lord
 	culture = german
 	religion = catholic
+	home_site = meissen
 	gender = male
-	mother = konstanze_von_babenberg
-	birth_date = 1240
-	death_date = 1314.11.13
+	start_date = 1221 #became margrave
+	death_date = 1288
 	
-	#son of Heinrich von Wettin
+	#became landgrave of Thuringia in 1247
+}
+
+albrecht_of_meissen = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+	name = "Albrecht" #the source gives "Albert"
+	dynasty = wettin
+	character_class = warrior #margrave
+	rank = lord
+	culture = german
+	religion = catholic
+	home_site = meissen
+	gender = male
+	father = heinrich_of_meissen
+	mother = konstanze_von_babenberg
+	start_date = 1288 #became margrave
+	death_date = 1314
 }
 
 dietrich_von_wettin = {
@@ -31,11 +47,10 @@ dietrich_von_wettin = {
 	culture = german
 	religion = catholic
 	gender = male
+	father = heinrich_of_meissen
 	mother = konstanze_von_babenberg
 	birth_date = 1242
 	death_date = 1285.2.8
-	
-	#son of Heinrich von Wettin
 }
 
 friedrich_von_wettin = {
@@ -45,7 +60,7 @@ friedrich_von_wettin = {
 	culture = german
 	religion = catholic
 	gender = male
-	father = albrecht_von_wettin
+	father = albrecht_of_meissen
 	birth_date = 1257
 	death_date = 1323.11.16
 	
@@ -73,7 +88,7 @@ dietrich_von_wettin_1260 = {
 	culture = german
 	religion = catholic
 	gender = male
-	father = albrecht_von_wettin
+	father = albrecht_of_meissen
 	birth_date = 1260
 	death_date = 1307.12.10
 	
