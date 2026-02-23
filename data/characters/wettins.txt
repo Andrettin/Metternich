@@ -1,31 +1,13 @@
-hermann_i_of_thuringia = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
-	name = "Hermann"
+dietrich_of_meissen = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+	name = "Dietrich"
 	dynasty = wettin
-	character_class = warrior #landgrave
+	character_class = warrior #margrave
 	rank = lord
 	culture = german
 	religion = catholic
-	home_site = erfurt #Thuringia
+	home_site = meissen
 	gender = male
-	start_date = 1190 #became landgrave
-	death_date = 1215
-	
-	#landgrave of Thuringia and count palatine of Saxony
-}
-
-ludwig_iv_of_thuringia = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
-	name = "Ludwig" #the source gives "Lewis"
-	epithet = "IV"
-	dynasty = wettin
-	character_class = warrior #landgrave
-	rank = lord
-	culture = german
-	religion = catholic
-	home_site = erfurt #Thuringia
-	gender = male
-	father = hermann_i_of_thuringia
-	start_date = 1215 #became landgrave
-	death_date = 1227
+	death_date = 1221
 }
 
 albrecht_von_wettin = {

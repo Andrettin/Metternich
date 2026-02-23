@@ -72,6 +72,17 @@ liudolfing = {
 	}
 }
 
+ludovingian = {
+	name = "Ludovingian"
+	culture = german
+	cultural_group_names = {
+		german = {
+			male = "Ludowinger"
+			female = "Ludowingerin"
+		}
+	}
+}
+
 meinhardiner = {
 	name = "Meinhardiner"
 	culture = german

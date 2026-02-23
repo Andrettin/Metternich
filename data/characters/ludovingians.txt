@@ -1,0 +1,98 @@
+hermann_i_of_thuringia = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+	name = "Hermann"
+	dynasty = ludovingian #correct?
+	character_class = warrior #landgrave
+	rank = lord
+	culture = german
+	religion = catholic
+	home_site = erfurt #Thuringia
+	gender = male
+	start_date = 1190 #became landgrave
+	death_date = 1215
+	
+	#landgrave of Thuringia and count palatine of Saxony
+}
+
+jutta_ludowingerin = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+	name = "Jutta"
+	dynasty = ludovingian #correct?
+	character_class = warrior
+	culture = german
+	religion = catholic
+	home_site = erfurt #Thuringia
+	gender = female
+	father = hermann_i_of_thuringia
+}
+
+ludwig_iv_of_thuringia = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+	name = "Ludwig" #the source gives "Lewis"
+	epithet = "IV"
+	dynasty = ludovingian #correct?
+	character_class = warrior #landgrave
+	rank = lord
+	culture = german
+	religion = catholic
+	home_site = erfurt #Thuringia
+	gender = male
+	father = hermann_i_of_thuringia
+	start_date = 1215 #became landgrave
+	death_date = 1227
+}
+
+heinrich_raspe = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+	name = "Heinrich" #the source gives "Henry"
+	epithet = "Raspe"
+	dynasty = ludovingian #correct?
+	character_class = warrior
+	culture = german
+	religion = catholic
+	home_site = erfurt #Thuringia
+	gender = male
+	father = hermann_i_of_thuringia
+	death_date = 1247
+	
+	#had his first marriage with Gertrude, daughter of Leopold VI of Austria
+	#had his second marriage with Beatrix, daughter of Henry II of Brabant
+}
+
+konrad_ludowinger = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+	name = "Konrad" #the source gives "Conrad"
+	dynasty = ludovingian #correct?
+	character_class = paladin #grand master of the Teutonic Order
+	rank = paladin
+	culture = german
+	religion = catholic
+	home_site = erfurt #Thuringia
+	gender = male
+	father = hermann_i_of_thuringia
+	death_date = 1241
+}
+
+hermann_ii_of_thuringia = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+	name = "Hermann"
+	dynasty = ludovingian #correct?
+	character_class = warrior #landgrave
+	rank = lord
+	culture = german
+	religion = catholic
+	home_site = erfurt #Thuringia
+	gender = male
+	father = ludwig_iv_of_thuringia
+	mother = erzsebet_arpad
+	start_date = 1227 #became landgrave
+	death_date = 1241
+}
+
+sophia_ludowingerin = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+	name = "Sophia"
+	dynasty = ludovingian #correct?
+	character_class = warrior
+	culture = german
+	religion = catholic
+	home_site = erfurt #Thuringia
+	gender = female
+	father = ludwig_iv_of_thuringia
+	mother = erzsebet_arpad
+	
+	#married to Henry II, duke of Brabant
+}

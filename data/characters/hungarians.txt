@@ -48,6 +48,32 @@ laszlo_arpad = {
 	#son of Imre Árpád
 }
 
+andras_ii_of_hungary = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+	name = "Andras" #"András"; the source gives "Elizabeth"
+	epithet = "II"
+	dynasty = arpad #correct?
+	character_class = warrior
+	rank = lord
+	culture = magyar
+	religion = catholic
+	home_site = pest #Hungary
+	gender = male
+}
+
+erzsebet_arpad = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+	name = "Erzsebet" #"Erzsébet"; the source gives "Elizabeth"
+	dynasty = arpad #correct?
+	character_class = paladin #saint
+	rank = paladin #saint
+	mythic_path = hierophant
+	mythic_rank = saint
+	culture = magyar
+	religion = catholic
+	home_site = pest #Hungary
+	gender = female
+	father = andras_ii_of_hungary
+}
+
 tamas_bakocz = { #Source: "Encyclopædia Britannica", 1911, vol. 3, p. 230.
 	name = "Tamas" #"Tamás"
 	surname = "Bakocz" #"Bakócz"

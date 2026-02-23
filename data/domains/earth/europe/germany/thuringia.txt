@@ -29,5 +29,11 @@ thuringia = {
 				ruler = ludwig_iv_of_thuringia #Lewis IV became landgrave of Thuringia in 1215; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
 			}
 		}
+		
+		1227 = {
+			offices = {
+				ruler = hermann_ii_of_thuringia #Hermann II became landgrave of Thuringia in 1227; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+			}
+		}
 	}
 }
