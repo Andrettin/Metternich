@@ -963,6 +963,18 @@ anna_piast_1293 = {
 	#child of Anna Piast
 }
 
+beatrycza_piast = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 17.
+	name = "Beatrycza" #the source gives "Beatrix"
+	dynasty = piast #correct?
+	character_class = warrior
+	culture = polish
+	religion = catholic
+	home_site = glogau
+	gender = female
+	
+	#Beatrix of Glogau
+}
+
 cymburgis_of_masovia = { #Cymburgis of Masovia; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
 	name = "Cymburgis"
 	surname = "of Masovia"

@@ -71,16 +71,18 @@ rudolf_von_wittelsbach = {
 	#child of Mechthild von Habsburg
 }
 
-ludwig_von_wittelsbach_1282 = {
-	name = "Ludwig"
+ludwig_iii_of_bavaria = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 17.
+	name = "Ludwig" #the source gives "Lewis"
 	dynasty = wittelsbach
-	character_class = warrior
+	character_class = warrior #emperor/duke
+	rank = lord
 	culture = german
 	religion = catholic
+	home_site = regensburg #Bavaria
 	gender = male
-	father = ludwig_von_wittelsbach
-	birth_date = 1282.4.1
-	death_date = 1347.10.11
+	father = ludwig_von_wittelsbach #correct?
+	start_date = 1294 #became duke
+	death_date = 1347
 	traits = {
 		#temperate
 		#proud
@@ -88,7 +90,8 @@ ludwig_von_wittelsbach_1282 = {
 		#amateurish_plotter
 	}
 	
-	#child of Mechthild von Habsburg
+	#became emperor in 1314
+	#child of Mechthild von Habsburg; correct?
 }
 
 mechthild_von_wittelsbach = {
@@ -158,6 +161,20 @@ otto_von_wittelsbach_1261 = {
 	}
 	
 	#child of Erzsebet Árpád
+}
+
+mathilde_von_wittelsbach = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 17.
+	name = "Mathilde" #the source gives "Matilda"
+	dynasty = wittelsbach
+	character_class = warrior
+	culture = german
+	religion = catholic
+	home_site = regensburg #Bavaria
+	gender = female
+	father = ludwig_iii_of_bavaria
+	mother = beatrycza_piast
+	
+	#married to Frederick II of Thuringia
 }
 
 friedrich_von_wittelsbach = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 4.

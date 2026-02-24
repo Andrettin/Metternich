@@ -186,6 +186,12 @@ holy_roman_empire = {
 			}
 		}
 		
+		1314 = {
+			offices = {
+				ruler = ludwig_iii_of_bavaria #Lewis III of Bavaria became emperor of the Holy Roman Empire in 1314; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 17.
+			}
+		}
+		
 		1438 = {
 			offices = {
 				ruler = albrecht_v_of_austria #Albrecht V of Austria became the ruler of the Holy Roman Empire in 1438; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 41.

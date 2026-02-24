@@ -40,5 +40,11 @@ meissen = {
 				ruler = friedrich_ii_of_meissen #Frederick II became margrave of Meissen in 1324; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
 			}
 		}
+		
+		1349 = {
+			offices = {
+				ruler = friedrich_iii_of_meissen #Frederick III became margrave of Meissen in 1349; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+			}
+		}
 	}
 }

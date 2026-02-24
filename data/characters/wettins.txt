@@ -158,6 +158,21 @@ elisabeth_von_wettin = {
 	death_date = 1367
 }
 
+friedrich_iii_of_meissen = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+	name = "Friedrich" #the source gives "Frederick"
+	dynasty = wettin
+	character_class = warrior #margrave
+	rank = lord
+	culture = german
+	religion = catholic
+	home_site = meissen
+	gender = male
+	father = friedrich_ii_of_meissen
+	mother = mathilde_von_wittelsbach
+	start_date = 1349 #became margrave
+	death_date = 1381
+}
+
 friedrich_ii_of_saxony = {
 	name = "Friedrich"
 	epithet = "II"
