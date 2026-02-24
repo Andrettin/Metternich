@@ -348,8 +348,9 @@ marie_kunigunde_von_wettin = { #Source: "Gothaischer Hofkalender zum Nutzen und 
 	}
 }
 
-friedrich_august_von_wettin = { #Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 6-7.
+friedrich_august_iii_of_saxony = { #Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 6-7.
 	name = "Friedrich August"
+	epithet = "III" #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
 	dynasty = wettin
 	character_class = warrior
 	rank = lord #king
@@ -359,6 +360,7 @@ friedrich_august_von_wettin = { #Source: "Almanach de Gotha pour l'année 1847",
 	gender = male
 	father = friedrich_christian_von_wettin #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 4.
 	birth_date = 1750.12.23
+	#start_date = 1763 #became elector of Saxony; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
 	death_date = 1827.5.5
 	
 	#king of Saxony

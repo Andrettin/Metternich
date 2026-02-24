@@ -37,5 +37,11 @@ upper_saxony = {
 				ruler = none #August III became king of Poland
 			}
 		}
+		
+		1763 = {
+			offices = {
+				ruler = friedrich_august_iii_of_saxony #Frederick Augustus III became elector of Saxony in 1763; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+			}
+		}
 	}
 }
