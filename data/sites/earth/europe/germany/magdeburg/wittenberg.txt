@@ -2,8 +2,9 @@ wittenberg = {
 	name = "Wittenberg"
 	world = earth
 	geocoordinate = { 12.6484 51.8671 }
-	type = resource
-	resource = sheep
+	type = holding
+	holding_type = law
+	#resource = sheep
 	province = magdeburg
 	features = {
 		academic #historical university
@@ -15,7 +16,7 @@ wittenberg = {
 		}
 		
 		1502 = {
-			buildings += university #University founded in Wittenberg in 1502; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+			#buildings += university #University founded in Wittenberg in 1502; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
 		}
 	}
 }

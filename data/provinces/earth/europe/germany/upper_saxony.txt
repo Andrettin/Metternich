@@ -22,18 +22,18 @@ upper_saxony = {
 		}
 		
 		1477 = {
-			owner = saxe_wittenberg #part of the Wettin Lands c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+			owner = upper_saxony #part of the Wettin Lands c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
 			culture = german
 			religion = catholic
 		}
 		
 		1740 = {
-			owner = saxe_wittenberg #part of Saxony c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+			owner = upper_saxony #part of Saxony c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
 			religion = protestant
 		}
 		
 		1815 = {
-			owner = saxe_wittenberg #part of the Kingdom of Saxony in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+			owner = upper_saxony #part of the Kingdom of Saxony in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
 		}
 		
 		1871 = {

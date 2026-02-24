@@ -24,7 +24,7 @@ thuringia = {
 		}
 		
 		1477 = {
-			owner = saxe_wittenberg #part of the Wettin Lands c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+			owner = upper_saxony #part of the Wettin Lands c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
 		}
 		
 		1815 = {

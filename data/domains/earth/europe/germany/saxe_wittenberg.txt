@@ -1,42 +1,15 @@
 saxe_wittenberg = {
 	name = "Saxe-Wittenberg"
 	type = polity
-	color = { 155 147 180 }
-	flag = saxony_royal
 	culture = german
-	default_religion = protestant
+	default_religion = catholic
 	default_tier = duchy
 	default_government_type = monarchy
-	default_capital = dresden
-	max_tier = kingdom
+	default_capital = wittenberg
 	eras = {
 		medieval_era
-		renaissance_era
-		industrial_era
 	}
 	core_provinces = {
 		upper_saxony
-	}
-	
-	history = {
-		1428.1.4 = {
-			government_type = monarchy
-			
-			offices = {
-				ruler = friedrich_ii_of_saxony
-			}
-		}
-		
-		1733.2.1 = {
-			offices = {
-				ruler = august_iii_of_poland
-			}
-		}
-		
-		1733.10.5 = {
-			offices = {
-				ruler = none #August III became king of Poland
-			}
-		}
 	}
 }
