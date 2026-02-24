@@ -974,4 +974,3 @@ beatrycza_piast = { #Source: Hereford B. George, "Genealogical Tables Illustrati
 	
 	#Beatrix of Glogau
 }
-

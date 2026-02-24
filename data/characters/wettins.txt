@@ -173,6 +173,67 @@ friedrich_iii_of_meissen = { #Source: Hereford B. George, "Genealogical Tables I
 	death_date = 1381
 }
 
+elisabeth_von_wettin_2 = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+	name = "Elisabeth" #the source gives "Elizabeth"
+	dynasty = wettin
+	character_class = warrior
+	culture = german
+	religion = catholic
+	home_site = meissen
+	gender = female
+	father = friedrich_ii_of_meissen
+	mother = mathilde_von_wittelsbach
+	
+	#married to Frederick V of Nürnberg
+}
+
+balthasar_of_thuringia = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+	name = "Balthasar"
+	dynasty = wettin
+	character_class = warrior #landgrave
+	rank = lord
+	culture = german
+	religion = catholic
+	home_site = erfurt #Thuringia
+	gender = male
+	father = friedrich_ii_of_meissen
+	mother = mathilde_von_wittelsbach
+	death_date = 1406
+	
+	#landgrave of Thuringia
+}
+
+friedrich_of_thuringia = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+	name = "Friedrich" #the source gives "Frederick"
+	dynasty = wettin
+	character_class = warrior #landgrave
+	rank = lord
+	culture = german
+	religion = catholic
+	home_site = erfurt #Thuringia
+	gender = male
+	father = balthasar_of_thuringia
+	death_date = 1440
+	
+	#landgrave of Thuringia
+}
+
+wilhelm_i_of_meissen = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+	name = "Wilhelm" #the source gives "William"
+	dynasty = wettin
+	character_class = warrior #margrave
+	rank = lord
+	culture = german
+	religion = catholic
+	home_site = meissen
+	gender = male
+	father = friedrich_ii_of_meissen
+	mother = mathilde_von_wittelsbach
+	death_date = 1407
+	
+	#margrave of Meissen
+}
+
 friedrich_ii_of_saxony = {
 	name = "Friedrich"
 	epithet = "II"
