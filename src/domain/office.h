@@ -16,6 +16,7 @@ class office final : public named_data_entry, public data_type<office>
 	Q_OBJECT
 
 	Q_PROPERTY(bool ruler READ is_ruler CONSTANT)
+	Q_PROPERTY(bool heir READ is_heir CONSTANT)
 	Q_PROPERTY(bool minister MEMBER minister READ is_minister NOTIFY changed)
 	Q_PROPERTY(bool appointable READ is_appointable CONSTANT)
 	Q_PROPERTY(const metternich::character_attribute* attribute MEMBER attribute READ get_attribute NOTIFY changed)
@@ -32,6 +33,7 @@ public:
 	virtual void check() const override;
 
 	bool is_ruler() const;
+	bool is_heir() const;
 
 	bool is_minister() const
 	{
@@ -40,7 +42,7 @@ public:
 
 	bool is_appointable() const
 	{
-		return !this->is_ruler();
+		return !this->is_ruler() && !this->is_heir();
 	}
 
 	const character_attribute *get_attribute() const

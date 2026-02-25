@@ -8,6 +8,7 @@ Item {
 	readonly property var minister_offices: get_minister_offices(country_game_data.government.available_offices)
 	readonly property var offices: filter_offices(country_game_data.government.available_offices)
 	readonly property var characters: country_game_data.characters
+	readonly property var heir: country_game_data.government.heir
 	
 	PortraitGridItem {
 		id: ruler_portrait
@@ -32,9 +33,32 @@ Item {
 		}
 	}
 	
+	PortraitGridItem {
+		id: heir_portrait
+		anchors.top: ruler_portrait.visible ? ruler_portrait.bottom : parent.top
+		anchors.topMargin: minister_portrait_grid.spacing
+		anchors.horizontalCenter: parent.horizontalCenter
+		portrait_identifier: heir ? heir.game_data.portrait.identifier : ""
+		visible: heir !== null
+		
+		onClicked: {
+			character_dialog.office = null
+			character_dialog.character = heir
+			character_dialog.open()
+		}
+		
+		onEntered: {
+			status_text = heir.game_data.titled_name
+		}
+		
+		onExited: {
+			status_text = ""
+		}
+	}
+	
 	PortraitGrid {
 		id: minister_portrait_grid
-		anchors.top: ruler_portrait.visible ? ruler_portrait.bottom : parent.top
+		anchors.top: heir_portrait.visible ? heir_portrait.bottom : (ruler_portrait.visible ? ruler_portrait.bottom : parent.top)
 		anchors.topMargin: spacing
 		anchors.horizontalCenter: parent.horizontalCenter
 		entries: minister_offices
@@ -68,7 +92,7 @@ Item {
 	
 	PortraitGrid {
 		id: office_holder_portrait_grid
-		anchors.top: minister_portrait_grid.visible ? minister_portrait_grid.bottom : (ruler_portrait.visible ? ruler_portrait.bottom : parent.top)
+		anchors.top: minister_portrait_grid.visible ? minister_portrait_grid.bottom : (heir_portrait.visible ? heir_portrait.bottom : (ruler_portrait.visible ? ruler_portrait.bottom : parent.top))
 		anchors.topMargin: spacing
 		anchors.horizontalCenter: parent.horizontalCenter
 		entries: offices
@@ -102,7 +126,7 @@ Item {
 	
 	PortraitGrid {
 		id: character_portrait_grid
-		anchors.top: office_holder_portrait_grid.visible ? office_holder_portrait_grid.bottom : (minister_portrait_grid.visible ? minister_portrait_grid.bottom : (ruler_portrait.visible ? ruler_portrait.bottom : parent.top))
+		anchors.top: office_holder_portrait_grid.visible ? office_holder_portrait_grid.bottom : (minister_portrait_grid.visible ? minister_portrait_grid.bottom : (heir_portrait.visible ? heir_portrait.bottom : (ruler_portrait.visible ? ruler_portrait.bottom : parent.top)))
 		anchors.topMargin: spacing
 		anchors.horizontalCenter: parent.horizontalCenter
 		entries: filter_characters(characters)
@@ -149,7 +173,7 @@ Item {
 		var result = []
 		
 		for (var office of offices) {
-			if (office.ruler || office.minister) {
+			if (office.ruler || office.heir || office.minister) {
 				continue
 			}
 			

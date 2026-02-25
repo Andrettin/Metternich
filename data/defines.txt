@@ -105,6 +105,7 @@ domain_maintenance_cost_per_domain_size = {
 
 max_character_skill = 10 #used for calculating character skill based on skill multipliers; this is not a hard cap
 ruler_office = ruler
+heir_office = heir
 interior_minister_office = steward
 war_minister_office = marshal
 interior_minister_portrait = jp_morgan

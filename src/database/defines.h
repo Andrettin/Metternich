@@ -75,6 +75,7 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(const metternich::icon* treasure_fleet_icon MEMBER treasure_fleet_icon NOTIFY changed)
 	Q_PROPERTY(int max_character_skill MEMBER max_character_skill READ get_max_character_skill NOTIFY changed)
 	Q_PROPERTY(const metternich::office* ruler_office MEMBER ruler_office READ get_ruler_office NOTIFY changed)
+	Q_PROPERTY(const metternich::office* heir_office MEMBER heir_office READ get_heir_office NOTIFY changed)
 	Q_PROPERTY(const metternich::office* interior_minister_office MEMBER interior_minister_office READ get_interior_minister_office NOTIFY changed)
 	Q_PROPERTY(const metternich::office* war_minister_office MEMBER war_minister_office READ get_war_minister_office NOTIFY changed)
 	Q_PROPERTY(const metternich::portrait* interior_minister_portrait MEMBER interior_minister_portrait READ get_interior_minister_portrait NOTIFY changed)
@@ -284,6 +285,11 @@ public:
 		return this->ruler_office;
 	}
 
+	const office *get_heir_office() const
+	{
+		return this->heir_office;
+	}
+
 	const office *get_interior_minister_office() const
 	{
 		return this->interior_minister_office;
@@ -457,6 +463,7 @@ private:
 	const icon *treasure_fleet_icon = nullptr;
 	int max_character_skill = 0;
 	const office *ruler_office = nullptr;
+	const office *heir_office = nullptr;
 	const office *interior_minister_office = nullptr;
 	const office *war_minister_office = nullptr;
 	const portrait *interior_minister_portrait = nullptr;

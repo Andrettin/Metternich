@@ -183,6 +183,11 @@ const character *country_government::get_ruler() const
 	return this->get_office_holder(defines::get()->get_ruler_office());
 }
 
+const character *country_government::get_heir() const
+{
+	return this->get_office_holder(defines::get()->get_heir_office());
+}
+
 QVariantList country_government::get_office_holders_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_office_holders());
@@ -244,6 +249,10 @@ void country_government::set_office_holder(const office *office, const character
 			if (character != nullptr) {
 				emit character->get_game_data()->ruler_changed();
 			}
+		}
+
+		if (office->is_heir()) {
+			emit heir_changed();
 		}
 
 		if (this->domain == game::get()->get_player_country() && character != nullptr) {
@@ -453,8 +462,12 @@ bool country_government::can_have_office_holder(const office *office, const char
 		return false;
 	}
 
-	if (office->is_ruler()) {
+	if (office->is_ruler() || office->is_heir()) {
 		if (character->get_character_class() == nullptr || !vector::contains(this->get_game_data()->get_government_type()->get_ruler_character_classes(), character->get_character_class())) {
+			return false;
+		}
+
+		if (office->is_heir() && character_game_data->get_office() != nullptr && character_game_data->get_office()->is_ruler()) {
 			return false;
 		}
 	} else {

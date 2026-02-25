@@ -1,0 +1,4 @@
+heir = {
+	name = "Heir"
+	attribute = charisma
+}

@@ -21,6 +21,7 @@ class country_government final : public QObject
 
 	Q_PROPERTY(QVariantList laws READ get_laws_qvariant_list NOTIFY laws_changed)
 	Q_PROPERTY(const metternich::character* ruler READ get_ruler NOTIFY ruler_changed)
+	Q_PROPERTY(const metternich::character* heir READ get_heir NOTIFY heir_changed)
 	Q_PROPERTY(QVariantList office_holders READ get_office_holders_qvariant_list NOTIFY office_holders_changed)
 	Q_PROPERTY(QVariantList appointed_office_holders READ get_appointed_office_holders_qvariant_list NOTIFY appointed_office_holders_changed)
 	Q_PROPERTY(QVariantList available_offices READ get_available_offices_qvariant_list NOTIFY available_offices_changed)
@@ -70,6 +71,7 @@ public:
 	void check_laws();
 
 	const character *get_ruler() const;
+	const character *get_heir() const;
 
 	const data_entry_map<office, const character *> &get_office_holders() const
 	{
@@ -162,6 +164,7 @@ signals:
 	void office_title_names_changed();
 	void laws_changed();
 	void ruler_changed();
+	void heir_changed();
 	void office_holders_changed();
 	void appointed_office_holders_changed();
 	void available_offices_changed();

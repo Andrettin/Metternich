@@ -56,4 +56,9 @@ bool office::is_ruler() const
 	return defines::get()->get_ruler_office() == this;
 }
 
+bool office::is_heir() const
+{
+	return defines::get()->get_heir_office() == this;
+}
+
 }
