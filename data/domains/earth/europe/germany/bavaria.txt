@@ -47,6 +47,12 @@ bavaria = {
 			}
 		}
 		
+		1726 = {
+			offices = {
+				ruler = karl_vii_of_the_holy_roman_empire #Chales Albert became elector of Bavaria in 1726; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 17.
+			}
+		}
+		
 		1805.12.26 = {
 			tier = kingdom
 			offices = {

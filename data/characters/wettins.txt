@@ -278,14 +278,16 @@ august_iii_of_poland = {
 	}
 }
 
-friedrich_christian_von_wettin = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 4.
+friedrich_christian_of_saxony = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 4.
 	name = "Friedrich Christian"
 	dynasty = wettin
 	character_class = warrior
+	rank = lord
 	culture = german #Thuringian
 	religion = catholic
 	home_site = dresden
 	gender = male
+	start_date = 1763.10 #became elector of Saxony; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
 	death_date = 1763.12.17 #succeeded by his son on 1763.12.17
 	
 	#prince-elector of Saxony
@@ -358,7 +360,8 @@ friedrich_august_iii_of_saxony = { #Source: "Almanach de Gotha pour l'année 184
 	religion = catholic
 	home_site = dresden
 	gender = male
-	father = friedrich_christian_von_wettin #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 4.
+	father = friedrich_christian_of_saxony #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 4.
+	mother = maria_antonia_von_wittelsbach #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
 	birth_date = 1750.12.23
 	#start_date = 1763 #became elector of Saxony; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
 	death_date = 1827.5.5
@@ -381,7 +384,7 @@ anton_von_wettin = { #King Anton von Wettin of Saxony; Source: "Almanach de Goth
 	religion = catholic
 	home_site = dresden
 	gender = male
-	father = friedrich_christian_von_wettin #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, pp. 4-5.
+	father = friedrich_christian_of_saxony #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, pp. 4-5.
 	birth_date = 1755.12.27
 	death_date = 1836.6.6 #succeeded by his nephew on 1836.6.6
 	
@@ -400,7 +403,7 @@ maximilian_von_wettin = { #Duke Maximilian von Wettin; Source: "Almanach de Goth
 	religion = catholic
 	home_site = dresden
 	gender = male
-	father = friedrich_christian_von_wettin #Friedrich Christian von Wettin; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, pp. 4-5.
+	father = friedrich_christian_of_saxony #Friedrich Christian von Wettin; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, pp. 4-5.
 	birth_date = 1759.4.13
 	death_date = 1838.1.3
 	

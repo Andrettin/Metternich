@@ -239,6 +239,12 @@ holy_roman_empire = {
 			}
 		}
 		
+		1742 = {
+			offices = {
+				ruler = karl_vii_of_the_holy_roman_empire #Charles VII became emperor of the Holy Roman Empire in 1742; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 17.
+			}
+		}
+		
 		1790 = {
 			offices = {
 				ruler = leopold_ii_of_the_holy_roman_empire #Leopold II von Habsburg of the Holy Roman Empire became emperor in 1790; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 250.

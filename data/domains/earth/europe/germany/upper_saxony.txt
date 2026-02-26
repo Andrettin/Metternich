@@ -38,9 +38,15 @@ upper_saxony = {
 			}
 		}
 		
-		1763 = {
+		1763.10 = {
 			offices = {
-				ruler = friedrich_august_iii_of_saxony #Frederick Augustus III became elector of Saxony in 1763; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+				ruler = friedrich_christian_of_saxony #Frederick Christian became elector of Saxony in October 1763; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+			}
+		}
+		
+		1763.12 = {
+			offices = {
+				ruler = friedrich_august_iii_of_saxony #Frederick Augustus III became elector of Saxony in December 1763; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
 			}
 		}
 	}

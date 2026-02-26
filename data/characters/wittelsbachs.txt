@@ -177,6 +177,35 @@ mathilde_von_wittelsbach = { #Source: Hereford B. George, "Genealogical Tables I
 	#married to Frederick II of Thuringia
 }
 
+karl_vii_of_the_holy_roman_empire = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 17.
+	name = "Karl" #the source gives "Charles Albert", and as emperor "Charles VII"
+	epithet = "VII"
+	dynasty = wittelsbach
+	character_class = warrior #elector
+	rank = lord
+	culture = german
+	religion = catholic
+	gender = male
+	start_date = 1726 #became elector of Bavaria
+	death_date = 1745
+	
+	#elector of Bavaria
+	#became emperor in 1742
+}
+
+maria_antonia_von_wittelsbach = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 17.
+	name = "Maria Antonia"
+	dynasty = wittelsbach
+	character_class = warrior
+	culture = german
+	religion = catholic
+	gender = female
+	father = karl_vii_of_the_holy_roman_empire
+	
+	#daughter of Maria Amelia, daughter of emperor Joseph I
+	#married to Frederick Christian, elector of Saxony
+}
+
 friedrich_von_wittelsbach = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 4.
 	name = "Friedrich"
 	dynasty = wittelsbach
