@@ -234,9 +234,38 @@ wilhelm_i_of_meissen = { #Source: Hereford B. George, "Genealogical Tables Illus
 	#margrave of Meissen
 }
 
+friedrich_i_of_saxony = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+	name = "Friedrich" #the source gives "Frederick"
+	dynasty = wettin
+	character_class = warrior #prince-elector/margrave
+	rank = lord
+	culture = german
+	religion = catholic
+	home_site = meissen
+	gender = male
+	father = friedrich_iii_of_meissen
+	mother = katharina_of_coburg
+	start_date = 1381 #became margrave
+	death_date = 1428
+	
+	#margrave of Meissen and prince-elector of Saxony
+}
+
+wilhelm_ii_von_wettin = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+	name = "Wilhelm" #the source gives "William II"
+	dynasty = wettin
+	character_class = warrior
+	culture = german
+	religion = catholic
+	home_site = meissen
+	gender = male
+	father = friedrich_iii_of_meissen
+	mother = katharina_of_coburg
+	death_date = 1425
+}
+
 friedrich_ii_of_saxony = {
 	name = "Friedrich"
-	epithet = "II"
 	dynasty = wettin
 	character_class = warrior
 	culture = german #Thuringian

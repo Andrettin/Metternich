@@ -344,6 +344,18 @@ johanna_von_pfirt = { #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
 	gender = female
 }
 
+katharina_of_coburg = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+	name = "Katharina"
+	surname = "of Coburg"
+	character_class = warrior
+	culture = german
+	religion = catholic
+	home_site = coburg
+	gender = female
+	
+	#heiress of Coburg
+}
+
 nikolaus_von_kues = { #Source: "Encyclopædia Britannica", 1911, vol. 7, pp. 665-666.
 	name = "Nikolaus"
 	surname = "von Kues"

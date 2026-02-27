@@ -18,9 +18,15 @@ upper_saxony = {
 	}
 	
 	history = {
-		1428.1.4 = {
+		1423 = {
 			government_type = monarchy
 			
+			offices = {
+				ruler = friedrich_i_of_saxony #Frederick I became elector of Saxony in 1423; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+			}
+		}
+		
+		1428.1.4 = {
 			offices = {
 				ruler = friedrich_ii_of_saxony
 			}

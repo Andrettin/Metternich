@@ -46,5 +46,15 @@ meissen = {
 				ruler = friedrich_iii_of_meissen #Frederick III became margrave of Meissen in 1349; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
 			}
 		}
+		
+		1381 = {
+			offices = {
+				ruler = friedrich_i_of_saxony #Frederick I of Saxony became margrave of Meissen in 1381; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+			}
+		}
+		
+		1423 = {
+			owner = upper_saxony #Frederick I became elector of Saxony in 1423; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+		}
 	}
 }
