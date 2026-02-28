@@ -74,7 +74,9 @@ public:
 	const character *get_ruler() const;
 	const character *get_heir() const;
 	const character *calculate_heir() const;
-	const character *calculate_heir_for_character(const character *character, character_set &disqualified_characters) const;
+	const character *calculate_primogeniture_heir() const;
+	const character *calculate_primogeniture_heir_for_character(const character *character, character_set &disqualified_characters) const;
+	const character *calculate_elective_heir() const;
 
 	const data_entry_map<office, const character *> &get_office_holders() const
 	{
@@ -116,11 +118,11 @@ public:
 
 	Q_INVOKABLE void set_appointed_office_holder(const metternich::office *office, const metternich::character *character);
 
-	void check_office_holder(const office *office, const character *previous_holder);
+	void check_office_holder(const office *office);
 	void check_office_holders();
 	std::vector<const character *> get_appointable_office_holders(const office *office) const;
 	Q_INVOKABLE QVariantList get_appointable_office_holders_qvariant_list(const metternich::office *office) const;
-	const character *get_best_office_holder(const office *office, const character *previous_holder) const;
+	const character *get_best_office_holder(const office *office) const;
 	bool can_have_office_holder(const office *office, const character *character) const;
 	bool can_gain_office_holder(const office *office, const character *character) const;
 	Q_INVOKABLE bool can_appoint_office_holder(const metternich::office *office, const metternich::character *character) const;

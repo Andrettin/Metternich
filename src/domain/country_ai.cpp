@@ -160,7 +160,7 @@ void country_ai::appoint_office_holders()
 			continue;
 		}
 
-		const character *character = this->domain->get_government()->get_best_office_holder(office, nullptr);
+		const character *character = this->domain->get_government()->get_best_office_holder(office);
 		if (character != nullptr) {
 			this->domain->get_government()->set_appointed_office_holder(office, character);
 		}

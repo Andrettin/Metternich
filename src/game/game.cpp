@@ -461,7 +461,7 @@ QCoro::Task<void> game::start_coro()
 			country_government *country_government = domain->get_government();
 
 			for (const office *office : office::get_all()) {
-				country_government->check_office_holder(office, nullptr);
+				country_government->check_office_holder(office);
 			}
 
 			domain_game_data->check_ideas();
@@ -1595,7 +1595,7 @@ QCoro::Task<void> game::on_setup_finished()
 		country_government->check_laws();
 
 		for (const office *office : office::get_all()) {
-			country_government->check_office_holder(office, nullptr);
+			country_government->check_office_holder(office);
 		}
 
 		domain_game_data->check_ideas();

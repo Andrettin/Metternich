@@ -195,16 +195,29 @@ const character *country_government::calculate_heir() const
 		return nullptr;
 	}
 
-	character_set disqualified_characters;
-	return this->calculate_heir_for_character(ruler, disqualified_characters);
+	//FIXME: at present we only calculate heirs through cognatic primogeniture (and as a fallback, elective), more succession types should be added
+
+	const character *heir = this->calculate_primogeniture_heir();
+
+	if (heir == nullptr) {
+		heir = this->calculate_elective_heir();
+	}
+
+	return heir;
 }
 
-const character *country_government::calculate_heir_for_character(const character *character, character_set &disqualified_characters) const
+const character *country_government::calculate_primogeniture_heir() const
 {
+	character_set disqualified_characters;
+	return this->calculate_primogeniture_heir_for_character(this->get_ruler(), disqualified_characters);
+}
+
+const character *country_government::calculate_primogeniture_heir_for_character(const character *character, character_set &disqualified_characters) const
+{
+	assert_throw(character != nullptr);
+
 	//if we are calculating a heir for the character, the character itself can't be a part of succession
 	disqualified_characters.insert(character);
-
-	//FIXME: at present we only calculate heirs through cognatic primogeniture, more succession types should be added
 
 	//children are expected to be sorted in birth order
 	for (const metternich::character *child : character->get_game_data()->get_children()) {
@@ -216,7 +229,7 @@ const character *country_government::calculate_heir_for_character(const characte
 			return child;
 		}
 
-		const metternich::character *child_heir = this->calculate_heir_for_character(child, disqualified_characters);
+		const metternich::character *child_heir = this->calculate_primogeniture_heir_for_character(child, disqualified_characters);
 		if (child_heir != nullptr) {
 			return child_heir;
 		}
@@ -228,10 +241,43 @@ const character *country_government::calculate_heir_for_character(const characte
 			return parent;
 		}
 
-		const metternich::character *parent_heir = this->calculate_heir_for_character(parent, disqualified_characters);
+		const metternich::character *parent_heir = this->calculate_primogeniture_heir_for_character(parent, disqualified_characters);
 		if (parent_heir != nullptr) {
 			return parent_heir;
 		}
+	}
+
+	return nullptr;
+}
+
+const character *country_government::calculate_elective_heir() const
+{
+	const office *heir_office = defines::get()->get_heir_office();
+
+	std::vector<const character *> potential_heirs;
+	int best_succession_score = 0;
+
+	for (const character *character : this->get_appointable_office_holders(heir_office)) {
+		if (!this->can_appoint_office_holder(heir_office, character)) {
+			continue;
+		}
+
+		const character_game_data *character_game_data = character->get_game_data();
+
+		const int succession_score = (character_game_data->get_reputation() - character_game_data->get_bloodline_strength()) + character_game_data->get_bloodline_strength() + character_game_data->get_attribute_value(heir_office->get_attribute());
+
+		if (succession_score > best_succession_score) {
+			potential_heirs.clear();
+			best_succession_score = succession_score;
+		} else if (succession_score < best_succession_score) {
+			continue;
+		}
+
+		potential_heirs.push_back(character);
+	}
+
+	if (!potential_heirs.empty()) {
+		return potential_heirs.front();
 	}
 
 	return nullptr;
@@ -292,7 +338,7 @@ void country_government::set_office_holder(const office *office, const character
 
 	if (old_office != nullptr) {
 		assert_throw(old_domain != nullptr);
-		old_domain->get_government()->check_office_holder(old_office, character);
+		old_domain->get_government()->check_office_holder(old_office);
 	}
 
 	if (game::get()->is_running()) {
@@ -360,7 +406,7 @@ void country_government::set_appointed_office_holder(const office *office, const
 	}
 }
 
-void country_government::check_office_holder(const office *office, const character *previous_holder)
+void country_government::check_office_holder(const office *office)
 {
 	if (this->get_game_data()->is_under_anarchy()) {
 		this->set_office_holder(office, nullptr);
@@ -377,7 +423,7 @@ void country_government::check_office_holder(const office *office, const charact
 
 	//if the country has no holder for a non-appointable office, see if there is any character who can become the holder
 	if (this->get_office_holder(office) == nullptr && !office->is_appointable()) {
-		const character *character = this->get_best_office_holder(office, previous_holder);
+		const character *character = this->get_best_office_holder(office);
 		if (character != nullptr) {
 			this->set_office_holder(office, character);
 		} else {
@@ -393,7 +439,7 @@ void country_government::check_office_holders()
 {
 	const std::vector<const office *> available_offices = this->get_available_offices();
 	for (const office *office : available_offices) {
-		this->check_office_holder(office, nullptr);
+		this->check_office_holder(office);
 	}
 
 	const data_entry_map<office, const character *> office_holders = this->get_office_holders();
@@ -436,7 +482,7 @@ QVariantList country_government::get_appointable_office_holders_qvariant_list(co
 	return container::to_qvariant_list(this->get_appointable_office_holders(office));
 }
 
-const character *country_government::get_best_office_holder(const office *office, const character *previous_holder) const
+const character *country_government::get_best_office_holder(const office *office) const
 {
 	assert_throw(this->get_game_data()->get_government_type() != nullptr);
 	assert_throw(office != nullptr);
@@ -448,7 +494,6 @@ const character *country_government::get_best_office_holder(const office *office
 	std::vector<const character *> potential_holders;
 	int best_attribute_value = 0;
 	int best_reputation = 0;
-	bool found_same_dynasty = false;
 
 	for (const character *character : this->get_appointable_office_holders(office)) {
 		if (!this->can_appoint_office_holder(office, character)) {
@@ -458,24 +503,12 @@ const character *country_government::get_best_office_holder(const office *office
 		const character_game_data *character_game_data = character->get_game_data();
 
 		if (office->is_ruler()) {
-			if (character->get_game_data()->get_reputation() > best_reputation) {
+			if (character_game_data->get_reputation() > best_reputation) {
 				potential_holders.clear();
-				best_reputation = character->get_game_data()->get_reputation();
+				best_reputation = character_game_data->get_reputation();
 				best_attribute_value = 0;
-				found_same_dynasty = false;
-			} else if (character->get_game_data()->get_reputation() < best_reputation) {
+			} else if (character_game_data->get_reputation() < best_reputation) {
 				continue;
-			}
-
-			if (previous_holder != nullptr && previous_holder->get_dynasty() != nullptr) {
-				const bool same_dynasty = character->get_dynasty() == previous_holder->get_dynasty();
-				if (same_dynasty && !found_same_dynasty) {
-					potential_holders.clear();
-					best_attribute_value = 0;
-					found_same_dynasty = true;
-				} else if (!same_dynasty && found_same_dynasty) {
-					continue;
-				}
 			}
 		}
 
@@ -604,7 +637,7 @@ void country_government::on_office_holder_died(const office *office, const chara
 		this->set_office_holder(office, nullptr);
 		assert_throw(office_holder->get_game_data()->get_office() == nullptr);
 
-		this->check_office_holder(office, office_holder);
+		this->check_office_holder(office);
 	}
 
 	assert_throw(this->get_office_holder(office) != office_holder);
