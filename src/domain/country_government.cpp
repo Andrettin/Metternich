@@ -255,12 +255,17 @@ void country_government::set_office_holder(const office *office, const character
 		old_office_holder->get_game_data()->set_office(nullptr);
 	}
 
+	const metternich::domain *old_domain = character ? character->get_game_data()->get_domain() : nullptr;
 	const metternich::office *old_office = character ? character->get_game_data()->get_office() : nullptr;
 	if (old_office != nullptr) {
 		this->set_office_holder(old_office, nullptr);
 	}
 
 	if (character != nullptr) {
+		if (character->get_game_data()->get_domain() != this->domain) {
+			character->get_game_data()->set_domain(this->domain);
+		}
+
 		this->office_holders[office] = character;
 	} else {
 		this->office_holders.erase(office);
@@ -272,7 +277,8 @@ void country_government::set_office_holder(const office *office, const character
 	}
 
 	if (old_office != nullptr) {
-		this->check_office_holder(old_office, character);
+		assert_throw(old_domain != nullptr);
+		old_domain->get_government()->check_office_holder(old_office, character);
 	}
 
 	if (office->is_ruler()) {
@@ -579,10 +585,7 @@ void country_government::on_office_holder_died(const office *office, const chara
 			const portrait *interior_minister_portrait = this->get_interior_minister_portrait();
 
 			if (office->is_ruler()) {
-				//engine_interface::get()->add_notification(std::format("{} Died", office_holder->get_game_data()->get_full_name()), interior_minister_portrait, std::format("Our {}, {}, has died!", string::lowered(office->get_name()), office_holder->get_full_name()));
-
-				//FIXME: allow players to continue playing with player character succession
-				emit game::get()->game_over();
+				engine_interface::get()->add_notification(std::format("{} Died", office_holder->get_game_data()->get_full_name()), interior_minister_portrait, std::format("Our {}, {}, has died!", string::lowered(office->get_name()), office_holder->get_full_name()));
 			} else {
 				engine_interface::get()->add_notification(std::format("{} Died", office_holder->get_game_data()->get_full_name()), interior_minister_portrait, std::format("Our {}, {}, has died!", string::lowered(office->get_name()), office_holder->get_game_data()->get_full_name()));
 			}
@@ -595,10 +598,15 @@ void country_government::on_office_holder_died(const office *office, const chara
 		}
 	}
 
-	this->set_office_holder(office, nullptr);
-	assert_throw(office_holder->get_game_data()->get_office() == nullptr);
+	if (office->is_ruler() && this->get_heir() != nullptr) {
+		this->set_office_holder(office, this->get_heir());
+	} else {
+		this->set_office_holder(office, nullptr);
+		assert_throw(office_holder->get_game_data()->get_office() == nullptr);
 
-	this->check_office_holder(office, office_holder);
+		this->check_office_holder(office, office_holder);
+	}
+
 	assert_throw(this->get_office_holder(office) != office_holder);
 	assert_throw(office_holder->get_game_data()->get_office() == nullptr);
 }
