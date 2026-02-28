@@ -258,7 +258,7 @@ void country_government::set_office_holder(const office *office, const character
 	const metternich::domain *old_domain = character ? character->get_game_data()->get_domain() : nullptr;
 	const metternich::office *old_office = character ? character->get_game_data()->get_office() : nullptr;
 	if (old_office != nullptr) {
-		this->set_office_holder(old_office, nullptr);
+		old_domain->get_government()->set_office_holder(old_office, nullptr);
 	}
 
 	if (character != nullptr) {
