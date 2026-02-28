@@ -3550,6 +3550,34 @@ void domain_game_data::remove_character(const character *character)
 
 void domain_game_data::check_characters()
 {
+	const QDate &current_date = game::get()->get_next_date();
+
+	for (const site *site : this->get_sites()) {
+		for (const character *site_character : site->get_game_data()->get_homed_characters()) {
+			if (site_character->get_game_data()->get_start_date() > current_date) {
+				continue;
+			}
+
+			if (!site_character->is_immortal() && site_character->get_game_data()->get_death_date() <= current_date) {
+				continue;
+			}
+
+			if (site_character->get_game_data()->is_dead()) {
+				continue;
+			}
+
+			if (site_character->get_game_data()->get_domain() != nullptr) {
+				continue;
+			}
+
+			site_character->get_game_data()->set_domain(this->domain);
+
+			if (this->domain == game::get()->get_player_country()) {
+				engine_interface::get()->add_notification(std::format("{} Joined Us", site_character->get_game_data()->get_full_name()), site_character, std::format("{} has joined our domain!", site_character->get_game_data()->get_full_name()));
+			}
+		}
+	}
+
 	for (const character *character : this->get_characters()) {
 		character_game_data *character_game_data = character->get_game_data();
 
@@ -3564,7 +3592,6 @@ void domain_game_data::check_characters()
 	}
 
 	const std::vector<const character *> characters = this->get_characters();
-	const QDate &current_date = game::get()->get_next_date();
 	for (const character *character : characters) {
 		if (character->is_immortal()) {
 			continue;

@@ -138,6 +138,10 @@ void site_game_data::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([&](const gsml_property &attribute_property) {
 			this->attribute_values[site_attribute::get(attribute_property.get_key())] = std::stoi(attribute_property.get_value());
 		});
+	} else if (tag == "homed_characters") {
+		for (const std::string &value : values) {
+			this->homed_characters.push_back(game::get()->get_character(value));
+		}
 	} else {
 		throw std::runtime_error(std::format("Invalid site game data scope: \"{}\".", tag));
 	}
@@ -181,6 +185,14 @@ gsml_data site_game_data::to_gsml_data() const
 			attributes_data.add_property(attribute->get_identifier(), std::to_string(value));
 		}
 		data.add_child(std::move(attributes_data));
+	}
+
+	if (!this->get_homed_characters().empty()) {
+		gsml_data homed_characters_data("homed_characters");
+		for (const character *character : this->get_homed_characters()) {
+			homed_characters_data.add_value(character->get_identifier());
+		}
+		data.add_child(std::move(homed_characters_data));
 	}
 
 	return data;

@@ -662,6 +662,10 @@ void character_game_data::on_setup_finished()
 
 	this->check_portrait();
 	this->check_icon();
+
+	if (this->get_home_site() != nullptr) {
+		this->get_home_site()->get_game_data()->add_homed_character(this->character);
+	}
 }
 
 std::string character_game_data::get_full_name() const

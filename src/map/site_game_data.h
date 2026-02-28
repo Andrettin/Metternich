@@ -26,6 +26,7 @@ class army;
 class building_class;
 class building_slot;
 class building_type;
+class character;
 class culture;
 class domain;
 class dungeon;
@@ -567,6 +568,16 @@ public:
 
 	int get_skill_modifier(const skill *skill) const;
 
+	const std::vector<const character *> &get_homed_characters() const
+	{
+		return this->homed_characters;
+	}
+
+	void add_homed_character(const character *character)
+	{
+		this->homed_characters.push_back(character);
+	}
+
 signals:
 	void title_name_changed();
 	void titled_name_changed();
@@ -619,6 +630,7 @@ private:
 	int resource_output_modifier = 0;
 	commodity_map<centesimal_int> commodity_output_modifiers;
 	std::vector<army *> visiting_armies; //armies visiting this site
+	std::vector<const character *> homed_characters;
 };
 
 }
