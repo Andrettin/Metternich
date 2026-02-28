@@ -531,7 +531,7 @@ bool country_government::can_have_office_holder(const office *office, const char
 			return false;
 		}
 
-		if (office->is_heir() && character_game_data->get_office() != nullptr && character_game_data->get_office()->is_ruler()) {
+		if (office->is_heir() && character_game_data->get_office() != nullptr && (character_game_data->get_office()->is_ruler() || character_game_data->get_office()->is_heir())) {
 			return false;
 		}
 	} else {
