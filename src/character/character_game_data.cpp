@@ -835,6 +835,7 @@ void character_game_data::check_portrait()
 	}
 
 	this->portrait = vector::get_random(potential_portraits);
+	emit portrait_changed();
 }
 
 bool character_game_data::is_current_icon_valid() const
@@ -877,6 +878,7 @@ void character_game_data::check_icon()
 	}
 
 	this->icon = vector::get_random(potential_icons);
+	emit icon_changed();
 }
 
 void character_game_data::set_domain(const metternich::domain *domain)
