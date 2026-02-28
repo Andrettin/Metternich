@@ -1,5 +1,6 @@
 #pragma once
 
+#include "character/character_container.h"
 #include "database/data_entry_container.h"
 #include "domain/law_group_container.h"
 #include "economy/commodity_container.h"
@@ -72,6 +73,8 @@ public:
 
 	const character *get_ruler() const;
 	const character *get_heir() const;
+	const character *calculate_heir() const;
+	const character *calculate_heir_for_character(const character *character, character_set &disqualified_characters) const;
 
 	const data_entry_map<office, const character *> &get_office_holders() const
 	{

@@ -188,6 +188,55 @@ const character *country_government::get_heir() const
 	return this->get_office_holder(defines::get()->get_heir_office());
 }
 
+const character *country_government::calculate_heir() const
+{
+	const character *ruler = this->get_ruler();
+	if (ruler == nullptr) {
+		return nullptr;
+	}
+
+	character_set disqualified_characters;
+	return this->calculate_heir_for_character(ruler, disqualified_characters);
+}
+
+const character *country_government::calculate_heir_for_character(const character *character, character_set &disqualified_characters) const
+{
+	//if we are calculating a heir for the character, the character itself can't be a part of succession
+	disqualified_characters.insert(character);
+
+	//FIXME: at present we only calculate heirs through cognatic primogeniture, more succession types should be added
+
+	//children are expected to be sorted in birth order
+	for (const metternich::character *child : character->get_game_data()->get_children()) {
+		if (disqualified_characters.contains(child)) {
+			continue;
+		}
+
+		if (this->can_appoint_office_holder(defines::get()->get_heir_office(), child)) {
+			return child;
+		}
+
+		const metternich::character *child_heir = this->calculate_heir_for_character(child, disqualified_characters);
+		if (child_heir != nullptr) {
+			return child_heir;
+		}
+	}
+
+	const metternich::character *parent = character->get_dynastic_parent();
+	if (parent != nullptr && !disqualified_characters.contains(parent)) {
+		if (this->can_appoint_office_holder(defines::get()->get_heir_office(), parent)) {
+			return parent;
+		}
+
+		const metternich::character *parent_heir = this->calculate_heir_for_character(parent, disqualified_characters);
+		if (parent_heir != nullptr) {
+			return parent_heir;
+		}
+	}
+
+	return nullptr;
+}
+
 QVariantList country_government::get_office_holders_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_office_holders());
@@ -233,6 +282,10 @@ void country_government::set_office_holder(const office *office, const character
 
 		if (character != nullptr && (this->get_game_data()->get_historical_rulers().empty() || this->get_game_data()->get_historical_rulers().rbegin()->second != character)) {
 			this->get_game_data()->add_historical_ruler(character);
+		}
+
+		if (game::get()->is_running()) {
+			this->set_office_holder(defines::get()->get_heir_office(), this->calculate_heir());
 		}
 	}
 
@@ -380,6 +433,11 @@ QVariantList country_government::get_appointable_office_holders_qvariant_list(co
 const character *country_government::get_best_office_holder(const office *office, const character *previous_holder) const
 {
 	assert_throw(this->get_game_data()->get_government_type() != nullptr);
+	assert_throw(office != nullptr);
+
+	if (office == defines::get()->get_heir_office()) {
+		return this->calculate_heir();
+	}
 
 	std::vector<const character *> potential_holders;
 	int best_attribute_value = 0;
@@ -445,7 +503,7 @@ bool country_government::can_have_office_holder(const office *office, const char
 		return false;
 	}
 
-	if (character_game_data->get_domain() != this->domain) {
+	if (!office->is_heir() && character_game_data->get_domain() != this->domain) {
 		return false;
 	}
 
