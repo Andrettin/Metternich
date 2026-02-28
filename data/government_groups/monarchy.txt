@@ -8,6 +8,16 @@ monarchy = {
 		5 = "Duchy"
 	}
 	office_title_names = {
+		heir = {
+			kingdom = {
+				male = "Crown Prince"
+				female = "Crown Princess"
+			}
+			empire = {
+				male = "Crown Prince"
+				female = "Crown Princess"
+			}
+		}
 		chief_builder = {
 			kingdom = "Royal Architect"
 			empire = "Imperial Architect"
