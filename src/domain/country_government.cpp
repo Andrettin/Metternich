@@ -276,11 +276,6 @@ void country_government::set_office_holder(const office *office, const character
 		character->get_game_data()->set_office(office);
 	}
 
-	if (old_office != nullptr) {
-		assert_throw(old_domain != nullptr);
-		old_domain->get_government()->check_office_holder(old_office, character);
-	}
-
 	if (office->is_ruler()) {
 		if (this->domain == game::get()->get_player_country()) {
 			game::get()->set_player_character(character);
@@ -293,6 +288,11 @@ void country_government::set_office_holder(const office *office, const character
 		if (game::get()->is_running()) {
 			this->set_office_holder(defines::get()->get_heir_office(), this->calculate_heir());
 		}
+	}
+
+	if (old_office != nullptr) {
+		assert_throw(old_domain != nullptr);
+		old_domain->get_government()->check_office_holder(old_office, character);
 	}
 
 	if (game::get()->is_running()) {
