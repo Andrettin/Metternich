@@ -15,6 +15,7 @@
 #include "domain/law.h"
 #include "domain/law_group.h"
 #include "domain/office.h"
+#include "domain/succession_gender_type.h"
 #include "domain/succession_type.h"
 #include "engine_interface.h"
 #include "game/domain_event.h"
@@ -92,6 +93,10 @@ void domain_government::set_law(const law_group *law_group, const law *law)
 
 		if (law->get_succession_type() != succession_type::none) {
 			this->set_succession_type(law->get_succession_type());
+		}
+
+		if (law->get_succession_gender_type() != succession_gender_type::none) {
+			this->set_succession_gender_type(law->get_succession_gender_type());
 		}
 	}
 
@@ -200,6 +205,19 @@ void domain_government::set_succession_type(const metternich::succession_type su
 	}
 }
 
+void domain_government::set_succession_gender_type(const metternich::succession_gender_type succession_gender_type)
+{
+	if (succession_gender_type == this->get_succession_gender_type()) {
+		return;
+	}
+
+	this->succession_gender_type = succession_gender_type;
+
+	if (game::get()->is_running()) {
+		this->set_office_holder(defines::get()->get_heir_office(), this->calculate_heir());
+	}
+}
+
 const character *domain_government::get_ruler() const
 {
 	return this->get_office_holder(defines::get()->get_ruler_office());
@@ -217,12 +235,10 @@ const character *domain_government::calculate_heir() const
 		return nullptr;
 	}
 
-	//FIXME: at present we only calculate heirs through cognatic primogeniture (and as a fallback, elective), more succession types should be added
-
 	switch (this->get_succession_type()) {
 		case succession_type::primogeniture:
 		case succession_type::ultimogeniture:
-			return this->calculate_heir_by_descent(this->get_succession_type());
+			return this->calculate_heir_by_descent(this->get_succession_type(), this->get_succession_gender_type());
 		case succession_type::elective:
 			return this->calculate_elective_heir();
 		default:
@@ -230,12 +246,12 @@ const character *domain_government::calculate_heir() const
 	}
 }
 
-const character *domain_government::calculate_heir_by_descent(const metternich::succession_type succession_type) const
+const character *domain_government::calculate_heir_by_descent(const metternich::succession_type succession_type, const metternich::succession_gender_type succession_gender_type) const
 {
 	assert_throw(succession_type == succession_type::primogeniture || succession_type == succession_type::ultimogeniture);
 
 	character_set disqualified_characters;
-	const character *heir = this->calculate_heir_by_descent_for_character(this->get_ruler(), disqualified_characters, succession_type);
+	const character *heir = this->calculate_heir_by_descent_for_character(this->get_ruler(), disqualified_characters, succession_type, succession_gender_type);
 
 	if (heir == nullptr) {
 		//use elective as a fallback
@@ -245,7 +261,7 @@ const character *domain_government::calculate_heir_by_descent(const metternich::
 	return heir;
 }
 
-const character *domain_government::calculate_heir_by_descent_for_character(const character *character, character_set &disqualified_characters, const metternich::succession_type succession_type) const
+const character *domain_government::calculate_heir_by_descent_for_character(const character *character, character_set &disqualified_characters, const metternich::succession_type succession_type, const metternich::succession_gender_type succession_gender_type) const
 {
 	assert_throw(character != nullptr);
 	assert_throw(succession_type == succession_type::primogeniture || succession_type == succession_type::ultimogeniture);
@@ -253,8 +269,45 @@ const character *domain_government::calculate_heir_by_descent_for_character(cons
 	//if we are calculating a heir for the character, the character itself can't be a part of succession
 	disqualified_characters.insert(character);
 
-	//children are expected to be sorted in birth order
-	const std::vector<const metternich::character *> children = character->get_game_data()->get_children();
+	//children are expected to be sorted by birth order
+	std::vector<const metternich::character *> children = character->get_game_data()->get_children();
+
+	switch (succession_gender_type) {
+		case succession_gender_type::agnatic:
+			std::erase_if(children, [](const metternich::character *child) {
+				return child->get_gender() != gender::male;
+			});
+			break;
+		case succession_gender_type::agnatic_cognatic:
+			std::sort(children.begin(), children.end(), [](const metternich::character *lhs, const metternich::character *rhs) {
+				if (lhs->get_gender() != rhs->get_gender()) {
+					return lhs->get_gender() == gender::male;
+				}
+
+				return character_base::birth_date_compare(lhs, rhs);
+			});
+			break;
+		case succession_gender_type::enatic:
+			std::erase_if(children, [](const metternich::character *child) {
+				return child->get_gender() != gender::female;
+			});
+			break;
+		case succession_gender_type::enatic_cognatic:
+			std::sort(children.begin(), children.end(), [](const metternich::character *lhs, const metternich::character *rhs) {
+				if (lhs->get_gender() != rhs->get_gender()) {
+					return lhs->get_gender() == gender::female;
+				}
+
+				return character_base::birth_date_compare(lhs, rhs);
+			});
+			break;
+		case succession_gender_type::cognatic:
+			break;
+		default:
+			assert_throw(false);
+			break;
+	}
+
 	for (size_t i = 0; i < children.size(); ++i) {
 		const metternich::character *child = succession_type == succession_type::ultimogeniture ? children.at(children.size() - 1 - i) : children.at(i);
 
@@ -266,19 +319,37 @@ const character *domain_government::calculate_heir_by_descent_for_character(cons
 			return child;
 		}
 
-		const metternich::character *child_heir = this->calculate_heir_by_descent_for_character(child, disqualified_characters, succession_type);
+		const metternich::character *child_heir = this->calculate_heir_by_descent_for_character(child, disqualified_characters, succession_type, succession_gender_type);
 		if (child_heir != nullptr) {
 			return child_heir;
 		}
 	}
 
-	const metternich::character *parent = character->get_dynastic_parent();
+	const metternich::character *parent = nullptr;
+
+	switch (succession_gender_type) {
+		case succession_gender_type::agnatic:
+		case succession_gender_type::agnatic_cognatic:
+			parent = character->get_father();
+			break;
+		case succession_gender_type::cognatic:
+			parent = character->get_dynastic_parent();
+			break;
+		case succession_gender_type::enatic:
+		case succession_gender_type::enatic_cognatic:
+			parent = character->get_mother();
+			break;
+		default:
+			assert_throw(false);
+			break;
+	}
+
 	if (parent != nullptr && !disqualified_characters.contains(parent)) {
 		if (this->can_appoint_office_holder(defines::get()->get_heir_office(), parent)) {
 			return parent;
 		}
 
-		const metternich::character *parent_heir = this->calculate_heir_by_descent_for_character(parent, disqualified_characters, succession_type);
+		const metternich::character *parent_heir = this->calculate_heir_by_descent_for_character(parent, disqualified_characters, succession_type, succession_gender_type);
 		if (parent_heir != nullptr) {
 			return parent_heir;
 		}

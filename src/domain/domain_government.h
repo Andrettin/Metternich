@@ -15,6 +15,7 @@ class domain;
 class domain_game_data;
 class law;
 class office;
+enum class succession_gender_type;
 enum class succession_type;
 
 class domain_government final : public QObject
@@ -79,11 +80,18 @@ public:
 
 	void set_succession_type(const succession_type succession_type);
 
+	succession_gender_type get_succession_gender_type() const
+	{
+		return this->succession_gender_type;
+	}
+
+	void set_succession_gender_type(const succession_gender_type succession_gender_type);
+
 	const character *get_ruler() const;
 	const character *get_heir() const;
 	const character *calculate_heir() const;
-	const character *calculate_heir_by_descent(const succession_type succession_type) const;
-	const character *calculate_heir_by_descent_for_character(const character *character, character_set &disqualified_characters, const succession_type succession_type) const;
+	const character *calculate_heir_by_descent(const succession_type succession_type, const succession_gender_type succession_gender_type) const;
+	const character *calculate_heir_by_descent_for_character(const character *character, character_set &disqualified_characters, const succession_type succession_type, const succession_gender_type succession_gender_type) const;
 	const character *calculate_elective_heir() const;
 
 	const data_entry_map<office, const character *> &get_office_holders() const
@@ -186,6 +194,7 @@ private:
 	const metternich::domain *domain = nullptr;
 	law_group_map<const law *> laws;
 	metternich::succession_type succession_type {};
+	metternich::succession_gender_type succession_gender_type {};
 	data_entry_map<office, const character *> office_holders;
 	data_entry_map<office, const character *> appointed_office_holders;
 	int law_cost_modifier = 0;

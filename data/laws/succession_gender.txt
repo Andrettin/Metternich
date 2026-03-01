@@ -1,0 +1,49 @@
+agnatic = {
+	name = "Agnatic"
+	group = succession_gender
+	icon = blood
+	succession_gender_type = agnatic
+	commodity_costs = {
+		wealth = 1gb
+	}
+}
+
+agnatic_cognatic = {
+	name = "Agnatic-Cognatic"
+	group = succession_gender
+	icon = blood
+	succession_gender_type = agnatic_cognatic
+	commodity_costs = {
+		wealth = 1gb
+	}
+}
+
+cognatic = {
+	name = "Cognatic"
+	group = succession_gender
+	icon = blood
+	succession_gender_type = cognatic
+	commodity_costs = {
+		wealth = 1gb
+	}
+}
+
+enatic = {
+	name = "Enatic"
+	group = succession_gender
+	icon = blood
+	succession_gender_type = enatic
+	commodity_costs = {
+		wealth = 1gb
+	}
+}
+
+enatic_cognatic = {
+	name = "Enatic-Cognatic"
+	group = succession_gender
+	icon = blood
+	succession_gender_type = enatic_cognatic
+	commodity_costs = {
+		wealth = 1gb
+	}
+}

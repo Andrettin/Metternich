@@ -3,6 +3,11 @@ succession = {
 	default_law = primogeniture
 }
 
+succession_gender = {
+	name = "Succession Gender"
+	default_law = cognatic
+}
+
 ruling_class = {
 	name = "Ruling Class"
 	default_law = aristocracy

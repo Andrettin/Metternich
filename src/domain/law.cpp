@@ -3,6 +3,7 @@
 #include "domain/law.h"
 
 #include "domain/law_group.h"
+#include "domain/succession_gender_type.h"
 #include "domain/succession_type.h"
 #include "economy/commodity.h"
 #include "script/condition/and_condition.h"
@@ -68,7 +69,7 @@ void law::check() const
 		throw std::runtime_error(std::format("Law \"{}\" has no icon.", this->get_identifier()));
 	}
 
-	if (this->get_modifier() == nullptr && this->get_succession_type() == succession_type::none) {
+	if (this->get_modifier() == nullptr && this->get_succession_type() == succession_type::none && this->get_succession_gender_type() == succession_gender_type::none) {
 		throw std::runtime_error(std::format("Law \"{}\" has no modifier, and does not affect succession.", this->get_identifier()));
 	}
 
@@ -96,6 +97,14 @@ QString law::get_modifier_string(const metternich::domain *domain) const
 		}
 
 		str += std::format("{} Succession", string::from_snake_case(magic_enum::enum_name(this->get_succession_type())));
+	}
+
+	if (this->get_succession_gender_type() != succession_gender_type::none) {
+		if (!str.empty()) {
+			str += ", ";
+		}
+
+		str += std::format("{} Succession", get_succession_gender_type_name(this->get_succession_gender_type()));
 	}
 
 	return QString::fromStdString(str);

@@ -8,6 +8,7 @@ self_governing_colony = {
 	}
 	forbidden_laws = {
 		primogeniture
+		ultimogeniture
 	}
 	conditions = {
 		subject_type = colony

@@ -5,6 +5,7 @@ monarchy = {
 	regnal_numbering = true
 	default_laws = {
 		succession = primogeniture
+		succession_gender = agnatic_cognatic
 		ruling_class = aristocracy
 		press_rights = censored_press
 	}

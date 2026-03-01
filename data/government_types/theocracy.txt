@@ -8,6 +8,7 @@ theocracy = {
 	}
 	forbidden_laws = {
 		primogeniture
+		ultimogeniture
 	}
 	conditions = {
 		not = {
