@@ -15,4 +15,12 @@ croatia = {
 		croatia
 		slavonia
 	}
+	
+	history = {
+		government_type = monarchy
+		
+		1835.3.2 = {
+			titular_ruler = ferdinand_i_of_austria #Ferdinand von Habsburg succeeded his father as King of Croatia on 1835.3.2; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 10.
+		}
+	}
 }

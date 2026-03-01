@@ -5,6 +5,7 @@ namespace metternich {
 enum class succession_type {
 	none,
 	primogeniture,
+	ultimogeniture,
 	elective
 };
 

@@ -27,6 +27,11 @@ lombardy_venetia = {
 			}
 		}
 		
+		1835.3.2 = {
+			government_type = monarchy
+			titular_ruler = ferdinand_i_of_austria #Ferdinand von Habsburg succeeded his father as King of Lombardy-Venetia on 1835.3.2; the official coronation as King of Lombardy-Venetia was on 1838.9.6; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 10.
+		}
+		
 		1847 = {
 			#Archduke Reiner von Habsburg was (Austrian) viceroy of Lombardy-Venetia in 1847; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 11-12.
 			offices = {

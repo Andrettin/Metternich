@@ -39,20 +39,24 @@ hungary = {
 		}
 		
 		1815 = {
-			government_type = overlordship
-			
 			#part of the the Empire of Austria in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
-			diplomacy_state = {
-				domain = austria
-				subject_type = vassal
-			}
+			#diplomacy_state = {
+			#	domain = austria
+			#	subject_type = vassal
+			#}
+			owner = austria
+		}
+		
+		1835.3.2 = {
+			government_type = monarchy
+			titular_ruler = ferdinand_i_of_austria #Ferdinand V von Habsburg succeeded his father as King of Hungary on 1835.3.2; the official coronation as King of Hungary was on 1830.9.28; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 10.
 		}
 		
 		1847 = {
 			#Archduke Joseph was palatine, governor and captain-general of Hungary, comes et judex Jazygum et Cumanorum as of 1847; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 11-12.
-			offices = {
-				ruler = joseph_anton_von_habsburg
-			}
+			#offices = {
+			#	ruler = joseph_anton_von_habsburg
+			#}
 		}
 	}
 }

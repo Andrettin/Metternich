@@ -798,6 +798,29 @@ marie_luise_von_habsburg = { #Source: "Almanach de Gotha pour l'année 1813", 18
 	}
 }
 
+ferdinand_i_of_austria = { #Ferdinand von Habsburg, Emperor Ferdinand I of Austria; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 10.
+	name = "Ferdinand"
+	dynasty = habsburg
+	character_class = warrior #emperor
+	rank = lord
+	culture = austrian
+	religion = catholic
+	home_site = vienna
+	gender = male
+	father = franz_i_of_austria
+	mother = maria_theresa_de_bourbon
+	birth_date = 1793.4.19
+	traits = {
+		#incapable
+	}
+	
+	history = {
+		1831.2.12 = { #married by procuration on 1831.2.12 and in person on 1831.2.27
+			spouse = maria_anna_di_savoia
+		}
+	}
+}
+
 stefan_franz_von_habsburg = { #Stefan Franz Victor von Habsburg; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 12.
 	name = "Stefan Franz" #"Stefan Franz Victor" #source gives "Etienne-François-Victor"
 	dynasty = habsburg
