@@ -221,7 +221,8 @@ const character *domain_government::calculate_heir() const
 
 	switch (this->get_succession_type()) {
 		case succession_type::primogeniture:
-			return this->calculate_primogeniture_heir();
+		case succession_type::ultimogeniture:
+			return this->calculate_heir_by_descent(this->get_succession_type());
 		case succession_type::elective:
 			return this->calculate_elective_heir();
 		default:
@@ -229,10 +230,12 @@ const character *domain_government::calculate_heir() const
 	}
 }
 
-const character *domain_government::calculate_primogeniture_heir() const
+const character *domain_government::calculate_heir_by_descent(const metternich::succession_type succession_type) const
 {
+	assert_throw(succession_type == succession_type::primogeniture || succession_type == succession_type::ultimogeniture);
+
 	character_set disqualified_characters;
-	const character *heir = this->calculate_primogeniture_heir_for_character(this->get_ruler(), disqualified_characters);
+	const character *heir = this->calculate_heir_by_descent_for_character(this->get_ruler(), disqualified_characters, succession_type);
 
 	if (heir == nullptr) {
 		//use elective as a fallback
@@ -242,15 +245,19 @@ const character *domain_government::calculate_primogeniture_heir() const
 	return heir;
 }
 
-const character *domain_government::calculate_primogeniture_heir_for_character(const character *character, character_set &disqualified_characters) const
+const character *domain_government::calculate_heir_by_descent_for_character(const character *character, character_set &disqualified_characters, const metternich::succession_type succession_type) const
 {
 	assert_throw(character != nullptr);
+	assert_throw(succession_type == succession_type::primogeniture || succession_type == succession_type::ultimogeniture);
 
 	//if we are calculating a heir for the character, the character itself can't be a part of succession
 	disqualified_characters.insert(character);
 
 	//children are expected to be sorted in birth order
-	for (const metternich::character *child : character->get_game_data()->get_children()) {
+	const std::vector<const metternich::character *> children = character->get_game_data()->get_children();
+	for (size_t i = 0; i < children.size(); ++i) {
+		const metternich::character *child = succession_type == succession_type::ultimogeniture ? children.at(children.size() - 1 - i) : children.at(i);
+
 		if (disqualified_characters.contains(child)) {
 			continue;
 		}
@@ -259,7 +266,7 @@ const character *domain_government::calculate_primogeniture_heir_for_character(c
 			return child;
 		}
 
-		const metternich::character *child_heir = this->calculate_primogeniture_heir_for_character(child, disqualified_characters);
+		const metternich::character *child_heir = this->calculate_heir_by_descent_for_character(child, disqualified_characters, succession_type);
 		if (child_heir != nullptr) {
 			return child_heir;
 		}
@@ -271,7 +278,7 @@ const character *domain_government::calculate_primogeniture_heir_for_character(c
 			return parent;
 		}
 
-		const metternich::character *parent_heir = this->calculate_primogeniture_heir_for_character(parent, disqualified_characters);
+		const metternich::character *parent_heir = this->calculate_heir_by_descent_for_character(parent, disqualified_characters, succession_type);
 		if (parent_heir != nullptr) {
 			return parent_heir;
 		}

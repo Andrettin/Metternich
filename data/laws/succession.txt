@@ -8,6 +8,16 @@ primogeniture = {
 	}
 }
 
+ultimogeniture = {
+	name = "Ultimogeniture"
+	group = succession
+	icon = blood
+	succession_type = ultimogeniture
+	commodity_costs = {
+		wealth = 1gb
+	}
+}
+
 elective = {
 	name = "Elective"
 	group = succession

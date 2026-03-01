@@ -82,8 +82,8 @@ public:
 	const character *get_ruler() const;
 	const character *get_heir() const;
 	const character *calculate_heir() const;
-	const character *calculate_primogeniture_heir() const;
-	const character *calculate_primogeniture_heir_for_character(const character *character, character_set &disqualified_characters) const;
+	const character *calculate_heir_by_descent(const succession_type succession_type) const;
+	const character *calculate_heir_by_descent_for_character(const character *character, character_set &disqualified_characters, const succession_type succession_type) const;
 	const character *calculate_elective_heir() const;
 
 	const data_entry_map<office, const character *> &get_office_holders() const
