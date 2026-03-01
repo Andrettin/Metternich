@@ -12,7 +12,6 @@
 #include "domain/consulate.h"
 #include "domain/country_ai.h"
 #include "domain/country_economy.h"
-#include "domain/country_government.h"
 #include "domain/country_military.h"
 #include "domain/country_rank.h"
 #include "domain/country_technology.h"
@@ -21,6 +20,7 @@
 #include "domain/diplomacy_state.h"
 #include "domain/domain.h"
 #include "domain/domain_attribute.h"
+#include "domain/domain_government.h"
 #include "domain/domain_history.h"
 #include "domain/domain_tier.h"
 #include "domain/domain_tier_data.h"
@@ -112,7 +112,7 @@ domain_game_data::domain_game_data(metternich::domain *domain)
 	: domain(domain), tier(domain_tier::none), culture(domain->get_default_culture()), religion(domain->get_default_religion())
 {
 	this->economy = make_qunique<country_economy>(domain, this);
-	this->government = make_qunique<country_government>(domain, this);
+	this->government = make_qunique<domain_government>(domain, this);
 	this->military = make_qunique<country_military>(domain);
 	this->technology = make_qunique<country_technology>(domain, this);
 
@@ -277,7 +277,7 @@ void domain_game_data::apply_history(const QDate &start_date)
 {
 	const domain_history *domain_history = this->domain->get_history();
 	country_economy *country_economy = this->get_economy();
-	country_government *country_government = this->get_government();
+	domain_government *domain_government = this->get_government();
 	country_technology *country_technology = this->get_technology();
 
 	assert_throw(domain_history->get_owner() == nullptr);
@@ -326,7 +326,7 @@ void domain_game_data::apply_history(const QDate &start_date)
 		}
 
 		office_holder_game_data->set_domain(this->domain);
-		country_government->set_office_holder(office, office_holder);
+		domain_government->set_office_holder(office, office_holder);
 	}
 
 	for (const metternich::technology *technology : domain_history->get_technologies()) {
@@ -334,7 +334,7 @@ void domain_game_data::apply_history(const QDate &start_date)
 	}
 
 	for (const auto &[law_group, law] : domain_history->get_laws()) {
-		country_government->set_law(law_group, law);
+		domain_government->set_law(law_group, law);
 
 		if (law->get_required_technology() != nullptr) {
 			country_technology->add_technology_with_prerequisites(law->get_required_technology());

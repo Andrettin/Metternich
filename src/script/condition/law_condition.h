@@ -1,7 +1,7 @@
 #pragma once
 
-#include "domain/country_government.h"
 #include "domain/domain.h"
+#include "domain/domain_government.h"
 #include "domain/law.h"
 #include "script/condition/condition.h"
 #include "util/string_util.h"

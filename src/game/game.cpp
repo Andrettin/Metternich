@@ -18,7 +18,6 @@
 #include "database/preferences.h"
 #include "domain/country_ai.h"
 #include "domain/country_economy.h"
-#include "domain/country_government.h"
 #include "domain/country_military.h"
 #include "domain/country_rank.h"
 #include "domain/country_technology.h"
@@ -26,6 +25,7 @@
 #include "domain/diplomacy_state.h"
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
+#include "domain/domain_government.h"
 #include "domain/domain_history.h"
 #include "domain/domain_tier.h"
 #include "domain/government_type.h"
@@ -458,10 +458,10 @@ QCoro::Task<void> game::start_coro()
 
 		for (const domain *domain : this->get_countries()) {
 			domain_game_data *domain_game_data = domain->get_game_data();
-			country_government *country_government = domain->get_government();
+			domain_government *domain_government = domain->get_government();
 
 			for (const office *office : office::get_all()) {
-				country_government->check_office_holder(office);
+				domain_government->check_office_holder(office);
 			}
 
 			domain_game_data->check_ideas();
@@ -1589,13 +1589,13 @@ QCoro::Task<void> game::on_setup_finished()
 	for (const domain *domain : this->get_countries()) {
 		domain_game_data *domain_game_data = domain->get_game_data();
 		//country_economy *country_economy = domain->get_economy();
-		country_government *country_government = domain->get_government();
+		domain_government *domain_government = domain->get_government();
 
 		domain_game_data->check_government_type();
-		country_government->check_laws();
+		domain_government->check_laws();
 
 		for (const office *office : office::get_all()) {
-			country_government->check_office_holder(office);
+			domain_government->check_office_holder(office);
 		}
 
 		domain_game_data->check_ideas();

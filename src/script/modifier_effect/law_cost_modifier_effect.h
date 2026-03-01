@@ -1,7 +1,7 @@
 #pragma once
 
-#include "domain/country_government.h"
 #include "domain/domain.h"
+#include "domain/domain_government.h"
 #include "script/modifier_effect/modifier_effect.h"
 
 namespace metternich {

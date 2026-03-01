@@ -21,10 +21,10 @@
 Q_MOC_INCLUDE("character/character.h")
 Q_MOC_INCLUDE("culture/culture.h")
 Q_MOC_INCLUDE("domain/country_economy.h")
-Q_MOC_INCLUDE("domain/country_government.h")
 Q_MOC_INCLUDE("domain/country_military.h")
 Q_MOC_INCLUDE("domain/country_technology.h")
 Q_MOC_INCLUDE("domain/domain.h")
+Q_MOC_INCLUDE("domain/domain_government.h")
 Q_MOC_INCLUDE("domain/domain_tier.h")
 Q_MOC_INCLUDE("domain/government_type.h")
 Q_MOC_INCLUDE("domain/journal_entry.h")
@@ -49,13 +49,13 @@ class civilian_unit;
 class consulate;
 class country_ai;
 class country_economy;
-class country_government;
 class country_military;
 class country_rank;
 class country_technology;
 class culture;
 class domain;
 class domain_attribute;
+class domain_government;
 class event;
 class flag;
 class government_type;
@@ -96,7 +96,7 @@ class domain_game_data final : public QObject
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::country_economy* economy READ get_economy CONSTANT)
-	Q_PROPERTY(metternich::country_government* government READ get_government CONSTANT)
+	Q_PROPERTY(metternich::domain_government* government READ get_government CONSTANT)
 	Q_PROPERTY(metternich::country_military* military READ get_military CONSTANT)
 	Q_PROPERTY(metternich::country_technology* technology READ get_technology CONSTANT)
 	Q_PROPERTY(metternich::domain_tier tier READ get_tier NOTIFY tier_changed)
@@ -189,7 +189,7 @@ public:
 		return this->economy.get();
 	}
 
-	country_government *get_government() const
+	domain_government *get_government() const
 	{
 		return this->government.get();
 	}
@@ -1372,7 +1372,7 @@ private:
 	std::set<const flag *> flags;
 	const site *visit_target_site = nullptr;
 	qunique_ptr<country_economy> economy;
-	qunique_ptr<country_government> government;
+	qunique_ptr<domain_government> government;
 	qunique_ptr<country_military> military;
 	qunique_ptr<country_technology> technology;
 };

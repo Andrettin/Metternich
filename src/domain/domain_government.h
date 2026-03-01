@@ -17,7 +17,7 @@ class law;
 class office;
 enum class succession_type;
 
-class country_government final : public QObject
+class domain_government final : public QObject
 {
 	Q_OBJECT
 
@@ -34,8 +34,8 @@ class country_government final : public QObject
 public:
 	static constexpr int base_advisor_cost = 80;
 
-	explicit country_government(const metternich::domain *domain, const domain_game_data *game_data);
-	~country_government();
+	explicit domain_government(const metternich::domain *domain, const domain_game_data *game_data);
+	~domain_government();
 
 	domain_game_data *get_game_data() const;
 
@@ -147,9 +147,9 @@ public:
 		const int advisor_count = static_cast<int>(this->get_office_holders().size() + this->get_appointed_office_holders().size()) - 1;
 
 		if (advisor_count <= 0) {
-			cost = country_government::base_advisor_cost / 2;
+			cost = domain_government::base_advisor_cost / 2;
 		} else {
-			cost = country_government::base_advisor_cost * (advisor_count + 1);
+			cost = domain_government::base_advisor_cost * (advisor_count + 1);
 		}
 
 		return std::max(0, cost);

@@ -1,8 +1,8 @@
 #pragma once
 
 #include "character/character.h"
-#include "domain/country_government.h"
 #include "domain/domain.h"
+#include "domain/domain_government.h"
 #include "script/condition/condition.h"
 #include "util/vector_util.h"
 

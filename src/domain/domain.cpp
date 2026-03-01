@@ -7,10 +7,10 @@
 #include "database/database.h"
 #include "database/defines.h"
 #include "domain/country_ai.h"
-#include "domain/country_government.h"
 #include "domain/country_turn_data.h"
 #include "domain/country_type.h"
 #include "domain/domain_game_data.h"
+#include "domain/domain_government.h"
 #include "domain/domain_history.h"
 #include "domain/domain_tier.h"
 #include "domain/domain_tier_data.h"
@@ -246,7 +246,7 @@ country_economy *domain::get_economy() const
 	return this->get_game_data()->get_economy();
 }
 
-country_government *domain::get_government() const
+domain_government *domain::get_government() const
 {
 	return this->get_game_data()->get_government();
 }
