@@ -2,6 +2,12 @@ magocracy = {
 	name = "Magocracy"
 	group = republic
 	icon = university
+	default_laws = {
+		succession = elective
+	}
+	forbidden_laws = {
+		primogeniture
+	}
 	conditions = {
 		not = {
 			country_type = clade

@@ -3,6 +3,12 @@ theocracy = {
 	group = theocracy
 	icon = wooden_cross
 	regnal_numbering = true
+	default_laws = {
+		succession = elective
+	}
+	forbidden_laws = {
+		primogeniture
+	}
 	conditions = {
 		not = {
 			country_type = clade

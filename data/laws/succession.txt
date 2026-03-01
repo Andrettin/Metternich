@@ -1,0 +1,19 @@
+primogeniture = {
+	name = "Primogeniture"
+	group = succession
+	icon = blood
+	succession_type = primogeniture
+	commodity_costs = {
+		wealth = 1gb
+	}
+}
+
+elective = {
+	name = "Elective"
+	group = succession
+	icon = flag
+	succession_type = elective
+	commodity_costs = {
+		wealth = 1gb
+	}
+}

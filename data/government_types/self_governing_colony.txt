@@ -3,6 +3,12 @@ self_governing_colony = {
 	group = republic
 	icon = settlement
 	required_technology = renaissance
+	default_laws = {
+		succession = elective
+	}
+	forbidden_laws = {
+		primogeniture
+	}
 	conditions = {
 		subject_type = colony
 		not = {

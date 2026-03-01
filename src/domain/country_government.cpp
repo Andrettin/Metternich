@@ -15,6 +15,7 @@
 #include "domain/law.h"
 #include "domain/law_group.h"
 #include "domain/office.h"
+#include "domain/succession_type.h"
 #include "engine_interface.h"
 #include "game/domain_event.h"
 #include "game/event_trigger.h"
@@ -76,14 +77,22 @@ void country_government::set_law(const law_group *law_group, const law *law)
 
 	const metternich::law *old_law = this->get_law(law_group);
 	if (old_law != nullptr) {
-		old_law->get_modifier()->remove(this->domain);
+		if (old_law->get_modifier() != nullptr) {
+			old_law->get_modifier()->remove(this->domain);
+		}
 	}
 
 	this->laws[law_group] = law;
 
 	if (law != nullptr) {
 		assert_throw(law->get_group() == law_group);
-		law->get_modifier()->apply(this->domain);
+		if (law->get_modifier() != nullptr) {
+			law->get_modifier()->apply(this->domain);
+		}
+
+		if (law->get_succession_type() != succession_type::none) {
+			this->set_succession_type(law->get_succession_type());
+		}
 	}
 
 	this->get_game_data()->check_government_type();
@@ -178,6 +187,19 @@ void country_government::check_laws()
 	}
 }
 
+void country_government::set_succession_type(const metternich::succession_type succession_type)
+{
+	if (succession_type == this->get_succession_type()) {
+		return;
+	}
+
+	this->succession_type = succession_type;
+
+	if (game::get()->is_running()) {
+		this->set_office_holder(defines::get()->get_heir_office(), this->calculate_heir());
+	}
+}
+
 const character *country_government::get_ruler() const
 {
 	return this->get_office_holder(defines::get()->get_ruler_office());
@@ -197,19 +219,27 @@ const character *country_government::calculate_heir() const
 
 	//FIXME: at present we only calculate heirs through cognatic primogeniture (and as a fallback, elective), more succession types should be added
 
-	const character *heir = this->calculate_primogeniture_heir();
-
-	if (heir == nullptr) {
-		heir = this->calculate_elective_heir();
+	switch (this->get_succession_type()) {
+		case succession_type::primogeniture:
+			return this->calculate_primogeniture_heir();
+		case succession_type::elective:
+			return this->calculate_elective_heir();
+		default:
+			return nullptr;
 	}
-
-	return heir;
 }
 
 const character *country_government::calculate_primogeniture_heir() const
 {
 	character_set disqualified_characters;
-	return this->calculate_primogeniture_heir_for_character(this->get_ruler(), disqualified_characters);
+	const character *heir = this->calculate_primogeniture_heir_for_character(this->get_ruler(), disqualified_characters);
+
+	if (heir == nullptr) {
+		//use elective as a fallback
+		heir = this->calculate_elective_heir();
+	}
+
+	return heir;
 }
 
 const character *country_government::calculate_primogeniture_heir_for_character(const character *character, character_set &disqualified_characters) const
@@ -290,6 +320,8 @@ QVariantList country_government::get_office_holders_qvariant_list() const
 
 void country_government::set_office_holder(const office *office, const character *character)
 {
+	assert_throw(office != nullptr);
+
 	const metternich::character *old_office_holder = this->get_office_holder(office);
 
 	if (character == old_office_holder) {

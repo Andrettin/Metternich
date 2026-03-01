@@ -2,6 +2,12 @@ colony = {
 	name = "Colony"
 	group = republic
 	icon = settlement
+	default_laws = {
+		succession = elective
+	}
+	forbidden_laws = {
+		primogeniture
+	}
 	conditions = {
 		subject_type = colony
 		not = {

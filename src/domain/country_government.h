@@ -15,6 +15,7 @@ class domain;
 class domain_game_data;
 class law;
 class office;
+enum class succession_type;
 
 class country_government final : public QObject
 {
@@ -70,6 +71,13 @@ public:
 	Q_INVOKABLE void enact_law(const metternich::law *law);
 	Q_INVOKABLE int get_total_law_cost_modifier() const;
 	void check_laws();
+
+	succession_type get_succession_type() const
+	{
+		return this->succession_type;
+	}
+
+	void set_succession_type(const succession_type succession_type);
 
 	const character *get_ruler() const;
 	const character *get_heir() const;
@@ -177,6 +185,7 @@ signals:
 private:
 	const metternich::domain *domain = nullptr;
 	law_group_map<const law *> laws;
+	metternich::succession_type succession_type {};
 	data_entry_map<office, const character *> office_holders;
 	data_entry_map<office, const character *> appointed_office_holders;
 	int law_cost_modifier = 0;

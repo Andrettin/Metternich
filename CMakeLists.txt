@@ -436,6 +436,7 @@ set(domain_HDRS
 	src/domain/law_group_container.h
 	src/domain/office.h
 	src/domain/subject_type.h
+	src/domain/succession_type.h
 )
 source_group(domain FILES ${domain_HDRS})
 

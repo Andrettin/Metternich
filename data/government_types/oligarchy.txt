@@ -2,6 +2,12 @@ oligarchy = {
 	name = "Oligarchy"
 	group = republic
 	icon = chest
+	default_laws = {
+		succession = elective
+	}
+	forbidden_laws = {
+		primogeniture
+	}
 	conditions = {
 		not = {
 			country_type = clade

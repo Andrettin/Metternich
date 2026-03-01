@@ -3,6 +3,7 @@ overlordship = {
 	group = republic
 	icon = saber
 	default_laws = {
+		succession = elective
 		ruling_class = plutocracy
 		centralization = centralization
 		serfdom = free_subjects

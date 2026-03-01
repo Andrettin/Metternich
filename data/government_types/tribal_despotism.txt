@@ -3,6 +3,7 @@ tribal_despotism = {
 	group = tribe
 	icon = bow
 	default_laws = {
+		succession = primogeniture
 		ruling_class = aristocracy
 		centralization = decentralization
 		serfdom = free_subjects

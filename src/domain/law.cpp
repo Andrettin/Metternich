@@ -3,11 +3,15 @@
 #include "domain/law.h"
 
 #include "domain/law_group.h"
+#include "domain/succession_type.h"
 #include "economy/commodity.h"
 #include "script/condition/and_condition.h"
 #include "script/modifier.h"
 #include "technology/technology.h"
 #include "util/map_util.h"
+#include "util/string_util.h"
+
+#include <magic_enum/magic_enum.hpp>
 
 namespace metternich {
 
@@ -64,8 +68,8 @@ void law::check() const
 		throw std::runtime_error(std::format("Law \"{}\" has no icon.", this->get_identifier()));
 	}
 
-	if (this->get_modifier() == nullptr) {
-		throw std::runtime_error(std::format("Law \"{}\" has no modifier.", this->get_identifier()));
+	if (this->get_modifier() == nullptr && this->get_succession_type() == succession_type::none) {
+		throw std::runtime_error(std::format("Law \"{}\" has no modifier, and does not affect succession.", this->get_identifier()));
 	}
 
 	if (this->get_conditions() != nullptr) {
@@ -80,7 +84,21 @@ QVariantList law::get_commodity_costs_qvariant_list() const
 
 QString law::get_modifier_string(const metternich::domain *domain) const
 {
-	return QString::fromStdString(this->get_modifier()->get_string(domain));
+	std::string str;
+
+	if (this->get_modifier() != nullptr) {
+		str += this->get_modifier()->get_string(domain);
+	}
+
+	if (this->get_succession_type() != succession_type::none) {
+		if (!str.empty()) {
+			str += "\n";
+		}
+
+		str += std::format("{} Succession", string::from_snake_case(magic_enum::enum_name(this->get_succession_type())));
+	}
+
+	return QString::fromStdString(str);
 }
 
 }

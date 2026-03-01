@@ -3,9 +3,13 @@ republic = {
 	group = republic
 	icon = philosophy
 	default_laws = {
+		succession = elective
 		ruling_class = plutocracy
 		serfdom = free_subjects
 		press_rights = censored_press
+	}
+	forbidden_laws = {
+		primogeniture
 	}
 	conditions = {
 		not = {

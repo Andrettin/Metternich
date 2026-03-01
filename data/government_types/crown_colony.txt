@@ -3,6 +3,12 @@ crown_colony = {
 	group = monarchy
 	icon = settlement
 	required_technology = renaissance
+	default_laws = {
+		succession = elective
+	}
+	forbidden_laws = {
+		primogeniture
+	}
 	conditions = {
 		subject_type = colony
 		not = {

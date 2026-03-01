@@ -31,6 +31,7 @@
 #include "domain/journal_entry.h"
 #include "domain/law.h"
 #include "domain/law_group.h"
+#include "domain/succession_type.h"
 #include "economy/commodity_type.h"
 #include "economy/commodity_unit.h"
 #include "economy/food_type.h"
@@ -185,6 +186,7 @@ int main(int argc, char **argv)
 		database_util::register_enum<site_type>();
 		database_util::register_enum<spell_target>();
 		database_util::register_enum<starting_age_category>();
+		database_util::register_enum<succession_type>();
 		database_util::register_enum<taxonomic_rank>();
 		database_util::register_enum<temperature_type>();
 		database_util::register_enum<transporter_category>();
