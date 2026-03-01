@@ -52,7 +52,6 @@ Rectangle {
 			id: government_button
 			icon_identifier: "flag"
 			highlighted: politics_view_mode === PoliticsView.Mode.Government
-			visible: false
 			
 			onClicked: {
 				politics_view_mode = PoliticsView.Mode.Government

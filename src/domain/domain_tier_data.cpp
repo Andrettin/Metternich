@@ -45,7 +45,7 @@ QString domain_tier_data::get_modifier_string(metternich::domain *domain) const
 		return QString();
 	}
 
-	return QString::fromStdString(this->get_modifier()->get_string(domain));
+	return QString::fromStdString(this->get_modifier()->get_single_line_string(domain));
 }
 
 }

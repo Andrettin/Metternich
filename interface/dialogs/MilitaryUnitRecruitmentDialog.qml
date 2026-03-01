@@ -42,7 +42,7 @@ DialogBase {
 						height: 64 * scale_factor + 6 * scale_factor
 						icon_identifier: military_unit_type !== null ? military_unit_type.icon.identifier : "skull"
 						
-						readonly property string costs_string: military_unit_type !== null ? costs_to_string(country_game_data.military.get_military_unit_type_commodity_costs_qvariant_list(military_unit_type, 1), undefined, ", ") : ""
+						readonly property string costs_string: military_unit_type !== null ? costs_to_single_line_string(country_game_data.military.get_military_unit_type_commodity_costs_qvariant_list(military_unit_type, 1)) : ""
 						readonly property string stats_string: military_unit_type !== null ? military_unit_type.get_stats_for_country_qstring(metternich.game.player_country) : ""
 						
 						onClicked: {

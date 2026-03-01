@@ -20,8 +20,7 @@ Item {
 		anchors.horizontalCenter: parent.horizontalCenter
 		icon_identifier: country_game_data.government_type.icon.identifier
 		name: country_game_data.government_type.name
-		tooltip: country_game_data.government_type.name + (modifier_string.length > 0 ? format_text(small_text("\n"
-			+ "\n" + modifier_string)) : "")
+		description: modifier_string
 		
 		readonly property string modifier_string: country_game_data.government_type.get_modifier_string(country)
 	}
@@ -41,9 +40,8 @@ Item {
 		anchors.horizontalCenter: parent.horizontalCenter
 		icon_identifier: domain_tier_data.icon.identifier
 		name: domain_tier_data.name
-		tooltip: domain_tier_data.name + (modifier_string.length > 0 ? format_text(small_text("\n"
-			+ "\n" + modifier_string)) : "")
-			
+		description: modifier_string
+		
 		readonly property var domain_tier_data: metternich.get_domain_tier_data(country_game_data.tier)
 		readonly property string modifier_string: domain_tier_data.get_modifier_string(country)
 	}
@@ -87,7 +85,6 @@ Item {
 							text: law.name
 							checked: law === current_law
 							checkable: !checked && country_game_data.government.laws.length > 0 && country_game_data.government.can_enact_law(law)
-							tooltip: tooltip_string.length > 0 ? format_text(small_text(tooltip_string)) : ""
 							visible: country_game_data.government.laws.length > 0 && country_game_data.government.can_have_law(law)
 							onCheckedChanged: {
 								if (law === current_law) {
@@ -96,11 +93,21 @@ Item {
 								
 								country_game_data.government.enact_law(law)
 							}
+							onHoveredChanged: {
+								if (hovered) {
+									status_text = law.name
+									middle_status_text = costs_string
+									right_status_text = modifier_string
+								} else if (status_text === law.name) {
+									status_text = ""
+									middle_status_text = ""
+									right_status_text = ""
+								}
+							}
 							
 							readonly property var law: model.modelData
-							readonly property string costs_string: law !== current_law ? costs_to_string(law.commodity_costs, country_game_data.government.get_total_law_cost_modifier()) : ""
-							readonly property string modifier_string: law.get_modifier_string(country)
-							readonly property string tooltip_string: costs_string + (costs_string.length > 0 && modifier_string.length > 0 ? "\n" : "") + modifier_string
+							readonly property string costs_string: law !== current_law ? ("Costs: " + costs_to_single_line_string(law.commodity_costs, country_game_data.government.get_total_law_cost_modifier())) : ""
+							readonly property string modifier_string: format_text(law.get_modifier_string(country))
 						}
 					}
 				}

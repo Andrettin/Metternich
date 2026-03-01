@@ -330,7 +330,7 @@ QString government_type::get_modifier_string(const metternich::domain *domain) c
 		return QString();
 	}
 
-	return QString::fromStdString(this->get_modifier()->get_string(domain));
+	return QString::fromStdString(this->get_modifier()->get_single_line_string(domain));
 }
 
 }

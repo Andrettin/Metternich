@@ -293,6 +293,10 @@ ApplicationWindow {
 		return str
 	}
 	
+	function costs_to_single_line_string(costs, modifier, separator = "\n\t", wealth_cost = 0) {
+		return costs_to_string(costs, modifier, ", ", wealth_cost)
+	}
+	
 	function object_counts_to_string(object_counts) {
 		var str = ""
 		

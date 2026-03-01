@@ -87,12 +87,12 @@ QString law::get_modifier_string(const metternich::domain *domain) const
 	std::string str;
 
 	if (this->get_modifier() != nullptr) {
-		str += this->get_modifier()->get_string(domain);
+		str += this->get_modifier()->get_single_line_string(domain);
 	}
 
 	if (this->get_succession_type() != succession_type::none) {
 		if (!str.empty()) {
-			str += "\n";
+			str += ", ";
 		}
 
 		str += std::format("{} Succession", string::from_snake_case(magic_enum::enum_name(this->get_succession_type())));
