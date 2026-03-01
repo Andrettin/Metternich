@@ -1,0 +1,11 @@
+austro_sardinian_war = {
+	name = "Austro-Sardinian War"
+	parent_scenario = restoration_of_europe
+	start_date = 1859
+	map_template = central_europe
+	hidden = true
+	default_countries = {
+		austria
+		sardinia
+	}
+}

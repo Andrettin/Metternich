@@ -273,6 +273,12 @@ austria = {
 			}
 		}
 		
+		1848.12.2 = {
+			offices = {
+				ruler = franz_joseph_i_of_austria #Franz Joseph I von Habsburg succeeded Ferdinand as Emperor of Austria on 1848.12.2; Source: Waltraud Heindl, "Josephinische Mandarine", 2013, p. 48; Source: Pieter M. Judson, "The Habsburg Empire: A New History", 2016, p. 215.
+			}
+		}
+		
 		1850 = {
 			literacy_rate = 60 #50-70% of adults; Source: Eric J. Hobsbawm, "A Era do Capital 1848-1875", 1977, p. 522.
 		}

@@ -821,6 +821,35 @@ ferdinand_i_of_austria = { #Ferdinand von Habsburg, Emperor Ferdinand I of Austr
 	}
 }
 
+franz_von_habsburg = { #Archduke Franz; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 10-11.
+	name = "Franz"
+	dynasty = habsburg
+	character_class = warrior
+	culture = austrian
+	religion = catholic
+	home_site = vienna
+	gender = male
+	father = franz_i_of_austria
+	mother = maria_theresa_de_bourbon #Maria Theresa de Bourbon
+	birth_date = 1802.12.7
+	traits = {
+		#tough_soldier
+	}
+	
+	history = {
+		1824.11.4 = { #married on 1824.11.4
+			#spouse = 10000018 #Friederike Sophie Dorothee von Wittelsbach
+		}
+		
+		1847 = { #FMLieut. and proprietary of the 52nd infantry regiment as of 1847
+			country = austria
+			#effect = {
+			#	make_commander_effect = yes
+			#}
+		}
+	}
+}
+
 stefan_franz_von_habsburg = { #Stefan Franz Victor von Habsburg; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 12.
 	name = "Stefan Franz" #"Stefan Franz Victor" #source gives "Etienne-François-Victor"
 	dynasty = habsburg
@@ -1069,6 +1098,35 @@ heinrich_anton_von_habsburg = { #Heinrich Anton Maria von Habsburg; Source: "Alm
 	
 	history = {
 		1847 = { #imperial and royal colonel of the regiment "Archduke Karl", number 3, as of 1847
+			country = austria
+			#effect = {
+			#	make_commander_effect = yes
+			#}
+		}
+	}
+}
+
+franz_joseph_i_of_austria = { #Emperor Franz Joseph I of Austria; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 11.
+	name = "Franz Joseph"
+	dynasty = habsburg
+	character_class = warrior #emperor
+	rank = lord
+	culture = austrian
+	religion = catholic
+	home_site = vienna
+	gender = male
+	father = franz_von_habsburg #Archduke Franz
+	#mother = 10000018 #Friederike Sophie Dorothee von Wittelsbach
+	birth_date = 1830.8.18
+	death_date = 1916 #died in 1916; Source: Pieter M. Judson, "The Habsburg Empire: A New History", 2016, p. 215.
+	traits = {
+		#tough_soldier
+		#diligent
+	}
+	
+	history = {
+		1847 = { #colonel and proprietary of the 3rd dragoons regiment as of 1847
+			#traits += cavalry_leader
 			country = austria
 			#effect = {
 			#	make_commander_effect = yes
