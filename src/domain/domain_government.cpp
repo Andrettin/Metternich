@@ -700,7 +700,7 @@ bool domain_government::can_have_office_holder(const office *office, const chara
 			return false;
 		}
 
-		if (office->is_heir() && character_game_data->get_office() != nullptr && (character_game_data->get_office()->is_ruler() || character_game_data->get_office()->is_heir())) {
+		if (office->is_heir() && character_game_data->get_office() != nullptr && (character_game_data->get_office()->is_ruler() || (character_game_data->get_office()->is_heir() && this->domain != character_game_data->get_domain()))) {
 			return false;
 		}
 	} else {
