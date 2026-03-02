@@ -270,35 +270,20 @@ const character *domain_government::calculate_heir_by_descent_for_character(cons
 	disqualified_characters.insert(character);
 
 	//children are expected to be sorted by birth order
-	std::vector<const metternich::character *> children = character->get_game_data()->get_children();
+	const std::vector<const metternich::character *> children = character->get_game_data()->get_children();
+	std::vector<const metternich::character *> primary_children = children;
 
 	switch (succession_gender_type) {
 		case succession_gender_type::agnatic:
-			std::erase_if(children, [](const metternich::character *child) {
+		case succession_gender_type::agnatic_cognatic:
+			std::erase_if(primary_children, [](const metternich::character *child) {
 				return child->get_gender() != gender::male;
 			});
 			break;
-		case succession_gender_type::agnatic_cognatic:
-			std::sort(children.begin(), children.end(), [](const metternich::character *lhs, const metternich::character *rhs) {
-				if (lhs->get_gender() != rhs->get_gender()) {
-					return lhs->get_gender() == gender::male;
-				}
-
-				return character_base::birth_date_compare(lhs, rhs);
-			});
-			break;
 		case succession_gender_type::enatic:
-			std::erase_if(children, [](const metternich::character *child) {
-				return child->get_gender() != gender::female;
-			});
-			break;
 		case succession_gender_type::enatic_cognatic:
-			std::sort(children.begin(), children.end(), [](const metternich::character *lhs, const metternich::character *rhs) {
-				if (lhs->get_gender() != rhs->get_gender()) {
-					return lhs->get_gender() == gender::female;
-				}
-
-				return character_base::birth_date_compare(lhs, rhs);
+			std::erase_if(primary_children, [](const metternich::character *child) {
+				return child->get_gender() != gender::female;
 			});
 			break;
 		case succession_gender_type::cognatic:
@@ -308,8 +293,49 @@ const character *domain_government::calculate_heir_by_descent_for_character(cons
 			break;
 	}
 
-	for (size_t i = 0; i < children.size(); ++i) {
-		const metternich::character *child = succession_type == succession_type::ultimogeniture ? children.at(children.size() - 1 - i) : children.at(i);
+	for (size_t i = 0; i < primary_children.size(); ++i) {
+		const metternich::character *child = succession_type == succession_type::ultimogeniture ? primary_children.at(primary_children.size() - 1 - i) : primary_children.at(i);
+
+		if (disqualified_characters.contains(child)) {
+			continue;
+		}
+
+		if (this->can_appoint_office_holder(defines::get()->get_heir_office(), child)) {
+			return child;
+		}
+
+		const metternich::character *child_heir = this->calculate_heir_by_descent_for_character(child, disqualified_characters, succession_type, succession_gender_type);
+		if (child_heir != nullptr) {
+			return child_heir;
+		}
+	}
+
+	std::vector<const metternich::character *> secondary_children;
+
+	switch (succession_gender_type) {
+		case succession_gender_type::agnatic_cognatic:
+			secondary_children = children;
+			std::erase_if(secondary_children, [](const metternich::character *child) {
+				return child->get_gender() == gender::male;
+			});
+			break;
+		case succession_gender_type::enatic_cognatic:
+			secondary_children = children;
+			std::erase_if(secondary_children, [](const metternich::character *child) {
+				return child->get_gender() == gender::female;
+			});
+			break;
+		case succession_gender_type::agnatic:
+		case succession_gender_type::enatic:
+		case succession_gender_type::cognatic:
+			break;
+		default:
+			assert_throw(false);
+			break;
+	}
+
+	for (size_t i = 0; i < secondary_children.size(); ++i) {
+		const metternich::character *child = succession_type == succession_type::ultimogeniture ? secondary_children.at(secondary_children.size() - 1 - i) : secondary_children.at(i);
 
 		if (disqualified_characters.contains(child)) {
 			continue;
