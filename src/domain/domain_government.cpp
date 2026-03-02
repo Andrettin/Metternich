@@ -711,7 +711,7 @@ bool domain_government::can_have_office_holder(const office *office, const chara
 	}
 
 	for (const skill *skill : office->get_skills()) {
-		if (character_game_data->get_skill_value(skill) <= 0) {
+		if (!character_game_data->is_skill_trained(skill) || character_game_data->get_skill_value(skill) <= 0) {
 			return false;
 		}
 	}
