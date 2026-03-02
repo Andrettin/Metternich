@@ -6,9 +6,6 @@ chancellor = {
 	skills = {
 		diplomacy
 	}
-	conditions = {
-		game_rule = offices
-	}
 }
 
 high_admiral = {
@@ -36,9 +33,6 @@ marshal = {
 		siegecraft
 		strategy
 	}
-	conditions = {
-		game_rule = offices
-	}
 }
 
 royal_enforcer = {
@@ -47,9 +41,6 @@ royal_enforcer = {
 	attribute = intelligence
 	skills = {
 		law
-	}
-	conditions = {
-		game_rule = offices
 	}
 }
 
@@ -60,9 +51,6 @@ spymaster = {
 	skills = {
 		intrigue
 	}
-	conditions = {
-		game_rule = offices
-	}
 }
 
 treasurer = {
@@ -72,8 +60,5 @@ treasurer = {
 	attribute = intelligence
 	skills = {
 		administration
-	}
-	conditions = {
-		game_rule = offices
 	}
 }
