@@ -7,6 +7,7 @@ namespace metternich {
 
 class character;
 class character_attribute;
+class skill;
 
 template <typename scope_type>
 class and_condition;
@@ -50,6 +51,11 @@ public:
 		return this->attribute;
 	}
 
+	const std::vector<const skill *> &get_skills() const
+	{
+		return this->skills;
+	}
+
 	const and_condition<domain> *get_conditions() const
 	{
 		return this->conditions.get();
@@ -66,6 +72,7 @@ signals:
 private:
 	bool minister = false;
 	const character_attribute *attribute = nullptr;
+	std::vector<const skill *> skills;
 	std::unique_ptr<const and_condition<domain>> conditions;
 	std::unique_ptr<const and_condition<character>> holder_conditions;
 };

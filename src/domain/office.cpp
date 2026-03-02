@@ -3,6 +3,7 @@
 #include "domain/office.h"
 
 #include "character/character_attribute.h"
+#include "character/skill.h"
 #include "database/defines.h"
 #include "script/condition/and_condition.h"
 #include "util/assert_util.h"
@@ -20,8 +21,13 @@ office::~office()
 void office::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
+	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "conditions") {
+	if (tag == "skills") {
+		for (const std::string &value : values) {
+			this->skills.push_back(skill::get(value));
+		}
+	} else if (tag == "conditions") {
 		auto conditions = std::make_unique<and_condition<domain>>();
 		conditions->process_gsml_data(scope);
 		this->conditions = std::move(conditions);

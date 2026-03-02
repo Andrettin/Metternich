@@ -628,8 +628,7 @@ const character *domain_government::get_best_office_holder(const office *office)
 	}
 
 	std::vector<const character *> potential_holders;
-	int best_attribute_value = 0;
-	int best_reputation = 0;
+	int best_score = 0;
 
 	for (const character *character : this->get_appointable_office_holders(office)) {
 		if (!this->can_appoint_office_holder(office, character)) {
@@ -638,24 +637,22 @@ const character *domain_government::get_best_office_holder(const office *office)
 
 		const character_game_data *character_game_data = character->get_game_data();
 
-		if (office->is_ruler()) {
-			if (character_game_data->get_reputation() > best_reputation) {
-				potential_holders.clear();
-				best_reputation = character_game_data->get_reputation();
-				best_attribute_value = 0;
-			} else if (character_game_data->get_reputation() < best_reputation) {
-				continue;
-			}
+		int score = character_game_data->get_attribute_value(office->get_attribute());
+
+		for (const skill *skill : office->get_skills()) {
+			score += character_game_data->get_skill_value(skill);
 		}
 
-		const int attribute_value = character_game_data->get_attribute_value(office->get_attribute());
+		if (office->is_ruler()) {
+			score += (character_game_data->get_reputation() - character_game_data->get_bloodline_strength()) + character_game_data->get_bloodline_strength();
+		}
 
-		if (attribute_value < best_attribute_value) {
+		if (score < best_score) {
 			continue;
 		}
 
-		if (attribute_value > best_attribute_value) {
-			best_attribute_value = attribute_value;
+		if (score > best_score) {
+			best_score = score;
 			potential_holders.clear();
 		}
 
@@ -683,11 +680,11 @@ bool domain_government::can_have_office_holder(const office *office, const chara
 	}
 
 	//FIXME: instead of checking the character dates, have a list of characters in the game object, and add characters to it as appropriate
-	if (game::get()->get_date() < character->get_game_data()->get_start_date()) {
+	if (game::get()->get_date() < character_game_data->get_start_date()) {
 		return false;
 	}
 
-	if (character->get_game_data()->get_death_date().isValid() && game::get()->get_date() >= character->get_game_data()->get_death_date()) {
+	if (character_game_data->get_death_date().isValid() && game::get()->get_date() >= character_game_data->get_death_date()) {
 		return false;
 	}
 
@@ -711,6 +708,12 @@ bool domain_government::can_have_office_holder(const office *office, const chara
 
 	if (office->get_holder_conditions() != nullptr && !office->get_holder_conditions()->check(character, read_only_context(character))) {
 		return false;
+	}
+
+	for (const skill *skill : office->get_skills()) {
+		if (character_game_data->get_skill_value(skill) <= 0) {
+			return false;
+		}
 	}
 
 	return true;
