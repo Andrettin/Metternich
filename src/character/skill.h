@@ -10,6 +10,7 @@ namespace metternich {
 
 class character_attribute;
 class icon;
+class skill_group;
 
 class skill final : public named_data_entry, public data_type<skill>
 {
@@ -71,6 +72,11 @@ public:
 		return this->trained_only;
 	}
 
+	const std::vector<const skill_group *> &get_groups() const
+	{
+		return this->groups;
+	}
+
 signals:
 	void changed();
 
@@ -82,6 +88,7 @@ private:
 	bool trained_only = true;
 	bool find_traps = false;
 	bool disarm_traps = false;
+	std::vector<const skill_group *> groups;
 };
 
 }

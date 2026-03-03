@@ -48,7 +48,7 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 		}
 	} else if (tag == "class_skill_groups") {
 		for (const std::string &value : values) {
-			this->class_skill_groups.push_back(skill_group::get(value));
+			this->class_skill_groups.insert(skill_group::get(value));
 		}
 	} else if (tag == "allowed_species") {
 		for (const std::string &value : values) {
@@ -127,17 +127,6 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 	}
 }
 
-void character_class::initialize()
-{
-	for (const skill_group *skill_group : this->class_skill_groups) {
-		for (const skill *group_skill : skill_group->get_skills()) {
-			this->class_skills.insert(group_skill);
-		}
-	}
-
-	named_data_entry::initialize();
-}
-
 void character_class::check() const
 {
 	if (this->get_attribute() == nullptr) {
@@ -163,8 +152,8 @@ void character_class::check() const
 		}
 	}
 
-	if (this->get_class_skills().empty()) {
-		throw std::runtime_error(std::format("Character class \"{}\" has no class skills.", this->get_identifier()));
+	if (this->get_class_skills().empty() && this->get_class_skill_groups().empty()) {
+		throw std::runtime_error(std::format("Character class \"{}\" has neither class skills nor class skill groups.", this->get_identifier()));
 	}
 
 	for (const species *species : this->allowed_species) {
@@ -185,6 +174,17 @@ metternich::starting_age_category character_class::get_starting_age_category() c
 	}
 
 	return starting_age_category::none;
+}
+
+bool character_class::has_class_skill(const skill *skill) const
+{
+	for (const skill_group *skill_group : skill->get_groups()) {
+		if (this->get_class_skill_groups().contains(skill_group)) {
+			return true;
+		}
+	}
+
+	return this->get_class_skills().contains(skill);
 }
 
 bool character_class::is_allowed_for_species(const species *species) const

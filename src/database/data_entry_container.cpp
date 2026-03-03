@@ -6,6 +6,7 @@
 #include "character/monster_type.h"
 #include "character/saving_throw_type.h"
 #include "character/skill.h"
+#include "character/skill_group.h"
 #include "character/status_effect.h"
 #include "character/trait.h"
 #include "character/trait_type.h"
@@ -63,6 +64,7 @@ template struct data_entry_compare<saving_throw_type>;
 template struct data_entry_compare<site_attribute>;
 template struct data_entry_compare<site_feature>;
 template struct data_entry_compare<skill>;
+template struct data_entry_compare<skill_group>;
 template struct data_entry_compare<species>;
 template struct data_entry_compare<status_effect>;
 template struct data_entry_compare<subject_type>;

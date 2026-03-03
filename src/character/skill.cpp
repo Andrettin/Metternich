@@ -16,6 +16,7 @@ void skill::process_gsml_scope(const gsml_data &scope)
 	if (tag == "groups") {
 		for (const std::string &value : values) {
 			skill_group *group = skill_group::get(value);
+			this->groups.push_back(group);
 			group->add_skill(this);
 		}
 	} else {

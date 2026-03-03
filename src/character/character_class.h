@@ -49,7 +49,6 @@ public:
 	~character_class();
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
-	virtual void initialize() override;
 	virtual void check() const override;
 
 	const character_class *get_base_class() const
@@ -145,10 +144,20 @@ public:
 		return this->class_skills;
 	}
 
-	bool has_class_skill(const skill *skill) const
+	const data_entry_set<skill_group> &get_class_skill_groups() const
 	{
-		return this->get_class_skills().contains(skill);
+		if (!this->class_skill_groups.empty()) {
+			return this->class_skill_groups;
+		}
+
+		if (this->get_base_class() != nullptr) {
+			return this->get_base_class()->get_class_skill_groups();
+		}
+
+		return this->class_skill_groups;
 	}
+
+	bool has_class_skill(const skill *skill) const;
 
 	bool is_allowed_for_species(const species *species) const;
 	void add_allowed_species(const species *species);
@@ -231,7 +240,7 @@ private:
 	const level_bonus_table *to_hit_bonus_table = nullptr;
 	data_entry_map<saving_throw_type, const level_bonus_table *> saving_throw_bonus_tables;
 	data_entry_set<skill> class_skills;
-	std::vector<const skill_group *> class_skill_groups;
+	data_entry_set<skill_group> class_skill_groups;
 	std::vector<const species *> allowed_species;
 	std::vector<const holding_type *> allowed_holding_types;
 	std::vector<const holding_type *> favored_holding_types;
