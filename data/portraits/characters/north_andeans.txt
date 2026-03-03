@@ -6,7 +6,10 @@ simon_bolivar = {
 			culture = castillian #Colombian/Venezuelan
 			culture = brazilian
 		}
-		character_class = warrior
+		or = {
+			character_class = aristocrat
+			character_class = warrior
+		}
 		birth_year >= 1750
 	}
 }

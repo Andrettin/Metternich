@@ -1,7 +1,7 @@
 elisabeth_von_gorz_tirol = { #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 244.
 	name = "Elisabeth"
 	surname = "von Gorz-Tirol" #"von Görz-Tirol"
-	character_class = warrior #aristocrat
+	character_class = aristocrat
 	culture = austrian
 	religion = catholic
 	gender = female

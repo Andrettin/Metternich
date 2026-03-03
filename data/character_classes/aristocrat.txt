@@ -1,0 +1,13 @@
+aristocrat = {
+	name = "Aristocrat"
+	base_class = warrior
+	military_unit_category = general
+	max_level = 20
+	class_skills = {
+		animal_handling
+		diplomacy
+		disguise
+		forgery
+		swimming
+	}
+}

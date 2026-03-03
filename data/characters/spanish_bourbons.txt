@@ -1,7 +1,7 @@
 maria_luisa_de_bourbon = { #Maria Luisa, daughter of king Carlos III of Spain; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 11.
 	name = "Maria Luisa"
 	dynasty = bourbon
-	character_class = warrior #aristocrat
+	character_class = aristocrat
 	culture = castillian
 	religion = catholic
 	home_site = madrid
@@ -17,7 +17,7 @@ maria_luisa_de_bourbon = { #Maria Luisa, daughter of king Carlos III of Spain; S
 maria_luisa_of_lucca = { #Duchess Maria Luisa of Lucca; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 50.
 	name = "Maria Luisa"
 	dynasty = bourbon
-	character_class = warrior #aristocrat
+	character_class = aristocrat
 	rank = lord #duchess
 	culture = castillian
 	religion = catholic

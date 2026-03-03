@@ -1,7 +1,7 @@
 helena_arpad = {
 	name = "Helena"
 	dynasty = arpad
-	character_class = warrior #aristocrat
+	character_class = aristocrat
 	culture = magyar
 	religion = catholic
 	gender = female

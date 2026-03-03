@@ -17,6 +17,7 @@ oligarchy = {
 		}
 	}
 	ruler_character_classes = {
+		aristocrat
 		rogue
 		warrior
 	}

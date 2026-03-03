@@ -4,6 +4,7 @@ louis_xiv = {
 		gender = male
 		culture = french
 		or = {
+			character_class = aristocrat
 			character_class = warrior
 			character_class = paladin
 		}

@@ -12,7 +12,8 @@ elizabeth_i_of_england = {
 			cultural_group = african
 		}
 		or = {
-			character_class = warrior #aristocrat
+			character_class = aristocrat
+			character_class = warrior
 			character_class = paladin
 		}
 		birth_year >= 1500

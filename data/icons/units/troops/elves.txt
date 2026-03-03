@@ -11,6 +11,7 @@ elven_archer = {
 			and = {
 				species = half_elf
 				or = {
+					character_class = aristocrat
 					character_class = ranger
 					character_class = warrior
 				}

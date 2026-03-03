@@ -1,7 +1,7 @@
 ferdinando_of_parma = { #Duke Ferdinand of Parma; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 5.
 	name = "Ferdinando"
 	dynasty = bourbon
-	character_class = warrior
+	character_class = aristocrat
 	rank = lord #duke
 	culture = italian
 	religion = catholic
@@ -12,7 +12,7 @@ ferdinando_of_parma = { #Duke Ferdinand of Parma; Source: "Gothaischer Hofkalend
 carolina_maria_of_parma = { #Princess Carolina Maria Teresa of Parma; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 6.
 	name = "Carolina Maria" #"Carolina Maria Teresa"
 	dynasty = bourbon
-	character_class = warrior #aristocrat
+	character_class = aristocrat
 	culture = italian
 	religion = catholic
 	home_site = parma

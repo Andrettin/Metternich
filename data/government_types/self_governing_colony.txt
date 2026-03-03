@@ -18,6 +18,7 @@ self_governing_colony = {
 		}
 	}
 	ruler_character_classes = {
+		aristocrat
 		rogue
 		warrior
 	}

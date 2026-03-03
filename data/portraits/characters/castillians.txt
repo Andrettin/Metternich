@@ -14,6 +14,7 @@ philip_ii_of_spain = {
 			cultural_group = asian
 		}
 		or = {
+			character_class = aristocrat
 			character_class = warrior
 			character_class = paladin
 		}

@@ -10,6 +10,7 @@ longswordsmen = {
 			species = water_elemental
 		}
 		or = {
+			character_class = aristocrat
 			character_class = paladin
 			character_class = warrior
 			species = titan

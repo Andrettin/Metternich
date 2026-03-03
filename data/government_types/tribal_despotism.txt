@@ -16,6 +16,7 @@ tribal_despotism = {
 		}
 	}
 	ruler_character_classes = {
+		aristocrat
 		warrior
 	}
 }

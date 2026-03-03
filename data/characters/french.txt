@@ -187,7 +187,7 @@ louis_xiv_of_france = {
 
 marie_laetitia = { #Source: "Almanach de Gotha pour l'année 1813", 1813, p. 4.
 	name = "Marie-Laetitia"
-	character_class = warrior #aristocrat?
+	character_class = aristocrat #correct?
 	culture = french
 	religion = catholic
 	home_site = paris #correct?
@@ -197,7 +197,7 @@ marie_laetitia = { #Source: "Almanach de Gotha pour l'année 1813", 1813, p. 4.
 
 josephine = { #Source: "Almanach de Gotha pour l'année 1813", 1813, p. 4.
 	name = "Josephine" #"Joséphine"
-	character_class = warrior #aristocrat?
+	character_class = aristocrat #correct?
 	culture = french
 	religion = catholic
 	home_site = paris #correct?
@@ -207,7 +207,7 @@ josephine = { #Source: "Almanach de Gotha pour l'année 1813", 1813, p. 4.
 
 antoinette = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, pp. 24-25.
 	name = "Antoinette"
-	character_class = warrior #aristocrat?
+	character_class = aristocrat #correct?
 	culture = french
 	religion = catholic
 	home_site = paris #correct?

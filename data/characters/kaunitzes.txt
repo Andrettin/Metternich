@@ -1,7 +1,7 @@
 ernst_von_kaunitz = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 85.
 	name = "Ernst"
 	dynasty = kaunitz
-	character_class = warrior
+	character_class = aristocrat
 	culture = german #Saxon/Westphalian
 	religion = catholic
 	home_site = minden #Rietberg
@@ -14,7 +14,7 @@ ernst_von_kaunitz = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnüge
 marie_eleonore_von_kaunitz = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 85.
 	name = "Marie Eleonore"
 	dynasty = kaunitz
-	character_class = warrior #aristocrat
+	character_class = aristocrat
 	culture = german #Saxon/Westphalian
 	religion = catholic
 	home_site = minden #Rietberg #correct?

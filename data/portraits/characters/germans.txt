@@ -6,7 +6,10 @@ frederick_the_great = {
 			culture = german
 			culture = polish
 		}
-		character_class = warrior
+		or = {
+			character_class = aristocrat
+			character_class = warrior
+		}
 		birth_year >= 1700
 	}
 }
@@ -72,7 +75,8 @@ otto_von_bismarck = {
 			cultural_group = asian
 		}
 		or = {
-			character_class = warrior #aristocrat
+			character_class = aristocrat
+			character_class = warrior
 			species = air_elemental
 			species = earth_elemental
 			species = triton

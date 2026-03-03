@@ -13,7 +13,7 @@ cranaus = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 
 
 atthis = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 94.
 	name = "Atthis"
-	character_class = warrior #aristocrat
+	character_class = aristocrat
 	culture = greek
 	religion = hellenic
 	home_site = athens
@@ -70,7 +70,7 @@ erechtheus = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, 
 
 butes = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 500.
 	name = "Butes"
-	character_class = warrior #aristocrat
+	character_class = aristocrat
 	culture = greek
 	religion = hellenic
 	home_site = athens
@@ -81,7 +81,7 @@ butes = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 50
 
 procne = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 500.
 	name = "Procne"
-	character_class = warrior #aristocrat
+	character_class = aristocrat
 	culture = greek
 	religion = hellenic
 	home_site = athens
@@ -92,7 +92,7 @@ procne = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 5
 
 philomela = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 500.
 	name = "Philomela"
-	character_class = warrior #aristocrat
+	character_class = aristocrat
 	culture = greek
 	religion = hellenic
 	home_site = athens
@@ -103,7 +103,7 @@ philomela = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p
 
 cecrops = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 507.
 	name = "Cecrops"
-	character_class = warrior #aristocrat
+	character_class = aristocrat
 	culture = greek
 	religion = hellenic
 	home_site = athens
@@ -113,7 +113,7 @@ cecrops = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 
 
 pandion_ii = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 507.
 	name = "Pandion"
-	character_class = warrior #aristocrat
+	character_class = aristocrat
 	culture = greek
 	religion = hellenic
 	home_site = athens
@@ -123,7 +123,7 @@ pandion_ii = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, 
 
 aegeus = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 507.
 	name = "Aegeus"
-	character_class = warrior #aristocrat
+	character_class = aristocrat
 	culture = greek
 	religion = hellenic
 	home_site = athens

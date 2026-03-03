@@ -6,6 +6,9 @@ william_the_silent = {
 			culture = dutch
 			culture = english
 		}
-		character_class = warrior
+		or = {
+			character_class = aristocrat
+			character_class = warrior
+		}
 	}
 }
