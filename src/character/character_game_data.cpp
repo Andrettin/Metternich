@@ -656,10 +656,6 @@ void character_game_data::apply_history(const QDate &start_date)
 
 void character_game_data::on_setup_finished()
 {
-	for (const trait *trait : this->character->get_traits()) {
-		this->change_trait_count(trait, 1);
-	}
-
 	this->check_portrait();
 	this->check_icon();
 
