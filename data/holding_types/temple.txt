@@ -1,6 +1,6 @@
 temple = {
 	name = "Temple"
-	icon = alliance_ring
+	icon = temple
 	portrait = temple
 	image_filepath = "tiles/settlements/town.png"
 	religious = true

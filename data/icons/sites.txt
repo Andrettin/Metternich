@@ -1,0 +1,15 @@
+dungeon = {
+	filepath = "icons/sites/dungeon.png"
+}
+
+dungeon_door = {
+	filepath = "icons/sites/dungeon_door.png"
+}
+
+law = {
+	filepath = "icons/sites/law.png"
+}
+
+temple = {
+	filepath = "icons/sites/temple.png"
+}

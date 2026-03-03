@@ -1,6 +1,6 @@
 law = { #administrative center
 	name = "Law"
-	icon = non_aggression_pact_shield
+	icon = law
 	portrait = aristocratic_palace
 	image_filepath = "tiles/settlements/town.png"
 	political = true
