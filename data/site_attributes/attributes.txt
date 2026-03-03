@@ -15,12 +15,24 @@ law = {
 
 lore = {
 	name = "Lore"
+	affected_skills = {
+		astrology
+		heraldry
+		religion
+	}
 }
 
 productivity = {
 	name = "Productivity"
 	affected_skills = {
 		agriculture
+		armorer
+		blacksmithing
+		cooking
+		herbalism
+		pottery
+		weaponsmithing
+		weaving
 	}
 }
 
