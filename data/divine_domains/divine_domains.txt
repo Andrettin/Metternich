@@ -22,6 +22,10 @@ combat = {
 	name = "Combat"
 }
 
+community = {
+	name = "Community"
+}
+
 creation = {
 	name = "Creation"
 }
