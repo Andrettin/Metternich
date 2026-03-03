@@ -148,15 +148,7 @@ public:
 		return std::numeric_limits<int>::max();
 	}
 
-	int get_character_class_level_limit(const character_class *character_class) const
-	{
-		const auto find_iterator = this->character_class_level_limits.find(character_class);
-		if (find_iterator != this->character_class_level_limits.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
+	int get_character_class_level_limit(const character_class *character_class) const;
 
 	const metternich::modifier<const character> *get_modifier() const
 	{

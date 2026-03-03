@@ -264,4 +264,18 @@ bool species::is_prehistoric() const
 	return this->get_era() < geological_era::holocene;
 }
 
+int species::get_character_class_level_limit(const character_class *character_class) const
+{
+	const auto find_iterator = this->character_class_level_limits.find(character_class);
+	if (find_iterator != this->character_class_level_limits.end()) {
+		return find_iterator->second;
+	}
+
+	if (character_class->get_base_class() != nullptr) {
+		return this->get_character_class_level_limit(character_class->get_base_class());
+	}
+
+	return 0;
+}
+
 }
