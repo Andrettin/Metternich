@@ -1683,7 +1683,7 @@ bool domain_game_data::is_playable() const
 		return false;
 	}
 
-	if (this->get_government()->get_ruler()->get_game_data()->get_character_class() == nullptr) {
+	if (!this->get_government()->get_ruler()->get_game_data()->is_playable()) {
 		return false;
 	}
 
@@ -1700,8 +1700,8 @@ QString domain_game_data::get_unplayable_reason() const
 		return "You cannot play as a domain without a ruler";
 	}
 
-	if (this->get_government()->get_ruler()->get_game_data()->get_character_class() == nullptr) {
-		return "You cannot play as a ruler without a character class";
+	if (!this->get_government()->get_ruler()->get_game_data()->is_playable()) {
+		return this->get_government()->get_ruler()->get_game_data()->get_unplayable_reason();
 	}
 
 	if (this->is_under_anarchy()) {

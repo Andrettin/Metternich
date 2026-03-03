@@ -162,6 +162,10 @@ public:
 
 	bool exists() const;
 	bool has_ever_existed() const;
+
+	bool is_playable() const;
+	QString get_unplayable_reason() const;
+
 	std::vector<const metternich::character *> get_children() const;
 	QVariantList get_children_qvariant_list() const;
 	std::vector<const metternich::character *> get_dynastic_children() const;

@@ -987,6 +987,32 @@ bool character_game_data::has_ever_existed() const
 	return this->is_dead();
 }
 
+bool character_game_data::is_playable() const
+{
+	if (this->get_character_class() == nullptr) {
+		return false;
+	}
+
+	if (this->character->is_innate_deity()) {
+		return false;
+	}
+
+	return true;
+}
+
+QString character_game_data::get_unplayable_reason() const
+{
+	if (this->get_character_class() == nullptr) {
+		return "You cannot play as a character without a character class";
+	}
+
+	if (this->character->is_innate_deity()) {
+		return "You cannot play as a deity";
+	}
+
+	return QString();
+}
+
 std::vector<const metternich::character *> character_game_data::get_children() const
 {
 	std::vector<const metternich::character *> children;
