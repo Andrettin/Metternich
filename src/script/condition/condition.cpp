@@ -80,6 +80,7 @@
 #include "script/condition/near_water_condition.h"
 #include "script/condition/owns_province_condition.h"
 #include "script/condition/owns_site_condition.h"
+#include "script/condition/playable_condition.h"
 #include "script/condition/population_scaled_commodity_condition.h"
 #include "script/condition/population_type_condition.h"
 #include "script/condition/produces_commodity_condition.h"
@@ -253,6 +254,8 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 	if constexpr (std::is_same_v<scope_type, character> || std::is_same_v<scope_type, domain>) {
 		if (key == "item") {
 			return std::make_unique<item_condition<scope_type>>(value, condition_operator);
+		} else if (key == "playable") {
+			return std::make_unique<playable_condition<scope_type>>(value, condition_operator);
 		} else if (key == "war") {
 			return std::make_unique<war_condition<scope_type>>(value, condition_operator);
 		}

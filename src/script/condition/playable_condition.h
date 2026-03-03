@@ -6,10 +6,10 @@
 namespace metternich {
 
 template <typename scope_type>
-class coastal_condition final : public condition<scope_type>
+class playable_condition final : public condition<scope_type>
 {
 public:
-	explicit coastal_condition(const std::string &value, const gsml_operator condition_operator)
+	explicit playable_condition(const std::string &value, const gsml_operator condition_operator)
 		: condition<scope_type>(condition_operator)
 	{
 		this->value = string::to_bool(value);
@@ -17,7 +17,7 @@ public:
 
 	virtual const std::string &get_class_identifier() const override
 	{
-		static const std::string class_identifier = "coastal";
+		static const std::string class_identifier = "playable";
 		return class_identifier;
 	}
 
@@ -25,7 +25,7 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		return scope->get_game_data()->is_coastal() == this->value;
+		return scope->get_game_data()->is_playable() == this->value;
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override
@@ -33,9 +33,9 @@ public:
 		Q_UNUSED(indent);
 
 		if (this->value) {
-			return "Coastal";
+			return "Playable";
 		} else {
-			return "Not coastal";
+			return "Not playable";
 		}
 	}
 
