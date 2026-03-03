@@ -195,6 +195,7 @@
 /graphics/icons/units/civilians/engineer_small.png (by Jinn) (licensed under the CC0)
 /graphics/icons/units/civilians/forester.png (by Jinn) (licensed under the CC0)
 /graphics/icons/units/civilians/forester_small.png (by Jinn) (licensed under the CC0)
+/graphics/icons/units/civilians/merchant.png (by Jinn) (licensed under the CC0)
 /graphics/icons/units/civilians/prospector.png (by Jinn) (licensed under the CC0)
 /graphics/icons/units/civilians/prospector_small.png (by Jinn) (licensed under the CC0)
 /graphics/icons/units/civilians/rancher.png (by Jinn) (licensed under the CC0)

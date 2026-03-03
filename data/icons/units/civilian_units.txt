@@ -37,6 +37,10 @@ forester_small = {
 	filepath = "icons/units/civilians/forester_small.png"
 }
 
+merchant = {
+	filepath = "icons/units/civilians/merchant.png"
+}
+
 prospector = {
 	filepath = "icons/units/civilians/prospector.png"
 }

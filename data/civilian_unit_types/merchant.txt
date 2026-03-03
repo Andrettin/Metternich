@@ -1,7 +1,7 @@
 merchant = {
 	name = "Merchant"
 	unit_class = merchant
-	icon = rifle_infantry_light
+	icon = merchant
 	developer = true
 	wealth_cost = 500
 	commodity_costs = {
