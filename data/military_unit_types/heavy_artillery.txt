@@ -1,7 +1,7 @@
 catapult = {
 	name = "Catapult"
 	unit_class = catapult
-	icon = artillery
+	icon = catapult
 	stats = {
 		hit_points = 2
 		movement = 1

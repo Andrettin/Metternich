@@ -212,6 +212,7 @@
 /graphics/icons/units/troops/artillerist.png (by Jinn) (licensed under the CC0)
 /graphics/icons/units/troops/artillery.png (by Jinn) (licensed under the CC0)
 /graphics/icons/units/troops/artillery_cannon.png (by Jinn) (licensed under the CC0)
+/graphics/icons/units/troops/catapult.png (by Jinn) (licensed under the CC0)
 /graphics/icons/units/troops/crossbowmen.png (by Jinn) (licensed under the CC0)
 /graphics/icons/units/troops/cuirassiers.png (by Jinn) (licensed under the CC0)
 /graphics/icons/units/troops/cuirassiers_ranged.png (by Jinn) (licensed under the CC0)
