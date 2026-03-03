@@ -20,6 +20,7 @@ agriculture = {
 	}
 	conditions = {
 		class_skill = agriculture
+		playable = false #only for flavor for NPCs, no mechanics added for it yet
 	}
 	modifier = {
 		skill_training = agriculture
@@ -34,6 +35,7 @@ animal_handling = {
 	}
 	conditions = {
 		class_skill = animal_handling
+		playable = false #only for flavor for NPCs, no mechanics added for it yet
 	}
 	modifier = {
 		skill_training = animal_handling
@@ -48,9 +50,25 @@ animal_training = {
 	}
 	conditions = {
 		class_skill = animal_training
+		playable = false #only for flavor for NPCs, no mechanics added for it yet
 	}
 	modifier = {
 		skill_training = animal_training
+	}
+}
+
+armorer = {
+	name = "Armorer"
+	icon = clothing
+	types = {
+		proficiency
+	}
+	conditions = {
+		class_skill = armorer
+		playable = false #only for flavor for NPCs, no mechanics added for it yet
+	}
+	modifier = {
+		skill_training = armorer
 	}
 }
 
@@ -62,6 +80,7 @@ artistic_ability = {
 	}
 	conditions = {
 		class_skill = artistic_ability
+		playable = false #only for flavor for NPCs, no mechanics added for it yet
 	}
 	modifier = {
 		skill_training = artistic_ability
@@ -76,9 +95,40 @@ astrology = {
 	}
 	conditions = {
 		class_skill = astrology
+		playable = false #only for flavor for NPCs, no mechanics added for it yet
 	}
 	modifier = {
 		skill_training = astrology
+	}
+}
+
+blacksmithing = {
+	name = "Blacksmithing"
+	icon = tools
+	types = {
+		proficiency
+	}
+	conditions = {
+		class_skill = blacksmithing
+		playable = false #only for flavor for NPCs, no mechanics added for it yet
+	}
+	modifier = {
+		skill_training = blacksmithing
+	}
+}
+
+cooking = {
+	name = "Cooking"
+	icon = tools
+	types = {
+		proficiency
+	}
+	conditions = {
+		class_skill = cooking
+		playable = false #only for flavor for NPCs, no mechanics added for it yet
+	}
+	modifier = {
+		skill_training = cooking
 	}
 }
 
@@ -104,6 +154,7 @@ disguise = {
 	}
 	conditions = {
 		class_skill = disguise
+		playable = false #only for flavor for NPCs, no mechanics added for it yet
 	}
 	modifier = {
 		skill_training = disguise
@@ -118,6 +169,7 @@ forgery = {
 	}
 	conditions = {
 		class_skill = forgery
+		playable = false #only for flavor for NPCs, no mechanics added for it yet
 	}
 	modifier = {
 		skill_training = forgery
@@ -132,9 +184,25 @@ heraldry = {
 	}
 	conditions = {
 		class_skill = heraldry
+		playable = false #only for flavor for NPCs, no mechanics added for it yet
 	}
 	modifier = {
 		skill_training = heraldry
+	}
+}
+
+herbalism = {
+	name = "Herbalism"
+	icon = tobacco
+	types = {
+		proficiency
+	}
+	conditions = {
+		class_skill = herbalism
+		playable = false #only for flavor for NPCs, no mechanics added for it yet
+	}
+	modifier = {
+		skill_training = herbalism
 	}
 }
 
@@ -180,6 +248,36 @@ leadership = {
 	}
 }
 
+pottery = {
+	name = "Pottery"
+	icon = glass
+	types = {
+		proficiency
+	}
+	conditions = {
+		class_skill = pottery
+		playable = false #only for flavor for NPCs, no mechanics added for it yet
+	}
+	modifier = {
+		skill_training = pottery
+	}
+}
+
+religion = {
+	name = "Religion"
+	icon = wooden_cross
+	types = {
+		proficiency
+	}
+	conditions = {
+		class_skill = religion
+		playable = false #only for flavor for NPCs, no mechanics added for it yet
+	}
+	modifier = {
+		skill_training = religion
+	}
+}
+
 siegecraft = {
 	name = "Siegecraft"
 	icon = cannon
@@ -216,8 +314,39 @@ swimming = {
 	}
 	conditions = {
 		class_skill = swimming
+		playable = false #only for flavor for NPCs, no mechanics added for it yet
 	}
 	modifier = {
 		skill_training = swimming
+	}
+}
+
+weaponsmithing = {
+	name = "Weaponsmithing"
+	icon = saber
+	types = {
+		proficiency
+	}
+	conditions = {
+		class_skill = weaponsmithing
+		playable = false #only for flavor for NPCs, no mechanics added for it yet
+	}
+	modifier = {
+		skill_training = weaponsmithing
+	}
+}
+
+weaving = {
+	name = "Weaving"
+	icon = fabric
+	types = {
+		proficiency
+	}
+	conditions = {
+		class_skill = weaving
+		playable = false #only for flavor for NPCs, no mechanics added for it yet
+	}
+	modifier = {
+		skill_training = weaving
 	}
 }

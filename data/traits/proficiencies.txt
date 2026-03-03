@@ -30,6 +30,146 @@ nimble_fingers = {
 	}
 }
 
+skill_focus_agriculture = {
+	name = "Skill Focus: Agriculture"
+	icon = grain
+	types = {
+		proficiency
+	}
+	conditions = {
+		skill_training = agriculture
+	}
+	modifier = {
+		agriculture = 3
+	}
+}
+
+skill_focus_armorer = {
+	name = "Skill Focus: Armorer"
+	icon = clothing
+	types = {
+		proficiency
+	}
+	conditions = {
+		skill_training = armorer
+	}
+	modifier = {
+		armorer = 3
+	}
+}
+
+skill_focus_blacksmithing = {
+	name = "Skill Focus: Blacksmithing"
+	icon = tools
+	types = {
+		proficiency
+	}
+	conditions = {
+		skill_training = blacksmithing
+	}
+	modifier = {
+		blacksmithing = 3
+	}
+}
+
+skill_focus_cooking = {
+	name = "Skill Focus: Cooking"
+	icon = tools
+	types = {
+		proficiency
+	}
+	conditions = {
+		skill_training = cooking
+	}
+	modifier = {
+		cooking = 3
+	}
+}
+
+skill_focus_diplomacy = {
+	name = "Skill Focus: Diplomacy"
+	icon = treaty
+	types = {
+		proficiency
+	}
+	conditions = {
+		skill_training = diplomacy
+	}
+	modifier = {
+		diplomacy = 3
+	}
+}
+
+skill_focus_herbalism = {
+	name = "Skill Focus: Herbalism"
+	icon = tobacco
+	types = {
+		proficiency
+	}
+	conditions = {
+		skill_training = herbalism
+	}
+	modifier = {
+		herbalism = 3
+	}
+}
+
+skill_focus_pottery = {
+	name = "Skill Focus: Pottery"
+	icon = glass
+	types = {
+		proficiency
+	}
+	conditions = {
+		skill_training = pottery
+	}
+	modifier = {
+		pottery = 3
+	}
+}
+
+skill_focus_religion = {
+	name = "Skill Focus: Religion"
+	icon = wooden_cross
+	types = {
+		proficiency
+	}
+	conditions = {
+		skill_training = religion
+	}
+	modifier = {
+		religion = 3
+	}
+}
+
+skill_focus_weaponsmithing = {
+	name = "Skill Focus: Weaponsmithing"
+	icon = saber
+	types = {
+		proficiency
+	}
+	conditions = {
+		skill_training = weaponsmithing
+	}
+	modifier = {
+		weaponsmithing = 3
+	}
+}
+
+skill_focus_weaving = {
+	name = "Skill Focus: Weaving"
+	icon = fabric
+	types = {
+		proficiency
+	}
+	conditions = {
+		skill_training = weaving
+	}
+	modifier = {
+		weaving = 3
+	}
+}
+
 toughness = {
 	name = "Toughness"
 	icon = labor

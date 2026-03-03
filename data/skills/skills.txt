@@ -40,6 +40,17 @@ animal_training = {
 	}
 }
 
+armorer = {
+	name = "Armorer"
+	icon = clothing
+	check_dice = 1d20
+	base_attribute = intelligence
+	base_value = -2
+	groups = {
+		warrior
+	}
+}
+
 artistic_ability = {
 	name = "Artistic Ability"
 	icon = painting
@@ -58,6 +69,26 @@ astrology = {
 	groups = {
 		mage
 		priest
+	}
+}
+
+blacksmithing = {
+	name = "Blacksmithing"
+	icon = tools
+	check_dice = 1d20
+	base_attribute = strength
+	groups = {
+		general
+	}
+}
+
+cooking = {
+	name = "Cooking"
+	icon = tools
+	check_dice = 1d20
+	base_attribute = intelligence
+	groups = {
+		general
 	}
 }
 
@@ -104,6 +135,18 @@ heraldry = {
 	}
 }
 
+herbalism = {
+	name = "Herbalism"
+	icon = tobacco
+	check_dice = 1d20
+	base_attribute = intelligence
+	base_value = -2
+	groups = {
+		mage
+		priest
+	}
+}
+
 intrigue = {
 	name = "Intrigue"
 	icon = dagger
@@ -136,6 +179,28 @@ leadership = {
 	}
 }
 
+pottery = {
+	name = "Pottery"
+	icon = glass
+	check_dice = 1d20
+	base_attribute = dexterity
+	base_value = -2
+	groups = {
+		general
+	}
+}
+
+religion = {
+	name = "Religion"
+	icon = wooden_cross
+	check_dice = 1d20
+	base_attribute = wisdom
+	groups = {
+		mage
+		priest
+	}
+}
+
 siegecraft = {
 	name = "Siegecraft"
 	icon = cannon
@@ -162,6 +227,28 @@ swimming = {
 	icon = anchor
 	check_dice = 1d20
 	base_attribute = strength
+	groups = {
+		general
+	}
+}
+
+weaponsmithing = {
+	name = "Weaponsmithing"
+	icon = saber
+	check_dice = 1d20
+	base_attribute = intelligence
+	base_value = -3
+	groups = {
+		warrior
+	}
+}
+
+weaving = {
+	name = "Weaving"
+	icon = fabric
+	check_dice = 1d20
+	base_attribute = intelligence
+	base_value = -1
 	groups = {
 		general
 	}
