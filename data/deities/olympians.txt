@@ -227,6 +227,14 @@ hephaestus = {
 		gender = male
 		father = zeus #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 504.
 		mother = hera #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 504.
+		traits = {
+			#armorer
+			#blacksmithing
+			#weaponsmithing
+			#skill_focus_armorer
+			#skill_focus_blacksmithing
+			#skill_focus_weaponsmithing
+		}
 	}
 }
 
@@ -256,6 +264,10 @@ hera = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 23
 		gender = female
 		father = cronus
 		mother = rhea
+		traits = {
+			#diplomacy
+			#skill_focus_diplomacy
+		}
 	}
 	
 	#goddess of marriage and childbirth
@@ -294,6 +306,41 @@ hermes = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 
 	#god of merchants and traders
 }
 
+hestia = {
+	name = "Hestia"
+	pantheon = olympian
+	divine_rank = lesser_deity
+	religions = {
+		hellenic
+	}
+	major_domains = {
+		community
+		protection
+	}
+	character = {
+		monster_type = trumpet_archon
+		culture = celestial
+		religion = hellenic
+		gender = female
+		father = cronus #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 504.
+		mother = rhea #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 504.
+		traits = {
+			#agriculture
+			#cooking
+			#herbalism
+			#pottery
+			#religion
+			#weaving
+			#skill_focus_agriculture
+			#skill_focus_cooking
+			#skill_focus_herbalism
+			#skill_focus_pottery
+			#skill_focus_religion
+			#skill_focus_weaving
+		}
+	}
+}
+
 poseidon = {
 	name = "Poseidon"
 	pantheon = olympian
@@ -323,6 +370,7 @@ poseidon = {
 		religion = hellenic
 		gender = male
 		father = cronus #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 504.
+		mother = rhea #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 504.
 	}
 }
 
@@ -350,5 +398,6 @@ zeus = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 28
 		religion = hellenic
 		gender = male
 		father = cronus #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 504.
+		mother = rhea #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 504.
 	}
 }
