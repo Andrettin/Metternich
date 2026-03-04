@@ -390,7 +390,9 @@ void character_game_data::apply_species_and_class(const int level, const bool ap
 		}
 	}
 
-	assert_throw(this->target_traits.empty());
+	if (!this->target_traits.empty()) {
+		throw std::runtime_error(std::format("Could not acquire all target traits for character \"{}\".", this->character->get_identifier()));
+	}
 
 	this->add_starting_items();
 
