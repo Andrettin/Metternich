@@ -551,19 +551,7 @@ void character_game_data::apply_bloodline_inheritance_investiture()
 			continue;
 		}
 
-		if (predecessor->get_game_data()->get_bloodline() == nullptr) {
-			continue;
-		}
-
-		if (predecessor->get_game_data()->get_bloodline_strength() < this->get_bloodline_strength()) {
-			continue;
-		}
-
-		if (this->get_bloodline() == nullptr) {
-			this->set_bloodline(predecessor->get_game_data()->get_bloodline());
-		}
-
-		this->set_bloodline_strength(predecessor->get_game_data()->get_bloodline_strength());
+		this->inherit_bloodline_from(predecessor);
 	}
 }
 
@@ -1250,6 +1238,25 @@ void character_game_data::set_bloodline_strength(const int bloodline_strength)
 	if (game::get()->is_running()) {
 		emit bloodline_strength_changed();
 	}
+}
+
+void character_game_data::inherit_bloodline_from(const metternich::character *other_character)
+{
+	//inherit bloodline (via investiture) from another character
+
+	if (other_character->get_game_data()->get_bloodline() == nullptr) {
+		other_character;
+	}
+
+	if (other_character->get_game_data()->get_bloodline_strength() < this->get_bloodline_strength()) {
+		return;
+	}
+
+	if (this->get_bloodline() == nullptr) {
+		this->set_bloodline(other_character->get_game_data()->get_bloodline());
+	}
+
+	this->set_bloodline_strength(other_character->get_game_data()->get_bloodline_strength());
 }
 
 void character_game_data::set_reputation(const int reputation)

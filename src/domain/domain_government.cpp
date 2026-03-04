@@ -752,6 +752,8 @@ bool domain_government::can_appoint_office_holder(const office *office, const ch
 
 void domain_government::on_office_holder_died(const office *office, const character *office_holder)
 {
+	assert_throw(office_holder != nullptr);
+
 	if (game::get()->is_running()) {
 		if (this->domain == game::get()->get_player_country()) {
 			const portrait *interior_minister_portrait = this->get_interior_minister_portrait();
@@ -771,6 +773,7 @@ void domain_government::on_office_holder_died(const office *office, const charac
 	}
 
 	if (office->is_ruler() && this->get_heir() != nullptr) {
+		this->get_heir()->get_game_data()->inherit_bloodline_from(office_holder);
 		this->set_office_holder(office, this->get_heir());
 	} else {
 		this->set_office_holder(office, nullptr);

@@ -245,6 +245,7 @@ public:
 	}
 
 	void set_bloodline_strength(const int bloodline_strength);
+	void inherit_bloodline_from(const metternich::character *other_character);
 
 	int get_reputation() const
 	{
