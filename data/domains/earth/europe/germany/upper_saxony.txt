@@ -26,9 +26,15 @@ upper_saxony = {
 			}
 		}
 		
-		1428.1.4 = {
+		1428 = {
 			offices = {
-				ruler = friedrich_ii_of_saxony
+				ruler = friedrich_ii_of_saxony #Frederick II became elector of Saxony in 1428; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+			}
+		}
+		
+		1464 = {
+			offices = {
+				ruler = ernst_of_saxony #Ernest became elector of Saxony in 1464; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
 			}
 		}
 		

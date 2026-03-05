@@ -228,7 +228,7 @@ albrecht_iv_of_austria = { #Albrecht IV of Austria; Source: Eva Demmerle, "Das H
 	}
 }
 
-ernst_the_iron_of_austria = { #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
+ernst_the_iron = { #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
 	name = "Ernst"
 	epithet = "the Iron"
 	dynasty = habsburg
@@ -271,6 +271,20 @@ albrecht_v_of_austria = { #Albrecht V of Austria; Source: Eva Demmerle, "Das Hau
 	}
 }
 
+anna_von_habsburg = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 14.
+	name = "Anna"
+	dynasty = habsburg
+	character_class = aristocrat
+	culture = austrian
+	religion = catholic
+	home_site = vienna
+	gender = female
+	father = albrecht_v_of_austria #emperor Albert II
+	
+	#daughter of Elizabeth, daughter of emperor Sigismund
+	#married to William III, son of prince-elector Frederick I of Saxony; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+}
+
 friedrich_iii_of_the_holy_roman_empire = { #Source: Eva Demmerle, "Das Haus Habsburg", 2011, pp. 245-246.
 	name = "Friedrich"
 	dynasty = habsburg
@@ -279,7 +293,7 @@ friedrich_iii_of_the_holy_roman_empire = { #Source: Eva Demmerle, "Das Haus Habs
 	religion = catholic
 	home_site = vienna
 	gender = male
-	father = ernst_the_iron_of_austria #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
+	father = ernst_the_iron #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
 	mother = cymburgis_of_masovia #Cymburgis of Masovia; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
 	birth_date = 1415.9.21 #Source: Eva Demmerle, "Das Haus Habsburg", 2011, pp. 47, 245.
 	death_date = 1493 #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 245.
@@ -292,6 +306,20 @@ friedrich_iii_of_the_holy_roman_empire = { #Source: Eva Demmerle, "Das Haus Habs
 			#spouse = 10000407 #Leonor of Portugal
 		}
 	}
+}
+
+margarete_von_habsburg = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 14.
+	name = "Margarete" #the source gives "Margaret"
+	dynasty = habsburg
+	character_class = aristocrat
+	culture = austrian
+	religion = catholic
+	home_site = vienna
+	gender = female
+	father = ernst_the_iron #duke Ernest of Styria
+	mother = cymburgis_of_masovia
+	
+	#married to Frederick II, prince-elector of Saxony; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
 }
 
 sigismund_von_habsburg = {

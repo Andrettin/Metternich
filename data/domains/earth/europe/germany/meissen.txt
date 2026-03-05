@@ -56,5 +56,13 @@ meissen = {
 		1423 = {
 			owner = upper_saxony #Frederick I became elector of Saxony in 1423; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
 		}
+		
+		1485 = {
+			owner = none
+			
+			offices = {
+				ruler = albrecht_of_meissen_2 #Albert became margrave of Meissen in 1485; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+			}
+		}
 	}
 }

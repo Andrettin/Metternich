@@ -264,25 +264,96 @@ wilhelm_ii_von_wettin = { #Source: Hereford B. George, "Genealogical Tables Illu
 	death_date = 1425
 }
 
-friedrich_ii_of_saxony = {
-	name = "Friedrich"
+friedrich_ii_of_saxony = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+	name = "Friedrich" #the source gives "Frederick"
 	dynasty = wettin
 	character_class = warrior
 	culture = german #Thuringian
 	religion = catholic
 	home_site = dresden
 	gender = male
-	birth_date = 1412.8.22
-	death_date = 1464.9.7
+	father = friedrich_i_of_saxony
+	start_date = 1428 #became prince-elector
+	death_date = 1464
 	traits = {
 		#industrious
 	}
 	
 	history = {
-		1428.1.4 = {
+		1428 = {
 			rank = lord
 		}
 	}
+}
+
+wilhelm_iii_von_wettin = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+	name = "Wilhelm" #the source gives "William III"
+	dynasty = wettin
+	character_class = warrior
+	culture = german
+	religion = catholic
+	home_site = erfurt #Thuringia
+	gender = male
+	father = friedrich_i_of_saxony
+	death_date = 1482
+}
+
+margarete_von_wettin = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+	name = "Margarete" #the source gives "Margaret"
+	dynasty = wettin
+	character_class = aristocrat
+	culture = german
+	religion = catholic
+	home_site = erfurt #Thuringia
+	gender = female
+	father = wilhelm_iii_von_wettin
+	mother = anna_von_habsburg
+	
+	#married to John Cicero, prince-elector of Brandenburg
+}
+
+anna_von_wettin = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+	name = "Anna"
+	dynasty = wettin
+	character_class = aristocrat
+	culture = german #Thuringian
+	religion = catholic
+	home_site = dresden
+	gender = female
+	father = friedrich_ii_of_saxony
+	mother = margarete_von_habsburg
+	
+	#married to Albert Achilles, prince-elector of Brandenburg
+}
+
+ernst_of_saxony = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+	name = "Ernst" #the source gives "Ernest"
+	dynasty = wettin
+	character_class = warrior
+	rank = lord
+	culture = german #Thuringian
+	religion = catholic
+	home_site = dresden
+	gender = male
+	father = friedrich_ii_of_saxony
+	mother = margarete_von_habsburg
+	start_date = 1464 #became prince-elector
+	death_date = 1486
+}
+
+albrecht_of_meissen_2 = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 19.
+	name = "Albrecht" #the source gives "Albert"
+	dynasty = wettin
+	character_class = warrior #margrave
+	rank = lord
+	culture = german #Thuringian
+	religion = catholic
+	home_site = meissen
+	gender = male
+	father = friedrich_ii_of_saxony
+	mother = margarete_von_habsburg
+	start_date = 1485 #became margrave of Meissen
+	death_date = 1500
 }
 
 august_iii_of_poland = {
