@@ -1,7 +1,7 @@
 ranger = {
 	name = "Ranger"
 	attribute = dexterity
-	max_level = 3
+	max_level = 20
 	starting_age_category = self_taught
 	to_hit_bonus_table = cleric_to_hit_bonus
 	saving_throw_bonus_tables = {
@@ -31,6 +31,28 @@ ranger = {
 	rank_levels = {
 		ranger_knight = 9
 		ranger_lord = 10
+	}
+	experience_per_level = {
+		1 = 0
+		2 = 2250
+		3 = 4500
+		4 = 9000
+		5 = 18000
+		6 = 36000
+		7 = 75000
+		8 = 150000
+		9 = 300000
+		10 = 600000
+		11 = 900000
+		12 = 1200000
+		13 = 1500000
+		14 = 1800000
+		15 = 2100000
+		16 = 2400000
+		17 = 2700000
+		18 = 3000000
+		19 = 3300000
+		20 = 3600000
 	}
 	level_modifiers = {
 		1 = {

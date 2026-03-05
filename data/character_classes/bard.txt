@@ -1,11 +1,11 @@
 bard = {
 	name = "Bard"
 	attribute = charisma
-	max_level = 3
+	max_level = 20
 	starting_age_category = self_taught
-	to_hit_bonus_table = cleric_to_hit_bonus
+	to_hit_bonus_table = rogue_to_hit_bonus
 	saving_throw_bonus_tables = {
-		save_vs_poison = cleric_save_vs_poison_bonus
+		save_vs_poison = rogue_save_vs_poison_bonus
 	}
 	class_skill_groups = {
 		general
@@ -25,6 +25,28 @@ bard = {
 		dexterity = 12
 		intelligence = 13
 		charisma = 15
+	}
+	experience_per_level = {
+		1 = 0
+		2 = 1250
+		3 = 2500
+		4 = 5000
+		5 = 10000
+		6 = 20000
+		7 = 40000
+		8 = 70000
+		9 = 110000
+		10 = 160000
+		11 = 220000
+		12 = 440000
+		13 = 660000
+		14 = 880000
+		15 = 1100000
+		16 = 1320000
+		17 = 1540000
+		18 = 1760000
+		19 = 1980000
+		20 = 2200000
 	}
 	level_modifiers = {
 		1 = {
