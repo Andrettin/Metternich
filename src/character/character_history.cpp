@@ -80,7 +80,7 @@ void character_history::calculate_heir()
 		return;
 	}
 
-	std::vector<const metternich::character *> potential_heirs;
+	const metternich::character *best_heir = nullptr;
 
 	for (const metternich::domain *ruled_domain : this->character->get_game_data()->get_ruled_domains()) {
 		bool found_self = false;
@@ -99,13 +99,15 @@ void character_history::calculate_heir()
 
 		if (successor != nullptr) {
 			if ((successor->get_dynasty() != nullptr && successor->get_dynasty() == this->character->get_dynasty()) || vector::contains(this->character->get_children(), successor)) {
-				potential_heirs.push_back(successor);
+				if (best_heir == nullptr || successor->get_birth_date() < best_heir->get_birth_date()) {
+					best_heir = successor;
+				}
 			}
 		}
 	}
 
-	if (!potential_heirs.empty()) {
-		this->set_heir(vector::get_random(potential_heirs));
+	if (best_heir != nullptr) {
+		this->set_heir(best_heir);
 	}
 }
 
