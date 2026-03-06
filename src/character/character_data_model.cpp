@@ -252,6 +252,8 @@ void character_data_model::reset_model()
 
 		this->top_rows.push_back(std::make_unique<character_data_row>("Reputation:", std::to_string(character_game_data->get_reputation())));
 
+		//this->top_rows.push_back(std::make_unique<character_data_row>("Challenge Rating:", std::to_string(character_game_data->get_challenge_rating())));
+
 		this->create_attribute_rows();
 
 		//this->top_rows.push_back(std::make_unique<character_data_row>("Hit Points:", std::format("{}/{}", character_game_data->get_hit_points(), character_game_data->get_max_hit_points())));

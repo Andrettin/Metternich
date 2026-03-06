@@ -325,6 +325,21 @@ public:
 		return (previous_level_experience - this->get_experience_for_level(level - 2)) * 2 + previous_level_experience;
 	}
 
+	int64_t get_experience_award_for_challenge_rating(const int challenge_rating) const
+	{
+		const auto find_iterator = this->experience_award_per_challenge_rating.find(challenge_rating);
+		if (find_iterator != this->experience_award_per_challenge_rating.end()) {
+			return find_iterator->second;
+		}
+
+		if (challenge_rating <= 0) {
+			throw std::runtime_error(std::format("No experience award is given for challenge rating {}.", challenge_rating));
+		}
+
+		const int64_t previous_experience_award = this->get_experience_award_for_challenge_rating(challenge_rating - 1);
+		return previous_experience_award + 1000;
+	}
+
 	int get_bloodline_strength_category_weight(const bloodline_strength_category category) const;
 	const std::vector<bloodline_strength_category> &get_weighted_bloodline_strength_categories() const;
 	const dice &get_bloodline_strength_for_category(const bloodline_strength_category category) const;
@@ -469,6 +484,7 @@ private:
 	const portrait *interior_minister_portrait = nullptr;
 	const portrait *war_minister_portrait = nullptr;
 	std::map<int, int64_t> experience_per_level;
+	std::map<int, int64_t> experience_award_per_challenge_rating;
 	std::map<bloodline_strength_category, int> bloodline_strength_category_weights;
 	std::vector<bloodline_strength_category> weighted_bloodline_strength_categories;
 	std::map<bloodline_strength_category, dice> bloodline_strength_per_category;

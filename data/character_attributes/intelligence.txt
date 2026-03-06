@@ -13,4 +13,9 @@ intelligence = {
 		supra_genius = 19-20
 		godlike = 21 #21+
 	}
+	value_modifiers = {
+		13 = {
+			challenge_rating = 1 #additional challenge rating for high intelligence
+		}
+	}
 }

@@ -110,8 +110,8 @@ void character_game_data::process_gsml_property(const gsml_property &property)
 		this->level = std::stoi(value);
 	} else if (key == "experience") {
 		this->experience = std::stoll(value);
-	} else if (key == "experience_award") {
-		this->experience_award = std::stoll(value);
+	} else if (key == "challenge_rating") {
+		this->challenge_rating = std::stoi(value);
 	} else if (key == "bloodline") {
 		this->bloodline = bloodline::get(value);
 	} else if (key == "bloodline_strength") {
@@ -237,7 +237,7 @@ gsml_data character_game_data::to_gsml_data() const
 	}
 	data.add_property("level", std::to_string(this->get_level()));
 	data.add_property("experience", std::to_string(this->get_experience()));
-	data.add_property("experience_award", std::to_string(this->get_experience_award()));
+	data.add_property("challenge_rating", std::to_string(this->get_challenge_rating()));
 	if (this->get_bloodline() != nullptr) {
 		data.add_property("bloodline", this->get_bloodline()->get_identifier());
 		data.add_property("bloodline_strength", std::to_string(this->get_bloodline_strength()));
@@ -1174,22 +1174,22 @@ int64_t character_game_data::get_experience_for_level(const int level) const
 	return experience;
 }
 
-int64_t character_game_data::get_experience_award() const
-{
-	if (this->character->get_monster_type() != nullptr) {
-		return this->character->get_monster_type()->get_experience_award();
-	}
-
-	return this->experience_award;
-}
-
-void character_game_data::change_experience_award(const int64_t change)
+void character_game_data::change_challenge_rating(const int change)
 {
 	if (change == 0) {
 		return;
 	}
 
-	this->experience_award += change;
+	this->challenge_rating += change;
+}
+
+int64_t character_game_data::get_experience_award() const
+{
+	if (this->character->get_monster_type() != nullptr && this->character->get_monster_type()->get_experience_award() != 0) {
+		return this->character->get_monster_type()->get_experience_award();
+	}
+
+	return defines::get()->get_experience_award_for_challenge_rating(this->get_challenge_rating());
 }
 
 bool character_game_data::is_deity() const
@@ -1491,7 +1491,16 @@ void character_game_data::set_armor_class_bonus(const int bonus)
 		return;
 	}
 
+	const int old_bonus = this->get_armor_class_bonus();
+
 	this->armor_class_bonus = bonus;
+
+	//an armor class bonus of +10 increases challenge rating by 1
+	if (bonus >= 10 && old_bonus < 10) {
+		this->change_challenge_rating(1);
+	} else if (bonus < 10 && old_bonus >= 10) {
+		this->change_challenge_rating(-1);
+	}
 
 	if (game::get()->is_running()) {
 		emit armor_class_bonus_changed();

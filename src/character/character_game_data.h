@@ -227,8 +227,14 @@ public:
 
 	void change_experience(const int64_t change);
 	int64_t get_experience_for_level(const int level) const;
+
+	int get_challenge_rating() const
+	{
+		return this->challenge_rating;
+	}
+
+	void change_challenge_rating(const int change);
 	int64_t get_experience_award() const;
-	void change_experience_award(const int64_t change);
 
 	bool is_deity() const;
 
@@ -292,6 +298,8 @@ public:
 		}
 
 		this->hit_dice_count += change;
+
+		this->change_challenge_rating(change);
 	}
 
 	void apply_hit_dice(const dice &hit_dice);
@@ -733,7 +741,7 @@ private:
 	const metternich::character_class *character_class = nullptr;
 	int level = 0;
 	int64_t experience = 0;
-	int64_t experience_award = 0; //the experience award for defeating the character
+	int challenge_rating = 0; //the challenge rating for defeating the character in combat
 	const metternich::bloodline *bloodline = nullptr;
 	int bloodline_strength = 0;
 	int reputation = 0;

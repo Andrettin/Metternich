@@ -134,6 +134,23 @@ experience_per_level = {
 	20 = 3600000
 }
 
+experience_award_per_challenge_rating = {
+	0 = 7
+	1 = 15
+	2 = 35
+	3 = 65
+	4 = 120
+	5 = 175
+	6 = 270
+	7 = 420
+	8 = 650
+	9 = 975
+	10 = 1400
+	11 = 2000
+	12 = 2000
+	13 = 3000
+}
+
 bloodline_strength_category_weights = {
 	tainted = 25
 	minor = 40

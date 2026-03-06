@@ -70,6 +70,13 @@ void defines::process_gsml_scope(const gsml_data &scope)
 
 			this->experience_per_level[level] = experience;
 		});
+	} else if (tag == "experience_award_per_challenge_rating") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const int challenge_rating = std::stoi(property.get_key());
+			const int64_t experience_award = std::stoll(property.get_value());
+
+			this->experience_award_per_challenge_rating[challenge_rating] = experience_award;
+		});
 	} else if (tag == "bloodline_strength_category_weights") {
 		scope.for_each_property([&](const gsml_property &property) {
 			const bloodline_strength_category category = magic_enum::enum_cast<bloodline_strength_category>(property.get_key()).value();
