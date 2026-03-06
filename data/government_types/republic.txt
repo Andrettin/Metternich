@@ -21,7 +21,7 @@ republic = {
 	}
 	ruler_character_classes = {
 		aristocrat
-		rogue
+		merchant
 		warrior
 	}
 	modifier = {

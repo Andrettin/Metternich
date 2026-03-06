@@ -25,7 +25,7 @@ jp_morgan = {
 			cultural_group = african
 			cultural_group = asian
 		}
-		character_class = rogue #merchant
+		character_class = merchant
 		birth_year >= 1800
 	}
 }

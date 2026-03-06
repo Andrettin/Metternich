@@ -216,7 +216,7 @@ philipp_von_hornigk = {
 johann_von_eggenberg = {
 	name = "Johann"
 	surname = "von Eggenberg"
-	character_class = rogue #merchant
+	character_class = merchant
 	culture = austrian
 	religion = catholic
 	home_site = salzburg
@@ -224,9 +224,6 @@ johann_von_eggenberg = {
 	birth_date = 1641
 	death_date = 1710.12.14
 	skill_multiplier = 0.33
-	traits = {
-		#merchant
-	}
 }
 
 franz_ferdinand_von_rummel = {

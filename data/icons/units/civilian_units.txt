@@ -39,6 +39,20 @@ forester_small = {
 
 merchant = {
 	filepath = "icons/units/civilians/merchant.png"
+	character_conditions = {
+		or = {
+			and = {
+				or = {
+					species = half_elf
+					species = human
+					species = halfling
+					species = titan
+					species = triton
+				}
+				character_class = merchant
+			}
+		}
+	}
 }
 
 prospector = {

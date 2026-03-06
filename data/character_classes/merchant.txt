@@ -1,0 +1,8 @@
+merchant = {
+	name = "Merchant"
+	base_class = rogue
+	class_skills = {
+		forgery
+		weaving
+	}
+}

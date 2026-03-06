@@ -19,7 +19,7 @@ self_governing_colony = {
 	}
 	ruler_character_classes = {
 		aristocrat
-		rogue
+		merchant
 		warrior
 	}
 	title_names = {

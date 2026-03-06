@@ -89,7 +89,7 @@ elizabeth_i_of_england = {
 edward_kelley = {
 	name = "Edward"
 	surname = "Kelley"
-	character_class = rogue #merchant
+	character_class = merchant
 	culture = english
 	religion = protestant
 	home_site = prague
@@ -97,9 +97,6 @@ edward_kelley = {
 	birth_date = 1552
 	death_date = 1597
 	skill_multiplier = 0.17
-	traits = {
-		#merchant
-	}
 }
 
 francis_bacon = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 252.

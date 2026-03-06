@@ -15,12 +15,6 @@ high_admiral = {
 	conditions = {
 		game_rule = offices
 	}
-	holder_conditions = {
-		or = {
-			character_class = rogue
-			character_class = warrior
-		}
-	}
 }
 
 marshal = {
