@@ -85,6 +85,17 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 
 			this->experience_per_level[level] = experience;
 		});
+	} else if (tag == "hit_point_bonus_per_level") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const int level = std::stoi(property.get_key());
+			const std::string &number_str = property.get_value();
+
+			if (number_str.find("d") != std::string::npos) {
+				this->hit_point_bonus_per_level[level] = dice(number_str);
+			} else {
+				this->hit_point_bonus_per_level[level] = std::stoi(number_str);
+			}
+		});
 	} else if (tag == "level_modifiers") {
 		scope.for_each_child([&](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
@@ -242,9 +253,42 @@ int64_t character_class::get_experience_for_level(const int level) const
 	return defines::get()->get_experience_for_level(level);
 }
 
+const std::variant<int, dice> &character_class::get_hit_point_bonus_for_level(const int level) const
+{
+	const auto find_iterator = this->hit_point_bonus_per_level.find(level);
+	if (find_iterator != this->hit_point_bonus_per_level.end()) {
+		return find_iterator->second;
+	}
+
+	if (this->get_base_class() != nullptr) {
+		return this->get_base_class()->get_hit_point_bonus_for_level(level);
+	}
+
+	static const std::variant<int, dice> zero = 0;
+	return zero;
+}
+
 std::string character_class::get_level_modifier_string(const int level, const metternich::character *character) const
 {
 	std::string str;
+
+	const std::variant<int, dice> &hit_point_bonus = this->get_hit_point_bonus_for_level(level);
+	if (std::holds_alternative<int>(hit_point_bonus)) {
+		const int hit_point_bonus_int = std::get<int>(hit_point_bonus);
+		if (hit_point_bonus_int != 0) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += std::format("Hit Points: +{}", hit_point_bonus_int);
+		}
+	} else if (std::holds_alternative<dice>(hit_point_bonus)) {
+		if (!str.empty()) {
+			str += "\n";
+		}
+
+		str += std::format("Hit Points: +{}", std::get<dice>(hit_point_bonus).to_display_string());
+	}
 
 	const int to_hit_bonus = this->get_to_hit_bonus_table()->get_bonus_per_level(level);
 	if (to_hit_bonus != 0) {

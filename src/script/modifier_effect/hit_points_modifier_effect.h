@@ -21,8 +21,7 @@ public:
 
 	virtual void apply(const character *scope, const centesimal_int &multiplier) const override
 	{
-		scope->get_game_data()->change_max_hit_points((this->value * multiplier).to_int());
-		scope->get_game_data()->change_hit_points((this->value * multiplier).to_int());
+		scope->get_game_data()->change_max_hit_points((this->value * multiplier).to_int(), true);
 	}
 
 	virtual std::string get_base_string(const character *scope) const override

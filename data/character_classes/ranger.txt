@@ -54,19 +54,34 @@ ranger = {
 		19 = 3300000
 		20 = 3600000
 	}
+	hit_point_bonus_per_level = {
+		1 = 1d10
+		2 = 1d10
+		3 = 1d10
+		4 = 1d10
+		5 = 1d10
+		6 = 1d10
+		7 = 1d10
+		8 = 1d10
+		9 = 1d10
+		10 = 3
+		11 = 3
+		12 = 3
+		13 = 3
+		14 = 3
+		15 = 3
+		16 = 3
+		17 = 3
+		18 = 3
+		19 = 3
+		20 = 3
+	}
 	level_modifiers = {
 		1 = {
-			hit_dice = 1d8 #as Cleric
 			#trait_of_type = past_experience
 			trait_of_type = proficiency
 			trait_of_type = proficiency
 			trait_of_type = proficiency
-		}
-		2 = {
-			hit_dice = 1d8
-		}
-		3 = {
-			hit_dice = 1d8
 		}
 	}
 	recurring_level_modifiers = {

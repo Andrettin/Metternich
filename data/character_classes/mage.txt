@@ -28,20 +28,35 @@ mage = {
 		3 = 5000
 		4 = 10000
 	}
+	hit_point_bonus_per_level = {
+		1 = 1d4
+		2 = 1d4
+		3 = 1d4
+		4 = 1d4
+		5 = 1d4
+		6 = 1d4
+		7 = 1d4
+		8 = 1d4
+		9 = 1d4
+		10 = 1d4
+		11 = 1
+		12 = 1
+		13 = 1
+		14 = 1
+		15 = 1
+		16 = 1
+		17 = 1
+		18 = 1
+		19 = 1
+		20 = 1
+	}
 	level_modifiers = {
 		1 = {
-			hit_dice = 1d4
 			#trait_of_type = past_experience
 			trait_of_type = proficiency
 			trait_of_type = proficiency
 			trait_of_type = proficiency
 			trait_of_type = proficiency
-		}
-		2 = {
-			hit_dice = 1d4
-		}
-		3 = {
-			hit_dice = 1d4
 		}
 	}
 	recurring_level_modifiers = {

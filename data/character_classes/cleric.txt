@@ -57,20 +57,35 @@ cleric = {
 		19 = 2475000
 		20 = 2700000
 	}
+	hit_point_bonus_per_level = {
+		1 = 1d8
+		2 = 1d8
+		3 = 1d8
+		4 = 1d8
+		5 = 1d8
+		6 = 1d8
+		7 = 1d8
+		8 = 1d8
+		9 = 1d8
+		10 = 2
+		11 = 2
+		12 = 2
+		13 = 2
+		14 = 2
+		15 = 2
+		16 = 2
+		17 = 2
+		18 = 2
+		19 = 2
+		20 = 2
+	}
 	level_modifiers = {
 		1 = {
-			hit_dice = 1d8
 			#trait_of_type = past_experience
 			trait_of_type = proficiency
 			trait_of_type = proficiency
 			trait_of_type = proficiency
 			trait_of_type = proficiency
-		}
-		2 = {
-			hit_dice = 1d8
-		}
-		3 = {
-			hit_dice = 1d8
 		}
 	}
 	recurring_level_modifiers = {

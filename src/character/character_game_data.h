@@ -318,8 +318,8 @@ public:
 		return this->max_hit_points;
 	}
 
-	void set_max_hit_points(const int hit_points);
-	void change_max_hit_points(const int change);
+	void set_max_hit_points(const int hit_points, const bool increase_hit_points);
+	void change_max_hit_points(const int change, const bool increase_hit_points);
 
 	int get_hit_point_bonus_per_hit_dice() const
 	{

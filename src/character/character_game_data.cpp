@@ -408,8 +408,7 @@ void character_game_data::apply_species_and_class(const int level, const bool ap
 		assert_log(this->character->get_hit_points() >= min_hp);
 		assert_log(this->character->get_hit_points() <= max_hp);
 
-		this->set_max_hit_points(this->character->get_hit_points());
-		this->set_hit_points(this->character->get_hit_points());
+		this->set_max_hit_points(this->character->get_hit_points(), true);
 	}
 
 	//ensure characters start with their hit point maximum
@@ -1103,6 +1102,20 @@ void character_game_data::on_level_gained(const int affected_level, const int mu
 	const metternich::character_class *character_class = this->get_character_class();
 	assert_throw(character_class != nullptr);
 
+	const std::variant<int, dice> &hit_point_bonus = character_class->get_hit_point_bonus_for_level(affected_level);
+	if (std::holds_alternative<int>(hit_point_bonus)) {
+		const int hit_point_bonus_int = std::get<int>(hit_point_bonus);
+		this->change_max_hit_points(hit_point_bonus_int * multiplier, true);
+	} else if (std::holds_alternative<dice>(hit_point_bonus)) {
+		const dice &hit_point_bonus_dice = std::get<dice>(hit_point_bonus);
+
+		if (multiplier > 0) {
+			this->apply_hit_dice(hit_point_bonus_dice);
+		} else if (multiplier < 0) {
+			this->remove_hit_dice(hit_point_bonus_dice);
+		}
+	}
+
 	if (character_class->get_to_hit_bonus_table() != nullptr) {
 		this->change_to_hit_bonus(character_class->get_to_hit_bonus_table()->get_bonus_per_level(affected_level) * multiplier);
 	}
@@ -1380,8 +1393,7 @@ void character_game_data::apply_hit_dice(const dice &hit_dice)
 	const int roll_result = std::max(random::get()->roll_dice(hit_dice), hit_dice.get_count());
 	const int hit_point_increase = std::max(roll_result + this->get_hit_point_bonus_per_hit_dice(), hit_dice.get_count());
 
-	this->change_max_hit_points(hit_point_increase);
-	this->change_hit_points(hit_point_increase);
+	this->change_max_hit_points(hit_point_increase, true);
 
 	this->hit_dice_roll_results[hit_dice].push_back(roll_result);
 }
@@ -1398,7 +1410,7 @@ void character_game_data::remove_hit_dice(const dice &hit_dice)
 	
 	const int last_roll_result = roll_results.back();
 	const int last_hit_point_increase = std::max(last_roll_result + this->get_hit_point_bonus_per_hit_dice(), hit_dice.get_count());
-	this->change_max_hit_points(-last_hit_point_increase);
+	this->change_max_hit_points(-last_hit_point_increase, false);
 
 	roll_results.pop_back();
 	if (roll_results.empty()) {
@@ -1430,16 +1442,20 @@ void character_game_data::change_hit_points(const int change)
 	this->set_hit_points(this->get_hit_points() + change);
 }
 
-void character_game_data::set_max_hit_points(const int hit_points)
+void character_game_data::set_max_hit_points(const int max_hit_points, const bool increase_hit_points)
 {
-	if (hit_points == this->get_max_hit_points()) {
+	if (max_hit_points == this->get_max_hit_points()) {
 		return;
 	}
 
-	this->max_hit_points = hit_points;
+	const int change = max_hit_points - this->get_max_hit_points();
+
+	this->max_hit_points = max_hit_points;
 
 	if (this->get_hit_points() > this->get_max_hit_points()) {
 		this->set_hit_points(this->get_max_hit_points());
+	} else if (change > 0 && increase_hit_points) {
+		this->change_hit_points(change);
 	}
 
 	if (game::get()->is_running()) {
@@ -1447,9 +1463,9 @@ void character_game_data::set_max_hit_points(const int hit_points)
 	}
 }
 
-void character_game_data::change_max_hit_points(const int change)
+void character_game_data::change_max_hit_points(const int change, const bool increase_hit_points)
 {
-	this->set_max_hit_points(this->get_max_hit_points() + change);
+	this->set_max_hit_points(this->get_max_hit_points() + change, increase_hit_points);
 }
 
 void character_game_data::set_hit_point_bonus_per_hit_dice(const int bonus)
@@ -1474,8 +1490,7 @@ void character_game_data::set_hit_point_bonus_per_hit_dice(const int bonus)
 		}
 
 		if (hit_point_change != 0) {
-			this->change_max_hit_points(hit_point_change);
-			this->change_hit_points(hit_point_change);
+			this->change_max_hit_points(hit_point_change, true);
 		}
 	}
 }

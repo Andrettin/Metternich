@@ -48,19 +48,34 @@ bard = {
 		19 = 1980000
 		20 = 2200000
 	}
+	hit_point_bonus_per_level = {
+		1 = 1d6
+		2 = 1d6
+		3 = 1d6
+		4 = 1d6
+		5 = 1d6
+		6 = 1d6
+		7 = 1d6
+		8 = 1d6
+		9 = 1d6
+		10 = 1d6
+		11 = 2
+		12 = 2
+		13 = 2
+		14 = 2
+		15 = 2
+		16 = 2
+		17 = 2
+		18 = 2
+		19 = 2
+		20 = 2
+	}
 	level_modifiers = {
 		1 = {
-			hit_dice = 1d8 #as Cleric
 			#trait_of_type = past_experience
 			trait_of_type = proficiency
 			trait_of_type = proficiency
 			trait_of_type = proficiency
-		}
-		2 = {
-			hit_dice = 1d8
-		}
-		3 = {
-			hit_dice = 1d8
 		}
 	}
 	recurring_level_modifiers = {
