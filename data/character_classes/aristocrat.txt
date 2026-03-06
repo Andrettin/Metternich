@@ -8,6 +8,8 @@ aristocrat = {
 		diplomacy
 		disguise
 		forgery
+		heraldry
+		religion
 		swimming
 	}
 }
