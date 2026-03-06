@@ -40,6 +40,16 @@ animal_training = {
 	}
 }
 
+appraising = {
+	name = "Appraising"
+	icon = research
+	check_dice = 1d20
+	base_attribute = intelligence
+	groups = {
+		rogue
+	}
+}
+
 armorer = {
 	name = "Armorer"
 	icon = clothing

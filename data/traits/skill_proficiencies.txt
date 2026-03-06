@@ -57,6 +57,21 @@ animal_training = {
 	}
 }
 
+appraising = {
+	name = "Appraising"
+	icon = research
+	types = {
+		proficiency
+	}
+	conditions = {
+		class_skill = appraising
+		playable = false #only for flavor for NPCs, no mechanics added for it yet
+	}
+	modifier = {
+		skill_training = appraising
+	}
+}
+
 armorer = {
 	name = "Armorer"
 	icon = clothing
