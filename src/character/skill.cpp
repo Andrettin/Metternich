@@ -20,7 +20,7 @@ void skill::process_gsml_scope(const gsml_data &scope)
 			group->add_skill(this);
 		}
 	} else {
-		named_data_entry::process_gsml_scope(scope);
+		character_attribute_base::process_gsml_scope(scope);
 	}
 }
 
@@ -40,7 +40,7 @@ void skill::initialize()
 		skill::disarm_traps_skill = this;
 	}
 
-	named_data_entry::initialize();
+	character_attribute_base::initialize();
 }
 
 void skill::check() const
@@ -56,6 +56,8 @@ void skill::check() const
 	if (this->get_check_dice().get_count() != 1) {
 		throw std::runtime_error(std::format("Skill \"{}\" has check dice with a dice count different than 1.", this->get_identifier()));
 	}
+
+	character_attribute_base::check();
 }
 const metternich::icon *skill::get_icon() const
 {

@@ -1,7 +1,7 @@
 #pragma once
 
+#include "character/character_attribute_base.h"
 #include "database/data_type.h"
-#include "database/named_data_entry.h"
 #include "util/dice.h"
 
 Q_MOC_INCLUDE("ui/icon.h")
@@ -12,7 +12,7 @@ class character_attribute;
 class icon;
 class skill_group;
 
-class skill final : public named_data_entry, public data_type<skill>
+class skill final : public character_attribute_base, public data_type<skill>
 {
 	Q_OBJECT
 
@@ -44,7 +44,7 @@ private:
 	static inline const skill *disarm_traps_skill = nullptr;
 
 public:
-	explicit skill(const std::string &identifier) : named_data_entry(identifier)
+	explicit skill(const std::string &identifier) : character_attribute_base(identifier)
 	{
 	}
 

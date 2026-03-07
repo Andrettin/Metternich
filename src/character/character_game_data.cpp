@@ -1311,21 +1311,7 @@ void character_game_data::change_attribute_value(const character_attribute *attr
 		this->apply_office_modifier(this->domain, this->get_office(), 1);
 	}
 
-	if (change > 0) {
-		for (int i = old_value + 1; i <= new_value; ++i) {
-			const modifier<const metternich::character> *value_modifier = attribute->get_value_modifier(i);
-			if (value_modifier != nullptr) {
-				value_modifier->apply(this->character);
-			}
-		}
-	} else {
-		for (int i = old_value; i > new_value; --i) {
-			const modifier<const metternich::character> *value_modifier = attribute->get_value_modifier(i);
-			if (value_modifier != nullptr) {
-				value_modifier->remove(this->character);
-			}
-		}
-	}
+	this->on_attribute_value_changed(attribute, new_value, old_value);
 }
 
 int character_game_data::get_primary_attribute_value() const
@@ -1384,6 +1370,25 @@ int character_game_data::get_attribute_check_chance(const character_attribute *a
 	chance = std::min(chance, 95);
 
 	return chance;
+}
+
+void character_game_data::on_attribute_value_changed(const character_attribute_base *attribute, const int new_value, const int old_value)
+{
+	if (new_value > old_value) {
+		for (int i = old_value + 1; i <= new_value; ++i) {
+			const modifier<const metternich::character> *value_modifier = attribute->get_value_modifier(i);
+			if (value_modifier != nullptr) {
+				value_modifier->apply(this->character);
+			}
+		}
+	} else {
+		for (int i = old_value; i > new_value; --i) {
+			const modifier<const metternich::character> *value_modifier = attribute->get_value_modifier(i);
+			if (value_modifier != nullptr) {
+				value_modifier->remove(this->character);
+			}
+		}
+	}
 }
 
 void character_game_data::apply_hit_dice(const dice &hit_dice)
@@ -1694,10 +1699,20 @@ void character_game_data::change_skill_training(const skill *skill, const int ch
 		return;
 	}
 
+	const bool was_trained = this->is_skill_trained(skill);
+
 	const int new_value = (this->skill_trainings[skill] += change);
 	assert_throw(new_value >= 0);
 	if (new_value == 0) {
 		this->skill_trainings.erase(skill);
+	}
+
+	const bool is_trained = this->is_skill_trained(skill);
+
+	if (is_trained && !was_trained) {
+		this->on_attribute_value_changed(skill, this->get_skill_value(skill), 0);
+	} else if (!is_trained && was_trained) {
+		this->on_attribute_value_changed(skill, 0, this->get_skill_value(skill));
 	}
 
 	if (game::get()->is_running()) {
@@ -1711,9 +1726,15 @@ void character_game_data::change_skill_value(const skill *skill, const int chang
 		return;
 	}
 
+	const int old_value = this->get_skill_value(skill);
+
 	const int new_value = (this->skill_values[skill] += change);
 	if (new_value == 0) {
 		this->skill_values.erase(skill);
+	}
+
+	if (this->is_skill_trained(skill)) {
+		this->on_attribute_value_changed(skill, new_value, old_value);
 	}
 
 	if (game::get()->is_running()) {

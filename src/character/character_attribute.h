@@ -1,17 +1,13 @@
 #pragma once
 
+#include "character/character_attribute_base.h"
 #include "database/data_type.h"
-#include "database/named_data_entry.h"
 
 namespace metternich {
 
-class character;
 class skill;
 
-template <typename scope_type>
-class modifier;
-
-class character_attribute final : public named_data_entry, public data_type<character_attribute>
+class character_attribute final : public character_attribute_base, public data_type<character_attribute>
 {
 	Q_OBJECT
 
@@ -36,16 +32,6 @@ public:
 		throw std::runtime_error(std::format("Invalid rating for attribute \"{}\": \"{}\".", this->get_identifier(), rating));
 	}
 
-	const modifier<const character> *get_value_modifier(const int value) const
-	{
-		const auto find_iterator = this->value_modifiers.find(value);
-		if (find_iterator != this->value_modifiers.end()) {
-			return find_iterator->second.get();
-		}
-
-		return nullptr;
-	}
-
 	const std::vector<const skill *> &get_derived_skills() const
 	{
 		return this->derived_skills;
@@ -61,7 +47,6 @@ signals:
 
 private:
 	std::map<std::string, std::pair<int, int>> rating_ranges; //names for particular ranges
-	std::map<int, std::unique_ptr<modifier<const character>>> value_modifiers; //the character modifiers applied for each value; these are cumulative
 	std::vector<const skill *> derived_skills;
 };
 

@@ -25,6 +25,7 @@ namespace metternich {
 class bloodline;
 class character;
 class character_attribute;
+class character_attribute_base;
 class domain;
 class enchantment;
 class item;
@@ -285,6 +286,7 @@ public:
 	data_entry_set<character_attribute> get_main_attributes() const;
 	bool do_attribute_check(const character_attribute *attribute, const int roll_modifier) const;
 	int get_attribute_check_chance(const character_attribute *attribute, const int roll_modifier) const;
+	void on_attribute_value_changed(const character_attribute_base *attribute, const int new_value, const int old_value); //also used for skills
 
 	int get_hit_dice_count() const
 	{
