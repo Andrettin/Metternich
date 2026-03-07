@@ -199,7 +199,7 @@ heraldry = {
 	}
 	conditions = {
 		class_skill = heraldry
-		playable = false #only for flavor for NPCs, no mechanics added for it yet
+		skill_training = diplomacy #it only makes sense to get Heraldry for now if the character also has Diplomacy, since all it does currently is to provide a bonus for Diplomacy
 	}
 	modifier = {
 		skill_training = heraldry

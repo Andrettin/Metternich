@@ -143,6 +143,11 @@ heraldry = {
 	groups = {
 		general
 	}
+	value_modifiers = {
+		5 = {
+			diplomacy = 2
+		}
+	}
 }
 
 herbalism = {
