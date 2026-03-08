@@ -9,4 +9,9 @@ hierophant = {
 	tier_title_names = {
 		10 = "Saint"
 	}
+	tier_modifiers = {
+		1 = {
+			trait_of_type = mythic_proficiency
+		}
+	}
 }

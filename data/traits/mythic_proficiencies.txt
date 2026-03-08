@@ -1,0 +1,20 @@
+insightful_interaction = {
+	name = "Insightful Interaction"
+	icon = research
+	types = {
+		mythic_proficiency
+	}
+	conditions = {
+		mythic_path = hierophant
+	}
+	per_mythic_tier_modifiers = {
+		2 = {
+			attribute_skill_bonus = {
+				attribute = wisdom
+				bonus = 1
+			}
+		}
+	}
+	
+	#FIXME: add mythic power-based bonuses
+}

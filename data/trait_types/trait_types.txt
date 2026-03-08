@@ -14,6 +14,10 @@ flaw = {
 	}
 }
 
+mythic_proficiency = {
+	name = "Mythic Proficiency"
+}
+
 past_experience = {
 	name = "Past Experience"
 	none_weight = 11
