@@ -11,7 +11,7 @@ hierophant = {
 	}
 	tier_modifiers = {
 		1 = {
-			trait_of_type = mythic_proficiency
+			trait_of_type = mythic_trait
 		}
 	}
 }
