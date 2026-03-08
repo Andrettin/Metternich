@@ -5,6 +5,11 @@
 
 namespace metternich {
 
+class character;
+
+template <typename scope_type>
+class modifier;
+
 class mythic_path final : public named_data_entry, public data_type<mythic_path>
 {
 	Q_OBJECT
@@ -14,9 +19,8 @@ public:
 	static constexpr const char property_class_identifier[] = "metternich::mythic_path*";
 	static constexpr const char database_folder[] = "mythic_paths";
 
-	explicit mythic_path(const std::string &identifier) : named_data_entry(identifier)
-	{
-	}
+	explicit mythic_path(const std::string &identifier);
+	~mythic_path();
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 
@@ -33,12 +37,25 @@ public:
 
 	const std::string &get_tier_title_name(const int mythic_tier) const;
 
+	const modifier<const character> *get_tier_modifier(const int tier) const
+	{
+		const auto find_iterator = this->tier_modifiers.find(tier);
+		if (find_iterator != this->tier_modifiers.end()) {
+			return find_iterator->second.get();
+		}
+
+		return nullptr;
+	}
+
+	std::string get_tier_modifier_string(const int tier, const metternich::character *character) const;
+
 signals:
 	void changed();
 
 private:
 	std::map<std::string, int> rank_tiers; //names for particular tiers
 	std::map<int, std::string> tier_title_names; //character title names, available from particular tiers
+	std::map<int, std::unique_ptr<modifier<const character>>> tier_modifiers;
 };
 
 }
