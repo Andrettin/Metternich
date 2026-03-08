@@ -71,6 +71,13 @@ void trait::process_gsml_scope(const gsml_data &scope)
 			modifier->process_gsml_data(child_scope);
 			this->per_mythic_tier_modifiers[tier_interval] = std::move(modifier);
 		});
+	} else if (tag == "per_divine_rank_modifiers") {
+		scope.for_each_child([&](const gsml_data &child_scope) {
+			const int rank_interval = std::stoi(child_scope.get_tag());
+			auto modifier = std::make_unique<metternich::modifier<const character>>();
+			modifier->process_gsml_data(child_scope);
+			this->per_divine_rank_modifiers[rank_interval] = std::move(modifier);
+		});
 	} else if (tag == "office_modifiers") {
 		scope.for_each_child([&](const gsml_data &child_scope) {
 			const office *office = office::get(child_scope.get_tag());
@@ -125,6 +132,18 @@ std::string trait::get_modifier_string(const int multiplier, const bool single_l
 		}
 
 		str += std::format("Every {} mythic tier{}:{}{}", tier_interval, tier_interval > 1 ? "s" : "", single_line ? " " : "\n", single_line ? modifier->get_single_line_string(nullptr, multiplier) : modifier->get_string(nullptr, multiplier, 1));
+	}
+
+	for (const auto &[rank_interval, modifier] : this->get_per_divine_rank_modifiers()) {
+		if (!str.empty()) {
+			if (single_line) {
+				str += ", ";
+			} else {
+				str += "\n";
+			}
+		}
+
+		str += std::format("Every {} divine rank{}:{}{}", rank_interval, rank_interval > 1 ? "s" : "", single_line ? " " : "\n", single_line ? modifier->get_single_line_string(nullptr, multiplier) : modifier->get_string(nullptr, multiplier, 1));
 	}
 
 	return str;

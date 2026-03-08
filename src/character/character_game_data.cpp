@@ -2010,6 +2010,15 @@ void character_game_data::on_trait_gained(const trait *trait, const int multipli
 		}
 	}
 
+	for (const auto &[rank_interval, modifier] : trait->get_per_divine_rank_modifiers()) {
+		assert_throw(this->is_deity());
+
+		const int rank_multiplier = this->character->get_deity()->get_divine_level() / rank_interval;
+		if (rank_multiplier > 0) {
+			this->apply_modifier(modifier.get(), rank_multiplier * multiplier);
+		}
+	}
+
 	if (trait->get_military_unit_modifier() != nullptr && this->get_military_unit() != nullptr) {
 		this->apply_military_unit_modifier(this->get_military_unit(), multiplier);
 	}
