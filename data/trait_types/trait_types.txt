@@ -14,8 +14,8 @@ flaw = {
 	}
 }
 
-mythic_proficiency = {
-	name = "Mythic Proficiency"
+mythic_trait = {
+	name = "Mythic Trait"
 }
 
 past_experience = {

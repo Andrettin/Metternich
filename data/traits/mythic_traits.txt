@@ -2,7 +2,7 @@ insightful_interaction = {
 	name = "Insightful Interaction"
 	icon = research
 	types = {
-		mythic_proficiency
+		mythic_trait
 	}
 	conditions = {
 		mythic_path = hierophant
