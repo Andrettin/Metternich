@@ -1939,6 +1939,13 @@ void character_game_data::on_trait_gained(const trait *trait, const int multipli
 		}
 	}
 
+	for (const auto &[tier_interval, modifier] : trait->get_per_mythic_tier_modifiers()) {
+		const int tier_multiplier = this->character->get_mythic_tier() / tier_interval;
+		if (tier_multiplier > 0) {
+			this->apply_modifier(modifier.get(), tier_multiplier * multiplier);
+		}
+	}
+
 	if (trait->get_military_unit_modifier() != nullptr && this->get_military_unit() != nullptr) {
 		this->apply_military_unit_modifier(this->get_military_unit(), multiplier);
 	}

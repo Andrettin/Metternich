@@ -64,6 +64,13 @@ void trait::process_gsml_scope(const gsml_data &scope)
 		auto modifier = std::make_unique<metternich::modifier<const character>>();
 		modifier->process_gsml_data(scope);
 		this->modifier = std::move(modifier);
+	} else if (tag == "per_mythic_tier_modifiers") {
+		scope.for_each_child([&](const gsml_data &child_scope) {
+			const int tier_interval = std::stoi(child_scope.get_tag());
+			auto modifier = std::make_unique<metternich::modifier<const character>>();
+			modifier->process_gsml_data(child_scope);
+			this->per_mythic_tier_modifiers[tier_interval] = std::move(modifier);
+		});
 	} else if (tag == "office_modifiers") {
 		scope.for_each_child([&](const gsml_data &child_scope) {
 			const office *office = office::get(child_scope.get_tag());
@@ -98,15 +105,29 @@ void trait::check() const
 
 std::string trait::get_modifier_string(const int multiplier, const bool single_line) const
 {
-	if (this->get_modifier() == nullptr) {
-		return std::string();
+	std::string str;
+
+	if (this->get_modifier() != nullptr) {
+		if (single_line) {
+			str = this->get_modifier()->get_single_line_string(nullptr, multiplier);
+		} else {
+			str = this->get_modifier()->get_string(nullptr, multiplier);
+		}
 	}
 
-	if (single_line) {
-		return this->get_modifier()->get_single_line_string(nullptr, multiplier);
-	} else {
-		return this->get_modifier()->get_string(nullptr, multiplier);
+	for (const auto &[tier_interval, modifier] : this->get_per_mythic_tier_modifiers()) {
+		if (!str.empty()) {
+			if (single_line) {
+				str += ", ";
+			} else {
+				str += "\n";
+			}
+		}
+
+		str += std::format("Every {} mythic tier{}:{}{}", tier_interval, tier_interval > 1 ? "s" : "", single_line ? " " : "\n", single_line ? modifier->get_single_line_string(nullptr, multiplier) : modifier->get_string(nullptr, multiplier, 1));
 	}
+
+	return str;
 }
 
 QString trait::get_modifier_qstring() const

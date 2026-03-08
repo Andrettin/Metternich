@@ -100,6 +100,11 @@ public:
 	std::string get_modifier_string(const int multiplier, const bool single_line) const;
 	QString get_modifier_qstring() const;
 
+	const std::map<int, std::unique_ptr<const metternich::modifier<const character>>> &get_per_mythic_tier_modifiers() const
+	{
+		return this->per_mythic_tier_modifiers;
+	}
+
 	const metternich::modifier<const domain> *get_office_modifier(const office *office) const
 	{
 		const auto find_iterator = this->office_modifiers.find(office);
@@ -134,6 +139,7 @@ private:
 	std::unique_ptr<const and_condition<character>> conditions;
 	std::unique_ptr<const and_condition<character>> gain_conditions;
 	std::unique_ptr<const metternich::modifier<const character>> modifier;
+	std::map<int, std::unique_ptr<const metternich::modifier<const character>>> per_mythic_tier_modifiers;
 	data_entry_map<office, std::unique_ptr<const metternich::modifier<const domain>>> office_modifiers;
 	std::unique_ptr<const metternich::modifier<military_unit>> military_unit_modifier;
 	std::unique_ptr<factor<character>> weight_factor;
