@@ -1773,6 +1773,15 @@ void character_game_data::change_skill_value(const skill *skill, const int chang
 	}
 }
 
+int character_game_data::get_effective_skill_value(const skill *skill) const
+{
+	if (!this->is_skill_trained(skill)) {
+		return 0;
+	}
+
+	return this->get_skill_value(skill);
+}
+
 bool character_game_data::do_skill_check(const skill *skill, const int roll_modifier, const site *location) const
 {
 	assert_throw(skill != nullptr);

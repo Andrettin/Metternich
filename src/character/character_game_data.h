@@ -431,6 +431,7 @@ public:
 	}
 
 	void change_skill_value(const skill *skill, const int change);
+	int get_effective_skill_value(const skill *skill) const;
 	bool do_skill_check(const skill *skill, const int roll_modifier, const site *location) const;
 	int get_skill_check_chance(const skill *skill, const int roll_modifier, const site *location) const;
 
