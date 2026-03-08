@@ -41,6 +41,7 @@
 #include "script/condition/culture_condition.h"
 #include "script/condition/discovered_province_condition.h"
 #include "script/condition/discovered_region_condition.h"
+#include "script/condition/divine_rank_condition.h"
 #include "script/condition/domain_condition.h"
 #include "script/condition/domain_attribute_condition.h"
 #include "script/condition/domain_exists_condition.h"
@@ -145,6 +146,8 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			return std::make_unique<character_class_condition>(value, condition_operator);
 		} else if (key == "class_skill") {
 			return std::make_unique<class_skill_condition>(value, condition_operator);
+		} else if (key == "divine_rank") {
+			return std::make_unique<divine_rank_condition>(value, condition_operator);
 		} else if (key == "level") {
 			return std::make_unique<level_condition>(value, condition_operator);
 		} else if (key == "mythic_path") {

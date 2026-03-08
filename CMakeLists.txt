@@ -642,6 +642,7 @@ set(script_condition_HDRS
 	src/script/condition/culture_condition.h
 	src/script/condition/discovered_province_condition.h
 	src/script/condition/discovered_region_condition.h
+	src/script/condition/divine_rank_condition.h
 	src/script/condition/domain_attribute_condition.h
 	src/script/condition/domain_condition.h
 	src/script/condition/domain_exists_condition.h
