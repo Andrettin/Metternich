@@ -1,0 +1,37 @@
+divine_skill_focus_religion = {
+	name = "Divine Skill Focus: Religion"
+	icon = wooden_cross
+	types = {
+		divine_trait
+	}
+	conditions = {
+		religion >= 23
+	}
+	modifier = {
+		religion = 10
+	}
+	per_divine_rank_modifiers = {
+		1 = {
+			religion = 1
+		}
+	}
+}
+
+divine_skill_focus_spellcraft = {
+	name = "Divine Skill Focus: Spellcraft"
+	icon = book
+	types = {
+		divine_trait
+	}
+	conditions = {
+		spellcraft >= 23
+	}
+	modifier = {
+		spellcraft = 10
+	}
+	per_divine_rank_modifiers = {
+		1 = {
+			spellcraft = 1
+		}
+	}
+}

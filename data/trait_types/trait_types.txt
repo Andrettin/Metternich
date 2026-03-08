@@ -18,6 +18,10 @@ mythic_trait = {
 	name = "Mythic Trait"
 }
 
+divine_trait = {
+	name = "Divine Trait"
+}
+
 past_experience = {
 	name = "Past Experience"
 	none_weight = 11
