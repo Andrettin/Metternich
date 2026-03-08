@@ -77,6 +77,7 @@
 #include "script/condition/military_unit_domain_condition.h"
 #include "script/condition/military_unit_type_condition.h"
 #include "script/condition/month_condition.h"
+#include "script/condition/mythic_path_condition.h"
 #include "script/condition/near_water_condition.h"
 #include "script/condition/owns_province_condition.h"
 #include "script/condition/owns_site_condition.h"
@@ -145,6 +146,8 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			return std::make_unique<class_skill_condition>(value, condition_operator);
 		} else if (key == "level") {
 			return std::make_unique<level_condition>(value, condition_operator);
+		} else if (key == "mythic_path") {
+			return std::make_unique<mythic_path_condition>(value, condition_operator);
 		} else if (key == "primary_attribute") {
 			return std::make_unique<primary_attribute_condition>(value, condition_operator);
 		} else if (key == "skill_training") {

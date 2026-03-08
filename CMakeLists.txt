@@ -678,6 +678,7 @@ set(script_condition_HDRS
 	src/script/condition/military_unit_domain_condition.h
 	src/script/condition/military_unit_type_condition.h
 	src/script/condition/month_condition.h
+	src/script/condition/mythic_path_condition.h
 	src/script/condition/near_water_condition.h
 	src/script/condition/owns_province_condition.h
 	src/script/condition/owns_site_condition.h
