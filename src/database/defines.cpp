@@ -103,6 +103,13 @@ void defines::process_gsml_scope(const gsml_data &scope)
 
 			this->divine_rank_levels[magic_enum::enum_cast<divine_rank>(key).value()] = std::stoi(value);
 		});
+	} else if (tag == "divine_rank_modifiers") {
+		scope.for_each_child([&](const gsml_data &child_scope) {
+			const int rank_interval = std::stoi(child_scope.get_tag());
+			auto modifier = std::make_unique<metternich::modifier<const character>>();
+			modifier->process_gsml_data(child_scope);
+			this->divine_rank_modifiers[rank_interval] = std::move(modifier);
+		});
 	} else if (tag == "diplomacy_state_colors") {
 		scope.for_each_child([&](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
@@ -290,6 +297,17 @@ divine_rank defines::get_divine_level_rank(const int divine_level) const
 	}
 
 	return rank;
+}
+
+const metternich::modifier<const character> *defines::get_divine_rank_modifier(const int divine_rank) const
+{
+	const auto find_iterator = this->divine_rank_modifiers.find(divine_rank);
+
+	if (find_iterator != this->divine_rank_modifiers.end()) {
+		return find_iterator->second.get();
+	}
+
+	return nullptr;
 }
 
 void defines::set_river_image_filepath(const std::filesystem::path &filepath)

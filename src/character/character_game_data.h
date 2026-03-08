@@ -237,8 +237,9 @@ public:
 	void change_challenge_rating(const int change);
 	int64_t get_experience_award() const;
 
-	bool is_deity() const;
 	void on_mythic_tier_gained(const int affected_tier, const int multiplier);
+	bool is_deity() const;
+	void on_divine_rank_gained(const int affected_rank, const int multiplier);
 
 	const metternich::bloodline *get_bloodline() const
 	{

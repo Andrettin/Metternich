@@ -390,6 +390,12 @@ void character_game_data::apply_species_and_class(const int level, const bool ap
 		}
 	}
 
+	if (this->is_deity()) {
+		for (int i = 1; i <= this->character->get_deity()->get_divine_level(); ++i) {
+			this->on_divine_rank_gained(i, 1);
+		}
+	}
+
 	if (character_class != nullptr) {
 		while (!this->target_traits.empty()) {
 			if (this->get_level() == character_class->get_max_level()) {
@@ -956,6 +962,12 @@ void character_game_data::die()
 
 	assert_throw(this->get_office() == nullptr);
 	this->set_domain(nullptr);
+
+	if (this->is_deity() && this->character->get_deity()->is_apotheotic()) {
+		for (int i = 1; i <= this->character->get_deity()->get_divine_level(); ++i) {
+			this->on_divine_rank_gained(i, 1);
+		}
+	}
 }
 
 bool character_game_data::exists() const
@@ -1215,6 +1227,27 @@ int64_t character_game_data::get_experience_award() const
 	return defines::get()->get_experience_award_for_challenge_rating(this->get_challenge_rating());
 }
 
+void character_game_data::on_mythic_tier_gained(const int affected_tier, const int multiplier)
+{
+	assert_throw(std::abs(multiplier) == 1);
+
+	assert_throw(affected_tier >= 1);
+
+	const metternich::mythic_path *mythic_path = this->character->get_mythic_path();
+	assert_throw(mythic_path != nullptr);
+
+	const modifier<const metternich::character> *tier_modifier = mythic_path->get_tier_modifier(affected_tier);
+	if (tier_modifier != nullptr) {
+		tier_modifier->apply(this->character, multiplier);
+	}
+
+	if (game::get()->is_running() && this->character == game::get()->get_player_character()) {
+		const std::string tier_modifier_string = mythic_path->get_tier_modifier_string(affected_tier, this->character);
+
+		engine_interface::get()->add_notification("Mythic Tier Gained", this->get_portrait(), std::format("You have gained a mythic tier!\n\n{}", tier_modifier_string));
+	}
+}
+
 bool character_game_data::is_deity() const
 {
 	if (this->character->get_deity() == nullptr) {
@@ -1228,24 +1261,15 @@ bool character_game_data::is_deity() const
 	}
 }
 
-void character_game_data::on_mythic_tier_gained(const int affected_tier, const int multiplier)
+void character_game_data::on_divine_rank_gained(const int affected_rank, const int multiplier)
 {
 	assert_throw(std::abs(multiplier) == 1);
 
-	assert_throw(affected_tier >= 1);
+	assert_throw(affected_rank >= 1);
 
-	const metternich::mythic_path *mythic_path = this->character->get_mythic_path();
-	assert_throw(mythic_path != nullptr);
-
-	const modifier<const metternich::character> *tier_modifier = mythic_path->get_tier_modifier(affected_tier);
-	if (tier_modifier != nullptr) {
-		tier_modifier->apply(this->character);
-	}
-
-	if (game::get()->is_running() && this->character == game::get()->get_player_character()) {
-		const std::string tier_modifier_string = mythic_path->get_tier_modifier_string(affected_tier, this->character);
-
-		engine_interface::get()->add_notification("Mythic Tier Gained", this->get_portrait(), std::format("You have gained a mythic tier!\n\n{}", tier_modifier_string));
+	const modifier<const metternich::character> *rank_modifier = defines::get()->get_divine_rank_modifier(affected_rank);
+	if (rank_modifier != nullptr) {
+		rank_modifier->apply(this->character, multiplier);
 	}
 }
 

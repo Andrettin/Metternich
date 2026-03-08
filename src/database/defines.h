@@ -27,6 +27,7 @@ namespace archimedes {
 namespace metternich {
 
 class building_class;
+class character;
 class commodity;
 class commodity_unit;
 class cursor;
@@ -346,6 +347,7 @@ public:
 
 	int get_divine_rank_level(const divine_rank rank) const;
 	divine_rank get_divine_level_rank(const int divine_level) const;
+	const metternich::modifier<const character> *get_divine_rank_modifier(const int divine_rank) const;
 
 	const QColor &get_minor_nation_color() const
 	{
@@ -489,6 +491,7 @@ private:
 	std::vector<bloodline_strength_category> weighted_bloodline_strength_categories;
 	std::map<bloodline_strength_category, dice> bloodline_strength_per_category;
 	std::map<divine_rank, int> divine_rank_levels;
+	std::map<int, std::unique_ptr<const metternich::modifier<const character>>> divine_rank_modifiers;
 	QColor minor_nation_color;
 	QColor country_border_color;
 	QColor selected_country_color;
