@@ -226,6 +226,18 @@ siegecraft = {
 	}
 }
 
+spellcraft = {
+	name = "Spellcraft"
+	icon = book
+	check_dice = 1d20
+	base_attribute = intelligence
+	base_value = -2
+	groups = {
+		mage
+		priest
+	}
+}
+
 strategy = {
 	name = "Strategy"
 	icon = crossed_sabers
@@ -244,6 +256,16 @@ swimming = {
 	base_attribute = strength
 	groups = {
 		general
+	}
+}
+
+tumbling = {
+	name = "Tumbling"
+	icon = labor
+	check_dice = 1d20
+	base_attribute = dexterity
+	groups = {
+		rogue
 	}
 }
 

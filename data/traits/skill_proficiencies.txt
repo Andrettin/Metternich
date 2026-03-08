@@ -307,6 +307,20 @@ siegecraft = {
 	}
 }
 
+spellcraft = {
+	name = "Spellcraft"
+	icon = book
+	types = {
+		proficiency
+	}
+	conditions = {
+		class_skill = spellcraft
+	}
+	modifier = {
+		skill_training = spellcraft
+	}
+}
+
 strategy = {
 	name = "Strategy"
 	icon = crossed_sabers
@@ -333,6 +347,21 @@ swimming = {
 	}
 	modifier = {
 		skill_training = swimming
+	}
+}
+
+tumbling = {
+	name = "Tumbling"
+	icon = labor
+	types = {
+		proficiency
+	}
+	conditions = {
+		class_skill = tumbling
+		playable = false #only for flavor for NPCs, no mechanics added for it yet
+	}
+	modifier = {
+		skill_training = tumbling
 	}
 }
 
