@@ -104,6 +104,7 @@
 #include "script/condition/site_attribute_condition.h"
 #include "script/condition/site_condition.h"
 #include "script/condition/site_scope_condition.h"
+#include "script/condition/skill_condition.h"
 #include "script/condition/skill_training_condition.h"
 #include "script/condition/source_character_condition.h"
 #include "script/condition/source_site_condition.h"
@@ -322,7 +323,7 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 
 	if (key == "cultural_group") {
 		return std::make_unique<cultural_group_condition<scope_type>>(value, condition_operator);
-	} else if (key == "culture") {
+	} else if (key == "culture" && condition_operator == gsml_operator::assignment) {
 		return std::make_unique<culture_condition<scope_type>>(value, condition_operator);
 	} else if (key == "domain") {
 		return std::make_unique<domain_condition<scope_type>>(value, condition_operator);
@@ -344,7 +345,7 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 		return std::make_unique<month_condition<scope_type>>(value, condition_operator);
 	} else if (key == "random_chance") {
 		return std::make_unique<random_chance_condition<scope_type>>(value, condition_operator);
-	} else if (key == "religion") {
+	} else if (key == "religion" && condition_operator == gsml_operator::assignment) {
 		return std::make_unique<religion_condition<scope_type>>(value, condition_operator);
 	} else if (key == "religious_group") {
 		return std::make_unique<religious_group_condition<scope_type>>(value, condition_operator);
@@ -362,7 +363,11 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 		return std::make_unique<year_condition<scope_type>>(value, condition_operator);
 	}
 
-	if constexpr (std::is_same_v<scope_type, domain>) {
+	if constexpr (std::is_same_v<scope_type, character>) {
+		if (skill::try_get(key) != nullptr) {
+			return std::make_unique<skill_condition>(skill::get(key), value, condition_operator);
+		}
+	} else if constexpr (std::is_same_v<scope_type, domain>) {
 		if (commodity::try_get(key) != nullptr) {
 			return std::make_unique<commodity_condition>(commodity::get(key), value, condition_operator);
 		}
