@@ -175,6 +175,9 @@ divine_rank_levels = {
 }
 
 divine_rank_modifiers = {
+	1 = {
+		#trait_of_type = divine_trait
+	}
 }
 
 minor_nation_color = { 221 216 181 }

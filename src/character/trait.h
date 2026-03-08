@@ -4,12 +4,14 @@
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 
+Q_MOC_INCLUDE("religion/divine_domain.h")
 Q_MOC_INCLUDE("ui/icon.h")
 
 namespace metternich {
 
 class character;
 class character_attribute;
+class divine_domain;
 class domain;
 class icon;
 class military_unit;
@@ -32,6 +34,7 @@ class trait final : public named_data_entry, public data_type<trait>
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
 	Q_PROPERTY(int level MEMBER level READ get_level NOTIFY changed)
 	Q_PROPERTY(bool unlimited MEMBER unlimited READ is_unlimited NOTIFY changed)
+	Q_PROPERTY(const metternich::divine_domain* divine_domain MEMBER divine_domain READ get_divine_domain NOTIFY changed)
 	Q_PROPERTY(QString modifier_string READ get_modifier_qstring CONSTANT)
 	Q_PROPERTY(QString military_unit_modifier_string READ get_military_unit_modifier_string CONSTANT)
 
@@ -65,6 +68,11 @@ public:
 	bool is_unlimited() const
 	{
 		return this->unlimited;
+	}
+
+	const metternich::divine_domain *get_divine_domain() const
+	{
+		return this->divine_domain;
 	}
 
 	const data_entry_map<character_attribute, int> &get_attribute_bonuses() const
@@ -140,6 +148,7 @@ private:
 	std::vector<const trait_type *> types;
 	int level = 1;
 	bool unlimited = false;
+	const metternich::divine_domain *divine_domain = nullptr;
 	data_entry_map<character_attribute, int> attribute_bonuses;
 	std::unique_ptr<const and_condition<character>> conditions;
 	std::unique_ptr<const and_condition<character>> gain_conditions;

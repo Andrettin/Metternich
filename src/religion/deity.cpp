@@ -5,6 +5,7 @@
 #include "character/character.h"
 #include "character/character_class.h"
 #include "character/mythic_path.h"
+#include "character/trait.h"
 #include "culture/cultural_group.h"
 #include "culture/culture.h"
 #include "database/defines.h"
@@ -95,6 +96,11 @@ void deity::process_gsml_scope(const gsml_data &scope)
 			const cultural_group *cultural_group = cultural_group::get(property.get_key());
 			this->cultural_group_names[cultural_group] = property.get_value();
 		});
+	} else if (tag == "traits") {
+		for (const std::string &value : values) {
+			const trait *trait = trait::get(value);
+			this->traits.push_back(trait);
+		}
 	} else if (tag == "character") {
 		this->character->process_gsml_data(scope);
 	} else {
@@ -125,10 +131,17 @@ void deity::check() const
 		throw std::runtime_error(std::format("Deity \"{}\" is not worshipped by any religions.", this->get_identifier()));
 	}
 
+	if (this->get_divine_level() == 0) {
+		log::log_error(std::format("Deity \"{}\" has no divine rank.", this->get_identifier()));
+	}
+
 	if (this->get_major_domains().empty()) {
 		log::log_error(std::format("Deity \"{}\" has no major domains.", this->get_identifier()));
 	}
 
+	if (static_cast<int>(this->get_major_domains().size()) < deity::base_deity_major_domains) {
+		log::log_error(std::format("Deity \"{}\" has less major domains than the base number of deity major domains ({}).", this->get_identifier(), deity::base_deity_major_domains));
+	}
 
 	idea::check();
 }

@@ -12,6 +12,9 @@ saint_cuthbert = { #Source: Frank Stenton, "Anglo-Saxon England", 1971, pp. 126,
 		protection
 		strength
 	}
+	traits = {
+		#extra_divine_domain_destruction
+	}
 	character = {
 		name = "Cuthbert"
 		epithet = "of Lindisfarne"
@@ -25,6 +28,16 @@ saint_cuthbert = { #Source: Frank Stenton, "Anglo-Saxon England", 1971, pp. 126,
 		gender = male
 		start_date = 651 #became a novice in Melrose in 651
 		death_date = 687.3.20 #died on 687.3.20
+		traits = {
+			#armorsmithing
+			#blacksmithing
+			diplomacy
+			heraldry
+			law
+			#religion
+			#spellcraft
+			#weaponsmithing
+		}
 		
 		#became a saint
 		

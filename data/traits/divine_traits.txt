@@ -35,3 +35,15 @@ divine_skill_focus_spellcraft = {
 		}
 	}
 }
+
+extra_divine_domain_destruction = {
+	name = "Extra Divine Domain: Destruction"
+	icon = skull
+	divine_domain = destruction
+	types = {
+		divine_trait
+	}
+	conditions = {
+		divine_rank >= 6
+	}
+}

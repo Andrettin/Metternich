@@ -6,6 +6,7 @@
 #include "database/data_type.h"
 
 Q_MOC_INCLUDE("character/character.h")
+Q_MOC_INCLUDE("character/trait.h")
 Q_MOC_INCLUDE("religion/pantheon.h")
 
 namespace metternich {
@@ -15,6 +16,7 @@ class cultural_group;
 class divine_domain;
 class pantheon;
 class religion;
+class trait;
 enum class divine_rank;
 
 class deity final : public idea, public data_type<deity>
@@ -30,6 +32,7 @@ public:
 	static constexpr const char class_identifier[] = "deity";
 	static constexpr const char property_class_identifier[] = "metternich::deity*";
 	static constexpr const char database_folder[] = "deities";
+	static constexpr int base_deity_major_domains = 3;
 
 	static const std::set<std::string> database_dependencies;
 
@@ -86,6 +89,11 @@ public:
 		return this->minor_domains;
 	}
 
+	const std::vector<const trait *> &get_traits() const
+	{
+		return this->traits;
+	}
+
 	virtual bool is_available_for_country_slot(const domain *domain, const idea_slot *slot) const override;
 
 signals:
@@ -101,6 +109,7 @@ private:
 	std::vector<const divine_domain *> minor_domains;
 	culture_map<std::string> cultural_names;
 	data_entry_map<cultural_group, std::string> cultural_group_names;
+	std::vector<const trait *> traits;
 };
 
 }

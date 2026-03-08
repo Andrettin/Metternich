@@ -394,6 +394,20 @@ void character_game_data::apply_species_and_class(const int level, const bool ap
 		for (int i = 1; i <= this->character->get_deity()->get_divine_level(); ++i) {
 			this->on_divine_rank_gained(i, 1);
 		}
+
+		int base_major_divine_domain_count = static_cast<int>(this->character->get_deity()->get_major_domains().size());
+
+		for (const auto &[trait, count] : this->get_trait_counts()) {
+			if (trait->get_divine_domain() != nullptr) {
+				assert_throw(vector::contains(this->character->get_deity()->get_major_domains(), trait->get_divine_domain()));
+				--base_major_divine_domain_count;
+			}
+		}
+
+		if (base_major_divine_domain_count > deity::base_deity_major_domains) {
+			const int major_domain_count = static_cast<int>(this->character->get_deity()->get_major_domains().size());
+			log::log_error(std::format("Deity \"{}\" has {} major domains, but its base major domains and traits only provide access to {} of them.", this->character->get_deity()->get_identifier(), major_domain_count, major_domain_count - (base_major_divine_domain_count - deity::base_deity_major_domains)));
+		}
 	}
 
 	if (character_class != nullptr) {
@@ -623,10 +637,19 @@ void character_game_data::add_starting_items(const std::vector<const item_type *
 
 void character_game_data::apply_history(const QDate &start_date)
 {
+	if (this->get_death_date().isValid() && start_date >= this->get_death_date()) {
+		this->set_dead(true);
+	}
+
 	const character_history *character_history = this->character->get_history();
 
 	this->character_class = this->character->get_character_class();
+
 	this->set_target_traits(character_history->get_traits());
+	if (this->is_deity()) {
+		vector::merge(this->target_traits, this->character->get_deity()->get_traits());
+	}
+
 	const int level = std::max(character_history->get_level(), 1);
 	this->apply_species_and_class(level, true);
 
@@ -634,8 +657,7 @@ void character_game_data::apply_history(const QDate &start_date)
 		return;
 	}
 
-	if (this->get_death_date().isValid() && start_date >= this->get_death_date()) {
-		this->set_dead(true);
+	if (this->is_dead()) {
 		return;
 	}
 
@@ -1935,6 +1957,16 @@ bool character_game_data::can_have_trait(const trait *trait) const
 		return false;
 	}
 
+	if (trait->get_divine_domain() != nullptr) {
+		if (!this->is_deity()) {
+			return false;
+		}
+
+		if (!vector::contains(this->character->get_deity()->get_major_domains(), trait->get_divine_domain())) {
+			return false;
+		}
+	}
+
 	return true;
 }
 
@@ -2021,6 +2053,11 @@ void character_game_data::on_trait_gained(const trait *trait, const int multipli
 
 	if (trait->get_military_unit_modifier() != nullptr && this->get_military_unit() != nullptr) {
 		this->apply_military_unit_modifier(this->get_military_unit(), multiplier);
+	}
+
+	if (trait->get_divine_domain() != nullptr) {
+		assert_throw(this->is_deity());
+		assert_throw(vector::contains(this->character->get_deity()->get_major_domains(), trait->get_divine_domain()));
 	}
 }
 
