@@ -36,11 +36,9 @@ public:
 
 	virtual void apply(const character *scope, const centesimal_int &multiplier) const override
 	{
-		if (this->species != nullptr) {
-			this->apply_to_species(scope, { this->species }, multiplier);
-		} else {
-			assert_throw(false);
-		}
+		assert_throw(this->species != nullptr);
+
+		this->apply_to_species(scope, { this->species }, multiplier);
 	}
 
 	void apply_to_species(const character *scope, const std::vector<const species *> &species_list, const centesimal_int &multiplier) const
@@ -54,12 +52,9 @@ public:
 	{
 		Q_UNUSED(scope);
 
-		if (this->species != nullptr) {
-			return std::format("Armor Class Against {}", this->species->get_name());
-		} else {
-			assert_throw(false);
-			return {};
-		}
+		assert_throw(this->species != nullptr);
+
+		return std::format("Armor Class Against {}", this->species->get_name());
 	}
 
 private:

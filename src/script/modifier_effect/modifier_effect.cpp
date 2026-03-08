@@ -6,6 +6,7 @@
 #include "script/modifier_effect/ai_building_desire_modifier_effect.h"
 #include "script/modifier_effect/armor_class_modifier_effect.h"
 #include "script/modifier_effect/artillery_cost_modifier_effect.h"
+#include "script/modifier_effect/attribute_skill_bonus_modifier_effect.h"
 #include "script/modifier_effect/building_cost_efficiency_modifier_effect.h"
 #include "script/modifier_effect/capital_commodity_bonus_modifier_effect.h"
 #include "script/modifier_effect/capital_commodity_bonus_per_population_modifier_effect.h"
@@ -278,7 +279,9 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 	std::unique_ptr<modifier_effect> modifier_effect;
 
 	if constexpr (std::is_same_v<scope_type, const character>) {
-		if (tag == "species_armor_class_bonus") {
+		if (tag == "attribute_skill_bonus") {
+			modifier_effect = std::make_unique<attribute_skill_bonus_modifier_effect>();
+		} else if (tag == "species_armor_class_bonus") {
 			modifier_effect = std::make_unique<species_armor_class_bonus_modifier_effect>();
 		}
 	} else if constexpr (std::is_same_v<scope_type, const domain>) {
