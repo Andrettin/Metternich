@@ -6,6 +6,10 @@ animal = {
 	name = "Animal"
 }
 
+artifice = {
+	name = "Artifice"
+}
+
 astral = {
 	name = "Astral"
 }
@@ -30,6 +34,14 @@ creation = {
 	name = "Creation"
 }
 
+darkness = {
+	name = "Darkness"
+}
+
+death = {
+	name = "Death"
+}
+
 destruction = {
 	name = "Destruction"
 }
@@ -50,6 +62,10 @@ fire = {
 	name = "Fire"
 }
 
+glory = {
+	name = "Glory"
+}
+
 guardian = {
 	name = "Guardian"
 }
@@ -58,12 +74,40 @@ healing = {
 	name = "Healing"
 }
 
+knowledge = {
+	name = "Knowledge"
+}
+
 law = {
 	name = "Law"
 }
 
+liberation = {
+	name = "Liberation"
+}
+
+luck = {
+	name = "Luck"
+}
+
+madness = {
+	name = "Madness"
+}
+
+magic = {
+	name = "Magic"
+}
+
+moon = {
+	name = "Moon"
+}
+
 necromantic = {
 	name = "Necromantic"
+}
+
+nobility = {
+	name = "Nobility"
 }
 
 numbers = {
@@ -76,6 +120,18 @@ plant = {
 
 protection = {
 	name = "Protection"
+}
+
+repose = {
+	name = "Repose"
+}
+
+rune = {
+	name = "Rune"
+}
+
+scalykind = {
+	name = "Scalykind"
 }
 
 strength = {
@@ -94,8 +150,12 @@ thought = {
 	name = "Thought"
 }
 
-travelers = {
-	name = "Travelers"
+travel = {
+	name = "Travel"
+}
+
+trickery = {
+	name = "Trickery"
 }
 
 war = {
