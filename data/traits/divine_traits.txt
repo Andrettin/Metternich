@@ -1,3 +1,41 @@
+divine_skill_focus_armorer = {
+	name = "Divine Skill Focus: Armorer"
+	icon = clothing
+	types = {
+		divine_trait
+	}
+	conditions = {
+		armorer >= 23
+	}
+	modifier = {
+		armorer = 10
+	}
+	per_divine_rank_modifiers = {
+		1 = {
+			armorer = 1
+		}
+	}
+}
+
+divine_skill_focus_blacksmithing = {
+	name = "Divine Skill Focus: Blacksmithing"
+	icon = tools
+	types = {
+		divine_trait
+	}
+	conditions = {
+		blacksmithing >= 23
+	}
+	modifier = {
+		blacksmithing = 10
+	}
+	per_divine_rank_modifiers = {
+		1 = {
+			blacksmithing = 1
+		}
+	}
+}
+
 divine_skill_focus_religion = {
 	name = "Divine Skill Focus: Religion"
 	icon = wooden_cross
@@ -32,6 +70,25 @@ divine_skill_focus_spellcraft = {
 	per_divine_rank_modifiers = {
 		1 = {
 			spellcraft = 1
+		}
+	}
+}
+
+divine_skill_focus_weaponsmithing = {
+	name = "Divine Skill Focus: Weaponsmithing"
+	icon = saber
+	types = {
+		divine_trait
+	}
+	conditions = {
+		weaponsmithing >= 23
+	}
+	modifier = {
+		weaponsmithing = 10
+	}
+	per_divine_rank_modifiers = {
+		1 = {
+			weaponsmithing = 1
 		}
 	}
 }

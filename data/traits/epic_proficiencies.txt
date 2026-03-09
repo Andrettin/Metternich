@@ -1,0 +1,161 @@
+armor_skin = {
+	name = "Armor Skin"
+	icon = heater_shield
+	unlimited = true
+	types = {
+		epic_proficiency
+		proficiency
+	}
+	modifier = {
+		armor_class = 2
+	}
+}
+
+epic_prowess = {
+	name = "Epic Prowess"
+	icon = labor
+	unlimited = true
+	types = {
+		epic_proficiency
+		proficiency
+	}
+	modifier = {
+		to_hit_bonus = 1
+	}
+}
+
+epic_skill_focus_diplomacy = {
+	name = "Epic Skill Focus: Diplomacy"
+	icon = treaty
+	types = {
+		epic_proficiency
+		proficiency
+	}
+	conditions = {
+		diplomacy >= 20
+	}
+	modifier = {
+		diplomacy = 10
+	}
+}
+
+epic_skill_focus_disguise = {
+	name = "Epic Skill Focus: Disguise"
+	icon = dagger
+	types = {
+		epic_proficiency
+		proficiency
+	}
+	conditions = {
+		disguise >= 20
+	}
+	modifier = {
+		disguise = 10
+	}
+}
+
+epic_skill_focus_spellcraft = {
+	name = "Epic Skill Focus: Spellcraft"
+	icon = treaty
+	types = {
+		epic_proficiency
+		proficiency
+	}
+	conditions = {
+		spellcraft >= 20
+	}
+	modifier = {
+		spellcraft = 10
+	}
+}
+
+epic_toughness = {
+	name = "Epic Toughness"
+	icon = labor
+	unlimited = true
+	types = {
+		epic_proficiency
+		proficiency
+	}
+	modifier = {
+		hit_points = 30
+	}
+}
+
+great_charisma = {
+	name = "Great Charisma"
+	icon = music
+	unlimited = true
+	types = {
+		epic_proficiency
+		proficiency
+	}
+	modifier = {
+		charisma = 1
+	}
+}
+
+great_constitution = {
+	name = "Great Constitution"
+	icon = labor
+	unlimited = true
+	types = {
+		epic_proficiency
+		proficiency
+	}
+	modifier = {
+		constitution = 1
+	}
+}
+
+great_dexterity = {
+	name = "Great Dexterity"
+	icon = labor
+	unlimited = true
+	types = {
+		epic_proficiency
+		proficiency
+	}
+	modifier = {
+		dexterity = 1
+	}
+}
+
+great_intelligence = {
+	name = "Great Intelligence"
+	icon = research
+	unlimited = true
+	types = {
+		epic_proficiency
+		proficiency
+	}
+	modifier = {
+		intelligence = 1
+	}
+}
+
+great_strength = {
+	name = "Great Strength"
+	icon = labor
+	unlimited = true
+	types = {
+		epic_proficiency
+		proficiency
+	}
+	modifier = {
+		strength = 1
+	}
+}
+
+great_wisdom = {
+	name = "Great Wisdom"
+	icon = university
+	unlimited = true
+	types = {
+		epic_proficiency
+		proficiency
+	}
+	modifier = {
+		wisdom = 1
+	}
+}

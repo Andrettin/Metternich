@@ -142,6 +142,20 @@ skill_focus_religion = {
 	}
 }
 
+skill_focus_spellcraft = {
+	name = "Skill Focus: Spellcraft"
+	icon = book
+	types = {
+		proficiency
+	}
+	conditions = {
+		skill_training = spellcraft
+	}
+	modifier = {
+		spellcraft = 3
+	}
+}
+
 skill_focus_weaponsmithing = {
 	name = "Skill Focus: Weaponsmithing"
 	icon = saber

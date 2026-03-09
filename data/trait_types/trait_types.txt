@@ -2,6 +2,13 @@ proficiency = {
 	name = "Proficiency"
 }
 
+epic_proficiency = {
+	name = "Epic Proficiency"
+	gain_conditions = {
+		level >= 21
+	}
+}
+
 flaw = {
 	name = "Flaw"
 	max_traits = 2
