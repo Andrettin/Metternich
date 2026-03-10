@@ -7,6 +7,7 @@ dwarven_guardsmen = {
 		melee = 4
 		defense = 6
 		movement = 4
+		range = 1
 	}
 	commodity_costs = {
 		manpower = 1
@@ -25,6 +26,7 @@ dwarven_stalwarts = {
 		melee = 5
 		defense = 6
 		movement = 3
+		range = 1
 	}
 	required_technology = dark_ages
 	commodity_costs = {
@@ -46,6 +48,7 @@ dwarven_sentinels = {
 		melee = 7
 		defense = 7
 		movement = 4
+		range = 1
 	}
 	required_technology = middle_ages
 	commodity_costs = {
@@ -68,6 +71,7 @@ dwarven_thunderers = {
 		melee = 1
 		defense = 3
 		movement = 2
+		range = 3
 	}
 	required_technology = renaissance
 	commodity_costs = {
@@ -90,6 +94,7 @@ dwarven_thunderguards = {
 		melee = 2
 		defense = 4
 		movement = 3
+		range = 3
 	}
 	required_technology = renaissance
 	commodity_costs = {
@@ -112,6 +117,7 @@ dwarven_dragonguards = {
 		melee = 12
 		defense = 5
 		movement = 4
+		range = 3
 	}
 	required_technology = renaissance
 	commodity_costs = {

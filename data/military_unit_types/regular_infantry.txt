@@ -9,6 +9,7 @@ regulars = {
 		defense = 2
 		melee = 2
 		missile = 4
+		range = 3
 	}
 	commodity_costs = {
 		wealth = 2gb
@@ -30,6 +31,7 @@ rifle_infantry = {
 		melee = 15
 		defense = 7
 		movement = 4
+		range = 3
 	}
 	required_technology = modern_era
 	commodity_costs = {
@@ -54,6 +56,7 @@ infantry = {
 		melee = 22
 		defense = 20
 		movement = 5
+		range = 3
 	}
 	required_technology = modern_era
 	commodity_costs = {

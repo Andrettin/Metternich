@@ -8,6 +8,7 @@ catapult = {
 		defense = 1
 		melee = 1
 		missile = 5
+		range = 3
 	}
 	commodity_costs = {
 		wealth = 4gb
@@ -31,6 +32,7 @@ culverin = {
 		defense = 2
 		melee = 1
 		missile = 5
+		range = 3
 	}
 	commodity_costs = {
 		wealth = 4gb
@@ -54,6 +56,7 @@ royal_artillery = {
 		defense = 2
 		melee = 1
 		missile = 5
+		range = 3
 	}
 	commodity_costs = {
 		wealth = 4gb
@@ -77,6 +80,7 @@ artillery = {
 		defense = 2
 		melee = 1
 		missile = 5
+		range = 3
 	}
 	commodity_costs = {
 		wealth = 4gb
@@ -98,6 +102,7 @@ siege_artillery = {
 		melee = 8
 		defense = 3
 		movement = 3
+		range = 3
 	}
 	required_technology = modern_era
 	commodity_costs = {
@@ -122,6 +127,7 @@ railroad_guns = {
 		melee = 12
 		defense = 20
 		movement = 3
+		range = 3
 	}
 	required_technology = modern_era
 	commodity_costs = {

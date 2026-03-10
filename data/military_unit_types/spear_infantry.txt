@@ -6,6 +6,7 @@ spearmen = {
 		melee = 4
 		defense = 5
 		movement = 4
+		range = 1
 	}
 	commodity_costs = {
 		manpower = 1
@@ -25,6 +26,7 @@ pikemen = {
 		movement = 1
 		defense = 3
 		melee = 3
+		range = 1
 	}
 	commodity_costs = {
 		wealth = 2gb
@@ -45,6 +47,7 @@ halberdiers = {
 		melee = 7
 		defense = 6
 		movement = 4
+		range = 1
 	}
 	required_technology = renaissance
 	commodity_costs = {

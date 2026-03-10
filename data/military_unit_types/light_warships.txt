@@ -7,6 +7,7 @@ trireme = {
 		missile = 2
 		melee = 3
 		movement = 4
+		range = 3
 	}
 	upgrades = {
 		sloop
@@ -22,6 +23,7 @@ sloop = {
 		missile = 4
 		melee = 4
 		movement = 4
+		range = 3
 	}
 	required_technology = renaissance
 	commodity_costs = {
@@ -43,6 +45,7 @@ frigate = {
 		missile = 3
 		melee = 3
 		movement = 4
+		range = 3
 	}
 	required_technology = renaissance
 	commodity_costs = {
@@ -67,6 +70,7 @@ raider = {
 		missile = 3
 		melee = 3
 		movement = 7
+		range = 3
 	}
 	required_technology = modern_era
 	commodity_costs = {
@@ -91,6 +95,7 @@ armored_cruiser = {
 		missile = 6
 		melee = 6
 		movement = 8
+		range = 3
 	}
 	required_technology = modern_era
 	commodity_costs = {
@@ -116,6 +121,7 @@ battlecruiser = {
 		missile = 18
 		melee = 18
 		movement = 9
+		range = 3
 	}
 	required_technology = modern_era
 	commodity_costs = {

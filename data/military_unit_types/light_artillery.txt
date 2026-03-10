@@ -7,6 +7,7 @@ horse_artillery = {
 		melee = 2
 		defense = 2
 		movement = 3
+		range = 3
 	}
 	required_technology = renaissance
 	commodity_costs = {
@@ -29,6 +30,7 @@ light_artillery = {
 		melee = 3
 		defense = 3
 		movement = 5
+		range = 3
 	}
 	required_technology = renaissance
 	commodity_costs = {
@@ -54,6 +56,7 @@ field_artillery = {
 		melee = 5
 		defense = 3
 		movement = 6
+		range = 3
 	}
 	required_technology = modern_era
 	commodity_costs = {
@@ -79,6 +82,7 @@ mobile_artillery = {
 		melee = 8
 		defense = 20
 		movement = 8
+		range = 3
 	}
 	required_technology = modern_era
 	commodity_costs = {

@@ -6,5 +6,6 @@ red_dragons = {
 		melee = 2
 		defense = 3
 		movement = 4
+		range = 1
 	}
 }

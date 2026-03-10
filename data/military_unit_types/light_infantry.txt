@@ -7,6 +7,7 @@ calivermen = {
 		melee = 2
 		defense = 5
 		movement = 4
+		range = 3
 	}
 	required_technology = renaissance
 	commodity_costs = {
@@ -28,6 +29,7 @@ skirmishers = {
 		melee = 5
 		defense = 7
 		movement = 6
+		range = 3
 	}
 	required_technology = renaissance
 	commodity_costs = {
@@ -52,6 +54,7 @@ sharpshooters = {
 		melee = 10
 		defense = 7
 		movement = 6
+		range = 3
 	}
 	required_technology = modern_era
 	commodity_costs = {
@@ -76,6 +79,7 @@ rangers = {
 		melee = 15
 		defense = 20
 		movement = 7
+		range = 3
 	}
 	required_technology = modern_era
 	commodity_costs = {

@@ -7,6 +7,7 @@ galleon = {
 		missile = 7
 		melee = 7
 		movement = 2
+		range = 3
 	}
 	required_technology = renaissance
 	commodity_costs = {
@@ -28,6 +29,7 @@ ship_of_the_line = {
 		missile = 6
 		melee = 6
 		movement = 3
+		range = 3
 	}
 	required_technology = renaissance
 	commodity_costs = {
@@ -52,6 +54,7 @@ ironclad = {
 		missile = 5
 		melee = 5
 		movement = 5
+		range = 3
 	}
 	required_technology = modern_era
 	commodity_costs = {
@@ -77,6 +80,7 @@ advanced_ironclad = {
 		missile = 10
 		melee = 10
 		movement = 6
+		range = 3
 	}
 	required_technology = modern_era
 	commodity_costs = {
@@ -102,6 +106,7 @@ dreadnought = {
 		missile = 20
 		melee = 20
 		movement = 7
+		range = 3
 	}
 	required_technology = modern_era
 	commodity_costs = {

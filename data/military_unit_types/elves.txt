@@ -8,6 +8,7 @@ elven_archers = {
 		melee = 1
 		defense = 2
 		movement = 4
+		range = 3
 	}
 	commodity_costs = {
 		manpower = 1
@@ -27,6 +28,7 @@ elven_marksmen = {
 		melee = 1
 		defense = 2
 		movement = 4
+		range = 3
 	}
 	required_technology = dark_ages
 	commodity_costs = {

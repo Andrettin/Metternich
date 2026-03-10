@@ -6,6 +6,7 @@ clubmen = {
 		melee = 2
 		defense = 3
 		movement = 4
+		range = 1
 	}
 	commodity_costs = {
 		manpower = 1
@@ -23,6 +24,7 @@ macemen = {
 		melee = 3
 		defense = 3
 		movement = 4
+		range = 1
 	}
 	required_technology = middle_ages
 	commodity_costs = {

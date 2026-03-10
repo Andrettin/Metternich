@@ -10,6 +10,7 @@ squires = {
 		melee = 3
 		charge = 5
 		missile = 1
+		range = 1
 	}
 	commodity_costs = {
 		wealth = 4gb
@@ -34,6 +35,7 @@ cossacks = {
 		melee = 3
 		charge = 5
 		missile = 1
+		range = 3
 	}
 	commodity_costs = {
 		wealth = 4gb
@@ -58,6 +60,7 @@ hussars = {
 		melee = 3
 		charge = 5
 		missile = 1
+		range = 3
 	}
 	commodity_costs = {
 		wealth = 4gb
@@ -79,6 +82,7 @@ scouts = {
 		melee = 13
 		defense = 7
 		movement = 11
+		range = 3
 	}
 	required_technology = modern_era
 	commodity_costs = {
@@ -104,6 +108,7 @@ mechanized_infantry = {
 		melee = 28
 		defense = 10
 		movement = 11
+		range = 3
 	}
 	required_technology = modern_era
 	commodity_costs = {

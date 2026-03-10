@@ -6,6 +6,7 @@ peasant_levies = {
 		melee = 3
 		defense = 3
 		movement = 3
+		range = 1
 	}
 	commodity_costs = {
 		manpower = 1
@@ -25,6 +26,7 @@ minutemen = {
 		melee = 5
 		defense = 4
 		movement = 4
+		range = 3
 	}
 	required_technology = renaissance
 	upgrades = {
@@ -41,6 +43,7 @@ militia = {
 		melee = 7
 		defense = 4
 		movement = 4
+		range = 3
 	}
 	required_technology = modern_era
 	upgrades = {
@@ -57,6 +60,7 @@ conscripts = {
 		melee = 10
 		defense = 10
 		movement = 5
+		range = 3
 	}
 	required_technology = modern_era
 }

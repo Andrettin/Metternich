@@ -10,6 +10,7 @@ harquebusiers = {
 		melee = 3
 		charge = 5
 		missile = 1
+		range = 3
 	}
 	commodity_costs = {
 		wealth = 4gb
@@ -34,6 +35,7 @@ cuirassiers = {
 		melee = 3
 		charge = 5
 		missile = 1
+		range = 3
 	}
 	commodity_costs = {
 		wealth = 4gb
@@ -55,6 +57,7 @@ carbine_cavalry = {
 		melee = 26
 		defense = 5
 		movement = 9
+		range = 3
 	}
 	required_technology = modern_era
 	commodity_costs = {
@@ -80,6 +83,7 @@ armor = {
 		melee = 60
 		defense = 20
 		movement = 9
+		range = 3
 	}
 	required_technology = modern_era
 	commodity_costs = {

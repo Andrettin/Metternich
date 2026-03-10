@@ -8,6 +8,7 @@ archers = {
 		defense = 2
 		melee = 2
 		missile = 4
+		range = 3
 	}
 	commodity_costs = {
 		wealth = 2gb
@@ -31,6 +32,7 @@ crossbowmen = {
 		defense = 2
 		melee = 2
 		missile = 4
+		range = 3
 	}
 	commodity_costs = {
 		wealth = 2gb

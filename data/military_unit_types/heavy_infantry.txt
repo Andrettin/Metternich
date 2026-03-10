@@ -9,6 +9,7 @@ arquebusiers = {
 		defense = 2
 		melee = 2
 		missile = 4
+		range = 3
 	}
 	commodity_costs = {
 		wealth = 2gb
@@ -30,6 +31,7 @@ musketeers = {
 		melee = 2
 		defense = 4
 		movement = 3
+		range = 3
 	}
 	required_technology = renaissance
 	commodity_costs = {
@@ -51,6 +53,7 @@ grenadiers = {
 		melee = 12
 		defense = 5
 		movement = 4
+		range = 3
 	}
 	required_technology = renaissance
 	commodity_costs = {
@@ -75,6 +78,7 @@ guards = {
 		melee = 17
 		defense = 7
 		movement = 4
+		range = 3
 	}
 	required_technology = modern_era
 	commodity_costs = {
@@ -99,6 +103,7 @@ machine_gunners = {
 		melee = 25
 		defense = 20
 		movement = 4
+		range = 3
 	}
 	required_technology = modern_era
 	commodity_costs = {

@@ -6,6 +6,7 @@ chariots = {
 		melee = 5
 		defense = 5
 		movement = 4
+		range = 1
 	}
 	commodity_costs = {
 		manpower = 1
@@ -26,6 +27,7 @@ knights = {
 		defense = 4
 		melee = 4
 		charge = 6
+		range = 1
 	}
 	commodity_costs = {
 		wealth = 6gb
@@ -46,6 +48,7 @@ lancers = {
 		melee = 8
 		defense = 5
 		movement = 6
+		range = 1
 	}
 	required_technology = renaissance
 	commodity_costs = {
