@@ -80,7 +80,7 @@ Flickable {
 				select_province(null)
 			} else {
 				if (metternich.selected_military_units.length > 0) {
-					metternich.move_selected_military_units_to(province.game_data.provincial_capital.map_data.tile_pos)
+					metternich.move_selected_military_units_to(province.game_data.provincial_capital ? province.game_data.provincial_capital.map_data.tile_pos : province.game_data.center_tile_pos)
 					select_province(null)
 					metternich.clear_selected_military_units()
 					return
@@ -98,10 +98,10 @@ Flickable {
 				
 				if (province.game_data.owner !== null) {
 					text += ", " + province.game_data.owner.name
-				}
-				
-				if (province.game_data.owner.game_data.realm !== province.game_data.owner) {
-					text += ", " + province.game_data.owner.game_data.realm.name
+					
+					if (province.game_data.owner.game_data.realm !== province.game_data.owner) {
+						text += ", " + province.game_data.owner.game_data.realm.name
+					}
 				}
 				
 				if (province_map.mode === ProvinceMap.Mode.Cultural && province.game_data.culture !== null) {
