@@ -3,10 +3,12 @@
 #include "game/combat.h"
 
 #include "character/character.h"
+#include "character/character_class.h"
 #include "character/character_game_data.h"
 #include "character/monster_type.h"
 #include "character/party.h"
 #include "character/skill.h"
+#include "character/status_effect.h"
 #include "database/defines.h"
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
@@ -21,6 +23,7 @@
 #include "map/site_game_data.h"
 #include "map/terrain_type.h"
 #include "script/effect/effect_list.h"
+#include "species/species.h"
 #include "ui/portrait.h"
 #include "util/assert_util.h"
 #include "util/dice.h"
@@ -39,23 +42,9 @@ namespace metternich {
 combat::combat(party *attacking_party, party *defending_party, const QSize &map_size)
 	: attacking_party(attacking_party), defending_party(defending_party)
 {
-	QSize min_map_size = (QGuiApplication::primaryScreen()->size() / defines::get()->get_scaled_tile_size()) - QSize(1, 0);
+	connect(this, &combat::current_unit_changed, this, &combat::movable_tiles_changed);
 
-	int max_range = 0;
-	for (const character *character : attacking_party->get_characters()) {
-		max_range = std::max(max_range, character->get_game_data()->get_range());
-	}
-	for (const character *character : defending_party->get_characters()) {
-		max_range = std::max(max_range, character->get_game_data()->get_range());
-	}
-
-	min_map_size.setWidth(std::max(min_map_size.width(), max_range + 4));
-
-	this->map_rect = QRect(QPoint(0, 0), QSize(std::max(map_size.width(), min_map_size.width()), std::max(map_size.height(), min_map_size.height())));
-
-	this->base_terrain = defines::get()->get_default_base_terrain();
-
-	connect(this, &combat::current_character_changed, this, &combat::movable_tiles_changed);
+	this->set_map_size(map_size);
 
 	for (const character *character : this->attacking_party->get_characters()) {
 		auto character_info = make_qunique<combat_character_info>(character, false);
@@ -71,11 +60,18 @@ combat::~combat()
 {
 }
 
-void combat::set_base_terrain(const terrain_type *terrain)
+int combat::get_max_range_of_units() const
 {
-	assert_throw(terrain != nullptr);
+	int max_range = 0;
 
-	this->base_terrain = terrain;
+	for (const character *character : attacking_party->get_characters()) {
+		max_range = std::max(max_range, character->get_game_data()->get_range());
+	}
+	for (const character *character : defending_party->get_characters()) {
+		max_range = std::max(max_range, character->get_game_data()->get_range());
+	}
+
+	return max_range;
 }
 
 void combat::set_generated_party(std::unique_ptr<party> &&generated_party)
@@ -83,7 +79,7 @@ void combat::set_generated_party(std::unique_ptr<party> &&generated_party)
 	this->generated_party = std::move(generated_party);
 }
 
-QVariantList combat::get_character_infos_qvariant_list() const
+QVariantList combat::get_unit_infos_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->character_infos);
 }
@@ -102,8 +98,8 @@ void combat::remove_character_info(const character *character)
 	this->get_tile(tile_pos).character = nullptr;
 	this->character_infos.erase(character);
 
-	emit tile_character_changed(tile_pos);
-	emit character_infos_changed();
+	emit tile_unit_changed(tile_pos);
+	emit unit_infos_changed();
 }
 
 QVariantList combat::get_objects_qvariant_list() const
@@ -141,7 +137,7 @@ void combat::initialize()
 	this->tiles.reserve(tile_count);
 
 	for (size_t i = 0; i < tile_count; ++i) {
-		this->tiles.emplace_back(this->base_terrain, this->base_terrain);
+		this->tiles.emplace_back(this->get_base_terrain(), this->get_base_terrain());
 	}
 
 	this->deploy_objects();
@@ -362,8 +358,7 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 		combat_character_info *character_info = this->get_character_info(character);
 		character_info->set_remaining_movement(character->get_game_data()->get_combat_movement());
 
-		this->current_character = character;
-		emit current_character_changed();
+		this->set_current_unit(character_info);
 
 		while (!attacked && character_info->get_remaining_movement() > 0) {
 			const QPoint current_tile_pos = character_info->get_tile_pos();
@@ -415,11 +410,11 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 							return;
 						}
 
-						if (!this->can_current_character_move_to(adjacent_pos)) {
+						if (!this->can_current_unit_move_to(adjacent_pos)) {
 							return;
 						}
 
-						if (this->can_current_character_retreat_at(adjacent_pos)) {
+						if (this->can_current_unit_retreat_at(adjacent_pos)) {
 							return;
 						}
 
@@ -525,11 +520,11 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 						}
 					}
 				}
-			} else if (this->can_current_character_move_to(target_pos)) {
+			} else if (this->can_current_unit_move_to(target_pos)) {
 				character_info->change_remaining_movement(-distance);
 				co_await this->move_character_to(character, target_pos);
 
-				if (this->can_current_character_retreat_at(target_pos)) {
+				if (this->can_current_unit_retreat_at(target_pos)) {
 					party->remove_character(character);
 					this->remove_character_info(character);
 					break;
@@ -538,9 +533,8 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 		}
 	}
 
-	if (this->current_character != nullptr) {
-		this->current_character = nullptr;
-		emit current_character_changed();
+	if (this->get_current_unit() != nullptr) {
+		this->set_current_unit(nullptr);
 	}
 
 	co_return experience_award;
@@ -697,15 +691,45 @@ const combat_tile &combat::get_tile(const QPoint &tile_pos) const
 	return this->tiles.at(point::to_index(tile_pos, this->get_map_width()));
 }
 
-bool combat::is_tile_attacker_escape(const QPoint &tile_pos) const
+std::string combat::get_tile_text(const QPoint &tile_pos) const
 {
-	//can only retreat if the enemy is still present; this is to prevent a retreat from happening while opening chests, leading to potentially opening the same chest multiple times
-	return tile_pos.x() == 0 && !this->defending_party->get_characters().empty();
+	std::string text = combat_base::get_tile_text(tile_pos);
+
+	const combat_tile &tile = this->get_tile(tile_pos);
+	if (tile.character != nullptr) {
+		const character *character = tile.character;
+		const character_game_data *character_game_data = character->get_game_data();
+		const std::string type_name = character->get_monster_type() != nullptr ? character->get_monster_type()->get_name() : (character_game_data->get_character_class() != nullptr ? (character_game_data->get_character_class()->get_name() + " " + std::to_string(character_game_data->get_level())) : character->get_species()->get_name());
+		const std::string full_name = character_game_data->get_full_name();
+		text += " " + (!full_name.empty() ? (full_name + " (" + type_name + ")") : type_name);
+
+		for (const auto &[status_effect, rounds] : character_game_data->get_status_effect_rounds()) {
+			text += std::format(" ({})", status_effect->get_adjective());
+		}
+	} else if (tile.object != nullptr) {
+		const combat_object *object = tile.object;
+		text += " " + object->get_object_type()->get_name();
+
+		if (object->get_trap() != nullptr && object->get_trap_found()) {
+			text += " (Trap: " + object->get_trap()->get_name();
+			if (this->get_current_unit() != nullptr) {
+				text += " - " + std::to_string(object->get_disarm_chance(static_cast<const combat_character_info *>(this->get_current_unit())->get_character())) + "% Disarm Chance";
+			}
+			text += ")";
+		}
+	}
+
+	return text;
 }
 
-bool combat::is_tile_defender_escape(const QPoint &tile_pos) const
+bool combat::is_attacker_defeated() const
 {
-	return tile_pos.x() == (this->get_map_width() - 1) && !this->attacking_party->get_characters().empty();
+	return this->attacking_party->get_characters().empty();
+}
+
+bool combat::is_defender_defeated() const
+{
+	return this->defending_party->get_characters().empty();
 }
 
 [[nodiscard]]
@@ -771,8 +795,8 @@ QCoro::Task<void> combat::move_character_to(const character *character, const QP
 		}
 	});
 
-	emit tile_character_changed(old_tile_pos);
-	emit tile_character_changed(tile_pos);
+	emit tile_unit_changed(old_tile_pos);
+	emit tile_unit_changed(tile_pos);
 }
 
 void combat::set_target(const QPoint &tile_pos)
@@ -785,9 +809,9 @@ void combat::set_target(const QPoint &tile_pos)
 	this->target_promise->finish();
 }
 
-bool combat::can_current_character_move_to(const QPoint &tile_pos) const
+bool combat::is_current_unit_in_enemy_range_at(const QPoint &tile_pos) const
 {
-	if (this->current_character == nullptr) {
+	if (this->get_current_unit() == nullptr) {
 		return false;
 	}
 
@@ -795,53 +819,7 @@ bool combat::can_current_character_move_to(const QPoint &tile_pos) const
 		return false;
 	}
 
-	const combat_character_info *character_info = this->get_character_info(this->current_character);
-	const QPoint current_tile_pos = character_info->get_tile_pos();
-
-	const int distance = point::distance_to(current_tile_pos, tile_pos);
-
-	if (distance > character_info->get_remaining_movement()) {
-		return false;
-	}
-
-	const combat_tile &tile = this->get_tile(tile_pos);
-	if (tile.is_occupied()) {
-		return false;
-	}
-
-	return true;
-}
-
-bool combat::can_current_character_retreat_at(const QPoint &tile_pos) const
-{
-	if (this->current_character == nullptr) {
-		return false;
-	}
-
-	if (!this->get_map_rect().contains(tile_pos)) {
-		return false;
-	}
-
-	const combat_character_info *character_info = this->get_character_info(this->current_character);
-	if (character_info->is_defender()) {
-		return this->defender_retreat_allowed && this->is_tile_defender_escape(tile_pos);
-	} else {
-		return this->attacker_retreat_allowed && this->is_tile_attacker_escape(tile_pos);
-	}
-}
-
-bool combat::is_current_character_in_enemy_range_at(const QPoint &tile_pos) const
-{
-	if (this->current_character == nullptr) {
-		return false;
-	}
-
-	if (!this->get_map_rect().contains(tile_pos)) {
-		return false;
-	}
-
-	const combat_character_info *character_info = this->get_character_info(this->current_character);
-	const party *enemy_party = character_info->is_defender() ? this->attacking_party : this->defending_party;
+	const party *enemy_party = this->get_current_unit()->is_defender() ? this->attacking_party : this->defending_party;
 
 	for (const character *enemy : enemy_party->get_characters()) {
 		const combat_character_info *enemy_info = this->get_character_info(enemy);
@@ -874,11 +852,11 @@ bool combat::can_character_use_object(const character *character, const combat_o
 
 bool combat::can_current_character_use_object(const combat_object *object) const
 {
-	if (this->current_character == nullptr) {
+	if (this->get_current_unit() == nullptr) {
 		return false;
 	}
 
-	return this->can_character_use_object(this->current_character, object);
+	return this->can_character_use_object(static_cast<const combat_character_info *>(this->get_current_unit())->get_character(), object);
 }
 
 const site *combat::get_location() const
@@ -893,24 +871,31 @@ const site *combat::get_location() const
 }
 
 combat_tile::combat_tile(const terrain_type *base_terrain, const terrain_type *terrain)
+	: combat_tile_base(base_terrain, terrain)
 {
-	this->terrain = terrain;
+}
 
-	if (!base_terrain->get_subtiles().empty()) {
-		std::array<const std::vector<int> *, 4> terrain_subtiles{};
+combat_character_info::combat_character_info(const metternich::character *character, const bool defender)
+	: combat_unit_info_base(defender), character(character)
+{
+	connect(character->get_game_data(), &character_game_data::icon_changed, this, &combat_character_info::icon_changed);
+	connect(character->get_game_data(), &character_game_data::hit_points_changed, this, &combat_character_info::hit_points_changed);
+	connect(character->get_game_data(), &character_game_data::max_hit_points_changed, this, &combat_character_info::max_hit_points_changed);
+}
 
-		for (size_t i = 0; i < terrain_subtiles.size(); ++i) {
-			terrain_subtiles[i] = &base_terrain->get_subtiles();
-		}
+const icon *combat_character_info::get_icon() const
+{
+	return this->get_character()->get_game_data()->get_icon();
+}
 
-		for (size_t i = 0; i < terrain_subtiles.size(); ++i) {
-			const short terrain_subtile = static_cast<short>(vector::get_random(*terrain_subtiles[i]));
+int combat_character_info::get_hit_points() const
+{
+	return this->get_character()->get_game_data()->get_hit_points();
+}
 
-			this->base_subtile_frames[i] = terrain_subtile;
-		}
-	} else {
-		this->base_tile_frame = static_cast<short>(vector::get_random(base_terrain->get_tiles()));
-	}
+int combat_character_info::get_max_hit_points() const
+{
+	return this->get_character()->get_game_data()->get_max_hit_points();
 }
 
 int combat_object::get_disarm_chance(const metternich::character *character) const

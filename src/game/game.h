@@ -16,7 +16,7 @@ namespace metternich {
 
 class army;
 class character;
-class combat;
+class combat_base;
 class domain;
 class event;
 class game_rules;
@@ -43,7 +43,7 @@ class game final : public QObject, public singleton<game>
 	Q_PROPERTY(const metternich::character* player_character READ get_player_character WRITE set_player_character NOTIFY player_character_changed)
 	Q_PROPERTY(const metternich::domain* player_country READ get_player_country WRITE set_player_country NOTIFY player_country_changed)
 	Q_PROPERTY(bool combat_running READ is_combat_running NOTIFY combat_running_changed)
-	Q_PROPERTY(metternich::combat* current_combat READ get_current_combat NOTIFY current_combat_changed)
+	Q_PROPERTY(metternich::combat_base* current_combat READ get_current_combat NOTIFY current_combat_changed)
 	Q_PROPERTY(const metternich::game_rules* rules READ get_rules CONSTANT)
 
 public:
@@ -298,12 +298,12 @@ public:
 
 	bool do_battle(army *attacking_army, army *defending_army);
 
-	combat *get_current_combat() const
+	combat_base *get_current_combat() const
 	{
 		return this->current_combat.get();
 	}
 
-	void set_current_combat(qunique_ptr<combat> &&combat);
+	void set_current_combat(qunique_ptr<combat_base> &&combat);
 
 	bool is_combat_running() const
 	{
@@ -342,7 +342,7 @@ private:
 	std::vector<std::unique_ptr<delayed_effect_instance<const province>>> province_delayed_effects;
 	std::vector<std::unique_ptr<delayed_effect_instance<const site>>> site_delayed_effects;
 	std::set<const metternich::event *> fired_events;
-	qunique_ptr<combat> current_combat;
+	qunique_ptr<combat_base> current_combat;
 };
 
 }

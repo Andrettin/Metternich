@@ -2186,11 +2186,11 @@ bool game::do_battle(army *attacking_army, army *defending_army)
 
 	military_unit_type_map<int> lost_unit_count;
 	//keep track of the player's starting unit count, so that we can later calculate their lost unit count
-	if (attacking_army->get_country() == this->get_player_country()) {
+	if (attacking_army->get_domain() == this->get_player_country()) {
 		for (const military_unit *military_unit : attacking_army->get_military_units()) {
 			lost_unit_count[military_unit->get_type()]++;
 		}
-	} else if (defending_army->get_country() == this->get_player_country()) {
+	} else if (defending_army->get_domain() == this->get_player_country()) {
 		for (const military_unit *military_unit : defending_army->get_military_units()) {
 			lost_unit_count[military_unit->get_type()]++;
 		}
@@ -2262,8 +2262,8 @@ bool game::do_battle(army *attacking_army, army *defending_army)
 	const bool attack_success = defending_army->get_military_units().empty() && !attacking_army->get_military_units().empty();
 
 	//display a notification for the player about the battle
-	if (attacking_army->get_country() == this->get_player_country() || defending_army->get_country() == this->get_player_country()) {
-		const bool is_attacker = attacking_army->get_country() == this->get_player_country();
+	if (attacking_army->get_domain() == this->get_player_country() || defending_army->get_domain() == this->get_player_country()) {
+		const bool is_attacker = attacking_army->get_domain() == this->get_player_country();
 		const bool victory = (is_attacker == attack_success);
 		const portrait *war_minister_portrait = this->get_player_country()->get_government()->get_war_minister_portrait();
 
@@ -2291,7 +2291,7 @@ bool game::do_battle(army *attacking_army, army *defending_army)
 	return attack_success;
 }
 
-void game::set_current_combat(qunique_ptr<combat> &&combat)
+void game::set_current_combat(qunique_ptr<combat_base> &&combat)
 {
 	this->current_combat = std::move(combat);
 

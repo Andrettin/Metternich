@@ -17,7 +17,7 @@ class army final : public QObject
 {
 	Q_OBJECT
 
-	Q_PROPERTY(const metternich::domain* country READ get_country CONSTANT)
+	Q_PROPERTY(const metternich::domain* domain READ get_domain CONSTANT)
 	Q_PROPERTY(const metternich::province* target_province READ get_target_province CONSTANT)
 	Q_PROPERTY(const metternich::site* target_site READ get_target_site CONSTANT)
 	Q_PROPERTY(QVariantList military_units READ get_military_units_qvariant_list NOTIFY military_units_changed)
@@ -30,7 +30,7 @@ public:
 
 	void do_turn();
 
-	const metternich::domain *get_country() const
+	const metternich::domain *get_domain() const
 	{
 		return this->domain;
 	}

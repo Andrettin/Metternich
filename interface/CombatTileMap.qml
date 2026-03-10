@@ -17,20 +17,19 @@ TableView {
 	delegate: CombatTileView {}
 	
 	Repeater {
-		model: combat ? combat.character_infos : []
+		model: combat ? combat.unit_infos : []
 		
 		Image {
-			id: character_icon
-			x: tile_pos.x * tile_size + Math.floor((tile_size - character_icon.width) / 2) + pixel_offset.x
-			y: tile_pos.y * tile_size + (tile_size - character_icon.height) + pixel_offset.y
-			source: "image://icon/" + character.game_data.icon.identifier
-			mirror: character_info.defender != character.game_data.icon.left_facing
+			id: unit_icon
+			x: tile_pos.x * tile_size + Math.floor((tile_size - unit_icon.width) / 2) + pixel_offset.x
+			y: tile_pos.y * tile_size + (tile_size - unit_icon.height) + pixel_offset.y
+			source: "image://icon/" + unit_info.icon.identifier
+			mirror: unit_info.defender != unit_info.icon.left_facing
 			z: 100
 			
-			readonly property var character: model.modelData.key
-			readonly property var character_info: model.modelData.value
-			readonly property var tile_pos: character_info.tile_pos
-			readonly property var pixel_offset: character_info.pixel_offset
+			readonly property var unit_info: model.modelData.value
+			readonly property var tile_pos: unit_info.tile_pos
+			readonly property var pixel_offset: unit_info.pixel_offset
 			
 			Rectangle {
 				id: hp_bar_shadow
@@ -57,14 +56,14 @@ TableView {
 					anchors.bottom: parent.bottom
 					anchors.left: parent.left
 					color: Qt.rgba(95.0 / 255.0, 186.0 / 255.0, 75.0 / 255.0, 1)
-					width: Math.floor(parent.width * character.game_data.hit_points / character.game_data.max_hit_points)
+					width: Math.floor(parent.width * unit_info.hit_points / unit_info.max_hit_points)
 				}
 			}
 		}
 	}
 	
 	Repeater {
-		model: combat ? combat.objects : []
+		model: combat && combat.objects ? combat.objects : []
 		
 		Image {
 			id: object_icon

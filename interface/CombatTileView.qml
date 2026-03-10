@@ -176,26 +176,7 @@ Item {
 		}
 		
 		onEntered: {
-			var text = "(" + column + ", " + row + ")"
-			
-			if (character !== null) {
-				var type_name = character.monster_type ? character.monster_type.name : (character.game_data.character_class ? (character.game_data.character_class.name + " " + character.game_data.level) : character.species.name)
-				text += " " + (character.full_name.length > 0 ? (character.full_name + " (" + type_name + ")") : type_name)
-				
-				for (var status_effect of character.game_data.status_effects) {
-					text += " (" + status_effect.adjective + ")"
-				}
-			} else if (object !== null) {
-				text += " " + object.object_type.name
-				
-				if (object.trap !== null && object.trap_found) {
-					text += " (Trap: " + object.trap.name
-					if (metternich.game.current_combat.current_character !== null) {
-						text += " - " + object.get_disarm_chance(metternich.game.current_combat.current_character) + "% Disarm Chance"
-					}
-					text += ")"
-				}
-			}
+			var text = tile_text
 			
 			status_text = text
 			saved_status_text = text

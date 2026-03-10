@@ -82,13 +82,13 @@ void army::do_turn()
 
 		std::vector<military_unit *> garrison;
 		for (military_unit *military_unit : province_military_units) {
-			if (military_unit->is_hostile_to(this->get_country())) {
+			if (military_unit->is_hostile_to(this->get_domain())) {
 				garrison.push_back(military_unit);
 			}
 		}
 
 		bool success = true;
-		const bool can_conquer_province = this->get_country()->get_game_data()->can_attack(target_province->get_game_data()->get_owner());
+		const bool can_conquer_province = this->get_domain()->get_game_data()->can_attack(target_province->get_game_data()->get_owner());
 
 		if (!garrison.empty() || can_conquer_province) {
 			if (!garrison.empty()) {
@@ -98,13 +98,13 @@ void army::do_turn()
 				success = true;
 
 				const portrait *war_minister_portrait = game::get()->get_player_country()->get_government()->get_war_minister_portrait();
-				if (this->get_country() == game::get()->get_player_country()) {
+				if (this->get_domain() == game::get()->get_player_country()) {
 					engine_interface::get()->add_notification("Victory!", war_minister_portrait, std::format("We have won a battle in {}!", target_province->get_game_data()->get_current_cultural_name()));
 				}
 			}
 
 			if (success && can_conquer_province) {
-				target_province->get_game_data()->set_owner(this->get_country());
+				target_province->get_game_data()->set_owner(this->get_domain());
 			}
 		}
 
@@ -118,7 +118,7 @@ void army::do_turn()
 		site_game_data *target_site_game_data = target_site->get_game_data();
 		assert_throw(target_site_game_data->can_be_visited());
 
-		context ctx(this->get_country());
+		context ctx(this->get_domain());
 		ctx.source_scope = target_site;
 		ctx.attacking_army = this;
 		domain_event::check_events_for_scope(domain, event_trigger::site_visited, ctx);

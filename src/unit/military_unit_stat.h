@@ -9,6 +9,7 @@ enum class military_unit_stat {
 	melee,
 	charge,
 	missile,
+	range,
 
 	count
 };
@@ -28,6 +29,8 @@ inline std::string_view get_military_unit_stat_name(const military_unit_stat sta
 			return "Charge";
 		case military_unit_stat::missile:
 			return "Missile";
+		case military_unit_stat::range:
+			return "Range";
 		default:
 			break;
 	}
@@ -50,6 +53,8 @@ inline std::string_view get_military_unit_stat_short_name(const military_unit_st
 			return "Charge";
 		case military_unit_stat::missile:
 			return "Missile";
+		case military_unit_stat::range:
+			return "Range";
 		default:
 			break;
 	}

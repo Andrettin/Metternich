@@ -657,6 +657,11 @@ public:
 
 	QVariantList get_status_effects_qvariant_list() const;
 
+	const data_entry_map<status_effect, int> &get_status_effect_rounds() const
+	{
+		return this->status_effect_rounds;
+	}
+
 	int get_status_effect_rounds(const status_effect *status_effect) const
 	{
 		const auto find_iterator = this->status_effect_rounds.find(status_effect);

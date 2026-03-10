@@ -18,8 +18,7 @@ public:
 		image_sources,
 		overlay_image_sources,
 		terrain,
-		character,
-		object,
+		tile_text,
 		movable_to,
 		retreatable_at,
 		in_enemy_range_at
@@ -59,8 +58,7 @@ public:
 		role_names.insert(static_cast<int>(role::image_sources), "image_sources");
 		role_names.insert(static_cast<int>(role::overlay_image_sources), "overlay_image_sources");
 		role_names.insert(static_cast<int>(role::terrain), "terrain");
-		role_names.insert(static_cast<int>(role::character), "character");
-		role_names.insert(static_cast<int>(role::object), "object");
+		role_names.insert(static_cast<int>(role::tile_text), "tile_text");
 		role_names.insert(static_cast<int>(role::movable_to), "movable_to");
 		role_names.insert(static_cast<int>(role::retreatable_at), "retreatable_at");
 		role_names.insert(static_cast<int>(role::in_enemy_range_at), "in_enemy_range_at");
@@ -68,7 +66,7 @@ public:
 		return role_names;
 	}
 
-	void on_tile_character_changed(const QPoint &tile_pos);
+	void on_tile_unit_changed(const QPoint &tile_pos);
 	void on_tile_object_changed(const QPoint &tile_pos);
 	void on_movable_tiles_changed();
 };

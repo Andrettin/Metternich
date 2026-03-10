@@ -1,6 +1,7 @@
 #pragma once
 
 #include "character/character_container.h"
+#include "game/combat_base.h"
 #include "script/context.h"
 #include "util/dice.h"
 #include "util/qunique_ptr.h"
@@ -18,131 +19,39 @@ class combat_object;
 class object_type;
 class party;
 class province;
-class terrain_type;
 class trap_type;
 
 template <typename scope_type>
 class effect_list;
 
-enum class combat_placement {
-	left,
-	center,
-	right
-};
-
-struct combat_tile final
+struct combat_tile final : public combat_tile_base
 {
 	explicit combat_tile(const terrain_type *base_terrain, const terrain_type *terrain);
 
-	bool is_occupied() const
+	virtual bool is_occupied() const override
 	{
 		return this->character != nullptr || this->object != nullptr;
 	}
 
-	const terrain_type *terrain = nullptr;
-	short base_tile_frame = 0;
-	std::array<short, 4> base_subtile_frames {};
-	short tile_frame = 0;
-	std::array<short, 4> subtile_frames {};
 	const metternich::character *character = nullptr;
 	combat_object *object = nullptr;
 };
 
-class combat_character_info final : public QObject
+class combat_character_info final : public combat_unit_info_base
 {
 	Q_OBJECT
 
-		Q_PROPERTY(const metternich::character *character READ get_character CONSTANT)
-		Q_PROPERTY(QPoint tile_pos READ get_tile_pos NOTIFY pos_changed)
-		Q_PROPERTY(QPoint pixel_offset READ get_pixel_offset NOTIFY pos_changed)
-		Q_PROPERTY(bool defender READ is_defender CONSTANT)
-		Q_PROPERTY(int remaining_movement READ get_remaining_movement NOTIFY remaining_movement_changed)
+	Q_PROPERTY(const metternich::character *character READ get_character CONSTANT)
 
 public:
-	explicit combat_character_info(const metternich::character *character, const bool defender)
-		: character(character), defender(defender), placement(defender ? combat_placement::right : combat_placement::left)
-	{
-	}
+	explicit combat_character_info(const metternich::character *character, const bool defender);
 
 	const metternich::character *get_character() const
 	{
 		return this->character;
 	}
 
-	combat_placement get_placement() const
-	{
-		return this->placement;
-	}
-
-	void set_placement(const combat_placement placement)
-	{
-		this->placement = placement;
-	}
-
-	const QPoint &get_placement_offset() const
-	{
-		return this->placement_offset;
-	}
-
-	void set_placement_offset(const QPoint &offset)
-	{
-		this->placement_offset = offset;
-	}
-
-	const QPoint &get_tile_pos() const
-	{
-		return this->tile_pos;
-	}
-
-	void set_tile_pos(const QPoint &tile_pos)
-	{
-		if (tile_pos == this->get_tile_pos()) {
-			return;
-		}
-
-		this->tile_pos = tile_pos;
-		this->pixel_offset = QPoint(0, 0);
-		emit pos_changed();
-	}
-
-	const QPoint &get_pixel_offset() const
-	{
-		return this->pixel_offset;
-	}
-
-	void set_pixel_offset(const QPoint &pixel_offset)
-	{
-		if (pixel_offset == this->get_pixel_offset()) {
-			return;
-		}
-
-		this->pixel_offset = pixel_offset;
-		emit pos_changed();
-	}
-
-	bool is_defender() const
-	{
-		return this->defender;
-	}
-
-	int get_remaining_movement() const
-	{
-		return this->remaining_movement;
-	}
-
-	void set_remaining_movement(const int movement)
-	{
-		if (movement == this->get_remaining_movement()) {
-			return;
-		}
-
-		this->remaining_movement = movement;
-	}
-
-	void change_remaining_movement(const int change)
-	{
-		this->set_remaining_movement(this->get_remaining_movement() + change);
-	}
+	virtual const icon *get_icon() const override;
 
 	const effect_list<const domain> *get_kill_effects() const
 	{
@@ -154,18 +63,11 @@ public:
 		this->kill_effects = kill_effects;
 	}
 
-signals:
-	void pos_changed();
-	void remaining_movement_changed();
+	virtual int get_hit_points() const override;
+	virtual int get_max_hit_points() const override;
 
 private:
 	const metternich::character *character = nullptr;
-	combat_placement placement = combat_placement::right;
-	QPoint placement_offset = QPoint(0, 0);
-	QPoint tile_pos;
-	QPoint pixel_offset = QPoint(0, 0);
-	bool defender = false;
-	int remaining_movement = 0;
 	const effect_list<const domain> *kill_effects = nullptr;
 };
 
@@ -270,14 +172,11 @@ private:
 	QPoint placement_offset = QPoint(0, 0);
 };
 
-class combat final : public QObject
+class combat final : public combat_base
 {
 	Q_OBJECT
 
-	Q_PROPERTY(QVariantList character_infos READ get_character_infos_qvariant_list NOTIFY character_infos_changed)
 	Q_PROPERTY(QVariantList objects READ get_objects_qvariant_list NOTIFY objects_changed)
-	Q_PROPERTY(const metternich::character* current_character READ get_current_character NOTIFY current_character_changed)
-	Q_PROPERTY(bool autoplay_enabled READ is_autoplay_enabled WRITE set_autoplay_enabled NOTIFY autoplay_enabled_changed)
 
 public:
 	static constexpr dice initiative_dice = dice(1, 10);
@@ -291,27 +190,7 @@ public:
 	explicit combat(party *attacking_party, party *defending_party, const QSize &map_size);
 	~combat();
 
-	const QRect &get_map_rect() const
-	{
-		return this->map_rect;
-	}
-
-	int get_map_width() const
-	{
-		return this->get_map_rect().width();
-	}
-
-	int get_map_height() const
-	{
-		return this->get_map_rect().height();
-	}
-
-	const terrain_type *get_base_terrain() const
-	{
-		return this->base_terrain;
-	}
-
-	void set_base_terrain(const terrain_type *terrain);
+	virtual int get_max_range_of_units() const override;
 
 	void set_surprise(const bool surprise)
 	{
@@ -326,16 +205,6 @@ public:
 	void set_defender_to_hit_modifier(const int modifier)
 	{
 		this->defender_to_hit_modifier = modifier;
-	}
-
-	void set_attacker_retreat_allowed(const bool allowed)
-	{
-		this->attacker_retreat_allowed = allowed;
-	}
-
-	void set_defender_retreat_allowed(const bool allowed)
-	{
-		this->defender_retreat_allowed = allowed;
 	}
 
 	void set_generated_characters(const std::vector<std::shared_ptr<character_reference>> &generated_characters)
@@ -365,7 +234,7 @@ public:
 		this->defeat_effects = defeat_effects;
 	}
 
-	QVariantList get_character_infos_qvariant_list() const;
+	virtual QVariantList get_unit_infos_qvariant_list() const override;
 	combat_character_info *get_character_info(const character *character) const;
 	void remove_character_info(const character *character);
 
@@ -397,59 +266,33 @@ public:
 
 	void process_result();
 
-	combat_tile &get_tile(const QPoint &tile_pos);
-	const combat_tile &get_tile(const QPoint &tile_pos) const;
-	bool is_tile_attacker_escape(const QPoint &tile_pos) const;
-	bool is_tile_defender_escape(const QPoint &tile_pos) const;
+	virtual combat_tile &get_tile(const QPoint &tile_pos) override;
+	virtual const combat_tile &get_tile(const QPoint &tile_pos) const override;
+	virtual std::string get_tile_text(const QPoint &tile_pos) const override;
+
+	virtual bool is_attacker_defeated() const override;
+	virtual bool is_defender_defeated() const override;
 
 	[[nodiscard]]
 	QCoro::Task<void> move_character_to(const character *character, const QPoint tile_pos);
 
 	Q_INVOKABLE void set_target(const QPoint &tile_pos);
 
-	const character *get_current_character() const
-	{
-		return this->current_character;
-	}
-
-	bool can_current_character_move_to(const QPoint &tile_pos) const;
-	bool can_current_character_retreat_at(const QPoint &tile_pos) const;
-	bool is_current_character_in_enemy_range_at(const QPoint &tile_pos) const;
+	virtual bool is_current_unit_in_enemy_range_at(const QPoint &tile_pos) const override;
 	bool can_character_use_object(const character *character, const combat_object *object) const;
 	bool can_current_character_use_object(const combat_object *object) const;
-
-	bool is_autoplay_enabled() const
-	{
-		return this->autoplay_enabled;
-	}
-
-	void set_autoplay_enabled(const bool enabled)
-	{
-		this->autoplay_enabled = enabled;
-		emit autoplay_enabled_changed();
-	}
 
 	const site *get_location() const;
 
 signals:
-	void character_infos_changed();
 	void objects_changed();
-	void tile_character_changed(const QPoint &tile_pos);
-	void tile_object_changed(const QPoint &tile_pos);
-	void current_character_changed();
-	void movable_tiles_changed();
-	void autoplay_enabled_changed();
 
 private:
-	QRect map_rect;
-	const terrain_type *base_terrain = nullptr;
 	party *attacking_party = nullptr;
 	party *defending_party = nullptr;
 	bool surprise = false;
 	int attacker_to_hit_modifier = 0;
 	int defender_to_hit_modifier = 0;
-	bool attacker_retreat_allowed = true;
-	bool defender_retreat_allowed = true;
 	combat::result result;
 	int64_t attacker_experience_award = 0;
 	int64_t defender_experience_award = 0;
@@ -463,8 +306,6 @@ private:
 	character_map<qunique_ptr<combat_character_info>> character_infos;
 	std::vector<qunique_ptr<combat_object>> objects;
 	std::unique_ptr<QPromise<QPoint>> target_promise;
-	const character *current_character = nullptr;
-	bool autoplay_enabled = false;
 };
 
 }

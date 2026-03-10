@@ -15,7 +15,7 @@ namespace metternich {
 
 combat_map_grid_model::combat_map_grid_model()
 {
-	connect(game::get()->get_current_combat(), &combat::tile_character_changed, this, &combat_map_grid_model::on_tile_character_changed);
+	connect(game::get()->get_current_combat(), &combat::tile_unit_changed, this, &combat_map_grid_model::on_tile_unit_changed);
 	connect(game::get()->get_current_combat(), &combat::tile_object_changed, this, &combat_map_grid_model::on_tile_object_changed);
 	connect(game::get()->get_current_combat(), &combat::movable_tiles_changed, this, &combat_map_grid_model::on_movable_tiles_changed);
 }
@@ -52,13 +52,13 @@ QVariant combat_map_grid_model::data(const QModelIndex &index, const int role) c
 	try {
 		const combat_map_grid_model::role model_role = static_cast<combat_map_grid_model::role>(role);
 		const QPoint tile_pos(index.column(), index.row());
-		const combat *combat = game::get()->get_current_combat();
+		const combat_base *combat = game::get()->get_current_combat();
 
 		if (!combat->get_map_rect().contains(tile_pos)) {
 			throw std::runtime_error("Invalid tile position: " + point::to_string(tile_pos) + ".");
 		}
 
-		const combat_tile &tile = combat->get_tile(tile_pos);
+		const combat_tile_base &tile = combat->get_tile(tile_pos);
 
 		switch (model_role) {
 			case role::base_image_sources: {
@@ -93,16 +93,14 @@ QVariant combat_map_grid_model::data(const QModelIndex &index, const int role) c
 			}
 			case role::terrain:
 				return QVariant::fromValue(tile.terrain);
-			case role::character:
-				return QVariant::fromValue(tile.character);
-			case role::object:
-				return QVariant::fromValue(tile.object);
+			case role::tile_text:
+				return QVariant::fromValue(QString::fromStdString(combat->get_tile_text(tile_pos)));
 			case role::movable_to:
-				return combat->can_current_character_move_to(tile_pos);
+				return combat->can_current_unit_move_to(tile_pos);
 			case role::retreatable_at:
-				return combat->can_current_character_retreat_at(tile_pos);
+				return combat->can_current_unit_retreat_at(tile_pos);
 			case role::in_enemy_range_at:
-				return combat->is_current_character_in_enemy_range_at(tile_pos);
+				return combat->is_current_unit_in_enemy_range_at(tile_pos);
 			default:
 				throw std::runtime_error(std::format("Invalid combat map grid model role: {}.", role));
 		}
@@ -113,11 +111,11 @@ QVariant combat_map_grid_model::data(const QModelIndex &index, const int role) c
 	return QVariant();
 }
 
-void combat_map_grid_model::on_tile_character_changed(const QPoint &tile_pos)
+void combat_map_grid_model::on_tile_unit_changed(const QPoint &tile_pos)
 {
 	const QModelIndex index = this->index(tile_pos.y(), tile_pos.x());
 	emit dataChanged(index, index, {
-		static_cast<int>(role::character)
+		static_cast<int>(role::tile_text)
 	});
 }
 
@@ -125,7 +123,7 @@ void combat_map_grid_model::on_tile_object_changed(const QPoint &tile_pos)
 {
 	const QModelIndex index = this->index(tile_pos.y(), tile_pos.x());
 	emit dataChanged(index, index, {
-		static_cast<int>(role::object)
+		static_cast<int>(role::tile_text)
 	});
 }
 
