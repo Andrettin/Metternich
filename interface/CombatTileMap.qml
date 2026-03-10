@@ -23,7 +23,7 @@ TableView {
 			id: unit_icon
 			x: tile_pos.x * tile_size + Math.floor((tile_size - unit_icon.width) / 2) + pixel_offset.x
 			y: tile_pos.y * tile_size + (tile_size - unit_icon.height) + pixel_offset.y
-			source: "image://icon/" + unit_info.icon.identifier
+			source: "image://icon/" + unit_info.icon.identifier + (unit_info === combat.current_unit ? "/selected" : "")
 			mirror: unit_info.defender != unit_info.icon.left_facing
 			z: 100
 			

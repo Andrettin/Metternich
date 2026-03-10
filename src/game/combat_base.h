@@ -143,6 +143,7 @@ class combat_base : public QObject
 	Q_OBJECT
 
 	Q_PROPERTY(QVariantList unit_infos READ get_unit_infos_qvariant_list NOTIFY unit_infos_changed)
+	Q_PROPERTY(const metternich::combat_unit_info_base* current_unit READ get_current_unit NOTIFY current_unit_changed)
 	Q_PROPERTY(bool autoplay_enabled READ is_autoplay_enabled WRITE set_autoplay_enabled NOTIFY autoplay_enabled_changed)
 
 public:
