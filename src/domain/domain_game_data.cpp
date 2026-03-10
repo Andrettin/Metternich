@@ -396,7 +396,7 @@ void domain_game_data::apply_ruler_history(const QDate &start_date)
 	}
 }
 
-void domain_game_data::do_turn()
+QCoro::Task<void> domain_game_data::do_turn()
 {
 	try {
 		for (const province *province : this->get_provinces()) {
@@ -443,7 +443,7 @@ void domain_game_data::do_turn()
 		}
 
 		for (const qunique_ptr<army> &army : this->get_military()->get_armies()) {
-			army->do_turn();
+			co_await army->do_turn();
 		}
 
 		this->get_military()->clear_armies();

@@ -175,6 +175,8 @@ void battle::deploy_units(std::vector<military_unit *> units, const bool defende
 
 QCoro::Task<void> battle::start_coro()
 {
+	this->get_promise()->start();
+
 	while (!this->attacking_army->get_military_units().empty() && !this->defending_army->get_military_units().empty()) {
 		co_await this->do_round();
 	}
@@ -182,6 +184,9 @@ QCoro::Task<void> battle::start_coro()
 	this->result.attacker_victory = this->defending_army->get_military_units().empty();
 
 	this->process_result();
+
+	this->get_promise()->addResult(this->result.attacker_victory);
+	this->get_promise()->finish();
 
 	if (game::get()->get_current_combat() == this) {
 		game::get()->set_current_combat(nullptr);

@@ -1671,7 +1671,7 @@ QCoro::Task<void> game::do_turn_coro()
 		this->do_trade();
 
 		for (const domain *domain : this->get_countries()) {
-			domain->get_game_data()->do_turn();
+			co_await domain->get_game_data()->do_turn();
 		}
 
 		for (const domain *domain : this->get_countries()) {

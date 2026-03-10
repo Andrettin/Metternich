@@ -28,7 +28,8 @@ public:
 	explicit army(const std::vector<military_unit *> &military_units, target_variant &&target);
 	~army();
 
-	void do_turn();
+	[[nodiscard]]
+	QCoro::Task<void> do_turn();
 
 	const metternich::domain *get_domain() const
 	{

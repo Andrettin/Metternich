@@ -6,6 +6,7 @@
 #include "domain/domain_game_data.h"
 #include "domain/domain_government.h"
 #include "engine_interface.h"
+#include "game/battle.h"
 #include "game/domain_event.h"
 #include "game/event_trigger.h"
 #include "game/game.h"
@@ -73,7 +74,7 @@ army::~army()
 	}, this->target);
 }
 
-void army::do_turn()
+QCoro::Task<void> army::do_turn()
 {
 	if (this->get_target_province() != nullptr) {
 		const province *target_province = this->get_target_province();
@@ -93,7 +94,26 @@ void army::do_turn()
 		if (!garrison.empty() || can_conquer_province) {
 			if (!garrison.empty()) {
 				auto defending_army = make_qunique<army>(garrison, std::monostate());
-				success = game::get()->do_battle(this, defending_army.get());
+				auto battle = make_qunique<metternich::battle>(this, defending_army.get(), QSize());
+				battle->set_scope(this->get_domain());
+				context battle_ctx;
+				battle_ctx.root_scope = this->get_domain();
+				battle_ctx.in_combat = true;
+				battle->set_context(battle_ctx);
+
+				battle->initialize();
+
+				QFuture<bool> success_future = battle->get_future();
+
+				if (this->get_domain() == game::get()->get_player_country() || defending_army->get_domain() == game::get()->get_player_country()) {
+					game::get()->set_current_combat(std::move(battle));
+				} else {
+					QTimer::singleShot(0, [battle = std::move(battle)]() -> QCoro::Task<void> {
+						co_await battle->start_coro();
+					});
+				}
+
+				success = co_await success_future;
 			} else {
 				success = true;
 

@@ -172,7 +172,9 @@ public:
 	void apply_history(const QDate &start_date);
 	void apply_ruler_history(const QDate &start_date);
 
-	void do_turn();
+	[[nodiscard]]
+	QCoro::Task<void> do_turn();
+
 	void collect_regency();
 	void collect_wealth();
 	void pay_maintenance();

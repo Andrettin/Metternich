@@ -221,6 +221,16 @@ public:
 		emit autoplay_enabled_changed();
 	}
 
+	const std::unique_ptr<QPromise<bool>> &get_promise() const
+	{
+		return this->promise;
+	}
+
+	QFuture<bool> get_future() const
+	{
+		return this->promise->future();
+	}
+
 signals:
 	void unit_infos_changed();
 	void tile_unit_changed(const QPoint &tile_pos);
@@ -236,6 +246,7 @@ private:
 	bool defender_retreat_allowed = true;
 	const combat_unit_info_base *current_unit = nullptr;
 	bool autoplay_enabled = false;
+	std::unique_ptr<QPromise<bool>> promise;
 };
 
 }

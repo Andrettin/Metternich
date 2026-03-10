@@ -13,6 +13,8 @@ namespace metternich {
 combat_base::combat_base()
 {
 	this->base_terrain = defines::get()->get_default_base_terrain();
+
+	this->promise = std::make_unique<QPromise<bool>>();
 }
 
 void combat_base::set_map_size(const QSize &map_size)
