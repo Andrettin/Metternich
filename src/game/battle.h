@@ -57,8 +57,6 @@ class battle final : public combat_base
 	Q_OBJECT
 
 public:
-	static constexpr dice initiative_dice = dice(1, 10);
-
 	struct result final
 	{
 		bool attacker_victory = false;
@@ -98,10 +96,10 @@ public:
 	QCoro::Task<void> do_round();
 
 	[[nodiscard]]
-	QCoro::Task<void> do_army_round(metternich::army *army, metternich::army *enemy_army);
+	QCoro::Task<void> do_unit_round(military_unit *unit, std::vector<military_unit *> &killed_units);
 
 	const military_unit *choose_enemy(const military_unit *unit, const std::vector<military_unit *> &enemies) const;
-	void do_unit_attack(const military_unit *unit, military_unit *enemy, army *enemy_army);
+	void do_unit_attack(const military_unit *unit, military_unit *enemy, army *enemy_army, std::vector<military_unit *> &killed_units);
 
 	void process_result();
 

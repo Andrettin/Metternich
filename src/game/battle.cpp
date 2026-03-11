@@ -195,142 +195,139 @@ QCoro::Task<void> battle::start_coro()
 
 QCoro::Task<void> battle::do_round()
 {
-	int attacker_initiative = 0;
-	int defender_initiative = 0;
-	while (attacker_initiative == defender_initiative) {
-		attacker_initiative = random::get()->roll_dice(battle::initiative_dice);
-		defender_initiative = random::get()->roll_dice(battle::initiative_dice);
-	}
+	std::vector<military_unit *> all_units = this->attacking_army->get_military_units();
+	vector::merge(all_units, this->defending_army->get_military_units());
 
-	if (attacker_initiative < defender_initiative) {
-		co_await this->do_army_round(this->attacking_army, this->defending_army);
-		co_await this->do_army_round(this->defending_army, this->attacking_army);
-	} else {
-		co_await this->do_army_round(this->defending_army, this->attacking_army);
-		co_await this->do_army_round(this->attacking_army, this->defending_army);
-	}
-}
+	std::sort(all_units.begin(), all_units.end(), [](const military_unit *lhs, const military_unit *rhs) {
+		if (lhs->get_stat(military_unit_stat::movement) != rhs->get_stat(military_unit_stat::movement)) {
+			return lhs->get_stat(military_unit_stat::movement) > rhs->get_stat(military_unit_stat::movement);
+		}
 
-QCoro::Task<void> battle::do_army_round(metternich::army *army, metternich::army *enemy_army)
-{
-	if (army->get_military_units().empty()) {
-		co_return;
-	}
+		return lhs < rhs;
+	});
 
-	if (enemy_army->get_military_units().empty() && army == this->defending_army) {
-		co_return;
-	}
+	std::vector<military_unit *> killed_units;
+	for (military_unit *unit : all_units) {
+		if (vector::contains(killed_units, unit)) {
+			continue;
+		}
 
-	const std::vector<military_unit *> army_units = army->get_military_units();
-	for (military_unit *unit : army_units) {
-		if (enemy_army->get_military_units().empty() && army == this->defending_army) {
+		if (this->attacking_army->get_military_units().empty() || this->defending_army->get_military_units().empty()) {
 			break;
 		}
 
-		bool attacked = false;
-		battle_unit_info *unit_info = this->get_unit_info(unit);
-		unit_info->set_remaining_movement(unit->get_stat(military_unit_stat::movement).to_int());
-
-		this->set_current_unit(unit_info);
-
-		while (!attacked && unit_info->get_remaining_movement() > 0) {
-			const QPoint current_tile_pos = unit_info->get_tile_pos();
-
-			QPoint target_pos(-1, -1);
-
-			if (army->get_domain() == game::get()->get_player_country() && !this->is_autoplay_enabled()) {
-				emit movable_tiles_changed();
-
-				target_pos = co_await this->get_target();
-
-				if (this->is_autoplay_enabled()) {
-					continue;
-				} else if (target_pos == QPoint(-1, -1)) {
-					//end unit's turn
-					break;
-				}
-			} else {
-				QPoint chosen_target_tile_pos(-1, -1);
-
-				if (!enemy_army->get_military_units().empty()) {
-					const metternich::military_unit *chosen_enemy = this->choose_enemy(unit, enemy_army->get_military_units());
-					assert_throw(chosen_enemy != nullptr);
-					const battle_unit_info *chosen_enemy_info = this->get_unit_info(chosen_enemy);
-					chosen_target_tile_pos = chosen_enemy_info->get_tile_pos();
-				}
-
-				assert_throw(chosen_target_tile_pos != QPoint(-1, -1));
-
-				const int distance_to_target = point::distance_to(current_tile_pos, chosen_target_tile_pos);
-				if (distance_to_target <= unit->get_stat(military_unit_stat::range).to_int()) {
-					target_pos = chosen_target_tile_pos;
-				} else {
-					const int current_square_distance = point::square_distance_to(current_tile_pos, chosen_target_tile_pos);
-					int best_square_distance = std::numeric_limits<int>::max();
-					std::vector<QPoint> potential_tiles;
-
-					point::for_each_adjacent(current_tile_pos, [&](const QPoint &adjacent_pos) {
-						if (!this->get_map_rect().contains(adjacent_pos)) {
-							return;
-						}
-
-						if (!this->can_current_unit_move_to(adjacent_pos)) {
-							return;
-						}
-
-						if (this->can_current_unit_retreat_at(adjacent_pos)) {
-							return;
-						}
-
-						const int square_distance = point::square_distance_to(adjacent_pos, chosen_target_tile_pos);
-
-						if (square_distance >= current_square_distance) {
-							return;
-						}
-
-						if (square_distance < best_square_distance) {
-							best_square_distance = square_distance;
-							potential_tiles.clear();
-						}
-
-						if (square_distance <= best_square_distance) {
-							potential_tiles.push_back(adjacent_pos);
-						}
-					});
-
-					if (!potential_tiles.empty()) {
-						target_pos = vector::get_random(potential_tiles);
-					}
-				}
-
-				if (target_pos == QPoint(-1, -1)) {
-					break;
-				}
-			}
-
-			const battle_tile &tile = this->get_tile(target_pos);
-			const int distance = point::distance_to(current_tile_pos, target_pos);
-
-			if (tile.unit != nullptr) {
-				if (distance <= unit->get_stat(military_unit_stat::range).to_int() && vector::contains(enemy_army->get_military_units(), tile.unit)) {
-					this->do_unit_attack(unit, tile.unit, enemy_army);
-					attacked = true;
-				}
-			} else if (this->can_current_unit_move_to(target_pos)) {
-				unit_info->change_remaining_movement(-distance);
-				co_await this->move_unit_to(unit, target_pos);
-
-				if (this->can_current_unit_retreat_at(target_pos)) {
-					army->remove_military_unit(unit);
-					this->remove_unit_info(unit);
-					break;
-				}
-			}
-		}
+		co_await this->do_unit_round(unit, killed_units);
 	}
 
 	if (this->get_current_unit() != nullptr) {
 		this->set_current_unit(nullptr);
+	}
+}
+
+QCoro::Task<void> battle::do_unit_round(military_unit *unit, std::vector<military_unit *> &killed_units)
+{
+	bool attacked = false;
+	battle_unit_info *unit_info = this->get_unit_info(unit);
+	unit_info->set_remaining_movement(unit->get_stat(military_unit_stat::movement).to_int());
+
+	this->set_current_unit(unit_info);
+
+	army *army = unit_info->is_defender() ? this->defending_army : this->attacking_army;
+	metternich::army *enemy_army = unit_info->is_defender() ? this->attacking_army : this->defending_army;
+
+	while (!attacked && unit_info->get_remaining_movement() > 0) {
+		const QPoint current_tile_pos = unit_info->get_tile_pos();
+
+		QPoint target_pos(-1, -1);
+
+		if (army->get_domain() == game::get()->get_player_country() && !this->is_autoplay_enabled()) {
+			emit movable_tiles_changed();
+
+			target_pos = co_await this->get_target();
+
+			if (this->is_autoplay_enabled()) {
+				continue;
+			} else if (target_pos == QPoint(-1, -1)) {
+				//end unit's turn
+				break;
+			}
+		} else {
+			QPoint chosen_target_tile_pos(-1, -1);
+
+			if (!enemy_army->get_military_units().empty()) {
+				const metternich::military_unit *chosen_enemy = this->choose_enemy(unit, enemy_army->get_military_units());
+				assert_throw(chosen_enemy != nullptr);
+				const battle_unit_info *chosen_enemy_info = this->get_unit_info(chosen_enemy);
+				chosen_target_tile_pos = chosen_enemy_info->get_tile_pos();
+			}
+
+			assert_throw(chosen_target_tile_pos != QPoint(-1, -1));
+
+			const int distance_to_target = point::distance_to(current_tile_pos, chosen_target_tile_pos);
+			if (distance_to_target <= unit->get_stat(military_unit_stat::range).to_int()) {
+				target_pos = chosen_target_tile_pos;
+			} else {
+				const int current_square_distance = point::square_distance_to(current_tile_pos, chosen_target_tile_pos);
+				int best_square_distance = std::numeric_limits<int>::max();
+				std::vector<QPoint> potential_tiles;
+
+				point::for_each_adjacent(current_tile_pos, [&](const QPoint &adjacent_pos) {
+					if (!this->get_map_rect().contains(adjacent_pos)) {
+						return;
+					}
+
+					if (!this->can_current_unit_move_to(adjacent_pos)) {
+						return;
+					}
+
+					if (this->can_current_unit_retreat_at(adjacent_pos)) {
+						return;
+					}
+
+					const int square_distance = point::square_distance_to(adjacent_pos, chosen_target_tile_pos);
+
+					if (square_distance >= current_square_distance) {
+						return;
+					}
+
+					if (square_distance < best_square_distance) {
+						best_square_distance = square_distance;
+						potential_tiles.clear();
+					}
+
+					if (square_distance <= best_square_distance) {
+						potential_tiles.push_back(adjacent_pos);
+					}
+				});
+
+				if (!potential_tiles.empty()) {
+					target_pos = vector::get_random(potential_tiles);
+				}
+			}
+
+			if (target_pos == QPoint(-1, -1)) {
+				break;
+			}
+		}
+
+		const battle_tile &tile = this->get_tile(target_pos);
+		const int distance = point::distance_to(current_tile_pos, target_pos);
+
+		if (tile.unit != nullptr) {
+			if (distance <= unit->get_stat(military_unit_stat::range).to_int() && vector::contains(enemy_army->get_military_units(), tile.unit)) {
+				this->do_unit_attack(unit, tile.unit, enemy_army, killed_units);
+				attacked = true;
+			}
+		} else if (this->can_current_unit_move_to(target_pos)) {
+			unit_info->change_remaining_movement(-distance);
+			co_await this->move_unit_to(unit, target_pos);
+
+			if (this->can_current_unit_retreat_at(target_pos)) {
+				army->remove_military_unit(unit);
+				this->remove_unit_info(unit);
+				break;
+			}
+		}
 	}
 }
 
@@ -363,13 +360,14 @@ const military_unit *battle::choose_enemy(const military_unit *unit, const std::
 	return vector::get_random(potential_enemies);
 }
 
-void battle::do_unit_attack(const military_unit *unit, military_unit *enemy, army *enemy_army)
+void battle::do_unit_attack(const military_unit *unit, military_unit *enemy, army *enemy_army, std::vector<military_unit *> &killed_units)
 {
 	const int damage = 1;
 	enemy->change_hit_points(-damage);
 
 	const bool enemy_dead = !vector::contains(enemy_army->get_military_units(), enemy);
 	if (enemy_dead) {
+		killed_units.push_back(enemy);
 		this->remove_unit_info(enemy);
 	}
 }
