@@ -276,8 +276,6 @@ public:
 	[[nodiscard]]
 	QCoro::Task<void> move_character_to(const character *character, const QPoint tile_pos);
 
-	Q_INVOKABLE void set_target(const QPoint &tile_pos);
-
 	virtual bool is_current_unit_in_enemy_range_at(const QPoint &tile_pos) const override;
 	bool can_character_use_object(const character *character, const combat_object *object) const;
 	bool can_current_character_use_object(const combat_object *object) const;
@@ -305,7 +303,6 @@ private:
 	std::vector<combat_tile> tiles;
 	character_map<qunique_ptr<combat_character_info>> character_infos;
 	std::vector<qunique_ptr<combat_object>> objects;
-	std::unique_ptr<QPromise<QPoint>> target_promise;
 };
 
 }

@@ -368,11 +368,7 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 			if (party->get_domain() == game::get()->get_player_country() && !this->is_autoplay_enabled()) {
 				emit movable_tiles_changed();
 
-				this->target_promise = std::make_unique<QPromise<QPoint>>();
-				const QFuture<QPoint> target_future = this->target_promise->future();
-				this->target_promise->start();
-
-				target_pos = co_await target_future;
+				target_pos = co_await this->get_target();
 
 				if (this->is_autoplay_enabled()) {
 					continue;
@@ -797,16 +793,6 @@ QCoro::Task<void> combat::move_character_to(const character *character, const QP
 
 	emit tile_unit_changed(old_tile_pos);
 	emit tile_unit_changed(tile_pos);
-}
-
-void combat::set_target(const QPoint &tile_pos)
-{
-	if (this->target_promise == nullptr) {
-		return;
-	}
-
-	this->target_promise->addResult(tile_pos);
-	this->target_promise->finish();
 }
 
 bool combat::is_current_unit_in_enemy_range_at(const QPoint &tile_pos) const

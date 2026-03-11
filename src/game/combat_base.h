@@ -195,6 +195,11 @@ public:
 	virtual bool is_attacker_defeated() const = 0;
 	virtual bool is_defender_defeated() const = 0;
 
+	[[nodiscard]]
+	QCoro::Task<QPoint> get_target();
+
+	Q_INVOKABLE void set_target(const QPoint &tile_pos);
+
 	const combat_unit_info_base *get_current_unit() const
 	{
 		return this->current_unit;
@@ -245,6 +250,7 @@ private:
 	const terrain_type *base_terrain = nullptr;
 	bool attacker_retreat_allowed = true;
 	bool defender_retreat_allowed = true;
+	std::unique_ptr<QPromise<QPoint>> target_promise;
 	const combat_unit_info_base *current_unit = nullptr;
 	bool autoplay_enabled = false;
 	std::unique_ptr<QPromise<bool>> promise;

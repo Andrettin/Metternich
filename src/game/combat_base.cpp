@@ -51,6 +51,25 @@ std::string combat_base::get_tile_text(const QPoint &tile_pos) const
 	return std::format("({}, {})", tile_pos.x(), tile_pos.y());
 }
 
+QCoro::Task<QPoint> combat_base::get_target()
+{
+	this->target_promise = std::make_unique<QPromise<QPoint>>();
+	const QFuture<QPoint> target_future = this->target_promise->future();
+	this->target_promise->start();
+
+	co_return co_await target_future;
+}
+
+void combat_base::set_target(const QPoint &tile_pos)
+{
+	if (this->target_promise == nullptr) {
+		return;
+	}
+
+	this->target_promise->addResult(tile_pos);
+	this->target_promise->finish();
+}
+
 bool combat_base::can_current_unit_move_to(const QPoint &tile_pos) const
 {
 	if (this->get_current_unit() == nullptr) {

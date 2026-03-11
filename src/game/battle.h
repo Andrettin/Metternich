@@ -115,8 +115,6 @@ public:
 	[[nodiscard]]
 	QCoro::Task<void> move_unit_to(military_unit *unit, const QPoint tile_pos);
 
-	Q_INVOKABLE void set_target(const QPoint &tile_pos);
-
 	virtual bool is_current_unit_in_enemy_range_at(const QPoint &tile_pos) const override;
 
 	const site *get_location() const;
@@ -129,7 +127,6 @@ private:
 	context ctx;
 	std::vector<battle_tile> tiles;
 	std::map<const military_unit *, qunique_ptr<battle_unit_info>> unit_infos;
-	std::unique_ptr<QPromise<QPoint>> target_promise;
 };
 
 }
