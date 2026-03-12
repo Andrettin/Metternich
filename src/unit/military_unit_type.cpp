@@ -7,6 +7,7 @@
 #include "domain/domain.h"
 #include "domain/country_military.h"
 #include "economy/commodity.h"
+#include "game/battle_resolution_type.h"
 #include "technology/technology.h"
 #include "unit/military_unit_category.h"
 #include "unit/military_unit_class.h"
@@ -15,6 +16,7 @@
 #include "unit/promotion.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
+#include "util/log_util.h"
 #include "util/map_util.h"
 
 #include <magic_enum/magic_enum.hpp>
@@ -32,6 +34,10 @@ void military_unit_type::process_gsml_scope(const gsml_data &scope)
 			const centesimal_int stat_value(property.get_value());
 			this->stats[stat] = stat_value;
 		});
+	} else if (tag == "battle_resolution_types") {
+		for (const std::string &value : values) {
+			this->battle_resolution_types.push_back(magic_enum::enum_cast<battle_resolution_type>(value).value());
+		}
 	} else if (tag == "commodity_costs") {
 		scope.for_each_property([&](const gsml_property &property) {
 			const commodity *commodity = commodity::get(property.get_key());
@@ -85,6 +91,18 @@ void military_unit_type::check() const
 {
 	assert_throw(this->get_domain() != military_unit_domain::none);
 	assert_throw(this->get_icon() != nullptr);
+
+	if (this->get_stat(military_unit_stat::hit_points) == 0) {
+		//throw std::runtime_error("Military unit type \"{}\" but has no hit point value.");
+	}
+
+	if (this->get_stat(military_unit_stat::range) > 1 && this->get_stat(military_unit_stat::missile) == 0) {
+		//throw std::runtime_error("Military unit type \"{}\" can attack at range, but has no missile value.");
+	}
+
+	if (this->get_stat(military_unit_stat::missile) > 0 && this->get_stat(military_unit_stat::range) <= 1) {
+		//throw std::runtime_error("Military unit type \"{}\" has a missile value, but cannot attack at range.");
+	}
 }
 
 military_unit_category military_unit_type::get_category() const

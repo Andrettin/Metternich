@@ -10,6 +10,7 @@
 #include "domain/diplomacy_state.h"
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
+#include "game/battle_resolution_type.h"
 #include "game/game.h"
 #include "infrastructure/improvement.h"
 #include "language/name_generator.h"
@@ -35,6 +36,7 @@
 #include "util/log_util.h"
 #include "util/map_util.h"
 #include "util/number_util.h"
+#include "util/vector_random_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -49,6 +51,12 @@ military_unit::military_unit(const military_unit_type *type) : type(type)
 
 	for (const auto &[stat, value] : type->get_stats()) {
 		this->set_stat(stat, value);
+	}
+
+	if (!type->get_battle_resolution_types().empty()) {
+		this->battle_resolution_type = vector::get_random(type->get_battle_resolution_types());
+	} else {
+		this->battle_resolution_type = static_cast<metternich::battle_resolution_type>(random::get()->generate_in_range(1, static_cast<int>(battle_resolution_type::count) - 1));
 	}
 
 	this->check_free_promotions();
@@ -177,6 +185,14 @@ void military_unit::set_type(const military_unit_type *type)
 		const centesimal_int old_type_stat_value = old_type->get_stat_for_country(stat, this->get_country());
 		if (type_stat_value != old_type_stat_value) {
 			this->change_stat(stat, type_stat_value - old_type_stat_value);
+		}
+	}
+
+	if (this->get_battle_resolution_type() == battle_resolution_type::none || !vector::contains(type->get_battle_resolution_types(), this->get_battle_resolution_type())) {
+		if (!type->get_battle_resolution_types().empty()) {
+			this->battle_resolution_type = vector::get_random(type->get_battle_resolution_types());
+		} else {
+			this->battle_resolution_type = static_cast<metternich::battle_resolution_type>(random::get()->generate_in_range(1, static_cast<int>(battle_resolution_type::count) - 1));
 		}
 	}
 
@@ -430,6 +446,11 @@ centesimal_int military_unit::get_effective_stat(const military_unit_stat stat) 
 	}
 
 	return stat_value;
+}
+
+int military_unit::get_battle_movement() const
+{
+	return this->get_effective_stat(military_unit_stat::movement).to_int() * 2;
 }
 
 QVariantList military_unit::get_promotions_qvariant_list() const

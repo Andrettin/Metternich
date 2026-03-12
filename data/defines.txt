@@ -204,6 +204,187 @@ event_trigger_none_random_weights = {
 	yearly_pulse = 5000
 }
 
+battle_resolution_tables = {
+	{
+		crossed_swords = {
+			shield = {
+				-3 = hit
+				-2 = miss
+				-1 = fall_back
+				0 = miss
+				1 = hit
+				2 = miss
+				3 = miss
+			}
+			pennant = {
+				-3 = miss
+				-2 = fall_back
+				-1 = miss
+				0 = miss
+				1 = hit
+				2 = hit
+				3 = destroy
+			}
+			crossed_swords = {
+				-3 = miss
+				-2 = hit
+				-1 = hit
+				0 = miss
+				1 = hit
+				2 = miss
+				3 = hit
+			}
+		}
+		shield = {
+			shield = {
+				-3 = fall_back
+				-2 = miss
+				-1 = miss
+				0 = route
+				1 = destroy
+				2 = hit
+				3 = route
+			}
+			pennant = {
+				-3 = hit
+				-2 = fall_back
+				-1 = hit
+				0 = hit
+				1 = hit
+				2 = hit
+				3 = hit
+			}
+			crossed_swords = {
+				-3 = miss
+				-2 = hit
+				-1 = miss
+				0 = hit
+				1 = route
+				2 = route
+				3 = destroy
+			}
+		}
+		pennant = {
+			shield = {
+				-3 = miss
+				-2 = fall_back
+				-1 = hit
+				0 = hit
+				1 = fall_back
+				2 = destroy
+				3 = hit
+			}
+			pennant = {
+				-3 = fall_back
+				-2 = hit
+				-1 = miss
+				0 = hit
+				1 = miss
+				2 = hit
+				3 = route
+			}
+			crossed_swords = {
+				-3 = fall_back
+				-2 = miss
+				-1 = hit
+				0 = fall_back
+				1 = miss
+				2 = hit
+				3 = hit
+			}
+		}
+	}
+	{
+		crossed_swords = {
+			shield = {
+				-3 = miss
+				-2 = fall_back
+				-1 = hit
+				0 = hit
+				1 = fall_back
+				2 = hit
+				3 = route
+			}
+			pennant = {
+				-3 = fall_back
+				-2 = hit
+				-1 = miss
+				0 = hit
+				1 = miss
+				2 = route
+				3 = hit
+			}
+			crossed_swords = {
+				-3 = fall_back
+				-2 = miss
+				-1 = hit
+				0 = fall_back
+				1 = miss
+				2 = hit
+				3 = destroy
+			}
+		}
+		shield = {
+			shield = {
+				-3 = hit
+				-2 = fall_back
+				-1 = fall_back
+				0 = miss
+				1 = hit
+				2 = miss
+				3 = hit
+			}
+			pennant = {
+				-3 = miss
+				-2 = hit
+				-1 = miss
+				0 = miss
+				1 = hit
+				2 = hit
+				3 = route
+			}
+			crossed_swords = {
+				-3 = miss
+				-2 = miss
+				-1 = hit
+				0 = miss
+				1 = hit
+				2 = miss
+				3 = hit
+			}
+		}
+		pennant = {
+			shield = {
+				-3 = fall_back
+				-2 = hit
+				-1 = miss
+				0 = route
+				1 = destroy
+				2 = route
+				3 = miss
+			}
+			pennant = {
+				-3 = hit
+				-2 = miss
+				-1 = hit
+				0 = hit
+				1 = hit
+				2 = destroy
+				3 = destroy
+			}
+			crossed_swords = {
+				-3 = miss
+				-2 = fall_back
+				-1 = miss
+				0 = hit
+				1 = route
+				2 = hit
+				3 = hit
+			}
+		}
+	}
+}
+
 river_adjacency_subtiles = {
 	0 = {
 		north = other

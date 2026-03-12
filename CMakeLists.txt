@@ -111,6 +111,7 @@ set_source_files_properties(${economy_SRCS} PROPERTIES UNITY_GROUP "economy")
 
 set(game_SRCS
 	src/game/battle.cpp
+	src/game/battle_resolution_table.cpp
 	src/game/combat.cpp
 	src/game/combat_base.cpp
 	src/game/event.cpp
@@ -469,7 +470,10 @@ set(economy_HDRS
 source_group(economy FILES ${economy_HDRS})
 
 set(game_HDRS
+	src/game/attack_result.h
 	src/game/battle.h
+	src/game/battle_resolution_table.h
+	src/game/battle_resolution_type.h
 	src/game/character_event.h
 	src/game/combat.h
 	src/game/combat_base.h

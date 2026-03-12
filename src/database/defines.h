@@ -27,6 +27,7 @@ namespace archimedes {
 
 namespace metternich {
 
+class battle_resolution_table;
 class building_class;
 class character;
 class commodity;
@@ -443,6 +444,11 @@ public:
 	const dice &get_province_taxation_for_level(const int level) const;
 	int get_domain_maintenance_cost_for_domain_size(const int domain_size) const;
 
+	const std::vector<std::unique_ptr<battle_resolution_table>> &get_battle_resolution_tables() const
+	{
+		return this->battle_resolution_tables;
+	}
+
 	const std::vector<int> &get_river_adjacency_subtiles(const terrain_adjacency &adjacency) const;
 	void set_river_adjacency_subtiles(const terrain_adjacency &adjacency, const std::vector<int> &subtiles);
 	int get_rivermouth_adjacency_tile(const terrain_adjacency &adjacency) const;
@@ -518,6 +524,7 @@ private:
 	std::map<int, int> province_population_per_level;
 	std::map<int, dice> province_taxation_per_level;
 	std::map<int, int> domain_maintenance_cost_per_domain_size;
+	std::vector<std::unique_ptr<battle_resolution_table>> battle_resolution_tables;
 	std::map<terrain_adjacency, std::vector<int>> river_adjacency_subtiles;
 	std::map<terrain_adjacency, int> rivermouth_adjacency_tiles;
 	std::map<terrain_adjacency, int> route_adjacency_tiles;

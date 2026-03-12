@@ -10,6 +10,11 @@ catapult = {
 		missile = 5
 		range = 3
 	}
+	battle_resolution_types = {
+		pennant
+		shield
+		crossed_swords
+	}
 	commodity_costs = {
 		wealth = 4gb
 	}
@@ -33,6 +38,11 @@ culverin = {
 		melee = 1
 		missile = 5
 		range = 3
+	}
+	battle_resolution_types = {
+		pennant
+		shield
+		crossed_swords
 	}
 	commodity_costs = {
 		wealth = 4gb
@@ -58,6 +68,11 @@ royal_artillery = {
 		missile = 5
 		range = 3
 	}
+	battle_resolution_types = {
+		pennant
+		shield
+		crossed_swords
+	}
 	commodity_costs = {
 		wealth = 4gb
 	}
@@ -82,6 +97,11 @@ artillery = {
 		missile = 5
 		range = 3
 	}
+	battle_resolution_types = {
+		pennant
+		shield
+		crossed_swords
+	}
 	commodity_costs = {
 		wealth = 4gb
 	}
@@ -97,6 +117,7 @@ siege_artillery = {
 	name = "Siege Artillery"
 	unit_class = siege_artillery
 	icon = artillery
+	required_technology = modern_era
 	stats = {
 		missile = 30
 		melee = 8
@@ -104,7 +125,11 @@ siege_artillery = {
 		movement = 3
 		range = 3
 	}
-	required_technology = modern_era
+	battle_resolution_types = {
+		pennant
+		shield
+		crossed_swords
+	}
 	commodity_costs = {
 		wealth = 5000
 		manpower = 1
@@ -122,6 +147,7 @@ railroad_guns = {
 	name = "Railroad Guns"
 	unit_class = railroad_guns
 	icon = artillery
+	required_technology = modern_era
 	stats = {
 		missile = 50
 		melee = 12
@@ -129,7 +155,11 @@ railroad_guns = {
 		movement = 3
 		range = 3
 	}
-	required_technology = modern_era
+	battle_resolution_types = {
+		pennant
+		shield
+		crossed_swords
+	}
 	commodity_costs = {
 		wealth = 9000
 		manpower = 1

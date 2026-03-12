@@ -29,6 +29,14 @@ knights = {
 		charge = 6
 		range = 1
 	}
+	battle_resolution_types = {
+		pennant
+		shield
+		crossed_swords
+		pennant
+		shield
+		crossed_swords
+	}
 	commodity_costs = {
 		wealth = 6gb
 	}
@@ -44,13 +52,13 @@ lancers = {
 	name = "Lancers"
 	unit_class = lancers
 	icon = knights
+	required_technology = renaissance
 	stats = {
 		melee = 8
 		defense = 5
 		movement = 6
 		range = 1
 	}
-	required_technology = renaissance
 	commodity_costs = {
 		manpower = 1
 		fabric = 1

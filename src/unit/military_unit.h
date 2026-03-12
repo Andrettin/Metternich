@@ -19,6 +19,7 @@ class phenotype;
 class promotion;
 class province;
 class religion;
+enum class battle_resolution_type;
 enum class military_unit_category;
 enum class military_unit_domain;
 enum class military_unit_stat;
@@ -187,6 +188,11 @@ public:
 	int get_hit_point_recovery_per_turn() const;
 	int get_morale_recovery_per_turn() const;
 
+	metternich::battle_resolution_type get_battle_resolution_type() const
+	{
+		return this->battle_resolution_type;
+	}
+
 	const centesimal_int &get_stat(const military_unit_stat stat) const
 	{
 		const auto find_iterator = this->stats.find(stat);
@@ -206,6 +212,8 @@ public:
 	}
 
 	centesimal_int get_effective_stat(const military_unit_stat stat) const;
+
+	int get_battle_movement() const;
 
 	const std::vector<const promotion *> &get_promotions() const
 	{
@@ -251,6 +259,7 @@ private:
 	int hit_points = 0;
 	int max_hit_points = 0;
 	int morale = 0; //morale is never higher than the amount of hit points; when morale reaches zero, the unit flees in combat
+	metternich::battle_resolution_type battle_resolution_type{};
 	std::map<military_unit_stat, centesimal_int> stats;
 	std::vector<const promotion *> promotions;
 };

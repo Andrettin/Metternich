@@ -28,6 +28,14 @@ pikemen = {
 		melee = 3
 		range = 1
 	}
+	battle_resolution_types = {
+		pennant
+		shield
+		crossed_swords
+		pennant
+		crossed_swords
+		crossed_swords
+	}
 	commodity_costs = {
 		wealth = 2gb
 	}
@@ -43,13 +51,21 @@ halberdiers = {
 	name = "Halberdiers"
 	unit_class = halberdiers
 	icon = halberdiers
+	required_technology = renaissance
 	stats = {
 		melee = 7
 		defense = 6
 		movement = 4
 		range = 1
 	}
-	required_technology = renaissance
+	battle_resolution_types = {
+		pennant
+		shield
+		crossed_swords
+		pennant
+		crossed_swords
+		crossed_swords
+	}
 	commodity_costs = {
 		manpower = 1
 		fabric = 1

@@ -21,6 +21,7 @@ class domain;
 class icon;
 class promotion;
 class technology;
+enum class battle_resolution_type;
 enum class military_unit_category;
 enum class military_unit_domain;
 enum class military_unit_stat;
@@ -77,6 +78,11 @@ public:
 		return this->icon;
 	}
 
+	const std::vector<battle_resolution_type> &get_battle_resolution_types() const
+	{
+		return this->battle_resolution_types;
+	}
+
 	const std::map<military_unit_stat, centesimal_int> &get_stats() const
 	{
 		return this->stats;
@@ -131,6 +137,7 @@ private:
 	metternich::culture *culture = nullptr;
 	metternich::cultural_group *cultural_group = nullptr;
 	metternich::icon *icon = nullptr;
+	std::vector<battle_resolution_type> battle_resolution_types;
 	std::map<military_unit_stat, centesimal_int> stats;
 	technology *required_technology = nullptr;
 	commodity_map<int> commodity_costs;

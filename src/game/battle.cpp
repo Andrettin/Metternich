@@ -7,6 +7,8 @@
 #include "domain/domain_game_data.h"
 #include "domain/domain_government.h"
 #include "engine_interface.h"
+#include "game/attack_result.h"
+#include "game/battle_resolution_table.h"
 #include "game/domain_event.h"
 #include "game/event_trigger.h"
 #include "game/game.h"
@@ -111,8 +113,8 @@ void battle::deploy_units(std::vector<military_unit *> units, const bool defende
 	const QPoint center_start_pos((this->get_map_width() - 1) / 2, (this->get_map_height() - 1) / 2);
 
 	std::sort(units.begin(), units.end(), [](const military_unit *lhs, const military_unit *rhs) {
-		if (lhs->get_stat(military_unit_stat::movement) != rhs->get_stat(military_unit_stat::movement)) {
-			return lhs->get_stat(military_unit_stat::movement) < rhs->get_stat(military_unit_stat::movement);
+		if (lhs->get_battle_movement() != rhs->get_battle_movement()) {
+			return lhs->get_battle_movement() < rhs->get_battle_movement();
 		}
 
 		if (lhs->get_stat(military_unit_stat::range) != rhs->get_stat(military_unit_stat::range)) {
@@ -199,8 +201,8 @@ QCoro::Task<void> battle::do_round()
 	vector::merge(all_units, this->defending_army->get_military_units());
 
 	std::sort(all_units.begin(), all_units.end(), [](const military_unit *lhs, const military_unit *rhs) {
-		if (lhs->get_stat(military_unit_stat::movement) != rhs->get_stat(military_unit_stat::movement)) {
-			return lhs->get_stat(military_unit_stat::movement) > rhs->get_stat(military_unit_stat::movement);
+		if (lhs->get_battle_movement() != rhs->get_battle_movement()) {
+			return lhs->get_battle_movement() > rhs->get_battle_movement();
 		}
 
 		return lhs < rhs;
@@ -228,7 +230,7 @@ QCoro::Task<void> battle::do_unit_round(military_unit *unit, std::vector<militar
 {
 	bool attacked = false;
 	battle_unit_info *unit_info = this->get_unit_info(unit);
-	unit_info->set_remaining_movement(unit->get_stat(military_unit_stat::movement).to_int());
+	unit_info->set_remaining_movement(unit->get_battle_movement());
 
 	this->set_current_unit(unit_info);
 
@@ -362,8 +364,42 @@ const military_unit *battle::choose_enemy(const military_unit *unit, const std::
 
 void battle::do_unit_attack(const military_unit *unit, military_unit *enemy, army *enemy_army, std::vector<military_unit *> &killed_units)
 {
-	const int damage = 1;
-	enemy->change_hit_points(-damage);
+	const battle_unit_info *unit_info = this->get_unit_info(unit);
+	const battle_unit_info *enemy_info = this->get_unit_info(enemy);
+
+	const QPoint tile_pos = unit_info->get_tile_pos();
+	const QPoint enemy_tile_pos = enemy_info->get_tile_pos();
+	const int distance = point::distance_to(enemy_tile_pos, tile_pos);
+
+	const bool moved = unit_info->get_remaining_movement() < unit->get_battle_movement();
+
+	int attack = 0;
+	if (distance > 1) {
+		attack = unit->get_effective_stat(military_unit_stat::missile).to_int();
+	} else if (moved && unit->get_effective_stat(military_unit_stat::charge).to_int() > 0) {
+		attack = unit->get_effective_stat(military_unit_stat::charge).to_int();
+	} else {
+		attack = unit->get_effective_stat(military_unit_stat::melee).to_int();
+	}
+
+	const int defense = enemy->get_effective_stat(military_unit_stat::defense).to_int();
+
+	const std::unique_ptr<battle_resolution_table> &battle_resolution_table = vector::get_random(defines::get()->get_battle_resolution_tables());
+
+	const attack_result result = battle_resolution_table->get_result(unit->get_battle_resolution_type(), enemy->get_battle_resolution_type(), attack - defense);
+
+	switch (result) {
+		case attack_result::miss:
+		case attack_result::fall_back:
+			break;
+		case attack_result::hit:
+		case attack_result::route:
+			enemy->change_hit_points(-1);
+			break;
+		case attack_result::destroy:
+			enemy->change_hit_points(-enemy->get_hit_points());
+			break;
+	}
 
 	const bool enemy_dead = !vector::contains(enemy_army->get_military_units(), enemy);
 	if (enemy_dead) {

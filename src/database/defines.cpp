@@ -8,6 +8,7 @@
 #include "domain/diplomacy_state.h"
 #include "economy/commodity.h"
 #include "economy/commodity_unit.h"
+#include "game/battle_resolution_table.h"
 #include "game/character_event.h"
 #include "game/domain_event.h"
 #include "game/event_trigger.h"
@@ -145,6 +146,11 @@ void defines::process_gsml_scope(const gsml_data &scope)
 			const int cost = this->get_wealth_commodity()->string_to_value(property.get_value());
 
 			this->domain_maintenance_cost_per_domain_size[domain_size] = cost;
+		});
+	} else if (tag == "battle_resolution_tables") {
+		scope.for_each_child([this](const gsml_data &child_scope) {
+			auto table = std::make_unique<battle_resolution_table>(child_scope);
+			this->battle_resolution_tables.push_back(std::move(table));
 		});
 	} else if (tag == "river_adjacency_subtiles") {
 		scope.for_each_child([&](const gsml_data &child_scope) {
