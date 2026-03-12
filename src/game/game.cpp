@@ -670,6 +670,8 @@ void game::apply_history(const QDate &start_date)
 						}
 					}
 
+					tile->calculate_pathway_frames();
+
 					//add prerequisites for the tile's pathway to its owner's researched technologies
 					if (tile->get_owner() != nullptr) {
 						if (route_pathway->get_required_technology() != nullptr) {
