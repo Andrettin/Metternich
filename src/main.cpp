@@ -277,12 +277,12 @@ int main(int argc, char **argv)
 		url.setScheme("file");
 
 		QObject::connect(&engine, &QQmlApplicationEngine::objectCreated, &app,
-			[url, argc, argv](QObject *obj, const QUrl &objUrl) {
+			[url, argc, argv](QObject *obj, const QUrl &objUrl) -> QCoro::Task<void> {
 			if (!obj && url == objUrl) {
 				QCoreApplication::exit(-1);
 			}
 
-			initialize();
+			co_await initialize();
 		}, Qt::QueuedConnection);
 
 		engine.load(url);
