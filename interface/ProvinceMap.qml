@@ -74,6 +74,8 @@ Flickable {
 		hoverEnabled: true
 		
 		onClicked: function (mouse) {
+			metternich.defines.click_sound.play()
+			
 			var province = metternich.map.get_tile_province(Qt.point(Math.floor(mouse.x / metternich.map.province_map_tile_pixel_size / scale_factor), Math.floor(mouse.y / metternich.map.province_map_tile_pixel_size / scale_factor)))
 			
 			if (province === null || selected_province === province || province.water_zone) {

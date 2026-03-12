@@ -61,6 +61,8 @@ Flickable {
 				maskSource: parent.source
 				
 				onClicked: {
+					metternich.defines.click_sound.play()
+					
 					if (selected) {
 						diplomatic_map.selected_country = null
 					} else {
@@ -151,6 +153,7 @@ Flickable {
 			maskSource: parent.source
 			
 			onClicked: {
+				metternich.defines.click_sound.play()
 				diplomatic_map.selected_country = null
 			}
 		}
@@ -177,6 +180,7 @@ Flickable {
 				maskSource: parent.source
 				
 				onClicked: {
+					metternich.defines.click_sound.play()
 					diplomatic_map.selected_country = other_country
 				}
 			}

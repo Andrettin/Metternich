@@ -6,6 +6,9 @@ RoundButton {
 	id: button
 	radius: Math.min(width, height) * 0.25
 	clip: true
+	onClicked: {
+		metternich.defines.click_sound.play()
+	}
 	
 	Rectangle {
 		anchors.fill: parent

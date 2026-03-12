@@ -509,3 +509,5 @@ route_adjacency_tiles = {
 		southeast = any
 	}
 }
+
+click_sound = click

@@ -15,6 +15,7 @@ Q_MOC_INCLUDE("game/game_rule.h")
 Q_MOC_INCLUDE("infrastructure/pathway.h")
 Q_MOC_INCLUDE("map/terrain_type.h")
 Q_MOC_INCLUDE("population/population_class.h")
+Q_MOC_INCLUDE("sound/sound.h")
 Q_MOC_INCLUDE("ui/cursor.h")
 Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("ui/portrait.h")
@@ -36,6 +37,7 @@ class office;
 class pathway;
 class population_class;
 class portrait;
+class sound;
 class terrain_type;
 enum class bloodline_strength_category;
 enum class diplomacy_state;
@@ -93,6 +95,7 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(int min_diplomatic_map_tile_scale MEMBER min_diplomatic_map_tile_scale READ get_min_diplomatic_map_tile_scale NOTIFY changed)
 	Q_PROPERTY(int min_province_map_tile_scale MEMBER min_province_map_tile_scale READ get_min_province_map_tile_scale NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity_unit* domain_income_unit MEMBER domain_income_unit READ get_domain_income_unit NOTIFY changed)
+	Q_PROPERTY(const metternich::sound* click_sound MEMBER click_sound READ get_click_sound NOTIFY changed)
 
 public:
 	using singleton<defines>::get;
@@ -447,6 +450,11 @@ public:
 	int get_route_adjacency_tile(const terrain_adjacency &adjacency) const;
 	void set_route_adjacency_tile(const terrain_adjacency &adjacency, const int tile);
 
+	const sound *get_click_sound() const
+	{
+		return this->click_sound;
+	}
+
 signals:
 	void changed();
 	void scaled_tile_size_changed();
@@ -513,6 +521,7 @@ private:
 	std::map<terrain_adjacency, std::vector<int>> river_adjacency_subtiles;
 	std::map<terrain_adjacency, int> rivermouth_adjacency_tiles;
 	std::map<terrain_adjacency, int> route_adjacency_tiles;
+	const sound *click_sound = nullptr;
 };
 
 }

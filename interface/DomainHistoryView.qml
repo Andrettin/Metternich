@@ -35,6 +35,7 @@ Item {
 							return
 						}
 						
+						metternich.defines.click_sound.play()
 						character_dialog.character = historical_ruler
 						character_dialog.open()
 					}

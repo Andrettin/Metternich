@@ -1,0 +1,1 @@
+/sounds/interface/click.wav (by the Battle for Wesnoth Team) (licensed under the GPL 2.0)

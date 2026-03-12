@@ -262,6 +262,12 @@ set(script_modifier_effect_SRCS
 source_group(script\\modifier_effect FILES ${script_modifier_effect_SRCS})
 set_source_files_properties(${script_modifier_effect_SRCS} PROPERTIES UNITY_GROUP "script_modifier_effect")
 
+set(sound_SRCS
+	src/sound/sound.cpp
+)
+source_group(sound FILES ${sound_SRCS})
+set_source_files_properties(${sound_SRCS} PROPERTIES UNITY_GROUP "sound")
+
 set(species_SRCS
 	src/species/phenotype.cpp
 	src/species/phenotype_container.cpp
@@ -353,6 +359,7 @@ set(metternich_SRCS
 	${script_condition_SRCS}
 	${script_effect_SRCS}
 	${script_modifier_effect_SRCS}
+	${sound_SRCS}
 	${species_SRCS}
 	${spell_SRCS}
 	${technology_SRCS}
@@ -854,6 +861,11 @@ set(script_modifier_effect_HDRS
 )
 source_group(script\\modifier_effect FILES ${script_modifier_effect_HDRS})
 
+set(sound_HDRS
+	src/sound/sound.h
+)
+source_group(sound FILES ${sound_HDRS})
+
 set(species_HDRS
 	src/species/geological_era.h
 	src/species/phenotype.h
@@ -954,6 +966,7 @@ set(metternich_HDRS
 	${script_condition_HDRS}
 	${script_effect_HDRS}
 	${script_modifier_effect_HDRS}
+	${sound_HDRS}
 	${species_HDRS}
 	${spell_HDRS}
 	${technology_HDRS}

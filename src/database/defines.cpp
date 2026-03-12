@@ -231,6 +231,8 @@ void defines::check() const
 	if (!this->get_wealth_commodity()->has_unit(this->get_domain_income_unit())) {
 		throw std::runtime_error("The wealth commodity does not have the domain income unit as a commodity unit for it.");
 	}
+
+	assert_throw(this->get_click_sound() != nullptr);
 }
 
 QSize defines::get_scaled_tile_size() const

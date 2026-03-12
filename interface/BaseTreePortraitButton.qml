@@ -47,21 +47,16 @@ Item {
 		//disabled: parent.disabled
 		highlighted: parent.highlighted
 		
-		MouseArea {
-			anchors.fill: parent
-			hoverEnabled: true
-			
-			onEntered: {
+		onHoveredChanged: {
+			if (hovered) {
 				status_text = name
-			}
-			
-			onExited: {
+			} else {
 				status_text = ""
 			}
+		}
 			
-			onReleased: {
-				parent.parent.clicked()
-			}
+		onClicked: {
+			parent.clicked()
 		}
 	}
 	
