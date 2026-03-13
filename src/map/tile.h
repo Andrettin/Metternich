@@ -23,7 +23,7 @@ class terrain_type;
 class tile final
 {
 public:
-	explicit tile(const terrain_type *base_terrain, const terrain_type *terrain);
+	explicit tile(const terrain_type *terrain);
 
 	const terrain_type *get_terrain() const
 	{
@@ -31,36 +31,6 @@ public:
 	}
 
 	void set_terrain(const terrain_type *terrain);
-
-	short get_base_tile() const
-	{
-		return this->base_tile_frame;
-	}
-
-	const std::array<short, 4> &get_base_subtiles() const
-	{
-		return this->base_subtile_frames;
-	}
-
-	short get_tile() const
-	{
-		return this->tile_frame;
-	}
-
-	void set_tile(const short tile)
-	{
-		this->tile_frame = tile;
-	}
-
-	const std::array<short, 4> &get_subtiles() const
-	{
-		return this->subtile_frames;
-	}
-
-	void set_subtile(const size_t index, const short subtile)
-	{
-		this->subtile_frames[index] = subtile;
-	}
 
 	const metternich::province *get_province() const
 	{
@@ -128,16 +98,6 @@ public:
 
 	bool is_river_crossing_direction(const direction direction) const;
 
-	const std::array<short, 4> &get_river_subtile_frames() const
-	{
-		return this->river_subtile_frames;
-	}
-
-	void set_river_subtile_frame(const size_t index, const short frame)
-	{
-		this->river_subtile_frames[index] = frame;
-	}
-
 	const pathway *get_direction_pathway(const direction direction) const
 	{
 		return this->direction_pathways[static_cast<int>(direction)];
@@ -147,40 +107,25 @@ public:
 
 	bool has_route() const
 	{
-		return !this->pathway_frames.empty();
+		for (const metternich::pathway *direction_pathway : this->direction_pathways) {
+			if (direction_pathway != nullptr) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	bool has_pathway(const pathway *pathway) const
 	{
-		return this->pathway_frames.contains(pathway);
-	}
-
-	const pathway_map<short> &get_pathway_frames() const
-	{
-		return this->pathway_frames;
-	}
-
-	short get_pathway_frame(const pathway *pathway) const
-	{
-		const auto find_iterator = this->pathway_frames.find(pathway);
-		if (find_iterator != this->pathway_frames.end()) {
-			return find_iterator->second;
+		for (const metternich::pathway *direction_pathway : this->direction_pathways) {
+			if (direction_pathway == pathway) {
+				return true;
+			}
 		}
 
-		return -1;
+		return false;
 	}
-
-	void set_pathway_frame(const pathway *pathway, const short frame)
-	{
-		if (frame == -1) {
-			this->pathway_frames.erase(pathway);
-		} else {
-			this->pathway_frames[pathway] = frame;
-		}
-	}
-
-	void calculate_pathway_frame(const pathway *pathway);
-	void calculate_pathway_frames();
 
 	const pathway *get_best_pathway() const;
 
@@ -241,18 +186,12 @@ public:
 
 private:
 	const terrain_type *terrain = nullptr;
-	short base_tile_frame = 0;
-	std::array<short, 4> base_subtile_frames;
-	short tile_frame = 0;
-	std::array<short, 4> subtile_frames;
 	const metternich::province *province = nullptr;
 	const metternich::site *site = nullptr;
 	int8_t improvement_variation = 0;
 	bool inner_river = false; //whether the tile has an in-tile river
 	std::vector<direction> river_directions;
-	std::array<short, 4> river_subtile_frames{ -1, -1, -1, -1 };
 	std::array<const pathway *, 8> direction_pathways{};
-	pathway_map<short> pathway_frames;
 	std::vector<direction> border_directions; //used for graphical borders; this does not include e.g. borders with water tiles for land ones
 	std::vector<direction> country_border_directions;
 	metternich::civilian_unit *civilian_unit = nullptr;

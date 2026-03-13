@@ -89,8 +89,6 @@ public:
 
 	tile *get_tile(const QPoint &pos) const;
 	void set_tile_terrain(const QPoint &tile_pos, const terrain_type *terrain);
-	void update_tile_terrain_tile(const QPoint &tile_pos);
-	void update_tile_rect_terrain_tile(const QRect &tile_rect);
 	void add_tile_border_river_direction(const QPoint &tile_pos, const direction direction, const province *border_province);
 	void add_tile_route_direction(const QPoint &tile_pos, const direction direction);
 	Q_INVOKABLE const metternich::province *get_tile_province(const QPoint &tile_pos) const;
