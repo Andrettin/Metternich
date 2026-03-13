@@ -92,16 +92,20 @@ void military_unit_type::check() const
 	assert_throw(this->get_domain() != military_unit_domain::none);
 	assert_throw(this->get_icon() != nullptr);
 
+	if (this->get_battle_resolution_types().empty()) {
+		log::log_error(std::format("Military unit type \"{}\" has no battle resolution types.", this->get_identifier()));
+	}
+
 	if (this->get_stat(military_unit_stat::hit_points) == 0) {
-		//throw std::runtime_error("Military unit type \"{}\" but has no hit point value.");
+		log::log_error(std::format("Military unit type \"{}\" but has no hit point value.", this->get_identifier()));
 	}
 
 	if (this->get_stat(military_unit_stat::range) > 1 && this->get_stat(military_unit_stat::missile) == 0) {
-		//throw std::runtime_error("Military unit type \"{}\" can attack at range, but has no missile value.");
+		throw std::runtime_error(std::format("Military unit type \"{}\" can attack at range, but has no missile value.", this->get_identifier()));
 	}
 
 	if (this->get_stat(military_unit_stat::missile) > 0 && this->get_stat(military_unit_stat::range) <= 1) {
-		//throw std::runtime_error("Military unit type \"{}\" has a missile value, but cannot attack at range.");
+		throw std::runtime_error(std::format("Military unit type \"{}\" has a missile value, but cannot attack at range.", this->get_identifier()));
 	}
 }
 

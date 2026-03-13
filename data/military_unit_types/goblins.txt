@@ -9,7 +9,7 @@ goblin_infantry = {
 		defense = 2
 		melee = 2
 		missile = 1
-		range = 1
+		range = 3
 		#melee_vs_pikes = 1
 		#melee_vs_irregulars = 1
 	}

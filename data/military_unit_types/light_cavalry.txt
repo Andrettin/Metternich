@@ -9,7 +9,7 @@ squires = {
 		defense = 3
 		melee = 3
 		charge = 5
-		missile = 1
+		#missile = 1
 		range = 1
 	}
 	commodity_costs = {
