@@ -692,3 +692,4 @@ route_adjacency_tiles = {
 }
 
 click_sound = click
+main_menu_music = main_menu
