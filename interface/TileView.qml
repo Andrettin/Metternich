@@ -220,7 +220,7 @@ Item {
 				selected_province = null
 			} else if (site !== null && (site !== selected_site || selected_garrison) && (site.settlement || resource || improvement)) {
 				selected_site = site
-				selected_province = province
+				selected_province = null
 				selected_civilian_unit = null
 			} else {
 				selected_civilian_unit = null
@@ -340,7 +340,7 @@ Item {
 				selected_garrison = false
 			} else {
 				selected_site = site
-				selected_province = province
+				selected_province = null
 				selected_garrison = true
 			}
 		}
