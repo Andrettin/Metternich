@@ -24,6 +24,7 @@
 #include "map/site_game_data.h"
 #include "map/tile.h"
 #include "map/world.h"
+#include "sound/media_player.h"
 #include "technology/technology.h"
 #include "technology/technology_category.h"
 #include "time/era.h"
@@ -74,6 +75,11 @@ map *engine_interface::get_map() const
 preferences *engine_interface::get_preferences() const
 {
 	return preferences::get();
+}
+
+media_player *engine_interface::get_media_player() const
+{
+	return media_player::get();
 }
 
 QString engine_interface::get_save_path() const

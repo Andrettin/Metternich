@@ -264,6 +264,8 @@ source_group(script\\modifier_effect FILES ${script_modifier_effect_SRCS})
 set_source_files_properties(${script_modifier_effect_SRCS} PROPERTIES UNITY_GROUP "script_modifier_effect")
 
 set(sound_SRCS
+	src/sound/media_player.cpp
+	src/sound/music.cpp
 	src/sound/sound.cpp
 )
 source_group(sound FILES ${sound_SRCS})
@@ -866,6 +868,8 @@ set(script_modifier_effect_HDRS
 source_group(script\\modifier_effect FILES ${script_modifier_effect_HDRS})
 
 set(sound_HDRS
+	src/sound/media_player.h
+	src/sound/music.h
 	src/sound/sound.h
 )
 source_group(sound FILES ${sound_HDRS})

@@ -45,4 +45,15 @@ MenuBase {
 	LoadGameDialog {
 		id: load_game_dialog
 	}
+	
+	Connections {
+		target: metternich
+		function onRunningChanged() {
+			if (metternich.running) {
+				if (metternich.defines.main_menu_music !== null) {
+					metternich.media_player.play_music(metternich.defines.main_menu_music)
+				}
+			}
+		}
+	}
 }
