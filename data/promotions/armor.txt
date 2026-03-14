@@ -1,0 +1,27 @@
+light_armor = {
+	name = "Light Armor"
+	icon = heater_shield
+	stat_bonuses = {
+		defense = 2
+	}
+}
+
+medium_armor = {
+	name = "Medium Armor"
+	icon = heater_shield
+	stat_bonuses = {
+		defense = 4
+		missile = -2
+		movement = -1
+	}
+}
+
+heavy_armor = {
+	name = "Heavy Armor"
+	icon = heater_shield
+	stat_bonuses = {
+		defense = 6
+		missile = -4
+		movement = -2
+	}
+}

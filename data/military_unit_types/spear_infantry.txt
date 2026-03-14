@@ -28,6 +28,9 @@ pikemen = {
 		melee = 3
 		range = 1
 	}
+	free_promotions = {
+		pike
+	}
 	battle_resolution_types = {
 		pennant
 		shield
@@ -57,6 +60,9 @@ halberdiers = {
 		defense = 6
 		movement = 4
 		range = 1
+	}
+	free_promotions = {
+		pike
 	}
 	battle_resolution_types = {
 		pennant

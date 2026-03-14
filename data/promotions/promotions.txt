@@ -1,0 +1,23 @@
+pike = {
+	name = "Pike"
+	icon = saber
+	conditions = {
+		military_unit_category = spear_infantry
+	}
+	stat_bonuses = {
+		melee_vs_mounted = 1
+		defense_vs_mounted = 1
+	}
+}
+
+tough = {
+	name = "Tough"
+	icon = labor
+	conditions = {
+		military_unit_domain = land
+	}
+	stat_bonuses = {
+		hit_points = 1
+		#morale = 2
+	}
+}
