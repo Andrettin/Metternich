@@ -380,9 +380,15 @@ void battle::do_unit_attack(const military_unit *unit, military_unit *enemy, arm
 		attack = unit->get_effective_stat(military_unit_stat::charge).to_int();
 	} else {
 		attack = unit->get_effective_stat(military_unit_stat::melee).to_int();
+		if (enemy->get_type()->is_cavalry()) {
+			attack += unit->get_effective_stat(military_unit_stat::melee_vs_mounted).to_int();
+		}
 	}
 
-	const int defense = enemy->get_effective_stat(military_unit_stat::defense).to_int();
+	int defense = enemy->get_effective_stat(military_unit_stat::defense).to_int();
+	if (unit->get_type()->is_cavalry()) {
+		defense += enemy->get_effective_stat(military_unit_stat::defense_vs_mounted).to_int();
+	}
 
 	const std::unique_ptr<battle_resolution_table> &battle_resolution_table = vector::get_random(defines::get()->get_battle_resolution_tables());
 

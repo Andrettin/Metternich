@@ -10,6 +10,8 @@ enum class military_unit_stat {
 	charge,
 	missile,
 	range,
+	melee_vs_mounted,
+	defense_vs_mounted,
 
 	count
 };
@@ -31,11 +33,15 @@ inline std::string_view get_military_unit_stat_name(const military_unit_stat sta
 			return "Missile";
 		case military_unit_stat::range:
 			return "Range";
+		case military_unit_stat::melee_vs_mounted:
+			return "Melee vs. Mounted";
+		case military_unit_stat::defense_vs_mounted:
+			return "Defense vs. Mounted";
 		default:
 			break;
 	}
 
-	throw std::runtime_error(std::format("Invalid military unit stat: \"{}\".", std::to_string(static_cast<int>(stat))));
+	throw std::runtime_error(std::format("Invalid military unit stat: \"{}\".", static_cast<int>(stat)));
 }
 
 inline std::string_view get_military_unit_stat_short_name(const military_unit_stat stat)
@@ -55,11 +61,15 @@ inline std::string_view get_military_unit_stat_short_name(const military_unit_st
 			return "Missile";
 		case military_unit_stat::range:
 			return "Range";
+		case military_unit_stat::melee_vs_mounted:
+			return "Melee vs. Mounted";
+		case military_unit_stat::defense_vs_mounted:
+			return "Defense vs. Mounted";
 		default:
 			break;
 	}
 
-	throw std::runtime_error(std::format("Invalid military unit stat: \"{}\".", std::to_string(static_cast<int>(stat))));
+	throw std::runtime_error(std::format("Invalid military unit stat: \"{}\".", static_cast<int>(stat)));
 }
 
 inline bool is_percent_military_unit_stat(const military_unit_stat stat)
