@@ -3,7 +3,7 @@ import QtQuick.Controls
 import map_grid_model 1.0
 
 TableView {
-	id: map
+	id: tile_map
 	leftMargin: 0
 	rightMargin: 0
 	topMargin: 0
@@ -23,11 +23,11 @@ TableView {
 	}
 	
 	function center_on_tile(tile_x, tile_y) {
-		var pixel_x = tile_x * tile_size - map.width / 2
-		var pixel_y = tile_y * tile_size - map.height / 2
+		var pixel_x = tile_x * tile_size - tile_map.width / 2
+		var pixel_y = tile_y * tile_size - tile_map.height / 2
 		
-		map.contentX = Math.min(Math.max(pixel_x, 0), map.contentWidth - map.width)
-		map.contentY = Math.min(Math.max(pixel_y, 0), map.contentHeight - map.height)
+		tile_map.contentX = Math.min(Math.max(pixel_x, 0), tile_map.contentWidth - tile_map.width)
+		tile_map.contentY = Math.min(Math.max(pixel_y, 0), tile_map.contentHeight - tile_map.height)
 	}
 	
 	function center_on_country_capital(country) {
