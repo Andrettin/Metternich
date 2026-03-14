@@ -34,7 +34,7 @@ transporter::transporter(const transporter_type *type, const metternich::domain 
 
 	for (int i = 0; i < static_cast<int>(transporter_stat::count); ++i) {
 		const transporter_stat stat = static_cast<transporter_stat>(i);
-		const centesimal_int type_stat_value = type->get_stat_for_country(stat, this->get_country());
+		const centesimal_int type_stat_value = type->get_stat_for_domain(stat, this->get_country());
 		this->change_stat(stat, type_stat_value - type->get_stat(stat));
 	}
 
@@ -92,8 +92,8 @@ void transporter::set_type(const transporter_type *type)
 
 	for (int i = 0; i < static_cast<int>(transporter_stat::count); ++i) {
 		const transporter_stat stat = static_cast<transporter_stat>(i);
-		const centesimal_int type_stat_value = type->get_stat_for_country(stat, this->get_country());
-		const centesimal_int old_type_stat_value = old_type->get_stat_for_country(stat, this->get_country());
+		const centesimal_int type_stat_value = type->get_stat_for_domain(stat, this->get_country());
+		const centesimal_int old_type_stat_value = old_type->get_stat_for_domain(stat, this->get_country());
 		if (type_stat_value != old_type_stat_value) {
 			this->change_stat(stat, type_stat_value - old_type_stat_value);
 		}

@@ -99,8 +99,9 @@ public:
 		return zero;
 	}
 
-	centesimal_int get_stat_for_country(const military_unit_stat stat, const domain *domain) const;
-	Q_INVOKABLE QString get_stats_for_country_qstring(const domain *domain) const;
+	centesimal_int get_stat_for_domain(const military_unit_stat stat, const domain *domain) const;
+	centesimal_int get_display_stat_for_domain(const military_unit_stat stat, const domain *domain) const;
+	Q_INVOKABLE QString get_stats_for_domain_qstring(const domain *domain) const;
 
 	const technology *get_required_technology() const
 	{

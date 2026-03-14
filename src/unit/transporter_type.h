@@ -87,7 +87,7 @@ public:
 		return zero;
 	}
 
-	centesimal_int get_stat_for_country(const transporter_stat stat, const domain *domain) const;
+	centesimal_int get_stat_for_domain(const transporter_stat stat, const domain *domain) const;
 
 	int get_hit_points() const
 	{

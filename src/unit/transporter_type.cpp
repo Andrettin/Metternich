@@ -85,7 +85,7 @@ bool transporter_type::is_ship() const
 	return this->get_transporter_class()->is_ship();
 }
 
-centesimal_int transporter_type::get_stat_for_country(const transporter_stat stat, const domain *domain) const
+centesimal_int transporter_type::get_stat_for_domain(const transporter_stat stat, const domain *domain) const
 {
 	centesimal_int value = this->get_stat(stat);
 	value += domain->get_game_data()->get_transporter_type_stat_modifier(this, stat);

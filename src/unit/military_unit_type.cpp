@@ -176,33 +176,44 @@ bool military_unit_type::is_ship() const
 	return this->get_unit_class()->is_ship();
 }
 
-centesimal_int military_unit_type::get_stat_for_country(const military_unit_stat stat, const domain *domain) const
+centesimal_int military_unit_type::get_stat_for_domain(const military_unit_stat stat, const domain *domain) const
 {
 	centesimal_int value = this->get_stat(stat);
 	value += domain->get_military()->get_military_unit_type_stat_modifier(this, stat);
 	return value;
 }
 
-QString military_unit_type::get_stats_for_country_qstring(const domain *domain) const
+centesimal_int military_unit_type::get_display_stat_for_domain(const military_unit_stat stat, const domain *domain) const
+{
+	centesimal_int value = this->get_stat_for_domain(stat, domain);
+
+	for (const promotion *promotion : this->get_free_promotions()) {
+		value += promotion->get_stat_bonus(stat);
+	}
+
+	return value;
+}
+
+QString military_unit_type::get_stats_for_domain_qstring(const domain *domain) const
 {
 	std::set<military_unit_stat> used_stats = container::to_set(archimedes::map::get_keys(this->get_stats()));
 	for (const auto &[stat, value] : domain->get_military()->get_military_unit_type_stat_modifiers(this)) {
 		used_stats.insert(stat);
 	}
+	for (const promotion *promotion : this->get_free_promotions()) {
+		for (const auto &[stat, bonus] : promotion->get_stat_bonuses()) {
+			used_stats.insert(stat);
+		}
+	}
 
 	std::string str;
 
 	for (const military_unit_stat stat : used_stats) {
-		if (stat == military_unit_stat::movement) {
-			//this stat does nothing at the moment, so it is better to not display it
-			continue;
-		}
-
 		if (!str.empty()) {
 			str += ", ";
 		}
 
-		str += std::format("{} {}", this->get_stat_for_country(stat, domain).to_string(), get_military_unit_stat_short_name(stat));
+		str += std::format("{} {}", this->get_display_stat_for_domain(stat, domain).to_string(), get_military_unit_stat_short_name(stat));
 	}
 
 	return QString::fromStdString(str);

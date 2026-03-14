@@ -79,7 +79,7 @@ military_unit::military_unit(const military_unit_type *type, const metternich::d
 
 	for (int i = 0; i < static_cast<int>(military_unit_stat::count); ++i) {
 		const military_unit_stat stat = static_cast<military_unit_stat>(i);
-		const centesimal_int type_stat_value = type->get_stat_for_country(stat, this->get_country());
+		const centesimal_int type_stat_value = type->get_stat_for_domain(stat, this->get_country());
 		this->change_stat(stat, type_stat_value - type->get_stat(stat));
 	}
 
@@ -181,8 +181,8 @@ void military_unit::set_type(const military_unit_type *type)
 
 	for (int i = 0; i < static_cast<int>(military_unit_stat::count); ++i) {
 		const military_unit_stat stat = static_cast<military_unit_stat>(i);
-		const centesimal_int type_stat_value = type->get_stat_for_country(stat, this->get_country());
-		const centesimal_int old_type_stat_value = old_type->get_stat_for_country(stat, this->get_country());
+		const centesimal_int type_stat_value = type->get_stat_for_domain(stat, this->get_country());
+		const centesimal_int old_type_stat_value = old_type->get_stat_for_domain(stat, this->get_country());
 		if (type_stat_value != old_type_stat_value) {
 			this->change_stat(stat, type_stat_value - old_type_stat_value);
 		}
@@ -480,7 +480,6 @@ void military_unit::add_promotion(const promotion *promotion)
 	}
 
 	const read_only_context ctx(this);
-
 	if (promotion->get_conditions() != nullptr && !promotion->get_conditions()->check(this, ctx)) {
 		log::log_error(std::format("Tried to add promotion \"{}\" to military unit \"{}\" ({}), for which the promotion's conditions are not fulfilled.", promotion->get_identifier(), this->get_name(), this->get_type()->get_name()));
 		return;

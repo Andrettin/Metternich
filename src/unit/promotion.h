@@ -9,6 +9,7 @@ namespace metternich {
 
 class icon;
 class military_unit;
+enum class military_unit_stat;
 
 template <typename scope_type>
 class and_condition;
@@ -44,11 +45,27 @@ public:
 		return this->conditions.get();
 	}
 
+	const std::map<military_unit_stat, int> &get_stat_bonuses() const
+	{
+		return this->stat_bonuses;
+	}
+
+	int get_stat_bonus(const military_unit_stat stat) const
+	{
+		const auto find_iterator = this->get_stat_bonuses().find(stat);
+		if (find_iterator != this->get_stat_bonuses().end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
 	const metternich::modifier<military_unit> *get_modifier() const
 	{
 		return this->modifier.get();
 	}
 
+	void apply_modifier(military_unit *military_unit, const int multiplier) const;
 	QString get_modifier_string() const;
 
 signals:
@@ -57,6 +74,7 @@ signals:
 private:
 	metternich::icon *icon = nullptr;
 	std::unique_ptr<const and_condition<military_unit>> conditions;
+	std::map<military_unit_stat, int> stat_bonuses;
 	std::unique_ptr<const metternich::modifier<military_unit>> modifier;
 };
 
