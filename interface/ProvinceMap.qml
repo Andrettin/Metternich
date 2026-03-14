@@ -174,6 +174,7 @@ Flickable {
 				onClicked: {
 					selected_civilian_unit = null
 					selected_province = null
+					selected_garrison = false
 					if (selected_site === site) {
 						selected_site = null
 					} else {
