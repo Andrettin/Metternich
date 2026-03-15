@@ -5,6 +5,9 @@ import QtQuick.Controls.Universal
 ComboBox {
 	id: combobox
 	focusPolicy: Qt.NoFocus
+	onClicked: {
+		metternich.defines.click_sound.play()
+	}
 	
 	property string tooltip: ""
 	

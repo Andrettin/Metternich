@@ -21,6 +21,8 @@ class preferences final : public QObject, public singleton<preferences>
 
 	Q_PROPERTY(archimedes::centesimal_int scale_factor READ get_scale_factor WRITE set_scale_factor NOTIFY scale_factor_changed)
 	Q_PROPERTY(QString scale_factor_string READ get_scale_factor_qstring WRITE set_scale_factor_qstring NOTIFY scale_factor_changed)
+	Q_PROPERTY(bool sound_effects_enabled READ are_sound_effects_enabled WRITE set_sound_effects_enabled NOTIFY sound_effects_enabled_changed)
+	Q_PROPERTY(bool music_enabled READ is_music_enabled WRITE set_music_enabled NOTIFY music_enabled_changed)
 	Q_PROPERTY(metternich::game_rules* game_rules READ get_game_rules CONSTANT)
 
 public:
@@ -52,6 +54,28 @@ public:
 		this->set_scale_factor(centesimal_int(factor_str.toStdString()));
 	}
 
+	bool are_sound_effects_enabled() const
+	{
+		return this->sound_effects_enabled;
+	}
+
+	void set_sound_effects_enabled(const bool enabled)
+	{
+		if (enabled == this->are_sound_effects_enabled()) {
+			return;
+		}
+
+		this->sound_effects_enabled = enabled;
+		emit sound_effects_enabled_changed();
+	}
+
+	bool is_music_enabled() const
+	{
+		return this->music_enabled;
+	}
+
+	void set_music_enabled(const bool enabled);
+
 	game_rules *get_game_rules()
 	{
 		return this->game_rules.get();
@@ -64,9 +88,13 @@ public:
 
 signals:
 	void scale_factor_changed();
+	void sound_effects_enabled_changed();
+	void music_enabled_changed();
 
 private:
 	centesimal_int scale_factor = centesimal_int(2);
+	bool sound_effects_enabled = true;
+	bool music_enabled = true;
 	qunique_ptr<game_rules> game_rules;
 };
 

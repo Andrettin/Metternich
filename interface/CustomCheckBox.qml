@@ -5,6 +5,9 @@ import QtQuick.Controls.Universal
 CheckBox {
 	id: checkbox
 	focusPolicy: Qt.NoFocus
+	onClicked: {
+		metternich.defines.click_sound.play()
+	}
 	
 	property string tooltip: ""
 	

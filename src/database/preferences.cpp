@@ -7,6 +7,7 @@
 #include "database/gsml_data.h"
 #include "database/gsml_parser.h"
 #include "game/game_rules.h"
+#include "sound/media_player.h"
 #include "util/exception_util.h"
 #include "util/log_util.h"
 #include "util/string_conversion_util.h"
@@ -62,6 +63,8 @@ void preferences::save() const
 	gsml_data data(preferences_path.filename().stem().string());
 
 	data.add_property("scale_factor", this->get_scale_factor().to_string());
+	data.add_property("sound_effects_enabled", string::from_bool(this->are_sound_effects_enabled()));
+	data.add_property("music_enabled", string::from_bool(this->is_music_enabled()));
 
 	data.add_child("game_rules", this->get_game_rules()->to_gsml_data());
 
@@ -107,6 +110,21 @@ void preferences::set_scale_factor(const centesimal_int &factor)
 	this->scale_factor = factor;
 
 	emit scale_factor_changed();
+}
+
+void preferences::set_music_enabled(const bool enabled)
+{
+	if (enabled == this->is_music_enabled()) {
+		return;
+	}
+
+	this->music_enabled = enabled;
+
+	if (!enabled) {
+		media_player::get()->stop_music();
+	}
+
+	emit music_enabled_changed();
 }
 
 }

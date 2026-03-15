@@ -32,6 +32,16 @@ MenuBase {
 		}
 		
 		TextButton {
+			id: options_button
+			text: qsTr("Options")
+			width: 128 * scale_factor
+			
+			onClicked: {
+				menu_stack.push("OptionsMenu.qml")
+			}
+		}
+		
+		TextButton {
 			id: exit_button
 			text: qsTr("Exit")
 			width: 128 * scale_factor

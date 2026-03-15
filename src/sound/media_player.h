@@ -19,6 +19,7 @@ public:
 	~media_player();
 
 	Q_INVOKABLE void play_music(const music *music);
+	void stop_music();
 
 private:
 	qunique_ptr<QMediaPlayer> music_player;

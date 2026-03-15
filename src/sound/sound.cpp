@@ -3,6 +3,7 @@
 #include "sound/sound.h"
 
 #include "database/database.h"
+#include "database/preferences.h"
 #include "util/assert_util.h"
 #include "util/path_util.h"
 
@@ -40,6 +41,10 @@ void sound::set_filepath(const std::filesystem::path &filepath)
 
 void sound::play() const
 {
+	if (!preferences::get()->are_sound_effects_enabled()) {
+		return;
+	}
+
 	if (this->sound_effect->isPlaying()) {
 		return;
 	}
