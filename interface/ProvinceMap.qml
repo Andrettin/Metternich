@@ -21,6 +21,7 @@ Flickable {
 	property bool show_sites: false
 	readonly property var reference_country: selected_province ? selected_province.game_data.owner : (metternich.game.player_country ? metternich.game.player_country : null)
 	property var hovered_site: null
+	property var hovered_label_province: null
 	
 	Repeater {
 		model: metternich.map.provinces
@@ -33,7 +34,7 @@ Flickable {
 			cache: false
 			
 			readonly property var province: model.modelData
-			readonly property var selected: selected_province === province || (selected_site !== null && selected_site.game_data.province === province && !province_map.show_sites)
+			readonly property var selected: (selected_province === province || (selected_site !== null && selected_site.game_data.province === province && !province_map.show_sites)) && (selected_garrison === false || province_map.show_sites)
 			property int change_count: 0
 			
 			Connections {
@@ -43,28 +44,6 @@ Flickable {
 					change_count += 1
 				}
 			}
-		}
-	}
-	
-	Repeater {
-		model: metternich.map.provinces
-		
-		TinyText {
-			id: province_label
-			text: province.game_data.current_cultural_name
-			x: Math.floor(text_rect.x * metternich.map.province_map_tile_pixel_size * scale_factor)
-			y: Math.floor(text_rect.y * metternich.map.province_map_tile_pixel_size * scale_factor)
-			width: Math.floor(text_rect_width)
-			height: Math.floor(text_rect_height)
-			visible: !province_map.show_sites
-			wrapMode: Text.WordWrap
-			horizontalAlignment: contentWidth <= width ? Text.AlignHCenter : (province.game_data.map_image_rect.x === 0 ? Text.AlignLeft : ((province.game_data.map_image_rect.x + province.game_data.map_image_rect.width) >= metternich.map.province_map_image_size.width * scale_factor ? Text.AlignRight : Text.AlignHCenter))
-			verticalAlignment: contentHeight <= height ? Text.AlignVCenter : (province.game_data.map_image_rect.y === 0 ? Text.AlignTop : ((province.game_data.map_image_rect.y + province.game_data.map_image_rect.height) >= metternich.map.province_map_image_size.height * scale_factor ? Text.AlignBottom : Text.AlignVCenter))
-			
-			readonly property var province: model.modelData
-			readonly property var text_rect: province.game_data.text_rect
-			readonly property int text_rect_width: text_rect.width * metternich.map.province_map_tile_pixel_size * scale_factor
-			readonly property int text_rect_height: text_rect.height * metternich.map.province_map_tile_pixel_size * scale_factor
 		}
 	}
 	
@@ -96,40 +75,110 @@ Flickable {
 			var province = metternich.map.get_tile_province(Qt.point(Math.floor(mouse.x / metternich.map.province_map_tile_pixel_size / scale_factor), Math.floor(mouse.y / metternich.map.province_map_tile_pixel_size / scale_factor)))
 			
 			if (province !== null) {
-				var text = province.game_data.current_cultural_name
-				
-				if (province.game_data.owner !== null) {
-					text += ", " + province.game_data.owner.name
-					
-					if (province.game_data.owner.game_data.realm !== province.game_data.owner) {
-						text += ", " + province.game_data.owner.game_data.realm.name
-					}
-				}
-				
-				if (province_map.mode === ProvinceMap.Mode.Cultural && province.game_data.culture !== null) {
-					text += " (" + province.game_data.culture.name + ")"
-				} else if (province_map.mode === ProvinceMap.Mode.TradeZone) {
-					var trade_zone_domain = province.game_data.get_trade_zone_domain()
-					if (trade_zone_domain !== null) {
-						text += " (" + trade_zone_domain.name + ")"
-					}
-				} else if (province_map.mode === ProvinceMap.Mode.Temple) {
-					var temple_domain = province.game_data.get_temple_domain()
-					if (temple_domain !== null) {
-						text += " (" + temple_domain.name + ")"
-					}
-				}
-				
+				var text = get_province_status_text(province)
 				status_text = text
 			} else {
 				status_text = ""
 			}
-			
 		}
 		
 		onContainsMouseChanged: {
-			if (!containsMouse && hovered_site === null) {
+			if (!containsMouse && hovered_site === null && hovered_label_province === null) {
 				status_text = ""
+			}
+		}
+	}
+	
+	Repeater {
+		model: metternich.map.provinces
+		
+		TinyText {
+			id: province_label
+			text: province.game_data.current_cultural_name
+			x: Math.floor(text_rect.x * metternich.map.province_map_tile_pixel_size * scale_factor)
+			y: Math.floor(text_rect.y * metternich.map.province_map_tile_pixel_size * scale_factor)
+			width: Math.floor(text_rect_width)
+			height: Math.floor(text_rect_height)
+			visible: !province_map.show_sites
+			wrapMode: Text.WordWrap
+			horizontalAlignment: contentWidth <= width ? Text.AlignHCenter : (province.game_data.map_image_rect.x === 0 ? Text.AlignLeft : ((province.game_data.map_image_rect.x + province.game_data.map_image_rect.width) >= metternich.map.province_map_image_size.width * scale_factor ? Text.AlignRight : Text.AlignHCenter))
+			verticalAlignment: contentHeight <= height ? Text.AlignVCenter : (province.game_data.map_image_rect.y === 0 ? Text.AlignTop : ((province.game_data.map_image_rect.y + province.game_data.map_image_rect.height) >= metternich.map.province_map_image_size.height * scale_factor ? Text.AlignBottom : Text.AlignVCenter))
+			
+			readonly property var province: model.modelData
+			readonly property var text_rect: province.game_data.text_rect
+			readonly property int text_rect_width: text_rect.width * metternich.map.province_map_tile_pixel_size * scale_factor
+			readonly property int text_rect_height: text_rect.height * metternich.map.province_map_tile_pixel_size * scale_factor
+			
+			MouseArea {
+				anchors.fill: parent
+				hoverEnabled: true
+				
+				onClicked: {
+					metternich.defines.click_sound.play()
+					if (selected_province === province) {
+						select_province(null)
+					} else {
+						select_province(province)
+					}
+				}
+				
+				onContainsMouseChanged: {
+					if (containsMouse) {
+						hovered_label_province = province
+						var text = get_province_status_text(province)
+						status_text = text
+					} else {
+						if (hovered_label_province === province) {
+							hovered_label_province = null
+						}
+					}
+				}
+				
+				onPositionChanged: {
+					var text = get_province_status_text(province)
+					status_text = text
+				}
+			}
+			
+			Image {
+				id: garrison_icon
+				anchors.horizontalCenter: province_label.horizontalCenter
+				anchors.verticalCenter: province_label.verticalCenter
+				anchors.verticalCenterOffset: Math.floor(-province_label.contentHeight / 2) - 4 * scale_factor
+				source: "image://icon/garrison" + (selected ? "/selected" : "")
+				visible: province.game_data.military_unit_category_counts.length > 0
+				
+				readonly property bool selected: visible && selected_province === province && selected_garrison
+				
+				MouseArea {
+					anchors.fill: parent
+					hoverEnabled: true
+					
+					onClicked: {
+						metternich.defines.click_sound.play()
+						selected_civilian_unit = null
+						selected_site = null
+						if (selected_province === province && selected_garrison) {
+							selected_province = null
+							selected_garrison = false
+						} else {
+							selected_province = province
+							selected_garrison = true
+						}
+					}
+					
+					onContainsMouseChanged: {
+						var text = "View Garrison"
+						
+						if (containsMouse) {
+							status_text = text
+						} else {
+							if (status_text === text) {
+								status_text = ""
+							}
+						}
+					}
+				}
 			}
 		}
 	}
@@ -220,44 +269,39 @@ Flickable {
 		}
 	}
 	
-	/*
-	Repeater {
-		model: reference_country ? reference_country.game_data.consulates : []
-		
-		Image {
-			id: consulate_icon
-			x: other_country_capital ? (other_country_capital.game_data.tile_pos.x * metternich.map.province_map_tile_pixel_size * scale_factor - width / 2) : 0
-			y: other_country_capital ? (other_country_capital.game_data.tile_pos.y * metternich.map.province_map_tile_pixel_size * scale_factor - height / 2) : 0
-			source: "image://icon/" + consulate.icon.identifier
-			visible: !reference_country.game_data.anarchy && !other_country.game_data.anarchy && province_map.mode === DiplomaticMap.Mode.Treaty
-			
-			readonly property var other_country: model.modelData.key
-			readonly property var other_country_capital: other_country.game_data.capital
-			readonly property var consulate: model.modelData.value
-			
-			MaskedMouseArea {
-				id: consulate_mouse_area
-				anchors.fill: parent
-				alphaThreshold: 0.4
-				maskSource: parent.source
-				
-				onClicked: {
-					select_province(other_country.game_data.capital.game_data.province)
-				}
-			}
-			
-			CustomTooltip {
-				text: small_text(consulate.name)
-				visible: consulate_mouse_area.containsMouse
-			}
-		}
-	}
-	*/
-	
 	function select_province(province) {
 		selected_civilian_unit = null
 		selected_site = null
 		selected_province = province
+		selected_garrison = false
+	}
+	
+	function get_province_status_text(province) {
+		var text = province.game_data.current_cultural_name
+		
+		if (province.game_data.owner !== null) {
+			text += ", " + province.game_data.owner.name
+			
+			if (province.game_data.owner.game_data.realm !== province.game_data.owner) {
+				text += ", " + province.game_data.owner.game_data.realm.name
+			}
+		}
+		
+		if (province_map.mode === ProvinceMap.Mode.Cultural && province.game_data.culture !== null) {
+			text += " (" + province.game_data.culture.name + ")"
+		} else if (province_map.mode === ProvinceMap.Mode.TradeZone) {
+			var trade_zone_domain = province.game_data.get_trade_zone_domain()
+			if (trade_zone_domain !== null) {
+				text += " (" + trade_zone_domain.name + ")"
+			}
+		} else if (province_map.mode === ProvinceMap.Mode.Temple) {
+			var temple_domain = province.game_data.get_temple_domain()
+			if (temple_domain !== null) {
+				text += " (" + temple_domain.name + ")"
+			}
+		}
+		
+		return text
 	}
 	
 	function center_on_tile(tile_x, tile_y) {
