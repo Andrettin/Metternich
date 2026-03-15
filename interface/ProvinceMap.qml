@@ -172,6 +172,7 @@ Flickable {
 				hoverEnabled: true
 				
 				onClicked: {
+					metternich.defines.click_sound.play()
 					selected_civilian_unit = null
 					selected_province = null
 					selected_garrison = false
