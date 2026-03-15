@@ -160,7 +160,8 @@ void map_template::initialize()
 				}
 
 				if (!found_pos) {
-					throw std::runtime_error(std::format("No position found for site \"{}\" in province \"{}\".", site->get_identifier(), site_province->get_identifier()));
+					log::log_error(std::format("No position found for site \"{}\" in province \"{}\".", site->get_identifier(), site_province->get_identifier()));
+					continue;
 				}
 			}
 
@@ -889,7 +890,7 @@ void map_template::apply_provinces() const
 		}
 	}
 
-	static constexpr int min_province_tile_count = 96;
+	static constexpr int min_province_tile_count = 4;
 
 	for (int x = 0; x < map->get_width(); ++x) {
 		for (int y = 0; y < map->get_height(); ++y) {
@@ -1025,136 +1026,50 @@ void map_template::generate_site(const site *site) const
 bool map_template::is_pos_available_for_site(const QPoint &tile_pos, const province *site_province, const QImage &province_image) const
 {
 	const QRect map_rect(QPoint(0, 0), this->get_size());
-	bool available = true;
-
-	static constexpr int coast_check_range = 0;
-	const QRect coast_check_rect(tile_pos - QPoint(coast_check_range, coast_check_range), tile_pos + QPoint(coast_check_range, coast_check_range));
-
-	rect::for_each_point_until(coast_check_rect, [this, &map_rect, &available, site_province, &province_image](const QPoint &rect_pos) {
-		if (!map_rect.contains(rect_pos)) {
-			available = false;
-			return true;
-		}
-
-		if (!province_image.isNull()) {
-			const province *tile_province = province::try_get_by_color(province_image.pixelColor(rect_pos));
-			if (tile_province == nullptr || (tile_province->is_water_zone() && site_province != tile_province)) {
-				available = false;
-				return true;
-			}
-		}
-
-		return false;
-	});
-
-	static constexpr int province_check_range = 2;
-	const QRect province_check_rect(tile_pos - QPoint(province_check_range, province_check_range), tile_pos + QPoint(province_check_range, province_check_range));
-
-	rect::for_each_point_until(province_check_rect, [this, &map_rect, &available, site_province, &province_image](const QPoint &rect_pos) {
-		if (!map_rect.contains(rect_pos)) {
-			available = false;
-			return true;
-		}
-
-		if (!province_image.isNull()) {
-			const province *tile_province = province::try_get_by_color(province_image.pixelColor(rect_pos));
-			if (tile_province != nullptr && !tile_province->is_water_zone() && site_province != tile_province) {
-				available = false;
-				return true;
-			}
-		}
-
-		return false;
-	});
-
-	if (!available) {
+	if (!map_rect.contains(tile_pos)) {
 		return false;
 	}
 
-	static constexpr int site_check_range = 4;
-	const QRect site_check_rect(tile_pos - QPoint(site_check_range, site_check_range), tile_pos + QPoint(site_check_range, site_check_range));
-
-	rect::for_each_point_until(site_check_rect, [this, &map_rect, &available, site_province](const QPoint &rect_pos) {
-		if (!map_rect.contains(rect_pos)) {
+	if (!province_image.isNull()) {
+		const province *tile_province = province::try_get_by_color(province_image.pixelColor(tile_pos));
+		if (tile_province == nullptr || (tile_province->is_water_zone() && site_province != tile_province)) {
 			return false;
 		}
 
-		if (this->sites_by_position.contains(rect_pos)) {
-			available = false;
-			return true;
+		if (tile_province != nullptr && !tile_province->is_water_zone() && site_province != tile_province) {
+			return false;
 		}
+	}
 
+	if (this->sites_by_position.contains(tile_pos)) {
 		return false;
-	});
+	}
 
-	return available;
+	return true;
 }
 
 bool map_template::is_pos_available_for_site_generation(const QPoint &tile_pos, const province *site_province) const
 {
 	const QRect map_rect(QPoint(0, 0), map::get()->get_size());
-	bool available = true;
-
-	static constexpr int coast_check_range = 0;
-	const QRect coast_check_rect(tile_pos - QPoint(coast_check_range, coast_check_range), tile_pos + QPoint(coast_check_range, coast_check_range));
-
-	rect::for_each_point_until(coast_check_rect, [this, &map_rect, &available, site_province](const QPoint &rect_pos) {
-		if (!map_rect.contains(rect_pos)) {
-			available = false;
-			return true;
-		}
-
-		const tile *tile = map::get()->get_tile(rect_pos);
-		const province *tile_province = tile->get_province();
-		if (tile_province == nullptr || (tile_province->is_water_zone() && site_province != tile_province)) {
-			available = false;
-			return true;
-		}
-
-		return false;
-	});
-
-	static constexpr int province_check_range = 2;
-	const QRect province_check_rect(tile_pos - QPoint(province_check_range, province_check_range), tile_pos + QPoint(province_check_range, province_check_range));
-
-	rect::for_each_point_until(province_check_rect, [this, &map_rect, &available, site_province](const QPoint &rect_pos) {
-		if (!map_rect.contains(rect_pos)) {
-			available = false;
-			return true;
-		}
-
-		const tile *tile = map::get()->get_tile(rect_pos);
-		const province *tile_province = tile->get_province();
-		if (tile_province != nullptr && !tile_province->is_water_zone() && site_province != tile_province) {
-			available = false;
-			return true;
-		}
-
-		return false;
-	});
-
-	if (!available) {
+	if (!map_rect.contains(tile_pos)) {
 		return false;
 	}
 
-	static constexpr int site_check_range = 4;
-	const QRect site_check_rect(tile_pos - QPoint(site_check_range, site_check_range), tile_pos + QPoint(site_check_range, site_check_range));
-
-	rect::for_each_point_until(site_check_rect, [this, &map_rect, &available, site_province](const QPoint &rect_pos) {
-		if (!map_rect.contains(rect_pos)) {
-			return false;
-		}
-
-		const tile *tile = map::get()->get_tile(rect_pos);
-		if (tile->get_site() != nullptr) {
-			available = false;
-			return true;
-		}
-
+	const tile *tile = map::get()->get_tile(tile_pos);
+	const province *tile_province = tile->get_province();
+	if (tile_province == nullptr || (tile_province->is_water_zone() && site_province != tile_province)) {
 		return false;
-	});
+	}
 
-	return available;
+	if (tile_province != nullptr && !tile_province->is_water_zone() && site_province != tile_province) {
+		return false;
+	}
+
+	if (tile->get_site() != nullptr) {
+		return false;
+	}
+
+	return true;
 }
 
 }
