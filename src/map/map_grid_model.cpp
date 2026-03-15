@@ -235,7 +235,7 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 
 				const metternich::tile *upper_tile = map::get()->get_tile(upper_tile_pos);
 
-				if (upper_tile->get_site() != nullptr && upper_tile->get_site()->is_celestial_body()) {
+				if (upper_tile->get_site() != nullptr) {
 					return upper_tile->get_site()->get_game_data()->get_current_cultural_name_qstring();
 				}
 
