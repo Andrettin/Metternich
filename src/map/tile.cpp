@@ -24,23 +24,8 @@
 
 namespace metternich {
 
-tile::tile(const terrain_type *base_terrain, const terrain_type *terrain) : terrain(terrain)
+tile::tile(const terrain_type *terrain) : terrain(terrain)
 {
-	if (!base_terrain->get_subtiles().empty()) {
-		std::array<const std::vector<int> *, 4> terrain_subtiles{};
-
-		for (size_t i = 0; i < terrain_subtiles.size(); ++i) {
-			terrain_subtiles[i] = &base_terrain->get_subtiles();
-		}
-
-		for (size_t i = 0; i < terrain_subtiles.size(); ++i) {
-			const short terrain_subtile = static_cast<short>(vector::get_random(*terrain_subtiles[i]));
-
-			this->base_subtile_frames[i] = terrain_subtile;
-		}
-	} else {
-		this->base_tile_frame = static_cast<short>(vector::get_random(base_terrain->get_tiles()));
-	}
 }
 
 void tile::set_terrain(const terrain_type *terrain)
@@ -166,53 +151,6 @@ void tile::set_direction_pathway(const direction direction, const pathway *pathw
 	this->direction_pathways[static_cast<int>(direction)] = pathway;
 }
 
-void tile::calculate_pathway_frame(const pathway *pathway)
-{
-	assert_throw(pathway != nullptr);
-
-	static constexpr size_t direction_count = static_cast<size_t>(direction::count);
-	static_assert(direction_count == terrain_adjacency::direction_count);
-
-	terrain_adjacency adjacency;
-
-	for (size_t i = 0; i < direction_count; ++i) {
-		const direction direction = static_cast<archimedes::direction>(i);
-		
-		if (this->get_direction_pathway(direction) == pathway) {
-			adjacency.set_direction_adjacency_type(direction, terrain_adjacency_type::same);
-		} else {
-			adjacency.set_direction_adjacency_type(direction, terrain_adjacency_type::other);
-		}
-	}
-
-	const int pathway_frame = defines::get()->get_route_adjacency_tile(adjacency);
-
-	if (pathway_frame != -1) {
-		this->set_pathway_frame(pathway, pathway_frame);
-	}
-}
-
-void tile::calculate_pathway_frames()
-{
-	std::vector<const pathway *> pathways;
-
-	for (const pathway *pathway : this->direction_pathways) {
-		if (pathway == nullptr) {
-			continue;
-		}
-
-		if (vector::contains(pathways, pathway)) {
-			continue;
-		}
-
-		pathways.push_back(pathway);
-	}
-
-	for (const pathway *pathway : pathways) {
-		this->calculate_pathway_frame(pathway);
-	}
-}
-
 const pathway *tile::get_best_pathway() const
 {
 	if (!this->has_route()) {
@@ -221,7 +159,11 @@ const pathway *tile::get_best_pathway() const
 
 	const pathway *best_pathway = nullptr;
 
-	for (const auto &[pathway, frame] : this->get_pathway_frames()) {
+	for (const pathway *pathway : this->direction_pathways) {
+		if (pathway == nullptr) {
+			continue;
+		}
+
 		if (best_pathway == nullptr || pathway->get_transport_level() > best_pathway->get_transport_level()) {
 			best_pathway = pathway;
 		}
