@@ -135,41 +135,68 @@ Flickable {
 				}
 			}
 			
-			Image {
-				id: garrison_icon
+			Row {
 				anchors.horizontalCenter: province_label.horizontalCenter
-				anchors.verticalCenter: province_label.verticalCenter
-				anchors.verticalCenterOffset: Math.floor(-province_label.contentHeight / 2) - 4 * scale_factor
-				source: "image://icon/garrison" + (selected ? "/selected" : "")
-				visible: province.game_data.military_unit_category_counts.length > 0
+				anchors.bottom: province_label.verticalCenter
+				anchors.bottomMargin: Math.floor(province_label.contentHeight / 2) + 2 * scale_factor
+				spacing: 2 * scale_factor
 				
-				readonly property bool selected: visible && selected_province === province && selected_garrison
-				
-				MouseArea {
-					anchors.fill: parent
-					hoverEnabled: true
+				Image {
+					id: garrison_icon
+					source: "image://icon/garrison" + (selected ? "/selected" : "")
+					visible: province.game_data.military_unit_category_counts.length > 0
 					
-					onClicked: {
-						metternich.defines.click_sound.play()
-						selected_civilian_unit = null
-						selected_site = null
-						if (selected_province === province && selected_garrison) {
-							selected_province = null
-							selected_garrison = false
-						} else {
-							selected_province = province
-							selected_garrison = true
+					readonly property bool selected: visible && selected_province === province && selected_garrison
+					
+					MouseArea {
+						anchors.fill: parent
+						hoverEnabled: true
+						
+						onClicked: {
+							metternich.defines.click_sound.play()
+							selected_civilian_unit = null
+							selected_site = null
+							if (selected_province === province && selected_garrison) {
+								selected_province = null
+								selected_garrison = false
+							} else {
+								selected_province = province
+								selected_garrison = true
+							}
+						}
+						
+						onContainsMouseChanged: {
+							var text = "View Garrison"
+							
+							if (containsMouse) {
+								status_text = text
+							} else {
+								if (status_text === text) {
+									status_text = ""
+								}
+							}
 						}
 					}
+				}
+				
+				Image {
+					id: entering_army_icon
+					source: "image://icon/war"
+					visible: province.game_data.entering_armies.length > 0
 					
-					onContainsMouseChanged: {
-						var text = "View Garrison"
+					MouseArea {
+						anchors.fill: parent
+						hoverEnabled: true
 						
-						if (containsMouse) {
-							status_text = text
-						} else {
-							if (status_text === text) {
-								status_text = ""
+						onContainsMouseChanged: {
+							var text = "Entering Army"
+							
+							if (containsMouse) {
+								status_text = text
+							} else {
+								if (status_text === text) {
+									status_text = ""
+								}
 							}
 						}
 					}
