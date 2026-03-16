@@ -3,11 +3,13 @@ general_napoleonic = {
 	unit_class = general_napoleonic
 	icon = general_napoleonic
 	stats = {
-		defense = 5
-		movement = 7
-	}
-	commodity_costs = {
-		leadership = 20
+		hit_points = 3
+		movement = 4
+		defense = 1
+		melee = 2
+		charge = 2
+		missile = 2
+		range = 3
 	}
 	upgrades = {
 		general_victorian
@@ -19,11 +21,13 @@ general_victorian = {
 	unit_class = general_victorian
 	icon = general_napoleonic
 	stats = {
-		defense = 7
-		movement = 9
-	}
-	commodity_costs = {
-		leadership = 20
+		hit_points = 3
+		movement = 4
+		defense = 1
+		melee = 2
+		charge = 2
+		missile = 2
+		range = 3
 	}
 	upgrades = {
 		general_modern
@@ -35,10 +39,12 @@ general_modern = {
 	unit_class = general_modern
 	icon = general_napoleonic
 	stats = {
-		defense = 20
-		movement = 11
-	}
-	commodity_costs = {
-		leadership = 20
+		hit_points = 2
+		movement = 4
+		defense = 1
+		melee = 2
+		charge = 2
+		missile = 2
+		range = 3
 	}
 }
