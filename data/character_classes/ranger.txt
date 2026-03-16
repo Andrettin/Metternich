@@ -1,6 +1,7 @@
 ranger = {
 	name = "Ranger"
 	attribute = dexterity
+	military_unit_category = general
 	max_level = 20
 	starting_age_category = self_taught
 	to_hit_bonus_table = cleric_to_hit_bonus
