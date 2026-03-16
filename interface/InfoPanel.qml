@@ -26,6 +26,18 @@ Rectangle {
 		width: 1 * scale_factor
 	}
 	
+	MouseArea {
+		id: infopanel_mouse_area
+		anchors.fill: parent
+		hoverEnabled: true
+		
+		onContainsMouseChanged: {
+			if (containsMouse) {
+				status_text = ""
+			}
+		}
+	}
+	
 	/*
 	Row {
 		id: button_row

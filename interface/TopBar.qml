@@ -24,6 +24,18 @@ Rectangle {
 		z: 1 //draw on top of everything else
 	}
 	
+	MouseArea {
+		id: top_bar_mouse_area
+		anchors.fill: parent
+		hoverEnabled: true
+		
+		onContainsMouseChanged: {
+			if (containsMouse) {
+				status_text = ""
+			}
+		}
+	}
+	
 	SmallText {
 		id: date_label
 		text: metternich.game.date_string

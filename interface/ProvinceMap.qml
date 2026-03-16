@@ -21,7 +21,6 @@ Flickable {
 	property bool show_sites: false
 	readonly property var reference_country: selected_province ? selected_province.game_data.owner : (metternich.game.player_country ? metternich.game.player_country : null)
 	property var hovered_site: null
-	property var hovered_label_province: null
 	
 	Repeater {
 		model: metternich.map.provinces
@@ -81,12 +80,6 @@ Flickable {
 				status_text = ""
 			}
 		}
-		
-		onContainsMouseChanged: {
-			if (!containsMouse && hovered_site === null && hovered_label_province === null) {
-				status_text = ""
-			}
-		}
 	}
 	
 	Repeater {
@@ -124,13 +117,8 @@ Flickable {
 				
 				onContainsMouseChanged: {
 					if (containsMouse) {
-						hovered_label_province = province
 						var text = get_province_status_text(province)
 						status_text = text
-					} else {
-						if (hovered_label_province === province) {
-							hovered_label_province = null
-						}
 					}
 				}
 				

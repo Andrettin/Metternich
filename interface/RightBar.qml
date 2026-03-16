@@ -19,4 +19,16 @@ Rectangle {
 		anchors.left: parent.left
 		width: 1 * scale_factor
 	}
+	
+	MouseArea {
+		id: right_bar_mouse_area
+		anchors.fill: parent
+		hoverEnabled: true
+		
+		onContainsMouseChanged: {
+			if (containsMouse) {
+				status_text = ""
+			}
+		}
+	}
 }

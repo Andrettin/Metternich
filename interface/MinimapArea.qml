@@ -12,19 +12,23 @@ Rectangle {
 	}
 	
 	Rectangle {
-		color: "black"
+		color: "gray"
 		anchors.top: parent.top
 		anchors.bottom: parent.bottom
 		anchors.right: parent.right
 		width: 1 * scale_factor
 	}
 	
-	Rectangle {
-		color: "gray"
-		anchors.top: parent.top
-		anchors.bottom: parent.bottom
-		anchors.right: parent.right
-		width: 1 * scale_factor
+	MouseArea {
+		id: minimap_area_mouse_area
+		anchors.fill: parent
+		hoverEnabled: true
+		
+		onContainsMouseChanged: {
+			if (containsMouse) {
+				status_text = ""
+			}
+		}
 	}
 	
 	Rectangle {

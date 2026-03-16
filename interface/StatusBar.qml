@@ -18,6 +18,18 @@ Rectangle {
 		height: 1 * scale_factor
 	}
 	
+	MouseArea {
+		id: status_bar_mouse_area
+		anchors.fill: parent
+		hoverEnabled: true
+		
+		onContainsMouseChanged: {
+			if (containsMouse) {
+				status_text = ""
+			}
+		}
+	}
+	
 	SmallText {
 		id: left_status_label
 		text: status_text
