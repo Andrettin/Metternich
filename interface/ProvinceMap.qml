@@ -111,6 +111,13 @@ Flickable {
 					if (selected_province === province && selected_garrison === false) {
 						select_province(null)
 					} else {
+						if (metternich.selected_military_units.length > 0) {
+							metternich.move_selected_military_units_to(province.game_data.provincial_capital ? province.game_data.provincial_capital.map_data.tile_pos : province.game_data.center_tile_pos)
+							select_province(null)
+							metternich.clear_selected_military_units()
+							return
+						}
+						
 						select_province(province)
 					}
 				}
