@@ -8,6 +8,7 @@ Item {
 	
 	property string portrait_identifier: ""
 	property string tooltip: ""
+	readonly property bool hovered: portrait_button.hovered
 	
 	signal clicked()
 	signal entered()
