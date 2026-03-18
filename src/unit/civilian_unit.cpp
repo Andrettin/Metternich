@@ -2,6 +2,8 @@
 
 #include "unit/civilian_unit.h"
 
+#include "character/character.h"
+#include "character/character_game_data.h"
 #include "culture/cultural_group.h"
 #include "culture/culture.h"
 #include "domain/country_economy.h"
@@ -48,6 +50,15 @@ civilian_unit::civilian_unit(const civilian_unit_type *type, const domain *owner
 	connect(this->get_owner()->get_game_data(), &domain_game_data::provinces_changed, this, &civilian_unit::prospectable_tiles_changed);
 	connect(this->get_owner()->get_game_data(), &domain_game_data::prospected_tiles_changed, this, &civilian_unit::prospectable_tiles_changed);
 	connect(this->get_owner()->get_technology(), &country_technology::technologies_changed, this, &civilian_unit::prospectable_tiles_changed);
+}
+
+civilian_unit::civilian_unit(const civilian_unit_type *type, const domain *owner, const metternich::character *character)
+	: civilian_unit(type, owner, character->get_phenotype())
+{
+	this->character = character;
+	this->name = character->get_game_data()->get_full_name();
+
+	character->get_game_data()->set_civilian_unit(this);
 }
 
 void civilian_unit::do_turn()
@@ -528,8 +539,17 @@ QVariantList civilian_unit::get_prospectable_tiles_qvariant_list() const
 	return archimedes::map::to_qvariant_list(this->get_prospectable_tiles());
 }
 
-void civilian_unit::disband()
+void civilian_unit::disband(const bool dead)
 {
+	if (this->get_character() != nullptr) {
+		character_game_data *character_game_data = this->get_character()->get_game_data();
+		character_game_data->set_civilian_unit(nullptr);
+
+		if (dead) {
+			character_game_data->die();
+		}
+	}
+
 	if (this->is_working()) {
 		this->cancel_work();
 	}

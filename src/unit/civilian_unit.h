@@ -3,12 +3,14 @@
 #include "economy/resource_container.h"
 #include "map/terrain_type_container.h"
 
+Q_MOC_INCLUDE("character/character.h")
 Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("unit/civilian_unit_type.h")
 
 namespace metternich {
 
+class character;
 class civilian_unit_type;
 class domain;
 class icon;
@@ -36,6 +38,7 @@ public:
 	static constexpr int prospection_turns = 1;
 
 	explicit civilian_unit(const civilian_unit_type *type, const domain *owner, const metternich::phenotype *phenotype);
+	explicit civilian_unit(const civilian_unit_type *type, const domain *owner, const metternich::character *character);
 
 	void do_turn();
 	void do_ai_turn();
@@ -80,6 +83,11 @@ public:
 	const metternich::phenotype *get_phenotype() const
 	{
 		return this->phenotype;
+	}
+
+	const metternich::character *get_character() const
+	{
+		return this->character;
 	}
 
 	const QPoint &get_tile_pos() const
@@ -148,7 +156,7 @@ public:
 		emit task_completion_turns_changed();
 	}
 
-	Q_INVOKABLE void disband();
+	Q_INVOKABLE void disband(const bool dead);
 
 signals:
 	void type_changed();
@@ -164,6 +172,7 @@ private:
 	const civilian_unit_type *type = nullptr;
 	const domain *owner = nullptr;
 	const metternich::phenotype *phenotype = nullptr;
+	const metternich::character *character = nullptr;
 	QPoint tile_pos = QPoint(-1, -1);
 	QPoint original_tile_pos = QPoint(-1, -1); //the tile position before moving
 	const improvement *improvement_under_construction = nullptr;

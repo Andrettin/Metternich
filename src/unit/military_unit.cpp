@@ -646,7 +646,7 @@ void military_unit::disband(const bool dead)
 		character_game_data->set_military_unit(nullptr);
 
 		if (dead) {
-			character_game_data->set_dead(true);
+			character_game_data->die();
 		}
 	}
 

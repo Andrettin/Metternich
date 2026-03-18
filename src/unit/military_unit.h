@@ -32,6 +32,7 @@ class military_unit final : public QObject
 	Q_PROPERTY(const metternich::military_unit_type* type READ get_type NOTIFY type_changed)
 	Q_PROPERTY(const metternich::icon* icon READ get_icon NOTIFY icon_changed)
 	Q_PROPERTY(const metternich::domain* country READ get_country CONSTANT)
+	Q_PROPERTY(const metternich::province* province READ get_province NOTIFY province_changed)
 	Q_PROPERTY(bool moving READ is_moving NOTIFY army_changed)
 	Q_PROPERTY(QVariantList promotions READ get_promotions_qvariant_list NOTIFY promotions_changed)
 	Q_PROPERTY(int hit_points READ get_hit_points NOTIFY hit_points_changed)

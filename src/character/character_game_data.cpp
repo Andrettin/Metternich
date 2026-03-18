@@ -51,6 +51,7 @@
 #include "spell/spell.h"
 #include "ui/icon.h"
 #include "ui/portrait.h"
+#include "unit/civilian_unit.h"
 #include "unit/military_unit.h"
 #include "unit/military_unit_category.h"
 #include "util/assert_util.h"
@@ -980,6 +981,10 @@ void character_game_data::die()
 
 	if (this->get_military_unit() != nullptr) {
 		this->get_domain()->get_military()->on_leader_died(this->character);
+	}
+
+	if (this->get_civilian_unit() != nullptr) {
+		this->get_civilian_unit()->disband(true);
 	}
 
 	assert_throw(this->get_office() == nullptr);
@@ -2362,6 +2367,7 @@ void character_game_data::deploy_to_province(const metternich::domain *domain, c
 	assert_throw(province != nullptr);
 	assert_throw(!this->is_deployed());
 	assert_throw(this->is_deployable());
+	assert_throw(this->character->get_military_unit_category() != military_unit_category::none);
 
 	const military_unit_type *military_unit_type = domain->get_military()->get_best_military_unit_category_type(this->character->get_military_unit_category(), this->character->get_culture());
 
@@ -2380,7 +2386,11 @@ void character_game_data::undeploy()
 {
 	assert_throw(this->is_deployed());
 
-	this->military_unit->disband(false);
+	if (this->get_military_unit() != nullptr) {
+		this->get_military_unit()->disband(false);
+	} else if (this->get_civilian_unit() != nullptr) {
+		this->get_civilian_unit()->disband(false);
+	}
 }
 
 void character_game_data::apply_modifier(const modifier<const metternich::character> *modifier, const int multiplier)

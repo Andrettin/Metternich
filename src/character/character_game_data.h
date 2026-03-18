@@ -11,6 +11,8 @@
 
 Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("domain/office.h")
+Q_MOC_INCLUDE("unit/civilian_unit.h")
+Q_MOC_INCLUDE("unit/military_unit.h")
 Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("ui/portrait.h")
 
@@ -26,6 +28,7 @@ class bloodline;
 class character;
 class character_attribute;
 class character_attribute_base;
+class civilian_unit;
 class domain;
 class enchantment;
 class item;
@@ -87,6 +90,8 @@ class character_game_data final : public QObject
 	Q_PROPERTY(QVariantList spells READ get_spells_qvariant_list NOTIFY spells_changed)
 	Q_PROPERTY(QVariantList items READ get_items_qvariant_list NOTIFY items_changed)
 	Q_PROPERTY(bool deployable READ is_deployable NOTIFY spells_changed)
+	Q_PROPERTY(const metternich::military_unit* military_unit READ get_military_unit NOTIFY military_unit_changed)
+	Q_PROPERTY(const metternich::civilian_unit* civilian_unit READ get_civilian_unit NOTIFY civilian_unit_changed)
 	Q_PROPERTY(QVariantList status_effects READ get_status_effects_qvariant_list NOTIFY status_effect_rounds_changed)
 
 public:
@@ -516,13 +521,31 @@ public:
 		}
 
 		this->military_unit = military_unit;
+
+		emit military_unit_changed();
+	}
+
+	metternich::civilian_unit *get_civilian_unit() const
+	{
+		return this->civilian_unit;
+	}
+	
+	void set_civilian_unit(metternich::civilian_unit *civilian_unit)
+	{
+		if (civilian_unit == this->get_civilian_unit()) {
+			return;
+		}
+
+		this->civilian_unit = civilian_unit;
+
+		emit civilian_unit_changed();
 	}
 
 	bool is_deployable() const;
 
 	bool is_deployed() const
 	{
-		return this->get_military_unit() != nullptr;
+		return this->get_military_unit() != nullptr || this->get_civilian_unit() != nullptr;
 	}
 
 	void deploy_to_province(const metternich::domain *domain, const province *province);
@@ -733,6 +756,8 @@ signals:
 	void scripted_modifiers_changed();
 	void ruler_changed();
 	void office_changed();
+	void military_unit_changed();
+	void civilian_unit_changed();
 	void spells_changed();
 	void items_changed();
 	void equipped_items_changed();
@@ -775,6 +800,7 @@ private:
 	scripted_character_modifier_map<int> scripted_modifiers;
 	const metternich::office *office = nullptr;
 	metternich::military_unit *military_unit = nullptr;
+	metternich::civilian_unit *civilian_unit = nullptr;
 	spell_set spells;
 	spell_set item_spells;
 	std::vector<qunique_ptr<item>> items;
