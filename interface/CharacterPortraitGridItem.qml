@@ -45,7 +45,6 @@ Item {
 		anchors.leftMargin: 8 * scale_factor
 		source: "image://icon/garrison"
 		visible: character !== null && character.game_data.military_unit !== null
-		//tooltip: status_text ? "" : display_text
 		
 		readonly property string display_text: character !== null && character.game_data.military_unit !== null ? ("Deployed as " + character.game_data.military_unit.type.name + " to " + character.game_data.military_unit.province.game_data.current_cultural_name) : ""
 		
@@ -59,6 +58,35 @@ Item {
 						status_text = garrison_icon.display_text
 					} else {
 						if (status_text === garrison_icon.display_text) {
+							status_text = character.game_data.full_name
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	Image {
+		id: civilian_icon
+		anchors.top: parent.top
+		anchors.topMargin: 8 * scale_factor
+		anchors.left: parent.left
+		anchors.leftMargin: 8 * scale_factor
+		source: "image://icon/alliance"
+		visible: character !== null && character.game_data.civilian_unit !== null
+		
+		readonly property string display_text: character !== null && character.game_data.civilian_unit !== null ? ("Deployed as " + character.game_data.civilian_unit.type.name /*+ " to " + character.game_data.civilian_unit.province.game_data.current_cultural_name*/) : ""
+		
+		MouseArea {
+			anchors.fill: parent
+			hoverEnabled: true
+			
+			onContainsMouseChanged: {
+				if (status_text) {
+					if (containsMouse) {
+						status_text = civilian_icon.display_text
+					} else {
+						if (status_text === civilian_icon.display_text) {
 							status_text = character.game_data.full_name
 						}
 					}
