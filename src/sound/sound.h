@@ -22,6 +22,7 @@ public:
 	explicit sound(const std::string &identifier);
 	~sound();
 
+	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;
 
 	const std::filesystem::path &get_filepath() const
@@ -31,11 +32,21 @@ public:
 
 	void set_filepath(const std::filesystem::path &filepath);
 
-	Q_INVOKABLE void play() const;
+	[[nodiscard]]
+	QCoro::Task<void> play_coro(const std::optional<std::chrono::milliseconds> &timeout = std::nullopt) const;
+
+	Q_INVOKABLE QCoro::QmlTask play() const
+	{
+		return this->play_coro();
+	}
+
+signals:
+	void played();
 
 private:
 	std::filesystem::path filepath;
 	qunique_ptr<QSoundEffect> sound_effect;
+	std::vector<const sound *> sounds;
 };
 
 }

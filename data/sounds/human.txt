@@ -1,0 +1,19 @@
+human_death_1 = {
+	filepath = "units/human/human-die-1.wav"
+}
+
+human_death_2 = {
+	filepath = "units/human/human-die-2.wav"
+}
+
+human_death_3 = {
+	filepath = "units/human/human-die-3.wav"
+}
+
+human_death = {
+	sounds = {
+		human_death_1
+		human_death_2
+		human_death_3
+	}
+}

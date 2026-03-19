@@ -1,1 +1,5 @@
 /sounds/interface/click.wav (by the Battle for Wesnoth Team) (licensed under the GPL 2.0)
+/sounds/units/human/human-die-1.wav (by the Battle for Wesnoth Team) (licensed under the GPL 2.0)
+/sounds/units/human/human-die-2.wav (by the Battle for Wesnoth Team) (licensed under the GPL 2.0)
+/sounds/units/human/human-die-3.wav (by the Battle for Wesnoth Team) (licensed under the GPL 2.0)
+/sounds/units/thunderstick.wav (by the Battle for Wesnoth Team) (licensed under the GPL 2.0)

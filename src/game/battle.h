@@ -99,7 +99,9 @@ public:
 	QCoro::Task<void> do_unit_round(military_unit *unit, std::vector<military_unit *> &killed_units);
 
 	const military_unit *choose_enemy(const military_unit *unit, const std::vector<military_unit *> &enemies) const;
-	void do_unit_attack(const military_unit *unit, military_unit *enemy, army *enemy_army, std::vector<military_unit *> &killed_units);
+
+	[[nodiscard]]
+	QCoro::Task<void> do_unit_attack(const military_unit *unit, military_unit *enemy, army *enemy_army, std::vector<military_unit *> &killed_units);
 
 	void process_result();
 

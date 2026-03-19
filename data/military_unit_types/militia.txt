@@ -2,6 +2,7 @@ peasant_levies = {
 	name = "Peasant Levies"
 	unit_class = peasant_levies
 	icon = peasant_levy
+	death_sound = human_death
 	stats = {
 		melee = 3
 		defense = 3
@@ -21,6 +22,10 @@ minutemen = {
 	name = "Minutemen"
 	unit_class = minutemen
 	icon = whitecoats
+	required_technology = renaissance
+	melee_attack_sound = thunderstick
+	ranged_attack_sound = thunderstick
+	death_sound = human_death
 	stats = {
 		missile = 5
 		melee = 5
@@ -28,7 +33,6 @@ minutemen = {
 		movement = 4
 		range = 3
 	}
-	required_technology = renaissance
 	upgrades = {
 		militia
 	}
@@ -38,6 +42,10 @@ militia = {
 	name = "Militia"
 	unit_class = militia
 	icon = rifle_infantry_light
+	required_technology = modern_era
+	melee_attack_sound = thunderstick
+	ranged_attack_sound = thunderstick
+	death_sound = human_death
 	stats = {
 		missile = 7
 		melee = 7
@@ -45,7 +53,6 @@ militia = {
 		movement = 4
 		range = 3
 	}
-	required_technology = modern_era
 	upgrades = {
 		conscripts
 	}
@@ -55,6 +62,10 @@ conscripts = {
 	name = "Conscripts"
 	unit_class = conscripts
 	icon = rifle_infantry_light
+	required_technology = modern_era
+	melee_attack_sound = thunderstick
+	ranged_attack_sound = thunderstick
+	death_sound = human_death
 	stats = {
 		missile = 10
 		melee = 10
@@ -62,5 +73,4 @@ conscripts = {
 		movement = 5
 		range = 3
 	}
-	required_technology = modern_era
 }

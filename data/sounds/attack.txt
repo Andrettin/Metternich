@@ -1,0 +1,3 @@
+thunderstick = {
+	filepath = "units/thunderstick.wav"
+}

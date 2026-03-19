@@ -8,6 +8,7 @@
 
 Q_MOC_INCLUDE("culture/cultural_group.h")
 Q_MOC_INCLUDE("culture/culture.h")
+Q_MOC_INCLUDE("sound/sound.h")
 Q_MOC_INCLUDE("technology/technology.h")
 Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("unit/military_unit_class.h")
@@ -20,6 +21,7 @@ class culture;
 class domain;
 class icon;
 class promotion;
+class sound;
 class technology;
 enum class battle_resolution_type;
 enum class military_unit_category;
@@ -33,8 +35,11 @@ class military_unit_type final : public named_data_entry, public data_type<milit
 	Q_PROPERTY(metternich::military_unit_class* unit_class MEMBER unit_class NOTIFY changed)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
 	Q_PROPERTY(metternich::cultural_group* cultural_group MEMBER cultural_group NOTIFY changed)
-	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
+	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
+	Q_PROPERTY(const metternich::sound* melee_attack_sound MEMBER melee_attack_sound READ get_melee_attack_sound NOTIFY changed)
+	Q_PROPERTY(const metternich::sound* ranged_attack_sound MEMBER ranged_attack_sound READ get_ranged_attack_sound NOTIFY changed)
+	Q_PROPERTY(const metternich::sound* death_sound MEMBER death_sound READ get_death_sound NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "military_unit_type";
@@ -130,6 +135,21 @@ public:
 
 	int get_score() const;
 
+	const metternich::sound *get_melee_attack_sound() const
+	{
+		return this->melee_attack_sound;
+	}
+
+	const metternich::sound *get_ranged_attack_sound() const
+	{
+		return this->ranged_attack_sound;
+	}
+
+	const metternich::sound *get_death_sound() const
+	{
+		return this->death_sound;
+	}
+
 signals:
 	void changed();
 
@@ -137,7 +157,7 @@ private:
 	military_unit_class *unit_class = nullptr;
 	metternich::culture *culture = nullptr;
 	metternich::cultural_group *cultural_group = nullptr;
-	metternich::icon *icon = nullptr;
+	const metternich::icon *icon = nullptr;
 	std::vector<battle_resolution_type> battle_resolution_types;
 	std::map<military_unit_stat, centesimal_int> stats;
 	technology *required_technology = nullptr;
@@ -145,6 +165,9 @@ private:
 	commodity_map<int> maintenance_commodity_costs; //commodities paid per turn as maintenance for the military unit
 	std::vector<const promotion *> free_promotions;
 	military_unit_type_set upgrades;
+	const sound *melee_attack_sound = nullptr;
+	const sound *ranged_attack_sound = nullptr;
+	const sound *death_sound = nullptr;
 };
 
 }
