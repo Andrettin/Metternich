@@ -362,11 +362,7 @@ void map::clear_tile_game_data()
 	try {
 		for (tile &tile : *this->tiles) {
 			tile.clear_improvement_variation();
-
-			if (tile.get_civilian_unit() != nullptr) {
-				tile.set_civilian_unit(nullptr);
-			}
-
+			tile.clear_civilian_units();
 			tile.clear_country_border_directions();
 		}
 	} catch (...) {
@@ -594,10 +590,18 @@ void map::set_tile_direction_pathway(const QPoint &tile_pos, const direction dir
 	emit tile_pathway_changed(tile_pos);
 }
 
-void map::set_tile_civilian_unit(const QPoint &tile_pos, civilian_unit *civilian_unit)
+void map::add_tile_civilian_unit(const QPoint &tile_pos, civilian_unit *civilian_unit)
 {
 	tile *tile = this->get_tile(tile_pos);
-	tile->set_civilian_unit(civilian_unit);
+	tile->add_civilian_unit(civilian_unit);
+
+	emit tile_civilian_unit_changed(tile_pos);
+}
+
+void map::remove_tile_civilian_unit(const QPoint &tile_pos, civilian_unit *civilian_unit)
+{
+	tile *tile = this->get_tile(tile_pos);
+	tile->remove_civilian_unit(civilian_unit);
 
 	emit tile_civilian_unit_changed(tile_pos);
 }
@@ -777,10 +781,10 @@ std::optional<QPoint> map::get_nearest_available_tile_pos_for_civilian_unit(cons
 
 	while (!potential_tiles.empty() && valid_tiles.empty()) {
 		for (const QPoint &tile_pos : potential_tiles) {
-			const metternich::tile *tile = this->get_tile(tile_pos);
-			if (tile->get_civilian_unit() == nullptr) {
+			//const metternich::tile *tile = this->get_tile(tile_pos);
+			//if (tile->get_civilian_units().empty()) {
 				valid_tiles.push_back(tile_pos);
-			}
+			//}
 		}
 
 		if (valid_tiles.empty()) {

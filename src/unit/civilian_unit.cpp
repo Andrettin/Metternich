@@ -11,6 +11,7 @@
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
 #include "economy/resource.h"
+#include "game/game.h"
 #include "infrastructure/improvement.h"
 #include "language/name_generator.h"
 #include "map/map.h"
@@ -21,6 +22,7 @@
 #include "map/site_game_data.h"
 #include "map/terrain_type.h"
 #include "map/tile.h"
+#include "species/phenotype.h"
 #include "unit/civilian_unit_type.h"
 #include "ui/icon.h"
 #include "util/assert_util.h"
@@ -28,6 +30,7 @@
 #include "util/log_util.h"
 #include "util/map_util.h"
 #include "util/point_util.h"
+#include "util/string_conversion_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -59,6 +62,81 @@ civilian_unit::civilian_unit(const civilian_unit_type *type, const domain *owner
 	this->name = character->get_game_data()->get_full_name();
 
 	character->get_game_data()->set_civilian_unit(this);
+}
+
+civilian_unit::civilian_unit(const gsml_data &scope)
+{
+	scope.process(this);
+
+	assert_throw(this->get_type() != nullptr);
+	assert_throw(this->get_owner() != nullptr);
+	assert_throw(this->get_phenotype() != nullptr);
+}
+
+void civilian_unit::process_gsml_property(const gsml_property &property)
+{
+	const std::string &key = property.get_key();
+	const std::string &value = property.get_value();
+
+	if (key == "name") {
+		this->name = value;
+	} else if (key == "type") {
+		this->type = civilian_unit_type::get(value);
+	} else if (key == "owner") {
+		this->owner = domain::get(value);
+	} else if (key == "phenotype") {
+		this->phenotype = phenotype::get(value);
+	} else if (key == "character") {
+		this->character = game::get()->get_character(value);
+		this->character->get_game_data()->set_civilian_unit(this);
+	} else if (key == "exploring") {
+		this->exploring = string::to_bool(value);
+	} else if (key == "prospecting") {
+		this->prospecting = string::to_bool(value);
+	} else if (key == "task_completion_turns") {
+		this->task_completion_turns = std::stoi(value);
+	} else {
+		throw std::runtime_error(std::format("Invalid civilian unit property: \"{}\".", key));
+	}
+}
+
+void civilian_unit::process_gsml_scope(const gsml_data &scope)
+{
+	const std::string &tag = scope.get_tag();
+
+	if (tag == "tile_pos") {
+		this->set_tile_pos(scope.to_point());
+	} else if (tag == "original_tile_pos") {
+		this->original_tile_pos = scope.to_point();
+	} else {
+		throw std::runtime_error(std::format("Invalid civilian unit scope: \"{}\".", tag));
+	}
+}
+
+gsml_data civilian_unit::to_gsml_data() const
+{
+	gsml_data data;
+
+	data.add_property("name", this->get_name());
+	data.add_property("type", this->get_type()->get_identifier());
+	data.add_property("owner", this->get_owner()->get_identifier());
+	data.add_property("phenotype", this->get_phenotype()->get_identifier());
+
+	if (this->get_character() != nullptr) {
+		data.add_property("character", this->get_character()->get_identifier());
+	}
+
+	data.add_child("tile_pos", gsml_data::from_point(this->get_tile_pos()));
+
+	if (this->original_tile_pos != QPoint(-1, -1)) {
+		data.add_child("original_tile_pos", gsml_data::from_point(this->original_tile_pos));
+	}
+
+	data.add_property("exploring", string::from_bool(this->exploring));
+	data.add_property("prospecting", string::from_bool(this->prospecting));
+	data.add_property("task_completion_turns", std::to_string(this->task_completion_turns));
+
+	return data;
 }
 
 void civilian_unit::do_turn()
@@ -186,13 +264,13 @@ void civilian_unit::set_tile_pos(const QPoint &tile_pos)
 	}
 
 	if (this->get_tile() != nullptr) {
-		map::get()->set_tile_civilian_unit(this->get_tile_pos(), nullptr);
+		map::get()->remove_tile_civilian_unit(this->get_tile_pos(), this);
 	}
 
 	this->tile_pos = tile_pos;
 
 	if (this->get_tile() != nullptr) {
-		map::get()->set_tile_civilian_unit(this->get_tile_pos(), this);
+		map::get()->add_tile_civilian_unit(this->get_tile_pos(), this);
 	}
 
 	emit tile_pos_changed();
@@ -207,12 +285,22 @@ tile *civilian_unit::get_tile() const
 	return map::get()->get_tile(tile_pos);
 }
 
+const province *civilian_unit::get_province() const
+{
+	const tile *tile = this->get_tile();
+	if (tile != nullptr) {
+		return tile->get_province();
+	}
+
+	return nullptr;
+}
+
 bool civilian_unit::can_move_to(const QPoint &tile_pos) const
 {
 	const tile *tile = map::get()->get_tile(tile_pos);
 
-	if (tile->get_civilian_unit() != nullptr) {
-		return false;
+	if (!tile->get_civilian_units().empty()) {
+		//return false;
 	}
 
 	if (tile->get_owner() == this->get_owner()) {
@@ -260,9 +348,9 @@ void civilian_unit::cancel_move()
 {
 	assert_throw(map::get()->contains(this->original_tile_pos));
 
-	if (map::get()->get_tile(this->original_tile_pos)->get_civilian_unit() != nullptr) {
+	if (!map::get()->get_tile(this->original_tile_pos)->get_civilian_units().empty()) {
 		//cannot move back if the original tile is currently occupied by a different civilian unit
-		return;
+		//return;
 	}
 
 	if (this->is_working()) {
@@ -558,7 +646,7 @@ void civilian_unit::disband(const bool dead)
 
 	assert_throw(tile != nullptr);
 
-	map::get()->set_tile_civilian_unit(this->get_tile_pos(), nullptr);
+	map::get()->remove_tile_civilian_unit(this->get_tile_pos(), this);
 
 	this->get_owner()->get_game_data()->remove_civilian_unit(this);
 }

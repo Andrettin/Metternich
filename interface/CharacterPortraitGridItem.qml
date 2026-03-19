@@ -75,7 +75,7 @@ Item {
 		source: "image://icon/alliance"
 		visible: character !== null && character.game_data.civilian_unit !== null
 		
-		readonly property string display_text: character !== null && character.game_data.civilian_unit !== null ? ("Deployed as " + character.game_data.civilian_unit.type.name /*+ " to " + character.game_data.civilian_unit.province.game_data.current_cultural_name*/) : ""
+		readonly property string display_text: character !== null && character.game_data.civilian_unit !== null ? ("Deployed as " + character.game_data.civilian_unit.type.name + " to " + character.game_data.civilian_unit.province.game_data.current_cultural_name) : ""
 		
 		MouseArea {
 			anchors.fill: parent

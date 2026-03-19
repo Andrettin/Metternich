@@ -169,14 +169,17 @@ public:
 		return !this->get_country_border_directions().empty();
 	}
 	
-	metternich::civilian_unit *get_civilian_unit() const
+	const std::vector<civilian_unit *> &get_civilian_units() const
 	{
-		return this->civilian_unit;
+		return this->civilian_units;
 	}
 
-	void set_civilian_unit(metternich::civilian_unit *civilian_unit)
+	void add_civilian_unit(civilian_unit *civilian_unit);
+	void remove_civilian_unit(civilian_unit *civilian_unit);
+
+	void clear_civilian_units()
 	{
-		this->civilian_unit = civilian_unit;
+		this->civilian_units.clear();
 	}
 
 	const commodity_map<centesimal_int> &get_commodity_outputs() const;
@@ -194,7 +197,7 @@ private:
 	std::array<const pathway *, 8> direction_pathways{};
 	std::vector<direction> border_directions; //used for graphical borders; this does not include e.g. borders with water tiles for land ones
 	std::vector<direction> country_border_directions;
-	metternich::civilian_unit *civilian_unit = nullptr;
+	std::vector<civilian_unit *> civilian_units;
 };
 
 }

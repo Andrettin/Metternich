@@ -170,12 +170,14 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 				return QVariant::fromValue(tile->get_site()->get_game_data()->get_main_improvement());
 			case role::pathway:
 				return QVariant::fromValue(tile->get_best_pathway());
-			case role::civilian_unit:
+			case role::civilian_unit: {
 				if (!game::get()->get_player_country()->get_game_data()->is_tile_explored(tile_pos)) {
 					return QVariant::fromValue(nullptr);
 				}
 
-				return QVariant::fromValue(tile->get_civilian_unit());
+				const civilian_unit *top_civilian_unit = tile->get_civilian_units().empty() ? nullptr : tile->get_civilian_units().at(0);
+				return QVariant::fromValue(top_civilian_unit);
+			}
 			case role::upper_label: {
 				const QPoint upper_tile_pos = tile_pos - QPoint(0, 1);
 

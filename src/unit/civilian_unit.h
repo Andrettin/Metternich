@@ -8,6 +8,10 @@ Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("unit/civilian_unit_type.h")
 
+namespace archimedes {
+	class gsml_data;
+}
+
 namespace metternich {
 
 class character;
@@ -16,6 +20,7 @@ class domain;
 class icon;
 class improvement;
 class phenotype;
+class province;
 class tile;
 
 class civilian_unit final : public QObject
@@ -27,6 +32,7 @@ class civilian_unit final : public QObject
 	Q_PROPERTY(const metternich::icon* icon READ get_icon NOTIFY icon_changed)
 	Q_PROPERTY(const metternich::domain* owner READ get_owner CONSTANT)
 	Q_PROPERTY(QPoint tile_pos READ get_tile_pos NOTIFY tile_pos_changed)
+	Q_PROPERTY(const metternich::province* province READ get_province NOTIFY tile_pos_changed)
 	Q_PROPERTY(bool moving READ is_moving NOTIFY original_tile_pos_changed)
 	Q_PROPERTY(bool working READ is_working NOTIFY task_completion_turns_changed)
 	Q_PROPERTY(QVariantList improvable_resource_tiles READ get_improvable_resource_tiles_qvariant_list NOTIFY improvable_resources_changed)
@@ -39,6 +45,12 @@ public:
 
 	explicit civilian_unit(const civilian_unit_type *type, const domain *owner, const metternich::phenotype *phenotype);
 	explicit civilian_unit(const civilian_unit_type *type, const domain *owner, const metternich::character *character);
+	explicit civilian_unit(const gsml_data &scope);
+
+	void process_gsml_property(const gsml_property &property);
+	void process_gsml_scope(const gsml_data &scope);
+
+	gsml_data to_gsml_data() const;
 
 	void do_turn();
 	void do_ai_turn();
@@ -107,6 +119,8 @@ public:
 		this->original_tile_pos = tile_pos;
 		emit original_tile_pos_changed();
 	}
+
+	const province *get_province() const;
 
 	Q_INVOKABLE bool can_move_to(const QPoint &tile_pos) const;
 	Q_INVOKABLE void move_to(const QPoint &tile_pos);

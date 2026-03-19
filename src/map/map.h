@@ -96,7 +96,8 @@ public:
 	void set_tile_site(const QPoint &tile_pos, const site *site);
 	void set_tile_resource_discovered(const QPoint &tile_pos, const bool discovered);
 	void set_tile_direction_pathway(const QPoint &tile_pos, const direction direction, const pathway *pathway);
-	void set_tile_civilian_unit(const QPoint &tile_pos, civilian_unit *civilian_unit);
+	void add_tile_civilian_unit(const QPoint &tile_pos, civilian_unit *civilian_unit);
+	void remove_tile_civilian_unit(const QPoint &tile_pos, civilian_unit *civilian_unit);
 
 	bool is_tile_water(const QPoint &tile_pos) const;
 	bool is_tile_near_water(const QPoint &tile_pos) const;

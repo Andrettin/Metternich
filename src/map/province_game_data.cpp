@@ -1514,6 +1514,16 @@ void province_game_data::clear_military_unit_recruitment_counts()
 	emit military_unit_recruitment_counts_changed();
 }
 
+const std::vector<civilian_unit *> &province_game_data::get_civilian_units() const
+{
+	return map::get()->get_tile(this->get_center_tile_pos())->get_civilian_units();
+}
+
+QVariantList province_game_data::get_civilian_units_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_civilian_units());
+}
+
 void province_game_data::calculate_site_commodity_outputs()
 {
 	for (const site *site : this->get_sites()) {

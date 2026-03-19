@@ -75,6 +75,7 @@ class province_game_data final : public QObject
 	Q_PROPERTY(QVariantList entering_armies READ get_entering_armies_qvariant_list NOTIFY entering_armies_changed)
 	Q_PROPERTY(QVariantList recruitable_military_unit_categories READ get_recruitable_military_unit_categories_qvariant_list NOTIFY owner_changed)
 	Q_PROPERTY(QVariantList military_unit_recruitment_counts READ get_military_unit_recruitment_counts_qvariant_list NOTIFY military_unit_recruitment_counts_changed)
+	Q_PROPERTY(QVariantList civilian_units READ get_civilian_units_qvariant_list NOTIFY civilian_units_changed)
 	Q_PROPERTY(int min_income READ get_min_income NOTIFY income_changed)
 	Q_PROPERTY(int max_income READ get_max_income NOTIFY income_changed)
 
@@ -345,6 +346,9 @@ public:
 	Q_INVOKABLE void decrease_military_unit_recruitment(const metternich::military_unit_type *military_unit_type, const bool restore_inputs);
 	void clear_military_unit_recruitment_counts();
 
+	const std::vector<civilian_unit *> &get_civilian_units() const;
+	QVariantList get_civilian_units_qvariant_list() const;
+
 	void calculate_site_commodity_outputs();
 	void calculate_site_commodity_output(const commodity *commodity);
 
@@ -537,6 +541,7 @@ signals:
 	void military_unit_category_counts_changed();
 	void entering_armies_changed();
 	void military_unit_recruitment_counts_changed();
+	void civilian_units_changed();
 	void income_changed();
 
 private:

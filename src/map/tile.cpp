@@ -172,6 +172,24 @@ const pathway *tile::get_best_pathway() const
 	return best_pathway;
 }
 
+void tile::add_civilian_unit(civilian_unit *civilian_unit)
+{
+	this->civilian_units.push_back(civilian_unit);
+
+	if (this->get_province() != nullptr) {
+		emit this->get_province()->get_game_data()->civilian_units_changed();
+	}
+}
+
+void tile::remove_civilian_unit(civilian_unit *civilian_unit)
+{
+	std::erase(this->civilian_units, civilian_unit);
+
+	if (this->get_province() != nullptr) {
+		emit this->get_province()->get_game_data()->civilian_units_changed();
+	}
+}
+
 const commodity_map<centesimal_int> &tile::get_commodity_outputs() const
 {
 	static commodity_map<centesimal_int> empty_map;

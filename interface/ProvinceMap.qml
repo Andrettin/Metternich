@@ -179,6 +179,39 @@ Flickable {
 					}
 				}
 				
+				Repeater {
+					model: province.game_data.civilian_units
+					
+					Image {
+						id: civilian_unit_icon
+						source: "image://icon/alliance"
+						
+						readonly property var civilian_unit: model.modelData
+						
+						MouseArea {
+							anchors.fill: parent
+							hoverEnabled: true
+							
+							onContainsMouseChanged: {
+								var text = civilian_unit.type.name
+								if (civilian_unit.working) {
+									text += " (Working)"
+								} else if (civilian_unit.moving) {
+									text += " (Moving)"
+								}
+								
+								if (containsMouse) {
+									status_text = text
+								} else {
+									if (status_text === text) {
+										status_text = ""
+									}
+								}
+							}
+						}
+					}
+				}
+				
 				Image {
 					id: entering_army_icon
 					source: "image://icon/war"

@@ -195,6 +195,9 @@ void domain_game_data::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([&](const gsml_property &attribute_property) {
 			this->historical_monarchs[string::to_date(attribute_property.get_key())] = game::get()->get_character(attribute_property.get_value());
 		});
+	} else if (tag == "civilian_units") {
+		auto civilian_unit = make_qunique<metternich::civilian_unit>(scope);
+		this->add_civilian_unit(std::move(civilian_unit));
 	} else {
 		throw std::runtime_error(std::format("Invalid domain game data scope: \"{}\".", tag));
 	}
@@ -268,6 +271,14 @@ gsml_data domain_game_data::to_gsml_data() const
 			attributes_data.add_property(date::to_string(date), historical_monarch->get_identifier());
 		}
 		data.add_child(std::move(attributes_data));
+	}
+
+	if (!this->get_civilian_units().empty()) {
+		gsml_data civilian_units_data("civilian_units");
+		for (const auto &civilian_unit : this->get_civilian_units()) {
+			civilian_units_data.add_child(civilian_unit->to_gsml_data());
+		}
+		data.add_child(std::move(civilian_units_data));
 	}
 
 	return data;
@@ -3703,7 +3714,8 @@ bool domain_game_data::create_civilian_unit(const civilian_unit_type *civilian_u
 
 	QPoint tile_pos = deployment_site->get_game_data()->get_tile_pos();
 
-	if (map::get()->get_tile(tile_pos)->get_civilian_unit() != nullptr) {
+	/*
+	if (!map::get()->get_tile(tile_pos)->get_civilian_units().empty()) {
 		//tile already occupied
 		const std::optional<QPoint> nearest_tile_pos = map::get()->get_nearest_available_tile_pos_for_civilian_unit(tile_pos);
 		if (!nearest_tile_pos.has_value()) {
@@ -3712,6 +3724,7 @@ bool domain_game_data::create_civilian_unit(const civilian_unit_type *civilian_u
 
 		tile_pos = nearest_tile_pos.value();
 	}
+	*/
 
 	qunique_ptr<civilian_unit> civilian_unit;
 
