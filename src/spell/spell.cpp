@@ -4,6 +4,7 @@
 
 #include "character/character_class.h"
 #include "database/defines.h"
+#include "game/attack_result.h"
 #include "spell/arcane_school.h"
 #include "spell/spell_effect.h"
 #include "spell/spell_target.h"
@@ -13,7 +14,7 @@
 namespace metternich {
 
 spell::spell(const std::string &identifier)
-	: named_data_entry(identifier), target(spell_target::none)
+	: named_data_entry(identifier)
 {
 }
 
@@ -49,10 +50,13 @@ void spell::process_gsml_scope(const gsml_data &scope)
 
 void spell::check() const
 {
-	assert_throw(this->get_target() != spell_target::none);
+	if (this->get_level() == 0) {
+		throw std::runtime_error(std::format("Spell \"{}\" has no level.", this->get_identifier()));
+	}
+
+	assert_throw(this->get_target() != spell_target::none || this->get_battle_target() != spell_target::none);
 	assert_throw(this->get_icon() != nullptr);
-	assert_throw(this->get_mana_cost() > 0);
-	assert_throw(!this->effects.empty());
+	assert_throw(!this->effects.empty() || this->get_battle_result() != attack_result::none);
 }
 
 int spell::get_mana_cost() const

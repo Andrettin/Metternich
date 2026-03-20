@@ -37,6 +37,7 @@
 #include "economy/commodity_unit.h"
 #include "economy/food_type.h"
 #include "engine_interface.h"
+#include "game/attack_result.h"
 #include "game/battle_resolution_type.h"
 #include "game/event.h"
 #include "game/event_instance.h"
@@ -168,6 +169,7 @@ int main(int argc, char **argv)
 		enum_converter<log_level>();
 
 		database_util::register_enum<affix_type>();
+		database_util::register_enum<attack_result>();
 		database_util::register_enum<battle_resolution_type>();
 		database_util::register_enum<bloodline_strength_category>();
 		database_util::register_enum<commodity_type>();

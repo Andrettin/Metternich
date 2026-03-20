@@ -3,6 +3,7 @@
 namespace metternich {
 
 enum class attack_result {
+	none,
 	miss,
 	fall_back,
 	hit,
