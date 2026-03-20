@@ -2432,6 +2432,25 @@ void character_game_data::learn_spell(const spell *spell)
 	this->add_spell(spell);
 }
 
+QVariantList character_game_data::get_battle_spells_qvariant_list() const
+{
+	std::vector<const spell *> spells = container::to_vector(this->get_spells());
+
+	std::erase_if(spells, [](const spell *spell) {
+		return !spell->is_battle_spell();
+	});
+
+	std::sort(spells.begin(), spells.end(), [](const spell *lhs, const spell *rhs) {
+		if (lhs->get_level() != rhs->get_level()) {
+			return lhs->get_level() < rhs->get_level();
+		}
+
+		return lhs->get_identifier() < rhs->get_identifier();
+	});
+
+	return container::to_qvariant_list(spells);
+}
+
 QVariantList character_game_data::get_items_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_items());

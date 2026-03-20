@@ -88,6 +88,7 @@ class character_game_data final : public QObject
 	Q_PROPERTY(bool ruler READ is_ruler NOTIFY ruler_changed)
 	Q_PROPERTY(const metternich::office* office READ get_office NOTIFY office_changed)
 	Q_PROPERTY(QVariantList spells READ get_spells_qvariant_list NOTIFY spells_changed)
+	Q_PROPERTY(QVariantList battle_spells READ get_battle_spells_qvariant_list NOTIFY spells_changed)
 	Q_PROPERTY(QVariantList items READ get_items_qvariant_list NOTIFY items_changed)
 	Q_PROPERTY(bool deployable READ is_deployable NOTIFY spells_changed)
 	Q_PROPERTY(const metternich::military_unit* military_unit READ get_military_unit NOTIFY military_unit_changed)
@@ -586,6 +587,8 @@ public:
 	}
 
 	void learn_spell(const spell *spell);
+
+	QVariantList get_battle_spells_qvariant_list() const;
 
 	const std::vector<qunique_ptr<item>> &get_items() const
 	{

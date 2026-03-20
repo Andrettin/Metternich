@@ -5,10 +5,12 @@ import ".."
 DialogBase {
 	id: spell_dialog
 	title: "Spells"
-	width: spell_grid.width	 + 8 * scale_factor * 2
+	width: icon_button_width * spell_grid.columns + spell_grid.spacing * (spell_grid.columns - 1) + 8 * scale_factor * 2
 	height: close_button.y + close_button.height + 8 * scale_factor
 	
-	property var spells: []
+	property var caster: null
+	readonly property var spells: caster ? caster.game_data.battle_spells : []
+	readonly property int icon_button_width: 32 * scale_factor + 6 * scale_factor
 	readonly property int icon_button_height: 32 * scale_factor + 6 * scale_factor
 	
 	Flickable {
@@ -38,14 +40,16 @@ DialogBase {
 				
 				IconButton {
 					id: spell_icon
-					icon_identifier: "skull"
+					icon_identifier: spell.icon.identifier
+					
+					readonly property var spell: model.modelData
 					
 					onClicked: {
 					}
 					
 					onHoveredChanged: {
 						if (hovered) {
-							status_text = "Spell"
+							status_text = spell.name
 						} else {
 							status_text = ""
 						}

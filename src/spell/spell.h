@@ -88,6 +88,8 @@ public:
 
 	bool is_available_for_character_class(const character_class *character_class) const;
 
+	bool is_battle_spell() const;
+
 signals:
 	void changed();
 

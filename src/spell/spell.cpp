@@ -73,4 +73,9 @@ bool spell::is_available_for_character_class(const character_class *character_cl
 	return vector::contains(this->get_character_classes(), character_class);
 }
 
+bool spell::is_battle_spell() const
+{
+	return this->get_battle_target() != spell_target::none;
+}
+
 }
