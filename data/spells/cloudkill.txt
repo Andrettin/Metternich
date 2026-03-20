@@ -1,0 +1,14 @@
+cloudkill = {
+	name = "Cloudkill"
+	level = 5
+	icon = skull
+	battle_target = enemy
+	battle_range = 3
+	battle_result = destroy
+	arcane_schools = {
+		evocation
+	}
+	character_classes = {
+		mage
+	}
+}
