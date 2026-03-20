@@ -1,8 +1,8 @@
 cause_light_wounds = {
 	name = "Cause Light Wounds"
+	level = 1
 	target = enemy
 	icon = wooden_cross
-	mana_cost = 5
 	range = 1
 	character_classes = {
 	}

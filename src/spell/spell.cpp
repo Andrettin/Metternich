@@ -3,6 +3,7 @@
 #include "spell/spell.h"
 
 #include "character/character_class.h"
+#include "database/defines.h"
 #include "spell/arcane_school.h"
 #include "spell/spell_effect.h"
 #include "spell/spell_target.h"
@@ -52,6 +53,15 @@ void spell::check() const
 	assert_throw(this->get_icon() != nullptr);
 	assert_throw(this->get_mana_cost() > 0);
 	assert_throw(!this->effects.empty());
+}
+
+int spell::get_mana_cost() const
+{
+	if (this->mana_cost != 0) {
+		return this->mana_cost;
+	}
+
+	return defines::get()->get_mana_cost_for_spell_level(this->get_level());
 }
 
 bool spell::is_available_for_character_class(const character_class *character_class) const

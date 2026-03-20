@@ -1,8 +1,8 @@
 fireball = {
 	name = "Fireball"
+	level = 3
 	target = enemy
 	icon = research
-	mana_cost = 15
 	range = 5
 	character_classes = {
 	}

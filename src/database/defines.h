@@ -356,6 +356,8 @@ public:
 	divine_rank get_divine_level_rank(const int divine_level) const;
 	const metternich::modifier<const character> *get_divine_rank_modifier(const int divine_rank) const;
 
+	int get_mana_cost_for_spell_level(const int level) const;
+
 	const QColor &get_minor_nation_color() const
 	{
 		return this->minor_nation_color;
@@ -514,6 +516,7 @@ private:
 	std::map<bloodline_strength_category, dice> bloodline_strength_per_category;
 	std::map<divine_rank, int> divine_rank_levels;
 	std::map<int, std::unique_ptr<const metternich::modifier<const character>>> divine_rank_modifiers;
+	std::map<int, int> mana_cost_per_spell_level;
 	QColor minor_nation_color;
 	QColor country_border_color;
 	QColor selected_country_color;

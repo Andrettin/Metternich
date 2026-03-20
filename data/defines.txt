@@ -180,6 +180,19 @@ divine_rank_modifiers = {
 	}
 }
 
+mana_cost_per_spell_level = {
+	0 = 1
+	1 = 8
+	2 = 12
+	3 = 20
+	4 = 30
+	5 = 44
+	6 = 60
+	7 = 80
+	8 = 100
+	9 = 120
+}
+
 minor_nation_color = { 221 216 181 }
 country_border_color = { 0 0 0 }
 selected_country_color = { 255 255 0 }

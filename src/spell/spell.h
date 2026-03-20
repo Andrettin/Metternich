@@ -18,9 +18,10 @@ class spell final : public named_data_entry, public data_type<spell>
 {
 	Q_OBJECT
 
+	Q_PROPERTY(int level MEMBER level READ get_level NOTIFY changed)
 	Q_PROPERTY(metternich::spell_target target MEMBER target READ get_target NOTIFY changed)
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
-	Q_PROPERTY(int mana_cost MEMBER mana_cost READ get_mana_cost NOTIFY changed)
+	Q_PROPERTY(int mana_cost MEMBER mana_cost NOTIFY changed)
 	Q_PROPERTY(int range MEMBER range READ get_range NOTIFY changed)
 
 public:
@@ -34,6 +35,11 @@ public:
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;
 
+	int get_level() const
+	{
+		return this->level;
+	}
+
 	spell_target get_target() const
 	{
 		return this->target;
@@ -44,10 +50,12 @@ public:
 		return this->icon;
 	}
 
-	int get_mana_cost() const
+	const metternich::icon *get_icon() const
 	{
-		return this->mana_cost;
+		return this->icon;
 	}
+
+	int get_mana_cost() const;
 
 	int get_range() const
 	{
@@ -70,7 +78,8 @@ signals:
 	void changed();
 
 private:
-	spell_target target;
+	int level = 0;
+	spell_target target{};
 	metternich::icon *icon = nullptr;
 	int mana_cost = 0;
 	int range = 0;

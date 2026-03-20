@@ -111,6 +111,13 @@ void defines::process_gsml_scope(const gsml_data &scope)
 			modifier->process_gsml_data(child_scope);
 			this->divine_rank_modifiers[rank_interval] = std::move(modifier);
 		});
+	} else if (tag == "mana_cost_per_spell_level") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const int level = std::stoi(property.get_key());
+			const int mana_cost = std::stoi(property.get_value());
+
+			this->mana_cost_per_spell_level[level] = mana_cost;
+		});
 	} else if (tag == "diplomacy_state_colors") {
 		scope.for_each_child([&](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
@@ -316,6 +323,17 @@ const metternich::modifier<const character> *defines::get_divine_rank_modifier(c
 	}
 
 	return nullptr;
+}
+
+int defines::get_mana_cost_for_spell_level(const int level) const
+{
+	const auto find_iterator = this->mana_cost_per_spell_level.find(level);
+
+	if (find_iterator != this->mana_cost_per_spell_level.end()) {
+		return find_iterator->second;
+	}
+
+	throw std::runtime_error(std::format("No mana cost is given for spell level {}.", level));
 }
 
 void defines::set_river_image_filepath(const std::filesystem::path &filepath)

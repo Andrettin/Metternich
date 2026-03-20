@@ -1,8 +1,8 @@
 arcane_missile = {
 	name = "Arcane Missile"
+	level = 1
 	target = enemy
 	icon = research
-	mana_cost = 5
 	range = 5
 	character_classes = {
 	}
