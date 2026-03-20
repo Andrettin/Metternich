@@ -4,7 +4,7 @@ arcane_missile = {
 	icon = research
 	mana_cost = 5
 	range = 5
-	military_unit_categories = {
+	character_classes = {
 	}
 	effects = {
 		damage = {

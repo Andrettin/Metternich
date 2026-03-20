@@ -2,13 +2,12 @@
 
 #include "spell/spell.h"
 
+#include "character/character_class.h"
+#include "spell/arcane_school.h"
 #include "spell/spell_effect.h"
 #include "spell/spell_target.h"
-#include "unit/military_unit_category.h"
 #include "util/assert_util.h"
 #include "util/vector_util.h"
-
-#include <magic_enum/magic_enum.hpp>
 
 namespace metternich {
 
@@ -26,9 +25,13 @@ void spell::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "military_unit_categories") {
+	if (tag == "arcane_schools") {
 		for (const std::string &value : values) {
-			this->military_unit_categories.push_back(magic_enum::enum_cast<military_unit_category>(value).value());
+			this->arcane_schools.push_back(arcane_school::get(value));
+		}
+	} else if (tag == "character_classes") {
+		for (const std::string &value : values) {
+			this->character_classes.push_back(character_class::get(value));
 		}
 	} else if (tag == "effects") {
 		scope.for_each_element([&](const gsml_property &property) {
@@ -48,13 +51,12 @@ void spell::check() const
 	assert_throw(this->get_target() != spell_target::none);
 	assert_throw(this->get_icon() != nullptr);
 	assert_throw(this->get_mana_cost() > 0);
-	//assert_throw(!this->get_military_unit_categories().empty());
 	assert_throw(!this->effects.empty());
 }
 
-bool spell::is_available_for_military_unit_category(const military_unit_category military_unit_category) const
+bool spell::is_available_for_character_class(const character_class *character_class) const
 {
-	return vector::contains(this->get_military_unit_categories(), military_unit_category);
+	return vector::contains(this->get_character_classes(), character_class);
 }
 
 }

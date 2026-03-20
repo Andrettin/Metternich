@@ -886,6 +886,7 @@ set(species_HDRS
 source_group(species FILES ${species_HDRS})
 
 set(spell_HDRS
+	src/spell/arcane_school.h
 	src/spell/damage_spell_effect.h
 	src/spell/healing_spell_effect.h
 	src/spell/spell.h

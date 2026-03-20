@@ -2416,7 +2416,7 @@ QVariantList character_game_data::get_spells_qvariant_list() const
 
 bool character_game_data::can_learn_spell(const spell *spell) const
 {
-	if (!spell->is_available_for_military_unit_category(this->character->get_military_unit_category())) {
+	if (!spell->is_available_for_character_class(this->get_character_class())) {
 		return false;
 	}
 

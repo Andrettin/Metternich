@@ -4,7 +4,7 @@ fireball = {
 	icon = research
 	mana_cost = 15
 	range = 5
-	military_unit_categories = {
+	character_classes = {
 	}
 	effects = {
 		damage = {
