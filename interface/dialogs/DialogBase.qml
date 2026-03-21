@@ -92,6 +92,8 @@ Popup {
 		} else {
 			dialog.receive_focus()
 		}
+		
+		metternich.set_current_cursor(metternich.defines.default_cursor)
 	}
 	
 	onClosed: {
