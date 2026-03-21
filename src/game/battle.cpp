@@ -433,7 +433,7 @@ QCoro::Task<void> battle::do_unit_attack(const military_unit *unit, military_uni
 		case attack_result::fall_back:
 			break;
 		case attack_result::hit:
-		case attack_result::route:
+		case attack_result::rout:
 			enemy->change_hit_points(-1);
 			break;
 		case attack_result::destroy:
@@ -464,8 +464,6 @@ QCoro::Task<void> battle::do_unit_attack(const military_unit *unit, military_uni
 
 QCoro::Task<void> battle::do_unit_spellcast(const military_unit *unit, const spell *spell, military_unit *target, std::vector<military_unit *> &killed_units)
 {
-	const battle_unit_info *unit_info = this->get_unit_info(unit);
-	const battle_unit_info *target_info = this->get_unit_info(target);
 	const army *target_army = target->get_army();
 
 	if (spell->get_battle_result() != attack_result::none) {
@@ -476,7 +474,7 @@ QCoro::Task<void> battle::do_unit_spellcast(const military_unit *unit, const spe
 			case attack_result::fall_back:
 				break;
 			case attack_result::hit:
-			case attack_result::route:
+			case attack_result::rout:
 				target->change_hit_points(-1);
 				break;
 			case attack_result::destroy:

@@ -7,7 +7,7 @@ enum class attack_result {
 	miss,
 	fall_back,
 	hit,
-	route,
+	rout,
 	destroy
 };
 
@@ -18,7 +18,7 @@ inline std::string_view get_attack_result_name(const attack_result result)
 		case attack_result::fall_back:
 			return "Miss";
 		case attack_result::hit:
-		case attack_result::route:
+		case attack_result::rout:
 			return "Hit";
 		case attack_result::destroy:
 			return "Destroy";

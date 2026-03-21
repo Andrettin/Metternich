@@ -256,10 +256,10 @@ battle_resolution_tables = {
 				-3 = fall_back
 				-2 = miss
 				-1 = miss
-				0 = route
+				0 = rout
 				1 = destroy
 				2 = hit
-				3 = route
+				3 = rout
 			}
 			pennant = {
 				-3 = hit
@@ -275,8 +275,8 @@ battle_resolution_tables = {
 				-2 = hit
 				-1 = miss
 				0 = hit
-				1 = route
-				2 = route
+				1 = rout
+				2 = rout
 				3 = destroy
 			}
 		}
@@ -297,7 +297,7 @@ battle_resolution_tables = {
 				0 = hit
 				1 = miss
 				2 = hit
-				3 = route
+				3 = rout
 			}
 			crossed_swords = {
 				-3 = fall_back
@@ -319,7 +319,7 @@ battle_resolution_tables = {
 				0 = hit
 				1 = fall_back
 				2 = hit
-				3 = route
+				3 = rout
 			}
 			pennant = {
 				-3 = fall_back
@@ -327,7 +327,7 @@ battle_resolution_tables = {
 				-1 = miss
 				0 = hit
 				1 = miss
-				2 = route
+				2 = rout
 				3 = hit
 			}
 			crossed_swords = {
@@ -357,7 +357,7 @@ battle_resolution_tables = {
 				0 = miss
 				1 = hit
 				2 = hit
-				3 = route
+				3 = rout
 			}
 			crossed_swords = {
 				-3 = miss
@@ -374,9 +374,9 @@ battle_resolution_tables = {
 				-3 = fall_back
 				-2 = hit
 				-1 = miss
-				0 = route
+				0 = rout
 				1 = destroy
-				2 = route
+				2 = rout
 				3 = miss
 			}
 			pennant = {
@@ -393,7 +393,7 @@ battle_resolution_tables = {
 				-2 = fall_back
 				-1 = miss
 				0 = hit
-				1 = route
+				1 = rout
 				2 = hit
 				3 = hit
 			}
