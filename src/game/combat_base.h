@@ -40,6 +40,7 @@ class combat_unit_info_base : public QObject
 	Q_PROPERTY(const metternich::icon* icon READ get_icon NOTIFY icon_changed)
 	Q_PROPERTY(int hit_points READ get_hit_points NOTIFY hit_points_changed)
 	Q_PROPERTY(int max_hit_points READ get_max_hit_points NOTIFY max_hit_points_changed)
+	Q_PROPERTY(const metternich::character* character READ get_character CONSTANT)
 
 public:
 	explicit combat_unit_info_base(const bool defender)
@@ -125,6 +126,7 @@ public:
 	virtual const icon *get_icon() const = 0;
 	virtual int get_hit_points() const = 0;
 	virtual int get_max_hit_points() const = 0;
+	virtual const character *get_character() const = 0;
 
 signals:
 	void pos_changed();

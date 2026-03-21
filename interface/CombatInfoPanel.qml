@@ -20,22 +20,47 @@ Rectangle {
 		width: 1 * scale_factor
 	}
 	
-	IconButton {
-		id: end_units_turn_button
+	Column {
+		id: button_column
 		anchors.top: parent.top
 		anchors.topMargin: 192 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
-		icon_identifier: "bell"
+		spacing: 8 * scale_factor
 		
-		onClicked: {
-			metternich.game.current_combat.set_target(Qt.point(-1, -1))
+		IconButton {
+			id: end_units_turn_button
+			icon_identifier: "bell"
+			
+			onClicked: {
+				metternich.game.current_combat.set_target(Qt.point(-1, -1))
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "End Unit's Turn"
+				} else {
+					status_text = ""
+				}
+			}
 		}
 		
-		onHoveredChanged: {
-			if (hovered) {
-				status_text = "End Unit's Turn"
-			} else {
-				status_text = ""
+		IconButton {
+			id: cast_spell_button
+			icon_identifier: "university"
+			visible: combat.current_unit && combat.current_unit.character && combat.current_unit.character.game_data.battle_spells.length > 0
+			
+			onClicked: {
+				spell_dialog.caster = combat.current_unit.character
+				spell_dialog.open()
+				popup_count += 1
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Cast Spell"
+				} else {
+					status_text = ""
+				}
 			}
 		}
 	}

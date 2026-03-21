@@ -652,4 +652,9 @@ int battle_unit_info::get_max_hit_points() const
 	return this->get_unit()->get_max_hit_points();
 }
 
+const character *battle_unit_info::get_character() const
+{
+	return this->get_unit()->get_character();
+}
+
 }

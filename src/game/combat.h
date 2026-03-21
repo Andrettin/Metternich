@@ -41,12 +41,10 @@ class combat_character_info final : public combat_unit_info_base
 {
 	Q_OBJECT
 
-	Q_PROPERTY(const metternich::character *character READ get_character CONSTANT)
-
 public:
 	explicit combat_character_info(const metternich::character *character, const bool defender);
 
-	const metternich::character *get_character() const
+	virtual const metternich::character *get_character() const override
 	{
 		return this->character;
 	}

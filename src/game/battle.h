@@ -43,6 +43,7 @@ public:
 	virtual const icon *get_icon() const override;
 	virtual int get_hit_points() const override;
 	virtual int get_max_hit_points() const override;
+	virtual const character *get_character() const override;
 
 signals:
 	void pos_changed();
