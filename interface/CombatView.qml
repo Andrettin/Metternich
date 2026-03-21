@@ -12,6 +12,7 @@ Item {
 	readonly property var combat: metternich.game.current_combat
 	readonly property var event_dialog_component: Qt.createComponent("dialogs/EventDialog.qml")
 	property int popup_count: 0
+	property bool combat_finished: false
 	
 	Rectangle {
 		id: combat_map_background
@@ -90,12 +91,10 @@ Item {
 	}
 	
 	Connections {
-		target: metternich.game
+		target: combat
 		
-		function onCombat_running_changed() {
-			if (!metternich.game.combat_running && popup_count === 0) {
-				menu_stack.pop()
-			}
+		function onFinished() {
+			combat_finished = true
 		}
 	}
 	
@@ -106,7 +105,8 @@ Item {
 	function on_popup_closed() {
 		popup_count -= 1
 		
-		if (!metternich.game.combat_running && popup_count === 0) {
+		if (combat_finished && popup_count === 0) {
+			combat.clear()
 			menu_stack.pop()
 		}
 	}

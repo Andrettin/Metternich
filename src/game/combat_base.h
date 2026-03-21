@@ -257,6 +257,8 @@ public:
 		return this->promise->future();
 	}
 
+	Q_INVOKABLE void clear();
+
 signals:
 	void unit_infos_changed();
 	void tile_unit_changed(const QPoint &tile_pos);
@@ -265,6 +267,7 @@ signals:
 	void current_spell_changed();
 	void movable_tiles_changed();
 	void autoplay_enabled_changed();
+	void finished();
 
 private:
 	QRect map_rect;

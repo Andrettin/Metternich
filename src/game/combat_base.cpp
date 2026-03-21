@@ -3,6 +3,7 @@
 #include "game/combat_base.h"
 
 #include "database/defines.h"
+#include "game/game.h"
 #include "map/terrain_type.h"
 #include "util/assert_util.h"
 #include "util/point_util.h"
@@ -121,6 +122,13 @@ bool combat_base::can_current_unit_retreat_at(const QPoint &tile_pos) const
 		return this->defender_retreat_allowed && this->is_tile_defender_escape(tile_pos);
 	} else {
 		return this->attacker_retreat_allowed && this->is_tile_attacker_escape(tile_pos);
+	}
+}
+
+void combat_base::clear()
+{
+	if (game::get()->get_current_combat() == this) {
+		game::get()->set_current_combat(nullptr);
 	}
 }
 

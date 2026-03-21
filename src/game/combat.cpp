@@ -297,8 +297,10 @@ QCoro::Task<void> combat::start_coro()
 		}
 	}
 
-	if (game::get()->get_current_combat() == this) {
-		game::get()->set_current_combat(nullptr);
+	emit finished();
+
+	if (this->scope != game::get()->get_player_country()) {
+		this->clear();
 	}
 }
 

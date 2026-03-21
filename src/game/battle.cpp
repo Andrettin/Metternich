@@ -191,8 +191,10 @@ QCoro::Task<void> battle::start_coro()
 	this->get_promise()->addResult(this->result.attacker_victory);
 	this->get_promise()->finish();
 
-	if (game::get()->get_current_combat() == this) {
-		game::get()->set_current_combat(nullptr);
+	emit finished();
+
+	if (this->scope != game::get()->get_player_country()) {
+		this->clear();
 	}
 }
 
