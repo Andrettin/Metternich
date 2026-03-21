@@ -2441,6 +2441,11 @@ QVariantList character_game_data::get_spells_qvariant_list() const
 	return container::to_qvariant_list(this->get_spells());
 }
 
+bool character_game_data::has_spell(const spell *spell) const
+{
+	return vector::contains(this->get_spells(), spell);
+}
+
 bool character_game_data::can_learn_spell(const spell *spell) const
 {
 	if (!spell->is_available_for_character_class(this->get_character_class())) {
@@ -2459,20 +2464,23 @@ void character_game_data::learn_spell(const spell *spell)
 	this->add_spell(spell);
 }
 
+void character_game_data::sort_spells()
+{
+	std::sort(this->spells.begin(), this->spells.end(), [](const spell *lhs, const spell *rhs) {
+		if (lhs->get_level() != rhs->get_level()) {
+			return lhs->get_level() < rhs->get_level();
+		}
+
+		return lhs->get_identifier() < rhs->get_identifier();
+	});
+}
+
 QVariantList character_game_data::get_battle_spells_qvariant_list() const
 {
 	std::vector<const spell *> spells = container::to_vector(this->get_spells());
 
 	std::erase_if(spells, [](const spell *spell) {
 		return !spell->is_battle_spell();
-	});
-
-	std::sort(spells.begin(), spells.end(), [](const spell *lhs, const spell *rhs) {
-		if (lhs->get_level() != rhs->get_level()) {
-			return lhs->get_level() < rhs->get_level();
-		}
-
-		return lhs->get_identifier() < rhs->get_identifier();
 	});
 
 	return container::to_qvariant_list(spells);

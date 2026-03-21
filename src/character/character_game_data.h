@@ -4,7 +4,6 @@
 #include "database/data_entry_container.h"
 #include "domain/domain_container.h"
 #include "script/scripted_modifier_container.h"
-#include "spell/spell_container.h"
 #include "unit/military_unit_type_container.h"
 #include "util/centesimal_int.h"
 #include "util/qunique_ptr.h"
@@ -90,7 +89,7 @@ class character_game_data final : public QObject
 	Q_PROPERTY(QVariantList spells READ get_spells_qvariant_list NOTIFY spells_changed)
 	Q_PROPERTY(QVariantList battle_spells READ get_battle_spells_qvariant_list NOTIFY spells_changed)
 	Q_PROPERTY(QVariantList items READ get_items_qvariant_list NOTIFY items_changed)
-	Q_PROPERTY(bool deployable READ is_deployable NOTIFY spells_changed)
+	Q_PROPERTY(bool deployable READ is_deployable CONSTANT)
 	Q_PROPERTY(const metternich::military_unit* military_unit READ get_military_unit NOTIFY military_unit_changed)
 	Q_PROPERTY(const metternich::civilian_unit* civilian_unit READ get_civilian_unit NOTIFY civilian_unit_changed)
 	Q_PROPERTY(QVariantList status_effects READ get_status_effects_qvariant_list NOTIFY status_effect_rounds_changed)
@@ -557,27 +556,24 @@ public:
 	void apply_modifier(const modifier<const metternich::character> *modifier, const int multiplier);
 	void apply_military_unit_modifier(metternich::military_unit *military_unit, const int multiplier);
 
-	const spell_set &get_spells() const
+	const std::vector<const spell *> &get_spells() const
 	{
 		return this->spells;
 	}
 
 	QVariantList get_spells_qvariant_list() const;
-
-	bool has_spell(const spell *spell) const
-	{
-		return this->get_spells().contains(spell);
-	}
+	bool has_spell(const spell *spell) const;
 
 	void add_spell(const spell *spell)
 	{
-		this->spells.insert(spell);
+		this->spells.push_back(spell);
+		this->sort_spells();
 		emit spells_changed();
 	}
 
 	void remove_spell(const spell *spell)
 	{
-		this->spells.erase(spell);
+		std::erase(this->spells, spell);
 		emit spells_changed();
 	}
 
@@ -589,6 +585,7 @@ public:
 	}
 
 	void learn_spell(const spell *spell);
+	void sort_spells();
 
 	QVariantList get_battle_spells_qvariant_list() const;
 
@@ -806,8 +803,8 @@ private:
 	const metternich::office *office = nullptr;
 	metternich::military_unit *military_unit = nullptr;
 	metternich::civilian_unit *civilian_unit = nullptr;
-	spell_set spells;
-	spell_set item_spells;
+	std::vector<const spell *> spells; //spells that the character has learned
+	std::vector<const spell *> item_spells; //spells granted by items, but which the character hasn't learned per se
 	std::vector<qunique_ptr<item>> items;
 	data_entry_map<item_slot, std::vector<item *>> equipped_items;
 	std::map<military_unit_stat, centesimal_int> commanded_military_unit_stat_modifiers;

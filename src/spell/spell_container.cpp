@@ -8,8 +8,8 @@ namespace metternich {
 
 bool spell_compare::operator()(const spell *lhs, const spell *rhs) const
 {
-	if (lhs->get_mana_cost() != rhs->get_mana_cost()) {
-		return lhs->get_mana_cost() < rhs->get_mana_cost();
+	if (lhs->get_level() != rhs->get_level()) {
+		return lhs->get_level() < rhs->get_level();
 	}
 
 	return lhs->get_identifier() < rhs->get_identifier();
