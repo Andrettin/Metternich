@@ -70,4 +70,9 @@ mage = {
 		robe
 		torch = 6
 	}
+	starting_spells = {
+		#charm_person
+		#sleep
+		#summon_monster_1
+	}
 }

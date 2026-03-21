@@ -19,6 +19,7 @@ class item_type;
 class level_bonus_table;
 class skill_group;
 class species;
+class spell;
 class technology;
 enum class military_unit_category;
 enum class starting_age_category;
@@ -226,6 +227,19 @@ public:
 		return this->starting_items;
 	}
 
+	const std::vector<const spell *> &get_starting_spells() const
+	{
+		if (!this->starting_spells.empty()) {
+			return this->starting_spells;
+		}
+
+		if (this->get_base_class() != nullptr) {
+			return this->get_base_class()->get_starting_spells();
+		}
+
+		return this->starting_spells;
+	}
+
 signals:
 	void changed();
 
@@ -251,6 +265,7 @@ private:
 	std::map<int, std::variant<int, dice>> hit_point_bonus_per_level;
 	std::map<int, std::unique_ptr<modifier<const character>>> level_modifiers;
 	std::vector<const item_type *> starting_items;
+	std::vector<const spell *> starting_spells;
 };
 
 }

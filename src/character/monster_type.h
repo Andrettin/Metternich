@@ -14,6 +14,7 @@ class character_attribute;
 class character_class;
 class item_type;
 class species;
+class spell;
 class trait;
 
 template <typename scope_type>
@@ -91,6 +92,11 @@ public:
 		return this->items;
 	}
 
+	const std::vector<const spell *> &get_spells() const
+	{
+		return this->spells;
+	}
+
 signals:
 	void changed();
 
@@ -105,6 +111,7 @@ private:
 	std::vector<const trait *> traits;
 	std::unique_ptr<const modifier<const character>> modifier;
 	std::vector<const item_type *> items;
+	std::vector<const spell *> spells;
 };
 
 }

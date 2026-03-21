@@ -50,6 +50,7 @@ class province;
 class religion;
 class site;
 class species;
+class spell;
 class trait;
 enum class bloodline_strength_category;
 enum class military_unit_category;
@@ -371,6 +372,11 @@ public:
 		return this->starting_items;
 	}
 
+	const std::vector<const spell *> &get_starting_spells() const
+	{
+		return this->starting_spells;
+	}
+
 	const and_condition<domain> *get_conditions() const
 	{
 		return this->conditions.get();
@@ -443,6 +449,7 @@ private:
 	int hit_points = 0;
 	std::vector<const trait *> traits;
 	std::vector<const item_type *> starting_items;
+	std::vector<const spell *> starting_spells;
 	std::unique_ptr<const and_condition<domain>> conditions;
 	qunique_ptr<character_history> history;
 	qunique_ptr<character_game_data> game_data;

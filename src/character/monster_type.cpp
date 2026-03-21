@@ -8,6 +8,7 @@
 #include "item/item_type.h"
 #include "script/modifier.h"
 #include "species/species.h"
+#include "spell/spell.h"
 #include "util/assert_util.h"
 #include "util/string_util.h"
 
@@ -75,6 +76,10 @@ void monster_type::process_gsml_scope(const gsml_data &scope)
 				this->items.push_back(item_type);
 			}
 		});
+	} else if (tag == "spells") {
+		for (const std::string &value : values) {
+			this->spells.push_back(spell::get(value));
+		}
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}

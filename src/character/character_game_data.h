@@ -110,6 +110,8 @@ public:
 	void apply_bloodline_inheritance_investiture();
 	void add_starting_items();
 	void add_starting_items(const std::vector<const item_type *> &starting_items, data_entry_set<item_slot> &filled_item_slots);
+	void add_starting_spells();
+	void add_starting_spells(const std::vector<const spell *> &starting_spells);
 	void apply_history(const QDate &start_date);
 	void on_setup_finished();
 

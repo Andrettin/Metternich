@@ -426,6 +426,7 @@ void character_game_data::apply_species_and_class(const int level, const bool ap
 	}
 
 	this->add_starting_items();
+	this->add_starting_spells();
 
 	if (this->character->get_hit_points() != 0) {
 		int min_hp = 0;
@@ -634,6 +635,32 @@ void character_game_data::add_starting_items(const std::vector<const item_type *
 	}
 
 	filled_item_slots = new_filled_item_slots;
+}
+
+void character_game_data::add_starting_spells()
+{
+	const metternich::character_class *character_class = this->get_character_class();
+
+	if (!this->character->get_starting_spells().empty()) {
+		this->add_starting_spells(this->character->get_starting_spells());
+	} else if (this->character->get_monster_type() != nullptr && !this->character->get_monster_type()->get_spells().empty()) {
+		this->add_starting_spells(this->character->get_monster_type()->get_spells());
+	} else if (character_class != nullptr) {
+		this->add_starting_spells(character_class->get_starting_spells());
+	}
+}
+
+void character_game_data::add_starting_spells(const std::vector<const spell *> &starting_spells)
+{
+	if (starting_spells.empty()) {
+		return;
+	}
+
+	for (const spell *spell : starting_spells) {
+		if (this->can_learn_spell(spell)) {
+			this->add_spell(spell);
+		}
+	}
 }
 
 void character_game_data::apply_history(const QDate &start_date)

@@ -29,6 +29,7 @@
 #include "script/modifier.h"
 #include "species/phenotype.h"
 #include "species/species.h"
+#include "spell/spell.h"
 #include "technology/technology.h"
 #include "time/calendar.h"
 #include "unit/civilian_unit_class.h"
@@ -315,6 +316,10 @@ void character::process_gsml_scope(const gsml_data &scope)
 				this->starting_items.push_back(item_type);
 			}
 		});
+	} else if (tag == "starting_spells") {
+		for (const std::string &value : values) {
+			this->starting_spells.push_back(spell::get(value));
+		}
 	} else if (tag == "conditions") {
 		auto conditions = std::make_unique<and_condition<domain>>();
 		conditions->process_gsml_data(scope);
