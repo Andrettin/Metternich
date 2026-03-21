@@ -77,6 +77,11 @@ Item {
 		id: character_dialog
 	}
 	
+	SpellDialog {
+		id: spell_dialog
+		mode: SpellDialog.Mode.All
+	}
+	
 	Component.onCompleted: {
 		diplomatic_map.center_on_tile(start_tile_x, start_tile_y)
 	}

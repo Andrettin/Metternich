@@ -53,7 +53,7 @@ Item {
 			hoverEnabled: true
 			
 			onContainsMouseChanged: {
-				if (status_text) {
+				if (typeof status_text !== 'undefined') {
 					if (containsMouse) {
 						status_text = garrison_icon.display_text
 					} else {
@@ -82,7 +82,7 @@ Item {
 			hoverEnabled: true
 			
 			onContainsMouseChanged: {
-				if (status_text) {
+				if (typeof status_text !== 'undefined') {
 					if (containsMouse) {
 						status_text = civilian_icon.display_text
 					} else {

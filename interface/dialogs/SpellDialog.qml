@@ -8,8 +8,15 @@ DialogBase {
 	width: icon_button_width * spell_grid.columns + spell_grid.spacing * (spell_grid.columns - 1) + 8 * scale_factor * 2
 	height: close_button.y + close_button.height + 8 * scale_factor
 	
+	enum Mode {
+		All,
+		Combat,
+		Battle
+	}
+
+	property int mode: SpellDialog.Mode.All
 	property var caster: null
-	readonly property var spells: caster ? caster.game_data.battle_spells : []
+	readonly property var spells: caster ? (mode === SpellDialog.Mode.Battle ? caster.game_data.battle_spells : caster.game_data.spells) : []
 	readonly property int icon_button_width: 32 * scale_factor + 6 * scale_factor
 	readonly property int icon_button_height: 32 * scale_factor + 6 * scale_factor
 	
@@ -41,24 +48,31 @@ DialogBase {
 				IconButton {
 					id: spell_icon
 					icon_identifier: spell.icon.identifier
+					tooltip: typeof status_text !== 'undefined' ? "" : format_text(small_text(spell.name + "\n\n" + costs_string))
 					
 					readonly property var spell: model.modelData
 					readonly property string costs_string: "Mana Cost: " + spell.get_mana_cost()
 					
 					onClicked: {
-						combat.current_spell = spell
-						spell_dialog.close()
+						if (mode === SpellDialog.Mode.Combat || mode === SpellDialog.Mode.Battle) {
+							combat.current_spell = spell
+							spell_dialog.close()
+						}
 					}
 					
 					onHoveredChanged: {
-						if (hovered) {
-							status_text = spell.name
-							middle_status_text = costs_string
-							right_status_text = spell.get_battle_effects_string()
-						} else {
-							status_text = ""
-							middle_status_text = ""
-							right_status_text = ""
+						if (typeof status_text !== 'undefined') {
+							if (hovered) {
+								status_text = spell.name
+								middle_status_text = costs_string
+								if (mode === SpellDialog.Mode.Battle) {
+									right_status_text = spell.get_battle_effects_string()
+								}
+							} else {
+								status_text = ""
+								middle_status_text = ""
+								right_status_text = ""
+							}
 						}
 					}
 				}

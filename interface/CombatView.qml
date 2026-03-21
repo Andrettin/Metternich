@@ -61,6 +61,7 @@ Item {
 	
 	SpellDialog {
 		id: spell_dialog
+		mode: SpellDialog.Mode.Battle
 	}
 	
 	Connections {

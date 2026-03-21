@@ -147,6 +147,17 @@ DialogBase {
 		}
 		
 		TextButton {
+			id: spells_button
+			text: "Spells"
+			visible: character !== null && character.game_data.spells.length > 0
+			onClicked: {
+				spell_dialog.caster = character_dialog.character
+				spell_dialog.open()
+				spell_dialog.receive_focus()
+			}
+		}
+		
+		TextButton {
 			id: ok_button
 			text: "OK"
 			onClicked: {

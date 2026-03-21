@@ -93,6 +93,11 @@ Item {
 		id: character_dialog
 	}
 	
+	SpellDialog {
+		id: spell_dialog
+		mode: SpellDialog.Mode.All
+	}
+	
 	readonly property int portrait_button_width: 64 * scale_factor + 2 * scale_factor
 	readonly property int portrait_button_height: 64 * scale_factor + 2 * scale_factor
 	readonly property int horizontal_padding: 8 * scale_factor

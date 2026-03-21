@@ -471,6 +471,11 @@ MenuBase {
 		id: character_dialog
 	}
 	
+	SpellDialog {
+		id: spell_dialog
+		mode: SpellDialog.Mode.All
+	}
+	
 	Connections {
 		target: metternich.game
 		function onSetup_finished() {
