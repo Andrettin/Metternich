@@ -332,6 +332,8 @@ QCoro::Task<void> battle::do_unit_round(military_unit *unit, std::vector<militar
 					}
 				}
 			}
+
+			this->set_current_spell(nullptr);
 		} else {
 			if (tile.unit != nullptr) {
 				if (distance <= unit->get_stat(military_unit_stat::range).to_int() && vector::contains(enemy_army->get_military_units(), tile.unit)) {
