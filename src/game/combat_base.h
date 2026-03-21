@@ -5,9 +5,11 @@ Q_MOC_INCLUDE("ui/icon.h")
 
 namespace metternich {
 
+class combat_unit_info_base;
 class icon;
 class spell;
 class terrain_type;
+enum class spell_target;
 
 enum class combat_placement
 {
@@ -126,7 +128,10 @@ public:
 	virtual const icon *get_icon() const = 0;
 	virtual int get_hit_points() const = 0;
 	virtual int get_max_hit_points() const = 0;
+	virtual int get_range() const = 0;
 	virtual const character *get_character() const = 0;
+	virtual bool is_player_unit() const = 0;
+	virtual bool is_player_enemy() const = 0;
 
 signals:
 	void pos_changed();
@@ -192,10 +197,13 @@ public:
 
 	virtual QVariantList get_unit_infos_qvariant_list() const = 0;
 	virtual int get_max_range_of_units() const = 0;
+	virtual spell_target get_spell_target(const spell *spell) const = 0;
+	virtual int get_spell_range(const spell *spell) const = 0;
 
 	virtual combat_tile_base &get_tile(const QPoint &tile_pos) = 0;
 	virtual const combat_tile_base &get_tile(const QPoint &tile_pos) const = 0;
 	virtual std::string get_tile_text(const QPoint &tile_pos) const;
+	virtual combat_unit_info_base *get_tile_unit(const QPoint &tile_pos) const = 0;
 	bool is_tile_attacker_escape(const QPoint &tile_pos) const;
 	bool is_tile_defender_escape(const QPoint &tile_pos) const;
 
@@ -222,6 +230,8 @@ public:
 	bool can_current_unit_move_to(const QPoint &tile_pos) const;
 	bool can_current_unit_retreat_at(const QPoint &tile_pos) const;
 	virtual bool is_current_unit_in_enemy_range_at(const QPoint &tile_pos) const = 0;
+	bool can_current_unit_target_ally_at(const QPoint &tile_pos) const;
+	bool can_current_unit_target_enemy_at(const QPoint &tile_pos) const;
 
 	const spell *get_current_spell() const
 	{

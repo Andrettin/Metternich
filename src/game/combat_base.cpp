@@ -5,6 +5,8 @@
 #include "database/defines.h"
 #include "game/game.h"
 #include "map/terrain_type.h"
+#include "spell/spell.h"
+#include "spell/spell_target.h"
 #include "util/assert_util.h"
 #include "util/point_util.h"
 #include "util/vector_random_util.h"
@@ -123,6 +125,70 @@ bool combat_base::can_current_unit_retreat_at(const QPoint &tile_pos) const
 	} else {
 		return this->attacker_retreat_allowed && this->is_tile_attacker_escape(tile_pos);
 	}
+}
+
+bool combat_base::can_current_unit_target_ally_at(const QPoint &tile_pos) const
+{
+	if (this->get_current_unit() == nullptr) {
+		return false;
+	}
+
+	if (!this->get_map_rect().contains(tile_pos)) {
+		return false;
+	}
+
+	if (this->get_current_spell() == nullptr) {
+		return false;
+	}
+
+	if (this->get_spell_target(this->get_current_spell()) != spell_target::ally) {
+		return false;
+	}
+
+	const QPoint current_tile_pos = this->get_current_unit()->get_tile_pos();
+	const int distance = point::distance_to(current_tile_pos, tile_pos);
+
+	const int range = this->get_spell_range(this->get_current_spell());
+	if (distance > range) {
+		return false;
+	}
+
+	const combat_unit_info_base *tile_unit = this->get_tile_unit(tile_pos);
+	if (tile_unit == nullptr) {
+		return false;
+	}
+
+	return tile_unit->is_player_unit();
+}
+
+bool combat_base::can_current_unit_target_enemy_at(const QPoint &tile_pos) const
+{
+	if (this->get_current_unit() == nullptr) {
+		return false;
+	}
+
+	if (!this->get_map_rect().contains(tile_pos)) {
+		return false;
+	}
+
+	if (this->get_current_spell() != nullptr && this->get_spell_target(this->get_current_spell()) != spell_target::enemy) {
+		return false;
+	}
+
+	const QPoint current_tile_pos = this->get_current_unit()->get_tile_pos();
+	const int distance = point::distance_to(current_tile_pos, tile_pos);
+
+	const int range = this->get_current_spell() != nullptr ? this->get_spell_range(this->get_current_spell()) : this->get_current_unit()->get_range();
+	if (distance > range) {
+		return false;
+	}
+
+	const combat_unit_info_base *tile_unit = this->get_tile_unit(tile_pos);
+	if (tile_unit == nullptr) {
+		return false;
+	}
+
+	return tile_unit->is_player_enemy();
 }
 
 void combat_base::clear()

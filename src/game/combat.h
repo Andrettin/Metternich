@@ -63,6 +63,9 @@ public:
 
 	virtual int get_hit_points() const override;
 	virtual int get_max_hit_points() const override;
+	virtual int get_range() const override;
+	virtual bool is_player_unit() const override;
+	virtual bool is_player_enemy() const override;
 
 private:
 	const metternich::character *character = nullptr;
@@ -189,6 +192,8 @@ public:
 	~combat();
 
 	virtual int get_max_range_of_units() const override;
+	virtual spell_target get_spell_target(const spell *spell) const override;
+	virtual int get_spell_range(const spell *spell) const override;
 
 	void set_surprise(const bool surprise)
 	{
@@ -267,6 +272,7 @@ public:
 	virtual combat_tile &get_tile(const QPoint &tile_pos) override;
 	virtual const combat_tile &get_tile(const QPoint &tile_pos) const override;
 	virtual std::string get_tile_text(const QPoint &tile_pos) const override;
+	virtual combat_unit_info_base *get_tile_unit(const QPoint &tile_pos) const override;
 
 	virtual bool is_attacker_defeated() const override;
 	virtual bool is_defender_defeated() const override;

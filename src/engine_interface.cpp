@@ -28,6 +28,7 @@
 #include "technology/technology.h"
 #include "technology/technology_category.h"
 #include "time/era.h"
+#include "ui/cursor.h"
 #include "unit/army.h"
 #include "unit/military_unit.h"
 #include "util/assert_util.h"
@@ -87,6 +88,11 @@ QString engine_interface::get_save_path() const
 	std::filesystem::path save_path = database::get_save_path();
 	save_path.make_preferred();
 	return path::to_qstring(save_path);
+}
+
+QCoro::QmlTask engine_interface::set_current_cursor(metternich::cursor *cursor)
+{
+	return cursor::set_current_cursor(cursor);
 }
 
 QVariantList engine_interface::get_game_rule_groups() const

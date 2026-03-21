@@ -24,6 +24,7 @@
 #include "map/terrain_type.h"
 #include "script/effect/effect_list.h"
 #include "species/species.h"
+#include "spell/spell.h"
 #include "ui/portrait.h"
 #include "util/assert_util.h"
 #include "util/dice.h"
@@ -62,14 +63,24 @@ int combat::get_max_range_of_units() const
 {
 	int max_range = 0;
 
-	for (const character *character : attacking_party->get_characters()) {
+	for (const character *character : this->attacking_party->get_characters()) {
 		max_range = std::max(max_range, character->get_game_data()->get_range());
 	}
-	for (const character *character : defending_party->get_characters()) {
+	for (const character *character : this->defending_party->get_characters()) {
 		max_range = std::max(max_range, character->get_game_data()->get_range());
 	}
 
 	return max_range;
+}
+
+spell_target combat::get_spell_target(const spell *spell) const
+{
+	return spell->get_target();
+}
+
+int combat::get_spell_range(const spell *spell) const
+{
+	return spell->get_range();
 }
 
 void combat::set_generated_party(std::unique_ptr<party> &&generated_party)
@@ -394,7 +405,7 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 				assert_throw(chosen_target_tile_pos != QPoint(-1, -1));
 
 				const int distance_to_target = point::distance_to(current_tile_pos, chosen_target_tile_pos);
-				if (distance_to_target <= character->get_game_data()->get_range()) {
+				if (distance_to_target <= character_info->get_range()) {
 					target_pos = chosen_target_tile_pos;
 				} else {
 					const int current_square_distance = point::square_distance_to(current_tile_pos, chosen_target_tile_pos);
@@ -444,7 +455,7 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 			const int distance = point::distance_to(current_tile_pos, target_pos);
 
 			if (tile.character != nullptr) {
-				if (distance <= character->get_game_data()->get_range() && vector::contains(enemy_party->get_characters(), tile.character)) {
+				if (distance <= character_info->get_range() && vector::contains(enemy_party->get_characters(), tile.character)) {
 					experience_award += this->do_character_attack(character, tile.character, enemy_party, to_hit_modifier);
 					attacked = true;
 				}
@@ -718,6 +729,16 @@ std::string combat::get_tile_text(const QPoint &tile_pos) const
 	return text;
 }
 
+combat_unit_info_base *combat::get_tile_unit(const QPoint &tile_pos) const
+{
+	const combat_tile &tile = this->get_tile(tile_pos);
+	if (tile.character != nullptr) {
+		return this->get_character_info(tile.character);
+	}
+
+	return nullptr;
+}
+
 bool combat::is_attacker_defeated() const
 {
 	return this->attacking_party->get_characters().empty();
@@ -812,7 +833,7 @@ bool combat::is_current_unit_in_enemy_range_at(const QPoint &tile_pos) const
 		const QPoint enemy_tile_pos = enemy_info->get_tile_pos();
 		const int distance = point::distance_to(enemy_tile_pos, tile_pos);
 
-		if (distance <= enemy->get_game_data()->get_range()) {
+		if (distance <= enemy_info->get_range()) {
 			return true;
 		}
 	}
@@ -882,6 +903,21 @@ int combat_character_info::get_hit_points() const
 int combat_character_info::get_max_hit_points() const
 {
 	return this->get_character()->get_game_data()->get_max_hit_points();
+}
+
+int combat_character_info::get_range() const
+{
+	return this->get_character()->get_game_data()->get_range();
+}
+
+bool combat_character_info::is_player_unit() const
+{
+	return this->get_character()->get_game_data()->get_domain() == game::get()->get_player_country();
+}
+
+bool combat_character_info::is_player_enemy() const
+{
+	return this->get_character()->get_game_data()->get_domain() != game::get()->get_player_country();
 }
 
 int combat_object::get_disarm_chance(const metternich::character *character) const

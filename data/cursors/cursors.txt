@@ -22,3 +22,18 @@ teutonic_gauntlet = {
 	filepath = "cursors/teutonic_gauntlet.png"
 	hot_pos = { 0 0 }
 }
+
+green_crosshair = {
+	filepath = "cursors/green_crosshair.png"
+	hot_pos = { 15 15 }
+}
+
+yellow_crosshair = {
+	filepath = "cursors/yellow_crosshair.png"
+	hot_pos = { 15 15 }
+}
+
+red_crosshair = {
+	filepath = "cursors/red_crosshair.png"
+	hot_pos = { 15 15 }
+}

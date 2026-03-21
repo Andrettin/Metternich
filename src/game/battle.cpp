@@ -61,14 +61,24 @@ int battle::get_max_range_of_units() const
 {
 	int max_range = 0;
 
-	for (const military_unit *unit : attacking_army->get_military_units()) {
+	for (const military_unit *unit : this->attacking_army->get_military_units()) {
 		max_range = std::max(max_range, unit->get_stat(military_unit_stat::range).to_int());
 	}
-	for (const military_unit *unit : defending_army->get_military_units()) {
+	for (const military_unit *unit : this->defending_army->get_military_units()) {
 		max_range = std::max(max_range, unit->get_stat(military_unit_stat::range).to_int());
 	}
 
 	return max_range;
+}
+
+spell_target battle::get_spell_target(const spell *spell) const
+{
+	return spell->get_battle_target();
+}
+
+int battle::get_spell_range(const spell *spell) const
+{
+	return spell->get_battle_range();
 }
 
 QVariantList battle::get_unit_infos_qvariant_list() const
@@ -269,7 +279,7 @@ QCoro::Task<void> battle::do_unit_round(military_unit *unit, std::vector<militar
 			assert_throw(chosen_target_tile_pos != QPoint(-1, -1));
 
 			const int distance_to_target = point::distance_to(current_tile_pos, chosen_target_tile_pos);
-			if (distance_to_target <= unit->get_stat(military_unit_stat::range).to_int()) {
+			if (distance_to_target <= unit_info->get_range()) {
 				target_pos = chosen_target_tile_pos;
 			} else {
 				const int current_square_distance = point::square_distance_to(current_tile_pos, chosen_target_tile_pos);
@@ -336,7 +346,7 @@ QCoro::Task<void> battle::do_unit_round(military_unit *unit, std::vector<militar
 			this->set_current_spell(nullptr);
 		} else {
 			if (tile.unit != nullptr) {
-				if (distance <= unit->get_stat(military_unit_stat::range).to_int() && vector::contains(enemy_army->get_military_units(), tile.unit)) {
+				if (distance <= unit_info->get_range() && vector::contains(enemy_army->get_military_units(), tile.unit)) {
 					co_await this->do_unit_attack(unit, tile.unit, enemy_army, killed_units);
 					attacked = true;
 				}
@@ -538,6 +548,16 @@ std::string battle::get_tile_text(const QPoint &tile_pos) const
 	return text;
 }
 
+combat_unit_info_base *battle::get_tile_unit(const QPoint &tile_pos) const
+{
+	const battle_tile &tile = this->get_tile(tile_pos);
+	if (tile.unit != nullptr) {
+		return this->get_unit_info(tile.unit);
+	}
+
+	return nullptr;
+}
+
 bool battle::is_attacker_defeated() const
 {
 	return this->attacking_army->get_military_units().empty();
@@ -605,7 +625,7 @@ bool battle::is_current_unit_in_enemy_range_at(const QPoint &tile_pos) const
 		const QPoint enemy_tile_pos = enemy_info->get_tile_pos();
 		const int distance = point::distance_to(enemy_tile_pos, tile_pos);
 
-		if (distance <= enemy->get_stat(military_unit_stat::range).to_int()) {
+		if (distance <= enemy_info->get_range()) {
 			return true;
 		}
 	}
@@ -652,9 +672,24 @@ int battle_unit_info::get_max_hit_points() const
 	return this->get_unit()->get_max_hit_points();
 }
 
+int battle_unit_info::get_range() const
+{
+	return this->get_unit()->get_stat(military_unit_stat::range).to_int();
+}
+
 const character *battle_unit_info::get_character() const
 {
 	return this->get_unit()->get_character();
+}
+
+bool battle_unit_info::is_player_unit() const
+{
+	return this->get_unit()->get_country() == game::get()->get_player_country();
+}
+
+bool battle_unit_info::is_player_enemy() const
+{
+	return this->get_unit()->get_country() != game::get()->get_player_country();
 }
 
 }

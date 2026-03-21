@@ -3,9 +3,11 @@
 #include "map/combat_map_grid_model.h"
 
 #include "character/character.h"
+#include "database/defines.h"
 #include "game/combat.h"
 #include "game/game.h"
 #include "map/terrain_type.h"
+#include "ui/cursor.h"
 #include "ui/icon.h"
 #include "util/assert_util.h"
 #include "util/exception_util.h"
@@ -95,6 +97,15 @@ QVariant combat_map_grid_model::data(const QModelIndex &index, const int role) c
 				return QVariant::fromValue(tile.terrain);
 			case role::tile_text:
 				return QVariant::fromValue(QString::fromStdString(combat->get_tile_text(tile_pos)));
+			case role::tile_cursor:
+				if (combat->get_current_unit() != nullptr && combat->get_current_unit()->is_player_unit()) {
+					if (combat->can_current_unit_target_ally_at(tile_pos)) {
+						return QVariant::fromValue(defines::get()->get_ally_target_cursor());
+					} else if (combat->can_current_unit_target_enemy_at(tile_pos)) {
+						return QVariant::fromValue(defines::get()->get_enemy_target_cursor());
+					}
+				}
+				return QVariant::fromValue(defines::get()->get_default_cursor());
 			case role::movable_to:
 				return combat->can_current_unit_move_to(tile_pos);
 			case role::retreatable_at:

@@ -95,9 +95,13 @@ QCoro::Task<void> army::do_turn()
 			if (!garrison.empty()) {
 				auto defending_army = make_qunique<army>(garrison, std::monostate());
 				auto battle = make_qunique<metternich::battle>(this, defending_army.get(), QSize());
-				battle->set_scope(this->get_domain());
+				const metternich::domain *scope = this->get_domain();
+				if (defending_army->get_domain() == game::get()->get_player_country()) {
+					scope = defending_army->get_domain();
+				}
+				battle->set_scope(scope);
 				context battle_ctx;
-				battle_ctx.root_scope = this->get_domain();
+				battle_ctx.root_scope = scope;
 				battle_ctx.in_combat = true;
 				battle->set_context(battle_ctx);
 

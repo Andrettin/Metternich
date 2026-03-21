@@ -56,6 +56,9 @@ class defines final : public defines_base, public singleton<defines>
 
 	Q_PROPERTY(archimedes::log_level min_log_level MEMBER min_log_level READ get_min_log_level NOTIFY changed)
 	Q_PROPERTY(metternich::cursor* default_cursor MEMBER default_cursor READ get_default_cursor NOTIFY changed)
+	Q_PROPERTY(metternich::cursor* ally_target_cursor MEMBER ally_target_cursor READ get_ally_target_cursor NOTIFY changed)
+	Q_PROPERTY(metternich::cursor* neutral_target_cursor MEMBER neutral_target_cursor READ get_neutral_target_cursor NOTIFY changed)
+	Q_PROPERTY(metternich::cursor* enemy_target_cursor MEMBER enemy_target_cursor READ get_enemy_target_cursor NOTIFY changed)
 	Q_PROPERTY(QSize tile_size MEMBER tile_size READ get_tile_size NOTIFY changed)
 	Q_PROPERTY(QSize scaled_tile_size READ get_scaled_tile_size NOTIFY scaled_tile_size_changed)
 	Q_PROPERTY(archimedes::decimillesimal_int minimap_tile_scale MEMBER minimap_tile_scale READ get_minimap_tile_scale NOTIFY changed)
@@ -119,6 +122,21 @@ public:
 	cursor *get_default_cursor() const
 	{
 		return this->default_cursor;
+	}
+
+	cursor *get_ally_target_cursor() const
+	{
+		return this->ally_target_cursor;
+	}
+
+	cursor *get_neutral_target_cursor() const
+	{
+		return this->neutral_target_cursor;
+	}
+
+	cursor *get_enemy_target_cursor() const
+	{
+		return this->enemy_target_cursor;
 	}
 
 	const QSize &get_tile_size() const
@@ -478,6 +496,9 @@ signals:
 private:
 	log_level min_log_level;
 	cursor *default_cursor = nullptr;
+	cursor *ally_target_cursor = nullptr;
+	cursor *neutral_target_cursor = nullptr;
+	cursor *enemy_target_cursor = nullptr;
 	QSize tile_size = QSize(64, 64);
 	decimillesimal_int minimap_tile_scale = decimillesimal_int(1);
 	int default_months_per_turn = 3;

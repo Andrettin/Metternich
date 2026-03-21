@@ -180,6 +180,7 @@ Item {
 			
 			status_text = text
 			saved_status_text = text
+			metternich.set_current_cursor(tile_cursor)
 		}
 		
 		onExited: {

@@ -15,6 +15,7 @@ Q_MOC_INCLUDE("sound/media_player.h")
 namespace metternich {
 
 class consulate;
+class cursor;
 class defines;
 class domain_tier_data;
 class event_instance;
@@ -75,6 +76,8 @@ public:
 	media_player *get_media_player() const;
 
 	QString get_save_path() const;
+
+	Q_INVOKABLE QCoro::QmlTask set_current_cursor(metternich::cursor *cursor);
 
 	Q_INVOKABLE QVariantList get_game_rule_groups() const;
 	Q_INVOKABLE const map_template *get_map_template(const QString &identifier) const;
