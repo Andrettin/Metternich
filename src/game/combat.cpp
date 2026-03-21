@@ -42,8 +42,6 @@ namespace metternich {
 combat::combat(party *attacking_party, party *defending_party, const QSize &map_size)
 	: attacking_party(attacking_party), defending_party(defending_party)
 {
-	connect(this, &combat::current_unit_changed, this, &combat::movable_tiles_changed);
-
 	this->set_map_size(map_size);
 
 	for (const character *character : this->attacking_party->get_characters()) {

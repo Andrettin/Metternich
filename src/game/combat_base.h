@@ -1,8 +1,12 @@
 #pragma once
 
+Q_MOC_INCLUDE("spell/spell.h")
+Q_MOC_INCLUDE("ui/icon.h")
+
 namespace metternich {
 
 class icon;
+class spell;
 class terrain_type;
 
 enum class combat_placement
@@ -144,6 +148,7 @@ class combat_base : public QObject
 
 	Q_PROPERTY(QVariantList unit_infos READ get_unit_infos_qvariant_list NOTIFY unit_infos_changed)
 	Q_PROPERTY(const metternich::combat_unit_info_base* current_unit READ get_current_unit NOTIFY current_unit_changed)
+	Q_PROPERTY(const metternich::spell* current_spell READ get_current_spell WRITE set_current_spell NOTIFY current_spell_changed)
 	Q_PROPERTY(bool autoplay_enabled READ is_autoplay_enabled WRITE set_autoplay_enabled NOTIFY autoplay_enabled_changed)
 
 public:
@@ -216,6 +221,18 @@ public:
 	bool can_current_unit_retreat_at(const QPoint &tile_pos) const;
 	virtual bool is_current_unit_in_enemy_range_at(const QPoint &tile_pos) const = 0;
 
+	const spell *get_current_spell() const
+	{
+		return this->current_spell;
+	}
+
+	void set_current_spell(const spell *spell)
+	{
+		this->current_spell = spell;
+
+		emit current_spell_changed();
+	}
+
 	bool is_autoplay_enabled() const
 	{
 		return this->autoplay_enabled;
@@ -224,6 +241,9 @@ public:
 	void set_autoplay_enabled(const bool enabled)
 	{
 		this->autoplay_enabled = enabled;
+
+		this->set_current_spell(nullptr); //autoplay can't handle spells yet
+
 		emit autoplay_enabled_changed();
 	}
 
@@ -242,6 +262,7 @@ signals:
 	void tile_unit_changed(const QPoint &tile_pos);
 	void tile_object_changed(const QPoint &tile_pos);
 	void current_unit_changed();
+	void current_spell_changed();
 	void movable_tiles_changed();
 	void autoplay_enabled_changed();
 
@@ -252,6 +273,7 @@ private:
 	bool defender_retreat_allowed = true;
 	std::unique_ptr<QPromise<QPoint>> target_promise;
 	const combat_unit_info_base *current_unit = nullptr;
+	const spell *current_spell = nullptr;
 	bool autoplay_enabled = false;
 	std::unique_ptr<QPromise<bool>> promise;
 };

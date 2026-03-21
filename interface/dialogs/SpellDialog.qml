@@ -45,6 +45,8 @@ DialogBase {
 					readonly property var spell: model.modelData
 					
 					onClicked: {
+						combat.current_spell = spell
+						spell_dialog.close()
 					}
 					
 					onHoveredChanged: {

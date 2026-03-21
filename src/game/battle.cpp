@@ -17,6 +17,8 @@
 #include "map/terrain_type.h"
 #include "script/effect/effect_list.h"
 #include "sound/sound.h"
+#include "spell/spell.h"
+#include "spell/spell_target.h"
 #include "ui/portrait.h"
 #include "unit/army.h"
 #include "unit/military_unit.h"
@@ -39,8 +41,6 @@ namespace metternich {
 battle::battle(army *attacking_army, army *defending_army, const QSize &map_size)
 	: attacking_army(attacking_army), defending_army(defending_army)
 {
-	connect(this, &battle::current_unit_changed, this, &battle::movable_tiles_changed);
-
 	this->set_map_size(map_size);
 
 	for (const military_unit *unit : this->attacking_army->get_military_units()) {
@@ -316,19 +316,35 @@ QCoro::Task<void> battle::do_unit_round(military_unit *unit, std::vector<militar
 		const battle_tile &tile = this->get_tile(target_pos);
 		const int distance = point::distance_to(current_tile_pos, target_pos);
 
-		if (tile.unit != nullptr) {
-			if (distance <= unit->get_stat(military_unit_stat::range).to_int() && vector::contains(enemy_army->get_military_units(), tile.unit)) {
-				co_await this->do_unit_attack(unit, tile.unit, enemy_army, killed_units);
-				attacked = true;
+		if (this->get_current_spell() != nullptr) {
+			if (tile.unit != nullptr) {
+				if (this->get_current_spell()->get_battle_target() == spell_target::enemy && vector::contains(enemy_army->get_military_units(), tile.unit)) {
+					if (distance <= this->get_current_spell()->get_battle_range()) {
+						co_await this->do_unit_spellcast(unit, this->get_current_spell(), tile.unit, killed_units);
+						attacked = true;
+					}
+				} else if (this->get_current_spell()->get_battle_target() == spell_target::ally && vector::contains(army->get_military_units(), tile.unit)) {
+					if (distance <= this->get_current_spell()->get_battle_range()) {
+						co_await this->do_unit_spellcast(unit, this->get_current_spell(), tile.unit, killed_units);
+						attacked = true;
+					}
+				}
 			}
-		} else if (this->can_current_unit_move_to(target_pos)) {
-			unit_info->change_remaining_movement(-distance);
-			co_await this->move_unit_to(unit, target_pos);
+		} else {
+			if (tile.unit != nullptr) {
+				if (distance <= unit->get_stat(military_unit_stat::range).to_int() && vector::contains(enemy_army->get_military_units(), tile.unit)) {
+					co_await this->do_unit_attack(unit, tile.unit, enemy_army, killed_units);
+					attacked = true;
+				}
+			} else if (this->can_current_unit_move_to(target_pos)) {
+				unit_info->change_remaining_movement(-distance);
+				co_await this->move_unit_to(unit, target_pos);
 
-			if (this->can_current_unit_retreat_at(target_pos)) {
-				army->remove_military_unit(unit);
-				this->remove_unit_info(unit);
-				break;
+				if (this->can_current_unit_retreat_at(target_pos)) {
+					army->remove_military_unit(unit);
+					this->remove_unit_info(unit);
+					break;
+				}
 			}
 		}
 	}
@@ -427,6 +443,48 @@ QCoro::Task<void> battle::do_unit_attack(const military_unit *unit, military_uni
 		if (this->scope == game::get()->get_player_country()) {
 			if (enemy_unit_type != nullptr && enemy_unit_type->get_death_sound() != nullptr) {
 				co_await enemy_unit_type->get_death_sound()->play_coro();
+			}
+		}
+	}
+}
+
+QCoro::Task<void> battle::do_unit_spellcast(const military_unit *unit, const spell *spell, military_unit *target, std::vector<military_unit *> &killed_units)
+{
+	const battle_unit_info *unit_info = this->get_unit_info(unit);
+	const battle_unit_info *target_info = this->get_unit_info(target);
+	const army *target_army = target->get_army();
+
+	if (spell->get_battle_result() != attack_result::none) {
+		const military_unit_type *target_unit_type = target->get_type();
+
+		switch (spell->get_battle_result()) {
+			case attack_result::miss:
+			case attack_result::fall_back:
+				break;
+			case attack_result::hit:
+			case attack_result::route:
+				target->change_hit_points(-1);
+				break;
+			case attack_result::destroy:
+				target->change_hit_points(-target->get_hit_points());
+				break;
+		}
+
+		if (this->scope == game::get()->get_player_country()) {
+			if (unit->get_type()->get_ranged_attack_sound() != nullptr) {
+				co_await unit->get_type()->get_ranged_attack_sound()->play_coro(std::chrono::milliseconds(100)); //FIXME: use spellcasting sound instead
+			}
+		}
+
+		const bool target_dead = !vector::contains(target_army->get_military_units(), target);
+		if (target_dead) {
+			killed_units.push_back(target);
+			this->remove_unit_info(target);
+
+			if (this->scope == game::get()->get_player_country()) {
+				if (target_unit_type != nullptr && target_unit_type->get_death_sound() != nullptr) {
+					co_await target_unit_type->get_death_sound()->play_coro();
+				}
 			}
 		}
 	}

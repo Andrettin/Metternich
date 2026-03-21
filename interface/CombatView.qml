@@ -58,6 +58,10 @@ Item {
 		anchors.right: infopanel.left
 	}
 	
+	SpellDialog {
+		id: spell_dialog
+	}
+	
 	Connections {
 		target: metternich
 		

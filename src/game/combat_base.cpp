@@ -12,6 +12,9 @@ namespace metternich {
 
 combat_base::combat_base()
 {
+	connect(this, &combat_base::current_unit_changed, this, &combat_base::movable_tiles_changed);
+	connect(this, &combat_base::current_spell_changed, this, &combat_base::movable_tiles_changed);
+
 	this->base_terrain = defines::get()->get_default_base_terrain();
 
 	this->promise = std::make_unique<QPromise<bool>>();
@@ -80,6 +83,10 @@ bool combat_base::can_current_unit_move_to(const QPoint &tile_pos) const
 		return false;
 	}
 
+	if (this->get_current_spell() != nullptr) {
+		return false;
+	}
+
 	const QPoint current_tile_pos = this->get_current_unit()->get_tile_pos();
 
 	const int distance = point::distance_to(current_tile_pos, tile_pos);
@@ -103,6 +110,10 @@ bool combat_base::can_current_unit_retreat_at(const QPoint &tile_pos) const
 	}
 
 	if (!this->get_map_rect().contains(tile_pos)) {
+		return false;
+	}
+
+	if (this->get_current_spell() != nullptr) {
 		return false;
 	}
 

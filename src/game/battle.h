@@ -103,6 +103,9 @@ public:
 	[[nodiscard]]
 	QCoro::Task<void> do_unit_attack(const military_unit *unit, military_unit *enemy, army *enemy_army, std::vector<military_unit *> &killed_units);
 
+	[[nodiscard]]
+	QCoro::Task<void> do_unit_spellcast(const military_unit *unit, const spell *spell, military_unit *target, std::vector<military_unit *> &killed_units);
+
 	void process_result();
 
 	virtual battle_tile &get_tile(const QPoint &tile_pos) override;
