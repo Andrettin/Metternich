@@ -59,7 +59,7 @@ public:
 		return this->icon;
 	}
 
-	int get_mana_cost() const;
+	Q_INVOKABLE int get_mana_cost() const;
 
 	int get_range() const
 	{
@@ -89,6 +89,8 @@ public:
 	bool is_available_for_character_class(const character_class *character_class) const;
 
 	bool is_battle_spell() const;
+
+	Q_INVOKABLE QString get_battle_effects_string() const;
 
 signals:
 	void changed();

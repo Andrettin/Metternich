@@ -78,4 +78,11 @@ bool spell::is_battle_spell() const
 	return this->get_battle_target() != spell_target::none;
 }
 
+QString spell::get_battle_effects_string() const
+{
+	std::string str = std::format("Target: {}, Range: {}, Effect: {}", get_spell_target_name(this->get_battle_target()), this->get_battle_range(), get_attack_result_name(this->get_battle_result()));
+
+	return QString::fromStdString(str);
+}
+
 }

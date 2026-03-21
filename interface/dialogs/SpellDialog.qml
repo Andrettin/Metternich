@@ -43,6 +43,7 @@ DialogBase {
 					icon_identifier: spell.icon.identifier
 					
 					readonly property var spell: model.modelData
+					readonly property string costs_string: "Mana Cost: " + spell.get_mana_cost()
 					
 					onClicked: {
 						combat.current_spell = spell
@@ -52,8 +53,12 @@ DialogBase {
 					onHoveredChanged: {
 						if (hovered) {
 							status_text = spell.name
+							middle_status_text = costs_string
+							right_status_text = spell.get_battle_effects_string()
 						} else {
 							status_text = ""
+							middle_status_text = ""
+							right_status_text = ""
 						}
 					}
 				}
