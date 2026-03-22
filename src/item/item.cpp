@@ -9,8 +9,6 @@
 #include "script/modifier.h"
 #include "util/assert_util.h"
 #include "util/string_conversion_util.h"
-#include "util/vector_random_util.h"
-#include "util/vector_util.h"
 
 namespace metternich {
 
@@ -36,7 +34,9 @@ item::item(const gsml_data &scope)
 
 	assert_throw(this->get_type() != nullptr);
 
-	this->update_name();
+	if (this->get_name().empty()) {
+		this->update_name();
+	}
 }
 
 void item::process_gsml_property(const gsml_property &property)
@@ -112,17 +112,7 @@ std::string item::create_name(const item_type *type, const item_material *materi
 
 void item::update_name()
 {
-	const std::vector<std::string> &potential_names = this->get_type()->get_names(this->get_material(), this->get_enchantment());
-
-	if (!potential_names.empty()) {
-		if (!this->get_name().empty() && vector::contains(potential_names, this->get_name())) {
-			return;
-		}
-
-		this->set_name(vector::get_random(potential_names));
-	} else {
-		this->set_name(item::create_name(this->get_type(), this->get_material(), this->get_enchantment()));
-	}
+	this->set_name(item::create_name(this->get_type(), this->get_material(), this->get_enchantment()));
 }
 
 const item_slot *item::get_slot() const

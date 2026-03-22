@@ -1,6 +1,5 @@
 #pragma once
 
-#include "database/data_entry_container.h"
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 #include "util/dice.h"
@@ -11,10 +10,8 @@ Q_MOC_INCLUDE("ui/icon.h")
 namespace metternich {
 
 class character;
-class enchantment;
 class icon;
 class item_class;
-class item_material;
 class item_slot;
 
 template <typename scope_type>
@@ -50,10 +47,6 @@ public:
 
 		return weapon_types;
 	}
-
-	static void process_name_scope(data_entry_map<item_material, data_entry_map<enchantment, std::vector<std::string>>> &names, const gsml_data &scope);
-	static void process_name_scope(data_entry_map<enchantment, std::vector<std::string>> &names, const gsml_data &scope);
-	static void process_name_scope(std::vector<std::string> &names, const gsml_data &scope);
 
 	explicit item_type(const std::string &identifier);
 	~item_type();
@@ -101,20 +94,6 @@ public:
 		return this->modifier.get();
 	}
 
-	const std::vector<std::string> &get_names(const item_material *material, const enchantment *enchantment) const
-	{
-		const auto material_find_iterator = this->names.find(material);
-		if (material_find_iterator != this->names.end()) {
-			const auto enchantment_find_iterator = material_find_iterator->second.find(enchantment);
-			if (enchantment_find_iterator != material_find_iterator->second.end()) {
-				return enchantment_find_iterator->second;
-			}
-		}
-
-		static const std::vector<std::string> empty_vector;
-		return empty_vector;
-	}
-
 signals:
 	void changed();
 
@@ -126,7 +105,6 @@ private:
 	bool two_handed = false;
 	bool stackable = false;
 	std::unique_ptr<const metternich::modifier<const character>> modifier;
-	data_entry_map<item_material, data_entry_map<enchantment, std::vector<std::string>>> names;
 };
 
 }

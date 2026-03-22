@@ -3,12 +3,6 @@ book = {
 	item_class = book
 	icon = book
 	price = 1gp #0gp #correct?
-	names = {
-		tome_of_understanding_2 = {
-			"Tome of Understanding +2"
-			"The Confessions of St. Augustine"
-		}
-	}
 }
 
 torch = {
