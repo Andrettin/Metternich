@@ -26,6 +26,7 @@ helmet = {
 book = {
 	name = "Book"
 	consumable = true
+	consume_verb = "read"
 }
 
 miscellaneous = {
