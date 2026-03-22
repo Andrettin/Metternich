@@ -1,3 +1,10 @@
+book = {
+	name = "Book"
+	item_class = book
+	icon = book
+	price = 1gp #0gp
+}
+
 torch = {
 	name = "Torch"
 	item_class = miscellaneous

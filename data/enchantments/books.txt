@@ -1,0 +1,69 @@
+tome_of_understanding_1 = {
+	name = "Tome of Understanding +1"
+	affix_type = stem
+	item_types = {
+		book
+	}
+	modifier = {
+		wisdom = {
+			modifier_type = inherent
+			modifier = 1
+		}
+	}
+}
+
+tome_of_understanding_2 = {
+	name = "Tome of Understanding +2"
+	affix_type = stem
+	item_types = {
+		book
+	}
+	modifier = {
+		wisdom = {
+			modifier_type = inherent
+			modifier = 2
+		}
+	}
+}
+
+tome_of_understanding_3 = {
+	name = "Tome of Understanding +3"
+	affix_type = stem
+	item_types = {
+		book
+	}
+	modifier = {
+		wisdom = {
+			modifier_type = inherent
+			modifier = 3
+		}
+	}
+}
+
+tome_of_understanding_4 = {
+	name = "Tome of Understanding +4"
+	affix_type = stem
+	item_types = {
+		book
+	}
+	modifier = {
+		wisdom = {
+			modifier_type = inherent
+			modifier = 4
+		}
+	}
+}
+
+tome_of_understanding_5 = {
+	name = "Tome of Understanding +5"
+	affix_type = stem
+	item_types = {
+		book
+	}
+	modifier = {
+		wisdom = {
+			modifier_type = inherent
+			modifier = 5
+		}
+	}
+}

@@ -23,6 +23,11 @@ helmet = {
 	slot = helmet
 }
 
+book = {
+	name = "Book"
+	consumable = true
+}
+
 miscellaneous = {
 	name = "Miscellaneous"
 }

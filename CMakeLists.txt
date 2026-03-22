@@ -385,6 +385,7 @@ set(character_HDRS
 	src/character/character_data_model.h
 	src/character/character_game_data.h
 	src/character/character_history.h
+	src/character/character_modifier_type.h
 	src/character/character_reference.h
 	src/character/dynasty.h
 	src/character/family_tree_model.h
