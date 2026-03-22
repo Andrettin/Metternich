@@ -49,6 +49,7 @@ class status_effect;
 class trait;
 class trait_type;
 enum class age_category;
+enum class character_modifier_type;
 enum class military_unit_stat;
 
 template <typename scope_type>
@@ -296,6 +297,59 @@ public:
 	bool do_attribute_check(const character_attribute *attribute, const int roll_modifier) const;
 	int get_attribute_check_chance(const character_attribute *attribute, const int roll_modifier) const;
 	void on_attribute_value_changed(const character_attribute_base *attribute, const int new_value, const int old_value); //also used for skills
+
+	int get_best_attribute_modifier(const character_attribute *attribute, const character_modifier_type modifier_type) const
+	{
+		const auto attribute_find_iterator = this->attribute_modifiers.find(attribute);
+		if (attribute_find_iterator != this->attribute_modifiers.end()) {
+			const auto modifier_type_find_iterator = attribute_find_iterator->second.find(modifier_type);
+			if (modifier_type_find_iterator != attribute_find_iterator->second.end()) {
+				int best_modifier = 0;
+
+				for (const int modifier : modifier_type_find_iterator->second) {
+					if (modifier > best_modifier) {
+						best_modifier = modifier;
+					}
+				}
+
+				return best_modifier;
+			}
+		}
+
+		return 0;
+	}
+
+	void add_attribute_modifier(const character_attribute *attribute, const character_modifier_type modifier_type, const int modifier)
+	{
+		const int old_best_modifier = this->get_best_attribute_modifier(attribute, modifier_type);
+
+		this->attribute_modifiers[attribute][modifier_type].push_back(modifier);
+
+		const int new_best_modifier = this->get_best_attribute_modifier(attribute, modifier_type);
+
+		if (new_best_modifier != old_best_modifier) {
+			this->change_attribute_value(attribute, new_best_modifier - old_best_modifier);
+		}
+	}
+
+	void remove_attribute_modifier(const character_attribute *attribute, const character_modifier_type modifier_type, const int modifier)
+	{
+		auto attribute_find_iterator = this->attribute_modifiers.find(attribute);
+		if (attribute_find_iterator != this->attribute_modifiers.end()) {
+			auto modifier_type_find_iterator = attribute_find_iterator->second.find(modifier_type);
+			if (modifier_type_find_iterator != attribute_find_iterator->second.end()) {
+				const int old_best_modifier = this->get_best_attribute_modifier(attribute, modifier_type);
+
+				std::erase(modifier_type_find_iterator->second, modifier);
+
+				const int new_best_modifier = this->get_best_attribute_modifier(attribute, modifier_type);
+
+				if (new_best_modifier != old_best_modifier) {
+					this->change_attribute_value(attribute, new_best_modifier - old_best_modifier);
+				}
+			}
+		}
+	}
 
 	int get_hit_dice_count() const
 	{
@@ -783,6 +837,7 @@ private:
 	int bloodline_strength = 0;
 	int reputation = 0;
 	data_entry_map<character_attribute, int> attribute_values;
+	data_entry_map<character_attribute, std::map<character_modifier_type, std::vector<int>>> attribute_modifiers;
 	int hit_dice_count = 0;
 	int hit_points = 0;
 	int max_hit_points = 0;

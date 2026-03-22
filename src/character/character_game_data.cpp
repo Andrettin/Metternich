@@ -8,6 +8,7 @@
 #include "character/character_attribute.h"
 #include "character/character_class.h"
 #include "character/character_history.h"
+#include "character/character_modifier_type.h"
 #include "character/level_bonus_table.h"
 #include "character/monster_type.h"
 #include "character/mythic_path.h"
@@ -64,6 +65,8 @@
 #include "util/string_util.h"
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
+
+#include <magic_enum/magic_enum.hpp>
 
 namespace metternich {
 
@@ -149,11 +152,28 @@ void character_game_data::process_gsml_scope(const gsml_data &scope)
 	const std::vector<std::string> &values = scope.get_values();
 
 	if (tag == "attributes") {
-		scope.for_each_property([&](const gsml_property &attribute_property) {
+		scope.for_each_property([this](const gsml_property &attribute_property) {
 			this->attribute_values[character_attribute::get(attribute_property.get_key())] = std::stoi(attribute_property.get_value());
 		});
+	} else if (tag == "attributes_modifiers") {
+		scope.for_each_child([this](const gsml_data &child_scope) {
+			const std::string &child_tag = child_scope.get_tag();
+			const std::vector<std::string> &child_values = child_scope.get_values();
+
+			const character_attribute *attribute = character_attribute::get(child_tag);
+
+			child_scope.for_each_child([this, attribute](const gsml_data &grandchild_scope) {
+				const std::string &grandchild_tag = grandchild_scope.get_tag();
+				const std::vector<std::string> &grandchild_values = grandchild_scope.get_values();
+
+				const character_modifier_type modifier_type = magic_enum::enum_cast<character_modifier_type>(grandchild_tag).value();
+				for (const std::string &grandchild_value : grandchild_values) {
+					this->attribute_modifiers[attribute][modifier_type].push_back(std::stoi(grandchild_value));
+				}
+			});
+		});
 	} else if (tag == "hit_dice_roll_results") {
-		scope.for_each_child([&](const gsml_data &child_scope) {
+		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
 			const std::vector<std::string> &child_values = child_scope.get_values();
 
@@ -163,27 +183,27 @@ void character_game_data::process_gsml_scope(const gsml_data &scope)
 			}
 		});
 	} else if (tag == "species_armor_class_bonuses") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			this->species_armor_class_bonuses[species::get(property.get_key())] = std::stoi(property.get_value());
 		});
 	} else if (tag == "saving_throw_bonuses") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			this->saving_throw_bonuses[saving_throw_type::get(property.get_key())] = std::stoi(property.get_value());
 		});
 	} else if (tag == "skill_trainings") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			this->skill_trainings[skill::get(property.get_key())] = std::stoi(property.get_value());
 		});
 	} else if (tag == "skill_values") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			this->skill_values[skill::get(property.get_key())] = std::stoi(property.get_value());
 		});
 	} else if (tag == "trait_counts") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			this->trait_counts[trait::get(property.get_key())] = std::stoi(property.get_value());
 		});
 	} else if (tag == "trait_choices") {
-		scope.for_each_child([&](const gsml_data &child_scope) {
+		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
 			const std::vector<std::string> &child_values = child_scope.get_values();
 
@@ -192,8 +212,12 @@ void character_game_data::process_gsml_scope(const gsml_data &scope)
 				this->trait_choices[trait_type].push_back(trait::get(child_value));
 			}
 		});
+	} else if (tag == "spells") {
+		for (const std::string &value : values) {
+			this->spells.push_back(spell::get(value));
+		}
 	} else if (tag == "items") {
-		scope.for_each_child([&](const gsml_data &child_scope) {
+		scope.for_each_child([this](const gsml_data &child_scope) {
 			auto item = make_qunique<metternich::item>(child_scope);
 			child_scope.process(item.get());
 			metternich::item *item_ptr = item.get();
@@ -252,6 +276,28 @@ gsml_data character_game_data::to_gsml_data() const
 			attributes_data.add_property(attribute->get_identifier(), std::to_string(value));
 		}
 		data.add_child(std::move(attributes_data));
+	}
+
+	if (!this->attribute_modifiers.empty()) {
+		gsml_data attribute_modifiers_data("attribute_modifiers");
+
+		for (const auto &[attribute, specific_attribute_modifiers] : this->attribute_modifiers) {
+			gsml_data specific_attribute_modifiers_data(attribute->get_identifier());
+
+			for (const auto &[modifier_type, modifiers] : specific_attribute_modifiers) {
+				gsml_data modifiers_data(std::string(magic_enum::enum_name(modifier_type)));
+
+				for (const int modifier : modifiers) {
+					modifiers_data.add_value(std::to_string(modifier));
+				}
+
+				specific_attribute_modifiers_data.add_child(std::move(modifiers_data));
+			}
+
+			attribute_modifiers_data.add_child(std::move(specific_attribute_modifiers_data));
+		}
+
+		data.add_child(std::move(attribute_modifiers_data));
 	}
 
 	data.add_property("hit_dice_count", std::to_string(this->get_hit_dice_count()));
@@ -326,6 +372,14 @@ gsml_data character_game_data::to_gsml_data() const
 			trait_choices_data.add_child(std::move(trait_type_data));
 		}
 		data.add_child(std::move(trait_choices_data));
+	}
+
+	if (!this->spells.empty()) {
+		gsml_data spells_data("spells");
+		for (const spell *spell : this->spells) {
+			spells_data.add_value(spell->get_identifier());
+		}
+		data.add_child(std::move(spells_data));
 	}
 
 	if (!this->items.empty()) {

@@ -283,6 +283,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			modifier_effect = std::make_unique<attribute_skill_bonus_modifier_effect>();
 		} else if (tag == "species_armor_class_bonus") {
 			modifier_effect = std::make_unique<species_armor_class_bonus_modifier_effect>();
+		} else if (character_attribute::try_get(tag) != nullptr) {
+			modifier_effect = std::make_unique<character_attribute_modifier_effect>(character_attribute::get(tag));
 		}
 	} else if constexpr (std::is_same_v<scope_type, const domain>) {
 		if (tag == "ai_building_desire") {
