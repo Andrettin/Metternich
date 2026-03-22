@@ -1475,6 +1475,10 @@ void character_game_data::change_attribute_value(const character_attribute *attr
 	}
 
 	this->on_attribute_value_changed(attribute, new_value, old_value);
+
+	if (game::get()->is_running()) {
+		emit attribute_values_changed();
+	}
 }
 
 int character_game_data::get_primary_attribute_value() const

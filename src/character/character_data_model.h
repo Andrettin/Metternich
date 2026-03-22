@@ -80,6 +80,7 @@ public:
 	void reset_model();
 	void create_divine_domain_rows();
 	void create_attribute_rows();
+	void update_attribute_rows();
 	void create_armor_class_rows();
 	void update_armor_class_rows();
 	void create_to_hit_bonus_rows();
@@ -110,6 +111,7 @@ signals:
 private:
 	const metternich::character *character = nullptr;
 	std::vector<std::unique_ptr<const character_data_row>> top_rows;
+	character_data_row *attribute_row = nullptr;
 	character_data_row *armor_class_row = nullptr;
 	character_data_row *to_hit_bonus_row = nullptr;
 	character_data_row *damage_row = nullptr;

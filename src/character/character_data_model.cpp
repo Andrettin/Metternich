@@ -134,6 +134,7 @@ QModelIndex character_data_model::parent(const QModelIndex &index) const
 void character_data_model::set_character(const metternich::character *character)
 {
 	if (this->character != nullptr) {
+		disconnect(this->character->get_game_data(), &character_game_data::attribute_values_changed, this, &character_data_model::update_attribute_rows);
 		//disconnect(this->character->get_game_data(), &character_game_data::armor_class_bonus_changed, this, &character_data_model::update_armor_class_rows);
 		//disconnect(this->character->get_game_data(), &character_game_data::species_armor_class_bonuses_changed, this, &character_data_model::update_armor_class_rows);
 		//disconnect(this->character->get_game_data(), &character_game_data::to_hit_bonus_changed, this, &character_data_model::update_to_hit_bonus_rows);
@@ -154,6 +155,7 @@ void character_data_model::set_character(const metternich::character *character)
 	this->reset_model();
 
 	if (character != nullptr) {
+		connect(this->character->get_game_data(), &character_game_data::attribute_values_changed, this, &character_data_model::update_attribute_rows);
 		//connect(this->character->get_game_data(), &character_game_data::armor_class_bonus_changed, this, &character_data_model::update_armor_class_rows);
 		//connect(this->character->get_game_data(), &character_game_data::species_armor_class_bonuses_changed, this, &character_data_model::update_armor_class_rows);
 		//connect(this->character->get_game_data(), &character_game_data::to_hit_bonus_changed, this, &character_data_model::update_to_hit_bonus_rows);
@@ -178,6 +180,7 @@ void character_data_model::reset_model()
 	this->resetting_model = true;
 
 	this->top_rows.clear();
+	this->attribute_row = nullptr;
 	this->armor_class_row = nullptr;
 	this->to_hit_bonus_row = nullptr;
 	this->damage_row = nullptr;
@@ -299,15 +302,27 @@ void character_data_model::create_divine_domain_rows()
 
 void character_data_model::create_attribute_rows()
 {
-	auto top_row = std::make_unique<character_data_row>("Attributes");
+	auto row = std::make_unique<character_data_row>("Attributes");
+	this->attribute_row = row.get();
+	this->top_rows.push_back(std::move(row));
+
+	this->update_attribute_rows();
+}
+
+void character_data_model::update_attribute_rows()
+{
+	assert_throw(this->attribute_row != nullptr);
+
+	this->clear_child_rows(this->attribute_row);
 
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
+
 	for (const auto &[attribute, value] : character_game_data->get_attribute_values()) {
-		auto row = std::make_unique<character_data_row>(attribute->get_name() + ":", std::to_string(value), top_row.get());
-		top_row->child_rows.push_back(std::move(row));
+		auto row = std::make_unique<character_data_row>(attribute->get_name() + ":", std::to_string(value), this->attribute_row);
+		this->attribute_row->child_rows.push_back(std::move(row));
 	}
 
-	this->top_rows.push_back(std::move(top_row));
+	this->on_child_rows_inserted(this->attribute_row);
 }
 
 void character_data_model::create_armor_class_rows()

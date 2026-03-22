@@ -802,6 +802,7 @@ signals:
 	void bloodline_changed();
 	void bloodline_strength_changed();
 	void reputation_changed();
+	void attribute_values_changed();
 	void hit_points_changed();
 	void max_hit_points_changed();
 	void armor_class_bonus_changed();
