@@ -185,8 +185,6 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			return std::make_unique<government_type_condition>(value, condition_operator);
 		} else if (key == "has_character") {
 			return std::make_unique<has_character_condition>(value, condition_operator);
-		} else if (key == "has_flag") {
-			return std::make_unique<has_flag_condition>(value, condition_operator);
 		} else if (key == "independent") {
 			return std::make_unique<independent_condition>(value, condition_operator);
 		} else if (key == "is_military_unit_category_available") {
@@ -262,7 +260,9 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 	}
 	
 	if constexpr (std::is_same_v<scope_type, character> || std::is_same_v<scope_type, domain>) {
-		if (key == "item") {
+		if (key == "has_flag") {
+			return std::make_unique<has_flag_condition<scope_type>>(value, condition_operator);
+		} else if (key == "item") {
 			return std::make_unique<item_condition<scope_type>>(value, condition_operator);
 		} else if (key == "playable") {
 			return std::make_unique<playable_condition<scope_type>>(value, condition_operator);

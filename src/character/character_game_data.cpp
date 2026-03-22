@@ -47,6 +47,7 @@
 #include "script/condition/and_condition.h"
 #include "script/effect/effect_list.h"
 #include "script/factor.h"
+#include "script/flag.h"
 #include "script/modifier.h"
 #include "script/scripted_character_modifier.h"
 #include "species/species.h"
@@ -235,6 +236,10 @@ void character_game_data::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->reigned_domains.insert(domain::get(value));
 		}
+	} else if (tag == "flags") {
+		for (const std::string &value : values) {
+			this->flags.insert(flag::get(value));
+		}
 	} else {
 		throw std::runtime_error(std::format("Invalid character game data scope: \"{}\".", tag));
 	}
@@ -403,6 +408,14 @@ gsml_data character_game_data::to_gsml_data() const
 			reigned_domains_data.add_value(domain->get_identifier());
 		}
 		data.add_child(std::move(reigned_domains_data));
+	}
+
+	if (!this->flags.empty()) {
+		gsml_data flags_data("flags");
+		for (const flag *flag : this->flags) {
+			flags_data.add_value(flag->get_identifier());
+		}
+		data.add_child(std::move(flags_data));
 	}
 
 	return data;

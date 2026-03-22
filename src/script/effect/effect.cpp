@@ -87,9 +87,7 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 		static const std::string percent_suffix = "_percent";
 		static const std::string population_scaled_commodity_prefix = "population_scaled_";
 
-		if (key == "clear_flag") {
-			return std::make_unique<clear_flag_effect>(value, effect_operator);
-		} else if (key == "create_military_unit") {
+		if (key == "create_military_unit") {
 			return std::make_unique<create_military_unit_effect>(value, effect_operator);
 		} else if (key == "create_transporter") {
 			return std::make_unique<create_transporter_effect>(value, effect_operator);
@@ -99,8 +97,6 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 			return std::make_unique<free_technologies_effect>(value, effect_operator);
 		} else if (key == "gain_spell_scroll") {
 			return std::make_unique<gain_spell_scroll_effect>(value, effect_operator);
-		} else if (key == "set_flag") {
-			return std::make_unique<set_flag_effect>(value, effect_operator);
 		} else if (commodity::try_get(key) != nullptr) {
 			return std::make_unique<commodity_effect>(commodity::get(key), value, effect_operator);
 		} else if (key.starts_with(population_scaled_commodity_prefix) && commodity::try_get(key.substr(population_scaled_commodity_prefix.size(), key.size() - population_scaled_commodity_prefix.size())) != nullptr) {
@@ -123,8 +119,12 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 			return std::make_unique<event_effect<scope_type>>(value, effect_operator);
 		} else if (key == "gain_item") {
 			return std::make_unique<gain_item_effect<scope_type>>(value, effect_operator);
+		} else if (key == "clear_flag") {
+			return std::make_unique<clear_flag_effect<scope_type>>(value, effect_operator);
 		} else if (key == "lose_item") {
 			return std::make_unique<lose_item_effect<scope_type>>(value, effect_operator);
+		} else if (key == "set_flag") {
+			return std::make_unique<set_flag_effect<scope_type>>(value, effect_operator);
 		}
 	}
 

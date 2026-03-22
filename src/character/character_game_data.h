@@ -30,6 +30,7 @@ class character_attribute_base;
 class civilian_unit;
 class domain;
 class enchantment;
+class flag;
 class item;
 class item_material;
 class item_slot;
@@ -792,6 +793,21 @@ public:
 	
 	const site *get_location() const;
 
+	bool has_flag(const flag *flag) const
+	{
+		return this->flags.contains(flag);
+	}
+
+	void set_flag(const flag *flag)
+	{
+		this->flags.insert(flag);
+	}
+
+	void clear_flag(const flag *flag)
+	{
+		this->flags.erase(flag);
+	}
+
 signals:
 	void full_name_changed();
 	void titled_name_changed();
@@ -878,6 +894,7 @@ private:
 	data_entry_map<status_effect, int> status_effect_rounds; //doesn't need to be saved since the game cannot be saved from within combat
 	domain_set ruled_domains; //domains that this character has ever ruled
 	domain_set reigned_domains; //domains that this character has ever ruled with a regnal number
+	std::set<const flag *> flags;
 };
 
 }
