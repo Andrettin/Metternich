@@ -2,7 +2,7 @@ book = {
 	name = "Book"
 	item_class = book
 	icon = book
-	price = 1gp #0gp
+	price = 1gp #0gp #correct?
 }
 
 torch = {

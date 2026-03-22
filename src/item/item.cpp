@@ -34,7 +34,9 @@ item::item(const gsml_data &scope)
 
 	assert_throw(this->get_type() != nullptr);
 
-	this->update_name();
+	if (this->get_name().empty()) {
+		this->update_name();
+	}
 }
 
 void item::process_gsml_property(const gsml_property &property)
@@ -42,7 +44,9 @@ void item::process_gsml_property(const gsml_property &property)
 	const std::string &key = property.get_key();
 	const std::string &value = property.get_value();
 
-	if (key == "type") {
+	if (key == "name") {
+		this->name = value;
+	} else if (key == "type") {
 		this->type = item_type::get(value);
 	} else if (key == "material") {
 		this->material = item_material::get(value);
@@ -65,6 +69,7 @@ gsml_data item::to_gsml_data() const
 {
 	gsml_data data;
 
+	data.add_property("name", this->get_name());
 	data.add_property("type", this->get_type()->get_identifier());
 
 	if (this->get_material() != nullptr) {
