@@ -34,6 +34,7 @@
 #include "game/game_rules.h"
 #include "item/enchantment.h"
 #include "item/item.h"
+#include "item/item_class.h"
 #include "item/item_slot.h"
 #include "item/item_type.h"
 #include "map/map.h"
@@ -158,7 +159,6 @@ void character_game_data::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "attributes_modifiers") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
-			const std::vector<std::string> &child_values = child_scope.get_values();
 
 			const character_attribute *attribute = character_attribute::get(child_tag);
 
@@ -2602,6 +2602,47 @@ void character_game_data::remove_item(const item_type *item_type, const item_mat
 			this->remove_item(item.get());
 			return;
 		}
+	}
+}
+
+bool character_game_data::can_use_item(const metternich::item *item) const
+{
+	if (!item->get_type()->get_item_class()->is_consumable()) {
+		return false;
+	}
+
+	return true;
+}
+
+void character_game_data::use_item(metternich::item *item)
+{
+	assert_throw(this->can_use_item(item));
+
+	this->on_item_used(item);
+
+	this->remove_item(item);
+}
+
+void character_game_data::on_item_used(const item *item)
+{
+	const item_type *type = item->get_type();
+	if (type->get_modifier() != nullptr) {
+		type->get_modifier()->apply(this->character);
+	}
+
+	if (item->get_enchantment() != nullptr) {
+		this->on_item_used_with_enchantment(item->get_enchantment());
+	}
+}
+
+void character_game_data::on_item_used_with_enchantment(const enchantment *enchantment)
+{
+	if (enchantment->get_modifier() != nullptr) {
+		enchantment->get_modifier()->apply(this->character);
+	}
+
+	for (const metternich::enchantment *subenchantment : enchantment->get_subenchantments()) {
+		this->on_item_used_with_enchantment(subenchantment);
 	}
 }
 

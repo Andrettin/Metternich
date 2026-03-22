@@ -654,6 +654,11 @@ public:
 	void remove_item(item *item);
 	void remove_item(const item_type *item_type, const item_material *material, const enchantment *enchantment);
 
+	Q_INVOKABLE bool can_use_item(const metternich::item *item) const;
+	Q_INVOKABLE void use_item(metternich::item *item);
+	void on_item_used(const item *item);
+	void on_item_used_with_enchantment(const enchantment *enchantment);
+
 	const std::vector<item *> &get_equipped_items(const item_slot *slot) const
 	{
 		const auto find_iterator = this->equipped_items.find(slot);
