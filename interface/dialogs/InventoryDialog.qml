@@ -13,6 +13,19 @@ DialogBase {
 	readonly property int icon_button_width: 32 * scale_factor + 6 * scale_factor
 	readonly property int icon_button_height: 32 * scale_factor + 6 * scale_factor
 	
+	MouseArea {
+		anchors.fill: parent
+		hoverEnabled: true
+		
+		onEntered: {
+			if (typeof status_text !== 'undefined') {
+				status_text = ""
+				middle_status_text = ""
+				right_status_text = ""
+			}
+		}
+	}
+	
 	Flickable {
 		id: inventory_grid_view
 		anchors.top: title_item.bottom
