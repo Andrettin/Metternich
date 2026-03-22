@@ -71,6 +71,7 @@
 #include "script/condition/and_condition.h"
 #include "script/effect/effect_list.h"
 #include "script/factor.h"
+#include "script/flag.h"
 #include "script/modifier.h"
 #include "script/opinion_modifier.h"
 #include "script/scripted_country_modifier.h"
@@ -198,6 +199,10 @@ void domain_game_data::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "civilian_units") {
 		auto civilian_unit = make_qunique<metternich::civilian_unit>(scope);
 		this->add_civilian_unit(std::move(civilian_unit));
+	} else if (tag == "flags") {
+		for (const std::string &value : values) {
+			this->flags.insert(flag::get(value));
+		}
 	} else {
 		throw std::runtime_error(std::format("Invalid domain game data scope: \"{}\".", tag));
 	}
@@ -258,19 +263,19 @@ gsml_data domain_game_data::to_gsml_data() const
 	data.add_child(std::move(characters_data));
 
 	if (!this->historical_rulers.empty()) {
-		gsml_data attributes_data("historical_rulers");
+		gsml_data historical_rulers_data("historical_rulers");
 		for (const auto &[date, historical_ruler] : this->historical_rulers) {
-			attributes_data.add_property(date::to_string(date), historical_ruler->get_identifier());
+			historical_rulers_data.add_property(date::to_string(date), historical_ruler->get_identifier());
 		}
-		data.add_child(std::move(attributes_data));
+		data.add_child(std::move(historical_rulers_data));
 	}
 
 	if (!this->historical_monarchs.empty()) {
-		gsml_data attributes_data("historical_monarchs");
+		gsml_data historical_monarchs_data("historical_monarchs");
 		for (const auto &[date, historical_monarch] : this->historical_monarchs) {
-			attributes_data.add_property(date::to_string(date), historical_monarch->get_identifier());
+			historical_monarchs_data.add_property(date::to_string(date), historical_monarch->get_identifier());
 		}
-		data.add_child(std::move(attributes_data));
+		data.add_child(std::move(historical_monarchs_data));
 	}
 
 	if (!this->get_civilian_units().empty()) {
@@ -279,6 +284,14 @@ gsml_data domain_game_data::to_gsml_data() const
 			civilian_units_data.add_child(civilian_unit->to_gsml_data());
 		}
 		data.add_child(std::move(civilian_units_data));
+	}
+
+	if (!this->flags.empty()) {
+		gsml_data flags_data("flags");
+		for (const flag *flag : this->flags) {
+			flags_data.add_value(flag->get_identifier());
+		}
+		data.add_child(std::move(flags_data));
 	}
 
 	return data;
