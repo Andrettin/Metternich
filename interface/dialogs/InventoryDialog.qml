@@ -45,7 +45,7 @@ DialogBase {
 		
 		Grid {
 			id: inventory_grid
-			columns: 3
+			columns: 5
 			spacing: 8 * scale_factor
 			
 			Repeater {
