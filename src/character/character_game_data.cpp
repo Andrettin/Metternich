@@ -423,6 +423,11 @@ void character_game_data::do_events()
 	character_event::check_events_for_scope(this->character, event_trigger::per_turn_pulse);
 }
 
+bool character_game_data::is_ai() const
+{
+	return this->character != game::get()->get_player_character();
+}
+
 void character_game_data::apply_species_and_class(const int level, const bool apply_history)
 {
 	const species *species = this->character->get_species();
@@ -2593,6 +2598,9 @@ void character_game_data::add_item(qunique_ptr<item> &&item)
 
 	if (this->can_equip_item(item_ptr, false)) {
 		this->equip_item(item_ptr);
+	} else if (this->is_ai() && this->can_use_item(item_ptr)) {
+		//AI characters use items as soon as they receive them
+		this->use_item(item_ptr);
 	}
 }
 
@@ -2629,6 +2637,8 @@ bool character_game_data::can_use_item(const metternich::item *item) const
 	if (!item->get_type()->get_item_class()->is_consumable()) {
 		return false;
 	}
+
+	//FIXME: only allow consuming items without modifiers (e.g. consumables with scripted effects, like healing potions) if consumption conditions are fulfilled (e.g. less than maximum HP for healing potions)
 
 	return true;
 }

@@ -20,7 +20,9 @@
 #include "game/game_rule.h"
 #include "infrastructure/dungeon_area.h"
 #include "infrastructure/holding_type.h"
+#include "item/enchantment.h"
 #include "item/item_class.h"
+#include "item/item_material.h"
 #include "item/item_slot.h"
 #include "item/item_type.h"
 #include "item/object_type.h"
@@ -50,10 +52,12 @@ template struct data_entry_compare<cultural_group>;
 template struct data_entry_compare<culture_base>;
 template struct data_entry_compare<domain_attribute>;
 template struct data_entry_compare<dungeon_area>;
+template struct data_entry_compare<enchantment>;
 template struct data_entry_compare<game_rule>;
 template struct data_entry_compare<holding_type>;
 template struct data_entry_compare<idea_slot>;
 template struct data_entry_compare<item_class>;
+template struct data_entry_compare<item_material>;
 template struct data_entry_compare<item_slot>;
 template struct data_entry_compare<item_type>;
 template struct data_entry_compare<monster_type>;
