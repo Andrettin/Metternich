@@ -134,15 +134,13 @@ DialogBase {
 		}
 		
 		TextButton {
-			id: family_tree_button
-			text: "Family Tree"
-			visible: character !== null && (character.father !== null || character.mother !== null || character.game_data.dynastic_children.length > 0) && show_family_tree_button
+			id: inventory_button
+			text: "Inventory"
+			visible: character !== null && character.game_data.items.length > 0
 			onClicked: {
-				var family_tree_character = character_dialog.character
-				character_dialog.close()
-				menu_stack.push("../FamilyTreeView.qml", {
-					character: family_tree_character
-				})
+				inventory_dialog.character = character_dialog.character
+				inventory_dialog.open()
+				inventory_dialog.receive_focus()
 			}
 		}
 		
@@ -154,6 +152,19 @@ DialogBase {
 				spell_dialog.caster = character_dialog.character
 				spell_dialog.open()
 				spell_dialog.receive_focus()
+			}
+		}
+		
+		TextButton {
+			id: family_tree_button
+			text: "Family Tree"
+			visible: character !== null && (character.father !== null || character.mother !== null || character.game_data.dynastic_children.length > 0) && show_family_tree_button
+			onClicked: {
+				var family_tree_character = character_dialog.character
+				character_dialog.close()
+				menu_stack.push("../FamilyTreeView.qml", {
+					character: family_tree_character
+				})
 			}
 		}
 		

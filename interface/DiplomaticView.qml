@@ -77,6 +77,10 @@ Item {
 		id: character_dialog
 	}
 	
+	InventoryDialog {
+		id: inventory_dialog
+	}
+	
 	SpellDialog {
 		id: spell_dialog
 		mode: SpellDialog.Mode.All
