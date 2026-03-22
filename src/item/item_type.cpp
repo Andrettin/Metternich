@@ -4,11 +4,54 @@
 
 #include "database/defines.h"
 #include "economy/commodity.h"
+#include "item/enchantment.h"
 #include "item/item_class.h"
+#include "item/item_material.h"
 #include "item/item_slot.h"
 #include "script/modifier.h"
 
 namespace metternich {
+
+void item_type::process_name_scope(data_entry_map<item_material, data_entry_map<enchantment, std::vector<std::string>>> &names, const gsml_data &scope)
+{
+	scope.for_each_child([&names](const gsml_data &child_scope) {
+		const std::string &child_tag = child_scope.get_tag();
+
+		const item_material *material = item_material::try_get(child_tag);
+
+		if (material != nullptr) {
+			item_type::process_name_scope(names[material], child_scope);
+
+			if (!child_scope.get_values().empty()) {
+				item_type::process_name_scope(names[material][nullptr], child_scope);
+			}
+		} else {
+			const enchantment *enchantment = enchantment::try_get(child_tag);
+			item_type::process_name_scope(names[nullptr][enchantment], child_scope);
+		}
+	});
+
+	if (!scope.get_values().empty()) {
+		item_type::process_name_scope(names[nullptr][nullptr], scope);
+	}
+}
+
+void item_type::process_name_scope(data_entry_map<enchantment, std::vector<std::string>> &names, const gsml_data &scope)
+{
+	scope.for_each_child([&names](const gsml_data &child_scope) {
+		const std::string &child_tag = child_scope.get_tag();
+		const enchantment *enchantment = enchantment::get(child_tag);
+		item_type::process_name_scope(names[enchantment], child_scope);
+	});
+}
+
+void item_type::process_name_scope(std::vector<std::string> &names, const gsml_data &scope)
+{
+	const std::vector<std::string> &values = scope.get_values();
+	for (const std::string &value : values) {
+		names.push_back(value);
+	}
+}
 
 item_type::item_type(const std::string &identifier) : named_data_entry(identifier)
 {
@@ -38,6 +81,8 @@ void item_type::process_gsml_scope(const gsml_data &scope)
 		auto modifier = std::make_unique<metternich::modifier<const character>>();
 		modifier->process_gsml_data(scope);
 		this->modifier = std::move(modifier);
+	} else if (tag == "names") {
+		item_type::process_name_scope(this->names, scope);
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
