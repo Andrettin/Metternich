@@ -6,6 +6,7 @@
 #include "item/enchantment.h"
 #include "item/item_material.h"
 #include "item/item_type.h"
+#include "script/modifier.h"
 #include "util/assert_util.h"
 #include "util/string_conversion_util.h"
 
@@ -126,6 +127,33 @@ void item::change_quantity(const int change)
 	this->quantity += change;
 	
 	assert_throw(this->quantity >= 0);
+}
+
+QString item::get_effects_string() const
+{
+	std::string str;
+
+	if (this->get_type()->get_modifier() != nullptr) {
+		str += this->get_type()->get_modifier()->get_single_line_string(nullptr);
+	}
+
+	if (this->get_material() != nullptr && this->get_material()->get_modifier() != nullptr) {
+		if (!str.empty()) {
+			str += ", ";
+		}
+
+		str += this->get_material()->get_modifier()->get_single_line_string(nullptr);
+	}
+
+	if (this->get_enchantment() != nullptr) {
+		if (!str.empty()) {
+			str += ", ";
+		}
+
+		str += this->get_enchantment()->get_effects_string();
+	}
+
+	return QString::fromStdString(str);
 }
 
 }

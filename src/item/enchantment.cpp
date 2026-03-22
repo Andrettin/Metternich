@@ -59,4 +59,23 @@ bool enchantment::is_allowed_for_item_type(const item_type *item_type) const
 	return this->get_item_types().contains(item_type) || (item_type->get_item_class() != nullptr && this->get_item_classes().contains(item_type->get_item_class()));
 }
 
+std::string enchantment::get_effects_string() const
+{
+	std::string str;
+
+	if (this->get_modifier() != nullptr) {
+		str += this->get_modifier()->get_single_line_string(nullptr);
+	}
+
+	for (const enchantment *subenchantment : this->get_subenchantments()) {
+		if (!str.empty()) {
+			str += ", ";
+		}
+
+		str += subenchantment->get_effects_string();
+	}
+
+	return str;
+}
+
 }

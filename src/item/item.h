@@ -99,6 +99,8 @@ public:
 
 	void change_quantity(const int change);
 
+	Q_INVOKABLE QString get_effects_string() const;
+
 signals:
 	void name_changed();
 	void equipped_changed();

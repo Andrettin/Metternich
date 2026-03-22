@@ -58,6 +58,8 @@ public:
 		return this->modifier.get();
 	}
 
+	std::string get_effects_string() const;
+
 signals:
 	void changed();
 

@@ -62,9 +62,11 @@ DialogBase {
 										middle_status_text = "Click to " + item.type.item_class.consume_verb
 									}
 								}
+								right_status_text = item.get_effects_string()
 							} else {
 								status_text = ""
 								middle_status_text = ""
+								right_status_text = ""
 							}
 						}
 					}
