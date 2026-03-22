@@ -94,10 +94,10 @@ cleric = {
 		}
 	}
 	starting_items = {
-		mace
-		shield
-		leather_armor
-		torch = 6
+		#mace
+		#shield
+		#leather_armor
+		#torch = 6
 	}
 	starting_spells = {
 		#cure_light_wounds

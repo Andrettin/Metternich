@@ -65,10 +65,10 @@ mage = {
 		}
 	}
 	starting_items = {
-		quarterstaff
-		dagger
-		robe
-		torch = 6
+		#quarterstaff
+		#dagger
+		#robe
+		#torch = 6
 	}
 	starting_spells = {
 		#charm_person
