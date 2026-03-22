@@ -408,6 +408,21 @@ gsml_data character_game_data::to_gsml_data() const
 	return data;
 }
 
+void character_game_data::do_events()
+{
+	const bool is_last_turn_of_year = game::get()->is_last_turn_of_year();
+	if (is_last_turn_of_year) {
+		character_event::check_events_for_scope(this->character, event_trigger::yearly_pulse);
+	}
+
+	const bool is_last_turn_of_quarter = game::get()->is_last_turn_of_quarter();
+	if (is_last_turn_of_quarter) {
+		character_event::check_events_for_scope(this->character, event_trigger::quarterly_pulse);
+	}
+
+	character_event::check_events_for_scope(this->character, event_trigger::per_turn_pulse);
+}
+
 void character_game_data::apply_species_and_class(const int level, const bool apply_history)
 {
 	const species *species = this->character->get_species();

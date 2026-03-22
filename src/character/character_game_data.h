@@ -103,6 +103,8 @@ public:
 
 	gsml_data to_gsml_data() const;
 
+	void do_events();
+
 	void apply_species_and_class(const int level, const bool apply_history);
 	void generate_attributes();
 	void apply_bloodline(const bool apply_history);

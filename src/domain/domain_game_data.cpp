@@ -777,25 +777,29 @@ void domain_game_data::do_cultural_change()
 
 void domain_game_data::do_events()
 {
-	for (const province *province : this->get_provinces()) {
+	const std::vector<const province *> provinces = this->get_provinces();
+	for (const province *province : provinces) {
 		province->get_game_data()->do_events();
 	}
 
-	if (this->is_under_anarchy()) {
-		return;
+	if (!this->is_under_anarchy()) {
+		const bool is_last_turn_of_year = game::get()->is_last_turn_of_year();
+		if (is_last_turn_of_year) {
+			domain_event::check_events_for_scope(this->domain, event_trigger::yearly_pulse);
+		}
+
+		const bool is_last_turn_of_quarter = game::get()->is_last_turn_of_quarter();
+		if (is_last_turn_of_quarter) {
+			domain_event::check_events_for_scope(this->domain, event_trigger::quarterly_pulse);
+		}
+
+		domain_event::check_events_for_scope(this->domain, event_trigger::per_turn_pulse);
 	}
 
-	const bool is_last_turn_of_year = game::get()->is_last_turn_of_year();
-	if (is_last_turn_of_year) {
-		domain_event::check_events_for_scope(this->domain, event_trigger::yearly_pulse);
+	const std::vector<const character *> characters = this->get_characters();
+	for (const character *character : characters) {
+		character->get_game_data()->do_events();
 	}
-
-	const bool is_last_turn_of_quarter = game::get()->is_last_turn_of_quarter();
-	if (is_last_turn_of_quarter) {
-		domain_event::check_events_for_scope(this->domain, event_trigger::quarterly_pulse);
-	}
-
-	domain_event::check_events_for_scope(this->domain, event_trigger::per_turn_pulse);
 }
 
 bool domain_game_data::is_ai() const
