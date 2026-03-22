@@ -14,6 +14,7 @@ class item_class final : public named_data_entry, public data_type<item_class>
 	Q_OBJECT
 
 	Q_PROPERTY(const metternich::item_slot* slot MEMBER slot READ get_slot NOTIFY changed)
+	Q_PROPERTY(bool consumable MEMBER consumable READ is_consumable NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "item_class";
@@ -23,6 +24,8 @@ public:
 	explicit item_class(const std::string &identifier);
 	~item_class();
 
+	virtual void check() const override;
+
 	const item_slot *get_slot() const
 	{
 		return this->slot;
@@ -30,11 +33,17 @@ public:
 
 	bool is_weapon() const;
 
+	bool is_consumable() const
+	{
+		return this->consumable;
+	}
+
 signals:
 	void changed();
 
 private:
 	const item_slot *slot = nullptr;
+	bool consumable = false;
 };
 
 }
