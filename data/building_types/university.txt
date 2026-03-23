@@ -27,6 +27,13 @@ academy = {
 		economy = 2
 		loyalty = 2
 	}
+	item_creation_types = {
+		minor_scroll_or_wondrous_item
+		minor_scroll_or_wondrous_item
+		minor_scroll_or_wondrous_item
+		medium_scroll_or_wondrous_item
+		medium_scroll_or_wondrous_item
+	}
 	free_on_start_conditions = {
 		has_building_class = cathedral
 	}
@@ -72,5 +79,13 @@ university = {
 		economy = 3
 		loyalty = 3
 		#fame = 1
+	}
+	item_creation_types = {
+		minor_scroll_or_wondrous_item
+		minor_scroll_or_wondrous_item
+		minor_scroll_or_wondrous_item
+		minor_scroll_or_wondrous_item
+		medium_scroll_or_wondrous_item
+		medium_scroll_or_wondrous_item
 	}
 }
