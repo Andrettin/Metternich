@@ -1,6 +1,7 @@
 weapon_1 = {
 	name = "+1"
 	affix_type = suffix
+	price = 2000gp
 	item_types = {
 		dagger
 		long_sword
@@ -14,6 +15,7 @@ weapon_1 = {
 weapon_2 = {
 	name = "+2"
 	affix_type = suffix
+	price = 8000gp
 	item_types = {
 		short_sword
 	}

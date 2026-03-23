@@ -1,6 +1,7 @@
 armor_1 = {
 	name = "+1"
 	affix_type = suffix
+	price = 1000gp
 	item_types = {
 		shield
 	}
@@ -12,6 +13,7 @@ armor_1 = {
 armor_2 = {
 	name = "+2"
 	affix_type = suffix
+	price = 4000gp
 	item_types = {
 		chain_mail
 	}

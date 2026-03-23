@@ -28,12 +28,18 @@ public:
 	explicit enchantment(const std::string &identifier);
 	~enchantment();
 
+	virtual void process_gsml_property(const gsml_property &property) override;
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;
 
 	metternich::affix_type get_affix_type() const
 	{
 		return this->affix_type;
+	}
+
+	int get_price() const
+	{
+		return this->price;
 	}
 
 	bool is_allowed_for_item_type(const item_type *item_type) const;
@@ -65,6 +71,7 @@ signals:
 
 private:
 	metternich::affix_type affix_type{};
+	int price = 0;
 	data_entry_set<item_class> item_classes;
 	data_entry_set<item_type> item_types;
 	std::vector<const enchantment *> subenchantments;

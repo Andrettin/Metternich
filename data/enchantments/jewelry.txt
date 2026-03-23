@@ -1,6 +1,7 @@
 of_protection_1 = {
 	name = "of Protection +1"
 	affix_type = suffix
+	price = 2000gp
 	item_types = {
 		ring
 	}

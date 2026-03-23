@@ -2,6 +2,8 @@
 
 #include "item/enchantment.h"
 
+#include "database/defines.h"
+#include "economy/commodity.h"
 #include "item/affix_type.h"
 #include "item/item_class.h"
 #include "item/item_type.h"
@@ -15,6 +17,18 @@ enchantment::enchantment(const std::string &identifier) : named_data_entry(ident
 
 enchantment::~enchantment()
 {
+}
+
+void enchantment::process_gsml_property(const gsml_property &property)
+{
+	const std::string &key = property.get_key();
+	const std::string &value = property.get_value();
+
+	if (key == "price") {
+		this->price = defines::get()->get_wealth_commodity()->string_to_value(value);
+	} else {
+		data_entry::process_gsml_property(property);
+	}
 }
 
 void enchantment::process_gsml_scope(const gsml_data &scope)
@@ -51,6 +65,10 @@ void enchantment::check() const
 
 	if (this->get_item_classes().empty() && this->get_item_types().empty()) {
 		throw std::runtime_error(std::format("Enchantment \"{}\" has neither item classes nor item types.", this->get_identifier()));
+	}
+
+	if (this->get_price() == 0) {
+		throw std::runtime_error(std::format("Enchantment \"{}\" has no price.", this->get_identifier()));
 	}
 }
 
