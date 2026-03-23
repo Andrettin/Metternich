@@ -1,3 +1,31 @@
+abjuration = {
+	name = "Abjuration"
+}
+
+alteration = {
+	name = "Alteration"
+}
+
+conjuration = {
+	name = "Conjuration"
+}
+
+divination = {
+	name = "Divination"
+}
+
+enchantment = {
+	name = "Enchantment"
+}
+
 evocation = {
 	name = "Evocation"
+}
+
+illusion = {
+	name = "Illusion"
+}
+
+necromancy = {
+	name = "Necromancy"
 }
