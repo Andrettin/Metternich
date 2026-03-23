@@ -150,6 +150,7 @@ set(item_SRCS
 	src/item/enchantment.cpp
 	src/item/item.cpp
 	src/item/item_class.cpp
+	src/item/item_creation_type.cpp
 	src/item/item_material.cpp
 	src/item/item_type.cpp
 	src/item/object_type.cpp
@@ -521,6 +522,7 @@ set(item_HDRS
 	src/item/enchantment.h
 	src/item/item.h
 	src/item/item_class.h
+	src/item/item_creation_type.h
 	src/item/item_material.h
 	src/item/item_slot.h
 	src/item/item_type.h
