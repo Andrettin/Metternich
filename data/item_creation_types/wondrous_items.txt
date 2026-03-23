@@ -1,0 +1,66 @@
+medium_wondrous_item = {
+	name = "Medium Wondrous Item"
+	item_creation_subtypes = {
+		tome_of_understanding_1 = 1
+	}
+}
+
+major_wondrous_item = {
+	name = "Major Wondrous Item"
+	item_creation_subtypes = {
+		tome_of_understanding_2 = 1
+		tome_of_understanding_3 = 1
+		tome_of_understanding_4 = 1
+		tome_of_understanding_5 = 1
+	}
+}
+
+tome_of_understanding_1 = {
+	name = "Tome of Understanding +1"
+	item_types = {
+		book
+	}
+	enchantments = {
+		tome_of_understanding_1
+	}
+}
+
+tome_of_understanding_2 = {
+	name = "Tome of Understanding +2"
+	item_types = {
+		book
+	}
+	enchantments = {
+		tome_of_understanding_2
+	}
+}
+
+tome_of_understanding_3 = {
+	name = "Tome of Understanding +3"
+	item_types = {
+		book
+	}
+	enchantments = {
+		tome_of_understanding_3
+	}
+}
+
+tome_of_understanding_4 = {
+	name = "Tome of Understanding +4"
+	item_types = {
+		book
+	}
+	enchantments = {
+		tome_of_understanding_4
+	}
+}
+
+tome_of_understanding_5 = {
+	name = "Tome of Understanding +5"
+	item_types = {
+		book
+	}
+	enchantments = {
+		tome_of_understanding_5
+	}
+}

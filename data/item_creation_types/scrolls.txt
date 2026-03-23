@@ -1,0 +1,27 @@
+minor_scroll = {
+	name = "Minor Scroll"
+	item_creation_subtypes = {
+		#minor_arcane_scroll = 70
+		minor_divine_scroll = 30
+	}
+}
+
+minor_divine_scroll = {
+	name = "Minor Divine Scroll"
+	item_creation_subtypes = {
+		#divine_scroll_level_0 = 5
+		#divine_scroll_level_1 = 45
+		#divine_scroll_level_2 = 45
+		divine_scroll_level_3 = 5
+	}
+}
+
+divine_scroll_level_3 = {
+	name = "Divine Scroll Level 3"
+	item_types = {
+		scroll
+	}
+	spells = {
+		call_lightning = 2
+	}
+}
