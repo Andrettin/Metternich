@@ -4,7 +4,7 @@ import ".."
 
 DialogBase {
 	id: shop_dialog
-	title: "Buy Items"
+	title: "Item Shop"
 	width: icon_button_width * item_grid.columns + item_grid.spacing * (item_grid.columns - 1) + 8 * scale_factor * 2
 	height: close_button.y + close_button.height + 8 * scale_factor
 	

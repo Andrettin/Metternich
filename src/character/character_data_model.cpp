@@ -14,6 +14,8 @@
 #include "character/trait.h"
 #include "character/trait_type.h"
 #include "culture/culture.h"
+#include "database/defines.h"
+#include "economy/commodity.h"
 #include "game/game.h"
 #include "item/item.h"
 #include "item/item_slot.h"
@@ -146,6 +148,7 @@ void character_data_model::set_character(const metternich::character *character)
 		disconnect(this->character->get_game_data(), &character_game_data::skill_values_changed, this, &character_data_model::update_skill_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::traits_changed, this, &character_data_model::update_trait_rows);
 		//disconnect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::update_damage_row);
+		disconnect(this->character->get_game_data(), &character_game_data::wealth_changed, this, &character_data_model::update_wealth_row);
 		//disconnect(this->character->get_game_data(), &character_game_data::items_changed, this, &character_data_model::create_inventory_rows);
 		//disconnect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::create_item_rows);
 	}
@@ -167,6 +170,7 @@ void character_data_model::set_character(const metternich::character *character)
 		connect(this->character->get_game_data(), &character_game_data::skill_values_changed, this, &character_data_model::update_skill_rows);
 		connect(this->character->get_game_data(), &character_game_data::traits_changed, this, &character_data_model::update_trait_rows);
 		//connect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::update_damage_row);
+		connect(this->character->get_game_data(), &character_game_data::wealth_changed, this, &character_data_model::update_wealth_row);
 		//connect(character->get_game_data(), &character_game_data::items_changed, this, &character_data_model::create_inventory_rows);
 		//connect(character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::create_item_rows);
 	}
@@ -189,6 +193,7 @@ void character_data_model::reset_model()
 	this->saving_throw_row = nullptr;
 	this->skill_row = nullptr;
 	this->trait_row = nullptr;
+	this->wealth_row = nullptr;
 	this->equipment_row = nullptr;
 	this->inventory_row = nullptr;
 
@@ -269,6 +274,8 @@ void character_data_model::reset_model()
 		//this->create_saving_throw_rows();
 		this->create_skill_rows();
 		this->create_trait_rows();
+
+		this->create_wealth_row();
 
 		if (!character_game_data->get_items().empty()) {
 			//this->create_item_rows();
@@ -516,6 +523,24 @@ void character_data_model::update_trait_rows()
 	}
 
 	this->on_child_rows_inserted(this->trait_row);
+}
+
+void character_data_model::create_wealth_row()
+{
+	auto row = std::make_unique<character_data_row>("Wealth:");
+	this->wealth_row = row.get();
+	this->top_rows.push_back(std::move(row));
+
+	this->update_wealth_row();
+}
+
+void character_data_model::update_wealth_row()
+{
+	assert_throw(this->wealth_row != nullptr);
+
+	const character_game_data *character_game_data = this->get_character()->get_game_data();
+
+	this->wealth_row->value = defines::get()->get_wealth_commodity()->value_to_string(character_game_data->get_wealth());
 }
 
 void character_data_model::create_item_rows()

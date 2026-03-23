@@ -97,6 +97,8 @@ public:
 	void update_skill_rows();
 	void create_trait_rows();
 	void update_trait_rows();
+	void create_wealth_row();
+	void update_wealth_row();
 	void create_item_rows();
 	void create_equipment_rows();
 	void create_inventory_rows();
@@ -120,6 +122,7 @@ private:
 	character_data_row *saving_throw_row = nullptr;
 	character_data_row *skill_row = nullptr;
 	character_data_row *trait_row = nullptr;
+	character_data_row *wealth_row = nullptr;
 	character_data_row *equipment_row = nullptr;
 	character_data_row *inventory_row = nullptr;
 	bool resetting_model = false;

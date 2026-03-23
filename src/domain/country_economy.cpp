@@ -2,10 +2,13 @@
 
 #include "domain/country_economy.h"
 
+#include "character/character.h"
+#include "character/character_game_data.h"
 #include "database/defines.h"
 #include "domain/country_turn_data.h"
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
+#include "domain/domain_government.h"
 #include "domain/subject_type.h"
 #include "economy/commodity.h"
 #include "economy/expense_transaction_type.h"
@@ -249,6 +252,10 @@ void country_economy::set_stored_commodity(const commodity *commodity, const int
 
 	if (this->get_offer(commodity) > value) {
 		this->set_offer(commodity, value);
+	}
+
+	if (commodity == defines::get()->get_wealth_commodity() && this->domain->get_government()->get_ruler() != nullptr) {
+		emit this->domain->get_government()->get_ruler()->get_game_data()->wealth_changed();
 	}
 
 	if (game::get()->is_running()) {

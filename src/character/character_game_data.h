@@ -648,6 +648,9 @@ public:
 
 	QVariantList get_battle_spells_qvariant_list() const;
 
+	int get_wealth() const;
+	void change_wealth(const int change);
+
 	const std::vector<qunique_ptr<item>> &get_items() const
 	{
 		return this->items;
@@ -841,6 +844,7 @@ signals:
 	void military_unit_changed();
 	void civilian_unit_changed();
 	void spells_changed();
+	void wealth_changed();
 	void items_changed();
 	void equipped_items_changed();
 	void status_effect_rounds_changed();
@@ -886,6 +890,7 @@ private:
 	metternich::civilian_unit *civilian_unit = nullptr;
 	std::vector<const spell *> spells; //spells that the character has learned
 	std::vector<const spell *> item_spells; //spells granted by items, but which the character hasn't learned per se
+	int wealth = 0;
 	std::vector<qunique_ptr<item>> items;
 	data_entry_map<item_slot, std::vector<item *>> equipped_items;
 	std::map<military_unit_stat, centesimal_int> commanded_military_unit_stat_modifiers;

@@ -58,26 +58,15 @@ bool building_item_slot::can_buy_item(const metternich::character *buyer)
 	
 	const int item_price = this->get_item()->get_price();
 
-	if (buyer->get_game_data()->is_ruler()) {
-		return buyer->get_game_data()->get_domain()->get_economy()->get_wealth() >= item_price;
-	} else {
-		//personal wealth for non-ruler characters not implemented yet
-		return false;
-	}
+	return buyer->get_game_data()->get_wealth() >= item_price;
 }
 
 void building_item_slot::buy_item(const metternich::character *buyer)
 {
 	const int item_price = this->get_item()->get_price();
 
-	if (buyer->get_game_data()->is_ruler()) {
-		buyer->get_game_data()->get_domain()->get_economy()->change_wealth(-item_price);
-	} else {
-		//personal wealth for non-ruler characters not implemented yet
-	}
-
+	buyer->get_game_data()->change_wealth(-item_price);
 	buyer->get_game_data()->add_item(this->take_item());
 }
-
 
 }

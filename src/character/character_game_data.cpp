@@ -19,6 +19,7 @@
 #include "character/trait_type.h"
 #include "culture/culture.h"
 #include "database/defines.h"
+#include "domain/country_economy.h"
 #include "domain/country_military.h"
 #include "domain/country_technology.h"
 #include "domain/domain.h"
@@ -2408,6 +2409,11 @@ void character_game_data::set_office(const metternich::office *office)
 
 	this->office = office;
 
+	if (office != nullptr && office->is_ruler()) {
+		this->get_domain()->get_economy()->change_wealth(this->wealth);
+		this->wealth = 0;
+	}
+
 	if (game::get()->is_running()) {
 		emit office_changed();
 	}
@@ -2564,6 +2570,27 @@ void character_game_data::sort_spells()
 
 		return lhs->get_identifier() < rhs->get_identifier();
 	});
+}
+
+int character_game_data::get_wealth() const
+{
+	if (this->is_ruler()) {
+		assert_throw(this->wealth == 0);
+		return this->get_domain()->get_economy()->get_wealth();
+	} else {
+		return this->wealth;
+	}
+}
+
+void character_game_data::change_wealth(const int change)
+{
+	if (this->is_ruler()) {
+		assert_throw(this->wealth == 0);
+		this->get_domain()->get_economy()->change_wealth(change);
+	} else {
+		this->wealth += change;
+		emit wealth_changed();
+	}
 }
 
 QVariantList character_game_data::get_battle_spells_qvariant_list() const
