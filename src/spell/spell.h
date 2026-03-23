@@ -10,6 +10,7 @@ namespace metternich {
 
 class arcane_school;
 class character_class;
+class divine_domain;
 class icon;
 class spell_effect;
 enum class attack_result;
@@ -81,6 +82,11 @@ public:
 		return this->arcane_schools;
 	}
 
+	const std::vector<const divine_domain *> &get_divine_domains() const
+	{
+		return this->divine_domains;
+	}
+
 	const std::vector<const character_class *> &get_character_classes() const
 	{
 		return this->character_classes;
@@ -105,6 +111,7 @@ private:
 	int battle_range = 0;
 	attack_result battle_result{};
 	std::vector<const arcane_school *> arcane_schools;
+	std::vector<const divine_domain *> divine_domains;
 	std::vector<const character_class *> character_classes;
 	std::vector<qunique_ptr<spell_effect>> effects;
 };

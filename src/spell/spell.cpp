@@ -5,6 +5,7 @@
 #include "character/character_class.h"
 #include "database/defines.h"
 #include "game/attack_result.h"
+#include "religion/divine_domain.h"
 #include "spell/arcane_school.h"
 #include "spell/spell_effect.h"
 #include "spell/spell_target.h"
@@ -30,6 +31,10 @@ void spell::process_gsml_scope(const gsml_data &scope)
 	if (tag == "arcane_schools") {
 		for (const std::string &value : values) {
 			this->arcane_schools.push_back(arcane_school::get(value));
+		}
+	} else if (tag == "divine_domains") {
+		for (const std::string &value : values) {
+			this->divine_domains.push_back(divine_domain::get(value));
 		}
 	} else if (tag == "character_classes") {
 		for (const std::string &value : values) {
