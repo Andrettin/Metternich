@@ -7,13 +7,14 @@
 #include "item/item_material.h"
 #include "item/item_type.h"
 #include "script/modifier.h"
+#include "spell/spell.h"
 #include "util/assert_util.h"
 #include "util/string_conversion_util.h"
 
 namespace metternich {
 
-item::item(const item_type *type, const item_material *material, const metternich::enchantment *enchantment)
-	: type(type), material(material), enchantment(enchantment)
+item::item(const item_type *type, const item_material *material, const metternich::enchantment *enchantment, const metternich::spell *spell)
+	: type(type), material(material), enchantment(enchantment), spell(spell)
 {
 	assert_throw(this->get_type() != nullptr);
 
@@ -52,6 +53,8 @@ void item::process_gsml_property(const gsml_property &property)
 		this->material = item_material::get(value);
 	} else if (key == "enchantment") {
 		this->enchantment = enchantment::get(value);
+	} else if (key == "spell") {
+		this->spell = spell::get(value);
 	} else if (key == "equipped") {
 		this->equipped = string::to_bool(value);
 	} else {
@@ -80,12 +83,16 @@ gsml_data item::to_gsml_data() const
 		data.add_property("enchantment", this->get_enchantment()->get_identifier());
 	}
 
+	if (this->get_spell() != nullptr) {
+		data.add_property("spell", this->get_spell()->get_identifier());
+	}
+
 	data.add_property("equipped", string::from_bool(this->is_equipped()));
 
 	return data;
 }
 
-std::string item::create_name(const item_type *type, const item_material *material, const metternich::enchantment *enchantment)
+std::string item::create_name(const item_type *type, const item_material *material, const metternich::enchantment *enchantment, const metternich::spell *spell)
 {
 	std::string name = type->get_name();
 
@@ -107,12 +114,16 @@ std::string item::create_name(const item_type *type, const item_material *materi
 		}
 	}
 
+	if (spell != nullptr) {
+		name += " of " + spell->get_name();
+	}
+
 	return name;
 }
 
 void item::update_name()
 {
-	this->set_name(item::create_name(this->get_type(), this->get_material(), this->get_enchantment()));
+	this->set_name(item::create_name(this->get_type(), this->get_material(), this->get_enchantment(), this->get_spell()));
 }
 
 const item_slot *item::get_slot() const
@@ -156,6 +167,14 @@ QString item::get_effects_string() const
 		}
 
 		str += this->get_enchantment()->get_effects_string();
+	}
+
+	if (this->get_spell() != nullptr) {
+		if (!str.empty()) {
+			str += ", ";
+		}
+
+		str += std::format("Cast {}", this->get_spell()->get_name());
 	}
 
 	return QString::fromStdString(str);

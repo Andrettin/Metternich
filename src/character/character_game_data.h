@@ -636,14 +636,14 @@ public:
 		emit spells_changed();
 	}
 
-	bool can_learn_spell(const spell *spell) const;
+	Q_INVOKABLE bool can_learn_spell(const metternich::spell *spell) const;
 
 	bool has_learned_spell(const spell *spell) const
 	{
 		return this->has_spell(spell);
 	}
 
-	void learn_spell(const spell *spell);
+	Q_INVOKABLE void learn_spell(const metternich::spell *spell);
 	void sort_spells();
 
 	QVariantList get_battle_spells_qvariant_list() const;
@@ -656,8 +656,8 @@ public:
 	QVariantList get_items_qvariant_list() const;
 	bool has_item(const item_type *item_type) const;
 	void add_item(qunique_ptr<item> &&item);
-	void remove_item(item *item);
-	void remove_item(const item_type *item_type, const item_material *material, const enchantment *enchantment);
+	Q_INVOKABLE void remove_item(metternich::item *item);
+	void remove_item(const item_type *item_type, const item_material *material, const enchantment *enchantment, const spell *spell);
 
 	Q_INVOKABLE bool can_use_item(const metternich::item *item) const;
 	Q_INVOKABLE void use_item(metternich::item *item);

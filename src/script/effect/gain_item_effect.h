@@ -9,6 +9,7 @@
 #include "item/item_material.h"
 #include "item/item_type.h"
 #include "script/effect/effect.h"
+#include "spell/spell.h"
 #include "util/string_util.h"
 
 namespace metternich {
@@ -47,6 +48,8 @@ public:
 			this->material = item_material::get(value);
 		} else if (key == "enchantment") {
 			this->enchantment = enchantment::get(value);
+		} else if (key == "spell") {
+			this->spell = spell::get(value);
 		} else {
 			effect<scope_type>::process_gsml_property(property);
 		}
@@ -70,7 +73,7 @@ public:
 			return;
 		}
 
-		auto item = make_qunique<metternich::item>(this->type, this->material, this->enchantment);
+		auto item = make_qunique<metternich::item>(this->type, this->material, this->enchantment, this->spell);
 		if (!this->name.empty()) {
 			item->set_name(this->name);
 		}
@@ -80,7 +83,7 @@ public:
 
 	virtual std::string get_assignment_string() const override
 	{
-		const std::string item_name = !this->name.empty() ? this->name : item::create_name(this->type, this->material, this->enchantment);
+		const std::string item_name = !this->name.empty() ? this->name : item::create_name(this->type, this->material, this->enchantment, this->spell);
 
 		return std::format("Gain {} {}", string::get_indefinite_article(item_name), item_name);
 	}
@@ -90,6 +93,7 @@ private:
 	const item_type *type = nullptr;
 	const item_material *material = nullptr;
 	const metternich::enchantment *enchantment = nullptr;
+	const metternich::spell *spell = nullptr;
 };
 
 }

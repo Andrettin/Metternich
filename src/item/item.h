@@ -3,6 +3,7 @@
 Q_MOC_INCLUDE("item/enchantment.h")
 Q_MOC_INCLUDE("item/item_material.h")
 Q_MOC_INCLUDE("item/item_type.h")
+Q_MOC_INCLUDE("spell/spell.h")
 Q_MOC_INCLUDE("ui/icon.h")
 
 namespace archimedes {
@@ -17,6 +18,7 @@ class icon;
 class item_material;
 class item_slot;
 class item_type;
+class spell;
 
 class item final : public QObject
 {
@@ -27,12 +29,13 @@ class item final : public QObject
 	Q_PROPERTY(const metternich::icon* icon READ get_icon CONSTANT)
 	Q_PROPERTY(const metternich::item_material* material READ get_material CONSTANT)
 	Q_PROPERTY(const metternich::enchantment* enchantment READ get_enchantment CONSTANT)
+	Q_PROPERTY(const metternich::spell* spell READ get_spell CONSTANT)
 	Q_PROPERTY(bool equipped READ is_equipped NOTIFY equipped_changed)
 
 public:
-	static std::string create_name(const item_type *type, const item_material *material, const metternich::enchantment *enchantment);
+	static std::string create_name(const item_type *type, const item_material *material, const metternich::enchantment *enchantment, const metternich::spell *spell);
 
-	explicit item(const item_type *type, const item_material *material, const metternich::enchantment *enchantment);
+	explicit item(const item_type *type, const item_material *material, const metternich::enchantment *enchantment, const metternich::spell *spell);
 	explicit item(const gsml_data &scope);
 
 	void process_gsml_property(const gsml_property &property);
@@ -81,6 +84,11 @@ public:
 		return this->enchantment;
 	}
 
+	const metternich::spell *get_spell() const
+	{
+		return this->spell;
+	}
+
 	bool is_equipped() const
 	{
 		return this->equipped;
@@ -110,6 +118,7 @@ private:
 	const item_type *type = nullptr;
 	const item_material *material = nullptr;
 	const metternich::enchantment *enchantment = nullptr;
+	const metternich::spell *spell = nullptr;
 	bool equipped = false;
 	int quantity = 1;
 };

@@ -705,7 +705,7 @@ void character_game_data::add_starting_items(const std::vector<const item_type *
 			continue;
 		}
 
-		auto item = make_qunique<metternich::item>(starting_item_type, nullptr, nullptr);
+		auto item = make_qunique<metternich::item>(starting_item_type, nullptr, nullptr, nullptr);
 		if (item->get_slot() != nullptr) {
 			new_filled_item_slots.insert(item->get_slot());
 
@@ -2597,7 +2597,7 @@ void character_game_data::add_item(qunique_ptr<item> &&item)
 {
 	if (item->get_type()->is_stackable()) {
 		for (const qunique_ptr<metternich::item> &loop_item : this->get_items()) {
-			if (loop_item->get_type() == item->get_type() && loop_item->get_material() == item->get_material() && loop_item->get_enchantment() == item->get_enchantment()) {
+			if (loop_item->get_type() == item->get_type() && loop_item->get_material() == item->get_material() && loop_item->get_enchantment() == item->get_enchantment() && loop_item->get_spell() == item->get_spell()) {
 				loop_item->change_quantity(1);
 				emit items_changed();
 				return;
@@ -2635,10 +2635,10 @@ void character_game_data::remove_item(item *item)
 	emit items_changed();
 }
 
-void character_game_data::remove_item(const item_type *item_type, const item_material *material, const enchantment *enchantment)
+void character_game_data::remove_item(const item_type *item_type, const item_material *material, const enchantment *enchantment, const spell *spell)
 {
 	for (const qunique_ptr<item> &item : this->get_items()) {
-		if (item->get_type() == item_type && item->get_material() == material && item->get_enchantment() == enchantment) {
+		if (item->get_type() == item_type && item->get_material() == material && item->get_enchantment() == enchantment && item->get_spell() == spell) {
 			this->remove_item(item.get());
 			return;
 		}
