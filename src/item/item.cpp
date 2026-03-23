@@ -180,4 +180,15 @@ QString item::get_effects_string() const
 	return QString::fromStdString(str);
 }
 
+int item::get_price() const
+{
+	int price = this->get_type()->get_price();
+
+	if (this->get_enchantment() != nullptr) {
+		price += this->get_enchantment()->get_price();
+	}
+
+	return price;
+}
+
 }

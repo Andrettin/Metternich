@@ -121,6 +121,10 @@ Item {
 		id: dungeon_dialog
 	}
 	
+	ItemShopDialog {
+		id: item_shop_dialog
+	}
+	
 	SaveGameDialog {
 		id: save_game_dialog
 	}

@@ -2,6 +2,10 @@
 
 #include "infrastructure/building_item_slot.h"
 
+#include "character/character.h"
+#include "character/character_game_data.h"
+#include "domain/country_economy.h"
+#include "domain/domain.h"
 #include "item/item.h"
 #include "item/item_creation_type.h"
 #include "util/assert_util.h"
@@ -45,5 +49,35 @@ qunique_ptr<item> building_item_slot::take_item()
 	emit item_changed();
 	return item;
 }
+
+bool building_item_slot::can_buy_item(const metternich::character *buyer)
+{
+	if (this->get_item() == nullptr) {
+		return false;
+	}
+	
+	const int item_price = this->get_item()->get_price();
+
+	if (buyer->get_game_data()->is_ruler()) {
+		return buyer->get_game_data()->get_domain()->get_economy()->get_wealth() >= item_price;
+	} else {
+		//personal wealth for non-ruler characters not implemented yet
+		return false;
+	}
+}
+
+void building_item_slot::buy_item(const metternich::character *buyer)
+{
+	const int item_price = this->get_item()->get_price();
+
+	if (buyer->get_game_data()->is_ruler()) {
+		buyer->get_game_data()->get_domain()->get_economy()->change_wealth(-item_price);
+	} else {
+		//personal wealth for non-ruler characters not implemented yet
+	}
+
+	buyer->get_game_data()->add_item(this->take_item());
+}
+
 
 }

@@ -27,7 +27,7 @@ ButtonBase {
 			anchors.verticalCenterOffset: (button.down ? 1 * scale_factor : 0)
 			anchors.horizontalCenter: parent.horizontalCenter
 			anchors.horizontalCenterOffset: button.down ? 1 * scale_factor : 0
-			source: "image://icon/" + icon_identifier
+			source: icon_identifier.length > 0 ? ("image://icon/" + icon_identifier) : "image://empty/"
 			fillMode: Image.Pad
 		}
 	}

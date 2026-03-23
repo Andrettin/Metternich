@@ -30,6 +30,7 @@ class item final : public QObject
 	Q_PROPERTY(const metternich::item_material* material READ get_material CONSTANT)
 	Q_PROPERTY(const metternich::enchantment* enchantment READ get_enchantment CONSTANT)
 	Q_PROPERTY(const metternich::spell* spell READ get_spell CONSTANT)
+	Q_PROPERTY(int price READ get_price CONSTANT)
 	Q_PROPERTY(bool equipped READ is_equipped NOTIFY equipped_changed)
 
 public:
@@ -108,6 +109,8 @@ public:
 	void change_quantity(const int change);
 
 	Q_INVOKABLE QString get_effects_string() const;
+
+	int get_price() const;
 
 signals:
 	void name_changed();

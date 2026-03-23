@@ -37,6 +37,9 @@ public:
 	void create_item();
 	qunique_ptr<item> take_item();
 
+	Q_INVOKABLE bool can_buy_item(const metternich::character *buyer);
+	Q_INVOKABLE void buy_item(const metternich::character *buyer);
+
 	const building_slot *get_building_slot() const
 	{
 		return this->building_slot;
