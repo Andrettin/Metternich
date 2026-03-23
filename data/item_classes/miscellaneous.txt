@@ -29,6 +29,12 @@ book = {
 	consume_verb = "read"
 }
 
+scroll = {
+	name = "Scroll"
+	consumable = true
+	consume_verb = "read"
+}
+
 miscellaneous = {
 	name = "Miscellaneous"
 }
