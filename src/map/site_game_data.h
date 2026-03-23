@@ -24,6 +24,7 @@ namespace metternich {
 
 class army;
 class building_class;
+class building_item_slot;
 class building_slot;
 class building_type;
 class character;
@@ -72,6 +73,7 @@ class site_game_data final : public QObject
 	Q_PROPERTY(QVariantList attribute_values READ get_attribute_values_qvariant_list NOTIFY attribute_values_changed)
 	Q_PROPERTY(QVariantList building_slots READ get_building_slots_qvariant_list CONSTANT)
 	Q_PROPERTY(QVariantList visible_building_slots READ get_visible_building_slots_qvariant_list CONSTANT)
+	Q_PROPERTY(QVariantList item_slots READ get_item_slots_qvariant_list CONSTANT)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(metternich::population* population READ get_population CONSTANT)
 	Q_PROPERTY(int population_unit_count READ get_population_unit_count NOTIFY population_units_changed)
@@ -94,6 +96,7 @@ public:
 	void initialize();
 	void do_turn();
 	void collect_income();
+	void check_item_slots();
 
 	const QPoint &get_tile_pos() const;
 	tile *get_tile() const;
@@ -336,6 +339,9 @@ public:
 	void on_building_gained(const building_type *building, const int multiplier);
 	void on_wonder_gained(const wonder *wonder, const int multiplier);
 	void on_improvement_gained(const improvement *improvement, const int multiplier);
+
+	std::vector<building_item_slot *> get_item_slots() const;
+	QVariantList get_item_slots_qvariant_list() const;
 
 	const scripted_site_modifier_map<int> &get_scripted_modifiers() const
 	{

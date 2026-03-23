@@ -1,6 +1,7 @@
 #pragma once
 
 #include "economy/commodity_container.h"
+#include "util/qunique_ptr.h"
 
 Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("infrastructure/building_type.h")
@@ -8,6 +9,7 @@ Q_MOC_INCLUDE("infrastructure/wonder.h")
 
 namespace metternich {
 
+class building_item_slot;
 class building_slot_type;
 class building_type;
 class domain;
@@ -23,10 +25,12 @@ class building_slot final : public QObject
 	Q_PROPERTY(const metternich::wonder* wonder READ get_wonder NOTIFY wonder_changed)
 	Q_PROPERTY(const metternich::wonder* under_construction_wonder READ get_under_construction_wonder WRITE set_under_construction_wonder NOTIFY under_construction_wonder_changed)
 	Q_PROPERTY(QString modifier_string READ get_modifier_string NOTIFY domain_modifier_changed)
+	Q_PROPERTY(QVariantList item_slots READ get_item_slots_qvariant_list CONSTANT)
 	Q_PROPERTY(const metternich::domain* country READ get_country CONSTANT)
 
 public:
 	explicit building_slot(const building_slot_type *type, const site *settlement);
+	~building_slot();
 
 	const building_slot_type *get_type() const
 	{
@@ -83,6 +87,16 @@ public:
 	Q_INVOKABLE const metternich::building_type *get_buildable_building() const;
 	Q_INVOKABLE const metternich::wonder *get_buildable_wonder() const;
 
+	const std::vector<qunique_ptr<building_item_slot>> &get_item_slots() const
+	{
+		return this->item_slots;
+	}
+
+	QVariantList get_item_slots_qvariant_list() const;
+
+	void add_item_slot(const item_creation_type *item_creation_type);
+	void remove_item_slot(const item_creation_type *item_creation_type);
+
 	const metternich::domain *get_country() const;
 
 	bool is_available() const;
@@ -103,6 +117,7 @@ private:
 	const building_type *under_construction_building = nullptr;
 	const metternich::wonder *wonder = nullptr;
 	const metternich::wonder *under_construction_wonder = nullptr;
+	std::vector<qunique_ptr<building_item_slot>> item_slots;
 };
 
 }

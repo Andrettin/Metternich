@@ -22,6 +22,7 @@ class culture;
 class domain;
 class holding_type;
 class icon;
+class item_creation_type;
 class population_unit;
 class portrait;
 class province;
@@ -308,6 +309,11 @@ public:
 		return this->effects.get();
 	}
 
+	const std::vector<const item_creation_type *> &get_item_creation_types() const
+	{
+		return this->item_creation_types;
+	}
+
 signals:
 	void changed();
 
@@ -349,6 +355,7 @@ private:
 	std::unique_ptr<metternich::modifier<const domain>> domain_modifier;
 	std::unique_ptr<metternich::modifier<const domain>> weighted_domain_modifier;
 	std::unique_ptr<effect_list<const site>> effects;
+	std::vector<const item_creation_type *> item_creation_types;
 };
 
 }

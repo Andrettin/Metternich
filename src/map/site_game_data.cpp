@@ -24,6 +24,7 @@
 #include "game/event_trigger.h"
 #include "game/game.h"
 #include "infrastructure/building_class.h"
+#include "infrastructure/building_item_slot.h"
 #include "infrastructure/building_slot.h"
 #include "infrastructure/building_slot_type.h"
 #include "infrastructure/building_type.h"
@@ -239,6 +240,22 @@ void site_game_data::collect_income()
 
 	this->get_owner()->get_economy()->add_tributable_commodity(defines::get()->get_wealth_commodity(), income, income_transaction_type::tribute);
 	this->get_owner()->get_turn_data()->add_income_transaction(income_transaction_type::holding_income, income, nullptr, 0, this->get_owner());
+}
+
+void site_game_data::check_item_slots()
+{
+	std::vector<building_item_slot *> item_slots = this->get_item_slots();
+
+	std::erase_if(item_slots, [](const building_item_slot *item_slot) {
+		return item_slot->get_item() != nullptr;
+	});
+
+	if (item_slots.empty()) {
+		return;
+	}
+
+	building_item_slot *item_slot = vector::get_random(item_slots);
+	item_slot->create_item();
 }
 
 const QPoint &site_game_data::get_tile_pos() const
@@ -1616,6 +1633,28 @@ void site_game_data::on_improvement_gained(const improvement *improvement, const
 	if (improvement->get_country_modifier() != nullptr && this->get_owner() != nullptr) {
 		improvement->get_country_modifier()->apply(this->get_owner(), multiplier);
 	}
+}
+
+std::vector<building_item_slot *> site_game_data::get_item_slots() const
+{
+	std::vector<building_item_slot *> item_slots;
+
+	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
+		if (building_slot->get_building() == nullptr) {
+			continue;
+		}
+
+		for (const qunique_ptr<building_item_slot> &item_slot : building_slot->get_item_slots()) {
+			item_slots.push_back(item_slot.get());
+		}
+	}
+
+	return item_slots;
+}
+
+QVariantList site_game_data::get_item_slots_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_item_slots());
 }
 
 QVariantList site_game_data::get_scripted_modifiers_qvariant_list() const

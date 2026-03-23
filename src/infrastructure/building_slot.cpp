@@ -11,6 +11,7 @@
 #include "economy/commodity.h"
 #include "game/game.h"
 #include "infrastructure/building_class.h"
+#include "infrastructure/building_item_slot.h"
 #include "infrastructure/building_slot_type.h"
 #include "infrastructure/building_type.h"
 #include "infrastructure/wonder.h"
@@ -22,6 +23,7 @@
 #include "script/condition/and_condition.h"
 #include "script/modifier.h"
 #include "util/assert_util.h"
+#include "util/container_util.h"
 #include "util/number_util.h"
 #include "util/string_util.h"
 #include "util/vector_util.h"
@@ -35,6 +37,10 @@ building_slot::building_slot(const building_slot_type *type, const site *settlem
 	assert_throw(this->get_settlement() != nullptr);
 
 	connect(this, &building_slot::building_changed, this, &building_slot::domain_modifier_changed);
+}
+
+building_slot::~building_slot()
+{
 }
 
 void building_slot::set_building(const building_type *building)
@@ -68,6 +74,32 @@ void building_slot::set_building(const building_type *building)
 
 	if (fortification_level_change != 0) {
 		this->get_settlement()->get_game_data()->change_fortification_level(fortification_level_change);
+	}
+
+	if (old_building == nullptr || this->get_building() == nullptr || old_building->get_item_creation_types() != this->get_building()->get_item_creation_types()) {
+		std::vector<const item_creation_type *> item_creation_types_to_remove;
+		std::vector<const item_creation_type *> item_creation_types_to_add;
+		if (this->get_building() != nullptr) {
+			item_creation_types_to_add = this->get_building()->get_item_creation_types();
+		}
+
+		if (old_building != nullptr) {
+			for (const item_creation_type *item_creation_type : old_building->get_item_creation_types()) {
+				if (vector::contains(item_creation_types_to_add, item_creation_type)) {
+					vector::remove_one(item_creation_types_to_add, item_creation_type);
+				} else {
+					item_creation_types_to_remove.push_back(item_creation_type);
+				}
+			}
+		}
+
+		for (const item_creation_type *item_creation_type : item_creation_types_to_remove) {
+			this->remove_item_slot(item_creation_type);
+		}
+
+		for (const item_creation_type *item_creation_type : item_creation_types_to_add) {
+			this->add_item_slot(item_creation_type);
+		}
 	}
 
 	if (game::get()->is_running()) {
@@ -476,6 +508,28 @@ const wonder *building_slot::get_buildable_wonder() const
 	}
 
 	return nullptr;
+}
+
+QVariantList building_slot::get_item_slots_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_item_slots());
+}
+
+void building_slot::add_item_slot(const item_creation_type *item_creation_type)
+{
+	auto item_slot = make_qunique<building_item_slot>(item_creation_type, this);
+	this->item_slots.push_back(std::move(item_slot));
+}
+
+void building_slot::remove_item_slot(const item_creation_type *item_creation_type)
+{
+	for (size_t i = 0; i < this->item_slots.size(); ++i) {
+		const size_t index = this->item_slots.size() - i - 1;
+		if (this->item_slots.at(index)->get_item_creation_type() == item_creation_type) {
+			this->item_slots.erase(this->item_slots.begin() + index);
+			return;
+		}
+	}
 }
 
 const domain *building_slot::get_country() const

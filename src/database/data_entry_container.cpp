@@ -22,6 +22,7 @@
 #include "infrastructure/holding_type.h"
 #include "item/enchantment.h"
 #include "item/item_class.h"
+#include "item/item_creation_type.h"
 #include "item/item_material.h"
 #include "item/item_slot.h"
 #include "item/item_type.h"
@@ -57,6 +58,7 @@ template struct data_entry_compare<game_rule>;
 template struct data_entry_compare<holding_type>;
 template struct data_entry_compare<idea_slot>;
 template struct data_entry_compare<item_class>;
+template struct data_entry_compare<item_creation_type>;
 template struct data_entry_compare<item_material>;
 template struct data_entry_compare<item_slot>;
 template struct data_entry_compare<item_type>;

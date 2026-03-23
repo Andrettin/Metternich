@@ -11,6 +11,7 @@
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot_type.h"
 #include "infrastructure/holding_type.h"
+#include "item/item_creation_type.h"
 #include "population/population_type.h"
 #include "population/population_unit.h"
 #include "script/condition/and_condition.h"
@@ -110,6 +111,10 @@ void building_type::process_gsml_scope(const gsml_data &scope)
 		auto effect_list = std::make_unique<metternich::effect_list<const site>>();
 		effect_list->process_gsml_data(scope);
 		this->effects = std::move(effect_list);
+	} else if (tag == "item_creation_types") {
+		for (const std::string &value : values) {
+			this->item_creation_types.push_back(item_creation_type::get(value));
+		}
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
