@@ -30,6 +30,7 @@
 #include "script/condition/cavalry_condition.h"
 #include "script/condition/character_condition.h"
 #include "script/condition/character_attribute_condition.h"
+#include "script/condition/character_attribute_modifier_condition.h"
 #include "script/condition/character_class_condition.h"
 #include "script/condition/class_skill_condition.h"
 #include "script/condition/coastal_condition.h"
@@ -389,7 +390,11 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 	const gsml_operator condition_operator = scope.get_operator();
 	std::unique_ptr<condition_base<scope_type, read_only_context>> condition;
 
-	if constexpr (std::is_same_v<scope_type, domain>) {
+	if constexpr (std::is_same_v<scope_type, character>) {
+		if (tag == "attribute_modifier") {
+			condition = std::make_unique<character_attribute_modifier_condition>(condition_operator);
+		}
+	} else if constexpr (std::is_same_v<scope_type, domain>) {
 		if (tag == "any_known_country") {
 			condition = std::make_unique<any_known_country_condition>(condition_operator);
 		} else if (tag == "any_neighbor_country") {

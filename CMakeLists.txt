@@ -395,6 +395,7 @@ set(character_HDRS
 	src/character/monster_type.h
 	src/character/mythic_path.h
 	src/character/party.h
+	src/character/profession_profitability.h
 	src/character/saving_throw_type.h
 	src/character/skill.h
 	src/character/skill_group.h
@@ -653,6 +654,7 @@ set(script_condition_HDRS
 	src/script/condition/cavalry_condition.h
 	src/script/condition/character_condition.h
 	src/script/condition/character_attribute_condition.h
+	src/script/condition/character_attribute_modifier_condition.h
 	src/script/condition/character_class_condition.h
 	src/script/condition/class_skill_condition.h
 	src/script/condition/coastal_condition.h

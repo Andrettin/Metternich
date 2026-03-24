@@ -5,6 +5,13 @@ tome_of_understanding_1 = {
 	item_types = {
 		book
 	}
+	conditions = {
+		attribute_modifier = {
+			attribute = wisdom
+			modifier_type = inherent
+			modifier < 1
+		}
+	}
 	modifier = {
 		wisdom = {
 			modifier_type = inherent
@@ -19,6 +26,13 @@ tome_of_understanding_2 = {
 	price = 55000gp
 	item_types = {
 		book
+	}
+	conditions = {
+		attribute_modifier = {
+			attribute = wisdom
+			modifier_type = inherent
+			modifier < 2
+		}
 	}
 	modifier = {
 		wisdom = {
@@ -35,6 +49,13 @@ tome_of_understanding_3 = {
 	item_types = {
 		book
 	}
+	conditions = {
+		attribute_modifier = {
+			attribute = wisdom
+			modifier_type = inherent
+			modifier < 3
+		}
+	}
 	modifier = {
 		wisdom = {
 			modifier_type = inherent
@@ -50,6 +71,13 @@ tome_of_understanding_4 = {
 	item_types = {
 		book
 	}
+	conditions = {
+		attribute_modifier = {
+			attribute = wisdom
+			modifier_type = inherent
+			modifier < 4
+		}
+	}
 	modifier = {
 		wisdom = {
 			modifier_type = inherent
@@ -64,6 +92,13 @@ tome_of_understanding_5 = {
 	price = 137500gp
 	item_types = {
 		book
+	}
+	conditions = {
+		attribute_modifier = {
+			attribute = wisdom
+			modifier_type = inherent
+			modifier < 5
+		}
 	}
 	modifier = {
 		wisdom = {
