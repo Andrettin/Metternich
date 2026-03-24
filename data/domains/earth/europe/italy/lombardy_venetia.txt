@@ -21,10 +21,11 @@ lombardy_venetia = {
 			government_type = overlordship
 			
 			#Lombardy and Venetia were part of the the Empire of Austria in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
-			diplomacy_state = {
-				domain = austria
-				subject_type = vassal
-			}
+			#diplomacy_state = {
+			#	domain = austria
+			#	subject_type = vassal
+			#}
+			owner = austria
 		}
 		
 		1835.3.2 = {
