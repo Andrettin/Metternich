@@ -1194,7 +1194,7 @@ void character_game_data::die()
 		}
 
 		if (!next_of_kin.empty()) {
-			const int wealth_share = this->get_wealth() / static_cast<int>(next_of_kin.size());
+			const int64_t wealth_share = this->get_wealth() / static_cast<int64_t>(next_of_kin.size());
 			for (const metternich::character * inheritor : next_of_kin) {
 				inheritor->get_game_data()->change_wealth(wealth_share);
 
@@ -2725,27 +2725,6 @@ void character_game_data::sort_spells()
 	});
 }
 
-int character_game_data::get_wealth() const
-{
-	if (this->is_ruler()) {
-		assert_throw(this->wealth == 0);
-		return this->get_domain()->get_economy()->get_wealth();
-	} else {
-		return this->wealth;
-	}
-}
-
-void character_game_data::change_wealth(const int change)
-{
-	if (this->is_ruler()) {
-		assert_throw(this->wealth == 0);
-		this->get_domain()->get_economy()->change_wealth(change);
-	} else {
-		this->wealth += change;
-		emit wealth_changed();
-	}
-}
-
 QVariantList character_game_data::get_battle_spells_qvariant_list() const
 {
 	std::vector<const spell *> spells = container::to_vector(this->get_spells());
@@ -2755,6 +2734,27 @@ QVariantList character_game_data::get_battle_spells_qvariant_list() const
 	});
 
 	return container::to_qvariant_list(spells);
+}
+
+int64_t character_game_data::get_wealth() const
+{
+	if (this->is_ruler()) {
+		assert_throw(this->wealth == 0);
+		return this->get_domain()->get_economy()->get_wealth();
+	} else {
+		return this->wealth;
+	}
+}
+
+void character_game_data::change_wealth(const int64_t change)
+{
+	if (this->is_ruler()) {
+		assert_throw(this->wealth == 0);
+		this->get_domain()->get_economy()->change_wealth(change);
+	} else {
+		this->wealth += change;
+		emit wealth_changed();
+	}
 }
 
 QVariantList character_game_data::get_items_qvariant_list() const

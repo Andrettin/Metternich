@@ -22,6 +22,7 @@
 #include "game/event_trigger.h"
 #include "game/game.h"
 #include "game/game_rules.h"
+#include "item/item.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "script/condition/and_condition.h"
