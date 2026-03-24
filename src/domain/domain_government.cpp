@@ -774,6 +774,16 @@ void domain_government::on_office_holder_died(const office *office, const charac
 
 	if (office->is_ruler() && this->get_heir() != nullptr) {
 		this->get_heir()->get_game_data()->inherit_bloodline_from(office_holder);
+
+		//during succession, the heir also inherits the items of the previous ruler
+		std::vector<item *> items_to_take;
+		for (const qunique_ptr<item> &item : office_holder->get_game_data()->get_items()) {
+			items_to_take.push_back(item.get());
+		}
+		for (item *item : items_to_take) {
+			this->get_heir()->get_game_data()->add_item(office_holder->get_game_data()->take_item(item));
+		}
+
 		this->set_office_holder(office, this->get_heir());
 	} else {
 		this->set_office_holder(office, nullptr);
