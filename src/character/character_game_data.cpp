@@ -2678,7 +2678,11 @@ bool character_game_data::can_use_item(const metternich::item *item) const
 		return false;
 	}
 
-	//FIXME: only allow consuming items without modifiers (e.g. consumables with scripted effects, like healing potions) if consumption conditions are fulfilled (e.g. less than maximum HP for healing potions)
+	if (item->get_enchantment() != nullptr && item->get_enchantment()->get_conditions() != nullptr) {
+		if (!item->get_enchantment()->get_conditions()->check(this->character, read_only_context(this->character))) {
+			return false;
+		}
+	}
 
 	return true;
 }
@@ -2720,6 +2724,12 @@ bool character_game_data::can_equip_item(const item *item, const bool ignore_alr
 	const item_slot *slot = item->get_slot();
 	if (slot == nullptr) {
 		return false;
+	}
+
+	if (item->get_enchantment() != nullptr && item->get_enchantment()->get_conditions() != nullptr) {
+		if (!item->get_enchantment()->get_conditions()->check(this->character, read_only_context(this->character))) {
+			return false;
+		}
 	}
 
 	const int item_slot_count = this->character->get_species()->get_item_slot_count(slot);

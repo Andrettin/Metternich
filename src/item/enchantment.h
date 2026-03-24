@@ -12,6 +12,9 @@ class item_type;
 enum class affix_type;
 
 template <typename scope_type>
+class and_condition;
+
+template <typename scope_type>
 class modifier;
 
 class enchantment final : public named_data_entry, public data_type<enchantment>
@@ -59,6 +62,11 @@ public:
 		return this->subenchantments;
 	}
 
+	const and_condition<character> *get_conditions() const
+	{
+		return this->conditions.get();
+	}
+
 	const metternich::modifier<const character> *get_modifier() const
 	{
 		return this->modifier.get();
@@ -75,6 +83,7 @@ private:
 	data_entry_set<item_class> item_classes;
 	data_entry_set<item_type> item_types;
 	std::vector<const enchantment *> subenchantments;
+	std::unique_ptr<const and_condition<character>> conditions;
 	std::unique_ptr<const metternich::modifier<const character>> modifier;
 };
 
