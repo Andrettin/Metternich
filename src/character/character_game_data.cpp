@@ -1184,6 +1184,36 @@ void character_game_data::die()
 	}
 
 	assert_throw(this->get_office() == nullptr);
+	if (this->get_wealth() > 0 || !this->get_items().empty()) {
+		character_set checked_characters;
+		std::vector<const metternich::character *> next_of_kin = this->get_next_of_kin(checked_characters, true);
+
+		if (next_of_kin.empty()) {
+			//if there is no next of kin, the ruler of the character's domain inherits their personal wealth
+			next_of_kin = { this->get_domain()->get_government()->get_ruler() };
+		}
+
+		if (!next_of_kin.empty()) {
+			const int wealth_share = this->get_wealth() / static_cast<int>(next_of_kin.size());
+			for (const metternich::character * inheritor : next_of_kin) {
+				inheritor->get_game_data()->change_wealth(wealth_share);
+
+				std::vector<item *> potential_items;
+				for (const qunique_ptr<item> &item : this->get_items()) {
+					potential_items.push_back(item.get());
+				}
+				for (item *item : potential_items) {
+					if (item->is_useful_for(inheritor)) {
+						inheritor->get_game_data()->add_item(this->take_item(item));
+					}
+				}
+			}
+		}
+
+		this->wealth = 0;
+	}
+
+	assert_throw(this->get_office() == nullptr);
 	this->set_domain(nullptr);
 
 	if (this->is_deity() && this->character->get_deity()->is_apotheotic()) {
@@ -1278,6 +1308,48 @@ std::vector<const metternich::character *> character_game_data::get_dynastic_chi
 QVariantList character_game_data::get_dynastic_children_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_dynastic_children());
+}
+
+std::vector<const metternich::character *> character_game_data::get_next_of_kin(character_set &checked_characters, const bool include_parents) const
+{
+	std::vector<const metternich::character *> next_of_kin;
+
+	checked_characters.insert(this->character);
+
+	//children are expected to be sorted by birth order
+	const std::vector<const metternich::character *> children = this->get_children();
+
+	for (const metternich::character *child : children) {
+		if (checked_characters.contains(child)) {
+			continue;
+		}
+
+		if (child->get_game_data()->exists()) {
+			checked_characters.insert(child);
+			next_of_kin.push_back(child);
+			continue;
+		}
+
+		vector::merge(next_of_kin, child->get_game_data()->get_next_of_kin(checked_characters, false));
+	}
+
+	if (include_parents) {
+		for (const metternich::character *parent : this->character->get_parents()) {
+			if (checked_characters.contains(parent)) {
+				continue;
+			}
+
+			if (parent->get_game_data()->exists()) {
+				checked_characters.insert(parent);
+				next_of_kin.push_back(parent);
+				continue;
+			}
+
+			vector::merge(next_of_kin, parent->get_game_data()->get_next_of_kin(checked_characters, true));
+		}
+	}
+
+	return next_of_kin;
 }
 
 const metternich::character_class *character_game_data::get_character_class() const
@@ -2723,6 +2795,33 @@ void character_game_data::add_item(qunique_ptr<item> &&item)
 		//AI characters use items as soon as they receive them
 		this->use_item(item_ptr);
 	}
+}
+
+qunique_ptr<item> character_game_data::take_item(metternich::item *item)
+{
+	qunique_ptr<metternich::item> taken_item;
+
+	if (item->get_type()->is_stackable() && item->get_quantity() > 1) {
+		item->change_quantity(-1);
+		taken_item = make_qunique<metternich::item>(item->get_type(), item->get_material(), item->get_enchantment(), item->get_spell());
+		emit items_changed();
+		return taken_item;
+	}
+
+	if (item->is_equipped()) {
+		this->deequip_item(item);
+	}
+
+	for (auto it = this->items.begin(); it != this->items.end(); ++it) {
+		if (it->get() == item) {
+			taken_item = std::move(*it);
+			this->items.erase(it);
+			break;
+		}
+	}
+
+	emit items_changed();
+	return taken_item;
 }
 
 void character_game_data::remove_item(item *item)

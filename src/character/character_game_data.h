@@ -185,6 +185,7 @@ public:
 	QVariantList get_children_qvariant_list() const;
 	std::vector<const metternich::character *> get_dynastic_children() const;
 	QVariantList get_dynastic_children_qvariant_list() const;
+	std::vector<const metternich::character *> get_next_of_kin(character_set &checked_characters, const bool include_parents) const;
 
 	const QDate &get_birth_date() const
 	{
@@ -660,6 +661,7 @@ public:
 	QVariantList get_items_qvariant_list() const;
 	bool has_item(const item_type *item_type) const;
 	void add_item(qunique_ptr<item> &&item);
+	qunique_ptr<item> take_item(metternich::item *item);
 	Q_INVOKABLE void remove_item(metternich::item *item);
 	void remove_item(const item_type *item_type, const item_material *material, const enchantment *enchantment, const spell *spell);
 
