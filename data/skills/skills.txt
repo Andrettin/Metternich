@@ -127,6 +127,18 @@ disguise = {
 	}
 }
 
+fishing = {
+	name = "Fishing"
+	icon = fish
+	check_dice = 1d20
+	base_attribute = wisdom
+	base_value = -1
+	profitability = marginal
+	groups = {
+		general
+	}
+}
+
 forgery = {
 	name = "Forgery"
 	icon = treaty
@@ -166,6 +178,18 @@ herbalism = {
 	}
 }
 
+hunting = {
+	name = "Hunting"
+	icon = deer
+	check_dice = 1d20
+	base_attribute = wisdom
+	base_value = -1
+	profitability = marginal
+	groups = {
+		warrior
+	}
+}
+
 intrigue = {
 	name = "Intrigue"
 	icon = dagger
@@ -193,6 +217,18 @@ leadership = {
 	check_dice = 1d20
 	base_attribute = charisma
 	base_value = -1
+	groups = {
+		general
+	}
+}
+
+mining = {
+	name = "Mining"
+	icon = iron_ore
+	check_dice = 1d20
+	base_attribute = wisdom
+	base_value = -3
+	profitability = marginal
 	groups = {
 		general
 	}

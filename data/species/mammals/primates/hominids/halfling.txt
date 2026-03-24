@@ -56,5 +56,6 @@ halfling = {
 		strength = -2
 		find_disarm_traps = 5
 		open_locks = 5
+		pick_pockets = 5
 	}
 }

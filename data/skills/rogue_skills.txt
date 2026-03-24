@@ -11,3 +11,10 @@ open_locks = {
 	icon = cog
 	check_dice = 1d100
 }
+
+pick_pockets = {
+	name = "Pick Pockets"
+	icon = wealth
+	check_dice = 1d100
+	profitability = marginal
+}

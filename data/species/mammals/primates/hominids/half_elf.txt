@@ -53,5 +53,6 @@ half_elf = {
 	modifier = {
 		dexterity = 1
 		constitution = -1
+		pick_pockets = 10
 	}
 }

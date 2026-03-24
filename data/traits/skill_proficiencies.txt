@@ -173,6 +173,20 @@ disguise = {
 	}
 }
 
+fishing = {
+	name = "Fishing"
+	icon = fish
+	types = {
+		proficiency
+	}
+	conditions = {
+		class_skill = fishing
+	}
+	modifier = {
+		skill_training = fishing
+	}
+}
+
 forgery = {
 	name = "Forgery"
 	icon = treaty
@@ -217,6 +231,20 @@ herbalism = {
 	}
 }
 
+hunting = {
+	name = "Hunting"
+	icon = deer
+	types = {
+		proficiency
+	}
+	conditions = {
+		class_skill = hunting
+	}
+	modifier = {
+		skill_training = hunting
+	}
+}
+
 intrigue = {
 	name = "Intrigue"
 	icon = dagger
@@ -256,6 +284,20 @@ leadership = {
 	}
 	modifier = {
 		skill_training = leadership
+	}
+}
+
+mining = {
+	name = "Mining"
+	icon = iron_ore
+	types = {
+		proficiency
+	}
+	conditions = {
+		class_skill = mining
+	}
+	modifier = {
+		skill_training = mining
 	}
 }
 
