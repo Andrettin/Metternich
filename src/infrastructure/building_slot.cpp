@@ -36,7 +36,7 @@ building_slot::building_slot(const building_slot_type *type, const site *settlem
 	assert_throw(this->get_type() != nullptr);
 	assert_throw(this->get_settlement() != nullptr);
 
-	connect(this, &building_slot::building_changed, this, &building_slot::domain_modifier_changed);
+	connect(this, &building_slot::building_changed, this, &building_slot::modifier_changed);
 }
 
 building_slot::~building_slot()

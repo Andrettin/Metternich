@@ -4,13 +4,14 @@ import ".."
 
 DialogBase {
 	id: building_dialog
-	title: building ? building.name : ""
+	title: wonder ? wonder.name : (building ? building.name : "")
 	width: Math.max(content_column.width + 8 * scale_factor * 2, 256 * scale_factor)
 	height: content_column.y + content_column.height + 8 * scale_factor
 	
 	property var building_slot: null
 	readonly property var building: building_slot ? building_slot.building : null
-	readonly property string modifier_string: building_slot ? building_slot.country_modifier_string : 0
+	readonly property var wonder: building_slot ? building_slot.wonder : null
+	readonly property string modifier_string: building_slot ? building_slot.modifier_string : 0
 	
 	UpgradeBuildingButton {
 		id: upgrade_building_button
@@ -18,6 +19,7 @@ DialogBase {
 		anchors.topMargin: 16 * scale_factor
 		anchors.right: parent.right
 		anchors.rightMargin: 16 * scale_factor
+		visible: false
 	}
 	
 	Column {
@@ -34,13 +36,22 @@ DialogBase {
 			visible: building && modifier_string.length > 0 && !building.warehouse
 		}
 		
+		/*
 		SmallText {
 			id: storage_capacity_label
 			anchors.horizontalCenter: parent.horizontalCenter
 			text: "Storage Capacity: " + number_string(country_game_data.economy.storage_capacity)
 			visible: building && building.warehouse
 		}
+		*/
 		
+		ItemShopGrid {
+			id: item_shop_grid
+			item_slots: building_slot ? building_slot.item_slots : []
+			visible: building_slot && building_slot.item_slots.length > 0
+		}
+		
+		/*
 		Grid {
 			id: commodity_grid
 			anchors.horizontalCenter: parent.horizontalCenter
@@ -262,6 +273,7 @@ DialogBase {
 				}
 			}
 		}
+		*/
 		
 		TextButton {
 			id: ok_button
