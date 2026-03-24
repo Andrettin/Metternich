@@ -33,6 +33,7 @@
 #include "game/event_trigger.h"
 #include "game/game.h"
 #include "game/game_rules.h"
+#include "infrastructure/building_item_slot.h"
 #include "item/enchantment.h"
 #include "item/item.h"
 #include "item/item_class.h"
@@ -2930,11 +2931,53 @@ void character_game_data::decrement_status_effect_rounds()
 
 const site *character_game_data::get_location() const
 {
+	if (this->get_civilian_unit() != nullptr && this->get_civilian_unit()->get_province()->get_game_data()->get_provincial_capital() != nullptr) {
+		return this->get_civilian_unit()->get_province()->get_game_data()->get_provincial_capital();
+	}
+
+	if (this->get_military_unit() != nullptr) {
+		if (this->get_military_unit()->get_province()->get_game_data()->get_provincial_capital() != nullptr) {
+			return this->get_military_unit()->get_province()->get_game_data()->get_provincial_capital();
+		}
+	}
+
 	if (this->get_domain() != nullptr) {
 		return this->get_domain()->get_game_data()->get_capital();
 	}
 
 	return nullptr;
+}
+
+void character_game_data::ai_buy_items()
+{
+	if (this->get_wealth() <= 0) {
+		return;
+	}
+
+	const province *province = this->get_location()->get_game_data()->get_province();
+	assert_throw(province != nullptr);
+
+	for (const site *holding_site : province->get_game_data()->get_settlement_sites()) {
+		if (!holding_site->get_game_data()->is_built()) {
+			continue;
+		}
+
+		for (building_item_slot *item_slot : holding_site->get_game_data()->get_item_slots()) {
+			if (item_slot->get_item() == nullptr) {
+				continue;
+			}
+
+			if (!item_slot->can_buy_item(this->character)) {
+				continue;
+			}
+
+			if (!item_slot->get_item()->is_useful_for(this->character)) {
+				continue;
+			}
+
+			item_slot->buy_item(this->character);
+		}
+	}
 }
 
 }

@@ -112,6 +112,8 @@ public:
 
 	int get_price() const;
 
+	bool is_useful_for(const character *character) const;
+
 signals:
 	void name_changed();
 	void equipped_changed();

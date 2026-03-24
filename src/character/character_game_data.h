@@ -811,6 +811,8 @@ public:
 		this->flags.erase(flag);
 	}
 
+	void ai_buy_items();
+
 signals:
 	void full_name_changed();
 	void titled_name_changed();

@@ -907,7 +907,7 @@ public:
 		this->apply_modifier(modifier, -1);
 	}
 
-	std::vector<const character *> get_characters() const;
+	const std::vector<const character *> &get_characters() const;
 	QVariantList get_characters_qvariant_list() const;
 	void add_character(const character *character);
 	void remove_character(const character *character);

@@ -2,8 +2,11 @@
 
 #include "item/item.h"
 
+#include "character/character.h"
+#include "character/character_game_data.h"
 #include "item/affix_type.h"
 #include "item/enchantment.h"
+#include "item/item_class.h"
 #include "item/item_material.h"
 #include "item/item_type.h"
 #include "script/modifier.h"
@@ -189,6 +192,38 @@ int item::get_price() const
 	}
 
 	return price;
+}
+
+bool item::is_useful_for(const character *character) const
+{
+	if (this->get_slot() != nullptr) {
+		if (!character->get_game_data()->can_equip_item(this, true)) {
+			return false;
+		}
+
+		if (!character->get_game_data()->can_equip_item(this, false)) {
+			bool is_better_than_any_equipped = false;
+			for (const item *equipped_item : character->get_game_data()->get_equipped_items(this->get_slot())) {
+				if (this->get_price() > equipped_item->get_price()) {
+					is_better_than_any_equipped = true;
+					break;
+				}
+			}
+			if (!is_better_than_any_equipped) {
+				return false;
+			}
+		}
+
+		return true;
+	} else if (this->get_type()->get_item_class()->is_consumable()) {
+		if (!character->get_game_data()->can_use_item(this)) {
+			return false;
+		}
+
+		return true;
+	}
+
+	return false;
 }
 
 }

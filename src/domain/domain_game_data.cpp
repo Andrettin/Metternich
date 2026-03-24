@@ -443,6 +443,12 @@ QCoro::Task<void> domain_game_data::do_turn()
 			}
 		}
 
+		for (const character *character : this->get_characters()) {
+			if (character->get_game_data()->is_ai()) {
+				character->get_game_data()->ai_buy_items();
+			}
+		}
+
 		this->do_transporter_recruitment();
 		this->do_civilian_unit_recruitment();
 		this->get_military()->do_military_unit_recruitment();
@@ -3553,7 +3559,7 @@ void domain_game_data::apply_modifier(const modifier<const metternich::domain> *
 	modifier->apply(this->domain, multiplier);
 }
 
-std::vector<const character *> domain_game_data::get_characters() const
+const std::vector<const character *> &domain_game_data::get_characters() const
 {
 	return this->characters;
 }
