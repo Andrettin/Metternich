@@ -95,6 +95,18 @@ blacksmithing = {
 	}
 }
 
+bowyer = {
+	name = "Bowyer" #also includes fletching
+	icon = bow
+	check_dice = 1d20
+	base_attribute = dexterity
+	base_value = -1
+	profitability = fair
+	groups = {
+		warrior
+	}
+}
+
 cooking = {
 	name = "Cooking"
 	icon = tools
@@ -222,6 +234,17 @@ leadership = {
 	}
 }
 
+leatherworking = {
+	name = "Leatherworking"
+	icon = leather
+	check_dice = 1d20
+	base_attribute = intelligence
+	profitability = fair
+	groups = {
+		general
+	}
+}
+
 mining = {
 	name = "Mining"
 	icon = iron_ore
@@ -253,6 +276,18 @@ religion = {
 	groups = {
 		mage
 		priest
+	}
+}
+
+seamanship = {
+	name = "Seamanship"
+	icon = anchor
+	check_dice = 1d20
+	base_attribute = dexterity
+	base_value = 1
+	profitability = marginal #sailor
+	groups = {
+		general
 	}
 }
 

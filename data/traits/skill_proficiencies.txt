@@ -129,6 +129,20 @@ blacksmithing = {
 	}
 }
 
+bowyer = {
+	name = "Bowyer"
+	icon = bow
+	types = {
+		proficiency
+	}
+	conditions = {
+		class_skill = bowyer
+	}
+	modifier = {
+		skill_training = bowyer
+	}
+}
+
 cooking = {
 	name = "Cooking"
 	icon = tools
@@ -287,6 +301,20 @@ leadership = {
 	}
 }
 
+leatherworking = {
+	name = "Leatherworking"
+	icon = leather
+	types = {
+		proficiency
+	}
+	conditions = {
+		class_skill = leatherworking
+	}
+	modifier = {
+		skill_training = leatherworking
+	}
+}
+
 mining = {
 	name = "Mining"
 	icon = iron_ore
@@ -328,6 +356,20 @@ religion = {
 	}
 	modifier = {
 		skill_training = religion
+	}
+}
+
+seamanship = {
+	name = "Seamanship"
+	icon = anchor
+	types = {
+		proficiency
+	}
+	conditions = {
+		class_skill = seamanship
+	}
+	modifier = {
+		skill_training = seamanship
 	}
 }
 
