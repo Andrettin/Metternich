@@ -20,7 +20,6 @@ agriculture = {
 	}
 	conditions = {
 		class_skill = agriculture
-		playable = false #only for flavor for NPCs, no mechanics added for it yet
 	}
 	modifier = {
 		skill_training = agriculture
@@ -80,7 +79,6 @@ armorer = {
 	}
 	conditions = {
 		class_skill = armorer
-		playable = false #only for flavor for NPCs, no mechanics added for it yet
 	}
 	modifier = {
 		skill_training = armorer
@@ -125,7 +123,6 @@ blacksmithing = {
 	}
 	conditions = {
 		class_skill = blacksmithing
-		playable = false #only for flavor for NPCs, no mechanics added for it yet
 	}
 	modifier = {
 		skill_training = blacksmithing
@@ -214,7 +211,6 @@ herbalism = {
 	}
 	conditions = {
 		class_skill = herbalism
-		playable = false #only for flavor for NPCs, no mechanics added for it yet
 	}
 	modifier = {
 		skill_training = herbalism
@@ -373,7 +369,6 @@ weaponsmithing = {
 	}
 	conditions = {
 		class_skill = weaponsmithing
-		playable = false #only for flavor for NPCs, no mechanics added for it yet
 	}
 	modifier = {
 		skill_training = weaponsmithing
@@ -388,7 +383,6 @@ weaving = {
 	}
 	conditions = {
 		class_skill = weaving
-		playable = false #only for flavor for NPCs, no mechanics added for it yet
 	}
 	modifier = {
 		skill_training = weaving

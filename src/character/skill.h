@@ -11,6 +11,7 @@ namespace metternich {
 class character_attribute;
 class icon;
 class skill_group;
+enum class profession_profitability;
 
 class skill final : public character_attribute_base, public data_type<skill>
 {
@@ -23,6 +24,7 @@ class skill final : public character_attribute_base, public data_type<skill>
 	Q_PROPERTY(bool trained_only MEMBER trained_only READ is_trained_only NOTIFY changed)
 	Q_PROPERTY(bool find_traps MEMBER find_traps NOTIFY changed)
 	Q_PROPERTY(bool disarm_traps MEMBER disarm_traps NOTIFY changed)
+	Q_PROPERTY(metternich::profession_profitability profitability MEMBER profitability READ get_profitability NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "skill";
@@ -72,6 +74,11 @@ public:
 		return this->trained_only;
 	}
 
+	profession_profitability get_profitability() const
+	{
+		return this->profitability;
+	}
+
 	const std::vector<const skill_group *> &get_groups() const
 	{
 		return this->groups;
@@ -88,6 +95,7 @@ private:
 	bool trained_only = true;
 	bool find_traps = false;
 	bool disarm_traps = false;
+	profession_profitability profitability{};
 	std::vector<const skill_group *> groups;
 };
 

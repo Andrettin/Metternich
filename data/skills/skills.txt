@@ -14,6 +14,7 @@ agriculture = {
 	icon = grain
 	check_dice = 1d20
 	base_attribute = intelligence
+	profitability = marginal
 	groups = {
 		general
 	}
@@ -56,6 +57,7 @@ armorer = {
 	check_dice = 1d20
 	base_attribute = intelligence
 	base_value = -2
+	profitability = good
 	groups = {
 		warrior
 	}
@@ -87,6 +89,7 @@ blacksmithing = {
 	icon = tools
 	check_dice = 1d20
 	base_attribute = strength
+	profitability = fair
 	groups = {
 		general
 	}
@@ -156,6 +159,7 @@ herbalism = {
 	check_dice = 1d20
 	base_attribute = intelligence
 	base_value = -2
+	profitability = fair
 	groups = {
 		mage
 		priest
@@ -275,6 +279,7 @@ weaponsmithing = {
 	check_dice = 1d20
 	base_attribute = intelligence
 	base_value = -3
+	profitability = good
 	groups = {
 		warrior
 	}
@@ -286,6 +291,7 @@ weaving = {
 	check_dice = 1d20
 	base_attribute = intelligence
 	base_value = -1
+	profitability = fair
 	groups = {
 		general
 	}

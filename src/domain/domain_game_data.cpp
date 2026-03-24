@@ -444,6 +444,10 @@ QCoro::Task<void> domain_game_data::do_turn()
 		}
 
 		for (const character *character : this->get_characters()) {
+			if (!character->get_game_data()->is_ruler()) {
+				character->get_game_data()->ply_trade();
+			}
+
 			if (character->get_game_data()->is_ai()) {
 				character->get_game_data()->ai_buy_items();
 			}

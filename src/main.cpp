@@ -7,6 +7,7 @@
 #include "character/character_game_data.h"
 #include "character/dynasty.h"
 #include "character/family_tree_model.h"
+#include "character/profession_profitability.h"
 #include "character/starting_age_category.h"
 #include "character/trait.h"
 #include "character/trait_type.h"
@@ -188,6 +189,7 @@ int main(int argc, char **argv)
 		database_util::register_enum<military_unit_category>();
 		database_util::register_enum<military_unit_domain>();
 		database_util::register_enum<moisture_type>();
+		database_util::register_enum<profession_profitability>();
 		database_util::register_enum<site_type>();
 		database_util::register_enum<spell_target>();
 		database_util::register_enum<starting_age_category>();

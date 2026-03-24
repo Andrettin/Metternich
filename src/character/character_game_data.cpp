@@ -12,6 +12,7 @@
 #include "character/level_bonus_table.h"
 #include "character/monster_type.h"
 #include "character/mythic_path.h"
+#include "character/profession_profitability.h"
 #include "character/saving_throw_type.h"
 #include "character/skill.h"
 #include "character/status_effect.h"
@@ -421,6 +422,85 @@ gsml_data character_game_data::to_gsml_data() const
 	}
 
 	return data;
+}
+
+void character_game_data::ply_trade()
+{
+	const skill *best_skill = nullptr;
+	profession_profitability skill_profitability = profession_profitability::none;
+	int skill_percent_value = 0;
+
+	for (const auto &[skill, value] : this->get_skill_values()) {
+		if (!this->is_skill_trained(skill)) {
+			continue;
+		}
+
+		if (skill->get_profitability() == profession_profitability::none) {
+			continue;
+		}
+
+		if (value <= 0) {
+			continue;
+		}
+
+		const int percent_value = value * 100 / skill->get_check_dice().get_sides();
+		if (skill->get_profitability() > skill_profitability || (skill->get_profitability() == skill_profitability && percent_value > skill_percent_value)) {
+			best_skill = skill;
+			skill_profitability = skill->get_profitability();
+			skill_percent_value = percent_value;
+		}
+	}
+
+	if (best_skill == nullptr) {
+		return;
+	}
+
+	if (!this->do_skill_check(best_skill, 0, this->get_location())) {
+		return;
+	}
+
+	const int province_level = this->get_location()->get_game_data()->get_province()->get_game_data()->get_level();
+	if (province_level <= 3 && skill_profitability != profession_profitability::marginal) {
+		skill_profitability = static_cast<profession_profitability>(static_cast<int>(skill_profitability) - 1);
+	} else if (province_level >= 7 && skill_profitability != profession_profitability::excellent) {
+		skill_profitability = static_cast<profession_profitability>(static_cast<int>(skill_profitability) + 1);
+	}
+
+	int profit = 0;
+
+	static constexpr int gp_value = 100;
+
+	switch (skill_profitability) {
+		case profession_profitability::marginal:
+		{
+			static constexpr dice profit_dice(5, 6);
+			profit = random::get()->roll_dice(profit_dice) * gp_value;
+			break;
+		}
+		case profession_profitability::fair:
+		{
+			static constexpr dice profit_dice(10, 6);
+			profit = random::get()->roll_dice(profit_dice) * gp_value;
+			break;
+		}
+		case profession_profitability::good:
+		{
+			static constexpr dice profit_dice(1, 6, 2);
+			profit = random::get()->roll_dice(profit_dice) * gp_value * 10;
+			break;
+		}
+		case profession_profitability::excellent:
+		{
+			static constexpr dice profit_dice(6, 4);
+			profit = random::get()->roll_dice(profit_dice) * gp_value * 10;
+			break;
+		}
+		default:
+			assert_throw(false);
+			break;
+	}
+
+	this->change_wealth(profit);
 }
 
 void character_game_data::do_events()
