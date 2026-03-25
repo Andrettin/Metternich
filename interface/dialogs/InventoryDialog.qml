@@ -10,8 +10,8 @@ DialogBase {
 	
 	property var character: null
 	readonly property var items: character ? character.game_data.items : []
-	readonly property int icon_button_width: 32 * scale_factor
-	readonly property int icon_button_height: 32 * scale_factor
+	readonly property int icon_button_width: 32 * scale_factor + 6 * scale_factor
+	readonly property int icon_button_height: 32 * scale_factor + 6 * scale_factor
 	
 	MouseArea {
 		anchors.fill: parent
@@ -51,53 +51,37 @@ DialogBase {
 			Repeater {
 				model: items
 				
-				Image {
+				IconButton {
 					id: item_icon
-					source: item.icon !== null ? ("image://icon/" + item.icon.identifier) : "image://empty/"
+					icon_identifier: item.icon.identifier
+					tooltip: typeof status_text !== 'undefined' ? "" : format_text(small_text(item.name))
 					
 					readonly property var item: model.modelData
-					readonly property string tooltip: typeof status_text !== 'undefined' ? "" : format_text(small_text(item.name))
 					
-					MouseArea {
-						id: item_mouse_area
-						anchors.fill: parent
-						hoverEnabled: true
-						acceptedButtons: Qt.LeftButton | Qt.RightButton
-						
-						onClicked: function(mouse) {
-							if (character === metternich.game.player_character) {
-								if (mouse.button === Qt.RightButton) {
-									if (item.type.item_class.consumable && character.game_data.can_use_item(item)) {
-										character.game_data.use_item(item)
-									}
-								}
+					onClicked: {
+						if (character === metternich.game.player_character) {
+							if (item.type.item_class.consumable && character.game_data.can_use_item(item)) {
+								character.game_data.use_item(item)
 							}
 						}
-						
-						onEntered: {
-							if (typeof status_text !== 'undefined') {
+					}
+					
+					onHoveredChanged: {
+						if (typeof status_text !== 'undefined') {
+							if (hovered) {
 								status_text = item.name
 								if (character === metternich.game.player_character) {
 									if (item.type.item_class.consumable && character.game_data.can_use_item(item)) {
-										middle_status_text = "Right-click to " + item.type.item_class.consume_verb
+										middle_status_text = "Click to " + item.type.item_class.consume_verb
 									}
 								}
 								right_status_text = item.get_effects_string()
-							}
-						}
-						
-						onExited: {
-							if (typeof status_text !== 'undefined') {
+							} else {
 								status_text = ""
 								middle_status_text = ""
 								right_status_text = ""
 							}
 						}
-					}
-					
-					CustomTooltip {
-						text: tooltip
-						visible: item_mouse_area.containsMouse && tooltip.length > 0
 					}
 				}
 			}
