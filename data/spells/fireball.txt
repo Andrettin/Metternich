@@ -1,8 +1,9 @@
 fireball = {
 	name = "Fireball"
 	level = 3
-	target = enemy
 	icon = research
+	price = 375gp
+	target = enemy
 	range = 5
 	character_classes = {
 	}

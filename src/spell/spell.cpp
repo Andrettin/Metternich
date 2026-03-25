@@ -72,8 +72,13 @@ void spell::check() const
 		throw std::runtime_error(std::format("Spell \"{}\" has no level.", this->get_identifier()));
 	}
 
-	assert_throw(this->get_target() != spell_target::none || this->get_battle_target() != spell_target::none);
 	assert_throw(this->get_icon() != nullptr);
+
+	if (this->get_price() == 0) {
+		throw std::runtime_error(std::format("Spell \"{}\" has no price.", this->get_identifier()));
+	}
+
+	assert_throw(this->get_target() != spell_target::none || this->get_battle_target() != spell_target::none);
 	assert_throw(!this->effects.empty() || this->get_battle_result() != attack_result::none);
 }
 

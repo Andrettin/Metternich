@@ -2,6 +2,7 @@ cloudkill = {
 	name = "Cloudkill"
 	level = 5
 	icon = skull
+	price = 1125gp
 	battle_target = enemy
 	battle_range = 3
 	battle_result = destroy

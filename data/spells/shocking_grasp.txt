@@ -1,8 +1,9 @@
 shocking_grasp = {
 	name = "Shocking Grasp"
 	level = 1
-	target = enemy
 	icon = research
+	price = 25gp
+	target = enemy
 	range = 1
 	character_classes = {
 	}
