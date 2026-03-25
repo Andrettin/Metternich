@@ -10,19 +10,37 @@ Image {
 	property string tooltip: ""
 	property string description: ""
 	
+	signal clicked()
+	signal entered()
+	signal exited()
+	
 	MouseArea {
 		id: icon_mouse_area
 		anchors.fill: parent
 		hoverEnabled: true
 		
+		onClicked: {
+			icon.clicked()
+		}
+		
 		onEntered: {
-			status_text = name
-			middle_status_text = description
+			if (name.length > 0) {
+				status_text = name
+			}
+			if (description.length > 0) {
+				middle_status_text = description
+			}
+			icon.entered()
 		}
 		
 		onExited: {
-			status_text = ""
-			middle_status_text = ""
+			if (name.length > 0) {
+				status_text = ""
+			}
+			if (description.length > 0) {
+				middle_status_text = ""
+			}
+			icon.exited()
 		}
 	}
 	
