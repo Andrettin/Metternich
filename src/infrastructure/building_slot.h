@@ -13,6 +13,7 @@ class building_item_slot;
 class building_slot_type;
 class building_type;
 class domain;
+class item_creation_type;
 class wonder;
 
 class building_slot final : public QObject
@@ -25,7 +26,8 @@ class building_slot final : public QObject
 	Q_PROPERTY(const metternich::wonder* wonder READ get_wonder NOTIFY wonder_changed)
 	Q_PROPERTY(const metternich::wonder* under_construction_wonder READ get_under_construction_wonder WRITE set_under_construction_wonder NOTIFY under_construction_wonder_changed)
 	Q_PROPERTY(QString modifier_string READ get_modifier_string NOTIFY modifier_changed)
-	Q_PROPERTY(QVariantList item_slots READ get_item_slots_qvariant_list CONSTANT)
+	Q_PROPERTY(QVariantList item_slots READ get_item_slots_qvariant_list NOTIFY items_changed)
+	Q_PROPERTY(QVariantList filled_item_slots READ get_filled_item_slots_qvariant_list NOTIFY items_changed)
 	Q_PROPERTY(const metternich::domain* country READ get_country CONSTANT)
 
 public:
@@ -93,6 +95,7 @@ public:
 	}
 
 	QVariantList get_item_slots_qvariant_list() const;
+	QVariantList get_filled_item_slots_qvariant_list() const;
 
 	void add_item_slot(const item_creation_type *item_creation_type);
 	void remove_item_slot(const item_creation_type *item_creation_type);
@@ -109,6 +112,7 @@ signals:
 	void wonder_changed();
 	void under_construction_wonder_changed();
 	void modifier_changed();
+	void items_changed();
 
 private:
 	const building_slot_type *type = nullptr;

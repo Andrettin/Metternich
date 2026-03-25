@@ -47,8 +47,8 @@ DialogBase {
 		
 		ItemShopGrid {
 			id: item_shop_grid
-			item_slots: building_slot ? building_slot.item_slots : []
-			visible: building_slot && building_slot.item_slots.length > 0
+			item_slots: building_slot ? building_slot.filled_item_slots : []
+			visible: building_slot && building_slot.filled_item_slots.length > 0
 		}
 		
 		/*

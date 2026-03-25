@@ -515,9 +515,22 @@ QVariantList building_slot::get_item_slots_qvariant_list() const
 	return container::to_qvariant_list(this->get_item_slots());
 }
 
+QVariantList building_slot::get_filled_item_slots_qvariant_list() const
+{
+	std::vector<building_item_slot *> item_slots;
+	for (const qunique_ptr<building_item_slot> &item_slot : this->get_item_slots()) {
+		if (item_slot->get_item() != nullptr) {
+			item_slots.push_back(item_slot.get());
+		}
+	}
+
+	return container::to_qvariant_list(item_slots);
+}
+
 void building_slot::add_item_slot(const item_creation_type *item_creation_type)
 {
 	auto item_slot = make_qunique<building_item_slot>(item_creation_type, this);
+	connect(item_slot.get(), &building_item_slot::item_changed, this, &building_slot::items_changed);
 	this->item_slots.push_back(std::move(item_slot));
 }
 
