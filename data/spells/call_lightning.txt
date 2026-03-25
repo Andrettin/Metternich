@@ -2,6 +2,7 @@ call_lightning = {
 	name = "Call Lightning"
 	level = 3
 	icon = research
+	price = 375gp
 	battle_target = enemy
 	battle_range = 3
 	battle_result = rout

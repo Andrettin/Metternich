@@ -191,6 +191,10 @@ int item::get_price() const
 		price += this->get_enchantment()->get_price();
 	}
 
+	if (this->get_spell() != nullptr) {
+		price += this->get_spell()->get_price();
+	}
+
 	return price;
 }
 
