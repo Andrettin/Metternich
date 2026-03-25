@@ -177,7 +177,7 @@ QString item::get_effects_string() const
 			str += ", ";
 		}
 
-		str += std::format("Cast {}", this->get_spell()->get_name());
+		str += std::format("{} Spell", this->get_spell()->get_name());
 	}
 
 	return QString::fromStdString(str);

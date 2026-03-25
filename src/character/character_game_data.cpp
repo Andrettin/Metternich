@@ -2864,6 +2864,16 @@ bool character_game_data::can_use_item(const metternich::item *item) const
 		}
 	}
 
+	if (item->get_spell() != nullptr) {
+		if (!item->get_type()->is_spell_learnable()) {
+			return false;
+		}
+
+		if (!this->can_learn_spell(item->get_spell())) {
+			return false;
+		}
+	}
+
 	return true;
 }
 
@@ -2885,6 +2895,12 @@ void character_game_data::on_item_used(const item *item)
 
 	if (item->get_enchantment() != nullptr) {
 		this->on_item_used_with_enchantment(item->get_enchantment());
+	}
+
+	if (item->get_spell() != nullptr) {
+		if (item->get_type()->is_spell_learnable() && this->can_learn_spell(item->get_spell())) {
+			this->learn_spell(item->get_spell());;
+		}
 	}
 }
 

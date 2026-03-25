@@ -72,7 +72,11 @@ DialogBase {
 								status_text = item.name
 								if (character === metternich.game.player_character) {
 									if (item.type.item_class.consumable && character.game_data.can_use_item(item)) {
-										middle_status_text = "Click to " + item.type.item_class.consume_verb
+										if (item.spell !== null && item.type.spell_learnable) {
+											middle_status_text = "Click to learn " + item.spell.name
+										} else {
+											middle_status_text = "Click to " + item.type.item_class.consume_verb
+										}
 									}
 								}
 								right_status_text = item.get_effects_string()
