@@ -221,6 +221,7 @@ set_source_files_properties(${population_SRCS} PROPERTIES UNITY_GROUP "populatio
 set(religion_SRCS
 	src/religion/deity.cpp
 	src/religion/deity_slot.cpp
+	src/religion/divine_domain.cpp
 	src/religion/pantheon.cpp
 	src/religion/religion.cpp
 	src/religion/religion_base.cpp
@@ -284,6 +285,7 @@ source_group(species FILES ${species_SRCS})
 set_source_files_properties(${species_SRCS} PROPERTIES UNITY_GROUP "species")
 
 set(spell_SRCS
+	src/spell/arcane_school.cpp
 	src/spell/spell.cpp
 	src/spell/spell_container.cpp
 	src/spell/spell_effect.cpp

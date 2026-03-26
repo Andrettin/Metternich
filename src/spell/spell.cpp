@@ -43,11 +43,15 @@ void spell::process_gsml_scope(const gsml_data &scope)
 
 	if (tag == "arcane_schools") {
 		for (const std::string &value : values) {
-			this->arcane_schools.push_back(arcane_school::get(value));
+			arcane_school *arcane_school = arcane_school::get(value);
+			this->arcane_schools.push_back(arcane_school);
+			arcane_school->add_spell(this);
 		}
 	} else if (tag == "divine_domains") {
 		for (const std::string &value : values) {
-			this->divine_domains.push_back(divine_domain::get(value));
+			divine_domain *divine_domain = divine_domain::get(value);
+			this->divine_domains.push_back(divine_domain);
+			divine_domain->add_spell(this);
 		}
 	} else if (tag == "character_classes") {
 		for (const std::string &value : values) {
