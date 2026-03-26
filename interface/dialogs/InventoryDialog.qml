@@ -58,6 +58,16 @@ DialogBase {
 					
 					readonly property var item: model.modelData
 					
+					SmallText {
+						id: stack_size_label
+						anchors.top: parent.top
+						anchors.topMargin: 4 * scale_factor
+						anchors.left: parent.left
+						anchors.leftMargin: 4 * scale_factor
+						text: item.quantity
+						visible: item.type.stackable && item.quantity > 1
+					}
+					
 					onClicked: {
 						if (character === metternich.game.player_character) {
 							if (item.type.item_class.consumable && character.game_data.can_use_item(item)) {
