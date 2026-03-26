@@ -81,10 +81,6 @@ QCoro::Task<void> sound::play_coro(const std::optional<std::chrono::milliseconds
 
 	assert_throw(this->sound_effect != nullptr);
 
-	if (this->sound_effect->isPlaying()) {
-		co_return;
-	}
-
 	this->sound_effect->play();
 	if (timeout.has_value()) {
 		co_await qCoro(const_cast<sound *>(this), &sound::played, timeout.value());
