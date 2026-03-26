@@ -50,6 +50,8 @@ Grid {
 					anchors.fill: parent
 					
 					onReleased: {
+						metternich.defines.click_sound.play()
+						
 						metternich.change_selected_military_unit_category_count(military_unit_category, 1, selected_province)
 						military_unit_selected_count_label.text = number_string(metternich.get_selected_military_unit_category_count(military_unit_category))
 					}
@@ -79,6 +81,8 @@ Grid {
 					anchors.fill: parent
 					
 					onReleased: {
+						metternich.defines.click_sound.play()
+						
 						metternich.change_selected_military_unit_category_count(military_unit_category, -1, selected_province)
 						military_unit_selected_count_label.text = number_string(metternich.get_selected_military_unit_category_count(military_unit_category))
 					}
