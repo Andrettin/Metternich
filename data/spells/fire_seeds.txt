@@ -1,0 +1,20 @@
+fire_seeds = {
+	name = "Fire Seeds"
+	level = 6
+	icon = research
+	price = 1650gp
+	battle_target = enemy
+	battle_range = 3
+	battle_result = rout
+	sound = fire
+	arcane_schools = {
+		conjuration
+	}
+	divine_domains = {
+		fire
+	}
+	character_classes = {
+		cleric
+		paladin
+	}
+}

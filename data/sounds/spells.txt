@@ -1,3 +1,11 @@
+fire = {
+	filepath = "spells/fire.wav"
+}
+
+flame_big = {
+	filepath = "spells/flame_big.wav"
+}
+
 lightning = {
 	filepath = "spells/lightning.wav"
 }

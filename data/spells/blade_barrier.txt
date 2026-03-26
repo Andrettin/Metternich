@@ -1,0 +1,21 @@
+blade_barrier = {
+	name = "Blade Barrier"
+	level = 6
+	icon = saber
+	price = 1650gp
+	battle_target = enemy
+	battle_range = 3
+	battle_result = rout
+	sound = sword
+	arcane_schools = {
+		evocation
+	}
+	divine_domains = {
+		creation
+		guardian
+	}
+	character_classes = {
+		cleric
+		paladin
+	}
+}

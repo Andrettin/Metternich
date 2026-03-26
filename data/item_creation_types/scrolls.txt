@@ -18,7 +18,7 @@ major_scroll = {
 	name = "Major Scroll"
 	item_creation_subtypes = {
 		major_arcane_scroll = 70
-		#major_divine_scroll = 30
+		major_divine_scroll = 30
 	}
 }
 
@@ -60,7 +60,19 @@ medium_divine_scroll = {
 		#divine_scroll_level_2 = 5
 		divine_scroll_level_3 = 60
 		#divine_scroll_level_4 = 30
-		#divine_scroll_level_5 = 5
+		divine_scroll_level_5 = 5
+	}
+}
+
+major_divine_scroll = {
+	name = "Major Divine Scroll"
+	item_creation_subtypes = {
+		#divine_scroll_level_4 = 5
+		divine_scroll_level_5 = 45
+		divine_scroll_level_6 = 20
+		#divine_scroll_level_7 = 15
+		#divine_scroll_level_8 = 10
+		#divine_scroll_level_9 = 5
 	}
 }
 
@@ -81,5 +93,26 @@ divine_scroll_level_3 = {
 	}
 	spells = {
 		call_lightning = 2
+	}
+}
+
+divine_scroll_level_5 = {
+	name = "Divine Scroll Level 5"
+	item_types = {
+		scroll
+	}
+	spells = {
+		flame_strike = 3
+	}
+}
+
+divine_scroll_level_6 = {
+	name = "Divine Scroll Level 6"
+	item_types = {
+		scroll
+	}
+	spells = {
+		blade_barrier = 3
+		fire_seeds = 3
 	}
 }

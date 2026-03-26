@@ -11,6 +11,7 @@ scroll = {
 	icon = treaty
 	price = 1gp #correct?
 	spell_learnable = true
+	stackable = true
 }
 
 torch = {

@@ -1,4 +1,6 @@
 /sounds/interface/click.wav (by the Battle for Wesnoth Team) (licensed under the GPL 2.0)
+/sounds/spells/fire.wav (by the Battle for Wesnoth Team) (licensed under the GPL 2.0)
+/sounds/spells/flame_big.wav (by the Battle for Wesnoth Team) (licensed under the GPL 2.0)
 /sounds/spells/lightning.wav (by the Battle for Wesnoth Team) (licensed under the GPL 2.0)
 /sounds/units/human/human_die_1.wav (by the Battle for Wesnoth Team) (licensed under the GPL 2.0)
 /sounds/units/human/human_die_2.wav (by the Battle for Wesnoth Team) (licensed under the GPL 2.0)

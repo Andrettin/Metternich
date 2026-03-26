@@ -9,7 +9,7 @@ minor_scroll_or_wondrous_item = {
 medium_scroll_or_wondrous_item = {
 	name = "Medium Scroll or Wondrous Item"
 	item_creation_subtypes = {
-		#medium_scroll
+		medium_scroll
 		medium_wondrous_item
 	}
 }
