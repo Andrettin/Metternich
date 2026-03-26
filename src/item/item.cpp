@@ -60,6 +60,8 @@ void item::process_gsml_property(const gsml_property &property)
 		this->spell = spell::get(value);
 	} else if (key == "equipped") {
 		this->equipped = string::to_bool(value);
+	} else if (key == "quantity") {
+		this->quantity = std::stoi(value);
 	} else {
 		throw std::runtime_error(std::format("Invalid item property: \"{}\".", key));
 	}
@@ -91,6 +93,7 @@ gsml_data item::to_gsml_data() const
 	}
 
 	data.add_property("equipped", string::from_bool(this->is_equipped()));
+	data.add_property("quantity", std::to_string(this->get_quantity()));
 
 	return data;
 }
@@ -146,6 +149,8 @@ void item::change_quantity(const int change)
 	this->quantity += change;
 	
 	assert_throw(this->quantity >= 0);
+
+	emit quantity_changed();
 }
 
 QString item::get_effects_string() const

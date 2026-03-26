@@ -32,6 +32,7 @@ class item final : public QObject
 	Q_PROPERTY(const metternich::spell* spell READ get_spell CONSTANT)
 	Q_PROPERTY(int price READ get_price CONSTANT)
 	Q_PROPERTY(bool equipped READ is_equipped NOTIFY equipped_changed)
+	Q_PROPERTY(int quantity READ get_quantity NOTIFY quantity_changed)
 
 public:
 	static std::string create_name(const item_type *type, const item_material *material, const metternich::enchantment *enchantment, const metternich::spell *spell);
@@ -117,6 +118,7 @@ public:
 signals:
 	void name_changed();
 	void equipped_changed();
+	void quantity_changed();
 
 private:
 	std::string name;
