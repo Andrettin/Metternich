@@ -1,0 +1,20 @@
+holy_word = {
+	name = "Holy Word"
+	level = 7
+	icon = golden_cross
+	price = 2275gp
+	battle_target = enemy
+	battle_range = 3
+	battle_result = rout
+	sound = magic_holy
+	arcane_schools = {
+		conjuration #conjuration/summoning
+	}
+	divine_domains = {
+		combat
+	}
+	character_classes = {
+		cleric
+		paladin
+	}
+}

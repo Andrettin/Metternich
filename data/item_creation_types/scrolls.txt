@@ -70,8 +70,8 @@ major_divine_scroll = {
 		#divine_scroll_level_4 = 5
 		divine_scroll_level_5 = 45
 		divine_scroll_level_6 = 20
-		#divine_scroll_level_7 = 15
-		#divine_scroll_level_8 = 10
+		divine_scroll_level_7 = 15
+		divine_scroll_level_8 = 10
 		#divine_scroll_level_9 = 5
 	}
 }
@@ -103,6 +103,7 @@ divine_scroll_level_5 = {
 	}
 	spells = {
 		flame_strike = 3
+		symbol = 1 #symbol of pain
 	}
 }
 
@@ -114,5 +115,27 @@ divine_scroll_level_6 = {
 	spells = {
 		blade_barrier = 3
 		fire_seeds = 3
+		symbol = 1 #symbol of persuasion
+	}
+}
+
+divine_scroll_level_7 = {
+	name = "Divine Scroll Level 7"
+	item_types = {
+		scroll
+	}
+	spells = {
+		creeping_doom = 5
+		holy_word = 4
+	}
+}
+
+divine_scroll_level_8 = {
+	name = "Divine Scroll Level 8"
+	item_types = {
+		scroll
+	}
+	spells = {
+		earthquake = 5
 	}
 }

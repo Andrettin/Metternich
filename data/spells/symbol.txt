@@ -1,0 +1,20 @@
+symbol = {
+	name = "Symbol"
+	level = 7
+	icon = golden_cross
+	price = 6650gp
+	battle_target = enemy
+	battle_range = 3
+	battle_result = rout
+	sound = magic_holy
+	arcane_schools = {
+		conjuration #conjuration/summoning
+	}
+	divine_domains = {
+		guardian
+	}
+	character_classes = {
+		cleric
+		paladin
+	}
+}

@@ -1,3 +1,7 @@
+cave_in = {
+	filepath = "spells/cave_in.wav"
+}
+
 fire = {
 	filepath = "spells/fire.wav"
 }
@@ -12,4 +16,29 @@ lightning = {
 
 magic_dark_big = {
 	filepath = "spells/magic_dark_big.wav"
+}
+
+magic_holy_1 = {
+	filepath = "spells/magic_holy_1.wav"
+}
+
+magic_holy_2 = {
+	filepath = "spells/magic_holy_2.wav"
+}
+
+magic_holy_3 = {
+	filepath = "spells/magic_holy_3.wav"
+}
+
+magic_holy_4 = {
+	filepath = "spells/magic_holy_4.wav"
+}
+
+magic_holy = {
+	sounds = {
+		magic_holy_1
+		magic_holy_2
+		magic_holy_3
+		magic_holy_4
+	}
 }

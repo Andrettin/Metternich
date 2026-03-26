@@ -1,0 +1,20 @@
+earthquake = {
+	name = "Earthquake"
+	level = 7
+	icon = mountains
+	price = 3000gp
+	battle_target = enemy
+	battle_range = 3
+	battle_result = rout
+	sound = cave_in
+	arcane_schools = {
+		alteration
+	}
+	divine_domains = {
+		earth
+	}
+	character_classes = {
+		cleric
+		paladin
+	}
+}

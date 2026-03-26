@@ -1,0 +1,21 @@
+creeping_doom = {
+	name = "Creeping Doom"
+	level = 7
+	icon = skull
+	price = 2275gp
+	battle_target = enemy
+	battle_range = 3
+	battle_result = rout
+	sound = bite_small
+	arcane_schools = {
+		conjuration #conjuration/summoning
+	}
+	divine_domains = {
+		animal
+		summoning
+	}
+	character_classes = {
+		cleric
+		paladin
+	}
+}
