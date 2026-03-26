@@ -483,8 +483,8 @@ QCoro::Task<void> battle::do_unit_spellcast(const military_unit *unit, const spe
 		}
 
 		if (this->scope == game::get()->get_player_country()) {
-			if (unit->get_type()->get_ranged_attack_sound() != nullptr) {
-				co_await unit->get_type()->get_ranged_attack_sound()->play_coro(std::chrono::milliseconds(100)); //FIXME: use spellcasting sound instead
+			if (spell->get_sound() != nullptr) {
+				co_await spell->get_sound()->play_coro(std::chrono::milliseconds(100));
 			}
 		}
 

@@ -4,6 +4,7 @@
 #include "database/named_data_entry.h"
 #include "util/qunique_ptr.h"
 
+Q_MOC_INCLUDE("sound/sound.h")
 Q_MOC_INCLUDE("ui/icon.h")
 
 namespace metternich {
@@ -12,6 +13,7 @@ class arcane_school;
 class character_class;
 class divine_domain;
 class icon;
+class sound;
 class spell_effect;
 enum class attack_result;
 enum class spell_target;
@@ -28,6 +30,7 @@ class spell final : public named_data_entry, public data_type<spell>
 	Q_PROPERTY(int range MEMBER range READ get_range NOTIFY changed)
 	Q_PROPERTY(int battle_range MEMBER battle_range READ get_battle_range NOTIFY changed)
 	Q_PROPERTY(attack_result battle_result MEMBER battle_result READ get_battle_result NOTIFY changed)
+	Q_PROPERTY(const metternich::sound* sound MEMBER sound READ get_sound NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "spell";
@@ -105,6 +108,11 @@ public:
 
 	Q_INVOKABLE QString get_battle_effects_string() const;
 
+	const metternich::sound *get_sound() const
+	{
+		return this->sound;
+	}
+
 signals:
 	void changed();
 
@@ -122,6 +130,7 @@ private:
 	std::vector<const divine_domain *> divine_domains;
 	std::vector<const character_class *> character_classes;
 	std::vector<qunique_ptr<spell_effect>> effects;
+	const metternich::sound *sound = nullptr;
 };
 
 }
