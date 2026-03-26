@@ -6,6 +6,44 @@ minor_scroll = {
 	}
 }
 
+medium_scroll = {
+	name = "Medium Scroll"
+	item_creation_subtypes = {
+		medium_arcane_scroll = 70
+		medium_divine_scroll = 30
+	}
+}
+
+major_scroll = {
+	name = "Major Scroll"
+	item_creation_subtypes = {
+		major_arcane_scroll = 70
+		#major_divine_scroll = 30
+	}
+}
+
+medium_arcane_scroll = {
+	name = "Medium Arcane Scroll"
+	item_creation_subtypes = {
+		#arcane_scroll_level_2 = 5
+		#arcane_scroll_level_3 = 60
+		#arcane_scroll_level_4 = 30
+		arcane_scroll_level_5 = 5
+	}
+}
+
+major_arcane_scroll = {
+	name = "Major Arcane Scroll"
+	item_creation_subtypes = {
+		#arcane_scroll_level_4 = 5
+		arcane_scroll_level_5 = 45
+		#arcane_scroll_level_6 = 20
+		#arcane_scroll_level_7 = 15
+		#arcane_scroll_level_8 = 10
+		#arcane_scroll_level_9 = 5
+	}
+}
+
 minor_divine_scroll = {
 	name = "Minor Divine Scroll"
 	item_creation_subtypes = {
@@ -13,6 +51,26 @@ minor_divine_scroll = {
 		#divine_scroll_level_1 = 45
 		#divine_scroll_level_2 = 45
 		divine_scroll_level_3 = 5
+	}
+}
+
+medium_divine_scroll = {
+	name = "Medium Divine Scroll"
+	item_creation_subtypes = {
+		#divine_scroll_level_2 = 5
+		divine_scroll_level_3 = 60
+		#divine_scroll_level_4 = 30
+		#divine_scroll_level_5 = 5
+	}
+}
+
+arcane_scroll_level_5 = {
+	name = "Arcane Scroll Level 5"
+	item_types = {
+		scroll
+	}
+	spells = {
+		cloudkill = 2
 	}
 }
 
