@@ -1,3 +1,7 @@
+sword = {
+	filepath = "units/sword_1.wav"
+}
+
 thunderstick = {
 	filepath = "units/thunderstick.wav"
 }

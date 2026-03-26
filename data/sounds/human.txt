@@ -1,13 +1,13 @@
 human_death_1 = {
-	filepath = "units/human/human-die-1.wav"
+	filepath = "units/human/human_die_1.wav"
 }
 
 human_death_2 = {
-	filepath = "units/human/human-die-2.wav"
+	filepath = "units/human/human_die_2.wav"
 }
 
 human_death_3 = {
-	filepath = "units/human/human-die-3.wav"
+	filepath = "units/human/human_die_3.wav"
 }
 
 human_death = {
