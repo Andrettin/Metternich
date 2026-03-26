@@ -137,5 +137,6 @@ divine_scroll_level_8 = {
 	}
 	spells = {
 		earthquake = 5
+		fire_storm = 4
 	}
 }

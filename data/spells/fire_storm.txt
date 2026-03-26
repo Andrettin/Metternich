@@ -1,0 +1,20 @@
+fire_storm = {
+	name = "Fire Storm"
+	level = 7
+	icon = research
+	price = 3000gp
+	battle_target = enemy
+	battle_range = 3
+	battle_result = destroy
+	sound = flame_big
+	arcane_schools = {
+		evocation
+	}
+	divine_domains = {
+		fire
+	}
+	character_classes = {
+		cleric
+		paladin
+	}
+}
