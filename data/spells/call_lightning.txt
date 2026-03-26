@@ -6,6 +6,7 @@ call_lightning = {
 	battle_target = enemy
 	battle_range = 3
 	battle_result = rout
+	sound = lightning
 	arcane_schools = {
 		alteration
 	}
