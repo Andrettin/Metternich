@@ -20,6 +20,15 @@ DialogBase {
 	readonly property int icon_button_width: 32 * scale_factor + 6 * scale_factor
 	readonly property int icon_button_height: 32 * scale_factor + 6 * scale_factor
 	
+	MouseArea {
+		anchors.fill: parent
+		hoverEnabled: true
+		
+		onEntered: {
+			metternich.set_current_cursor(metternich.defines.default_cursor)
+		}
+	}
+	
 	Flickable {
 		id: spell_grid_view
 		anchors.top: title_item.bottom
