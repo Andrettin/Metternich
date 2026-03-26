@@ -6,6 +6,7 @@ cloudkill = {
 	battle_target = enemy
 	battle_range = 3
 	battle_result = destroy
+	sound = magic_dark_big
 	arcane_schools = {
 		evocation
 	}

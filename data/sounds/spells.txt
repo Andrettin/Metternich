@@ -1,3 +1,7 @@
 lightning = {
 	filepath = "spells/lightning.wav"
 }
+
+magic_dark_big = {
+	filepath = "spells/magic_dark_big.wav"
+}

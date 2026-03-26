@@ -5,6 +5,7 @@ shocking_grasp = {
 	price = 25gp
 	target = enemy
 	range = 1
+	sound = lightning
 	character_classes = {
 	}
 	effects = {
