@@ -46,9 +46,39 @@ DialogBase {
 		slot_icon_identifier: "clothing"
 	}
 	
+	ItemSlotButton {
+		id: belt_slot_icon
+		anchors.top: cloak_slot_icon ? cloak_slot_icon.bottom : (helmet_slot_icon ? helmet_slot_icon.bottom : title_item.bottom)
+		anchors.topMargin: cloak_slot_icon || helmet_slot_icon ? 8 * scale_factor : 16 * scale_factor
+		anchors.horizontalCenter: parent.horizontalCenter
+		item_slot: metternich.get_item_slot("belt")
+		item_slot_index: 0
+		slot_icon_identifier: "sack_2"
+	}
+	
+	ItemSlotButton {
+		id: gloves_slot_icon
+		anchors.top: cloak_slot_icon.top
+		anchors.right: cloak_slot_icon.left
+		anchors.rightMargin: 8 * scale_factor
+		item_slot: metternich.get_item_slot("gloves")
+		item_slot_index: 0
+		slot_icon_identifier: "sack_2"
+	}
+	
+	ItemSlotButton {
+		id: amulet_slot_icon
+		anchors.top: helmet_slot_icon.top
+		anchors.left: helmet_slot_icon.right
+		anchors.leftMargin: 8 * scale_factor
+		item_slot: metternich.get_item_slot("amulet")
+		item_slot_index: 0
+		slot_icon_identifier: "sack_2"
+	}
+	
 	Flickable {
 		id: inventory_grid_view
-		anchors.top: cloak_slot_icon ? cloak_slot_icon.bottom : (helmet_slot_icon ? helmet_slot_icon.bottom : title_item.bottom)
+		anchors.top: belt_slot_icon ? belt_slot_icon.bottom : (cloak_slot_icon ? cloak_slot_icon.bottom : (helmet_slot_icon ? helmet_slot_icon.bottom : title_item.bottom))
 		anchors.topMargin: 16 * scale_factor
 		anchors.left: parent.left
 		anchors.leftMargin: 8 * scale_factor
