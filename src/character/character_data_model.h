@@ -12,8 +12,6 @@ namespace archimedes {
 
 namespace metternich {
 
-class item;
-
 class character_data_model : public QAbstractItemModel
 {
 	Q_OBJECT
@@ -23,8 +21,7 @@ class character_data_model : public QAbstractItemModel
 public:
 	enum role
 	{
-		tooltip = Qt::UserRole,
-		item
+		tooltip = Qt::UserRole
 	};
 
 	struct character_data_row final
@@ -49,7 +46,6 @@ public:
 		const character_data_row *parent_row = nullptr;
 		std::vector<std::unique_ptr<character_data_row>> child_rows;
 		std::string tooltip;
-		metternich::item *item = nullptr;
 	};
 
 	character_data_model();
@@ -65,7 +61,6 @@ public:
 		QHash<int, QByteArray> role_names = QAbstractItemModel::roleNames();
 
 		role_names.insert(static_cast<int>(role::tooltip), "tooltip");
-		role_names.insert(static_cast<int>(role::item), "item");
 
 		return role_names;
 	}
@@ -99,9 +94,6 @@ public:
 	void update_trait_rows();
 	void create_wealth_row();
 	void update_wealth_row();
-	void create_item_rows();
-	void create_equipment_rows();
-	void create_inventory_rows();
 
 	std::optional<size_t> get_top_row_index(const character_data_row *row) const;
 	void clear_child_rows(character_data_row *row);
@@ -123,8 +115,6 @@ private:
 	character_data_row *skill_row = nullptr;
 	character_data_row *trait_row = nullptr;
 	character_data_row *wealth_row = nullptr;
-	character_data_row *equipment_row = nullptr;
-	character_data_row *inventory_row = nullptr;
 	bool resetting_model = false;
 };
 

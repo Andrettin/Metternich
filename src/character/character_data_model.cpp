@@ -17,8 +17,6 @@
 #include "database/defines.h"
 #include "economy/commodity.h"
 #include "game/game.h"
-#include "item/item.h"
-#include "item/item_slot.h"
 #include "religion/deity.h"
 #include "religion/divine_domain.h"
 #include "religion/pantheon.h"
@@ -76,8 +74,6 @@ QVariant character_data_model::data(const QModelIndex &index, const int role) co
 				}
 			case role::tooltip:
 				return QString::fromStdString(row_data->tooltip);
-			case role::item:
-				return QVariant::fromValue(row_data->item);
 			default:
 				throw std::runtime_error(std::format("Invalid character data model role: {}.", role));
 		}
@@ -147,10 +143,7 @@ void character_data_model::set_character(const metternich::character *character)
 		disconnect(this->character->get_game_data(), &character_game_data::skill_trainings_changed, this, &character_data_model::update_skill_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::skill_values_changed, this, &character_data_model::update_skill_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::traits_changed, this, &character_data_model::update_trait_rows);
-		//disconnect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::update_damage_row);
 		disconnect(this->character->get_game_data(), &character_game_data::wealth_changed, this, &character_data_model::update_wealth_row);
-		//disconnect(this->character->get_game_data(), &character_game_data::items_changed, this, &character_data_model::create_inventory_rows);
-		//disconnect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::create_item_rows);
 	}
 
 	this->character = character;
@@ -169,10 +162,7 @@ void character_data_model::set_character(const metternich::character *character)
 		connect(this->character->get_game_data(), &character_game_data::skill_trainings_changed, this, &character_data_model::update_skill_rows);
 		connect(this->character->get_game_data(), &character_game_data::skill_values_changed, this, &character_data_model::update_skill_rows);
 		connect(this->character->get_game_data(), &character_game_data::traits_changed, this, &character_data_model::update_trait_rows);
-		//connect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::update_damage_row);
 		connect(this->character->get_game_data(), &character_game_data::wealth_changed, this, &character_data_model::update_wealth_row);
-		//connect(character->get_game_data(), &character_game_data::items_changed, this, &character_data_model::create_inventory_rows);
-		//connect(character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::create_item_rows);
 	}
 
 	emit character_changed();
@@ -194,8 +184,6 @@ void character_data_model::reset_model()
 	this->skill_row = nullptr;
 	this->trait_row = nullptr;
 	this->wealth_row = nullptr;
-	this->equipment_row = nullptr;
-	this->inventory_row = nullptr;
 
 	if (this->character != nullptr) {
 		const character_game_data *character_game_data = this->get_character()->get_game_data();
@@ -276,10 +264,6 @@ void character_data_model::reset_model()
 		this->create_trait_rows();
 
 		this->create_wealth_row();
-
-		if (!character_game_data->get_items().empty()) {
-			//this->create_item_rows();
-		}
 	}
 
 	this->resetting_model = false;
@@ -541,126 +525,6 @@ void character_data_model::update_wealth_row()
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
 
 	this->wealth_row->value = defines::get()->get_wealth_commodity()->value_to_string(character_game_data->get_wealth());
-}
-
-void character_data_model::create_item_rows()
-{
-	this->create_equipment_rows();
-	this->create_inventory_rows();
-}
-
-void character_data_model::create_equipment_rows()
-{
-	const character_game_data *character_game_data = this->get_character()->get_game_data();
-
-	size_t equipment_row_index = 0;
-
-	if (this->equipment_row == nullptr) {
-		auto top_row = std::make_unique<character_data_row>("Equipment");
-		this->equipment_row = top_row.get();
-
-		const std::optional<size_t> inventory_row_index = this->get_top_row_index(this->inventory_row);
-
-		if (inventory_row_index.has_value()) {
-			this->top_rows.insert(this->top_rows.begin() + inventory_row_index.value(), std::move(top_row));
-			equipment_row_index = inventory_row_index.value();
-		} else {
-			this->top_rows.push_back(std::move(top_row));
-			equipment_row_index = this->top_rows.size() - 1;
-		}
-
-		if (!this->resetting_model) {
-			this->beginInsertRows(QModelIndex(), static_cast<int>(equipment_row_index), static_cast<int>(equipment_row_index));
-			this->endInsertRows();
-		}
-	}
-
-	if (equipment_row_index == 0) {
-		equipment_row_index = this->get_top_row_index(this->equipment_row).value();
-	}
-
-	this->clear_child_rows(this->equipment_row);
-
-	for (const auto &[item_slot, count] : this->get_character()->get_species()->get_item_slot_counts()) {
-		const std::vector<metternich::item *> &slot_equipped_items = character_game_data->get_equipped_items(item_slot);
-
-		for (int i = 0; i < count; ++i) {
-			if (static_cast<size_t>(i) >= slot_equipped_items.size()) {
-				break;
-			}
-
-			std::string slot_name;
-			if (count > 1) {
-				slot_name = std::format("{} {}:", item_slot->get_name(), i + 1);
-			} else {
-				slot_name = item_slot->get_name() + ":";
-			}
-
-			auto row = std::make_unique<character_data_row>(slot_name, slot_equipped_items[i]->get_name() + (slot_equipped_items[i]->get_quantity() > 1 ? std::format(" (x{})", slot_equipped_items[i]->get_quantity()) : ""), this->equipment_row);
-			row->item = slot_equipped_items[i];
-			this->equipment_row->child_rows.push_back(std::move(row));
-		}
-	}
-
-	if (this->equipment_row->child_rows.empty()) {
-		if (!this->resetting_model) {
-			this->beginRemoveRows(QModelIndex(), static_cast<int>(equipment_row_index), static_cast<int>(equipment_row_index));
-		}
-
-		this->top_rows.erase(this->top_rows.begin() + equipment_row_index);
-		this->equipment_row = nullptr;
-
-		if (!this->resetting_model) {
-			this->endRemoveRows();
-		}
-	} else {
-		this->on_child_rows_inserted(this->equipment_row);
-	}
-}
-
-void character_data_model::create_inventory_rows()
-{
-	const character_game_data *character_game_data = this->get_character()->get_game_data();
-
-	if (this->inventory_row == nullptr) {
-		auto top_row = std::make_unique<character_data_row>("Inventory");
-		this->inventory_row = top_row.get();
-		this->top_rows.push_back(std::move(top_row));
-
-		if (!this->resetting_model) {
-			this->beginInsertRows(QModelIndex(), static_cast<int>(this->top_rows.size()) - 1, static_cast<int>(this->top_rows.size()) - 1);
-			this->endInsertRows();
-		}
-	}
-
-	this->clear_child_rows(this->inventory_row);
-
-	for (const qunique_ptr<metternich::item> &item : character_game_data->get_items()) {
-		if (item->is_equipped()) {
-			continue;
-		}
-
-		auto row = std::make_unique<character_data_row>(item->get_name(), item->get_quantity() > 1 ? std::format("(x{})", item->get_quantity()) : "", this->inventory_row);
-		row->item = item.get();
-		this->inventory_row->child_rows.push_back(std::move(row));
-	}
-
-	if (this->inventory_row->child_rows.empty()) {
-		const size_t inventory_row_index = this->get_top_row_index(this->inventory_row).value();
-
-		if (!this->resetting_model) {
-			this->beginRemoveRows(QModelIndex(), static_cast<int>(inventory_row_index), static_cast<int>(inventory_row_index));
-		}
-
-		this->top_rows.erase(this->top_rows.begin() + inventory_row_index);
-		this->inventory_row = nullptr;
-
-		if (!this->resetting_model) {
-			this->endRemoveRows();
-		}
-	} else {
-		this->on_child_rows_inserted(this->inventory_row);
-	}
 }
 
 std::optional<size_t> character_data_model::get_top_row_index(const character_data_row *row) const

@@ -57,35 +57,9 @@ DialogBase {
 			font.pixelSize: 10 * scale_factor
 			Material.theme: Material.Dark
 			
-			onClicked: {
-				if (character === metternich.game.player_character) {
-					if (model.item) {
-						if (model.item.equipped) {
-							character.game_data.deequip_item(model.item)
-						} else if (character.game_data.can_equip_item(model.item, true)) {
-							character.game_data.equip_item(model.item)
-						}
-					}
-				}
-			}
-			
 			onHoveredChanged: {
-				var text = ""
+				var text = model.tooltip
 				var middle_text = ""
-				
-				if (model.item) {
-					text = model.item.name
-					
-					if (character === metternich.game.player_character) {
-						if (model.item.equipped) {
-							middle_text = "Click to de-equip"
-						} else if (character.game_data.can_equip_item(model.item, true)) {
-							middle_text = "Click to equip"
-						}
-					}
-				} else {
-					text = model.tooltip
-				}
 				
 				if (typeof status_text !== 'undefined') {
 					if (hovered) {
