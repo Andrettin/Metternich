@@ -3,12 +3,15 @@
 namespace metternich {
 
 enum class character_modifier_type {
+	enhancement,
 	inherent
 };
 
 inline std::string_view get_character_modifier_type_name(const character_modifier_type modifier_type)
 {
 	switch (modifier_type) {
+		case character_modifier_type::enhancement:
+			return "Enhancement";
 		case character_modifier_type::inherent:
 			return "Inherent";
 		default:
