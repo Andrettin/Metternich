@@ -21,8 +21,43 @@ building_item_slot::building_item_slot(const metternich::item_creation_type *ite
 	assert_throw(this->get_building_slot() != nullptr);
 }
 
+building_item_slot::building_item_slot(const gsml_data &scope, const metternich::building_slot *building_slot)
+	: building_item_slot(item_creation_type::get(scope.get_tag()), building_slot)
+{
+	scope.process(this);
+}
+
 building_item_slot::~building_item_slot()
 {
+}
+
+void building_item_slot::process_gsml_property(const gsml_property &property)
+{
+	const std::string &key = property.get_key();
+
+	throw std::runtime_error(std::format("Invalid building item slot property: \"{}\".", key));
+}
+
+void building_item_slot::process_gsml_scope(const gsml_data &scope)
+{
+	const std::string &tag = scope.get_tag();
+
+	if (tag == "item") {
+		this->item = make_qunique<metternich::item>(scope);
+	} else {
+		throw std::runtime_error(std::format("Invalid building item slot scope: \"{}\".", tag));
+	}
+}
+
+gsml_data building_item_slot::to_gsml_data() const
+{
+	gsml_data data(this->get_item_creation_type()->get_identifier());
+
+	if (this->get_item() != nullptr) {
+		data.add_child(this->get_item()->to_gsml_data());
+	}
+
+	return data;
 }
 
 void building_item_slot::create_item()

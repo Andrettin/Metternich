@@ -39,8 +39,75 @@ building_slot::building_slot(const building_slot_type *type, const site *settlem
 	connect(this, &building_slot::building_changed, this, &building_slot::modifier_changed);
 }
 
+building_slot::building_slot(const gsml_data &scope, const site *settlement)
+	: building_slot(building_slot_type::get(scope.get_tag()), settlement)
+{
+	scope.process(this);
+}
+
 building_slot::~building_slot()
 {
+}
+
+void building_slot::process_gsml_property(const gsml_property &property)
+{
+	const std::string &key = property.get_key();
+	const std::string &value = property.get_value();
+
+	if (key == "building") {
+		this->building = building_type::get(value);
+	} else if (key == "under_construction_building") {
+		this->under_construction_building = building_type::get(value);
+	} else if (key == "wonder") {
+		this->wonder = wonder::get(value);
+	} else if (key == "under_construction_wonder") {
+		this->under_construction_wonder = wonder::get(value);
+	} else {
+		throw std::runtime_error(std::format("Invalid building slot property: \"{}\".", key));
+	}
+}
+
+void building_slot::process_gsml_scope(const gsml_data &scope)
+{
+	const std::string &tag = scope.get_tag();
+
+	if (tag == "item_slots") {
+		auto item_slot = make_qunique<building_item_slot>(scope, this);
+		this->add_item_slot(std::move(item_slot));
+	} else {
+		throw std::runtime_error(std::format("Invalid building slot scope: \"{}\".", tag));
+	}
+}
+
+gsml_data building_slot::to_gsml_data() const
+{
+	gsml_data data(this->get_type()->get_identifier());
+
+	if (this->get_building() != nullptr) {
+		data.add_property("building", this->get_building()->get_identifier());
+	}
+
+	if (this->get_under_construction_building() != nullptr) {
+		data.add_property("under_construction_building", this->get_under_construction_building()->get_identifier());
+	}
+
+	if (this->get_wonder() != nullptr) {
+		data.add_property("wonder", this->get_wonder()->get_identifier());
+	}
+
+	if (this->get_under_construction_wonder() != nullptr) {
+		data.add_property("under_construction_wonder", this->get_under_construction_wonder()->get_identifier());
+	}
+
+	if (!this->get_item_slots().empty()) {
+		gsml_data item_slots_data("item_slots");
+		for (const auto &item_slot : this->get_item_slots()) {
+			item_slots_data.add_child(item_slot->to_gsml_data());
+		}
+		data.add_child(std::move(item_slots_data));
+	}
+
+	return data;
 }
 
 void building_slot::set_building(const building_type *building)
@@ -530,6 +597,11 @@ QVariantList building_slot::get_filled_item_slots_qvariant_list() const
 void building_slot::add_item_slot(const item_creation_type *item_creation_type)
 {
 	auto item_slot = make_qunique<building_item_slot>(item_creation_type, this);
+	this->add_item_slot(std::move(item_slot));
+}
+
+void building_slot::add_item_slot(qunique_ptr<building_item_slot> &&item_slot)
+{
 	connect(item_slot.get(), &building_item_slot::item_changed, this, &building_slot::items_changed);
 	this->item_slots.push_back(std::move(item_slot));
 }

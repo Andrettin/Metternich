@@ -20,6 +20,14 @@ class item_slot;
 class item_type;
 class spell;
 
+struct item_key final
+{
+	const item_type *type = nullptr;
+	const item_material *material = nullptr;
+	const metternich::enchantment *enchantment = nullptr;
+	const metternich::spell *spell = nullptr;
+};
+
 class item final : public QObject
 {
 	Q_OBJECT

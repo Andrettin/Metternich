@@ -7,6 +7,10 @@ Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("infrastructure/building_type.h")
 Q_MOC_INCLUDE("infrastructure/wonder.h")
 
+namespace archimedes {
+	class gsml_data;
+}
+
 namespace metternich {
 
 class building_item_slot;
@@ -32,7 +36,13 @@ class building_slot final : public QObject
 
 public:
 	explicit building_slot(const building_slot_type *type, const site *settlement);
+	explicit building_slot(const gsml_data &scope, const site *settlement);
 	~building_slot();
+
+	void process_gsml_property(const gsml_property &property);
+	void process_gsml_scope(const gsml_data &scope);
+
+	gsml_data to_gsml_data() const;
 
 	const building_slot_type *get_type() const
 	{
@@ -98,6 +108,7 @@ public:
 	QVariantList get_filled_item_slots_qvariant_list() const;
 
 	void add_item_slot(const item_creation_type *item_creation_type);
+	void add_item_slot(qunique_ptr<building_item_slot> &&item_slot);
 	void remove_item_slot(const item_creation_type *item_creation_type);
 
 	const metternich::domain *get_country() const;

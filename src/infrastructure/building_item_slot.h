@@ -22,7 +22,13 @@ class building_item_slot final : public QObject
 
 public:
 	explicit building_item_slot(const item_creation_type *item_creation_type, const building_slot *building_slot);
+	explicit building_item_slot(const gsml_data &scope, const building_slot *building_slot);
 	~building_item_slot();
+
+	void process_gsml_property(const gsml_property &property);
+	void process_gsml_scope(const gsml_data &scope);
+
+	gsml_data to_gsml_data() const;
 
 	const item_creation_type *get_item_creation_type() const
 	{

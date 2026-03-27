@@ -136,8 +136,15 @@ void site_game_data::process_gsml_scope(const gsml_data &scope)
 			this->features.insert(site_feature::get(value));
 		}
 	} else if (tag == "attributes") {
-		scope.for_each_property([&](const gsml_property &attribute_property) {
+		scope.for_each_property([this](const gsml_property &attribute_property) {
 			this->attribute_values[site_attribute::get(attribute_property.get_key())] = std::stoi(attribute_property.get_value());
+		});
+	} else if (tag == "building_slots") {
+		this->building_slots.clear();
+		this->building_slot_map.clear();
+		scope.for_each_child([this](const gsml_data &child_scope) {
+			this->building_slots.push_back(make_qunique<building_slot>(child_scope, this->site));
+			this->building_slot_map[this->building_slots.back()->get_type()] = this->building_slots.back().get();
 		});
 	} else if (tag == "homed_characters") {
 		for (const std::string &value : values) {
@@ -186,6 +193,14 @@ gsml_data site_game_data::to_gsml_data() const
 			attributes_data.add_property(attribute->get_identifier(), std::to_string(value));
 		}
 		data.add_child(std::move(attributes_data));
+	}
+
+	if (this->site->is_settlement()) {
+		gsml_data building_slots_data("building_slots");
+		for (const auto &building_slot : this->get_building_slots()) {
+			building_slots_data.add_child(building_slot->to_gsml_data());
+		}
+		data.add_child(std::move(building_slots_data));
 	}
 
 	if (!this->get_homed_characters().empty()) {
