@@ -68,6 +68,8 @@ QCoro::Task<void> icon_image_provider::load_image(const std::string id)
 			image::apply_greenscale(image);
 		} else if (state == "red") {
 			image::apply_redscale(image);
+		} else if (state == "silhouette") {
+			image = image::to_silhouette(image);
 		} else if (state != "small") {
 			assert_throw(false);
 		}
