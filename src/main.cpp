@@ -55,6 +55,7 @@
 #include "infrastructure/wonder.h"
 #include "item/affix_type.h"
 #include "item/item.h"
+#include "item/item_slot.h"
 #include "language/grammatical_gender.h"
 #include "map/combat_map_grid_model.h"
 #include "map/diplomatic_map_image_provider.h"
@@ -229,6 +230,8 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<improvement>("", 1);
 		qmlRegisterAnonymousType<item>("", 1);
 		qmlRegisterAnonymousType<const item>("", 1);
+		qmlRegisterAnonymousType<item_slot>("", 1);
+		qmlRegisterAnonymousType<const item_slot>("", 1);
 		qmlRegisterAnonymousType<journal_entry>("", 1);
 		qmlRegisterAnonymousType<law>("", 1);
 		qmlRegisterAnonymousType<law_group>("", 1);

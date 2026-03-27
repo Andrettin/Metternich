@@ -7,6 +7,7 @@ Q_MOC_INCLUDE("database/defines.h")
 Q_MOC_INCLUDE("database/preferences.h")
 Q_MOC_INCLUDE("game/event_instance.h")
 Q_MOC_INCLUDE("game/game.h")
+Q_MOC_INCLUDE("item/item_slot.h")
 Q_MOC_INCLUDE("map/map.h")
 Q_MOC_INCLUDE("map/map_template.h")
 Q_MOC_INCLUDE("map/world.h")
@@ -20,6 +21,7 @@ class defines;
 class domain_tier_data;
 class event_instance;
 class game;
+class item_slot;
 class map;
 class map_template;
 class media_player;
@@ -92,6 +94,7 @@ public:
 	Q_INVOKABLE const metternich::domain_tier_data *get_domain_tier_data(const metternich::domain_tier tier) const;
 	Q_INVOKABLE const consulate *get_consulate(const QString &identifier) const;
 	Q_INVOKABLE const commodity *get_commodity(const QString &identifier) const;
+	Q_INVOKABLE const item_slot *get_item_slot(const QString &identifier) const;
 
 	void add_notification(const QString &title, const QObject *portrait_object, const QString &text)
 	{

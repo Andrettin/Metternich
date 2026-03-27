@@ -16,6 +16,7 @@
 #include "game/game.h"
 #include "game/game_rule_group.h"
 #include "game/scenario.h"
+#include "item/item_slot.h"
 #include "map/map.h"
 #include "map/map_template.h"
 #include "map/province.h"
@@ -174,6 +175,11 @@ const consulate *engine_interface::get_consulate(const QString &identifier) cons
 const commodity *engine_interface::get_commodity(const QString &identifier) const
 {
 	return commodity::try_get(identifier.toStdString());
+}
+
+const item_slot *engine_interface::get_item_slot(const QString &identifier) const
+{
+	return item_slot::try_get(identifier.toStdString());
 }
 
 void engine_interface::add_event_instance(qunique_ptr<event_instance> &&event_instance)
