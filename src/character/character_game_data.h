@@ -682,6 +682,8 @@ public:
 		return empty_vector;
 	}
 
+	Q_INVOKABLE const metternich::item *get_equipped_item(const metternich::item_slot *slot, const int slot_index) const;
+
 	int get_equipped_item_count(const item_slot *slot) const
 	{
 		return static_cast<int>(this->get_equipped_items(slot).size());
@@ -852,6 +854,7 @@ signals:
 	void wealth_changed();
 	void items_changed();
 	void equipped_items_changed();
+	void equipped_item_changed(const metternich::item_slot *slot, const int slot_index);
 	void status_effect_rounds_changed();
 
 private:

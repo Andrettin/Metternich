@@ -2915,6 +2915,15 @@ void character_game_data::on_item_used_with_enchantment(const enchantment *encha
 	}
 }
 
+const item *character_game_data::get_equipped_item(const item_slot *slot, const int slot_index) const
+{
+	const std::vector<item *> &equipped_items = this->get_equipped_items(slot);
+	if (static_cast<size_t>(slot_index) >= equipped_items.size()) {
+		return nullptr;
+	}
+	return equipped_items.at(slot_index);
+}
+
 bool character_game_data::can_equip_item(const item *item, const bool ignore_already_equipped) const
 {
 	const item_slot *slot = item->get_slot();
@@ -3001,13 +3010,15 @@ void character_game_data::equip_item(item *item)
 		this->deequip_item(item_to_deequip);
 	}
 
-	this->equipped_items[item->get_slot()].push_back(item);
+	std::vector<metternich::item *> &equipped_items = this->equipped_items[item->get_slot()];
+	equipped_items.push_back(item);
 
 	item->set_equipped(true);
 
 	this->on_item_equipped(item, 1);
 
 	if (game::get()->is_running()) {
+		emit equipped_item_changed(item->get_slot(), static_cast<int>(equipped_items.size()) - 1);
 		emit equipped_items_changed();
 	}
 }
@@ -3015,7 +3026,10 @@ void character_game_data::equip_item(item *item)
 void character_game_data::deequip_item(item *item)
 {
 	std::vector<metternich::item *> &equipped_items = this->equipped_items[item->get_slot()];
-	std::erase(equipped_items, item);
+	const auto slot_iterator = std::find(equipped_items.begin(), equipped_items.end(), item);
+	assert_throw(slot_iterator != equipped_items.end());
+	const int slot_index = static_cast<int>(slot_iterator - equipped_items.begin());
+	equipped_items.erase(slot_iterator);
 
 	if (equipped_items.empty()) {
 		this->equipped_items.erase(item->get_slot());
@@ -3026,6 +3040,10 @@ void character_game_data::deequip_item(item *item)
 	this->on_item_equipped(item, -1);
 
 	if (game::get()->is_running()) {
+		const int slot_count = this->character->get_species()->get_item_slot_count(item->get_slot());
+		for (int i = slot_index; i <= slot_count; ++i) {
+			emit equipped_item_changed(item->get_slot(), i);
+		}
 		emit equipped_items_changed();
 	}
 }
