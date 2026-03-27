@@ -133,6 +133,8 @@ void character_data_model::set_character(const metternich::character *character)
 {
 	if (this->character != nullptr) {
 		disconnect(this->character->get_game_data(), &character_game_data::attribute_values_changed, this, &character_data_model::update_attribute_rows);
+		disconnect(this->character->get_game_data(), &character_game_data::mana_changed, this, &character_data_model::update_mana_row);
+		disconnect(this->character->get_game_data(), &character_game_data::max_mana_changed, this, &character_data_model::update_mana_row);
 		//disconnect(this->character->get_game_data(), &character_game_data::armor_class_bonus_changed, this, &character_data_model::update_armor_class_rows);
 		//disconnect(this->character->get_game_data(), &character_game_data::species_armor_class_bonuses_changed, this, &character_data_model::update_armor_class_rows);
 		//disconnect(this->character->get_game_data(), &character_game_data::to_hit_bonus_changed, this, &character_data_model::update_to_hit_bonus_rows);
@@ -152,6 +154,8 @@ void character_data_model::set_character(const metternich::character *character)
 
 	if (character != nullptr) {
 		connect(this->character->get_game_data(), &character_game_data::attribute_values_changed, this, &character_data_model::update_attribute_rows);
+		connect(this->character->get_game_data(), &character_game_data::mana_changed, this, &character_data_model::update_mana_row);
+		connect(this->character->get_game_data(), &character_game_data::max_mana_changed, this, &character_data_model::update_mana_row);
 		//connect(this->character->get_game_data(), &character_game_data::armor_class_bonus_changed, this, &character_data_model::update_armor_class_rows);
 		//connect(this->character->get_game_data(), &character_game_data::species_armor_class_bonuses_changed, this, &character_data_model::update_armor_class_rows);
 		//connect(this->character->get_game_data(), &character_game_data::to_hit_bonus_changed, this, &character_data_model::update_to_hit_bonus_rows);
@@ -175,6 +179,7 @@ void character_data_model::reset_model()
 
 	this->top_rows.clear();
 	this->attribute_row = nullptr;
+	this->mana_row = nullptr;
 	this->armor_class_row = nullptr;
 	this->to_hit_bonus_row = nullptr;
 	this->damage_row = nullptr;
@@ -254,6 +259,10 @@ void character_data_model::reset_model()
 
 		//this->top_rows.push_back(std::make_unique<character_data_row>("Hit Points:", std::format("{}/{}", character_game_data->get_hit_points(), character_game_data->get_max_hit_points())));
 
+		if (character_game_data->get_max_mana() > 0) {
+			this->create_mana_row();
+		}
+
 		//this->create_armor_class_rows();
 		//this->create_to_hit_bonus_rows();
 		//this->create_damage_row();
@@ -314,6 +323,32 @@ void character_data_model::update_attribute_rows()
 	}
 
 	this->on_child_rows_inserted(this->attribute_row);
+}
+
+void character_data_model::create_mana_row()
+{
+	auto row = std::make_unique<character_data_row>("Mana:");
+	this->mana_row = row.get();
+	this->top_rows.push_back(std::move(row));
+
+	this->update_mana_row();
+}
+
+void character_data_model::update_mana_row()
+{
+	if (this->mana_row == nullptr) {
+		return;
+	}
+
+	assert_throw(this->mana_row != nullptr);
+
+	const character_game_data *character_game_data = this->get_character()->get_game_data();
+
+	if (character_game_data->exists()) {
+		this->mana_row->value = std::format("{}/{}", character_game_data->get_mana(), character_game_data->get_max_mana());
+	} else {
+		this->mana_row->value = std::to_string(character_game_data->get_max_mana());
+	}
 }
 
 void character_data_model::create_armor_class_rows()

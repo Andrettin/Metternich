@@ -3,6 +3,7 @@ mage = {
 	attribute = intelligence
 	max_level = 3
 	starting_age_category = trained
+	mana_bonus_table = mage_mana_bonus
 	to_hit_bonus_table = mage_to_hit_bonus
 	saving_throw_bonus_tables = {
 		save_vs_poison = mage_save_vs_poison_bonus

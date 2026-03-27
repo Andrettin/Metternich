@@ -77,6 +77,8 @@ class character_game_data final : public QObject
 	Q_PROPERTY(int reputation READ get_reputation NOTIFY reputation_changed)
 	Q_PROPERTY(int hit_points READ get_hit_points NOTIFY hit_points_changed)
 	Q_PROPERTY(int max_hit_points READ get_max_hit_points NOTIFY max_hit_points_changed)
+	Q_PROPERTY(int mana READ get_mana NOTIFY mana_changed)
+	Q_PROPERTY(int max_mana READ get_max_mana NOTIFY max_mana_changed)
 	Q_PROPERTY(int armor_class_bonus READ get_armor_class_bonus NOTIFY armor_class_bonus_changed)
 	Q_PROPERTY(int to_hit_bonus READ get_to_hit_bonus NOTIFY to_hit_bonus_changed)
 	Q_PROPERTY(int damage_bonus READ get_damage_bonus NOTIFY damage_bonus_changed)
@@ -400,6 +402,22 @@ public:
 
 	void set_hit_point_bonus_per_hit_dice(const int bonus);
 	void change_hit_point_bonus_per_hit_dice(const int change);
+
+	int get_mana() const
+	{
+		return this->mana;
+	}
+
+	void set_mana(const int mana);
+	void change_mana(const int change);
+
+	int get_max_mana() const
+	{
+		return this->max_mana;
+	}
+
+	void set_max_mana(const int mana, const bool increase_mana);
+	void change_max_mana(const int change, const bool increase_mana);
 
 	int get_armor_class_bonus() const
 	{
@@ -835,6 +853,8 @@ signals:
 	void attribute_values_changed();
 	void hit_points_changed();
 	void max_hit_points_changed();
+	void mana_changed();
+	void max_mana_changed();
 	void armor_class_bonus_changed();
 	void species_armor_class_bonuses_changed();
 	void to_hit_bonus_changed();
@@ -881,6 +901,8 @@ private:
 	int max_hit_points = 0;
 	std::map<dice, std::vector<int>> hit_dice_roll_results;
 	int hit_point_bonus_per_hit_dice = 0;
+	int mana = 0;
+	int max_mana = 0;
 	int armor_class_bonus = 0;
 	data_entry_map<species, int> species_armor_class_bonuses; //armor class bonuses when attacked by certain species
 	int to_hit_bonus = 0;

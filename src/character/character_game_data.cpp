@@ -136,6 +136,10 @@ void character_game_data::process_gsml_property(const gsml_property &property)
 		this->max_hit_points = std::stoi(value);
 	} else if (key == "hit_point_bonus_per_hit_dice") {
 		this->hit_point_bonus_per_hit_dice = std::stoi(value);
+	} else if (key == "mana") {
+		this->mana = std::stoi(value);
+	} else if (key == "max_mana") {
+		this->max_mana = std::stoi(value);
 	} else if (key == "armor_class_bonus") {
 		this->armor_class_bonus = std::stoi(value);
 	} else if (key == "to_hit_bonus") {
@@ -312,6 +316,8 @@ gsml_data character_game_data::to_gsml_data() const
 	data.add_property("hit_points", std::to_string(this->get_hit_points()));
 	data.add_property("max_hit_points", std::to_string(this->get_max_hit_points()));
 	data.add_property("hit_point_bonus_per_hit_dice", std::to_string(this->get_hit_point_bonus_per_hit_dice()));
+	data.add_property("mana", std::to_string(this->get_mana()));
+	data.add_property("max_mana", std::to_string(this->get_max_mana()));
 	data.add_property("armor_class_bonus", std::to_string(this->get_armor_class_bonus()));
 	data.add_property("to_hit_bonus", std::to_string(this->get_to_hit_bonus()));
 	data.add_property("damage_bonus", std::to_string(this->get_damage_bonus()));
@@ -612,8 +618,9 @@ void character_game_data::apply_species_and_class(const int level, const bool ap
 		this->set_max_hit_points(this->character->get_hit_points(), true);
 	}
 
-	//ensure characters start with their hit point maximum
+	//ensure characters start with their hit point and mana maximum
 	this->set_hit_points(this->get_max_hit_points());
+	this->set_mana(this->get_max_mana());
 }
 
 void character_game_data::generate_attributes()
@@ -1433,6 +1440,10 @@ void character_game_data::on_level_gained(const int affected_level, const int mu
 		}
 	}
 
+	if (character_class->get_mana_bonus_table() != nullptr) {
+		this->change_max_mana(character_class->get_mana_bonus_table()->get_bonus_per_level(affected_level) * multiplier, true);
+	}
+
 	if (character_class->get_to_hit_bonus_table() != nullptr) {
 		this->change_to_hit_bonus(character_class->get_to_hit_bonus_table()->get_bonus_per_level(affected_level) * multiplier);
 	}
@@ -1857,6 +1868,52 @@ void character_game_data::set_hit_point_bonus_per_hit_dice(const int bonus)
 void character_game_data::change_hit_point_bonus_per_hit_dice(const int change)
 {
 	this->set_hit_point_bonus_per_hit_dice(this->get_hit_point_bonus_per_hit_dice() + change);
+}
+
+void character_game_data::set_mana(int mana)
+{
+	mana = std::min(mana, this->get_max_mana());
+
+	if (mana == this->get_mana()) {
+		return;
+	}
+
+	this->mana = mana;
+
+	if (game::get()->is_running()) {
+		emit mana_changed();
+	}
+}
+
+void character_game_data::change_mana(const int change)
+{
+	this->set_mana(this->get_mana() + change);
+}
+
+void character_game_data::set_max_mana(const int max_mana, const bool increase_mana)
+{
+	if (max_mana == this->get_max_mana()) {
+		return;
+	}
+
+	const int change = max_mana - this->get_max_mana();
+
+	this->max_mana = max_mana;
+
+	if (this->get_mana() > this->get_max_mana()) {
+		this->set_mana(this->get_max_mana());
+	} else if (change > 0 && increase_mana) {
+		this->change_mana(change);
+	}
+
+	if (game::get()->is_running()) {
+		emit max_mana_changed();
+	}
+}
+
+void character_game_data::change_max_mana(const int change, const bool increase_mana)
+{
+	this->set_max_mana(this->get_max_mana() + change, increase_mana);
 }
 
 void character_game_data::set_armor_class_bonus(const int bonus)

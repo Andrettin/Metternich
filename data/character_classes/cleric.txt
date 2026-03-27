@@ -3,6 +3,7 @@ cleric = {
 	attribute = wisdom
 	max_level = 20
 	starting_age_category = trained
+	mana_bonus_table = cleric_mana_bonus
 	to_hit_bonus_table = cleric_to_hit_bonus
 	saving_throw_bonus_tables = {
 		save_vs_poison = cleric_save_vs_poison_bonus
