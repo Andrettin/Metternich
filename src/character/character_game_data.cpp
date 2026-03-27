@@ -164,7 +164,7 @@ void character_game_data::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([this](const gsml_property &attribute_property) {
 			this->attribute_values[character_attribute::get(attribute_property.get_key())] = std::stoi(attribute_property.get_value());
 		});
-	} else if (tag == "attributes_modifiers") {
+	} else if (tag == "attribute_modifiers") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
 
@@ -266,7 +266,9 @@ gsml_data character_game_data::to_gsml_data() const
 	data.add_property("dead", string::from_bool(this->is_dead()));
 	data.add_property("start_date", date::to_string(this->get_start_date()));
 	data.add_property("birth_date", date::to_string(this->get_birth_date()));
-	data.add_property("death_date", date::to_string(this->get_death_date()));
+	if (this->get_death_date().isValid()) {
+		data.add_property("death_date", date::to_string(this->get_death_date()));
+	}
 	if (this->get_home_site() != nullptr) {
 		data.add_property("home_site", this->get_home_site()->get_identifier());
 	}

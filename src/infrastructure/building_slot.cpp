@@ -72,8 +72,10 @@ void building_slot::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 
 	if (tag == "item_slots") {
-		auto item_slot = make_qunique<building_item_slot>(scope, this);
-		this->add_item_slot(std::move(item_slot));
+		scope.for_each_child([this](const gsml_data &child_scope) {
+			auto item_slot = make_qunique<building_item_slot>(child_scope, this);
+			this->add_item_slot(std::move(item_slot));
+		});
 	} else {
 		throw std::runtime_error(std::format("Invalid building slot scope: \"{}\".", tag));
 	}

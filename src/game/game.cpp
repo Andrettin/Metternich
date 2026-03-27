@@ -165,21 +165,21 @@ void game::process_gsml_scope(const gsml_data &scope)
 		this->rules = std::move(rules);
 	} else if (tag == "map") {
 		scope.process(map::get());
-	} else if (tag == "countries") {
-		scope.for_each_child([&](const gsml_data &domain_data) {
+	} else if (tag == "domains") {
+		scope.for_each_child([this](const gsml_data &domain_data) {
 			domain *domain = domain::get(domain_data.get_tag());
 			domain_data.process(domain->get_game_data());
 			this->countries.push_back(domain);
 		});
 	} else if (tag == "provinces") {
-		scope.for_each_child([&](const gsml_data &child_scope) {
+		scope.for_each_child([this](const gsml_data &child_scope) {
 			const province *province = province::get(child_scope.get_tag());
 			child_scope.process(province->get_game_data());
 
 			map::get()->add_province(province);
 		});
 	} else if (tag == "sites") {
-		scope.for_each_child([&](const gsml_data &child_scope) {
+		scope.for_each_child([this](const gsml_data &child_scope) {
 			const site *site = site::get(child_scope.get_tag());
 			child_scope.process(site->get_game_data());
 
@@ -188,43 +188,40 @@ void game::process_gsml_scope(const gsml_data &scope)
 
 		map::get()->process_site_tiles();
 	} else if (tag == "characters") {
-		scope.for_each_child([&](const gsml_data &character_data) {
+		scope.for_each_child([this](const gsml_data &character_data) {
 			const character *character = character::get(character_data.get_tag());
 			character_data.process(character->get_game_data());
 		});
 	} else if (tag == "generated_characters") {
-		scope.for_each_child([&](const gsml_data &character_data) {
-			auto generated_character = make_qunique<character>(character_data.get_tag());
-			generated_character->moveToThread(QApplication::instance()->thread());
-			character_data.process(generated_character.get());
-			this->add_generated_character(std::move(generated_character));
+		scope.for_each_child([this](const gsml_data &character_data) {
+			character_data.process(this->get_generated_character(character_data.get_tag()));
 		});
 	} else if (tag == "character_delayed_effects") {
-		scope.for_each_child([&](const gsml_data &delayed_effect_data) {
+		scope.for_each_child([this](const gsml_data &delayed_effect_data) {
 			auto delayed_effect = std::make_unique<delayed_effect_instance<const character>>();
 			delayed_effect_data.process(delayed_effect.get());
 			this->add_delayed_effect(std::move(delayed_effect));
 		});
 	} else if (tag == "country_delayed_effects") {
-		scope.for_each_child([&](const gsml_data &delayed_effect_data) {
+		scope.for_each_child([this](const gsml_data &delayed_effect_data) {
 			auto delayed_effect = std::make_unique<delayed_effect_instance<const domain>>();
 			delayed_effect_data.process(delayed_effect.get());
 			this->add_delayed_effect(std::move(delayed_effect));
 		});
 	} else if (tag == "province_delayed_effects") {
-		scope.for_each_child([&](const gsml_data &delayed_effect_data) {
+		scope.for_each_child([this](const gsml_data &delayed_effect_data) {
 			auto delayed_effect = std::make_unique<delayed_effect_instance<const province>>();
 			delayed_effect_data.process(delayed_effect.get());
 			this->add_delayed_effect(std::move(delayed_effect));
 		});
 	} else if (tag == "site_delayed_effects") {
-		scope.for_each_child([&](const gsml_data &delayed_effect_data) {
+		scope.for_each_child([this](const gsml_data &delayed_effect_data) {
 			auto delayed_effect = std::make_unique<delayed_effect_instance<const site>>();
 			delayed_effect_data.process(delayed_effect.get());
 			this->add_delayed_effect(std::move(delayed_effect));
 		});
 	} else if (tag == "fired_events") {
-		scope.for_each_child([&](const gsml_data &fired_events_data) {
+		scope.for_each_child([this](const gsml_data &fired_events_data) {
 			const std::string &event_type_string = fired_events_data.get_tag();
 			const std::vector<std::string> &child_values = fired_events_data.get_values();
 
@@ -267,11 +264,11 @@ gsml_data game::to_gsml_data() const
 
 	data.add_child("map", map::get()->to_gsml_data());
 
-	gsml_data countries_data("countries");
+	gsml_data domains_data("domains");
 	for (const domain *domain : this->get_countries()) {
-		countries_data.add_child(domain->get_game_data()->to_gsml_data());
+		domains_data.add_child(domain->get_game_data()->to_gsml_data());
 	}
-	data.add_child(std::move(countries_data));
+	data.add_child(std::move(domains_data));
 
 	gsml_data sites_data("sites");
 	for (const site *site : site::get_all()) {
@@ -374,6 +371,13 @@ QCoro::Task<void> game::load(const std::filesystem::path &filepath)
 			exception::report(std::current_exception());
 			log::log_error(std::format("Failed to parse save file: {}", path::to_string(filepath)));
 		}
+
+		//create generated characters first, so that they can be referred to by objects when loading the saved game data
+		data.get_child("generated_characters").for_each_child([this](const gsml_data &character_data) {
+			auto generated_character = make_qunique<character>(character_data.get_tag());
+			generated_character->moveToThread(QApplication::instance()->thread());
+			this->add_generated_character(std::move(generated_character));
+		});
 
 		data.process(this);
 
@@ -2112,6 +2116,21 @@ const character *game::get_character(const std::string &identifier) const
 		return character;
 	}
 
+	return this->get_generated_character(identifier);
+}
+
+const character *game::get_generated_character(const std::string &identifier) const
+{
+	const auto find_iterator = this->generated_characters_by_identifier.find(identifier);
+	if (find_iterator != this->generated_characters_by_identifier.end()) {
+		return find_iterator->second;
+	}
+
+	throw std::runtime_error(std::format("Failed to get game character for identifier \"{}\".", identifier));
+}
+
+character *game::get_generated_character(const std::string &identifier)
+{
 	const auto find_iterator = this->generated_characters_by_identifier.find(identifier);
 	if (find_iterator != this->generated_characters_by_identifier.end()) {
 		return find_iterator->second;

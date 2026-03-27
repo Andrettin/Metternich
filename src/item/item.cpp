@@ -77,7 +77,7 @@ gsml_data item::to_gsml_data() const
 {
 	gsml_data data;
 
-	data.add_property("name", this->get_name());
+	data.add_property("name", std::format("\"{}\"", this->get_name()));
 	data.add_property("type", this->get_type()->get_identifier());
 
 	if (this->get_material() != nullptr) {

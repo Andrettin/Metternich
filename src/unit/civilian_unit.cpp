@@ -117,7 +117,7 @@ gsml_data civilian_unit::to_gsml_data() const
 {
 	gsml_data data;
 
-	data.add_property("name", this->get_name());
+	data.add_property("name", std::format("\"{}\"", this->get_name()));
 	data.add_property("type", this->get_type()->get_identifier());
 	data.add_property("owner", this->get_owner()->get_identifier());
 	data.add_property("phenotype", this->get_phenotype()->get_identifier());

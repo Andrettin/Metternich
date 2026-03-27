@@ -486,9 +486,9 @@ gsml_data character::to_gsml_data() const
 {
 	gsml_data data(this->get_identifier());
 
-	data.add_property("name", this->get_name());
+	data.add_property("name", std::format("\"{}\"", this->get_name()));
 	if (!this->get_surname().empty()) {
-		data.add_property("surname", this->get_surname());
+		data.add_property("surname", std::format("\"{}\"", this->get_surname()));
 	}
 	if (this->get_character_class() != nullptr) {
 		data.add_property("character_class", this->get_character_class()->get_identifier());

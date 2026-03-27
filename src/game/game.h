@@ -258,6 +258,8 @@ public:
 	}
 
 	const character *get_character(const std::string &identifier) const;
+	const character *get_generated_character(const std::string &identifier) const;
+	character *get_generated_character(const std::string &identifier);
 
 	const std::vector<qunique_ptr<character>> &get_generated_characters() const
 	{
@@ -336,7 +338,7 @@ private:
 	bool exploration_changed = false;
 	std::map<const wonder *, const domain *> wonder_countries;
 	std::vector<qunique_ptr<character>> generated_characters;
-	std::map<std::string, const character *> generated_characters_by_identifier;
+	std::map<std::string, character *> generated_characters_by_identifier;
 	std::vector<std::unique_ptr<delayed_effect_instance<const character>>> character_delayed_effects;
 	std::vector<std::unique_ptr<delayed_effect_instance<const domain>>> country_delayed_effects;
 	std::vector<std::unique_ptr<delayed_effect_instance<const province>>> province_delayed_effects;

@@ -107,7 +107,13 @@ void site_game_data::process_gsml_property(const gsml_property &property)
 	const std::string &key = property.get_key();
 	const std::string &value = property.get_value();
 
-	if (key == "holding_type") {
+	if (key == "owner") {
+		this->owner = domain::get(value);
+	} else if (key == "culture") {
+		this->culture = culture::get(value);
+	} else if (key == "religion") {
+		this->religion = religion::get(value);
+	} else if (key == "holding_type") {
 		this->holding_type = holding_type::get(value);
 	} else if (key == "holding_level") {
 		this->holding_level = std::stoi(value);
@@ -161,6 +167,18 @@ gsml_data site_game_data::to_gsml_data() const
 
 	assert_throw(this->is_on_map());
 	data.add_child("tile_pos", gsml_data::from_point(this->get_tile_pos()));
+
+	if (this->get_owner() != nullptr) {
+		data.add_property("owner", this->get_owner()->get_identifier());
+	}
+
+	if (this->get_culture() != nullptr) {
+		data.add_property("culture", this->get_culture()->get_identifier());
+	}
+
+	if (this->get_religion() != nullptr) {
+		data.add_property("religion", this->get_religion()->get_identifier());
+	}
 
 	if (this->get_holding_type() != nullptr) {
 		data.add_property("holding_type", this->get_holding_type()->get_identifier());

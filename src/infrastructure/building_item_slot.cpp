@@ -54,7 +54,7 @@ gsml_data building_item_slot::to_gsml_data() const
 	gsml_data data(this->get_item_creation_type()->get_identifier());
 
 	if (this->get_item() != nullptr) {
-		data.add_child(this->get_item()->to_gsml_data());
+		data.add_child("item", this->get_item()->to_gsml_data());
 	}
 
 	return data;

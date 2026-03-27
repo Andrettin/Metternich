@@ -169,11 +169,11 @@ void domain_game_data::process_gsml_scope(const gsml_data &scope)
 	const std::vector<std::string> &values = scope.get_values();
 
 	if (tag == "attributes") {
-		scope.for_each_property([&](const gsml_property &attribute_property) {
+		scope.for_each_property([this](const gsml_property &attribute_property) {
 			this->attribute_values[domain_attribute::get(attribute_property.get_key())] = std::stoi(attribute_property.get_value());
 		});
 	} else if (tag == "site_attributes") {
-		scope.for_each_property([&](const gsml_property &attribute_property) {
+		scope.for_each_property([this](const gsml_property &attribute_property) {
 			this->site_attribute_values[site_attribute::get(attribute_property.get_key())] = std::stoi(attribute_property.get_value());
 		});
 	} else if (tag == "provinces") {
@@ -189,16 +189,18 @@ void domain_game_data::process_gsml_scope(const gsml_data &scope)
 			this->characters.push_back(game::get()->get_character(value));
 		}
 	} else if (tag == "historical_rulers") {
-		scope.for_each_property([&](const gsml_property &attribute_property) {
+		scope.for_each_property([this](const gsml_property &attribute_property) {
 			this->historical_rulers[string::to_date(attribute_property.get_key())] = game::get()->get_character(attribute_property.get_value());
 		});
 	} else if (tag == "historical_monarchs") {
-		scope.for_each_property([&](const gsml_property &attribute_property) {
+		scope.for_each_property([this](const gsml_property &attribute_property) {
 			this->historical_monarchs[string::to_date(attribute_property.get_key())] = game::get()->get_character(attribute_property.get_value());
 		});
 	} else if (tag == "civilian_units") {
-		auto civilian_unit = make_qunique<metternich::civilian_unit>(scope);
-		this->add_civilian_unit(std::move(civilian_unit));
+		scope.for_each_child([this](const gsml_data &child_scope) {
+			auto civilian_unit = make_qunique<metternich::civilian_unit>(child_scope);
+			this->add_civilian_unit(std::move(civilian_unit));
+		});
 	} else if (tag == "flags") {
 		for (const std::string &value : values) {
 			this->flags.insert(flag::get(value));
