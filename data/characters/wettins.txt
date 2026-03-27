@@ -19,6 +19,8 @@ heinrich_of_meissen = { #Source: Hereford B. George, "Genealogical Tables Illust
 	religion = catholic
 	home_site = meissen
 	gender = male
+	father = dietrich_of_meissen
+	mother = jutta_ludowingerin
 	start_date = 1221 #became margrave
 	death_date = 1288
 	
