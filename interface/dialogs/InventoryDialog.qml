@@ -26,73 +26,29 @@ DialogBase {
 		}
 	}
 	
-	IconButton {
+	ItemSlotButton {
 		id: helmet_slot_icon
 		anchors.top: title_item.bottom
 		anchors.topMargin: 16 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
-		icon_identifier: item ? item.icon.identifier : "crown_baronial/silhouette"
-		tooltip: typeof status_text !== 'undefined' ? "" : format_text(small_text(item_name))
-		visible: character && character.species.get_item_slot_count(item_slot) > item_slot_index
-		
-		readonly property var item_slot: metternich.get_item_slot("helmet")
-		readonly property int item_slot_index: 0
-		property var item: character !== null ? character.game_data.get_equipped_item(item_slot, item_slot_index) : null
-		readonly property string item_name: item ? item.name : (item_slot.name + " Slot")
-		
-		SmallText {
-			id: stack_size_label
-			anchors.top: parent.top
-			anchors.topMargin: 4 * scale_factor
-			anchors.left: parent.left
-			anchors.leftMargin: 4 * scale_factor
-			text: helmet_slot_icon.item ? helmet_slot_icon.item.quantity : ""
-			visible: helmet_slot_icon.item !== null && helmet_slot_icon.item.type.stackable && helmet_slot_icon.item.quantity > 1
-		}
-		
-		onClicked: {
-			if (character === metternich.game.player_character) {
-				if (item !== null) {
-					character.game_data.deequip_item(item)
-					status_text = item_name
-					middle_status_text = ""
-					right_status_text = ""
-				}
-			}
-		}
-		
-		onHoveredChanged: {
-			if (typeof status_text !== 'undefined') {
-				if (hovered) {
-					status_text = item_name
-					if (item !== null) {
-						if (character === metternich.game.player_character) {
-							middle_status_text = "Click to de-equip"
-						}
-						right_status_text = item.get_effects_string()
-					}
-				} else {
-					status_text = ""
-					middle_status_text = ""
-					right_status_text = ""
-				}
-			}
-		}
-		
-		Connections {
-			target: character ? character.game_data : null
-			
-			function onEquipped_item_changed(slot, slot_index) {
-				if (slot === helmet_slot_icon.item_slot && slot_index === helmet_slot_icon.item_slot_index) {
-					helmet_slot_icon.item = character.game_data.get_equipped_item(helmet_slot_icon.item_slot, helmet_slot_icon.item_slot_index)
-				}
-			}
-		}
+		item_slot: metternich.get_item_slot("helmet")
+		item_slot_index: 0
+		slot_icon_identifier: "crown_baronial"
+	}
+	
+	ItemSlotButton {
+		id: cloak_slot_icon
+		anchors.top: helmet_slot_icon ? helmet_slot_icon.bottom : title_item.bottom
+		anchors.topMargin: helmet_slot_icon ? 8 * scale_factor : 16 * scale_factor
+		anchors.horizontalCenter: parent.horizontalCenter
+		item_slot: metternich.get_item_slot("cloak")
+		item_slot_index: 0
+		slot_icon_identifier: "clothing"
 	}
 	
 	Flickable {
 		id: inventory_grid_view
-		anchors.top: helmet_slot_icon ? helmet_slot_icon.bottom : title_item.bottom
+		anchors.top: cloak_slot_icon ? cloak_slot_icon.bottom : (helmet_slot_icon ? helmet_slot_icon.bottom : title_item.bottom)
 		anchors.topMargin: 16 * scale_factor
 		anchors.left: parent.left
 		anchors.leftMargin: 8 * scale_factor
