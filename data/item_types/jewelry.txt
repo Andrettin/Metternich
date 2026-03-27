@@ -2,12 +2,12 @@ amulet = {
 	name = "Amulet"
 	item_class = amulet
 	icon = crown_baronial
-	price = 1gp #?gp
+	price = 1cp #?gp
 }
 
 ring = {
 	name = "Ring"
 	item_class = ring
 	icon = crown_baronial
-	price = 1gp #?gp
+	price = 1cp #?gp
 }

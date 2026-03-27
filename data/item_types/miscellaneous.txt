@@ -2,14 +2,14 @@ book = {
 	name = "Book"
 	item_class = book
 	icon = book
-	price = 1gp #correct?
+	price = 1cp #correct?
 }
 
 scroll = {
 	name = "Scroll"
 	item_class = scroll
 	icon = treaty
-	price = 1gp #correct?
+	price = 1cp #correct?
 	spell_learnable = true
 	stackable = true
 }
