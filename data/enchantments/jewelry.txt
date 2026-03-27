@@ -1,3 +1,69 @@
+of_health_2 = {
+	name = "of Health +2"
+	affix_type = suffix
+	price = 4000gp
+	item_types = {
+		amulet
+	}
+	conditions = {
+		attribute_modifier = {
+			attribute = constitution
+			modifier_type = enhancement
+			modifier < 2
+		}
+	}
+	modifier = {
+		constitution = {
+			modifier_type = enhancement
+			modifier = 2
+		}
+	}
+}
+
+of_health_4 = {
+	name = "of Health +4"
+	affix_type = suffix
+	price = 16000gp
+	item_types = {
+		amulet
+	}
+	conditions = {
+		attribute_modifier = {
+			attribute = constitution
+			modifier_type = enhancement
+			modifier < 4
+		}
+	}
+	modifier = {
+		constitution = {
+			modifier_type = enhancement
+			modifier = 4
+		}
+	}
+}
+
+of_health_6 = {
+	name = "of Health +6"
+	affix_type = suffix
+	price = 36000gp
+	item_types = {
+		amulet
+	}
+	conditions = {
+		attribute_modifier = {
+			attribute = constitution
+			modifier_type = enhancement
+			modifier < 6
+		}
+	}
+	modifier = {
+		constitution = {
+			modifier_type = enhancement
+			modifier = 6
+		}
+	}
+}
+
 of_protection_1 = {
 	name = "of Protection +1"
 	affix_type = suffix

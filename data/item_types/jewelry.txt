@@ -1,3 +1,10 @@
+amulet = {
+	name = "Amulet"
+	item_class = amulet
+	icon = crown_baronial
+	price = 1gp #?gp
+}
+
 ring = {
 	name = "Ring"
 	item_class = ring

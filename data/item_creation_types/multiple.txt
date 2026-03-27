@@ -2,7 +2,7 @@ minor_scroll_or_wondrous_item = {
 	name = "Minor Scroll or Wondrous Item"
 	item_creation_subtypes = {
 		minor_scroll
-		#minor_wondrous_item
+		minor_wondrous_item
 	}
 }
 
