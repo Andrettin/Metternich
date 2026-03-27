@@ -60,7 +60,7 @@ public:
 	const dice &get_starting_age_modifier(const starting_age_category category) const;
 
 	const data_entry_map<item_slot, int> &get_item_slot_counts() const;
-	int get_item_slot_count(const item_slot *slot) const;
+	Q_INVOKABLE int get_item_slot_count(const metternich::item_slot *slot) const;
 
 	const name_generator *get_given_name_generator(const gender gender) const;
 
