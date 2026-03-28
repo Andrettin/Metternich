@@ -2,6 +2,7 @@ minor_wondrous_item = {
 	name = "Minor Wondrous Item"
 	item_creation_subtypes = {
 		amulet_of_health_2 = 1
+		cloak_of_charisma_2 = 1
 	}
 }
 
@@ -9,6 +10,7 @@ medium_wondrous_item = {
 	name = "Medium Wondrous Item"
 	item_creation_subtypes = {
 		amulet_of_health_4 = 1
+		cloak_of_charisma_4 = 1
 		tome_of_understanding_1 = 1
 	}
 }
@@ -17,6 +19,7 @@ major_wondrous_item = {
 	name = "Major Wondrous Item"
 	item_creation_subtypes = {
 		amulet_of_health_6 = 1
+		cloak_of_charisma_6 = 1
 		tome_of_understanding_2 = 1
 		tome_of_understanding_3 = 1
 		tome_of_understanding_4 = 1
@@ -51,6 +54,36 @@ amulet_of_health_6 = {
 	}
 	enchantments = {
 		of_health_6
+	}
+}
+
+cloak_of_charisma_2 = {
+	name = "Cloak of Charisma +2"
+	item_types = {
+		cloak
+	}
+	enchantments = {
+		of_charisma_2
+	}
+}
+
+cloak_of_charisma_4 = {
+	name = "Cloak of Charisma +4"
+	item_types = {
+		cloak
+	}
+	enchantments = {
+		of_charisma_4
+	}
+}
+
+cloak_of_charisma_6 = {
+	name = "Cloak of Charisma +6"
+	item_types = {
+		cloak
+	}
+	enchantments = {
+		of_charisma_6
 	}
 }
 

@@ -1,3 +1,10 @@
+cloak = {
+	name = "Cloak"
+	item_class = cloak
+	icon = clothing
+	price = 1cp #correct?
+}
+
 book = {
 	name = "Book"
 	item_class = book

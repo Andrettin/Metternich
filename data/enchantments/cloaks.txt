@@ -1,0 +1,65 @@
+of_charisma_2 = {
+	name = "of Charisma +2"
+	affix_type = suffix
+	price = 4000gp
+	item_types = {
+		cloak
+	}
+	ai_conditions = {
+		attribute_modifier = {
+			attribute = charisma
+			modifier_type = enhancement
+			modifier < 2
+		}
+	}
+	modifier = {
+		charisma = {
+			modifier_type = enhancement
+			modifier = 2
+		}
+	}
+}
+
+of_charisma_4 = {
+	name = "of Charisma +4"
+	affix_type = suffix
+	price = 16000gp
+	item_types = {
+		cloak
+	}
+	ai_conditions = {
+		attribute_modifier = {
+			attribute = charisma
+			modifier_type = enhancement
+			modifier < 4
+		}
+	}
+	modifier = {
+		charisma = {
+			modifier_type = enhancement
+			modifier = 4
+		}
+	}
+}
+
+of_charisma_6 = {
+	name = "of Charisma +6"
+	affix_type = suffix
+	price = 36000gp
+	item_types = {
+		cloak
+	}
+	ai_conditions = {
+		attribute_modifier = {
+			attribute = charisma
+			modifier_type = enhancement
+			modifier < 6
+		}
+	}
+	modifier = {
+		charisma = {
+			modifier_type = enhancement
+			modifier = 6
+		}
+	}
+}
