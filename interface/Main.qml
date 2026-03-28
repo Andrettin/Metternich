@@ -69,8 +69,13 @@ ApplicationWindow {
 		target: metternich.game
 		function onRunningChanged() {
 			if (metternich.game.running) {
-				//replace the scenario menu or the random map menu with the map view
-				menu_stack.replace("CustomMapView.qml")
+				if (menu_stack.depth > 1) {
+					//replace the scenario menu or the random map menu with the map view
+					menu_stack.replace("CustomMapView.qml")
+				} else {
+					//push the map view to the stack if we are in the main menu loading a game, rather than replace the main menu
+					menu_stack.push("CustomMapView.qml")
+				}
 			}
 		}
 	}
