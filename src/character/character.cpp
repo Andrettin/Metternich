@@ -490,6 +490,9 @@ gsml_data character::to_gsml_data() const
 	if (!this->get_surname().empty()) {
 		data.add_property("surname", std::format("\"{}\"", this->get_surname()));
 	}
+	if (this->get_species() != nullptr) {
+		data.add_property("species", this->get_species()->get_identifier());
+	}
 	if (this->get_character_class() != nullptr) {
 		data.add_property("character_class", this->get_character_class()->get_identifier());
 		data.add_property("level", std::to_string(this->get_level()));

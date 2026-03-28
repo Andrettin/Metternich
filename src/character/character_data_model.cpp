@@ -272,7 +272,9 @@ void character_data_model::reset_model()
 		this->create_skill_rows();
 		this->create_trait_rows();
 
-		this->create_wealth_row();
+		if (character_game_data->exists()) {
+			this->create_wealth_row();
+		}
 	}
 
 	this->resetting_model = false;

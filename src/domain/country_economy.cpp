@@ -58,6 +58,48 @@ country_economy::~country_economy()
 {
 }
 
+void country_economy::process_gsml_property(const gsml_property &property)
+{
+	const std::string &key = property.get_key();
+	const std::string &value = property.get_value();
+
+	if (key == "storage_capacity") {
+		this->storage_capacity = std::stoll(value);
+	} else {
+		throw std::runtime_error(std::format("Invalid domain government property: \"{}\".", key));
+	}
+}
+
+void country_economy::process_gsml_scope(const gsml_data &scope)
+{
+	const std::string &tag = scope.get_tag();
+
+	if (tag == "stored_commodities") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->stored_commodities[commodity::get(property.get_key())] = std::stoll(property.get_value());
+		});
+	} else {
+		throw std::runtime_error(std::format("Invalid domain government scope: \"{}\".", tag));
+	}
+}
+
+gsml_data country_economy::to_gsml_data() const
+{
+	gsml_data data("economy");
+
+	data.add_property("storage_capacity", std::to_string(this->get_storage_capacity()));
+
+	if (!this->get_stored_commodities().empty()) {
+		gsml_data stored_commodities_data("stored_commodities");
+		for (const auto &[commodity, quantity] : this->get_stored_commodities()) {
+			stored_commodities_data.add_property(commodity->get_identifier(), std::to_string(quantity));
+		}
+		data.add_child(std::move(stored_commodities_data));
+	}
+
+	return data;
+}
+
 domain_game_data *country_economy::get_game_data() const
 {
 	return this->domain->get_game_data();
@@ -217,7 +259,7 @@ QVariantList country_economy::get_stored_commodities_qvariant_list() const
 	return archimedes::map::to_qvariant_list(this->get_stored_commodities());
 }
 
-void country_economy::set_stored_commodity(const commodity *commodity, const int value)
+void country_economy::set_stored_commodity(const commodity *commodity, const int64_t value)
 {
 	if (!commodity->is_enabled()) {
 		return;
@@ -233,7 +275,7 @@ void country_economy::set_stored_commodity(const commodity *commodity, const int
 
 	if (commodity->is_convertible_to_wealth()) {
 		assert_throw(value > 0);
-		const int wealth_conversion_income = commodity->get_wealth_value() * value;
+		const int64_t wealth_conversion_income = commodity->get_wealth_value() * value;
 		this->add_tributable_commodity(defines::get()->get_wealth_commodity(), wealth_conversion_income, income_transaction_type::treasure_fleet);
 		this->domain->get_turn_data()->add_income_transaction(income_transaction_type::liquidated_riches, wealth_conversion_income, commodity, value);
 		return;
@@ -305,9 +347,9 @@ void country_economy::add_tributable_commodity(const commodity *commodity, const
 	}
 }
 
-int country_economy::get_stored_food() const
+int64_t country_economy::get_stored_food() const
 {
-	int stored_food = 0;
+	int64_t stored_food = 0;
 
 	for (const auto &[commodity, quantity] : this->get_stored_commodities()) {
 		if (commodity->is_food()) {
@@ -318,7 +360,7 @@ int country_economy::get_stored_food() const
 	return stored_food;
 }
 
-void country_economy::set_storage_capacity(const int capacity)
+void country_economy::set_storage_capacity(const int64_t capacity)
 {
 	if (capacity == this->get_storage_capacity()) {
 		return;

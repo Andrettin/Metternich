@@ -205,6 +205,10 @@ void domain_game_data::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->flags.insert(flag::get(value));
 		}
+	} else if (tag == "economy") {
+		scope.process(this->get_economy());
+	} else if (tag == "government") {
+		scope.process(this->get_government());
 	} else {
 		throw std::runtime_error(std::format("Invalid domain game data scope: \"{}\".", tag));
 	}
@@ -295,6 +299,9 @@ gsml_data domain_game_data::to_gsml_data() const
 		}
 		data.add_child(std::move(flags_data));
 	}
+
+	data.add_child(this->get_economy()->to_gsml_data());
+	data.add_child(this->get_government()->to_gsml_data());
 
 	return data;
 }
@@ -597,7 +604,7 @@ void domain_game_data::collect_wealth()
 
 void domain_game_data::pay_maintenance()
 {
-	const int domain_maintenance_cost = std::min(this->get_domain_maintenance_cost(), this->get_economy()->get_stored_commodity(defines::get()->get_wealth_commodity()));
+	const int64_t domain_maintenance_cost = std::min(this->get_domain_maintenance_cost(), this->get_economy()->get_stored_commodity(defines::get()->get_wealth_commodity()));
 	if (domain_maintenance_cost != 0) {
 		this->get_economy()->change_stored_commodity(defines::get()->get_wealth_commodity(), -domain_maintenance_cost);
 
@@ -723,14 +730,14 @@ void domain_game_data::do_population_growth()
 
 void domain_game_data::do_food_consumption(const int food_consumption)
 {
-	int remaining_food_consumption = food_consumption;
+	int64_t remaining_food_consumption = food_consumption;
 
 	//this is a copy because we may need to erase elements from the map in the subsequent code
-	const commodity_map<int> stored_commodities = this->get_economy()->get_stored_commodities();
+	const commodity_map<int64_t> stored_commodities = this->get_economy()->get_stored_commodities();
 
 	for (const auto &[commodity, quantity] : stored_commodities) {
 		if (commodity->is_food()) {
-			const int consumed_food = std::min(remaining_food_consumption, quantity);
+			const int64_t consumed_food = std::min(remaining_food_consumption, quantity);
 			this->get_economy()->change_stored_commodity(commodity, -consumed_food);
 
 			remaining_food_consumption -= consumed_food;
@@ -4717,7 +4724,7 @@ int domain_game_data::get_max_income() const
 	return max_income;
 }
 
-int domain_game_data::get_domain_maintenance_cost() const
+int64_t domain_game_data::get_domain_maintenance_cost() const
 {
 	const int domain_size = this->get_province_count() + this->get_holding_count();
 	assert_throw(domain_size > 0);
@@ -4725,9 +4732,9 @@ int domain_game_data::get_domain_maintenance_cost() const
 	return defines::get()->get_domain_maintenance_cost_for_domain_size(domain_size);
 }
 
-int domain_game_data::get_maintenance_cost() const
+int64_t domain_game_data::get_maintenance_cost() const
 {
-	int maintenance_cost = this->get_domain_maintenance_cost();
+	int64_t maintenance_cost = this->get_domain_maintenance_cost();
 
 	for (const qunique_ptr<military_unit> &military_unit : this->get_military()->get_military_units()) {
 		const auto find_iterator = military_unit->get_type()->get_maintenance_commodity_costs().find(defines::get()->get_wealth_commodity());

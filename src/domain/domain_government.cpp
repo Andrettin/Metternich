@@ -37,6 +37,8 @@
 #include "util/vector_util.h"
 #include "util/vector_random_util.h"
 
+#include <magic_enum/magic_enum.hpp>
+
 namespace metternich {
 
 domain_government::domain_government(const metternich::domain *domain, const domain_game_data *game_data)
@@ -50,6 +52,56 @@ domain_government::domain_government(const metternich::domain *domain, const dom
 
 domain_government::~domain_government()
 {
+}
+
+void domain_government::process_gsml_property(const gsml_property &property)
+{
+	const std::string &key = property.get_key();
+	const std::string &value = property.get_value();
+
+	if (key == "succession_type") {
+		this->succession_type = magic_enum::enum_cast<metternich::succession_type>(value).value();
+	} else if (key == "succession_gender_type") {
+		this->succession_gender_type = magic_enum::enum_cast<metternich::succession_gender_type>(value).value();
+	} else {
+		throw std::runtime_error(std::format("Invalid domain government property: \"{}\".", key));
+	}
+}
+
+void domain_government::process_gsml_scope(const gsml_data &scope)
+{
+	const std::string &tag = scope.get_tag();
+
+	if (tag == "office_holders") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->office_holders[office::get(property.get_key())] = game::get()->get_character(property.get_value());
+		});
+	} else {
+		throw std::runtime_error(std::format("Invalid domain government scope: \"{}\".", tag));
+	}
+}
+
+gsml_data domain_government::to_gsml_data() const
+{
+	gsml_data data("government");
+
+	if (this->get_succession_type() != succession_type::none) {
+		data.add_property("succession_type", std::string(magic_enum::enum_name(this->get_succession_type())));
+	}
+
+	if (this->get_succession_gender_type() != succession_gender_type::none) {
+		data.add_property("succession_gender_type", std::string(magic_enum::enum_name(this->get_succession_gender_type())));
+	}
+
+	if (!this->get_office_holders().empty()) {
+		gsml_data office_holders_data("office_holders");
+		for (const auto &[office, office_holder] : this->get_office_holders()) {
+			office_holders_data.add_property(office->get_identifier(), office_holder->get_identifier());
+		}
+		data.add_child(std::move(office_holders_data));
+	}
+
+	return data;
 }
 
 domain_game_data *domain_government::get_game_data() const

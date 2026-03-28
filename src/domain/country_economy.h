@@ -23,7 +23,7 @@ class country_economy final : public QObject
 	Q_PROPERTY(QVariantList available_commodities READ get_available_commodities_qvariant_list NOTIFY available_commodities_changed)
 	Q_PROPERTY(QVariantList tradeable_commodities READ get_tradeable_commodities_qvariant_list NOTIFY tradeable_commodities_changed)
 	Q_PROPERTY(QVariantList stored_commodities READ get_stored_commodities_qvariant_list NOTIFY stored_commodities_changed)
-	Q_PROPERTY(int storage_capacity READ get_storage_capacity NOTIFY storage_capacity_changed)
+	Q_PROPERTY(qint64 storage_capacity READ get_storage_capacity NOTIFY storage_capacity_changed)
 	Q_PROPERTY(QVariantList commodity_inputs READ get_commodity_inputs_qvariant_list NOTIFY commodity_inputs_changed)
 	Q_PROPERTY(QVariantList commodity_outputs READ get_commodity_outputs_qvariant_list NOTIFY commodity_outputs_changed)
 	Q_PROPERTY(QVariantList bids READ get_bids_qvariant_list NOTIFY bids_changed)
@@ -36,6 +36,11 @@ class country_economy final : public QObject
 public:
 	explicit country_economy(const metternich::domain *domain, const domain_game_data *game_data);
 	~country_economy();
+
+	void process_gsml_property(const gsml_property &property);
+	void process_gsml_scope(const gsml_data &scope);
+
+	gsml_data to_gsml_data() const;
 
 	domain_game_data *get_game_data() const;
 
@@ -125,14 +130,14 @@ public:
 		return this->get_tradeable_commodities().contains(commodity);
 	}
 
-	const commodity_map<int> &get_stored_commodities() const
+	const commodity_map<int64_t> &get_stored_commodities() const
 	{
 		return this->stored_commodities;
 	}
 
 	QVariantList get_stored_commodities_qvariant_list() const;
 
-	Q_INVOKABLE int get_stored_commodity(const metternich::commodity *commodity) const
+	Q_INVOKABLE qint64 get_stored_commodity(const metternich::commodity *commodity) const
 	{
 		const auto find_iterator = this->stored_commodities.find(commodity);
 
@@ -143,25 +148,25 @@ public:
 		return 0;
 	}
 
-	void set_stored_commodity(const commodity *commodity, const int value);
+	void set_stored_commodity(const commodity *commodity, const int64_t value);
 
-	void change_stored_commodity(const commodity *commodity, const int value)
+	void change_stored_commodity(const commodity *commodity, const int64_t value)
 	{
 		this->set_stored_commodity(commodity, this->get_stored_commodity(commodity) + value);
 	}
 
 	void add_tributable_commodity(const commodity *commodity, const int tributable_quantity, const income_transaction_type tribute_income_type);
 
-	int get_stored_food() const;
+	int64_t get_stored_food() const;
 
-	int get_storage_capacity() const
+	int64_t get_storage_capacity() const
 	{
 		return this->storage_capacity;
 	}
 
-	void set_storage_capacity(const int capacity);
+	void set_storage_capacity(const int64_t capacity);
 
-	void change_storage_capacity(const int change)
+	void change_storage_capacity(const int64_t change)
 	{
 		this->set_storage_capacity(this->get_storage_capacity() + change);
 	}
@@ -688,8 +693,8 @@ private:
 	resource_map<int> vassal_resource_counts;
 	commodity_set available_commodities;
 	commodity_set tradeable_commodities;
-	commodity_map<int> stored_commodities;
-	int storage_capacity = 0;
+	commodity_map<int64_t> stored_commodities;
+	int64_t storage_capacity = 0;
 	commodity_map<centesimal_int> commodity_inputs;
 	commodity_map<centesimal_int> commodity_outputs;
 	commodity_map<decimillesimal_int> commodity_demands;

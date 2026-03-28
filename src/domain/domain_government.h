@@ -38,6 +38,11 @@ public:
 	explicit domain_government(const metternich::domain *domain, const domain_game_data *game_data);
 	~domain_government();
 
+	void process_gsml_property(const gsml_property &property);
+	void process_gsml_scope(const gsml_data &scope);
+
+	gsml_data to_gsml_data() const;
+
 	domain_game_data *get_game_data() const;
 
 	const std::string &get_office_title_name(const office *office) const;
