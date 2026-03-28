@@ -63,9 +63,15 @@ DialogBase {
 					readonly property string costs_string: "Mana Cost: " + spell.get_mana_cost()
 					
 					onClicked: {
-						if (mode === SpellDialog.Mode.Combat || mode === SpellDialog.Mode.Battle) {
-							combat.current_spell = spell
-							spell_dialog.close()
+						if (caster.game_data.can_cast_spell(spell)) {
+							if (mode === SpellDialog.Mode.Combat || mode === SpellDialog.Mode.Battle) {
+								combat.current_spell = spell
+								spell_dialog.close()
+							} else {
+								metternich.defines.error_sound.play()
+							}
+						} else {
+							metternich.defines.error_sound.play()
 						}
 					}
 					

@@ -664,6 +664,7 @@ public:
 	}
 
 	Q_INVOKABLE void learn_spell(const metternich::spell *spell);
+	Q_INVOKABLE bool can_cast_spell(const metternich::spell *spell) const;
 	void sort_spells();
 
 	QVariantList get_battle_spells_qvariant_list() const;

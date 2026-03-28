@@ -2,6 +2,8 @@
 
 #include "game/battle.h"
 
+#include "character/character.h"
+#include "character/character_game_data.h"
 #include "database/defines.h"
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
@@ -464,6 +466,9 @@ QCoro::Task<void> battle::do_unit_attack(const military_unit *unit, military_uni
 
 QCoro::Task<void> battle::do_unit_spellcast(const military_unit *unit, const spell *spell, military_unit *target, std::vector<military_unit *> &killed_units)
 {
+	assert_throw(unit->get_character() != nullptr);
+	assert_throw(unit->get_character()->get_game_data()->can_cast_spell(spell));
+
 	const army *target_army = target->get_army();
 
 	if (spell->get_battle_result() != attack_result::none) {
@@ -481,6 +486,8 @@ QCoro::Task<void> battle::do_unit_spellcast(const military_unit *unit, const spe
 				target->change_hit_points(-target->get_hit_points());
 				break;
 		}
+
+		unit->get_character()->get_game_data()->change_mana(-spell->get_mana_cost());
 
 		if (this->scope == game::get()->get_player_country()) {
 			if (spell->get_sound() != nullptr) {

@@ -2773,6 +2773,19 @@ void character_game_data::learn_spell(const spell *spell)
 	this->add_spell(spell);
 }
 
+bool character_game_data::can_cast_spell(const metternich::spell *spell) const
+{
+	if (!this->has_spell(spell)) {
+		return false;
+	}
+
+	if (this->get_mana() < spell->get_mana_cost()) {
+		return false;
+	}
+
+	return true;
+}
+
 void character_game_data::sort_spells()
 {
 	std::sort(this->spells.begin(), this->spells.end(), [](const spell *lhs, const spell *rhs) {
