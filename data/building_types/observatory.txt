@@ -3,19 +3,27 @@ observatory = {
 	building_class = observatory
 	portrait = university
 	icon = research
+	size = 1
+	population_type = laborers
 	required_technology = renaissance
 	holding_types = {
 		city
+		guild
+		magic_source
 	}
 	conditions = {
-		game_rule = research_commodity
-		game_rule = additional_buildings
-		or = {
-			terrain = mountains
-			adjacent_terrain = mountains
-		}
+		feature = academic
+	}
+	commodity_costs = {
+		wealth = 12gb
 	}
 	modifier = {
-		research_bonus = 1
+		lore = 2
+	}
+	domain_modifier = {
+		stability = 1
+	}
+	item_creation_types = {
+		minor_scroll_or_wondrous_item
 	}
 }
