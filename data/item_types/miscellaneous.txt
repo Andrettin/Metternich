@@ -5,6 +5,13 @@ book = {
 	price = 1cp #correct?
 }
 
+tome = {
+	name = "Tome"
+	item_class = book
+	icon = book
+	price = 1cp #correct?
+}
+
 scroll = {
 	name = "Scroll"
 	item_class = scroll

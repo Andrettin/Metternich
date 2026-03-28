@@ -1,9 +1,9 @@
-tome_of_understanding_1 = {
-	name = "Tome of Understanding +1"
-	affix_type = stem
+of_understanding_1 = {
+	name = "of Understanding +1"
+	affix_type = suffix
 	price = 27500gp
 	item_types = {
-		book
+		tome
 	}
 	conditions = {
 		attribute_modifier = {
@@ -20,12 +20,12 @@ tome_of_understanding_1 = {
 	}
 }
 
-tome_of_understanding_2 = {
-	name = "Tome of Understanding +2"
-	affix_type = stem
+of_understanding_2 = {
+	name = "of Understanding +2"
+	affix_type = suffix
 	price = 55000gp
 	item_types = {
-		book
+		tome
 	}
 	conditions = {
 		attribute_modifier = {
@@ -42,12 +42,12 @@ tome_of_understanding_2 = {
 	}
 }
 
-tome_of_understanding_3 = {
-	name = "Tome of Understanding +3"
-	affix_type = stem
+of_understanding_3 = {
+	name = "of Understanding +3"
+	affix_type = suffix
 	price = 82500gp
 	item_types = {
-		book
+		tome
 	}
 	conditions = {
 		attribute_modifier = {
@@ -64,12 +64,12 @@ tome_of_understanding_3 = {
 	}
 }
 
-tome_of_understanding_4 = {
-	name = "Tome of Understanding +4"
-	affix_type = stem
+of_understanding_4 = {
+	name = "of Understanding +4"
+	affix_type = suffix
 	price = 110000gp
 	item_types = {
-		book
+		tome
 	}
 	conditions = {
 		attribute_modifier = {
@@ -86,12 +86,12 @@ tome_of_understanding_4 = {
 	}
 }
 
-tome_of_understanding_5 = {
-	name = "Tome of Understanding +5"
-	affix_type = stem
+of_understanding_5 = {
+	name = "of Understanding +5"
+	affix_type = suffix
 	price = 137500gp
 	item_types = {
-		book
+		tome
 	}
 	conditions = {
 		attribute_modifier = {
