@@ -91,6 +91,13 @@ cathedral = {
 		#unrest = -4
 		#fame = 1
 	}
+	item_creation_types = {
+		minor_potion_or_wondrous_item
+		minor_potion_or_wondrous_item
+		minor_potion_or_wondrous_item
+		medium_potion_or_wondrous_item
+		medium_potion_or_wondrous_item
+	}
 }
 
 large_cathedral = {
@@ -118,6 +125,13 @@ large_cathedral = {
 		#unrest = -4
 		#fame = 1
 	}
+	item_creation_types = {
+		minor_potion_or_wondrous_item
+		minor_potion_or_wondrous_item
+		minor_potion_or_wondrous_item
+		medium_potion_or_wondrous_item
+		medium_potion_or_wondrous_item
+	}
 }
 
 grand_cathedral = {
@@ -144,6 +158,13 @@ grand_cathedral = {
 		stability = 4
 		#unrest = -4
 		#fame = 1
+	}
+	item_creation_types = {
+		minor_potion_or_wondrous_item
+		minor_potion_or_wondrous_item
+		minor_potion_or_wondrous_item
+		medium_potion_or_wondrous_item
+		medium_potion_or_wondrous_item
 	}
 }
 

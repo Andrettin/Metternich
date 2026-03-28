@@ -1,3 +1,19 @@
+minor_potion_or_wondrous_item = {
+	name = "Minor Potion or Wondrous Item"
+	item_creation_subtypes = {
+		#minor_potion
+		minor_wondrous_item
+	}
+}
+
+medium_potion_or_wondrous_item = {
+	name = "Medium Potion or Wondrous Item"
+	item_creation_subtypes = {
+		#medium_potion
+		medium_wondrous_item
+	}
+}
+
 minor_scroll_or_wondrous_item = {
 	name = "Minor Scroll or Wondrous Item"
 	item_creation_subtypes = {

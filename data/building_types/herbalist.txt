@@ -18,4 +18,7 @@ herbalist = {
 		loyalty = 1
 		stability = 1
 	}
+	item_creation_types = {
+		minor_potion_or_wondrous_item
+	}
 }
