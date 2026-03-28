@@ -29,9 +29,18 @@ DialogBase {
 		}
 	}
 	
+	NormalText {
+		id: mana_label
+		anchors.top: title_item.bottom
+		anchors.topMargin: 16 * scale_factor
+		anchors.horizontalCenter: parent.horizontalCenter
+		text: caster ? ("Mana: " + caster.game_data.mana + "/" + caster.game_data.max_mana) : ""
+		visible: mode !== SpellDialog.Mode.All && caster && caster.game_data.max_mana > 0
+	}
+	
 	Flickable {
 		id: spell_grid_view
-		anchors.top: title_item.bottom
+		anchors.top: mana_label.visible ? mana_label.bottom : title_item.bottom
 		anchors.topMargin: 16 * scale_factor
 		anchors.left: parent.left
 		anchors.leftMargin: 8 * scale_factor
