@@ -114,7 +114,7 @@ public:
 
 	Q_INVOKABLE void stop();
 
-	void clear();
+	Q_INVOKABLE void clear();
 	void reset_game_data();
 
 	void apply_history(const QDate &start_date);

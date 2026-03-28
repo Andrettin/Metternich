@@ -49,7 +49,7 @@ public:
 	void initialize(const bool province_post_processing_enabled);
 	void process_border_tiles();
 	void process_site_tiles();
-	void clear();
+	Q_INVOKABLE void clear();
 	void clear_tile_game_data();
 
 	const QSize &get_size() const
