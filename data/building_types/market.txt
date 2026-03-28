@@ -41,4 +41,8 @@ market = {
 		economy = 2
 		stability = 2
 	}
+	item_creation_types = {
+		minor_wondrous_item
+		minor_wondrous_item
+	}
 }
