@@ -2935,8 +2935,12 @@ bool character_game_data::can_use_item(const metternich::item *item) const
 		return false;
 	}
 
-	if (item->get_enchantment() != nullptr && item->get_enchantment()->get_conditions() != nullptr) {
-		if (!item->get_enchantment()->get_conditions()->check(this->character, read_only_context(this->character))) {
+	if (item->get_enchantment() != nullptr) {
+		if (item->get_enchantment()->get_conditions() != nullptr && !item->get_enchantment()->get_conditions()->check(this->character, read_only_context(this->character))) {
+			return false;
+		}
+
+		if (this->is_ai() && item->get_enchantment()->get_ai_conditions() != nullptr && !item->get_enchantment()->get_ai_conditions()->check(this->character, read_only_context(this->character))) {
 			return false;
 		}
 	}
@@ -3008,8 +3012,12 @@ bool character_game_data::can_equip_item(const item *item, const bool ignore_alr
 		return false;
 	}
 
-	if (item->get_enchantment() != nullptr && item->get_enchantment()->get_conditions() != nullptr) {
-		if (!item->get_enchantment()->get_conditions()->check(this->character, read_only_context(this->character))) {
+	if (item->get_enchantment() != nullptr) {
+		if (item->get_enchantment()->get_conditions() != nullptr && !item->get_enchantment()->get_conditions()->check(this->character, read_only_context(this->character))) {
+			return false;
+		}
+
+		if (this->is_ai() && item->get_enchantment()->get_ai_conditions() != nullptr && !item->get_enchantment()->get_ai_conditions()->check(this->character, read_only_context(this->character))) {
 			return false;
 		}
 	}

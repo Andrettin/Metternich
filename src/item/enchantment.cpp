@@ -53,6 +53,10 @@ void enchantment::process_gsml_scope(const gsml_data &scope)
 		auto conditions = std::make_unique<and_condition<character>>();
 		conditions->process_gsml_data(scope);
 		this->conditions = std::move(conditions);
+	} else if (tag == "ai_conditions") {
+		auto conditions = std::make_unique<and_condition<character>>();
+		conditions->process_gsml_data(scope);
+		this->ai_conditions = std::move(conditions);
 	} else if (tag == "modifier") {
 		auto modifier = std::make_unique<metternich::modifier<const character>>();
 		modifier->process_gsml_data(scope);

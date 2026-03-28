@@ -5,7 +5,7 @@ of_health_2 = {
 	item_types = {
 		amulet
 	}
-	conditions = {
+	ai_conditions = {
 		attribute_modifier = {
 			attribute = constitution
 			modifier_type = enhancement
@@ -27,7 +27,7 @@ of_health_4 = {
 	item_types = {
 		amulet
 	}
-	conditions = {
+	ai_conditions = {
 		attribute_modifier = {
 			attribute = constitution
 			modifier_type = enhancement
@@ -49,7 +49,7 @@ of_health_6 = {
 	item_types = {
 		amulet
 	}
-	conditions = {
+	ai_conditions = {
 		attribute_modifier = {
 			attribute = constitution
 			modifier_type = enhancement
