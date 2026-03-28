@@ -1,3 +1,0 @@
-click = {
-	filepath = "interface/click.wav"
-}

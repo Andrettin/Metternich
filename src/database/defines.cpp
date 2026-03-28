@@ -246,6 +246,7 @@ void defines::check() const
 	}
 
 	assert_throw(this->get_click_sound() != nullptr);
+	assert_throw(this->get_error_sound() != nullptr);
 }
 
 QSize defines::get_scaled_tile_size() const

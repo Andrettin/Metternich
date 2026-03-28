@@ -1,4 +1,5 @@
 /sounds/interface/click.wav (by the Battle for Wesnoth Team) (licensed under the GPL 2.0)
+/sounds/interface/placement_error.wav (by Wolfgang Kohler) (licensed under the GPL 2.0)
 /sounds/spells/cave_in.wav (by the Battle for Wesnoth Team) (licensed under the GPL 2.0)
 /sounds/spells/fire.wav (by the Battle for Wesnoth Team) (licensed under the GPL 2.0)
 /sounds/spells/flame_big.wav (by the Battle for Wesnoth Team) (licensed under the GPL 2.0)

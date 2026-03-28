@@ -102,6 +102,7 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(int min_province_map_tile_scale MEMBER min_province_map_tile_scale READ get_min_province_map_tile_scale NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity_unit* domain_income_unit MEMBER domain_income_unit READ get_domain_income_unit NOTIFY changed)
 	Q_PROPERTY(const metternich::sound* click_sound MEMBER click_sound READ get_click_sound NOTIFY changed)
+	Q_PROPERTY(const metternich::sound* error_sound MEMBER error_sound READ get_error_sound NOTIFY changed)
 	Q_PROPERTY(const metternich::music* main_menu_music MEMBER main_menu_music READ get_main_menu_music NOTIFY changed)
 
 public:
@@ -484,6 +485,11 @@ public:
 		return this->click_sound;
 	}
 
+	const sound *get_error_sound() const
+	{
+		return this->error_sound;
+	}
+
 	const music *get_main_menu_music() const
 	{
 		return this->main_menu_music;
@@ -561,6 +567,7 @@ private:
 	std::map<terrain_adjacency, int> rivermouth_adjacency_tiles;
 	std::map<terrain_adjacency, int> route_adjacency_tiles;
 	const sound *click_sound = nullptr;
+	const sound *error_sound = nullptr;
 	const music *main_menu_music = nullptr;
 };
 

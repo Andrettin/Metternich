@@ -1,0 +1,7 @@
+click = {
+	filepath = "interface/click.wav"
+}
+
+placement_error = {
+	filepath = "interface/placement_error.wav"
+}

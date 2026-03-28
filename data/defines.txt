@@ -708,4 +708,5 @@ route_adjacency_tiles = {
 }
 
 click_sound = click
+error_sound = placement_error
 main_menu_music = main_menu

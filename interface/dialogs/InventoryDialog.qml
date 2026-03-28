@@ -125,6 +125,8 @@ DialogBase {
 								character.game_data.equip_item(item)
 							} else if (item.type.item_class.consumable && character.game_data.can_use_item(item)) {
 								character.game_data.use_item(item)
+							} else {
+								metternich.defines.error_sound.play()
 							}
 						}
 					}

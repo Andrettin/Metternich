@@ -69,6 +69,8 @@ Item {
 					onClicked: {
 						if (item_slot.can_buy_item(metternich.game.player_character)) {
 							item_slot.buy_item(metternich.game.player_character)
+						} else {
+							metternich.defines.error_sound.play()
 						}
 					}
 					
