@@ -3,6 +3,7 @@ minor_wondrous_item = {
 	item_creation_subtypes = {
 		amulet_of_health_2 = 1
 		cloak_of_charisma_2 = 1
+		gauntlets_of_ogre_power = 1
 	}
 }
 
@@ -10,6 +11,7 @@ medium_wondrous_item = {
 	name = "Medium Wondrous Item"
 	item_creation_subtypes = {
 		amulet_of_health_4 = 1
+		belt_of_giant_strength_4 = 1
 		cloak_of_charisma_4 = 1
 		tome_of_understanding_1 = 1
 	}
@@ -19,6 +21,7 @@ major_wondrous_item = {
 	name = "Major Wondrous Item"
 	item_creation_subtypes = {
 		amulet_of_health_6 = 1
+		belt_of_giant_strength_6 = 1
 		cloak_of_charisma_6 = 1
 		tome_of_understanding_2 = 1
 		tome_of_understanding_3 = 1
@@ -57,6 +60,26 @@ amulet_of_health_6 = {
 	}
 }
 
+belt_of_giant_strength_4 = {
+	name = "Belt of Giant Strength +4"
+	item_types = {
+		belt
+	}
+	enchantments = {
+		of_giant_strength_4
+	}
+}
+
+belt_of_giant_strength_6 = {
+	name = "Belt of Giant Strength +6"
+	item_types = {
+		belt
+	}
+	enchantments = {
+		of_giant_strength_6
+	}
+}
+
 cloak_of_charisma_2 = {
 	name = "Cloak of Charisma +2"
 	item_types = {
@@ -84,6 +107,16 @@ cloak_of_charisma_6 = {
 	}
 	enchantments = {
 		of_charisma_6
+	}
+}
+
+gauntlets_of_ogre_power = {
+	name = "Gauntlets of Ogre Power"
+	item_types = {
+		gauntlets
+	}
+	enchantments = {
+		of_ogre_power
 	}
 }
 

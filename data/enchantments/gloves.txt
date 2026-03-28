@@ -1,0 +1,21 @@
+of_ogre_power = {
+	name = "of Ogre Power"
+	affix_type = suffix
+	price = 4000gp
+	item_types = {
+		gauntlets
+	}
+	ai_conditions = {
+		attribute_modifier = {
+			attribute = strength
+			modifier_type = enhancement
+			modifier < 2
+		}
+	}
+	modifier = {
+		strength = {
+			modifier_type = enhancement
+			modifier = 2
+		}
+	}
+}

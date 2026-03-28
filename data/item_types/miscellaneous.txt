@@ -5,6 +5,13 @@ cloak = {
 	price = 1cp #correct?
 }
 
+belt = {
+	name = "Belt"
+	item_class = belt
+	icon = clothing
+	price = 1cp #correct?
+}
+
 book = {
 	name = "Book"
 	item_class = book

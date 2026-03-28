@@ -1,0 +1,6 @@
+gauntlets = {
+	name = "Gauntlets"
+	item_class = gloves
+	icon = clothing
+	price = 1cp #correct?
+}
