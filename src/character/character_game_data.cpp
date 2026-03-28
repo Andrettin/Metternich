@@ -621,8 +621,7 @@ void character_game_data::apply_species_and_class(const int level, const bool ap
 	}
 
 	//ensure characters start with their hit point and mana maximum
-	this->set_hit_points(this->get_max_hit_points());
-	this->set_mana(this->get_max_mana());
+	this->fully_recover();
 }
 
 void character_game_data::generate_attributes()

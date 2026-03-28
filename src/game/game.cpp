@@ -2270,10 +2270,10 @@ bool game::do_battle(army *attacking_army, army *defending_army)
 
 	//restore hit points of the surviving units
 	for (military_unit *attacking_unit : attacking_army->get_military_units()) {
-		attacking_unit->set_hit_points(attacking_unit->get_max_hit_points());
+		attacking_unit->fully_recover();
 	}
 	for (military_unit *defending_unit : defending_army->get_military_units()) {
-		defending_unit->set_hit_points(defending_unit->get_max_hit_points());
+		defending_unit->fully_recover();
 	}
 
 	assert_throw(attacking_army->get_military_units().empty() || defending_army->get_military_units().empty());

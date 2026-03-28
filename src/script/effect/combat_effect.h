@@ -423,8 +423,8 @@ public:
 		for (const target_variant<const character> &enemy_character_variant : this->enemy_characters) {
 			const character *enemy_character = this->get_enemy_character(enemy_character_variant, ctx);
 
-			//ensure the enemy character's HP is completely recovered
-			enemy_character->get_game_data()->set_hit_points(enemy_character->get_game_data()->get_max_hit_points());
+			//ensure the enemy character's HP and mana are completely recovered
+			enemy_character->get_game_data()->fully_recover();
 
 			enemy_characters.push_back(enemy_character);
 		}

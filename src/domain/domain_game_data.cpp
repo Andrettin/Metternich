@@ -3637,16 +3637,9 @@ void domain_game_data::check_characters()
 	for (const character *character : this->get_characters()) {
 		character_game_data *character_game_data = character->get_game_data();
 
-		if (character_game_data->get_hit_points() < character_game_data->get_max_hit_points()) {
-			assert_throw(character_game_data->get_hit_points() > 0);
-			//recover hit points
-			character_game_data->set_hit_points(character_game_data->get_max_hit_points());
-		}
-
-		if (character_game_data->get_mana() < character_game_data->get_max_mana()) {
-			//recover mana
-			character_game_data->set_mana(character_game_data->get_max_mana());
-		}
+		//recover hit points and mana
+		assert_throw(character_game_data->get_hit_points() > 0);
+		character_game_data->fully_recover();
 
 		//check if the portrait is still valid, or should change (e.g. due to aging)
 		character_game_data->check_portrait();

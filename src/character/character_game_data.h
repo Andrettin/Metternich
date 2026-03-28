@@ -419,6 +419,12 @@ public:
 	void set_max_mana(const int mana, const bool increase_mana);
 	void change_max_mana(const int change, const bool increase_mana);
 
+	void fully_recover()
+	{
+		this->set_hit_points(this->get_max_hit_points());
+		this->set_mana(this->get_max_mana());
+	}
+
 	int get_armor_class_bonus() const
 	{
 		return this->armor_class_bonus;

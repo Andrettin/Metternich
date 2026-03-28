@@ -190,6 +190,8 @@ public:
 	int get_hit_point_recovery_per_turn() const;
 	int get_morale_recovery_per_turn() const;
 
+	void fully_recover();
+
 	metternich::battle_resolution_type get_battle_resolution_type() const
 	{
 		return this->battle_resolution_type;

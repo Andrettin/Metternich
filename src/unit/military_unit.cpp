@@ -414,6 +414,15 @@ int military_unit::get_morale_recovery_per_turn() const
 	return military_unit::morale_recovery_per_turn;
 }
 
+void military_unit::fully_recover()
+{
+	this->set_hit_points(this->get_max_hit_points());
+
+	if (this->get_character() != nullptr) {
+		this->get_character()->get_game_data()->fully_recover();
+	}
+}
+
 void military_unit::set_stat(const military_unit_stat stat, const centesimal_int &value)
 {
 	if (value == this->get_stat(stat)) {
