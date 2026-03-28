@@ -3241,26 +3241,35 @@ void character_game_data::ai_buy_items()
 	const province *province = this->get_location()->get_game_data()->get_province();
 	assert_throw(province != nullptr);
 
-	for (const site *holding_site : province->get_game_data()->get_settlement_sites()) {
-		if (!holding_site->get_game_data()->is_built()) {
+	std::vector<building_item_slot *> accessible_item_slots;
+
+	if (this->get_office() != nullptr && !this->is_deployed()) {
+		//characters which have an office and are not deployed have access to items across their entire domain
+		accessible_item_slots = this->get_domain()->get_game_data()->get_item_slots();
+	} else {
+		for (const site *holding_site : province->get_game_data()->get_settlement_sites()) {
+			if (!holding_site->get_game_data()->is_built()) {
+				continue;
+			}
+
+			vector::merge(accessible_item_slots, holding_site->get_game_data()->get_item_slots());
+		}
+	}
+
+	for (building_item_slot *item_slot : accessible_item_slots) {
+		if (item_slot->get_item() == nullptr) {
 			continue;
 		}
 
-		for (building_item_slot *item_slot : holding_site->get_game_data()->get_item_slots()) {
-			if (item_slot->get_item() == nullptr) {
-				continue;
-			}
-
-			if (!item_slot->can_buy_item(this->character)) {
-				continue;
-			}
-
-			if (!item_slot->get_item()->is_useful_for(this->character)) {
-				continue;
-			}
-
-			item_slot->buy_item(this->character);
+		if (!item_slot->can_buy_item(this->character)) {
+			continue;
 		}
+
+		if (!item_slot->get_item()->is_useful_for(this->character)) {
+			continue;
+		}
+
+		item_slot->buy_item(this->character);
 	}
 }
 
