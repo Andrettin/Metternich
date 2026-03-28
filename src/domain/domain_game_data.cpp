@@ -42,6 +42,7 @@
 #include "game/game.h"
 #include "game/game_rules.h"
 #include "infrastructure/building_class.h"
+#include "infrastructure/building_item_slot.h"
 #include "infrastructure/building_slot.h"
 #include "infrastructure/building_slot_type.h"
 #include "infrastructure/building_type.h"
@@ -1475,6 +1476,25 @@ void domain_game_data::on_province_gained(const province *province, const int mu
 			province_game_data->change_commodity_bonus_for_tile_threshold(commodity, threshold, value * multiplier);
 		}
 	}
+}
+
+std::vector<const province *> domain_game_data::get_accessible_provinces() const
+{
+	//get provinces either owned by this domain, or in which this domain has holdings
+	std::vector<const province *> accessible_provinces = this->get_provinces();
+
+	for (const site *site : this->get_sites()) {
+		if (!site->is_settlement()) {
+			continue;
+		}
+
+		const province *site_province = site->get_game_data()->get_province();
+		if (!vector::contains(accessible_provinces, site_province)) {
+			accessible_provinces.push_back(site_province);
+		}
+	}
+
+	return accessible_provinces;
 }
 
 QVariantList domain_game_data::get_sites_qvariant_list() const
@@ -3141,6 +3161,24 @@ void domain_game_data::on_wonder_gained(const wonder *wonder, const int multipli
 	} else if (multiplier < 0 && game::get()->get_wonder_country(wonder) == this->domain) {
 		game::get()->set_wonder_country(wonder, nullptr);
 	}
+}
+
+std::vector<building_item_slot *> domain_game_data::get_item_slots() const
+{
+	std::vector<building_item_slot *> item_slots;
+
+	for (const province *accessible_province : this->get_accessible_provinces()) {
+		for (const site *site : accessible_province->get_game_data()->get_settlement_sites()) {
+			vector::merge(item_slots, site->get_game_data()->get_item_slots());
+		}
+	}
+
+	return item_slots;
+}
+
+QVariantList domain_game_data::get_item_slots_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_item_slots());
 }
 
 bool domain_game_data::can_declare_war_on(const metternich::domain *other_domain) const

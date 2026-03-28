@@ -20,6 +20,26 @@ Rectangle {
 		width: 1 * scale_factor
 	}
 	
+	IconButton {
+		id: buy_items_button
+		anchors.horizontalCenter: parent.horizontalCenter
+		anchors.bottom: back_button.top
+		anchors.bottomMargin: 16 * scale_factor
+		icon_identifier: "sack_3"
+		
+		onClicked: {
+			item_shop_dialog.open()
+		}
+		
+		onHoveredChanged: {
+			if (hovered) {
+				status_text = "Buy Items"
+			} else {
+				status_text = ""
+			}
+		}
+	}
+	
 	TextButton {
 		id: back_button
 		anchors.horizontalCenter: parent.horizontalCenter

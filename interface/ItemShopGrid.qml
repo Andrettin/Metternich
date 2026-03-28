@@ -8,6 +8,7 @@ Item {
 	height: item_grid_view.y + item_grid_view.height + 8 * scale_factor
 	
 	property var item_slots: []
+	property bool label_visible: true
 	readonly property int icon_button_width: 32 * scale_factor + 6 * scale_factor
 	readonly property int icon_button_height: 32 * scale_factor + 6 * scale_factor
 	
@@ -30,12 +31,13 @@ Item {
 		anchors.topMargin: 8 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
 		text: "Item Shop"
+		visible: item_shop_grid.label_visible
 	}
 	
 	Flickable {
 		id: item_grid_view
-		anchors.top: item_shop_label.bottom
-		anchors.topMargin: 8 * scale_factor
+		anchors.top: item_shop_label.visible ? item_shop_label.bottom : parent.top
+		anchors.topMargin: item_shop_label.visible ? 8 * scale_factor : 0
 		anchors.left: parent.left
 		anchors.leftMargin: 8 * scale_factor
 		anchors.right: parent.right

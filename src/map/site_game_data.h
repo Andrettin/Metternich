@@ -73,7 +73,7 @@ class site_game_data final : public QObject
 	Q_PROPERTY(QVariantList attribute_values READ get_attribute_values_qvariant_list NOTIFY attribute_values_changed)
 	Q_PROPERTY(QVariantList building_slots READ get_building_slots_qvariant_list CONSTANT)
 	Q_PROPERTY(QVariantList visible_building_slots READ get_visible_building_slots_qvariant_list CONSTANT)
-	Q_PROPERTY(QVariantList item_slots READ get_item_slots_qvariant_list CONSTANT)
+	Q_PROPERTY(QVariantList item_slots READ get_item_slots_qvariant_list NOTIFY item_slots_changed)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(metternich::population* population READ get_population CONSTANT)
 	Q_PROPERTY(int population_unit_count READ get_population_unit_count NOTIFY population_units_changed)
@@ -301,6 +301,7 @@ public:
 	}
 
 	QVariantList get_building_slots_qvariant_list() const;
+	void add_building_slot(qunique_ptr<building_slot> &&building_slot);
 	void initialize_building_slots();
 
 	building_slot *get_building_slot(const building_slot_type *slot_type) const
@@ -600,6 +601,7 @@ signals:
 	void portrait_changed();
 	void features_changed();
 	void attribute_values_changed();
+	void item_slots_changed();
 	void scripted_modifiers_changed();
 	void population_units_changed();
 	void total_building_size_changed();

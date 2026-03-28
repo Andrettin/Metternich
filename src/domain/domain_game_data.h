@@ -43,6 +43,7 @@ namespace archimedes {
 
 namespace metternich {
 
+class building_item_slot;
 class building_type;
 class character;
 class civilian_unit;
@@ -140,6 +141,7 @@ class domain_game_data final : public QObject
 	Q_PROPERTY(int population_unit_count READ get_population_unit_count NOTIFY population_units_changed)
 	Q_PROPERTY(metternich::population* population READ get_population CONSTANT)
 	Q_PROPERTY(int population_growth READ get_population_growth NOTIFY population_growth_changed)
+	Q_PROPERTY(QVariantList item_slots READ get_item_slots_qvariant_list NOTIFY item_slots_changed)
 	Q_PROPERTY(QColor diplomatic_map_color READ get_diplomatic_map_color NOTIFY overlord_changed)
 	Q_PROPERTY(QVariantList ideas READ get_ideas_qvariant_list NOTIFY ideas_changed)
 	Q_PROPERTY(QVariantList appointed_ideas READ get_appointed_ideas_qvariant_list NOTIFY appointed_ideas_changed)
@@ -326,6 +328,8 @@ public:
 	{
 		return static_cast<int>(this->get_provinces().size());
 	}
+
+	std::vector<const province *> get_accessible_provinces() const;
 
 	const std::vector<const site *> &get_sites() const
 	{
@@ -829,6 +833,9 @@ public:
 
 	void on_wonder_gained(const wonder *wonder, const int multiplier);
 
+	std::vector<building_item_slot *> get_item_slots() const;
+	QVariantList get_item_slots_qvariant_list() const;
+
 	bool can_declare_war_on(const metternich::domain *other_domain) const;
 
 	const std::map<idea_type, data_entry_map<idea_slot, const idea *>> &get_ideas() const
@@ -1279,6 +1286,7 @@ signals:
 	void population_type_inputs_changed();
 	void population_type_outputs_changed();
 	void settlement_building_counts_changed();
+	void item_slots_changed();
 	void ideas_changed();
 	void appointed_ideas_changed();
 	void available_idea_slots_changed();

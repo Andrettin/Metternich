@@ -49,6 +49,7 @@
 #include "population/population.h"
 #include "population/population_type.h"
 #include "population/population_unit.h"
+#include "religion/religion.h"
 #include "script/condition/and_condition.h"
 #include "script/context.h"
 #include "script/effect/effect_list.h"
@@ -149,8 +150,7 @@ void site_game_data::process_gsml_scope(const gsml_data &scope)
 		this->building_slots.clear();
 		this->building_slot_map.clear();
 		scope.for_each_child([this](const gsml_data &child_scope) {
-			this->building_slots.push_back(make_qunique<building_slot>(child_scope, this->site));
-			this->building_slot_map[this->building_slots.back()->get_type()] = this->building_slots.back().get();
+			this->add_building_slot(make_qunique<building_slot>(child_scope, this->site));
 		});
 	} else if (tag == "homed_characters") {
 		for (const std::string &value : values) {
@@ -504,6 +504,8 @@ void site_game_data::set_owner(const domain *owner)
 
 			old_owner->get_economy()->change_commodity_output(commodity, -this->get_commodity_output(commodity));
 		}
+
+		disconnect(this, &site_game_data::item_slots_changed, old_owner->get_game_data(), &domain_game_data::item_slots_changed);
 	}
 
 	this->owner = owner;
@@ -552,6 +554,8 @@ void site_game_data::set_owner(const domain *owner)
 		}
 
 		this->get_owner()->get_game_data()->add_site(this->site);
+
+		connect(this, &site_game_data::item_slots_changed, this->get_owner()->get_game_data(), &domain_game_data::item_slots_changed);
 	}
 
 	if (this->site->is_settlement() && this->is_built()) {
@@ -1168,6 +1172,13 @@ QVariantList site_game_data::get_building_slots_qvariant_list() const
 	return container::to_qvariant_list(building_slots);
 }
 
+void site_game_data::add_building_slot(qunique_ptr<building_slot> &&building_slot)
+{
+	this->building_slot_map[building_slot->get_type()] = building_slot.get();
+	connect(building_slot.get(), &building_slot::items_changed, this, &site_game_data::item_slots_changed);
+	this->building_slots.push_back(std::move(building_slot));
+}
+
 void site_game_data::initialize_building_slots()
 {
 	assert_throw(this->site->is_settlement());
@@ -1177,8 +1188,7 @@ void site_game_data::initialize_building_slots()
 	vector::shuffle(building_slot_types);
 
 	for (const building_slot_type *building_slot_type : building_slot_types) {
-		this->building_slots.push_back(make_qunique<building_slot>(building_slot_type, this->site));
-		this->building_slot_map[building_slot_type] = this->building_slots.back().get();
+		this->add_building_slot(make_qunique<building_slot>(building_slot_type, this->site));
 	}
 }
 
