@@ -5,7 +5,15 @@ fireball = {
 	price = 375gp
 	target = enemy
 	range = 5
+	battle_target = enemy
+	battle_range = 3
+	battle_result = rout
+	sound = flame_big
+	arcane_schools = {
+		evocation
+	}
 	character_classes = {
+		mage
 	}
 	effects = {
 		damage = {

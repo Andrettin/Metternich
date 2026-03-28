@@ -1,7 +1,7 @@
 minor_scroll = {
 	name = "Minor Scroll"
 	item_creation_subtypes = {
-		#minor_arcane_scroll = 70
+		minor_arcane_scroll = 70
 		minor_divine_scroll = 30
 	}
 }
@@ -22,11 +22,21 @@ major_scroll = {
 	}
 }
 
+minor_arcane_scroll = {
+	name = "Minor Divine Scroll"
+	item_creation_subtypes = {
+		#arcane_scroll_level_0 = 5
+		#arcane_scroll_level_1 = 45
+		#arcane_scroll_level_2 = 45
+		arcane_scroll_level_3 = 5
+	}
+}
+
 medium_arcane_scroll = {
 	name = "Medium Arcane Scroll"
 	item_creation_subtypes = {
 		#arcane_scroll_level_2 = 5
-		#arcane_scroll_level_3 = 60
+		arcane_scroll_level_3 = 60
 		#arcane_scroll_level_4 = 30
 		arcane_scroll_level_5 = 5
 	}
@@ -73,6 +83,16 @@ major_divine_scroll = {
 		divine_scroll_level_7 = 15
 		divine_scroll_level_8 = 10
 		#divine_scroll_level_9 = 5
+	}
+}
+
+arcane_scroll_level_3 = {
+	name = "Arcane Scroll Level 3"
+	item_types = {
+		scroll
+	}
+	spells = {
+		fireball = 2
 	}
 }
 
