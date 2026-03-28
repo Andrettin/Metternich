@@ -2860,11 +2860,17 @@ void character_game_data::add_item(qunique_ptr<item> &&item)
 	this->items.push_back(std::move(item));
 	emit items_changed();
 
-	if (this->can_equip_item(item_ptr, false)) {
-		this->equip_item(item_ptr);
-	} else if (this->is_ai() && this->can_use_item(item_ptr)) {
-		//AI characters use items as soon as they receive them
-		this->use_item(item_ptr);
+	if (this->is_ai()) {
+		if (this->can_equip_item(item_ptr, false, item_ptr->get_price())) {
+			this->equip_item(item_ptr);
+		} else if (this->can_use_item(item_ptr)) {
+			//AI characters use items as soon as they receive them
+			this->use_item(item_ptr);
+		}
+	} else {
+		if (this->can_equip_item(item_ptr, false)) {
+			this->equip_item(item_ptr);
+		}
 	}
 }
 
@@ -2995,7 +3001,7 @@ const item *character_game_data::get_equipped_item(const item_slot *slot, const 
 	return equipped_items.at(slot_index);
 }
 
-bool character_game_data::can_equip_item(const item *item, const bool ignore_already_equipped) const
+bool character_game_data::can_equip_item(const item *item, const bool ignore_already_equipped, const std::optional<int64_t> &already_equipped_ignore_price_threshold) const
 {
 	const item_slot *slot = item->get_slot();
 	if (slot == nullptr) {
@@ -3015,7 +3021,22 @@ bool character_game_data::can_equip_item(const item *item, const bool ignore_alr
 		}
 	} else {
 		if (item_slot_count == this->get_equipped_item_count(slot)) {
-			return false;
+			if (already_equipped_ignore_price_threshold.has_value()) {
+				bool found_lower_price_item = false;
+
+				for (const metternich::item *other_item : this->get_equipped_items(slot)) {
+					if (other_item->get_price() < already_equipped_ignore_price_threshold.value()) {
+						found_lower_price_item = true;
+						break;
+					}
+				}
+
+				if (!found_lower_price_item) {
+					return false;
+				}
+			} else {
+				return false;
+			}
 		}
 
 		if (item->get_type()->is_two_handed()) {
@@ -3043,6 +3064,11 @@ bool character_game_data::can_equip_item(const item *item, const bool ignore_alr
 	return true;
 }
 
+bool character_game_data::can_equip_item(const metternich::item *item, const bool ignore_already_equipped) const
+{
+	return this->can_equip_item(item, ignore_already_equipped, std::nullopt);
+}
+
 void character_game_data::equip_item(item *item)
 {
 	assert_throw(item->get_slot() != nullptr);
@@ -3055,7 +3081,18 @@ void character_game_data::equip_item(item *item)
 	const int used_slots = this->get_equipped_item_count(item->get_slot());
 	assert_throw(used_slots <= slot_count);
 	if (used_slots == slot_count) {
-		items_to_deequip.push_back(this->get_equipped_items(item->get_slot()).at(0));
+		metternich::item *lowest_price_item = nullptr;
+		int64_t lowest_price = std::numeric_limits<int64_t>::max();
+
+		for (metternich::item *other_item : this->get_equipped_items(item->get_slot())) {
+			if (other_item->get_price() < lowest_price) {
+				lowest_price_item = other_item;
+				lowest_price = other_item->get_price();
+			}
+		}
+
+		assert_throw(lowest_price_item != nullptr);
+		items_to_deequip.push_back(lowest_price_item);
 	}
 
 	if (item->get_type()->is_two_handed()) {

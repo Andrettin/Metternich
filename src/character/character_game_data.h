@@ -714,6 +714,7 @@ public:
 		return static_cast<int>(this->get_equipped_items(slot).size());
 	}
 
+	bool can_equip_item(const metternich::item *item, const bool ignore_already_equipped, const std::optional<int64_t> &already_equipped_ignore_price_threshold) const;
 	Q_INVOKABLE bool can_equip_item(const metternich::item *item, const bool ignore_already_equipped) const;
 	Q_INVOKABLE void equip_item(metternich::item *item);
 	Q_INVOKABLE void deequip_item(metternich::item *item);

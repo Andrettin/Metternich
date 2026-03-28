@@ -206,21 +206,8 @@ int item::get_price() const
 bool item::is_useful_for(const character *character) const
 {
 	if (this->get_slot() != nullptr) {
-		if (!character->get_game_data()->can_equip_item(this, true)) {
+		if (!character->get_game_data()->can_equip_item(this, false, this->get_price())) {
 			return false;
-		}
-
-		if (!character->get_game_data()->can_equip_item(this, false)) {
-			bool is_better_than_any_equipped = false;
-			for (const item *equipped_item : character->get_game_data()->get_equipped_items(this->get_slot())) {
-				if (this->get_price() > equipped_item->get_price()) {
-					is_better_than_any_equipped = true;
-					break;
-				}
-			}
-			if (!is_better_than_any_equipped) {
-				return false;
-			}
 		}
 
 		return true;
