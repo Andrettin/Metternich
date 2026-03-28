@@ -56,7 +56,7 @@ Flickable {
 			
 			var province = metternich.map.get_tile_province(Qt.point(Math.floor(mouse.x / metternich.map.province_map_tile_pixel_size / scale_factor), Math.floor(mouse.y / metternich.map.province_map_tile_pixel_size / scale_factor)))
 			
-			if (province === null || (selected_province === province && selected_garrison === false) || province.water_zone) {
+			if (province === null || ((selected_province === province || (selected_site !== null && selected_site.game_data.province === province && !province_map.show_sites)) && selected_garrison === false) || province.water_zone) {
 				select_province(null)
 			} else {
 				if (metternich.selected_military_units.length > 0) {
@@ -108,7 +108,7 @@ Flickable {
 				
 				onClicked: {
 					metternich.defines.click_sound.play()
-					if (selected_province === province && selected_garrison === false) {
+					if ((selected_province === province || (selected_site !== null && selected_site.game_data.province === province && !province_map.show_sites)) && selected_garrison === false) {
 						select_province(null)
 					} else {
 						if (metternich.selected_military_units.length > 0) {
