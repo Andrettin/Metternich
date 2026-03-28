@@ -109,6 +109,5 @@ Item {
 	
 	ItemShopDialog {
 		id: item_shop_dialog
-		item_slots: country ? country.game_data.item_slots : []
 	}
 }

@@ -30,7 +30,7 @@ class building_slot final : public QObject
 	Q_PROPERTY(const metternich::wonder* wonder READ get_wonder NOTIFY wonder_changed)
 	Q_PROPERTY(const metternich::wonder* under_construction_wonder READ get_under_construction_wonder WRITE set_under_construction_wonder NOTIFY under_construction_wonder_changed)
 	Q_PROPERTY(QString modifier_string READ get_modifier_string NOTIFY modifier_changed)
-	Q_PROPERTY(QVariantList item_slots READ get_item_slots_qvariant_list NOTIFY items_changed)
+	Q_PROPERTY(QVariantList item_slots READ get_item_slots_qvariant_list CONSTANT)
 	Q_PROPERTY(QVariantList filled_item_slots READ get_filled_item_slots_qvariant_list NOTIFY items_changed)
 	Q_PROPERTY(const metternich::domain* country READ get_country CONSTANT)
 

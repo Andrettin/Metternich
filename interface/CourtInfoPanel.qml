@@ -28,6 +28,7 @@ Rectangle {
 		icon_identifier: "sack_3"
 		
 		onClicked: {
+			item_shop_dialog.item_slots = country ? country.game_data.item_slots : []
 			item_shop_dialog.open()
 		}
 		

@@ -67,8 +67,8 @@ Item {
 					
 					readonly property var item_key: model.modelData.key
 					property var item_slot_list: model.modelData.value
-					readonly property var item_slot: item_slot_list[0]
-					readonly property var item: item_slot.item
+					readonly property var item_slot: item_slot_list.length > 0 ? item_slot_list[0] : null
+					readonly property var item: item_slot ? item_slot.item : null
 					
 					SmallText {
 						id: item_quantity_label
@@ -85,6 +85,7 @@ Item {
 						var chosen_item_slot = item_slot_list[item_slot_index]
 						if (chosen_item_slot.can_buy_item(metternich.game.player_character)) {
 							chosen_item_slot.buy_item(metternich.game.player_character)
+							
 							var new_item_slot_list = []
 							for (var listed_item_slot of item_slot_list) {
 								if (listed_item_slot !== chosen_item_slot) {
