@@ -46,7 +46,7 @@ DialogBase {
 		anchors.leftMargin: 8 * scale_factor
 		anchors.right: parent.right
 		anchors.rightMargin: 8 * scale_factor
-		height: icon_button_height * 4 + spell_grid.spacing * 3
+		height: Math.min(icon_button_height * 4 + spell_grid.spacing * 3, contentHeight)
 		contentHeight: contentItem.childrenRect.height
 		leftMargin: 0
 		rightMargin: 0
