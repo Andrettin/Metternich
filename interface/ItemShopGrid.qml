@@ -7,7 +7,7 @@ Item {
 	width: icon_button_width * item_grid.columns + item_grid.spacing * (item_grid.columns - 1) + 8 * scale_factor * 2
 	height: item_grid_view.y + item_grid_view.height + 8 * scale_factor
 	
-	property var item_slots: []
+	property var item_slots: {}
 	property bool label_visible: true
 	readonly property int icon_button_width: 32 * scale_factor + 6 * scale_factor
 	readonly property int icon_button_height: 32 * scale_factor + 6 * scale_factor
@@ -65,12 +65,33 @@ Item {
 					tooltip: typeof status_text !== 'undefined' ? "" : format_text(small_text(item.name))
 					visible: item !== null
 					
-					readonly property var item_slot: model.modelData
+					readonly property var item_key: model.modelData.key
+					property var item_slot_list: model.modelData.value
+					readonly property var item_slot: item_slot_list[0]
 					readonly property var item: item_slot.item
 					
+					SmallText {
+						id: item_quantity_label
+						anchors.top: parent.top
+						anchors.topMargin: 4 * scale_factor
+						anchors.left: parent.left
+						anchors.leftMargin: 4 * scale_factor
+						text: item_slot_list.length
+						visible: item_slot_list.length > 1
+					}
+					
 					onClicked: {
-						if (item_slot.can_buy_item(metternich.game.player_character)) {
-							item_slot.buy_item(metternich.game.player_character)
+						var item_slot_index = random(item_slot_list.length)
+						var chosen_item_slot = item_slot_list[item_slot_index]
+						if (chosen_item_slot.can_buy_item(metternich.game.player_character)) {
+							chosen_item_slot.buy_item(metternich.game.player_character)
+							var new_item_slot_list = []
+							for (var listed_item_slot of item_slot_list) {
+								if (listed_item_slot !== chosen_item_slot) {
+									new_item_slot_list.push(listed_item_slot)
+								}
+							}
+							item_slot_list = new_item_slot_list
 						} else {
 							metternich.defines.error_sound.play()
 						}

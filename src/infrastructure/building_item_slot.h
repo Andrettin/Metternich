@@ -11,6 +11,7 @@ namespace metternich {
 class building_slot;
 class item;
 class item_creation_type;
+struct item_key;
 
 class building_item_slot final : public QObject
 {
@@ -21,6 +22,8 @@ class building_item_slot final : public QObject
 	Q_PROPERTY(const metternich::building_slot* building_slot READ get_building_slot CONSTANT)
 
 public:
+	static std::map<item_key, std::vector<building_item_slot *>> item_slots_to_map(const std::vector<building_item_slot *> &item_slots);
+
 	explicit building_item_slot(const item_creation_type *item_creation_type, const building_slot *building_slot);
 	explicit building_item_slot(const gsml_data &scope, const building_slot *building_slot);
 	~building_item_slot();

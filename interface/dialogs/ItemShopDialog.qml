@@ -8,7 +8,7 @@ DialogBase {
 	width: Math.max(content_column.width + 8 * scale_factor * 2, 256 * scale_factor)
 	height: content_column.y + content_column.height + 8 * scale_factor
 	
-	property var item_slots: []
+	property var item_slots: {}
 	
 	Column {
 		id: content_column

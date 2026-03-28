@@ -50,6 +50,7 @@
 #include "infrastructure/improvement.h"
 #include "infrastructure/improvement_slot.h"
 #include "infrastructure/wonder.h"
+#include "item/item.h"
 #include "map/diplomatic_map_mode.h"
 #include "map/map.h"
 #include "map/province.h"
@@ -3178,7 +3179,20 @@ std::vector<building_item_slot *> domain_game_data::get_item_slots() const
 
 QVariantList domain_game_data::get_item_slots_qvariant_list() const
 {
-	return container::to_qvariant_list(this->get_item_slots());
+	const std::map<item_key, std::vector<building_item_slot *>> item_slot_map = building_item_slot::item_slots_to_map(this->get_item_slots());
+
+	QVariantList qvariant_list;
+
+	for (const auto &[item_key, item_slots] : item_slot_map) {
+		QVariantMap qvariant_map;
+
+		qvariant_map["key"] = item_key.to_qvariant_map();
+		qvariant_map["value"] = container::to_qvariant_list(item_slots);
+
+		qvariant_list.push_back(std::move(qvariant_map));
+	}
+
+	return qvariant_list;
 }
 
 bool domain_game_data::can_declare_war_on(const metternich::domain *other_domain) const

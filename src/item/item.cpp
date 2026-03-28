@@ -16,6 +16,39 @@
 
 namespace metternich {
 
+QVariantMap item_key::to_qvariant_map() const
+{
+	QVariantMap qvariant_map;
+
+	qvariant_map["type"] = QVariant::fromValue(this->type);
+	qvariant_map["material"] = QVariant::fromValue(this->material);
+	qvariant_map["enchantment"] = QVariant::fromValue(this->enchantment);
+	qvariant_map["spell"] = QVariant::fromValue(this->spell);
+
+	return qvariant_map;
+}
+
+bool item_key::operator <(const item_key &other) const
+{
+	if (this->type != other.type) {
+		return this->type->get_identifier() < other.type->get_identifier();
+	}
+
+	if (this->material != other.material) {
+		return this->material->get_identifier() < other.material->get_identifier();
+	}
+
+	if (this->enchantment != other.enchantment) {
+		return this->enchantment->get_identifier() < other.enchantment->get_identifier();
+	}
+
+	if (this->spell != other.spell) {
+		return this->spell->get_identifier() < other.spell->get_identifier();
+	}
+
+	return false;
+}
+
 item::item(const item_type *type, const item_material *material, const metternich::enchantment *enchantment, const metternich::spell *spell)
 	: type(type), material(material), enchantment(enchantment), spell(spell)
 {

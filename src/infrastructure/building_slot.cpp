@@ -15,6 +15,7 @@
 #include "infrastructure/building_slot_type.h"
 #include "infrastructure/building_type.h"
 #include "infrastructure/wonder.h"
+#include "item/item.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/site.h"
@@ -581,7 +582,25 @@ const wonder *building_slot::get_buildable_wonder() const
 
 QVariantList building_slot::get_item_slots_qvariant_list() const
 {
-	return container::to_qvariant_list(this->get_item_slots());
+	std::vector<building_item_slot *> item_slots_vector;
+	for (const qunique_ptr<building_item_slot> &item_slot : this->get_item_slots()) {
+		item_slots_vector.push_back(item_slot.get());
+	}
+
+	const std::map<item_key, std::vector<building_item_slot *>> item_slot_map = building_item_slot::item_slots_to_map(item_slots_vector);
+
+	QVariantList qvariant_list;
+
+	for (const auto &[item_key, item_slots] : item_slot_map) {
+		QVariantMap qvariant_map;
+
+		qvariant_map["key"] = item_key.to_qvariant_map();
+		qvariant_map["value"] = container::to_qvariant_list(item_slots);
+
+		qvariant_list.push_back(std::move(qvariant_map));
+	}
+
+	return qvariant_list;
 }
 
 QVariantList building_slot::get_filled_item_slots_qvariant_list() const

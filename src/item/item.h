@@ -26,6 +26,10 @@ struct item_key final
 	const item_material *material = nullptr;
 	const metternich::enchantment *enchantment = nullptr;
 	const metternich::spell *spell = nullptr;
+
+	QVariantMap to_qvariant_map() const;
+
+	bool operator <(const item_key &other) const;
 };
 
 class item final : public QObject
@@ -122,6 +126,16 @@ public:
 	int get_price() const;
 
 	bool is_useful_for(const character *character) const;
+
+	item_key to_item_key() const
+	{
+		item_key item_key;
+		item_key.type = this->get_type();
+		item_key.material = this->get_material();
+		item_key.enchantment = this->get_enchantment();
+		item_key.spell = this->get_spell();
+		return item_key;
+	}
 
 signals:
 	void name_changed();

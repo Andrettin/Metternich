@@ -14,6 +14,21 @@
 
 namespace metternich {
 
+std::map<item_key, std::vector<building_item_slot *>> building_item_slot::item_slots_to_map(const std::vector<building_item_slot *> &item_slots)
+{
+	std::map<item_key, std::vector<building_item_slot *>> item_slot_map;
+
+	for (building_item_slot *item_slot : item_slots) {
+		if (item_slot->get_item() == nullptr) {
+			continue;
+		}
+
+		item_slot_map[item_slot->get_item()->to_item_key()].push_back(item_slot);
+	}
+
+	return item_slot_map;
+}
+
 building_item_slot::building_item_slot(const metternich::item_creation_type *item_creation_type, const metternich::building_slot *building_slot)
 	: item_creation_type(item_creation_type), building_slot(building_slot)
 {
