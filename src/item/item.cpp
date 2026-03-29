@@ -73,9 +73,7 @@ item::item(const gsml_data &scope)
 
 	assert_throw(this->get_type() != nullptr);
 
-	if (this->get_name().empty()) {
-		this->update_name();
-	}
+	this->update_name();
 }
 
 item::~item()

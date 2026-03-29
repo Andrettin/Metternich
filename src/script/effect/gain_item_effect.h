@@ -40,9 +40,7 @@ public:
 		const std::string &key = property.get_key();
 		const std::string &value = property.get_value();
 
-		if (key == "name") {
-			this->name = value;
-		} else if (key == "type") {
+		if (key == "type") {
 			this->type = item_type::get(value);
 		} else if (key == "material") {
 			this->material = item_material::get(value);
@@ -74,16 +72,13 @@ public:
 		}
 
 		auto item = make_qunique<metternich::item>(this->type, this->material, this->enchantment, this->spell);
-		if (!this->name.empty()) {
-			item->set_name(this->name);
-		}
 
 		character->get_game_data()->add_item(std::move(item));
 	}
 
 	virtual std::string get_assignment_string() const override
 	{
-		const std::string item_name = !this->name.empty() ? this->name : item::create_name(this->type, this->material, this->enchantment, this->spell);
+		const std::string item_name = item::create_name(this->type, this->material, this->enchantment, this->spell);
 
 		return std::format("Gain {} {}", string::get_indefinite_article(item_name), item_name);
 	}
