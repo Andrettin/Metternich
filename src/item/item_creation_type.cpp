@@ -5,6 +5,7 @@
 #include "item/enchantment.h"
 #include "item/item.h"
 #include "item/item_type.h"
+#include "script/condition/and_condition.h"
 #include "spell/spell.h"
 #include "util/assert_util.h"
 #include "util/vector_random_util.h"
@@ -84,10 +85,12 @@ void item_creation_type::check() const
 	}
 }
 
-qunique_ptr<item> item_creation_type::create_item() const
+qunique_ptr<item> item_creation_type::create_item(const site *creation_site) const
 {
+	assert_throw(creation_site != nullptr);
+
 	if (!this->item_creation_subtypes.empty()) {
-		return vector::get_random(this->item_creation_subtypes)->create_item();
+		return vector::get_random(this->item_creation_subtypes)->create_item(creation_site);
 	}
 
 	assert_throw(!this->item_types.empty());
@@ -95,7 +98,12 @@ qunique_ptr<item> item_creation_type::create_item() const
 
 	const enchantment *enchantment = nullptr;
 	if (!this->enchantments.empty()) {
-		enchantment = vector::get_random(this->enchantments);
+		std::vector<const metternich::enchantment *> enchantments = this->enchantments;
+		std::erase_if(enchantments, [this, creation_site](const metternich::enchantment *enchantment) {
+			return enchantment->get_creation_site_conditions() != nullptr && !enchantment->get_creation_site_conditions()->check(creation_site, read_only_context(creation_site));
+		});
+
+		enchantment = vector::get_random(enchantments);
 	}
 
 	const spell *spell = nullptr;

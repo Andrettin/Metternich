@@ -72,6 +72,11 @@ public:
 		return this->ai_conditions.get();
 	}
 
+	const and_condition<site> *get_creation_site_conditions() const
+	{
+		return this->creation_site_conditions.get();
+	}
+
 	const metternich::modifier<const character> *get_modifier() const
 	{
 		return this->modifier.get();
@@ -90,6 +95,7 @@ private:
 	std::vector<const enchantment *> subenchantments;
 	std::unique_ptr<const and_condition<character>> conditions;
 	std::unique_ptr<const and_condition<character>> ai_conditions;
+	std::unique_ptr<const and_condition<site>> creation_site_conditions;
 	std::unique_ptr<const metternich::modifier<const character>> modifier;
 };
 

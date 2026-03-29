@@ -26,7 +26,7 @@ public:
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;
 
-	qunique_ptr<item> create_item() const;
+	qunique_ptr<item> create_item(const site *creation_site) const;
 
 signals:
 	void changed();

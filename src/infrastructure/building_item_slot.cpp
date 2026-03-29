@@ -6,6 +6,7 @@
 #include "character/character_game_data.h"
 #include "domain/country_economy.h"
 #include "domain/domain.h"
+#include "infrastructure/building_slot.h"
 #include "item/item.h"
 #include "item/item_creation_type.h"
 #include "util/assert_util.h"
@@ -87,7 +88,7 @@ void building_item_slot::create_item()
 		return;
 	}
 
-	this->item = this->get_item_creation_type()->create_item();
+	this->item = this->get_item_creation_type()->create_item(this->get_building_slot()->get_settlement());
 	emit item_changed();
 }
 
