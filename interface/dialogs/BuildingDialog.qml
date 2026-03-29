@@ -280,6 +280,7 @@ DialogBase {
 			anchors.horizontalCenter: parent.horizontalCenter
 			text: "OK"
 			onClicked: {
+				building_dialog.building_slot = null
 				building_dialog.close()
 			}
 		}
