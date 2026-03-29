@@ -1,0 +1,65 @@
+of_intellect_2 = {
+	name = "of Intellect +2"
+	affix_type = suffix
+	price = 4000gp
+	item_types = {
+		headband
+	}
+	ai_conditions = {
+		attribute_modifier = {
+			attribute = intelligence
+			modifier_type = enhancement
+			modifier < 2
+		}
+	}
+	modifier = {
+		intelligence = {
+			modifier_type = enhancement
+			modifier = 2
+		}
+	}
+}
+
+of_intellect_4 = {
+	name = "of Intellect +4"
+	affix_type = suffix
+	price = 16000gp
+	item_types = {
+		headband
+	}
+	ai_conditions = {
+		attribute_modifier = {
+			attribute = intelligence
+			modifier_type = enhancement
+			modifier < 4
+		}
+	}
+	modifier = {
+		intelligence = {
+			modifier_type = enhancement
+			modifier = 4
+		}
+	}
+}
+
+of_intellect_6 = {
+	name = "of Intellect +6"
+	affix_type = suffix
+	price = 36000gp
+	item_types = {
+		headband
+	}
+	ai_conditions = {
+		attribute_modifier = {
+			attribute = intelligence
+			modifier_type = enhancement
+			modifier < 6
+		}
+	}
+	modifier = {
+		intelligence = {
+			modifier_type = enhancement
+			modifier = 6
+		}
+	}
+}

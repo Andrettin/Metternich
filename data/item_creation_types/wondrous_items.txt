@@ -5,6 +5,7 @@ minor_wondrous_item = {
 		cloak_of_charisma_2 = 1
 		gauntlets_of_ogre_power = 1
 		gloves_of_dexterity_2 = 1
+		headband_of_intellect_2 = 1
 		periapt_of_wisdom_2 = 1
 	}
 }
@@ -16,6 +17,7 @@ medium_wondrous_item = {
 		belt_of_giant_strength_4 = 1
 		cloak_of_charisma_4 = 1
 		gloves_of_dexterity_4 = 1
+		headband_of_intellect_4 = 1
 		periapt_of_wisdom_4 = 1
 		tome_of_understanding_1 = 1
 	}
@@ -28,6 +30,7 @@ major_wondrous_item = {
 		belt_of_giant_strength_6 = 1
 		cloak_of_charisma_6 = 1
 		gloves_of_dexterity_6 = 1
+		headband_of_intellect_6 = 1
 		periapt_of_wisdom_6 = 1
 		tome_of_understanding_2 = 1
 		tome_of_understanding_3 = 1
@@ -153,6 +156,36 @@ gloves_of_dexterity_6 = {
 	}
 	enchantments = {
 		of_dexterity_6
+	}
+}
+
+headband_of_intellect_2 = {
+	name = "Headband of Intellect +2"
+	item_types = {
+		headband
+	}
+	enchantments = {
+		of_intellect_2
+	}
+}
+
+headband_of_intellect_4 = {
+	name = "Headband of Intellect +4"
+	item_types = {
+		headband
+	}
+	enchantments = {
+		of_intellect_4
+	}
+}
+
+headband_of_intellect_6 = {
+	name = "Headband of Intellect +6"
+	item_types = {
+		headband
+	}
+	enchantments = {
+		of_intellect_6
 	}
 }
 

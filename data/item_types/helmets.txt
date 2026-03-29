@@ -1,0 +1,6 @@
+headband = {
+	name = "Headband"
+	item_class = helmet
+	icon = crown_baronial
+	price = 1cp #correct?
+}
