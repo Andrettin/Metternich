@@ -4,6 +4,7 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
+#include "database/defines.h"
 #include "item/affix_type.h"
 #include "item/enchantment.h"
 #include "item/item_class.h"
@@ -13,6 +14,7 @@
 #include "spell/spell.h"
 #include "util/assert_util.h"
 #include "util/string_conversion_util.h"
+#include "util/string_util.h"
 
 namespace metternich {
 
@@ -190,7 +192,7 @@ void item::change_quantity(const int change)
 	emit quantity_changed();
 }
 
-QString item::get_effects_string() const
+QString item::get_effects_string(const character *character) const
 {
 	std::string str;
 
@@ -220,6 +222,10 @@ QString item::get_effects_string() const
 		}
 
 		str += std::format("{} Spell", this->get_spell()->get_name());
+	}
+
+	if (!character->get_game_data()->can_use_item(this)) {
+		str += " " + string::colored(std::format("(cannot {})", this->get_slot() != nullptr ? "equip" : this->get_type()->get_item_class()->get_consume_verb()), defines::get()->get_red_text_color());
 	}
 
 	return QString::fromStdString(str);

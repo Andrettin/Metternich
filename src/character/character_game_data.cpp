@@ -3188,6 +3188,26 @@ void character_game_data::on_item_equipped_with_enchantment(const enchantment *e
 	}
 }
 
+bool character_game_data::can_use_item(const metternich::item *item) const
+{
+	if (item->get_slot() != nullptr) {
+		return this->can_equip_item(item, true, std::nullopt);
+	} else if (item->get_type()->get_item_class()->is_consumable()) {
+		return this->can_consume_item(item);
+	}
+
+	return false;
+}
+
+void character_game_data::use_item(metternich::item *item)
+{
+	if (item->get_slot() != nullptr) {
+		this->equip_item(item);
+	} else if (item->get_type()->get_item_class()->is_consumable()) {
+		this->consume_item(item);
+	}
+}
+
 void character_game_data::set_commanded_military_unit_stat_modifier(const military_unit_stat stat, const centesimal_int &value)
 {
 	const centesimal_int old_value = this->get_commanded_military_unit_stat_modifier(stat);

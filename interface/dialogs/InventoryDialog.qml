@@ -121,10 +121,8 @@ DialogBase {
 					
 					onClicked: {
 						if (character === metternich.game.player_character) {
-							if (item.type.item_class.slot !== null && character.game_data.can_equip_item(item, true)) {
-								character.game_data.equip_item(item)
-							} else if (item.type.item_class.consumable && character.game_data.can_consume_item(item)) {
-								character.game_data.consume_item(item)
+							if (character.game_data.can_use_item(item)) {
+								character.game_data.use_item(item)
 							} else {
 								metternich.defines.error_sound.play()
 							}
@@ -146,7 +144,7 @@ DialogBase {
 										}
 									}
 								}
-								right_status_text = item.get_effects_string()
+								right_status_text = item.get_effects_string(character)
 							} else {
 								status_text = ""
 								middle_status_text = ""

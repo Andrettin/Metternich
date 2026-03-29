@@ -122,7 +122,7 @@ public:
 
 	void change_quantity(const int change);
 
-	Q_INVOKABLE QString get_effects_string() const;
+	Q_INVOKABLE QString get_effects_string(const metternich::character *character) const;
 
 	int get_price() const;
 

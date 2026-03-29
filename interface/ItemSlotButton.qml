@@ -43,7 +43,7 @@ IconButton {
 					if (character === metternich.game.player_character) {
 						middle_status_text = "Click to de-equip"
 					}
-					right_status_text = item.get_effects_string()
+					right_status_text = item.get_effects_string(character)
 				}
 			} else {
 				status_text = ""

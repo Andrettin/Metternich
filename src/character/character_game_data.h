@@ -721,6 +721,9 @@ public:
 	void on_item_equipped(const item *item, const int multiplier);
 	void on_item_equipped_with_enchantment(const enchantment *enchantment, const int multiplier);
 
+	Q_INVOKABLE bool can_use_item(const metternich::item *item) const;
+	Q_INVOKABLE void use_item(metternich::item *item);
+
 	const centesimal_int &get_commanded_military_unit_stat_modifier(const military_unit_stat stat) const
 	{
 		const auto find_iterator = this->commanded_military_unit_stat_modifiers.find(stat);
