@@ -723,6 +723,7 @@ public:
 
 	Q_INVOKABLE bool can_use_item(const metternich::item *item) const;
 	Q_INVOKABLE void use_item(metternich::item *item);
+	bool can_use_enchantment(const enchantment *enchantment) const;
 
 	const centesimal_int &get_commanded_military_unit_stat_modifier(const military_unit_stat stat) const
 	{

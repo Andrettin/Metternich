@@ -2936,14 +2936,8 @@ bool character_game_data::can_consume_item(const metternich::item *item) const
 		return false;
 	}
 
-	if (item->get_enchantment() != nullptr) {
-		if (item->get_enchantment()->get_conditions() != nullptr && !item->get_enchantment()->get_conditions()->check(this->character, read_only_context(this->character))) {
-			return false;
-		}
-
-		if (this->is_ai() && item->get_enchantment()->get_ai_conditions() != nullptr && !item->get_enchantment()->get_ai_conditions()->check(this->character, read_only_context(this->character))) {
-			return false;
-		}
+	if (item->get_enchantment() != nullptr && !this->can_use_enchantment(item->get_enchantment())) {
+		return false;
 	}
 
 	if (item->get_spell() != nullptr) {
@@ -3013,14 +3007,8 @@ bool character_game_data::can_equip_item(const item *item, const bool ignore_alr
 		return false;
 	}
 
-	if (item->get_enchantment() != nullptr) {
-		if (item->get_enchantment()->get_conditions() != nullptr && !item->get_enchantment()->get_conditions()->check(this->character, read_only_context(this->character))) {
-			return false;
-		}
-
-		if (this->is_ai() && item->get_enchantment()->get_ai_conditions() != nullptr && !item->get_enchantment()->get_ai_conditions()->check(this->character, read_only_context(this->character))) {
-			return false;
-		}
+	if (item->get_enchantment() != nullptr && !this->can_use_enchantment(item->get_enchantment())) {
+		return false;
 	}
 
 	const int item_slot_count = this->character->get_species()->get_item_slot_count(slot);
@@ -3206,6 +3194,25 @@ void character_game_data::use_item(metternich::item *item)
 	} else if (item->get_type()->get_item_class()->is_consumable()) {
 		this->consume_item(item);
 	}
+}
+
+bool character_game_data::can_use_enchantment(const enchantment *enchantment) const
+{
+	if (enchantment->get_conditions() != nullptr && !enchantment->get_conditions()->check(this->character, read_only_context(this->character))) {
+		return false;
+	}
+
+	if (this->is_ai() && enchantment->get_ai_conditions() != nullptr && !enchantment->get_ai_conditions()->check(this->character, read_only_context(this->character))) {
+		return false;
+	}
+
+	for (const metternich::enchantment *subenchantment : enchantment->get_subenchantments()) {
+		if (!this->can_use_enchantment(subenchantment)) {
+			return false;
+		}
+	}
+
+	return true;
 }
 
 void character_game_data::set_commanded_military_unit_stat_modifier(const military_unit_stat stat, const centesimal_int &value)
