@@ -1,0 +1,16 @@
+the_confessions_of_st_augustine = {
+	name = "The Confessions of St. Augustine"
+	affix_type = stem
+	item_types = {
+		tome
+	}
+	subenchantments = {
+		of_understanding_2
+	}
+	creation_site_conditions = {
+		religious_group = christian
+	}
+	item_creation_types = {
+		tome_of_understanding_2
+	}
+}
