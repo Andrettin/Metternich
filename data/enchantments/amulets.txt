@@ -64,15 +64,68 @@ of_health_6 = {
 	}
 }
 
-of_protection_1 = {
-	name = "of Protection +1"
+of_wisdom_2 = {
+	name = "of Wisdom +2"
 	affix_type = suffix
-	price = 2000gp
+	price = 4000gp
 	item_types = {
-		ring
+		periapt
+	}
+	ai_conditions = {
+		attribute_modifier = {
+			attribute = wisdom
+			modifier_type = enhancement
+			modifier < 2
+		}
 	}
 	modifier = {
-		armor_class = 1
-		saving_throw_bonus = 1
+		wisdom = {
+			modifier_type = enhancement
+			modifier = 2
+		}
+	}
+}
+
+of_wisdom_4 = {
+	name = "of Wisdom +4"
+	affix_type = suffix
+	price = 16000gp
+	item_types = {
+		periapt
+	}
+	ai_conditions = {
+		attribute_modifier = {
+			attribute = wisdom
+			modifier_type = enhancement
+			modifier < 4
+		}
+	}
+	modifier = {
+		wisdom = {
+			modifier_type = enhancement
+			modifier = 4
+		}
+	}
+}
+
+of_wisdom_6 = {
+	name = "of Wisdom +6"
+	affix_type = suffix
+	price = 36000gp
+	item_types = {
+		periapt
+	}
+	ai_conditions = {
+		attribute_modifier = {
+			attribute = wisdom
+			modifier_type = enhancement
+			modifier < 6
+		}
+	}
+	modifier = {
+		wisdom = {
+			modifier_type = enhancement
+			modifier = 6
+		}
 	}
 }

@@ -5,6 +5,13 @@ amulet = {
 	price = 1cp #?gp
 }
 
+periapt = {
+	name = "Periapt"
+	item_class = amulet
+	icon = crown_baronial
+	price = 1cp #?gp
+}
+
 ring = {
 	name = "Ring"
 	item_class = ring
