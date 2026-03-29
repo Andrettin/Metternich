@@ -9,6 +9,7 @@ namespace metternich {
 class character;
 class item_class;
 class item_type;
+class site;
 enum class affix_type;
 
 template <typename scope_type>

@@ -6,6 +6,7 @@
 #include "economy/commodity.h"
 #include "item/affix_type.h"
 #include "item/item_class.h"
+#include "item/item_creation_type.h"
 #include "item/item_type.h"
 #include "script/condition/and_condition.h"
 #include "script/modifier.h"
@@ -65,6 +66,19 @@ void enchantment::process_gsml_scope(const gsml_data &scope)
 		auto modifier = std::make_unique<metternich::modifier<const character>>();
 		modifier->process_gsml_data(scope);
 		this->modifier = std::move(modifier);
+	} else if (tag == "item_creation_types") {
+		for (const std::string &value : values) {
+			item_creation_type *item_creation_type = item_creation_type::get(value);
+			item_creation_type->add_enchantment(this);
+		}
+
+		scope.for_each_property([this](const gsml_property &property) {
+			item_creation_type *item_creation_type = item_creation_type::get(property.get_key());
+			const int weight = std::stoi(property.get_value());
+			for (int i = 0; i < weight; ++i) {
+				item_creation_type->add_enchantment(this);
+			}
+		});
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
