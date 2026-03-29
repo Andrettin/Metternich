@@ -4,6 +4,7 @@ minor_wondrous_item = {
 		amulet_of_health_2 = 1
 		cloak_of_charisma_2 = 1
 		gauntlets_of_ogre_power = 1
+		gloves_of_dexterity_2 = 1
 		periapt_of_wisdom_2 = 1
 	}
 }
@@ -14,6 +15,7 @@ medium_wondrous_item = {
 		amulet_of_health_4 = 1
 		belt_of_giant_strength_4 = 1
 		cloak_of_charisma_4 = 1
+		gloves_of_dexterity_4 = 1
 		periapt_of_wisdom_4 = 1
 		tome_of_understanding_1 = 1
 	}
@@ -25,6 +27,7 @@ major_wondrous_item = {
 		amulet_of_health_6 = 1
 		belt_of_giant_strength_6 = 1
 		cloak_of_charisma_6 = 1
+		gloves_of_dexterity_6 = 1
 		periapt_of_wisdom_6 = 1
 		tome_of_understanding_2 = 1
 		tome_of_understanding_3 = 1
@@ -120,6 +123,36 @@ gauntlets_of_ogre_power = {
 	}
 	enchantments = {
 		of_ogre_power
+	}
+}
+
+gloves_of_dexterity_2 = {
+	name = "Gloves of Dexterity +2"
+	item_types = {
+		gloves
+	}
+	enchantments = {
+		of_dexterity_2
+	}
+}
+
+gloves_of_dexterity_4 = {
+	name = "Gloves of Dexterity +4"
+	item_types = {
+		gloves
+	}
+	enchantments = {
+		of_dexterity_4
+	}
+}
+
+gloves_of_dexterity_6 = {
+	name = "Gloves of Dexterity +6"
+	item_types = {
+		gloves
+	}
+	enchantments = {
+		of_dexterity_6
 	}
 }
 

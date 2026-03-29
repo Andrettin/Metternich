@@ -1,3 +1,69 @@
+of_dexterity_2 = {
+	name = "of Dexterity +2"
+	affix_type = suffix
+	price = 4000gp
+	item_types = {
+		gloves
+	}
+	ai_conditions = {
+		attribute_modifier = {
+			attribute = dexterity
+			modifier_type = enhancement
+			modifier < 2
+		}
+	}
+	modifier = {
+		dexterity = {
+			modifier_type = enhancement
+			modifier = 2
+		}
+	}
+}
+
+of_dexterity_4 = {
+	name = "of Dexterity +4"
+	affix_type = suffix
+	price = 16000gp
+	item_types = {
+		gloves
+	}
+	ai_conditions = {
+		attribute_modifier = {
+			attribute = dexterity
+			modifier_type = enhancement
+			modifier < 4
+		}
+	}
+	modifier = {
+		dexterity = {
+			modifier_type = enhancement
+			modifier = 4
+		}
+	}
+}
+
+of_dexterity_6 = {
+	name = "of Dexterity +6"
+	affix_type = suffix
+	price = 36000gp
+	item_types = {
+		gloves
+	}
+	ai_conditions = {
+		attribute_modifier = {
+			attribute = dexterity
+			modifier_type = enhancement
+			modifier < 6
+		}
+	}
+	modifier = {
+		dexterity = {
+			modifier_type = enhancement
+			modifier = 6
+		}
+	}
+}
+
 of_ogre_power = {
 	name = "of Ogre Power"
 	affix_type = suffix
