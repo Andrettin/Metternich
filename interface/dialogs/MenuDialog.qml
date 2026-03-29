@@ -52,6 +52,8 @@ DialogBase {
 			text: "Exit Game"
 			width: 128 * scale_factor
 			onClicked: {
+				menu_stack.pop()
+				metternich.game.stop()
 				window.close()
 			}
 		}

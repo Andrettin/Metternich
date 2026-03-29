@@ -141,6 +141,11 @@ static QCoro::Task<void> initialize()
 
 static void on_exit_cleanup()
 {
+	const QObjectList application_children = QApplication::instance()->children();
+	for (QObject *child : application_children) {
+		child->setParent(nullptr);
+	}
+
 	database::get()->clear();
 }
 
@@ -294,10 +299,11 @@ int main(int argc, char **argv)
 
 		engine.load(url);
 
+		QObject::connect(&app, &QApplication::aboutToQuit, []() {
+			on_exit_cleanup();
+		});
+
 		const int result = app.exec();
-
-		on_exit_cleanup();
-
 		return result;
 	} catch (...) {
 		exception::report(std::current_exception());
