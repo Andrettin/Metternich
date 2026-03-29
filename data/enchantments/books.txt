@@ -1,3 +1,113 @@
+of_clear_thought_1 = {
+	name = "of Clear Thought +1"
+	affix_type = suffix
+	price = 27500gp
+	item_types = {
+		tome
+	}
+	conditions = {
+		attribute_modifier = {
+			attribute = intelligence
+			modifier_type = inherent
+			modifier < 1
+		}
+	}
+	modifier = {
+		intelligence = {
+			modifier_type = inherent
+			modifier = 1
+		}
+	}
+}
+
+of_clear_thought_2 = {
+	name = "of Clear Thought +2"
+	affix_type = suffix
+	price = 55000gp
+	item_types = {
+		tome
+	}
+	conditions = {
+		attribute_modifier = {
+			attribute = intelligence
+			modifier_type = inherent
+			modifier < 2
+		}
+	}
+	modifier = {
+		intelligence = {
+			modifier_type = inherent
+			modifier = 2
+		}
+	}
+}
+
+of_clear_thought_3 = {
+	name = "of Clear Thought +3"
+	affix_type = suffix
+	price = 82500gp
+	item_types = {
+		tome
+	}
+	conditions = {
+		attribute_modifier = {
+			attribute = intelligence
+			modifier_type = inherent
+			modifier < 3
+		}
+	}
+	modifier = {
+		intelligence = {
+			modifier_type = inherent
+			modifier = 3
+		}
+	}
+}
+
+of_clear_thought_4 = {
+	name = "of Clear Thought +4"
+	affix_type = suffix
+	price = 110000gp
+	item_types = {
+		tome
+	}
+	conditions = {
+		attribute_modifier = {
+			attribute = intelligence
+			modifier_type = inherent
+			modifier < 4
+		}
+	}
+	modifier = {
+		intelligence = {
+			modifier_type = inherent
+			modifier = 4
+		}
+	}
+}
+
+of_clear_thought_5 = {
+	name = "of Clear Thought +5"
+	affix_type = suffix
+	price = 137500gp
+	item_types = {
+		tome
+	}
+	conditions = {
+		attribute_modifier = {
+			attribute = intelligence
+			modifier_type = inherent
+			modifier < 5
+		}
+	}
+	modifier = {
+		intelligence = {
+			modifier_type = inherent
+			modifier = 5
+		}
+	}
+}
+
 of_understanding_1 = {
 	name = "of Understanding +1"
 	affix_type = suffix

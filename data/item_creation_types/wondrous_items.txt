@@ -19,6 +19,7 @@ medium_wondrous_item = {
 		gloves_of_dexterity_4 = 1
 		headband_of_intellect_4 = 1
 		periapt_of_wisdom_4 = 1
+		tome_of_clear_thought_1 = 1
 		tome_of_understanding_1 = 1
 	}
 }
@@ -32,6 +33,10 @@ major_wondrous_item = {
 		gloves_of_dexterity_6 = 1
 		headband_of_intellect_6 = 1
 		periapt_of_wisdom_6 = 1
+		tome_of_clear_thought_2 = 1
+		tome_of_clear_thought_3 = 1
+		tome_of_clear_thought_4 = 1
+		tome_of_clear_thought_5 = 1
 		tome_of_understanding_2 = 1
 		tome_of_understanding_3 = 1
 		tome_of_understanding_4 = 1
@@ -216,6 +221,56 @@ periapt_of_wisdom_6 = {
 	}
 	enchantments = {
 		of_wisdom_6
+	}
+}
+
+tome_of_clear_thought_1 = {
+	name = "Tome of Clear Thought +1"
+	item_types = {
+		tome
+	}
+	enchantments = {
+		of_clear_thought_1
+	}
+}
+
+tome_of_clear_thought_2 = {
+	name = "Tome of Clear Thought +2"
+	item_types = {
+		tome
+	}
+	enchantments = {
+		of_clear_thought_2
+	}
+}
+
+tome_of_clear_thought_3 = {
+	name = "Tome of Clear Thought +3"
+	item_types = {
+		tome
+	}
+	enchantments = {
+		of_clear_thought_3
+	}
+}
+
+tome_of_clear_thought_4 = {
+	name = "Tome of Clear Thought +4"
+	item_types = {
+		tome
+	}
+	enchantments = {
+		of_clear_thought_4
+	}
+}
+
+tome_of_clear_thought_5 = {
+	name = "Tome of Clear Thought +5"
+	item_types = {
+		tome
+	}
+	enchantments = {
+		of_clear_thought_5
 	}
 }
 
