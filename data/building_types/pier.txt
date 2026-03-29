@@ -59,4 +59,10 @@ waterfront = {
 		economy = 4
 		stability = 1
 	}
+	item_creation_types = {
+		minor_wondrous_item
+		minor_wondrous_item
+		medium_wondrous_item
+		major_wondrous_item
+	}
 }
