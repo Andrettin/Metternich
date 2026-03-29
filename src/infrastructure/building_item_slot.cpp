@@ -9,6 +9,8 @@
 #include "infrastructure/building_slot.h"
 #include "item/item.h"
 #include "item/item_creation_type.h"
+#include "map/site.h"
+#include "map/site_game_data.h"
 #include "util/assert_util.h"
 #include "util/dice.h"
 #include "util/random.h"
@@ -104,6 +106,10 @@ qunique_ptr<item> building_item_slot::take_item()
 bool building_item_slot::can_buy_item(const metternich::character *buyer)
 {
 	if (this->get_item() == nullptr) {
+		return false;
+	}
+
+	if (!this->get_building_slot()->get_settlement()->get_game_data()->is_accessible_for_character(buyer)) {
 		return false;
 	}
 	

@@ -2250,4 +2250,37 @@ int site_game_data::get_skill_modifier(const skill *skill) const
 	return modifier;
 }
 
+bool site_game_data::is_accessible_for_character(const character *character) const
+{
+	const metternich::site *character_location = character->get_game_data()->get_location();
+	if (character_location != nullptr && character_location->get_game_data()->get_province() == this->get_province()) {
+		return true;
+	}
+
+	if (character->get_game_data()->get_office() != nullptr) {
+		return this->is_accessible_for_domain(character->get_game_data()->get_domain());
+	}
+
+	return false;
+}
+
+bool site_game_data::is_accessible_for_domain(const domain *domain) const
+{
+	if (this->get_owner() == domain) {
+		return true;
+	}
+
+	if (this->get_province()->get_game_data()->get_owner() == domain) {
+		return true;
+	}
+
+	for (const metternich::site *holding_site : this->get_province()->get_game_data()->get_settlement_sites()) {
+		if (holding_site->get_game_data()->get_owner() == domain) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
 }

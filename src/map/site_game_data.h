@@ -585,6 +585,9 @@ public:
 		this->homed_characters.push_back(character);
 	}
 
+	bool is_accessible_for_character(const character *character) const;
+	bool is_accessible_for_domain(const domain *domain) const;
+
 signals:
 	void title_name_changed();
 	void titled_name_changed();
