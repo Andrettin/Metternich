@@ -2864,9 +2864,9 @@ void character_game_data::add_item(qunique_ptr<item> &&item)
 	if (this->is_ai()) {
 		if (this->can_equip_item(item_ptr, false, item_ptr->get_price())) {
 			this->equip_item(item_ptr);
-		} else if (this->can_use_item(item_ptr)) {
-			//AI characters use items as soon as they receive them
-			this->use_item(item_ptr);
+		} else if (this->can_consume_item(item_ptr)) {
+			//AI characters use items as soon as they receive them, if possible
+			this->consume_item(item_ptr);
 		}
 	} else {
 		if (this->can_equip_item(item_ptr, false)) {
@@ -2930,7 +2930,7 @@ void character_game_data::remove_item(const item_type *item_type, const item_mat
 	}
 }
 
-bool character_game_data::can_use_item(const metternich::item *item) const
+bool character_game_data::can_consume_item(const metternich::item *item) const
 {
 	if (!item->get_type()->get_item_class()->is_consumable()) {
 		return false;
@@ -2959,16 +2959,16 @@ bool character_game_data::can_use_item(const metternich::item *item) const
 	return true;
 }
 
-void character_game_data::use_item(metternich::item *item)
+void character_game_data::consume_item(metternich::item *item)
 {
-	assert_throw(this->can_use_item(item));
+	assert_throw(this->can_consume_item(item));
 
-	this->on_item_used(item);
+	this->on_item_consumed(item);
 
 	this->remove_item(item);
 }
 
-void character_game_data::on_item_used(const item *item)
+void character_game_data::on_item_consumed(const item *item)
 {
 	const item_type *type = item->get_type();
 	if (type->get_modifier() != nullptr) {
@@ -2976,7 +2976,7 @@ void character_game_data::on_item_used(const item *item)
 	}
 
 	if (item->get_enchantment() != nullptr) {
-		this->on_item_used_with_enchantment(item->get_enchantment());
+		this->on_item_consumed_with_enchantment(item->get_enchantment());
 	}
 
 	if (item->get_spell() != nullptr) {
@@ -2986,14 +2986,14 @@ void character_game_data::on_item_used(const item *item)
 	}
 }
 
-void character_game_data::on_item_used_with_enchantment(const enchantment *enchantment)
+void character_game_data::on_item_consumed_with_enchantment(const enchantment *enchantment)
 {
 	if (enchantment->get_modifier() != nullptr) {
 		enchantment->get_modifier()->apply(this->character);
 	}
 
 	for (const metternich::enchantment *subenchantment : enchantment->get_subenchantments()) {
-		this->on_item_used_with_enchantment(subenchantment);
+		this->on_item_consumed_with_enchantment(subenchantment);
 	}
 }
 

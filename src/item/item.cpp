@@ -249,7 +249,7 @@ bool item::is_useful_for(const character *character) const
 
 		return true;
 	} else if (this->get_type()->get_item_class()->is_consumable()) {
-		if (!character->get_game_data()->can_use_item(this)) {
+		if (!character->get_game_data()->can_consume_item(this)) {
 			return false;
 		}
 

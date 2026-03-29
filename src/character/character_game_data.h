@@ -690,10 +690,10 @@ public:
 	Q_INVOKABLE void remove_item(metternich::item *item);
 	void remove_item(const item_type *item_type, const item_material *material, const enchantment *enchantment, const spell *spell);
 
-	Q_INVOKABLE bool can_use_item(const metternich::item *item) const;
-	Q_INVOKABLE void use_item(metternich::item *item);
-	void on_item_used(const item *item);
-	void on_item_used_with_enchantment(const enchantment *enchantment);
+	Q_INVOKABLE bool can_consume_item(const metternich::item *item) const;
+	Q_INVOKABLE void consume_item(metternich::item *item);
+	void on_item_consumed(const item *item);
+	void on_item_consumed_with_enchantment(const enchantment *enchantment);
 
 	const std::vector<item *> &get_equipped_items(const item_slot *slot) const
 	{
