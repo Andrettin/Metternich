@@ -41,10 +41,7 @@ public:
 		return this->affix_type;
 	}
 
-	int get_price() const
-	{
-		return this->price;
-	}
+	int get_price() const;
 
 	bool is_allowed_for_item_type(const item_type *item_type) const;
 

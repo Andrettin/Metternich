@@ -99,6 +99,21 @@ void enchantment::check() const
 	}
 }
 
+int enchantment::get_price() const
+{
+	if (this->price != 0) {
+		return this->price;
+	}
+
+	int price = 0;
+
+	for (const enchantment *subenchantment : this->get_subenchantments()) {
+		price += subenchantment->get_price();
+	}
+
+	return price;
+}
+
 bool enchantment::is_allowed_for_item_type(const item_type *item_type) const
 {
 	return this->get_item_types().contains(item_type) || (item_type->get_item_class() != nullptr && this->get_item_classes().contains(item_type->get_item_class()));
