@@ -51,6 +51,7 @@ public:
 
 	explicit item(const item_type *type, const item_material *material, const metternich::enchantment *enchantment, const metternich::spell *spell);
 	explicit item(const gsml_data &scope);
+	~item();
 
 	void process_gsml_property(const gsml_property &property);
 	void process_gsml_scope(const gsml_data &scope);

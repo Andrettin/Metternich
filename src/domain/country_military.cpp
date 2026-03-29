@@ -103,7 +103,7 @@ void country_military::on_leader_died(const character *leader)
 		engine_interface::get()->add_notification(std::format("{} Retired", leader_type_name), war_minister_portrait, std::format("Your Excellency, after a distinguished career in our service, the {} {} has decided to retire.", string::lowered(leader_type_name), leader->get_game_data()->get_full_name()));
 	}
 
-	leader->get_game_data()->get_military_unit()->disband(true);
+	leader->get_game_data()->get_military_unit()->disband(false);
 }
 
 bool country_military::create_military_unit(const military_unit_type *military_unit_type, const province *deployment_province, const phenotype *phenotype, const std::vector<const promotion *> &promotions)

@@ -76,6 +76,10 @@ item::item(const gsml_data &scope)
 	}
 }
 
+item::~item()
+{
+}
+
 void item::process_gsml_property(const gsml_property &property)
 {
 	const std::string &key = property.get_key();

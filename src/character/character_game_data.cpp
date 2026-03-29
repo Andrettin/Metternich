@@ -1188,10 +1188,11 @@ void character_game_data::die()
 	}
 
 	if (this->get_civilian_unit() != nullptr) {
-		this->get_civilian_unit()->disband(true);
+		this->get_civilian_unit()->disband(false);
 	}
 
 	assert_throw(this->get_office() == nullptr);
+	assert_throw(this->get_domain() != nullptr);
 	if (this->get_wealth() > 0 || !this->get_items().empty()) {
 		character_set checked_characters;
 		std::vector<const metternich::character *> next_of_kin = this->get_next_of_kin(checked_characters, true);
