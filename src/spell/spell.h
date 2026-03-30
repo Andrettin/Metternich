@@ -14,9 +14,11 @@ class character_class;
 class divine_domain;
 class icon;
 class sound;
-class spell_effect;
 enum class attack_result;
 enum class spell_target;
+
+template <typename scope_type>
+class effect_list;
 
 class spell final : public named_data_entry, public data_type<spell>
 {
@@ -106,6 +108,11 @@ public:
 	bool is_combat_spell() const;
 	bool is_battle_spell() const;
 
+	const effect_list<const character> *get_effects() const
+	{
+		return this->effects.get();
+	}
+
 	Q_INVOKABLE QString get_battle_effects_string() const;
 
 	const metternich::sound *get_sound() const
@@ -129,7 +136,7 @@ private:
 	std::vector<const arcane_school *> arcane_schools;
 	std::vector<const divine_domain *> divine_domains;
 	std::vector<const character_class *> character_classes;
-	std::vector<qunique_ptr<spell_effect>> effects;
+	std::unique_ptr<const effect_list<const character>> effects;
 	const metternich::sound *sound = nullptr;
 };
 

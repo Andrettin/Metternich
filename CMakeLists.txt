@@ -288,7 +288,6 @@ set(spell_SRCS
 	src/spell/arcane_school.cpp
 	src/spell/spell.cpp
 	src/spell/spell_container.cpp
-	src/spell/spell_effect.cpp
 )
 source_group(spell FILES ${spell_SRCS})
 set_source_files_properties(${spell_SRCS} PROPERTIES UNITY_GROUP "spell")
@@ -897,11 +896,8 @@ source_group(species FILES ${species_HDRS})
 
 set(spell_HDRS
 	src/spell/arcane_school.h
-	src/spell/damage_spell_effect.h
-	src/spell/healing_spell_effect.h
 	src/spell/spell.h
 	src/spell/spell_container.h
-	src/spell/spell_effect.h
 	src/spell/spell_target.h
 )
 source_group(spell FILES ${spell_HDRS})

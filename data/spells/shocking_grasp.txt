@@ -9,8 +9,6 @@ shocking_grasp = {
 	character_classes = {
 	}
 	effects = {
-		damage = {
-			value = 10
-		}
+		damage = 10
 	}
 }

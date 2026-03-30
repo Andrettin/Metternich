@@ -8,8 +8,6 @@ arcane_missile = {
 	character_classes = {
 	}
 	effects = {
-		damage = {
-			value = 5
-		}
+		damage = 5
 	}
 }

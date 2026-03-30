@@ -16,8 +16,6 @@ fireball = {
 		mage
 	}
 	effects = {
-		damage = {
-			value = 15
-		}
+		damage = 15
 	}
 }
