@@ -95,7 +95,7 @@ public:
 	void build_wonder(const wonder *wonder);
 
 	Q_INVOKABLE void build_building(const metternich::building_type *building);
-	Q_INVOKABLE virtual void cancel_construction();
+	Q_INVOKABLE void cancel_construction();
 	Q_INVOKABLE const metternich::building_type *get_buildable_building() const;
 	Q_INVOKABLE const metternich::wonder *get_buildable_wonder() const;
 

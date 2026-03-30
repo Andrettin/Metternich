@@ -47,7 +47,10 @@ Rectangle {
 		IconButton {
 			id: cast_spell_button
 			icon_identifier: "university"
-			visible: combat.current_unit && combat.current_unit.character && combat.current_unit.character.game_data.battle_spells.length > 0
+			visible: caster_spells.length > 0
+			
+			readonly property var caster: combat.current_unit ? combat.current_unit.character : null
+			readonly property var caster_spells: caster ? (combat_view.mode === CombatView.Mode.Combat ? caster.game_data.combat_spells : caster.game_data.battle_spells) : []
 			
 			onClicked: {
 				spell_dialog.caster = combat.current_unit.character

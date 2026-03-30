@@ -5,6 +5,11 @@ import "./dialogs"
 Item {
 	id: combat_view
 	
+	enum Mode {
+		Combat,
+		Battle
+	}
+	
 	property string status_text: ""
 	property string middle_status_text: ""
 	property string right_status_text: ""
@@ -13,6 +18,7 @@ Item {
 	readonly property var event_dialog_component: Qt.createComponent("dialogs/EventDialog.qml")
 	property int popup_count: 0
 	property bool combat_finished: false
+	property int mode: combat && combat.is_battle() ? CombatView.Mode.Battle : CombatView.Mode.Combat
 	
 	Rectangle {
 		id: combat_map_background
@@ -61,7 +67,7 @@ Item {
 	
 	SpellDialog {
 		id: spell_dialog
-		mode: SpellDialog.Mode.Battle
+		mode: combat_view.mode === CombatView.Mode.Combat ? SpellDialog.Mode.Combat : SpellDialog.Mode.Battle
 	}
 	
 	Connections {

@@ -91,6 +91,7 @@ class character_game_data final : public QObject
 	Q_PROPERTY(bool ruler READ is_ruler NOTIFY ruler_changed)
 	Q_PROPERTY(const metternich::office* office READ get_office NOTIFY office_changed)
 	Q_PROPERTY(QVariantList spells READ get_spells_qvariant_list NOTIFY spells_changed)
+	Q_PROPERTY(QVariantList combat_spells READ get_combat_spells_qvariant_list NOTIFY spells_changed)
 	Q_PROPERTY(QVariantList battle_spells READ get_battle_spells_qvariant_list NOTIFY spells_changed)
 	Q_PROPERTY(QVariantList items READ get_items_qvariant_list NOTIFY items_changed)
 	Q_PROPERTY(bool deployable READ is_deployable CONSTANT)
@@ -673,6 +674,7 @@ public:
 	Q_INVOKABLE bool can_cast_spell(const metternich::spell *spell) const;
 	void sort_spells();
 
+	QVariantList get_combat_spells_qvariant_list() const;
 	QVariantList get_battle_spells_qvariant_list() const;
 
 	int64_t get_wealth() const;

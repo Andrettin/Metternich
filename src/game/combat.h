@@ -267,6 +267,12 @@ public:
 	const combat_object *choose_target_object(const character *character) const;
 	int64_t do_character_attack(const character *character, const metternich::character *enemy, party *enemy_party, const int to_hit_modifier);
 
+	[[nodiscard]]
+	QCoro::Task<int64_t> do_character_spellcast(const character *caster, const spell *spell, const metternich::character *target, party *target_party);
+
+	void on_character_killed(const character *dead_character, party *dead_character_party, const metternich::character *killer);
+	void on_character_died(const character *dead_character, party *dead_character_party);
+
 	void process_result();
 
 	virtual combat_tile &get_tile(const QPoint &tile_pos) override;

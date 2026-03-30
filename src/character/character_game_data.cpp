@@ -2797,6 +2797,17 @@ void character_game_data::sort_spells()
 	});
 }
 
+QVariantList character_game_data::get_combat_spells_qvariant_list() const
+{
+	std::vector<const spell *> spells = container::to_vector(this->get_spells());
+
+	std::erase_if(spells, [](const spell *spell) {
+		return !spell->is_combat_spell();
+	});
+
+	return container::to_qvariant_list(spells);
+}
+
 QVariantList character_game_data::get_battle_spells_qvariant_list() const
 {
 	std::vector<const spell *> spells = container::to_vector(this->get_spells());

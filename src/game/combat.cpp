@@ -23,8 +23,10 @@
 #include "map/site_game_data.h"
 #include "map/terrain_type.h"
 #include "script/effect/effect_list.h"
+#include "sound/sound.h"
 #include "species/species.h"
 #include "spell/spell.h"
+#include "spell/spell_target.h"
 #include "ui/portrait.h"
 #include "util/assert_util.h"
 #include "util/dice.h"
@@ -454,87 +456,104 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 			const combat_tile &tile = this->get_tile(target_pos);
 			const int distance = point::distance_to(current_tile_pos, target_pos);
 
-			if (tile.character != nullptr) {
-				if (distance <= character_info->get_range() && vector::contains(enemy_party->get_characters(), tile.character)) {
-					experience_award += this->do_character_attack(character, tile.character, enemy_party, to_hit_modifier);
-					attacked = true;
+			if (this->get_current_spell() != nullptr) {
+				if (tile.character != nullptr) {
+					if (this->get_current_spell()->get_target() == spell_target::enemy && vector::contains(enemy_party->get_characters(), tile.character)) {
+						if (distance <= this->get_current_spell()->get_range()) {
+							co_await this->do_character_spellcast(character, this->get_current_spell(), tile.character, enemy_party);
+							attacked = true;
+						}
+					} else if (this->get_current_spell()->get_target() == spell_target::ally && vector::contains(party->get_characters(), tile.character)) {
+						if (distance <= this->get_current_spell()->get_range()) {
+							co_await this->do_character_spellcast(character, this->get_current_spell(), tile.character, party);
+							attacked = true;
+						}
+					}
 				}
-			} else if (tile.object != nullptr) {
-				if (distance <= 1) {
-					//can only use objects (e.g. chests) if the enemy has been wiped out
-					if (this->can_current_character_use_object(tile.object)) {
-						if (tile.object->get_trap() != nullptr) {
-							bool disarmed = false;
-							if (tile.object->get_trap_found() && skill::get_disarm_traps_skill() != nullptr) {
-								disarmed = character->get_game_data()->do_skill_check(skill::get_disarm_traps_skill(), tile.object->get_trap()->get_disarm_modifier(), this->get_location());
+
+				this->set_current_spell(nullptr);
+			} else {
+				if (tile.character != nullptr) {
+					if (distance <= character_info->get_range() && vector::contains(enemy_party->get_characters(), tile.character)) {
+						experience_award += this->do_character_attack(character, tile.character, enemy_party, to_hit_modifier);
+						attacked = true;
+					}
+				} else if (tile.object != nullptr) {
+					if (distance <= 1) {
+						//can only use objects (e.g. chests) if the enemy has been wiped out
+						if (this->can_current_character_use_object(tile.object)) {
+							if (tile.object->get_trap() != nullptr) {
+								bool disarmed = false;
+								if (tile.object->get_trap_found() && skill::get_disarm_traps_skill() != nullptr) {
+									disarmed = character->get_game_data()->do_skill_check(skill::get_disarm_traps_skill(), tile.object->get_trap()->get_disarm_modifier(), this->get_location());
+								}
+
+								if (disarmed) {
+									if (character->get_game_data()->get_domain() == game::get()->get_player_country()) {
+										const portrait *war_minister_portrait = character->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
+
+										engine_interface::get()->add_combat_notification(std::format("{} Disarmed", tile.object->get_trap()->get_name()), war_minister_portrait, std::format("You have disarmed the {} trap!", tile.object->get_trap()->get_name()));
+									}
+								} else if (tile.object->get_trap()->get_trigger_effects() != nullptr) {
+									context ctx = this->ctx;
+									ctx.root_scope = character;
+
+									if (character->get_game_data()->get_domain() == game::get()->get_player_country()) {
+										const portrait *war_minister_portrait = character->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
+										const std::string effects_string = tile.object->get_trap()->get_trigger_effects()->get_effects_string(character, ctx);
+
+										engine_interface::get()->add_combat_notification(std::format("{} Triggered", tile.object->get_trap()->get_name()), war_minister_portrait, effects_string);
+									}
+
+									tile.object->get_trap()->get_trigger_effects()->do_effects(character, ctx);
+								}
+
+								tile.object->remove_trap();
 							}
 
-							if (disarmed) {
-								if (character->get_game_data()->get_domain() == game::get()->get_player_country()) {
-									const portrait *war_minister_portrait = character->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
+							if (character->get_game_data()->is_dead()) {
+								this->on_character_died(character, party);
+								break;
+							}
 
-									engine_interface::get()->add_combat_notification(std::format("{} Disarmed", tile.object->get_trap()->get_name()), war_minister_portrait, std::format("You have disarmed the {} trap!", tile.object->get_trap()->get_name()));
-								}
-							} else if (tile.object->get_trap()->get_trigger_effects() != nullptr) {
+							if (tile.object->get_use_effects() != nullptr) {
 								context ctx = this->ctx;
 								ctx.root_scope = character;
 
 								if (character->get_game_data()->get_domain() == game::get()->get_player_country()) {
-									const portrait *war_minister_portrait = character->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
-									const std::string effects_string = tile.object->get_trap()->get_trigger_effects()->get_effects_string(character, ctx);
+									std::string text = tile.object->get_description();
 
-									engine_interface::get()->add_combat_notification(std::format("{} Triggered", tile.object->get_trap()->get_name()), war_minister_portrait, effects_string);
+									const std::string effects_string = tile.object->get_use_effects()->get_effects_string(character, ctx);
+									if (!text.empty()) {
+										text += "\n\n";
+									}
+									text += effects_string;
+
+									engine_interface::get()->add_combat_notification(std::format("{} {}", tile.object->get_object_type()->get_name(), tile.object->get_object_type()->get_usage_adjective()), nullptr, text);
 								}
 
-								tile.object->get_trap()->get_trigger_effects()->do_effects(character, ctx);
+								tile.object->get_use_effects()->do_effects(character, ctx);
 							}
 
-							tile.object->remove_trap();
-						}
-
-						if (character->get_game_data()->is_dead()) {
-							party->remove_character(character);
-							this->remove_character_info(character);
-							break;
-						}
-
-						if (tile.object->get_use_effects() != nullptr) {
-							context ctx = this->ctx;
-							ctx.root_scope = character;
-
+							this->remove_object(tile.object);
+							attacked = true;
+						} else {
 							if (character->get_game_data()->get_domain() == game::get()->get_player_country()) {
-								std::string text = tile.object->get_description();
+								const portrait *war_minister_portrait = character->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
 
-								const std::string effects_string = tile.object->get_use_effects()->get_effects_string(character, ctx);
-								if (!text.empty()) {
-									text += "\n\n";
-								}
-								text += effects_string;
-
-								engine_interface::get()->add_combat_notification(std::format("{} {}", tile.object->get_object_type()->get_name(), tile.object->get_object_type()->get_usage_adjective()), nullptr, text);
+								engine_interface::get()->add_combat_notification(std::format("Cannot Use {}", tile.object->get_object_type()->get_name()), war_minister_portrait, std::format("Your Excellency, the {} can only be used once all enemies have been defeated.", string::lowered(tile.object->get_object_type()->get_name())));
 							}
-
-							tile.object->get_use_effects()->do_effects(character, ctx);
-						}
-
-						this->remove_object(tile.object);
-						attacked = true;
-					} else {
-						if (character->get_game_data()->get_domain() == game::get()->get_player_country()) {
-							const portrait *war_minister_portrait = character->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
-
-							engine_interface::get()->add_combat_notification(std::format("Cannot Use {}", tile.object->get_object_type()->get_name()), war_minister_portrait, std::format("Your Excellency, the {} can only be used once all enemies have been defeated.", string::lowered(tile.object->get_object_type()->get_name())));
 						}
 					}
-				}
-			} else if (this->can_current_unit_move_to(target_pos)) {
-				character_info->change_remaining_movement(-distance);
-				co_await this->move_character_to(character, target_pos);
+				} else if (this->can_current_unit_move_to(target_pos)) {
+					character_info->change_remaining_movement(-distance);
+					co_await this->move_character_to(character, target_pos);
 
-				if (this->can_current_unit_retreat_at(target_pos)) {
-					party->remove_character(character);
-					this->remove_character_info(character);
-					break;
+					if (this->can_current_unit_retreat_at(target_pos)) {
+						party->remove_character(character);
+						this->remove_character_info(character);
+						break;
+					}
 				}
 			}
 		}
@@ -620,32 +639,78 @@ int64_t combat::do_character_attack(const character *character, const metternich
 	enemy->get_game_data()->change_hit_points(-damage);
 
 	if (enemy->get_game_data()->is_dead()) {
-		if (character->get_game_data()->get_domain() != nullptr) {
-			const combat_character_info *enemy_info = this->get_character_info(enemy);
-			assert_throw(enemy_info != nullptr);
-			if (enemy_info->get_kill_effects() != nullptr) {
-				context ctx = this->ctx;
-				ctx.root_scope = character->get_game_data()->get_domain();
-
-				if (character->get_game_data()->get_domain() == game::get()->get_player_country()) {
-					const portrait *war_minister_portrait = character->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
-					const std::string effects_string = enemy_info->get_kill_effects()->get_effects_string(character->get_game_data()->get_domain(), ctx);
-
-					engine_interface::get()->add_combat_notification(std::format("{} Killed", enemy->is_temporary() && enemy->get_monster_type() != nullptr ? enemy->get_monster_type()->get_name() : enemy->get_game_data()->get_full_name()), war_minister_portrait, effects_string);
-				}
-
-				enemy_info->get_kill_effects()->do_effects(character->get_game_data()->get_domain(), ctx);
-			}
-		}
-
 		const int64_t experience_award = enemy->get_game_data()->get_experience_award();
-		enemy_party->remove_character(enemy);
-		this->remove_character_info(enemy);
-
+		this->on_character_killed(enemy, enemy_party, character);
 		return experience_award;
 	}
 
 	return 0;
+}
+
+QCoro::Task<int64_t> combat::do_character_spellcast(const character *caster, const spell *spell, const metternich::character *target, party *target_party)
+{
+	assert_throw(caster != nullptr);
+	assert_throw(caster->get_game_data()->can_cast_spell(spell));
+
+	caster->get_game_data()->change_mana(-spell->get_mana_cost());
+
+	if (spell->get_effects() != nullptr) {
+		context ctx = this->ctx;
+		ctx.root_scope = target;
+		ctx.source_scope = caster;
+		spell->get_effects()->do_effects(target, ctx);
+	}
+
+	if (this->scope == game::get()->get_player_country()) {
+		if (spell->get_sound() != nullptr) {
+			co_await spell->get_sound()->play_coro(std::chrono::milliseconds(100));
+		}
+	}
+
+	if (target->get_game_data()->is_dead()) {
+		if (spell->get_target() == spell_target::enemy) {
+			const int64_t experience_award = target->get_game_data()->get_experience_award();
+			this->on_character_killed(target, target_party, caster);
+			co_return experience_award;
+		} else {
+			this->on_character_died(target, target_party);
+		}
+	}
+
+	co_return 0;
+}
+
+void combat::on_character_killed(const character *dead_character, party *dead_character_party, const metternich::character *killer)
+{
+	if (killer->get_game_data()->get_domain() != nullptr) {
+		const combat_character_info *dead_character_info = this->get_character_info(dead_character);
+		assert_throw(dead_character_info != nullptr);
+		if (dead_character_info->get_kill_effects() != nullptr) {
+			context ctx = this->ctx;
+			ctx.root_scope = killer->get_game_data()->get_domain();
+
+			if (killer->get_game_data()->get_domain() == game::get()->get_player_country()) {
+				const portrait *war_minister_portrait = killer->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
+				const std::string effects_string = dead_character_info->get_kill_effects()->get_effects_string(killer->get_game_data()->get_domain(), ctx);
+
+				engine_interface::get()->add_combat_notification(std::format("{} Killed", dead_character->is_temporary() && dead_character->get_monster_type() != nullptr ? dead_character->get_monster_type()->get_name() : dead_character->get_game_data()->get_full_name()), war_minister_portrait, effects_string);
+			}
+
+			dead_character_info->get_kill_effects()->do_effects(killer->get_game_data()->get_domain(), ctx);
+		}
+	}
+
+	this->on_character_died(dead_character, dead_character_party);
+}
+
+void combat::on_character_died(const character *dead_character, party *dead_character_party)
+{
+	if (this->scope == game::get()->get_player_country()) {
+		//FIXME: play character death sound
+	}
+
+	dead_character_party->remove_character(dead_character);
+	this->remove_character_info(dead_character);
 }
 
 void combat::process_result()

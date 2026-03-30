@@ -161,6 +161,11 @@ class combat_base : public QObject
 public:
 	combat_base();
 
+	Q_INVOKABLE virtual bool is_battle() const
+	{
+		return false;
+	}
+
 	void set_map_size(const QSize &map_size);
 
 	const QRect &get_map_rect() const
