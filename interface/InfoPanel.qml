@@ -201,7 +201,7 @@ Rectangle {
 	
 	BuildingPortraitGrid {
 		id: building_portrait_grid
-		anchors.bottom: garrison_details_button.top
+		anchors.bottom: bottom_button_row.top
 		anchors.bottomMargin: 8 * scale_factor
 		anchors.left: parent.left
 		anchors.right: parent.right
@@ -212,7 +212,7 @@ Rectangle {
 	
 	SitePortraitGrid {
 		id: site_portrait_grid
-		anchors.bottom: garrison_details_button.top
+		anchors.bottom: bottom_button_row.top
 		anchors.bottomMargin: 8 * scale_factor
 		anchors.left: parent.left
 		anchors.right: parent.right
@@ -298,7 +298,7 @@ Rectangle {
 		id: military_unit_grid
 		anchors.top: subtitle.bottom
 		anchors.topMargin: 16 * scale_factor
-		anchors.bottom: end_turn_button_internal.top
+		anchors.bottom: bottom_button_row.top
 		anchors.bottomMargin: 16 * scale_factor
 		anchors.left: parent.left
 		anchors.right: parent.right
@@ -322,7 +322,7 @@ Rectangle {
 		id: population_chart_grid
 		anchors.top: population_info_text.bottom
 		anchors.topMargin: 12 * scale_factor
-		anchors.bottom: end_turn_button_internal.top
+		anchors.bottom: bottom_button_row.top
 		anchors.bottomMargin: 16 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
 		columns: 2
@@ -451,7 +451,7 @@ Rectangle {
 	TextButton {
 		id: disband_button
 		anchors.horizontalCenter: parent.horizontalCenter
-		anchors.bottom: end_turn_button_internal.top
+		anchors.bottom: bottom_button_row.top
 		anchors.bottomMargin: 8 * scale_factor
 		text: qsTr("Disband")
 		width: 64 * scale_factor
@@ -472,208 +472,179 @@ Rectangle {
 		}
 	}
 	
-	TextButton {
-		id: end_turn_button_internal
+	Row {
+		id: bottom_button_row
 		anchors.horizontalCenter: parent.horizontalCenter
 		anchors.bottom: parent.bottom
-		anchors.bottomMargin: 8 * scale_factor
-		text: qsTr("End Turn")
-		width: 64 * scale_factor
-		height: 24 * scale_factor
-		
-		onClicked: {
-			metternich.game.do_turn()
-		}
-		
-		onHoveredChanged: {
-			if (hovered) {
-				status_text = "End Turn"
-			} else {
-				status_text = ""
-			}
-		}
-	}
-	
-	IconButton {
-		id: population_button
-		anchors.right: end_turn_button_internal.left
-		anchors.rightMargin: 8 * scale_factor
-		anchors.bottom: parent.bottom
 		anchors.bottomMargin: 4 * scale_factor
-		icon_identifier: "craftsmen_light_small"
-		//visible: selected_site !== null && selected_site.game_data.can_have_population() && selected_site.game_data.is_built() && !selected_garrison && !viewing_population
-		visible: false
+		spacing: 4 * scale_factor
 		
-		onClicked: {
-			viewing_population = true
-			viewing_settlement_info = false
-		}
-		
-		onHoveredChanged: {
-			if (hovered) {
-				status_text = "View " + (selected_site !== null && selected_site.settlement ? "Settlement" : "Site") + " Population"
-			} else {
-				status_text = ""
+		IconButton {
+			id: end_turn_button_internal
+			icon_identifier: "flag"
+			
+			onClicked: {
+				metternich.game.do_turn()
 			}
-		}
-	}
-	
-	IconButton {
-		id: garrison_button
-		anchors.right: end_turn_button_internal.left
-		anchors.rightMargin: 8 * scale_factor
-		anchors.bottom: parent.bottom
-		anchors.bottomMargin: 4 * scale_factor
-		icon_identifier: "rifle_infantry_light_small"
-		visible: selected_province !== null && selected_province.game_data.military_unit_category_counts.length > 0
-		
-		onReleased: {
-			selected_garrison = true
-		}
-		
-		onHoveredChanged: {
-			if (hovered) {
-				status_text = "View Garrison"
-			} else {
-				status_text = ""
-			}
-		}
-	}
-	
-	IconButton {
-		id: garrison_details_button
-		anchors.left: end_turn_button_internal.right
-		anchors.leftMargin: 8 * scale_factor
-		anchors.bottom: parent.bottom
-		anchors.bottomMargin: 4 * scale_factor
-		icon_identifier: "crossed_sabers"
-		visible: selected_garrison && selected_province !== null && selected_province.game_data.get_country_military_units_qvariant_list(metternich.game.player_country).length > 0
-		
-		onReleased: {
-			garrison_dialog.open()
-		}
-		
-		onHoveredChanged: {
-			if (hovered) {
-				status_text = "View Garrison Details"
-			} else {
-				status_text = ""
-			}
-		}
-	}
-	
-	IconButton {
-		id: recruit_military_units_button
-		anchors.left: end_turn_button_internal.right
-		anchors.leftMargin: 8 * scale_factor
-		anchors.bottom: parent.bottom
-		anchors.bottomMargin: 4 * scale_factor
-		icon_identifier: "musket"
-		visible: !selected_garrison && selected_province !== null && selected_province.game_data.owner == metternich.game.player_country
-		
-		onReleased: {
-			military_unit_recruiment_dialog.open()
-		}
-		
-		onHoveredChanged: {
-			if (hovered) {
-				status_text = "Recruit Military Units"
-			} else {
-				status_text = ""
-			}
-		}
-	}
-	
-	IconButton {
-		id: output_button
-		anchors.left: end_turn_button_internal.right
-		anchors.leftMargin: 8 * scale_factor
-		anchors.bottom: parent.bottom
-		anchors.bottomMargin: 4 * scale_factor
-		icon_identifier: "cog"
-		//visible: selected_site !== null && selected_site.settlement && selected_site.game_data.holding_type !== null && !selected_garrison && !viewing_settlement_info
-		visible: false
-		
-		onClicked: {
-			viewing_settlement_info = true
-			viewing_population = false
-		}
-		
-		onHoveredChanged: {
-			if (hovered) {
-				status_text = "View Settlement Info"
-			} else {
-				status_text = ""
-			}
-		}
-	}
-	
-	IconButton {
-		id: population_back_button
-		anchors.right: end_turn_button_internal.left
-		anchors.rightMargin: 8 * scale_factor
-		anchors.bottom: parent.bottom
-		anchors.bottomMargin: 4 * scale_factor
-		icon_identifier: "settlement"
-		visible: selected_site !== null && selected_site.game_data.can_have_population() && selected_site.game_data.is_built() && !selected_garrison && viewing_population
-		
-		onClicked: {
-			viewing_population = false
-		}
-		
-		onHoveredChanged: {
-			if (hovered) {
-				status_text = selected_site.settlement ? "Back to Settlement" : "Back to Site"
-			} else {
-				status_text = ""
-			}
-		}
-	}
-	IconButton {
-		id: back_to_province_button
-		anchors.right: end_turn_button_internal.left
-		anchors.rightMargin: 8 * scale_factor
-		anchors.bottom: parent.bottom
-		anchors.bottomMargin: 4 * scale_factor
-		icon_identifier: "mountains"
-		visible: (selected_province !== null && selected_garrison) || selected_site !== null
-		
-		onClicked: {
-			selected_garrison = false
-			if (selected_site !== null) {
-				selected_civilian_unit = null
-				selected_province = selected_site.game_data.province
-				selected_site = null
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "End Turn"
+				} else {
+					status_text = ""
+				}
 			}
 		}
 		
-		onHoveredChanged: {
-			if (hovered) {
-				status_text = selected_site !== null ? "To Province" : "Back to Province"
-			} else {
-				status_text = ""
+		IconButton {
+			id: population_button
+			icon_identifier: "craftsmen_light_small"
+			//visible: selected_site !== null && selected_site.game_data.can_have_population() && selected_site.game_data.is_built() && !selected_garrison && !viewing_population
+			visible: false
+			
+			onClicked: {
+				viewing_population = true
+				viewing_settlement_info = false
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "View " + (selected_site !== null && selected_site.settlement ? "Settlement" : "Site") + " Population"
+				} else {
+					status_text = ""
+				}
 			}
 		}
-	}
-	
-	IconButton {
-		id: output_back_button
-		anchors.left: end_turn_button_internal.right
-		anchors.leftMargin: 8 * scale_factor
-		anchors.bottom: parent.bottom
-		anchors.bottomMargin: 4 * scale_factor
-		icon_identifier: "settlement"
-		visible: selected_site !== null && selected_site.settlement && selected_site.game_data.holding_type !== null && !selected_garrison && viewing_settlement_info
 		
-		onClicked: {
-			viewing_settlement_info = false
+		IconButton {
+			id: garrison_button
+			icon_identifier: "rifle_infantry_light_small"
+			visible: selected_province !== null && !selected_garrison && selected_province.game_data.military_unit_category_counts.length > 0
+			
+			onReleased: {
+				selected_garrison = true
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "View Garrison"
+				} else {
+					status_text = ""
+				}
+			}
 		}
 		
-		onHoveredChanged: {
-			if (hovered) {
-				status_text = "Back to Settlement"
-			} else {
-				status_text = ""
+		IconButton {
+			id: garrison_details_button
+			icon_identifier: "crossed_sabers"
+			visible: selected_garrison && selected_province !== null && selected_province.game_data.get_country_military_units_qvariant_list(metternich.game.player_country).length > 0
+			
+			onReleased: {
+				garrison_dialog.open()
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "View Garrison Details"
+				} else {
+					status_text = ""
+				}
+			}
+		}
+		
+		IconButton {
+			id: recruit_military_units_button
+			icon_identifier: "musket"
+			visible: !selected_garrison && selected_province !== null && selected_province.game_data.owner == metternich.game.player_country
+			
+			onReleased: {
+				military_unit_recruiment_dialog.open()
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Recruit Military Units"
+				} else {
+					status_text = ""
+				}
+			}
+		}
+		
+		IconButton {
+			id: output_button
+			icon_identifier: "cog"
+			//visible: selected_site !== null && selected_site.settlement && selected_site.game_data.holding_type !== null && !selected_garrison && !viewing_settlement_info
+			visible: false
+			
+			onClicked: {
+				viewing_settlement_info = true
+				viewing_population = false
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "View Settlement Info"
+				} else {
+					status_text = ""
+				}
+			}
+		}
+		
+		IconButton {
+			id: population_back_button
+			icon_identifier: "settlement"
+			visible: selected_site !== null && selected_site.game_data.can_have_population() && selected_site.game_data.is_built() && !selected_garrison && viewing_population
+			
+			onClicked: {
+				viewing_population = false
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = selected_site.settlement ? "Back to Settlement" : "Back to Site"
+				} else {
+					status_text = ""
+				}
+			}
+		}
+		IconButton {
+			id: back_to_province_button
+			icon_identifier: "mountains"
+			visible: (selected_province !== null && selected_garrison) || selected_site !== null
+			
+			onClicked: {
+				selected_garrison = false
+				if (selected_site !== null) {
+					selected_civilian_unit = null
+					selected_province = selected_site.game_data.province
+					selected_site = null
+				}
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = selected_site !== null ? "To Province" : "Back to Province"
+				} else {
+					status_text = ""
+				}
+			}
+		}
+		
+		IconButton {
+			id: output_back_button
+			icon_identifier: "settlement"
+			visible: selected_site !== null && selected_site.settlement && selected_site.game_data.holding_type !== null && !selected_garrison && viewing_settlement_info
+			
+			onClicked: {
+				viewing_settlement_info = false
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Back to Settlement"
+				} else {
+					status_text = ""
+				}
 			}
 		}
 	}
