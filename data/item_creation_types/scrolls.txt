@@ -58,7 +58,7 @@ minor_divine_scroll = {
 	name = "Minor Divine Scroll"
 	item_creation_subtypes = {
 		#divine_scroll_level_0 = 5
-		#divine_scroll_level_1 = 45
+		divine_scroll_level_1 = 45
 		#divine_scroll_level_2 = 45
 		divine_scroll_level_3 = 5
 	}
@@ -103,6 +103,16 @@ arcane_scroll_level_5 = {
 	}
 	spells = {
 		cloudkill = 2
+	}
+}
+
+divine_scroll_level_1 = {
+	name = "Divine Scroll Level 1"
+	item_types = {
+		scroll
+	}
+	spells = {
+		cure_light_wounds = 5
 	}
 }
 
