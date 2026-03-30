@@ -445,7 +445,11 @@ std::string site_game_data::get_display_text() const
 			text += " (Provincial Capital)";
 		}
 	} else if (this->get_dungeon() != nullptr) {
-		text += " (Dungeon)";
+		if (this->get_dungeon()->get_level() != 0) {
+			text += std::format(" (Dungeon Level {})", this->get_dungeon()->get_level());
+		} else {
+			text += " (Dungeon)";
+		}
 
 		if (game::get()->get_player_country()->get_game_data()->get_visit_target_site() == this->site) {
 			text += " (Visiting)";
