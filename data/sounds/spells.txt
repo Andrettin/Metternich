@@ -10,6 +10,10 @@ flame_big = {
 	filepath = "spells/flame_big.wav"
 }
 
+heal = {
+	filepath = "spells/heal.wav"
+}
+
 lightning = {
 	filepath = "spells/lightning.wav"
 }

@@ -5,9 +5,19 @@ cure_light_wounds = {
 	price = 25gp
 	target = ally
 	range = 1
+	sound = heal
+	arcane_schools = {
+		necromancy
+	}
+	divine_domains = {
+		healing
+	}
 	character_classes = {
+		cleric
+		druid
+		paladin
 	}
 	effects = {
-		healing = 10
+		healing = 1d8
 	}
 }
