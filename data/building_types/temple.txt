@@ -17,6 +17,9 @@ shrine = {
 		loyalty = 1
 		#unrest = -1
 	}
+	item_creation_types = {
+		minor_potion_scroll_or_wondrous_item
+	}
 }
 
 temple = {
@@ -40,6 +43,10 @@ temple = {
 		stability = 2
 		#unrest = -2
 	}
+	item_creation_types = {
+		minor_potion_scroll_or_wondrous_item
+		minor_potion_scroll_or_wondrous_item
+	}
 }
 
 large_temple = {
@@ -59,6 +66,10 @@ large_temple = {
 		loyalty = 2
 		stability = 2
 		#unrest = -2
+	}
+	item_creation_types = {
+		minor_potion_scroll_or_wondrous_item
+		minor_potion_scroll_or_wondrous_item
 	}
 }
 
@@ -92,8 +103,8 @@ cathedral = {
 		#fame = 1
 	}
 	item_creation_types = {
-		minor_potion_or_wondrous_item
-		minor_potion_or_wondrous_item
+		minor_potion_scroll_or_wondrous_item
+		minor_potion_scroll_or_wondrous_item
 		minor_potion_or_wondrous_item
 		medium_potion_or_wondrous_item
 		medium_potion_or_wondrous_item
@@ -126,8 +137,8 @@ large_cathedral = {
 		#fame = 1
 	}
 	item_creation_types = {
-		minor_potion_or_wondrous_item
-		minor_potion_or_wondrous_item
+		minor_potion_scroll_or_wondrous_item
+		minor_potion_scroll_or_wondrous_item
 		minor_potion_or_wondrous_item
 		medium_potion_or_wondrous_item
 		medium_potion_or_wondrous_item
@@ -160,8 +171,8 @@ grand_cathedral = {
 		#fame = 1
 	}
 	item_creation_types = {
-		minor_potion_or_wondrous_item
-		minor_potion_or_wondrous_item
+		minor_potion_scroll_or_wondrous_item
+		minor_potion_scroll_or_wondrous_item
 		minor_potion_or_wondrous_item
 		medium_potion_or_wondrous_item
 		medium_potion_or_wondrous_item
