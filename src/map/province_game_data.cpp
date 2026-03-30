@@ -76,6 +76,7 @@ province_game_data::province_game_data(const metternich::province *province)
 	connect(this->get_population(), &population::main_religion_changed, this, &province_game_data::on_population_main_religion_changed);
 
 	connect(this, &province_game_data::provincial_capital_changed, this, &province_game_data::visible_sites_changed);
+	connect(this, &province_game_data::dungeon_sites_changed, this, &province_game_data::visible_sites_changed);
 
 	connect(this, &province_game_data::level_changed, this, &province_game_data::income_changed);
 }
@@ -1000,6 +1001,19 @@ std::vector<const site *> province_game_data::get_visible_sites() const
 QVariantList province_game_data::get_visible_sites_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_visible_sites());
+}
+
+QVariantList province_game_data::get_dungeon_sites_qvariant_list() const
+{
+	std::vector<const site *> dungeon_sites;
+
+	for (const site *site : this->province->get_map_data()->get_sites()) {
+		if (site->get_type() == site_type::dungeon && site->get_game_data()->get_dungeon() != nullptr) {
+			dungeon_sites.push_back(site);
+		}
+	}
+
+	return container::to_qvariant_list(dungeon_sites);
 }
 
 const resource_map<int> &province_game_data::get_resource_counts() const
