@@ -2023,7 +2023,15 @@ void character_game_data::set_range(const int range)
 		return;
 	}
 
+	const int old_range = this->get_range();
+
 	this->range = range;
+
+	if (range > 1 && old_range <= 1) {
+		this->change_challenge_rating(1);
+	} else if (range <= 1 && old_range > 1) {
+		this->change_challenge_rating(-1);
+	}
 
 	if (game::get()->is_running()) {
 		emit range_changed();
