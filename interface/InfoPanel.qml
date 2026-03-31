@@ -553,6 +553,39 @@ Rectangle {
 		}
 		
 		IconButton {
+			id: explore_dungeon_button
+			icon_identifier: "skull"
+			visible: selected_garrison && selected_province !== null && selected_province.game_data.dungeon_sites.length > 0 && selected_province.game_data.get_country_military_units_qvariant_list(metternich.game.player_country).length > 0 && can_visit_dungeons(metternich.selected_military_units)
+			
+			onClicked: {
+				dungeon_dialog.dungeon_sites = selected_province.game_data.dungeon_sites
+				dungeon_dialog.open()
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Explore Dungeon"
+				} else {
+					status_text = ""
+				}
+			}
+			
+			function can_visit_dungeons(selected_military_units) {
+				if (selected_military_units.length === 0) {
+					return false
+				}
+				
+				for (var military_unit of selected_military_units) {
+					if (military_unit.character === null) {
+						return false
+					}
+				}
+				
+				return true
+			}
+		}
+		
+		IconButton {
 			id: recruit_military_units_button
 			icon_identifier: "musket"
 			visible: !selected_garrison && selected_province !== null && selected_province.game_data.owner == metternich.game.player_country

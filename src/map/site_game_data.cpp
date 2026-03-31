@@ -451,7 +451,7 @@ std::string site_game_data::get_display_text() const
 			text += " (Dungeon)";
 		}
 
-		if (game::get()->get_player_country()->get_game_data()->get_visit_target_site() == this->site) {
+		if (!this->get_visiting_armies().empty()) {
 			text += " (Visiting)";
 		}
 	} else if (this->site->get_holding_type() != nullptr) {
@@ -2114,10 +2114,17 @@ int site_game_data::get_max_income() const
 	return income_dice.get_maximum_result() * defines::get()->get_domain_income_unit_value();
 }
 
-bool site_game_data::can_be_visited() const
+bool site_game_data::can_be_visited_by(const metternich::domain *domain) const
 {
-	const improvement *improvement = this->get_improvement(improvement_slot::main);
-	return improvement != nullptr && improvement->is_visitable();
+	if (this->get_dungeon() == nullptr) {
+		return false;
+	}
+
+	if (this->get_province()->get_game_data()->get_owner() != domain) {
+		return false;
+	}
+
+	return true;
 }
 
 QVariantList site_game_data::get_visiting_armies_qvariant_list() const

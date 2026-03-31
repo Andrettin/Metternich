@@ -253,7 +253,6 @@ Flickable {
 			readonly property var tile_pos: site.map_data.tile_pos
 			readonly property var holding_type: site.game_data.holding_type
 			readonly property var dungeon: site.game_data.dungeon
-			readonly property bool is_visit_target: metternich.game.player_country.game_data.visit_target_site === site
 			
 			Rectangle {
 				id: site_domain_color_circle

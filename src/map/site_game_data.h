@@ -546,7 +546,7 @@ public:
 	int get_min_income() const;
 	int get_max_income() const;
 
-	bool can_be_visited() const;
+	bool can_be_visited_by(const metternich::domain *domain) const;
 
 	const std::vector<army *> &get_visiting_armies() const
 	{

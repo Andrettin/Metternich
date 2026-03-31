@@ -26,7 +26,7 @@ Flickable {
 				
 				readonly property var site: model.modelData
 				readonly property var dungeon: site.game_data.dungeon
-				readonly property bool is_visit_target: metternich.game.player_country.game_data.visit_target_site === site
+				readonly property bool is_visit_target: site.game_data.visiting_armies.length > 0
 				
 				Image {
 					id: visiting_icon
@@ -39,7 +39,7 @@ Flickable {
 				
 				onClicked: {
 					if (dungeon !== null) {
-						dungeon_dialog.site = site
+						dungeon_dialog.dungeon_sites = [site]
 						dungeon_dialog.open()
 					} else {
 						selected_civilian_unit = null

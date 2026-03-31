@@ -471,19 +471,6 @@ QCoro::Task<void> domain_game_data::do_turn()
 		this->do_population_growth();
 		this->do_cultural_change();
 
-		if (this->get_visit_target_site() != nullptr) {
-			const character *ruler = this->get_government()->get_ruler();
-			assert_throw(ruler != nullptr);
-			const std::vector<const character *> characters = { ruler };
-			auto party = std::make_shared<metternich::party>(characters);
-
-			if (this->get_visit_target_site()->get_game_data()->get_dungeon() != nullptr) {
-				this->get_visit_target_site()->get_game_data()->explore_dungeon(party);
-			}
-
-			this->set_visit_target_site(nullptr);
-		}
-
 		for (const qunique_ptr<civilian_unit> &civilian_unit : this->civilian_units) {
 			civilian_unit->do_turn();
 		}

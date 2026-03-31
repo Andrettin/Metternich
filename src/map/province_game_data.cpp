@@ -170,7 +170,7 @@ void province_game_data::do_ai_turn()
 	if (this->get_owner() != nullptr && this->has_country_military_unit(this->get_owner())) {
 		for (const site *site : this->get_sites()) {
 			site_game_data *site_game_data = site->get_game_data();
-			if (!site_game_data->can_be_visited()) {
+			if (!site_game_data->can_be_visited_by(this->get_owner())) {
 				continue;
 			}
 
@@ -182,6 +182,10 @@ void province_game_data::do_ai_turn()
 				}
 
 				if (military_unit->is_moving()) {
+					return true;
+				}
+
+				if (military_unit->get_character() == nullptr) {
 					return true;
 				}
 

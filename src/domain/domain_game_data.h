@@ -156,7 +156,6 @@ class domain_game_data final : public QObject
 	Q_PROPERTY(int min_income READ get_min_income NOTIFY income_changed)
 	Q_PROPERTY(int max_income READ get_max_income NOTIFY income_changed)
 	Q_PROPERTY(qint64 maintenance_cost READ get_maintenance_cost NOTIFY maintenance_cost_changed)
-	Q_PROPERTY(const metternich::site* visit_target_site READ get_visit_target_site WRITE set_visit_target_site NOTIFY visit_target_site_changed)
 
 public:
 	static constexpr int first_deity_cost = 10;
@@ -1241,21 +1240,6 @@ public:
 
 	Q_INVOKABLE bool can_visit_site(const metternich::site *site) const;
 
-	const site *get_visit_target_site() const
-	{
-		return this->visit_target_site;
-	}
-
-	void set_visit_target_site(const site *site)
-	{
-		if (site == this->get_visit_target_site()) {
-			return;
-		}
-
-		this->visit_target_site = site;
-		emit visit_target_site_changed();
-	}
-
 signals:
 	void tier_changed();
 	void title_name_changed();
@@ -1298,7 +1282,6 @@ signals:
 	void journal_entry_completed(const journal_entry *journal_entry);
 	void income_changed();
 	void maintenance_cost_changed();
-	void visit_target_site_changed();
 
 private:
 	metternich::domain *domain = nullptr;
@@ -1380,7 +1363,6 @@ private:
 	building_class_map<int> free_building_class_counts;
 	consulate_map<int> free_consulate_counts;
 	std::set<const flag *> flags;
-	const site *visit_target_site = nullptr;
 	qunique_ptr<country_economy> economy;
 	qunique_ptr<domain_government> government;
 	qunique_ptr<country_military> military;

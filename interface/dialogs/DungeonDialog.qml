@@ -1,87 +1,82 @@
 import QtQuick
 import QtQuick.Controls
-import QtQuick.Controls.Material
 import ".."
 
 DialogBase {
 	id: dungeon_dialog
-	height: button_column.y + button_column.height + 8 * scale_factor
-	title: dungeon_name
+	title: "Explore Dungeon"
+	width: Math.max(portrait_button_width * dungeon_grid.columns + dungeon_grid.spacing * (dungeon_grid.columns - 1), close_button.width) + 8 * scale_factor * 2
+	height: close_button.y + close_button.height + 8 * scale_factor
 	
-	property var site: null
-	property var dungeon: site ? site.game_data.dungeon : null
-	readonly property string dungeon_name: dungeon ? (dungeon.random ? (dungeon.name + " of " + site.game_data.current_cultural_name) : dungeon.name) : ""
-	readonly property bool can_visit_dungeon: site && dungeon && metternich.game.player_country.game_data.can_visit_site(site)
+	property var dungeon_sites: []
+	readonly property int portrait_button_width: 64 * scale_factor + 2 * scale_factor
+	readonly property int portrait_button_height: 64 * scale_factor + 2 * scale_factor
 	
-	PortraitButton {
-		id: dungeon_portrait
+	Flickable {
+		id: dungeon_grid_view
 		anchors.top: title_item.bottom
 		anchors.topMargin: 16 * scale_factor
-		anchors.horizontalCenter: parent.horizontalCenter
-		portrait_identifier: dungeon ? dungeon.portrait.identifier : ""
-	}
-	
-	SmallText {
-		id: text_label
-		anchors.top: dungeon_portrait.bottom
-		anchors.topMargin: 16 * scale_factor
-		anchors.horizontalCenter: parent.horizontalCenter
-		text: dungeon ? format_text(
-			can_visit_dungeon ? ("Do you wish to explore " + (dungeon.random ? "the " : "") + dungeon_name + "?"
-				+ (dungeon.level !== 0 ? ("\n\nDungeon Level: " + dungeon.level) : "")
-			) : (dungeon.level !== 0 ? ("Dungeon Level: " + dungeon.level) : "")
-		) : ""
-		wrapMode: Text.WordWrap
-		width: Math.min(text_label_proxy.contentWidth, parent.width - 16 * scale_factor)
+		anchors.left: parent.left
+		anchors.leftMargin: 8 * scale_factor
+		anchors.right: parent.right
+		anchors.rightMargin: 8 * scale_factor
+		height: Math.min(portrait_button_height * 4 + dungeon_grid.spacing * 3, contentHeight)
+		contentHeight: contentItem.childrenRect.height
+		leftMargin: 0
+		rightMargin: 0
+		topMargin: 0
+		bottomMargin: 0
+		boundsBehavior: Flickable.StopAtBounds
+		clip: true
 		
-		SmallText { //used to measure text, avoiding the binding loop of using the main text label's content width directly, given the wrap mode
-			id: text_label_proxy
+		Grid {
+			id: dungeon_grid
 			anchors.horizontalCenter: parent.horizontalCenter
-			text: text_label.text
-			opacity: 0
+			columns: Math.min(3, dungeon_sites.length)
+			spacing: 8 * scale_factor
+			
+			Repeater {
+				model: dungeon_sites
+				
+				PortraitButton {
+					id: dungeon_portrait
+					portrait_identifier: dungeon.portrait.identifier
+					
+					readonly property var dungeon_site: model.modelData
+					readonly property var dungeon: dungeon_site.game_data.dungeon
+					
+					onClicked: {
+						if (metternich.selected_military_units.length > 0) {
+							metternich.move_selected_military_units_to(dungeon_site.map_data.tile_pos)
+							metternich.clear_selected_military_units()
+							dungeon_dialog.close()
+						} else {
+							metternich.defines.error_sound.play()
+						}
+					}
+					
+					onHoveredChanged: {
+						if (typeof status_text !== 'undefined') {
+							if (hovered) {
+								status_text = dungeon_site.game_data.display_text
+							} else {
+								status_text = ""
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 	
-	Column {
-		id: button_column
-		anchors.top: text_label.bottom
+	TextButton {
+		id: close_button
+		anchors.top: dungeon_grid_view.bottom
 		anchors.topMargin: 16 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
-		spacing: 8 * scale_factor
-		
-		TextButton {
-			id: yes_button
-			text: "Yes"
-			visible: can_visit_dungeon
-			onClicked: {
-				metternich.game.player_country.game_data.visit_target_site = site
-				dungeon_dialog.close()
-			}
+		text: "Close"
+		onClicked: {
+			dungeon_dialog.close()
 		}
-		
-		TextButton {
-			id: no_button
-			text: "No"
-			visible: can_visit_dungeon
-			onClicked: {
-				if (metternich.game.player_country.game_data.visit_target_site === site) {
-					metternich.game.player_country.game_data.visit_target_site = null
-				}
-				dungeon_dialog.close()
-			}
-		}
-		
-		TextButton {
-			id: ok_button
-			text: "OK"
-			visible: !can_visit_dungeon
-			onClicked: {
-				dungeon_dialog.close()
-			}
-		}
-	}
-	
-	onClosed: {
-		site = null
 	}
 }

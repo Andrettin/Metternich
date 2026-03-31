@@ -2,6 +2,7 @@
 
 #include "unit/army.h"
 
+#include "character/party.h"
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
 #include "domain/domain_government.h"
@@ -45,7 +46,7 @@ army::army(const std::vector<military_unit *> &military_units, target_variant &&
 		if constexpr (std::is_same_v<target_type, const province *>) {
 			target_value->get_game_data()->add_entering_army(this);
 		} else if constexpr (std::is_same_v<target_type, const site *>) {
-			assert_throw(target_value->get_game_data()->can_be_visited());
+			assert_throw(target_value->get_game_data()->can_be_visited_by(this->get_domain()));
 
 			target_value->get_game_data()->add_visiting_army(this);
 		}
@@ -67,8 +68,6 @@ army::~army()
 		if constexpr (std::is_same_v<target_type, const province *>) {
 			target_value->get_game_data()->remove_entering_army(this);
 		} else if constexpr (std::is_same_v<target_type, const site *>) {
-			assert_throw(target_value->get_game_data()->can_be_visited());
-
 			target_value->get_game_data()->remove_visiting_army(this);
 		}
 	}, this->target);
@@ -140,14 +139,12 @@ QCoro::Task<void> army::do_turn()
 	} else if (this->get_target_site() != nullptr) {
 		const site *target_site = this->get_target_site();
 		site_game_data *target_site_game_data = target_site->get_game_data();
-		assert_throw(target_site_game_data->can_be_visited());
-
-		context ctx(this->get_domain());
-		ctx.source_scope = target_site;
-		ctx.attacking_army = this;
-		domain_event::check_events_for_scope(domain, event_trigger::site_visited, ctx);
-
-		target_site_game_data->set_improvement(improvement_slot::main, nullptr);
+		if (target_site_game_data->can_be_visited_by(this->get_domain())) {
+			std::unique_ptr<party> party = this->to_party();
+			if (!party->get_characters().empty()) {
+				target_site_game_data->explore_dungeon(std::move(party));
+			}
+		}
 	}
 }
 
@@ -208,6 +205,18 @@ const character *army::get_commander() const
 	}
 
 	return nullptr;
+}
+
+std::unique_ptr<party> army::to_party() const
+{
+	std::vector<const character *> characters;
+
+	for (const military_unit *military_unit : this->get_military_units()) {
+		assert_throw(military_unit->get_character() != nullptr);
+		characters.push_back(military_unit->get_character());
+	}
+
+	return std::make_unique<party>(characters);
 }
 
 }

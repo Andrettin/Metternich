@@ -9,6 +9,7 @@ namespace metternich {
 class character;
 class domain;
 class military_unit;
+class party;
 class province;
 class site;
 
@@ -66,6 +67,8 @@ public:
 	int get_score() const;
 
 	const character *get_commander() const;
+
+	std::unique_ptr<party> to_party() const;
 
 signals:
 	void military_units_changed();
