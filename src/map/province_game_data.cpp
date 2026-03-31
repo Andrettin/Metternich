@@ -4,6 +4,7 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
+#include "character/party.h"
 #include "culture/culture.h"
 #include "database/defines.h"
 #include "database/preferences.h"
@@ -24,6 +25,7 @@
 #include "game/province_event.h"
 #include "infrastructure/building_slot.h"
 #include "infrastructure/building_type.h"
+#include "infrastructure/dungeon.h"
 #include "infrastructure/holding_type.h"
 #include "infrastructure/improvement.h"
 #include "map/diplomatic_map_mode.h"
@@ -193,8 +195,13 @@ void province_game_data::do_ai_turn()
 			});
 
 			if (!military_units.empty()) {
-				auto army = make_qunique<metternich::army>(military_units, site);
-				this->get_owner()->get_military()->add_army(std::move(army));
+				//only visit if the character party has a suitable level
+				const int max_appropriate_dungeon_level = party::get_max_appropriate_dungeon_level(army::get_characters(military_units));
+
+				if (site_game_data->get_dungeon() == nullptr || site_game_data->get_dungeon()->get_level() <= max_appropriate_dungeon_level) {
+					auto army = make_qunique<metternich::army>(military_units, site);
+					this->get_owner()->get_military()->add_army(std::move(army));
+				}
 			}
 			break;
 		}
