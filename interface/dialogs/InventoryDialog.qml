@@ -37,19 +37,19 @@ DialogBase {
 	}
 	
 	ItemSlotButton {
-		id: cloak_slot_icon
+		id: armor_slot_icon
 		anchors.top: helmet_slot_icon ? helmet_slot_icon.bottom : title_item.bottom
 		anchors.topMargin: helmet_slot_icon ? 8 * scale_factor : 16 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
-		item_slot: metternich.get_item_slot("cloak")
+		item_slot: metternich.get_item_slot("armor")
 		item_slot_index: 0
 		slot_icon_identifier: "clothing"
 	}
 	
 	ItemSlotButton {
 		id: belt_slot_icon
-		anchors.top: cloak_slot_icon ? cloak_slot_icon.bottom : (helmet_slot_icon ? helmet_slot_icon.bottom : title_item.bottom)
-		anchors.topMargin: cloak_slot_icon || helmet_slot_icon ? 8 * scale_factor : 16 * scale_factor
+		anchors.top: armor_slot_icon ? armor_slot_icon.bottom : (helmet_slot_icon ? helmet_slot_icon.bottom : title_item.bottom)
+		anchors.topMargin: armor_slot_icon || helmet_slot_icon ? 8 * scale_factor : 16 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
 		item_slot: metternich.get_item_slot("belt")
 		item_slot_index: 0
@@ -57,9 +57,19 @@ DialogBase {
 	}
 	
 	ItemSlotButton {
+		id: weapon_slot_icon
+		anchors.top: armor_slot_icon.top
+		anchors.right: armor_slot_icon.left
+		anchors.rightMargin: 8 * scale_factor
+		item_slot: metternich.get_item_slot("weapon")
+		item_slot_index: 0
+		slot_icon_identifier: "saber"
+	}
+	
+	ItemSlotButton {
 		id: gloves_slot_icon
-		anchors.top: cloak_slot_icon.top
-		anchors.right: cloak_slot_icon.left
+		anchors.top: belt_slot_icon.top
+		anchors.right: belt_slot_icon.left
 		anchors.rightMargin: 8 * scale_factor
 		item_slot: metternich.get_item_slot("gloves")
 		item_slot_index: 0
@@ -76,9 +86,29 @@ DialogBase {
 		slot_icon_identifier: "sack_2"
 	}
 	
+	ItemSlotButton {
+		id: cloak_slot_icon
+		anchors.top: armor_slot_icon.top
+		anchors.left: armor_slot_icon.right
+		anchors.leftMargin: 8 * scale_factor
+		item_slot: metternich.get_item_slot("cloak")
+		item_slot_index: 0
+		slot_icon_identifier: "clothing"
+	}
+	
+	ItemSlotButton {
+		id: shield_slot_icon
+		anchors.top: cloak_slot_icon.top
+		anchors.left: cloak_slot_icon.right
+		anchors.leftMargin: 8 * scale_factor
+		item_slot: metternich.get_item_slot("shield")
+		item_slot_index: 0
+		slot_icon_identifier: "heater_shield"
+	}
+	
 	Flickable {
 		id: inventory_grid_view
-		anchors.top: belt_slot_icon ? belt_slot_icon.bottom : (cloak_slot_icon ? cloak_slot_icon.bottom : (helmet_slot_icon ? helmet_slot_icon.bottom : title_item.bottom))
+		anchors.top: belt_slot_icon ? belt_slot_icon.bottom : (armor_slot_icon ? armor_slot_icon.bottom : (helmet_slot_icon ? helmet_slot_icon.bottom : title_item.bottom))
 		anchors.topMargin: 16 * scale_factor
 		anchors.left: parent.left
 		anchors.leftMargin: 8 * scale_factor
