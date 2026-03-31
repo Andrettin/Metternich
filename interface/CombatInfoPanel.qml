@@ -49,7 +49,7 @@ Rectangle {
 			icon_identifier: "university"
 			visible: caster_spells.length > 0
 			
-			readonly property var caster: combat.current_unit ? combat.current_unit.character : null
+			readonly property var caster: combat && combat.current_unit ? combat.current_unit.character : null
 			readonly property var caster_spells: caster ? (combat_view.mode === CombatView.Mode.Combat ? caster.game_data.combat_spells : caster.game_data.battle_spells) : []
 			
 			onClicked: {
