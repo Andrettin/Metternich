@@ -446,7 +446,14 @@ std::string site_game_data::get_display_text() const
 		}
 	} else if (this->get_dungeon() != nullptr) {
 		if (this->get_dungeon()->get_level() != 0) {
-			text += std::format(" (Dungeon Level {})", this->get_dungeon()->get_level());
+			const std::string dungeon_str = std::format("(Dungeon Level {})", this->get_dungeon()->get_level());
+			text += " ";
+			if (!engine_interface::get()->get_selected_military_units().empty()) {
+				const int max_appropriate_dungeon_level = party::get_max_appropriate_dungeon_level(army::get_characters(engine_interface::get()->get_selected_military_units()));
+				text += this->get_dungeon()->get_level() > max_appropriate_dungeon_level ? string::colored(dungeon_str, defines::get()->get_red_text_color()) : dungeon_str;
+			} else {
+				text += dungeon_str;
+			}
 		} else {
 			text += " (Dungeon)";
 		}

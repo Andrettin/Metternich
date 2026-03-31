@@ -26,6 +26,8 @@ class army final : public QObject
 public:
 	using target_variant = std::variant<std::monostate, const province *, const site *>;
 
+	static std::vector<const character *> get_characters(const std::vector<military_unit *> &military_units);
+
 	explicit army(const std::vector<military_unit *> &military_units, target_variant &&target);
 	~army();
 

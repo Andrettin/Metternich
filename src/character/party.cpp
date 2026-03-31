@@ -4,11 +4,34 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
+#include "database/defines.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
+
+int party::get_max_appropriate_dungeon_level(const std::vector<const character *> &characters)
+{
+	assert_throw(!characters.empty());
+
+	int party_challenge_rating = 0;
+
+	for (const character *character : characters) {
+		party_challenge_rating += character->get_game_data()->get_challenge_rating();
+	}
+
+	const int party_size = static_cast<int>(characters.size());
+	party_challenge_rating /= party_size;
+
+	if (party_size <= 3) {
+		party_challenge_rating -= 1;
+	} else if (party_size >= 6) {
+		party_challenge_rating += 1;
+	}
+
+	return party_challenge_rating;
+}
 
 party::party(const std::vector<const character *> &characters)
 	: characters(characters)
@@ -61,6 +84,11 @@ const character *party::get_best_skill_character(const skill *skill) const
 	}
 
 	return best_skill_character;
+}
+
+int party::get_max_appropriate_dungeon_level() const
+{
+	return party::get_max_appropriate_dungeon_level(this->get_characters());
 }
 
 }

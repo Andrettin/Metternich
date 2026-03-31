@@ -27,6 +27,17 @@
 
 namespace metternich {
 
+std::vector<const character *> army::get_characters(const std::vector<military_unit *> &military_units)
+{
+	std::vector<const character *> characters;
+
+	for (const military_unit *military_unit : military_units) {
+		characters.push_back(military_unit->get_character());
+	}
+
+	return characters;
+}
+
 army::army(const std::vector<military_unit *> &military_units, target_variant &&target)
 	: military_units(military_units), target(std::move(target))
 {
@@ -209,14 +220,7 @@ const character *army::get_commander() const
 
 std::unique_ptr<party> army::to_party() const
 {
-	std::vector<const character *> characters;
-
-	for (const military_unit *military_unit : this->get_military_units()) {
-		assert_throw(military_unit->get_character() != nullptr);
-		characters.push_back(military_unit->get_character());
-	}
-
-	return std::make_unique<party>(characters);
+	return std::make_unique<party>(army::get_characters(this->get_military_units()));
 }
 
 }
