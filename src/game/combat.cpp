@@ -641,6 +641,13 @@ bool combat::do_to_hit_check(const character *character, const metternich::chara
 QCoro::Task<int64_t> combat::do_character_attack(const character *character, const metternich::character *enemy, party *enemy_party, const int to_hit_modifier)
 {
 	const bool hit = this->do_to_hit_check(character, enemy, to_hit_modifier);
+
+	if (this->scope == game::get()->get_player_country()) {
+		if (character->get_game_data()->get_attack_sound() != nullptr) {
+			co_await character->get_game_data()->get_attack_sound()->play_coro(std::chrono::milliseconds(100));
+		}
+	}
+
 	if (hit) {
 		co_return 0;
 	}

@@ -1,5 +1,21 @@
+axe = {
+	filepath = "units/axe.wav"
+}
+
 bite_small = {
 	filepath = "units/bite_small.wav"
+}
+
+club = {
+	filepath = "units/club.wav"
+}
+
+dagger = {
+	filepath = "units/dagger.wav"
+}
+
+mace = {
+	filepath = "units/mace.wav"
 }
 
 sword = {

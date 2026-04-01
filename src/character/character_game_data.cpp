@@ -3377,4 +3377,18 @@ void character_game_data::ai_buy_items()
 	}
 }
 
+const sound *character_game_data::get_attack_sound() const
+{
+	for (const auto &[slot, items] : this->equipped_items) {
+		if (!slot->is_weapon()) {
+			continue;
+		}
+
+		assert_throw(!items.empty());
+		return items.at(0)->get_type()->get_attack_sound();
+	}
+
+	return nullptr;
+}
+
 }

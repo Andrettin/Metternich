@@ -44,6 +44,7 @@ class saving_throw_type;
 class scripted_character_modifier;
 class site;
 class skill;
+class sound;
 class species;
 class spell;
 class status_effect;
@@ -852,6 +853,8 @@ public:
 	}
 
 	void ai_buy_items();
+
+	const sound *get_attack_sound() const;
 
 signals:
 	void full_name_changed();

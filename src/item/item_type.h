@@ -5,6 +5,7 @@
 #include "util/dice.h"
 
 Q_MOC_INCLUDE("item/item_class.h")
+Q_MOC_INCLUDE("sound/sound.h")
 Q_MOC_INCLUDE("ui/icon.h")
 
 namespace metternich {
@@ -13,6 +14,7 @@ class character;
 class icon;
 class item_class;
 class item_slot;
+class sound;
 
 template <typename scope_type>
 class modifier;
@@ -27,6 +29,7 @@ class item_type final : public named_data_entry, public data_type<item_type>
 	Q_PROPERTY(bool two_handed MEMBER two_handed READ is_two_handed NOTIFY changed)
 	Q_PROPERTY(bool stackable MEMBER stackable READ is_stackable NOTIFY changed)
 	Q_PROPERTY(bool spell_learnable MEMBER spell_learnable READ is_spell_learnable NOTIFY changed)
+	Q_PROPERTY(const metternich::sound* attack_sound MEMBER attack_sound READ get_attack_sound NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "item_type";
@@ -100,6 +103,11 @@ public:
 		return this->modifier.get();
 	}
 
+	const metternich::sound *get_attack_sound() const
+	{
+		return this->attack_sound;
+	}
+
 signals:
 	void changed();
 
@@ -112,6 +120,7 @@ private:
 	bool stackable = false;
 	bool spell_learnable = false;
 	std::unique_ptr<const metternich::modifier<const character>> modifier;
+	const sound *attack_sound = nullptr;
 };
 
 }
