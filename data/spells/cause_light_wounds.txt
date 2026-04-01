@@ -5,7 +5,15 @@ cause_light_wounds = {
 	price = 25gp
 	target = enemy
 	range = 1
+	to_hit_check = true
+	arcane_schools = {
+		necromancy
+	}
+	divine_domains = {
+		healing
+	}
 	character_classes = {
+		cleric
 	}
 	target_effects = {
 		damage = 1d8
