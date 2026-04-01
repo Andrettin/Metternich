@@ -23,6 +23,9 @@ bow = {
 	price = 100gp
 	damage_dice = 1d8
 	two_handed = true
+	modifier = {
+		range = 4
+	}
 }
 
 club = {
