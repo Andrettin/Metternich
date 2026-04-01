@@ -5,10 +5,18 @@ shocking_grasp = {
 	price = 25gp
 	target = enemy
 	range = 1
+	to_hit_check = true
 	sound = lightning
+	arcane_schools = {
+		alteration
+	}
 	character_classes = {
+		mage
 	}
 	target_effects = {
-		damage = 10
+		damage = {
+			value = 1d8
+			value_per_caster_level = 1
+		}
 	}
 }
