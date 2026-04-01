@@ -8,7 +8,7 @@ shocking_grasp = {
 	sound = lightning
 	character_classes = {
 	}
-	effects = {
+	target_effects = {
 		damage = 10
 	}
 }

@@ -460,12 +460,12 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 				if (tile.character != nullptr) {
 					if (this->get_current_spell()->get_target() == spell_target::enemy && vector::contains(enemy_party->get_characters(), tile.character)) {
 						if (distance <= this->get_current_spell()->get_range()) {
-							co_await this->do_character_spellcast(character, this->get_current_spell(), tile.character, enemy_party);
+							co_await this->do_character_spellcast(character, this->get_current_spell(), tile.character, enemy_party, to_hit_modifier);
 							attacked = true;
 						}
 					} else if (this->get_current_spell()->get_target() == spell_target::ally && vector::contains(party->get_characters(), tile.character)) {
 						if (distance <= this->get_current_spell()->get_range()) {
-							co_await this->do_character_spellcast(character, this->get_current_spell(), tile.character, party);
+							co_await this->do_character_spellcast(character, this->get_current_spell(), tile.character, party, to_hit_modifier);
 							attacked = true;
 						}
 					}
@@ -623,7 +623,7 @@ const combat_object *combat::choose_target_object(const character *character) co
 	return vector::get_random(potential_objects);
 }
 
-int64_t combat::do_character_attack(const character *character, const metternich::character *enemy, party *enemy_party, const int to_hit_modifier)
+bool combat::do_to_hit_check(const character *character, const metternich::character *enemy, const int to_hit_modifier) const
 {
 	static constexpr dice to_hit_dice(1, 20);
 	const int to_hit = 20 - character->get_game_data()->get_to_hit_bonus() - to_hit_modifier;
@@ -632,6 +632,16 @@ int64_t combat::do_character_attack(const character *character, const metternich
 	const int armor_class_bonus = enemy->get_game_data()->get_armor_class_bonus() + enemy->get_game_data()->get_species_armor_class_bonus(character->get_species());
 	const int armor_class = 10 - armor_class_bonus;
 	if (to_hit_result > armor_class) {
+		return false;
+	}
+
+	return true;
+}
+
+int64_t combat::do_character_attack(const character *character, const metternich::character *enemy, party *enemy_party, const int to_hit_modifier)
+{
+	const bool hit = this->do_to_hit_check(character, enemy, to_hit_modifier);
+	if (hit) {
 		return 0;
 	}
 
@@ -647,24 +657,30 @@ int64_t combat::do_character_attack(const character *character, const metternich
 	return 0;
 }
 
-QCoro::Task<int64_t> combat::do_character_spellcast(const character *caster, const spell *spell, const metternich::character *target, party *target_party)
+QCoro::Task<int64_t> combat::do_character_spellcast(const character *caster, const spell *spell, const metternich::character *target, party *target_party, const int to_hit_modifier)
 {
 	assert_throw(caster != nullptr);
 	assert_throw(caster->get_game_data()->can_cast_spell(spell));
 
 	caster->get_game_data()->change_mana(-spell->get_mana_cost());
 
-	if (spell->get_effects() != nullptr) {
-		context ctx = this->ctx;
-		ctx.root_scope = target;
-		ctx.source_scope = caster;
-		spell->get_effects()->do_effects(target, ctx);
-	}
+	const bool hit = !spell->requires_to_hit_check() || this->do_to_hit_check(caster, target, to_hit_modifier);
 
 	if (this->scope == game::get()->get_player_country()) {
 		if (spell->get_sound() != nullptr) {
 			co_await spell->get_sound()->play_coro(std::chrono::milliseconds(100));
 		}
+	}
+
+	if (!hit) {
+		co_return 0;
+	}
+
+	if (spell->get_target_effects() != nullptr) {
+		context ctx = this->ctx;
+		ctx.root_scope = target;
+		ctx.source_scope = caster;
+		spell->get_target_effects()->do_effects(target, ctx);
 	}
 
 	if (target->get_game_data()->is_dead()) {

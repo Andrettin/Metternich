@@ -17,7 +17,7 @@ cure_light_wounds = {
 		druid
 		paladin
 	}
-	effects = {
+	target_effects = {
 		healing = 1d8
 	}
 }

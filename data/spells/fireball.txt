@@ -15,7 +15,7 @@ fireball = {
 	character_classes = {
 		mage
 	}
-	effects = {
+	target_effects = {
 		damage = 15
 	}
 }

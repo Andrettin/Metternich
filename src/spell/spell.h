@@ -32,6 +32,7 @@ class spell final : public named_data_entry, public data_type<spell>
 	Q_PROPERTY(int range MEMBER range READ get_range NOTIFY changed)
 	Q_PROPERTY(int battle_range MEMBER battle_range READ get_battle_range NOTIFY changed)
 	Q_PROPERTY(attack_result battle_result MEMBER battle_result READ get_battle_result NOTIFY changed)
+	Q_PROPERTY(bool to_hit_check MEMBER to_hit_check READ requires_to_hit_check NOTIFY changed)
 	Q_PROPERTY(const metternich::sound* sound MEMBER sound READ get_sound NOTIFY changed)
 
 public:
@@ -88,6 +89,11 @@ public:
 		return this->battle_result;
 	}
 
+	bool requires_to_hit_check() const
+	{
+		return this->to_hit_check;
+	}
+
 	const std::vector<const arcane_school *> &get_arcane_schools() const
 	{
 		return this->arcane_schools;
@@ -108,9 +114,9 @@ public:
 	bool is_combat_spell() const;
 	bool is_battle_spell() const;
 
-	const effect_list<const character> *get_effects() const
+	const effect_list<const character> *get_target_effects() const
 	{
-		return this->effects.get();
+		return this->target_effects.get();
 	}
 
 	Q_INVOKABLE QString get_battle_effects_string() const;
@@ -133,10 +139,11 @@ private:
 	int range = 0;
 	int battle_range = 0;
 	attack_result battle_result{};
+	bool to_hit_check = false;
 	std::vector<const arcane_school *> arcane_schools;
 	std::vector<const divine_domain *> divine_domains;
 	std::vector<const character_class *> character_classes;
-	std::unique_ptr<const effect_list<const character>> effects;
+	std::unique_ptr<const effect_list<const character>> target_effects;
 	const metternich::sound *sound = nullptr;
 };
 

@@ -7,7 +7,7 @@ cause_light_wounds = {
 	range = 1
 	character_classes = {
 	}
-	effects = {
-		damage = 10
+	target_effects = {
+		damage = 1d8
 	}
 }

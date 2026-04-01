@@ -265,10 +265,12 @@ public:
 
 	const character *choose_enemy(const character *character, const std::vector<const metternich::character *> &enemies) const;
 	const combat_object *choose_target_object(const character *character) const;
+
+	bool do_to_hit_check(const character *character, const metternich::character *enemy, const int to_hit_modifier) const;
 	int64_t do_character_attack(const character *character, const metternich::character *enemy, party *enemy_party, const int to_hit_modifier);
 
 	[[nodiscard]]
-	QCoro::Task<int64_t> do_character_spellcast(const character *caster, const spell *spell, const metternich::character *target, party *target_party);
+	QCoro::Task<int64_t> do_character_spellcast(const character *caster, const spell *spell, const metternich::character *target, party *target_party, const int to_hit_modifier);
 
 	void on_character_killed(const character *dead_character, party *dead_character_party, const metternich::character *killer);
 	void on_character_died(const character *dead_character, party *dead_character_party);

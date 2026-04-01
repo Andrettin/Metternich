@@ -57,10 +57,10 @@ void spell::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->character_classes.push_back(character_class::get(value));
 		}
-	} else if (tag == "effects") {
+	} else if (tag == "target_effects") {
 		auto effects = std::make_unique<effect_list<const character>>();
 		effects->process_gsml_data(scope);
-		this->effects = std::move(effects);
+		this->target_effects = std::move(effects);
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
@@ -79,7 +79,7 @@ void spell::check() const
 	}
 
 	assert_throw(this->get_target() != spell_target::none || this->get_battle_target() != spell_target::none);
-	assert_throw(this->get_effects() != nullptr || this->get_battle_result() != attack_result::none);
+	assert_throw(this->get_target_effects() != nullptr || this->get_battle_result() != attack_result::none);
 }
 
 int spell::get_mana_cost() const
