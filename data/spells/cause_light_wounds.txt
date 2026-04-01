@@ -1,11 +1,12 @@
 cause_light_wounds = {
 	name = "Cause Light Wounds"
 	level = 1
-	icon = wooden_cross
+	icon = skull
 	price = 25gp
 	target = enemy
 	range = 1
 	to_hit_check = true
+	sound = magic_holy
 	arcane_schools = {
 		necromancy
 	}
