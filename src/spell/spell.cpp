@@ -109,7 +109,10 @@ bool spell::is_battle_spell() const
 
 QString spell::get_combat_effects_string(const metternich::character *caster) const
 {
-	std::string str = std::format("Target: {}, Range: {}, Target Effect: {}", get_spell_target_name(this->get_target()), this->get_range(), this->get_target_effects()->get_effects_single_line_string(caster, read_only_context(caster)));
+	read_only_context ctx(caster);
+	ctx.source_scope = caster;
+
+	std::string str = std::format("Target: {}, Range: {}, Target Effect: {}", get_spell_target_name(this->get_target()), this->get_range(), this->get_target_effects()->get_effects_single_line_string(caster, ctx));
 
 	return QString::fromStdString(str);
 }

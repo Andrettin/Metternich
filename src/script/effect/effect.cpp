@@ -159,7 +159,11 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 	const gsml_operator effect_operator = scope.get_operator();
 	std::unique_ptr<effect> effect;
 
-	if constexpr (std::is_same_v<scope_type, const domain>) {
+	if constexpr (std::is_same_v<scope_type, const character>) {
+		if (effect_identifier == "damage") {
+			effect = std::make_unique<damage_effect>(effect_operator);
+		}
+	} else if constexpr (std::is_same_v<scope_type, const domain>) {
 		if (effect_identifier == "any_known_domain") {
 			effect = std::make_unique<any_known_domain_effect>(effect_operator);
 		} else if (effect_identifier == "any_neighbor_country") {
