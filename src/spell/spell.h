@@ -119,6 +119,7 @@ public:
 		return this->target_effects.get();
 	}
 
+	Q_INVOKABLE QString get_combat_effects_string(const metternich::character *caster) const;
 	Q_INVOKABLE QString get_battle_effects_string() const;
 
 	const metternich::sound *get_sound() const

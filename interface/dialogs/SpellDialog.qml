@@ -89,7 +89,9 @@ DialogBase {
 							if (hovered) {
 								status_text = spell.name
 								middle_status_text = costs_string
-								if (mode === SpellDialog.Mode.Battle) {
+								if (mode === SpellDialog.Mode.Combat) {
+									right_status_text = spell.get_combat_effects_string(caster)
+								} else if (mode === SpellDialog.Mode.Battle) {
 									right_status_text = spell.get_battle_effects_string()
 								}
 							} else {

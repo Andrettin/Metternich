@@ -7,6 +7,7 @@
 #include "economy/commodity.h"
 #include "game/attack_result.h"
 #include "religion/divine_domain.h"
+#include "script/context.h"
 #include "script/effect/effect_list.h"
 #include "spell/arcane_school.h"
 #include "spell/spell_target.h"
@@ -104,6 +105,13 @@ bool spell::is_combat_spell() const
 bool spell::is_battle_spell() const
 {
 	return this->get_battle_target() != spell_target::none;
+}
+
+QString spell::get_combat_effects_string(const metternich::character *caster) const
+{
+	std::string str = std::format("Target: {}, Range: {}, Target Effect: {}", get_spell_target_name(this->get_target()), this->get_range(), this->get_target_effects()->get_effects_single_line_string(caster, read_only_context(caster)));
+
+	return QString::fromStdString(str);
 }
 
 QString spell::get_battle_effects_string() const
