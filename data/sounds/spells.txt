@@ -46,3 +46,23 @@ magic_holy = {
 		magic_holy_4
 	}
 }
+
+magic_missile_1 = {
+	filepath = "spells/magic_missile_1.wav"
+}
+
+magic_missile_2 = {
+	filepath = "spells/magic_missile_2.wav"
+}
+
+magic_missile_3 = {
+	filepath = "spells/magic_missile_3.wav"
+}
+
+magic_missile = {
+	sounds = {
+		magic_missile_1
+		magic_missile_2
+		magic_missile_3
+	}
+}

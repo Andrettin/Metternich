@@ -92,6 +92,7 @@ arcane_scroll_level_1 = {
 		scroll
 	}
 	spells = {
+		arcane_missile = 2
 		shocking_grasp = 2
 	}
 }
