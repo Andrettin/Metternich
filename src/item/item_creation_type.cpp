@@ -9,6 +9,7 @@
 #include "spell/spell.h"
 #include "util/assert_util.h"
 #include "util/vector_random_util.h"
+#include "util/vector_util.h"
 
 namespace metternich {
 
@@ -112,6 +113,22 @@ qunique_ptr<item> item_creation_type::create_item(const site *creation_site) con
 	}
 
 	return make_qunique<item>(item_type, nullptr, enchantment, spell);
+}
+
+
+bool item_creation_type::can_create_item_type(const item_type *item_type) const
+{
+	if (vector::contains(this->item_types, item_type)) {
+		return true;
+	}
+
+	for (const item_creation_type *item_creation_subtype : this->item_creation_subtypes) {
+		if (item_creation_subtype->can_create_item_type(item_type)) {
+			return true;
+		}
+	}
+
+	return false;
 }
 
 }

@@ -44,6 +44,7 @@ public:
 	}
 
 	void create_item();
+	void set_item(qunique_ptr<item> &&item);
 	qunique_ptr<item> take_item();
 
 	Q_INVOKABLE bool can_buy_item(const metternich::character *buyer);

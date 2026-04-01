@@ -38,6 +38,7 @@
 #include "item/enchantment.h"
 #include "item/item.h"
 #include "item/item_class.h"
+#include "item/item_creation_type.h"
 #include "item/item_slot.h"
 #include "item/item_type.h"
 #include "map/map.h"
@@ -3235,6 +3236,7 @@ bool character_game_data::can_use_enchantment(const enchantment *enchantment) co
 
 bool character_game_data::can_sell_item(const item *item) const
 {
+	Q_UNUSED(item);
 	return true;
 }
 
@@ -3243,7 +3245,70 @@ void character_game_data::sell_item(item *item)
 	qunique_ptr<metternich::item> sold_item = this->take_item(item);
 	this->change_wealth(sold_item->get_sell_price());
 
-	//FIXME: see if the sold item can be placed in any item slot for an item shop accessible to this character, and if so, place the item there
+	//see if the sold item can be placed in any item slot for an item shop accessible to this character, and if so, place the item there
+
+	//only put items in item slots if they have special properties
+	if (sold_item->get_enchantment() == nullptr && sold_item->get_spell() == nullptr) {
+		return;
+	}
+
+	const std::vector<building_item_slot *> accessible_item_slots = this->get_accessible_item_slots();
+
+	std::vector<building_item_slot *> potential_item_slots;
+	bool found_empty_slot = false;
+	const int sold_item_price = sold_item->get_price();
+
+	for (building_item_slot *item_slot : accessible_item_slots) {
+		if (!item_slot->get_item_creation_type()->can_create_item_type(sold_item->get_type())) {
+			continue;
+		}
+
+		if (item_slot->get_item() == nullptr) {
+			if (!found_empty_slot) {
+				found_empty_slot = true;
+				potential_item_slots.clear();
+			}
+		} else {
+			if (found_empty_slot) {
+				continue;
+			}
+
+			if (item_slot->get_item()->get_price() > sold_item_price) {
+				continue;
+			}
+		}
+
+		//FIXME: do not place items in slots which could generate higher-price items
+
+		potential_item_slots.push_back(item_slot);
+	}
+
+	if (!potential_item_slots.empty()) {
+		vector::get_random(potential_item_slots)->set_item(std::move(sold_item));
+	}
+}
+
+std::vector<building_item_slot *> character_game_data::get_accessible_item_slots() const
+{
+	const province *province = this->get_location()->get_game_data()->get_province();
+	assert_throw(province != nullptr);
+
+	std::vector<building_item_slot *> accessible_item_slots;
+
+	if (this->get_office() != nullptr && !this->is_deployed()) {
+		//characters which have an office and are not deployed have access to items across their entire domain
+		accessible_item_slots = this->get_domain()->get_game_data()->get_item_slots();
+	} else {
+		for (const site *holding_site : province->get_game_data()->get_settlement_sites()) {
+			if (!holding_site->get_game_data()->is_built()) {
+				continue;
+			}
+
+			vector::merge(accessible_item_slots, holding_site->get_game_data()->get_item_slots());
+		}
+	}
+
+	return accessible_item_slots;
 }
 
 void character_game_data::set_commanded_military_unit_stat_modifier(const military_unit_stat stat, const centesimal_int &value)
@@ -3345,20 +3410,7 @@ void character_game_data::ai_buy_items()
 	const province *province = this->get_location()->get_game_data()->get_province();
 	assert_throw(province != nullptr);
 
-	std::vector<building_item_slot *> accessible_item_slots;
-
-	if (this->get_office() != nullptr && !this->is_deployed()) {
-		//characters which have an office and are not deployed have access to items across their entire domain
-		accessible_item_slots = this->get_domain()->get_game_data()->get_item_slots();
-	} else {
-		for (const site *holding_site : province->get_game_data()->get_settlement_sites()) {
-			if (!holding_site->get_game_data()->is_built()) {
-				continue;
-			}
-
-			vector::merge(accessible_item_slots, holding_site->get_game_data()->get_item_slots());
-		}
-	}
+	const std::vector<building_item_slot *> accessible_item_slots = this->get_accessible_item_slots();
 
 	for (building_item_slot *item_slot : accessible_item_slots) {
 		if (item_slot->get_item() == nullptr) {

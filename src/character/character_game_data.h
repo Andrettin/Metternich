@@ -24,6 +24,7 @@ namespace archimedes {
 namespace metternich {
 
 class bloodline;
+class building_item_slot;
 class character;
 class character_attribute;
 class character_attribute_base;
@@ -730,6 +731,8 @@ public:
 
 	Q_INVOKABLE bool can_sell_item(const metternich::item *item) const;
 	Q_INVOKABLE void sell_item(metternich::item *item);
+
+	std::vector<building_item_slot *> get_accessible_item_slots() const;
 
 	const centesimal_int &get_commanded_military_unit_stat_modifier(const military_unit_stat stat) const
 	{

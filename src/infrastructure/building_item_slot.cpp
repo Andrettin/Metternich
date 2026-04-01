@@ -90,7 +90,12 @@ void building_item_slot::create_item()
 		return;
 	}
 
-	this->item = this->get_item_creation_type()->create_item(this->get_building_slot()->get_settlement());
+	this->set_item(this->get_item_creation_type()->create_item(this->get_building_slot()->get_settlement()));
+}
+
+void building_item_slot::set_item(qunique_ptr<metternich::item> &&item)
+{
+	this->item = std::move(item);
 	emit item_changed();
 }
 

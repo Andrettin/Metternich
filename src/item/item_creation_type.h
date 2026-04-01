@@ -34,6 +34,8 @@ public:
 
 	qunique_ptr<item> create_item(const site *creation_site) const;
 
+	bool can_create_item_type(const item_type *item_type) const;
+
 signals:
 	void changed();
 
