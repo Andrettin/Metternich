@@ -3377,6 +3377,31 @@ void character_game_data::ai_buy_items()
 	}
 }
 
+void character_game_data::ai_sell_items()
+{
+	if (this->get_items().empty()) {
+		return;
+	}
+
+	std::vector<item *> items_to_sell;
+
+	for (const qunique_ptr<item> &item : this->get_items()) {
+		if (item->is_equipped() || item->is_useful_for(this->character)) {
+			continue;
+		}
+
+		if (!this->can_sell_item(item.get())) {
+			continue;
+		}
+
+		items_to_sell.push_back(item.get());
+	}
+
+	for (item *item : items_to_sell) {
+		this->sell_item(item);
+	}
+}
+
 const sound *character_game_data::get_attack_sound() const
 {
 	for (const auto &[slot, items] : this->equipped_items) {

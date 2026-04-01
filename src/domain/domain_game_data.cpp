@@ -460,6 +460,7 @@ QCoro::Task<void> domain_game_data::do_turn()
 			}
 
 			if (character->get_game_data()->is_ai()) {
+				character->get_game_data()->ai_sell_items();
 				character->get_game_data()->ai_buy_items();
 			}
 		}

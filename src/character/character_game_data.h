@@ -853,6 +853,7 @@ public:
 	}
 
 	void ai_buy_items();
+	void ai_sell_items();
 
 	const sound *get_attack_sound() const;
 
