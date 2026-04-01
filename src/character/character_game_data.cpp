@@ -1192,12 +1192,11 @@ void character_game_data::die()
 	}
 
 	assert_throw(this->get_office() == nullptr);
-	assert_throw(this->get_domain() != nullptr);
 	if (this->get_wealth() > 0 || !this->get_items().empty()) {
 		character_set checked_characters;
 		std::vector<const metternich::character *> next_of_kin = this->get_next_of_kin(checked_characters, true);
 
-		if (next_of_kin.empty()) {
+		if (next_of_kin.empty() && this->get_domain() != nullptr) {
 			//if there is no next of kin, the ruler of the character's domain inherits their personal wealth
 			next_of_kin = { this->get_domain()->get_government()->get_ruler() };
 		}
