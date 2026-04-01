@@ -112,6 +112,7 @@ divine_scroll_level_1 = {
 		scroll
 	}
 	spells = {
+		cause_light_wounds = 2
 		cure_light_wounds = 5
 	}
 }
