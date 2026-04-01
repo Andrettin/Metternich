@@ -55,6 +55,7 @@ class defines final : public defines_base, public singleton<defines>
 	Q_OBJECT
 
 	Q_PROPERTY(archimedes::log_level min_log_level MEMBER min_log_level READ get_min_log_level NOTIFY changed)
+	Q_PROPERTY(QColor magic_item_text_color MEMBER magic_item_text_color READ get_magic_item_text_color NOTIFY changed)
 	Q_PROPERTY(metternich::cursor* default_cursor MEMBER default_cursor READ get_default_cursor NOTIFY changed)
 	Q_PROPERTY(metternich::cursor* ally_target_cursor MEMBER ally_target_cursor READ get_ally_target_cursor NOTIFY changed)
 	Q_PROPERTY(metternich::cursor* neutral_target_cursor MEMBER neutral_target_cursor READ get_neutral_target_cursor NOTIFY changed)
@@ -118,6 +119,11 @@ public:
 	log_level get_min_log_level() const
 	{
 		return this->min_log_level;
+	}
+
+	const QColor &get_magic_item_text_color() const
+	{
+		return this->magic_item_text_color;
 	}
 
 	cursor *get_default_cursor() const
@@ -501,6 +507,7 @@ signals:
 
 private:
 	log_level min_log_level;
+	QColor magic_item_text_color;
 	cursor *default_cursor = nullptr;
 	cursor *ally_target_cursor = nullptr;
 	cursor *neutral_target_cursor = nullptr;

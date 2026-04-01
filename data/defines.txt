@@ -2,6 +2,7 @@ min_log_level = trace
 
 green_text_color = { 0 159 3 }
 red_text_color = { 255 50 50 }
+magic_item_text_color = { 65 105 225 }
 
 default_cursor = teutonic_gauntlet
 ally_target_cursor = green_crosshair

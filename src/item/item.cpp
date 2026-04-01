@@ -161,7 +161,11 @@ std::string item::create_name(const item_type *type, const item_material *materi
 		name += " of " + spell->get_name();
 	}
 
-	return name;
+	if (enchantment != nullptr) {
+		return string::colored(name, defines::get()->get_magic_item_text_color());
+	} else {
+		return name;
+	}
 }
 
 void item::update_name()
