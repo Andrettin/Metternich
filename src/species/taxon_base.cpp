@@ -282,4 +282,17 @@ void taxon_base::add_given_names_from(const taxon_base *other)
 	}
 }
 
+const metternich::sound *taxon_base::get_death_sound() const
+{
+	if (this->death_sound != nullptr) {
+		return this->death_sound;
+	}
+
+	if (this->get_supertaxon() != nullptr) {
+		return this->get_supertaxon()->get_death_sound();
+	}
+
+	return this->death_sound;
+}
+
 }

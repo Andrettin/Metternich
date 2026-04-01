@@ -5,6 +5,8 @@
 #include "language/name_variant.h"
 #include "util/dice.h"
 
+Q_MOC_INCLUDE("sound/sound.h")
+
 namespace archimedes {
 	class gendered_name_generator;
 	class name_generator;
@@ -14,6 +16,7 @@ namespace archimedes {
 namespace metternich {
 
 class item_slot;
+class sound;
 class taxon;
 enum class starting_age_category;
 enum class taxonomic_rank;
@@ -29,6 +32,7 @@ class taxon_base : public named_data_entry
 	Q_PROPERTY(int old_age MEMBER old_age NOTIFY changed)
 	Q_PROPERTY(int venerable_age MEMBER venerable_age NOTIFY changed)
 	Q_PROPERTY(archimedes::dice maximum_age_modifier MEMBER maximum_age_modifier NOTIFY changed)
+	Q_PROPERTY(const metternich::sound* death_sound MEMBER death_sound NOTIFY changed)
 
 protected:
 	explicit taxon_base(const std::string &identifier);
@@ -67,6 +71,8 @@ public:
 	void add_given_name(const gender gender, const name_variant &name);
 	void add_given_names_from(const taxon_base *other);
 
+	const metternich::sound *get_death_sound() const;
+
 signals:
 	void changed();
 
@@ -81,6 +87,7 @@ private:
 	std::map<starting_age_category, dice> starting_age_modifiers;
 	data_entry_map<item_slot, int> item_slot_counts;
 	std::unique_ptr<gendered_name_generator> given_name_generator; //given names, mapped to the gender they pertain to (use gender::none for names which should be available for both genders)
+	const sound *death_sound = nullptr;
 };
 
 }

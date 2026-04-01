@@ -475,7 +475,7 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 			} else {
 				if (tile.character != nullptr) {
 					if (distance <= character_info->get_range() && vector::contains(enemy_party->get_characters(), tile.character)) {
-						experience_award += this->do_character_attack(character, tile.character, enemy_party, to_hit_modifier);
+						experience_award += co_await this->do_character_attack(character, tile.character, enemy_party, to_hit_modifier);
 						attacked = true;
 					}
 				} else if (tile.object != nullptr) {
@@ -512,7 +512,7 @@ QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich
 							}
 
 							if (character->get_game_data()->is_dead()) {
-								this->on_character_died(character, party);
+								co_await this->on_character_died(character, party);
 								break;
 							}
 
@@ -638,11 +638,11 @@ bool combat::do_to_hit_check(const character *character, const metternich::chara
 	return true;
 }
 
-int64_t combat::do_character_attack(const character *character, const metternich::character *enemy, party *enemy_party, const int to_hit_modifier)
+QCoro::Task<int64_t> combat::do_character_attack(const character *character, const metternich::character *enemy, party *enemy_party, const int to_hit_modifier)
 {
 	const bool hit = this->do_to_hit_check(character, enemy, to_hit_modifier);
 	if (hit) {
-		return 0;
+		co_return 0;
 	}
 
 	const int damage = random::get()->roll_dice(character->get_game_data()->get_damage_dice()) + character->get_game_data()->get_damage_bonus();
@@ -650,11 +650,11 @@ int64_t combat::do_character_attack(const character *character, const metternich
 
 	if (enemy->get_game_data()->is_dead()) {
 		const int64_t experience_award = enemy->get_game_data()->get_experience_award();
-		this->on_character_killed(enemy, enemy_party, character);
-		return experience_award;
+		co_await this->on_character_killed(enemy, enemy_party, character);
+		co_return experience_award;
 	}
 
-	return 0;
+	co_return 0;
 }
 
 QCoro::Task<int64_t> combat::do_character_spellcast(const character *caster, const spell *spell, const metternich::character *target, party *target_party, const int to_hit_modifier)
@@ -686,17 +686,17 @@ QCoro::Task<int64_t> combat::do_character_spellcast(const character *caster, con
 	if (target->get_game_data()->is_dead()) {
 		if (spell->get_target() == spell_target::enemy) {
 			const int64_t experience_award = target->get_game_data()->get_experience_award();
-			this->on_character_killed(target, target_party, caster);
+			co_await this->on_character_killed(target, target_party, caster);
 			co_return experience_award;
 		} else {
-			this->on_character_died(target, target_party);
+			co_await this->on_character_died(target, target_party);
 		}
 	}
 
 	co_return 0;
 }
 
-void combat::on_character_killed(const character *dead_character, party *dead_character_party, const metternich::character *killer)
+QCoro::Task<void> combat::on_character_killed(const character *dead_character, party *dead_character_party, const metternich::character *killer)
 {
 	if (killer->get_game_data()->get_domain() != nullptr) {
 		const combat_character_info *dead_character_info = this->get_character_info(dead_character);
@@ -716,13 +716,15 @@ void combat::on_character_killed(const character *dead_character, party *dead_ch
 		}
 	}
 
-	this->on_character_died(dead_character, dead_character_party);
+	co_await this->on_character_died(dead_character, dead_character_party);
 }
 
-void combat::on_character_died(const character *dead_character, party *dead_character_party)
+QCoro::Task<void> combat::on_character_died(const character *dead_character, party *dead_character_party)
 {
 	if (this->scope == game::get()->get_player_country()) {
-		//FIXME: play character death sound
+		if (dead_character->get_species()->get_death_sound() != nullptr) {
+			co_await dead_character->get_species()->get_death_sound()->play_coro();
+		}
 	}
 
 	dead_character_party->remove_character(dead_character);
