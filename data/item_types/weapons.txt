@@ -2,7 +2,7 @@ bastard_sword = {
 	name = "Bastard Sword"
 	item_class = weapon
 	icon = saber
-	price = 15gp #? gp
+	price = 25gp
 	damage_dice = 2d4
 }
 
@@ -59,7 +59,7 @@ morning_star = {
 	name = "Morning Star"
 	item_class = weapon
 	icon = saber
-	price = 8gp #? gp
+	price = 10gp
 	damage_dice = 2d4
 }
 
