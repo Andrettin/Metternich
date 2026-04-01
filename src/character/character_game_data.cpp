@@ -2948,7 +2948,7 @@ void character_game_data::remove_item(const item_type *item_type, const item_mat
 	}
 }
 
-bool character_game_data::can_consume_item(const metternich::item *item) const
+bool character_game_data::can_consume_item(const item *item) const
 {
 	if (!item->get_type()->get_item_class()->is_consumable()) {
 		return false;
@@ -2971,7 +2971,7 @@ bool character_game_data::can_consume_item(const metternich::item *item) const
 	return true;
 }
 
-void character_game_data::consume_item(metternich::item *item)
+void character_game_data::consume_item(item *item)
 {
 	assert_throw(this->can_consume_item(item));
 
@@ -3079,7 +3079,7 @@ bool character_game_data::can_equip_item(const item *item, const bool ignore_alr
 	return true;
 }
 
-bool character_game_data::can_equip_item(const metternich::item *item, const bool ignore_already_equipped) const
+bool character_game_data::can_equip_item(const item *item, const bool ignore_already_equipped) const
 {
 	return this->can_equip_item(item, ignore_already_equipped, std::nullopt);
 }
@@ -3194,7 +3194,7 @@ void character_game_data::on_item_equipped_with_enchantment(const enchantment *e
 	}
 }
 
-bool character_game_data::can_use_item(const metternich::item *item) const
+bool character_game_data::can_use_item(const item *item) const
 {
 	if (item->get_slot() != nullptr) {
 		return this->can_equip_item(item, true, std::nullopt);
@@ -3205,7 +3205,7 @@ bool character_game_data::can_use_item(const metternich::item *item) const
 	return false;
 }
 
-void character_game_data::use_item(metternich::item *item)
+void character_game_data::use_item(item *item)
 {
 	if (item->get_slot() != nullptr) {
 		this->equip_item(item);
@@ -3231,6 +3231,19 @@ bool character_game_data::can_use_enchantment(const enchantment *enchantment) co
 	}
 
 	return true;
+}
+
+bool character_game_data::can_sell_item(const item *item) const
+{
+	return true;
+}
+
+void character_game_data::sell_item(item *item)
+{
+	qunique_ptr<metternich::item> sold_item = this->take_item(item);
+	this->change_wealth(sold_item->get_sell_price());
+
+	//FIXME: see if the sold item can be placed in any item slot for an item shop accessible to this character, and if so, place the item there
 }
 
 void character_game_data::set_commanded_military_unit_stat_modifier(const military_unit_stat stat, const centesimal_int &value)

@@ -110,4 +110,8 @@ Item {
 	ItemShopDialog {
 		id: item_shop_dialog
 	}
+	
+	SellItemsDialog {
+		id: sell_items_dialog
+	}
 }

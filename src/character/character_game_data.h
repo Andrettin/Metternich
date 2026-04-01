@@ -727,6 +727,9 @@ public:
 	Q_INVOKABLE void use_item(metternich::item *item);
 	bool can_use_enchantment(const enchantment *enchantment) const;
 
+	Q_INVOKABLE bool can_sell_item(const metternich::item *item) const;
+	Q_INVOKABLE void sell_item(metternich::item *item);
+
 	const centesimal_int &get_commanded_military_unit_stat_modifier(const military_unit_stat stat) const
 	{
 		const auto find_iterator = this->commanded_military_unit_stat_modifiers.find(stat);

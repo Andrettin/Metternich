@@ -23,8 +23,8 @@ Rectangle {
 	IconButton {
 		id: buy_items_button
 		anchors.horizontalCenter: parent.horizontalCenter
-		anchors.bottom: back_button.top
-		anchors.bottomMargin: 16 * scale_factor
+		anchors.bottom: sell_items_button.top
+		anchors.bottomMargin: 4 * scale_factor
 		icon_identifier: "sack_3"
 		
 		onClicked: {
@@ -35,6 +35,27 @@ Rectangle {
 		onHoveredChanged: {
 			if (hovered) {
 				status_text = "Buy Items"
+			} else {
+				status_text = ""
+			}
+		}
+	}
+	
+	IconButton {
+		id: sell_items_button
+		anchors.horizontalCenter: parent.horizontalCenter
+		anchors.bottom: back_button.top
+		anchors.bottomMargin: 16 * scale_factor
+		icon_identifier: "chest"
+		
+		onClicked: {
+			sell_items_dialog.character = metternich.game.player_character
+			sell_items_dialog.open()
+		}
+		
+		onHoveredChanged: {
+			if (hovered) {
+				status_text = "Sell Items"
 			} else {
 				status_text = ""
 			}

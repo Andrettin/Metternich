@@ -43,6 +43,7 @@ class item final : public QObject
 	Q_PROPERTY(const metternich::enchantment* enchantment READ get_enchantment CONSTANT)
 	Q_PROPERTY(const metternich::spell* spell READ get_spell CONSTANT)
 	Q_PROPERTY(int price READ get_price CONSTANT)
+	Q_PROPERTY(int sell_price READ get_sell_price CONSTANT)
 	Q_PROPERTY(bool equipped READ is_equipped NOTIFY equipped_changed)
 	Q_PROPERTY(int quantity READ get_quantity NOTIFY quantity_changed)
 
@@ -125,6 +126,12 @@ public:
 	Q_INVOKABLE QString get_effects_string(const metternich::character *character) const;
 
 	int get_price() const;
+
+	int get_sell_price() const
+	{
+		//the price for which a character can sell the item
+		return std::max(this->get_price() / 2, 1);
+	}
 
 	bool is_useful_for(const character *character) const;
 
