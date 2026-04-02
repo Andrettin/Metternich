@@ -2,12 +2,12 @@ gauntlets = {
 	name = "Gauntlets"
 	item_class = gloves
 	icon = clothing
-	price = 1cp #correct?
+	price = 1gp #correct?
 }
 
 gloves = {
 	name = "Gloves"
 	item_class = gloves
 	icon = clothing
-	price = 1cp #correct?
+	price = 1gp
 }

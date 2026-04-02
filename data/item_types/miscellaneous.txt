@@ -2,35 +2,35 @@ cloak = {
 	name = "Cloak"
 	item_class = cloak
 	icon = clothing
-	price = 1cp #correct?
+	price = 8sp
 }
 
 belt = {
 	name = "Belt"
 	item_class = belt
 	icon = clothing
-	price = 1cp #correct?
+	price = 3sp
 }
 
 book = {
 	name = "Book"
 	item_class = book
 	icon = book
-	price = 1cp #correct?
+	price = 8sp #correct?
 }
 
 tome = {
 	name = "Tome"
 	item_class = book
 	icon = book
-	price = 1cp #correct?
+	price = 8sp #correct?
 }
 
 scroll = {
 	name = "Scroll"
 	item_class = scroll
 	icon = treaty
-	price = 1cp #correct?
+	price = 8sp #correct?
 	spell_learnable = true
 	stackable = true
 }
@@ -39,6 +39,6 @@ torch = {
 	name = "Torch"
 	item_class = miscellaneous
 	icon = saber
-	price = 1gp #0gp
+	price = 1cp
 	stackable = true
 }
