@@ -23,6 +23,12 @@ magical_academy = {
 		economy = 2
 		#fame = 1
 	}
+	item_creation_types = {
+		minor_potion_scroll_or_wondrous_item
+		minor_potion_scroll_or_wondrous_item
+		minor_potion_scroll_or_wondrous_item
+		medium_potion_scroll_or_wondrous_item
+	}
 	free_on_start_conditions = {
 		has_building_class = university
 	}

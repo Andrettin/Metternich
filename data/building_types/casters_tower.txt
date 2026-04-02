@@ -15,4 +15,11 @@ casters_tower = {
 		economy = 1
 		loyalty = 1
 	}
+	item_creation_types = {
+		minor_item
+		minor_item
+		minor_item
+		medium_item
+		medium_item
+	}
 }

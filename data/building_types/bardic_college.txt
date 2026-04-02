@@ -18,4 +18,8 @@ bardic_college = {
 		stability = 1
 		#fame = 1
 	}
+	item_creation_types = {
+		minor_scroll_or_wondrous_item
+		minor_scroll_or_wondrous_item
+	}
 }
