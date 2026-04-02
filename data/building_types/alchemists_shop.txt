@@ -3,30 +3,18 @@ alchemists_shop = {
 	building_class = alchemists_shop
 	portrait = university
 	icon = research
+	size = 1
+	population_type = laborers
 	holding_types = {
-		village
-		town
-		city
+		magic_source
 	}
 	commodity_costs = {
-		lumber = 4
-		cast_iron = 4
-	}
-	conditions = {
-		game_rule = research_commodity
-		game_rule = mercury_commodity
-		game_rule = additional_buildings
-		province = {
-			produces_commodity = cinnabar
-		}
+		wealth = 18gb
 	}
 	domain_modifier = {
-		commodity_demand = {
-			commodity = mercury
-			value = 1
-		}
+		economy = 1
 	}
-	province_modifier = {
-		research_per_improved_cinnabar = 1
+	item_creation_types = {
+		minor_potion_or_wondrous_item
 	}
 }
