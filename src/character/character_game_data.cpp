@@ -141,6 +141,10 @@ void character_game_data::process_gsml_property(const gsml_property &property)
 		this->mana = std::stoi(value);
 	} else if (key == "max_mana") {
 		this->max_mana = std::stoi(value);
+	} else if (key == "craft") {
+		this->craft = std::stoi(value);
+	} else if (key == "max_craft") {
+		this->max_craft = std::stoi(value);
 	} else if (key == "armor_class_bonus") {
 		this->armor_class_bonus = std::stoi(value);
 	} else if (key == "to_hit_bonus") {
@@ -321,6 +325,8 @@ gsml_data character_game_data::to_gsml_data() const
 	data.add_property("hit_point_bonus_per_hit_dice", std::to_string(this->get_hit_point_bonus_per_hit_dice()));
 	data.add_property("mana", std::to_string(this->get_mana()));
 	data.add_property("max_mana", std::to_string(this->get_max_mana()));
+	data.add_property("craft", std::to_string(this->get_craft()));
+	data.add_property("max_craft", std::to_string(this->get_max_craft()));
 	data.add_property("armor_class_bonus", std::to_string(this->get_armor_class_bonus()));
 	data.add_property("to_hit_bonus", std::to_string(this->get_to_hit_bonus()));
 	data.add_property("damage_bonus", std::to_string(this->get_damage_bonus()));
@@ -1446,6 +1452,10 @@ void character_game_data::on_level_gained(const int affected_level, const int mu
 		this->change_max_mana(character_class->get_mana_bonus_table()->get_bonus_per_level(affected_level) * multiplier, true);
 	}
 
+	if (character_class->get_craft_bonus_table() != nullptr) {
+		this->change_max_craft(character_class->get_craft_bonus_table()->get_bonus_per_level(affected_level) * multiplier, true);
+	}
+
 	if (character_class->get_to_hit_bonus_table() != nullptr) {
 		this->change_to_hit_bonus(character_class->get_to_hit_bonus_table()->get_bonus_per_level(affected_level) * multiplier);
 	}
@@ -1916,6 +1926,52 @@ void character_game_data::set_max_mana(const int max_mana, const bool increase_m
 void character_game_data::change_max_mana(const int change, const bool increase_mana)
 {
 	this->set_max_mana(this->get_max_mana() + change, increase_mana);
+}
+
+void character_game_data::set_craft(int craft)
+{
+	craft = std::min(craft, this->get_max_craft());
+
+	if (craft == this->get_craft()) {
+		return;
+	}
+
+	this->craft = craft;
+
+	if (game::get()->is_running()) {
+		emit craft_changed();
+	}
+}
+
+void character_game_data::change_craft(const int change)
+{
+	this->set_craft(this->get_craft() + change);
+}
+
+void character_game_data::set_max_craft(const int max_craft, const bool increase_craft)
+{
+	if (max_craft == this->get_max_craft()) {
+		return;
+	}
+
+	const int change = max_craft - this->get_max_craft();
+
+	this->max_craft = max_craft;
+
+	if (this->get_craft() > this->get_max_craft()) {
+		this->set_craft(this->get_max_craft());
+	} else if (change > 0 && increase_craft) {
+		this->change_craft(change);
+	}
+
+	if (game::get()->is_running()) {
+		emit max_craft_changed();
+	}
+}
+
+void character_game_data::change_max_craft(const int change, const bool increase_craft)
+{
+	this->set_max_craft(this->get_max_craft() + change, increase_craft);
 }
 
 void character_game_data::set_armor_class_bonus(const int bonus)
@@ -3252,7 +3308,7 @@ void character_game_data::sell_item(item *item)
 		return;
 	}
 
-	const std::vector<building_item_slot *> accessible_item_slots = this->get_accessible_item_slots();
+	const std::vector<building_item_slot *> accessible_item_slots = this->get_accessible_building_item_slots();
 
 	std::vector<building_item_slot *> potential_item_slots;
 	bool found_empty_slot = false;
@@ -3288,7 +3344,7 @@ void character_game_data::sell_item(item *item)
 	}
 }
 
-std::vector<building_item_slot *> character_game_data::get_accessible_item_slots() const
+std::vector<building_item_slot *> character_game_data::get_accessible_building_item_slots() const
 {
 	const province *province = this->get_location()->get_game_data()->get_province();
 	assert_throw(province != nullptr);
@@ -3309,6 +3365,11 @@ std::vector<building_item_slot *> character_game_data::get_accessible_item_slots
 	}
 
 	return accessible_item_slots;
+}
+
+bool character_game_data::can_craft_items() const
+{
+	return false;
 }
 
 void character_game_data::set_commanded_military_unit_stat_modifier(const military_unit_stat stat, const centesimal_int &value)
@@ -3410,7 +3471,7 @@ void character_game_data::ai_buy_items()
 	const province *province = this->get_location()->get_game_data()->get_province();
 	assert_throw(province != nullptr);
 
-	const std::vector<building_item_slot *> accessible_item_slots = this->get_accessible_item_slots();
+	const std::vector<building_item_slot *> accessible_item_slots = this->get_accessible_building_item_slots();
 
 	for (building_item_slot *item_slot : accessible_item_slots) {
 		if (item_slot->get_item() == nullptr) {

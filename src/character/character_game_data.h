@@ -81,6 +81,8 @@ class character_game_data final : public QObject
 	Q_PROPERTY(int max_hit_points READ get_max_hit_points NOTIFY max_hit_points_changed)
 	Q_PROPERTY(int mana READ get_mana NOTIFY mana_changed)
 	Q_PROPERTY(int max_mana READ get_max_mana NOTIFY max_mana_changed)
+	Q_PROPERTY(int craft READ get_craft NOTIFY craft_changed)
+	Q_PROPERTY(int max_craft READ get_max_craft NOTIFY max_craft_changed)
 	Q_PROPERTY(int armor_class_bonus READ get_armor_class_bonus NOTIFY armor_class_bonus_changed)
 	Q_PROPERTY(int to_hit_bonus READ get_to_hit_bonus NOTIFY to_hit_bonus_changed)
 	Q_PROPERTY(int damage_bonus READ get_damage_bonus NOTIFY damage_bonus_changed)
@@ -422,6 +424,22 @@ public:
 	void set_max_mana(const int mana, const bool increase_mana);
 	void change_max_mana(const int change, const bool increase_mana);
 
+	int get_craft() const
+	{
+		return this->craft;
+	}
+
+	void set_craft(const int craft);
+	void change_craft(const int change);
+
+	int get_max_craft() const
+	{
+		return this->max_craft;
+	}
+
+	void set_max_craft(const int craft, const bool increase_craft);
+	void change_max_craft(const int change, const bool increase_craft);
+
 	void fully_recover()
 	{
 		this->set_hit_points(this->get_max_hit_points());
@@ -732,7 +750,9 @@ public:
 	Q_INVOKABLE bool can_sell_item(const metternich::item *item) const;
 	Q_INVOKABLE void sell_item(metternich::item *item);
 
-	std::vector<building_item_slot *> get_accessible_item_slots() const;
+	std::vector<building_item_slot *> get_accessible_building_item_slots() const;
+
+	bool can_craft_items() const;
 
 	const centesimal_int &get_commanded_military_unit_stat_modifier(const military_unit_stat stat) const
 	{
@@ -879,6 +899,8 @@ signals:
 	void max_hit_points_changed();
 	void mana_changed();
 	void max_mana_changed();
+	void craft_changed();
+	void max_craft_changed();
 	void armor_class_bonus_changed();
 	void species_armor_class_bonuses_changed();
 	void to_hit_bonus_changed();
@@ -927,6 +949,8 @@ private:
 	int hit_point_bonus_per_hit_dice = 0;
 	int mana = 0;
 	int max_mana = 0;
+	int craft = 0;
+	int max_craft = 0;
 	int armor_class_bonus = 0;
 	data_entry_map<species, int> species_armor_class_bonuses; //armor class bonuses when attacked by certain species
 	int to_hit_bonus = 0;

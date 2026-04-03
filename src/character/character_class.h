@@ -40,6 +40,7 @@ class character_class final : public named_data_entry, public data_type<characte
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(metternich::technology* obsolescence_technology MEMBER obsolescence_technology NOTIFY changed)
 	Q_PROPERTY(const metternich::level_bonus_table* mana_bonus_table MEMBER mana_bonus_table READ get_mana_bonus_table NOTIFY changed)
+	Q_PROPERTY(const metternich::level_bonus_table* craft_bonus_table MEMBER craft_bonus_table READ get_craft_bonus_table NOTIFY changed)
 	Q_PROPERTY(const metternich::level_bonus_table* to_hit_bonus_table MEMBER to_hit_bonus_table READ get_to_hit_bonus_table NOTIFY changed)
 
 public:
@@ -114,6 +115,19 @@ public:
 
 		if (this->get_base_class() != nullptr) {
 			return this->get_base_class()->get_mana_bonus_table();
+		}
+
+		return nullptr;
+	}
+
+	const level_bonus_table *get_craft_bonus_table() const
+	{
+		if (this->craft_bonus_table != nullptr) {
+			return this->craft_bonus_table;
+		}
+
+		if (this->get_base_class() != nullptr) {
+			return this->get_base_class()->get_craft_bonus_table();
 		}
 
 		return nullptr;
@@ -267,6 +281,7 @@ private:
 	technology *required_technology = nullptr;
 	technology *obsolescence_technology = nullptr;
 	const level_bonus_table *mana_bonus_table = nullptr;
+	const level_bonus_table *craft_bonus_table = nullptr;
 	const level_bonus_table *to_hit_bonus_table = nullptr;
 	data_entry_map<saving_throw_type, const level_bonus_table *> saving_throw_bonus_tables;
 	data_entry_set<skill> class_skills;
