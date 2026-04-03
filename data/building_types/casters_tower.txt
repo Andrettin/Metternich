@@ -16,10 +16,10 @@ casters_tower = {
 		loyalty = 1
 	}
 	item_creation_types = {
-		minor_item
-		minor_item
-		minor_item
-		medium_item
-		medium_item
+		minor_magic_item
+		minor_magic_item
+		minor_magic_item
+		medium_magic_item
+		medium_magic_item
 	}
 }

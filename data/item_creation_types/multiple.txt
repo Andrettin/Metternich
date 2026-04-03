@@ -1,3 +1,27 @@
+minor_magic_item = {
+	name = "Minor Magic Item"
+	item_creation_subtypes = {
+		minor_scroll = 35
+		minor_wondrous_item = 9
+	}
+}
+
+medium_magic_item = {
+	name = "Medium Magic Item"
+	item_creation_subtypes = {
+		medium_scroll = 15
+		medium_wondrous_item = 17
+	}
+}
+
+major_magic_item = {
+	name = "Major Magic Item"
+	item_creation_subtypes = {
+		major_scroll = 10
+		major_wondrous_item = 20
+	}
+}
+
 minor_potion_or_wondrous_item = {
 	name = "Minor Potion or Wondrous Item"
 	item_creation_subtypes = {
@@ -28,6 +52,15 @@ minor_scroll_or_wondrous_item = {
 	item_creation_subtypes = {
 		minor_scroll
 		minor_wondrous_item
+	}
+}
+
+medium_potion_scroll_or_wondrous_item = {
+	name = "Medium Potion, Scroll or Wondrous Item"
+	item_creation_subtypes = {
+		#medium_potion
+		medium_scroll
+		medium_wondrous_item
 	}
 }
 
