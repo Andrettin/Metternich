@@ -5,6 +5,7 @@ ranger = {
 	max_level = 20
 	starting_age_category = self_taught
 	mana_bonus_table = ranger_mana_bonus
+	craft_bonus_table = craft_bonus
 	to_hit_bonus_table = cleric_to_hit_bonus
 	saving_throw_bonus_tables = {
 		save_vs_poison = cleric_save_vs_poison_bonus
