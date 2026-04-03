@@ -39,19 +39,35 @@ bool item_key::operator <(const item_key &other) const
 	}
 
 	if (this->material != other.material) {
-		return this->material->get_identifier() < other.material->get_identifier();
+		if (this->material != nullptr && other.material != nullptr) {
+			return this->material->get_identifier() < other.material->get_identifier();
+		} else {
+			return this->material == nullptr;
+		}
 	}
 
 	if (this->enchantment != other.enchantment) {
-		return this->enchantment->get_identifier() < other.enchantment->get_identifier();
+		if (this->enchantment != nullptr && other.enchantment != nullptr) {
+			return this->enchantment->get_identifier() < other.enchantment->get_identifier();
+		} else {
+			return this->enchantment == nullptr;
+		}
 	}
 
 	if (this->spell != other.spell) {
-		return this->spell->get_identifier() < other.spell->get_identifier();
+		if (this->spell != nullptr && other.spell != nullptr) {
+			return this->spell->get_identifier() < other.spell->get_identifier();
+		} else {
+			return this->spell == nullptr;
+		}
 	}
 
 	if (this->recipe != other.recipe) {
-		return this->recipe->get_identifier() < other.recipe->get_identifier();
+		if (this->recipe != nullptr && other.recipe != nullptr) {
+			return this->recipe->get_identifier() < other.recipe->get_identifier();
+		} else {
+			return this->recipe == nullptr;
+		}
 	}
 
 	return false;
