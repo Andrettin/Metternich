@@ -2959,6 +2959,8 @@ bool character_game_data::can_craft_recipe(const metternich::recipe *recipe) con
 		return false;
 	}
 
+	//FIXME: for AI characters, they should not craft recipes which are not sure to produce an item of higher value
+
 	return true;
 }
 
