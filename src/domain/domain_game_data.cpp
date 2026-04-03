@@ -459,6 +459,8 @@ QCoro::Task<void> domain_game_data::do_turn()
 				character->get_game_data()->ply_trade();
 			}
 
+			character->get_game_data()->do_crafting();
+
 			if (character->get_game_data()->is_ai()) {
 				character->get_game_data()->ai_sell_items();
 				character->get_game_data()->ai_buy_items();

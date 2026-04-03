@@ -518,6 +518,19 @@ void character_game_data::ply_trade()
 	this->change_wealth(profit);
 }
 
+void character_game_data::do_crafting()
+{
+	if (!this->can_craft_items()) {
+		return;
+	}
+
+	if (this->get_craft() < this->get_max_craft()) {
+		const int turn_days = game::get()->get_date().daysTo(game::get()->get_next_date());
+		const int recovered_craft = defines::get()->get_craft_recovery_per_day() * turn_days;
+		this->change_craft(recovered_craft);
+	}
+}
+
 void character_game_data::do_events()
 {
 	const bool is_last_turn_of_year = game::get()->is_last_turn_of_year();

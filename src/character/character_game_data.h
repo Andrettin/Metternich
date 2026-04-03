@@ -112,6 +112,7 @@ public:
 	gsml_data to_gsml_data() const;
 
 	void ply_trade();
+	void do_crafting();
 	void do_events();
 
 	bool is_ai() const;
