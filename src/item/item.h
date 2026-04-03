@@ -3,6 +3,7 @@
 Q_MOC_INCLUDE("item/enchantment.h")
 Q_MOC_INCLUDE("item/item_material.h")
 Q_MOC_INCLUDE("item/item_type.h")
+Q_MOC_INCLUDE("item/recipe.h")
 Q_MOC_INCLUDE("spell/spell.h")
 Q_MOC_INCLUDE("ui/icon.h")
 
@@ -18,6 +19,7 @@ class icon;
 class item_material;
 class item_slot;
 class item_type;
+class recipe;
 class spell;
 
 struct item_key final
@@ -26,6 +28,7 @@ struct item_key final
 	const item_material *material = nullptr;
 	const metternich::enchantment *enchantment = nullptr;
 	const metternich::spell *spell = nullptr;
+	const metternich::recipe *recipe = nullptr;
 
 	QVariantMap to_qvariant_map() const;
 
@@ -42,15 +45,16 @@ class item final : public QObject
 	Q_PROPERTY(const metternich::item_material* material READ get_material CONSTANT)
 	Q_PROPERTY(const metternich::enchantment* enchantment READ get_enchantment CONSTANT)
 	Q_PROPERTY(const metternich::spell* spell READ get_spell CONSTANT)
+	Q_PROPERTY(const metternich::recipe* recipe READ get_recipe CONSTANT)
 	Q_PROPERTY(int price READ get_price CONSTANT)
 	Q_PROPERTY(int sell_price READ get_sell_price CONSTANT)
 	Q_PROPERTY(bool equipped READ is_equipped NOTIFY equipped_changed)
 	Q_PROPERTY(int quantity READ get_quantity NOTIFY quantity_changed)
 
 public:
-	static std::string create_name(const item_type *type, const item_material *material, const metternich::enchantment *enchantment, const metternich::spell *spell);
+	static std::string create_name(const item_type *type, const item_material *material, const metternich::enchantment *enchantment, const metternich::spell *spell, const metternich::recipe *recipe);
 
-	explicit item(const item_type *type, const item_material *material, const metternich::enchantment *enchantment, const metternich::spell *spell);
+	explicit item(const item_type *type, const item_material *material, const metternich::enchantment *enchantment, const metternich::spell *spell, const metternich::recipe *recipe);
 	explicit item(const gsml_data &scope);
 	~item();
 
@@ -105,6 +109,11 @@ public:
 		return this->spell;
 	}
 
+	const metternich::recipe *get_recipe() const
+	{
+		return this->recipe;
+	}
+
 	bool is_equipped() const
 	{
 		return this->equipped;
@@ -142,6 +151,7 @@ public:
 		item_key.material = this->get_material();
 		item_key.enchantment = this->get_enchantment();
 		item_key.spell = this->get_spell();
+		item_key.recipe = this->get_recipe();
 		return item_key;
 	}
 
@@ -156,6 +166,7 @@ private:
 	const item_material *material = nullptr;
 	const metternich::enchantment *enchantment = nullptr;
 	const metternich::spell *spell = nullptr;
+	const metternich::recipe *recipe = nullptr;
 	bool equipped = false;
 	int quantity = 1;
 };

@@ -41,6 +41,7 @@ class military_unit_type;
 class office;
 class portrait;
 class province;
+class recipe;
 class saving_throw_type;
 class scripted_character_modifier;
 class site;
@@ -97,6 +98,7 @@ class character_game_data final : public QObject
 	Q_PROPERTY(QVariantList spells READ get_spells_qvariant_list NOTIFY spells_changed)
 	Q_PROPERTY(QVariantList combat_spells READ get_combat_spells_qvariant_list NOTIFY spells_changed)
 	Q_PROPERTY(QVariantList battle_spells READ get_battle_spells_qvariant_list NOTIFY spells_changed)
+	Q_PROPERTY(QVariantList recipes READ get_recipes_qvariant_list NOTIFY recipes_changed)
 	Q_PROPERTY(QVariantList items READ get_items_qvariant_list NOTIFY items_changed)
 	Q_PROPERTY(bool deployable READ is_deployable CONSTANT)
 	Q_PROPERTY(const metternich::military_unit* military_unit READ get_military_unit NOTIFY military_unit_changed)
@@ -684,19 +686,46 @@ public:
 		emit spells_changed();
 	}
 
-	Q_INVOKABLE bool can_learn_spell(const metternich::spell *spell) const;
+	bool can_learn_spell(const metternich::spell *spell) const;
 
 	bool has_learned_spell(const spell *spell) const
 	{
 		return this->has_spell(spell);
 	}
 
-	Q_INVOKABLE void learn_spell(const metternich::spell *spell);
+	void learn_spell(const metternich::spell *spell);
 	Q_INVOKABLE bool can_cast_spell(const metternich::spell *spell) const;
 	void sort_spells();
 
 	QVariantList get_combat_spells_qvariant_list() const;
 	QVariantList get_battle_spells_qvariant_list() const;
+
+	const std::vector<const recipe *> &get_recipes() const
+	{
+		return this->recipes;
+	}
+
+	QVariantList get_recipes_qvariant_list() const;
+	bool has_recipe(const recipe *recipe) const;
+
+	void add_recipe(const recipe *recipe)
+	{
+		this->recipes.push_back(recipe);
+		this->sort_recipes();
+		emit recipes_changed();
+	}
+
+	void remove_recipe(const recipe *recipe)
+	{
+		std::erase(this->recipes, recipe);
+		emit recipes_changed();
+	}
+
+	bool can_learn_recipe(const metternich::recipe *recipe) const;
+	void learn_recipe(const metternich::recipe *recipe);
+	Q_INVOKABLE bool can_craft_recipe(const metternich::recipe *recipe) const;
+	Q_INVOKABLE void craft_recipe(const metternich::recipe *recipe);
+	void sort_recipes();
 
 	int64_t get_wealth() const;
 	void change_wealth(const int64_t change);
@@ -711,7 +740,7 @@ public:
 	void add_item(qunique_ptr<item> &&item);
 	qunique_ptr<item> take_item(metternich::item *item);
 	Q_INVOKABLE void remove_item(metternich::item *item);
-	void remove_item(const item_type *item_type, const item_material *material, const enchantment *enchantment, const spell *spell);
+	void remove_item(const item_type *item_type, const item_material *material, const enchantment *enchantment, const spell *spell, const recipe *recipe);
 
 	Q_INVOKABLE bool can_consume_item(const metternich::item *item) const;
 	Q_INVOKABLE void consume_item(metternich::item *item);
@@ -918,6 +947,7 @@ signals:
 	void military_unit_changed();
 	void civilian_unit_changed();
 	void spells_changed();
+	void recipes_changed();
 	void wealth_changed();
 	void items_changed();
 	void equipped_items_changed();
@@ -969,6 +999,7 @@ private:
 	metternich::civilian_unit *civilian_unit = nullptr;
 	std::vector<const spell *> spells; //spells that the character has learned
 	std::vector<const spell *> item_spells; //spells granted by items, but which the character hasn't learned per se
+	std::vector<const recipe *> recipes; //recipes that the character has learned
 	int64_t wealth = 0;
 	std::vector<qunique_ptr<item>> items;
 	data_entry_map<item_slot, std::vector<item *>> equipped_items;

@@ -5,6 +5,7 @@
 #include "item/enchantment.h"
 #include "item/item.h"
 #include "item/item_type.h"
+#include "item/recipe.h"
 #include "script/condition/and_condition.h"
 #include "spell/spell.h"
 #include "util/assert_util.h"
@@ -70,6 +71,17 @@ void item_creation_type::process_gsml_scope(const gsml_data &scope)
 				this->spells.push_back(spell::get(property.get_key()));
 			}
 		});
+	} else if (tag == "recipes") {
+		for (const std::string &value : values) {
+			this->recipes.push_back(recipe::get(value));
+		}
+
+		scope.for_each_property([this](const gsml_property &property) {
+			const int weight = std::stoi(property.get_value());
+			for (int i = 0; i < weight; ++i) {
+				this->recipes.push_back(recipe::get(property.get_key()));
+			}
+		});
 	} else {
 		named_data_entry::process_gsml_scope(scope);
 	}
@@ -97,22 +109,40 @@ qunique_ptr<item> item_creation_type::create_item(const site *creation_site) con
 	assert_throw(!this->item_types.empty());
 	const item_type *item_type = vector::get_random(this->item_types);
 
-	const enchantment *enchantment = nullptr;
+	std::vector<std::variant<const enchantment *, const spell *, const recipe *>> properties;
+
 	if (!this->enchantments.empty()) {
-		std::vector<const metternich::enchantment *> enchantments = this->enchantments;
-		std::erase_if(enchantments, [this, creation_site](const metternich::enchantment *enchantment) {
+		std::vector<const enchantment *> enchantments = this->enchantments;
+		std::erase_if(enchantments, [this, creation_site](const enchantment *enchantment) {
 			return enchantment->get_creation_site_conditions() != nullptr && !enchantment->get_creation_site_conditions()->check(creation_site, read_only_context(creation_site));
 		});
 
-		enchantment = vector::get_random(enchantments);
+		vector::merge(properties, std::move(enchantments));
 	}
 
-	const spell *spell = nullptr;
 	if (!this->spells.empty()) {
-		spell = vector::get_random(this->spells);
+		vector::merge(properties, this->spells);
 	}
 
-	return make_qunique<item>(item_type, nullptr, enchantment, spell);
+	if (!this->recipes.empty()) {
+		vector::merge(properties, this->recipes);
+	}
+
+	const enchantment *enchantment = nullptr;
+	const spell *spell = nullptr;
+	const recipe *recipe = nullptr;
+
+	const auto &chosen_property = vector::get_random(properties);
+
+	if (std::holds_alternative<const metternich::enchantment *>(chosen_property)) {
+		enchantment = std::get<const metternich::enchantment *>(chosen_property);
+	} else if (std::holds_alternative<const metternich::spell *>(chosen_property)) {
+		spell = std::get<const metternich::spell *>(chosen_property);
+	} else if (std::holds_alternative<const metternich::recipe *>(chosen_property)) {
+		recipe = std::get<const metternich::recipe *>(chosen_property);
+	}
+
+	return make_qunique<item>(item_type, nullptr, enchantment, spell, recipe);
 }
 
 

@@ -10,6 +10,7 @@
 #include "item/item_class.h"
 #include "item/item_material.h"
 #include "item/item_type.h"
+#include "item/recipe.h"
 #include "script/modifier.h"
 #include "spell/spell.h"
 #include "util/assert_util.h"
@@ -26,6 +27,7 @@ QVariantMap item_key::to_qvariant_map() const
 	qvariant_map["material"] = QVariant::fromValue(this->material);
 	qvariant_map["enchantment"] = QVariant::fromValue(this->enchantment);
 	qvariant_map["spell"] = QVariant::fromValue(this->spell);
+	qvariant_map["recipe"] = QVariant::fromValue(this->recipe);
 
 	return qvariant_map;
 }
@@ -48,11 +50,15 @@ bool item_key::operator <(const item_key &other) const
 		return this->spell->get_identifier() < other.spell->get_identifier();
 	}
 
+	if (this->recipe != other.recipe) {
+		return this->recipe->get_identifier() < other.recipe->get_identifier();
+	}
+
 	return false;
 }
 
-item::item(const item_type *type, const item_material *material, const metternich::enchantment *enchantment, const metternich::spell *spell)
-	: type(type), material(material), enchantment(enchantment), spell(spell)
+item::item(const item_type *type, const item_material *material, const metternich::enchantment *enchantment, const metternich::spell *spell, const metternich::recipe *recipe)
+	: type(type), material(material), enchantment(enchantment), spell(spell), recipe(recipe)
 {
 	assert_throw(this->get_type() != nullptr);
 
@@ -95,6 +101,8 @@ void item::process_gsml_property(const gsml_property &property)
 		this->enchantment = enchantment::get(value);
 	} else if (key == "spell") {
 		this->spell = spell::get(value);
+	} else if (key == "recipe") {
+		this->recipe = recipe::get(value);
 	} else if (key == "equipped") {
 		this->equipped = string::to_bool(value);
 	} else if (key == "quantity") {
@@ -129,13 +137,17 @@ gsml_data item::to_gsml_data() const
 		data.add_property("spell", this->get_spell()->get_identifier());
 	}
 
+	if (this->get_recipe() != nullptr) {
+		data.add_property("recipe", this->get_recipe()->get_identifier());
+	}
+
 	data.add_property("equipped", string::from_bool(this->is_equipped()));
 	data.add_property("quantity", std::to_string(this->get_quantity()));
 
 	return data;
 }
 
-std::string item::create_name(const item_type *type, const item_material *material, const metternich::enchantment *enchantment, const metternich::spell *spell)
+std::string item::create_name(const item_type *type, const item_material *material, const metternich::enchantment *enchantment, const metternich::spell *spell, const metternich::recipe *recipe)
 {
 	std::string name = type->get_name();
 
@@ -161,6 +173,10 @@ std::string item::create_name(const item_type *type, const item_material *materi
 		name += " of " + spell->get_name();
 	}
 
+	if (recipe != nullptr) {
+		name += " of " + recipe->get_name();
+	}
+
 	if (enchantment != nullptr) {
 		return string::colored(name, defines::get()->get_magic_item_text_color());
 	} else {
@@ -170,7 +186,7 @@ std::string item::create_name(const item_type *type, const item_material *materi
 
 void item::update_name()
 {
-	this->set_name(item::create_name(this->get_type(), this->get_material(), this->get_enchantment(), this->get_spell()));
+	this->set_name(item::create_name(this->get_type(), this->get_material(), this->get_enchantment(), this->get_spell(), this->get_recipe()));
 }
 
 const item_slot *item::get_slot() const
@@ -226,6 +242,14 @@ QString item::get_effects_string(const character *character) const
 		str += std::format("{} Spell", this->get_spell()->get_name());
 	}
 
+	if (this->get_recipe() != nullptr) {
+		if (!str.empty()) {
+			str += ", ";
+		}
+
+		str += std::format("{} Recipe", this->get_recipe()->get_name());
+	}
+
 	if (!character->get_game_data()->can_use_item(this)) {
 		str += " " + string::colored(std::format("(cannot {})", this->get_slot() != nullptr ? "equip" : this->get_type()->get_item_class()->get_consume_verb()), defines::get()->get_red_text_color());
 	}
@@ -243,6 +267,10 @@ int item::get_price() const
 
 	if (this->get_spell() != nullptr) {
 		price += this->get_spell()->get_price();
+	}
+
+	if (this->get_recipe() != nullptr) {
+		price += this->get_recipe()->get_price();
 	}
 
 	return price;

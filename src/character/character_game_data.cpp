@@ -41,6 +41,7 @@
 #include "item/item_creation_type.h"
 #include "item/item_slot.h"
 #include "item/item_type.h"
+#include "item/recipe.h"
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
@@ -229,6 +230,10 @@ void character_game_data::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->spells.push_back(spell::get(value));
 		}
+	} else if (tag == "recipes") {
+		for (const std::string &value : values) {
+			this->recipes.push_back(recipe::get(value));
+		}
 	} else if (tag == "items") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
 			auto item = make_qunique<metternich::item>(child_scope);
@@ -405,6 +410,14 @@ gsml_data character_game_data::to_gsml_data() const
 		data.add_child(std::move(spells_data));
 	}
 
+	if (!this->recipes.empty()) {
+		gsml_data recipes_data("recipes");
+		for (const recipe *recipe : this->recipes) {
+			recipes_data.add_value(recipe->get_identifier());
+		}
+		data.add_child(std::move(recipes_data));
+	}
+
 	if (!this->items.empty()) {
 		gsml_data items_data("items");
 		for (const qunique_ptr<item> &item : this->items) {
@@ -528,6 +541,18 @@ void character_game_data::do_crafting()
 		const int turn_days = game::get()->get_date().daysTo(game::get()->get_next_date());
 		const int recovered_craft = defines::get()->get_craft_recovery_per_day() * turn_days;
 		this->change_craft(recovered_craft);
+	}
+
+	if (this->is_ai()) {
+		for (const recipe *recipe : this->get_recipes()) {
+			if (this->get_craft() == 0) {
+				break;
+			}
+
+			if (this->can_craft_recipe(recipe)) {
+				this->craft_recipe(recipe);
+			}
+		}
 	}
 }
 
@@ -815,7 +840,7 @@ void character_game_data::add_starting_items(const std::vector<const item_type *
 			continue;
 		}
 
-		auto item = make_qunique<metternich::item>(starting_item_type, nullptr, nullptr, nullptr);
+		auto item = make_qunique<metternich::item>(starting_item_type, nullptr, nullptr, nullptr, nullptr);
 		if (item->get_slot() != nullptr) {
 			new_filled_item_slots.insert(item->get_slot());
 
@@ -2896,6 +2921,63 @@ QVariantList character_game_data::get_battle_spells_qvariant_list() const
 	return container::to_qvariant_list(spells);
 }
 
+QVariantList character_game_data::get_recipes_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_recipes());
+}
+
+bool character_game_data::has_recipe(const recipe *recipe) const
+{
+	return vector::contains(this->get_recipes(), recipe);
+}
+
+bool character_game_data::can_learn_recipe(const recipe *recipe) const
+{
+	if (recipe->get_crafter_conditions() != nullptr && !recipe->get_crafter_conditions()->check(this->character, read_only_context(this->character))) {
+		return false;
+	}
+
+	if (this->has_recipe(recipe)) {
+		return false;
+	}
+
+	return true;
+}
+
+void character_game_data::learn_recipe(const recipe *recipe)
+{
+	this->add_recipe(recipe);
+}
+
+bool character_game_data::can_craft_recipe(const metternich::recipe *recipe) const
+{
+	if (this->get_craft() < recipe->get_craft_cost()) {
+		return false;
+	}
+
+	if (!this->has_recipe(recipe)) {
+		return false;
+	}
+
+	return true;
+}
+
+void character_game_data::craft_recipe(const metternich::recipe *recipe)
+{
+	assert_throw(this->can_craft_recipe(recipe));
+
+	//FIXME: implement crafting
+
+	this->change_craft(-recipe->get_craft_cost());
+}
+
+void character_game_data::sort_recipes()
+{
+	std::sort(this->recipes.begin(), this->recipes.end(), [](const recipe *lhs, const recipe *rhs) {
+		return lhs->get_identifier() < rhs->get_identifier();
+	});
+}
+
 int64_t character_game_data::get_wealth() const
 {
 	if (this->is_ruler()) {
@@ -2937,7 +3019,7 @@ void character_game_data::add_item(qunique_ptr<item> &&item)
 {
 	if (item->get_type()->is_stackable()) {
 		for (const qunique_ptr<metternich::item> &loop_item : this->get_items()) {
-			if (loop_item->get_type() == item->get_type() && loop_item->get_material() == item->get_material() && loop_item->get_enchantment() == item->get_enchantment() && loop_item->get_spell() == item->get_spell()) {
+			if (loop_item->get_type() == item->get_type() && loop_item->get_material() == item->get_material() && loop_item->get_enchantment() == item->get_enchantment() && loop_item->get_spell() == item->get_spell() && loop_item->get_recipe() == item->get_recipe()) {
 				loop_item->change_quantity(1);
 				emit items_changed();
 				return;
@@ -2969,7 +3051,7 @@ qunique_ptr<item> character_game_data::take_item(metternich::item *item)
 
 	if (item->get_type()->is_stackable() && item->get_quantity() > 1) {
 		item->change_quantity(-1);
-		taken_item = make_qunique<metternich::item>(item->get_type(), item->get_material(), item->get_enchantment(), item->get_spell());
+		taken_item = make_qunique<metternich::item>(item->get_type(), item->get_material(), item->get_enchantment(), item->get_spell(), item->get_recipe());
 		emit items_changed();
 		return taken_item;
 	}
@@ -3008,10 +3090,10 @@ void character_game_data::remove_item(item *item)
 	emit items_changed();
 }
 
-void character_game_data::remove_item(const item_type *item_type, const item_material *material, const enchantment *enchantment, const spell *spell)
+void character_game_data::remove_item(const item_type *item_type, const item_material *material, const enchantment *enchantment, const spell *spell, const recipe *recipe)
 {
 	for (const qunique_ptr<item> &item : this->get_items()) {
-		if (item->get_type() == item_type && item->get_material() == material && item->get_enchantment() == enchantment && item->get_spell() == spell) {
+		if (item->get_type() == item_type && item->get_material() == material && item->get_enchantment() == enchantment && item->get_spell() == spell && item->get_recipe() == recipe) {
 			this->remove_item(item.get());
 			return;
 		}
@@ -3036,6 +3118,10 @@ bool character_game_data::can_consume_item(const item *item) const
 		if (!this->can_learn_spell(item->get_spell())) {
 			return false;
 		}
+	}
+
+	if (item->get_recipe() != nullptr && !this->can_learn_recipe(item->get_recipe())) {
+		return false;
 	}
 
 	return true;
@@ -3063,7 +3149,13 @@ void character_game_data::on_item_consumed(const item *item)
 
 	if (item->get_spell() != nullptr) {
 		if (item->get_type()->is_spell_learnable() && this->can_learn_spell(item->get_spell())) {
-			this->learn_spell(item->get_spell());;
+			this->learn_spell(item->get_spell());
+		}
+	}
+
+	if (item->get_recipe() != nullptr) {
+		if (this->can_learn_recipe(item->get_recipe())) {
+			this->learn_recipe(item->get_recipe());
 		}
 	}
 }
@@ -3317,7 +3409,7 @@ void character_game_data::sell_item(item *item)
 	//see if the sold item can be placed in any item slot for an item shop accessible to this character, and if so, place the item there
 
 	//only put items in item slots if they have special properties
-	if (sold_item->get_enchantment() == nullptr && sold_item->get_spell() == nullptr) {
+	if (sold_item->get_enchantment() == nullptr && sold_item->get_spell() == nullptr && sold_item->get_recipe() == nullptr) {
 		return;
 	}
 

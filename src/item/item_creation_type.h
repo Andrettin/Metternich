@@ -9,6 +9,7 @@ namespace metternich {
 class enchantment;
 class item;
 class item_type;
+class recipe;
 class site;
 class spell;
 
@@ -32,6 +33,11 @@ public:
 		this->enchantments.push_back(enchantment);
 	}
 
+	void add_recipe(const recipe *recipe)
+	{
+		this->recipes.push_back(recipe);
+	}
+
 	qunique_ptr<item> create_item(const site *creation_site) const;
 
 	bool can_create_item_type(const item_type *item_type) const;
@@ -44,6 +50,7 @@ private:
 	std::vector<const item_type *> item_types;
 	std::vector<const enchantment *> enchantments;
 	std::vector<const spell *> spells;
+	std::vector<const recipe *> recipes;
 };
 
 }

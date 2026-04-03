@@ -155,6 +155,7 @@ set(item_SRCS
 	src/item/item_material.cpp
 	src/item/item_type.cpp
 	src/item/object_type.cpp
+	src/item/recipe.cpp
 	src/item/trap_type.cpp
 )
 source_group(item FILES ${item_SRCS})
@@ -531,6 +532,7 @@ set(item_HDRS
 	src/item/item_slot.h
 	src/item/item_type.h
 	src/item/object_type.h
+	src/item/recipe.h
 	src/item/trap_type.h
 )
 source_group(item FILES ${item_HDRS})
