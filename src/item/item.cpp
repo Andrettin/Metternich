@@ -200,6 +200,25 @@ std::string item::create_name(const item_type *type, const item_material *materi
 	}
 }
 
+int item::get_price(const item_type *type, const item_material *material, const metternich::enchantment *enchantment, const metternich::spell *spell, const metternich::recipe *recipe)
+{
+	int price = type->get_price();
+
+	if (enchantment != nullptr) {
+		price += enchantment->get_price();
+	}
+
+	if (spell != nullptr) {
+		price += spell->get_price();
+	}
+
+	if (recipe != nullptr) {
+		price += recipe->get_price();
+	}
+
+	return price;
+}
+
 void item::update_name()
 {
 	this->set_name(item::create_name(this->get_type(), this->get_material(), this->get_enchantment(), this->get_spell(), this->get_recipe()));
@@ -275,21 +294,7 @@ QString item::get_effects_string(const character *character) const
 
 int item::get_price() const
 {
-	int price = this->get_type()->get_price();
-
-	if (this->get_enchantment() != nullptr) {
-		price += this->get_enchantment()->get_price();
-	}
-
-	if (this->get_spell() != nullptr) {
-		price += this->get_spell()->get_price();
-	}
-
-	if (this->get_recipe() != nullptr) {
-		price += this->get_recipe()->get_price();
-	}
-
-	return price;
+	return item::get_price(this->get_type(), this->get_material(), this->get_enchantment(), this->get_spell(), this->get_recipe());
 }
 
 bool item::is_useful_for(const character *character) const

@@ -7,6 +7,7 @@ namespace metternich {
 
 class character;
 class enchantment;
+class item;
 class item_type;
 
 template <typename scope_type>
@@ -23,6 +24,19 @@ class recipe final : public named_data_entry, public data_type<recipe>
 	
 
 public:
+	struct material final
+	{
+		explicit material(const metternich::item_type *item_type, const int quantity = 1)
+			: item_type(item_type), quantity(quantity)
+		{
+		}
+
+		bool matches_item(const item *item) const;
+
+		const metternich::item_type *item_type = nullptr;
+		int quantity = 1;
+	};
+
 	static constexpr const char class_identifier[] = "recipe";
 	static constexpr const char property_class_identifier[] = "metternich::recipe*";
 	static constexpr const char database_folder[] = "recipes";
@@ -50,7 +64,14 @@ public:
 		return this->crafter_conditions.get();
 	}
 
+	const std::vector<material> &get_materials() const
+	{
+		return this->materials;
+	}
+
 	int get_price() const;
+
+	int get_price_of_materials() const;
 	int get_result_price() const;
 
 	int get_craft_cost() const;
@@ -69,6 +90,7 @@ private:
 	const item_type *result_item_type = nullptr;
 	const enchantment *result_enchantment = nullptr;
 	std::unique_ptr<const and_condition<character>> crafter_conditions;
+	std::vector<material> materials;
 };
 
 }

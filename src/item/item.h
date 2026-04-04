@@ -53,6 +53,7 @@ class item final : public QObject
 
 public:
 	static std::string create_name(const item_type *type, const item_material *material, const metternich::enchantment *enchantment, const metternich::spell *spell, const metternich::recipe *recipe);
+	static int get_price(const item_type *type, const item_material *material, const metternich::enchantment *enchantment, const metternich::spell *spell, const metternich::recipe *recipe);
 
 	explicit item(const item_type *type, const item_material *material, const metternich::enchantment *enchantment, const metternich::spell *spell, const metternich::recipe *recipe);
 	explicit item(const gsml_data &scope);

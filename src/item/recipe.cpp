@@ -27,6 +27,16 @@ void recipe::process_gsml_scope(const gsml_data &scope)
 		auto conditions = std::make_unique<and_condition<character>>();
 		conditions->process_gsml_data(scope);
 		this->crafter_conditions = std::move(conditions);
+	} else if (tag == "materials") {
+		for (const std::string &value : values) {
+			this->materials.emplace_back(item_type::get(value));
+		}
+
+		scope.for_each_property([this](const gsml_property &property) {
+			const item_type *item_type = item_type::get(property.get_key());
+			const int quantity = std::stoi(property.get_value());
+			this->materials.emplace_back(item_type, quantity);
+		});
 	} else if (tag == "item_creation_types") {
 		for (const std::string &value : values) {
 			item_creation_type *item_creation_type = item_creation_type::get(value);
@@ -62,6 +72,17 @@ int recipe::get_price() const
 	return std::max(1, this->get_result_price() / 25);
 }
 
+int recipe::get_price_of_materials() const
+{
+	int price = 0;
+
+	for (const material &material : this->get_materials()) {
+		price += item::get_price(material.item_type, nullptr, nullptr, nullptr, nullptr) * material.quantity;
+	}
+
+	return price;
+}
+
 int recipe::get_result_price() const
 {
 	int price = this->get_result_item_type()->get_price();
@@ -83,11 +104,40 @@ std::string recipe::get_formula_string() const
 	const int craft_cost = this->get_craft_cost();
 	std::string str = std::format("{} Craft", craft_cost);
 
+	for (const material &material : this->get_materials()) {
+		str += std::format(" + {}x{}", material.quantity, item::create_name(material.item_type, nullptr, nullptr, nullptr, nullptr));
+	}
+
 	str += " \u2192 ";
 
 	str += item::create_name(this->get_result_item_type(), nullptr, this->get_result_enchantment(), nullptr, nullptr);
 
 	return str;
+}
+
+bool recipe::material::matches_item(const item *item) const
+{
+	if (item->get_type() != this->item_type) {
+		return false;
+	}
+
+	if (item->get_material() != nullptr) {
+		return false;
+	}
+
+	if (item->get_enchantment() != nullptr) {
+		return false;
+	}
+
+	if (item->get_spell() != nullptr) {
+		return false;
+	}
+
+	if (item->get_recipe() != nullptr) {
+		return false;
+	}
+
+	return true;
 }
 
 }

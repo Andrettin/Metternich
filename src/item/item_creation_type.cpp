@@ -44,9 +44,10 @@ void item_creation_type::process_gsml_scope(const gsml_data &scope)
 		}
 
 		scope.for_each_property([this](const gsml_property &property) {
+			const item_type *item_type = item_type::get(property.get_key());
 			const int weight = std::stoi(property.get_value());
 			for (int i = 0; i < weight; ++i) {
-				this->item_types.push_back(item_type::get(property.get_key()));
+				this->item_types.push_back(item_type);
 			}
 		});
 	} else if (tag == "enchantments") {
@@ -55,9 +56,10 @@ void item_creation_type::process_gsml_scope(const gsml_data &scope)
 		}
 
 		scope.for_each_property([this](const gsml_property &property) {
+			const enchantment *enchantment = enchantment::get(property.get_key());
 			const int weight = std::stoi(property.get_value());
 			for (int i = 0; i < weight; ++i) {
-				this->enchantments.push_back(enchantment::get(property.get_key()));
+				this->enchantments.push_back(enchantment);
 			}
 		});
 	} else if (tag == "spells") {
@@ -66,9 +68,10 @@ void item_creation_type::process_gsml_scope(const gsml_data &scope)
 		}
 
 		scope.for_each_property([this](const gsml_property &property) {
+			const spell *spell = spell::get(property.get_key());
 			const int weight = std::stoi(property.get_value());
 			for (int i = 0; i < weight; ++i) {
-				this->spells.push_back(spell::get(property.get_key()));
+				this->spells.push_back(spell);
 			}
 		});
 	} else if (tag == "recipes") {
@@ -77,9 +80,10 @@ void item_creation_type::process_gsml_scope(const gsml_data &scope)
 		}
 
 		scope.for_each_property([this](const gsml_property &property) {
+			const recipe *recipe = recipe::get(property.get_key());
 			const int weight = std::stoi(property.get_value());
 			for (int i = 0; i < weight; ++i) {
-				this->recipes.push_back(recipe::get(property.get_key()));
+				this->recipes.push_back(recipe);
 			}
 		});
 	} else {

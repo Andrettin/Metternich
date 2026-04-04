@@ -2959,8 +2959,29 @@ bool character_game_data::can_craft_recipe(const metternich::recipe *recipe) con
 		return false;
 	}
 
+	for (const recipe::material &material : recipe->get_materials()) {
+		int found_quantity = 0;
+
+		for (const qunique_ptr<item> &item : this->get_items()) {
+			if (item->is_equipped()) {
+				continue;
+			}
+
+			if (material.matches_item(item.get())) {
+				found_quantity += item->get_quantity();
+			}
+		}
+
+		if (found_quantity < material.quantity) {
+			return false;
+		}
+	}
+
 	if (this->is_ai()) {
-		//FIXME: for AI characters, they should not craft recipes which are not sure to produce an item of higher value
+		//for AI characters, they should not craft recipes which are not sure to produce an item of higher value than the recipe materials
+		if (recipe->get_price_of_materials() >= recipe->get_result_price()) {
+			return false;
+		}
 	}
 
 	return true;
@@ -2971,6 +2992,35 @@ void character_game_data::craft_recipe(const metternich::recipe *recipe)
 	assert_throw(this->can_craft_recipe(recipe));
 
 	this->change_craft(-recipe->get_craft_cost());
+
+	std::vector<item *> items_to_remove;
+	for (const recipe::material &material : recipe->get_materials()) {
+		int remaining_quantity = material.quantity;
+
+		for (const qunique_ptr<item> &item : this->get_items()) {
+			if (item->is_equipped()) {
+				continue;
+			}
+
+			if (!material.matches_item(item.get())) {
+				continue;
+			}
+
+			const int removed_quantity = std::min(remaining_quantity, item->get_quantity());
+			for (int i = 0; i < removed_quantity; ++i) {
+				items_to_remove.push_back(item.get());
+			}
+
+			remaining_quantity -= removed_quantity;
+			if (remaining_quantity == 0) {
+				break;
+			}
+		}
+	}
+
+	for (item *item : items_to_remove) {
+		this->remove_item(item);
+	}
 
 	auto crafted_item = make_qunique<item>(recipe->get_result_item_type(), nullptr, recipe->get_result_enchantment(), nullptr, nullptr);
 	this->add_item(std::move(crafted_item));
