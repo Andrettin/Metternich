@@ -202,6 +202,8 @@ std::string item::create_name(const item_type *type, const item_material *materi
 
 int item::get_price(const item_type *type, const item_material *material, const metternich::enchantment *enchantment, const metternich::spell *spell, const metternich::recipe *recipe)
 {
+	Q_UNUSED(material);
+
 	int price = type->get_price();
 
 	if (enchantment != nullptr) {
