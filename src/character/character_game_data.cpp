@@ -83,6 +83,8 @@ character_game_data::character_game_data(const metternich::character *character)
 	connect(game::get(), &game::turn_changed, this, &character_game_data::age_changed);
 	connect(this, &character_game_data::office_changed, this, &character_game_data::full_name_changed);
 	connect(this, &character_game_data::office_changed, this, &character_game_data::titled_name_changed);
+	connect(this, &character_game_data::items_changed, this, &character_game_data::unequipped_items_changed);
+	connect(this, &character_game_data::equipped_items_changed, this, &character_game_data::unequipped_items_changed);
 
 	this->portrait = this->character->get_portrait();
 	this->birth_date = this->character->get_birth_date();
@@ -3057,6 +3059,20 @@ void character_game_data::change_wealth(const int64_t change)
 QVariantList character_game_data::get_items_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_items());
+}
+
+QVariantList character_game_data::get_unequipped_items_qvariant_list() const
+{
+	std::vector<const item *> unequipped_items;
+	for (const qunique_ptr<item> &item : this->get_items()) {
+		if (item->is_equipped()) {
+			continue;
+		}
+
+		unequipped_items.push_back(item.get());
+	}
+
+	return container::to_qvariant_list(unequipped_items);
 }
 
 bool character_game_data::has_item(const item_type *item_type) const

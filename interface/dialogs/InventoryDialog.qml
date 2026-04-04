@@ -9,7 +9,7 @@ DialogBase {
 	height: close_button.y + close_button.height + 8 * scale_factor
 	
 	property var character: null
-	readonly property var items: character ? character.game_data.items : []
+	readonly property var items: character ? character.game_data.unequipped_items : []
 	readonly property int icon_button_width: 32 * scale_factor + 6 * scale_factor
 	readonly property int icon_button_height: 32 * scale_factor + 6 * scale_factor
 	
@@ -122,7 +122,7 @@ DialogBase {
 		bottomMargin: 0
 		boundsBehavior: Flickable.StopAtBounds
 		clip: true
-		visible: contentHeight > 0
+		visible: items.length > 0
 		
 		Grid {
 			id: inventory_grid
@@ -136,7 +136,6 @@ DialogBase {
 					id: item_icon
 					icon_identifier: item.icon.identifier
 					tooltip: typeof status_text !== 'undefined' ? "" : format_text(small_text(item.name))
-					visible: item.equipped === false
 					
 					readonly property var item: model.modelData
 					
@@ -218,7 +217,7 @@ DialogBase {
 		IconButton {
 			id: sell_items_button
 			icon_identifier: "chest"
-			visible: inventory_dialog.character === metternich.game.player_character
+			visible: inventory_dialog.character && inventory_dialog.character === metternich.game.player_character && inventory_dialog.character.game_data.unequipped_items.length > 0
 			
 			onClicked: {
 				sell_items_dialog.character = metternich.game.player_character

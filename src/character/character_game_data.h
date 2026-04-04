@@ -100,6 +100,7 @@ class character_game_data final : public QObject
 	Q_PROPERTY(QVariantList battle_spells READ get_battle_spells_qvariant_list NOTIFY spells_changed)
 	Q_PROPERTY(QVariantList recipes READ get_recipes_qvariant_list NOTIFY recipes_changed)
 	Q_PROPERTY(QVariantList items READ get_items_qvariant_list NOTIFY items_changed)
+	Q_PROPERTY(QVariantList unequipped_items READ get_unequipped_items_qvariant_list NOTIFY unequipped_items_changed)
 	Q_PROPERTY(bool deployable READ is_deployable CONSTANT)
 	Q_PROPERTY(const metternich::military_unit* military_unit READ get_military_unit NOTIFY military_unit_changed)
 	Q_PROPERTY(const metternich::civilian_unit* civilian_unit READ get_civilian_unit NOTIFY civilian_unit_changed)
@@ -736,6 +737,7 @@ public:
 	}
 
 	QVariantList get_items_qvariant_list() const;
+	QVariantList get_unequipped_items_qvariant_list() const;
 	bool has_item(const item_type *item_type) const;
 	void add_item(qunique_ptr<item> &&item);
 	qunique_ptr<item> take_item(metternich::item *item);
@@ -950,6 +952,7 @@ signals:
 	void recipes_changed();
 	void wealth_changed();
 	void items_changed();
+	void unequipped_items_changed();
 	void equipped_items_changed();
 	void equipped_item_changed(const metternich::item_slot *slot, const int slot_index);
 	void status_effect_rounds_changed();

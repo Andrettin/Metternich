@@ -9,7 +9,7 @@ DialogBase {
 	height: close_button.y + close_button.height + 8 * scale_factor
 	
 	property var character: null
-	readonly property var items: character ? character.game_data.items : []
+	readonly property var items: character ? character.game_data.unequipped_items : []
 	readonly property int icon_button_width: 32 * scale_factor + 6 * scale_factor
 	readonly property int icon_button_height: 32 * scale_factor + 6 * scale_factor
 	
@@ -55,7 +55,6 @@ DialogBase {
 					id: item_icon
 					icon_identifier: item.icon.identifier
 					tooltip: typeof status_text !== 'undefined' ? "" : format_text(small_text(item.name))
-					visible: item.equipped === false
 					
 					readonly property var item: model.modelData
 					
