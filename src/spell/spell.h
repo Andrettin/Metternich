@@ -13,6 +13,7 @@ class arcane_school;
 class character_class;
 class divine_domain;
 class icon;
+class item_type;
 class sound;
 enum class attack_result;
 enum class spell_target;
@@ -111,6 +112,11 @@ public:
 
 	bool is_available_for_character_class(const character_class *character_class) const;
 
+	const std::vector<const item_type *> &get_material_components() const
+	{
+		return this->material_components;
+	}
+
 	bool is_combat_spell() const;
 	bool is_battle_spell() const;
 
@@ -144,6 +150,7 @@ private:
 	std::vector<const arcane_school *> arcane_schools;
 	std::vector<const divine_domain *> divine_domains;
 	std::vector<const character_class *> character_classes;
+	std::vector<const item_type *> material_components;
 	std::unique_ptr<const effect_list<const character>> target_effects;
 	const metternich::sound *sound = nullptr;
 };

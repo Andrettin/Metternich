@@ -6,6 +6,7 @@
 #include "database/defines.h"
 #include "economy/commodity.h"
 #include "game/attack_result.h"
+#include "item/item_type.h"
 #include "religion/divine_domain.h"
 #include "script/context.h"
 #include "script/effect/effect_list.h"
@@ -58,6 +59,18 @@ void spell::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->character_classes.push_back(character_class::get(value));
 		}
+	} else if (tag == "material_components") {
+		for (const std::string &value : values) {
+			this->material_components.push_back(item_type::get(value));
+		}
+
+		scope.for_each_property([this](const gsml_property &property) {
+			const item_type *item_type = item_type::get(property.get_key());
+			const int weight = std::stoi(property.get_value());
+			for (int i = 0; i < weight; ++i) {
+				this->material_components.push_back(item_type);
+			}
+		});
 	} else if (tag == "target_effects") {
 		auto effects = std::make_unique<effect_list<const character>>();
 		effects->process_gsml_data(scope);
