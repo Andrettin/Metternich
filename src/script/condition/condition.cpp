@@ -27,6 +27,7 @@
 #include "script/condition/can_gain_building_class_condition.h"
 #include "script/condition/can_gain_trait_condition.h"
 #include "script/condition/capital_condition.h"
+#include "script/condition/caster_level_condition.h"
 #include "script/condition/cavalry_condition.h"
 #include "script/condition/character_condition.h"
 #include "script/condition/character_attribute_condition.h"
@@ -142,6 +143,8 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			return std::make_unique<age_condition>(value, condition_operator);
 		} else if (key == "can_gain_trait") {
 			return std::make_unique<can_gain_trait_condition>(value, condition_operator);
+		} else if (key == "caster_level") {
+			return std::make_unique<caster_level_condition>(value, condition_operator);
 		} else if (key == "character") {
 			return std::make_unique<character_condition>(value, condition_operator);
 		} else if (key == "character_class") {

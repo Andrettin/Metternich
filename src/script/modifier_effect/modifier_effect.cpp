@@ -11,6 +11,7 @@
 #include "script/modifier_effect/capital_commodity_bonus_modifier_effect.h"
 #include "script/modifier_effect/capital_commodity_bonus_per_population_modifier_effect.h"
 #include "script/modifier_effect/capital_commodity_output_modifier_effect.h"
+#include "script/modifier_effect/caster_level_modifier_effect.h"
 #include "script/modifier_effect/cavalry_cost_modifier_effect.h"
 #include "script/modifier_effect/challenge_rating_modifier_effect.h"
 #include "script/modifier_effect/character_attribute_modifier_effect.h"
@@ -82,6 +83,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 	if constexpr (std::is_same_v<scope_type, const character>) {
 		if (key == "armor_class") {
 			return std::make_unique<armor_class_modifier_effect>(value);
+		} else if (key == "caster_level") {
+			return std::make_unique<caster_level_modifier_effect>(value);
 		} else if (key == "challenge_rating") {
 			return std::make_unique<challenge_rating_modifier_effect>(value);
 		} else if (key == "damage_bonus") {

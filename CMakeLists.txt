@@ -654,6 +654,7 @@ set(script_condition_HDRS
 	src/script/condition/can_gain_building_class_condition.h
 	src/script/condition/can_gain_trait_condition.h
 	src/script/condition/capital_condition.h
+	src/script/condition/caster_level_condition.h
 	src/script/condition/cavalry_condition.h
 	src/script/condition/character_condition.h
 	src/script/condition/character_attribute_condition.h
@@ -819,6 +820,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/capital_commodity_bonus_modifier_effect.h
 	src/script/modifier_effect/capital_commodity_bonus_per_population_modifier_effect.h
 	src/script/modifier_effect/capital_commodity_output_modifier_effect.h
+	src/script/modifier_effect/caster_level_modifier_effect.h
 	src/script/modifier_effect/cavalry_cost_modifier_effect.h
 	src/script/modifier_effect/challenge_rating_modifier_effect.h
 	src/script/modifier_effect/character_attribute_modifier_effect.h

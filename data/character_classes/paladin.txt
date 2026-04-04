@@ -85,6 +85,9 @@ paladin = {
 		}
 	}
 	recurring_level_modifiers = {
+		2 = {
+			caster_level = 1
+		}
 		3 = {
 			trait_of_type = proficiency
 		}

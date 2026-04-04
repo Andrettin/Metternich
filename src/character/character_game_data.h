@@ -75,6 +75,7 @@ class character_game_data final : public QObject
 	Q_PROPERTY(const metternich::character_class* character_class READ get_character_class NOTIFY character_class_changed)
 	Q_PROPERTY(int level READ get_level NOTIFY level_changed)
 	Q_PROPERTY(qint64 experience READ get_experience NOTIFY experience_changed)
+	Q_PROPERTY(int caster_level READ get_caster_level NOTIFY caster_level_changed)
 	Q_PROPERTY(const metternich::bloodline* bloodline READ get_bloodline NOTIFY bloodline_changed)
 	Q_PROPERTY(int bloodline_strength READ get_bloodline_strength NOTIFY bloodline_strength_changed)
 	Q_PROPERTY(int reputation READ get_reputation NOTIFY reputation_changed)
@@ -262,6 +263,13 @@ public:
 
 	void change_challenge_rating(const int change);
 	int64_t get_experience_award() const;
+
+	int get_caster_level() const
+	{
+		return this->caster_level;
+	}
+
+	void change_caster_level(const int change);
 
 	void on_mythic_tier_gained(const int affected_tier, const int multiplier);
 	bool is_deity() const;
@@ -923,6 +931,7 @@ signals:
 	void character_class_changed();
 	void level_changed();
 	void experience_changed();
+	void caster_level_changed();
 	void bloodline_changed();
 	void bloodline_strength_changed();
 	void reputation_changed();
@@ -971,6 +980,7 @@ private:
 	int level = 0;
 	int64_t experience = 0;
 	int challenge_rating = 0; //the challenge rating for defeating the character in combat
+	int caster_level = 0;
 	const metternich::bloodline *bloodline = nullptr;
 	int bloodline_strength = 0;
 	int reputation = 0;

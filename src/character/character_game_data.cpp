@@ -126,6 +126,8 @@ void character_game_data::process_gsml_property(const gsml_property &property)
 		this->experience = std::stoll(value);
 	} else if (key == "challenge_rating") {
 		this->challenge_rating = std::stoi(value);
+	} else if (key == "caster_level") {
+		this->caster_level = std::stoi(value);
 	} else if (key == "bloodline") {
 		this->bloodline = bloodline::get(value);
 	} else if (key == "bloodline_strength") {
@@ -290,6 +292,9 @@ gsml_data character_game_data::to_gsml_data() const
 	data.add_property("level", std::to_string(this->get_level()));
 	data.add_property("experience", std::to_string(this->get_experience()));
 	data.add_property("challenge_rating", std::to_string(this->get_challenge_rating()));
+	if (this->get_caster_level() != 0) {
+		data.add_property("caster_level", std::to_string(this->get_caster_level()));
+	}
 	if (this->get_bloodline() != nullptr) {
 		data.add_property("bloodline", this->get_bloodline()->get_identifier());
 		data.add_property("bloodline_strength", std::to_string(this->get_bloodline_strength()));
@@ -1583,6 +1588,17 @@ int64_t character_game_data::get_experience_award() const
 	}
 
 	return defines::get()->get_experience_award_for_challenge_rating(this->get_challenge_rating());
+}
+
+void character_game_data::change_caster_level(const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	this->caster_level += change;
+
+	emit caster_level_changed();
 }
 
 void character_game_data::on_mythic_tier_gained(const int affected_tier, const int multiplier)

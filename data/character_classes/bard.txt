@@ -81,6 +81,9 @@ bard = {
 		}
 	}
 	recurring_level_modifiers = {
+		1 = {
+			caster_level = 1
+		}
 		4 = {
 			trait_of_type = proficiency
 		}
