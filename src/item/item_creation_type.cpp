@@ -120,8 +120,16 @@ qunique_ptr<item> item_creation_type::create_item(const site *creation_site) con
 
 	if (!this->enchantments.empty()) {
 		std::vector<const enchantment *> enchantments = this->enchantments;
-		std::erase_if(enchantments, [this, creation_site](const enchantment *enchantment) {
-			return enchantment->get_creation_site_conditions() != nullptr && !enchantment->get_creation_site_conditions()->check(creation_site, read_only_context(creation_site));
+		std::erase_if(enchantments, [this, creation_site, item_type](const enchantment *enchantment) {
+			if (enchantment->get_creation_site_conditions() != nullptr && !enchantment->get_creation_site_conditions()->check(creation_site, read_only_context(creation_site))) {
+				return true;
+			}
+
+			if (!enchantment->get_item_types().contains(item_type) && !enchantment->get_item_classes().contains(item_type->get_item_class())) {
+				return true;
+			}
+
+			return false;
 		});
 
 		vector::merge(properties, std::move(enchantments));
