@@ -834,11 +834,13 @@ void domain_government::on_office_holder_died(const office *office, const charac
 			items_to_take.push_back(item.get());
 		}
 
-		this->set_office_holder(office, this->get_heir());
+		const character *heir = this->get_heir();
+
+		this->set_office_holder(office, heir);
 
 		//inherit the items after succession, so that the heir is not AI when receiving the items
 		for (item *item : items_to_take) {
-			this->get_heir()->get_game_data()->add_item(office_holder->get_game_data()->take_item(item));
+			heir->get_game_data()->add_item(office_holder->get_game_data()->take_item(item));
 		}
 	} else {
 		this->set_office_holder(office, nullptr);
