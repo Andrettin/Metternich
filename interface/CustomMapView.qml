@@ -105,6 +105,18 @@ Item {
 		mode: SpellDialog.Mode.All
 	}
 	
+	ItemShopDialog {
+		id: item_shop_dialog
+	}
+	
+	SellItemsDialog {
+		id: sell_items_dialog
+	}
+	
+	RecipeDialog {
+		id: recipe_dialog
+	}
+	
 	ModifierDialog {
 		id: modifier_dialog
 	}

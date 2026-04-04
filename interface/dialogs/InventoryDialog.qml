@@ -122,6 +122,7 @@ DialogBase {
 		bottomMargin: 0
 		boundsBehavior: Flickable.StopAtBounds
 		clip: true
+		visible: contentHeight > 0
 		
 		Grid {
 			id: inventory_grid
@@ -187,9 +188,77 @@ DialogBase {
 		}
 	}
 	
+	Row {
+		id: button_row
+		anchors.top: inventory_grid_view.visible ? inventory_grid_view.bottom : (belt_slot_icon ? belt_slot_icon.bottom : (armor_slot_icon ? armor_slot_icon.bottom : (helmet_slot_icon ? helmet_slot_icon.bottom : title_item.bottom)))
+		anchors.topMargin: 16 * scale_factor
+		anchors.horizontalCenter: parent.horizontalCenter
+		spacing: 8 * scale_factor
+		
+		IconButton {
+			id: buy_items_button
+			icon_identifier: "sack_3"
+			visible: inventory_dialog.character === metternich.game.player_character
+			
+			onClicked: {
+				item_shop_dialog.item_slots = country ? country.game_data.item_slots : []
+				item_shop_dialog.open()
+				item_shop_dialog.receive_focus()
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Buy Items"
+				} else {
+					status_text = ""
+				}
+			}
+		}
+		
+		IconButton {
+			id: sell_items_button
+			icon_identifier: "chest"
+			visible: inventory_dialog.character === metternich.game.player_character
+			
+			onClicked: {
+				sell_items_dialog.character = metternich.game.player_character
+				sell_items_dialog.open()
+				sell_items_dialog.receive_focus()
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Sell Items"
+				} else {
+					status_text = ""
+				}
+			}
+		}
+		
+		IconButton {
+			id: recipes_button
+			icon_identifier: "cog"
+			visible: inventory_dialog.character && inventory_dialog.character.game_data.recipes.length > 0
+			
+			onClicked: {
+				recipe_dialog.crafter = inventory_dialog.character
+				recipe_dialog.open()
+				recipe_dialog.receive_focus()
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Crafting Recipes"
+				} else {
+					status_text = ""
+				}
+			}
+		}
+	}
+	
 	TextButton {
 		id: close_button
-		anchors.top: inventory_grid_view.bottom
+		anchors.top: button_row.visible ? button_row.bottom : (inventory_grid_view.visible ? inventory_grid_view.bottom : (belt_slot_icon ? belt_slot_icon.bottom : (armor_slot_icon ? armor_slot_icon.bottom : (helmet_slot_icon ? helmet_slot_icon.bottom : title_item.bottom))))
 		anchors.topMargin: 16 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
 		text: "Close"

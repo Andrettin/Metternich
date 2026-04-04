@@ -24,56 +24,21 @@ Rectangle {
 		anchors.horizontalCenter: parent.horizontalCenter
 		anchors.bottom: back_button.top
 		anchors.bottomMargin: 16 * scale_factor
-		spacing: 4 * scale_factor
+		spacing: 8 * scale_factor
 		
 		IconButton {
-			id: buy_items_button
+			id: inventory_button
 			icon_identifier: "sack_3"
 			
 			onClicked: {
-				item_shop_dialog.item_slots = country ? country.game_data.item_slots : []
-				item_shop_dialog.open()
+				inventory_dialog.character = metternich.game.player_character
+				inventory_dialog.open()
+				inventory_dialog.receive_focus()
 			}
 			
 			onHoveredChanged: {
 				if (hovered) {
-					status_text = "Buy Items"
-				} else {
-					status_text = ""
-				}
-			}
-		}
-		
-		IconButton {
-			id: sell_items_button
-			icon_identifier: "chest"
-			
-			onClicked: {
-				sell_items_dialog.character = metternich.game.player_character
-				sell_items_dialog.open()
-			}
-			
-			onHoveredChanged: {
-				if (hovered) {
-					status_text = "Sell Items"
-				} else {
-					status_text = ""
-				}
-			}
-		}
-		
-		IconButton {
-			id: craft_items_button
-			icon_identifier: "cog"
-			
-			onClicked: {
-				recipe_dialog.crafter = metternich.game.player_character
-				recipe_dialog.open()
-			}
-			
-			onHoveredChanged: {
-				if (hovered) {
-					status_text = "Craft Items"
+					status_text = "View Inventory"
 				} else {
 					status_text = ""
 				}

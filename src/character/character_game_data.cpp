@@ -3479,7 +3479,7 @@ std::vector<building_item_slot *> character_game_data::get_accessible_building_i
 
 bool character_game_data::can_craft_items() const
 {
-	return false;
+	return !this->get_recipes().empty();
 }
 
 void character_game_data::set_commanded_military_unit_stat_modifier(const military_unit_stat stat, const centesimal_int &value)

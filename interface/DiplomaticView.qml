@@ -86,6 +86,18 @@ Item {
 		mode: SpellDialog.Mode.All
 	}
 	
+	ItemShopDialog {
+		id: item_shop_dialog
+	}
+	
+	SellItemsDialog {
+		id: sell_items_dialog
+	}
+	
+	RecipeDialog {
+		id: recipe_dialog
+	}
+	
 	Component.onCompleted: {
 		diplomatic_map.center_on_tile(start_tile_x, start_tile_y)
 	}

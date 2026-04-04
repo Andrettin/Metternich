@@ -102,6 +102,18 @@ Item {
 		mode: SpellDialog.Mode.All
 	}
 	
+	ItemShopDialog {
+		id: item_shop_dialog
+	}
+	
+	SellItemsDialog {
+		id: sell_items_dialog
+	}
+	
+	RecipeDialog {
+		id: recipe_dialog
+	}
+	
 	readonly property int portrait_button_width: 64 * scale_factor + 2 * scale_factor
 	readonly property int portrait_button_height: 64 * scale_factor + 2 * scale_factor
 	readonly property int horizontal_padding: 8 * scale_factor

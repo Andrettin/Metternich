@@ -29,7 +29,7 @@ DialogBase {
 		}
 	}
 	
-	NormalText {
+	SmallText {
 		id: mana_label
 		anchors.top: title_item.bottom
 		anchors.topMargin: 16 * scale_factor

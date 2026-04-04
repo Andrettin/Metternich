@@ -22,7 +22,7 @@ DialogBase {
 		}
 	}
 	
-	NormalText {
+	SmallText {
 		id: craft_label
 		anchors.top: title_item.bottom
 		anchors.topMargin: 16 * scale_factor
@@ -64,7 +64,7 @@ DialogBase {
 					readonly property string formula_string: recipe.formula_string
 					
 					onClicked: {
-						if (crafter.game_data.can_craft_recipe(recipe)) {
+						if (crafter === metternich.game.player_character && crafter.game_data.can_craft_recipe(recipe)) {
 							crafter.game_data.craft_recipe(recipe)
 						} else {
 							metternich.defines.error_sound.play()

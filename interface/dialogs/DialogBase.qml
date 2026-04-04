@@ -115,7 +115,7 @@ Popup {
 		//give focus to a different open dialog, if any
 		if (open_dialogs) {
 			for (var i = 0; i < open_dialogs.length; ++i) {
-				var child_item = open_dialogs[i]
+				var child_item = open_dialogs[open_dialogs.length - 1 - i]
 				
 				if (child_item == this) {
 					continue
