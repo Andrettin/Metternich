@@ -93,10 +93,6 @@ void item_creation_type::process_gsml_scope(const gsml_data &scope)
 
 void item_creation_type::check() const
 {
-	if (!this->item_creation_subtypes.empty() && !this->item_types.empty()) {
-		throw std::runtime_error(std::format("Item creation type \"{}\" has both item creation subtypes and information for creating items directly.", this->get_identifier()));
-	}
-
 	if (this->item_creation_subtypes.empty() && this->item_types.empty()) {
 		throw std::runtime_error(std::format("Item creation type \"{}\" has neither item creation subtypes nor information for creating items directly.", this->get_identifier()));
 	}
@@ -106,12 +102,19 @@ qunique_ptr<item> item_creation_type::create_item(const site *creation_site) con
 {
 	assert_throw(creation_site != nullptr);
 
-	if (!this->item_creation_subtypes.empty()) {
-		return vector::get_random(this->item_creation_subtypes)->create_item(creation_site);
+	std::vector<std::variant<const item_creation_type *, const item_type *>> bases;
+	vector::merge(bases, this->item_creation_subtypes);
+	vector::merge(bases, this->item_types);
+
+	const auto &chosen_base = vector::get_random(bases);
+
+	if (std::holds_alternative<const metternich::item_creation_type *>(chosen_base)) {
+		return std::get<const metternich::item_creation_type *>(chosen_base)->create_item(creation_site);
 	}
 
-	assert_throw(!this->item_types.empty());
-	const item_type *item_type = vector::get_random(this->item_types);
+	assert_throw(std::holds_alternative<const item_type *>(chosen_base));
+
+	const item_type *item_type = std::get<const metternich::item_type *>(chosen_base);
 
 	std::vector<std::variant<const enchantment *, const spell *, const recipe *>> properties;
 
