@@ -147,14 +147,16 @@ qunique_ptr<item> item_creation_type::create_item(const site *creation_site) con
 	const spell *spell = nullptr;
 	const recipe *recipe = nullptr;
 
-	const auto &chosen_property = vector::get_random(properties);
+	if (!properties.empty()) {
+		const auto &chosen_property = vector::get_random(properties);
 
-	if (std::holds_alternative<const metternich::enchantment *>(chosen_property)) {
-		enchantment = std::get<const metternich::enchantment *>(chosen_property);
-	} else if (std::holds_alternative<const metternich::spell *>(chosen_property)) {
-		spell = std::get<const metternich::spell *>(chosen_property);
-	} else if (std::holds_alternative<const metternich::recipe *>(chosen_property)) {
-		recipe = std::get<const metternich::recipe *>(chosen_property);
+		if (std::holds_alternative<const metternich::enchantment *>(chosen_property)) {
+			enchantment = std::get<const metternich::enchantment *>(chosen_property);
+		} else if (std::holds_alternative<const metternich::spell *>(chosen_property)) {
+			spell = std::get<const metternich::spell *>(chosen_property);
+		} else if (std::holds_alternative<const metternich::recipe *>(chosen_property)) {
+			recipe = std::get<const metternich::recipe *>(chosen_property);
+		}
 	}
 
 	return make_qunique<item>(item_type, nullptr, enchantment, spell, recipe);
