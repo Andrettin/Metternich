@@ -28,6 +28,11 @@ public:
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;
 
+	void add_item_type(const item_type *item_type)
+	{
+		this->item_types.push_back(item_type);
+	}
+
 	void add_enchantment(const enchantment *enchantment)
 	{
 		this->enchantments.push_back(enchantment);
