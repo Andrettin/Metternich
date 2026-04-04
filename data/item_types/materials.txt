@@ -4,4 +4,7 @@ ogre_mage_eyelash = {
 	icon = heart
 	price = 40gp
 	stackable = true
+	item_creation_types = {
+		alchemical_item
+	}
 }

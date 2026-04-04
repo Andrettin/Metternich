@@ -1,0 +1,3 @@
+alchemical_item = {
+	name = "Alchemical Item"
+}
