@@ -9,6 +9,10 @@ epic_proficiency = {
 	}
 }
 
+item_creation_proficiency = {
+	name = "Item Creation Proficiency"
+}
+
 flaw = {
 	name = "Flaw"
 	max_traits = 2

@@ -1,0 +1,14 @@
+craft_wondrous_item = {
+	name = "Craft Wondrous Item"
+	icon = research
+	types = {
+		item_creation_proficiency
+		proficiency
+	}
+	conditions = {
+		caster_level >= 3
+	}
+	modifier = {
+		craft = 1500
+	}
+}
