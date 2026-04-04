@@ -1,0 +1,7 @@
+ogre_mage_eyelash = { #bar of steel worked by an ogre
+	name = "Ogre Mage Eyelash"
+	item_class = miscellaneous
+	icon = heart
+	price = 40gp
+	stackable = true
+}
