@@ -443,15 +443,7 @@ QCoro::Task<void> domain_game_data::do_turn()
 			this->get_economy()->do_production();
 			this->collect_wealth();
 			this->pay_maintenance();
-
-			//check item slots
-			for (const site *holding_site : this->get_sites()) {
-				if (!holding_site->is_settlement() || !holding_site->get_game_data()->is_built()) {
-					continue;
-				}
-
-				holding_site->get_game_data()->check_item_slots();
-			}
+			this->check_item_slots();
 		}
 
 		for (const character *character : this->get_characters()) {
@@ -636,6 +628,17 @@ void domain_game_data::pay_maintenance()
 		}
 
 		engine_interface::get()->add_notification("Military Units Disbanded", war_minister_portrait, std::format("Your Excellency, our finances are in dire straits! Due to a lack of available resources, we were forced to disband some of our military units.\n\nDisbanded Units:{}", disbanded_units_str));
+	}
+}
+
+void domain_game_data::check_item_slots()
+{
+	for (const site *holding_site : this->get_sites()) {
+		if (!holding_site->is_settlement() || !holding_site->get_game_data()->is_built()) {
+			continue;
+		}
+
+		holding_site->get_game_data()->check_item_slots();
 	}
 }
 

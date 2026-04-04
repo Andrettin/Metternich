@@ -472,6 +472,9 @@ QCoro::Task<void> game::start_coro()
 
 			//setup journal entries, marking the ones for which the country already fulfills conditions as finished, but without doing the effects
 			domain_game_data->check_journal_entries(true, true);
+
+			//ensure some item slots will start off filled
+			domain_game_data->check_item_slots();
 		}
 
 		this->set_running(true);

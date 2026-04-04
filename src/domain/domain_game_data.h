@@ -179,6 +179,7 @@ public:
 	void collect_regency();
 	void collect_wealth();
 	void pay_maintenance();
+	void check_item_slots();
 	void do_civilian_unit_recruitment();
 	void do_transporter_recruitment();
 	void do_population_growth();
