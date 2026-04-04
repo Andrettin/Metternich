@@ -114,4 +114,8 @@ Item {
 	SellItemsDialog {
 		id: sell_items_dialog
 	}
+	
+	RecipeDialog {
+		id: recipe_dialog
+	}
 }

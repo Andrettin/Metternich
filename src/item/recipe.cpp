@@ -3,6 +3,7 @@
 #include "item/recipe.h"
 
 #include "item/enchantment.h"
+#include "item/item.h"
 #include "item/item_creation_type.h"
 #include "item/item_type.h"
 #include "script/condition/and_condition.h"
@@ -58,7 +59,7 @@ const icon *recipe::get_icon() const
 
 int recipe::get_price() const
 {
-	return std::max(1, this->get_result_price() / 2);
+	return std::max(1, this->get_result_price() / 25);
 }
 
 int recipe::get_result_price() const
@@ -74,7 +75,19 @@ int recipe::get_result_price() const
 
 int recipe::get_craft_cost() const
 {
-	return std::max(1, this->get_result_price() / 10);
+	return std::max(1, this->get_result_price() / 10 / 100);
+}
+
+std::string recipe::get_formula_string() const
+{
+	const int craft_cost = this->get_craft_cost();
+	std::string str = std::format("{} Craft", craft_cost);
+
+	str += " \u2192 ";
+
+	str += item::create_name(this->get_result_item_type(), nullptr, this->get_result_enchantment(), nullptr, nullptr);
+
+	return str;
 }
 
 }

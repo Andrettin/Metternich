@@ -20,44 +20,63 @@ Rectangle {
 		width: 1 * scale_factor
 	}
 	
-	IconButton {
-		id: buy_items_button
-		anchors.horizontalCenter: parent.horizontalCenter
-		anchors.bottom: sell_items_button.top
-		anchors.bottomMargin: 4 * scale_factor
-		icon_identifier: "sack_3"
-		
-		onClicked: {
-			item_shop_dialog.item_slots = country ? country.game_data.item_slots : []
-			item_shop_dialog.open()
-		}
-		
-		onHoveredChanged: {
-			if (hovered) {
-				status_text = "Buy Items"
-			} else {
-				status_text = ""
-			}
-		}
-	}
-	
-	IconButton {
-		id: sell_items_button
+	Column {
 		anchors.horizontalCenter: parent.horizontalCenter
 		anchors.bottom: back_button.top
 		anchors.bottomMargin: 16 * scale_factor
-		icon_identifier: "chest"
+		spacing: 4 * scale_factor
 		
-		onClicked: {
-			sell_items_dialog.character = metternich.game.player_character
-			sell_items_dialog.open()
+		IconButton {
+			id: buy_items_button
+			icon_identifier: "sack_3"
+			
+			onClicked: {
+				item_shop_dialog.item_slots = country ? country.game_data.item_slots : []
+				item_shop_dialog.open()
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Buy Items"
+				} else {
+					status_text = ""
+				}
+			}
 		}
 		
-		onHoveredChanged: {
-			if (hovered) {
-				status_text = "Sell Items"
-			} else {
-				status_text = ""
+		IconButton {
+			id: sell_items_button
+			icon_identifier: "chest"
+			
+			onClicked: {
+				sell_items_dialog.character = metternich.game.player_character
+				sell_items_dialog.open()
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Sell Items"
+				} else {
+					status_text = ""
+				}
+			}
+		}
+		
+		IconButton {
+			id: craft_items_button
+			icon_identifier: "cog"
+			
+			onClicked: {
+				recipe_dialog.crafter = metternich.game.player_character
+				recipe_dialog.open()
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Craft Items"
+				} else {
+					status_text = ""
+				}
 			}
 		}
 	}

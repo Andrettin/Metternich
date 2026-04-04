@@ -2959,7 +2959,9 @@ bool character_game_data::can_craft_recipe(const metternich::recipe *recipe) con
 		return false;
 	}
 
-	//FIXME: for AI characters, they should not craft recipes which are not sure to produce an item of higher value
+	if (this->is_ai()) {
+		//FIXME: for AI characters, they should not craft recipes which are not sure to produce an item of higher value
+	}
 
 	return true;
 }
@@ -2968,9 +2970,10 @@ void character_game_data::craft_recipe(const metternich::recipe *recipe)
 {
 	assert_throw(this->can_craft_recipe(recipe));
 
-	//FIXME: implement crafting
-
 	this->change_craft(-recipe->get_craft_cost());
+
+	auto crafted_item = make_qunique<item>(recipe->get_result_item_type(), nullptr, recipe->get_result_enchantment(), nullptr, nullptr);
+	this->add_item(std::move(crafted_item));
 }
 
 void character_game_data::sort_recipes()
