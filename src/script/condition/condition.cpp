@@ -114,6 +114,7 @@
 #include "script/condition/source_site_condition.h"
 #include "script/condition/source_site_scope_condition.h"
 #include "script/condition/species_condition.h"
+#include "script/condition/spell_condition.h"
 #include "script/condition/subject_type_condition.h"
 #include "script/condition/taxon_condition.h"
 #include "script/condition/technology_condition.h"
@@ -163,6 +164,8 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			return std::make_unique<primary_attribute_condition>(value, condition_operator);
 		} else if (key == "skill_training") {
 			return std::make_unique<skill_training_condition>(value, condition_operator);
+		} else if (key == "spell") {
+			return std::make_unique<spell_condition>(value, condition_operator);
 		} else if (key == "trait") {
 			return std::make_unique<trait_condition>(value, condition_operator);
 		} else if (character_attribute::try_get(key) != nullptr) {
