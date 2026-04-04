@@ -1,8 +1,9 @@
 weapon = {
 	name = "Weapon"
 	item_creation_subtypes = {
-		common_melee_weapon = 70
-		uncommon_weapon = 10
+		common_melee_weapon = 50
+		uncommon_weapon = 20
+		#common_ranged_weapon = 30
 	}
 }
 

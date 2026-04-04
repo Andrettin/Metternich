@@ -1,3 +1,11 @@
+mundane_item = {
+	name = "Mundane Item"
+	item_creation_subtypes = {
+		#armor = 33
+		weapon = 33
+	}
+}
+
 minor_magic_item = {
 	name = "Minor Magic Item"
 	item_creation_subtypes = {

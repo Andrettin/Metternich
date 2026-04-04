@@ -1,4 +1,4 @@
-ogre_mage_eyelash = { #bar of steel worked by an ogre
+ogre_mage_eyelash = {
 	name = "Ogre Mage Eyelash"
 	item_class = miscellaneous
 	icon = heart

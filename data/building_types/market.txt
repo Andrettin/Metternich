@@ -17,6 +17,9 @@ shop = {
 	domain_modifier = {
 		economy = 1
 	}
+	item_creation_types = {
+		mundane_item
+	}
 }
 
 market = {
@@ -42,6 +45,7 @@ market = {
 		stability = 2
 	}
 	item_creation_types = {
+		mundane_item
 		minor_wondrous_item
 		minor_wondrous_item
 	}
