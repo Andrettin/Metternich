@@ -2,7 +2,9 @@ gauntlets = {
 	name = "Gauntlets"
 	item_class = gloves
 	icon = clothing
-	price = 1gp #correct?
+	price = 2gp
+	
+	#FIXME: should increase unarmed attack damage
 }
 
 gloves = {
