@@ -12,7 +12,7 @@ linz = {
 		}
 		
 		1672 = {
-			buildings += textile_mill #Christian Sind founded the Linzer Wollzeugfabrik (a wool textile factory located in Linz) in 1672; Source: Josef Dullinger, "Die Handelskompagnien Oesterreichs nach dem Oriente und nach Ostindien in der ersten Hälfte des 18. Jahrhunderts", 1900, p. 57.
+			buildings += trade_shop #Christian Sind founded the Linzer Wollzeugfabrik (a wool textile factory located in Linz) in 1672; Source: Josef Dullinger, "Die Handelskompagnien Oesterreichs nach dem Oriente und nach Ostindien in der ersten Hälfte des 18. Jahrhunderts", 1900, p. 57.
 		}
 		
 		1815 = {
