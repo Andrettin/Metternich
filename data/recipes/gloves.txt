@@ -1,0 +1,19 @@
+gauntlets_of_ogre_power = {
+	name = "Gauntlets of Ogre Power"
+	result_item_type = gauntlets
+	result_enchantment = of_ogre_power
+	crafter_conditions = {
+		caster_level >= 6
+		trait = craft_wondrous_item
+		spell = bulls_strength
+	}
+	materials = {
+		gauntlets
+		ogre_mage_eyelash #so that the creation of this item requires a material related to ogres
+	}
+	item_creation_types = {
+		#same as the Scroll of Bull's Strength
+		arcane_scroll_level_2
+		divine_scroll_level_2
+	}
+}
