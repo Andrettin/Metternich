@@ -21,7 +21,7 @@ bulls_strength = {
 		warrior
 	}
 	material_components = {
-		ox_hair #a few bull hairs; could also be bull dung instead
+		ox_hair = 3 #should be bull hairs instead; alternatively could also be bull dung
 	}
 	target_effects = {
 		status_effect = bulls_strength
