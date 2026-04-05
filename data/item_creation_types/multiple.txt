@@ -2,7 +2,7 @@ mundane_item = {
 	name = "Mundane Item"
 	item_creation_subtypes = {
 		alchemical_item = 17
-		#armor = 33
+		armor = 33
 		weapon = 33
 	}
 }

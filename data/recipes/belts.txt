@@ -1,0 +1,43 @@
+belt_of_giant_strength_4 = {
+	name = "Belt of Giant Strength +4"
+	result_item_type = belt
+	result_enchantment = of_giant_strength_4
+	min_caster_level = 10
+	required_traits = {
+		craft_wondrous_item
+	}
+	materials = {
+		belt
+	}
+	spells = {
+		bulls_strength
+	}
+	item_creation_types = {
+		#same as the Scroll of Bull's Strength
+		arcane_scroll_level_2
+		divine_scroll_level_2
+	}
+}
+
+belt_of_giant_strength_6 = {
+	name = "Belt of Giant Strength +6"
+	result_item_type = belt
+	result_enchantment = of_giant_strength_6
+	min_caster_level = 10
+	required_traits = {
+		craft_wondrous_item
+	}
+	materials = {
+		belt = {
+			enchantment = of_giant_strength_4
+		}
+	}
+	spells = {
+		bulls_strength
+	}
+	item_creation_types = {
+		#same as the Scroll of Bull's Strength
+		arcane_scroll_level_2
+		divine_scroll_level_2
+	}
+}

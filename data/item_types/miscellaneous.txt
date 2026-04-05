@@ -10,6 +10,9 @@ belt = {
 	item_class = belt
 	icon = clothing
 	price = 3sp
+	item_creation_types = {
+		armor
+	}
 }
 
 book = {
