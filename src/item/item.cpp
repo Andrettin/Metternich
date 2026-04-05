@@ -190,7 +190,7 @@ std::string item::create_name(const item_type *type, const item_material *materi
 	}
 
 	if (recipe != nullptr) {
-		name += " of " + recipe->get_name();
+		name = "Recipe of " + recipe->get_name();
 	}
 
 	if (enchantment != nullptr) {
