@@ -27,6 +27,6 @@ ox_hair = {
 	price = 1cp
 	stackable = true
 	item_creation_types = {
-		#alchemical_item
+		alchemical_item
 	}
 }

@@ -48,6 +48,7 @@ public:
 	~recipe();
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
+	virtual void initialize() override;
 	virtual void check() const override;
 
 	const icon *get_icon() const;
@@ -81,6 +82,8 @@ public:
 	{
 		return this->materials;
 	}
+
+	void add_material(const item_type *item_type);
 
 	const std::vector<const spell *> &get_spells() const
 	{

@@ -65,6 +65,18 @@ void recipe::process_gsml_scope(const gsml_data &scope)
 	}
 }
 
+void recipe::initialize()
+{
+	//add material components from spells to the materials of the recipe
+	for (const spell *spell : this->get_spells()) {
+		for (const item_type *material_component : spell->get_material_components()) {
+			this->add_material(material_component);
+		}
+	}
+
+	named_data_entry::initialize();
+}
+
 void recipe::check() const
 {
 	if (this->get_result_item_type() == nullptr) {
@@ -75,6 +87,18 @@ void recipe::check() const
 const icon *recipe::get_icon() const
 {
 	return this->get_result_item_type()->get_icon();
+}
+
+void recipe::add_material(const item_type *item_type)
+{
+	for (material &material : this->materials) {
+		if (material.item_type == item_type) {
+			++material.quantity;
+			return;
+		}
+	}
+
+	this->materials.emplace_back(item_type);
 }
 
 int recipe::get_price() const
