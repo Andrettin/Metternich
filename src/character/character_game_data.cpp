@@ -1740,11 +1740,6 @@ void character_game_data::change_attribute_value(const character_attribute *attr
 	}
 
 	const int old_value = this->get_attribute_value(attribute);
-
-	if (this->get_office() != nullptr) {
-		this->apply_office_modifier(this->domain, this->get_office(), -1);
-	}
-
 	const int new_value = (this->attribute_values[attribute] += change);
 
 	if (new_value == 0) {
@@ -1753,10 +1748,6 @@ void character_game_data::change_attribute_value(const character_attribute *attr
 
 	for (const skill *skill : attribute->get_derived_skills()) {
 		this->change_skill_value(skill, change);
-	}
-
-	if (this->get_office() != nullptr) {
-		this->apply_office_modifier(this->domain, this->get_office(), 1);
 	}
 
 	this->on_attribute_value_changed(attribute, new_value, old_value);
