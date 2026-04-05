@@ -36,6 +36,7 @@
 #include "infrastructure/pathway.h"
 #include "infrastructure/wonder.h"
 #include "item/item.h"
+#include "item/item_creation_type.h"
 #include "map/diplomatic_map_mode.h"
 #include "map/map.h"
 #include "map/province.h"
@@ -279,6 +280,17 @@ void site_game_data::collect_income()
 void site_game_data::check_item_slots()
 {
 	std::vector<building_item_slot *> item_slots = this->get_item_slots();
+
+	for (building_item_slot *item_slot : item_slots) {
+		if (item_slot->get_item() != nullptr) {
+			continue;
+		}
+
+		if (item_slot->get_item_creation_type()->is_mundane()) {
+			//mundane item slots are always refilled
+			item_slot->create_item();
+		}
+	}
 
 	std::erase_if(item_slots, [](const building_item_slot *item_slot) {
 		return item_slot->get_item() != nullptr;

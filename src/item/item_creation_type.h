@@ -47,6 +47,8 @@ public:
 
 	bool can_create_item_type(const item_type *item_type) const;
 
+	bool is_mundane() const;
+
 signals:
 	void changed();
 

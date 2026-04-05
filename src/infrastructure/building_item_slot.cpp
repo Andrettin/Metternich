@@ -84,10 +84,12 @@ void building_item_slot::create_item()
 
 	static constexpr dice creation_chance_dice(1, 100);
 
-	const int creation_chance_result = random::get()->roll_dice(creation_chance_dice);
+	if (!this->get_item_creation_type()->is_mundane()) { //mundane item slots are always refilled
+		const int creation_chance_result = random::get()->roll_dice(creation_chance_dice);
 
-	if (creation_chance_result <= 50) {
-		return;
+		if (creation_chance_result <= 50) {
+			return;
+		}
 	}
 
 	this->set_item(this->get_item_creation_type()->create_item(this->get_building_slot()->get_settlement()));

@@ -162,7 +162,6 @@ qunique_ptr<item> item_creation_type::create_item(const site *creation_site) con
 	return make_qunique<item>(item_type, nullptr, enchantment, spell, recipe);
 }
 
-
 bool item_creation_type::can_create_item_type(const item_type *item_type) const
 {
 	if (vector::contains(this->item_types, item_type)) {
@@ -176,6 +175,17 @@ bool item_creation_type::can_create_item_type(const item_type *item_type) const
 	}
 
 	return false;
+}
+
+bool item_creation_type::is_mundane() const
+{
+	for (const item_creation_type *item_creation_subtype : this->item_creation_subtypes) {
+		if (!item_creation_subtype->is_mundane()) {
+			return false;
+		}
+	}
+
+	return this->enchantments.empty() && this->spells.empty() && this->recipes.empty();
 }
 
 }
