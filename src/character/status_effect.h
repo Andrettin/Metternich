@@ -20,7 +20,7 @@ class status_effect final : public named_data_entry, public data_type<status_eff
 	Q_PROPERTY(QString adjective READ get_adjective_qstring NOTIFY changed)
 	Q_PROPERTY(const metternich::saving_throw_type* saving_throw_type MEMBER saving_throw_type READ get_saving_throw_type NOTIFY changed)
 	Q_PROPERTY(int saving_throw_modifier MEMBER saving_throw_modifier READ get_saving_throw_modifier NOTIFY changed)
-	Q_PROPERTY(archimedes::dice duration_rounds_dice MEMBER duration_rounds_dice READ get_duration_rounds_dice NOTIFY changed)
+	Q_PROPERTY(archimedes::dice duration_rounds MEMBER duration_rounds READ get_duration_rounds NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "status_effect";
@@ -30,6 +30,7 @@ public:
 	explicit status_effect(const std::string &identifier);
 	~status_effect();
 
+	virtual void process_gsml_property(const gsml_property &property) override;
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;
 
@@ -58,10 +59,17 @@ public:
 		return this->saving_throw_modifier;
 	}
 
-	const dice &get_duration_rounds_dice() const
+	const dice &get_duration_rounds() const
 	{
-		return this->duration_rounds_dice;
+		return this->duration_rounds;
 	}
+
+	const std::chrono::seconds &get_duration_per_caster_level() const
+	{
+		return this->duration_per_caster_level;
+	}
+
+	std::chrono::seconds get_duration(const std::optional<int> &caster_level) const;
 
 	const effect_list<const character> *get_end_effects() const
 	{
@@ -75,7 +83,8 @@ private:
 	std::string adjective;
 	const metternich::saving_throw_type *saving_throw_type = nullptr;
 	int saving_throw_modifier = 0;
-	dice duration_rounds_dice;
+	dice duration_rounds;
+	std::chrono::seconds duration_per_caster_level = std::chrono::seconds(0);
 	std::unique_ptr<effect_list<const character>> end_effects; //effects after the duration has passed
 };
 

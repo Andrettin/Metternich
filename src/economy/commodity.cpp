@@ -12,6 +12,7 @@
 #include "util/dice.h"
 #include "util/log_util.h"
 #include "util/number_util.h"
+#include "util/string_conversion_util.h"
 #include "util/string_util.h"
 
 namespace metternich {
@@ -131,31 +132,12 @@ int commodity::get_unit_value(const commodity_unit *unit) const
 
 std::pair<std::string, const commodity_unit *> commodity::string_to_number_string_and_unit(const std::string &str) const
 {
-	size_t suffix_pos = std::string::npos;
-	bool has_suffix = false;
+	const auto [number_str, suffix] = string::to_number_string_and_unit_string(str);
 
-	for (int i = (static_cast<int>(str.size()) - 1); i >= 0; --i) {
-		const char c = str[i];
-
-		if (!std::isdigit(c)) {
-			has_suffix = true;
-			continue;
-		}
-
-		if (!has_suffix) {
-			break;
-		}
-
-		suffix_pos = i + 1;
-		break;
+	if (suffix.empty()) {
+		return { number_str, nullptr };
 	}
 
-	if (suffix_pos == std::string::npos) {
-		return { str, nullptr };
-	}
-
-	const std::string number_str = str.substr(0, suffix_pos);
-	const std::string suffix = str.substr(suffix_pos);
 	const commodity_unit *unit = commodity_unit::get(suffix);
 
 	return { number_str, unit };

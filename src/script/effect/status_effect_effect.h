@@ -40,13 +40,22 @@ public:
 		}
 
 		if (!saving_throw_successful) {
-			if (ctx.in_combat) {
-				scope->get_game_data()->set_status_effect_rounds(this->status_effect, random::get()->roll_dice(this->status_effect->get_duration_rounds_dice()));
-			} else {
-				//if we are out of combat, resolve the status effect immediately
+			std::optional<int> caster_level;
+
+			if (std::holds_alternative<const character *>(ctx.source_scope)) {
+				const character *caster = std::get<const character *>(ctx.source_scope);
+				caster_level = caster->get_game_data()->get_level();
+			}
+
+			const std::chrono::seconds duration = this->status_effect->get_duration(caster_level);
+
+			if (!ctx.in_combat && duration < std::chrono::months(1)) {
+				//if we are out of combat and the duration is less than a month, resolve the status effect immediately
 				if (this->status_effect->get_end_effects() != nullptr) {
 					this->status_effect->get_end_effects()->do_effects(scope, ctx);
 				}
+			} else {
+				scope->get_game_data()->set_status_effect_duration(this->status_effect, duration);
 			}
 		}
 	}

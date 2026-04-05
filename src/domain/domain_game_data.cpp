@@ -457,6 +457,10 @@ QCoro::Task<void> domain_game_data::do_turn()
 				character->get_game_data()->ai_sell_items();
 				character->get_game_data()->ai_buy_items();
 			}
+
+			const int turn_days = game::get()->get_date().daysTo(game::get()->get_next_date());
+			context ctx(this->domain);
+			character->get_game_data()->decrement_status_effect_durations(std::chrono::days(turn_days), ctx);
 		}
 
 		this->do_transporter_recruitment();

@@ -305,8 +305,8 @@ QCoro::Task<void> combat::start_coro()
 	std::vector<const character *> all_characters = this->attacking_party->get_characters();
 	vector::merge(all_characters, this->defending_party->get_characters());
 	for (const character *character : all_characters) {
-		while (character->get_game_data()->has_any_status_effect()) {
-			character->get_game_data()->decrement_status_effect_rounds();
+		while (character->get_game_data()->has_any_status_effect_with_less_than_duration(std::chrono::months(1))) {
+			character->get_game_data()->decrement_status_effect_durations(defines::get()->get_combat_round_duration(), this->ctx);
 		}
 	}
 
@@ -345,7 +345,7 @@ QCoro::Task<void> combat::do_round()
 	std::vector<const character *> all_characters = this->attacking_party->get_characters();
 	vector::merge(all_characters, this->defending_party->get_characters());
 	for (const character *character : all_characters) {
-		character->get_game_data()->decrement_status_effect_rounds();
+		character->get_game_data()->decrement_status_effect_durations(defines::get()->get_combat_round_duration(), this->ctx);
 	}
 }
 
@@ -800,7 +800,7 @@ std::string combat::get_tile_text(const QPoint &tile_pos) const
 		const std::string full_name = character_game_data->get_full_name();
 		text += " " + (!full_name.empty() ? (full_name + " (" + type_name + ")") : type_name);
 
-		for (const auto &[status_effect, rounds] : character_game_data->get_status_effect_rounds()) {
+		for (const auto &[status_effect, duration] : character_game_data->get_status_effect_durations()) {
 			text += std::format(" ({})", status_effect->get_adjective());
 		}
 	} else if (tile.object != nullptr) {

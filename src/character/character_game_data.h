@@ -55,6 +55,7 @@ class trait_type;
 enum class age_category;
 enum class character_modifier_type;
 enum class military_unit_stat;
+struct context;
 
 template <typename scope_type>
 class modifier;
@@ -105,7 +106,7 @@ class character_game_data final : public QObject
 	Q_PROPERTY(bool deployable READ is_deployable CONSTANT)
 	Q_PROPERTY(const metternich::military_unit* military_unit READ get_military_unit NOTIFY military_unit_changed)
 	Q_PROPERTY(const metternich::civilian_unit* civilian_unit READ get_civilian_unit NOTIFY civilian_unit_changed)
-	Q_PROPERTY(QVariantList status_effects READ get_status_effects_qvariant_list NOTIFY status_effect_rounds_changed)
+	Q_PROPERTY(QVariantList status_effects READ get_status_effects_qvariant_list NOTIFY status_effect_durations_changed)
 
 public:
 	explicit character_game_data(const metternich::character *character);
@@ -843,40 +844,52 @@ public:
 
 	bool has_any_status_effect() const
 	{
-		return !this->status_effect_rounds.empty();
+		return !this->status_effect_durations.empty();
+	}
+
+	bool has_any_status_effect_with_less_than_duration(const std::chrono::seconds &duration_threshold) const
+	{
+		for (const auto &[status_effect, duration] : this->status_effect_durations) {
+			if (duration < duration_threshold) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	bool has_status_effect(const status_effect *status_effect) const
 	{
-		return this->get_status_effect_rounds(status_effect) > 0;
+		return this->status_effect_durations.find(status_effect) != this->status_effect_durations.end();
 	}
 
 	QVariantList get_status_effects_qvariant_list() const;
 
-	const data_entry_map<status_effect, int> &get_status_effect_rounds() const
+	const data_entry_map<status_effect, std::chrono::seconds> &get_status_effect_durations() const
 	{
-		return this->status_effect_rounds;
+		return this->status_effect_durations;
 	}
 
-	int get_status_effect_rounds(const status_effect *status_effect) const
+	const std::chrono::seconds &get_status_effect_duration(const status_effect *status_effect) const
 	{
-		const auto find_iterator = this->status_effect_rounds.find(status_effect);
+		const auto find_iterator = this->status_effect_durations.find(status_effect);
 
-		if (find_iterator != this->status_effect_rounds.end()) {
+		if (find_iterator != this->status_effect_durations.end()) {
 			return find_iterator->second;
 		}
 
-		return 0;
+		static constexpr std::chrono::seconds zero = std::chrono::seconds(0);
+		return zero;
 	}
 
-	void set_status_effect_rounds(const status_effect *status_effect, const int rounds);
+	void set_status_effect_duration(const status_effect *status_effect, const std::chrono::seconds &duration);
 
-	void change_status_effect_rounds(const status_effect *status_effect, const int change)
+	void change_status_effect_duration(const status_effect *status_effect, const std::chrono::seconds &change)
 	{
-		this->set_status_effect_rounds(status_effect, this->get_status_effect_rounds(status_effect) + change);
+		this->set_status_effect_duration(status_effect, this->get_status_effect_duration(status_effect) + change);
 	}
 
-	void decrement_status_effect_rounds();
+	void decrement_status_effect_durations(const std::chrono::seconds &decrement, context &ctx);
 
 	const domain_set &get_ruled_domains() const
 	{
@@ -964,7 +977,7 @@ signals:
 	void unequipped_items_changed();
 	void equipped_items_changed();
 	void equipped_item_changed(const metternich::item_slot *slot, const int slot_index);
-	void status_effect_rounds_changed();
+	void status_effect_durations_changed();
 
 private:
 	const metternich::character *character = nullptr;
@@ -1019,7 +1032,7 @@ private:
 	std::map<military_unit_stat, centesimal_int> commanded_military_unit_stat_modifiers;
 	military_unit_type_map<std::map<military_unit_stat, centesimal_int>> commanded_military_unit_type_stat_modifiers;
 	std::vector<const trait *> target_traits;
-	data_entry_map<status_effect, int> status_effect_rounds; //doesn't need to be saved since the game cannot be saved from within combat
+	data_entry_map<status_effect, std::chrono::seconds> status_effect_durations;
 	domain_set ruled_domains; //domains that this character has ever ruled
 	domain_set reigned_domains; //domains that this character has ever ruled with a regnal number
 	std::set<const flag *> flags;

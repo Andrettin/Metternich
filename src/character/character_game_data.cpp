@@ -249,6 +249,10 @@ void character_game_data::process_gsml_scope(const gsml_data &scope)
 				this->equipped_items[item_ptr->get_slot()].push_back(item_ptr);
 			}
 		});
+	} else if (tag == "status_effect_durations") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->status_effect_durations[status_effect::get(property.get_key())] = std::chrono::seconds(std::stoll(property.get_value()));
+		});
 	} else if (tag == "ruled_domains") {
 		for (const std::string &value : values) {
 			this->ruled_domains.insert(domain::get(value));
@@ -431,6 +435,14 @@ gsml_data character_game_data::to_gsml_data() const
 			items_data.add_child(item->to_gsml_data());
 		}
 		data.add_child(std::move(items_data));
+	}
+
+	if (!this->status_effect_durations.empty()) {
+		gsml_data status_effect_durations_data("status_effect_durations");
+		for (const auto &[status_effect, duration] : this->status_effect_durations) {
+			status_effect_durations_data.add_property(status_effect->get_identifier(), std::to_string(duration.count()));
+		}
+		data.add_child(std::move(status_effect_durations_data));
 	}
 
 	if (!this->get_ruled_domains().empty()) {
@@ -3600,37 +3612,41 @@ void character_game_data::set_commanded_military_unit_type_stat_modifier(const m
 
 QVariantList character_game_data::get_status_effects_qvariant_list() const
 {
-	return container::to_qvariant_list(archimedes::map::get_keys(this->status_effect_rounds));
+	return container::to_qvariant_list(archimedes::map::get_keys(this->status_effect_durations));
 }
 
-void character_game_data::set_status_effect_rounds(const status_effect *status_effect, const int rounds)
+void character_game_data::set_status_effect_duration(const status_effect *status_effect, const std::chrono::seconds &duration)
 {
-	if (rounds == this->get_status_effect_rounds(status_effect)) {
+	using namespace std::chrono_literals;
+
+	if (duration == this->get_status_effect_duration(status_effect)) {
 		return;
 	}
 
-	if (rounds == 0) {
-		this->status_effect_rounds.erase(status_effect);
+	if (duration <= 0s) {
+		this->status_effect_durations.erase(status_effect);
 	} else {
-		this->status_effect_rounds[status_effect] = rounds;
+		this->status_effect_durations[status_effect] = duration;
 	}
 
 	if (game::get()->is_running()) {
-		emit status_effect_rounds_changed();
+		emit status_effect_durations_changed();
 	}
 }
 
-void character_game_data::decrement_status_effect_rounds()
+void character_game_data::decrement_status_effect_durations(const std::chrono::seconds &decrement, context &ctx)
 {
-	const std::vector<const status_effect *> status_effects = archimedes::map::get_keys(this->status_effect_rounds);
+	using namespace std::chrono_literals;
+
+	const std::vector<const status_effect *> status_effects = archimedes::map::get_keys(this->status_effect_durations);
 
 	for (const status_effect *status_effect : status_effects) {
-		this->change_status_effect_rounds(status_effect, -1);
+		this->change_status_effect_duration(status_effect, -decrement);
 
-		if (this->get_status_effect_rounds(status_effect) == 0 && status_effect->get_end_effects() != nullptr) {
-			context ctx(this->character);
-			ctx.in_combat = true; //must be in combat for status effect rounds to be decremented
-			status_effect->get_end_effects()->do_effects(this->character, ctx);
+		if (this->get_status_effect_duration(status_effect) <= 0s) {
+			if (status_effect->get_end_effects() != nullptr) {
+				status_effect->get_end_effects()->do_effects(this->character, ctx);
+			}
 		}
 	}
 }
