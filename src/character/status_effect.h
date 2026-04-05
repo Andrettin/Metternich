@@ -13,6 +13,9 @@ class saving_throw_type;
 template <typename scope_type>
 class effect_list;
 
+template <typename scope_type>
+class modifier;
+
 class status_effect final : public named_data_entry, public data_type<status_effect>
 {
 	Q_OBJECT
@@ -71,6 +74,11 @@ public:
 
 	std::chrono::seconds get_duration(const std::optional<int> &caster_level) const;
 
+	const metternich::modifier<const character> *get_modifier() const
+	{
+		return this->modifier.get();
+	}
+
 	const effect_list<const character> *get_end_effects() const
 	{
 		return this->end_effects.get();
@@ -85,6 +93,7 @@ private:
 	int saving_throw_modifier = 0;
 	dice duration_rounds;
 	std::chrono::seconds duration_per_caster_level = std::chrono::seconds(0);
+	std::unique_ptr<const metternich::modifier<const character>> modifier;
 	std::unique_ptr<effect_list<const character>> end_effects; //effects after the duration has passed
 };
 

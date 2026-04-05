@@ -3644,8 +3644,18 @@ void character_game_data::set_status_effect_duration(const status_effect *status
 	}
 
 	if (duration <= 0s) {
+		if (status_effect->get_modifier() != nullptr) {
+			status_effect->get_modifier()->remove(this->character);
+		}
+
 		this->status_effect_durations.erase(status_effect);
 	} else {
+		if (!this->status_effect_durations.contains(status_effect)) {
+			if (status_effect->get_modifier() != nullptr) {
+				status_effect->get_modifier()->apply(this->character);
+			}
+		}
+
 		this->status_effect_durations[status_effect] = duration;
 	}
 

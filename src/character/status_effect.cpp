@@ -4,6 +4,7 @@
 
 #include "database/defines.h"
 #include "script/effect/effect_list.h"
+#include "script/modifier.h"
 #include "util/random.h"
 #include "util/string_conversion_util.h"
 
@@ -33,7 +34,11 @@ void status_effect::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 
-	if (tag == "end_effects") {
+	if (tag == "modifier") {
+		auto modifier = std::make_unique<metternich::modifier<const character>>();
+		modifier->process_gsml_data(scope);
+		this->modifier = std::move(modifier);
+	} else if (tag == "end_effects") {
 		this->end_effects = std::make_unique<metternich::effect_list<const character>>();
 		this->end_effects->process_gsml_data(scope);
 	} else {
