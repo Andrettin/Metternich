@@ -1,10 +1,32 @@
 ogre_mage_eyelash = {
 	name = "Ogre Mage Eyelash"
 	item_class = miscellaneous
-	icon = heart
+	icon = sack_2
 	price = 40gp
 	stackable = true
 	item_creation_types = {
 		alchemical_item
+	}
+}
+
+ox_dung = {
+	name = "Ox Dung"
+	item_class = miscellaneous
+	icon = sack_2
+	price = 1cp
+	stackable = true
+	item_creation_types = {
+		#alchemical_item
+	}
+}
+
+ox_hair = {
+	name = "Ox Hair"
+	item_class = miscellaneous
+	icon = sack_2
+	price = 1cp
+	stackable = true
+	item_creation_types = {
+		#alchemical_item
 	}
 }

@@ -1,0 +1,10 @@
+bulls_strength = {
+	name = "Bull's Strength"
+	duration_per_caster_level = 1min
+	modifier = {
+		strength = {
+			modifier_type = enhancement
+			modifier = 4
+		}
+	}
+}

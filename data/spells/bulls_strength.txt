@@ -1,0 +1,29 @@
+bulls_strength = {
+	name = "Bull's Strength"
+	level = 2
+	icon = labor
+	price = 150gp
+	target = ally
+	range = 1
+	sound = magic_holy
+	arcane_schools = {
+		alteration #transmutation
+	}
+	divine_domains = {
+		strength
+	}
+	character_classes = {
+		cleric
+		druid
+		mage
+		paladin
+		aristocrat
+		warrior
+	}
+	material_components = {
+		ox_hair #a few bull hairs; could also be bull dung instead
+	}
+	target_effects = {
+		status_effect = bulls_strength
+	}
+}

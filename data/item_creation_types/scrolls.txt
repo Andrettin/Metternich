@@ -27,7 +27,7 @@ minor_arcane_scroll = {
 	item_creation_subtypes = {
 		#arcane_scroll_level_0 = 5
 		arcane_scroll_level_1 = 45
-		#arcane_scroll_level_2 = 45
+		arcane_scroll_level_2 = 45
 		arcane_scroll_level_3 = 5
 	}
 }
@@ -35,7 +35,7 @@ minor_arcane_scroll = {
 medium_arcane_scroll = {
 	name = "Medium Arcane Scroll"
 	item_creation_subtypes = {
-		#arcane_scroll_level_2 = 5
+		arcane_scroll_level_2 = 5
 		arcane_scroll_level_3 = 60
 		#arcane_scroll_level_4 = 30
 		arcane_scroll_level_5 = 5
@@ -59,7 +59,7 @@ minor_divine_scroll = {
 	item_creation_subtypes = {
 		#divine_scroll_level_0 = 5
 		divine_scroll_level_1 = 45
-		#divine_scroll_level_2 = 45
+		divine_scroll_level_2 = 45
 		divine_scroll_level_3 = 5
 	}
 }
@@ -67,7 +67,7 @@ minor_divine_scroll = {
 medium_divine_scroll = {
 	name = "Medium Divine Scroll"
 	item_creation_subtypes = {
-		#divine_scroll_level_2 = 5
+		divine_scroll_level_2 = 5
 		divine_scroll_level_3 = 60
 		#divine_scroll_level_4 = 30
 		divine_scroll_level_5 = 5
@@ -94,6 +94,16 @@ arcane_scroll_level_1 = {
 	spells = {
 		arcane_missile = 2
 		shocking_grasp = 2
+	}
+}
+
+arcane_scroll_level_2 = {
+	name = "Arcane Scroll Level 2"
+	item_types = {
+		scroll
+	}
+	spells = {
+		bulls_strength = 3
 	}
 }
 
@@ -125,6 +135,16 @@ divine_scroll_level_1 = {
 	spells = {
 		cause_light_wounds = 2
 		cure_light_wounds = 5
+	}
+}
+
+divine_scroll_level_2 = {
+	name = "Divine Scroll Level 2"
+	item_types = {
+		scroll
+	}
+	spells = {
+		bulls_strength = 3
 	}
 }
 
