@@ -306,14 +306,9 @@ std::string character_class::get_level_modifier_string(const int level, const me
 
 	for (const saving_throw_type *saving_throw_type : saving_throw_type::get_all()) {
 		const level_bonus_table *saving_throw_bonus_table = this->get_saving_throw_bonus_table(saving_throw_type);
+		const int saving_throw_bonus = saving_throw_bonus_table->get_bonus_per_level(level);
 
-		int saving_throw_bonus = saving_throw_bonus_table->get_bonus_per_level(level);
-		if (saving_throw_type->get_base_saving_throw_type() != nullptr) {
-			//derived saving throw type bonus tables are applied with the base saving throw type bonus subtracted from it
-			saving_throw_bonus -= this->get_saving_throw_bonus_table(saving_throw_type->get_base_saving_throw_type())->get_bonus_per_level(level);
-		}
-
-		if (saving_throw_bonus >= 0) {
+		if (saving_throw_bonus != 0) {
 			if (!str.empty()) {
 				str += "\n";
 			}
