@@ -3,6 +3,7 @@ symbol = {
 	level = 7
 	icon = golden_cross
 	price = 6650gp
+	casting_time_initiative_modifier = 3
 	battle_target = enemy
 	battle_range = 3
 	battle_result = rout

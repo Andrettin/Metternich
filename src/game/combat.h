@@ -258,10 +258,10 @@ public:
 	QCoro::Task<void> start_coro();
 
 	[[nodiscard]]
-	QCoro::Task<void> do_round();
+	QCoro::Task<void> do_round(std::map<const character *, int> &next_round_initiative_modifiers);
 
 	[[nodiscard]]
-	QCoro::Task<int64_t> do_character_round(const character *character, party *party, metternich::party *enemy_party, const int to_hit_modifier);
+	QCoro::Task<int64_t> do_character_round(const character *character, party *party, metternich::party *enemy_party, const int to_hit_modifier, int &next_round_initiative_modifier);
 
 	const character *choose_enemy(const character *character, const std::vector<const metternich::character *> &enemies) const;
 	const combat_object *choose_target_object(const character *character) const;

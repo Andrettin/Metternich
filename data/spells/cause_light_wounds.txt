@@ -5,6 +5,7 @@ cause_light_wounds = {
 	price = 25gp
 	target = enemy
 	range = 1
+	casting_time_initiative_modifier = 5
 	to_hit_check = true
 	sound = magic_holy
 	arcane_schools = {

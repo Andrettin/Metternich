@@ -3,6 +3,7 @@ holy_word = {
 	level = 7
 	icon = golden_cross
 	price = 2275gp
+	casting_time_initiative_modifier = 1
 	battle_target = enemy
 	battle_range = 3
 	battle_result = rout

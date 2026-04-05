@@ -3,6 +3,7 @@ flame_strike = {
 	level = 5
 	icon = research
 	price = 1125gp
+	casting_time_initiative_modifier = 8
 	battle_target = enemy
 	battle_range = 3
 	battle_result = rout

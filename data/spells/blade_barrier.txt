@@ -3,6 +3,7 @@ blade_barrier = {
 	level = 6
 	icon = saber
 	price = 1650gp
+	casting_time_initiative_modifier = 9
 	battle_target = enemy
 	battle_range = 3
 	battle_result = rout

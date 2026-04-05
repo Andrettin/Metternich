@@ -31,6 +31,7 @@ class spell final : public named_data_entry, public data_type<spell>
 	Q_PROPERTY(metternich::spell_target battle_target MEMBER battle_target READ get_battle_target NOTIFY changed)
 	Q_PROPERTY(int mana_cost MEMBER mana_cost NOTIFY changed)
 	Q_PROPERTY(int range MEMBER range READ get_range NOTIFY changed)
+	Q_PROPERTY(int casting_time_initiative_modifier MEMBER casting_time_initiative_modifier READ get_casting_time_initiative_modifier NOTIFY changed)
 	Q_PROPERTY(int battle_range MEMBER battle_range READ get_battle_range NOTIFY changed)
 	Q_PROPERTY(attack_result battle_result MEMBER battle_result READ get_battle_result NOTIFY changed)
 	Q_PROPERTY(bool to_hit_check MEMBER to_hit_check READ requires_to_hit_check NOTIFY changed)
@@ -78,6 +79,11 @@ public:
 	int get_range() const
 	{
 		return this->range;
+	}
+
+	int get_casting_time_initiative_modifier() const
+	{
+		return this->casting_time_initiative_modifier;
 	}
 
 	int get_battle_range() const
@@ -144,6 +150,7 @@ private:
 	spell_target battle_target{};
 	int mana_cost = 0;
 	int range = 0;
+	int casting_time_initiative_modifier = 0;
 	int battle_range = 0;
 	attack_result battle_result{};
 	bool to_hit_check = false;

@@ -285,8 +285,10 @@ QCoro::Task<void> combat::start_coro()
 {
 	domain_event::check_events_for_scope(this->scope, event_trigger::combat_started, this->ctx);
 
+	std::map<const character *, int> next_round_initiative_modifiers;
+
 	while (!this->attacking_party->get_characters().empty() && (!this->defending_party->get_characters().empty() || !this->objects.empty())) {
-		co_await this->do_round();
+		co_await this->do_round(next_round_initiative_modifiers);
 	}
 
 	this->result.attacker_victory = this->defending_party->get_characters().empty();
@@ -308,7 +310,7 @@ QCoro::Task<void> combat::start_coro()
 	}
 }
 
-QCoro::Task<void> combat::do_round()
+QCoro::Task<void> combat::do_round(std::map<const character *, int> &next_round_initiative_modifiers)
 {
 	std::vector<const character *> all_characters;
 	std::map<const character *, party *> character_parties;
@@ -328,7 +330,7 @@ QCoro::Task<void> combat::do_round()
 
 	std::map<const character *, int> initiative_results;
 	for (const character *character : all_characters) {
-		initiative_results[character] = random::get()->roll_dice(combat::initiative_dice) - character->get_game_data()->get_initiative_bonus();
+		initiative_results[character] = random::get()->roll_dice(combat::initiative_dice) - character->get_game_data()->get_initiative_bonus() + next_round_initiative_modifiers[character];
 	}
 
 	std::sort(all_characters.begin(), all_characters.end(), [&initiative_results](const character *lhs, const character *rhs) {
@@ -341,6 +343,8 @@ QCoro::Task<void> combat::do_round()
 		return lhs->get_identifier() < rhs->get_identifier();
 	});
 
+	next_round_initiative_modifiers.clear();
+
 	for (const character *character : all_characters) {
 		if (character->get_game_data()->is_dead()) {
 			continue;
@@ -350,7 +354,7 @@ QCoro::Task<void> combat::do_round()
 		const bool is_attacker = party == this->attacking_party;
 		metternich::party *enemy_party = is_attacker ? this->defending_party : this->attacking_party;
 
-		const int64_t experience_award = co_await this->do_character_round(character, party, enemy_party, is_attacker ? this->attacker_to_hit_modifier : this->defender_to_hit_modifier);
+		const int64_t experience_award = co_await this->do_character_round(character, party, enemy_party, is_attacker ? this->attacker_to_hit_modifier : this->defender_to_hit_modifier, next_round_initiative_modifiers[character]);
 
 		if (is_attacker) {
 			this->attacker_experience_award += experience_award;
@@ -368,13 +372,14 @@ QCoro::Task<void> combat::do_round()
 	}
 }
 
-QCoro::Task<int64_t> combat::do_character_round(const character *character, party *party, metternich::party *enemy_party, const int to_hit_modifier)
+QCoro::Task<int64_t> combat::do_character_round(const character *character, party *party, metternich::party *enemy_party, const int to_hit_modifier, int &next_round_initiative_modifier)
 {
 	if (enemy_party->get_characters().empty() && (party == this->defending_party || this->objects.empty())) {
 		co_return 0;
 	}
 
 	int64_t experience_award = 0;
+	next_round_initiative_modifier = 0;
 
 	bool attacked = false;
 	combat_character_info *character_info = this->get_character_info(character);
@@ -478,6 +483,10 @@ QCoro::Task<int64_t> combat::do_character_round(const character *character, part
 						attacked = true;
 					}
 				}
+			}
+
+			if (attacked) {
+				next_round_initiative_modifier += this->get_current_spell()->get_casting_time_initiative_modifier();
 			}
 
 			this->set_current_spell(nullptr);

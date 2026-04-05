@@ -5,6 +5,7 @@ arcane_missile = {
 	price = 25gp
 	target = enemy
 	range = 6
+	casting_time_initiative_modifier = 1
 	sound = magic_missile
 	arcane_schools = {
 		evocation

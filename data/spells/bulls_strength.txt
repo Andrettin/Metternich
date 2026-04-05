@@ -17,8 +17,6 @@ bulls_strength = {
 		druid
 		mage
 		paladin
-		aristocrat
-		warrior
 	}
 	material_components = {
 		ox_hair = 3 #should be bull hairs instead; alternatively could also be bull dung

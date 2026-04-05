@@ -5,6 +5,7 @@ shocking_grasp = {
 	price = 25gp
 	target = enemy
 	range = 1
+	casting_time_initiative_modifier = 1
 	to_hit_check = true
 	sound = lightning
 	arcane_schools = {

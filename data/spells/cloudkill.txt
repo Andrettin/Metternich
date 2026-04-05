@@ -3,6 +3,7 @@ cloudkill = {
 	level = 5
 	icon = skull
 	price = 1125gp
+	casting_time_initiative_modifier = 5
 	battle_target = enemy
 	battle_range = 3
 	battle_result = destroy
