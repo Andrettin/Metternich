@@ -45,14 +45,6 @@ void status_effect::check() const
 {
 	using namespace std::chrono_literals;
 
-	if (this->get_adjective().empty()) {
-		throw std::runtime_error(std::format("Status effect \"{}\" has no adjective.", this->get_identifier()));
-	}
-
-	if (this->get_saving_throw_type() == nullptr) {
-		throw std::runtime_error(std::format("Status effect \"{}\" has no saving throw type.", this->get_identifier()));
-	}
-
 	if (this->get_duration_rounds().is_null() && this->get_duration_per_caster_level() == 0s) {
 		throw std::runtime_error(std::format("Status effect \"{}\" has no duration.", this->get_identifier()));
 	}

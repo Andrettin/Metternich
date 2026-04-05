@@ -27,19 +27,27 @@ public:
 
 	virtual void do_assignment_effect(const character *scope, context &ctx) const override
 	{
-		const bool saving_throw_successful = scope->get_game_data()->do_saving_throw(this->status_effect->get_saving_throw_type(), this->status_effect->get_saving_throw_modifier());
+		bool apply_status_effect = true;
 
-		if (scope == game::get()->get_player_character()) {
-			const portrait *war_minister_portrait = scope->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
+		if (this->status_effect->get_saving_throw_type() != nullptr) {
+			const bool saving_throw_successful = scope->get_game_data()->do_saving_throw(this->status_effect->get_saving_throw_type(), this->status_effect->get_saving_throw_modifier());
 
-			if (saving_throw_successful) {
-				engine_interface::get()->add_notification("Saving Throw Successful!", war_minister_portrait, std::format("You have succeeded in a {} saving throw, and managed to avoid being {}!", this->status_effect->get_saving_throw_type()->get_name(), string::lowered(this->status_effect->get_adjective())));
-			} else {
-				engine_interface::get()->add_notification("Saving Throw Failed!", war_minister_portrait, std::format("You have failed a {} saving throw, and are now {}!", this->status_effect->get_saving_throw_type()->get_name(), string::lowered(this->status_effect->get_adjective())));
+			if (scope == game::get()->get_player_character()) {
+				const portrait *war_minister_portrait = scope->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
+
+				const std::string status_effect_adjective = !this->status_effect->get_adjective().empty() ? string::lowered(this->status_effect->get_adjective()) : std::format("affected by {}", this->status_effect->get_name());
+
+				if (saving_throw_successful) {
+					engine_interface::get()->add_notification("Saving Throw Successful!", war_minister_portrait, std::format("You have succeeded in a {} saving throw, and managed to avoid being {}!", this->status_effect->get_saving_throw_type()->get_name(), status_effect_adjective));
+				} else {
+					engine_interface::get()->add_notification("Saving Throw Failed!", war_minister_portrait, std::format("You have failed a {} saving throw, and are now {}!", this->status_effect->get_saving_throw_type()->get_name(), status_effect_adjective));
+				}
 			}
+
+			apply_status_effect = !saving_throw_successful;
 		}
 
-		if (!saving_throw_successful) {
+		if (apply_status_effect) {
 			std::optional<int> caster_level;
 
 			if (std::holds_alternative<const character *>(ctx.source_scope)) {
@@ -66,7 +74,13 @@ public:
 		Q_UNUSED(indent);
 		Q_UNUSED(prefix);
 
-		return std::format("{} (Saving Throw: {} {})", this->status_effect->get_adjective(), this->status_effect->get_saving_throw_type()->get_name(), number::to_signed_string(scope->get_game_data()->get_saving_throw_bonus(this->status_effect->get_saving_throw_type()) + this->status_effect->get_saving_throw_modifier()));
+		const std::string_view status_effect_str = !this->status_effect->get_adjective().empty() ? this->status_effect->get_adjective() : this->status_effect->get_name();
+
+		if (this->status_effect->get_saving_throw_type() != nullptr) {
+			return std::format("{} (Saving Throw: {} {})", status_effect_str, this->status_effect->get_saving_throw_type()->get_name(), number::to_signed_string(scope->get_game_data()->get_saving_throw_bonus(this->status_effect->get_saving_throw_type()) + this->status_effect->get_saving_throw_modifier()));
+		} else {
+			return std::string(status_effect_str);
+		}
 	}
 
 private:

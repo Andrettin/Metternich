@@ -801,7 +801,7 @@ std::string combat::get_tile_text(const QPoint &tile_pos) const
 		text += " " + (!full_name.empty() ? (full_name + " (" + type_name + ")") : type_name);
 
 		for (const auto &[status_effect, duration] : character_game_data->get_status_effect_durations()) {
-			text += std::format(" ({})", status_effect->get_adjective());
+			text += std::format(" ({})", !status_effect->get_adjective().empty() ? status_effect->get_adjective() : status_effect->get_name());
 		}
 	} else if (tile.object != nullptr) {
 		const combat_object *object = tile.object;
