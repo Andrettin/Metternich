@@ -12,6 +12,8 @@ namespace archimedes {
 
 namespace metternich {
 
+class saving_throw_type;
+
 class character_data_model : public QAbstractItemModel
 {
 	Q_OBJECT
@@ -92,6 +94,7 @@ public:
 	void update_movement_row();
 	void create_saving_throw_rows();
 	void update_saving_throw_rows();
+	void create_saving_throw_row(const saving_throw_type *saving_throw_type, const int bonus, data_entry_map<metternich::saving_throw_type, character_data_row *> &saving_throw_type_rows);
 	void create_skill_rows();
 	void update_skill_rows();
 	void create_trait_rows();

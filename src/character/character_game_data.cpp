@@ -1519,7 +1519,14 @@ void character_game_data::on_level_gained(const int affected_level, const int mu
 
 	for (const saving_throw_type *saving_throw_type : saving_throw_type::get_all()) {
 		const level_bonus_table *saving_throw_bonus_table = character_class->get_saving_throw_bonus_table(saving_throw_type);
-		this->change_saving_throw_bonus(saving_throw_type, saving_throw_bonus_table->get_bonus_per_level(affected_level) * multiplier);
+
+		int saving_throw_bonus = saving_throw_bonus_table->get_bonus_per_level(affected_level) * multiplier;
+		if (saving_throw_type->get_base_saving_throw_type() != nullptr) {
+			//derived saving throw type bonus tables are applied with the base saving throw type bonus subtracted from it
+			saving_throw_bonus -= character_class->get_saving_throw_bonus_table(saving_throw_type->get_base_saving_throw_type())->get_bonus_per_level(affected_level) * multiplier;
+		}
+
+		this->change_saving_throw_bonus(saving_throw_type, saving_throw_bonus);
 	}
 
 	const modifier<const metternich::character> *level_modifier = character_class->get_level_modifier(affected_level);
@@ -2210,6 +2217,10 @@ void character_game_data::change_saving_throw_bonus(const saving_throw_type *typ
 	const int new_value = (this->saving_throw_bonuses[type] += change);
 	if (new_value == 0) {
 		this->saving_throw_bonuses.erase(type);
+	}
+
+	for (const saving_throw_type *derived_type : type->get_derived_saving_throw_types()) {
+		this->change_saving_throw_bonus(derived_type, change);
 	}
 
 	if (game::get()->is_running()) {

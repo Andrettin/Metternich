@@ -505,12 +505,32 @@ void character_data_model::update_saving_throw_rows()
 
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
 
+	data_entry_map<saving_throw_type, character_data_row *> saving_throw_type_rows;
+
 	for (const auto &[saving_throw_type, bonus] : character_game_data->get_saving_throw_bonuses()) {
-		auto row = std::make_unique<character_data_row>(saving_throw_type->get_name() + ":", number::to_signed_string(bonus), this->saving_throw_row);
-		this->saving_throw_row->child_rows.push_back(std::move(row));
+		this->create_saving_throw_row(saving_throw_type, bonus, saving_throw_type_rows);
 	}
 
 	this->on_child_rows_inserted(this->saving_throw_row);
+}
+
+void character_data_model::create_saving_throw_row(const saving_throw_type *saving_throw_type, const int bonus, data_entry_map<metternich::saving_throw_type, character_data_row *> &saving_throw_type_rows)
+{
+	character_data_row *parent_row = nullptr;
+
+	if (saving_throw_type->get_base_saving_throw_type() != nullptr) {
+		if (!saving_throw_type_rows.contains(saving_throw_type->get_base_saving_throw_type())) {
+			this->create_saving_throw_row(saving_throw_type->get_base_saving_throw_type(), this->character->get_game_data()->get_saving_throw_bonus(saving_throw_type->get_base_saving_throw_type()), saving_throw_type_rows);
+		}
+
+		parent_row = saving_throw_type_rows.find(saving_throw_type->get_base_saving_throw_type())->second;
+	} else {
+		parent_row = this->saving_throw_row;
+	}
+
+	auto row = std::make_unique<character_data_row>(saving_throw_type->get_name() + ":", number::to_signed_string(bonus), parent_row);
+	saving_throw_type_rows[saving_throw_type] = row.get();
+	parent_row->child_rows.push_back(std::move(row));
 }
 
 void character_data_model::create_skill_rows()
