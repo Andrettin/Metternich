@@ -310,248 +310,261 @@ QCoro::Task<void> combat::start_coro()
 
 QCoro::Task<void> combat::do_round()
 {
-	int attacker_initiative = 0;
-	int defender_initiative = 0;
-	while (attacker_initiative == defender_initiative) {
-		attacker_initiative = random::get()->roll_dice(combat::initiative_dice);
-		defender_initiative = random::get()->roll_dice(combat::initiative_dice);
-	}
+	std::vector<const character *> all_characters;
+	std::map<const character *, party *> character_parties;
 
-	if (attacker_initiative < defender_initiative) {
-		this->attacker_experience_award += co_await this->do_party_round(this->attacking_party, this->defending_party, this->attacker_to_hit_modifier);
-		if (!this->surprise) {
-			this->defender_experience_award += co_await this->do_party_round(this->defending_party, this->attacking_party, this->defender_to_hit_modifier);
-		} else {
-			this->surprise = false;
-		}
+	for (const character *character : this->attacking_party->get_characters()) {
+		all_characters.push_back(character);
+		character_parties[character] = this->attacking_party;
+	}
+	if (this->surprise) { //if the defenders are surprised, they won't act in the first round
+		this->surprise = false;
 	} else {
-		if (!this->surprise) {
-			this->defender_experience_award += co_await this->do_party_round(this->defending_party, this->attacking_party, this->defender_to_hit_modifier);
-		} else {
-			this->surprise = false;
+		for (const character *character : this->defending_party->get_characters()) {
+			all_characters.push_back(character);
+			character_parties[character] = this->defending_party;
 		}
-		this->attacker_experience_award += co_await this->do_party_round(this->attacking_party, this->defending_party, this->attacker_to_hit_modifier);
 	}
 
-	std::vector<const character *> all_characters = this->attacking_party->get_characters();
-	vector::merge(all_characters, this->defending_party->get_characters());
+	std::map<const character *, int> initiative_results;
+	for (const character *character : all_characters) {
+		initiative_results[character] = random::get()->roll_dice(combat::initiative_dice) - character->get_game_data()->get_initiative_bonus();
+	}
+
+	std::sort(all_characters.begin(), all_characters.end(), [&initiative_results](const character *lhs, const character *rhs) {
+		const int lhs_initiative_result = initiative_results.find(lhs)->second;
+		const int rhs_initiative_result = initiative_results.find(rhs)->second;
+		if (lhs_initiative_result != rhs_initiative_result) {
+			return lhs_initiative_result < rhs_initiative_result;
+		}
+
+		return lhs->get_identifier() < rhs->get_identifier();
+	});
+
+	for (const character *character : all_characters) {
+		if (character->get_game_data()->is_dead()) {
+			continue;
+		}
+
+		party *party = character_parties.find(character)->second;
+		const bool is_attacker = party == this->attacking_party;
+		metternich::party *enemy_party = is_attacker ? this->defending_party : this->attacking_party;
+
+		const int64_t experience_award = co_await this->do_character_round(character, party, enemy_party, is_attacker ? this->attacker_to_hit_modifier : this->defender_to_hit_modifier);
+
+		if (is_attacker) {
+			this->attacker_experience_award += experience_award;
+		} else {
+			this->defender_experience_award += experience_award;
+		}
+	}
+
+	if (this->get_current_unit() != nullptr) {
+		this->set_current_unit(nullptr);
+	}
+
 	for (const character *character : all_characters) {
 		character->get_game_data()->decrement_status_effect_durations(defines::get()->get_combat_round_duration(), this->ctx);
 	}
 }
 
-QCoro::Task<int64_t> combat::do_party_round(metternich::party *party, metternich::party *enemy_party, const int to_hit_modifier)
+QCoro::Task<int64_t> combat::do_character_round(const character *character, party *party, metternich::party *enemy_party, const int to_hit_modifier)
 {
-	if (party->get_characters().empty()) {
-		co_return 0;
-	}
-
 	if (enemy_party->get_characters().empty() && (party == this->defending_party || this->objects.empty())) {
 		co_return 0;
 	}
 
 	int64_t experience_award = 0;
 
-	const std::vector<const character *> party_characters = party->get_characters();
-	for (const character *character : party_characters) {
-		if (enemy_party->get_characters().empty() && (party == this->defending_party || this->objects.empty())) {
-			break;
-		}
+	bool attacked = false;
+	combat_character_info *character_info = this->get_character_info(character);
+	character_info->set_remaining_movement(character->get_game_data()->get_combat_movement());
 
-		bool attacked = false;
-		combat_character_info *character_info = this->get_character_info(character);
-		character_info->set_remaining_movement(character->get_game_data()->get_combat_movement());
+	this->set_current_unit(character_info);
 
-		this->set_current_unit(character_info);
+	while (!attacked && character_info->get_remaining_movement() > 0) {
+		const QPoint current_tile_pos = character_info->get_tile_pos();
 
-		while (!attacked && character_info->get_remaining_movement() > 0) {
-			const QPoint current_tile_pos = character_info->get_tile_pos();
+		QPoint target_pos(-1, -1);
 
-			QPoint target_pos(-1, -1);
+		if (party->get_domain() == game::get()->get_player_country() && !this->is_autoplay_enabled()) {
+			emit movable_tiles_changed();
 
-			if (party->get_domain() == game::get()->get_player_country() && !this->is_autoplay_enabled()) {
-				emit movable_tiles_changed();
+			target_pos = co_await this->get_target();
 
-				target_pos = co_await this->get_target();
+			if (this->is_autoplay_enabled()) {
+				continue;
+			} else if (target_pos == QPoint(-1, -1)) {
+				//end unit's turn
+				break;
+			}
+		} else {
+			QPoint chosen_target_tile_pos(-1, -1);
 
-				if (this->is_autoplay_enabled()) {
-					continue;
-				} else if (target_pos == QPoint(-1, -1)) {
-					//end unit's turn
-					break;
-				}
+			if (!enemy_party->get_characters().empty()) {
+				const metternich::character *chosen_enemy = this->choose_enemy(character, enemy_party->get_characters());
+				assert_throw(chosen_enemy != nullptr);
+				const combat_character_info *chosen_enemy_info = this->get_character_info(chosen_enemy);
+				chosen_target_tile_pos = chosen_enemy_info->get_tile_pos();
 			} else {
-				QPoint chosen_target_tile_pos(-1, -1);
+				assert_throw(!this->objects.empty());
+				const combat_object *chosen_object = this->choose_target_object(character);
+				assert_throw(chosen_object != nullptr);
+				chosen_target_tile_pos = chosen_object->get_tile_pos();
+			}
 
-				if (!enemy_party->get_characters().empty()) {
-					const metternich::character *chosen_enemy = this->choose_enemy(character, enemy_party->get_characters());
-					assert_throw(chosen_enemy != nullptr);
-					const combat_character_info *chosen_enemy_info = this->get_character_info(chosen_enemy);
-					chosen_target_tile_pos = chosen_enemy_info->get_tile_pos();
-				} else {
-					assert_throw(!this->objects.empty());
-					const combat_object *chosen_object = this->choose_target_object(character);
-					assert_throw(chosen_object != nullptr);
-					chosen_target_tile_pos = chosen_object->get_tile_pos();
-				}
+			assert_throw(chosen_target_tile_pos != QPoint(-1, -1));
 
-				assert_throw(chosen_target_tile_pos != QPoint(-1, -1));
+			const int distance_to_target = point::distance_to(current_tile_pos, chosen_target_tile_pos);
+			if (distance_to_target <= character_info->get_range()) {
+				target_pos = chosen_target_tile_pos;
+			} else {
+				const int current_square_distance = point::square_distance_to(current_tile_pos, chosen_target_tile_pos);
+				int best_square_distance = std::numeric_limits<int>::max();
+				std::vector<QPoint> potential_tiles;
 
-				const int distance_to_target = point::distance_to(current_tile_pos, chosen_target_tile_pos);
-				if (distance_to_target <= character_info->get_range()) {
-					target_pos = chosen_target_tile_pos;
-				} else {
-					const int current_square_distance = point::square_distance_to(current_tile_pos, chosen_target_tile_pos);
-					int best_square_distance = std::numeric_limits<int>::max();
-					std::vector<QPoint> potential_tiles;
-
-					point::for_each_adjacent(current_tile_pos, [&](const QPoint &adjacent_pos) {
-						if (!this->get_map_rect().contains(adjacent_pos)) {
-							return;
-						}
-
-						if (!this->can_current_unit_move_to(adjacent_pos)) {
-							return;
-						}
-
-						if (this->can_current_unit_retreat_at(adjacent_pos)) {
-							return;
-						}
-
-						const int square_distance = point::square_distance_to(adjacent_pos, chosen_target_tile_pos);
-
-						if (square_distance >= current_square_distance) {
-							return;
-						}
-
-						if (square_distance < best_square_distance) {
-							best_square_distance = square_distance;
-							potential_tiles.clear();
-						}
-
-						if (square_distance <= best_square_distance) {
-							potential_tiles.push_back(adjacent_pos);
-						}
-					});
-
-					if (!potential_tiles.empty()) {
-						target_pos = vector::get_random(potential_tiles);
+				point::for_each_adjacent(current_tile_pos, [&](const QPoint &adjacent_pos) {
+					if (!this->get_map_rect().contains(adjacent_pos)) {
+						return;
 					}
-				}
 
-				if (target_pos == QPoint(-1, -1)) {
-					break;
+					if (!this->can_current_unit_move_to(adjacent_pos)) {
+						return;
+					}
+
+					if (this->can_current_unit_retreat_at(adjacent_pos)) {
+						return;
+					}
+
+					const int square_distance = point::square_distance_to(adjacent_pos, chosen_target_tile_pos);
+
+					if (square_distance >= current_square_distance) {
+						return;
+					}
+
+					if (square_distance < best_square_distance) {
+						best_square_distance = square_distance;
+						potential_tiles.clear();
+					}
+
+					if (square_distance <= best_square_distance) {
+						potential_tiles.push_back(adjacent_pos);
+					}
+				});
+
+				if (!potential_tiles.empty()) {
+					target_pos = vector::get_random(potential_tiles);
 				}
 			}
 
-			const combat_tile &tile = this->get_tile(target_pos);
-			const int distance = point::distance_to(current_tile_pos, target_pos);
+			if (target_pos == QPoint(-1, -1)) {
+				break;
+			}
+		}
 
-			if (this->get_current_spell() != nullptr) {
-				if (tile.character != nullptr) {
-					if (this->get_current_spell()->get_target() == spell_target::enemy && vector::contains(enemy_party->get_characters(), tile.character)) {
-						if (distance <= this->get_current_spell()->get_range()) {
-							co_await this->do_character_spellcast(character, this->get_current_spell(), tile.character, enemy_party, to_hit_modifier);
-							attacked = true;
-						}
-					} else if (this->get_current_spell()->get_target() == spell_target::ally && vector::contains(party->get_characters(), tile.character)) {
-						if (distance <= this->get_current_spell()->get_range()) {
-							co_await this->do_character_spellcast(character, this->get_current_spell(), tile.character, party, to_hit_modifier);
-							attacked = true;
-						}
-					}
-				}
+		const combat_tile &tile = this->get_tile(target_pos);
+		const int distance = point::distance_to(current_tile_pos, target_pos);
 
-				this->set_current_spell(nullptr);
-			} else {
-				if (tile.character != nullptr) {
-					if (distance <= character_info->get_range() && vector::contains(enemy_party->get_characters(), tile.character)) {
-						experience_award += co_await this->do_character_attack(character, tile.character, enemy_party, to_hit_modifier);
+		if (this->get_current_spell() != nullptr) {
+			if (tile.character != nullptr) {
+				if (this->get_current_spell()->get_target() == spell_target::enemy && vector::contains(enemy_party->get_characters(), tile.character)) {
+					if (distance <= this->get_current_spell()->get_range()) {
+						co_await this->do_character_spellcast(character, this->get_current_spell(), tile.character, enemy_party, to_hit_modifier);
 						attacked = true;
 					}
-				} else if (tile.object != nullptr) {
-					if (distance <= 1) {
-						//can only use objects (e.g. chests) if the enemy has been wiped out
-						if (this->can_current_character_use_object(tile.object)) {
-							if (tile.object->get_trap() != nullptr) {
-								bool disarmed = false;
-								if (tile.object->get_trap_found() && skill::get_disarm_traps_skill() != nullptr) {
-									disarmed = character->get_game_data()->do_skill_check(skill::get_disarm_traps_skill(), tile.object->get_trap()->get_disarm_modifier(), this->get_location());
-								}
+				} else if (this->get_current_spell()->get_target() == spell_target::ally && vector::contains(party->get_characters(), tile.character)) {
+					if (distance <= this->get_current_spell()->get_range()) {
+						co_await this->do_character_spellcast(character, this->get_current_spell(), tile.character, party, to_hit_modifier);
+						attacked = true;
+					}
+				}
+			}
 
-								if (disarmed) {
-									if (character->get_game_data()->get_domain() == game::get()->get_player_country()) {
-										const portrait *war_minister_portrait = character->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
-
-										engine_interface::get()->add_combat_notification(std::format("{} Disarmed", tile.object->get_trap()->get_name()), war_minister_portrait, std::format("You have disarmed the {} trap!", tile.object->get_trap()->get_name()));
-									}
-								} else if (tile.object->get_trap()->get_trigger_effects() != nullptr) {
-									context ctx = this->ctx;
-									ctx.root_scope = character;
-
-									if (character->get_game_data()->get_domain() == game::get()->get_player_country()) {
-										const portrait *war_minister_portrait = character->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
-										const std::string effects_string = tile.object->get_trap()->get_trigger_effects()->get_effects_string(character, ctx);
-
-										engine_interface::get()->add_combat_notification(std::format("{} Triggered", tile.object->get_trap()->get_name()), war_minister_portrait, effects_string);
-									}
-
-									tile.object->get_trap()->get_trigger_effects()->do_effects(character, ctx);
-								}
-
-								tile.object->remove_trap();
+			this->set_current_spell(nullptr);
+		} else {
+			if (tile.character != nullptr) {
+				if (distance <= character_info->get_range() && vector::contains(enemy_party->get_characters(), tile.character)) {
+					experience_award += co_await this->do_character_attack(character, tile.character, enemy_party, to_hit_modifier);
+					attacked = true;
+				}
+			} else if (tile.object != nullptr) {
+				if (distance <= 1) {
+					//can only use objects (e.g. chests) if the enemy has been wiped out
+					if (this->can_current_character_use_object(tile.object)) {
+						if (tile.object->get_trap() != nullptr) {
+							bool disarmed = false;
+							if (tile.object->get_trap_found() && skill::get_disarm_traps_skill() != nullptr) {
+								disarmed = character->get_game_data()->do_skill_check(skill::get_disarm_traps_skill(), tile.object->get_trap()->get_disarm_modifier(), this->get_location());
 							}
 
-							if (character->get_game_data()->is_dead()) {
-								co_await this->on_character_died(character, party);
-								break;
-							}
+							if (disarmed) {
+								if (character->get_game_data()->get_domain() == game::get()->get_player_country()) {
+									const portrait *war_minister_portrait = character->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
 
-							if (tile.object->get_use_effects() != nullptr) {
+									engine_interface::get()->add_combat_notification(std::format("{} Disarmed", tile.object->get_trap()->get_name()), war_minister_portrait, std::format("You have disarmed the {} trap!", tile.object->get_trap()->get_name()));
+								}
+							} else if (tile.object->get_trap()->get_trigger_effects() != nullptr) {
 								context ctx = this->ctx;
 								ctx.root_scope = character;
 
 								if (character->get_game_data()->get_domain() == game::get()->get_player_country()) {
-									std::string text = tile.object->get_description();
+									const portrait *war_minister_portrait = character->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
+									const std::string effects_string = tile.object->get_trap()->get_trigger_effects()->get_effects_string(character, ctx);
 
-									const std::string effects_string = tile.object->get_use_effects()->get_effects_string(character, ctx);
-									if (!text.empty()) {
-										text += "\n\n";
-									}
-									text += effects_string;
-
-									engine_interface::get()->add_combat_notification(std::format("{} {}", tile.object->get_object_type()->get_name(), tile.object->get_object_type()->get_usage_adjective()), nullptr, text);
+									engine_interface::get()->add_combat_notification(std::format("{} Triggered", tile.object->get_trap()->get_name()), war_minister_portrait, effects_string);
 								}
 
-								tile.object->get_use_effects()->do_effects(character, ctx);
+								tile.object->get_trap()->get_trigger_effects()->do_effects(character, ctx);
 							}
 
-							this->remove_object(tile.object);
-							attacked = true;
-						} else {
+							tile.object->remove_trap();
+						}
+
+						if (character->get_game_data()->is_dead()) {
+							co_await this->on_character_died(character, party);
+							break;
+						}
+
+						if (tile.object->get_use_effects() != nullptr) {
+							context ctx = this->ctx;
+							ctx.root_scope = character;
+
 							if (character->get_game_data()->get_domain() == game::get()->get_player_country()) {
-								const portrait *war_minister_portrait = character->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
+								std::string text = tile.object->get_description();
 
-								engine_interface::get()->add_combat_notification(std::format("Cannot Use {}", tile.object->get_object_type()->get_name()), war_minister_portrait, std::format("Your Excellency, the {} can only be used once all enemies have been defeated.", string::lowered(tile.object->get_object_type()->get_name())));
+								const std::string effects_string = tile.object->get_use_effects()->get_effects_string(character, ctx);
+								if (!text.empty()) {
+									text += "\n\n";
+								}
+								text += effects_string;
+
+								engine_interface::get()->add_combat_notification(std::format("{} {}", tile.object->get_object_type()->get_name(), tile.object->get_object_type()->get_usage_adjective()), nullptr, text);
 							}
+
+							tile.object->get_use_effects()->do_effects(character, ctx);
+						}
+
+						this->remove_object(tile.object);
+						attacked = true;
+					} else {
+						if (character->get_game_data()->get_domain() == game::get()->get_player_country()) {
+							const portrait *war_minister_portrait = character->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
+
+							engine_interface::get()->add_combat_notification(std::format("Cannot Use {}", tile.object->get_object_type()->get_name()), war_minister_portrait, std::format("Your Excellency, the {} can only be used once all enemies have been defeated.", string::lowered(tile.object->get_object_type()->get_name())));
 						}
 					}
-				} else if (this->can_current_unit_move_to(target_pos)) {
-					character_info->change_remaining_movement(-distance);
-					co_await this->move_character_to(character, target_pos);
+				}
+			} else if (this->can_current_unit_move_to(target_pos)) {
+				character_info->change_remaining_movement(-distance);
+				co_await this->move_character_to(character, target_pos);
 
-					if (this->can_current_unit_retreat_at(target_pos)) {
-						party->remove_character(character);
-						this->remove_character_info(character);
-						break;
-					}
+				if (this->can_current_unit_retreat_at(target_pos)) {
+					party->remove_character(character);
+					this->remove_character_info(character);
+					break;
 				}
 			}
 		}
-	}
-
-	if (this->get_current_unit() != nullptr) {
-		this->set_current_unit(nullptr);
 	}
 
 	co_return experience_award;
