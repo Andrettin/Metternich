@@ -1,6 +1,6 @@
 deceitful = {
 	name = "Deceitful"
-	icon = dagger
+	icon = dagger_bloody
 	types = {
 		proficiency
 	}
@@ -11,6 +11,50 @@ deceitful = {
 	modifier = {
 		disguise = 2
 		forgery = 2
+	}
+}
+
+great_fortitude = {
+	name = "Great Fortitude"
+	icon = labor
+	types = {
+		proficiency
+	}
+	modifier = {
+		fortitude = 2
+	}
+}
+
+improved_initiative = {
+	name = "Improved Initiative"
+	icon = saber
+	types = {
+		proficiency #maybe should be a weapon/combat proficiency instead?
+	}
+	modifier = {
+		initiative = 4
+	}
+}
+
+iron_will = {
+	name = "Iron Will"
+	icon = wall
+	types = {
+		proficiency
+	}
+	modifier = {
+		will = 2
+	}
+}
+
+lightning_reflexes = {
+	name = "Lightning Reflexes"
+	icon = research
+	types = {
+		proficiency
+	}
+	modifier = {
+		reflex = 2
 	}
 }
 
