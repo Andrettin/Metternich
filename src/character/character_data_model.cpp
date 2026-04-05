@@ -507,7 +507,7 @@ void character_data_model::update_initiative_bonus_row()
 
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
 
-	this->initiative_bonus_row->value = std::to_string(character_game_data->get_initiative_bonus());
+	this->initiative_bonus_row->value = number::to_signed_string(character_game_data->get_initiative_bonus());
 }
 
 void character_data_model::create_saving_throw_rows()
