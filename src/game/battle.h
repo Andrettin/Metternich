@@ -117,7 +117,9 @@ public:
 	[[nodiscard]]
 	QCoro::Task<void> do_unit_spellcast(const military_unit *unit, const spell *spell, military_unit *target, std::vector<military_unit *> &killed_units);
 
+	void notify_result();
 	void process_result();
+	Q_INVOKABLE void on_ended();
 
 	virtual battle_tile &get_tile(const QPoint &tile_pos) override;
 	virtual const battle_tile &get_tile(const QPoint &tile_pos) const override;

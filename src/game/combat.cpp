@@ -299,21 +299,12 @@ QCoro::Task<void> combat::start_coro()
 		this->result.experience_award = this->defender_experience_award;
 	}
 
-	this->process_result();
-
-	//resolve all remaining status effects
-	std::vector<const character *> all_characters = this->attacking_party->get_characters();
-	vector::merge(all_characters, this->defending_party->get_characters());
-	for (const character *character : all_characters) {
-		while (character->get_game_data()->has_any_status_effect_with_less_than_duration(std::chrono::months(1))) {
-			character->get_game_data()->decrement_status_effect_durations(defines::get()->get_combat_round_duration(), this->ctx);
-		}
-	}
+	this->notify_result();
 
 	emit finished();
 
 	if (this->scope != game::get()->get_player_country()) {
-		this->clear();
+		this->on_ended();
 	}
 }
 
@@ -738,7 +729,7 @@ QCoro::Task<void> combat::on_character_died(const character *dead_character, par
 	this->remove_character_info(dead_character);
 }
 
-void combat::process_result()
+void combat::notify_result()
 {
 	const bool success = this->attacking_party->get_domain() == this->scope ? this->result.attacker_victory : !this->result.attacker_victory;
 
@@ -766,6 +757,14 @@ void combat::process_result()
 			engine_interface::get()->add_combat_notification("Defeat!", war_minister_portrait, std::format("You have lost a combat!{}", !effects_string.empty() ? ("\n\n" + effects_string) : ""));
 		}
 	}
+}
+
+void combat::process_result()
+{
+	const bool success = this->attacking_party->get_domain() == this->scope ? this->result.attacker_victory : !this->result.attacker_victory;
+
+	context ctx = this->ctx;
+	ctx.in_combat = false;
 
 	if (success) {
 		if (this->victory_effects != nullptr) {
@@ -776,6 +775,22 @@ void combat::process_result()
 			this->defeat_effects->do_effects(this->scope, ctx);
 		}
 	}
+}
+
+void combat::on_ended()
+{
+	this->process_result();
+
+	//resolve all remaining status effects
+	std::vector<const character *> all_characters = this->attacking_party->get_characters();
+	vector::merge(all_characters, this->defending_party->get_characters());
+	for (const character *character : all_characters) {
+		while (character->get_game_data()->has_any_status_effect_with_less_than_duration(std::chrono::months(1))) {
+			character->get_game_data()->decrement_status_effect_durations(defines::get()->get_combat_round_duration(), this->ctx);
+		}
+	}
+
+	this->clear();
 }
 
 combat_tile &combat::get_tile(const QPoint &tile_pos)

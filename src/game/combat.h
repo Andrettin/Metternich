@@ -280,7 +280,9 @@ public:
 	[[nodiscard]]
 	QCoro::Task<void> on_character_died(const character *dead_character, party *dead_character_party);
 
+	void notify_result();
 	void process_result();
+	Q_INVOKABLE void on_ended();
 
 	virtual combat_tile &get_tile(const QPoint &tile_pos) override;
 	virtual const combat_tile &get_tile(const QPoint &tile_pos) const override;

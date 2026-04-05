@@ -198,15 +198,15 @@ QCoro::Task<void> battle::start_coro()
 
 	this->result.attacker_victory = this->defending_army->get_military_units().empty();
 
-	this->process_result();
-
 	this->get_promise()->addResult(this->result.attacker_victory);
 	this->get_promise()->finish();
+
+	this->notify_result();
 
 	emit finished();
 
 	if (this->scope != game::get()->get_player_country()) {
-		this->clear();
+		this->on_ended();
 	}
 }
 
@@ -509,12 +509,9 @@ QCoro::Task<void> battle::do_unit_spellcast(const military_unit *unit, const spe
 	}
 }
 
-void battle::process_result()
+void battle::notify_result()
 {
 	const bool success = this->attacking_army->get_domain() == this->scope ? this->result.attacker_victory : !this->result.attacker_victory;
-
-	context ctx = this->ctx;
-	ctx.in_combat = false;
 
 	if (this->scope == game::get()->get_player_country()) {
 		const portrait *war_minister_portrait = this->scope->get_government()->get_war_minister_portrait();
@@ -525,6 +522,25 @@ void battle::process_result()
 			engine_interface::get()->add_combat_notification("Defeat!", war_minister_portrait, std::format("You have lost a battle!"));
 		}
 	}
+}
+
+void battle::process_result()
+{
+	const bool success = this->attacking_army->get_domain() == this->scope ? this->result.attacker_victory : !this->result.attacker_victory;
+
+	context ctx = this->ctx;
+	ctx.in_combat = false;
+
+	if (success) {
+		//FIXME: do post-battle effects, if necessary
+	}
+}
+
+void battle::on_ended()
+{
+	this->process_result();
+
+	this->clear();
 }
 
 battle_tile &battle::get_tile(const QPoint &tile_pos)

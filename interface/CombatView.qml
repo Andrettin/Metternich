@@ -113,7 +113,7 @@ Item {
 		popup_count -= 1
 		
 		if (combat_finished && popup_count === 0) {
-			combat.clear()
+			combat.on_ended()
 			menu_stack.pop()
 		}
 	}
