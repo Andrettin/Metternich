@@ -8,6 +8,9 @@ ranger = {
 	craft_bonus_table = craft_bonus
 	to_hit_bonus_table = cleric_to_hit_bonus
 	saving_throw_bonus_tables = {
+		fortitude = high_saving_throw_bonus
+		reflex = high_saving_throw_bonus
+		will = low_saving_throw_bonus
 		save_vs_poison = cleric_save_vs_poison_bonus
 	}
 	class_skill_groups = {

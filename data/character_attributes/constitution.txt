@@ -3,7 +3,7 @@ constitution = {
 	value_modifiers = {
 		1 = {
 			hit_points_per_hit_dice = -3
-			#fortitude = -5
+			fortitude = -5
 		}
 		2 = {
 			hit_points_per_hit_dice = 1
@@ -23,7 +23,7 @@ constitution = {
 	}
 	recurring_value_modifiers = {
 		2 = {
-			#fortitude = 1
+			fortitude = 1
 		}
 	}
 }

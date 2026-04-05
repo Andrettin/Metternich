@@ -6,7 +6,7 @@ dexterity = {
 			find_disarm_traps = -10
 			open_locks = -10
 			pick_pockets = -15
-			#reflex = -5
+			reflex = -5
 		}
 		3 = {
 			armor_class = 1
@@ -68,7 +68,7 @@ dexterity = {
 	}
 	recurring_value_modifiers = {
 		2 = {
-			#reflex = 1
+			reflex = 1
 		}
 	}
 }

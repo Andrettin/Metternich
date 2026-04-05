@@ -2,12 +2,12 @@ wisdom = {
 	name = "Wisdom"	
 	value_modifiers = {
 		1 = {
-			#will = -5
+			will = -5
 		}
 	}
 	recurring_value_modifiers = {
 		2 = {
-			#will = 1
+			will = 1
 		}
 	}
 }
