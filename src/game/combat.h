@@ -180,7 +180,7 @@ class combat final : public combat_base
 	Q_PROPERTY(QVariantList objects READ get_objects_qvariant_list NOTIFY objects_changed)
 
 public:
-	static constexpr dice initiative_dice = dice(1, 10);
+	static constexpr dice initiative_dice = dice(1, 20);
 
 	struct result final
 	{
