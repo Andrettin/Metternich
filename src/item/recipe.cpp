@@ -9,6 +9,7 @@
 #include "item/item_type.h"
 #include "script/condition/and_condition.h"
 #include "spell/spell.h"
+#include "util/assert_util.h"
 
 namespace metternich {
 
@@ -35,13 +36,33 @@ void recipe::process_gsml_scope(const gsml_data &scope)
 		this->crafter_conditions = std::move(conditions);
 	} else if (tag == "materials") {
 		for (const std::string &value : values) {
-			this->materials.emplace_back(item_type::get(value));
+			this->materials.emplace_back(item_type::get(value), nullptr);
 		}
 
 		scope.for_each_property([this](const gsml_property &property) {
 			const item_type *item_type = item_type::get(property.get_key());
 			const int quantity = std::stoi(property.get_value());
-			this->materials.emplace_back(item_type, quantity);
+			this->materials.emplace_back(item_type, nullptr, quantity);
+		});
+
+		scope.for_each_child([this](const gsml_data &child_scope) {
+			const item_type *item_type = item_type::get(child_scope.get_tag());
+			const enchantment *enchantment = nullptr;
+			int quantity = 1;
+
+			child_scope.for_each_property([this, &enchantment, &quantity](const gsml_property &property) {
+				const std::string &value = property.get_value();
+
+				if (property.get_key() == "enchantment") {
+					enchantment = enchantment::get(value);
+				} else if (property.get_key() == "quantity") {
+					quantity = std::stoi(value);
+				} else {
+					assert_throw(false);
+				}
+			});
+
+			this->materials.emplace_back(item_type, enchantment, quantity);
 		});
 	} else if (tag == "spells") {
 		for (const std::string &value : values) {
@@ -70,7 +91,7 @@ void recipe::initialize()
 	//add material components from spells to the materials of the recipe
 	for (const spell *spell : this->get_spells()) {
 		for (const item_type *material_component : spell->get_material_components()) {
-			this->add_material(material_component);
+			this->add_material(material_component, nullptr);
 		}
 	}
 
@@ -89,16 +110,16 @@ const icon *recipe::get_icon() const
 	return this->get_result_item_type()->get_icon();
 }
 
-void recipe::add_material(const item_type *item_type)
+void recipe::add_material(const item_type *item_type, const enchantment *enchantment)
 {
 	for (material &material : this->materials) {
-		if (material.item_type == item_type) {
+		if (material.item_type == item_type && material.enchantment == enchantment) {
 			++material.quantity;
 			return;
 		}
 	}
 
-	this->materials.emplace_back(item_type);
+	this->materials.emplace_back(item_type, enchantment);
 }
 
 int recipe::get_price() const
@@ -111,7 +132,7 @@ int recipe::get_price_of_materials() const
 	int price = 0;
 
 	for (const material &material : this->get_materials()) {
-		price += item::get_price(material.item_type, nullptr, nullptr, nullptr, nullptr) * material.quantity;
+		price += item::get_price(material.item_type, nullptr, material.enchantment, nullptr, nullptr) * material.quantity;
 	}
 
 	return price;
@@ -139,7 +160,7 @@ std::string recipe::get_formula_string() const
 	std::string str = std::format("{} Craft", craft_cost);
 
 	for (const material &material : this->get_materials()) {
-		str += std::format(" + {}x{}", material.quantity, item::create_name(material.item_type, nullptr, nullptr, nullptr, nullptr));
+		str += std::format(" + {}x{}", material.quantity, item::create_name(material.item_type, nullptr, material.enchantment, nullptr, nullptr));
 	}
 
 	str += " \u2192 ";
@@ -159,7 +180,7 @@ bool recipe::material::matches_item(const item *item) const
 		return false;
 	}
 
-	if (item->get_enchantment() != nullptr) {
+	if (item->get_enchantment() != this->enchantment) {
 		return false;
 	}
 

@@ -29,14 +29,15 @@ class recipe final : public named_data_entry, public data_type<recipe>
 public:
 	struct material final
 	{
-		explicit material(const metternich::item_type *item_type, const int quantity = 1)
-			: item_type(item_type), quantity(quantity)
+		explicit material(const metternich::item_type *item_type, const metternich::enchantment *enchantment, const int quantity = 1)
+			: item_type(item_type), enchantment(enchantment), quantity(quantity)
 		{
 		}
 
 		bool matches_item(const item *item) const;
 
 		const metternich::item_type *item_type = nullptr;
+		const metternich::enchantment *enchantment = nullptr;
 		int quantity = 1;
 	};
 
@@ -83,7 +84,7 @@ public:
 		return this->materials;
 	}
 
-	void add_material(const item_type *item_type);
+	void add_material(const item_type *item_type, const enchantment *enchantment);
 
 	const std::vector<const spell *> &get_spells() const
 	{
