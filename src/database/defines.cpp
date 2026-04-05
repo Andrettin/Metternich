@@ -22,6 +22,7 @@
 #include "util/assert_util.h"
 #include "util/log_util.h"
 #include "util/path_util.h"
+#include "util/string_conversion_util.h"
 
 #include <magic_enum/magic_enum.hpp>
 
@@ -37,6 +38,20 @@ defines::defines() : min_log_level(log_level::warning)
 
 defines::~defines()
 {
+}
+
+void defines::process_gsml_property(const gsml_property &property)
+{
+	const std::string &key = property.get_key();
+	const std::string &value = property.get_value();
+
+	if (key == "combat_round_duration") {
+		this->combat_round_duration = string::to_duration(value);
+	} else if (key == "battle_round_duration") {
+		this->battle_round_duration = string::to_duration(value);
+	} else {
+		defines_base::process_gsml_property(property);
+	}
 }
 
 void defines::process_gsml_scope(const gsml_data &scope)

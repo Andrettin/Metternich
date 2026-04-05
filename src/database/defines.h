@@ -64,8 +64,8 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(QSize scaled_tile_size READ get_scaled_tile_size NOTIFY scaled_tile_size_changed)
 	Q_PROPERTY(archimedes::decimillesimal_int minimap_tile_scale MEMBER minimap_tile_scale READ get_minimap_tile_scale NOTIFY changed)
 	Q_PROPERTY(double minimap_tile_scale_double READ get_minimap_tile_scale_double NOTIFY changed)
-	Q_PROPERTY(int default_months_per_turn MEMBER default_months_per_turn NOTIFY changed)
 	Q_PROPERTY(QDate default_start_date MEMBER default_start_date READ get_default_start_date)
+	Q_PROPERTY(int default_months_per_turn MEMBER default_months_per_turn NOTIFY changed)
 	Q_PROPERTY(const metternich::terrain_type* default_base_terrain MEMBER default_base_terrain READ get_default_base_terrain NOTIFY changed)
 	Q_PROPERTY(const metternich::terrain_type* unexplored_terrain MEMBER unexplored_terrain READ get_unexplored_terrain NOTIFY changed)
 	Q_PROPERTY(const metternich::terrain_type* default_province_terrain MEMBER default_province_terrain  READ get_default_province_terrain NOTIFY changed)
@@ -113,6 +113,7 @@ public:
 	defines();
 	~defines();
 
+	virtual void process_gsml_property(const gsml_property &property) override;
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
 	virtual void check() const override;
@@ -176,6 +177,11 @@ public:
 		return this->get_minimap_tile_scale().to_double();
 	}
 
+	const QDate &get_default_start_date() const
+	{
+		return this->default_start_date;
+	}
+
 	int get_months_per_turn(const int current_year) const
 	{
 		if (!this->months_per_turn_from_year.empty()) {
@@ -209,9 +215,14 @@ public:
 		return this->months_to_turns(years * 12, current_year);
 	}
 
-	const QDate &get_default_start_date() const
+	const std::chrono::seconds &get_combat_round_duration() const
 	{
-		return this->default_start_date;
+		return this->combat_round_duration;
+	}
+
+	const std::chrono::seconds &get_battle_round_duration() const
+	{
+		return this->battle_round_duration;
 	}
 
 	const terrain_type *get_default_base_terrain() const
@@ -520,9 +531,11 @@ private:
 	cursor *enemy_target_cursor = nullptr;
 	QSize tile_size = QSize(64, 64);
 	decimillesimal_int minimap_tile_scale = decimillesimal_int(1);
+	QDate default_start_date;
 	int default_months_per_turn = 3;
 	std::map<int, int> months_per_turn_from_year;
-	QDate default_start_date;
+	std::chrono::seconds combat_round_duration;
+	std::chrono::seconds battle_round_duration;
 	const terrain_type *default_base_terrain = nullptr;
 	const terrain_type *unexplored_terrain = nullptr;
 	const terrain_type *default_province_terrain = nullptr;

@@ -30,6 +30,8 @@ default_months_per_turn = 1
 #	1600 = 6
 #	1800 = 1
 #}
+combat_round_duration = 6s
+battle_round_duration = 5min
 
 default_population_class = laborers
 default_tribal_population_class = tribesmen
