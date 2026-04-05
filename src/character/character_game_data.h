@@ -538,6 +538,7 @@ public:
 
 	void change_saving_throw_bonus(const saving_throw_type *type, const int change);
 	bool do_saving_throw(const saving_throw_type *saving_throw_type, const int roll_modifier = 0) const;
+	int get_saving_throw_chance(const saving_throw_type *saving_throw_type, const int roll_modifier = 0) const;
 
 	bool is_skill_trained(const skill *skill) const;
 	void change_skill_training(const skill *skill, const int change);

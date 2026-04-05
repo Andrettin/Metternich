@@ -2231,6 +2231,24 @@ bool character_game_data::do_saving_throw(const saving_throw_type *saving_throw_
 	return modified_roll_result >= saving_throw_value;
 }
 
+int character_game_data::get_saving_throw_chance(const saving_throw_type *saving_throw_type, const int roll_modifier) const
+{
+	assert_throw(saving_throw_type != nullptr);
+
+	int chance = this->get_saving_throw_bonus(saving_throw_type) + 1;
+	chance += roll_modifier;
+
+	static constexpr dice saving_throw_dice(1, 20);
+
+	chance *= 100;
+	chance /= saving_throw_dice.get_sides();
+
+	chance = std::min(chance, 100);
+	chance = std::max(chance, 0);
+
+	return chance;
+}
+
 bool character_game_data::is_skill_trained(const skill *skill) const
 {
 	if (!skill->is_trained_only()) {

@@ -77,7 +77,11 @@ public:
 		const std::string_view status_effect_str = !this->status_effect->get_adjective().empty() ? this->status_effect->get_adjective() : this->status_effect->get_name();
 
 		if (this->status_effect->get_saving_throw_type() != nullptr) {
-			return std::format("{} (Saving Throw: {} {})", status_effect_str, this->status_effect->get_saving_throw_type()->get_name(), number::to_signed_string(scope->get_game_data()->get_saving_throw_bonus(this->status_effect->get_saving_throw_type()) + this->status_effect->get_saving_throw_modifier()));
+			if (scope != nullptr) {
+				return std::format("{} (Saving Throw: {} {}% Chance)", status_effect_str, this->status_effect->get_saving_throw_type()->get_name(), scope->get_game_data()->get_saving_throw_chance(this->status_effect->get_saving_throw_type(), this->status_effect->get_saving_throw_modifier()));
+			} else {
+				return std::format("{} (Saving Throw: {})", status_effect_str, this->status_effect->get_saving_throw_type()->get_name());
+			}
 		} else {
 			return std::string(status_effect_str);
 		}
