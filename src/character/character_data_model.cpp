@@ -143,6 +143,7 @@ void character_data_model::set_character(const metternich::character *character)
 		disconnect(this->character->get_game_data(), &character_game_data::damage_bonus_changed, this, &character_data_model::update_damage_row);
 		disconnect(this->character->get_game_data(), &character_game_data::range_changed, this, &character_data_model::update_range_row);
 		disconnect(this->character->get_game_data(), &character_game_data::movement_changed, this, &character_data_model::update_movement_row);
+		disconnect(this->character->get_game_data(), &character_game_data::initiative_bonus_changed, this, &character_data_model::update_initiative_bonus_row);
 		disconnect(this->character->get_game_data(), &character_game_data::saving_throw_bonuses_changed, this, &character_data_model::update_saving_throw_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::skill_trainings_changed, this, &character_data_model::update_skill_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::skill_values_changed, this, &character_data_model::update_skill_rows);
@@ -166,6 +167,7 @@ void character_data_model::set_character(const metternich::character *character)
 		connect(this->character->get_game_data(), &character_game_data::damage_bonus_changed, this, &character_data_model::update_damage_row);
 		connect(this->character->get_game_data(), &character_game_data::range_changed, this, &character_data_model::update_range_row);
 		connect(this->character->get_game_data(), &character_game_data::movement_changed, this, &character_data_model::update_movement_row);
+		connect(this->character->get_game_data(), &character_game_data::initiative_bonus_changed, this, &character_data_model::update_initiative_bonus_row);
 		connect(this->character->get_game_data(), &character_game_data::saving_throw_bonuses_changed, this, &character_data_model::update_saving_throw_rows);
 		connect(this->character->get_game_data(), &character_game_data::skill_trainings_changed, this, &character_data_model::update_skill_rows);
 		connect(this->character->get_game_data(), &character_game_data::skill_values_changed, this, &character_data_model::update_skill_rows);
@@ -190,6 +192,7 @@ void character_data_model::reset_model()
 	this->damage_row = nullptr;
 	this->range_row = nullptr;
 	this->movement_row = nullptr;
+	this->initiative_bonus_row = nullptr;
 	this->saving_throw_row = nullptr;
 	this->skill_row = nullptr;
 	this->trait_row = nullptr;
@@ -277,6 +280,7 @@ void character_data_model::reset_model()
 		this->create_damage_row();
 		this->create_range_row();
 		this->create_movement_row();
+		this->create_initiative_bonus_row();
 		this->create_saving_throw_rows();
 		this->create_skill_rows();
 		this->create_trait_rows();
@@ -417,7 +421,7 @@ void character_data_model::update_armor_class_rows()
 
 void character_data_model::create_to_hit_bonus_rows()
 {
-	auto row = std::make_unique<character_data_row>("To Hit Bonus:");
+	auto row = std::make_unique<character_data_row>("To Hit:");
 	this->to_hit_bonus_row = row.get();
 	this->top_rows.push_back(std::move(row));
 
@@ -486,6 +490,24 @@ void character_data_model::update_movement_row()
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
 
 	this->movement_row->value = std::to_string(character_game_data->get_combat_movement());
+}
+
+void character_data_model::create_initiative_bonus_row()
+{
+	auto row = std::make_unique<character_data_row>("Initiative:");
+	this->initiative_bonus_row = row.get();
+	this->top_rows.push_back(std::move(row));
+
+	this->update_initiative_bonus_row();
+}
+
+void character_data_model::update_initiative_bonus_row()
+{
+	assert_throw(this->initiative_bonus_row != nullptr);
+
+	const character_game_data *character_game_data = this->get_character()->get_game_data();
+
+	this->initiative_bonus_row->value = std::to_string(character_game_data->get_initiative_bonus());
 }
 
 void character_data_model::create_saving_throw_rows()

@@ -92,6 +92,8 @@ public:
 	void update_range_row();
 	void create_movement_row();
 	void update_movement_row();
+	void create_initiative_bonus_row();
+	void update_initiative_bonus_row();
 	void create_saving_throw_rows();
 	void update_saving_throw_rows();
 	void create_saving_throw_row(const saving_throw_type *saving_throw_type, const int bonus, data_entry_map<metternich::saving_throw_type, character_data_row *> &saving_throw_type_rows);
@@ -120,6 +122,7 @@ private:
 	character_data_row *damage_row = nullptr;
 	character_data_row *range_row = nullptr;
 	character_data_row *movement_row = nullptr;
+	character_data_row *initiative_bonus_row = nullptr;
 	character_data_row *saving_throw_row = nullptr;
 	character_data_row *skill_row = nullptr;
 	character_data_row *trait_row = nullptr;

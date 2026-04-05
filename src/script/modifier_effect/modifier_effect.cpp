@@ -44,6 +44,7 @@
 #include "script/modifier_effect/holding_level_modifier_effect.h"
 #include "script/modifier_effect/industrial_output_modifier_effect.h"
 #include "script/modifier_effect/infantry_cost_modifier_effect.h"
+#include "script/modifier_effect/initiative_modifier_effect.h"
 #include "script/modifier_effect/law_cost_modifier_effect.h"
 #include "script/modifier_effect/leader_cost_modifier_effect.h"
 #include "script/modifier_effect/merchant_ship_stat_modifier_effect.h"
@@ -104,6 +105,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<range_modifier_effect>(value);
 		} else if (key == "to_hit_bonus") {
 			return std::make_unique<to_hit_bonus_modifier_effect>(value);
+		} else if (key == "initiative") {
+			return std::make_unique<initiative_modifier_effect>(value);
 		} else if (key == "saving_throw_bonus") {
 			return std::make_unique<saving_throw_modifier_effect>(value);
 		} else if (key == "skill_training") {

@@ -92,6 +92,7 @@ class character_game_data final : public QObject
 	Q_PROPERTY(int range READ get_range NOTIFY range_changed)
 	Q_PROPERTY(int movement READ get_movement NOTIFY movement_changed)
 	Q_PROPERTY(int combat_movement READ get_combat_movement NOTIFY movement_changed)
+	Q_PROPERTY(int initiative_bonus READ get_initiative_bonus NOTIFY initiative_bonus_changed)
 	Q_PROPERTY(QVariantList saving_throw_bonuses READ get_saving_throw_bonuses_qvariant_list NOTIFY saving_throw_bonuses_changed)
 	Q_PROPERTY(QVariantList traits READ get_traits_qvariant_list NOTIFY traits_changed)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
@@ -518,6 +519,14 @@ public:
 	void set_movement(const int movement);
 	void change_movement(const int change);
 	int get_combat_movement() const;
+
+	int get_initiative_bonus() const
+	{
+		return this->initiative_bonus;
+	}
+
+	void set_initiative_bonus(const int initiative_bonus);
+	void change_initiative_bonus(const int change);
 
 	const data_entry_map<saving_throw_type, int> &get_saving_throw_bonuses() const
 	{
@@ -962,6 +971,7 @@ signals:
 	void damage_bonus_changed();
 	void range_changed();
 	void movement_changed();
+	void initiative_bonus_changed();
 	void saving_throw_bonuses_changed();
 	void skill_trainings_changed();
 	void skill_values_changed();
@@ -1015,6 +1025,7 @@ private:
 	int damage_bonus = 0;
 	int range = 1;
 	int movement = 0;
+	int initiative_bonus = 0;
 	data_entry_map<saving_throw_type, int> saving_throw_bonuses;
 	data_entry_map<skill, int> skill_trainings;
 	data_entry_map<skill, int> skill_values;
