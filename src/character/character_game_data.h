@@ -706,7 +706,7 @@ public:
 		emit spells_changed();
 	}
 
-	bool can_learn_spell(const metternich::spell *spell) const;
+	bool can_learn_spell(const metternich::spell *spell, std::string *reason = nullptr) const;
 
 	bool has_learned_spell(const spell *spell) const
 	{
@@ -741,7 +741,7 @@ public:
 		emit recipes_changed();
 	}
 
-	bool can_learn_recipe(const metternich::recipe *recipe) const;
+	bool can_learn_recipe(const metternich::recipe *recipe, std::string *reason = nullptr) const;
 	void learn_recipe(const metternich::recipe *recipe);
 	Q_INVOKABLE bool can_craft_recipe(const metternich::recipe *recipe) const;
 	Q_INVOKABLE void craft_recipe(const metternich::recipe *recipe);
@@ -763,7 +763,13 @@ public:
 	Q_INVOKABLE void remove_item(metternich::item *item);
 	void remove_item(const item_type *item_type, const item_material *material, const enchantment *enchantment, const spell *spell, const recipe *recipe);
 
-	Q_INVOKABLE bool can_consume_item(const metternich::item *item) const;
+	bool can_consume_item(const metternich::item *item, std::string *reason) const;
+
+	Q_INVOKABLE bool can_consume_item(const metternich::item *item) const
+	{
+		return this->can_consume_item(item, nullptr);
+	}
+
 	Q_INVOKABLE void consume_item(metternich::item *item);
 	void on_item_consumed(const item *item);
 	void on_item_consumed_with_enchantment(const enchantment *enchantment);
@@ -794,7 +800,13 @@ public:
 	void on_item_equipped(const item *item, const int multiplier);
 	void on_item_equipped_with_enchantment(const enchantment *enchantment, const int multiplier);
 
-	Q_INVOKABLE bool can_use_item(const metternich::item *item) const;
+	bool can_use_item(const metternich::item *item, std::string *reason) const;
+
+	Q_INVOKABLE bool can_use_item(const metternich::item *item) const
+	{
+		return this->can_use_item(item, nullptr);
+	}
+
 	Q_INVOKABLE void use_item(metternich::item *item);
 	bool can_use_enchantment(const enchantment *enchantment) const;
 

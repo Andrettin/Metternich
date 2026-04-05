@@ -287,8 +287,12 @@ QString item::get_effects_string(const character *character) const
 		str += std::format("{} Recipe", this->get_recipe()->get_name());
 	}
 
-	if ((this->get_slot() != nullptr || this->get_type()->get_item_class()->is_consumable()) && !character->get_game_data()->can_use_item(this)) {
-		str += " " + string::colored(std::format("(cannot {})", this->get_slot() != nullptr ? "equip" : this->get_type()->get_item_class()->get_consume_verb()), defines::get()->get_red_text_color());
+	std::string reason;
+	if ((this->get_slot() != nullptr || this->get_type()->get_item_class()->is_consumable()) && !character->get_game_data()->can_use_item(this, &reason)) {
+		if (reason.empty()) {
+			reason = std::format("cannot {}", this->get_slot() != nullptr ? "equip" : this->get_type()->get_item_class()->get_consume_verb());
+		}
+		str += " " + string::colored(std::format("({})", reason), defines::get()->get_red_text_color());
 	}
 
 	return QString::fromStdString(str);

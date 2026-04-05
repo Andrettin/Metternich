@@ -9,6 +9,8 @@ class character;
 class enchantment;
 class item;
 class item_type;
+class spell;
+class trait;
 
 template <typename scope_type>
 class and_condition;
@@ -20,6 +22,7 @@ class recipe final : public named_data_entry, public data_type<recipe>
 	Q_PROPERTY(const metternich::icon* icon READ get_icon NOTIFY changed)
 	Q_PROPERTY(const metternich::item_type* result_item_type MEMBER result_item_type READ get_result_item_type NOTIFY changed)
 	Q_PROPERTY(const metternich::enchantment* result_enchantment MEMBER result_enchantment READ get_result_enchantment NOTIFY changed)
+	Q_PROPERTY(int min_caster_level MEMBER min_caster_level READ get_min_caster_level NOTIFY changed)
 	Q_PROPERTY(QString formula_string READ get_formula_qstring NOTIFY changed)
 	
 
@@ -59,6 +62,16 @@ public:
 		return this->result_enchantment;
 	}
 
+	int get_min_caster_level() const
+	{
+		return this->min_caster_level;
+	}
+
+	const std::vector<const trait *> &get_required_traits() const
+	{
+		return this->required_traits;
+	}
+
 	const and_condition<character> *get_crafter_conditions() const
 	{
 		return this->crafter_conditions.get();
@@ -67,6 +80,11 @@ public:
 	const std::vector<material> &get_materials() const
 	{
 		return this->materials;
+	}
+
+	const std::vector<const spell *> &get_spells() const
+	{
+		return this->spells;
 	}
 
 	int get_price() const;
@@ -89,8 +107,11 @@ signals:
 private:
 	const item_type *result_item_type = nullptr;
 	const enchantment *result_enchantment = nullptr;
+	int min_caster_level = 0;
+	std::vector<const trait *> required_traits;
 	std::unique_ptr<const and_condition<character>> crafter_conditions;
 	std::vector<material> materials;
+	std::vector<const spell *> spells;
 };
 
 }

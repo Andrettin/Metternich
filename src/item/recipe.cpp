@@ -2,11 +2,13 @@
 
 #include "item/recipe.h"
 
+#include "character/trait.h"
 #include "item/enchantment.h"
 #include "item/item.h"
 #include "item/item_creation_type.h"
 #include "item/item_type.h"
 #include "script/condition/and_condition.h"
+#include "spell/spell.h"
 
 namespace metternich {
 
@@ -23,7 +25,11 @@ void recipe::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "crafter_conditions") {
+	if (tag == "required_traits") {
+		for (const std::string &value : values) {
+			this->required_traits.emplace_back(trait::get(value));
+		}
+	} else if (tag == "crafter_conditions") {
 		auto conditions = std::make_unique<and_condition<character>>();
 		conditions->process_gsml_data(scope);
 		this->crafter_conditions = std::move(conditions);
@@ -37,6 +43,10 @@ void recipe::process_gsml_scope(const gsml_data &scope)
 			const int quantity = std::stoi(property.get_value());
 			this->materials.emplace_back(item_type, quantity);
 		});
+	} else if (tag == "spells") {
+		for (const std::string &value : values) {
+			this->spells.emplace_back(spell::get(value));
+		}
 	} else if (tag == "item_creation_types") {
 		for (const std::string &value : values) {
 			item_creation_type *item_creation_type = item_creation_type::get(value);

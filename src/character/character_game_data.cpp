@@ -2928,13 +2928,17 @@ bool character_game_data::has_spell(const spell *spell) const
 	return vector::contains(this->get_spells(), spell);
 }
 
-bool character_game_data::can_learn_spell(const spell *spell) const
+bool character_game_data::can_learn_spell(const spell *spell, std::string *reason) const
 {
 	if (!spell->is_available_for_character_class(this->get_character_class())) {
 		return false;
 	}
 
 	if (this->has_learned_spell(spell)) {
+		if (reason != nullptr) {
+			*reason = "already learned";
+		}
+
 		return false;
 	}
 
@@ -3002,13 +3006,45 @@ bool character_game_data::has_recipe(const recipe *recipe) const
 	return vector::contains(this->get_recipes(), recipe);
 }
 
-bool character_game_data::can_learn_recipe(const recipe *recipe) const
+bool character_game_data::can_learn_recipe(const recipe *recipe, std::string *reason) const
 {
+	if (this->get_caster_level() < recipe->get_min_caster_level()) {
+		if (reason != nullptr) {
+			*reason = std::format("Caster Level {} required", recipe->get_min_caster_level());
+		}
+
+		return false;
+	}
+
+	for (const trait *trait : recipe->get_required_traits()) {
+		if (!this->has_trait(trait)) {
+			if (reason != nullptr) {
+				*reason = trait->get_name() + " required";
+			}
+
+			return false;
+		}
+	}
+
+	for (const spell *spell : recipe->get_spells()) {
+		if (!this->has_spell(spell)) {
+			if (reason != nullptr) {
+				*reason = spell->get_name() + " required";
+			}
+
+			return false;
+		}
+	}
+
 	if (recipe->get_crafter_conditions() != nullptr && !recipe->get_crafter_conditions()->check(this->character, read_only_context(this->character))) {
 		return false;
 	}
 
 	if (this->has_recipe(recipe)) {
+		if (reason != nullptr) {
+			*reason = "already learned";
+		}
+
 		return false;
 	}
 
@@ -3240,7 +3276,7 @@ void character_game_data::remove_item(const item_type *item_type, const item_mat
 	}
 }
 
-bool character_game_data::can_consume_item(const item *item) const
+bool character_game_data::can_consume_item(const item *item, std::string *reason) const
 {
 	if (!item->get_type()->get_item_class()->is_consumable()) {
 		return false;
@@ -3255,12 +3291,12 @@ bool character_game_data::can_consume_item(const item *item) const
 			return false;
 		}
 
-		if (!this->can_learn_spell(item->get_spell())) {
+		if (!this->can_learn_spell(item->get_spell(), reason)) {
 			return false;
 		}
 	}
 
-	if (item->get_recipe() != nullptr && !this->can_learn_recipe(item->get_recipe())) {
+	if (item->get_recipe() != nullptr && !this->can_learn_recipe(item->get_recipe(), reason)) {
 		return false;
 	}
 
@@ -3496,12 +3532,12 @@ void character_game_data::on_item_equipped_with_enchantment(const enchantment *e
 	}
 }
 
-bool character_game_data::can_use_item(const item *item) const
+bool character_game_data::can_use_item(const item *item, std::string *reason) const
 {
 	if (item->get_slot() != nullptr) {
 		return this->can_equip_item(item, true, std::nullopt);
 	} else if (item->get_type()->get_item_class()->is_consumable()) {
-		return this->can_consume_item(item);
+		return this->can_consume_item(item, reason);
 	}
 
 	return false;
