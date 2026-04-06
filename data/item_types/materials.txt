@@ -1,3 +1,14 @@
+cat_fur = {
+	name = "Cat Fur"
+	item_class = miscellaneous
+	icon = sack_2
+	price = 1cp
+	stackable = true
+	item_creation_types = {
+		alchemical_item
+	}
+}
+
 ogre_mage_eyelash = {
 	name = "Ogre Mage Eyelash"
 	item_class = miscellaneous

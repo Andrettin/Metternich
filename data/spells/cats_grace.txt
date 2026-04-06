@@ -1,0 +1,25 @@
+cats_grace = {
+	name = "Cat's Grace"
+	level = 2
+	icon = lion
+	price = 150gp
+	target = ally
+	range = 1
+	sound = magic_holy
+	arcane_schools = {
+		alteration #transmutation
+	}
+	character_classes = {
+		bard
+		druid
+		mage
+		ranger
+		#sorcerer
+	}
+	material_components = {
+		cat_fur
+	}
+	target_effects = {
+		status_effect = cats_grace
+	}
+}

@@ -1,0 +1,10 @@
+cats_grace = {
+	name = "Cat's Grace"
+	duration_per_caster_level = 1min
+	modifier = {
+		dexterity = {
+			modifier_type = enhancement
+			modifier = 4
+		}
+	}
+}
