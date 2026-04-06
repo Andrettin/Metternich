@@ -476,6 +476,16 @@ gsml_data character_game_data::to_gsml_data() const
 
 void character_game_data::ply_trade()
 {
+	static constexpr int gp_value = 100;
+
+	const int province_level = this->get_location()->get_game_data()->get_province()->get_game_data()->get_level();
+
+	if (this->get_caster_level() > 0) {
+		const int profit = 25 * gp_value * this->get_caster_level() * province_level;
+		this->change_wealth(profit);
+		return;
+	}
+
 	const skill *best_skill = nullptr;
 	profession_profitability skill_profitability = profession_profitability::none;
 	int skill_percent_value = 0;
@@ -509,7 +519,6 @@ void character_game_data::ply_trade()
 		return;
 	}
 
-	const int province_level = this->get_location()->get_game_data()->get_province()->get_game_data()->get_level();
 	if (province_level <= 3 && skill_profitability != profession_profitability::marginal) {
 		skill_profitability = static_cast<profession_profitability>(static_cast<int>(skill_profitability) - 1);
 	} else if (province_level >= 7 && skill_profitability != profession_profitability::excellent) {
@@ -517,8 +526,6 @@ void character_game_data::ply_trade()
 	}
 
 	int profit = 0;
-
-	static constexpr int gp_value = 100;
 
 	switch (skill_profitability) {
 		case profession_profitability::marginal:
