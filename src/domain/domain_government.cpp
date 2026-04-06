@@ -887,8 +887,8 @@ commodity_map<int> domain_government::get_advisor_commodity_costs(const office *
 	commodity_map<int> commodity_costs;
 
 	if (office != nullptr && office->is_appointable()) {
-		const int cost = this->get_advisor_cost();
-		commodity_costs[defines::get()->get_advisor_commodity()] = cost;
+		//const int cost = this->get_advisor_cost();
+		//commodity_costs[defines::get()->get_advisor_commodity()] = cost;
 	}
 
 	return commodity_costs;
