@@ -164,7 +164,7 @@ antonio_bonfini = {
 	gender = male
 	birth_date = 1428
 	death_date = 1503.6.6
-	skill_multiplier = 0.5
+	level_multiplier = 0.5
 	traits = {
 		#philosopher
 	}
@@ -206,7 +206,7 @@ mercurino_gattinara = {
 	gender = male
 	birth_date = 1465
 	death_date = 1530
-	skill_multiplier = 0.83
+	level_multiplier = 0.83
 	traits = {
 		#statesman
 	}
@@ -249,7 +249,7 @@ niccolo_tartaglia = { #Source: Isaac Asimov, "Cronologia das Ciências e das Des
 	gender = male
 	birth_date = 1499
 	death_date = 1557
-	skill_multiplier = 0.33
+	level_multiplier = 0.33
 	traits = {
 		#philosopher
 	}
@@ -267,7 +267,7 @@ geronimo_cardano = { #Source: Isaac Asimov, "Cronologia das Ciências e das Desc
 	gender = male
 	birth_date = 1501
 	death_date = 1576
-	skill_multiplier = 0.67
+	level_multiplier = 0.67
 	traits = {
 		#philosopher
 	}

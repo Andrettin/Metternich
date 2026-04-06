@@ -781,7 +781,6 @@ set(script_effect_HDRS
 	src/script/effect/explore_dungeon_effect.h
 	src/script/effect/free_technologies_effect.h
 	src/script/effect/gain_item_effect.h
-	src/script/effect/gain_spell_scroll_effect.h
 	src/script/effect/healing_effect.h
 	src/script/effect/hidden_effect.h
 	src/script/effect/if_effect.h

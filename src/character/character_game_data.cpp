@@ -2676,15 +2676,6 @@ bool character_game_data::generate_trait(const trait_type *trait_type, const cha
 	return true;
 }
 
-bool character_game_data::generate_initial_trait(const trait_type *trait_type)
-{
-	const character_attribute *target_attribute = this->character->get_skill() != 0 ? this->character->get_primary_attribute() : nullptr;
-	const int target_attribute_value = target_attribute ? this->character->get_skill() : 0;
-	const int target_attribute_bonus = target_attribute ? (target_attribute_value - this->get_attribute_value(target_attribute)) : 0;
-
-	return this->generate_trait(trait_type, target_attribute, target_attribute_bonus);
-}
-
 void character_game_data::on_trait_chosen(const trait *trait, const trait_type *trait_type)
 {
 	this->trait_choices[trait_type].push_back(trait);

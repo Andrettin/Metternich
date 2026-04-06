@@ -27,7 +27,7 @@ void character_history::process_gsml_property(const gsml_property &property, con
 
 	if (key == "rank") {
 		assert_throw(this->character->get_character_class() != nullptr);
-		this->level = this->character->get_character_class()->get_rank_level(value);
+		this->level = std::max(this->level, this->character->get_character_class()->get_rank_level(value));
 	} else if (key == "trait") {
 		const trait *trait = trait::get(value);
 		this->traits.push_back(trait);

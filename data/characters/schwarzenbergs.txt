@@ -124,7 +124,7 @@ felix_zu_schwarzenberg = { #Source: "Encyclopædia Britannica", 1911, vol. 24, p
 	gender = male
 	birth_date = 1800
 	death_date = 1852
-	skill_multiplier = 0.5
+	level_multiplier = 0.5
 	traits = {
 		#statesman
 	}

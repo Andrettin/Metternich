@@ -609,7 +609,6 @@ public:
 	void add_trait_of_type(const trait_type *trait_type);
 	void remove_trait_of_type(const trait_type *trait_type);
 	[[nodiscard]] bool generate_trait(const trait_type *trait_type, const character_attribute *target_attribute, const int target_attribute_bonus);
-	[[nodiscard]] bool generate_initial_trait(const trait_type *trait_type);
 	Q_INVOKABLE void on_trait_chosen(const metternich::trait *trait, const metternich::trait_type *trait_type);
 	std::vector<const trait *> get_potential_traits_from_list(const std::vector<const trait *> &traits) const;
 

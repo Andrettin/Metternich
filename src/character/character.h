@@ -88,8 +88,7 @@ class character final : public character_base, public data_type<character>
 	Q_PROPERTY(metternich::character* biological_father READ get_biological_father WRITE set_biological_father NOTIFY changed)
 	Q_PROPERTY(metternich::character* mother READ get_mother WRITE set_mother NOTIFY changed)
 	Q_PROPERTY(metternich::character* contemporary_character READ get_contemporary_character WRITE set_contemporary_character NOTIFY changed)
-	Q_PROPERTY(int skill MEMBER skill READ get_skill NOTIFY changed)
-	Q_PROPERTY(archimedes::centesimal_int skill_multiplier READ get_skill_multiplier WRITE set_skill_multiplier NOTIFY changed)
+	Q_PROPERTY(archimedes::centesimal_int level_multiplier READ get_level_multiplier WRITE set_level_multiplier NOTIFY changed)
 	Q_PROPERTY(int health MEMBER health READ get_health NOTIFY changed)
 	Q_PROPERTY(QString leader_type_name READ get_leader_type_name_qstring NOTIFY changed)
 	Q_PROPERTY(metternich::character_game_data* game_data READ get_game_data NOTIFY game_data_changed)
@@ -110,8 +109,6 @@ public:
 	static void initialize_all();
 	static void initialize_all_vital_dates();
 	static void initialize_all_home_sites();
-
-	static bool skill_compare(const character *lhs, const character *rhs);
 
 	static character *generate(const metternich::species *species, const metternich::character_class *character_class, const int level, const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const std::vector<const trait *> &traits, const int health, const std::vector<const item_type *> &items, const bool generate_bloodline, const bool temporary = false);
 	static character *generate(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const int health, const std::vector<const item_type *> &items, const bool generate_bloodline, const bool temporary = false);
@@ -347,13 +344,8 @@ public:
 
 	const character_attribute *get_primary_attribute() const;
 
-	int get_skill() const
-	{
-		return this->skill;
-	}
-
-	centesimal_int get_skill_multiplier() const;
-	void set_skill_multiplier(const centesimal_int &skill_multiplier);
+	centesimal_int get_level_multiplier() const;
+	void set_level_multiplier(const centesimal_int &level_multiplier);
 
 	std::optional<std::pair<int, int>> get_attribute_range(const character_attribute *attribute) const;
 
@@ -443,7 +435,6 @@ private:
 	bool generated_bloodline = false;
 	metternich::portrait *portrait = nullptr;
 	const site *home_site = nullptr;
-	int skill = 0;
 	data_entry_map<character_attribute, std::string> attribute_ratings;
 	data_entry_map<character_attribute, std::pair<int, int>> attribute_ranges;
 	int health = 0;

@@ -8,7 +8,7 @@ vilem_rozmberk = {
 	gender = male
 	birth_date = 1545
 	death_date = 1592
-	skill_multiplier = 0.17
+	level_multiplier = 0.17
 	traits = {
 		#treasurer
 	}
@@ -24,7 +24,7 @@ karel_starsi = {
 	gender = male
 	birth_date = 1564.9.15
 	death_date = 1636.11.9
-	skill_multiplier = 0.33
+	level_multiplier = 0.33
 	traits = {
 		#statesman
 	}
@@ -39,7 +39,7 @@ zdenko_adalbert = {
 	gender = male
 	birth_date = 1568
 	death_date = 1628.7.16
-	skill_multiplier = 0.17
+	level_multiplier = 0.17
 	traits = {
 		#statesman
 	}
@@ -55,7 +55,7 @@ jaroslav_borsita = {
 	gender = male
 	birth_date = 1582
 	death_date = 1649.11.21
-	skill_multiplier = 0.17
+	level_multiplier = 0.17
 	traits = {
 		#treasurer
 	}
@@ -72,7 +72,7 @@ jan_amos_komensky = {
 	gender = male
 	birth_date = 1592.3.28
 	death_date = 1670.11.15
-	skill_multiplier = 0.17
+	level_multiplier = 0.17
 	traits = {
 		#philosopher
 	}
@@ -88,7 +88,7 @@ francis_kinsky = {
 	gender = male
 	birth_date = 1678
 	death_date = 1741
-	skill_multiplier = 0.5
+	level_multiplier = 0.5
 	traits = {
 		#statesman
 	}

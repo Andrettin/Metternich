@@ -83,7 +83,7 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(const metternich::commodity* advisor_commodity MEMBER advisor_commodity NOTIFY changed)
 	Q_PROPERTY(const metternich::icon* tariff_icon MEMBER tariff_icon NOTIFY changed)
 	Q_PROPERTY(const metternich::icon* treasure_fleet_icon MEMBER treasure_fleet_icon NOTIFY changed)
-	Q_PROPERTY(int max_character_skill MEMBER max_character_skill READ get_max_character_skill NOTIFY changed)
+	Q_PROPERTY(int max_character_normal_level MEMBER max_character_normal_level READ get_max_character_normal_level NOTIFY changed)
 	Q_PROPERTY(int craft_recovery_per_day MEMBER craft_recovery_per_day READ get_craft_recovery_per_day NOTIFY changed)
 	Q_PROPERTY(const metternich::office* ruler_office MEMBER ruler_office READ get_ruler_office NOTIFY changed)
 	Q_PROPERTY(const metternich::office* heir_office MEMBER heir_office READ get_heir_office NOTIFY changed)
@@ -320,9 +320,9 @@ public:
 		return this->treasure_fleet_icon;
 	}
 
-	int get_max_character_skill() const
+	int get_max_character_normal_level() const
 	{
-		return this->max_character_skill;
+		return this->max_character_normal_level;
 	}
 	
 	int get_craft_recovery_per_day() const
@@ -555,7 +555,7 @@ private:
 	const commodity *advisor_commodity = nullptr;
 	const icon *tariff_icon = nullptr;
 	const icon *treasure_fleet_icon = nullptr;
-	int max_character_skill = 0;
+	int max_character_normal_level = 0;
 	int craft_recovery_per_day = 0;
 	const office *ruler_office = nullptr;
 	const office *heir_office = nullptr;

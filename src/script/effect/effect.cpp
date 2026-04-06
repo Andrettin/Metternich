@@ -35,7 +35,6 @@
 #include "script/effect/explore_dungeon_effect.h"
 #include "script/effect/free_technologies_effect.h"
 #include "script/effect/gain_item_effect.h"
-#include "script/effect/gain_spell_scroll_effect.h"
 #include "script/effect/healing_effect.h"
 #include "script/effect/hidden_effect.h"
 #include "script/effect/if_effect.h"
@@ -95,8 +94,6 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 			return std::make_unique<explore_dungeon_effect>(value, effect_operator);
 		} else if (key == "free_technologies") {
 			return std::make_unique<free_technologies_effect>(value, effect_operator);
-		} else if (key == "gain_spell_scroll") {
-			return std::make_unique<gain_spell_scroll_effect>(value, effect_operator);
 		} else if (commodity::try_get(key) != nullptr) {
 			return std::make_unique<commodity_effect>(commodity::get(key), value, effect_operator);
 		} else if (key.starts_with(population_scaled_commodity_prefix) && commodity::try_get(key.substr(population_scaled_commodity_prefix.size(), key.size() - population_scaled_commodity_prefix.size())) != nullptr) {

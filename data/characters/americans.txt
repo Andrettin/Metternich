@@ -21,7 +21,7 @@ george_washington = {
 	gender = male
 	birth_date = 1732
 	death_date = 1799
-	skill = 10 #Disciplined: -50% Infantry Cost
+	#skill = 10 #Disciplined: -50% Infantry Cost
 	traits = {
 		#disciplined
 		#expansive
@@ -65,7 +65,7 @@ thomas_jefferson = {
 	gender = male
 	birth_date = 1743
 	death_date = 1826
-	skill = 10 #+50% Statesmanship
+	#skill = 10 #+50% Statesmanship
 	traits = {
 		#statesman
 	}
@@ -81,7 +81,7 @@ john_jay = {
 	gender = male
 	birth_date = 1745
 	death_date = 1829
-	skill = 5 #+25% Statesmanship
+	#skill = 5 #+25% Statesmanship
 	traits = {
 		#statesman
 	}
@@ -121,7 +121,7 @@ eli_whitney = {
 	gender = male
 	birth_date = 1765
 	death_date = 1825
-	skill = 10 #+50% Cotton
+	#skill = 10 #+50% Cotton
 	traits = {
 		#cotton_planter
 	}

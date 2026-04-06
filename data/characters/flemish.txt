@@ -30,7 +30,7 @@ jan_stephan_van_calcar = { #Source: Isaac Asimov, "Cronologia das Ciências e da
 	gender = male
 	birth_date = 1499
 	death_date = 1545
-	skill_multiplier = 0.83
+	level_multiplier = 0.83
 	
 	history = {
 		#made illustrations for Vesalius' book "De Corporis Humani Fabrica", published in 1543
@@ -47,7 +47,7 @@ andreas_vesalius = { #Source: Isaac Asimov, "Cronologia das Ciências e das Desc
 	gender = male
 	birth_date = 1514
 	death_date = 1564
-	skill_multiplier = 0.83
+	level_multiplier = 0.83
 	traits = {
 		#natural_scientist
 	}

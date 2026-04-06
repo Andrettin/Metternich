@@ -160,15 +160,6 @@ void character::initialize_all_home_sites()
 	}
 }
 
-bool character::skill_compare(const character *lhs, const character *rhs)
-{
-	if (lhs->get_skill() != rhs->get_skill()) {
-		return lhs->get_skill() > rhs->get_skill();
-	}
-
-	return lhs->get_identifier() < rhs->get_identifier();
-}
-
 character *character::generate(const metternich::species *species, const metternich::character_class *character_class, const int level, const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const std::vector<const trait *> &traits, const int health, const std::vector<const item_type *> &items, const bool generate_bloodline, const bool temporary)
 {
 	assert_throw(species != nullptr);
@@ -268,7 +259,7 @@ void character::process_gsml_property(const gsml_property &property)
 	if (key == "rank") {
 		assert_throw(this->get_level() == 0);
 		assert_throw(this->get_character_class() != nullptr);
-		this->level = this->get_character_class()->get_rank_level(value);
+		this->level = std::max(this->level, this->get_character_class()->get_rank_level(value));
 	} else if (key == "mythic_rank") {
 		assert_throw(this->get_mythic_path() != nullptr);
 		this->mythic_tier = this->get_mythic_path()->get_rank_tier(value);
@@ -928,16 +919,16 @@ const character_attribute *character::get_primary_attribute() const
 	return nullptr;
 }
 
-centesimal_int character::get_skill_multiplier() const
+centesimal_int character::get_level_multiplier() const
 {
-	assert_throw(defines::get()->get_max_character_skill() > 0);
-	return centesimal_int(this->get_skill()) / defines::get()->get_max_character_skill();
+	assert_throw(defines::get()->get_max_character_normal_level() > 0);
+	return centesimal_int(this->get_level()) / defines::get()->get_max_character_normal_level();
 }
 
-void character::set_skill_multiplier(const centesimal_int &skill_multiplier)
+void character::set_level_multiplier(const centesimal_int &level_multiplier)
 {
-	assert_throw(defines::get()->get_max_character_skill() > 0);
-	this->skill = (skill_multiplier * defines::get()->get_max_character_skill()).to_int();
+	assert_throw(defines::get()->get_max_character_normal_level() > 0);
+	this->level = (level_multiplier * defines::get()->get_max_character_normal_level()).to_int();
 }
 
 std::optional<std::pair<int, int>> character::get_attribute_range(const character_attribute *attribute) const
