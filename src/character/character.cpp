@@ -169,7 +169,7 @@ bool character::skill_compare(const character *lhs, const character *rhs)
 	return lhs->get_identifier() < rhs->get_identifier();
 }
 
-character *character::generate(const metternich::species *species, const metternich::character_class *character_class, const int level, const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const std::vector<const trait *> &traits, const int hit_points, const std::vector<const item_type *> &items, const bool generate_bloodline, const bool temporary)
+character *character::generate(const metternich::species *species, const metternich::character_class *character_class, const int level, const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const std::vector<const trait *> &traits, const int health, const std::vector<const item_type *> &items, const bool generate_bloodline, const bool temporary)
 {
 	assert_throw(species != nullptr);
 
@@ -214,8 +214,8 @@ character *character::generate(const metternich::species *species, const mettern
 		}
 	}
 
-	if (hit_points != 0) {
-		generated_character->hit_points = hit_points;
+	if (health != 0) {
+		generated_character->health = health;
 	}
 
 	generated_character->starting_items = items;
@@ -239,14 +239,14 @@ character *character::generate(const metternich::species *species, const mettern
 	return game::get()->get_generated_characters().back().get();
 }
 
-character *character::generate(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const int hit_points, const std::vector<const item_type *> &items, const bool generate_bloodline, const bool temporary)
+character *character::generate(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const int health, const std::vector<const item_type *> &items, const bool generate_bloodline, const bool temporary)
 {
-	return character::generate(monster_type->get_species(), monster_type->get_character_class(), monster_type->get_level(), monster_type, culture, religion, home_site, monster_type->get_traits(), hit_points, items, generate_bloodline, temporary);
+	return character::generate(monster_type->get_species(), monster_type->get_character_class(), monster_type->get_level(), monster_type, culture, religion, home_site, monster_type->get_traits(), health, items, generate_bloodline, temporary);
 }
 
-std::shared_ptr<character_reference> character::generate_temporary(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const int hit_points, const std::vector<const item_type *> &items)
+std::shared_ptr<character_reference> character::generate_temporary(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const int health, const std::vector<const item_type *> &items)
 {
-	metternich::character *character = character::generate(monster_type, culture, religion, home_site, hit_points, items, false, true);
+	metternich::character *character = character::generate(monster_type, culture, religion, home_site, health, items, false, true);
 	return std::make_shared<character_reference>(character);
 }
 

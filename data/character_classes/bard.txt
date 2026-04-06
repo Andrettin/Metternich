@@ -53,7 +53,7 @@ bard = {
 		19 = 1980000
 		20 = 2200000
 	}
-	hit_point_bonus_per_level = {
+	health_bonus_per_level = {
 		1 = 1d6
 		2 = 1d6
 		3 = 1d6

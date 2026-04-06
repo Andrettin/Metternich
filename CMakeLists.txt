@@ -848,9 +848,9 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/free_infantry_promotion_modifier_effect.h
 	src/script/modifier_effect/free_warship_promotion_modifier_effect.h
 	src/script/modifier_effect/gain_technologies_known_by_others_modifier_effect.h
+	src/script/modifier_effect/health_modifier_effect.h
+	src/script/modifier_effect/health_per_hit_dice_modifier_effect.h
 	src/script/modifier_effect/hit_dice_modifier_effect.h
-	src/script/modifier_effect/hit_points_modifier_effect.h
-	src/script/modifier_effect/hit_points_per_hit_dice_modifier_effect.h
 	src/script/modifier_effect/holding_level_modifier_effect.h
 	src/script/modifier_effect/industrial_output_modifier_effect.h
 	src/script/modifier_effect/infantry_cost_modifier_effect.h

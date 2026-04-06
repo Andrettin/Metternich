@@ -78,7 +78,7 @@ epic_toughness = {
 		proficiency
 	}
 	modifier = {
-		hit_points = 30
+		health = 30
 	}
 }
 

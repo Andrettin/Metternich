@@ -34,7 +34,7 @@ public:
 	{
 		Q_UNUSED(scope);
 
-		return "Hit Points";
+		return "Health";
 	}
 
 	virtual std::string get_string(const character *scope, const centesimal_int &multiplier, const bool ignore_decimals) const override

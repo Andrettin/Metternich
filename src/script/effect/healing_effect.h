@@ -35,7 +35,7 @@ public:
 		if (std::holds_alternative<bool>(this->healing)) {
 			const bool value = std::get<bool>(this->healing);
 			if (value) {
-				quantity = scope->get_game_data()->get_max_hit_points();
+				quantity = scope->get_game_data()->get_max_health();
 			} else {
 				return;
 			}
@@ -44,7 +44,7 @@ public:
 			quantity = random::get()->roll_dice(healing_dice);
 		}
 
-		scope->get_game_data()->change_hit_points(quantity);
+		scope->get_game_data()->change_health(quantity);
 	}
 
 	virtual std::string get_assignment_string() const override

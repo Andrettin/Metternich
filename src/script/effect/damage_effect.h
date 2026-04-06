@@ -75,7 +75,7 @@ public:
 			}
 		}
 
-		scope->get_game_data()->change_hit_points(-damage);
+		scope->get_game_data()->change_health(-damage);
 	}
 
 	virtual std::string get_assignment_string(const character *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override

@@ -666,7 +666,7 @@ QCoro::Task<int64_t> combat::do_character_attack(const character *character, con
 	}
 
 	const int damage = random::get()->roll_dice(character->get_game_data()->get_damage_dice()) + character->get_game_data()->get_damage_bonus();
-	enemy->get_game_data()->change_hit_points(-damage);
+	enemy->get_game_data()->change_health(-damage);
 
 	if (enemy->get_game_data()->is_dead()) {
 		const int64_t experience_award = enemy->get_game_data()->get_experience_award();
@@ -1013,8 +1013,8 @@ combat_character_info::combat_character_info(const metternich::character *charac
 	: combat_unit_info_base(defender), character(character)
 {
 	connect(character->get_game_data(), &character_game_data::icon_changed, this, &combat_character_info::icon_changed);
-	connect(character->get_game_data(), &character_game_data::hit_points_changed, this, &combat_character_info::hit_points_changed);
-	connect(character->get_game_data(), &character_game_data::max_hit_points_changed, this, &combat_character_info::max_hit_points_changed);
+	connect(character->get_game_data(), &character_game_data::health_changed, this, &combat_character_info::hit_points_changed);
+	connect(character->get_game_data(), &character_game_data::max_health_changed, this, &combat_character_info::max_hit_points_changed);
 }
 
 const icon *combat_character_info::get_icon() const
@@ -1024,12 +1024,12 @@ const icon *combat_character_info::get_icon() const
 
 int combat_character_info::get_hit_points() const
 {
-	return this->get_character()->get_game_data()->get_hit_points();
+	return this->get_character()->get_game_data()->get_health();
 }
 
 int combat_character_info::get_max_hit_points() const
 {
-	return this->get_character()->get_game_data()->get_max_hit_points();
+	return this->get_character()->get_game_data()->get_max_health();
 }
 
 int combat_character_info::get_range() const

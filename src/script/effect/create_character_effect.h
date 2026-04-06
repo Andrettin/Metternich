@@ -32,8 +32,8 @@ public:
 			this->character = character::get(value);
 		} else if (key == "monster_type") {
 			this->monster_type = monster_type::get(value);
-		} else if (key == "hit_points") {
-			this->hit_points = std::stoi(value);
+		} else if (key == "health") {
+			this->health = std::stoi(value);
 		} else if (key == "saved_scope") {
 			this->saved_scope_name = value;
 		} else {
@@ -67,8 +67,8 @@ public:
 			assert_throw(false);
 		}
 
-		if (this->hit_points > 0) {
-			created_character->get_game_data()->set_hit_points(this->hit_points);
+		if (this->health > 0) {
+			created_character->get_game_data()->set_health(this->health);
 		}
 
 		created_character->get_game_data()->set_domain(scope);
@@ -98,7 +98,7 @@ public:
 private:
 	const metternich::character *character = nullptr;
 	const metternich::monster_type *monster_type = nullptr;
-	int hit_points = 0; //the hit points the character should start with (in case they would be hurt)
+	int health = 0; //the health the character should start with (in case they would be hurt)
 	std::string saved_scope_name;
 };
 

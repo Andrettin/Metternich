@@ -90,7 +90,7 @@ class character final : public character_base, public data_type<character>
 	Q_PROPERTY(metternich::character* contemporary_character READ get_contemporary_character WRITE set_contemporary_character NOTIFY changed)
 	Q_PROPERTY(int skill MEMBER skill READ get_skill NOTIFY changed)
 	Q_PROPERTY(archimedes::centesimal_int skill_multiplier READ get_skill_multiplier WRITE set_skill_multiplier NOTIFY changed)
-	Q_PROPERTY(int hit_points MEMBER hit_points READ get_hit_points NOTIFY changed)
+	Q_PROPERTY(int health MEMBER health READ get_health NOTIFY changed)
 	Q_PROPERTY(QString leader_type_name READ get_leader_type_name_qstring NOTIFY changed)
 	Q_PROPERTY(metternich::character_game_data* game_data READ get_game_data NOTIFY game_data_changed)
 	Q_PROPERTY(bool temporary READ is_temporary CONSTANT)
@@ -113,9 +113,9 @@ public:
 
 	static bool skill_compare(const character *lhs, const character *rhs);
 
-	static character *generate(const metternich::species *species, const metternich::character_class *character_class, const int level, const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const std::vector<const trait *> &traits, const int hit_points, const std::vector<const item_type *> &items, const bool generate_bloodline, const bool temporary = false);
-	static character *generate(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const int hit_points, const std::vector<const item_type *> &items, const bool generate_bloodline, const bool temporary = false);
-	static std::shared_ptr<character_reference> generate_temporary(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const int hit_points, const std::vector<const item_type *> &items);
+	static character *generate(const metternich::species *species, const metternich::character_class *character_class, const int level, const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const std::vector<const trait *> &traits, const int health, const std::vector<const item_type *> &items, const bool generate_bloodline, const bool temporary = false);
+	static character *generate(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const int health, const std::vector<const item_type *> &items, const bool generate_bloodline, const bool temporary = false);
+	static std::shared_ptr<character_reference> generate_temporary(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const int health, const std::vector<const item_type *> &items);
 
 	explicit character(const std::string &identifier);
 	~character();
@@ -357,9 +357,9 @@ public:
 
 	std::optional<std::pair<int, int>> get_attribute_range(const character_attribute *attribute) const;
 
-	int get_hit_points() const
+	int get_health() const
 	{
-		return this->hit_points;
+		return this->health;
 	}
 
 	const std::vector<const trait *> &get_traits() const
@@ -446,7 +446,7 @@ private:
 	int skill = 0;
 	data_entry_map<character_attribute, std::string> attribute_ratings;
 	data_entry_map<character_attribute, std::pair<int, int>> attribute_ranges;
-	int hit_points = 0;
+	int health = 0;
 	std::vector<const trait *> traits;
 	std::vector<const item_type *> starting_items;
 	std::vector<const spell *> starting_spells;

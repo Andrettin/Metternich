@@ -46,8 +46,8 @@ public:
 		this->monster_type = monster_type::get(scope.get_tag());
 
 		scope.for_each_element([&](const gsml_property &property) {
-			if (property.get_key() == "hit_points") {
-				this->hit_points = std::stoi(property.get_value());
+			if (property.get_key() == "health") {
+				this->health = std::stoi(property.get_value());
 			} else if (property.get_key() == "placement") {
 				this->placement = magic_enum::enum_cast<combat_placement>(property.get_value()).value();
 			} else {
@@ -85,9 +85,9 @@ public:
 		return this->monster_type;
 	}
 
-	int get_hit_points()
+	int get_health()
 	{
-		return this->hit_points;
+		return this->health;
 	}
 
 	const combat_placement get_placement() const
@@ -112,7 +112,7 @@ public:
 
 private:
 	const metternich::monster_type *monster_type = nullptr;
-	int hit_points = 0;
+	int health = 0;
 	combat_placement placement = combat_placement::right;
 	QPoint placement_offset = QPoint(0, 0);
 	std::vector<const item_type *> items;
@@ -334,7 +334,7 @@ public:
 			if (character_class != nullptr) {
 				character_class_string += std::format(" {} {}", character_class->get_name(), party_character->get_game_data()->get_level());
 			}
-			str += "\n" + std::string(indent + 1, '\t') + std::format("{} ({}{} HP {}/{})", party_character->get_game_data()->get_full_name(), party_character->get_species()->get_name(), character_class_string, party_character->get_game_data()->get_hit_points(), party_character->get_game_data()->get_max_hit_points());
+			str += "\n" + std::string(indent + 1, '\t') + std::format("{} ({}{} HP {}/{})", party_character->get_game_data()->get_full_name(), party_character->get_species()->get_name(), character_class_string, party_character->get_game_data()->get_health(), party_character->get_game_data()->get_max_health());
 		}
 
 		str += "\n" + std::string(indent, '\t') + std::format("Does combat against{}:", this->attacker && this->surprise ? " (surprised)" : "");
@@ -413,7 +413,7 @@ public:
 		}
 
 		for (const std::unique_ptr<enemy> &enemy : this->enemies) {
-			std::shared_ptr<character_reference> enemy_character = character::generate_temporary(enemy->get_monster_type(), nullptr, nullptr, nullptr, enemy->get_hit_points(), enemy->get_items());
+			std::shared_ptr<character_reference> enemy_character = character::generate_temporary(enemy->get_monster_type(), nullptr, nullptr, nullptr, enemy->get_health(), enemy->get_items());
 			enemy_characters.push_back(enemy_character->get_character());
 			generated_characters.push_back(enemy_character);
 

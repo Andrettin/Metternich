@@ -6,29 +6,29 @@
 
 namespace metternich {
 
-class hit_points_modifier_effect final : public modifier_effect<const character>
+class health_modifier_effect final : public modifier_effect<const character>
 {
 public:
-	explicit hit_points_modifier_effect(const std::string &value) : modifier_effect(value)
+	explicit health_modifier_effect(const std::string &value) : modifier_effect(value)
 	{
 	}
 
 	virtual const std::string &get_identifier() const override
 	{
-		static const std::string identifier = "hit_points";
+		static const std::string identifier = "health";
 		return identifier;
 	}
 
 	virtual void apply(const character *scope, const centesimal_int &multiplier) const override
 	{
-		scope->get_game_data()->change_max_hit_points((this->value * multiplier).to_int(), true);
+		scope->get_game_data()->change_max_health((this->value * multiplier).to_int(), true);
 	}
 
 	virtual std::string get_base_string(const character *scope) const override
 	{
 		Q_UNUSED(scope);
 
-		return "Hit Points";
+		return "Health";
 	}
 };
 

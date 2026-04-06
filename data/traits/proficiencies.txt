@@ -236,6 +236,6 @@ toughness = {
 		proficiency
 	}
 	modifier = {
-		hit_points = 3
+		health = 3
 	}
 }

@@ -224,7 +224,7 @@ public:
 	}
 
 	int64_t get_experience_for_level(const int level) const;
-	const std::variant<int, dice> &get_hit_point_bonus_for_level(const int level) const;
+	const std::variant<int, dice> &get_health_bonus_for_level(const int level) const;
 
 	const modifier<const character> *get_level_modifier(const int level) const
 	{
@@ -292,7 +292,7 @@ private:
 	data_entry_map<character_attribute, int> min_attribute_values;
 	std::map<std::string, int> rank_levels; //names for particular levels
 	std::map<int, int64_t> experience_per_level;
-	std::map<int, std::variant<int, dice>> hit_point_bonus_per_level;
+	std::map<int, std::variant<int, dice>> health_bonus_per_level;
 	std::map<int, std::unique_ptr<modifier<const character>>> level_modifiers;
 	std::vector<const item_type *> starting_items;
 	std::vector<const spell *> starting_spells;

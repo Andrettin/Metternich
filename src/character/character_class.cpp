@@ -86,15 +86,15 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 
 			this->experience_per_level[level] = experience;
 		});
-	} else if (tag == "hit_point_bonus_per_level") {
+	} else if (tag == "health_bonus_per_level") {
 		scope.for_each_property([&](const gsml_property &property) {
 			const int level = std::stoi(property.get_key());
 			const std::string &number_str = property.get_value();
 
 			if (number_str.find("d") != std::string::npos) {
-				this->hit_point_bonus_per_level[level] = dice(number_str);
+				this->health_bonus_per_level[level] = dice(number_str);
 			} else {
-				this->hit_point_bonus_per_level[level] = std::stoi(number_str);
+				this->health_bonus_per_level[level] = std::stoi(number_str);
 			}
 		});
 	} else if (tag == "level_modifiers") {
@@ -258,15 +258,15 @@ int64_t character_class::get_experience_for_level(const int level) const
 	return defines::get()->get_experience_for_level(level);
 }
 
-const std::variant<int, dice> &character_class::get_hit_point_bonus_for_level(const int level) const
+const std::variant<int, dice> &character_class::get_health_bonus_for_level(const int level) const
 {
-	const auto find_iterator = this->hit_point_bonus_per_level.find(level);
-	if (find_iterator != this->hit_point_bonus_per_level.end()) {
+	const auto find_iterator = this->health_bonus_per_level.find(level);
+	if (find_iterator != this->health_bonus_per_level.end()) {
 		return find_iterator->second;
 	}
 
 	if (this->get_base_class() != nullptr) {
-		return this->get_base_class()->get_hit_point_bonus_for_level(level);
+		return this->get_base_class()->get_health_bonus_for_level(level);
 	}
 
 	static const std::variant<int, dice> zero = 0;
@@ -277,22 +277,22 @@ std::string character_class::get_level_modifier_string(const int level, const me
 {
 	std::string str;
 
-	const std::variant<int, dice> &hit_point_bonus = this->get_hit_point_bonus_for_level(level);
-	if (std::holds_alternative<int>(hit_point_bonus)) {
-		const int hit_point_bonus_int = std::get<int>(hit_point_bonus);
-		if (hit_point_bonus_int != 0) {
+	const std::variant<int, dice> &health_bonus = this->get_health_bonus_for_level(level);
+	if (std::holds_alternative<int>(health_bonus)) {
+		const int health_bonus_int = std::get<int>(health_bonus);
+		if (health_bonus_int != 0) {
 			if (!str.empty()) {
 				str += "\n";
 			}
 
-			str += std::format("Hit Points: +{}", hit_point_bonus_int);
+			str += std::format("Health: +{}", health_bonus_int);
 		}
-	} else if (std::holds_alternative<dice>(hit_point_bonus)) {
+	} else if (std::holds_alternative<dice>(health_bonus)) {
 		if (!str.empty()) {
 			str += "\n";
 		}
 
-		str += std::format("Hit Points: +{}", std::get<dice>(hit_point_bonus).to_display_string());
+		str += std::format("Health: +{}", std::get<dice>(health_bonus).to_display_string());
 	}
 
 	const int to_hit_bonus = this->get_to_hit_bonus_table()->get_bonus_per_level(level);

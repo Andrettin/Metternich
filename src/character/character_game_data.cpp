@@ -136,12 +136,12 @@ void character_game_data::process_gsml_property(const gsml_property &property)
 		this->reputation = std::stoi(value);
 	} else if (key == "hit_dice_count") {
 		this->hit_dice_count = std::stoi(value);
-	} else if (key == "hit_points") {
-		this->hit_points = std::stoi(value);
-	} else if (key == "max_hit_points") {
-		this->max_hit_points = std::stoi(value);
-	} else if (key == "hit_point_bonus_per_hit_dice") {
-		this->hit_point_bonus_per_hit_dice = std::stoi(value);
+	} else if (key == "health") {
+		this->health = std::stoi(value);
+	} else if (key == "max_health") {
+		this->max_health = std::stoi(value);
+	} else if (key == "health_bonus_per_hit_dice") {
+		this->health_bonus_per_hit_dice = std::stoi(value);
 	} else if (key == "mana") {
 		this->mana = std::stoi(value);
 	} else if (key == "max_mana") {
@@ -338,9 +338,9 @@ gsml_data character_game_data::to_gsml_data() const
 	}
 
 	data.add_property("hit_dice_count", std::to_string(this->get_hit_dice_count()));
-	data.add_property("hit_points", std::to_string(this->get_hit_points()));
-	data.add_property("max_hit_points", std::to_string(this->get_max_hit_points()));
-	data.add_property("hit_point_bonus_per_hit_dice", std::to_string(this->get_hit_point_bonus_per_hit_dice()));
+	data.add_property("health", std::to_string(this->get_health()));
+	data.add_property("max_health", std::to_string(this->get_max_health()));
+	data.add_property("health_bonus_per_hit_dice", std::to_string(this->get_health_bonus_per_hit_dice()));
 	data.add_property("mana", std::to_string(this->get_mana()));
 	data.add_property("max_mana", std::to_string(this->get_max_mana()));
 	data.add_property("craft", std::to_string(this->get_craft()));
@@ -672,22 +672,22 @@ void character_game_data::apply_species_and_class(const int level, const bool ap
 	this->add_starting_items();
 	this->add_starting_spells();
 
-	if (this->character->get_hit_points() != 0) {
+	if (this->character->get_health() != 0) {
 		int min_hp = 0;
 		int max_hp = 0;
 
 		for (const auto &[hit_dice, roll_results] : this->hit_dice_roll_results) {
-			min_hp += std::max(hit_dice.get_minimum_result() + this->get_hit_point_bonus_per_hit_dice(), hit_dice.get_count()) * static_cast<int>(roll_results.size());
-			max_hp += std::max(hit_dice.get_maximum_result() + this->get_hit_point_bonus_per_hit_dice(), hit_dice.get_count()) * static_cast<int>(roll_results.size());
+			min_hp += std::max(hit_dice.get_minimum_result() + this->get_health_bonus_per_hit_dice(), hit_dice.get_count()) * static_cast<int>(roll_results.size());
+			max_hp += std::max(hit_dice.get_maximum_result() + this->get_health_bonus_per_hit_dice(), hit_dice.get_count()) * static_cast<int>(roll_results.size());
 		}
 
-		assert_log(this->character->get_hit_points() >= min_hp);
-		assert_log(this->character->get_hit_points() <= max_hp);
+		assert_log(this->character->get_health() >= min_hp);
+		assert_log(this->character->get_health() <= max_hp);
 
-		this->set_max_hit_points(this->character->get_hit_points(), true);
+		this->set_max_health(this->character->get_health(), true);
 	}
 
-	//ensure characters start with their hit point and mana maximum
+	//ensure characters start with their health and mana maximum
 	this->fully_recover();
 }
 
@@ -1494,17 +1494,17 @@ void character_game_data::on_level_gained(const int affected_level, const int mu
 	const metternich::character_class *character_class = this->get_character_class();
 	assert_throw(character_class != nullptr);
 
-	const std::variant<int, dice> &hit_point_bonus = character_class->get_hit_point_bonus_for_level(affected_level);
-	if (std::holds_alternative<int>(hit_point_bonus)) {
-		const int hit_point_bonus_int = std::get<int>(hit_point_bonus);
-		this->change_max_hit_points(hit_point_bonus_int * multiplier, true);
-	} else if (std::holds_alternative<dice>(hit_point_bonus)) {
-		const dice &hit_point_bonus_dice = std::get<dice>(hit_point_bonus);
+	const std::variant<int, dice> &health_bonus = character_class->get_health_bonus_for_level(affected_level);
+	if (std::holds_alternative<int>(health_bonus)) {
+		const int health_bonus_int = std::get<int>(health_bonus);
+		this->change_max_health(health_bonus_int * multiplier, true);
+	} else if (std::holds_alternative<dice>(health_bonus)) {
+		const dice &health_bonus_dice = std::get<dice>(health_bonus);
 
 		if (multiplier > 0) {
-			this->apply_hit_dice(hit_point_bonus_dice);
+			this->apply_hit_dice(health_bonus_dice);
 		} else if (multiplier < 0) {
-			this->remove_hit_dice(hit_point_bonus_dice);
+			this->remove_hit_dice(health_bonus_dice);
 		}
 	}
 
@@ -1842,9 +1842,9 @@ void character_game_data::apply_hit_dice(const dice &hit_dice)
 	this->change_hit_dice_count(hit_dice.get_count());
 
 	const int roll_result = std::max(random::get()->roll_dice(hit_dice), hit_dice.get_count());
-	const int hit_point_increase = std::max(roll_result + this->get_hit_point_bonus_per_hit_dice(), hit_dice.get_count());
+	const int health_increase = std::max(roll_result + this->get_health_bonus_per_hit_dice(), hit_dice.get_count());
 
-	this->change_max_hit_points(hit_point_increase, true);
+	this->change_max_health(health_increase, true);
 
 	this->hit_dice_roll_results[hit_dice].push_back(roll_result);
 }
@@ -1860,8 +1860,8 @@ void character_game_data::remove_hit_dice(const dice &hit_dice)
 	assert_throw(!roll_results.empty());
 	
 	const int last_roll_result = roll_results.back();
-	const int last_hit_point_increase = std::max(last_roll_result + this->get_hit_point_bonus_per_hit_dice(), hit_dice.get_count());
-	this->change_max_hit_points(-last_hit_point_increase, false);
+	const int last_health_increase = std::max(last_roll_result + this->get_health_bonus_per_hit_dice(), hit_dice.get_count());
+	this->change_max_health(-last_health_increase, false);
 
 	roll_results.pop_back();
 	if (roll_results.empty()) {
@@ -1869,86 +1869,86 @@ void character_game_data::remove_hit_dice(const dice &hit_dice)
 	}
 }
 
-void character_game_data::set_hit_points(int hit_points)
+void character_game_data::set_health(int health)
 {
-	hit_points = std::min(hit_points, this->get_max_hit_points());
+	health = std::min(health, this->get_max_health());
 
-	if (hit_points == this->get_hit_points()) {
+	if (health == this->get_health()) {
 		return;
 	}
 
-	this->hit_points = hit_points;
+	this->health = health;
 
-	if (this->get_hit_points() <= 0 && this->get_max_hit_points() > 0) {
+	if (this->get_health() <= 0 && this->get_max_health() > 0) {
 		this->die();
 	}
 
 	if (game::get()->is_running()) {
-		emit hit_points_changed();
+		emit health_changed();
 	}
 }
 
-void character_game_data::change_hit_points(const int change)
+void character_game_data::change_health(const int change)
 {
-	this->set_hit_points(this->get_hit_points() + change);
+	this->set_health(this->get_health() + change);
 }
 
-void character_game_data::set_max_hit_points(const int max_hit_points, const bool increase_hit_points)
+void character_game_data::set_max_health(const int max_health, const bool increase_health)
 {
-	if (max_hit_points == this->get_max_hit_points()) {
+	if (max_health == this->get_max_health()) {
 		return;
 	}
 
-	const int change = max_hit_points - this->get_max_hit_points();
+	const int change = max_health - this->get_max_health();
 
-	this->max_hit_points = max_hit_points;
+	this->max_health = max_health;
 
-	if (this->get_hit_points() > this->get_max_hit_points()) {
-		this->set_hit_points(this->get_max_hit_points());
-	} else if (change > 0 && increase_hit_points) {
-		this->change_hit_points(change);
+	if (this->get_health() > this->get_max_health()) {
+		this->set_health(this->get_max_health());
+	} else if (change > 0 && increase_health) {
+		this->change_health(change);
 	}
 
 	if (game::get()->is_running()) {
-		emit max_hit_points_changed();
+		emit max_health_changed();
 	}
 }
 
-void character_game_data::change_max_hit_points(const int change, const bool increase_hit_points)
+void character_game_data::change_max_health(const int change, const bool increase_health)
 {
-	this->set_max_hit_points(this->get_max_hit_points() + change, increase_hit_points);
+	this->set_max_health(this->get_max_health() + change, increase_health);
 }
 
-void character_game_data::set_hit_point_bonus_per_hit_dice(const int bonus)
+void character_game_data::set_health_bonus_per_hit_dice(const int bonus)
 {
-	if (bonus == this->get_hit_point_bonus_per_hit_dice()) {
+	if (bonus == this->get_health_bonus_per_hit_dice()) {
 		return;
 	}
 
-	const int old_bonus = this->get_hit_point_bonus_per_hit_dice();
+	const int old_bonus = this->get_health_bonus_per_hit_dice();
 
-	this->hit_point_bonus_per_hit_dice = bonus;
+	this->health_bonus_per_hit_dice = bonus;
 
 	if (this->get_hit_dice_count() > 0) {
-		int hit_point_change = 0;
+		int health_change = 0;
 
 		for (const auto &[hit_dice, roll_results] : this->hit_dice_roll_results) {
 			for (const int roll_result : roll_results) {
-				const int old_hit_point_change = std::max(roll_result + old_bonus, hit_dice.get_count());
-				const int new_hit_point_change = std::max(roll_result + bonus, hit_dice.get_count());
-				hit_point_change += new_hit_point_change - old_hit_point_change;
+				const int old_health_change = std::max(roll_result + old_bonus, hit_dice.get_count());
+				const int new_health_change = std::max(roll_result + bonus, hit_dice.get_count());
+				health_change += new_health_change - old_health_change;
 			}
 		}
 
-		if (hit_point_change != 0) {
-			this->change_max_hit_points(hit_point_change, true);
+		if (health_change != 0) {
+			this->change_max_health(health_change, true);
 		}
 	}
 }
 
-void character_game_data::change_hit_point_bonus_per_hit_dice(const int change)
+void character_game_data::change_health_bonus_per_hit_dice(const int change)
 {
-	this->set_hit_point_bonus_per_hit_dice(this->get_hit_point_bonus_per_hit_dice() + change);
+	this->set_health_bonus_per_hit_dice(this->get_health_bonus_per_hit_dice() + change);
 }
 
 void character_game_data::set_mana(int mana)

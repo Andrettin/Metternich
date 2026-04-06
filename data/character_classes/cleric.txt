@@ -62,7 +62,7 @@ cleric = {
 		19 = 2475000
 		20 = 2700000
 	}
-	hit_point_bonus_per_level = {
+	health_bonus_per_level = {
 		1 = 1d8
 		2 = 1d8
 		3 = 1d8

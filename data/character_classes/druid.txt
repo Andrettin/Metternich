@@ -37,7 +37,7 @@ druid = {
 		archdruid = 13
 		great_druid = 14
 	}
-	hit_point_bonus_per_level = {
+	health_bonus_per_level = {
 		1 = 1d8
 		2 = 1d8
 		3 = 1d8

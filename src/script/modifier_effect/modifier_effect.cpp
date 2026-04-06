@@ -39,8 +39,8 @@
 #include "script/modifier_effect/free_warship_promotion_modifier_effect.h"
 #include "script/modifier_effect/gain_technologies_known_by_others_modifier_effect.h"
 #include "script/modifier_effect/hit_dice_modifier_effect.h"
-#include "script/modifier_effect/hit_points_modifier_effect.h"
-#include "script/modifier_effect/hit_points_per_hit_dice_modifier_effect.h"
+#include "script/modifier_effect/health_modifier_effect.h"
+#include "script/modifier_effect/health_per_hit_dice_modifier_effect.h"
 #include "script/modifier_effect/holding_level_modifier_effect.h"
 #include "script/modifier_effect/industrial_output_modifier_effect.h"
 #include "script/modifier_effect/infantry_cost_modifier_effect.h"
@@ -93,12 +93,12 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<craft_modifier_effect>(value);
 		} else if (key == "damage_bonus") {
 			return std::make_unique<damage_bonus_modifier_effect>(value);
+		} else if (key == "health") {
+			return std::make_unique<health_modifier_effect>(value);
+		} else if (key == "health_per_hit_dice") {
+			return std::make_unique<health_per_hit_dice_modifier_effect>(value);
 		} else if (key == "hit_dice") {
 			return std::make_unique<hit_dice_modifier_effect>(value);
-		} else if (key == "hit_points") {
-			return std::make_unique<hit_points_modifier_effect>(value);
-		} else if (key == "hit_points_per_hit_dice") {
-			return std::make_unique<hit_points_per_hit_dice_modifier_effect>(value);
 		} else if (key == "movement") {
 			return std::make_unique<movement_modifier_effect>(value);
 		} else if (key == "range") {

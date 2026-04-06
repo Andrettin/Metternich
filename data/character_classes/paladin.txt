@@ -57,7 +57,7 @@ paladin = {
 		19 = 3300000
 		20 = 3600000
 	}
-	hit_point_bonus_per_level = {
+	health_bonus_per_level = {
 		1 = 1d10
 		2 = 1d10
 		3 = 1d10

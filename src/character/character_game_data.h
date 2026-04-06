@@ -80,8 +80,8 @@ class character_game_data final : public QObject
 	Q_PROPERTY(const metternich::bloodline* bloodline READ get_bloodline NOTIFY bloodline_changed)
 	Q_PROPERTY(int bloodline_strength READ get_bloodline_strength NOTIFY bloodline_strength_changed)
 	Q_PROPERTY(int reputation READ get_reputation NOTIFY reputation_changed)
-	Q_PROPERTY(int hit_points READ get_hit_points NOTIFY hit_points_changed)
-	Q_PROPERTY(int max_hit_points READ get_max_hit_points NOTIFY max_hit_points_changed)
+	Q_PROPERTY(int health READ get_health NOTIFY health_changed)
+	Q_PROPERTY(int max_health READ get_max_health NOTIFY max_health_changed)
 	Q_PROPERTY(int mana READ get_mana NOTIFY mana_changed)
 	Q_PROPERTY(int max_mana READ get_max_mana NOTIFY max_mana_changed)
 	Q_PROPERTY(int craft READ get_craft NOTIFY craft_changed)
@@ -398,29 +398,29 @@ public:
 	void apply_hit_dice(const dice &hit_dice);
 	void remove_hit_dice(const dice &hit_dice);
 
-	int get_hit_points() const
+	int get_health() const
 	{
-		return this->hit_points;
+		return this->health;
 	}
 
-	void set_hit_points(const int hit_points);
-	void change_hit_points(const int change);
+	void set_health(const int health);
+	void change_health(const int change);
 
-	int get_max_hit_points() const
+	int get_max_health() const
 	{
-		return this->max_hit_points;
+		return this->max_health;
 	}
 
-	void set_max_hit_points(const int hit_points, const bool increase_hit_points);
-	void change_max_hit_points(const int change, const bool increase_hit_points);
+	void set_max_health(const int health, const bool increase_health);
+	void change_max_health(const int change, const bool increase_health);
 
-	int get_hit_point_bonus_per_hit_dice() const
+	int get_health_bonus_per_hit_dice() const
 	{
-		return this->hit_point_bonus_per_hit_dice;
+		return this->health_bonus_per_hit_dice;
 	}
 
-	void set_hit_point_bonus_per_hit_dice(const int bonus);
-	void change_hit_point_bonus_per_hit_dice(const int change);
+	void set_health_bonus_per_hit_dice(const int bonus);
+	void change_health_bonus_per_hit_dice(const int change);
 
 	int get_mana() const
 	{
@@ -456,7 +456,7 @@ public:
 
 	void fully_recover()
 	{
-		this->set_hit_points(this->get_max_hit_points());
+		this->set_health(this->get_max_health());
 		this->set_mana(this->get_max_mana());
 	}
 
@@ -971,8 +971,8 @@ signals:
 	void bloodline_strength_changed();
 	void reputation_changed();
 	void attribute_values_changed();
-	void hit_points_changed();
-	void max_hit_points_changed();
+	void health_changed();
+	void max_health_changed();
 	void mana_changed();
 	void max_mana_changed();
 	void craft_changed();
@@ -1023,10 +1023,10 @@ private:
 	data_entry_map<character_attribute, int> attribute_values;
 	data_entry_map<character_attribute, std::map<character_modifier_type, std::vector<int>>> attribute_modifiers;
 	int hit_dice_count = 0;
-	int hit_points = 0;
-	int max_hit_points = 0;
+	int health = 0;
+	int max_health = 0;
 	std::map<dice, std::vector<int>> hit_dice_roll_results;
-	int hit_point_bonus_per_hit_dice = 0;
+	int health_bonus_per_hit_dice = 0;
 	int mana = 0;
 	int max_mana = 0;
 	int craft = 0;

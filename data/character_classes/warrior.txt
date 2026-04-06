@@ -55,7 +55,7 @@ warrior = {
 		19 = 2750000
 		20 = 3000000
 	}
-	hit_point_bonus_per_level = {
+	health_bonus_per_level = {
 		1 = 1d10
 		2 = 1d10
 		3 = 1d10

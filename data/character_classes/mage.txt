@@ -33,7 +33,7 @@ mage = {
 		3 = 5000
 		4 = 10000
 	}
-	hit_point_bonus_per_level = {
+	health_bonus_per_level = {
 		1 = 1d4
 		2 = 1d4
 		3 = 1d4

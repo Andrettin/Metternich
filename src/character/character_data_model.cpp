@@ -265,7 +265,7 @@ void character_data_model::reset_model()
 
 		this->create_attribute_rows();
 
-		this->top_rows.push_back(std::make_unique<character_data_row>("Hit Points:", std::format("{}/{}", character_game_data->get_hit_points(), character_game_data->get_max_hit_points())));
+		this->top_rows.push_back(std::make_unique<character_data_row>("Health:", std::format("{}/{}", character_game_data->get_health(), character_game_data->get_max_health())));
 
 		if (character_game_data->get_max_mana() > 0) {
 			this->create_mana_row();
