@@ -477,6 +477,15 @@ gsml_data character_game_data::to_gsml_data() const
 void character_game_data::ply_trade()
 {
 	static constexpr int gp_value = 100;
+	static constexpr int gb_value = 2000 * gp_value;
+
+	if (this->get_office() != nullptr) {
+		//FIXME: this cost should be subtract from the domain wealth, as maintenance
+		//FIXME: office holders should also cost regency as maintenance
+		const int income = gb_value * std::max(1, this->get_level() / 4);
+		this->change_wealth(income);
+		return;
+	}
 
 	const int province_level = this->get_location()->get_game_data()->get_province()->get_game_data()->get_level();
 
