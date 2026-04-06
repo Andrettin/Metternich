@@ -3,6 +3,9 @@ cloak = {
 	item_class = cloak
 	icon = clothing
 	price = 8sp
+	item_creation_types = {
+		armor
+	}
 }
 
 belt = {

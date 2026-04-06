@@ -1,0 +1,10 @@
+eagles_splendor = {
+	name = "Eagle's Splendor"
+	duration_per_caster_level = 1min
+	modifier = {
+		charisma = {
+			modifier_type = enhancement
+			modifier = 4
+		}
+	}
+}

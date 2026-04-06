@@ -1,0 +1,66 @@
+cloak_of_charisma_2 = {
+	name = "Cloak of Charisma +2"
+	result_item_type = cloak
+	result_enchantment = of_charisma_2
+	min_caster_level = 8
+	required_traits = {
+		craft_wondrous_item
+	}
+	materials = {
+		cloak
+	}
+	spells = {
+		eagles_splendor
+	}
+	item_creation_types = {
+		#same as the Scroll of Eagle's Splendor
+		arcane_scroll_level_2
+		divine_scroll_level_2
+	}
+}
+
+cloak_of_charisma_4 = {
+	name = "Cloak of Charisma +4"
+	result_item_type = cloak
+	result_enchantment = of_charisma_4
+	min_caster_level = 8
+	required_traits = {
+		craft_wondrous_item
+	}
+	materials = {
+		cloak = {
+			enchantment = of_charisma_2
+		}
+	}
+	spells = {
+		eagles_splendor
+	}
+	item_creation_types = {
+		#same as the Scroll of Eagle's Splendor
+		arcane_scroll_level_2
+		divine_scroll_level_2
+	}
+}
+
+cloak_of_charisma_6 = {
+	name = "Cloak of Charisma +6"
+	result_item_type = cloak
+	result_enchantment = of_charisma_6
+	min_caster_level = 8
+	required_traits = {
+		craft_wondrous_item
+	}
+	materials = {
+		cloak = {
+			enchantment = of_charisma_4
+		}
+	}
+	spells = {
+		eagles_splendor
+	}
+	item_creation_types = {
+		#same as the Scroll of Eagle's Splendor
+		arcane_scroll_level_2
+		divine_scroll_level_2
+	}
+}

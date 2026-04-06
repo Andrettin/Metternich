@@ -1,0 +1,25 @@
+eagles_splendor = {
+	name = "Eagle's Splendor"
+	level = 2
+	icon = research
+	price = 150gp
+	target = ally
+	range = 1
+	sound = magic_holy
+	arcane_schools = {
+		alteration #transmutation
+	}
+	character_class_levels = {
+		bard = 2
+		cleric = 2
+		mage = 2
+		paladin = 2
+		#sorcerer = 2
+	}
+	material_components = {
+		eagle_feather = 3 #could also be eagle droppings
+	}
+	target_effects = {
+		status_effect = eagles_splendor
+	}
+}
