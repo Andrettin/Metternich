@@ -12,4 +12,7 @@ gloves = {
 	item_class = gloves
 	icon = clothing
 	price = 1gp
+	item_creation_types = {
+		armor
+	}
 }

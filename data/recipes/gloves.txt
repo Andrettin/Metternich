@@ -19,3 +19,70 @@ gauntlets_of_ogre_power = {
 		divine_scroll_level_2
 	}
 }
+
+gloves_of_dexterity_2 = {
+	name = "Gloves of Dexterity +2"
+	result_item_type = gloves
+	result_enchantment = of_dexterity_2
+	min_caster_level = 8
+	required_traits = {
+		craft_wondrous_item
+	}
+	materials = {
+		gloves
+	}
+	spells = {
+		cats_grace
+	}
+	item_creation_types = {
+		#same as the Scroll of Cat's Grace
+		arcane_scroll_level_2
+		divine_scroll_level_2
+	}
+}
+
+gloves_of_dexterity_4 = {
+	name = "Gloves of Dexterity +4"
+	result_item_type = gloves
+	result_enchantment = of_dexterity_4
+	min_caster_level = 8
+	required_traits = {
+		craft_wondrous_item
+	}
+	materials = {
+		gloves = {
+			enchantment = of_dexterity_2
+		}
+	}
+	spells = {
+		cats_grace
+	}
+	item_creation_types = {
+		#same as the Scroll of Cat's Grace
+		arcane_scroll_level_2
+		divine_scroll_level_2
+	}
+}
+
+gloves_of_dexterity_6 = {
+	name = "Gloves of Dexterity +6"
+	result_item_type = gloves
+	result_enchantment = of_dexterity_6
+	min_caster_level = 8
+	required_traits = {
+		craft_wondrous_item
+	}
+	materials = {
+		gloves = {
+			enchantment = of_dexterity_4
+		}
+	}
+	spells = {
+		cats_grace
+	}
+	item_creation_types = {
+		#same as the Scroll of Cat's Grace
+		arcane_scroll_level_2
+		divine_scroll_level_2
+	}
+}
