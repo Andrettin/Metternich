@@ -111,7 +111,7 @@ Q_INVOKABLE const metternich::commodity_unit *commodity::get_unit(const int valu
 			continue;
 		}
 
-		if (std::abs(value / unit_value) >= 10) {
+		if (std::abs(value) >= unit_value) {
 			return unit;
 		}
 	}
