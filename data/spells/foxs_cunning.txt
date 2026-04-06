@@ -1,0 +1,23 @@
+foxs_cunning = {
+	name = "Fox's Cunning"
+	level = 2
+	icon = research
+	price = 150gp
+	target = ally
+	range = 1
+	sound = magic_holy
+	arcane_schools = {
+		alteration #transmutation
+	}
+	character_class_levels = {
+		bard = 2
+		mage = 2
+		#sorcerer = 2
+	}
+	material_components = {
+		#a few fox hairs or fox dung
+	}
+	target_effects = {
+		status_effect = foxs_cunning
+	}
+}

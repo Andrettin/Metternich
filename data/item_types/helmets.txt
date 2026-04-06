@@ -3,4 +3,7 @@ headband = {
 	item_class = helmet
 	icon = crown_baronial
 	price = 1cp #correct?
+	item_creation_types = {
+		armor
+	}
 }

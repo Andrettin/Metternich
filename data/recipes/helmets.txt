@@ -1,0 +1,63 @@
+headband_of_intellect_2 = {
+	name = "Headband of Intellect +2"
+	result_item_type = headband
+	result_enchantment = of_intellect_2
+	min_caster_level = 8
+	required_traits = {
+		craft_wondrous_item
+	}
+	materials = {
+		headband
+	}
+	spells = {
+		foxs_cunning
+	}
+	item_creation_types = {
+		#same as the Scroll of Fox's Cunning
+		arcane_scroll_level_2
+	}
+}
+
+headband_of_intellect_4 = {
+	name = "Headband of Intellect +4"
+	result_item_type = headband
+	result_enchantment = of_intellect_4
+	min_caster_level = 8
+	required_traits = {
+		craft_wondrous_item
+	}
+	materials = {
+		headband = {
+			enchantment = of_intellect_2
+		}
+	}
+	spells = {
+		foxs_cunning
+	}
+	item_creation_types = {
+		#same as the Scroll of Fox's Cunning
+		arcane_scroll_level_2
+	}
+}
+
+headband_of_intellect_6 = {
+	name = "Headband of Intellect +6"
+	result_item_type = headband
+	result_enchantment = of_intellect_6
+	min_caster_level = 8
+	required_traits = {
+		craft_wondrous_item
+	}
+	materials = {
+		headband = {
+			enchantment = of_intellect_4
+		}
+	}
+	spells = {
+		foxs_cunning
+	}
+	item_creation_types = {
+		#same as the Scroll of Fox's Cunning
+		arcane_scroll_level_2
+	}
+}

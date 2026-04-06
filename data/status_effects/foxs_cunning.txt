@@ -1,0 +1,10 @@
+foxs_cunning = {
+	name = "Fox's Cunning"
+	duration_per_caster_level = 1min
+	modifier = {
+		intelligence = {
+			modifier_type = enhancement
+			modifier = 4
+		}
+	}
+}
