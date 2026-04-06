@@ -107,6 +107,7 @@ arcane_scroll_level_2 = {
 		bulls_strength = 3
 		cats_grace = 3
 		eagles_splendor = 3
+		owls_wisdom = 3
 	}
 }
 
@@ -151,6 +152,7 @@ divine_scroll_level_2 = {
 		bulls_strength = 3
 		cats_grace = 3
 		eagles_splendor = 3
+		owls_wisdom = 3
 	}
 }
 

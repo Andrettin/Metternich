@@ -1,0 +1,10 @@
+owls_wisdom = {
+	name = "Owl's Wisdom"
+	duration_per_caster_level = 1min
+	modifier = {
+		wisdom = {
+			modifier_type = enhancement
+			modifier = 4
+		}
+	}
+}

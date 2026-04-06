@@ -1,0 +1,26 @@
+owls_wisdom = {
+	name = "Owl's Wisdom"
+	level = 2
+	icon = university
+	price = 150gp
+	target = ally
+	range = 1
+	sound = magic_holy
+	arcane_schools = {
+		alteration #transmutation
+	}
+	character_class_levels = {
+		cleric = 2
+		druid = 2
+		mage = 2
+		paladin = 2
+		ranger = 2
+		#sorcerer = 2
+	}
+	material_components = {
+		owl_feather = 3 #could also be owl droppings
+	}
+	target_effects = {
+		status_effect = owls_wisdom
+	}
+}

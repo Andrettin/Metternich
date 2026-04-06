@@ -31,6 +31,17 @@ ogre_mage_eyelash = {
 	}
 }
 
+owl_feather = {
+	name = "Owl Feather"
+	item_class = miscellaneous
+	icon = sack_2
+	price = 1sp
+	stackable = true
+	item_creation_types = {
+		alchemical_item
+	}
+}
+
 ox_dung = {
 	name = "Ox Dung"
 	item_class = miscellaneous
