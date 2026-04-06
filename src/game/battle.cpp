@@ -487,7 +487,7 @@ QCoro::Task<void> battle::do_unit_spellcast(const military_unit *unit, const spe
 				break;
 		}
 
-		unit->get_character()->get_game_data()->change_mana(-spell->get_mana_cost());
+		unit->get_character()->get_game_data()->change_mana(-spell->get_mana_cost(unit->get_character()->get_game_data()->get_character_class()));
 
 		if (this->scope == game::get()->get_player_country()) {
 			if (spell->get_sound() != nullptr) {

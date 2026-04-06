@@ -682,7 +682,7 @@ QCoro::Task<int64_t> combat::do_character_spellcast(const character *caster, con
 	assert_throw(caster != nullptr);
 	assert_throw(caster->get_game_data()->can_cast_spell(spell));
 
-	caster->get_game_data()->change_mana(-spell->get_mana_cost());
+	caster->get_game_data()->change_mana(-spell->get_mana_cost(caster->get_game_data()->get_character_class()));
 
 	const bool hit = !spell->requires_to_hit_check() || this->do_to_hit_check(caster, target, to_hit_modifier);
 

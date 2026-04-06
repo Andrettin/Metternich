@@ -9,12 +9,12 @@ bears_endurance = {
 	arcane_schools = {
 		alteration #transmutation
 	}
-	character_classes = {
-		cleric
-		druid
-		mage
-		ranger
-		#sorcerer
+	character_class_levels = {
+		cleric = 2
+		druid = 2
+		mage = 2
+		ranger = 2
+		#sorcerer = 2
 	}
 	target_effects = {
 		status_effect = bears_endurance

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "character/character_class_container.h"
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 #include "util/qunique_ptr.h"
@@ -74,7 +75,7 @@ public:
 		return this->battle_target;
 	}
 
-	Q_INVOKABLE int get_mana_cost() const;
+	Q_INVOKABLE int get_mana_cost(const metternich::character_class *character_class) const;
 
 	int get_range() const
 	{
@@ -117,6 +118,7 @@ public:
 	}
 
 	bool is_available_for_character_class(const character_class *character_class) const;
+	int get_level_for_character_class(const character_class *character_class) const;
 
 	const std::vector<const item_type *> &get_material_components() const
 	{
@@ -157,6 +159,7 @@ private:
 	std::vector<const arcane_school *> arcane_schools;
 	std::vector<const divine_domain *> divine_domains;
 	std::vector<const character_class *> character_classes;
+	character_class_map<int> character_class_levels;
 	std::vector<const item_type *> material_components;
 	std::unique_ptr<const effect_list<const character>> target_effects;
 	const metternich::sound *sound = nullptr;

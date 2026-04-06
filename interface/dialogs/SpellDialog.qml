@@ -69,7 +69,7 @@ DialogBase {
 					tooltip: typeof status_text !== 'undefined' ? "" : format_text(small_text(spell.name + "\n\n" + costs_string))
 					
 					readonly property var spell: model.modelData
-					readonly property string costs_string: "Mana Cost: " + spell.get_mana_cost()
+					readonly property string costs_string: "Mana Cost: " + spell.get_mana_cost(caster.game_data.character_class)
 					
 					onClicked: {
 						if (caster.game_data.can_cast_spell(spell)) {

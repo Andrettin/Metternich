@@ -59,6 +59,13 @@ void spell::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->character_classes.push_back(character_class::get(value));
 		}
+	} else if (tag == "character_class_levels") {
+		scope.for_each_property([this](const gsml_property &property) {
+			const character_class *character_class = character_class::get(property.get_key());
+			const int level = std::stoi(property.get_value());
+			this->character_class_levels[character_class] = level;
+			this->character_classes.push_back(character_class);
+		});
 	} else if (tag == "material_components") {
 		for (const std::string &value : values) {
 			this->material_components.push_back(item_type::get(value));
@@ -96,18 +103,28 @@ void spell::check() const
 	assert_throw(this->get_target_effects() != nullptr || this->get_battle_result() != attack_result::none);
 }
 
-int spell::get_mana_cost() const
+int spell::get_mana_cost(const character_class *character_class) const
 {
 	if (this->mana_cost != 0) {
 		return this->mana_cost;
 	}
 
-	return defines::get()->get_mana_cost_for_spell_level(this->get_level());
+	return defines::get()->get_mana_cost_for_spell_level(this->get_level_for_character_class(character_class));
 }
 
 bool spell::is_available_for_character_class(const character_class *character_class) const
 {
 	return vector::contains(this->get_character_classes(), character_class);
+}
+
+int spell::get_level_for_character_class(const character_class *character_class) const
+{
+	const auto find_iterator = this->character_class_levels.find(character_class);
+	if (find_iterator != this->character_class_levels.end()) {
+		return find_iterator->second;
+	}
+
+	return this->get_level();
 }
 
 bool spell::is_combat_spell() const

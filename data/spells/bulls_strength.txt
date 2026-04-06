@@ -12,12 +12,12 @@ bulls_strength = {
 	divine_domains = {
 		strength
 	}
-	character_classes = {
-		cleric
-		druid
-		mage
-		paladin
-		#sorcerer
+	character_class_levels = {
+		cleric = 2
+		druid = 2
+		mage = 2
+		paladin = 2
+		#sorcerer = 2
 	}
 	material_components = {
 		ox_hair = 3 #should be bull hairs instead; alternatively could also be bull dung

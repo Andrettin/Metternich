@@ -2956,7 +2956,7 @@ bool character_game_data::can_cast_spell(const metternich::spell *spell) const
 		return false;
 	}
 
-	if (this->get_mana() < spell->get_mana_cost()) {
+	if (this->get_mana() < spell->get_mana_cost(this->get_character_class())) {
 		return false;
 	}
 

@@ -9,12 +9,12 @@ cats_grace = {
 	arcane_schools = {
 		alteration #transmutation
 	}
-	character_classes = {
-		bard
-		druid
-		mage
-		ranger
-		#sorcerer
+	character_class_levels = {
+		bard = 2
+		druid = 2
+		mage = 2
+		ranger = 2
+		#sorcerer = 2
 	}
 	material_components = {
 		cat_fur
