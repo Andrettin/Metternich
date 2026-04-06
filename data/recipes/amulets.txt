@@ -1,0 +1,66 @@
+amulet_of_health_2 = {
+	name = "Amulet of Health +2"
+	result_item_type = amulet
+	result_enchantment = of_health_2
+	min_caster_level = 8
+	required_traits = {
+		craft_wondrous_item
+	}
+	materials = {
+		amulet
+	}
+	spells = {
+		bears_endurance
+	}
+	item_creation_types = {
+		#same as the Scroll of Bear's Endurance
+		arcane_scroll_level_2
+		divine_scroll_level_2
+	}
+}
+
+amulet_of_health_4 = {
+	name = "Amulet of Health +4"
+	result_item_type = amulet
+	result_enchantment = of_health_4
+	min_caster_level = 8
+	required_traits = {
+		craft_wondrous_item
+	}
+	materials = {
+		amulet = {
+			enchantment = of_health_2
+		}
+	}
+	spells = {
+		bears_endurance
+	}
+	item_creation_types = {
+		#same as the Scroll of Bear's Endurance
+		arcane_scroll_level_2
+		divine_scroll_level_2
+	}
+}
+
+amulet_of_health_6 = {
+	name = "Amulet of Health +6"
+	result_item_type = amulet
+	result_enchantment = of_health_6
+	min_caster_level = 8
+	required_traits = {
+		craft_wondrous_item
+	}
+	materials = {
+		amulet = {
+			enchantment = of_health_4
+		}
+	}
+	spells = {
+		bears_endurance
+	}
+	item_creation_types = {
+		#same as the Scroll of Bear's Endurance
+		arcane_scroll_level_2
+		divine_scroll_level_2
+	}
+}
