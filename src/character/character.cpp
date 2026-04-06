@@ -41,6 +41,7 @@
 #include "util/log_util.h"
 #include "util/number_util.h"
 #include "util/random.h"
+#include "util/string_conversion_util.h"
 #include "util/string_util.h"
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
@@ -257,12 +258,15 @@ void character::process_gsml_property(const gsml_property &property)
 	const std::string &value = property.get_value();
 
 	if (key == "rank") {
-		assert_throw(this->get_level() == 0);
 		assert_throw(this->get_character_class() != nullptr);
 		this->level = std::max(this->level, this->get_character_class()->get_rank_level(value));
 	} else if (key == "mythic_rank") {
 		assert_throw(this->get_mythic_path() != nullptr);
 		this->mythic_tier = this->get_mythic_path()->get_rank_tier(value);
+	} else if (key == "level_ratio") {
+		assert_throw(defines::get()->get_max_character_normal_level() > 0);
+		const auto [numerator, denominator] = string::to_numerator_and_denominator(value);
+		this->level = std::max(this->level, defines::get()->get_max_character_normal_level() * numerator / denominator);
 	} else {
 		character_base::process_gsml_property(property);
 	}
@@ -917,18 +921,6 @@ const character_attribute *character::get_primary_attribute() const
 	}
 
 	return nullptr;
-}
-
-centesimal_int character::get_level_multiplier() const
-{
-	assert_throw(defines::get()->get_max_character_normal_level() > 0);
-	return centesimal_int(this->get_level()) / defines::get()->get_max_character_normal_level();
-}
-
-void character::set_level_multiplier(const centesimal_int &level_multiplier)
-{
-	assert_throw(defines::get()->get_max_character_normal_level() > 0);
-	this->level = (level_multiplier * defines::get()->get_max_character_normal_level()).to_int();
 }
 
 std::optional<std::pair<int, int>> character::get_attribute_range(const character_attribute *attribute) const

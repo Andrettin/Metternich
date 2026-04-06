@@ -332,7 +332,7 @@ sigismund_von_habsburg = {
 	gender = male
 	birth_date = 1427.10.26
 	death_date = 1496.3.4
-	level_multiplier = 0.67
+	level_ratio = 2/3
 	traits = {
 		#statesman
 	}
@@ -445,7 +445,7 @@ karl_vi_of_the_holy_roman_empire = { #Emperor Karl VI of the Holy Roman Empire; 
 	birth_date = 1685 #Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 249.
 	start_date = 1711
 	death_date = 1740 #Source: Ivan Erceg, "Außenhandel der Nordadriatischen Seestädte als Faktor im Entstehen der kapitalistischen Beziehungen in Österreich im 18. und 19. Jahrhundert", 1968, p. 464; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 249.
-	level_multiplier = 0.67
+	level_ratio = 2/3
 	
 	#became emperor of the HRE in 1711; Source: Ivan Erceg, "Außenhandel der Nordadriatischen Seestädte als Faktor im Entstehen der kapitalistischen Beziehungen in Österreich im 18. und 19. Jahrhundert", 1968, p. 464; Source: Eva Demmerle, "Das Haus Habsburg", 2011, p. 249.
 }
@@ -558,7 +558,7 @@ franz_i_of_austria = { #Franz von Habsburg, Emperor Franz II of the Holy Roman E
 	mother = maria_luisa_de_bourbon #Maria Luisa, daughter of king Charles III of Spain
 	birth_date = 1768.2.12
 	death_date = 1835.3.2
-	level_multiplier = 0.67
+	level_ratio = 2/3
 	
 	history = {
 		1791.12.12 = { #marriage date unknown, but their daughter Marie Louise was born on 1791.12.12

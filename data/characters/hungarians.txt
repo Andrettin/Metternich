@@ -84,7 +84,7 @@ tamas_bakocz = { #Source: "Encyclopædia Britannica", 1911, vol. 3, p. 230.
 	gender = male
 	birth_date = 1442
 	death_date = 1521
-	level_multiplier = 0.5
+	level_ratio = 3/6
 	traits = {
 		#statesman
 	}
@@ -116,7 +116,7 @@ istvan_bathory = {
 	gender = male
 	birth_date = 1473
 	death_date = 1534
-	level_multiplier = 0.33
+	level_ratio = 1/3
 	traits = {
 		#statesman
 	}
@@ -132,7 +132,7 @@ juraj_thurzo = {
 	gender = male
 	birth_date = 1567
 	death_date = 1616
-	level_multiplier = 0.33
+	level_ratio = 1/3
 	traits = {
 		#statesman
 	}
@@ -148,7 +148,7 @@ palffy_janos_iv = {
 	gender = male
 	birth_date = 1678
 	death_date = 1750.3.24
-	level_multiplier = 0.5
+	level_ratio = 3/6
 	traits = {
 		#statesman
 	}
@@ -164,7 +164,7 @@ franciszek_rakoczy = {
 	gender = male
 	birth_date = 1676
 	death_date = 1738
-	level_multiplier = 0.33
+	level_ratio = 1/3
 	traits = {
 		#statesman
 	}

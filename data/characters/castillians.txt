@@ -141,7 +141,7 @@ bartolome_de_las_casas = {
 	gender = male
 	birth_date = 1484
 	death_date = 1566
-	level_multiplier = 0.5
+	level_ratio = 3/6
 	traits = {
 		#theologian
 		#compassionate
@@ -182,7 +182,7 @@ juan_de_sepulveda = {
 	gender = male
 	birth_date = 1494
 	death_date = 1573
-	level_multiplier = 0.5
+	level_ratio = 3/6
 	traits = {
 		#theologian
 	}

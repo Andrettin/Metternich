@@ -83,7 +83,7 @@ jean_calvin = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobert
 	gender = male
 	birth_date = 1509
 	death_date = 1564
-	level_multiplier = 1
+	level_ratio = 6/6
 	traits = {
 		#theologian
 	}
@@ -99,7 +99,7 @@ ambroise_pare = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobe
 	gender = male
 	birth_date = 1510
 	death_date = 1590
-	level_multiplier = 0.67
+	level_ratio = 2/3
 	traits = {
 		#natural_scientist
 	}

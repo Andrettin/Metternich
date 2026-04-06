@@ -96,7 +96,7 @@ edward_kelley = {
 	gender = male
 	birth_date = 1552
 	death_date = 1597
-	level_multiplier = 0.17
+	level_ratio = 1/6
 }
 
 francis_bacon = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 252.
@@ -109,7 +109,7 @@ francis_bacon = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobe
 	gender = male
 	birth_date = 1561
 	death_date = 1626
-	level_multiplier = 0.83
+	level_ratio = 5/6
 	traits = {
 		#philosopher
 	}

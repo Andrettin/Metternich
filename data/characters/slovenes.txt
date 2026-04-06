@@ -8,7 +8,7 @@ janez_v_valvasor = {
 	gender = male
 	birth_date = 1641.5.28
 	death_date = 1693.9.16
-	level_multiplier = 0.5
+	level_ratio = 3/6
 	traits = {
 		#natural_scientist
 	}
@@ -24,7 +24,7 @@ jurij_vega = {
 	gender = male
 	birth_date = 1754.3.23
 	death_date = 1802.9.26
-	level_multiplier = 0.33
+	level_ratio = 1/3
 	traits = {
 		#natural_scientist
 	}

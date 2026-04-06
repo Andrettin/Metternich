@@ -7,7 +7,7 @@ bernardo_pereira_de_vasconcelos = {
 	home_site = ouro_preto
 	gender = male
 	birth_date = 1795.8.27
-	level_multiplier = 1
+	level_ratio = 3/3
 	traits = {
 		#statesman
 	}

@@ -88,7 +88,6 @@ class character final : public character_base, public data_type<character>
 	Q_PROPERTY(metternich::character* biological_father READ get_biological_father WRITE set_biological_father NOTIFY changed)
 	Q_PROPERTY(metternich::character* mother READ get_mother WRITE set_mother NOTIFY changed)
 	Q_PROPERTY(metternich::character* contemporary_character READ get_contemporary_character WRITE set_contemporary_character NOTIFY changed)
-	Q_PROPERTY(archimedes::centesimal_int level_multiplier READ get_level_multiplier WRITE set_level_multiplier NOTIFY changed)
 	Q_PROPERTY(int health MEMBER health READ get_health NOTIFY changed)
 	Q_PROPERTY(QString leader_type_name READ get_leader_type_name_qstring NOTIFY changed)
 	Q_PROPERTY(metternich::character_game_data* game_data READ get_game_data NOTIFY game_data_changed)
@@ -343,9 +342,6 @@ public:
 	}
 
 	const character_attribute *get_primary_attribute() const;
-
-	centesimal_int get_level_multiplier() const;
-	void set_level_multiplier(const centesimal_int &level_multiplier);
 
 	std::optional<std::pair<int, int>> get_attribute_range(const character_attribute *attribute) const;
 
