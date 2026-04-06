@@ -110,6 +110,14 @@ const icon *recipe::get_icon() const
 	return this->get_result_item_type()->get_icon();
 }
 
+item_key recipe::get_result_item_key() const
+{
+	item_key item_key;
+	item_key.type = this->get_result_item_type();
+	item_key.enchantment = this->get_result_enchantment();
+	return item_key;
+}
+
 void recipe::add_material(const item_type *item_type, const enchantment *enchantment)
 {
 	for (material &material : this->materials) {
@@ -120,6 +128,17 @@ void recipe::add_material(const item_type *item_type, const enchantment *enchant
 	}
 
 	this->materials.emplace_back(item_type, enchantment);
+}
+
+bool recipe::item_matches_any_material(const item_key &item_key) const
+{
+	for (const material &material : this->get_materials()) {
+		if (material.matches_item(item_key)) {
+			return true;
+		}
+	}
+
+	return false;
 }
 
 int recipe::get_price() const
@@ -170,25 +189,25 @@ std::string recipe::get_formula_string() const
 	return str;
 }
 
-bool recipe::material::matches_item(const item *item) const
+bool recipe::material::matches_item(const item_key &item_key) const
 {
-	if (item->get_type() != this->item_type) {
+	if (item_key.type != this->item_type) {
 		return false;
 	}
 
-	if (item->get_material() != nullptr) {
+	if (item_key.material != nullptr) {
 		return false;
 	}
 
-	if (item->get_enchantment() != this->enchantment) {
+	if (item_key.enchantment != this->enchantment) {
 		return false;
 	}
 
-	if (item->get_spell() != nullptr) {
+	if (item_key.spell != nullptr) {
 		return false;
 	}
 
-	if (item->get_recipe() != nullptr) {
+	if (item_key.recipe != nullptr) {
 		return false;
 	}
 

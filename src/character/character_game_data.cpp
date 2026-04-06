@@ -3070,11 +3070,7 @@ bool character_game_data::can_craft_recipe(const metternich::recipe *recipe) con
 		int found_quantity = 0;
 
 		for (const qunique_ptr<item> &item : this->get_items()) {
-			if (item->is_equipped()) {
-				continue;
-			}
-
-			if (material.matches_item(item.get())) {
+			if (material.matches_item(item->to_item_key())) {
 				found_quantity += item->get_quantity();
 			}
 		}
@@ -3105,11 +3101,7 @@ void character_game_data::craft_recipe(const metternich::recipe *recipe)
 		int remaining_quantity = material.quantity;
 
 		for (const qunique_ptr<item> &item : this->get_items()) {
-			if (item->is_equipped()) {
-				continue;
-			}
-
-			if (!material.matches_item(item.get())) {
+			if (!material.matches_item(item->to_item_key())) {
 				continue;
 			}
 
@@ -3208,7 +3200,7 @@ void character_game_data::add_item(qunique_ptr<item> &&item)
 	emit items_changed();
 
 	if (this->is_ai()) {
-		if (this->can_equip_item(item_ptr, false, item_ptr->get_price())) {
+		if (this->can_equip_item(item_ptr->to_item_key(), false, item_ptr->get_price())) {
 			this->equip_item(item_ptr);
 		} else if (this->can_consume_item(item_ptr)) {
 			//AI characters use items as soon as they receive them, if possible
@@ -3276,31 +3268,36 @@ void character_game_data::remove_item(const item_type *item_type, const item_mat
 	}
 }
 
-bool character_game_data::can_consume_item(const item *item, std::string *reason) const
+bool character_game_data::can_consume_item(const item_key &item_key, std::string *reason) const
 {
-	if (!item->get_type()->get_item_class()->is_consumable()) {
+	if (!item_key.type->get_item_class()->is_consumable()) {
 		return false;
 	}
 
-	if (item->get_enchantment() != nullptr && !this->can_use_enchantment(item->get_enchantment())) {
+	if (item_key.enchantment != nullptr && !this->can_use_enchantment(item_key.enchantment)) {
 		return false;
 	}
 
-	if (item->get_spell() != nullptr) {
-		if (!item->get_type()->is_spell_learnable()) {
+	if (item_key.spell != nullptr) {
+		if (!item_key.type->is_spell_learnable()) {
 			return false;
 		}
 
-		if (!this->can_learn_spell(item->get_spell(), reason)) {
+		if (!this->can_learn_spell(item_key.spell, reason)) {
 			return false;
 		}
 	}
 
-	if (item->get_recipe() != nullptr && !this->can_learn_recipe(item->get_recipe(), reason)) {
+	if (item_key.recipe != nullptr && !this->can_learn_recipe(item_key.recipe, reason)) {
 		return false;
 	}
 
 	return true;
+}
+
+bool character_game_data::can_consume_item(const metternich::item *item) const
+{
+	return this->can_consume_item(item->to_item_key(), nullptr);
 }
 
 void character_game_data::consume_item(item *item)
@@ -3356,14 +3353,14 @@ const item *character_game_data::get_equipped_item(const item_slot *slot, const 
 	return equipped_items.at(slot_index);
 }
 
-bool character_game_data::can_equip_item(const item *item, const bool ignore_already_equipped, const std::optional<int64_t> &already_equipped_ignore_price_threshold) const
+bool character_game_data::can_equip_item(const item_key &item_key, const bool ignore_already_equipped, const std::optional<int64_t> &already_equipped_ignore_price_threshold) const
 {
-	const item_slot *slot = item->get_slot();
+	const item_slot *slot = item_key.type->get_slot();
 	if (slot == nullptr) {
 		return false;
 	}
 
-	if (item->get_enchantment() != nullptr && !this->can_use_enchantment(item->get_enchantment())) {
+	if (item_key.enchantment != nullptr && !this->can_use_enchantment(item_key.enchantment)) {
 		return false;
 	}
 
@@ -3392,7 +3389,7 @@ bool character_game_data::can_equip_item(const item *item, const bool ignore_alr
 			}
 		}
 
-		if (item->get_type()->is_two_handed()) {
+		if (item_key.type->is_two_handed()) {
 			for (const auto &[other_slot, other_items] : this->equipped_items) {
 				assert_throw(!other_items.empty());
 
@@ -3419,7 +3416,7 @@ bool character_game_data::can_equip_item(const item *item, const bool ignore_alr
 
 bool character_game_data::can_equip_item(const item *item, const bool ignore_already_equipped) const
 {
-	return this->can_equip_item(item, ignore_already_equipped, std::nullopt);
+	return this->can_equip_item(item->to_item_key(), ignore_already_equipped, std::nullopt);
 }
 
 void character_game_data::equip_item(item *item)
@@ -3535,9 +3532,9 @@ void character_game_data::on_item_equipped_with_enchantment(const enchantment *e
 bool character_game_data::can_use_item(const item *item, std::string *reason) const
 {
 	if (item->get_slot() != nullptr) {
-		return this->can_equip_item(item, true, std::nullopt);
+		return this->can_equip_item(item->to_item_key(), true, std::nullopt);
 	} else if (item->get_type()->get_item_class()->is_consumable()) {
-		return this->can_consume_item(item, reason);
+		return this->can_consume_item(item->to_item_key(), reason);
 	}
 
 	return false;

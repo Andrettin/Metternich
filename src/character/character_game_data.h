@@ -56,6 +56,7 @@ enum class age_category;
 enum class character_modifier_type;
 enum class military_unit_stat;
 struct context;
+struct item_key;
 
 template <typename scope_type>
 class modifier;
@@ -763,13 +764,8 @@ public:
 	Q_INVOKABLE void remove_item(metternich::item *item);
 	void remove_item(const item_type *item_type, const item_material *material, const enchantment *enchantment, const spell *spell, const recipe *recipe);
 
-	bool can_consume_item(const metternich::item *item, std::string *reason) const;
-
-	Q_INVOKABLE bool can_consume_item(const metternich::item *item) const
-	{
-		return this->can_consume_item(item, nullptr);
-	}
-
+	bool can_consume_item(const item_key &item_key, std::string *reason) const;
+	Q_INVOKABLE bool can_consume_item(const metternich::item *item) const;
 	Q_INVOKABLE void consume_item(metternich::item *item);
 	void on_item_consumed(const item *item);
 	void on_item_consumed_with_enchantment(const enchantment *enchantment);
@@ -793,7 +789,7 @@ public:
 		return static_cast<int>(this->get_equipped_items(slot).size());
 	}
 
-	bool can_equip_item(const metternich::item *item, const bool ignore_already_equipped, const std::optional<int64_t> &already_equipped_ignore_price_threshold) const;
+	bool can_equip_item(const item_key &item_key, const bool ignore_already_equipped, const std::optional<int64_t> &already_equipped_ignore_price_threshold) const;
 	Q_INVOKABLE bool can_equip_item(const metternich::item *item, const bool ignore_already_equipped) const;
 	Q_INVOKABLE void equip_item(metternich::item *item);
 	Q_INVOKABLE void deequip_item(metternich::item *item);

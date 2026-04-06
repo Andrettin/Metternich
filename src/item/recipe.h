@@ -11,6 +11,7 @@ class item;
 class item_type;
 class spell;
 class trait;
+struct item_key;
 
 template <typename scope_type>
 class and_condition;
@@ -34,7 +35,7 @@ public:
 		{
 		}
 
-		bool matches_item(const item *item) const;
+		bool matches_item(const item_key &item_key) const;
 
 		const metternich::item_type *item_type = nullptr;
 		const metternich::enchantment *enchantment = nullptr;
@@ -64,6 +65,8 @@ public:
 		return this->result_enchantment;
 	}
 
+	item_key get_result_item_key() const;
+
 	int get_min_caster_level() const
 	{
 		return this->min_caster_level;
@@ -85,6 +88,7 @@ public:
 	}
 
 	void add_material(const item_type *item_type, const enchantment *enchantment);
+	bool item_matches_any_material(const item_key &item_key) const;
 
 	const std::vector<const spell *> &get_spells() const
 	{

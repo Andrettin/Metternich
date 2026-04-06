@@ -73,6 +73,32 @@ bool item_key::operator <(const item_key &other) const
 	return false;
 }
 
+
+bool item_key::is_useful_for(const character *character) const
+{
+	if (this->type->get_slot() != nullptr) {
+		if (!character->get_game_data()->can_equip_item(*this, false, item::get_price(this->type, this->material, this->enchantment, this->spell, this->recipe))) {
+			return false;
+		}
+
+		return true;
+	} else if (this->type->get_item_class()->is_consumable()) {
+		if (!character->get_game_data()->can_consume_item(*this, nullptr)) {
+			return false;
+		}
+
+		return true;
+	}
+
+	for (const metternich::recipe *recipe : character->get_game_data()->get_recipes()) {
+		if (recipe->get_result_item_key().is_useful_for(character) && recipe->item_matches_any_material(*this)) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
 item::item(const item_type *type, const item_material *material, const metternich::enchantment *enchantment, const metternich::spell *spell, const metternich::recipe *recipe)
 	: type(type), material(material), enchantment(enchantment), spell(spell), recipe(recipe)
 {
@@ -305,21 +331,7 @@ int item::get_price() const
 
 bool item::is_useful_for(const character *character) const
 {
-	if (this->get_slot() != nullptr) {
-		if (!character->get_game_data()->can_equip_item(this, false, this->get_price())) {
-			return false;
-		}
-
-		return true;
-	} else if (this->get_type()->get_item_class()->is_consumable()) {
-		if (!character->get_game_data()->can_consume_item(this)) {
-			return false;
-		}
-
-		return true;
-	}
-
-	return false;
+	return this->to_item_key().is_useful_for(character);
 }
 
 }

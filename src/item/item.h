@@ -33,6 +33,8 @@ struct item_key final
 	QVariantMap to_qvariant_map() const;
 
 	bool operator <(const item_key &other) const;
+
+	bool is_useful_for(const character *character) const;
 };
 
 class item final : public QObject
