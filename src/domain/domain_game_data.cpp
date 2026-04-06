@@ -443,7 +443,6 @@ QCoro::Task<void> domain_game_data::do_turn()
 			this->get_economy()->do_production();
 			this->collect_wealth();
 			this->pay_maintenance();
-			this->check_item_slots();
 		}
 
 		for (const character *character : this->get_characters()) {
@@ -461,6 +460,11 @@ QCoro::Task<void> domain_game_data::do_turn()
 			const int turn_days = game::get()->get_date().daysTo(game::get()->get_next_date());
 			context ctx(this->domain);
 			character->get_game_data()->decrement_status_effect_durations(std::chrono::days(turn_days), ctx);
+		}
+
+		if (game::get()->is_last_turn_of_quarter()) {
+			//fill item slots after AI characters have bought items, so that the player has a chance to buy items before they are snatched up by AI characters
+			this->check_item_slots();
 		}
 
 		this->do_transporter_recruitment();
