@@ -91,8 +91,14 @@ bool item_key::is_useful_for(const character *character) const
 	}
 
 	for (const metternich::recipe *recipe : character->get_game_data()->get_recipes()) {
-		if (recipe->get_result_item_key().is_useful_for(character) && recipe->item_matches_any_material(*this)) {
-			return true;
+		if (!recipe->get_result_item_key().is_useful_for(character)) {
+			continue;
+		}
+
+		for (const recipe_material &material : recipe->get_materials()) {
+			if (material.matches_item(*this) && !character->get_game_data()->has_recipe_material(material)) {
+				return true;
+			}
 		}
 	}
 
@@ -314,7 +320,7 @@ QString item::get_effects_string(const character *character) const
 	}
 
 	std::string reason;
-	if ((this->get_slot() != nullptr || this->get_type()->get_item_class()->is_consumable()) && !character->get_game_data()->can_use_item(this, &reason)) {
+	if ((this->get_slot() != nullptr || this->get_type()->get_item_class()->is_consumable()) && !this->is_equipped() && !character->get_game_data()->can_use_item(this, &reason)) {
 		if (reason.empty()) {
 			reason = std::format("cannot {}", this->get_slot() != nullptr ? "equip" : this->get_type()->get_item_class()->get_consume_verb());
 		}

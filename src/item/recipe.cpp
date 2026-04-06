@@ -120,7 +120,7 @@ item_key recipe::get_result_item_key() const
 
 void recipe::add_material(const item_type *item_type, const enchantment *enchantment)
 {
-	for (material &material : this->materials) {
+	for (recipe_material &material : this->materials) {
 		if (material.item_type == item_type && material.enchantment == enchantment) {
 			++material.quantity;
 			return;
@@ -128,17 +128,6 @@ void recipe::add_material(const item_type *item_type, const enchantment *enchant
 	}
 
 	this->materials.emplace_back(item_type, enchantment);
-}
-
-bool recipe::item_matches_any_material(const item_key &item_key) const
-{
-	for (const material &material : this->get_materials()) {
-		if (material.matches_item(item_key)) {
-			return true;
-		}
-	}
-
-	return false;
 }
 
 int recipe::get_price() const
@@ -150,7 +139,7 @@ int recipe::get_price_of_materials() const
 {
 	int price = 0;
 
-	for (const material &material : this->get_materials()) {
+	for (const recipe_material &material : this->get_materials()) {
 		price += item::get_price(material.item_type, nullptr, material.enchantment, nullptr, nullptr) * material.quantity;
 	}
 
@@ -178,7 +167,7 @@ std::string recipe::get_formula_string() const
 	const int craft_cost = this->get_craft_cost();
 	std::string str = std::format("{} Craft", craft_cost);
 
-	for (const material &material : this->get_materials()) {
+	for (const recipe_material &material : this->get_materials()) {
 		str += std::format(" + {}x{}", material.quantity, item::create_name(material.item_type, nullptr, material.enchantment, nullptr, nullptr));
 	}
 
@@ -189,7 +178,7 @@ std::string recipe::get_formula_string() const
 	return str;
 }
 
-bool recipe::material::matches_item(const item_key &item_key) const
+bool recipe_material::matches_item(const item_key &item_key) const
 {
 	if (item_key.type != this->item_type) {
 		return false;

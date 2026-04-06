@@ -16,6 +16,20 @@ struct item_key;
 template <typename scope_type>
 class and_condition;
 
+struct recipe_material final
+{
+	explicit recipe_material(const metternich::item_type *item_type, const metternich::enchantment *enchantment, const int quantity = 1)
+		: item_type(item_type), enchantment(enchantment), quantity(quantity)
+	{
+	}
+
+	bool matches_item(const item_key &item_key) const;
+
+	const metternich::item_type *item_type = nullptr;
+	const metternich::enchantment *enchantment = nullptr;
+	int quantity = 1;
+};
+
 class recipe final : public named_data_entry, public data_type<recipe>
 {
 	Q_OBJECT
@@ -28,20 +42,6 @@ class recipe final : public named_data_entry, public data_type<recipe>
 	
 
 public:
-	struct material final
-	{
-		explicit material(const metternich::item_type *item_type, const metternich::enchantment *enchantment, const int quantity = 1)
-			: item_type(item_type), enchantment(enchantment), quantity(quantity)
-		{
-		}
-
-		bool matches_item(const item_key &item_key) const;
-
-		const metternich::item_type *item_type = nullptr;
-		const metternich::enchantment *enchantment = nullptr;
-		int quantity = 1;
-	};
-
 	static constexpr const char class_identifier[] = "recipe";
 	static constexpr const char property_class_identifier[] = "metternich::recipe*";
 	static constexpr const char database_folder[] = "recipes";
@@ -82,13 +82,12 @@ public:
 		return this->crafter_conditions.get();
 	}
 
-	const std::vector<material> &get_materials() const
+	const std::vector<recipe_material> &get_materials() const
 	{
 		return this->materials;
 	}
 
 	void add_material(const item_type *item_type, const enchantment *enchantment);
-	bool item_matches_any_material(const item_key &item_key) const;
 
 	const std::vector<const spell *> &get_spells() const
 	{
@@ -118,7 +117,7 @@ private:
 	int min_caster_level = 0;
 	std::vector<const trait *> required_traits;
 	std::unique_ptr<const and_condition<character>> crafter_conditions;
-	std::vector<material> materials;
+	std::vector<recipe_material> materials;
 	std::vector<const spell *> spells;
 };
 

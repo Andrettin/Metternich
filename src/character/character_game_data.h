@@ -57,6 +57,7 @@ enum class character_modifier_type;
 enum class military_unit_stat;
 struct context;
 struct item_key;
+struct recipe_material;
 
 template <typename scope_type>
 class modifier;
@@ -744,6 +745,7 @@ public:
 
 	bool can_learn_recipe(const metternich::recipe *recipe, std::string *reason = nullptr) const;
 	void learn_recipe(const metternich::recipe *recipe);
+	bool has_recipe_material(const recipe_material &material) const;
 	Q_INVOKABLE bool can_craft_recipe(const metternich::recipe *recipe) const;
 	Q_INVOKABLE void craft_recipe(const metternich::recipe *recipe);
 	void sort_recipes();

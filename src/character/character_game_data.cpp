@@ -3063,6 +3063,27 @@ void character_game_data::learn_recipe(const recipe *recipe)
 	this->add_recipe(recipe);
 }
 
+bool character_game_data::has_recipe_material(const recipe_material &material) const
+{
+	int found_quantity = 0;
+
+	for (const qunique_ptr<item> &item : this->get_items()) {
+		if (material.matches_item(item->to_item_key())) {
+			found_quantity += item->get_quantity();
+
+			if (found_quantity >= material.quantity) {
+				break;
+			}
+		}
+	}
+
+	if (found_quantity < material.quantity) {
+		return false;
+	}
+
+	return true;
+}
+
 bool character_game_data::can_craft_recipe(const metternich::recipe *recipe) const
 {
 	if (this->get_craft() < recipe->get_craft_cost()) {
@@ -3073,16 +3094,8 @@ bool character_game_data::can_craft_recipe(const metternich::recipe *recipe) con
 		return false;
 	}
 
-	for (const recipe::material &material : recipe->get_materials()) {
-		int found_quantity = 0;
-
-		for (const qunique_ptr<item> &item : this->get_items()) {
-			if (material.matches_item(item->to_item_key())) {
-				found_quantity += item->get_quantity();
-			}
-		}
-
-		if (found_quantity < material.quantity) {
+	for (const recipe_material &material : recipe->get_materials()) {
+		if (!this->has_recipe_material(material)) {
 			return false;
 		}
 	}
@@ -3104,7 +3117,7 @@ void character_game_data::craft_recipe(const metternich::recipe *recipe)
 	this->change_craft(-recipe->get_craft_cost());
 
 	std::vector<item *> items_to_remove;
-	for (const recipe::material &material : recipe->get_materials()) {
+	for (const recipe_material &material : recipe->get_materials()) {
 		int remaining_quantity = material.quantity;
 
 		for (const qunique_ptr<item> &item : this->get_items()) {
