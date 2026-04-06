@@ -1,0 +1,10 @@
+bears_endurance = {
+	name = "Bear's Endurance"
+	duration_per_caster_level = 1min
+	modifier = {
+		constitution = {
+			modifier_type = enhancement
+			modifier = 4
+		}
+	}
+}

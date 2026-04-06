@@ -103,6 +103,7 @@ arcane_scroll_level_2 = {
 		scroll
 	}
 	spells = {
+		bears_endurance = 3
 		bulls_strength = 3
 		cats_grace = 3
 	}
@@ -145,6 +146,7 @@ divine_scroll_level_2 = {
 		scroll
 	}
 	spells = {
+		bears_endurance = 3
 		bulls_strength = 3
 		cats_grace = 3
 	}

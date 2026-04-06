@@ -1,0 +1,22 @@
+bears_endurance = {
+	name = "Bear's Endurance"
+	level = 2
+	icon = lion
+	price = 150gp
+	target = ally
+	range = 1
+	sound = magic_holy
+	arcane_schools = {
+		alteration #transmutation
+	}
+	character_classes = {
+		cleric
+		druid
+		mage
+		ranger
+		#sorcerer
+	}
+	target_effects = {
+		status_effect = bears_endurance
+	}
+}
