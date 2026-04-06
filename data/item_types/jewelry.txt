@@ -13,6 +13,9 @@ periapt = {
 	item_class = amulet
 	icon = crown_baronial
 	price = 1cp #?gp
+	item_creation_types = {
+		armor
+	}
 }
 
 ring = {

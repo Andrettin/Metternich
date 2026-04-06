@@ -64,3 +64,70 @@ amulet_of_health_6 = {
 		divine_scroll_level_2
 	}
 }
+
+periapt_of_wisdom_2 = {
+	name = "Periapt of Wisdom +2"
+	result_item_type = periapt
+	result_enchantment = of_wisdom_2
+	min_caster_level = 8
+	required_traits = {
+		craft_wondrous_item
+	}
+	materials = {
+		periapt
+	}
+	spells = {
+		owls_wisdom
+	}
+	item_creation_types = {
+		#same as the Scroll of Owl's Wisdom
+		arcane_scroll_level_2
+		divine_scroll_level_2
+	}
+}
+
+periapt_of_wisdom_4 = {
+	name = "Periapt of Wisdom +4"
+	result_item_type = periapt
+	result_enchantment = of_wisdom_4
+	min_caster_level = 8
+	required_traits = {
+		craft_wondrous_item
+	}
+	materials = {
+		periapt = {
+			enchantment = of_wisdom_2
+		}
+	}
+	spells = {
+		owls_wisdom
+	}
+	item_creation_types = {
+		#same as the Scroll of Owl's Wisdom
+		arcane_scroll_level_2
+		divine_scroll_level_2
+	}
+}
+
+periapt_of_wisdom_6 = {
+	name = "Periapt of Wisdom +6"
+	result_item_type = periapt
+	result_enchantment = of_wisdom_6
+	min_caster_level = 8
+	required_traits = {
+		craft_wondrous_item
+	}
+	materials = {
+		periapt = {
+			enchantment = of_wisdom_4
+		}
+	}
+	spells = {
+		owls_wisdom
+	}
+	item_creation_types = {
+		#same as the Scroll of Owl's Wisdom
+		arcane_scroll_level_2
+		divine_scroll_level_2
+	}
+}
