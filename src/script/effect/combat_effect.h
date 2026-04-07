@@ -264,13 +264,13 @@ public:
 		}
 	}
 
-	virtual void do_assignment_effect(const domain *scope, context &ctx) const override
+	[[nodiscard]] virtual QCoro::Task<void> do_assignment_effect_coro(const domain *scope, context &ctx) const override
 	{
 		assert_throw(ctx.party != nullptr);
 
 		std::vector<std::shared_ptr<character_reference>> generated_characters;
 		character_map<const enemy *> character_enemy_infos;
-		const std::vector<const character *> enemy_characters = this->get_enemy_characters(ctx, generated_characters, character_enemy_infos);
+		const std::vector<const character *> enemy_characters = co_await this->get_enemy_characters(ctx, generated_characters, character_enemy_infos);
 
 		auto enemy_party = std::make_unique<party>(enemy_characters);
 
@@ -392,7 +392,7 @@ public:
 		return str;
 	}
 
-	std::vector<const character *> get_enemy_characters(const read_only_context &ctx, std::vector<std::shared_ptr<character_reference>> &generated_characters, character_map<const enemy *> &character_enemy_infos) const
+	[[nodiscard]] QCoro::Task<std::vector<const character *>> get_enemy_characters(const read_only_context &ctx, std::vector<std::shared_ptr<character_reference>> &generated_characters, character_map<const enemy *> &character_enemy_infos) const
 	{
 		std::vector<const character *> enemy_characters;
 
@@ -406,14 +406,14 @@ public:
 			}
 
 			for (int i = 0; i < quantity; ++i) {
-				std::shared_ptr<character_reference> enemy_character = character::generate_temporary(monster_type, nullptr, nullptr, nullptr, 0, {});
+				std::shared_ptr<character_reference> enemy_character = co_await character::generate_temporary(monster_type, nullptr, nullptr, nullptr, 0, {});
 				enemy_characters.push_back(enemy_character->get_character());
 				generated_characters.push_back(enemy_character);
 			}
 		}
 
 		for (const std::unique_ptr<enemy> &enemy : this->enemies) {
-			std::shared_ptr<character_reference> enemy_character = character::generate_temporary(enemy->get_monster_type(), nullptr, nullptr, nullptr, enemy->get_health(), enemy->get_items());
+			std::shared_ptr<character_reference> enemy_character = co_await character::generate_temporary(enemy->get_monster_type(), nullptr, nullptr, nullptr, enemy->get_health(), enemy->get_items());
 			enemy_characters.push_back(enemy_character->get_character());
 			generated_characters.push_back(enemy_character);
 
@@ -424,12 +424,12 @@ public:
 			const character *enemy_character = this->get_enemy_character(enemy_character_variant, ctx);
 
 			//ensure the enemy character's HP and mana are completely recovered
-			enemy_character->get_game_data()->fully_recover();
+			co_await enemy_character->get_game_data()->fully_recover();
 
 			enemy_characters.push_back(enemy_character);
 		}
 
-		return vector::shuffled(enemy_characters);
+		co_return vector::shuffled(enemy_characters);
 	}
 
 	const character *get_enemy_character(const target_variant<const character> &target_variant, const read_only_context &ctx) const

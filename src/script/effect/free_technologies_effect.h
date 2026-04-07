@@ -21,11 +21,11 @@ public:
 		return class_identifier;
 	}
 
-	virtual void do_assignment_effect(const domain *scope, context &ctx) const override
+	[[nodiscard]] virtual QCoro::Task<void> do_assignment_effect_coro(const domain *scope, context &ctx) const override
 	{
 		Q_UNUSED(ctx);
 
-		scope->get_technology()->gain_free_technologies(this->count);
+		co_await scope->get_technology()->gain_free_technologies(this->count);
 	}
 
 	virtual std::string get_assignment_string() const override

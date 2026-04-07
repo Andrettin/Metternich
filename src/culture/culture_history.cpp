@@ -11,7 +11,7 @@
 
 namespace metternich {
 
-void culture_history::apply_to_domain(const domain *domain) const
+QCoro::Task<void> culture_history::apply_to_domain(const domain *domain) const
 {
 	domain_game_data *domain_game_data = domain->get_game_data();
 
@@ -20,7 +20,7 @@ void culture_history::apply_to_domain(const domain *domain) const
 			continue;
 		}
 
-		domain_game_data->explore_province(province);
+		co_await domain_game_data->explore_province(province);
 	}
 
 	for (const region *region : this->get_explored_regions()) {
@@ -29,17 +29,17 @@ void culture_history::apply_to_domain(const domain *domain) const
 				continue;
 			}
 
-			domain_game_data->explore_province(province);
+			co_await domain_game_data->explore_province(province);
 		}
 	}
 }
 
-void culture_history::apply_to_province(const province *province) const
+QCoro::Task<void> culture_history::apply_to_province(const province *province) const
 {
 	province_game_data *province_game_data = province->get_game_data();
 
 	for (const technology *technology : this->get_technologies()) {
-		province_game_data->add_technology_with_prerequisites(technology);
+		co_await province_game_data->add_technology_with_prerequisites(technology);
 	}
 }
 

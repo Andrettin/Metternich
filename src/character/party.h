@@ -28,7 +28,7 @@ public:
 	QVariantList get_characters_qvariant_list() const;
 	void remove_character(const character *character);
 
-	void gain_experience(const int64_t experience);
+	[[nodiscard]] QCoro::Task<void> gain_experience(const int64_t experience);
 
 	const character *get_best_skill_character(const skill *skill) const;
 

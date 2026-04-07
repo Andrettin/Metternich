@@ -34,14 +34,14 @@ public:
 		}
 	}
 
-	virtual void do_assignment_effect(const domain *upper_scope, context &ctx) const override
+	[[nodiscard]] virtual QCoro::Task<void> do_assignment_effect_coro(const domain *upper_scope, context &ctx) const override
 	{
 		for (const domain *known_domain : upper_scope->get_game_data()->get_known_countries()) {
 			if (!this->conditions.check(known_domain, ctx)) {
 				continue;
 			}
 
-			this->do_scope_effect(known_domain, upper_scope, ctx);
+			co_await this->do_scope_effect(known_domain, upper_scope, ctx);
 		}
 	}
 

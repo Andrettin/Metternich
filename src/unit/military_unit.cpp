@@ -41,12 +41,60 @@
 
 namespace metternich {
 
+QCoro::Task<qunique_ptr<military_unit>> military_unit::create(const military_unit_type *type)
+{
+	auto military_unit = make_qunique<metternich::military_unit>(type);
+	co_await military_unit->set_hit_points(military_unit->get_max_hit_points());
+	co_await military_unit->check_free_promotions();
+	co_return military_unit;
+}
+
+QCoro::Task<qunique_ptr<military_unit>> military_unit::create(const military_unit_type *type, const metternich::domain *domain, const metternich::phenotype *phenotype)
+{
+	auto military_unit = co_await metternich::military_unit::create(type);
+
+	military_unit->domain = domain;
+	military_unit->phenotype = phenotype;
+
+	military_unit->generate_name();
+
+	assert_throw(military_unit->get_country() != nullptr);
+	assert_throw(military_unit->get_phenotype() != nullptr);
+
+	military_unit->get_country()->get_game_data()->change_military_score(military_unit->get_score());
+
+	for (int i = 0; i < static_cast<int>(military_unit_stat::count); ++i) {
+		const military_unit_stat stat = static_cast<military_unit_stat>(i);
+		const centesimal_int type_stat_value = type->get_stat_for_domain(stat, military_unit->get_country());
+		military_unit->change_stat(stat, type_stat_value - type->get_stat(stat));
+	}
+
+	co_await military_unit->check_free_promotions();
+
+	co_return military_unit;
+}
+
+QCoro::Task<qunique_ptr<military_unit>> military_unit::create(const military_unit_type *type, const metternich::domain *domain, const metternich::character *character)
+{
+	auto military_unit = co_await metternich::military_unit::create(type, domain, character->get_phenotype());
+
+	military_unit->character = character;
+	military_unit->name = character->get_game_data()->get_full_name();
+
+	character->get_game_data()->set_military_unit(military_unit.get());
+	co_await character->get_game_data()->apply_military_unit_modifier(military_unit.get(), 1);
+
+	//character military units do not have any province set as their home province, since they don't consume food
+
+	co_return military_unit;
+}
+
+
 military_unit::military_unit(const military_unit_type *type) : type(type)
 {
 	assert_throw(this->get_type() != nullptr);
 
 	this->max_hit_points = type->get_stat(military_unit_stat::hit_points).to_int();
-	this->set_hit_points(this->get_max_hit_points());
 	this->set_morale(this->get_hit_points());
 
 	for (const auto &[stat, value] : type->get_stats()) {
@@ -59,53 +107,17 @@ military_unit::military_unit(const military_unit_type *type) : type(type)
 		this->battle_resolution_type = static_cast<metternich::battle_resolution_type>(random::get()->generate_in_range(1, static_cast<int>(battle_resolution_type::count) - 1));
 	}
 
-	this->check_free_promotions();
-}
-
-military_unit::military_unit(const military_unit_type *type, const metternich::domain *domain, const metternich::phenotype *phenotype)
-	: military_unit(type)
-{
-	this->domain = domain;
-	this->phenotype = phenotype;
-
-	this->generate_name();
-
-	assert_throw(this->get_country() != nullptr);
-	assert_throw(this->get_phenotype() != nullptr);
-
 	connect(this, &military_unit::type_changed, this, &military_unit::icon_changed);
-
-	this->get_country()->get_game_data()->change_military_score(this->get_score());
-
-	for (int i = 0; i < static_cast<int>(military_unit_stat::count); ++i) {
-		const military_unit_stat stat = static_cast<military_unit_stat>(i);
-		const centesimal_int type_stat_value = type->get_stat_for_domain(stat, this->get_country());
-		this->change_stat(stat, type_stat_value - type->get_stat(stat));
-	}
-
-	this->check_free_promotions();
 }
 
-military_unit::military_unit(const military_unit_type *type, const metternich::domain *domain, const metternich::character *character)
-	: military_unit(type, domain, character->get_phenotype())
-{
-	this->character = character;
-	this->name = character->get_game_data()->get_full_name();
-
-	character->get_game_data()->set_military_unit(this);
-	character->get_game_data()->apply_military_unit_modifier(this, 1);
-
-	//character military units do not have any province set as their home province, since they don't consume food
-}
-
-void military_unit::do_turn()
+QCoro::Task<void> military_unit::do_turn()
 {
 	if (!this->is_moving()) {
 		const int missing_hit_points = this->get_max_hit_points() - this->get_hit_points();
 		assert_throw(missing_hit_points >= 0);
 		if (missing_hit_points > 0) {
 			//recover unit HP if it is not moving
-			this->change_hit_points(std::min(this->get_hit_point_recovery_per_turn(), missing_hit_points));
+			co_await this->change_hit_points(std::min(this->get_hit_point_recovery_per_turn(), missing_hit_points));
 		}
 
 		const int missing_morale = this->get_hit_points() - this->get_morale();
@@ -156,10 +168,10 @@ void military_unit::generate_name()
 	}
 }
 
-void military_unit::set_type(const military_unit_type *type)
+QCoro::Task<void> military_unit::set_type(const military_unit_type *type)
 {
 	if (type == this->get_type()) {
-		return;
+		co_return;
 	}
 
 	const military_unit_type *old_type = this->get_type();
@@ -176,7 +188,7 @@ void military_unit::set_type(const military_unit_type *type)
 	}
 
 	if (type->get_stat(military_unit_stat::hit_points).to_int() != old_type->get_stat(military_unit_stat::hit_points).to_int()) {
-		this->change_max_hit_points(type->get_stat(military_unit_stat::hit_points).to_int() - old_type->get_stat(military_unit_stat::hit_points).to_int());
+		co_await this->change_max_hit_points(type->get_stat(military_unit_stat::hit_points).to_int() - old_type->get_stat(military_unit_stat::hit_points).to_int());
 	}
 
 	for (int i = 0; i < static_cast<int>(military_unit_stat::count); ++i) {
@@ -197,7 +209,7 @@ void military_unit::set_type(const military_unit_type *type)
 	}
 
 	//check promotions in case any have been invalidated by the type change, or if new free promotions have been gained
-	this->check_promotions();
+	co_await this->check_promotions();
 
 	emit type_changed();
 
@@ -257,10 +269,10 @@ const metternich::religion *military_unit::get_religion() const
 	return nullptr;
 }
 
-void military_unit::set_province(const metternich::province *province)
+QCoro::Task<void> military_unit::set_province(const metternich::province *province)
 {
 	if (province == this->get_province()) {
-		return;
+		co_return;
 	}
 
 	if (this->get_province() != nullptr) {
@@ -280,7 +292,7 @@ void military_unit::set_province(const metternich::province *province)
 				}
 
 				if (neighbor_province->is_water_zone()) {
-					this->get_country()->get_game_data()->explore_province(neighbor_province);
+					co_await this->get_country()->get_game_data()->explore_province(neighbor_province);
 				} else {
 					//for coastal provinces bordering the water zone, explore all their tiles bordering it
 					for (const QPoint &coastal_tile_pos : neighbor_province->get_game_data()->get_border_tiles()) {
@@ -289,7 +301,7 @@ void military_unit::set_province(const metternich::province *province)
 						}
 
 						if (!this->get_country()->get_game_data()->is_tile_explored(coastal_tile_pos)) {
-							this->get_country()->get_game_data()->explore_tile(coastal_tile_pos);
+							co_await this->get_country()->get_game_data()->explore_tile(coastal_tile_pos);
 						}
 					}
 				}
@@ -383,10 +395,10 @@ bool military_unit::is_hostile_to(const metternich::domain *domain) const
 	return this->get_country()->get_game_data()->can_attack(domain);
 }
 
-void military_unit::set_hit_points(const int hit_points)
+QCoro::Task<void> military_unit::set_hit_points(const int hit_points)
 {
 	if (hit_points == this->get_hit_points()) {
-		return;
+		co_return;
 	}
 
 	this->hit_points = hit_points;
@@ -398,7 +410,7 @@ void military_unit::set_hit_points(const int hit_points)
 	}
 
 	if (this->get_hit_points() <= 0) {
-		this->disband(true);
+		co_await this->disband(true);
 	} else {
 		emit hit_points_changed();
 	}
@@ -414,12 +426,12 @@ int military_unit::get_morale_recovery_per_turn() const
 	return military_unit::morale_recovery_per_turn;
 }
 
-void military_unit::fully_recover()
+QCoro::Task<void> military_unit::fully_recover()
 {
-	this->set_hit_points(this->get_max_hit_points());
+	co_await this->set_hit_points(this->get_max_hit_points());
 
 	if (this->get_character() != nullptr) {
-		this->get_character()->get_game_data()->fully_recover();
+		co_await this->get_character()->get_game_data()->fully_recover();
 	}
 }
 
@@ -481,23 +493,23 @@ bool military_unit::has_promotion(const promotion *promotion) const
 	return vector::contains(this->get_promotions(), promotion);
 }
 
-void military_unit::add_promotion(const promotion *promotion)
+QCoro::Task<void> military_unit::add_promotion(const promotion *promotion)
 {
 	if (vector::contains(this->get_promotions(), promotion)) {
 		log::log_error(std::format("Tried to add promotion \"{}\" to military unit \"{}\" ({}), but it already has the promotion.", promotion->get_identifier(), this->get_name(), this->get_type()->get_name()));
-		return;
+		co_return;
 	}
 
 	const read_only_context ctx(this);
 	if (promotion->get_conditions() != nullptr && !promotion->get_conditions()->check(this, ctx)) {
 		log::log_error(std::format("Tried to add promotion \"{}\" to military unit \"{}\" ({}), for which the promotion's conditions are not fulfilled.", promotion->get_identifier(), this->get_name(), this->get_type()->get_name()));
-		return;
+		co_return;
 	}
 
 	this->promotions.push_back(promotion);
 
 	if (promotion->get_modifier() != nullptr) {
-		promotion->get_modifier()->apply(this);
+		co_await promotion->get_modifier()->apply(this);
 	}
 
 	if (game::get()->is_running()) {
@@ -505,12 +517,12 @@ void military_unit::add_promotion(const promotion *promotion)
 	}
 }
 
-void military_unit::remove_promotion(const promotion *promotion)
+QCoro::Task<void> military_unit::remove_promotion(const promotion *promotion)
 {
 	std::erase(this->promotions, promotion);
 
 	if (promotion->get_modifier() != nullptr) {
-		promotion->get_modifier()->remove(this);
+		co_await promotion->get_modifier()->remove(this);
 	}
 
 	if (game::get()->is_running()) {
@@ -518,9 +530,9 @@ void military_unit::remove_promotion(const promotion *promotion)
 	}
 }
 
-void military_unit::check_promotions()
+QCoro::Task<void> military_unit::check_promotions()
 {
-	this->check_free_promotions();
+	co_await this->check_free_promotions();
 
 	std::vector<const promotion *> promotions_to_remove;
 
@@ -538,15 +550,15 @@ void military_unit::check_promotions()
 
 	if (!promotions_to_remove.empty()) {
 		for (const promotion *promotion : promotions_to_remove) {
-			this->remove_promotion(promotion);
+			co_await this->remove_promotion(promotion);
 		}
 
 		//check promotions again, as the removal of a promotion might have invalidated other ones
-		this->check_promotions();
+		co_await this->check_promotions();
 	}
 }
 
-void military_unit::check_free_promotions()
+QCoro::Task<void> military_unit::check_free_promotions()
 {
 	bool changed = false;
 
@@ -559,7 +571,7 @@ void military_unit::check_free_promotions()
 			continue;
 		}
 
-		this->add_promotion(promotion);
+		co_await this->add_promotion(promotion);
 		changed = true;
 	}
 
@@ -588,18 +600,18 @@ void military_unit::check_free_promotions()
 				continue;
 			}
 
-			this->add_promotion(promotion);
+			co_await this->add_promotion(promotion);
 			changed = true;
 		}
 	}
 
 	if (changed) {
 		//check free promotions again, as the addition of a free promotion might have caused the requirements of others to be fulfilled
-		this->check_free_promotions();
+		co_await this->check_free_promotions();
 	}
 }
 
-void military_unit::attack(military_unit *target, const bool ranged)
+QCoro::Task<void> military_unit::attack(military_unit *target, const bool ranged)
 {
 	assert_throw(target != nullptr);
 
@@ -623,12 +635,12 @@ void military_unit::attack(military_unit *target, const bool ranged)
 
 	damage = centesimal_int::max(damage, 1);
 
-	target->receive_damage(damage.to_int(), 0);
+	co_await target->receive_damage(damage.to_int(), 0);
 }
 
-void military_unit::receive_damage(const int damage, const int morale_damage_modifier)
+QCoro::Task<void> military_unit::receive_damage(const int damage, const int morale_damage_modifier)
 {
-	this->change_hit_points(-damage);
+	co_await this->change_hit_points(-damage);
 
 	int morale_damage = damage;
 	morale_damage *= 100 + morale_damage_modifier;
@@ -637,25 +649,25 @@ void military_unit::receive_damage(const int damage, const int morale_damage_mod
 	this->change_morale(-morale_damage);
 }
 
-void military_unit::heal(const int healing)
+[[nodiscard]] QCoro::Task<void> military_unit::heal(const int healing)
 {
 	const int missing_hit_points = this->get_max_hit_points() - this->get_hit_points();
 
 	if (missing_hit_points == 0) {
-		return;
+		co_return;
 	}
 
-	this->change_hit_points(std::min(healing, missing_hit_points));
+	co_await this->change_hit_points(std::min(healing, missing_hit_points));
 }
 
-void military_unit::disband(const bool dead)
+QCoro::Task<void> military_unit::disband(const bool dead)
 {
 	if (this->get_character() != nullptr) {
 		character_game_data *character_game_data = this->get_character()->get_game_data();
 		character_game_data->set_military_unit(nullptr);
 
 		if (dead) {
-			character_game_data->die();
+			co_await character_game_data->die();
 		}
 	}
 
@@ -671,11 +683,6 @@ void military_unit::disband(const bool dead)
 		this->get_country()->get_game_data()->change_military_score(-this->get_score());
 		this->get_country()->get_military()->remove_military_unit(this);
 	}
-}
-
-void military_unit::disband()
-{
-	this->disband(false);
 }
 
 int military_unit::get_score() const

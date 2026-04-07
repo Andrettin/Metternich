@@ -28,7 +28,7 @@ public:
 
 	domain_game_data *get_game_data() const;
 
-	void do_research();
+	[[nodiscard]] QCoro::Task<void> do_research();
 
 	const technology_set &get_technologies() const;
 	QVariantList get_technologies_qvariant_list() const;
@@ -38,12 +38,12 @@ public:
 		return this->get_technologies().contains(technology);
 	}
 
-	void add_technology(const technology *technology);
-	void add_technology_with_prerequisites(const technology *technology);
-	void on_technology_added(const technology *technology);
-	void remove_technology(const technology *technology);
-	void on_technology_lost(const technology *technology);
-	void check_technologies();
+	[[nodiscard]] QCoro::Task<void> add_technology(const technology *technology);
+	[[nodiscard]] QCoro::Task<void> add_technology_with_prerequisites(const technology *technology);
+	[[nodiscard]] QCoro::Task<void> on_technology_added(const technology *technology);
+	[[nodiscard]] QCoro::Task<void> remove_technology(const technology *technology);
+	[[nodiscard]] QCoro::Task<void> on_technology_lost(const technology *technology);
+	[[nodiscard]] QCoro::Task<void> check_technologies();
 
 	bool can_gain_technology(const technology *technology) const;
 	Q_INVOKABLE bool can_research_technology(const metternich::technology *technology) const;
@@ -62,30 +62,29 @@ public:
 	QVariantList get_current_researches_qvariant_list() const;
 	Q_INVOKABLE void add_current_research(const metternich::technology *technology);
 	Q_INVOKABLE void remove_current_research(const metternich::technology *technology, const bool restore_costs);
-	void on_technology_researched(const technology *technology);
+	[[nodiscard]] QCoro::Task<void> on_technology_researched(const technology *technology);
 
 	data_entry_map<technology_category, const technology *> get_research_choice_map(const bool is_free) const;
 
-	void gain_free_technology();
+	[[nodiscard]] QCoro::Task<void> gain_free_technology();
 
-	void gain_free_technology(const technology *technology)
+	[[nodiscard]] QCoro::Task<void> gain_free_technology_coro(const technology *technology)
 	{
-		this->on_technology_researched(technology);
+		co_await this->on_technology_researched(technology);
 		--this->free_technology_count;
 
 		if (this->free_technology_count > 0) {
-			this->gain_free_technology();
+			co_await this->gain_free_technology();
 		}
 	}
 
-	Q_INVOKABLE void gain_free_technology(metternich::technology *technology)
+	Q_INVOKABLE QCoro::QmlTask gain_free_technology(const metternich::technology *technology)
 	{
-		const metternich::technology *const_technology = technology;
-		return this->gain_free_technology(const_technology);
+		return this->gain_free_technology_coro(technology);
 	}
 
-	void gain_free_technologies(const int count);
-	void gain_technologies_known_by_others();
+	[[nodiscard]] QCoro::Task<void> gain_free_technologies(const int count);
+	[[nodiscard]] QCoro::Task<void> gain_technologies_known_by_others();
 
 	const centesimal_int &get_technology_cost_modifier() const
 	{
@@ -140,11 +139,11 @@ public:
 		return this->gain_technologies_known_by_others_count;
 	}
 
-	void set_gain_technologies_known_by_others_count(const int value);
+	[[nodiscard]] QCoro::Task<void> set_gain_technologies_known_by_others_count(const int value);
 
-	void change_gain_technologies_known_by_others_count(const int value)
+	[[nodiscard]] QCoro::Task<void> change_gain_technologies_known_by_others_count(const int value)
 	{
-		this->set_gain_technologies_known_by_others_count(this->get_gain_technologies_known_by_others_count() + value);
+		co_await this->set_gain_technologies_known_by_others_count(this->get_gain_technologies_known_by_others_count() + value);
 	}
 
 signals:

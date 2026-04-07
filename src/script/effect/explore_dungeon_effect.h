@@ -30,7 +30,8 @@ public:
 		return class_identifier;
 	}
 
-	virtual void do_assignment_effect(const domain *scope, context &ctx) const override
+	[[nodiscard]]
+	virtual QCoro::Task<void> do_assignment_effect_coro(const domain *scope, context &ctx) const override
 	{
 		assert_throw(ctx.party != nullptr);
 		assert_throw(ctx.party->get_domain() == scope);
@@ -42,7 +43,7 @@ public:
 				ctx.dungeon_site->get_game_data()->add_explored_dungeon_area(ctx.dungeon_area);
 			}
 
-			ctx.dungeon_site->get_game_data()->explore_dungeon(ctx.party);
+			co_await ctx.dungeon_site->get_game_data()->explore_dungeon(ctx.party);
 		}
 	}
 

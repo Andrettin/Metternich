@@ -34,9 +34,10 @@ public:
 		return class_identifier;
 	}
 
-	virtual void do_assignment_effect(scope_type *scope, context &ctx) const override
+	[[nodiscard]]
+	virtual QCoro::Task<void> do_assignment_effect_coro(scope_type *scope, context &ctx) const override
 	{
-		this->scripted_effect->get_effects().do_effects(scope, ctx);
+		co_await this->scripted_effect->get_effects().do_effects(scope, ctx);
 	}
 
 	virtual std::string get_assignment_string(const scope_type *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override

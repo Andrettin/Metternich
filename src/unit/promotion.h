@@ -65,7 +65,7 @@ public:
 		return this->modifier.get();
 	}
 
-	void apply_modifier(military_unit *military_unit, const int multiplier) const;
+	[[nodiscard]] QCoro::Task<void> apply_modifier(military_unit *military_unit, const int multiplier) const;
 	QString get_modifier_string() const;
 
 signals:

@@ -91,10 +91,6 @@ character_game_data::character_game_data(const metternich::character *character)
 	this->death_date = this->character->get_death_date();
 	this->start_date = this->character->get_start_date();
 	this->home_site = this->character->get_home_site();
-
-	for (const skill *skill : skill::get_all()) {
-		this->change_skill_value(skill, skill->get_base_value());
-	}
 }
 
 void character_game_data::process_gsml_property(const gsml_property &property)
@@ -474,6 +470,13 @@ gsml_data character_game_data::to_gsml_data() const
 	return data;
 }
 
+QCoro::Task<void> character_game_data::initialize()
+{
+	for (const skill *skill : skill::get_all()) {
+		co_await this->change_skill_value(skill, skill->get_base_value());
+	}
+}
+
 void character_game_data::ply_trade()
 {
 	static constexpr int gp_value = 100;
@@ -569,10 +572,10 @@ void character_game_data::ply_trade()
 	this->change_wealth(profit);
 }
 
-void character_game_data::do_crafting()
+QCoro::Task<void> character_game_data::do_crafting()
 {
 	if (!this->can_craft_items()) {
-		return;
+		co_return;
 	}
 
 	if (this->get_craft() < this->get_max_craft()) {
@@ -588,25 +591,25 @@ void character_game_data::do_crafting()
 			}
 
 			if (this->can_craft_recipe(recipe)) {
-				this->craft_recipe(recipe);
+				co_await this->craft_recipe_coro(recipe);
 			}
 		}
 	}
 }
 
-void character_game_data::do_events()
+QCoro::Task<void> character_game_data::do_events()
 {
 	const bool is_last_turn_of_year = game::get()->is_last_turn_of_year();
 	if (is_last_turn_of_year) {
-		character_event::check_events_for_scope(this->character, event_trigger::yearly_pulse);
+		co_await character_event::check_events_for_scope(this->character, event_trigger::yearly_pulse);
 	}
 
 	const bool is_last_turn_of_quarter = game::get()->is_last_turn_of_quarter();
 	if (is_last_turn_of_quarter) {
-		character_event::check_events_for_scope(this->character, event_trigger::quarterly_pulse);
+		co_await character_event::check_events_for_scope(this->character, event_trigger::quarterly_pulse);
 	}
 
-	character_event::check_events_for_scope(this->character, event_trigger::per_turn_pulse);
+	co_await character_event::check_events_for_scope(this->character, event_trigger::per_turn_pulse);
 }
 
 bool character_game_data::is_ai() const
@@ -614,26 +617,26 @@ bool character_game_data::is_ai() const
 	return this->character != game::get()->get_player_character();
 }
 
-void character_game_data::apply_species_and_class(const int level, const bool apply_history)
+QCoro::Task<void> character_game_data::apply_species_and_class(const int level, const bool apply_history)
 {
 	const species *species = this->character->get_species();
 	if (species->get_modifier() != nullptr) {
-		species->get_modifier()->apply(this->character);
+		co_await species->get_modifier()->apply(this->character);
 	}
 
 	const culture *culture = this->character->get_culture();
 	if (culture != nullptr && culture->get_character_modifier() != nullptr) {
-		culture->get_character_modifier()->apply(this->character);
+		co_await culture->get_character_modifier()->apply(this->character);
 	}
 
 	const monster_type *monster_type = this->character->get_monster_type();
 	if (monster_type != nullptr) {
 		if (monster_type->get_modifier() != nullptr) {
-			monster_type->get_modifier()->apply(this->character);
+			co_await monster_type->get_modifier()->apply(this->character);
 		}
 	}
 
-	this->generate_attributes();
+	co_await this->generate_attributes();
 	this->apply_bloodline(apply_history);
 	if (this->get_reputation() < character::base_reputation) {
 		this->set_reputation(character::base_reputation);
@@ -641,19 +644,19 @@ void character_game_data::apply_species_and_class(const int level, const bool ap
 
 	const metternich::character_class *character_class = this->get_character_class();
 	if (character_class != nullptr) {
-		this->set_level(std::min(level, character_class->get_max_level()));
+		co_await this->set_level(std::min(level, character_class->get_max_level()));
 	}
 
 	const metternich::mythic_path *mythic_path = this->character->get_mythic_path();
 	if (mythic_path != nullptr) {
 		for (int i = 1; i <= this->character->get_mythic_tier(); ++i) {
-			this->on_mythic_tier_gained(i, 1);
+			co_await this->on_mythic_tier_gained(i, 1);
 		}
 	}
 
 	if (this->is_deity()) {
 		for (int i = 1; i <= this->character->get_deity()->get_divine_level(); ++i) {
-			this->on_divine_rank_gained(i, 1);
+			co_await this->on_divine_rank_gained(i, 1);
 		}
 
 		int base_major_divine_domain_count = static_cast<int>(this->character->get_deity()->get_major_domains().size());
@@ -677,7 +680,7 @@ void character_game_data::apply_species_and_class(const int level, const bool ap
 				break;
 			}
 
-			this->change_level(1);
+			co_await this->change_level(1);
 		}
 	}
 
@@ -685,7 +688,7 @@ void character_game_data::apply_species_and_class(const int level, const bool ap
 		throw std::runtime_error(std::format("Could not acquire all target traits for character \"{}\".", this->character->get_identifier()));
 	}
 
-	this->add_starting_items();
+	co_await this->add_starting_items();
 	this->add_starting_spells();
 
 	if (this->character->get_health() != 0) {
@@ -700,14 +703,14 @@ void character_game_data::apply_species_and_class(const int level, const bool ap
 		assert_log(this->character->get_health() >= min_hp);
 		assert_log(this->character->get_health() <= max_hp);
 
-		this->set_max_health(this->character->get_health(), true);
+		co_await this->set_max_health(this->character->get_health(), true);
 	}
 
 	//ensure characters start with their health and mana maximum
-	this->fully_recover();
+	co_await this->fully_recover();
 }
 
-void character_game_data::generate_attributes()
+QCoro::Task<void> character_game_data::generate_attributes()
 {
 	const species *species = this->character->get_species();
 	const metternich::character_class *character_class = this->get_character_class();
@@ -736,7 +739,7 @@ void character_game_data::generate_attributes()
 		assert_throw(max_result >= min_result);
 
 		if (min_result == max_result) {
-			this->change_attribute_value(attribute, min_result - this->get_attribute_value(attribute));
+			co_await this->change_attribute_value(attribute, min_result - this->get_attribute_value(attribute));
 			continue;
 		}
 
@@ -754,7 +757,7 @@ void character_game_data::generate_attributes()
 
 			valid_result = result >= min_result && result <= max_result;
 			if (valid_result) {
-				this->change_attribute_value(attribute, base_result);
+				co_await this->change_attribute_value(attribute, base_result);
 			}
 		}
 	}
@@ -846,29 +849,29 @@ void character_game_data::apply_bloodline_inheritance_investiture()
 	}
 }
 
-void character_game_data::add_starting_items()
+QCoro::Task<void> character_game_data::add_starting_items()
 {
 	const metternich::character_class *character_class = this->get_character_class();
 
 	data_entry_set<item_slot> filled_item_slots;
 
 	if (!this->character->get_starting_items().empty()) {
-		this->add_starting_items(this->character->get_starting_items(), filled_item_slots);
+		co_await this->add_starting_items(this->character->get_starting_items(), filled_item_slots);
 	}
 
 	if (this->character->get_monster_type() != nullptr) {
-		this->add_starting_items(this->character->get_monster_type()->get_items(), filled_item_slots);
+		co_await this->add_starting_items(this->character->get_monster_type()->get_items(), filled_item_slots);
 	}
 
 	if (character_class != nullptr) {
-		this->add_starting_items(character_class->get_starting_items(), filled_item_slots);
+		co_await this->add_starting_items(character_class->get_starting_items(), filled_item_slots);
 	}
 }
 
-void character_game_data::add_starting_items(const std::vector<const item_type *> &starting_items, data_entry_set<item_slot> &filled_item_slots)
+QCoro::Task<void> character_game_data::add_starting_items(const std::vector<const item_type *> &starting_items, data_entry_set<item_slot> &filled_item_slots)
 {
 	if (starting_items.empty()) {
-		return;
+		co_return;
 	}
 
 	data_entry_set<item_slot> new_filled_item_slots = filled_item_slots;
@@ -891,7 +894,7 @@ void character_game_data::add_starting_items(const std::vector<const item_type *
 				}
 			}
 		}
-		this->add_item(std::move(item));
+		co_await this->add_item(std::move(item));
 	}
 
 	filled_item_slots = new_filled_item_slots;
@@ -923,7 +926,7 @@ void character_game_data::add_starting_spells(const std::vector<const spell *> &
 	}
 }
 
-void character_game_data::apply_history(const QDate &start_date)
+QCoro::Task<void> character_game_data::apply_history(const QDate &start_date)
 {
 	if (this->get_death_date().isValid() && start_date >= this->get_death_date()) {
 		this->set_dead(true);
@@ -939,14 +942,14 @@ void character_game_data::apply_history(const QDate &start_date)
 	}
 
 	const int level = std::max(character_history->get_level(), 1);
-	this->apply_species_and_class(level, true);
+	co_await this->apply_species_and_class(level, true);
 
 	if (start_date < this->get_start_date()) {
-		return;
+		co_return;
 	}
 
 	if (this->is_dead()) {
-		return;
+		co_return;
 	}
 
 	const metternich::domain *domain = character_history->get_country();
@@ -958,7 +961,7 @@ void character_game_data::apply_history(const QDate &start_date)
 			const province *deployment_province = character_history->get_deployment_province();
 			if (deployment_province != nullptr) {
 				if (deployment_province->is_water_zone() || deployment_province->get_game_data()->get_owner() == domain) {
-					this->deploy_to_province(domain, deployment_province);
+					co_await this->deploy_to_province(domain, deployment_province);
 				}
 			}
 		}
@@ -1257,21 +1260,21 @@ void character_game_data::set_dead(const bool dead)
 	}
 }
 
-void character_game_data::die()
+QCoro::Task<void> character_game_data::die()
 {
 	this->set_dead(true);
 
 	if (this->get_office() != nullptr) {
 		assert_throw(this->get_domain() != nullptr);
-		this->get_domain()->get_government()->on_office_holder_died(this->get_office(), this->character);
+		co_await this->get_domain()->get_government()->on_office_holder_died(this->get_office(), this->character);
 	}
 
 	if (this->get_military_unit() != nullptr) {
-		this->get_domain()->get_military()->on_leader_died(this->character);
+		co_await this->get_domain()->get_military()->on_leader_died(this->character);
 	}
 
 	if (this->get_civilian_unit() != nullptr) {
-		this->get_civilian_unit()->disband(false);
+		co_await this->get_civilian_unit()->disband(false);
 	}
 
 	assert_throw(this->get_office() == nullptr);
@@ -1295,7 +1298,7 @@ void character_game_data::die()
 				}
 				for (item *item : potential_items) {
 					if (item->is_useful_for(inheritor)) {
-						inheritor->get_game_data()->add_item(this->take_item(item));
+						co_await inheritor->get_game_data()->add_item(co_await this->take_item(item));
 					}
 				}
 			}
@@ -1309,7 +1312,7 @@ void character_game_data::die()
 
 	if (this->is_deity() && this->character->get_deity()->is_apotheotic()) {
 		for (int i = 1; i <= this->character->get_deity()->get_divine_level(); ++i) {
-			this->on_divine_rank_gained(i, 1);
+			co_await this->on_divine_rank_gained(i, 1);
 		}
 	}
 }
@@ -1469,11 +1472,11 @@ int character_game_data::get_level() const
 	return this->level;
 }
 
-void character_game_data::set_level(const int level)
+QCoro::Task<void> character_game_data::set_level(const int level)
 {
 	const int old_level = this->get_level();
 	if (level == old_level) {
-		return;
+		co_return;
 	}
 
 	//characters losing levels is not supported
@@ -1484,7 +1487,7 @@ void character_game_data::set_level(const int level)
 	this->level = level;
 
 	for (int i = old_level + 1; i <= level; ++i) {
-		this->on_level_gained(i, 1);
+		co_await this->on_level_gained(i, 1);
 	}
 
 	if (game::get()->is_running()) {
@@ -1492,12 +1495,12 @@ void character_game_data::set_level(const int level)
 	}
 }
 
-void character_game_data::change_level(const int change)
+QCoro::Task<void> character_game_data::change_level(const int change)
 {
-	this->set_level(this->get_level() + change);
+	co_await this->set_level(this->get_level() + change);
 }
 
-void character_game_data::on_level_gained(const int affected_level, const int multiplier)
+QCoro::Task<void> character_game_data::on_level_gained(const int affected_level, const int multiplier)
 {
 	//only the effects of one level at a time should be applied
 	assert_throw(std::abs(multiplier) == 1);
@@ -1513,14 +1516,14 @@ void character_game_data::on_level_gained(const int affected_level, const int mu
 	const std::variant<int, dice> &health_bonus = character_class->get_health_bonus_for_level(affected_level);
 	if (std::holds_alternative<int>(health_bonus)) {
 		const int health_bonus_int = std::get<int>(health_bonus);
-		this->change_max_health(health_bonus_int * multiplier, true);
+		co_await this->change_max_health(health_bonus_int * multiplier, true);
 	} else if (std::holds_alternative<dice>(health_bonus)) {
 		const dice &health_bonus_dice = std::get<dice>(health_bonus);
 
 		if (multiplier > 0) {
-			this->apply_hit_dice(health_bonus_dice);
+			co_await this->apply_hit_dice(health_bonus_dice);
 		} else if (multiplier < 0) {
-			this->remove_hit_dice(health_bonus_dice);
+			co_await this->remove_hit_dice(health_bonus_dice);
 		}
 	}
 
@@ -1550,7 +1553,7 @@ void character_game_data::on_level_gained(const int affected_level, const int mu
 
 	const modifier<const metternich::character> *level_modifier = character_class->get_level_modifier(affected_level);
 	if (level_modifier != nullptr) {
-		level_modifier->apply(this->character);
+		co_await level_modifier->apply(this->character);
 	}
 
 	if (game::get()->is_running() && this->character == game::get()->get_player_character()) {
@@ -1560,11 +1563,11 @@ void character_game_data::on_level_gained(const int affected_level, const int mu
 	}
 }
 
-void character_game_data::check_level_experience()
+QCoro::Task<void> character_game_data::check_level_experience()
 {
 	const metternich::character_class *character_class = this->get_character_class();
 	if (character_class == nullptr) {
-		return;
+		co_return;
 	}
 
 	while (this->get_experience() >= this->get_experience_for_level(this->get_level() + 1)) {
@@ -1572,15 +1575,15 @@ void character_game_data::check_level_experience()
 			break;
 		}
 
-		this->change_experience(-this->get_experience_for_level(this->get_level() + 1));
-		this->change_level(1);
+		co_await this->change_experience(-this->get_experience_for_level(this->get_level() + 1));
+		co_await this->change_level(1);
 	}
 }
 
-void character_game_data::change_experience(const int64_t change)
+QCoro::Task<void> character_game_data::change_experience(const int64_t change)
 {
 	if (change == 0) {
-		return;
+		co_return;
 	}
 
 	this->experience += change;
@@ -1589,7 +1592,7 @@ void character_game_data::change_experience(const int64_t change)
 		emit experience_changed();
 	}
 
-	this->check_level_experience();
+	co_await this->check_level_experience();
 }
 
 int64_t character_game_data::get_experience_for_level(const int level) const
@@ -1639,7 +1642,7 @@ void character_game_data::change_caster_level(const int change)
 	emit caster_level_changed();
 }
 
-void character_game_data::on_mythic_tier_gained(const int affected_tier, const int multiplier)
+QCoro::Task<void> character_game_data::on_mythic_tier_gained(const int affected_tier, const int multiplier)
 {
 	assert_throw(std::abs(multiplier) == 1);
 
@@ -1650,7 +1653,7 @@ void character_game_data::on_mythic_tier_gained(const int affected_tier, const i
 
 	const modifier<const metternich::character> *tier_modifier = mythic_path->get_tier_modifier(affected_tier);
 	if (tier_modifier != nullptr) {
-		tier_modifier->apply(this->character, multiplier);
+		co_await tier_modifier->apply(this->character, multiplier);
 	}
 
 	if (game::get()->is_running() && this->character == game::get()->get_player_character()) {
@@ -1673,7 +1676,7 @@ bool character_game_data::is_deity() const
 	}
 }
 
-void character_game_data::on_divine_rank_gained(const int affected_rank, const int multiplier)
+QCoro::Task<void> character_game_data::on_divine_rank_gained(const int affected_rank, const int multiplier)
 {
 	assert_throw(std::abs(multiplier) == 1);
 
@@ -1681,7 +1684,7 @@ void character_game_data::on_divine_rank_gained(const int affected_rank, const i
 
 	const modifier<const metternich::character> *rank_modifier = defines::get()->get_divine_rank_modifier(affected_rank);
 	if (rank_modifier != nullptr) {
-		rank_modifier->apply(this->character, multiplier);
+		co_await rank_modifier->apply(this->character, multiplier);
 	}
 }
 
@@ -1752,17 +1755,17 @@ void character_game_data::set_reputation(const int reputation)
 	}
 }
 
-void character_game_data::change_attribute_value(const character_attribute *attribute, const int change)
+QCoro::Task<void> character_game_data::change_attribute_value(const character_attribute *attribute, const int change)
 {
 	if (change == 0) {
-		return;
+		co_return;
 	}
 
 	const int old_value = this->get_attribute_value(attribute);
 
 	const bool is_office_attribute = this->get_office() != nullptr && vector::contains(office->get_character_attributes(), attribute);
 	if (is_office_attribute) {
-		this->apply_office_modifier(this->domain, this->get_office(), -1);
+		co_await this->apply_office_modifier(this->domain, this->get_office(), -1);
 	}
 
 	const int new_value = (this->attribute_values[attribute] += change);
@@ -1772,14 +1775,14 @@ void character_game_data::change_attribute_value(const character_attribute *attr
 	}
 
 	if (is_office_attribute) {
-		this->apply_office_modifier(this->domain, this->get_office(), 1);
+		co_await this->apply_office_modifier(this->domain, this->get_office(), 1);
 	}
 
 	for (const skill *skill : attribute->get_derived_skills()) {
-		this->change_skill_value(skill, change);
+		co_await this->change_skill_value(skill, change);
 	}
 
-	this->on_attribute_value_changed(attribute, new_value, old_value);
+	co_await this->on_attribute_value_changed(attribute, new_value, old_value);
 
 	if (game::get()->is_running()) {
 		emit attribute_values_changed();
@@ -1849,38 +1852,38 @@ int character_game_data::get_attribute_check_chance(const character_attribute *a
 	return chance;
 }
 
-void character_game_data::on_attribute_value_changed(const character_attribute_base *attribute, const int new_value, const int old_value)
+QCoro::Task<void> character_game_data::on_attribute_value_changed(const character_attribute_base *attribute, const int new_value, const int old_value)
 {
 	if (new_value > old_value) {
 		for (int i = old_value + 1; i <= new_value; ++i) {
 			const modifier<const metternich::character> *value_modifier = attribute->get_value_modifier(i);
 			if (value_modifier != nullptr) {
-				value_modifier->apply(this->character);
+				co_await value_modifier->apply(this->character);
 			}
 		}
 	} else {
 		for (int i = old_value; i > new_value; --i) {
 			const modifier<const metternich::character> *value_modifier = attribute->get_value_modifier(i);
 			if (value_modifier != nullptr) {
-				value_modifier->remove(this->character);
+				co_await value_modifier->remove(this->character);
 			}
 		}
 	}
 }
 
-void character_game_data::apply_hit_dice(const dice &hit_dice)
+QCoro::Task<void> character_game_data::apply_hit_dice(const dice &hit_dice)
 {
 	this->change_hit_dice_count(hit_dice.get_count());
 
 	const int roll_result = std::max(random::get()->roll_dice(hit_dice), hit_dice.get_count());
 	const int health_increase = std::max(roll_result + this->get_health_bonus_per_hit_dice(), hit_dice.get_count());
 
-	this->change_max_health(health_increase, true);
+	co_await this->change_max_health(health_increase, true);
 
 	this->hit_dice_roll_results[hit_dice].push_back(roll_result);
 }
 
-void character_game_data::remove_hit_dice(const dice &hit_dice)
+QCoro::Task<void> character_game_data::remove_hit_dice(const dice &hit_dice)
 {
 	this->change_hit_dice_count(-hit_dice.get_count());
 
@@ -1892,7 +1895,7 @@ void character_game_data::remove_hit_dice(const dice &hit_dice)
 	
 	const int last_roll_result = roll_results.back();
 	const int last_health_increase = std::max(last_roll_result + this->get_health_bonus_per_hit_dice(), hit_dice.get_count());
-	this->change_max_health(-last_health_increase, false);
+	co_await this->change_max_health(-last_health_increase, false);
 
 	roll_results.pop_back();
 	if (roll_results.empty()) {
@@ -1900,18 +1903,18 @@ void character_game_data::remove_hit_dice(const dice &hit_dice)
 	}
 }
 
-void character_game_data::set_health(int health)
+QCoro::Task<void> character_game_data::set_health(int health)
 {
 	health = std::min(health, this->get_max_health());
 
 	if (health == this->get_health()) {
-		return;
+		co_return;
 	}
 
 	this->health = health;
 
 	if (this->get_health() <= 0 && this->get_max_health() > 0) {
-		this->die();
+		co_await this->die();
 	}
 
 	if (game::get()->is_running()) {
@@ -1919,15 +1922,15 @@ void character_game_data::set_health(int health)
 	}
 }
 
-void character_game_data::change_health(const int change)
+QCoro::Task<void> character_game_data::change_health(const int change)
 {
-	this->set_health(this->get_health() + change);
+	co_await this->set_health(this->get_health() + change);
 }
 
-void character_game_data::set_max_health(const int max_health, const bool increase_health)
+QCoro::Task<void> character_game_data::set_max_health(const int max_health, const bool increase_health)
 {
 	if (max_health == this->get_max_health()) {
-		return;
+		co_return;
 	}
 
 	const int change = max_health - this->get_max_health();
@@ -1935,9 +1938,9 @@ void character_game_data::set_max_health(const int max_health, const bool increa
 	this->max_health = max_health;
 
 	if (this->get_health() > this->get_max_health()) {
-		this->set_health(this->get_max_health());
+		co_await this->set_health(this->get_max_health());
 	} else if (change > 0 && increase_health) {
-		this->change_health(change);
+		co_await this->change_health(change);
 	}
 
 	if (game::get()->is_running()) {
@@ -1945,15 +1948,15 @@ void character_game_data::set_max_health(const int max_health, const bool increa
 	}
 }
 
-void character_game_data::change_max_health(const int change, const bool increase_health)
+QCoro::Task<void> character_game_data::change_max_health(const int change, const bool increase_health)
 {
-	this->set_max_health(this->get_max_health() + change, increase_health);
+	co_await this->set_max_health(this->get_max_health() + change, increase_health);
 }
 
-void character_game_data::set_health_bonus_per_hit_dice(const int bonus)
+QCoro::Task<void> character_game_data::set_health_bonus_per_hit_dice(const int bonus)
 {
 	if (bonus == this->get_health_bonus_per_hit_dice()) {
-		return;
+		co_return;
 	}
 
 	const int old_bonus = this->get_health_bonus_per_hit_dice();
@@ -1972,14 +1975,14 @@ void character_game_data::set_health_bonus_per_hit_dice(const int bonus)
 		}
 
 		if (health_change != 0) {
-			this->change_max_health(health_change, true);
+			co_await this->change_max_health(health_change, true);
 		}
 	}
 }
 
-void character_game_data::change_health_bonus_per_hit_dice(const int change)
+QCoro::Task<void> character_game_data::change_health_bonus_per_hit_dice(const int change)
 {
-	this->set_health_bonus_per_hit_dice(this->get_health_bonus_per_hit_dice() + change);
+	co_await this->set_health_bonus_per_hit_dice(this->get_health_bonus_per_hit_dice() + change);
 }
 
 void character_game_data::set_mana(int mana)
@@ -2310,10 +2313,10 @@ bool character_game_data::is_skill_trained(const skill *skill) const
 	return this->skill_trainings.contains(skill);
 }
 
-void character_game_data::change_skill_training(const skill *skill, const int change)
+QCoro::Task<void> character_game_data::change_skill_training(const skill *skill, const int change)
 {
 	if (change == 0) {
-		return;
+		co_return;
 	}
 
 	const bool was_trained = this->is_skill_trained(skill);
@@ -2327,9 +2330,9 @@ void character_game_data::change_skill_training(const skill *skill, const int ch
 	const bool is_trained = this->is_skill_trained(skill);
 
 	if (is_trained && !was_trained) {
-		this->on_attribute_value_changed(skill, this->get_skill_value(skill), 0);
+		co_await this->on_attribute_value_changed(skill, this->get_skill_value(skill), 0);
 	} else if (!is_trained && was_trained) {
-		this->on_attribute_value_changed(skill, 0, this->get_skill_value(skill));
+		co_await this->on_attribute_value_changed(skill, 0, this->get_skill_value(skill));
 	}
 
 	if (game::get()->is_running()) {
@@ -2337,10 +2340,10 @@ void character_game_data::change_skill_training(const skill *skill, const int ch
 	}
 }
 
-void character_game_data::change_skill_value(const skill *skill, const int change)
+QCoro::Task<void> character_game_data::change_skill_value(const skill *skill, const int change)
 {
 	if (change == 0) {
-		return;
+		co_return;
 	}
 
 	const int old_value = this->get_skill_value(skill);
@@ -2351,7 +2354,7 @@ void character_game_data::change_skill_value(const skill *skill, const int chang
 	}
 
 	if (this->is_skill_trained(skill)) {
-		this->on_attribute_value_changed(skill, new_value, old_value);
+		co_await this->on_attribute_value_changed(skill, new_value, old_value);
 	}
 
 	if (game::get()->is_running()) {
@@ -2417,10 +2420,10 @@ int character_game_data::get_skill_check_chance(const skill *skill, const int ro
 	return chance;
 }
 
-void character_game_data::change_trait_count(const trait *trait, const int change)
+QCoro::Task<void> character_game_data::change_trait_count(const trait *trait, const int change)
 {
 	if (change == 0) {
-		return;
+		co_return;
 	}
 
 	if (change > 0) {
@@ -2451,12 +2454,12 @@ void character_game_data::change_trait_count(const trait *trait, const int chang
 	}
 
 	if (trait->is_unlimited()) {
-		this->on_trait_gained(trait, change);
+		co_await this->on_trait_gained(trait, change);
 	} else {
 		if (old_value == 0 && new_value > 0) {
-			this->on_trait_gained(trait, 1);
+			co_await this->on_trait_gained(trait, 1);
 		} else if (new_value == 0 && old_value > 0) {
-			this->on_trait_gained(trait, -1);
+			co_await this->on_trait_gained(trait, -1);
 		}
 	}
 
@@ -2551,34 +2554,34 @@ bool character_game_data::has_trait(const trait *trait) const
 	return this->get_trait_counts().contains(trait);
 }
 
-void character_game_data::on_trait_gained(const trait *trait, const int multiplier)
+QCoro::Task<void> character_game_data::on_trait_gained(const trait *trait, const int multiplier)
 {
 	if (this->get_office() != nullptr) {
 		assert_throw(this->get_domain() != nullptr);
 
 		if (trait->get_office_modifier(this->get_office()) != nullptr) {
-			this->apply_trait_office_modifier(trait, this->get_domain(), this->get_office(), multiplier);
+			co_await this->apply_trait_office_modifier(trait, this->get_domain(), this->get_office(), multiplier);
 		}
 	}
 
 	for (const auto &[attribute, bonus] : trait->get_attribute_bonuses()) {
-		this->change_attribute_value(attribute, bonus * multiplier);
+		co_await this->change_attribute_value(attribute, bonus * multiplier);
 	}
 
 	if (trait->get_modifier() != nullptr) {
-		this->apply_modifier(trait->get_modifier(), multiplier);
+		co_await this->apply_modifier(trait->get_modifier(), multiplier);
 	}
 
 	for (const trait_type *trait_type : trait->get_types()) {
 		if (trait_type->get_modifier() != nullptr) {
-			this->apply_modifier(trait_type->get_modifier(), multiplier);
+			co_await this->apply_modifier(trait_type->get_modifier(), multiplier);
 		}
 	}
 
 	for (const auto &[tier_interval, modifier] : trait->get_per_mythic_tier_modifiers()) {
 		const int tier_multiplier = this->character->get_mythic_tier() / tier_interval;
 		if (tier_multiplier > 0) {
-			this->apply_modifier(modifier.get(), tier_multiplier * multiplier);
+			co_await this->apply_modifier(modifier.get(), tier_multiplier * multiplier);
 		}
 	}
 
@@ -2587,12 +2590,12 @@ void character_game_data::on_trait_gained(const trait *trait, const int multipli
 
 		const int rank_multiplier = this->character->get_deity()->get_divine_level() / rank_interval;
 		if (rank_multiplier > 0) {
-			this->apply_modifier(modifier.get(), rank_multiplier * multiplier);
+			co_await this->apply_modifier(modifier.get(), rank_multiplier * multiplier);
 		}
 	}
 
 	if (trait->get_military_unit_modifier() != nullptr && this->get_military_unit() != nullptr) {
-		this->apply_military_unit_modifier(this->get_military_unit(), multiplier);
+		co_await this->apply_military_unit_modifier(this->get_military_unit(), multiplier);
 	}
 
 	if (trait->get_divine_domain() != nullptr) {
@@ -2601,7 +2604,7 @@ void character_game_data::on_trait_gained(const trait *trait, const int multipli
 	}
 }
 
-void character_game_data::add_trait_of_type(const trait_type *trait_type)
+QCoro::Task<void> character_game_data::add_trait_of_type(const trait_type *trait_type)
 {
 	try {
 		std::vector<const trait *> potential_traits = this->get_potential_traits_from_list(vector::intersected(this->target_traits, trait_type->get_traits()));
@@ -2635,21 +2638,21 @@ void character_game_data::add_trait_of_type(const trait_type *trait_type)
 			emit engine_interface::get()->trait_choosable(this->character, trait_type, container::to_qvariant_list(potential_traits));
 		} else {
 			const trait *chosen_trait = vector::get_random(potential_traits);
-			this->on_trait_chosen(chosen_trait, trait_type);
+			co_await this->on_trait_chosen_coro(chosen_trait, trait_type);
 		}
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error(std::format("Failed to add trait of type \"{}\" for character \"{}\".", trait_type->get_identifier(), this->character->get_identifier())));
 	}
 }
 
-void character_game_data::remove_trait_of_type(const trait_type *trait_type)
+QCoro::Task<void> character_game_data::remove_trait_of_type(const trait_type *trait_type)
 {
 	try {
 		std::vector<const trait *> &chosen_traits = this->trait_choices[trait_type];
 		assert_throw(!chosen_traits.empty());
 
 		if (chosen_traits.back() != nullptr) {
-			this->change_trait_count(chosen_traits.back(), -1);
+			co_await this->change_trait_count(chosen_traits.back(), -1);
 		}
 		chosen_traits.pop_back();
 
@@ -2661,7 +2664,7 @@ void character_game_data::remove_trait_of_type(const trait_type *trait_type)
 	}
 }
 
-bool character_game_data::generate_trait(const trait_type *trait_type, const character_attribute *target_attribute, const int target_attribute_bonus)
+QCoro::Task<bool> character_game_data::generate_trait(const trait_type *trait_type, const character_attribute *target_attribute, const int target_attribute_bonus)
 {
 	std::vector<const trait *> potential_traits;
 	int best_attribute_bonus = 0;
@@ -2693,19 +2696,19 @@ bool character_game_data::generate_trait(const trait_type *trait_type, const cha
 	}
 
 	if (potential_traits.empty()) {
-		return false;
+		co_return false;
 	}
 
-	this->change_trait_count(vector::get_random(potential_traits), 1);
-	return true;
+	co_await this->change_trait_count(vector::get_random(potential_traits), 1);
+	co_return true;
 }
 
-void character_game_data::on_trait_chosen(const trait *trait, const trait_type *trait_type)
+QCoro::Task<void> character_game_data::on_trait_chosen_coro(const trait *trait, const trait_type *trait_type)
 {
 	this->trait_choices[trait_type].push_back(trait);
 
 	if (trait != nullptr) {
-		this->change_trait_count(trait, 1);
+		co_await this->change_trait_count(trait, 1);
 	}
 }
 
@@ -2755,14 +2758,14 @@ bool character_game_data::has_scripted_modifier(const scripted_character_modifie
 	return this->get_scripted_modifiers().contains(modifier);
 }
 
-void character_game_data::add_scripted_modifier(const scripted_character_modifier *modifier, const int duration)
+QCoro::Task<void> character_game_data::add_scripted_modifier(const scripted_character_modifier *modifier, const int duration)
 {
 	const read_only_context ctx(this->character);
 
 	this->scripted_modifiers[modifier] = std::max(this->scripted_modifiers[modifier], duration);
 
 	if (modifier->get_modifier() != nullptr) {
-		this->apply_modifier(modifier->get_modifier(), 1);
+		co_await this->apply_modifier(modifier->get_modifier(), 1);
 	}
 
 	if (game::get()->is_running()) {
@@ -2770,12 +2773,12 @@ void character_game_data::add_scripted_modifier(const scripted_character_modifie
 	}
 }
 
-void character_game_data::remove_scripted_modifier(const scripted_character_modifier *modifier)
+QCoro::Task<void> character_game_data::remove_scripted_modifier(const scripted_character_modifier *modifier)
 {
 	this->scripted_modifiers.erase(modifier);
 
 	if (modifier->get_modifier() != nullptr) {
-		this->apply_modifier(modifier->get_modifier(), -1);
+		co_await this->apply_modifier(modifier->get_modifier(), -1);
 	}
 
 	if (game::get()->is_running()) {
@@ -2783,7 +2786,7 @@ void character_game_data::remove_scripted_modifier(const scripted_character_modi
 	}
 }
 
-void character_game_data::decrement_scripted_modifiers()
+QCoro::Task<void> character_game_data::decrement_scripted_modifiers()
 {
 	std::vector<const scripted_character_modifier *> modifiers_to_remove;
 	for (auto &[modifier, duration] : this->scripted_modifiers) {
@@ -2795,7 +2798,7 @@ void character_game_data::decrement_scripted_modifiers()
 	}
 
 	for (const scripted_character_modifier *modifier : modifiers_to_remove) {
-		this->remove_scripted_modifier(modifier);
+		co_await this->remove_scripted_modifier(modifier);
 	}
 }
 
@@ -2865,7 +2868,7 @@ std::string character_game_data::get_office_modifier_string(const metternich::do
 	return str;
 }
 
-void character_game_data::apply_office_modifier(const metternich::domain *domain, const metternich::office *office, const int multiplier) const
+QCoro::Task<void> character_game_data::apply_office_modifier(const metternich::domain *domain, const metternich::office *office, const int multiplier) const
 {
 	assert_throw(domain != nullptr);
 	assert_throw(office != nullptr);
@@ -2878,20 +2881,20 @@ void character_game_data::apply_office_modifier(const metternich::domain *domain
 		attribute_modifier /= 2;
 	}
 	if (office->is_ruler()) {
-		domain->get_game_data()->change_attribute_value(domain->get_game_data()->get_government_type()->get_primary_domain_attribute(), attribute_modifier);
+		co_await domain->get_game_data()->change_attribute_value(domain->get_game_data()->get_government_type()->get_primary_domain_attribute(), attribute_modifier);
 	} else {
-		domain->get_game_data()->change_attribute_value(office->get_domain_attribute(), attribute_modifier);
+		co_await domain->get_game_data()->change_attribute_value(office->get_domain_attribute(), attribute_modifier);
 	}
 
 	for (const auto &[trait, count] : this->get_trait_counts()) {
-		this->apply_trait_office_modifier(trait, domain, office, (trait->is_unlimited() ? count : 1) * multiplier);
+		co_await this->apply_trait_office_modifier(trait, domain, office, (trait->is_unlimited() ? count : 1) * multiplier);
 	}
 }
 
-void character_game_data::apply_trait_office_modifier(const trait *trait, const metternich::domain *domain, const metternich::office *office, const int multiplier) const
+QCoro::Task<void> character_game_data::apply_trait_office_modifier(const trait *trait, const metternich::domain *domain, const metternich::office *office, const int multiplier) const
 {
 	if (trait->get_office_modifier(office) != nullptr) {
-		trait->get_office_modifier(office)->apply(domain, multiplier);
+		co_await trait->get_office_modifier(office)->apply(domain, multiplier);
 	}
 }
 
@@ -2904,7 +2907,7 @@ bool character_game_data::is_deployable() const
 	return true;
 }
 
-void character_game_data::deploy_to_province(const metternich::domain *domain, const province *province)
+QCoro::Task<void> character_game_data::deploy_to_province(const metternich::domain *domain, const province *province)
 {
 	assert_throw(domain != nullptr);
 	assert_throw(domain == this->get_domain());
@@ -2915,40 +2918,40 @@ void character_game_data::deploy_to_province(const metternich::domain *domain, c
 
 	const military_unit_type *military_unit_type = domain->get_military()->get_best_military_unit_category_type(this->character->get_military_unit_category(), this->character->get_culture());
 
-	auto military_unit = make_qunique<metternich::military_unit>(military_unit_type, domain, this->character);
+	auto military_unit = co_await metternich::military_unit::create(military_unit_type, domain, this->character);
 
 	assert_throw(military_unit->can_move_to(province));
 
-	military_unit->set_province(province);
+	co_await military_unit->set_province(province);
 
 	domain->get_military()->add_military_unit(std::move(military_unit));
 
 	assert_throw(this->get_domain() != nullptr);
 }
 
-void character_game_data::undeploy()
+QCoro::Task<void> character_game_data::undeploy()
 {
 	assert_throw(this->is_deployed());
 
 	if (this->get_military_unit() != nullptr) {
-		this->get_military_unit()->disband(false);
+		co_await this->get_military_unit()->disband(false);
 	} else if (this->get_civilian_unit() != nullptr) {
-		this->get_civilian_unit()->disband(false);
+		co_await this->get_civilian_unit()->disband(false);
 	}
 }
 
-void character_game_data::apply_modifier(const modifier<const metternich::character> *modifier, const int multiplier)
+QCoro::Task<void> character_game_data::apply_modifier(const modifier<const metternich::character> *modifier, const int multiplier)
 {
 	assert_throw(modifier != nullptr);
 
-	modifier->apply(this->character, multiplier);
+	co_await modifier->apply(this->character, multiplier);
 }
 
-void character_game_data::apply_military_unit_modifier(metternich::military_unit *military_unit, const int multiplier)
+QCoro::Task<void> character_game_data::apply_military_unit_modifier(metternich::military_unit *military_unit, const int multiplier)
 {
 	for (const auto &[trait, count] : this->get_trait_counts()) {
 		if (trait->get_military_unit_modifier() != nullptr) {
-			trait->get_military_unit_modifier()->apply(military_unit, (trait->is_unlimited() ? count : 1) * multiplier);
+			co_await trait->get_military_unit_modifier()->apply(military_unit, (trait->is_unlimited() ? count : 1) * multiplier);
 		}
 	}
 }
@@ -3138,7 +3141,7 @@ bool character_game_data::can_craft_recipe(const metternich::recipe *recipe) con
 	return true;
 }
 
-void character_game_data::craft_recipe(const metternich::recipe *recipe)
+QCoro::Task<void> character_game_data::craft_recipe_coro(const metternich::recipe *recipe)
 {
 	assert_throw(this->can_craft_recipe(recipe));
 
@@ -3166,11 +3169,11 @@ void character_game_data::craft_recipe(const metternich::recipe *recipe)
 	}
 
 	for (item *item : items_to_remove) {
-		this->remove_item(item);
+		co_await this->remove_item_coro(item);
 	}
 
 	auto crafted_item = make_qunique<item>(recipe->get_result_item_type(), nullptr, recipe->get_result_enchantment(), nullptr, nullptr);
-	this->add_item(std::move(crafted_item));
+	co_await this->add_item(std::move(crafted_item));
 }
 
 void character_game_data::sort_recipes()
@@ -3231,14 +3234,14 @@ bool character_game_data::has_item(const item_type *item_type) const
 	return false;
 }
 
-void character_game_data::add_item(qunique_ptr<item> &&item)
+QCoro::Task<void> character_game_data::add_item(qunique_ptr<item> &&item)
 {
 	if (item->get_type()->is_stackable()) {
 		for (const qunique_ptr<metternich::item> &loop_item : this->get_items()) {
 			if (loop_item->get_type() == item->get_type() && loop_item->get_material() == item->get_material() && loop_item->get_enchantment() == item->get_enchantment() && loop_item->get_spell() == item->get_spell() && loop_item->get_recipe() == item->get_recipe()) {
 				loop_item->change_quantity(1);
 				emit items_changed();
-				return;
+				co_return;
 			}
 		}
 	}
@@ -3249,19 +3252,19 @@ void character_game_data::add_item(qunique_ptr<item> &&item)
 
 	if (this->is_ai()) {
 		if (this->can_equip_item(item_ptr->to_item_key(), false, item_ptr->get_price())) {
-			this->equip_item(item_ptr);
+			co_await this->equip_item_coro(item_ptr);
 		} else if (this->can_consume_item(item_ptr)) {
 			//AI characters use items as soon as they receive them, if possible
-			this->consume_item(item_ptr);
+			co_await this->consume_item_coro(item_ptr);
 		}
 	} else {
 		if (this->can_equip_item(item_ptr, false)) {
-			this->equip_item(item_ptr);
+			co_await this->equip_item_coro(item_ptr);
 		}
 	}
 }
 
-qunique_ptr<item> character_game_data::take_item(metternich::item *item)
+QCoro::Task<qunique_ptr<item>> character_game_data::take_item(metternich::item *item)
 {
 	qunique_ptr<metternich::item> taken_item;
 
@@ -3269,11 +3272,11 @@ qunique_ptr<item> character_game_data::take_item(metternich::item *item)
 		item->change_quantity(-1);
 		taken_item = make_qunique<metternich::item>(item->get_type(), item->get_material(), item->get_enchantment(), item->get_spell(), item->get_recipe());
 		emit items_changed();
-		return taken_item;
+		co_return taken_item;
 	}
 
 	if (item->is_equipped()) {
-		this->deequip_item(item);
+		co_await this->deequip_item_coro(item);
 	}
 
 	for (auto it = this->items.begin(); it != this->items.end(); ++it) {
@@ -3285,33 +3288,33 @@ qunique_ptr<item> character_game_data::take_item(metternich::item *item)
 	}
 
 	emit items_changed();
-	return taken_item;
+	co_return taken_item;
 }
 
-void character_game_data::remove_item(item *item)
+QCoro::Task<void> character_game_data::remove_item_coro(item *item)
 {
 	if (item->get_type()->is_stackable()) {
 		item->change_quantity(-1);
 		if (item->get_quantity() > 0) {
 			emit items_changed();
-			return;
+			co_return;
 		}
 	}
 
 	if (item->is_equipped()) {
-		this->deequip_item(item);
+		co_await this->deequip_item_coro(item);
 	}
 
 	vector::remove(this->items, item);
 	emit items_changed();
 }
 
-void character_game_data::remove_item(const item_type *item_type, const item_material *material, const enchantment *enchantment, const spell *spell, const recipe *recipe)
+QCoro::Task<void> character_game_data::remove_item(const item_type *item_type, const item_material *material, const enchantment *enchantment, const spell *spell, const recipe *recipe)
 {
 	for (const qunique_ptr<item> &item : this->get_items()) {
 		if (item->get_type() == item_type && item->get_material() == material && item->get_enchantment() == enchantment && item->get_spell() == spell && item->get_recipe() == recipe) {
-			this->remove_item(item.get());
-			return;
+			co_await this->remove_item_coro(item.get());
+			co_return;
 		}
 	}
 }
@@ -3348,24 +3351,24 @@ bool character_game_data::can_consume_item(const metternich::item *item) const
 	return this->can_consume_item(item->to_item_key(), nullptr);
 }
 
-void character_game_data::consume_item(item *item)
+QCoro::Task<void> character_game_data::consume_item_coro(item *item)
 {
 	assert_throw(this->can_consume_item(item));
 
-	this->on_item_consumed(item);
+	co_await this->on_item_consumed(item);
 
-	this->remove_item(item);
+	co_await this->remove_item_coro(item);
 }
 
-void character_game_data::on_item_consumed(const item *item)
+QCoro::Task<void> character_game_data::on_item_consumed(const item *item)
 {
 	const item_type *type = item->get_type();
 	if (type->get_modifier() != nullptr) {
-		type->get_modifier()->apply(this->character);
+		co_await type->get_modifier()->apply(this->character);
 	}
 
 	if (item->get_enchantment() != nullptr) {
-		this->on_item_consumed_with_enchantment(item->get_enchantment());
+		co_await this->on_item_consumed_with_enchantment(item->get_enchantment());
 	}
 
 	if (item->get_spell() != nullptr) {
@@ -3381,14 +3384,14 @@ void character_game_data::on_item_consumed(const item *item)
 	}
 }
 
-void character_game_data::on_item_consumed_with_enchantment(const enchantment *enchantment)
+QCoro::Task<void> character_game_data::on_item_consumed_with_enchantment(const enchantment *enchantment)
 {
 	if (enchantment->get_modifier() != nullptr) {
-		enchantment->get_modifier()->apply(this->character);
+		co_await enchantment->get_modifier()->apply(this->character);
 	}
 
 	for (const metternich::enchantment *subenchantment : enchantment->get_subenchantments()) {
-		this->on_item_consumed_with_enchantment(subenchantment);
+		co_await this->on_item_consumed_with_enchantment(subenchantment);
 	}
 }
 
@@ -3467,7 +3470,7 @@ bool character_game_data::can_equip_item(const item *item, const bool ignore_alr
 	return this->can_equip_item(item->to_item_key(), ignore_already_equipped, std::nullopt);
 }
 
-void character_game_data::equip_item(item *item)
+QCoro::Task<void> character_game_data::equip_item_coro(item *item)
 {
 	assert_throw(item->get_slot() != nullptr);
 
@@ -3513,7 +3516,7 @@ void character_game_data::equip_item(item *item)
 	}
 
 	for (metternich::item *item_to_deequip : items_to_deequip) {
-		this->deequip_item(item_to_deequip);
+		co_await this->deequip_item_coro(item_to_deequip);
 	}
 
 	std::vector<metternich::item *> &equipped_items = this->equipped_items[item->get_slot()];
@@ -3521,7 +3524,7 @@ void character_game_data::equip_item(item *item)
 
 	item->set_equipped(true);
 
-	this->on_item_equipped(item, 1);
+	co_await this->on_item_equipped(item, 1);
 
 	if (game::get()->is_running()) {
 		emit equipped_item_changed(item->get_slot(), static_cast<int>(equipped_items.size()) - 1);
@@ -3529,7 +3532,7 @@ void character_game_data::equip_item(item *item)
 	}
 }
 
-void character_game_data::deequip_item(item *item)
+[[nodiscard]] QCoro::Task<void> character_game_data::deequip_item_coro(item *item)
 {
 	std::vector<metternich::item *> &equipped_items = this->equipped_items[item->get_slot()];
 	const auto slot_iterator = std::find(equipped_items.begin(), equipped_items.end(), item);
@@ -3543,7 +3546,7 @@ void character_game_data::deequip_item(item *item)
 
 	item->set_equipped(false);
 
-	this->on_item_equipped(item, -1);
+	co_await this->on_item_equipped(item, -1);
 
 	if (game::get()->is_running()) {
 		const int slot_count = this->character->get_species()->get_item_slot_count(item->get_slot());
@@ -3554,26 +3557,26 @@ void character_game_data::deequip_item(item *item)
 	}
 }
 
-void character_game_data::on_item_equipped(const item *item, const int multiplier)
+QCoro::Task<void> character_game_data::on_item_equipped(const item *item, const int multiplier)
 {
 	const item_type *type = item->get_type();
 	if (type->get_modifier() != nullptr) {
-		type->get_modifier()->apply(this->character, multiplier);
+		co_await type->get_modifier()->apply(this->character, multiplier);
 	}
 
 	if (item->get_enchantment() != nullptr) {
-		this->on_item_equipped_with_enchantment(item->get_enchantment(), multiplier);
+		co_await this->on_item_equipped_with_enchantment(item->get_enchantment(), multiplier);
 	}
 }
 
-void character_game_data::on_item_equipped_with_enchantment(const enchantment *enchantment, const int multiplier)
+QCoro::Task<void> character_game_data::on_item_equipped_with_enchantment(const enchantment *enchantment, const int multiplier)
 {
 	if (enchantment->get_modifier() != nullptr) {
-		enchantment->get_modifier()->apply(this->character, multiplier);
+		co_await enchantment->get_modifier()->apply(this->character, multiplier);
 	}
 
 	for (const metternich::enchantment *subenchantment : enchantment->get_subenchantments()) {
-		this->on_item_equipped_with_enchantment(subenchantment, multiplier);
+		co_await this->on_item_equipped_with_enchantment(subenchantment, multiplier);
 	}
 }
 
@@ -3588,12 +3591,12 @@ bool character_game_data::can_use_item(const item *item, std::string *reason) co
 	return false;
 }
 
-void character_game_data::use_item(item *item)
+QCoro::Task<void> character_game_data::use_item_coro(item *item)
 {
 	if (item->get_slot() != nullptr) {
-		this->equip_item(item);
+		co_await this->equip_item_coro(item);
 	} else if (item->get_type()->get_item_class()->is_consumable()) {
-		this->consume_item(item);
+		co_await this->consume_item_coro(item);
 	}
 }
 
@@ -3622,16 +3625,16 @@ bool character_game_data::can_sell_item(const item *item) const
 	return true;
 }
 
-void character_game_data::sell_item(item *item)
+QCoro::Task<void> character_game_data::sell_item_coro(item *item)
 {
-	qunique_ptr<metternich::item> sold_item = this->take_item(item);
+	qunique_ptr<metternich::item> sold_item = co_await this->take_item(item);
 	this->change_wealth(sold_item->get_sell_price());
 
 	//see if the sold item can be placed in any item slot for an item shop accessible to this character, and if so, place the item there
 
 	//only put items in item slots if they have special properties
 	if (sold_item->get_enchantment() == nullptr && sold_item->get_spell() == nullptr && sold_item->get_recipe() == nullptr) {
-		return;
+		co_return;
 	}
 
 	const std::vector<building_item_slot *> accessible_item_slots = this->get_accessible_building_item_slots();
@@ -3737,24 +3740,24 @@ QVariantList character_game_data::get_status_effects_qvariant_list() const
 	return container::to_qvariant_list(archimedes::map::get_keys(this->status_effect_durations));
 }
 
-void character_game_data::set_status_effect_duration(const status_effect *status_effect, const std::chrono::seconds &duration)
+QCoro::Task<void> character_game_data::set_status_effect_duration(const status_effect *status_effect, const std::chrono::seconds &duration)
 {
 	using namespace std::chrono_literals;
 
 	if (duration == this->get_status_effect_duration(status_effect)) {
-		return;
+		co_return;
 	}
 
 	if (duration <= 0s) {
 		if (status_effect->get_modifier() != nullptr) {
-			status_effect->get_modifier()->remove(this->character);
+			co_await status_effect->get_modifier()->remove(this->character);
 		}
 
 		this->status_effect_durations.erase(status_effect);
 	} else {
 		if (!this->status_effect_durations.contains(status_effect)) {
 			if (status_effect->get_modifier() != nullptr) {
-				status_effect->get_modifier()->apply(this->character);
+				co_await status_effect->get_modifier()->apply(this->character);
 			}
 		}
 
@@ -3766,18 +3769,18 @@ void character_game_data::set_status_effect_duration(const status_effect *status
 	}
 }
 
-void character_game_data::decrement_status_effect_durations(const std::chrono::seconds &decrement, context &ctx)
+QCoro::Task<void> character_game_data::decrement_status_effect_durations(const std::chrono::seconds &decrement, context &ctx)
 {
 	using namespace std::chrono_literals;
 
 	const std::vector<const status_effect *> status_effects = archimedes::map::get_keys(this->status_effect_durations);
 
 	for (const status_effect *status_effect : status_effects) {
-		this->change_status_effect_duration(status_effect, -decrement);
+		co_await this->change_status_effect_duration(status_effect, -decrement);
 
 		if (this->get_status_effect_duration(status_effect) <= 0s) {
 			if (status_effect->get_end_effects() != nullptr) {
-				status_effect->get_end_effects()->do_effects(this->character, ctx);
+				co_await status_effect->get_end_effects()->do_effects(this->character, ctx);
 			}
 		}
 	}
@@ -3802,10 +3805,10 @@ const site *character_game_data::get_location() const
 	return nullptr;
 }
 
-void character_game_data::ai_buy_items()
+QCoro::Task<void> character_game_data::ai_buy_items()
 {
 	if (this->get_wealth() <= 0) {
-		return;
+		co_return;
 	}
 
 	const province *province = this->get_location()->get_game_data()->get_province();
@@ -3826,14 +3829,14 @@ void character_game_data::ai_buy_items()
 			continue;
 		}
 
-		item_slot->buy_item(this->character);
+		co_await item_slot->buy_item_coro(this->character);
 	}
 }
 
-void character_game_data::ai_sell_items()
+QCoro::Task<void> character_game_data::ai_sell_items()
 {
 	if (this->get_items().empty()) {
-		return;
+		co_return;
 	}
 
 	std::vector<item *> items_to_sell;
@@ -3851,7 +3854,7 @@ void character_game_data::ai_sell_items()
 	}
 
 	for (item *item : items_to_sell) {
-		this->sell_item(item);
+		co_await this->sell_item_coro(item);
 	}
 }
 

@@ -43,16 +43,16 @@ public:
 		}
 	}
 
-	virtual void apply(const character *scope, const centesimal_int &multiplier) const override
+	[[nodiscard]] virtual QCoro::Task<void> apply_coro(const character *scope, const centesimal_int &multiplier) const override
 	{
 		if (this->modifier_type.has_value()) {
 			if (multiplier > 0) {
-				scope->get_game_data()->add_attribute_modifier(this->attribute, this->modifier_type.value(), this->value.to_int());
+				co_await scope->get_game_data()->add_attribute_modifier(this->attribute, this->modifier_type.value(), this->value.to_int());
 			} else if (multiplier < 0) {
-				scope->get_game_data()->remove_attribute_modifier(this->attribute, this->modifier_type.value(), this->value.to_int());
+				co_await scope->get_game_data()->remove_attribute_modifier(this->attribute, this->modifier_type.value(), this->value.to_int());
 			}
 		} else {
-			scope->get_game_data()->change_attribute_value(this->attribute, (this->value * multiplier).to_int());
+			co_await scope->get_game_data()->change_attribute_value(this->attribute, (this->value * multiplier).to_int());
 		}
 	}
 

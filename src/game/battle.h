@@ -119,7 +119,14 @@ public:
 
 	void notify_result();
 	void process_result();
-	Q_INVOKABLE void on_ended();
+
+	[[nodiscard]]
+	QCoro::Task<void> on_ended_coro();
+
+	Q_INVOKABLE QCoro::QmlTask on_ended()
+	{
+		return this->on_ended_coro();
+	}
 
 	virtual battle_tile &get_tile(const QPoint &tile_pos) override;
 	virtual const battle_tile &get_tile(const QPoint &tile_pos) const override;

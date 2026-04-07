@@ -67,14 +67,15 @@ public:
 		}
 	}
 
-	virtual void do_assignment_effect(scope_type *scope, context &ctx) const override
+	[[nodiscard]]
+	virtual QCoro::Task<void> do_assignment_effect_coro(scope_type *scope, context &ctx) const override
 	{
 		std::vector<qunique_ptr<military_unit>> enemy_unit_unique_ptrs;
 		std::vector<military_unit *> enemy_units;
 
 		for (const auto &[military_unit_type, quantity] : this->enemies) {
 			for (int i = 0; i < quantity; ++i) {
-				auto military_unit = make_qunique<metternich::military_unit>(military_unit_type);
+				auto military_unit = co_await metternich::military_unit::create(military_unit_type);
 				enemy_units.push_back(military_unit.get());
 				enemy_unit_unique_ptrs.push_back(std::move(military_unit));
 			}
@@ -85,18 +86,18 @@ public:
 		bool success = false;
 
 		if (this->attacker) {
-			success = game::get()->do_battle(ctx.attacking_army, enemy_army.get());
+			success = co_await game::get()->do_battle(ctx.attacking_army, enemy_army.get());
 		} else {
-			success = !game::get()->do_battle(enemy_army.get(), ctx.defending_army);
+			success = !(co_await game::get()->do_battle(enemy_army.get(), ctx.defending_army));
 		}
 
 		if (success) {
 			if (this->victory_effects != nullptr) {
-				this->victory_effects->do_effects(scope, ctx);
+				co_await this->victory_effects->do_effects(scope, ctx);
 			}
 		} else {
 			if (this->defeat_effects != nullptr) {
-				this->defeat_effects->do_effects(scope, ctx);
+				co_await this->defeat_effects->do_effects(scope, ctx);
 			}
 
 			if (this->victorious_enemies_attack_province) {

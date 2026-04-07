@@ -67,7 +67,8 @@ public:
 	{
 	}
 
-	virtual void do_assignment_effect(scope_type *scope, context &ctx) const override
+	[[nodiscard]]
+	virtual QCoro::Task<void> do_assignment_effect_coro(scope_type *scope, context &ctx) const override
 	{
 		const bool success = scope->get_game_data()->do_attribute_check(this->attribute, this->roll_modifier);
 
@@ -93,11 +94,11 @@ public:
 
 		if (success) {
 			if (this->success_effects != nullptr) {
-				this->success_effects->do_effects(scope, ctx);
+				co_await this->success_effects->do_effects(scope, ctx);
 			}
 		} else {
 			if (this->failure_effects != nullptr) {
-				this->failure_effects->do_effects(scope, ctx);
+				co_await this->failure_effects->do_effects(scope, ctx);
 			}
 		}
 	}

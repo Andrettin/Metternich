@@ -34,7 +34,7 @@ public:
 		return class_identifier;
 	}
 
-	virtual void do_assignment_effect(const scope_type *scope, context &ctx) const override
+	[[nodiscard]] virtual QCoro::Task<void> do_assignment_effect_coro(const scope_type *scope, context &ctx) const override
 	{
 		Q_UNUSED(ctx);
 
@@ -50,18 +50,18 @@ public:
 		}
 
 		if (domain == nullptr) {
-			return;
+			co_return;
 		}
 
 		if (settlement->get_game_data()->get_owner() != domain) {
-			return;
+			co_return;
 		}
 
 		if (!settlement->get_game_data()->can_be_capital()) {
-			return;
+			co_return;
 		}
 
-		domain->get_game_data()->set_capital(settlement);
+		co_await domain->get_game_data()->set_capital(settlement);
 	}
 
 	virtual std::string get_assignment_string(const scope_type *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override

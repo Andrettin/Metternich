@@ -21,19 +21,25 @@ public:
 		return identifier;
 	}
 
-	virtual void do_assignment_effect(const character *scope) const override
+	[[nodiscard]] virtual QCoro::Task<void> do_assignment_effect_coro(const character *scope, context &ctx) const override
 	{
-		scope->get_game_data()->set_experience(this->quantity);
+		Q_UNUSED(ctx);
+
+		co_await scope->get_game_data()->set_experience(this->quantity);
 	}
 
-	virtual void do_addition_effect(const character *scope) const override
+	[[nodiscard]] virtual QCoro::Task<void> do_addition_effect_coro(const character *scope, context &ctx) const override
 	{
-		scope->get_game_data()->change_experience(this->quantity);
+		Q_UNUSED(ctx);
+
+		co_await scope->get_game_data()->change_experience(this->quantity);
 	}
 
-	virtual void do_subtraction_effect(const character *scope) const override
+	[[nodiscard]] virtual QCoro::Task<void> do_subtraction_effect_coro(const character *scope, context &ctx) const override
 	{
-		scope->get_game_data()->change_experience(-this->quantity);
+		Q_UNUSED(ctx);
+
+		co_await scope->get_game_data()->change_experience(-this->quantity);
 	}
 
 	virtual std::string get_assignment_string() const override

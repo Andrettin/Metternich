@@ -459,7 +459,7 @@ Rectangle {
 		visible: selected_civilian_unit !== null
 		
 		onClicked: {
-			selected_civilian_unit.disband(false)
+			selected_civilian_unit.disband()
 			selected_civilian_unit = null
 		}
 		

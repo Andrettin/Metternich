@@ -23,9 +23,9 @@ public:
 		return identifier;
 	}
 
-	virtual void apply(const domain *scope, const centesimal_int &multiplier) const override
+	[[nodiscard]] virtual QCoro::Task<void> apply_coro(const domain *scope, const centesimal_int &multiplier) const override
 	{
-		scope->get_military()->change_free_infantry_promotion_count(this->promotion, (this->value * multiplier).to_int());
+		co_await scope->get_military()->change_free_infantry_promotion_count(this->promotion, (this->value * multiplier).to_int());
 	}
 
 	virtual std::string get_base_string(const domain *scope) const override

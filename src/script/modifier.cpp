@@ -38,23 +38,23 @@ void modifier<scope_type>::process_gsml_data(const gsml_data &data)
 }
 
 template <typename scope_type>
-void modifier<scope_type>::apply(scope_type *scope, const centesimal_int &multiplier) const
+QCoro::Task<void> modifier<scope_type>::apply(scope_type *scope, const centesimal_int &multiplier) const
 {
 	for (const std::unique_ptr<modifier_effect<scope_type>> &modifier_effect : this->modifier_effects) {
-		modifier_effect->apply(scope, multiplier);
+		co_await modifier_effect->apply_coro(scope, multiplier);
 	}
 }
 
 template <typename scope_type>
-void modifier<scope_type>::apply(scope_type *scope, const int multiplier) const
+QCoro::Task<void> modifier<scope_type>::apply(scope_type *scope, const int multiplier) const
 {
-	this->apply(scope, centesimal_int(multiplier));
+	co_await this->apply(scope, centesimal_int(multiplier));
 }
 
 template <typename scope_type>
-void modifier<scope_type>::remove(scope_type *scope, const int multiplier) const
+QCoro::Task<void> modifier<scope_type>::remove(scope_type *scope, const int multiplier) const
 {
-	this->apply(scope, centesimal_int(-multiplier));
+	co_await this->apply(scope, centesimal_int(-multiplier));
 }
 
 template <typename scope_type>

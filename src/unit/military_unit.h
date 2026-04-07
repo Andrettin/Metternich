@@ -1,6 +1,7 @@
 #pragma once
 
 #include "util/centesimal_int.h"
+#include "util/qunique_ptr.h"
 
 Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("ui/icon.h")
@@ -44,11 +45,13 @@ public:
 	static constexpr int hit_point_recovery_per_turn = 10;
 	static constexpr int morale_recovery_per_turn = 20;
 
-	explicit military_unit(const military_unit_type *type);
-	explicit military_unit(const military_unit_type *type, const metternich::domain *domain, const metternich::phenotype *phenotype);
-	explicit military_unit(const military_unit_type *type, const metternich::domain *domain, const character *character);
+	[[nodiscard]] static QCoro::Task<qunique_ptr<military_unit>> create(const military_unit_type *type);
+	[[nodiscard]] static QCoro::Task<qunique_ptr<military_unit>> create(const military_unit_type *type, const metternich::domain *domain, const metternich::phenotype *phenotype);
+	[[nodiscard]] static QCoro::Task<qunique_ptr<military_unit>> create(const military_unit_type *type, const metternich::domain *domain, const metternich::character *character);
 
-	void do_turn();
+	explicit military_unit(const military_unit_type *type);
+
+	[[nodiscard]] QCoro::Task<void> do_turn();
 	void do_ai_turn();
 
 	const std::string &get_name() const
@@ -79,7 +82,7 @@ public:
 		return this->type;
 	}
 
-	void set_type(const military_unit_type *type);
+	[[nodiscard]] QCoro::Task<void> set_type(const military_unit_type *type);
 
 	military_unit_category get_category() const;
 	military_unit_domain get_domain() const;
@@ -110,7 +113,7 @@ public:
 		return this->province;
 	}
 
-	void set_province(const metternich::province *province);
+	[[nodiscard]] QCoro::Task<void> set_province(const metternich::province *province);
 
 	const metternich::army *get_army() const
 	{
@@ -134,11 +137,11 @@ public:
 		return this->hit_points;
 	}
 
-	void set_hit_points(const int hit_points);
+	[[nodiscard]] QCoro::Task<void> set_hit_points(const int hit_points);
 
-	void change_hit_points(const int change)
+	[[nodiscard]] QCoro::Task<void> change_hit_points(const int change)
 	{
-		this->set_hit_points(this->get_hit_points() + change);
+		co_await this->set_hit_points(this->get_hit_points() + change);
 	}
 
 	int get_max_hit_points() const
@@ -146,24 +149,24 @@ public:
 		return this->max_hit_points;
 	}
 
-	void set_max_hit_points(const int max_hit_points)
+	[[nodiscard]] QCoro::Task<void> set_max_hit_points(const int max_hit_points)
 	{
 		if (max_hit_points == this->get_max_hit_points()) {
-			return;
+			co_return;
 		}
 
 		this->max_hit_points = max_hit_points;
 
 		if (this->get_hit_points() > this->get_max_hit_points()) {
-			this->set_hit_points(this->get_max_hit_points());
+			co_await this->set_hit_points(this->get_max_hit_points());
 		}
 
 		emit max_hit_points_changed();
 	}
 
-	void change_max_hit_points(const int change)
+	[[nodiscard]] QCoro::Task<void> change_max_hit_points(const int change)
 	{
-		this->set_max_hit_points(this->get_max_hit_points() + change);
+		co_await this->set_max_hit_points(this->get_max_hit_points() + change);
 	}
 
 	int get_morale() const
@@ -190,7 +193,7 @@ public:
 	int get_hit_point_recovery_per_turn() const;
 	int get_morale_recovery_per_turn() const;
 
-	void fully_recover();
+	[[nodiscard]] QCoro::Task<void> fully_recover();
 
 	metternich::battle_resolution_type get_battle_resolution_type() const
 	{
@@ -227,17 +230,21 @@ public:
 	QVariantList get_promotions_qvariant_list() const;
 	bool can_have_promotion(const promotion *promotion) const;
 	bool has_promotion(const promotion *promotion) const;
-	void add_promotion(const promotion *promotion);
-	void remove_promotion(const promotion *promotion);
-	void check_promotions();
-	void check_free_promotions();
+	[[nodiscard]] QCoro::Task<void> add_promotion(const promotion *promotion);
+	[[nodiscard]] QCoro::Task<void> remove_promotion(const promotion *promotion);
+	[[nodiscard]] QCoro::Task<void> check_promotions();
+	[[nodiscard]] QCoro::Task<void> check_free_promotions();
 
-	void attack(military_unit *target, const bool ranged);
-	void receive_damage(const int damage, const int morale_damage_modifier);
-	void heal(const int healing);
+	[[nodiscard]] QCoro::Task<void> attack(military_unit *target, const bool ranged);
+	[[nodiscard]] QCoro::Task<void> receive_damage(const int damage, const int morale_damage_modifier);
+	[[nodiscard]] QCoro::Task<void> heal(const int healing);
 
-	void disband(const bool dead);
-	Q_INVOKABLE void disband();
+	[[nodiscard]] QCoro::Task<void> disband(const bool dead);
+
+	Q_INVOKABLE QCoro::QmlTask disband()
+	{
+		return this->disband(false);
+	}
 
 	int get_score() const;
 

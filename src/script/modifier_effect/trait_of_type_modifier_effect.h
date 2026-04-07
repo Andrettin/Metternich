@@ -21,12 +21,12 @@ public:
 		return identifier;
 	}
 
-	virtual void apply(const character *scope, const centesimal_int &multiplier) const override
+	[[nodiscard]] virtual QCoro::Task<void> apply_coro(const character *scope, const centesimal_int &multiplier) const override
 	{
 		if (multiplier > 0) {
-			scope->get_game_data()->add_trait_of_type(this->trait_type);
+			co_await scope->get_game_data()->add_trait_of_type(this->trait_type);
 		} else if (multiplier < 0) {
-			scope->get_game_data()->remove_trait_of_type(this->trait_type);
+			co_await scope->get_game_data()->remove_trait_of_type(this->trait_type);
 		}
 	}
 

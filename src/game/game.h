@@ -109,21 +109,32 @@ public:
 		return this->start_coro();
 	}
 
-	[[nodiscard]]
-	QCoro::Task<void> start_coro();
+	[[nodiscard]] QCoro::Task<void> start_coro();
 
-	Q_INVOKABLE void stop();
+	[[nodiscard]] QCoro::Task<void> stop_coro();
 
-	Q_INVOKABLE void clear();
-	void reset_game_data();
+	Q_INVOKABLE QCoro::QmlTask stop()
+	{
+		return this->stop_coro();
+	}
 
-	void apply_history(const QDate &start_date);
-	void apply_sites();
-	void apply_site_buildings(const site *site);
-	void apply_free_on_start_buildings();
+	[[nodiscard]] QCoro::Task<void> clear_coro();
+
+	Q_INVOKABLE QCoro::QmlTask clear()
+	{
+		return this->clear_coro();
+	}
+
+	[[nodiscard]] QCoro::Task<void> reset_game_data();
+
+	[[nodiscard]] QCoro::Task<void> apply_history(const QDate &start_date);
+	[[nodiscard]] QCoro::Task<void> apply_sites();
+	[[nodiscard]] QCoro::Task<void> apply_site_buildings(const site *site);
+	[[nodiscard]] QCoro::Task<void> apply_free_on_start_buildings();
+
 	void apply_population_history();
 	int64_t apply_historical_population_group_to_site(const population_group_key &group_key, const int64_t population, const site *site);
-	void apply_character_history(const QDate &start_date);
+	[[nodiscard]] QCoro::Task<void> apply_character_history(const QDate &start_date);
 
 	QCoro::Task<void> on_setup_finished();
 
@@ -180,7 +191,7 @@ public:
 
 	QVariantList get_countries_qvariant_list() const;
 	void add_country(domain *domain);
-	void remove_country(domain *domain);
+	[[nodiscard]] QCoro::Task<void> remove_country(domain *domain);
 
 	void calculate_country_ranks();
 
@@ -269,18 +280,20 @@ public:
 	void add_generated_character(qunique_ptr<character> &&character);
 	void remove_generated_character(character *character);
 
-	void process_delayed_effects();
+	[[nodiscard]]
+	QCoro::Task<void> process_delayed_effects();
 
 private:
 	template <typename scope_type>
-	void process_delayed_effects(std::vector<std::unique_ptr<delayed_effect_instance<scope_type>>> &delayed_effects)
+	[[nodiscard]]
+	QCoro::Task<void> process_delayed_effects(std::vector<std::unique_ptr<delayed_effect_instance<scope_type>>> &delayed_effects)
 	{
 		for (size_t i = 0; i < delayed_effects.size();) {
 			const std::unique_ptr<delayed_effect_instance<scope_type>> &delayed_effect = delayed_effects[i];
 			delayed_effect->decrement_remaining_turns();
 
 			if (delayed_effect->get_remaining_turns() <= 0) {
-				delayed_effect->do_effects();
+				co_await delayed_effect->do_effects();
 				delayed_effects.erase(delayed_effects.begin() + i);
 			} else {
 				++i;
@@ -298,7 +311,7 @@ public:
 	bool has_fired_event(const metternich::event *event) const;
 	void add_fired_event(const metternich::event *event);
 
-	bool do_battle(army *attacking_army, army *defending_army);
+	[[nodiscard]] QCoro::Task<bool> do_battle(army *attacking_army, army *defending_army);
 
 	combat_base *get_current_combat() const
 	{

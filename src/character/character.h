@@ -109,9 +109,9 @@ public:
 	static void initialize_all_vital_dates();
 	static void initialize_all_home_sites();
 
-	static character *generate(const metternich::species *species, const metternich::character_class *character_class, const int level, const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const std::vector<const trait *> &traits, const int health, const std::vector<const item_type *> &items, const bool generate_bloodline, const bool temporary = false);
-	static character *generate(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const int health, const std::vector<const item_type *> &items, const bool generate_bloodline, const bool temporary = false);
-	static std::shared_ptr<character_reference> generate_temporary(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const int health, const std::vector<const item_type *> &items);
+	[[nodiscard]] static QCoro::Task<character *> generate(const metternich::species *species, const metternich::character_class *character_class, const int level, const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const std::vector<const trait *> &traits, const int health, const std::vector<const item_type *> &items, const bool generate_bloodline, const bool temporary = false);
+	[[nodiscard]] static QCoro::Task<character *> generate(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const int health, const std::vector<const item_type *> &items, const bool generate_bloodline, const bool temporary = false);
+	[[nodiscard]] static QCoro::Task<std::shared_ptr<character_reference>> generate_temporary(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const int health, const std::vector<const item_type *> &items);
 
 	explicit character(const std::string &identifier);
 	~character();
@@ -131,7 +131,7 @@ public:
 
 	virtual void reset_history() override;
 
-	void reset_game_data();
+	[[nodiscard]] QCoro::Task<void> reset_game_data();
 
 	character_game_data *get_game_data() const
 	{

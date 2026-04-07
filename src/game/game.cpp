@@ -359,7 +359,9 @@ QCoro::Task<void> game::load(const std::filesystem::path &filepath)
 		}
 
 		if (this->is_running()) {
-			this->stop();
+			co_await this->stop_coro();
+		} else {
+			co_await this->reset_game_data();
 		}
 
 		gsml_parser parser;
@@ -403,7 +405,7 @@ QCoro::Task<void> game::setup_scenario_coro(const metternich::scenario *scenario
 	try {
 		const metternich::scenario *old_scenario = this->scenario;
 
-		this->clear();
+		co_await this->clear_coro();
 		this->scenario = scenario;
 
 		QDate start_date = scenario->get_start_date();
@@ -420,10 +422,10 @@ QCoro::Task<void> game::setup_scenario_coro(const metternich::scenario *scenario
 			map::get()->initialize(scenario->get_map_template()->is_province_post_processing_enabled());
 
 			//reset the game data for provinces and sites, since their constructors rely on the map having been initialized before
-			this->reset_game_data();
+			co_await this->reset_game_data();
 		}
 
-		this->apply_history(start_date);
+		co_await this->apply_history(start_date);
 
 		co_await this->on_setup_finished();
 	} catch (...) {
@@ -456,7 +458,7 @@ QCoro::Task<void> game::start_coro()
 				continue;
 			}
 
-			site->get_game_data()->check_holding_type();
+			co_await site->get_game_data()->check_holding_type();
 			site->get_game_data()->calculate_commodity_outputs();
 		}
 
@@ -465,13 +467,13 @@ QCoro::Task<void> game::start_coro()
 			domain_government *domain_government = domain->get_government();
 
 			for (const office *office : office::get_all()) {
-				domain_government->check_office_holder(office);
+				co_await domain_government->check_office_holder(office);
 			}
 
 			domain_game_data->check_ideas();
 
 			//setup journal entries, marking the ones for which the country already fulfills conditions as finished, but without doing the effects
-			domain_game_data->check_journal_entries(true, true);
+			co_await domain_game_data->check_journal_entries(true, true);
 
 			//ensure some item slots will start off filled
 			domain_game_data->check_item_slots();
@@ -485,16 +487,16 @@ QCoro::Task<void> game::start_coro()
 	}
 }
 
-void game::stop()
+QCoro::Task<void> game::stop_coro()
 {
 	try {
 		if (!this->is_running()) {
 			//already stopped
-			return;
+			co_return;
 		}
 
 		this->set_running(false);
-		this->clear();
+		co_await this->clear_coro();
 		map::get()->clear();
 		this->set_player_character(nullptr);
 		this->set_player_country(nullptr);
@@ -503,7 +505,7 @@ void game::stop()
 	}
 }
 
-void game::clear()
+QCoro::Task<void> game::clear_coro()
 {
 	try {
 		this->rules = preferences::get()->get_game_rules()->duplicate();
@@ -511,7 +513,7 @@ void game::clear()
 		this->clear_delayed_effects();
 		this->fired_events.clear();
 
-		this->reset_game_data();
+		co_await this->reset_game_data();
 
 		map::get()->clear_tile_game_data();
 
@@ -530,7 +532,7 @@ void game::clear()
 	}
 }
 
-void game::reset_game_data()
+QCoro::Task<void> game::reset_game_data()
 {
 	//clear data related to the game (i.e. the data determined by history), but not that related only to the map
 	//this is so that game setup speed can be faster if changing from one scenario to another with the same map template
@@ -539,21 +541,21 @@ void game::reset_game_data()
 	}
 
 	for (site *site : site::get_all()) {
-		site->reset_game_data();
+		co_await site->reset_game_data();
 	}
 
 	for (domain *domain : domain::get_all()) {
-		domain->reset_game_data(false);
+		co_await domain->reset_game_data(false);
 	}
 
 	for (character *character : character::get_all()) {
-		character->reset_game_data();
+		co_await character->reset_game_data();
 	}
 
 	this->generated_characters.clear();
 }
 
-void game::apply_history(const QDate &start_date)
+QCoro::Task<void> game::apply_history(const QDate &start_date)
 {
 	try {
 		for (const province *province : map::get()->get_provinces()) {
@@ -574,17 +576,17 @@ void game::apply_history(const QDate &start_date)
 						owner = owner->get_history()->get_owner();
 					}
 				}
-				province_game_data->set_owner(owner);
+				co_await province_game_data->set_owner(owner);
 
 				const culture *culture = province_game_data->get_culture();
 				if (culture != nullptr) {
 					const culture_history *culture_history = culture->get_history();
-					culture_history->apply_to_province(province);
+					co_await culture_history->apply_to_province(province);
 
 					const cultural_group *cultural_group = culture->get_group();
 					while (cultural_group != nullptr) {
 						const metternich::culture_history *cultural_group_history = cultural_group->get_history();
-						cultural_group_history->apply_to_province(province);
+						co_await cultural_group_history->apply_to_province(province);
 						cultural_group = cultural_group->get_upper_group();
 					}
 				}
@@ -602,7 +604,7 @@ void game::apply_history(const QDate &start_date)
 		}
 
 		for (const domain *domain : this->get_countries()) {
-			domain->get_game_data()->apply_history(start_date);
+			co_await domain->get_game_data()->apply_history(start_date);
 		}
 
 		for (const cultural_group *cultural_group : cultural_group::get_all()) {
@@ -613,7 +615,7 @@ void game::apply_history(const QDate &start_date)
 					continue;
 				}
 
-				culture_history->apply_to_domain(domain);
+				co_await culture_history->apply_to_domain(domain);
 			}
 		}
 
@@ -625,7 +627,7 @@ void game::apply_history(const QDate &start_date)
 					continue;
 				}
 
-				culture_history->apply_to_domain(domain);
+				co_await culture_history->apply_to_domain(domain);
 			}
 		}
 
@@ -640,14 +642,14 @@ void game::apply_history(const QDate &start_date)
 				if (domain_game_data->get_subject_type() != nullptr) {
 					log::log_error(std::format("Country \"{}\" is not a vassal, but has a subject type.", domain->get_identifier()));
 
-					domain_game_data->set_subject_type(nullptr);
+					co_await domain_game_data->set_subject_type(nullptr);
 				}
 			}
 
-			domain_game_data->check_government_type();
+			co_await domain_game_data->check_government_type();
 		}
 
-		this->apply_sites();
+		co_await this->apply_sites();
 
 		for (const route *route : route::get_all()) {
 			const route_game_data *route_game_data = route->get_game_data();
@@ -672,7 +674,7 @@ void game::apply_history(const QDate &start_date)
 							tile->set_direction_pathway(direction, route_pathway);
 
 							if (tile->has_river() && tile->get_owner() != nullptr && route_pathway->get_river_crossing_required_technology() != nullptr && tile->is_river_crossing_direction(direction)) {
-								tile->get_province()->get_game_data()->add_technology_with_prerequisites(route_pathway->get_river_crossing_required_technology());
+								co_await tile->get_province()->get_game_data()->add_technology_with_prerequisites(route_pathway->get_river_crossing_required_technology());
 							}
 						}
 					}
@@ -680,12 +682,12 @@ void game::apply_history(const QDate &start_date)
 					//add prerequisites for the tile's pathway to its owner's researched technologies
 					if (tile->get_owner() != nullptr) {
 						if (route_pathway->get_required_technology() != nullptr) {
-							tile->get_province()->get_game_data()->add_technology_with_prerequisites(route_pathway->get_required_technology());
+							co_await tile->get_province()->get_game_data()->add_technology_with_prerequisites(route_pathway->get_required_technology());
 						}
 
 						const technology *terrain_required_technology = route_pathway->get_terrain_required_technology(tile->get_terrain());
 						if (terrain_required_technology != nullptr) {
-							tile->get_province()->get_game_data()->add_technology_with_prerequisites(terrain_required_technology);
+							co_await tile->get_province()->get_game_data()->add_technology_with_prerequisites(terrain_required_technology);
 						}
 					}
 				}
@@ -696,12 +698,12 @@ void game::apply_history(const QDate &start_date)
 			for (const site *settlement : province->get_game_data()->get_settlement_sites()) {
 				site_game_data *settlement_game_data = settlement->get_game_data();
 				if (settlement_game_data->is_built()) {
-					settlement_game_data->check_free_buildings();
+					co_await settlement_game_data->check_free_buildings();
 				}
 			}
 		}
 
-		this->apply_free_on_start_buildings();
+		co_await this->apply_free_on_start_buildings();
 		this->apply_population_history();
 
 		//set stored commodities from history after the initial buildings have been constructed, so that buildings granting storage capacity (e.g. warehouses) will already be present
@@ -711,7 +713,7 @@ void game::apply_history(const QDate &start_date)
 			}
 		}
 
-		this->apply_character_history(start_date);
+		co_await this->apply_character_history(start_date);
 
 		for (const historical_civilian_unit *historical_civilian_unit : historical_civilian_unit::get_all()) {
 			try {
@@ -749,7 +751,7 @@ void game::apply_history(const QDate &start_date)
 				assert_throw(type != nullptr);
 
 				if (type->get_required_technology() != nullptr) {
-					site->get_game_data()->get_province()->get_game_data()->add_technology_with_prerequisites(type->get_required_technology());
+					co_await site->get_game_data()->get_province()->get_game_data()->add_technology_with_prerequisites(type->get_required_technology());
 				}
 
 				const phenotype *phenotype = historical_civilian_unit->get_phenotype();
@@ -796,13 +798,13 @@ void game::apply_history(const QDate &start_date)
 				assert_throw(type != nullptr);
 
 				if (type->get_required_technology() != nullptr) {
-					province->get_game_data()->add_technology_with_prerequisites(type->get_required_technology());
+					co_await province->get_game_data()->add_technology_with_prerequisites(type->get_required_technology());
 				}
 
 				const phenotype *phenotype = historical_military_unit->get_phenotype();
 
 				for (int i = 0; i < historical_military_unit->get_quantity(); ++i) {
-					const bool created = country_military->create_military_unit(type, province, phenotype, historical_military_unit_history->get_promotions());
+					const bool created = co_await country_military->create_military_unit(type, province, phenotype, historical_military_unit_history->get_promotions());
 					assert_throw(created);
 				}
 			} catch (...) {
@@ -835,7 +837,7 @@ void game::apply_history(const QDate &start_date)
 			assert_throw(type != nullptr);
 
 			if (type->get_required_technology() != nullptr) {
-				country_technology->add_technology_with_prerequisites(type->get_required_technology());
+				co_await country_technology->add_technology_with_prerequisites(type->get_required_technology());
 			}
 
 			const phenotype *phenotype = historical_transporter->get_phenotype();
@@ -850,7 +852,7 @@ void game::apply_history(const QDate &start_date)
 	}
 }
 
-void game::apply_sites()
+QCoro::Task<void> game::apply_sites()
 {
 	for (const site *site : site::get_all()) {
 		site_game_data *site_game_data = site->get_game_data();
@@ -871,10 +873,10 @@ void game::apply_sites()
 			if (site->get_holding_type() != nullptr && site_history->is_developed()) {
 				assert_throw(site_history->get_dungeon() == nullptr);
 
-				site_game_data->set_holding_type(site->get_holding_type());
+				co_await site_game_data->set_holding_type(site->get_holding_type());
 
 				if (tile->get_resource() != nullptr) {
-					map::get()->set_tile_resource_discovered(site_game_data->get_tile_pos(), true);
+					co_await map::get()->set_tile_resource_discovered(site_game_data->get_tile_pos(), true);
 				}
 			} else if (site_history->get_holding_type() != nullptr) {
 				if (!site->is_settlement()) {
@@ -883,21 +885,21 @@ void game::apply_sites()
 
 				assert_throw(site_history->get_dungeon() == nullptr);
 
-				site_game_data->set_holding_type(site_history->get_holding_type());
+				co_await site_game_data->set_holding_type(site_history->get_holding_type());
 
 				if (tile->get_resource() != nullptr) {
-					map::get()->set_tile_resource_discovered(site_game_data->get_tile_pos(), true);
+					co_await map::get()->set_tile_resource_discovered(site_game_data->get_tile_pos(), true);
 				}
 			} else if (site_history->get_dungeon() != nullptr) {
-				site_game_data->set_dungeon(site_history->get_dungeon());
+				co_await site_game_data->set_dungeon(site_history->get_dungeon());
 			}
 
 			const province_history *province_history = site_province->get_history();
 			if (province_history->get_trade_zone() != nullptr && site_game_data->get_holding_type() != nullptr && site_game_data->get_holding_type()->is_economic()) {
-				site_game_data->set_owner(province_history->get_trade_zone());
+				co_await site_game_data->set_owner(province_history->get_trade_zone());
 			}
 			if (province_history->get_temple_domain() != nullptr && site_game_data->get_holding_type() != nullptr && site_game_data->get_holding_type()->is_religious()) {
-				site_game_data->set_owner(province_history->get_temple_domain());
+				co_await site_game_data->set_owner(province_history->get_temple_domain());
 			}
 		}
 	}
@@ -933,7 +935,7 @@ void game::apply_sites()
 
 		const holding_type *best_holding_type = provincial_capital_slot->get_holding_type();
 		assert_throw(best_holding_type != nullptr);
-		provincial_capital_slot_game_data->set_holding_type(best_holding_type);
+		co_await provincial_capital_slot_game_data->set_holding_type(best_holding_type);
 
 		province->get_game_data()->choose_provincial_capital();
 		assert_throw(province->get_game_data()->get_provincial_capital() != nullptr);
@@ -941,8 +943,8 @@ void game::apply_sites()
 
 	//set the capitals here, so that building requirements that require a capital can be fulfilled
 	for (const domain *domain : this->get_countries()) {
-		domain->get_game_data()->set_capital(nullptr);
-		domain->get_game_data()->choose_capital();
+		co_await domain->get_game_data()->set_capital(nullptr);
+		co_await domain->get_game_data()->choose_capital();
 	}
 
 	for (const site *site : site::get_all()) {
@@ -958,7 +960,7 @@ void game::apply_sites()
 			const site_history *site_history = site->get_history();
 
 			if (site_province != nullptr && site_province->get_game_data()->is_on_map()) {
-				this->apply_site_buildings(site);
+				co_await this->apply_site_buildings(site);
 			}
 
 			if (tile == nullptr) {
@@ -992,21 +994,21 @@ void game::apply_sites()
 							throw std::runtime_error(std::format("Failed to set resource improvement for tile for site \"{}\", as its resource is different than that of the improvement.", site->get_identifier()));
 						}
 
-						map::get()->set_tile_resource_discovered(site_game_data->get_tile_pos(), true);
+						co_await map::get()->set_tile_resource_discovered(site_game_data->get_tile_pos(), true);
 					}
 
-					site_game_data->set_improvement(improvement->get_slot(), improvement);
+					co_await site_game_data->set_improvement(improvement->get_slot(), improvement);
 
 					//add prerequisites for the tile's improvement to its owner's researched technologies
 					if (improvement->get_required_technology() != nullptr && tile->get_owner() != nullptr) {
-						tile->get_province()->get_game_data()->add_technology_with_prerequisites(improvement->get_required_technology());
+						co_await tile->get_province()->get_game_data()->add_technology_with_prerequisites(improvement->get_required_technology());
 					}
 				}
 			}
 
 			if (site_history->is_resource_discovered()) {
 				assert_throw(site->get_type() == site_type::resource || site->get_type() == site_type::celestial_body || site->is_settlement());
-				map::get()->set_tile_resource_discovered(site_game_data->get_tile_pos(), true);
+				co_await map::get()->set_tile_resource_discovered(site_game_data->get_tile_pos(), true);
 			}
 		} catch (...) {
 			std::throw_with_nested(std::runtime_error(std::format("Failed to apply history for site \"{}\".", site->get_identifier())));
@@ -1039,7 +1041,7 @@ void game::apply_sites()
 	}
 }
 
-void game::apply_site_buildings(const site *site)
+QCoro::Task<void> game::apply_site_buildings(const site *site)
 {
 	site_game_data *site_game_data = site->get_game_data();
 	const tile *tile = site_game_data->get_tile();
@@ -1052,7 +1054,7 @@ void game::apply_site_buildings(const site *site)
 	const metternich::site *settlement = site->is_settlement() && tile != nullptr ? site : site_province->get_game_data()->get_provincial_capital();
 
 	if (settlement == nullptr || !settlement->get_map_data()->is_on_map()) {
-		return;
+		co_return;
 	}
 
 	metternich::site_game_data *settlement_game_data = settlement->get_game_data();
@@ -1107,7 +1109,7 @@ void game::apply_site_buildings(const site *site)
 		const building_type *slot_building = settlement_game_data->get_slot_building(building_slot_type);
 
 		if (slot_building == nullptr || slot_building->get_level() < building->get_level()) {
-			settlement_game_data->add_building_with_prerequisites(building);
+			co_await settlement_game_data->add_building_with_prerequisites(building);
 		}
 	}
 
@@ -1134,20 +1136,20 @@ void game::apply_site_buildings(const site *site)
 			throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have wonder \"{}\", but cannot have it.", settlement->get_identifier(), wonder->get_identifier()));
 		}
 
-		building_slot->set_wonder(wonder);
+		co_await building_slot->set_wonder(wonder);
 
 		if (wonder->get_required_technology() != nullptr && owner_game_data != nullptr) {
-			site_province->get_game_data()->add_technology_with_prerequisites(wonder->get_required_technology());
+			co_await site_province->get_game_data()->add_technology_with_prerequisites(wonder->get_required_technology());
 		}
 	}
 
 	const int holding_level = site_history->get_development_level();
 	if (site_game_data->get_holding_type() != nullptr && holding_level != 0 && site_game_data->get_holding_level() < holding_level) {
-		site_game_data->set_holding_level_from_buildings(holding_level);
+		co_await site_game_data->set_holding_level_from_buildings(holding_level);
 	}
 }
 
-void game::apply_free_on_start_buildings()
+QCoro::Task<void> game::apply_free_on_start_buildings()
 {
 	//build free on start buildings
 	for (const site *site : map::get()->get_sites()) {
@@ -1168,7 +1170,7 @@ void game::apply_free_on_start_buildings()
 				continue;
 			}
 
-			site->get_game_data()->check_free_building(building);
+			co_await site->get_game_data()->check_free_building(building);
 		}
 	}
 }
@@ -1561,7 +1563,7 @@ int64_t game::apply_historical_population_group_to_site(const population_group_k
 	return remaining_population - population_for_unit;
 }
 
-void game::apply_character_history(const QDate &start_date)
+QCoro::Task<void> game::apply_character_history(const QDate &start_date)
 {
 	//sort characters by ancestry depth and birth date
 	std::vector<character *> characters_by_birth_date = character::get_all();
@@ -1580,7 +1582,7 @@ void game::apply_character_history(const QDate &start_date)
 	//apply character history
 	for (const character *character : characters_by_birth_date) {
 		character_game_data *character_game_data = character->get_game_data();
-		character_game_data->apply_history(start_date);
+		co_await character_game_data->apply_history(start_date);
 		if (character_game_data->is_dead()) {
 			character->get_history()->calculate_heir();
 		}
@@ -1598,16 +1600,16 @@ QCoro::Task<void> game::on_setup_finished()
 		//country_economy *country_economy = domain->get_economy();
 		domain_government *domain_government = domain->get_government();
 
-		domain_game_data->check_government_type();
-		domain_government->check_laws();
+		co_await domain_game_data->check_government_type();
+		co_await domain_government->check_laws();
 
 		for (const office *office : office::get_all()) {
-			domain_government->check_office_holder(office);
+			co_await domain_government->check_office_holder(office);
 		}
 
 		domain_game_data->check_ideas();
-		domain_game_data->check_tier();
-		domain_game_data->check_culture();
+		co_await domain_game_data->check_tier();
+		co_await domain_game_data->check_culture();
 
 		for (const QPoint &border_tile_pos : domain_game_data->get_border_tiles()) {
 			map::get()->calculate_tile_country_border_directions(border_tile_pos);
@@ -1624,7 +1626,7 @@ QCoro::Task<void> game::on_setup_finished()
 						continue;
 					}
 
-					site->get_game_data()->check_free_improvement(improvement);
+					co_await site->get_game_data()->check_free_improvement(improvement);
 				}
 			}
 		}
@@ -1639,7 +1641,7 @@ QCoro::Task<void> game::on_setup_finished()
 		emit domain->game_data_changed();
 	}
 
-	this->apply_free_on_start_buildings();
+	co_await this->apply_free_on_start_buildings();
 
 	this->calculate_country_ranks();
 
@@ -1657,7 +1659,7 @@ QCoro::Task<void> game::on_setup_finished()
 QCoro::Task<void> game::do_turn_coro()
 {
 	try {
-		this->process_delayed_effects();
+		co_await this->process_delayed_effects();
 
 		domain_map<commodity_map<int>> old_bids;
 		domain_map<commodity_map<int>> old_offers;
@@ -1668,7 +1670,7 @@ QCoro::Task<void> game::do_turn_coro()
 			domain->get_economy()->calculate_commodity_needs();
 
 			if (domain->get_game_data()->is_ai()) {
-				domain->get_ai()->do_turn();
+				co_await domain->get_ai()->do_turn();
 			}
 
 			old_bids[domain] = domain->get_economy()->get_bids();
@@ -1683,7 +1685,7 @@ QCoro::Task<void> game::do_turn_coro()
 
 		for (const domain *domain : this->get_countries()) {
 			//do country events after processing the turn for each country, so that e.g. events won't refer to a scope which no longer exists by the time the player gets to choose an option
-			domain->get_game_data()->do_events();
+			co_await domain->get_game_data()->do_events();
 
 			//restore old bids and offers, if possible
 			for (const auto &[commodity, bid] : old_bids[domain]) {
@@ -1896,7 +1898,7 @@ void game::add_country(domain *domain)
 	}
 }
 
-void game::remove_country(domain *domain)
+QCoro::Task<void> game::remove_country(domain *domain)
 {
 	std::erase(this->countries, domain);
 
@@ -1906,7 +1908,7 @@ void game::remove_country(domain *domain)
 		domain_game_data *other_domain_game_data = other_domain->get_game_data();
 
 		if (other_domain_game_data->get_diplomacy_state(domain) != diplomacy_state::peace) {
-			other_domain_game_data->set_diplomacy_state(domain, diplomacy_state::peace);
+			co_await other_domain_game_data->set_diplomacy_state(domain, diplomacy_state::peace);
 		}
 
 		if (other_domain_game_data->get_consulate(domain) != nullptr) {
@@ -1918,7 +1920,7 @@ void game::remove_country(domain *domain)
 		emit countries_changed();
 	}
 
-	domain->reset_game_data(true);
+	co_await domain->reset_game_data(true);
 }
 
 void game::calculate_country_ranks()
@@ -2154,12 +2156,12 @@ void game::remove_generated_character(character *character)
 	vector::remove(this->generated_characters, character);
 }
 
-void game::process_delayed_effects()
+QCoro::Task<void> game::process_delayed_effects()
 {
-	this->process_delayed_effects(this->character_delayed_effects);
-	this->process_delayed_effects(this->country_delayed_effects);
-	this->process_delayed_effects(this->province_delayed_effects);
-	this->process_delayed_effects(this->site_delayed_effects);
+	co_await this->process_delayed_effects(this->character_delayed_effects);
+	co_await this->process_delayed_effects(this->country_delayed_effects);
+	co_await this->process_delayed_effects(this->province_delayed_effects);
+	co_await this->process_delayed_effects(this->site_delayed_effects);
 }
 
 void game::add_delayed_effect(std::unique_ptr<delayed_effect_instance<const character>> &&delayed_effect)
@@ -2200,7 +2202,7 @@ void game::add_fired_event(const metternich::event *event)
 	this->fired_events.insert(event);
 }
 
-bool game::do_battle(army *attacking_army, army *defending_army)
+QCoro::Task<bool> game::do_battle(army *attacking_army, army *defending_army)
 {
 	//this function returns true if the attackers won, or false otherwise
 
@@ -2251,7 +2253,7 @@ bool game::do_battle(army *attacking_army, army *defending_army)
 		while (attacker_hits > 0 && !defending_army->get_military_units().empty()) {
 			const std::vector<military_unit *> defending_units = defending_army->get_military_units();
 			for (military_unit *defending_unit : defending_units) {
-				defending_unit->change_hit_points(-1);
+				co_await defending_unit->change_hit_points(-1);
 				--attacker_hits;
 				if (attacker_hits == 0) {
 					break;
@@ -2262,7 +2264,7 @@ bool game::do_battle(army *attacking_army, army *defending_army)
 		while (defender_hits > 0 && !attacking_army->get_military_units().empty()) {
 			const std::vector<military_unit *> attacking_units = attacking_army->get_military_units();
 			for (military_unit *attacking_unit : attacking_units) {
-				attacking_unit->change_hit_points(-1);
+				co_await attacking_unit->change_hit_points(-1);
 				--defender_hits;
 				if (defender_hits == 0) {
 					break;
@@ -2273,10 +2275,10 @@ bool game::do_battle(army *attacking_army, army *defending_army)
 
 	//restore hit points of the surviving units
 	for (military_unit *attacking_unit : attacking_army->get_military_units()) {
-		attacking_unit->fully_recover();
+		co_await attacking_unit->fully_recover();
 	}
 	for (military_unit *defending_unit : defending_army->get_military_units()) {
-		defending_unit->fully_recover();
+		co_await defending_unit->fully_recover();
 	}
 
 	assert_throw(attacking_army->get_military_units().empty() || defending_army->get_military_units().empty());
@@ -2310,7 +2312,7 @@ bool game::do_battle(army *attacking_army, army *defending_army)
 		engine_interface::get()->add_notification(victory ? "Victory!" : "Defeat!", war_minister_portrait, std::format("We have {} a battle{}!{}", victory ? "won" : "lost", battle_province != nullptr ? std::format(" in {}", battle_province->get_game_data()->get_current_cultural_name()) : "", lost_units_str));
 	}
 
-	return attack_success;
+	co_return attack_success;
 }
 
 void game::set_current_combat(qunique_ptr<combat_base> &&combat)

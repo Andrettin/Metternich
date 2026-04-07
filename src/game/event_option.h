@@ -59,7 +59,9 @@ public:
 
 	void add_effect(std::unique_ptr<effect<scope_type>> &&effect);
 	std::string get_effects_string(const read_only_context &ctx) const;
-	void do_effects(scope_type *scope, context &ctx) const;
+
+	[[nodiscard]]
+	QCoro::Task<void> do_effects(scope_type *scope, context &ctx) const;
 
 private:
 	std::string name;

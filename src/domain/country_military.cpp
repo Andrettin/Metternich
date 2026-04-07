@@ -44,15 +44,15 @@ domain_game_data *country_military::get_game_data() const
 	return this->domain->get_game_data();
 }
 
-void country_military::do_military_unit_recruitment()
+QCoro::Task<void> country_military::do_military_unit_recruitment()
 {
 	try {
 		if (this->get_game_data()->is_under_anarchy()) {
-			return;
+			co_return;
 		}
 
 		for (const province *province : this->get_game_data()->get_provinces()) {
-			province->get_game_data()->do_military_unit_recruitment();
+			co_await province->get_game_data()->do_military_unit_recruitment();
 		}
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error(std::format("Error doing military unit recruitment for country \"{}\".", this->domain->get_identifier())));
@@ -93,7 +93,7 @@ void country_military::clear_leaders()
 	emit leaders_changed();
 }
 
-void country_military::on_leader_died(const character *leader)
+QCoro::Task<void> country_military::on_leader_died(const character *leader)
 {
 	if (this->domain == game::get()->get_player_country()) {
 		const portrait *war_minister_portrait = this->domain->get_government()->get_war_minister_portrait();
@@ -103,10 +103,10 @@ void country_military::on_leader_died(const character *leader)
 		engine_interface::get()->add_notification(std::format("{} Retired", leader_type_name), war_minister_portrait, std::format("Your Excellency, after a distinguished career in our service, the {} {} has decided to retire.", string::lowered(leader_type_name), leader->get_game_data()->get_full_name()));
 	}
 
-	leader->get_game_data()->get_military_unit()->disband(false);
+	co_await leader->get_game_data()->get_military_unit()->disband(false);
 }
 
-bool country_military::create_military_unit(const military_unit_type *military_unit_type, const province *deployment_province, const phenotype *phenotype, const std::vector<const promotion *> &promotions)
+QCoro::Task<bool> country_military::create_military_unit(const military_unit_type *military_unit_type, const province *deployment_province, const phenotype *phenotype, const std::vector<const promotion *> &promotions)
 {
 	if (deployment_province == nullptr) {
 		deployment_province = this->get_game_data()->get_capital_province();
@@ -152,7 +152,7 @@ bool country_military::create_military_unit(const military_unit_type *military_u
 	qunique_ptr<military_unit> military_unit;
 
 	if (chosen_character != nullptr) {
-		military_unit = make_qunique<metternich::military_unit>(military_unit_type, this->domain, chosen_character);
+		military_unit = co_await metternich::military_unit::create(military_unit_type, this->domain, chosen_character);
 	} else {
 		if (phenotype == nullptr) {
 			const std::vector<const metternich::phenotype *> weighted_phenotypes = this->get_game_data()->get_weighted_phenotypes();
@@ -161,15 +161,15 @@ bool country_military::create_military_unit(const military_unit_type *military_u
 		}
 		assert_throw(phenotype != nullptr);
 
-		military_unit = make_qunique<metternich::military_unit>(military_unit_type, this->domain, phenotype);
+		military_unit = co_await metternich::military_unit::create(military_unit_type, this->domain, phenotype);
 	}
 
 	assert_throw(military_unit != nullptr);
 
-	military_unit->set_province(deployment_province);
+	co_await military_unit->set_province(deployment_province);
 
 	for (const promotion *promotion : promotions) {
-		military_unit->add_promotion(promotion);
+		co_await military_unit->add_promotion(promotion);
 	}
 
 	this->add_military_unit(std::move(military_unit));
@@ -178,7 +178,7 @@ bool country_military::create_military_unit(const military_unit_type *military_u
 		emit leader_recruited(chosen_character);
 	}
 
-	return true;
+	co_return true;
 }
 
 void country_military::add_military_unit(qunique_ptr<metternich::military_unit> &&military_unit)
@@ -366,11 +366,11 @@ void country_military::set_military_unit_type_stat_modifier(const military_unit_
 	}
 }
 
-void country_military::set_free_infantry_promotion_count(const promotion *promotion, const int value)
+QCoro::Task<void> country_military::set_free_infantry_promotion_count(const promotion *promotion, const int value)
 {
 	const int old_value = this->get_free_infantry_promotion_count(promotion);
 	if (value == old_value) {
-		return;
+		co_return;
 	}
 
 	assert_throw(value >= 0);
@@ -385,16 +385,16 @@ void country_military::set_free_infantry_promotion_count(const promotion *promot
 				continue;
 			}
 
-			military_unit->check_free_promotions();
+			co_await military_unit->check_free_promotions();
 		}
 	}
 }
 
-void country_military::set_free_cavalry_promotion_count(const promotion *promotion, const int value)
+QCoro::Task<void> country_military::set_free_cavalry_promotion_count(const promotion *promotion, const int value)
 {
 	const int old_value = this->get_free_cavalry_promotion_count(promotion);
 	if (value == old_value) {
-		return;
+		co_return;
 	}
 
 	assert_throw(value >= 0);
@@ -409,16 +409,16 @@ void country_military::set_free_cavalry_promotion_count(const promotion *promoti
 				continue;
 			}
 
-			military_unit->check_free_promotions();
+			co_await military_unit->check_free_promotions();
 		}
 	}
 }
 
-void country_military::set_free_artillery_promotion_count(const promotion *promotion, const int value)
+QCoro::Task<void> country_military::set_free_artillery_promotion_count(const promotion *promotion, const int value)
 {
 	const int old_value = this->get_free_artillery_promotion_count(promotion);
 	if (value == old_value) {
-		return;
+		co_return;
 	}
 
 	assert_throw(value >= 0);
@@ -433,16 +433,16 @@ void country_military::set_free_artillery_promotion_count(const promotion *promo
 				continue;
 			}
 
-			military_unit->check_free_promotions();
+			co_await military_unit->check_free_promotions();
 		}
 	}
 }
 
-void country_military::set_free_warship_promotion_count(const promotion *promotion, const int value)
+QCoro::Task<void> country_military::set_free_warship_promotion_count(const promotion *promotion, const int value)
 {
 	const int old_value = this->get_free_warship_promotion_count(promotion);
 	if (value == old_value) {
-		return;
+		co_return;
 	}
 
 	assert_throw(value >= 0);
@@ -457,7 +457,7 @@ void country_military::set_free_warship_promotion_count(const promotion *promoti
 				continue;
 			}
 
-			military_unit->check_free_promotions();
+			co_await military_unit->check_free_promotions();
 		}
 	}
 }

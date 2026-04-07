@@ -139,7 +139,7 @@ gsml_data civilian_unit::to_gsml_data() const
 	return data;
 }
 
-void civilian_unit::do_turn()
+QCoro::Task<void> civilian_unit::do_turn()
 {
 	if (this->is_moving()) {
 		this->set_original_tile_pos(QPoint(-1, -1));
@@ -151,13 +151,13 @@ void civilian_unit::do_turn()
 		if (this->task_completion_turns == 0) {
 			if (this->exploring) {
 				//set the adjacent tiles to explored for the owner player
-				point::for_each_adjacent(this->get_tile_pos(), [this](const QPoint &adjacent_pos) {
+				co_await point::for_each_adjacent_coro(this->get_tile_pos(), [this](const QPoint &adjacent_pos) -> QCoro::Task<void> {
 					if (!map::get()->contains(adjacent_pos)) {
-						return;
+						co_return;
 					}
 
 					if (!this->get_owner()->get_game_data()->is_tile_explored(adjacent_pos)) {
-						this->get_owner()->get_game_data()->explore_tile(adjacent_pos);
+						co_await this->get_owner()->get_game_data()->explore_tile(adjacent_pos);
 					}
 				});
 
@@ -165,12 +165,12 @@ void civilian_unit::do_turn()
 			}
 			
 			if (this->prospecting) {
-				this->get_owner()->get_game_data()->prospect_tile(this->get_tile_pos());
+				co_await this->get_owner()->get_game_data()->prospect_tile(this->get_tile_pos());
 				this->prospecting = false;
 			}
 			
 			if (this->improvement_under_construction != nullptr) {
-				this->get_tile()->get_site()->get_game_data()->set_improvement(this->improvement_under_construction->get_slot(), this->improvement_under_construction);
+				co_await this->get_tile()->get_site()->get_game_data()->set_improvement(this->improvement_under_construction->get_slot(), this->improvement_under_construction);
 				this->improvement_under_construction = nullptr;
 			}
 		}
@@ -627,14 +627,14 @@ QVariantList civilian_unit::get_prospectable_tiles_qvariant_list() const
 	return archimedes::map::to_qvariant_list(this->get_prospectable_tiles());
 }
 
-void civilian_unit::disband(const bool dead)
+QCoro::Task<void> civilian_unit::disband(const bool dead)
 {
 	if (this->get_character() != nullptr) {
 		character_game_data *character_game_data = this->get_character()->get_game_data();
 		character_game_data->set_civilian_unit(nullptr);
 
 		if (dead) {
-			character_game_data->die();
+			co_await character_game_data->die();
 		}
 	}
 

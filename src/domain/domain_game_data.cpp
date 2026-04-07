@@ -308,7 +308,7 @@ gsml_data domain_game_data::to_gsml_data() const
 	return data;
 }
 
-void domain_game_data::apply_history(const QDate &start_date)
+QCoro::Task<void> domain_game_data::apply_history(const QDate &start_date)
 {
 	const domain_history *domain_history = this->domain->get_history();
 	country_economy *country_economy = this->get_economy();
@@ -318,33 +318,33 @@ void domain_game_data::apply_history(const QDate &start_date)
 	assert_throw(domain_history->get_owner() == nullptr);
 
 	if (domain_history->get_tier() != domain_tier::none) {
-		this->set_tier(domain_history->get_tier());
+		co_await this->set_tier(domain_history->get_tier());
 	}
 
 	if (domain_history->get_culture() != nullptr) {
-		this->set_culture(domain_history->get_culture());
+		co_await this->set_culture(domain_history->get_culture());
 	}
 
 	if (domain_history->get_religion() != nullptr) {
-		this->set_religion(domain_history->get_religion());
+		co_await this->set_religion(domain_history->get_religion());
 	}
 
 	const metternich::subject_type *subject_type = domain_history->get_subject_type();
 	if (subject_type != nullptr) {
-		this->set_subject_type(subject_type);
+		co_await this->set_subject_type(subject_type);
 	}
 
 	if (domain_history->get_government_type() != nullptr) {
-		this->set_government_type(domain_history->get_government_type());
+		co_await this->set_government_type(domain_history->get_government_type());
 
 		if (domain_history->get_government_type()->get_required_technology() != nullptr) {
-			country_technology->add_technology_with_prerequisites(domain_history->get_government_type()->get_required_technology());
+			co_await country_technology->add_technology_with_prerequisites(domain_history->get_government_type()->get_required_technology());
 		}
 	} else if (this->domain->get_default_government_type() != nullptr) {
-		this->set_government_type(this->domain->get_default_government_type());
+		co_await this->set_government_type(this->domain->get_default_government_type());
 
 		if (this->domain->get_default_government_type()->get_required_technology() != nullptr) {
-			country_technology->add_technology_with_prerequisites(this->domain->get_default_government_type()->get_required_technology());
+			co_await country_technology->add_technology_with_prerequisites(this->domain->get_default_government_type()->get_required_technology());
 		}
 	}
 
@@ -361,18 +361,18 @@ void domain_game_data::apply_history(const QDate &start_date)
 		}
 
 		office_holder_game_data->set_domain(this->domain);
-		domain_government->set_office_holder(office, office_holder);
+		co_await domain_government->set_office_holder(office, office_holder);
 	}
 
 	for (const metternich::technology *technology : domain_history->get_technologies()) {
-		country_technology->add_technology_with_prerequisites(technology);
+		co_await country_technology->add_technology_with_prerequisites(technology);
 	}
 
 	for (const auto &[law_group, law] : domain_history->get_laws()) {
-		domain_government->set_law(law_group, law);
+		co_await domain_government->set_law(law_group, law);
 
 		if (law->get_required_technology() != nullptr) {
-			country_technology->add_technology_with_prerequisites(law->get_required_technology());
+			co_await country_technology->add_technology_with_prerequisites(law->get_required_technology());
 		}
 	}
 
@@ -383,8 +383,8 @@ void domain_game_data::apply_history(const QDate &start_date)
 			continue;
 		}
 
-		this->set_diplomacy_state(other_country, diplomacy_state);
-		other_country->get_game_data()->set_diplomacy_state(this->domain, get_diplomacy_state_counterpart(diplomacy_state));
+		co_await this->set_diplomacy_state(other_country, diplomacy_state);
+		co_await other_country->get_game_data()->set_diplomacy_state(this->domain, get_diplomacy_state_counterpart(diplomacy_state));
 	}
 
 	for (const auto &[other_country, consulate] : domain_history->get_consulates()) {
@@ -435,14 +435,14 @@ QCoro::Task<void> domain_game_data::do_turn()
 {
 	try {
 		for (const province *province : this->get_provinces()) {
-			province->get_game_data()->do_turn();
+			co_await province->get_game_data()->do_turn();
 		}
 
 		if (game::get()->is_last_turn_of_quarter()) {
 			this->collect_regency();
 			this->get_economy()->do_production();
 			this->collect_wealth();
-			this->pay_maintenance();
+			co_await this->pay_maintenance();
 		}
 
 		for (const character *character : this->get_characters()) {
@@ -450,16 +450,16 @@ QCoro::Task<void> domain_game_data::do_turn()
 				character->get_game_data()->ply_trade();
 			}
 
-			character->get_game_data()->do_crafting();
+			co_await character->get_game_data()->do_crafting();
 
 			if (character->get_game_data()->is_ai()) {
-				character->get_game_data()->ai_sell_items();
-				character->get_game_data()->ai_buy_items();
+				co_await character->get_game_data()->ai_sell_items();
+				co_await character->get_game_data()->ai_buy_items();
 			}
 
 			const int turn_days = game::get()->get_date().daysTo(game::get()->get_next_date());
 			context ctx(this->domain);
-			character->get_game_data()->decrement_status_effect_durations(std::chrono::days(turn_days), ctx);
+			co_await character->get_game_data()->decrement_status_effect_durations(std::chrono::days(turn_days), ctx);
 		}
 
 		if (game::get()->is_last_turn_of_quarter()) {
@@ -469,17 +469,17 @@ QCoro::Task<void> domain_game_data::do_turn()
 
 		this->do_transporter_recruitment();
 		this->do_civilian_unit_recruitment();
-		this->get_military()->do_military_unit_recruitment();
-		this->get_technology()->do_research();
+		co_await this->get_military()->do_military_unit_recruitment();
+		co_await this->get_technology()->do_research();
 		this->do_population_growth();
 		this->do_cultural_change();
 
 		for (const qunique_ptr<civilian_unit> &civilian_unit : this->civilian_units) {
-			civilian_unit->do_turn();
+			co_await civilian_unit->do_turn();
 		}
 
 		for (const qunique_ptr<military_unit> &military_unit : this->get_military()->get_military_units()) {
-			military_unit->do_turn();
+			co_await military_unit->do_turn();
 		}
 
 		for (const qunique_ptr<transporter> &transporter : this->transporters) {
@@ -492,15 +492,15 @@ QCoro::Task<void> domain_game_data::do_turn()
 
 		this->get_military()->clear_armies();
 
-		this->decrement_scripted_modifiers();
+		co_await this->decrement_scripted_modifiers();
 
-		this->check_journal_entries();
+		co_await this->check_journal_entries();
 
-		this->check_government_type();
-		this->check_characters();
+		co_await this->check_government_type();
+		co_await this->check_characters();
 		this->check_ideas();
-		this->check_tier();
-		this->check_culture();
+		co_await this->check_tier();
+		co_await this->check_culture();
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error(std::format("Failed to process turn for country \"{}\".", this->domain->get_identifier())));
 	}
@@ -594,7 +594,7 @@ void domain_game_data::collect_wealth()
 	}
 }
 
-void domain_game_data::pay_maintenance()
+QCoro::Task<void> domain_game_data::pay_maintenance()
 {
 	const int64_t domain_maintenance_cost = std::min(this->get_domain_maintenance_cost(), this->get_economy()->get_stored_commodity(defines::get()->get_wealth_commodity()));
 	if (domain_maintenance_cost != 0) {
@@ -624,7 +624,7 @@ void domain_game_data::pay_maintenance()
 	military_unit_type_map<int> disbanded_type_counts;
 	for (military_unit *military_unit : military_units_to_disband) {
 		disbanded_type_counts[military_unit->get_type()]++;
-		military_unit->disband(false);
+		co_await military_unit->disband(false);
 	}
 
 	if (!disbanded_type_counts.empty() && this->domain == game::get()->get_player_country()) {
@@ -819,30 +819,30 @@ void domain_game_data::do_cultural_change()
 	}
 }
 
-void domain_game_data::do_events()
+QCoro::Task<void> domain_game_data::do_events()
 {
 	const std::vector<const province *> provinces = this->get_provinces();
 	for (const province *province : provinces) {
-		province->get_game_data()->do_events();
+		co_await province->get_game_data()->do_events();
 	}
 
 	if (!this->is_under_anarchy()) {
 		const bool is_last_turn_of_year = game::get()->is_last_turn_of_year();
 		if (is_last_turn_of_year) {
-			domain_event::check_events_for_scope(this->domain, event_trigger::yearly_pulse);
+			co_await domain_event::check_events_for_scope(this->domain, event_trigger::yearly_pulse);
 		}
 
 		const bool is_last_turn_of_quarter = game::get()->is_last_turn_of_quarter();
 		if (is_last_turn_of_quarter) {
-			domain_event::check_events_for_scope(this->domain, event_trigger::quarterly_pulse);
+			co_await domain_event::check_events_for_scope(this->domain, event_trigger::quarterly_pulse);
 		}
 
-		domain_event::check_events_for_scope(this->domain, event_trigger::per_turn_pulse);
+		co_await domain_event::check_events_for_scope(this->domain, event_trigger::per_turn_pulse);
 	}
 
 	const std::vector<const character *> characters = this->get_characters();
 	for (const character *character : characters) {
-		character->get_game_data()->do_events();
+		co_await character->get_game_data()->do_events();
 	}
 }
 
@@ -856,10 +856,10 @@ country_ai *domain_game_data::get_ai() const
 	return this->domain->get_ai();
 }
 
-void domain_game_data::set_tier(const domain_tier tier)
+QCoro::Task<void> domain_game_data::set_tier(const domain_tier tier)
 {
 	if (tier == this->get_tier()) {
-		return;
+		co_return;
 	}
 
 	assert_throw(tier >= this->domain->get_min_tier());
@@ -868,7 +868,7 @@ void domain_game_data::set_tier(const domain_tier tier)
 	if (this->get_tier() != domain_tier::none) {
 		const domain_tier_data *tier_data = domain_tier_data::get(this->get_tier());
 		if (tier_data->get_modifier() != nullptr) {
-			tier_data->get_modifier()->remove(this->domain);
+			co_await tier_data->get_modifier()->remove(this->domain);
 		}
 	}
 
@@ -877,7 +877,7 @@ void domain_game_data::set_tier(const domain_tier tier)
 	if (this->get_tier() != domain_tier::none) {
 		const domain_tier_data *tier_data = domain_tier_data::get(this->get_tier());
 		if (tier_data->get_modifier() != nullptr) {
-			tier_data->get_modifier()->apply(this->domain);
+			co_await tier_data->get_modifier()->apply(this->domain);
 		}
 	}
 
@@ -886,17 +886,17 @@ void domain_game_data::set_tier(const domain_tier tier)
 	}
 }
 
-void domain_game_data::check_tier()
+QCoro::Task<void> domain_game_data::check_tier()
 {
 	if (this->is_under_anarchy()) {
-		return;
+		co_return;
 	}
 
 	const domain_tier current_tier = this->get_tier();
 	const domain_tier_data *current_tier_data = domain_tier_data::get(current_tier);
 	const int domain_size = this->get_holding_count_with_vassals();
 	if (domain_size >= current_tier_data->get_min_domain_size() && domain_size <= current_tier_data->get_max_domain_size()) {
-		return;
+		co_return;
 	}
 
 	domain_tier new_tier = domain_tier::none;
@@ -938,10 +938,10 @@ void domain_game_data::check_tier()
 	new_tier = std::min(new_tier, this->domain->get_max_tier());
 
 	if (new_tier == current_tier) {
-		return;
+		co_return;
 	}
 
-	this->set_tier(new_tier);
+	co_await this->set_tier(new_tier);
 
 	if (this->domain == game::get()->get_player_country()) {
 		const portrait *interior_minister_portrait = this->get_government()->get_interior_minister_portrait();
@@ -978,10 +978,10 @@ const std::string &domain_game_data::get_flag() const
 	return this->domain->get_flag();
 }
 
-void domain_game_data::set_culture(const metternich::culture *culture)
+QCoro::Task<void> domain_game_data::set_culture(const metternich::culture *culture)
 {
 	if (culture == this->get_culture()) {
-		return;
+		co_return;
 	}
 
 	if (!this->domain->is_culture_allowed(culture)) {
@@ -996,14 +996,14 @@ void domain_game_data::set_culture(const metternich::culture *culture)
 		}
 	}
 
-	this->get_technology()->check_technologies();
+	co_await this->get_technology()->check_technologies();
 
 	if (game::get()->is_running()) {
 		emit culture_changed();
 	}
 }
 
-void domain_game_data::check_culture()
+QCoro::Task<void> domain_game_data::check_culture()
 {
 	std::vector<const metternich::culture *> potential_cultures;
 
@@ -1031,15 +1031,15 @@ void domain_game_data::check_culture()
 	}
 
 	if (potential_cultures.empty()) {
-		return;
+		co_return;
 	}
 
 	const metternich::culture *chosen_culture = vector::get_random(potential_cultures);
 	if (chosen_culture == this->get_culture()) {
-		return;
+		co_return;
 	}
 
-	this->set_culture(chosen_culture);
+	co_await this->set_culture(chosen_culture);
 
 	if (this->domain == game::get()->get_player_country()) {
 		const portrait *interior_minister_portrait = this->get_government()->get_interior_minister_portrait();
@@ -1048,10 +1048,10 @@ void domain_game_data::check_culture()
 	}
 }
 
-void domain_game_data::set_religion(const metternich::religion *religion)
+QCoro::Task<void> domain_game_data::set_religion(const metternich::religion *religion)
 {
 	if (religion == this->get_religion()) {
-		return;
+		co_return;
 	}
 
 	this->religion = religion;
@@ -1062,17 +1062,17 @@ void domain_game_data::set_religion(const metternich::religion *religion)
 		}
 	}
 
-	this->get_technology()->check_technologies();
+	co_await this->get_technology()->check_technologies();
 
 	if (game::get()->is_running()) {
 		emit religion_changed();
 	}
 }
 
-void domain_game_data::set_overlord(const metternich::domain *overlord)
+QCoro::Task<void> domain_game_data::set_overlord(const metternich::domain *overlord)
 {
 	if (overlord == this->get_overlord()) {
-		return;
+		co_return;
 	}
 
 	if (this->get_overlord() != nullptr) {
@@ -1092,7 +1092,7 @@ void domain_game_data::set_overlord(const metternich::domain *overlord)
 			this->get_overlord()->get_economy()->change_vassal_resource_count(resource, count);
 		}
 	} else {
-		this->set_subject_type(nullptr);
+		co_await this->set_subject_type(nullptr);
 	}
 
 	if (game::get()->is_running()) {
@@ -1165,10 +1165,10 @@ std::string domain_game_data::get_type_name() const
 	return std::string();
 }
 
-void domain_game_data::set_subject_type(const metternich::subject_type *subject_type)
+QCoro::Task<void> domain_game_data::set_subject_type(const metternich::subject_type *subject_type)
 {
 	if (subject_type == this->get_subject_type()) {
-		return;
+		co_return;
 	}
 
 	this->subject_type = subject_type;
@@ -1177,13 +1177,13 @@ void domain_game_data::set_subject_type(const metternich::subject_type *subject_
 		emit subject_type_changed();
 	}
 
-	this->check_government_type();
+	co_await this->check_government_type();
 }
 
-void domain_game_data::set_government_type(const metternich::government_type *government_type)
+QCoro::Task<void> domain_game_data::set_government_type(const metternich::government_type *government_type)
 {
 	if (government_type == this->get_government_type()) {
-		return;
+		co_return;
 	}
 
 	const metternich::government_type *old_government_type = this->get_government_type();
@@ -1199,13 +1199,13 @@ void domain_game_data::set_government_type(const metternich::government_type *go
 	}
 
 	if (this->get_government_type() != nullptr && this->get_government_type()->get_modifier() != nullptr) {
-		this->get_government_type()->get_modifier()->apply(this->domain, -1);
+		co_await this->get_government_type()->get_modifier()->apply(this->domain, -1);
 	}
 
 	this->government_type = government_type;
 
 	if (this->get_government_type() != nullptr && this->get_government_type()->get_modifier() != nullptr) {
-		this->get_government_type()->get_modifier()->apply(this->domain, 1);
+		co_await this->get_government_type()->get_modifier()->apply(this->domain, 1);
 	}
 
 	if ((old_government_type == nullptr || !old_government_type->has_regnal_numbering()) && this->get_government_type() != nullptr && this->get_government_type()->has_regnal_numbering() && this->get_government()->get_ruler() != nullptr) {
@@ -1237,10 +1237,10 @@ bool domain_game_data::can_have_government_type(const metternich::government_typ
 	return true;
 }
 
-void domain_game_data::check_government_type()
+QCoro::Task<void> domain_game_data::check_government_type()
 {
 	if (this->get_government_type() != nullptr && this->can_have_government_type(this->get_government_type())) {
-		return;
+		co_return;
 	}
 
 	std::vector<const metternich::government_type *> potential_government_types;
@@ -1253,7 +1253,7 @@ void domain_game_data::check_government_type()
 
 	assert_throw(!potential_government_types.empty());
 
-	this->set_government_type(vector::get_random(potential_government_types));
+	co_await this->set_government_type(vector::get_random(potential_government_types));
 }
 
 bool domain_game_data::is_tribal() const
@@ -1271,11 +1271,11 @@ QVariantList domain_game_data::get_provinces_qvariant_list() const
 	return container::to_qvariant_list(this->get_provinces());
 }
 
-void domain_game_data::add_province(const province *province)
+QCoro::Task<void> domain_game_data::add_province(const province *province)
 {
 	const bool was_alive = this->is_alive();
 
-	this->explore_province(province);
+	co_await this->explore_province(province);
 
 	this->provinces.push_back(province);
 
@@ -1293,7 +1293,7 @@ void domain_game_data::add_province(const province *province)
 				assert_throw(resource->get_required_technology() != nullptr);
 
 				if (this->get_technology()->has_technology(resource->get_required_technology())) {
-					map::get()->set_tile_resource_discovered(tile_pos, true);
+					co_await map::get()->set_tile_resource_discovered(tile_pos, true);
 				}
 			}
 		}
@@ -1343,12 +1343,12 @@ void domain_game_data::add_province(const province *province)
 		}
 
 		if (!domain->get_game_data()->is_country_known(this->domain) && domain->get_game_data()->is_province_discovered(province)) {
-			domain->get_game_data()->add_known_country(this->domain);
+			co_await domain->get_game_data()->add_known_country(this->domain);
 		}
 	}
 
 	if (this->get_capital() == nullptr) {
-		this->choose_capital();
+		co_await this->choose_capital();
 	}
 
 	if (game::get()->is_running()) {
@@ -1356,12 +1356,12 @@ void domain_game_data::add_province(const province *province)
 	}
 }
 
-void domain_game_data::remove_province(const province *province)
+QCoro::Task<void> domain_game_data::remove_province(const province *province)
 {
 	std::erase(this->provinces, province);
 
 	if (this->get_capital_province() == province) {
-		this->choose_capital();
+		co_await this->choose_capital();
 	}
 
 	this->on_province_gained(province, -1);
@@ -1436,7 +1436,7 @@ void domain_game_data::remove_province(const province *province)
 	}
 
 	if (!this->is_alive()) {
-		game::get()->remove_country(this->domain);
+		co_await game::get()->remove_country(this->domain);
 	}
 
 	if (game::get()->is_running()) {
@@ -1504,11 +1504,11 @@ QVariantList domain_game_data::get_sites_qvariant_list() const
 	return container::to_qvariant_list(this->get_sites());
 }
 
-void domain_game_data::add_site(const site *site)
+QCoro::Task<void> domain_game_data::add_site(const site *site)
 {
 	const bool was_alive = this->is_alive();
 
-	this->explore_province(site->get_map_data()->get_province());
+	co_await this->explore_province(site->get_map_data()->get_province());
 
 	this->sites.push_back(site);
 
@@ -1516,10 +1516,10 @@ void domain_game_data::add_site(const site *site)
 		game::get()->add_country(this->domain);
 	}
 
-	this->on_site_gained(site, 1);
+	co_await this->on_site_gained(site, 1);
 
 	if (this->get_capital() == nullptr) {
-		this->choose_capital();
+		co_await this->choose_capital();
 	}
 
 	if (game::get()->is_running()) {
@@ -1527,15 +1527,15 @@ void domain_game_data::add_site(const site *site)
 	}
 }
 
-void domain_game_data::remove_site(const site *site)
+QCoro::Task<void> domain_game_data::remove_site(const site *site)
 {
 	std::erase(this->sites, site);
 
 	if (this->get_capital() == site) {
-		this->choose_capital();
+		co_await this->choose_capital();
 	}
 
-	this->on_site_gained(site, -1);
+	co_await this->on_site_gained(site, -1);
 
 	//remove this as a known country for other countries, if they no longer have explored tiles in this country's territory
 	for (const metternich::domain *domain : game::get()->get_countries()) {
@@ -1574,7 +1574,7 @@ void domain_game_data::remove_site(const site *site)
 	}
 
 	if (!this->is_alive()) {
-		game::get()->remove_country(this->domain);
+		co_await game::get()->remove_country(this->domain);
 	}
 
 	if (game::get()->is_running()) {
@@ -1582,28 +1582,28 @@ void domain_game_data::remove_site(const site *site)
 	}
 }
 
-void domain_game_data::on_site_gained(const site *site, const int multiplier)
+QCoro::Task<void> domain_game_data::on_site_gained(const site *site, const int multiplier)
 {
 	const site_game_data *site_game_data = site->get_game_data();
 
 	if (site->is_settlement() && site_game_data->is_built()) {
-		this->change_holding_count(1 * multiplier);
+		co_await this->change_holding_count(1 * multiplier);
 		this->change_score(site_game_data->get_holding_level() * 100 * multiplier);
 		this->change_domain_power(site_game_data->get_holding_level() * multiplier);
 
 		for (const auto &[attribute, value] : this->get_site_attribute_values()) {
-			site->get_game_data()->change_attribute_value(attribute, value * multiplier);
+			co_await site->get_game_data()->change_attribute_value(attribute, value * multiplier);
 		}
 
 		for (const qunique_ptr<building_slot> &building_slot : site_game_data->get_building_slots()) {
 			const building_type *building = building_slot->get_building();
 			if (building != nullptr) {
-				this->change_settlement_building_count(building, 1 * multiplier);
+				co_await this->change_settlement_building_count(building, 1 * multiplier);
 			}
 
 			const wonder *wonder = building_slot->get_wonder();
 			if (wonder != nullptr) {
-				this->on_wonder_gained(wonder, multiplier);
+				co_await this->on_wonder_gained(wonder, multiplier);
 			}
 		}
 	}
@@ -1611,26 +1611,26 @@ void domain_game_data::on_site_gained(const site *site, const int multiplier)
 	const resource *site_resource = site->get_game_data()->get_resource();
 	if (site_resource != nullptr) {
 		if (site_resource->get_country_modifier() != nullptr) {
-			site_resource->get_country_modifier()->apply(this->domain, multiplier);
+			co_await site_resource->get_country_modifier()->apply(this->domain, multiplier);
 		}
 
 		if (site_resource->get_improved_country_modifier() != nullptr && site->get_game_data()->get_resource_improvement() != nullptr) {
-			site_resource->get_improved_country_modifier()->apply(this->domain, multiplier);
+			co_await site_resource->get_improved_country_modifier()->apply(this->domain, multiplier);
 		}
 	}
 
 	magic_enum::enum_for_each<improvement_slot>([this, site, multiplier](const improvement_slot slot) {
 		const improvement *improvement = site->get_game_data()->get_improvement(slot);
 		if (improvement != nullptr && improvement->get_country_modifier() != nullptr) {
-			improvement->get_country_modifier()->apply(this->domain, multiplier);
+			QCoro::waitFor(improvement->get_country_modifier()->apply(this->domain, multiplier));
 		}
 	});
 }
 
-void domain_game_data::set_capital(const site *capital)
+QCoro::Task<void> domain_game_data::set_capital(const site *capital)
 {
 	if (capital == this->get_capital()) {
-		return;
+		co_return;
 	}
 
 	if (capital != nullptr) {
@@ -1645,7 +1645,7 @@ void domain_game_data::set_capital(const site *capital)
 
 	if (capital != nullptr) {
 		capital->get_game_data()->calculate_commodity_outputs();
-		capital->get_game_data()->check_building_conditions();
+		co_await capital->get_game_data()->check_building_conditions();
 		if (!capital->get_game_data()->is_provincial_capital()) {
 			capital->get_map_data()->get_province()->get_game_data()->choose_provincial_capital();
 		}
@@ -1656,7 +1656,7 @@ void domain_game_data::set_capital(const site *capital)
 
 	if (old_capital != nullptr) {
 		old_capital->get_game_data()->calculate_commodity_outputs();
-		old_capital->get_game_data()->check_building_conditions();
+		co_await old_capital->get_game_data()->check_building_conditions();
 		if (old_capital->get_game_data()->is_provincial_capital()) {
 			old_capital->get_map_data()->get_province()->get_game_data()->choose_provincial_capital();
 		}
@@ -1665,18 +1665,18 @@ void domain_game_data::set_capital(const site *capital)
 	emit capital_changed();
 }
 
-void domain_game_data::choose_capital()
+QCoro::Task<void> domain_game_data::choose_capital()
 {
 	const site *default_capital = this->domain->get_default_capital();
 	if (default_capital->get_game_data()->get_owner() == this->domain && default_capital->get_game_data()->can_be_capital()) {
-		this->set_capital(default_capital);
-		return;
+		co_await this->set_capital(default_capital);
+		co_return;
 	}
 
 	const province *default_capital_province = default_capital->get_game_data()->get_province();
 	if (default_capital_province != nullptr && default_capital_province->get_game_data()->get_owner() == this->domain && default_capital_province->get_game_data()->get_provincial_capital() != nullptr && default_capital_province->get_game_data()->get_provincial_capital()->get_game_data()->can_be_capital()) {
-		this->set_capital(default_capital_province->get_game_data()->get_provincial_capital());
-		return;
+		co_await this->set_capital(default_capital_province->get_game_data()->get_provincial_capital());
+		co_return;
 	}
 
 	const site *best_capital = nullptr;
@@ -1701,7 +1701,7 @@ void domain_game_data::choose_capital()
 		best_capital = site;
 	}
 
-	this->set_capital(best_capital);
+	co_await this->set_capital(best_capital);
 }
 
 const province *domain_game_data::get_capital_province() const
@@ -1713,10 +1713,10 @@ const province *domain_game_data::get_capital_province() const
 	return nullptr;
 }
 
-void domain_game_data::change_holding_count(const int change)
+QCoro::Task<void> domain_game_data::change_holding_count(const int change)
 {
 	if (change == 0) {
-		return;
+		co_return;
 	}
 
 	const int old_holding_count = this->get_holding_count();
@@ -1725,7 +1725,7 @@ void domain_game_data::change_holding_count(const int change)
 
 	for (const auto &[building, count] : this->settlement_building_counts) {
 		if (building->get_weighted_domain_modifier() != nullptr) {
-			building->get_weighted_domain_modifier()->apply(this->domain, centesimal_int(-count) / old_holding_count);
+			co_await building->get_weighted_domain_modifier()->apply(this->domain, centesimal_int(-count) / old_holding_count);
 		}
 	}
 
@@ -1733,7 +1733,7 @@ void domain_game_data::change_holding_count(const int change)
 		for (const auto &[building, count] : this->settlement_building_counts) {
 			if (building->get_weighted_domain_modifier() != nullptr) {
 				//reapply the settlement building's weighted country modifier with the updated settlement count
-				building->get_weighted_domain_modifier()->apply(this->domain, centesimal_int(count) / this->get_holding_count());
+				co_await building->get_weighted_domain_modifier()->apply(this->domain, centesimal_int(count) / this->get_holding_count());
 			}
 		}
 	}
@@ -2107,7 +2107,7 @@ QVariantList domain_game_data::get_tile_terrain_counts_qvariant_list() const
 	return counts;
 }
 
-void domain_game_data::add_known_country(const metternich::domain *other_domain)
+QCoro::Task<void> domain_game_data::add_known_country(const metternich::domain *other_domain)
 {
 	this->known_countries.insert(other_domain);
 
@@ -2125,7 +2125,7 @@ void domain_game_data::add_known_country(const metternich::domain *other_domain)
 	}
 
 	if (this->get_technology()->get_gain_technologies_known_by_others_count() > 0) {
-		this->get_technology()->gain_technologies_known_by_others();
+		co_await this->get_technology()->gain_technologies_known_by_others();
 	}
 }
 
@@ -2140,19 +2140,19 @@ diplomacy_state domain_game_data::get_diplomacy_state(const metternich::domain *
 	return diplomacy_state::peace;
 }
 
-void domain_game_data::set_diplomacy_state(const metternich::domain *other_domain, const diplomacy_state state)
+QCoro::Task<void> domain_game_data::set_diplomacy_state(const metternich::domain *other_domain, const diplomacy_state state)
 {
 	const diplomacy_state old_state = this->get_diplomacy_state(other_domain);
 
 	if (state == old_state) {
-		return;
+		co_return;
 	}
 
 	if (is_vassalage_diplomacy_state(state)) {
-		this->set_overlord(other_domain);
+		co_await this->set_overlord(other_domain);
 	} else {
 		if (this->get_overlord() == other_domain) {
-			this->set_overlord(nullptr);
+			co_await this->set_overlord(nullptr);
 		}
 	}
 
@@ -2698,10 +2698,10 @@ QVariantList domain_game_data::get_attribute_values_qvariant_list() const
 	return archimedes::map::to_qvariant_list(this->get_attribute_values());
 }
 
-void domain_game_data::change_attribute_value(const domain_attribute *attribute, const int change)
+QCoro::Task<void> domain_game_data::change_attribute_value(const domain_attribute *attribute, const int change)
 {
 	if (change == 0) {
-		return;
+		co_return;
 	}
 
 	const int old_value = this->get_attribute_value(attribute);
@@ -2718,14 +2718,14 @@ void domain_game_data::change_attribute_value(const domain_attribute *attribute,
 		for (int i = old_value + 1; i <= new_value; ++i) {
 			const modifier<const metternich::domain> *value_modifier = attribute->get_value_modifier(i);
 			if (value_modifier != nullptr) {
-				value_modifier->apply(this->domain);
+				co_await value_modifier->apply(this->domain);
 			}
 		}
 	} else {
 		for (int i = old_value; i > new_value; --i) {
 			const modifier<const metternich::domain> *value_modifier = attribute->get_value_modifier(i);
 			if (value_modifier != nullptr) {
-				value_modifier->remove(this->domain);
+				co_await value_modifier->remove(this->domain);
 			}
 		}
 	}
@@ -2790,10 +2790,10 @@ QVariantList domain_game_data::get_site_attribute_values_qvariant_list() const
 	return archimedes::map::to_qvariant_list(this->get_site_attribute_values());
 }
 
-void domain_game_data::change_site_attribute_value(const site_attribute *attribute, const int change)
+QCoro::Task<void> domain_game_data::change_site_attribute_value(const site_attribute *attribute, const int change)
 {
 	if (change == 0) {
-		return;
+		co_return;
 	}
 
 	const int new_value = (this->site_attribute_values[attribute] += change);
@@ -2807,7 +2807,7 @@ void domain_game_data::change_site_attribute_value(const site_attribute *attribu
 			continue;
 		}
 
-		site->get_game_data()->change_attribute_value(attribute, change);
+		co_await site->get_game_data()->change_attribute_value(attribute, change);
 	}
 
 	if (game::get()->is_running()) {
@@ -3119,10 +3119,10 @@ bool domain_game_data::has_building_or_better(const building_type *building) con
 	return false;
 }
 
-void domain_game_data::change_settlement_building_count(const building_type *building, const int change)
+QCoro::Task<void> domain_game_data::change_settlement_building_count(const building_type *building, const int change)
 {
 	if (change == 0) {
-		return;
+		co_return;
 	}
 
 	const int old_count = this->get_settlement_building_count(building);
@@ -3139,12 +3139,12 @@ void domain_game_data::change_settlement_building_count(const building_type *bui
 
 	if (building->get_weighted_domain_modifier() != nullptr && this->get_holding_count() != 0) {
 		//reapply the settlement building's weighted country modifier with the updated count
-		building->get_weighted_domain_modifier()->apply(this->domain, centesimal_int(-old_count) / this->get_holding_count());
-		building->get_weighted_domain_modifier()->apply(this->domain, centesimal_int(count) / this->get_holding_count());
+		co_await building->get_weighted_domain_modifier()->apply(this->domain, centesimal_int(-old_count) / this->get_holding_count());
+		co_await building->get_weighted_domain_modifier()->apply(this->domain, centesimal_int(count) / this->get_holding_count());
 	}
 
 	if (building->get_domain_modifier() != nullptr) {
-		building->get_domain_modifier()->apply(this->domain, change);
+		co_await building->get_domain_modifier()->apply(this->domain, change);
 	}
 
 	if (game::get()->is_running()) {
@@ -3152,10 +3152,10 @@ void domain_game_data::change_settlement_building_count(const building_type *bui
 	}
 }
 
-void domain_game_data::on_wonder_gained(const wonder *wonder, const int multiplier)
+QCoro::Task<void> domain_game_data::on_wonder_gained(const wonder *wonder, const int multiplier)
 {
 	if (wonder->get_country_modifier() != nullptr) {
-		wonder->get_country_modifier()->apply(this->domain, multiplier);
+		co_await wonder->get_country_modifier()->apply(this->domain, multiplier);
 	}
 
 	if (multiplier > 0) {
@@ -3550,14 +3550,14 @@ bool domain_game_data::has_scripted_modifier(const scripted_country_modifier *mo
 	return this->get_scripted_modifiers().contains(modifier);
 }
 
-void domain_game_data::add_scripted_modifier(const scripted_country_modifier *modifier, const int duration)
+QCoro::Task<void> domain_game_data::add_scripted_modifier(const scripted_country_modifier *modifier, const int duration)
 {
 	const read_only_context ctx(this->domain);
 
 	this->scripted_modifiers[modifier] = std::max(this->scripted_modifiers[modifier], duration);
 
 	if (modifier->get_modifier() != nullptr) {
-		this->apply_modifier(modifier->get_modifier(), 1);
+		co_await this->apply_modifier(modifier->get_modifier(), 1);
 	}
 
 	if (game::get()->is_running()) {
@@ -3565,12 +3565,12 @@ void domain_game_data::add_scripted_modifier(const scripted_country_modifier *mo
 	}
 }
 
-void domain_game_data::remove_scripted_modifier(const scripted_country_modifier *modifier)
+QCoro::Task<void> domain_game_data::remove_scripted_modifier(const scripted_country_modifier *modifier)
 {
 	this->scripted_modifiers.erase(modifier);
 
 	if (modifier->get_modifier() != nullptr) {
-		this->apply_modifier(modifier->get_modifier(), -1);
+		co_await this->apply_modifier(modifier->get_modifier(), -1);
 	}
 
 	if (game::get()->is_running()) {
@@ -3578,7 +3578,7 @@ void domain_game_data::remove_scripted_modifier(const scripted_country_modifier 
 	}
 }
 
-void domain_game_data::decrement_scripted_modifiers()
+QCoro::Task<void> domain_game_data::decrement_scripted_modifiers()
 {
 	std::vector<const scripted_country_modifier *> modifiers_to_remove;
 	for (auto &[modifier, duration] : this->scripted_modifiers) {
@@ -3590,7 +3590,7 @@ void domain_game_data::decrement_scripted_modifiers()
 	}
 
 	for (const scripted_country_modifier *modifier : modifiers_to_remove) {
-		this->remove_scripted_modifier(modifier);
+		co_await this->remove_scripted_modifier(modifier);
 	}
 
 	//decrement opinion modifiers
@@ -3618,11 +3618,11 @@ void domain_game_data::decrement_scripted_modifiers()
 	}
 }
 
-void domain_game_data::apply_modifier(const modifier<const metternich::domain> *modifier, const int multiplier)
+QCoro::Task<void> domain_game_data::apply_modifier(const modifier<const metternich::domain> *modifier, const int multiplier)
 {
 	assert_throw(modifier != nullptr);
 
-	modifier->apply(this->domain, multiplier);
+	co_await modifier->apply(this->domain, multiplier);
 }
 
 const std::vector<const character *> &domain_game_data::get_characters() const
@@ -3657,7 +3657,7 @@ void domain_game_data::remove_character(const character *character)
 	}
 }
 
-void domain_game_data::check_characters()
+QCoro::Task<void> domain_game_data::check_characters()
 {
 	const QDate &current_date = game::get()->get_next_date();
 
@@ -3692,7 +3692,7 @@ void domain_game_data::check_characters()
 
 		//recover health and mana
 		assert_throw(character_game_data->get_health() > 0);
-		character_game_data->fully_recover();
+		co_await character_game_data->fully_recover();
 
 		//check if the portrait is still valid, or should change (e.g. due to aging)
 		character_game_data->check_portrait();
@@ -3710,13 +3710,13 @@ void domain_game_data::check_characters()
 			continue;
 		}
 
-		character->get_game_data()->die();
+		co_await character->get_game_data()->die();
 	}
 
-	this->get_government()->check_office_holders();
+	co_await this->get_government()->check_office_holders();
 }
 
-void domain_game_data::generate_ruler()
+QCoro::Task<void> domain_game_data::generate_ruler()
 {
 	const metternich::government_type *government_type = this->get_government_type();
 	assert_throw(government_type != nullptr);
@@ -3743,9 +3743,9 @@ void domain_game_data::generate_ruler()
 
 	const character_class *character_class = vector::get_random(potential_classes);
 
-	const character *ruler = character::generate(species, character_class, 1, nullptr, this->get_culture(), this->get_religion(), this->get_capital(), {}, 0, {}, false);
+	const character *ruler = co_await character::generate(species, character_class, 1, nullptr, this->get_culture(), this->get_religion(), this->get_capital(), {}, 0, {}, false);
 	ruler->get_game_data()->set_domain(this->domain);
-	this->get_government()->set_office_holder(defines::get()->get_ruler_office(), ruler);
+	co_await this->get_government()->set_office_holder(defines::get()->get_ruler_office(), ruler);
 }
 
 QVariantList domain_game_data::get_historical_rulers_qvariant_list() const
@@ -4352,7 +4352,7 @@ bool domain_game_data::is_region_discovered(const region *region) const
 	return false;
 }
 
-void domain_game_data::explore_tile(const QPoint &tile_pos)
+QCoro::Task<void> domain_game_data::explore_tile(const QPoint &tile_pos)
 {
 	this->explored_tiles.insert(tile_pos);
 
@@ -4367,12 +4367,12 @@ void domain_game_data::explore_tile(const QPoint &tile_pos)
 	const resource *tile_resource = tile->get_resource();
 
 	if (tile_owner != nullptr && tile_owner != this->domain && !this->is_country_known(tile_owner)) {
-		this->add_known_country(tile_owner);
+		co_await this->add_known_country(tile_owner);
 	}
 
 	if (tile_resource != nullptr && tile->is_resource_discovered() && tile_resource->get_discovery_technology() != nullptr) {
 		if (this->get_technology()->can_gain_technology(tile_resource->get_discovery_technology())) {
-			this->get_technology()->add_technology(tile_resource->get_discovery_technology());
+			co_await this->get_technology()->add_technology(tile_resource->get_discovery_technology());
 
 			if (game::get()->is_running()) {
 				emit get_technology()->technology_researched(tile_resource->get_discovery_technology());
@@ -4386,20 +4386,20 @@ void domain_game_data::explore_tile(const QPoint &tile_pos)
 		if (this->explored_tiles.size() >= province_map_data->get_tiles().size()) {
 			for (const QPoint &province_tile_pos : province_map_data->get_tiles()) {
 				if (!this->explored_tiles.contains(province_tile_pos)) {
-					return;
+					co_return;
 				}
 			}
 
 			//add the province to the explored provinces and remove its tiles from the explored tiles, as they no longer need to be taken into account separately
-			this->explore_province(tile->get_province());
+			co_await this->explore_province(tile->get_province());
 		}
 	}
 }
 
-void domain_game_data::explore_province(const province *province)
+QCoro::Task<void> domain_game_data::explore_province(const province *province)
 {
 	if (this->explored_provinces.contains(province)) {
-		return;
+		co_return;
 	}
 
 	const province_game_data *province_game_data = province->get_game_data();
@@ -4408,14 +4408,14 @@ void domain_game_data::explore_province(const province *province)
 	const metternich::domain *province_owner = province_game_data->get_owner();
 
 	if (province_owner != nullptr && province_owner != this->domain && !this->is_country_known(province_owner)) {
-		this->add_known_country(province_owner);
+		co_await this->add_known_country(province_owner);
 	}
 
 	for (const site *site : province_game_data->get_sites()) {
 		const metternich::domain *site_owner = site->get_game_data()->get_owner();
 
 		if (site_owner != nullptr && site_owner != this->domain && !this->is_country_known(site_owner)) {
-			this->add_known_country(site_owner);
+			co_await this->add_known_country(site_owner);
 		}
 	}
 
@@ -4446,7 +4446,7 @@ void domain_game_data::explore_province(const province *province)
 
 		if (tile_resource != nullptr && tile->is_resource_discovered() && tile_resource->get_discovery_technology() != nullptr) {
 			if (this->get_technology()->can_gain_technology(tile_resource->get_discovery_technology())) {
-				this->get_technology()->add_technology(tile_resource->get_discovery_technology());
+				co_await this->get_technology()->add_technology(tile_resource->get_discovery_technology());
 
 				if (game::get()->is_running()) {
 					emit get_technology()->technology_researched(tile_resource->get_discovery_technology());
@@ -4456,7 +4456,7 @@ void domain_game_data::explore_province(const province *province)
 	}
 }
 
-void domain_game_data::prospect_tile(const QPoint &tile_pos)
+QCoro::Task<void> domain_game_data::prospect_tile(const QPoint &tile_pos)
 {
 	this->prospected_tiles.insert(tile_pos);
 
@@ -4465,7 +4465,7 @@ void domain_game_data::prospect_tile(const QPoint &tile_pos)
 
 	if (tile_resource != nullptr) {
 		if (!tile->is_resource_discovered() && (tile_resource->get_required_technology() == nullptr || this->get_technology()->has_technology(tile_resource->get_required_technology()))) {
-			map::get()->set_tile_resource_discovered(tile_pos, true);
+			co_await map::get()->set_tile_resource_discovered(tile_pos, true);
 		}
 	}
 
@@ -4492,12 +4492,12 @@ QVariantList domain_game_data::get_active_journal_entries_qvariant_list() const
 	return container::to_qvariant_list(this->get_active_journal_entries());
 }
 
-void domain_game_data::add_active_journal_entry(const journal_entry *journal_entry)
+QCoro::Task<void> domain_game_data::add_active_journal_entry(const journal_entry *journal_entry)
 {
 	this->active_journal_entries.push_back(journal_entry);
 
 	if (journal_entry->get_active_modifier() != nullptr) {
-		journal_entry->get_active_modifier()->apply(this->domain);
+		co_await journal_entry->get_active_modifier()->apply(this->domain);
 	}
 
 	for (const building_type *building : journal_entry->get_built_buildings_with_requirements()) {
@@ -4511,12 +4511,12 @@ void domain_game_data::add_active_journal_entry(const journal_entry *journal_ent
 	}
 }
 
-void domain_game_data::remove_active_journal_entry(const journal_entry *journal_entry)
+QCoro::Task<void> domain_game_data::remove_active_journal_entry(const journal_entry *journal_entry)
 {
 	std::erase(this->active_journal_entries, journal_entry);
 
 	if (journal_entry->get_active_modifier() != nullptr) {
-		journal_entry->get_active_modifier()->remove(this->domain);
+		co_await journal_entry->get_active_modifier()->remove(this->domain);
 	}
 
 	for (const building_type *building : journal_entry->get_built_buildings_with_requirements()) {
@@ -4540,7 +4540,7 @@ QVariantList domain_game_data::get_finished_journal_entries_qvariant_list() cons
 	return container::to_qvariant_list(this->get_finished_journal_entries());
 }
 
-void domain_game_data::check_journal_entries(const bool ignore_effects, const bool ignore_random_chance)
+QCoro::Task<void> domain_game_data::check_journal_entries(const bool ignore_effects, const bool ignore_random_chance)
 {
 	const read_only_context ctx(this->domain);
 
@@ -4551,11 +4551,11 @@ void domain_game_data::check_journal_entries(const bool ignore_effects, const bo
 		changed = true;
 	}
 
-	if (this->check_inactive_journal_entries()) {
+	if (co_await this->check_inactive_journal_entries()) {
 		changed = true;
 	}
 
-	if (this->check_active_journal_entries(ctx, ignore_effects, ignore_random_chance)) {
+	if (co_await this->check_active_journal_entries(ctx, ignore_effects, ignore_random_chance)) {
 		changed = true;
 	}
 
@@ -4592,7 +4592,7 @@ bool domain_game_data::check_potential_journal_entries()
 	return changed;
 }
 
-bool domain_game_data::check_inactive_journal_entries()
+QCoro::Task<bool> domain_game_data::check_inactive_journal_entries()
 {
 	bool changed = false;
 
@@ -4611,15 +4611,15 @@ bool domain_game_data::check_inactive_journal_entries()
 
 		std::erase(this->inactive_journal_entries, journal_entry);
 
-		this->add_active_journal_entry(journal_entry);
+		co_await this->add_active_journal_entry(journal_entry);
 
 		changed = true;
 	}
 
-	return changed;
+	co_return changed;
 }
 
-bool domain_game_data::check_active_journal_entries(const read_only_context &ctx, const bool ignore_effects, const bool ignore_random_chance)
+QCoro::Task<bool> domain_game_data::check_active_journal_entries(const read_only_context &ctx, const bool ignore_effects, const bool ignore_random_chance)
 {
 	bool changed = false;
 
@@ -4627,25 +4627,25 @@ bool domain_game_data::check_active_journal_entries(const read_only_context &ctx
 
 	for (const journal_entry *journal_entry : active_entries) {
 		if (!journal_entry->check_preconditions(this->domain)) {
-			this->remove_active_journal_entry(journal_entry);
+			co_await this->remove_active_journal_entry(journal_entry);
 			changed = true;
 			continue;
 		}
 
 		if (!journal_entry->check_conditions(this->domain)) {
-			this->remove_active_journal_entry(journal_entry);
+			co_await this->remove_active_journal_entry(journal_entry);
 			this->inactive_journal_entries.push_back(journal_entry);
 			changed = true;
 			continue;
 		}
 
 		if (journal_entry->check_completion_conditions(this->domain, ignore_random_chance)) {
-			this->remove_active_journal_entry(journal_entry);
+			co_await this->remove_active_journal_entry(journal_entry);
 			this->finished_journal_entries.push_back(journal_entry);
 			if (!ignore_effects) {
 				if (journal_entry->get_completion_effects() != nullptr) {
 					context effects_ctx(this->domain);
-					journal_entry->get_completion_effects()->do_effects(this->domain, effects_ctx);
+					co_await journal_entry->get_completion_effects()->do_effects(this->domain, effects_ctx);
 				}
 
 				if (game::get()->is_running()) {
@@ -4654,16 +4654,16 @@ bool domain_game_data::check_active_journal_entries(const read_only_context &ctx
 			}
 
 			if (journal_entry->get_completion_modifier() != nullptr) {
-				journal_entry->get_completion_modifier()->apply(this->domain);
+				co_await journal_entry->get_completion_modifier()->apply(this->domain);
 			}
 
 			changed = true;
 		} else if (journal_entry->get_failure_conditions() != nullptr && journal_entry->get_failure_conditions()->check(this->domain, ctx)) {
-			this->remove_active_journal_entry(journal_entry);
+			co_await this->remove_active_journal_entry(journal_entry);
 			this->finished_journal_entries.push_back(journal_entry);
 			if (journal_entry->get_failure_effects() != nullptr && !ignore_effects) {
 				context effects_ctx(this->domain);
-				journal_entry->get_failure_effects()->do_effects(this->domain, effects_ctx);
+				co_await journal_entry->get_failure_effects()->do_effects(this->domain, effects_ctx);
 
 				if (this->domain == game::get()->get_player_country()) {
 					engine_interface::get()->add_notification(journal_entry->get_name(), journal_entry->get_portrait(), std::format("{}{}{}", journal_entry->get_description(), (!journal_entry->get_description().empty() ? "\n\n" : ""), journal_entry->get_failure_effects()->get_effects_string(this->domain, ctx)));
@@ -4673,14 +4673,14 @@ bool domain_game_data::check_active_journal_entries(const read_only_context &ctx
 		}
 	}
 
-	return changed;
+	co_return changed;
 }
 
-void domain_game_data::set_free_building_class_count(const building_class *building_class, const int value)
+QCoro::Task<void> domain_game_data::set_free_building_class_count(const building_class *building_class, const int value)
 {
 	const int old_value = this->get_free_building_class_count(building_class);
 	if (value == old_value) {
-		return;
+		co_return;
 	}
 
 	assert_throw(value >= 0);
@@ -4695,7 +4695,7 @@ void domain_game_data::set_free_building_class_count(const building_class *build
 				continue;
 			}
 
-			site->get_game_data()->check_free_buildings();
+			co_await site->get_game_data()->check_free_buildings();
 		}
 	}
 }

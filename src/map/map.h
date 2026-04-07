@@ -94,7 +94,7 @@ public:
 	Q_INVOKABLE const metternich::province *get_tile_province(const QPoint &tile_pos) const;
 	void set_tile_province(const QPoint &tile_pos, const province *province);
 	void set_tile_site(const QPoint &tile_pos, const site *site);
-	void set_tile_resource_discovered(const QPoint &tile_pos, const bool discovered);
+	[[nodiscard]] QCoro::Task<void> set_tile_resource_discovered(const QPoint &tile_pos, const bool discovered);
 	void set_tile_direction_pathway(const QPoint &tile_pos, const direction direction, const pathway *pathway);
 	void add_tile_civilian_unit(const QPoint &tile_pos, civilian_unit *civilian_unit);
 	void remove_tile_civilian_unit(const QPoint &tile_pos, civilian_unit *civilian_unit);

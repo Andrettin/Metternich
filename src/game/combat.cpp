@@ -283,7 +283,7 @@ void combat::deploy_characters(std::vector<const character *> characters, const 
 
 QCoro::Task<void> combat::start_coro()
 {
-	domain_event::check_events_for_scope(this->scope, event_trigger::combat_started, this->ctx);
+	co_await domain_event::check_events_for_scope(this->scope, event_trigger::combat_started, this->ctx);
 
 	std::map<const character *, int> next_round_initiative_modifiers;
 
@@ -294,10 +294,10 @@ QCoro::Task<void> combat::start_coro()
 	this->result.attacker_victory = this->defending_party->get_characters().empty();
 
 	if (this->result.attacker_victory) {
-		this->attacking_party->gain_experience(this->attacker_experience_award);
+		co_await this->attacking_party->gain_experience(this->attacker_experience_award);
 		this->result.experience_award = this->attacker_experience_award;
 	} else {
-		this->defending_party->gain_experience(this->defender_experience_award);
+		co_await this->defending_party->gain_experience(this->defender_experience_award);
 		this->result.experience_award = this->defender_experience_award;
 	}
 
@@ -368,7 +368,7 @@ QCoro::Task<void> combat::do_round(std::map<const character *, int> &next_round_
 	}
 
 	for (const character *character : all_characters) {
-		character->get_game_data()->decrement_status_effect_durations(defines::get()->get_combat_round_duration(), this->ctx);
+		co_await character->get_game_data()->decrement_status_effect_durations(defines::get()->get_combat_round_duration(), this->ctx);
 	}
 }
 
@@ -523,7 +523,7 @@ QCoro::Task<int64_t> combat::do_character_round(const character *character, part
 									engine_interface::get()->add_combat_notification(std::format("{} Triggered", tile.object->get_trap()->get_name()), war_minister_portrait, effects_string);
 								}
 
-								tile.object->get_trap()->get_trigger_effects()->do_effects(character, ctx);
+								co_await tile.object->get_trap()->get_trigger_effects()->do_effects(character, ctx);
 							}
 
 							tile.object->remove_trap();
@@ -550,7 +550,7 @@ QCoro::Task<int64_t> combat::do_character_round(const character *character, part
 								engine_interface::get()->add_combat_notification(std::format("{} {}", tile.object->get_object_type()->get_name(), tile.object->get_object_type()->get_usage_adjective()), nullptr, text);
 							}
 
-							tile.object->get_use_effects()->do_effects(character, ctx);
+							co_await tile.object->get_use_effects()->do_effects(character, ctx);
 						}
 
 						this->remove_object(tile.object);
@@ -666,7 +666,7 @@ QCoro::Task<int64_t> combat::do_character_attack(const character *character, con
 	}
 
 	const int damage = random::get()->roll_dice(character->get_game_data()->get_damage_dice()) + character->get_game_data()->get_damage_bonus();
-	enemy->get_game_data()->change_health(-damage);
+	co_await enemy->get_game_data()->change_health(-damage);
 
 	if (enemy->get_game_data()->is_dead()) {
 		const int64_t experience_award = enemy->get_game_data()->get_experience_award();
@@ -700,7 +700,7 @@ QCoro::Task<int64_t> combat::do_character_spellcast(const character *caster, con
 		context ctx = this->ctx;
 		ctx.root_scope = target;
 		ctx.source_scope = caster;
-		spell->get_target_effects()->do_effects(target, ctx);
+		co_await spell->get_target_effects()->do_effects(target, ctx);
 	}
 
 	if (target->get_game_data()->is_dead()) {
@@ -732,7 +732,7 @@ QCoro::Task<void> combat::on_character_killed(const character *dead_character, p
 				engine_interface::get()->add_combat_notification(std::format("{} Killed", dead_character->is_temporary() && dead_character->get_monster_type() != nullptr ? dead_character->get_monster_type()->get_name() : dead_character->get_game_data()->get_full_name()), war_minister_portrait, effects_string);
 			}
 
-			dead_character_info->get_kill_effects()->do_effects(killer->get_game_data()->get_domain(), ctx);
+			co_await dead_character_info->get_kill_effects()->do_effects(killer->get_game_data()->get_domain(), ctx);
 		}
 	}
 
@@ -781,7 +781,7 @@ void combat::notify_result()
 	}
 }
 
-void combat::process_result()
+QCoro::Task<void> combat::process_result()
 {
 	const bool success = this->attacking_party->get_domain() == this->scope ? this->result.attacker_victory : !this->result.attacker_victory;
 
@@ -790,25 +790,25 @@ void combat::process_result()
 
 	if (success) {
 		if (this->victory_effects != nullptr) {
-			this->victory_effects->do_effects(this->scope, ctx);
+			co_await this->victory_effects->do_effects(this->scope, ctx);
 		}
 	} else {
 		if (this->defeat_effects != nullptr) {
-			this->defeat_effects->do_effects(this->scope, ctx);
+			co_await this->defeat_effects->do_effects(this->scope, ctx);
 		}
 	}
 }
 
-void combat::on_ended()
+QCoro::Task<void> combat::on_ended_coro()
 {
-	this->process_result();
+	co_await this->process_result();
 
 	//resolve all remaining status effects
 	std::vector<const character *> all_characters = this->attacking_party->get_characters();
 	vector::merge(all_characters, this->defending_party->get_characters());
 	for (const character *character : all_characters) {
 		while (character->get_game_data()->has_any_status_effect_with_less_than_duration(std::chrono::months(1))) {
-			character->get_game_data()->decrement_status_effect_durations(defines::get()->get_combat_round_duration(), this->ctx);
+			co_await character->get_game_data()->decrement_status_effect_durations(defines::get()->get_combat_round_duration(), this->ctx);
 		}
 	}
 

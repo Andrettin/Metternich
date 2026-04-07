@@ -25,7 +25,8 @@ public:
 		return identifier;
 	}
 
-	virtual void do_assignment_effect(const character *scope, context &ctx) const override
+	[[nodiscard]]
+	virtual QCoro::Task<void> do_assignment_effect_coro(const character *scope, context &ctx) const override
 	{
 		bool apply_status_effect = true;
 
@@ -60,10 +61,10 @@ public:
 			if (!ctx.in_combat && duration < std::chrono::months(1)) {
 				//if we are out of combat and the duration is less than a month, resolve the status effect immediately
 				if (this->status_effect->get_end_effects() != nullptr) {
-					this->status_effect->get_end_effects()->do_effects(scope, ctx);
+					co_await this->status_effect->get_end_effects()->do_effects(scope, ctx);
 				}
 			} else {
-				scope->get_game_data()->set_status_effect_duration(this->status_effect, duration);
+				co_await scope->get_game_data()->set_status_effect_duration(this->status_effect, duration);
 			}
 		}
 	}

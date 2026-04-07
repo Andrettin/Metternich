@@ -66,7 +66,8 @@ public:
 	{
 	}
 
-	virtual void do_assignment_effect(scope_type *scope, context &ctx) const override
+	[[nodiscard]]
+	virtual QCoro::Task<void> do_assignment_effect_coro(scope_type *scope, context &ctx) const override
 	{
 		const character *roll_character = this->get_roll_character(scope, ctx);
 		const bool success = roll_character->get_game_data()->do_skill_check(this->skill, this->roll_modifier, this->get_location(roll_character, ctx));
@@ -93,19 +94,19 @@ public:
 
 		if (success) {
 			if (this->success_effects != nullptr) {
-				this->success_effects->do_effects(scope, ctx);
+				co_await this->success_effects->do_effects(scope, ctx);
 			}
 
 			if (this->character_success_effects != nullptr) {
-				this->character_success_effects->do_effects(roll_character, ctx);
+				co_await this->character_success_effects->do_effects(roll_character, ctx);
 			}
 		} else {
 			if (this->failure_effects != nullptr) {
-				this->failure_effects->do_effects(scope, ctx);
+				co_await this->failure_effects->do_effects(scope, ctx);
 			}
 
 			if (this->character_failure_effects != nullptr) {
-				this->character_failure_effects->do_effects(roll_character, ctx);
+				co_await this->character_failure_effects->do_effects(roll_character, ctx);
 			}
 		}
 	}

@@ -48,7 +48,12 @@ public:
 	qunique_ptr<item> take_item();
 
 	Q_INVOKABLE bool can_buy_item(const metternich::character *buyer);
-	Q_INVOKABLE void buy_item(const metternich::character *buyer);
+	[[nodiscard]] QCoro::Task<void> buy_item_coro(const character *buyer);
+
+	Q_INVOKABLE QCoro::QmlTask buy_item(const metternich::character *buyer)
+	{
+		return this->buy_item_coro(buyer);
+	}
 
 	const building_slot *get_building_slot() const
 	{

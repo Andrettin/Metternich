@@ -24,15 +24,15 @@ public:
 		return class_identifier;
 	}
 
-	virtual void do_assignment_effect(const site *scope, context &ctx) const override
+	[[nodiscard]] virtual QCoro::Task<void> do_assignment_effect_coro(const site *scope, context &ctx) const override
 	{
 		Q_UNUSED(ctx);
 
 		if (!this->improvement->is_buildable_on_site(scope)) {
-			return;
+			co_return;
 		}
 
-		scope->get_game_data()->set_improvement(this->improvement->get_slot(), this->improvement);
+		co_await scope->get_game_data()->set_improvement(this->improvement->get_slot(), this->improvement);
 	}
 
 	virtual std::string get_assignment_string(const site *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override

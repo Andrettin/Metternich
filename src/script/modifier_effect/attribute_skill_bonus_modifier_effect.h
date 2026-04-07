@@ -33,13 +33,13 @@ public:
 		}
 	}
 
-	virtual void apply(const character *scope, const centesimal_int &multiplier) const override
+	[[nodiscard]] virtual QCoro::Task<void> apply_coro(const character *scope, const centesimal_int &multiplier) const override
 	{
 		assert_throw(this->attribute != nullptr);
 
 		//FIXME: should grant a bonus not only to skills which have their value based upon that of the attribute, but any skills for which the attribute grants the attribute modifier
 		for (const skill *skill : this->attribute->get_derived_skills()) {
-			scope->get_game_data()->change_skill_value(skill, (this->value * multiplier).to_int());
+			co_await scope->get_game_data()->change_skill_value(skill, (this->value * multiplier).to_int());
 		}
 	}
 

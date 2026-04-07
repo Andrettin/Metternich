@@ -70,27 +70,33 @@ public:
 		return nullptr;
 	}
 
-	void set_law(const law_group *law_group, const law *law);
+	[[nodiscard]] QCoro::Task<void> set_law(const law_group *law_group, const law *law);
 	bool has_law(const law *law) const;
 	Q_INVOKABLE bool can_have_law(const metternich::law *law) const;
 	Q_INVOKABLE bool can_enact_law(const metternich::law *law) const;
-	Q_INVOKABLE void enact_law(const metternich::law *law);
+	[[nodiscard]] QCoro::Task<void> enact_law_coro(const law *law);
+
+	Q_INVOKABLE QCoro::QmlTask enact_law(const metternich::law *law)
+	{
+		return this->enact_law_coro(law);
+	}
+
 	Q_INVOKABLE int get_total_law_cost_modifier() const;
-	void check_laws();
+	[[nodiscard]] QCoro::Task<void> check_laws();
 
 	succession_type get_succession_type() const
 	{
 		return this->succession_type;
 	}
 
-	void set_succession_type(const succession_type succession_type);
+	[[nodiscard]] QCoro::Task<void> set_succession_type(const succession_type succession_type);
 
 	succession_gender_type get_succession_gender_type() const
 	{
 		return this->succession_gender_type;
 	}
 
-	void set_succession_gender_type(const succession_gender_type succession_gender_type);
+	[[nodiscard]] QCoro::Task<void> set_succession_gender_type(const succession_gender_type succession_gender_type);
 
 	const character *get_ruler() const;
 	const character *get_heir() const;
@@ -117,7 +123,7 @@ public:
 		return nullptr;
 	}
 
-	void set_office_holder(const office *office, const character *character);
+	[[nodiscard]] QCoro::Task<void> set_office_holder(const office *office, const character *character);
 
 	const data_entry_map<office, const character *> &get_appointed_office_holders() const
 	{
@@ -139,15 +145,15 @@ public:
 
 	Q_INVOKABLE void set_appointed_office_holder(const metternich::office *office, const metternich::character *character);
 
-	void check_office_holder(const office *office);
-	void check_office_holders();
+	[[nodiscard]] QCoro::Task<void> check_office_holder(const office *office);
+	[[nodiscard]] QCoro::Task<void> check_office_holders();
 	std::vector<const character *> get_appointable_office_holders(const office *office) const;
 	Q_INVOKABLE QVariantList get_appointable_office_holders_qvariant_list(const metternich::office *office) const;
 	const character *get_best_office_holder(const office *office) const;
 	bool can_have_office_holder(const office *office, const character *character) const;
 	bool can_gain_office_holder(const office *office, const character *character) const;
 	Q_INVOKABLE bool can_appoint_office_holder(const metternich::office *office, const metternich::character *character) const;
-	void on_office_holder_died(const office *office, const character *office_holder);
+	[[nodiscard]] QCoro::Task<void> on_office_holder_died(const office *office, const character *office_holder);
 
 	std::vector<const office *> get_available_offices() const;
 	std::vector<const office *> get_appointable_available_offices() const;

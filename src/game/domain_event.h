@@ -115,9 +115,10 @@ public:
 		return scoped_event_base::get_option_tooltip(option_index, ctx);
 	}
 
-	virtual void do_option_effects(const int option_index, context &ctx) const override
+	[[nodiscard]]
+	virtual QCoro::Task<void> do_option_effects(const int option_index, context &ctx) const override
 	{
-		scoped_event_base::do_option_effects(option_index, ctx);
+		co_await scoped_event_base::do_option_effects(option_index, ctx);
 	}
 
 	virtual void create_instance(const context &ctx) const override

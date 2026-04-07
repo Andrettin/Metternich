@@ -234,21 +234,21 @@ gsml_data site_game_data::to_gsml_data() const
 	return data;
 }
 
-void site_game_data::initialize()
+QCoro::Task<void> site_game_data::initialize()
 {
 	const resource *resource = this->get_resource();
 	if (resource != nullptr && resource->get_modifier() != nullptr) {
-		resource->get_modifier()->apply(this->site);
+		co_await resource->get_modifier()->apply(this->site);
 	}
 
 	for (const site_feature *feature : this->site->get_features()) {
-		this->add_feature(feature);
+		co_await this->add_feature(feature);
 	}
 }
 
-void site_game_data::do_turn()
+QCoro::Task<void> site_game_data::do_turn()
 {
-	this->decrement_scripted_modifiers();
+	co_await this->decrement_scripted_modifiers();
 }
 
 void site_game_data::collect_income()
@@ -480,10 +480,10 @@ std::string site_game_data::get_display_text() const
 	return text;
 }
 
-void site_game_data::set_owner(const domain *owner)
+QCoro::Task<void> site_game_data::set_owner(const domain *owner)
 {
 	if (owner == this->get_owner()) {
-		return;
+		co_return;
 	}
 
 	const domain *old_owner = this->get_owner();
@@ -519,7 +519,7 @@ void site_game_data::set_owner(const domain *owner)
 			}
 		}
 
-		old_owner->get_game_data()->remove_site(this->site);
+		co_await old_owner->get_game_data()->remove_site(this->site);
 
 		for (const auto &[commodity, output] : this->get_commodity_outputs()) {
 			if (commodity->is_local()) {
@@ -577,14 +577,14 @@ void site_game_data::set_owner(const domain *owner)
 			}
 		}
 
-		this->get_owner()->get_game_data()->add_site(this->site);
+		co_await this->get_owner()->get_game_data()->add_site(this->site);
 
 		connect(this, &site_game_data::item_slots_changed, this->get_owner()->get_game_data(), &domain_game_data::item_slots_changed);
 	}
 
 	if (this->site->is_settlement() && this->is_built()) {
-		this->check_building_conditions();
-		this->check_free_buildings();
+		co_await this->check_building_conditions();
+		co_await this->check_free_buildings();
 
 		if (this->is_provincial_capital()) {
 			this->get_province()->get_game_data()->choose_provincial_capital();
@@ -662,38 +662,38 @@ void site_game_data::on_population_main_religion_changed(const metternich::relig
 	}
 }
 
-void site_game_data::set_holding_type(const metternich::holding_type *holding_type)
+QCoro::Task<void> site_game_data::set_holding_type(const metternich::holding_type *holding_type)
 {
 	assert_throw(this->site->is_settlement());
 
 	if (holding_type == this->get_holding_type()) {
-		return;
+		co_return;
 	}
 
 	const metternich::holding_type *old_holding_type = this->get_holding_type();
 
 	if (old_holding_type != nullptr) {
 		if (old_holding_type->get_modifier() != nullptr) {
-			old_holding_type->get_modifier()->apply(this->site, -1);
+			co_await old_holding_type->get_modifier()->apply(this->site, -1);
 		}
 	}
 
 	this->holding_type = holding_type;
 
 	if (old_holding_type == nullptr && this->get_holding_type() != nullptr) {
-		this->on_settlement_built(1);
+		co_await this->on_settlement_built(1);
 
 		if (this->get_owner() != nullptr) {
 			if (this->get_owner()->get_game_data()->get_capital() == nullptr && this->can_be_capital()) {
-				this->get_owner()->get_game_data()->set_capital(this->site);
+				co_await this->get_owner()->get_game_data()->set_capital(this->site);
 			}
 		}
 	} else if (old_holding_type != nullptr && this->get_holding_type() == nullptr) {
-		this->on_settlement_built(-1);
+		co_await this->on_settlement_built(-1);
 
 		if (this->get_owner() != nullptr) {
 			if (this->get_owner()->get_game_data()->get_capital() == this->site) {
-				this->get_owner()->get_game_data()->choose_capital();
+				co_await this->get_owner()->get_game_data()->choose_capital();
 			}
 		}
 	}
@@ -702,11 +702,11 @@ void site_game_data::set_holding_type(const metternich::holding_type *holding_ty
 		assert_throw(this->get_dungeon() == nullptr);
 
 		if (this->get_holding_type()->get_modifier() != nullptr) {
-			this->get_holding_type()->get_modifier()->apply(this->site, 1);
+			co_await this->get_holding_type()->get_modifier()->apply(this->site, 1);
 		}
 
-		this->check_building_conditions();
-		this->check_free_buildings();
+		co_await this->check_building_conditions();
+		co_await this->check_free_buildings();
 	}
 
 	this->update_holding_type_name();
@@ -717,20 +717,20 @@ void site_game_data::set_holding_type(const metternich::holding_type *holding_ty
 	}
 }
 
-void site_game_data::check_holding_type()
+QCoro::Task<void> site_game_data::check_holding_type()
 {
 	if (this->get_holding_type() == nullptr) {
-		return;
+		co_return;
 	}
 
 	if (this->get_holding_type()->get_conditions() == nullptr || this->get_holding_type()->get_conditions()->check(this->site, read_only_context(this->site))) {
-		return;
+		co_return;
 	}
 
 	const std::vector<const metternich::holding_type *> potential_holding_types = this->get_best_holding_types(this->get_holding_type()->get_base_holding_types());
 
 	assert_throw(!potential_holding_types.empty());
-	this->set_holding_type(vector::get_random(potential_holding_types));
+	co_await this->set_holding_type(vector::get_random(potential_holding_types));
 }
 
 std::vector<const metternich::holding_type *> site_game_data::get_best_holding_types(const std::vector<const metternich::holding_type *> &holding_types) const
@@ -832,7 +832,7 @@ int site_game_data::get_building_holding_level_change(const building_type *build
 	return holding_level_change;
 }
 
-void site_game_data::set_holding_level_from_buildings(const int level)
+QCoro::Task<void> site_game_data::set_holding_level_from_buildings(const int level)
 {
 	bool changed = true;
 	while (level > this->get_holding_level() && changed) {
@@ -858,7 +858,7 @@ void site_game_data::set_holding_level_from_buildings(const int level)
 		}
 
 		if (!potential_buildings.empty()) {
-			this->add_building_with_prerequisites(vector::get_random(potential_buildings));
+			co_await this->add_building_with_prerequisites(vector::get_random(potential_buildings));
 			changed = true;
 		}
 	}
@@ -945,10 +945,10 @@ const resource *site_game_data::get_resource() const
 	return this->site->get_map_data()->get_resource();
 }
 
-void site_game_data::set_dungeon(const metternich::dungeon *dungeon)
+QCoro::Task<void> site_game_data::set_dungeon(const metternich::dungeon *dungeon)
 {
 	if (dungeon == this->get_dungeon()) {
-		return;
+		co_return;
 	}
 
 	if (dungeon != nullptr) {
@@ -962,10 +962,10 @@ void site_game_data::set_dungeon(const metternich::dungeon *dungeon)
 
 	if (this->get_dungeon() != nullptr) {
 		//dungeons cannot have owners
-		this->set_owner(nullptr);
+		co_await this->set_owner(nullptr);
 	} else {
 		//when sites are cleared of a dungeon, they can be owned
-		this->set_owner(this->get_province()->get_game_data()->get_owner());
+		co_await this->set_owner(this->get_province()->get_game_data()->get_owner());
 	}
 
 	if (game::get()->is_running()) {
@@ -1036,22 +1036,22 @@ bool site_game_data::has_improvement_or_better(const improvement *improvement) c
 	return false;
 }
 
-void site_game_data::set_improvement(const improvement_slot slot, const improvement *improvement)
+QCoro::Task<void> site_game_data::set_improvement(const improvement_slot slot, const improvement *improvement)
 {
 	const metternich::improvement *old_improvement = this->get_improvement(slot);
 
 	if (old_improvement == improvement) {
-		return;
+		co_return;
 	}
 
 	if (old_improvement != nullptr) {
-		this->on_improvement_gained(old_improvement, -1);
+		co_await this->on_improvement_gained(old_improvement, -1);
 	}
 
 	this->improvements[slot] = improvement;
 
 	if (improvement != nullptr) {
-		this->on_improvement_gained(improvement, 1);
+		co_await this->on_improvement_gained(improvement, 1);
 	}
 
 	if (slot == improvement_slot::main || (slot == improvement_slot::resource && this->get_improvement(improvement_slot::main) == nullptr)) {
@@ -1080,14 +1080,14 @@ QVariantList site_game_data::get_features_qvariant_list() const
 	return archimedes::container::to_qvariant_list(this->get_features());
 }
 
-void site_game_data::add_feature(const site_feature *feature)
+QCoro::Task<void> site_game_data::add_feature(const site_feature *feature)
 {
 	assert_throw(!this->has_feature(feature));
 
 	this->features.insert(feature);
 
 	if (feature->get_modifier() != nullptr) {
-		feature->get_modifier()->apply(this->site);
+		co_await feature->get_modifier()->apply(this->site);
 	}
 
 	if (game::get()->is_running()) {
@@ -1095,14 +1095,14 @@ void site_game_data::add_feature(const site_feature *feature)
 	}
 }
 
-void site_game_data::remove_feature(const site_feature *feature)
+QCoro::Task<void> site_game_data::remove_feature(const site_feature *feature)
 {
 	assert_throw(this->has_feature(feature));
 
 	this->features.erase(feature);
 
 	if (feature->get_modifier() != nullptr) {
-		feature->get_modifier()->remove(this->site);
+		co_await feature->get_modifier()->remove(this->site);
 	}
 
 	if (game::get()->is_running()) {
@@ -1115,10 +1115,10 @@ QVariantList site_game_data::get_attribute_values_qvariant_list() const
 	return archimedes::map::to_qvariant_list(this->get_attribute_values());
 }
 
-void site_game_data::change_attribute_value(const site_attribute *attribute, const int change)
+QCoro::Task<void> site_game_data::change_attribute_value(const site_attribute *attribute, const int change)
 {
 	if (change == 0) {
-		return;
+		co_return;
 	}
 
 	const int old_value = this->get_attribute_value(attribute);
@@ -1133,14 +1133,14 @@ void site_game_data::change_attribute_value(const site_attribute *attribute, con
 		for (int i = old_value + 1; i <= new_value; ++i) {
 			const modifier<const metternich::site> *value_modifier = attribute->get_value_modifier(i);
 			if (value_modifier != nullptr) {
-				value_modifier->apply(this->site);
+				co_await value_modifier->apply(this->site);
 			}
 		}
 	} else {
 		for (int i = old_value; i > new_value; --i) {
 			const modifier<const metternich::site> *value_modifier = attribute->get_value_modifier(i);
 			if (value_modifier != nullptr) {
-				value_modifier->remove(this->site);
+				co_await value_modifier->remove(this->site);
 			}
 		}
 	}
@@ -1258,7 +1258,7 @@ const building_type *site_game_data::get_slot_building(const building_slot_type 
 	return nullptr;
 }
 
-void site_game_data::set_slot_building(const building_slot_type *slot_type, const building_type *building)
+QCoro::Task<void> site_game_data::set_slot_building(const building_slot_type *slot_type, const building_type *building)
 {
 	if (building != nullptr) {
 		assert_throw(building->get_slot_type() == slot_type);
@@ -1266,8 +1266,8 @@ void site_game_data::set_slot_building(const building_slot_type *slot_type, cons
 
 	const auto find_iterator = this->building_slot_map.find(slot_type);
 	if (find_iterator != this->building_slot_map.end()) {
-		find_iterator->second->set_building(building);
-		return;
+		co_await find_iterator->second->set_building(building);
+		co_return;
 	}
 
 	assert_throw(false);
@@ -1344,21 +1344,21 @@ bool site_game_data::can_gain_building_class(const building_class *building_clas
 	return this->can_gain_building(building);
 }
 
-void site_game_data::add_building(const building_type *building)
+QCoro::Task<void> site_game_data::add_building(const building_type *building)
 {
 	if (this->has_building_or_better(building)) {
-		return;
+		co_return;
 	}
 
-	this->get_building_slot(building->get_slot_type())->set_building(building);
+	co_await this->get_building_slot(building->get_slot_type())->set_building(building);
 }
 
-void site_game_data::add_building_with_prerequisites(const building_type *building)
+QCoro::Task<void> site_game_data::add_building_with_prerequisites(const building_type *building)
 {
 	assert_throw(building != nullptr);
 
 	if (building->get_min_holding_level() > 0 && building->get_min_holding_level() > this->get_holding_level()) {
-		this->set_holding_level_from_buildings(building->get_min_holding_level());
+		co_await this->set_holding_level_from_buildings(building->get_min_holding_level());
 	}
 
 	for (const building_type *required_building : building->get_required_buildings()) {
@@ -1366,25 +1366,25 @@ void site_game_data::add_building_with_prerequisites(const building_type *buildi
 			continue;
 		}
 
-		this->add_building_with_prerequisites(required_building);
+		co_await this->add_building_with_prerequisites(required_building);
 	}
 
 	if (building->get_required_technology() != nullptr && this->get_province() != nullptr) {
-		this->get_province()->get_game_data()->add_technology_with_prerequisites(building->get_required_technology());
+		co_await this->get_province()->get_game_data()->add_technology_with_prerequisites(building->get_required_technology());
 	}
 
-	this->add_building(building);
+	co_await this->add_building(building);
 }
 
-void site_game_data::clear_buildings()
+QCoro::Task<void> site_game_data::clear_buildings()
 {
 	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
-		building_slot->set_wonder(nullptr);
-		building_slot->set_building(nullptr);
+		co_await building_slot->set_wonder(nullptr);
+		co_await building_slot->set_building(nullptr);
 	}
 }
 
-void site_game_data::check_building_conditions()
+QCoro::Task<void> site_game_data::check_building_conditions()
 {
 	assert_throw(this->site->is_settlement());
 
@@ -1399,7 +1399,7 @@ void site_game_data::check_building_conditions()
 
 		const wonder *wonder = building_slot->get_wonder();
 		if (wonder != nullptr && !building_slot->can_have_wonder(wonder)) {
-			building_slot->set_wonder(nullptr);
+			co_await building_slot->set_wonder(nullptr);
 		}
 
 		//if the building fails its conditions, try to replace it with one of its required buildings, if valid
@@ -1454,22 +1454,22 @@ void site_game_data::check_building_conditions()
 		}
 
 		if (building != building_slot->get_building()) {
-			building_slot->set_building(building);
+			co_await building_slot->set_building(building);
 		}
 	}
 }
 
-void site_game_data::check_free_buildings()
+QCoro::Task<void> site_game_data::check_free_buildings()
 {
 	assert_throw(this->site->is_settlement());
 
 	const domain *owner = this->get_owner();
 	if (owner == nullptr) {
-		return;
+		co_return;
 	}
 
 	if (this->get_culture() == nullptr) {
-		return;
+		co_return;
 	}
 
 	const domain_game_data *owner_game_data = owner->get_game_data();
@@ -1485,7 +1485,7 @@ void site_game_data::check_free_buildings()
 			continue;
 		}
 
-		if (this->check_free_building(building)) {
+		if (co_await this->check_free_building(building)) {
 			changed = true;
 		}
 	}
@@ -1496,7 +1496,7 @@ void site_game_data::check_free_buildings()
 				continue;
 			}
 
-			if (this->check_free_building(building)) {
+			if (co_await this->check_free_building(building)) {
 				changed = true;
 			}
 		}
@@ -1504,7 +1504,7 @@ void site_game_data::check_free_buildings()
 
 	if (changed) {
 		//check free buildings again, as the addition of a free building might have caused the requirements of others to be fulfilled
-		this->check_free_buildings();
+		co_await this->check_free_buildings();
 	}
 }
 
@@ -1553,43 +1553,44 @@ bool site_game_data::can_gain_free_building(const building_type *building, const
 	return true;
 }
 
-bool site_game_data::check_free_building(const building_type *building)
+[[nodiscard]]
+QCoro::Task<bool> site_game_data::check_free_building(const building_type *building)
 {
 	if (!this->can_gain_free_building(building, true)) {
-		return false;
+		co_return false;
 	}
 
 	building_slot *building_slot = this->get_building_slot(building->get_slot_type());
 	assert_throw(building_slot != nullptr);
-	building_slot->set_building(building);
+	co_await building_slot->set_building(building);
 
-	return true;
+	co_return true;
 }
 
-bool site_game_data::check_free_improvement(const improvement *improvement)
+QCoro::Task<bool> site_game_data::check_free_improvement(const improvement *improvement)
 {
 	if (improvement->get_required_technology() != nullptr && (this->get_owner() == nullptr || !this->get_owner()->get_technology()->has_technology(improvement->get_required_technology()))) {
-		return false;
+		co_return false;
 	}
 
 	if (!improvement->is_buildable_on_site(this->site)) {
-		return false;
+		co_return false;
 	}
 
-	this->set_improvement(improvement->get_slot(), improvement);
+	co_await this->set_improvement(improvement->get_slot(), improvement);
 
-	return true;
+	co_return true;
 }
 
-void site_game_data::on_settlement_built(const int multiplier)
+QCoro::Task<void> site_game_data::on_settlement_built(const int multiplier)
 {
 	this->get_province()->get_game_data()->change_settlement_count(multiplier);
 
 	if (this->get_owner() != nullptr) {
-		this->get_owner()->get_game_data()->change_holding_count(multiplier);
+		co_await this->get_owner()->get_game_data()->change_holding_count(multiplier);
 
 		for (const auto &[attribute, value] : this->get_owner()->get_game_data()->get_site_attribute_values()) {
-			this->change_attribute_value(attribute, value * multiplier);
+			co_await this->change_attribute_value(attribute, value * multiplier);
 		}
 	}
 
@@ -1613,7 +1614,7 @@ void site_game_data::on_settlement_built(const int multiplier)
 	}
 }
 
-void site_game_data::on_building_gained(const building_type *building, const int multiplier)
+QCoro::Task<void> site_game_data::on_building_gained(const building_type *building, const int multiplier)
 {
 	assert_throw(building != nullptr);
 	assert_throw(multiplier != 0);
@@ -1622,7 +1623,7 @@ void site_game_data::on_building_gained(const building_type *building, const int
 	if (this->get_owner() != nullptr) {
 		domain_game_data *domain_game_data = this->get_owner()->get_game_data();
 		country_economy *country_economy = this->get_owner()->get_economy();
-		domain_game_data->change_settlement_building_count(building, multiplier);
+		co_await domain_game_data->change_settlement_building_count(building, multiplier);
 
 		for (const auto &[commodity, bonus] : country_economy->get_building_commodity_bonuses(building)) {
 			this->change_base_commodity_output(commodity, centesimal_int(bonus) * multiplier);
@@ -1630,16 +1631,16 @@ void site_game_data::on_building_gained(const building_type *building, const int
 	}
 
 	if (building->get_province_modifier() != nullptr) {
-		building->get_province_modifier()->apply(this->get_province(), multiplier);
+		co_await building->get_province_modifier()->apply(this->get_province(), multiplier);
 	}
 
 	if (building->get_modifier() != nullptr) {
-		building->get_modifier()->apply(this->site, multiplier);
+		co_await building->get_modifier()->apply(this->site, multiplier);
 	}
 
 	if (multiplier > 0 && building->get_effects() != nullptr) {
 		context effects_ctx(this->site);
-		building->get_effects()->do_effects(this->site, effects_ctx);
+		co_await building->get_effects()->do_effects(this->site, effects_ctx);
 	}
 
 	this->change_total_building_size(building->get_size() * multiplier);
@@ -1653,21 +1654,21 @@ void site_game_data::on_building_gained(const building_type *building, const int
 	}
 }
 
-void site_game_data::on_wonder_gained(const wonder *wonder, const int multiplier)
+QCoro::Task<void> site_game_data::on_wonder_gained(const wonder *wonder, const int multiplier)
 {
 	assert_throw(wonder != nullptr);
 	assert_throw(multiplier != 0);
 
 	if (this->get_owner() != nullptr) {
-		this->get_owner()->get_game_data()->on_wonder_gained(wonder, multiplier);
+		co_await this->get_owner()->get_game_data()->on_wonder_gained(wonder, multiplier);
 	}
 
 	if (wonder->get_province_modifier() != nullptr) {
-		wonder->get_province_modifier()->apply(this->get_province(), multiplier);
+		co_await wonder->get_province_modifier()->apply(this->get_province(), multiplier);
 	}
 }
 
-void site_game_data::on_improvement_gained(const improvement *improvement, const int multiplier)
+QCoro::Task<void> site_game_data::on_improvement_gained(const improvement *improvement, const int multiplier)
 {
 	if (this->get_province() != nullptr && this->get_resource() != nullptr && improvement->get_slot() == improvement_slot::resource) {
 		for (const auto &[commodity, value] : this->get_province()->get_game_data()->get_improved_resource_commodity_bonuses(this->get_resource())) {
@@ -1685,20 +1686,20 @@ void site_game_data::on_improvement_gained(const improvement *improvement, const
 
 	if (this->get_resource() != nullptr && improvement->get_slot() == improvement_slot::resource) {
 		if (this->get_resource()->get_improved_modifier() != nullptr) {
-			this->get_resource()->get_improved_modifier()->apply(this->site, multiplier);
+			co_await this->get_resource()->get_improved_modifier()->apply(this->site, multiplier);
 		}
 
 		if (this->get_resource()->get_improved_country_modifier() != nullptr && this->get_owner() != nullptr) {
-			this->get_resource()->get_improved_country_modifier()->apply(this->get_owner(), multiplier);
+			co_await this->get_resource()->get_improved_country_modifier()->apply(this->get_owner(), multiplier);
 		}
 	}
 
 	if (improvement->get_modifier() != nullptr) {
-		improvement->get_modifier()->apply(this->site, multiplier);
+		co_await improvement->get_modifier()->apply(this->site, multiplier);
 	}
 
 	if (improvement->get_country_modifier() != nullptr && this->get_owner() != nullptr) {
-		improvement->get_country_modifier()->apply(this->get_owner(), multiplier);
+		co_await improvement->get_country_modifier()->apply(this->get_owner(), multiplier);
 	}
 }
 
@@ -1747,14 +1748,14 @@ bool site_game_data::has_scripted_modifier(const scripted_site_modifier *modifie
 	return this->get_scripted_modifiers().contains(modifier);
 }
 
-void site_game_data::add_scripted_modifier(const scripted_site_modifier *modifier, const int duration)
+QCoro::Task<void> site_game_data::add_scripted_modifier(const scripted_site_modifier *modifier, const int duration)
 {
 	const read_only_context ctx(this->site);
 
 	this->scripted_modifiers[modifier] = std::max(this->scripted_modifiers[modifier], duration);
 
 	if (modifier->get_modifier() != nullptr) {
-		modifier->get_modifier()->apply(this->site);
+		co_await modifier->get_modifier()->apply(this->site);
 	}
 
 	if (game::get()->is_running()) {
@@ -1762,12 +1763,12 @@ void site_game_data::add_scripted_modifier(const scripted_site_modifier *modifie
 	}
 }
 
-void site_game_data::remove_scripted_modifier(const scripted_site_modifier *modifier)
+QCoro::Task<void> site_game_data::remove_scripted_modifier(const scripted_site_modifier *modifier)
 {
 	this->scripted_modifiers.erase(modifier);
 
 	if (modifier->get_modifier() != nullptr) {
-		modifier->get_modifier()->remove(this->site);
+		co_await modifier->get_modifier()->remove(this->site);
 	}
 
 	if (game::get()->is_running()) {
@@ -1792,10 +1793,10 @@ bool site_game_data::can_have_population_type(const population_type *type) const
 	}
 }
 
-void site_game_data::decrement_scripted_modifiers()
+QCoro::Task<void> site_game_data::decrement_scripted_modifiers()
 {
 	if (this->scripted_modifiers.empty()) {
-		return;
+		co_return;
 	}
 
 	std::vector<const scripted_site_modifier *> modifiers_to_remove;
@@ -1808,7 +1809,7 @@ void site_game_data::decrement_scripted_modifiers()
 	}
 
 	for (const scripted_site_modifier *modifier : modifiers_to_remove) {
-		this->remove_scripted_modifier(modifier);
+		co_await this->remove_scripted_modifier(modifier);
 	}
 }
 
@@ -2151,7 +2152,7 @@ QVariantList site_game_data::get_visiting_armies_qvariant_list() const
 	return container::to_qvariant_list(this->get_visiting_armies());
 }
 
-void site_game_data::explore_dungeon(const std::shared_ptr<party> &party)
+QCoro::Task<void> site_game_data::explore_dungeon(const std::shared_ptr<party> &party)
 {
 	assert_throw(!party->get_characters().empty());
 
@@ -2163,7 +2164,7 @@ void site_game_data::explore_dungeon(const std::shared_ptr<party> &party)
 		ctx.root_scope = party->get_domain();
 		ctx.party = party;
 		ctx.dungeon_site = this->site;
-		domain_event::check_events_for_scope(party->get_domain(), event_trigger::dungeon_cleared, ctx);
+		co_await domain_event::check_events_for_scope(party->get_domain(), event_trigger::dungeon_cleared, ctx);
 
 		if (party->get_domain() == game::get()->get_player_country()) {
 			const portrait *war_minister_portrait = party->get_domain()->get_government()->get_war_minister_portrait();
@@ -2171,8 +2172,8 @@ void site_game_data::explore_dungeon(const std::shared_ptr<party> &party)
 			engine_interface::get()->add_notification("Dungeon Cleared", war_minister_portrait, std::format("You have cleared the {} dungeon!", this->get_dungeon()->get_name()));
 		}
 
-		this->set_dungeon(nullptr);
-		return;
+		co_await this->set_dungeon(nullptr);
+		co_return;
 	}
 
 	const dungeon_area *dungeon_area = vector::get_random(potential_dungeon_areas);
@@ -2183,7 +2184,7 @@ void site_game_data::explore_dungeon(const std::shared_ptr<party> &party)
 	ctx.dungeon_site = this->site;
 	ctx.dungeon_area = dungeon_area;
 
-	dungeon_area->get_event()->fire(party->get_domain(), ctx);
+	co_await dungeon_area->get_event()->fire(party->get_domain(), ctx);
 }
 
 std::vector<const dungeon_area *> site_game_data::get_potential_dungeon_areas() const

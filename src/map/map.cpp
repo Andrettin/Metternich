@@ -546,12 +546,12 @@ void map::set_tile_site(const QPoint &tile_pos, const site *site)
 	site->get_map_data()->set_tile_pos(tile_pos);
 }
 
-void map::set_tile_resource_discovered(const QPoint &tile_pos, const bool discovered)
+QCoro::Task<void> map::set_tile_resource_discovered(const QPoint &tile_pos, const bool discovered)
 {
 	tile *tile = this->get_tile(tile_pos);
 
 	if (discovered == tile->is_resource_discovered()) {
-		return;
+		co_return;
 	}
 
 	const resource *resource = tile->get_resource();
@@ -569,7 +569,7 @@ void map::set_tile_resource_discovered(const QPoint &tile_pos, const bool discov
 			}
 
 			if (country_technology->can_gain_technology(resource->get_discovery_technology())) {
-				country_technology->add_technology(resource->get_discovery_technology());
+				co_await country_technology->add_technology(resource->get_discovery_technology());
 
 				if (game::get()->is_running()) {
 					emit country_technology->technology_researched(resource->get_discovery_technology());

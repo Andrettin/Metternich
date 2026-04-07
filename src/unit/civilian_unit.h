@@ -10,6 +10,7 @@ Q_MOC_INCLUDE("unit/civilian_unit_type.h")
 
 namespace archimedes {
 	class gsml_data;
+	class gsml_property;
 }
 
 namespace metternich {
@@ -52,7 +53,7 @@ public:
 
 	gsml_data to_gsml_data() const;
 
-	void do_turn();
+	[[nodiscard]] QCoro::Task<void> do_turn();
 	void do_ai_turn();
 
 	const std::string &get_name() const
@@ -170,7 +171,12 @@ public:
 		emit task_completion_turns_changed();
 	}
 
-	Q_INVOKABLE void disband(const bool dead);
+	[[nodiscard]] QCoro::Task<void> disband(const bool dead);
+
+	Q_INVOKABLE QCoro::QmlTask disband()
+	{
+		return this->disband(false);
+	}
 
 signals:
 	void type_changed();

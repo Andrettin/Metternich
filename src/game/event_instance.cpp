@@ -32,12 +32,12 @@ event_instance::event_instance(const metternich::event *event, const QString &na
 	}
 }
 
-void event_instance::choose_option(const int displayed_option_index)
+QCoro::Task<void> event_instance::choose_option_coro(const int displayed_option_index)
 {
 	try {
 		if (this->event->get_option_count() > 0) {
 			const int option_index = this->option_indexes.at(displayed_option_index);
-			this->event->do_option_effects(option_index, this->ctx);
+			co_await this->event->do_option_effects(option_index, this->ctx);
 		}
 
 		engine_interface::get()->remove_event_instance(this);

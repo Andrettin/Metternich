@@ -93,8 +93,8 @@ public:
 
 	gsml_data to_gsml_data() const;
 
-	void initialize();
-	void do_turn();
+	[[nodiscard]] QCoro::Task<void> initialize();
+	[[nodiscard]] QCoro::Task<void> do_turn();
 	void collect_income();
 	void check_item_slots();
 
@@ -145,7 +145,8 @@ public:
 		return this->owner;
 	}
 
-	void set_owner(const domain *owner);
+	[[nodiscard]]
+	QCoro::Task<void> set_owner(const domain *owner);
 
 	const terrain_type *get_terrain() const;
 
@@ -177,8 +178,12 @@ public:
 		return this->holding_type;
 	}
 
-	void set_holding_type(const metternich::holding_type *holding_type);
-	void check_holding_type();
+	[[nodiscard]]
+	QCoro::Task<void> set_holding_type(const metternich::holding_type *holding_type);
+
+	[[nodiscard]]
+	QCoro::Task<void> check_holding_type();
+
 	std::vector<const metternich::holding_type *> get_best_holding_types(const std::vector<const metternich::holding_type *> &holding_types) const;
 
 	int get_holding_level() const
@@ -194,7 +199,9 @@ public:
 	}
 
 	int get_building_holding_level_change(const building_type *building) const;
-	void set_holding_level_from_buildings(const int level);
+
+	[[nodiscard]]
+	QCoro::Task<void> set_holding_level_from_buildings(const int level);
 
 	int get_fortification_level() const
 	{
@@ -237,7 +244,7 @@ public:
 		return this->dungeon;
 	}
 
-	void set_dungeon(const metternich::dungeon *dungeon);
+	[[nodiscard]] QCoro::Task<void> set_dungeon(const metternich::dungeon *dungeon);
 	bool can_have_dungeon(const metternich::dungeon *dungeon) const;
 
 	const improvement *get_improvement(const improvement_slot slot) const
@@ -255,7 +262,7 @@ public:
 	const improvement *get_resource_improvement() const;
 	bool has_improvement(const improvement *improvement) const;
 	bool has_improvement_or_better(const improvement *improvement) const;
-	void set_improvement(const improvement_slot slot, const improvement *improvement);
+	[[nodiscard]] QCoro::Task<void> set_improvement(const improvement_slot slot, const improvement *improvement);
 
 	const portrait *get_portrait() const;
 
@@ -271,8 +278,8 @@ public:
 		return this->get_features().contains(feature);
 	}
 
-	void add_feature(const site_feature *feature);
-	void remove_feature(const site_feature *feature);
+	[[nodiscard]] QCoro::Task<void> add_feature(const site_feature *feature);
+	[[nodiscard]] QCoro::Task<void> remove_feature(const site_feature *feature);
 
 	const data_entry_map<site_attribute, int> &get_attribute_values() const
 	{
@@ -291,7 +298,7 @@ public:
 		return 0;
 	}
 
-	void change_attribute_value(const site_attribute *attribute, const int change);
+	[[nodiscard]] QCoro::Task<void> change_attribute_value(const site_attribute *attribute, const int change);
 	bool do_attribute_check(const site_attribute *attribute, const int roll_modifier) const;
 	int get_attribute_check_chance(const site_attribute *attribute, const int roll_modifier) const;
 
@@ -319,7 +326,10 @@ public:
 	QVariantList get_visible_building_slots_qvariant_list() const;
 
 	const building_type *get_slot_building(const building_slot_type *slot_type) const;
-	void set_slot_building(const building_slot_type *slot_type, const building_type *building);
+
+	[[nodiscard]]
+	QCoro::Task<void> set_slot_building(const building_slot_type *slot_type, const building_type *building);
+
 	const building_type *get_building_class_type(const building_class *building_class) const;
 	bool has_building(const building_type *building) const;
 	bool has_building_or_better(const building_type *building) const;
@@ -327,19 +337,20 @@ public:
 	bool has_building_class_or_better(const building_class *building_class) const;
 	bool can_gain_building(const building_type *building) const;
 	bool can_gain_building_class(const building_class *building_class) const;
-	void add_building(const building_type *building);
-	void add_building_with_prerequisites(const building_type *building);
-	void clear_buildings();
-	void check_building_conditions();
-	void check_free_buildings();
-	bool can_gain_free_building(const building_type *building, const bool check_required_buildings) const;
-	bool check_free_building(const building_type *building);
-	bool check_free_improvement(const improvement *improvement);
+	[[nodiscard]] QCoro::Task<void> add_building(const building_type *building);
+	[[nodiscard]] QCoro::Task<void> add_building_with_prerequisites(const building_type *building);
+	[[nodiscard]] QCoro::Task<void> clear_buildings();
 
-	void on_settlement_built(const int multiplier);
-	void on_building_gained(const building_type *building, const int multiplier);
-	void on_wonder_gained(const wonder *wonder, const int multiplier);
-	void on_improvement_gained(const improvement *improvement, const int multiplier);
+	[[nodiscard]] QCoro::Task<void> check_building_conditions();
+	[[nodiscard]] QCoro::Task<void> check_free_buildings();
+	bool can_gain_free_building(const building_type *building, const bool check_required_buildings) const;
+	[[nodiscard]] QCoro::Task<bool> check_free_building(const building_type *building);
+	[[nodiscard]] QCoro::Task<bool> check_free_improvement(const improvement *improvement);
+
+	[[nodiscard]] QCoro::Task<void> on_settlement_built(const int multiplier);
+	[[nodiscard]] QCoro::Task<void> on_building_gained(const building_type *building, const int multiplier);
+	[[nodiscard]] QCoro::Task<void> on_wonder_gained(const wonder *wonder, const int multiplier);
+	[[nodiscard]] QCoro::Task<void> on_improvement_gained(const improvement *improvement, const int multiplier);
 
 	std::vector<building_item_slot *> get_item_slots() const;
 	QVariantList get_item_slots_qvariant_list() const;
@@ -351,9 +362,9 @@ public:
 
 	QVariantList get_scripted_modifiers_qvariant_list() const;
 	bool has_scripted_modifier(const scripted_site_modifier *modifier) const;
-	void add_scripted_modifier(const scripted_site_modifier *modifier, const int duration);
-	void remove_scripted_modifier(const scripted_site_modifier *modifier);
-	void decrement_scripted_modifiers();
+	[[nodiscard]] QCoro::Task<void> add_scripted_modifier(const scripted_site_modifier *modifier, const int duration);
+	[[nodiscard]] QCoro::Task<void> remove_scripted_modifier(const scripted_site_modifier *modifier);
+	[[nodiscard]] QCoro::Task<void> decrement_scripted_modifiers();
 
 	Q_INVOKABLE bool can_have_population() const;
 	bool can_have_population_type(const population_type *type) const;
@@ -567,7 +578,9 @@ public:
 		emit visiting_armies_changed();
 	}
 
-	void explore_dungeon(const std::shared_ptr<party> &party);
+	[[nodiscard]]
+	QCoro::Task<void> explore_dungeon(const std::shared_ptr<party> &party);
+
 	std::vector<const dungeon_area *> get_potential_dungeon_areas() const;
 	std::vector<const dungeon_area *> get_potential_dungeon_areas(const dungeon_area *additional_explored_area);
 	const data_entry_set<dungeon_area> &get_explored_dungeon_areas() const;

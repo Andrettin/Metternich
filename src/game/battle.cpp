@@ -436,10 +436,10 @@ QCoro::Task<void> battle::do_unit_attack(const military_unit *unit, military_uni
 			break;
 		case attack_result::hit:
 		case attack_result::rout:
-			enemy->change_hit_points(-1);
+			co_await enemy->change_hit_points(-1);
 			break;
 		case attack_result::destroy:
-			enemy->change_hit_points(-enemy->get_hit_points());
+			co_await enemy->change_hit_points(-enemy->get_hit_points());
 			break;
 	}
 
@@ -480,10 +480,10 @@ QCoro::Task<void> battle::do_unit_spellcast(const military_unit *unit, const spe
 				break;
 			case attack_result::hit:
 			case attack_result::rout:
-				target->change_hit_points(-1);
+				co_await target->change_hit_points(-1);
 				break;
 			case attack_result::destroy:
-				target->change_hit_points(-target->get_hit_points());
+				co_await target->change_hit_points(-target->get_hit_points());
 				break;
 		}
 
@@ -536,11 +536,13 @@ void battle::process_result()
 	}
 }
 
-void battle::on_ended()
+[[nodiscard]]
+QCoro::Task<void> battle::on_ended_coro()
 {
 	this->process_result();
 
 	this->clear();
+	co_return;
 }
 
 battle_tile &battle::get_tile(const QPoint &tile_pos)

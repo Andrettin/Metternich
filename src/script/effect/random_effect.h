@@ -37,14 +37,15 @@ public:
 		this->effects.process_gsml_scope(scope);
 	}
 
-	virtual void do_assignment_effect(scope_type *scope, context &ctx) const override
+	[[nodiscard]]
+	virtual QCoro::Task<void> do_assignment_effect_coro(scope_type *scope, context &ctx) const override
 	{
 		const int64_t random_number = random::get()->generate(decimillesimal_int::divisor * 100);
 		if (this->chance.get_value() <= random_number) {
-			return;
+			co_return;
 		}
 
-		this->effects.do_effects(scope, ctx);
+		co_await this->effects.do_effects(scope, ctx);
 	}
 
 	virtual std::string get_assignment_string(const scope_type *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override

@@ -54,21 +54,21 @@ public:
 		}
 	}
 
-	virtual void do_assignment_effect(const domain *scope, context &ctx) const override
+	[[nodiscard]] virtual QCoro::Task<void> do_assignment_effect_coro(const domain *scope, context &ctx) const override
 	{
 		Q_UNUSED(ctx);
 
 		if (scope->get_game_data()->is_under_anarchy()) {
-			return;
+			co_return;
 		}
 
 		const military_unit_type *type = this->get_type(scope);
 
 		if (type == nullptr) {
-			return;
+			co_return;
 		}
 
-		scope->get_military()->create_military_unit(type, nullptr, nullptr, {});
+		co_await scope->get_military()->create_military_unit(type, nullptr, nullptr, {});
 	}
 
 	virtual std::string get_assignment_string(const domain *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override

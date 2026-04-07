@@ -21,7 +21,7 @@ public:
 
 	domain_game_data *get_game_data() const;
 
-	void do_turn();
+	[[nodiscard]] QCoro::Task<void> do_turn();
 
 	void choose_current_research();
 	const technology *get_research_choice(const data_entry_map<technology_category, const technology *> &research_choice_map) const;

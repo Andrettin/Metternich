@@ -75,14 +75,18 @@ public:
 		return 0;
 	}
 
-	virtual void do_addition_effect(const scope_type *scope) const override
+	[[nodiscard]] virtual QCoro::Task<void> do_addition_effect_coro(const scope_type *scope, context &ctx) const override
 	{
-		scope->get_game_data()->add_scripted_modifier(this->modifier, this->get_duration());
+		Q_UNUSED(ctx);
+
+		co_await scope->get_game_data()->add_scripted_modifier(this->modifier, this->get_duration());
 	}
 
-	virtual void do_subtraction_effect(const scope_type *scope) const override
+	[[nodiscard]] virtual QCoro::Task<void> do_subtraction_effect_coro(const scope_type *scope, context &ctx) const override
 	{
-		scope->get_game_data()->remove_scripted_modifier(this->modifier);
+		Q_UNUSED(ctx);
+
+		co_await scope->get_game_data()->remove_scripted_modifier(this->modifier);
 	}
 
 	virtual std::string get_addition_string(const scope_type *scope, const read_only_context &ctx, const size_t indent) const override

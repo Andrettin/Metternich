@@ -35,7 +35,6 @@ site::site(const std::string &identifier)
 	: named_data_entry(identifier), type(site_type::none)
 {
 	this->reset_map_data();
-	this->reset_game_data();
 }
 
 site::~site()
@@ -178,10 +177,10 @@ void site::reset_map_data()
 	this->map_data = make_qunique<site_map_data>(this);
 }
 
-void site::reset_game_data()
+QCoro::Task<void> site::reset_game_data()
 {
 	this->game_data = make_qunique<site_game_data>(this);
-	this->get_game_data()->initialize();
+	co_await this->get_game_data()->initialize();
 }
 
 bool site::is_settlement() const

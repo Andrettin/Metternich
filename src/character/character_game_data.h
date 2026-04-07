@@ -119,22 +119,24 @@ public:
 
 	gsml_data to_gsml_data() const;
 
+	[[nodiscard]] QCoro::Task<void> initialize();
+
 	void ply_trade();
-	void do_crafting();
-	void do_events();
+	[[nodiscard]] QCoro::Task<void> do_crafting();
+	[[nodiscard]] QCoro::Task<void> do_events();
 
 	bool is_ai() const;
 
-	void apply_species_and_class(const int level, const bool apply_history);
-	void generate_attributes();
+	[[nodiscard]] QCoro::Task<void> apply_species_and_class(const int level, const bool apply_history);
+	[[nodiscard]] QCoro::Task<void> generate_attributes();
 	void apply_bloodline(const bool apply_history);
 	void apply_bloodline_from_parents();
 	void apply_bloodline_inheritance_investiture();
-	void add_starting_items();
-	void add_starting_items(const std::vector<const item_type *> &starting_items, data_entry_set<item_slot> &filled_item_slots);
+	[[nodiscard]] QCoro::Task<void> add_starting_items();
+	[[nodiscard]] QCoro::Task<void> add_starting_items(const std::vector<const item_type *> &starting_items, data_entry_set<item_slot> &filled_item_slots);
 	void add_starting_spells();
 	void add_starting_spells(const std::vector<const spell *> &starting_spells);
-	void apply_history(const QDate &start_date);
+	[[nodiscard]] QCoro::Task<void> apply_history(const QDate &start_date);
 	void on_setup_finished();
 
 	std::string get_full_name() const;
@@ -189,7 +191,7 @@ public:
 	}
 
 	void set_dead(const bool dead);
-	void die();
+	[[nodiscard]] QCoro::Task<void> die();
 
 	bool exists() const;
 	bool has_ever_existed() const;
@@ -242,22 +244,22 @@ public:
 	void set_character_class(const metternich::character_class *character_class);
 
 	int get_level() const;
-	void set_level(const int level);
-	void change_level(const int change);
-	void on_level_gained(const int affected_level, const int multiplier);
-	void check_level_experience();
+	[[nodiscard]] QCoro::Task<void> set_level(const int level);
+	[[nodiscard]] QCoro::Task<void> change_level(const int change);
+	[[nodiscard]] QCoro::Task<void> on_level_gained(const int affected_level, const int multiplier);
+	[[nodiscard]] QCoro::Task<void> check_level_experience();
 
 	int64_t get_experience() const
 	{
 		return this->experience;
 	}
 
-	void set_experience(const int64_t experience)
+	[[nodiscard]] QCoro::Task<void> set_experience(const int64_t experience)
 	{
-		this->change_experience(experience - this->get_experience());
+		co_await this->change_experience(experience - this->get_experience());
 	}
 
-	void change_experience(const int64_t change);
+	[[nodiscard]] QCoro::Task<void> change_experience(const int64_t change);
 	int64_t get_experience_for_level(const int level) const;
 
 	int get_challenge_rating() const
@@ -275,9 +277,9 @@ public:
 
 	void change_caster_level(const int change);
 
-	void on_mythic_tier_gained(const int affected_tier, const int multiplier);
+	[[nodiscard]] QCoro::Task<void> on_mythic_tier_gained(const int affected_tier, const int multiplier);
 	bool is_deity() const;
-	void on_divine_rank_gained(const int affected_rank, const int multiplier);
+	[[nodiscard]] QCoro::Task<void> on_divine_rank_gained(const int affected_rank, const int multiplier);
 
 	const metternich::bloodline *get_bloodline() const
 	{
@@ -321,13 +323,13 @@ public:
 		return 0;
 	}
 
-	void change_attribute_value(const character_attribute *attribute, const int change);
+	[[nodiscard]] QCoro::Task<void> change_attribute_value(const character_attribute *attribute, const int change);
 	int get_primary_attribute_value() const;
 	int get_attribute_modifier(const character_attribute *attribute) const;
 	data_entry_set<character_attribute> get_main_attributes() const;
 	bool do_attribute_check(const character_attribute *attribute, const int roll_modifier) const;
 	int get_attribute_check_chance(const character_attribute *attribute, const int roll_modifier) const;
-	void on_attribute_value_changed(const character_attribute_base *attribute, const int new_value, const int old_value); //also used for skills
+	[[nodiscard]] QCoro::Task<void> on_attribute_value_changed(const character_attribute_base *attribute, const int new_value, const int old_value); //also used for skills
 
 	int get_best_attribute_modifier(const character_attribute *attribute, const character_modifier_type modifier_type) const
 	{
@@ -350,7 +352,7 @@ public:
 		return 0;
 	}
 
-	void add_attribute_modifier(const character_attribute *attribute, const character_modifier_type modifier_type, const int modifier)
+	[[nodiscard]] QCoro::Task<void> add_attribute_modifier(const character_attribute *attribute, const character_modifier_type modifier_type, const int modifier)
 	{
 		const int old_best_modifier = this->get_best_attribute_modifier(attribute, modifier_type);
 
@@ -359,11 +361,11 @@ public:
 		const int new_best_modifier = this->get_best_attribute_modifier(attribute, modifier_type);
 
 		if (new_best_modifier != old_best_modifier) {
-			this->change_attribute_value(attribute, new_best_modifier - old_best_modifier);
+			co_await this->change_attribute_value(attribute, new_best_modifier - old_best_modifier);
 		}
 	}
 
-	void remove_attribute_modifier(const character_attribute *attribute, const character_modifier_type modifier_type, const int modifier)
+	[[nodiscard]] QCoro::Task<void> remove_attribute_modifier(const character_attribute *attribute, const character_modifier_type modifier_type, const int modifier)
 	{
 		auto attribute_find_iterator = this->attribute_modifiers.find(attribute);
 		if (attribute_find_iterator != this->attribute_modifiers.end()) {
@@ -376,7 +378,7 @@ public:
 				const int new_best_modifier = this->get_best_attribute_modifier(attribute, modifier_type);
 
 				if (new_best_modifier != old_best_modifier) {
-					this->change_attribute_value(attribute, new_best_modifier - old_best_modifier);
+					co_await this->change_attribute_value(attribute, new_best_modifier - old_best_modifier);
 				}
 			}
 		}
@@ -398,32 +400,32 @@ public:
 		this->change_challenge_rating(change);
 	}
 
-	void apply_hit_dice(const dice &hit_dice);
-	void remove_hit_dice(const dice &hit_dice);
+	[[nodiscard]] QCoro::Task<void> apply_hit_dice(const dice &hit_dice);
+	[[nodiscard]] QCoro::Task<void> remove_hit_dice(const dice &hit_dice);
 
 	int get_health() const
 	{
 		return this->health;
 	}
 
-	void set_health(const int health);
-	void change_health(const int change);
+	[[nodiscard]] QCoro::Task<void> set_health(const int health);
+	[[nodiscard]] QCoro::Task<void> change_health(const int change);
 
 	int get_max_health() const
 	{
 		return this->max_health;
 	}
 
-	void set_max_health(const int health, const bool increase_health);
-	void change_max_health(const int change, const bool increase_health);
+	[[nodiscard]] QCoro::Task<void> set_max_health(const int health, const bool increase_health);
+	[[nodiscard]] QCoro::Task<void> change_max_health(const int change, const bool increase_health);
 
 	int get_health_bonus_per_hit_dice() const
 	{
 		return this->health_bonus_per_hit_dice;
 	}
 
-	void set_health_bonus_per_hit_dice(const int bonus);
-	void change_health_bonus_per_hit_dice(const int change);
+	[[nodiscard]] QCoro::Task<void> set_health_bonus_per_hit_dice(const int bonus);
+	[[nodiscard]] QCoro::Task<void> change_health_bonus_per_hit_dice(const int change);
 
 	int get_mana() const
 	{
@@ -457,9 +459,9 @@ public:
 	void set_max_craft(const int craft, const bool increase_craft);
 	void change_max_craft(const int change, const bool increase_craft);
 
-	void fully_recover()
+	[[nodiscard]] QCoro::Task<void> fully_recover()
 	{
-		this->set_health(this->get_max_health());
+		co_await this->set_health(this->get_max_health());
 		this->set_mana(this->get_max_mana());
 	}
 
@@ -553,7 +555,7 @@ public:
 	int get_saving_throw_chance(const saving_throw_type *saving_throw_type, const int roll_modifier = 0) const;
 
 	bool is_skill_trained(const skill *skill) const;
-	void change_skill_training(const skill *skill, const int change);
+	[[nodiscard]] QCoro::Task<void> change_skill_training(const skill *skill, const int change);
 
 	const data_entry_map<skill, int> &get_skill_values() const
 	{
@@ -570,7 +572,7 @@ public:
 		return 0;
 	}
 
-	void change_skill_value(const skill *skill, const int change);
+	[[nodiscard]] QCoro::Task<void> change_skill_value(const skill *skill, const int change);
 	int get_effective_skill_value(const skill *skill) const;
 	bool do_skill_check(const skill *skill, const int roll_modifier, const site *location) const;
 	int get_skill_check_chance(const skill *skill, const int roll_modifier, const site *location) const;
@@ -591,7 +593,7 @@ public:
 		return 0;
 	}
 
-	void change_trait_count(const trait *trait, const int change);
+	[[nodiscard]] QCoro::Task<void> change_trait_count(const trait *trait, const int change);
 
 	QVariantList get_traits_qvariant_list() const;
 
@@ -606,11 +608,17 @@ public:
 	bool can_have_trait(const trait *trait) const;
 	bool can_gain_trait(const trait *trait) const;
 	bool has_trait(const trait *trait) const;
-	void on_trait_gained(const trait *trait, const int multiplier);
-	void add_trait_of_type(const trait_type *trait_type);
-	void remove_trait_of_type(const trait_type *trait_type);
-	[[nodiscard]] bool generate_trait(const trait_type *trait_type, const character_attribute *target_attribute, const int target_attribute_bonus);
-	Q_INVOKABLE void on_trait_chosen(const metternich::trait *trait, const metternich::trait_type *trait_type);
+	[[nodiscard]] QCoro::Task<void> on_trait_gained(const trait *trait, const int multiplier);
+	[[nodiscard]] QCoro::Task<void> add_trait_of_type(const trait_type *trait_type);
+	[[nodiscard]] QCoro::Task<void> remove_trait_of_type(const trait_type *trait_type);
+	[[nodiscard]] QCoro::Task<bool> generate_trait(const trait_type *trait_type, const character_attribute *target_attribute, const int target_attribute_bonus);
+	[[nodiscard]] QCoro::Task<void> on_trait_chosen_coro(const trait *trait, const trait_type *trait_type);
+
+	Q_INVOKABLE QCoro::QmlTask on_trait_chosen(const metternich::trait *trait, const metternich::trait_type *trait_type)
+	{
+		return this->on_trait_chosen_coro(trait, trait_type);
+	}
+
 	std::vector<const trait *> get_potential_traits_from_list(const std::vector<const trait *> &traits) const;
 
 	const scripted_character_modifier_map<int> &get_scripted_modifiers() const
@@ -620,9 +628,9 @@ public:
 
 	QVariantList get_scripted_modifiers_qvariant_list() const;
 	bool has_scripted_modifier(const scripted_character_modifier *modifier) const;
-	void add_scripted_modifier(const scripted_character_modifier *modifier, const int duration);
-	void remove_scripted_modifier(const scripted_character_modifier *modifier);
-	void decrement_scripted_modifiers();
+	[[nodiscard]] QCoro::Task<void> add_scripted_modifier(const scripted_character_modifier *modifier, const int duration);
+	[[nodiscard]] QCoro::Task<void> remove_scripted_modifier(const scripted_character_modifier *modifier);
+	[[nodiscard]] QCoro::Task<void> decrement_scripted_modifiers();
 
 	bool is_ruler() const;
 
@@ -639,8 +647,8 @@ public:
 		return QString::fromStdString(this->get_office_modifier_string(domain, office));
 	}
 
-	void apply_office_modifier(const metternich::domain *domain, const metternich::office *office, const int multiplier) const;
-	void apply_trait_office_modifier(const trait *trait, const metternich::domain *domain, const metternich::office *office, const int multiplier) const;
+	[[nodiscard]] QCoro::Task<void> apply_office_modifier(const metternich::domain *domain, const metternich::office *office, const int multiplier) const;
+	[[nodiscard]] QCoro::Task<void> apply_trait_office_modifier(const trait *trait, const metternich::domain *domain, const metternich::office *office, const int multiplier) const;
 
 	metternich::military_unit *get_military_unit() const
 	{
@@ -681,11 +689,11 @@ public:
 		return this->get_military_unit() != nullptr || this->get_civilian_unit() != nullptr;
 	}
 
-	void deploy_to_province(const metternich::domain *domain, const province *province);
-	void undeploy();
+	[[nodiscard]] QCoro::Task<void> deploy_to_province(const metternich::domain *domain, const province *province);
+	[[nodiscard]] QCoro::Task<void> undeploy();
 
-	void apply_modifier(const modifier<const metternich::character> *modifier, const int multiplier);
-	void apply_military_unit_modifier(metternich::military_unit *military_unit, const int multiplier);
+	[[nodiscard]] QCoro::Task<void> apply_modifier(const modifier<const metternich::character> *modifier, const int multiplier);
+	[[nodiscard]] QCoro::Task<void> apply_military_unit_modifier(metternich::military_unit *military_unit, const int multiplier);
 
 	const std::vector<const spell *> &get_spells() const
 	{
@@ -747,7 +755,13 @@ public:
 	void learn_recipe(const metternich::recipe *recipe);
 	bool has_recipe_material(const recipe_material &material) const;
 	Q_INVOKABLE bool can_craft_recipe(const metternich::recipe *recipe) const;
-	Q_INVOKABLE void craft_recipe(const metternich::recipe *recipe);
+	[[nodiscard]] QCoro::Task<void> craft_recipe_coro(const recipe *recipe);
+
+	Q_INVOKABLE QCoro::QmlTask craft_recipe(const metternich::recipe *recipe)
+	{
+		return this->craft_recipe_coro(recipe);
+	}
+
 	void sort_recipes();
 
 	int64_t get_wealth() const;
@@ -761,16 +775,29 @@ public:
 	QVariantList get_items_qvariant_list() const;
 	QVariantList get_unequipped_items_qvariant_list() const;
 	bool has_item(const item_type *item_type) const;
-	void add_item(qunique_ptr<item> &&item);
-	qunique_ptr<item> take_item(metternich::item *item);
-	Q_INVOKABLE void remove_item(metternich::item *item);
-	void remove_item(const item_type *item_type, const item_material *material, const enchantment *enchantment, const spell *spell, const recipe *recipe);
+	[[nodiscard]] QCoro::Task<void> add_item(qunique_ptr<item> &&item);
+	[[nodiscard]] QCoro::Task<qunique_ptr<item>> take_item(metternich::item *item);
+	[[nodiscard]] QCoro::Task<void> remove_item_coro(item *item);
+
+	Q_INVOKABLE QCoro::QmlTask remove_item(metternich::item *item)
+	{
+		return this->remove_item_coro(item);
+	}
+
+	[[nodiscard]] QCoro::Task<void> remove_item(const item_type *item_type, const item_material *material, const enchantment *enchantment, const spell *spell, const recipe *recipe);
 
 	bool can_consume_item(const item_key &item_key, std::string *reason) const;
 	Q_INVOKABLE bool can_consume_item(const metternich::item *item) const;
-	Q_INVOKABLE void consume_item(metternich::item *item);
-	void on_item_consumed(const item *item);
-	void on_item_consumed_with_enchantment(const enchantment *enchantment);
+
+	[[nodiscard]] QCoro::Task<void> consume_item_coro(item *item);
+
+	Q_INVOKABLE QCoro::QmlTask consume_item(metternich::item *item)
+	{
+		return this->consume_item_coro(item);
+	}
+
+	[[nodiscard]] QCoro::Task<void> on_item_consumed(const item *item);
+	[[nodiscard]] QCoro::Task<void> on_item_consumed_with_enchantment(const enchantment *enchantment);
 
 	const std::vector<item *> &get_equipped_items(const item_slot *slot) const
 	{
@@ -793,10 +820,22 @@ public:
 
 	bool can_equip_item(const item_key &item_key, const bool ignore_already_equipped, const std::optional<int64_t> &already_equipped_ignore_price_threshold) const;
 	Q_INVOKABLE bool can_equip_item(const metternich::item *item, const bool ignore_already_equipped) const;
-	Q_INVOKABLE void equip_item(metternich::item *item);
-	Q_INVOKABLE void deequip_item(metternich::item *item);
-	void on_item_equipped(const item *item, const int multiplier);
-	void on_item_equipped_with_enchantment(const enchantment *enchantment, const int multiplier);
+	[[nodiscard]] QCoro::Task<void> equip_item_coro(item *item);
+
+	Q_INVOKABLE QCoro::QmlTask equip_item(metternich::item *item)
+	{
+		return this->equip_item_coro(item);
+	}
+
+	[[nodiscard]] QCoro::Task<void> deequip_item_coro(item *item);
+
+	Q_INVOKABLE QCoro::QmlTask deequip_item(metternich::item *item)
+	{
+		return this->deequip_item_coro(item);
+	}
+
+	[[nodiscard]] QCoro::Task<void> on_item_equipped(const item *item, const int multiplier);
+	[[nodiscard]] QCoro::Task<void> on_item_equipped_with_enchantment(const enchantment *enchantment, const int multiplier);
 
 	bool can_use_item(const metternich::item *item, std::string *reason) const;
 
@@ -805,11 +844,22 @@ public:
 		return this->can_use_item(item, nullptr);
 	}
 
-	Q_INVOKABLE void use_item(metternich::item *item);
+	[[nodiscard]] QCoro::Task<void> use_item_coro(item *item);
+
+	Q_INVOKABLE QCoro::QmlTask use_item(metternich::item *item)
+	{
+		return this->use_item_coro(item);
+	}
+
 	bool can_use_enchantment(const enchantment *enchantment) const;
 
 	Q_INVOKABLE bool can_sell_item(const metternich::item *item) const;
-	Q_INVOKABLE void sell_item(metternich::item *item);
+	[[nodiscard]] QCoro::Task<void> sell_item_coro(item *item);
+
+	Q_INVOKABLE QCoro::QmlTask sell_item(metternich::item *item)
+	{
+		return this->sell_item_coro(item);
+	}
 
 	std::vector<building_item_slot *> get_accessible_building_item_slots() const;
 
@@ -902,14 +952,15 @@ public:
 		return zero;
 	}
 
-	void set_status_effect_duration(const status_effect *status_effect, const std::chrono::seconds &duration);
+	[[nodiscard]] QCoro::Task<void> set_status_effect_duration(const status_effect *status_effect, const std::chrono::seconds &duration);
 
-	void change_status_effect_duration(const status_effect *status_effect, const std::chrono::seconds &change)
+	[[nodiscard]] QCoro::Task<void> change_status_effect_duration(const status_effect *status_effect, const std::chrono::seconds &change)
 	{
-		this->set_status_effect_duration(status_effect, this->get_status_effect_duration(status_effect) + change);
+		co_await this->set_status_effect_duration(status_effect, this->get_status_effect_duration(status_effect) + change);
 	}
 
-	void decrement_status_effect_durations(const std::chrono::seconds &decrement, context &ctx);
+	[[nodiscard]]
+	QCoro::Task<void> decrement_status_effect_durations(const std::chrono::seconds &decrement, context &ctx);
 
 	const domain_set &get_ruled_domains() const
 	{
@@ -948,8 +999,8 @@ public:
 		this->flags.erase(flag);
 	}
 
-	void ai_buy_items();
-	void ai_sell_items();
+	[[nodiscard]] QCoro::Task<void> ai_buy_items();
+	[[nodiscard]] QCoro::Task<void> ai_sell_items();
 
 	const sound *get_attack_sound() const;
 

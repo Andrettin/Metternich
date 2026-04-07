@@ -31,15 +31,16 @@ public:
 		this->effects.check();
 	}
 
-	void do_scope_effect(scope_type *scope, upper_scope_type *upper_scope, context &ctx) const
+	[[nodiscard]]
+	QCoro::Task<void> do_scope_effect(scope_type *scope, upper_scope_type *upper_scope, context &ctx) const
 	{
 		if (scope == nullptr) {
-			return;
+			co_return;
 		}
 
 		ctx.previous_scope = upper_scope;
 
-		this->effects.do_effects(scope, ctx);
+		co_await this->effects.do_effects(scope, ctx);
 	}
 
 	virtual std::string get_scope_name() const

@@ -110,15 +110,15 @@ gsml_data delayed_effect_instance<scope_type>::to_gsml_data() const
 }
 
 template <typename scope_type>
-void delayed_effect_instance<scope_type>::do_effects()
+QCoro::Task<void> delayed_effect_instance<scope_type>::do_effects()
 {
 	if (this->scripted_effect != nullptr) {
-		this->scripted_effect->get_effects().do_effects(scope, this->context);
+		co_await this->scripted_effect->get_effects().do_effects(scope, this->context);
 	} else {
 		metternich::context event_ctx(this->get_scope());
 		event_ctx.source_scope = this->context.root_scope;
 
-		this->event->fire(this->get_scope(), event_ctx);
+		co_await this->event->fire(this->get_scope(), event_ctx);
 	}
 }
 

@@ -39,7 +39,7 @@ domain_game_data *country_ai::get_game_data() const
 	return this->domain->get_game_data();
 }
 
-void country_ai::do_turn()
+QCoro::Task<void> country_ai::do_turn()
 {
 	assert_throw(this->get_game_data()->is_ai());
 
@@ -67,7 +67,7 @@ void country_ai::do_turn()
 			++i;
 		} else {
 			//if the civilian unit is idle, this means that nothing was found for it to do above; in that case, disband it
-			civilian_unit->disband(false);
+			co_await civilian_unit->disband(false);
 		}
 	}
 

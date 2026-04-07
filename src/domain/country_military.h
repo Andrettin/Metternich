@@ -32,7 +32,7 @@ public:
 
 	domain_game_data *get_game_data() const;
 
-	void do_military_unit_recruitment();
+	[[nodiscard]] QCoro::Task<void> do_military_unit_recruitment();
 
 	const std::vector<const character *> &get_leaders() const
 	{
@@ -43,14 +43,14 @@ public:
 	void add_leader(const character *leader);
 	void remove_leader(const character *leader);
 	void clear_leaders();
-	void on_leader_died(const character *leader);
+	[[nodiscard]] QCoro::Task<void> on_leader_died(const character *leader);
 
 	const std::vector<qunique_ptr<military_unit>> &get_military_units() const
 	{
 		return this->military_units;
 	}
 
-	bool create_military_unit(const military_unit_type *military_unit_type, const province *deployment_province, const phenotype *phenotype, const std::vector<const promotion *> &promotions);
+	[[nodiscard]] QCoro::Task<bool> create_military_unit(const military_unit_type *military_unit_type, const province *deployment_province, const phenotype *phenotype, const std::vector<const promotion *> &promotions);
 	void add_military_unit(qunique_ptr<military_unit> &&military_unit);
 	void remove_military_unit(military_unit *military_unit);
 
@@ -191,11 +191,11 @@ public:
 		return 0;
 	}
 
-	void set_free_infantry_promotion_count(const promotion *promotion, const int value);
+	[[nodiscard]] QCoro::Task<void> set_free_infantry_promotion_count(const promotion *promotion, const int value);
 
-	void change_free_infantry_promotion_count(const promotion *promotion, const int value)
+	[[nodiscard]] QCoro::Task<void> change_free_infantry_promotion_count(const promotion *promotion, const int value)
 	{
-		this->set_free_infantry_promotion_count(promotion, this->get_free_infantry_promotion_count(promotion) + value);
+		co_await this->set_free_infantry_promotion_count(promotion, this->get_free_infantry_promotion_count(promotion) + value);
 	}
 
 	const promotion_map<int> &get_free_cavalry_promotion_counts() const
@@ -214,11 +214,11 @@ public:
 		return 0;
 	}
 
-	void set_free_cavalry_promotion_count(const promotion *promotion, const int value);
+	[[nodiscard]] QCoro::Task<void> set_free_cavalry_promotion_count(const promotion *promotion, const int value);
 
-	void change_free_cavalry_promotion_count(const promotion *promotion, const int value)
+	[[nodiscard]] QCoro::Task<void> change_free_cavalry_promotion_count(const promotion *promotion, const int value)
 	{
-		this->set_free_cavalry_promotion_count(promotion, this->get_free_cavalry_promotion_count(promotion) + value);
+		co_await this->set_free_cavalry_promotion_count(promotion, this->get_free_cavalry_promotion_count(promotion) + value);
 	}
 
 	const promotion_map<int> &get_free_artillery_promotion_counts() const
@@ -237,11 +237,11 @@ public:
 		return 0;
 	}
 
-	void set_free_artillery_promotion_count(const promotion *promotion, const int value);
+	[[nodiscard]] QCoro::Task<void> set_free_artillery_promotion_count(const promotion *promotion, const int value);
 
-	void change_free_artillery_promotion_count(const promotion *promotion, const int value)
+	[[nodiscard]] QCoro::Task<void> change_free_artillery_promotion_count(const promotion *promotion, const int value)
 	{
-		this->set_free_artillery_promotion_count(promotion, this->get_free_artillery_promotion_count(promotion) + value);
+		co_await this->set_free_artillery_promotion_count(promotion, this->get_free_artillery_promotion_count(promotion) + value);
 	}
 
 	const promotion_map<int> &get_free_warship_promotion_counts() const
@@ -260,11 +260,11 @@ public:
 		return 0;
 	}
 
-	void set_free_warship_promotion_count(const promotion *promotion, const int value);
+	[[nodiscard]] QCoro::Task<void> set_free_warship_promotion_count(const promotion *promotion, const int value);
 
-	void change_free_warship_promotion_count(const promotion *promotion, const int value)
+	[[nodiscard]] QCoro::Task<void> change_free_warship_promotion_count(const promotion *promotion, const int value)
 	{
-		this->set_free_warship_promotion_count(promotion, this->get_free_warship_promotion_count(promotion) + value);
+		co_await this->set_free_warship_promotion_count(promotion, this->get_free_warship_promotion_count(promotion) + value);
 	}
 
 signals:

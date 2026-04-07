@@ -149,10 +149,10 @@ std::string event_option<scope_type>::get_effects_string(const read_only_context
 }
 
 template <typename scope_type>
-void event_option<scope_type>::do_effects(scope_type *scope, context &ctx) const
+QCoro::Task<void> event_option<scope_type>::do_effects(scope_type *scope, context &ctx) const
 {
 	if (this->effects != nullptr) {
-		this->effects->do_effects(scope, ctx);
+		co_await this->effects->do_effects(scope, ctx);
 	}
 }
 

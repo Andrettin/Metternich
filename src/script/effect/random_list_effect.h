@@ -39,9 +39,10 @@ public:
 		return this->weight_factor->calculate(scope).to_int();
 	}
 
-	void do_effects(scope_type *scope, context &ctx) const
+	[[nodiscard]]
+	QCoro::Task<void> do_effects(scope_type *scope, context &ctx) const
 	{
-		this->effects->do_effects(scope, ctx);
+		co_await this->effects->do_effects(scope, ctx);
 	}
 
 	std::string get_effects_string(const scope_type *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix, const bool indent_first_line) const
@@ -86,13 +87,14 @@ public:
 		}
 	}
 
-	virtual void do_assignment_effect(scope_type *scope, context &ctx) const override
+	[[nodiscard]]
+	virtual QCoro::Task<void> do_assignment_effect_coro(scope_type *scope, context &ctx) const override
 	{
 		const std::vector<const random_list_entry<scope_type> *> weighted_entries = this->get_weighted_entries(scope);
 
 		if (!weighted_entries.empty()) {
 			const random_list_entry<scope_type> *chosen_entry = vector::get_random(weighted_entries);
-			chosen_entry->do_effects(scope, ctx);
+			co_await chosen_entry->do_effects(scope, ctx);
 		}
 	}
 

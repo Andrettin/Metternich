@@ -141,29 +141,29 @@ gsml_data province_game_data::to_gsml_data() const
 	return data;
 }
 
-void province_game_data::do_turn()
+QCoro::Task<void> province_game_data::do_turn()
 {
 	for (const site *site : this->get_sites()) {
 		assert_throw(site->get_map_data()->is_on_map());
-		site->get_game_data()->do_turn();
+		co_await site->get_game_data()->do_turn();
 	}
 
-	this->decrement_scripted_modifiers();
+	co_await this->decrement_scripted_modifiers();
 }
 
-void province_game_data::do_events()
+QCoro::Task<void> province_game_data::do_events()
 {
 	const bool is_last_turn_of_year = game::get()->is_last_turn_of_year();
 	if (is_last_turn_of_year) {
-		province_event::check_events_for_scope(this->province, event_trigger::yearly_pulse);
+		co_await province_event::check_events_for_scope(this->province, event_trigger::yearly_pulse);
 	}
 
 	const bool is_last_turn_of_quarter = game::get()->is_last_turn_of_quarter();
 	if (is_last_turn_of_quarter) {
-		province_event::check_events_for_scope(this->province, event_trigger::quarterly_pulse);
+		co_await province_event::check_events_for_scope(this->province, event_trigger::quarterly_pulse);
 	}
 
-	province_event::check_events_for_scope(this->province, event_trigger::per_turn_pulse);
+	co_await province_event::check_events_for_scope(this->province, event_trigger::per_turn_pulse);
 }
 
 void province_game_data::do_ai_turn()
@@ -223,27 +223,27 @@ void province_game_data::collect_taxes()
 	this->get_owner()->get_turn_data()->add_income_transaction(income_transaction_type::taxation, taxation, nullptr, 0, this->get_owner());
 }
 
-void province_game_data::do_military_unit_recruitment()
+QCoro::Task<void> province_game_data::do_military_unit_recruitment()
 {
 	if (this->get_owner() == nullptr) {
-		return;
+		co_return;
 	}
 
 	try {
 		if (this->get_owner()->get_game_data()->is_under_anarchy()) {
-			return;
+			co_return;
 		}
 
 		const military_unit_type_map<int> recruitment_counts = this->military_unit_recruitment_counts;
 		if (recruitment_counts.empty()) {
-			return;
+			co_return;
 		}
 
 		for (const auto &[military_unit_type, recruitment_count] : recruitment_counts) {
 			assert_throw(recruitment_count > 0);
 
 			for (int i = 0; i < recruitment_count; ++i) {
-				const bool created = this->get_owner()->get_military()->create_military_unit(military_unit_type, this->province, nullptr, {});
+				const bool created = co_await this->get_owner()->get_military()->create_military_unit(military_unit_type, this->province, nullptr, {});
 				const bool restore_costs = !created;
 				this->change_military_unit_recruitment_count(military_unit_type, -1, restore_costs);
 			}
@@ -271,10 +271,10 @@ bool province_game_data::is_on_map() const
 	return this->province->get_map_data()->is_on_map();
 }
 
-void province_game_data::set_owner(const domain *domain)
+QCoro::Task<void> province_game_data::set_owner(const domain *domain)
 {
 	if (domain == this->get_owner()) {
-		return;
+		co_return;
 	}
 
 	const metternich::domain *old_owner = this->owner;
@@ -288,16 +288,16 @@ void province_game_data::set_owner(const domain *domain)
 		}
 
 		if (site->get_game_data()->get_owner() == old_owner) {
-			site->get_game_data()->set_owner(domain);
+			co_await site->get_game_data()->set_owner(domain);
 		}
 	}
 
 	if (old_owner != nullptr) {
-		old_owner->get_game_data()->remove_province(this->province);
+		co_await old_owner->get_game_data()->remove_province(this->province);
 	}
 
 	if (this->get_owner() != nullptr) {
-		this->get_owner()->get_game_data()->add_province(this->province);
+		co_await this->get_owner()->get_game_data()->add_province(this->province);
 
 		if (this->get_population()->get_main_culture() == nullptr) {
 			this->set_culture(this->get_owner()->get_game_data()->get_culture());
@@ -1065,16 +1065,16 @@ QVariantList province_game_data::get_technologies_qvariant_list() const
 	return container::to_qvariant_list(this->get_technologies());
 }
 
-void province_game_data::add_technology(const technology *technology)
+QCoro::Task<void> province_game_data::add_technology(const technology *technology)
 {
 	if (this->has_technology(technology)) {
-		return;
+		co_return;
 	}
 
 	this->technologies.insert(technology);
 
 	if (this->get_owner() != nullptr && this->is_capital()) {
-		this->get_owner()->get_technology()->on_technology_added(technology);
+		co_await this->get_owner()->get_technology()->on_technology_added(technology);
 	}
 
 	if (game::get()->is_running()) {
@@ -1082,32 +1082,32 @@ void province_game_data::add_technology(const technology *technology)
 	}
 }
 
-void province_game_data::add_technology_with_prerequisites(const technology *technology)
+QCoro::Task<void> province_game_data::add_technology_with_prerequisites(const technology *technology)
 {
-	this->add_technology(technology);
+	co_await this->add_technology(technology);
 
 	for (const metternich::technology *prerequisite : technology->get_prerequisites()) {
-		this->add_technology_with_prerequisites(prerequisite);
+		co_await this->add_technology_with_prerequisites(prerequisite);
 	}
 }
 
-void province_game_data::remove_technology(const technology *technology)
+QCoro::Task<void> province_game_data::remove_technology(const technology *technology)
 {
 	assert_throw(technology != nullptr);
 
 	if (!this->has_technology(technology)) {
-		return;
+		co_return;
 	}
 
 	this->technologies.erase(technology);
 
 	if (this->get_owner() != nullptr && this->is_capital()) {
-		this->get_owner()->get_technology()->on_technology_lost(technology);
+		co_await this->get_owner()->get_technology()->on_technology_lost(technology);
 	}
 
 	//remove any technologies requiring this one as well
 	for (const metternich::technology *requiring_technology : technology->get_leads_to()) {
-		this->remove_technology(requiring_technology);
+		co_await this->remove_technology(requiring_technology);
 	}
 
 	if (game::get()->is_running()) {
@@ -1124,14 +1124,14 @@ bool province_game_data::has_scripted_modifier(const scripted_province_modifier 
 	return this->get_scripted_modifiers().contains(modifier);
 }
 
-void province_game_data::add_scripted_modifier(const scripted_province_modifier *modifier, const int duration)
+QCoro::Task<void> province_game_data::add_scripted_modifier(const scripted_province_modifier *modifier, const int duration)
 {
 	const read_only_context ctx(this->province);
 
 	this->scripted_modifiers[modifier] = std::max(this->scripted_modifiers[modifier], duration);
 
 	if (modifier->get_modifier() != nullptr) {
-		this->apply_modifier(modifier->get_modifier());
+		co_await this->apply_modifier(modifier->get_modifier());
 	}
 
 	if (game::get()->is_running()) {
@@ -1139,12 +1139,12 @@ void province_game_data::add_scripted_modifier(const scripted_province_modifier 
 	}
 }
 
-void province_game_data::remove_scripted_modifier(const scripted_province_modifier *modifier)
+QCoro::Task<void> province_game_data::remove_scripted_modifier(const scripted_province_modifier *modifier)
 {
 	this->scripted_modifiers.erase(modifier);
 
 	if (modifier->get_modifier() != nullptr) {
-		this->remove_modifier(modifier->get_modifier());
+		co_await this->remove_modifier(modifier->get_modifier());
 	}
 
 	if (game::get()->is_running()) {
@@ -1152,7 +1152,7 @@ void province_game_data::remove_scripted_modifier(const scripted_province_modifi
 	}
 }
 
-void province_game_data::decrement_scripted_modifiers()
+QCoro::Task<void> province_game_data::decrement_scripted_modifiers()
 {
 	std::vector<const scripted_province_modifier *> modifiers_to_remove;
 	for (auto &[modifier, duration] : this->scripted_modifiers) {
@@ -1164,15 +1164,15 @@ void province_game_data::decrement_scripted_modifiers()
 	}
 
 	for (const scripted_province_modifier *modifier : modifiers_to_remove) {
-		this->remove_scripted_modifier(modifier);
+		co_await this->remove_scripted_modifier(modifier);
 	}
 }
 
-void province_game_data::apply_modifier(const modifier<const metternich::province> *modifier, const int multiplier)
+QCoro::Task<void> province_game_data::apply_modifier(const modifier<const metternich::province> *modifier, const int multiplier)
 {
 	assert_throw(modifier != nullptr);
 
-	modifier->apply(this->province, multiplier);
+	co_await modifier->apply(this->province, multiplier);
 }
 
 void province_game_data::add_population_unit(population_unit *population_unit)

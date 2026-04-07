@@ -22,12 +22,12 @@ public:
 		return identifier;
 	}
 
-	virtual void apply(const scope_type *scope, const centesimal_int &multiplier) const override
+	[[nodiscard]] virtual QCoro::Task<void> apply_coro(const scope_type *scope, const centesimal_int &multiplier) const override
 	{
 		if constexpr (std::is_same_v<scope_type, const site>) {
-			scope->get_game_data()->change_attribute_value(this->attribute, (this->value * multiplier).to_int());
+			co_await scope->get_game_data()->change_attribute_value(this->attribute, (this->value * multiplier).to_int());
 		} else {
-			scope->get_game_data()->change_site_attribute_value(this->attribute, (this->value * multiplier).to_int());
+			co_await scope->get_game_data()->change_site_attribute_value(this->attribute, (this->value * multiplier).to_int());
 		}
 	}
 

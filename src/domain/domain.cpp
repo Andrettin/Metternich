@@ -37,7 +37,6 @@ namespace metternich {
 domain::domain(const std::string &identifier)
 	: named_data_entry(identifier), type(country_type::polity), default_tier(domain_tier::none), min_tier(domain_tier::none), max_tier(domain_tier::none)
 {
-	this->reset_game_data(false);
 }
 
 domain::~domain()
@@ -218,7 +217,7 @@ void domain::reset_history()
 	this->history = make_qunique<domain_history>(this);
 }
 
-void domain::reset_game_data(const bool preserve_ruler_history)
+QCoro::Task<void> domain::reset_game_data(const bool preserve_ruler_history)
 {
 	std::map<QDate, const character *> historical_rulers;
 	std::map<QDate, const character *> historical_monarchs;
@@ -232,8 +231,8 @@ void domain::reset_game_data(const bool preserve_ruler_history)
 	this->reset_turn_data();
 	this->reset_ai();
 
-	this->get_game_data()->set_tier(this->get_default_tier());
-	this->get_game_data()->set_government_type(this->get_default_government_type());
+	co_await this->get_game_data()->set_tier(this->get_default_tier());
+	co_await this->get_game_data()->set_government_type(this->get_default_government_type());
 
 	if (preserve_ruler_history) {
 		this->get_game_data()->set_historical_rulers(historical_rulers);

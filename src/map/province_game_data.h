@@ -90,11 +90,11 @@ public:
 
 	gsml_data to_gsml_data() const;
 
-	void do_turn();
-	void do_events();
+	[[nodiscard]] QCoro::Task<void> do_turn();
+	[[nodiscard]] QCoro::Task<void> do_events();
 	void do_ai_turn();
 	void collect_taxes();
-	void do_military_unit_recruitment();
+	[[nodiscard]] QCoro::Task<void> do_military_unit_recruitment();
 
 	bool is_on_map() const;
 
@@ -103,7 +103,8 @@ public:
 		return this->owner;
 	}
 
-	void set_owner(const domain *domain);
+	[[nodiscard]]
+	QCoro::Task<void> set_owner(const domain *domain);
 
 	bool is_capital() const;
 
@@ -227,9 +228,9 @@ public:
 		return this->get_technologies().contains(technology);
 	}
 
-	void add_technology(const technology *technology);
-	void add_technology_with_prerequisites(const technology *technology);
-	void remove_technology(const technology *technology);
+	[[nodiscard]] QCoro::Task<void> add_technology(const technology *technology);
+	[[nodiscard]] QCoro::Task<void> add_technology_with_prerequisites(const technology *technology);
+	[[nodiscard]] QCoro::Task<void> remove_technology(const technology *technology);
 
 	const scripted_province_modifier_map<int> &get_scripted_modifiers() const
 	{
@@ -238,15 +239,15 @@ public:
 
 	QVariantList get_scripted_modifiers_qvariant_list() const;
 	bool has_scripted_modifier(const scripted_province_modifier *modifier) const;
-	void add_scripted_modifier(const scripted_province_modifier *modifier, const int duration);
-	void remove_scripted_modifier(const scripted_province_modifier *modifier);
-	void decrement_scripted_modifiers();
+	[[nodiscard]] QCoro::Task<void> add_scripted_modifier(const scripted_province_modifier *modifier, const int duration);
+	[[nodiscard]] QCoro::Task<void> remove_scripted_modifier(const scripted_province_modifier *modifier);
+	[[nodiscard]] QCoro::Task<void> decrement_scripted_modifiers();
 
-	void apply_modifier(const modifier<const metternich::province> *modifier, const int multiplier = 1);
+	[[nodiscard]] QCoro::Task<void> apply_modifier(const modifier<const metternich::province> *modifier, const int multiplier = 1);
 
-	void remove_modifier(const modifier<const metternich::province> *modifier)
+	[[nodiscard]] QCoro::Task<void> remove_modifier(const modifier<const metternich::province> *modifier)
 	{
-		this->apply_modifier(modifier, -1);
+		co_await this->apply_modifier(modifier, -1);
 	}
 
 	const std::vector<population_unit *> &get_population_units() const

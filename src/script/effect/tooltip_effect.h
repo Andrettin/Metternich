@@ -43,9 +43,10 @@ public:
 		this->effects.process_gsml_scope(scope);
 	}
 
-	virtual void do_assignment_effect(scope_type *scope, context &ctx) const override
+	[[nodiscard]]
+	virtual QCoro::Task<void> do_assignment_effect_coro(scope_type *scope, context &ctx) const override
 	{
-		this->effects.do_effects(scope, ctx);
+		co_await this->effects.do_effects(scope, ctx);
 	}
 
 	virtual std::string get_assignment_string() const override

@@ -131,7 +131,9 @@ public:
 	virtual bool is_option_available(const int option_index, const read_only_context &ctx) const = 0;
 	virtual const std::string &get_option_name(const int option_index) const = 0;
 	virtual std::string get_option_tooltip(const int option_index, const read_only_context &ctx) const = 0;
-	virtual void do_option_effects(const int option_index, context &ctx) const = 0;
+
+	[[nodiscard]]
+	virtual QCoro::Task<void> do_option_effects(const int option_index, context &ctx) const = 0;
 
 	void create_instance(const context &ctx) const;
 

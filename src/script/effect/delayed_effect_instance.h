@@ -50,7 +50,7 @@ public:
 		--this->remaining_turns;
 	}
 
-	void do_effects();
+	[[nodiscard]] QCoro::Task<void> do_effects();
 
 private:
 	const scripted_effect_base<scope_type> *scripted_effect = nullptr;

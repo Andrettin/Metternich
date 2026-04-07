@@ -28,8 +28,10 @@ public:
 		return identifier;
 	}
 
-	virtual void do_assignment_effect(const character *scope) const override
+	[[nodiscard]] virtual QCoro::Task<void> do_assignment_effect_coro(const character *scope, context &ctx) const override
 	{
+		Q_UNUSED(ctx);
+
 		int quantity = 0;
 
 		if (std::holds_alternative<bool>(this->healing)) {
@@ -37,14 +39,14 @@ public:
 			if (value) {
 				quantity = scope->get_game_data()->get_max_health();
 			} else {
-				return;
+				co_return;
 			}
 		} else {
 			const dice healing_dice = std::get<dice>(this->healing);
 			quantity = random::get()->roll_dice(healing_dice);
 		}
 
-		scope->get_game_data()->change_health(quantity);
+		co_await scope->get_game_data()->change_health(quantity);
 	}
 
 	virtual std::string get_assignment_string() const override

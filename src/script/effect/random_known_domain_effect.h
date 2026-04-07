@@ -35,7 +35,7 @@ public:
 		}
 	}
 
-	virtual void do_assignment_effect(const domain *upper_scope, context &ctx) const override
+	[[nodiscard]] virtual QCoro::Task<void> do_assignment_effect_coro(const domain *upper_scope, context &ctx) const override
 	{
 		std::vector<const domain *> potential_countries;
 
@@ -48,7 +48,7 @@ public:
 		}
 
 		if (!potential_countries.empty()) {
-			this->do_scope_effect(vector::get_random(potential_countries), upper_scope, ctx);
+			co_await this->do_scope_effect(vector::get_random(potential_countries), upper_scope, ctx);
 		}
 	}
 

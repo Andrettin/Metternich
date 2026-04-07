@@ -59,14 +59,14 @@ void promotion::check() const
 	}
 }
 
-void promotion::apply_modifier(military_unit *military_unit, const int multiplier) const
+QCoro::Task<void> promotion::apply_modifier(military_unit *military_unit, const int multiplier) const
 {
 	for (const auto &[stat, bonus] : this->get_stat_bonuses()) {
 		military_unit->change_stat(stat, centesimal_int(bonus * multiplier));
 	}
 
 	if (this->get_modifier() != nullptr) {
-		this->get_modifier()->apply(military_unit, multiplier);
+		co_await this->get_modifier()->apply(military_unit, multiplier);
 	}
 }
 

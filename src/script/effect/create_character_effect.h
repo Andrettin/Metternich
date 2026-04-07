@@ -46,7 +46,7 @@ public:
 		assert_throw(this->character != nullptr || this->monster_type != nullptr);
 	}
 
-	virtual void do_assignment_effect(const domain *scope, context &ctx) const override
+	[[nodiscard]] virtual QCoro::Task<void> do_assignment_effect_coro(const domain *scope, context &ctx) const override
 	{
 		const metternich::character *created_character = nullptr;
 
@@ -62,13 +62,13 @@ public:
 
 			created_character = this->character;
 		} else if (this->monster_type != nullptr) {
-			created_character = character::generate(this->monster_type, nullptr, nullptr, nullptr, 0, {}, false, false);
+			created_character = co_await character::generate(this->monster_type, nullptr, nullptr, nullptr, 0, {}, false, false);
 		} else {
 			assert_throw(false);
 		}
 
 		if (this->health > 0) {
-			created_character->get_game_data()->set_health(this->health);
+			co_await created_character->get_game_data()->set_health(this->health);
 		}
 
 		created_character->get_game_data()->set_domain(scope);

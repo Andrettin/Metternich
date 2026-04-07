@@ -56,7 +56,7 @@ public:
 		}
 	}
 
-	virtual void do_assignment_effect(scope_type *scope, context &ctx) const override
+	[[nodiscard]] virtual QCoro::Task<void> do_assignment_effect_coro(scope_type *scope, context &ctx) const override
 	{
 		Q_UNUSED(ctx);
 
@@ -71,10 +71,10 @@ public:
 		}
 
 		if (character == nullptr) {
-			return;
+			co_return;
 		}
 
-		character->get_game_data()->remove_item(this->type, this->material, this->enchantment, this->spell, this->recipe);
+		co_await character->get_game_data()->remove_item(this->type, this->material, this->enchantment, this->spell, this->recipe);
 	}
 
 	virtual std::string get_assignment_string() const override

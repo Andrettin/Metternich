@@ -170,7 +170,7 @@ public:
 
 	gsml_data to_gsml_data() const;
 
-	void apply_history(const QDate &start_date);
+	[[nodiscard]] QCoro::Task<void> apply_history(const QDate &start_date);
 	void apply_ruler_history(const QDate &start_date);
 
 	[[nodiscard]]
@@ -178,7 +178,7 @@ public:
 
 	void collect_regency();
 	void collect_wealth();
-	void pay_maintenance();
+	[[nodiscard]] QCoro::Task<void> pay_maintenance();
 	void check_item_slots();
 	void do_civilian_unit_recruitment();
 	void do_transporter_recruitment();
@@ -186,7 +186,7 @@ public:
 	void do_food_consumption(const int food_consumption);
 	void do_starvation();
 	void do_cultural_change();
-	void do_events();
+	[[nodiscard]] QCoro::Task<void> do_events();
 
 	country_economy *get_economy() const
 	{
@@ -216,8 +216,8 @@ public:
 		return this->tier;
 	}
 
-	void set_tier(const domain_tier tier);
-	void check_tier();
+	[[nodiscard]] QCoro::Task<void> set_tier(const domain_tier tier);
+	[[nodiscard]] QCoro::Task<void> check_tier();
 
 	const std::string &get_name() const;
 
@@ -252,22 +252,22 @@ public:
 		return this->culture;
 	}
 
-	void set_culture(const metternich::culture *culture);
-	void check_culture();
+	[[nodiscard]] QCoro::Task<void> set_culture(const metternich::culture *culture);
+	[[nodiscard]] QCoro::Task<void> check_culture();
 
 	const metternich::religion *get_religion() const
 	{
 		return this->religion;
 	}
 
-	void set_religion(const metternich::religion *religion);
+	[[nodiscard]] QCoro::Task<void> set_religion(const metternich::religion *religion);
 
 	const metternich::domain *get_overlord() const
 	{
 		return this->overlord;
 	}
 
-	void set_overlord(const metternich::domain *overlord);
+	[[nodiscard]] QCoro::Task<void> set_overlord(const metternich::domain *overlord);
 
 	bool is_vassal_of(const metternich::domain *domain) const;
 	bool is_any_vassal_of(const metternich::domain *domain) const;
@@ -300,16 +300,16 @@ public:
 		return this->subject_type;
 	}
 
-	void set_subject_type(const metternich::subject_type *subject_type);
+	[[nodiscard]] QCoro::Task<void> set_subject_type(const metternich::subject_type *subject_type);
 
 	const metternich::government_type *get_government_type() const
 	{
 		return this->government_type;
 	}
 
-	void set_government_type(const metternich::government_type *government_type);
+	[[nodiscard]] QCoro::Task<void> set_government_type(const metternich::government_type *government_type);
 	bool can_have_government_type(const metternich::government_type *government_type) const;
-	void check_government_type();
+	[[nodiscard]] QCoro::Task<void> check_government_type();
 
 	bool is_tribal() const;
 	bool is_clade() const;
@@ -320,8 +320,8 @@ public:
 	}
 
 	QVariantList get_provinces_qvariant_list() const;
-	void add_province(const province *province);
-	void remove_province(const province *province);
+	[[nodiscard]] QCoro::Task<void> add_province(const province *province);
+	[[nodiscard]] QCoro::Task<void> remove_province(const province *province);
 	void on_province_gained(const province *province, const int multiplier);
 
 	int get_province_count() const
@@ -337,17 +337,17 @@ public:
 	}
 
 	QVariantList get_sites_qvariant_list() const;
-	void add_site(const site *site);
-	void remove_site(const site *site);
-	void on_site_gained(const site *site, const int multiplier);
+	[[nodiscard]] QCoro::Task<void> add_site(const site *site);
+	[[nodiscard]] QCoro::Task<void> remove_site(const site *site);
+	[[nodiscard]] QCoro::Task<void> on_site_gained(const site *site, const int multiplier);
 
 	const site *get_capital() const
 	{
 		return this->capital;
 	}
 
-	void set_capital(const site *capital);
-	void choose_capital();
+	[[nodiscard]] QCoro::Task<void> set_capital(const site *capital);
+	[[nodiscard]] QCoro::Task<void> choose_capital();
 
 	const province *get_capital_province() const;
 
@@ -356,7 +356,7 @@ public:
 		return this->holding_count;
 	}
 
-	void change_holding_count(const int change);
+	[[nodiscard]] QCoro::Task<void> change_holding_count(const int change);
 	int get_holding_count_with_vassals() const;
 
 	const std::vector<const province *> &get_border_provinces() const
@@ -471,7 +471,7 @@ public:
 		return this->get_known_countries().contains(other_domain);
 	}
 
-	void add_known_country(const metternich::domain *other_domain);
+	[[nodiscard]] QCoro::Task<void> add_known_country(const metternich::domain *other_domain);
 
 	void remove_known_country(const metternich::domain *other_domain)
 	{
@@ -479,7 +479,7 @@ public:
 	}
 
 	diplomacy_state get_diplomacy_state(const metternich::domain *other_domain) const;
-	void set_diplomacy_state(const metternich::domain *other_domain, const diplomacy_state state);
+	[[nodiscard]] QCoro::Task<void> set_diplomacy_state(const metternich::domain *other_domain, const diplomacy_state state);
 
 	const std::map<diplomacy_state, int> &get_diplomacy_state_counts() const
 	{
@@ -660,7 +660,7 @@ public:
 		return 0;
 	}
 
-	void change_attribute_value(const domain_attribute *attribute, const int change);
+	[[nodiscard]] QCoro::Task<void> change_attribute_value(const domain_attribute *attribute, const int change);
 	bool do_attribute_check(const domain_attribute *attribute, const int roll_modifier, int *roll_result_output = nullptr) const;
 	int get_attribute_check_chance(const domain_attribute *attribute, const int roll_modifier) const;
 	int get_attribute_check_control_modifier() const;
@@ -682,7 +682,7 @@ public:
 		return 0;
 	}
 
-	void change_site_attribute_value(const site_attribute *attribute, const int change);
+	[[nodiscard]] QCoro::Task<void> change_site_attribute_value(const site_attribute *attribute, const int change);
 
 	int get_unrest() const
 	{
@@ -829,9 +829,9 @@ public:
 		return this->get_settlement_building_count(const_building);
 	}
 
-	void change_settlement_building_count(const building_type *building, const int change);
+	[[nodiscard]] QCoro::Task<void> change_settlement_building_count(const building_type *building, const int change);
 
-	void on_wonder_gained(const wonder *wonder, const int multiplier);
+	[[nodiscard]] QCoro::Task<void> on_wonder_gained(const wonder *wonder, const int multiplier);
 
 	std::vector<building_item_slot *> get_item_slots() const;
 	QVariantList get_item_slots_qvariant_list() const;
@@ -903,24 +903,24 @@ public:
 
 	QVariantList get_scripted_modifiers_qvariant_list() const;
 	bool has_scripted_modifier(const scripted_country_modifier *modifier) const;
-	void add_scripted_modifier(const scripted_country_modifier *modifier, const int duration);
-	void remove_scripted_modifier(const scripted_country_modifier *modifier);
-	void decrement_scripted_modifiers();
+	[[nodiscard]] QCoro::Task<void> add_scripted_modifier(const scripted_country_modifier *modifier, const int duration);
+	[[nodiscard]] QCoro::Task<void> remove_scripted_modifier(const scripted_country_modifier *modifier);
+	[[nodiscard]] QCoro::Task<void> decrement_scripted_modifiers();
 
-	void apply_modifier(const modifier<const metternich::domain> *modifier, const int multiplier = 1);
+	[[nodiscard]] QCoro::Task<void> apply_modifier(const modifier<const metternich::domain> *modifier, const int multiplier = 1);
 
-	void remove_modifier(const modifier<const metternich::domain> *modifier)
+	[[nodiscard]] QCoro::Task<void> remove_modifier(const modifier<const metternich::domain> *modifier)
 	{
-		this->apply_modifier(modifier, -1);
+		co_await this->apply_modifier(modifier, -1);
 	}
 
 	const std::vector<const character *> &get_characters() const;
 	QVariantList get_characters_qvariant_list() const;
 	void add_character(const character *character);
 	void remove_character(const character *character);
-	void check_characters();
+	[[nodiscard]] QCoro::Task<void> check_characters();
 
-	void generate_ruler();
+	[[nodiscard]] QCoro::Task<void> generate_ruler();
 
 	const std::map<QDate, const character *> &get_historical_rulers() const
 	{
@@ -1135,8 +1135,8 @@ public:
 
 	bool is_region_discovered(const region *region) const;
 
-	void explore_tile(const QPoint &tile_pos);
-	void explore_province(const province *province);
+	[[nodiscard]] QCoro::Task<void> explore_tile(const QPoint &tile_pos);
+	[[nodiscard]] QCoro::Task<void> explore_province(const province *province);
 
 	const point_set &get_prospected_tiles() const
 	{
@@ -1148,7 +1148,7 @@ public:
 		return this->prospected_tiles.contains(tile_pos);
 	}
 
-	void prospect_tile(const QPoint &tile_pos);
+	[[nodiscard]] QCoro::Task<void> prospect_tile(const QPoint &tile_pos);
 	void reset_tile_prospection(const QPoint &tile_pos);
 
 	const std::vector<const journal_entry *> &get_active_journal_entries() const
@@ -1157,8 +1157,8 @@ public:
 	}
 
 	QVariantList get_active_journal_entries_qvariant_list() const;
-	void add_active_journal_entry(const journal_entry *journal_entry);
-	void remove_active_journal_entry(const journal_entry *journal_entry);
+	[[nodiscard]] QCoro::Task<void> add_active_journal_entry(const journal_entry *journal_entry);
+	[[nodiscard]] QCoro::Task<void> remove_active_journal_entry(const journal_entry *journal_entry);
 
 	const std::vector<const journal_entry *> &get_inactive_journal_entries() const
 	{
@@ -1173,10 +1173,12 @@ public:
 	}
 
 	QVariantList get_finished_journal_entries_qvariant_list() const;
-	void check_journal_entries(const bool ignore_effects = false, const bool ignore_random_chance = false);
+	[[nodiscard]] QCoro::Task<void> check_journal_entries(const bool ignore_effects = false, const bool ignore_random_chance = false);
 	bool check_potential_journal_entries();
-	bool check_inactive_journal_entries();
-	bool check_active_journal_entries(const read_only_context &ctx, const bool ignore_effects, const bool ignore_random_chance);
+	[[nodiscard]] QCoro::Task<bool> check_inactive_journal_entries();
+
+	[[nodiscard]]
+	QCoro::Task<bool> check_active_journal_entries(const read_only_context &ctx, const bool ignore_effects, const bool ignore_random_chance);
 
 	const building_class_map<int> &get_free_building_class_counts() const
 	{
@@ -1194,11 +1196,13 @@ public:
 		return 0;
 	}
 
-	void set_free_building_class_count(const building_class *building_class, const int value);
+	[[nodiscard]]
+	QCoro::Task<void> set_free_building_class_count(const building_class *building_class, const int value);
 
-	void change_free_building_class_count(const building_class *building_class, const int value)
+	[[nodiscard]]
+	QCoro::Task<void> change_free_building_class_count(const building_class *building_class, const int value)
 	{
-		this->set_free_building_class_count(building_class, this->get_free_building_class_count(building_class) + value);
+		co_await this->set_free_building_class_count(building_class, this->get_free_building_class_count(building_class) + value);
 	}
 
 	int get_free_consulate_count(const consulate *consulate) const

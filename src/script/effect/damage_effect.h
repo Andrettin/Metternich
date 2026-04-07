@@ -57,7 +57,7 @@ public:
 		}
 	}
 
-	virtual void do_assignment_effect(const character *scope, context &ctx) const override
+	[[nodiscard]] virtual QCoro::Task<void> do_assignment_effect_coro(const character *scope, context &ctx) const override
 	{
 		int damage = damage_effect::damage_variant_to_damage(this->damage);
 
@@ -75,7 +75,7 @@ public:
 			}
 		}
 
-		scope->get_game_data()->change_health(-damage);
+		co_await scope->get_game_data()->change_health(-damage);
 	}
 
 	virtual std::string get_assignment_string(const character *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override

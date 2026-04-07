@@ -55,7 +55,7 @@ bool scoped_event_base<scope_type>::is_player_scope(const scope_type *scope)
 }
 
 template <typename scope_type>
-void scoped_event_base<scope_type>::check_events_for_scope(const scope_type *scope, const event_trigger trigger, const context &ctx)
+QCoro::Task<void> scoped_event_base<scope_type>::check_events_for_scope(const scope_type *scope, const event_trigger trigger, const context &ctx)
 {
 	assert_throw(trigger != event_trigger::none);
 
@@ -64,25 +64,25 @@ void scoped_event_base<scope_type>::check_events_for_scope(const scope_type *sco
 			continue;
 		}
 
-		event->fire(scope, ctx);
+		co_await event->fire(scope, ctx);
 	}
 
-	scoped_event_base::check_random_events_for_scope(scope, ctx, scoped_event_base::get_trigger_random_events(trigger), 0);
-	scoped_event_base::check_random_event_groups_for_scope(scope, trigger, ctx);
+	co_await scoped_event_base::check_random_events_for_scope(scope, ctx, scoped_event_base::get_trigger_random_events(trigger), 0);
+	co_await scoped_event_base::check_random_event_groups_for_scope(scope, trigger, ctx);
 
 	if (trigger == event_trigger::per_turn_pulse) {
-		scoped_event_base::check_mtth_events_for_scope(scope);
+		co_await scoped_event_base::check_mtth_events_for_scope(scope);
 	}
 }
 
 template <typename scope_type>
-void scoped_event_base<scope_type>::check_events_for_scope(const scope_type *scope, const event_trigger trigger)
+QCoro::Task<void> scoped_event_base<scope_type>::check_events_for_scope(const scope_type *scope, const event_trigger trigger)
 {
-	scoped_event_base<scope_type>::check_events_for_scope(scope, trigger, context(scope));
+	co_await scoped_event_base<scope_type>::check_events_for_scope(scope, trigger, context(scope));
 }
 
 template <typename scope_type>
-void scoped_event_base<scope_type>::check_random_events_for_scope(const scope_type *scope, const context &ctx, const std::vector<const scoped_event_base *> &potential_events, const int delay)
+QCoro::Task<void> scoped_event_base<scope_type>::check_random_events_for_scope(const scope_type *scope, const context &ctx, const std::vector<const scoped_event_base *> &potential_events, const int delay)
 {
 	std::vector<const scoped_event_base *> random_events;
 
@@ -112,7 +112,7 @@ void scoped_event_base<scope_type>::check_random_events_for_scope(const scope_ty
 				auto delayed_effect = std::make_unique<delayed_effect_instance<scope_type>>(event, scope, ctx, delay);
 				game::get()->add_delayed_effect(std::move(delayed_effect));
 			} else {
-				event->fire(scope, ctx);
+				co_await event->fire(scope, ctx);
 			}
 			break;
 		}
@@ -122,7 +122,7 @@ void scoped_event_base<scope_type>::check_random_events_for_scope(const scope_ty
 }
 
 template <typename scope_type>
-void scoped_event_base<scope_type>::check_random_event_groups_for_scope(const scope_type *scope, const event_trigger trigger, const context &ctx)
+QCoro::Task<void> scoped_event_base<scope_type>::check_random_event_groups_for_scope(const scope_type *scope, const event_trigger trigger, const context &ctx)
 {
 	for (const event_random_group *random_group : event_random_group::get_all_of_trigger(trigger)) {
 		const std::vector<const scoped_event_base *> &potential_events = random_group->get_events<scope_type>();
@@ -130,12 +130,12 @@ void scoped_event_base<scope_type>::check_random_event_groups_for_scope(const sc
 			continue;
 		}
 
-		scoped_event_base::check_random_events_for_scope(scope, ctx, potential_events, random_group->get_delay(game::get()->get_year()));
+		co_await scoped_event_base::check_random_events_for_scope(scope, ctx, potential_events, random_group->get_delay(game::get()->get_year()));
 	}
 }
 
 template <typename scope_type>
-void scoped_event_base<scope_type>::check_mtth_events_for_scope(const scope_type *scope)
+QCoro::Task<void> scoped_event_base<scope_type>::check_mtth_events_for_scope(const scope_type *scope)
 {
 	const read_only_context ctx(scope);
 
@@ -156,7 +156,7 @@ void scoped_event_base<scope_type>::check_mtth_events_for_scope(const scope_type
 		}
 
 		if (should_fire) {
-			event->fire(scope, context(scope));
+			co_await event->fire(scope, context(scope));
 		}
 	}
 }
@@ -281,10 +281,10 @@ bool scoped_event_base<scope_type>::can_fire(const scope_type *scope, const read
 }
 
 template <typename scope_type>
-void scoped_event_base<scope_type>::do_immediate_effects(scope_type *scope, context &ctx) const
+QCoro::Task<void> scoped_event_base<scope_type>::do_immediate_effects(scope_type *scope, context &ctx) const
 {
 	if (this->immediate_effects != nullptr) {
-		this->immediate_effects->do_effects(scope, ctx);
+		co_await this->immediate_effects->do_effects(scope, ctx);
 	}
 }
 
@@ -321,14 +321,14 @@ std::string scoped_event_base<scope_type>::get_option_tooltip(const int option_i
 }
 
 template <typename scope_type>
-void scoped_event_base<scope_type>::do_option_effects(const int option_index, context &ctx) const
+QCoro::Task<void> scoped_event_base<scope_type>::do_option_effects(const int option_index, context &ctx) const
 {
 	const scope_type *scope = scoped_event_base::get_scope_from_context(ctx);
-	this->get_options().at(option_index)->do_effects(scope, ctx);
+	co_await this->get_options().at(option_index)->do_effects(scope, ctx);
 }
 
 template <typename scope_type>
-void scoped_event_base<scope_type>::fire(const scope_type *scope, const context &ctx) const
+QCoro::Task<void> scoped_event_base<scope_type>::fire(const scope_type *scope, const context &ctx) const
 {
 	if (this->fires_only_once()) {
 		assert_throw(!game::get()->has_fired_event(this->get_event_pointer()));
@@ -338,7 +338,7 @@ void scoped_event_base<scope_type>::fire(const scope_type *scope, const context 
 
 	context event_ctx = ctx;
 
-	this->do_immediate_effects(scope, event_ctx);
+	co_await this->do_immediate_effects(scope, event_ctx);
 
 	if (scoped_event_base::is_player_scope(scope) && !this->is_hidden()) {
 		this->create_instance(event_ctx);
@@ -357,7 +357,7 @@ void scoped_event_base<scope_type>::fire(const scope_type *scope, const context 
 
 		if (!options.empty()) {
 			const event_option<scope_type> *option = vector::get_random(options);
-			option->do_effects(scope, event_ctx);
+			co_await option->do_effects(scope, event_ctx);
 		}
 	}
 }

@@ -161,7 +161,7 @@ void character::initialize_all_home_sites()
 	}
 }
 
-character *character::generate(const metternich::species *species, const metternich::character_class *character_class, const int level, const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const std::vector<const trait *> &traits, const int health, const std::vector<const item_type *> &items, const bool generate_bloodline, const bool temporary)
+QCoro::Task<character *> character::generate(const metternich::species *species, const metternich::character_class *character_class, const int level, const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const std::vector<const trait *> &traits, const int health, const std::vector<const item_type *> &items, const bool generate_bloodline, const bool temporary)
 {
 	assert_throw(species != nullptr);
 
@@ -221,31 +221,30 @@ character *character::generate(const metternich::species *species, const mettern
 
 	generated_character->check();
 
-	generated_character->reset_game_data();
+	co_await generated_character->reset_game_data();
 	generated_character->get_game_data()->set_character_class(character_class);
 	generated_character->get_game_data()->set_target_traits(traits);
-	generated_character->get_game_data()->apply_species_and_class(level, false);
+	co_await generated_character->get_game_data()->apply_species_and_class(level, false);
 	generated_character->get_game_data()->on_setup_finished();
 
 	game::get()->add_generated_character(std::move(generated_character));
-	return game::get()->get_generated_characters().back().get();
+	co_return game::get()->get_generated_characters().back().get();
 }
 
-character *character::generate(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const int health, const std::vector<const item_type *> &items, const bool generate_bloodline, const bool temporary)
+QCoro::Task<character *> character::generate(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const int health, const std::vector<const item_type *> &items, const bool generate_bloodline, const bool temporary)
 {
-	return character::generate(monster_type->get_species(), monster_type->get_character_class(), monster_type->get_level(), monster_type, culture, religion, home_site, monster_type->get_traits(), health, items, generate_bloodline, temporary);
+	co_return co_await character::generate(monster_type->get_species(), monster_type->get_character_class(), monster_type->get_level(), monster_type, culture, religion, home_site, monster_type->get_traits(), health, items, generate_bloodline, temporary);
 }
 
-std::shared_ptr<character_reference> character::generate_temporary(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const int health, const std::vector<const item_type *> &items)
+QCoro::Task<std::shared_ptr<character_reference>> character::generate_temporary(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const int health, const std::vector<const item_type *> &items)
 {
-	metternich::character *character = character::generate(monster_type, culture, religion, home_site, health, items, false, true);
-	return std::make_shared<character_reference>(character);
+	metternich::character *character = co_await character::generate(monster_type, culture, religion, home_site, health, items, false, true);
+	co_return std::make_shared<character_reference>(character);
 }
 
 character::character(const std::string &identifier)
 	: character_base(identifier)
 {
-	this->reset_game_data();
 }
 
 character::~character()
@@ -524,9 +523,10 @@ void character::reset_history()
 	this->history = make_qunique<character_history>(this);
 }
 
-void character::reset_game_data()
+QCoro::Task<void> character::reset_game_data()
 {
 	this->game_data = make_qunique<character_game_data>(this);
+	co_await this->get_game_data()->initialize();
 	emit game_data_changed();
 }
 

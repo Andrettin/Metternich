@@ -76,11 +76,11 @@ public:
 	static const scope_type *get_scope_from_context(const read_only_context &ctx);
 	static bool is_player_scope(const scope_type *scope);
 
-	static void check_events_for_scope(const scope_type *scope, const event_trigger trigger, const context &ctx);
-	static void check_events_for_scope(const scope_type *scope, const event_trigger trigger);
-	static void check_random_events_for_scope(const scope_type *scope, const context &ctx, const std::vector<const scoped_event_base *> &potential_events, const int delay);
-	static void check_random_event_groups_for_scope(const scope_type *scope, const event_trigger trigger, const context &ctx);
-	static void check_mtth_events_for_scope(const scope_type *scope);
+	[[nodiscard]] static QCoro::Task<void> check_events_for_scope(const scope_type *scope, const event_trigger trigger, const context &ctx);
+	[[nodiscard]] static QCoro::Task<void> check_events_for_scope(const scope_type *scope, const event_trigger trigger);
+	[[nodiscard]] static QCoro::Task<void> check_random_events_for_scope(const scope_type *scope, const context &ctx, const std::vector<const scoped_event_base *> &potential_events, const int delay);
+	[[nodiscard]] static QCoro::Task<void> check_random_event_groups_for_scope(const scope_type *scope, const event_trigger trigger, const context &ctx);
+	[[nodiscard]] static QCoro::Task<void> check_mtth_events_for_scope(const scope_type *scope);
 
 private:
 	static inline std::map<event_trigger, std::vector<const scoped_event_base *>> trigger_events;
@@ -129,7 +129,8 @@ public:
 
 	bool can_fire(const scope_type *scope, const read_only_context &ctx) const;
 
-	void do_immediate_effects(scope_type *scope, context &ctx) const;
+	[[nodiscard]]
+	QCoro::Task<void> do_immediate_effects(scope_type *scope, context &ctx) const;
 
 	const std::vector<std::unique_ptr<event_option<scope_type>>> &get_options() const
 	{
@@ -146,9 +147,13 @@ public:
 	bool is_option_available(const int option_index, const read_only_context &ctx) const;
 	const std::string &get_option_name(const int option_index) const;
 	std::string get_option_tooltip(const int option_index, const read_only_context &ctx) const;
-	void do_option_effects(const int option_index, context &ctx) const;
 
-	void fire(const scope_type *scope, const context &ctx) const;
+	[[nodiscard]]
+	QCoro::Task<void> do_option_effects(const int option_index, context &ctx) const;
+
+	[[nodiscard]]
+	QCoro::Task<void> fire(const scope_type *scope, const context &ctx) const;
+
 	virtual void create_instance(const context &ctx) const = 0;
 
 private:

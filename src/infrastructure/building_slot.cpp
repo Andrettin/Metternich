@@ -113,10 +113,10 @@ gsml_data building_slot::to_gsml_data() const
 	return data;
 }
 
-void building_slot::set_building(const building_type *building)
+QCoro::Task<void> building_slot::set_building(const building_type *building)
 {
 	if (building == this->get_building()) {
-		return;
+		co_return;
 	}
 
 	if (building != nullptr) {
@@ -129,13 +129,13 @@ void building_slot::set_building(const building_type *building)
 	const building_type *old_building = this->get_building();
 
 	if (old_building != nullptr) {
-		this->on_building_gained(old_building, -1);
+		co_await this->on_building_gained(old_building, -1);
 	}
 
 	this->building = building;
 
 	if (this->get_building() != nullptr) {
-		this->on_building_gained(this->get_building(), 1);
+		co_await this->on_building_gained(this->get_building(), 1);
 	}
 
 	if (holding_level_change != 0) {
@@ -343,16 +343,16 @@ bool building_slot::can_build_building(const building_type *building) const
 	return this->can_gain_building(building);
 }
 
-void building_slot::on_building_gained(const building_type *building, const int multiplier)
+QCoro::Task<void> building_slot::on_building_gained(const building_type *building, const int multiplier)
 {
 	site_game_data *settlement_game_data = this->get_settlement()->get_game_data();
-	settlement_game_data->on_building_gained(building, multiplier);
+	co_await settlement_game_data->on_building_gained(building, multiplier);
 }
 
-void building_slot::set_wonder(const metternich::wonder *wonder)
+QCoro::Task<void> building_slot::set_wonder(const metternich::wonder *wonder)
 {
 	if (wonder == this->get_wonder()) {
-		return;
+		co_return;
 	}
 
 	if (wonder != nullptr) {
@@ -362,16 +362,16 @@ void building_slot::set_wonder(const metternich::wonder *wonder)
 	site_game_data *settlement_game_data = this->get_settlement()->get_game_data();
 
 	if (this->get_wonder() != nullptr) {
-		settlement_game_data->on_wonder_gained(this->get_wonder(), -1);
+		co_await settlement_game_data->on_wonder_gained(this->get_wonder(), -1);
 	}
 
 	this->wonder = wonder;
 
 	if (this->get_wonder() != nullptr) {
-		settlement_game_data->on_wonder_gained(this->get_wonder(), 1);
+		co_await settlement_game_data->on_wonder_gained(this->get_wonder(), 1);
 
 		if (this->get_building() == nullptr || this->get_wonder()->get_building()->is_any_base_building(this->get_building())) {
-			this->set_building(this->get_wonder()->get_building());
+			co_await this->set_building(this->get_wonder()->get_building());
 		}
 	}
 

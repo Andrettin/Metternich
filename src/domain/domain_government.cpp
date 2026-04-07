@@ -121,18 +121,18 @@ QVariantList domain_government::get_laws_qvariant_list() const
 	return archimedes::map::to_qvariant_list(this->get_laws());
 }
 
-void domain_government::set_law(const law_group *law_group, const law *law)
+QCoro::Task<void> domain_government::set_law(const law_group *law_group, const law *law)
 {
 	assert_throw(law_group != nullptr);
 
 	if (law == this->get_law(law_group)) {
-		return;
+		co_return;
 	}
 
 	const metternich::law *old_law = this->get_law(law_group);
 	if (old_law != nullptr) {
 		if (old_law->get_modifier() != nullptr) {
-			old_law->get_modifier()->remove(this->domain);
+			co_await old_law->get_modifier()->remove(this->domain);
 		}
 	}
 
@@ -141,19 +141,19 @@ void domain_government::set_law(const law_group *law_group, const law *law)
 	if (law != nullptr) {
 		assert_throw(law->get_group() == law_group);
 		if (law->get_modifier() != nullptr) {
-			law->get_modifier()->apply(this->domain);
+			co_await law->get_modifier()->apply(this->domain);
 		}
 
 		if (law->get_succession_type() != succession_type::none) {
-			this->set_succession_type(law->get_succession_type());
+			co_await this->set_succession_type(law->get_succession_type());
 		}
 
 		if (law->get_succession_gender_type() != succession_gender_type::none) {
-			this->set_succession_gender_type(law->get_succession_gender_type());
+			co_await this->set_succession_gender_type(law->get_succession_gender_type());
 		}
 	}
 
-	this->get_game_data()->check_government_type();
+	co_await this->get_game_data()->check_government_type();
 
 	if (game::get()->is_running()) {
 		emit laws_changed();
@@ -197,13 +197,13 @@ bool domain_government::can_enact_law(const metternich::law *law) const
 	return true;
 }
 
-void domain_government::enact_law(const law *law)
+QCoro::Task<void> domain_government::enact_law_coro(const law *law)
 {
 	for (const auto &[commodity, cost] : law->get_commodity_costs()) {
 		this->domain->get_economy()->change_stored_commodity(commodity, -cost * this->get_total_law_cost_modifier() / 100);
 	}
 
-	this->set_law(law->get_group(), law);
+	co_await this->set_law(law->get_group(), law);
 }
 
 int domain_government::get_total_law_cost_modifier() const
@@ -211,23 +211,23 @@ int domain_government::get_total_law_cost_modifier() const
 	return 100 + (this->get_game_data()->get_population_unit_count() - 1) + this->get_law_cost_modifier();
 }
 
-void domain_government::check_laws()
+QCoro::Task<void> domain_government::check_laws()
 {
 	for (const law_group *law_group : law_group::get_all()) {
 		if (this->get_law(law_group) != nullptr && !this->can_have_law(this->get_law(law_group))) {
-			this->set_law(law_group, nullptr);
+			co_await this->set_law(law_group, nullptr);
 		}
 
 		if (this->get_law(law_group) == nullptr) {
 			const law *government_type_default_law = this->get_game_data()->get_government_type()->get_default_law(law_group);
 			if (government_type_default_law != nullptr && this->can_have_law(government_type_default_law)) {
-				this->set_law(law_group, government_type_default_law);
+				co_await this->set_law(law_group, government_type_default_law);
 			}
 		}
 
 		if (this->get_law(law_group) == nullptr) {
 			if (this->can_have_law(law_group->get_default_law())) {
-				this->set_law(law_group, law_group->get_default_law());
+				co_await this->set_law(law_group, law_group->get_default_law());
 			}
 		}
 
@@ -239,35 +239,35 @@ void domain_government::check_laws()
 				}
 			}
 			if (!potential_laws.empty()) {
-				this->set_law(law_group, vector::get_random(potential_laws));
+				co_await this->set_law(law_group, vector::get_random(potential_laws));
 			}
 		}
 	}
 }
 
-void domain_government::set_succession_type(const metternich::succession_type succession_type)
+QCoro::Task<void> domain_government::set_succession_type(const metternich::succession_type succession_type)
 {
 	if (succession_type == this->get_succession_type()) {
-		return;
+		co_return;
 	}
 
 	this->succession_type = succession_type;
 
 	if (game::get()->is_running()) {
-		this->set_office_holder(defines::get()->get_heir_office(), this->calculate_heir());
+		co_await this->set_office_holder(defines::get()->get_heir_office(), this->calculate_heir());
 	}
 }
 
-void domain_government::set_succession_gender_type(const metternich::succession_gender_type succession_gender_type)
+QCoro::Task<void> domain_government::set_succession_gender_type(const metternich::succession_gender_type succession_gender_type)
 {
 	if (succession_gender_type == this->get_succession_gender_type()) {
-		return;
+		co_return;
 	}
 
 	this->succession_gender_type = succession_gender_type;
 
 	if (game::get()->is_running()) {
-		this->set_office_holder(defines::get()->get_heir_office(), this->calculate_heir());
+		co_await this->set_office_holder(defines::get()->get_heir_office(), this->calculate_heir());
 	}
 }
 
@@ -480,25 +480,25 @@ QVariantList domain_government::get_office_holders_qvariant_list() const
 	return archimedes::map::to_qvariant_list(this->get_office_holders());
 }
 
-void domain_government::set_office_holder(const office *office, const character *character)
+QCoro::Task<void> domain_government::set_office_holder(const office *office, const character *character)
 {
 	assert_throw(office != nullptr);
 
 	const metternich::character *old_office_holder = this->get_office_holder(office);
 
 	if (character == old_office_holder) {
-		return;
+		co_return;
 	}
 
 	if (old_office_holder != nullptr) {
-		old_office_holder->get_game_data()->apply_office_modifier(this->domain, office, -1);
+		co_await old_office_holder->get_game_data()->apply_office_modifier(this->domain, office, -1);
 		old_office_holder->get_game_data()->set_office(nullptr);
 	}
 
 	const metternich::domain *old_domain = character ? character->get_game_data()->get_domain() : nullptr;
 	const metternich::office *old_office = character ? character->get_game_data()->get_office() : nullptr;
 	if (old_office != nullptr) {
-		old_domain->get_government()->set_office_holder(old_office, nullptr);
+		co_await old_domain->get_government()->set_office_holder(old_office, nullptr);
 	}
 
 	if (character != nullptr) {
@@ -512,7 +512,7 @@ void domain_government::set_office_holder(const office *office, const character 
 	}
 
 	if (character != nullptr) {
-		character->get_game_data()->apply_office_modifier(this->domain, office, 1);
+		co_await character->get_game_data()->apply_office_modifier(this->domain, office, 1);
 		character->get_game_data()->set_office(office);
 	}
 
@@ -526,13 +526,13 @@ void domain_government::set_office_holder(const office *office, const character 
 		}
 
 		if (game::get()->is_running()) {
-			this->set_office_holder(defines::get()->get_heir_office(), this->calculate_heir());
+			co_await this->set_office_holder(defines::get()->get_heir_office(), this->calculate_heir());
 		}
 	}
 
 	if (old_office != nullptr) {
 		assert_throw(old_domain != nullptr);
-		old_domain->get_government()->check_office_holder(old_office);
+		co_await old_domain->get_government()->check_office_holder(old_office);
 	}
 
 	if (game::get()->is_running()) {
@@ -600,18 +600,18 @@ void domain_government::set_appointed_office_holder(const office *office, const 
 	}
 }
 
-void domain_government::check_office_holder(const office *office)
+QCoro::Task<void> domain_government::check_office_holder(const office *office)
 {
 	if (this->get_game_data()->is_under_anarchy()) {
-		this->set_office_holder(office, nullptr);
-		return;
+		co_await this->set_office_holder(office, nullptr);
+		co_return;
 	}
 
 	//process appointment, if any
 	const character *appointed_holder = this->get_appointed_office_holder(office);
 	if (appointed_holder != nullptr && this->can_have_office_holder(office, appointed_holder)) {
 		assert_throw(office->is_appointable());
-		this->set_office_holder(office, appointed_holder);
+		co_await this->set_office_holder(office, appointed_holder);
 		this->set_appointed_office_holder(office, nullptr);
 	}
 
@@ -619,27 +619,27 @@ void domain_government::check_office_holder(const office *office)
 	if (this->get_office_holder(office) == nullptr && !office->is_appointable()) {
 		const character *character = this->get_best_office_holder(office);
 		if (character != nullptr) {
-			this->set_office_holder(office, character);
+			co_await this->set_office_holder(office, character);
 		} else {
 			if (office == defines::get()->get_ruler_office()) {
-				this->get_game_data()->generate_ruler();
+				co_await this->get_game_data()->generate_ruler();
 				assert_throw(this->get_ruler() != nullptr);
 			}
 		}
 	}
 }
 
-void domain_government::check_office_holders()
+QCoro::Task<void> domain_government::check_office_holders()
 {
 	const std::vector<const office *> available_offices = this->get_available_offices();
 	for (const office *office : available_offices) {
-		this->check_office_holder(office);
+		co_await this->check_office_holder(office);
 	}
 
 	const data_entry_map<office, const character *> office_holders = this->get_office_holders();
 	for (const auto &[office, office_holder] : office_holders) {
 		if (!vector::contains(available_offices, office)) {
-			this->set_office_holder(office, nullptr);
+			co_await this->set_office_holder(office, nullptr);
 		}
 	}
 
@@ -812,7 +812,7 @@ bool domain_government::can_appoint_office_holder(const office *office, const ch
 	return true;
 }
 
-void domain_government::on_office_holder_died(const office *office, const character *office_holder)
+QCoro::Task<void> domain_government::on_office_holder_died(const office *office, const character *office_holder)
 {
 	assert_throw(office_holder != nullptr);
 
@@ -830,7 +830,7 @@ void domain_government::on_office_holder_died(const office *office, const charac
 		if (office->is_ruler()) {
 			context ctx(this->domain);
 			ctx.source_scope = office_holder;
-			domain_event::check_events_for_scope(this->domain, event_trigger::ruler_death, ctx);
+			co_await domain_event::check_events_for_scope(this->domain, event_trigger::ruler_death, ctx);
 		}
 	}
 
@@ -845,17 +845,17 @@ void domain_government::on_office_holder_died(const office *office, const charac
 
 		const character *heir = this->get_heir();
 
-		this->set_office_holder(office, heir);
+		co_await this->set_office_holder(office, heir);
 
 		//inherit the items after succession, so that the heir is not AI when receiving the items
 		for (item *item : items_to_take) {
-			heir->get_game_data()->add_item(office_holder->get_game_data()->take_item(item));
+			co_await heir->get_game_data()->add_item(co_await office_holder->get_game_data()->take_item(item));
 		}
 	} else {
-		this->set_office_holder(office, nullptr);
+		co_await this->set_office_holder(office, nullptr);
 		assert_throw(office_holder->get_game_data()->get_office() == nullptr);
 
-		this->check_office_holder(office);
+		co_await this->check_office_holder(office);
 	}
 
 	assert_throw(this->get_office_holder(office) != office_holder);

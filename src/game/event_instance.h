@@ -49,7 +49,13 @@ public:
 		return this->option_tooltips;
 	}
 
-	Q_INVOKABLE void choose_option(const int displayed_option_index);
+	[[nodiscard]]
+	QCoro::Task<void> choose_option_coro(const int displayed_option_index);
+
+	Q_INVOKABLE QCoro::QmlTask choose_option(const int displayed_option_index)
+	{
+		return this->choose_option_coro(displayed_option_index);
+	}
 
 	bool is_in_combat() const;
 

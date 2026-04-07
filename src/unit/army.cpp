@@ -138,13 +138,13 @@ QCoro::Task<void> army::do_turn()
 			}
 
 			if (success && can_conquer_province) {
-				target_province->get_game_data()->set_owner(this->get_domain());
+				co_await target_province->get_game_data()->set_owner(this->get_domain());
 			}
 		}
 
 		if (success) {
 			for (military_unit *military_unit : this->get_military_units()) {
-				military_unit->set_province(target_province);
+				co_await military_unit->set_province(target_province);
 			}
 		}
 	} else if (this->get_target_site() != nullptr) {
@@ -153,7 +153,7 @@ QCoro::Task<void> army::do_turn()
 		if (target_site_game_data->can_be_visited_by(this->get_domain())) {
 			std::unique_ptr<party> party = this->to_party();
 			if (!party->get_characters().empty()) {
-				target_site_game_data->explore_dungeon(std::move(party));
+				co_await target_site_game_data->explore_dungeon(std::move(party));
 			}
 		}
 	}
