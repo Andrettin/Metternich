@@ -2,7 +2,11 @@ chancellor = {
 	name = "Chancellor"
 	aliases += foreign_minister
 	minister = true
-	attribute = wisdom
+	domain_attribute = stability
+	character_attributes = {
+		charisma
+		intelligence
+	}
 	skills = {
 		diplomacy
 	}
@@ -11,9 +15,32 @@ chancellor = {
 high_admiral = {
 	name = "High Admiral"
 	minister = true
-	attribute = intelligence
+	domain_attribute = stability
+	character_attributes = {
+		intelligence
+	}
 	conditions = {
 		game_rule = offices
+	}
+}
+
+high_priest = {
+	name = "High Priest"
+	minister = true
+	domain_attribute = stability
+	character_attributes = {
+		charisma
+		wisdom
+	}
+}
+
+magister = {
+	name = "Magister"
+	minister = true
+	domain_attribute = economy
+	character_attributes = {
+		charisma
+		intelligence
 	}
 }
 
@@ -21,7 +48,11 @@ marshal = {
 	name = "Marshal"
 	aliases += war_minister
 	minister = true
-	attribute = intelligence
+	domain_attribute = stability
+	character_attributes = {
+		charisma
+		strength
+	}
 	skills = {
 		leadership
 		siegecraft
@@ -32,7 +63,11 @@ marshal = {
 royal_enforcer = {
 	name = "Royal Enforcer"
 	minister = true
-	attribute = intelligence
+	domain_attribute = loyalty
+	character_attributes = {
+		dexterity
+		strength
+	}
 	skills = {
 		law
 	}
@@ -41,7 +76,11 @@ royal_enforcer = {
 spymaster = {
 	name = "Spymaster"
 	minister = true
-	attribute = wisdom
+	domain_attribute = loyalty #should be variable instead
+	character_attributes = {
+		dexterity
+		intelligence
+	}
 	skills = {
 		intrigue
 	}
@@ -51,7 +90,11 @@ treasurer = {
 	name = "Treasurer"
 	aliases += finance_minister
 	minister = true
-	attribute = intelligence
+	domain_attribute = economy
+	character_attributes = {
+		intelligence
+		wisdom
+	}
 	skills = {
 		administration
 	}

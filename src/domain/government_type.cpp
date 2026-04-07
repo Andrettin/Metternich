@@ -281,6 +281,10 @@ void government_type::check() const
 		throw std::runtime_error(std::format("Government type \"{}\" has no icon.", this->get_identifier()));
 	}
 
+	if (this->get_primary_domain_attribute() == nullptr) {
+		throw std::runtime_error(std::format("Government type \"{}\" has no primary domain attribute.", this->get_identifier()));
+	}
+
 	if (this->get_modifier() == nullptr) {
 		//log::log_error(std::format("Government type \"{}\" has no modifier.", this->get_identifier()));
 	}

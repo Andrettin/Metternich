@@ -2,6 +2,7 @@ magocracy = {
 	name = "Magocracy"
 	group = republic
 	icon = university
+	primary_domain_attribute = economy
 	default_laws = {
 		succession = elective
 	}

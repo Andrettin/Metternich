@@ -2,6 +2,7 @@ monarchy = {
 	name = "Monarchy"
 	group = monarchy
 	icon = crown_royal
+	primary_domain_attribute = loyalty
 	regnal_numbering = true
 	default_laws = {
 		succession = primogeniture

@@ -23,7 +23,11 @@ void office::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "skills") {
+	if (tag == "character_attributes") {
+		for (const std::string &value : values) {
+			this->character_attributes.push_back(character_attribute::get(value));
+		}
+	} else if (tag == "skills") {
 		for (const std::string &value : values) {
 			this->skills.push_back(skill::get(value));
 		}
@@ -42,7 +46,8 @@ void office::process_gsml_scope(const gsml_data &scope)
 
 void office::check() const
 {
-	assert_throw(this->get_attribute() != nullptr);
+	assert_throw(this->get_domain_attribute() != nullptr || this->is_ruler());
+	assert_throw(!this->get_character_attributes().empty());
 
 	if (this->is_ruler()) {
 		assert_throw(!this->is_minister());

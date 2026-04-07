@@ -2,6 +2,7 @@ crown_colony = {
 	name = "Crown Colony"
 	group = monarchy
 	icon = settlement
+	primary_domain_attribute = loyalty
 	required_technology = renaissance
 	default_laws = {
 		succession = elective

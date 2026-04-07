@@ -1,4 +1,6 @@
 ruler = {
 	name = "Ruler"
-	attribute = charisma
+	character_attributes = {
+		charisma
+	}
 }

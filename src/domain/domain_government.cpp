@@ -451,7 +451,12 @@ const character *domain_government::calculate_elective_heir() const
 
 		const character_game_data *character_game_data = character->get_game_data();
 
-		const int succession_score = (character_game_data->get_reputation() - character_game_data->get_bloodline_strength()) + character_game_data->get_bloodline_strength() + character_game_data->get_attribute_value(heir_office->get_attribute());
+		int succession_score = 0;
+		for (const character_attribute *attribute : heir_office->get_character_attributes()) {
+			succession_score = std::max(succession_score, character_game_data->get_attribute_modifier(attribute));
+		}
+
+		succession_score += (character_game_data->get_reputation() - character_game_data->get_bloodline_strength()) + character_game_data->get_bloodline_strength();
 
 		if (succession_score > best_succession_score) {
 			potential_heirs.clear();
@@ -690,7 +695,11 @@ const character *domain_government::get_best_office_holder(const office *office)
 
 		const character_game_data *character_game_data = character->get_game_data();
 
-		int score = character_game_data->get_attribute_value(office->get_attribute());
+		int score = 0;
+
+		for (const character_attribute *attribute : office->get_character_attributes()) {
+			score = std::max(score, character_game_data->get_attribute_modifier(attribute));
+		}
 
 		for (const skill *skill : office->get_skills()) {
 			score += character_game_data->get_skill_value(skill);

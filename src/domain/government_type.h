@@ -5,6 +5,7 @@
 #include "database/named_data_entry.h"
 #include "domain/law_group_container.h"
 
+Q_MOC_INCLUDE("domain/domain_attribute.h")
 Q_MOC_INCLUDE("domain/government_group.h")
 Q_MOC_INCLUDE("technology/technology.h")
 Q_MOC_INCLUDE("ui/icon.h")
@@ -16,6 +17,7 @@ namespace archimedes {
 namespace metternich {
 
 class character_class;
+class domain_attribute;
 class government_group;
 class law;
 class law_group;
@@ -35,6 +37,7 @@ class government_type final : public named_data_entry, public data_type<governme
 
 	Q_PROPERTY(const metternich::government_group* group MEMBER group READ get_group NOTIFY changed)
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
+	Q_PROPERTY(const metternich::domain_attribute* primary_domain_attribute MEMBER primary_domain_attribute READ get_primary_domain_attribute NOTIFY changed)
 	Q_PROPERTY(bool regnal_numbering MEMBER regnal_numbering READ has_regnal_numbering NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 
@@ -82,6 +85,11 @@ public:
 	const icon *get_icon() const
 	{
 		return this->icon;
+	}
+
+	const domain_attribute *get_primary_domain_attribute() const
+	{
+		return this->primary_domain_attribute;
 	}
 
 	bool has_regnal_numbering() const
@@ -138,6 +146,7 @@ signals:
 private:
 	const government_group *group = nullptr;
 	const metternich::icon *icon = nullptr;
+	const domain_attribute *primary_domain_attribute = nullptr;
 	bool regnal_numbering = false; //whether this government type uses regnal numbers for its rulers
 	std::vector<const law *> forbidden_laws;
 	law_group_map<const law *> default_laws;

@@ -2,6 +2,7 @@ self_governing_colony = {
 	name = "Self-Governing Colony"
 	group = republic
 	icon = settlement
+	primary_domain_attribute = economy
 	required_technology = renaissance
 	default_laws = {
 		succession = elective

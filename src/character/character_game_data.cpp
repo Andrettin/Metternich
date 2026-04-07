@@ -1759,10 +1759,20 @@ void character_game_data::change_attribute_value(const character_attribute *attr
 	}
 
 	const int old_value = this->get_attribute_value(attribute);
+
+	const bool is_office_attribute = this->get_office() != nullptr && vector::contains(office->get_character_attributes(), attribute);
+	if (is_office_attribute) {
+		this->apply_office_modifier(this->domain, this->get_office(), -1);
+	}
+
 	const int new_value = (this->attribute_values[attribute] += change);
 
 	if (new_value == 0) {
 		this->attribute_values.erase(attribute);
+	}
+
+	if (is_office_attribute) {
+		this->apply_office_modifier(this->domain, this->get_office(), 1);
 	}
 
 	for (const skill *skill : attribute->get_derived_skills()) {
@@ -1781,6 +1791,11 @@ int character_game_data::get_primary_attribute_value() const
 	assert_throw(this->get_character_class() != nullptr);
 
 	return this->get_attribute_value(this->character->get_primary_attribute());
+}
+
+int character_game_data::get_attribute_modifier(const character_attribute *attribute) const
+{
+	return -5 + (this->get_attribute_value(attribute) / 2);
 }
 
 data_entry_set<character_attribute> character_game_data::get_main_attributes() const
@@ -2854,6 +2869,19 @@ void character_game_data::apply_office_modifier(const metternich::domain *domain
 {
 	assert_throw(domain != nullptr);
 	assert_throw(office != nullptr);
+
+	int attribute_modifier = 0;
+	for (const character_attribute *attribute : office->get_character_attributes()) {
+		attribute_modifier = std::max(attribute_modifier, this->get_attribute_modifier(attribute));
+	}
+	if (office->gives_half_domain_attribute_bonus()) {
+		attribute_modifier /= 2;
+	}
+	if (office->is_ruler()) {
+		domain->get_game_data()->change_attribute_value(domain->get_game_data()->get_government_type()->get_primary_domain_attribute(), attribute_modifier);
+	} else {
+		domain->get_game_data()->change_attribute_value(office->get_domain_attribute(), attribute_modifier);
+	}
 
 	for (const auto &[trait, count] : this->get_trait_counts()) {
 		this->apply_trait_office_modifier(trait, domain, office, (trait->is_unlimited() ? count : 1) * multiplier);

@@ -2,6 +2,7 @@ tribal_despotism = {
 	name = "Tribal Despotism"
 	group = tribe
 	icon = bow
+	primary_domain_attribute = loyalty
 	default_laws = {
 		succession = primogeniture
 		ruling_class = aristocracy

@@ -2,6 +2,7 @@ colony = {
 	name = "Colony"
 	group = republic
 	icon = settlement
+	primary_domain_attribute = stability
 	default_laws = {
 		succession = elective
 	}

@@ -2,6 +2,7 @@ republic = {
 	name = "Republic"
 	group = republic
 	icon = philosophy
+	primary_domain_attribute = economy
 	default_laws = {
 		succession = elective
 		ruling_class = plutocracy

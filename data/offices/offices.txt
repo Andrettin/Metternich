@@ -1,23 +1,11 @@
 chief_builder = {
 	name = "Chief Builder"
-	attribute = intelligence
+	domain_attribute = stability
+	character_attributes = {
+		intelligence
+	}
 	conditions = {
 		game_rule = offices
-	}
-	holder_conditions = {
 	}
 }
 
-court_scholar = {
-	name = "Court Scholar"
-	attribute = intelligence
-	conditions = {
-		game_rule = offices
-	}
-	holder_conditions = {
-		or = {
-			character_class = cleric
-			character_class = mage
-		}
-	}
-}

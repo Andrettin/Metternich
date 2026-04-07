@@ -3,6 +3,7 @@ theocracy = {
 	group = theocracy
 	icon = wooden_cross
 	regnal_numbering = true
+	primary_domain_attribute = stability
 	default_laws = {
 		succession = elective
 	}

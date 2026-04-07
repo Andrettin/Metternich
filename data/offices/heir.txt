@@ -1,4 +1,8 @@
 heir = {
 	name = "Heir"
-	attribute = charisma
+	domain_attribute = loyalty
+	half_domain_attribute_bonus = true
+	character_attributes = {
+		charisma
+	}
 }

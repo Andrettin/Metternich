@@ -2,6 +2,7 @@ clade = {
 	name = "Clade"
 	group = clade
 	icon = bow
+	primary_domain_attribute = stability
 	conditions = {
 		country_type = clade
 	}

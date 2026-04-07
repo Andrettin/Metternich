@@ -2,6 +2,7 @@ oligarchy = {
 	name = "Oligarchy"
 	group = republic
 	icon = chest
+	primary_domain_attribute = economy
 	default_laws = {
 		succession = elective
 	}
