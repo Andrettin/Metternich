@@ -27,7 +27,7 @@ class bloodline;
 class building_item_slot;
 class character;
 class character_attribute;
-class character_attribute_base;
+class character_stat;
 class civilian_unit;
 class domain;
 class enchantment;
@@ -329,7 +329,7 @@ public:
 	data_entry_set<character_attribute> get_main_attributes() const;
 	bool do_attribute_check(const character_attribute *attribute, const int roll_modifier) const;
 	int get_attribute_check_chance(const character_attribute *attribute, const int roll_modifier) const;
-	[[nodiscard]] QCoro::Task<void> on_attribute_value_changed(const character_attribute_base *attribute, const int new_value, const int old_value); //also used for skills
+	[[nodiscard]] QCoro::Task<void> on_stat_value_changed(const character_stat *stat, const int new_value, const int old_value); //also used for skills
 
 	int get_best_attribute_modifier(const character_attribute *attribute, const character_modifier_type modifier_type) const
 	{

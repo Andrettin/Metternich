@@ -1784,7 +1784,7 @@ QCoro::Task<void> character_game_data::change_attribute_value(const character_at
 		co_await this->change_skill_value(skill, change);
 	}
 
-	co_await this->on_attribute_value_changed(attribute, new_value, old_value);
+	co_await this->on_stat_value_changed(attribute, new_value, old_value);
 
 	if (game::get()->is_running()) {
 		emit attribute_values_changed();
@@ -1854,18 +1854,18 @@ int character_game_data::get_attribute_check_chance(const character_attribute *a
 	return chance;
 }
 
-QCoro::Task<void> character_game_data::on_attribute_value_changed(const character_attribute_base *attribute, const int new_value, const int old_value)
+QCoro::Task<void> character_game_data::on_stat_value_changed(const character_stat *stat, const int new_value, const int old_value)
 {
 	if (new_value > old_value) {
 		for (int i = old_value + 1; i <= new_value; ++i) {
-			const modifier<const metternich::character> *value_modifier = attribute->get_value_modifier(i);
+			const modifier<const metternich::character> *value_modifier = stat->get_value_modifier(i);
 			if (value_modifier != nullptr) {
 				co_await value_modifier->apply(this->character);
 			}
 		}
 	} else {
 		for (int i = old_value; i > new_value; --i) {
-			const modifier<const metternich::character> *value_modifier = attribute->get_value_modifier(i);
+			const modifier<const metternich::character> *value_modifier = stat->get_value_modifier(i);
 			if (value_modifier != nullptr) {
 				co_await value_modifier->remove(this->character);
 			}
@@ -2339,9 +2339,9 @@ QCoro::Task<void> character_game_data::change_skill_training(const skill *skill,
 	const bool is_trained = this->is_skill_trained(skill);
 
 	if (is_trained && !was_trained) {
-		co_await this->on_attribute_value_changed(skill, this->get_skill_value(skill), 0);
+		co_await this->on_stat_value_changed(skill, this->get_skill_value(skill), 0);
 	} else if (!is_trained && was_trained) {
-		co_await this->on_attribute_value_changed(skill, 0, this->get_skill_value(skill));
+		co_await this->on_stat_value_changed(skill, 0, this->get_skill_value(skill));
 	}
 
 	if (game::get()->is_running()) {
@@ -2363,7 +2363,7 @@ QCoro::Task<void> character_game_data::change_skill_value(const skill *skill, co
 	}
 
 	if (this->is_skill_available(skill)) {
-		co_await this->on_attribute_value_changed(skill, new_value, old_value);
+		co_await this->on_stat_value_changed(skill, new_value, old_value);
 	}
 
 	if (game::get()->is_running()) {

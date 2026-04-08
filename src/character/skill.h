@@ -1,6 +1,6 @@
 #pragma once
 
-#include "character/character_attribute_base.h"
+#include "character/character_stat.h"
 #include "database/data_type.h"
 #include "util/dice.h"
 
@@ -13,7 +13,7 @@ class icon;
 class skill_group;
 enum class profession_profitability;
 
-class skill final : public character_attribute_base, public data_type<skill>
+class skill final : public character_stat, public data_type<skill>
 {
 	Q_OBJECT
 
@@ -46,7 +46,7 @@ private:
 	static inline const skill *disarm_traps_skill = nullptr;
 
 public:
-	explicit skill(const std::string &identifier) : character_attribute_base(identifier)
+	explicit skill(const std::string &identifier) : character_stat(identifier)
 	{
 	}
 

@@ -9,13 +9,13 @@ class character;
 template <typename scope_type>
 class modifier;
 
-class character_attribute_base : public named_data_entry
+class character_stat : public named_data_entry
 {
 	Q_OBJECT
 
 public:
-	explicit character_attribute_base(const std::string &identifier);
-	~character_attribute_base();
+	explicit character_stat(const std::string &identifier);
+	~character_stat();
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 

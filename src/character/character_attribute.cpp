@@ -8,7 +8,7 @@
 
 namespace metternich {
 
-character_attribute::character_attribute(const std::string &identifier) : character_attribute_base(identifier)
+character_attribute::character_attribute(const std::string &identifier) : character_stat(identifier)
 {
 }
 
@@ -38,7 +38,7 @@ void character_attribute::process_gsml_scope(const gsml_data &scope)
 			this->rating_ranges[key] = std::move(range);
 		});
 	} else {
-		character_attribute_base::process_gsml_scope(scope);
+		character_stat::process_gsml_scope(scope);
 	}
 }
 

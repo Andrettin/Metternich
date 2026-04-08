@@ -23,7 +23,6 @@ set(character_SRCS
 	src/character/bloodline.cpp
 	src/character/character.cpp
 	src/character/character_attribute.cpp
-	src/character/character_attribute_base.cpp
 	src/character/character_class.cpp
 	src/character/character_class_container.cpp
 	src/character/character_container.cpp
@@ -31,6 +30,7 @@ set(character_SRCS
 	src/character/character_game_data.cpp
 	src/character/character_history.cpp
 	src/character/character_reference.cpp
+	src/character/character_stat.cpp
 	src/character/dynasty.cpp
 	src/character/family_tree_model.cpp
 	src/character/level_bonus_table.cpp
@@ -382,7 +382,6 @@ set(character_HDRS
 	src/character/bloodline_strength_category.h
 	src/character/character.h
 	src/character/character_attribute.h
-	src/character/character_attribute_base.h
 	src/character/character_class.h
 	src/character/character_class_container.h
 	src/character/character_container.h
@@ -391,6 +390,7 @@ set(character_HDRS
 	src/character/character_history.h
 	src/character/character_modifier_type.h
 	src/character/character_reference.h
+	src/character/character_stat.h
 	src/character/dynasty.h
 	src/character/family_tree_model.h
 	src/character/level_bonus_table.h

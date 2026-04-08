@@ -1,6 +1,6 @@
 #include "metternich.h"
 
-#include "character/character_attribute_base.h"
+#include "character/character_stat.h"
 
 #include "script/modifier.h"
 #include "util/assert_util.h"
@@ -8,15 +8,15 @@
 
 namespace metternich {
 
-character_attribute_base::character_attribute_base(const std::string &identifier) : named_data_entry(identifier)
+character_stat::character_stat(const std::string &identifier) : named_data_entry(identifier)
 {
 }
 
-character_attribute_base::~character_attribute_base()
+character_stat::~character_stat()
 {
 }
 
-void character_attribute_base::process_gsml_scope(const gsml_data &scope)
+void character_stat::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 

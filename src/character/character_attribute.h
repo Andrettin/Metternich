@@ -1,13 +1,13 @@
 #pragma once
 
-#include "character/character_attribute_base.h"
+#include "character/character_stat.h"
 #include "database/data_type.h"
 
 namespace metternich {
 
 class skill;
 
-class character_attribute final : public character_attribute_base, public data_type<character_attribute>
+class character_attribute final : public character_stat, public data_type<character_attribute>
 {
 	Q_OBJECT
 
