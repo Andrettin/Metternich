@@ -77,9 +77,9 @@ const character *party::get_best_skill_character(const skill *skill) const
 	const character *best_skill_character = nullptr;
 
 	for (const character *character : this->get_characters()) {
-		if (best_skill_character == nullptr || (character->get_game_data()->is_skill_trained(skill) && character->get_game_data()->get_skill_value(skill) > best_skill_value)) {
+		if (best_skill_character == nullptr || character->get_game_data()->get_effective_skill_value(skill) > best_skill_value) {
 			best_skill_character = character;
-			best_skill_value = character->get_game_data()->is_skill_trained(skill) ? character->get_game_data()->get_skill_value(skill) : 0;
+			best_skill_value = character->get_game_data()->get_effective_skill_value(skill);
 		}
 	}
 
