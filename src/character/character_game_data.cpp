@@ -24,6 +24,7 @@
 #include "domain/country_military.h"
 #include "domain/country_technology.h"
 #include "domain/domain.h"
+#include "domain/domain_attribute.h"
 #include "domain/domain_game_data.h"
 #include "domain/domain_government.h"
 #include "domain/domain_tier.h"
@@ -68,6 +69,7 @@
 #include "util/gender.h"
 #include "util/log_util.h"
 #include "util/map_util.h"
+#include "util/number_util.h"
 #include "util/string_conversion_util.h"
 #include "util/string_util.h"
 #include "util/vector_random_util.h"
@@ -2836,23 +2838,86 @@ void character_game_data::set_office(const metternich::office *office)
 	}
 }
 
+int character_game_data::get_office_domain_attribute_modifier(const metternich::office *office, const character_attribute **output_character_attribute, const skill **output_skill) const
+{
+	int attribute_modifier = 0;
+	for (const character_attribute *attribute : office->get_character_attributes()) {
+		const int character_attribute_modifier = this->get_attribute_modifier(attribute);
+		if (character_attribute_modifier > attribute_modifier) {
+			attribute_modifier = character_attribute_modifier;
+
+			if (output_character_attribute != nullptr) {
+				*output_character_attribute = attribute;
+			}
+		}
+	}
+
+	int skill_attribute_modifier = 0;
+	for (const skill *skill : office->get_skills()) {
+		const int skill_modifier = this->get_effective_skill_value(skill) / 5;
+		if (skill_modifier > skill_attribute_modifier) {
+			skill_attribute_modifier = skill_modifier;
+
+			if (output_skill != nullptr) {
+				*output_skill = skill;
+			}
+		}
+	}
+	attribute_modifier += skill_attribute_modifier;
+
+	if (office->gives_half_domain_attribute_bonus()) {
+		attribute_modifier /= 2;
+	}
+
+	return attribute_modifier;
+}
+
 std::string character_game_data::get_office_modifier_string(const metternich::domain *domain, const metternich::office *office) const
 {
 	assert_throw(office != nullptr);
 
 	std::string str;
 
+	if (office->is_ruler()) {
+		str = domain->get_game_data()->get_government_type()->get_primary_domain_attribute()->get_name();
+	} else {
+		str = office->get_domain_attribute()->get_name();
+	}
+
+	const character_attribute *output_character_attribute = nullptr;
+	const skill *output_skill = nullptr;
+	const int domain_attribute_modifier = this->get_office_domain_attribute_modifier(office, &output_character_attribute, &output_skill);
+
+	if (output_character_attribute != nullptr || output_skill != nullptr) {
+		str += " (from ";
+
+		if (output_character_attribute != nullptr) {
+			str += output_character_attribute->get_name();
+
+			if (output_skill != nullptr) {
+				str += " and ";
+			}
+		}
+
+		if (output_skill != nullptr) {
+			str += output_skill->get_name();
+		}
+
+		str += ")";
+	}
+
+	const QColor &number_color = domain_attribute_modifier < 0 ? defines::get()->get_red_text_color() : defines::get()->get_green_text_color();
+	str += ": " + string::colored(number::to_signed_string(domain_attribute_modifier), number_color);
+
 	for (const auto &[trait, count] : this->get_trait_counts()) {
 		if (trait->get_office_modifier(office) == nullptr) {
 			continue;
 		}
 
-		const size_t indent = 1;
-
 		std::string trait_modifier_str;
 
 		if (trait->get_office_modifier(office) != nullptr) {
-			trait_modifier_str = trait->get_office_modifier(office)->get_string(domain, trait->is_unlimited() ? count : 1, indent);
+			trait_modifier_str = trait->get_office_modifier(office)->get_single_line_string(domain, trait->is_unlimited() ? count : 1);
 		}
 
 		if (trait_modifier_str.empty()) {
@@ -2860,16 +2925,12 @@ std::string character_game_data::get_office_modifier_string(const metternich::do
 		}
 
 		if (!str.empty()) {
-			str += "\n";
-		}
-
-		if (!str.empty()) {
-			str += "\n";
+			str += ", ";
 		}
 
 		str += string::highlight(trait->get_name());
 
-		str += "\n" + trait_modifier_str;
+		str += ": " + trait_modifier_str;
 	}
 
 	return str;
@@ -2880,20 +2941,7 @@ QCoro::Task<void> character_game_data::apply_office_modifier(const metternich::d
 	assert_throw(domain != nullptr);
 	assert_throw(office != nullptr);
 
-	int attribute_modifier = 0;
-	for (const character_attribute *attribute : office->get_character_attributes()) {
-		attribute_modifier = std::max(attribute_modifier, this->get_attribute_modifier(attribute));
-	}
-
-	int skill_attribute_modifier = 0;
-	for (const skill *skill : office->get_skills()) {
-		skill_attribute_modifier = std::max(skill_attribute_modifier, this->get_effective_skill_value(skill) / 5);
-	}
-	attribute_modifier += skill_attribute_modifier;
-
-	if (office->gives_half_domain_attribute_bonus()) {
-		attribute_modifier /= 2;
-	}
+	const int attribute_modifier = this->get_office_domain_attribute_modifier(office, nullptr, nullptr);
 	if (office->is_ruler()) {
 		co_await domain->get_game_data()->change_attribute_value(domain->get_game_data()->get_government_type()->get_primary_domain_attribute(), attribute_modifier * multiplier);
 	} else {

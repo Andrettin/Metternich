@@ -452,16 +452,7 @@ const character *domain_government::calculate_elective_heir() const
 
 		const character_game_data *character_game_data = character->get_game_data();
 
-		int succession_score = 0;
-		for (const character_attribute *attribute : heir_office->get_character_attributes()) {
-			succession_score = std::max(succession_score, character_game_data->get_attribute_modifier(attribute));
-		}
-
-		int skill_score = 0;
-		for (const skill *skill : ruler_office->get_skills()) {
-			skill_score = std::max(skill_score, character_game_data->get_effective_skill_value(skill) / 5);
-		}
-		succession_score += skill_score;
+		int succession_score = character_game_data->get_office_domain_attribute_modifier(ruler_office, nullptr, nullptr);
 
 		succession_score += (character_game_data->get_reputation() - character_game_data->get_bloodline_strength()) + character_game_data->get_bloodline_strength();
 
@@ -702,17 +693,7 @@ const character *domain_government::get_best_office_holder(const office *office)
 
 		const character_game_data *character_game_data = character->get_game_data();
 
-		int score = 0;
-
-		for (const character_attribute *attribute : office->get_character_attributes()) {
-			score = std::max(score, character_game_data->get_attribute_modifier(attribute));
-		}
-
-		int skill_score = 0;
-		for (const skill *skill : office->get_skills()) {
-			skill_score = std::max(skill_score, character_game_data->get_effective_skill_value(skill) / 5);
-		}
-		score += skill_score;
+		int score = character_game_data->get_office_domain_attribute_modifier(office, nullptr, nullptr);
 
 		if (office->is_ruler()) {
 			score += (character_game_data->get_reputation() - character_game_data->get_bloodline_strength()) + character_game_data->get_bloodline_strength();
