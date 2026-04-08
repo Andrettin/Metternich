@@ -5,4 +5,7 @@ heir = {
 	character_attributes = {
 		charisma
 	}
+	skills = {
+		heraldry
+	}
 }

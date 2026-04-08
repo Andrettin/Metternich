@@ -224,7 +224,6 @@ heraldry = {
 	}
 	conditions = {
 		class_skill = heraldry
-		skill_training = diplomacy #it only makes sense to get Heraldry for now if the character also has Diplomacy, since all it does currently is to provide a bonus for Diplomacy
 	}
 	modifier = {
 		skill_training = heraldry

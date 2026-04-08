@@ -440,6 +440,7 @@ const character *domain_government::calculate_heir_by_descent_for_character(cons
 const character *domain_government::calculate_elective_heir() const
 {
 	const office *heir_office = defines::get()->get_heir_office();
+	const office *ruler_office = defines::get()->get_ruler_office();
 
 	std::vector<const character *> potential_heirs;
 	int best_succession_score = 0;
@@ -455,6 +456,12 @@ const character *domain_government::calculate_elective_heir() const
 		for (const character_attribute *attribute : heir_office->get_character_attributes()) {
 			succession_score = std::max(succession_score, character_game_data->get_attribute_modifier(attribute));
 		}
+
+		int skill_score = 0;
+		for (const skill *skill : ruler_office->get_skills()) {
+			skill_score = std::max(skill_score, character_game_data->get_effective_skill_value(skill) / 5);
+		}
+		succession_score += skill_score;
 
 		succession_score += (character_game_data->get_reputation() - character_game_data->get_bloodline_strength()) + character_game_data->get_bloodline_strength();
 
@@ -701,9 +708,11 @@ const character *domain_government::get_best_office_holder(const office *office)
 			score = std::max(score, character_game_data->get_attribute_modifier(attribute));
 		}
 
+		int skill_score = 0;
 		for (const skill *skill : office->get_skills()) {
-			score += character_game_data->get_skill_value(skill);
+			skill_score = std::max(skill_score, character_game_data->get_effective_skill_value(skill) / 5);
 		}
+		score += skill_score;
 
 		if (office->is_ruler()) {
 			score += (character_game_data->get_reputation() - character_game_data->get_bloodline_strength()) + character_game_data->get_bloodline_strength();
@@ -770,12 +779,6 @@ bool domain_government::can_have_office_holder(const office *office, const chara
 
 	if (office->get_holder_conditions() != nullptr && !office->get_holder_conditions()->check(character, read_only_context(character))) {
 		return false;
-	}
-
-	for (const skill *skill : office->get_skills()) {
-		if (character_game_data->get_effective_skill_value(skill) <= 0) {
-			return false;
-		}
 	}
 
 	return true;

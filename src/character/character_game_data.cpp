@@ -2884,13 +2884,20 @@ QCoro::Task<void> character_game_data::apply_office_modifier(const metternich::d
 	for (const character_attribute *attribute : office->get_character_attributes()) {
 		attribute_modifier = std::max(attribute_modifier, this->get_attribute_modifier(attribute));
 	}
+
+	int skill_attribute_modifier = 0;
+	for (const skill *skill : office->get_skills()) {
+		skill_attribute_modifier = std::max(skill_attribute_modifier, this->get_effective_skill_value(skill) / 5);
+	}
+	attribute_modifier += skill_attribute_modifier;
+
 	if (office->gives_half_domain_attribute_bonus()) {
 		attribute_modifier /= 2;
 	}
 	if (office->is_ruler()) {
-		co_await domain->get_game_data()->change_attribute_value(domain->get_game_data()->get_government_type()->get_primary_domain_attribute(), attribute_modifier);
+		co_await domain->get_game_data()->change_attribute_value(domain->get_game_data()->get_government_type()->get_primary_domain_attribute(), attribute_modifier * multiplier);
 	} else {
-		co_await domain->get_game_data()->change_attribute_value(office->get_domain_attribute(), attribute_modifier);
+		co_await domain->get_game_data()->change_attribute_value(office->get_domain_attribute(), attribute_modifier * multiplier);
 	}
 
 	for (const auto &[trait, count] : this->get_trait_counts()) {

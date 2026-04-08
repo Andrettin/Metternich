@@ -3,4 +3,7 @@ ruler = {
 	character_attributes = {
 		charisma
 	}
+	skills = {
+		heraldry
+	}
 }

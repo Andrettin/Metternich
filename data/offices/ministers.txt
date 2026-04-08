@@ -10,6 +10,9 @@ chancellor = {
 	skills = {
 		diplomacy
 	}
+	holder_conditions = {
+		diplomacy > 0
+	}
 }
 
 high_admiral = {
@@ -32,6 +35,12 @@ high_priest = {
 		charisma
 		wisdom
 	}
+	skills = {
+		religion
+	}
+	holder_conditions = {
+		religion > 0
+	}
 }
 
 magister = {
@@ -53,10 +62,8 @@ marshal = {
 		charisma
 		strength
 	}
-	skills = {
-		leadership
-		siegecraft
-		strategy
+	holder_conditions = {
+		strategy > 0
 	}
 }
 
@@ -69,7 +76,9 @@ royal_enforcer = {
 		strength
 	}
 	skills = {
-		law
+	}
+	holder_conditions = {
+		law > 0
 	}
 }
 
@@ -82,7 +91,9 @@ spymaster = {
 		intelligence
 	}
 	skills = {
-		intrigue
+	}
+	holder_conditions = {
+		intrigue > 0
 	}
 }
 
@@ -95,7 +106,7 @@ treasurer = {
 		intelligence
 		wisdom
 	}
-	skills = {
-		administration
+	holder_conditions = {
+		administration > 0
 	}
 }
