@@ -76,6 +76,7 @@ royal_enforcer = {
 		strength
 	}
 	skills = {
+		intimidate
 	}
 	holder_conditions = {
 		law > 0
@@ -91,6 +92,7 @@ spymaster = {
 		intelligence
 	}
 	skills = {
+		sense_motive
 	}
 	holder_conditions = {
 		intrigue > 0

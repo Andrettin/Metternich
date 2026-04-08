@@ -202,6 +202,14 @@ hunting = {
 	}
 }
 
+intimidate = {
+	name = "Intimidate"
+	icon = labor
+	check_dice = 1d20
+	base_attribute = charisma
+	trained_only = false
+}
+
 intrigue = {
 	name = "Intrigue"
 	icon = dagger
@@ -289,6 +297,14 @@ seamanship = {
 	groups = {
 		general
 	}
+}
+
+sense_motive = {
+	name = "Sense Motive"
+	icon = dagger
+	check_dice = 1d20
+	base_attribute = wisdom
+	trained_only = false
 }
 
 siegecraft = {
