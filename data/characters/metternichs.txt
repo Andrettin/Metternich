@@ -35,6 +35,7 @@ clemens_wenceslaus_von_metternich = { #Source: "Gothaischer Hofkalender zum Nutz
 	traits = {
 		diplomacy #diplomat
 		skill_focus_diplomacy
+		negotiator
 	}
 	
 	history = {

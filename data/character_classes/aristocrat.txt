@@ -9,7 +9,9 @@ aristocrat = {
 		disguise
 		forgery
 		heraldry
+		intimidate
 		religion
+		sense_motive
 		swimming
 	}
 }

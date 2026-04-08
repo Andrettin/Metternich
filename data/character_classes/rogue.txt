@@ -16,6 +16,10 @@ rogue = {
 		general
 		rogue
 	}
+	class_skills = {
+		intimidate
+		sense_motive
+	}
 	allowed_species = {
 		dwarf
 		elf

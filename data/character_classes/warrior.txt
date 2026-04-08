@@ -16,6 +16,9 @@ warrior = {
 		general
 		warrior
 	}
+	class_skills = {
+		intimidate
+	}
 	allowed_species = {
 		dwarf
 		elf

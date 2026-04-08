@@ -18,6 +18,9 @@ paladin = {
 		priest
 		warrior
 	}
+	class_skills = {
+		sense_motive
+	}
 	allowed_species = {
 		human
 	}

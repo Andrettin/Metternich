@@ -18,6 +18,9 @@ bard = {
 		rogue
 		warrior
 	}
+	class_skills = {
+		sense_motive
+	}
 	allowed_species = {
 		elf
 		half_elf

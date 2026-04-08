@@ -58,6 +58,22 @@ lightning_reflexes = {
 	}
 }
 
+negotiator = {
+	name = "Negotiator"
+	icon = treaty
+	types = {
+		proficiency
+	}
+	conditions = {
+		skill_training = diplomacy
+		class_skill = sense_motive
+	}
+	modifier = {
+		diplomacy = 2
+		sense_motive = 2
+	}
+}
+
 nimble_fingers = {
 	name = "Nimble Fingers"
 	icon = dagger
