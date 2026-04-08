@@ -71,6 +71,20 @@ appraising = {
 	}
 }
 
+arcanology = {
+	name = "Arcanology"
+	icon = book
+	types = {
+		proficiency
+	}
+	conditions = {
+		class_skill = arcanology
+	}
+	modifier = {
+		skill_training = arcanology
+	}
+}
+
 armorer = {
 	name = "Armorer"
 	icon = clothing
@@ -351,7 +365,6 @@ religion = {
 	}
 	conditions = {
 		class_skill = religion
-		playable = false #only for flavor for NPCs, no mechanics added for it yet
 	}
 	modifier = {
 		skill_training = religion

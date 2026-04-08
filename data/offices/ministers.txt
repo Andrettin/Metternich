@@ -51,6 +51,12 @@ magister = {
 		charisma
 		intelligence
 	}
+	skills = {
+		arcanology
+	}
+	holder_conditions = {
+		arcanology > 0
+	}
 }
 
 marshal = {

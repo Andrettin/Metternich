@@ -51,6 +51,17 @@ appraising = {
 	}
 }
 
+arcanology = {
+	name = "Arcanology"
+	icon = book
+	check_dice = 1d20
+	base_attribute = intelligence
+	base_value = -3
+	groups = {
+		mage
+	}
+}
+
 armorer = {
 	name = "Armorer"
 	icon = clothing
