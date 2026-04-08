@@ -14,6 +14,7 @@ public:
 		: condition<character>(condition_operator)
 	{
 		this->skill = skill::get(value);
+		assert_throw(this->skill->is_trained_only());
 	}
 
 	virtual const std::string &get_class_identifier() const override

@@ -554,6 +554,7 @@ public:
 	bool do_saving_throw(const saving_throw_type *saving_throw_type, const int roll_modifier = 0) const;
 	int get_saving_throw_chance(const saving_throw_type *saving_throw_type, const int roll_modifier = 0) const;
 
+	bool is_skill_available(const skill *skill) const;
 	bool is_skill_trained(const skill *skill) const;
 	[[nodiscard]] QCoro::Task<void> change_skill_training(const skill *skill, const int change);
 

@@ -573,7 +573,7 @@ void character_data_model::update_skill_rows()
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
 
 	for (const auto &[skill, value] : character_game_data->get_skill_values()) {
-		if (!character_game_data->is_skill_trained(skill)) {
+		if (!character_game_data->is_skill_available(skill)) {
 			continue;
 		}
 

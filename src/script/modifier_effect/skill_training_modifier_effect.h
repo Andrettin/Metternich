@@ -13,6 +13,7 @@ public:
 	explicit skill_training_modifier_effect(const std::string &value)
 	{
 		this->skill = skill::get(value);
+		assert_throw(this->skill->is_trained_only());
 	}
 
 	virtual const std::string &get_identifier() const override

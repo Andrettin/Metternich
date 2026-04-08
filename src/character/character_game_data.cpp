@@ -503,7 +503,7 @@ void character_game_data::ply_trade()
 	int skill_percent_value = 0;
 
 	for (const auto &[skill, value] : this->get_skill_values()) {
-		if (!this->is_skill_trained(skill)) {
+		if (!this->is_skill_available(skill)) {
 			continue;
 		}
 
@@ -2304,17 +2304,24 @@ int character_game_data::get_saving_throw_chance(const saving_throw_type *saving
 	return chance;
 }
 
-bool character_game_data::is_skill_trained(const skill *skill) const
+bool character_game_data::is_skill_available(const skill *skill) const
 {
 	if (!skill->is_trained_only()) {
 		return true;
 	}
 
+	return this->is_skill_trained(skill);
+}
+
+bool character_game_data::is_skill_trained(const skill *skill) const
+{
 	return this->skill_trainings.contains(skill);
 }
 
 QCoro::Task<void> character_game_data::change_skill_training(const skill *skill, const int change)
 {
+	assert_throw(skill->is_trained_only());
+
 	if (change == 0) {
 		co_return;
 	}
@@ -2353,7 +2360,7 @@ QCoro::Task<void> character_game_data::change_skill_value(const skill *skill, co
 		this->skill_values.erase(skill);
 	}
 
-	if (this->is_skill_trained(skill)) {
+	if (this->is_skill_available(skill)) {
 		co_await this->on_attribute_value_changed(skill, new_value, old_value);
 	}
 
@@ -2364,7 +2371,7 @@ QCoro::Task<void> character_game_data::change_skill_value(const skill *skill, co
 
 int character_game_data::get_effective_skill_value(const skill *skill) const
 {
-	if (!this->is_skill_trained(skill)) {
+	if (!this->is_skill_available(skill)) {
 		return 0;
 	}
 
@@ -2376,7 +2383,7 @@ bool character_game_data::do_skill_check(const skill *skill, const int roll_modi
 	assert_throw(skill != nullptr);
 	assert_throw(location != nullptr);
 
-	if (!this->is_skill_trained(skill)) {
+	if (!this->is_skill_available(skill)) {
 		return false;
 	}
 
@@ -2402,7 +2409,7 @@ int character_game_data::get_skill_check_chance(const skill *skill, const int ro
 	assert_throw(skill != nullptr);
 	assert_throw(location != nullptr);
 
-	if (!this->is_skill_trained(skill)) {
+	if (!this->is_skill_available(skill)) {
 		return 0;
 	}
 
