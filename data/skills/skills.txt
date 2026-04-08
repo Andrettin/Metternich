@@ -305,6 +305,11 @@ sense_motive = {
 	check_dice = 1d20
 	base_attribute = wisdom
 	trained_only = false
+	#value_modifiers = {
+	#	5 = {
+	#		diplomacy = 2
+	#	}
+	#}
 }
 
 siegecraft = {

@@ -352,7 +352,7 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 		return std::make_unique<explored_dungeon_area_condition<scope_type>>(value, condition_operator);
 	} else if (key == "game_rule") {
 		return std::make_unique<game_rule_condition<scope_type>>(value, condition_operator);
-	} else if (key == "law") {
+	} else if (key == "law" && condition_operator == gsml_operator::assignment) {
 		return std::make_unique<law_condition<scope_type>>(value, condition_operator);
 	} else if (key == "month") {
 		return std::make_unique<month_condition<scope_type>>(value, condition_operator);
