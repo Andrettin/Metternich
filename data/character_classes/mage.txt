@@ -98,6 +98,8 @@ mage = {
 		#torch = 6
 	}
 	starting_spells = {
+		ray_of_frost
+		
 		#charm_person
 		#sleep
 		#summon_monster_1

@@ -80,4 +80,7 @@ druid = {
 			trait_of_type = proficiency
 		}
 	}
+	starting_spells = {
+		cure_minor_wounds
+	}
 }

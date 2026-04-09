@@ -112,6 +112,8 @@ cleric = {
 		#torch = 6
 	}
 	starting_spells = {
+		cure_minor_wounds
+		
 		cure_light_wounds
 		#protection_from_evil
 	}
