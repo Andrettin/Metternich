@@ -308,28 +308,31 @@ public:
 		this->set_reputation(this->get_reputation() + change);
 	}
 
-	const data_entry_map<character_attribute, int> &get_attribute_values() const
+	int get_stat_value(const character_stat *stat) const
 	{
-		return this->attribute_values;
-	}
-
-	int get_attribute_value(const character_attribute *attribute) const
-	{
-		const auto find_iterator = this->attribute_values.find(attribute);
-		if (find_iterator != this->attribute_values.end()) {
+		const auto find_iterator = this->stat_values.find(stat);
+		if (find_iterator != this->stat_values.end()) {
 			return find_iterator->second;
 		}
 
 		return 0;
 	}
 
+	const data_entry_map<character_stat, int> &get_stat_values() const
+	{
+		return this->stat_values;
+	}
+
+	[[nodiscard]] QCoro::Task<void> change_stat_value(const character_stat *stat, const int change, const bool stat_enabled, const bool affects_office_modifier);
+
+	int get_attribute_value(const character_attribute *attribute) const;
 	[[nodiscard]] QCoro::Task<void> change_attribute_value(const character_attribute *attribute, const int change);
 	int get_primary_attribute_value() const;
 	int get_attribute_modifier(const character_attribute *attribute) const;
 	data_entry_set<character_attribute> get_main_attributes() const;
 	bool do_attribute_check(const character_attribute *attribute, const int roll_modifier) const;
 	int get_attribute_check_chance(const character_attribute *attribute, const int roll_modifier) const;
-	[[nodiscard]] QCoro::Task<void> on_stat_value_changed(const character_stat *stat, const int new_value, const int old_value); //also used for skills
+	[[nodiscard]] QCoro::Task<void> on_stat_value_changed(const character_stat *stat, const int new_value, const int old_value);
 
 	int get_best_attribute_modifier(const character_attribute *attribute, const character_modifier_type modifier_type) const
 	{
@@ -558,21 +561,7 @@ public:
 	bool is_skill_trained(const skill *skill) const;
 	[[nodiscard]] QCoro::Task<void> change_skill_training(const skill *skill, const int change);
 
-	const data_entry_map<skill, int> &get_skill_values() const
-	{
-		return this->skill_values;
-	}
-
-	int get_skill_value(const skill *skill) const
-	{
-		const auto find_iterator = this->skill_values.find(skill);
-		if (find_iterator != this->skill_values.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
+	int get_skill_value(const skill *skill) const;
 	[[nodiscard]] QCoro::Task<void> change_skill_value(const skill *skill, const int change);
 	int get_effective_skill_value(const skill *skill) const;
 	bool do_skill_check(const skill *skill, const int roll_modifier, const site *location) const;
@@ -1021,7 +1010,7 @@ signals:
 	void bloodline_changed();
 	void bloodline_strength_changed();
 	void reputation_changed();
-	void attribute_values_changed();
+	void stat_values_changed();
 	void health_changed();
 	void max_health_changed();
 	void mana_changed();
@@ -1037,7 +1026,6 @@ signals:
 	void initiative_bonus_changed();
 	void saving_throw_bonuses_changed();
 	void skill_trainings_changed();
-	void skill_values_changed();
 	void traits_changed();
 	void scripted_modifiers_changed();
 	void ruler_changed();
@@ -1071,7 +1059,7 @@ private:
 	const metternich::bloodline *bloodline = nullptr;
 	int bloodline_strength = 0;
 	int reputation = 0;
-	data_entry_map<character_attribute, int> attribute_values;
+	data_entry_map<character_stat, int> stat_values;
 	data_entry_map<character_attribute, std::map<character_modifier_type, std::vector<int>>> attribute_modifiers;
 	int hit_dice_count = 0;
 	int health = 0;
@@ -1091,7 +1079,6 @@ private:
 	int initiative_bonus = 0;
 	data_entry_map<saving_throw_type, int> saving_throw_bonuses;
 	data_entry_map<skill, int> skill_trainings;
-	data_entry_map<skill, int> skill_values;
 	data_entry_map<trait, int> trait_counts;
 	data_entry_map<trait_type, std::vector<const trait *>> trait_choices;
 	scripted_character_modifier_map<int> scripted_modifiers;

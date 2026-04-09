@@ -132,7 +132,7 @@ QModelIndex character_data_model::parent(const QModelIndex &index) const
 void character_data_model::set_character(const metternich::character *character)
 {
 	if (this->character != nullptr) {
-		disconnect(this->character->get_game_data(), &character_game_data::attribute_values_changed, this, &character_data_model::update_attribute_rows);
+		disconnect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_attribute_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::mana_changed, this, &character_data_model::update_mana_row);
 		disconnect(this->character->get_game_data(), &character_game_data::max_mana_changed, this, &character_data_model::update_mana_row);
 		disconnect(this->character->get_game_data(), &character_game_data::craft_changed, this, &character_data_model::update_craft_row);
@@ -146,7 +146,7 @@ void character_data_model::set_character(const metternich::character *character)
 		disconnect(this->character->get_game_data(), &character_game_data::initiative_bonus_changed, this, &character_data_model::update_initiative_bonus_row);
 		disconnect(this->character->get_game_data(), &character_game_data::saving_throw_bonuses_changed, this, &character_data_model::update_saving_throw_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::skill_trainings_changed, this, &character_data_model::update_skill_rows);
-		disconnect(this->character->get_game_data(), &character_game_data::skill_values_changed, this, &character_data_model::update_skill_rows);
+		disconnect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_skill_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::traits_changed, this, &character_data_model::update_trait_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::wealth_changed, this, &character_data_model::update_wealth_row);
 	}
@@ -156,7 +156,7 @@ void character_data_model::set_character(const metternich::character *character)
 	this->reset_model();
 
 	if (character != nullptr) {
-		connect(this->character->get_game_data(), &character_game_data::attribute_values_changed, this, &character_data_model::update_attribute_rows);
+		connect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_attribute_rows);
 		connect(this->character->get_game_data(), &character_game_data::mana_changed, this, &character_data_model::update_mana_row);
 		connect(this->character->get_game_data(), &character_game_data::max_mana_changed, this, &character_data_model::update_mana_row);
 		connect(this->character->get_game_data(), &character_game_data::craft_changed, this, &character_data_model::update_craft_row);
@@ -170,7 +170,7 @@ void character_data_model::set_character(const metternich::character *character)
 		connect(this->character->get_game_data(), &character_game_data::initiative_bonus_changed, this, &character_data_model::update_initiative_bonus_row);
 		connect(this->character->get_game_data(), &character_game_data::saving_throw_bonuses_changed, this, &character_data_model::update_saving_throw_rows);
 		connect(this->character->get_game_data(), &character_game_data::skill_trainings_changed, this, &character_data_model::update_skill_rows);
-		connect(this->character->get_game_data(), &character_game_data::skill_values_changed, this, &character_data_model::update_skill_rows);
+		connect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_skill_rows);
 		connect(this->character->get_game_data(), &character_game_data::traits_changed, this, &character_data_model::update_trait_rows);
 		connect(this->character->get_game_data(), &character_game_data::wealth_changed, this, &character_data_model::update_wealth_row);
 	}
@@ -332,7 +332,12 @@ void character_data_model::update_attribute_rows()
 
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
 
-	for (const auto &[attribute, value] : character_game_data->get_attribute_values()) {
+	for (const auto &[stat, value] : character_game_data->get_stat_values()) {
+		const character_attribute *attribute = dynamic_cast<const character_attribute *>(stat);
+		if (attribute == nullptr) {
+			continue;
+		}
+
 		auto row = std::make_unique<character_data_row>(attribute->get_name() + ":", std::to_string(value), this->attribute_row);
 		this->attribute_row->child_rows.push_back(std::move(row));
 	}
@@ -572,7 +577,12 @@ void character_data_model::update_skill_rows()
 
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
 
-	for (const auto &[skill, value] : character_game_data->get_skill_values()) {
+	for (const auto &[stat, value] : character_game_data->get_stat_values()) {
+		const skill *skill = dynamic_cast<const metternich::skill *>(stat);
+		if (skill == nullptr) {
+			continue;
+		}
+
 		if (!character_game_data->is_skill_available(skill)) {
 			continue;
 		}

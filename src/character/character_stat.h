@@ -14,6 +14,31 @@ class character_stat : public named_data_entry
 	Q_OBJECT
 
 public:
+	static const character_stat *get_stat(const std::string &identifier)
+	{
+		const character_stat *stat = character_stat::try_get_stat(identifier);
+
+		if (stat == nullptr) {
+			throw std::runtime_error(std::format("No character stat found for identifier \"{}\".", identifier));
+		}
+
+		return stat;
+	}
+
+	static const character_stat *try_get_stat(const std::string &identifier)
+	{
+		const auto find_iterator = character_stat::stats_by_identifier.find(identifier);
+		if (find_iterator != character_stat::stats_by_identifier.end()) {
+			return find_iterator->second;
+		}
+
+		return nullptr;
+	}
+
+private:
+	static inline std::map<std::string, const character_stat *> stats_by_identifier;
+
+public:
 	explicit character_stat(const std::string &identifier);
 	~character_stat();
 

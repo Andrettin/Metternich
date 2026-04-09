@@ -42,7 +42,6 @@ class province;
 class religion;
 class scripted_province_modifier;
 class site;
-class skill;
 class tile;
 class wonder;
 enum class military_unit_category;

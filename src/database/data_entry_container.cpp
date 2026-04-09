@@ -3,6 +3,7 @@
 #include "database/data_entry_container.h"
 
 #include "character/character_attribute.h"
+#include "character/character_stat.h"
 #include "character/monster_type.h"
 #include "character/saving_throw_type.h"
 #include "character/skill.h"
@@ -47,6 +48,7 @@ bool data_entry_compare<T>::operator()(const T *lhs, const T *rhs) const
 }
 
 template struct data_entry_compare<character_attribute>;
+template struct data_entry_compare<character_stat>;
 template struct data_entry_compare<civilian_unit_type>;
 template struct data_entry_compare<commodity_unit>;
 template struct data_entry_compare<cultural_group>;

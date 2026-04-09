@@ -21,6 +21,7 @@ using data_entry_map = std::map<const T *, U, data_entry_compare<T>>;
 
 class character_attribute;
 class character_class;
+class character_stat;
 class civilian_unit_type;
 class commodity_unit;
 class cultural_group;
@@ -53,6 +54,7 @@ class trait_type;
 
 extern template struct data_entry_compare<character_attribute>;
 extern template struct data_entry_compare<character_class>;
+extern template struct data_entry_compare<character_stat>;
 extern template struct data_entry_compare<civilian_unit_type>;
 extern template struct data_entry_compare<commodity_unit>;
 extern template struct data_entry_compare<cultural_group>;

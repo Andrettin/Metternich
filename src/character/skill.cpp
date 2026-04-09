@@ -59,6 +59,7 @@ void skill::check() const
 
 	character_stat::check();
 }
+
 const metternich::icon *skill::get_icon() const
 {
 	return this->icon;

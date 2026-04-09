@@ -2,6 +2,7 @@
 
 #include "character/character_stat.h"
 
+#include "database/gsml_data.h"
 #include "script/modifier.h"
 #include "util/assert_util.h"
 #include "util/string_util.h"
@@ -10,6 +11,10 @@ namespace metternich {
 
 character_stat::character_stat(const std::string &identifier) : named_data_entry(identifier)
 {
+	const auto result = character_stat::stats_by_identifier.insert_or_assign(this->get_identifier(), this);
+	if (!result.second) {
+		throw std::runtime_error(std::format("Character stat with identifier \"{}\" already exists.", this->get_identifier()));
+	}
 }
 
 character_stat::~character_stat()

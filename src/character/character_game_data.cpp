@@ -170,9 +170,9 @@ void character_game_data::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "attributes") {
+	if (tag == "stats") {
 		scope.for_each_property([this](const gsml_property &attribute_property) {
-			this->attribute_values[character_attribute::get(attribute_property.get_key())] = std::stoi(attribute_property.get_value());
+			this->stat_values[character_stat::get_stat(attribute_property.get_key())] = std::stoi(attribute_property.get_value());
 		});
 	} else if (tag == "attribute_modifiers") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
@@ -211,10 +211,6 @@ void character_game_data::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "skill_trainings") {
 		scope.for_each_property([this](const gsml_property &property) {
 			this->skill_trainings[skill::get(property.get_key())] = std::stoi(property.get_value());
-		});
-	} else if (tag == "skill_values") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->skill_values[skill::get(property.get_key())] = std::stoi(property.get_value());
 		});
 	} else if (tag == "trait_counts") {
 		scope.for_each_property([this](const gsml_property &property) {
@@ -305,12 +301,12 @@ gsml_data character_game_data::to_gsml_data() const
 	}
 	data.add_property("reputation", std::to_string(this->get_reputation()));
 
-	if (!this->attribute_values.empty()) {
-		gsml_data attributes_data("attributes");
-		for (const auto &[attribute, value] : this->attribute_values) {
-			attributes_data.add_property(attribute->get_identifier(), std::to_string(value));
+	if (!this->stat_values.empty()) {
+		gsml_data stats_data("stats");
+		for (const auto &[stat, value] : this->stat_values) {
+			stats_data.add_property(stat->get_identifier(), std::to_string(value));
 		}
-		data.add_child(std::move(attributes_data));
+		data.add_child(std::move(stats_data));
 	}
 
 	if (!this->attribute_modifiers.empty()) {
@@ -384,14 +380,6 @@ gsml_data character_game_data::to_gsml_data() const
 			skill_trainings_data.add_property(skill->get_identifier(), std::to_string(training));
 		}
 		data.add_child(std::move(skill_trainings_data));
-	}
-
-	if (!this->skill_values.empty()) {
-		gsml_data skill_values_data("skill_values");
-		for (const auto &[skill, value] : this->skill_values) {
-			skill_values_data.add_property(skill->get_identifier(), std::to_string(value));
-		}
-		data.add_child(std::move(skill_values_data));
 	}
 
 	if (!this->trait_counts.empty()) {
@@ -504,7 +492,12 @@ void character_game_data::ply_trade()
 	profession_profitability skill_profitability = profession_profitability::none;
 	int skill_percent_value = 0;
 
-	for (const auto &[skill, value] : this->get_skill_values()) {
+	for (const auto &[stat, value] : this->get_stat_values()) {
+		const skill *skill = dynamic_cast<const metternich::skill *>(stat);
+		if (skill == nullptr) {
+			continue;
+		}
+
 		if (!this->is_skill_available(skill)) {
 			continue;
 		}
@@ -1757,37 +1750,56 @@ void character_game_data::set_reputation(const int reputation)
 	}
 }
 
+QCoro::Task<void> character_game_data::change_stat_value(const character_stat *stat, const int change, const bool stat_enabled, const bool affects_office_modifier)
+{
+	if (change == 0) {
+		co_return;
+	}
+
+	const int old_value = this->get_stat_value(stat);
+
+	if (affects_office_modifier) {
+		co_await this->apply_office_modifier(this->domain, this->get_office(), -1);
+	}
+
+	const int new_value = (this->stat_values[stat] += change);
+
+	if (new_value == 0) {
+		this->stat_values.erase(stat);
+	}
+
+	if (affects_office_modifier) {
+		co_await this->apply_office_modifier(this->domain, this->get_office(), 1);
+	}
+
+	//FIXME: change derived stats here
+
+	if (stat_enabled) {
+		co_await this->on_stat_value_changed(stat, new_value, old_value);
+	}
+
+	if (game::get()->is_running()) {
+		emit stat_values_changed();
+	}
+}
+
+int character_game_data::get_attribute_value(const character_attribute *attribute) const
+{
+	return this->get_stat_value(attribute);
+}
+
 QCoro::Task<void> character_game_data::change_attribute_value(const character_attribute *attribute, const int change)
 {
 	if (change == 0) {
 		co_return;
 	}
 
-	const int old_value = this->get_attribute_value(attribute);
+	const bool is_office_attribute = this->get_office() != nullptr && vector::contains(this->get_office()->get_character_attributes(), attribute);
 
-	const bool is_office_attribute = this->get_office() != nullptr && vector::contains(office->get_character_attributes(), attribute);
-	if (is_office_attribute) {
-		co_await this->apply_office_modifier(this->domain, this->get_office(), -1);
-	}
-
-	const int new_value = (this->attribute_values[attribute] += change);
-
-	if (new_value == 0) {
-		this->attribute_values.erase(attribute);
-	}
-
-	if (is_office_attribute) {
-		co_await this->apply_office_modifier(this->domain, this->get_office(), 1);
-	}
+	co_await this->change_stat_value(attribute, change, true, is_office_attribute);
 
 	for (const skill *skill : attribute->get_derived_skills()) {
 		co_await this->change_skill_value(skill, change);
-	}
-
-	co_await this->on_stat_value_changed(attribute, new_value, old_value);
-
-	if (game::get()->is_running()) {
-		emit attribute_values_changed();
 	}
 }
 
@@ -2349,26 +2361,20 @@ QCoro::Task<void> character_game_data::change_skill_training(const skill *skill,
 	}
 }
 
+int character_game_data::get_skill_value(const skill *skill) const
+{
+	return this->get_stat_value(skill);
+}
+
 QCoro::Task<void> character_game_data::change_skill_value(const skill *skill, const int change)
 {
 	if (change == 0) {
 		co_return;
 	}
 
-	const int old_value = this->get_skill_value(skill);
+	const bool is_office_skill = this->get_office() != nullptr && vector::contains(this->get_office()->get_skills(), skill);
 
-	const int new_value = (this->skill_values[skill] += change);
-	if (new_value == 0) {
-		this->skill_values.erase(skill);
-	}
-
-	if (this->is_skill_available(skill)) {
-		co_await this->on_stat_value_changed(skill, new_value, old_value);
-	}
-
-	if (game::get()->is_running()) {
-		emit skill_values_changed();
-	}
+	co_await this->change_stat_value(skill, change, this->is_skill_available(skill), is_office_skill);
 }
 
 int character_game_data::get_effective_skill_value(const skill *skill) const
