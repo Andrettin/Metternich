@@ -1,0 +1,20 @@
+ray_of_frost = {
+	name = "Ray of Frost"
+	level = 0
+	icon = research
+	price = 125sp
+	target = enemy
+	range = 1 #should increase based on caster level
+	to_hit_check = true
+	sound = magic_missile
+	arcane_schools = {
+		evocation #Evocation: Cold
+	}
+	character_classes = {
+		mage = 0
+		#sorcerer = 0
+	}
+	target_effects = {
+		damage = 1d3 #cold damage
+	}
+}

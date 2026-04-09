@@ -1,0 +1,19 @@
+cure_minor_wounds = {
+	name = "Cure Minor Wounds"
+	level = 0
+	icon = wooden_cross
+	price = 125sp
+	target = ally
+	range = 1
+	sound = heal
+	arcane_schools = {
+		conjuration #Conjuration: Healing
+	}
+	character_class_levels = {
+		cleric = 0
+		druid = 0
+	}
+	target_effects = {
+		healing = 1
+	}
+}

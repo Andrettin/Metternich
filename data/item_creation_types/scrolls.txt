@@ -25,7 +25,7 @@ major_scroll = {
 minor_arcane_scroll = {
 	name = "Minor Divine Scroll"
 	item_creation_subtypes = {
-		#arcane_scroll_level_0 = 5
+		arcane_scroll_level_0 = 5
 		arcane_scroll_level_1 = 45
 		arcane_scroll_level_2 = 45
 		arcane_scroll_level_3 = 5
@@ -57,7 +57,7 @@ major_arcane_scroll = {
 minor_divine_scroll = {
 	name = "Minor Divine Scroll"
 	item_creation_subtypes = {
-		#divine_scroll_level_0 = 5
+		divine_scroll_level_0 = 5
 		divine_scroll_level_1 = 45
 		divine_scroll_level_2 = 45
 		divine_scroll_level_3 = 5
@@ -83,6 +83,16 @@ major_divine_scroll = {
 		divine_scroll_level_7 = 15
 		divine_scroll_level_8 = 10
 		#divine_scroll_level_9 = 5
+	}
+}
+
+arcane_scroll_level_0 = {
+	name = "Arcane Scroll Level 0"
+	item_types = {
+		scroll
+	}
+	spells = {
+		ray_of_frost = 4
 	}
 }
 
@@ -129,6 +139,16 @@ arcane_scroll_level_5 = {
 	}
 	spells = {
 		cloudkill = 2
+	}
+}
+
+divine_scroll_level_0 = {
+	name = "Divine Scroll Level 0"
+	item_types = {
+		scroll
+	}
+	spells = {
+		cure_minor_wounds = 7
 	}
 }
 
