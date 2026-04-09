@@ -14,7 +14,7 @@
 #include "script/modifier_effect/caster_level_modifier_effect.h"
 #include "script/modifier_effect/cavalry_cost_modifier_effect.h"
 #include "script/modifier_effect/challenge_rating_modifier_effect.h"
-#include "script/modifier_effect/character_attribute_modifier_effect.h"
+#include "script/modifier_effect/character_stat_modifier_effect.h"
 #include "script/modifier_effect/commodity_bonus_modifier_effect.h"
 #include "script/modifier_effect/commodity_bonus_for_tile_threshold_modifier_effect.h"
 #include "script/modifier_effect/commodity_bonus_per_adjacent_terrain_modifier_effect.h"
@@ -115,12 +115,12 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<trait_modifier_effect>(value);
 		} else if (key == "trait_of_type") {
 			return std::make_unique<trait_of_type_modifier_effect>(value);
-		} else if (character_attribute::try_get(key) != nullptr) {
-			return std::make_unique<character_attribute_modifier_effect>(character_attribute::get(key), value);
 		} else if (saving_throw_type::try_get(key) != nullptr) {
 			return std::make_unique<saving_throw_modifier_effect>(saving_throw_type::get(key), value);
 		} else if (skill::try_get(key) != nullptr) {
 			return std::make_unique<skill_modifier_effect>(skill::get(key), value);
+		} else if (character_stat::try_get_stat(key) != nullptr) {
+			return std::make_unique<character_stat_modifier_effect>(character_stat::get_stat(key), value);
 		}
 	} else if constexpr (std::is_same_v<scope_type, const domain>) {
 		static const std::string capital_commodity_bonus_prefix = "capital_";
@@ -292,8 +292,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			modifier_effect = std::make_unique<attribute_skill_bonus_modifier_effect>();
 		} else if (tag == "species_armor_class_bonus") {
 			modifier_effect = std::make_unique<species_armor_class_bonus_modifier_effect>();
-		} else if (character_attribute::try_get(tag) != nullptr) {
-			modifier_effect = std::make_unique<character_attribute_modifier_effect>(character_attribute::get(tag));
+		} else if (character_stat::try_get_stat(tag) != nullptr) {
+			modifier_effect = std::make_unique<character_stat_modifier_effect>(character_stat::get_stat(tag));
 		}
 	} else if constexpr (std::is_same_v<scope_type, const domain>) {
 		if (tag == "ai_building_desire") {
