@@ -14,6 +14,7 @@ DialogBase {
 	property var office: null
 	readonly property bool is_appointee: office ? metternich.game.player_country.game_data.government.get_appointed_office_holder(office) === character : false
 	property bool show_family_tree_button: true
+	property var office_holder_choice_dialog: null
 	
 	PortraitButton {
 		id: character_portrait
@@ -101,8 +102,11 @@ DialogBase {
 					metternich.game.player_country.game_data.government.set_appointed_office_holder(office, null)
 					character_dialog.close()
 				} else {
-					office_holder_choice_dialog.office = office
-					office_holder_choice_dialog.open()
+					if (character_dialog.office_holder_choice_dialog !== null) {
+						character_dialog.office_holder_choice_dialog.office = office
+						character_dialog.office_holder_choice_dialog.open()
+						character_dialog.office_holder_choice_dialog.receive_focus()
+					}
 				}
 			}
 		}
@@ -154,5 +158,6 @@ DialogBase {
 	onClosed: {
 		character = null
 		office = null
+		office_holder_choice_dialog = null
 	}
 }

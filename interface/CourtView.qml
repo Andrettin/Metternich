@@ -3,7 +3,7 @@ import QtQuick.Controls
 import "./dialogs"
 
 Item {
-	id: advisors_view
+	id: court_view
 	
 	readonly property var minister_offices: get_minister_offices(country_game_data.government.available_offices)
 	readonly property var offices: filter_offices(country_game_data.government.available_offices)
@@ -66,6 +66,7 @@ Item {
 				if (office_holder !== null || appointed_office_holder !== null) {
 					character_dialog.office = office
 					character_dialog.character = appointed_office_holder ? appointed_office_holder : office_holder
+					character_dialog.office_holder_choice_dialog = office_holder_choice_dialog
 					character_dialog.open()
 				} else {
 					office_holder_choice_dialog.office = office
@@ -103,6 +104,7 @@ Item {
 				if (office_holder !== null || appointed_office_holder !== null) {
 					character_dialog.office = office
 					character_dialog.character = appointed_office_holder ? appointed_office_holder : office_holder
+					character_dialog.office_holder_choice_dialog = office_holder_choice_dialog
 					character_dialog.open()
 				} else {
 					office_holder_choice_dialog.office = office
