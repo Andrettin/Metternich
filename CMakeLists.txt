@@ -31,6 +31,7 @@ set(character_SRCS
 	src/character/character_history.cpp
 	src/character/character_reference.cpp
 	src/character/character_stat.cpp
+	src/character/domain_skill.cpp
 	src/character/dynasty.cpp
 	src/character/family_tree_model.cpp
 	src/character/level_bonus_table.cpp
@@ -391,6 +392,7 @@ set(character_HDRS
 	src/character/character_modifier_type.h
 	src/character/character_reference.h
 	src/character/character_stat.h
+	src/character/domain_skill.h
 	src/character/dynasty.h
 	src/character/family_tree_model.h
 	src/character/level_bonus_table.h

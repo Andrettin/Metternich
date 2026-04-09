@@ -7,6 +7,7 @@
 #include "character/character_attribute.h"
 #include "character/character_class.h"
 #include "character/character_game_data.h"
+#include "character/domain_skill.h"
 #include "character/dynasty.h"
 #include "character/mythic_path.h"
 #include "character/saving_throw_type.h"
@@ -147,6 +148,7 @@ void character_data_model::set_character(const metternich::character *character)
 		disconnect(this->character->get_game_data(), &character_game_data::saving_throw_bonuses_changed, this, &character_data_model::update_saving_throw_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::skill_trainings_changed, this, &character_data_model::update_skill_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_skill_rows);
+		disconnect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_domain_skill_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::traits_changed, this, &character_data_model::update_trait_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::wealth_changed, this, &character_data_model::update_wealth_row);
 	}
@@ -171,6 +173,7 @@ void character_data_model::set_character(const metternich::character *character)
 		connect(this->character->get_game_data(), &character_game_data::saving_throw_bonuses_changed, this, &character_data_model::update_saving_throw_rows);
 		connect(this->character->get_game_data(), &character_game_data::skill_trainings_changed, this, &character_data_model::update_skill_rows);
 		connect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_skill_rows);
+		connect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_domain_skill_rows);
 		connect(this->character->get_game_data(), &character_game_data::traits_changed, this, &character_data_model::update_trait_rows);
 		connect(this->character->get_game_data(), &character_game_data::wealth_changed, this, &character_data_model::update_wealth_row);
 	}
@@ -195,6 +198,7 @@ void character_data_model::reset_model()
 	this->initiative_bonus_row = nullptr;
 	this->saving_throw_row = nullptr;
 	this->skill_row = nullptr;
+	this->domain_skill_row = nullptr;
 	this->trait_row = nullptr;
 	this->wealth_row = nullptr;
 
@@ -283,6 +287,7 @@ void character_data_model::reset_model()
 		this->create_initiative_bonus_row();
 		this->create_saving_throw_rows();
 		this->create_skill_rows();
+		this->create_domain_skill_rows();
 		this->create_trait_rows();
 
 		if (character_game_data->exists()) {
@@ -592,6 +597,36 @@ void character_data_model::update_skill_rows()
 	}
 
 	this->on_child_rows_inserted(this->skill_row);
+}
+
+void character_data_model::create_domain_skill_rows()
+{
+	auto row = std::make_unique<character_data_row>("Domain Skills");
+	this->domain_skill_row = row.get();
+	this->top_rows.push_back(std::move(row));
+
+	this->update_domain_skill_rows();
+}
+
+void character_data_model::update_domain_skill_rows()
+{
+	assert_throw(this->domain_skill_row != nullptr);
+
+	this->clear_child_rows(this->domain_skill_row);
+
+	const character_game_data *character_game_data = this->get_character()->get_game_data();
+
+	for (const auto &[stat, value] : character_game_data->get_stat_values()) {
+		const domain_skill *domain_skill = dynamic_cast<const metternich::domain_skill *>(stat);
+		if (domain_skill == nullptr) {
+			continue;
+		}
+
+		auto row = std::make_unique<character_data_row>(domain_skill->get_name() + ":", number::to_signed_string(value), this->domain_skill_row);
+		this->domain_skill_row->child_rows.push_back(std::move(row));
+	}
+
+	this->on_child_rows_inserted(this->domain_skill_row);
 }
 
 void character_data_model::create_trait_rows()

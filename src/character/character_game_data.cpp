@@ -9,6 +9,7 @@
 #include "character/character_class.h"
 #include "character/character_history.h"
 #include "character/character_modifier_type.h"
+#include "character/domain_skill.h"
 #include "character/level_bonus_table.h"
 #include "character/monster_type.h"
 #include "character/mythic_path.h"
@@ -1546,6 +1547,17 @@ QCoro::Task<void> character_game_data::on_level_gained(const int affected_level,
 		this->change_saving_throw_bonus(saving_throw_type, saving_throw_bonus);
 	}
 
+	for (const domain_skill *domain_skill : domain_skill::get_all()) {
+		const level_bonus_table *domain_skill_bonus_table = character_class->get_domain_skill_bonus_table(domain_skill);
+		if (domain_skill_bonus_table == nullptr) {
+			continue;
+		}
+
+		const int domain_skill_bonus = domain_skill_bonus_table->get_bonus_per_level(affected_level) * multiplier;
+
+		co_await this->change_domain_skill_value(domain_skill, domain_skill_bonus);
+	}
+
 	const modifier<const metternich::character> *level_modifier = character_class->get_level_modifier(affected_level);
 	if (level_modifier != nullptr) {
 		co_await level_modifier->apply(this->character);
@@ -2433,6 +2445,20 @@ int character_game_data::get_skill_check_chance(const skill *skill, const int ro
 	chance = std::min(chance, 95);
 
 	return chance;
+}
+
+int character_game_data::get_domain_skill_value(const domain_skill *domain_skill) const
+{
+	return this->get_stat_value(domain_skill);
+}
+
+QCoro::Task<void> character_game_data::change_domain_skill_value(const domain_skill *domain_skill, const int change)
+{
+	if (change == 0) {
+		co_return;
+	}
+
+	co_await this->change_stat_value(domain_skill, change, true, false);
 }
 
 QCoro::Task<void> character_game_data::change_trait_count(const trait *trait, const int change)

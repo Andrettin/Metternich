@@ -14,6 +14,7 @@ namespace metternich {
 class character_attribute;
 class civilian_unit_class;
 class domain;
+class domain_skill;
 class holding_type;
 class item_type;
 class level_bonus_table;
@@ -160,6 +161,20 @@ public:
 		return nullptr;
 	}
 
+	const level_bonus_table *get_domain_skill_bonus_table(const domain_skill *domain_skill) const
+	{
+		const auto find_iterator = this->domain_skill_bonus_tables.find(domain_skill);
+		if (find_iterator != this->domain_skill_bonus_tables.end()) {
+			return find_iterator->second;
+		}
+
+		if (this->get_base_class() != nullptr) {
+			return this->get_base_class()->get_domain_skill_bonus_table(domain_skill);
+		}
+
+		return nullptr;
+	}
+
 	const data_entry_set<skill> &get_class_skills() const
 	{
 		if (!this->class_skills.empty()) {
@@ -284,6 +299,7 @@ private:
 	const level_bonus_table *craft_bonus_table = nullptr;
 	const level_bonus_table *to_hit_bonus_table = nullptr;
 	data_entry_map<saving_throw_type, const level_bonus_table *> saving_throw_bonus_tables;
+	data_entry_map<domain_skill, const level_bonus_table *> domain_skill_bonus_tables;
 	data_entry_set<skill> class_skills;
 	data_entry_set<skill_group> class_skill_groups;
 	std::vector<const species *> allowed_species;

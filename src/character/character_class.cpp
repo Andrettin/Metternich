@@ -3,6 +3,7 @@
 #include "character/character_class.h"
 
 #include "character/character_attribute.h"
+#include "character/domain_skill.h"
 #include "character/level_bonus_table.h"
 #include "character/saving_throw_type.h"
 #include "character/skill.h"
@@ -42,6 +43,13 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 			const std::string &value = property.get_value();
 
 			this->saving_throw_bonus_tables[saving_throw_type::get(key)] = level_bonus_table::get(value);
+		});
+	} else if (tag == "domain_skill_bonus_tables") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+
+			this->domain_skill_bonus_tables[domain_skill::get(key)] = level_bonus_table::get(value);
 		});
 	} else if (tag == "class_skills") {
 		for (const std::string &value : values) {
@@ -314,6 +322,22 @@ std::string character_class::get_level_modifier_string(const int level, const me
 			}
 
 			str += std::format("{}: +{}", saving_throw_type->get_name(), saving_throw_bonus);
+		}
+	}
+
+	for (const domain_skill *domain_skill : domain_skill::get_all()) {
+		const level_bonus_table *domain_skill_bonus_table = this->get_domain_skill_bonus_table(domain_skill);
+		if (domain_skill_bonus_table == nullptr) {
+			continue;
+		}
+		const int domain_skill_bonus = domain_skill_bonus_table->get_bonus_per_level(level);
+
+		if (domain_skill_bonus != 0) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += std::format("{}: +{}", domain_skill->get_name(), domain_skill_bonus);
 		}
 	}
 

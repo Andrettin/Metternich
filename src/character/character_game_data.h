@@ -30,6 +30,7 @@ class character_attribute;
 class character_stat;
 class civilian_unit;
 class domain;
+class domain_skill;
 class enchantment;
 class flag;
 class item;
@@ -566,6 +567,9 @@ public:
 	int get_effective_skill_value(const skill *skill) const;
 	bool do_skill_check(const skill *skill, const int roll_modifier, const site *location) const;
 	int get_skill_check_chance(const skill *skill, const int roll_modifier, const site *location) const;
+
+	int get_domain_skill_value(const domain_skill *domain_skill) const;
+	[[nodiscard]] QCoro::Task<void> change_domain_skill_value(const domain_skill *domain_skill, const int change);
 
 	const data_entry_map<trait, int> &get_trait_counts() const
 	{

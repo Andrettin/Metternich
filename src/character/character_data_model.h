@@ -99,6 +99,8 @@ public:
 	void create_saving_throw_row(const saving_throw_type *saving_throw_type, const int bonus, data_entry_map<metternich::saving_throw_type, character_data_row *> &saving_throw_type_rows);
 	void create_skill_rows();
 	void update_skill_rows();
+	void create_domain_skill_rows();
+	void update_domain_skill_rows();
 	void create_trait_rows();
 	void update_trait_rows();
 	void create_wealth_row();
@@ -125,6 +127,7 @@ private:
 	character_data_row *initiative_bonus_row = nullptr;
 	character_data_row *saving_throw_row = nullptr;
 	character_data_row *skill_row = nullptr;
+	character_data_row *domain_skill_row = nullptr;
 	character_data_row *trait_row = nullptr;
 	character_data_row *wealth_row = nullptr;
 	bool resetting_model = false;
