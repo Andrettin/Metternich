@@ -17,6 +17,8 @@ public:
 	{
 		if (string::is_bool(value)) {
 			this->healing = string::to_bool(value);
+		} else if (string::is_number(value)) {
+			this->healing = std::stoi(value);
 		} else {
 			this->healing = dice(value);
 		}
@@ -41,6 +43,8 @@ public:
 			} else {
 				co_return;
 			}
+		} else if (std::holds_alternative<int>(this->healing)) {
+			quantity = std::get<int>(this->healing);
 		} else {
 			const dice healing_dice = std::get<dice>(this->healing);
 			quantity = random::get()->roll_dice(healing_dice);
@@ -59,6 +63,8 @@ public:
 			} else {
 				return {};
 			}
+		} else if (std::holds_alternative<int>(this->healing)) {
+			quantity_string = std::to_string(std::get<int>(this->healing));
 		} else {
 			const dice healing_dice = std::get<dice>(this->healing);
 			quantity_string = healing_dice.to_display_string();
@@ -68,7 +74,7 @@ public:
 	}
 
 private:
-	std::variant<bool, dice> healing;
+	std::variant<bool, int, dice> healing;
 };
 
 }
