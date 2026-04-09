@@ -145,7 +145,7 @@ signals:
 	void changed();
 
 private:
-	int level = 0;
+	int level = -1;
 	metternich::icon *icon = nullptr;
 	int price = 0;
 	spell_target target{};

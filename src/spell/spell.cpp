@@ -89,7 +89,7 @@ void spell::process_gsml_scope(const gsml_data &scope)
 
 void spell::check() const
 {
-	if (this->get_level() == 0) {
+	if (this->get_level() == -1) {
 		throw std::runtime_error(std::format("Spell \"{}\" has no level.", this->get_identifier()));
 	}
 
