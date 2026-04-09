@@ -92,6 +92,7 @@
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/date_util.h"
+#include "util/gender.h"
 #include "util/image_util.h"
 #include "util/map_util.h"
 #include "util/number_util.h"
@@ -3743,7 +3744,7 @@ QCoro::Task<void> domain_game_data::generate_ruler()
 
 	const character_class *character_class = vector::get_random(potential_classes);
 
-	const character *ruler = co_await character::generate(species, character_class, 1, nullptr, this->get_culture(), this->get_religion(), this->get_capital(), {}, 0, {}, false);
+	const character *ruler = co_await character::generate(species, character_class, 1, nullptr, this->get_culture(), this->get_religion(), this->get_capital(), {}, 0, {}, false, gender::none);
 	ruler->get_game_data()->set_domain(this->domain);
 	co_await this->get_government()->set_office_holder(defines::get()->get_ruler_office(), ruler);
 }

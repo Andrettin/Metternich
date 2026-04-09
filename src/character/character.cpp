@@ -161,7 +161,7 @@ void character::initialize_all_home_sites()
 	}
 }
 
-QCoro::Task<character *> character::generate(const metternich::species *species, const metternich::character_class *character_class, const int level, const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const std::vector<const trait *> &traits, const int health, const std::vector<const item_type *> &items, const bool generate_bloodline, const bool temporary)
+QCoro::Task<character *> character::generate(const metternich::species *species, const metternich::character_class *character_class, const int level, const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const std::vector<const trait *> &traits, const int health, const std::vector<const item_type *> &items, const bool generate_bloodline, archimedes::gender gender, const bool temporary)
 {
 	assert_throw(species != nullptr);
 
@@ -188,7 +188,9 @@ QCoro::Task<character *> character::generate(const metternich::species *species,
 	generated_character->home_site = home_site;
 	generated_character->set_start_date(game::get()->get_date());
 
-	const archimedes::gender gender = random::get()->generate(2) == 0 ? gender::male : gender::female;
+	if (gender == gender::none) {
+		gender = random::get()->generate(2) == 0 ? gender::male : gender::female;
+	}
 	generated_character->set_gender(gender);
 	if (generated_character->get_culture() != nullptr) {
 		const archimedes::name_generator *given_name_generator = generated_character->get_culture()->get_given_name_generator(gender);
@@ -233,7 +235,7 @@ QCoro::Task<character *> character::generate(const metternich::species *species,
 
 QCoro::Task<character *> character::generate(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const int health, const std::vector<const item_type *> &items, const bool generate_bloodline, const bool temporary)
 {
-	co_return co_await character::generate(monster_type->get_species(), monster_type->get_character_class(), monster_type->get_level(), monster_type, culture, religion, home_site, monster_type->get_traits(), health, items, generate_bloodline, temporary);
+	co_return co_await character::generate(monster_type->get_species(), monster_type->get_character_class(), monster_type->get_level(), monster_type, culture, religion, home_site, monster_type->get_traits(), health, items, generate_bloodline, gender::none, temporary);
 }
 
 QCoro::Task<std::shared_ptr<character_reference>> character::generate_temporary(const metternich::monster_type *monster_type, const metternich::culture *culture, const metternich::religion *religion, const site *home_site, const int health, const std::vector<const item_type *> &items)

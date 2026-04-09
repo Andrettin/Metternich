@@ -3,9 +3,16 @@
 #include "character/character.h"
 #include "character/character_game_data.h"
 #include "character/monster_type.h"
+#include "culture/culture.h"
+#include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "script/effect/effect.h"
+#include "species/species.h"
 #include "util/assert_util.h"
+#include "util/gender.h"
 #include "util/string_util.h"
+
+#include <magic_enum/magic_enum.hpp>
 
 namespace metternich {
 
@@ -32,6 +39,12 @@ public:
 			this->character = character::get(value);
 		} else if (key == "monster_type") {
 			this->monster_type = monster_type::get(value);
+		} else if (key == "character_class") {
+			this->character_class = character_class::get(value);
+		} else if (key == "level") {
+			this->level = std::stoi(value);
+		} else if (key == "gender") {
+			this->gender = magic_enum::enum_cast<archimedes::gender>(value).value();
 		} else if (key == "health") {
 			this->health = std::stoi(value);
 		} else if (key == "saved_scope") {
@@ -61,6 +74,8 @@ public:
 			this->character->get_game_data()->set_dead(false);
 
 			created_character = this->character;
+		} else if (this->character_class != nullptr) {
+			created_character = co_await character::generate(scope->get_game_data()->get_culture()->get_species().at(0), this->character_class, std::max(this->level, 1), nullptr, scope->get_game_data()->get_culture(), scope->get_game_data()->get_religion(), scope->get_game_data()->get_capital(), {}, 0, {}, false, this->gender, false);
 		} else if (this->monster_type != nullptr) {
 			created_character = co_await character::generate(this->monster_type, nullptr, nullptr, nullptr, 0, {}, false, false);
 		} else {
@@ -88,7 +103,9 @@ public:
 		if (this->character != nullptr) {
 			return std::format("{} ({} {} {}) will join your domain", this->character->get_game_data()->get_full_name(), this->character->get_species()->get_name(), this->character->get_game_data()->get_character_class()->get_name(), this->character->get_game_data()->get_level());
 		} else if (this->monster_type != nullptr) {
-			return std::format("{} {} will join your domain", string::get_indefinite_article(this->monster_type->get_name()), this->monster_type->get_name());
+			return std::format("{} {} will join your domain", string::capitalized(string::get_indefinite_article(this->monster_type->get_name())), this->monster_type->get_name());
+		} else if (this->character_class != nullptr) {
+			return std::format("{} {} will join your domain", string::capitalized(string::get_indefinite_article(this->character_class->get_name())), this->character_class->get_name());
 		} else {
 			assert_throw(false);
 			return {};
@@ -97,7 +114,10 @@ public:
 
 private:
 	const metternich::character *character = nullptr;
+	const metternich::character_class *character_class = nullptr;
+	int level = 0;
 	const metternich::monster_type *monster_type = nullptr;
+	archimedes::gender gender = gender::none;
 	int health = 0; //the health the character should start with (in case they would be hurt)
 	std::string saved_scope_name;
 };
