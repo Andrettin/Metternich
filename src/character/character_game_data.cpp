@@ -2447,6 +2447,18 @@ int character_game_data::get_skill_check_chance(const skill *skill, const int ro
 	return chance;
 }
 
+bool character_game_data::has_domain_skill() const
+{
+	for (const auto &[stat, value] : this->get_stat_values()) {
+		const domain_skill *domain_skill = dynamic_cast<const metternich::domain_skill *>(stat);
+		if (domain_skill != nullptr) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
 int character_game_data::get_domain_skill_value(const domain_skill *domain_skill) const
 {
 	return this->get_stat_value(domain_skill);

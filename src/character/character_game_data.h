@@ -568,6 +568,7 @@ public:
 	bool do_skill_check(const skill *skill, const int roll_modifier, const site *location) const;
 	int get_skill_check_chance(const skill *skill, const int roll_modifier, const site *location) const;
 
+	bool has_domain_skill() const;
 	int get_domain_skill_value(const domain_skill *domain_skill) const;
 	[[nodiscard]] QCoro::Task<void> change_domain_skill_value(const domain_skill *domain_skill, const int change);
 

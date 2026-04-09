@@ -287,7 +287,9 @@ void character_data_model::reset_model()
 		this->create_initiative_bonus_row();
 		this->create_saving_throw_rows();
 		this->create_skill_rows();
-		this->create_domain_skill_rows();
+		if (character_game_data->has_domain_skill()) {
+			this->create_domain_skill_rows();
+		}
 		this->create_trait_rows();
 
 		if (character_game_data->exists()) {
@@ -610,7 +612,9 @@ void character_data_model::create_domain_skill_rows()
 
 void character_data_model::update_domain_skill_rows()
 {
-	assert_throw(this->domain_skill_row != nullptr);
+	if (this->domain_skill_row == nullptr) {
+		return;
+	}
 
 	this->clear_child_rows(this->domain_skill_row);
 
