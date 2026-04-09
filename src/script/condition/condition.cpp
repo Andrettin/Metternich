@@ -30,9 +30,9 @@
 #include "script/condition/caster_level_condition.h"
 #include "script/condition/cavalry_condition.h"
 #include "script/condition/character_condition.h"
-#include "script/condition/character_attribute_condition.h"
 #include "script/condition/character_attribute_modifier_condition.h"
 #include "script/condition/character_class_condition.h"
+#include "script/condition/character_stat_condition.h"
 #include "script/condition/class_skill_condition.h"
 #include "script/condition/coastal_condition.h"
 #include "script/condition/commodity_condition.h"
@@ -168,8 +168,6 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			return std::make_unique<spell_condition>(value, condition_operator);
 		} else if (key == "trait") {
 			return std::make_unique<trait_condition>(value, condition_operator);
-		} else if (character_attribute::try_get(key) != nullptr) {
-			return std::make_unique<character_attribute_condition>(character_attribute::get(key), value, condition_operator);
 		}
 	} else if constexpr (std::is_same_v<scope_type, domain>) {
 		static const std::string population_scaled_commodity_prefix = "population_scaled_";
@@ -379,6 +377,8 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 	if constexpr (std::is_same_v<scope_type, character>) {
 		if (skill::try_get(key) != nullptr) {
 			return std::make_unique<skill_condition>(skill::get(key), value, condition_operator);
+		} else if (character_stat::try_get_stat(key) != nullptr) {
+			return std::make_unique<character_stat_condition>(character_stat::get_stat(key), value, condition_operator);
 		}
 	} else if constexpr (std::is_same_v<scope_type, domain>) {
 		if (commodity::try_get(key) != nullptr) {

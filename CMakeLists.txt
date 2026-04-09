@@ -657,9 +657,9 @@ set(script_condition_HDRS
 	src/script/condition/caster_level_condition.h
 	src/script/condition/cavalry_condition.h
 	src/script/condition/character_condition.h
-	src/script/condition/character_attribute_condition.h
 	src/script/condition/character_attribute_modifier_condition.h
 	src/script/condition/character_class_condition.h
+	src/script/condition/character_stat_condition.h
 	src/script/condition/class_skill_condition.h
 	src/script/condition/coastal_condition.h
 	src/script/condition/commodity_condition.h
