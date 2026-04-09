@@ -658,14 +658,6 @@ std::vector<const character *> domain_government::get_appointable_office_holders
 		potential_holders.push_back(character);
 	}
 
-	for (const qunique_ptr<character> &character : game::get()->get_generated_characters()) {
-		if (!this->can_gain_office_holder(office, character.get())) {
-			continue;
-		}
-
-		potential_holders.push_back(character.get());
-	}
-
 	return potential_holders;
 }
 
