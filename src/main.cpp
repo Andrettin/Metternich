@@ -40,6 +40,7 @@
 #include "engine_interface.h"
 #include "game/attack_result.h"
 #include "game/battle_resolution_type.h"
+#include "game/decision_type.h"
 #include "game/event.h"
 #include "game/event_instance.h"
 #include "game/event_trigger.h"
@@ -182,6 +183,7 @@ int main(int argc, char **argv)
 		database_util::register_enum<commodity_type>();
 		database_util::register_enum<country_type>();
 		database_util::register_enum<cultural_group_rank>();
+		database_util::register_enum<decision_type>();
 		database_util::register_enum<diplomacy_state>();
 		database_util::register_enum<domain_tier>();
 		database_util::register_enum<elevation_type>();

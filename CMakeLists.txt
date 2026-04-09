@@ -115,6 +115,7 @@ set(game_SRCS
 	src/game/battle_resolution_table.cpp
 	src/game/combat.cpp
 	src/game/combat_base.cpp
+	src/game/decision.cpp
 	src/game/event.cpp
 	src/game/event_instance.cpp
 	src/game/event_option.cpp
@@ -487,6 +488,8 @@ set(game_HDRS
 	src/game/character_event.h
 	src/game/combat.h
 	src/game/combat_base.h
+	src/game/decision.h
+	src/game/decision_type.h
 	src/game/domain_event.h
 	src/game/event.h
 	src/game/event_instance.h

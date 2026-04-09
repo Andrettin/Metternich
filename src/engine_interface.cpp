@@ -12,6 +12,8 @@
 #include "domain/domain_tier_data.h"
 #include "domain/law_group.h"
 #include "economy/commodity.h"
+#include "game/decision.h"
+#include "game/decision_type.h"
 #include "game/event_instance.h"
 #include "game/game.h"
 #include "game/game_rule_group.h"
@@ -154,6 +156,25 @@ QVariantList engine_interface::get_technology_categories() const
 QVariantList engine_interface::get_research_commodities() const
 {
 	return container::to_qvariant_list(technology::get_research_commodities());
+}
+
+QVariantList engine_interface::get_decisions(const QString &decision_type_str) const
+{
+	const std::optional<decision_type> decision_type = magic_enum::enum_cast<metternich::decision_type>(decision_type_str.toStdString());
+	if (!decision_type.has_value()) {
+		return {};
+	}
+
+	std::vector<const decision *> decisions;
+	for (const decision *decision : decision::get_all()) {
+		if (decision->get_type() != decision_type.value()) {
+			continue;
+		}
+
+		decisions.push_back(decision);
+	}
+
+	return container::to_qvariant_list(decisions);
 }
 
 const domain_tier_data *engine_interface::get_domain_tier_data(const metternich::domain_tier tier) const

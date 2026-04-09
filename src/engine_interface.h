@@ -91,6 +91,7 @@ public:
 	Q_INVOKABLE QVariantList get_technologies() const;
 	Q_INVOKABLE QVariantList get_technology_categories() const;
 	Q_INVOKABLE QVariantList get_research_commodities() const;
+	Q_INVOKABLE QVariantList get_decisions(const QString &decision_type_str) const;
 	Q_INVOKABLE const metternich::domain_tier_data *get_domain_tier_data(const metternich::domain_tier tier) const;
 	Q_INVOKABLE const consulate *get_consulate(const QString &identifier) const;
 	Q_INVOKABLE const commodity *get_commodity(const QString &identifier) const;

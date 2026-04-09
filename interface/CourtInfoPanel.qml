@@ -21,6 +21,52 @@ Rectangle {
 	}
 	
 	Column {
+		id: decision_button_column
+		anchors.horizontalCenter: parent.horizontalCenter
+		anchors.top: parent.top
+		anchors.topMargin: 16 * scale_factor
+		spacing: 8 * scale_factor
+		
+		Repeater {
+			model: metternich.get_decisions("court")
+			
+			IconButton {
+				id: decision_button
+				icon_identifier: decision.icon.identifier
+				
+				readonly property var decision: model.modelData
+				
+				onClicked: {
+					if (decision.can_be_enacted_by(metternich.game.player_country)) {
+						decision.enact_for(metternich.game.player_country)
+						update_status_text()
+					} else {
+						metternich.defines.error_sound.play()
+					}
+				}
+				
+				onHoveredChanged: {
+					update_status_text()
+				}
+				
+				function update_status_text() {
+					if (hovered) {
+						status_text = decision.name
+						if (!decision.can_be_enacted_by(metternich.game.player_country)) {
+							right_status_text = format_text(decision.get_conditions_string(metternich.game.player_country))
+						} else {
+							right_status_text = format_text(decision.get_effects_string(metternich.game.player_country))
+						}
+					} else {
+						status_text = ""
+						right_status_text = ""
+					}
+				}
+			}
+		}
+	}
+	
+	Column {
 		anchors.horizontalCenter: parent.horizontalCenter
 		anchors.bottom: back_button.top
 		anchors.bottomMargin: 16 * scale_factor
