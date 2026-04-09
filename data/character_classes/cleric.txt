@@ -12,6 +12,10 @@ cleric = {
 		will = high_saving_throw_bonus
 		save_vs_poison = cleric_save_vs_poison_bonus
 	}
+	domain_skill_bonus_tables = {
+		faith = high_domain_skill_bonus
+		order = low_domain_skill_bonus
+	}
 	class_skill_groups = {
 		general
 		priest

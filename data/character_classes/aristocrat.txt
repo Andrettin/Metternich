@@ -3,6 +3,9 @@ aristocrat = {
 	base_class = warrior
 	military_unit_category = general
 	max_level = 20
+	domain_skill_bonus_tables = {
+		culture = high_domain_skill_bonus
+	}
 	class_skills = {
 		animal_handling
 		diplomacy

@@ -1,0 +1,24 @@
+culture = {
+	name = "Culture"
+	icon = music
+}
+
+faith = {
+	name = "Faith"
+	icon = wooden_cross
+}
+
+magic = {
+	name = "Magic"
+	icon = university
+}
+
+order = {
+	name = "Order"
+	icon = heater_shield
+}
+
+trade = {
+	name = "Trade"
+	icon = chest
+}

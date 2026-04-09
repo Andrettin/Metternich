@@ -12,6 +12,10 @@ bard = {
 		will = high_saving_throw_bonus
 		save_vs_poison = rogue_save_vs_poison_bonus
 	}
+	domain_skill_bonus_tables = {
+		culture = high_domain_skill_bonus
+		trade = low_domain_skill_bonus
+	}
 	class_skill_groups = {
 		general
 		mage

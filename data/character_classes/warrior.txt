@@ -12,6 +12,9 @@ warrior = {
 		will = low_saving_throw_bonus
 		save_vs_poison = warrior_save_vs_poison_bonus
 	}
+	domain_skill_bonus_tables = {
+		order = high_domain_skill_bonus
+	}
 	class_skill_groups = {
 		general
 		warrior
@@ -82,7 +85,6 @@ warrior = {
 	}
 	level_modifiers = {
 		1 = {
-			#fortitude = 2
 			#trait_of_type = past_experience
 			trait_of_type = proficiency
 			trait_of_type = proficiency

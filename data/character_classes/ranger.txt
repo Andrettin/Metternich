@@ -13,6 +13,10 @@ ranger = {
 		will = low_saving_throw_bonus
 		save_vs_poison = cleric_save_vs_poison_bonus
 	}
+	domain_skill_bonus_tables = {
+		order = high_domain_skill_bonus
+		trade = high_domain_skill_bonus
+	}
 	class_skill_groups = {
 		general
 		mage
