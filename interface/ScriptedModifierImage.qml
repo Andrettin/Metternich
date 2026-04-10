@@ -5,7 +5,7 @@ CustomIconImage {
 	id: modifier_icon
 	icon_identifier: scripted_modifier.icon.identifier + "/small/" + (scripted_modifier.negative ? "red" : "green")
 	tooltip: scripted_modifier.name + (modifier_string.length > 0 ? format_text(small_text("\n"
-		+ "\nDuration: " + (duration * metternich.defines.months_per_turn) + " Months"
+		+ "\nDuration: " + (duration * metternich.defines.default_months_per_turn) + " Months"
 		+ "\n" + modifier_string)) : "")
 	
 	property var scripted_modifier_pair: null
