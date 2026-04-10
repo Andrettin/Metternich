@@ -46,9 +46,27 @@ Item {
 		readonly property string modifier_string: domain_tier_data.get_modifier_string(country)
 	}
 	
+	SmallText {
+		id: domain_modifiers_label
+		text: "Modifiers"
+		anchors.top: domain_tier_icon.bottom
+		anchors.topMargin: 16 * scale_factor
+		anchors.horizontalCenter: parent.horizontalCenter
+		visible: scripted_modifier_row.visible
+	}
+	
+	ScriptedModifierRow {
+		id: scripted_modifier_row
+		anchors.top: domain_modifiers_label.bottom
+		anchors.topMargin: 8 * scale_factor
+		anchors.horizontalCenter: parent.horizontalCenter
+		scope: country
+		visible: country && country.game_data.scripted_modifiers.length > 0
+	}
+	
 	Column {
 		id: law_groups_column
-		anchors.top: domain_tier_icon.bottom
+		anchors.top: scripted_modifier_row.visible ? scripted_modifier_row.bottom : domain_tier_icon.bottom
 		anchors.topMargin: 16 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
 		spacing: 8 * scale_factor
