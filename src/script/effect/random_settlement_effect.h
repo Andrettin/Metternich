@@ -64,7 +64,7 @@ public:
 
 	virtual std::string get_scope_name() const override
 	{
-		return "Random settlement";
+		return "Random holding";
 	}
 
 	virtual std::string get_conditions_string(const size_t indent) const override
