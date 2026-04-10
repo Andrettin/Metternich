@@ -73,7 +73,7 @@ class portrait;
 class province;
 class region;
 class religion;
-class scripted_country_modifier;
+class scripted_domain_modifier;
 class site;
 class site_attribute;
 class subject_type;
@@ -896,15 +896,15 @@ public:
 	commodity_map<int> get_idea_commodity_costs(const idea *idea) const;
 	Q_INVOKABLE QVariantList get_idea_commodity_costs_qvariant_list(const metternich::idea *idea) const;
 
-	const scripted_country_modifier_map<int> &get_scripted_modifiers() const
+	const scripted_domain_modifier_map<int> &get_scripted_modifiers() const
 	{
 		return this->scripted_modifiers;
 	}
 
 	QVariantList get_scripted_modifiers_qvariant_list() const;
-	bool has_scripted_modifier(const scripted_country_modifier *modifier) const;
-	[[nodiscard]] QCoro::Task<void> add_scripted_modifier(const scripted_country_modifier *modifier, const int duration);
-	[[nodiscard]] QCoro::Task<void> remove_scripted_modifier(const scripted_country_modifier *modifier);
+	bool has_scripted_modifier(const scripted_domain_modifier *modifier) const;
+	[[nodiscard]] QCoro::Task<void> add_scripted_modifier(const scripted_domain_modifier *modifier, const int duration);
+	[[nodiscard]] QCoro::Task<void> remove_scripted_modifier(const scripted_domain_modifier *modifier);
 	[[nodiscard]] QCoro::Task<void> decrement_scripted_modifiers();
 
 	[[nodiscard]] QCoro::Task<void> apply_modifier(const modifier<const metternich::domain> *modifier, const int multiplier = 1);
@@ -1344,7 +1344,7 @@ private:
 	building_type_map<int> settlement_building_counts;
 	std::map<idea_type, data_entry_map<idea_slot, const idea *>> ideas;
 	std::map<idea_type, data_entry_map<idea_slot, const idea *>> appointed_ideas;
-	scripted_country_modifier_map<int> scripted_modifiers;
+	scripted_domain_modifier_map<int> scripted_modifiers;
 	std::vector<const character *> characters;
 	std::map<QDate, const character *> historical_rulers;
 	std::map<QDate, const character *> historical_monarchs; //used for regnal numbers

@@ -11,16 +11,16 @@ class domain;
 template <typename scope_type>
 class modifier;
 
-class scripted_country_modifier final : public scripted_modifier, public data_type<scripted_country_modifier>, public scripted_scoped_modifier<domain>
+class scripted_domain_modifier final : public scripted_modifier, public data_type<scripted_domain_modifier>, public scripted_scoped_modifier<domain>
 {
 	Q_OBJECT
 
 public:
-	static constexpr const char class_identifier[] = "scripted_country_modifier";
-	static constexpr const char property_class_identifier[] = "metternich::scripted_country_modifier*";
-	static constexpr const char database_folder[] = "scripted_modifiers/country";
+	static constexpr const char class_identifier[] = "scripted_domain_modifier";
+	static constexpr const char property_class_identifier[] = "metternich::scripted_domain_modifier*";
+	static constexpr const char database_folder[] = "scripted_modifiers/domain";
 
-	explicit scripted_country_modifier(const std::string &identifier) : scripted_modifier(identifier)
+	explicit scripted_domain_modifier(const std::string &identifier) : scripted_modifier(identifier)
 	{
 	}
 

@@ -8,7 +8,7 @@
 #include "script/effect/effect.h"
 #include "script/modifier.h"
 #include "script/scripted_character_modifier.h"
-#include "script/scripted_country_modifier.h"
+#include "script/scripted_domain_modifier.h"
 #include "script/scripted_province_modifier.h"
 #include "script/scripted_site_modifier.h"
 
@@ -18,7 +18,7 @@ template <typename scope_type>
 class scripted_modifiers_effect final : public effect<scope_type>
 {
 public:
-	using scripted_modifier_type = std::conditional_t<std::is_same_v<scope_type, const character>, scripted_character_modifier, std::conditional_t<std::is_same_v<scope_type, const domain>, scripted_country_modifier, std::conditional_t<std::is_same_v<scope_type, const province>, scripted_province_modifier, std::conditional_t<std::is_same_v<scope_type, const site>, scripted_site_modifier, void>>>>;
+	using scripted_modifier_type = std::conditional_t<std::is_same_v<scope_type, const character>, scripted_character_modifier, std::conditional_t<std::is_same_v<scope_type, const domain>, scripted_domain_modifier, std::conditional_t<std::is_same_v<scope_type, const province>, scripted_province_modifier, std::conditional_t<std::is_same_v<scope_type, const site>, scripted_site_modifier, void>>>>;
 
 	explicit scripted_modifiers_effect(const gsml_operator effect_operator)
 		: effect<scope_type>(effect_operator)

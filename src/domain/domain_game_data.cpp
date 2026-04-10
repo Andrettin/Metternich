@@ -76,7 +76,7 @@
 #include "script/flag.h"
 #include "script/modifier.h"
 #include "script/opinion_modifier.h"
-#include "script/scripted_country_modifier.h"
+#include "script/scripted_domain_modifier.h"
 #include "species/phenotype.h"
 #include "ui/icon.h"
 #include "ui/icon_container.h"
@@ -3546,12 +3546,12 @@ QVariantList domain_game_data::get_scripted_modifiers_qvariant_list() const
 	return archimedes::map::to_qvariant_list(this->get_scripted_modifiers());
 }
 
-bool domain_game_data::has_scripted_modifier(const scripted_country_modifier *modifier) const
+bool domain_game_data::has_scripted_modifier(const scripted_domain_modifier *modifier) const
 {
 	return this->get_scripted_modifiers().contains(modifier);
 }
 
-QCoro::Task<void> domain_game_data::add_scripted_modifier(const scripted_country_modifier *modifier, const int duration)
+QCoro::Task<void> domain_game_data::add_scripted_modifier(const scripted_domain_modifier *modifier, const int duration)
 {
 	const read_only_context ctx(this->domain);
 
@@ -3566,7 +3566,7 @@ QCoro::Task<void> domain_game_data::add_scripted_modifier(const scripted_country
 	}
 }
 
-QCoro::Task<void> domain_game_data::remove_scripted_modifier(const scripted_country_modifier *modifier)
+QCoro::Task<void> domain_game_data::remove_scripted_modifier(const scripted_domain_modifier *modifier)
 {
 	this->scripted_modifiers.erase(modifier);
 
@@ -3581,7 +3581,7 @@ QCoro::Task<void> domain_game_data::remove_scripted_modifier(const scripted_coun
 
 QCoro::Task<void> domain_game_data::decrement_scripted_modifiers()
 {
-	std::vector<const scripted_country_modifier *> modifiers_to_remove;
+	std::vector<const scripted_domain_modifier *> modifiers_to_remove;
 	for (auto &[modifier, duration] : this->scripted_modifiers) {
 		--duration;
 
@@ -3590,7 +3590,7 @@ QCoro::Task<void> domain_game_data::decrement_scripted_modifiers()
 		}
 	}
 
-	for (const scripted_country_modifier *modifier : modifiers_to_remove) {
+	for (const scripted_domain_modifier *modifier : modifiers_to_remove) {
 		co_await this->remove_scripted_modifier(modifier);
 	}
 
