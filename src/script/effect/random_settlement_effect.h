@@ -41,18 +41,20 @@ public:
 	{
 		std::vector<const site *> potential_settlements;
 
-		for (const province *province : upper_scope->get_game_data()->get_provinces()) {
-			for (const site *settlement : province->get_game_data()->get_settlement_sites()) {
-				if (!settlement->get_game_data()->is_built()) {
-					continue;
-				}
-
-				if (!this->conditions.check(settlement, ctx)) {
-					continue;
-				}
-
-				potential_settlements.push_back(settlement);
+		for (const site *settlement : upper_scope->get_game_data()->get_sites()) {
+			if (!settlement->is_settlement()) {
+				continue;
 			}
+
+			if (!settlement->get_game_data()->is_built()) {
+				continue;
+			}
+
+			if (!this->conditions.check(settlement, ctx)) {
+				continue;
+			}
+
+			potential_settlements.push_back(settlement);
 		}
 
 		if (!potential_settlements.empty()) {
