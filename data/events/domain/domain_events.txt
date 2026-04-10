@@ -19,6 +19,18 @@ beneficial_domain_event = {
 	}
 }
 
+beneficial_holding_event = {
+	name = "Beneficial Holding Event"
+	trigger = per_turn_pulse
+	random_weight = 25
+	hidden = true
+	immediate_effects = {
+		random_settlement = {
+			event_group = beneficial_holding_events
+		}
+	}
+}
+
 good_weather = {
 	name = "Good Weather"
 	portrait = building_slot

@@ -5,3 +5,11 @@ beneficial_domain_events = {
 dangerous_domain_events = {
 	name = "Dangerous Domain Events"
 }
+
+beneficial_holding_events = {
+	name = "Beneficial Holding Events"
+}
+
+dangerous_holding_events = {
+	name = "Dangerous Holding Events"
+}

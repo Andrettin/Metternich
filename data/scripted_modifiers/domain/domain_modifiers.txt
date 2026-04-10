@@ -1,3 +1,11 @@
+archaeological_find = {
+	name = "Archaeological Find"
+	icon = chest
+	modifier = {
+		lore = 1
+	}
+}
+
 good_weather = {
 	name = "Good Weather"
 	icon = mountains
