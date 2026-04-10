@@ -219,9 +219,9 @@ min_diplomatic_map_tile_scale = 1
 min_province_map_tile_scale = 2
 
 event_trigger_none_random_weights = {
-	per_turn_pulse = 5000
-	quarterly_pulse = 5000
-	yearly_pulse = 5000
+	per_turn_pulse = 36
+	quarterly_pulse = 36
+	yearly_pulse = 36
 }
 
 battle_resolution_tables = {

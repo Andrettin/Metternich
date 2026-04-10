@@ -30,7 +30,7 @@ class event : public named_data_entry
 	Q_PROPERTY(QString newspaper READ get_newspaper_qstring NOTIFY changed)
 
 public:
-	static constexpr int default_random_weight = 100;
+	static constexpr int default_random_weight = 1;
 	static constexpr const char option_default_name[] = "OK";
 
 	explicit event(const std::string &identifier);

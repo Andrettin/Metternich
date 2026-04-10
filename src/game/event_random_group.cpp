@@ -32,7 +32,6 @@ void event_random_group::initialize()
 
 void event_random_group::check() const
 {
-	assert_throw(this->get_trigger() != event_trigger::none);
 }
 
 int event_random_group::get_delay(const int current_year) const

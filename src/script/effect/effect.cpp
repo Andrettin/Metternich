@@ -31,6 +31,7 @@
 #include "script/effect/domain_effect.h"
 #include "script/effect/else_effect.h"
 #include "script/effect/event_effect.h"
+#include "script/effect/event_group_effect.h"
 #include "script/effect/experience_effect.h"
 #include "script/effect/explore_dungeon_effect.h"
 #include "script/effect/free_technologies_effect.h"
@@ -114,6 +115,8 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 	if constexpr (std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, const domain>) {
 		if (key == "event") {
 			return std::make_unique<event_effect<scope_type>>(value, effect_operator);
+		} else if (key == "event_group") {
+			return std::make_unique<event_group_effect<scope_type>>(value, effect_operator);
 		} else if (key == "gain_item") {
 			return std::make_unique<gain_item_effect<scope_type>>(value, effect_operator);
 		} else if (key == "clear_flag") {

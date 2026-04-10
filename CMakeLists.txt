@@ -782,6 +782,7 @@ set(script_effect_HDRS
 	src/script/effect/effect_list.h
 	src/script/effect/else_effect.h
 	src/script/effect/event_effect.h
+	src/script/effect/event_group_effect.h
 	src/script/effect/experience_effect.h
 	src/script/effect/explore_dungeon_effect.h
 	src/script/effect/free_technologies_effect.h
