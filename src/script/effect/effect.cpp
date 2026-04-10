@@ -113,11 +113,7 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 	}
 
 	if constexpr (std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, const domain>) {
-		if (key == "event") {
-			return std::make_unique<event_effect<scope_type>>(value, effect_operator);
-		} else if (key == "event_group") {
-			return std::make_unique<event_group_effect<scope_type>>(value, effect_operator);
-		} else if (key == "gain_item") {
+		if (key == "gain_item") {
 			return std::make_unique<gain_item_effect<scope_type>>(value, effect_operator);
 		} else if (key == "clear_flag") {
 			return std::make_unique<clear_flag_effect<scope_type>>(value, effect_operator);
@@ -125,6 +121,14 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 			return std::make_unique<lose_item_effect<scope_type>>(value, effect_operator);
 		} else if (key == "set_flag") {
 			return std::make_unique<set_flag_effect<scope_type>>(value, effect_operator);
+		}
+	}
+
+	if constexpr (std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, const domain> || std::is_same_v<scope_type, const province> || std::is_same_v<scope_type, const site>) {
+		if (key == "event") {
+			return std::make_unique<event_effect<scope_type>>(value, effect_operator);
+		} else if (key == "event_group") {
+			return std::make_unique<event_group_effect<scope_type>>(value, effect_operator);
 		}
 	}
 
