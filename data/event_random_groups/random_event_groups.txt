@@ -1,0 +1,7 @@
+beneficial_domain_events = {
+	name = "Beneficial Domain Events"
+}
+
+dangerous_domain_events = {
+	name = "Dangerous Domain Events"
+}

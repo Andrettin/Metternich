@@ -1,0 +1,9 @@
+good_weather = {
+	name = "Good Weather"
+	icon = mountains
+	modifier = {
+		economy = 2
+		loyalty = 2
+		productivity = 2
+	}
+}

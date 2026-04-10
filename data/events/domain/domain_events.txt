@@ -1,10 +1,40 @@
-roll_domain_event = {
-	name = "Roll Domain Event"
-	trigger = quarterly_pulse
+good_weather_and_roll_again = {
+	name = "Good Weather and Roll Again"
+	trigger = per_turn_pulse
+	random_weight = 2
 	hidden = true
 	immediate_effects = {
-		random_list = {
-			36 = { #no event
+		event = good_weather
+		event_group = random
+	}
+}
+
+beneficial_domain_event = {
+	name = "Beneficial Domain Event"
+	trigger = per_turn_pulse
+	random_weight = 21
+	hidden = true
+	immediate_effects = {
+		event_group = beneficial_domain_events
+	}
+}
+
+good_weather = {
+	name = "Good Weather"
+	portrait = building_slot
+	description = "Our domain is graced with good weather, boosting morale and prosperity!"
+	random_group = beneficial_domain_events
+	random_weight = 13
+	conditions = {
+		not = {
+			scripted_modifier = good_weather
+		}
+	}
+	option = {
+		effects = {
+			scripted_modifiers += {
+				modifier = good_weather
+				duration = 1
 			}
 		}
 	}
