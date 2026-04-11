@@ -9,6 +9,7 @@ import "./dialogs"
 
 Item {
 	id: map_view
+	focus: true
 	
 	property string status_text: ""
 	property string middle_status_text: ""
