@@ -1,0 +1,20 @@
+discovery = {
+	name = "Discovery"
+	portrait = engineering
+	description = "Our scholars in [root.name] have made an important discovery!"
+	random_group = beneficial_holding_events
+	random_weight = 12
+	conditions = {
+		not = {
+			scripted_modifier = discovery
+		}
+	}
+	option = {
+		effects = {
+			scripted_modifiers += {
+				modifier = discovery
+				years = 1
+			}
+		}
+	}
+}

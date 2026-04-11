@@ -1,0 +1,8 @@
+discovery = {
+	name = "Discovery"
+	icon = research
+	modifier = {
+		#fame = 1
+		lore = 1d4
+	}
+}
