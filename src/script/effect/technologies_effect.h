@@ -45,12 +45,12 @@ public:
 
 	virtual std::string get_addition_string() const override
 	{
-		return "Gain the " + this->technology->get_name() + " technology";
+		return "Gain the " + string::highlight(this->technology->get_name()) + " technology";
 	}
 
 	virtual std::string get_subtraction_string() const override
 	{
-		return "Lose the " + this->technology->get_name() + " technology";
+		return "Lose the " + string::highlight(this->technology->get_name()) + " technology";
 	}
 
 private:
