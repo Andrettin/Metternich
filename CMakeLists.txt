@@ -186,6 +186,7 @@ set(map_SRCS
 	src/map/province_history.cpp
 	src/map/province_map_data.cpp
 	src/map/province_map_image_provider.cpp
+	src/map/province_turn_data.cpp
 	src/map/region.cpp
 	src/map/region_history.cpp
 	src/map/route.cpp
@@ -576,6 +577,7 @@ set(map_HDRS
 	src/map/province_map_data.h
 	src/map/province_map_image_provider.h
 	src/map/province_map_mode.h
+	src/map/province_turn_data.h
 	src/map/region.h
 	src/map/region_history.h
 	src/map/route.h

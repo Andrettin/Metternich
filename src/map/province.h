@@ -10,6 +10,7 @@
 
 Q_MOC_INCLUDE("map/province_game_data.h")
 Q_MOC_INCLUDE("map/province_map_data.h")
+Q_MOC_INCLUDE("map/province_turn_data.h")
 Q_MOC_INCLUDE("map/site.h")
 
 namespace metternich {
@@ -21,6 +22,7 @@ class domain;
 class province_game_data;
 class province_history;
 class province_map_data;
+class province_turn_data;
 class region;
 class site;
 class terrain_feature;
@@ -46,6 +48,7 @@ class province final : public named_data_entry, public data_type<province>
 	Q_PROPERTY(std::vector<metternich::region *> regions READ get_regions NOTIFY changed)
 	Q_PROPERTY(metternich::province_map_data* map_data READ get_map_data NOTIFY changed)
 	Q_PROPERTY(metternich::province_game_data* game_data READ get_game_data NOTIFY changed)
+	Q_PROPERTY(metternich::province_turn_data* turn_data READ get_turn_data NOTIFY turn_data_changed)
 
 public:
 	static constexpr const char class_identifier[] = "province";
@@ -113,6 +116,13 @@ public:
 	province_game_data *get_game_data() const
 	{
 		return this->game_data.get();
+	}
+
+	void reset_turn_data();
+
+	province_turn_data *get_turn_data() const
+	{
+		return this->turn_data.get();
 	}
 
 	const metternich::world *get_world() const
@@ -248,6 +258,7 @@ public:
 
 signals:
 	void changed();
+	void turn_data_changed() const;
 
 private:
 	const metternich::world *world = nullptr;
@@ -272,6 +283,7 @@ private:
 	qunique_ptr<province_history> history;
 	qunique_ptr<province_map_data> map_data;
 	qunique_ptr<province_game_data> game_data;
+	qunique_ptr<province_turn_data> turn_data;
 };
 
 }

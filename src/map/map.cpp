@@ -5,7 +5,6 @@
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "domain/country_technology.h"
-#include "domain/country_turn_data.h"
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
 #include "economy/resource.h"
@@ -76,7 +75,7 @@ void map::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_child([&](const gsml_data &child_scope) {
 			for (size_t x = 0; x < child_scope.get_values().size(); ++x) {
 				const std::string &value = child_scope.get_values()[x];
-				const province *province = nullptr;
+				province *province = nullptr;
 				if (value != "n") {
 					const int map_province_index = std::stoi(value);
 					province = this->get_provinces().at(map_province_index);
@@ -172,7 +171,7 @@ void map::initialize(const bool province_post_processing_enabled)
 						continue;
 					}
 
-					province_map<int> adjacent_province_counts;
+					std::map<province *, int, province_compare> adjacent_province_counts;
 					std::vector<QPoint> adjacent_without_province;
 					point::for_each_adjacent(tile_pos, [this, tile, &adjacent_province_counts, &adjacent_without_province](const QPoint &adjacent_pos) {
 						if (!this->contains(adjacent_pos)) {
@@ -198,7 +197,7 @@ void map::initialize(const bool province_post_processing_enabled)
 					});
 
 					int best_count = 0;
-					std::vector<const province *> best_provinces;
+					std::vector<province *> best_provinces;
 
 					for (const auto &[province, province_count] : adjacent_province_counts) {
 						if (province_count > best_count) {
@@ -228,14 +227,14 @@ void map::initialize(const bool province_post_processing_enabled)
 	this->process_border_tiles();
 	this->process_site_tiles();
 
-	province_set provinces;
+	std::set<province *, province_compare> provinces;
 	std::vector<const site *> sites;
 
 	for (int x = 0; x < this->get_width(); ++x) {
 		for (int y = 0; y < this->get_height(); ++y) {
 			const QPoint tile_pos(x, y);
 			tile *tile = this->get_tile(tile_pos);
-			const province *tile_province = tile->get_province();
+			province *tile_province = tile->get_province();
 
 			if (tile_province != nullptr) {
 				provinces.insert(tile_province);
@@ -490,7 +489,7 @@ const metternich::province *map::get_tile_province(const QPoint &tile_pos) const
 	return tile->get_province();
 }
 
-void map::set_tile_province(const QPoint &tile_pos, const province *province)
+void map::set_tile_province(const QPoint &tile_pos, province *province)
 {
 	assert_throw(province != nullptr);
 

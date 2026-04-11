@@ -92,7 +92,7 @@ public:
 	void add_tile_border_river_direction(const QPoint &tile_pos, const direction direction, const province *border_province);
 	void add_tile_route_direction(const QPoint &tile_pos, const direction direction);
 	Q_INVOKABLE const metternich::province *get_tile_province(const QPoint &tile_pos) const;
-	void set_tile_province(const QPoint &tile_pos, const province *province);
+	void set_tile_province(const QPoint &tile_pos, province *province);
 	void set_tile_site(const QPoint &tile_pos, const site *site);
 	[[nodiscard]] QCoro::Task<void> set_tile_resource_discovered(const QPoint &tile_pos, const bool discovered);
 	void set_tile_direction_pathway(const QPoint &tile_pos, const direction direction, const pathway *pathway);
@@ -111,14 +111,14 @@ public:
 
 	std::optional<QPoint> get_nearest_available_tile_pos_for_civilian_unit(const QPoint &tile_pos) const;
 
-	const std::vector<const province *> &get_provinces() const
+	const std::vector<province *> &get_provinces() const
 	{
 		return this->provinces;
 	}
 
 	QVariantList get_provinces_qvariant_list() const;
 
-	void add_province(const province *province)
+	void add_province(province *province)
 	{
 		this->provinces.push_back(province);
 	}
@@ -192,7 +192,7 @@ signals:
 private:
 	QSize size;
 	std::unique_ptr<std::vector<tile>> tiles;
-	std::vector<const province *> provinces; //the provinces which are on the map
+	std::vector<province *> provinces; //the provinces which are on the map
 	std::vector<const site *> sites; //the sites which are on the map
 	QImage ocean_diplomatic_map_image;
 	QSize diplomatic_map_image_size;

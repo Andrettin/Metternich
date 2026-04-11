@@ -32,12 +32,12 @@ public:
 
 	void set_terrain(const terrain_type *terrain);
 
-	const metternich::province *get_province() const
+	metternich::province *get_province() const
 	{
 		return this->province;
 	}
 
-	void set_province(const metternich::province *province)
+	void set_province(metternich::province *province)
 	{
 		this->province = province;
 	}
@@ -189,7 +189,7 @@ public:
 
 private:
 	const terrain_type *terrain = nullptr;
-	const metternich::province *province = nullptr;
+	metternich::province *province = nullptr;
 	const metternich::site *site = nullptr;
 	int8_t improvement_variation = 0;
 	bool inner_river = false; //whether the tile has an in-tile river

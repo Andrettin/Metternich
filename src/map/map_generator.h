@@ -107,12 +107,12 @@ private:
 
 	void generate_provinces();
 	void generate_countries();
-	void generate_countries_from_provinces(const std::vector<const province *> &provinces);
+	void generate_countries_from_provinces(const std::vector<province *> &provinces);
 	bool generate_ocean(const region *ocean);
-	bool generate_country(const domain *domain, const std::vector<const province *> &country_provinces);
+	bool generate_country(const domain *domain, const std::vector<province *> &country_provinces);
 	void generate_star_systems();
-	std::vector<const province *> generate_province_group(const std::vector<const province *> &potential_provinces, const province *capital_province);
-	int generate_province(const province *province, std::vector<int> &group_zone_indexes);
+	std::vector<province *> generate_province_group(const std::vector<province *> &potential_provinces, province *capital_province);
+	int generate_province(province *province, std::vector<int> &group_zone_indexes);
 	bool can_assign_province_to_zone_index(const province *province, const int zone_index) const;
 	static int get_province_distance_multiplier_to(const province *province, const metternich::province *other_province);
 
@@ -191,7 +191,7 @@ private:
 	std::vector<int> tile_moistures;
 	std::vector<int> tile_forestations;
 	province_set generated_provinces;
-	std::map<int, const province *> provinces_by_zone_index;
+	std::map<int, province *> provinces_by_zone_index;
 };
 
 }

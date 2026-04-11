@@ -10,6 +10,7 @@
 #include "map/province_game_data.h"
 #include "map/province_history.h"
 #include "map/province_map_data.h"
+#include "map/province_turn_data.h"
 #include "map/region.h"
 #include "map/site.h"
 #include "map/site_type.h"
@@ -148,6 +149,14 @@ void province::reset_map_data()
 void province::reset_game_data()
 {
 	this->game_data = make_qunique<province_game_data>(this);
+
+	this->reset_turn_data();
+}
+
+void province::reset_turn_data()
+{
+	this->turn_data = make_qunique<province_turn_data>(this);
+	emit turn_data_changed();
 }
 
 const geocoordinate &province::get_geocoordinate() const

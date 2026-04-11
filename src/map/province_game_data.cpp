@@ -33,6 +33,7 @@
 #include "map/province.h"
 #include "map/province_map_data.h"
 #include "map/province_map_mode.h"
+#include "map/province_turn_data.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "map/site_map_data.h"
@@ -323,6 +324,8 @@ QCoro::Task<void> province_game_data::set_owner(const domain *domain)
 
 		map::get()->update_minimap_rect(this->get_territory_rect());
 
+		this->province->get_turn_data()->set_province_map_dirty(true);
+
 		emit owner_changed();
 	}
 }
@@ -345,6 +348,8 @@ void province_game_data::set_culture(const metternich::culture *culture)
 	this->culture = culture;
 
 	if (game::get()->is_running()) {
+		this->province->get_turn_data()->set_province_map_mode_dirty(province_map_mode::cultural);
+
 		if (this->get_owner() != nullptr) {
 			this->get_owner()->get_turn_data()->set_diplomatic_map_mode_dirty(diplomatic_map_mode::cultural);
 		}

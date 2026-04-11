@@ -114,7 +114,7 @@ void map_generator::generate()
 			continue;
 		}
 
-		const province *province = find_iterator->second;
+		province *province = find_iterator->second;
 		assert_throw(province != nullptr);
 		map->set_tile_province(point::from_index(static_cast<int>(i), this->get_width()), province);
 	}
@@ -816,10 +816,10 @@ void map_generator::generate_countries()
 		this->generate_ocean(ocean);
 	}
 
-	std::vector<const province *> provinces;
-	std::vector<const province *> provinces_from_other_worlds;
+	std::vector<province *> provinces;
+	std::vector<province *> provinces_from_other_worlds;
 
-	for (const province *province : province::get_all()) {
+	for (province *province : province::get_all()) {
 		if (province->is_hidden()) {
 			continue;
 		}
@@ -846,7 +846,7 @@ void map_generator::generate_countries()
 	}
 }
 
-void map_generator::generate_countries_from_provinces(const std::vector<const province *> &provinces)
+void map_generator::generate_countries_from_provinces(const std::vector<province *> &provinces)
 {
 	if (provinces.empty()) {
 		return;
@@ -856,12 +856,12 @@ void map_generator::generate_countries_from_provinces(const std::vector<const pr
 		return;
 	}
 
-	std::vector<const province *> potential_seas;
-	std::vector<const province *> potential_lakes;
+	std::vector<province *> potential_seas;
+	std::vector<province *> potential_lakes;
 	std::vector<const domain *> potential_countries;
-	domain_map<std::vector<const province *>> provinces_by_country;
+	domain_map<std::vector<province *>> provinces_by_country;
 
-	for (const province *province : provinces) {
+	for (province *province : provinces) {
 		if (province->is_sea() || province->is_bay()) {
 			potential_seas.push_back(province);
 		} else if (province->is_lake()) {
@@ -880,7 +880,7 @@ void map_generator::generate_countries_from_provinces(const std::vector<const pr
 	vector::shuffle(potential_seas);
 	vector::shuffle(potential_lakes);
 
-	for (const province *province : potential_seas) {
+	for (province *province : potential_seas) {
 		if (static_cast<int>(this->generated_provinces.size()) == this->zone_count) {
 			break;
 		}
@@ -889,7 +889,7 @@ void map_generator::generate_countries_from_provinces(const std::vector<const pr
 		this->generate_province(province, group_province_indexes);
 	}
 
-	for (const province *province : potential_lakes) {
+	for (province *province : potential_lakes) {
 		if (static_cast<int>(this->generated_provinces.size()) == this->zone_count) {
 			break;
 		}
@@ -915,29 +915,29 @@ void map_generator::generate_countries_from_provinces(const std::vector<const pr
 
 bool map_generator::generate_ocean(const region *ocean)
 {
-	std::vector<const province *> potential_provinces;
-	for (const province *province : ocean->get_provinces()) {
+	std::vector<province *> potential_provinces;
+	for (province *province : ocean->get_provinces()) {
 		potential_provinces.push_back(province);
 	}
 
-	const std::vector<const province *> provinces = this->generate_province_group(potential_provinces, nullptr);
+	const std::vector<province *> provinces = this->generate_province_group(potential_provinces, nullptr);
 
 	return !provinces.empty();
 }
 
-bool map_generator::generate_country(const domain *domain, const std::vector<const province *> &country_provinces)
+bool map_generator::generate_country(const domain *domain, const std::vector<province *> &country_provinces)
 {
-	const province *default_capital_province = domain->get_default_capital()->get_province();
-	const std::vector<const province *> generated_provinces = this->generate_province_group(country_provinces, default_capital_province->get_history()->get_owner() == domain ? default_capital_province : nullptr);
+	province *default_capital_province = domain->get_default_capital()->get_province();
+	const std::vector<province *> generated_provinces = this->generate_province_group(country_provinces, default_capital_province->get_history()->get_owner() == domain ? default_capital_province : nullptr);
 
 	return !generated_provinces.empty();
 }
 
 void map_generator::generate_star_systems()
 {
-	std::vector<const province *> star_systems;
-	std::vector<const province *> random_star_systems;
-	for (const province *province : province::get_all()) {
+	std::vector<province *> star_systems;
+	std::vector<province *> random_star_systems;
+	for (province *province : province::get_all()) {
 		if (province->is_hidden()) {
 			continue;
 		}
@@ -960,7 +960,7 @@ void map_generator::generate_star_systems()
 	vector::shuffle(random_star_systems);
 	vector::merge(star_systems, std::move(random_star_systems));
 
-	for (const province *province : star_systems) {
+	for (province *province : star_systems) {
 		if (static_cast<int>(this->generated_provinces.size()) == this->zone_count) {
 			break;
 		}
@@ -973,9 +973,9 @@ void map_generator::generate_star_systems()
 	}
 }
 
-std::vector<const province *> map_generator::generate_province_group(const std::vector<const province *> &potential_provinces, const province *capital_province)
+std::vector<province *> map_generator::generate_province_group(const std::vector<province *> &potential_provinces, province *capital_province)
 {
-	std::vector<const province *> provinces;
+	std::vector<province *> provinces;
 	std::vector<int> group_zone_indexes;
 
 	if (capital_province != nullptr) {
@@ -987,7 +987,7 @@ std::vector<const province *> map_generator::generate_province_group(const std::
 		provinces.push_back(capital_province);
 	}
 
-	for (const province *province : vector::shuffled(potential_provinces)) {
+	for (province *province : vector::shuffled(potential_provinces)) {
 		const int zone_index = this->generate_province(province, group_zone_indexes);
 		if (zone_index == -1) {
 			continue;
@@ -1003,7 +1003,7 @@ std::vector<const province *> map_generator::generate_province_group(const std::
 	return provinces;
 }
 
-int map_generator::generate_province(const province *province, std::vector<int> &group_zone_indexes)
+int map_generator::generate_province(province *province, std::vector<int> &group_zone_indexes)
 {
 	if (province->is_hidden()) {
 		return -1;

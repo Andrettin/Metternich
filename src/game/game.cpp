@@ -56,6 +56,7 @@
 #include "map/province_game_data.h"
 #include "map/province_history.h"
 #include "map/province_map_data.h"
+#include "map/province_turn_data.h"
 #include "map/region.h"
 #include "map/region_history.h"
 #include "map/route.h"
@@ -173,7 +174,7 @@ void game::process_gsml_scope(const gsml_data &scope)
 		});
 	} else if (tag == "provinces") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
-			const province *province = province::get(child_scope.get_tag());
+			province *province = province::get(child_scope.get_tag());
 			child_scope.process(province->get_game_data());
 
 			map::get()->add_province(province);
@@ -1664,6 +1665,10 @@ QCoro::Task<void> game::do_turn_coro()
 		domain_map<commodity_map<int>> old_bids;
 		domain_map<commodity_map<int>> old_offers;
 
+		for (province *province : map::get()->get_provinces()) {
+			province->reset_turn_data();
+		}
+
 		for (domain *domain : this->get_countries()) {
 			domain->reset_turn_data();
 
@@ -1700,11 +1705,6 @@ QCoro::Task<void> game::do_turn_coro()
 		for (const domain *domain : this->get_countries()) {
 			if (domain->get_turn_data()->is_diplomatic_map_dirty()) {
 				co_await domain->get_game_data()->create_diplomatic_map_image();
-
-				//FIXME: add province turn data, and allow setting a "province map dirty" property for it to true, for recreating the province map image
-				for (const province *province : domain->get_game_data()->get_provinces()) {
-					co_await province->get_game_data()->create_map_image();
-				}
 			} else {
 				for (const diplomatic_map_mode mode : domain->get_turn_data()->get_dirty_diplomatic_map_modes()) {
 					co_await domain->get_game_data()->create_diplomatic_map_mode_image(mode);
@@ -1717,6 +1717,16 @@ QCoro::Task<void> game::do_turn_coro()
 
 			if (domain->get_turn_data()->is_realm_diplomatic_map_dirty()) {
 				co_await domain->get_game_data()->create_realm_diplomatic_map_image();
+			}
+		}
+
+		for (const province *province : map::get()->get_provinces()) {
+			if (province->get_turn_data()->is_province_map_dirty()) {
+				co_await province->get_game_data()->create_map_image();
+			} else {
+				for (const province_map_mode mode : province->get_turn_data()->get_dirty_province_map_modes()) {
+					co_await province->get_game_data()->create_map_mode_image(mode);
+				}
 			}
 		}
 

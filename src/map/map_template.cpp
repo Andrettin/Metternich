@@ -900,7 +900,7 @@ void map_template::apply_provinces() const
 				continue;
 			}
 
-			const province *province = province::get_by_color(tile_color);
+			province *province = province::get_by_color(tile_color);
 
 			if (province_tile_counts.find(province)->second < min_province_tile_count) {
 				//do not place provinces if they would be too small
