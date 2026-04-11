@@ -3,7 +3,7 @@ weapon = {
 	item_creation_subtypes = {
 		common_melee_weapon = 50
 		uncommon_weapon = 20
-		#common_ranged_weapon = 30
+		common_ranged_weapon = 30
 	}
 }
 
@@ -25,5 +25,16 @@ uncommon_weapon = {
 		club = 2
 		gauntlets = 2
 		morning_star = 3
+	}
+}
+
+
+common_ranged_weapon = {
+	name = "Common Ranged Weapon"
+	item_types = {
+		short_bow = 5
+		composite_short_bow = 15
+		long_bow = 10
+		composite_long_bow = 25
 	}
 }
