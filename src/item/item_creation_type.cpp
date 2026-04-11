@@ -118,6 +118,10 @@ qunique_ptr<item> item_creation_type::create_item(const site *creation_site) con
 		vector::merge(bases, std::move(item_types));
 	}
 
+	if (bases.empty()) {
+		return nullptr;
+	}
+
 	const auto &chosen_base = vector::get_random(bases);
 
 	if (std::holds_alternative<const metternich::item_creation_type *>(chosen_base)) {
