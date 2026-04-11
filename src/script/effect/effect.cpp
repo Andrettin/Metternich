@@ -58,6 +58,7 @@
 #include "script/effect/skill_check_effect.h"
 #include "script/effect/source_site_effect.h"
 #include "script/effect/status_effect_effect.h"
+#include "script/effect/technologies_effect.h"
 #include "script/effect/tooltip_effect.h"
 #include "script/effect/traits_effect.h"
 #include "util/assert_util.h"
@@ -136,6 +137,12 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 		if (key == "scripted_modifiers") {
 			assert_throw(effect_operator == gsml_operator::subtraction);
 			return std::make_unique<scripted_modifiers_effect<scope_type>>(value, effect_operator);
+		}
+	}
+
+	if constexpr (std::is_same_v<scope_type, const domain> || std::is_same_v<scope_type, const province>) {
+		if (key == "technologies") {
+			return std::make_unique<technologies_effect<scope_type>>(value, effect_operator);
 		}
 	}
 
