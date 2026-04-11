@@ -489,7 +489,7 @@ Rectangle {
 			
 			onHoveredChanged: {
 				if (hovered) {
-					status_text = "End Turn"
+					status_text = format_text("~<E~>nd Turn")
 				} else {
 					status_text = ""
 				}
