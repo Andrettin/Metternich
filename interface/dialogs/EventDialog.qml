@@ -52,11 +52,12 @@ DialogBase {
 		anchors.rightMargin: 8 * scale_factor
 		text: event_instance ? format_text(event_instance.description) : ""
 		wrapMode: Text.WordWrap
+		visible: text.length > 0
 	}
 	
 	Column {
 		id: option_column
-		anchors.top: description.bottom
+		anchors.top: description.visible ? description.bottom : (portrait.visible ? portrait.bottom : (subtitle_text.text.length > 0 ? subtitle_text.bottom : title_item.bottom))
 		anchors.topMargin: 16 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
 		spacing: 8 * scale_factor
