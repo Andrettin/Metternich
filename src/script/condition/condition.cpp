@@ -25,6 +25,7 @@
 #include "script/condition/attacking_commander_condition.h"
 #include "script/condition/available_food_condition.h"
 #include "script/condition/can_gain_building_class_condition.h"
+#include "script/condition/can_gain_technology_condition.h"
 #include "script/condition/can_gain_trait_condition.h"
 #include "script/condition/capital_condition.h"
 #include "script/condition/caster_level_condition.h"
@@ -297,7 +298,9 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 	}
 	
 	if constexpr (std::is_same_v<scope_type, domain> || std::is_same_v<scope_type, province>) {
-		if (key == "has_resource") {
+		if (key == "can_gain_technology") {
+			return std::make_unique<can_gain_technology_condition<scope_type>>(value, condition_operator);
+		} else if (key == "has_resource") {
 			return std::make_unique<has_resource_condition<scope_type>>(value, condition_operator);
 		} else if (key == "has_terrain") {
 			return std::make_unique<has_terrain_condition<scope_type>>(value, condition_operator);

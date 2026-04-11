@@ -1114,6 +1114,24 @@ QCoro::Task<void> province_game_data::remove_technology(const technology *techno
 		emit technologies_changed();
 	}
 }
+
+bool province_game_data::can_gain_technology(const technology *technology) const
+{
+	assert_throw(technology != nullptr);
+
+	if (this->has_technology(technology)) {
+		return false;
+	}
+
+	for (const metternich::technology *prerequisite : technology->get_prerequisites()) {
+		if (!this->has_technology(prerequisite)) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
 QVariantList province_game_data::get_scripted_modifiers_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_scripted_modifiers());

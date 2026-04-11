@@ -664,6 +664,7 @@ set(script_condition_HDRS
 	src/script/condition/attacking_commander_condition.h
 	src/script/condition/available_food_condition.h
 	src/script/condition/can_gain_building_class_condition.h
+	src/script/condition/can_gain_technology_condition.h
 	src/script/condition/can_gain_trait_condition.h
 	src/script/condition/capital_condition.h
 	src/script/condition/caster_level_condition.h

@@ -289,17 +289,11 @@ bool country_technology::can_gain_technology(const technology *technology) const
 		return false;
 	}
 
-	if (this->has_technology(technology)) {
+	if (this->get_game_data()->get_capital_province() == nullptr) {
 		return false;
 	}
 
-	for (const metternich::technology *prerequisite : technology->get_prerequisites()) {
-		if (!this->has_technology(prerequisite)) {
-			return false;
-		}
-	}
-
-	return true;
+	return this->get_game_data()->get_capital_province()->get_game_data()->can_gain_technology(technology);
 }
 
 bool country_technology::can_research_technology(const technology *technology) const
