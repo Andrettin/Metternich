@@ -354,7 +354,7 @@ set_source_files_properties(${xbrz_SRCS} PROPERTIES
 )
 if(MSVC)
 	set_source_files_properties(${xbrz_SRCS} PROPERTIES
-		COMPILE_FLAGS /W0
+		COMPILE_FLAGS "/wd4100 /wd4828"
 	)
 endif()
 
@@ -1062,7 +1062,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_UNITY_BUILD ON)
 
 if(MSVC)
-	add_compile_options(/W4 /w44800 /wd4244 /wd4458 /bigobj)
+	#C4702 needs to be turned off because it apparently can't be suppressed in external headers
+	add_compile_options(/W4 /w44800 /wd4244 /wd4458 /wd4702 /bigobj /external:anglebrackets /external:W0)
 else()
 	add_compile_options(-Wall -Wno-unknown-pragmas)
 endif()
@@ -1084,9 +1085,15 @@ qt_add_shaders(metternich_main "shaders"
 
 target_precompile_headers(metternich PRIVATE archimedes/src/pch.h)
 
-set_target_properties(metternich PROPERTIES UNITY_BUILD_MODE GROUP)
+set_target_properties(metternich PROPERTIES
+	UNITY_BUILD_MODE GROUP
+	COMPILE_WARNING_AS_ERROR ON
+)
 
-set_target_properties(metternich_test PROPERTIES UNITY_BUILD_MODE GROUP)
+set_target_properties(metternich_test PROPERTIES
+	UNITY_BUILD_MODE GROUP
+	COMPILE_WARNING_AS_ERROR ON
+)
 set_source_files_properties(${game_test_SRCS} PROPERTIES UNITY_GROUP "game_test")
 
 target_link_libraries(metternich PUBLIC archimedes)
@@ -1104,7 +1111,10 @@ if(WIN32)
 	)
 endif()
 
-set_target_properties(metternich_main PROPERTIES OUTPUT_NAME "metternich")
+set_target_properties(metternich_main PROPERTIES
+	OUTPUT_NAME "metternich"
+	COMPILE_WARNING_AS_ERROR ON
+)
 
 target_link_libraries(metternich_main PUBLIC metternich Qt6::Charts)
 target_link_libraries(metternich_test PUBLIC metternich)
