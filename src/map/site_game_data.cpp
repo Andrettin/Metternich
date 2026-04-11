@@ -23,6 +23,7 @@
 #include "game/domain_event.h"
 #include "game/event_trigger.h"
 #include "game/game.h"
+#include "game/site_event.h"
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_item_slot.h"
 #include "infrastructure/building_slot.h"
@@ -280,6 +281,25 @@ QCoro::Task<void> site_game_data::initialize()
 QCoro::Task<void> site_game_data::do_turn()
 {
 	co_await this->decrement_scripted_modifiers();
+}
+
+QCoro::Task<void> site_game_data::do_events()
+{
+	if (!this->site->is_settlement() || !this->is_built()) {
+		co_return;
+	}
+
+	const bool is_last_turn_of_year = game::get()->is_last_turn_of_year();
+	if (is_last_turn_of_year) {
+		co_await site_event::check_events_for_scope(this->site, event_trigger::yearly_pulse);
+	}
+
+	const bool is_last_turn_of_quarter = game::get()->is_last_turn_of_quarter();
+	if (is_last_turn_of_quarter) {
+		co_await site_event::check_events_for_scope(this->site, event_trigger::quarterly_pulse);
+	}
+
+	co_await site_event::check_events_for_scope(this->site, event_trigger::per_turn_pulse);
 }
 
 void site_game_data::collect_income()

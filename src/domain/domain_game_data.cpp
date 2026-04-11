@@ -827,6 +827,11 @@ QCoro::Task<void> domain_game_data::do_events()
 		co_await province->get_game_data()->do_events();
 	}
 
+	const std::vector<const site *> sites = this->get_sites();
+	for (const site *site : sites) {
+		co_await site->get_game_data()->do_events();
+	}
+
 	if (!this->is_under_anarchy()) {
 		const bool is_last_turn_of_year = game::get()->is_last_turn_of_year();
 		if (is_last_turn_of_year) {

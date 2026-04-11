@@ -96,6 +96,7 @@ public:
 
 	[[nodiscard]] QCoro::Task<void> initialize();
 	[[nodiscard]] QCoro::Task<void> do_turn();
+	[[nodiscard]] QCoro::Task<void> do_events();
 	void collect_income();
 	void check_item_slots();
 
