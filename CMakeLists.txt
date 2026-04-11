@@ -657,6 +657,7 @@ set(script_condition_HDRS
 	src/script/condition/any_adjacent_site_condition.h
 	src/script/condition/any_known_country_condition.h
 	src/script/condition/any_neighbor_country_condition.h
+	src/script/condition/any_neighbor_province_condition.h
 	src/script/condition/any_settlement_condition.h
 	src/script/condition/any_site_condition.h
 	src/script/condition/any_subject_country_condition.h

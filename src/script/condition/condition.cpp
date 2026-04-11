@@ -18,6 +18,7 @@
 #include "script/condition/any_adjacent_site_condition.h"
 #include "script/condition/any_known_country_condition.h"
 #include "script/condition/any_neighbor_country_condition.h"
+#include "script/condition/any_neighbor_province_condition.h"
 #include "script/condition/any_settlement_condition.h"
 #include "script/condition/any_site_condition.h"
 #include "script/condition/any_subject_country_condition.h"
@@ -414,6 +415,10 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 	} else if constexpr (std::is_same_v<scope_type, population_unit>) {
 		if (tag == "site") {
 			condition = std::make_unique<site_scope_condition>(condition_operator);
+		}
+	} else if constexpr (std::is_same_v<scope_type, province>) {
+		if (tag == "any_neighbor_province") {
+			condition = std::make_unique<any_neighbor_province_condition>(condition_operator);
 		}
 	} else if constexpr (std::is_same_v<scope_type, site>) {
 		if (tag == "any_adjacent_site") {
