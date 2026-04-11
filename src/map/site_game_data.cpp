@@ -148,6 +148,21 @@ void site_game_data::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([this](const gsml_property &attribute_property) {
 			this->attribute_values[site_attribute::get(attribute_property.get_key())] = std::stoi(attribute_property.get_value());
 		});
+	} else if (tag == "attribute_roll_results") {
+		scope.for_each_child([this](const gsml_data &child_scope) {
+			const std::string &child_tag = child_scope.get_tag();
+			const site_attribute *attribute = site_attribute::get(child_tag);
+
+			child_scope.for_each_child([this, attribute](const gsml_data &grandchild_scope) {
+				const std::string &grandchild_tag = grandchild_scope.get_tag();
+				const std::vector<std::string> &grandchild_values = grandchild_scope.get_values();
+
+				const dice dice(grandchild_tag);
+				for (const std::string &grandchild_value : grandchild_values) {
+					this->attribute_roll_results[attribute][dice].push_back(std::stoi(grandchild_value));
+				}
+			});
+		});
 	} else if (tag == "building_slots") {
 		this->building_slots.clear();
 		this->building_slot_map.clear();
@@ -213,6 +228,22 @@ gsml_data site_game_data::to_gsml_data() const
 			attributes_data.add_property(attribute->get_identifier(), std::to_string(value));
 		}
 		data.add_child(std::move(attributes_data));
+	}
+
+	if (!this->attribute_roll_results.empty()) {
+		gsml_data attribute_roll_results_data("attribute_roll_results");
+		for (const auto &[attribute, dice_roll_results] : attribute_roll_results) {
+			gsml_data roll_results_data(attribute->get_identifier());
+			for (const auto &[dice, roll_results] : dice_roll_results) {
+				gsml_data dice_data(dice.to_string());
+				for (const int roll_result : roll_results) {
+					dice_data.add_value(std::to_string(roll_result));
+				}
+				roll_results_data.add_child(std::move(dice_data));
+			}
+			attribute_roll_results_data.add_child(std::move(roll_results_data));
+		}
+		data.add_child(std::move(attribute_roll_results_data));
 	}
 
 	if (this->site->is_settlement()) {
@@ -1148,6 +1179,37 @@ QCoro::Task<void> site_game_data::change_attribute_value(const site_attribute *a
 	if (game::get()->is_running()) {
 		emit attribute_values_changed();
 	}
+}
+
+QCoro::Task<void> site_game_data::add_attribute_roll_result(const site_attribute *attribute, const dice &dice, const int roll_result)
+{
+	this->attribute_roll_results[attribute][dice].push_back(roll_result);
+	co_await this->change_attribute_value(attribute, roll_result);
+}
+
+QCoro::Task<void> site_game_data::remove_attribute_roll_result(const site_attribute *attribute, const dice &dice)
+{
+	auto attribute_find_iterator = this->attribute_roll_results.find(attribute);
+	assert_throw(attribute_find_iterator != this->attribute_roll_results.end());
+
+	auto dice_find_iterator = attribute_find_iterator->second.find(dice);
+	assert_throw(dice_find_iterator != attribute_find_iterator->second.end());
+
+	std::vector<int> &roll_results = dice_find_iterator->second;
+	assert_throw(!roll_results.empty());
+
+	const int last_roll_result = roll_results.back();
+
+	roll_results.pop_back();
+	if (roll_results.empty()) {
+		attribute_find_iterator->second.erase(dice_find_iterator);
+
+		if (attribute_find_iterator->second.empty()) {
+			this->attribute_roll_results.erase(attribute_find_iterator);
+		}
+	}
+
+	co_await this->change_attribute_value(attribute, -last_roll_result);
 }
 
 bool site_game_data::do_attribute_check(const site_attribute *attribute, const int roll_modifier) const

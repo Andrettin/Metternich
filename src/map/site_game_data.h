@@ -16,6 +16,7 @@ Q_MOC_INCLUDE("map/province.h")
 Q_MOC_INCLUDE("population/population.h")
 
 namespace archimedes {
+	class dice;
 	class gsml_data;
 	class gsml_property;
 }
@@ -299,6 +300,8 @@ public:
 	}
 
 	[[nodiscard]] QCoro::Task<void> change_attribute_value(const site_attribute *attribute, const int change);
+	[[nodiscard]] QCoro::Task<void> add_attribute_roll_result(const site_attribute *attribute, const dice &dice, const int roll_result);
+	[[nodiscard]] QCoro::Task<void> remove_attribute_roll_result(const site_attribute *attribute, const dice &dice);
 	bool do_attribute_check(const site_attribute *attribute, const int roll_modifier) const;
 	int get_attribute_check_chance(const site_attribute *attribute, const int roll_modifier) const;
 
@@ -640,6 +643,7 @@ private:
 	bool resource_discovered = false;
 	data_entry_set<site_feature> features;
 	data_entry_map<site_attribute, int> attribute_values;
+	data_entry_map<site_attribute, std::map<dice, std::vector<int>>> attribute_roll_results;
 	std::vector<qunique_ptr<building_slot>> building_slots;
 	building_slot_type_map<building_slot *> building_slot_map;
 	scripted_site_modifier_map<int> scripted_modifiers;
