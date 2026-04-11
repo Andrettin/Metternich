@@ -2,6 +2,7 @@ archers = {
 	name = "Archers"
 	unit_class = archers
 	icon = archers
+	required_technology = short_bow
 	death_sound = human_death
 	stats = {
 		hit_points = 2
