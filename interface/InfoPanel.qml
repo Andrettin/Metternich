@@ -243,7 +243,7 @@ Rectangle {
 	
 	SmallText {
 		id: site_info_text
-		anchors.top: portrait.visible ? portrait.bottom : title.bottom
+		anchors.top: scripted_modifier_row.visible ? scripted_modifier_row.bottom : (portrait.visible ? portrait.bottom : title.bottom)
 		anchors.topMargin: 16 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
 		text: format_text(
