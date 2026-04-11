@@ -349,7 +349,14 @@ set(xbrz_SRCS
 	src/third_party/xbrz/xbrz.cpp
 )
 source_group(third_party\\xbrz FILES ${xbrz_SRCS})
-set_source_files_properties(${xbrz_SRCS} PROPERTIES UNITY_GROUP "xbrz")
+set_source_files_properties(${xbrz_SRCS} PROPERTIES
+	UNITY_GROUP "xbrz"
+)
+if(MSVC)
+	set_source_files_properties(${xbrz_SRCS} PROPERTIES
+		COMPILE_FLAGS /W0
+	)
+endif()
 
 set(metternich_SRCS
 	${character_SRCS}
