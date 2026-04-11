@@ -1,0 +1,32 @@
+short_bow = {
+	name = "Short Bow"
+	subcategory = technology
+	portrait = helmet
+	icon = bow
+	period = dark_ages
+	cost_commodity = research
+}
+
+long_bow = {
+	name = "Long Bow"
+	subcategory = technology
+	portrait = helmet
+	icon = bow
+	period = middle_ages
+	cost_commodity = research
+	prerequisites = {
+		short_bow
+	}
+}
+
+composite_bow = {
+	name = "Composite Bow"
+	subcategory = technology
+	portrait = helmet
+	icon = bow
+	period = renaissance
+	cost_commodity = research
+	prerequisites = {
+		long_bow
+	}
+}
