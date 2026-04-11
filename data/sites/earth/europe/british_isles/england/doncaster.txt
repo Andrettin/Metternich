@@ -1,0 +1,8 @@
+doncaster = {
+	name = "Doncaster"
+	world = earth
+	geocoordinate = { -1.1325 53.522777777777776 }
+	type = holding
+	holding_type = guild
+	province = yorkshire
+}
