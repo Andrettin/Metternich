@@ -166,6 +166,25 @@ Rectangle {
 		}
 		
 		IconButton {
+			id: technology_map_mode_button
+			icon_identifier: "cog"
+			highlighted: province_map.mode === ProvinceMap.Mode.Technology
+			
+			onClicked: {
+				province_map.mode = ProvinceMap.Mode.Technology
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Technology Map Mode"
+				} else {
+					status_text = ""
+				}
+			}
+		}
+		
+		/*
+		IconButton {
 			id: terrain_map_mode_button
 			icon_identifier: "mountains"
 			highlighted: province_map.mode === ProvinceMap.Mode.Terrain
@@ -182,5 +201,6 @@ Rectangle {
 				}
 			}
 		}
+		*/
 	}
 }

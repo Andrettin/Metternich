@@ -784,6 +784,7 @@ QCoro::Task<void> province_game_data::create_map_image()
 
 	co_await this->create_map_mode_image(province_map_mode::terrain);
 	co_await this->create_map_mode_image(province_map_mode::cultural);
+	co_await this->create_map_mode_image(province_map_mode::technology);
 	co_await this->create_map_mode_image(province_map_mode::trade_zone);
 	co_await this->create_map_mode_image(province_map_mode::temple);
 
@@ -819,6 +820,19 @@ QCoro::Task<void> province_game_data::create_map_mode_image(const province_map_m
 			}
 			break;
 		}
+		case province_map_mode::technology: {
+			if (!this->province->is_water_zone()) {
+				const int province_technology_count = static_cast<int>(this->get_technologies().size());
+				const int total_technology_count = static_cast<int>(technology::get_all().size());
+				static const QColor min_technology_color(Qt::white);
+				static const QColor max_technology_color(Qt::darkBlue);
+
+				province_color.setRed(max_technology_color.red() + (min_technology_color.red() - max_technology_color.red()) * (total_technology_count - province_technology_count) / total_technology_count);
+				province_color.setGreen(max_technology_color.green() + (min_technology_color.green() - max_technology_color.green()) * (total_technology_count - province_technology_count) / total_technology_count);
+				province_color.setBlue(max_technology_color.blue() + (min_technology_color.blue() - max_technology_color.blue()) * (total_technology_count - province_technology_count) / total_technology_count);
+				break;
+			}
+		}
 		case province_map_mode::trade_zone: {
 			const domain *trade_zone_domain = this->get_trade_zone_domain();
 			if (trade_zone_domain != nullptr) {
@@ -853,6 +867,7 @@ QCoro::Task<void> province_game_data::create_map_mode_image(const province_map_m
 					color = &tile->get_terrain()->get_color();
 					break;
 				case province_map_mode::cultural:
+				case province_map_mode::technology:
 				case province_map_mode::trade_zone:
 				case province_map_mode::temple:
 					color = &province_color;
@@ -1082,6 +1097,8 @@ QCoro::Task<void> province_game_data::add_technology(const technology *technolog
 		co_await this->get_owner()->get_technology()->on_technology_added(technology);
 	}
 
+	this->province->get_turn_data()->set_province_map_mode_dirty(province_map_mode::technology);
+
 	if (game::get()->is_running()) {
 		emit technologies_changed();
 	}
@@ -1114,6 +1131,8 @@ QCoro::Task<void> province_game_data::remove_technology(const technology *techno
 	for (const metternich::technology *requiring_technology : technology->get_leads_to()) {
 		co_await this->remove_technology(requiring_technology);
 	}
+
+	this->province->get_turn_data()->set_province_map_mode_dirty(province_map_mode::technology);
 
 	if (game::get()->is_running()) {
 		emit technologies_changed();
