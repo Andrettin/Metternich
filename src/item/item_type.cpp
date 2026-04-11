@@ -7,6 +7,7 @@
 #include "item/item_class.h"
 #include "item/item_creation_type.h"
 #include "item/item_slot.h"
+#include "script/condition/and_condition.h"
 #include "script/modifier.h"
 
 namespace metternich {
@@ -36,7 +37,11 @@ void item_type::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "modifier") {
+	if (tag == "creation_site_conditions") {
+		auto conditions = std::make_unique<and_condition<site>>();
+		conditions->process_gsml_data(scope);
+		this->creation_site_conditions = std::move(conditions);
+	} else if (tag == "modifier") {
 		auto modifier = std::make_unique<metternich::modifier<const character>>();
 		modifier->process_gsml_data(scope);
 		this->modifier = std::move(modifier);

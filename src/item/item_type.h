@@ -14,7 +14,11 @@ class character;
 class icon;
 class item_class;
 class item_slot;
+class site;
 class sound;
+
+template <typename scope_type>
+class and_condition;
 
 template <typename scope_type>
 class modifier;
@@ -98,6 +102,11 @@ public:
 		return this->spell_learnable;
 	}
 
+	const and_condition<site> *get_creation_site_conditions() const
+	{
+		return this->creation_site_conditions.get();
+	}
+
 	const metternich::modifier<const character> *get_modifier() const
 	{
 		return this->modifier.get();
@@ -119,6 +128,7 @@ private:
 	bool two_handed = false;
 	bool stackable = false;
 	bool spell_learnable = false;
+	std::unique_ptr<const and_condition<site>> creation_site_conditions;
 	std::unique_ptr<const metternich::modifier<const character>> modifier;
 	const sound *attack_sound = nullptr;
 };

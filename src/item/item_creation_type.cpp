@@ -104,7 +104,19 @@ qunique_ptr<item> item_creation_type::create_item(const site *creation_site) con
 
 	std::vector<std::variant<const item_creation_type *, const item_type *>> bases;
 	vector::merge(bases, this->item_creation_subtypes);
-	vector::merge(bases, this->item_types);
+
+	if (!this->item_types.empty()) {
+		std::vector<const item_type *> item_types = this->item_types;
+		std::erase_if(item_types, [this, creation_site](const item_type *item_type) {
+			if (item_type->get_creation_site_conditions() != nullptr && !item_type->get_creation_site_conditions()->check(creation_site, read_only_context(creation_site))) {
+				return true;
+			}
+
+			return false;
+		});
+
+		vector::merge(bases, std::move(item_types));
+	}
 
 	const auto &chosen_base = vector::get_random(bases);
 
