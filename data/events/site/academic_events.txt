@@ -1,0 +1,22 @@
+heraldry_lord_howdens_shield = { #Mr. Wimberley Lecture: Doncaster: 1841", 1841.12.11.
+	name = "Heraldry: Lord Howden's Shield"
+	portrait = dwarven_heater_shield
+	description = "The philosophy of \"Heraldry\" is so well exemplified in the following extract from a lecture delivered by Mr. Wimberley at Doncaster, that we make no apology for laying it before our readers:\n\n\"Before I pass on to modern heraldry, (said Mr. Wimberley,) I will point out to you a shield that I think will interest you. I know the nobleman who bears it only by his high intellectual character, and by the peerage list, but it is in all respects of the highest order; and his name, Romanized as it was in the days of Emperor Claudius, will remind you of one of the most beautiful passages of ancient history, and which is found on the pages of Tacitus – Lord Howden, Caradoc, Caractacus. Its charges betoken command, nobility, and beneficence. The Dragon is one of the most ancient of signs. It was also the device of the ancient British kings.\"" #abridged
+	trigger = per_turn_pulse
+	random_weight = 1000
+	only_once = true
+	news = true
+	newspaper = "Doncaster Gazette" #unknown newspaper, but this is one is in Doncaster, so perhaps it was originally written there
+	conditions = {
+		technology = renaissance
+		site = doncaster
+	}
+	option = {
+		effects = {
+			scripted_modifiers += {
+				modifier = discovery
+				years = 1
+			}
+		}
+	}
+}
