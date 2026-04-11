@@ -28,8 +28,16 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		if constexpr (std::is_same_v<scope_type, province>) {
+		if constexpr (std::is_same_v<scope_type, province> || std::is_same_v<scope_type, site>) {
 			return scope->get_game_data()->has_technology(this->technology);
+		} else if constexpr (std::is_same_v<scope_type, character>) {
+			if (scope->get_game_data()->get_location() == nullptr) {
+				return false;
+			}
+
+			return scope->get_game_data()->get_location()->get_game_data()->has_technology(this->technology);
+		} else if constexpr (std::is_same_v<scope_type, population_unit>) {
+			return scope->get_province()->get_game_data()->has_technology(this->technology);
 		} else {
 			const domain *domain = condition<scope_type>::get_scope_domain(scope);
 

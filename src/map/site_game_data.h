@@ -48,6 +48,7 @@ class scripted_site_modifier;
 class site;
 class site_attribute;
 class site_feature;
+class technology;
 class tile;
 enum class improvement_slot;
 
@@ -358,6 +359,8 @@ public:
 
 	std::vector<building_item_slot *> get_item_slots() const;
 	QVariantList get_item_slots_qvariant_list() const;
+
+	bool has_technology(const technology *technology) const;
 
 	const scripted_site_modifier_map<int> &get_scripted_modifiers() const
 	{

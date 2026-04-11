@@ -1820,6 +1820,12 @@ QVariantList site_game_data::get_item_slots_qvariant_list() const
 	return qvariant_list;
 }
 
+bool site_game_data::has_technology(const technology *technology) const
+{
+	assert_throw(this->get_province() != nullptr);
+	return this->get_province()->get_game_data()->has_technology(technology);
+}
+
 QVariantList site_game_data::get_scripted_modifiers_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_scripted_modifiers());
