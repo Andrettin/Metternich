@@ -16,18 +16,6 @@ battle_axe = {
 	attack_sound = axe
 }
 
-bow = {
-	name = "Bow"
-	item_class = weapon
-	icon = bow
-	price = 100gp
-	damage_dice = 1d8
-	two_handed = true
-	modifier = {
-		range = 4
-	}
-}
-
 club = {
 	name = "Club"
 	item_class = weapon

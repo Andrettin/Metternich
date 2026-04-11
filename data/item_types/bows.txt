@@ -1,0 +1,47 @@
+short_bow = {
+	name = "Short Bow"
+	item_class = weapon
+	icon = bow
+	price = 30gp
+	damage_dice = 1d8
+	two_handed = true
+	modifier = {
+		range = 4
+	}
+}
+
+long_bow = {
+	name = "Long Bow"
+	item_class = weapon
+	icon = bow
+	price = 75gp
+	damage_dice = 1d8
+	two_handed = true
+	modifier = {
+		range = 6
+	}
+}
+
+composite_short_bow = {
+	name = "Composite Short Bow"
+	item_class = weapon
+	icon = bow
+	price = 75gp
+	damage_dice = 1d8
+	two_handed = true
+	modifier = {
+		range = 4
+	}
+}
+
+composite_long_bow = {
+	name = "Composite Long Bow"
+	item_class = weapon
+	icon = bow
+	price = 100gp
+	damage_dice = 1d8
+	two_handed = true
+	modifier = {
+		range = 5
+	}
+}
