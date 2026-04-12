@@ -722,6 +722,10 @@ QString technology::get_effects_string(const metternich::domain *domain) const
 	const std::vector<const wonder *> enabled_wonders = this->get_enabled_wonders_for_country(domain);
 	if (!enabled_wonders.empty()) {
 		for (const wonder *wonder : enabled_wonders) {
+			if (!wonder->is_enabled()) {
+				continue;
+			}
+
 			if (!str.empty()) {
 				str += "\n";
 			}
@@ -733,6 +737,10 @@ QString technology::get_effects_string(const metternich::domain *domain) const
 	const std::vector<const wonder *> disabled_wonders = this->get_disabled_wonders_for_country(domain);
 	if (!disabled_wonders.empty()) {
 		for (const wonder *wonder : disabled_wonders) {
+			if (!wonder->is_enabled()) {
+				continue;
+			}
+
 			if (!str.empty()) {
 				str += "\n";
 			}
