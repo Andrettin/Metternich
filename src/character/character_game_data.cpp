@@ -484,7 +484,7 @@ void character_game_data::ply_trade()
 	const int province_level = this->get_location()->get_game_data()->get_province()->get_game_data()->get_level();
 
 	if (this->get_caster_level() > 0) {
-		const int profit = 25 * gp_value * this->get_caster_level() * province_level;
+		const int profit = 25 * gp_value * this->get_caster_level() * province_level * game::get()->get_current_months_per_turn();
 		this->change_wealth(profit);
 		return;
 	}
@@ -565,7 +565,7 @@ void character_game_data::ply_trade()
 			break;
 	}
 
-	this->change_wealth(profit);
+	this->change_wealth(profit * game::get()->get_current_months_per_turn());
 }
 
 QCoro::Task<void> character_game_data::do_crafting()
