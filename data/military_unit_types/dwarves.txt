@@ -22,13 +22,13 @@ dwarven_stalwarts = {
 	unit_class = pikemen
 	culture = dwarven
 	icon = pikemen
+	required_technology = dark_ages
 	stats = {
 		melee = 5
 		defense = 6
 		movement = 3
 		range = 1
 	}
-	required_technology = dark_ages
 	commodity_costs = {
 		manpower = 1
 		fabric = 1

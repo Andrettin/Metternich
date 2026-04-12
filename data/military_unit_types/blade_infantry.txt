@@ -48,13 +48,13 @@ two_handed_swordsmen = {
 	icon = longswordsmen
 	melee_attack_sound = sword
 	death_sound = human_death
+	required_technology = bastard_sword
 	stats = {
 		melee = 7
 		defense = 6
 		movement = 4
 		range = 1
 	}
-	required_technology = middle_ages
 	commodity_costs = {
 		manpower = 1
 		fabric = 1
