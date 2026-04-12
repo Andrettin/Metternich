@@ -1,7 +1,7 @@
 short_bow_discovered = {
 	name = "Short Bow Discovered"
 	portrait = engineering
-	description = "Your Excellency, short bows have been invented in [root.name]!"
+	description = "Your Excellency, short bows have been developed in [root.name]!"
 	conditions = {
 		capital = true
 		can_gain_technology = short_bow
@@ -55,6 +55,226 @@ short_bow_discovered = {
 	option = {
 		effects = {
 			technologies += short_bow
+		}
+	}
+}
+
+long_bow_discovered = {
+	name = "Long Bow Discovered"
+	portrait = engineering
+	description = "Your Excellency, long bows have been developed in [root.name]!"
+	conditions = {
+		capital = true
+		can_gain_technology = long_bow
+	}
+	mean_time_to_happen =  {
+		months = 100
+		
+		modifier = {
+			factor = 0.95
+			has_terrain = forest
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = sawmill
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				tier >= kingdom
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				tier >= duchy
+			}
+		}
+		modifier = {
+			factor = 0.8
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1250
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1350
+		}
+	}
+	option = {
+		effects = {
+			technologies += long_bow
+		}
+	}
+}
+
+composite_bow_discovered = {
+	name = "Composite Bow Discovered"
+	portrait = engineering
+	description = "Your Excellency, composite bows have been developed in [root.name]!"
+	conditions = {
+		capital = true
+		can_gain_technology = composite_bow
+	}
+	mean_time_to_happen =  {
+		months = 250
+		
+		modifier = {
+			factor = 0.95
+			has_terrain = forest
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = sawmill
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				tier >= kingdom
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				tier >= duchy
+			}
+		}
+		modifier = {
+			factor = 0.8
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 1.25
+			year < 1150
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1350
+		}
+	}
+	option = {
+		effects = {
+			technologies += composite_bow
+		}
+	}
+}
+
+light_crossbow_discovered = {
+	name = "Light Crossbow Discovered"
+	portrait = engineering
+	description = "Your Excellency, light crossbows have been developed in [root.name]!"
+	conditions = {
+		capital = true
+		can_gain_technology = light_crossbow
+	}
+	mean_time_to_happen =  {
+		months = 100
+		
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = smithy
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				tier >= kingdom
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				tier >= duchy
+			}
+		}
+		modifier = {
+			factor = 0.8
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1250
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1350
+		}
+	}
+	option = {
+		effects = {
+			technologies += light_crossbow
+		}
+	}
+}
+
+heavy_crossbow_discovered = {
+	name = "Heavy Crossbow Discovered"
+	portrait = engineering
+	description = "Your Excellency, heavy crossbows have been developed in [root.name]!"
+	conditions = {
+		capital = true
+		can_gain_technology = heavy_crossbow
+	}
+	mean_time_to_happen =  {
+		months = 500
+		
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = smithy
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				tier >= kingdom
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				tier >= duchy
+			}
+		}
+		modifier = {
+			factor = 0.8
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 1.25
+			year < 1150
+		}
+		modifier = {
+			factor = 1.25
+			year < 1250
+		}
+	}
+	option = {
+		effects = {
+			technologies += heavy_crossbow
 		}
 	}
 }

@@ -1,4 +1,4 @@
-short_bow_spreads = {
+short_bow_spread = {
 	name = "Short Bow Spread to [root.name]"
 	portrait = engineering
 	description = "Your Excellency, knowledge of short bows has spread to [root.name]."
@@ -117,6 +117,478 @@ short_bow_spreads = {
 	option = {
 		effects = {
 			technologies += short_bow
+		}
+	}
+}
+
+long_bow_spread = {
+	name = "Long Bow Spread to [root.name]"
+	portrait = engineering
+	description = "Your Excellency, knowledge of long bows has spread to [root.name]."
+	conditions = {
+		can_gain_technology = long_bow
+		any_neighbor_province = {
+			technology = long_bow
+		}
+	}
+	mean_time_to_happen =  {
+		months = 1000
+		
+		modifier = {
+			factor = 0.9
+			has_terrain = forest
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = sawmill
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = military_academy
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			any_neighbor_province = {
+				technology = long_bow
+				has_building_class = waterfront
+			}
+		}
+		modifier = {
+			factor = 0.9
+			any_neighbor_province = {
+				technology = long_bow
+				culture = root
+			}
+		}
+		modifier = {
+			factor = 0.3
+			any_neighbor_province = {
+				technology = long_bow
+				domain = root
+			}
+		}
+		modifier = {
+			factor = 0.5
+			any_neighbor_province = {
+				technology = long_bow
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				independent = true
+			}
+			any_neighbor_province = {
+				technology = long_bow
+				realm = root
+				domain = {
+					independent = false
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				war = true
+			}
+			any_neighbor_province = {
+				technology = long_bow
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 10
+			any_neighbor_province = {
+				technology = long_bow
+				not = {
+					realm = root
+				}
+				domain = {
+					war = true
+				}
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				war = true
+			}
+			any_neighbor_province = {
+				technology = long_bow
+				not = {
+					realm = root
+				}
+				domain = {
+					war = false
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			capital = true
+			any_neighbor_province = {
+				technology = long_bow
+				realm = root
+			}
+		}
+	}
+	option = {
+		effects = {
+			technologies += long_bow
+		}
+	}
+}
+
+composite_bow_spread = {
+	name = "Composite Bow Spread to [root.name]"
+	portrait = engineering
+	description = "Your Excellency, knowledge of composite bows has spread to [root.name]."
+	conditions = {
+		can_gain_technology = composite_bow
+		any_neighbor_province = {
+			technology = composite_bow
+		}
+	}
+	mean_time_to_happen =  {
+		months = 2000
+		
+		modifier = {
+			factor = 0.9
+			has_building_class = sawmill
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = military_academy
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			any_neighbor_province = {
+				technology = composite_bow
+				has_building_class = waterfront
+			}
+		}
+		modifier = {
+			factor = 0.9
+			any_neighbor_province = {
+				technology = composite_bow
+				culture = root
+			}
+		}
+		modifier = {
+			factor = 0.3
+			any_neighbor_province = {
+				technology = composite_bow
+				domain = root
+			}
+		}
+		modifier = {
+			factor = 0.6
+			any_neighbor_province = {
+				technology = composite_bow
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				independent = true
+			}
+			any_neighbor_province = {
+				technology = composite_bow
+				realm = root
+				domain = {
+					independent = false
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				war = true
+			}
+			any_neighbor_province = {
+				technology = composite_bow
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 10
+			any_neighbor_province = {
+				technology = composite_bow
+				not = {
+					realm = root
+				}
+				domain = {
+					war = true
+				}
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				war = true
+			}
+			any_neighbor_province = {
+				technology = composite_bow
+				not = {
+					realm = root
+				}
+				domain = {
+					war = false
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			capital = true
+			any_neighbor_province = {
+				technology = composite_bow
+				realm = root
+			}
+		}
+	}
+	option = {
+		effects = {
+			technologies += composite_bow
+		}
+	}
+}
+
+light_crossbow_spread = {
+	name = "Light Crossbow Spread to [root.name]"
+	portrait = engineering
+	description = "Your Excellency, knowledge of light crossbows has spread to [root.name]."
+	conditions = {
+		can_gain_technology = light_crossbow
+		any_neighbor_province = {
+			technology = light_crossbow
+		}
+	}
+	mean_time_to_happen =  {
+		months = 1000
+		
+		modifier = {
+			factor = 0.9
+			has_building_class = military_academy
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			any_neighbor_province = {
+				technology = light_crossbow
+				has_building_class = waterfront
+			}
+		}
+		modifier = {
+			factor = 0.9
+			any_neighbor_province = {
+				technology = light_crossbow
+				culture = root
+			}
+		}
+		modifier = {
+			factor = 0.3
+			any_neighbor_province = {
+				technology = light_crossbow
+				domain = root
+			}
+		}
+		modifier = {
+			factor = 0.6
+			any_neighbor_province = {
+				technology = light_crossbow
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				independent = true
+			}
+			any_neighbor_province = {
+				technology = light_crossbow
+				realm = root
+				domain = {
+					independent = false
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				war = true
+			}
+			any_neighbor_province = {
+				technology = light_crossbow
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 10
+			any_neighbor_province = {
+				technology = light_crossbow
+				not = {
+					realm = root
+				}
+				domain = {
+					war = true
+				}
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				war = true
+			}
+			any_neighbor_province = {
+				technology = light_crossbow
+				not = {
+					realm = root
+				}
+				domain = {
+					war = false
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			capital = true
+			any_neighbor_province = {
+				technology = light_crossbow
+				realm = root
+			}
+		}
+	}
+	option = {
+		effects = {
+			technologies += light_crossbow
+		}
+	}
+}
+
+heavy_crossbow_spread = {
+	name = "Heavy Crossbow Spread to [root.name]"
+	portrait = engineering
+	description = "Your Excellency, knowledge of heavy crossbows has spread to [root.name]."
+	conditions = {
+		can_gain_technology = heavy_crossbow
+		any_neighbor_province = {
+			technology = heavy_crossbow
+		}
+	}
+	mean_time_to_happen =  {
+		months = 5000
+		
+		modifier = {
+			factor = 0.9
+			has_building_class = military_academy
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			any_neighbor_province = {
+				technology = heavy_crossbow
+				has_building_class = waterfront
+			}
+		}
+		modifier = {
+			factor = 0.9
+			any_neighbor_province = {
+				technology = heavy_crossbow
+				culture = root
+			}
+		}
+		modifier = {
+			factor = 0.35
+			any_neighbor_province = {
+				technology = heavy_crossbow
+				domain = root
+			}
+		}
+		modifier = {
+			factor = 0.6
+			any_neighbor_province = {
+				technology = heavy_crossbow
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				independent = true
+			}
+			any_neighbor_province = {
+				technology = heavy_crossbow
+				realm = root
+				domain = {
+					independent = false
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				war = true
+			}
+			any_neighbor_province = {
+				technology = heavy_crossbow
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 10
+			any_neighbor_province = {
+				technology = heavy_crossbow
+				not = {
+					realm = root
+				}
+				domain = {
+					war = true
+				}
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				war = true
+			}
+			any_neighbor_province = {
+				technology = heavy_crossbow
+				not = {
+					realm = root
+				}
+				domain = {
+					war = false
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			capital = true
+			any_neighbor_province = {
+				technology = heavy_crossbow
+				realm = root
+			}
+		}
+	}
+	option = {
+		effects = {
+			technologies += heavy_crossbow
 		}
 	}
 }
