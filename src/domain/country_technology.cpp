@@ -344,6 +344,10 @@ bool country_technology::is_technology_researchable(const technology *technology
 		return false;
 	}
 
+	if (technology->get_level() == 0) {
+		return false;
+	}
+
 	return this->can_gain_technology(technology);
 }
 
