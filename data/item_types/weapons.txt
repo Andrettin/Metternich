@@ -1,12 +1,3 @@
-bastard_sword = {
-	name = "Bastard Sword"
-	item_class = weapon
-	icon = saber
-	price = 25gp
-	damage_dice = 2d4
-	attack_sound = sword
-}
-
 battle_axe = {
 	name = "Battle Axe"
 	item_class = weapon
@@ -32,15 +23,6 @@ dagger = {
 	price = 2gp
 	damage_dice = 1d4
 	attack_sound = dagger
-}
-
-long_sword = {
-	name = "Long Sword"
-	item_class = weapon
-	icon = saber
-	price = 15gp
-	damage_dice = 1d8
-	attack_sound = sword
 }
 
 mace = {
@@ -77,15 +59,6 @@ quarterstaff = {
 	price = 1cp #0gp
 	damage_dice = 1d6
 	two_handed = true
-}
-
-short_sword = {
-	name = "Short Sword"
-	item_class = weapon
-	icon = saber
-	price = 10gp
-	damage_dice = 1d6
-	attack_sound = sword
 }
 
 torture_implement = {

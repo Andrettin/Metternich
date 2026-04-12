@@ -1,0 +1,32 @@
+short_sword = {
+	name = "Short Sword"
+	subcategory = technology
+	portrait = bronze_short_sword
+	icon = saber
+	period = dark_ages
+	cost_commodity = research
+}
+
+long_sword = {
+	name = "Long Sword"
+	subcategory = technology
+	portrait = bronze_short_sword
+	icon = saber
+	period = middle_ages
+	cost_commodity = research
+	prerequisites = {
+		short_sword
+	}
+}
+
+bastard_sword = {
+	name = "Bastard Sword"
+	subcategory = technology
+	portrait = bronze_short_sword
+	icon = saber
+	period = renaissance
+	cost_commodity = research
+	prerequisites = {
+		long_sword
+	}
+}

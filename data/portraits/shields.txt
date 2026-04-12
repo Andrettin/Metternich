@@ -2,6 +2,10 @@ bronze_shield = {
 	filepath = "portraits/bronze_shield.png"
 }
 
+round_shield = {
+	filepath = "portraits/round_shield.png"
+}
+
 dwarven_heater_shield = {
 	filepath = "portraits/dwarven_heater_shield.png"
 }

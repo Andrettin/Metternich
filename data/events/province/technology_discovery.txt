@@ -379,6 +379,91 @@ heavy_crossbow_discovered = {
 	}
 }
 
+short_sword_discovered = {
+	name = "Short Sword Discovered"
+	portrait = bronze_short_sword
+	description = "Your Excellency, short swords have been developed in [root.name]!"
+	conditions = {
+		capital = true
+		can_gain_technology = short_sword
+	}
+	mean_time_to_happen =  {
+		months = 75
+		
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = smithy
+		}
+		modifier = {
+			factor = 0.85
+			has_building_class = library
+		}
+		modifier = {
+			factor = 0.75
+			has_building_class = university
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				tier >= kingdom
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				tier == duchy
+			}
+		}
+		modifier = {
+			factor = 0.8
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 0.97
+			technology = aristotelian_logic
+		}
+		modifier = {
+			factor = 0.95
+			technology = scholasticism
+		}
+		modifier = {
+			factor = 0.98
+			technology = astrology_and_astronomy
+		}
+		modifier = {
+			factor = 0.97
+			technology = natural_philosophy
+		}
+		modifier = {
+			factor = 0.9
+			technology = science
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1150
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1250
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1350
+		}
+	}
+	option = {
+		effects = {
+			technologies += short_sword
+		}
+	}
+}
+
 university_discovered = {
 	name = "University Discovered"
 	portrait = university

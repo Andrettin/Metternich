@@ -1,0 +1,35 @@
+bastard_sword = {
+	name = "Bastard Sword"
+	item_class = weapon
+	icon = saber
+	price = 25gp
+	damage_dice = 2d4
+	attack_sound = sword
+	creation_site_conditions = {
+		technology = bastard_sword
+	}
+}
+
+long_sword = {
+	name = "Long Sword"
+	item_class = weapon
+	icon = saber
+	price = 15gp
+	damage_dice = 1d8
+	attack_sound = sword
+	creation_site_conditions = {
+		technology = long_sword
+	}
+}
+
+short_sword = {
+	name = "Short Sword"
+	item_class = weapon
+	icon = saber
+	price = 10gp
+	damage_dice = 1d6
+	attack_sound = sword
+	creation_site_conditions = {
+		technology = short_sword
+	}
+}

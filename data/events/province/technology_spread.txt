@@ -593,6 +593,125 @@ heavy_crossbow_spread = {
 	}
 }
 
+short_sword_spread = {
+	name = "Short Sword Spread to [root.name]"
+	portrait = bronze_short_sword
+	description = "Your Excellency, knowledge of short swords has spread to [root.name]."
+	conditions = {
+		can_gain_technology = short_sword
+		any_neighbor_province = {
+			technology = short_sword
+		}
+	}
+	mean_time_to_happen =  {
+		months = 750
+		
+		modifier = {
+			factor = 0.9
+			has_building_class = military_academy
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = smithy
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			any_neighbor_province = {
+				technology = short_sword
+				has_building_class = waterfront
+			}
+		}
+		modifier = {
+			factor = 0.85
+			any_neighbor_province = {
+				technology = short_sword
+				culture = root
+			}
+		}
+		modifier = {
+			factor = 0.3
+			any_neighbor_province = {
+				technology = short_sword
+				domain = root
+			}
+		}
+		modifier = {
+			factor = 0.5
+			any_neighbor_province = {
+				technology = short_sword
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				independent = true
+			}
+			any_neighbor_province = {
+				technology = short_sword
+				realm = root
+				domain = {
+					independent = false
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				war = true
+			}
+			any_neighbor_province = {
+				technology = short_sword
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 10
+			any_neighbor_province = {
+				technology = short_sword
+				not = {
+					realm = root
+				}
+				domain = {
+					war = true
+				}
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				war = true
+			}
+			any_neighbor_province = {
+				technology = short_sword
+				not = {
+					realm = root
+				}
+				domain = {
+					war = false
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			capital = true
+			any_neighbor_province = {
+				technology = short_sword
+				realm = root
+			}
+		}
+	}
+	option = {
+		effects = {
+			technologies += short_sword
+		}
+	}
+}
+
 university_spread = {
 	name = "University Concept Spread to [root.name]"
 	portrait = university

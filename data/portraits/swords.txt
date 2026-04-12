@@ -1,0 +1,7 @@
+bronze_short_sword = {
+	filepath = "portraits/bronze_shortsword.png"
+}
+
+crossed_bronze_broad_swords = {
+	filepath = "portraits/crossed_bronze_broadswords.png"
+}
