@@ -5,7 +5,7 @@ observatory = {
 	icon = research
 	size = 1
 	population_type = laborers
-	required_technology = renaissance
+	required_technology = astrology_and_astronomy
 	holding_types = {
 		city
 		guild
