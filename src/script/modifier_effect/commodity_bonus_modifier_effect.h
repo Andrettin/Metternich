@@ -42,9 +42,12 @@ public:
 		}
 	}
 
-	virtual bool are_decimals_relevant() const override
+	virtual std::string get_number_string(const centesimal_int &multiplier, const bool ignore_decimals) const override
 	{
-		return true;
+		Q_UNUSED(ignore_decimals);
+
+		const centesimal_int value = this->get_multiplied_value(multiplier);
+		return (value >= 0 ? "+" : "") + this->commodity->value_to_string(value.to_int());
 	}
 
 	virtual bool is_hidden(const site *scope) const override
