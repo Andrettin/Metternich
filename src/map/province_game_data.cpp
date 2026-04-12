@@ -111,8 +111,15 @@ void province_game_data::process_gsml_property(const gsml_property &property)
 void province_game_data::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
+	const std::vector<std::string> &values = scope.get_values();
 
-	throw std::runtime_error(std::format("Invalid province game data scope: \"{}\".", tag));
+	if (tag == "technologies") {
+		for (const std::string &value : values) {
+			this->technologies.insert(technology::get(value));
+		}
+	} else {
+		throw std::runtime_error(std::format("Invalid province game data scope: \"{}\".", tag));
+	}
 }
 
 gsml_data province_game_data::to_gsml_data() const
@@ -137,6 +144,14 @@ gsml_data province_game_data::to_gsml_data() const
 
 	if (this->get_provincial_capital() != 0) {
 		data.add_property("provincial_capital", provincial_capital->get_identifier());
+	}
+
+	if (!this->get_technologies().empty()) {
+		gsml_data technologies_data("technologies");
+		for (const technology *technology : this->get_technologies()) {
+			technologies_data.add_value(technology->get_identifier());
+		}
+		data.add_child(std::move(technologies_data));
 	}
 
 	return data;
