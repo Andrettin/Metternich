@@ -4731,7 +4731,7 @@ void domain_game_data::set_free_consulate_count(const consulate *consulate, cons
 
 int domain_game_data::get_min_income() const
 {
-	int min_income = 0;
+	int min_income = this->get_economy()->get_commodity_output(defines::get()->get_wealth_commodity()).to_int();
 
 	for (const province *province : this->get_provinces()) {
 		min_income += province->get_game_data()->get_min_income();
@@ -4750,7 +4750,7 @@ int domain_game_data::get_min_income() const
 
 int domain_game_data::get_max_income() const
 {
-	int max_income = 0;
+	int max_income = this->get_economy()->get_commodity_output(defines::get()->get_wealth_commodity()).to_int();
 
 	for (const province *province : this->get_provinces()) {
 		max_income += province->get_game_data()->get_max_income();
