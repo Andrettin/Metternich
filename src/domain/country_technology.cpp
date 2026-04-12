@@ -365,7 +365,7 @@ QVariantList country_technology::get_future_technologies_qvariant_list() const
 				has_all_prerequisites = false;
 			}
 		}
-		if (has_all_prerequisites) {
+		if (has_all_prerequisites && this->is_technology_researchable(technology)) {
 			return true;
 		}
 
