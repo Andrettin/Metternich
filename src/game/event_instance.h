@@ -59,6 +59,9 @@ public:
 
 	bool is_in_combat() const;
 
+signals:
+	void finished();
+
 private:
 	const metternich::event *event = nullptr;
 	QString name;

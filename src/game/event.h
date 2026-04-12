@@ -8,6 +8,7 @@ Q_MOC_INCLUDE("ui/portrait.h")
 
 namespace metternich {
 
+class event_instance;
 class event_random_group;
 class portrait;
 enum class event_trigger;
@@ -135,7 +136,7 @@ public:
 	[[nodiscard]]
 	virtual QCoro::Task<void> do_option_effects(const int option_index, context &ctx) const = 0;
 
-	void create_instance(const context &ctx) const;
+	event_instance *create_instance(const context &ctx) const;
 
 signals:
 	void changed();

@@ -40,7 +40,7 @@ void event::initialize()
 	}
 }
 
-void event::create_instance(const context &ctx) const
+event_instance *event::create_instance(const context &ctx) const
 {
 	const text_processor text_processor(ctx);
 
@@ -48,7 +48,10 @@ void event::create_instance(const context &ctx) const
 	const std::string description = text_processor.process_text(this->get_description(), true);
 
 	auto event_instance = make_qunique<metternich::event_instance>(this, QString::fromStdString(name), QString::fromStdString(description), ctx);
+	metternich::event_instance *event_instance_ptr = event_instance.get();
 	engine_interface::get()->add_event_instance(std::move(event_instance));
+
+	return event_instance_ptr;
 }
 
 }

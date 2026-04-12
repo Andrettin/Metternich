@@ -154,7 +154,7 @@ public:
 	[[nodiscard]]
 	QCoro::Task<void> fire(const scope_type *scope, const context &ctx) const;
 
-	virtual void create_instance(const context &ctx) const = 0;
+	virtual event_instance *create_instance(const context &ctx) const = 0;
 
 private:
 	std::unique_ptr<factor<std::remove_const_t<scope_type>>> random_weight_factor;

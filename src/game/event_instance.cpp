@@ -40,6 +40,8 @@ QCoro::Task<void> event_instance::choose_option_coro(const int displayed_option_
 			co_await this->event->do_option_effects(option_index, this->ctx);
 		}
 
+		emit finished();
+
 		engine_interface::get()->remove_event_instance(this);
 	} catch (...) {
 		exception::report(std::current_exception());

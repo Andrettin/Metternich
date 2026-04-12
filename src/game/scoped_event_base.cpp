@@ -24,6 +24,8 @@
 #include "util/random.h"
 #include "util/vector_random_util.h"
 
+#include <qcorosignal.h>
+
 namespace metternich {
 
 template <typename scope_type>
@@ -341,7 +343,8 @@ QCoro::Task<void> scoped_event_base<scope_type>::fire(const scope_type *scope, c
 	co_await this->do_immediate_effects(scope, event_ctx);
 
 	if (scoped_event_base::is_player_scope(scope) && !this->is_hidden()) {
-		this->create_instance(event_ctx);
+		event_instance *event_instance = this->create_instance(event_ctx);
+		co_await qCoro(const_cast<metternich::event_instance *>(event_instance), &event_instance::finished);
 	} else {
 		//the event doesn't need to be displayed for AIs; instead, it is processed immediately
 		//pick a random option out of the available ones

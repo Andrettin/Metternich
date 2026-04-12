@@ -121,9 +121,9 @@ public:
 		co_await scoped_event_base::do_option_effects(option_index, ctx);
 	}
 
-	virtual void create_instance(const context &ctx) const override
+	virtual event_instance *create_instance(const context &ctx) const override
 	{
-		event::create_instance(ctx);
+		return event::create_instance(ctx);
 	}
 };
 
