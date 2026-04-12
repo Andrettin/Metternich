@@ -47,7 +47,7 @@ university = {
 	size = 4
 	population_type = laborers
 	base_building = academy
-	required_technology = middle_ages
+	required_technology = university
 	holding_types = {
 		city
 		guild

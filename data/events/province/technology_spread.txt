@@ -593,6 +593,84 @@ heavy_crossbow_spread = {
 	}
 }
 
+university_spread = {
+	name = "University Concept Spread to [root.name]"
+	portrait = university
+	description = "Your Excellency, knowledge of universities has spread to [root.name]."
+	conditions = {
+		can_gain_technology = university
+		any_neighbor_province = {
+			technology = university
+		}
+	}
+	mean_time_to_happen =  {
+		months = 8000
+		
+		modifier = {
+			factor = 0.9
+			has_building_class = library
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			any_neighbor_province = {
+				technology = university
+				has_building_class = waterfront
+			}
+		}
+		modifier = {
+			factor = 0.9
+			any_neighbor_province = {
+				technology = university
+				culture = root
+			}
+		}
+		modifier = {
+			factor = 0.8
+			any_neighbor_province = {
+				technology = university
+				religion = root
+			}
+		}
+		modifier = {
+			factor = 0.7
+			any_neighbor_province = {
+				technology = university
+				domain = root
+			}
+		}
+		modifier = {
+			factor = 0.8
+			any_neighbor_province = {
+				technology = university
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 5
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 0.75
+			capital = true
+			any_neighbor_province = {
+				technology = university
+				realm = root
+			}
+		}
+	}
+	option = {
+		effects = {
+			technologies += university
+		}
+	}
+}
+
 aristotelian_logic_spread = {
 	name = "Aristotelian Logic Spread to [root.name]"
 	portrait = engineering

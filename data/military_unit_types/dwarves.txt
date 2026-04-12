@@ -44,13 +44,13 @@ dwarven_sentinels = {
 	unit_class = halberdiers
 	culture = dwarven
 	icon = halberdiers
+	required_technology = middle_ages
 	stats = {
 		melee = 7
 		defense = 7
 		movement = 4
 		range = 1
 	}
-	required_technology = middle_ages
 	commodity_costs = {
 		manpower = 1
 		fabric = 1

@@ -379,6 +379,63 @@ heavy_crossbow_discovered = {
 	}
 }
 
+university_discovered = {
+	name = "University Discovered"
+	portrait = university
+	description = "Your Excellency, the concept of a university has been developed in [root.name]!"
+	conditions = {
+		capital = true
+		can_gain_technology = university
+	}
+	mean_time_to_happen =  {
+		months = 1000
+		
+		modifier = {
+			factor = 0.8
+			has_building_class = university
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = library
+		}
+		modifier = {
+			factor = 0.95
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				tier >= kingdom
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				tier == duchy
+			}
+		}
+		modifier = {
+			factor = 5
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 1.25
+			year < 1150
+		}
+		modifier = {
+			factor = 1.25
+			year < 1250
+		}
+	}
+	option = {
+		effects = {
+			technologies += university
+		}
+	}
+}
+
 aristotelian_logic_discovered = {
 	name = "Aristotelian Logic Discovered"
 	portrait = engineering

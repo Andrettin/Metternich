@@ -1,0 +1,11 @@
+university = {
+	name = "University"
+	subcategory = technology
+	portrait = university
+	icon = university
+	period = middle_ages
+	cost_commodity = research
+	prerequisites = {
+		scholasticism
+	}
+}

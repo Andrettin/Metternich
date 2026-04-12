@@ -1,21 +1,3 @@
-#bronze_age = {
-#	name = "Antiquity"
-#	subcategory = technology
-#	portrait = engineering
-#	icon = architecture
-#	period = copper_age
-#	cost_commodity = research
-#}
-
-antiquity = {
-	name = "Antiquity"
-	subcategory = technology
-	portrait = engineering
-	icon = architecture
-	period = antiquity
-	cost_commodity = research
-}
-
 dark_ages = {
 	name = "Dark Ages"
 	subcategory = technology
@@ -24,7 +6,7 @@ dark_ages = {
 	period = dark_ages
 	cost_commodity = research
 	prerequisites = {
-		antiquity
+		aristotelian_logic
 	}
 }
 
