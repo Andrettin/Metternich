@@ -11,6 +11,8 @@ class province_event final : public event, public data_type<province_event>, pub
 {
 	Q_OBJECT
 
+	Q_PROPERTY(bool from_neighbor MEMBER from_neighbor READ is_from_neighbor)
+
 public:
 	static constexpr const char class_identifier[] = "province_event";
 	static constexpr const char property_class_identifier[] = "metternich::province_event*";
@@ -85,6 +87,11 @@ public:
 		scoped_event_base::set_random_weight(weight);
 	}
 
+	virtual bool is_from_neighbor() const override
+	{
+		return this->from_neighbor;
+	}
+
 	virtual bool is_hidden() const override
 	{
 		return event::is_hidden();
@@ -125,6 +132,9 @@ public:
 	{
 		return event::create_instance(ctx);
 	}
+
+private:
+	bool from_neighbor = false;
 };
 
 }

@@ -2,9 +2,10 @@ short_bow_spread = {
 	name = "Short Bow Spread to [root.name]"
 	portrait = engineering
 	description = "Your Excellency, knowledge of short bows has spread to [root.name]."
+	from_neighbor = true
 	conditions = {
 		can_gain_technology = short_bow
-		any_neighbor_province = {
+		source_province = {
 			technology = short_bow
 		}
 	}
@@ -29,29 +30,25 @@ short_bow_spread = {
 		}
 		modifier = {
 			factor = 0.9
-			any_neighbor_province = {
-				technology = short_bow
+			source_province = {
 				has_building_class = waterfront
 			}
 		}
 		modifier = {
 			factor = 0.9
-			any_neighbor_province = {
-				technology = short_bow
+			source_province = {
 				culture = root
 			}
 		}
 		modifier = {
 			factor = 0.3
-			any_neighbor_province = {
-				technology = short_bow
+			source_province = {
 				domain = root
 			}
 		}
 		modifier = {
 			factor = 0.5
-			any_neighbor_province = {
-				technology = short_bow
+			source_province = {
 				realm = root
 			}
 		}
@@ -60,8 +57,7 @@ short_bow_spread = {
 			domain = {
 				independent = true
 			}
-			any_neighbor_province = {
-				technology = short_bow
+			source_province = {
 				realm = root
 				domain = {
 					independent = false
@@ -73,15 +69,13 @@ short_bow_spread = {
 			domain = {
 				war = true
 			}
-			any_neighbor_province = {
-				technology = short_bow
+			source_province = {
 				realm = root
 			}
 		}
 		modifier = {
 			factor = 10
-			any_neighbor_province = {
-				technology = short_bow
+			source_province = {
 				not = {
 					realm = root
 				}
@@ -95,8 +89,7 @@ short_bow_spread = {
 			domain = {
 				war = true
 			}
-			any_neighbor_province = {
-				technology = short_bow
+			source_province = {
 				not = {
 					realm = root
 				}
@@ -108,8 +101,7 @@ short_bow_spread = {
 		modifier = {
 			factor = 0.75
 			capital = true
-			any_neighbor_province = {
-				technology = short_bow
+			source_province = {
 				realm = root
 			}
 		}
@@ -125,9 +117,10 @@ long_bow_spread = {
 	name = "Long Bow Spread to [root.name]"
 	portrait = engineering
 	description = "Your Excellency, knowledge of long bows has spread to [root.name]."
+	from_neighbor = true
 	conditions = {
 		can_gain_technology = long_bow
-		any_neighbor_province = {
+		source_province = {
 			technology = long_bow
 		}
 	}
@@ -152,29 +145,25 @@ long_bow_spread = {
 		}
 		modifier = {
 			factor = 0.9
-			any_neighbor_province = {
-				technology = long_bow
+			source_province = {
 				has_building_class = waterfront
 			}
 		}
 		modifier = {
 			factor = 0.9
-			any_neighbor_province = {
-				technology = long_bow
+			source_province = {
 				culture = root
 			}
 		}
 		modifier = {
 			factor = 0.3
-			any_neighbor_province = {
-				technology = long_bow
+			source_province = {
 				domain = root
 			}
 		}
 		modifier = {
 			factor = 0.5
-			any_neighbor_province = {
-				technology = long_bow
+			source_province = {
 				realm = root
 			}
 		}
@@ -183,8 +172,7 @@ long_bow_spread = {
 			domain = {
 				independent = true
 			}
-			any_neighbor_province = {
-				technology = long_bow
+			source_province = {
 				realm = root
 				domain = {
 					independent = false
@@ -196,15 +184,13 @@ long_bow_spread = {
 			domain = {
 				war = true
 			}
-			any_neighbor_province = {
-				technology = long_bow
+			source_province = {
 				realm = root
 			}
 		}
 		modifier = {
 			factor = 10
-			any_neighbor_province = {
-				technology = long_bow
+			source_province = {
 				not = {
 					realm = root
 				}
@@ -218,8 +204,7 @@ long_bow_spread = {
 			domain = {
 				war = true
 			}
-			any_neighbor_province = {
-				technology = long_bow
+			source_province = {
 				not = {
 					realm = root
 				}
@@ -231,8 +216,7 @@ long_bow_spread = {
 		modifier = {
 			factor = 0.75
 			capital = true
-			any_neighbor_province = {
-				technology = long_bow
+			source_province = {
 				realm = root
 			}
 		}
@@ -248,9 +232,10 @@ composite_bow_spread = {
 	name = "Composite Bow Spread to [root.name]"
 	portrait = engineering
 	description = "Your Excellency, knowledge of composite bows has spread to [root.name]."
+	from_neighbor = true
 	conditions = {
 		can_gain_technology = composite_bow
-		any_neighbor_province = {
+		source_province = {
 			technology = composite_bow
 		}
 	}
@@ -271,29 +256,25 @@ composite_bow_spread = {
 		}
 		modifier = {
 			factor = 0.9
-			any_neighbor_province = {
-				technology = composite_bow
+			source_province = {
 				has_building_class = waterfront
 			}
 		}
 		modifier = {
 			factor = 0.9
-			any_neighbor_province = {
-				technology = composite_bow
+			source_province = {
 				culture = root
 			}
 		}
 		modifier = {
 			factor = 0.3
-			any_neighbor_province = {
-				technology = composite_bow
+			source_province = {
 				domain = root
 			}
 		}
 		modifier = {
 			factor = 0.6
-			any_neighbor_province = {
-				technology = composite_bow
+			source_province = {
 				realm = root
 			}
 		}
@@ -302,8 +283,7 @@ composite_bow_spread = {
 			domain = {
 				independent = true
 			}
-			any_neighbor_province = {
-				technology = composite_bow
+			source_province = {
 				realm = root
 				domain = {
 					independent = false
@@ -315,15 +295,13 @@ composite_bow_spread = {
 			domain = {
 				war = true
 			}
-			any_neighbor_province = {
-				technology = composite_bow
+			source_province = {
 				realm = root
 			}
 		}
 		modifier = {
 			factor = 10
-			any_neighbor_province = {
-				technology = composite_bow
+			source_province = {
 				not = {
 					realm = root
 				}
@@ -337,8 +315,7 @@ composite_bow_spread = {
 			domain = {
 				war = true
 			}
-			any_neighbor_province = {
-				technology = composite_bow
+			source_province = {
 				not = {
 					realm = root
 				}
@@ -350,8 +327,7 @@ composite_bow_spread = {
 		modifier = {
 			factor = 0.75
 			capital = true
-			any_neighbor_province = {
-				technology = composite_bow
+			source_province = {
 				realm = root
 			}
 		}
@@ -367,9 +343,10 @@ light_crossbow_spread = {
 	name = "Light Crossbow Spread to [root.name]"
 	portrait = engineering
 	description = "Your Excellency, knowledge of light crossbows has spread to [root.name]."
+	from_neighbor = true
 	conditions = {
 		can_gain_technology = light_crossbow
-		any_neighbor_province = {
+		source_province = {
 			technology = light_crossbow
 		}
 	}
@@ -386,29 +363,25 @@ light_crossbow_spread = {
 		}
 		modifier = {
 			factor = 0.9
-			any_neighbor_province = {
-				technology = light_crossbow
+			source_province = {
 				has_building_class = waterfront
 			}
 		}
 		modifier = {
 			factor = 0.9
-			any_neighbor_province = {
-				technology = light_crossbow
+			source_province = {
 				culture = root
 			}
 		}
 		modifier = {
 			factor = 0.3
-			any_neighbor_province = {
-				technology = light_crossbow
+			source_province = {
 				domain = root
 			}
 		}
 		modifier = {
 			factor = 0.6
-			any_neighbor_province = {
-				technology = light_crossbow
+			source_province = {
 				realm = root
 			}
 		}
@@ -417,8 +390,7 @@ light_crossbow_spread = {
 			domain = {
 				independent = true
 			}
-			any_neighbor_province = {
-				technology = light_crossbow
+			source_province = {
 				realm = root
 				domain = {
 					independent = false
@@ -430,15 +402,13 @@ light_crossbow_spread = {
 			domain = {
 				war = true
 			}
-			any_neighbor_province = {
-				technology = light_crossbow
+			source_province = {
 				realm = root
 			}
 		}
 		modifier = {
 			factor = 10
-			any_neighbor_province = {
-				technology = light_crossbow
+			source_province = {
 				not = {
 					realm = root
 				}
@@ -452,8 +422,7 @@ light_crossbow_spread = {
 			domain = {
 				war = true
 			}
-			any_neighbor_province = {
-				technology = light_crossbow
+			source_province = {
 				not = {
 					realm = root
 				}
@@ -465,8 +434,7 @@ light_crossbow_spread = {
 		modifier = {
 			factor = 0.75
 			capital = true
-			any_neighbor_province = {
-				technology = light_crossbow
+			source_province = {
 				realm = root
 			}
 		}
@@ -482,9 +450,10 @@ heavy_crossbow_spread = {
 	name = "Heavy Crossbow Spread to [root.name]"
 	portrait = engineering
 	description = "Your Excellency, knowledge of heavy crossbows has spread to [root.name]."
+	from_neighbor = true
 	conditions = {
 		can_gain_technology = heavy_crossbow
-		any_neighbor_province = {
+		source_province = {
 			technology = heavy_crossbow
 		}
 	}
@@ -501,29 +470,25 @@ heavy_crossbow_spread = {
 		}
 		modifier = {
 			factor = 0.9
-			any_neighbor_province = {
-				technology = heavy_crossbow
+			source_province = {
 				has_building_class = waterfront
 			}
 		}
 		modifier = {
 			factor = 0.9
-			any_neighbor_province = {
-				technology = heavy_crossbow
+			source_province = {
 				culture = root
 			}
 		}
 		modifier = {
 			factor = 0.35
-			any_neighbor_province = {
-				technology = heavy_crossbow
+			source_province = {
 				domain = root
 			}
 		}
 		modifier = {
 			factor = 0.6
-			any_neighbor_province = {
-				technology = heavy_crossbow
+			source_province = {
 				realm = root
 			}
 		}
@@ -532,8 +497,7 @@ heavy_crossbow_spread = {
 			domain = {
 				independent = true
 			}
-			any_neighbor_province = {
-				technology = heavy_crossbow
+			source_province = {
 				realm = root
 				domain = {
 					independent = false
@@ -545,15 +509,13 @@ heavy_crossbow_spread = {
 			domain = {
 				war = true
 			}
-			any_neighbor_province = {
-				technology = heavy_crossbow
+			source_province = {
 				realm = root
 			}
 		}
 		modifier = {
 			factor = 10
-			any_neighbor_province = {
-				technology = heavy_crossbow
+			source_province = {
 				not = {
 					realm = root
 				}
@@ -567,8 +529,7 @@ heavy_crossbow_spread = {
 			domain = {
 				war = true
 			}
-			any_neighbor_province = {
-				technology = heavy_crossbow
+			source_province = {
 				not = {
 					realm = root
 				}
@@ -580,8 +541,7 @@ heavy_crossbow_spread = {
 		modifier = {
 			factor = 0.75
 			capital = true
-			any_neighbor_province = {
-				technology = heavy_crossbow
+			source_province = {
 				realm = root
 			}
 		}
@@ -597,9 +557,10 @@ short_sword_spread = {
 	name = "Short Sword Spread to [root.name]"
 	portrait = bronze_short_sword
 	description = "Your Excellency, knowledge of short swords has spread to [root.name]."
+	from_neighbor = true
 	conditions = {
 		can_gain_technology = short_sword
-		any_neighbor_province = {
+		source_province = {
 			technology = short_sword
 		}
 	}
@@ -620,29 +581,25 @@ short_sword_spread = {
 		}
 		modifier = {
 			factor = 0.9
-			any_neighbor_province = {
-				technology = short_sword
+			source_province = {
 				has_building_class = waterfront
 			}
 		}
 		modifier = {
 			factor = 0.85
-			any_neighbor_province = {
-				technology = short_sword
+			source_province = {
 				culture = root
 			}
 		}
 		modifier = {
 			factor = 0.3
-			any_neighbor_province = {
-				technology = short_sword
+			source_province = {
 				domain = root
 			}
 		}
 		modifier = {
 			factor = 0.5
-			any_neighbor_province = {
-				technology = short_sword
+			source_province = {
 				realm = root
 			}
 		}
@@ -651,8 +608,7 @@ short_sword_spread = {
 			domain = {
 				independent = true
 			}
-			any_neighbor_province = {
-				technology = short_sword
+			source_province = {
 				realm = root
 				domain = {
 					independent = false
@@ -664,15 +620,13 @@ short_sword_spread = {
 			domain = {
 				war = true
 			}
-			any_neighbor_province = {
-				technology = short_sword
+			source_province = {
 				realm = root
 			}
 		}
 		modifier = {
 			factor = 10
-			any_neighbor_province = {
-				technology = short_sword
+			source_province = {
 				not = {
 					realm = root
 				}
@@ -686,8 +640,7 @@ short_sword_spread = {
 			domain = {
 				war = true
 			}
-			any_neighbor_province = {
-				technology = short_sword
+			source_province = {
 				not = {
 					realm = root
 				}
@@ -699,8 +652,7 @@ short_sword_spread = {
 		modifier = {
 			factor = 0.75
 			capital = true
-			any_neighbor_province = {
-				technology = short_sword
+			source_province = {
 				realm = root
 			}
 		}
@@ -716,9 +668,10 @@ university_spread = {
 	name = "University Concept Spread to [root.name]"
 	portrait = university
 	description = "Your Excellency, knowledge of universities has spread to [root.name]."
+	from_neighbor = true
 	conditions = {
 		can_gain_technology = university
-		any_neighbor_province = {
+		source_province = {
 			technology = university
 		}
 	}
@@ -735,36 +688,31 @@ university_spread = {
 		}
 		modifier = {
 			factor = 0.9
-			any_neighbor_province = {
-				technology = university
+			source_province = {
 				has_building_class = waterfront
 			}
 		}
 		modifier = {
 			factor = 0.9
-			any_neighbor_province = {
-				technology = university
+			source_province = {
 				culture = root
 			}
 		}
 		modifier = {
 			factor = 0.8
-			any_neighbor_province = {
-				technology = university
+			source_province = {
 				religion = root
 			}
 		}
 		modifier = {
 			factor = 0.7
-			any_neighbor_province = {
-				technology = university
+			source_province = {
 				domain = root
 			}
 		}
 		modifier = {
 			factor = 0.8
-			any_neighbor_province = {
-				technology = university
+			source_province = {
 				realm = root
 			}
 		}
@@ -777,8 +725,7 @@ university_spread = {
 		modifier = {
 			factor = 0.75
 			capital = true
-			any_neighbor_province = {
-				technology = university
+			source_province = {
 				realm = root
 			}
 		}
@@ -794,9 +741,10 @@ aristotelian_logic_spread = {
 	name = "Aristotelian Logic Spread to [root.name]"
 	portrait = engineering
 	description = "Your Excellency, knowledge of Aristotelian logic has spread to [root.name]."
+	from_neighbor = true
 	conditions = {
 		can_gain_technology = aristotelian_logic
-		any_neighbor_province = {
+		source_province = {
 			technology = aristotelian_logic
 		}
 	}
@@ -817,43 +765,37 @@ aristotelian_logic_spread = {
 		}
 		modifier = {
 			factor = 0.9
-			any_neighbor_province = {
-				technology = aristotelian_logic
+			source_province = {
 				has_building_class = waterfront
 			}
 		}
 		modifier = {
 			factor = 0.9
-			any_neighbor_province = {
-				technology = aristotelian_logic
+			source_province = {
 				has_building_class = library
 			}
 		}
 		modifier = {
 			factor = 0.7
-			any_neighbor_province = {
-				technology = aristotelian_logic
+			source_province = {
 				has_building_class = university
 			}
 		}
 		modifier = {
 			factor = 0.9
-			any_neighbor_province = {
-				technology = aristotelian_logic
+			source_province = {
 				culture = root
 			}
 		}
 		modifier = {
 			factor = 0.6
-			any_neighbor_province = {
-				technology = aristotelian_logic
+			source_province = {
 				domain = root
 			}
 		}
 		modifier = {
 			factor = 0.8
-			any_neighbor_province = {
-				technology = aristotelian_logic
+			source_province = {
 				realm = root
 			}
 		}
@@ -866,8 +808,7 @@ aristotelian_logic_spread = {
 		modifier = {
 			factor = 0.75
 			capital = true
-			any_neighbor_province = {
-				technology = aristotelian_logic
+			source_province = {
 				realm = root
 			}
 		}
@@ -883,9 +824,10 @@ scholasticism_spread = {
 	name = "Scholasticism Spread to [root.name]"
 	portrait = engineering
 	description = "Your Excellency, knowledge of scholasticism has spread to [root.name]."
+	from_neighbor = true
 	conditions = {
 		can_gain_technology = scholasticism
-		any_neighbor_province = {
+		source_province = {
 			technology = scholasticism
 		}
 	}
@@ -910,43 +852,37 @@ scholasticism_spread = {
 		}
 		modifier = {
 			factor = 0.9
-			any_neighbor_province = {
-				technology = scholasticism
+			source_province = {
 				has_building_class = waterfront
 			}
 		}
 		modifier = {
 			factor = 0.9
-			any_neighbor_province = {
-				technology = scholasticism
+			source_province = {
 				has_building_class = library
 			}
 		}
 		modifier = {
 			factor = 0.75
-			any_neighbor_province = {
-				technology = scholasticism
+			source_province = {
 				has_building_class = university
 			}
 		}
 		modifier = {
 			factor = 0.9
-			any_neighbor_province = {
-				technology = scholasticism
+			source_province = {
 				culture = root
 			}
 		}
 		modifier = {
 			factor = 0.6
-			any_neighbor_province = {
-				technology = scholasticism
+			source_province = {
 				domain = root
 			}
 		}
 		modifier = {
 			factor = 0.8
-			any_neighbor_province = {
-				technology = scholasticism
+			source_province = {
 				realm = root
 			}
 		}
@@ -959,8 +895,7 @@ scholasticism_spread = {
 		modifier = {
 			factor = 0.75
 			capital = true
-			any_neighbor_province = {
-				technology = scholasticism
+			source_province = {
 				realm = root
 			}
 		}
@@ -976,9 +911,10 @@ astrology_and_astronomy_spread = {
 	name = "Astrology and Astronomy Spread to [root.name]"
 	portrait = engineering
 	description = "Your Excellency, knowledge of astrology and astronomy has spread to [root.name]."
+	from_neighbor = true
 	conditions = {
 		can_gain_technology = astrology_and_astronomy
-		any_neighbor_province = {
+		source_province = {
 			technology = astrology_and_astronomy
 		}
 	}
@@ -1003,36 +939,31 @@ astrology_and_astronomy_spread = {
 		}
 		modifier = {
 			factor = 0.9
-			any_neighbor_province = {
-				technology = astrology_and_astronomy
+			source_province = {
 				has_building_class = waterfront
 			}
 		}
 		modifier = {
 			factor = 0.8
-			any_neighbor_province = {
-				technology = astrology_and_astronomy
+			source_province = {
 				has_building_class = university
 			}
 		}
 		modifier = {
 			factor = 0.9
-			any_neighbor_province = {
-				technology = astrology_and_astronomy
+			source_province = {
 				culture = root
 			}
 		}
 		modifier = {
 			factor = 0.6
-			any_neighbor_province = {
-				technology = astrology_and_astronomy
+			source_province = {
 				domain = root
 			}
 		}
 		modifier = {
 			factor = 0.8
-			any_neighbor_province = {
-				technology = astrology_and_astronomy
+			source_province = {
 				realm = root
 			}
 		}
@@ -1045,8 +976,7 @@ astrology_and_astronomy_spread = {
 		modifier = {
 			factor = 0.75
 			capital = true
-			any_neighbor_province = {
-				technology = astrology_and_astronomy
+			source_province = {
 				realm = root
 			}
 		}
@@ -1062,9 +992,10 @@ natural_philosophy_spread = {
 	name = "Natural Philosophy Spread to [root.name]"
 	portrait = engineering
 	description = "Your Excellency, knowledge of natural philosophy has spread to [root.name]."
+	from_neighbor = true
 	conditions = {
 		can_gain_technology = natural_philosophy
-		any_neighbor_province = {
+		source_province = {
 			technology = natural_philosophy
 		}
 	}
@@ -1089,43 +1020,37 @@ natural_philosophy_spread = {
 		}
 		modifier = {
 			factor = 0.9
-			any_neighbor_province = {
-				technology = natural_philosophy
+			source_province = {
 				has_building_class = waterfront
 			}
 		}
 		modifier = {
 			factor = 0.95
-			any_neighbor_province = {
-				technology = natural_philosophy
+			source_province = {
 				has_building_class = library
 			}
 		}
 		modifier = {
 			factor = 0.85
-			any_neighbor_province = {
-				technology = natural_philosophy
+			source_province = {
 				has_building_class = university
 			}
 		}
 		modifier = {
 			factor = 0.9
-			any_neighbor_province = {
-				technology = natural_philosophy
+			source_province = {
 				culture = root
 			}
 		}
 		modifier = {
 			factor = 0.6
-			any_neighbor_province = {
-				technology = natural_philosophy
+			source_province = {
 				domain = root
 			}
 		}
 		modifier = {
 			factor = 0.8
-			any_neighbor_province = {
-				technology = natural_philosophy
+			source_province = {
 				realm = root
 			}
 		}
@@ -1138,8 +1063,7 @@ natural_philosophy_spread = {
 		modifier = {
 			factor = 0.75
 			capital = true
-			any_neighbor_province = {
-				technology = natural_philosophy
+			source_province = {
 				realm = root
 			}
 		}
@@ -1155,9 +1079,10 @@ science_spread = {
 	name = "Science Spread to [root.name]"
 	portrait = engineering
 	description = "Your Excellency, knowledge of science has spread to [root.name]."
+	from_neighbor = true
 	conditions = {
 		can_gain_technology = science
-		any_neighbor_province = {
+		source_province = {
 			technology = science
 		}
 	}
@@ -1182,43 +1107,38 @@ science_spread = {
 		}
 		modifier = {
 			factor = 0.9
-			any_neighbor_province = {
-				technology = science
+			source_province = {
 				has_building_class = waterfront
 			}
 		}
 		modifier = {
 			factor = 0.95
-			any_neighbor_province = {
-				technology = science
+			source_province = {
 				has_building_class = library
 			}
 		}
 		modifier = {
 			factor = 0.9
-			any_neighbor_province = {
-				technology = science
+			source_province = {
 				has_building_class = university
 			}
 		}
 		modifier = {
 			factor = 0.9
-			any_neighbor_province = {
-				technology = science
+			source_province = {
 				culture = root
 			}
 		}
 		modifier = {
 			factor = 0.7
-			any_neighbor_province = {
+			source_province = {
 				technology = science
 				domain = root
 			}
 		}
 		modifier = {
 			factor = 0.9
-			any_neighbor_province = {
-				technology = science
+			source_province = {
 				realm = root
 			}
 		}
@@ -1231,8 +1151,7 @@ science_spread = {
 		modifier = {
 			factor = 0.75
 			capital = true
-			any_neighbor_province = {
-				technology = science
+			source_province = {
 				realm = root
 			}
 		}

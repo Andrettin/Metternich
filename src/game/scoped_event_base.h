@@ -81,6 +81,7 @@ public:
 	[[nodiscard]] static QCoro::Task<void> check_random_events_for_scope(const scope_type *scope, const context &ctx, const std::vector<const scoped_event_base *> &potential_events, const int delay);
 	[[nodiscard]] static QCoro::Task<void> check_random_event_groups_for_scope(const scope_type *scope, const event_trigger trigger, const context &ctx);
 	[[nodiscard]] static QCoro::Task<void> check_mtth_events_for_scope(const scope_type *scope);
+	[[nodiscard]] static QCoro::Task<void> check_mtth_event_for_scope(const scoped_event_base *event, const scope_type *scope, const read_only_context &ctx);
 
 private:
 	static inline std::map<event_trigger, std::vector<const scoped_event_base *>> trigger_events;
@@ -112,6 +113,11 @@ public:
 	const factor<std::remove_const_t<scope_type>> *get_random_weight_factor() const
 	{
 		return this->random_weight_factor.get();
+	}
+
+	virtual bool is_from_neighbor() const
+	{
+		return false;
 	}
 
 	const metternich::mean_time_to_happen<std::remove_const_t<scope_type>> *get_mean_time_to_happen() const

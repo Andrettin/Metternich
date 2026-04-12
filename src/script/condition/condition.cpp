@@ -114,6 +114,7 @@
 #include "script/condition/skill_condition.h"
 #include "script/condition/skill_training_condition.h"
 #include "script/condition/source_character_condition.h"
+#include "script/condition/source_province_scope_condition.h"
 #include "script/condition/source_site_condition.h"
 #include "script/condition/source_site_scope_condition.h"
 #include "script/condition/species_condition.h"
@@ -457,6 +458,8 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 		condition = std::make_unique<saved_scope_condition<scope_type, province, read_only_context, metternich::condition<province>>>(condition_operator);
 	} else if (tag == "saved_site_scope") {
 		condition = std::make_unique<saved_scope_condition<scope_type, site, read_only_context, metternich::condition<site>>>(condition_operator);
+	} else if (tag == "source_province") {
+		condition = std::make_unique<source_province_scope_condition<scope_type>>(condition_operator);
 	} else if (tag == "source_site") {
 		condition = std::make_unique<source_site_scope_condition<scope_type>>(condition_operator);
 	}

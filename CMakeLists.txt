@@ -755,6 +755,7 @@ set(script_condition_HDRS
 	src/script/condition/skill_condition.h
 	src/script/condition/skill_training_condition.h
 	src/script/condition/source_character_condition.h
+	src/script/condition/source_province_scope_condition.h
 	src/script/condition/source_site_condition.h
 	src/script/condition/source_site_scope_condition.h
 	src/script/condition/species_condition.h

@@ -142,24 +142,42 @@ QCoro::Task<void> scoped_event_base<scope_type>::check_mtth_events_for_scope(con
 	const read_only_context ctx(scope);
 
 	for (const scoped_event_base *event : scoped_event_base::mtth_events) {
-		if (!event->can_fire(scope, ctx)) {
-			continue;
+		if constexpr (std::is_same_v<scope_type, const province>) {
+			if (event->is_from_neighbor()) {
+				for (const province *neighbor_province : scope->get_game_data()->get_neighbor_provinces()) {
+					read_only_context event_ctx(scope);
+					event_ctx.source_scope = neighbor_province;
+					co_await scoped_event_base::check_mtth_event_for_scope(event, scope, event_ctx);
+				}
+
+				continue;
+			}
 		}
 
-		const centesimal_int mtth = event->get_mean_time_to_happen()->calculate(scope, game::get()->get_year());
-		bool should_fire = false;
+		co_await scoped_event_base::check_mtth_event_for_scope(event, scope, ctx);
+	}
+}
 
-		if (mtth <= 1) {
-			should_fire = true;
-		} else {
-			const int fire_chance = (decimillesimal_int(1) / mtth).get_value();
-			assert_throw(fire_chance > 0);
-			should_fire = random::get()->generate(10000) < fire_chance;
-		}
+template <typename scope_type>
+QCoro::Task<void> scoped_event_base<scope_type>::check_mtth_event_for_scope(const scoped_event_base *event, const scope_type *scope, const read_only_context &ctx)
+{
+	if (!event->can_fire(scope, ctx)) {
+		co_return;
+	}
 
-		if (should_fire) {
-			co_await event->fire(scope, context(scope));
-		}
+	const centesimal_int mtth = event->get_mean_time_to_happen()->calculate(scope, game::get()->get_year());
+	bool should_fire = false;
+
+	if (mtth <= 1) {
+		should_fire = true;
+	} else {
+		const int fire_chance = (decimillesimal_int(1) / mtth).get_value();
+		assert_throw(fire_chance > 0);
+		should_fire = random::get()->generate(10000) < fire_chance;
+	}
+
+	if (should_fire) {
+		co_await event->fire(scope, context(scope));
 	}
 }
 
