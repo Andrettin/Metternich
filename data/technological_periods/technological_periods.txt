@@ -1,11 +1,11 @@
-#antiquity = {
-#	parent_period = bronze_age
-#	start_year = -4000
-#	end_year = 450
-#}
+antiquity = {
+	#parent_period = bronze_age
+	start_year = -4000
+	end_year = 450
+}
 
 dark_ages = {
-	#parent_period = antiquity
+	parent_period = antiquity
 	start_year = 450
 	end_year = 1100
 }

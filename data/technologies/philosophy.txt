@@ -6,3 +6,60 @@
 #		philosophy
 #	}
 #}
+
+aristotelian_logic = {
+	name = "Aristotelian Logic"
+	subcategory = technology
+	portrait = engineering
+	icon = philosophy
+	period = antiquity
+	cost_commodity = research
+}
+
+scholasticism = {
+	name = "Scholasticism"
+	subcategory = technology
+	portrait = engineering
+	icon = wooden_cross
+	period = dark_ages
+	cost_commodity = research
+	prerequisites = {
+		aristotelian_logic
+	}
+}
+
+astrology_and_astronomy = {
+	name = "Astrology and Astronomy"
+	subcategory = technology
+	portrait = engineering
+	icon = philosophy
+	period = middle_ages
+	cost_commodity = research
+	prerequisites = {
+		scholasticism
+	}
+}
+
+natural_philosophy = {
+	name = "Natural Philosophy"
+	subcategory = technology
+	portrait = engineering
+	icon = philosophy
+	period = renaissance
+	cost_commodity = research
+	prerequisites = {
+		astrology_and_astronomy
+	}
+}
+
+science = {
+	name = "Science"
+	subcategory = technology
+	portrait = engineering
+	icon = philosophy
+	period = modern_era
+	cost_commodity = research
+	prerequisites = {
+		natural_philosophy
+	}
+}

@@ -592,3 +592,457 @@ heavy_crossbow_spread = {
 		}
 	}
 }
+
+aristotelian_logic_spread = {
+	name = "Aristotelian Logic Spread to [root.name]"
+	portrait = engineering
+	description = "Your Excellency, knowledge of Aristotelian logic has spread to [root.name]."
+	conditions = {
+		can_gain_technology = aristotelian_logic
+		any_neighbor_province = {
+			technology = aristotelian_logic
+		}
+	}
+	mean_time_to_happen =  {
+		months = 750
+		
+		modifier = {
+			factor = 0.9
+			has_building_class = library
+		}
+		modifier = {
+			factor = 0.7
+			has_building_class = university
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			any_neighbor_province = {
+				technology = aristotelian_logic
+				has_building_class = waterfront
+			}
+		}
+		modifier = {
+			factor = 0.9
+			any_neighbor_province = {
+				technology = aristotelian_logic
+				has_building_class = library
+			}
+		}
+		modifier = {
+			factor = 0.7
+			any_neighbor_province = {
+				technology = aristotelian_logic
+				has_building_class = university
+			}
+		}
+		modifier = {
+			factor = 0.9
+			any_neighbor_province = {
+				technology = aristotelian_logic
+				culture = root
+			}
+		}
+		modifier = {
+			factor = 0.6
+			any_neighbor_province = {
+				technology = aristotelian_logic
+				domain = root
+			}
+		}
+		modifier = {
+			factor = 0.8
+			any_neighbor_province = {
+				technology = aristotelian_logic
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 5
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 0.75
+			capital = true
+			any_neighbor_province = {
+				technology = aristotelian_logic
+				realm = root
+			}
+		}
+	}
+	option = {
+		effects = {
+			technologies += aristotelian_logic
+		}
+	}
+}
+
+scholasticism_spread = {
+	name = "Scholasticism Spread to [root.name]"
+	portrait = engineering
+	description = "Your Excellency, knowledge of scholasticism has spread to [root.name]."
+	conditions = {
+		can_gain_technology = scholasticism
+		any_neighbor_province = {
+			technology = scholasticism
+		}
+	}
+	mean_time_to_happen =  {
+		months = 1500
+		
+		modifier = {
+			factor = 0.9
+			technology = aristotelian_logic
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = library
+		}
+		modifier = {
+			factor = 0.75
+			has_building_class = university
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			any_neighbor_province = {
+				technology = scholasticism
+				has_building_class = waterfront
+			}
+		}
+		modifier = {
+			factor = 0.9
+			any_neighbor_province = {
+				technology = scholasticism
+				has_building_class = library
+			}
+		}
+		modifier = {
+			factor = 0.75
+			any_neighbor_province = {
+				technology = scholasticism
+				has_building_class = university
+			}
+		}
+		modifier = {
+			factor = 0.9
+			any_neighbor_province = {
+				technology = scholasticism
+				culture = root
+			}
+		}
+		modifier = {
+			factor = 0.6
+			any_neighbor_province = {
+				technology = scholasticism
+				domain = root
+			}
+		}
+		modifier = {
+			factor = 0.8
+			any_neighbor_province = {
+				technology = scholasticism
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 5
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 0.75
+			capital = true
+			any_neighbor_province = {
+				technology = scholasticism
+				realm = root
+			}
+		}
+	}
+	option = {
+		effects = {
+			technologies += scholasticism
+		}
+	}
+}
+
+astrology_and_astronomy_spread = {
+	name = "Astrology and Astronomy Spread to [root.name]"
+	portrait = engineering
+	description = "Your Excellency, knowledge of astrology and astronomy has spread to [root.name]."
+	conditions = {
+		can_gain_technology = astrology_and_astronomy
+		any_neighbor_province = {
+			technology = astrology_and_astronomy
+		}
+	}
+	mean_time_to_happen =  {
+		months = 3000
+		
+		modifier = {
+			factor = 0.9
+			technology = scholasticism
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = library
+		}
+		modifier = {
+			factor = 0.8
+			has_building_class = university
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			any_neighbor_province = {
+				technology = astrology_and_astronomy
+				has_building_class = waterfront
+			}
+		}
+		modifier = {
+			factor = 0.8
+			any_neighbor_province = {
+				technology = astrology_and_astronomy
+				has_building_class = university
+			}
+		}
+		modifier = {
+			factor = 0.9
+			any_neighbor_province = {
+				technology = astrology_and_astronomy
+				culture = root
+			}
+		}
+		modifier = {
+			factor = 0.6
+			any_neighbor_province = {
+				technology = astrology_and_astronomy
+				domain = root
+			}
+		}
+		modifier = {
+			factor = 0.8
+			any_neighbor_province = {
+				technology = astrology_and_astronomy
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 5
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 0.75
+			capital = true
+			any_neighbor_province = {
+				technology = astrology_and_astronomy
+				realm = root
+			}
+		}
+	}
+	option = {
+		effects = {
+			technologies += astrology_and_astronomy
+		}
+	}
+}
+
+natural_philosophy_spread = {
+	name = "Natural Philosophy Spread to [root.name]"
+	portrait = engineering
+	description = "Your Excellency, knowledge of natural philosophy has spread to [root.name]."
+	conditions = {
+		can_gain_technology = natural_philosophy
+		any_neighbor_province = {
+			technology = natural_philosophy
+		}
+	}
+	mean_time_to_happen =  {
+		months = 5000
+		
+		modifier = {
+			factor = 0.9
+			technology = astrology_and_astronomy
+		}
+		modifier = {
+			factor = 0.95
+			has_building_class = library
+		}
+		modifier = {
+			factor = 0.85
+			has_building_class = university
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			any_neighbor_province = {
+				technology = natural_philosophy
+				has_building_class = waterfront
+			}
+		}
+		modifier = {
+			factor = 0.95
+			any_neighbor_province = {
+				technology = natural_philosophy
+				has_building_class = library
+			}
+		}
+		modifier = {
+			factor = 0.85
+			any_neighbor_province = {
+				technology = natural_philosophy
+				has_building_class = university
+			}
+		}
+		modifier = {
+			factor = 0.9
+			any_neighbor_province = {
+				technology = natural_philosophy
+				culture = root
+			}
+		}
+		modifier = {
+			factor = 0.6
+			any_neighbor_province = {
+				technology = natural_philosophy
+				domain = root
+			}
+		}
+		modifier = {
+			factor = 0.8
+			any_neighbor_province = {
+				technology = natural_philosophy
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 5
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 0.75
+			capital = true
+			any_neighbor_province = {
+				technology = natural_philosophy
+				realm = root
+			}
+		}
+	}
+	option = {
+		effects = {
+			technologies += natural_philosophy
+		}
+	}
+}
+
+science_spread = {
+	name = "Science Spread to [root.name]"
+	portrait = engineering
+	description = "Your Excellency, knowledge of science has spread to [root.name]."
+	conditions = {
+		can_gain_technology = science
+		any_neighbor_province = {
+			technology = science
+		}
+	}
+	mean_time_to_happen =  {
+		months = 10000
+		
+		modifier = {
+			factor = 0.9
+			technology = natural_philosophy
+		}
+		modifier = {
+			factor = 0.95
+			has_building_class = library
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = university
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			any_neighbor_province = {
+				technology = science
+				has_building_class = waterfront
+			}
+		}
+		modifier = {
+			factor = 0.95
+			any_neighbor_province = {
+				technology = science
+				has_building_class = library
+			}
+		}
+		modifier = {
+			factor = 0.9
+			any_neighbor_province = {
+				technology = science
+				has_building_class = university
+			}
+		}
+		modifier = {
+			factor = 0.9
+			any_neighbor_province = {
+				technology = science
+				culture = root
+			}
+		}
+		modifier = {
+			factor = 0.7
+			any_neighbor_province = {
+				technology = science
+				domain = root
+			}
+		}
+		modifier = {
+			factor = 0.9
+			any_neighbor_province = {
+				technology = science
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 0.75
+			capital = true
+			any_neighbor_province = {
+				technology = science
+				realm = root
+			}
+		}
+	}
+	option = {
+		effects = {
+			technologies += science
+		}
+	}
+}

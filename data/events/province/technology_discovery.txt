@@ -30,7 +30,7 @@ short_bow_discovered = {
 		modifier = {
 			factor = 0.85
 			domain = {
-				tier >= duchy
+				tier == duchy
 			}
 		}
 		modifier = {
@@ -38,6 +38,26 @@ short_bow_discovered = {
 			domain = {
 				war = true
 			}
+		}
+		modifier = {
+			factor = 0.95
+			technology = aristotelian_logic
+		}
+		modifier = {
+			factor = 0.97
+			technology = scholasticism
+		}
+		modifier = {
+			factor = 0.98
+			technology = astrology_and_astronomy
+		}
+		modifier = {
+			factor = 0.98
+			technology = natural_philosophy
+		}
+		modifier = {
+			factor = 0.9
+			technology = science
 		}
 		modifier = {
 			factor = 0.8
@@ -91,7 +111,7 @@ long_bow_discovered = {
 		modifier = {
 			factor = 0.85
 			domain = {
-				tier >= duchy
+				tier == duchy
 			}
 		}
 		modifier = {
@@ -99,6 +119,26 @@ long_bow_discovered = {
 			domain = {
 				war = true
 			}
+		}
+		modifier = {
+			factor = 0.95
+			technology = aristotelian_logic
+		}
+		modifier = {
+			factor = 0.97
+			technology = scholasticism
+		}
+		modifier = {
+			factor = 0.98
+			technology = astrology_and_astronomy
+		}
+		modifier = {
+			factor = 0.98
+			technology = natural_philosophy
+		}
+		modifier = {
+			factor = 0.9
+			technology = science
 		}
 		modifier = {
 			factor = 0.8
@@ -148,7 +188,7 @@ composite_bow_discovered = {
 		modifier = {
 			factor = 0.85
 			domain = {
-				tier >= duchy
+				tier == duchy
 			}
 		}
 		modifier = {
@@ -156,6 +196,26 @@ composite_bow_discovered = {
 			domain = {
 				war = true
 			}
+		}
+		modifier = {
+			factor = 0.95
+			technology = aristotelian_logic
+		}
+		modifier = {
+			factor = 0.97
+			technology = scholasticism
+		}
+		modifier = {
+			factor = 0.98
+			technology = astrology_and_astronomy
+		}
+		modifier = {
+			factor = 0.98
+			technology = natural_philosophy
+		}
+		modifier = {
+			factor = 0.9
+			technology = science
 		}
 		modifier = {
 			factor = 1.25
@@ -201,7 +261,7 @@ light_crossbow_discovered = {
 		modifier = {
 			factor = 0.85
 			domain = {
-				tier >= duchy
+				tier == duchy
 			}
 		}
 		modifier = {
@@ -209,6 +269,26 @@ light_crossbow_discovered = {
 			domain = {
 				war = true
 			}
+		}
+		modifier = {
+			factor = 0.95
+			technology = aristotelian_logic
+		}
+		modifier = {
+			factor = 0.97
+			technology = scholasticism
+		}
+		modifier = {
+			factor = 0.98
+			technology = astrology_and_astronomy
+		}
+		modifier = {
+			factor = 0.98
+			technology = natural_philosophy
+		}
+		modifier = {
+			factor = 0.9
+			technology = science
 		}
 		modifier = {
 			factor = 0.8
@@ -254,11 +334,272 @@ heavy_crossbow_discovered = {
 		modifier = {
 			factor = 0.85
 			domain = {
-				tier >= duchy
+				tier == duchy
 			}
 		}
 		modifier = {
 			factor = 0.8
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 0.95
+			technology = aristotelian_logic
+		}
+		modifier = {
+			factor = 0.97
+			technology = scholasticism
+		}
+		modifier = {
+			factor = 0.98
+			technology = astrology_and_astronomy
+		}
+		modifier = {
+			factor = 0.98
+			technology = natural_philosophy
+		}
+		modifier = {
+			factor = 0.9
+			technology = science
+		}
+		modifier = {
+			factor = 1.25
+			year < 1150
+		}
+		modifier = {
+			factor = 1.25
+			year < 1250
+		}
+	}
+	option = {
+		effects = {
+			technologies += heavy_crossbow
+		}
+	}
+}
+
+aristotelian_logic_discovered = {
+	name = "Aristotelian Logic Discovered"
+	portrait = engineering
+	description = "Your Excellency, Aristotelian logic has been developed in [root.name]!"
+	conditions = {
+		capital = true
+		can_gain_technology = aristotelian_logic
+	}
+	mean_time_to_happen =  {
+		months = 250
+		
+		modifier = {
+			factor = 0.7
+			has_building_class = university
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = library
+		}
+		modifier = {
+			factor = 0.95
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				tier >= kingdom
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				tier == duchy
+			}
+		}
+		modifier = {
+			factor = 5
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1150
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1250
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1350
+		}
+	}
+	option = {
+		effects = {
+			technologies += aristotelian_logic
+			domain = {
+				regency += 25
+			}
+		}
+	}
+}
+
+scholasticism_discovered = {
+	name = "Scholasticism Discovered"
+	portrait = engineering
+	description = "Your Excellency, scholasticism has been developed in [root.name]!"
+	conditions = {
+		capital = true
+		can_gain_technology = scholasticism
+	}
+	mean_time_to_happen =  {
+		months = 600
+		
+		modifier = {
+			factor = 0.75
+			has_building_class = university
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = library
+		}
+		modifier = {
+			factor = 0.95
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				tier >= kingdom
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				tier == duchy
+			}
+		}
+		modifier = {
+			factor = 5
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1250
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1350
+		}
+	}
+	option = {
+		effects = {
+			technologies += scholasticism
+			domain = {
+				regency += 25
+			}
+		}
+	}
+}
+
+astrology_and_astronomy_discovered = {
+	name = "Astrology and Astronomy Discovered"
+	portrait = engineering
+	description = "Your Excellency, astrology and astronomy have been developed in [root.name]!"
+	conditions = {
+		capital = true
+		can_gain_technology = astrology_and_astronomy
+	}
+	mean_time_to_happen =  {
+		months = 1200
+		
+		modifier = {
+			factor = 0.75
+			has_building_class = university
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = library
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				tier >= kingdom
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				tier == duchy
+			}
+		}
+		modifier = {
+			factor = 5
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 1.25
+			year < 1150
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1350
+		}
+	}
+	option = {
+		effects = {
+			technologies += astrology_and_astronomy
+			domain = {
+				regency += 25
+			}
+		}
+	}
+}
+
+natural_philosophy_discovered = {
+	name = "Natural Philosophy Discovered"
+	portrait = engineering
+	description = "Your Excellency, natural philosophy has been developed in [root.name]!"
+	conditions = {
+		capital = true
+		can_gain_technology = natural_philosophy
+	}
+	mean_time_to_happen =  {
+		months = 2500
+		
+		modifier = {
+			factor = 0.8
+			has_building_class = university
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = library
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				tier >= kingdom
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				tier == duchy
+			}
+		}
+		modifier = {
+			factor = 5
 			domain = {
 				war = true
 			}
@@ -274,7 +615,74 @@ heavy_crossbow_discovered = {
 	}
 	option = {
 		effects = {
-			technologies += heavy_crossbow
+			technologies += natural_philosophy
+			domain = {
+				regency += 50
+			}
+		}
+	}
+}
+
+science_discovered = {
+	name = "Science Discovered"
+	portrait = engineering
+	description = "Your Excellency, science has been developed in [root.name]!"
+	conditions = {
+		capital = true
+		can_gain_technology = science
+	}
+	mean_time_to_happen =  {
+		months = 5000
+		
+		modifier = {
+			factor = 0.85
+			has_building_class = university
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = library
+		}
+		modifier = {
+			factor = 0.95
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				tier >= kingdom
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				tier == duchy
+			}
+		}
+		modifier = {
+			factor = 5
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 1.25
+			year < 1150
+		}
+		modifier = {
+			factor = 1.25
+			year < 1250
+		}
+		modifier = {
+			factor = 1.25
+			year < 1350
+		}
+	}
+	option = {
+		effects = {
+			technologies += science
+			domain = {
+				regency += 75
+			}
 		}
 	}
 }
