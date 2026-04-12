@@ -11,8 +11,9 @@ class commodity_bonus_modifier_effect final : public modifier_effect<const site>
 {
 public:
 	explicit commodity_bonus_modifier_effect(const metternich::commodity *commodity, const std::string &value)
-		: modifier_effect(value), commodity(commodity)
+		: commodity(commodity)
 	{
+		this->value = centesimal_int(this->commodity->string_to_value(value));
 	}
 
 	virtual const std::string &get_identifier() const override
