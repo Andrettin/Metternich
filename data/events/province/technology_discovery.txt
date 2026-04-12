@@ -1,0 +1,44 @@
+short_bow_discovered = {
+	name = "Short Bow Discovered"
+	portrait = engineering
+	description = "Your Excellency, short bows have been invented in [root.name]!"
+	conditions = {
+		capital = true
+		can_gain_technology = short_bow
+	}
+	mean_time_to_happen =  {
+		months = 50
+		
+		modifier = {
+			factor = 0.95
+			has_terrain = forest
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.8
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1150
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1250
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1350
+		}
+	}
+	option = {
+		effects = {
+			technologies += short_bow
+		}
+	}
+}

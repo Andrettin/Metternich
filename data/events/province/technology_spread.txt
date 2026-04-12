@@ -1,0 +1,111 @@
+short_bow_spreads = {
+	name = "Short Bow Spread to [root.name]"
+	portrait = engineering
+	description = "Your Excellency, knowledge of short bows has spread to [root.name]."
+	conditions = {
+		can_gain_technology = short_bow
+		any_neighbor_province = {
+			technology = short_bow
+		}
+	}
+	mean_time_to_happen =  {
+		months = 500
+		
+		modifier = {
+			factor = 0.9
+			has_terrain = forest
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = military_academy
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			any_neighbor_province = {
+				technology = short_bow
+				culture = root
+			}
+		}
+		modifier = {
+			factor = 0.3
+			any_neighbor_province = {
+				technology = short_bow
+				domain = root
+			}
+		}
+		modifier = {
+			factor = 0.5
+			any_neighbor_province = {
+				technology = short_bow
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				independent = true
+			}
+			any_neighbor_province = {
+				technology = short_bow
+				realm = root
+				domain = {
+					independent = false
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				war = true
+			}
+			any_neighbor_province = {
+				technology = short_bow
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 10
+			any_neighbor_province = {
+				technology = short_bow
+				not = {
+					realm = root
+				}
+				domain = {
+					war = true
+				}
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				war = true
+			}
+			any_neighbor_province = {
+				technology = short_bow
+				not = {
+					realm = root
+				}
+				domain = {
+					war = false
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			capital = true
+			any_neighbor_province = {
+				technology = short_bow
+				realm = root
+			}
+		}
+	}
+	option = {
+		effects = {
+			technologies += short_bow
+		}
+	}
+}
