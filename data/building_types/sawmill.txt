@@ -1,0 +1,21 @@
+sawmill = {
+	name = "Sawmill"
+	building_class = sawmill
+	portrait = factory
+	icon = lumber
+	holding_types = {
+		guild
+	}
+	conditions = {
+		terrain = forest
+	}
+	commodity_costs = {
+		wealth = 3gb
+	}
+	modifier = {
+		wealth_bonus = 1gb
+	}
+	domain_modifier = {
+		stability = 1
+	}
+}

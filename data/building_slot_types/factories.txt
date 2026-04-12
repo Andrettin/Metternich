@@ -18,8 +18,8 @@ lead_smelter = {
 	name = "Lead Smelter"
 }
 
-lumber_mill = {
-	name = "Lumber Mill"
+sawmill = {
+	name = "Sawmill"
 }
 
 mercury_refinery = {
