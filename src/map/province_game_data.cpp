@@ -884,6 +884,8 @@ QCoro::Task<void> province_game_data::create_map_mode_image(const province_map_m
 	}
 
 	this->map_mode_images[mode] = co_await this->finalize_map_image(std::move(image));
+
+	emit map_mode_image_changed(QString::fromUtf8(magic_enum::enum_name(mode)));
 }
 
 void province_game_data::calculate_text_rect()

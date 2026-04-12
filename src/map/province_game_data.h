@@ -537,6 +537,7 @@ signals:
 	void level_changed();
 	void provincial_capital_changed();
 	void map_image_changed();
+	void map_mode_image_changed(QString map_mode_identifier);
 	void visible_sites_changed();
 	void dungeon_sites_changed();
 	void technologies_changed();

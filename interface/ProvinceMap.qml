@@ -43,6 +43,40 @@ Flickable {
 				function onMap_image_changed() {
 					change_count += 1
 				}
+				
+				function onMap_mode_image_changed(map_mode_identifier) {
+					switch (mode) {
+						case ProvinceMap.Mode.Political:
+							return
+						case ProvinceMap.Mode.Terrain:
+							if (map_mode_identifier !== "terrain") {
+								return
+							}
+							break
+						case ProvinceMap.Mode.Cultural:
+							if (map_mode_identifier !== "cultural") {
+								return
+							}
+							break
+						case ProvinceMap.Mode.Technology:
+							if (map_mode_identifier !== "technology") {
+								return
+							}
+							break
+						case ProvinceMap.Mode.TradeZone:
+							if (map_mode_identifier !== "trade_zone") {
+								return
+							}
+							break
+						case ProvinceMap.Mode.Temple:
+							if (map_mode_identifier !== "temple") {
+								return
+							}
+							break
+					}
+					
+					change_count += 1
+				}
 			}
 		}
 	}
