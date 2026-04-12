@@ -17,11 +17,22 @@ short_bow_spreads = {
 		}
 		modifier = {
 			factor = 0.9
+			has_building_class = sawmill
+		}
+		modifier = {
+			factor = 0.9
 			has_building_class = military_academy
 		}
 		modifier = {
 			factor = 0.9
 			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			any_neighbor_province = {
+				technology = short_bow
+				has_building_class = waterfront
+			}
 		}
 		modifier = {
 			factor = 0.9

@@ -15,7 +15,23 @@ short_bow_discovered = {
 		}
 		modifier = {
 			factor = 0.9
+			has_building_class = sawmill
+		}
+		modifier = {
+			factor = 0.9
 			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				tier >= kingdom
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				tier >= duchy
+			}
 		}
 		modifier = {
 			factor = 0.8
