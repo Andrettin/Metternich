@@ -57,3 +57,33 @@ composite_long_bow = {
 		technology = composite_bow
 	}
 }
+
+light_crossbow = {
+	name = "Light Crossbow"
+	item_class = weapon
+	icon = bow
+	price = 35gp
+	damage_dice = 1d4
+	two_handed = true
+	modifier = {
+		range = 5
+	}
+	creation_site_conditions = {
+		technology = light_crossbow
+	}
+}
+
+heavy_crossbow = {
+	name = "Heavy Crossbow"
+	item_class = weapon
+	icon = bow
+	price = 50gp
+	damage_dice = 1d4+1
+	two_handed = true
+	modifier = {
+		range = 7
+	}
+	creation_site_conditions = {
+		technology = heavy_crossbow
+	}
+}

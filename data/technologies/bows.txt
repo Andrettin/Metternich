@@ -30,3 +30,27 @@ composite_bow = {
 		long_bow
 	}
 }
+
+light_crossbow = {
+	name = "Light Crossbow"
+	subcategory = technology
+	portrait = engineering
+	icon = bow
+	period = middle_ages
+	cost_commodity = research
+	prerequisites = {
+		short_bow
+	}
+}
+
+heavy_crossbow = {
+	name = "Heavy Crossbow"
+	subcategory = technology
+	portrait = engineering
+	icon = bow
+	period = renaissance
+	cost_commodity = research
+	prerequisites = {
+		light_crossbow
+	}
+}
