@@ -97,6 +97,7 @@
 #include "script/condition/province_count_condition.h"
 #include "script/condition/provincial_capital_condition.h"
 #include "script/condition/random_chance_condition.h"
+#include "script/condition/realm_condition.h"
 #include "script/condition/religion_condition.h"
 #include "script/condition/religious_group_condition.h"
 #include "script/condition/resource_condition.h"
@@ -360,6 +361,8 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 		return std::make_unique<month_condition<scope_type>>(value, condition_operator);
 	} else if (key == "random_chance") {
 		return std::make_unique<random_chance_condition<scope_type>>(value, condition_operator);
+	} else if (key == "realm") {
+		return std::make_unique<realm_condition<scope_type>>(value, condition_operator);
 	} else if (key == "religion" && condition_operator == gsml_operator::assignment) {
 		return std::make_unique<religion_condition<scope_type>>(value, condition_operator);
 	} else if (key == "religious_group") {
