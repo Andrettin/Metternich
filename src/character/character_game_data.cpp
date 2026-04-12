@@ -474,10 +474,12 @@ void character_game_data::ply_trade()
 	static constexpr int gb_value = 2000 * gp_value;
 
 	if (this->get_office() != nullptr) {
-		//FIXME: this cost should be subtract from the domain wealth, as maintenance
-		//FIXME: office holders should also cost regency as maintenance
-		const int income = gb_value * std::max(1, this->get_level() / 4);
-		this->change_wealth(income);
+		if (game::get()->is_last_turn_of_quarter()) {
+			//FIXME: this cost should be subtract from the domain wealth, as maintenance
+			//FIXME: office holders should also cost regency as maintenance
+			const int income = gb_value * std::max(1, this->get_level() / 4);
+			this->change_wealth(income);
+		}
 		return;
 	}
 
