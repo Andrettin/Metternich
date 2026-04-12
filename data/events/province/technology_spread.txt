@@ -664,8 +664,230 @@ short_sword_spread = {
 	}
 }
 
+long_sword_spread = {
+	name = "Long Sword Spread to [root.name]"
+	portrait = bronze_short_sword
+	description = "Your Excellency, knowledge of long swords has spread to [root.name]."
+	from_neighbor = true
+	conditions = {
+		can_gain_technology = long_sword
+		source_province = {
+			technology = long_sword
+		}
+	}
+	mean_time_to_happen =  {
+		months = 3000
+		
+		modifier = {
+			factor = 0.9
+			has_building_class = military_academy
+		}
+		modifier = {
+			factor = 0.95
+			has_building_class = smithy
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				has_building_class = waterfront
+			}
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				culture = root
+			}
+		}
+		modifier = {
+			factor = 0.3
+			source_province = {
+				domain = root
+			}
+		}
+		modifier = {
+			factor = 0.6
+			source_province = {
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				independent = true
+			}
+			source_province = {
+				realm = root
+				domain = {
+					independent = false
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				war = true
+			}
+			source_province = {
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 10
+			source_province = {
+				not = {
+					realm = root
+				}
+				domain = {
+					war = true
+				}
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				war = true
+			}
+			source_province = {
+				not = {
+					realm = root
+				}
+				domain = {
+					war = false
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			capital = true
+			source_province = {
+				realm = root
+			}
+		}
+	}
+	option = {
+		effects = {
+			technologies += long_sword
+		}
+	}
+}
+
+bastard_sword_spread = {
+	name = "Bastard Sword Spread to [root.name]"
+	portrait = bronze_short_sword
+	description = "Your Excellency, knowledge of bastard swords has spread to [root.name]."
+	from_neighbor = true
+	conditions = {
+		can_gain_technology = bastard_sword
+		source_province = {
+			technology = bastard_sword
+		}
+	}
+	mean_time_to_happen =  {
+		months = 6000
+		
+		modifier = {
+			factor = 0.9
+			has_building_class = military_academy
+		}
+		modifier = {
+			factor = 0.95
+			has_building_class = smithy
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				has_building_class = waterfront
+			}
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				culture = root
+			}
+		}
+		modifier = {
+			factor = 0.4
+			source_province = {
+				domain = root
+			}
+		}
+		modifier = {
+			factor = 0.7
+			source_province = {
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				independent = true
+			}
+			source_province = {
+				realm = root
+				domain = {
+					independent = false
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				war = true
+			}
+			source_province = {
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 10
+			source_province = {
+				not = {
+					realm = root
+				}
+				domain = {
+					war = true
+				}
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				war = true
+			}
+			source_province = {
+				not = {
+					realm = root
+				}
+				domain = {
+					war = false
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			capital = true
+			source_province = {
+				realm = root
+			}
+		}
+	}
+	option = {
+		effects = {
+			technologies += bastard_sword
+		}
+	}
+}
+
 university_spread = {
-	name = "University Concept Spread to [root.name]"
+	name = "University Spread to [root.name]"
 	portrait = university
 	description = "Your Excellency, knowledge of universities has spread to [root.name]."
 	from_neighbor = true
