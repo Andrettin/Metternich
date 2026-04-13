@@ -169,6 +169,9 @@ chain_mail = {
 	icon = clothing
 	period = dark_ages
 	cost_commodity = research
+	prerequisites = {
+		soft_leather_armor
+	}
 	discovery_mean_time_to_happen = {
 		months = 500
 		
@@ -345,6 +348,9 @@ plate_mail = {
 	icon = clothing
 	period = middle_ages
 	cost_commodity = research
+	prerequisites = {
+		chain_mail
+	}
 	discovery_mean_time_to_happen = {
 		months = 1250
 		
