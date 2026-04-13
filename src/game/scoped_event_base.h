@@ -9,6 +9,7 @@ namespace metternich {
 class character;
 class domain;
 class event;
+class event_instance;
 class province;
 class site;
 enum class event_trigger;
@@ -125,6 +126,8 @@ public:
 		return this->mean_time_to_happen.get();
 	}
 
+	void set_mean_time_to_happen(std::unique_ptr<metternich::mean_time_to_happen<std::remove_const_t<scope_type>>>  &&mtth);
+
 	virtual bool is_hidden() const = 0;
 	virtual bool fires_only_once() const = 0;
 
@@ -132,6 +135,8 @@ public:
 	{
 		return this->conditions.get();
 	}
+
+	void set_conditions(std::unique_ptr<and_condition<std::remove_const_t<scope_type>>> &&conditions);
 
 	bool can_fire(const scope_type *scope, const read_only_context &ctx) const;
 

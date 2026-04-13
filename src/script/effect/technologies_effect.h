@@ -9,10 +9,15 @@ template <typename scope_type>
 class technologies_effect final : public effect<scope_type>
 {
 public:
-	explicit technologies_effect(const std::string &value, const gsml_operator effect_operator)
+	explicit technologies_effect(const technology *technology, const gsml_operator effect_operator)
 		: effect<scope_type>(effect_operator)
 	{
-		this->technology = technology::get(value);
+		this->technology = technology;
+	}
+
+	explicit technologies_effect(const std::string &value, const gsml_operator effect_operator)
+		: technologies_effect(technology::get(value), effect_operator)
+	{
 	}
 
 	virtual const std::string &get_class_identifier() const override

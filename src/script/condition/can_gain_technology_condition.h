@@ -2,6 +2,7 @@
 
 #include "script/condition/condition.h"
 #include "technology/technology.h"
+#include "util/string_util.h"
 
 namespace metternich {
 
@@ -9,10 +10,15 @@ template <typename scope_type>
 class can_gain_technology_condition final : public condition<scope_type>
 {
 public:
-	explicit can_gain_technology_condition(const std::string &value, const gsml_operator condition_operator)
+	explicit can_gain_technology_condition(const technology *technology, const gsml_operator condition_operator = gsml_operator::assignment)
 		: condition<scope_type>(condition_operator)
 	{
-		this->technology = technology::get(value);
+		this->technology = technology;
+	}
+
+	explicit can_gain_technology_condition(const std::string &value, const gsml_operator condition_operator)
+		: can_gain_technology_condition(technology::get(value), condition_operator)
+	{
 	}
 
 	virtual const std::string &get_class_identifier() const override

@@ -15,8 +15,10 @@
 #include "economy/commodity.h"
 #include "economy/commodity_type.h"
 #include "economy/resource.h"
+#include "game/event_option.h"
 #include "game/game.h"
 #include "game/game_rules.h"
+#include "game/province_event.h"
 #include "infrastructure/building_type.h"
 #include "infrastructure/improvement.h"
 #include "infrastructure/pathway.h"
@@ -29,7 +31,14 @@
 #include "religion/religion.h"
 #include "religion/religious_group.h"
 #include "script/condition/and_condition.h"
+#include "script/condition/can_gain_technology_condition.h"
+#include "script/condition/capital_condition.h"
+#include "script/condition/source_province_scope_condition.h"
+#include "script/condition/technology_condition.h"
+#include "script/effect/effect_list.h"
+#include "script/effect/technologies_effect.h"
 #include "script/factor.h"
+#include "script/mean_time_to_happen.h"
 #include "script/modifier.h"
 #include "technology/technological_period.h"
 #include "technology/technology_category.h"
@@ -148,6 +157,12 @@ void technology::process_gsml_scope(const gsml_data &scope)
 		auto modifier = std::make_unique<metternich::modifier<const domain>>();
 		modifier->process_gsml_data(scope);
 		this->modifier = std::move(modifier);
+	} else if (tag == "discovery_mean_time_to_happen") {
+		this->discovery_mean_time_to_happen = std::make_unique<metternich::mean_time_to_happen<province>>();
+		scope.process(this->discovery_mean_time_to_happen.get());
+	} else if (tag == "spread_mean_time_to_happen") {
+		this->spread_mean_time_to_happen = std::make_unique<metternich::mean_time_to_happen<province>>();
+		scope.process(this->spread_mean_time_to_happen.get());
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
@@ -179,6 +194,47 @@ void technology::initialize()
 
 	std::sort(this->enabled_pathways.begin(), this->enabled_pathways.end(), pathway_compare());
 	std::sort(this->enabled_river_crossing_pathways.begin(), this->enabled_river_crossing_pathways.end(), pathway_compare());
+
+	if (this->discovery_mean_time_to_happen != nullptr) {
+		province_event *event = province_event::add(std::format("{}_discovered", this->get_identifier()), this->get_module());
+		event->set_name(std::format("{} Discovered", this->get_name()));
+		event->set_portrait(this->get_portrait());
+		event->set_description(std::format("Your Excellency, the {} technology has been discovered in [root.name]!", string::lowered(this->get_name())));
+		event->set_mean_time_to_happen(std::move(this->discovery_mean_time_to_happen));
+
+		auto event_conditions = std::make_unique<and_condition<province>>();
+		event_conditions->add_condition(std::make_unique<capital_condition<province>>(true));
+		event_conditions->add_condition(std::make_unique<can_gain_technology_condition<province>>(this));
+		event->set_conditions(std::move(event_conditions));
+
+		auto event_option = std::make_unique<metternich::event_option<const province>>();
+		event_option->add_effect(std::make_unique<technologies_effect<const province>>(this, gsml_operator::addition));
+		event->add_option(std::move(event_option));
+
+		event->initialize();
+	}
+
+	if (this->spread_mean_time_to_happen != nullptr) {
+		province_event *event = province_event::add(std::format("{}_spread", this->get_identifier()), this->get_module());
+		event->set_name(std::format("{} Spread to [root.name]", this->get_name()));
+		event->set_portrait(this->get_portrait());
+		event->set_description(std::format("Your Excellency, the {} technology has spread to [root.name].", string::lowered(this->get_name())));
+		event->set_from_neighbor(true);
+		event->set_mean_time_to_happen(std::move(this->spread_mean_time_to_happen));
+
+		auto event_conditions = std::make_unique<and_condition<province>>();
+		event_conditions->add_condition(std::make_unique<can_gain_technology_condition<province>>(this));
+		auto source_condition = std::make_unique<source_province_scope_condition<province>>();
+		source_condition->add_condition(std::make_unique<technology_condition<province>>(this));
+		event_conditions->add_condition(std::move(source_condition));
+		event->set_conditions(std::move(event_conditions));
+
+		auto event_option = std::make_unique<metternich::event_option<const province>>();
+		event_option->add_effect(std::make_unique<technologies_effect<const province>>(this, gsml_operator::addition));
+		event->add_option(std::move(event_option));
+
+		event->initialize();
+	}
 
 	named_data_entry::initialize();
 }

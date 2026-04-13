@@ -10,7 +10,7 @@ template <typename upper_scope_type>
 class source_province_scope_condition final : public scope_condition<upper_scope_type, province, read_only_context, condition<province>>
 {
 public:
-	explicit source_province_scope_condition(const gsml_operator condition_operator)
+	explicit source_province_scope_condition(const gsml_operator condition_operator = gsml_operator::assignment)
 		: scope_condition<upper_scope_type, province, read_only_context, condition<province>>(condition_operator)
 	{
 	}

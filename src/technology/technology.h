@@ -36,6 +36,7 @@ class law;
 class military_unit_type;
 class pathway;
 class portrait;
+class province;
 class religion;
 class religious_group;
 class resource;
@@ -48,6 +49,9 @@ class wonder;
 
 template <typename scope_type>
 class factor;
+
+template <typename scope_type>
+class mean_time_to_happen;
 
 template <typename scope_type>
 class modifier;
@@ -490,6 +494,8 @@ private:
 	std::vector<const item_type *> enabled_item_types;
 	std::unique_ptr<const metternich::modifier<const domain>> modifier;
 	const game_rule *required_game_rule = nullptr;
+	std::unique_ptr<metternich::mean_time_to_happen<province>> discovery_mean_time_to_happen;
+	std::unique_ptr<metternich::mean_time_to_happen<province>> spread_mean_time_to_happen;
 };
 
 }

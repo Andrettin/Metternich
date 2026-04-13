@@ -12,10 +12,15 @@ template <typename scope_type>
 class technology_condition final : public condition<scope_type>
 {
 public:
-	explicit technology_condition(const std::string &value, const gsml_operator condition_operator)
+	explicit technology_condition(const technology *technology, const gsml_operator condition_operator = gsml_operator::assignment)
 		: condition<scope_type>(condition_operator)
 	{
-		this->technology = technology::get(value);
+		this->technology = technology;
+	}
+
+	explicit technology_condition(const std::string &value, const gsml_operator condition_operator)
+		: technology_condition(technology::get(value), condition_operator)
+	{
 	}
 
 	virtual const std::string &get_class_identifier() const override

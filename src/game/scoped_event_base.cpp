@@ -287,6 +287,18 @@ void scoped_event_base<scope_type>::set_random_weight(const int weight)
 }
 
 template <typename scope_type>
+void scoped_event_base<scope_type>::set_mean_time_to_happen(std::unique_ptr<metternich::mean_time_to_happen<std::remove_const_t<scope_type>>> &&mtth)
+{
+	this->mean_time_to_happen = std::move(mtth);
+}
+
+template <typename scope_type>
+void scoped_event_base<scope_type>::set_conditions(std::unique_ptr<and_condition<std::remove_const_t<scope_type>>> &&conditions)
+{
+	this->conditions = std::move(conditions);
+}
+
+template <typename scope_type>
 bool scoped_event_base<scope_type>::can_fire(const scope_type *scope, const read_only_context &ctx) const
 {
 	if (this->fires_only_once() && game::get()->has_fired_event(this->get_event_pointer())) {

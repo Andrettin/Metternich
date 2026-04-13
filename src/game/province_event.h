@@ -11,7 +11,7 @@ class province_event final : public event, public data_type<province_event>, pub
 {
 	Q_OBJECT
 
-	Q_PROPERTY(bool from_neighbor MEMBER from_neighbor READ is_from_neighbor)
+	Q_PROPERTY(bool from_neighbor READ is_from_neighbor WRITE set_from_neighbor)
 
 public:
 	static constexpr const char class_identifier[] = "province_event";
@@ -90,6 +90,11 @@ public:
 	virtual bool is_from_neighbor() const override
 	{
 		return this->from_neighbor;
+	}
+
+	void set_from_neighbor(const bool value)
+	{
+		this->from_neighbor = value;
 	}
 
 	virtual bool is_hidden() const override
