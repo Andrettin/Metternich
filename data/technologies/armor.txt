@@ -1,9 +1,9 @@
 soft_leather_armor = {
 	name = "Soft Leather Armor"
 	subcategory = technology
-	portrait = round_shield
+	portrait = helmet
 	icon = clothing
-	period = dark_ages
+	period = antiquity
 	cost_commodity = research
 	discovery_mean_time_to_happen = {
 		months = 50
@@ -102,6 +102,350 @@ soft_leather_armor = {
 		}
 		modifier = {
 			factor = 0.5
+			source_province = {
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				independent = true
+			}
+			source_province = {
+				realm = root
+				domain = {
+					independent = false
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				war = true
+			}
+			source_province = {
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 10
+			source_province = {
+				not = {
+					realm = root
+				}
+				domain = {
+					war = true
+				}
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				war = true
+			}
+			source_province = {
+				not = {
+					realm = root
+				}
+				domain = {
+					war = false
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			capital = true
+			source_province = {
+				realm = root
+			}
+		}
+	}
+}
+
+chain_mail = {
+	name = "Chain Mail"
+	subcategory = technology
+	portrait = helmet
+	icon = clothing
+	period = dark_ages
+	cost_commodity = research
+	discovery_mean_time_to_happen = {
+		months = 500
+		
+		modifier = {
+			factor = 0.9
+			has_building_class = smithy
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = library
+		}
+		modifier = {
+			factor = 0.75
+			has_building_class = university
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			technology = soft_leather_armor
+		}
+		#modifier = {
+		#	factor = 0.9
+		#	technology = reinforced_leather_armor
+		#}
+		modifier = {
+			factor = 0.75
+			domain = {
+				tier >= kingdom
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				tier == duchy
+			}
+		}
+		modifier = {
+			factor = 0.8
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 0.97
+			technology = aristotelian_logic
+		}
+		modifier = {
+			factor = 0.95
+			technology = scholasticism
+		}
+		modifier = {
+			factor = 0.98
+			technology = astrology_and_astronomy
+		}
+		modifier = {
+			factor = 0.97
+			technology = natural_philosophy
+		}
+		modifier = {
+			factor = 0.9
+			technology = science
+		}
+		modifier = {
+			factor = 1.25
+			year < 1150
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1350
+		}
+	}
+	spread_mean_time_to_happen = {
+		months = 3000
+		
+		modifier = {
+			factor = 0.9
+			has_building_class = military_academy
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = smithy
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				has_building_class = waterfront
+			}
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				culture = root
+			}
+		}
+		modifier = {
+			factor = 0.3
+			source_province = {
+				domain = root
+			}
+		}
+		modifier = {
+			factor = 0.6
+			source_province = {
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				independent = true
+			}
+			source_province = {
+				realm = root
+				domain = {
+					independent = false
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				war = true
+			}
+			source_province = {
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 10
+			source_province = {
+				not = {
+					realm = root
+				}
+				domain = {
+					war = true
+				}
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				war = true
+			}
+			source_province = {
+				not = {
+					realm = root
+				}
+				domain = {
+					war = false
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			capital = true
+			source_province = {
+				realm = root
+			}
+		}
+	}
+}
+
+plate_mail = {
+	name = "Plate Mail"
+	subcategory = technology
+	portrait = helmet
+	icon = clothing
+	period = middle_ages
+	cost_commodity = research
+	discovery_mean_time_to_happen = {
+		months = 1250
+		
+		modifier = {
+			factor = 0.95
+			has_building_class = smithy
+		}
+		modifier = {
+			factor = 0.95
+			has_building_class = library
+		}
+		modifier = {
+			factor = 0.8
+			has_building_class = university
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		#modifier = {
+		#	factor = 0.9
+		#	technology = plated_chain_mail
+		#}
+		modifier = {
+			factor = 0.75
+			domain = {
+				tier >= kingdom
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				tier == duchy
+			}
+		}
+		modifier = {
+			factor = 0.8
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 0.97
+			technology = aristotelian_logic
+		}
+		modifier = {
+			factor = 0.95
+			technology = scholasticism
+		}
+		modifier = {
+			factor = 0.98
+			technology = astrology_and_astronomy
+		}
+		modifier = {
+			factor = 0.97
+			technology = natural_philosophy
+		}
+		modifier = {
+			factor = 0.9
+			technology = science
+		}
+		modifier = {
+			factor = 1.25
+			year < 1150
+		}
+		modifier = {
+			factor = 1.25
+			year < 1250
+		}
+	}
+	spread_mean_time_to_happen = {
+		months = 6000
+		
+		modifier = {
+			factor = 0.9
+			has_building_class = military_academy
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				has_building_class = waterfront
+			}
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				culture = root
+			}
+		}
+		modifier = {
+			factor = 0.4
+			source_province = {
+				domain = root
+			}
+		}
+		modifier = {
+			factor = 0.7
 			source_province = {
 				realm = root
 			}

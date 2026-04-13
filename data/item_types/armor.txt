@@ -21,6 +21,7 @@ chain_mail = {
 	item_class = armor
 	icon = clothing
 	price = 75gp
+	required_technology = chain_mail
 	modifier = {
 		armor_class = 5
 	}
@@ -31,6 +32,7 @@ plate_mail = {
 	item_class = armor
 	icon = clothing
 	price = 600gp
+	required_technology = plate_mail
 	modifier = {
 		armor_class = 7
 	}
