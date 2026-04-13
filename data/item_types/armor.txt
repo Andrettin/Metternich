@@ -10,6 +10,7 @@ leather_armor = {
 	item_class = armor
 	icon = clothing
 	price = 5gp
+	required_technology = soft_leather_armor
 	modifier = {
 		armor_class = 2
 	}
