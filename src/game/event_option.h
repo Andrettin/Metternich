@@ -58,6 +58,7 @@ public:
 	}
 
 	void add_effect(std::unique_ptr<effect<scope_type>> &&effect);
+	void add_effects(std::unique_ptr<effect_list<scope_type>> &&effect_list);
 	std::string get_effects_string(const read_only_context &ctx) const;
 
 	[[nodiscard]]

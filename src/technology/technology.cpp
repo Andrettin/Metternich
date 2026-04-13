@@ -157,6 +157,10 @@ void technology::process_gsml_scope(const gsml_data &scope)
 		auto modifier = std::make_unique<metternich::modifier<const domain>>();
 		modifier->process_gsml_data(scope);
 		this->modifier = std::move(modifier);
+	} else if (tag == "discovery_effects") {
+		auto effects = std::make_unique<effect_list<const province>>();
+		effects->process_gsml_data(scope);
+		this->discovery_effects = std::move(effects);
 	} else if (tag == "discovery_mean_time_to_happen") {
 		this->discovery_mean_time_to_happen = std::make_unique<metternich::mean_time_to_happen<province>>();
 		scope.process(this->discovery_mean_time_to_happen.get());
@@ -209,6 +213,9 @@ void technology::initialize()
 
 		auto event_option = std::make_unique<metternich::event_option<const province>>();
 		event_option->add_effect(std::make_unique<technologies_effect<const province>>(this, gsml_operator::addition));
+		if (this->discovery_effects != nullptr) {
+			event_option->add_effects(std::move(this->discovery_effects));
+		}
 		event->add_option(std::move(event_option));
 
 		event->initialize();

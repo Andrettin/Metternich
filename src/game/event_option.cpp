@@ -106,6 +106,16 @@ void event_option<scope_type>::add_effect(std::unique_ptr<effect<scope_type>> &&
 }
 
 template <typename scope_type>
+void event_option<scope_type>::add_effects(std::unique_ptr<effect_list<scope_type>> &&effect_list)
+{
+	if (this->effects == nullptr) {
+		this->effects = std::make_unique<metternich::effect_list<scope_type>>();
+	}
+
+	this->effects->add_effects(std::move(effect_list));
+}
+
+template <typename scope_type>
 std::string event_option<scope_type>::get_effects_string(const read_only_context &ctx) const
 {
 	if (this->effects != nullptr) {
