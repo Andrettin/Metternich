@@ -14,6 +14,122 @@ aristotelian_logic = {
 	icon = philosophy
 	period = antiquity
 	cost_commodity = research
+	discovery_effects = {
+		domain = {
+			regency += 25
+		}
+	}
+	discovery_mean_time_to_happen = {
+		months = 250
+		
+		modifier = {
+			factor = 0.7
+			has_building_class = university
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = library
+		}
+		modifier = {
+			factor = 0.95
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				tier >= kingdom
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				tier == duchy
+			}
+		}
+		modifier = {
+			factor = 5
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1150
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1250
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1350
+		}
+	}
+	spread_mean_time_to_happen = {
+		months = 750
+		
+		modifier = {
+			factor = 0.9
+			has_building_class = library
+		}
+		modifier = {
+			factor = 0.7
+			has_building_class = university
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				has_building_class = waterfront
+			}
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				has_building_class = library
+			}
+		}
+		modifier = {
+			factor = 0.7
+			source_province = {
+				has_building_class = university
+			}
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				culture = root
+			}
+		}
+		modifier = {
+			factor = 0.6
+			source_province = {
+				domain = root
+			}
+		}
+		modifier = {
+			factor = 0.8
+			source_province = {
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 5
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 0.75
+			capital = true
+			source_province = {
+				realm = root
+			}
+		}
+	}
 }
 
 scholasticism = {
@@ -25,6 +141,122 @@ scholasticism = {
 	cost_commodity = research
 	prerequisites = {
 		aristotelian_logic
+	}
+	discovery_effects = {
+		domain = {
+			regency += 25
+		}
+	}
+	discovery_mean_time_to_happen = {
+		months = 600
+		
+		modifier = {
+			factor = 0.75
+			has_building_class = university
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = library
+		}
+		modifier = {
+			factor = 0.95
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				tier >= kingdom
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				tier == duchy
+			}
+		}
+		modifier = {
+			factor = 5
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1250
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1350
+		}
+	}
+	spread_mean_time_to_happen = {
+		months = 1500
+		
+		modifier = {
+			factor = 0.9
+			technology = aristotelian_logic
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = library
+		}
+		modifier = {
+			factor = 0.75
+			has_building_class = university
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				has_building_class = waterfront
+			}
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				has_building_class = library
+			}
+		}
+		modifier = {
+			factor = 0.75
+			source_province = {
+				has_building_class = university
+			}
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				culture = root
+			}
+		}
+		modifier = {
+			factor = 0.6
+			source_province = {
+				domain = root
+			}
+		}
+		modifier = {
+			factor = 0.8
+			source_province = {
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 5
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 0.75
+			capital = true
+			source_province = {
+				realm = root
+			}
+		}
 	}
 }
 
@@ -38,6 +270,116 @@ astrology_and_astronomy = {
 	prerequisites = {
 		scholasticism
 	}
+	discovery_effects = {
+		domain = {
+			regency += 25
+		}
+	}
+	discovery_mean_time_to_happen = {
+		months = 1200
+		
+		modifier = {
+			factor = 0.75
+			has_building_class = university
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = library
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				tier >= kingdom
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				tier == duchy
+			}
+		}
+		modifier = {
+			factor = 5
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 1.25
+			year < 1150
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1350
+		}
+	}
+	spread_mean_time_to_happen = {
+		months = 3000
+		
+		modifier = {
+			factor = 0.9
+			technology = scholasticism
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = library
+		}
+		modifier = {
+			factor = 0.8
+			has_building_class = university
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				has_building_class = waterfront
+			}
+		}
+		modifier = {
+			factor = 0.8
+			source_province = {
+				has_building_class = university
+			}
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				culture = root
+			}
+		}
+		modifier = {
+			factor = 0.6
+			source_province = {
+				domain = root
+			}
+		}
+		modifier = {
+			factor = 0.8
+			source_province = {
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 5
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 0.75
+			capital = true
+			source_province = {
+				realm = root
+			}
+		}
+	}
 }
 
 natural_philosophy = {
@@ -50,6 +392,122 @@ natural_philosophy = {
 	prerequisites = {
 		astrology_and_astronomy
 	}
+	discovery_effects = {
+		domain = {
+			regency += 50
+		}
+	}
+	discovery_mean_time_to_happen = {
+		months = 2500
+		
+		modifier = {
+			factor = 0.8
+			has_building_class = university
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = library
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				tier >= kingdom
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				tier == duchy
+			}
+		}
+		modifier = {
+			factor = 5
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 1.25
+			year < 1150
+		}
+		modifier = {
+			factor = 1.25
+			year < 1250
+		}
+	}
+	spread_mean_time_to_happen = {
+		months = 5000
+		
+		modifier = {
+			factor = 0.9
+			technology = astrology_and_astronomy
+		}
+		modifier = {
+			factor = 0.95
+			has_building_class = library
+		}
+		modifier = {
+			factor = 0.85
+			has_building_class = university
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				has_building_class = waterfront
+			}
+		}
+		modifier = {
+			factor = 0.95
+			source_province = {
+				has_building_class = library
+			}
+		}
+		modifier = {
+			factor = 0.85
+			source_province = {
+				has_building_class = university
+			}
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				culture = root
+			}
+		}
+		modifier = {
+			factor = 0.6
+			source_province = {
+				domain = root
+			}
+		}
+		modifier = {
+			factor = 0.8
+			source_province = {
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 5
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 0.75
+			capital = true
+			source_province = {
+				realm = root
+			}
+		}
+	}
 }
 
 science = {
@@ -61,5 +519,126 @@ science = {
 	cost_commodity = research
 	prerequisites = {
 		natural_philosophy
+	}
+	discovery_effects = {
+		domain = {
+			regency += 75
+		}
+	}
+	discovery_mean_time_to_happen = {
+		months = 5000
+		
+		modifier = {
+			factor = 0.85
+			has_building_class = university
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = library
+		}
+		modifier = {
+			factor = 0.95
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				tier >= kingdom
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				tier == duchy
+			}
+		}
+		modifier = {
+			factor = 5
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 1.25
+			year < 1150
+		}
+		modifier = {
+			factor = 1.25
+			year < 1250
+		}
+		modifier = {
+			factor = 1.25
+			year < 1350
+		}
+	}
+	spread_mean_time_to_happen = {
+		months = 10000
+		
+		modifier = {
+			factor = 0.9
+			technology = natural_philosophy
+		}
+		modifier = {
+			factor = 0.95
+			has_building_class = library
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = university
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				has_building_class = waterfront
+			}
+		}
+		modifier = {
+			factor = 0.95
+			source_province = {
+				has_building_class = library
+			}
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				has_building_class = university
+			}
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				culture = root
+			}
+		}
+		modifier = {
+			factor = 0.7
+			source_province = {
+				technology = science
+				domain = root
+			}
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 0.75
+			capital = true
+			source_province = {
+				realm = root
+			}
+		}
 	}
 }
