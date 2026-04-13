@@ -5,6 +5,169 @@ short_bow = {
 	icon = bow
 	period = dark_ages
 	cost_commodity = research
+	discovery_mean_time_to_happen = {
+		months = 50
+		
+		modifier = {
+			factor = 0.95
+			terrain = forest
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = sawmill
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				tier >= kingdom
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				tier == duchy
+			}
+		}
+		modifier = {
+			factor = 0.8
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 0.95
+			technology = aristotelian_logic
+		}
+		modifier = {
+			factor = 0.97
+			technology = scholasticism
+		}
+		modifier = {
+			factor = 0.98
+			technology = astrology_and_astronomy
+		}
+		modifier = {
+			factor = 0.98
+			technology = natural_philosophy
+		}
+		modifier = {
+			factor = 0.9
+			technology = science
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1150
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1250
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1350
+		}
+	}
+	spread_mean_time_to_happen = {
+		months = 500
+		
+		modifier = {
+			factor = 0.9
+			terrain = forest
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = sawmill
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = military_academy
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				has_building_class = waterfront
+			}
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				culture = root
+			}
+		}
+		modifier = {
+			factor = 0.3
+			source_province = {
+				domain = root
+			}
+		}
+		modifier = {
+			factor = 0.5
+			source_province = {
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				independent = true
+			}
+			source_province = {
+				realm = root
+				domain = {
+					independent = false
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				war = true
+			}
+			source_province = {
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 10
+			source_province = {
+				not = {
+					realm = root
+				}
+				domain = {
+					war = true
+				}
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				war = true
+			}
+			source_province = {
+				not = {
+					realm = root
+				}
+				domain = {
+					war = false
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			capital = true
+			source_province = {
+				realm = root
+			}
+		}
+	}
 }
 
 long_bow = {
@@ -16,6 +179,165 @@ long_bow = {
 	cost_commodity = research
 	prerequisites = {
 		short_bow
+	}
+	discovery_mean_time_to_happen = {
+		months = 100
+		
+		modifier = {
+			factor = 0.95
+			terrain = forest
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = sawmill
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				tier >= kingdom
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				tier == duchy
+			}
+		}
+		modifier = {
+			factor = 0.8
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 0.95
+			technology = aristotelian_logic
+		}
+		modifier = {
+			factor = 0.97
+			technology = scholasticism
+		}
+		modifier = {
+			factor = 0.98
+			technology = astrology_and_astronomy
+		}
+		modifier = {
+			factor = 0.98
+			technology = natural_philosophy
+		}
+		modifier = {
+			factor = 0.9
+			technology = science
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1250
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1350
+		}
+	}
+	spread_mean_time_to_happen = {
+		months = 1000
+		
+		modifier = {
+			factor = 0.9
+			terrain = forest
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = sawmill
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = military_academy
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				has_building_class = waterfront
+			}
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				culture = root
+			}
+		}
+		modifier = {
+			factor = 0.3
+			source_province = {
+				domain = root
+			}
+		}
+		modifier = {
+			factor = 0.5
+			source_province = {
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				independent = true
+			}
+			source_province = {
+				realm = root
+				domain = {
+					independent = false
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				war = true
+			}
+			source_province = {
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 10
+			source_province = {
+				not = {
+					realm = root
+				}
+				domain = {
+					war = true
+				}
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				war = true
+			}
+			source_province = {
+				not = {
+					realm = root
+				}
+				domain = {
+					war = false
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			capital = true
+			source_province = {
+				realm = root
+			}
+		}
 	}
 }
 
@@ -29,6 +351,161 @@ composite_bow = {
 	prerequisites = {
 		long_bow
 	}
+	discovery_mean_time_to_happen = {
+		months = 250
+		
+		modifier = {
+			factor = 0.95
+			terrain = forest
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = sawmill
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				tier >= kingdom
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				tier == duchy
+			}
+		}
+		modifier = {
+			factor = 0.8
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 0.95
+			technology = aristotelian_logic
+		}
+		modifier = {
+			factor = 0.97
+			technology = scholasticism
+		}
+		modifier = {
+			factor = 0.98
+			technology = astrology_and_astronomy
+		}
+		modifier = {
+			factor = 0.98
+			technology = natural_philosophy
+		}
+		modifier = {
+			factor = 0.9
+			technology = science
+		}
+		modifier = {
+			factor = 1.25
+			year < 1150
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1350
+		}
+	}
+	spread_mean_time_to_happen = {
+		months = 2000
+		
+		modifier = {
+			factor = 0.9
+			has_building_class = sawmill
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = military_academy
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				has_building_class = waterfront
+			}
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				culture = root
+			}
+		}
+		modifier = {
+			factor = 0.3
+			source_province = {
+				domain = root
+			}
+		}
+		modifier = {
+			factor = 0.6
+			source_province = {
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				independent = true
+			}
+			source_province = {
+				realm = root
+				domain = {
+					independent = false
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				war = true
+			}
+			source_province = {
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 10
+			source_province = {
+				not = {
+					realm = root
+				}
+				domain = {
+					war = true
+				}
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				war = true
+			}
+			source_province = {
+				not = {
+					realm = root
+				}
+				domain = {
+					war = false
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			capital = true
+			source_province = {
+				realm = root
+			}
+		}
+	}
 }
 
 light_crossbow = {
@@ -41,6 +518,153 @@ light_crossbow = {
 	prerequisites = {
 		short_bow
 	}
+	discovery_mean_time_to_happen = {
+		months = 100
+		
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = smithy
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				tier >= kingdom
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				tier == duchy
+			}
+		}
+		modifier = {
+			factor = 0.8
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 0.95
+			technology = aristotelian_logic
+		}
+		modifier = {
+			factor = 0.97
+			technology = scholasticism
+		}
+		modifier = {
+			factor = 0.98
+			technology = astrology_and_astronomy
+		}
+		modifier = {
+			factor = 0.98
+			technology = natural_philosophy
+		}
+		modifier = {
+			factor = 0.9
+			technology = science
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1250
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1350
+		}
+	}
+	spread_mean_time_to_happen = {
+		months = 1000
+		
+		modifier = {
+			factor = 0.9
+			has_building_class = military_academy
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				has_building_class = waterfront
+			}
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				culture = root
+			}
+		}
+		modifier = {
+			factor = 0.3
+			source_province = {
+				domain = root
+			}
+		}
+		modifier = {
+			factor = 0.6
+			source_province = {
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				independent = true
+			}
+			source_province = {
+				realm = root
+				domain = {
+					independent = false
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				war = true
+			}
+			source_province = {
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 10
+			source_province = {
+				not = {
+					realm = root
+				}
+				domain = {
+					war = true
+				}
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				war = true
+			}
+			source_province = {
+				not = {
+					realm = root
+				}
+				domain = {
+					war = false
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			capital = true
+			source_province = {
+				realm = root
+			}
+		}
+	}
 }
 
 heavy_crossbow = {
@@ -52,5 +676,152 @@ heavy_crossbow = {
 	cost_commodity = research
 	prerequisites = {
 		light_crossbow
+	}
+	discovery_mean_time_to_happen = {
+		months = 500
+		
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = smithy
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				tier >= kingdom
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				tier == duchy
+			}
+		}
+		modifier = {
+			factor = 0.8
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 0.95
+			technology = aristotelian_logic
+		}
+		modifier = {
+			factor = 0.97
+			technology = scholasticism
+		}
+		modifier = {
+			factor = 0.98
+			technology = astrology_and_astronomy
+		}
+		modifier = {
+			factor = 0.98
+			technology = natural_philosophy
+		}
+		modifier = {
+			factor = 0.9
+			technology = science
+		}
+		modifier = {
+			factor = 1.25
+			year < 1150
+		}
+		modifier = {
+			factor = 1.25
+			year < 1250
+		}
+	}
+	spread_mean_time_to_happen = {
+		months = 5000
+		
+		modifier = {
+			factor = 0.9
+			has_building_class = military_academy
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				has_building_class = waterfront
+			}
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				culture = root
+			}
+		}
+		modifier = {
+			factor = 0.35
+			source_province = {
+				domain = root
+			}
+		}
+		modifier = {
+			factor = 0.6
+			source_province = {
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				independent = true
+			}
+			source_province = {
+				realm = root
+				domain = {
+					independent = false
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				war = true
+			}
+			source_province = {
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 10
+			source_province = {
+				not = {
+					realm = root
+				}
+				domain = {
+					war = true
+				}
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				war = true
+			}
+			source_province = {
+				not = {
+					realm = root
+				}
+				domain = {
+					war = false
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			capital = true
+			source_province = {
+				realm = root
+			}
+		}
 	}
 }
