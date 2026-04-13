@@ -16,6 +16,7 @@ class item_class;
 class item_slot;
 class site;
 class sound;
+class technology;
 
 template <typename scope_type>
 class and_condition;
@@ -33,6 +34,7 @@ class item_type final : public named_data_entry, public data_type<item_type>
 	Q_PROPERTY(bool two_handed MEMBER two_handed READ is_two_handed NOTIFY changed)
 	Q_PROPERTY(bool stackable MEMBER stackable READ is_stackable NOTIFY changed)
 	Q_PROPERTY(bool spell_learnable MEMBER spell_learnable READ is_spell_learnable NOTIFY changed)
+	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(const metternich::sound* attack_sound MEMBER attack_sound READ get_attack_sound NOTIFY changed)
 
 public:
@@ -102,6 +104,11 @@ public:
 		return this->spell_learnable;
 	}
 
+	const technology *get_required_technology() const
+	{
+		return this->required_technology;
+	}
+
 	const and_condition<site> *get_creation_site_conditions() const
 	{
 		return this->creation_site_conditions.get();
@@ -128,6 +135,7 @@ private:
 	bool two_handed = false;
 	bool stackable = false;
 	bool spell_learnable = false;
+	technology *required_technology = nullptr;
 	std::unique_ptr<const and_condition<site>> creation_site_conditions;
 	std::unique_ptr<const metternich::modifier<const character>> modifier;
 	const sound *attack_sound = nullptr;

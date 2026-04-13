@@ -9,6 +9,7 @@
 #include "item/item_slot.h"
 #include "script/condition/and_condition.h"
 #include "script/modifier.h"
+#include "technology/technology.h"
 
 namespace metternich {
 
@@ -66,6 +67,10 @@ void item_type::process_gsml_scope(const gsml_data &scope)
 void item_type::initialize()
 {
 	this->damage_dice.set_min_value(0);
+
+	if (this->required_technology != nullptr) {
+		this->required_technology->add_enabled_item_type(this);
+	}
 
 	named_data_entry::initialize();
 }

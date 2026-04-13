@@ -6,6 +6,8 @@
 #include "item/item.h"
 #include "item/item_type.h"
 #include "item/recipe.h"
+#include "map/site.h"
+#include "map/site_game_data.h"
 #include "script/condition/and_condition.h"
 #include "spell/spell.h"
 #include "util/assert_util.h"
@@ -108,6 +110,10 @@ qunique_ptr<item> item_creation_type::create_item(const site *creation_site) con
 	if (!this->item_types.empty()) {
 		std::vector<const item_type *> item_types = this->item_types;
 		std::erase_if(item_types, [this, creation_site](const item_type *item_type) {
+			if (item_type->get_required_technology() != nullptr && !creation_site->get_game_data()->has_technology(item_type->get_required_technology())) {
+				return true;
+			}
+
 			if (item_type->get_creation_site_conditions() != nullptr && !item_type->get_creation_site_conditions()->check(creation_site, read_only_context(creation_site))) {
 				return true;
 			}

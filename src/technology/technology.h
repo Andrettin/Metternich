@@ -31,6 +31,7 @@ class domain;
 class government_type;
 class icon;
 class improvement;
+class item_type;
 class law;
 class military_unit_type;
 class pathway;
@@ -382,6 +383,16 @@ public:
 		this->disabled_deities.push_back(deity);
 	}
 
+	const std::vector<const item_type *> &get_enabled_item_types() const
+	{
+		return this->enabled_item_types;
+	}
+
+	void add_enabled_item_type(const item_type *item_type)
+	{
+		this->enabled_item_types.push_back(item_type);
+	}
+
 	const metternich::modifier<const domain> *get_modifier() const
 	{
 		return this->modifier.get();
@@ -476,6 +487,7 @@ private:
 	std::vector<const law *> enabled_laws;
 	std::vector<const deity *> enabled_deities;
 	std::vector<const deity *> disabled_deities;
+	std::vector<const item_type *> enabled_item_types;
 	std::unique_ptr<const metternich::modifier<const domain>> modifier;
 	const game_rule *required_game_rule = nullptr;
 };

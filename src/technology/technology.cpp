@@ -21,6 +21,7 @@
 #include "infrastructure/improvement.h"
 #include "infrastructure/pathway.h"
 #include "infrastructure/wonder.h"
+#include "item/item_type.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "map/terrain_type.h"
@@ -235,6 +236,7 @@ void technology::check() const
 		&& this->get_enabled_deities().empty()
 		&& this->get_enabled_government_types().empty()
 		&& this->get_enabled_improvements().empty()
+		&& this->get_enabled_item_types().empty()
 		&& this->get_enabled_laws().empty()
 		&& this->get_enabled_military_units().empty()
 		&& this->get_enabled_pathway_terrains().empty()
@@ -867,6 +869,17 @@ QString technology::get_effects_string(const metternich::domain *domain) const
 			}
 
 			str += std::format("Obsoletes {} deity", deity->get_name());
+		}
+	}
+
+	const std::vector<const item_type *> &enabled_item_types = this->get_enabled_item_types();
+	if (!enabled_item_types.empty()) {
+		for (const item_type *item_type : enabled_item_types) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += std::format("Enables {} item type", item_type->get_name());
 		}
 	}
 
