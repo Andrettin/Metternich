@@ -886,6 +886,121 @@ bastard_sword_spread = {
 	}
 }
 
+pike_spread = {
+	name = "Pike Spread to [root.name]"
+	portrait = bronze_short_sword
+	description = "Your Excellency, knowledge of pikes has spread to [root.name]."
+	from_neighbor = true
+	conditions = {
+		can_gain_technology = pike
+		source_province = {
+			technology = pike
+		}
+	}
+	mean_time_to_happen =  {
+		months = 1500
+		
+		modifier = {
+			factor = 0.9
+			has_building_class = military_academy
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = sawmill
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = smithy
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				has_building_class = waterfront
+			}
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				culture = root
+			}
+		}
+		modifier = {
+			factor = 0.3
+			source_province = {
+				domain = root
+			}
+		}
+		modifier = {
+			factor = 0.5
+			source_province = {
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				independent = true
+			}
+			source_province = {
+				realm = root
+				domain = {
+					independent = false
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				war = true
+			}
+			source_province = {
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 10
+			source_province = {
+				not = {
+					realm = root
+				}
+				domain = {
+					war = true
+				}
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				war = true
+			}
+			source_province = {
+				not = {
+					realm = root
+				}
+				domain = {
+					war = false
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			capital = true
+			source_province = {
+				realm = root
+			}
+		}
+	}
+	option = {
+		effects = {
+			technologies += pike
+		}
+	}
+}
+
 university_spread = {
 	name = "University Spread to [root.name]"
 	portrait = university

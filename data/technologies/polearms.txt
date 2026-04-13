@@ -1,0 +1,8 @@
+pike = {
+	name = "Pike"
+	subcategory = technology
+	portrait = bronze_short_sword
+	icon = saber
+	period = dark_ages
+	cost_commodity = research
+}
