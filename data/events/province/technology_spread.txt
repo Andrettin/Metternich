@@ -14,7 +14,7 @@ short_bow_spread = {
 		
 		modifier = {
 			factor = 0.9
-			has_terrain = forest
+			terrain = forest
 		}
 		modifier = {
 			factor = 0.9
@@ -129,7 +129,7 @@ long_bow_spread = {
 		
 		modifier = {
 			factor = 0.9
-			has_terrain = forest
+			terrain = forest
 		}
 		modifier = {
 			factor = 0.9

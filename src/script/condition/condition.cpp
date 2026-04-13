@@ -261,8 +261,6 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			return std::make_unique<river_condition>(value, condition_operator);
 		} else if (key == "site") {
 			return std::make_unique<site_condition>(value, condition_operator);
-		} else if (key == "terrain") {
-			return std::make_unique<terrain_condition>(value, condition_operator);
 		} else if (site_attribute::try_get(key) != nullptr) {
 			return std::make_unique<site_attribute_condition>(site_attribute::get(key), value, condition_operator);
 		}
@@ -335,6 +333,8 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			return std::make_unique<near_water_condition<scope_type>>(value, condition_operator);
 		} else if (key == "provincial_capital") {
 			return std::make_unique<provincial_capital_condition<scope_type>>(value, condition_operator);
+		} else if (key == "terrain") {
+			return std::make_unique<terrain_condition<scope_type>>(value, condition_operator);
 		}
 	}
 

@@ -11,7 +11,7 @@ short_bow_discovered = {
 		
 		modifier = {
 			factor = 0.95
-			has_terrain = forest
+			terrain = forest
 		}
 		modifier = {
 			factor = 0.9
@@ -92,7 +92,7 @@ long_bow_discovered = {
 		
 		modifier = {
 			factor = 0.95
-			has_terrain = forest
+			terrain = forest
 		}
 		modifier = {
 			factor = 0.9
@@ -169,7 +169,7 @@ composite_bow_discovered = {
 		
 		modifier = {
 			factor = 0.95
-			has_terrain = forest
+			terrain = forest
 		}
 		modifier = {
 			factor = 0.9

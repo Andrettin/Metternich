@@ -209,6 +209,7 @@ public:
 
 	const resource_map<int> &get_resource_counts() const;
 	const terrain_type_map<int> &get_tile_terrain_counts() const;
+	const terrain_type *get_terrain() const;
 
 	std::vector<const site *> get_visible_sites() const;
 	QVariantList get_visible_sites_qvariant_list() const;
