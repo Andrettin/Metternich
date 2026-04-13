@@ -4,10 +4,8 @@ bastard_sword = {
 	icon = saber
 	price = 25gp
 	damage_dice = 2d4
+	required_technology = bastard_sword
 	attack_sound = sword
-	creation_site_conditions = {
-		technology = bastard_sword
-	}
 }
 
 long_sword = {
@@ -16,10 +14,8 @@ long_sword = {
 	icon = saber
 	price = 15gp
 	damage_dice = 1d8
+	required_technology = long_sword
 	attack_sound = sword
-	creation_site_conditions = {
-		technology = long_sword
-	}
 }
 
 short_sword = {
@@ -28,8 +24,6 @@ short_sword = {
 	icon = saber
 	price = 10gp
 	damage_dice = 1d6
+	required_technology = short_sword
 	attack_sound = sword
-	creation_site_conditions = {
-		technology = short_sword
-	}
 }
