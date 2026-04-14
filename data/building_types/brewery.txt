@@ -1,0 +1,18 @@
+brewery = {
+	name = "Brewery"
+	building_class = brewery
+	portrait = trading_post
+	icon = wine
+	size = 1
+	population_type = laborers
+	holding_types = {
+		guild
+	}
+	commodity_costs = {
+		wealth = 6gb
+	}
+	domain_modifier = {
+		loyalty = 1
+		stability = 1
+	}
+}

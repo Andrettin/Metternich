@@ -1,0 +1,21 @@
+mill = {
+	name = "Mill"
+	building_class = mill
+	portrait = factory
+	icon = cog
+	size = 1
+	population_type = laborers
+	holding_types = {
+		guild
+	}
+	commodity_costs = {
+		wealth = 6gb
+	}
+	modifier = {
+		productivity = 1
+	}
+	domain_modifier = {
+		economy = 1
+		stability = 1
+	}
+}

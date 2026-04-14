@@ -1,0 +1,27 @@
+mine = {
+	name = "Mine"
+	building_class = mine
+	portrait = factory
+	icon = iron_ore
+	holding_types = {
+		guild
+	}
+	conditions = {
+		or = {
+			#terrain = cavern
+			terrain = desert
+			terrain = hills
+			terrain = mountains
+			terrain = high_mountains
+		}
+	}
+	commodity_costs = {
+		wealth = 6gb
+	}
+	modifier = {
+		wealth_bonus = 1gb
+	}
+	domain_modifier = {
+		economy = 1
+	}
+}
