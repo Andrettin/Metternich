@@ -3,7 +3,7 @@ short_bow = {
 	subcategory = technology
 	portrait = engineering
 	icon = bow
-	period = dark_ages
+	period = antiquity
 	cost_commodity = research
 	discovery_mean_time_to_happen = {
 		months = 50
@@ -175,7 +175,7 @@ long_bow = {
 	subcategory = technology
 	portrait = engineering
 	icon = bow
-	period = middle_ages
+	period = dark_ages
 	cost_commodity = research
 	prerequisites = {
 		short_bow
@@ -346,7 +346,7 @@ composite_bow = {
 	subcategory = technology
 	portrait = engineering
 	icon = bow
-	period = renaissance
+	period = middle_ages
 	cost_commodity = research
 	prerequisites = {
 		long_bow
@@ -513,7 +513,7 @@ light_crossbow = {
 	subcategory = technology
 	portrait = engineering
 	icon = bow
-	period = middle_ages
+	period = dark_ages
 	cost_commodity = research
 	prerequisites = {
 		short_bow
@@ -672,7 +672,7 @@ heavy_crossbow = {
 	subcategory = technology
 	portrait = engineering
 	icon = bow
-	period = renaissance
+	period = middle_ages
 	cost_commodity = research
 	prerequisites = {
 		light_crossbow

@@ -31,6 +31,7 @@ mace = {
 	icon = saber
 	price = 8gp
 	damage_dice = 1d6+1
+	required_technology = mace
 	attack_sound = mace
 }
 
@@ -40,6 +41,7 @@ morning_star = {
 	icon = saber
 	price = 10gp
 	damage_dice = 2d4
+	required_technology = morning_star
 	attack_sound = mace
 }
 

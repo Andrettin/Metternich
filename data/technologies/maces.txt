@@ -1,187 +1,12 @@
-short_sword = {
-	name = "Short Sword"
+mace = {
+	name = "Mace"
 	subcategory = technology
 	portrait = bronze_short_sword
 	icon = saber
 	period = antiquity
 	cost_commodity = research
 	discovery_mean_time_to_happen = {
-		months = 75
-		
-		modifier = {
-			factor = 0.9
-			has_building_class = waterfront
-		}
-		modifier = {
-			factor = 0.9
-			has_building_class = smithy
-		}
-		modifier = {
-			factor = 0.85
-			has_building_class = library
-		}
-		modifier = {
-			factor = 0.75
-			has_building_class = university
-		}
-		modifier = {
-			factor = 0.75
-			domain = {
-				tier >= kingdom
-			}
-		}
-		modifier = {
-			factor = 0.85
-			domain = {
-				tier == duchy
-			}
-		}
-		modifier = {
-			factor = 0.8
-			domain = {
-				war = true
-			}
-		}
-		modifier = {
-			factor = 0.97
-			technology = aristotelian_logic
-		}
-		modifier = {
-			factor = 0.95
-			technology = scholasticism
-		}
-		modifier = {
-			factor = 0.98
-			technology = astrology_and_astronomy
-		}
-		modifier = {
-			factor = 0.97
-			technology = natural_philosophy
-		}
-		modifier = {
-			factor = 0.9
-			technology = science
-		}
-		modifier = {
-			factor = 0.8
-			year >= 1150
-		}
-		modifier = {
-			factor = 0.8
-			year >= 1250
-		}
-		modifier = {
-			factor = 0.8
-			year >= 1350
-		}
-	}
-	spread_mean_time_to_happen = {
-		months = 750
-		
-		modifier = {
-			factor = 0.9
-			has_building_class = military_academy
-		}
-		modifier = {
-			factor = 0.9
-			has_building_class = smithy
-		}
-		modifier = {
-			factor = 0.9
-			has_building_class = waterfront
-		}
-		modifier = {
-			factor = 0.9
-			source_province = {
-				has_building_class = waterfront
-			}
-		}
-		modifier = {
-			factor = 0.85
-			source_province = {
-				culture = root
-			}
-		}
-		modifier = {
-			factor = 0.3
-			source_province = {
-				domain = root
-			}
-		}
-		modifier = {
-			factor = 0.5
-			source_province = {
-				realm = root
-			}
-		}
-		modifier = {
-			factor = 0.75
-			domain = {
-				independent = true
-			}
-			source_province = {
-				realm = root
-				domain = {
-					independent = false
-				}
-			}
-		}
-		modifier = {
-			factor = 0.75
-			domain = {
-				war = true
-			}
-			source_province = {
-				realm = root
-			}
-		}
-		modifier = {
-			factor = 10
-			source_province = {
-				not = {
-					realm = root
-				}
-				domain = {
-					war = true
-				}
-			}
-		}
-		modifier = {
-			factor = 0.85
-			domain = {
-				war = true
-			}
-			source_province = {
-				not = {
-					realm = root
-				}
-				domain = {
-					war = false
-				}
-			}
-		}
-		modifier = {
-			factor = 0.75
-			capital = true
-			source_province = {
-				realm = root
-			}
-		}
-	}
-}
-
-long_sword = {
-	name = "Long Sword"
-	subcategory = technology
-	portrait = bronze_short_sword
-	icon = saber
-	period = dark_ages
-	cost_commodity = research
-	prerequisites = {
-		short_sword
-	}
-	discovery_mean_time_to_happen = {
-		months = 500
+		months = 250
 		
 		modifier = {
 			factor = 0.9
@@ -196,7 +21,7 @@ long_sword = {
 			has_building_class = library
 		}
 		modifier = {
-			factor = 0.8
+			factor = 0.75
 			has_building_class = university
 		}
 		modifier = {
@@ -247,14 +72,14 @@ long_sword = {
 		}
 	}
 	spread_mean_time_to_happen = {
-		months = 3000
+		months = 2000
 		
 		modifier = {
 			factor = 0.9
 			has_building_class = military_academy
 		}
 		modifier = {
-			factor = 0.95
+			factor = 0.9
 			has_building_class = smithy
 		}
 		modifier = {
@@ -341,29 +166,29 @@ long_sword = {
 	}
 }
 
-bastard_sword = {
-	name = "Bastard Sword"
+morning_star = {
+	name = "Morning Star"
 	subcategory = technology
 	portrait = bronze_short_sword
 	icon = saber
-	period = middle_ages
+	period = dark_ages
 	cost_commodity = research
 	prerequisites = {
-		long_sword
+		mace
 	}
 	discovery_mean_time_to_happen = {
-		months = 1000
+		months = 500
 		
 		modifier = {
 			factor = 0.9
 			has_building_class = waterfront
 		}
 		modifier = {
-			factor = 0.95
+			factor = 0.9
 			has_building_class = smithy
 		}
 		modifier = {
-			factor = 0.95
+			factor = 0.9
 			has_building_class = library
 		}
 		modifier = {
@@ -418,14 +243,14 @@ bastard_sword = {
 		}
 	}
 	spread_mean_time_to_happen = {
-		months = 6000
+		months = 5000
 		
 		modifier = {
 			factor = 0.9
 			has_building_class = military_academy
 		}
 		modifier = {
-			factor = 0.95
+			factor = 0.9
 			has_building_class = smithy
 		}
 		modifier = {
@@ -445,13 +270,13 @@ bastard_sword = {
 			}
 		}
 		modifier = {
-			factor = 0.4
+			factor = 0.35
 			source_province = {
 				domain = root
 			}
 		}
 		modifier = {
-			factor = 0.7
+			factor = 0.6
 			source_province = {
 				realm = root
 			}
