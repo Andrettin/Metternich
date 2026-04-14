@@ -579,6 +579,10 @@ QCoro::Task<void> game::apply_history(const QDate &start_date)
 				}
 				co_await province_game_data->set_owner(owner);
 
+				for (const technology *technology : province_history->get_technologies()) {
+					co_await province_game_data->add_technology_with_prerequisites(technology);
+				}
+
 				const culture *culture = province_game_data->get_culture();
 				if (culture != nullptr) {
 					const culture_history *culture_history = culture->get_history();

@@ -1119,9 +1119,9 @@ QCoro::Task<void> province_game_data::add_technology(const technology *technolog
 		co_await this->get_owner()->get_technology()->on_technology_added(technology);
 	}
 
-	this->province->get_turn_data()->set_province_map_mode_dirty(province_map_mode::technology);
-
 	if (game::get()->is_running()) {
+		this->province->get_turn_data()->set_province_map_mode_dirty(province_map_mode::technology);
+
 		emit technologies_changed();
 	}
 }
@@ -1154,9 +1154,9 @@ QCoro::Task<void> province_game_data::remove_technology(const technology *techno
 		co_await this->remove_technology(requiring_technology);
 	}
 
-	this->province->get_turn_data()->set_province_map_mode_dirty(province_map_mode::technology);
-
 	if (game::get()->is_running()) {
+		this->province->get_turn_data()->set_province_map_mode_dirty(province_map_mode::technology);
+
 		emit technologies_changed();
 	}
 }
