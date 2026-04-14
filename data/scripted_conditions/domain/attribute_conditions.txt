@@ -1,0 +1,48 @@
+has_minimal_stability = { #0-13
+	attribute_check_chance = {
+		attribute = stability
+		chance >= 0
+	}
+}
+
+has_low_stability = { #14-27
+	attribute_check_chance = {
+		attribute = stability
+		chance >= 14
+	}
+}
+
+has_medium_low_stability = { #28-41
+	attribute_check_chance = {
+		attribute = stability
+		chance >= 28
+	}
+}
+
+has_medium_stability = { #42-58
+	attribute_check_chance = {
+		attribute = stability
+		chance >= 42
+	}
+}
+
+has_medium_high_stability = { #59-72
+	attribute_check_chance = {
+		attribute = stability
+		chance >= 59
+	}
+}
+
+has_high_stability = { #73-86
+	attribute_check_chance = {
+		attribute = stability
+		chance >= 73
+	}
+}
+
+has_maximal_stability = { #87-100
+	attribute_check_chance = {
+		attribute = stability
+		chance >= 87
+	}
+}

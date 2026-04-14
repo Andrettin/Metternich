@@ -46,7 +46,7 @@ public:
 
 	virtual std::string get_value_name() const override
 	{
-		return std::format("{} ({} Bonus)", this->attribute->get_name(), get_character_modifier_type_name(this->modifier_type.value()));;
+		return std::format("{} ({} Bonus)", this->attribute->get_name(), get_character_modifier_type_name(this->modifier_type.value()));
 	}
 
 private:

@@ -24,6 +24,7 @@
 #include "script/condition/any_subject_country_condition.h"
 #include "script/condition/artillery_condition.h"
 #include "script/condition/attacking_commander_condition.h"
+#include "script/condition/attribute_check_chance_condition.h"
 #include "script/condition/available_food_condition.h"
 #include "script/condition/can_gain_building_class_condition.h"
 #include "script/condition/can_gain_technology_condition.h"
@@ -427,6 +428,12 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 	} else if constexpr (std::is_same_v<scope_type, site>) {
 		if (tag == "any_adjacent_site") {
 			condition = std::make_unique<any_adjacent_site_condition>(condition_operator);
+		}
+	}
+
+	if constexpr (std::is_same_v<scope_type, character> || std::is_same_v<scope_type, domain>) {
+		if (tag == "attribute_check_chance") {
+			condition = std::make_unique<attribute_check_chance_condition<scope_type>>(condition_operator);
 		}
 	}
 
