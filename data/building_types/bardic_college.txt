@@ -5,6 +5,7 @@ bardic_college = {
 	icon = music
 	size = 2
 	population_type = laborers
+	required_technology = ballads
 	min_holding_level = 4
 	holding_types = {
 		guild
