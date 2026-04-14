@@ -80,8 +80,6 @@ gsml_data building_item_slot::to_gsml_data() const
 
 void building_item_slot::create_item()
 {
-	assert_throw(this->get_item() == nullptr);
-
 	static constexpr dice creation_chance_dice(1, 100);
 
 	if (!this->get_item_creation_type()->is_mundane()) { //mundane item slots are always refilled

@@ -333,10 +333,6 @@ void site_game_data::check_item_slots()
 	std::vector<building_item_slot *> item_slots = this->get_item_slots();
 
 	for (building_item_slot *item_slot : item_slots) {
-		if (item_slot->get_item() != nullptr) {
-			continue;
-		}
-
 		if (item_slot->get_item_creation_type()->is_mundane()) {
 			//mundane item slots are always refilled
 			item_slot->create_item();
@@ -344,14 +340,29 @@ void site_game_data::check_item_slots()
 	}
 
 	std::erase_if(item_slots, [](const building_item_slot *item_slot) {
-		return item_slot->get_item() != nullptr;
+		return item_slot->get_item_creation_type()->is_mundane();
 	});
 
 	if (item_slots.empty()) {
 		return;
 	}
 
-	building_item_slot *item_slot = vector::get_random(item_slots);
+	std::vector<building_item_slot *> empty_item_slots = item_slots;
+	std::erase_if(empty_item_slots, [](const building_item_slot *item_slot) {
+		return item_slot->get_item() != nullptr;
+	});
+
+	building_item_slot *item_slot = nullptr;
+
+	if (!empty_item_slots.empty()) {
+		item_slot = vector::get_random(empty_item_slots);
+	} else {
+		//if no empty item slots are available, refill an item slot which already has an item
+		item_slot = vector::get_random(item_slots);
+	}
+
+	assert_throw(item_slot != nullptr);
+	
 	item_slot->create_item();
 }
 
