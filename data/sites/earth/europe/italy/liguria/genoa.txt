@@ -24,6 +24,11 @@ genoa = {
 			buildings += market
 		}
 		
+		1187 = {
+			buildings += sawmill
+			buildings += smithy
+		}
+		
 		1360 = {
 			#existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}

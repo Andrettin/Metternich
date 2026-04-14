@@ -16,6 +16,10 @@ venice = {
 			buildings += market
 		}
 		
+		1187 = {
+			buildings += smithy
+		}
+		
 		1360 = {
 			#important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}

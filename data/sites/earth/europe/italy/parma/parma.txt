@@ -5,4 +5,10 @@ parma = {
 	type = holding
 	holding_type = law
 	province = parma
+	
+	history = {
+		1187 = {
+			#buildings += smithy
+		}
+	}
 }

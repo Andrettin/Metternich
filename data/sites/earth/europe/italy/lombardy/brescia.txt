@@ -20,6 +20,10 @@ brescia = {
 			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
 		}
 		
+		1187 = {
+			buildings += smithy
+		}
+		
 		1815 = {
 			#important settlement in the 1815-1866 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
 		}

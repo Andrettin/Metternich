@@ -33,6 +33,10 @@ rome = {
 			buildings += market
 		}
 		
+		1187 = {
+			buildings += smithy
+		}
+		
 		1303 = {
 			buildings += university #University founded in Rome in 1303; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
 		}
