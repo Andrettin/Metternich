@@ -26,8 +26,20 @@ vienna = {
 			buildings += market
 		}
 		
+		1066 = {
+			#buildings += temple
+		}
+		
 		1160 = {
 			#buildings += cathedral #Stephansdom
+		}
+		
+		1187 = {
+			buildings += sawmill
+			buildings += mine
+			buildings += mill
+			buildings += brewery
+			#buildings += monastery
 		}
 		
 		1360 = {

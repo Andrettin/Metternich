@@ -33,6 +33,21 @@ lower_austria = {
 			culture = austrian
 		}
 		
+		1187 = {
+			technologies += short_bow
+			technologies += long_bow
+			technologies += light_crossbow
+			technologies += soft_leather_armor
+			technologies += chain_mail
+			technologies += mace
+			technologies += short_sword
+			technologies += long_sword
+			technologies += pike
+			technologies += aristotelian_logic
+			technologies += scholasticism
+			technologies += asceticism
+		}
+		
 		1477 = {
 			owner = austria #part of the Archduchy of Austria c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
 		}
