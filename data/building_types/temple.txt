@@ -15,7 +15,7 @@ shrine = {
 	}
 	domain_modifier = {
 		loyalty = 1
-		#unrest = -1
+		unrest = -1
 	}
 	item_creation_types = {
 		minor_potion_scroll_or_wondrous_item
@@ -41,7 +41,7 @@ temple = {
 	domain_modifier = {
 		loyalty = 2
 		stability = 2
-		#unrest = -2
+		unrest = -2
 	}
 	item_creation_types = {
 		minor_potion_scroll_or_wondrous_item
@@ -65,7 +65,7 @@ large_temple = {
 	domain_modifier = {
 		loyalty = 2
 		stability = 2
-		#unrest = -2
+		unrest = -2
 	}
 	item_creation_types = {
 		minor_potion_scroll_or_wondrous_item
@@ -99,7 +99,7 @@ cathedral = {
 	domain_modifier = {
 		loyalty = 4
 		stability = 4
-		#unrest = -4
+		unrest = -4
 		#fame = 1
 	}
 	item_creation_types = {
@@ -133,7 +133,7 @@ large_cathedral = {
 	domain_modifier = {
 		loyalty = 4
 		stability = 4
-		#unrest = -4
+		unrest = -4
 		#fame = 1
 	}
 	item_creation_types = {
@@ -167,7 +167,7 @@ grand_cathedral = {
 	domain_modifier = {
 		loyalty = 4
 		stability = 4
-		#unrest = -4
+		unrest = -4
 		#fame = 1
 	}
 	item_creation_types = {

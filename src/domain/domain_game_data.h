@@ -135,7 +135,7 @@ class domain_game_data final : public QObject
 	Q_PROPERTY(QRect realm_diplomatic_map_image_rect READ get_realm_diplomatic_map_image_rect NOTIFY realm_diplomatic_map_image_changed)
 	Q_PROPERTY(QVariantList attribute_values READ get_attribute_values_qvariant_list NOTIFY attribute_values_changed)
 	Q_PROPERTY(QVariantList site_attribute_values READ get_site_attribute_values_qvariant_list NOTIFY site_attribute_values_changed)
-	Q_PROPERTY(int unrest READ get_unrest NOTIFY unrest_changed)
+	Q_PROPERTY(int unrest READ get_effective_unrest NOTIFY unrest_changed)
 	Q_PROPERTY(int score READ get_score NOTIFY score_changed)
 	Q_PROPERTY(int score_rank READ get_score_rank NOTIFY score_rank_changed)
 	Q_PROPERTY(int domain_power READ get_domain_power NOTIFY domain_power_changed)
@@ -702,6 +702,11 @@ public:
 	void change_unrest(const int change)
 	{
 		this->set_unrest(this->get_unrest() + change);
+	}
+
+	int get_effective_unrest() const
+	{
+		return std::max(this->get_unrest(), 0);
 	}
 
 	int get_score() const

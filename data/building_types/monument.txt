@@ -14,7 +14,7 @@ monument = {
 	}
 	domain_modifier = {
 		loyalty = 1
-		#unrest = -1
+		unrest = -1
 	}
 	free_on_start_conditions = {
 		has_building_class = temple

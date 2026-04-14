@@ -15,7 +15,7 @@ city_wall = {
 		wealth = 2gb
 	}
 	domain_modifier = {
-		#unrest = -2
+		unrest = -2
 	}
 	free_on_start_conditions = {
 		has_building_class = garrison
@@ -42,7 +42,7 @@ watchtower = {
 	}
 	domain_modifier = {
 		stability = 1
-		#unrest = -2
+		unrest = -2
 	}
 }
 
@@ -69,7 +69,7 @@ castle = {
 		economy = 2
 		loyalty = 2
 		stability = 2
-		#unrest = -4
+		unrest = -4
 		#fame = 1
 	}
 }

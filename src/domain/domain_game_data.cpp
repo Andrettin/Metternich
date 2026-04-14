@@ -580,7 +580,7 @@ void domain_game_data::collect_wealth()
 		}
 
 		result += attribute_value;
-		result -= this->get_unrest();
+		result -= this->get_effective_unrest();
 		result /= 3;
 
 		if (result <= 0) {
@@ -2768,7 +2768,7 @@ bool domain_game_data::do_attribute_check(const domain_attribute *attribute, con
 	}
 
 	const int attribute_value = this->get_attribute_value(attribute);
-	const int modified_attribute_value = attribute_value + roll_modifier + this->get_attribute_check_control_modifier() - this->get_unrest();
+	const int modified_attribute_value = attribute_value + roll_modifier + this->get_attribute_check_control_modifier() - this->get_effective_unrest();
 
 	return roll_result <= modified_attribute_value;
 }
@@ -2780,7 +2780,7 @@ int domain_game_data::get_attribute_check_chance(const domain_attribute *attribu
 	static constexpr dice check_dice(1, 20);
 
 	int chance = this->get_attribute_value(attribute);
-	chance += roll_modifier + this->get_attribute_check_control_modifier() - this->get_unrest();
+	chance += roll_modifier + this->get_attribute_check_control_modifier() - this->get_effective_unrest();
 
 	if (check_dice.get_sides() != 100) {
 		chance *= 100;
@@ -4777,7 +4777,7 @@ int domain_game_data::get_max_income() const
 			continue;
 		}
 
-		const int max_result = (20 + attribute_value - this->get_unrest()) / 3;
+		const int max_result = (20 + attribute_value - this->get_effective_unrest()) / 3;
 		max_income += max_result * defines::get()->get_domain_income_unit_value();
 	}
 

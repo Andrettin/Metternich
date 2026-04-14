@@ -31,7 +31,7 @@ barracks = {
 		law = 1
 	}
 	domain_modifier = {
-		#unrest = -1
+		unrest = -1
 	}
 }
 
@@ -55,6 +55,6 @@ garrison = {
 	domain_modifier = {
 		loyalty = 2
 		stability = 2
-		#unrest = -2
+		unrest = -2
 	}
 }

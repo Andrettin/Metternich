@@ -16,6 +16,6 @@ orphanage = {
 	}
 	domain_modifier = {
 		stability = 1
-		#unrest = -1
+		unrest = -1
 	}
 }
