@@ -1,6 +1,6 @@
 #pragma once
 
-#include "util/centesimal_int.h"
+#include "util/decimillesimal_int.h"
 
 namespace archimedes {
 	class gsml_data;
@@ -28,11 +28,11 @@ public:
 	void process_gsml_scope(const gsml_data &scope);
 	void check() const;
 
-	centesimal_int calculate(const scope_type *scope, const int current_year) const;
+	decimillesimal_int calculate(const scope_type *scope, const int current_year) const;
 
 private:
 	std::unique_ptr<factor<scope_type>> factor;
-	centesimal_int months;
+	decimillesimal_int months;
 };
 
 extern template class mean_time_to_happen<character>;

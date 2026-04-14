@@ -439,19 +439,19 @@ int technology::get_total_cost_weights() const
 	return cost_weights;
 }
 
-centesimal_int technology::get_cost_for_country(const domain *domain) const
+decimillesimal_int technology::get_cost_for_country(const domain *domain) const
 {
-	centesimal_int cost(this->cost);
+	decimillesimal_int cost(this->cost);
 
 	if (cost > 0) {
-		cost *= centesimal_int(100) + domain->get_technology()->get_technology_cost_modifier() + domain->get_technology()->get_technology_category_cost_modifier(this->get_category()) + domain->get_technology()->get_technology_subcategory_cost_modifier(this->get_subcategory());
+		cost *= decimillesimal_int(centesimal_int(100) + domain->get_technology()->get_technology_cost_modifier() + domain->get_technology()->get_technology_category_cost_modifier(this->get_category()) + domain->get_technology()->get_technology_subcategory_cost_modifier(this->get_subcategory()));
 		cost /= 100;
 
 		if (this->get_cost_factor() != nullptr) {
 			cost = this->get_cost_factor()->calculate(domain, cost);
 		}
 
-		cost = centesimal_int::max(centesimal_int(1), cost);
+		cost = decimillesimal_int::max(decimillesimal_int(1), cost);
 	}
 
 	return cost;
@@ -465,7 +465,7 @@ int technology::get_wealth_cost_for_country(const domain *domain) const
 		return 0;
 	}
 
-	centesimal_int cost = this->get_cost_for_country(domain) * 100;
+	decimillesimal_int cost = this->get_cost_for_country(domain) * 100;
 	cost *= wealth_cost_weight;
 	cost /= this->get_total_cost_weights();
 	return std::max(1, cost.to_int());
@@ -473,7 +473,7 @@ int technology::get_wealth_cost_for_country(const domain *domain) const
 
 commodity_map<int> technology::get_commodity_costs_for_country(const domain *domain) const
 {
-	const centesimal_int cost = this->get_cost_for_country(domain);
+	const decimillesimal_int cost = this->get_cost_for_country(domain);
 	const int total_cost_weights = this->get_total_cost_weights();
 
 	commodity_map<int> costs;
@@ -487,7 +487,7 @@ commodity_map<int> technology::get_commodity_costs_for_country(const domain *dom
 			continue;
 		}
 
-		centesimal_int commodity_cost = cost;
+		decimillesimal_int commodity_cost = cost;
 		commodity_cost *= cost_weight;
 		commodity_cost /= total_cost_weights;
 

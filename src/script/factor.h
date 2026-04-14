@@ -1,6 +1,6 @@
 #pragma once
 
-#include "util/centesimal_int.h"
+#include "util/decimillesimal_int.h"
 
 namespace archimedes {
 	class gsml_data;
@@ -32,16 +32,16 @@ public:
 	void process_gsml_data(const gsml_data &data);
 	void check() const;
 
-	void set_base_value(centesimal_int &&value)
+	void set_base_value(decimillesimal_int &&value)
 	{
 		this->base_value = std::move(value);
 	}
 
-	centesimal_int calculate(const scope_type *scope, const centesimal_int &base_value) const;
-	centesimal_int calculate(const scope_type *scope) const;
+	decimillesimal_int calculate(const scope_type *scope, const decimillesimal_int &base_value) const;
+	decimillesimal_int calculate(const scope_type *scope) const;
 
 private:
-	centesimal_int base_value; //the base value for the factor
+	decimillesimal_int base_value; //the base value for the factor
 	std::vector<std::unique_ptr<factor_modifier<scope_type>>> modifiers; //modifiers for the factor
 };
 

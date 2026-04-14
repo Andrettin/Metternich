@@ -43,11 +43,11 @@ public:
 		} else if (key == "duration") {
 			this->duration = std::stoi(value);
 		} else if (key == "days") {
-			this->months_duration = centesimal_int(value) / 30;
+			this->months_duration = decimillesimal_int(value) / 30;
 		} else if (key == "months") {
-			this->months_duration = centesimal_int(value);
+			this->months_duration = decimillesimal_int(value);
 		} else if (key == "years") {
-			this->months_duration = centesimal_int(value) * 12;
+			this->months_duration = decimillesimal_int(value) * 12;
 		}
 	}
 
@@ -69,7 +69,7 @@ public:
 		}
 
 		if (this->months_duration > 0) {
-			return centesimal_int::max(defines::get()->months_to_turns(this->months_duration, game::get()->get_year()), 1).to_int();
+			return decimillesimal_int::max(defines::get()->months_to_turns(this->months_duration, game::get()->get_year()), 1).to_int();
 		}
 
 		if (this->modifier->get_duration() > 0) {
@@ -77,7 +77,7 @@ public:
 		}
 
 		if (this->modifier->get_duration_days() > 0) {
-			return centesimal_int::max(defines::get()->days_to_turns(this->modifier->get_duration_days(), game::get()->get_year()), 1).to_int();
+			return decimillesimal_int::max(defines::get()->days_to_turns(this->modifier->get_duration_days(), game::get()->get_year()), 1).to_int();
 		}
 
 		return 0;
@@ -123,7 +123,7 @@ private:
 	const opinion_modifier *modifier = nullptr;
 	target_variant<scope_type> target;
 	int duration = 0;
-	centesimal_int months_duration;
+	decimillesimal_int months_duration;
 };
 
 }

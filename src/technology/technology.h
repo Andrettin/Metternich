@@ -7,7 +7,7 @@
 #include "economy/commodity_container.h"
 #include "infrastructure/pathway_container.h"
 #include "religion/religion_container.h"
-#include "util/centesimal_int.h"
+#include "util/decimillesimal_int.h"
 
 Q_MOC_INCLUDE("game/game_rule.h")
 Q_MOC_INCLUDE("technology/technology_category.h")
@@ -212,7 +212,7 @@ public:
 	int get_wealth_cost_weight() const;
 	commodity_map<int> get_commodity_cost_weights() const;
 	int get_total_cost_weights() const;
-	centesimal_int get_cost_for_country(const domain *domain) const;
+	decimillesimal_int get_cost_for_country(const domain *domain) const;
 	Q_INVOKABLE int get_wealth_cost_for_country(const metternich::domain *domain) const;
 	commodity_map<int> get_commodity_costs_for_country(const domain *domain) const;
 	Q_INVOKABLE QVariantList get_commodity_costs_for_country_qvariant_list(const metternich::domain *domain) const;

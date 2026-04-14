@@ -279,7 +279,7 @@ int building_type::get_wealth_cost_for_country(const domain *domain) const
 		}
 
 		if (this->get_cost_factor() != nullptr) {
-			cost = this->get_cost_factor()->calculate(domain, centesimal_int(cost)).to_int();
+			cost = this->get_cost_factor()->calculate(domain, decimillesimal_int(cost)).to_int();
 		}
 
 		cost = std::max(1, cost);
@@ -334,7 +334,7 @@ commodity_map<int> building_type::get_commodity_costs_for_site(const site *site)
 				}
 
 				if (this->get_cost_factor() != nullptr) {
-					cost = this->get_cost_factor()->calculate(domain, centesimal_int(cost)).to_int();
+					cost = this->get_cost_factor()->calculate(domain, decimillesimal_int(cost)).to_int();
 				}
 
 				cost = std::max(1, cost);

@@ -103,7 +103,7 @@ int wonder::get_wealth_cost_for_country(const domain *domain) const
 	int cost = this->get_wealth_cost();
 
 	if (cost > 0 && this->get_cost_factor() != nullptr) {
-		cost = this->get_cost_factor()->calculate(domain, centesimal_int(cost)).to_int();
+		cost = this->get_cost_factor()->calculate(domain, decimillesimal_int(cost)).to_int();
 		cost = std::max(1, cost);
 	}
 
@@ -122,7 +122,7 @@ commodity_map<int> wonder::get_commodity_costs_for_country(const domain *domain)
 			}
 
 			if (this->get_cost_factor() != nullptr) {
-				cost = this->get_cost_factor()->calculate(domain, centesimal_int(cost)).to_int();
+				cost = this->get_cost_factor()->calculate(domain, decimillesimal_int(cost)).to_int();
 			}
 
 			cost = std::max(1, cost);

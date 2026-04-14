@@ -165,7 +165,7 @@ QCoro::Task<void> scoped_event_base<scope_type>::check_mtth_event_for_scope(cons
 		co_return;
 	}
 
-	const centesimal_int mtth = event->get_mean_time_to_happen()->calculate(scope, game::get()->get_year());
+	const decimillesimal_int mtth = event->get_mean_time_to_happen()->calculate(scope, game::get()->get_year());
 	bool should_fire = false;
 
 	if (mtth <= 1) {
