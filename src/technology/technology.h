@@ -48,6 +48,9 @@ class transporter_type;
 class wonder;
 
 template <typename scope_type>
+class and_condition;
+
+template <typename scope_type>
 class effect_list;
 
 template <typename scope_type>
@@ -497,6 +500,7 @@ private:
 	std::vector<const item_type *> enabled_item_types;
 	std::unique_ptr<const metternich::modifier<const domain>> modifier;
 	std::unique_ptr<effect_list<const province>> discovery_effects;
+	std::unique_ptr<and_condition<province>> spread_conditions;
 	const game_rule *required_game_rule = nullptr;
 	std::unique_ptr<metternich::mean_time_to_happen<province>> discovery_mean_time_to_happen;
 	std::unique_ptr<metternich::mean_time_to_happen<province>> spread_mean_time_to_happen;
