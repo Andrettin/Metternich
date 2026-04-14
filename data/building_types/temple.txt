@@ -186,6 +186,7 @@ monastery = {
 	icon = wooden_cross
 	size = 2
 	population_type = laborers
+	required_technology = asceticism
 	holding_types = {
 		temple
 	}
