@@ -559,7 +559,7 @@ QCoro::Task<int64_t> combat::do_character_round(const character *character, part
 						if (character->get_game_data()->get_domain() == game::get()->get_player_country()) {
 							const portrait *war_minister_portrait = character->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
 
-							engine_interface::get()->add_combat_notification(std::format("Cannot Use {}", tile.object->get_object_type()->get_name()), war_minister_portrait, std::format("Your Excellency, the {} can only be used once all enemies have been defeated.", string::lowered(tile.object->get_object_type()->get_name())));
+							engine_interface::get()->add_combat_notification(std::format("Cannot Use {}", tile.object->get_object_type()->get_name()), war_minister_portrait, std::format("{}, the {} can only be used once all enemies have been defeated.", character->get_game_data()->get_domain()->get_game_data()->get_form_of_address(), string::lowered(tile.object->get_object_type()->get_name())));
 						}
 					}
 				}

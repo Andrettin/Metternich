@@ -53,7 +53,7 @@ DialogBase {
 						metternich.game.player_country.game_data.government.set_appointed_office_holder(office, office_holder)
 						dialog.close()
 					} else {
-						add_notification("Costs", metternich.game.player_country.game_data.government.interior_minister_portrait, "Your Excellency, we unfortunately cannot pay the costs of appointing a new " + office_name.toLowerCase() + ".", dialog.parent)
+						add_notification("Costs", metternich.game.player_country.game_data.government.interior_minister_portrait, metternich.game.player_country.game_data.form_of_address + ", we unfortunately cannot pay the costs of appointing a new " + office_name.toLowerCase() + ".", dialog.parent)
 					}
 				}
 			}

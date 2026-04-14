@@ -17,4 +17,9 @@ theocracy = {
 			}
 		}
 	}
+	forms_of_address = {
+		duchy = "Your Eminence"
+		kingdom = "Your Holiness"
+		empire = "Your Holiness"
+	}
 }

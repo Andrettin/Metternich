@@ -203,7 +203,7 @@ void technology::initialize()
 		province_event *event = province_event::add(std::format("{}_discovered", this->get_identifier()), this->get_module());
 		event->set_name(std::format("{} Discovered", this->get_name()));
 		event->set_portrait(this->get_portrait());
-		event->set_description(std::format("Your Excellency, the {} technology has been discovered in [root.name]!", string::lowered(this->get_name())));
+		event->set_description(std::format("[root.domain.form_of_address], the {} technology has been discovered in [root.name]!", string::lowered(this->get_name())));
 		event->set_mean_time_to_happen(std::move(this->discovery_mean_time_to_happen));
 
 		auto event_conditions = std::make_unique<and_condition<province>>();
@@ -225,7 +225,7 @@ void technology::initialize()
 		province_event *event = province_event::add(std::format("{}_spread", this->get_identifier()), this->get_module());
 		event->set_name(std::format("{} Spread to [root.name]", this->get_name()));
 		event->set_portrait(this->get_portrait());
-		event->set_description(std::format("Your Excellency, the {} technology has spread to [root.name].", string::lowered(this->get_name())));
+		event->set_description(std::format("[root.domain.form_of_address], the {} technology has spread to [root.name].", string::lowered(this->get_name())));
 		event->set_from_neighbor(true);
 		event->set_mean_time_to_happen(std::move(this->spread_mean_time_to_happen));
 

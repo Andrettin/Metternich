@@ -636,7 +636,7 @@ QCoro::Task<void> domain_game_data::pay_maintenance()
 			disbanded_units_str += std::format("\n{} {}", disbanded_count, military_unit_type->get_name());
 		}
 
-		engine_interface::get()->add_notification("Military Units Disbanded", war_minister_portrait, std::format("Your Excellency, our finances are in dire straits! Due to a lack of available resources, we were forced to disband some of our military units.\n\nDisbanded Units:{}", disbanded_units_str));
+		engine_interface::get()->add_notification("Military Units Disbanded", war_minister_portrait, std::format("{}, our finances are in dire straits! Due to a lack of available resources, we were forced to disband some of our military units.\n\nDisbanded Units:{}", this->get_form_of_address(), disbanded_units_str));
 	}
 }
 
@@ -773,7 +773,7 @@ void domain_game_data::do_starvation()
 
 		const portrait *interior_minister_portrait = this->get_government()->get_interior_minister_portrait();
 
-		engine_interface::get()->add_notification("Starvation", interior_minister_portrait, std::format("Your Excellency, I regret to inform you that {} {} of our population {} starved to death.", number::to_formatted_string(starvation_count), (plural ? "units" : "unit"), (plural ? "have" : "has")));
+		engine_interface::get()->add_notification("Starvation", interior_minister_portrait, std::format("{}, I regret to inform you that {} {} of our population {} starved to death.", this->get_form_of_address(), number::to_formatted_string(starvation_count), (plural ? "units" : "unit"), (plural ? "have" : "has")));
 	}
 }
 
@@ -952,7 +952,7 @@ QCoro::Task<void> domain_game_data::check_tier()
 	if (this->domain == game::get()->get_player_country()) {
 		const portrait *interior_minister_portrait = this->get_government()->get_interior_minister_portrait();
 
-		engine_interface::get()->add_notification(this->get_titled_name(), interior_minister_portrait, std::format("Your Excellency, due to its recent change in size, our domain is now known as {} {}!", string::get_indefinite_article(this->get_title_name()), this->get_title_name()));
+		engine_interface::get()->add_notification(this->get_titled_name(), interior_minister_portrait, std::format("{}, due to its recent change in size, our domain is now known as {} {}!", this->get_form_of_address(), string::get_indefinite_article(this->get_title_name()), this->get_title_name()));
 	}
 }
 
@@ -969,6 +969,14 @@ std::string domain_game_data::get_titled_name() const
 const std::string &domain_game_data::get_title_name() const
 {
 	return this->domain->get_title_name(this->get_government_type(), this->get_tier(), this->get_culture(), this->get_religion());
+}
+
+const std::string &domain_game_data::get_form_of_address() const
+{
+	assert_throw(this->get_government_type() != nullptr);
+	assert_throw(this->get_government()->get_ruler() != nullptr);
+
+	return this->get_government_type()->get_form_of_address(this->get_tier(), this->get_government()->get_ruler()->get_gender());
 }
 
 const std::string &domain_game_data::get_flag() const
@@ -1050,7 +1058,7 @@ QCoro::Task<void> domain_game_data::check_culture()
 	if (this->domain == game::get()->get_player_country()) {
 		const portrait *interior_minister_portrait = this->get_government()->get_interior_minister_portrait();
 
-		engine_interface::get()->add_notification("New State Culture", interior_minister_portrait, std::format("Your Excellency, the {} culture has taken hold of our institutions, becoming our new state culture!", chosen_culture->get_name()));
+		engine_interface::get()->add_notification("New State Culture", interior_minister_portrait, std::format("{}, the {} culture has taken hold of our institutions, becoming our new state culture!", this->get_form_of_address(), chosen_culture->get_name()));
 	}
 }
 
@@ -3349,7 +3357,7 @@ void domain_game_data::check_idea(const idea_slot *slot)
 
 				switch (slot->get_idea_type()) {
 					case idea_type::deity:
-						engine_interface::get()->add_notification(std::format("{} No Longer Worshiped", old_idea->get_cultural_name(this->get_culture())), interior_minister_portrait, std::format("Your Excellency, despite a long and proud history of being worshiped in our nation, the cult of {} has lost favor amongst our people, and declined to nothingness.", old_idea->get_cultural_name(this->get_culture())));
+						engine_interface::get()->add_notification(std::format("{} No Longer Worshiped", old_idea->get_cultural_name(this->get_culture())), interior_minister_portrait, std::format("{}, despite a long and proud history of being worshiped in our nation, the cult of {} has lost favor amongst our people, and declined to nothingness.", this->get_form_of_address(), old_idea->get_cultural_name(this->get_culture())));
 						break;
 					default:
 						assert_throw(false);

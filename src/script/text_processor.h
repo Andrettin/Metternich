@@ -6,6 +6,7 @@
 namespace metternich {
 
 class culture;
+class domain;
 class holding_type;
 class population_type;
 
@@ -19,6 +20,7 @@ public:
 	virtual std::string process_tokens(std::queue<std::string> &&tokens, const bool process_in_game_data, bool &processed) const override;
 	std::string process_scope_variant_tokens(const read_only_context::scope_variant_type &scope_variant, std::queue<std::string> &tokens) const;
 	std::string process_culture_tokens(const culture *culture, std::queue<std::string> &tokens) const;
+	std::string process_domain_tokens(const domain *domain, std::queue<std::string> &tokens) const;
 	std::string process_holding_type_tokens(const holding_type *holding_type, std::queue<std::string> &tokens) const;
 	std::string process_population_type_tokens(const population_type *population_type, std::queue<std::string> &tokens) const;
 	std::string process_population_unit_tokens(const population_unit *population_unit, std::queue<std::string> &tokens) const;

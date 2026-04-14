@@ -23,4 +23,17 @@ monarchy = {
 			empire = "Imperial Architect"
 		}
 	}
+	forms_of_address = {
+		barony = {
+			male = "My Lord"
+			female = "My Lady"
+		}
+		county = {
+			male = "My Lord"
+			female = "My Lady"
+		}
+		duchy = "Your Grace"
+		kingdom = "Your Majesty"
+		empire = "Your Majesty"
+	}
 }

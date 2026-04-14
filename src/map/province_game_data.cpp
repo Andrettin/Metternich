@@ -275,7 +275,7 @@ QCoro::Task<void> province_game_data::do_military_unit_recruitment()
 
 			const portrait *war_minister_portrait = this->get_owner()->get_government()->get_war_minister_portrait();
 
-			engine_interface::get()->add_notification(std::format("Military Units Recruited in {}", this->get_current_cultural_name()), war_minister_portrait, std::format("Your Excellency, we have recruited new military units for our army in {}.\n{}", this->get_current_cultural_name(), recruitment_counts_str));
+			engine_interface::get()->add_notification(std::format("Military Units Recruited in {}", this->get_current_cultural_name()), war_minister_portrait, std::format("{}, we have recruited new military units for our army in {}.\n{}", this->get_owner()->get_game_data()->get_form_of_address(), this->get_current_cultural_name(), recruitment_counts_str));
 		}
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error(std::format("Error doing military unit recruitment for country \"{}\" in province \"{}\".", this->get_owner()->get_identifier(), this->province->get_identifier())));

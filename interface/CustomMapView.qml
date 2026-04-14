@@ -275,7 +275,7 @@ Item {
 			var dialog = notification_dialog_component.createObject(map_view, {
 				title: technology.discovery ? "Discovery" : "Technology Researched",
 				portrait_object: metternich.game.player_country.game_data.government.interior_minister_portrait,
-				text: technology.discovery ? ("Your Excellency, we have discovered " + technology.name + "!") : ("Your Excellency, our scholars have made a breakthrough in the research of the " + technology.name + " technology!" + (effects_string.length > 0 ? ("\n\nEffects:\n" + effects_string): "")),
+				text: technology.discovery ? (metternich.game.player_country.game_data.form_of_address + ", we have discovered " + technology.name + "!") : (metternich.game.player_country.game_data.form_of_address + ", our scholars have made a breakthrough in the research of the " + technology.name + " technology!" + (effects_string.length > 0 ? ("\n\nEffects:\n" + effects_string): "")),
 				second_button_text: "View Technologies",
 				second_button_effects: () => {
 					if (!technology.discovery && !(menu_stack.currentItem instanceof TechnologyView)) {
@@ -296,7 +296,7 @@ Item {
 			var dialog = notification_dialog_component.createObject(map_view, {
 				title: "Technology Lost",
 				portrait_object: metternich.game.player_country.game_data.government.interior_minister_portrait,
-				text: "Your Excellency, we have lost knowledge of the " + technology.name + " technology!",
+				text: metternich.game.player_country.game_data.form_of_address + ", we have lost knowledge of the " + technology.name + " technology!",
 				second_button_text: "View Technologies",
 				second_button_effects: () => {
 					if (!technology.discovery && !(menu_stack.currentItem instanceof TechnologyView)) {
@@ -321,7 +321,7 @@ Item {
 			var dialog = notification_dialog_component.createObject(map_view, {
 				title: leader.leader_type_name + " Recruited",
 				portrait_object: metternich.game.player_country.game_data.government.war_minister_portrait,
-				text: "Your Excellency, the " + leader.leader_type_name.toLowerCase() + " " + leader.full_name  + " has joined our nation!"
+				text: metternich.game.player_country.game_data.form_of_address + ", the " + leader.leader_type_name.toLowerCase() + " " + leader.full_name  + " has joined our nation!"
 			})
 			
 			dialog.open()

@@ -76,6 +76,7 @@ public:
 	const std::string &get_title_name(const domain_tier tier) const;
 	const std::string &get_site_title_name(const int tier) const;
 	const std::string &get_office_title_name(const office *office, const domain_tier tier, const gender gender) const;
+	const std::string &get_form_of_address(const domain_tier tier, const gender gender) const;
 
 	const government_group *get_group() const
 	{
@@ -157,6 +158,7 @@ private:
 	title_name_map title_names;
 	site_title_name_map site_title_names;
 	office_title_name_map office_title_names;
+	office_title_inner_name_map forms_of_address;
 };
 
 }

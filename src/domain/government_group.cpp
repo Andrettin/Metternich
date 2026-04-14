@@ -23,6 +23,8 @@ void government_group::process_gsml_scope(const gsml_data &scope)
 		government_type::process_site_title_name_scope(this->site_title_names, scope);
 	} else if (tag == "office_title_names") {
 		government_type::process_office_title_name_scope(this->office_title_names, scope);
+	} else if (tag == "forms_of_address") {
+		government_type::process_office_title_name_scope(this->forms_of_address, scope);
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
@@ -103,6 +105,17 @@ const std::string &government_group::get_office_title_name(const metternich::off
 	}
 
 	return office->get_name();
+}
+
+const std::string &government_group::get_form_of_address(const domain_tier tier, const gender gender) const
+{
+	const std::string &form_of_address = government_type::get_office_title_name(this->forms_of_address, tier, gender);
+	if (!form_of_address.empty()) {
+		return form_of_address;
+	}
+
+	static const std::string str = "Your Excellency";
+	return str;
 }
 
 }

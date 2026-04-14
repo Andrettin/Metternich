@@ -104,6 +104,7 @@ class domain_game_data final : public QObject
 	Q_PROPERTY(QString name READ get_name_qstring NOTIFY title_name_changed)
 	Q_PROPERTY(QString titled_name READ get_titled_name_qstring NOTIFY title_name_changed)
 	Q_PROPERTY(QString title_name READ get_title_name_qstring NOTIFY title_name_changed)
+	Q_PROPERTY(QString form_of_address READ get_form_of_address_qstring NOTIFY title_name_changed)
 	Q_PROPERTY(QString flag READ get_flag_qstring NOTIFY title_name_changed)
 	Q_PROPERTY(const metternich::culture* culture READ get_culture NOTIFY culture_changed)
 	Q_PROPERTY(const metternich::religion* religion READ get_religion NOTIFY religion_changed)
@@ -238,6 +239,13 @@ public:
 	QString get_title_name_qstring() const
 	{
 		return QString::fromStdString(this->get_title_name());
+	}
+
+	const std::string &get_form_of_address() const;
+
+	QString get_form_of_address_qstring() const
+	{
+		return QString::fromStdString(this->get_form_of_address());
 	}
 
 	const std::string &get_flag() const;

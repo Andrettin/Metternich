@@ -156,7 +156,7 @@ Item {
 							if (country_game_data.technology.can_research_technology(technology)) {
 								country_game_data.technology.add_current_research(technology)
 							} else {
-								add_notification("Costs", country_game_data.government.interior_minister_portrait, "Your Excellency, we unfortunately cannot afford the costs of researching the " + technology.name + " technology.", technology_view)
+								add_notification("Costs", country_game_data.government.interior_minister_portrait, country_game_data.form_of_address + ", we unfortunately cannot afford the costs of researching the " + technology.name + " technology.", technology_view)
 							}
 						}
 					}
