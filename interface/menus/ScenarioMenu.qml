@@ -206,6 +206,7 @@ MenuBase {
 				+ (!selected_country.game_data.anarchy ? ("\nScore: " + number_string(selected_country.game_data.score) + " (#" + (selected_country.game_data.score_rank + 1) + ")") : "")
 				+ ("\nDomain Power: " + number_string(selected_country.game_data.domain_power))
 				+ (selected_country.game_data.attribute_values.length > 0 ? ("\n" + object_counts_to_string(selected_country.game_data.attribute_values)) : "")
+				+ (selected_country.game_data.unrest > 0 ? ("\nUnrest: " + number_string(selected_country.game_data.unrest)) : "")
 				+ (population_visible ? ("\nPopulation: " + number_string(selected_country.game_data.population.size)) : "")
 				+ get_subject_type_counts_string(selected_country.game_data.subject_type_counts)
 				+ get_resource_counts_string(selected_country.game_data.economy.resource_counts)
