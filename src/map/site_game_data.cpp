@@ -127,6 +127,8 @@ void site_game_data::process_gsml_property(const gsml_property &property)
 		this->holding_type_name = value;
 	} else if (key == "dungeon") {
 		this->dungeon = dungeon::get(value);
+	} else if (key == "population_capacity") {
+		this->population_capacity = std::stoi(value);
 	} else {
 		throw std::runtime_error(std::format("Invalid site game data property: \"{}\".", key));
 	}
@@ -253,6 +255,10 @@ gsml_data site_game_data::to_gsml_data() const
 			building_slots_data.add_child(building_slot->to_gsml_data());
 		}
 		data.add_child(std::move(building_slots_data));
+	}
+
+	if (this->get_population_capacity() != 0) {
+		data.add_property("population_capacity", std::to_string(this->get_population_capacity()));
 	}
 
 	if (!this->get_homed_characters().empty()) {
@@ -1739,11 +1745,11 @@ QCoro::Task<void> site_game_data::on_building_gained(const building_type *buildi
 	this->change_total_building_size(building->get_size() * multiplier);
 
 	if (building->get_population_type() != nullptr) {
-		this->change_population_type_capacity(building->get_population_type(), building->get_population_capacity() * multiplier);
+		this->change_population_capacity(building->get_population_capacity() * multiplier);
 	}
 
 	if (building->get_holding_level() > 0) {
-		this->change_population_type_capacity(this->get_culture()->get_population_class_type(defines::get()->get_default_population_class()), building->get_population_capacity_for_province_level(this->get_province()->get_game_data()->get_level()) * multiplier);
+		this->change_population_capacity(building->get_population_capacity_for_province_level(this->get_province()->get_game_data()->get_level()) * multiplier);
 	}
 }
 
@@ -2021,33 +2027,28 @@ const population_class *site_game_data::get_default_literate_population_class() 
 	return nullptr;
 }
 
-void site_game_data::set_population_type_capacity(const population_type *population_type, const int64_t capacity)
+const population_type *site_game_data::get_default_population_type() const
 {
-	if (capacity == this->get_population_type_capacity(population_type)) {
+	assert_throw(this->get_culture() != nullptr);
+	return this->get_culture()->get_population_class_type(this->get_default_population_class());
+}
+
+void site_game_data::set_population_capacity(const int64_t capacity)
+{
+	if (capacity == this->get_population_capacity()) {
 		return;
 	}
 
-	if (capacity == 0) {
-		this->population_type_capacities.erase(population_type);
-	} else {
-		this->population_type_capacities[population_type] = capacity;
-	}
-}
+	this->population_capacity = capacity;
 
-int64_t site_game_data::get_available_population_type_capacity(const population_type *population_type) const
-{
-	const int64_t available_capacity = this->get_population_type_capacity(population_type) - this->get_population()->get_type_size(population_type);
-	return std::max(0ll, available_capacity);
+	if (game::get()->is_running()) {
+		emit population_capacity_changed();
+	}
 }
 
 int64_t site_game_data::get_available_population_capacity() const
 {
-	int64_t available_capacity = 0;
-
-	for (const auto &[population_type, capacity] : this->get_population_type_capacities()) {
-		available_capacity += capacity - this->get_population()->get_type_size(population_type);
-	}
-
+	const int64_t available_capacity = this->get_population_capacity() - this->get_population()->get_size();
 	return std::max(0ll, available_capacity);
 }
 

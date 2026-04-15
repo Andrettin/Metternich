@@ -400,30 +400,20 @@ public:
 
 	const population_class *get_default_population_class() const;
 	const population_class *get_default_literate_population_class() const;
+	const population_type *get_default_population_type() const;
 
-	const population_type_map<int64_t> &get_population_type_capacities() const
+	int64_t get_population_capacity() const
 	{
-		return this->population_type_capacities;
+		return this->population_capacity;
 	}
 
-	int64_t get_population_type_capacity(const population_type *population_type) const
-	{
-		const auto find_iterator = this->population_type_capacities.find(population_type);
-		if (find_iterator != this->population_type_capacities.end()) {
-			return find_iterator->second;
-		}
+	void set_population_capacity(const int64_t capacity);
 
-		return 0;
+	void change_population_capacity(const int64_t change)
+	{
+		this->set_population_capacity(this->get_population_capacity() + change);
 	}
 
-	void set_population_type_capacity(const population_type *population_type, const int64_t capacity);
-
-	void change_population_type_capacity(const population_type *population_type, const int64_t change)
-	{
-		this->set_population_type_capacity(population_type, this->get_population_type_capacity(population_type) + change);
-	}
-
-	int64_t get_available_population_type_capacity(const population_type *population_type) const;
 	int64_t get_available_population_capacity() const;
 
 	int get_free_food_consumption() const
@@ -627,6 +617,7 @@ signals:
 	void item_slots_changed();
 	void scripted_modifiers_changed();
 	void population_units_changed();
+	void population_capacity_changed();
 	void total_building_size_changed();
 	void commodity_outputs_changed();
 	void income_changed();
@@ -653,7 +644,7 @@ private:
 	scripted_site_modifier_map<int> scripted_modifiers;
 	std::vector<qunique_ptr<population_unit>> population_units;
 	qunique_ptr<metternich::population> population;
-	population_type_map<int64_t> population_type_capacities;
+	int64_t population_capacity = 0;
 	int free_food_consumption = 0;
 	int total_building_size = 0;
 	commodity_map<centesimal_int> base_commodity_outputs;

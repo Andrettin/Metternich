@@ -1382,10 +1382,6 @@ int64_t game::apply_historical_population_group_to_site(const population_group_k
 		if (!site_game_data->can_have_population_type(population_type)) {
 			return population;
 		}
-
-		if (site_game_data->get_available_population_type_capacity(population_type) == 0) {
-			return population;
-		}
 	} else {
 		if (site_game_data->get_available_population_capacity() == 0) {
 			return population;
@@ -1532,40 +1528,13 @@ int64_t game::apply_historical_population_group_to_site(const population_group_k
 	assert_throw(phenotype != nullptr);
 
 	if (population_type == nullptr) {
-		std::vector<const metternich::population_type *> available_population_types = archimedes::map::get_keys(site_game_data->get_population_type_capacities());
-		std::sort(available_population_types.begin(), available_population_types.end(), [&](const metternich::population_type *lhs, const metternich::population_type *rhs) {
-			const int64_t lhs_available_capacity = site_game_data->get_available_population_type_capacity(lhs);
-			const int64_t rhs_available_capacity = site_game_data->get_available_population_type_capacity(rhs);
-			if (lhs_available_capacity != rhs_available_capacity) {
-				return lhs_available_capacity > rhs_available_capacity;
-			}
-
-			return lhs->get_identifier() < rhs->get_identifier();
-		});
-
-		for (const metternich::population_type *available_population_type : available_population_types) {
-			const int64_t available_capacity = site_game_data->get_available_population_type_capacity(available_population_type);
-
-			if (available_capacity == 0) {
-				continue;
-			}
-
-			population_group_key group_key_copy = group_key;
-			group_key_copy.type = available_population_type;
-
-			int64_t type_population = std::min(remaining_population, available_capacity);
-			type_population -= this->apply_historical_population_group_to_site(group_key_copy, type_population, site);
-			remaining_population -= type_population;
-		}
-
-		return remaining_population;
+		population_type = site_game_data->get_default_population_type();
 	}
 	assert_throw(population_type != nullptr);
 
-	const int64_t population_for_unit = std::min(remaining_population, site_game_data->get_available_population_type_capacity(population_type));
-	site_game_data->create_population_unit(population_type, culture, religion, phenotype, remaining_population);
+	site_game_data->change_population(population_type, culture, religion, phenotype, remaining_population);
 
-	return remaining_population - population_for_unit;
+	return remaining_population;
 }
 
 QCoro::Task<void> game::apply_character_history(const QDate &start_date)

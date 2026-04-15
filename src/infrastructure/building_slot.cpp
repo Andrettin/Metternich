@@ -808,27 +808,18 @@ QString building_slot::get_modifier_string() const
 		str += this->get_building()->get_weighted_domain_modifier()->get_string(this->get_country(), multiplier, 0, false);
 	}
 
-	/*
-	population_type_map<int64_t> population_type_capacities;
-	if (this->get_building()->get_population_type() != nullptr) {
-		population_type_capacities[this->get_building()->get_population_type()] += this->get_building()->get_population_capacity();
-	}
+	int64_t population_capacity = this->get_building()->get_population_capacity();
 	if (this->get_building()->get_holding_level() > 0) {
-		population_type_capacities[this->get_settlement()->get_game_data()->get_culture()->get_population_class_type(defines::get()->get_default_population_class())] += this->get_building()->get_population_capacity_for_province_level(this->get_settlement()->get_game_data()->get_province()->get_game_data()->get_level());
+		population_capacity += this->get_building()->get_population_capacity_for_province_level(this->get_settlement()->get_game_data()->get_province()->get_game_data()->get_level());
 	}
-	for (const auto &[population_type, population_capacity] : population_type_capacities) {
-		if (population_capacity == 0) {
-			continue;
-		}
-
+	if (population_capacity > 0) {
 		if (!str.empty()) {
 			str += "\n";
 		}
 
 		const QColor &number_color = defines::get()->get_green_text_color();
-		str += std::format("{} Capacity: {}", population_type->get_name(), string::colored(number::to_signed_string(population_capacity), number_color));
+		str += std::format("Population Capacity: {}", string::colored(number::to_signed_string(population_capacity), number_color));
 	}
-	*/
 
 	return QString::fromStdString(str);
 }

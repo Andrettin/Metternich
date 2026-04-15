@@ -480,7 +480,7 @@ void province_game_data::set_level(const int level)
 
 			const int64_t old_population_capacity = building->get_population_capacity_for_province_level(old_level);
 			const int64_t new_population_capacity = building->get_population_capacity_for_province_level(level);
-			holding_site->get_game_data()->change_population_type_capacity(holding_site->get_game_data()->get_culture()->get_population_class_type(defines::get()->get_default_population_class()), new_population_capacity - old_population_capacity);
+			holding_site->get_game_data()->change_population_capacity(new_population_capacity - old_population_capacity);
 		}
 
 		emit holding_site->get_game_data()->income_changed();
