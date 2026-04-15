@@ -204,7 +204,7 @@ Rectangle {
 		anchors.right: culture_chart.left
 		anchors.rightMargin: 16 * scale_factor
 		data_source: selected_country_game_data ? selected_country_game_data.population : null
-		visible: population_visible
+		visible: population_visible && data_source !== null
 	}
 	
 	SmallText {
@@ -222,7 +222,7 @@ Rectangle {
 		anchors.right: religion_chart.left
 		anchors.rightMargin: 16 * scale_factor
 		data_source: selected_country_game_data ? selected_country_game_data.population : null
-		visible: population_visible
+		visible: population_visible && data_source !== null
 	}
 	
 	SmallText {
@@ -239,7 +239,7 @@ Rectangle {
 		anchors.right: map_mode_button_grid.left
 		anchors.rightMargin: 16 * scale_factor
 		data_source: selected_country_game_data ? selected_country_game_data.population : null
-		visible: population_visible
+		visible: population_visible && data_source !== null
 	}
 	
 	Row {

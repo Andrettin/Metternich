@@ -306,7 +306,7 @@ MenuBase {
 		anchors.top: culture_chart.top
 		anchors.right: culture_chart.left
 		anchors.rightMargin: 16 * scale_factor
-		visible: population_visible
+		visible: population_visible && population_data !== null
 	}
 	
 	SmallText {
@@ -323,7 +323,7 @@ MenuBase {
 		anchors.topMargin: 4 * scale_factor
 		anchors.right: religion_chart.left
 		anchors.rightMargin: 16 * scale_factor
-		visible: population_visible
+		visible: population_visible && population_data !== null
 	}
 	
 	SmallText {
@@ -339,7 +339,7 @@ MenuBase {
 		anchors.top: culture_chart.top
 		anchors.right: phenotype_chart.left
 		anchors.rightMargin: 16 * scale_factor
-		visible: population_visible
+		visible: population_visible && population_data !== null
 	}
 	
 	SmallText {
@@ -355,7 +355,7 @@ MenuBase {
 		anchors.top: culture_chart.top
 		anchors.right: diplomatic_map_background.right
 		anchors.rightMargin: 4 * scale_factor
-		visible: population_visible
+		visible: population_visible && population_data !== null
 	}
 	
 	Rectangle {
