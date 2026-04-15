@@ -1,7 +1,6 @@
 expert_drillers = {
 	name = "Expert Drillers"
 	population_class = expert_drillers
-	literate = true
 	icon = miners
 	small_icon = miners_small
 	commodity_demands = {

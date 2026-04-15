@@ -2,7 +2,6 @@ clergymen = {
 	name = "Clergymen"
 	population_class = clergymen
 	color = { 234 227 40 }
-	literate = true
 	icon = rifle_infantry_light
 	small_icon = rifle_infantry_light_small
 	strata = middle

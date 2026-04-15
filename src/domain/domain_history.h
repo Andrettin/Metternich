@@ -5,7 +5,7 @@
 #include "domain/domain_container.h"
 #include "domain/law_group_container.h"
 #include "economy/commodity_container.h"
-#include "util/centesimal_int.h"
+#include "util/decimillesimal_int.h"
 
 Q_MOC_INCLUDE("character/character.h")
 Q_MOC_INCLUDE("culture/culture.h")
@@ -37,7 +37,7 @@ class domain_history final : public data_entry_history
 	Q_PROPERTY(const metternich::religion* religion MEMBER religion READ get_religion)
 	Q_PROPERTY(const metternich::government_type* government_type MEMBER government_type READ get_government_type)
 	Q_PROPERTY(const metternich::domain* owner MEMBER owner READ get_owner)
-	Q_PROPERTY(archimedes::centesimal_int literacy_rate MEMBER literacy_rate READ get_literacy_rate)
+	Q_PROPERTY(archimedes::decimillesimal_int literacy_rate MEMBER literacy_rate READ get_literacy_rate)
 	Q_PROPERTY(std::vector<const metternich::technology *> technologies READ get_technologies)
 	Q_PROPERTY(int wealth MEMBER wealth READ get_wealth)
 
@@ -94,7 +94,7 @@ public:
 		return this->subject_type;
 	}
 
-	const centesimal_int &get_literacy_rate() const
+	const decimillesimal_int &get_literacy_rate() const
 	{
 		return this->literacy_rate;
 	}
@@ -153,7 +153,7 @@ private:
 	domain_map<QDate> inserted_domain_ruler_histories;
 	const metternich::domain *owner = nullptr;
 	const metternich::subject_type *subject_type = nullptr;
-	centesimal_int literacy_rate;
+	decimillesimal_int literacy_rate;
 	std::vector<const technology *> technologies;
 	law_group_map<const law *> laws;
 	int wealth = 0;

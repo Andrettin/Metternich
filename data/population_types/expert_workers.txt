@@ -2,7 +2,6 @@ expert_workers = {
 	name = "Expert Workers"
 	population_class = expert_workers
 	color = { 0 64 184 }
-	literate = true
 	icon = expert_workers
 	small_icon = expert_workers_small
 	commodity_demands = {

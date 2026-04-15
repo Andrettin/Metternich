@@ -2,7 +2,6 @@ firebrand_preachers = {
 	name = "Firebrand Preachers"
 	population_class = firebrand_preachers
 	color = { 162 105 40 }
-	literate = true
 	icon = rifle_infantry_light
 	small_icon = rifle_infantry_light_small
 	required_game_rule = additional_population_types

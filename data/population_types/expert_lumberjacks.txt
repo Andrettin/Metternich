@@ -1,7 +1,6 @@
 expert_lumberjacks = {
 	name = "Expert Lumberjacks"
 	population_class = expert_lumberjacks
-	literate = true
 	icon = forester
 	small_icon = forester_small
 	commodity_demands = {

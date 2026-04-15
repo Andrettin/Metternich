@@ -1,7 +1,6 @@
 master_tobacco_planters = {
 	name = "Master Tobacco Planters"
 	population_class = master_tobacco_planters
-	literate = true
 	icon = master_tobacco_planters
 	small_icon = master_tobacco_planters_small
 	commodity_demands = {

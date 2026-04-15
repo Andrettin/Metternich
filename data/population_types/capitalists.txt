@@ -3,7 +3,6 @@ capitalists = {
 	aliases += capitalist
 	population_class = capitalists
 	color = { 18 129 10 }
-	literate = true
 	icon = rifle_infantry_light
 	small_icon = rifle_infantry_light_small
 	strata = upper

@@ -1,7 +1,6 @@
 expert_farmers = {
 	name = "Expert Farmers"
 	population_class = expert_farmers
-	literate = true
 	icon = slaves_light
 	small_icon = slaves_light_small
 	commodity_demands = {

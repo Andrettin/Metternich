@@ -4,7 +4,7 @@
 #include "database/data_entry_history.h"
 #include "population/population_group_map.h"
 #include "species/phenotype_container.h"
-#include "util/centesimal_int.h"
+#include "util/decimillesimal_int.h"
 
 Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("religion/religion.h")
@@ -27,7 +27,7 @@ class province_history final : public data_entry_history
 	Q_PROPERTY(const metternich::religion* religion MEMBER religion)
 	Q_PROPERTY(int level MEMBER level READ get_level)
 	Q_PROPERTY(int population READ get_population WRITE set_population)
-	Q_PROPERTY(archimedes::centesimal_int literacy_rate MEMBER literacy_rate READ get_literacy_rate)
+	Q_PROPERTY(archimedes::decimillesimal_int literacy_rate MEMBER literacy_rate READ get_literacy_rate)
 	Q_PROPERTY(std::vector<const metternich::technology *> technologies READ get_technologies)
 
 public:
@@ -143,12 +143,12 @@ public:
 	void initialize_population();
 	void distribute_population();
 
-	const centesimal_int &get_literacy_rate() const
+	const decimillesimal_int &get_literacy_rate() const
 	{
 		return this->literacy_rate;
 	}
 
-	void set_literacy_rate(const centesimal_int &literacy_rate)
+	void set_literacy_rate(const decimillesimal_int &literacy_rate)
 	{
 		this->literacy_rate = literacy_rate;
 	}
@@ -179,7 +179,7 @@ private:
 	int level = 0;
 	population_group_map<int> population_groups;
 	population_group_map<int> lower_bound_population_groups;
-	centesimal_int literacy_rate;
+	decimillesimal_int literacy_rate;
 	std::vector<const technology *> technologies;
 };
 

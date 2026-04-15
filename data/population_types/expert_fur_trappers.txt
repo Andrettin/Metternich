@@ -1,7 +1,6 @@
 expert_fur_trappers = {
 	name = "Expert Fur Trappers"
 	population_class = expert_fur_trappers
-	literate = true
 	icon = forester
 	small_icon = forester_small
 	commodity_demands = {

@@ -148,7 +148,7 @@ Rectangle {
 			+ (selected_country_game_data.unrest > 0 ? ("\nUnrest: " + number_string(selected_country_game_data.unrest)) : "")
 			+ (population_visible ? ("\nPopulation: " + number_string(selected_country_game_data.population.size)) : "")
 			//+ "\nPopulation Growth: " + selected_country_game_data.population_growth + "/" + metternich.defines.population_growth_threshold
-			//+ "\nLiteracy: " + selected_country_game_data.population.literacy_rate + "%"
+			+ "\nLiteracy: " + selected_country_game_data.population.literacy_rate + "%"
 		) : "")
 		anchors.left: bottom_panel.left
 		anchors.leftMargin: 16 * scale_factor

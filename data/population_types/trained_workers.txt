@@ -2,7 +2,6 @@ trained_workers = {
 	name = "Trained Workers"
 	population_class = trained_workers
 	color = { 156 198 119 }
-	literate = true
 	icon = trained_workers
 	small_icon = trained_workers_small
 	commodity_demands = {

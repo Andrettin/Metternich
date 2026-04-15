@@ -3,7 +3,7 @@
 #include "database/data_entry_history.h"
 #include "infrastructure/building_slot_type_container.h"
 #include "population/population_group_map.h"
-#include "util/centesimal_int.h"
+#include "util/decimillesimal_int.h"
 
 Q_MOC_INCLUDE("culture/culture.h")
 Q_MOC_INCLUDE("infrastructure/dungeon.h")
@@ -32,7 +32,7 @@ class site_history final : public data_entry_history
 	Q_PROPERTY(metternich::culture* culture MEMBER culture)
 	Q_PROPERTY(metternich::religion* religion MEMBER religion)
 	Q_PROPERTY(int population READ get_population WRITE set_population)
-	Q_PROPERTY(archimedes::centesimal_int literacy_rate MEMBER literacy_rate READ get_literacy_rate)
+	Q_PROPERTY(archimedes::decimillesimal_int literacy_rate MEMBER literacy_rate READ get_literacy_rate)
 
 public:
 	explicit site_history(const metternich::site *site) : site(site)
@@ -183,7 +183,7 @@ public:
 		}
 	}
 
-	const centesimal_int &get_literacy_rate() const
+	const decimillesimal_int &get_literacy_rate() const
 	{
 		return this->literacy_rate;
 	}
@@ -201,7 +201,7 @@ private:
 	building_slot_type_map<const building_type *> buildings;
 	building_slot_type_map<const wonder *> wonders;
 	population_group_map<int> population_groups;
-	centesimal_int literacy_rate;
+	decimillesimal_int literacy_rate;
 };
 
 }

@@ -1970,7 +1970,7 @@ void site_game_data::clear_population_units()
 	this->population_units.clear();
 }
 
-void site_game_data::create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const int64_t size)
+void site_game_data::create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const int64_t size, const decimillesimal_int &literacy_rate)
 {
 	assert_throw(type != nullptr);
 	assert_throw(type->is_enabled());
@@ -1978,16 +1978,17 @@ void site_game_data::create_population_unit(const population_type *type, const m
 	assert_throw(this->is_built());
 	assert_throw(this->can_have_population_type(type));
 
-	auto population_unit = make_qunique<metternich::population_unit>(type, culture, religion, phenotype, size, this->site);
+	auto population_unit = make_qunique<metternich::population_unit>(type, culture, religion, phenotype, size, literacy_rate, this->site);
 	this->get_province()->get_game_data()->add_population_unit(population_unit.get());
 
 	this->add_population_unit(std::move(population_unit));
 }
 
-void site_game_data::change_population(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const int64_t size_change)
+void site_game_data::change_population(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const int64_t size_change, const decimillesimal_int &literacy_rate)
 {
 	for (const auto &population_unit : this->get_population_units()) {
 		if (population_unit->get_type() == type && population_unit->get_culture() == culture && population_unit->get_religion() == religion && population_unit->get_phenotype() == phenotype) {
+			population_unit->set_literacy_rate(((literacy_rate * size_change) + (population_unit->get_literacy_rate() * population_unit->get_size())) / (population_unit->get_size() + size_change));
 			population_unit->change_size(size_change);
 			if (population_unit->get_size() == 0) {
 				this->pop_population_unit(population_unit.get());
@@ -1999,7 +2000,7 @@ void site_game_data::change_population(const population_type *type, const metter
 	assert_throw(size_change >= 0);
 
 	if (size_change > 0) {
-		this->create_population_unit(type, culture, religion, phenotype, size_change);
+		this->create_population_unit(type, culture, religion, phenotype, size_change, literacy_rate);
 	}
 }
 
@@ -2030,20 +2031,6 @@ const population_class *site_game_data::get_default_population_class() const
 	}
 
 	return defines::get()->get_default_population_class();
-}
-
-const population_class *site_game_data::get_default_literate_population_class() const
-{
-	assert_throw(this->can_have_population());
-	assert_throw(this->is_built());
-
-	if (this->site->is_settlement()) {
-		if (this->get_owner() != nullptr && !this->get_owner()->get_game_data()->is_tribal() && !this->get_owner()->get_game_data()->is_clade()) {
-			return defines::get()->get_default_literate_population_class();
-		}
-	}
-
-	return nullptr;
 }
 
 const population_type *site_game_data::get_default_population_type() const

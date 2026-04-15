@@ -2,7 +2,6 @@ elder_statesmen = {
 	name = "Elder Statesmen"
 	population_class = elder_statesmen
 	color = { 134 0 0 }
-	literate = true
 	icon = rifle_infantry_light
 	small_icon = rifle_infantry_light_small
 	required_game_rule = additional_population_types

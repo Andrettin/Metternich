@@ -3,7 +3,6 @@ aristocrats = {
 	aliases += aristocrat
 	population_class = aristocrats
 	color = { 11 40 93 }
-	literate = true
 	icon = rifle_infantry_light
 	small_icon = rifle_infantry_light_small
 	strata = upper

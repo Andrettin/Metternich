@@ -2,7 +2,6 @@ bureaucrats = {
 	name = "Bureaucrats"
 	population_class = bureaucrats
 	color = { 136 136 136 }
-	literate = true
 	icon = rifle_infantry_light
 	small_icon = rifle_infantry_light_small
 	strata = middle

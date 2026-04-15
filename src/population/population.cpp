@@ -68,10 +68,6 @@ void population::change_type_size(const population_type *type, const int64_t cha
 		this->type_sizes.erase(type);
 	}
 
-	if (type->is_literate()) {
-		this->literate_size += change;
-	}
-
 	for (population *upper_population : this->upper_populations) {
 		upper_population->change_type_size(type, change);
 	}
@@ -193,6 +189,25 @@ std::vector<const phenotype *> population::get_weighted_phenotypes_for_culture(c
 	return archimedes::map::to_weighted_vector(phenotype_sizes);
 }
 
+void population::change_literate_size(const int64_t change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	this->literate_size += change;
+
+	assert_throw(this->literate_size >= 0);
+
+	for (population *upper_population : this->upper_populations) {
+		upper_population->change_literate_size(change);
+	}
+
+	if (game::get()->is_running()) {
+		emit literate_size_changed();
+	}
+}
+
 void population::on_population_unit_gained(const population_unit *population_unit, const int multiplier)
 {
 	this->change_population_unit_count(multiplier);
@@ -204,6 +219,7 @@ void population::on_population_unit_gained(const population_unit *population_uni
 	this->change_culture_size(population_unit->get_culture(), size * multiplier);
 	this->change_religion_size(population_unit->get_religion(), size * multiplier);
 	this->change_phenotype_size(population_unit->get_phenotype(), size * multiplier);
+	this->change_literate_size(population_unit->get_literate_size() * multiplier);
 
 	emit population_unit_gained(population_unit, multiplier);
 }

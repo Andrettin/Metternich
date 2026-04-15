@@ -21,8 +21,8 @@ class population final : public QObject
 	Q_PROPERTY(QVariantList culture_sizes READ get_culture_sizes_qvariant_list NOTIFY culture_sizes_changed)
 	Q_PROPERTY(QVariantList religion_sizes READ get_religion_sizes_qvariant_list NOTIFY religion_sizes_changed)
 	Q_PROPERTY(QVariantList phenotype_sizes READ get_phenotype_sizes_qvariant_list NOTIFY phenotype_sizes_changed)
-	Q_PROPERTY(int literacy_rate READ get_literacy_rate NOTIFY type_sizes_changed)
-	Q_PROPERTY(int literate_size READ get_literate_size NOTIFY type_sizes_changed)
+	Q_PROPERTY(int literacy_rate READ get_literacy_rate NOTIFY literate_size_changed)
+	Q_PROPERTY(int literate_size READ get_literate_size NOTIFY literate_size_changed)
 
 public:
 	int get_population_unit_count() const
@@ -149,6 +149,8 @@ public:
 		return this->literate_size;
 	}
 
+	void change_literate_size(const int64_t change);
+
 	int get_literacy_rate() const
 	{
 		if (this->get_population_unit_count() == 0) {
@@ -180,6 +182,7 @@ public:
 	{
 		this->change_population_unit_count(other_population->get_population_unit_count() * change);
 		this->change_size(other_population->get_size() * change);
+		this->change_literate_size(other_population->get_literate_size() * change);
 
 		for (const auto &[type, size] : other_population->get_type_sizes()) {
 			this->change_type_size(type, size * change);
@@ -215,6 +218,7 @@ signals:
 	void religion_sizes_changed();
 	void main_religion_changed(const religion *religion);
 	void phenotype_sizes_changed();
+	void literate_size_changed();
 	void population_unit_gained(const population_unit *population_unit, const int multiplier);
 
 private:

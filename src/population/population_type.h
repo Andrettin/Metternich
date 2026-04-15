@@ -43,7 +43,6 @@ class population_type final : public named_data_entry, public data_type<populati
 	Q_PROPERTY(metternich::cultural_group* cultural_group MEMBER cultural_group NOTIFY changed)
 	Q_PROPERTY(QColor color MEMBER color READ get_color NOTIFY changed)
 	Q_PROPERTY(metternich::population_strata strata MEMBER strata NOTIFY changed)
-	Q_PROPERTY(bool literate MEMBER literate READ is_literate NOTIFY changed)
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
 	Q_PROPERTY(metternich::icon* small_icon MEMBER small_icon NOTIFY changed)
 	Q_PROPERTY(metternich::commodity* output_commodity MEMBER output_commodity NOTIFY changed)
@@ -93,11 +92,6 @@ public:
 	population_strata get_strata() const
 	{
 		return this->strata;
-	}
-
-	bool is_literate() const
-	{
-		return this->literate;
 	}
 
 	const metternich::icon *get_icon() const

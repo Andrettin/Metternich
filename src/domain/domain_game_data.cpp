@@ -3000,7 +3000,7 @@ void domain_game_data::grow_population()
 	const population_type *population_type = culture->get_population_class_type(site->get_game_data()->get_default_population_class());
 
 	const int64_t population_size = 100;
-	site->get_game_data()->change_population(population_type, culture, religion, phenotype, population_size);
+	site->get_game_data()->change_population(population_type, culture, religion, phenotype, population_size, population_unit->get_literacy_rate());
 
 	this->change_population_growth(-defines::get()->get_population_growth_threshold());
 }

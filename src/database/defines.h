@@ -78,7 +78,6 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(metternich::pathway* route_pathway MEMBER route_pathway NOTIFY changed)
 	Q_PROPERTY(metternich::population_class* default_population_class MEMBER default_population_class)
 	Q_PROPERTY(metternich::population_class* default_tribal_population_class MEMBER default_tribal_population_class)
-	Q_PROPERTY(metternich::population_class* default_literate_population_class MEMBER default_literate_population_class)
 	Q_PROPERTY(int population_growth_threshold MEMBER population_growth_threshold READ get_population_growth_threshold NOTIFY changed)
 	Q_PROPERTY(archimedes::decimillesimal_int base_monthly_promotion_rate MEMBER base_monthly_promotion_rate READ get_base_monthly_promotion_rate NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity* wealth_commodity MEMBER wealth_commodity READ get_wealth_commodity NOTIFY changed)
@@ -268,11 +267,6 @@ public:
 	const population_class *get_default_tribal_population_class() const
 	{
 		return this->default_tribal_population_class;
-	}
-
-	const population_class *get_default_literate_population_class() const
-	{
-		return this->default_literate_population_class;
 	}
 
 	int get_population_growth_threshold() const
@@ -564,7 +558,6 @@ private:
 	pathway *route_pathway = nullptr;
 	population_class *default_population_class = nullptr;
 	population_class *default_tribal_population_class = nullptr;
-	population_class *default_literate_population_class = nullptr;
 	int population_growth_threshold = 100;
 	decimillesimal_int base_monthly_promotion_rate;
 	std::unique_ptr<factor<population_unit>> promotion_chance;

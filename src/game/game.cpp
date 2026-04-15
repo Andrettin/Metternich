@@ -1532,7 +1532,15 @@ int64_t game::apply_historical_population_group_to_site(const population_group_k
 	}
 	assert_throw(population_type != nullptr);
 
-	site_game_data->change_population(population_type, culture, religion, phenotype, remaining_population);
+	decimillesimal_int literacy_rate = site_history->get_literacy_rate();
+	if (literacy_rate == 0 && province_history->get_literacy_rate() > 0) {
+		literacy_rate = province_history->get_literacy_rate();
+	}
+	if (literacy_rate == 0 && domain->get_history()->get_literacy_rate() > 0) {
+		literacy_rate = domain->get_history()->get_literacy_rate();
+	}
+
+	site_game_data->change_population(population_type, culture, religion, phenotype, remaining_population, literacy_rate);
 
 	return remaining_population;
 }

@@ -30,14 +30,15 @@
 
 namespace metternich {
 
-population_unit::population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const int64_t size, const metternich::site *site)
-	: type(type), culture(culture), religion(religion), phenotype(phenotype), size(size), site(site)
+population_unit::population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const int64_t size, const decimillesimal_int &literacy_rate, const metternich::site *site)
+	: type(type), culture(culture), religion(religion), phenotype(phenotype), size(size), literacy_rate(literacy_rate), site(site)
 {
 	assert_throw(this->get_type() != nullptr);
 	assert_throw(this->get_culture() != nullptr);
 	assert_throw(this->get_religion() != nullptr);
 	assert_throw(this->get_phenotype() != nullptr);
 	assert_throw(this->get_size() > 0);
+	assert_throw(this->get_literacy_rate() >= 0);
 
 	if (!vector::contains(this->get_culture()->get_species(), this->get_species())) {
 		throw std::runtime_error(std::format("Tried to create a population unit with a species (\"{}\") which is not allowed for its culture (\"{}\").", this->get_species()->get_identifier(), this->get_culture()->get_identifier()));
@@ -106,9 +107,9 @@ void population_unit::do_promotion(const bool is_demotion)
 
 	const int64_t promoted_size = (this->get_size() * promotion_rate / 100).to_int64();
 
-	this->get_site()->get_game_data()->change_population(this->get_type(), this->get_culture(), this->get_religion(), this->get_phenotype(), -promoted_size);
+	this->get_site()->get_game_data()->change_population(this->get_type(), this->get_culture(), this->get_religion(), this->get_phenotype(), -promoted_size, this->get_literacy_rate());
 
-	this->get_site()->get_game_data()->change_population(best_promotion_type, this->get_culture(), this->get_religion(), this->get_phenotype(), promoted_size);
+	this->get_site()->get_game_data()->change_population(best_promotion_type, this->get_culture(), this->get_religion(), this->get_phenotype(), promoted_size, this->get_literacy_rate());
 }
 
 std::string population_unit::get_scope_name() const
@@ -268,6 +269,26 @@ void population_unit::set_size(const int64_t size)
 	this->get_site()->get_game_data()->get_population()->on_population_unit_gained(this);
 
 	emit size_changed();
+}
+
+int64_t population_unit::get_literate_size() const
+{
+	return (this->get_size() * this->get_literacy_rate() / 100).to_int64();
+}
+
+void population_unit::set_literacy_rate(const decimillesimal_int &literacy_rate)
+{
+	if (literacy_rate == this->get_literacy_rate()) {
+		return;
+	}
+
+	this->get_site()->get_game_data()->get_population()->change_literate_size(-this->get_literate_size());
+
+	this->literacy_rate = literacy_rate;
+
+	this->get_site()->get_game_data()->get_population()->change_literate_size(this->get_literate_size());
+
+	emit literacy_rate_changed();
 }
 
 bool population_unit::is_food_producer() const

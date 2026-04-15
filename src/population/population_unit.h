@@ -1,6 +1,6 @@
 #pragma once
 
-#include "util/centesimal_int.h"
+#include "util/decimillesimal_int.h"
 
 Q_MOC_INCLUDE("culture/culture.h")
 Q_MOC_INCLUDE("domain/domain.h")
@@ -38,7 +38,7 @@ class population_unit final : public QObject
 	Q_PROPERTY(qint64 size READ get_size NOTIFY size_changed)
 
 public:
-	explicit population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const int64_t size, const site *site);
+	explicit population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const int64_t size, const decimillesimal_int &literacy_rate, const site *site);
 
 	void do_promotion();
 	void do_promotion(const bool is_demotion);
@@ -106,6 +106,20 @@ public:
 		this->set_size(this->get_size() + change);
 	}
 
+	int64_t get_literate_size() const;
+
+	const decimillesimal_int &get_literacy_rate() const
+	{
+		return this->literacy_rate;
+	}
+
+	void set_literacy_rate(const decimillesimal_int &literacy_rate);
+
+	void change_literacy_rate(const decimillesimal_int &change)
+	{
+		this->set_literacy_rate(this->get_literacy_rate() + change);
+	}
+
 	bool is_food_producer() const;
 
 signals:
@@ -118,6 +132,7 @@ signals:
 	void province_changed();
 	void site_changed();
 	void size_changed();
+	void literacy_rate_changed();
 
 private:
 	const population_type *type = nullptr;
@@ -127,6 +142,7 @@ private:
 	const metternich::domain *domain = nullptr;
 	const metternich::site *site = nullptr;
 	int64_t size = 0; //number of individuals in this population unit
+	decimillesimal_int literacy_rate; //in percent
 };
 
 }

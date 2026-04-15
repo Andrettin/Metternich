@@ -4,7 +4,7 @@
 #include "database/data_entry_history.h"
 #include "population/population_group_map.h"
 #include "species/phenotype_container.h"
-#include "util/centesimal_int.h"
+#include "util/decimillesimal_int.h"
 
 namespace metternich {
 
@@ -15,7 +15,7 @@ class region_history final : public data_entry_history
 	Q_OBJECT
 
 	Q_PROPERTY(int population READ get_population WRITE set_population)
-	Q_PROPERTY(archimedes::centesimal_int literacy_rate MEMBER literacy_rate READ get_literacy_rate)
+	Q_PROPERTY(archimedes::decimillesimal_int literacy_rate MEMBER literacy_rate READ get_literacy_rate)
 
 public:
 	explicit region_history(const metternich::region *region) : region(region)
@@ -59,7 +59,7 @@ public:
 
 	void distribute_population();
 
-	const centesimal_int &get_literacy_rate() const
+	const decimillesimal_int &get_literacy_rate() const
 	{
 		return this->literacy_rate;
 	}
@@ -69,7 +69,7 @@ private:
 	culture_map<int64_t> culture_weights;
 	phenotype_map<int64_t> phenotype_weights;
 	population_group_map<int> population_groups;
-	centesimal_int literacy_rate;
+	decimillesimal_int literacy_rate;
 };
 
 }

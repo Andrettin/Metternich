@@ -1,7 +1,6 @@
 master_ranchers = {
 	name = "Master Ranchers"
 	population_class = master_ranchers
-	literate = true
 	icon = rancher
 	small_icon = rancher_small
 	commodity_demands = {

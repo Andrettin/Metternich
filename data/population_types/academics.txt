@@ -2,7 +2,6 @@ academics = {
 	name = "Academics"
 	population_class = academics
 	color = { 94 46 63 }
-	literate = true
 	icon = rifle_infantry_light
 	small_icon = rifle_infantry_light_small
 	strata = middle
