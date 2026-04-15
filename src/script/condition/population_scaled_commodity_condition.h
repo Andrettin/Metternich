@@ -22,14 +22,14 @@ public:
 		return class_identifier;
 	}
 
-	virtual int get_scope_value(const domain *scope) const override
+	virtual centesimal_int get_scope_value(const domain *scope) const override
 	{
-		return scope->get_economy()->get_stored_commodity(this->commodity);
+		return centesimal_int(scope->get_economy()->get_stored_commodity(this->commodity));
 	}
 
-	virtual int get_value(const domain *scope) const override
+	virtual centesimal_int get_value(const domain *scope) const override
 	{
-		return (this->get_base_value() * scope->get_game_data()->get_population_unit_count()).to_int();
+		return this->get_base_value() * scope->get_game_data()->get_population_unit_count();
 	}
 
 	virtual std::string get_value_name() const override

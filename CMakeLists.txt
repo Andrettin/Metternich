@@ -731,6 +731,7 @@ set(script_condition_HDRS
 	src/script/condition/playable_condition.h
 	src/script/condition/population_scaled_commodity_condition.h
 	src/script/condition/population_type_condition.h
+	src/script/condition/population_type_percent_condition.h
 	src/script/condition/primary_attribute_condition.h
 	src/script/condition/produces_commodity_condition.h
 	src/script/condition/promotion_condition.h

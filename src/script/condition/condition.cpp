@@ -91,6 +91,7 @@
 #include "script/condition/playable_condition.h"
 #include "script/condition/population_scaled_commodity_condition.h"
 #include "script/condition/population_type_condition.h"
+#include "script/condition/population_type_percent_condition.h"
 #include "script/condition/produces_commodity_condition.h"
 #include "script/condition/primary_attribute_condition.h"
 #include "script/condition/promotion_condition.h"
@@ -326,6 +327,8 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			return std::make_unique<has_population_religion_condition<scope_type>>(value, condition_operator);
 		} else if (key == "has_population_type") {
 			return std::make_unique<has_population_type_condition<scope_type>>(value, condition_operator);
+		} else if (population_type::try_get(key) != nullptr) {
+			return std::make_unique<population_type_percent_condition<scope_type>>(population_type::get(key), value, condition_operator);
 		}
 	}
 
