@@ -4,6 +4,7 @@ soldiers = {
 	color = { 200 187 157 }
 	icon = rifle_infantry_light
 	small_icon = rifle_infantry_light_small
+	strata = lower
 	commodity_demands = {
 		clothing = 0.125
 		furniture = 0.125

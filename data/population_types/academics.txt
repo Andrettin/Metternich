@@ -5,6 +5,7 @@ academics = {
 	literate = true
 	icon = rifle_infantry_light
 	small_icon = rifle_infantry_light_small
+	strata = middle
 	required_game_rule = additional_population_types
 	commodity_demands = {
 		clothing = 0.25

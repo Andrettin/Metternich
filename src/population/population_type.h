@@ -26,6 +26,7 @@ class culture;
 class icon;
 class phenotype;
 class population_class;
+enum class population_strata;
 
 template <typename scope_type>
 class factor;
@@ -41,6 +42,7 @@ class population_type final : public named_data_entry, public data_type<populati
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
 	Q_PROPERTY(metternich::cultural_group* cultural_group MEMBER cultural_group NOTIFY changed)
 	Q_PROPERTY(QColor color MEMBER color READ get_color NOTIFY changed)
+	Q_PROPERTY(metternich::population_strata strata MEMBER strata NOTIFY changed)
 	Q_PROPERTY(bool literate MEMBER literate READ is_literate NOTIFY changed)
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
 	Q_PROPERTY(metternich::icon* small_icon MEMBER small_icon NOTIFY changed)
@@ -86,6 +88,11 @@ public:
 	const QColor &get_color() const
 	{
 		return this->color;
+	}
+
+	population_strata get_strata() const
+	{
+		return this->strata;
 	}
 
 	bool is_literate() const
@@ -191,6 +198,7 @@ private:
 	metternich::culture *culture = nullptr;
 	metternich::cultural_group *cultural_group = nullptr;
 	QColor color;
+	population_strata strata{};
 	bool literate = false;
 	metternich::icon *icon = nullptr;
 	metternich::icon *small_icon = nullptr;

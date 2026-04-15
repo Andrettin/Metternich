@@ -41,6 +41,7 @@ public:
 	explicit population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const int64_t size, const site *site);
 
 	void do_promotion();
+	void do_promotion(const bool is_demotion);
 
 	std::string get_scope_name() const;
 

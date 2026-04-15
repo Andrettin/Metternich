@@ -51,11 +51,23 @@ population_unit::population_unit(const population_type *type, const metternich::
 
 void population_unit::do_promotion()
 {
-	const factor<population_unit> *promotion_chance = defines::get()->get_promotion_chance();
-	const decimillesimal_int promotion_chance_result = promotion_chance->calculate(this);
+	this->do_promotion(false);
+	this->do_promotion(true);
+}
 
+void population_unit::do_promotion(const bool is_demotion)
+{
 	decimillesimal_int promotion_rate = defines::get()->get_base_monthly_promotion_rate() * game::get()->get_current_months_per_turn();
-	promotion_rate *= promotion_chance_result;
+
+	if (is_demotion) {
+		const factor<population_unit> *demotion_chance = defines::get()->get_demotion_chance();
+		const decimillesimal_int demotion_chance_result = demotion_chance->calculate(this);
+		promotion_rate *= demotion_chance_result;
+	} else {
+		const factor<population_unit> *promotion_chance = defines::get()->get_promotion_chance();
+		const decimillesimal_int promotion_chance_result = promotion_chance->calculate(this);
+		promotion_rate *= promotion_chance_result;
+	}
 
 	if (promotion_rate == 0) {
 		return;
@@ -65,6 +77,18 @@ void population_unit::do_promotion()
 	decimillesimal_int best_promotion_factor_result;
 
 	for (const auto &[promotion_type, promotion_factor] : this->get_type()->get_promotion_factors()) {
+		if (is_demotion) {
+			//when demoting, population units can only demote to population types in the same strata or lower
+			if (promotion_type->get_strata() > this->get_type()->get_strata()) {
+				continue;
+			}
+		} else {
+			//when promoting, population units can only promote to population types in the same strata or higher
+			if (promotion_type->get_strata() < this->get_type()->get_strata()) {
+				continue;
+			}
+		}
+
 		if (!this->get_site()->get_game_data()->can_have_population_type(promotion_type)) {
 			continue;
 		}

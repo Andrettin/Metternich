@@ -79,6 +79,7 @@
 #include "map/temperature_type.h"
 #include "map/tile_image_provider.h"
 #include "population/population.h"
+#include "population/population_strata.h"
 #include "population/population_type.h"
 #include "script/scripted_character_modifier.h"
 #include "species/geological_era.h"
@@ -197,6 +198,7 @@ int main(int argc, char **argv)
 		database_util::register_enum<military_unit_category>();
 		database_util::register_enum<military_unit_domain>();
 		database_util::register_enum<moisture_type>();
+		database_util::register_enum<population_strata>();
 		database_util::register_enum<profession_profitability>();
 		database_util::register_enum<site_type>();
 		database_util::register_enum<spell_target>();

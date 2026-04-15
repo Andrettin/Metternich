@@ -6,6 +6,7 @@ aristocrats = {
 	literate = true
 	icon = rifle_infantry_light
 	small_icon = rifle_infantry_light_small
+	strata = upper
 	max_modifier_multiplier = 5
 	commodity_demands = {
 		clothing = 1

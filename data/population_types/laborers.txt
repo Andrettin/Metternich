@@ -4,6 +4,7 @@ laborers = {
 	color = { 189 57 36 }
 	icon = miners
 	small_icon = miners_small
+	strata = lower
 	#output_commodity = wealth
 	#output_value = 7sp
 	equivalent_population_types = {
@@ -21,6 +22,38 @@ laborers = {
 		tea = 0.125
 	}
 	promotion_factors = {
+		#artisans = {
+		#	base_value = 0.01
+		#	
+		#	modifier = {
+		#		factor = 1
+		#		additive = true
+		#		province = {
+		#			clergymen >= 0.8
+		#		}
+		#	}
+		#	modifier = {
+		#		factor = 1
+		#		additive = true
+		#		province = {
+		#			clergymen >= 1.6
+		#		}
+		#	}
+		#	modifier = {
+		#		factor = 1
+		#		additive = true
+		#		province = {
+		#			clergymen >= 2.4
+		#		}
+		#	}
+		#	modifier = {
+		#		factor = 1
+		#		additive = true
+		#		province = {
+		#			clergymen >= 3.2
+		#		}
+		#	}
+		#}
 		aristocrats = {
 			base_value = 0.01
 			
