@@ -38,6 +38,8 @@ void population::change_size(const int64_t change)
 
 	this->size += change;
 
+	assert_throw(this->size >= 0);
+
 	for (population *upper_population : this->upper_populations) {
 		upper_population->change_size(change);
 	}

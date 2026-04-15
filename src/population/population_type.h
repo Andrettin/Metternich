@@ -3,6 +3,7 @@
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 #include "economy/commodity_container.h"
+#include "population/population_type_container.h"
 #include "species/phenotype_container.h"
 #include "util/centesimal_int.h"
 #include "util/decimillesimal_int.h"
@@ -25,6 +26,9 @@ class culture;
 class icon;
 class phenotype;
 class population_class;
+
+template <typename scope_type>
+class factor;
 
 template <typename scope_type>
 class modifier;
@@ -172,6 +176,11 @@ public:
 		return this->equivalent_population_types;
 	}
 
+	const population_type_map<std::unique_ptr<factor<population_unit>>> &get_promotion_factors() const
+	{
+		return this->promotion_factors;
+	}
+
 	bool is_enabled() const;
 
 signals:
@@ -195,6 +204,7 @@ private:
 	centesimal_int max_modifier_multiplier = centesimal_int(0);
 	std::unique_ptr<modifier<const domain>> country_modifier;
 	std::vector<const population_type *> equivalent_population_types;
+	population_type_map<std::unique_ptr<factor<population_unit>>> promotion_factors; //selects the population type to be promoted or demoted to
 	const game_rule *required_game_rule = nullptr;
 };
 

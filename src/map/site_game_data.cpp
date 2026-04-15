@@ -1984,6 +1984,25 @@ void site_game_data::create_population_unit(const population_type *type, const m
 	this->add_population_unit(std::move(population_unit));
 }
 
+void site_game_data::change_population(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const int64_t size_change)
+{
+	for (const auto &population_unit : this->get_population_units()) {
+		if (population_unit->get_type() == type && population_unit->get_culture() == culture && population_unit->get_religion() == religion && population_unit->get_phenotype() == phenotype) {
+			population_unit->change_size(size_change);
+			if (population_unit->get_size() == 0) {
+				this->pop_population_unit(population_unit.get());
+			}
+			return;
+		}
+	}
+
+	assert_throw(size_change >= 0);
+
+	if (size_change > 0) {
+		this->create_population_unit(type, culture, religion, phenotype, size_change);
+	}
+}
+
 void site_game_data::on_population_type_size_changed(const population_type *population_type, const int64_t change)
 {
 	if (population_type->get_output_commodity() != nullptr) {

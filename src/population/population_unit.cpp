@@ -3,6 +3,7 @@
 #include "population/population_unit.h"
 
 #include "culture/culture.h"
+#include "database/defines.h"
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
 #include "economy/commodity.h"
@@ -46,6 +47,44 @@ population_unit::population_unit(const population_type *type, const metternich::
 	assert_throw(this->get_country() != nullptr);
 
 	connect(this, &population_unit::type_changed, this, &population_unit::icon_changed);
+}
+
+void population_unit::do_promotion()
+{
+	const factor<population_unit> *promotion_chance = defines::get()->get_promotion_chance();
+	const decimillesimal_int promotion_chance_result = promotion_chance->calculate(this);
+
+	decimillesimal_int promotion_rate = defines::get()->get_base_monthly_promotion_rate() * game::get()->get_current_months_per_turn();
+	promotion_rate *= promotion_chance_result;
+
+	if (promotion_rate == 0) {
+		return;
+	}
+
+	const population_type *best_promotion_type = nullptr;
+	decimillesimal_int best_promotion_factor_result;
+
+	for (const auto &[promotion_type, promotion_factor] : this->get_type()->get_promotion_factors()) {
+		if (!this->get_site()->get_game_data()->can_have_population_type(promotion_type)) {
+			continue;
+		}
+
+		const decimillesimal_int promotion_factor_result = promotion_factor->calculate(this);
+		if (promotion_factor_result > 0 && promotion_factor_result > best_promotion_factor_result) {
+			best_promotion_factor_result = promotion_factor_result;
+			best_promotion_type = promotion_type;
+		}
+	}
+
+	if (best_promotion_type == nullptr) {
+		return;
+	}
+
+	const int64_t promoted_size = (this->get_size() * promotion_rate / 100).to_int64();
+
+	this->get_site()->get_game_data()->change_population(this->get_type(), this->get_culture(), this->get_religion(), this->get_phenotype(), -promoted_size);
+
+	this->get_site()->get_game_data()->change_population(best_promotion_type, this->get_culture(), this->get_religion(), this->get_phenotype(), promoted_size);
 }
 
 std::string population_unit::get_scope_name() const

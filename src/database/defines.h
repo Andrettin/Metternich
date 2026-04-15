@@ -39,6 +39,7 @@ class music;
 class office;
 class pathway;
 class population_class;
+class population_unit;
 class portrait;
 class sound;
 class terrain_type;
@@ -46,6 +47,9 @@ enum class bloodline_strength_category;
 enum class diplomacy_state;
 enum class divine_rank;
 enum class event_trigger;
+
+template <typename scope_type>
+class factor;
 
 template <typename scope_type>
 class modifier;
@@ -76,6 +80,7 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(metternich::population_class* default_tribal_population_class MEMBER default_tribal_population_class)
 	Q_PROPERTY(metternich::population_class* default_literate_population_class MEMBER default_literate_population_class)
 	Q_PROPERTY(int population_growth_threshold MEMBER population_growth_threshold READ get_population_growth_threshold NOTIFY changed)
+	Q_PROPERTY(archimedes::decimillesimal_int base_monthly_promotion_rate MEMBER base_monthly_promotion_rate READ get_base_monthly_promotion_rate NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity* wealth_commodity MEMBER wealth_commodity READ get_wealth_commodity NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity* regency_commodity MEMBER regency_commodity READ get_regency_commodity NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity* piety_commodity MEMBER piety_commodity NOTIFY changed)
@@ -273,6 +278,21 @@ public:
 	int get_population_growth_threshold() const
 	{
 		return this->population_growth_threshold;
+	}
+
+	const decimillesimal_int &get_base_monthly_promotion_rate() const
+	{
+		return this->base_monthly_promotion_rate;
+	}
+
+	const factor<population_unit> *get_promotion_chance() const
+	{
+		return this->promotion_chance.get();
+	}
+
+	const factor<population_unit> *get_demotion_chance() const
+	{
+		return this->demotion_chance.get();
 	}
 
 	const commodity_map<int> &get_settlement_commodity_bonuses() const
@@ -546,6 +566,9 @@ private:
 	population_class *default_tribal_population_class = nullptr;
 	population_class *default_literate_population_class = nullptr;
 	int population_growth_threshold = 100;
+	decimillesimal_int base_monthly_promotion_rate;
+	std::unique_ptr<factor<population_unit>> promotion_chance;
+	std::unique_ptr<factor<population_unit>> demotion_chance;
 	commodity_map<int> settlement_commodity_bonuses;
 	commodity_map<int> river_settlement_commodity_bonuses;
 	const commodity *wealth_commodity = nullptr;

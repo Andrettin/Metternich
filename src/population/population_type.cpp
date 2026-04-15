@@ -12,6 +12,7 @@
 #include "game/game_rules.h"
 #include "population/population.h"
 #include "population/population_class.h"
+#include "script/factor.h"
 #include "script/modifier.h"
 #include "species/phenotype.h"
 #include "species/species.h"
@@ -59,7 +60,7 @@ void population_type::process_gsml_scope(const gsml_data &scope)
 	const std::vector<std::string> &values = scope.get_values();
 
 	if (tag == "commodity_demands") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
@@ -74,8 +75,16 @@ void population_type::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->equivalent_population_types.push_back(population_type::get(value));
 		}
+	} else if (tag == "promotion_factors") {
+		scope.for_each_child([this](const gsml_data &child_scope) {
+			const std::string &child_tag = child_scope.get_tag();
+			auto promotion_factor = std::make_unique<factor<population_unit>>();
+			promotion_factor->process_gsml_data(child_scope);
+
+			this->promotion_factors[population_type::get(child_tag)] = std::move(promotion_factor);
+		});
 	} else if (tag == "phenotype_icons") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
@@ -84,7 +93,7 @@ void population_type::process_gsml_scope(const gsml_data &scope)
 			this->phenotype_icons[phenotype] = icon;
 		});
 	} else if (tag == "phenotype_small_icons") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 

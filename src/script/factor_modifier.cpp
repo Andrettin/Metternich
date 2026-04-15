@@ -8,6 +8,7 @@
 #include "script/condition/and_condition.h"
 #include "script/condition/condition.h"
 #include "script/context.h"
+#include "util/string_conversion_util.h"
 
 namespace metternich {
 
@@ -33,7 +34,13 @@ void factor_modifier<scope_type>::process_gsml_property(const gsml_property &pro
 		if (gsml_operator == gsml_operator::assignment) {
 			this->factor = centesimal_int(value);
 		} else {
-			throw std::runtime_error("Invalid operator for property (\"" + property.get_key() + "\").");
+			throw std::runtime_error(std::format("Invalid operator for property (\"{}\").", property.get_key()));
+		}
+	} else if (key == "additive") {
+		if (gsml_operator == gsml_operator::assignment) {
+			this->additive = string::to_bool(value);
+		} else {
+			throw std::runtime_error(std::format("Invalid operator for property (\"{}\").", property.get_key()));
 		}
 	} else {
 		std::unique_ptr<const condition_base<scope_type, read_only_context>> condition = metternich::condition<scope_type>::from_gsml_property(property);

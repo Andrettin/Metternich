@@ -390,6 +390,7 @@ public:
 	qunique_ptr<population_unit> pop_population_unit(population_unit *population_unit);
 	void clear_population_units();
 	void create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const int64_t size);
+	void change_population(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const int64_t size_change);
 
 	metternich::population *get_population() const
 	{

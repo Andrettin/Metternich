@@ -40,6 +40,8 @@ class population_unit final : public QObject
 public:
 	explicit population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const int64_t size, const site *site);
 
+	void do_promotion();
+
 	std::string get_scope_name() const;
 
 	const population_type *get_type() const

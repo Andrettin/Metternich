@@ -474,6 +474,7 @@ QCoro::Task<void> domain_game_data::do_turn()
 		co_await this->get_technology()->do_research();
 		this->do_population_growth();
 		this->do_cultural_change();
+		this->do_population_promotion();
 
 		for (const qunique_ptr<civilian_unit> &civilian_unit : this->civilian_units) {
 			co_await civilian_unit->do_turn();
@@ -817,6 +818,14 @@ void domain_game_data::do_cultural_change()
 			population_unit->set_culture(new_culture);
 			break;
 		}
+	}
+}
+
+void domain_game_data::do_population_promotion()
+{
+	const std::vector<population_unit *> population_units = this->get_population_units();
+	for (population_unit *population_unit : population_units) {
+		population_unit->do_promotion();
 	}
 }
 
@@ -2991,7 +3000,7 @@ void domain_game_data::grow_population()
 	const population_type *population_type = culture->get_population_class_type(site->get_game_data()->get_default_population_class());
 
 	const int64_t population_size = 100;
-	site->get_game_data()->create_population_unit(population_type, culture, religion, phenotype, population_size);
+	site->get_game_data()->change_population(population_type, culture, religion, phenotype, population_size);
 
 	this->change_population_growth(-defines::get()->get_population_growth_threshold());
 }
