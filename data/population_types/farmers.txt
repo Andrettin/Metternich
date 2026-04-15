@@ -8,7 +8,6 @@ farmers = {
 	#output_value = 7sp
 	equivalent_population_types = {
 		laborers
-		soldiers
 		untrained_workers
 	}
 	commodity_demands = {

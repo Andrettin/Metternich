@@ -4,11 +4,6 @@ soldiers = {
 	color = { 200 187 157 }
 	icon = rifle_infantry_light
 	small_icon = rifle_infantry_light_small
-	equivalent_population_types = {
-		farmers
-		laborers
-		untrained_workers
-	}
 	commodity_demands = {
 		clothing = 0.125
 		furniture = 0.125

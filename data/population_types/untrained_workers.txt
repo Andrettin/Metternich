@@ -7,7 +7,6 @@ untrained_workers = {
 	equivalent_population_types = {
 		farmers
 		laborers
-		soldiers
 	}
 	commodity_demands = {
 		clothing = 0.125

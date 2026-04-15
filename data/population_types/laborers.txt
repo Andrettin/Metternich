@@ -8,7 +8,6 @@ laborers = {
 	#output_value = 7sp
 	equivalent_population_types = {
 		farmers
-		soldiers
 		untrained_workers
 	}
 	commodity_demands = {
@@ -20,5 +19,310 @@ laborers = {
 		opium = 0.0625
 		salt = 0.125
 		tea = 0.125
+	}
+	promotion_factors = {
+		aristocrats = {
+			base_value = 0.01
+			
+			modifier = {
+				factor = -100
+				additive = true
+				province = {
+					aristocrats >= 2
+				}
+			}
+		}
+		bureaucrats = {
+			base_value = 0.01
+			
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					bureaucrats >= 0.2
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					bureaucrats >= 0.4
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					bureaucrats >= 0.6
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					bureaucrats >= 0.8
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					bureaucrats >= 1
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					bureaucrats >= 1.2
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					bureaucrats >= 1.4
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					bureaucrats >= 1.6
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					bureaucrats >= 1.8
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					bureaucrats >= 2
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					bureaucrats >= 2.2
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					bureaucrats >= 2.4
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					bureaucrats >= 2.6
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					bureaucrats >= 2.8
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					bureaucrats >= 3
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					bureaucrats >= 3.2
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					bureaucrats >= 3.4
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					bureaucrats >= 3.6
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					bureaucrats >= 3.8
+				}
+			}
+			modifier = {
+				factor = -100
+				additive = true
+				province = {
+					bureaucrats >= 4
+				}
+			}
+		}
+		clergymen = {
+			base_value = 0.01
+			
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					clergymen >= 0.4
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					clergymen >= 0.8
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					clergymen >= 1.2
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					clergymen >= 1.6
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					clergymen >= 2
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					clergymen >= 2.4
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					clergymen >= 2.8
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					clergymen >= 3.2
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					clergymen >= 3.6
+				}
+			}
+			modifier = {
+				factor = -100
+				additive = true
+				province = {
+					clergymen >= 4
+				}
+			}
+		}
+		soldiers = {
+			base_value = 0.01
+			
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					soldiers >= 0.5
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					soldiers >= 1
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					soldiers >= 1.5
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					soldiers >= 2
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					soldiers >= 2.5
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					soldiers >= 3
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					soldiers >= 3.5
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					soldiers >= 4
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					soldiers >= 4.5
+				}
+			}
+			modifier = {
+				factor = -100
+				additive = true
+				province = {
+					soldiers >= 5
+				}
+			}
+		}
 	}
 }
