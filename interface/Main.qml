@@ -23,7 +23,7 @@ ApplicationWindow {
 	property var technology_view_category: null
 	property var technology_view_subcategory: null
 	property int trade_view_mode: TradeView.BalanceBook
-	readonly property bool population_visible: false
+	readonly property bool population_visible: true
 	
 	property var open_dialogs: []
 	
