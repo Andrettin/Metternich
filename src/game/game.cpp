@@ -1676,6 +1676,10 @@ QCoro::Task<void> game::do_turn_coro()
 		}
 
 		for (const domain *domain : this->get_countries()) {
+			if (domain->get_game_data()->get_province_count() == 0) {
+				continue;
+			}
+
 			if (domain->get_turn_data()->is_diplomatic_map_dirty()) {
 				co_await domain->get_game_data()->create_diplomatic_map_image();
 			} else {
