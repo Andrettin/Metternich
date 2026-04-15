@@ -3,6 +3,7 @@ sawmill = {
 	building_class = sawmill
 	portrait = factory
 	icon = lumber
+	size = 1
 	holding_types = {
 		guild
 	}

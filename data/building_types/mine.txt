@@ -3,6 +3,7 @@ mine = {
 	building_class = mine
 	portrait = factory
 	icon = iron_ore
+	size = 1
 	holding_types = {
 		guild
 	}
