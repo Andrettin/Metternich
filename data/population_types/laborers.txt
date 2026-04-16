@@ -521,6 +521,38 @@ laborers = {
 			base_value = 0.01
 			
 			modifier = {
+				factor = 5
+				additive = true
+				or = {
+					law = token_promotion #25%
+					law = standard_promotion
+					law = aggressive_promotion
+					law = expansionist_promotion
+				}
+			}
+			modifier = {
+				factor = 5
+				additive = true
+				or = {
+					law = standard_promotion #50%
+					law = aggressive_promotion
+					law = expansionist_promotion
+				}
+			}
+			modifier = {
+				factor = 5
+				additive = true
+				or = {
+					law = aggressive_promotion #75%
+					law = expansionist_promotion
+				}
+			}
+			modifier = {
+				factor = 5
+				additive = true
+				law = expansionist_promotion #100%
+			}
+			modifier = {
 				factor = -2
 				additive = true
 				province = {
