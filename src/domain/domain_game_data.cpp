@@ -157,6 +157,8 @@ void domain_game_data::process_gsml_property(const gsml_property &property)
 		this->capital = site::get(value);
 	} else if (key == "holding_count") {
 		this->holding_count = std::stoi(value);
+	} else if (key == "consumption") {
+		this->consumption = std::stoi(value);
 	} else if (key == "unrest") {
 		this->unrest = std::stoi(value);
 	} else if (key == "domain_power") {
@@ -234,6 +236,7 @@ gsml_data domain_game_data::to_gsml_data() const
 	}
 
 	data.add_property("holding_count", std::to_string(this->get_holding_count()));
+	data.add_property("consumption", std::to_string(this->get_consumption()));
 	data.add_property("unrest", std::to_string(this->get_unrest()));
 	data.add_property("domain_power", std::to_string(this->get_domain_power()));
 
@@ -604,6 +607,15 @@ QCoro::Task<void> domain_game_data::pay_maintenance()
 		this->get_economy()->change_stored_commodity(defines::get()->get_wealth_commodity(), -domain_maintenance_cost);
 
 		this->domain->get_turn_data()->add_expense_transaction(expense_transaction_type::domain_maintenance, domain_maintenance_cost, nullptr, 0, this->domain);
+	}
+
+	const int64_t domain_consumption_cost = std::min<int64_t>(std::max(this->get_consumption(), 0) * defines::get()->get_domain_income_unit_value(), this->get_economy()->get_stored_commodity(defines::get()->get_wealth_commodity()));
+	if (domain_consumption_cost != 0) {
+		this->get_economy()->change_stored_commodity(defines::get()->get_wealth_commodity(), -domain_consumption_cost);
+
+		this->domain->get_turn_data()->add_expense_transaction(expense_transaction_type::consumption, domain_consumption_cost, nullptr, 0, this->domain);
+
+		//FIXME: increase unrest if the domain cannot pay for its consumption
 	}
 
 	std::vector<military_unit *> military_units_to_disband;
@@ -2846,18 +2858,25 @@ QCoro::Task<void> domain_game_data::change_site_attribute_value(const site_attri
 	}
 }
 
-void domain_game_data::set_unrest(const int unrest)
+void domain_game_data::set_consumption(const int consumption)
 {
-	if (unrest < 0) {
-		this->set_unrest(0);
+	if (consumption == this->get_consumption()) {
 		return;
 	}
 
+	this->consumption = consumption;
+
+	emit consumption_changed();
+}
+
+void domain_game_data::set_unrest(const int unrest)
+{
 	if (unrest == this->get_unrest()) {
 		return;
 	}
 
 	this->unrest = unrest;
+
 	emit unrest_changed();
 }
 

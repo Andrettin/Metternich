@@ -135,6 +135,7 @@ class domain_game_data final : public QObject
 	Q_PROPERTY(QRect realm_diplomatic_map_image_rect READ get_realm_diplomatic_map_image_rect NOTIFY realm_diplomatic_map_image_changed)
 	Q_PROPERTY(QVariantList attribute_values READ get_attribute_values_qvariant_list NOTIFY attribute_values_changed)
 	Q_PROPERTY(QVariantList site_attribute_values READ get_site_attribute_values_qvariant_list NOTIFY site_attribute_values_changed)
+	Q_PROPERTY(int consumption READ get_consumption NOTIFY consumption_changed)
 	Q_PROPERTY(int unrest READ get_effective_unrest NOTIFY unrest_changed)
 	Q_PROPERTY(int score READ get_score NOTIFY score_changed)
 	Q_PROPERTY(int score_rank READ get_score_rank NOTIFY score_rank_changed)
@@ -693,6 +694,18 @@ public:
 	}
 
 	[[nodiscard]] QCoro::Task<void> change_site_attribute_value(const site_attribute *attribute, const int change);
+
+	int get_consumption() const
+	{
+		return this->consumption;
+	}
+
+	void set_consumption(const int consumption);
+
+	void change_consumption(const int change)
+	{
+		this->set_consumption(this->get_consumption() + change);
+	}
 
 	int get_unrest() const
 	{
@@ -1280,6 +1293,7 @@ signals:
 	void realm_diplomatic_map_image_changed();
 	void attribute_values_changed();
 	void site_attribute_values_changed();
+	void consumption_changed();
 	void unrest_changed();
 	void score_changed();
 	void score_rank_changed();
@@ -1345,6 +1359,7 @@ private:
 	QRect realm_diplomatic_map_image_rect;
 	data_entry_map<domain_attribute, int> attribute_values;
 	data_entry_map<site_attribute, int> site_attribute_values;
+	int consumption = 0;
 	int unrest = 0;
 	int score = 0;
 	const country_rank *rank = nullptr;

@@ -14,6 +14,8 @@ namespace metternich {
 QString expense_transaction::get_name() const
 {
 	switch (this->get_type()) {
+		case expense_transaction_type::consumption:
+			return "Consumption";
 		case expense_transaction_type::domain_maintenance:
 			return "Domain Maintenance";
 		case expense_transaction_type::military_maintenance:
@@ -28,6 +30,7 @@ QString expense_transaction::get_name() const
 const icon *expense_transaction::get_icon() const
 {
 	switch (this->get_type()) {
+		case expense_transaction_type::consumption:
 		case expense_transaction_type::domain_maintenance:
 		case expense_transaction_type::military_maintenance:
 			return defines::get()->get_wealth_commodity()->get_icon();
@@ -47,6 +50,9 @@ QString expense_transaction::get_description() const
 	switch (this->get_type()) {
 		case expense_transaction_type::purchase:
 			str = std::format("Bought {} {} from {} for {}", number::to_formatted_string(this->get_object_quantity()), this->get_object_name(), this->get_country()->get_game_data()->get_name(), amount_str);
+			break;
+		case expense_transaction_type::consumption:
+			str = std::format("Paid {} in consumption", amount_str);
 			break;
 		case expense_transaction_type::domain_maintenance:
 			str = std::format("Paid {} in domain maintenance", amount_str);
