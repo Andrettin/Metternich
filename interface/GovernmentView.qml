@@ -64,19 +64,19 @@ Item {
 		visible: country && country.game_data.scripted_modifiers.length > 0
 	}
 	
-	Column {
-		id: law_groups_column
+	Grid {
+		id: law_groups_grid
 		anchors.top: scripted_modifier_row.visible ? scripted_modifier_row.bottom : domain_tier_icon.bottom
 		anchors.topMargin: 16 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
-		spacing: 8 * scale_factor
+		spacing: 16 * scale_factor
+		columns: 3
 		
 		Repeater {
 			model: country_game_data.government.laws
 			
 			Item {
 				id: law_group_item
-				anchors.horizontalCenter: parent.horizontalCenter
 				width: Math.max(law_group_label.width, laws_column.width)
 				height: laws_column.y + laws_column.height
 				

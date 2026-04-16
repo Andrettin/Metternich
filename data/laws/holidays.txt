@@ -1,0 +1,63 @@
+no_holidays = {
+	name = "No Holidays"
+	group = holidays
+	icon = music
+	commodity_costs = {
+		wealth = 1gb
+	}
+	modifier = {
+		loyalty = -1
+	}
+}
+
+1_holiday_per_year = {
+	name = "1 Holiday per Year"
+	group = holidays
+	icon = music
+	commodity_costs = {
+		wealth = 1gb
+	}
+	modifier = {
+		loyalty = 1
+		consumption = 1
+	}
+}
+
+6_holidays_per_year = {
+	name = "6 Holidays per Year"
+	group = holidays
+	icon = music
+	commodity_costs = {
+		wealth = 1gb
+	}
+	modifier = {
+		loyalty = 2
+		consumption = 2
+	}
+}
+
+12_holidays_per_year = {
+	name = "12 Holidays per Year"
+	group = holidays
+	icon = music
+	commodity_costs = {
+		wealth = 1gb
+	}
+	modifier = {
+		loyalty = 3
+		consumption = 4
+	}
+}
+
+24_holidays_per_year = {
+	name = "24 Holidays per Year"
+	group = holidays
+	icon = music
+	commodity_costs = {
+		wealth = 1gb
+	}
+	modifier = {
+		loyalty = 4
+		consumption = 8
+	}
+}

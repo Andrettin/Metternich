@@ -23,6 +23,11 @@ serfdom = {
 	default_law = free_subjects
 }
 
+holidays = {
+	name = "Holidays"
+	default_law = no_holidays
+}
+
 promotion = {
 	name = "Promotion"
 	default_law = no_promotion
