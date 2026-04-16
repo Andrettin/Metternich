@@ -1,6 +1,6 @@
 #pragma once
 
-#include "util/centesimal_int.h"
+#include "util/decimillesimal_int.h"
 
 namespace archimedes {
 	class gsml_data;
@@ -31,7 +31,7 @@ public:
 	void process_gsml_data(const gsml_data &data);
 	void check_validity() const;
 
-	const centesimal_int &get_factor() const
+	const decimillesimal_int &get_factor() const
 	{
 		return this->factor;
 	}
@@ -44,7 +44,7 @@ public:
 	bool check_conditions(const scope_type *scope) const;
 
 private:
-	centesimal_int factor; //the factor of the modifier itself
+	decimillesimal_int factor; //the factor of the modifier itself
 	bool additive = false; //whether the modifier is additive instead of multiplicative
 	std::unique_ptr<and_condition<scope_type>> conditions; //conditions for whether the modifier is to be applied
 };

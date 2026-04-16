@@ -32,7 +32,7 @@ void factor_modifier<scope_type>::process_gsml_property(const gsml_property &pro
 
 	if (key == "factor") {
 		if (gsml_operator == gsml_operator::assignment) {
-			this->factor = centesimal_int(value);
+			this->factor = decimillesimal_int(value);
 		} else {
 			throw std::runtime_error(std::format("Invalid operator for property (\"{}\").", property.get_key()));
 		}

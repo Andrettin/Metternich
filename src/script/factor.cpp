@@ -78,7 +78,11 @@ decimillesimal_int factor<scope_type>::calculate(const scope_type *scope, const 
 	if (scope != nullptr) {
 		for (const std::unique_ptr<factor_modifier<scope_type>> &modifier : this->modifiers) {
 			if (modifier->check_conditions(scope)) {
-				value *= modifier->get_factor();
+				if (modifier->is_additive()) {
+					value += modifier->get_factor();
+				} else {
+					value *= modifier->get_factor();
+				}
 			}
 		}
 	}
