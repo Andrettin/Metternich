@@ -282,6 +282,16 @@ void population_unit::set_literacy_rate(const decimillesimal_int &literacy_rate)
 		return;
 	}
 
+	if (literacy_rate > 100) {
+		this->set_literacy_rate(decimillesimal_int(100));
+		return;
+	}
+
+	if (literacy_rate < 100) {
+		this->set_literacy_rate(decimillesimal_int(0));
+		return;
+	}
+
 	this->get_site()->get_game_data()->get_population()->change_literate_size(-this->get_literate_size());
 
 	this->literacy_rate = literacy_rate;

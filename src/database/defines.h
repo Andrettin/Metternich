@@ -80,6 +80,9 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(metternich::population_class* default_tribal_population_class MEMBER default_tribal_population_class)
 	Q_PROPERTY(int population_growth_threshold MEMBER population_growth_threshold READ get_population_growth_threshold NOTIFY changed)
 	Q_PROPERTY(archimedes::decimillesimal_int base_monthly_promotion_rate MEMBER base_monthly_promotion_rate READ get_base_monthly_promotion_rate NOTIFY changed)
+	Q_PROPERTY(archimedes::decimillesimal_int base_monthly_literacy_change_rate MEMBER base_monthly_literacy_change_rate READ get_base_monthly_literacy_change_rate NOTIFY changed)
+	Q_PROPERTY(archimedes::decimillesimal_int base_literacy_educator_percent MEMBER base_literacy_educator_percent READ get_base_literacy_educator_percent NOTIFY changed)
+	Q_PROPERTY(archimedes::decimillesimal_int max_literacy_educator_percent MEMBER max_literacy_educator_percent READ get_max_literacy_educator_percent NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity* wealth_commodity MEMBER wealth_commodity READ get_wealth_commodity NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity* regency_commodity MEMBER regency_commodity READ get_regency_commodity NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity* piety_commodity MEMBER piety_commodity NOTIFY changed)
@@ -277,6 +280,21 @@ public:
 	const decimillesimal_int &get_base_monthly_promotion_rate() const
 	{
 		return this->base_monthly_promotion_rate;
+	}
+
+	const decimillesimal_int &get_base_monthly_literacy_change_rate() const
+	{
+		return this->base_monthly_literacy_change_rate;
+	}
+
+	const decimillesimal_int &get_base_literacy_educator_percent() const
+	{
+		return this->base_literacy_educator_percent;
+	}
+
+	const decimillesimal_int &get_max_literacy_educator_percent() const
+	{
+		return this->max_literacy_educator_percent;
 	}
 
 	const factor<population_unit> *get_promotion_chance() const
@@ -560,6 +578,9 @@ private:
 	population_class *default_tribal_population_class = nullptr;
 	int population_growth_threshold = 100;
 	decimillesimal_int base_monthly_promotion_rate;
+	decimillesimal_int base_monthly_literacy_change_rate;
+	decimillesimal_int base_literacy_educator_percent;
+	decimillesimal_int max_literacy_educator_percent;
 	std::unique_ptr<factor<population_unit>> promotion_chance;
 	std::unique_ptr<factor<population_unit>> demotion_chance;
 	commodity_map<int> settlement_commodity_bonuses;

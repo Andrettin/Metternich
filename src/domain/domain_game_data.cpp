@@ -474,6 +474,7 @@ QCoro::Task<void> domain_game_data::do_turn()
 		co_await this->get_technology()->do_research();
 		this->do_population_growth();
 		this->do_cultural_change();
+		this->do_population_literacy_change();
 		this->do_population_promotion();
 
 		for (const qunique_ptr<civilian_unit> &civilian_unit : this->civilian_units) {
@@ -818,6 +819,13 @@ void domain_game_data::do_cultural_change()
 			population_unit->set_culture(new_culture);
 			break;
 		}
+	}
+}
+
+void domain_game_data::do_population_literacy_change()
+{
+	for (const province *province : this->get_provinces()) {
+		province->get_game_data()->do_population_literacy_change();
 	}
 }
 
@@ -3014,7 +3022,6 @@ void domain_game_data::decrease_population(const bool change_population_growth)
 			if (change_population_growth) {
 				this->change_population_growth(1);
 			}
-			population_unit->get_province()->get_game_data()->remove_population_unit(population_unit);
 			population_unit->get_site()->get_game_data()->pop_population_unit(population_unit);
 			return;
 		}

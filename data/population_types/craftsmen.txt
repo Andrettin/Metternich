@@ -8,11 +8,6 @@ craftsmen = {
 	#output_commodity = wealth
 	#output_value = 7sp
 	#output_modifier = 25
-	equivalent_population_types = {
-		farmers
-		soldiers
-		untrained_workers
-	}
 	commodity_demands = {
 		clothing = 0.125
 		furniture = 0.125

@@ -1941,6 +1941,7 @@ qunique_ptr<population_unit> site_game_data::pop_population_unit(population_unit
 			qunique_ptr<metternich::population_unit> population_unit_unique_ptr = std::move(this->population_units[i]);
 			this->population_units.erase(this->population_units.begin() + i);
 
+			population_unit->get_province()->get_game_data()->remove_population_unit(population_unit);
 			population_unit->set_site(nullptr);
 
 			this->get_population()->on_population_unit_lost(population_unit);

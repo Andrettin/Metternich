@@ -21,7 +21,7 @@ class population final : public QObject
 	Q_PROPERTY(QVariantList culture_sizes READ get_culture_sizes_qvariant_list NOTIFY culture_sizes_changed)
 	Q_PROPERTY(QVariantList religion_sizes READ get_religion_sizes_qvariant_list NOTIFY religion_sizes_changed)
 	Q_PROPERTY(QVariantList phenotype_sizes READ get_phenotype_sizes_qvariant_list NOTIFY phenotype_sizes_changed)
-	Q_PROPERTY(int literacy_rate READ get_literacy_rate NOTIFY literate_size_changed)
+	Q_PROPERTY(QString literacy_rate READ get_literacy_rate_qstring NOTIFY literate_size_changed)
 	Q_PROPERTY(int literate_size READ get_literate_size NOTIFY literate_size_changed)
 
 public:
@@ -151,13 +151,18 @@ public:
 
 	void change_literate_size(const int64_t change);
 
-	int get_literacy_rate() const
+	centesimal_int get_literacy_rate() const
 	{
 		if (this->get_population_unit_count() == 0) {
-			return 0;
+			return centesimal_int(0);
 		}
 
-		return static_cast<int>(this->get_literate_size() * 100 / this->get_size());
+		return centesimal_int(this->get_literate_size()) * 100 / this->get_size();
+	}
+
+	QString get_literacy_rate_qstring() const
+	{
+		return QString::fromStdString(this->get_literacy_rate().to_string());
 	}
 
 	void add_upper_population(population *upper_population)

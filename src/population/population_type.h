@@ -42,9 +42,10 @@ class population_type final : public named_data_entry, public data_type<populati
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
 	Q_PROPERTY(metternich::cultural_group* cultural_group MEMBER cultural_group NOTIFY changed)
 	Q_PROPERTY(QColor color MEMBER color READ get_color NOTIFY changed)
-	Q_PROPERTY(metternich::population_strata strata MEMBER strata NOTIFY changed)
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
 	Q_PROPERTY(metternich::icon* small_icon MEMBER small_icon NOTIFY changed)
+	Q_PROPERTY(metternich::population_strata strata MEMBER strata READ get_strata NOTIFY changed)
+	Q_PROPERTY(bool educator MEMBER educator READ is_educator NOTIFY changed)
 	Q_PROPERTY(metternich::commodity* output_commodity MEMBER output_commodity NOTIFY changed)
 	Q_PROPERTY(int output_value MEMBER output_value READ get_output_value NOTIFY changed)
 	Q_PROPERTY(int output_modifier MEMBER output_modifier READ get_output_modifier NOTIFY changed)
@@ -89,11 +90,6 @@ public:
 		return this->color;
 	}
 
-	population_strata get_strata() const
-	{
-		return this->strata;
-	}
-
 	const metternich::icon *get_icon() const
 	{
 		return this->icon;
@@ -122,6 +118,16 @@ public:
 		}
 
 		return this->get_small_icon();
+	}
+
+	population_strata get_strata() const
+	{
+		return this->strata;
+	}
+
+	bool is_educator() const
+	{
+		return this->educator;
 	}
 
 	const commodity_map<decimillesimal_int> &get_commodity_demands() const
@@ -192,10 +198,10 @@ private:
 	metternich::culture *culture = nullptr;
 	metternich::cultural_group *cultural_group = nullptr;
 	QColor color;
-	population_strata strata{};
-	bool literate = false;
 	metternich::icon *icon = nullptr;
 	metternich::icon *small_icon = nullptr;
+	population_strata strata{};
+	bool educator = false;
 	phenotype_map<const metternich::icon *> phenotype_icons;
 	phenotype_map<const metternich::icon *> phenotype_small_icons;
 	commodity_map<decimillesimal_int> commodity_demands;

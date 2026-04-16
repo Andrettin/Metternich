@@ -95,6 +95,7 @@ public:
 	void do_ai_turn();
 	void collect_taxes();
 	[[nodiscard]] QCoro::Task<void> do_military_unit_recruitment();
+	void do_population_literacy_change();
 
 	bool is_on_map() const;
 

@@ -282,6 +282,30 @@ QCoro::Task<void> province_game_data::do_military_unit_recruitment()
 	}
 }
 
+void province_game_data::do_population_literacy_change()
+{
+	if (this->get_population()->get_size() == 0) {
+		return;
+	}
+
+	int64_t educator_size = 0;
+	for (const auto &[population_type, population_type_size] : this->get_population()->get_type_sizes()) {
+		if (population_type->is_educator()) {
+			educator_size += population_type_size;
+		}
+	}
+
+	const decimillesimal_int educator_percent = decimillesimal_int(educator_size) * 100 / this->get_population()->get_size();
+
+	const decimillesimal_int monthly_literacy_change_rate = (educator_percent - defines::get()->get_base_literacy_educator_percent()) * defines::get()->get_base_monthly_literacy_change_rate() / (defines::get()->get_max_literacy_educator_percent() - defines::get()->get_base_literacy_educator_percent());
+
+	const decimillesimal_int literacy_change_rate = monthly_literacy_change_rate * game::get()->get_current_months_per_turn() / 100;
+
+	for (population_unit *population_unit : this->get_population_units()) {
+		population_unit->change_literacy_rate(literacy_change_rate);
+	}
+}
+
 bool province_game_data::is_on_map() const
 {
 	return this->province->get_map_data()->is_on_map();
@@ -324,7 +348,8 @@ QCoro::Task<void> province_game_data::set_owner(const domain *domain)
 		}
 	} else {
 		//remove population if this province becomes unowned
-		for (population_unit *population_unit : this->population_units) {
+		std::vector<population_unit *> population_units = this->population_units;
+		for (population_unit *population_unit : population_units) {
 			population_unit->get_site()->get_game_data()->pop_population_unit(population_unit);
 		}
 	}

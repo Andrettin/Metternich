@@ -5,6 +5,7 @@ clergymen = {
 	icon = rifle_infantry_light
 	small_icon = rifle_infantry_light_small
 	strata = middle
+	educator = true
 	commodity_demands = {
 		clothing = 0.25
 		furniture = 0.25

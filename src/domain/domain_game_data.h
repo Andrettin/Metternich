@@ -187,6 +187,7 @@ public:
 	void do_food_consumption(const int food_consumption);
 	void do_starvation();
 	void do_cultural_change();
+	void do_population_literacy_change();
 	void do_population_promotion();
 	[[nodiscard]] QCoro::Task<void> do_events();
 
