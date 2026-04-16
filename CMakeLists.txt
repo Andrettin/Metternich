@@ -719,6 +719,7 @@ set(script_condition_HDRS
 	src/script/condition/item_condition.h
 	src/script/condition/law_condition.h
 	src/script/condition/level_condition.h
+	src/script/condition/literacy_rate_condition.h
 	src/script/condition/military_unit_category_condition.h
 	src/script/condition/military_unit_domain_condition.h
 	src/script/condition/military_unit_type_condition.h

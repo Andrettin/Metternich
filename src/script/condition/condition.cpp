@@ -79,6 +79,7 @@
 #include "script/condition/item_condition.h"
 #include "script/condition/law_condition.h"
 #include "script/condition/level_condition.h"
+#include "script/condition/literacy_rate_condition.h"
 #include "script/condition/military_unit_category_condition.h"
 #include "script/condition/military_unit_domain_condition.h"
 #include "script/condition/military_unit_type_condition.h"
@@ -329,6 +330,12 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			return std::make_unique<has_population_type_condition<scope_type>>(value, condition_operator);
 		} else if (population_type::try_get(key) != nullptr) {
 			return std::make_unique<population_type_percent_condition<scope_type>>(population_type::get(key), value, condition_operator);
+		}
+	}
+
+	if constexpr (std::is_same_v<scope_type, domain> || std::is_same_v<scope_type, population_unit> || std::is_same_v<scope_type, province> || std::is_same_v<scope_type, site>) {
+		if (key == "literacy_rate") {
+			return std::make_unique<literacy_rate_condition<scope_type>>(value, condition_operator);
 		}
 	}
 
