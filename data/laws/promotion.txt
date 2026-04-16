@@ -1,0 +1,63 @@
+no_promotion = {
+	name = "No Promotion"
+	group = promotion
+	icon = flag
+	commodity_costs = {
+		wealth = 1gb
+	}
+	modifier = {
+		stability = -1
+	}
+}
+
+token_promotion = {
+	name = "Token Promotion"
+	group = promotion
+	icon = flag
+	commodity_costs = {
+		wealth = 1gb
+	}
+	modifier = {
+		stability = 1
+		consumption = 1
+	}
+}
+
+standard_promotion = {
+	name = "Standard Promotion"
+	group = promotion
+	icon = flag
+	commodity_costs = {
+		wealth = 1gb
+	}
+	modifier = {
+		stability = 2
+		consumption = 2
+	}
+}
+
+aggressive_promotion = {
+	name = "Aggressive Promotion"
+	group = promotion
+	icon = flag
+	commodity_costs = {
+		wealth = 1gb
+	}
+	modifier = {
+		stability = 3
+		consumption = 4
+	}
+}
+
+expansionist_promotion = {
+	name = "Expansionist Promotion"
+	group = promotion
+	icon = flag
+	commodity_costs = {
+		wealth = 1gb
+	}
+	modifier = {
+		stability = 4
+		consumption = 8
+	}
+}

@@ -23,6 +23,11 @@ serfdom = {
 	default_law = free_subjects
 }
 
+promotion = {
+	name = "Promotion"
+	default_law = no_promotion
+}
+
 press_rights = {
 	name = "Press Rights"
 	default_law = state_press
