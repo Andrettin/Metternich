@@ -12,6 +12,7 @@ Rectangle {
 	readonly property var province_game_data: selected_province ? selected_province.game_data : null
 	readonly property var selected_site_game_data: selected_site ? selected_site.game_data : null
 	property bool viewing_population: false
+	property bool viewing_population_units: false
 	property bool viewing_settlement_info: false
 	
 	PanelTiledBackground {
@@ -187,7 +188,7 @@ Rectangle {
 		anchors.bottomMargin: 8 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
 		site: selected_site
-		visible: selected_site && !selected_garrison && selected_site.game_data.features.length > 0
+		visible: selected_site && !selected_garrison && selected_site.game_data.features.length > 0 && !viewing_population && !viewing_population_units
 	}
 	
 	ScriptedModifierRow {
@@ -206,7 +207,7 @@ Rectangle {
 		anchors.left: parent.left
 		anchors.right: parent.right
 		visible_rows: 2
-		visible: selected_site !== null && selected_site.settlement && !selected_garrison && !viewing_population && !viewing_settlement_info
+		visible: selected_site !== null && selected_site.settlement && !selected_garrison && !viewing_population && !viewing_population_units && !viewing_settlement_info
 		building_slots: selected_site !== null && selected_site.settlement ? selected_site_game_data.visible_building_slots : []
 	}
 	
@@ -260,7 +261,7 @@ Rectangle {
 				+ (selected_site_game_data.commodity_outputs.length > 0 ? get_commodity_outputs_string(selected_site_game_data.commodity_outputs) : "")
 			) : ""
 		)
-		visible: selected_site && !selected_garrison && !viewing_population
+		visible: selected_site && !selected_garrison && !viewing_population && !viewing_population_units
 		
 		readonly property var holding_type: selected_site_game_data ? selected_site_game_data.holding_type : null
 		readonly property var dungeon: selected_site_game_data ? selected_site_game_data.dungeon : null
@@ -393,13 +394,27 @@ Rectangle {
 		}
 	}
 	
+	PopulationUnitColumn {
+		id: population_unit_column_grid
+		anchors.top: title.bottom
+		anchors.topMargin: 16 * scale_factor
+		anchors.bottom: bottom_button_row.top
+		anchors.bottomMargin: 8 * scale_factor
+		anchors.left: parent.left
+		anchors.leftMargin: 8 * scale_factor
+		anchors.right: parent.right
+		anchors.rightMargin: 8 * scale_factor
+		visible: selected_site !== null && selected_site.game_data.can_have_population() && selected_site.game_data.is_built() && !selected_garrison && viewing_population_units
+		population_units: selected_site ? selected_site.game_data.population_units : []
+	}
+	
 	PortraitButton {
 		id: holder_portrait
 		anchors.top: selected_site !== null && !selected_site.settlement ? site_info_text.bottom : title.bottom
 		anchors.topMargin: 16 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
 		portrait_identifier: holder ? holder.game_data.portrait.identifier : ""
-		visible: holder !== null && (viewing_settlement_info || (selected_site !== null && !selected_site.settlement)) && !viewing_population
+		visible: holder !== null && (viewing_settlement_info || (selected_site !== null && !selected_site.settlement)) && !viewing_population && !viewing_population_units
 		circle: true
 		
 		readonly property var holder: selected_site !== null && selected_site.settlement && province_game_data ? province_game_data.governor : null
@@ -505,12 +520,33 @@ Rectangle {
 			
 			onClicked: {
 				viewing_population = true
+				viewing_population_units = false
 				viewing_settlement_info = false
 			}
 			
 			onHoveredChanged: {
 				if (hovered) {
 					status_text = "View " + (selected_site !== null && selected_site.settlement ? "Settlement" : "Site") + " Population"
+				} else {
+					status_text = ""
+				}
+			}
+		}
+		
+		IconButton {
+			id: population_units_button
+			icon_identifier: "craftsmen_light_small"
+			visible: selected_site !== null && selected_site.game_data.can_have_population() && selected_site.game_data.is_built() && !selected_garrison
+			
+			onClicked: {
+				viewing_population_units = true
+				viewing_population = false
+				viewing_settlement_info = false
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "View Population Units"
 				} else {
 					status_text = ""
 				}
@@ -613,6 +649,7 @@ Rectangle {
 			onClicked: {
 				viewing_settlement_info = true
 				viewing_population = false
+				viewing_population_units = false
 			}
 			
 			onHoveredChanged: {
@@ -625,22 +662,24 @@ Rectangle {
 		}
 		
 		IconButton {
-			id: population_back_button
+			id: back_to_holding_button
 			icon_identifier: "settlement"
-			visible: selected_site !== null && selected_site.game_data.can_have_population() && selected_site.game_data.is_built() && !selected_garrison && viewing_population
+			visible: selected_site !== null && !selected_garrison && (viewing_population || viewing_population_units)
 			
 			onClicked: {
 				viewing_population = false
+				viewing_population_units = false
 			}
 			
 			onHoveredChanged: {
 				if (hovered) {
-					status_text = selected_site.settlement ? "Back to Settlement" : "Back to Site"
+					status_text = selected_site.settlement ? "Back to Holding" : "Back to Site"
 				} else {
 					status_text = ""
 				}
 			}
 		}
+		
 		IconButton {
 			id: back_to_province_button
 			icon_identifier: "mountains"
