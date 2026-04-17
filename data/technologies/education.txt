@@ -495,6 +495,30 @@ university = {
 			has_building_class = waterfront
 		}
 		modifier = {
+			factor = 0.95
+			domain = {
+				ruler = {
+					trade >= 2
+				}
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				ruler = {
+					trade >= 3
+				}
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				ruler = {
+					trade >= 4
+				}
+			}
+		}
+		modifier = {
 			factor = 0.75
 			domain = {
 				tier >= kingdom
@@ -510,6 +534,48 @@ university = {
 			factor = 5
 			domain = {
 				war = true
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_medium_high_stability
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_high_stability
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_maximal_stability
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_medium_stability
+				}
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_medium_low_stability
+				}
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_low_stability
+				}
 			}
 		}
 		modifier = {
@@ -536,6 +602,30 @@ university = {
 			factor = 0.9
 			source_province = {
 				has_building_class = waterfront
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				ruler = {
+					trade >= 2
+				}
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				ruler = {
+					trade >= 3
+				}
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				ruler = {
+					trade >= 4
+				}
 			}
 		}
 		modifier = {
@@ -573,6 +663,48 @@ university = {
 			capital = true
 			source_province = {
 				realm = root
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_medium_high_stability
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_high_stability
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_maximal_stability
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_medium_stability
+				}
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_medium_low_stability
+				}
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_low_stability
+				}
 			}
 		}
 	}
