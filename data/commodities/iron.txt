@@ -1,13 +1,10 @@
-iron_ore = {
-	name = "Iron Ore"
+iron = {
+	name = "Iron"
 	type = resource
-	icon = iron_ore
-	base_price = 100
-}
-
-cast_iron = {
-	name = "Cast Iron"
-	type = material
 	icon = iron
-	base_price = 300
+	base_price = 10 #1sp
+	units = {
+		1 = lb
+		2000 = tn
+	}
 }

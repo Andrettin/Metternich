@@ -1,6 +1,6 @@
 iron_ore = {
 	name = "Iron Ore"
-	commodity = iron_ore
+	commodity = iron
 	tiny_icon = trade_consulate
 	prospectable = true
 	terrain_types = {

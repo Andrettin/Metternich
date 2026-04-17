@@ -11,7 +11,7 @@ fluyte = {
 	required_technology = renaissance
 	commodity_costs = {
 		lumber = 6
-		cast_iron = 2
+		iron = 2
 		fabric = 2
 	}
 	upgrades = {

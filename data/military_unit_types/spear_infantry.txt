@@ -78,7 +78,7 @@ halberdiers = {
 	commodity_costs = {
 		manpower = 1
 		fabric = 1
-		cast_iron = 2
+		iron = 2
 	}
 	upgrades = {
 		regulars

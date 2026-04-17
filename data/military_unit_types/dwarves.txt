@@ -32,7 +32,7 @@ dwarven_stalwarts = {
 	commodity_costs = {
 		manpower = 1
 		fabric = 1
-		cast_iron = 1
+		iron = 1
 	}
 	upgrades = {
 		dwarven_sentinels
@@ -54,7 +54,7 @@ dwarven_sentinels = {
 	commodity_costs = {
 		manpower = 1
 		fabric = 1
-		cast_iron = 2
+		iron = 2
 	}
 	upgrades = {
 		regulars

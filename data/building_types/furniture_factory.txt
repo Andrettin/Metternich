@@ -18,7 +18,7 @@ carpenters_house = {
 	}
 	commodity_costs = {
 		lumber = 2
-		cast_iron = 2
+		iron = 2
 	}
 }
 
@@ -42,7 +42,7 @@ carpenters_shop = {
 	}
 	commodity_costs = {
 		lumber = 4
-		cast_iron = 4
+		iron = 4
 	}
 }
 
