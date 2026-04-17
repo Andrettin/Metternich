@@ -79,6 +79,7 @@ class site_game_data final : public QObject
 	Q_PROPERTY(QVariantList item_slots READ get_item_slots_qvariant_list NOTIFY item_slots_changed)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(metternich::population* population READ get_population CONSTANT)
+	Q_PROPERTY(QVariantList population_units READ get_population_units_qvariant_list NOTIFY population_units_changed)
 	Q_PROPERTY(int population_unit_count READ get_population_unit_count NOTIFY population_units_changed)
 	Q_PROPERTY(qint64 population_capacity READ get_population_capacity NOTIFY population_capacity_changed)
 	Q_PROPERTY(int total_building_size READ get_total_building_size NOTIFY total_building_size_changed)
@@ -382,6 +383,8 @@ public:
 	{
 		return this->population_units;
 	}
+
+	QVariantList get_population_units_qvariant_list() const;
 
 	int get_population_unit_count() const
 	{

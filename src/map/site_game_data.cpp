@@ -1923,6 +1923,11 @@ bool site_game_data::can_have_population_type(const population_type *type) const
 	}
 }
 
+QVariantList site_game_data::get_population_units_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_population_units());
+}
+
 QCoro::Task<void> site_game_data::decrement_scripted_modifiers()
 {
 	if (this->scripted_modifiers.empty()) {
