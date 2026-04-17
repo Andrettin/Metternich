@@ -8,6 +8,16 @@ university = {
 	slot_type = university
 }
 
+monastic_school = {
+	name = "Monastic School"
+	slot_type = university
+}
+
+cathedral_school = {
+	name = "Cathedral School"
+	slot_type = university
+}
+
 bardic_college = {
 	name = "Bardic College"
 	slot_type = bardic_college

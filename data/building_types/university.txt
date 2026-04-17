@@ -89,3 +89,42 @@ university = {
 		medium_scroll_or_wondrous_item
 	}
 }
+
+monastic_school = {
+	name = "Monastic School"
+	building_class = monastic_school
+	portrait = university
+	icon = wooden_cross
+	holding_types = {
+		temple
+	}
+	required_buildings = {
+		monastery
+	}
+	commodity_costs = {
+		wealth = 18000gp
+	}
+	province_modifier = {
+		technology_spread = 10
+	}
+}
+
+cathedral_school = {
+	name = "Cathedral School"
+	building_class = cathedral_school
+	portrait = university
+	icon = wooden_cross
+	base_building = monastic_school
+	holding_types = {
+		temple
+	}
+	required_buildings = {
+		cathedral
+	}
+	commodity_costs = {
+		wealth = 18000gp
+	}
+	province_modifier = {
+		technology_spread = 20
+	}
+}
