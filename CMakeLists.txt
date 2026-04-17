@@ -866,6 +866,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/deployment_limit_modifier_effect.h
 	src/script/modifier_effect/diplomatic_penalty_for_expansion_modifier_effect.h
 	src/script/modifier_effect/domain_attribute_modifier_effect.h
+	src/script/modifier_effect/employment_capacity_modifier_effect.h
 	src/script/modifier_effect/free_artillery_promotion_modifier_effect.h
 	src/script/modifier_effect/free_building_class_modifier_effect.h
 	src/script/modifier_effect/free_cavalry_promotion_modifier_effect.h

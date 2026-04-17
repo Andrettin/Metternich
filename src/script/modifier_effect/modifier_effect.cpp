@@ -32,6 +32,7 @@
 #include "script/modifier_effect/deployment_limit_modifier_effect.h"
 #include "script/modifier_effect/diplomatic_penalty_for_expansion_modifier_effect.h"
 #include "script/modifier_effect/domain_attribute_modifier_effect.h"
+#include "script/modifier_effect/employment_capacity_modifier_effect.h"
 #include "script/modifier_effect/free_artillery_promotion_modifier_effect.h"
 #include "script/modifier_effect/free_building_class_modifier_effect.h"
 #include "script/modifier_effect/free_cavalry_promotion_modifier_effect.h"
@@ -323,6 +324,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 	} else if constexpr (std::is_same_v<scope_type, const site>) {
 		if (tag == "commodity_bonus_per_adjacent_terrain") {
 			modifier_effect = std::make_unique<commodity_bonus_per_adjacent_terrain_modifier_effect>();
+		} else if (tag == "employment_capacity") {
+			modifier_effect = std::make_unique<employment_capacity_modifier_effect>();
 		}
 	}
 	

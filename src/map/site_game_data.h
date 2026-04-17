@@ -417,6 +417,24 @@ public:
 
 	int64_t get_available_population_capacity() const;
 
+	const data_entry_map<employment_type, int64_t> &get_employment_capacities() const
+	{
+		return this->employment_capacities;
+	}
+
+	int64_t get_employment_capacity(const employment_type *employment_type) const
+	{
+		const auto find_iterator = this->employment_capacities.find(employment_type);
+
+		if (find_iterator != this->employment_capacities.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void change_employment_capacity(const employment_type *employment_type, const int64_t change);
+
 	int get_free_food_consumption() const
 	{
 		return this->free_food_consumption;

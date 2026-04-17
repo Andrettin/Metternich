@@ -17,6 +17,7 @@
 #include "domain/domain_game_data.h"
 #include "domain/domain_government.h"
 #include "economy/commodity.h"
+#include "economy/employment_type.h"
 #include "economy/income_transaction_type.h"
 #include "economy/resource.h"
 #include "engine_interface.h"
@@ -172,6 +173,10 @@ void site_game_data::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_child([this](const gsml_data &child_scope) {
 			this->add_building_slot(make_qunique<building_slot>(child_scope, this->site));
 		});
+	} else if (tag == "employment_capacities") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->employment_capacities[employment_type::get(property.get_key())] = std::stoll(property.get_value());
+		});
 	} else if (tag == "homed_characters") {
 		for (const std::string &value : values) {
 			this->homed_characters.push_back(game::get()->get_character(value));
@@ -259,6 +264,14 @@ gsml_data site_game_data::to_gsml_data() const
 
 	if (this->get_population_capacity() != 0) {
 		data.add_property("population_capacity", std::to_string(this->get_population_capacity()));
+	}
+
+	if (this->get_employment_capacities().empty()) {
+		gsml_data employment_capacities_data("employment_capacities");
+		for (const auto &[employment_type, employment_capacity] : this->get_employment_capacities()) {
+			employment_capacities_data.add_property(employment_type->get_identifier(), std::to_string(employment_capacity));
+		}
+		data.add_child(std::move(employment_capacities_data));
 	}
 
 	if (!this->get_homed_characters().empty()) {
@@ -2057,6 +2070,19 @@ int64_t site_game_data::get_available_population_capacity() const
 {
 	const int64_t available_capacity = this->get_population_capacity() - this->get_population()->get_size();
 	return std::max(0ll, available_capacity);
+}
+
+void site_game_data::change_employment_capacity(const employment_type *employment_type, const int64_t change)
+{
+	assert_throw(employment_type != nullptr);
+
+	const int64_t capacity = (this->employment_capacities[employment_type] += change);
+
+	assert_throw(capacity >= 0);
+
+	if (capacity == 0) {
+		this->employment_capacities.erase(employment_type);
+	}
 }
 
 void site_game_data::change_total_building_size(const int change)
