@@ -2,5 +2,8 @@ silk = {
 	name = "Silk"
 	type = resource
 	icon = silk
-	base_price = 100
+	wealth_value = 1000 #10gp
+	units = {
+		1 = sq_yd
+	}
 }
