@@ -254,6 +254,7 @@ Rectangle {
 				+ ((selected_site.max_holding_level > 0 && dungeon === null) ? ("\nFortification Level: " + selected_site_game_data.fortification_level) : "")
 				+ (dungeon && dungeon.level !== 0 ? ("Dungeon Level: " + dungeon.level) : "")
 				+ (holding_type !== null && population_visible ? ("\nPopulation: " + number_string(selected_site_game_data.population.size)) : "")
+				+ (holding_type !== null && population_visible ? ("\nPopulation Capacity: " + number_string(selected_site_game_data.population_capacity)) : "")
 				+ (income_string.length > 0 ? ("\nIncome: " + income_string) : "")
 				+ (selected_site_game_data.attribute_values.length > 0 ? ("\n" + object_counts_to_string(selected_site_game_data.attribute_values)) : "")
 				+ (selected_site_game_data.commodity_outputs.length > 0 ? get_commodity_outputs_string(selected_site_game_data.commodity_outputs) : "")
