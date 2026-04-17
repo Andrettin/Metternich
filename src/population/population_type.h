@@ -26,6 +26,7 @@ class culture;
 class icon;
 class phenotype;
 class population_class;
+class population_unit;
 enum class population_strata;
 
 template <typename scope_type>

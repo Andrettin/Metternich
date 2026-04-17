@@ -190,6 +190,7 @@ public:
 	void do_cultural_change();
 	void do_population_literacy_change();
 	void do_population_promotion();
+	void do_population_employment();
 	[[nodiscard]] QCoro::Task<void> do_events();
 
 	country_economy *get_economy() const

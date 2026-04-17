@@ -4,6 +4,7 @@
 
 Q_MOC_INCLUDE("culture/culture.h")
 Q_MOC_INCLUDE("domain/domain.h")
+Q_MOC_INCLUDE("economy/employment_type.h")
 Q_MOC_INCLUDE("map/province.h")
 Q_MOC_INCLUDE("map/site.h")
 Q_MOC_INCLUDE("population/population_type.h")
@@ -15,6 +16,7 @@ namespace metternich {
 
 class culture;
 class domain;
+class employment_type;
 class icon;
 class phenotype;
 class population_type;
@@ -31,6 +33,7 @@ class population_unit final : public QObject
 	Q_PROPERTY(const metternich::culture* culture READ get_culture NOTIFY culture_changed)
 	Q_PROPERTY(const metternich::religion* religion READ get_religion NOTIFY religion_changed)
 	Q_PROPERTY(const metternich::phenotype* phenotype READ get_phenotype NOTIFY phenotype_changed)
+	Q_PROPERTY(const metternich::employment_type* employment_type READ get_employment_type NOTIFY employment_type_changed)
 	Q_PROPERTY(const metternich::icon* icon READ get_icon NOTIFY icon_changed)
 	Q_PROPERTY(const metternich::domain* country READ get_country NOTIFY country_changed)
 	Q_PROPERTY(const metternich::province* province READ get_province NOTIFY province_changed)
@@ -38,7 +41,7 @@ class population_unit final : public QObject
 	Q_PROPERTY(qint64 size READ get_size NOTIFY size_changed)
 
 public:
-	explicit population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const int64_t size, const decimillesimal_int &literacy_rate, const site *site);
+	explicit population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const metternich::employment_type *employment_type, const int64_t size, const decimillesimal_int &literacy_rate, const site *site);
 
 	void do_promotion();
 	void do_promotion(const bool is_demotion);
@@ -74,6 +77,13 @@ public:
 	void set_phenotype(const metternich::phenotype *phenotype);
 
 	const species *get_species() const;
+
+	const employment_type *get_employment_type() const
+	{
+		return this->employment_type;
+	}
+
+	void set_employment_type(const metternich::employment_type *employment_type);
 
 	const icon *get_icon() const;
 	const icon *get_small_icon() const;
@@ -127,6 +137,7 @@ signals:
 	void culture_changed();
 	void religion_changed();
 	void phenotype_changed();
+	void employment_type_changed();
 	void icon_changed();
 	void country_changed();
 	void province_changed();
@@ -139,6 +150,7 @@ private:
 	const metternich::culture *culture = nullptr;
 	const metternich::religion *religion = nullptr;
 	const metternich::phenotype *phenotype = nullptr;
+	const metternich::employment_type *employment_type = nullptr;
 	const metternich::domain *domain = nullptr;
 	const metternich::site *site = nullptr;
 	int64_t size = 0; //number of individuals in this population unit

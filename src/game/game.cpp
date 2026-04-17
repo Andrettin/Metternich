@@ -1540,7 +1540,7 @@ int64_t game::apply_historical_population_group_to_site(const population_group_k
 		literacy_rate = domain->get_history()->get_literacy_rate();
 	}
 
-	site_game_data->change_population(population_type, culture, religion, phenotype, remaining_population, literacy_rate);
+	site_game_data->change_population(population_type, culture, religion, phenotype, nullptr, remaining_population, literacy_rate);
 
 	return remaining_population;
 }

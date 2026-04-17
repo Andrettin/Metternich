@@ -173,6 +173,10 @@ void site_game_data::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_child([this](const gsml_data &child_scope) {
 			this->add_building_slot(make_qunique<building_slot>(child_scope, this->site));
 		});
+	} else if (tag == "employment_sizes") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->employment_sizes[employment_type::get(property.get_key())] = std::stoll(property.get_value());
+		});
 	} else if (tag == "employment_capacities") {
 		scope.for_each_property([this](const gsml_property &property) {
 			this->employment_capacities[employment_type::get(property.get_key())] = std::stoll(property.get_value());
@@ -264,6 +268,14 @@ gsml_data site_game_data::to_gsml_data() const
 
 	if (this->get_population_capacity() != 0) {
 		data.add_property("population_capacity", std::to_string(this->get_population_capacity()));
+	}
+
+	if (this->get_employment_sizes().empty()) {
+		gsml_data employment_sizes_data("employment_sizes");
+		for (const auto &[employment_type, employment_size] : this->get_employment_sizes()) {
+			employment_sizes_data.add_property(employment_type->get_identifier(), std::to_string(employment_size));
+		}
+		data.add_child(std::move(employment_sizes_data));
 	}
 
 	if (this->get_employment_capacities().empty()) {
@@ -1935,6 +1947,10 @@ void site_game_data::add_population_unit(qunique_ptr<population_unit> &&populati
 {
 	this->get_population()->on_population_unit_gained(population_unit.get());
 
+	if (population_unit->get_employment_type() != nullptr) {
+		this->change_employment_size(population_unit->get_employment_type(), population_unit->get_size());
+	}
+
 	this->population_units.push_back(std::move(population_unit));
 
 	if (this->is_capital()) {
@@ -1953,6 +1969,10 @@ qunique_ptr<population_unit> site_game_data::pop_population_unit(population_unit
 		if (this->population_units[i].get() == population_unit) {
 			qunique_ptr<metternich::population_unit> population_unit_unique_ptr = std::move(this->population_units[i]);
 			this->population_units.erase(this->population_units.begin() + i);
+
+			if (population_unit->get_employment_type() != nullptr) {
+				this->change_employment_size(population_unit->get_employment_type(), -population_unit->get_size());
+			}
 
 			population_unit->get_province()->get_game_data()->remove_population_unit(population_unit);
 			population_unit->set_site(nullptr);
@@ -1984,7 +2004,7 @@ void site_game_data::clear_population_units()
 	this->population_units.clear();
 }
 
-void site_game_data::create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const int64_t size, const decimillesimal_int &literacy_rate)
+void site_game_data::create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const employment_type *employment_type, const int64_t size, const decimillesimal_int &literacy_rate)
 {
 	assert_throw(type != nullptr);
 	assert_throw(type->is_enabled());
@@ -1992,17 +2012,19 @@ void site_game_data::create_population_unit(const population_type *type, const m
 	assert_throw(this->is_built());
 	assert_throw(this->can_have_population_type(type));
 
-	auto population_unit = make_qunique<metternich::population_unit>(type, culture, religion, phenotype, size, literacy_rate, this->site);
+	auto population_unit = make_qunique<metternich::population_unit>(type, culture, religion, phenotype, employment_type, size, literacy_rate, this->site);
 	this->get_province()->get_game_data()->add_population_unit(population_unit.get());
 
 	this->add_population_unit(std::move(population_unit));
 }
 
-void site_game_data::change_population(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const int64_t size_change, const decimillesimal_int &literacy_rate)
+void site_game_data::change_population(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const employment_type *employment_type, const int64_t size_change, const decimillesimal_int &literacy_rate)
 {
 	for (const auto &population_unit : this->get_population_units()) {
-		if (population_unit->get_type() == type && population_unit->get_culture() == culture && population_unit->get_religion() == religion && population_unit->get_phenotype() == phenotype) {
-			population_unit->set_literacy_rate(((literacy_rate * size_change) + (population_unit->get_literacy_rate() * population_unit->get_size())) / (population_unit->get_size() + size_change));
+		if (population_unit->get_type() == type && population_unit->get_culture() == culture && population_unit->get_religion() == religion && population_unit->get_phenotype() == phenotype && population_unit->get_employment_type() == employment_type) {
+			if ((population_unit->get_size() + size_change) > 0) {
+				population_unit->set_literacy_rate(((literacy_rate * size_change) + (population_unit->get_literacy_rate() * population_unit->get_size())) / (population_unit->get_size() + size_change));
+			}
 			population_unit->change_size(size_change);
 			if (population_unit->get_size() == 0) {
 				this->pop_population_unit(population_unit.get());
@@ -2014,7 +2036,7 @@ void site_game_data::change_population(const population_type *type, const metter
 	assert_throw(size_change >= 0);
 
 	if (size_change > 0) {
-		this->create_population_unit(type, culture, religion, phenotype, size_change, literacy_rate);
+		this->create_population_unit(type, culture, religion, phenotype, employment_type, size_change, literacy_rate);
 	}
 }
 
@@ -2072,6 +2094,20 @@ int64_t site_game_data::get_available_population_capacity() const
 	return std::max(0ll, available_capacity);
 }
 
+void site_game_data::change_employment_size(const employment_type *employment_type, const int64_t change)
+{
+	assert_throw(employment_type != nullptr);
+
+	const int64_t size = (this->employment_sizes[employment_type] += change);
+
+	assert_throw(size >= 0);
+	assert_throw(size <= this->get_employment_capacity(employment_type));
+
+	if (size == 0) {
+		this->employment_sizes.erase(employment_type);
+	}
+}
+
 void site_game_data::change_employment_capacity(const employment_type *employment_type, const int64_t change)
 {
 	assert_throw(employment_type != nullptr);
@@ -2082,6 +2118,74 @@ void site_game_data::change_employment_capacity(const employment_type *employmen
 
 	if (capacity == 0) {
 		this->employment_capacities.erase(employment_type);
+	}
+
+	if (change < 0) {
+		//if the employment capacity is now below the employment size, reduce the latter
+		int64_t capacity_overflow = this->get_employment_size(employment_type) - capacity;
+		if (capacity_overflow > 0) {
+			std::vector<population_unit *> population_units;
+			for (const auto &population_unit : this->get_population_units()) {
+				if (population_unit->get_employment_type() == employment_type) {
+					population_units.push_back(population_unit.get());
+				}
+			}
+			for (population_unit *population_unit : population_units) {
+				const int64_t unemployment_size = std::min(capacity_overflow, population_unit->get_size());
+				this->change_population(population_unit->get_type(), population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), nullptr, unemployment_size, population_unit->get_literacy_rate());
+
+				this->change_population(population_unit->get_type(), population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), employment_type, -unemployment_size, population_unit->get_literacy_rate());
+
+				capacity_overflow -= unemployment_size;
+				if (capacity_overflow == 0) {
+					break;
+				}
+			}
+
+			assert_throw(capacity_overflow == 0);
+			assert_throw(this->get_employment_size(employment_type) == capacity);
+		}
+	}
+}
+
+void site_game_data::check_employment()
+{
+	std::vector<population_unit *> unemployed_population_units;
+	for (const auto &population_unit : this->get_population_units()) {
+		if (population_unit->get_employment_type() == nullptr) {
+			unemployed_population_units.push_back(population_unit.get());
+		}
+	}
+
+	for (const auto &[employment_type, employment_capacity] : this->get_employment_capacities()) {
+		int64_t available_employment_capacity = this->get_available_employment_capacity(employment_type);
+		assert_throw(available_employment_capacity >= 0);
+
+		if (available_employment_capacity == 0) {
+			continue;
+		}
+
+		for (size_t i = 0; i < unemployed_population_units.size();) {
+			population_unit *population_unit = unemployed_population_units.at(i);
+
+			if (!employment_type->get_employee_types().contains(population_unit->get_type())) {
+				++i;
+				continue;
+			}
+
+			const int64_t employee_size = std::min(available_employment_capacity, population_unit->get_size());
+			const bool full_employment = employee_size == population_unit->get_size();
+
+			this->change_population(population_unit->get_type(), population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), employment_type, employee_size, population_unit->get_literacy_rate());
+
+			this->change_population(population_unit->get_type(), population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), nullptr, -employee_size, population_unit->get_literacy_rate());
+
+			if (full_employment) {
+				unemployed_population_units.erase(unemployed_population_units.begin() + i);
+			} else {
+				++i;
+			}
+		}
 	}
 }
 

@@ -32,6 +32,7 @@ class character;
 class culture;
 class domain;
 class dungeon;
+class employment_type;
 class holding_type;
 class improvement;
 class party;
@@ -390,8 +391,8 @@ public:
 	void add_population_unit(qunique_ptr<population_unit> &&population_unit);
 	qunique_ptr<population_unit> pop_population_unit(population_unit *population_unit);
 	void clear_population_units();
-	void create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const int64_t size, const decimillesimal_int &literacy_rate);
-	void change_population(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const int64_t size_change, const decimillesimal_int &literacy_rate);
+	void create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const employment_type *employment_type, const int64_t size, const decimillesimal_int &literacy_rate);
+	void change_population(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const employment_type *employment_type, const int64_t size_change, const decimillesimal_int &literacy_rate);
 
 	metternich::population *get_population() const
 	{
@@ -417,6 +418,24 @@ public:
 
 	int64_t get_available_population_capacity() const;
 
+	const data_entry_map<employment_type, int64_t> &get_employment_sizes() const
+	{
+		return this->employment_sizes;
+	}
+
+	int64_t get_employment_size(const employment_type *employment_type) const
+	{
+		const auto find_iterator = this->employment_sizes.find(employment_type);
+
+		if (find_iterator != this->employment_sizes.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void change_employment_size(const employment_type *employment_type, const int64_t change);
+
 	const data_entry_map<employment_type, int64_t> &get_employment_capacities() const
 	{
 		return this->employment_capacities;
@@ -434,6 +453,13 @@ public:
 	}
 
 	void change_employment_capacity(const employment_type *employment_type, const int64_t change);
+
+	int64_t get_available_employment_capacity(const employment_type *employment_type) const
+	{
+		return this->get_employment_capacity(employment_type) - this->get_employment_size(employment_type);
+	}
+
+	void check_employment();
 
 	int get_free_food_consumption() const
 	{
@@ -664,6 +690,8 @@ private:
 	std::vector<qunique_ptr<population_unit>> population_units;
 	qunique_ptr<metternich::population> population;
 	int64_t population_capacity = 0;
+	data_entry_map<employment_type, int64_t> employment_sizes;
+	data_entry_map<employment_type, int64_t> employment_capacities;
 	int free_food_consumption = 0;
 	int total_building_size = 0;
 	commodity_map<centesimal_int> base_commodity_outputs;

@@ -7,6 +7,7 @@
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
 #include "economy/commodity.h"
+#include "economy/employment_type.h"
 #include "economy/resource.h"
 #include "game/game.h"
 #include "map/province.h"
@@ -30,8 +31,8 @@
 
 namespace metternich {
 
-population_unit::population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const int64_t size, const decimillesimal_int &literacy_rate, const metternich::site *site)
-	: type(type), culture(culture), religion(religion), phenotype(phenotype), size(size), literacy_rate(literacy_rate), site(site)
+population_unit::population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const metternich::employment_type *employment_type, const int64_t size, const decimillesimal_int &literacy_rate, const metternich::site *site)
+	: type(type), culture(culture), religion(religion), phenotype(phenotype), employment_type(employment_type), size(size), literacy_rate(literacy_rate), site(site)
 {
 	assert_throw(this->get_type() != nullptr);
 	assert_throw(this->get_culture() != nullptr);
@@ -107,9 +108,9 @@ void population_unit::do_promotion(const bool is_demotion)
 
 	const int64_t promoted_size = (this->get_size() * promotion_rate / 100).to_int64();
 
-	this->get_site()->get_game_data()->change_population(this->get_type(), this->get_culture(), this->get_religion(), this->get_phenotype(), -promoted_size, this->get_literacy_rate());
+	this->get_site()->get_game_data()->change_population(best_promotion_type, this->get_culture(), this->get_religion(), this->get_phenotype(), nullptr, promoted_size, this->get_literacy_rate());
 
-	this->get_site()->get_game_data()->change_population(best_promotion_type, this->get_culture(), this->get_religion(), this->get_phenotype(), promoted_size, this->get_literacy_rate());
+	this->get_site()->get_game_data()->change_population(this->get_type(), this->get_culture(), this->get_religion(), this->get_phenotype(), this->get_employment_type(), -promoted_size, this->get_literacy_rate());
 }
 
 std::string population_unit::get_scope_name() const
@@ -200,6 +201,25 @@ const species *population_unit::get_species() const
 	return this->get_phenotype()->get_species();
 }
 
+void population_unit::set_employment_type(const metternich::employment_type *employment_type)
+{
+	if (employment_type == this->get_employment_type()) {
+		return;
+	}
+
+	if (this->get_employment_type() != nullptr) {
+		this->get_site()->get_game_data()->change_employment_size(this->get_employment_type(), -this->get_size());
+	}
+
+	this->employment_type = employment_type;
+
+	if (this->get_employment_type() != nullptr) {
+		this->get_site()->get_game_data()->change_employment_size(this->get_employment_type(), this->get_size());
+	}
+
+	emit employment_type_changed();
+}
+
 const icon *population_unit::get_small_icon() const
 {
 	return this->get_type()->get_phenotype_small_icon(this->get_phenotype());
@@ -262,11 +282,20 @@ void population_unit::set_size(const int64_t size)
 	}
 
 	assert_throw(this->get_site() != nullptr);
+
+	if (this->get_employment_type() != nullptr) {
+		this->get_site()->get_game_data()->change_employment_size(this->get_employment_type(), -this->get_size());
+	}
+
 	this->get_site()->get_game_data()->get_population()->on_population_unit_lost(this);
 
 	this->size = size;
 
 	this->get_site()->get_game_data()->get_population()->on_population_unit_gained(this);
+
+	if (this->get_employment_type() != nullptr) {
+		this->get_site()->get_game_data()->change_employment_size(this->get_employment_type(), this->get_size());
+	}
 
 	emit size_changed();
 }
