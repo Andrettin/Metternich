@@ -1,11 +1,482 @@
+monastic_school = {
+	name = "Monastic School"
+	subcategory = technology
+	portrait = university
+	icon = wooden_cross
+	period = dark_ages
+	cost_commodity = research
+	prerequisites = {
+		asceticism
+	}
+	discovery_mean_time_to_happen = {
+		months = 250
+		
+		modifier = {
+			factor = 0.75
+			has_building_class = university
+		}
+		modifier = {
+			factor = 0.85
+			has_building_class = library
+		}
+		modifier = {
+			factor = 0.95
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.95
+			domain = {
+				ruler = {
+					trade >= 2
+				}
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				ruler = {
+					trade >= 3
+				}
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				ruler = {
+					trade >= 4
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				tier >= kingdom
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				tier == duchy
+			}
+		}
+		modifier = {
+			factor = 5
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_medium_high_stability
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_high_stability
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_maximal_stability
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_medium_stability
+				}
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_medium_low_stability
+				}
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_low_stability
+				}
+			}
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1250
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1350
+		}
+	}
+	spread_mean_time_to_happen = {
+		months = 2000
+		
+		modifier = {
+			factor = 0.9
+			has_building_class = library
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				has_building_class = waterfront
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				ruler = {
+					trade >= 2
+				}
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				ruler = {
+					trade >= 3
+				}
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				ruler = {
+					trade >= 4
+				}
+			}
+		}
+		modifier = {
+			factor = 0.7
+			source_province = {
+				religion = root
+			}
+		}
+		modifier = {
+			factor = 0.6
+			source_province = {
+				domain = root
+			}
+		}
+		modifier = {
+			factor = 0.8
+			source_province = {
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 5
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 0.75
+			capital = true
+			source_province = {
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_medium_high_stability
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_high_stability
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_maximal_stability
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_medium_stability
+				}
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_medium_low_stability
+				}
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_low_stability
+				}
+			}
+		}
+	}
+}
+
+cathedral_school = {
+	name = "Cathedral School"
+	subcategory = technology
+	portrait = university
+	icon = wooden_cross
+	period = middle_ages
+	cost_commodity = research
+	prerequisites = {
+		monastic_school
+	}
+	discovery_mean_time_to_happen = {
+		months = 500
+		
+		modifier = {
+			factor = 0.75
+			has_building_class = university
+		}
+		modifier = {
+			factor = 0.85
+			has_building_class = library
+		}
+		modifier = {
+			factor = 0.95
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.95
+			domain = {
+				ruler = {
+					trade >= 2
+				}
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				ruler = {
+					trade >= 3
+				}
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				ruler = {
+					trade >= 4
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				tier >= kingdom
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				tier == duchy
+			}
+		}
+		modifier = {
+			factor = 5
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_medium_high_stability
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_high_stability
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_maximal_stability
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_medium_stability
+				}
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_medium_low_stability
+				}
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_low_stability
+				}
+			}
+		}
+		modifier = {
+			factor = 1.25
+			year < 1150
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1350
+		}
+	}
+	spread_mean_time_to_happen = {
+		months = 4000
+		
+		modifier = {
+			factor = 0.9
+			has_building_class = cathedral
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				has_building_class = waterfront
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				ruler = {
+					trade >= 2
+				}
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				ruler = {
+					trade >= 3
+				}
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				ruler = {
+					trade >= 4
+				}
+			}
+		}
+		modifier = {
+			factor = 0.7
+			source_province = {
+				religion = root
+			}
+		}
+		modifier = {
+			factor = 0.6
+			source_province = {
+				domain = root
+			}
+		}
+		modifier = {
+			factor = 0.8
+			source_province = {
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 5
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 0.75
+			capital = true
+			source_province = {
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_medium_high_stability
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_high_stability
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_maximal_stability
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_medium_stability
+				}
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_medium_low_stability
+				}
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_low_stability
+				}
+			}
+		}
+	}
+}
+
 university = {
 	name = "University"
 	subcategory = technology
 	portrait = university
 	icon = university
-	period = middle_ages
+	period = renaissance
 	cost_commodity = research
 	prerequisites = {
+		cathedral_school
 		scholasticism
 	}
 	discovery_mean_time_to_happen = {

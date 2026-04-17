@@ -98,6 +98,7 @@ monastic_school = {
 	building_class = monastic_school
 	portrait = university
 	icon = wooden_cross
+	required_technology = monastic_school
 	holding_types = {
 		temple
 	}
@@ -118,6 +119,7 @@ cathedral_school = {
 	portrait = university
 	icon = wooden_cross
 	base_building = monastic_school
+	required_technology = cathedral_school
 	holding_types = {
 		temple
 	}
