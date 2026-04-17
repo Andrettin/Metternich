@@ -75,6 +75,9 @@ university = {
 		productivity = 1
 		society = 3
 	}
+	province_modifier = {
+		technology_spread = 30
+	}
 	domain_modifier = {
 		economy = 3
 		loyalty = 3
