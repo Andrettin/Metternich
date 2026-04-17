@@ -522,6 +522,16 @@ public:
 		this->set_commodity_bonus_for_tile_threshold(commodity, threshold, this->get_commodity_bonus_for_tile_threshold(commodity, threshold) + value);
 	}
 
+	int get_technology_spread_modifier() const
+	{
+		return this->technology_spread_modifier;
+	}
+
+	void change_technology_spread_modifier(const int change)
+	{
+		this->technology_spread_modifier += change;
+	}
+
 	bool can_produce_commodity(const commodity *commodity) const;
 
 	int get_min_income() const;
@@ -579,6 +589,7 @@ private:
 	commodity_map<centesimal_int> commodity_output_modifiers;
 	resource_map<commodity_map<int>> improved_resource_commodity_bonuses;
 	commodity_map<std::map<int, int>> commodity_bonuses_for_tile_thresholds;
+	int technology_spread_modifier = 0;
 };
 
 }

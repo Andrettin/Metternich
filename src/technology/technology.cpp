@@ -231,6 +231,7 @@ void technology::initialize()
 		event->set_portrait(this->get_portrait());
 		event->set_description(std::format("[root.domain.form_of_address], the {} technology has spread to [root.name].", string::lowered(this->get_name())));
 		event->set_from_neighbor(true);
+		event->set_technology_spread(true);
 		event->set_mean_time_to_happen(std::move(this->spread_mean_time_to_happen));
 
 		auto event_conditions = std::make_unique<and_condition<province>>();

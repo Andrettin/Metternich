@@ -63,6 +63,7 @@
 #include "script/modifier_effect/species_armor_class_bonus_modifier_effect.h"
 #include "script/modifier_effect/storage_capacity_modifier_effect.h"
 #include "script/modifier_effect/technology_cost_modifier_effect.h"
+#include "script/modifier_effect/technology_spread_modifier_effect.h"
 #include "script/modifier_effect/throughput_modifier_effect.h"
 #include "script/modifier_effect/to_hit_bonus_modifier_effect.h"
 #include "script/modifier_effect/trait_modifier_effect.h"
@@ -227,6 +228,10 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 
 				return std::make_unique<merchant_ship_stat_modifier_effect>(magic_enum::enum_cast<transporter_stat>(stat_name).value(), value);
 			}
+		}
+	} else if constexpr (std::is_same_v<scope_type, const province>) {
+		if (key == "technology_spread") {
+			return std::make_unique<technology_spread_modifier_effect>(value);
 		}
 	} else if constexpr (std::is_same_v<scope_type, const site>) {
 		if (key == "holding_level") {

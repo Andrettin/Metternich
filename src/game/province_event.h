@@ -12,6 +12,7 @@ class province_event final : public event, public data_type<province_event>, pub
 	Q_OBJECT
 
 	Q_PROPERTY(bool from_neighbor READ is_from_neighbor WRITE set_from_neighbor)
+	Q_PROPERTY(bool technology_spread READ is_technology_spread WRITE set_technology_spread)
 
 public:
 	static constexpr const char class_identifier[] = "province_event";
@@ -97,6 +98,16 @@ public:
 		this->from_neighbor = value;
 	}
 
+	bool is_technology_spread() const
+	{
+		return this->technology_spread;
+	}
+
+	void set_technology_spread(const bool value)
+	{
+		this->technology_spread = value;
+	}
+
 	virtual bool is_hidden() const override
 	{
 		return event::is_hidden();
@@ -140,6 +151,7 @@ public:
 
 private:
 	bool from_neighbor = false;
+	bool technology_spread = false;
 };
 
 }

@@ -103,6 +103,8 @@ void province_game_data::process_gsml_property(const gsml_property &property)
 		this->level = std::stoi(value);
 	} else if (key == "provincial_capital") {
 		this->provincial_capital = site::get(value);
+	} else if (key == "technology_spread_modifier") {
+		this->technology_spread_modifier = std::stoi(value);
 	} else {
 		throw std::runtime_error(std::format("Invalid province game data property: \"{}\".", key));
 	}
@@ -152,6 +154,10 @@ gsml_data province_game_data::to_gsml_data() const
 			technologies_data.add_value(technology->get_identifier());
 		}
 		data.add_child(std::move(technologies_data));
+	}
+
+	if (this->get_technology_spread_modifier() != 0) {
+		data.add_property("technology_spread_modifier", std::to_string(this->get_technology_spread_modifier()));
 	}
 
 	return data;

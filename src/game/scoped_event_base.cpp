@@ -9,6 +9,7 @@
 #include "game/event_random_group.h"
 #include "game/event_trigger.h"
 #include "game/game.h"
+#include "game/province_event.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/site.h"
@@ -165,7 +166,16 @@ QCoro::Task<void> scoped_event_base<scope_type>::check_mtth_event_for_scope(cons
 		co_return;
 	}
 
-	const decimillesimal_int mtth = event->get_mean_time_to_happen()->calculate(scope, game::get()->get_year());
+	decimillesimal_int mtth = event->get_mean_time_to_happen()->calculate(scope, game::get()->get_year());
+
+	if constexpr (std::is_same_v<scope_type, const province>) {
+		const province_event *province_event = static_cast<const metternich::province_event *>(event);
+		if (province_event->is_technology_spread() && scope->get_game_data()->get_technology_spread_modifier() != 0) {
+			mtth *= 100;
+			mtth /= 100 + scope->get_game_data()->get_technology_spread_modifier();
+		}
+	}
+
 	bool should_fire = false;
 
 	if (mtth <= 1) {
