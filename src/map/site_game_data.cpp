@@ -2190,6 +2190,11 @@ void site_game_data::check_employment()
 			} else {
 				++i;
 			}
+
+			available_employment_capacity -= employee_size;
+			if (available_employment_capacity == 0) {
+				break;
+			}
 		}
 	}
 }
