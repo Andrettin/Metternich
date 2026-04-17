@@ -2,5 +2,9 @@ tobacco = {
 	name = "Tobacco"
 	type = resource
 	icon = tobacco
-	base_price = 100
+	base_price = 50 #5sp
+	units = {
+		1 = lb
+		2000 = tn
+	}
 }

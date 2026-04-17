@@ -1,0 +1,11 @@
+lb = {
+	name = "Pound"
+	icon = sack_2
+	suffix = "lb"
+}
+
+tn = {
+	name = "Ton"
+	icon = sack_2
+	suffix = "tn"
+}

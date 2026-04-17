@@ -2,5 +2,9 @@ salt = {
 	name = "Salt"
 	type = resource
 	icon = salt
-	base_price = 100
+	base_price = 500 #5gp
+	units = {
+		1 = lb
+		2000 = tn
+	}
 }

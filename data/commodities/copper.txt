@@ -2,5 +2,9 @@ copper = {
 	name = "Copper"
 	type = resource
 	icon = copper
-	base_price = 100
+	base_price = 50 #5sp
+	units = {
+		1 = lb
+		2000 = tn
+	}
 }

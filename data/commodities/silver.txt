@@ -2,5 +2,9 @@ silver = {
 	name = "Silver"
 	type = resource
 	icon = silver
-	wealth_value = 100
+	wealth_value = 500 #5gp
+	units = {
+		1 = lb
+		2000 = tn
+	}
 }
