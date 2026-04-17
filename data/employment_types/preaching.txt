@@ -1,0 +1,6 @@
+preaching = {
+	name = "Preaching"
+	employee_types = {
+		clergymen
+	}
+}
