@@ -536,7 +536,7 @@ Rectangle {
 		IconButton {
 			id: population_units_button
 			icon_identifier: "craftsmen_light_small"
-			visible: selected_site !== null && selected_site.game_data.can_have_population() && selected_site.game_data.is_built() && !selected_garrison
+			visible: selected_site !== null && selected_site.game_data.can_have_population() && selected_site.game_data.is_built() && !selected_garrison && !viewing_population_units
 			
 			onClicked: {
 				viewing_population_units = true
