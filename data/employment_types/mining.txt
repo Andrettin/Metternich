@@ -1,0 +1,6 @@
+mining = {
+	name = "Mining"
+	employee_types = {
+		laborers
+	}
+}
