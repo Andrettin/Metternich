@@ -101,6 +101,7 @@ set(economy_SRCS
 	src/economy/commodity.cpp
 	src/economy/commodity_container.cpp
 	src/economy/commodity_unit.cpp
+	src/economy/employment_type.cpp
 	src/economy/expense_transaction.cpp
 	src/economy/income_transaction.cpp
 	src/economy/resource.cpp
@@ -477,6 +478,7 @@ set(economy_HDRS
 	src/economy/commodity_container.h
 	src/economy/commodity_type.h
 	src/economy/commodity_unit.h
+	src/economy/employment_type.h
 	src/economy/expense_transaction.h
 	src/economy/expense_transaction_type.h
 	src/economy/food_type.h

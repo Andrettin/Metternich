@@ -19,6 +19,7 @@
 #include "domain/office.h"
 #include "domain/subject_type.h"
 #include "economy/commodity_unit.h"
+#include "economy/employment_type.h"
 #include "game/game_rule.h"
 #include "infrastructure/dungeon_area.h"
 #include "infrastructure/holding_type.h"
@@ -57,6 +58,7 @@ template struct data_entry_compare<culture_base>;
 template struct data_entry_compare<domain_attribute>;
 template struct data_entry_compare<domain_skill>;
 template struct data_entry_compare<dungeon_area>;
+template struct data_entry_compare<employment_type>;
 template struct data_entry_compare<enchantment>;
 template struct data_entry_compare<game_rule>;
 template struct data_entry_compare<holding_type>;
