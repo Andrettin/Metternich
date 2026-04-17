@@ -51,6 +51,7 @@
 #include "script/condition/domain_attribute_condition.h"
 #include "script/condition/domain_exists_condition.h"
 #include "script/condition/domain_scope_condition.h"
+#include "script/condition/domain_skill_condition.h"
 #include "script/condition/dungeon_condition.h"
 #include "script/condition/dungeon_area_condition.h"
 #include "script/condition/event_condition.h"
@@ -394,7 +395,9 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 	}
 
 	if constexpr (std::is_same_v<scope_type, character>) {
-		if (skill::try_get(key) != nullptr) {
+		if (domain_skill::try_get(key) != nullptr) {
+			return std::make_unique<domain_skill_condition>(domain_skill::get(key), value, condition_operator);
+		} else if (skill::try_get(key) != nullptr) {
 			return std::make_unique<skill_condition>(skill::get(key), value, condition_operator);
 		} else if (character_stat::try_get_stat(key) != nullptr) {
 			return std::make_unique<character_stat_condition>(character_stat::get_stat(key), value, condition_operator);
