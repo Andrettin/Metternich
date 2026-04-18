@@ -397,6 +397,20 @@ void site_game_data::check_item_slots()
 	item_slot->create_item();
 }
 
+QCoro::Task<void> site_game_data::do_construction()
+{
+	for (const auto &building_slot : this->get_building_slots()) {
+		if (building_slot->get_under_construction_building() != nullptr) {
+			if (building_slot->is_available()) {
+				co_await building_slot->set_building(building_slot->get_under_construction_building());
+				building_slot->set_under_construction_building(nullptr);
+			} else {
+				building_slot->cancel_construction();
+			}
+		}
+	}
+}
+
 const QPoint &site_game_data::get_tile_pos() const
 {
 	return this->site->get_map_data()->get_tile_pos();

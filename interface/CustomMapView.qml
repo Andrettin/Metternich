@@ -138,6 +138,14 @@ Item {
 		id: building_dialog
 	}
 	
+	BuildBuildingDialog {
+		id: build_building_dialog
+	}
+	
+	CancelConstructionDialog {
+		id: cancel_construction_dialog
+	}
+	
 	SaveGameDialog {
 		id: save_game_dialog
 	}

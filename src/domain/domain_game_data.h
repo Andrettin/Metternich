@@ -184,6 +184,7 @@ public:
 	void check_item_slots();
 	void do_civilian_unit_recruitment();
 	void do_transporter_recruitment();
+	[[nodiscard]] QCoro::Task<void> do_construction();
 	void do_population_growth();
 	void do_food_consumption(const int food_consumption);
 	void do_starvation();

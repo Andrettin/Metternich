@@ -3,20 +3,25 @@ import QtQuick.Controls
 import ".."
 
 DialogBase {
-	id: build_building_dialog
+	id: cancel_construction_dialog
 	width: 256 * scale_factor
 	height: no_button.y + no_button.height + 8 * scale_factor
-	title: building ? ("Build " + building.name + "?") : ""
+	title: "Cancel Construction?"
 	
 	property var building_slot: null
-	property var building: null
+	readonly property var under_construction_building: building_slot ? building_slot.under_construction_building : null
 	
 	SmallText {
 		id: text
 		anchors.top: title_item.bottom
 		anchors.topMargin: 16 * scale_factor
-		anchors.horizontalCenter: parent.horizontalCenter
-		text: building ? ("Do you wish to build a " + building.name + " here?") : ""
+		anchors.left: parent.left
+		anchors.leftMargin: 8 * scale_factor
+		anchors.right: parent.right
+		anchors.rightMargin: 8 * scale_factor
+		text: under_construction_building ? ("Do you wish to cancel the construction of a " + under_construction_building.name + " here?") : ""
+		wrapMode: Text.WordWrap
+		horizontalAlignment: Text.AlignHCenter
 	}
 	
 	TextButton {
@@ -26,10 +31,9 @@ DialogBase {
 		anchors.horizontalCenter: parent.horizontalCenter
 		text: "Yes"
 		onClicked: {
-			building_slot.build_building(building)
+			building_slot.cancel_construction()
 			building_slot = null
-			building = null
-			build_building_dialog.close()
+			cancel_construction_dialog.close()
 		}
 	}
 	
@@ -40,10 +44,8 @@ DialogBase {
 		anchors.horizontalCenter: parent.horizontalCenter
 		text: "No"
 		onClicked: {
-			building_slot.cancel_construction()
 			building_slot = null
-			building = null
-			build_building_dialog.close()
+			cancel_construction_dialog.close()
 		}
 	}
 }

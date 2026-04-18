@@ -40,6 +40,16 @@ Flickable {
 					if (building !== null) {
 						building_dialog.building_slot = building_slot
 						building_dialog.open()
+					} else if (building_slot.under_construction_building !== null) {
+						cancel_construction_dialog.building_slot = building_slot
+						cancel_construction_dialog.open()
+					} else {
+						var buildable_building = building_slot.get_buildable_building()
+						if (buildable_building !== null) {
+							build_building_dialog.building_slot = building_slot
+							build_building_dialog.building = buildable_building
+							build_building_dialog.open()
+						}
 					}
 				}
 				

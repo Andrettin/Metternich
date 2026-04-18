@@ -475,6 +475,7 @@ QCoro::Task<void> domain_game_data::do_turn()
 		this->do_civilian_unit_recruitment();
 		co_await this->get_military()->do_military_unit_recruitment();
 		co_await this->get_technology()->do_research();
+		co_await this->do_construction();
 		this->do_population_growth();
 		this->do_cultural_change();
 		this->do_population_literacy_change();
@@ -789,6 +790,15 @@ void domain_game_data::do_starvation()
 		const portrait *interior_minister_portrait = this->get_government()->get_interior_minister_portrait();
 
 		engine_interface::get()->add_notification("Starvation", interior_minister_portrait, std::format("{}, I regret to inform you that {} {} of our population {} starved to death.", this->get_form_of_address(), number::to_formatted_string(starvation_count), (plural ? "units" : "unit"), (plural ? "have" : "has")));
+	}
+}
+
+QCoro::Task<void> domain_game_data::do_construction()
+{
+	for (const site *site : this->get_sites()) {
+		if (site->is_settlement() && site->get_game_data()->is_built()) {
+			co_await site->get_game_data()->do_construction();
+		}
 	}
 }
 

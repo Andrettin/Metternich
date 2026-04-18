@@ -7,10 +7,15 @@ IconButton {
 	visible: building_slot && (building_slot.under_construction_building || building_slot.get_buildable_building() !== null)
 	
 	onReleased: {
-		if (building_slot.under_construction_building) {
-			building_slot.cancel_construction()
+		if (building_slot.under_construction_building !== null) {
+			cancel_construction_dialog.building_slot = building_slot
+			cancel_construction_dialog.open()
+			cancel_construction_dialog.receive_focus()
 		} else {
-			building_slot.build_building(building_slot.get_buildable_building())
+			build_building_dialog.building_slot = building_slot
+			build_building_dialog.building = building_slot.get_buildable_building()
+			build_building_dialog.open()
+			build_building_dialog.receive_focus()
 		}
 		
 		update_status_text()
