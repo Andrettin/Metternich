@@ -66,11 +66,13 @@ Item {
 								middle_status_text += " (" + metternich.defines.wealth_commodity.value_to_qstring(commodity.wealth_value * output) + ")"
 							}
 						}
+						right_status_text = commodity.get_units_tooltip()
 					}
 					
 					onExited: {
 						status_text = ""
 						middle_status_text = ""
+						right_status_text = ""
 					}
 				}
 			}
