@@ -53,8 +53,7 @@ Rectangle {
 			
 			onHoveredChanged: {
 				if (hovered) {
-					//status_text = "View Politics"
-					status_text = "View Court"
+					status_text = "View Domestic Affairs"
 				} else {
 					status_text = ""
 				}

@@ -26,6 +26,7 @@ Rectangle {
 		anchors.top: parent.top
 		anchors.topMargin: 16 * scale_factor
 		spacing: 8 * scale_factor
+		visible: politics_view_mode === PoliticsView.Mode.Court
 		
 		Repeater {
 			model: metternich.get_decisions("court")

@@ -36,15 +36,6 @@ DialogBase {
 			visible: building && modifier_string.length > 0 && !building.warehouse
 		}
 		
-		/*
-		SmallText {
-			id: storage_capacity_label
-			anchors.horizontalCenter: parent.horizontalCenter
-			text: "Storage Capacity: " + number_string(country_game_data.economy.storage_capacity)
-			visible: building && building.warehouse
-		}
-		*/
-		
 		ItemShopGrid {
 			id: item_shop_grid
 			item_slots: building_slot ? building_slot.item_slots : []
@@ -52,55 +43,6 @@ DialogBase {
 		}
 		
 		/*
-		Grid {
-			id: commodity_grid
-			anchors.horizontalCenter: parent.horizontalCenter
-			columns: 4
-			visible: building && building.warehouse
-			
-			Repeater {
-				model: country_game_data.economy.stored_commodities
-				
-				Item {
-					width: 64 * scale_factor
-					height: 64 * scale_factor
-					visible: !commodity.abstract
-					
-					readonly property var commodity: model.modelData.key
-					readonly property int stored: model.modelData.value
-					
-					Image {
-						id: commodity_icon
-						anchors.verticalCenter: parent.verticalCenter
-						anchors.horizontalCenter: parent.horizontalCenter
-						anchors.horizontalCenterOffset: -8 * scale_factor
-						source: "image://icon/" + commodity.icon.identifier
-					}
-					
-					SmallText {
-						id: stored_label
-						text: number_string(stored)
-						anchors.left: commodity_icon.right
-						anchors.leftMargin: 4 * scale_factor
-						anchors.bottom: commodity_icon.bottom
-					}
-					
-					MouseArea {
-						anchors.fill: commodity_icon
-						hoverEnabled: true
-						
-						onEntered: {
-							status_text = commodity.name
-						}
-						
-						onExited: {
-							status_text = ""
-						}
-					}
-				}
-			}
-		}
-		
 		Grid {
 			id: civilian_unit_grid
 			anchors.horizontalCenter: parent.horizontalCenter

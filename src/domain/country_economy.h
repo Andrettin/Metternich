@@ -213,7 +213,7 @@ public:
 		return zero;
 	}
 
-	Q_INVOKABLE int get_commodity_output(const QString &commodity_identifier) const;
+	Q_INVOKABLE qint64 get_commodity_output_int(const metternich::commodity *commodity) const;
 	void change_commodity_output(const commodity *commodity, const centesimal_int &change);
 
 	int get_net_commodity_output(const commodity *commodity) const

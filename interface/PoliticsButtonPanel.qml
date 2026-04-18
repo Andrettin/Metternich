@@ -86,6 +86,24 @@ Rectangle {
 		}
 		
 		IconButton {
+			id: production_button
+			icon_identifier: "cog"
+			highlighted: politics_view_mode === PoliticsView.Mode.Production
+			
+			onClicked: {
+				politics_view_mode = PoliticsView.Mode.Production
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "View Production"
+				} else {
+					status_text = ""
+				}
+			}
+		}
+		
+		IconButton {
 			id: domain_history_button
 			icon_identifier: "painting"
 			highlighted: politics_view_mode === PoliticsView.Mode.DomainHistory

@@ -440,9 +440,9 @@ QVariantList country_economy::get_commodity_outputs_qvariant_list() const
 	return archimedes::map::to_qvariant_list(this->get_commodity_outputs());
 }
 
-int country_economy::get_commodity_output(const QString &commodity_identifier) const
+qint64 country_economy::get_commodity_output_int(const commodity *commodity) const
 {
-	return this->get_commodity_output(commodity::get(commodity_identifier.toStdString())).to_int();
+	return this->get_commodity_output(commodity).to_int64();
 }
 
 void country_economy::change_commodity_output(const commodity *commodity, const centesimal_int &change)

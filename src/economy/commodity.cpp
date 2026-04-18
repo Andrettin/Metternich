@@ -147,11 +147,11 @@ int commodity::string_to_value(const std::string &str) const
 {
 	try {
 		const auto [number_str, unit] = this->string_to_number_string_and_unit(str);
-		int value = std::stoi(number_str);
+		decimillesimal_int value = decimillesimal_int(number_str);
 		if (unit != nullptr) {
 			value *= this->get_unit_value(unit);
 		}
-		return value;
+		return value.to_int();
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error(std::format("Failed to convert string \"{}\" to a value for commodity \"{}\".", str, this->get_identifier())));
 	}
