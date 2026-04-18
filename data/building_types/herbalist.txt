@@ -12,7 +12,7 @@ herbalist = {
 		temple
 	}
 	commodity_costs = {
-		wealth = 28gb
+		wealth = 10gb
 	}
 	domain_modifier = {
 		loyalty = 1
