@@ -57,7 +57,6 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(QVariantList recruited_transporter_categories READ get_recruited_transporter_categories_qvariant_list NOTIFY changed)
 	Q_PROPERTY(bool capitol MEMBER capitol READ is_capitol NOTIFY changed)
 	Q_PROPERTY(bool provincial_capitol MEMBER provincial_capitol READ is_provincial_capitol NOTIFY changed)
-	Q_PROPERTY(bool warehouse MEMBER warehouse READ is_warehouse NOTIFY changed)
 	Q_PROPERTY(bool free_in_capital MEMBER free_in_capital READ is_free_in_capital NOTIFY changed)
 	Q_PROPERTY(bool capital_only MEMBER capital_only READ is_capital_only NOTIFY changed)
 	Q_PROPERTY(bool provincial_capital_only MEMBER provincial_capital_only READ is_provincial_capital_only NOTIFY changed)
@@ -156,11 +155,6 @@ public:
 	bool is_provincial_capitol() const
 	{
 		return this->provincial_capitol;
-	}
-
-	bool is_warehouse() const
-	{
-		return this->warehouse;
 	}
 
 	bool is_free_in_capital() const
@@ -330,7 +324,6 @@ private:
 	std::vector<transporter_category> recruited_transporter_categories;
 	bool capitol = false;
 	bool provincial_capitol = false;
-	bool warehouse = false;
 	bool free_in_capital = false;
 	bool capital_only = false;
 	bool provincial_capital_only = false;
