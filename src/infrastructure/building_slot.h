@@ -6,6 +6,7 @@
 Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("infrastructure/building_type.h")
 Q_MOC_INCLUDE("infrastructure/wonder.h")
+Q_MOC_INCLUDE("map/site.h")
 
 namespace archimedes {
 	class gsml_data;
@@ -25,6 +26,7 @@ class building_slot final : public QObject
 	Q_OBJECT
 
 	Q_PROPERTY(const metternich::building_slot_type* type READ get_type CONSTANT)
+	Q_PROPERTY(const metternich::site* holding READ get_settlement CONSTANT)
 	Q_PROPERTY(const metternich::building_type* building READ get_building NOTIFY building_changed)
 	Q_PROPERTY(const metternich::building_type* under_construction_building READ get_under_construction_building WRITE set_under_construction_building NOTIFY under_construction_building_changed)
 	Q_PROPERTY(const metternich::wonder* wonder READ get_wonder NOTIFY wonder_changed)

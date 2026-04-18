@@ -345,6 +345,30 @@ commodity_map<int> building_type::get_commodity_costs_for_site(const site *site)
 	return costs;
 }
 
+QString building_type::get_commodity_costs_string_for_site(const metternich::site *site) const
+{
+	std::string str;
+
+	const commodity_map<int> commodity_costs = this->get_commodity_costs_for_site(site);
+
+	for (const auto &[commodity, cost] : commodity_costs) {
+		if (cost == 0) {
+			continue;
+		}
+
+		if (str.empty()) {
+			str = "Costs:";
+		}
+
+		str += "\n" + commodity->value_to_string(cost);
+		if (commodity != defines::get()->get_wealth_commodity()) {
+			str += " " + commodity->get_name();
+		}
+	}
+
+	return QString::fromStdString(str);
+}
+
 QString building_type::get_effects_string(metternich::site *site) const
 {
 	assert_throw(site->is_settlement());

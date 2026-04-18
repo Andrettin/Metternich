@@ -255,6 +255,7 @@ public:
 	}
 
 	commodity_map<int> get_commodity_costs_for_site(const site *site) const;
+	Q_INVOKABLE QString get_commodity_costs_string_for_site(const metternich::site *site) const;
 
 	const factor<domain> *get_cost_factor() const
 	{
