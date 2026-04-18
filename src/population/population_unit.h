@@ -39,6 +39,7 @@ class population_unit final : public QObject
 	Q_PROPERTY(const metternich::province* province READ get_province NOTIFY province_changed)
 	Q_PROPERTY(const metternich::site* site READ get_site NOTIFY site_changed)
 	Q_PROPERTY(qint64 size READ get_size NOTIFY size_changed)
+	Q_PROPERTY(qint64 wealth READ get_wealth NOTIFY wealth_changed)
 
 public:
 	explicit population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const metternich::employment_type *employment_type, const int64_t size, const decimillesimal_int &literacy_rate, const site *site);
@@ -130,6 +131,18 @@ public:
 		this->set_literacy_rate(this->get_literacy_rate() + change);
 	}
 
+	int64_t get_wealth() const
+	{
+		return this->wealth;
+	}
+
+	void set_wealth(const int64_t wealth);
+
+	void change_wealth(const int64_t change)
+	{
+		this->set_wealth(this->get_wealth() + change);
+	}
+
 	bool is_food_producer() const;
 
 signals:
@@ -144,6 +157,7 @@ signals:
 	void site_changed();
 	void size_changed();
 	void literacy_rate_changed();
+	void wealth_changed();
 
 private:
 	const population_type *type = nullptr;
@@ -155,6 +169,7 @@ private:
 	const metternich::site *site = nullptr;
 	int64_t size = 0; //number of individuals in this population unit
 	decimillesimal_int literacy_rate; //in percent
+	int64_t wealth = 0;
 };
 
 }

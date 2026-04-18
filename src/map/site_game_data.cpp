@@ -2023,7 +2023,7 @@ void site_game_data::clear_population_units()
 	this->population_units.clear();
 }
 
-void site_game_data::create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const employment_type *employment_type, const int64_t size, const decimillesimal_int &literacy_rate)
+void site_game_data::create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const employment_type *employment_type, const int64_t size, const decimillesimal_int &literacy_rate, const int64_t wealth)
 {
 	assert_throw(type != nullptr);
 	assert_throw(type->is_enabled());
@@ -2032,18 +2032,20 @@ void site_game_data::create_population_unit(const population_type *type, const m
 	assert_throw(this->can_have_population_type(type));
 
 	auto population_unit = make_qunique<metternich::population_unit>(type, culture, religion, phenotype, employment_type, size, literacy_rate, this->site);
+	population_unit->change_wealth(wealth);
 	this->get_province()->get_game_data()->add_population_unit(population_unit.get());
 
 	this->add_population_unit(std::move(population_unit));
 }
 
-void site_game_data::change_population(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const employment_type *employment_type, const int64_t size_change, const decimillesimal_int &literacy_rate)
+void site_game_data::change_population(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const employment_type *employment_type, const int64_t size_change, const decimillesimal_int &literacy_rate, const int64_t wealth)
 {
 	for (const auto &population_unit : this->get_population_units()) {
 		if (population_unit->get_type() == type && population_unit->get_culture() == culture && population_unit->get_religion() == religion && population_unit->get_phenotype() == phenotype && population_unit->get_employment_type() == employment_type) {
 			if ((population_unit->get_size() + size_change) > 0) {
 				population_unit->set_literacy_rate(((literacy_rate * size_change) + (population_unit->get_literacy_rate() * population_unit->get_size())) / (population_unit->get_size() + size_change));
 			}
+			population_unit->change_wealth(wealth);
 			population_unit->change_size(size_change);
 			if (population_unit->get_size() == 0) {
 				this->pop_population_unit(population_unit.get());
@@ -2055,7 +2057,7 @@ void site_game_data::change_population(const population_type *type, const metter
 	assert_throw(size_change >= 0);
 
 	if (size_change > 0) {
-		this->create_population_unit(type, culture, religion, phenotype, employment_type, size_change, literacy_rate);
+		this->create_population_unit(type, culture, religion, phenotype, employment_type, size_change, literacy_rate, wealth);
 	}
 }
 
@@ -2155,9 +2157,11 @@ void site_game_data::change_employment_capacity(const employment_type *employmen
 			}
 			for (population_unit *population_unit : population_units) {
 				const int64_t unemployment_size = std::min(capacity_overflow, population_unit->get_size());
-				this->change_population(population_unit->get_type(), population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), nullptr, unemployment_size, population_unit->get_literacy_rate());
+				const int64_t lost_wealth = population_unit->get_wealth() * unemployment_size / population_unit->get_size();
 
-				this->change_population(population_unit->get_type(), population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), employment_type, -unemployment_size, population_unit->get_literacy_rate());
+				this->change_population(population_unit->get_type(), population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), nullptr, unemployment_size, population_unit->get_literacy_rate(), lost_wealth);
+
+				this->change_population(population_unit->get_type(), population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), employment_type, -unemployment_size, population_unit->get_literacy_rate(), -lost_wealth);
 
 				capacity_overflow -= unemployment_size;
 				if (capacity_overflow == 0) {
@@ -2197,11 +2201,12 @@ void site_game_data::check_employment()
 			}
 
 			const int64_t employee_size = std::min(available_employment_capacity, population_unit->get_size());
+			const int64_t lost_wealth = population_unit->get_wealth() * employee_size / population_unit->get_size();
 			const bool full_employment = employee_size == population_unit->get_size();
 
-			this->change_population(population_unit->get_type(), population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), employment_type, employee_size, population_unit->get_literacy_rate());
+			this->change_population(population_unit->get_type(), population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), employment_type, employee_size, population_unit->get_literacy_rate(), lost_wealth);
 
-			this->change_population(population_unit->get_type(), population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), nullptr, -employee_size, population_unit->get_literacy_rate());
+			this->change_population(population_unit->get_type(), population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), nullptr, -employee_size, population_unit->get_literacy_rate(), -lost_wealth);
 
 			if (full_employment) {
 				unemployed_population_units.erase(unemployed_population_units.begin() + i);

@@ -35,6 +35,7 @@ Flickable {
 						anchors.verticalCenter: parent.verticalCenter
 						icon_identifier: population_unit.icon.identifier
 						name: population_unit.type.name
+						description: "Wealth: " + metternich.defines.wealth_commodity.value_to_qstring(population_unit.wealth)
 					}
 				}
 				

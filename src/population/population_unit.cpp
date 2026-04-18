@@ -107,10 +107,11 @@ void population_unit::do_promotion(const bool is_demotion)
 	}
 
 	const int64_t promoted_size = (this->get_size() * promotion_rate / 100).to_int64();
+	const int64_t lost_wealth = this->get_wealth() * promoted_size / this->get_size();
 
-	this->get_site()->get_game_data()->change_population(best_promotion_type, this->get_culture(), this->get_religion(), this->get_phenotype(), nullptr, promoted_size, this->get_literacy_rate());
+	this->get_site()->get_game_data()->change_population(best_promotion_type, this->get_culture(), this->get_religion(), this->get_phenotype(), nullptr, promoted_size, this->get_literacy_rate(), lost_wealth);
 
-	this->get_site()->get_game_data()->change_population(this->get_type(), this->get_culture(), this->get_religion(), this->get_phenotype(), this->get_employment_type(), -promoted_size, this->get_literacy_rate());
+	this->get_site()->get_game_data()->change_population(this->get_type(), this->get_culture(), this->get_religion(), this->get_phenotype(), this->get_employment_type(), -promoted_size, this->get_literacy_rate(), -lost_wealth);
 }
 
 std::string population_unit::get_scope_name() const
@@ -328,6 +329,19 @@ void population_unit::set_literacy_rate(const decimillesimal_int &literacy_rate)
 	this->get_site()->get_game_data()->get_population()->change_literate_size(this->get_literate_size());
 
 	emit literacy_rate_changed();
+}
+
+void population_unit::set_wealth(const int64_t wealth)
+{
+	if (wealth == this->get_wealth()) {
+		return;
+	}
+
+	assert_throw(wealth >= 0);
+
+	this->wealth = wealth;
+
+	emit wealth_changed();
 }
 
 bool population_unit::is_food_producer() const

@@ -1543,7 +1543,7 @@ int64_t game::apply_historical_population_group_to_site(const population_group_k
 
 	const int64_t applied_population = std::min(remaining_population, site_game_data->get_available_population_capacity());
 
-	site_game_data->change_population(population_type, culture, religion, phenotype, nullptr, applied_population, literacy_rate);
+	site_game_data->change_population(population_type, culture, religion, phenotype, nullptr, applied_population, literacy_rate, 0);
 
 	return remaining_population - applied_population;
 }
