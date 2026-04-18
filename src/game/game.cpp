@@ -460,6 +460,7 @@ QCoro::Task<void> game::start_coro()
 			}
 
 			co_await site->get_game_data()->check_holding_type();
+			site->get_game_data()->check_employment();
 			site->get_game_data()->calculate_commodity_outputs();
 		}
 
@@ -1382,10 +1383,10 @@ int64_t game::apply_historical_population_group_to_site(const population_group_k
 		if (!site_game_data->can_have_population_type(population_type)) {
 			return population;
 		}
-	} else {
-		if (site_game_data->get_available_population_capacity() == 0) {
-			return population;
-		}
+	}
+
+	if (site_game_data->get_available_population_capacity() == 0) {
+		return population;
 	}
 
 	log_trace(std::format("Applying historical population group of type \"{}\", culture \"{}\", religion \"{}\" and size {} for settlement \"{}\".", population_type ? population_type->get_identifier() : "none", group_key.culture ? group_key.culture->get_identifier() : "none", group_key.religion ? group_key.religion->get_identifier() : "none", population, site->get_identifier()));
@@ -1540,9 +1541,11 @@ int64_t game::apply_historical_population_group_to_site(const population_group_k
 		literacy_rate = domain->get_history()->get_literacy_rate();
 	}
 
-	site_game_data->change_population(population_type, culture, religion, phenotype, nullptr, remaining_population, literacy_rate);
+	const int64_t applied_population = std::min(remaining_population, site_game_data->get_available_population_capacity());
 
-	return remaining_population;
+	site_game_data->change_population(population_type, culture, religion, phenotype, nullptr, applied_population, literacy_rate);
+
+	return remaining_population - applied_population;
 }
 
 QCoro::Task<void> game::apply_character_history(const QDate &start_date)
