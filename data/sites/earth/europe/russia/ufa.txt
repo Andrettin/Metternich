@@ -5,6 +5,6 @@ ufa = {
 	type = holding
 	province = bashkortostan
 	features = {
-		iron
+		iron_deposit
 	}
 }

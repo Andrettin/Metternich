@@ -26,3 +26,96 @@ mine = {
 		economy = 1
 	}
 }
+
+gold_mine = {
+	name = "Gold Mine"
+	building_class = gold_mine
+	portrait = factory
+	icon = gold_ore
+	size = 1
+	holding_types = {
+		guild
+		law
+		temple
+	}
+	conditions = {
+		feature = gold_deposit
+	}
+	commodity_costs = {
+		wealth = 6gb
+	}
+	modifier = {
+		employment_capacity = {
+			employment_type = gold_mining
+			capacity = 40000
+		}
+		population_capacity = 40000
+	}
+	domain_modifier = {
+		economy = 1
+	}
+	free_on_start_conditions = {
+	}
+}
+
+iron_mine = {
+	name = "Iron Mine"
+	building_class = iron_mine
+	portrait = factory
+	icon = iron_ore
+	size = 1
+	holding_types = {
+		guild
+		law
+		temple
+	}
+	conditions = {
+		feature = iron_deposit
+	}
+	commodity_costs = {
+		wealth = 6gb
+	}
+	modifier = {
+		employment_capacity = {
+			employment_type = iron_mining
+			capacity = 40000
+		}
+		population_capacity = 40000
+	}
+	domain_modifier = {
+		economy = 1
+	}
+	free_on_start_conditions = {
+	}
+}
+
+silver_mine = {
+	name = "Silver Mine"
+	building_class = silver_mine
+	portrait = factory
+	icon = silver
+	size = 1
+	holding_types = {
+		guild
+		law
+		temple
+	}
+	conditions = {
+		feature = silver_deposit
+	}
+	commodity_costs = {
+		wealth = 6gb
+	}
+	modifier = {
+		employment_capacity = {
+			employment_type = silver_mining
+			capacity = 40000
+		}
+		population_capacity = 40000
+	}
+	domain_modifier = {
+		economy = 1
+	}
+	free_on_start_conditions = {
+	}
+}

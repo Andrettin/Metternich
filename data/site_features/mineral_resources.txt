@@ -1,4 +1,14 @@
-iron = {
-	name = "Iron"
+gold_deposit = {
+	name = "Gold Deposit"
+	icon = gold_ore
+}
+
+iron_deposit = {
+	name = "Iron Deposit"
 	icon = iron_ore
+}
+
+silver_deposit = {
+	name = "Silver Deposit"
+	icon = silver
 }

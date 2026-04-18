@@ -5,10 +5,13 @@ gossensass = {
 	type = resource
 	resource = silver
 	province = south_tyrol
+	features = {
+		silver_deposit
+	}
 	
 	history = {
 		1427 = {
-			developed = true #the silver-lead mine Gossensass was in existence in 1427; Source: M. J. T. Lewis, "Railways in the Greek and Roman World", 2001, p. 16.
+			buildings += silver_mine #the silver-lead mine Gossensass was in existence in 1427; Source: M. J. T. Lewis, "Railways in the Greek and Roman World", 2001, p. 16.
 		}
 		
 		1480 = {

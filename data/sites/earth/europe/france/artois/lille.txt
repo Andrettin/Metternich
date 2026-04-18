@@ -7,7 +7,7 @@ lille = {
 	resource = iron_ore
 	province = picardy
 	features = {
-		iron
+		iron_deposit
 	}
 	
 	history = {

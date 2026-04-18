@@ -4,10 +4,12 @@ krumau = {
 	geocoordinate = { 14.31520771066 48.810990441614 }
 	type = holding
 	holding_type = law #duchy
-	#resource = gold
 	max_tier = duchy
 	province = budweis
 	cultural_names = {
 		czech = "Krumlov"
+	}
+	features = {
+		gold_deposit
 	}
 }

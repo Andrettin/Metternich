@@ -5,15 +5,18 @@ tres_minas = {
 	type = resource
 	resource = gold #gold present in Três Minas; Source: M. J. T. Lewis, "Railways in the Greek and Roman World", 2001, p. 15.
 	province = tras_os_montes
+	features = {
+		gold_deposit
+	}
 	
 	history = {
 		1 = {
 			#Três Minas was the location of a Roman gold mine in the 1st century AD; Source: M. J. T. Lewis, "Railways in the Greek and Roman World", 2001, p. 15.
-			developed = true
+			buildings += gold_mine
 		}
 		
 		100 = {
-			developed = false
+			buildings -= gold_mine
 			#improvements += ruins
 		}
 	}

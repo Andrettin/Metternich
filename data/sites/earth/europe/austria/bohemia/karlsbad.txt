@@ -6,7 +6,7 @@ karlsbad = {
 	resource = iron_ore
 	province = pilsen
 	features = {
-		iron
+		iron_deposit
 	}
 	
 	history = {

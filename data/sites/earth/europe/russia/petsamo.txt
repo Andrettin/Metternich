@@ -5,7 +5,7 @@ petsamo = {
 	type = resource
 	resource = iron_ore
 	features = {
-		iron
+		iron_deposit
 	}
 	cultural_names = {
 		russian = "Pechenga"

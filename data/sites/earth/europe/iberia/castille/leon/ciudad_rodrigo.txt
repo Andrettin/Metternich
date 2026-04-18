@@ -8,4 +8,7 @@ ciudad_rodrigo = {
 	cultural_names = {
 		roman = "Mirobriga"
 	}
+	features = {
+		gold_deposit
+	}
 }

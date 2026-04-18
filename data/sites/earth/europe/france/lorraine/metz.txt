@@ -3,12 +3,12 @@ metz = {
 	world = earth
 	geocoordinate = { 6.18002559269 49.12034669910 } #from Natural Earth
 	type = holding
-	#resource = gold
 	province = moselle
 	cultural_names = {
 		frankish = "Mettis"
 	}
 	features = {
+		gold_deposit
 		holy_site #historical cathedral
 	}
 	

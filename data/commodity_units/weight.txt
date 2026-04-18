@@ -4,6 +4,12 @@ lb = {
 	suffix = "lb"
 }
 
+cwt = {
+	name = "Hundredweight"
+	icon = sack_2
+	suffix = "cwt"
+}
+
 tn = {
 	name = "Ton"
 	icon = sack_2

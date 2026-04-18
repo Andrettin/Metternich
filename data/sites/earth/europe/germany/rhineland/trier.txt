@@ -10,7 +10,7 @@ trier = {
 		french = "Treves" #"Trèves"
 	}
 	features = {
-		iron
+		iron_deposit
 		academic #historical university
 		holy_site #historical cathedral
 	}

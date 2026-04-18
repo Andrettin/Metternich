@@ -6,7 +6,7 @@ treviso = {
 	holding_type = law
 	province = venetia
 	features = {
-		iron
+		iron_deposit
 		academic #historical university
 	}
 	

@@ -6,6 +6,6 @@ senj = {
 	resource = iron_ore
 	province = croatia
 	features = {
-		iron
+		iron_deposit
 	}
 }

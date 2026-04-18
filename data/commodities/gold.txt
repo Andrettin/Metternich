@@ -5,6 +5,7 @@ gold = {
 	wealth_value = 5000 #50gp
 	units = {
 		1 = lb
+		100 = cwt
 		2000 = tn
 	}
 }

@@ -8,4 +8,7 @@ trujillo = {
 	cultural_names = {
 		roman = "Turgalium"
 	}
+	features = {
+		gold_deposit
+	}
 }

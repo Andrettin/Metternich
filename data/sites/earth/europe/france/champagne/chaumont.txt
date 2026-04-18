@@ -6,7 +6,7 @@ chaumont_en_bassigny = {
 	resource = iron_ore
 	province = champagne
 	features = {
-		iron
+		iron_deposit
 	}
 	
 	history = {

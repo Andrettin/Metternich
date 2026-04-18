@@ -2,6 +2,14 @@ mine = {
 	name = "Mine"
 }
 
+gold_mine = {
+	name = "Gold Mine"
+}
+
 iron_mine = {
 	name = "Iron Mine"
+}
+
+silver_mine = {
+	name = "Silver Mine"
 }

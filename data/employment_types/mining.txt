@@ -5,10 +5,30 @@ mining = {
 	}
 }
 
+gold_mining = {
+	name = "Gold Mining"
+	output_commodity = gold
+	monthly_output_value = 2cwt
+	base_employment_size = 40000
+	employee_types = {
+		laborers
+	}
+}
+
 iron_mining = {
 	name = "Iron Mining"
 	output_commodity = iron
 	monthly_output_value = 1.8tn
+	base_employment_size = 40000
+	employee_types = {
+		laborers
+	}
+}
+
+silver_mining = {
+	name = "Silver Mining"
+	output_commodity = silver
+	monthly_output_value = 2cwt
 	base_employment_size = 40000
 	employee_types = {
 		laborers
