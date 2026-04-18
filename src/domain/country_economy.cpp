@@ -281,9 +281,12 @@ void country_economy::set_stored_commodity(const commodity *commodity, const int
 		return;
 	}
 
-	if (value > this->get_storage_capacity() && !commodity->is_abstract()) {
-		this->set_stored_commodity(commodity, this->get_storage_capacity());
-		return;
+	if (!commodity->is_abstract()) {
+		const int64_t storage_capacity = this->get_storage_capacity_for_commodity(commodity);
+		if (value > storage_capacity) {
+			this->set_stored_commodity(commodity, storage_capacity);
+			return;
+		}
 	}
 
 	if (value <= 0) {
@@ -371,6 +374,20 @@ void country_economy::set_storage_capacity(const int64_t capacity)
 	if (game::get()->is_running()) {
 		emit storage_capacity_changed();
 	}
+}
+
+int64_t country_economy::get_storage_capacity_for_commodity(const commodity *commodity) const
+{
+	int64_t storage_capacity = this->get_storage_capacity();
+
+	if (commodity->get_units().empty()) {
+		return storage_capacity;
+	}
+
+	const int64_t highest_unit_value = commodity->get_units().rbegin()->first;
+	storage_capacity *= highest_unit_value;
+
+	return storage_capacity;
 }
 
 QVariantList country_economy::get_commodity_inputs_qvariant_list() const

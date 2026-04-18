@@ -171,6 +171,8 @@ public:
 		this->set_storage_capacity(this->get_storage_capacity() + change);
 	}
 
+	int64_t get_storage_capacity_for_commodity(const commodity *commodity) const;
+
 	const commodity_map<centesimal_int> &get_commodity_inputs() const
 	{
 		return this->commodity_inputs;

@@ -126,6 +126,11 @@ public:
 
 	bool is_enabled() const;
 
+	const std::map<int, const commodity_unit *> &get_units() const
+	{
+		return this->units;
+	}
+
 	bool has_unit(const commodity_unit *unit) const
 	{
 		return this->unit_values.contains(unit);
