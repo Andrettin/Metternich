@@ -21,6 +21,7 @@
 #include "map/site_game_data.h"
 #include "map/tile.h"
 #include "population/population.h"
+#include "population/population_strata.h"
 #include "population/population_type.h"
 #include "population/population_unit.h"
 #include "util/assert_util.h"
@@ -276,8 +277,9 @@ void country_economy::set_stored_commodity(const commodity *commodity, const int
 	if (commodity->is_convertible_to_wealth()) {
 		assert_throw(value > 0);
 		const int64_t wealth_conversion_income = commodity->get_wealth_value() * value;
-		this->add_tributable_commodity(defines::get()->get_wealth_commodity(), wealth_conversion_income, income_transaction_type::treasure_fleet);
-		this->domain->get_turn_data()->add_income_transaction(income_transaction_type::liquidated_riches, wealth_conversion_income, commodity, value);
+		const int64_t gained_wealth = this->add_population_wealth(wealth_conversion_income);
+		this->add_tributable_commodity(defines::get()->get_wealth_commodity(), gained_wealth, income_transaction_type::treasure_fleet);
+		this->domain->get_turn_data()->add_income_transaction(income_transaction_type::liquidated_riches, gained_wealth, commodity, value);
 		return;
 	}
 
@@ -348,6 +350,36 @@ void country_economy::add_tributable_commodity(const commodity *commodity, const
 		this->get_game_data()->get_overlord()->get_turn_data()->add_income_transaction(tribute_income_type, tribute, nullptr, 0, this->domain);
 		this->domain->get_turn_data()->add_expense_transaction(expense_transaction_type::tribute, tribute, nullptr, 0, this->get_game_data()->get_overlord());
 	}
+}
+
+int64_t country_economy::add_population_wealth(const int64_t wealth)
+{
+	int64_t weighted_population_size = 0;
+
+	for (const auto &[population_type, population_type_size] : this->get_game_data()->get_population()->get_type_sizes()) {
+		int64_t weighted_population_type_size = population_type_size;
+		weighted_population_type_size *= get_population_strata_income_weight(population_type->get_strata());
+		weighted_population_size += weighted_population_type_size;
+	}
+
+	if (weighted_population_size == 0) {
+		return wealth;
+	}
+	
+	static constexpr int population_tax_rate = 50;
+
+	int64_t remaining_wealth = wealth;
+
+	for (population_unit *population_unit : this->get_game_data()->get_population_units()) {
+		const int64_t population_unit_weighted_size = population_unit->get_size() * get_population_strata_income_weight(population_unit->get_type()->get_strata());
+		const int64_t population_unit_income = wealth * population_unit_weighted_size / weighted_population_size * population_tax_rate / 100;
+		population_unit->change_wealth(population_unit_income);
+		remaining_wealth -= population_unit_income;
+	}
+
+	assert_throw(remaining_wealth > 0);
+
+	return remaining_wealth;
 }
 
 int64_t country_economy::get_stored_food() const

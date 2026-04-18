@@ -156,6 +156,8 @@ public:
 	}
 
 	void add_tributable_commodity(const commodity *commodity, const int tributable_quantity, const income_transaction_type tribute_income_type);
+	
+	int64_t add_population_wealth(const int64_t wealth);
 
 	int64_t get_stored_food() const;
 
