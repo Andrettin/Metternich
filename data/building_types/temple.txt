@@ -92,6 +92,7 @@ cathedral = {
 	}
 	commodity_costs = {
 		wealth = 26gb
+		iron = 100tn
 	}
 	modifier = {
 		law = 2
