@@ -10,6 +10,10 @@ warehouse = {
 		village
 		town
 		city
+		guild
+		law
+		magic_source
+		temple
 	}
 	domain_modifier = {
 		storage_capacity = 100
