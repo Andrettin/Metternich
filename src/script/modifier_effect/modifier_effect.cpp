@@ -53,6 +53,7 @@
 #include "script/modifier_effect/military_unit_stat_modifier_effect.h"
 #include "script/modifier_effect/movement_modifier_effect.h"
 #include "script/modifier_effect/output_modifier_effect.h"
+#include "script/modifier_effect/population_capacity_modifier_effect.h"
 #include "script/modifier_effect/population_type_bonus_modifier_effect.h"
 #include "script/modifier_effect/range_modifier_effect.h"
 #include "script/modifier_effect/resource_output_modifier_effect.h"
@@ -237,6 +238,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 	} else if constexpr (std::is_same_v<scope_type, const site>) {
 		if (key == "holding_level") {
 			return std::make_unique<holding_level_modifier_effect>(value);
+		} else if (key == "population_capacity") {
+			return std::make_unique<population_capacity_modifier_effect>(value);
 		} else if (key.ends_with(bonus_suffix)) {
 			const size_t commodity_identifier_size = key.size() - bonus_suffix.size();
 			const commodity *commodity = commodity::get(key.substr(0, commodity_identifier_size));
