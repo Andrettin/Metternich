@@ -3,4 +3,5 @@ refined_sugar = {
 	type = material
 	icon = refined_sugar
 	base_price = 300
+	required_game_rule = additional_commodities
 }

@@ -4,4 +4,5 @@ armament = {
 	icon = cannon
 	base_price = 900
 	required_technology = renaissance
+	required_game_rule = additional_commodities
 }

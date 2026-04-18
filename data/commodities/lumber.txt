@@ -3,4 +3,5 @@ lumber = {
 	type = material
 	icon = lumber
 	base_price = 300
+	required_game_rule = additional_commodities
 }

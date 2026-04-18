@@ -3,4 +3,5 @@ tin = {
 	type = resource
 	icon = tin
 	base_price = 100
+	required_game_rule = additional_commodities
 }

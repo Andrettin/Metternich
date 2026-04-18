@@ -4,4 +4,5 @@ fish = {
 	icon = fish
 	food_type = meat
 	base_price = 100
+	required_game_rule = additional_commodities
 }

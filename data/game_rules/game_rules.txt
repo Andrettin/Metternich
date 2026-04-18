@@ -69,6 +69,13 @@ myths_enabled = {
 	hidden = true
 }
 
+additional_commodities = {
+	name = "Additional Commodities"
+	default_value = false
+	description = "Allow additional commodities"
+	hidden = true
+}
+
 additional_holding_types = {
 	name = "Additional Holding Types"
 	default_value = false

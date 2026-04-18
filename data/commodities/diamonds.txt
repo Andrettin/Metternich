@@ -3,4 +3,5 @@ diamonds = {
 	type = resource
 	icon = diamonds
 	wealth_value = 400
+	required_game_rule = additional_commodities
 }

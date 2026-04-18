@@ -3,4 +3,5 @@ furs = {
 	type = resource
 	icon = furs
 	base_price = 100
+	required_game_rule = additional_commodities
 }

@@ -3,4 +3,5 @@ tea = {
 	type = resource
 	icon = tobacco
 	base_price = 100
+	required_game_rule = additional_commodities
 }

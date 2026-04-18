@@ -3,4 +3,5 @@ amber = {
 	type = resource
 	icon = amber
 	wealth_value = 300
+	required_game_rule = additional_commodities
 }
