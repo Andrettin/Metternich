@@ -16,6 +16,13 @@ gp = {
 	suffix = "gp"
 }
 
+pp = {
+	name = "Platinum Piece"
+	icon = wealth
+	suffix = "pp"
+	displayed = false
+}
+
 gb = {
 	name = "Gold Bar"
 	icon = gold
