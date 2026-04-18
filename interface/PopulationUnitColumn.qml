@@ -19,7 +19,7 @@ Flickable {
 			model: population_units
 			
 			Row {
-				spacing: 8 * scale_factor
+				spacing: 4 * scale_factor
 				
 				readonly property var population_unit: model.modelData
 				

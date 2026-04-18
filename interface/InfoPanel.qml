@@ -258,7 +258,7 @@ Rectangle {
 				+ (holding_type !== null && population_visible ? ("\nPopulation Capacity: " + number_string(selected_site_game_data.population_capacity)) : "")
 				+ (income_string.length > 0 ? ("\nIncome: " + income_string) : "")
 				+ (selected_site_game_data.attribute_values.length > 0 ? ("\n" + object_counts_to_string(selected_site_game_data.attribute_values)) : "")
-				+ (selected_site_game_data.commodity_outputs.length > 0 ? get_commodity_outputs_string(selected_site_game_data.commodity_outputs) : "")
+				+ (selected_site_game_data.commodity_outputs.length > 0 ? ("\n" + get_commodity_outputs_string(selected_site_game_data.commodity_outputs)) : "")
 			) : ""
 		)
 		visible: selected_site && !selected_garrison && !viewing_population && !viewing_population_units
@@ -278,7 +278,7 @@ Rectangle {
 					str += "\n"
 				}
 				
-				str += commodity.name + " Output: " + output
+				str += commodity.name + " Output: " + commodity.value_to_qstring(output)
 			}
 			
 			return str

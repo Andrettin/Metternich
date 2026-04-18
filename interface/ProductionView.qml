@@ -31,10 +31,11 @@ Item {
 			Item {
 				width: 64 * scale_factor
 				height: 64 * scale_factor
-				visible: !commodity.abstract && commodity.wealth_value === 0
+				visible: !commodity.abstract && (commodity.wealth_value === 0 || output > 0)
 				
 				readonly property var commodity: model.modelData
 				readonly property int stored: domain_economy.get_stored_commodity(commodity)
+				readonly property int output: domain_economy.get_commodity_output_int(commodity)
 				
 				Image {
 					id: commodity_icon
@@ -50,6 +51,7 @@ Item {
 					anchors.left: commodity_icon.right
 					anchors.leftMargin: 4 * scale_factor
 					anchors.bottom: commodity_icon.bottom
+					visible: commodity.wealth_value === 0
 				}
 				
 				MouseArea {
@@ -58,8 +60,11 @@ Item {
 					
 					onEntered: {
 						status_text = commodity.name
-						if (domain_economy.get_commodity_output_int(commodity) > 0) {
-							middle_status_text = "Output: " + commodity.value_to_qstring(domain_economy.get_commodity_output_int(commodity))
+						if (output > 0) {
+							middle_status_text = "Output: " + commodity.value_to_qstring(output)
+							if (commodity.wealth_value !== 0) {
+								middle_status_text += " (" + metternich.defines.wealth_commodity.value_to_qstring(commodity.wealth_value * output) + ")"
+							}
 						}
 					}
 					
