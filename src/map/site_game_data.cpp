@@ -2111,6 +2111,10 @@ void site_game_data::change_employment_size(const employment_type *employment_ty
 	if (size == 0) {
 		this->employment_sizes.erase(employment_type);
 	}
+
+	if (employment_type->get_output_commodity() != nullptr) {
+		this->calculate_commodity_outputs();
+	}
 }
 
 void site_game_data::change_employment_capacity(const employment_type *employment_type, const int64_t change)
@@ -2329,6 +2333,17 @@ void site_game_data::calculate_commodity_outputs()
 		for (const auto &[commodity, modifier] : this->get_owner()->get_economy()->get_commodity_output_modifiers()) {
 			commodity_output_modifiers[commodity] += modifier;
 		}
+	}
+
+	for (const auto &[employment_type, employment_size] : this->get_employment_sizes()) {
+		if (employment_type->get_output_commodity() == nullptr) {
+			continue;
+		}
+
+		assert_throw(employment_type->get_base_employment_size() > 0);
+
+		const int64_t output = employment_type->get_monthly_output_value() * employment_size / employment_type->get_base_employment_size() * game::get()->get_current_months_per_turn();
+		outputs[employment_type->get_output_commodity()] += centesimal_int(output);
 	}
 
 	for (auto &[commodity, output] : outputs) {
