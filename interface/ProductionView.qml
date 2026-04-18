@@ -23,7 +23,7 @@ Item {
 		anchors.topMargin: 16 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
 		columns: 4
-		spacing: 8 * scale_factor
+		spacing: 16 * scale_factor
 		
 		Repeater {
 			model: domain_economy.available_commodities
