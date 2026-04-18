@@ -11,10 +11,13 @@
 #include "domain/idea_type.h"
 #include "domain/journal_entry.h"
 #include "domain/office.h"
+#include "infrastructure/building_slot.h"
 #include "infrastructure/building_type.h"
 #include "infrastructure/building_type_container.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
+#include "map/site.h"
+#include "map/site_game_data.h"
 #include "technology/technology.h"
 #include "unit/civilian_unit.h"
 #include "unit/military_unit.h"
@@ -48,6 +51,7 @@ QCoro::Task<void> country_ai::do_turn()
 	this->choose_current_research();
 	this->appoint_office_holders();
 	this->appoint_ideas();
+	this->do_construction();
 
 	for (const province *province : this->get_game_data()->get_provinces()) {
 		province->get_game_data()->do_ai_turn();
@@ -163,6 +167,30 @@ void country_ai::appoint_office_holders()
 		const character *character = this->domain->get_government()->get_best_office_holder(office);
 		if (character != nullptr) {
 			this->domain->get_government()->set_appointed_office_holder(office, character);
+		}
+	}
+}
+
+void country_ai::do_construction()
+{
+	for (const site *site : this->get_game_data()->get_sites()) {
+		if (site->is_settlement() && site->get_game_data()->is_built()) {
+			for (const auto &building_slot : site->get_game_data()->get_building_slots()) {
+				if (!building_slot->is_available()) {
+					continue;
+				}
+
+				if (building_slot->get_under_construction_building() != nullptr) {
+					continue;
+				}
+
+				const building_type *buildable_building = building_slot->get_buildable_building();
+				if (buildable_building == nullptr) {
+					continue;
+				}
+
+				building_slot->build_building(buildable_building);
+			}
 		}
 	}
 }
