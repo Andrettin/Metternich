@@ -5,6 +5,9 @@ namur = {
 	type = resource
 	resource = iron_ore
 	province = liege
+	features = {
+		iron
+	}
 	
 	history = {
 		919 = {

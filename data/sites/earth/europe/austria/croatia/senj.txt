@@ -5,4 +5,7 @@ senj = {
 	type = resource
 	resource = iron_ore
 	province = croatia
+	features = {
+		iron
+	}
 }

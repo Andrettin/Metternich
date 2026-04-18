@@ -2,3 +2,8 @@ mine = {
 	name = "Mine"
 	slot_type = mine
 }
+
+iron_mine = {
+	name = "Iron Mine"
+	slot_type = iron_mine
+}

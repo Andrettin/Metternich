@@ -5,6 +5,9 @@ chaumont_en_bassigny = {
 	type = resource
 	resource = iron_ore
 	province = champagne
+	features = {
+		iron
+	}
 	
 	history = {
 		1836 = {

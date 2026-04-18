@@ -11,6 +11,7 @@ cartagena = {
 		roman = "New Carthage"
 	}
 	features = {
+		iron
 		holy_site #historical cathedral
 	}
 	

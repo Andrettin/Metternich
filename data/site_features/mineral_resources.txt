@@ -1,0 +1,4 @@
+iron = {
+	name = "Iron"
+	icon = iron_ore
+}

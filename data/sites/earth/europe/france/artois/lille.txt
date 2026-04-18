@@ -6,6 +6,9 @@ lille = {
 	#resource = grain #Cropland (primarily wheat, sugar beets, corn); Source: Map No. 500197 of the Perry-Castañeda Library Map Collection, 1972.
 	resource = iron_ore
 	province = picardy
+	features = {
+		iron
+	}
 	
 	history = {
 		919 = {

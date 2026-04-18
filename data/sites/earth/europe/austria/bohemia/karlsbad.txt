@@ -5,6 +5,9 @@ karlsbad = {
 	type = resource
 	resource = iron_ore
 	province = pilsen
+	features = {
+		iron
+	}
 	
 	history = {
 		1815 = {

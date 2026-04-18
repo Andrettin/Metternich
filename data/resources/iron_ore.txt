@@ -10,7 +10,4 @@ iron_ore = {
 	site_types = {
 		resource
 	}
-	improved_modifier = {
-		research_bonus = 1
-	}
 }

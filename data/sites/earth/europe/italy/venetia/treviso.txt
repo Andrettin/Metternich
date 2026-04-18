@@ -4,9 +4,9 @@ treviso = {
 	geocoordinate = { 12.24001745470 45.67001466780 } #from Natural Earth
 	type = holding
 	holding_type = law
-	#resource = iron_ore
 	province = venetia
 	features = {
+		iron
 		academic #historical university
 	}
 	

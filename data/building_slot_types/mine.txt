@@ -1,3 +1,7 @@
 mine = {
 	name = "Mine"
 }
+
+iron_mine = {
+	name = "Iron Mine"
+}
