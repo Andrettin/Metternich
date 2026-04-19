@@ -381,6 +381,11 @@ int population_unit::purchase_needs(const commodity_map<int64_t> &needs, const s
 		commodity_need *= needs_modifier;
 		commodity_need /= 100;
 
+		if (commodity_need == 0) {
+			fulfilled_percent += 100;
+			continue;
+		}
+
 		int64_t affordable_commodity_need = std::min(commodity_need, this->get_wealth() / game::get()->get_price(commodity));
 
 		if (affordable_commodity_need == 0) {
