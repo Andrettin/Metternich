@@ -1,3 +1,13 @@
+prime_cotton_land = {
+	name = "Prime Cotton Land"
+	icon = cotton
+}
+
+prime_sugar_land = {
+	name = "Prime Sugar Land"
+	icon = sugar_cane
+}
+
 prime_tobacco_land = {
 	name = "Prime Tobacco Land"
 	icon = tobacco

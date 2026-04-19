@@ -1,0 +1,4 @@
+prime_timber = {
+	name = "Prime Timber"
+	icon = timber
+}
