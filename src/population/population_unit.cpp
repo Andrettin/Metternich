@@ -5,6 +5,7 @@
 #include "culture/culture.h"
 #include "database/defines.h"
 #include "domain/domain.h"
+#include "domain/domain_economy.h"
 #include "domain/domain_game_data.h"
 #include "economy/commodity.h"
 #include "economy/employment_type.h"
@@ -351,6 +352,55 @@ bool population_unit::is_food_producer() const
 	}
 
 	return false;
+}
+
+void population_unit::purchase_needs(const std::vector<const metternich::domain *> &trade_domains)
+{
+	this->purchase_needs(this->get_type()->get_life_needs(), trade_domains);
+	this->purchase_needs(this->get_type()->get_everyday_needs(), trade_domains);
+	this->purchase_needs(this->get_type()->get_luxury_needs(), trade_domains);
+}
+
+void population_unit::purchase_needs(const commodity_map<int64_t> &needs, const std::vector<const metternich::domain *> &trade_domains)
+{
+	for (const auto &[commodity, base_commodity_need] : needs) {
+		int64_t commodity_need = base_commodity_need * game::get()->get_current_months_per_turn();
+		commodity_need *= this->get_size();
+		commodity_need /= defines::get()->get_base_population_needs_size();
+
+		static constexpr int64_t needs_modifier = 80;
+		commodity_need *= needs_modifier;
+		commodity_need /= 100;
+
+		int64_t affordable_commodity_need = std::min(commodity_need, this->get_wealth() / game::get()->get_price(commodity));
+
+		if (affordable_commodity_need == 0) {
+			continue;
+		}
+
+		for (const metternich::domain *trade_domain : trade_domains) {
+			const int64_t domain_offer = trade_domain->get_economy()->get_offer(commodity);
+			if (domain_offer == 0) {
+				continue;
+			}
+
+			assert_throw(domain_offer > 0);
+			assert_throw(affordable_commodity_need > 0);
+
+			const int64_t bought_quantity = std::min(domain_offer, affordable_commodity_need);
+			assert_throw(bought_quantity > 0);
+
+			trade_domain->get_economy()->do_sale(this->domain, commodity, bought_quantity, false);
+
+			const int64_t purchase_price = bought_quantity * game::get()->get_price(commodity);
+			this->change_wealth(-purchase_price);
+
+			affordable_commodity_need -= bought_quantity;
+			if (affordable_commodity_need == 0) {
+				break;
+			}
+		}
+	}
 }
 
 }

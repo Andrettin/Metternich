@@ -179,40 +179,20 @@ void domain_economy::do_production()
 	}
 }
 
-void domain_economy::do_trade(domain_map<commodity_map<int>> &country_luxury_demands)
+void domain_economy::do_trade(domain_map<commodity_map<int>> &domain_luxury_demands)
 {
 	try {
 		if (this->get_game_data()->is_under_anarchy()) {
 			return;
 		}
 
-		//get the known countries and sort them by priority
-		std::vector<const metternich::domain *> countries = container::to_vector(this->get_game_data()->get_known_countries());
-		std::sort(countries.begin(), countries.end(), [&](const metternich::domain *lhs, const metternich::domain *rhs) {
-			if (this->get_game_data()->is_vassal_of(lhs) != this->get_game_data()->is_vassal_of(rhs)) {
-				return this->get_game_data()->is_vassal_of(lhs);
-			}
-
-			if (this->get_game_data()->is_any_vassal_of(lhs) != this->get_game_data()->is_any_vassal_of(rhs)) {
-				return this->get_game_data()->is_any_vassal_of(lhs);
-			}
-
-			//give trade priority by opinion
-			const int lhs_opinion = this->get_game_data()->get_opinion_of(lhs);
-			const int rhs_opinion = this->get_game_data()->get_opinion_of(rhs);
-
-			if (lhs_opinion != rhs_opinion) {
-				return lhs_opinion > rhs_opinion;
-			}
-
-			return lhs->get_identifier() < rhs->get_identifier();
-		});
+		const std::vector<const metternich::domain *> trade_domains = this->get_known_domains_by_trade_priority();
 
 		commodity_map<int> offers = this->get_offers();
 		for (auto &[commodity, offer] : offers) {
 			const int price = game::get()->get_price(commodity);
 
-			for (const metternich::domain *other_domain : countries) {
+			for (const metternich::domain *other_domain : trade_domains) {
 				domain_economy *other_domain_economy = other_domain->get_economy();
 
 				const int bid = other_domain_economy->get_bid(commodity);
@@ -231,7 +211,7 @@ void domain_economy::do_trade(domain_map<commodity_map<int>> &country_luxury_dem
 					}
 				}
 
-				int &demand = country_luxury_demands[other_domain][commodity];
+				int &demand = domain_luxury_demands[other_domain][commodity];
 				if (demand > 0) {
 					const int sold_quantity = std::min(offer, demand);
 
@@ -250,6 +230,16 @@ void domain_economy::do_trade(domain_map<commodity_map<int>> &country_luxury_dem
 		}
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error(std::format("Error doing trade for domain \"{}\".", this->domain->get_identifier())));
+	}
+}
+
+void domain_economy::do_population_needs_purchasing()
+{
+	std::vector<const metternich::domain *> trade_domains = { this->domain };
+	vector::merge(trade_domains, this->get_known_domains_by_trade_priority());
+
+	for (population_unit *population_unit : this->get_game_data()->get_population_units()) {
+		population_unit->purchase_needs(trade_domains);
 	}
 }
 
@@ -746,13 +736,40 @@ void domain_economy::set_offer(const commodity *commodity, const int value)
 
 void domain_economy::prepare_offers()
 {
-	for (const auto &[commodity, base_max_storage] : this->get_min_commodity_storages()) {
+	for (const auto &[commodity, base_max_storage] : this->get_max_commodity_storages()) {
 		const int64_t max_storage = domain_economy::get_storage_for_commodity(commodity, base_max_storage);
 		const int64_t stored_quantity = this->get_stored_commodity(commodity);
 		if (stored_quantity > max_storage) {
 			this->set_offer(commodity, stored_quantity - max_storage);
 		}
 	}
+}
+
+std::vector<const domain *> domain_economy::get_known_domains_by_trade_priority() const
+{
+	//get the known countries and sort them by priority
+	std::vector<const metternich::domain *> countries = container::to_vector(this->get_game_data()->get_known_countries());
+	std::sort(countries.begin(), countries.end(), [&](const metternich::domain *lhs, const metternich::domain *rhs) {
+		if (this->get_game_data()->is_vassal_of(lhs) != this->get_game_data()->is_vassal_of(rhs)) {
+			return this->get_game_data()->is_vassal_of(lhs);
+		}
+
+		if (this->get_game_data()->is_any_vassal_of(lhs) != this->get_game_data()->is_any_vassal_of(rhs)) {
+			return this->get_game_data()->is_any_vassal_of(lhs);
+		}
+
+		//give trade priority by opinion
+		const int lhs_opinion = this->get_game_data()->get_opinion_of(lhs);
+		const int rhs_opinion = this->get_game_data()->get_opinion_of(rhs);
+
+		if (lhs_opinion != rhs_opinion) {
+			return lhs_opinion > rhs_opinion;
+		}
+
+		return lhs->get_identifier() < rhs->get_identifier();
+	});
+
+	return countries;
 }
 
 void domain_economy::do_sale(const metternich::domain *other_domain, const commodity *commodity, const int sold_quantity, const bool state_purchase)

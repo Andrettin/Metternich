@@ -1747,9 +1747,9 @@ QCoro::Task<void> game::do_turn_coro()
 
 void game::do_trade()
 {
-	std::vector<metternich::domain *> trade_countries = this->get_countries();
+	std::vector<metternich::domain *> trade_domains = this->get_countries();
 
-	std::erase_if(trade_countries, [this](const domain *domain) {
+	std::erase_if(trade_domains, [this](const domain *domain) {
 		if (domain->get_game_data()->is_under_anarchy()) {
 			return true;
 		}
@@ -1757,13 +1757,17 @@ void game::do_trade()
 		return false;
 	});
 
-	std::sort(trade_countries.begin(), trade_countries.end(), [&](const metternich::domain *lhs, const metternich::domain *rhs) {
+	std::sort(trade_domains.begin(), trade_domains.end(), [&](const metternich::domain *lhs, const metternich::domain *rhs) {
 		return lhs->get_identifier() < rhs->get_identifier();
 	});
 
-	domain_map<commodity_map<int>> country_luxury_demands;
+	domain_map<commodity_map<int>> domain_luxury_demands;
 
-	for (const domain *domain : trade_countries) {
+	for (const domain *domain : trade_domains) {
+		domain->get_economy()->do_population_needs_purchasing();
+	}
+
+	for (const domain *domain : trade_domains) {
 		domain_economy *domain_economy = domain->get_economy();
 
 		for (const auto &[commodity, demand] : domain_economy->get_commodity_demands()) {
@@ -1796,18 +1800,18 @@ void game::do_trade()
 			}
 
 			if (effective_demand_int > 0) {
-				country_luxury_demands[domain][commodity] = effective_demand_int;
+				domain_luxury_demands[domain][commodity] = effective_demand_int;
 			}
 		}
 	}
 
-	for (const domain *domain : trade_countries) {
-		domain->get_economy()->do_trade(country_luxury_demands);
+	for (const domain *domain : trade_domains) {
+		domain->get_economy()->do_trade(domain_luxury_demands);
 	}
 
 	//change commodity prices based on whether there were unfulfilled bids/offers
 	commodity_map<int> remaining_demands;
-	for (const domain *domain : trade_countries) {
+	for (const domain *domain : trade_domains) {
 		for (const auto &[commodity, bid] : domain->get_economy()->get_bids()) {
 			remaining_demands[commodity] += bid;
 		}
@@ -1816,7 +1820,7 @@ void game::do_trade()
 			remaining_demands[commodity] -= offer;
 		}
 	}
-	for (const auto &[country, luxury_demands] : country_luxury_demands) {
+	for (const auto &[country, luxury_demands] : domain_luxury_demands) {
 		for (const auto &[commodity, demand] : luxury_demands) {
 			remaining_demands[commodity] += demand;
 		}
@@ -1999,11 +2003,13 @@ void game::set_player_country(const domain *domain)
 
 int game::get_price(const commodity *commodity) const
 {
+	/*
 	const auto find_iterator = this->prices.find(commodity);
 
 	if (find_iterator != this->prices.end()) {
 		return find_iterator->second;
 	}
+	*/
 
 	return commodity->get_base_price();
 }

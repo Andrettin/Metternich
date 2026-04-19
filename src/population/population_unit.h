@@ -1,5 +1,6 @@
 #pragma once
 
+#include "economy/commodity_container.h"
 #include "util/decimillesimal_int.h"
 
 Q_MOC_INCLUDE("culture/culture.h")
@@ -144,6 +145,9 @@ public:
 	}
 
 	bool is_food_producer() const;
+
+	void purchase_needs(const std::vector<const metternich::domain *> &trade_domains);
+	void purchase_needs(const commodity_map<int64_t> &needs, const std::vector<const metternich::domain *> &trade_domains);
 
 signals:
 	void type_changed();

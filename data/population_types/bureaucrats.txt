@@ -26,4 +26,7 @@ bureaucrats = {
 		south_asian = rifle_infantry_medium_small
 		african = rifle_infantry_dark_small
 	}
+	everyday_needs = {
+		tobacco = 3tn
+	}
 }

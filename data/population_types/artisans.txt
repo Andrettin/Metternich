@@ -14,4 +14,7 @@ artisans = {
 		salt = 0.25
 		tea = 0.25
 	}
+	everyday_needs = {
+		tobacco = 3tn
+	}
 }

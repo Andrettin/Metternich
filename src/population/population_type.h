@@ -184,6 +184,21 @@ public:
 		return this->equivalent_population_types;
 	}
 
+	const commodity_map<int64_t> &get_life_needs() const
+	{
+		return this->life_needs;
+	}
+
+	const commodity_map<int64_t> &get_everyday_needs() const
+	{
+		return this->everyday_needs;
+	}
+
+	const commodity_map<int64_t> &get_luxury_needs() const
+	{
+		return this->luxury_needs;
+	}
+
 	const population_type_map<std::unique_ptr<factor<population_unit>>> &get_promotion_factors() const
 	{
 		return this->promotion_factors;
@@ -213,6 +228,9 @@ private:
 	centesimal_int max_modifier_multiplier = centesimal_int(0);
 	std::unique_ptr<modifier<const domain>> country_modifier;
 	std::vector<const population_type *> equivalent_population_types;
+	commodity_map<int64_t> life_needs;
+	commodity_map<int64_t> everyday_needs;
+	commodity_map<int64_t> luxury_needs;
 	population_type_map<std::unique_ptr<factor<population_unit>>> promotion_factors; //selects the population type to be promoted or demoted to
 	const game_rule *required_game_rule = nullptr;
 };

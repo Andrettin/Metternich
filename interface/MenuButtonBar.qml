@@ -41,9 +41,8 @@ Rectangle {
 		spacing: 4 * scale_factor
 		
 		IconButton {
-			id: politics_button
-			//icon_identifier: "flag"
-			icon_identifier: "rifle_infantry_light_small"
+			id: domestic_affairs_button
+			icon_identifier: "bell"
 			
 			onReleased: {
 				menu_stack.push("PoliticsView.qml", {

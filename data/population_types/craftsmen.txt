@@ -30,4 +30,7 @@ craftsmen = {
 		south_asian = craftsmen_medium_small
 		african = craftsmen_dark_small
 	}
+	luxury_needs = {
+		tobacco = 0.95tn
+	}
 }

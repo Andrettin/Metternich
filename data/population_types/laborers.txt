@@ -21,6 +21,9 @@ laborers = {
 		salt = 0.125
 		tea = 0.125
 	}
+	luxury_needs = {
+		tobacco = 0.95tn
+	}
 	promotion_factors = {
 		aristocrats = {
 			base_value = 0.01

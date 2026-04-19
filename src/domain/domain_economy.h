@@ -48,7 +48,8 @@ public:
 	domain_game_data *get_game_data() const;
 
 	void do_production();
-	void do_trade(domain_map<commodity_map<int>> &country_luxury_demands);
+	void do_trade(domain_map<commodity_map<int>> &domain_luxury_demands);
+	void do_population_needs_purchasing();
 
 	const resource_map<int> &get_resource_counts() const
 	{
@@ -371,6 +372,7 @@ public:
 		emit offers_changed();
 	}
 
+	std::vector<const domain *> get_known_domains_by_trade_priority() const;
 	void do_sale(const metternich::domain *other_domain, const commodity *commodity, const int sold_quantity, const bool state_purchase);
 
 	const commodity_map<int> &get_commodity_needs() const

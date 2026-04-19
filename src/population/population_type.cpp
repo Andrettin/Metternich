@@ -75,6 +75,27 @@ void population_type::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->equivalent_population_types.push_back(population_type::get(value));
 		}
+	} else if (tag == "life_needs") {
+		scope.for_each_property([this](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+			const commodity *commodity = commodity::get(key);
+			this->life_needs[commodity] = commodity->string_to_value(value);
+		});
+	} else if (tag == "everyday_needs") {
+		scope.for_each_property([this](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+			const commodity *commodity = commodity::get(key);
+			this->everyday_needs[commodity] = commodity->string_to_value(value);
+		});
+	} else if (tag == "luxury_needs") {
+		scope.for_each_property([this](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+			const commodity *commodity = commodity::get(key);
+			this->luxury_needs[commodity] = commodity->string_to_value(value);
+		});
 	} else if (tag == "promotion_factors") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();

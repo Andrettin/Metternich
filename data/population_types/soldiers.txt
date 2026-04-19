@@ -26,4 +26,7 @@ soldiers = {
 		south_asian = rifle_infantry_medium_small
 		african = rifle_infantry_dark_small
 	}
+	luxury_needs = {
+		tobacco = 0.95tn
+	}
 }

@@ -33,4 +33,7 @@ farmers = {
 		south_asian = slaves_medium_small
 		african = slaves_dark_small
 	}
+	luxury_needs = {
+		tobacco = 0.95tn
+	}
 }

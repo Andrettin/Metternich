@@ -36,6 +36,7 @@ battle_round_duration = 5min
 default_population_class = laborers
 default_tribal_population_class = tribesmen
 population_growth_threshold = 100
+base_population_needs_size = 200000
 base_monthly_promotion_rate = 0.2 #0.2%
 base_monthly_literacy_change_rate = 10 #percent
 base_literacy_educator_percent = 0.5 #0.5%
