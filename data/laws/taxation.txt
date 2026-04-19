@@ -1,0 +1,111 @@
+no_taxation = {
+	name = "No Taxation"
+	group = taxation
+	icon = chest
+	commodity_costs = {
+		wealth = 1gb
+	}
+	modifier = {
+		loyalty = -1
+	}
+}
+
+light_taxation = {
+	name = "Light Taxation"
+	group = taxation
+	icon = chest
+	commodity_costs = {
+		wealth = 1gb
+	}
+	modifier = {
+		population_strata_tax_rate = {
+			strata = lower
+			rate = 25
+		}
+		population_strata_tax_rate = {
+			strata = middle
+			rate = 25
+		}
+		population_strata_tax_rate = {
+			strata = upper
+			rate = 25
+		}
+		economy = 1
+		loyalty = -1
+	}
+}
+
+moderate_taxation = {
+	name = "Moderate Taxation"
+	group = taxation
+	icon = chest
+	commodity_costs = {
+		wealth = 1gb
+	}
+	modifier = {
+		population_strata_tax_rate = {
+			strata = lower
+			rate = 50
+		}
+		population_strata_tax_rate = {
+			strata = middle
+			rate = 50
+		}
+		population_strata_tax_rate = {
+			strata = upper
+			rate = 50
+		}
+		economy = 2
+		loyalty = -2
+	}
+}
+
+heavy_taxation = {
+	name = "Heavy Taxation"
+	group = taxation
+	icon = chest
+	commodity_costs = {
+		wealth = 1gb
+	}
+	modifier = {
+		population_strata_tax_rate = {
+			strata = lower
+			rate = 75
+		}
+		population_strata_tax_rate = {
+			strata = middle
+			rate = 75
+		}
+		population_strata_tax_rate = {
+			strata = upper
+			rate = 75
+		}
+		economy = 3
+		loyalty = -4
+	}
+}
+
+overwhelming_taxation = {
+	name = "Overwhelming Taxation"
+	group = taxation
+	icon = chest
+	commodity_costs = {
+		wealth = 1gb
+	}
+	modifier = {
+		population_strata_tax_rate = {
+			strata = lower
+			rate = 100
+		}
+		population_strata_tax_rate = {
+			strata = middle
+			rate = 100
+		}
+		population_strata_tax_rate = {
+			strata = upper
+			rate = 100
+		}
+		economy = 4
+		loyalty = -8
+	}
+}

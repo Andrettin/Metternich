@@ -33,6 +33,11 @@ promotion = {
 	default_law = no_promotion
 }
 
+taxation = {
+	name = "Taxation"
+	default_law = moderate_taxation
+}
+
 press_rights = {
 	name = "Press Rights"
 	default_law = state_press
