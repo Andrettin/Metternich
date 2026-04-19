@@ -4,6 +4,6 @@ tobacco_planting = {
 	monthly_output_value = 2.5tn
 	base_employment_size = 40000
 	employee_types = {
-		laborers
+		farmers
 	}
 }

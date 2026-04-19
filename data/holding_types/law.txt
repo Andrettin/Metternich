@@ -85,6 +85,7 @@ law = { #administrative center
 		untrained_workers
 		trained_workers
 		expert_workers
+		farmers
 		laborers
 		soldiers
 		officers
