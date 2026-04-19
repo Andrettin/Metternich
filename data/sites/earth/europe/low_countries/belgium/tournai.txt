@@ -5,6 +5,9 @@ tournai = {
 	type = resource
 	resource = coal
 	province = brabant
+	features = {
+		coal_deposit
+	}
 	
 	history = {
 		919 = {

@@ -3,6 +3,8 @@ lanzhou = {
 	world = earth
 	geocoordinate = { 103.79200028400 36.05602785140 } #from Natural Earth
 	type = holding
-	#resource = coal
 	province = gansu
+	features = {
+		coal_deposit
+	}
 }

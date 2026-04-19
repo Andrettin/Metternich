@@ -3,6 +3,11 @@ mine = {
 	slot_type = mine
 }
 
+coal_mine = {
+	name = "Coal Mine"
+	slot_type = coal_mine
+}
+
 gold_mine = {
 	name = "Gold Mine"
 	slot_type = gold_mine

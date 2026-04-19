@@ -4,10 +4,12 @@ budweis = {
 	geocoordinate = { 14.46003698590 48.98001934720 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	#resource = coal
 	province = budweis
 	cultural_names = {
 		czech = "Budejovice" #Budějovice
+	}
+	features = {
+		coal_deposit
 	}
 	
 	history = {

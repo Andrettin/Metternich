@@ -5,6 +5,9 @@ moulins = {
 	type = resource
 	resource = coal
 	province = berry
+	features = {
+		coal_deposit
+	}
 	
 	history = {
 		1836 = {

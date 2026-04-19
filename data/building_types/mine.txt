@@ -27,6 +27,37 @@ mine = {
 	}
 }
 
+coal_mine = {
+	name = "Coal Mine"
+	building_class = coal_mine
+	portrait = factory
+	icon = coal
+	size = 1
+	holding_types = {
+		guild
+		law
+		temple
+	}
+	conditions = {
+		feature = coal_deposit
+	}
+	commodity_costs = {
+		wealth = 6gb
+	}
+	modifier = {
+		employment_capacity = {
+			employment_type = coal_mining
+			capacity = 40000
+		}
+		population_capacity = 40000
+	}
+	domain_modifier = {
+		economy = 1
+	}
+	free_on_start_conditions = {
+	}
+}
+
 gold_mine = {
 	name = "Gold Mine"
 	building_class = gold_mine

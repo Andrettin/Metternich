@@ -6,6 +6,17 @@ mining = {
 	}
 }
 
+coal_mining = {
+	name = "Coal Mining"
+	output_commodity = coal
+	monthly_output_value = 2.4tn
+	base_employment_size = 40000
+	employee_types = {
+		laborers
+		slaves
+	}
+}
+
 gold_mining = {
 	name = "Gold Mining"
 	output_commodity = gold

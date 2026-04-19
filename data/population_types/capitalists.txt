@@ -34,6 +34,7 @@ capitalists = {
 		african = rifle_infantry_dark_small
 	}
 	everyday_needs = {
+		coal = 20tn
 		tobacco = 20tn
 	}
 }

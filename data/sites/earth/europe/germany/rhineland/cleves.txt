@@ -5,4 +5,7 @@ cleves = {
 	type = resource
 	resource = coal
 	province = rhineland
+	features = {
+		coal_deposit
+	}
 }

@@ -4,8 +4,10 @@ cassel = {
 	geocoordinate = { 9.50002966171 51.30000693670 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	#resource = coal
 	province = hesse
+	features = {
+		coal_deposit
+	}
 	
 	history = {
 		919 = {

@@ -4,13 +4,13 @@ olmutz = {
 	geocoordinate = { 17.24999588900 49.63003135080 } #from Natural Earth
 	type = holding
 	holding_type = law
-	#resource = coal
 	province = olmutz
 	cultural_names = {
 		czech = "Olomouc"
 	}
 	features = {
 		academic #historical university
+		coal_deposit
 	}
 	
 	history = {

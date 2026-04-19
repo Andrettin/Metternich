@@ -8,6 +8,9 @@ kosice = {
 	cultural_group_names = {
 		german = "Kaschau"
 	}
+	features = {
+		coal_deposit
+	}
 	
 	history = {
 		1815 = {

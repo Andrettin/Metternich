@@ -4,10 +4,12 @@ przemysl = {
 	geocoordinate = { 22.78424 49.78345 }
 	type = holding
 	holding_type = law
-	#resource = coal
 	province = west_galicia
 	cultural_names = {
 		ukrainian = "Peremyshl"
+	}
+	features = {
+		coal_deposit
 	}
 	
 	history = {

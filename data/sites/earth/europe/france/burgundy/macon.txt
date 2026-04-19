@@ -5,6 +5,9 @@ macon = {
 	type = resource
 	resource = coal
 	province = burgundy
+	features = {
+		coal_deposit
+	}
 	
 	history = {
 		919 = {

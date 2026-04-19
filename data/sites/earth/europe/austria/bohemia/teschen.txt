@@ -7,6 +7,9 @@ teschen = {
 	cultural_names = {
 		czech = "Tesin"
 	}
+	features = {
+		coal_deposit
+	}
 	
 	history = {
 		1815 = {

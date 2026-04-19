@@ -2,6 +2,9 @@ coal = {
 	name = "Coal"
 	type = resource
 	icon = coal
-	base_price = 100
-	required_game_rule = additional_commodities
+	base_price = 1 #1/4cp
+	units = {
+		1 = lb
+		2000 = tn
+	}
 }

@@ -1,3 +1,8 @@
+coal_deposit = {
+	name = "Coal Deposit"
+	icon = coal
+}
+
 gold_deposit = {
 	name = "Gold Deposit"
 	icon = gold_ore

@@ -4,10 +4,12 @@ troppau = {
 	geocoordinate = { 17.904444444444 49.938055555556 }
 	type = holding
 	holding_type = law
-	#resource = coal
 	province = troppau
 	cultural_names = {
 		czech = "Opava"
+	}
+	features = {
+		coal_deposit
 	}
 	
 	history = {

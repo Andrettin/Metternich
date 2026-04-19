@@ -5,6 +5,9 @@ annecy = {
 	type = resource
 	resource = coal
 	province = savoy
+	features = {
+		coal_deposit
+	}
 	
 	history = {
 		1836 = {

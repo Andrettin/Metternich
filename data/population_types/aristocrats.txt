@@ -33,6 +33,7 @@ aristocrats = {
 		african = rifle_infantry_dark_small
 	}
 	everyday_needs = {
+		coal = 1tn
 		tobacco = 10tn
 	}
 }

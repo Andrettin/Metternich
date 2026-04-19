@@ -5,6 +5,9 @@ charleville_mezieres = {
 	type = resource
 	resource = coal
 	province = champagne
+	features = {
+		coal_deposit
+	}
 	
 	history = {
 		1836 = {

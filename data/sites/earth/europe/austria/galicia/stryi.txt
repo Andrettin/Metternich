@@ -4,4 +4,7 @@ stryi = {
 	geocoordinate = { 23.85 49.25 }
 	type = resource
 	resource = coal
+	features = {
+		coal_deposit
+	}
 }

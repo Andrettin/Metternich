@@ -15,6 +15,7 @@ artisans = {
 		tea = 0.25
 	}
 	everyday_needs = {
+		coal = 1tn
 		tobacco = 3tn
 	}
 }

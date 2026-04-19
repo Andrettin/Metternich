@@ -5,4 +5,7 @@ uzhgorod = {
 	type = resource
 	resource = coal
 	province = kesmark
+	features = {
+		coal_deposit
+	}
 }

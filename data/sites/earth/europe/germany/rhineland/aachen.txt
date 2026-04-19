@@ -8,6 +8,9 @@ aachen = {
 	cultural_names = {
 		french = "Aix-la-Chapelle"
 	}
+	features = {
+		coal_deposit
+	}
 	
 	history = {
 		919 = {

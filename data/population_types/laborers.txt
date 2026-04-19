@@ -21,6 +21,9 @@ laborers = {
 		salt = 0.125
 		tea = 0.125
 	}
+	everyday_needs = {
+		coal = 1tn
+	}
 	luxury_needs = {
 		tobacco = 0.95tn
 	}

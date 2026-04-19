@@ -4,9 +4,11 @@ roznava = {
 	geocoordinate = { 20.531388888889 48.658611111111 }
 	type = holding
 	holding_type = law
-	#resource = coal
 	province = kesmark
 	cultural_names = {
 		magyar = "Rozsnyo"
+	}
+	features = {
+		coal_deposit
 	}
 }

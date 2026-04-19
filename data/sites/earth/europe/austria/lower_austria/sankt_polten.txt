@@ -5,8 +5,10 @@ sankt_polten = {
 	type = holding
 	holding_type = guild
 	#resource = grain #Crop cultivation with livestock; Source: Map No. 77706 of the Perry-Castañeda Library Map Collection, 1969.
-	#resource = coal
 	province = lower_austria
+	features = {
+		coal_deposit
+	}
 	
 	history = {
 		919 = {

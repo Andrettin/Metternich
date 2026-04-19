@@ -4,11 +4,11 @@ leipzig = {
 	geocoordinate = { 12.40998124050 51.33540529290 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	#resource = coal
 	max_tier = market
 	province = upper_saxony
 	features = {
 		academic #historical university
+		coal_deposit
 	}
 	
 	history = {
