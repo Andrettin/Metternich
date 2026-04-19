@@ -27,6 +27,8 @@ class domain_economy final : public QObject
 	Q_PROPERTY(qint64 storage_capacity READ get_storage_capacity NOTIFY storage_capacity_changed)
 	Q_PROPERTY(QVariantList commodity_inputs READ get_commodity_inputs_qvariant_list NOTIFY commodity_inputs_changed)
 	Q_PROPERTY(QVariantList commodity_outputs READ get_commodity_outputs_qvariant_list NOTIFY commodity_outputs_changed)
+	Q_PROPERTY(QVariantList min_commodity_storages READ get_min_commodity_storages_qvariant_list NOTIFY min_commodity_storages_changed)
+	Q_PROPERTY(QVariantList max_commodity_storages READ get_max_commodity_storages_qvariant_list NOTIFY max_commodity_storages_changed)
 	Q_PROPERTY(QVariantList bids READ get_bids_qvariant_list NOTIFY bids_changed)
 	Q_PROPERTY(QVariantList offers READ get_offers_qvariant_list NOTIFY offers_changed)
 	Q_PROPERTY(int output_modifier READ get_output_modifier_int NOTIFY output_modifier_changed)
@@ -113,18 +115,8 @@ public:
 	}
 
 	QVariantList get_tradeable_commodities_qvariant_list() const;
-
-	void add_tradeable_commodity(const commodity *commodity)
-	{
-		this->tradeable_commodities.insert(commodity);
-		emit tradeable_commodities_changed();
-	}
-
-	void remove_tradeable_commodity(const commodity *commodity)
-	{
-		this->tradeable_commodities.erase(commodity);
-		emit tradeable_commodities_changed();
-	}
+	void add_tradeable_commodity(const commodity *commodity);
+	void remove_tradeable_commodity(const commodity *commodity);
 
 	bool can_trade_commodity(const commodity *commodity) const
 	{
@@ -174,6 +166,7 @@ public:
 		this->set_storage_capacity(this->get_storage_capacity() + change);
 	}
 
+	static int64_t get_storage_for_commodity(const commodity *commodity, int64_t storage);
 	int64_t get_storage_capacity_for_commodity(const commodity *commodity) const;
 
 	const commodity_map<centesimal_int> &get_commodity_inputs() const
@@ -252,6 +245,66 @@ public:
 
 	bool produces_commodity(const commodity *commodity) const;
 
+	const commodity_map<int64_t> &get_min_commodity_storages() const
+	{
+		return this->min_commodity_storages;
+	}
+
+	QVariantList get_min_commodity_storages_qvariant_list() const;
+
+	Q_INVOKABLE qint64 get_min_commodity_storage(const metternich::commodity *commodity) const
+	{
+		const auto find_iterator = this->min_commodity_storages.find(commodity);
+
+		if (find_iterator != this->min_commodity_storages.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	Q_INVOKABLE void set_min_commodity_storage(const metternich::commodity *commodity, const int64_t value);
+
+	Q_INVOKABLE void change_min_commodity_storage(const metternich::commodity *commodity, const int64_t change)
+	{
+		this->set_min_commodity_storage(commodity, this->get_min_commodity_storage(commodity) + change);
+	}
+
+	void set_default_min_commodity_storage(const metternich::commodity *commodity)
+	{
+		this->set_min_commodity_storage(commodity, this->get_storage_capacity() * 10 / 100);
+	}
+
+	const commodity_map<int64_t> &get_max_commodity_storages() const
+	{
+		return this->max_commodity_storages;
+	}
+
+	QVariantList get_max_commodity_storages_qvariant_list() const;
+
+	Q_INVOKABLE qint64 get_max_commodity_storage(const metternich::commodity *commodity) const
+	{
+		const auto find_iterator = this->max_commodity_storages.find(commodity);
+
+		if (find_iterator != this->max_commodity_storages.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	Q_INVOKABLE void set_max_commodity_storage(const metternich::commodity *commodity, const int64_t value);
+
+	Q_INVOKABLE void change_max_commodity_storage(const metternich::commodity *commodity, const int64_t change)
+	{
+		this->set_max_commodity_storage(commodity, this->get_max_commodity_storage(commodity) + change);
+	}
+
+	void set_default_max_commodity_storage(const metternich::commodity *commodity)
+	{
+		this->set_max_commodity_storage(commodity, this->get_storage_capacity() * 50 / 100);
+	}
+
 	const commodity_map<int> &get_bids() const
 	{
 		return this->bids;
@@ -276,6 +329,8 @@ public:
 	{
 		this->set_bid(commodity, this->get_bid(commodity) + change);
 	}
+
+	void prepare_bids();
 
 	void clear_bids()
 	{
@@ -307,6 +362,8 @@ public:
 	{
 		this->set_offer(commodity, this->get_offer(commodity) + change);
 	}
+
+	void prepare_offers();
 
 	void clear_offers()
 	{
@@ -703,6 +760,8 @@ signals:
 	void storage_capacity_changed();
 	void commodity_inputs_changed();
 	void commodity_outputs_changed();
+	void min_commodity_storages_changed();
+	void max_commodity_storages_changed();
 	void bids_changed();
 	void offers_changed();
 	void output_modifier_changed();
@@ -721,6 +780,8 @@ private:
 	commodity_map<centesimal_int> commodity_inputs;
 	commodity_map<centesimal_int> commodity_outputs;
 	commodity_map<decimillesimal_int> commodity_demands;
+	commodity_map<int64_t> min_commodity_storages; //if storage is below this, import the commodity
+	commodity_map<int64_t> max_commodity_storages; //if storage is above this, export the commodity
 	commodity_map<int> bids;
 	commodity_map<int> offers;
 	commodity_map<int> commodity_needs;

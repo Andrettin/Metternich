@@ -479,6 +479,12 @@ QCoro::Task<void> game::start_coro()
 
 			//ensure some item slots will start off filled
 			domain_game_data->check_item_slots();
+
+			//set commodity trade defaults
+			for (const commodity *commodity : domain_game_data->get_economy()->get_tradeable_commodities()) {
+				domain_game_data->get_economy()->set_default_min_commodity_storage(commodity);
+				domain_game_data->get_economy()->set_default_max_commodity_storage(commodity);
+			}
 		}
 
 		this->set_running(true);
@@ -1669,11 +1675,14 @@ QCoro::Task<void> game::do_turn_coro()
 			old_offers[domain] = domain->get_economy()->get_offers();
 		}
 
-		this->do_trade();
-
 		for (const domain *domain : this->get_countries()) {
 			co_await domain->get_game_data()->do_turn();
+
+			domain->get_economy()->prepare_bids();
+			domain->get_economy()->prepare_offers();
 		}
+
+		this->do_trade();
 
 		for (const domain *domain : this->get_countries()) {
 			//do country events after processing the turn for each country, so that e.g. events won't refer to a scope which no longer exists by the time the player gets to choose an option

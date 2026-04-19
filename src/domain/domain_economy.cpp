@@ -81,6 +81,14 @@ void domain_economy::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([this](const gsml_property &property) {
 			this->stored_commodities[commodity::get(property.get_key())] = std::stoll(property.get_value());
 		});
+	} else if (tag == "min_commodity_storages") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->min_commodity_storages[commodity::get(property.get_key())] = std::stoll(property.get_value());
+		});
+	} else if (tag == "max_commodity_storages") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->max_commodity_storages[commodity::get(property.get_key())] = std::stoll(property.get_value());
+		});
 	} else if (tag == "population_strata_tax_rates") {
 		scope.for_each_property([this](const gsml_property &property) {
 			this->population_strata_tax_rates[magic_enum::enum_cast<population_strata>(property.get_key()).value()] = std::stoi(property.get_value());
@@ -102,6 +110,22 @@ gsml_data domain_economy::to_gsml_data() const
 			stored_commodities_data.add_property(commodity->get_identifier(), std::to_string(quantity));
 		}
 		data.add_child(std::move(stored_commodities_data));
+	}
+
+	if (!this->get_min_commodity_storages().empty()) {
+		gsml_data min_commodity_storages_data("min_commodity_storages");
+		for (const auto &[commodity, storage] : this->get_min_commodity_storages()) {
+			min_commodity_storages_data.add_property(commodity->get_identifier(), std::to_string(storage));
+		}
+		data.add_child(std::move(min_commodity_storages_data));
+	}
+
+	if (!this->get_max_commodity_storages().empty()) {
+		gsml_data max_commodity_storages_data("max_commodity_storages");
+		for (const auto &[commodity, storage] : this->get_max_commodity_storages()) {
+			max_commodity_storages_data.add_property(commodity->get_identifier(), std::to_string(storage));
+		}
+		data.add_child(std::move(max_commodity_storages_data));
 	}
 
 	if (!this->population_strata_tax_rates.empty()) {
@@ -269,6 +293,26 @@ QVariantList domain_economy::get_tradeable_commodities_qvariant_list() const
 	return container::to_qvariant_list(tradeable_commodities);
 }
 
+void domain_economy::add_tradeable_commodity(const commodity *commodity)
+{
+	this->tradeable_commodities.insert(commodity);
+
+	this->set_default_min_commodity_storage(commodity);
+	this->set_default_max_commodity_storage(commodity);
+
+	emit tradeable_commodities_changed();
+}
+
+void domain_economy::remove_tradeable_commodity(const commodity *commodity)
+{
+	this->tradeable_commodities.erase(commodity);
+
+	this->set_min_commodity_storage(commodity, 0);
+	this->set_max_commodity_storage(commodity, 0);
+
+	emit tradeable_commodities_changed();
+}
+
 QVariantList domain_economy::get_stored_commodities_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_stored_commodities());
@@ -415,25 +459,37 @@ void domain_economy::set_storage_capacity(const int64_t capacity)
 		return;
 	}
 
+	const int64_t old_capacity = this->get_storage_capacity();
+
 	this->storage_capacity = capacity;
+
+	for (auto &[commodity, max_storage] : this->get_max_commodity_storages()) {
+		if (max_storage == old_capacity) {
+			this->change_max_commodity_storage(commodity, capacity - old_capacity);
+		}
+	}
 
 	if (game::get()->is_running()) {
 		emit storage_capacity_changed();
 	}
 }
 
-int64_t domain_economy::get_storage_capacity_for_commodity(const commodity *commodity) const
+int64_t domain_economy::get_storage_for_commodity(const commodity *commodity, int64_t storage)
 {
-	int64_t storage_capacity = this->get_storage_capacity();
-
 	if (commodity->get_units().empty()) {
-		return storage_capacity;
+		return storage;
 	}
 
 	const int64_t highest_unit_value = commodity->get_units().rbegin()->first;
-	storage_capacity *= highest_unit_value;
+	storage *= highest_unit_value;
 
-	return storage_capacity;
+	return storage;
+}
+
+int64_t domain_economy::get_storage_capacity_for_commodity(const commodity *commodity) const
+{
+	const int64_t storage_capacity = this->get_storage_capacity();
+	return domain_economy::get_storage_for_commodity(commodity, storage_capacity);
 }
 
 QVariantList domain_economy::get_commodity_inputs_qvariant_list() const
@@ -586,6 +642,46 @@ bool domain_economy::produces_commodity(const commodity *commodity) const
 	return false;
 }
 
+QVariantList domain_economy::get_min_commodity_storages_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_min_commodity_storages());
+}
+
+void domain_economy::set_min_commodity_storage(const commodity *commodity, const int64_t value)
+{
+	if (value == this->get_min_commodity_storage(commodity)) {
+		return;
+	}
+
+	if (value == 0) {
+		this->min_commodity_storages.erase(commodity);
+	} else {
+		this->min_commodity_storages[commodity] = value;
+	}
+
+	emit min_commodity_storages_changed();
+}
+
+QVariantList domain_economy::get_max_commodity_storages_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_max_commodity_storages());
+}
+
+void domain_economy::set_max_commodity_storage(const commodity *commodity, const int64_t value)
+{
+	if (value == this->get_max_commodity_storage(commodity)) {
+		return;
+	}
+
+	if (value == 0) {
+		this->max_commodity_storages.erase(commodity);
+	} else {
+		this->max_commodity_storages[commodity] = value;
+	}
+
+	emit max_commodity_storages_changed();
+}
+
 QVariantList domain_economy::get_bids_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_bids());
@@ -606,6 +702,17 @@ void domain_economy::set_bid(const commodity *commodity, const int value)
 
 	if (game::get()->is_running()) {
 		emit bids_changed();
+	}
+}
+
+void domain_economy::prepare_bids()
+{
+	for (const auto &[commodity, base_min_storage] : this->get_min_commodity_storages()) {
+		const int64_t min_storage = domain_economy::get_storage_for_commodity(commodity, base_min_storage);
+		const int64_t stored_quantity = this->get_stored_commodity(commodity);
+		if (stored_quantity < min_storage) {
+			this->set_bid(commodity, min_storage - stored_quantity);
+		}
 	}
 }
 
@@ -637,14 +744,26 @@ void domain_economy::set_offer(const commodity *commodity, const int value)
 	}
 }
 
+void domain_economy::prepare_offers()
+{
+	for (const auto &[commodity, base_max_storage] : this->get_min_commodity_storages()) {
+		const int64_t max_storage = domain_economy::get_storage_for_commodity(commodity, base_max_storage);
+		const int64_t stored_quantity = this->get_stored_commodity(commodity);
+		if (stored_quantity > max_storage) {
+			this->set_offer(commodity, stored_quantity - max_storage);
+		}
+	}
+}
+
 void domain_economy::do_sale(const metternich::domain *other_domain, const commodity *commodity, const int sold_quantity, const bool state_purchase)
 {
 	this->change_stored_commodity(commodity, -sold_quantity);
 
 	const int price = game::get()->get_price(commodity);
 	const int sale_income = price * sold_quantity;
-	this->add_tributable_commodity(defines::get()->get_wealth_commodity(), sale_income, income_transaction_type::tariff);
-	this->domain->get_turn_data()->add_income_transaction(income_transaction_type::sale, sale_income, commodity, sold_quantity, other_domain != this->domain ? other_domain : nullptr);
+	const int64_t gained_wealth = this->add_population_wealth(sale_income);
+	this->add_tributable_commodity(defines::get()->get_wealth_commodity(), gained_wealth, income_transaction_type::tariff);
+	this->domain->get_turn_data()->add_income_transaction(income_transaction_type::sale, gained_wealth, commodity, sold_quantity, other_domain != this->domain ? other_domain : nullptr);
 
 	this->change_offer(commodity, -sold_quantity);
 

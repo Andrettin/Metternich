@@ -199,23 +199,30 @@ void domain_ai::assign_trade_orders()
 {
 	assert_throw(this->get_game_data()->is_ai());
 
-	this->get_game_data()->get_economy()->clear_bids();
-	this->get_game_data()->get_economy()->clear_offers();
+	domain_economy *domain_economy = this->get_game_data()->get_economy();
+
+	domain_economy->clear_bids();
+	domain_economy->clear_offers();
 
 	if (this->get_game_data()->is_under_anarchy()) {
 		return;
 	}
 
-	for (const auto &[commodity, value] : this->get_game_data()->get_economy()->get_stored_commodities()) {
-		if (!this->get_game_data()->get_economy()->can_trade_commodity(commodity)) {
+	for (const auto &[commodity, value] : domain_economy->get_stored_commodities()) {
+		if (!domain_economy->can_trade_commodity(commodity)) {
 			continue;
 		}
 
-		const int need = this->get_game_data()->get_economy()->get_commodity_need(commodity);
+		const int need = domain_economy->get_commodity_need(commodity);
 
 		if (value > need) {
-			this->get_game_data()->get_economy()->set_offer(commodity, value);
+			domain_economy->set_offer(commodity, value);
 		}
+	}
+
+	for (const commodity *commodity : domain_economy->get_tradeable_commodities()) {
+		domain_economy->set_default_min_commodity_storage(commodity);
+		domain_economy->set_default_max_commodity_storage(commodity);
 	}
 }
 
