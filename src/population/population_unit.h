@@ -41,6 +41,9 @@ class population_unit final : public QObject
 	Q_PROPERTY(const metternich::site* site READ get_site NOTIFY site_changed)
 	Q_PROPERTY(qint64 size READ get_size NOTIFY size_changed)
 	Q_PROPERTY(qint64 wealth READ get_wealth NOTIFY wealth_changed)
+	Q_PROPERTY(int fulfilled_life_needs_percent READ get_fulfilled_life_needs_percent NOTIFY fulfilled_life_needs_percent_changed)
+	Q_PROPERTY(int fulfilled_everyday_needs_percent READ get_fulfilled_everyday_needs_percent NOTIFY fulfilled_everyday_needs_percent_changed)
+	Q_PROPERTY(int fulfilled_luxury_needs_percent READ get_fulfilled_luxury_needs_percent NOTIFY fulfilled_luxury_needs_percent_changed)
 
 public:
 	explicit population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const metternich::employment_type *employment_type, const int64_t size, const decimillesimal_int &literacy_rate, const site *site);
@@ -144,10 +147,58 @@ public:
 		this->set_wealth(this->get_wealth() + change);
 	}
 
+	int get_fulfilled_life_needs_percent() const
+	{
+		return this->fulfilled_life_needs_percent;
+	}
+
+	void set_fulfilled_life_needs_percent(const int percent)
+	{
+		if (percent == this->get_fulfilled_life_needs_percent()) {
+			return;
+		}
+
+		this->fulfilled_life_needs_percent = percent;
+
+		emit fulfilled_life_needs_percent_changed();
+	}
+
+	int get_fulfilled_everyday_needs_percent() const
+	{
+		return this->fulfilled_everyday_needs_percent;
+	}
+
+	void set_fulfilled_everyday_needs_percent(const int percent)
+	{
+		if (percent == this->get_fulfilled_everyday_needs_percent()) {
+			return;
+		}
+
+		this->fulfilled_everyday_needs_percent = percent;
+
+		emit fulfilled_everyday_needs_percent_changed();
+	}
+
+	int get_fulfilled_luxury_needs_percent() const
+	{
+		return this->fulfilled_luxury_needs_percent;
+	}
+
+	void set_fulfilled_luxury_needs_percent(const int percent)
+	{
+		if (percent == this->get_fulfilled_luxury_needs_percent()) {
+			return;
+		}
+
+		this->fulfilled_luxury_needs_percent = percent;
+
+		emit fulfilled_luxury_needs_percent_changed();
+	}
+
 	bool is_food_producer() const;
 
 	void purchase_needs(const std::vector<const metternich::domain *> &trade_domains);
-	void purchase_needs(const commodity_map<int64_t> &needs, const std::vector<const metternich::domain *> &trade_domains);
+	int purchase_needs(const commodity_map<int64_t> &needs, const std::vector<const metternich::domain *> &trade_domains);
 
 signals:
 	void type_changed();
@@ -162,6 +213,9 @@ signals:
 	void size_changed();
 	void literacy_rate_changed();
 	void wealth_changed();
+	void fulfilled_life_needs_percent_changed();
+	void fulfilled_everyday_needs_percent_changed();
+	void fulfilled_luxury_needs_percent_changed();
 
 private:
 	const population_type *type = nullptr;
@@ -174,6 +228,9 @@ private:
 	int64_t size = 0; //number of individuals in this population unit
 	decimillesimal_int literacy_rate; //in percent
 	int64_t wealth = 0;
+	int fulfilled_life_needs_percent = 100;
+	int fulfilled_everyday_needs_percent = 100;
+	int fulfilled_luxury_needs_percent = 100;
 };
 
 }

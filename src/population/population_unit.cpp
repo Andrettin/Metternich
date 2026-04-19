@@ -356,14 +356,23 @@ bool population_unit::is_food_producer() const
 
 void population_unit::purchase_needs(const std::vector<const metternich::domain *> &trade_domains)
 {
-	this->purchase_needs(this->get_type()->get_life_needs(), trade_domains);
-	this->purchase_needs(this->get_type()->get_everyday_needs(), trade_domains);
-	this->purchase_needs(this->get_type()->get_luxury_needs(), trade_domains);
+	this->set_fulfilled_life_needs_percent(this->purchase_needs(this->get_type()->get_life_needs(), trade_domains));
+	this->set_fulfilled_everyday_needs_percent(this->purchase_needs(this->get_type()->get_everyday_needs(), trade_domains));
+	this->set_fulfilled_luxury_needs_percent(this->purchase_needs(this->get_type()->get_luxury_needs(), trade_domains));
 }
 
-void population_unit::purchase_needs(const commodity_map<int64_t> &needs, const std::vector<const metternich::domain *> &trade_domains)
+int population_unit::purchase_needs(const commodity_map<int64_t> &needs, const std::vector<const metternich::domain *> &trade_domains)
 {
+	int fulfilled_percent = 0;
+	int commodity_count = 0;
+
 	for (const auto &[commodity, base_commodity_need] : needs) {
+		if (!this->domain->get_economy()->get_available_commodities().contains(commodity)) {
+			continue;
+		}
+
+		++commodity_count;
+
 		int64_t commodity_need = base_commodity_need * game::get()->get_current_months_per_turn();
 		commodity_need *= this->get_size();
 		commodity_need /= defines::get()->get_base_population_needs_size();
@@ -377,6 +386,8 @@ void population_unit::purchase_needs(const commodity_map<int64_t> &needs, const 
 		if (affordable_commodity_need == 0) {
 			continue;
 		}
+
+		int64_t fulfilled_commodity_need = 0;
 
 		for (const metternich::domain *trade_domain : trade_domains) {
 			const int64_t domain_offer = trade_domain->get_economy()->get_offer(commodity);
@@ -396,11 +407,21 @@ void population_unit::purchase_needs(const commodity_map<int64_t> &needs, const 
 			this->change_wealth(-purchase_price);
 
 			affordable_commodity_need -= bought_quantity;
+			fulfilled_commodity_need += bought_quantity;
 			if (affordable_commodity_need == 0) {
 				break;
 			}
 		}
+
+		fulfilled_percent += static_cast<int>(fulfilled_commodity_need * 100 / commodity_need);
 	}
+
+	if (commodity_count == 0) {
+		return 100;
+	}
+
+	fulfilled_percent /= commodity_count;
+	return fulfilled_percent;
 }
 
 }
