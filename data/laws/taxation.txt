@@ -18,18 +18,7 @@ light_taxation = {
 		wealth = 1gb
 	}
 	modifier = {
-		population_strata_tax_rate = {
-			strata = lower
-			rate = 25
-		}
-		population_strata_tax_rate = {
-			strata = middle
-			rate = 25
-		}
-		population_strata_tax_rate = {
-			strata = upper
-			rate = 25
-		}
+		population_tax_rate = 25
 		economy = 1
 		loyalty = -1
 	}
@@ -43,18 +32,7 @@ moderate_taxation = {
 		wealth = 1gb
 	}
 	modifier = {
-		population_strata_tax_rate = {
-			strata = lower
-			rate = 50
-		}
-		population_strata_tax_rate = {
-			strata = middle
-			rate = 50
-		}
-		population_strata_tax_rate = {
-			strata = upper
-			rate = 50
-		}
+		population_tax_rate = 50
 		economy = 2
 		loyalty = -2
 	}
@@ -68,18 +46,7 @@ heavy_taxation = {
 		wealth = 1gb
 	}
 	modifier = {
-		population_strata_tax_rate = {
-			strata = lower
-			rate = 75
-		}
-		population_strata_tax_rate = {
-			strata = middle
-			rate = 75
-		}
-		population_strata_tax_rate = {
-			strata = upper
-			rate = 75
-		}
+		population_tax_rate = 75
 		economy = 3
 		loyalty = -4
 	}
@@ -93,18 +60,7 @@ overwhelming_taxation = {
 		wealth = 1gb
 	}
 	modifier = {
-		population_strata_tax_rate = {
-			strata = lower
-			rate = 100
-		}
-		population_strata_tax_rate = {
-			strata = middle
-			rate = 100
-		}
-		population_strata_tax_rate = {
-			strata = upper
-			rate = 100
-		}
+		population_tax_rate = 100
 		economy = 4
 		loyalty = -8
 	}

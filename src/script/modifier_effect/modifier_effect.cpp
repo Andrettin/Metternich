@@ -55,6 +55,7 @@
 #include "script/modifier_effect/output_modifier_effect.h"
 #include "script/modifier_effect/population_capacity_modifier_effect.h"
 #include "script/modifier_effect/population_strata_tax_rate_modifier_effect.h"
+#include "script/modifier_effect/population_tax_rate_modifier_effect.h"
 #include "script/modifier_effect/population_type_bonus_modifier_effect.h"
 #include "script/modifier_effect/range_modifier_effect.h"
 #include "script/modifier_effect/resource_output_modifier_effect.h"
@@ -173,6 +174,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<law_cost_modifier_effect>(value);
 		} else if (key == "leader_cost_modifier") {
 			return std::make_unique<leader_cost_modifier_effect>(value);
+		} else if (key == "population_tax_rate") {
+			return std::make_unique<population_tax_rate_modifier_effect>(value);
 		} else if (key == "storage_capacity") {
 			return std::make_unique<storage_capacity_modifier_effect>(value);
 		} else if (key == "technology_cost_modifier") {
