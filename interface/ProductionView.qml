@@ -100,6 +100,16 @@ Item {
 					onClicked: function(target_value) {
 						domain_game_data.economy.set_min_commodity_storage(commodity, target_value)
 					}
+					
+					onEntered: {
+						status_text = "Minimum " + commodity.name + " Storage"
+						middle_status_text = "If storage is below the minimum, the commodity will be imported"
+					}
+					
+					onExited: {
+						status_text = ""
+						middle_status_text = ""
+					}
 				}
 				
 				CustomSlider {
@@ -127,6 +137,16 @@ Item {
 					
 					onClicked: function(target_value) {
 						domain_game_data.economy.set_max_commodity_storage(commodity, target_value)
+					}
+					
+					onEntered: {
+						status_text = "Maximum " + commodity.name + " Storage"
+						middle_status_text = "If storage is above the maximum, the commodity will be exported"
+					}
+					
+					onExited: {
+						status_text = ""
+						middle_status_text = ""
 					}
 				}
 			}
