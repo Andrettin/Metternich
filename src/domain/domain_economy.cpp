@@ -30,6 +30,8 @@
 #include "util/vector_util.h"
 #include "util/vector_random_util.h"
 
+#include <magic_enum/magic_enum.hpp>
+
 namespace metternich {
 
 domain_economy::domain_economy(const metternich::domain *domain, const domain_game_data *game_data)
@@ -79,6 +81,10 @@ void domain_economy::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([this](const gsml_property &property) {
 			this->stored_commodities[commodity::get(property.get_key())] = std::stoll(property.get_value());
 		});
+	} else if (tag == "population_strata_tax_rates") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->population_strata_tax_rates[magic_enum::enum_cast<population_strata>(property.get_key()).value()] = std::stoi(property.get_value());
+		});
 	} else {
 		throw std::runtime_error(std::format("Invalid domain government scope: \"{}\".", tag));
 	}
@@ -96,6 +102,14 @@ gsml_data domain_economy::to_gsml_data() const
 			stored_commodities_data.add_property(commodity->get_identifier(), std::to_string(quantity));
 		}
 		data.add_child(std::move(stored_commodities_data));
+	}
+
+	if (!this->population_strata_tax_rates.empty()) {
+		gsml_data population_strata_tax_rates_data("population_strata_tax_rates");
+		for (const auto &[strata, tax_rate] : this->population_strata_tax_rates) {
+			population_strata_tax_rates_data.add_property(std::string(magic_enum::enum_name(strata)), std::to_string(tax_rate));
+		}
+		data.add_child(std::move(population_strata_tax_rates_data));
 	}
 
 	return data;
@@ -366,15 +380,15 @@ int64_t domain_economy::add_population_wealth(const int64_t wealth)
 		return wealth;
 	}
 	
-	static constexpr int population_tax_rate = 50;
-
 	int64_t remaining_wealth = wealth;
 
 	for (population_unit *population_unit : this->get_game_data()->get_population_units()) {
-		const int64_t population_unit_weighted_size = population_unit->get_size() * get_population_strata_income_weight(population_unit->get_type()->get_strata());
-		const int64_t population_unit_income = wealth * population_unit_weighted_size / weighted_population_size * population_tax_rate / 100;
-		population_unit->change_wealth(population_unit_income);
-		remaining_wealth -= population_unit_income;
+		const population_strata population_unit_strata = population_unit->get_type()->get_strata();
+		const int64_t population_unit_weighted_size = population_unit->get_size() * get_population_strata_income_weight(population_unit_strata);
+		const int64_t population_unit_income = wealth * population_unit_weighted_size / weighted_population_size;
+		const int64_t taxed_population_unit_income = population_unit_income * (100 - this->get_population_strata_tax_rate(population_unit_strata)) / 100;
+		population_unit->change_wealth(taxed_population_unit_income);
+		remaining_wealth -= taxed_population_unit_income;
 	}
 
 	assert_throw(remaining_wealth > 0);
@@ -656,6 +670,22 @@ void domain_economy::do_sale(const metternich::domain *other_domain, const commo
 void domain_economy::calculate_commodity_needs()
 {
 	this->commodity_needs.clear();
+}
+
+void domain_economy::set_population_strata_tax_rate(const population_strata strata, const int value)
+{
+	if (value == this->get_population_strata_tax_rate(strata)) {
+		return;
+	}
+
+	assert_throw(value >= 0);
+	assert_throw(value <= 100);
+
+	if (value == 0) {
+		this->population_strata_tax_rates.erase(strata);
+	} else {
+		this->population_strata_tax_rates[strata] = value;
+	}
 }
 
 void domain_economy::set_output_modifier(const centesimal_int &value)

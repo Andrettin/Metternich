@@ -13,6 +13,7 @@ namespace metternich {
 class domain;
 class domain_game_data;
 enum class income_transaction_type;
+enum class population_strata;
 
 class domain_economy final : public QObject
 {
@@ -345,6 +346,24 @@ public:
 	}
 
 	void calculate_commodity_needs();
+
+	int get_population_strata_tax_rate(const population_strata strata) const
+	{
+		const auto find_iterator = this->population_strata_tax_rates.find(strata);
+
+		if (find_iterator != this->population_strata_tax_rates.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void set_population_strata_tax_rate(const population_strata strata, const int value);
+
+	void change_population_strata_tax_rate(const population_strata strata, const int change)
+	{
+		this->set_population_strata_tax_rate(strata, this->get_population_strata_tax_rate(strata) + change);
+	}
 
 	const centesimal_int &get_output_modifier() const
 	{
@@ -705,6 +724,7 @@ private:
 	commodity_map<int> bids;
 	commodity_map<int> offers;
 	commodity_map<int> commodity_needs;
+	std::map<population_strata, int> population_strata_tax_rates;
 	centesimal_int output_modifier;
 	int resource_output_modifier = 0;
 	int industrial_output_modifier = 0;

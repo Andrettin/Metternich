@@ -889,6 +889,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/movement_modifier_effect.h
 	src/script/modifier_effect/output_modifier_effect.h
 	src/script/modifier_effect/population_capacity_modifier_effect.h
+	src/script/modifier_effect/population_strata_tax_rate_modifier_effect.h
 	src/script/modifier_effect/population_type_bonus_modifier_effect.h
 	src/script/modifier_effect/range_modifier_effect.h
 	src/script/modifier_effect/resource_output_modifier_effect.h

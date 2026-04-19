@@ -54,6 +54,7 @@
 #include "script/modifier_effect/movement_modifier_effect.h"
 #include "script/modifier_effect/output_modifier_effect.h"
 #include "script/modifier_effect/population_capacity_modifier_effect.h"
+#include "script/modifier_effect/population_strata_tax_rate_modifier_effect.h"
 #include "script/modifier_effect/population_type_bonus_modifier_effect.h"
 #include "script/modifier_effect/range_modifier_effect.h"
 #include "script/modifier_effect/resource_output_modifier_effect.h"
@@ -321,6 +322,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			modifier_effect = std::make_unique<commodity_bonus_per_settlement_modifier_effect<scope_type>>();
 		} else if (tag == "commodity_demand") {
 			modifier_effect = std::make_unique<commodity_demand_modifier_effect>();
+		} else if (tag == "population_strata_tax_rate") {
+			modifier_effect = std::make_unique<population_strata_tax_rate_modifier_effect>();
 		} else if (tag == "technology_cost_modifier") {
 			modifier_effect = std::make_unique<technology_cost_modifier_effect>();
 		}
