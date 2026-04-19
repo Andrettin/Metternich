@@ -2,8 +2,8 @@ montauban = {
 	name = "Montauban"
 	world = earth
 	geocoordinate = { 1.355 44.017222222222 }
-	type = resource
-	resource = tobacco
+	type = holding
+	holding_type = guild
 	province = guyenne
 	features = {
 		prime_tobacco_land
