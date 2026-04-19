@@ -3,9 +3,9 @@ havana = {
 	world = earth
 	geocoordinate = { -82.36418217130 23.13195884090 } #from Natural Earth
 	type = holding
-	#resource = tobacco
 	province = cuba
 	features = {
+		prime_tobacco_land
 		academic #historical college
 	}
 	

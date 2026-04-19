@@ -3,6 +3,9 @@ thessalonica = {
 	world = earth
 	geocoordinate = { 22.88500077180 40.69610638330 } #from Natural Earth
 	type = holding
+	features = {
+		prime_tobacco_land
+	}
 	
 	history = {
 		1360 = {

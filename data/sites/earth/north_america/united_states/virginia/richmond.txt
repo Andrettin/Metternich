@@ -3,6 +3,8 @@ richmond = {
 	world = earth
 	geocoordinate = { -77.44998600430 37.55001934720 } #from Natural Earth
 	type = holding
-	#resource = tobacco
 	province = virginia
+	features = {
+		prime_tobacco_land
+	}
 }

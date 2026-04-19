@@ -1,0 +1,30 @@
+tobacco_plantation = {
+	name = "Tobacco Plantation"
+	building_class = tobacco_plantation
+	portrait = aristocratic_palace
+	icon = tobacco
+	size = 1
+	holding_types = {
+		guild
+		law
+		temple
+	}
+	conditions = {
+		feature = prime_tobacco_land
+	}
+	commodity_costs = {
+		wealth = 2gb #FIXME: cost should vary depending on terrain
+	}
+	modifier = {
+		employment_capacity = {
+			employment_type = tobacco_planting
+			capacity = 40000
+		}
+		population_capacity = 40000
+	}
+	domain_modifier = {
+		consumption = -2
+	}
+	free_on_start_conditions = {
+	}
+}

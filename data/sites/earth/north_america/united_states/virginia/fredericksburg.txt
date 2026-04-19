@@ -5,4 +5,7 @@ fredericksburg = {
 	type = resource
 	resource = tobacco
 	province = virginia
+	features = {
+		prime_tobacco_land
+	}
 }

@@ -1,0 +1,3 @@
+tobacco_plantation = {
+	name = "Tobacco Plantation"
+}

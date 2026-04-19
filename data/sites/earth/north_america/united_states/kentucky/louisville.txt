@@ -5,4 +5,7 @@ louisville = {
 	type = resource
 	resource = tobacco
 	province = kentucky
+	features = {
+		prime_tobacco_land
+	}
 }

@@ -6,6 +6,9 @@ philippopolis = {
 	cultural_names = {
 		bulgarian = "Plovdiv"
 	}
+	features = {
+		prime_tobacco_land
+	}
 	
 	history = {
 		1360 = {

@@ -1,0 +1,4 @@
+prime_tobacco_land = {
+	name = "Prime Tobacco Land"
+	icon = tobacco
+}

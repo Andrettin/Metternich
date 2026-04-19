@@ -3,6 +3,8 @@ port_au_prince = {
 	world = earth
 	geocoordinate = { -72.33603458830 18.54102459610 } #from Natural Earth
 	type = holding
-	#resource = tobacco
 	province = haiti
+	features = {
+		prime_tobacco_land
+	}
 }

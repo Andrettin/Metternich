@@ -3,9 +3,9 @@ santo_domingo = {
 	world = earth
 	geocoordinate = { -69.90008508470 18.47007285460 } #from Natural Earth
 	type = holding
-	#resource = tobacco
 	province = santo_domingo
 	features = {
+		prime_tobacco_land
 		academic #historical university
 	}
 	

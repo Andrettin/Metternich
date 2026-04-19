@@ -1,0 +1,4 @@
+tobacco_plantation = {
+	name = "Tobacco Plantation"
+	slot_type = tobacco_plantation
+}

@@ -5,6 +5,9 @@ montauban = {
 	type = resource
 	resource = tobacco
 	province = guyenne
+	features = {
+		prime_tobacco_land
+	}
 	
 	history = {
 		1789 = {

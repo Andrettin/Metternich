@@ -4,6 +4,9 @@ jamestown = {
 	geocoordinate = { -76.7775 37.209166666667 }
 	type = resource
 	resource = tobacco
+	features = {
+		prime_tobacco_land
+	}
 	
 	history = {
 		1607 = {
