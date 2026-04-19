@@ -10,10 +10,10 @@
 #include "database/defines.h"
 #include "database/gsml_data.h"
 #include "database/gsml_property.h"
-#include "domain/country_economy.h"
 #include "domain/country_technology.h"
 #include "domain/country_turn_data.h"
 #include "domain/domain.h"
+#include "domain/domain_economy.h"
 #include "domain/domain_game_data.h"
 #include "domain/domain_government.h"
 #include "economy/commodity.h"
@@ -1760,10 +1760,10 @@ QCoro::Task<void> site_game_data::on_building_gained(const building_type *buildi
 
 	if (this->get_owner() != nullptr) {
 		domain_game_data *domain_game_data = this->get_owner()->get_game_data();
-		country_economy *country_economy = this->get_owner()->get_economy();
+		domain_economy *domain_economy = this->get_owner()->get_economy();
 		co_await domain_game_data->change_settlement_building_count(building, multiplier);
 
-		for (const auto &[commodity, bonus] : country_economy->get_building_commodity_bonuses(building)) {
+		for (const auto &[commodity, bonus] : domain_economy->get_building_commodity_bonuses(building)) {
 			this->change_base_commodity_output(commodity, centesimal_int(bonus) * multiplier);
 		}
 	}
@@ -1815,9 +1815,9 @@ QCoro::Task<void> site_game_data::on_improvement_gained(const improvement *impro
 	}
 
 	if (this->get_owner() != nullptr) {
-		const country_economy *country_economy = this->get_owner()->get_economy();
+		const domain_economy *domain_economy = this->get_owner()->get_economy();
 
-		for (const auto &[commodity, bonus] : country_economy->get_improvement_commodity_bonuses(improvement)) {
+		for (const auto &[commodity, bonus] : domain_economy->get_improvement_commodity_bonuses(improvement)) {
 			this->change_base_commodity_output(commodity, bonus * multiplier);
 		}
 	}

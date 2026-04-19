@@ -4,8 +4,8 @@
 
 #include "database/defines.h"
 #include "domain/country_ai.h"
-#include "domain/country_economy.h"
 #include "domain/domain.h"
+#include "domain/domain_economy.h"
 #include "domain/domain_game_data.h"
 #include "domain/domain_government.h"
 #include "domain/idea_slot.h"

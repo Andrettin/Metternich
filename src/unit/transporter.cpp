@@ -4,8 +4,8 @@
 
 #include "culture/cultural_group.h"
 #include "culture/culture.h"
-#include "domain/country_economy.h"
 #include "domain/domain.h"
+#include "domain/domain_economy.h"
 #include "domain/domain_game_data.h"
 #include "language/name_generator.h"
 #include "map/site.h"

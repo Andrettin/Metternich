@@ -4,9 +4,9 @@
 
 #include "database/defines.h"
 #include "culture/culture.h"
-#include "domain/country_economy.h"
 #include "domain/country_technology.h"
 #include "domain/domain.h"
+#include "domain/domain_economy.h"
 #include "domain/domain_game_data.h"
 #include "economy/commodity.h"
 #include "game/game.h"
@@ -328,14 +328,14 @@ bool building_slot::can_build_building(const building_type *building) const
 		}
 	}
 
-	const country_economy *country_economy = this->get_country()->get_economy();
+	const domain_economy *domain_economy = this->get_country()->get_economy();
 	const int wealth_cost = building->get_wealth_cost_for_country(this->get_country());
-	if (wealth_cost > 0 && wealth_cost > country_economy->get_wealth()) {
+	if (wealth_cost > 0 && wealth_cost > domain_economy->get_wealth()) {
 		return false;
 	}
 
 	for (const auto &[commodity, cost] : building->get_commodity_costs_for_site(this->get_settlement())) {
-		if (cost > country_economy->get_stored_commodity(commodity)) {
+		if (cost > domain_economy->get_stored_commodity(commodity)) {
 			return false;
 		}
 	}
@@ -447,14 +447,14 @@ bool building_slot::can_build_wonder(const metternich::wonder *wonder) const
 		return false;
 	}
 
-	const country_economy *country_economy = this->get_country()->get_economy();
+	const domain_economy *domain_economy = this->get_country()->get_economy();
 	const int wealth_cost = wonder->get_wealth_cost_for_country(this->get_country());
-	if (wealth_cost > 0 && wealth_cost > country_economy->get_wealth()) {
+	if (wealth_cost > 0 && wealth_cost > domain_economy->get_wealth()) {
 		return false;
 	}
 
 	for (const auto &[commodity, cost] : wonder->get_commodity_costs_for_country(this->get_country())) {
-		if (cost > country_economy->get_stored_commodity(commodity)) {
+		if (cost > domain_economy->get_stored_commodity(commodity)) {
 			return false;
 		}
 	}
@@ -468,14 +468,14 @@ void building_slot::build_wonder(const metternich::wonder *wonder)
 		this->cancel_construction();
 	}
 
-	country_economy *country_economy = this->get_country()->get_economy();
+	domain_economy *domain_economy = this->get_country()->get_economy();
 	const int wealth_cost = wonder->get_wealth_cost_for_country(this->get_country());
 	if (wealth_cost > 0) {
-		country_economy->change_wealth(-wealth_cost);
+		domain_economy->change_wealth(-wealth_cost);
 	}
 
 	for (const auto &[commodity, cost] : wonder->get_commodity_costs_for_country(this->get_country())) {
-		country_economy->change_stored_commodity(commodity, -cost);
+		domain_economy->change_stored_commodity(commodity, -cost);
 	}
 
 	this->set_under_construction_wonder(wonder);
@@ -487,14 +487,14 @@ void building_slot::build_building(const building_type *building)
 		this->cancel_construction();
 	}
 
-	country_economy *country_economy = this->get_country()->get_economy();
+	domain_economy *domain_economy = this->get_country()->get_economy();
 	const int wealth_cost = building->get_wealth_cost_for_country(this->get_country());
 	if (wealth_cost > 0) {
-		country_economy->change_wealth(-wealth_cost);
+		domain_economy->change_wealth(-wealth_cost);
 	}
 
 	for (const auto &[commodity, cost] : building->get_commodity_costs_for_site(this->get_settlement())) {
-		country_economy->change_stored_commodity(commodity, -cost);
+		domain_economy->change_stored_commodity(commodity, -cost);
 	}
 
 	this->set_under_construction_building(building);
@@ -503,14 +503,14 @@ void building_slot::build_building(const building_type *building)
 void building_slot::cancel_construction()
 {
 	if (this->get_under_construction_wonder() != nullptr) {
-		country_economy *country_economy = this->get_country()->get_economy();
+		domain_economy *domain_economy = this->get_country()->get_economy();
 		const int wealth_cost = this->get_under_construction_wonder()->get_wealth_cost_for_country(this->get_country());
 		if (wealth_cost > 0) {
-			country_economy->change_wealth(wealth_cost);
+			domain_economy->change_wealth(wealth_cost);
 		}
 
 		for (const auto &[commodity, cost] : this->get_under_construction_wonder()->get_commodity_costs_for_country(this->get_country())) {
-			country_economy->change_stored_commodity(commodity, cost);
+			domain_economy->change_stored_commodity(commodity, cost);
 		}
 
 		this->set_under_construction_wonder(nullptr);
@@ -521,14 +521,14 @@ void building_slot::cancel_construction()
 		return;
 	}
 
-	country_economy *country_economy = this->get_country()->get_economy();
+	domain_economy *domain_economy = this->get_country()->get_economy();
 	const int wealth_cost = this->get_under_construction_building()->get_wealth_cost_for_country(this->get_country());
 	if (wealth_cost > 0) {
-		country_economy->change_wealth(wealth_cost);
+		domain_economy->change_wealth(wealth_cost);
 	}
 
 	for (const auto &[commodity, cost] : this->get_under_construction_building()->get_commodity_costs_for_site(this->get_settlement())) {
-		country_economy->change_stored_commodity(commodity, cost);
+		domain_economy->change_stored_commodity(commodity, cost);
 	}
 
 	this->set_under_construction_building(nullptr);

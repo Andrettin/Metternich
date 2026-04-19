@@ -11,7 +11,6 @@
 #include "database/preferences.h"
 #include "domain/consulate.h"
 #include "domain/country_ai.h"
-#include "domain/country_economy.h"
 #include "domain/country_military.h"
 #include "domain/country_rank.h"
 #include "domain/country_technology.h"
@@ -20,6 +19,7 @@
 #include "domain/diplomacy_state.h"
 #include "domain/domain.h"
 #include "domain/domain_attribute.h"
+#include "domain/domain_economy.h"
 #include "domain/domain_government.h"
 #include "domain/domain_history.h"
 #include "domain/domain_tier.h"
@@ -115,7 +115,7 @@ namespace metternich {
 domain_game_data::domain_game_data(metternich::domain *domain)
 	: domain(domain), tier(domain_tier::none), culture(domain->get_default_culture()), religion(domain->get_default_religion())
 {
-	this->economy = make_qunique<country_economy>(domain, this);
+	this->economy = make_qunique<domain_economy>(domain, this);
 	this->government = make_qunique<domain_government>(domain, this);
 	this->military = make_qunique<country_military>(domain);
 	this->technology = make_qunique<country_technology>(domain, this);
@@ -315,7 +315,7 @@ gsml_data domain_game_data::to_gsml_data() const
 QCoro::Task<void> domain_game_data::apply_history(const QDate &start_date)
 {
 	const domain_history *domain_history = this->domain->get_history();
-	country_economy *country_economy = this->get_economy();
+	domain_economy *domain_economy = this->get_economy();
 	domain_government *domain_government = this->get_government();
 	country_technology *country_technology = this->get_technology();
 
@@ -380,7 +380,7 @@ QCoro::Task<void> domain_game_data::apply_history(const QDate &start_date)
 		}
 	}
 
-	country_economy->set_wealth(domain_history->get_wealth());
+	domain_economy->set_wealth(domain_history->get_wealth());
 
 	for (const auto &[other_country, diplomacy_state] : domain_history->get_diplomacy_states()) {
 		if (!other_country->get_game_data()->is_alive()) {

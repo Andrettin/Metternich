@@ -17,13 +17,13 @@
 #include "database/gsml_property.h"
 #include "database/preferences.h"
 #include "domain/country_ai.h"
-#include "domain/country_economy.h"
 #include "domain/country_military.h"
 #include "domain/country_rank.h"
 #include "domain/country_technology.h"
 #include "domain/country_turn_data.h"
 #include "domain/diplomacy_state.h"
 #include "domain/domain.h"
+#include "domain/domain_economy.h"
 #include "domain/domain_game_data.h"
 #include "domain/domain_government.h"
 #include "domain/domain_history.h"
@@ -1582,7 +1582,7 @@ QCoro::Task<void> game::on_setup_finished()
 
 	for (const domain *domain : this->get_countries()) {
 		domain_game_data *domain_game_data = domain->get_game_data();
-		//country_economy *country_economy = domain->get_economy();
+		//domain_economy *domain_economy = domain->get_economy();
 		domain_government *domain_government = domain->get_government();
 
 		co_await domain_game_data->check_government_type();
@@ -1618,7 +1618,7 @@ QCoro::Task<void> game::on_setup_finished()
 
 		//decrease population if there's too much for the starting food output
 		/*
-		while ((country_economy->get_food_output() - domain_game_data->get_net_food_consumption()) < 0) {
+		while ((domain_economy->get_food_output() - domain_game_data->get_net_food_consumption()) < 0) {
 			domain_game_data->decrease_population(false);
 		}
 		*/
@@ -1752,10 +1752,10 @@ void game::do_trade()
 	domain_map<commodity_map<int>> country_luxury_demands;
 
 	for (const domain *domain : trade_countries) {
-		country_economy *country_economy = domain->get_economy();
+		domain_economy *domain_economy = domain->get_economy();
 
-		for (const auto &[commodity, demand] : country_economy->get_commodity_demands()) {
-			if (!country_economy->can_trade_commodity(commodity)) {
+		for (const auto &[commodity, demand] : domain_economy->get_commodity_demands()) {
+			if (!domain_economy->can_trade_commodity(commodity)) {
 				continue;
 			}
 
@@ -1770,7 +1770,7 @@ void game::do_trade()
 				continue;
 			}
 
-			const int offer = country_economy->get_offer(commodity);
+			const int offer = domain_economy->get_offer(commodity);
 			if (offer > 0) {
 				const int sold_quantity = std::min(offer, effective_demand_int);
 
@@ -1778,7 +1778,7 @@ void game::do_trade()
 					continue;
 				}
 
-				country_economy->do_sale(domain, commodity, sold_quantity, false);
+				domain_economy->do_sale(domain, commodity, sold_quantity, false);
 
 				effective_demand_int -= sold_quantity;
 			}

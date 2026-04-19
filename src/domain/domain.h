@@ -22,11 +22,11 @@ namespace metternich {
 
 class character;
 class country_ai;
-class country_economy;
 class country_military;
 class country_technology;
 class country_turn_data;
 class culture;
+class domain_economy;
 class domain_game_data;
 class domain_government;
 class domain_history;
@@ -102,7 +102,7 @@ public:
 		return this->game_data.get();
 	}
 
-	country_economy *get_economy() const;
+	domain_economy *get_economy() const;
 	domain_government *get_government() const;
 	country_military *get_military() const;
 	country_technology *get_technology() const;

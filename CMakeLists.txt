@@ -70,7 +70,6 @@ set(domain_SRCS
 	src/domain/consulate.cpp
 	src/domain/consulate_container.cpp
 	src/domain/country_ai.cpp
-	src/domain/country_economy.cpp
 	src/domain/country_military.cpp
 	src/domain/country_rank.cpp
 	src/domain/country_technology.cpp
@@ -78,6 +77,7 @@ set(domain_SRCS
 	src/domain/domain.cpp
 	src/domain/domain_attribute.cpp
 	src/domain/domain_container.cpp
+	src/domain/domain_economy.cpp
 	src/domain/domain_game_data.cpp
 	src/domain/domain_government.cpp
 	src/domain/domain_history.cpp
@@ -441,7 +441,6 @@ set(domain_HDRS
 	src/domain/consulate.h
 	src/domain/consulate_container.h
 	src/domain/country_ai.h
-	src/domain/country_economy.h
 	src/domain/country_military.h
 	src/domain/country_rank.h
 	src/domain/country_technology.h
@@ -451,6 +450,7 @@ set(domain_HDRS
 	src/domain/domain.h
 	src/domain/domain_attribute.h
 	src/domain/domain_container.h
+	src/domain/domain_economy.h
 	src/domain/domain_game_data.h
 	src/domain/domain_government.h
 	src/domain/domain_history.h

@@ -14,7 +14,7 @@ class domain;
 class domain_game_data;
 enum class income_transaction_type;
 
-class country_economy final : public QObject
+class domain_economy final : public QObject
 {
 	Q_OBJECT
 
@@ -34,8 +34,8 @@ class country_economy final : public QObject
 	Q_PROPERTY(int throughput_modifier READ get_throughput_modifier NOTIFY throughput_modifier_changed)
 
 public:
-	explicit country_economy(const metternich::domain *domain, const domain_game_data *game_data);
-	~country_economy();
+	explicit domain_economy(const metternich::domain *domain, const domain_game_data *game_data);
+	~domain_economy();
 
 	void process_gsml_property(const gsml_property &property);
 	void process_gsml_scope(const gsml_data &scope);

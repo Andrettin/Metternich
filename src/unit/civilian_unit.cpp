@@ -6,9 +6,9 @@
 #include "character/character_game_data.h"
 #include "culture/cultural_group.h"
 #include "culture/culture.h"
-#include "domain/country_economy.h"
 #include "domain/country_technology.h"
 #include "domain/domain.h"
+#include "domain/domain_economy.h"
 #include "domain/domain_game_data.h"
 #include "economy/resource.h"
 #include "game/game.h"
@@ -47,7 +47,7 @@ civilian_unit::civilian_unit(const civilian_unit_type *type, const domain *owner
 	connect(this, &civilian_unit::type_changed, this, &civilian_unit::icon_changed);
 
 	connect(this->get_owner()->get_game_data(), &domain_game_data::provinces_changed, this, &civilian_unit::improvable_resources_changed);
-	connect(this->get_owner()->get_economy(), &country_economy::commodity_outputs_changed, this, &civilian_unit::improvable_resources_changed);
+	connect(this->get_owner()->get_economy(), &domain_economy::commodity_outputs_changed, this, &civilian_unit::improvable_resources_changed);
 	connect(this->get_owner()->get_technology(), &country_technology::technologies_changed, this, &civilian_unit::improvable_resources_changed);
 
 	connect(this->get_owner()->get_game_data(), &domain_game_data::provinces_changed, this, &civilian_unit::prospectable_tiles_changed);
@@ -375,19 +375,19 @@ void civilian_unit::build_on_tile()
 
 bool civilian_unit::can_build_improvement(const improvement *improvement) const
 {
-	const country_economy *country_economy = this->get_owner()->get_economy();
+	const domain_economy *domain_economy = this->get_owner()->get_economy();
 	const country_technology *country_technology = this->get_owner()->get_technology();
 
 	if (improvement->get_required_technology() != nullptr && !country_technology->has_technology(improvement->get_required_technology())) {
 		return false;
 	}
 
-	if (improvement->get_wealth_cost() > 0 && improvement->get_wealth_cost() > country_economy->get_wealth()) {
+	if (improvement->get_wealth_cost() > 0 && improvement->get_wealth_cost() > domain_economy->get_wealth()) {
 		return false;
 	}
 
 	for (const auto &[commodity, cost] : improvement->get_commodity_costs()) {
-		if (cost > country_economy->get_stored_commodity(commodity)) {
+		if (cost > domain_economy->get_stored_commodity(commodity)) {
 			return false;
 		}
 	}
@@ -422,27 +422,27 @@ void civilian_unit::build_improvement(const improvement *improvement)
 	//FIXME: set the task completion turns as a field for each improvement?
 	this->set_task_completion_turns(civilian_unit::improvement_construction_turns);
 
-	country_economy *country_economy = this->get_owner()->get_economy();
+	domain_economy *domain_economy = this->get_owner()->get_economy();
 
 	if (improvement->get_wealth_cost() > 0) {
-		country_economy->change_wealth(-improvement->get_wealth_cost());
+		domain_economy->change_wealth(-improvement->get_wealth_cost());
 	}
 
 	for (const auto &[commodity, cost] : improvement->get_commodity_costs()) {
-		country_economy->change_stored_commodity(commodity, -cost);
+		domain_economy->change_stored_commodity(commodity, -cost);
 	}
 }
 
 void civilian_unit::cancel_work()
 {
 	if (this->improvement_under_construction != nullptr) {
-		country_economy *country_economy = this->get_owner()->get_economy();
+		domain_economy *domain_economy = this->get_owner()->get_economy();
 		if (this->improvement_under_construction->get_wealth_cost() > 0) {
-			country_economy->change_wealth(this->improvement_under_construction->get_wealth_cost());
+			domain_economy->change_wealth(this->improvement_under_construction->get_wealth_cost());
 		}
 
 		for (const auto &[commodity, cost] : this->improvement_under_construction->get_commodity_costs()) {
-			country_economy->change_stored_commodity(commodity, cost);
+			domain_economy->change_stored_commodity(commodity, cost);
 		}
 	}
 

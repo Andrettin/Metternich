@@ -4,8 +4,8 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
-#include "domain/country_economy.h"
 #include "domain/domain.h"
+#include "domain/domain_economy.h"
 #include "infrastructure/building_slot.h"
 #include "item/item.h"
 #include "item/item_creation_type.h"

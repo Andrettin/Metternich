@@ -1,6 +1,6 @@
 #include "metternich.h"
 
-#include "domain/country_economy.h"
+#include "domain/domain_economy.h"
 
 #include "character/character.h"
 #include "character/character_game_data.h"
@@ -32,11 +32,11 @@
 
 namespace metternich {
 
-country_economy::country_economy(const metternich::domain *domain, const domain_game_data *game_data)
+domain_economy::domain_economy(const metternich::domain *domain, const domain_game_data *game_data)
 	: domain(domain)
 {
-	connect(game_data, &domain_game_data::provinces_changed, this, &country_economy::resource_counts_changed);
-	connect(game_data, &domain_game_data::diplomacy_states_changed, this, &country_economy::vassal_resource_counts_changed);
+	connect(game_data, &domain_game_data::provinces_changed, this, &domain_economy::resource_counts_changed);
+	connect(game_data, &domain_game_data::diplomacy_states_changed, this, &domain_economy::vassal_resource_counts_changed);
 
 	for (const commodity *commodity : commodity::get_all()) {
 		if (!commodity->is_enabled()) {
@@ -55,11 +55,11 @@ country_economy::country_economy(const metternich::domain *domain, const domain_
 	}
 }
 
-country_economy::~country_economy()
+domain_economy::~domain_economy()
 {
 }
 
-void country_economy::process_gsml_property(const gsml_property &property)
+void domain_economy::process_gsml_property(const gsml_property &property)
 {
 	const std::string &key = property.get_key();
 	const std::string &value = property.get_value();
@@ -71,7 +71,7 @@ void country_economy::process_gsml_property(const gsml_property &property)
 	}
 }
 
-void country_economy::process_gsml_scope(const gsml_data &scope)
+void domain_economy::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 
@@ -84,7 +84,7 @@ void country_economy::process_gsml_scope(const gsml_data &scope)
 	}
 }
 
-gsml_data country_economy::to_gsml_data() const
+gsml_data domain_economy::to_gsml_data() const
 {
 	gsml_data data("economy");
 
@@ -101,12 +101,12 @@ gsml_data country_economy::to_gsml_data() const
 	return data;
 }
 
-domain_game_data *country_economy::get_game_data() const
+domain_game_data *domain_economy::get_game_data() const
 {
 	return this->domain->get_game_data();
 }
 
-void country_economy::do_production()
+void domain_economy::do_production()
 {
 	try {
 		for (const auto &[commodity, output] : this->get_commodity_outputs()) {
@@ -141,7 +141,7 @@ void country_economy::do_production()
 	}
 }
 
-void country_economy::do_trade(domain_map<commodity_map<int>> &country_luxury_demands)
+void domain_economy::do_trade(domain_map<commodity_map<int>> &country_luxury_demands)
 {
 	try {
 		if (this->get_game_data()->is_under_anarchy()) {
@@ -175,12 +175,12 @@ void country_economy::do_trade(domain_map<commodity_map<int>> &country_luxury_de
 			const int price = game::get()->get_price(commodity);
 
 			for (const metternich::domain *other_domain : countries) {
-				country_economy *other_country_economy = other_domain->get_economy();
+				domain_economy *other_domain_economy = other_domain->get_economy();
 
-				const int bid = other_country_economy->get_bid(commodity);
+				const int bid = other_domain_economy->get_bid(commodity);
 				if (bid != 0) {
 					int sold_quantity = std::min(offer, bid);
-					sold_quantity = std::min(sold_quantity, other_country_economy->get_wealth() / price);
+					sold_quantity = std::min(sold_quantity, other_domain_economy->get_wealth() / price);
 
 					if (sold_quantity > 0) {
 						this->do_sale(other_domain, commodity, sold_quantity, true);
@@ -215,32 +215,32 @@ void country_economy::do_trade(domain_map<commodity_map<int>> &country_luxury_de
 	}
 }
 
-QVariantList country_economy::get_resource_counts_qvariant_list() const
+QVariantList domain_economy::get_resource_counts_qvariant_list() const
 {
 	return archimedes::map::to_value_sorted_qvariant_list(this->get_resource_counts());
 }
 
-QVariantList country_economy::get_vassal_resource_counts_qvariant_list() const
+QVariantList domain_economy::get_vassal_resource_counts_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_vassal_resource_counts());
 }
 
-int country_economy::get_wealth() const
+int domain_economy::get_wealth() const
 {
 	return this->get_stored_commodity(defines::get()->get_wealth_commodity());
 }
 
-void country_economy::set_wealth(const int wealth)
+void domain_economy::set_wealth(const int wealth)
 {
 	this->set_stored_commodity(defines::get()->get_wealth_commodity(), wealth);
 }
 
-QVariantList country_economy::get_available_commodities_qvariant_list() const
+QVariantList domain_economy::get_available_commodities_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_available_commodities());
 }
 
-QVariantList country_economy::get_tradeable_commodities_qvariant_list() const
+QVariantList domain_economy::get_tradeable_commodities_qvariant_list() const
 {
 	std::vector<const commodity *> tradeable_commodities = container::to_vector(this->get_tradeable_commodities());
 
@@ -255,12 +255,12 @@ QVariantList country_economy::get_tradeable_commodities_qvariant_list() const
 	return container::to_qvariant_list(tradeable_commodities);
 }
 
-QVariantList country_economy::get_stored_commodities_qvariant_list() const
+QVariantList domain_economy::get_stored_commodities_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_stored_commodities());
 }
 
-void country_economy::set_stored_commodity(const commodity *commodity, const int64_t value)
+void domain_economy::set_stored_commodity(const commodity *commodity, const int64_t value)
 {
 	if (!commodity->is_enabled()) {
 		return;
@@ -310,7 +310,7 @@ void country_economy::set_stored_commodity(const commodity *commodity, const int
 	}
 }
 
-void country_economy::add_tributable_commodity(const commodity *commodity, const int tributable_quantity, const income_transaction_type tribute_income_type)
+void domain_economy::add_tributable_commodity(const commodity *commodity, const int tributable_quantity, const income_transaction_type tribute_income_type)
 {
 	assert_throw(commodity != nullptr);
 	assert_throw(tributable_quantity >= 0);
@@ -352,7 +352,7 @@ void country_economy::add_tributable_commodity(const commodity *commodity, const
 	}
 }
 
-int64_t country_economy::add_population_wealth(const int64_t wealth)
+int64_t domain_economy::add_population_wealth(const int64_t wealth)
 {
 	int64_t weighted_population_size = 0;
 
@@ -382,7 +382,7 @@ int64_t country_economy::add_population_wealth(const int64_t wealth)
 	return remaining_wealth;
 }
 
-int64_t country_economy::get_stored_food() const
+int64_t domain_economy::get_stored_food() const
 {
 	int64_t stored_food = 0;
 
@@ -395,7 +395,7 @@ int64_t country_economy::get_stored_food() const
 	return stored_food;
 }
 
-void country_economy::set_storage_capacity(const int64_t capacity)
+void domain_economy::set_storage_capacity(const int64_t capacity)
 {
 	if (capacity == this->get_storage_capacity()) {
 		return;
@@ -408,7 +408,7 @@ void country_economy::set_storage_capacity(const int64_t capacity)
 	}
 }
 
-int64_t country_economy::get_storage_capacity_for_commodity(const commodity *commodity) const
+int64_t domain_economy::get_storage_capacity_for_commodity(const commodity *commodity) const
 {
 	int64_t storage_capacity = this->get_storage_capacity();
 
@@ -422,17 +422,17 @@ int64_t country_economy::get_storage_capacity_for_commodity(const commodity *com
 	return storage_capacity;
 }
 
-QVariantList country_economy::get_commodity_inputs_qvariant_list() const
+QVariantList domain_economy::get_commodity_inputs_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_commodity_inputs());
 }
 
-int country_economy::get_commodity_input(const QString &commodity_identifier) const
+int domain_economy::get_commodity_input(const QString &commodity_identifier) const
 {
 	return this->get_commodity_input(commodity::get(commodity_identifier.toStdString())).to_int();
 }
 
-void country_economy::change_commodity_input(const commodity *commodity, const centesimal_int &change, const bool change_input_storage)
+void domain_economy::change_commodity_input(const commodity *commodity, const centesimal_int &change, const bool change_input_storage)
 {
 	if (change == 0) {
 		return;
@@ -461,7 +461,7 @@ void country_economy::change_commodity_input(const commodity *commodity, const c
 	}
 }
 
-bool country_economy::can_change_commodity_input(const commodity *commodity, const centesimal_int &change) const
+bool domain_economy::can_change_commodity_input(const commodity *commodity, const centesimal_int &change) const
 {
 	if (change <= 0) {
 		return true;
@@ -484,17 +484,17 @@ bool country_economy::can_change_commodity_input(const commodity *commodity, con
 	return true;
 }
 
-QVariantList country_economy::get_commodity_outputs_qvariant_list() const
+QVariantList domain_economy::get_commodity_outputs_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_commodity_outputs());
 }
 
-qint64 country_economy::get_commodity_output_int(const commodity *commodity) const
+qint64 domain_economy::get_commodity_output_int(const commodity *commodity) const
 {
 	return this->get_commodity_output(commodity).to_int64();
 }
 
-void country_economy::change_commodity_output(const commodity *commodity, const centesimal_int &change)
+void domain_economy::change_commodity_output(const commodity *commodity, const centesimal_int &change)
 {
 	if (change == 0) {
 		return;
@@ -515,21 +515,21 @@ void country_economy::change_commodity_output(const commodity *commodity, const 
 	}
 }
 
-void country_economy::calculate_site_commodity_outputs()
+void domain_economy::calculate_site_commodity_outputs()
 {
 	for (const province *province : this->get_game_data()->get_provinces()) {
 		province->get_game_data()->calculate_site_commodity_outputs();
 	}
 }
 
-void country_economy::calculate_site_commodity_output(const commodity *commodity)
+void domain_economy::calculate_site_commodity_output(const commodity *commodity)
 {
 	for (const province *province : this->get_game_data()->get_provinces()) {
 		province->get_game_data()->calculate_site_commodity_output(commodity);
 	}
 }
 
-int country_economy::get_food_output() const
+int domain_economy::get_food_output() const
 {
 	int food_output = 0;
 
@@ -542,7 +542,7 @@ int country_economy::get_food_output() const
 	return food_output;
 }
 
-void country_economy::change_commodity_demand(const commodity *commodity, const decimillesimal_int &change)
+void domain_economy::change_commodity_demand(const commodity *commodity, const decimillesimal_int &change)
 {
 	if (change == 0) {
 		return;
@@ -557,7 +557,7 @@ void country_economy::change_commodity_demand(const commodity *commodity, const 
 	}
 }
 
-bool country_economy::produces_commodity(const commodity *commodity) const
+bool domain_economy::produces_commodity(const commodity *commodity) const
 {
 	if (this->get_commodity_output(commodity).to_int() > 0) {
 		return true;
@@ -572,12 +572,12 @@ bool country_economy::produces_commodity(const commodity *commodity) const
 	return false;
 }
 
-QVariantList country_economy::get_bids_qvariant_list() const
+QVariantList domain_economy::get_bids_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_bids());
 }
 
-void country_economy::set_bid(const commodity *commodity, const int value)
+void domain_economy::set_bid(const commodity *commodity, const int value)
 {
 	if (value == this->get_bid(commodity)) {
 		return;
@@ -595,12 +595,12 @@ void country_economy::set_bid(const commodity *commodity, const int value)
 	}
 }
 
-QVariantList country_economy::get_offers_qvariant_list() const
+QVariantList domain_economy::get_offers_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_offers());
 }
 
-void country_economy::set_offer(const commodity *commodity, const int value)
+void domain_economy::set_offer(const commodity *commodity, const int value)
 {
 	if (value == this->get_offer(commodity)) {
 		return;
@@ -623,7 +623,7 @@ void country_economy::set_offer(const commodity *commodity, const int value)
 	}
 }
 
-void country_economy::do_sale(const metternich::domain *other_domain, const commodity *commodity, const int sold_quantity, const bool state_purchase)
+void domain_economy::do_sale(const metternich::domain *other_domain, const commodity *commodity, const int sold_quantity, const bool state_purchase)
 {
 	this->change_stored_commodity(commodity, -sold_quantity);
 
@@ -635,15 +635,15 @@ void country_economy::do_sale(const metternich::domain *other_domain, const comm
 	this->change_offer(commodity, -sold_quantity);
 
 	domain_game_data *other_domain_game_data = other_domain->get_game_data();
-	country_economy *other_country_economy = other_domain->get_economy();
+	domain_economy *other_domain_economy = other_domain->get_economy();
 
 	if (state_purchase) {
-		other_country_economy->change_stored_commodity(commodity, sold_quantity);
+		other_domain_economy->change_stored_commodity(commodity, sold_quantity);
 		const int purchase_expense = price * sold_quantity;
-		other_country_economy->change_wealth(-purchase_expense);
+		other_domain_economy->change_wealth(-purchase_expense);
 		other_domain->get_turn_data()->add_expense_transaction(expense_transaction_type::purchase, purchase_expense, commodity, sold_quantity, this->domain);
 
-		other_country_economy->change_bid(commodity, -sold_quantity);
+		other_domain_economy->change_bid(commodity, -sold_quantity);
 	}
 
 	//improve relations between the two countries after they traded (even if it was not a state purchase)
@@ -653,12 +653,12 @@ void country_economy::do_sale(const metternich::domain *other_domain, const comm
 	}
 }
 
-void country_economy::calculate_commodity_needs()
+void domain_economy::calculate_commodity_needs()
 {
 	this->commodity_needs.clear();
 }
 
-void country_economy::set_output_modifier(const centesimal_int &value)
+void domain_economy::set_output_modifier(const centesimal_int &value)
 {
 	if (value == this->get_output_modifier()) {
 		return;
@@ -673,7 +673,7 @@ void country_economy::set_output_modifier(const centesimal_int &value)
 	}
 }
 
-void country_economy::set_resource_output_modifier(const int value)
+void domain_economy::set_resource_output_modifier(const int value)
 {
 	if (value == this->get_resource_output_modifier()) {
 		return;
@@ -688,7 +688,7 @@ void country_economy::set_resource_output_modifier(const int value)
 	}
 }
 
-void country_economy::set_industrial_output_modifier(const int value)
+void domain_economy::set_industrial_output_modifier(const int value)
 {
 	if (value == this->get_industrial_output_modifier()) {
 		return;
@@ -701,7 +701,7 @@ void country_economy::set_industrial_output_modifier(const int value)
 	}
 }
 
-void country_economy::set_commodity_output_modifier(const commodity *commodity, const centesimal_int &value)
+void domain_economy::set_commodity_output_modifier(const commodity *commodity, const centesimal_int &value)
 {
 	if (value == this->get_commodity_output_modifier(commodity)) {
 		return;
@@ -716,7 +716,7 @@ void country_economy::set_commodity_output_modifier(const commodity *commodity, 
 	this->calculate_site_commodity_output(commodity);
 }
 
-void country_economy::set_capital_commodity_output_modifier(const commodity *commodity, const centesimal_int &value)
+void domain_economy::set_capital_commodity_output_modifier(const commodity *commodity, const centesimal_int &value)
 {
 	if (value == this->get_capital_commodity_output_modifier(commodity)) {
 		return;
@@ -733,7 +733,7 @@ void country_economy::set_capital_commodity_output_modifier(const commodity *com
 	}
 }
 
-void country_economy::set_throughput_modifier(const int value)
+void domain_economy::set_throughput_modifier(const int value)
 {
 	if (value == this->get_throughput_modifier()) {
 		return;
@@ -746,7 +746,7 @@ void country_economy::set_throughput_modifier(const int value)
 	}
 }
 
-void country_economy::set_commodity_throughput_modifier(const commodity *commodity, const int value)
+void domain_economy::set_commodity_throughput_modifier(const commodity *commodity, const int value)
 {
 	if (value == this->get_commodity_throughput_modifier(commodity)) {
 		return;
@@ -759,7 +759,7 @@ void country_economy::set_commodity_throughput_modifier(const commodity *commodi
 	}
 }
 
-void country_economy::change_improved_resource_commodity_bonus(const resource *resource, const commodity *commodity, const int change)
+void domain_economy::change_improved_resource_commodity_bonus(const resource *resource, const commodity *commodity, const int change)
 {
 	if (change == 0) {
 		return;
@@ -782,7 +782,7 @@ void country_economy::change_improved_resource_commodity_bonus(const resource *r
 	}
 }
 
-void country_economy::change_improvement_commodity_bonus(const improvement *improvement, const commodity *commodity, const centesimal_int &change)
+void domain_economy::change_improvement_commodity_bonus(const improvement *improvement, const commodity *commodity, const centesimal_int &change)
 {
 	if (change == 0) {
 		return;
@@ -812,7 +812,7 @@ void country_economy::change_improvement_commodity_bonus(const improvement *impr
 	}
 }
 
-void country_economy::change_building_commodity_bonus(const building_type *building, const commodity *commodity, const int change)
+void domain_economy::change_building_commodity_bonus(const building_type *building, const commodity *commodity, const int change)
 {
 	if (change == 0) {
 		return;
@@ -843,7 +843,7 @@ void country_economy::change_building_commodity_bonus(const building_type *build
 	}
 }
 
-void country_economy::set_commodity_bonus_for_tile_threshold(const commodity *commodity, const int threshold, const int value)
+void domain_economy::set_commodity_bonus_for_tile_threshold(const commodity *commodity, const int threshold, const int value)
 {
 	const int old_value = this->get_commodity_bonus_for_tile_threshold(commodity, threshold);
 
@@ -866,7 +866,7 @@ void country_economy::set_commodity_bonus_for_tile_threshold(const commodity *co
 	}
 }
 
-void country_economy::change_commodity_bonus_per_population(const commodity *commodity, const centesimal_int &change)
+void domain_economy::change_commodity_bonus_per_population(const commodity *commodity, const centesimal_int &change)
 {
 	if (change == 0) {
 		return;
@@ -891,7 +891,7 @@ void country_economy::change_commodity_bonus_per_population(const commodity *com
 	}
 }
 
-void country_economy::change_settlement_commodity_bonus(const commodity *commodity, const centesimal_int &change)
+void domain_economy::change_settlement_commodity_bonus(const commodity *commodity, const centesimal_int &change)
 {
 	if (change == 0) {
 		return;
@@ -916,7 +916,7 @@ void country_economy::change_settlement_commodity_bonus(const commodity *commodi
 	}
 }
 
-void country_economy::change_capital_commodity_bonus(const commodity *commodity, const centesimal_int &change)
+void domain_economy::change_capital_commodity_bonus(const commodity *commodity, const centesimal_int &change)
 {
 	if (change == 0) {
 		return;
@@ -935,7 +935,7 @@ void country_economy::change_capital_commodity_bonus(const commodity *commodity,
 	}
 }
 
-void country_economy::change_capital_commodity_bonus_per_population(const commodity *commodity, const centesimal_int &change)
+void domain_economy::change_capital_commodity_bonus_per_population(const commodity *commodity, const centesimal_int &change)
 {
 	if (change == 0) {
 		return;

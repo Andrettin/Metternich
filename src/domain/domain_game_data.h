@@ -20,10 +20,10 @@
 
 Q_MOC_INCLUDE("character/character.h")
 Q_MOC_INCLUDE("culture/culture.h")
-Q_MOC_INCLUDE("domain/country_economy.h")
 Q_MOC_INCLUDE("domain/country_military.h")
 Q_MOC_INCLUDE("domain/country_technology.h")
 Q_MOC_INCLUDE("domain/domain.h")
+Q_MOC_INCLUDE("domain/domain_economy.h")
 Q_MOC_INCLUDE("domain/domain_government.h")
 Q_MOC_INCLUDE("domain/domain_tier.h")
 Q_MOC_INCLUDE("domain/government_type.h")
@@ -49,13 +49,13 @@ class character;
 class civilian_unit;
 class consulate;
 class country_ai;
-class country_economy;
 class country_military;
 class country_rank;
 class country_technology;
 class culture;
 class domain;
 class domain_attribute;
+class domain_economy;
 class domain_government;
 class event;
 class flag;
@@ -96,7 +96,7 @@ class domain_game_data final : public QObject
 {
 	Q_OBJECT
 
-	Q_PROPERTY(metternich::country_economy* economy READ get_economy CONSTANT)
+	Q_PROPERTY(metternich::domain_economy* economy READ get_economy CONSTANT)
 	Q_PROPERTY(metternich::domain_government* government READ get_government CONSTANT)
 	Q_PROPERTY(metternich::country_military* military READ get_military CONSTANT)
 	Q_PROPERTY(metternich::country_technology* technology READ get_technology CONSTANT)
@@ -194,7 +194,7 @@ public:
 	void do_population_employment();
 	[[nodiscard]] QCoro::Task<void> do_events();
 
-	country_economy *get_economy() const
+	domain_economy *get_economy() const
 	{
 		return this->economy.get();
 	}
@@ -1400,7 +1400,7 @@ private:
 	building_class_map<int> free_building_class_counts;
 	consulate_map<int> free_consulate_counts;
 	std::set<const flag *> flags;
-	qunique_ptr<country_economy> economy;
+	qunique_ptr<domain_economy> economy;
 	qunique_ptr<domain_government> government;
 	qunique_ptr<country_military> military;
 	qunique_ptr<country_technology> technology;
