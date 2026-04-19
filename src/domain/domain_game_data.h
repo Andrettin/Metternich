@@ -48,12 +48,12 @@ class building_type;
 class character;
 class civilian_unit;
 class consulate;
-class country_ai;
 class country_military;
 class country_rank;
 class country_technology;
 class culture;
 class domain;
+class domain_ai;
 class domain_attribute;
 class domain_economy;
 class domain_government;
@@ -215,7 +215,7 @@ public:
 	}
 
 	bool is_ai() const;
-	country_ai *get_ai() const;
+	domain_ai *get_ai() const;
 
 	domain_tier get_tier() const
 	{

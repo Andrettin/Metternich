@@ -69,12 +69,12 @@ set_source_files_properties(${database_SRCS} PROPERTIES UNITY_GROUP "database")
 set(domain_SRCS
 	src/domain/consulate.cpp
 	src/domain/consulate_container.cpp
-	src/domain/country_ai.cpp
 	src/domain/country_military.cpp
 	src/domain/country_rank.cpp
 	src/domain/country_technology.cpp
 	src/domain/country_turn_data.cpp
 	src/domain/domain.cpp
+	src/domain/domain_ai.cpp
 	src/domain/domain_attribute.cpp
 	src/domain/domain_container.cpp
 	src/domain/domain_economy.cpp
@@ -440,7 +440,6 @@ source_group(database FILES ${database_HDRS})
 set(domain_HDRS
 	src/domain/consulate.h
 	src/domain/consulate_container.h
-	src/domain/country_ai.h
 	src/domain/country_military.h
 	src/domain/country_rank.h
 	src/domain/country_technology.h
@@ -448,6 +447,7 @@ set(domain_HDRS
 	src/domain/country_type.h
 	src/domain/diplomacy_state.h
 	src/domain/domain.h
+	src/domain/domain_ai.h
 	src/domain/domain_attribute.h
 	src/domain/domain_container.h
 	src/domain/domain_economy.h

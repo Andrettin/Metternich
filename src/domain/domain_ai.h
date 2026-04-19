@@ -11,13 +11,13 @@ class domain_game_data;
 class technology;
 class technology_category;
 
-class country_ai final : public QObject
+class domain_ai final : public QObject
 {
 	Q_OBJECT
 
 public:
-	explicit country_ai(const metternich::domain *domain);
-	~country_ai();
+	explicit domain_ai(const metternich::domain *domain);
+	~domain_ai();
 
 	domain_game_data *get_game_data() const;
 

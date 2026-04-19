@@ -10,7 +10,6 @@
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "domain/consulate.h"
-#include "domain/country_ai.h"
 #include "domain/country_military.h"
 #include "domain/country_rank.h"
 #include "domain/country_technology.h"
@@ -18,6 +17,7 @@
 #include "domain/country_type.h"
 #include "domain/diplomacy_state.h"
 #include "domain/domain.h"
+#include "domain/domain_ai.h"
 #include "domain/domain_attribute.h"
 #include "domain/domain_economy.h"
 #include "domain/domain_government.h"
@@ -906,7 +906,7 @@ bool domain_game_data::is_ai() const
 	return this->domain != game::get()->get_player_country();
 }
 
-country_ai *domain_game_data::get_ai() const
+domain_ai *domain_game_data::get_ai() const
 {
 	return this->domain->get_ai();
 }

@@ -6,9 +6,9 @@
 #include "culture/culture.h"
 #include "database/database.h"
 #include "database/defines.h"
-#include "domain/country_ai.h"
 #include "domain/country_turn_data.h"
 #include "domain/country_type.h"
+#include "domain/domain_ai.h"
 #include "domain/domain_game_data.h"
 #include "domain/domain_government.h"
 #include "domain/domain_history.h"
@@ -268,7 +268,7 @@ void domain::reset_turn_data()
 
 void domain::reset_ai()
 {
-	this->ai = make_qunique<country_ai>(this);
+	this->ai = make_qunique<domain_ai>(this);
 	emit ai_changed();
 }
 

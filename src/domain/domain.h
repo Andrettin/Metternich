@@ -5,8 +5,8 @@
 #include "database/named_data_entry.h"
 #include "util/qunique_ptr.h"
 
-Q_MOC_INCLUDE("domain/country_ai.h")
 Q_MOC_INCLUDE("domain/country_turn_data.h")
+Q_MOC_INCLUDE("domain/domain_ai.h")
 Q_MOC_INCLUDE("domain/domain_game_data.h")
 Q_MOC_INCLUDE("domain/domain_tier.h")
 Q_MOC_INCLUDE("domain/government_type.h")
@@ -21,11 +21,11 @@ namespace archimedes {
 namespace metternich {
 
 class character;
-class country_ai;
 class country_military;
 class country_technology;
 class country_turn_data;
 class culture;
+class domain_ai;
 class domain_economy;
 class domain_game_data;
 class domain_government;
@@ -64,7 +64,7 @@ class domain final : public named_data_entry, public data_type<domain>
 	Q_PROPERTY(QVariantList available_technologies READ get_available_technologies_qvariant_list NOTIFY changed)
 	Q_PROPERTY(metternich::domain_game_data* game_data READ get_game_data NOTIFY game_data_changed)
 	Q_PROPERTY(metternich::country_turn_data* turn_data READ get_turn_data NOTIFY turn_data_changed)
-	Q_PROPERTY(metternich::country_ai* ai READ get_ai NOTIFY ai_changed)
+	Q_PROPERTY(metternich::domain_ai* ai READ get_ai NOTIFY ai_changed)
 
 public:
 	using government_variant = std::variant<const government_type *, const government_group *>;
@@ -116,7 +116,7 @@ public:
 
 	void reset_ai();
 
-	country_ai *get_ai() const
+	domain_ai *get_ai() const
 	{
 		return this->ai.get();
 	}
@@ -278,7 +278,7 @@ private:
 	qunique_ptr<domain_history> history;
 	qunique_ptr<domain_game_data> game_data;
 	qunique_ptr<country_turn_data> turn_data;
-	qunique_ptr<country_ai> ai;
+	qunique_ptr<domain_ai> ai;
 };
 
 }

@@ -1,6 +1,6 @@
 #include "metternich.h"
 
-#include "domain/country_ai.h"
+#include "domain/domain_ai.h"
 
 #include "domain/country_military.h"
 #include "domain/country_technology.h"
@@ -29,20 +29,20 @@
 
 namespace metternich {
 
-country_ai::country_ai(const metternich::domain *domain) : domain(domain)
+domain_ai::domain_ai(const metternich::domain *domain) : domain(domain)
 {
 }
 
-country_ai::~country_ai()
+domain_ai::~domain_ai()
 {
 }
 
-domain_game_data *country_ai::get_game_data() const
+domain_game_data *domain_ai::get_game_data() const
 {
 	return this->domain->get_game_data();
 }
 
-QCoro::Task<void> country_ai::do_turn()
+QCoro::Task<void> domain_ai::do_turn()
 {
 	assert_throw(this->get_game_data()->is_ai());
 
@@ -78,7 +78,7 @@ QCoro::Task<void> country_ai::do_turn()
 	this->assign_trade_orders();
 }
 
-void country_ai::choose_current_research()
+void domain_ai::choose_current_research()
 {
 	assert_throw(this->get_game_data()->is_ai());
 
@@ -95,7 +95,7 @@ void country_ai::choose_current_research()
 	}
 }
 
-const technology *country_ai::get_research_choice(const data_entry_map<technology_category, const technology *> &research_choice_map) const
+const technology *domain_ai::get_research_choice(const data_entry_map<technology_category, const technology *> &research_choice_map) const
 {
 	assert_throw(this->get_game_data()->is_ai());
 
@@ -129,7 +129,7 @@ const technology *country_ai::get_research_choice(const data_entry_map<technolog
 	return chosen_technology;
 }
 
-void country_ai::appoint_ideas()
+void domain_ai::appoint_ideas()
 {
 	magic_enum::enum_for_each<idea_type>([this](const idea_type idea_type) {
 		for (const idea_slot *slot : this->get_game_data()->get_available_idea_slots(idea_type)) {
@@ -149,7 +149,7 @@ void country_ai::appoint_ideas()
 	});
 }
 
-void country_ai::appoint_office_holders()
+void domain_ai::appoint_office_holders()
 {
 	for (const office *office : this->domain->get_government()->get_available_offices()) {
 		if (!office->is_appointable()) {
@@ -171,7 +171,7 @@ void country_ai::appoint_office_holders()
 	}
 }
 
-void country_ai::do_construction()
+void domain_ai::do_construction()
 {
 	for (const site *site : this->get_game_data()->get_sites()) {
 		if (site->is_settlement() && site->get_game_data()->is_built()) {
@@ -195,7 +195,7 @@ void country_ai::do_construction()
 	}
 }
 
-void country_ai::assign_trade_orders()
+void domain_ai::assign_trade_orders()
 {
 	assert_throw(this->get_game_data()->is_ai());
 
