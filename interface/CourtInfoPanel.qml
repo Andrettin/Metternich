@@ -76,6 +76,7 @@ Rectangle {
 		IconButton {
 			id: inventory_button
 			icon_identifier: "sack_3"
+			visible: politics_view_mode === PoliticsView.Mode.Court
 			
 			onClicked: {
 				inventory_dialog.character = metternich.game.player_character
