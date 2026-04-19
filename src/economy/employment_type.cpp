@@ -55,4 +55,23 @@ void employment_type::check() const
 	}
 }
 
+bool employment_type::can_employ(const population_type *population_type, const metternich::population_type *&employed_population_type) const
+{
+	employed_population_type = nullptr;
+
+	if (this->get_employee_types().contains(population_type)) {
+		employed_population_type = population_type;
+		return true;
+	}
+
+	for (const metternich::population_type *equivalent_population_type : population_type->get_equivalent_population_types()) {
+		if (this->get_employee_types().contains(equivalent_population_type)) {
+			employed_population_type = equivalent_population_type;
+			return true;
+		}
+	}
+
+	return false;
+}
+
 }

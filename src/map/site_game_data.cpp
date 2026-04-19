@@ -2195,16 +2195,19 @@ void site_game_data::check_employment()
 		for (size_t i = 0; i < unemployed_population_units.size();) {
 			population_unit *population_unit = unemployed_population_units.at(i);
 
-			if (!employment_type->get_employee_types().contains(population_unit->get_type())) {
+			const population_type *employed_population_type = nullptr;
+			if (!employment_type->can_employ(population_unit->get_type(), employed_population_type)) {
 				++i;
 				continue;
 			}
+
+			assert_throw(employed_population_type != nullptr);
 
 			const int64_t employee_size = std::min(available_employment_capacity, population_unit->get_size());
 			const int64_t lost_wealth = population_unit->get_wealth() * employee_size / population_unit->get_size();
 			const bool full_employment = employee_size == population_unit->get_size();
 
-			this->change_population(population_unit->get_type(), population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), employment_type, employee_size, population_unit->get_literacy_rate(), lost_wealth);
+			this->change_population(employed_population_type, population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), employment_type, employee_size, population_unit->get_literacy_rate(), lost_wealth);
 
 			this->change_population(population_unit->get_type(), population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), nullptr, -employee_size, population_unit->get_literacy_rate(), -lost_wealth);
 

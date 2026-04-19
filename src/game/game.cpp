@@ -1602,6 +1602,9 @@ QCoro::Task<void> game::on_setup_finished()
 
 		for (const province *province : domain_game_data->get_provinces()) {
 			for (const site *site : province->get_game_data()->get_sites()) {
+				//check employment here because it can affect the population type charts via equivalent population types for employment
+				site->get_game_data()->check_employment();
+
 				for (const improvement *improvement : improvement::get_all()) {
 					if (improvement->get_free_on_start_conditions() == nullptr) {
 						continue;

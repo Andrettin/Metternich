@@ -35,6 +35,8 @@ public:
 		return this->employee_types;
 	}
 
+	bool can_employ(const population_type *population_type, const metternich::population_type *&employed_population_type) const;
+
 	const commodity *get_output_commodity() const
 	{
 		return this->output_commodity;
