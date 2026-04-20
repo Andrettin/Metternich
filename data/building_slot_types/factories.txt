@@ -22,6 +22,10 @@ lead_smelter = {
 	name = "Lead Smelter"
 }
 
+liquor_distillery = {
+	name = "Liquor Distillery"
+}
+
 sawmill = {
 	name = "Sawmill"
 }

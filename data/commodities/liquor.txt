@@ -1,0 +1,11 @@
+liquor = {
+	name = "Liquor"
+	type = good
+	icon = wine
+	base_price = 20 #2sp, price of a pound of whiskey
+	units = {
+		1 = lb
+		100 = cwt
+		2000 = tn
+	}
+}

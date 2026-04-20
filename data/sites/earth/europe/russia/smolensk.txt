@@ -4,10 +4,17 @@ smolensk = {
 	geocoordinate = { 32.04733557000 54.78268841460 } #from Natural Earth
 	type = holding
 	province = smolensk
+	features = {
+		liquor
+	}
 	
 	history = {
 		1360 = {
 			holding_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1861 = {
+			buildings += liquor_distillery
 		}
 	}
 }

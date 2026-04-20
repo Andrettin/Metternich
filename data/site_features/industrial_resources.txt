@@ -2,3 +2,8 @@ glass = {
 	name = "Glass"
 	icon = glass
 }
+
+liquor = {
+	name = "Liquor"
+	icon = wine
+}

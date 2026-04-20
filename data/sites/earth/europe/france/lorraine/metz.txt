@@ -10,6 +10,7 @@ metz = {
 	features = {
 		gold_deposit
 		holy_site #historical cathedral
+		liquor
 	}
 	
 	history = {
@@ -36,6 +37,10 @@ metz = {
 				clergymen.german.catholic = 1100
 				clergymen.german.protestant = 300
 			}
+		}
+		
+		1861 = {
+			buildings += liquor_distillery
 		}
 	}
 }

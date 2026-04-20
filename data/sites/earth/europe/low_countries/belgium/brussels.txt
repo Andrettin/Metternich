@@ -5,7 +5,9 @@ brussels = {
 	type = holding
 	holding_type = guild
 	province = brabant
-	
+	features = {
+		liquor
+	}
 	
 	history = {
 		1815 = {
@@ -24,6 +26,10 @@ brussels = {
 				clergymen.flemish.catholic = 6500
 				clergymen.walloon.catholic = 1000
 			}
+		}
+		
+		1861 = {
+			buildings += liquor_distillery
 		}
 	}
 }

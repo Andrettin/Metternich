@@ -1,0 +1,27 @@
+liquor_distillery = {
+	name = "Liquor Distillery"
+	building_class = liquor_distillery
+	portrait = trading_post
+	icon = wine
+	size = 1
+	holding_types = {
+		guild
+	}
+	conditions = {
+		feature = liquor
+	}
+	commodity_costs = {
+		wealth = 6gb #same as brewery
+	}
+	modifier = {
+		employment_capacity = {
+			employment_type = liquor_distilling
+			capacity = 10000
+		}
+		population_capacity = 10000
+	}
+	domain_modifier = { #same as brewery
+		loyalty = 1
+		stability = 1
+	}
+}

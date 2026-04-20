@@ -1,0 +1,4 @@
+liquor_distillery = {
+	name = "Liquor Distillery"
+	slot_type = liquor_distillery
+}

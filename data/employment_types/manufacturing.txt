@@ -10,3 +10,17 @@ glass_making = {
 		craftsmen
 	}
 }
+
+liquor_distilling = {
+	name = "Liquor Distilling"
+	input_commodities = {
+		grain = 10tn
+		glass = 8cwt
+	}
+	output_commodity = liquor
+	monthly_output_value = 10tn
+	base_employment_size = 10000
+	employee_types = {
+		craftsmen
+	}
+}
