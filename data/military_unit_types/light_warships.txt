@@ -72,7 +72,7 @@ raider = {
 		movement = 7
 		range = 3
 	}
-	required_technology = modern_era
+	required_technology = industrial_era
 	commodity_costs = {
 		lumber = 6
 		armament = 3

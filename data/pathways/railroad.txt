@@ -3,11 +3,11 @@ railroad = {
 	image_filepath = "tiles/pathways/road.png"
 	transport_level = 4
 	required_pathway = road
-	required_technology = renaissance
-	river_crossing_required_technology = renaissance
+	required_technology = industrial_era
+	river_crossing_required_technology = industrial_era
 	terrain_required_technologies = {
-		hills = renaissance
+		hills = industrial_era
 		mountains = modern_era
-		swamp = renaissance
+		swamp = industrial_era
 	}
 }

@@ -515,7 +515,7 @@ science = {
 	subcategory = technology
 	portrait = engineering
 	icon = philosophy
-	period = modern_era
+	period = industrial_era
 	cost_commodity = research
 	prerequisites = {
 		natural_philosophy

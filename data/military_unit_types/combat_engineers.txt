@@ -30,7 +30,7 @@ combat_engineers = {
 		defense = 4
 		movement = 4
 	}
-	required_technology = modern_era
+	required_technology = industrial_era
 	commodity_costs = {
 		wealth = 7000
 		manpower = 1

@@ -34,6 +34,18 @@ renaissance = {
 	}
 }
 
+industrial_era = {
+	name = "Industrial Era"
+	subcategory = technology
+	portrait = engineering
+	icon = cog
+	period = industrial_era
+	cost_commodity = research
+	prerequisites = {
+		renaissance
+	}
+}
+
 modern_era = {
 	name = "Modern Era"
 	subcategory = technology
@@ -42,6 +54,6 @@ modern_era = {
 	period = modern_era
 	cost_commodity = research
 	prerequisites = {
-		renaissance
+		industrial_era
 	}
 }
