@@ -1,3 +1,18 @@
+cattle_ranch = {
+	name = "Cattle Ranch"
+	slot_type = cattle_ranch
+}
+
+grain_farm = {
+	name = "Grain Farm"
+	slot_type = grain_farm
+}
+
+sheep_ranch = {
+	name = "Sheep Ranch"
+	slot_type = sheep_ranch
+}
+
 tobacco_plantation = {
 	name = "Tobacco Plantation"
 	slot_type = tobacco_plantation
