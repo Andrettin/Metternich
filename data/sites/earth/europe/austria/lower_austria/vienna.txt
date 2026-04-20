@@ -13,6 +13,7 @@ vienna = {
 	}
 	features = {
 		academic #historical university
+		glass
 		#holy_site #historical cathedral
 	}
 	
@@ -69,6 +70,10 @@ vienna = {
 		
 		1844 = {
 			population = 374378 #the Austrian Kreis of "Haupt- und Residenstadt Wien" had 374,378 inhabitants in 1844 (excluding military personnel); Source: "Tafeln zur Statistik der österreichischen Monarchie für das Jahr 1844", 1848, Tafel 50.
+		}
+		
+		1861 = {
+			buildings += glassworks
 		}
 		
 		1900 = {

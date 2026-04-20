@@ -10,6 +10,10 @@ bronze_foundry = {
 	name = "Bronze Foundry"
 }
 
+glassworks = {
+	name = "Glassworks"
+}
+
 iron_smelter = {
 	name = "Iron Smelter"
 }

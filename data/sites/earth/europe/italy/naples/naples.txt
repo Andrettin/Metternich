@@ -3,6 +3,7 @@ naples = {
 	world = earth
 	geocoordinate = { 14.24501135120 40.84002524730 } #from Natural Earth
 	type = holding
+	holding_type = guild
 	#resource = fish
 	province = naples
 	cultural_names = {
@@ -11,16 +12,16 @@ naples = {
 	}
 	features = {
 		academic #historical university
+		glass
 	}
 	
 	history = {
 		1224 = {
 			buildings += university #University founded in Naples in 1224; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
-			holding_type = city
 		}
 		
 		1360 = {
-			holding_type = city #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			#important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 		
 		1500 = {
@@ -33,6 +34,10 @@ naples = {
 		
 		1700 = {
 			population = 500000 #Naples had a population of 500,000 in 1700; Source: Henry Kamen, "Early Modern European Society", 2021, p. 34.
+		}
+		
+		1861 = {
+			buildings += glassworks
 		}
 	}
 }

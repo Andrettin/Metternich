@@ -1,0 +1,12 @@
+glass_making = {
+	name = "Glass Making"
+	input_commodities = {
+		coal = 14tn
+	}
+	output_commodity = glass
+	monthly_output_value = 18cwt
+	base_employment_size = 10000
+	employee_types = {
+		craftsmen
+	}
+}

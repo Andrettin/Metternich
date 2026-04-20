@@ -1,0 +1,4 @@
+glass = {
+	name = "Glass"
+	icon = glass
+}

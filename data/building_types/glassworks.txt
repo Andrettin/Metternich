@@ -1,0 +1,23 @@
+glassworks = {
+	name = "Glassworks"
+	building_class = glassworks
+	portrait = factory
+	icon = glass
+	size = 1
+	holding_types = {
+		guild
+	}
+	conditions = {
+		feature = glass
+	}
+	commodity_costs = {
+		wealth = 10000gp
+	}
+	modifier = {
+		employment_capacity = {
+			employment_type = glass_making
+			capacity = 10000
+		}
+		population_capacity = 10000
+	}
+}

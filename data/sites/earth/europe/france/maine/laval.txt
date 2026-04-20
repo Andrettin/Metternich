@@ -5,6 +5,9 @@ laval = {
 	type = resource
 	resource = timber
 	province = anjou
+	features = {
+		glass
+	}
 	
 	history = {
 		1789 = {
@@ -15,6 +18,10 @@ laval = {
 			population_groups = {
 				clergymen.french.catholic = 3400
 			}
+		}
+		
+		1861 = {
+			buildings += glassworks
 		}
 	}
 }
