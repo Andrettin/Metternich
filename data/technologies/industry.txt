@@ -1,0 +1,28 @@
+integral_distillery_process = {
+	name = "Integral Distillery Process"
+	subcategory = technology
+	portrait = engineering
+	icon = wine
+	period = modern_era
+	cost_commodity = research
+	prerequisites = {
+		#interchangeable_parts
+		
+		science
+	}
+	monthly_chance = {
+		base_value = 2
+		
+		#modifier = {
+		#	factor = 2
+		#	technology = scientific_management
+		#}
+		#modifier = {
+		#	factor = 2
+		#	technology = market_structure
+		#}
+	}
+	modifier = {
+		liquor_output_modifier = 2
+	}
+}
