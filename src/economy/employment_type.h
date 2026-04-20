@@ -1,5 +1,6 @@
 #pragma once
 
+#include "economy/commodity_container.h"
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 #include "population/population_type_container.h"
@@ -37,6 +38,14 @@ public:
 
 	bool can_employ(const population_type *population_type, const metternich::population_type *&employed_population_type) const;
 
+	const commodity_map<int64_t> &get_input_commodities() const
+	{
+		return this->input_commodities;
+	}
+
+	int64_t get_input_for_employment_size(const commodity *commodity, const int64_t employment_size) const;
+	int64_t get_employment_size_for_input(const commodity *commodity, const int64_t input) const;
+
 	const commodity *get_output_commodity() const
 	{
 		return this->output_commodity;
@@ -57,6 +66,7 @@ signals:
 
 private:
 	population_type_set employee_types;
+	commodity_map<int64_t> input_commodities;
 	const commodity *output_commodity = nullptr;
 	int64_t monthly_output_value = 0;
 	int64_t base_employment_size = 0; //the employment size used for calculating the employee output

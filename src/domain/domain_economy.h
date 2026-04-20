@@ -8,6 +8,10 @@
 #include "util/centesimal_int.h"
 #include "util/decimillesimal_int.h"
 
+namespace archimedes {
+	class gsml_data;
+}
+
 namespace metternich {
 
 class domain;
@@ -192,6 +196,7 @@ public:
 	Q_INVOKABLE int get_commodity_input(const QString &commodity_identifier) const;
 	void change_commodity_input(const commodity *commodity, const centesimal_int &change, const bool change_input_storage);
 	bool can_change_commodity_input(const commodity *commodity, const centesimal_int &change) const;
+	void decrease_commodity_input(const commodity *commodity, int64_t decrease);
 
 	const commodity_map<centesimal_int> &get_commodity_outputs() const
 	{

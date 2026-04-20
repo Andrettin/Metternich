@@ -2119,6 +2119,8 @@ void site_game_data::change_employment_size(const employment_type *employment_ty
 {
 	assert_throw(employment_type != nullptr);
 
+	const int64_t old_size = this->get_employment_size(employment_type);
+
 	const int64_t size = (this->employment_sizes[employment_type] += change);
 
 	assert_throw(size >= 0);
@@ -2126,6 +2128,19 @@ void site_game_data::change_employment_size(const employment_type *employment_ty
 
 	if (size == 0) {
 		this->employment_sizes.erase(employment_type);
+	}
+
+	if (this->get_owner() != nullptr) {
+		for (const auto &[commodity, input] : employment_type->get_input_commodities()) {
+			const int64_t input_change = employment_type->get_input_for_employment_size(commodity, size) - employment_type->get_input_for_employment_size(commodity, old_size);
+			if (input_change == 0) {
+				continue;
+			}
+
+			assert_throw(this->get_owner()->get_economy()->can_change_commodity_input(commodity, centesimal_int(input_change)));
+
+			this->get_owner()->get_economy()->change_commodity_input(commodity, centesimal_int(input_change), true);
+		}
 	}
 
 	if (employment_type->get_output_commodity() != nullptr) {
@@ -2149,30 +2164,52 @@ void site_game_data::change_employment_capacity(const employment_type *employmen
 		//if the employment capacity is now below the employment size, reduce the latter
 		int64_t capacity_overflow = this->get_employment_size(employment_type) - capacity;
 		if (capacity_overflow > 0) {
-			std::vector<population_unit *> population_units;
-			for (const auto &population_unit : this->get_population_units()) {
-				if (population_unit->get_employment_type() == employment_type) {
-					population_units.push_back(population_unit.get());
-				}
-			}
-			for (population_unit *population_unit : population_units) {
-				const int64_t unemployment_size = std::min(capacity_overflow, population_unit->get_size());
-				const int64_t lost_wealth = population_unit->get_wealth() * unemployment_size / population_unit->get_size();
-
-				this->change_population(population_unit->get_type(), population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), nullptr, unemployment_size, population_unit->get_literacy_rate(), lost_wealth);
-
-				this->change_population(population_unit->get_type(), population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), employment_type, -unemployment_size, population_unit->get_literacy_rate(), -lost_wealth);
-
-				capacity_overflow -= unemployment_size;
-				if (capacity_overflow == 0) {
-					break;
-				}
-			}
+			this->decrease_employment(employment_type, capacity_overflow);
 
 			assert_throw(capacity_overflow == 0);
 			assert_throw(this->get_employment_size(employment_type) == capacity);
 		}
 	}
+}
+
+int64_t site_game_data::get_available_employment_input_capacity(const employment_type *employment_type) const
+{
+	int64_t input_capacity = std::numeric_limits<int64_t>::max();
+
+	for (const auto &[commodity, input] : employment_type->get_input_commodities()) {
+		if (this->get_owner() == nullptr) {
+			return 0;
+		}
+
+		input_capacity = std::min(input_capacity, employment_type->get_employment_size_for_input(commodity, this->get_owner()->get_economy()->get_stored_commodity(commodity)));
+	}
+
+	return input_capacity;
+}
+
+void site_game_data::decrease_employment(const employment_type *employment_type, int64_t decrease)
+{
+	std::vector<population_unit *> population_units;
+	for (const auto &population_unit : this->get_population_units()) {
+		if (population_unit->get_employment_type() == employment_type) {
+			population_units.push_back(population_unit.get());
+		}
+	}
+	for (population_unit *population_unit : population_units) {
+		const int64_t unemployment_size = std::min(decrease, population_unit->get_size());
+		const int64_t lost_wealth = population_unit->get_wealth() * unemployment_size / population_unit->get_size();
+
+		this->change_population(population_unit->get_type(), population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), nullptr, unemployment_size, population_unit->get_literacy_rate(), lost_wealth);
+
+		this->change_population(population_unit->get_type(), population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), employment_type, -unemployment_size, population_unit->get_literacy_rate(), -lost_wealth);
+
+		decrease -= unemployment_size;
+		if (decrease == 0) {
+			break;
+		}
+	}
+
+	assert_throw(decrease == 0);
 }
 
 void site_game_data::check_employment()
@@ -2187,8 +2224,13 @@ void site_game_data::check_employment()
 	for (const auto &[employment_type, employment_capacity] : this->get_employment_capacities()) {
 		int64_t available_employment_capacity = this->get_available_employment_capacity(employment_type);
 		assert_throw(available_employment_capacity >= 0);
-
 		if (available_employment_capacity == 0) {
+			continue;
+		}
+
+		int64_t available_employment_input_capacity = this->get_available_employment_input_capacity(employment_type);
+		assert_throw(available_employment_input_capacity >= 0);
+		if (available_employment_input_capacity == 0) {
 			continue;
 		}
 
@@ -2203,7 +2245,7 @@ void site_game_data::check_employment()
 
 			assert_throw(employed_population_type != nullptr);
 
-			const int64_t employee_size = std::min(available_employment_capacity, population_unit->get_size());
+			const int64_t employee_size = std::min(std::min(available_employment_capacity, available_employment_input_capacity), population_unit->get_size());
 			const int64_t lost_wealth = population_unit->get_wealth() * employee_size / population_unit->get_size();
 			const bool full_employment = employee_size == population_unit->get_size();
 
@@ -2218,7 +2260,8 @@ void site_game_data::check_employment()
 			}
 
 			available_employment_capacity -= employee_size;
-			if (available_employment_capacity == 0) {
+			available_employment_input_capacity -= employee_size;
+			if (available_employment_capacity == 0 || available_employment_input_capacity == 0) {
 				break;
 			}
 		}

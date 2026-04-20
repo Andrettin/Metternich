@@ -463,6 +463,8 @@ public:
 		return this->get_employment_capacity(employment_type) - this->get_employment_size(employment_type);
 	}
 
+	int64_t get_available_employment_input_capacity(const employment_type *employment_type) const;
+	void decrease_employment(const employment_type *employment_type, int64_t decrease);
 	void check_employment();
 
 	int get_free_food_consumption() const

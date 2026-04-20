@@ -11,6 +11,7 @@
 #include "domain/domain_government.h"
 #include "domain/subject_type.h"
 #include "economy/commodity.h"
+#include "economy/employment_type.h"
 #include "economy/expense_transaction_type.h"
 #include "economy/income_transaction_type.h"
 #include "game/game.h"
@@ -156,6 +157,18 @@ void domain_economy::do_production()
 			this->change_stored_commodity(commodity, output.to_int());
 		}
 
+		const commodity_map<centesimal_int> commodity_inputs = this->get_commodity_inputs();
+		for (const auto &[commodity, input] : commodity_inputs) {
+			if (!commodity->is_storable()) {
+				continue;
+			}
+
+			const int input_int = input.to_int();
+			if (this->get_stored_commodity(commodity) < input_int) {
+				this->decrease_commodity_input(commodity, input_int - this->get_stored_commodity(commodity));
+			}
+		}
+
 		//reduce inputs from the storage for the next turn (for production this turn it had already been subtracted)
 		for (const auto &[commodity, input] : this->get_commodity_inputs()) {
 			try {
@@ -168,6 +181,8 @@ void domain_economy::do_production()
 					}
 					continue;
 				}
+				
+				assert_throw(this->get_stored_commodity(commodity) >= input_int);
 
 				this->change_stored_commodity(commodity, -input_int);
 			} catch (...) {
@@ -175,7 +190,7 @@ void domain_economy::do_production()
 			}
 		}
 	} catch (...) {
-		std::throw_with_nested(std::runtime_error(std::format("Error doing production for country \"{}\".", this->domain->get_identifier())));
+		std::throw_with_nested(std::runtime_error(std::format("Error doing production for domain \"{}\".", this->domain->get_identifier())));
 	}
 }
 
@@ -542,6 +557,50 @@ bool domain_economy::can_change_commodity_input(const commodity *commodity, cons
 	}
 
 	return true;
+}
+
+void domain_economy::decrease_commodity_input(const commodity *commodity, int64_t decrease)
+{
+	assert_throw(decrease >= 0);
+
+	for (const site *site : this->get_game_data()->get_sites()) {
+		if (!site->is_settlement() || !site->get_game_data()->is_built()) {
+			continue;
+		}
+
+		const data_entry_map<employment_type, int64_t> employment_sizes = site->get_game_data()->get_employment_sizes();
+		for (const auto &[employment_type, employment_size] : employment_sizes) {
+			if (!employment_type->get_input_commodities().contains(commodity)) {
+				continue;
+			}
+
+			const int64_t employment_input = employment_type->get_input_for_employment_size(commodity, employment_size);
+
+			int64_t employment_input_decrease = 0;
+			int64_t unemployment_size = 0;
+			if (employment_input <= decrease) {
+				unemployment_size = employment_size;
+				employment_input_decrease = employment_input;
+			} else {
+				const int64_t new_employment_size = employment_type->get_employment_size_for_input(commodity, employment_input - decrease);
+				unemployment_size = employment_size - new_employment_size;
+				employment_input_decrease = employment_input - employment_type->get_input_for_employment_size(commodity, new_employment_size);
+				assert_throw(unemployment_size > 0);
+				assert_throw(employment_input_decrease >= 0);
+			}
+
+			site->get_game_data()->decrease_employment(employment_type, unemployment_size);
+			decrease -= employment_input_decrease;
+
+			if (decrease <= 0) {
+				break;
+			}
+		}
+
+		if (decrease <= 0) {
+			break;
+		}
+	}
 }
 
 QVariantList domain_economy::get_commodity_outputs_qvariant_list() const
