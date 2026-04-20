@@ -1146,6 +1146,8 @@ QCoro::Task<void> province_game_data::add_technology(const technology *technolog
 
 	this->technologies.insert(technology);
 
+	co_await this->on_technology_gained(technology, 1);
+
 	if (this->get_owner() != nullptr && this->is_capital()) {
 		co_await this->get_owner()->get_technology()->on_technology_added(technology);
 	}
@@ -1175,6 +1177,8 @@ QCoro::Task<void> province_game_data::remove_technology(const technology *techno
 	}
 
 	this->technologies.erase(technology);
+
+	co_await this->on_technology_gained(technology, -1);
 
 	if (this->get_owner() != nullptr && this->is_capital()) {
 		co_await this->get_owner()->get_technology()->on_technology_lost(technology);
@@ -1207,6 +1211,13 @@ bool province_game_data::can_gain_technology(const technology *technology) const
 	}
 
 	return true;
+}
+
+QCoro::Task<void> province_game_data::on_technology_gained(const technology *technology, const int multiplier)
+{
+	if (technology->get_modifier() != nullptr) {
+		co_await technology->get_modifier()->apply(this->province, multiplier);
+	}
 }
 
 QVariantList province_game_data::get_scripted_modifiers_qvariant_list() const

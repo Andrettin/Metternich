@@ -154,9 +154,13 @@ void technology::process_gsml_scope(const gsml_data &scope)
 		factor->process_gsml_data(scope);
 		this->cost_factor = std::move(factor);
 	} else if (tag == "modifier") {
-		auto modifier = std::make_unique<metternich::modifier<const domain>>();
+		auto modifier = std::make_unique<metternich::modifier<const province>>();
 		modifier->process_gsml_data(scope);
 		this->modifier = std::move(modifier);
+	} else if (tag == "domain_modifier") {
+		auto modifier = std::make_unique<metternich::modifier<const domain>>();
+		modifier->process_gsml_data(scope);
+		this->domain_modifier = std::move(modifier);
 	} else if (tag == "discovery_effects") {
 		auto effects = std::make_unique<effect_list<const province>>();
 		effects->process_gsml_data(scope);
@@ -300,6 +304,7 @@ void technology::check() const
 
 	if (
 		this->get_modifier() == nullptr
+		&& this->get_domain_modifier() == nullptr
 		&& this->get_free_technologies() == 0
 		&& this->get_enabled_buildings().empty()
 		&& this->get_enabled_civilian_units().empty()
@@ -736,18 +741,30 @@ std::vector<const deity *> technology::get_disabled_deities_for_country(const do
 	return deities;
 }
 
-std::string technology::get_modifier_string(const domain *domain) const
+std::string technology::get_modifier_string(const province *province) const
 {
-	if (this->get_modifier() == nullptr) {
-		return std::string();
+	assert_throw(province != nullptr);
+
+	std::string str;
+
+	if (this->get_modifier() != nullptr) {
+		str = this->get_modifier()->get_string(province);
 	}
 
-	return this->get_modifier()->get_string(domain);
+	if (this->get_domain_modifier() != nullptr) {
+		if (!str.empty()) {
+			str += "\n";
+		}
+
+		str = this->get_domain_modifier()->get_string(province->get_game_data()->get_owner());
+	}
+
+	return str;
 }
 
 QString technology::get_effects_string(const metternich::domain *domain) const
 {
-	std::string str = this->get_modifier_string(domain);
+	std::string str = this->get_modifier_string(domain->get_game_data()->get_capital_province());
 
 	if (this->get_free_technologies() > 0) {
 		if (!str.empty()) {

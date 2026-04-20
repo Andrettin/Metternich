@@ -40,6 +40,7 @@ class province;
 class religion;
 class religious_group;
 class resource;
+class site;
 class technological_period;
 class technology_category;
 class technology_subcategory;
@@ -403,12 +404,17 @@ public:
 		this->enabled_item_types.push_back(item_type);
 	}
 
-	const metternich::modifier<const domain> *get_modifier() const
+	const metternich::modifier<const province> *get_modifier() const
 	{
 		return this->modifier.get();
 	}
 
-	std::string get_modifier_string(const domain *domain) const;
+	const metternich::modifier<const domain> *get_domain_modifier() const
+	{
+		return this->domain_modifier.get();
+	}
+
+	std::string get_modifier_string(const province *province) const;
 	Q_INVOKABLE QString get_effects_string(const metternich::domain *domain) const;
 
 	virtual named_data_entry *get_tree_parent() const override
@@ -498,7 +504,8 @@ private:
 	std::vector<const deity *> enabled_deities;
 	std::vector<const deity *> disabled_deities;
 	std::vector<const item_type *> enabled_item_types;
-	std::unique_ptr<const metternich::modifier<const domain>> modifier;
+	std::unique_ptr<const metternich::modifier<const province>> modifier;
+	std::unique_ptr<const metternich::modifier<const domain>> domain_modifier;
 	std::unique_ptr<effect_list<const province>> discovery_effects;
 	std::unique_ptr<and_condition<province>> spread_conditions;
 	const game_rule *required_game_rule = nullptr;

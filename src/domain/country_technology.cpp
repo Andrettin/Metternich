@@ -107,8 +107,8 @@ QCoro::Task<void> country_technology::add_technology_with_prerequisites(const te
 
 QCoro::Task<void> country_technology::on_technology_added(const technology *technology)
 {
-	if (technology->get_modifier() != nullptr) {
-		co_await technology->get_modifier()->apply(this->domain, 1);
+	if (technology->get_domain_modifier() != nullptr) {
+		co_await technology->get_domain_modifier()->apply(this->domain, 1);
 	}
 
 	for (const commodity *enabled_commodity : technology->get_enabled_commodities()) {
@@ -242,8 +242,8 @@ QCoro::Task<void> country_technology::remove_technology(const technology *techno
 
 QCoro::Task<void> country_technology::on_technology_lost(const technology *technology)
 {
-	if (technology->get_modifier() != nullptr) {
-		co_await technology->get_modifier()->apply(this->domain, -1);
+	if (technology->get_domain_modifier() != nullptr) {
+		co_await technology->get_domain_modifier()->apply(this->domain, -1);
 	}
 
 	for (const commodity *enabled_commodity : technology->get_enabled_commodities()) {
