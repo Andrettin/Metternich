@@ -175,6 +175,12 @@ void technology::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "spread_mean_time_to_happen") {
 		this->spread_mean_time_to_happen = std::make_unique<metternich::mean_time_to_happen<province>>();
 		scope.process(this->spread_mean_time_to_happen.get());
+	} else if (tag == "monthly_chance") {
+		this->discovery_monthly_chance = std::make_unique<metternich::factor<province>>();
+		scope.process(this->discovery_monthly_chance.get());
+
+		this->spread_monthly_chance = std::make_unique<metternich::factor<province>>();
+		scope.process(this->spread_monthly_chance.get());
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
@@ -207,12 +213,16 @@ void technology::initialize()
 	std::sort(this->enabled_pathways.begin(), this->enabled_pathways.end(), pathway_compare());
 	std::sort(this->enabled_river_crossing_pathways.begin(), this->enabled_river_crossing_pathways.end(), pathway_compare());
 
-	if (this->discovery_mean_time_to_happen != nullptr) {
+	if (this->discovery_mean_time_to_happen != nullptr || this->discovery_monthly_chance != nullptr) {
 		province_event *event = province_event::add(std::format("{}_discovered", this->get_identifier()), this->get_module());
 		event->set_name(std::format("{} Discovered", this->get_name()));
 		event->set_portrait(this->get_portrait());
 		event->set_description(std::format("[root.domain.form_of_address], the {} technology has been discovered in [root.name]!", string::lowered(this->get_name())));
-		event->set_mean_time_to_happen(std::move(this->discovery_mean_time_to_happen));
+		if (this->discovery_monthly_chance != nullptr) {
+			event->set_monthly_chance(std::move(this->discovery_monthly_chance));
+		} else {
+			event->set_mean_time_to_happen(std::move(this->discovery_mean_time_to_happen));
+		}
 
 		auto event_conditions = std::make_unique<and_condition<province>>();
 		event_conditions->add_condition(std::make_unique<capital_condition<province>>(true));
@@ -229,14 +239,18 @@ void technology::initialize()
 		event->initialize();
 	}
 
-	if (this->spread_mean_time_to_happen != nullptr) {
+	if (this->spread_mean_time_to_happen != nullptr || this->spread_monthly_chance != nullptr) {
 		province_event *event = province_event::add(std::format("{}_spread", this->get_identifier()), this->get_module());
 		event->set_name(std::format("{} Spread to [root.name]", this->get_name()));
 		event->set_portrait(this->get_portrait());
 		event->set_description(std::format("[root.domain.form_of_address], the {} technology has spread to [root.name].", string::lowered(this->get_name())));
 		event->set_from_neighbor(true);
 		event->set_technology_spread(true);
-		event->set_mean_time_to_happen(std::move(this->spread_mean_time_to_happen));
+		if (this->spread_monthly_chance != nullptr) {
+			event->set_monthly_chance(std::move(this->spread_monthly_chance));
+		} else {
+			event->set_mean_time_to_happen(std::move(this->spread_mean_time_to_happen));
+		}
 
 		auto event_conditions = std::make_unique<and_condition<province>>();
 		event_conditions->add_condition(std::make_unique<can_gain_technology_condition<province>>(this));

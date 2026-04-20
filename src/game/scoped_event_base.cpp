@@ -166,7 +166,20 @@ QCoro::Task<void> scoped_event_base<scope_type>::check_mtth_event_for_scope(cons
 		co_return;
 	}
 
-	decimillesimal_int mtth = event->get_mean_time_to_happen()->calculate(scope, game::get()->get_year());
+	decimillesimal_int mtth;
+	if (event->get_mean_time_to_happen() != nullptr) {
+		mtth = event->get_mean_time_to_happen()->calculate(scope, game::get()->get_year());
+	} else if (event->get_monthly_chance() != nullptr) {
+		const decimillesimal_int monthly_chance = event->get_monthly_chance()->calculate(scope);
+		if (monthly_chance <= 0) {
+			co_return;
+		}
+
+		mtth = decimillesimal_int(100) / monthly_chance;
+		mtth /= game::get()->get_current_months_per_turn();
+	} else {
+		assert_throw(false);
+	}
 
 	if constexpr (std::is_same_v<scope_type, const province>) {
 		const province_event *province_event = static_cast<const metternich::province_event *>(event);
@@ -214,6 +227,10 @@ bool scoped_event_base<scope_type>::process_gsml_scope(const gsml_data &scope)
 		this->mean_time_to_happen = std::make_unique<metternich::mean_time_to_happen<std::remove_const_t<scope_type>>>();
 		scope.process(this->mean_time_to_happen.get());
 		return true;
+	} else if (tag == "monthly_chance") {
+		this->monthly_chance = std::make_unique<metternich::factor<std::remove_const_t<scope_type>>>();
+		scope.process(this->monthly_chance.get());
+		return true;
 	} else if (tag == "conditions") {
 		auto conditions = std::make_unique<and_condition<std::remove_const_t<scope_type>>>();
 		conditions->process_gsml_data(scope);
@@ -244,7 +261,7 @@ void scoped_event_base<scope_type>::initialize()
 		} else {
 			scoped_event_base::trigger_events[this->get_trigger()].push_back(this);
 		}
-	} else if (this->get_mean_time_to_happen() != nullptr) {
+	} else if (this->get_mean_time_to_happen() != nullptr || this->get_monthly_chance() != nullptr) {
 		scoped_event_base::mtth_events.push_back(this);
 	}
 
@@ -271,6 +288,10 @@ void scoped_event_base<scope_type>::check() const
 		if (this->get_random_group() != nullptr) {
 			throw std::runtime_error("Event \"" + this->get_identifier() + "\" has both a mean time to happen and a random group.");
 		}
+	}
+
+	if (this->get_monthly_chance() != nullptr) {
+		this->get_monthly_chance()->check();
 	}
 
 	if (this->get_conditions() != nullptr) {
@@ -300,6 +321,12 @@ template <typename scope_type>
 void scoped_event_base<scope_type>::set_mean_time_to_happen(std::unique_ptr<metternich::mean_time_to_happen<std::remove_const_t<scope_type>>> &&mtth)
 {
 	this->mean_time_to_happen = std::move(mtth);
+}
+
+template <typename scope_type>
+void scoped_event_base<scope_type>::set_monthly_chance(std::unique_ptr<metternich::factor<std::remove_const_t<scope_type>>> &&monthly_chance)
+{
+	this->monthly_chance = std::move(monthly_chance);
 }
 
 template <typename scope_type>

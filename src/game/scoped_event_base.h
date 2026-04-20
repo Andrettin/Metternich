@@ -128,6 +128,13 @@ public:
 
 	void set_mean_time_to_happen(std::unique_ptr<metternich::mean_time_to_happen<std::remove_const_t<scope_type>>>  &&mtth);
 
+	const metternich::factor<std::remove_const_t<scope_type>> *get_monthly_chance() const
+	{
+		return this->monthly_chance.get();
+	}
+
+	void set_monthly_chance(std::unique_ptr<metternich::factor<std::remove_const_t<scope_type>>>  &&monthly_chance);
+
 	virtual bool is_hidden() const = 0;
 	virtual bool fires_only_once() const = 0;
 
@@ -170,6 +177,7 @@ public:
 private:
 	std::unique_ptr<factor<std::remove_const_t<scope_type>>> random_weight_factor;
 	std::unique_ptr<metternich::mean_time_to_happen<std::remove_const_t<scope_type>>> mean_time_to_happen;
+	std::unique_ptr<metternich::factor<std::remove_const_t<scope_type>>> monthly_chance;
 	std::unique_ptr<const and_condition<std::remove_const_t<scope_type>>> conditions;
 	std::unique_ptr<effect_list<scope_type>> immediate_effects;
 	std::vector<std::unique_ptr<event_option<scope_type>>> options;
