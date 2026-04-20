@@ -1703,6 +1703,7 @@ QCoro::Task<void> domain_game_data::set_capital(const site *capital)
 	}
 
 	const site *old_capital = this->get_capital();
+	const province *old_capital_province = this->get_capital_province();
 
 	this->capital = capital;
 
@@ -1722,6 +1723,25 @@ QCoro::Task<void> domain_game_data::set_capital(const site *capital)
 		co_await old_capital->get_game_data()->check_building_conditions();
 		if (old_capital->get_game_data()->is_provincial_capital()) {
 			old_capital->get_map_data()->get_province()->get_game_data()->choose_provincial_capital();
+		}
+	}
+
+	const province *capital_province = this->get_capital_province();
+
+	if (old_capital_province != capital_province) {
+		const technology_set old_capital_technologies = old_capital_province != nullptr ? old_capital_province->get_game_data()->get_technologies() : technology_set();
+		const technology_set new_capital_technologies = capital_province != nullptr ? capital_province->get_game_data()->get_technologies() : technology_set();
+
+		for (const metternich::technology *technology : old_capital_technologies) {
+			if (!new_capital_technologies.contains(technology)) {
+				co_await this->get_technology()->on_technology_lost(technology);
+			}
+		}
+
+		for (const metternich::technology *technology : new_capital_technologies) {
+			if (!old_capital_technologies.contains(technology)) {
+				co_await this->get_technology()->on_technology_added(technology);
+			}
 		}
 	}
 
