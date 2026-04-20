@@ -43,9 +43,17 @@ lower_austria = {
 			technologies += short_sword
 			technologies += long_sword
 			technologies += pike
+			technologies += monastic_school
 			technologies += aristotelian_logic
 			technologies += scholasticism
 			technologies += asceticism
+		}
+		
+		1337 = {
+			technologies += morning_star
+			technologies += cathedral_school
+			technologies += astrology_and_astronomy
+			technologies += ballads
 		}
 		
 		1477 = {
