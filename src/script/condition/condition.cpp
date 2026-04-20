@@ -25,6 +25,7 @@
 #include "script/condition/artillery_condition.h"
 #include "script/condition/attacking_commander_condition.h"
 #include "script/condition/attribute_check_chance_condition.h"
+#include "script/condition/available_employment_condition.h"
 #include "script/condition/available_food_condition.h"
 #include "script/condition/can_gain_building_class_condition.h"
 #include "script/condition/can_gain_technology_condition.h"
@@ -245,6 +246,8 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 	} else if constexpr (std::is_same_v<scope_type, site>) {
 		if (key == "adjacent_terrain") {
 			return std::make_unique<adjacent_terrain_condition>(value, condition_operator);
+		} else if (key == "available_employment") {
+			return std::make_unique<available_employment_condition>(value, condition_operator);
 		} else if (key == "can_gain_building_class") {
 			return std::make_unique<can_gain_building_class_condition>(value, condition_operator);
 		} else if (key == "feature") {
