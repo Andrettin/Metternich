@@ -329,10 +329,6 @@ bool building_slot::can_build_building(const building_type *building) const
 	}
 
 	const domain_economy *domain_economy = this->get_country()->get_economy();
-	const int wealth_cost = building->get_wealth_cost_for_country(this->get_country());
-	if (wealth_cost > 0 && wealth_cost > domain_economy->get_wealth()) {
-		return false;
-	}
 
 	for (const auto &[commodity, cost] : building->get_commodity_costs_for_site(this->get_settlement())) {
 		if (cost > domain_economy->get_stored_commodity(commodity)) {
@@ -488,10 +484,6 @@ void building_slot::build_building(const building_type *building)
 	}
 
 	domain_economy *domain_economy = this->get_country()->get_economy();
-	const int wealth_cost = building->get_wealth_cost_for_country(this->get_country());
-	if (wealth_cost > 0) {
-		domain_economy->change_wealth(-wealth_cost);
-	}
 
 	for (const auto &[commodity, cost] : building->get_commodity_costs_for_site(this->get_settlement())) {
 		domain_economy->change_stored_commodity(commodity, -cost);
@@ -522,10 +514,6 @@ void building_slot::cancel_construction()
 	}
 
 	domain_economy *domain_economy = this->get_country()->get_economy();
-	const int wealth_cost = this->get_under_construction_building()->get_wealth_cost_for_country(this->get_country());
-	if (wealth_cost > 0) {
-		domain_economy->change_wealth(wealth_cost);
-	}
 
 	for (const auto &[commodity, cost] : this->get_under_construction_building()->get_commodity_costs_for_site(this->get_settlement())) {
 		domain_economy->change_stored_commodity(commodity, cost);

@@ -68,7 +68,6 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(metternich::building_type* base_building MEMBER base_building NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(int min_holding_level MEMBER min_holding_level READ get_min_holding_level NOTIFY changed)
-	Q_PROPERTY(int wealth_cost MEMBER wealth_cost READ get_wealth_cost NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "building_type";
@@ -242,13 +241,6 @@ public:
 		return this->min_holding_level;
 	}
 
-	int get_wealth_cost() const
-	{
-		return this->wealth_cost;
-	}
-
-	int get_wealth_cost_for_country(const domain *domain) const;
-
 	const commodity_map<int> &get_commodity_costs() const
 	{
 		return this->commodity_costs;
@@ -257,7 +249,7 @@ public:
 	commodity_map<int> get_commodity_costs_for_site(const site *site) const;
 	Q_INVOKABLE QString get_commodity_costs_string_for_site(const metternich::site *site) const;
 
-	const factor<domain> *get_cost_factor() const
+	const factor<site> *get_cost_factor() const
 	{
 		return this->cost_factor.get();
 	}
@@ -338,9 +330,8 @@ private:
 	std::vector<const building_type *> required_buildings;
 	technology *required_technology = nullptr;
 	int min_holding_level = 0;
-	int wealth_cost = 0;
 	commodity_map<int> commodity_costs;
-	std::unique_ptr<const factor<domain>> cost_factor;
+	std::unique_ptr<const factor<site>> cost_factor;
 	std::unique_ptr<and_condition<site>> conditions;
 	std::unique_ptr<const and_condition<site>> build_conditions;
 	std::unique_ptr<const and_condition<site>> free_on_start_conditions;

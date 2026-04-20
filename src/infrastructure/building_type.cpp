@@ -80,7 +80,7 @@ void building_type::process_gsml_scope(const gsml_data &scope)
 			this->commodity_costs[commodity] = commodity->string_to_value(property.get_value());
 		});
 	} else if (tag == "cost_factor") {
-		auto factor = std::make_unique<metternich::factor<domain>>(100);
+		auto factor = std::make_unique<metternich::factor<site>>(100);
 		factor->process_gsml_data(scope);
 		this->cost_factor = std::move(factor);
 	} else if (tag == "conditions") {
@@ -262,32 +262,6 @@ int64_t building_type::get_population_capacity_for_province_level(const int prov
 	return defines::get()->get_province_population_for_level(province_level) * this->get_holding_level() / std::max(province_level, 1);
 }
 
-int building_type::get_wealth_cost_for_country(const domain *domain) const
-{
-	int cost = this->get_wealth_cost();
-
-	if (cost > 0) {
-		if (domain->get_game_data()->get_building_cost_efficiency_modifier() != 0) {
-			const int cost_efficiency_modifier = domain->get_game_data()->get_building_cost_efficiency_modifier() + domain->get_game_data()->get_building_class_cost_efficiency_modifier(this->get_building_class());
-			if (cost_efficiency_modifier >= 0) {
-				cost *= 100;
-				cost /= 100 + cost_efficiency_modifier;
-			} else {
-				cost *= 100 + std::abs(cost_efficiency_modifier);
-				cost /= 100;
-			}
-		}
-
-		if (this->get_cost_factor() != nullptr) {
-			cost = this->get_cost_factor()->calculate(domain, decimillesimal_int(cost)).to_int();
-		}
-
-		cost = std::max(1, cost);
-	}
-
-	return cost;
-}
-
 commodity_map<int> building_type::get_commodity_costs_for_site(const site *site) const
 {
 	commodity_map<int> costs = this->get_commodity_costs();
@@ -333,12 +307,16 @@ commodity_map<int> building_type::get_commodity_costs_for_site(const site *site)
 					}
 				}
 
-				if (this->get_cost_factor() != nullptr) {
-					cost = this->get_cost_factor()->calculate(domain, decimillesimal_int(cost)).to_int();
-				}
-
 				cost = std::max(1, cost);
 			}
+		}
+	}
+
+	if (this->get_cost_factor() != nullptr) {
+		for (auto &[commodity, cost] : costs) {
+			cost = this->get_cost_factor()->calculate(site, decimillesimal_int(cost)).to_int();
+
+			cost = std::max(1, cost);
 		}
 	}
 
