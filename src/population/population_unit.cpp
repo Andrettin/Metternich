@@ -361,7 +361,7 @@ void population_unit::purchase_needs(const std::vector<const metternich::domain 
 	this->set_fulfilled_luxury_needs_percent(this->purchase_needs(this->get_type()->get_luxury_needs(), trade_domains));
 }
 
-int population_unit::purchase_needs(const commodity_map<int64_t> &needs, const std::vector<const metternich::domain *> &trade_domains)
+int population_unit::purchase_needs(const commodity_map<decimillesimal_int> &needs, const std::vector<const metternich::domain *> &trade_domains)
 {
 	int fulfilled_percent = 0;
 	int commodity_count = 0;
@@ -373,13 +373,15 @@ int population_unit::purchase_needs(const commodity_map<int64_t> &needs, const s
 
 		++commodity_count;
 
-		int64_t commodity_need = base_commodity_need * game::get()->get_current_months_per_turn();
-		commodity_need *= this->get_size();
-		commodity_need /= defines::get()->get_base_population_needs_size();
+		decimillesimal_int fractional_commodity_need = base_commodity_need * game::get()->get_current_months_per_turn();
+		fractional_commodity_need *= this->get_size();
+		fractional_commodity_need /= defines::get()->get_base_population_needs_size();
 
 		static constexpr int64_t needs_modifier = 80;
-		commodity_need *= needs_modifier;
-		commodity_need /= 100;
+		fractional_commodity_need *= needs_modifier;
+		fractional_commodity_need /= 100;
+
+		const int64_t commodity_need = fractional_commodity_need.to_int64();
 
 		if (commodity_need == 0) {
 			fulfilled_percent += 100;

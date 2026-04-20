@@ -198,7 +198,7 @@ public:
 	bool is_food_producer() const;
 
 	void purchase_needs(const std::vector<const metternich::domain *> &trade_domains);
-	int purchase_needs(const commodity_map<int64_t> &needs, const std::vector<const metternich::domain *> &trade_domains);
+	int purchase_needs(const commodity_map<decimillesimal_int> &needs, const std::vector<const metternich::domain *> &trade_domains);
 
 signals:
 	void type_changed();
