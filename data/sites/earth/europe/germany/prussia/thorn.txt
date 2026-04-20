@@ -5,9 +5,11 @@ thorn = {
 	province = west_prussia
 	type = holding
 	holding_type = guild #city belonging to the Hanseatic League in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
-	#resource = grain
 	cultural_names = {
 		polish = "Torun" #"Toruń"
+	}
+	features = {
+		prime_grain_land
 	}
 	
 	history = {

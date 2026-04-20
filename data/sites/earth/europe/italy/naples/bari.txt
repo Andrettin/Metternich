@@ -5,4 +5,7 @@ bari = {
 	type = resource
 	resource = grain
 	province = taranto
+	features = {
+		prime_grain_land
+	}
 }

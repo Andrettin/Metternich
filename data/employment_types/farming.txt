@@ -1,3 +1,36 @@
+cattle_ranching = {
+	name = "Cattle Ranching"
+	output_commodity = cattle
+	monthly_output_value = 1.8da
+	base_employment_size = 40000
+	employee_types = {
+		farmers
+		slaves
+	}
+}
+
+grain_farming = {
+	name = "Grain Farming"
+	output_commodity = grain
+	monthly_output_value = 1.8tn
+	base_employment_size = 40000
+	employee_types = {
+		farmers
+		slaves
+	}
+}
+
+sheep_ranching = {
+	name = "Sheep Ranching"
+	output_commodity = wool
+	monthly_output_value = 5cwt
+	base_employment_size = 40000
+	employee_types = {
+		farmers
+		slaves
+	}
+}
+
 tobacco_planting = {
 	name = "Tobacco Planting"
 	output_commodity = tobacco

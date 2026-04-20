@@ -3,6 +3,8 @@ kaf = {
 	world = earth
 	geocoordinate = { 37.553055555556 31.401944444444 }
 	type = holding
-	#resource = sheep
 	province = jawf
+	features = {
+		prime_sheep_land
+	}
 }

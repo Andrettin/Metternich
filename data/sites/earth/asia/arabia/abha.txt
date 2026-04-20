@@ -3,6 +3,8 @@ abha = {
 	world = earth
 	geocoordinate = { 42.50013423540 18.23008750300 } #from Natural Earth
 	type = holding
-	#resource = sheep
 	province = asir
+	features = {
+		prime_sheep_land
+	}
 }

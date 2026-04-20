@@ -5,6 +5,9 @@ pirna = {
 	type = resource
 	resource = grain
 	province = upper_saxony
+	features = {
+		prime_grain_land
+	}
 	
 	history = {
 		1629 = {

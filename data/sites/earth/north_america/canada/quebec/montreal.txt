@@ -5,4 +5,7 @@ montreal = {
 	type = resource
 	resource = cattle
 	province = quebec
+	features = {
+		prime_cattle_land
+	}
 }

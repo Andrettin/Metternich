@@ -4,9 +4,11 @@ udvarhely = {
 	geocoordinate = { 25.301666666667 46.313888888889 }
 	type = holding
 	holding_type = law
-	#resource = sheep
 	province = transylvania
 	cultural_names = {
 		romanian = "Odorhei"
+	}
+	features = {
+		prime_sheep_land
 	}
 }

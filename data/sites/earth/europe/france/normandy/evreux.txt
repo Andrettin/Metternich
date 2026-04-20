@@ -4,6 +4,9 @@ evreux = {
 	geocoordinate = { 1.1525 49.023333333333 }
 	type = resource
 	resource = grain
+	features = {
+		prime_grain_land
+	}
 	
 	history = {
 		1836 = {

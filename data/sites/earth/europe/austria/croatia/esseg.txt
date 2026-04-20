@@ -4,10 +4,12 @@ esseg = {
 	geocoordinate = { 18.68003779980 45.55038372710 } #from Natural Earth
 	type = holding
 	holding_type = temple
-	#resource = cattle
 	province = slavonia
 	cultural_names = {
 		croatian = "Osijek"
+	}
+	features = {
+		prime_cattle_land
 	}
 	
 	history = {

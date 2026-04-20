@@ -2,6 +2,11 @@ cotton = {
 	name = "Cotton"
 	type = resource
 	icon = cotton
-	base_price = 100
+	base_price = 800 #8gp
 	required_game_rule = additional_commodities
+	units = {
+		1 = sq_yd #or pound
+		100 = cwt
+		2000 = tn
+	}
 }

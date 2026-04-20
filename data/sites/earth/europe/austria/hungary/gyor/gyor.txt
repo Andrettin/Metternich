@@ -4,10 +4,12 @@ gyor = {
 	geocoordinate = { 17.63002437200 47.70035585440 } #from Natural Earth
 	type = holding
 	holding_type = temple
-	#resource = cattle
 	province = gyor
 	cultural_group_names = {
 		german = "Raab"
+	}
+	features = {
+		prime_cattle_land
 	}
 	
 	history = {

@@ -3,9 +3,11 @@ le_mans = {
 	world = earth
 	geocoordinate = { 0.09998327495 48.00041505850 } #from Natural Earth
 	type = resource
-	#resource = cattle #Grassland; Source: Map No. 500197 of the Perry-Castañeda Library Map Collection, 1972.
 	resource = grain
 	province = anjou
+	features = {
+		prime_grain_land
+	}
 	
 	history = {
 		1789 = {

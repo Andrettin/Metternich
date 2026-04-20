@@ -3,7 +3,9 @@ fayzabad = {
 	world = earth
 	geocoordinate = { 70.57924719130 37.12976076160 } #from Natural Earth
 	type = resource
-	#resource = grain #Irrigated cultivation; Source: Map No. 504958 of the Perry-Castañeda Library Map Collection, 1971.
 	resource = sheep
 	province = afghanistan
+	features = {
+		prime_sheep_land
+	}
 }

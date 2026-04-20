@@ -4,13 +4,13 @@ pecs = {
 	geocoordinate = { 18.22001419950 46.08042889310 } #from Natural Earth
 	type = holding
 	holding_type = law
-	#resource = cattle
 	province = pecs
 	cultural_group_names = {
 		german = "Funfkirchen" #"Fünfkirchen"
 	}
 	features = {
 		academic #historical university
+		prime_cattle_land
 	}
 	
 	history = {

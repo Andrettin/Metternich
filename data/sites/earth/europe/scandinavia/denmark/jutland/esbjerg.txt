@@ -5,4 +5,7 @@ esbjerg = {
 	type = resource
 	resource = cattle
 	province = jutland
+	features = {
+		prime_cattle_land
+	}
 }

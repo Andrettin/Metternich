@@ -3,7 +3,6 @@ toulouse = {
 	world = earth
 	geocoordinate = { 1.44992671571 43.61995892240 } #from Natural Earth
 	type = holding
-	#resource = grain
 	province = upper_languedoc
 	cultural_names = {
 		frankish = "Tolosa"
@@ -13,6 +12,7 @@ toulouse = {
 	features = {
 		academic #historical university
 		holy_site #historical cathedral
+		prime_grain_land
 	}
 	
 	history = {

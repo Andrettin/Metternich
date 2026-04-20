@@ -116,7 +116,11 @@ Q_INVOKABLE const metternich::commodity_unit *commodity::get_unit(const int valu
 		}
 	}
 
-	return this->units.begin()->second;
+	if (this->units.begin()->second->is_displayed()) {
+		return this->units.begin()->second;
+	}
+
+	return nullptr;
 }
 
 int commodity::get_unit_value(const commodity_unit *unit) const

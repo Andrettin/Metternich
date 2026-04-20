@@ -4,10 +4,10 @@ lucca = {
 	geocoordinate = { 10.516666666667 43.85 }
 	type = holding
 	holding_type = law
-	#resource = grain
 	province = tuscany
 	features = {
 		academic #historical university
+		prime_grain_land
 	}
 	
 	history = {

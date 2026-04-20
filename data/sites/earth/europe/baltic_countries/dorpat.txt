@@ -4,10 +4,12 @@ dorpat = {
 	geocoordinate = { 26.70988358430 58.38394146640 } #from Natural Earth
 	type = holding
 	holding_type = guild #city belonging to the Hanseatic League in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
-	#resource = cattle
 	province = estonia
 	cultural_names = {
 		estonian = "Tartu"
+	}
+	features = {
+		prime_cattle_land
 	}
 	
 	history = {

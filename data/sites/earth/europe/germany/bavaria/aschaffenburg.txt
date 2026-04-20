@@ -5,6 +5,9 @@ aschaffenburg = {
 	type = resource
 	resource = grain
 	province = franconia
+	features = {
+		prime_grain_land
+	}
 	
 	history = {
 		919 = {

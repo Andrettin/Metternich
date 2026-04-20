@@ -1,0 +1,25 @@
+da = {
+	name = "Ten"
+	icon = sack_2
+	suffix = "da"
+	displayed = false
+}
+
+h = {
+	name = "Hundred"
+	icon = sack_2
+	suffix = "h"
+	displayed = false
+}
+
+k = {
+	name = "Thousand"
+	icon = sack_2
+	suffix = "k"
+}
+
+m = {
+	name = "Million"
+	icon = sack_2
+	suffix = "m"
+}

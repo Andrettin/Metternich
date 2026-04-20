@@ -8,4 +8,7 @@ brasso = {
 	cultural_names = {
 		romanian = "Brasov" #"Brașov"
 	}
+	features = {
+		prime_sheep_land
+	}
 }

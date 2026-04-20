@@ -4,10 +4,12 @@ szekesfehervar = {
 	geocoordinate = { 18.40806473660 47.19467612620 } #from Natural Earth
 	type = holding
 	holding_type = law
-	#resource = grain
 	province = szekesfehervar
 	cultural_group_names = {
 		german = "Stuhlweissenburg"
+	}
+	features = {
+		prime_grain_land
 	}
 	
 	history = {

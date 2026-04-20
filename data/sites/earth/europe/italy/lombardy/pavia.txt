@@ -4,8 +4,10 @@ pavia = {
 	geocoordinate = { 9.155 45.185280555556 }
 	type = holding
 	holding_type = law
-	#resource = grain
 	province = lombardy
+	features = {
+		prime_grain_land
+	}
 	
 	history = {
 		1815 = {

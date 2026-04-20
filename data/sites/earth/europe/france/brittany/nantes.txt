@@ -3,7 +3,6 @@ nantes = {
 	world = earth
 	geocoordinate = { -1.59001692850 47.21038576160 } #from Natural Earth
 	type = holding
-	#resource = grain
 	province = brittany
 	cultural_names = {
 		frankish = "Namnetes"
@@ -11,6 +10,7 @@ nantes = {
 	features = {
 		academic #historical university
 		holy_site #historical cathedral
+		prime_grain_land
 	}
 	
 	history = {

@@ -4,6 +4,8 @@ grosseto = {
 	geocoordinate = { 11.108888888889 42.772222222222 }
 	type = holding
 	holding_type = guild
-	#resource = cattle
 	province = tuscany
+	features = {
+		prime_cattle_land
+	}
 }

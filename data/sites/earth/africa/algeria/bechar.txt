@@ -3,6 +3,8 @@ bechar = {
 	world = earth
 	geocoordinate = { -2.23000370422 31.61110536600 } #from Natural Earth
 	type = holding
-	#resource = sheep
 	province = bechar
+	features = {
+		prime_sheep_land
+	}
 }

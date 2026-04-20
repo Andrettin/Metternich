@@ -4,10 +4,12 @@ trencin = {
 	geocoordinate = { 18.040555555556 48.894166666667 }
 	type = holding
 	holding_type = law
-	#resource = grain
 	province = trencin
 	cultural_names = {
 		magyar = "Trencsen"
+	}
+	features = {
+		prime_grain_land
 	}
 	
 	history = {

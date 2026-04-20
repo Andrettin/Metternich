@@ -4,4 +4,7 @@ norrkoping = {
 	geocoordinate = { 16.17869177110 58.59542726560 } #from Natural Earth
 	type = resource
 	resource = grain
+	features = {
+		prime_grain_land
+	}
 }

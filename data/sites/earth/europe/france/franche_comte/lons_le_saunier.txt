@@ -5,6 +5,9 @@ lons_le_saunier = {
 	type = resource
 	resource = grain
 	province = franche_comte
+	features = {
+		prime_grain_land
+	}
 	
 	history = {
 		1836 = {

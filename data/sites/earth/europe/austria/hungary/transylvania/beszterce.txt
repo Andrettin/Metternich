@@ -8,4 +8,7 @@ beszterce = {
 	cultural_names = {
 		romanian = "Bistrita" #"Bistrița"
 	}
+	features = {
+		prime_grain_land
+	}
 }

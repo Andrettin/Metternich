@@ -3,8 +3,10 @@ limoges = {
 	world = earth
 	geocoordinate = { 1.24999059918 45.82997906400 } #from Natural Earth
 	type = holding
-	#resource = cattle
 	province = limousin
+	features = {
+		prime_cattle_land
+	}
 	
 	history = {
 		1360 = {

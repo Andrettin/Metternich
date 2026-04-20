@@ -4,8 +4,10 @@ minden = {
 	geocoordinate = { 8.916666666666666 52.288333333333334 }
 	type = holding
 	holding_type = temple #or law
-	#resource = cattle
 	province = westphalia
+	features = {
+		prime_cattle_land
+	}
 	
 	history = {
 		919 = {

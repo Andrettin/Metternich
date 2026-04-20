@@ -5,6 +5,9 @@ tours = {
 	type = resource
 	resource = grain
 	province = anjou
+	features = {
+		prime_grain_land
+	}
 	
 	history = {
 		1360 = {

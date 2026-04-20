@@ -11,6 +11,9 @@ nagyszeben = {
 	cultural_group_names = {
 		german = "Hermannstadt"
 	}
+	features = {
+		prime_cattle_land
+	}
 	
 	history = {
 		1360 = {

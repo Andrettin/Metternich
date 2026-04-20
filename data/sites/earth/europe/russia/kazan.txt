@@ -3,8 +3,10 @@ kazan = {
 	world = earth
 	geocoordinate = { 49.12634476600 55.74994203600 } #from Natural Earth
 	type = holding
-	#resource = grain
 	province = tatarstan
+	features = {
+		prime_grain_land
+	}
 	
 	history = {
 		1360 = {

@@ -1,3 +1,15 @@
+cattle_ranch = {
+	name = "Cattle Ranch"
+}
+
+grain_farm = {
+	name = "Grain Farm"
+}
+
+sheep_ranch = {
+	name = "Sheep Ranch"
+}
+
 tobacco_plantation = {
 	name = "Tobacco Plantation"
 }

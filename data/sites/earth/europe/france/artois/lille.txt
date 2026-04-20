@@ -3,7 +3,6 @@ lille = {
 	world = earth
 	geocoordinate = { 3.08000809593 50.64996909490 } #from Natural Earth
 	type = resource
-	#resource = grain #Cropland (primarily wheat, sugar beets, corn); Source: Map No. 500197 of the Perry-Castañeda Library Map Collection, 1972.
 	resource = iron_ore
 	province = picardy
 	features = {

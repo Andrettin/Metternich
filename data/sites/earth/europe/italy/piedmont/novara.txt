@@ -4,8 +4,10 @@ novara = {
 	geocoordinate = { 8.61998001978 45.45000225740 } #from Natural Earth
 	type = holding
 	holding_type = law
-	#resource = cattle
 	province = piedmont
+	features = {
+		prime_cattle_land
+	}
 	
 	history = {
 		919 = {

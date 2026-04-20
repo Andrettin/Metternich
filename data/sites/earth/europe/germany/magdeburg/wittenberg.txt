@@ -4,10 +4,10 @@ wittenberg = {
 	geocoordinate = { 12.6484 51.8671 }
 	type = holding
 	holding_type = law
-	#resource = sheep
 	province = magdeburg
 	features = {
 		academic #historical university
+		prime_sheep_land
 	}
 	
 	history = {

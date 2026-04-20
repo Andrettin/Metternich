@@ -8,6 +8,9 @@ amasia = {
 	cultural_names = {
 		turkish = "Amasya"
 	}
+	features = {
+		prime_sheep_land
+	}
 	
 	history = {
 		1360 = {

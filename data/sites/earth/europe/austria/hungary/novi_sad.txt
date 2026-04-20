@@ -7,6 +7,9 @@ novi_sad = {
 	cultural_group_names = {
 		german = "Neusatz"
 	}
+	features = {
+		prime_sheep_land
+	}
 	
 	history = {
 		1815 = {

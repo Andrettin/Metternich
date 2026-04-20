@@ -4,10 +4,10 @@ bergamo = {
 	geocoordinate = { 9.66999344752 45.70040041000 } #from Natural Earth
 	type = holding
 	holding_type = law
-	#resource = cattle
 	province = lombardy
 	features = {
 		#holy_site #historical cathedral
+		prime_cattle_land
 	}
 	
 	history = {

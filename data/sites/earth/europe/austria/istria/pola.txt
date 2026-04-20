@@ -8,6 +8,9 @@ pola = {
 	cultural_names = {
 		croatian = "Pula"
 	}
+	features = {
+		prime_grain_land
+	}
 	
 	history = {
 		1815 = {

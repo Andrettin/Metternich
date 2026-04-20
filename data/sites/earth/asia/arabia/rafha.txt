@@ -5,4 +5,7 @@ rafha = {
 	type = resource
 	resource = sheep
 	province = jawf
+	features = {
+		prime_sheep_land
+	}
 }

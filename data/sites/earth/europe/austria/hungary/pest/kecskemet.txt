@@ -5,6 +5,9 @@ kecskemet = {
 	type = resource
 	resource = grain
 	province = pest
+	features = {
+		prime_grain_land
+	}
 	
 	history = {
 		1815 = {

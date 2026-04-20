@@ -5,6 +5,9 @@ varazdin = {
 	type = resource
 	resource = sheep
 	province = croatia
+	features = {
+		prime_sheep_land
+	}
 	
 	history = {
 		1815 = {

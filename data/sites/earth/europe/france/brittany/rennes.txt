@@ -3,9 +3,11 @@ rennes = {
 	world = earth
 	geocoordinate = { -1.67001204569 48.10002138170 } #from Natural Earth
 	type = resource
-	#resource = cattle #Grassland and crops; Source: Map No. 500197 of the Perry-Castañeda Library Map Collection, 1972.
 	resource = grain
 	province = brittany
+	features = {
+		prime_grain_land
+	}
 	
 	history = {
 		1360 = {

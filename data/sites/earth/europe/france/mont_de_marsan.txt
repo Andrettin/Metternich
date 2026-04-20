@@ -5,6 +5,9 @@ mont_de_marsan = {
 	type = resource
 	resource = grain
 	province = gascony
+	features = {
+		prime_grain_land
+	}
 	
 	history = {
 		1836 = {

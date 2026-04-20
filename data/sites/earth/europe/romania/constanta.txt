@@ -4,9 +4,11 @@ constanta = {
 	geocoordinate = { 28.60997432320 44.20266237290 } #from Natural Earth
 	type = holding
 	holding_type = law
-	#resource = grain
 	province = dobruja
 	cultural_names = {
 		roman = "Tomi" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 38-39.
+	}
+	features = {
+		prime_grain_land
 	}
 }

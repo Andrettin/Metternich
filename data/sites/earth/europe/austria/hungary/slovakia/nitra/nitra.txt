@@ -4,9 +4,11 @@ nitra = {
 	geocoordinate = { 18.0875 48.314722222222 }
 	type = holding
 	holding_type = law
-	#resource = grain
 	province = nitra
 	cultural_names = {
 		magyar = "Nyitra"
+	}
+	features = {
+		prime_grain_land
 	}
 }

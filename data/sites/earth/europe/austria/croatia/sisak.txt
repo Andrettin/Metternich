@@ -4,6 +4,8 @@ sisak = {
 	geocoordinate = { 16.37611111111111 45.48722222222222 }
 	type = holding
 	holding_type = temple
-	#resource = cattle
 	province = croatia
+	features = {
+		prime_cattle_land
+	}
 }

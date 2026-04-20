@@ -1,0 +1,11 @@
+cattle = {
+	name = "Cattle"
+	type = resource
+	icon = cattle
+	food_type = meat
+	base_price = 1000 #10gp per cow
+	units = {
+		10 = da
+		100 = h
+	}
+}

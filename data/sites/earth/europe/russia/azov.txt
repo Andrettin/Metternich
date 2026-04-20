@@ -8,6 +8,9 @@ azov = {
 	cultural_names = {
 		italian = "Tana" #Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 	}
+	features = {
+		prime_cattle_land
+	}
 	
 	history = {
 		1360 = {

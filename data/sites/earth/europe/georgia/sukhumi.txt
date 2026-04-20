@@ -5,4 +5,7 @@ sukhumi = {
 	type = resource
 	resource = grain
 	province = georgia_caucasus
+	features = {
+		prime_grain_land
+	}
 }

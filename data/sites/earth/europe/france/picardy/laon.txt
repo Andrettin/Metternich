@@ -5,6 +5,9 @@ laon = {
 	type = resource
 	resource = grain
 	province = ile_de_france
+	features = {
+		prime_grain_land
+	}
 	
 	history = {
 		919 = {

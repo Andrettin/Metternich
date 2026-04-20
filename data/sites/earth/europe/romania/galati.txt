@@ -8,6 +8,9 @@ galati = {
 	cultural_group_names = {
 		german = "Galatz"
 	}
+	features = {
+		prime_grain_land
+	}
 	
 	history = {
 		1360 = {

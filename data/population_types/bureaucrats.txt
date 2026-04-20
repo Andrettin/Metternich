@@ -26,6 +26,11 @@ bureaucrats = {
 		south_asian = rifle_infantry_medium_small
 		african = rifle_infantry_dark_small
 	}
+	life_needs = {
+		cattle = 0.75da
+		grain = 2.5tn
+		wool = 1cwt
+	}
 	everyday_needs = {
 		coal = 1tn
 		tobacco = 3tn

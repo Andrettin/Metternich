@@ -4,4 +4,7 @@ odense = {
 	geocoordinate = { 10.38333491890 55.40037680980 } #from Natural Earth
 	type = resource
 	resource = grain
+	features = {
+		prime_grain_land
+	}
 }

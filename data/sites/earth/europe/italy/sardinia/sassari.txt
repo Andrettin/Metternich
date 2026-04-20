@@ -5,6 +5,9 @@ sassari = {
 	type = resource
 	resource = grain
 	province = sardinia
+	features = {
+		prime_grain_land
+	}
 	
 	history = {
 		1360 = {

@@ -4,6 +4,9 @@ tarnow = {
 	geocoordinate = { 20.988333333333 50.0125 }
 	type = resource
 	resource = grain
+	features = {
+		prime_grain_land
+	}
 	
 	history = {
 		1815 = {

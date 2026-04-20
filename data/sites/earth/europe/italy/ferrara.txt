@@ -4,10 +4,10 @@ ferrara = {
 	geocoordinate = { 11.60992671580 44.85042645170 } #from Natural Earth
 	type = holding
 	holding_type = law
-	#resource = grain
 	province = romagna
 	features = {
 		academic #historical university
+		prime_grain_land
 	}
 	
 	history = {

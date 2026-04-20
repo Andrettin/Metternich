@@ -5,6 +5,9 @@ astrakhan = {
 	type = resource
 	resource = sheep
 	province = astrakhan
+	features = {
+		prime_sheep_land
+	}
 	
 	history = {
 		1360 = {

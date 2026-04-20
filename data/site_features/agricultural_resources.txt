@@ -1,6 +1,21 @@
+prime_cattle_land = {
+	name = "Prime Cattle Land"
+	icon = cattle
+}
+
 prime_cotton_land = {
 	name = "Prime Cotton Land"
 	icon = cotton
+}
+
+prime_grain_land = {
+	name = "Prime Grain Land"
+	icon = grain
+}
+
+prime_sheep_land = {
+	name = "Prime Sheep Land"
+	icon = wool
 }
 
 prime_sugar_land = {

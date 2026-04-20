@@ -5,4 +5,7 @@ resita = {
 	type = resource
 	resource = grain
 	province = banat
+	features = {
+		prime_grain_land
+	}
 }

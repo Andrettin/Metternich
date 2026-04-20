@@ -4,4 +4,7 @@ deva = {
 	geocoordinate = { 22.91667357040 45.88332304240 } #from Natural Earth
 	type = resource
 	resource = grain
+	features = {
+		prime_grain_land
+	}
 }

@@ -5,6 +5,9 @@ verdun = {
 	type = resource
 	resource = grain
 	province = lorraine
+	features = {
+		prime_grain_land
+	}
 	
 	history = {
 		919 = {

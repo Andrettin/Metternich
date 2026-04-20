@@ -4,4 +4,7 @@ nowy_sacz = {
 	geocoordinate = { 20.697222222222 49.623888888889 }
 	type = resource
 	resource = grain
+	features = {
+		prime_grain_land
+	}
 }

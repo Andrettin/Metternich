@@ -5,4 +5,7 @@ aabenraa = {
 	type = resource
 	resource = cattle
 	province = schleswig
+	features = {
+		prime_cattle_land
+	}
 }

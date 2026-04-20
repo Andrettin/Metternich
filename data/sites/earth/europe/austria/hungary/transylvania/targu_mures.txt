@@ -4,9 +4,11 @@ targu_mures = {
 	geocoordinate = { 24.55781856150 46.55820334790 } #from Natural Earth
 	type = holding
 	holding_type = law
-	#resource = grain
 	province = transylvania
 	cultural_names = {
 		magyar = "Marosvasarhely" #"Marosvásárhely"
+	}
+	features = {
+		prime_grain_land
 	}
 }

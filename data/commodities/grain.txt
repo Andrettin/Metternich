@@ -3,6 +3,9 @@ grain = {
 	type = resource
 	icon = grain
 	food_type = starch
-	base_price = 100
-	required_game_rule = additional_commodities
+	base_price = 1 #1cp, price of a pound of wheat
+	units = {
+		1 = lb
+		2000 = tn
+	}
 }

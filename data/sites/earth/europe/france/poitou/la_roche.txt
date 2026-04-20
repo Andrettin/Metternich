@@ -5,6 +5,9 @@ la_roche_sur_yon = {
 	type = resource
 	resource = grain
 	province = poitou
+	features = {
+		prime_grain_land
+	}
 	
 	history = {
 		1836 = {

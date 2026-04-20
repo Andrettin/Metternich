@@ -21,6 +21,11 @@ laborers = {
 		salt = 0.125
 		tea = 0.125
 	}
+	life_needs = {
+		cattle = 0.75da
+		grain = 2.5tn
+		wool = 1cwt
+	}
 	everyday_needs = {
 		coal = 1tn
 	}

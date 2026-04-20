@@ -3,6 +3,8 @@ ulundi = {
 	world = earth
 	geocoordinate = { 31.41001013050 -28.32960284550 } #from Natural Earth
 	type = holding
-	#resource = sheep
 	province = zululand
+	features = {
+		prime_sheep_land
+	}
 }

@@ -30,6 +30,11 @@ craftsmen = {
 		south_asian = craftsmen_medium_small
 		african = craftsmen_dark_small
 	}
+	life_needs = {
+		cattle = 0.75da
+		grain = 2.5tn
+		wool = 1cwt
+	}
 	everyday_needs = {
 		coal = 1tn
 	}

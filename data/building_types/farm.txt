@@ -1,3 +1,126 @@
+cattle_ranch = {
+	name = "Cattle Ranch"
+	building_class = cattle_ranch
+	portrait = aristocratic_palace
+	icon = cattle
+	size = 1
+	holding_types = {
+		guild
+		law
+		temple
+	}
+	conditions = {
+		feature = prime_cattle_land
+	}
+	commodity_costs = {
+		wealth = 2gb
+	}
+	cost_factor = {
+		modifier = {
+			factor = 2
+			terrain = hills
+		}
+		modifier = {
+			factor = 4
+			terrain = desert
+		}
+	}
+	modifier = {
+		employment_capacity = {
+			employment_type = cattle_ranching
+			capacity = 40000
+		}
+		population_capacity = 40000
+	}
+	domain_modifier = {
+		consumption = -2
+	}
+	free_on_start_conditions = {
+	}
+}
+
+grain_farm = {
+	name = "Grain Farm"
+	building_class = grain_farm
+	portrait = aristocratic_palace
+	icon = grain
+	size = 1
+	holding_types = {
+		guild
+		law
+		temple
+	}
+	conditions = {
+		feature = prime_grain_land
+	}
+	commodity_costs = {
+		wealth = 2gb
+	}
+	cost_factor = {
+		modifier = {
+			factor = 2
+			terrain = hills
+		}
+		modifier = {
+			factor = 4
+			terrain = desert
+		}
+	}
+	modifier = {
+		employment_capacity = {
+			employment_type = grain_farming
+			capacity = 40000
+		}
+		population_capacity = 40000
+	}
+	domain_modifier = {
+		consumption = -2
+	}
+	free_on_start_conditions = {
+	}
+}
+
+sheep_ranch = {
+	name = "Sheep Ranch"
+	building_class = sheep_ranch
+	portrait = aristocratic_palace
+	icon = wool
+	size = 1
+	holding_types = {
+		guild
+		law
+		temple
+	}
+	conditions = {
+		feature = prime_sheep_land
+	}
+	commodity_costs = {
+		wealth = 2gb
+	}
+	cost_factor = {
+		modifier = {
+			factor = 2
+			terrain = hills
+		}
+		modifier = {
+			factor = 4
+			terrain = desert
+		}
+	}
+	modifier = {
+		employment_capacity = {
+			employment_type = sheep_ranching
+			capacity = 40000
+		}
+		population_capacity = 40000
+	}
+	domain_modifier = {
+		consumption = -2
+	}
+	free_on_start_conditions = {
+	}
+}
+
 tobacco_plantation = {
 	name = "Tobacco Plantation"
 	building_class = tobacco_plantation
@@ -13,7 +136,17 @@ tobacco_plantation = {
 		feature = prime_tobacco_land
 	}
 	commodity_costs = {
-		wealth = 2gb #FIXME: cost should vary depending on terrain
+		wealth = 2gb
+	}
+	cost_factor = {
+		modifier = {
+			factor = 2
+			terrain = hills
+		}
+		modifier = {
+			factor = 4
+			terrain = desert
+		}
 	}
 	modifier = {
 		employment_capacity = {

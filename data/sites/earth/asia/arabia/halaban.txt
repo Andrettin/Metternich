@@ -5,4 +5,7 @@ halaban = {
 	type = resource
 	resource = sheep
 	province = riyadh
+	features = {
+		prime_sheep_land
+	}
 }

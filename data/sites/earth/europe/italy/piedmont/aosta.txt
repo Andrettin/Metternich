@@ -4,8 +4,10 @@ aosta = {
 	geocoordinate = { 7.31500259571 45.73700106710 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	#resource = sheep
 	province = piedmont
+	features = {
+		prime_sheep_land
+	}
 	
 	history = {
 		919 = {

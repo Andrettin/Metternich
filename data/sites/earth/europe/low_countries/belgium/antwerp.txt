@@ -5,6 +5,9 @@ antwerp = {
 	type = resource
 	resource = cattle
 	province = brabant
+	features = {
+		prime_cattle_land
+	}
 	
 	history = {
 		919 = {

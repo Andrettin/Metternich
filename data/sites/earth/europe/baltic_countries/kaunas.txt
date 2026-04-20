@@ -8,6 +8,9 @@ kaunas = {
 	cultural_names = {
 		russian = "Kovno"
 	}
+	features = {
+		prime_grain_land
+	}
 	
 	history = {
 		1360 = {

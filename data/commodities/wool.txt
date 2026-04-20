@@ -2,6 +2,10 @@ wool = {
 	name = "Wool"
 	type = resource
 	icon = wool
-	base_price = 100
-	required_game_rule = additional_commodities
+	base_price = 600 #6gp
+	units = {
+		1 = sq_yd #or pound
+		100 = cwt
+		2000 = tn
+	}
 }

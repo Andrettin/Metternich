@@ -5,4 +5,7 @@ banska_bystrica = {
 	type = resource
 	resource = grain
 	province = banska_bystrica
+	features = {
+		prime_grain_land
+	}
 }

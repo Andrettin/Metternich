@@ -8,6 +8,9 @@ bozen = {
 	cultural_names = {
 		italian = "Bolzano"
 	}
+	features = {
+		prime_grain_land
+	}
 	
 	history = {
 		919 = {

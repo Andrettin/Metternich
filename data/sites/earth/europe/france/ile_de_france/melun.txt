@@ -4,8 +4,10 @@ melun = {
 	geocoordinate = { 2.66664831403 48.53330242830 } #from Natural Earth
 	type = holding
 	holding_type = law
-	#resource = grain
 	province = ile_de_france
+	features = {
+		prime_grain_land
+	}
 	
 	history = {
 		1836 = {

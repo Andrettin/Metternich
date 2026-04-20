@@ -5,6 +5,9 @@ rhodes = {
 	type = resource
 	resource = grain
 	province = attica
+	features = {
+		prime_grain_land
+	}
 	
 	history = {
 		-280 = {

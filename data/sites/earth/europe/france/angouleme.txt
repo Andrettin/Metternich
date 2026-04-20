@@ -5,6 +5,9 @@ angouleme = {
 	type = resource
 	resource = cattle
 	province = poitou
+	features = {
+		prime_cattle_land
+	}
 	
 	history = {
 		1836 = {

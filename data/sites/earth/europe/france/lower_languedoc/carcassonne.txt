@@ -5,6 +5,9 @@ carcassonne = {
 	type = resource
 	resource = grain
 	province = lower_languedoc
+	features = {
+		prime_grain_land
+	}
 	
 	history = {
 		1836 = {
