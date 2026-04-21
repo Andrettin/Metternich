@@ -4,6 +4,7 @@ coal_mine = {
 	portrait = factory
 	icon = coal
 	size = 1
+	required_technology = black_coal
 	holding_types = {
 		guild
 		law

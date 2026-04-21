@@ -1,0 +1,8 @@
+has_mine = {
+	or = {
+		has_building_class = coal_mine
+		has_building_class = gold_mine
+		has_building_class = iron_mine
+		has_building_class = silver_mine
+	}
+}

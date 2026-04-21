@@ -161,6 +161,10 @@ void technology::process_gsml_scope(const gsml_data &scope)
 		auto modifier = std::make_unique<metternich::modifier<const domain>>();
 		modifier->process_gsml_data(scope);
 		this->domain_modifier = std::move(modifier);
+	} else if (tag == "discovery_conditions") {
+		auto conditions = std::make_unique<and_condition<province>>();
+		conditions->process_gsml_data(scope);
+		this->discovery_conditions = std::move(conditions);
 	} else if (tag == "discovery_effects") {
 		auto effects = std::make_unique<effect_list<const province>>();
 		effects->process_gsml_data(scope);
@@ -227,6 +231,9 @@ void technology::initialize()
 		auto event_conditions = std::make_unique<and_condition<province>>();
 		event_conditions->add_condition(std::make_unique<capital_condition<province>>(true));
 		event_conditions->add_condition(std::make_unique<can_gain_technology_condition<province>>(this));
+		if (this->discovery_conditions != nullptr) {
+			event_conditions->add_condition(std::move(this->discovery_conditions));
+		}
 		event->set_conditions(std::move(event_conditions));
 
 		auto event_option = std::make_unique<metternich::event_option<const province>>();

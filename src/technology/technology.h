@@ -506,6 +506,7 @@ private:
 	std::vector<const item_type *> enabled_item_types;
 	std::unique_ptr<const metternich::modifier<const province>> modifier;
 	std::unique_ptr<const metternich::modifier<const domain>> domain_modifier;
+	std::unique_ptr<and_condition<province>> discovery_conditions;
 	std::unique_ptr<effect_list<const province>> discovery_effects;
 	std::unique_ptr<and_condition<province>> spread_conditions;
 	const game_rule *required_game_rule = nullptr;
