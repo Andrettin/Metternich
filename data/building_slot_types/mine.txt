@@ -1,7 +1,3 @@
-mine = {
-	name = "Mine"
-}
-
 coal_mine = {
 	name = "Coal Mine"
 }

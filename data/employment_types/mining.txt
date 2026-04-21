@@ -1,11 +1,3 @@
-mining = {
-	name = "Mining"
-	employee_types = {
-		laborers
-		slaves
-	}
-}
-
 coal_mining = {
 	name = "Coal Mining"
 	output_commodity = coal
