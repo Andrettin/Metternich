@@ -4,6 +4,7 @@ glassworks = {
 	portrait = factory
 	icon = glass
 	size = 1
+	required_technology = glassblowing
 	holding_types = {
 		guild
 	}

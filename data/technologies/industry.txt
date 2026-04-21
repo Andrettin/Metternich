@@ -1,3 +1,288 @@
+glassblowing = {
+	name = "Glassblowing"
+	subcategory = industry
+	portrait = engineering
+	icon = glass
+	period = bronze_age
+	cost_commodity = research
+	discovery_mean_time_to_happen = {
+		months = 150
+		
+		modifier = {
+			factor = 0.85
+			has_building_class = university
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = library
+		}
+		modifier = {
+			factor = 0.95
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.95
+			domain = {
+				ruler = {
+					trade >= 2
+				}
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				ruler = {
+					trade >= 3
+				}
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				ruler = {
+					trade >= 4
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				tier >= kingdom
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				tier == duchy
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				war = false
+			}
+		}
+		modifier = {
+			factor = 0.95
+			technology = aristotelian_logic
+		}
+		modifier = {
+			factor = 0.95
+			technology = scholasticism
+		}
+		modifier = {
+			factor = 0.97
+			technology = astrology_and_astronomy
+		}
+		modifier = {
+			factor = 0.85
+			technology = natural_philosophy
+		}
+		modifier = {
+			factor = 0.8
+			technology = science
+		}
+		modifier = {
+			factor = 0.95
+			technology = asceticism
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_medium_high_stability
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_high_stability
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_maximal_stability
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_medium_stability
+				}
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_medium_low_stability
+				}
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_low_stability
+				}
+			}
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1250
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1350
+		}
+	}
+	spread_mean_time_to_happen = {
+		months = 1500
+		
+		modifier = {
+			factor = 0.9
+			has_building_class = library
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				has_building_class = waterfront
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				ruler = {
+					trade >= 2
+				}
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				ruler = {
+					trade >= 3
+				}
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				ruler = {
+					trade >= 4
+				}
+			}
+		}
+		modifier = {
+			factor = 0.8
+			source_province = {
+				culture = root
+			}
+		}
+		modifier = {
+			factor = 0.8
+			source_province = {
+				religion = root
+			}
+		}
+		modifier = {
+			factor = 0.5
+			source_province = {
+				domain = root
+			}
+		}
+		modifier = {
+			factor = 0.8
+			source_province = {
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				independent = true
+			}
+			source_province = {
+				realm = root
+				domain = {
+					independent = false
+				}
+			}
+		}
+		modifier = {
+			factor = 2
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 5
+			source_province = {
+				not = {
+					realm = root
+				}
+				domain = {
+					war = true
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			capital = true
+			source_province = {
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_medium_high_stability
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_high_stability
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_maximal_stability
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_medium_stability
+				}
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_medium_low_stability
+				}
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_low_stability
+				}
+			}
+		}
+	}
+}
+
 mechanized_slaughtering_block = {
 	name = "Mechanized Slaughtering-Block"
 	subcategory = industry
