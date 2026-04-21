@@ -218,7 +218,7 @@ Rectangle {
 		anchors.left: parent.left
 		anchors.right: parent.right
 		visible_rows: 2
-		visible: selected_province !== null && !selected_garrison
+		visible: selected_province !== null && !selected_garrison && !viewing_population
 		sites: selected_province ? selected_province.game_data.visible_sites : []
 	}
 	
@@ -237,7 +237,7 @@ Rectangle {
 				+ (taxation_income_string.length > 0 ? ("\nTaxation Income: " + taxation_income_string) : "")
 			) : ""
 		)
-		visible: selected_province && !selected_garrison
+		visible: selected_province && !selected_garrison && !viewing_population
 		
 		readonly property string taxation_income_string: selected_province ? get_income_range_string(selected_province.game_data.min_income, selected_province.game_data.max_income) : ""
 	}
@@ -255,7 +255,6 @@ Rectangle {
 				+ ((selected_site.max_holding_level > 0 && dungeon === null) ? ("\nFortification Level: " + selected_site_game_data.fortification_level) : "")
 				+ (dungeon && dungeon.level !== 0 ? ("Dungeon Level: " + dungeon.level) : "")
 				+ (holding_type !== null && population_visible ? ("\nPopulation: " + number_string(selected_site_game_data.population.size)) : "")
-				+ (holding_type !== null && population_visible ? ("\nPopulation Capacity: " + number_string(selected_site_game_data.population_capacity)) : "")
 				+ (income_string.length > 0 ? ("\nIncome: " + income_string) : "")
 				+ (selected_site_game_data.attribute_values.length > 0 ? ("\n" + object_counts_to_string(selected_site_game_data.attribute_values)) : "")
 				+ (selected_site_game_data.commodity_outputs.length > 0 ? ("\n" + get_commodity_outputs_string(selected_site_game_data.commodity_outputs)) : "")
@@ -313,11 +312,15 @@ Rectangle {
 		anchors.topMargin: 12 * scale_factor
 		anchors.left: parent.left
 		anchors.leftMargin: 16 * scale_factor
-		text: selected_site_game_data ? format_text(
-			"Population: " + number_string(selected_site_game_data.population.size)
-			 + "\nLiteracy: " + selected_site_game_data.population.literacy_rate + "%"
+		text: population ? format_text(
+			"Population: " + number_string(population.size)
+			 + (selected_site !== null ? ("\nPopulation Capacity: " + number_string(selected_site_game_data.population_capacity)) : "")
+			 + "\nLiteracy: " + population.literacy_rate + "%"
+
 		) : ""
-		visible: selected_site !== null && selected_site.game_data.can_have_population() && selected_site.game_data.is_built() && !selected_garrison && viewing_population
+		visible: !selected_garrison && viewing_population && ((selected_site !== null && selected_site.game_data.can_have_population() && selected_site.game_data.is_built()) || selected_province !== null)
+		
+		readonly property var population: selected_site !== null ? selected_site_game_data.population : (selected_province !== null ? selected_province.game_data.population : null)
 	}
 	
 	Grid {
@@ -331,7 +334,9 @@ Rectangle {
 		columnSpacing: 16 * scale_factor
 		rowSpacing: 8 * scale_factor
 		verticalItemAlignment: Grid.AlignVCenter
-		visible: population_info_text.visible && selected_site !== null && selected_site.game_data.population.size > 0
+		visible: population_info_text.visible && population && population.size > 0
+		
+		readonly property var population: selected_site !== null ? selected_site_game_data.population : (selected_province !== null ? selected_province.game_data.population : null)
 		
 		Item {
 			width: population_type_chart.width
@@ -349,7 +354,7 @@ Rectangle {
 				anchors.top: population_type_chart_label.bottom
 				anchors.topMargin: 4 * scale_factor
 				anchors.horizontalCenter: parent.horizontalCenter
-				data_source: selected_site_game_data ? selected_site_game_data.population : null
+				data_source: population_chart_grid.population
 			}
 		}
 		
@@ -369,7 +374,7 @@ Rectangle {
 				anchors.top: culture_chart_label.bottom
 				anchors.topMargin: 4 * scale_factor
 				anchors.horizontalCenter: parent.horizontalCenter
-				data_source: selected_site_game_data ? selected_site_game_data.population : null
+				data_source: population_chart_grid.population
 			}
 		}
 		
@@ -389,7 +394,7 @@ Rectangle {
 				anchors.top: religion_chart_label.bottom
 				anchors.topMargin: 4 * scale_factor
 				anchors.horizontalCenter: parent.horizontalCenter
-				data_source: selected_site_game_data ? selected_site_game_data.population : null
+				data_source: population_chart_grid.population
 			}
 		}
 	}
@@ -514,9 +519,8 @@ Rectangle {
 		
 		IconButton {
 			id: population_button
-			icon_identifier: "craftsmen_light_small"
-			//visible: selected_site !== null && selected_site.game_data.can_have_population() && selected_site.game_data.is_built() && !selected_garrison && !viewing_population
-			visible: false
+			icon_identifier: "labor_hammer"
+			visible: ((selected_site !== null && selected_site.game_data.can_have_population() && selected_site.game_data.is_built()) || selected_province !== null) && !selected_garrison && !viewing_population
 			
 			onClicked: {
 				viewing_population = true
@@ -526,7 +530,7 @@ Rectangle {
 			
 			onHoveredChanged: {
 				if (hovered) {
-					status_text = "View " + (selected_site !== null && selected_site.settlement ? "Settlement" : "Site") + " Population"
+					status_text = "View " + (selected_site !== null ? "Holding" : "Province") + " Population"
 				} else {
 					status_text = ""
 				}
@@ -683,10 +687,11 @@ Rectangle {
 		IconButton {
 			id: back_to_province_button
 			icon_identifier: "mountains"
-			visible: (selected_province !== null && selected_garrison) || selected_site !== null
+			visible: (selected_province !== null && (selected_garrison || viewing_population)) || selected_site !== null
 			
 			onClicked: {
 				selected_garrison = false
+				viewing_population = false
 				if (selected_site !== null) {
 					selected_civilian_unit = null
 					selected_province = selected_site.game_data.province
