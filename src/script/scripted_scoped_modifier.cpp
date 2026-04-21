@@ -45,7 +45,7 @@ QString scripted_scoped_modifier<scope_type>::get_modifier_string(const scope_ty
 		return QString();
 	}
 
-	return QString::fromStdString(this->get_modifier()->get_string(scope));
+	return QString::fromStdString(this->get_modifier()->get_single_line_string(scope));
 }
 
 template class scripted_scoped_modifier<character>;

@@ -3,8 +3,8 @@ import QtQuick.Controls
 
 Row {
 	id: scripted_modifier_row
-	height: 16 * scale_factor
-	spacing: 2 * scale_factor
+	height: 32 * scale_factor
+	spacing: 4 * scale_factor
 	
 	property var scope: null
 	

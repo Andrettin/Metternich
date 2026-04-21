@@ -182,22 +182,26 @@ Rectangle {
 		readonly property string site_title_name: selected_site_game_data ? selected_site_game_data.title_name : ""
 	}
 	
-	FeatureRow {
-		id: feature_row
+	Row {
 		anchors.bottom: building_portrait_grid.top
 		anchors.bottomMargin: 8 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
-		site: selected_site
-		visible: selected_site && !selected_garrison && selected_site.game_data.features.length > 0 && !viewing_population && !viewing_population_units
-	}
-	
-	ScriptedModifierRow {
-		id: scripted_modifier_row
-		anchors.top: title.bottom
-		anchors.topMargin: 8 * scale_factor
-		anchors.horizontalCenter: parent.horizontalCenter
-		scope: selected_site
-		visible: selected_site && !selected_garrison && selected_site.game_data.scripted_modifiers.length > 0
+		height: Math.max(feature_row.height, scripted_modifier_row.height)
+		spacing: 4 * scale_factor
+		
+		FeatureRow {
+			id: feature_row
+			anchors.verticalCenter: parent.verticalCenter
+			site: selected_site
+			visible: selected_site && !selected_garrison && selected_site.game_data.features.length > 0 && !viewing_population && !viewing_population_units
+		}
+		
+		ScriptedModifierRow {
+			id: scripted_modifier_row
+			anchors.verticalCenter: parent.verticalCenter
+			scope: selected_site
+			visible: selected_site && !selected_garrison && selected_site.game_data.scripted_modifiers.length > 0 && !viewing_population && !viewing_population_units
+		}
 	}
 	
 	BuildingPortraitGrid {
@@ -244,7 +248,7 @@ Rectangle {
 	
 	SmallText {
 		id: site_info_text
-		anchors.top: scripted_modifier_row.visible ? scripted_modifier_row.bottom : (portrait.visible ? portrait.bottom : title.bottom)
+		anchors.top: portrait.visible ? portrait.bottom : title.bottom
 		anchors.topMargin: 16 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
 		text: format_text(
