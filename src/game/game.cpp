@@ -1724,7 +1724,8 @@ QCoro::Task<void> game::do_turn_coro()
 			if (province->get_turn_data()->is_province_map_dirty()) {
 				co_await province->get_game_data()->create_map_image();
 			} else {
-				for (const province_map_mode mode : province->get_turn_data()->get_dirty_province_map_modes()) {
+				const std::set<province_map_mode> dirty_map_modes = province->get_turn_data()->get_dirty_province_map_modes();
+				for (const province_map_mode mode : dirty_map_modes) {
 					co_await province->get_game_data()->create_map_mode_image(mode);
 				}
 			}
