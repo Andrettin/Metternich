@@ -318,7 +318,7 @@ void population_unit::set_literacy_rate(const decimillesimal_int &literacy_rate)
 		return;
 	}
 
-	if (literacy_rate < 100) {
+	if (literacy_rate < 0) {
 		this->set_literacy_rate(decimillesimal_int(0));
 		return;
 	}
