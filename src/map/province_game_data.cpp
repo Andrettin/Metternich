@@ -301,7 +301,7 @@ void province_game_data::do_population_literacy_change()
 		}
 	}
 
-	const decimillesimal_int educator_percent = decimillesimal_int(educator_size) * 100 / this->get_population()->get_size();
+	const decimillesimal_int educator_percent = decimillesimal_int::min(decimillesimal_int(educator_size) * 100 / this->get_population()->get_size(), defines::get()->get_max_literacy_educator_percent() + defines::get()->get_base_literacy_educator_percent());
 
 	const decimillesimal_int monthly_literacy_change_rate = (educator_percent - defines::get()->get_base_literacy_educator_percent()) * defines::get()->get_base_monthly_literacy_change_rate() / (defines::get()->get_max_literacy_educator_percent() - defines::get()->get_base_literacy_educator_percent());
 
