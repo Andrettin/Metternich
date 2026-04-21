@@ -17,3 +17,8 @@ industry = {
 	name = "Industry"
 	icon = cog
 }
+
+navy = {
+	name = "Navy"
+	icon = anchor
+}

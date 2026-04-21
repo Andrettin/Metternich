@@ -1,0 +1,11 @@
+industry = {
+	name = "Industry"
+	category = industry
+	icon = cog
+}
+
+metallurgy = {
+	name = "Metallurgy"
+	category = industry
+	icon = steel
+}

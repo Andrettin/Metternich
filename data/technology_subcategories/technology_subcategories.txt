@@ -16,14 +16,8 @@ culture = {
 	icon = music
 }
 
-industry = {
-	name = "Industry"
-	category = industry
-	icon = cog
-}
-
-metallurgy = {
-	name = "Metallurgy"
-	category = industry
-	icon = steel
+navy = {
+	name = "Navy"
+	category = navy
+	icon = anchor
 }

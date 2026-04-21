@@ -1,0 +1,28 @@
+commerce_raider = {
+	name = "Commerce Raider"
+	subcategory = navy
+	portrait = unload
+	icon = anchor
+	period = renaissance_age
+	cost_commodity = research
+	prerequisites = {
+		#steamers
+		
+		black_coal
+		science
+	}
+	monthly_chance = {
+		base_value = 5
+		
+		#modifier = {
+		#	factor = 1
+		#	additive = true
+		#	technology = fire_control_systems
+		#}
+		#modifier = {
+		#	factor = 3
+		#	additive = true
+		#	technology = raider_group_doctrine
+		#}
+	}
+}
