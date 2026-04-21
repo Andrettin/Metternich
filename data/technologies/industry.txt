@@ -626,6 +626,39 @@ mechanized_slaughtering_block = {
 	}
 }
 
+precision_work = {
+	name = "Precision Work"
+	subcategory = industry
+	portrait = engineering
+	icon = glass
+	period = renaissance_age
+	cost_commodity = research
+	prerequisites = {
+		#mechanical_production
+		
+		glassblowing
+		science
+	}
+	monthly_chance = {
+		base_value = 2
+		
+		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	technology = mechanical_precision_saw
+		#}
+		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	technology = early_railroad
+		#}
+	}
+	modifier = {
+		glass_output_modifier = 10
+		#ammunition_output_modifier = 10
+	}
+}
+
 integral_distillery_process = {
 	name = "Integral Distillery Process"
 	subcategory = industry
@@ -689,5 +722,36 @@ refrigeration = {
 		#fish_output_modifier = 20
 		liquor_output_modifier = 2
 		#wine_output_modifier = 2
+	}
+}
+
+bakelite = {
+	name = "Bakelite"
+	subcategory = industry
+	portrait = engineering
+	icon = glass
+	period = gunpowder_age
+	cost_commodity = research
+	prerequisites = {
+		#synthetic_polymers
+		
+		precision_work
+	}
+	monthly_chance = {
+		base_value = 2
+		
+		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	technology = bell_and_greys_telephones
+		#}
+		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	technology = time_saving_measures
+		#}
+	}
+	modifier = {
+		glass_output_modifier = 5
 	}
 }
