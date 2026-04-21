@@ -3,7 +3,7 @@ short_sword = {
 	subcategory = technology
 	portrait = bronze_short_sword
 	icon = saber
-	period = antiquity
+	period = bronze_age
 	cost_commodity = research
 	discovery_mean_time_to_happen = {
 		months = 75
@@ -175,7 +175,7 @@ long_sword = {
 	subcategory = technology
 	portrait = bronze_short_sword
 	icon = saber
-	period = dark_ages
+	period = iron_age
 	cost_commodity = research
 	prerequisites = {
 		short_sword
@@ -346,7 +346,7 @@ bastard_sword = {
 	subcategory = technology
 	portrait = bronze_short_sword
 	icon = saber
-	period = middle_ages
+	period = classical_age
 	cost_commodity = research
 	prerequisites = {
 		long_sword

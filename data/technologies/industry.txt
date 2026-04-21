@@ -3,7 +3,7 @@ advanced_ore_roasting_processes = {
 	subcategory = technology
 	portrait = engineering
 	icon = iron
-	period = modern_era
+	period = renaissance_age
 	cost_commodity = research
 	prerequisites = {
 		#cheap_iron
@@ -34,7 +34,7 @@ advanced_ore_grinding_processes = {
 	subcategory = technology
 	portrait = engineering
 	icon = iron
-	period = modern_era
+	period = renaissance_age
 	cost_commodity = research
 	prerequisites = {
 		#cheap_iron
@@ -65,7 +65,7 @@ advanced_ore_smelting_processes = {
 	subcategory = technology
 	portrait = engineering
 	icon = iron
-	period = modern_era
+	period = renaissance_age
 	cost_commodity = research
 	prerequisites = {
 		#cheap_iron
@@ -96,7 +96,7 @@ steel_alloys = {
 	subcategory = technology
 	portrait = engineering
 	icon = steel
-	period = modern_era
+	period = renaissance_age
 	cost_commodity = research
 	prerequisites = {
 		#advanced_metallurgy
@@ -128,7 +128,7 @@ mechanized_slaughtering_block = {
 	subcategory = technology
 	portrait = engineering
 	icon = cattle
-	period = modern_era
+	period = renaissance_age
 	cost_commodity = research
 	prerequisites = {
 		#mechanical_production
@@ -160,7 +160,7 @@ integral_distillery_process = {
 	subcategory = technology
 	portrait = engineering
 	icon = wine
-	period = modern_era
+	period = renaissance_age
 	cost_commodity = research
 	prerequisites = {
 		#interchangeable_parts
@@ -191,7 +191,7 @@ refrigeration = {
 	subcategory = technology
 	portrait = engineering
 	icon = cattle
-	period = modern_era
+	period = renaissance_age
 	cost_commodity = research
 	prerequisites = {
 		#assembly_line

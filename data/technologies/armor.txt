@@ -3,7 +3,7 @@ soft_leather_armor = {
 	subcategory = technology
 	portrait = helmet
 	icon = clothing
-	period = antiquity
+	period = bronze_age
 	cost_commodity = research
 	discovery_mean_time_to_happen = {
 		months = 50
@@ -167,7 +167,7 @@ chain_mail = {
 	subcategory = technology
 	portrait = helmet
 	icon = clothing
-	period = dark_ages
+	period = iron_age
 	cost_commodity = research
 	prerequisites = {
 		soft_leather_armor
@@ -346,7 +346,7 @@ plate_mail = {
 	subcategory = technology
 	portrait = helmet
 	icon = clothing
-	period = middle_ages
+	period = classical_age
 	cost_commodity = research
 	prerequisites = {
 		chain_mail

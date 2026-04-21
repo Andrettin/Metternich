@@ -12,7 +12,7 @@ aristotelian_logic = {
 	subcategory = technology
 	portrait = engineering
 	icon = philosophy
-	period = antiquity
+	period = bronze_age #classical_age
 	cost_commodity = research
 	discovery_effects = {
 		domain = {
@@ -137,7 +137,7 @@ scholasticism = {
 	subcategory = technology
 	portrait = engineering
 	icon = wooden_cross
-	period = dark_ages
+	period = iron_age
 	cost_commodity = research
 	prerequisites = {
 		aristotelian_logic
@@ -265,7 +265,7 @@ astrology_and_astronomy = {
 	subcategory = technology
 	portrait = engineering
 	icon = philosophy
-	period = middle_ages
+	period = classical_age
 	cost_commodity = research
 	prerequisites = {
 		scholasticism
@@ -387,7 +387,7 @@ natural_philosophy = {
 	subcategory = technology
 	portrait = engineering
 	icon = philosophy
-	period = renaissance
+	period = feudal_age
 	cost_commodity = research
 	prerequisites = {
 		astrology_and_astronomy
@@ -515,7 +515,7 @@ science = {
 	subcategory = technology
 	portrait = engineering
 	icon = philosophy
-	period = industrial_era
+	period = castle_age
 	cost_commodity = research
 	prerequisites = {
 		natural_philosophy

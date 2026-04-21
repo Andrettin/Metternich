@@ -3,7 +3,7 @@ monastic_school = {
 	subcategory = technology
 	portrait = university
 	icon = wooden_cross
-	period = dark_ages
+	period = iron_age
 	cost_commodity = research
 	prerequisites = {
 		asceticism
@@ -238,7 +238,7 @@ cathedral_school = {
 	subcategory = technology
 	portrait = university
 	icon = wooden_cross
-	period = middle_ages
+	period = classical_age
 	cost_commodity = research
 	prerequisites = {
 		monastic_school
@@ -473,7 +473,7 @@ university = {
 	subcategory = technology
 	portrait = university
 	icon = university
-	period = renaissance
+	period = feudal_age #renaissance_age
 	cost_commodity = research
 	prerequisites = {
 		cathedral_school
