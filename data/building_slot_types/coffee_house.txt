@@ -1,3 +1,0 @@
-coffee_house = {
-	name = "Coffee House"
-}
