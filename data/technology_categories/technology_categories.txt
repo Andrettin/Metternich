@@ -2,3 +2,18 @@ technology = {
 	name = "Technology"
 	icon = cog
 }
+
+army = {
+	name = "Army"
+	icon = crossed_sabers
+}
+
+culture = {
+	name = "Culture"
+	icon = music
+}
+
+industry = {
+	name = "Industry"
+	icon = cog
+}

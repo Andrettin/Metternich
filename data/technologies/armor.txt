@@ -1,6 +1,6 @@
 soft_leather_armor = {
 	name = "Soft Leather Armor"
-	subcategory = technology
+	subcategory = army
 	portrait = helmet
 	icon = clothing
 	period = bronze_age
@@ -164,7 +164,7 @@ soft_leather_armor = {
 
 chain_mail = {
 	name = "Chain Mail"
-	subcategory = technology
+	subcategory = army
 	portrait = helmet
 	icon = clothing
 	period = iron_age
@@ -343,7 +343,7 @@ chain_mail = {
 
 plate_mail = {
 	name = "Plate Mail"
-	subcategory = technology
+	subcategory = army
 	portrait = helmet
 	icon = clothing
 	period = classical_age

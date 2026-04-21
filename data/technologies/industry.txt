@@ -1,6 +1,6 @@
 advanced_ore_roasting_processes = {
 	name = "Advanced Ore Roasting Processes"
-	subcategory = technology
+	subcategory = industry
 	portrait = engineering
 	icon = iron
 	period = renaissance_age
@@ -31,7 +31,7 @@ advanced_ore_roasting_processes = {
 
 advanced_ore_grinding_processes = {
 	name = "Advanced Ore Grinding Processes"
-	subcategory = technology
+	subcategory = industry
 	portrait = engineering
 	icon = iron
 	period = renaissance_age
@@ -62,7 +62,7 @@ advanced_ore_grinding_processes = {
 
 advanced_ore_smelting_processes = {
 	name = "Advanced Ore Smelting Processes"
-	subcategory = technology
+	subcategory = industry
 	portrait = engineering
 	icon = iron
 	period = renaissance_age
@@ -93,7 +93,7 @@ advanced_ore_smelting_processes = {
 
 steel_alloys = {
 	name = "Steel Alloys"
-	subcategory = technology
+	subcategory = industry
 	portrait = engineering
 	icon = steel
 	period = renaissance_age
@@ -125,7 +125,7 @@ steel_alloys = {
 
 mechanized_slaughtering_block = {
 	name = "Mechanized Slaughtering-Block"
-	subcategory = technology
+	subcategory = industry
 	portrait = engineering
 	icon = cattle
 	period = renaissance_age
@@ -157,7 +157,7 @@ mechanized_slaughtering_block = {
 
 integral_distillery_process = {
 	name = "Integral Distillery Process"
-	subcategory = technology
+	subcategory = industry
 	portrait = engineering
 	icon = wine
 	period = renaissance_age
@@ -188,7 +188,7 @@ integral_distillery_process = {
 
 refrigeration = {
 	name = "Refrigeration"
-	subcategory = technology
+	subcategory = industry
 	portrait = engineering
 	icon = cattle
 	period = renaissance_age

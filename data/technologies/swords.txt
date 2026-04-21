@@ -1,6 +1,6 @@
 short_sword = {
 	name = "Short Sword"
-	subcategory = technology
+	subcategory = army
 	portrait = bronze_short_sword
 	icon = saber
 	period = bronze_age
@@ -172,7 +172,7 @@ short_sword = {
 
 long_sword = {
 	name = "Long Sword"
-	subcategory = technology
+	subcategory = army
 	portrait = bronze_short_sword
 	icon = saber
 	period = iron_age
@@ -343,7 +343,7 @@ long_sword = {
 
 bastard_sword = {
 	name = "Bastard Sword"
-	subcategory = technology
+	subcategory = army
 	portrait = bronze_short_sword
 	icon = saber
 	period = classical_age

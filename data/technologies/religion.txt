@@ -1,6 +1,6 @@
 asceticism = {
 	name = "Asceticism"
-	subcategory = technology
+	subcategory = culture
 	portrait = engineering
 	icon = wooden_cross
 	period = bronze_age

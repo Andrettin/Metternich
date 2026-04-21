@@ -1,6 +1,6 @@
 pike = {
 	name = "Pike"
-	subcategory = technology
+	subcategory = army
 	portrait = bronze_short_sword
 	icon = saber
 	period = bronze_age

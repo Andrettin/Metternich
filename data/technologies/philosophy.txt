@@ -9,7 +9,7 @@
 
 aristotelian_logic = {
 	name = "Aristotelian Logic"
-	subcategory = technology
+	subcategory = culture
 	portrait = engineering
 	icon = philosophy
 	period = bronze_age #classical_age
@@ -134,7 +134,7 @@ aristotelian_logic = {
 
 scholasticism = {
 	name = "Scholasticism"
-	subcategory = technology
+	subcategory = culture
 	portrait = engineering
 	icon = wooden_cross
 	period = iron_age
@@ -262,7 +262,7 @@ scholasticism = {
 
 astrology_and_astronomy = {
 	name = "Astrology and Astronomy"
-	subcategory = technology
+	subcategory = culture
 	portrait = engineering
 	icon = philosophy
 	period = classical_age
@@ -384,7 +384,7 @@ astrology_and_astronomy = {
 
 natural_philosophy = {
 	name = "Natural Philosophy"
-	subcategory = technology
+	subcategory = culture
 	portrait = engineering
 	icon = philosophy
 	period = feudal_age
@@ -512,7 +512,7 @@ natural_philosophy = {
 
 science = {
 	name = "Science"
-	subcategory = technology
+	subcategory = culture
 	portrait = engineering
 	icon = philosophy
 	period = castle_age

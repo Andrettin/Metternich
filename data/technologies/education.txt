@@ -1,6 +1,6 @@
 monastic_school = {
 	name = "Monastic School"
-	subcategory = technology
+	subcategory = culture
 	portrait = university
 	icon = wooden_cross
 	period = iron_age
@@ -235,7 +235,7 @@ monastic_school = {
 
 cathedral_school = {
 	name = "Cathedral School"
-	subcategory = technology
+	subcategory = culture
 	portrait = university
 	icon = wooden_cross
 	period = classical_age
@@ -470,7 +470,7 @@ cathedral_school = {
 
 university = {
 	name = "University"
-	subcategory = technology
+	subcategory = culture
 	portrait = university
 	icon = university
 	period = feudal_age #renaissance_age

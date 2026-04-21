@@ -1,6 +1,6 @@
 mace = {
 	name = "Mace"
-	subcategory = technology
+	subcategory = army
 	portrait = bronze_short_sword
 	icon = saber
 	period = bronze_age
@@ -168,7 +168,7 @@ mace = {
 
 morning_star = {
 	name = "Morning Star"
-	subcategory = technology
+	subcategory = army
 	portrait = bronze_short_sword
 	icon = saber
 	period = iron_age

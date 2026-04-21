@@ -1,6 +1,6 @@
 short_bow = {
 	name = "Short Bow"
-	subcategory = technology
+	subcategory = army
 	portrait = engineering
 	icon = bow
 	period = bronze_age
@@ -172,7 +172,7 @@ short_bow = {
 
 long_bow = {
 	name = "Long Bow"
-	subcategory = technology
+	subcategory = army
 	portrait = engineering
 	icon = bow
 	period = iron_age
@@ -343,7 +343,7 @@ long_bow = {
 
 composite_bow = {
 	name = "Composite Bow"
-	subcategory = technology
+	subcategory = army
 	portrait = engineering
 	icon = bow
 	period = classical_age
@@ -510,7 +510,7 @@ composite_bow = {
 
 light_crossbow = {
 	name = "Light Crossbow"
-	subcategory = technology
+	subcategory = army
 	portrait = engineering
 	icon = bow
 	period = iron_age
@@ -669,7 +669,7 @@ light_crossbow = {
 
 heavy_crossbow = {
 	name = "Heavy Crossbow"
-	subcategory = technology
+	subcategory = army
 	portrait = engineering
 	icon = bow
 	period = classical_age
