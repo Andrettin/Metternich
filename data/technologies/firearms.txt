@@ -1,0 +1,101 @@
+flintlock_rifle = {
+	name = "Flintlock Rifle"
+	subcategory = army
+	portrait = engineering
+	icon = rifle
+	period = renaissance_age
+	cost_commodity = research
+	prerequisites = {
+		heavy_crossbow
+		science
+	}
+	monthly_chance = {
+		base_value = 5
+		
+		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	technology = small_arms_production
+		#}
+		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	war = true
+		#	war_domains = {
+		#		technology = flintlock_rifle
+		#	}
+		#}
+	}
+}
+
+breech_loading_rifle = {
+	name = "Breech-Loading Rifle"
+	subcategory = army
+	portrait = engineering
+	icon = rifle
+	period = gunpowder_age
+	cost_commodity = research
+	prerequisites = {
+		flintlock_rifle
+	}
+	monthly_chance = {
+		base_value = 5
+		
+		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	war = true
+		#	war_domains = {
+		#		technology = breech_loading_rifle
+		#	}
+		#}
+	}
+}
+
+machine_gun = {
+	name = "Machine Gun"
+	subcategory = army
+	portrait = engineering
+	icon = rifle
+	period = enlightenment_age
+	cost_commodity = research
+	prerequisites = {
+		breech_loading_rifle
+	}
+	monthly_chance = {
+		base_value = 5
+		
+		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	war = true
+		#	war_domains = {
+		#		technology = machine_gun
+		#	}
+		#}
+	}
+}
+
+bolt_action_rifle = {
+	name = "Bolt-Action Rifle"
+	subcategory = army
+	portrait = engineering
+	icon = rifle
+	period = industrial_age
+	cost_commodity = research
+	prerequisites = {
+		machine_gun
+	}
+	monthly_chance = {
+		base_value = 5
+		
+		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	war = true
+		#	war_domains = {
+		#		technology = bolt_action_rifle
+		#	}
+		#}
+	}
+}
