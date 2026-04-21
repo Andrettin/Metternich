@@ -519,6 +519,7 @@ science = {
 	cost_commodity = research
 	prerequisites = {
 		natural_philosophy
+		university
 	}
 	discovery_effects = {
 		domain = {

@@ -101,6 +101,7 @@ steel_alloys = {
 	prerequisites = {
 		#advanced_metallurgy
 		
+		black_coal
 		science
 	}
 	monthly_chance = {
