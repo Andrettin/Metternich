@@ -7,4 +7,6 @@ road = {
 	commodity_costs = {
 		wealth = 1gb
 	}
+	
+	#FIXME: should halve movement cost
 }

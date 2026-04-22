@@ -577,7 +577,20 @@ QCoro::Task<void> game::apply_history(const QDate &start_date)
 
 				province_game_data->set_culture(province_history->get_main_culture());
 				province_game_data->set_religion(province_history->get_religion());
-				province_game_data->set_pathway(province_history->get_pathway());
+
+				if (province_history->get_pathway() != nullptr) {
+					province_game_data->set_pathway(province_history->get_pathway());
+
+					//add prerequisites for the province's pathway to its researched technologies
+					if (province_history->get_pathway()->get_required_technology() != nullptr) {
+						co_await province_game_data->add_technology_with_prerequisites(province_history->get_pathway()->get_required_technology());
+					}
+
+					const technology *terrain_required_technology = province_history->get_pathway()->get_terrain_required_technology(province_game_data->get_terrain());
+					if (terrain_required_technology != nullptr) {
+						co_await province_game_data->add_technology_with_prerequisites(terrain_required_technology);
+					}
+				}
 
 				const domain *owner = province_history->get_owner();
 				if (owner != nullptr) {
