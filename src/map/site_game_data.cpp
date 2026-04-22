@@ -442,15 +442,22 @@ bool site_game_data::has_route() const
 	return tile->has_route();
 }
 
-bool site_game_data::has_pathway(const pathway *pathway) const
+const pathway *site_game_data::get_pathway() const
 {
-	const tile *tile = this->get_tile();
+	if (this->get_province() == nullptr) {
+		return nullptr;
+	}
 
-	if (tile == nullptr) {
+	return this->get_province()->get_game_data()->get_pathway();
+}
+
+bool site_game_data::has_pathway_or_better(const pathway *pathway) const
+{
+	if (this->get_province() == nullptr) {
 		return false;
 	}
 
-	return tile->has_pathway(pathway);
+	return this->get_province()->get_game_data()->has_pathway_or_better(pathway);
 }
 
 const province *site_game_data::get_province() const

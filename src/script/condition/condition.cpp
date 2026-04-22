@@ -65,7 +65,6 @@
 #include "script/condition/has_building_class_condition.h"
 #include "script/condition/has_character_condition.h"
 #include "script/condition/has_flag_condition.h"
-#include "script/condition/has_pathway_condition.h"
 #include "script/condition/has_population_culture_condition.h"
 #include "script/condition/has_population_religion_condition.h"
 #include "script/condition/has_population_type_condition.h"
@@ -91,6 +90,7 @@
 #include "script/condition/office_condition.h"
 #include "script/condition/owns_province_condition.h"
 #include "script/condition/owns_site_condition.h"
+#include "script/condition/pathway_condition.h"
 #include "script/condition/playable_condition.h"
 #include "script/condition/population_scaled_commodity_condition.h"
 #include "script/condition/population_type_condition.h"
@@ -252,8 +252,6 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			return std::make_unique<can_gain_building_class_condition>(value, condition_operator);
 		} else if (key == "feature") {
 			return std::make_unique<feature_condition>(value, condition_operator);
-		} else if (key == "has_pathway") {
-			return std::make_unique<has_pathway_condition>(value, condition_operator);
 		} else if (key == "has_route") {
 			return std::make_unique<has_route_condition<site>>(value, condition_operator);
 		} else if (key == "holding_level") {
@@ -346,6 +344,8 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 	if constexpr (std::is_same_v<scope_type, province> || std::is_same_v<scope_type, site>) {
 		if (key == "near_water") {
 			return std::make_unique<near_water_condition<scope_type>>(value, condition_operator);
+		} else if (key == "pathway") {
+			return std::make_unique<pathway_condition<scope_type>>(value, condition_operator);
 		} else if (key == "provincial_capital") {
 			return std::make_unique<provincial_capital_condition<scope_type>>(value, condition_operator);
 		} else if (key == "terrain") {

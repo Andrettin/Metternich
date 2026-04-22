@@ -740,6 +740,21 @@ void province_game_data::set_under_construction_pathway(const metternich::pathwa
 	}
 }
 
+bool province_game_data::has_pathway_or_better(const metternich::pathway *pathway) const
+{
+	assert_throw(pathway != nullptr);
+
+	if (this->get_pathway() == pathway) {
+		return true;
+	}
+
+	if (this->get_pathway() == nullptr) {
+		return false;
+	}
+
+	return this->get_pathway()->get_transport_level() >= pathway->get_transport_level();
+}
+
 bool province_game_data::can_build_pathway(const metternich::pathway *pathway) const
 {
 	if (!pathway->is_buildable_in_province(this->province)) {

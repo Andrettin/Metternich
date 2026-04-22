@@ -174,6 +174,7 @@ public:
 	}
 
 	void set_under_construction_pathway(const pathway *pathway);
+	bool has_pathway_or_better(const pathway *pathway) const;
 	bool can_build_pathway(const pathway *pathway) const;
 	Q_INVOKABLE void build_pathway(const metternich::pathway *pathway);
 	Q_INVOKABLE void cancel_pathway_construction();

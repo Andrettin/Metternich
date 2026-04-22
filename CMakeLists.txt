@@ -707,7 +707,6 @@ set(script_condition_HDRS
 	src/script/condition/has_building_condition.h
 	src/script/condition/has_character_condition.h
 	src/script/condition/has_flag_condition.h
-	src/script/condition/has_pathway_condition.h
 	src/script/condition/has_population_culture_condition.h
 	src/script/condition/has_population_religion_condition.h
 	src/script/condition/has_population_type_condition.h
@@ -733,6 +732,7 @@ set(script_condition_HDRS
 	src/script/condition/office_condition.h
 	src/script/condition/owns_province_condition.h
 	src/script/condition/owns_site_condition.h
+	src/script/condition/pathway_condition.h
 	src/script/condition/playable_condition.h
 	src/script/condition/population_scaled_commodity_condition.h
 	src/script/condition/population_type_condition.h
