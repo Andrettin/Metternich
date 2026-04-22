@@ -75,11 +75,23 @@ void pathway::set_image_filepath(const std::filesystem::path &filepath)
 	this->image_filepath = database::get()->get_graphics_path(this->get_module()) / filepath;
 }
 
-QString pathway::get_commodity_costs_string() const
+commodity_map<int64_t> pathway::get_commodity_costs_for_province(const province *province) const
+{
+	commodity_map<int64_t> costs = this->get_commodity_costs();
+
+	//multiply the costs by the province's terrain type movement cost
+	for (auto &[commodity, cost] : costs) {
+		cost *= province->get_game_data()->get_terrain()->get_movement_cost();
+	}
+
+	return costs;
+}
+
+QString pathway::get_commodity_costs_string_for_province(const metternich::province *province) const
 {
 	std::string str;
 
-	const commodity_map<int64_t> commodity_costs = this->get_commodity_costs();
+	const commodity_map<int64_t> commodity_costs = this->get_commodity_costs_for_province(province);
 
 	for (const auto &[commodity, cost] : commodity_costs) {
 		if (cost == 0) {
@@ -101,6 +113,10 @@ QString pathway::get_commodity_costs_string() const
 
 bool pathway::is_buildable_in_province(const province *province) const
 {
+	if (this == defines::get()->get_route_pathway()) {
+		return false;
+	}
+
 	const pathway *province_pathway = province->get_game_data()->get_pathway();
 
 	if (this->get_required_pathway() != nullptr && province_pathway != this->get_required_pathway()) {

@@ -752,7 +752,7 @@ bool province_game_data::can_build_pathway(const metternich::pathway *pathway) c
 
 	const domain_economy *domain_economy = this->get_owner()->get_economy();
 
-	for (const auto &[commodity, cost] : pathway->get_commodity_costs()) {
+	for (const auto &[commodity, cost] : pathway->get_commodity_costs_for_province(this->province)) {
 		if (cost > domain_economy->get_stored_commodity(commodity)) {
 			return false;
 		}
@@ -773,7 +773,7 @@ void province_game_data::build_pathway(const metternich::pathway *pathway)
 
 	domain_economy *domain_economy = this->get_owner()->get_economy();
 
-	for (const auto &[commodity, cost] : pathway->get_commodity_costs()) {
+	for (const auto &[commodity, cost] : pathway->get_commodity_costs_for_province(this->province)) {
 		domain_economy->change_stored_commodity(commodity, -cost);
 	}
 
@@ -789,7 +789,7 @@ void province_game_data::cancel_pathway_construction()
 	if (this->get_owner() != nullptr) {
 		domain_economy *domain_economy = this->get_owner()->get_economy();
 
-		for (const auto &[commodity, cost] : this->get_under_construction_pathway()->get_commodity_costs()) {
+		for (const auto &[commodity, cost] : this->get_under_construction_pathway()->get_commodity_costs_for_province(this->province)) {
 			domain_economy->change_stored_commodity(commodity, cost);
 		}
 	}

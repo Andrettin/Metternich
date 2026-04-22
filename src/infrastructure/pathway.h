@@ -89,7 +89,8 @@ public:
 		return this->commodity_costs;
 	}
 
-	Q_INVOKABLE QString get_commodity_costs_string() const;
+	commodity_map<int64_t> get_commodity_costs_for_province(const province *province) const;
+	Q_INVOKABLE QString get_commodity_costs_string_for_province(const metternich::province *province) const;
 
 	bool is_buildable_in_province(const province *province) const;
 
