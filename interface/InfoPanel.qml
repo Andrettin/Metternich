@@ -200,7 +200,7 @@ Rectangle {
 			id: pathway_icon
 			name: pathway ? pathway.name : "No Pathway"
 			icon_identifier: pathway ? pathway.icon.identifier : "mountains"
-			visible: selected_province !== null
+			visible: selected_province !== null && !selected_garrison && !viewing_population && !viewing_population_units
 			
 			readonly property var pathway: selected_province ? selected_province.game_data.pathway : null
 			
