@@ -15,6 +15,7 @@
 Q_MOC_INCLUDE("character/character.h")
 Q_MOC_INCLUDE("culture/culture.h")
 Q_MOC_INCLUDE("domain/domain.h")
+Q_MOC_INCLUDE("infrastructure/pathway.h")
 Q_MOC_INCLUDE("population/population.h")
 Q_MOC_INCLUDE("religion/religion.h")
 Q_MOC_INCLUDE("ui/icon.h")
@@ -35,6 +36,7 @@ class domain;
 class icon;
 class improvement;
 class military_unit;
+class pathway;
 class phenotype;
 class population;
 class population_unit;
@@ -66,6 +68,7 @@ class province_game_data final : public QObject
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect CONSTANT)
 	Q_PROPERTY(const metternich::site* provincial_capital READ get_provincial_capital NOTIFY provincial_capital_changed)
 	Q_PROPERTY(QPoint center_tile_pos READ get_center_tile_pos CONSTANT)
+	Q_PROPERTY(const metternich::pathway* pathway READ get_pathway NOTIFY pathway_changed)
 	Q_PROPERTY(QVariantList visible_sites READ get_visible_sites_qvariant_list NOTIFY visible_sites_changed)
 	Q_PROPERTY(QVariantList dungeon_sites READ get_dungeon_sites_qvariant_list NOTIFY dungeon_sites_changed)
 	Q_PROPERTY(QVariantList technologies READ get_technologies_qvariant_list NOTIFY technologies_changed)
@@ -155,6 +158,13 @@ public:
 	void choose_provincial_capital();
 	const site *get_best_provincial_capital_slot() const;
 	const QPoint &get_center_tile_pos() const;
+
+	const metternich::pathway *get_pathway() const
+	{
+		return this->pathway;
+	}
+
+	void set_pathway(const pathway *pathway);
 
 	const std::vector<QPoint> &get_border_tiles() const;
 	const std::vector<QPoint> &get_resource_tiles() const;
@@ -549,6 +559,7 @@ signals:
 	void religion_changed();
 	void level_changed();
 	void provincial_capital_changed();
+	void pathway_changed();
 	void map_image_changed();
 	void map_mode_image_changed(QString map_mode_identifier);
 	void visible_sites_changed();
@@ -570,6 +581,7 @@ private:
 	const metternich::religion *religion = nullptr;
 	int level = 0;
 	const site *provincial_capital = nullptr;
+	const metternich::pathway *pathway = nullptr;
 	QImage map_image;
 	QImage selected_map_image;
 	std::map<province_map_mode, QImage> map_mode_images;

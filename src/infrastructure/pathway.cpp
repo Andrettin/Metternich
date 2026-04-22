@@ -58,6 +58,7 @@ void pathway::initialize()
 
 void pathway::check() const
 {
+	assert_throw(this->get_icon() != nullptr);
 	assert_throw(this->get_transport_level() > 0 || this == defines::get()->get_route_pathway());
 
 	assert_log(!this->get_image_filepath().empty());

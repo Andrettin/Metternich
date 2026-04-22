@@ -1,5 +1,6 @@
 railroad = {
 	name = "Railroad"
+	icon = railroad
 	image_filepath = "tiles/pathways/road.png"
 	transport_level = 4
 	required_pathway = road

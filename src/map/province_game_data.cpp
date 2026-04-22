@@ -28,6 +28,7 @@
 #include "infrastructure/dungeon.h"
 #include "infrastructure/holding_type.h"
 #include "infrastructure/improvement.h"
+#include "infrastructure/pathway.h"
 #include "map/diplomatic_map_mode.h"
 #include "map/map.h"
 #include "map/province.h"
@@ -103,6 +104,8 @@ void province_game_data::process_gsml_property(const gsml_property &property)
 		this->level = std::stoi(value);
 	} else if (key == "provincial_capital") {
 		this->provincial_capital = site::get(value);
+	} else if (key == "pathway") {
+		this->pathway = pathway::get(value);
 	} else if (key == "technology_spread_modifier") {
 		this->technology_spread_modifier = std::stoi(value);
 	} else {
@@ -144,8 +147,12 @@ gsml_data province_game_data::to_gsml_data() const
 		data.add_property("level", std::to_string(this->get_level()));
 	}
 
-	if (this->get_provincial_capital() != 0) {
-		data.add_property("provincial_capital", provincial_capital->get_identifier());
+	if (this->get_provincial_capital() != nullptr) {
+		data.add_property("provincial_capital", this->get_provincial_capital()->get_identifier());
+	}
+
+	if (this->get_pathway() != nullptr) {
+		data.add_property("pathway", this->get_pathway()->get_identifier());
 	}
 
 	if (!this->get_technologies().empty()) {
@@ -691,6 +698,19 @@ const site *province_game_data::get_best_provincial_capital_slot() const
 const QPoint &province_game_data::get_center_tile_pos() const
 {
 	return this->province->get_map_data()->get_center_tile_pos();
+}
+
+void province_game_data::set_pathway(const metternich::pathway *pathway)
+{
+	if (pathway == this->get_pathway()) {
+		return;
+	}
+
+	this->pathway = pathway;
+
+	if (game::get()->is_running()) {
+		emit pathway_changed();
+	}
 }
 
 const std::vector<QPoint> &province_game_data::get_border_tiles() const

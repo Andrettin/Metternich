@@ -577,6 +577,7 @@ QCoro::Task<void> game::apply_history(const QDate &start_date)
 
 				province_game_data->set_culture(province_history->get_main_culture());
 				province_game_data->set_religion(province_history->get_religion());
+				province_game_data->set_pathway(province_history->get_pathway());
 
 				const domain *owner = province_history->get_owner();
 				if (owner != nullptr) {

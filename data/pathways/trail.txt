@@ -1,5 +1,6 @@
 trail = {
 	name = "Trail"
+	icon = road
 	image_filepath = "tiles/pathways/road.png"
 	transport_level = 1
 	required_pathway = route

@@ -7,12 +7,14 @@
 #include "util/decimillesimal_int.h"
 
 Q_MOC_INCLUDE("domain/domain.h")
+Q_MOC_INCLUDE("infrastructure/pathway.h")
 Q_MOC_INCLUDE("religion/religion.h")
 
 namespace metternich {
 
 class culture;
 class domain;
+class pathway;
 class province;
 class religion;
 class technology;
@@ -26,6 +28,7 @@ class province_history final : public data_entry_history
 	Q_PROPERTY(const metternich::domain* temple_domain MEMBER temple_domain)
 	Q_PROPERTY(const metternich::religion* religion MEMBER religion)
 	Q_PROPERTY(int level MEMBER level READ get_level)
+	Q_PROPERTY(const metternich::pathway* pathway MEMBER pathway)
 	Q_PROPERTY(int population READ get_population WRITE set_population)
 	Q_PROPERTY(archimedes::decimillesimal_int literacy_rate MEMBER literacy_rate READ get_literacy_rate)
 	Q_PROPERTY(std::vector<const metternich::technology *> technologies READ get_technologies)
@@ -85,6 +88,11 @@ public:
 	int get_level() const
 	{
 		return this->level;
+	}
+
+	const metternich::pathway *get_pathway() const
+	{
+		return this->pathway;
 	}
 
 	int get_population() const
@@ -177,6 +185,7 @@ private:
 	const metternich::religion *religion = nullptr;
 	phenotype_map<int64_t> phenotype_weights;
 	int level = 0;
+	const metternich::pathway *pathway = nullptr;
 	population_group_map<int> population_groups;
 	population_group_map<int> lower_bound_population_groups;
 	decimillesimal_int literacy_rate;

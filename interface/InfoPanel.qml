@@ -196,11 +196,20 @@ Rectangle {
 			visible: selected_site && !selected_garrison && selected_site.game_data.features.length > 0 && !viewing_population && !viewing_population_units
 		}
 		
+		CustomIconImage {
+			id: pathway_icon
+			name: pathway ? pathway.name : "No Pathway"
+			icon_identifier: pathway ? pathway.icon.identifier : "mountains"
+			visible: selected_province !== null
+			
+			readonly property var pathway: selected_province ? selected_province.game_data.pathway : null
+		}
+		
 		ScriptedModifierRow {
 			id: scripted_modifier_row
 			anchors.verticalCenter: parent.verticalCenter
-			scope: selected_site
-			visible: selected_site && !selected_garrison && selected_site.game_data.scripted_modifiers.length > 0 && !viewing_population && !viewing_population_units
+			scope: selected_site !== null ? selected_site : selected_province
+			visible: (selected_site !== null || selected_province !== null) && !selected_garrison && selected_site.game_data.scripted_modifiers.length > 0 && !viewing_population && !viewing_population_units
 		}
 	}
 	
