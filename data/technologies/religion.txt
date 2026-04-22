@@ -4,7 +4,6 @@ asceticism = {
 	portrait = engineering
 	icon = wooden_cross
 	period = bronze_age
-	cost_commodity = research
 	spread_conditions = {
 		source_province = {
 			or = {

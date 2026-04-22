@@ -4,7 +4,6 @@ road_building = {
 	portrait = engineering
 	icon = road
 	period = bronze_age
-	cost_commodity = research
 	discovery_mean_time_to_happen = {
 		months = 50
 		
@@ -303,7 +302,6 @@ glassblowing = {
 	portrait = engineering
 	icon = glass
 	period = bronze_age
-	cost_commodity = research
 	discovery_mean_time_to_happen = {
 		months = 150
 		
@@ -588,7 +586,6 @@ black_coal = {
 	portrait = engineering
 	icon = coal
 	period = castle_age
-	cost_commodity = research
 	prerequisites = {
 		natural_philosophy
 	}
@@ -899,7 +896,6 @@ pit_coal = {
 	portrait = engineering
 	icon = coal
 	period = renaissance_age
-	cost_commodity = research
 	prerequisites = {
 		#clean_coal
 		
@@ -931,7 +927,6 @@ coke = {
 	portrait = engineering
 	icon = coal
 	period = gunpowder_age
-	cost_commodity = research
 	prerequisites = {
 		#clean_coal
 		
@@ -962,7 +957,6 @@ mechanized_slaughtering_block = {
 	portrait = engineering
 	icon = cattle
 	period = renaissance_age
-	cost_commodity = research
 	prerequisites = {
 		#mechanical_production
 		
@@ -994,7 +988,6 @@ precision_work = {
 	portrait = engineering
 	icon = glass
 	period = renaissance_age
-	cost_commodity = research
 	prerequisites = {
 		#mechanical_production
 		
@@ -1027,7 +1020,6 @@ integral_distillery_process = {
 	portrait = engineering
 	icon = wine
 	period = renaissance_age
-	cost_commodity = research
 	prerequisites = {
 		#interchangeable_parts
 		
@@ -1058,7 +1050,6 @@ refrigeration = {
 	portrait = engineering
 	icon = cattle
 	period = renaissance_age
-	cost_commodity = research
 	prerequisites = {
 		#assembly_line
 		
@@ -1093,7 +1084,6 @@ bakelite = {
 	portrait = engineering
 	icon = glass
 	period = gunpowder_age
-	cost_commodity = research
 	prerequisites = {
 		#synthetic_polymers
 		

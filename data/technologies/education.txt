@@ -4,7 +4,6 @@ monastic_school = {
 	portrait = university
 	icon = wooden_cross
 	period = iron_age
-	cost_commodity = research
 	prerequisites = {
 		asceticism
 	}
@@ -239,7 +238,6 @@ cathedral_school = {
 	portrait = university
 	icon = wooden_cross
 	period = classical_age
-	cost_commodity = research
 	prerequisites = {
 		monastic_school
 	}
@@ -474,7 +472,6 @@ university = {
 	portrait = university
 	icon = university
 	period = feudal_age #renaissance_age
-	cost_commodity = research
 	prerequisites = {
 		cathedral_school
 		scholasticism

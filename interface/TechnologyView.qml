@@ -106,19 +106,11 @@ Item {
 							spacing: 8 * scale_factor
 							visible: country_game_data.technology.current_researches.includes(technology) === false
 							
-							SmallText {
-								id: wealth_cost_label
-								anchors.verticalCenter: commodity_costs_row.verticalCenter
-								text: "$" + number_string(wealth_cost)
-								visible: wealth_cost > 0
-								
-								readonly property var wealth_cost: technology.get_wealth_cost_for_country(country)
-							}
-							
 							Repeater {
-								model: technology.get_commodity_costs_for_country_qvariant_list(country)
+								model: technology.get_commodity_costs_for_domain_qvariant_list(country)
 								
 								Row {
+									id: commodity_cost_row
 									spacing: 4 * scale_factor
 									
 									readonly property var commodity: model.modelData.key
@@ -131,7 +123,7 @@ Item {
 									
 									SmallText {
 										id: cost_label
-										text: number_string(commodity_cost)
+										text: commodity.value_to_qstring(commodity_cost)
 										anchors.verticalCenter: commodity_icon.verticalCenter
 									}
 								}

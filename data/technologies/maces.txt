@@ -4,7 +4,6 @@ mace = {
 	portrait = bronze_short_sword
 	icon = saber
 	period = bronze_age
-	cost_commodity = research
 	discovery_mean_time_to_happen = {
 		months = 250
 		
@@ -172,7 +171,6 @@ morning_star = {
 	portrait = bronze_short_sword
 	icon = saber
 	period = iron_age
-	cost_commodity = research
 	prerequisites = {
 		mace
 	}

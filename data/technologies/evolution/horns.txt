@@ -5,7 +5,6 @@
 #	icon = lion
 #	period = jurassic
 #	year = -68000000 #Triceratops
-#	cost_commodity = research
 #	prerequisites = {
 #		bony_neck_frill
 #		bony_knobs

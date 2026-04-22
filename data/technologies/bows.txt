@@ -4,7 +4,6 @@ short_bow = {
 	portrait = engineering
 	icon = bow
 	period = bronze_age
-	cost_commodity = research
 	discovery_mean_time_to_happen = {
 		months = 50
 		
@@ -176,7 +175,6 @@ long_bow = {
 	portrait = engineering
 	icon = bow
 	period = iron_age
-	cost_commodity = research
 	prerequisites = {
 		short_bow
 	}
@@ -347,7 +345,6 @@ composite_bow = {
 	portrait = engineering
 	icon = bow
 	period = classical_age
-	cost_commodity = research
 	prerequisites = {
 		long_bow
 	}
@@ -514,7 +511,6 @@ light_crossbow = {
 	portrait = engineering
 	icon = bow
 	period = iron_age
-	cost_commodity = research
 	prerequisites = {
 		short_bow
 	}
@@ -673,7 +669,6 @@ heavy_crossbow = {
 	portrait = engineering
 	icon = bow
 	period = classical_age
-	cost_commodity = research
 	prerequisites = {
 		light_crossbow
 	}

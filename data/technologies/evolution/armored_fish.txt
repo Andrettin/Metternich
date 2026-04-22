@@ -5,7 +5,6 @@
 #	icon = fish
 #	period = cretaceous
 #	year = -400000000 #Hemicyclaspis
-#	cost_commodity = research
 #	prerequisites = {
 #		full_armor
 #		spiny_fins

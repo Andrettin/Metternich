@@ -5,7 +5,6 @@
 #	icon = lion
 #	period = neogene
 #	year = -72700000 #Tyrannosaurus
-#	cost_commodity = research
 #	prerequisites = {
 #		serrated_teeth
 #		upright_stature

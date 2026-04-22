@@ -4,7 +4,6 @@ dark_ages = {
 	portrait = engineering
 	icon = iron
 	period = feudal_age
-	cost_commodity = research
 	prerequisites = {
 		aristotelian_logic
 	}
@@ -16,7 +15,6 @@ middle_ages = {
 	portrait = engineering
 	icon = iron
 	period = castle_age
-	cost_commodity = research
 	prerequisites = {
 		dark_ages
 	}
@@ -28,7 +26,6 @@ renaissance = {
 	portrait = engineering
 	icon = painting
 	period = renaissance_age
-	cost_commodity = research
 	prerequisites = {
 		middle_ages
 	}
@@ -40,7 +37,6 @@ industrial_era = {
 	portrait = engineering
 	icon = cog
 	period = industrial_age
-	cost_commodity = research
 	prerequisites = {
 		renaissance
 	}
@@ -52,7 +48,6 @@ modern_era = {
 	portrait = engineering
 	icon = rifle
 	period = modern_age
-	cost_commodity = research
 	prerequisites = {
 		industrial_era
 	}

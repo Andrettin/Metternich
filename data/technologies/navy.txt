@@ -4,7 +4,6 @@ steamer_transport = {
 	portrait = unload
 	icon = anchor
 	period = renaissance_age
-	cost_commodity = research
 	prerequisites = {
 		#steamers
 		
@@ -33,7 +32,6 @@ commerce_raider = {
 	portrait = unload
 	icon = anchor
 	period = gunpowder_age
-	cost_commodity = research
 	prerequisites = {
 		#steamers
 		
@@ -61,7 +59,6 @@ ironclad = {
 	portrait = unload
 	icon = anchor
 	period = enlightenment_age
-	cost_commodity = research
 	prerequisites = {
 		#iron_steamers
 		
@@ -90,7 +87,6 @@ protected_cruiser = {
 	portrait = unload
 	icon = anchor
 	period = industrial_age
-	cost_commodity = research
 	prerequisites = {
 		#steel_steamers
 		
@@ -119,7 +115,6 @@ dreadnought = {
 	portrait = unload
 	icon = anchor
 	period = modern_age
-	cost_commodity = research
 	prerequisites = {
 		#steam_turbine_ships
 		

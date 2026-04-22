@@ -13,7 +13,6 @@ aristotelian_logic = {
 	portrait = engineering
 	icon = philosophy
 	period = bronze_age #classical_age
-	cost_commodity = research
 	discovery_effects = {
 		domain = {
 			regency += 25
@@ -138,7 +137,6 @@ scholasticism = {
 	portrait = engineering
 	icon = wooden_cross
 	period = iron_age
-	cost_commodity = research
 	prerequisites = {
 		aristotelian_logic
 	}
@@ -266,7 +264,6 @@ astrology_and_astronomy = {
 	portrait = engineering
 	icon = philosophy
 	period = classical_age
-	cost_commodity = research
 	prerequisites = {
 		scholasticism
 	}
@@ -388,7 +385,6 @@ natural_philosophy = {
 	portrait = engineering
 	icon = philosophy
 	period = feudal_age
-	cost_commodity = research
 	prerequisites = {
 		astrology_and_astronomy
 	}
@@ -516,7 +512,6 @@ science = {
 	portrait = engineering
 	icon = philosophy
 	period = castle_age
-	cost_commodity = research
 	prerequisites = {
 		natural_philosophy
 		university

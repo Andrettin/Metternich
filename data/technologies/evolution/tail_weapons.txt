@@ -5,7 +5,6 @@
 #	icon = lion
 #	period = triassic
 #	year = -155000000 #Stegosaurus
-#	cost_commodity = research
 #	prerequisites = {
 #		spikes
 #		tail_weapons

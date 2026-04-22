@@ -5,5 +5,4 @@
 #	icon = fish
 #	period = devonian
 #	year = -405000000 #Climatius
-#	cost_commodity = research
 #}

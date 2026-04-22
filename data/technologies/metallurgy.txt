@@ -4,7 +4,6 @@ advanced_ore_roasting_processes = {
 	portrait = engineering
 	icon = iron
 	period = renaissance_age
-	cost_commodity = research
 	prerequisites = {
 		#cheap_iron
 		
@@ -35,7 +34,6 @@ advanced_ore_grinding_processes = {
 	portrait = engineering
 	icon = iron
 	period = gunpowder_age
-	cost_commodity = research
 	prerequisites = {
 		#cheap_iron
 		
@@ -66,7 +64,6 @@ advanced_ore_smelting_processes = {
 	portrait = engineering
 	icon = iron
 	period = enlightenment_age
-	cost_commodity = research
 	prerequisites = {
 		#cheap_iron
 		
@@ -97,7 +94,6 @@ steel_alloys = {
 	portrait = engineering
 	icon = steel
 	period = industrial_age
-	cost_commodity = research
 	prerequisites = {
 		#advanced_metallurgy
 		

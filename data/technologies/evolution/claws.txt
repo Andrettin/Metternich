@@ -5,7 +5,6 @@
 #	icon = lion
 #	period = triassic
 #	year = -130000000 #Baryonyx
-#	cost_commodity = research
 #	prerequisites = {
 #		fingers
 #	}

@@ -5,5 +5,4 @@
 #	icon = lion
 #	period = devonian
 #	year = -385000000 #Gyroptychius
-#	cost_commodity = research
 #}

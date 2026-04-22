@@ -78,7 +78,6 @@ class technology final : public named_data_entry, public data_type<technology>
 	Q_PROPERTY(int level MEMBER level READ get_level NOTIFY changed)
 	Q_PROPERTY(int free_technologies MEMBER free_technologies READ get_free_technologies NOTIFY changed)
 	Q_PROPERTY(QVariantList prerequisites READ get_prerequisites_qvariant_list NOTIFY changed)
-	Q_PROPERTY(int wealth_cost_weight MEMBER wealth_cost_weight NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_buildings READ get_enabled_buildings_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_improvements READ get_enabled_improvements_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_pathways READ get_enabled_pathways_qvariant_list NOTIFY changed)
@@ -93,9 +92,6 @@ public:
 	static constexpr const char class_identifier[] = "technology";
 	static constexpr const char property_class_identifier[] = "metternich::technology*";
 	static constexpr const char database_folder[] = "technologies";
-
-	static constexpr int default_wealth_cost_weight = 1;
-	static constexpr int default_commodity_cost_weight = 1;
 
 public:
 	static void initialize_all();
@@ -118,7 +114,6 @@ public:
 	explicit technology(const std::string &identifier);
 	~technology();
 
-	virtual void process_gsml_property(const gsml_property &property) override;
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
 	virtual void check() const override;
@@ -213,17 +208,15 @@ public:
 		return this->child_technologies;
 	}
 
-	int get_wealth_cost_weight() const;
-	commodity_map<int> get_commodity_cost_weights() const;
-	int get_total_cost_weights() const;
-	decimillesimal_int get_cost_for_country(const domain *domain) const;
-	Q_INVOKABLE int get_wealth_cost_for_country(const metternich::domain *domain) const;
-	commodity_map<int> get_commodity_costs_for_country(const domain *domain) const;
-	Q_INVOKABLE QVariantList get_commodity_costs_for_country_qvariant_list(const metternich::domain *domain) const;
+	const commodity_map<int64_t> &get_commodity_costs() const
+	{
+		return this->commodity_costs;
+	}
 
-	void calculate_cost();
+	commodity_map<int64_t> get_commodity_costs_for_domain(const domain *domain) const;
+	Q_INVOKABLE QVariantList get_commodity_costs_for_domain_qvariant_list(const metternich::domain *domain) const;
 
-	const factor<domain> *get_cost_factor() const
+	const factor<province> *get_cost_factor() const
 	{
 		return this->cost_factor.get();
 	}
@@ -483,10 +476,8 @@ private:
 	std::vector<const technology *> leads_to;
 	const technology *parent_technology = nullptr;
 	std::vector<const technology *> child_technologies;
-	int cost = 0;
-	int wealth_cost_weight = technology::default_wealth_cost_weight;
-	commodity_map<int> commodity_cost_weights;
-	std::unique_ptr<const factor<domain>> cost_factor;
+	commodity_map<int64_t> commodity_costs;
+	std::unique_ptr<const factor<province>> cost_factor;
 	std::vector<const commodity *> enabled_commodities;
 	std::vector<const resource *> enabled_resources;
 	std::vector<const building_type *> enabled_buildings;

@@ -302,12 +302,7 @@ bool country_technology::can_research_technology(const technology *technology) c
 		return false;
 	}
 
-	const int wealth_cost = technology->get_wealth_cost_for_country(this->domain);
-	if (wealth_cost > 0 && wealth_cost > this->domain->get_economy()->get_wealth()) {
-		return false;
-	}
-
-	for (const auto &[commodity, cost] : technology->get_commodity_costs_for_country(this->domain)) {
+	for (const auto &[commodity, cost] : technology->get_commodity_costs_for_domain(this->domain)) {
 		if (cost > this->domain->get_economy()->get_stored_commodity(commodity)) {
 			return false;
 		}
@@ -386,10 +381,7 @@ void country_technology::add_current_research(const technology *technology)
 {
 	assert_throw(this->can_research_technology(technology));
 
-	const int wealth_cost = technology->get_wealth_cost_for_country(this->domain);
-	this->domain->get_economy()->change_wealth(-wealth_cost);
-
-	for (const auto &[commodity, cost] : technology->get_commodity_costs_for_country(this->domain)) {
+	for (const auto &[commodity, cost] : technology->get_commodity_costs_for_domain(this->domain)) {
 		this->domain->get_economy()->change_stored_commodity(commodity, -cost);
 	}
 
@@ -402,10 +394,7 @@ void country_technology::remove_current_research(const technology *technology, c
 	assert_throw(this->get_current_researches().contains(technology));
 
 	if (restore_costs) {
-		const int wealth_cost = technology->get_wealth_cost_for_country(this->domain);
-		this->domain->get_economy()->change_wealth(wealth_cost);
-
-		for (const auto &[commodity, cost] : technology->get_commodity_costs_for_country(this->domain)) {
+		for (const auto &[commodity, cost] : technology->get_commodity_costs_for_domain(this->domain)) {
 			this->domain->get_economy()->change_stored_commodity(commodity, cost);
 		}
 	}

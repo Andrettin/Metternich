@@ -84,7 +84,7 @@ void technology::initialize_all()
 
 	commodity_map<int> research_commodity_counts;
 	for (const technology *technology : technology::get_all()) {
-		for (const auto &[commodity, cost_weight] : technology->commodity_cost_weights) {
+		for (const auto &[commodity, cost] : technology->commodity_costs) {
 			++research_commodity_counts[commodity];
 		}
 	}
@@ -109,19 +109,6 @@ technology::technology(const std::string &identifier)
 
 technology::~technology()
 {
-}
-
-void technology::process_gsml_property(const gsml_property &property)
-{
-	const std::string &key = property.get_key();
-	const std::string &value = property.get_value();
-
-	if (key == "cost_commodity") {
-		assert_throw(property.get_operator() == gsml_operator::assignment);
-		this->commodity_cost_weights[commodity::get(value)] = technology::default_commodity_cost_weight;
-	} else {
-		named_data_entry::process_gsml_property(property);
-	}
 }
 
 void technology::process_gsml_scope(const gsml_data &scope)
@@ -150,7 +137,7 @@ void technology::process_gsml_scope(const gsml_data &scope)
 			this->prerequisites.push_back(technology::get(value));
 		}
 	} else if (tag == "cost_factor") {
-		auto factor = std::make_unique<metternich::factor<domain>>(100);
+		auto factor = std::make_unique<metternich::factor<province>>(100);
 		factor->process_gsml_data(scope);
 		this->cost_factor = std::move(factor);
 	} else if (tag == "modifier") {
@@ -208,10 +195,6 @@ void technology::initialize()
 
 	for (technology *prerequisite : this->get_prerequisites()) {
 		prerequisite->leads_to.push_back(this);
-	}
-
-	if (!this->is_discovery()) {
-		this->calculate_cost();
 	}
 
 	std::sort(this->enabled_pathways.begin(), this->enabled_pathways.end(), pathway_compare());
@@ -295,14 +278,6 @@ void technology::check() const
 
 	if (this->get_icon() == nullptr) {
 		throw std::runtime_error(std::format("Technology \"{}\" has no icon.", this->get_identifier()));
-	}
-
-	if (this->cost == 0 && !this->is_discovery()) {
-		//throw std::runtime_error(std::format("Technology \"{}\" has no cost, and is not a discovery.", this->get_identifier()));
-	}
-
-	if (this->commodity_cost_weights.empty() && !this->is_discovery()) {
-		throw std::runtime_error(std::format("Technology \"{}\" has no cost commodity, and is not a discovery.", this->get_identifier()));
 	}
 
 	if (this->get_period() != nullptr) {
@@ -425,132 +400,38 @@ void technology::calculate_total_prerequisite_depth()
 	this->total_prerequisite_depth = depth;
 }
 
-int technology::get_wealth_cost_weight() const
+commodity_map<int64_t> technology::get_commodity_costs_for_domain(const domain *domain) const
 {
-	int weight = this->wealth_cost_weight;
+	assert_throw(domain->get_game_data()->get_capital_province() != nullptr);
 
-	if (weight == 0) {
-		const bool has_commodity_cost_weight = !this->get_commodity_cost_weights().empty();
-		if (!has_commodity_cost_weight) {
-			weight = 1;
-		}
-	}
+	commodity_map<int64_t> costs;
 
-	return weight;
-}
-
-commodity_map<int> technology::get_commodity_cost_weights() const
-{
-	commodity_map<int> weights;
-
-	for (const auto &[commodity, cost_weight] : this->commodity_cost_weights) {
+	for (const auto &[commodity, base_cost] : this->get_commodity_costs()) {
 		if (!commodity->is_enabled()) {
 			continue;
 		}
 
-		weights[commodity] = cost_weight;
-	}
-
-	if (!this->commodity_cost_weights.empty() && weights.empty() && defines::get()->get_default_research_commodity()->is_enabled()) {
-		//if the technology has commodity cost weights, but those commodities are disabled, use the default research commodity instead
-		weights[defines::get()->get_default_research_commodity()] = technology::default_commodity_cost_weight;
-	}
-
-	return weights;
-}
-
-int technology::get_total_cost_weights() const
-{
-	int cost_weights = this->get_wealth_cost_weight();
-
-	for (const auto &[commodity, cost_weight] : this->get_commodity_cost_weights()) {
-		if (!commodity->is_enabled()) {
+		if (base_cost <= 0) {
 			continue;
 		}
-		cost_weights += cost_weight;
-	}
 
-	return cost_weights;
-}
-
-decimillesimal_int technology::get_cost_for_country(const domain *domain) const
-{
-	decimillesimal_int cost(this->cost);
-
-	if (cost > 0) {
+		decimillesimal_int cost(base_cost);
 		cost *= decimillesimal_int(centesimal_int(100) + domain->get_technology()->get_technology_cost_modifier() + domain->get_technology()->get_technology_category_cost_modifier(this->get_category()) + domain->get_technology()->get_technology_subcategory_cost_modifier(this->get_subcategory()));
 		cost /= 100;
 
 		if (this->get_cost_factor() != nullptr) {
-			cost = this->get_cost_factor()->calculate(domain, cost);
+			cost = this->get_cost_factor()->calculate(domain->get_game_data()->get_capital_province(), cost);
 		}
 
-		cost = decimillesimal_int::max(decimillesimal_int(1), cost);
-	}
-
-	return cost;
-}
-
-int technology::get_wealth_cost_for_country(const domain *domain) const
-{
-	const int wealth_cost_weight = this->get_wealth_cost_weight();
-
-	if (wealth_cost_weight == 0) {
-		return 0;
-	}
-
-	decimillesimal_int cost = this->get_cost_for_country(domain) * 100;
-	cost *= wealth_cost_weight;
-	cost /= this->get_total_cost_weights();
-	return std::max(1, cost.to_int());
-}
-
-commodity_map<int> technology::get_commodity_costs_for_country(const domain *domain) const
-{
-	const decimillesimal_int cost = this->get_cost_for_country(domain);
-	const int total_cost_weights = this->get_total_cost_weights();
-
-	commodity_map<int> costs;
-
-	for (const auto &[commodity, cost_weight] : this->get_commodity_cost_weights()) {
-		if (!commodity->is_enabled()) {
-			continue;
-		}
-
-		if (cost_weight <= 0) {
-			continue;
-		}
-
-		decimillesimal_int commodity_cost = cost;
-		commodity_cost *= cost_weight;
-		commodity_cost /= total_cost_weights;
-
-		switch (commodity->get_type()) {
-			case commodity_type::material:
-				commodity_cost /= 2;
-				break;
-			case commodity_type::good:
-				commodity_cost /= 4;
-				break;
-			default:
-				break;
-		}
-
-		costs[commodity] = std::max(1, commodity_cost.to_int());
+		costs[commodity] = std::max(1ll, cost.to_int64());
 	}
 
 	return costs;
 }
 
-QVariantList technology::get_commodity_costs_for_country_qvariant_list(const domain *domain) const
+QVariantList technology::get_commodity_costs_for_domain_qvariant_list(const domain *domain) const
 {
-	return archimedes::map::to_qvariant_list(this->get_commodity_costs_for_country(domain));
-}
-
-void technology::calculate_cost()
-{
-	const int depth = this->get_total_prerequisite_depth();
-	this->cost = (depth + 2) * number::sqrt(depth + 2) * 10;
+	return archimedes::map::to_qvariant_list(this->get_commodity_costs_for_domain(domain));
 }
 
 QVariantList technology::get_enabled_buildings_qvariant_list() const

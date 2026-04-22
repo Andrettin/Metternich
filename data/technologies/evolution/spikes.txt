@@ -5,7 +5,6 @@
 #	icon = lion
 #	period = permian
 #	year = -97000000 #Acanthopholis
-#	cost_commodity = research
 #	prerequisites = {
 #		spines
 #		bony_plates

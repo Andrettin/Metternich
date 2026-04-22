@@ -4,7 +4,6 @@ ballads = {
 	portrait = engineering
 	icon = music
 	period = bronze_age
-	cost_commodity = research
 	discovery_mean_time_to_happen = {
 		months = 250
 		

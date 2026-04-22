@@ -4,7 +4,6 @@ flintlock_rifle = {
 	portrait = engineering
 	icon = rifle
 	period = renaissance_age
-	cost_commodity = research
 	prerequisites = {
 		heavy_crossbow
 		science
@@ -34,7 +33,6 @@ breech_loading_rifle = {
 	portrait = engineering
 	icon = rifle
 	period = gunpowder_age
-	cost_commodity = research
 	prerequisites = {
 		flintlock_rifle
 	}
@@ -58,7 +56,6 @@ machine_gun = {
 	portrait = engineering
 	icon = rifle
 	period = enlightenment_age
-	cost_commodity = research
 	prerequisites = {
 		breech_loading_rifle
 	}
@@ -82,7 +79,6 @@ bolt_action_rifle = {
 	portrait = engineering
 	icon = rifle
 	period = industrial_age
-	cost_commodity = research
 	prerequisites = {
 		machine_gun
 	}
