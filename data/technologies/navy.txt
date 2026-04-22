@@ -1,5 +1,5 @@
-commerce_raider = {
-	name = "Commerce Raider"
+steamer_transport = {
+	name = "Steamer Transport"
 	subcategory = navy
 	portrait = unload
 	icon = anchor
@@ -15,6 +15,34 @@ commerce_raider = {
 		base_value = 5
 		
 		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	technology = mechanical_production
+		#}
+		#modifier = {
+		#	factor = 1
+		#	additive = true
+		#	technology = clean_coal
+		#}
+	}
+}
+
+commerce_raider = {
+	name = "Commerce Raider"
+	subcategory = navy
+	portrait = unload
+	icon = anchor
+	period = gunpowder_age
+	cost_commodity = research
+	prerequisites = {
+		#steamers
+		
+		steamer_transport
+	}
+	monthly_chance = {
+		base_value = 5
+		
+		#modifier = {
 		#	factor = 1
 		#	additive = true
 		#	technology = fire_control_systems
@@ -23,6 +51,91 @@ commerce_raider = {
 		#	factor = 3
 		#	additive = true
 		#	technology = raider_group_doctrine
+		#}
+	}
+}
+
+ironclad = {
+	name = "Ironclad"
+	subcategory = navy
+	portrait = unload
+	icon = anchor
+	period = gunpowder_age
+	cost_commodity = research
+	prerequisites = {
+		#iron_steamers
+		
+		steamer_transport
+	}
+	monthly_chance = {
+		base_value = 5
+		
+		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	technology = monitors
+		#}
+		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	technology = torpedo_boats
+		#}
+	}
+}
+
+protected_cruiser = {
+	name = "Protected Cruiser"
+	subcategory = navy
+	portrait = unload
+	icon = anchor
+	period = enlightenment_age
+	cost_commodity = research
+	prerequisites = {
+		#steel_steamers
+		
+		commerce_raider
+		ironclad
+	}
+	monthly_chance = {
+		base_value = 3
+		
+		modifier = {
+			factor = 2
+			additive = true
+			technology = ironclad
+		}
+		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	technology = cheap_steel
+		#}
+	}
+}
+
+dreadnought = {
+	name = "Dreadnought"
+	subcategory = navy
+	portrait = unload
+	icon = anchor
+	period = enlightenment_age
+	cost_commodity = research
+	prerequisites = {
+		#steam_turbine_ships
+		
+		ironclad
+	}
+	monthly_chance = {
+		base_value = 5
+		
+		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	technology = pre_dreadnought
+		#}
+		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	technology = naval_logistics
 		#}
 	}
 }

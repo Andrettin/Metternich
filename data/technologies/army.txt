@@ -1,0 +1,36 @@
+tank_experiments = {
+	name = "Tank Experiments"
+	subcategory = army
+	portrait = engineering
+	icon = cannon
+	period = renaissance_age
+	cost_commodity = research
+	prerequisites = {
+		#infiltration
+		
+		black_coal
+		science
+	}
+	monthly_chance = {
+		base_value = 1
+		
+		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	technology = elastic_defense_system
+		#}
+		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	war = true
+		#	war_domains = { technology = tank_experiments }
+		#}
+		#modifier = {
+		#	factor = -5
+		#	additive = true
+		#	not = {
+		#		technology = combustion_engine
+		#	}
+		#}
+	}
+}
