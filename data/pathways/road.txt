@@ -4,6 +4,7 @@ road = {
 	image_filepath = "tiles/pathways/road.png"
 	transport_level = 2
 	required_pathway = trail
+	required_technology = road_building
 	commodity_costs = {
 		wealth = 1gb
 	}
