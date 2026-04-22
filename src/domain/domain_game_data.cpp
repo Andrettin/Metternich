@@ -3003,10 +3003,7 @@ void domain_game_data::remove_population_unit(population_unit *population_unit)
 
 void domain_game_data::on_population_unit_gained(const population_unit *population_unit, const int multiplier)
 {
-	//countries generate demand in the world market depending on population commodity demand
-	for (const auto &[commodity, value] : population_unit->get_type()->get_commodity_demands()) {
-		this->get_economy()->change_commodity_demand(commodity, value * multiplier);
-	}
+	Q_UNUSED(population_unit);
 
 	this->change_food_consumption(multiplier);
 

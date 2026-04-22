@@ -194,7 +194,7 @@ void domain_economy::do_production()
 	}
 }
 
-void domain_economy::do_trade(domain_map<commodity_map<int>> &domain_luxury_demands)
+void domain_economy::do_trade()
 {
 	try {
 		if (this->get_game_data()->is_under_anarchy()) {
@@ -219,22 +219,6 @@ void domain_economy::do_trade(domain_map<commodity_map<int>> &domain_luxury_dema
 						this->do_sale(other_domain, commodity, sold_quantity, true);
 
 						offer -= sold_quantity;
-
-						if (offer == 0) {
-							break;
-						}
-					}
-				}
-
-				int &demand = domain_luxury_demands[other_domain][commodity];
-				if (demand > 0) {
-					const int sold_quantity = std::min(offer, demand);
-
-					if (sold_quantity > 0) {
-						this->do_sale(domain, commodity, sold_quantity, false);
-
-						offer -= sold_quantity;
-						demand -= sold_quantity;
 
 						if (offer == 0) {
 							break;
@@ -659,21 +643,6 @@ int domain_economy::get_food_output() const
 	}
 
 	return food_output;
-}
-
-void domain_economy::change_commodity_demand(const commodity *commodity, const decimillesimal_int &change)
-{
-	if (change == 0) {
-		return;
-	}
-
-	const decimillesimal_int count = (this->commodity_demands[commodity] += change);
-
-	assert_throw(count >= 0);
-
-	if (count == 0) {
-		this->commodity_demands.erase(commodity);
-	}
 }
 
 bool domain_economy::produces_commodity(const commodity *commodity) const

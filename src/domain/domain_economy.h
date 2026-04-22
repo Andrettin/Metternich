@@ -52,7 +52,7 @@ public:
 	domain_game_data *get_game_data() const;
 
 	void do_production();
-	void do_trade(domain_map<commodity_map<int>> &domain_luxury_demands);
+	void do_trade();
 	void do_population_needs_purchasing();
 
 	const resource_map<int> &get_resource_counts() const
@@ -229,25 +229,6 @@ public:
 	void calculate_site_commodity_output(const commodity *commodity);
 
 	int get_food_output() const;
-
-	const commodity_map<decimillesimal_int> &get_commodity_demands() const
-	{
-		return this->commodity_demands;
-	}
-
-	const decimillesimal_int &get_commodity_demand(const commodity *commodity) const
-	{
-		const auto find_iterator = this->commodity_demands.find(commodity);
-
-		if (find_iterator != this->commodity_demands.end()) {
-			return find_iterator->second;
-		}
-
-		static const decimillesimal_int zero;
-		return zero;
-	}
-
-	void change_commodity_demand(const commodity *commodity, const decimillesimal_int &change);
 
 	bool produces_commodity(const commodity *commodity) const;
 
@@ -786,7 +767,6 @@ private:
 	int64_t storage_capacity = 0;
 	commodity_map<centesimal_int> commodity_inputs;
 	commodity_map<centesimal_int> commodity_outputs;
-	commodity_map<decimillesimal_int> commodity_demands;
 	commodity_map<int64_t> min_commodity_storages; //if storage is below this, import the commodity
 	commodity_map<int64_t> max_commodity_storages; //if storage is above this, export the commodity
 	commodity_map<int> bids;

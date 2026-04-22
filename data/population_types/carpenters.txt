@@ -4,15 +4,6 @@ apprentice_carpenters = {
 	icon = expert_workers
 	small_icon = expert_workers_small
 	required_game_rule = additional_population_types
-	commodity_demands = {
-		clothing = 0.25
-		furniture = 0.25
-		brass_lamps = 0.125
-		coffee = 0.25
-		opium = 0.125
-		salt = 0.25
-		tea = 0.25
-	}
 }
 
 journeyman_carpenters = {
@@ -21,15 +12,6 @@ journeyman_carpenters = {
 	icon = expert_workers
 	small_icon = expert_workers_small
 	required_game_rule = additional_population_types
-	commodity_demands = {
-		clothing = 0.25
-		furniture = 0.25
-		brass_lamps = 0.125
-		coffee = 0.25
-		opium = 0.125
-		salt = 0.25
-		tea = 0.25
-	}
 }
 
 master_carpenters = {
@@ -38,13 +20,4 @@ master_carpenters = {
 	icon = expert_workers
 	small_icon = expert_workers_small
 	required_game_rule = additional_population_types
-	commodity_demands = {
-		clothing = 0.25
-		furniture = 0.25
-		brass_lamps = 0.125
-		coffee = 0.25
-		opium = 0.125
-		salt = 0.25
-		tea = 0.25
-	}
 }

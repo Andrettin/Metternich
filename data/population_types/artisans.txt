@@ -5,15 +5,6 @@ artisans = {
 	icon = expert_workers
 	small_icon = expert_workers_small
 	strata = middle
-	commodity_demands = {
-		clothing = 0.25
-		furniture = 0.25
-		brass_lamps = 0.125
-		coffee = 0.25
-		opium = 0.125
-		salt = 0.25
-		tea = 0.25
-	}
 	life_needs = {
 		cattle = 0.75da
 		grain = 2.5tn

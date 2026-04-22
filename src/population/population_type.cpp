@@ -59,16 +59,7 @@ void population_type::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "commodity_demands") {
-		scope.for_each_property([this](const gsml_property &property) {
-			const std::string &key = property.get_key();
-			const std::string &value = property.get_value();
-
-			const commodity *commodity = commodity::get(key);
-			decimillesimal_int demand(value);
-			this->commodity_demands[commodity] = std::move(demand);
-		});
-	} else if (tag == "country_modifier") {
+	if (tag == "country_modifier") {
 		this->country_modifier = std::make_unique<modifier<const domain>>();
 		this->country_modifier->process_gsml_data(scope);
 	} else if (tag == "equivalent_population_types") {
@@ -168,9 +159,21 @@ void population_type::check() const
 		}
 	}
 
-	for (const auto &[commodity, demand] : this->get_commodity_demands()) {
+	for (const auto &[commodity, need] : this->get_life_needs()) {
 		if (!commodity->is_tradeable()) {
-			throw std::runtime_error(std::format("Population type \"{}\" demands a non-tradeable commodity (\"{}\").", this->get_identifier(), commodity->get_identifier()));
+			throw std::runtime_error(std::format("Population type \"{}\" needs a non-tradeable commodity (\"{}\").", this->get_identifier(), commodity->get_identifier()));
+		}
+	}
+
+	for (const auto &[commodity, need] : this->get_everyday_needs()) {
+		if (!commodity->is_tradeable()) {
+			throw std::runtime_error(std::format("Population type \"{}\" needs a non-tradeable commodity (\"{}\").", this->get_identifier(), commodity->get_identifier()));
+		}
+	}
+
+	for (const auto &[commodity, need] : this->get_luxury_needs()) {
+		if (!commodity->is_tradeable()) {
+			throw std::runtime_error(std::format("Population type \"{}\" needs a non-tradeable commodity (\"{}\").", this->get_identifier(), commodity->get_identifier()));
 		}
 	}
 }

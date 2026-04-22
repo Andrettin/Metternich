@@ -858,7 +858,6 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/commodity_bonus_per_improvement_modifier_effect.h
 	src/script/modifier_effect/commodity_bonus_per_settlement_modifier_effect.h
 	src/script/modifier_effect/commodity_bonus_per_population_modifier_effect.h
-	src/script/modifier_effect/commodity_demand_modifier_effect.h
 	src/script/modifier_effect/commodity_output_modifier_effect.h
 	src/script/modifier_effect/commodity_throughput_modifier_effect.h
 	src/script/modifier_effect/consumption_modifier_effect.h

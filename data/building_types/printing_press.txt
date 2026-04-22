@@ -12,12 +12,6 @@ printing_press = {
 	conditions = {
 		game_rule = additional_buildings
 	}
-	domain_modifier = {
-		commodity_demand = {
-			commodity = paper
-			value = 1
-		}
-	}
 	province_modifier = {
 		statesmanship_output_modifier = 50
 		research_output_modifier = 22
@@ -37,12 +31,6 @@ newspaper = {
 	}
 	conditions = {
 		game_rule = additional_buildings
-	}
-	domain_modifier = {
-		commodity_demand = {
-			commodity = paper
-			value = 1
-		}
 	}
 	province_modifier = {
 		statesmanship_output_modifier = 100

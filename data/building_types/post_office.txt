@@ -14,12 +14,6 @@ post_office = {
 			produces_commodity = trade
 		}
 	}
-	domain_modifier = {
-		commodity_demand = {
-			commodity = paper
-			value = 1
-		}
-	}
 	province_modifier = {
 		trade_output_modifier = 10
 	}

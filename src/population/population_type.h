@@ -131,22 +131,6 @@ public:
 		return this->educator;
 	}
 
-	const commodity_map<decimillesimal_int> &get_commodity_demands() const
-	{
-		return this->commodity_demands;
-	}
-
-	const decimillesimal_int &get_commodity_demand(const commodity *commodity) const
-	{
-		const auto find_iterator = this->get_commodity_demands().find(commodity);
-		if (find_iterator != this->get_commodity_demands().end()) {
-			return find_iterator->second;
-		}
-
-		static const decimillesimal_int zero;
-		return zero;
-	}
-
 	const commodity *get_output_commodity() const
 	{
 		return this->output_commodity;
@@ -220,7 +204,6 @@ private:
 	bool educator = false;
 	phenotype_map<const metternich::icon *> phenotype_icons;
 	phenotype_map<const metternich::icon *> phenotype_small_icons;
-	commodity_map<decimillesimal_int> commodity_demands;
 	commodity *output_commodity = nullptr;
 	int output_value = 0;
 	int output_modifier = 0;

@@ -1762,52 +1762,12 @@ void game::do_trade()
 		return lhs->get_identifier() < rhs->get_identifier();
 	});
 
-	domain_map<commodity_map<int>> domain_luxury_demands;
-
 	for (const domain *domain : trade_domains) {
 		domain->get_economy()->do_population_needs_purchasing();
 	}
 
 	for (const domain *domain : trade_domains) {
-		domain_economy *domain_economy = domain->get_economy();
-
-		for (const auto &[commodity, demand] : domain_economy->get_commodity_demands()) {
-			if (!domain_economy->can_trade_commodity(commodity)) {
-				continue;
-			}
-
-			//increase demand if prices are lower than the base price, or the inverse if they are higher
-			decimillesimal_int effective_demand = demand * commodity->get_base_price() / game::get()->get_price(commodity);
-
-			int effective_demand_int = effective_demand.to_int();
-
-			assert_throw(effective_demand_int >= 0);
-
-			if (effective_demand_int == 0) {
-				continue;
-			}
-
-			const int offer = domain_economy->get_offer(commodity);
-			if (offer > 0) {
-				const int sold_quantity = std::min(offer, effective_demand_int);
-
-				if (sold_quantity <= 0) {
-					continue;
-				}
-
-				domain_economy->do_sale(domain, commodity, sold_quantity, false);
-
-				effective_demand_int -= sold_quantity;
-			}
-
-			if (effective_demand_int > 0) {
-				domain_luxury_demands[domain][commodity] = effective_demand_int;
-			}
-		}
-	}
-
-	for (const domain *domain : trade_domains) {
-		domain->get_economy()->do_trade(domain_luxury_demands);
+		domain->get_economy()->do_trade();
 	}
 
 	//change commodity prices based on whether there were unfulfilled bids/offers
@@ -1819,11 +1779,6 @@ void game::do_trade()
 
 		for (const auto &[commodity, offer] : domain->get_economy()->get_offers()) {
 			remaining_demands[commodity] -= offer;
-		}
-	}
-	for (const auto &[country, luxury_demands] : domain_luxury_demands) {
-		for (const auto &[commodity, demand] : luxury_demands) {
-			remaining_demands[commodity] += demand;
 		}
 	}
 
