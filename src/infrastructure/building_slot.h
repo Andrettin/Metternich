@@ -61,8 +61,7 @@ public:
 		return this->building;
 	}
 
-	[[nodiscard]]
-	QCoro::Task<void> set_building(const building_type *building);
+	[[nodiscard]] QCoro::Task<void> set_building(const building_type *building);
 
 	const building_type *get_under_construction_building() const
 	{
@@ -76,16 +75,14 @@ public:
 	bool can_gain_building(const building_type *building) const;
 	bool can_build_building(const building_type *building) const;
 
-	[[nodiscard]]
-	QCoro::Task<void> on_building_gained(const building_type *building, const int multiplier);
+	[[nodiscard]] QCoro::Task<void> on_building_gained(const building_type *building, const int multiplier);
 
 	const wonder *get_wonder() const
 	{
 		return this->wonder;
 	}
 
-	[[nodiscard]]
-	QCoro::Task<void> set_wonder(const wonder *wonder);
+	[[nodiscard]] QCoro::Task<void> set_wonder(const wonder *wonder);
 
 	const wonder *get_under_construction_wonder() const
 	{

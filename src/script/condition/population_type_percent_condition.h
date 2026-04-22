@@ -23,6 +23,10 @@ public:
 
 	virtual centesimal_int get_scope_value(const scope_type *scope) const override
 	{
+		if (scope->get_game_data()->get_population()->get_size() == 0) {
+			return centesimal_int(0);
+		}
+
 		return centesimal_int(scope->get_game_data()->get_population()->get_type_size(this->population_type)) * 100 / scope->get_game_data()->get_population()->get_size();
 	}
 

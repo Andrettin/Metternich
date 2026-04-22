@@ -60,6 +60,10 @@ void population_unit::do_promotion()
 
 void population_unit::do_promotion(const bool is_demotion)
 {
+	assert_throw(this->get_site()->get_game_data()->get_population()->get_size() > 0);
+	assert_throw(this->get_province()->get_game_data()->get_population()->get_size() > 0);
+	assert_throw(this->get_country()->get_game_data()->get_population()->get_size() > 0);
+
 	decimillesimal_int promotion_rate = defines::get()->get_base_monthly_promotion_rate() * game::get()->get_current_months_per_turn();
 
 	if (is_demotion) {

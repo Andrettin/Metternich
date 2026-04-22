@@ -795,6 +795,10 @@ void domain_game_data::do_starvation()
 
 QCoro::Task<void> domain_game_data::do_construction()
 {
+	for (const province *province : this->get_provinces()) {
+		province->get_game_data()->do_construction();
+	}
+
 	for (const site *site : this->get_sites()) {
 		if (site->is_settlement() && site->get_game_data()->is_built()) {
 			co_await site->get_game_data()->do_construction();

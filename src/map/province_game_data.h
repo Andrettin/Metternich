@@ -69,6 +69,7 @@ class province_game_data final : public QObject
 	Q_PROPERTY(const metternich::site* provincial_capital READ get_provincial_capital NOTIFY provincial_capital_changed)
 	Q_PROPERTY(QPoint center_tile_pos READ get_center_tile_pos CONSTANT)
 	Q_PROPERTY(const metternich::pathway* pathway READ get_pathway NOTIFY pathway_changed)
+	Q_PROPERTY(const metternich::pathway* under_construction_pathway READ get_under_construction_pathway WRITE set_under_construction_pathway NOTIFY under_construction_pathway_changed)
 	Q_PROPERTY(QVariantList visible_sites READ get_visible_sites_qvariant_list NOTIFY visible_sites_changed)
 	Q_PROPERTY(QVariantList dungeon_sites READ get_dungeon_sites_qvariant_list NOTIFY dungeon_sites_changed)
 	Q_PROPERTY(QVariantList technologies READ get_technologies_qvariant_list NOTIFY technologies_changed)
@@ -98,6 +99,7 @@ public:
 	void do_ai_turn();
 	void collect_taxes();
 	[[nodiscard]] QCoro::Task<void> do_military_unit_recruitment();
+	void do_construction();
 	void do_population_literacy_change();
 
 	bool is_on_map() const;
@@ -165,6 +167,17 @@ public:
 	}
 
 	void set_pathway(const pathway *pathway);
+
+	const pathway *get_under_construction_pathway() const
+	{
+		return this->under_construction_pathway;
+	}
+
+	void set_under_construction_pathway(const pathway *pathway);
+	bool can_build_pathway(const pathway *pathway) const;
+	Q_INVOKABLE void build_pathway(const metternich::pathway *pathway);
+	Q_INVOKABLE void cancel_pathway_construction();
+	Q_INVOKABLE const metternich::pathway *get_buildable_pathway() const;
 
 	const std::vector<QPoint> &get_border_tiles() const;
 	const std::vector<QPoint> &get_resource_tiles() const;
@@ -560,6 +573,7 @@ signals:
 	void level_changed();
 	void provincial_capital_changed();
 	void pathway_changed();
+	void under_construction_pathway_changed();
 	void map_image_changed();
 	void map_mode_image_changed(QString map_mode_identifier);
 	void visible_sites_changed();
@@ -582,6 +596,7 @@ private:
 	int level = 0;
 	const site *provincial_capital = nullptr;
 	const metternich::pathway *pathway = nullptr;
+	const metternich::pathway *under_construction_pathway = nullptr;
 	QImage map_image;
 	QImage selected_map_image;
 	std::map<province_map_mode, QImage> map_mode_images;

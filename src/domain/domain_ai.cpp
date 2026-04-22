@@ -173,6 +173,19 @@ void domain_ai::appoint_office_holders()
 
 void domain_ai::do_construction()
 {
+	for (const province *province : this->get_game_data()->get_provinces()) {
+		if (province->get_game_data()->get_under_construction_pathway() != nullptr) {
+			continue;
+		}
+
+		const pathway *buildable_pathway = province->get_game_data()->get_buildable_pathway();
+		if (buildable_pathway == nullptr) {
+			continue;
+		}
+
+		province->get_game_data()->build_pathway(buildable_pathway);
+	}
+
 	for (const site *site : this->get_game_data()->get_sites()) {
 		if (site->is_settlement() && site->get_game_data()->is_built()) {
 			for (const auto &building_slot : site->get_game_data()->get_building_slots()) {

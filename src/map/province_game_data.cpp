@@ -106,6 +106,8 @@ void province_game_data::process_gsml_property(const gsml_property &property)
 		this->provincial_capital = site::get(value);
 	} else if (key == "pathway") {
 		this->pathway = pathway::get(value);
+	} else if (key == "under_construction_pathway") {
+		this->under_construction_pathway = pathway::get(value);
 	} else if (key == "technology_spread_modifier") {
 		this->technology_spread_modifier = std::stoi(value);
 	} else {
@@ -153,6 +155,10 @@ gsml_data province_game_data::to_gsml_data() const
 
 	if (this->get_pathway() != nullptr) {
 		data.add_property("pathway", this->get_pathway()->get_identifier());
+	}
+
+	if (this->get_under_construction_pathway() != nullptr) {
+		data.add_property("under_construction_pathway", this->get_under_construction_pathway()->get_identifier());
 	}
 
 	if (!this->get_technologies().empty()) {
@@ -292,6 +298,14 @@ QCoro::Task<void> province_game_data::do_military_unit_recruitment()
 		}
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error(std::format("Error doing military unit recruitment for country \"{}\" in province \"{}\".", this->get_owner()->get_identifier(), this->province->get_identifier())));
+	}
+}
+
+void province_game_data::do_construction()
+{
+	if (this->get_under_construction_pathway() != nullptr) {
+		this->set_pathway(this->get_under_construction_pathway());
+		this->set_under_construction_pathway(nullptr);
 	}
 }
 
@@ -711,6 +725,89 @@ void province_game_data::set_pathway(const metternich::pathway *pathway)
 	if (game::get()->is_running()) {
 		emit pathway_changed();
 	}
+}
+
+void province_game_data::set_under_construction_pathway(const metternich::pathway *pathway)
+{
+	if (pathway == this->get_under_construction_pathway()) {
+		return;
+	}
+
+	this->under_construction_pathway = pathway;
+
+	if (game::get()->is_running()) {
+		emit under_construction_pathway_changed();
+	}
+}
+
+bool province_game_data::can_build_pathway(const metternich::pathway *pathway) const
+{
+	if (!pathway->is_buildable_in_province(this->province)) {
+		return false;
+	}
+
+	if (this->get_owner() == nullptr) {
+		return false;
+	}
+
+	const domain_economy *domain_economy = this->get_owner()->get_economy();
+
+	for (const auto &[commodity, cost] : pathway->get_commodity_costs()) {
+		if (cost > domain_economy->get_stored_commodity(commodity)) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+void province_game_data::build_pathway(const metternich::pathway *pathway)
+{
+	if (this->get_owner() == nullptr) {
+		return;
+	}
+
+	if (this->get_under_construction_pathway() != nullptr) {
+		this->cancel_pathway_construction();
+	}
+
+	domain_economy *domain_economy = this->get_owner()->get_economy();
+
+	for (const auto &[commodity, cost] : pathway->get_commodity_costs()) {
+		domain_economy->change_stored_commodity(commodity, -cost);
+	}
+
+	this->set_under_construction_pathway(pathway);
+}
+
+void province_game_data::cancel_pathway_construction()
+{
+	if (this->get_under_construction_pathway() == nullptr) {
+		return;
+	}
+
+	if (this->get_owner() != nullptr) {
+		domain_economy *domain_economy = this->get_owner()->get_economy();
+
+		for (const auto &[commodity, cost] : this->get_under_construction_pathway()->get_commodity_costs()) {
+			domain_economy->change_stored_commodity(commodity, cost);
+		}
+	}
+
+	this->set_under_construction_pathway(nullptr);
+}
+
+const pathway *province_game_data::get_buildable_pathway() const
+{
+	for (const metternich::pathway *pathway : pathway::get_all()) {
+		if (!pathway->is_buildable_in_province(this->province)) {
+			continue;
+		}
+
+		return pathway;
+	}
+
+	return nullptr;
 }
 
 const std::vector<QPoint> &province_game_data::get_border_tiles() const

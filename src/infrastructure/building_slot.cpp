@@ -526,11 +526,7 @@ const building_type *building_slot::get_buildable_building() const
 {
 	for (const building_type *building : this->get_type()->get_building_types()) {
 		if (building->get_required_technology() != nullptr) {
-			if (this->get_country() == nullptr) {
-				continue;
-			}
-
-			if (!this->get_country()->get_technology()->has_technology(building->get_required_technology())) {
+			if (!this->get_settlement()->get_game_data()->get_province()->get_game_data()->has_technology(building->get_required_technology())) {
 				continue;
 			}
 		}

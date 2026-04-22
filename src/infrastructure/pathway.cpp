@@ -5,6 +5,8 @@
 #include "database/database.h"
 #include "database/defines.h"
 #include "economy/commodity.h"
+#include "map/province.h"
+#include "map/province_game_data.h"
 #include "map/terrain_type.h"
 #include "map/tile.h"
 #include "map/tile_image_provider.h"
@@ -73,24 +75,57 @@ void pathway::set_image_filepath(const std::filesystem::path &filepath)
 	this->image_filepath = database::get()->get_graphics_path(this->get_module()) / filepath;
 }
 
-bool pathway::is_buildable_on_tile(const tile *tile, const direction direction) const
+QString pathway::get_commodity_costs_string() const
 {
-	const pathway *tile_pathway = tile->get_direction_pathway(direction);
+	std::string str;
 
-	if (this->get_required_pathway() != nullptr && tile_pathway != this->get_required_pathway()) {
+	const commodity_map<int64_t> commodity_costs = this->get_commodity_costs();
+
+	for (const auto &[commodity, cost] : commodity_costs) {
+		if (cost == 0) {
+			continue;
+		}
+
+		if (str.empty()) {
+			str = "Costs:";
+		}
+
+		str += "\n" + commodity->value_to_string(cost);
+		if (commodity != defines::get()->get_wealth_commodity()) {
+			str += " " + commodity->get_name();
+		}
+	}
+
+	return QString::fromStdString(str);
+}
+
+bool pathway::is_buildable_in_province(const province *province) const
+{
+	const pathway *province_pathway = province->get_game_data()->get_pathway();
+
+	if (this->get_required_pathway() != nullptr && province_pathway != this->get_required_pathway()) {
 		return false;
 	}
 
-	if (tile_pathway != nullptr) {
-		if (this == tile_pathway) {
+	if (this->get_required_technology() != nullptr && !province->get_game_data()->has_technology(this->get_required_technology())) {
+		return false;
+	}
+
+	const technology *terrain_required_technology = this->get_terrain_required_technology(province->get_game_data()->get_terrain());
+	if (terrain_required_technology != nullptr && !province->get_game_data()->has_technology(terrain_required_technology)) {
+		return false;
+	}
+
+	if (province_pathway != nullptr) {
+		if (this == province_pathway) {
 			return false;
 		}
 
-		if (this->get_transport_level() < tile_pathway->get_transport_level()) {
+		if (this->get_transport_level() < province_pathway->get_transport_level()) {
 			return false;
 		}
 
-		if (this->get_transport_level() == tile_pathway->get_transport_level()) {
+		if (this->get_transport_level() == province_pathway->get_transport_level()) {
 			//the pathway must be better in some way
 			return false;
 		}
