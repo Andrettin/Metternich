@@ -60,12 +60,13 @@ ironclad = {
 	subcategory = navy
 	portrait = unload
 	icon = anchor
-	period = gunpowder_age
+	period = enlightenment_age
 	cost_commodity = research
 	prerequisites = {
 		#iron_steamers
 		
 		steamer_transport
+		commerce_raider
 	}
 	monthly_chance = {
 		base_value = 5
@@ -88,7 +89,7 @@ protected_cruiser = {
 	subcategory = navy
 	portrait = unload
 	icon = anchor
-	period = enlightenment_age
+	period = industrial_age
 	cost_commodity = research
 	prerequisites = {
 		#steel_steamers
@@ -117,12 +118,13 @@ dreadnought = {
 	subcategory = navy
 	portrait = unload
 	icon = anchor
-	period = enlightenment_age
+	period = modern_age
 	cost_commodity = research
 	prerequisites = {
 		#steam_turbine_ships
 		
 		ironclad
+		protected_cruiser
 	}
 	monthly_chance = {
 		base_value = 5

@@ -3,13 +3,13 @@ tank_experiments = {
 	subcategory = army
 	portrait = engineering
 	icon = cannon
-	period = renaissance_age
+	period = modern_age
 	cost_commodity = research
 	prerequisites = {
 		#infiltration
 		
-		black_coal
-		science
+		bolt_action_rifle
+		steel_alloys
 	}
 	monthly_chance = {
 		base_value = 1

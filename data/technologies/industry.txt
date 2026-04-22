@@ -893,6 +893,69 @@ black_coal = {
 	}
 }
 
+pit_coal = {
+	name = "Pit Coal"
+	subcategory = industry
+	portrait = engineering
+	icon = coal
+	period = renaissance_age
+	cost_commodity = research
+	prerequisites = {
+		#clean_coal
+		
+		black_coal
+		science
+	}
+	monthly_chance = {
+		base_value = 2
+		
+		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	technology = practical_steam_engine
+		#}
+		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	technology = early_railroad
+		#}
+	}
+	modifier = {
+		coal_output_modifier = 50
+	}
+}
+
+coke = {
+	name = "Coke"
+	subcategory = industry
+	portrait = engineering
+	icon = coal
+	period = gunpowder_age
+	cost_commodity = research
+	prerequisites = {
+		#clean_coal
+		
+		pit_coal
+	}
+	monthly_chance = {
+		base_value = 2
+		
+		modifier = {
+			factor = 2
+			additive = true
+			technology = pit_coal
+		}
+		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	technology = early_railroad
+		#}
+	}
+	modifier = {
+		coal_output_modifier = 50
+	}
+}
+
 mechanized_slaughtering_block = {
 	name = "Mechanized Slaughtering-Block"
 	subcategory = industry
