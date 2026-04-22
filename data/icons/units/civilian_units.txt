@@ -8,10 +8,7 @@ engineer = {
 			species = titan
 			species = triton
 		}
-		or = {
-			character_class = cleric
-			character_class = mage
-		}
+		character_class = mage
 	}
 }
 

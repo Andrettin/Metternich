@@ -1,0 +1,21 @@
+clergymen_byzantine = {
+	filepath = "icons/population/clergymen_byzantine.png"
+	left_facing = true
+	character_conditions = {
+		or = {
+			species = half_elf
+			species = human
+			species = halfling
+			species = titan
+			species = triton
+		}
+		or = {
+			character_class = cleric
+			character_class = mage
+		}
+	}
+}
+
+clergymen_byzantine_small = {
+	filepath = "icons/population/clergymen_byzantine_small.png"
+}

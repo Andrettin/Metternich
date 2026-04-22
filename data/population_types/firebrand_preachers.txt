@@ -2,19 +2,7 @@ firebrand_preachers = {
 	name = "Firebrand Preachers"
 	population_class = firebrand_preachers
 	color = { 162 105 40 }
-	icon = rifle_infantry_light
-	small_icon = rifle_infantry_light_small
+	icon = clergymen_byzantine
+	small_icon = clergymen_byzantine_small
 	required_game_rule = additional_population_types
-	phenotype_icons = {
-		afro_european = rifle_infantry_medium
-		amerindian = rifle_infantry_medium
-		south_asian = rifle_infantry_medium
-		african = rifle_infantry_dark
-	}
-	phenotype_small_icons = {
-		afro_european = rifle_infantry_medium_small
-		amerindian = rifle_infantry_medium_small
-		south_asian = rifle_infantry_medium_small
-		african = rifle_infantry_dark_small
-	}
 }

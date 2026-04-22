@@ -2,22 +2,10 @@ clergymen = {
 	name = "Clergymen"
 	population_class = clergymen
 	color = { 234 227 40 }
-	icon = rifle_infantry_light
-	small_icon = rifle_infantry_light_small
+	icon = clergymen_byzantine
+	small_icon = clergymen_byzantine_small
 	strata = middle
 	educator = true
-	phenotype_icons = {
-		afro_european = rifle_infantry_medium
-		amerindian = rifle_infantry_medium
-		south_asian = rifle_infantry_medium
-		african = rifle_infantry_dark
-	}
-	phenotype_small_icons = {
-		afro_european = rifle_infantry_medium_small
-		amerindian = rifle_infantry_medium_small
-		south_asian = rifle_infantry_medium_small
-		african = rifle_infantry_dark_small
-	}
 	life_needs = {
 		cattle = 0.75da
 		grain = 2.5tn
