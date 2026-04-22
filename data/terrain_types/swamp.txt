@@ -7,5 +7,6 @@ swamp = {
 	wetland = true
 	elevation_type = flatlands
 	moisture_type = wet
+	movement_cost = 3
 	tiles = { 0 }
 }

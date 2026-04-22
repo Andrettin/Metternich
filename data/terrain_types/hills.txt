@@ -6,6 +6,7 @@ hills = {
 	image_filepath = "tiles/terrain/barren_hills.png"
 	hills = true
 	elevation_type = hills
+	movement_cost = 2
 	tiles = { 129 132 135 138 141 }
 	fallback_terrains = {
 		mountains

@@ -7,6 +7,7 @@ forest = {
 	forest = true
 	elevation_type = flatlands
 	forestation_type = forest
+	movement_cost = 2
 	tiles = { 0 }
 	adjacency_tiles = {
 		0 = {

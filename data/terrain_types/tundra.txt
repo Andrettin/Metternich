@@ -6,6 +6,7 @@ tundra = {
 	image_filepath = "tiles/terrain/plains.png"
 	elevation_type = flatlands
 	temperature_type = cold
+	movement_cost = 3
 	tiles = { 0 }
 	fallback_terrains = {
 		plains

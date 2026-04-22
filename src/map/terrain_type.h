@@ -33,6 +33,7 @@ class terrain_type final : public named_data_entry, public data_type<terrain_typ
 	Q_PROPERTY(metternich::temperature_type temperature_type MEMBER temperature_type READ get_temperature_type NOTIFY changed)
 	Q_PROPERTY(metternich::moisture_type moisture_type MEMBER moisture_type READ get_moisture_type NOTIFY changed)
 	Q_PROPERTY(metternich::forestation_type forestation_type MEMBER forestation_type READ get_forestation_type NOTIFY changed)
+	Q_PROPERTY(int movement_cost MEMBER movement_cost READ get_movement_cost NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "terrain_type";
@@ -205,6 +206,11 @@ public:
 
 	void assign_to_biome(const elevation_type elevation_type, const temperature_type temperature_type, const moisture_type moisture_type, const forestation_type forestation_type);
 
+	int get_movement_cost() const
+	{
+		return this->movement_cost;
+	}
+
 	const std::vector<const terrain_type *> &get_fallback_terrains() const
 	{
 		return this->fallback_terrains;
@@ -272,6 +278,7 @@ private:
 	metternich::temperature_type temperature_type;
 	metternich::moisture_type moisture_type;
 	metternich::forestation_type forestation_type;
+	int movement_cost = 0;
 	std::vector<const terrain_type *> fallback_terrains;
 	std::vector<int> tiles;
 	std::map<terrain_adjacency, std::vector<int>> adjacency_tiles;

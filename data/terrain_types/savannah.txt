@@ -6,6 +6,7 @@ savannah = {
 	image_filepath = "tiles/terrain/semi_dry_grass.png"
 	elevation_type = flatlands
 	temperature_type = tropical
+	movement_cost = 1
 	fallback_terrains = {
 		plains
 	}

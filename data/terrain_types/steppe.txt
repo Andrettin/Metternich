@@ -4,6 +4,7 @@ steppe = {
 	character = 5
 	icon = mountains
 	image_filepath = "tiles/terrain/semi_dry_grass.png"
+	movement_cost = 1
 	fallback_terrains = {
 		plains
 	}

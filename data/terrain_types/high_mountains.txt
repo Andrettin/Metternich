@@ -5,6 +5,7 @@ high_mountains = {
 	icon = mountains
 	image_filepath = "tiles/terrain/mountains.png"
 	mountains = true
+	movement_cost = 8
 	tiles = { 129 }
 	fallback_terrains = {
 		mountains

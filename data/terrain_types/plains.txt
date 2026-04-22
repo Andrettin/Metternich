@@ -5,6 +5,7 @@ plains = {
 	icon = mountains
 	image_filepath = "tiles/terrain/semi_dry_grass.png"
 	elevation_type = flatlands
+	movement_cost = 1
 	fallback_terrains = {
 		savannah
 		swamp

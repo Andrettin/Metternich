@@ -7,5 +7,6 @@ scrub_forest = {
 	elevation_type = flatlands
 	moisture_type = semi_arid
 	forestation_type = forest
+	movement_cost = 2
 	tiles = { 0 1 2 3 }
 }
