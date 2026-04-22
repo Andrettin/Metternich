@@ -578,15 +578,27 @@ QCoro::Task<void> game::apply_history(const QDate &start_date)
 				province_game_data->set_culture(province_history->get_main_culture());
 				province_game_data->set_religion(province_history->get_religion());
 
-				if (province_history->get_pathway() != nullptr) {
-					province_game_data->set_pathway(province_history->get_pathway());
-
-					//add prerequisites for the province's pathway to its researched technologies
-					if (province_history->get_pathway()->get_required_technology() != nullptr) {
-						co_await province_game_data->add_technology_with_prerequisites(province_history->get_pathway()->get_required_technology());
+				const pathway *pathway = province_history->get_pathway();
+				for (const route *route : province->get_routes()) {
+					const route_history *route_history = route->get_history();
+					const metternich::pathway *route_pathway = route_history->get_pathway();
+					if (route_pathway == nullptr) {
+						continue;
 					}
 
-					const technology *terrain_required_technology = province_history->get_pathway()->get_terrain_required_technology(province_game_data->get_terrain());
+					if (pathway == nullptr || route_pathway->get_transport_level() > pathway->get_transport_level()) {
+						pathway = route_pathway;
+					}
+				}
+				if (pathway != nullptr) {
+					province_game_data->set_pathway(pathway);
+
+					//add prerequisites for the province's pathway to its researched technologies
+					if (pathway->get_required_technology() != nullptr) {
+						co_await province_game_data->add_technology_with_prerequisites(pathway->get_required_technology());
+					}
+
+					const technology *terrain_required_technology = pathway->get_terrain_required_technology(province_game_data->get_terrain());
 					if (terrain_required_technology != nullptr) {
 						co_await province_game_data->add_technology_with_prerequisites(terrain_required_technology);
 					}

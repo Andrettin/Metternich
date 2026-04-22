@@ -9,6 +9,7 @@ Q_MOC_INCLUDE("map/route_game_data.h")
 
 namespace metternich {
 
+class province;
 class route_game_data;
 class route_history;
 
@@ -60,6 +61,7 @@ public:
 	explicit route(const std::string &identifier);
 	~route();
 
+	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;
 	virtual data_entry_history *get_history_base() override;
 
@@ -101,12 +103,18 @@ public:
 		return this->hidden;
 	}
 
+	const std::vector<const province *> &get_path_provinces() const
+	{
+		return this->path_provinces;
+	}
+
 signals:
 	void changed();
 
 private:
 	QColor color;
 	bool hidden = false;
+	std::vector<const province *> path_provinces;
 	qunique_ptr<route_history> history;
 	qunique_ptr<route_game_data> game_data;
 };

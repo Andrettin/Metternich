@@ -1,8 +1,11 @@
 #include "metternich.h"
 
 #include "map/route.h"
+
+#include "map/province.h"
 #include "map/route_game_data.h"
 #include "map/route_history.h"
+#include "util/log_util.h"
 
 namespace metternich {
 
@@ -15,10 +18,30 @@ route::~route()
 {
 }
 
+void route::process_gsml_scope(const gsml_data &scope)
+{
+	const std::string &tag = scope.get_tag();
+	const std::vector<std::string> &values = scope.get_values();
+
+	if (tag == "path_provinces") {
+		for (const std::string &value : values) {
+			province *province = province::get(value);
+			province->add_route(this);
+			this->path_provinces.push_back(province);
+		}
+	} else {
+		named_data_entry::process_gsml_scope(scope);
+	}
+}
+
 void route::check() const
 {
 	if (!this->get_color().isValid()) {
 		throw std::runtime_error(std::format("Route \"{}\" has no color.", this->get_identifier()));
+	}
+
+	if (this->get_path_provinces().empty()) {
+		log::log_error(std::format("Route \"{}\" has no path provinces.", this->get_identifier()));
 	}
 }
 

@@ -24,6 +24,7 @@ class province_history;
 class province_map_data;
 class province_turn_data;
 class region;
+class route;
 class site;
 class terrain_feature;
 class terrain_type;
@@ -256,6 +257,16 @@ public:
 		this->sites.push_back(site);
 	}
 
+	const std::vector<const route *> &get_routes() const
+	{
+		return this->routes;
+	}
+
+	void add_route(const route *route)
+	{
+		this->routes.push_back(route);
+	}
+
 signals:
 	void changed();
 	void turn_data_changed() const;
@@ -280,6 +291,7 @@ private:
 	province_map<const terrain_feature *> border_rivers;
 	std::vector<const metternich::world *> generation_worlds; //worlds other than its own where this province can be generated
 	std::vector<const site *> sites; //sites located in this province, used for map generation
+	std::vector<const route *> routes;
 	qunique_ptr<province_history> history;
 	qunique_ptr<province_map_data> map_data;
 	qunique_ptr<province_game_data> game_data;

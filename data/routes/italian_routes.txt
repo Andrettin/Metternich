@@ -1,6 +1,11 @@
 aemilian_way = {
 	name = "Aemilian Way"
 	color = { 2 80 57 }
+	path_provinces = {
+		romagna
+		modena
+		parma
+	}
 	
 	history = {
 		-100 = {
@@ -45,6 +50,11 @@ flaminian_way = {
 postumian_way = {
 	name = "Postumian Way"
 	color = { 87 243 152 }
+	path_provinces = {
+		genoa
+		piedmont
+		parma
+	}
 	
 	history = {
 		500 = {

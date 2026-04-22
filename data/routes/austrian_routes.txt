@@ -1,6 +1,10 @@
 linz_budweis = {
 	name = "Linz-Budweis"
 	color = { 0 71 102 }
+	path_provinces = {
+		upper_austria
+		budweis
+	}
 	
 	history = {
 		1832 = {
@@ -12,6 +16,12 @@ linz_budweis = {
 pest_zagreb_fiume = {
 	name = "Pest-Zagreb-Fiume"
 	color = { 226 180 121 }
+	path_provinces = {
+		pest
+		szekesfehervar
+		zalaegerszeg
+		croatia
+	}
 	
 	history = {
 		1873 = {
@@ -23,6 +33,10 @@ pest_zagreb_fiume = {
 vienna_brunn = {
 	name = "Vienna-Brunn"
 	color = { 139 105 112 }
+	path_provinces = {
+		lower_austria
+		brunn
+	}
 	
 	history = {
 		1000 = {
@@ -38,6 +52,12 @@ vienna_brunn = {
 vienna_trieste = {
 	name = "Vienna-Trieste"
 	color = { 191 242 151 }
+	path_provinces = {
+		lower_austria
+		styria
+		carniola
+		istria
+	}
 	
 	history = {
 		1000 = {
