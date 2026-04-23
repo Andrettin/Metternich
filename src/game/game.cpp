@@ -619,14 +619,6 @@ QCoro::Task<void> game::apply_history(const QDate &start_date)
 					}
 				}
 
-				const domain *owner = province_history->get_owner();
-				if (owner != nullptr) {
-					while (owner->get_history()->get_owner() != nullptr) {
-						owner = owner->get_history()->get_owner();
-					}
-				}
-				co_await province_game_data->set_owner(owner);
-
 				for (const technology *technology : province_history->get_technologies()) {
 					co_await province_game_data->add_technology_with_prerequisites(technology);
 				}
@@ -643,6 +635,14 @@ QCoro::Task<void> game::apply_history(const QDate &start_date)
 						cultural_group = cultural_group->get_upper_group();
 					}
 				}
+
+				const domain *owner = province_history->get_owner();
+				if (owner != nullptr) {
+					while (owner->get_history()->get_owner() != nullptr) {
+						owner = owner->get_history()->get_owner();
+					}
+				}
+				co_await province_game_data->set_owner(owner);
 
 				if (owner == nullptr) {
 					log::log_error(std::format("Province \"{}\" has no owner for scenario \"{}\".", province->get_identifier(), this->scenario->get_identifier()));
