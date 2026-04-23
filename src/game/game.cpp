@@ -188,6 +188,11 @@ void game::process_gsml_scope(const gsml_data &scope)
 		});
 
 		map::get()->process_site_tiles();
+	} else if (tag == "routes") {
+		scope.for_each_child([this](const gsml_data &child_scope) {
+			const route *route = route::get(child_scope.get_tag());
+			child_scope.process(route->get_game_data());
+		});
 	} else if (tag == "characters") {
 		scope.for_each_child([this](const gsml_data &character_data) {
 			const character *character = character::get(character_data.get_tag());
@@ -280,6 +285,16 @@ gsml_data game::to_gsml_data() const
 		sites_data.add_child(site->get_game_data()->to_gsml_data());
 	}
 	data.add_child(std::move(sites_data));
+
+	gsml_data routes_data("routes");
+	for (const route *route : route::get_all()) {
+		if (!route->get_game_data()->is_on_map()) {
+			continue;
+		}
+
+		routes_data.add_child(route->get_game_data()->to_gsml_data());
+	}
+	data.add_child(std::move(routes_data));
 
 	gsml_data characters_data("characters");
 	for (const character *character : character::get_all()) {
@@ -688,49 +703,6 @@ QCoro::Task<void> game::apply_history(const QDate &start_date)
 		}
 
 		co_await this->apply_sites();
-
-		for (const route *route : route::get_all()) {
-			const route_game_data *route_game_data = route->get_game_data();
-
-			if (!route_game_data->is_on_map()) {
-				continue;
-			}
-
-			const route_history *route_history = route->get_history();
-
-			const pathway *route_pathway = route_history->get_pathway();
-			if (route_pathway != nullptr) {
-				for (const QPoint &tile_pos : route_game_data->get_tiles()) {
-					tile *tile = map::get()->get_tile(tile_pos);
-
-					static constexpr size_t direction_count = static_cast<size_t>(direction::count);
-					for (size_t i = 0; i < direction_count; ++i) {
-						const direction direction = static_cast<archimedes::direction>(i);
-						const pathway *direction_pathway = tile->get_direction_pathway(direction);
-
-						if (direction_pathway != nullptr && direction_pathway->get_transport_level() < route_pathway->get_transport_level()) {
-							tile->set_direction_pathway(direction, route_pathway);
-
-							if (tile->has_river() && tile->get_owner() != nullptr && route_pathway->get_river_crossing_required_technology() != nullptr && tile->is_river_crossing_direction(direction)) {
-								co_await tile->get_province()->get_game_data()->add_technology_with_prerequisites(route_pathway->get_river_crossing_required_technology());
-							}
-						}
-					}
-
-					//add prerequisites for the tile's pathway to its owner's researched technologies
-					if (tile->get_owner() != nullptr) {
-						if (route_pathway->get_required_technology() != nullptr) {
-							co_await tile->get_province()->get_game_data()->add_technology_with_prerequisites(route_pathway->get_required_technology());
-						}
-
-						const technology *terrain_required_technology = route_pathway->get_terrain_required_technology(tile->get_terrain());
-						if (terrain_required_technology != nullptr) {
-							co_await tile->get_province()->get_game_data()->add_technology_with_prerequisites(terrain_required_technology);
-						}
-					}
-				}
-			}
-		}
 
 		for (const province *province : map::get()->get_provinces()) {
 			for (const site *settlement : province->get_game_data()->get_settlement_sites()) {
@@ -1611,6 +1583,14 @@ QCoro::Task<void> game::on_setup_finished()
 	co_await this->create_map_images();
 
 	emit countries_changed();
+
+	for (const route *route : route::get_all()) {
+		if (!route->get_game_data()->is_on_map()) {
+			continue;
+		}
+
+		route->get_game_data()->check_active();
+	}
 
 	for (const domain *domain : this->get_countries()) {
 		domain_game_data *domain_game_data = domain->get_game_data();

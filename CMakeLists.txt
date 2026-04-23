@@ -192,6 +192,7 @@ set(map_SRCS
 	src/map/region_history.cpp
 	src/map/route.cpp
 	src/map/route_container.cpp
+	src/map/route_game_data.cpp
 	src/map/site.cpp
 	src/map/site_attribute.cpp
 	src/map/site_container.cpp

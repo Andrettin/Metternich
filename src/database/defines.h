@@ -75,7 +75,6 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(const metternich::terrain_type* default_province_terrain MEMBER default_province_terrain  READ get_default_province_terrain NOTIFY changed)
 	Q_PROPERTY(const metternich::terrain_type* default_water_zone_terrain MEMBER default_water_zone_terrain  READ get_default_water_zone_terrain NOTIFY changed)
 	Q_PROPERTY(const metternich::terrain_type* default_space_terrain MEMBER default_space_terrain READ get_default_space_terrain NOTIFY changed)
-	Q_PROPERTY(metternich::pathway* route_pathway MEMBER route_pathway NOTIFY changed)
 	Q_PROPERTY(metternich::population_class* default_population_class MEMBER default_population_class)
 	Q_PROPERTY(metternich::population_class* default_tribal_population_class MEMBER default_tribal_population_class)
 	Q_PROPERTY(int population_growth_threshold MEMBER population_growth_threshold READ get_population_growth_threshold NOTIFY changed)
@@ -256,11 +255,6 @@ public:
 	const terrain_type *get_default_space_terrain() const
 	{
 		return this->default_space_terrain;
-	}
-
-	const pathway *get_route_pathway() const
-	{
-		return this->route_pathway;
 	}
 
 	const population_class *get_default_population_class() const
@@ -579,7 +573,6 @@ private:
 	const terrain_type *default_province_terrain = nullptr;
 	const terrain_type *default_water_zone_terrain = nullptr;
 	const terrain_type *default_space_terrain = nullptr;
-	pathway *route_pathway = nullptr;
 	population_class *default_population_class = nullptr;
 	population_class *default_tribal_population_class = nullptr;
 	int population_growth_threshold = 100;

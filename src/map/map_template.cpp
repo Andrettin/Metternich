@@ -13,9 +13,6 @@
 #include "map/province.h"
 #include "map/province_map_data.h"
 #include "map/region.h"
-#include "map/route.h"
-#include "map/route_container.h"
-#include "map/route_game_data.h"
 #include "map/site.h"
 #include "map/site_map_data.h"
 #include "map/site_type.h"
@@ -509,61 +506,6 @@ void map_template::write_border_river_image()
 	}
 }
 
-void map_template::set_route_image_filepath(const std::filesystem::path &filepath)
-{
-	if (filepath == this->get_route_image_filepath()) {
-		return;
-	}
-
-	this->route_image_filepath = database::get()->get_maps_path(this->get_module()) / filepath;
-}
-
-void map_template::write_route_image()
-{
-	using route_geodata_map_type = route_map<std::vector<std::unique_ptr<QGeoShape>>>;
-
-	try {
-		assert_throw(this->get_world() != nullptr);
-
-		route_geodata_map_type route_geodata_map = this->get_world()->parse_routes_geojson_folder();
-
-		color_map<std::vector<std::unique_ptr<QGeoShape>>> geodata_map;
-
-		for (auto &[route, geoshapes] : route_geodata_map) {
-			if (route->is_hidden()) {
-				continue;
-			}
-
-			vector::merge(geodata_map[route->get_color()], std::move(geoshapes));
-		}
-
-		assert_throw(this->map_projection != nullptr);
-
-		this->map_projection->validate_area(this->get_georectangle(), this->get_size());
-
-		QImage base_image;
-
-		if (!this->get_route_image_filepath().empty()) {
-			base_image = QImage(path::to_qstring(this->get_route_image_filepath()));
-			assert_throw(!base_image.isNull());
-		} else {
-			base_image = QImage(this->get_size(), QImage::Format_RGBA8888);
-			base_image.fill(Qt::transparent);
-		}
-
-		//write route geoshapes
-		std::filesystem::path output_filepath = this->get_route_image_filepath().filename();
-		if (output_filepath.empty()) {
-			output_filepath = "routes.png";
-		}
-
-		geoshape::write_image(output_filepath, geodata_map, this->get_georectangle(), this->get_size(), this->map_projection, base_image, this->geocoordinate_x_offset);
-	} catch (...) {
-		exception::report(std::current_exception());
-		QApplication::exit(EXIT_FAILURE);
-	}
-}
-
 void map_template::set_province_image_filepath(const std::filesystem::path &filepath)
 {
 	if (filepath == this->get_province_image_filepath()) {
@@ -629,7 +571,6 @@ void map_template::apply() const
 		this->apply_site_terrain();
 		this->apply_rivers();
 		this->apply_border_rivers();
-		this->apply_routes();
 		this->apply_provinces();
 	}
 
@@ -803,56 +744,6 @@ void map_template::apply_border_rivers() const
 				river_tile_4->add_river_direction(direction::north);
 				river_tile_4->add_river_direction(direction::northeast);
 			}
-		}
-	}
-}
-
-void map_template::apply_routes() const
-{
-	if (this->get_route_image_filepath().empty()) {
-		return;
-	}
-
-	const QImage route_image(path::to_qstring(this->get_route_image_filepath()));
-
-	map *map = map::get();
-
-	static const QColor empty_color(Qt::black);
-
-	for (int x = 0; x < map->get_width(); ++x) {
-		for (int y = 0; y < map->get_height(); ++y) {
-			const QPoint tile_pos(x, y);
-			const QColor tile_color = route_image.pixelColor(tile_pos);
-
-			if (tile_color.alpha() == 0 || tile_color == empty_color) {
-				continue;
-			}
-
-			if (map->is_tile_water(tile_pos)) {
-				continue;
-			}
-
-			const route *route = route::get_by_color(tile_color);
-			route->get_game_data()->add_tile(tile_pos);
-
-			point::for_each_cardinally_adjacent(tile_pos, [map, &route_image, &tile_pos](const QPoint &adjacent_pos) {
-				if (!map->contains(adjacent_pos)) {
-					return;
-				}
-				
-				const QColor adjacent_tile_color = route_image.pixelColor(adjacent_pos);
-
-				if (adjacent_tile_color.alpha() == 0 || adjacent_tile_color == empty_color) {
-					return;
-				}
-
-				if (map->is_tile_water(adjacent_pos)) {
-					return;
-				}
-
-				const direction direction = offset_to_direction(adjacent_pos - tile_pos);
-				map->add_tile_route_direction(tile_pos, direction);
-			});
 		}
 	}
 }

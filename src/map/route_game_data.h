@@ -1,5 +1,10 @@
 #pragma once
 
+namespace archimedes {
+	class gsml_data;
+	class gsml_property;
+}
+
 namespace metternich {
 
 class route;
@@ -13,24 +18,24 @@ public:
 	{
 	}
 
-	const std::vector<QPoint> &get_tiles() const
+	void process_gsml_property(const gsml_property &property);
+	void process_gsml_scope(const gsml_data &scope);
+
+	gsml_data to_gsml_data() const;
+
+	bool is_on_map() const;
+
+	bool is_active() const
 	{
-		return this->tiles;
+		return this->active;
 	}
 
-	void add_tile(const QPoint &tile_pos)
-	{
-		this->tiles.push_back(tile_pos);
-	}
-
-	bool is_on_map() const
-	{
-		return !this->tiles.empty();
-	}
+	void set_active(const bool active);
+	void check_active();
 
 private:
 	const metternich::route *route = nullptr;
-	std::vector<QPoint> tiles;
+	bool active = false;
 };
 
 }

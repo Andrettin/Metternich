@@ -61,7 +61,7 @@ void pathway::initialize()
 void pathway::check() const
 {
 	assert_throw(this->get_icon() != nullptr);
-	assert_throw(this->get_transport_level() > 0 || this == defines::get()->get_route_pathway());
+	assert_throw(this->get_transport_level() > 0);
 
 	assert_log(!this->get_image_filepath().empty());
 }
@@ -113,10 +113,6 @@ QString pathway::get_commodity_costs_string_for_province(const metternich::provi
 
 bool pathway::is_buildable_in_province(const province *province) const
 {
-	if (this == defines::get()->get_route_pathway()) {
-		return false;
-	}
-
 	const pathway *province_pathway = province->get_game_data()->get_pathway();
 
 	if (this->get_required_pathway() != nullptr && province_pathway != this->get_required_pathway()) {

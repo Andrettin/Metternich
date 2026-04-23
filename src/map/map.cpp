@@ -473,12 +473,6 @@ void map::add_tile_border_river_direction(const QPoint &tile_pos, const directio
 	}
 }
 
-void map::add_tile_route_direction(const QPoint &tile_pos, const direction direction)
-{
-	tile *tile = this->get_tile(tile_pos);
-	tile->set_direction_pathway(direction, defines::get()->get_route_pathway());
-}
-
 const metternich::province *map::get_tile_province(const QPoint &tile_pos) const
 {
 	const tile *tile = this->get_tile(tile_pos);
