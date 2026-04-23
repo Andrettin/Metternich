@@ -76,7 +76,7 @@ english = {
 		
 		1620 = {
 			#the Englishman Francis Bacon published his "Novum Organum" in 1620, in which he described the scientific method; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 252.
-			#technologies += scientific_method
+			technologies += science #scientific_method
 		}
 		
 		1701 = {

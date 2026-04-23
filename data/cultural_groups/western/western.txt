@@ -188,7 +188,7 @@ western = {
 		
 		1543 = {
 			#the Polish astronomer Nicolaus Copernicus published his "De Revolutionibus Orbium Coelestium" in 1543, in which he described the heliocentric model; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, pp. 209-211.
-			#technologies += astronomy
+			technologies += astrology_and_astronomy #astronomy
 			
 			#Andreas Vesalius published his "De Corporis Humani Fabrica" in 1543, which revolutionized the understanding of anatomy; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 211.
 			#technologies += medicine
@@ -205,7 +205,7 @@ western = {
 		
 		1620 = {
 			#the Englishman Francis Bacon published his "Novum Organum" in 1620, in which he described the scientific method; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 252.
-			#technologies += scientific_method
+			technologies += science #scientific_method
 		}
 		
 		1800 = {
