@@ -387,10 +387,6 @@ QCoro::Task<void> province_game_data::set_owner(const domain *domain)
 	this->clear_military_unit_recruitment_counts();
 
 	if (game::get()->is_running()) {
-		for (const QPoint &tile_pos : this->get_border_tiles()) {
-			map::get()->calculate_tile_country_border_directions(tile_pos);
-		}
-
 		map::get()->update_minimap_rect(this->get_territory_rect());
 
 		this->province->get_turn_data()->set_province_map_dirty(true);

@@ -1385,10 +1385,6 @@ QCoro::Task<void> domain_game_data::add_province(const province *province)
 			if (!map->is_tile_on_country_border(tile_pos)) {
 				std::erase(this->border_tiles, tile_pos);
 			}
-
-			if (game::get()->is_running()) {
-				map->calculate_tile_country_border_directions(tile_pos);
-			}
 		}
 	}
 
@@ -1456,10 +1452,6 @@ QCoro::Task<void> domain_game_data::remove_province(const province *province)
 		for (const QPoint &tile_pos : neighbor_province_game_data->get_border_tiles()) {
 			if (map->is_tile_on_country_border(tile_pos) && !vector::contains(this->get_border_tiles(), tile_pos)) {
 				this->border_tiles.push_back(tile_pos);
-			}
-
-			if (game::get()->is_running()) {
-				map->calculate_tile_country_border_directions(tile_pos);
 			}
 		}
 	}

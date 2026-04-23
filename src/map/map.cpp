@@ -294,7 +294,6 @@ void map::process_border_tiles()
 
 					if (tile_province != nullptr && adjacent_province != nullptr && tile_province->is_water_zone() == adjacent_province->is_water_zone()) {
 						const direction border_direction = offset_to_direction(adjacent_pos - tile_pos);
-						tile->add_border_direction(border_direction);
 
 						if (tile_province->get_border_rivers().contains(adjacent_province)) {
 							this->add_tile_border_river_direction(tile_pos, border_direction, adjacent_province);
@@ -304,8 +303,6 @@ void map::process_border_tiles()
 			});
 
 			if (is_border_tile) {
-				tile->sort_border_directions();
-
 				tile_province->get_map_data()->add_border_tile(tile_pos);
 			}
 		}
@@ -361,7 +358,6 @@ void map::clear_tile_game_data()
 		for (tile &tile : *this->tiles) {
 			tile.clear_improvement_variation();
 			tile.clear_civilian_units();
-			tile.clear_country_border_directions();
 		}
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error("Failed to clear tile game data for the map."));
@@ -729,27 +725,6 @@ bool map::is_tile_on_province_border_with(const QPoint &tile_pos, const province
 	});
 
 	return result;
-}
-
-void map::calculate_tile_country_border_directions(const QPoint &tile_pos)
-{
-	tile *tile = this->get_tile(tile_pos);
-	const domain *tile_domain = tile->get_owner();
-
-	tile->clear_country_border_directions();
-
-	point::for_each_adjacent(tile_pos, [this, tile, &tile_pos, tile_domain](const QPoint &adjacent_pos) {
-		if (!this->contains(adjacent_pos)) {
-			return;
-		}
-
-		const metternich::tile *adjacent_tile = this->get_tile(adjacent_pos);
-		const domain *adjacent_domain = adjacent_tile->get_owner();
-
-		if (tile_domain != adjacent_domain && tile_domain != nullptr && adjacent_domain != nullptr) {
-			tile->add_country_border_direction(offset_to_direction(adjacent_pos - tile_pos));
-		}
-	});
 }
 
 std::optional<QPoint> map::get_nearest_available_tile_pos_for_civilian_unit(const QPoint &starting_tile_pos) const

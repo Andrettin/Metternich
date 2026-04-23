@@ -96,12 +96,6 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 			case role::object_image_sources: {
 				QStringList object_image_sources;
 
-				if (tile->get_province() != nullptr && !tile->get_province()->is_water_zone()) {
-					for (const direction direction : tile->get_border_directions()) {
-						object_image_sources.push_back("tile/borders/province_border/" + QString::number(static_cast<int>(direction)));
-					}
-				}
-
 				if (tile->get_site() != nullptr) {
 					if (tile->get_site() != nullptr && tile->get_site()->is_celestial_body()) {
 						QString image_source = "tile/celestial_body/" + tile->get_site()->get_celestial_body_type()->get_identifier_qstring();

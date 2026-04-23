@@ -96,46 +96,6 @@ public:
 
 	bool is_river_crossing_direction(const direction direction) const;
 
-	const std::vector<direction> &get_border_directions() const
-	{
-		return this->border_directions;
-	}
-
-	void add_border_direction(const direction direction)
-	{
-		this->border_directions.push_back(direction);
-	}
-
-	void sort_border_directions()
-	{
-		std::sort(this->border_directions.begin(), this->border_directions.end());
-	}
-
-	bool has_graphical_border() const
-	{
-		return !this->get_border_directions().empty();
-	}
-
-	const std::vector<direction> &get_country_border_directions() const
-	{
-		return this->country_border_directions;
-	}
-
-	void add_country_border_direction(const direction direction)
-	{
-		this->country_border_directions.push_back(direction);
-	}
-
-	void clear_country_border_directions()
-	{
-		this->country_border_directions.clear();
-	}
-
-	bool has_graphical_country_border() const
-	{
-		return !this->get_country_border_directions().empty();
-	}
-	
 	const std::vector<civilian_unit *> &get_civilian_units() const
 	{
 		return this->civilian_units;
@@ -161,8 +121,6 @@ private:
 	int8_t improvement_variation = 0;
 	bool inner_river = false; //whether the tile has an in-tile river
 	std::vector<direction> river_directions;
-	std::vector<direction> border_directions; //used for graphical borders; this does not include e.g. borders with water tiles for land ones
-	std::vector<direction> country_border_directions;
 	std::vector<civilian_unit *> civilian_units;
 };
 

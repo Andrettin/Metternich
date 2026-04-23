@@ -1608,10 +1608,6 @@ QCoro::Task<void> game::on_setup_finished()
 		co_await domain_game_data->check_tier();
 		co_await domain_game_data->check_culture();
 
-		for (const QPoint &border_tile_pos : domain_game_data->get_border_tiles()) {
-			map::get()->calculate_tile_country_border_directions(border_tile_pos);
-		}
-
 		for (const province *province : domain_game_data->get_provinces()) {
 			for (const site *site : province->get_game_data()->get_sites()) {
 				//check employment here because it can affect the population type charts via equivalent population types for employment
