@@ -47,6 +47,7 @@ class province final : public named_data_entry, public data_type<province>
 	Q_PROPERTY(bool coastal MEMBER coastal READ is_coastal NOTIFY changed)
 	Q_PROPERTY(bool hidden MEMBER hidden READ is_hidden NOTIFY changed)
 	Q_PROPERTY(std::vector<metternich::region *> regions READ get_regions NOTIFY changed)
+	Q_PROPERTY(QVariantList routes READ get_routes_qvariant_list NOTIFY changed)
 	Q_PROPERTY(metternich::province_map_data* map_data READ get_map_data NOTIFY changed)
 	Q_PROPERTY(metternich::province_game_data* game_data READ get_game_data NOTIFY changed)
 	Q_PROPERTY(metternich::province_turn_data* turn_data READ get_turn_data NOTIFY turn_data_changed)
@@ -261,6 +262,8 @@ public:
 	{
 		return this->routes;
 	}
+
+	QVariantList get_routes_qvariant_list() const;
 
 	void add_route(const route *route)
 	{

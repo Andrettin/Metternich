@@ -221,6 +221,19 @@ Rectangle {
 			}
 		}
 		
+		Repeater {
+			model: selected_province !== null ? selected_province.routes : []
+			
+			CustomIconImage {
+				id: route_icon
+				name: route.name
+				icon_identifier: "road"
+				visible: route.game_data.active && !selected_garrison && !viewing_population && !viewing_population_units
+				
+				readonly property var route: model.modelData
+			}
+		}
+		
 		ScriptedModifierRow {
 			id: scripted_modifier_row
 			anchors.verticalCenter: parent.verticalCenter

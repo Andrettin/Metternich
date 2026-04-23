@@ -13,6 +13,8 @@ class route_game_data final : public QObject
 {
 	Q_OBJECT
 
+	Q_PROPERTY(bool active MEMBER active READ is_active NOTIFY active_changed)
+
 public:
 	explicit route_game_data(const metternich::route *route) : route(route)
 	{
@@ -32,6 +34,9 @@ public:
 
 	void set_active(const bool active);
 	void check_active();
+
+signals:
+	void active_changed();
 
 private:
 	const metternich::route *route = nullptr;

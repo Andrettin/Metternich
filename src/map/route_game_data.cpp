@@ -62,6 +62,8 @@ void route_game_data::set_active(const bool active)
 	}
 
 	this->active = active;
+
+	emit active_changed();
 }
 
 void route_game_data::check_active()

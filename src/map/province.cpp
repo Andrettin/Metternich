@@ -18,6 +18,7 @@
 #include "map/terrain_type.h"
 #include "map/world.h"
 #include "util/assert_util.h"
+#include "util/container_util.h"
 #include "util/log_util.h"
 #include "util/vector_util.h"
 
@@ -234,6 +235,11 @@ bool province::has_core_country_of_culture(const culture *culture) const
 	}
 
 	return false;
+}
+
+QVariantList province::get_routes_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_routes());
 }
 
 }
