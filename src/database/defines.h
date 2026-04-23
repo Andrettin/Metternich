@@ -12,7 +12,6 @@ Q_MOC_INCLUDE("domain/office.h")
 Q_MOC_INCLUDE("economy/commodity.h")
 Q_MOC_INCLUDE("economy/commodity_unit.h")
 Q_MOC_INCLUDE("game/game_rule.h")
-Q_MOC_INCLUDE("infrastructure/pathway.h")
 Q_MOC_INCLUDE("map/terrain_type.h")
 Q_MOC_INCLUDE("population/population_class.h")
 Q_MOC_INCLUDE("sound/music.h")
@@ -37,7 +36,6 @@ class cursor;
 class icon;
 class music;
 class office;
-class pathway;
 class population_class;
 class population_unit;
 class portrait;

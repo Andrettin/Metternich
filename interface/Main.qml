@@ -60,7 +60,6 @@ ApplicationWindow {
 				//metternich.get_map_template("central_europe").write_terrain_image()
 				//metternich.get_map_template("earth").write_river_image()
 				//metternich.get_map_template("earth").write_border_river_image()
-				//metternich.get_map_template("earth").write_route_image()
 			}
 		}
 	}

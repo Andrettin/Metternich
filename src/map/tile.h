@@ -1,7 +1,6 @@
 #pragma once
 
 #include "economy/commodity_container.h"
-#include "infrastructure/pathway_container.h"
 #include "util/centesimal_int.h"
 
 namespace archimedes {
@@ -14,7 +13,6 @@ class civilian_unit;
 class domain;
 class holding_type;
 class improvement;
-class pathway;
 class province;
 class resource;
 class site;
@@ -98,37 +96,6 @@ public:
 
 	bool is_river_crossing_direction(const direction direction) const;
 
-	const pathway *get_direction_pathway(const direction direction) const
-	{
-		return this->direction_pathways[static_cast<int>(direction)];
-	}
-
-	void set_direction_pathway(const direction direction, const pathway *pathway);
-
-	bool has_route() const
-	{
-		for (const metternich::pathway *direction_pathway : this->direction_pathways) {
-			if (direction_pathway != nullptr) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	bool has_pathway(const pathway *pathway) const
-	{
-		for (const metternich::pathway *direction_pathway : this->direction_pathways) {
-			if (direction_pathway == pathway) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	const pathway *get_best_pathway() const;
-
 	const std::vector<direction> &get_border_directions() const
 	{
 		return this->border_directions;
@@ -194,7 +161,6 @@ private:
 	int8_t improvement_variation = 0;
 	bool inner_river = false; //whether the tile has an in-tile river
 	std::vector<direction> river_directions;
-	std::array<const pathway *, 8> direction_pathways{};
 	std::vector<direction> border_directions; //used for graphical borders; this does not include e.g. borders with water tiles for land ones
 	std::vector<direction> country_border_directions;
 	std::vector<civilian_unit *> civilian_units;

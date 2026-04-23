@@ -10,7 +10,6 @@
 #include "economy/resource.h"
 #include "game/game.h"
 #include "infrastructure/improvement.h"
-#include "infrastructure/pathway.h"
 #include "map/direction.h"
 #include "map/province.h"
 #include "map/province_container.h"
@@ -572,15 +571,6 @@ QCoro::Task<void> map::set_tile_resource_discovered(const QPoint &tile_pos, cons
 	}
 
 	emit tile_resource_changed(tile_pos);
-}
-
-void map::set_tile_direction_pathway(const QPoint &tile_pos, const direction direction, const pathway *pathway)
-{
-	tile *tile = this->get_tile(tile_pos);
-
-	tile->set_direction_pathway(direction, pathway);
-
-	emit tile_pathway_changed(tile_pos);
 }
 
 void map::add_tile_civilian_unit(const QPoint &tile_pos, civilian_unit *civilian_unit)

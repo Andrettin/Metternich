@@ -6,7 +6,6 @@
 #include "domain/domain.h"
 #include "economy/resource.h"
 #include "infrastructure/improvement.h"
-#include "infrastructure/pathway.h"
 #include "map/celestial_body_type.h"
 #include "map/direction.h"
 #include "map/province.h"
@@ -138,38 +137,6 @@ bool tile::is_river_crossing_direction(const direction direction) const
 	}
 
 	return false;
-}
-
-void tile::set_direction_pathway(const direction direction, const pathway *pathway)
-{
-	const metternich::pathway *old_pathway = this->get_direction_pathway(direction);
-
-	if (pathway == old_pathway) {
-		return;
-	}
-
-	this->direction_pathways[static_cast<int>(direction)] = pathway;
-}
-
-const pathway *tile::get_best_pathway() const
-{
-	if (!this->has_route()) {
-		return nullptr;
-	}
-
-	const pathway *best_pathway = nullptr;
-
-	for (const pathway *pathway : this->direction_pathways) {
-		if (pathway == nullptr) {
-			continue;
-		}
-
-		if (best_pathway == nullptr || pathway->get_transport_level() > best_pathway->get_transport_level()) {
-			best_pathway = pathway;
-		}
-	}
-
-	return best_pathway;
 }
 
 void tile::add_civilian_unit(civilian_unit *civilian_unit)

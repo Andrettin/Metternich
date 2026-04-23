@@ -1,5 +1,9 @@
 #pragma once
 
+#include "map/province.h"
+#include "map/province_game_data.h"
+#include "map/route.h"
+#include "map/route_game_data.h"
 #include "script/condition/condition.h"
 #include "util/string_conversion_util.h"
 
@@ -25,7 +29,18 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		return scope->get_game_data()->has_route();
+		const province *province = condition<scope_type>::get_scope_province(scope);
+		if (province == nullptr) {
+			return false;
+		}
+
+		for (const route *route : province->get_routes()) {
+			if (route->get_game_data()->is_active()) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override

@@ -12,7 +12,6 @@ namespace metternich {
 
 class civilian_unit;
 class improvement;
-class pathway;
 class province;
 class resource;
 class site;
@@ -94,7 +93,6 @@ public:
 	void set_tile_province(const QPoint &tile_pos, province *province);
 	void set_tile_site(const QPoint &tile_pos, const site *site);
 	[[nodiscard]] QCoro::Task<void> set_tile_resource_discovered(const QPoint &tile_pos, const bool discovered);
-	void set_tile_direction_pathway(const QPoint &tile_pos, const direction direction, const pathway *pathway);
 	void add_tile_civilian_unit(const QPoint &tile_pos, civilian_unit *civilian_unit);
 	void remove_tile_civilian_unit(const QPoint &tile_pos, civilian_unit *civilian_unit);
 
@@ -181,7 +179,6 @@ signals:
 	void tile_resource_changed(const QPoint &tile_pos);
 	void tile_holding_type_changed(const QPoint &tile_pos);
 	void tile_improvement_changed(const QPoint &tile_pos);
-	void tile_pathway_changed(const QPoint &tile_pos);
 	void tile_civilian_unit_changed(const QPoint &tile_pos);
 	void provinces_changed();
 	void sites_changed();

@@ -10,7 +10,6 @@
 #	geocoordinate_x_offset = -32 #shift all positions derived from geocoordinates by this offset
 #	terrain_image_filepath = "earth/terrain.png"
 #	river_image_filepath = "earth/rivers.png"
-#	route_image_filepath = "earth/routes.png"
 #	province_image_filepath = "earth/provinces.png"
 #}
 
@@ -37,7 +36,6 @@ europe = {
 	max_latitude = 60
 	terrain_image_filepath = "earth/terrain_europe.png"
 	#river_image_filepath = "earth/rivers_europe.png"
-	#route_image_filepath = "earth/routes.png"
 	province_image_filepath = "earth/provinces_europe.png"
 }
 
@@ -52,6 +50,5 @@ central_europe = {
 	max_latitude = 56.01
 	terrain_image_filepath = "earth/terrain_central_europe.png"
 	#river_image_filepath = "earth/rivers_europe.png"
-	#route_image_filepath = "earth/routes.png"
 	province_image_filepath = "earth/provinces_central_europe.png"
 }

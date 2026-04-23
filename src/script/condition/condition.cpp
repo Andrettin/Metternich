@@ -252,8 +252,6 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			return std::make_unique<can_gain_building_class_condition>(value, condition_operator);
 		} else if (key == "feature") {
 			return std::make_unique<feature_condition>(value, condition_operator);
-		} else if (key == "has_route") {
-			return std::make_unique<has_route_condition<site>>(value, condition_operator);
 		} else if (key == "holding_level") {
 			return std::make_unique<holding_level_condition>(value, condition_operator);
 		} else if (key == "holding_type") {
@@ -342,7 +340,9 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 	}
 
 	if constexpr (std::is_same_v<scope_type, province> || std::is_same_v<scope_type, site>) {
-		if (key == "near_water") {
+		if (key == "has_route") {
+			return std::make_unique<has_route_condition<scope_type>>(value, condition_operator);
+		} else if (key == "near_water") {
 			return std::make_unique<near_water_condition<scope_type>>(value, condition_operator);
 		} else if (key == "pathway") {
 			return std::make_unique<pathway_condition<scope_type>>(value, condition_operator);

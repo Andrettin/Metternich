@@ -115,7 +115,6 @@ public:
 
 	bool is_coastal() const;
 	bool is_near_water() const;
-	bool has_route() const;
 	const pathway *get_pathway() const;
 	bool has_pathway_or_better(const pathway *pathway) const;
 
