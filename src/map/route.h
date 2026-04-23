@@ -13,6 +13,9 @@ class province;
 class route_game_data;
 class route_history;
 
+template <typename scope_type>
+class and_condition;
+
 class route final : public named_data_entry, public data_type<route>
 {
 	Q_OBJECT
@@ -108,6 +111,11 @@ public:
 		return this->path_provinces;
 	}
 
+	const and_condition<province> *get_conditions() const
+	{
+		return this->conditions.get();
+	}
+
 signals:
 	void changed();
 
@@ -115,6 +123,7 @@ private:
 	QColor color;
 	bool hidden = false;
 	std::vector<const province *> path_provinces;
+	std::unique_ptr<const and_condition<province>> conditions;
 	qunique_ptr<route_history> history;
 	qunique_ptr<route_game_data> game_data;
 };

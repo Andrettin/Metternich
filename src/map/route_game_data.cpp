@@ -5,6 +5,7 @@
 #include "map/province.h"
 #include "map/province_map_data.h"
 #include "map/route.h"
+#include "script/condition/and_condition.h"
 #include "util/assert_util.h"
 #include "util/string_conversion_util.h"
 
@@ -72,7 +73,14 @@ void route_game_data::check_active()
 		return;
 	}
 
-	//FIXME: check if conditions are fulfilled for each province
+	if (this->route->get_conditions() != nullptr) {
+		for (const province *province : this->route->get_path_provinces()) {
+			if (!this->route->get_conditions()->check(province, read_only_context(province))) {
+				this->set_active(false);
+				return;
+			}
+		}
+	}
 
 	this->set_active(true);
 }

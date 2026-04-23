@@ -1,6 +1,9 @@
 persian_royal_highway = {
 	name = "Persian Royal Highway"
 	color = { 168 168 24 }
+	conditions = {
+		pathway = road
+	}
 	
 	history = {
 		-500 = {

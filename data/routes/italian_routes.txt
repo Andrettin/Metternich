@@ -6,6 +6,9 @@ aemilian_way = {
 		modena
 		parma
 	}
+	conditions = {
+		pathway = road
+	}
 	
 	history = {
 		-100 = {
@@ -17,6 +20,9 @@ aemilian_way = {
 appian_way = {
 	name = "Appian Way"
 	color = { 159 93 229 }
+	conditions = {
+		pathway = road
+	}
 	
 	history = {
 		-100 = {
@@ -28,6 +34,9 @@ appian_way = {
 cassian_way = {
 	name = "Cassian Way"
 	color = { 206 39 73 }
+	conditions = {
+		pathway = road
+	}
 	
 	history = {
 		-100 = {
@@ -39,6 +48,9 @@ cassian_way = {
 flaminian_way = {
 	name = "Flaminian Way"
 	color = { 71 132 104 }
+	conditions = {
+		pathway = road
+	}
 	
 	history = {
 		-100 = {
@@ -54,6 +66,9 @@ postumian_way = {
 		genoa
 		piedmont
 		parma
+	}
+	conditions = {
+		pathway = road
 	}
 	
 	history = {

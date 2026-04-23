@@ -5,6 +5,7 @@
 #include "map/province.h"
 #include "map/route_game_data.h"
 #include "map/route_history.h"
+#include "script/condition/and_condition.h"
 #include "util/log_util.h"
 
 namespace metternich {
@@ -29,6 +30,10 @@ void route::process_gsml_scope(const gsml_data &scope)
 			province->add_route(this);
 			this->path_provinces.push_back(province);
 		}
+	} else if (tag == "conditions") {
+		auto conditions = std::make_unique<and_condition<province>>();
+		conditions->process_gsml_data(scope);
+		this->conditions = std::move(conditions);
 	} else {
 		named_data_entry::process_gsml_scope(scope);
 	}

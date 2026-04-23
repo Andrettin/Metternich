@@ -35,6 +35,8 @@
 #include "map/province_map_data.h"
 #include "map/province_map_mode.h"
 #include "map/province_turn_data.h"
+#include "map/route.h"
+#include "map/route_game_data.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "map/site_map_data.h"
@@ -723,6 +725,10 @@ void province_game_data::set_pathway(const metternich::pathway *pathway)
 	this->pathway = pathway;
 
 	if (game::get()->is_running()) {
+		for (const route *route : this->province->get_routes()) {
+			route->get_game_data()->check_active();
+		}
+
 		emit pathway_changed();
 	}
 }
