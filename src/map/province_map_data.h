@@ -17,6 +17,8 @@ class province_map_data final : public QObject
 	Q_PROPERTY(bool coastal READ is_coastal CONSTANT)
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect NOTIFY territory_changed)
 	Q_PROPERTY(QVariantList sites READ get_sites_qvariant_list CONSTANT)
+	Q_PROPERTY(QVariantList polygon_paths READ get_polygon_paths_qvariant_list CONSTANT)
+	Q_PROPERTY(QVariantList polygon_rects READ get_polygon_rects_qvariant_list CONSTANT)
 
 public:
 	explicit province_map_data(const metternich::province *province);
@@ -114,6 +116,14 @@ public:
 		return this->tile_terrain_counts;
 	}
 
+	const std::vector<QPolygon> &get_polygons() const
+	{
+		return this->polygons;
+	}
+
+	QVariantList get_polygon_paths_qvariant_list() const;
+	QVariantList get_polygon_rects_qvariant_list() const;
+
 signals:
 	void territory_changed();
 
@@ -134,6 +144,7 @@ private:
 	std::vector<const site *> settlement_sites; //includes all settlements, even if unbuilt
 	resource_map<int> resource_counts;
 	terrain_type_map<int> tile_terrain_counts;
+	std::vector<QPolygon> polygons;
 };
 
 }

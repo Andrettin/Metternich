@@ -3,6 +3,7 @@
 #include "map/province_map_data.h"
 
 #include "database/data_entry_container.h"
+#include "database/preferences.h"
 #include "map/map.h"
 #include "map/province.h"
 #include "map/site.h"
@@ -156,6 +157,43 @@ void province_map_data::add_border_tile(const QPoint &tile_pos)
 QVariantList province_map_data::get_sites_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_sites());
+}
+
+QVariantList province_map_data::get_polygon_paths_qvariant_list() const
+{
+	QVariantList polygon_paths;
+
+	for (const QPolygon &polygon : this->get_polygons()) {
+		std::string polygon_path;
+
+		bool first = true;
+
+		for (const QPoint &point : polygon) {
+			if (first) {
+				polygon_path += std::format("M {} {}", (point.x() * preferences::get()->get_scale_factor()).to_int(), (point.y() * preferences::get()->get_scale_factor()).to_int());
+				first = false;
+			} else {
+				polygon_path += std::format(" L {} {}", (point.x() * preferences::get()->get_scale_factor()).to_int(), (point.y() * preferences::get()->get_scale_factor()).to_int());
+			}
+		}
+
+		polygon_path += "z";
+
+		polygon_paths.append(QString::fromStdString(polygon_path));
+	}
+
+	return polygon_paths;
+}
+
+QVariantList province_map_data::get_polygon_rects_qvariant_list() const
+{
+	std::vector<QRect> polygon_rects;
+
+	for (const QPolygon &polygon : this->get_polygons()) {
+		polygon_rects.push_back(polygon.boundingRect());
+	}
+
+	return container::to_qvariant_list(polygon_rects);
 }
 
 }
