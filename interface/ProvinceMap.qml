@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Shapes
 import MaskedMouseArea 1.0
 
 Flickable {
@@ -25,6 +26,33 @@ Flickable {
 	
 	Repeater {
 		model: metternich.map.provinces
+		
+		/*
+		Shape {
+			id: province_shape
+			x: province_polygon_rect ? province_polygon_rect.x * scale_factor : 0
+			y: province_polygon_rect ? province_polygon_rect.y * scale_factor : 0
+			width: province_polygon_rect ? province_polygon_rect.width * scale_factor : 1
+			height: province_polygon_rect ? province_polygon_rect.height * scale_factor : 1
+			visible: province_polygon_path !== null
+			
+			readonly property var province: model.modelData
+			readonly property var province_polygon_path: province.map_data.polygon_paths.length > 0 ? province.map_data.polygon_paths[0] : null
+			readonly property var province_polygon_rect: province.map_data.polygon_rects.length > 0 ? province.map_data.polygon_rects[0] : null
+			
+			ShapePath {
+				strokeWidth: 1 * scale_factor
+				strokeColor: "black"
+				fillColor: province.game_data.map_color
+				startX: 0
+				startY: 0
+				
+				PathSvg {
+					path: province_polygon_path ? province_polygon_path : ""
+				}
+			}
+		}
+		*/
 		
 		Image {
 			id: province_image
