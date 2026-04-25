@@ -1,7 +1,3 @@
 fur_trading_post = {
 	name = "Fur Trading Post"
 }
-
-spice_factory = {
-	name = "Spice Factory"
-}
