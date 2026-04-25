@@ -30,10 +30,6 @@ Flickable {
 		/*
 		Shape {
 			id: province_shape
-			x: province_polygon_rect ? province_polygon_rect.x * scale_factor : 0
-			y: province_polygon_rect ? province_polygon_rect.y * scale_factor : 0
-			width: province_polygon_rect ? province_polygon_rect.width * scale_factor : 1
-			height: province_polygon_rect ? province_polygon_rect.height * scale_factor : 1
 			visible: province_polygon_path !== null
 			
 			readonly property var province: model.modelData
@@ -43,7 +39,7 @@ Flickable {
 			ShapePath {
 				strokeWidth: 1 * scale_factor
 				strokeColor: "black"
-				fillColor: province.game_data.map_color
+				fillColor: selected_province === province ? metternich.defines.selected_country_color : province.game_data.map_color
 				startX: 0
 				startY: 0
 				

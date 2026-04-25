@@ -3,6 +3,7 @@
 #include "map/province_map_data.h"
 
 #include "database/data_entry_container.h"
+#include "database/defines.h"
 #include "database/preferences.h"
 #include "map/map.h"
 #include "map/province.h"
@@ -170,10 +171,10 @@ QVariantList province_map_data::get_polygon_paths_qvariant_list() const
 
 		for (const QPoint &point : polygon) {
 			if (first) {
-				polygon_path += std::format("M {} {}", (point.x() * preferences::get()->get_scale_factor()).to_int(), (point.y() * preferences::get()->get_scale_factor()).to_int());
+				polygon_path += std::format("M {} {}", (point.x() * defines::get()->get_min_province_map_tile_scale() * preferences::get()->get_scale_factor()).to_int(), (point.y() * defines::get()->get_min_province_map_tile_scale() * preferences::get()->get_scale_factor()).to_int());
 				first = false;
 			} else {
-				polygon_path += std::format(" L {} {}", (point.x() * preferences::get()->get_scale_factor()).to_int(), (point.y() * preferences::get()->get_scale_factor()).to_int());
+				polygon_path += std::format(" L {} {}", (point.x() * defines::get()->get_min_province_map_tile_scale() * preferences::get()->get_scale_factor()).to_int(), (point.y() * defines::get()->get_min_province_map_tile_scale() * preferences::get()->get_scale_factor()).to_int());
 			}
 		}
 
