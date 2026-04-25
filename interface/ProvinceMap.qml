@@ -167,7 +167,7 @@ Flickable {
 				
 				onClicked: {
 					metternich.defines.click_sound.play()
-					if ((selected_province === province || (selected_site !== null && selected_site.game_data.province === province && !province_map.show_sites)) && selected_garrison === false) {
+					if (((selected_province === province || (selected_site !== null && selected_site.game_data.province === province && !province_map.show_sites)) && selected_garrison === false) || province.water_zone) {
 						select_province(null)
 					} else {
 						if (metternich.selected_military_units.length > 0) {
