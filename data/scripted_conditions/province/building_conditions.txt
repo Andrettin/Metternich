@@ -6,3 +6,7 @@ has_mine = {
 		has_building_class = silver_mine
 	}
 }
+
+has_school = {
+	has_building_class = monastic_school
+}
