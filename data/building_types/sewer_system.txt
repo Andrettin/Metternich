@@ -4,9 +4,19 @@ sewer_system = {
 	portrait = hospital
 	icon = architecture
 	holding_types = {
-		city
+		guild
+		law
+		temple
 	}
-	conditions = {
-		game_rule = additional_buildings
+	commodity_costs = {
+		wealth = 24gb
+	}
+	domain_modifier = {
+		loyalty = 1
+		stability = 2
+	}
+	modifier = {
+		crime = 1
+		productivity = 1
 	}
 }
