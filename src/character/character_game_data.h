@@ -107,7 +107,6 @@ class character_game_data final : public QObject
 	Q_PROPERTY(QVariantList recipes READ get_recipes_qvariant_list NOTIFY recipes_changed)
 	Q_PROPERTY(QVariantList items READ get_items_qvariant_list NOTIFY items_changed)
 	Q_PROPERTY(QVariantList unequipped_items READ get_unequipped_items_qvariant_list NOTIFY unequipped_items_changed)
-	Q_PROPERTY(bool deployable READ is_deployable CONSTANT)
 	Q_PROPERTY(const metternich::military_unit* military_unit READ get_military_unit NOTIFY military_unit_changed)
 	Q_PROPERTY(const metternich::civilian_unit* civilian_unit READ get_civilian_unit NOTIFY civilian_unit_changed)
 	Q_PROPERTY(QVariantList status_effects READ get_status_effects_qvariant_list NOTIFY status_effect_durations_changed)
@@ -678,18 +677,19 @@ public:
 		emit civilian_unit_changed();
 	}
 
-	bool is_deployable() const;
-
 	bool is_deployed() const
 	{
 		return this->get_military_unit() != nullptr || this->get_civilian_unit() != nullptr;
 	}
 
 	Q_INVOKABLE const metternich::military_unit_type *get_deployable_military_unit_type() const;
+	Q_INVOKABLE const metternich::civilian_unit_type *get_deployable_civilian_unit_type() const;
 
-	[[nodiscard]] QCoro::Task<void> deploy_to_province(const metternich::domain *domain, const province *province);
+	[[nodiscard]] QCoro::Task<void> deploy_as_military_unit_coro(const province *province);
+	[[nodiscard]] QCoro::Task<void> deploy_as_civilian_unit_coro(const province *province);
 
-	Q_INVOKABLE QCoro::QmlTask deploy();
+	Q_INVOKABLE QCoro::QmlTask deploy_as_military_unit();
+	Q_INVOKABLE QCoro::QmlTask deploy_as_civilian_unit();
 
 	[[nodiscard]] QCoro::Task<void> undeploy();
 

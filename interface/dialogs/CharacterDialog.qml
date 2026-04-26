@@ -136,11 +136,30 @@ DialogBase {
 				readonly property var deployable_military_unit_type: character !== null ? character.game_data.get_deployable_military_unit_type() : null
 				
 				onClicked: {
-					character.game_data.deploy()
+					character.game_data.deploy_as_military_unit()
 				}
 				onHoveredChanged: {
 					if (hovered) {
 						status_text = "Deploy as " + deployable_military_unit_type.name
+					} else {
+						status_text = ""
+					}
+				}
+			}
+			
+			IconButton {
+				id: civilian_deployment_button
+				icon_identifier: "labor_hammer"
+				visible: character !== null && deployable_civilian_unit_type !== null && character.game_data.military_unit === null && character.game_data.civilian_unit === null && character.game_data.domain === metternich.game.player_country
+				
+				readonly property var deployable_civilian_unit_type: character !== null ? character.game_data.get_deployable_civilian_unit_type() : null
+				
+				onClicked: {
+					character.game_data.deploy_as_civilian_unit()
+				}
+				onHoveredChanged: {
+					if (hovered) {
+						status_text = "Deploy as " + deployable_civilian_unit_type.name
 					} else {
 						status_text = ""
 					}

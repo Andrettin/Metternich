@@ -959,7 +959,7 @@ QCoro::Task<void> character_game_data::apply_history(const QDate &start_date)
 			const province *deployment_province = character_history->get_deployment_province();
 			if (deployment_province != nullptr) {
 				if (deployment_province->is_water_zone() || deployment_province->get_game_data()->get_owner() == domain) {
-					co_await this->deploy_to_province(domain, deployment_province);
+					co_await this->deploy_as_military_unit_coro(deployment_province);
 				}
 			}
 		}
@@ -3006,15 +3006,6 @@ QCoro::Task<void> character_game_data::apply_trait_office_modifier(const trait *
 	}
 }
 
-bool character_game_data::is_deployable() const
-{
-	if (this->character->get_military_unit_category() == military_unit_category::none) {
-		return false;
-	}
-
-	return true;
-}
-
 const metternich::military_unit_type *character_game_data::get_deployable_military_unit_type() const
 {
 	if (this->character->get_military_unit_category() == military_unit_category::none) {
@@ -3026,31 +3017,56 @@ const metternich::military_unit_type *character_game_data::get_deployable_milita
 	return this->get_domain()->get_military()->get_best_military_unit_category_type(this->character->get_military_unit_category(), this->character->get_culture());
 }
 
-QCoro::Task<void> character_game_data::deploy_to_province(const metternich::domain *domain, const province *province)
+const metternich::civilian_unit_type *character_game_data::get_deployable_civilian_unit_type() const
 {
-	assert_throw(domain != nullptr);
-	assert_throw(domain == this->get_domain());
+	//FIXME: add civilian unit type from office?
+
+	return this->character->get_civilian_unit_type();
+}
+
+QCoro::Task<void> character_game_data::deploy_as_military_unit_coro(const province *province)
+{
+	assert_throw(this->get_domain() != nullptr);
 	assert_throw(province != nullptr);
 	assert_throw(!this->is_deployed());
-	assert_throw(this->is_deployable());
 
 	const military_unit_type *military_unit_type = this->get_deployable_military_unit_type();
 	assert_throw(military_unit_type != nullptr);
 
-	auto military_unit = co_await metternich::military_unit::create(military_unit_type, domain, this->character);
+	auto military_unit = co_await metternich::military_unit::create(military_unit_type, this->get_domain(), this->character);
 
 	assert_throw(military_unit->can_move_to(province));
 
 	co_await military_unit->set_province(province);
 
-	domain->get_military()->add_military_unit(std::move(military_unit));
-
-	assert_throw(this->get_domain() != nullptr);
+	this->get_domain()->get_military()->add_military_unit(std::move(military_unit));
 }
 
-QCoro::QmlTask character_game_data::deploy()
+QCoro::Task<void> character_game_data::deploy_as_civilian_unit_coro(const province *province)
 {
-	return this->deploy_to_province(this->get_domain(), this->get_domain()->get_game_data()->get_capital_province());
+	assert_throw(this->get_domain() != nullptr);
+	assert_throw(province != nullptr);
+	assert_throw(!this->is_deployed());
+
+	const civilian_unit_type *civilian_unit_type = this->get_deployable_civilian_unit_type();
+	assert_throw(civilian_unit_type != nullptr);
+
+	auto civilian_unit = make_qunique<metternich::civilian_unit>(civilian_unit_type, this->get_domain(), this->character);
+
+	civilian_unit->set_province(province);
+
+	this->get_domain()->get_game_data()->add_civilian_unit(std::move(civilian_unit));
+	co_return;
+}
+
+QCoro::QmlTask character_game_data::deploy_as_military_unit()
+{
+	return this->deploy_as_military_unit_coro(this->get_domain()->get_game_data()->get_capital_province());
+}
+
+QCoro::QmlTask character_game_data::deploy_as_civilian_unit()
+{
+	return this->deploy_as_civilian_unit_coro(this->get_domain()->get_game_data()->get_capital_province());
 }
 
 QCoro::Task<void> character_game_data::undeploy()
