@@ -1,5 +1,6 @@
 ruler = {
 	name = "Ruler"
+	civilian_unit_class = ruler
 	character_attributes = {
 		charisma
 	}

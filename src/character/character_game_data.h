@@ -633,7 +633,7 @@ public:
 		return this->office;
 	}
 
-	void set_office(const metternich::office *office);
+	[[nodiscard]] QCoro::Task<void> set_office(const metternich::office *office);
 	int get_office_domain_attribute_modifier(const metternich::office *office, const character_attribute **output_character_attribute, const skill **output_skill) const;
 	std::string get_office_modifier_string(const metternich::domain *domain, const metternich::office *office) const;
 

@@ -1,0 +1,45 @@
+ruler = {
+	name = "Ruler"
+	unit_class = ruler
+	icon = general_napoleonic
+	buildable_pathways = {
+		trail
+		road
+		railroad
+	}
+}
+
+high_priest = {
+	name = "High Priest"
+	unit_class = high_priest
+	icon = clergymen_byzantine
+}
+
+magister = {
+	name = "Magister"
+	unit_class = magister
+	icon = clergymen_byzantine
+}
+
+marshal = {
+	name = "Marshal"
+	unit_class = marshal
+	icon = general_napoleonic
+}
+
+royal_enforcer = {
+	name = "Royal Enforcer"
+	unit_class = royal_enforcer
+	icon = spy
+}
+
+treasurer = {
+	name = "Treasurer"
+	unit_class = treasurer
+	icon = merchant
+	buildable_pathways = {
+		trail
+		road
+		railroad
+	}
+}

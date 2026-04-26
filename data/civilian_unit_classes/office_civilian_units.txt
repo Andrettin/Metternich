@@ -1,0 +1,23 @@
+ruler = {
+	name = "Ruler"
+}
+
+high_priest = {
+	name = "High Priest"
+}
+
+magister = {
+	name = "Magister"
+}
+
+marshal = {
+	name = "Marshal"
+}
+
+royal_enforcer = {
+	name = "Royal Enforcer"
+}
+
+treasurer = {
+	name = "Treasurer"
+}

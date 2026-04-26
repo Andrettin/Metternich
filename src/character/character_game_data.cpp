@@ -62,6 +62,7 @@
 #include "ui/icon.h"
 #include "ui/portrait.h"
 #include "unit/civilian_unit.h"
+#include "unit/civilian_unit_type.h"
 #include "unit/military_unit.h"
 #include "unit/military_unit_category.h"
 #include "util/assert_util.h"
@@ -2862,21 +2863,30 @@ bool character_game_data::is_ruler() const
 	return this->get_domain() != nullptr && this->get_domain()->get_government()->get_ruler() == this->character;
 }
 
-void character_game_data::set_office(const metternich::office *office)
+QCoro::Task<void> character_game_data::set_office(const metternich::office *office)
 {
 	if (office == this->get_office()) {
-		return;
+		co_return;
 	}
 
 	if (office != nullptr) {
 		assert_throw(!this->is_dead());
 	}
 
+	const civilian_unit_type *old_deployable_civilian_unit_type = this->get_deployable_civilian_unit_type();
+
 	this->office = office;
 
 	if (office != nullptr && office->is_ruler()) {
 		this->get_domain()->get_economy()->change_wealth(this->wealth);
 		this->wealth = 0;
+	}
+
+	const civilian_unit_type *deployable_civilian_unit_type = this->get_deployable_civilian_unit_type();
+
+	if (this->get_civilian_unit() != nullptr && old_deployable_civilian_unit_type != deployable_civilian_unit_type) {
+		//if the character's deployable civilian unit type changed as a consequence of the office change, undeploy them
+		co_await this->undeploy();
 	}
 
 	if (game::get()->is_running()) {
@@ -3019,7 +3029,9 @@ const metternich::military_unit_type *character_game_data::get_deployable_milita
 
 const metternich::civilian_unit_type *character_game_data::get_deployable_civilian_unit_type() const
 {
-	//FIXME: add civilian unit type from office?
+	if (this->get_office() != nullptr && this->get_office()->get_civilian_unit_class() != nullptr) {
+		return this->character->get_culture()->get_civilian_class_unit_type(this->get_office()->get_civilian_unit_class());
+	}
 
 	return this->character->get_civilian_unit_type();
 }

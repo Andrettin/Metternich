@@ -490,7 +490,7 @@ QCoro::Task<void> domain_government::set_office_holder(const office *office, con
 
 	if (old_office_holder != nullptr) {
 		co_await old_office_holder->get_game_data()->apply_office_modifier(this->domain, office, -1);
-		old_office_holder->get_game_data()->set_office(nullptr);
+		co_await old_office_holder->get_game_data()->set_office(nullptr);
 	}
 
 	const metternich::domain *old_domain = character ? character->get_game_data()->get_domain() : nullptr;
@@ -511,7 +511,7 @@ QCoro::Task<void> domain_government::set_office_holder(const office *office, con
 
 	if (character != nullptr) {
 		co_await character->get_game_data()->apply_office_modifier(this->domain, office, 1);
-		character->get_game_data()->set_office(office);
+		co_await character->get_game_data()->set_office(office);
 	}
 
 	if (office->is_ruler()) {

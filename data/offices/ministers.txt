@@ -32,6 +32,7 @@ high_priest = {
 	name = "High Priest"
 	minister = true
 	domain_attribute = stability
+	civilian_unit_class = high_priest
 	character_attributes = {
 		charisma
 		wisdom
@@ -48,6 +49,7 @@ magister = {
 	name = "Magister"
 	minister = true
 	domain_attribute = economy
+	civilian_unit_class = magister
 	character_attributes = {
 		charisma
 		intelligence
@@ -65,6 +67,7 @@ marshal = {
 	aliases += war_minister
 	minister = true
 	domain_attribute = stability
+	civilian_unit_class = marshal
 	character_attributes = {
 		charisma
 		strength
@@ -79,6 +82,7 @@ royal_enforcer = {
 	name = "Royal Enforcer"
 	minister = true
 	domain_attribute = loyalty
+	civilian_unit_class = royal_enforcer
 	character_attributes = {
 		dexterity
 		strength
@@ -112,6 +116,7 @@ treasurer = {
 	aliases += finance_minister
 	minister = true
 	domain_attribute = economy
+	civilian_unit_class = treasurer
 	character_attributes = {
 		intelligence
 		wisdom

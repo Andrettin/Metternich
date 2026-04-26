@@ -7,6 +7,7 @@ namespace metternich {
 
 class character;
 class character_attribute;
+class civilian_unit_class;
 class domain_attribute;
 class skill;
 
@@ -23,6 +24,7 @@ class office final : public named_data_entry, public data_type<office>
 	Q_PROPERTY(bool appointable READ is_appointable CONSTANT)
 	Q_PROPERTY(const metternich::domain_attribute* domain_attribute MEMBER domain_attribute READ get_domain_attribute NOTIFY changed)
 	Q_PROPERTY(bool half_domain_attribute_bonus MEMBER half_domain_attribute_bonus READ gives_half_domain_attribute_bonus NOTIFY changed)
+	Q_PROPERTY(const metternich::civilian_unit_class* civilian_unit_class MEMBER civilian_unit_class READ get_civilian_unit_class NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "office";
@@ -58,6 +60,11 @@ public:
 		return this->half_domain_attribute_bonus;
 	}
 
+	const civilian_unit_class *get_civilian_unit_class() const
+	{
+		return this->civilian_unit_class;
+	}
+
 	const std::vector<const character_attribute *> &get_character_attributes() const
 	{
 		return this->character_attributes;
@@ -85,6 +92,7 @@ private:
 	bool minister = false;
 	const metternich::domain_attribute *domain_attribute = nullptr;
 	bool half_domain_attribute_bonus = false;
+	const metternich::civilian_unit_class *civilian_unit_class = nullptr;
 	std::vector<const character_attribute *> character_attributes;
 	std::vector<const skill *> skills;
 	std::unique_ptr<const and_condition<domain>> conditions;
