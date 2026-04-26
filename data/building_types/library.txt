@@ -9,6 +9,11 @@ library = {
 		magic_source
 		temple
 	}
+	builder_civilian_unit_types = {
+		ruler
+		magister
+		engineer
+	}
 	commodity_costs = {
 		wealth = 6gb
 	}

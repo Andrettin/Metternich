@@ -27,6 +27,7 @@
 #include "unit/transporter_category.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
+#include "util/log_util.h"
 #include "util/vector_util.h"
 
 #include <magic_enum/magic_enum.hpp>
@@ -60,9 +61,15 @@ void building_type::process_gsml_scope(const gsml_data &scope)
 			const building_type *required_building = building_type::get(value);
 			this->required_buildings.push_back(required_building);
 		}
+	} else if (tag == "builder_civilian_unit_types") {
+		for (const std::string &value : values) {
+			this->builder_civilian_unit_types.push_back(civilian_unit_type::get(value));
+		}
 	} else if (tag == "recruited_civilian_unit_types") {
 		for (const std::string &value : values) {
-			this->recruited_civilian_unit_types.push_back(civilian_unit_type::get(value));
+			civilian_unit_type *civilian_unit_type = civilian_unit_type::get(value);
+			civilian_unit_type->add_buildable_building(this);
+			this->recruited_civilian_unit_types.push_back(civilian_unit_type);
 		}
 	} else if (tag == "recruited_military_unit_categories") {
 		for (const std::string &value : values) {
@@ -206,6 +213,10 @@ void building_type::check() const
 
 	if (this->get_holding_types().empty()) {
 		throw std::runtime_error(std::format("Building type \"{}\" does not have any holding types listed for it.", this->get_identifier()));
+	}
+
+	if (this->get_builder_civilian_unit_types().empty()) {
+		log::log_error(std::format("Building type \"{}\" has no builder civilian unit types.", this->get_identifier()));
 	}
 }
 

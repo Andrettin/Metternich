@@ -13,6 +13,11 @@ bank = {
 		guildhall
 		market
 	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
 	commodity_costs = {
 		wealth = 28gb
 	}

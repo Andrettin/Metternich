@@ -11,6 +11,11 @@ magical_academy = {
 	required_buildings = {
 		casters_tower
 	}
+	builder_civilian_unit_types = {
+		ruler
+		magister
+		engineer
+	}
 	commodity_costs = {
 		wealth = 58gb
 	}

@@ -7,6 +7,11 @@ shop = {
 	holding_types = {
 		guild
 	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
 	commodity_costs = {
 		wealth = 8gb
 	}
@@ -31,6 +36,11 @@ market = {
 	min_holding_level = 2
 	holding_types = {
 		guild
+	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
 	}
 	commodity_costs = {
 		wealth = 40gb

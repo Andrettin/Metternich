@@ -8,6 +8,11 @@ small_merchant_enclave = {
 	holding_types = {
 		guild
 	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
 }
 
 merchant_enclave = {
@@ -21,6 +26,11 @@ merchant_enclave = {
 	holding_types = {
 		guild
 	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
 }
 
 large_merchant_enclave = {
@@ -33,6 +43,11 @@ large_merchant_enclave = {
 	base_building = merchant_enclave
 	holding_types = {
 		guild
+	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
 	}
 }
 
@@ -49,6 +64,11 @@ guildhall = {
 	}
 	required_buildings = {
 		market
+	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
 	}
 	commodity_costs = {
 		wealth = 34gb

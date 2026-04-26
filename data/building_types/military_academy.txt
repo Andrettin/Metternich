@@ -11,6 +11,11 @@ military_academy = {
 		barracks
 		garrison
 	}
+	builder_civilian_unit_types = {
+		ruler
+		marshal
+		engineer
+	}
 	conditions = {
 		feature = academic
 	}

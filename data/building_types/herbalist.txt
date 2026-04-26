@@ -10,6 +10,12 @@ herbalist = {
 	required_buildings = {
 		temple
 	}
+	builder_civilian_unit_types = {
+		ruler
+		high_priest
+		magister
+		engineer
+	}
 	commodity_costs = {
 		wealth = 10gb
 	}

@@ -7,6 +7,11 @@ barracks = {
 	holding_types = {
 		law
 	}
+	builder_civilian_unit_types = {
+		ruler
+		marshal
+		engineer
+	}
 	recruited_military_unit_categories = {
 		mace_infantry
 		spear_infantry
@@ -43,6 +48,11 @@ garrison = {
 	base_building = barracks
 	holding_types = {
 		law
+	}
+	builder_civilian_unit_types = {
+		ruler
+		marshal
+		engineer
 	}
 	commodity_costs = {
 		wealth = 22gb

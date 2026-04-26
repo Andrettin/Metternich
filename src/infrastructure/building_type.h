@@ -123,6 +123,16 @@ public:
 		return this->holding_types;
 	}
 
+	const std::vector<const civilian_unit_type *> &get_builder_civilian_unit_types() const
+	{
+		return this->builder_civilian_unit_types;
+	}
+
+	void add_builder_civilian_unit_type(const civilian_unit_type *civilian_unit_type)
+	{
+		this->builder_civilian_unit_types.push_back(civilian_unit_type);
+	}
+
 	const std::vector<const civilian_unit_type *> &get_recruited_civilian_unit_types() const
 	{
 		return this->recruited_civilian_unit_types;
@@ -305,6 +315,7 @@ private:
 	const metternich::icon *icon = nullptr;
 	int level = 0;
 	std::vector<const holding_type *> holding_types;
+	std::vector<const civilian_unit_type *> builder_civilian_unit_types;
 	std::vector<const civilian_unit_type *> recruited_civilian_unit_types;
 	std::vector<military_unit_category> recruited_military_unit_categories;
 	std::vector<transporter_category> recruited_transporter_categories;

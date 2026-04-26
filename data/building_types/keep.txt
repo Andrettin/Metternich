@@ -8,6 +8,11 @@ donjon = {
 	holding_types = {
 		law
 	}
+	builder_civilian_unit_types = {
+		ruler
+		marshal
+		engineer
+	}
 }
 
 keep = {
@@ -20,6 +25,11 @@ keep = {
 	base_building = donjon
 	holding_types = {
 		law
+	}
+	builder_civilian_unit_types = {
+		ruler
+		marshal
+		engineer
 	}
 	commodity_costs = {
 		wealth = 24gb
@@ -41,6 +51,11 @@ expanded_keep = {
 	holding_types = {
 		law
 	}
+	builder_civilian_unit_types = {
+		ruler
+		marshal
+		engineer
+	}
 	domain_modifier = {
 		loyalty = 1
 		stability = 1
@@ -57,6 +72,11 @@ large_keep = {
 	base_building = expanded_keep
 	holding_types = {
 		law
+	}
+	builder_civilian_unit_types = {
+		ruler
+		marshal
+		engineer
 	}
 	domain_modifier = {
 		loyalty = 1
@@ -75,6 +95,11 @@ great_keep = {
 	holding_types = {
 		law
 	}
+	builder_civilian_unit_types = {
+		ruler
+		marshal
+		engineer
+	}
 	domain_modifier = {
 		loyalty = 1
 		stability = 1
@@ -91,6 +116,11 @@ epic_keep = {
 	base_building = great_keep
 	holding_types = {
 		law
+	}
+	builder_civilian_unit_types = {
+		ruler
+		marshal
+		engineer
 	}
 	domain_modifier = {
 		loyalty = 1

@@ -10,6 +10,11 @@ observatory = {
 		guild
 		magic_source
 	}
+	builder_civilian_unit_types = {
+		ruler
+		magister
+		engineer
+	}
 	conditions = {
 		feature = academic
 	}

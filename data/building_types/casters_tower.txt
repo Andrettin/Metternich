@@ -8,6 +8,11 @@ casters_tower = {
 	holding_types = {
 		magic_source
 	}
+	builder_civilian_unit_types = {
+		ruler
+		magister
+		engineer
+	}
 	commodity_costs = {
 		wealth = 30gb
 	}

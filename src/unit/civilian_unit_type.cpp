@@ -6,6 +6,7 @@
 #include "culture/culture.h"
 #include "economy/commodity.h"
 #include "economy/resource.h"
+#include "infrastructure/building_type.h"
 #include "infrastructure/pathway.h"
 #include "technology/technology.h"
 #include "unit/civilian_unit_class.h"
@@ -36,6 +37,12 @@ void civilian_unit_type::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "buildable_pathways") {
 		for (const std::string &value : values) {
 			this->buildable_pathways.insert(pathway::get(value));
+		}
+	} else if (tag == "buildable_buildings") {
+		for (const std::string &value : values) {
+			building_type *building = building_type::get(value);
+			building->add_builder_civilian_unit_type(this);
+			this->buildable_buildings.insert(building);
 		}
 	} else {
 		data_entry::process_gsml_scope(scope);

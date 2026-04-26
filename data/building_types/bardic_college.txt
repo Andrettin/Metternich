@@ -9,6 +9,11 @@ bardic_college = {
 	holding_types = {
 		guild
 	}
+	builder_civilian_unit_types = {
+		ruler
+		magister
+		engineer
+	}
 	commodity_costs = {
 		wealth = 40gb
 	}

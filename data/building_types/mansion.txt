@@ -7,6 +7,11 @@ mansion = {
 	holding_types = {
 		law
 	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
 	commodity_costs = {
 		wealth = 10gb
 	}
@@ -28,6 +33,11 @@ noble_villa = {
 	base_building = mansion
 	holding_types = {
 		law
+	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
 	}
 	commodity_costs = {
 		wealth = 14gb
@@ -59,6 +69,11 @@ palace = {
 	}
 	required_buildings = {
 		bureau
+	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
 	}
 	commodity_costs = {
 		wealth = 84gb

@@ -9,6 +9,12 @@ bureau = {
 		guild
 		law
 	}
+	builder_civilian_unit_types = {
+		ruler
+		royal_enforcer
+		treasurer
+		engineer
+	}
 	commodity_costs = {
 		wealth = 10gb
 	}

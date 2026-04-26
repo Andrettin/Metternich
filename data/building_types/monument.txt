@@ -9,6 +9,12 @@ monument = {
 		guild #for the Colossus of Rhodes
 		temple
 	}
+	builder_civilian_unit_types = {
+		ruler
+		high_priest
+		magister
+		engineer
+	}
 	commodity_costs = {
 		wealth = 6gb
 	}

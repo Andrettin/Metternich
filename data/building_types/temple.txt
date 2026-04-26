@@ -9,6 +9,11 @@ shrine = {
 		temple
 		city
 	}
+	builder_civilian_unit_types = {
+		ruler
+		high_priest
+		engineer
+	}
 	commodity_costs = {
 		wealth = 8gb
 	}
@@ -32,6 +37,11 @@ temple = {
 	holding_types = {
 		temple
 		city
+	}
+	builder_civilian_unit_types = {
+		ruler
+		high_priest
+		engineer
 	}
 	commodity_costs = {
 		wealth = 24gb
@@ -59,6 +69,11 @@ large_temple = {
 		temple
 		city
 	}
+	builder_civilian_unit_types = {
+		ruler
+		high_priest
+		engineer
+	}
 	domain_modifier = {
 		loyalty = 2
 		stability = 2
@@ -82,6 +97,11 @@ cathedral = {
 	holding_types = {
 		temple
 		city
+	}
+	builder_civilian_unit_types = {
+		ruler
+		high_priest
+		engineer
 	}
 	conditions = {
 		feature = holy_site
@@ -120,6 +140,11 @@ large_cathedral = {
 	holding_types = {
 		temple
 	}
+	builder_civilian_unit_types = {
+		ruler
+		high_priest
+		engineer
+	}
 	conditions = {
 		feature = holy_site
 	}
@@ -152,6 +177,11 @@ grand_cathedral = {
 	required_technology = middle_ages
 	holding_types = {
 		temple
+	}
+	builder_civilian_unit_types = {
+		ruler
+		high_priest
+		engineer
 	}
 	conditions = {
 		feature = holy_site
@@ -186,6 +216,11 @@ monastery = {
 	}
 	required_buildings = {
 		temple
+	}
+	builder_civilian_unit_types = {
+		ruler
+		high_priest
+		engineer
 	}
 	commodity_costs = {
 		wealth = 16gb

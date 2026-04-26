@@ -11,6 +11,11 @@ academy = {
 	required_buildings = {
 		library
 	}
+	builder_civilian_unit_types = {
+		ruler
+		magister
+		engineer
+	}
 	conditions = {
 		feature = academic
 	}
@@ -50,6 +55,11 @@ university = {
 	holding_types = {
 		city
 		guild
+	}
+	builder_civilian_unit_types = {
+		ruler
+		magister
+		engineer
 	}
 	recruited_civilian_unit_types = {
 		miner
@@ -105,6 +115,12 @@ monastic_school = {
 	required_buildings = {
 		monastery
 	}
+	builder_civilian_unit_types = {
+		ruler
+		high_priest
+		magister
+		engineer
+	}
 	commodity_costs = {
 		wealth = 18000gp
 	}
@@ -125,6 +141,12 @@ cathedral_school = {
 	}
 	required_buildings = {
 		cathedral
+	}
+	builder_civilian_unit_types = {
+		ruler
+		high_priest
+		magister
+		engineer
 	}
 	commodity_costs = {
 		wealth = 18000gp

@@ -15,6 +15,11 @@ warehouse = {
 		magic_source
 		temple
 	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
 	domain_modifier = {
 		storage_capacity = 100
 	}

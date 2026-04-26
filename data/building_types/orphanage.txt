@@ -10,6 +10,11 @@ orphanage = {
 	required_buildings = {
 		temple
 	}
+	builder_civilian_unit_types = {
+		ruler
+		high_priest
+		engineer
+	}
 	commodity_costs = {
 		wealth = 6gb
 	}

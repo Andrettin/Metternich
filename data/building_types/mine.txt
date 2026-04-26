@@ -10,6 +10,11 @@ coal_mine = {
 		law
 		temple
 	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
 	conditions = {
 		feature = coal_deposit
 	}
@@ -40,6 +45,11 @@ gold_mine = {
 		guild
 		law
 		temple
+	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
 	}
 	conditions = {
 		feature = gold_deposit
@@ -72,6 +82,11 @@ iron_mine = {
 		law
 		temple
 	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
 	conditions = {
 		feature = iron_deposit
 	}
@@ -102,6 +117,11 @@ silver_mine = {
 		guild
 		law
 		temple
+	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
 	}
 	conditions = {
 		feature = silver_deposit

@@ -7,6 +7,11 @@ liquor_distillery = {
 	holding_types = {
 		guild
 	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
 	conditions = {
 		feature = liquor
 	}

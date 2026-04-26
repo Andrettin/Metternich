@@ -8,6 +8,11 @@ town_hall = {
 	holding_types = {
 		law
 	}
+	builder_civilian_unit_types = {
+		ruler
+		royal_enforcer
+		engineer
+	}
 	commodity_costs = {
 		wealth = 22gb
 	}

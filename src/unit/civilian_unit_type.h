@@ -4,6 +4,7 @@
 #include "database/named_data_entry.h"
 #include "economy/commodity_container.h"
 #include "economy/resource_container.h"
+#include "infrastructure/building_type_container.h"
 #include "infrastructure/pathway_container.h"
 
 Q_MOC_INCLUDE("culture/cultural_group.h")
@@ -123,6 +124,21 @@ public:
 		return this->get_buildable_pathways().contains(pathway);
 	}
 
+	const building_type_set &get_buildable_buildings() const
+	{
+		return this->buildable_buildings;
+	}
+
+	bool can_build_building(const building_type *building) const
+	{
+		return this->get_buildable_buildings().contains(building);
+	}
+
+	void add_buildable_building(const building_type *building)
+	{
+		this->buildable_buildings.insert(building);
+	}
+
 signals:
 	void changed();
 
@@ -139,6 +155,7 @@ private:
 	commodity_map<int64_t> commodity_costs;
 	resource_set improvable_resources;
 	pathway_set buildable_pathways;
+	building_type_set buildable_buildings;
 };
 
 }
