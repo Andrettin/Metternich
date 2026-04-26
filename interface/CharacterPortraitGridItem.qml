@@ -46,7 +46,8 @@ Item {
 		source: "image://icon/garrison"
 		visible: character !== null && character.game_data.military_unit !== null
 		
-		readonly property string display_text: character !== null && character.game_data.military_unit !== null ? ("Deployed as " + character.game_data.military_unit.type.name + " to " + character.game_data.military_unit.province.game_data.current_cultural_name) : ""
+		readonly property string display_text: character !== null && character.game_data.military_unit !== null ? ("Deployed as " + character.game_data.military_unit.type.name + " to " + deployment_province_name) : ""
+		readonly property string deployment_province_name: character !== null && character.game_data.military_unit !== null && character.game_data.military_unit.province !== null ? character.game_data.military_unit.province.game_data.current_cultural_name : ""
 		
 		MouseArea {
 			anchors.fill: parent
@@ -75,7 +76,8 @@ Item {
 		source: "image://icon/alliance"
 		visible: character !== null && character.game_data.civilian_unit !== null
 		
-		readonly property string display_text: character !== null && character.game_data.civilian_unit !== null ? ("Deployed as " + character.game_data.civilian_unit.type.name + " to " + character.game_data.civilian_unit.province.game_data.current_cultural_name) : ""
+		readonly property string display_text: character !== null && character.game_data.civilian_unit !== null ? ("Deployed as " + character.game_data.civilian_unit.type.name + " to " + deployment_province_name) : ""
+		readonly property string deployment_province_name: character !== null && character.game_data.civilian_unit !== null && character.game_data.civilian_unit.province !== null ? character.game_data.civilian_unit.province.game_data.current_cultural_name : ""
 		
 		MouseArea {
 			anchors.fill: parent

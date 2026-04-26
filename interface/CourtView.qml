@@ -23,8 +23,10 @@ Item {
 				status_text = ruler.game_data.titled_name
 				right_status_text = ruler.game_data.get_office_modifier_qstring(ruler.game_data.domain, ruler.game_data.office)
 			} else {
-				status_text = ""
-				right_status_text = ""
+				if (status_text === ruler.game_data.titled_name) {
+					status_text = ""
+					right_status_text = ""
+				}
 			}
 		}
 	}
@@ -42,8 +44,10 @@ Item {
 				status_text = heir.game_data.titled_name
 				right_status_text = heir.game_data.get_office_modifier_qstring(heir.game_data.domain, heir.game_data.office)
 			} else {
-				status_text = ""
-				right_status_text = ""
+				if (status_text === heir.game_data.titled_name) {
+					status_text = ""
+					right_status_text = ""
+				}
 			}
 		}
 	}
@@ -61,6 +65,7 @@ Item {
 			readonly property var office: model.modelData
 			readonly property var office_holder: country_game_data.government.get_office_holder(office)
 			readonly property var appointed_office_holder: country_game_data.government.appointed_office_holders.length > 0 ? country_game_data.government.get_appointed_office_holder(office) : null //the check here is for the sake of property binding
+			readonly property string display_text: appointed_office_holder ? "Appointing " + appointed_office_holder.full_name + " as " + country_game_data.government.get_office_title_name_qstring(office) : (office_holder ? office_holder.game_data.titled_name : country_game_data.government.get_office_title_name_qstring(office))
 			
 			onClicked: {
 				if (office_holder !== null || appointed_office_holder !== null) {
@@ -76,11 +81,13 @@ Item {
 			
 			onHoveredChanged: {
 				if (hovered) {
-					status_text = appointed_office_holder ? "Appointing " + appointed_office_holder.full_name + " as " + country_game_data.government.get_office_title_name_qstring(office) : (office_holder ? office_holder.game_data.titled_name : country_game_data.government.get_office_title_name_qstring(office))
+					status_text = display_text
 					right_status_text = appointed_office_holder ? appointed_office_holder.game_data.get_office_modifier_qstring(country, office) : (office_holder ? office_holder.game_data.get_office_modifier_qstring(country, office) : "")
 				} else {
-					status_text = ""
-					right_status_text = ""
+					if (status_text === display_text) {
+						status_text = ""
+						right_status_text = ""
+					}
 				}
 			}
 		}
@@ -99,6 +106,7 @@ Item {
 			readonly property var office: model.modelData
 			readonly property var office_holder: country_game_data.government.get_office_holder(office)
 			readonly property var appointed_office_holder: country_game_data.government.appointed_office_holders.length > 0 ? country_game_data.government.get_appointed_office_holder(office) : null //the check here is for the sake of property binding
+			readonly property string display_text: appointed_office_holder ? "Appointing " + appointed_office_holder.full_name + " as " + country_game_data.get_office_title_name_qstring(office) : (office_holder ? office_holder.game_data.titled_name : country_game_data.get_office_title_name_qstring(office))
 			
 			onClicked: {
 				if (office_holder !== null || appointed_office_holder !== null) {
@@ -114,9 +122,11 @@ Item {
 			
 			onHoveredChanged: {
 				if (hovered) {
-					status_text = appointed_office_holder ? "Appointing " + appointed_office_holder.full_name + " as " + country_game_data.get_office_title_name_qstring(office) : (office_holder ? office_holder.game_data.titled_name : country_game_data.get_office_title_name_qstring(office))
+					status_text = display_text
 				} else {
-					status_text = ""
+					if (status_text === display_text) {
+						status_text = ""
+					}
 				}
 			}
 		}
