@@ -6,9 +6,7 @@ DialogBase {
 	id: build_building_choice_dialog
 	title: "Build Structure"
 	width: building_button_column.width + 8 * scale_factor * 2
-	height: content_height
-	
-	readonly property int content_height: building_button_column_view.y + building_button_column_view.height + 8 * scale_factor
+	height: cancel_button.y + cancel_button.height + 8 * scale_factor
 	
 	property var civilian_unit: null
 	property var potential_traits: []
@@ -97,6 +95,17 @@ DialogBase {
 					}
 				}
 			}
+		}
+	}
+	
+	TextButton {
+		id: cancel_button
+		anchors.top: building_button_column_view.bottom
+		anchors.topMargin: 16 * scale_factor
+		anchors.horizontalCenter: parent.horizontalCenter
+		text: "Cancel"
+		onClicked: {
+			build_building_choice_dialog.close()
 		}
 	}
 	
