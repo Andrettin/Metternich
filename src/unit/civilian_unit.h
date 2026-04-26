@@ -22,6 +22,7 @@ class civilian_unit_type;
 class domain;
 class icon;
 class improvement;
+class pathway;
 class phenotype;
 class province;
 
@@ -140,6 +141,9 @@ public:
 	QVariantList get_buildable_buildings_qvariant_list() const;
 	Q_INVOKABLE void build_building(const metternich::building_type *building_type, const metternich::site *site);
 
+	Q_INVOKABLE const metternich::pathway *get_buildable_pathway() const;
+	Q_INVOKABLE void build_pathway(const metternich::pathway *pathway);
+
 	Q_INVOKABLE bool can_build_on_tile() const;
 	Q_INVOKABLE void build_on_tile();
 
@@ -194,8 +198,9 @@ private:
 	const metternich::character *character = nullptr;
 	const metternich::province *province = nullptr;
 	const metternich::province *original_province = nullptr; //the province before moving
-	const building_type *building_under_construction = nullptr;
-	const site *building_under_construction_site = nullptr;
+	const building_type *under_construction_building = nullptr;
+	const site *under_construction_building_site = nullptr;
+	const pathway *under_construction_pathway = nullptr;
 	const improvement *improvement_under_construction = nullptr;
 	bool exploring = false;
 	bool prospecting = false;

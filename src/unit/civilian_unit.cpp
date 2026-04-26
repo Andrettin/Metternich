@@ -15,6 +15,7 @@
 #include "infrastructure/building_slot.h"
 #include "infrastructure/building_type.h"
 #include "infrastructure/improvement.h"
+#include "infrastructure/pathway.h"
 #include "language/name_generator.h"
 #include "map/map.h"
 #include "map/province.h"
@@ -167,13 +168,21 @@ QCoro::Task<void> civilian_unit::do_turn()
 				this->prospecting = false;
 			}
 			
-			if (this->building_under_construction != nullptr) {
-				assert_throw(this->building_under_construction_site != nullptr);
+			if (this->under_construction_building != nullptr) {
+				assert_throw(this->under_construction_building_site != nullptr);
 
-				co_await this->building_under_construction_site->get_game_data()->add_building(this->building_under_construction);
+				co_await this->under_construction_building_site->get_game_data()->add_building(this->under_construction_building);
 
-				this->building_under_construction = nullptr;
-				this->building_under_construction_site = nullptr;
+				this->under_construction_building = nullptr;
+				this->under_construction_building_site = nullptr;
+			}
+
+			if (this->under_construction_pathway != nullptr) {
+				assert_throw(this->get_province() != nullptr);
+
+				this->get_province()->get_game_data()->set_pathway(this->under_construction_pathway);
+
+				this->under_construction_pathway = nullptr;
 			}
 
 			if (this->improvement_under_construction != nullptr) {
@@ -394,8 +403,8 @@ QVariantList civilian_unit::get_buildable_buildings_qvariant_list() const
 
 void civilian_unit::build_building(const building_type *building_type, const site *site)
 {
-	this->building_under_construction = building_type;
-	this->building_under_construction_site = site;
+	this->under_construction_building = building_type;
+	this->under_construction_building_site = site;
 
 	//FIXME: have different task completion turns for different buildings
 	this->set_task_completion_turns(civilian_unit::improvement_construction_turns);
@@ -403,6 +412,32 @@ void civilian_unit::build_building(const building_type *building_type, const sit
 	domain_economy *domain_economy = this->get_owner()->get_economy();
 
 	for (const auto &[commodity, cost] : building_type->get_commodity_costs_for_site(site)) {
+		domain_economy->change_stored_commodity(commodity, -cost);
+	}
+}
+
+const metternich::pathway *civilian_unit::get_buildable_pathway() const
+{
+	assert_throw(this->get_province() != nullptr);
+
+	const pathway *buildable_pathway = this->get_province()->get_game_data()->get_buildable_pathway();
+	if (buildable_pathway != nullptr && this->get_type()->can_build_pathway(buildable_pathway)) {
+		return buildable_pathway;
+	}
+
+	return nullptr;
+}
+
+void civilian_unit::build_pathway(const metternich::pathway *pathway)
+{
+	this->under_construction_pathway = pathway;
+
+	//FIXME: have different task completion turns for different pathways
+	this->set_task_completion_turns(civilian_unit::improvement_construction_turns);
+
+	domain_economy *domain_economy = this->get_owner()->get_economy();
+
+	for (const auto &[commodity, cost] : pathway->get_commodity_costs_for_province(this->get_province())) {
 		domain_economy->change_stored_commodity(commodity, -cost);
 	}
 }
@@ -484,10 +519,18 @@ void civilian_unit::build_improvement(const improvement *improvement)
 
 void civilian_unit::cancel_work()
 {
-	if (this->building_under_construction != nullptr) {
+	if (this->under_construction_building != nullptr) {
 		domain_economy *domain_economy = this->get_owner()->get_economy();
 
-		for (const auto &[commodity, cost] : this->building_under_construction->get_commodity_costs_for_site(this->building_under_construction_site)) {
+		for (const auto &[commodity, cost] : this->under_construction_building->get_commodity_costs_for_site(this->under_construction_building_site)) {
+			domain_economy->change_stored_commodity(commodity, cost);
+		}
+	}
+
+	if (this->under_construction_pathway != nullptr) {
+		domain_economy *domain_economy = this->get_owner()->get_economy();
+
+		for (const auto &[commodity, cost] : this->under_construction_pathway->get_commodity_costs_for_province(this->get_province())) {
 			domain_economy->change_stored_commodity(commodity, cost);
 		}
 	}
@@ -504,8 +547,9 @@ void civilian_unit::cancel_work()
 	}
 
 	this->set_task_completion_turns(0);
-	this->building_under_construction = nullptr;
-	this->building_under_construction_site = nullptr;
+	this->under_construction_building = nullptr;
+	this->under_construction_building_site = nullptr;
+	this->under_construction_pathway = nullptr;
 	this->improvement_under_construction = nullptr;
 	this->exploring = false;
 	this->prospecting = false;

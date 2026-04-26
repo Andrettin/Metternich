@@ -138,22 +138,6 @@ Item {
 		id: building_dialog
 	}
 	
-	BuildBuildingDialog {
-		id: build_building_dialog
-	}
-	
-	CancelConstructionDialog {
-		id: cancel_construction_dialog
-	}
-	
-	BuildPathwayDialog {
-		id: build_pathway_dialog
-	}
-	
-	CancelPathwayConstructionDialog {
-		id: cancel_pathway_construction_dialog
-	}
-	
 	BuildBuildingChoiceDialog {
 		id: build_building_choice_dialog
 	}

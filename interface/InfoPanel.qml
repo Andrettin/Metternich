@@ -198,27 +198,11 @@ Rectangle {
 		
 		CustomIconImage {
 			id: pathway_icon
-			name: pathway ? pathway.name : "No Pathway"
+			name: pathway ? pathway.name : ""
 			icon_identifier: pathway ? pathway.icon.identifier : "mountains"
-			visible: selected_province !== null && !selected_garrison && !viewing_population && !viewing_population_units
+			visible: selected_province !== null && pathway !== null && !selected_garrison && !viewing_population && !viewing_population_units
 			
 			readonly property var pathway: selected_province ? selected_province.game_data.pathway : null
-			
-			onClicked: {
-				if (selected_province.game_data.owner === metternich.game.player_country) { //FIXME: also allow pathway construction in vassal provinces
-					if (selected_province.game_data.under_construction_pathway !== null) {
-						cancel_pathway_construction_dialog.province = province
-						cancel_pathway_construction_dialog.open()
-					} else {
-						var buildable_pathway = selected_province.game_data.get_buildable_pathway()
-						if (buildable_pathway !== null) {
-							build_pathway_dialog.province = selected_province
-							build_pathway_dialog.pathway = buildable_pathway
-							build_pathway_dialog.open()
-						}
-					}
-				}
-			}
 		}
 		
 		Repeater {

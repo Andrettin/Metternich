@@ -53,8 +53,4 @@ Item {
 	BuildingDialog {
 		id: building_dialog
 	}
-	
-	BuildBuildingDialog {
-		id: build_building_dialog
-	}
 }
