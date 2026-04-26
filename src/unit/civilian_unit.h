@@ -38,6 +38,7 @@ class civilian_unit final : public QObject
 	Q_PROPERTY(bool moving READ is_moving NOTIFY original_province_changed)
 	Q_PROPERTY(bool working READ is_working NOTIFY task_completion_turns_changed)
 	Q_PROPERTY(QVariantList buildable_buildings READ get_buildable_buildings_qvariant_list NOTIFY buildable_buildings_changed)
+	Q_PROPERTY(const metternich::pathway* buildable_pathway READ get_buildable_pathway NOTIFY buildable_pathway_changed)
 	Q_PROPERTY(QVariantList improvable_resource_tiles READ get_improvable_resource_tiles_qvariant_list NOTIFY improvable_resources_changed)
 	Q_PROPERTY(QVariantList prospectable_provinces READ get_prospectable_provinces_qvariant_list NOTIFY prospectable_provinces_changed)
 
@@ -141,7 +142,7 @@ public:
 	QVariantList get_buildable_buildings_qvariant_list() const;
 	Q_INVOKABLE void build_building(const metternich::building_type *building_type, const metternich::site *site);
 
-	Q_INVOKABLE const metternich::pathway *get_buildable_pathway() const;
+	const metternich::pathway *get_buildable_pathway() const;
 	Q_INVOKABLE void build_pathway(const metternich::pathway *pathway);
 
 	Q_INVOKABLE bool can_build_on_tile() const;
@@ -186,6 +187,7 @@ signals:
 	void province_changed();
 	void original_province_changed();
 	void buildable_buildings_changed();
+	void buildable_pathway_changed();
 	void improvable_resources_changed();
 	void prospectable_provinces_changed();
 	void task_completion_turns_changed();

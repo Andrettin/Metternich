@@ -50,6 +50,7 @@ civilian_unit::civilian_unit(const civilian_unit_type *type, const domain *owner
 	connect(this, &civilian_unit::type_changed, this, &civilian_unit::icon_changed);
 
 	connect(this, &civilian_unit::province_changed, this, &civilian_unit::buildable_buildings_changed);
+	connect(this, &civilian_unit::province_changed, this, &civilian_unit::buildable_pathway_changed);
 
 	connect(this->get_owner()->get_game_data(), &domain_game_data::provinces_changed, this, &civilian_unit::improvable_resources_changed);
 	connect(this->get_owner()->get_economy(), &domain_economy::commodity_outputs_changed, this, &civilian_unit::improvable_resources_changed);

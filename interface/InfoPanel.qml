@@ -729,6 +729,26 @@ Rectangle {
 		}
 		
 		IconButton {
+			id: build_pathway_button
+			icon_identifier: pathway !== null ? pathway.icon.identifier : "road"
+			visible: selected_civilian_unit !== null && !selected_civilian_unit.working && pathway !== null
+			
+			readonly property var pathway: selected_civilian_unit !== null ? selected_civilian_unit.buildable_pathway : null
+			
+			onClicked: {
+				selected_civilian_unit.build_pathway(pathway)
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Build " + pathway.name
+				} else {
+					status_text = ""
+				}
+			}
+		}
+		
+		IconButton {
 			id: build_building_button
 			icon_identifier: "cog"
 			visible: selected_civilian_unit !== null && !selected_civilian_unit.working && selected_civilian_unit.buildable_buildings.length > 0
