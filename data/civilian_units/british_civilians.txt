@@ -3,11 +3,11 @@ english_builder = {
 	
 	history = {
 		1492 = {
-			site = london
+			province = middlesex #london
 		}
 		
 		1820 = {
-			site = none
+			province = none
 		}
 	}
 }
@@ -17,7 +17,7 @@ british_prospector = {
 	
 	history = {
 		1820 = {
-			site = newcastle
+			province = northumberland #newcastle
 		}
 	}
 }
@@ -27,7 +27,7 @@ british_northern_engineer = {
 	
 	history = {
 		1820 = {
-			site = newcastle
+			province = northumberland #newcastle
 		}
 	}
 }
@@ -37,7 +37,7 @@ british_miner = {
 	
 	history = {
 		1820 = {
-			site = newcastle
+			province = northumberland #newcastle
 		}
 	}
 }
@@ -47,7 +47,7 @@ british_southern_engineer = {
 	
 	history = {
 		1820 = {
-			site = london
+			province = middlesex #london
 		}
 	}
 }
@@ -57,7 +57,7 @@ british_farmer = {
 	
 	history = {
 		1820 = {
-			site = london
+			province = middlesex #london
 		}
 	}
 }

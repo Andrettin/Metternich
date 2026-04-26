@@ -64,7 +64,7 @@ Item {
 	}
 	
 	Grid {
-		id: prospectable_tiles_grid
+		id: prospectable_provinces_grid
 		anchors.top: parent.top
 		anchors.bottom: parent.bottom
 		anchors.horizontalCenter: parent.horizontalCenter
@@ -73,15 +73,15 @@ Item {
 		rowSpacing: 4 * scale_factor
 		
 		Repeater {
-			model: selected_civilian_unit ? selected_civilian_unit.prospectable_tiles : []
+			model: selected_civilian_unit ? selected_civilian_unit.prospectable_provinces : []
 			
 			Item {
 				width: terrain_icon.width + 4 * scale_factor
 				height: terrain_icon.height
 				
 				readonly property var terrain: model.modelData.key
-				readonly property var tiles: model.modelData.value
-				property int next_tile_index: 0
+				readonly property var provinces: model.modelData.value
+				property int next_province_index: 0
 				
 				Image {
 					id: terrain_icon
@@ -92,7 +92,7 @@ Item {
 				
 				SmallText {
 					id: count_label
-					text: number_string(tiles.length)
+					text: number_string(provinces.length)
 					anchors.right: parent.right
 					anchors.bottom: parent.bottom
 				}
@@ -102,11 +102,11 @@ Item {
 					hoverEnabled: true
 					
 					onReleased: {
-						province_map.center_on_tile(tiles[next_tile_index].x, tiles[next_tile_index].y)
+						province_map.center_on_province(provinces[next_province_index])
 						
-						next_tile_index += 1
-						if (next_tile_index >= tiles.length) {
-							next_tile_index = 0
+						next_province_index += 1
+						if (next_province_index >= provinces.length) {
+							next_province_index = 0
 						}
 					}
 					

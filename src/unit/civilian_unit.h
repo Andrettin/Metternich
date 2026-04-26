@@ -5,6 +5,7 @@
 
 Q_MOC_INCLUDE("character/character.h")
 Q_MOC_INCLUDE("domain/domain.h")
+Q_MOC_INCLUDE("map/province.h")
 Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("unit/civilian_unit_type.h")
 
@@ -22,7 +23,6 @@ class icon;
 class improvement;
 class phenotype;
 class province;
-class tile;
 
 class civilian_unit final : public QObject
 {
@@ -32,12 +32,11 @@ class civilian_unit final : public QObject
 	Q_PROPERTY(const metternich::civilian_unit_type* type READ get_type NOTIFY type_changed)
 	Q_PROPERTY(const metternich::icon* icon READ get_icon NOTIFY icon_changed)
 	Q_PROPERTY(const metternich::domain* owner READ get_owner CONSTANT)
-	Q_PROPERTY(QPoint tile_pos READ get_tile_pos NOTIFY tile_pos_changed)
-	Q_PROPERTY(const metternich::province* province READ get_province NOTIFY tile_pos_changed)
-	Q_PROPERTY(bool moving READ is_moving NOTIFY original_tile_pos_changed)
+	Q_PROPERTY(const metternich::province* province READ get_province NOTIFY province_changed)
+	Q_PROPERTY(bool moving READ is_moving NOTIFY original_province_changed)
 	Q_PROPERTY(bool working READ is_working NOTIFY task_completion_turns_changed)
 	Q_PROPERTY(QVariantList improvable_resource_tiles READ get_improvable_resource_tiles_qvariant_list NOTIFY improvable_resources_changed)
-	Q_PROPERTY(QVariantList prospectable_tiles READ get_prospectable_tiles_qvariant_list NOTIFY prospectable_tiles_changed)
+	Q_PROPERTY(QVariantList prospectable_provinces READ get_prospectable_provinces_qvariant_list NOTIFY prospectable_provinces_changed)
 
 public:
 	static constexpr int improvement_construction_turns = 2;
@@ -103,33 +102,26 @@ public:
 		return this->character;
 	}
 
-	const QPoint &get_tile_pos() const
-	{
-		return this->tile_pos;
-	}
+	const province *get_province() const;
+	void set_province(const province *province);
 
-	void set_tile_pos(const QPoint &tile_pos);
-	tile *get_tile() const;
-
-	void set_original_tile_pos(const QPoint &tile_pos)
+	void set_original_province(const metternich::province *province)
 	{
-		if (tile_pos == this->original_tile_pos) {
+		if (province == this->original_province) {
 			return;
 		}
 
-		this->original_tile_pos = tile_pos;
-		emit original_tile_pos_changed();
+		this->original_province = province;
+		emit original_province_changed();
 	}
 
-	const province *get_province() const;
-
-	Q_INVOKABLE bool can_move_to(const QPoint &tile_pos) const;
-	Q_INVOKABLE void move_to(const QPoint &tile_pos);
+	Q_INVOKABLE bool can_move_to(const metternich::province *province) const;
+	Q_INVOKABLE void move_to(const metternich::province *province);
 	Q_INVOKABLE void cancel_move();
 
 	bool is_moving() const
 	{
-		return this->original_tile_pos != QPoint(-1, -1);
+		return this->original_province != nullptr;
 	}
 
 	bool is_working() const
@@ -155,11 +147,11 @@ public:
 	resource_map<std::vector<QPoint>> get_improvable_resource_tiles() const;
 	QVariantList get_improvable_resource_tiles_qvariant_list() const;
 
-	bool can_explore_tile(const QPoint &tile_pos) const;
+	bool can_explore_province(const province *province) const;
 
-	bool can_prospect_tile(const QPoint &tile_pos) const;
-	terrain_type_map<std::vector<QPoint>> get_prospectable_tiles() const;
-	QVariantList get_prospectable_tiles_qvariant_list() const;
+	bool can_prospect_province(const province *province) const;
+	terrain_type_map<std::vector<const province *>> get_prospectable_provinces() const;
+	QVariantList get_prospectable_provinces_qvariant_list() const;
 
 	void set_task_completion_turns(const int turns)
 	{
@@ -181,10 +173,10 @@ public:
 signals:
 	void type_changed();
 	void icon_changed();
-	void tile_pos_changed();
-	void original_tile_pos_changed();
+	void province_changed();
+	void original_province_changed();
 	void improvable_resources_changed();
-	void prospectable_tiles_changed();
+	void prospectable_provinces_changed();
 	void task_completion_turns_changed();
 
 private:
@@ -193,8 +185,8 @@ private:
 	const domain *owner = nullptr;
 	const metternich::phenotype *phenotype = nullptr;
 	const metternich::character *character = nullptr;
-	QPoint tile_pos = QPoint(-1, -1);
-	QPoint original_tile_pos = QPoint(-1, -1); //the tile position before moving
+	const metternich::province *province = nullptr;
+	const metternich::province *original_province = nullptr; //the province before moving
 	const improvement *improvement_under_construction = nullptr;
 	bool exploring = false;
 	bool prospecting = false;

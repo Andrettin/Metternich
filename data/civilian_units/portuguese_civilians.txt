@@ -3,7 +3,7 @@ portuguese_builder = {
 	
 	history = {
 		1492 = {
-			site = lisbon
+			province = estremadura #lisbon
 		}
 	}
 }

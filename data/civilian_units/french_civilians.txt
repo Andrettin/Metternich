@@ -3,11 +3,11 @@ french_builder = {
 	
 	history = {
 		1492 = {
-			site = paris
+			province = ile_de_france #paris
 		}
 		
 		1820 = {
-			site = none
+			province = none
 		}
 	}
 }
@@ -17,7 +17,7 @@ french_engineer = {
 	
 	history = {
 		1820 = {
-			site = paris
+			province = ile_de_france #paris
 		}
 	}
 }
@@ -27,7 +27,7 @@ french_farmer = {
 	
 	history = {
 		1820 = {
-			site = paris
+			province = ile_de_france #paris
 		}
 	}
 }
@@ -37,7 +37,7 @@ french_miner = {
 	
 	history = {
 		1820 = {
-			site = nancy
+			province = lorraine
 		}
 	}
 }
@@ -47,7 +47,7 @@ french_prospector = {
 	
 	history = {
 		1820 = {
-			site = nancy
+			province = lorraine
 		}
 	}
 }

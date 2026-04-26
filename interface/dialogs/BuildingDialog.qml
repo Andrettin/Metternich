@@ -66,7 +66,7 @@ DialogBase {
 						icon_identifier: civilian_unit_type.icon.identifier
 						tooltip: tooltip_string.length > 0 ? format_text(small_text(tooltip_string)) : ""
 						
-						readonly property string costs_string: civilian_unit_type !== null ? costs_to_string(civilian_unit_type.commodity_costs, undefined, "\n\t", civilian_unit_type.wealth_cost) : ""
+						readonly property string costs_string: civilian_unit_type !== null ? costs_to_string(civilian_unit_type.commodity_costs, undefined, "\n\t") : ""
 						readonly property string tooltip_string: costs_string
 						
 						onClicked: {

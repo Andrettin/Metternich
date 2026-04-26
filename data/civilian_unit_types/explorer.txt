@@ -4,8 +4,8 @@ explorer = {
 	icon = arquebusiers
 	explorer = true
 	prospector = true
-	wealth_cost = 500
 	commodity_costs = {
+		wealth = 500gp
 		paper = 3
 	}
 }

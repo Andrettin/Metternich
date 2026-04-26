@@ -3,7 +3,7 @@ ottoman_prospector = {
 	
 	history = {
 		1820 = {
-			site = constantinople
+			province = thrace #constantinople
 		}
 	}
 }

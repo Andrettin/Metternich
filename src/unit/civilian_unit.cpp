@@ -50,9 +50,9 @@ civilian_unit::civilian_unit(const civilian_unit_type *type, const domain *owner
 	connect(this->get_owner()->get_economy(), &domain_economy::commodity_outputs_changed, this, &civilian_unit::improvable_resources_changed);
 	connect(this->get_owner()->get_technology(), &country_technology::technologies_changed, this, &civilian_unit::improvable_resources_changed);
 
-	connect(this->get_owner()->get_game_data(), &domain_game_data::provinces_changed, this, &civilian_unit::prospectable_tiles_changed);
-	connect(this->get_owner()->get_game_data(), &domain_game_data::prospected_tiles_changed, this, &civilian_unit::prospectable_tiles_changed);
-	connect(this->get_owner()->get_technology(), &country_technology::technologies_changed, this, &civilian_unit::prospectable_tiles_changed);
+	connect(this->get_owner()->get_game_data(), &domain_game_data::provinces_changed, this, &civilian_unit::prospectable_provinces_changed);
+	connect(this->get_owner()->get_game_data(), &domain_game_data::prospected_tiles_changed, this, &civilian_unit::prospectable_provinces_changed);
+	connect(this->get_owner()->get_technology(), &country_technology::technologies_changed, this, &civilian_unit::prospectable_provinces_changed);
 }
 
 civilian_unit::civilian_unit(const civilian_unit_type *type, const domain *owner, const metternich::character *character)
@@ -89,6 +89,10 @@ void civilian_unit::process_gsml_property(const gsml_property &property)
 	} else if (key == "character") {
 		this->character = game::get()->get_character(value);
 		this->character->get_game_data()->set_civilian_unit(this);
+	} else if (key == "province") {
+		this->set_province(province::get(value));
+	} else if (key == "original_province") {
+		this->original_province = province::get(value);
 	} else if (key == "exploring") {
 		this->exploring = string::to_bool(value);
 	} else if (key == "prospecting") {
@@ -104,13 +108,7 @@ void civilian_unit::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 
-	if (tag == "tile_pos") {
-		this->set_tile_pos(scope.to_point());
-	} else if (tag == "original_tile_pos") {
-		this->original_tile_pos = scope.to_point();
-	} else {
-		throw std::runtime_error(std::format("Invalid civilian unit scope: \"{}\".", tag));
-	}
+	throw std::runtime_error(std::format("Invalid civilian unit scope: \"{}\".", tag));
 }
 
 gsml_data civilian_unit::to_gsml_data() const
@@ -126,10 +124,10 @@ gsml_data civilian_unit::to_gsml_data() const
 		data.add_property("character", this->get_character()->get_identifier());
 	}
 
-	data.add_child("tile_pos", gsml_data::from_point(this->get_tile_pos()));
+	data.add_property("province", this->get_province()->get_identifier());
 
-	if (this->original_tile_pos != QPoint(-1, -1)) {
-		data.add_child("original_tile_pos", gsml_data::from_point(this->original_tile_pos));
+	if (this->original_province != nullptr) {
+		data.add_property("original_province", this->original_province->get_identifier());
 	}
 
 	data.add_property("exploring", string::from_bool(this->exploring));
@@ -142,7 +140,7 @@ gsml_data civilian_unit::to_gsml_data() const
 QCoro::Task<void> civilian_unit::do_turn()
 {
 	if (this->is_moving()) {
-		this->set_original_tile_pos(QPoint(-1, -1));
+		this->set_original_province(nullptr);
 	}
 
 	if (this->task_completion_turns > 0) {
@@ -150,27 +148,23 @@ QCoro::Task<void> civilian_unit::do_turn()
 
 		if (this->task_completion_turns == 0) {
 			if (this->exploring) {
-				//set the adjacent tiles to explored for the owner player
-				co_await point::for_each_adjacent_coro(this->get_tile_pos(), [this](const QPoint &adjacent_pos) -> QCoro::Task<void> {
-					if (!map::get()->contains(adjacent_pos)) {
-						co_return;
+				//set the adjacent provinces to explored for the owner player
+				for (const metternich::province *neighbor_province : this->get_province()->get_map_data()->get_neighbor_provinces()) {
+					if (!this->get_owner()->get_game_data()->is_province_explored(neighbor_province)) {
+						co_await this->get_owner()->get_game_data()->explore_province(neighbor_province);
 					}
-
-					if (!this->get_owner()->get_game_data()->is_tile_explored(adjacent_pos)) {
-						co_await this->get_owner()->get_game_data()->explore_tile(adjacent_pos);
-					}
-				});
+				}
 
 				this->exploring = false;
 			}
 			
 			if (this->prospecting) {
-				co_await this->get_owner()->get_game_data()->prospect_tile(this->get_tile_pos());
+				//co_await this->get_owner()->get_game_data()->prospect_province(this->get_province());
 				this->prospecting = false;
 			}
 			
 			if (this->improvement_under_construction != nullptr) {
-				co_await this->get_tile()->get_site()->get_game_data()->set_improvement(this->improvement_under_construction->get_slot(), this->improvement_under_construction);
+				//co_await this->get_tile()->get_site()->get_game_data()->set_improvement(this->improvement_under_construction->get_slot(), this->improvement_under_construction);
 				this->improvement_under_construction = nullptr;
 			}
 		}
@@ -183,7 +177,8 @@ void civilian_unit::do_ai_turn()
 		return;
 	}
 
-	for (const province *province : this->get_owner()->get_game_data()->get_provinces()) {
+	/*
+	for (const metternich::province *province : this->get_owner()->get_game_data()->get_provinces()) {
 		for (const QPoint &resource_tile_pos : province->get_game_data()->get_resource_tiles()) {
 			if (resource_tile_pos != this->get_tile_pos() && !this->can_move_to(resource_tile_pos)) {
 				continue;
@@ -203,6 +198,7 @@ void civilian_unit::do_ai_turn()
 			}
 		}
 	}
+	*/
 }
 
 void civilian_unit::generate_name()
@@ -257,69 +253,49 @@ const metternich::cultural_group *civilian_unit::get_cultural_group() const
 	return nullptr;
 }
 
-void civilian_unit::set_tile_pos(const QPoint &tile_pos)
+const province *civilian_unit::get_province() const
 {
-	if (tile_pos == this->get_tile_pos()) {
+	return this->province;
+}
+
+void civilian_unit::set_province(const metternich::province *province)
+{
+	if (province == this->get_province()) {
 		return;
 	}
 
-	if (this->get_tile() != nullptr) {
-		map::get()->remove_tile_civilian_unit(this->get_tile_pos(), this);
+	if (this->get_province() != nullptr) {
+		this->get_province()->get_game_data()->remove_civilian_unit(this);
 	}
 
-	this->tile_pos = tile_pos;
+	this->province = province;
 
-	if (this->get_tile() != nullptr) {
-		map::get()->add_tile_civilian_unit(this->get_tile_pos(), this);
+	if (this->get_province() != nullptr) {
+		this->get_province()->get_game_data()->add_civilian_unit(this);
 	}
 
-	emit tile_pos_changed();
+	emit province_changed();
 }
 
-tile *civilian_unit::get_tile() const
+bool civilian_unit::can_move_to(const metternich::province *province) const
 {
-	if (this->get_tile_pos() == QPoint(-1, -1)) {
-		return nullptr;
-	}
-
-	return map::get()->get_tile(tile_pos);
-}
-
-const province *civilian_unit::get_province() const
-{
-	const tile *tile = this->get_tile();
-	if (tile != nullptr) {
-		return tile->get_province();
-	}
-
-	return nullptr;
-}
-
-bool civilian_unit::can_move_to(const QPoint &tile_pos) const
-{
-	const tile *tile = map::get()->get_tile(tile_pos);
-
-	if (!tile->get_civilian_units().empty()) {
-		//return false;
-	}
-
-	if (tile->get_owner() == this->get_owner()) {
+	if (province->get_game_data()->get_owner() == this->get_owner()) {
 		return true;
 	}
 
-	if (tile->get_owner() != nullptr) {
-		return tile->get_owner()->get_game_data()->is_any_vassal_of(this->get_owner());
+	if (province->get_game_data()->get_owner() != nullptr) {
+		return province->get_game_data()->get_owner()->get_game_data()->is_any_vassal_of(this->get_owner());
 	}
 
 	return false;
 }
 
-void civilian_unit::move_to(const QPoint &tile_pos)
+void civilian_unit::move_to(const metternich::province *province)
 {
-	this->set_original_tile_pos(this->get_tile_pos());
-	this->set_tile_pos(tile_pos);
+	this->set_original_province(this->get_province());
+	this->set_province(province);
 
-	if (this->get_type()->is_explorer() && this->can_explore_tile(tile_pos) && this->get_type()->is_prospector() && this->can_prospect_tile(tile_pos)) {
+	if (this->get_type()->is_explorer() && this->can_explore_province(province) && this->get_type()->is_prospector() && this->can_prospect_province(province)) {
 		//explore and prospect at the same time
 		this->exploring = true;
 		this->prospecting = true;
@@ -327,13 +303,13 @@ void civilian_unit::move_to(const QPoint &tile_pos)
 		return;
 	}
 
-	if (this->get_type()->is_explorer() && this->can_explore_tile(tile_pos)) {
+	if (this->get_type()->is_explorer() && this->can_explore_province(province)) {
 		this->exploring = true;
 		this->set_task_completion_turns(civilian_unit::exploration_turns);
 		return;
 	}
 
-	if (this->get_type()->is_prospector() && this->can_prospect_tile(tile_pos)) {
+	if (this->get_type()->is_prospector() && this->can_prospect_province(province)) {
 		this->prospecting = true;
 		this->set_task_completion_turns(civilian_unit::prospection_turns);
 		return;
@@ -346,31 +322,29 @@ void civilian_unit::move_to(const QPoint &tile_pos)
 
 void civilian_unit::cancel_move()
 {
-	assert_throw(map::get()->contains(this->original_tile_pos));
-
-	if (!map::get()->get_tile(this->original_tile_pos)->get_civilian_units().empty()) {
-		//cannot move back if the original tile is currently occupied by a different civilian unit
-		//return;
-	}
+	assert_throw(this->original_province != nullptr);
 
 	if (this->is_working()) {
 		this->cancel_work();
 	}
 
-	this->set_tile_pos(this->original_tile_pos);
-	this->set_original_tile_pos(QPoint(-1, -1));
+	this->set_province(this->original_province);
+	this->set_original_province(nullptr);
 }
 
 bool civilian_unit::can_build_on_tile() const
 {
-	return this->get_buildable_resource_improvement_for_tile(this->get_tile_pos()) != nullptr;
+	return false;
+	//return this->get_buildable_resource_improvement_for_tile(this->get_tile_pos()) != nullptr;
 }
 
 void civilian_unit::build_on_tile()
 {
+	/*
 	const improvement *buildable_improvement = this->get_buildable_resource_improvement_for_tile(this->get_tile_pos());
 	assert_throw(buildable_improvement != nullptr);
 	this->build_improvement(buildable_improvement);
+	*/
 }
 
 bool civilian_unit::can_build_improvement(const improvement *improvement) const
@@ -481,7 +455,7 @@ resource_map<std::vector<QPoint>> civilian_unit::get_improvable_resource_tiles()
 		return resource_tiles;
 	}
 
-	for (const province *province : this->get_owner()->get_game_data()->get_provinces()) {
+	for (const metternich::province *province : this->get_owner()->get_game_data()->get_provinces()) {
 		for (const QPoint &tile_pos : province->get_game_data()->get_resource_tiles()) {
 			const tile *tile = map::get()->get_tile(tile_pos);
 
@@ -508,77 +482,75 @@ QVariantList civilian_unit::get_improvable_resource_tiles_qvariant_list() const
 	return archimedes::map::to_qvariant_list(this->get_improvable_resource_tiles());
 }
 
-bool civilian_unit::can_explore_tile(const QPoint &tile_pos) const
+bool civilian_unit::can_explore_province(const metternich::province *province) const
 {
 	if (!this->get_type()->is_explorer()) {
 		return false;
 	}
 
-	if (!this->get_owner()->get_game_data()->is_tile_explored(tile_pos)) {
-		//can only explore already-explored tiles which border non-explored ones
+	if (!this->get_owner()->get_game_data()->is_province_explored(province)) {
+		//can only explore already-explored provinces which border non-explored ones
 		return false;
 	}
 
 	bool adjacent_unexplored = false;
 
-	point::for_each_adjacent_until(tile_pos, [this, &adjacent_unexplored](const QPoint &adjacent_pos) {
-		if (!map::get()->contains(adjacent_pos)) {
-			return false;
-		}
-
-		if (!this->get_owner()->get_game_data()->is_tile_explored(adjacent_pos)) {
+	for (const metternich::province *neighbor_province : province->get_map_data()->get_neighbor_provinces()) {
+		if (!this->get_owner()->get_game_data()->is_province_explored(neighbor_province)) {
 			adjacent_unexplored = true;
 			return true;
 		}
 
 		return false;
-	});
+	}
 
 	return adjacent_unexplored;
 }
 
-bool civilian_unit::can_prospect_tile(const QPoint &tile_pos) const
+bool civilian_unit::can_prospect_province(const metternich::province *province) const
 {
 	if (!this->get_type()->is_prospector()) {
 		return false;
 	}
 
-	if (this->get_owner()->get_game_data()->is_tile_prospected(tile_pos)) {
-		//already prospected
-		return false;
-	}
-
-	const tile *tile = map::get()->get_tile(tile_pos);
-
-	if (tile->is_resource_discovered()) {
-		return false;
-	}
-
-	for (const resource *resource : resource::get_all()) {
-		if (!resource->is_prospectable()) {
+	for (const QPoint &tile_pos : province->get_map_data()->get_tiles()) {
+		if (this->get_owner()->get_game_data()->is_tile_prospected(tile_pos)) {
+			//already prospected
 			continue;
 		}
 
-		if (!vector::contains(resource->get_terrain_types(), tile->get_terrain())) {
+		const tile *tile = map::get()->get_tile(tile_pos);
+
+		if (tile->is_resource_discovered()) {
 			continue;
 		}
 
-		if (resource->get_required_technology() != nullptr && !this->get_owner()->get_technology()->has_technology(resource->get_required_technology())) {
-			continue;
-		}
+		for (const resource *resource : resource::get_all()) {
+			if (!resource->is_prospectable()) {
+				continue;
+			}
 
-		return true;
+			if (!vector::contains(resource->get_terrain_types(), tile->get_terrain())) {
+				continue;
+			}
+
+			if (resource->get_required_technology() != nullptr && !this->get_owner()->get_technology()->has_technology(resource->get_required_technology())) {
+				continue;
+			}
+
+			return true;
+		}
 	}
 
 	return false;
 }
 
-terrain_type_map<std::vector<QPoint>> civilian_unit::get_prospectable_tiles() const
+terrain_type_map<std::vector<const metternich::province *>> civilian_unit::get_prospectable_provinces() const
 {
-	terrain_type_map<std::vector<QPoint>> prospectable_tiles;
+	terrain_type_map<std::vector<const metternich::province *>> prospectable_provinces;
 
 	if (!this->get_type()->is_prospector()) {
-		return prospectable_tiles;
+		return prospectable_provinces;
 	}
 
 	terrain_type_set prospectable_terrains;
@@ -597,7 +569,7 @@ terrain_type_map<std::vector<QPoint>> civilian_unit::get_prospectable_tiles() co
 		}
 	}
 
-	for (const province *province : this->get_owner()->get_game_data()->get_provinces()) {
+	for (const metternich::province *province : this->get_owner()->get_game_data()->get_provinces()) {
 		bool has_prospectable_terrain = false;
 		for (const terrain_type *prospectable_terrain : prospectable_terrains) {
 			if (province->get_game_data()->get_tile_terrain_counts().contains(prospectable_terrain)) {
@@ -609,22 +581,19 @@ terrain_type_map<std::vector<QPoint>> civilian_unit::get_prospectable_tiles() co
 			continue;
 		}
 
-		for (const QPoint &tile_pos : province->get_map_data()->get_tiles()) {
-			if (!this->can_prospect_tile(tile_pos)) {
-				continue;
-			}
-
-			const tile *tile = map::get()->get_tile(tile_pos);
-			prospectable_tiles[tile->get_terrain()].push_back(tile_pos);
+		if (!this->can_prospect_province(province)) {
+			continue;
 		}
+
+		prospectable_provinces[province->get_game_data()->get_terrain()].push_back(province);
 	}
 
-	return prospectable_tiles;
+	return prospectable_provinces;
 }
 
-QVariantList civilian_unit::get_prospectable_tiles_qvariant_list() const
+QVariantList civilian_unit::get_prospectable_provinces_qvariant_list() const
 {
-	return archimedes::map::to_qvariant_list(this->get_prospectable_tiles());
+	return archimedes::map::to_qvariant_list(this->get_prospectable_provinces());
 }
 
 QCoro::Task<void> civilian_unit::disband(const bool dead)
@@ -642,11 +611,8 @@ QCoro::Task<void> civilian_unit::disband(const bool dead)
 		this->cancel_work();
 	}
 
-	tile *tile = this->get_tile();
-
-	assert_throw(tile != nullptr);
-
-	map::get()->remove_tile_civilian_unit(this->get_tile_pos(), this);
+	assert_throw(this->get_province() != nullptr);
+	this->set_province(nullptr);
 
 	this->get_owner()->get_game_data()->remove_civilian_unit(this);
 }

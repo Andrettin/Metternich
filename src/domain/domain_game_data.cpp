@@ -3878,31 +3878,17 @@ QDate domain_game_data::get_historical_ruler_end_date(const character *character
 	return QDate();
 }
 
-bool domain_game_data::create_civilian_unit(const civilian_unit_type *civilian_unit_type, const site *deployment_site, const phenotype *phenotype)
+bool domain_game_data::create_civilian_unit(const civilian_unit_type *civilian_unit_type, const province *deployment_province, const phenotype *phenotype)
 {
 	if (this->is_under_anarchy()) {
 		return false;
 	}
 
-	if (deployment_site == nullptr) {
-		deployment_site = this->get_capital();
+	if (deployment_province == nullptr) {
+		deployment_province = this->get_capital_province();
 	}
 
-	assert_throw(deployment_site != nullptr);
-
-	QPoint tile_pos = deployment_site->get_game_data()->get_tile_pos();
-
-	/*
-	if (!map::get()->get_tile(tile_pos)->get_civilian_units().empty()) {
-		//tile already occupied
-		const std::optional<QPoint> nearest_tile_pos = map::get()->get_nearest_available_tile_pos_for_civilian_unit(tile_pos);
-		if (!nearest_tile_pos.has_value()) {
-			return false;
-		}
-
-		tile_pos = nearest_tile_pos.value();
-	}
-	*/
+	assert_throw(deployment_province != nullptr);
 
 	qunique_ptr<civilian_unit> civilian_unit;
 
@@ -3921,7 +3907,7 @@ bool domain_game_data::create_civilian_unit(const civilian_unit_type *civilian_u
 
 	assert_throw(civilian_unit != nullptr);
 
-	civilian_unit->set_tile_pos(tile_pos);
+	civilian_unit->set_province(deployment_province);
 
 	this->add_civilian_unit(std::move(civilian_unit));
 
@@ -3978,18 +3964,13 @@ void domain_game_data::change_civilian_unit_recruitment_count(const civilian_uni
 	}
 
 	if (change_input_storage) {
-		const commodity_map<int> &commodity_costs = civilian_unit_type->get_commodity_costs();
+		const commodity_map<int64_t> &commodity_costs = civilian_unit_type->get_commodity_costs();
 		for (const auto &[commodity, cost] : commodity_costs) {
 			assert_throw(commodity->is_storable());
 
-			const int cost_change = cost * change;
+			const int64_t cost_change = cost * change;
 
 			this->get_economy()->change_stored_commodity(commodity, -cost_change);
-		}
-
-		if (civilian_unit_type->get_wealth_cost() > 0) {
-			const int wealth_cost_change = civilian_unit_type->get_wealth_cost() * change;
-			this->get_economy()->change_wealth(-wealth_cost_change);
 		}
 	}
 }
@@ -4005,10 +3986,6 @@ bool domain_game_data::can_increase_civilian_unit_recruitment(const civilian_uni
 		if (this->get_economy()->get_stored_commodity(commodity) < cost) {
 			return false;
 		}
-	}
-
-	if (civilian_unit_type->get_wealth_cost() != 0 && this->get_economy()->get_wealth() < civilian_unit_type->get_wealth_cost()) {
-		return false;
 	}
 
 	return true;

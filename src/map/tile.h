@@ -9,7 +9,6 @@ namespace archimedes {
 
 namespace metternich {
 
-class civilian_unit;
 class domain;
 class holding_type;
 class improvement;
@@ -96,19 +95,6 @@ public:
 
 	bool is_river_crossing_direction(const direction direction) const;
 
-	const std::vector<civilian_unit *> &get_civilian_units() const
-	{
-		return this->civilian_units;
-	}
-
-	void add_civilian_unit(civilian_unit *civilian_unit);
-	void remove_civilian_unit(civilian_unit *civilian_unit);
-
-	void clear_civilian_units()
-	{
-		this->civilian_units.clear();
-	}
-
 	const commodity_map<centesimal_int> &get_commodity_outputs() const;
 	void calculate_commodity_outputs();
 
@@ -121,7 +107,6 @@ private:
 	int8_t improvement_variation = 0;
 	bool inner_river = false; //whether the tile has an in-tile river
 	std::vector<direction> river_directions;
-	std::vector<civilian_unit *> civilian_units;
 };
 
 }

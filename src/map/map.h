@@ -10,7 +10,6 @@ namespace archimedes {
 
 namespace metternich {
 
-class civilian_unit;
 class improvement;
 class province;
 class resource;
@@ -93,8 +92,6 @@ public:
 	void set_tile_province(const QPoint &tile_pos, province *province);
 	void set_tile_site(const QPoint &tile_pos, const site *site);
 	[[nodiscard]] QCoro::Task<void> set_tile_resource_discovered(const QPoint &tile_pos, const bool discovered);
-	void add_tile_civilian_unit(const QPoint &tile_pos, civilian_unit *civilian_unit);
-	void remove_tile_civilian_unit(const QPoint &tile_pos, civilian_unit *civilian_unit);
 
 	bool is_tile_water(const QPoint &tile_pos) const;
 	bool is_tile_near_water(const QPoint &tile_pos) const;
@@ -104,8 +101,6 @@ public:
 	bool is_tile_on_country_border(const QPoint &tile_pos) const;
 	bool is_tile_on_province_border(const QPoint &tile_pos) const;
 	bool is_tile_on_province_border_with(const QPoint &tile_pos, const province *other_province) const;
-
-	std::optional<QPoint> get_nearest_available_tile_pos_for_civilian_unit(const QPoint &tile_pos) const;
 
 	const std::vector<province *> &get_provinces() const
 	{
@@ -178,7 +173,6 @@ signals:
 	void tile_resource_changed(const QPoint &tile_pos);
 	void tile_holding_type_changed(const QPoint &tile_pos);
 	void tile_improvement_changed(const QPoint &tile_pos);
-	void tile_civilian_unit_changed(const QPoint &tile_pos);
 	void provinces_changed();
 	void sites_changed();
 	void diplomatic_map_image_size_changed();

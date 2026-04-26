@@ -3,7 +3,7 @@ russian_prospector = {
 	
 	history = {
 		1820 = {
-			site = moscow
+			province = moscow
 		}
 	}
 }

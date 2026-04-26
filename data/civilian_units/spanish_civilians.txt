@@ -3,7 +3,7 @@ castillian_builder = {
 	
 	history = {
 		1492 = {
-			site = madrid
+			province = castille #madrid
 		}
 	}
 }

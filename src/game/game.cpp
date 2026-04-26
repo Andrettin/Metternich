@@ -733,18 +733,18 @@ QCoro::Task<void> game::apply_history(const QDate &start_date)
 					continue;
 				}
 
-				const site *site = historical_civilian_unit_history->get_site();
+				const province *province = historical_civilian_unit_history->get_province();
 
-				assert_throw(site != nullptr);
+				assert_throw(province != nullptr);
 
-				if (!site->get_game_data()->is_on_map()) {
+				if (!province->get_game_data()->is_on_map()) {
 					continue;
 				}
 
 				const domain *owner = historical_civilian_unit->get_owner();
 
-				if (owner == nullptr) {
-					owner = site->get_game_data()->get_owner();
+				if (owner == nullptr && province != nullptr) {
+					owner = province->get_game_data()->get_owner();
 				}
 
 				assert_throw(owner != nullptr);
@@ -761,11 +761,11 @@ QCoro::Task<void> game::apply_history(const QDate &start_date)
 				assert_throw(type != nullptr);
 
 				if (type->get_required_technology() != nullptr) {
-					co_await site->get_game_data()->get_province()->get_game_data()->add_technology_with_prerequisites(type->get_required_technology());
+					co_await province->get_game_data()->add_technology_with_prerequisites(type->get_required_technology());
 				}
 
 				const phenotype *phenotype = historical_civilian_unit->get_phenotype();
-				const bool created = owner_game_data->create_civilian_unit(historical_civilian_unit->get_type(), site, phenotype);
+				const bool created = owner_game_data->create_civilian_unit(historical_civilian_unit->get_type(), province, phenotype);
 				assert_throw(created);
 			} catch (...) {
 				std::throw_with_nested(std::runtime_error(std::format("Failed to apply historical civilian unit \"{}\".", historical_civilian_unit->get_identifier())));

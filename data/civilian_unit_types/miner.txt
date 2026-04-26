@@ -2,8 +2,8 @@ miner = {
 	name = "Miner"
 	unit_class = miner
 	icon = miners
-	wealth_cost = 1500
 	commodity_costs = {
+		wealth = 1500gp
 		paper = 2
 	}
 	improvable_resources = {

@@ -3,8 +3,8 @@ prospector = {
 	unit_class = prospector
 	icon = prospector
 	prospector = true
-	wealth_cost = 500
 	commodity_costs = {
+		wealth = 500gp
 		paper = 2
 	}
 }

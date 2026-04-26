@@ -4,27 +4,27 @@
 
 namespace metternich {
 
-class site;
+class province;
 
 class historical_civilian_unit_history final : public data_entry_history
 {
 	Q_OBJECT
 
-	Q_PROPERTY(metternich::site* site MEMBER site)
+	Q_PROPERTY(metternich::province* province MEMBER province)
 
 public:
-	const metternich::site *get_site() const
+	const metternich::province *get_province() const
 	{
-		return this->site;
+		return this->province;
 	}
 
 	bool is_active() const
 	{
-		return this->get_site() != nullptr;
+		return this->get_province() != nullptr;
 	}
 
 private:
-	metternich::site *site = nullptr;
+	metternich::province *province = nullptr;
 };
 
 }

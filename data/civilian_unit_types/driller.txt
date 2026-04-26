@@ -3,8 +3,8 @@ driller = {
 	unit_class = driller
 	icon = miners
 	required_technology = industrial_era
-	wealth_cost = 5000
 	commodity_costs = {
+		wealth = 5000gp
 		paper = 2
 	}
 	improvable_resources = {

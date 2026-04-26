@@ -3,8 +3,8 @@ merchant = {
 	unit_class = merchant
 	icon = merchant
 	developer = true
-	wealth_cost = 500
 	commodity_costs = {
+		wealth = 500gp
 		paper = 3
 	}
 }

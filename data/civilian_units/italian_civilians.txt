@@ -3,7 +3,7 @@ sardinian_prospector = {
 	
 	history = {
 		1820 = {
-			site = genoa
+			province = liguria #genoa
 		}
 	}
 }

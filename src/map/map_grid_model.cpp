@@ -19,7 +19,6 @@
 #include "map/terrain_type.h"
 #include "map/tile.h"
 #include "ui/icon.h"
-#include "unit/civilian_unit.h"
 #include "util/assert_util.h"
 #include "util/exception_util.h"
 #include "util/point_util.h"
@@ -34,7 +33,6 @@ map_grid_model::map_grid_model()
 	connect(map::get(), &map::tile_resource_changed, this, &map_grid_model::on_tile_resource_changed);
 	connect(map::get(), &map::tile_holding_type_changed, this, &map_grid_model::on_tile_holding_type_changed);
 	connect(map::get(), &map::tile_improvement_changed, this, &map_grid_model::on_tile_improvement_changed);
-	connect(map::get(), &map::tile_civilian_unit_changed, this, &map_grid_model::on_tile_civilian_unit_changed);
 }
 
 QString map_grid_model::build_image_source(const terrain_type *terrain, const short tile_frame)
@@ -160,14 +158,6 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 				}
 
 				return QVariant::fromValue(tile->get_site()->get_game_data()->get_main_improvement());
-			case role::civilian_unit: {
-				if (!game::get()->get_player_country()->get_game_data()->is_tile_explored(tile_pos)) {
-					return QVariant::fromValue(nullptr);
-				}
-
-				const civilian_unit *top_civilian_unit = tile->get_civilian_units().empty() ? nullptr : tile->get_civilian_units().at(0);
-				return QVariant::fromValue(top_civilian_unit);
-			}
 			case role::upper_label: {
 				const QPoint upper_tile_pos = tile_pos - QPoint(0, 1);
 
@@ -228,7 +218,6 @@ void map_grid_model::on_tile_exploration_changed(const QPoint &tile_pos)
 	emit dataChanged(index, index, {
 		static_cast<int>(role::object_image_sources),
 		static_cast<int>(role::site),
-		static_cast<int>(role::civilian_unit),
 		static_cast<int>(role::upper_label)
 	});
 }
@@ -264,14 +253,6 @@ void map_grid_model::on_tile_improvement_changed(const QPoint &tile_pos)
 	emit dataChanged(index, index, {
 		static_cast<int>(role::object_image_sources),
 		static_cast<int>(role::improvement)
-	});
-}
-
-void map_grid_model::on_tile_civilian_unit_changed(const QPoint &tile_pos)
-{
-	const QModelIndex index = this->index(tile_pos.y(), tile_pos.x());
-	emit dataChanged(index, index, {
-		static_cast<int>(role::civilian_unit)
 	});
 }
 

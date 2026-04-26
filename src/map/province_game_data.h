@@ -380,6 +380,8 @@ public:
 
 	const std::vector<civilian_unit *> &get_civilian_units() const;
 	QVariantList get_civilian_units_qvariant_list() const;
+	void add_civilian_unit(civilian_unit *civilian_unit);
+	void remove_civilian_unit(civilian_unit *civilian_unit);
 
 	void calculate_site_commodity_outputs();
 	void calculate_site_commodity_output(const commodity *commodity);
@@ -613,6 +615,7 @@ private:
 	std::map<military_unit_category, int> military_unit_category_counts;
 	std::vector<army *> entering_armies; //armies entering this province
 	military_unit_type_map<int> military_unit_recruitment_counts;
+	std::vector<civilian_unit *> civilian_units;
 	commodity_map<centesimal_int> local_commodity_outputs;
 	centesimal_int output_modifier;
 	int resource_output_modifier = 0;

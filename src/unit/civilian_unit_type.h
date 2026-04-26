@@ -33,13 +33,14 @@ class civilian_unit_type final : public named_data_entry, public data_type<civil
 	Q_PROPERTY(bool developer MEMBER developer READ is_developer NOTIFY changed)
 	Q_PROPERTY(bool spy MEMBER spy READ is_spy NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
-	Q_PROPERTY(int wealth_cost MEMBER wealth_cost READ get_wealth_cost NOTIFY changed)
 	Q_PROPERTY(QVariantList commodity_costs READ get_commodity_costs_qvariant_list CONSTANT)
 
 public:
 	static constexpr const char class_identifier[] = "civilian_unit_type";
 	static constexpr const char property_class_identifier[] = "metternich::civilian_unit_type*";
 	static constexpr const char database_folder[] = "civilian_unit_types";
+
+	static const std::set<std::string> database_dependencies;
 
 public:
 	explicit civilian_unit_type(const std::string &identifier) : named_data_entry(identifier)
@@ -95,12 +96,7 @@ public:
 		return this->required_technology;
 	}
 
-	int get_wealth_cost() const
-	{
-		return this->wealth_cost;
-	}
-
-	const commodity_map<int> &get_commodity_costs() const
+	const commodity_map<int64_t> &get_commodity_costs() const
 	{
 		return this->commodity_costs;
 	}
@@ -140,8 +136,7 @@ private:
 	bool developer = false;
 	bool spy = false;
 	technology *required_technology = nullptr;
-	int wealth_cost = 0;
-	commodity_map<int> commodity_costs;
+	commodity_map<int64_t> commodity_costs;
 	resource_set improvable_resources;
 	pathway_set buildable_pathways;
 };

@@ -447,6 +447,10 @@ Flickable {
 		province_map.contentY = Math.min(Math.max(pixel_y, 0), province_map.contentHeight - province_map.height)
 	}
 	
+	function center_on_province(province) {
+		center_on_tile(province.game_data.center_tile_pos.x, province.game_data.center_tile_pos.y)
+	}
+	
 	function center_on_country_capital(country) {
 		var capital = country.game_data.capital
 		

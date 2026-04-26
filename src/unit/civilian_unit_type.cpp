@@ -14,6 +14,11 @@
 
 namespace metternich {
 
+const std::set<std::string> civilian_unit_type::database_dependencies = {
+	//so that commodity units are present
+	commodity::class_identifier
+};
+
 void civilian_unit_type::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();

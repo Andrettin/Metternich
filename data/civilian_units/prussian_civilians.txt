@@ -3,7 +3,7 @@ prussian_engineer = {
 	
 	history = {
 		1820 = {
-			site = berlin
+			province = brandenburg #berlin
 		}
 	}
 }
@@ -13,7 +13,7 @@ prussian_farmer = {
 	
 	history = {
 		1820 = {
-			site = berlin
+			province = brandenburg #berlin
 		}
 	}
 }
@@ -23,7 +23,7 @@ prussian_prospector = {
 	
 	history = {
 		1820 = {
-			site = breslau
+			province = lower_silesia
 		}
 	}
 }
@@ -33,7 +33,7 @@ prussian_miner = {
 	
 	history = {
 		1820 = {
-			site = oppeln
+			province = upper_silesia
 		}
 	}
 }

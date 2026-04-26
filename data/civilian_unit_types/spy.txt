@@ -3,8 +3,8 @@ spy = {
 	unit_class = spy
 	icon = spy
 	spy = true
-	wealth_cost = 500
 	commodity_costs = {
+		wealth = 500gp
 		paper = 3
 	}
 }

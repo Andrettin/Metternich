@@ -2,8 +2,8 @@ builder = {
 	name = "Builder"
 	unit_class = builder
 	icon = craftsmen_light
-	wealth_cost = 500
 	commodity_costs = {
+		wealth = 500gp
 		paper = 3
 	}
 }

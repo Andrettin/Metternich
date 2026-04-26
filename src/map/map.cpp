@@ -357,7 +357,6 @@ void map::clear_tile_game_data()
 	try {
 		for (tile &tile : *this->tiles) {
 			tile.clear_improvement_variation();
-			tile.clear_civilian_units();
 		}
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error("Failed to clear tile game data for the map."));
@@ -569,22 +568,6 @@ QCoro::Task<void> map::set_tile_resource_discovered(const QPoint &tile_pos, cons
 	emit tile_resource_changed(tile_pos);
 }
 
-void map::add_tile_civilian_unit(const QPoint &tile_pos, civilian_unit *civilian_unit)
-{
-	tile *tile = this->get_tile(tile_pos);
-	tile->add_civilian_unit(civilian_unit);
-
-	emit tile_civilian_unit_changed(tile_pos);
-}
-
-void map::remove_tile_civilian_unit(const QPoint &tile_pos, civilian_unit *civilian_unit)
-{
-	tile *tile = this->get_tile(tile_pos);
-	tile->remove_civilian_unit(civilian_unit);
-
-	emit tile_civilian_unit_changed(tile_pos);
-}
-
 bool map::is_tile_water(const QPoint &tile_pos) const
 {
 	const tile *tile = this->get_tile(tile_pos);
@@ -725,56 +708,6 @@ bool map::is_tile_on_province_border_with(const QPoint &tile_pos, const province
 	});
 
 	return result;
-}
-
-std::optional<QPoint> map::get_nearest_available_tile_pos_for_civilian_unit(const QPoint &starting_tile_pos) const
-{
-	const metternich::tile *starting_tile = this->get_tile(starting_tile_pos);
-
-	std::vector<QPoint> potential_tiles = { starting_tile_pos };
-	std::vector<QPoint> valid_tiles;
-	point_set added_tiles = { starting_tile_pos };
-
-	assert_throw(!this->is_tile_water(starting_tile_pos));
-
-	while (!potential_tiles.empty() && valid_tiles.empty()) {
-		for (const QPoint &tile_pos : potential_tiles) {
-			//const metternich::tile *tile = this->get_tile(tile_pos);
-			//if (tile->get_civilian_units().empty()) {
-				valid_tiles.push_back(tile_pos);
-			//}
-		}
-
-		if (valid_tiles.empty()) {
-			std::vector<QPoint> next_potential_tiles;
-
-			for (const QPoint &tile_pos : potential_tiles) {
-				point::for_each_adjacent(tile_pos, [&](const QPoint &adjacent_pos) {
-					if (is_tile_water(adjacent_pos)) {
-						return;
-					}
-
-					const tile *adjacent_tile = this->get_tile(adjacent_pos);
-					if (adjacent_tile->get_owner() != starting_tile->get_owner()) {
-						return;
-					}
-
-					if (!added_tiles.contains(adjacent_pos)) {
-						next_potential_tiles.push_back(adjacent_pos);
-						added_tiles.insert(adjacent_pos);
-					}
-				});
-			}
-
-			potential_tiles = next_potential_tiles;
-		}
-	}
-
-	if (valid_tiles.empty()) {
-		return std::nullopt;
-	}
-
-	return vector::get_random(valid_tiles);
 }
 
 QVariantList map::get_provinces_qvariant_list() const

@@ -983,7 +983,7 @@ public:
 		return this->civilian_units;
 	}
 
-	bool create_civilian_unit(const civilian_unit_type *civilian_unit_type, const site *deployment_site, const phenotype *phenotype);
+	bool create_civilian_unit(const civilian_unit_type *civilian_unit_type, const province *deployment_province, const phenotype *phenotype);
 	void add_civilian_unit(qunique_ptr<civilian_unit> &&civilian_unit);
 	void remove_civilian_unit(civilian_unit *civilian_unit);
 

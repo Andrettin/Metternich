@@ -56,6 +56,7 @@
 #include "ui/icon_container.h"
 #include "ui/portrait.h"
 #include "unit/army.h"
+#include "unit/civilian_unit.h"
 #include "unit/military_unit.h"
 #include "unit/military_unit_category.h"
 #include "unit/military_unit_type.h"
@@ -1781,12 +1782,26 @@ void province_game_data::clear_military_unit_recruitment_counts()
 
 const std::vector<civilian_unit *> &province_game_data::get_civilian_units() const
 {
-	return map::get()->get_tile(this->get_center_tile_pos())->get_civilian_units();
+	return this->civilian_units;
 }
 
 QVariantList province_game_data::get_civilian_units_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_civilian_units());
+}
+
+void province_game_data::add_civilian_unit(civilian_unit *civilian_unit)
+{
+	this->civilian_units.push_back(civilian_unit);
+
+	emit civilian_units_changed();
+}
+
+void province_game_data::remove_civilian_unit(civilian_unit *civilian_unit)
+{
+	std::erase(this->civilian_units, civilian_unit);
+
+	emit civilian_units_changed();
 }
 
 void province_game_data::calculate_site_commodity_outputs()
