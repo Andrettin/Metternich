@@ -12,6 +12,7 @@ DialogBase {
 	
 	property var character: null
 	property var office: null
+	readonly property string office_name: office ? metternich.game.player_country.game_data.government.get_office_title_name_qstring(office) : ""
 	readonly property bool is_appointee: office ? metternich.game.player_country.game_data.government.get_appointed_office_holder(office) === character : false
 	property bool show_family_tree_button: true
 	property var office_holder_choice_dialog: null
@@ -93,61 +94,119 @@ DialogBase {
 		anchors.horizontalCenter: parent.horizontalCenter
 		spacing: 8 * scale_factor
 		
-		TextButton {
-			id: appoint_button
-			text: is_appointee ? "Unappoint" : "Appoint"
-			visible: office !== null && office.appointable
-			onClicked: {
-				if (is_appointee) {
-					metternich.game.player_country.game_data.government.set_appointed_office_holder(office, null)
+		Row {
+			id: button_row
+			anchors.horizontalCenter: parent.horizontalCenter
+			spacing: 8 * scale_factor
+			
+			IconButton {
+				id: appoint_button
+				icon_identifier: "bell"
+				visible: office !== null && office.appointable
+				onClicked: {
+					if (is_appointee) {
+						metternich.game.player_country.game_data.government.set_appointed_office_holder(office, null)
+						character_dialog.close()
+					} else {
+						if (character_dialog.office_holder_choice_dialog !== null) {
+							character_dialog.office_holder_choice_dialog.office = office
+							character_dialog.office_holder_choice_dialog.open()
+							character_dialog.office_holder_choice_dialog.receive_focus()
+						}
+					}
+				}
+				onHoveredChanged: {
+					if (hovered) {
+						if (is_appointee) {
+							status_text = "Unappoint as " + office_name
+						} else {
+							status_text = "Appoint " + office_name
+						}
+					} else {
+						status_text = ""
+					}
+				}
+			}
+			
+			IconButton {
+				id: military_deployment_button
+				icon_identifier: "flag"
+				visible: character !== null && deployable_military_unit_type !== null && character.game_data.military_unit === null && character.game_data.civilian_unit === null && character.game_data.domain === metternich.game.player_country
+				
+				readonly property var deployable_military_unit_type: character !== null ? character.game_data.get_deployable_military_unit_type() : null
+				
+				onClicked: {
+					character.game_data.deploy()
+				}
+				onHoveredChanged: {
+					if (hovered) {
+						status_text = "Deploy as " + deployable_military_unit_type.name
+					} else {
+						status_text = ""
+					}
+				}
+			}
+			
+			IconButton {
+				id: inventory_button
+				icon_identifier: "sack_3"
+				visible: character !== null && character.game_data.items.length > 0
+				onClicked: {
+					inventory_dialog.character = character_dialog.character
+					inventory_dialog.open()
+					inventory_dialog.receive_focus()
+				}
+				onHoveredChanged: {
+					if (hovered) {
+						status_text = "View Inventory"
+					} else {
+						status_text = ""
+					}
+				}
+			}
+			
+			IconButton {
+				id: spells_button
+				icon_identifier: "university"
+				visible: character !== null && character.game_data.spells.length > 0
+				onClicked: {
+					spell_dialog.caster = character_dialog.character
+					spell_dialog.open()
+					spell_dialog.receive_focus()
+				}
+				onHoveredChanged: {
+					if (hovered) {
+						status_text = "View Spells"
+					} else {
+						status_text = ""
+					}
+				}
+			}
+			
+			IconButton {
+				id: family_tree_button
+				icon_identifier: "painting"
+				visible: character !== null && (character.father !== null || character.mother !== null || character.game_data.dynastic_children.length > 0) && show_family_tree_button
+				onClicked: {
+					var family_tree_character = character_dialog.character
 					character_dialog.close()
-				} else {
-					if (character_dialog.office_holder_choice_dialog !== null) {
-						character_dialog.office_holder_choice_dialog.office = office
-						character_dialog.office_holder_choice_dialog.open()
-						character_dialog.office_holder_choice_dialog.receive_focus()
+					menu_stack.push("../FamilyTreeView.qml", {
+						character: family_tree_character
+					})
+				}
+				onHoveredChanged: {
+					if (hovered) {
+						status_text = "View Family Tree"
+					} else {
+						status_text = ""
 					}
 				}
 			}
 		}
 		
 		TextButton {
-			id: inventory_button
-			text: "Inventory"
-			visible: character !== null && character.game_data.items.length > 0
-			onClicked: {
-				inventory_dialog.character = character_dialog.character
-				inventory_dialog.open()
-				inventory_dialog.receive_focus()
-			}
-		}
-		
-		TextButton {
-			id: spells_button
-			text: "Spells"
-			visible: character !== null && character.game_data.spells.length > 0
-			onClicked: {
-				spell_dialog.caster = character_dialog.character
-				spell_dialog.open()
-				spell_dialog.receive_focus()
-			}
-		}
-		
-		TextButton {
-			id: family_tree_button
-			text: "Family Tree"
-			visible: character !== null && (character.father !== null || character.mother !== null || character.game_data.dynastic_children.length > 0) && show_family_tree_button
-			onClicked: {
-				var family_tree_character = character_dialog.character
-				character_dialog.close()
-				menu_stack.push("../FamilyTreeView.qml", {
-					character: family_tree_character
-				})
-			}
-		}
-		
-		TextButton {
 			id: ok_button
+			anchors.horizontalCenter: parent.horizontalCenter
 			text: "OK"
 			onClicked: {
 				character_dialog.close()

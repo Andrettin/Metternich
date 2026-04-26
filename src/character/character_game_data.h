@@ -685,7 +685,12 @@ public:
 		return this->get_military_unit() != nullptr || this->get_civilian_unit() != nullptr;
 	}
 
+	Q_INVOKABLE const metternich::military_unit_type *get_deployable_military_unit_type() const;
+
 	[[nodiscard]] QCoro::Task<void> deploy_to_province(const metternich::domain *domain, const province *province);
+
+	Q_INVOKABLE QCoro::QmlTask deploy();
+
 	[[nodiscard]] QCoro::Task<void> undeploy();
 
 	[[nodiscard]] QCoro::Task<void> apply_modifier(const modifier<const metternich::character> *modifier, const int multiplier);
