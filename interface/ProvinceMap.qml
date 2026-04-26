@@ -123,6 +123,10 @@ Flickable {
 					select_province(null)
 					metternich.clear_selected_military_units()
 					return
+				} else if (selected_civilian_unit !== null && !selected_civilian_unit.moving && !selected_civilian_unit.working && selected_civilian_unit.can_move_to(province)) {
+					selected_civilian_unit.move_to(province)
+					select_civilian_unit(null)
+					return
 				}
 				
 				select_province(province)
@@ -174,6 +178,10 @@ Flickable {
 							metternich.move_selected_military_units_to(province.game_data.provincial_capital ? province.game_data.provincial_capital.map_data.tile_pos : province.game_data.center_tile_pos)
 							select_province(null)
 							metternich.clear_selected_military_units()
+							return
+						} else if (selected_civilian_unit !== null && !selected_civilian_unit.moving && !selected_civilian_unit.working && selected_civilian_unit.can_move_to(province)) {
+							selected_civilian_unit.move_to(province)
+							select_civilian_unit(null)
 							return
 						}
 						
