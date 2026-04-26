@@ -138,6 +138,7 @@ public:
 
 	site_map<std::vector<const building_type *>> get_buildable_buildings() const;
 	QVariantList get_buildable_buildings_qvariant_list() const;
+	Q_INVOKABLE void build_building(const metternich::building_type *building_type, const metternich::site *site);
 
 	Q_INVOKABLE bool can_build_on_tile() const;
 	Q_INVOKABLE void build_on_tile();
@@ -193,6 +194,8 @@ private:
 	const metternich::character *character = nullptr;
 	const metternich::province *province = nullptr;
 	const metternich::province *original_province = nullptr; //the province before moving
+	const building_type *building_under_construction = nullptr;
+	const site *building_under_construction_site = nullptr;
 	const improvement *improvement_under_construction = nullptr;
 	bool exploring = false;
 	bool prospecting = false;

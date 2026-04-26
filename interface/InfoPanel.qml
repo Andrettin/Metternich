@@ -747,7 +747,7 @@ Rectangle {
 		IconButton {
 			id: build_building_button
 			icon_identifier: "cog"
-			visible: selected_civilian_unit !== null && selected_civilian_unit.buildable_buildings.length > 0
+			visible: selected_civilian_unit !== null && !selected_civilian_unit.working && selected_civilian_unit.buildable_buildings.length > 0
 			
 			onClicked: {
 				build_building_choice_dialog.civilian_unit = selected_civilian_unit
@@ -757,6 +757,24 @@ Rectangle {
 			onHoveredChanged: {
 				if (hovered) {
 					status_text = "Build Structure"
+				} else {
+					status_text = ""
+				}
+			}
+		}
+		
+		IconButton {
+			id: cancel_work_button
+			icon_identifier: "cog"
+			visible: selected_civilian_unit !== null && selected_civilian_unit.working
+			
+			onClicked: {
+				selected_civilian_unit.cancel_work()
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Cancel Work"
 				} else {
 					status_text = ""
 				}

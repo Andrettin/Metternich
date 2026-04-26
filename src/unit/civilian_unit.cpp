@@ -13,6 +13,7 @@
 #include "economy/resource.h"
 #include "game/game.h"
 #include "infrastructure/building_slot.h"
+#include "infrastructure/building_type.h"
 #include "infrastructure/improvement.h"
 #include "language/name_generator.h"
 #include "map/map.h"
@@ -166,6 +167,15 @@ QCoro::Task<void> civilian_unit::do_turn()
 				this->prospecting = false;
 			}
 			
+			if (this->building_under_construction != nullptr) {
+				assert_throw(this->building_under_construction_site != nullptr);
+
+				co_await this->building_under_construction_site->get_game_data()->add_building(this->building_under_construction);
+
+				this->building_under_construction = nullptr;
+				this->building_under_construction_site = nullptr;
+			}
+
 			if (this->improvement_under_construction != nullptr) {
 				//co_await this->get_tile()->get_site()->get_game_data()->set_improvement(this->improvement_under_construction->get_slot(), this->improvement_under_construction);
 				this->improvement_under_construction = nullptr;
@@ -382,6 +392,21 @@ QVariantList civilian_unit::get_buildable_buildings_qvariant_list() const
 	return archimedes::map::to_qvariant_list(this->get_buildable_buildings());
 }
 
+void civilian_unit::build_building(const building_type *building_type, const site *site)
+{
+	this->building_under_construction = building_type;
+	this->building_under_construction_site = site;
+
+	//FIXME: have different task completion turns for different buildings
+	this->set_task_completion_turns(civilian_unit::improvement_construction_turns);
+
+	domain_economy *domain_economy = this->get_owner()->get_economy();
+
+	for (const auto &[commodity, cost] : building_type->get_commodity_costs_for_site(site)) {
+		domain_economy->change_stored_commodity(commodity, -cost);
+	}
+}
+
 bool civilian_unit::can_build_on_tile() const
 {
 	return false;
@@ -459,6 +484,14 @@ void civilian_unit::build_improvement(const improvement *improvement)
 
 void civilian_unit::cancel_work()
 {
+	if (this->building_under_construction != nullptr) {
+		domain_economy *domain_economy = this->get_owner()->get_economy();
+
+		for (const auto &[commodity, cost] : this->building_under_construction->get_commodity_costs_for_site(this->building_under_construction_site)) {
+			domain_economy->change_stored_commodity(commodity, cost);
+		}
+	}
+
 	if (this->improvement_under_construction != nullptr) {
 		domain_economy *domain_economy = this->get_owner()->get_economy();
 		if (this->improvement_under_construction->get_wealth_cost() > 0) {
@@ -471,6 +504,8 @@ void civilian_unit::cancel_work()
 	}
 
 	this->set_task_completion_turns(0);
+	this->building_under_construction = nullptr;
+	this->building_under_construction_site = nullptr;
 	this->improvement_under_construction = nullptr;
 	this->exploring = false;
 	this->prospecting = false;

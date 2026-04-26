@@ -73,7 +73,7 @@ DialogBase {
 								icon_identifier: building.icon.identifier
 								
 								onClicked: {
-									//FIXME: implement construction
+									civilian_unit.build_building(building, site)
 									build_building_choice_dialog.close()
 								}
 								

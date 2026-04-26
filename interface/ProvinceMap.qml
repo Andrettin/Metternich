@@ -255,7 +255,7 @@ Flickable {
 							
 							onClicked: {
 								metternich.defines.click_sound.play()
-								if (civilian_unit_interactive && civilian_unit !== selected_civilian_unit && !civilian_unit.moving && !civilian_unit.working) {
+								if (civilian_unit_interactive && civilian_unit !== selected_civilian_unit && !civilian_unit.moving) {
 									select_civilian_unit(civilian_unit)
 								} else {
 									select_civilian_unit(null)

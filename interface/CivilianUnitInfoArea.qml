@@ -4,118 +4,128 @@ import QtQuick.Controls
 Item {
 	id: civilian_unit_info_area
 	
-	Grid {
-		id: improvable_resources_grid
+	Column {
 		anchors.top: parent.top
 		anchors.bottom: parent.bottom
 		anchors.horizontalCenter: parent.horizontalCenter
-		columns: 4
-		columnSpacing: 4 * scale_factor
-		rowSpacing: 4 * scale_factor
+		spacing: 16 * scale_factor
 		
-		Repeater {
-			model: selected_civilian_unit ? selected_civilian_unit.improvable_resource_tiles : []
+		SmallText {
+			id: working_text
+			anchors.horizontalCenter: parent.horizontalCenter
+			text: "Working"
+			visible: selected_civilian_unit !== null && selected_civilian_unit.working
+		}
+		
+		Grid {
+			id: improvable_resources_grid
+			anchors.horizontalCenter: parent.horizontalCenter
+			columns: 4
+			columnSpacing: 4 * scale_factor
+			rowSpacing: 4 * scale_factor
 			
-			Item {
-				width: resource_icon.width + 4 * scale_factor
-				height: resource_icon.height
+			Repeater {
+				model: selected_civilian_unit ? selected_civilian_unit.improvable_resource_tiles : []
 				
-				readonly property var resource: model.modelData.key
-				readonly property var tiles: model.modelData.value
-				property int next_tile_index: 0
-				
-				Image {
-					id: resource_icon
-					anchors.verticalCenter: parent.verticalCenter
-					anchors.left: parent.left
-					source: "image://icon/" + resource.icon.identifier
-				}
-				
-				SmallText {
-					id: count_label
-					text: number_string(tiles.length)
-					anchors.right: parent.right
-					anchors.bottom: parent.bottom
-				}
-				
-				MouseArea {
-					anchors.fill: parent
-					hoverEnabled: true
+				Item {
+					width: resource_icon.width + 4 * scale_factor
+					height: resource_icon.height
 					
-					onReleased: {
-						province_map.center_on_tile(tiles[next_tile_index].x, tiles[next_tile_index].y)
+					readonly property var resource: model.modelData.key
+					readonly property var tiles: model.modelData.value
+					property int next_tile_index: 0
+					
+					Image {
+						id: resource_icon
+						anchors.verticalCenter: parent.verticalCenter
+						anchors.left: parent.left
+						source: "image://icon/" + resource.icon.identifier
+					}
+					
+					SmallText {
+						id: count_label
+						text: number_string(tiles.length)
+						anchors.right: parent.right
+						anchors.bottom: parent.bottom
+					}
+					
+					MouseArea {
+						anchors.fill: parent
+						hoverEnabled: true
 						
-						next_tile_index += 1
-						if (next_tile_index >= tiles.length) {
-							next_tile_index = 0
+						onReleased: {
+							province_map.center_on_tile(tiles[next_tile_index].x, tiles[next_tile_index].y)
+							
+							next_tile_index += 1
+							if (next_tile_index >= tiles.length) {
+								next_tile_index = 0
+							}
 						}
-					}
-					
-					onEntered: {
-						status_text = resource.name
-					}
-					
-					onExited: {
-						status_text = ""
+						
+						onEntered: {
+							status_text = resource.name
+						}
+						
+						onExited: {
+							status_text = ""
+						}
 					}
 				}
 			}
 		}
-	}
-	
-	Grid {
-		id: prospectable_provinces_grid
-		anchors.top: parent.top
-		anchors.bottom: parent.bottom
-		anchors.horizontalCenter: parent.horizontalCenter
-		columns: 4
-		columnSpacing: 4 * scale_factor
-		rowSpacing: 4 * scale_factor
 		
-		Repeater {
-			model: selected_civilian_unit ? selected_civilian_unit.prospectable_provinces : []
+		Grid {
+			id: prospectable_provinces_grid
+			anchors.horizontalCenter: parent.horizontalCenter
+			columns: 4
+			columnSpacing: 4 * scale_factor
+			rowSpacing: 4 * scale_factor
 			
-			Item {
-				width: terrain_icon.width + 4 * scale_factor
-				height: terrain_icon.height
+			Repeater {
+				model: selected_civilian_unit ? selected_civilian_unit.prospectable_provinces : []
 				
-				readonly property var terrain: model.modelData.key
-				readonly property var provinces: model.modelData.value
-				property int next_province_index: 0
-				
-				Image {
-					id: terrain_icon
-					anchors.verticalCenter: parent.verticalCenter
-					anchors.left: parent.left
-					source: "image://icon/" + terrain.icon.identifier
-				}
-				
-				SmallText {
-					id: count_label
-					text: number_string(provinces.length)
-					anchors.right: parent.right
-					anchors.bottom: parent.bottom
-				}
-				
-				MouseArea {
-					anchors.fill: parent
-					hoverEnabled: true
+				Item {
+					width: terrain_icon.width + 4 * scale_factor
+					height: terrain_icon.height
 					
-					onReleased: {
-						province_map.center_on_province(provinces[next_province_index])
+					readonly property var terrain: model.modelData.key
+					readonly property var provinces: model.modelData.value
+					property int next_province_index: 0
+					
+					Image {
+						id: terrain_icon
+						anchors.verticalCenter: parent.verticalCenter
+						anchors.left: parent.left
+						source: "image://icon/" + terrain.icon.identifier
+					}
+					
+					SmallText {
+						id: count_label
+						text: number_string(provinces.length)
+						anchors.right: parent.right
+						anchors.bottom: parent.bottom
+					}
+					
+					MouseArea {
+						anchors.fill: parent
+						hoverEnabled: true
 						
-						next_province_index += 1
-						if (next_province_index >= provinces.length) {
-							next_province_index = 0
+						onReleased: {
+							province_map.center_on_province(provinces[next_province_index])
+							
+							next_province_index += 1
+							if (next_province_index >= provinces.length) {
+								next_province_index = 0
+							}
 						}
-					}
-					
-					onEntered: {
-						status_text = terrain.name
-					}
-					
-					onExited: {
-						status_text = ""
+						
+						onEntered: {
+							status_text = terrain.name
+						}
+						
+						onExited: {
+							status_text = ""
+						}
 					}
 				}
 			}

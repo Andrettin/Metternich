@@ -265,6 +265,8 @@ int64_t building_type::get_population_capacity_for_province_level(const int prov
 
 commodity_map<int> building_type::get_commodity_costs_for_site(const site *site) const
 {
+	assert_throw(site != nullptr);
+
 	commodity_map<int> costs = this->get_commodity_costs();
 
 	if (this->get_holding_level() > 0) {
