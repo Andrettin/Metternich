@@ -745,6 +745,25 @@ Rectangle {
 		}
 		
 		IconButton {
+			id: build_building_button
+			icon_identifier: "cog"
+			visible: selected_civilian_unit !== null && selected_civilian_unit.buildable_buildings.length > 0
+			
+			onClicked: {
+				build_building_choice_dialog.civilian_unit = selected_civilian_unit
+				build_building_choice_dialog.open()
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Build Structure"
+				} else {
+					status_text = ""
+				}
+			}
+		}
+		
+		IconButton {
 			id: disband_button
 			icon_identifier: "skull"
 			visible: selected_civilian_unit !== null

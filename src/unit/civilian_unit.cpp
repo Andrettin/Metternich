@@ -12,6 +12,7 @@
 #include "domain/domain_game_data.h"
 #include "economy/resource.h"
 #include "game/game.h"
+#include "infrastructure/building_slot.h"
 #include "infrastructure/improvement.h"
 #include "language/name_generator.h"
 #include "map/map.h"
@@ -45,6 +46,8 @@ civilian_unit::civilian_unit(const civilian_unit_type *type, const domain *owner
 	this->generate_name();
 
 	connect(this, &civilian_unit::type_changed, this, &civilian_unit::icon_changed);
+
+	connect(this, &civilian_unit::province_changed, this, &civilian_unit::buildable_buildings_changed);
 
 	connect(this->get_owner()->get_game_data(), &domain_game_data::provinces_changed, this, &civilian_unit::improvable_resources_changed);
 	connect(this->get_owner()->get_economy(), &domain_economy::commodity_outputs_changed, this, &civilian_unit::improvable_resources_changed);
@@ -330,6 +333,53 @@ void civilian_unit::cancel_move()
 
 	this->set_province(this->original_province);
 	this->set_original_province(nullptr);
+}
+
+site_map<std::vector<const building_type *>> civilian_unit::get_buildable_buildings() const
+{
+	assert_throw(this->get_province() != nullptr);
+
+	site_map<std::vector<const building_type *>> buildable_buildings;
+
+	for (const site *site : this->get_province()->get_game_data()->get_settlement_sites()) {
+		if (!site->get_game_data()->is_built()) {
+			continue;
+		}
+
+		std::vector<const building_type *> holding_buildable_buildings;
+
+		for (const qunique_ptr<building_slot> &building_slot : site->get_game_data()->get_building_slots()) {
+			if (!building_slot->is_available()) {
+				continue;
+			}
+
+			if (building_slot->get_under_construction_building() != nullptr) {
+				continue;
+			}
+
+			const building_type *buildable_building = building_slot->get_buildable_building();
+			if (buildable_building == nullptr) {
+				continue;
+			}
+
+			if (!this->get_type()->can_build_building(buildable_building)) {
+				continue;
+			}
+
+			holding_buildable_buildings.push_back(buildable_building);
+		}
+
+		if (!holding_buildable_buildings.empty()) {
+			buildable_buildings[site] = std::move(holding_buildable_buildings);
+		}
+	}
+
+	return buildable_buildings;
+}
+
+QVariantList civilian_unit::get_buildable_buildings_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_buildable_buildings());
 }
 
 bool civilian_unit::can_build_on_tile() const

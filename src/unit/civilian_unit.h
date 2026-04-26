@@ -1,6 +1,7 @@
 #pragma once
 
 #include "economy/resource_container.h"
+#include "map/site_container.h"
 #include "map/terrain_type_container.h"
 
 Q_MOC_INCLUDE("character/character.h")
@@ -35,6 +36,7 @@ class civilian_unit final : public QObject
 	Q_PROPERTY(const metternich::province* province READ get_province NOTIFY province_changed)
 	Q_PROPERTY(bool moving READ is_moving NOTIFY original_province_changed)
 	Q_PROPERTY(bool working READ is_working NOTIFY task_completion_turns_changed)
+	Q_PROPERTY(QVariantList buildable_buildings READ get_buildable_buildings_qvariant_list NOTIFY buildable_buildings_changed)
 	Q_PROPERTY(QVariantList improvable_resource_tiles READ get_improvable_resource_tiles_qvariant_list NOTIFY improvable_resources_changed)
 	Q_PROPERTY(QVariantList prospectable_provinces READ get_prospectable_provinces_qvariant_list NOTIFY prospectable_provinces_changed)
 
@@ -134,6 +136,9 @@ public:
 		return this->is_moving() || this->is_working();
 	}
 
+	site_map<std::vector<const building_type *>> get_buildable_buildings() const;
+	QVariantList get_buildable_buildings_qvariant_list() const;
+
 	Q_INVOKABLE bool can_build_on_tile() const;
 	Q_INVOKABLE void build_on_tile();
 
@@ -175,6 +180,7 @@ signals:
 	void icon_changed();
 	void province_changed();
 	void original_province_changed();
+	void buildable_buildings_changed();
 	void improvable_resources_changed();
 	void prospectable_provinces_changed();
 	void task_completion_turns_changed();

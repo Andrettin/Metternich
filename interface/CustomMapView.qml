@@ -154,6 +154,10 @@ Item {
 		id: cancel_pathway_construction_dialog
 	}
 	
+	BuildBuildingChoiceDialog {
+		id: build_building_choice_dialog
+	}
+	
 	SaveGameDialog {
 		id: save_game_dialog
 	}

@@ -63,13 +63,13 @@ void building_type::process_gsml_scope(const gsml_data &scope)
 		}
 	} else if (tag == "builder_civilian_unit_types") {
 		for (const std::string &value : values) {
-			this->builder_civilian_unit_types.push_back(civilian_unit_type::get(value));
+			civilian_unit_type *civilian_unit_type = civilian_unit_type::get(value);
+			civilian_unit_type->add_buildable_building(this);
+			this->builder_civilian_unit_types.push_back(civilian_unit_type);
 		}
 	} else if (tag == "recruited_civilian_unit_types") {
 		for (const std::string &value : values) {
-			civilian_unit_type *civilian_unit_type = civilian_unit_type::get(value);
-			civilian_unit_type->add_buildable_building(this);
-			this->recruited_civilian_unit_types.push_back(civilian_unit_type);
+			this->recruited_civilian_unit_types.push_back(civilian_unit_type::get(value));
 		}
 	} else if (tag == "recruited_military_unit_categories") {
 		for (const std::string &value : values) {
