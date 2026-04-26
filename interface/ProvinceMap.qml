@@ -58,7 +58,7 @@ Flickable {
 			cache: false
 			
 			readonly property var province: model.modelData
-			readonly property var selected: (selected_province === province || (selected_site !== null && selected_site.game_data.province === province && !province_map.show_sites)) && (selected_garrison === false || province_map.show_sites)
+			readonly property var selected: selected_province === province && (selected_garrison === false || province_map.show_sites)
 			property int change_count: 0
 			
 			Connections {
@@ -115,7 +115,7 @@ Flickable {
 			
 			var province = metternich.map.get_tile_province(Qt.point(Math.floor(mouse.x / metternich.map.province_map_tile_pixel_size / scale_factor), Math.floor(mouse.y / metternich.map.province_map_tile_pixel_size / scale_factor)))
 			
-			if (province === null || ((selected_province === province || (selected_site !== null && selected_site.game_data.province === province && !province_map.show_sites)) && selected_garrison === false) || province.water_zone) {
+			if (province === null || (selected_province === province && selected_garrison === false) || province.water_zone) {
 				select_province(null)
 			} else {
 				if (metternich.selected_military_units.length > 0) {
@@ -167,7 +167,7 @@ Flickable {
 				
 				onClicked: {
 					metternich.defines.click_sound.play()
-					if (((selected_province === province || (selected_site !== null && selected_site.game_data.province === province && !province_map.show_sites)) && selected_garrison === false) || province.water_zone) {
+					if ((selected_province === province && selected_garrison === false) || province.water_zone) {
 						select_province(null)
 					} else {
 						if (metternich.selected_military_units.length > 0) {
@@ -244,6 +244,7 @@ Flickable {
 					Image {
 						id: civilian_unit_icon
 						source: "image://icon/alliance" + (selected ? "/selected" : "")
+						visible: civilian_unit.owner === metternich.game.player_country
 						
 						readonly property var civilian_unit: model.modelData
 						readonly property bool civilian_unit_interactive: civilian_unit.owner === metternich.game.player_country
@@ -299,6 +300,79 @@ Flickable {
 							} else {
 								if (status_text === text) {
 									status_text = ""
+								}
+							}
+						}
+					}
+				}
+			}
+			
+			Grid {
+				anchors.horizontalCenter: province_label.horizontalCenter
+				anchors.top: province_label.verticalCenter
+				anchors.topMargin: Math.floor(province_label.contentHeight / 2) + 2 * scale_factor
+				spacing: 1 * scale_factor
+				columns: 6
+				
+				Repeater {
+					model: province.game_data.visible_sites
+					
+					Item {
+						id: site_icon_area
+						width: site_icon.width + 4 * scale_factor
+						height: site_icon.height + 4 * scale_factor
+						
+						readonly property var site: model.modelData
+						readonly property var holding_type: site.game_data.holding_type
+						readonly property var dungeon: site.game_data.dungeon
+						readonly property bool selected: site === selected_site
+						
+						Rectangle {
+							id: site_domain_color_circle
+							width: site_icon_area.width
+							height: site_icon_area.height
+							radius: width / 2
+							color: site.game_data.owner ? site.game_data.owner.color : "transparent"
+							visible: site.game_data.owner !== null && site.game_data.owner !== site.game_data.province.game_data.owner
+						}
+						
+						Image {
+							id: site_icon
+							anchors.verticalCenter: parent.verticalCenter
+							anchors.horizontalCenter: parent.horizontalCenter
+							source: "image://icon/" + (holding_type ? holding_type.icon.identifier : (dungeon ? dungeon.icon.identifier : "garrison")) + (selected ? "/selected" : "")
+						}
+						
+						MouseArea {
+							anchors.fill: parent
+							hoverEnabled: true
+							
+							onClicked: {
+								metternich.defines.click_sound.play()
+								selected_civilian_unit = null
+								selected_province = null
+								selected_garrison = false
+								if (selected_site === site) {
+									selected_site = null
+								} else {
+									selected_site = site
+								}
+							}
+							
+							onContainsMouseChanged: {
+								var text = site.game_data.display_text
+								
+								if (containsMouse) {
+									hovered_site = site
+									status_text = text
+								} else {
+									if (status_text === text) {
+										status_text = ""
+									}
+									
+									if (hovered_site === site) {
+										hovered_site = null
+									}
 								}
 							}
 						}
