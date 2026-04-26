@@ -330,7 +330,7 @@ Rectangle {
 		id: civilian_unit_info_area
 		anchors.top: subtitle.bottom
 		anchors.topMargin: 16 * scale_factor
-		anchors.bottom: disband_button.top
+		anchors.bottom: bottom_button_row.top
 		anchors.bottomMargin: 16 * scale_factor
 		anchors.left: parent.left
 		anchors.right: parent.right
@@ -508,30 +508,6 @@ Rectangle {
 			}
 			
 			return str
-		}
-	}
-	
-	TextButton {
-		id: disband_button
-		anchors.horizontalCenter: parent.horizontalCenter
-		anchors.bottom: bottom_button_row.top
-		anchors.bottomMargin: 8 * scale_factor
-		text: qsTr("Disband")
-		width: 64 * scale_factor
-		height: 24 * scale_factor
-		visible: selected_civilian_unit !== null
-		
-		onClicked: {
-			selected_civilian_unit.disband()
-			selected_civilian_unit = null
-		}
-		
-		onHoveredChanged: {
-			if (hovered) {
-				status_text = "Disband Civilian Unit"
-			} else {
-				status_text = ""
-			}
 		}
 	}
 	
@@ -762,6 +738,25 @@ Rectangle {
 			onHoveredChanged: {
 				if (hovered) {
 					status_text = "Back to Settlement"
+				} else {
+					status_text = ""
+				}
+			}
+		}
+		
+		IconButton {
+			id: disband_button
+			icon_identifier: "skull"
+			visible: selected_civilian_unit !== null
+			
+			onClicked: {
+				selected_civilian_unit.disband()
+				selected_civilian_unit = null
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Disband Civilian Unit"
 				} else {
 					status_text = ""
 				}

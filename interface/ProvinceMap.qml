@@ -243,13 +243,24 @@ Flickable {
 					
 					Image {
 						id: civilian_unit_icon
-						source: "image://icon/alliance"
+						source: "image://icon/alliance" + (selected ? "/selected" : "")
 						
 						readonly property var civilian_unit: model.modelData
+						readonly property bool civilian_unit_interactive: civilian_unit.owner === metternich.game.player_country
+						readonly property bool selected: civilian_unit === selected_civilian_unit
 						
 						MouseArea {
 							anchors.fill: parent
 							hoverEnabled: true
+							
+							onClicked: {
+								metternich.defines.click_sound.play()
+								if (civilian_unit_interactive && civilian_unit !== selected_civilian_unit && !civilian_unit.moving && !civilian_unit.working) {
+									select_civilian_unit(civilian_unit)
+								} else {
+									select_civilian_unit(null)
+								}
+							}
 							
 							onContainsMouseChanged: {
 								var text = civilian_unit.type.name
@@ -386,6 +397,13 @@ Flickable {
 		selected_civilian_unit = null
 		selected_site = null
 		selected_province = province
+		selected_garrison = false
+	}
+	
+	function select_civilian_unit(civilian_unit) {
+		selected_civilian_unit = civilian_unit
+		selected_site = null
+		selected_province = null
 		selected_garrison = false
 	}
 	
