@@ -12,8 +12,6 @@
 #include "infrastructure/building_slot_type.h"
 #include "infrastructure/holding_type.h"
 #include "item/item_creation_type.h"
-#include "population/population_type.h"
-#include "population/population_unit.h"
 #include "script/condition/and_condition.h"
 #include "script/condition/capital_condition.h"
 #include "script/condition/or_condition.h"
@@ -208,14 +206,6 @@ void building_type::check() const
 
 	if (this->get_holding_types().empty()) {
 		throw std::runtime_error(std::format("Building type \"{}\" does not have any holding types listed for it.", this->get_identifier()));
-	}
-
-	if (this->get_population_type() != nullptr) {
-		for (const holding_type *holding_type : this->get_holding_types()) {
-			if (!holding_type->can_have_population_type(this->get_population_type())) {
-				throw std::runtime_error(std::format("Building type \"{}\" increases capacity for population type \"{}\", but it is buildable in holding type \"{}\", which cannot have that population type.", this->get_identifier(), this->get_population_type()->get_identifier(), holding_type->get_identifier()));
-			}
-		}
 	}
 }
 

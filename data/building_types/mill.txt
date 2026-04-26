@@ -4,7 +4,6 @@ mill = {
 	portrait = factory
 	icon = cog
 	size = 1
-	population_type = laborers
 	holding_types = {
 		guild
 	}

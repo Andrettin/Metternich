@@ -4,7 +4,6 @@ shop = {
 	portrait = trading_post
 	icon = wealth
 	size = 1
-	population_type = merchants
 	holding_types = {
 		guild
 	}
@@ -28,7 +27,6 @@ market = {
 	portrait = trading_post
 	icon = wealth
 	size = 2
-	population_type = merchants
 	base_building = shop
 	min_holding_level = 2
 	holding_types = {

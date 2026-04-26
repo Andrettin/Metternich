@@ -1779,9 +1779,7 @@ QCoro::Task<void> site_game_data::on_building_gained(const building_type *buildi
 
 	this->change_total_building_size(building->get_size() * multiplier);
 
-	if (building->get_population_type() != nullptr) {
-		this->change_population_capacity(building->get_population_capacity() * multiplier);
-	}
+	this->change_population_capacity(building->get_population_capacity() * multiplier);
 
 	if (building->get_holding_level() > 0) {
 		this->change_population_capacity(building->get_population_capacity_for_province_level(this->get_province()->get_game_data()->get_level()) * multiplier);

@@ -5,7 +5,6 @@ donjon = {
 	icon = wall
 	holding_level = 1
 	size = 1
-	population_type = laborers
 	holding_types = {
 		law
 	}
@@ -18,7 +17,6 @@ keep = {
 	icon = wall
 	holding_level = 2
 	size = 1
-	population_type = laborers
 	base_building = donjon
 	holding_types = {
 		law
@@ -39,7 +37,6 @@ expanded_keep = {
 	icon = wall
 	holding_level = 3
 	size = 1
-	population_type = laborers
 	base_building = keep
 	holding_types = {
 		law
@@ -57,7 +54,6 @@ large_keep = {
 	icon = wall
 	holding_level = 4
 	size = 1
-	population_type = laborers
 	base_building = expanded_keep
 	holding_types = {
 		law
@@ -75,7 +71,6 @@ great_keep = {
 	icon = wall
 	holding_level = 5
 	size = 1
-	population_type = laborers
 	base_building = large_keep
 	holding_types = {
 		law
@@ -93,7 +88,6 @@ epic_keep = {
 	icon = wall
 	holding_level = 6
 	size = 1
-	population_type = laborers
 	base_building = great_keep
 	holding_types = {
 		law

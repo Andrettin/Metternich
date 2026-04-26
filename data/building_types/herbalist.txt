@@ -4,7 +4,6 @@ herbalist = {
 	portrait = university
 	icon = tobacco
 	size = 1
-	population_type = laborers
 	holding_types = {
 		temple
 	}
