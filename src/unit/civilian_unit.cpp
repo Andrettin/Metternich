@@ -309,6 +309,10 @@ void civilian_unit::set_province(const metternich::province *province)
 
 bool civilian_unit::can_move_to(const metternich::province *province) const
 {
+	if (province == this->get_province()) {
+		return false;
+	}
+
 	if (province->get_game_data()->get_owner() == this->get_owner()) {
 		return true;
 	}
