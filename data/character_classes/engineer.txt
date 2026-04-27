@@ -19,13 +19,13 @@ engineer = {
 	}
 	class_skills = {
 		artistic_ability
-		#carpentry
-		#engineering
+		carpentry
+		engineering
 		heraldry
 		mining
 		#modern_languages
 		#reading_writing
-		#stonemasonry
+		stonemasonry
 	}
 	min_attribute_values = {
 		intelligence = 12
@@ -81,9 +81,9 @@ engineer = {
 			#trait_of_type = weapon_proficiency
 			#trait_of_type = weapon_proficiency
 			#trait_of_type = weapon_proficiency
-			#trait = engineering
+			trait = engineering
 			trait_of_type = proficiency #should be Reading/Writing proficiency instead
-			trait_of_type = proficiency #should be one of Carpentry, Mining and Stonemasonry
+			trait_of_type = engineering_specialization #one of Carpentry, Mining or Stonemasonry
 			trait_of_type = proficiency
 		}
 	}
