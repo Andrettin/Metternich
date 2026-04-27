@@ -110,6 +110,10 @@ DialogBase {
 	}
 	
 	onClosed: {
+		if (civilian_unit === selected_civilian_unit) {
+			selected_civilian_unit = null
+		}
+		
 		civilian_unit = null
 	}
 }

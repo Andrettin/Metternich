@@ -737,6 +737,7 @@ Rectangle {
 			
 			onClicked: {
 				selected_civilian_unit.build_pathway(pathway)
+				selected_civilian_unit = null
 			}
 			
 			onHoveredChanged: {
