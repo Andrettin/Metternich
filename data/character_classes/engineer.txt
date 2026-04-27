@@ -1,0 +1,111 @@
+engineer = {
+	name = "Engineer"
+	base_class = rogue #should be something else?
+	attribute = intelligence
+	civilian_unit_class = engineer
+	max_level = 20
+	starting_age_category = trained
+	to_hit_bonus_table = cleric_to_hit_bonus
+	saving_throw_bonus_tables = {
+		fortitude = high_saving_throw_bonus
+		reflex = low_saving_throw_bonus
+		will = high_saving_throw_bonus
+		save_vs_poison = cleric_save_vs_poison_bonus
+	}
+	class_skill_groups = {
+		general
+		mage
+		warrior
+	}
+	class_skills = {
+		artistic_ability
+		#carpentry
+		#engineering
+		heraldry
+		mining
+		#modern_languages
+		#reading_writing
+		#stonemasonry
+	}
+	min_attribute_values = {
+		intelligence = 12
+		wisdom = 10
+		dexterity = 0
+	}
+	experience_per_level = {
+		1 = 0
+		2 = 1250
+		3 = 2500
+		4 = 5000
+		5 = 10000
+		6 = 20000
+		7 = 40000
+		8 = 90000
+		9 = 180000
+		10 = 380000
+		11 = 590000
+		12 = 800000
+		13 = 1000000
+		14 = 1200000
+		15 = 1400000
+		16 = 1600000
+		17 = 1800000
+		18 = 2000000
+		19 = 2200000
+		20 = 2400000
+	}
+	health_bonus_per_level = {
+		1 = 1d8
+		2 = 1d8
+		3 = 1d8
+		4 = 1d8
+		5 = 1d8
+		6 = 1d8
+		7 = 1d8
+		8 = 1d8
+		9 = 2
+		10 = 2
+		11 = 2
+		12 = 2
+		13 = 2
+		14 = 2
+		15 = 2
+		16 = 2
+		17 = 2
+		18 = 2
+		19 = 2
+		20 = 2
+	}
+	level_modifiers = {
+		1 = {
+			#trait_of_type = weapon_proficiency
+			#trait_of_type = weapon_proficiency
+			#trait_of_type = weapon_proficiency
+			#trait = engineering
+			trait_of_type = proficiency #should be Reading/Writing proficiency instead
+			trait_of_type = proficiency #should be one of Carpentry, Mining and Stonemasonry
+			trait_of_type = proficiency
+		}
+	}
+	recurring_level_modifiers = {
+		1 = { #to ensure we don't inherit any level modifiers from the base class
+		}
+		3 = {
+			trait_of_type = proficiency
+		}
+		4 = {
+			#trait_of_type = weapon_proficiency
+		}
+	}
+	starting_items = {
+		long_sword
+		shield
+		chain_mail
+		#quill and ink
+		#parchment
+		#measuring string
+		#carpentry tools
+	}
+	
+	#FIXME: should not receive Constitution bonuses to Health
+}

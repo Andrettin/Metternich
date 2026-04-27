@@ -131,7 +131,7 @@ ctimene = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp.
 
 archimedes = {
 	name = "Archimedes"
-	character_class = mage #engineer
+	character_class = engineer
 	culture = greek
 	religion = hellenic
 	home_site = syracuse

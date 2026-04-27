@@ -15,6 +15,7 @@ scholar = {
 		}
 		or = {
 			character_class = bard
+			character_class = engineer
 			character_class = mage
 		}
 	}
