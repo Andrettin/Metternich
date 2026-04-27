@@ -157,6 +157,21 @@ bowyer = {
 	}
 }
 
+carpentry = {
+	name = "Carpentry"
+	icon = lumber
+	types = {
+		proficiency
+		engineering_specialization
+	}
+	conditions = {
+		class_skill = carpentry
+	}
+	modifier = {
+		skill_training = carpentry
+	}
+}
+
 cooking = {
 	name = "Cooking"
 	icon = tools
@@ -198,6 +213,20 @@ disguise = {
 	}
 	modifier = {
 		skill_training = disguise
+	}
+}
+
+engineering = {
+	name = "Engineering"
+	icon = cog
+	types = {
+		proficiency
+	}
+	conditions = {
+		class_skill = engineering
+	}
+	modifier = {
+		skill_training = engineering
 	}
 }
 
@@ -333,6 +362,7 @@ mining = {
 	icon = iron_ore
 	types = {
 		proficiency
+		engineering_specialization
 	}
 	conditions = {
 		class_skill = mining
@@ -410,6 +440,21 @@ spellcraft = {
 	}
 	modifier = {
 		skill_training = spellcraft
+	}
+}
+
+stonemasonry = {
+	name = "Stonemasonry"
+	icon = architecture
+	types = {
+		proficiency
+		engineering_specialization
+	}
+	conditions = {
+		class_skill = stonemasonry
+	}
+	modifier = {
+		skill_training = stonemasonry
 	}
 }
 

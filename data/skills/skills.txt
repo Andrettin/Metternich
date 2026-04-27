@@ -118,6 +118,17 @@ bowyer = {
 	}
 }
 
+carpentry = {
+	name = "Carpentry"
+	icon = lumber
+	check_dice = 1d20
+	base_attribute = strength
+	profitability = fair #woodworker
+	groups = {
+		general
+	}
+}
+
 cooking = {
 	name = "Cooking"
 	icon = tools
@@ -147,6 +158,19 @@ disguise = {
 	base_value = -1
 	groups = {
 		rogue
+	}
+}
+
+engineering = {
+	name = "Engineering"
+	icon = cog
+	check_dice = 1d20
+	base_attribute = intelligence
+	base_value = -3
+	profitability = excellent
+	groups = {
+		mage
+		priest
 	}
 }
 
@@ -342,6 +366,18 @@ spellcraft = {
 	groups = {
 		mage
 		priest
+	}
+}
+
+stonemasonry = {
+	name = "Stonemasonry"
+	icon = architecture
+	check_dice = 1d20
+	base_attribute = strength
+	base_value = -2
+	profitability = fair
+	groups = {
+		general
 	}
 }
 

@@ -37,3 +37,7 @@ past_experience = {
 	name = "Past Experience"
 	none_weight = 11
 }
+
+engineering_specialization = {
+	name = "Engineering Specialization"
+}
