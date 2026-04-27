@@ -6,6 +6,7 @@
 #include "character/character_game_data.h"
 #include "culture/cultural_group.h"
 #include "culture/culture.h"
+#include "database/defines.h"
 #include "domain/country_technology.h"
 #include "domain/domain.h"
 #include "domain/domain_economy.h"
@@ -33,6 +34,7 @@
 #include "util/log_util.h"
 #include "util/map_util.h"
 #include "util/point_util.h"
+#include "util/random.h"
 #include "util/string_conversion_util.h"
 #include "util/vector_util.h"
 
@@ -103,8 +105,8 @@ void civilian_unit::process_gsml_property(const gsml_property &property)
 		this->exploring = string::to_bool(value);
 	} else if (key == "prospecting") {
 		this->prospecting = string::to_bool(value);
-	} else if (key == "task_completion_turns") {
-		this->task_completion_turns = std::stoi(value);
+	} else if (key == "work_progress") {
+		this->work_progress = decimillesimal_int(value);
 	} else {
 		throw std::runtime_error(std::format("Invalid civilian unit property: \"{}\".", key));
 	}
@@ -138,7 +140,10 @@ gsml_data civilian_unit::to_gsml_data() const
 
 	data.add_property("exploring", string::from_bool(this->exploring));
 	data.add_property("prospecting", string::from_bool(this->prospecting));
-	data.add_property("task_completion_turns", std::to_string(this->task_completion_turns));
+
+	if (this->work_progress.has_value()) {
+		data.add_property("work_progress", this->work_progress.value().to_string());
+	}
 
 	return data;
 }
@@ -149,10 +154,12 @@ QCoro::Task<void> civilian_unit::do_turn()
 		this->set_original_province(nullptr);
 	}
 
-	if (this->task_completion_turns > 0) {
-		this->set_task_completion_turns(this->task_completion_turns - 1);
+	if (this->work_progress.has_value()) {
+		this->increment_work_progress();
 
-		if (this->task_completion_turns == 0) {
+		if (this->work_progress == 100) {
+			this->set_work_progress(std::nullopt);
+
 			if (this->exploring) {
 				//set the adjacent provinces to explored for the owner player
 				for (const metternich::province *neighbor_province : this->get_province()->get_map_data()->get_neighbor_provinces()) {
@@ -322,19 +329,19 @@ void civilian_unit::move_to(const metternich::province *province)
 		//explore and prospect at the same time
 		this->exploring = true;
 		this->prospecting = true;
-		this->set_task_completion_turns(std::max(civilian_unit::exploration_turns, civilian_unit::prospection_turns));
+		this->set_work_progress(decimillesimal_int(0));
 		return;
 	}
 
 	if (this->get_type()->is_explorer() && this->can_explore_province(province)) {
 		this->exploring = true;
-		this->set_task_completion_turns(civilian_unit::exploration_turns);
+		this->set_work_progress(decimillesimal_int(0));
 		return;
 	}
 
 	if (this->get_type()->is_prospector() && this->can_prospect_province(province)) {
 		this->prospecting = true;
-		this->set_task_completion_turns(civilian_unit::prospection_turns);
+		this->set_work_progress(decimillesimal_int(0));
 		return;
 	}
 
@@ -407,8 +414,7 @@ void civilian_unit::build_building(const building_type *building_type, const sit
 	this->under_construction_building = building_type;
 	this->under_construction_building_site = site;
 
-	//FIXME: have different task completion turns for different buildings
-	this->set_task_completion_turns(civilian_unit::improvement_construction_turns);
+	this->set_work_progress(decimillesimal_int(0));
 
 	domain_economy *domain_economy = this->get_owner()->get_economy();
 
@@ -433,8 +439,7 @@ void civilian_unit::build_pathway(const metternich::pathway *pathway)
 {
 	this->under_construction_pathway = pathway;
 
-	//FIXME: have different task completion turns for different pathways
-	this->set_task_completion_turns(civilian_unit::improvement_construction_turns);
+	this->set_work_progress(decimillesimal_int(0));
 
 	domain_economy *domain_economy = this->get_owner()->get_economy();
 
@@ -505,7 +510,7 @@ void civilian_unit::build_improvement(const improvement *improvement)
 	this->improvement_under_construction = improvement;
 
 	//FIXME: set the task completion turns as a field for each improvement?
-	this->set_task_completion_turns(civilian_unit::improvement_construction_turns);
+	this->set_work_progress(decimillesimal_int(0));
 
 	domain_economy *domain_economy = this->get_owner()->get_economy();
 
@@ -547,7 +552,7 @@ void civilian_unit::cancel_work()
 		}
 	}
 
-	this->set_task_completion_turns(0);
+	this->set_work_progress(std::nullopt);
 	this->under_construction_building = nullptr;
 	this->under_construction_building_site = nullptr;
 	this->under_construction_pathway = nullptr;
@@ -724,6 +729,64 @@ terrain_type_map<std::vector<const metternich::province *>> civilian_unit::get_p
 QVariantList civilian_unit::get_prospectable_provinces_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_prospectable_provinces());
+}
+
+QString civilian_unit::get_work_progress_qstring() const
+{
+	if (!this->work_progress.has_value()) {
+		return QString();
+	}
+
+	return QString::fromStdString(std::to_string(this->work_progress.value().to_int()));
+}
+
+void civilian_unit::increment_work_progress()
+{
+	assert_throw(this->work_progress.has_value());
+
+	const decimillesimal_int current_progress = this->work_progress.value();
+
+	decimillesimal_int progress_change(100);
+
+	if (this->exploring) {
+		progress_change = decimillesimal_int::min(progress_change, decimillesimal_int(100) / civilian_unit::exploration_turns);
+	}
+
+	if (this->prospecting) {
+		progress_change = decimillesimal_int::min(progress_change, decimillesimal_int(100) / civilian_unit::prospection_turns);
+	}
+
+	if (this->improvement_under_construction != nullptr) {
+		progress_change = decimillesimal_int::min(progress_change, decimillesimal_int(100) / civilian_unit::improvement_construction_turns);
+	}
+
+	if (this->under_construction_building != nullptr) {
+		int64_t wealth_cost = 0;
+		const commodity_map<int> commodity_costs = this->under_construction_building->get_commodity_costs_for_site(this->under_construction_building_site);
+		if (commodity_costs.contains(defines::get()->get_wealth_commodity())) {
+			wealth_cost = commodity_costs.find(defines::get()->get_wealth_commodity())->second;
+		}
+
+		static constexpr dice progress_dice(1, 6);
+		const int64_t wealth_cost_progress = random::get()->roll_dice(progress_dice) * defines::get()->get_domain_income_unit_value();
+
+		progress_change = decimillesimal_int::min(progress_change, decimillesimal_int(wealth_cost_progress) * 100 / std::max(wealth_cost, 1ll));
+	}
+
+	if (this->under_construction_pathway != nullptr) {
+		int64_t wealth_cost = 0;
+		const commodity_map<int64_t> commodity_costs = this->under_construction_pathway->get_commodity_costs_for_province(this->get_province());
+		if (commodity_costs.contains(defines::get()->get_wealth_commodity())) {
+			wealth_cost = commodity_costs.find(defines::get()->get_wealth_commodity())->second;
+		}
+
+		static constexpr dice progress_dice(1, 6);
+		const int64_t wealth_cost_progress = random::get()->roll_dice(progress_dice) * defines::get()->get_domain_income_unit_value();
+
+		progress_change = decimillesimal_int::min(progress_change, decimillesimal_int(wealth_cost_progress) * 100 / std::max(wealth_cost, 1ll));
+	}
+
+	this->set_work_progress(current_progress + progress_change);
 }
 
 QCoro::Task<void> civilian_unit::disband(const bool dead)

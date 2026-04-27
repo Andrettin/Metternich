@@ -3,6 +3,7 @@
 #include "economy/resource_container.h"
 #include "map/site_container.h"
 #include "map/terrain_type_container.h"
+#include "util/decimillesimal_int.h"
 
 Q_MOC_INCLUDE("character/character.h")
 Q_MOC_INCLUDE("domain/domain.h")
@@ -36,7 +37,8 @@ class civilian_unit final : public QObject
 	Q_PROPERTY(const metternich::domain* owner READ get_owner CONSTANT)
 	Q_PROPERTY(const metternich::province* province READ get_province NOTIFY province_changed)
 	Q_PROPERTY(bool moving READ is_moving NOTIFY original_province_changed)
-	Q_PROPERTY(bool working READ is_working NOTIFY task_completion_turns_changed)
+	Q_PROPERTY(bool working READ is_working NOTIFY work_progress_changed)
+	Q_PROPERTY(QString work_progress READ get_work_progress_qstring NOTIFY work_progress_changed)
 	Q_PROPERTY(QVariantList buildable_buildings READ get_buildable_buildings_qvariant_list NOTIFY buildable_buildings_changed)
 	Q_PROPERTY(const metternich::pathway* buildable_pathway READ get_buildable_pathway NOTIFY buildable_pathway_changed)
 	Q_PROPERTY(QVariantList improvable_resource_tiles READ get_improvable_resource_tiles_qvariant_list NOTIFY improvable_resources_changed)
@@ -130,7 +132,7 @@ public:
 
 	bool is_working() const
 	{
-		return this->task_completion_turns > 0;
+		return this->work_progress.has_value();
 	}
 
 	bool is_busy() const
@@ -164,15 +166,24 @@ public:
 	terrain_type_map<std::vector<const province *>> get_prospectable_provinces() const;
 	QVariantList get_prospectable_provinces_qvariant_list() const;
 
-	void set_task_completion_turns(const int turns)
+	QString get_work_progress_qstring() const;
+
+	void set_work_progress(const std::optional<decimillesimal_int> &progress)
 	{
-		if (turns == this->task_completion_turns) {
+		if (progress == this->work_progress) {
 			return;
 		}
 
-		this->task_completion_turns = turns;
-		emit task_completion_turns_changed();
+		if (progress > 100) {
+			this->set_work_progress(decimillesimal_int(100));
+			return;
+		}
+
+		this->work_progress = progress;
+		emit work_progress_changed();
 	}
+
+	void increment_work_progress();
 
 	[[nodiscard]] QCoro::Task<void> disband(const bool dead);
 
@@ -190,7 +201,7 @@ signals:
 	void buildable_pathway_changed();
 	void improvable_resources_changed();
 	void prospectable_provinces_changed();
-	void task_completion_turns_changed();
+	void work_progress_changed();
 
 private:
 	std::string name;
@@ -206,7 +217,7 @@ private:
 	const improvement *improvement_under_construction = nullptr;
 	bool exploring = false;
 	bool prospecting = false;
-	int task_completion_turns = 0; //the remaining turns for the current task to be complete
+	std::optional<decimillesimal_int> work_progress;
 };
 
 }

@@ -13,7 +13,7 @@ Item {
 		SmallText {
 			id: working_text
 			anchors.horizontalCenter: parent.horizontalCenter
-			text: "Working"
+			text: "Working: " + selected_civilian_unit.work_progress + "% Complete"
 			visible: selected_civilian_unit !== null && selected_civilian_unit.working
 		}
 		
