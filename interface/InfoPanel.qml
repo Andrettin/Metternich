@@ -751,7 +751,7 @@ Rectangle {
 		IconButton {
 			id: build_building_button
 			icon_identifier: "cog"
-			visible: selected_civilian_unit !== null && !selected_civilian_unit.working && selected_civilian_unit.buildable_buildings.length > 0
+			visible: selected_civilian_unit !== null && !selected_civilian_unit.working && !selected_civilian_unit.moving && selected_civilian_unit.buildable_buildings.length > 0
 			
 			onClicked: {
 				build_building_choice_dialog.civilian_unit = selected_civilian_unit
@@ -779,6 +779,25 @@ Rectangle {
 			onHoveredChanged: {
 				if (hovered) {
 					status_text = "Cancel Work"
+				} else {
+					status_text = ""
+				}
+			}
+		}
+		
+		IconButton {
+			id: cancel_move_button
+			icon_identifier: "compass"
+			visible: selected_civilian_unit !== null && selected_civilian_unit.moving
+			
+			onClicked: {
+				selected_civilian_unit.cancel_move()
+				selected_civilian_unit = null
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Cancel Move"
 				} else {
 					status_text = ""
 				}
