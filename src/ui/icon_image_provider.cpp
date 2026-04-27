@@ -58,20 +58,24 @@ QCoro::Task<void> icon_image_provider::load_image(const std::string id)
 	}
 
 	if (id_list.size() >= 2) {
-		const std::string &state = id_list.back();
-		if (state == "selected") {
-			static const QColor selected_color(Qt::white);
-			image::set_outline_color(image, selected_color);
-		} else if (state == "grayscale") {
-			image::apply_grayscale(image);
-		} else if (state == "green") {
-			image::apply_greenscale(image);
-		} else if (state == "red") {
-			image::apply_redscale(image);
-		} else if (state == "silhouette") {
-			image = image::to_silhouette(image);
-		} else if (state != "small") {
-			assert_throw(false);
+		for (size_t i = 1; i < id_list.size(); ++i) {
+			const std::string &state = id_list.at(i);
+			if (state == "selected") {
+				static const QColor selected_color(Qt::white);
+				image::set_outline_color(image, selected_color);
+			} else if (state == "grayscale") {
+				image::apply_grayscale(image);
+			} else if (state == "green") {
+				image::apply_greenscale(image);
+			} else if (state == "red") {
+				image::apply_redscale(image);
+			} else if (state == "silhouette") {
+				image = image::to_silhouette(image);
+			} else if (state == "small") {
+				continue;
+			} else {
+				assert_throw(false);
+			}
 		}
 	}
 

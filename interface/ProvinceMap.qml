@@ -251,12 +251,13 @@ Flickable {
 					
 					Image {
 						id: civilian_unit_icon
-						source: "image://icon/alliance" + (selected ? "/selected" : "")
+						source: "image://icon/alliance" + (grayscale ? "/grayscale" : "") + (selected ? "/selected" : "")
 						visible: civilian_unit.owner === metternich.game.player_country
 						
 						readonly property var civilian_unit: model.modelData
 						readonly property bool civilian_unit_interactive: civilian_unit.owner === metternich.game.player_country
 						readonly property bool selected: civilian_unit === selected_civilian_unit
+						readonly property bool grayscale: civilian_unit.moving || civilian_unit.working
 						
 						MouseArea {
 							anchors.fill: parent
@@ -264,7 +265,7 @@ Flickable {
 							
 							onClicked: {
 								metternich.defines.click_sound.play()
-								if (civilian_unit_interactive && civilian_unit !== selected_civilian_unit && !civilian_unit.moving) {
+								if (civilian_unit_interactive && civilian_unit !== selected_civilian_unit) {
 									select_civilian_unit(civilian_unit)
 								} else {
 									select_civilian_unit(null)
