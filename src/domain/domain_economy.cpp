@@ -82,6 +82,14 @@ void domain_economy::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([this](const gsml_property &property) {
 			this->stored_commodities[commodity::get(property.get_key())] = std::stoll(property.get_value());
 		});
+	} else if (tag == "commodity_inputs") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->commodity_inputs[commodity::get(property.get_key())] = centesimal_int(property.get_value());
+		});
+	} else if (tag == "commodity_outputs") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->commodity_outputs[commodity::get(property.get_key())] = centesimal_int(property.get_value());
+		});
 	} else if (tag == "min_commodity_storages") {
 		scope.for_each_property([this](const gsml_property &property) {
 			this->min_commodity_storages[commodity::get(property.get_key())] = std::stoll(property.get_value());
@@ -111,6 +119,22 @@ gsml_data domain_economy::to_gsml_data() const
 			stored_commodities_data.add_property(commodity->get_identifier(), std::to_string(quantity));
 		}
 		data.add_child(std::move(stored_commodities_data));
+	}
+
+	if (!this->get_commodity_inputs().empty()) {
+		gsml_data commodity_inputs_data("commodity_inputs");
+		for (const auto &[commodity, input] : this->get_commodity_inputs()) {
+			commodity_inputs_data.add_property(commodity->get_identifier(), input.to_string());
+		}
+		data.add_child(std::move(commodity_inputs_data));
+	}
+
+	if (!this->get_commodity_outputs().empty()) {
+		gsml_data commodity_outputs_data("commodity_outputs");
+		for (const auto &[commodity, output] : this->get_commodity_outputs()) {
+			commodity_outputs_data.add_property(commodity->get_identifier(), output.to_string());
+		}
+		data.add_child(std::move(commodity_outputs_data));
 	}
 
 	if (!this->get_min_commodity_storages().empty()) {

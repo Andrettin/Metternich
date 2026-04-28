@@ -181,6 +181,14 @@ void site_game_data::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([this](const gsml_property &property) {
 			this->employment_capacities[employment_type::get(property.get_key())] = std::stoll(property.get_value());
 		});
+	} else if (tag == "base_commodity_outputs") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->base_commodity_outputs[commodity::get(property.get_key())] = centesimal_int(property.get_value());
+		});
+	} else if (tag == "commodity_outputs") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->commodity_outputs[commodity::get(property.get_key())] = centesimal_int(property.get_value());
+		});
 	} else if (tag == "homed_characters") {
 		for (const std::string &value : values) {
 			this->homed_characters.push_back(game::get()->get_character(value));
@@ -270,7 +278,7 @@ gsml_data site_game_data::to_gsml_data() const
 		data.add_property("population_capacity", std::to_string(this->get_population_capacity()));
 	}
 
-	if (this->get_employment_sizes().empty()) {
+	if (!this->get_employment_sizes().empty()) {
 		gsml_data employment_sizes_data("employment_sizes");
 		for (const auto &[employment_type, employment_size] : this->get_employment_sizes()) {
 			employment_sizes_data.add_property(employment_type->get_identifier(), std::to_string(employment_size));
@@ -278,12 +286,28 @@ gsml_data site_game_data::to_gsml_data() const
 		data.add_child(std::move(employment_sizes_data));
 	}
 
-	if (this->get_employment_capacities().empty()) {
+	if (!this->get_employment_capacities().empty()) {
 		gsml_data employment_capacities_data("employment_capacities");
 		for (const auto &[employment_type, employment_capacity] : this->get_employment_capacities()) {
 			employment_capacities_data.add_property(employment_type->get_identifier(), std::to_string(employment_capacity));
 		}
 		data.add_child(std::move(employment_capacities_data));
+	}
+
+	if (!this->get_base_commodity_outputs().empty()) {
+		gsml_data base_commodity_outputs_data("base_commodity_outputs");
+		for (const auto &[commodity, base_output] : this->get_base_commodity_outputs()) {
+			base_commodity_outputs_data.add_property(commodity->get_identifier(), base_output.to_string());
+		}
+		data.add_child(std::move(base_commodity_outputs_data));
+	}
+
+	if (!this->get_commodity_outputs().empty()) {
+		gsml_data commodity_outputs_data("commodity_outputs");
+		for (const auto &[commodity, output] : this->get_commodity_outputs()) {
+			commodity_outputs_data.add_property(commodity->get_identifier(), output.to_string());
+		}
+		data.add_child(std::move(commodity_outputs_data));
 	}
 
 	if (!this->get_homed_characters().empty()) {
