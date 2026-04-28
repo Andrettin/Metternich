@@ -2,3 +2,18 @@ library = {
 	name = "Library"
 	slot_type = library
 }
+
+library_great_library = {
+	name = "Library"
+	slot_type = library
+}
+
+great_library = {
+	name = "Great Library"
+	slot_type = library
+}
+
+scribe_room = {
+	name = "Scribe Room"
+	slot_type = scribe_room
+}

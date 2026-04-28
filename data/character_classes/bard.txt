@@ -30,6 +30,9 @@ bard = {
 		half_elf
 		human
 	}
+	favored_holding_types = {
+		great_library
+	}
 	allowed_holding_types = {
 		guild
 	}

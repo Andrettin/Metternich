@@ -25,6 +25,86 @@ library = {
 		loyalty = 1
 	}
 	free_on_start_conditions = {
-		has_building_class = university
+		or = {
+			has_building_class = university
+			holding_type = great_library
+		}
+	}
+}
+
+library_great_library = {
+	name = "Library"
+	building_class = library_great_library
+	portrait = university
+	icon = book
+	holding_level = 2
+	size = 1
+	holding_types = {
+		great_library
+	}
+	builder_civilian_unit_types = {
+		ruler
+		magister
+		engineer
+	}
+	commodity_costs = {
+		wealth = 6gb
+	}
+	modifier = {
+		lore = 1
+	}
+	domain_modifier = {
+		economy = 1
+		loyalty = 1
+	}
+	free_on_start_conditions = {
+	}
+}
+
+great_library = {
+	name = "Great Library"
+	building_class = great_library
+	portrait = university
+	icon = book
+	holding_level = 4
+	base_building = library_great_library
+	holding_types = {
+		great_library
+	}
+	builder_civilian_unit_types = {
+		ruler
+		magister
+		engineer
+	}
+	modifier = {
+		lore = 1
+	}
+	domain_modifier = {
+		economy = 1
+		loyalty = 1
+	}
+}
+
+scribe_room = {
+	name = "Scribe Room"
+	building_class = scribe_room
+	portrait = university
+	icon = book
+	holding_types = {
+		great_library
+	}
+	builder_civilian_unit_types = {
+		ruler
+		magister
+		engineer
+	}
+	commodity_costs = {
+		wealth = 47400gp
+	}
+	modifier = {
+		#monthly_regency_output = 0.1
+	}
+	province_modifier = {
+		technology_spread = 25
 	}
 }

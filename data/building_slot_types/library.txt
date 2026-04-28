@@ -1,3 +1,7 @@
 library = {
 	name = "Library"
 }
+
+scribe_room = {
+	name = "Scribe Room"
+}
