@@ -85,6 +85,30 @@ great_library = {
 	}
 }
 
+poetry_and_drama_collection = {
+	name = "Poetry and Drama Collection"
+	building_class = poetry_and_drama_collection
+	portrait = university
+	icon = book
+	holding_types = {
+		great_library
+	}
+	builder_civilian_unit_types = {
+		ruler
+		magister
+		engineer
+	}
+	commodity_costs = {
+		wealth = 47400gp
+	}
+	province_modifier = {
+		technology_spread_modifier = {
+			category = culture
+			value = 10
+		}
+	}
+}
+
 scribe_room = {
 	name = "Scribe Room"
 	building_class = scribe_room

@@ -13,6 +13,11 @@ great_library = {
 	slot_type = library
 }
 
+poetry_and_drama_collection = {
+	name = "Poetry and Drama Collection"
+	slot_type = poetry_and_drama_collection
+}
+
 scribe_room = {
 	name = "Scribe Room"
 	slot_type = scribe_room
