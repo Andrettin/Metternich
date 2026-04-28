@@ -235,7 +235,7 @@ void technology::initialize()
 		event->set_portrait(this->get_portrait());
 		event->set_description(std::format("[root.domain.form_of_address], the {} technology has spread to [root.name].", string::lowered(this->get_name())));
 		event->set_from_neighbor(true);
-		event->set_technology_spread(true);
+		event->set_spread_technology(this);
 		if (this->spread_monthly_chance != nullptr) {
 			event->set_monthly_chance(std::move(this->spread_monthly_chance));
 		} else {

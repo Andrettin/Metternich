@@ -86,7 +86,7 @@ university = {
 		society = 3
 	}
 	province_modifier = {
-		technology_spread = 60
+		technology_spread_modifier = 60
 	}
 	domain_modifier = {
 		economy = 3
@@ -125,7 +125,7 @@ monastic_school = {
 		wealth = 18000gp
 	}
 	province_modifier = {
-		technology_spread = 10
+		technology_spread_modifier = 10
 	}
 }
 
@@ -152,6 +152,6 @@ cathedral_school = {
 		wealth = 18000gp
 	}
 	province_modifier = {
-		technology_spread = 30
+		technology_spread_modifier = 30
 	}
 }

@@ -105,6 +105,6 @@ scribe_room = {
 		monthly_regency_bonus = 0.1
 	}
 	province_modifier = {
-		technology_spread = 25
+		technology_spread_modifier = 25
 	}
 }

@@ -52,6 +52,7 @@
 #include "script/modifier.h"
 #include "script/scripted_province_modifier.h"
 #include "technology/technology.h"
+#include "technology/technology_category.h"
 #include "ui/icon.h"
 #include "ui/icon_container.h"
 #include "ui/portrait.h"
@@ -111,8 +112,6 @@ void province_game_data::process_gsml_property(const gsml_property &property)
 		this->pathway = pathway::get(value);
 	} else if (key == "under_construction_pathway") {
 		this->under_construction_pathway = pathway::get(value);
-	} else if (key == "technology_spread_modifier") {
-		this->technology_spread_modifier = std::stoi(value);
 	} else {
 		throw std::runtime_error(std::format("Invalid province game data property: \"{}\".", key));
 	}
@@ -127,6 +126,10 @@ void province_game_data::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->technologies.insert(technology::get(value));
 		}
+	} else if (tag == "technology_category_spread_modifiers") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->technology_category_spread_modifiers[technology_category::get(property.get_key())] = std::stoi(property.get_value());
+		});
 	} else {
 		throw std::runtime_error(std::format("Invalid province game data scope: \"{}\".", tag));
 	}
@@ -172,8 +175,12 @@ gsml_data province_game_data::to_gsml_data() const
 		data.add_child(std::move(technologies_data));
 	}
 
-	if (this->get_technology_spread_modifier() != 0) {
-		data.add_property("technology_spread_modifier", std::to_string(this->get_technology_spread_modifier()));
+	if (!this->technology_category_spread_modifiers.empty()) {
+		gsml_data technology_category_spread_modifiers_data("technology_category_spread_modifiers");
+		for (const auto &[technology_category, modifier] : this->technology_category_spread_modifiers) {
+			technology_category_spread_modifiers_data.add_property(technology_category->get_identifier(), std::to_string(modifier));
+		}
+		data.add_child(std::move(technology_category_spread_modifiers_data));
 	}
 
 	return data;

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "culture/culture_container.h"
+#include "database/data_entry_container.h"
 #include "economy/commodity_container.h"
 #include "economy/resource_container.h"
 #include "infrastructure/building_type_container.h"
@@ -550,14 +551,24 @@ public:
 		this->set_commodity_bonus_for_tile_threshold(commodity, threshold, this->get_commodity_bonus_for_tile_threshold(commodity, threshold) + value);
 	}
 
-	int get_technology_spread_modifier() const
+	int get_technology_category_spread_modifier(const technology_category *category) const
 	{
-		return this->technology_spread_modifier;
+		const auto find_iterator = this->technology_category_spread_modifiers.find(category);
+
+		if (find_iterator != this->technology_category_spread_modifiers.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
 	}
 
-	void change_technology_spread_modifier(const int change)
+	void change_technology_category_spread_modifier(const technology_category *category, const int change)
 	{
-		this->technology_spread_modifier += change;
+		const int new_value = (this->technology_category_spread_modifiers[category] += change);
+
+		if (new_value == 0) {
+			this->technology_category_spread_modifiers.erase(category);
+		}
 	}
 
 	bool can_produce_commodity(const commodity *commodity) const;
@@ -622,7 +633,7 @@ private:
 	commodity_map<centesimal_int> commodity_output_modifiers;
 	resource_map<commodity_map<int>> improved_resource_commodity_bonuses;
 	commodity_map<std::map<int, int>> commodity_bonuses_for_tile_thresholds;
-	int technology_spread_modifier = 0;
+	data_entry_map<technology_category, int> technology_category_spread_modifiers;
 };
 
 }

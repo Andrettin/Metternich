@@ -20,7 +20,7 @@ public:
 
 	virtual const std::string &get_identifier() const override
 	{
-		static const std::string identifier = "technology_cost_modifier_effect";
+		static const std::string identifier = "technology_cost_modifier";
 		return identifier;
 	}
 

@@ -20,6 +20,7 @@
 #include "script/effect/effect_list.h"
 #include "script/factor.h"
 #include "script/mean_time_to_happen.h"
+#include "technology/technology.h"
 #include "util/assert_util.h"
 #include "util/centesimal_int.h"
 #include "util/random.h"
@@ -183,9 +184,9 @@ QCoro::Task<void> scoped_event_base<scope_type>::check_mtth_event_for_scope(cons
 
 	if constexpr (std::is_same_v<scope_type, const province>) {
 		const province_event *province_event = static_cast<const metternich::province_event *>(event);
-		if (province_event->is_technology_spread() && scope->get_game_data()->get_technology_spread_modifier() != 0) {
+		if (province_event->get_spread_technology() != nullptr && scope->get_game_data()->get_technology_category_spread_modifier(province_event->get_spread_technology()->get_category()) != 0) {
 			mtth *= 100;
-			mtth /= 100 + scope->get_game_data()->get_technology_spread_modifier();
+			mtth /= 100 + scope->get_game_data()->get_technology_category_spread_modifier(province_event->get_spread_technology()->get_category());
 		}
 	}
 

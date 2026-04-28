@@ -6,13 +6,14 @@
 namespace metternich {
 
 class province;
+class technology;
 
 class province_event final : public event, public data_type<province_event>, public scoped_event_base<const province>
 {
 	Q_OBJECT
 
 	Q_PROPERTY(bool from_neighbor READ is_from_neighbor WRITE set_from_neighbor)
-	Q_PROPERTY(bool technology_spread READ is_technology_spread WRITE set_technology_spread)
+	Q_PROPERTY(const metternich::technology* spread_technology READ get_spread_technology WRITE set_spread_technology)
 
 public:
 	static constexpr const char class_identifier[] = "province_event";
@@ -98,14 +99,14 @@ public:
 		this->from_neighbor = value;
 	}
 
-	bool is_technology_spread() const
+	const technology *get_spread_technology() const
 	{
-		return this->technology_spread;
+		return this->spread_technology;
 	}
 
-	void set_technology_spread(const bool value)
+	void set_spread_technology(const technology *technology)
 	{
-		this->technology_spread = value;
+		this->spread_technology = technology;
 	}
 
 	virtual bool is_hidden() const override
@@ -151,7 +152,7 @@ public:
 
 private:
 	bool from_neighbor = false;
-	bool technology_spread = false;
+	const technology *spread_technology = nullptr;
 };
 
 }

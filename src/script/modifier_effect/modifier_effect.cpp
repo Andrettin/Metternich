@@ -237,7 +237,7 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			}
 		}
 	} else if constexpr (std::is_same_v<scope_type, const province>) {
-		if (key == "technology_spread") {
+		if (key == "technology_spread_modifier") {
 			return std::make_unique<technology_spread_modifier_effect>(value);
 		}
 	} else if constexpr (std::is_same_v<scope_type, const site>) {
@@ -331,6 +331,10 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			modifier_effect = std::make_unique<population_strata_tax_rate_modifier_effect>();
 		} else if (tag == "technology_cost_modifier") {
 			modifier_effect = std::make_unique<technology_cost_modifier_effect>();
+		}
+	} else if constexpr (std::is_same_v<scope_type, const province>) {
+		if (tag == "technology_spread_modifier") {
+			modifier_effect = std::make_unique<technology_spread_modifier_effect>();
 		}
 	} else if constexpr (std::is_same_v<scope_type, const site>) {
 		if (tag == "commodity_bonus_per_adjacent_terrain") {
