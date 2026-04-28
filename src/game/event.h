@@ -25,7 +25,7 @@ class event : public named_data_entry
 	Q_PROPERTY(metternich::event_trigger trigger MEMBER trigger READ get_trigger)
 	Q_PROPERTY(metternich::event_random_group* random_group MEMBER random_group)
 	Q_PROPERTY(bool random READ is_random WRITE set_random)
-	Q_PROPERTY(bool hidden MEMBER hidden READ is_hidden)
+	Q_PROPERTY(bool hidden READ is_hidden WRITE set_hidden)
 	Q_PROPERTY(bool only_once MEMBER only_once READ fires_only_once)
 	Q_PROPERTY(bool news MEMBER news READ is_news NOTIFY changed)
 	Q_PROPERTY(QString newspaper READ get_newspaper_qstring NOTIFY changed)
@@ -101,6 +101,11 @@ public:
 	bool is_hidden() const
 	{
 		return this->hidden;
+	}
+
+	void set_hidden(const bool hidden)
+	{
+		this->hidden = hidden;
 	}
 
 	bool fires_only_once() const
