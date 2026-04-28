@@ -10,6 +10,7 @@
 #include "script/condition/and_condition.h"
 #include "script/modifier.h"
 #include "util/assert_util.h"
+#include "util/log_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -124,6 +125,10 @@ void holding_type::check() const
 
 	if (this->get_image_filepath().empty()) {
 		throw std::runtime_error(std::format("Holding type \"{}\" has no image filepath.", this->get_identifier()));
+	}
+
+	if (this->get_domain_skill() == nullptr) {
+		log::log_error(std::format("Holding type \"{}\" has no domain skill.", this->get_identifier()));
 	}
 
 	if (vector::contains(this->get_base_holding_types(), this)) {

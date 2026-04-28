@@ -5,11 +5,13 @@
 #include "economy/commodity_container.h"
 #include "util/dice.h"
 
+Q_MOC_INCLUDE("character/domain_skill.h")
 Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("ui/portrait.h")
 
 namespace metternich {
 
+class domain_skill;
 class icon;
 class population_class;
 class population_type;
@@ -32,6 +34,7 @@ class holding_type final : public named_data_entry, public data_type<holding_typ
 	Q_PROPERTY(bool political MEMBER political READ is_political NOTIFY changed)
 	Q_PROPERTY(bool economic MEMBER economic READ is_economic NOTIFY changed)
 	Q_PROPERTY(bool religious MEMBER religious READ is_religious NOTIFY changed)
+	Q_PROPERTY(const metternich::domain_skill* domain_skill MEMBER domain_skill READ get_domain_skill NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "holding_type";
@@ -77,6 +80,11 @@ public:
 	bool is_religious() const
 	{
 		return this->religious;
+	}
+
+	const domain_skill *get_domain_skill() const
+	{
+		return this->domain_skill;
 	}
 
 	const commodity_map<int> &get_level_commodity_costs() const
@@ -161,6 +169,7 @@ private:
 	bool political = false;
 	bool economic = false;
 	bool religious = false;
+	const metternich::domain_skill *domain_skill = nullptr;
 	commodity_map<int> level_commodity_costs;
 	commodity_map<int> level_commodity_costs_per_level;
 	commodity_map<int> fortification_level_commodity_costs;

@@ -3,6 +3,7 @@ magic_source = {
 	icon = alliance
 	portrait = university
 	image_filepath = "tiles/settlements/town.png"
+	domain_skill = magic
 	level_commodity_costs = {
 		wealth = 1gb
 	}

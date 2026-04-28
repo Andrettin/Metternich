@@ -4,6 +4,7 @@ guild = {
 	portrait = trading_post
 	image_filepath = "tiles/settlements/town.png"
 	economic = true
+	domain_skill = trade
 	level_commodity_costs = {
 		wealth = 1gb
 	}

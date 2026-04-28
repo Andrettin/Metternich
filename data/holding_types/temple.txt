@@ -4,6 +4,7 @@ temple = {
 	portrait = temple
 	image_filepath = "tiles/settlements/town.png"
 	religious = true
+	domain_skill = faith
 	level_commodity_costs = {
 		wealth = 1gb
 	}
