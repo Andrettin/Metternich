@@ -1,0 +1,65 @@
+#pragma once
+
+#include "database/defines.h"
+#include "economy/commodity.h"
+#include "map/site.h"
+#include "map/site_game_data.h"
+#include "script/modifier_effect/modifier_effect.h"
+
+namespace metternich {
+
+class monthly_commodity_bonus_modifier_effect final : public modifier_effect<const site>
+{
+public:
+	explicit monthly_commodity_bonus_modifier_effect(const metternich::commodity *commodity, const std::string &value)
+		: commodity(commodity)
+	{
+		this->value = centesimal_int(this->commodity->string_to_fractional_value(value) * defines::get()->get_default_months_per_turn());
+	}
+
+	virtual const std::string &get_identifier() const override
+	{
+		static const std::string identifier = "monthly_commodity_bonus";
+		return identifier;
+	}
+
+	virtual void apply(const site *scope, const centesimal_int &multiplier) const override
+	{
+		if (!this->commodity->is_enabled()) {
+			return;
+		}
+
+		scope->get_game_data()->change_base_commodity_output(this->commodity, this->value * multiplier);
+	}
+
+	virtual std::string get_base_string(const site *scope) const override
+	{
+		Q_UNUSED(scope);
+
+		if (this->commodity->is_storable()) {
+			return std::format("{} Output", this->commodity->get_name());
+		} else {
+			return this->commodity->get_name();
+		}
+	}
+
+	virtual std::string get_number_string(const centesimal_int &multiplier, const bool ignore_decimals) const override
+	{
+		Q_UNUSED(ignore_decimals);
+
+		const centesimal_int value = this->get_multiplied_value(multiplier);
+		return (value >= 0 ? "+" : "") + this->commodity->value_to_string(value);
+	}
+
+	virtual bool is_hidden(const site *scope) const override
+	{
+		Q_UNUSED(scope);
+
+		return !this->commodity->is_enabled();
+	}
+
+private:
+	const metternich::commodity *commodity = nullptr;
+};
+
+}

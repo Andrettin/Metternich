@@ -20,7 +20,6 @@
 #include "script/effect/effect_list.h"
 #include "script/factor.h"
 #include "script/modifier.h"
-#include "script/modifier_effect/commodity_bonus_modifier_effect.h"
 #include "technology/technology.h"
 #include "unit/civilian_unit_type.h"
 #include "unit/military_unit_category.h"

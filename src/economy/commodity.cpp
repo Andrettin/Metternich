@@ -187,6 +187,16 @@ std::string commodity::value_to_string(const int value) const
 	return number::to_formatted_string(value);
 }
 
+std::string commodity::value_to_string(const centesimal_int &value) const
+{
+	const commodity_unit *unit = this->get_unit(value.to_int());
+	if (unit != nullptr) {
+		return std::format("{} {}", (value / this->get_unit_value(unit)).to_formatted_string(), unit->get_suffix());
+	}
+
+	return value.to_formatted_string();
+}
+
 QString commodity::value_to_qstring(const int value) const
 {
 	return QString::fromStdString(this->value_to_string(value));

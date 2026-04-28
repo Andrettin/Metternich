@@ -3,6 +3,7 @@
 #include "database/data_entry_container.h"
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
+#include "util/centesimal_int.h"
 #include "util/decimillesimal_int.h"
 
 Q_MOC_INCLUDE("game/game_rule.h")
@@ -146,6 +147,7 @@ public:
 	std::pair<std::variant<int, dice>, const commodity_unit *> string_to_value_variant_with_unit(const std::string &str) const;
 
 	std::string value_to_string(const int value) const;
+	std::string value_to_string(const centesimal_int &value) const;
 	Q_INVOKABLE QString value_to_qstring(const int value) const;
 
 	Q_INVOKABLE QString get_units_tooltip() const;

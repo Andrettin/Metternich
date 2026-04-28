@@ -67,7 +67,7 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(archimedes::decimillesimal_int minimap_tile_scale MEMBER minimap_tile_scale READ get_minimap_tile_scale NOTIFY changed)
 	Q_PROPERTY(double minimap_tile_scale_double READ get_minimap_tile_scale_double NOTIFY changed)
 	Q_PROPERTY(QDate default_start_date MEMBER default_start_date READ get_default_start_date)
-	Q_PROPERTY(int default_months_per_turn MEMBER default_months_per_turn NOTIFY changed)
+	Q_PROPERTY(int default_months_per_turn MEMBER default_months_per_turn READ get_default_months_per_turn NOTIFY changed)
 	Q_PROPERTY(const metternich::terrain_type* default_base_terrain MEMBER default_base_terrain READ get_default_base_terrain NOTIFY changed)
 	Q_PROPERTY(const metternich::terrain_type* unexplored_terrain MEMBER unexplored_terrain READ get_unexplored_terrain NOTIFY changed)
 	Q_PROPERTY(const metternich::terrain_type* default_province_terrain MEMBER default_province_terrain  READ get_default_province_terrain NOTIFY changed)
@@ -185,6 +185,11 @@ public:
 	const QDate &get_default_start_date() const
 	{
 		return this->default_start_date;
+	}
+
+	int get_default_months_per_turn() const
+	{
+		return this->default_months_per_turn;
 	}
 
 	int get_months_per_turn(const int current_year) const
