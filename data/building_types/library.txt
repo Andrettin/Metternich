@@ -102,7 +102,7 @@ scribe_room = {
 		wealth = 47400gp
 	}
 	modifier = {
-		#monthly_regency_output = 0.1
+		monthly_regency_bonus = 0.1
 	}
 	province_modifier = {
 		technology_spread = 25

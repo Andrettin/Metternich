@@ -4,7 +4,7 @@ bibliotheca_corviniana = {
 	geocoordinate = { 19.039722222222224 47.49611111111111 }
 	type = holding
 	holding_type = great_library
-	max_level = 4
+	max_tier = great_library
 	province = buda
 	
 	history = {
