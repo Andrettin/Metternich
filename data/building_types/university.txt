@@ -109,6 +109,7 @@ monastic_school = {
 	portrait = university
 	icon = wooden_cross
 	required_technology = monastic_school
+	build_duration = 547d
 	holding_types = {
 		temple
 	}
@@ -127,6 +128,11 @@ monastic_school = {
 	province_modifier = {
 		technology_spread_modifier = 10
 	}
+	modifier = {
+		monthly_regency_bonus = 0.05
+	}
+	
+	#FIXME: should increase culture research points
 }
 
 cathedral_school = {
@@ -136,6 +142,7 @@ cathedral_school = {
 	icon = wooden_cross
 	base_building = monastic_school
 	required_technology = cathedral_school
+	build_duration = 547d
 	holding_types = {
 		temple
 	}
@@ -154,4 +161,9 @@ cathedral_school = {
 	province_modifier = {
 		technology_spread_modifier = 30
 	}
+	modifier = {
+		monthly_regency_bonus = 0.1
+	}
+	
+	#FIXME: should increase culture research points
 }
