@@ -85,11 +85,37 @@ great_library = {
 	}
 }
 
+history_collection = {
+	name = "History Collection"
+	building_class = history_collection
+	portrait = university
+	icon = book
+	build_duration = 24mo
+	holding_types = {
+		great_library
+	}
+	builder_civilian_unit_types = {
+		ruler
+		magister
+		engineer
+	}
+	commodity_costs = {
+		wealth = 47400gp
+	}
+	province_modifier = {
+		technology_spread_modifier = {
+			category = army
+			value = 10
+		}
+	}
+}
+
 poetry_and_drama_collection = {
 	name = "Poetry and Drama Collection"
 	building_class = poetry_and_drama_collection
 	portrait = university
 	icon = book
+	build_duration = 24mo
 	holding_types = {
 		great_library
 	}
@@ -114,6 +140,7 @@ scribe_room = {
 	building_class = scribe_room
 	portrait = university
 	icon = book
+	build_duration = 24mo
 	holding_types = {
 		great_library
 	}
