@@ -46,6 +46,22 @@ building_type::~building_type()
 {
 }
 
+void building_type::process_gsml_property(const gsml_property &property)
+{
+	const std::string &key = property.get_key();
+	const std::string &value = property.get_value();
+
+	if (key == "build_duration") {
+		const std::chrono::seconds duration_seconds = string::to_duration(value);
+		this->build_duration = std::chrono::duration_cast<std::chrono::months>(duration_seconds);
+		if ((duration_seconds % std::chrono::months(1)).count() > 0) {
+			this->build_duration += std::chrono::months(1);
+		}
+	} else {
+		named_data_entry::process_gsml_property(property);
+	}
+}
+
 void building_type::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();

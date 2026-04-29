@@ -765,16 +765,22 @@ void civilian_unit::increment_work_progress()
 	}
 
 	if (this->under_construction_building != nullptr) {
-		int64_t wealth_cost = 0;
-		const commodity_map<int> commodity_costs = this->under_construction_building->get_commodity_costs_for_site(this->under_construction_building_site);
-		if (commodity_costs.contains(defines::get()->get_wealth_commodity())) {
-			wealth_cost = commodity_costs.find(defines::get()->get_wealth_commodity())->second;
+		if (this->under_construction_building->get_build_duration() != std::chrono::months(0)) {
+			const int build_months = this->under_construction_building->get_build_duration().count();
+
+			progress_change = decimillesimal_int::min(progress_change, decimillesimal_int(game::get()->get_current_months_per_turn()) * 100 / std::max(build_months, 1));
+		} else {
+			int64_t wealth_cost = 0;
+			const commodity_map<int> commodity_costs = this->under_construction_building->get_commodity_costs_for_site(this->under_construction_building_site);
+			if (commodity_costs.contains(defines::get()->get_wealth_commodity())) {
+				wealth_cost = commodity_costs.find(defines::get()->get_wealth_commodity())->second;
+			}
+
+			static constexpr dice progress_dice(1, 6);
+			const int64_t wealth_cost_progress = random::get()->roll_dice(progress_dice) * defines::get()->get_domain_income_unit_value();
+
+			progress_change = decimillesimal_int::min(progress_change, decimillesimal_int(wealth_cost_progress) * 100 / std::max(wealth_cost, 1ll));
 		}
-
-		static constexpr dice progress_dice(1, 6);
-		const int64_t wealth_cost_progress = random::get()->roll_dice(progress_dice) * defines::get()->get_domain_income_unit_value();
-
-		progress_change = decimillesimal_int::min(progress_change, decimillesimal_int(wealth_cost_progress) * 100 / std::max(wealth_cost, 1ll));
 	}
 
 	if (this->under_construction_pathway != nullptr) {

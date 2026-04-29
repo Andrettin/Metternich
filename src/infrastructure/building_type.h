@@ -80,6 +80,7 @@ public:
 	explicit building_type(const std::string &identifier);
 	~building_type();
 
+	virtual void process_gsml_property(const gsml_property &property) override;
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
 	virtual void check() const override;
@@ -244,6 +245,11 @@ public:
 		return this->min_holding_level;
 	}
 
+	const std::chrono::months &get_build_duration() const
+	{
+		return this->build_duration;
+	}
+
 	const commodity_map<int> &get_commodity_costs() const
 	{
 		return this->commodity_costs;
@@ -333,6 +339,7 @@ private:
 	std::vector<const building_type *> required_buildings;
 	technology *required_technology = nullptr;
 	int min_holding_level = 0;
+	std::chrono::months build_duration{};
 	commodity_map<int> commodity_costs;
 	std::unique_ptr<const factor<site>> cost_factor;
 	std::unique_ptr<and_condition<site>> conditions;
