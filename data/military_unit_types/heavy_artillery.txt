@@ -2,6 +2,7 @@ catapult = {
 	name = "Catapult"
 	unit_class = catapult
 	icon = catapult
+	required_technology = mangonel
 	stats = {
 		hit_points = 2
 		movement = 1
