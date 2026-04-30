@@ -91,6 +91,7 @@ history_collection = {
 	portrait = university
 	icon = book
 	build_duration = 24mo
+	required_technology = chronicle_writing
 	holding_types = {
 		great_library
 	}
