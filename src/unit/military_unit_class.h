@@ -20,6 +20,7 @@ class military_unit_class final : public named_data_entry, public data_type<mili
 
 	Q_PROPERTY(metternich::military_unit_domain domain MEMBER domain READ get_domain)
 	Q_PROPERTY(metternich::military_unit_category category MEMBER category READ get_category)
+	Q_PROPERTY(bool animal MEMBER animal READ is_animal)
 
 public:
 	static constexpr const char class_identifier[] = "military_unit_class";
@@ -67,6 +68,7 @@ public:
 private:
 	military_unit_domain domain;
 	military_unit_category category;
+	bool animal = false;
 	const military_unit_type *default_unit_type = nullptr;
 	std::vector<const military_unit_type *> unit_types;
 };
