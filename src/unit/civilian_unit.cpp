@@ -368,7 +368,9 @@ void civilian_unit::cancel_move()
 
 site_map<std::vector<const building_type *>> civilian_unit::get_buildable_buildings() const
 {
-	assert_throw(this->get_province() != nullptr);
+	if (this->get_province() == nullptr) {
+		return {};
+	}
 
 	site_map<std::vector<const building_type *>> buildable_buildings;
 
@@ -429,7 +431,9 @@ void civilian_unit::build_building(const building_type *building_type, const sit
 
 const metternich::pathway *civilian_unit::get_buildable_pathway() const
 {
-	assert_throw(this->get_province() != nullptr);
+	if (this->get_province() == nullptr) {
+		return nullptr;
+	}
 
 	const pathway *buildable_pathway = this->get_province()->get_game_data()->get_buildable_pathway();
 	if (buildable_pathway != nullptr && this->get_type()->can_build_pathway(buildable_pathway)) {
