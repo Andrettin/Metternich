@@ -1005,10 +1005,6 @@ void site_game_data::set_fortification_level(const int level)
 
 	this->fortification_level = level;
 
-	if (level > 0) {
-		assert_throw(this->get_holding_type() != nullptr);
-	}
-
 	if (game::get()->is_running()) {
 		emit fortification_level_changed();
 	}

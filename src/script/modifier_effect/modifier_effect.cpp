@@ -32,6 +32,7 @@
 #include "script/modifier_effect/diplomatic_penalty_for_expansion_modifier_effect.h"
 #include "script/modifier_effect/domain_attribute_modifier_effect.h"
 #include "script/modifier_effect/employment_capacity_modifier_effect.h"
+#include "script/modifier_effect/fortification_level_modifier_effect.h"
 #include "script/modifier_effect/free_artillery_promotion_modifier_effect.h"
 #include "script/modifier_effect/free_building_class_modifier_effect.h"
 #include "script/modifier_effect/free_cavalry_promotion_modifier_effect.h"
@@ -244,7 +245,9 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<technology_spread_modifier_effect>(value);
 		}
 	} else if constexpr (std::is_same_v<scope_type, const site>) {
-		if (key == "holding_level") {
+		if (key == "fortification_level") {
+			return std::make_unique<fortification_level_modifier_effect>(value);
+		} else if (key == "holding_level") {
 			return std::make_unique<holding_level_modifier_effect>(value);
 		} else if (key == "population_capacity") {
 			return std::make_unique<population_capacity_modifier_effect>(value);
