@@ -6,6 +6,14 @@ academic = {
 	}
 }
 
+cove = {
+	name = "Cove"
+	icon = anchor
+	modifier = {
+		productivity = 1
+	}
+}
+
 crossroads = {
 	name = "Crossroads"
 	icon = chest

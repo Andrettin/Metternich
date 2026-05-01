@@ -4,10 +4,12 @@ trieste = {
 	geocoordinate = { 13.80002559270 45.65037762360 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	max_tier = seaport
 	province = istria
 	cultural_names = {
 		roman = "Tergeste" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 38-39.
+	}
+	features = {
+		cove #free port
 	}
 	
 	history = {

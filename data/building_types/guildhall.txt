@@ -71,7 +71,10 @@ guildhall = {
 		engineer
 	}
 	conditions = {
-		feature = crossroads
+		or = {
+			feature = cove
+			feature = crossroads
+		}
 	}
 	commodity_costs = {
 		wealth = 34gb

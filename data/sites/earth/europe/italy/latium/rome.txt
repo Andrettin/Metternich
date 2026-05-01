@@ -5,10 +5,10 @@ rome = {
 	type = holding
 	holding_type = guild
 	#holding_type = temple
-	max_tier = seaport
 	province = latium
 	features = {
 		academic #historical university
+		cove #had shipyards ("Navalia")
 		#holy_site
 	}
 	

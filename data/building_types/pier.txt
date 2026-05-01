@@ -54,6 +54,7 @@ waterfront = {
 		heavy_warship
 	}
 	conditions = {
+		feature = cove
 		province = {
 			near_water = true
 		}
