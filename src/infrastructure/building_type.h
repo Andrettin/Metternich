@@ -298,7 +298,8 @@ public:
 		return this->weighted_domain_modifier.get();
 	}
 
-	Q_INVOKABLE QString get_effects_string(metternich::site *site) const;
+	std::string get_modifier_string(const site *site, const bool single_line) const;
+	Q_INVOKABLE QString get_effects_string(const metternich::site *site) const;
 
 	const effect_list<const site> *get_effects() const
 	{

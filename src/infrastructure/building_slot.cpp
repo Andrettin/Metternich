@@ -706,103 +706,13 @@ QString building_slot::get_modifier_string() const
 		}
 	}
 
-	if (this->get_building()->get_holding_level() != 0) {
+	std::string building_modifier_str = this->get_building()->get_modifier_string(this->get_settlement(), false);
+	if (!building_modifier_str.empty()) {
 		if (!str.empty()) {
 			str += "\n";
 		}
 
-		const QColor &number_color = this->get_building()->get_holding_level() < 0 ? defines::get()->get_red_text_color() : defines::get()->get_green_text_color();
-		str += std::format("Holding Level: {}", string::colored(number::to_signed_string(this->get_building()->get_holding_level()), number_color));
-	}
-
-	if (this->get_building()->get_fortification_level() != 0) {
-		if (!str.empty()) {
-			str += "\n";
-		}
-
-		const QColor &number_color = this->get_building()->get_fortification_level() < 0 ? defines::get()->get_red_text_color() : defines::get()->get_green_text_color();
-		str += std::format("Fortification Level: {}", string::colored(number::to_signed_string(this->get_building()->get_fortification_level()), number_color));
-	}
-
-	std::string site_modifier_str;
-	if (this->get_building()->get_modifier() != nullptr) {
-		site_modifier_str += this->get_building()->get_modifier()->get_string(this->get_settlement());
-	}
-
-	const commodity_map<int> building_commodity_bonuses = this->get_country()->get_economy()->get_building_commodity_bonuses(this->get_building());
-	for (const auto &[commodity, bonus] : building_commodity_bonuses) {
-		const std::string base_string = commodity->is_storable() ? std::format("{} Output: ", commodity->get_name()) : std::format("{}: ", commodity->get_name());
-
-		const size_t find_pos = site_modifier_str.find(base_string);
-		if (find_pos != std::string::npos) {
-			const size_t number_start_pos = site_modifier_str.find('>', find_pos) + 2;
-			const size_t number_end_pos = site_modifier_str.find('<', number_start_pos);
-
-			if (site_modifier_str.at(number_end_pos - 1) != '%') {
-				const std::string number_str = site_modifier_str.substr(number_start_pos, number_end_pos - number_start_pos);
-				const int new_number = std::stoi(number_str) + bonus;
-				site_modifier_str.replace(number_start_pos, number_end_pos - number_start_pos, std::to_string(new_number));
-
-				continue;
-			}
-		}
-
-		if (!site_modifier_str.empty()) {
-			site_modifier_str += "\n";
-		}
-
-		const std::string number_str = number::to_signed_string(bonus);
-		const QColor &number_color = bonus < 0 ? defines::get()->get_red_text_color() : defines::get()->get_green_text_color();
-		const std::string colored_number_str = string::colored(number_str, number_color);
-
-		site_modifier_str += base_string + colored_number_str;
-	}
-
-	if (!site_modifier_str.empty()) {
-		if (!str.empty()) {
-			str += "\n";
-		}
-
-		str += site_modifier_str;
-	}
-
-	if (this->get_building()->get_province_modifier() != nullptr) {
-		if (!str.empty()) {
-			str += "\n";
-		}
-
-		str += this->get_building()->get_province_modifier()->get_string(province);
-	}
-
-	if (this->get_building()->get_domain_modifier() != nullptr) {
-		if (!str.empty()) {
-			str += "\n";
-		}
-
-		str += this->get_building()->get_domain_modifier()->get_string(this->get_country());
-	}
-
-	if (this->get_building()->get_weighted_domain_modifier() != nullptr) {
-		if (!str.empty()) {
-			str += "\n";
-		}
-
-		const domain_game_data *domain_game_data = this->get_country()->get_game_data();
-		const centesimal_int multiplier = centesimal_int(1) / domain_game_data->get_holding_count();
-		str += this->get_building()->get_weighted_domain_modifier()->get_string(this->get_country(), multiplier, 0, false);
-	}
-
-	int64_t population_capacity = this->get_building()->get_population_capacity();
-	if (this->get_building()->get_holding_level() > 0) {
-		population_capacity += this->get_building()->get_population_capacity_for_province_level(this->get_settlement()->get_game_data()->get_province()->get_game_data()->get_level());
-	}
-	if (population_capacity > 0) {
-		if (!str.empty()) {
-			str += "\n";
-		}
-
-		const QColor &number_color = defines::get()->get_green_text_color();
-		str += std::format("Population Capacity: {}", string::colored(number::to_signed_string(population_capacity), number_color));
+		str += building_modifier_str;
 	}
 
 	return QString::fromStdString(str);

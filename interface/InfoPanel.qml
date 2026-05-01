@@ -744,9 +744,11 @@ Rectangle {
 				if (hovered) {
 					status_text = "Build " + pathway.name
 					middle_status_text = pathway.get_commodity_costs_string_for_province(selected_civilian_unit.province)
+					right_status_text = pathway.get_modifier_string(selected_civilian_unit.province)
 				} else {
 					status_text = ""
 					middle_status_text = ""
+					right_status_text = ""
 				}
 			}
 		}

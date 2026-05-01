@@ -81,9 +81,11 @@ DialogBase {
 									if (hovered) {
 										status_text = "Build " + building.name + " in " + site.game_data.current_cultural_name
 										middle_status_text = building.get_commodity_costs_string_for_site(site)
+										right_status_text = building.get_effects_string(site)
 									} else {
 										status_text = ""
 										middle_status_text = ""
+										right_status_text = ""
 									}
 								}
 							}

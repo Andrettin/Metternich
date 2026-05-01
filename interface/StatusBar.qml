@@ -36,7 +36,7 @@ Rectangle {
 		anchors.bottom: parent.bottom
 		anchors.bottomMargin: 1 * scale_factor
 		anchors.left: parent.left
-		anchors.leftMargin: 16 * scale_factor
+		anchors.leftMargin: 8 * scale_factor
 	}
 	
 	SmallText {
@@ -44,7 +44,7 @@ Rectangle {
 		text: middle_status_text
 		anchors.bottom: left_status_label.bottom
 		anchors.left: left_status_label.left
-		anchors.leftMargin: 192 * scale_factor
+		anchors.leftMargin: 192 * scale_factor + 8 * scale_factor
 	}
 	
 	SmallText {
@@ -52,6 +52,6 @@ Rectangle {
 		text: right_status_text ? right_status_text : ""
 		anchors.bottom: left_status_label.bottom
 		anchors.left: left_status_label.left
-		anchors.leftMargin: 384 * scale_factor
+		anchors.leftMargin: 384 * scale_factor + 8 * scale_factor
 	}
 }
