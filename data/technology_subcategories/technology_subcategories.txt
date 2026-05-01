@@ -10,6 +10,12 @@ army = {
 	icon = crossed_sabers
 }
 
+commerce = {
+	name = "Commerce"
+	category = commerce
+	icon = wealth
+}
+
 culture = {
 	name = "Culture"
 	category = culture
