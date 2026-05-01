@@ -976,7 +976,7 @@ QCoro::Task<void> site_game_data::set_holding_level_from_buildings(const int lev
 				continue;
 			}
 
-			if (!this->can_gain_free_building(building, false)) {
+			if (!this->can_gain_free_building(building, false, false)) {
 				continue;
 			}
 
@@ -1661,7 +1661,7 @@ QCoro::Task<void> site_game_data::check_free_buildings()
 	}
 }
 
-bool site_game_data::can_gain_free_building(const building_type *building, const bool check_required_buildings) const
+bool site_game_data::can_gain_free_building(const building_type *building, const bool check_required_buildings, const bool check_required_technologies) const
 {
 	if (building != this->get_culture()->get_building_class_type(building->get_building_class())) {
 		return false;
@@ -1693,8 +1693,10 @@ bool site_game_data::can_gain_free_building(const building_type *building, const
 		}
 	}
 
-	if (building->get_required_technology() != nullptr && (this->get_owner() == nullptr || !this->get_owner()->get_technology()->has_technology(building->get_required_technology()))) {
-		return false;
+	if (check_required_technologies) {
+		if (building->get_required_technology() != nullptr && (this->get_owner() == nullptr || !this->get_owner()->get_technology()->has_technology(building->get_required_technology()))) {
+			return false;
+		}
 	}
 
 	if (building->get_build_conditions() != nullptr) {
@@ -1709,7 +1711,7 @@ bool site_game_data::can_gain_free_building(const building_type *building, const
 [[nodiscard]]
 QCoro::Task<bool> site_game_data::check_free_building(const building_type *building)
 {
-	if (!this->can_gain_free_building(building, true)) {
+	if (!this->can_gain_free_building(building, true, true)) {
 		co_return false;
 	}
 

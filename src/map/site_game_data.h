@@ -352,7 +352,7 @@ public:
 
 	[[nodiscard]] QCoro::Task<void> check_building_conditions();
 	[[nodiscard]] QCoro::Task<void> check_free_buildings();
-	bool can_gain_free_building(const building_type *building, const bool check_required_buildings) const;
+	bool can_gain_free_building(const building_type *building, const bool check_required_buildings, const bool check_required_technologies) const;
 	[[nodiscard]] QCoro::Task<bool> check_free_building(const building_type *building);
 	[[nodiscard]] QCoro::Task<bool> check_free_improvement(const improvement *improvement);
 
