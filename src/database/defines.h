@@ -521,6 +521,11 @@ public:
 
 	int get_domain_income_unit_value() const;
 
+	const commodity_map<int> &get_province_level_commodity_costs_per_level() const
+	{
+		return this->province_level_commodity_costs_per_level;
+	}
+
 	int get_province_population_for_level(const int level) const;
 	int get_province_level_for_population(const int population) const;
 	const dice &get_province_taxation_for_level(const int level) const;
@@ -626,6 +631,7 @@ private:
 	int min_diplomatic_map_tile_scale = 2;
 	int min_province_map_tile_scale = 2;
 	const commodity_unit *domain_income_unit = nullptr;
+	commodity_map<int> province_level_commodity_costs_per_level;
 	std::map<int, int> province_population_per_level;
 	std::map<int, dice> province_taxation_per_level;
 	std::map<int, int> domain_maintenance_cost_per_domain_size;

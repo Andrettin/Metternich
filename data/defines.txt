@@ -65,6 +65,11 @@ treasure_fleet_icon = chest
 
 domain_income_unit = gb
 
+province_level_commodity_costs_per_level = {
+	wealth = 1
+	regency = 1
+}
+
 province_population_per_level = {
 	0 = 1000
 	1 = 2000

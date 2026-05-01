@@ -60,7 +60,7 @@ void defines::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 
 	if (tag == "months_per_turn_from_year") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const int threshold_year = std::stoi(property.get_key());
 			const int months_per_turn = std::stoi(property.get_value());
 
@@ -73,35 +73,35 @@ void defines::process_gsml_scope(const gsml_data &scope)
 		this->demotion_chance = std::make_unique<factor<population_unit>>();
 		this->demotion_chance->process_gsml_data(scope);
 	} else if (tag == "settlement_commodity_bonuses") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const commodity *commodity = commodity::get(property.get_key());
 			const int bonus = std::stoi(property.get_value());
 
 			this->settlement_commodity_bonuses[commodity] = bonus;
 		});
 	} else if (tag == "river_settlement_commodity_bonuses") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const commodity *commodity = commodity::get(property.get_key());
 			const int bonus = std::stoi(property.get_value());
 
 			this->river_settlement_commodity_bonuses[commodity] = bonus;
 		});
 	} else if (tag == "experience_per_level") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const int level = std::stoi(property.get_key());
 			const int64_t experience = std::stoll(property.get_value());
 
 			this->experience_per_level[level] = experience;
 		});
 	} else if (tag == "experience_award_per_challenge_rating") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const int challenge_rating = std::stoi(property.get_key());
 			const int64_t experience_award = std::stoll(property.get_value());
 
 			this->experience_award_per_challenge_rating[challenge_rating] = experience_award;
 		});
 	} else if (tag == "bloodline_strength_category_weights") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const bloodline_strength_category category = magic_enum::enum_cast<bloodline_strength_category>(property.get_key()).value();
 			const int weight = std::stoi(property.get_value());
 
@@ -113,55 +113,62 @@ void defines::process_gsml_scope(const gsml_data &scope)
 			}
 		});
 	} else if (tag == "bloodline_strength_per_category") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const bloodline_strength_category category = magic_enum::enum_cast<bloodline_strength_category>(property.get_key()).value();
 			dice dice(property.get_value());
 
 			this->bloodline_strength_per_category[category] = std::move(dice);
 		});
 	} else if (tag == "divine_rank_levels") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
 			this->divine_rank_levels[magic_enum::enum_cast<divine_rank>(key).value()] = std::stoi(value);
 		});
 	} else if (tag == "divine_rank_modifiers") {
-		scope.for_each_child([&](const gsml_data &child_scope) {
+		scope.for_each_child([this](const gsml_data &child_scope) {
 			const int rank_interval = std::stoi(child_scope.get_tag());
 			auto modifier = std::make_unique<metternich::modifier<const character>>();
 			modifier->process_gsml_data(child_scope);
 			this->divine_rank_modifiers[rank_interval] = std::move(modifier);
 		});
 	} else if (tag == "mana_cost_per_spell_level") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const int level = std::stoi(property.get_key());
 			const int mana_cost = std::stoi(property.get_value());
 
 			this->mana_cost_per_spell_level[level] = mana_cost;
 		});
 	} else if (tag == "diplomacy_state_colors") {
-		scope.for_each_child([&](const gsml_data &child_scope) {
+		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
 			const diplomacy_state diplomacy_state = magic_enum::enum_cast<metternich::diplomacy_state>(child_tag).value();
 			this->diplomacy_state_colors[diplomacy_state] = child_scope.to_color();
 		});
 	} else if (tag == "event_trigger_none_random_weights") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const event_trigger trigger = magic_enum::enum_cast<event_trigger>(property.get_key()).value();
 			const int weight = std::stoi(property.get_value());
 
 			this->event_trigger_none_random_weights[trigger] = weight;
 		});
+	} else if (tag == "province_level_commodity_costs_per_level") {
+		scope.for_each_property([this](const gsml_property &property) {
+			const commodity *commodity = commodity::get(property.get_key());
+			const int cost = std::stoi(property.get_value());
+
+			this->province_level_commodity_costs_per_level[commodity] = cost;
+		});
 	} else if (tag == "province_population_per_level") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const int level = std::stoi(property.get_key());
 			const int population = std::stoi(property.get_value());
 
 			this->province_population_per_level[level] = population;
 		});
 	} else if (tag == "province_taxation_per_level") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const int level = std::stoi(property.get_key());
 			dice dice(property.get_value());
 
@@ -170,7 +177,7 @@ void defines::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "domain_maintenance_cost_per_domain_size") {
 		assert_throw(this->get_wealth_commodity() != nullptr);
 
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const int domain_size = std::stoi(property.get_key());
 			const int cost = this->get_wealth_commodity()->string_to_value(property.get_value());
 
@@ -182,20 +189,20 @@ void defines::process_gsml_scope(const gsml_data &scope)
 			this->battle_resolution_tables.push_back(std::move(table));
 		});
 	} else if (tag == "river_adjacency_subtiles") {
-		scope.for_each_child([&](const gsml_data &child_scope) {
+		scope.for_each_child([this](const gsml_data &child_scope) {
 			const int subtile = std::stoi(child_scope.get_tag());
 			std::vector<int> subtiles;
 			subtiles.push_back(subtile);
 
 			terrain_adjacency adjacency;
 
-			child_scope.for_each_property([&](const gsml_property &property) {
+			child_scope.for_each_property([this, &adjacency](const gsml_property &property) {
 				const direction direction = string_to_direction(property.get_key());
 				const terrain_adjacency_type adjacency_type = string_to_terrain_adjacency_type(property.get_value());
 				adjacency.set_direction_adjacency_type(direction, adjacency_type);
 			});
 
-			child_scope.for_each_child([&](const gsml_data &grandchild_scope) {
+			child_scope.for_each_child([this, &subtiles](const gsml_data &grandchild_scope) {
 				if (grandchild_scope.get_tag() == "variations") {
 					for (const std::string &value : grandchild_scope.get_values()) {
 						subtiles.push_back(std::stoi(value));
@@ -208,12 +215,12 @@ void defines::process_gsml_scope(const gsml_data &scope)
 			this->set_river_adjacency_subtiles(adjacency, subtiles);
 		});
 	} else if (tag == "rivermouth_adjacency_tiles") {
-		scope.for_each_child([&](const gsml_data &child_scope) {
+		scope.for_each_child([this](const gsml_data &child_scope) {
 			const int tile = std::stoi(child_scope.get_tag());
 
 			terrain_adjacency adjacency;
 
-			child_scope.for_each_property([&](const gsml_property &property) {
+			child_scope.for_each_property([this, &adjacency](const gsml_property &property) {
 				const direction direction = string_to_direction(property.get_key());
 				const terrain_adjacency_type adjacency_type = string_to_terrain_adjacency_type(property.get_value());
 				adjacency.set_direction_adjacency_type(direction, adjacency_type);
@@ -222,12 +229,12 @@ void defines::process_gsml_scope(const gsml_data &scope)
 			this->set_rivermouth_adjacency_tile(adjacency, tile);
 		});
 	} else if (tag == "route_adjacency_tiles") {
-		scope.for_each_child([&](const gsml_data &child_scope) {
+		scope.for_each_child([this](const gsml_data &child_scope) {
 			const int tile = std::stoi(child_scope.get_tag());
 
 			terrain_adjacency adjacency;
 
-			child_scope.for_each_property([&](const gsml_property &property) {
+			child_scope.for_each_property([this, &adjacency](const gsml_property &property) {
 				const direction direction = string_to_direction(property.get_key());
 				const terrain_adjacency_type adjacency_type = string_to_terrain_adjacency_type(property.get_value());
 				adjacency.set_direction_adjacency_type(direction, adjacency_type);
