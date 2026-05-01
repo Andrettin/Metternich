@@ -96,6 +96,7 @@ public:
 
 	gsml_data to_gsml_data() const;
 
+	[[nodiscard]] QCoro::Task<void> initialize();
 	[[nodiscard]] QCoro::Task<void> do_turn();
 	[[nodiscard]] QCoro::Task<void> do_events();
 	void do_ai_turn();

@@ -186,6 +186,14 @@ gsml_data province_game_data::to_gsml_data() const
 	return data;
 }
 
+QCoro::Task<void> province_game_data::initialize()
+{
+	const terrain_type *terrain = this->get_terrain();
+	if (terrain != nullptr && terrain->get_province_modifier() != nullptr) {
+		co_await terrain->get_province_modifier()->apply(this->province);
+	}
+}
+
 QCoro::Task<void> province_game_data::do_turn()
 {
 	for (const site *site : this->get_sites()) {

@@ -11,6 +11,7 @@
 #include "map/terrain_adjacency_type.h"
 #include "map/temperature_type.h"
 #include "map/tile_image_provider.h"
+#include "script/modifier.h"
 #include "util/assert_util.h"
 #include "util/image_util.h"
 #include "util/path_util.h"
@@ -84,7 +85,10 @@ terrain_type::terrain_type(const std::string &identifier)
 {
 }
 
-	
+terrain_type::~terrain_type()
+{
+}
+
 void terrain_type::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
@@ -94,6 +98,10 @@ void terrain_type::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->fallback_terrains.push_back(terrain_type::get(value));
 		}
+	} else if (tag == "province_modifier") {
+		auto modifier = std::make_unique<metternich::modifier<const province>>();
+		modifier->process_gsml_data(scope);
+		this->province_modifier = std::move(modifier);
 	} else if (tag == "tiles") {
 		for (const std::string &value : values) {
 			this->tiles.push_back(std::stoi(value));
@@ -274,6 +282,19 @@ void terrain_type::set_adjacency_subtiles(const terrain_adjacency &adjacency, co
 	//if this is false, that means there was already a definition for the same adjacency data
 	//multiple adjacency definitions with the same adjacency data is an error
 	assert_throw(result.second); 
+}
+
+QString terrain_type::get_modifier_string(const province *province) const
+{
+	assert_throw(province != nullptr);
+
+	std::string str;
+
+	if (this->get_province_modifier() != nullptr) {
+		str = this->get_province_modifier()->get_single_line_string(province);
+	}
+
+	return QString::fromStdString(str);
 }
 
 }

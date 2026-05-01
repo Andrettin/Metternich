@@ -31,7 +31,6 @@ const std::set<std::string> province::database_dependencies = {
 province::province(const std::string &identifier) : named_data_entry(identifier)
 {
 	this->reset_map_data();
-	this->reset_game_data();
 }
 
 province::~province()
@@ -147,9 +146,10 @@ void province::reset_map_data()
 	this->map_data = make_qunique<province_map_data>(this);
 }
 
-void province::reset_game_data()
+QCoro::Task<void> province::reset_game_data()
 {
 	this->game_data = make_qunique<province_game_data>(this);
+	co_await this->get_game_data()->initialize();
 
 	this->reset_turn_data();
 }

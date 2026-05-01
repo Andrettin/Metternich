@@ -560,7 +560,7 @@ QCoro::Task<void> game::reset_game_data()
 	//clear data related to the game (i.e. the data determined by history), but not that related only to the map
 	//this is so that game setup speed can be faster if changing from one scenario to another with the same map template
 	for (province *province : province::get_all()) {
-		province->reset_game_data();
+		co_await province->reset_game_data();
 	}
 
 	for (site *site : site::get_all()) {

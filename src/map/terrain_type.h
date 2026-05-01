@@ -10,10 +10,14 @@ Q_MOC_INCLUDE("ui/icon.h")
 namespace metternich {
 
 class icon;
+class province;
 enum class elevation_type;
 enum class forestation_type;
 enum class moisture_type;
 enum class temperature_type;
+
+template <typename scope_type>
+class modifier;
 
 class terrain_type final : public named_data_entry, public data_type<terrain_type>
 {
@@ -99,6 +103,7 @@ private:
 
 public:
 	explicit terrain_type(const std::string &identifier);
+	~terrain_type();
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
@@ -216,6 +221,11 @@ public:
 		return this->fallback_terrains;
 	}
 
+	const modifier<const province> *get_province_modifier() const
+	{
+		return this->province_modifier.get();
+	}
+
 	const std::vector<int> &get_tiles() const
 	{
 		return this->tiles;
@@ -260,6 +270,8 @@ public:
 
 	void set_adjacency_subtiles(const terrain_adjacency &adjacency, const std::vector<int> &subtiles);
 
+	Q_INVOKABLE QString get_modifier_string(const metternich::province *province) const;
+
 signals:
 	void changed();
 
@@ -280,6 +292,7 @@ private:
 	metternich::forestation_type forestation_type;
 	int movement_cost = 0;
 	std::vector<const terrain_type *> fallback_terrains;
+	std::unique_ptr<const modifier<const province>> province_modifier;
 	std::vector<int> tiles;
 	std::map<terrain_adjacency, std::vector<int>> adjacency_tiles;
 	std::vector<int> subtiles;

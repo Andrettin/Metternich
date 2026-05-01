@@ -113,7 +113,7 @@ public:
 		return this->map_data.get();
 	}
 
-	void reset_game_data();
+	[[nodiscard]] QCoro::Task<void> reset_game_data();
 
 	province_game_data *get_game_data() const
 	{
