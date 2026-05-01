@@ -8,6 +8,9 @@ forest = {
 	elevation_type = flatlands
 	forestation_type = forest
 	movement_cost = 2
+	province_modifier = {
+		max_level = 6
+	}
 	tiles = { 0 }
 	adjacency_tiles = {
 		0 = {

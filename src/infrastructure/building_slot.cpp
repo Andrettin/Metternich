@@ -268,6 +268,10 @@ bool building_slot::can_gain_building(const building_type *building) const
 		if (total_holding_level > this->get_settlement()->get_max_holding_level()) {
 			return false;
 		}
+
+		if (total_holding_level > this->get_settlement()->get_game_data()->get_province()->get_game_data()->get_max_level()) {
+			return false;
+		}
 	}
 
 	if (building->get_fortification_level() > 0) {

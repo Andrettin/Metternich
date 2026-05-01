@@ -11,4 +11,7 @@ railroad = {
 		mountains = modern_era
 		swamp = industrial_era
 	}
+	modifier = {
+		max_level = 1
+	}
 }

@@ -5,6 +5,9 @@ cave = {
 	icon = mountains
 	image_filepath = "tiles/terrain/cave_floor.png"
 	movement_cost = 2
+	province_modifier = {
+		max_level = 3
+	}
 	subtiles = { 17 20 23 }
 	adjacency_subtiles = {
 		0 = {

@@ -35,11 +35,6 @@ public:
 		return this->terrain;
 	}
 
-	int get_max_level() const
-	{
-		return this->max_level;
-	}
-
 	const QPoint &get_center_tile_pos() const
 	{
 		return this->center_tile_pos;
@@ -130,7 +125,6 @@ signals:
 private:
 	const metternich::province *province = nullptr;
 	const terrain_type *terrain = nullptr;
-	int max_level = 0;
 	QPoint center_tile_pos = QPoint(-1, -1);
 	bool coastal = false;
 	bool has_river = false;

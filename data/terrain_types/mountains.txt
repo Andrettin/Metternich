@@ -7,12 +7,15 @@ mountains = {
 	mountains = true
 	elevation_type = mountains
 	movement_cost = 4
-	tiles = { 129 }
 	fallback_terrains = {
 		hills
 		plains
 		forest
 	}
+	province_modifier = {
+		max_level = 3
+	}
+	tiles = { 129 }
 	adjacency_tiles = {
 		0 = {
 			north = other

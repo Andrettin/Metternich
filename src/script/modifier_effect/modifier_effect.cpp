@@ -48,6 +48,7 @@
 #include "script/modifier_effect/initiative_modifier_effect.h"
 #include "script/modifier_effect/law_cost_modifier_effect.h"
 #include "script/modifier_effect/leader_cost_modifier_effect.h"
+#include "script/modifier_effect/max_level_modifier_effect.h"
 #include "script/modifier_effect/merchant_ship_stat_modifier_effect.h"
 #include "script/modifier_effect/military_unit_stat_modifier_effect.h"
 #include "script/modifier_effect/monthly_commodity_bonus_modifier_effect.h"
@@ -237,7 +238,9 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			}
 		}
 	} else if constexpr (std::is_same_v<scope_type, const province>) {
-		if (key == "technology_spread_modifier") {
+		if (key == "max_level") {
+			return std::make_unique<max_level_modifier_effect>(value);
+		} else if (key == "technology_spread_modifier") {
 			return std::make_unique<technology_spread_modifier_effect>(value);
 		}
 	} else if constexpr (std::is_same_v<scope_type, const site>) {

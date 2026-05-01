@@ -13,6 +13,9 @@ desert = {
 		hills
 		mountains
 	}
+	province_modifier = {
+		max_level = 2
+	}
 	subtiles = { 17 20 23 }
 	adjacency_subtiles = {
 		0 = {

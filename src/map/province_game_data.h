@@ -61,7 +61,7 @@ class province_game_data final : public QObject
 	Q_PROPERTY(const metternich::culture* culture READ get_culture NOTIFY culture_changed)
 	Q_PROPERTY(const metternich::religion* religion READ get_religion NOTIFY religion_changed)
 	Q_PROPERTY(int level READ get_level NOTIFY level_changed)
-	Q_PROPERTY(int max_level READ get_max_level CONSTANT)
+	Q_PROPERTY(int max_level READ get_max_level NOTIFY max_level_changed)
 	Q_PROPERTY(QColor map_color READ get_map_color NOTIFY owner_changed)
 	Q_PROPERTY(QRect map_image_rect READ get_map_image_rect NOTIFY map_image_changed)
 	Q_PROPERTY(QRect text_rect READ get_text_rect NOTIFY map_image_changed)
@@ -147,6 +147,8 @@ public:
 	void set_level(const int level);
 	void change_level(const int change);
 	int get_max_level() const;
+	void set_max_level(const int level);
+	void change_max_level(const int change);
 
 	bool is_coastal() const;
 	bool is_near_water() const;
@@ -586,6 +588,7 @@ signals:
 	void culture_changed();
 	void religion_changed();
 	void level_changed();
+	void max_level_changed();
 	void provincial_capital_changed();
 	void pathway_changed();
 	void under_construction_pathway_changed();
@@ -609,6 +612,7 @@ private:
 	const metternich::culture *culture = nullptr;
 	const metternich::religion *religion = nullptr;
 	int level = 0;
+	int max_level = 0;
 	const site *provincial_capital = nullptr;
 	const metternich::pathway *pathway = nullptr;
 	const metternich::pathway *under_construction_pathway = nullptr;

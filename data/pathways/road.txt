@@ -8,6 +8,9 @@ road = {
 	commodity_costs = {
 		wealth = 1gb
 	}
+	modifier = {
+		max_level = 1
+	}
 	
 	#FIXME: should halve movement cost
 }

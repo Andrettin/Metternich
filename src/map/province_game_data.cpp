@@ -106,6 +106,8 @@ void province_game_data::process_gsml_property(const gsml_property &property)
 		this->religion = religion::get(value);
 	} else if (key == "level") {
 		this->level = std::stoi(value);
+	} else if (key == "max_level") {
+		this->max_level = std::stoi(value);
 	} else if (key == "provincial_capital") {
 		this->provincial_capital = site::get(value);
 	} else if (key == "pathway") {
@@ -153,6 +155,10 @@ gsml_data province_game_data::to_gsml_data() const
 
 	if (this->get_level() != 0) {
 		data.add_property("level", std::to_string(this->get_level()));
+	}
+
+	if (this->get_max_level() != 0) {
+		data.add_property("max_level", std::to_string(this->get_max_level()));
 	}
 
 	if (this->get_provincial_capital() != nullptr) {
@@ -512,9 +518,13 @@ const std::string &province_game_data::get_current_cultural_name() const
 void province_game_data::set_level(const int level)
 {
 	assert_throw(level >= 0);
-	assert_throw(level <= this->get_max_level());
 
 	if (level == this->get_level()) {
+		return;
+	}
+
+	if (level > this->get_max_level()) {
+		this->set_level(this->get_max_level());
 		return;
 	}
 
@@ -568,7 +578,31 @@ void province_game_data::change_level(const int change)
 
 int province_game_data::get_max_level() const
 {
-	return this->province->get_map_data()->get_max_level();
+	return this->max_level;
+}
+
+void province_game_data::set_max_level(const int level)
+{
+	assert_throw(level >= 0);
+
+	if (level == this->get_max_level()) {
+		return;
+	}
+
+	this->max_level = level;
+
+	if (this->get_max_level() < this->get_level()) {
+		this->set_level(this->get_max_level());
+	}
+
+	if (game::get()->is_running()) {
+		emit max_level_changed();
+	}
+}
+
+void province_game_data::change_max_level(const int change)
+{
+	this->set_max_level(this->get_max_level() + change);
 }
 
 bool province_game_data::is_coastal() const

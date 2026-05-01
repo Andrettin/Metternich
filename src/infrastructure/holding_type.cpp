@@ -189,7 +189,9 @@ const dice &holding_type::get_income(const int level, const int province_level) 
 	--find_iterator;
 
 	auto sub_find_iterator = find_iterator->second.upper_bound(province_level);
-	assert_throw(sub_find_iterator != find_iterator->second.begin());
+	if (sub_find_iterator == find_iterator->second.begin()) {
+		throw std::runtime_error(std::format("Could not find income for holding type \"{}\" for holding level {} and province level {}.", this->get_identifier(), level, province_level));
+	}
 	--sub_find_iterator;
 
 	return sub_find_iterator->second;

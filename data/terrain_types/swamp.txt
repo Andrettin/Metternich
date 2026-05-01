@@ -8,5 +8,8 @@ swamp = {
 	elevation_type = flatlands
 	moisture_type = wet
 	movement_cost = 3
+	province_modifier = {
+		max_level = 6
+	}
 	tiles = { 0 }
 }
