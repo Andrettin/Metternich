@@ -5,7 +5,6 @@ warehouse = {
 	icon = chest
 	free_in_capital = true
 	holding_types = {
-		town
 		city
 		castle
 		guild
