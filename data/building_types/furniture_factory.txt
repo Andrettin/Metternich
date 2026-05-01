@@ -4,7 +4,6 @@ carpenters_house = {
 	portrait = factory
 	icon = furniture
 	holding_types = {
-		village
 		town
 		city
 	}

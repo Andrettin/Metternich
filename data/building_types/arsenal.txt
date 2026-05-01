@@ -4,7 +4,6 @@ armory = {
 	portrait = factory
 	icon = tools
 	holding_types = {
-		village
 		town
 		city
 	}

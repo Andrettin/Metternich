@@ -4,7 +4,6 @@ furriers_house = {
 	portrait = factory
 	icon = fur_hats
 	holding_types = {
-		village
 		town
 		city
 	}

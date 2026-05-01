@@ -5,8 +5,6 @@ artifact = {
 	icon = bell
 	wonder_only = true
 	holding_types = {
-		camp
-		hamlet
 		castle
 		temple
 		town

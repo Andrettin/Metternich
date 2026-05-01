@@ -4,7 +4,6 @@ weavers_house = {
 	portrait = factory
 	icon = fabric
 	holding_types = {
-		village
 		town
 		city
 		guild

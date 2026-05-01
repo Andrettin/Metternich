@@ -9,7 +9,7 @@ buenos_aires = {
 	
 	history = {
 		1535 = {
-			holding_type = village #Buenos Aires founded by the Spanish in 1535/1580; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 107-110.
+			developed = true #Buenos Aires founded by the Spanish in 1535/1580; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 107-110.
 			culture = castillian
 		}
 		

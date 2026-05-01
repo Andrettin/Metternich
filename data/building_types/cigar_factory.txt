@@ -4,7 +4,6 @@ tobacconists_house = {
 	portrait = factory
 	icon = tobacco
 	holding_types = {
-		village
 		town
 		city
 	}

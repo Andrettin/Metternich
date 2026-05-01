@@ -4,7 +4,6 @@ tailors_house = {
 	portrait = factory
 	icon = clothing
 	holding_types = {
-		village
 		town
 		city
 	}

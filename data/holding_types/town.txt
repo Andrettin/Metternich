@@ -1,53 +1,8 @@
-hamlet = {
-	name = "Hamlet"
-	icon = embassy
-	portrait = town
-	image_filepath = "tiles/settlements/hamlet.png"
-	population_classes = {
-		slaves
-		untrained_workers
-		trained_workers
-		expert_workers
-		laborers
-	}
-	build_conditions = {
-		domain = {
-			not = {
-				scripted_condition = is_tribe
-			}
-		}
-	}
-}
-
-village = {
-	name = "Village"
-	icon = embassy
-	portrait = town
-	image_filepath = "tiles/settlements/village.png"
-	base_holding_types = {
-		camp
-		hamlet
-	}
-	population_classes = {
-		slaves
-		untrained_workers
-		trained_workers
-		expert_workers
-		laborers
-	}
-	build_conditions = {
-		has_building_class = warehouse
-	}
-}
-
 town = {
 	name = "Town"
 	icon = embassy
 	portrait = town
 	image_filepath = "tiles/settlements/town.png"
-	base_holding_types = {
-		village
-	}
 	population_classes = {
 		slaves
 		untrained_workers

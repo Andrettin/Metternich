@@ -13,13 +13,13 @@ rio_de_janeiro = {
 	
 	history = {
 		1555 = {
-			holding_type = hamlet #Villegaignon Island became a French possession in 1555; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 107-110.
+			developed = true #Villegaignon Island became a French possession in 1555; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 107-110.
 			culture = french
 			religion = catholic
 		}
 		
 		1567 = {
-			holding_type = village #Rio de Janeiro founded by the Portuguese in 1567; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 107-110.
+			developed = true #Rio de Janeiro founded by the Portuguese in 1567; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 107-110.
 			culture = brazilian
 		}
 		
