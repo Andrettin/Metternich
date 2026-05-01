@@ -3,6 +3,6 @@ nagyroce = {
 	world = earth
 	geocoordinate = { 20.116666666667 48.683333333333 } #Revúca
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = banska_bystrica
 }

@@ -3,7 +3,7 @@ dresden = {
 	world = earth
 	geocoordinate = { 13.75000280630 51.04997051910 } #from Natural Earth
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = upper_saxony
 	
 	history = {

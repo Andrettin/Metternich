@@ -3,6 +3,6 @@ waldeck = {
 	world = earth
 	geocoordinate = { 9.0666666666667 51.2 }
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = hesse
 }

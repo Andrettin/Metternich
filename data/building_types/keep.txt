@@ -6,7 +6,7 @@ donjon = {
 	holding_level = 1
 	size = 1
 	holding_types = {
-		law
+		castle
 	}
 	builder_civilian_unit_types = {
 		ruler
@@ -24,7 +24,7 @@ keep = {
 	size = 1
 	base_building = donjon
 	holding_types = {
-		law
+		castle
 	}
 	builder_civilian_unit_types = {
 		ruler
@@ -49,7 +49,7 @@ expanded_keep = {
 	size = 1
 	base_building = keep
 	holding_types = {
-		law
+		castle
 	}
 	builder_civilian_unit_types = {
 		ruler
@@ -71,7 +71,7 @@ large_keep = {
 	size = 1
 	base_building = expanded_keep
 	holding_types = {
-		law
+		castle
 	}
 	builder_civilian_unit_types = {
 		ruler
@@ -96,7 +96,7 @@ great_keep = {
 	size = 1
 	base_building = large_keep
 	holding_types = {
-		law
+		castle
 	}
 	builder_civilian_unit_types = {
 		ruler
@@ -121,7 +121,7 @@ epic_keep = {
 	size = 1
 	base_building = great_keep
 	holding_types = {
-		law
+		castle
 	}
 	builder_civilian_unit_types = {
 		ruler

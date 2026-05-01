@@ -3,6 +3,6 @@ durlach = {
 	world = earth
 	geocoordinate = { 8.4667 49 }
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = baden
 }

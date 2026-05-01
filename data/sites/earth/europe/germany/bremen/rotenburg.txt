@@ -3,6 +3,6 @@ rotenburg = {
 	world = earth
 	geocoordinate = { 9.4108333333333 53.111388888889 } #Rotenburg an der Wümme
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = bremen
 }

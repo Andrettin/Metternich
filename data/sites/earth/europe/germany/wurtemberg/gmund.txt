@@ -3,6 +3,6 @@ schwabisch_gmund = {
 	world = earth
 	geocoordinate = { 9.8 48.8 } #Schwäbisch Gmünd
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = wurtemberg
 }

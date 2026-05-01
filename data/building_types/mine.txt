@@ -6,8 +6,8 @@ coal_mine = {
 	size = 1
 	required_technology = black_coal
 	holding_types = {
+		castle
 		guild
-		law
 		temple
 	}
 	builder_civilian_unit_types = {
@@ -42,8 +42,8 @@ gold_mine = {
 	icon = gold_ore
 	size = 1
 	holding_types = {
+		castle
 		guild
-		law
 		temple
 	}
 	builder_civilian_unit_types = {
@@ -78,8 +78,8 @@ iron_mine = {
 	icon = iron_ore
 	size = 1
 	holding_types = {
+		castle
 		guild
-		law
 		temple
 	}
 	builder_civilian_unit_types = {
@@ -114,8 +114,8 @@ silver_mine = {
 	icon = silver
 	size = 1
 	holding_types = {
+		castle
 		guild
-		law
 		temple
 	}
 	builder_civilian_unit_types = {

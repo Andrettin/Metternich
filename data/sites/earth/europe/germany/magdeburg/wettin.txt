@@ -3,7 +3,7 @@ wettin = {
 	world = earth
 	geocoordinate = { 11.8 51.583055555556 }
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = magdeburg
 	
 	history = {

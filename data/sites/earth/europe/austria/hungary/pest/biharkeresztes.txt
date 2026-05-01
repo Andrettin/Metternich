@@ -3,6 +3,6 @@ biharkeresztes = {
 	world = earth
 	geocoordinate = { 21.716666666667 47.133333333333 }
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = pest
 }

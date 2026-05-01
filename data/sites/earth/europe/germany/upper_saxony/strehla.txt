@@ -3,7 +3,7 @@ strehla = {
 	world = earth
 	geocoordinate = { 13.225833333333 51.353055555556 }
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = upper_saxony
 	
 	history = {

@@ -3,6 +3,6 @@ tecklenburg = {
 	world = earth
 	geocoordinate = { 7.8125 52.219444444444 }
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = westphalia
 }

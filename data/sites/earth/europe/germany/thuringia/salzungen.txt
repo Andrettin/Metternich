@@ -3,7 +3,7 @@ salzungen = {
 	world = earth
 	geocoordinate = { 10.233333333333 50.811666666667 }
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = thuringia
 	
 	history = {

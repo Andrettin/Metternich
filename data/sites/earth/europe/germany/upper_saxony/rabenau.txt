@@ -3,6 +3,6 @@ rabenau = {
 	world = earth
 	geocoordinate = { 13.633333333333 50.966666666667 }
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = upper_saxony
 }

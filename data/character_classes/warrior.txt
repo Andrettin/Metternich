@@ -30,7 +30,7 @@ warrior = {
 		human
 	}
 	favored_holding_types = {
-		law
+		castle
 	}
 	min_attribute_values = {
 		strength = 9

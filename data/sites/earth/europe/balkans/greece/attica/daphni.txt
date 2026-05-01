@@ -3,6 +3,6 @@ daphni = {
 	world = earth
 	geocoordinate = { 23.635833333333 38.013055555556 } #Daphni Monastery
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = attica
 }

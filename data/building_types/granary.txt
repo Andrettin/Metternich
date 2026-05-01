@@ -5,8 +5,8 @@ granary = {
 	icon = grain
 	size = 1
 	holding_types = {
+		castle
 		guild
-		law
 	}
 	builder_civilian_unit_types = {
 		ruler

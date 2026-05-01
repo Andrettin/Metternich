@@ -3,6 +3,6 @@ bihar = {
 	world = earth
 	geocoordinate = { 21.920341 47.152888 }
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = pest
 }

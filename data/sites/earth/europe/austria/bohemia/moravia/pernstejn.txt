@@ -3,6 +3,6 @@ pernstejn = {
 	world = earth
 	geocoordinate = { 16.318888888889 49.450833333333 } #Pernštejn Castle
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = brunn
 }

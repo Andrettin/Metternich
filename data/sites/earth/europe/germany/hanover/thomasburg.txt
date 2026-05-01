@@ -3,6 +3,6 @@ thomasburg = {
 	world = earth
 	geocoordinate = { 10.666666666667 53.233333333333 }
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = hanover
 }

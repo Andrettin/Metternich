@@ -3,6 +3,6 @@ waiblingen = {
 	world = earth
 	geocoordinate = { 9.3169444444444 48.830277777778 }
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = wurtemberg
 }

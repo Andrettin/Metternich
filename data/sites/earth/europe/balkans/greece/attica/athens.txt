@@ -3,7 +3,7 @@ athens = {
 	world = earth
 	geocoordinate = { 23.73332108430 37.98332623190 } #from Natural Earth
 	type = holding
-	holding_type = law #or guild
+	holding_type = castle #or guild
 	province = attica
 	
 	history = {

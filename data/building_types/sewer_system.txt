@@ -4,8 +4,8 @@ sewer_system = {
 	portrait = hospital
 	icon = architecture
 	holding_types = {
+		castle
 		guild
-		law
 		temple
 	}
 	builder_civilian_unit_types = {

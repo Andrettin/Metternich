@@ -3,6 +3,6 @@ reuss = {
 	world = earth
 	geocoordinate = { 12.083333333333334 50.88055555555555 } #Republic of Reuss
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = thuringia
 }

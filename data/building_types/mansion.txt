@@ -5,7 +5,7 @@ mansion = {
 	icon = heater_shield
 	size = 1
 	holding_types = {
-		law
+		castle
 	}
 	builder_civilian_unit_types = {
 		ruler
@@ -32,7 +32,7 @@ noble_villa = {
 	size = 2
 	base_building = mansion
 	holding_types = {
-		law
+		castle
 	}
 	builder_civilian_unit_types = {
 		ruler
@@ -65,7 +65,7 @@ palace = {
 	size = 4
 	base_building = noble_villa
 	holding_types = {
-		law
+		castle
 	}
 	required_buildings = {
 		bureau

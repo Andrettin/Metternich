@@ -3,6 +3,6 @@ ithaca = {
 	world = earth
 	geocoordinate = { 20.666666666667 38.416666666667 }
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = attica
 }

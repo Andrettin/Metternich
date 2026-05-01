@@ -3,7 +3,7 @@ wittenberg = {
 	world = earth
 	geocoordinate = { 12.6484 51.8671 }
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = magdeburg
 	features = {
 		academic #historical university

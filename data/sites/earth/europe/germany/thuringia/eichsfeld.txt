@@ -3,6 +3,6 @@ eichsfeld = {
 	world = earth
 	geocoordinate = { 10.25 51.33 } #Landkreis Eichsfeld
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = thuringia
 }

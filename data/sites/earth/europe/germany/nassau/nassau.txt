@@ -3,6 +3,6 @@ nassau = {
 	world = earth
 	geocoordinate = { 7.802222222222222 50.31583333333333 }
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = nassau
 }

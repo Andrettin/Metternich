@@ -3,6 +3,6 @@ nagysurany = {
 	world = earth
 	geocoordinate = { 18.18611111111111 48.08722222222222 } #Šurany
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = nitra
 }

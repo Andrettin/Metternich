@@ -3,7 +3,7 @@ northeim = {
 	world = earth
 	geocoordinate = { 10.001111111111 51.706666666667 }
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = hanover
 	
 	history = {

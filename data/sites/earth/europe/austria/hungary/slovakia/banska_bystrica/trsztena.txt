@@ -3,6 +3,6 @@ trsztena = {
 	world = earth
 	geocoordinate = { 19.616666666667 49.366666666667 } #Trstená
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = banska_bystrica
 }

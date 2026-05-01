@@ -4,7 +4,7 @@ pest = {
 	geocoordinate = { 19.1 47.5 }
 	type = holding
 	holding_type = guild
-	#holding_type = law
+	#holding_type = castle
 	province = pest
 	features = {
 		crossroads #important market or fair

@@ -10,8 +10,8 @@ warehouse = {
 		village
 		town
 		city
+		castle
 		guild
-		law
 		magic_source
 		temple
 	}

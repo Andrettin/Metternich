@@ -3,6 +3,6 @@ blumenthal = {
 	world = earth
 	geocoordinate = { 8.56667 53.1944 } #Blumenthal (Bremen)
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = bremen
 }

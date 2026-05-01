@@ -3,6 +3,6 @@ hersfeld = {
 	world = earth
 	geocoordinate = { 9.7066666666667 50.868333333333 } #Bad Hersfeld
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = hesse
 }

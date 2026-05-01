@@ -3,6 +3,6 @@ feher = {
 	world = earth
 	geocoordinate = { 23.572777777777777 46.076388888888886 } #Fehér County
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = transylvania
 }

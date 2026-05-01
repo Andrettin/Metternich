@@ -3,6 +3,6 @@ zemenos = {
 	world = earth
 	geocoordinate = { 22.606388888889 38.029722222222 } #Zemeno
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = peloponnese
 }

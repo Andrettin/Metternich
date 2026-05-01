@@ -3,7 +3,7 @@ calw = {
 	world = earth
 	geocoordinate = { 8.7375 48.714444444444 }
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = baden
 	
 	history = {

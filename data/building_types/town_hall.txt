@@ -6,7 +6,7 @@ town_hall = {
 	size = 2
 	min_holding_level = 5
 	holding_types = {
-		law
+		castle
 	}
 	builder_civilian_unit_types = {
 		ruler

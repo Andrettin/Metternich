@@ -3,6 +3,6 @@ elek = {
 	world = earth
 	geocoordinate = { 21.246944444444 46.527777777778 }
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = pest
 }

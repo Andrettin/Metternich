@@ -3,6 +3,6 @@ tangermunde = {
 	world = earth
 	geocoordinate = { 11.968888888889 52.540833333333 }
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = magdeburg
 }

@@ -5,7 +5,7 @@ jail = {
 	icon = skull
 	size = 1
 	holding_types = {
-		law
+		castle
 	}
 	builder_civilian_unit_types = {
 		ruler

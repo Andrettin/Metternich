@@ -3,7 +3,7 @@ pinsk = {
 	world = earth
 	geocoordinate = { 26.09405554070 52.12786338210 } #from Natural Earth
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = brest
 	features = {
 		prime_grain_land

@@ -5,8 +5,8 @@ cattle_ranch = {
 	icon = cattle
 	size = 1
 	holding_types = {
+		castle
 		guild
-		law
 		temple
 	}
 	builder_civilian_unit_types = {
@@ -51,8 +51,8 @@ grain_farm = {
 	icon = grain
 	size = 1
 	holding_types = {
+		castle
 		guild
-		law
 		temple
 	}
 	conditions = {
@@ -92,8 +92,8 @@ sheep_ranch = {
 	icon = wool
 	size = 1
 	holding_types = {
+		castle
 		guild
-		law
 		temple
 	}
 	conditions = {
@@ -133,8 +133,8 @@ tobacco_plantation = {
 	icon = tobacco
 	size = 1
 	holding_types = {
+		castle
 		guild
-		law
 		temple
 	}
 	conditions = {

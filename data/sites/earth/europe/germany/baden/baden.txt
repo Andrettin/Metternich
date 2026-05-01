@@ -3,7 +3,7 @@ baden = {
 	world = earth
 	geocoordinate = { 8.2408333333333 48.761944444444 }
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = baden
 	
 	history = {

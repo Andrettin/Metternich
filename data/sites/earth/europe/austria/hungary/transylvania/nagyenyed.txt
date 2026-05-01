@@ -3,6 +3,6 @@ nagyenyed = {
 	world = earth
 	geocoordinate = { 23.716666666667 46.310277777778 } #Aiud
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = transylvania
 }

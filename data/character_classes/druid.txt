@@ -29,7 +29,7 @@ druid = {
 		temple
 	}
 	allowed_holding_types = {
-		law
+		castle
 	}
 	min_attribute_values = {
 		wisdom = 12

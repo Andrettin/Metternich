@@ -3,6 +3,6 @@ gandersheim = {
 	world = earth
 	geocoordinate = { 10.025277777778 51.871944444444 } #Bad Gandersheim
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = hanover
 }

@@ -3,6 +3,6 @@ altenburg = {
 	world = earth
 	geocoordinate = { 12.433333333333 50.985 }
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = thuringia
 }

@@ -3,7 +3,7 @@ werben = {
 	world = earth
 	geocoordinate = { 11.966666666667 52.866666666667 }
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = magdeburg
 	
 	history = {

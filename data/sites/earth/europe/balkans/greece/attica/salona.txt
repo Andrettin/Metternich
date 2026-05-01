@@ -3,6 +3,6 @@ salona = {
 	world = earth
 	geocoordinate = { 22.375277777778 38.525277777778 } #Amfissa
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = attica
 }

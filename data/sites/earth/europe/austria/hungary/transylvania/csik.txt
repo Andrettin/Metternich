@@ -3,6 +3,6 @@ csik = {
 	world = earth
 	geocoordinate = { 25.8 46.36666667 } #Csík County
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = transylvania
 }

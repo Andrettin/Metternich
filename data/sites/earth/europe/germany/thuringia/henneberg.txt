@@ -3,7 +3,7 @@ henneberg = {
 	world = earth
 	geocoordinate = { 10.355597 50.493105 }
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = thuringia
 	
 	history = {

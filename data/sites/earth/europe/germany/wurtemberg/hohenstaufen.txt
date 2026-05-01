@@ -3,7 +3,7 @@ hohenstaufen = {
 	world = earth
 	geocoordinate = { 9.71944 48.7394 }
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = wurtemberg
 	
 	history = {

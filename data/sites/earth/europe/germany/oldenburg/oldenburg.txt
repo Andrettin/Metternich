@@ -3,7 +3,7 @@ oldenburg = {
 	world = earth
 	geocoordinate = { 8.22000443384 53.12999859530 } #from Natural Earth
 	type = holding
-	holding_type = law
+	holding_type = castle
 	
 	history = {
 		1815 = {

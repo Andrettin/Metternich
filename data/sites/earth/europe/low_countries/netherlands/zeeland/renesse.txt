@@ -3,6 +3,6 @@ renesse = {
 	world = earth
 	geocoordinate = { 3.7731 51.7322 }
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = zeeland
 }

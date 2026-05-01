@@ -3,6 +3,6 @@ esslingen = {
 	world = earth
 	geocoordinate = { 9.3108333333333 48.740555555556 } #Esslingen am Neckar
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = wurtemberg
 }

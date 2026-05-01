@@ -29,7 +29,7 @@ paladin = {
 		human
 	}
 	favored_holding_types = {
-		law
+		castle
 		temple
 	}
 	min_attribute_values = {

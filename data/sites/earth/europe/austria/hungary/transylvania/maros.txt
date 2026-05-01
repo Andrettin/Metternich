@@ -3,6 +3,6 @@ maros = {
 	world = earth
 	geocoordinate = { 24.61 46.59 } #Mureș County
 	type = holding
-	holding_type = law
+	holding_type = castle
 	province = transylvania
 }
