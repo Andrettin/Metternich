@@ -3,9 +3,9 @@ santiago_de_compostela = {
 	world = earth
 	geocoordinate = { -8.54109135073 42.88289796860 } #from Natural Earth
 	type = holding
-	#resource = holy_site
 	features = {
 		academic #historical university
+		#holy_site
 	}
 	
 	history = {

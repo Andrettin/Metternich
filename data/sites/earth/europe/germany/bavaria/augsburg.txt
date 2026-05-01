@@ -5,7 +5,6 @@ augsburg = {
 	type = holding
 	holding_type = guild
 	#holding_type = temple
-	max_tier = market
 	cultural_names = {
 		roman = "Augusta Vindelicorum" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 38-39.
 	}

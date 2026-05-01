@@ -5,5 +5,5 @@ santos = {
 	type = resource
 	resource = sugar_cane
 	province = sao_paulo
-	max_tier = marquisate #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, pp. 433-434.
+	#max_tier = marquisate #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, pp. 433-434.
 }

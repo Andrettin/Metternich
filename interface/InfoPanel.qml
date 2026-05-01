@@ -277,8 +277,8 @@ Rectangle {
 			selected_site_game_data ? (
 				(selected_site.game_data.owner !== null ? ("Domain: " + selected_site.game_data.owner.name) : "")
 				+ (selected_site.game_data.owner !== null && selected_site.game_data.owner.game_data.realm !== selected_site.game_data.owner ? ("\nRealm: " + selected_site.game_data.owner.game_data.realm.name) : "")
-				+ ((selected_site.max_holding_level > 0 && dungeon === null) ? ("\nHolding Level: " + selected_site_game_data.holding_level + "/" + selected_site.max_holding_level) : "")
-				+ ((selected_site.max_holding_level > 0 && dungeon === null) ? ("\nFortification Level: " + selected_site_game_data.fortification_level) : "")
+				+ ((selected_site.holding_type !== null && dungeon === null) ? ("\nHolding Level: " + selected_site_game_data.holding_level) : "")
+				+ ((selected_site.holding_type !== null && dungeon === null) ? ("\nFortification Level: " + selected_site_game_data.fortification_level) : "")
 				+ (dungeon && dungeon.level !== 0 ? ("Dungeon Level: " + dungeon.level) : "")
 				+ (holding_type !== null && population_visible ? ("\nPopulation: " + number_string(selected_site_game_data.population.size)) : "")
 				+ (income_string.length > 0 ? ("\nIncome: " + income_string) : "")

@@ -5,7 +5,6 @@ pest = {
 	type = holding
 	holding_type = guild
 	#holding_type = law
-	max_tier = market
 	province = pest
 	features = {
 		crossroads #important market or fair

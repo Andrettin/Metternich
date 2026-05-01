@@ -523,19 +523,13 @@ bool site_game_data::can_be_capital() const
 
 int site_game_data::get_level() const
 {
-	int level = 0;
-
 	if (this->get_holding_type() != nullptr) {
-		level = this->get_holding_level();
+		return this->get_holding_level();
 	} else if (this->get_resource_improvement() != nullptr) {
-		level = this->get_resource_improvement()->get_level();
+		return this->get_resource_improvement()->get_level();
 	}
 
-	if (level > this->site->get_max_level()) {
-		level = this->site->get_max_level();
-	}
-
-	return level;
+	return 0;
 }
 
 const std::string &site_game_data::get_title_name() const
@@ -912,7 +906,7 @@ std::vector<const metternich::holding_type *> site_game_data::get_best_holding_t
 void site_game_data::set_holding_level(const int level)
 {
 	assert_throw(this->site->is_settlement());
-	assert_throw(level <= this->site->get_max_holding_level());
+	assert_throw(level <= this->get_province()->get_game_data()->get_max_level());
 
 	if (level == this->get_holding_level()) {
 		return;

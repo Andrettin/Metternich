@@ -4,7 +4,6 @@ baghdad = {
 	geocoordinate = { 44.39386877320 33.33864849750 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	max_tier = market
 	province = diyala
 	features = {
 		crossroads #important market or fair

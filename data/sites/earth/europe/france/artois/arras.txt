@@ -4,7 +4,6 @@ arras = {
 	geocoordinate = { 2.78333369814 50.28332480780 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	max_tier = market
 	province = picardy
 	features = {
 		coal_deposit

@@ -4,7 +4,6 @@ strasbourg = {
 	geocoordinate = { 7.75000728215 48.57996624660 } #from Natural Earth
 	type = holding
 	holding_type = temple
-	max_tier = bishopric
 	province = alsace
 	cultural_names = {
 		frankish = "Argentoratum"

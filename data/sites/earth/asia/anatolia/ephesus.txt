@@ -2,8 +2,10 @@ ephesus = {
 	name = "Ephesus"
 	world = earth
 	geocoordinate = { 27.348611 37.939722 }
-	#resource = holy_site
 	province = smyrna
+	features = {
+		#holy_site
+	}
 	
 	history = {
 		1360 = {

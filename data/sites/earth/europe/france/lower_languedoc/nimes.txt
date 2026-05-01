@@ -4,7 +4,6 @@ nimes = {
 	geocoordinate = { 4.35000809593 43.83038535470 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	max_tier = market
 	province = lower_languedoc
 	features = {
 		crossroads #important market or fair

@@ -4,7 +4,6 @@ ravenna = {
 	geocoordinate = { 12.22001867540 44.42037518220 } #from Natural Earth
 	type = holding
 	holding_type = temple
-	max_tier = archbishopric
 	province = romagna
 	features = {
 		holy_site #historical cathedral

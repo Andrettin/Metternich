@@ -4,7 +4,6 @@ basel = {
 	geocoordinate = { 7.59001704777 47.58038901680 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	max_tier = market
 	province = bern
 	features = {
 		academic #historical university

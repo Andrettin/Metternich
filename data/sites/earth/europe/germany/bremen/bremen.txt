@@ -4,7 +4,6 @@ bremen = {
 	geocoordinate = { 8.80002070988 53.08000164700 } #from Natural Earth
 	type = holding
 	holding_type = temple #bishopric
-	max_tier = bishopric
 	features = {
 		#crossroads #important market or fair
 		holy_site #historical cathedral

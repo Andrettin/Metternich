@@ -5,7 +5,6 @@ troyes = {
 	type = holding
 	holding_type = guild
 	#resource = timber
-	max_tier = market
 	province = champagne
 	cultural_names = {
 		frankish = "Trecae"

@@ -5,7 +5,6 @@ cracow = {
 	type = holding
 	holding_type = guild
 	#holding_type = law
-	max_tier = market
 	features = {
 		academic #historical university
 		crossroads #important market or fair

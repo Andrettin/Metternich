@@ -5,7 +5,7 @@ marica = {
 	type = resource
 	resource = fruit #bananas
 	province = rio_de_janeiro
-	max_tier = marquisate #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, pp. 277-278.
+	#max_tier = marquisate #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, pp. 277-278.
 	
 	history = {
 		1824.10.12 = {

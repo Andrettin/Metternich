@@ -41,22 +41,6 @@ site::~site()
 {
 }
 
-void site::process_gsml_property(const gsml_property &property)
-{
-	const std::string &key = property.get_key();
-	const std::string &value = property.get_value();
-
-	if (key == "max_tier") {
-		assert_log(this->get_holding_type() != nullptr);
-		assert_throw(property.get_operator() == gsml_operator::assignment);
-		if (this->get_holding_type() != nullptr) {
-			this->max_level = this->get_holding_type()->get_tier_level(value);
-		}
-	} else {
-		named_data_entry::process_gsml_property(property);
-	}
-}
-
 void site::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
@@ -191,15 +175,6 @@ bool site::is_settlement() const
 bool site::is_celestial_body() const
 {
 	return this->get_type() == site_type::celestial_body || this->get_type() == site_type::habitable_world;
-}
-
-int site::get_max_holding_level() const
-{
-	if (this->get_type() != site_type::holding) {
-		return 0;
-	}
-
-	return this->get_max_level();
 }
 
 std::string site::get_scope_name() const

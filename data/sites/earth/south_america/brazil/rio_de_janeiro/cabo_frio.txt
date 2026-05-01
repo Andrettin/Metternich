@@ -5,7 +5,7 @@ cabo_frio = {
 	type = resource
 	resource = salt #also brazilwood
 	province = rio_de_janeiro
-	max_tier = viscounty #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, pp. 88-89.
+	#max_tier = viscounty #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, pp. 88-89.
 	
 	history = {
 		1858.6.10 = {

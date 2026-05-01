@@ -4,7 +4,6 @@ aleppo = {
 	geocoordinate = { 37.17002030310 36.22997072250 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	max_tier = market
 	province = syria
 	features = {
 		crossroads #important market or fair

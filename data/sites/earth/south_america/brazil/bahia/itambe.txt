@@ -3,7 +3,7 @@ itambe = {
 	world = earth
 	geocoordinate = { -40.62998539380 -15.23960081090 } #from Natural Earth
 	province = bahia
-	max_tier = barony #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, p. 209.
+	#max_tier = barony #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, p. 209.
 	
 	#whether this is indeed the Itambé referred to in the title of barony of Itambé is uncertain
 	

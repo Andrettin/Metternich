@@ -4,7 +4,6 @@ regensburg = {
 	geocoordinate = { 12.12002477890 49.02040447910 } #from Natural Earth
 	type = holding
 	holding_type = temple #bishopric
-	max_tier = bishopric
 	province = bavaria
 	cultural_names = {
 		roman = "Regina Castra"

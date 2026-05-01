@@ -5,7 +5,7 @@ valenca = {
 	type = resource
 	resource = coffee
 	province = rio_de_janeiro
-	max_tier = marquisate #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, pp. 524-525.
+	#max_tier = marquisate #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, pp. 524-525.
 	
 	history = {
 		1825.10.12 = {

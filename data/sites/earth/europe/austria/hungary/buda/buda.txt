@@ -4,7 +4,6 @@ buda = {
 	geocoordinate = { 19.05 47.466666666667 }
 	type = holding
 	holding_type = guild
-	max_tier = market
 	province = buda
 	cultural_group_names = {
 		german = "Ofen" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.

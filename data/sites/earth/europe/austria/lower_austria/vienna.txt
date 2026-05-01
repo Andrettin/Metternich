@@ -5,7 +5,6 @@ vienna = {
 	type = holding
 	holding_type = guild
 	terrain_type = plains
-	max_tier = market
 	province = lower_austria
 	cultural_names = {
 		gaulish = "Vindobona"

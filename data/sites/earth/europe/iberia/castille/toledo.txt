@@ -4,7 +4,6 @@ toledo = {
 	geocoordinate = { -4.01671635071 39.86703554180 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	max_tier = market
 	province = castille
 	cultural_names = {
 		roman = "Toletum" #Source: "Ancient Warfare VII.6", 2013, p. 7.

@@ -4,7 +4,6 @@ cairo = {
 	geocoordinate = { 31.24996821970 30.04996034650 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	max_tier = market
 	province = cairo
 	cultural_names = {
 		egyptian = "Memphis" #Source: William R. Shepherd, "Historical Atlas", 1911, p. 4.

@@ -3,5 +3,5 @@ gouveia = {
 	world = earth
 	#geocoordinate = { -7.6 40.5 }
 	province = beira
-	max_tier = marquisate
+	#max_tier = marquisate
 }

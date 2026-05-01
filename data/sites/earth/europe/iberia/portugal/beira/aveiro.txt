@@ -5,5 +5,5 @@ aveiro = {
 	type = resource
 	resource = fish #Source: Map No. 500530 of the Perry-Castañeda Library Map Collection, 1972.
 	province = beira
-	max_tier = duchy
+	#max_tier = duchy
 }

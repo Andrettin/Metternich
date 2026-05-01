@@ -4,7 +4,6 @@ dublin = {
 	geocoordinate = { -6.24890568178 53.33306113600 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	max_tier = market
 	province = leinster
 	features = {
 		academic #historical university

@@ -4,7 +4,6 @@ beaucaire = {
 	geocoordinate = { 4.6433333333333 43.807222222222 }
 	type = holding
 	holding_type = guild
-	max_tier = market
 	province = lower_languedoc
 	features = {
 		crossroads #important market or fair

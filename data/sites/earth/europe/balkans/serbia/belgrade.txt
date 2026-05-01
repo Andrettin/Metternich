@@ -5,7 +5,6 @@ belgrade = {
 	type = holding
 	holding_type = guild
 	#holding_type = law
-	max_tier = market
 	cultural_names = {
 		roman = "Singidunum" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 38-39.
 	}

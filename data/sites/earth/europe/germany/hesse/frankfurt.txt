@@ -5,7 +5,6 @@ frankfurt = {
 	type = holding
 	holding_type = guild #important market or fair in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
 	#holding_type = temple
-	max_tier = market
 	features = {
 		crossroads #important market or fair
 	}

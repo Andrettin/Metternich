@@ -4,7 +4,6 @@ kairouan = {
 	geocoordinate = { 10.09999304060 35.68039186510 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	max_tier = market
 	#resource = fruit
 	province = tunisia
 	features = {

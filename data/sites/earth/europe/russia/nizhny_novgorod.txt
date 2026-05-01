@@ -5,7 +5,6 @@ nizhny_novgorod = {
 	type = holding
 	holding_type = guild
 	#resource = timber
-	max_tier = market
 	province = nizhegorod
 	features = {
 		crossroads #important market or fair
