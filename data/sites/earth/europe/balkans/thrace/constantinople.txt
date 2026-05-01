@@ -9,6 +9,7 @@ constantinople = {
 		turkish = "Istanbul"
 	}
 	features = {
+		crossroads #important market or fair
 		#holy_site #historical cathedral
 	}
 	

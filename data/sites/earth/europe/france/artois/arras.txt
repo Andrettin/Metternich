@@ -8,6 +8,7 @@ arras = {
 	province = picardy
 	features = {
 		coal_deposit
+		crossroads #important market or fair
 	}
 	
 	history = {

@@ -7,6 +7,9 @@ nizhny_novgorod = {
 	#resource = timber
 	max_tier = market
 	province = nizhegorod
+	features = {
+		crossroads #important market or fair
+	}
 	
 	history = {
 		high_middle_ages = {

@@ -6,6 +6,9 @@ nimes = {
 	holding_type = guild
 	max_tier = market
 	province = lower_languedoc
+	features = {
+		crossroads #important market or fair
+	}
 	
 	history = {
 		high_middle_ages = {

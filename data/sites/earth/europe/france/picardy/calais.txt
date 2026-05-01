@@ -6,6 +6,9 @@ calais = {
 	holding_type = guild
 	max_tier = market
 	province = picardy
+	features = {
+		crossroads #important market or fair
+	}
 	
 	history = {
 		high_middle_ages = {

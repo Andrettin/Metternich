@@ -4,8 +4,11 @@ damascus = {
 	geocoordinate = { 36.29999588900 33.50003399560 } #from Natural Earth
 	type = holding
 	holding_type = guild 
-	#resource = holy_site
 	max_tier = market
+	features = {
+		crossroads #important market or fair
+		#holy_site
+	}
 	
 	history = {
 		-1450 = {

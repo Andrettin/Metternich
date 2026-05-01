@@ -11,6 +11,7 @@ rouen = {
 		frankish = "Rotomagus"
 	}
 	features = {
+		crossroads #important market or fair
 		#holy_site #historical cathedral
 	}
 	

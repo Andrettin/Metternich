@@ -9,6 +9,9 @@ florence = {
 	cultural_names = {
 		roman = "Florentia" #Source: "Ancient Warfare VII.6", 2013, p. 7.
 	}
+	features = {
+		crossroads #important market or fair
+	}
 	
 	history = {
 		high_middle_ages = {

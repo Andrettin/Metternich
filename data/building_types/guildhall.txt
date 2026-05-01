@@ -70,6 +70,9 @@ guildhall = {
 		treasurer
 		engineer
 	}
+	conditions = {
+		feature = crossroads
+	}
 	commodity_costs = {
 		wealth = 34gb
 	}

@@ -6,6 +6,9 @@ nuremberg = {
 	holding_type = guild
 	#holding_type = law
 	max_tier = market
+	features = {
+		crossroads #important market or fair
+	}
 	
 	history = {
 		919 = {

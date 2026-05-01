@@ -7,6 +7,9 @@ pest = {
 	#holding_type = law
 	max_tier = market
 	province = pest
+	features = {
+		crossroads #important market or fair
+	}
 	
 	history = {
 		high_middle_ages = {

@@ -9,6 +9,9 @@ cairo = {
 	cultural_names = {
 		egyptian = "Memphis" #Source: William R. Shepherd, "Historical Atlas", 1911, p. 4.
 	}
+	features = {
+		crossroads #important market or fair
+	}
 	
 	history = {
 		-1450 = {

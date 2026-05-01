@@ -8,6 +8,7 @@ montpellier = {
 	province = lower_languedoc
 	features = {
 		academic #historical university
+		crossroads #important market or fair
 		prime_cattle_land
 	}
 	

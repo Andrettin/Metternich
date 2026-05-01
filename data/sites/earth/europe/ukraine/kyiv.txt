@@ -8,6 +8,9 @@ kyiv = {
 	cultural_names = {
 		russian = "Kiev"
 	}
+	features = {
+		crossroads #important market or fair
+	}
 	
 	history = {
 		high_middle_ages = {

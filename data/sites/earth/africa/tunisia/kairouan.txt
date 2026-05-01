@@ -7,6 +7,9 @@ kairouan = {
 	max_tier = market
 	#resource = fruit
 	province = tunisia
+	features = {
+		crossroads #important market or fair
+	}
 	
 	history = {
 		high_middle_ages = {

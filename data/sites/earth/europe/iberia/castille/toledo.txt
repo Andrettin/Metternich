@@ -4,7 +4,6 @@ toledo = {
 	geocoordinate = { -4.01671635071 39.86703554180 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	#resource = iron_ore
 	max_tier = market
 	province = castille
 	cultural_names = {
@@ -12,6 +11,8 @@ toledo = {
 	}
 	features = {
 		academic #historical university
+		crossroads #important market or fair
+		iron_deposit
 	}
 	
 	history = {

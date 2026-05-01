@@ -10,6 +10,7 @@ genoa = {
 		roman = "Genua" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 34-35.
 	}
 	features = {
+		crossroads #important market or fair
 		#holy_site #historical cathedral
 	}
 	

@@ -12,6 +12,7 @@ besancon = {
 	features = {
 		academic #historical university
 		coal_deposit
+		crossroads #important market or fair
 		#holy_site #historical cathedral
 	}
 	

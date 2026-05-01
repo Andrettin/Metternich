@@ -13,6 +13,7 @@ paris = {
 	}
 	features = {
 		academic #historical university
+		crossroads #important market or fair
 		prime_grain_land
 	}
 	

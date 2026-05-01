@@ -8,6 +8,7 @@ cracow = {
 	max_tier = market
 	features = {
 		academic #historical university
+		crossroads #important market or fair
 	}
 	
 	history = {

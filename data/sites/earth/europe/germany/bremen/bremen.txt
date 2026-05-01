@@ -6,6 +6,7 @@ bremen = {
 	holding_type = temple #bishopric
 	max_tier = bishopric
 	features = {
+		#crossroads #important market or fair
 		holy_site #historical cathedral
 	}
 	

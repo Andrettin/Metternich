@@ -6,6 +6,9 @@ ballinasloe = {
 	holding_type = guild
 	max_tier = market
 	province = connaught
+	features = {
+		crossroads #important market or fair
+	}
 	
 	history = {
 		high_middle_ages = {

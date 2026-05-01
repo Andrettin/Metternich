@@ -6,6 +6,14 @@ academic = {
 	}
 }
 
+crossroads = {
+	name = "Crossroads"
+	icon = chest
+	modifier = {
+		productivity = 1
+	}
+}
+
 holy_site = {
 	name = "Holy Site"
 	icon = wooden_cross
@@ -40,11 +48,11 @@ prosperous = {
 	}
 }
 
-strategic_location = {
-	name = "Strategic Location"
-	icon = globe
+rugged = {
+	name = "Rugged"
+	icon = mountains
 	modifier = {
-		productivity = 1
+		fortification_level = 1
 	}
 }
 

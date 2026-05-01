@@ -6,6 +6,7 @@ venice = {
 	holding_type = guild
 	max_tier = market
 	features = {
+		crossroads #important market or fair
 		glass
 	}
 	

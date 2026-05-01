@@ -4,11 +4,14 @@ alexandria = {
 	geocoordinate = { 29.94999588900 31.20001934710 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	#resource = holy_site
 	max_tier = market
 	province = alexandria
 	cultural_names = {
 		#arabic = "Al-Iskandariyah"
+	}
+	features = {
+		crossroads #important market or fair
+		#holy_site
 	}
 	
 	history = {

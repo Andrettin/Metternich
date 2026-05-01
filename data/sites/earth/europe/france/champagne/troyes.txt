@@ -10,6 +10,9 @@ troyes = {
 	cultural_names = {
 		frankish = "Trecae"
 	}
+	features = {
+		crossroads #important market or fair
+	}
 	
 	history = {
 		782 = {

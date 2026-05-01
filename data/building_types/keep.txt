@@ -78,6 +78,9 @@ large_keep = {
 		marshal
 		engineer
 	}
+	conditions = {
+		feature = rugged
+	}
 	domain_modifier = {
 		loyalty = 1
 		stability = 1
@@ -100,6 +103,9 @@ great_keep = {
 		marshal
 		engineer
 	}
+	conditions = {
+		feature = rugged
+	}
 	domain_modifier = {
 		loyalty = 1
 		stability = 1
@@ -121,6 +127,9 @@ epic_keep = {
 		ruler
 		marshal
 		engineer
+	}
+	conditions = {
+		feature = rugged
 	}
 	domain_modifier = {
 		loyalty = 1

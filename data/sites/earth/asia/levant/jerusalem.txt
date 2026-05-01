@@ -4,9 +4,12 @@ jerusalem = {
 	geocoordinate = { 35.20662593460 31.77840781560 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	#resource = holy_site
 	max_tier = market
 	province = palestine
+	features = {
+		crossroads #important market or fair
+		#holy_site
+	}
 	
 	history = {
 		high_middle_ages = {

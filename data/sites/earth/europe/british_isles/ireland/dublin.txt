@@ -8,6 +8,7 @@ dublin = {
 	province = leinster
 	features = {
 		academic #historical university
+		crossroads #important market or fair
 	}
 	
 	history = {

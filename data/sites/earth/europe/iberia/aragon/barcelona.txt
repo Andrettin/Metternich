@@ -4,12 +4,13 @@ barcelona = {
 	geocoordinate = { 2.18337031923 41.38329957990 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	#resource = cattle
 	max_tier = market
 	province = catalonia
 	features = {
 		academic #historical university
+		crossroads #important market or fair
 		#holy_site #historical cathedral
+		prime_cattle_land
 	}
 	
 	history = {

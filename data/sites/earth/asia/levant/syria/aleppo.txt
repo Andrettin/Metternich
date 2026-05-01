@@ -6,6 +6,9 @@ aleppo = {
 	holding_type = guild
 	max_tier = market
 	province = syria
+	features = {
+		crossroads #important market or fair
+	}
 	
 	history = {
 		high_middle_ages = {

@@ -9,6 +9,9 @@ belgrade = {
 	cultural_names = {
 		roman = "Singidunum" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 38-39.
 	}
+	features = {
+		crossroads #important market or fair
+	}
 	
 	history = {
 		high_middle_ages = {
