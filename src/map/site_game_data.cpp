@@ -919,6 +919,11 @@ void site_game_data::set_holding_level(const int level)
 
 	this->holding_level = level;
 
+	if (this->get_holding_level() > this->get_province()->get_game_data()->get_level()) {
+		this->get_province()->get_game_data()->set_level(this->get_holding_level());
+		assert_throw(this->get_province()->get_game_data()->get_level() == this->get_holding_level());
+	}
+
 	if (this->get_owner() != nullptr) {
 		this->get_owner()->get_game_data()->change_score(this->get_holding_level() * 100);
 		this->get_owner()->get_game_data()->change_domain_power(this->get_holding_level());
