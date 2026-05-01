@@ -113,9 +113,11 @@ QString pathway::get_commodity_costs_string_for_province(const metternich::provi
 
 		if (str.empty()) {
 			str = "Costs:";
+		} else {
+			str += ", ";
 		}
 
-		str += "\n" + commodity->value_to_string(cost);
+		str += commodity->value_to_string(cost);
 		if (commodity != defines::get()->get_wealth_commodity()) {
 			str += " " + commodity->get_name();
 		}

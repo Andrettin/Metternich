@@ -80,8 +80,10 @@ DialogBase {
 								onHoveredChanged: {
 									if (hovered) {
 										status_text = "Build " + building.name + " in " + site.game_data.current_cultural_name
+										middle_status_text = building.get_commodity_costs_string_for_site(site)
 									} else {
 										status_text = ""
+										middle_status_text = ""
 									}
 								}
 							}

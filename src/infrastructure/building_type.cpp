@@ -370,10 +370,12 @@ QString building_type::get_commodity_costs_string_for_site(const metternich::sit
 		}
 
 		if (str.empty()) {
-			str = "Costs:";
+			str = "Costs: ";
+		} else {
+			str += ", ";
 		}
 
-		str += "\n" + commodity->value_to_string(cost);
+		str += commodity->value_to_string(cost);
 		if (commodity != defines::get()->get_wealth_commodity()) {
 			str += " " + commodity->get_name();
 		}
