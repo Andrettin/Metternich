@@ -2,6 +2,8 @@ epinal = {
 	name = "Epinal" #"Épinal"
 	world = earth
 	geocoordinate = { 6.4516666666667 48.173611111111 }
+	type = holding
+	holding_type = guild
 	province = lorraine
 	
 	history = {

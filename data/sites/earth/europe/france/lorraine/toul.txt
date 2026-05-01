@@ -2,6 +2,8 @@ toul = {
 	name = "Toul"
 	world = earth
 	geocoordinate = { 5.891666667 48.675 }
+	type = holding
+	holding_type = temple
 	province = lorraine
 	
 	history = {

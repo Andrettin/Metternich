@@ -2,6 +2,8 @@ luneville = {
 	name = "Luneville" #"Lunéville"
 	world = earth
 	geocoordinate = { 6.5016666666667 48.589444444444 }
+	type = holding
+	holding_type = castle
 	province = lorraine
 	
 	history = {

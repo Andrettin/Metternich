@@ -2,8 +2,8 @@ macon = {
 	name = "Macon" #"Mâcon"
 	world = earth
 	geocoordinate = { 4.8319444444444 46.306666666667 }
-	type = resource
-	resource = coal
+	type = holding
+	holding_type = castle
 	province = burgundy
 	features = {
 		coal_deposit

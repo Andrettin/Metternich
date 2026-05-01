@@ -2,6 +2,8 @@ autun = {
 	name = "Autun"
 	world = earth
 	geocoordinate = { 4.2986111111111 46.951111111111 }
+	type = holding
+	holding_type = temple
 	province = burgundy
 	
 	history = {

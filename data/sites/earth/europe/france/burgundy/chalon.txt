@@ -4,6 +4,7 @@ chalon = {
 	geocoordinate = { 4.8538888888889 46.781111111111 } #Chalon-sur-Saône
 	type = holding
 	holding_type = guild
+	#holding_type = castle
 	province = burgundy
 	features = {
 		crossroads #important market or fair

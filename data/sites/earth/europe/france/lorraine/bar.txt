@@ -2,6 +2,8 @@ bar = {
 	name = "Bar" #Bar-le-Duc
 	world = earth
 	geocoordinate = { 5.1672222222222 48.771666666667 }
+	type = holding
+	holding_type = castle
 	province = lorraine
 	
 	history = {

@@ -2,8 +2,8 @@ verdun = {
 	name = "Verdun"
 	world = earth
 	geocoordinate = { 5.3827777777778 49.159722222222 }
-	type = resource
-	resource = grain
+	type = holding
+	holding_type = temple
 	province = lorraine
 	features = {
 		prime_grain_land
