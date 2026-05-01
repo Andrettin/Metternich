@@ -15,8 +15,12 @@ namespace archimedes {
 namespace metternich {
 
 class icon;
+class province;
 class technology;
 class tile;
+
+template <typename scope_type>
+class modifier;
 
 class pathway final : public named_data_entry, public data_type<pathway>
 {
@@ -34,9 +38,8 @@ public:
 	static constexpr const char property_class_identifier[] = "metternich::pathway*";
 	static constexpr const char database_folder[] = "pathways";
 
-	explicit pathway(const std::string &identifier) : named_data_entry(identifier)
-	{
-	}
+	explicit pathway(const std::string &identifier);
+	~pathway();
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
@@ -92,7 +95,14 @@ public:
 	commodity_map<int64_t> get_commodity_costs_for_province(const province *province) const;
 	Q_INVOKABLE QString get_commodity_costs_string_for_province(const metternich::province *province) const;
 
+	const metternich::modifier<const province> *get_modifier() const
+	{
+		return this->modifier.get();
+	}
+
 	bool is_buildable_in_province(const province *province) const;
+
+	Q_INVOKABLE QString get_modifier_string(const metternich::province *province) const;
 
 signals:
 	void changed();
@@ -106,6 +116,7 @@ private:
 	technology *river_crossing_required_technology = nullptr;
 	terrain_type_map<const technology *> terrain_required_technologies;
 	commodity_map<int64_t> commodity_costs;
+	std::unique_ptr<const metternich::modifier<const province>> modifier;
 };
 
 }

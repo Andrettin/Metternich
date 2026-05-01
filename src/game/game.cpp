@@ -606,7 +606,7 @@ QCoro::Task<void> game::apply_history(const QDate &start_date)
 					}
 				}
 				if (pathway != nullptr) {
-					province_game_data->set_pathway(pathway);
+					co_await province_game_data->set_pathway(pathway);
 
 					//add prerequisites for the province's pathway to its researched technologies
 					if (pathway->get_required_technology() != nullptr) {

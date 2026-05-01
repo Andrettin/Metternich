@@ -102,7 +102,7 @@ public:
 	void do_ai_turn();
 	void collect_taxes();
 	[[nodiscard]] QCoro::Task<void> do_military_unit_recruitment();
-	void do_construction();
+	[[nodiscard]] QCoro::Task<void> do_construction();
 	void do_population_literacy_change();
 
 	bool is_on_map() const;
@@ -112,8 +112,7 @@ public:
 		return this->owner;
 	}
 
-	[[nodiscard]]
-	QCoro::Task<void> set_owner(const domain *domain);
+	[[nodiscard]] QCoro::Task<void> set_owner(const domain *domain);
 
 	bool is_capital() const;
 
@@ -169,7 +168,7 @@ public:
 		return this->pathway;
 	}
 
-	void set_pathway(const pathway *pathway);
+	[[nodiscard]] QCoro::Task<void> set_pathway(const pathway *pathway);
 
 	const pathway *get_under_construction_pathway() const
 	{

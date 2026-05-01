@@ -10,11 +10,20 @@
 #include "map/terrain_type.h"
 #include "map/tile.h"
 #include "map/tile_image_provider.h"
+#include "script/modifier.h"
 #include "technology/technology.h"
 #include "util/assert_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
+
+pathway::pathway(const std::string &identifier) : named_data_entry(identifier)
+{
+}
+
+pathway::~pathway()
+{
+}
 	
 void pathway::process_gsml_scope(const gsml_data &scope)
 {
@@ -36,6 +45,10 @@ void pathway::process_gsml_scope(const gsml_data &scope)
 			const commodity *commodity = commodity::get(property.get_key());
 			this->commodity_costs[commodity] = commodity->string_to_value(property.get_value());
 		});
+	} else if (tag == "modifier") {
+		auto modifier = std::make_unique<metternich::modifier<const province>>();
+		modifier->process_gsml_data(scope);
+		this->modifier = std::move(modifier);
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
@@ -144,6 +157,19 @@ bool pathway::is_buildable_in_province(const province *province) const
 	}
 
 	return true;
+}
+
+QString pathway::get_modifier_string(const province *province) const
+{
+	assert_throw(province != nullptr);
+
+	std::string str;
+
+	if (this->get_modifier() != nullptr) {
+		str = this->get_modifier()->get_single_line_string(province);
+	}
+
+	return QString::fromStdString(str);
 }
 
 }

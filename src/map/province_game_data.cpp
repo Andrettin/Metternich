@@ -319,10 +319,10 @@ QCoro::Task<void> province_game_data::do_military_unit_recruitment()
 	}
 }
 
-void province_game_data::do_construction()
+QCoro::Task<void> province_game_data::do_construction()
 {
 	if (this->get_under_construction_pathway() != nullptr) {
-		this->set_pathway(this->get_under_construction_pathway());
+		co_await this->set_pathway(this->get_under_construction_pathway());
 		this->set_under_construction_pathway(nullptr);
 	}
 }
@@ -728,13 +728,21 @@ const QPoint &province_game_data::get_center_tile_pos() const
 	return this->province->get_map_data()->get_center_tile_pos();
 }
 
-void province_game_data::set_pathway(const metternich::pathway *pathway)
+QCoro::Task<void> province_game_data::set_pathway(const metternich::pathway *pathway)
 {
 	if (pathway == this->get_pathway()) {
-		return;
+		co_return;
+	}
+
+	if (this->get_pathway() != nullptr && this->get_pathway()->get_modifier() != nullptr) {
+		co_await this->get_pathway()->get_modifier()->remove(this->province);
 	}
 
 	this->pathway = pathway;
+
+	if (this->get_pathway() != nullptr && this->get_pathway()->get_modifier() != nullptr) {
+		co_await this->get_pathway()->get_modifier()->apply(this->province);
+	}
 
 	if (game::get()->is_running()) {
 		for (const route *route : this->province->get_routes()) {

@@ -188,7 +188,7 @@ QCoro::Task<void> civilian_unit::do_turn()
 			if (this->under_construction_pathway != nullptr) {
 				assert_throw(this->get_province() != nullptr);
 
-				this->get_province()->get_game_data()->set_pathway(this->under_construction_pathway);
+				co_await this->get_province()->get_game_data()->set_pathway(this->under_construction_pathway);
 
 				this->under_construction_pathway = nullptr;
 			}
