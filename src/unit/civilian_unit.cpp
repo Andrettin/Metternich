@@ -54,6 +54,10 @@ civilian_unit::civilian_unit(const civilian_unit_type *type, const domain *owner
 	connect(this, &civilian_unit::province_changed, this, &civilian_unit::buildable_buildings_changed);
 	connect(this, &civilian_unit::province_changed, this, &civilian_unit::buildable_pathway_changed);
 
+	connect(this->get_owner()->get_game_data(), &domain_game_data::sites_changed, this, &civilian_unit::buildable_provinces_changed);
+	connect(this->get_owner()->get_game_data(), &domain_game_data::settlement_building_counts_changed, this, &civilian_unit::buildable_provinces_changed);
+	connect(this->get_owner()->get_technology(), &country_technology::technologies_changed, this, &civilian_unit::buildable_provinces_changed);
+
 	connect(this->get_owner()->get_game_data(), &domain_game_data::provinces_changed, this, &civilian_unit::improvable_resources_changed);
 	connect(this->get_owner()->get_economy(), &domain_economy::commodity_outputs_changed, this, &civilian_unit::improvable_resources_changed);
 	connect(this->get_owner()->get_technology(), &country_technology::technologies_changed, this, &civilian_unit::improvable_resources_changed);
@@ -366,6 +370,37 @@ void civilian_unit::cancel_move()
 	this->set_original_province(nullptr);
 }
 
+std::vector<const building_type *> civilian_unit::get_buildable_buildings_for_site(const site *site) const
+{
+	assert_throw(site->is_settlement());
+	assert_throw(site->get_game_data()->is_built());
+
+	std::vector<const building_type *> holding_buildable_buildings;
+
+	for (const qunique_ptr<building_slot> &building_slot : site->get_game_data()->get_building_slots()) {
+		if (!building_slot->is_available()) {
+			continue;
+		}
+
+		if (building_slot->get_under_construction_building() != nullptr) {
+			continue;
+		}
+
+		const building_type *buildable_building = building_slot->get_buildable_building();
+		if (buildable_building == nullptr) {
+			continue;
+		}
+
+		if (!this->get_type()->can_build_building(buildable_building)) {
+			continue;
+		}
+
+		holding_buildable_buildings.push_back(buildable_building);
+	}
+
+	return holding_buildable_buildings;
+}
+
 site_map<std::vector<const building_type *>> civilian_unit::get_buildable_buildings() const
 {
 	if (this->get_province() == nullptr) {
@@ -379,28 +414,7 @@ site_map<std::vector<const building_type *>> civilian_unit::get_buildable_buildi
 			continue;
 		}
 
-		std::vector<const building_type *> holding_buildable_buildings;
-
-		for (const qunique_ptr<building_slot> &building_slot : site->get_game_data()->get_building_slots()) {
-			if (!building_slot->is_available()) {
-				continue;
-			}
-
-			if (building_slot->get_under_construction_building() != nullptr) {
-				continue;
-			}
-
-			const building_type *buildable_building = building_slot->get_buildable_building();
-			if (buildable_building == nullptr) {
-				continue;
-			}
-
-			if (!this->get_type()->can_build_building(buildable_building)) {
-				continue;
-			}
-
-			holding_buildable_buildings.push_back(buildable_building);
-		}
+		std::vector<const building_type *> holding_buildable_buildings = this->get_buildable_buildings_for_site(site);
 
 		if (!holding_buildable_buildings.empty()) {
 			buildable_buildings[site] = std::move(holding_buildable_buildings);
@@ -427,6 +441,38 @@ void civilian_unit::build_building(const building_type *building_type, const sit
 	for (const auto &[commodity, cost] : building_type->get_commodity_costs_for_site(site)) {
 		domain_economy->change_stored_commodity(commodity, -cost);
 	}
+}
+
+std::vector<const metternich::province *> civilian_unit::get_buildable_provinces() const
+{
+	std::vector<const metternich::province *> buildable_provinces;
+
+	if (this->get_type()->get_buildable_buildings().empty()) {
+		return buildable_provinces;
+	}
+
+	for (const site *site : this->get_owner()->get_game_data()->get_sites()) {
+		if (!site->is_settlement() || !site->get_game_data()->is_built()) {
+			continue;
+		}
+
+		if (vector::contains(buildable_provinces, site->get_game_data()->get_province())) {
+			continue;
+		}
+
+		if (this->get_buildable_buildings_for_site(site).empty()) {
+			continue;
+		}
+
+		buildable_provinces.push_back(site->get_game_data()->get_province());
+	}
+
+	return buildable_provinces;
+}
+
+QVariantList civilian_unit::get_buildable_provinces_qvariant_list() const
+{
+	return archimedes::container::to_qvariant_list(this->get_buildable_provinces());
 }
 
 const metternich::pathway *civilian_unit::get_buildable_pathway() const

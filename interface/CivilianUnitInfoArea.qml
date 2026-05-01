@@ -75,11 +75,57 @@ Item {
 		}
 		
 		Grid {
-			id: prospectable_provinces_grid
+			id: improvable_provinces_grid
 			anchors.horizontalCenter: parent.horizontalCenter
 			columns: 4
 			columnSpacing: 4 * scale_factor
 			rowSpacing: 4 * scale_factor
+			
+			Item {
+				id: buildable_provinces_area
+				width: settlement_icon.width + 4 * scale_factor
+				height: settlement_icon.height
+				visible: selected_civilian_unit !== null && !selected_civilian_unit.working && !selected_civilian_unit.moving && buildable_provinces.length > 0
+				
+				readonly property var buildable_provinces: selected_civilian_unit ? selected_civilian_unit.buildable_provinces : []
+				property int next_province_index: 0
+				
+				Image {
+					id: settlement_icon
+					anchors.verticalCenter: parent.verticalCenter
+					anchors.left: parent.left
+					source: "image://icon/settlement"
+				}
+				
+				SmallText {
+					id: count_label
+					text: number_string(buildable_provinces_area.buildable_provinces.length)
+					anchors.right: parent.right
+					anchors.bottom: parent.bottom
+				}
+				
+				MouseArea {
+					anchors.fill: parent
+					hoverEnabled: true
+					
+					onReleased: {
+						province_map.center_on_province(buildable_provinces_area.buildable_provinces[buildable_provinces_area.next_province_index])
+						
+						buildable_provinces_area.next_province_index += 1
+						if (buildable_provinces_area.next_province_index >= buildable_provinces_area.buildable_provinces.length) {
+							buildable_provinces_area.next_province_index = 0
+						}
+					}
+					
+					onEntered: {
+						status_text = "Buildable Provinces"
+					}
+					
+					onExited: {
+						status_text = ""
+					}
+				}
+			}
 			
 			Repeater {
 				model: selected_civilian_unit ? selected_civilian_unit.prospectable_provinces : []
