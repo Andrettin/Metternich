@@ -584,12 +584,22 @@ laborers = {
 				province = {
 					soldiers >= 0.5
 				}
+				not = {
+					site = {
+						available_employment = soldiers
+					}
+				}
 			}
 			modifier = {
 				factor = -2
 				additive = true
 				province = {
 					soldiers >= 1
+				}
+				not = {
+					site = {
+						available_employment = soldiers
+					}
 				}
 			}
 			modifier = {
@@ -598,12 +608,22 @@ laborers = {
 				province = {
 					soldiers >= 1.5
 				}
+				not = {
+					site = {
+						available_employment = soldiers
+					}
+				}
 			}
 			modifier = {
 				factor = -2
 				additive = true
 				province = {
 					soldiers >= 2
+				}
+				not = {
+					site = {
+						available_employment = soldiers
+					}
 				}
 			}
 			modifier = {
@@ -612,12 +632,22 @@ laborers = {
 				province = {
 					soldiers >= 2.5
 				}
+				not = {
+					site = {
+						available_employment = soldiers
+					}
+				}
 			}
 			modifier = {
 				factor = -2
 				additive = true
 				province = {
 					soldiers >= 3
+				}
+				not = {
+					site = {
+						available_employment = soldiers
+					}
 				}
 			}
 			modifier = {
@@ -626,12 +656,22 @@ laborers = {
 				province = {
 					soldiers >= 3.5
 				}
+				not = {
+					site = {
+						available_employment = soldiers
+					}
+				}
 			}
 			modifier = {
 				factor = -2
 				additive = true
 				province = {
 					soldiers >= 4
+				}
+				not = {
+					site = {
+						available_employment = soldiers
+					}
 				}
 			}
 			modifier = {
@@ -640,12 +680,22 @@ laborers = {
 				province = {
 					soldiers >= 4.5
 				}
+				not = {
+					site = {
+						available_employment = soldiers
+					}
+				}
 			}
 			modifier = {
 				factor = -100
 				additive = true
 				province = {
 					soldiers >= 5
+				}
+				not = {
+					site = {
+						available_employment = soldiers
+					}
 				}
 			}
 		}
