@@ -45,7 +45,7 @@ watchtower = {
 		engineer
 	}
 	commodity_costs = {
-		wealth = 10gb
+		wealth = 12gb
 	}
 	domain_modifier = {
 		stability = 1
