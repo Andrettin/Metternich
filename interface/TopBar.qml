@@ -7,10 +7,10 @@ Rectangle {
 	height: 16 * scale_factor
 	clip: true
 	
-	readonly property var stored_commodities: metternich.game.player_country ? metternich.game.player_country.game_data.economy.stored_commodities : []
+	readonly property var domain: metternich.game.player_country
+	readonly property var stored_commodities: domain ? domain.game_data.economy.stored_commodities : []
 	readonly property var regency_commodity: metternich.get_commodity("regency")
-	readonly property var top_bar_commodities: [metternich.defines.wealth_commodity, regency_commodity]
-	property bool commodities_visible: metternich.game.player_country ? true : false
+	property bool commodities_visible: domain ? true : false
 	
 	PanelTiledBackground {
 	}
@@ -73,7 +73,7 @@ Rectangle {
 				height: commodities_row.height
 				
 				readonly property var commodity: model.modelData
-				readonly property var commodity_value: stored_commodities.length > 0 ? metternich.game.player_country.game_data.economy.get_stored_commodity(commodity) : 0 //refer to the stored commodities to ensure the counter is updated when the storage value for this commodity changes
+				readonly property var commodity_value: domain !== null && stored_commodities.length > 0 ? domain.game_data.economy.get_stored_commodity(commodity) : 0 //refer to the stored commodities to ensure the counter is updated when the storage value for this commodity changes
 				
 				Image {
 					id: commodity_icon
@@ -104,10 +104,10 @@ Rectangle {
 					
 					readonly property bool is_wealth: commodity === metternich.defines.wealth_commodity
 					readonly property var commodity_unit: commodity.get_unit(commodity_value)
-					readonly property int min_income: is_wealth && metternich.game.player_country ? metternich.game.player_country.game_data.min_income : 0
-					readonly property int max_income: is_wealth && metternich.game.player_country ? metternich.game.player_country.game_data.max_income : 0
+					readonly property int min_income: is_wealth && domain ? domain.game_data.min_income : 0
+					readonly property int max_income: is_wealth && domain ? domain.game_data.max_income : 0
 					readonly property string income_string: get_income_range_string(min_income, max_income)
-					readonly property int maintenance_cost: is_wealth && metternich.game.player_country ? metternich.game.player_country.game_data.maintenance_cost : 0
+					readonly property int maintenance_cost: is_wealth && domain ? domain.game_data.maintenance_cost : 0
 					readonly property string commodity_status_text: (commodity_unit && is_wealth ? get_plural_form(commodity_unit.name) : commodity.name)
 						+ (is_wealth && income_string.length > 0 ? format_text("\t\tIncome: " + income_string) : "")
 						+ (is_wealth ? format_text("\t\tMaintenance Cost: " + commodity.value_to_qstring(maintenance_cost)) : "")
