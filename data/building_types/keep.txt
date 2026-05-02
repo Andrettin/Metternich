@@ -28,6 +28,9 @@ keep = {
 	holding_types = {
 		castle
 	}
+	required_buildings = {
+		wooden_palisade
+	}
 	builder_civilian_unit_types = {
 		ruler
 		marshal
@@ -53,6 +56,9 @@ expanded_keep = {
 	required_technology = medium_castle
 	holding_types = {
 		castle
+	}
+	required_buildings = {
+		low_stone_wall
 	}
 	builder_civilian_unit_types = {
 		ruler
