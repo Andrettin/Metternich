@@ -2,7 +2,12 @@ sion = {
 	name = "Sion"
 	world = earth
 	geocoordinate = { 7.35399948193 46.23900302860 } #from Natural Earth
+	type = holding
+	holding_type = temple
 	province = geneva
+	cultural_group_names = {
+		german = "Sitten"
+	}
 	
 	history = {
 		919 = {

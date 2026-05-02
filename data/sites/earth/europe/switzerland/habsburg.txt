@@ -2,12 +2,13 @@ habsburg = {
 	name = "Habsburg"
 	world = earth
 	geocoordinate = { 8.1861111111111 47.463611111111 }
+	type = holding
+	holding_type = castle
 	province = bern
 	
 	history = {
 		919 = {
-			#holding_type = castle #had a castle or stronghold in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
-			buildings += castle
+			buildings += castle #had a castle or stronghold in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
 		}
 	}
 }

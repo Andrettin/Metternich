@@ -2,6 +2,8 @@ lausanne = {
 	name = "Lausanne"
 	world = earth
 	geocoordinate = { 6.65002274438 46.53042726550 } #from Natural Earth
+	type = holding
+	holding_type = castle
 	province = geneva
 	
 	history = {

@@ -3,7 +3,8 @@ basel = {
 	world = earth
 	geocoordinate = { 7.59001704777 47.58038901680 } #from Natural Earth
 	type = holding
-	holding_type = guild
+	holding_type = guild #important market or fair
+	#holding_type = castle
 	province = bern
 	features = {
 		academic #historical university

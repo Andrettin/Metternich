@@ -1,7 +1,9 @@
 martigny = {
 	name = "Martigny"
 	world = earth
-	#geocoordinate = { 7.07277777778 46.1 }
+	geocoordinate = { 7.07277777778 46.1 }
+	type = holding
+	holding_type = guild
 	province = geneva
 	
 	history = {
