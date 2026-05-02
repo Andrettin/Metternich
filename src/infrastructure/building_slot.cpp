@@ -124,7 +124,7 @@ QCoro::Task<void> building_slot::set_building(const building_type *building)
 	}
 
 	const int holding_level_change = this->get_settlement()->get_game_data()->get_building_holding_level_change(building);
-	const int fortification_level_change = this->get_settlement()->get_game_data()->get_building_fortification_level_change(building);
+	const centesimal_int fortification_level_change = this->get_settlement()->get_game_data()->get_building_fortification_level_change(building);
 
 	const building_type *old_building = this->get_building();
 
@@ -271,8 +271,8 @@ bool building_slot::can_gain_building(const building_type *building) const
 	}
 
 	if (building->get_fortification_level() > 0) {
-		const int total_fortification_level = this->get_settlement()->get_game_data()->get_fortification_level() + this->get_settlement()->get_game_data()->get_building_fortification_level_change(building);
-		if (total_fortification_level > this->get_settlement()->get_game_data()->get_province()->get_game_data()->get_max_level()) {
+		const centesimal_int total_fortification_level = this->get_settlement()->get_game_data()->get_fortification_level() + this->get_settlement()->get_game_data()->get_building_fortification_level_change(building);
+		if (total_fortification_level > this->get_settlement()->get_game_data()->get_holding_level()) {
 			return false;
 		}
 	}
@@ -312,7 +312,7 @@ bool building_slot::can_build_building(const building_type *building) const
 	}
 
 	if (building->get_fortification_level() > 0) {
-		const int total_fortification_level = this->get_settlement()->get_game_data()->get_fortification_level() + this->get_settlement()->get_game_data()->get_building_fortification_level_change(building);
+		const centesimal_int total_fortification_level = this->get_settlement()->get_game_data()->get_fortification_level() + this->get_settlement()->get_game_data()->get_building_fortification_level_change(building);
 		if (total_fortification_level > this->get_settlement()->get_game_data()->get_holding_level()) {
 			return false;
 		}

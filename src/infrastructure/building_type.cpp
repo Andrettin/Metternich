@@ -319,12 +319,13 @@ commodity_map<int> building_type::get_commodity_costs_for_site(const site *site)
 
 	if (this->get_fortification_level() > 0) {
 		assert_throw(site->get_game_data()->get_holding_type() != nullptr);
-		const int fortification_level_change = site->get_game_data()->get_building_fortification_level_change(this);
+		const centesimal_int fortification_level_change = site->get_game_data()->get_building_fortification_level_change(this);
 		for (const auto &[commodity, level_cost] : site->get_game_data()->get_holding_type()->get_fortification_level_commodity_costs()) {
-			int fortification_cost = level_cost * fortification_level_change;
+			int fortification_cost = (level_cost * fortification_level_change).to_int();
 			if (site->get_game_data()->is_provincial_capital() && commodity == defines::get()->get_wealth_commodity()) {
 				fortification_cost *= 2;
 			}
+			fortification_cost = std::max(fortification_cost, 1);
 			costs[commodity] += fortification_cost;
 		}
 	}
@@ -407,7 +408,7 @@ std::string building_type::get_modifier_string(const site *site, const bool sing
 		}
 
 		const QColor &number_color = this->get_fortification_level() < 0 ? defines::get()->get_red_text_color() : defines::get()->get_green_text_color();
-		str += std::format("Fortification Level: {}", string::colored(number::to_signed_string(this->get_fortification_level()), number_color));
+		str += std::format("Fortification Level: {}", string::colored(this->get_fortification_level().to_signed_string(), number_color));
 	}
 
 	std::string site_modifier_str;

@@ -3,6 +3,7 @@
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 #include "economy/commodity_container.h"
+#include "util/centesimal_int.h"
 
 Q_MOC_INCLUDE("culture/cultural_group.h")
 Q_MOC_INCLUDE("culture/culture.h")
@@ -61,7 +62,7 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(bool provincial_capital_only MEMBER provincial_capital_only READ is_provincial_capital_only NOTIFY changed)
 	Q_PROPERTY(bool wonder_only MEMBER wonder_only READ is_wonder_only NOTIFY changed)
 	Q_PROPERTY(int holding_level MEMBER holding_level READ get_holding_level NOTIFY changed)
-	Q_PROPERTY(int fortification_level MEMBER fortification_level READ get_fortification_level NOTIFY changed)
+	Q_PROPERTY(archimedes::centesimal_int fortification_level MEMBER fortification_level READ get_fortification_level NOTIFY changed)
 	Q_PROPERTY(int size MEMBER size READ get_size NOTIFY changed)
 	Q_PROPERTY(metternich::building_type* base_building MEMBER base_building NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
@@ -190,7 +191,7 @@ public:
 		return this->holding_level;
 	}
 
-	int get_fortification_level() const
+	const centesimal_int &get_fortification_level() const
 	{
 		return this->fortification_level;
 	}
@@ -333,7 +334,7 @@ private:
 	bool provincial_capital_only = false;
 	bool wonder_only = false;
 	int holding_level = 0;
-	int fortification_level = 0;
+	centesimal_int fortification_level;
 	int size = 1;
 	building_type *base_building = nullptr;
 	std::vector<const building_type *> derived_buildings; //buildings which are based on this one

@@ -67,7 +67,7 @@ class site_game_data final : public QObject
 	Q_PROPERTY(const metternich::terrain_type* terrain READ get_terrain CONSTANT)
 	Q_PROPERTY(const metternich::holding_type* holding_type READ get_holding_type NOTIFY holding_type_changed)
 	Q_PROPERTY(int holding_level READ get_holding_level NOTIFY holding_level_changed)
-	Q_PROPERTY(int fortification_level READ get_fortification_level NOTIFY fortification_level_changed)
+	Q_PROPERTY(QString fortification_level READ get_fortification_level_qstring NOTIFY fortification_level_changed)
 	Q_PROPERTY(const metternich::dungeon* dungeon READ get_dungeon NOTIFY dungeon_changed)
 	Q_PROPERTY(const metternich::improvement* improvement READ get_main_improvement NOTIFY improvements_changed)
 	Q_PROPERTY(const metternich::improvement* resource_improvement READ get_resource_improvement NOTIFY improvements_changed)
@@ -210,19 +210,24 @@ public:
 	[[nodiscard]]
 	QCoro::Task<void> set_holding_level_from_buildings(const int level);
 
-	int get_fortification_level() const
+	const centesimal_int &get_fortification_level() const
 	{
 		return this->fortification_level;
 	}
 
-	void set_fortification_level(const int level);
+	QString get_fortification_level_qstring() const
+	{
+		return QString::fromStdString(this->get_fortification_level().to_string());
+	}
 
-	void change_fortification_level(const int change)
+	void set_fortification_level(const centesimal_int &level);
+
+	void change_fortification_level(const centesimal_int &change)
 	{
 		this->set_fortification_level(this->get_fortification_level() + change);
 	}
 
-	int get_building_fortification_level_change(const building_type *building) const;
+	centesimal_int get_building_fortification_level_change(const building_type *building) const;
 
 	const std::string &get_holding_type_name() const
 	{
@@ -681,7 +686,7 @@ private:
 	const metternich::religion *religion = nullptr;
 	const metternich::holding_type *holding_type = nullptr;
 	int holding_level = 0;
-	int fortification_level = 0;
+	centesimal_int fortification_level;
 	std::string holding_type_name;
 	const metternich::dungeon *dungeon = nullptr;
 	data_entry_set<dungeon_area> explored_dungeon_areas;

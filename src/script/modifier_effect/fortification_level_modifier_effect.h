@@ -22,7 +22,7 @@ public:
 
 	virtual void apply(const site *scope, const centesimal_int &multiplier) const override
 	{
-		scope->get_game_data()->change_fortification_level((this->value * multiplier).to_int());
+		scope->get_game_data()->change_fortification_level(this->value * multiplier);
 	}
 
 	virtual std::string get_base_string(const site *scope) const override
@@ -30,6 +30,11 @@ public:
 		Q_UNUSED(scope);
 
 		return "Fortification Level";
+	}
+
+	virtual bool are_decimals_relevant() const override
+	{
+		return true;
 	}
 };
 

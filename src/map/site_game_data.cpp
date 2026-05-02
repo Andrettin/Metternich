@@ -123,7 +123,7 @@ void site_game_data::process_gsml_property(const gsml_property &property)
 	} else if (key == "holding_level") {
 		this->holding_level = std::stoi(value);
 	} else if (key == "fortification_level") {
-		this->fortification_level = std::stoi(value);
+		this->fortification_level = centesimal_int(value);
 	} else if (key == "holding_type_name") {
 		this->holding_type_name = value;
 	} else if (key == "dungeon") {
@@ -227,7 +227,7 @@ gsml_data site_game_data::to_gsml_data() const
 	}
 
 	if (this->get_fortification_level() != 0) {
-		data.add_property("fortification_level", std::to_string(this->get_fortification_level()));
+		data.add_property("fortification_level", this->get_fortification_level().to_string());
 	}
 
 	if (this->get_dungeon() != nullptr) {
@@ -994,7 +994,7 @@ QCoro::Task<void> site_game_data::set_holding_level_from_buildings(const int lev
 	}
 }
 
-void site_game_data::set_fortification_level(const int level)
+void site_game_data::set_fortification_level(const centesimal_int &level)
 {
 	assert_throw(this->site->is_settlement());
 
@@ -1009,14 +1009,14 @@ void site_game_data::set_fortification_level(const int level)
 	}
 }
 
-int site_game_data::get_building_fortification_level_change(const building_type *building) const
+centesimal_int site_game_data::get_building_fortification_level_change(const building_type *building) const
 {
 	assert_throw(building != nullptr);
 
 	const building_slot *building_slot = this->get_building_slot(building->get_slot_type());
 	assert_throw(building_slot != nullptr);
 
-	int fortification_level_change = building->get_fortification_level();
+	centesimal_int fortification_level_change = building->get_fortification_level();
 
 	if (building_slot->get_building() != nullptr) {
 		fortification_level_change -= building_slot->get_building()->get_fortification_level();
