@@ -9,7 +9,10 @@ Rectangle {
 	
 	readonly property var domain: metternich.game.player_country
 	readonly property var stored_commodities: domain ? domain.game_data.economy.stored_commodities : []
+	readonly property var commodity_storage_capacities: domain ? domain.game_data.economy.commodity_storage_capacities : []
 	readonly property var regency_commodity: metternich.get_commodity("regency")
+	readonly property var manpower_commodity: metternich.get_commodity("manpower")
+	readonly property var top_bar_commodities: [metternich.defines.wealth_commodity, regency_commodity, manpower_commodity]
 	property bool commodities_visible: domain ? true : false
 	
 	PanelTiledBackground {
@@ -108,9 +111,11 @@ Rectangle {
 					readonly property int max_income: is_wealth && domain ? domain.game_data.max_income : 0
 					readonly property string income_string: get_income_range_string(min_income, max_income)
 					readonly property int maintenance_cost: is_wealth && domain ? domain.game_data.maintenance_cost : 0
+					readonly property int commodity_storage_capacity: domain && commodity.special_storage_capacity && commodity_storage_capacities.length > 0 ? domain.game_data.economy.get_commodity_storage_capacity(commodity) : 0
 					readonly property string commodity_status_text: (commodity_unit && is_wealth ? get_plural_form(commodity_unit.name) : commodity.name)
 						+ (is_wealth && income_string.length > 0 ? format_text("\t\tIncome: " + income_string) : "")
 						+ (is_wealth ? format_text("\t\tMaintenance Cost: " + commodity.value_to_qstring(maintenance_cost)) : "")
+						+ (commodity.special_storage_capacity ? format_text("\t\tMaximum: " + commodity.value_to_qstring(commodity_storage_capacity)) : "")
 						+ (commodity_unit ? format_text("\t\t" + commodity.get_units_tooltip()) : "")
 					
 					onEntered: {
