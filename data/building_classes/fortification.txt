@@ -1,6 +1,31 @@
+wooden_palisade = {
+	name = "Wooden Palisade"
+	slot_type = wall
+}
+
+low_stone_wall = {
+	name = "Low Stone Wall"
+	slot_type = wall
+}
+
+medium_stone_wall = {
+	name = "Medium Stone Wall"
+	slot_type = wall
+}
+
+large_stone_wall = {
+	name = "Large Stone Wall"
+	slot_type = wall
+}
+
+huge_stone_wall = {
+	name = "Huge Stone Wall"
+	slot_type = wall
+}
+
 city_wall = {
 	name = "City Wall"
-	slot_type = fortification
+	slot_type = wall
 }
 
 watchtower = {

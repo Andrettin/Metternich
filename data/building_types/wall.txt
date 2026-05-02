@@ -1,0 +1,99 @@
+wooden_palisade = {
+	name = "Wooden Palisade"
+	building_class = wooden_palisade
+	portrait = fort
+	icon = wall
+	fortification_level = 0.5
+	holding_types = {
+		castle
+	}
+	builder_civilian_unit_types = {
+		ruler
+		marshal
+		engineer
+	}
+}
+
+low_stone_wall = {
+	name = "Low Stone Wall"
+	building_class = low_stone_wall
+	portrait = fort
+	icon = wall
+	fortification_level = 1
+	base_building = wooden_palisade
+	required_technology = small_castle
+	holding_types = {
+		castle
+	}
+	builder_civilian_unit_types = {
+		ruler
+		marshal
+		engineer
+	}
+}
+
+medium_stone_wall = {
+	name = "Medium Stone Wall"
+	building_class = medium_stone_wall
+	portrait = fort
+	icon = wall
+	fortification_level = 2
+	base_building = low_stone_wall
+	required_technology = medium_castle
+	holding_types = {
+		castle
+	}
+	builder_civilian_unit_types = {
+		ruler
+		marshal
+		engineer
+	}
+	commodity_costs = {
+		wealth = 2gb
+	}
+	domain_modifier = {
+		unrest = -2
+	}
+}
+
+large_stone_wall = {
+	name = "Large Stone Wall"
+	building_class = large_stone_wall
+	portrait = fort
+	icon = wall
+	fortification_level = 3
+	base_building = medium_stone_wall
+	required_technology = large_castle
+	holding_types = {
+		castle
+	}
+	builder_civilian_unit_types = {
+		ruler
+		marshal
+		engineer
+	}
+	domain_modifier = {
+		unrest = -2
+	}
+}
+
+huge_stone_wall = {
+	name = "Huge Stone Wall"
+	building_class = huge_stone_wall
+	portrait = fort
+	icon = wall
+	fortification_level = 4.5
+	base_building = large_stone_wall
+	required_technology = huge_castle
+	holding_types = {
+		castle
+	}
+	builder_civilian_unit_types = {
+		ruler
+		marshal
+		engineer
+	}
+	domain_modifier = {
+		unrest = -2
+	}
+}

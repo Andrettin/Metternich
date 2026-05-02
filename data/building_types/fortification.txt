@@ -6,7 +6,6 @@ city_wall = {
 	fortification_level = 1
 	size = 0
 	holding_types = {
-		castle
 		guild
 		magic_source
 		temple
@@ -34,7 +33,6 @@ watchtower = {
 	icon = wall
 	fortification_level = 2
 	size = 1
-	base_building = city_wall
 	holding_types = {
 		castle
 		guild
@@ -51,7 +49,7 @@ watchtower = {
 	}
 	domain_modifier = {
 		stability = 1
-		unrest = -2
+		unrest = -1
 	}
 }
 
