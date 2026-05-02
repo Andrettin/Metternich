@@ -82,6 +82,10 @@ void domain_economy::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([this](const gsml_property &property) {
 			this->stored_commodities[commodity::get(property.get_key())] = std::stoll(property.get_value());
 		});
+	} else if (tag == "commodity_storage_capacities") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->commodity_storage_capacities[commodity::get(property.get_key())] = std::stoll(property.get_value());
+		});
 	} else if (tag == "commodity_inputs") {
 		scope.for_each_property([this](const gsml_property &property) {
 			this->commodity_inputs[commodity::get(property.get_key())] = centesimal_int(property.get_value());
@@ -119,6 +123,14 @@ gsml_data domain_economy::to_gsml_data() const
 			stored_commodities_data.add_property(commodity->get_identifier(), std::to_string(quantity));
 		}
 		data.add_child(std::move(stored_commodities_data));
+	}
+
+	if (!this->get_commodity_storage_capacities().empty()) {
+		gsml_data commodity_storage_capacities_data("commodity_storage_capacities");
+		for (const auto &[commodity, storage_capacity] : this->get_commodity_storage_capacities()) {
+			commodity_storage_capacities_data.add_property(commodity->get_identifier(), std::to_string(storage_capacity));
+		}
+		data.add_child(std::move(commodity_storage_capacities_data));
 	}
 
 	if (!this->get_commodity_inputs().empty()) {
@@ -354,7 +366,7 @@ void domain_economy::set_stored_commodity(const commodity *commodity, const int6
 		return;
 	}
 
-	if (!commodity->is_abstract()) {
+	if (!commodity->is_abstract() || commodity->has_special_storage_capacity()) {
 		const int64_t storage_capacity = this->get_storage_capacity_for_commodity(commodity);
 		if (value > storage_capacity) {
 			this->set_stored_commodity(commodity, storage_capacity);
@@ -487,6 +499,36 @@ void domain_economy::set_storage_capacity(const int64_t capacity)
 	}
 }
 
+QVariantList domain_economy::get_commodity_storage_capacities_qvariant_list() const
+{
+	return archimedes::map::to_qvariant_list(this->get_commodity_storage_capacities());
+}
+
+void domain_economy::change_commodity_storage_capacity(const commodity *commodity, const int64_t change)
+{
+	assert_throw(commodity->has_special_storage_capacity());
+
+	if (change == 0) {
+		return;
+	}
+
+	const int64_t new_capacity = (this->commodity_storage_capacities[commodity] += change);
+
+	assert_throw(new_capacity >= 0);
+
+	if (new_capacity == 0) {
+		this->commodity_storage_capacities.erase(commodity);
+	}
+
+	if (change < 0 && this->get_stored_commodity(commodity) > new_capacity) {
+		this->set_stored_commodity(commodity, new_capacity);
+	}
+
+	if (game::get()->is_running()) {
+		emit commodity_storage_capacities_changed();
+	}
+}
+
 int64_t domain_economy::get_storage_for_commodity(const commodity *commodity, int64_t storage)
 {
 	if (commodity->get_units().empty()) {
@@ -501,6 +543,10 @@ int64_t domain_economy::get_storage_for_commodity(const commodity *commodity, in
 
 int64_t domain_economy::get_storage_capacity_for_commodity(const commodity *commodity) const
 {
+	if (commodity->has_special_storage_capacity()) {
+		return this->get_commodity_storage_capacity(commodity);
+	}
+
 	const int64_t storage_capacity = this->get_storage_capacity();
 	return domain_economy::get_storage_for_commodity(commodity, storage_capacity);
 }

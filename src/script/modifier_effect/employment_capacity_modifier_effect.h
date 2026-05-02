@@ -33,11 +33,11 @@ public:
 		}
 	}
 
-	virtual void apply(const site *scope, const centesimal_int &multiplier) const override
+	[[nodiscard]] virtual QCoro::Task<void> apply_coro(const site *scope, const centesimal_int &multiplier) const override
 	{
 		assert_throw(this->employment_type != nullptr);
 
-		scope->get_game_data()->change_employment_capacity(this->employment_type, (this->value * multiplier).to_int());
+		co_await scope->get_game_data()->change_employment_capacity(this->employment_type, (this->value * multiplier).to_int());
 	}
 
 	virtual std::string get_base_string(const site *scope) const override

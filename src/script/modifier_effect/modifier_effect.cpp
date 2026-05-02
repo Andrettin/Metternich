@@ -335,6 +335,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			modifier_effect = std::make_unique<commodity_bonus_per_settlement_modifier_effect<scope_type>>();
 		} else if (tag == "population_strata_tax_rate") {
 			modifier_effect = std::make_unique<population_strata_tax_rate_modifier_effect>();
+		} else if (tag == "storage_capacity") {
+			modifier_effect = std::make_unique<storage_capacity_modifier_effect>();
 		} else if (tag == "technology_cost_modifier") {
 			modifier_effect = std::make_unique<technology_cost_modifier_effect>();
 		}

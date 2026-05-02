@@ -10,6 +10,7 @@
 
 namespace archimedes {
 	class gsml_data;
+	class gsml_property;
 }
 
 namespace metternich {
@@ -29,6 +30,7 @@ class domain_economy final : public QObject
 	Q_PROPERTY(QVariantList tradeable_commodities READ get_tradeable_commodities_qvariant_list NOTIFY tradeable_commodities_changed)
 	Q_PROPERTY(QVariantList stored_commodities READ get_stored_commodities_qvariant_list NOTIFY stored_commodities_changed)
 	Q_PROPERTY(qint64 storage_capacity READ get_storage_capacity NOTIFY storage_capacity_changed)
+	Q_PROPERTY(QVariantList commodity_storage_capacities READ get_commodity_storage_capacities_qvariant_list NOTIFY commodity_storage_capacities_changed)
 	Q_PROPERTY(QVariantList commodity_inputs READ get_commodity_inputs_qvariant_list NOTIFY commodity_inputs_changed)
 	Q_PROPERTY(QVariantList commodity_outputs READ get_commodity_outputs_qvariant_list NOTIFY commodity_outputs_changed)
 	Q_PROPERTY(QVariantList min_commodity_storages READ get_min_commodity_storages_qvariant_list NOTIFY min_commodity_storages_changed)
@@ -170,6 +172,26 @@ public:
 	{
 		this->set_storage_capacity(this->get_storage_capacity() + change);
 	}
+
+	const commodity_map<int64_t> &get_commodity_storage_capacities() const
+	{
+		return this->commodity_storage_capacities;
+	}
+
+	QVariantList get_commodity_storage_capacities_qvariant_list() const;
+
+	Q_INVOKABLE qint64 get_commodity_storage_capacity(const metternich::commodity *commodity) const
+	{
+		const auto find_iterator = this->commodity_storage_capacities.find(commodity);
+
+		if (find_iterator != this->commodity_storage_capacities.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void change_commodity_storage_capacity(const commodity *commodity, const int64_t change);
 
 	static int64_t get_storage_for_commodity(const commodity *commodity, int64_t storage);
 	int64_t get_storage_capacity_for_commodity(const commodity *commodity) const;
@@ -746,6 +768,7 @@ signals:
 	void tradeable_commodities_changed();
 	void stored_commodities_changed();
 	void storage_capacity_changed();
+	void commodity_storage_capacities_changed();
 	void commodity_inputs_changed();
 	void commodity_outputs_changed();
 	void min_commodity_storages_changed();
@@ -765,6 +788,7 @@ private:
 	commodity_set tradeable_commodities;
 	commodity_map<int64_t> stored_commodities;
 	int64_t storage_capacity = 0;
+	commodity_map<int64_t> commodity_storage_capacities;
 	commodity_map<centesimal_int> commodity_inputs;
 	commodity_map<centesimal_int> commodity_outputs;
 	commodity_map<int64_t> min_commodity_storages; //if storage is below this, import the commodity

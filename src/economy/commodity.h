@@ -32,6 +32,7 @@ class commodity final : public named_data_entry, public data_type<commodity>
 	Q_PROPERTY(metternich::food_type food_type MEMBER food_type READ get_food_type NOTIFY changed)
 	Q_PROPERTY(bool abstract MEMBER abstract READ is_abstract NOTIFY changed)
 	Q_PROPERTY(bool storable MEMBER storable READ is_storable NOTIFY changed)
+	Q_PROPERTY(bool special_storage_capacity MEMBER special_storage_capacity READ has_special_storage_capacity NOTIFY changed)
 	Q_PROPERTY(bool local MEMBER local READ is_local NOTIFY changed)
 	Q_PROPERTY(bool provincial MEMBER provincial READ is_provincial NOTIFY changed)
 	Q_PROPERTY(bool negative_allowed MEMBER negative_allowed READ is_negative_allowed NOTIFY changed)
@@ -86,6 +87,10 @@ public:
 		return this->storable;
 	}
 
+	bool has_special_storage_capacity() const
+	{
+		return this->special_storage_capacity;
+	}
 	bool is_local() const
 	{
 		return this->local;
@@ -162,6 +167,7 @@ private:
 	metternich::food_type food_type;
 	bool abstract = false;
 	bool storable = true;
+	bool special_storage_capacity = false; //whether this commodity has special storage capacity for itself
 	bool local = false;
 	bool provincial = false;
 	bool negative_allowed = false;

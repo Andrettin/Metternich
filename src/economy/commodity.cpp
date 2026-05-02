@@ -82,6 +82,10 @@ void commodity::check() const
 	if (this->get_base_price() != 0 && this->get_wealth_value() != 0) {
 		throw std::runtime_error(std::format("Commodity \"{}\" has both a base price and a wealth value.", this->get_identifier()));
 	}
+
+	if (this->has_special_storage_capacity() && !this->is_storable()) {
+		throw std::runtime_error(std::format("Non-storable commodity \"{}\" has a special storage capacity.", this->get_identifier()));
+	}
 }
 
 bool commodity::is_food() const
