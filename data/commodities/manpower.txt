@@ -2,5 +2,8 @@ manpower = {
 	name = "Manpower"
 	type = resource
 	icon = labor
+	tiny_icon = alliance
 	abstract = true
+	manpower = true
+	special_storage_capacity = true
 }
