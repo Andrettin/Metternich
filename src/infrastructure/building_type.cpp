@@ -320,9 +320,15 @@ commodity_map<int> building_type::get_commodity_costs_for_site(const site *site)
 	if (this->get_fortification_level() > 0) {
 		assert_throw(site->get_game_data()->get_holding_type() != nullptr);
 		const centesimal_int fortification_level_change = site->get_game_data()->get_building_fortification_level_change(this);
+		const centesimal_int total_fortification_level = site->get_game_data()->get_fortification_level() + fortification_level_change;
 		for (const auto &[commodity, level_cost] : site->get_game_data()->get_holding_type()->get_fortification_level_commodity_costs()) {
 			int fortification_cost = (level_cost * fortification_level_change).to_int();
 			if (site->get_game_data()->is_provincial_capital() && commodity == defines::get()->get_wealth_commodity()) {
+				//double the cost if fortifying the provincial capital (i.e. fortifying the province itself)
+				fortification_cost *= 2;
+			}
+			if (total_fortification_level > site->get_game_data()->get_holding_level()) {
+				//double the cost if fortifying beyond the holding level
 				fortification_cost *= 2;
 			}
 			fortification_cost = std::max(fortification_cost, 1);
