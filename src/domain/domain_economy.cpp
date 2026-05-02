@@ -169,7 +169,7 @@ domain_game_data *domain_economy::get_game_data() const
 	return this->domain->get_game_data();
 }
 
-void domain_economy::do_production()
+QCoro::Task<void> domain_economy::do_production()
 {
 	try {
 		for (const auto &[commodity, output] : this->get_commodity_outputs()) {
@@ -189,7 +189,7 @@ void domain_economy::do_production()
 
 			const int input_int = input.to_int();
 			if (this->get_stored_commodity(commodity) < input_int) {
-				this->decrease_commodity_input(commodity, input_int - this->get_stored_commodity(commodity));
+				co_await this->decrease_commodity_input(commodity, input_int - this->get_stored_commodity(commodity));
 			}
 		}
 
@@ -567,7 +567,7 @@ bool domain_economy::can_change_commodity_input(const commodity *commodity, cons
 	return true;
 }
 
-void domain_economy::decrease_commodity_input(const commodity *commodity, int64_t decrease)
+QCoro::Task<void> domain_economy::decrease_commodity_input(const commodity *commodity, int64_t decrease)
 {
 	assert_throw(decrease >= 0);
 
@@ -597,7 +597,7 @@ void domain_economy::decrease_commodity_input(const commodity *commodity, int64_
 				assert_throw(employment_input_decrease >= 0);
 			}
 
-			site->get_game_data()->decrease_employment(employment_type, unemployment_size);
+			co_await site->get_game_data()->decrease_employment(employment_type, unemployment_size);
 			decrease -= employment_input_decrease;
 
 			if (decrease <= 0) {

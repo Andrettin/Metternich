@@ -52,13 +52,13 @@ population_unit::population_unit(const population_type *type, const metternich::
 	connect(this, &population_unit::type_changed, this, &population_unit::icon_changed);
 }
 
-void population_unit::do_promotion()
+QCoro::Task<void> population_unit::do_promotion()
 {
-	this->do_promotion(false);
-	this->do_promotion(true);
+	co_await this->do_promotion(false);
+	co_await this->do_promotion(true);
 }
 
-void population_unit::do_promotion(const bool is_demotion)
+QCoro::Task<void> population_unit::do_promotion(const bool is_demotion)
 {
 	assert_throw(this->get_site()->get_game_data()->get_population()->get_size() > 0);
 	assert_throw(this->get_province()->get_game_data()->get_population()->get_size() > 0);
@@ -77,7 +77,7 @@ void population_unit::do_promotion(const bool is_demotion)
 	}
 
 	if (promotion_rate == 0) {
-		return;
+		co_return;
 	}
 
 	const population_type *best_promotion_type = nullptr;
@@ -108,15 +108,15 @@ void population_unit::do_promotion(const bool is_demotion)
 	}
 
 	if (best_promotion_type == nullptr) {
-		return;
+		co_return;
 	}
 
 	const int64_t promoted_size = (this->get_size() * promotion_rate / 100).to_int64();
 	const int64_t lost_wealth = this->get_wealth() * promoted_size / this->get_size();
 
-	this->get_site()->get_game_data()->change_population(best_promotion_type, this->get_culture(), this->get_religion(), this->get_phenotype(), nullptr, promoted_size, this->get_literacy_rate(), lost_wealth);
+	co_await this->get_site()->get_game_data()->change_population(best_promotion_type, this->get_culture(), this->get_religion(), this->get_phenotype(), nullptr, promoted_size, this->get_literacy_rate(), lost_wealth);
 
-	this->get_site()->get_game_data()->change_population(this->get_type(), this->get_culture(), this->get_religion(), this->get_phenotype(), this->get_employment_type(), -promoted_size, this->get_literacy_rate(), -lost_wealth);
+	co_await this->get_site()->get_game_data()->change_population(this->get_type(), this->get_culture(), this->get_religion(), this->get_phenotype(), this->get_employment_type(), -promoted_size, this->get_literacy_rate(), -lost_wealth);
 }
 
 std::string population_unit::get_scope_name() const
@@ -207,20 +207,20 @@ const species *population_unit::get_species() const
 	return this->get_phenotype()->get_species();
 }
 
-void population_unit::set_employment_type(const metternich::employment_type *employment_type)
+QCoro::Task<void> population_unit::set_employment_type(const metternich::employment_type *employment_type)
 {
 	if (employment_type == this->get_employment_type()) {
-		return;
+		co_return;
 	}
 
 	if (this->get_employment_type() != nullptr) {
-		this->get_site()->get_game_data()->change_employment_size(this->get_employment_type(), -this->get_size());
+		co_await this->get_site()->get_game_data()->change_employment_size(this->get_employment_type(), -this->get_size());
 	}
 
 	this->employment_type = employment_type;
 
 	if (this->get_employment_type() != nullptr) {
-		this->get_site()->get_game_data()->change_employment_size(this->get_employment_type(), this->get_size());
+		co_await this->get_site()->get_game_data()->change_employment_size(this->get_employment_type(), this->get_size());
 	}
 
 	emit employment_type_changed();
@@ -281,16 +281,16 @@ void population_unit::set_site(const metternich::site *site)
 	this->set_country(domain);
 }
 
-void population_unit::set_size(const int64_t size)
+[[nodiscard]] QCoro::Task<void> population_unit::set_size(const int64_t size)
 {
 	if (size == this->get_size()) {
-		return;
+		co_return;
 	}
 
 	assert_throw(this->get_site() != nullptr);
 
 	if (this->get_employment_type() != nullptr) {
-		this->get_site()->get_game_data()->change_employment_size(this->get_employment_type(), -this->get_size());
+		co_await this->get_site()->get_game_data()->change_employment_size(this->get_employment_type(), -this->get_size());
 	}
 
 	this->get_site()->get_game_data()->get_population()->on_population_unit_lost(this);
@@ -300,7 +300,7 @@ void population_unit::set_size(const int64_t size)
 	this->get_site()->get_game_data()->get_population()->on_population_unit_gained(this);
 
 	if (this->get_employment_type() != nullptr) {
-		this->get_site()->get_game_data()->change_employment_size(this->get_employment_type(), this->get_size());
+		co_await this->get_site()->get_game_data()->change_employment_size(this->get_employment_type(), this->get_size());
 	}
 
 	emit size_changed();

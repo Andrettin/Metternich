@@ -475,7 +475,7 @@ QCoro::Task<void> game::start_coro()
 			}
 
 			co_await site->get_game_data()->check_holding_type();
-			site->get_game_data()->check_employment();
+			co_await site->get_game_data()->check_employment();
 			site->get_game_data()->calculate_commodity_outputs();
 		}
 
@@ -714,7 +714,7 @@ QCoro::Task<void> game::apply_history(const QDate &start_date)
 		}
 
 		co_await this->apply_free_on_start_buildings();
-		this->apply_population_history();
+		co_await this->apply_population_history();
 
 		//set stored commodities from history after the initial buildings have been constructed, so that buildings granting storage capacity (e.g. warehouses) will already be present
 		for (const domain *domain : this->get_countries()) {
@@ -1185,7 +1185,7 @@ QCoro::Task<void> game::apply_free_on_start_buildings()
 	}
 }
 
-void game::apply_population_history()
+QCoro::Task<void> game::apply_population_history()
 {
 	for (const province *province : map::get()->get_provinces()) {
 		if (province->is_water_zone()) {
@@ -1258,7 +1258,7 @@ void game::apply_population_history()
 					continue;
 				}
 
-				const int64_t remaining_population = this->apply_historical_population_group_to_site(group_key, population, site);
+				const int64_t remaining_population = co_await this->apply_historical_population_group_to_site(group_key, population, site);
 
 				if (remaining_population != 0 && site_game_data->get_owner() != nullptr) {
 					//add the remaining population to remaining population data for the province
@@ -1269,7 +1269,7 @@ void game::apply_population_history()
 			if (site_game_data->get_population_units().empty()) {
 				//ensure holdings have at least one population unit
 				const int64_t population = 10000; //a bit of population to start with
-				this->apply_historical_population_group_to_site(population_group_key(), population, site);
+				co_await this->apply_historical_population_group_to_site(population_group_key(), population, site);
 			}
 		}
 
@@ -1281,7 +1281,7 @@ void game::apply_population_history()
 				continue;
 			}
 
-			const int64_t remaining_population = this->apply_historical_population_group_to_site(group_key, population, provincial_capital);
+			const int64_t remaining_population = co_await this->apply_historical_population_group_to_site(group_key, population, provincial_capital);
 
 			if (remaining_population != 0 && provincial_capital->get_game_data()->get_owner() != nullptr) {
 				//add the remaining population to remaining population data for the owner
@@ -1338,7 +1338,7 @@ void game::apply_population_history()
 				continue;
 			}
 
-			const int64_t remaining_population = this->apply_historical_population_group_to_site(group_key, population, capital);
+			const int64_t remaining_population = co_await this->apply_historical_population_group_to_site(group_key, population, capital);
 
 			//add the remaining population to broader groups
 			if (remaining_population > 0 && !group_key.is_empty()) {
@@ -1366,27 +1366,27 @@ void game::apply_population_history()
 	}
 }
 
-int64_t game::apply_historical_population_group_to_site(const population_group_key &group_key, const int64_t population, const site *site)
+QCoro::Task<int64_t> game::apply_historical_population_group_to_site(const population_group_key &group_key, const int64_t population, const site *site)
 {
 	if (population <= 0) {
-		return 0;
+		co_return 0;
 	}
 
 	site_game_data *site_game_data = site->get_game_data();
 
 	if (!site_game_data->is_built()) {
-		return population;
+		co_return population;
 	}
 
 	const population_type *population_type = group_key.type;
 	if (population_type != nullptr) {
 		if (!site_game_data->can_have_population_type(population_type)) {
-			return population;
+			co_return population;
 		}
 	}
 
 	if (site_game_data->get_available_population_capacity() == 0) {
-		return population;
+		co_return population;
 	}
 
 	log_trace(std::format("Applying historical population group of type \"{}\", culture \"{}\", religion \"{}\" and size {} for settlement \"{}\".", population_type ? population_type->get_identifier() : "none", group_key.culture ? group_key.culture->get_identifier() : "none", group_key.religion ? group_key.religion->get_identifier() : "none", population, site->get_identifier()));
@@ -1394,7 +1394,7 @@ int64_t game::apply_historical_population_group_to_site(const population_group_k
 	const domain *domain = site_game_data->get_owner();
 
 	if (domain == nullptr) {
-		return 0;
+		co_return 0;
 	}
 
 	site_history *site_history = site->get_history();
@@ -1418,7 +1418,7 @@ int64_t game::apply_historical_population_group_to_site(const population_group_k
 			}
 		} else {
 			log::log_error(std::format("Province \"{}\" has no culture weights.", province->get_identifier()));
-			return 0;
+			co_return 0;
 		}
 	}
 	assert_throw(culture != nullptr || !culture_weights.empty());
@@ -1434,7 +1434,7 @@ int64_t game::apply_historical_population_group_to_site(const population_group_k
 			group_key_copy.culture = weighted_culture;
 
 			int64_t culture_population = remaining_population * weight / total_weight;
-			culture_population -= this->apply_historical_population_group_to_site(group_key_copy, culture_population, site);
+			culture_population -= co_await this->apply_historical_population_group_to_site(group_key_copy, culture_population, site);
 			new_remaining_population -= culture_population;
 		}
 
@@ -1450,7 +1450,7 @@ int64_t game::apply_historical_population_group_to_site(const population_group_k
 				}
 			}
 		} else {
-			return 0;
+			co_return 0;
 		}
 	}
 	assert_throw(culture != nullptr);
@@ -1466,7 +1466,7 @@ int64_t game::apply_historical_population_group_to_site(const population_group_k
 			religion = province_religion;
 		} else {
 			log::log_error(std::format("Province \"{}\" has no religion.", province->get_identifier()));
-			return 0;
+			co_return 0;
 		}
 	}
 	assert_throw(religion != nullptr);
@@ -1503,7 +1503,7 @@ int64_t game::apply_historical_population_group_to_site(const population_group_k
 			group_key_copy.phenotype = weighted_phenotype;
 
 			int64_t phenotype_population = remaining_population * weight / total_weight;
-			phenotype_population -= this->apply_historical_population_group_to_site(group_key_copy, phenotype_population, site);
+			phenotype_population -= co_await this->apply_historical_population_group_to_site(group_key_copy, phenotype_population, site);
 			new_remaining_population -= phenotype_population;
 		}
 
@@ -1519,7 +1519,7 @@ int64_t game::apply_historical_population_group_to_site(const population_group_k
 				}
 			}
 		} else {
-			return 0;
+			co_return 0;
 		}
 	}
 	assert_throw(phenotype != nullptr);
@@ -1543,9 +1543,9 @@ int64_t game::apply_historical_population_group_to_site(const population_group_k
 
 	const int64_t applied_population = std::min(remaining_population, site_game_data->get_available_population_capacity());
 
-	site_game_data->change_population(population_type, culture, religion, phenotype, nullptr, applied_population, literacy_rate, 0);
+	co_await site_game_data->change_population(population_type, culture, religion, phenotype, nullptr, applied_population, literacy_rate, 0);
 
-	return remaining_population - applied_population;
+	co_return remaining_population - applied_population;
 }
 
 QCoro::Task<void> game::apply_character_history(const QDate &start_date)
@@ -1607,7 +1607,7 @@ QCoro::Task<void> game::on_setup_finished()
 		for (const province *province : domain_game_data->get_provinces()) {
 			for (const site *site : province->get_game_data()->get_sites()) {
 				//check employment here because it can affect the population type charts via equivalent population types for employment
-				site->get_game_data()->check_employment();
+				co_await site->get_game_data()->check_employment();
 
 				for (const improvement *improvement : improvement::get_all()) {
 					if (improvement->get_free_on_start_conditions() == nullptr) {

@@ -51,7 +51,7 @@ public:
 
 	domain_game_data *get_game_data() const;
 
-	void do_production();
+	[[nodiscard]] QCoro::Task<void> do_production();
 	void do_trade();
 	void do_population_needs_purchasing();
 
@@ -196,7 +196,7 @@ public:
 	Q_INVOKABLE int get_commodity_input(const QString &commodity_identifier) const;
 	void change_commodity_input(const commodity *commodity, const centesimal_int &change, const bool change_input_storage);
 	bool can_change_commodity_input(const commodity *commodity, const centesimal_int &change) const;
-	void decrease_commodity_input(const commodity *commodity, int64_t decrease);
+	[[nodiscard]] QCoro::Task<void> decrease_commodity_input(const commodity *commodity, int64_t decrease);
 
 	const commodity_map<centesimal_int> &get_commodity_outputs() const
 	{

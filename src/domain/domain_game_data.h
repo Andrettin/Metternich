@@ -185,13 +185,13 @@ public:
 	void do_civilian_unit_recruitment();
 	void do_transporter_recruitment();
 	[[nodiscard]] QCoro::Task<void> do_construction();
-	void do_population_growth();
+	[[nodiscard]] QCoro::Task<void> do_population_growth();
 	void do_food_consumption(const int food_consumption);
-	void do_starvation();
+	[[nodiscard]] QCoro::Task<void> do_starvation();
 	void do_cultural_change();
 	void do_population_literacy_change();
-	void do_population_promotion();
-	void do_population_employment();
+	[[nodiscard]] QCoro::Task<void> do_population_promotion();
+	[[nodiscard]] QCoro::Task<void> do_population_employment();
 	[[nodiscard]] QCoro::Task<void> do_events();
 
 	domain_economy *get_economy() const
@@ -820,8 +820,8 @@ public:
 		this->set_population_growth(this->get_population_growth() + change);
 	}
 
-	void grow_population();
-	void decrease_population(const bool change_population_growth);
+	[[nodiscard]] QCoro::Task<void> grow_population();
+	[[nodiscard]] QCoro::Task<void> decrease_population(const bool change_population_growth);
 	population_unit *choose_starvation_population_unit();
 
 	Q_INVOKABLE const icon *get_population_type_small_icon(const metternich::population_type *type) const;

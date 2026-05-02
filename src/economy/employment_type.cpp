@@ -5,6 +5,7 @@
 #include "economy/commodity.h"
 #include "game/game.h"
 #include "population/population_type.h"
+#include "script/modifier.h"
 #include "util/assert_util.h"
 
 namespace metternich {
@@ -45,6 +46,12 @@ void employment_type::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->employee_types.insert(population_type::get(value));
 		}
+	} else if (tag == "modifier") {
+		this->modifier = std::make_unique<metternich::modifier<const site>>();
+		this->modifier->process_gsml_data(scope);
+	} else if (tag == "domain_modifier") {
+		this->domain_modifier = std::make_unique<metternich::modifier<const domain>>();
+		this->domain_modifier->process_gsml_data(scope);
 	} else {
 		named_data_entry::process_gsml_scope(scope);
 	}

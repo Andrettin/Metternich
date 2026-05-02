@@ -11,6 +11,9 @@ namespace metternich {
 
 class commodity;
 
+template <typename scope_type>
+class modifier;
+
 class employment_type final : public named_data_entry, public data_type<employment_type>
 {
 	Q_OBJECT
@@ -61,6 +64,16 @@ public:
 		return this->base_employment_size;
 	}
 
+	const modifier<const site> *get_modifier() const
+	{
+		return this->modifier.get();
+	}
+
+	const modifier<const domain> *get_domain_modifier() const
+	{
+		return this->domain_modifier.get();
+	}
+
 signals:
 	void changed();
 
@@ -70,6 +83,8 @@ private:
 	const commodity *output_commodity = nullptr;
 	int64_t monthly_output_value = 0;
 	int64_t base_employment_size = 0; //the employment size used for calculating the employee output
+	std::unique_ptr<metternich::modifier<const site>> modifier;
+	std::unique_ptr<metternich::modifier<const domain>> domain_modifier;
 };
 
 }

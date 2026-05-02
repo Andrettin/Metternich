@@ -33,6 +33,7 @@
 #include "domain/law.h"
 #include "domain/subject_type.h"
 #include "economy/commodity.h"
+#include "economy/employment_type.h"
 #include "economy/expense_transaction_type.h"
 #include "economy/income_transaction_type.h"
 #include "economy/resource.h"
@@ -444,7 +445,7 @@ QCoro::Task<void> domain_game_data::do_turn()
 
 		if (game::get()->is_last_turn_of_quarter()) {
 			this->collect_regency();
-			this->get_economy()->do_production();
+			co_await this->get_economy()->do_production();
 			this->collect_wealth();
 			co_await this->pay_maintenance();
 		}
@@ -476,11 +477,11 @@ QCoro::Task<void> domain_game_data::do_turn()
 		co_await this->get_military()->do_military_unit_recruitment();
 		co_await this->get_technology()->do_research();
 		co_await this->do_construction();
-		this->do_population_growth();
+		co_await this->do_population_growth();
 		this->do_cultural_change();
 		this->do_population_literacy_change();
-		this->do_population_promotion();
-		this->do_population_employment();
+		co_await this->do_population_promotion();
+		co_await this->do_population_employment();
 
 		for (const qunique_ptr<civilian_unit> &civilian_unit : this->civilian_units) {
 			co_await civilian_unit->do_turn();
@@ -715,12 +716,12 @@ void domain_game_data::do_transporter_recruitment()
 	}
 }
 
-void domain_game_data::do_population_growth()
+QCoro::Task<void> domain_game_data::do_population_growth()
 {
 	try {
 		if (this->get_food_consumption() == 0) {
 			this->set_population_growth(0);
-			return;
+			co_return;
 		}
 
 		const int available_food = this->get_available_food();
@@ -737,11 +738,11 @@ void domain_game_data::do_population_growth()
 		this->do_food_consumption(food_consumption);
 
 		while (this->get_population_growth() >= defines::get()->get_population_growth_threshold()) {
-			this->grow_population();
+			co_await this->grow_population();
 		}
 
 		if (this->get_population_growth() < 0) {
-			//this->do_starvation();
+			//co_await this->do_starvation();
 		}
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error(std::format("Error doing population growth for country \"{}\".", this->domain->get_identifier())));
@@ -769,13 +770,13 @@ void domain_game_data::do_food_consumption(const int food_consumption)
 	}
 }
 
-void domain_game_data::do_starvation()
+QCoro::Task<void> domain_game_data::do_starvation()
 {
 	int starvation_count = 0;
 
 	while (this->get_population_growth() < 0) {
 		//starvation
-		this->decrease_population(true);
+		co_await this->decrease_population(true);
 		++starvation_count;
 
 		if (this->get_food_consumption() == 0) {
@@ -856,19 +857,19 @@ void domain_game_data::do_population_literacy_change()
 	}
 }
 
-void domain_game_data::do_population_promotion()
+QCoro::Task<void> domain_game_data::do_population_promotion()
 {
 	const std::vector<population_unit *> population_units = this->get_population_units();
 	for (population_unit *population_unit : population_units) {
-		population_unit->do_promotion();
+		co_await population_unit->do_promotion();
 	}
 }
 
-void domain_game_data::do_population_employment()
+QCoro::Task<void> domain_game_data::do_population_employment()
 {
 	for (const site *site : this->get_sites()) {
 		if (site->is_settlement() && site->get_game_data()->is_built()) {
-			site->get_game_data()->check_employment();
+			co_await site->get_game_data()->check_employment();
 		}
 	}
 }
@@ -1663,6 +1664,12 @@ QCoro::Task<void> domain_game_data::on_site_gained(const site *site, const int m
 			const wonder *wonder = building_slot->get_wonder();
 			if (wonder != nullptr) {
 				co_await this->on_wonder_gained(wonder, multiplier);
+			}
+		}
+
+		for (const auto &[employment_type, employment_size] : site->get_game_data()->get_employment_sizes()) {
+			if (employment_type->get_domain_modifier() != nullptr) {
+				co_await employment_type->get_domain_modifier()->apply(this->domain, (centesimal_int(employment_size) / employment_type->get_base_employment_size()) * multiplier);
 			}
 		}
 	}
@@ -3040,7 +3047,7 @@ void domain_game_data::set_population_growth(const int growth)
 	}
 }
 
-void domain_game_data::grow_population()
+QCoro::Task<void> domain_game_data::grow_population()
 {
 	if (this->population_units.empty()) {
 		throw std::runtime_error("Tried to grow population in a country which has no pre-existing population.");
@@ -3060,12 +3067,12 @@ void domain_game_data::grow_population()
 	const population_type *population_type = culture->get_population_class_type(site->get_game_data()->get_default_population_class());
 
 	const int64_t population_size = 100;
-	site->get_game_data()->change_population(population_type, culture, religion, phenotype, nullptr, population_size, population_unit->get_literacy_rate(), 0);
+	co_await site->get_game_data()->change_population(population_type, culture, religion, phenotype, nullptr, population_size, population_unit->get_literacy_rate(), 0);
 
 	this->change_population_growth(-defines::get()->get_population_growth_threshold());
 }
 
-void domain_game_data::decrease_population(const bool change_population_growth)
+QCoro::Task<void> domain_game_data::decrease_population(const bool change_population_growth)
 {
 	//disband population unit, if possible
 	if (!this->population_units.empty()) {
@@ -3074,8 +3081,8 @@ void domain_game_data::decrease_population(const bool change_population_growth)
 			if (change_population_growth) {
 				this->change_population_growth(1);
 			}
-			population_unit->get_site()->get_game_data()->pop_population_unit(population_unit);
-			return;
+			co_await population_unit->get_site()->get_game_data()->pop_population_unit(population_unit);
+			co_return;
 		}
 	}
 

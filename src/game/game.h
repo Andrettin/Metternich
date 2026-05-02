@@ -132,8 +132,8 @@ public:
 	[[nodiscard]] QCoro::Task<void> apply_site_buildings(const site *site);
 	[[nodiscard]] QCoro::Task<void> apply_free_on_start_buildings();
 
-	void apply_population_history();
-	int64_t apply_historical_population_group_to_site(const population_group_key &group_key, const int64_t population, const site *site);
+	[[nodiscard]] QCoro::Task<void> apply_population_history();
+	[[nodiscard]] QCoro::Task<int64_t> apply_historical_population_group_to_site(const population_group_key &group_key, const int64_t population, const site *site);
 	[[nodiscard]] QCoro::Task<void> apply_character_history(const QDate &start_date);
 
 	QCoro::Task<void> on_setup_finished();

@@ -48,8 +48,8 @@ class population_unit final : public QObject
 public:
 	explicit population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const metternich::employment_type *employment_type, const int64_t size, const decimillesimal_int &literacy_rate, const site *site);
 
-	void do_promotion();
-	void do_promotion(const bool is_demotion);
+	[[nodiscard]] QCoro::Task<void> do_promotion();
+	[[nodiscard]] QCoro::Task<void> do_promotion(const bool is_demotion);
 
 	std::string get_scope_name() const;
 
@@ -88,7 +88,7 @@ public:
 		return this->employment_type;
 	}
 
-	void set_employment_type(const metternich::employment_type *employment_type);
+	[[nodiscard]] QCoro::Task<void> set_employment_type(const metternich::employment_type *employment_type);
 
 	const icon *get_icon() const;
 	const icon *get_small_icon() const;
@@ -114,11 +114,11 @@ public:
 		return this->size;
 	}
 
-	void set_size(const int64_t size);
+	[[nodiscard]] QCoro::Task<void> set_size(const int64_t size);
 
-	void change_size(const int64_t change)
+	[[nodiscard]] QCoro::Task<void> change_size(const int64_t change)
 	{
-		this->set_size(this->get_size() + change);
+		co_await this->set_size(this->get_size() + change);
 	}
 
 	int64_t get_literate_size() const;
