@@ -2201,7 +2201,11 @@ QCoro::Task<void> site_game_data::change_employment_capacity(const employment_ty
 		if (capacity_overflow > 0) {
 			co_await this->decrease_employment(employment_type, capacity_overflow);
 
-			assert_throw(capacity_overflow == 0);
+			capacity_overflow = this->get_employment_size(employment_type) - capacity;
+			if (capacity_overflow != 0) {
+				throw std::runtime_error(std::format("Capacity overflow is {} (rather than 0) after decreasing employment for employment type \"{}\".", capacity_overflow, employment_type->get_identifier()));
+			}
+
 			assert_throw(this->get_employment_size(employment_type) == capacity);
 		}
 	}
