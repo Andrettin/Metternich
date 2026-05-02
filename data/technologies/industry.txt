@@ -13,7 +13,7 @@ road_building = {
 		}
 		modifier = {
 			factor = 0.9
-			has_building_class = library
+			scripted_condition = has_library
 		}
 		modifier = {
 			factor = 0.9
@@ -311,7 +311,7 @@ glassblowing = {
 		}
 		modifier = {
 			factor = 0.9
-			has_building_class = library
+			scripted_condition = has_library
 		}
 		modifier = {
 			factor = 0.9
@@ -439,7 +439,7 @@ glassblowing = {
 		
 		modifier = {
 			factor = 0.9
-			has_building_class = library
+			scripted_condition = has_library
 		}
 		modifier = {
 			factor = 0.9
@@ -605,7 +605,7 @@ black_coal = {
 		}
 		modifier = {
 			factor = 0.9
-			has_building_class = library
+			scripted_condition = has_library
 		}
 		modifier = {
 			factor = 0.9

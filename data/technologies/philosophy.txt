@@ -27,7 +27,7 @@ aristotelian_logic = {
 		}
 		modifier = {
 			factor = 0.9
-			has_building_class = library
+			scripted_condition = has_library
 		}
 		modifier = {
 			factor = 0.95
@@ -69,7 +69,7 @@ aristotelian_logic = {
 		
 		modifier = {
 			factor = 0.9
-			has_building_class = library
+			scripted_condition = has_library
 		}
 		modifier = {
 			factor = 0.7
@@ -88,7 +88,7 @@ aristotelian_logic = {
 		modifier = {
 			factor = 0.9
 			source_province = {
-				has_building_class = library
+				scripted_condition = has_library
 			}
 		}
 		modifier = {
@@ -154,7 +154,7 @@ scholasticism = {
 		}
 		modifier = {
 			factor = 0.9
-			has_building_class = library
+			scripted_condition = has_library
 		}
 		modifier = {
 			factor = 0.95
@@ -196,7 +196,7 @@ scholasticism = {
 		}
 		modifier = {
 			factor = 0.9
-			has_building_class = library
+			scripted_condition = has_library
 		}
 		modifier = {
 			factor = 0.75
@@ -215,7 +215,7 @@ scholasticism = {
 		modifier = {
 			factor = 0.9
 			source_province = {
-				has_building_class = library
+				scripted_condition = has_library
 			}
 		}
 		modifier = {
@@ -281,7 +281,7 @@ astrology_and_astronomy = {
 		}
 		modifier = {
 			factor = 0.9
-			has_building_class = library
+			scripted_condition = has_library
 		}
 		modifier = {
 			factor = 0.9
@@ -323,7 +323,7 @@ astrology_and_astronomy = {
 		}
 		modifier = {
 			factor = 0.9
-			has_building_class = library
+			scripted_condition = has_library
 		}
 		modifier = {
 			factor = 0.8
@@ -402,7 +402,7 @@ natural_philosophy = {
 		}
 		modifier = {
 			factor = 0.9
-			has_building_class = library
+			scripted_condition = has_library
 		}
 		modifier = {
 			factor = 0.9
@@ -444,7 +444,7 @@ natural_philosophy = {
 		}
 		modifier = {
 			factor = 0.95
-			has_building_class = library
+			scripted_condition = has_library
 		}
 		modifier = {
 			factor = 0.85
@@ -463,7 +463,7 @@ natural_philosophy = {
 		modifier = {
 			factor = 0.95
 			source_province = {
-				has_building_class = library
+				scripted_condition = has_library
 			}
 		}
 		modifier = {
@@ -530,7 +530,7 @@ science = {
 		}
 		modifier = {
 			factor = 0.9
-			has_building_class = library
+			scripted_condition = has_library
 		}
 		modifier = {
 			factor = 0.95
@@ -576,7 +576,7 @@ science = {
 		}
 		modifier = {
 			factor = 0.95
-			has_building_class = library
+			scripted_condition = has_library
 		}
 		modifier = {
 			factor = 0.9
@@ -595,7 +595,7 @@ science = {
 		modifier = {
 			factor = 0.95
 			source_province = {
-				has_building_class = library
+				scripted_condition = has_library
 			}
 		}
 		modifier = {

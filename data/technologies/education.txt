@@ -16,7 +16,7 @@ monastic_school = {
 		}
 		modifier = {
 			factor = 0.85
-			has_building_class = library
+			scripted_condition = has_library
 		}
 		modifier = {
 			factor = 0.95
@@ -120,7 +120,7 @@ monastic_school = {
 		
 		modifier = {
 			factor = 0.9
-			has_building_class = library
+			scripted_condition = has_library
 		}
 		modifier = {
 			factor = 0.9
@@ -250,7 +250,7 @@ cathedral_school = {
 		}
 		modifier = {
 			factor = 0.85
-			has_building_class = library
+			scripted_condition = has_library
 		}
 		modifier = {
 			factor = 0.95
@@ -485,7 +485,7 @@ university = {
 		}
 		modifier = {
 			factor = 0.9
-			has_building_class = library
+			scripted_condition = has_library
 		}
 		modifier = {
 			factor = 0.95
@@ -589,7 +589,7 @@ university = {
 		
 		modifier = {
 			factor = 0.9
-			has_building_class = library
+			scripted_condition = has_library
 		}
 		modifier = {
 			factor = 0.9

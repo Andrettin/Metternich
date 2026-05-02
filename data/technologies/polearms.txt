@@ -25,7 +25,7 @@ pike = {
 		}
 		modifier = {
 			factor = 0.85
-			has_building_class = library
+			scripted_condition = has_library
 		}
 		modifier = {
 			factor = 0.75
@@ -207,7 +207,7 @@ polearm = {
 		}
 		modifier = {
 			factor = 0.95
-			has_building_class = library
+			scripted_condition = has_library
 		}
 		modifier = {
 			factor = 0.85

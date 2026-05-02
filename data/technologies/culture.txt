@@ -13,7 +13,7 @@ ballads = {
 		}
 		modifier = {
 			factor = 0.9
-			has_building_class = library
+			scripted_condition = has_library
 		}
 		modifier = {
 			factor = 0.9
@@ -196,7 +196,7 @@ chronicle_writing = {
 		}
 		modifier = {
 			factor = 0.9
-			has_building_class = library
+			scripted_condition = has_library
 		}
 		modifier = {
 			factor = 0.95

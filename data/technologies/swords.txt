@@ -17,7 +17,7 @@ short_sword = {
 		}
 		modifier = {
 			factor = 0.85
-			has_building_class = library
+			scripted_condition = has_library
 		}
 		modifier = {
 			factor = 0.75
@@ -191,7 +191,7 @@ long_sword = {
 		}
 		modifier = {
 			factor = 0.9
-			has_building_class = library
+			scripted_condition = has_library
 		}
 		modifier = {
 			factor = 0.8
@@ -361,7 +361,7 @@ bastard_sword = {
 		}
 		modifier = {
 			factor = 0.95
-			has_building_class = library
+			scripted_condition = has_library
 		}
 		modifier = {
 			factor = 0.8
