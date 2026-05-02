@@ -193,6 +193,19 @@ QCoro::Task<void> domain_economy::do_production()
 			this->change_stored_commodity(commodity, output.to_int());
 		}
 
+		//recover manpower
+		for (const auto &[commodity, storage_capacity] : this->get_commodity_storage_capacities()) {
+			if (!commodity->is_manpower()) {
+				continue;
+			}
+
+			assert_throw(commodity->is_storable());
+
+			const int64_t monthly_recovery = std::max(storage_capacity / 120, 100ll);
+			const int64_t recovery_per_turn = monthly_recovery * game::get()->get_current_months_per_turn();
+			this->change_stored_commodity(commodity, recovery_per_turn);
+		}
+
 		const commodity_map<centesimal_int> commodity_inputs = this->get_commodity_inputs();
 		for (const auto &[commodity, input] : commodity_inputs) {
 			if (!commodity->is_storable()) {

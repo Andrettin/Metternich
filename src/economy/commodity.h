@@ -31,6 +31,7 @@ class commodity final : public named_data_entry, public data_type<commodity>
 	Q_PROPERTY(const metternich::icon* tiny_icon MEMBER tiny_icon READ get_tiny_icon NOTIFY changed)
 	Q_PROPERTY(metternich::food_type food_type MEMBER food_type READ get_food_type NOTIFY changed)
 	Q_PROPERTY(bool abstract MEMBER abstract READ is_abstract NOTIFY changed)
+	Q_PROPERTY(bool manpower MEMBER manpower READ is_manpower NOTIFY changed)
 	Q_PROPERTY(bool storable MEMBER storable READ is_storable NOTIFY changed)
 	Q_PROPERTY(bool special_storage_capacity MEMBER special_storage_capacity READ has_special_storage_capacity NOTIFY changed)
 	Q_PROPERTY(bool local MEMBER local READ is_local NOTIFY changed)
@@ -82,6 +83,11 @@ public:
 		return this->abstract;
 	}
 
+	bool is_manpower() const
+	{
+		return this->manpower;
+	}
+
 	bool is_storable() const
 	{
 		return this->storable;
@@ -91,6 +97,7 @@ public:
 	{
 		return this->special_storage_capacity;
 	}
+
 	bool is_local() const
 	{
 		return this->local;
@@ -166,6 +173,7 @@ private:
 	const metternich::icon *tiny_icon = nullptr;
 	metternich::food_type food_type;
 	bool abstract = false;
+	bool manpower = false; //whether this is some form of manpower, used for recruiting units
 	bool storable = true;
 	bool special_storage_capacity = false; //whether this commodity has special storage capacity for itself
 	bool local = false;
