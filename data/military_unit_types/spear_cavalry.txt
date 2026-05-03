@@ -41,6 +41,7 @@ knights = {
 	}
 	commodity_costs = {
 		wealth = 6gb
+		manpower = 200
 	}
 	maintenance_commodity_costs = {
 		wealth = 2gb

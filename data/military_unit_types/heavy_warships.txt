@@ -13,6 +13,7 @@ galleon = {
 	}
 	commodity_costs = {
 		wealth = 15gb
+		manpower = 250
 	}
 	upgrades = {
 		ship_of_the_line

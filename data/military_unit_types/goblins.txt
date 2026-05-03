@@ -15,6 +15,7 @@ goblin_infantry = {
 	}
 	commodity_costs = {
 		wealth = 1gb
+		manpower = 200
 	}
 	maintenance_commodity_costs = {
 		wealth = 1gb

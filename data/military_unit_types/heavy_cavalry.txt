@@ -17,6 +17,7 @@ harquebusiers = {
 	}
 	commodity_costs = {
 		wealth = 4gb
+		manpower = 200
 	}
 	maintenance_commodity_costs = {
 		wealth = 2gb
@@ -45,6 +46,7 @@ cuirassiers = {
 	}
 	commodity_costs = {
 		wealth = 4gb
+		manpower = 200
 	}
 	maintenance_commodity_costs = {
 		wealth = 2gb
