@@ -461,7 +461,7 @@ public:
 		return 0;
 	}
 
-	[[nodiscard]] QCoro::Task<void> change_employment_capacity(const employment_type *employment_type, const int64_t change);
+	void change_employment_capacity(const employment_type *employment_type, const int64_t change);
 
 	int64_t get_available_employment_capacity(const employment_type *employment_type) const
 	{
@@ -471,6 +471,7 @@ public:
 	int64_t get_available_employment_input_capacity(const employment_type *employment_type) const;
 	[[nodiscard]] QCoro::Task<void> decrease_employment(const employment_type *employment_type, int64_t decrease);
 	[[nodiscard]] QCoro::Task<void> check_employment();
+	[[nodiscard]] QCoro::Task<void> check_employment_capacities_overflow();
 
 	int get_free_food_consumption() const
 	{

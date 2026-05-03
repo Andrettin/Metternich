@@ -2183,7 +2183,7 @@ QCoro::Task<void> site_game_data::change_employment_size(const employment_type *
 	}
 }
 
-QCoro::Task<void> site_game_data::change_employment_capacity(const employment_type *employment_type, const int64_t change)
+void site_game_data::change_employment_capacity(const employment_type *employment_type, const int64_t change)
 {
 	assert_throw(employment_type != nullptr);
 
@@ -2193,21 +2193,6 @@ QCoro::Task<void> site_game_data::change_employment_capacity(const employment_ty
 
 	if (capacity == 0) {
 		this->employment_capacities.erase(employment_type);
-	}
-
-	if (change < 0) {
-		//if the employment capacity is now below the employment size, reduce the latter
-		int64_t capacity_overflow = this->get_employment_size(employment_type) - capacity;
-		if (capacity_overflow > 0) {
-			co_await this->decrease_employment(employment_type, capacity_overflow);
-
-			capacity_overflow = this->get_employment_size(employment_type) - capacity;
-			if (capacity_overflow != 0) {
-				throw std::runtime_error(std::format("Capacity overflow is {} (rather than 0) after decreasing employment for employment type \"{}\".", capacity_overflow, employment_type->get_identifier()));
-			}
-
-			assert_throw(this->get_employment_size(employment_type) == capacity);
-		}
 	}
 }
 
@@ -2253,6 +2238,8 @@ QCoro::Task<void> site_game_data::decrease_employment(const employment_type *emp
 
 QCoro::Task<void> site_game_data::check_employment()
 {
+	co_await this->check_employment_capacities_overflow();
+
 	std::vector<population_unit *> unemployed_population_units;
 	for (const auto &population_unit : this->get_population_units()) {
 		if (population_unit->get_employment_type() == nullptr) {
@@ -2303,6 +2290,27 @@ QCoro::Task<void> site_game_data::check_employment()
 			if (available_employment_capacity == 0 || available_employment_input_capacity == 0) {
 				break;
 			}
+		}
+	}
+}
+
+QCoro::Task<void> site_game_data::check_employment_capacities_overflow()
+{
+	const data_entry_map<employment_type, int64_t> employment_sizes = this->get_employment_sizes();
+	for (const auto &[employment_type, employment_size] : employment_sizes) {
+		const int64_t capacity = this->get_employment_capacity(employment_type);
+
+		//if the employment capacity is below the employment size, reduce the latter
+		int64_t capacity_overflow = employment_size - capacity;
+		if (capacity_overflow > 0) {
+			co_await this->decrease_employment(employment_type, capacity_overflow);
+
+			capacity_overflow = this->get_employment_size(employment_type) - capacity;
+			if (capacity_overflow != 0) {
+				throw std::runtime_error(std::format("Capacity overflow is {} (rather than 0) after decreasing employment for employment type \"{}\".", capacity_overflow, employment_type->get_identifier()));
+			}
+
+			assert_throw(this->get_employment_size(employment_type) == capacity);
 		}
 	}
 }
