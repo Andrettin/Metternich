@@ -28,6 +28,10 @@ lower_austria = {
 			culture = german
 		}
 		
+		1066 = {
+			technologies += hill_fort
+		}
+		
 		1156 = {
 			owner = austria #became part of the Duchy of Austria in 1156; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
 			culture = austrian

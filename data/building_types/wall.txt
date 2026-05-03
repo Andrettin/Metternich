@@ -4,6 +4,7 @@ wooden_palisade = {
 	portrait = fort
 	icon = wall
 	fortification_level = 0.5
+	required_technology = hill_fort
 	free_on_start_extra_technology = 1
 	holding_types = {
 		castle
