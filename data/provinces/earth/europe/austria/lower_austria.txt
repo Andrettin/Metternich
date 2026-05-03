@@ -43,6 +43,8 @@ lower_austria = {
 			technologies += short_sword
 			technologies += long_sword
 			technologies += pike
+			technologies += small_castle
+			technologies += medium_castle
 			technologies += monastic_school
 			technologies += aristotelian_logic
 			technologies += scholasticism
@@ -51,6 +53,7 @@ lower_austria = {
 		
 		1337 = {
 			technologies += morning_star
+			technologies += large_castle
 			technologies += cathedral_school
 			technologies += astrology_and_astronomy
 			technologies += ballads

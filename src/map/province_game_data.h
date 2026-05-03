@@ -263,6 +263,7 @@ public:
 	[[nodiscard]] QCoro::Task<void> remove_technology(const technology *technology);
 	bool can_gain_technology(const technology *technology) const;
 	[[nodiscard]] QCoro::Task<void> on_technology_gained(const technology *technology, const int multiplier);
+	centesimal_int get_extra_technology(const technology *technology) const;
 
 	const scripted_province_modifier_map<int> &get_scripted_modifiers() const
 	{

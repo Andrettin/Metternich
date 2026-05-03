@@ -52,6 +52,7 @@ university = {
 	size = 4
 	base_building = academy
 	required_technology = university
+	free_on_start_extra_technology = 1.2
 	holding_types = {
 		city
 		guild
@@ -110,6 +111,7 @@ monastic_school = {
 	icon = wooden_cross
 	required_technology = monastic_school
 	build_duration = 547d
+	free_on_start_extra_technology = 0.2
 	holding_types = {
 		temple
 	}
@@ -143,6 +145,7 @@ cathedral_school = {
 	base_building = monastic_school
 	required_technology = cathedral_school
 	build_duration = 547d
+	free_on_start_extra_technology = 0.2
 	holding_types = {
 		temple
 	}

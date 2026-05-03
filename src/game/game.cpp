@@ -1176,12 +1176,25 @@ QCoro::Task<void> game::apply_free_on_start_buildings()
 			continue;
 		}
 
+		const province *province = site->get_game_data()->get_province();
+
 		for (const building_type *building : building_type::get_all()) {
-			if (building->get_free_on_start_conditions() == nullptr) {
-				continue;
+			bool is_free_on_start = false;
+
+			if (building->get_free_on_start_extra_technology() != 0) {
+				assert_throw(building->get_required_technology() != nullptr);
+				const centesimal_int extra_technology = province->get_game_data()->get_extra_technology(building->get_required_technology());
+				const centesimal_int extra_technology_threshold = building->get_free_on_start_extra_technology() + random::get()->generate_in_range(0, 1);
+				if (extra_technology >= extra_technology_threshold) {
+					is_free_on_start = true;
+				}
 			}
 
-			if (!building->get_free_on_start_conditions()->check(site, read_only_context(site))) {
+			if (!is_free_on_start && building->get_free_on_start_conditions() != nullptr && building->get_free_on_start_conditions()->check(site, read_only_context(site))) {
+				is_free_on_start = true;
+			}
+
+			if (!is_free_on_start) {
 				continue;
 			}
 

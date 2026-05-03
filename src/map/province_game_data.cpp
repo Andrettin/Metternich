@@ -1412,6 +1412,26 @@ QCoro::Task<void> province_game_data::on_technology_gained(const technology *tec
 	}
 }
 
+centesimal_int province_game_data::get_extra_technology(const technology *technology) const
+{
+	centesimal_int extra_technology;
+
+	if (!this->has_technology(technology)) {
+		return extra_technology;
+	}
+
+	//check technologies which have this one as their prerequisite
+	for (const metternich::technology *requiring_technology : technology->get_leads_to()) {
+		if (!this->has_technology(requiring_technology)) {
+			continue;
+		}
+
+		extra_technology = centesimal_int::max(this->get_extra_technology(requiring_technology) + 1, extra_technology);
+	}
+
+	return extra_technology;
+}
+
 QVariantList province_game_data::get_scripted_modifiers_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_scripted_modifiers());

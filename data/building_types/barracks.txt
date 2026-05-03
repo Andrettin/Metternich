@@ -4,6 +4,8 @@ guard_quarters = {
 	portrait = fort
 	icon = crossed_sabers
 	build_duration = 365d
+	required_technology = small_castle
+	free_on_start_extra_technology = 1
 	holding_types = {
 		castle
 	}

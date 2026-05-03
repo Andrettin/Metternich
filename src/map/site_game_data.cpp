@@ -1708,7 +1708,6 @@ bool site_game_data::can_gain_free_building(const building_type *building, const
 	return true;
 }
 
-[[nodiscard]]
 QCoro::Task<bool> site_game_data::check_free_building(const building_type *building)
 {
 	if (!this->can_gain_free_building(building, true, true)) {
