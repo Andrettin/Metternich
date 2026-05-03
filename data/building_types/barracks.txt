@@ -38,6 +38,233 @@ guard_quarters = {
 	}
 }
 
+small_barracks = {
+	name = "Small Barracks"
+	building_class = small_barracks
+	portrait = fort
+	icon = crossed_sabers
+	build_duration = 547d
+	base_building = guard_quarters
+	required_technology = small_castle
+	free_on_start_extra_technology = 2.2
+	holding_types = {
+		castle
+	}
+	required_buildings = {
+		wooden_palisade
+	}
+	builder_civilian_unit_types = {
+		ruler
+		marshal
+		engineer
+	}
+	recruited_military_unit_categories = {
+		mace_infantry
+		spear_infantry
+		blade_infantry
+		regular_infantry
+		heavy_infantry
+		general
+	}
+	commodity_costs = {
+		wealth = 18000gp
+	}
+	modifier = {
+		employment_capacity = {
+			employment_type = heavy_infantry
+			capacity = 70
+		}
+		employment_capacity = {
+			employment_type = pikemen
+			capacity = 30
+		}
+		population_capacity = 100
+	}
+}
+
+medium_barracks = {
+	name = "Medium Barracks"
+	building_class = medium_barracks
+	portrait = fort
+	icon = crossed_sabers
+	build_duration = 730d
+	base_building = small_barracks
+	required_technology = medium_castle
+	free_on_start_extra_technology = 3
+	holding_types = {
+		castle
+	}
+	required_buildings = {
+		low_stone_wall
+	}
+	builder_civilian_unit_types = {
+		ruler
+		marshal
+		engineer
+	}
+	recruited_military_unit_categories = {
+		mace_infantry
+		spear_infantry
+		blade_infantry
+		regular_infantry
+		heavy_infantry
+		general
+	}
+	commodity_costs = {
+		wealth = 30000gp
+	}
+	modifier = {
+		law = 1
+		employment_capacity = {
+			employment_type = heavy_infantry
+			capacity = 115
+		}
+		employment_capacity = {
+			employment_type = pikemen
+			capacity = 50
+		}
+		population_capacity = 165
+	}
+	domain_modifier = {
+		unrest = -1
+	}
+}
+
+large_barracks = {
+	name = "Large Barracks"
+	building_class = large_barracks
+	portrait = fort
+	icon = crossed_sabers
+	build_duration = 1095d
+	base_building = medium_barracks
+	required_technology = large_castle
+	free_on_start_extra_technology = 3
+	holding_types = {
+		castle
+	}
+	builder_civilian_unit_types = {
+		ruler
+		marshal
+		engineer
+	}
+	recruited_military_unit_categories = {
+		mace_infantry
+		spear_infantry
+		blade_infantry
+		regular_infantry
+		heavy_infantry
+		general
+	}
+	commodity_costs = {
+		wealth = 45000gp
+	}
+	modifier = {
+		law = 1
+		employment_capacity = {
+			employment_type = heavy_infantry
+			capacity = 165
+		}
+		employment_capacity = {
+			employment_type = pikemen
+			capacity = 75
+		}
+		population_capacity = 240
+	}
+	domain_modifier = {
+		unrest = -1
+	}
+}
+
+great_barracks = {
+	name = "Great Barracks"
+	building_class = great_barracks
+	portrait = fort
+	icon = crossed_sabers
+	build_duration = 2190d
+	base_building = large_barracks
+	required_technology = huge_castle
+	free_on_start_extra_technology = 2
+	holding_types = {
+		castle
+	}
+	builder_civilian_unit_types = {
+		ruler
+		marshal
+		engineer
+	}
+	recruited_military_unit_categories = {
+		mace_infantry
+		spear_infantry
+		blade_infantry
+		regular_infantry
+		heavy_infantry
+		general
+	}
+	commodity_costs = {
+		wealth = 60000gp
+	}
+	modifier = {
+		law = 1
+		employment_capacity = {
+			employment_type = heavy_infantry
+			capacity = 225
+		}
+		employment_capacity = {
+			employment_type = pikemen
+			capacity = 100
+		}
+		population_capacity = 325
+	}
+	domain_modifier = {
+		unrest = -1
+	}
+}
+
+royal_barracks = {
+	name = "Royal Barracks"
+	building_class = royal_barracks
+	portrait = fort
+	icon = crossed_sabers
+	build_duration = 2190d
+	base_building = great_barracks
+	required_technology = huge_castle
+	free_on_start_extra_technology = 0.2
+	holding_types = {
+		castle
+	}
+	builder_civilian_unit_types = {
+		ruler
+		marshal
+		engineer
+	}
+	recruited_military_unit_categories = {
+		mace_infantry
+		spear_infantry
+		blade_infantry
+		regular_infantry
+		heavy_infantry
+		general
+	}
+	commodity_costs = {
+		wealth = 75000gp
+	}
+	modifier = {
+		law = 1
+		employment_capacity = {
+			employment_type = heavy_infantry
+			capacity = 290
+		}
+		employment_capacity = {
+			employment_type = pikemen
+			capacity = 130
+		}
+		population_capacity = 420
+	}
+	domain_modifier = {
+		unrest = -1
+	}
+}
+
 barracks = {
 	name = "Barracks"
 	building_class = barracks
