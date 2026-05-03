@@ -1,0 +1,27 @@
+heavy_infantry = {
+	name = "Heavy Infantry"
+	base_employment_size = 1
+	employee_types = {
+		soldiers
+	}
+	domain_modifier = {
+		storage_capacity = {
+			commodity = heavy_infantry
+			capacity = 1
+		}
+	}
+}
+
+pikemen = {
+	name = "Pikemen"
+	base_employment_size = 1
+	employee_types = {
+		soldiers
+	}
+	domain_modifier = {
+		storage_capacity = {
+			commodity = pikemen
+			capacity = 1
+		}
+	}
+}

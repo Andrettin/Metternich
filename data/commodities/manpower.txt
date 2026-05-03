@@ -1,3 +1,23 @@
+heavy_infantry = {
+	name = "Heavy Infantry"
+	type = resource
+	icon = heater_shield
+	tiny_icon = alliance
+	abstract = true
+	manpower = true
+	special_storage_capacity = true
+}
+
+pikemen = {
+	name = "Pikemen"
+	type = resource
+	icon = heater_shield
+	tiny_icon = alliance
+	abstract = true
+	manpower = true
+	special_storage_capacity = true
+}
+
 manpower = {
 	name = "Manpower"
 	type = resource
