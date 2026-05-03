@@ -4,6 +4,7 @@ wooden_palisade = {
 	portrait = fort
 	icon = wall
 	fortification_level = 0.5
+	free_on_start_extra_technology = 1
 	holding_types = {
 		castle
 	}
@@ -22,6 +23,7 @@ low_stone_wall = {
 	fortification_level = 1
 	base_building = wooden_palisade
 	required_technology = small_castle
+	free_on_start_extra_technology = 1.4
 	holding_types = {
 		castle
 	}
@@ -40,6 +42,7 @@ medium_stone_wall = {
 	fortification_level = 2
 	base_building = low_stone_wall
 	required_technology = medium_castle
+	free_on_start_extra_technology = 1.2
 	holding_types = {
 		castle
 	}
@@ -64,6 +67,7 @@ large_stone_wall = {
 	fortification_level = 3
 	base_building = medium_stone_wall
 	required_technology = large_castle
+	free_on_start_extra_technology = 0.8
 	holding_types = {
 		castle
 	}
@@ -85,6 +89,7 @@ huge_stone_wall = {
 	fortification_level = 4.5
 	base_building = large_stone_wall
 	required_technology = huge_castle
+	free_on_start_extra_technology = 0.4
 	holding_types = {
 		castle
 	}
