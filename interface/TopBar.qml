@@ -11,8 +11,7 @@ Rectangle {
 	readonly property var stored_commodities: domain ? domain.game_data.economy.stored_commodities : []
 	readonly property var commodity_storage_capacities: domain ? domain.game_data.economy.commodity_storage_capacities : []
 	readonly property var regency_commodity: metternich.get_commodity("regency")
-	readonly property var manpower_commodity: metternich.get_commodity("manpower")
-	readonly property var top_bar_commodities: [metternich.defines.wealth_commodity, regency_commodity, manpower_commodity]
+	readonly property var top_bar_commodities: [metternich.defines.wealth_commodity, regency_commodity]
 	property bool commodities_visible: domain ? true : false
 	
 	PanelTiledBackground {

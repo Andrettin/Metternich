@@ -10,6 +10,7 @@ DialogBase {
 	
 	property var recruitable_military_unit_categories: selected_province ? selected_province.game_data.recruitable_military_unit_categories : []
 	readonly property var country_game_data: metternich.game.player_country.game_data
+	property var selected_military_unit_type: null
 	
 	Column {
 		id: content_column
@@ -18,86 +19,184 @@ DialogBase {
 		anchors.horizontalCenter: parent.horizontalCenter
 		spacing: 16 * scale_factor
 		
-		Grid {
-			id: military_unit_grid
+		Row {
+			id: content_row
 			anchors.horizontalCenter: parent.horizontalCenter
-			columns: 3
-			visible: recruitable_military_unit_categories.length > 0
 			spacing: 16 * scale_factor
 			
-			Repeater {
-				model: recruitable_military_unit_categories
+			Column {
+				id: military_unit_info_column
+				anchors.top: parent.top
+				spacing: 16 * scale_factor
+				width: 48 * scale_factor * 3 + 16 * scale_factor * 2
+				
+				SmallText {
+					id: military_unit_type_name
+					anchors.horizontalCenter: parent.horizontalCenter
+					text: selected_military_unit_type ? selected_military_unit_type.name : ""
+				}
 				
 				Column {
-					spacing: 2 * scale_factor
-					visible: military_unit_type !== null
+					id: military_unit_type_cost_column
+					spacing: 4 * scale_factor
 					
-					readonly property var military_unit_category: model.modelData
-					readonly property var military_unit_type: country_game_data.military.get_best_military_unit_category_type(military_unit_category)
-					readonly property int military_unit_recruitment_count: military_unit_type !== null && selected_province.game_data.military_unit_recruitment_counts.length > 0 ? selected_province.game_data.get_military_unit_recruitment_count(military_unit_type) : 0
-					
-					IconButton {
-						id: military_unit_button
-						width: 64 * scale_factor + 6 * scale_factor
-						height: 64 * scale_factor + 6 * scale_factor
-						icon_identifier: military_unit_type !== null ? military_unit_type.icon.identifier : "skull"
-						
-						readonly property string costs_string: military_unit_type !== null ? costs_to_single_line_string(country_game_data.military.get_military_unit_type_commodity_costs_qvariant_list(military_unit_type, 1)) : ""
-						readonly property string stats_string: military_unit_type !== null ? military_unit_type.get_stats_for_domain_qstring(metternich.game.player_country) : ""
-						
-						onClicked: {
-						}
-						
-						onHoveredChanged: {
-							if (hovered) {
-								status_text = military_unit_type.name
-								middle_status_text = format_text("Costs: " + costs_string)
-								right_status_text = format_text(stats_string)
-							} else {
-								status_text = ""
-								middle_status_text = ""
-								right_status_text = ""
-							}
-						}
+					SmallText {
+						id: military_unit_type_cost_label
+						text: "Cost:"
 					}
 					
 					Row {
-						anchors.horizontalCenter: parent.horizontalCenter
+						id: military_unit_type_cost_row
+						spacing: 16 * scale_factor
+						
+						Repeater {
+							model: selected_military_unit_type ? country_game_data.military.get_military_unit_type_commodity_costs_qvariant_list(selected_military_unit_type, 1) : []
+							
+							Column {
+								id: cost_commodity_column
+								width: 48 * scale_factor
+							
+								readonly property var commodity: model.modelData.key
+								readonly property int cost: model.modelData.value
+								
+								CustomIconImage {
+									id: cost_commodity_icon
+									anchors.horizontalCenter: parent.horizontalCenter
+									name: commodity.name
+									icon_identifier: commodity.icon.identifier
+								}
+								
+								SmallText {
+									id: commodity_cost_label
+									anchors.right: parent.right
+									text: commodity.value_to_qstring(cost)
+								}
+							}
+						}
+					}
+				}
+				
+				Column {
+					id: military_unit_type_available_commodities_column
+					spacing: 4 * scale_factor
+					
+					SmallText {
+						id: military_unit_type_available_commodities_label
+						text: "Available:"
+					}
+					
+					Row {
+						id: military_unit_type_available_commodities_row
+						spacing: military_unit_type_cost_row.spacing
+						
+						Repeater {
+							model: selected_military_unit_type ? country_game_data.military.get_military_unit_type_commodity_costs_qvariant_list(selected_military_unit_type, 1) : []
+							
+							Column {
+								id: available_commodity_column
+								width: 48 * scale_factor
+							
+								readonly property var commodity: model.modelData.key
+								readonly property int stored: country_game_data.economy.stored_commodities.length > 0 ? country_game_data.economy.get_stored_commodity(commodity) : 0
+								
+								CustomIconImage {
+									id: available_commodity_icon
+									anchors.horizontalCenter: parent.horizontalCenter
+									name: commodity.name
+									icon_identifier: commodity.icon.identifier
+								}
+								
+								SmallText {
+									id: available_commodity_label
+									anchors.right: parent.right
+									text: commodity.value_to_qstring(stored)
+								}
+							}
+						}
+					}
+				}
+			}
+			
+			Grid {
+				id: military_unit_grid
+				anchors.top: parent.top
+				columns: 3
+				visible: recruitable_military_unit_categories.length > 0
+				spacing: 16 * scale_factor
+				
+				Repeater {
+					model: recruitable_military_unit_categories
+					
+					Column {
+						spacing: 2 * scale_factor
+						visible: military_unit_type !== null
+						
+						readonly property var military_unit_category: model.modelData
+						readonly property var military_unit_type: country_game_data.military.get_best_military_unit_category_type(military_unit_category)
+						readonly property int military_unit_recruitment_count: military_unit_type !== null && selected_province.game_data.military_unit_recruitment_counts.length > 0 ? selected_province.game_data.get_military_unit_recruitment_count(military_unit_type) : 0
 						
 						IconButton {
-							id: decrement_button
-							anchors.verticalCenter: parent.verticalCenter
-							width: 16 * scale_factor
-							height: 16 * scale_factor
-							icon_identifier: "trade_consulate"
-							use_opacity_mask: false
+							id: military_unit_button
+							width: 64 * scale_factor + 6 * scale_factor
+							height: 64 * scale_factor + 6 * scale_factor
+							icon_identifier: military_unit_type !== null ? military_unit_type.icon.identifier : "skull"
+							highlighted: selected_military_unit_type === military_unit_type
 							
-							onReleased: {
-								if (selected_province.game_data.can_decrease_military_unit_recruitment(military_unit_type)) {
-									selected_province.game_data.decrease_military_unit_recruitment(military_unit_type, true)
+							readonly property string stats_string: military_unit_type !== null ? military_unit_type.get_stats_for_domain_qstring(metternich.game.player_country) : ""
+							
+							onClicked: {
+								selected_military_unit_type = military_unit_type
+							}
+							
+							onHoveredChanged: {
+								if (hovered) {
+									status_text = military_unit_type.name
+									middle_status_text = format_text(stats_string)
+								} else {
+									status_text = ""
+									middle_status_text = ""
 								}
 							}
 						}
 						
-						SmallText {
-							id: military_unit_recruiting_count_label
-							anchors.verticalCenter: parent.verticalCenter
-							text: number_string(military_unit_recruitment_count)
-							width: 24 * scale_factor
-							horizontalAlignment: Text.AlignHCenter
-						}
-						
-						IconButton {
-							id: increment_button
-							anchors.verticalCenter: parent.verticalCenter
-							width: 16 * scale_factor
-							height: 16 * scale_factor
-							icon_identifier: "trade_consulate"
-							use_opacity_mask: false
+						Row {
+							anchors.horizontalCenter: parent.horizontalCenter
 							
-							onReleased: {
-								if (selected_province.game_data.can_increase_military_unit_recruitment(military_unit_type)) {
-									selected_province.game_data.increase_military_unit_recruitment(military_unit_type)
+							IconButton {
+								id: decrement_button
+								anchors.verticalCenter: parent.verticalCenter
+								width: 16 * scale_factor
+								height: 16 * scale_factor
+								icon_identifier: "trade_consulate"
+								use_opacity_mask: false
+								
+								onReleased: {
+									if (selected_province.game_data.can_decrease_military_unit_recruitment(military_unit_type)) {
+										selected_province.game_data.decrease_military_unit_recruitment(military_unit_type, true)
+									}
+								}
+							}
+							
+							SmallText {
+								id: military_unit_recruiting_count_label
+								anchors.verticalCenter: parent.verticalCenter
+								text: number_string(military_unit_recruitment_count)
+								width: 24 * scale_factor
+								horizontalAlignment: Text.AlignHCenter
+							}
+							
+							IconButton {
+								id: increment_button
+								anchors.verticalCenter: parent.verticalCenter
+								width: 16 * scale_factor
+								height: 16 * scale_factor
+								icon_identifier: "trade_consulate"
+								use_opacity_mask: false
+								
+								onReleased: {
+									if (selected_province.game_data.can_increase_military_unit_recruitment(military_unit_type)) {
+										selected_province.game_data.increase_military_unit_recruitment(military_unit_type)
+									}
 								}
 							}
 						}
@@ -114,5 +213,19 @@ DialogBase {
 				military_unit_recruiment_dialog.close()
 			}
 		}
+	}
+	
+	onOpened: {
+		for (var military_unit_category of recruitable_military_unit_categories) {
+			var military_unit_type = country_game_data.military.get_best_military_unit_category_type(military_unit_category)
+			if (military_unit_type !== null) {
+				selected_military_unit_type = military_unit_type
+				break
+			}
+		}
+	}
+	
+	onClosed: {
+		selected_military_unit_type = null
 	}
 }
