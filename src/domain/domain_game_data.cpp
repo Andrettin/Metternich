@@ -639,21 +639,9 @@ QCoro::Task<void> domain_game_data::pay_maintenance()
 		}
 	}
 
-	military_unit_type_map<int> disbanded_type_counts;
 	for (military_unit *military_unit : military_units_to_disband) {
-		disbanded_type_counts[military_unit->get_type()]++;
+		this->domain->get_turn_data()->add_disbanded_military_unit(military_unit->get_type());
 		co_await military_unit->disband(false);
-	}
-
-	if (!disbanded_type_counts.empty() && this->domain == game::get()->get_player_country()) {
-		const portrait *war_minister_portrait = this->get_government()->get_war_minister_portrait();
-
-		std::string disbanded_units_str;
-		for (const auto &[military_unit_type, disbanded_count] : disbanded_type_counts) {
-			disbanded_units_str += std::format("\n{} {}", disbanded_count, military_unit_type->get_name());
-		}
-
-		engine_interface::get()->add_notification("Military Units Disbanded", war_minister_portrait, std::format("{}, our finances are in dire straits! Due to a lack of available resources, we were forced to disband some of our military units.\n\nDisbanded Units:{}", this->get_form_of_address(), disbanded_units_str));
 	}
 }
 

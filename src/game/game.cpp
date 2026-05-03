@@ -772,6 +772,11 @@ QCoro::Task<void> game::apply_history(const QDate &start_date)
 			}
 		}
 
+		for (const site *site : map::get()->get_sites()) {
+			//check employment because it could be necessary for providing manpower before applying military units
+			co_await site->get_game_data()->check_employment();
+		}
+
 		for (const historical_military_unit *historical_military_unit : historical_military_unit::get_all()) {
 			try {
 				const historical_military_unit_history *historical_military_unit_history = historical_military_unit->get_history();
@@ -1694,6 +1699,17 @@ QCoro::Task<void> game::do_turn_coro()
 			for (const auto &[commodity, offer] : old_offers[domain]) {
 				domain->get_economy()->set_offer(commodity, offer);
 			}
+		}
+
+		if (!game::get()->get_player_country()->get_turn_data()->get_disbanded_military_units().empty()) {
+			const portrait *war_minister_portrait = game::get()->get_player_country()->get_government()->get_war_minister_portrait();
+
+			std::string disbanded_units_str;
+			for (const auto &[military_unit_type, disbanded_count] : game::get()->get_player_country()->get_turn_data()->get_disbanded_military_units()) {
+				disbanded_units_str += std::format("\n{} {}", disbanded_count, military_unit_type->get_name());
+			}
+
+			engine_interface::get()->add_notification("Military Units Disbanded", war_minister_portrait, std::format("{}, due to a lack of available resources, we were forced to disband some of our military units.\n\nDisbanded Units:{}", game::get()->get_player_country()->get_game_data()->get_form_of_address(), disbanded_units_str));
 		}
 
 		for (const domain *domain : this->get_countries()) {

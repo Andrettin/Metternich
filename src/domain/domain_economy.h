@@ -191,10 +191,11 @@ public:
 		return 0;
 	}
 
-	void change_commodity_storage_capacity(const commodity *commodity, const int64_t change);
+	[[nodiscard]] QCoro::Task<void> change_commodity_storage_capacity(const commodity *commodity, const int64_t change);
 
 	static int64_t get_storage_for_commodity(const commodity *commodity, int64_t storage);
 	int64_t get_storage_capacity_for_commodity(const commodity *commodity) const;
+	[[nodiscard]] QCoro::Task<void> decrease_manpower_commodity_usage(const commodity *commodity);
 
 	const commodity_map<centesimal_int> &get_commodity_inputs() const
 	{

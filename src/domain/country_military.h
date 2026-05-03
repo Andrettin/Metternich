@@ -51,8 +51,8 @@ public:
 	}
 
 	[[nodiscard]] QCoro::Task<bool> create_military_unit(const military_unit_type *military_unit_type, const province *deployment_province, const phenotype *phenotype, const std::vector<const promotion *> &promotions);
-	void add_military_unit(qunique_ptr<military_unit> &&military_unit);
-	void remove_military_unit(military_unit *military_unit);
+	[[nodiscard]] QCoro::Task<void> add_military_unit(qunique_ptr<military_unit> &&military_unit);
+	[[nodiscard]] QCoro::Task<void> remove_military_unit(military_unit *military_unit);
 
 	int get_military_unit_type_cost_modifier(const military_unit_type *military_unit_type) const;
 	commodity_map<int> get_military_unit_type_commodity_costs(const military_unit_type *military_unit_type, const int quantity) const;

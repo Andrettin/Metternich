@@ -36,10 +36,10 @@ public:
 		}
 	}
 
-	virtual void apply(const domain *scope, const centesimal_int &multiplier) const override
+	[[nodiscard]] virtual QCoro::Task<void> apply_coro(const domain *scope, const centesimal_int &multiplier) const override
 	{
 		if (this->commodity != nullptr) {
-			scope->get_economy()->change_commodity_storage_capacity(this->commodity, (this->value * multiplier).to_int64());
+			co_await scope->get_economy()->change_commodity_storage_capacity(this->commodity, (this->value * multiplier).to_int64());
 		} else {
 			scope->get_economy()->change_storage_capacity((this->value * multiplier).to_int64());
 		}

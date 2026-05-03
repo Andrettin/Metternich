@@ -3051,7 +3051,7 @@ QCoro::Task<void> character_game_data::deploy_as_military_unit_coro(const provin
 
 	co_await military_unit->set_province(province);
 
-	this->get_domain()->get_military()->add_military_unit(std::move(military_unit));
+	co_await this->get_domain()->get_military()->add_military_unit(std::move(military_unit));
 }
 
 QCoro::Task<void> character_game_data::deploy_as_civilian_unit_coro(const province *province)

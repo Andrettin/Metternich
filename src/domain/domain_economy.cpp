@@ -5,6 +5,7 @@
 #include "character/character.h"
 #include "character/character_game_data.h"
 #include "database/defines.h"
+#include "domain/country_military.h"
 #include "domain/country_turn_data.h"
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
@@ -25,6 +26,8 @@
 #include "population/population_strata.h"
 #include "population/population_type.h"
 #include "population/population_unit.h"
+#include "unit/military_unit.h"
+#include "unit/military_unit_type.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/map_util.h"
@@ -517,15 +520,20 @@ QVariantList domain_economy::get_commodity_storage_capacities_qvariant_list() co
 	return archimedes::map::to_qvariant_list(this->get_commodity_storage_capacities());
 }
 
-void domain_economy::change_commodity_storage_capacity(const commodity *commodity, const int64_t change)
+QCoro::Task<void> domain_economy::change_commodity_storage_capacity(const commodity *commodity, const int64_t change)
 {
 	assert_throw(commodity->has_special_storage_capacity());
 
 	if (change == 0) {
-		return;
+		co_return;
 	}
 
 	const int64_t new_capacity = (this->commodity_storage_capacities[commodity] += change);
+
+	if (commodity->is_manpower() && new_capacity < 0) {
+		co_await this->decrease_manpower_commodity_usage(commodity);
+		co_return;
+	}
 
 	assert_throw(new_capacity >= 0);
 
@@ -562,6 +570,22 @@ int64_t domain_economy::get_storage_capacity_for_commodity(const commodity *comm
 
 	const int64_t storage_capacity = this->get_storage_capacity();
 	return domain_economy::get_storage_for_commodity(commodity, storage_capacity);
+}
+
+QCoro::Task<void> domain_economy::decrease_manpower_commodity_usage(const commodity *commodity)
+{
+	assert_throw(commodity->is_manpower());
+
+	std::vector<military_unit *> military_units;
+	for (const auto &military_unit : this->get_game_data()->get_military()->get_military_units()) {
+		if (military_unit->get_type()->get_commodity_costs().contains(commodity)) {
+			this->domain->get_turn_data()->add_disbanded_military_unit(military_unit->get_type());
+			co_await military_unit->disband(false);
+			co_return;
+		}
+	}
+
+	assert_throw(false);
 }
 
 QVariantList domain_economy::get_commodity_inputs_qvariant_list() const

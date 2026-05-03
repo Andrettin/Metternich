@@ -185,7 +185,7 @@ QCoro::Task<void> military_unit::set_type(const military_unit_type *type)
 
 	for (const auto &[commodity, cost] : old_type->get_commodity_costs()) {
 		if (commodity->is_manpower()) {
-			this->get_country()->get_economy()->change_commodity_storage_capacity(commodity, cost);
+			co_await this->get_country()->get_economy()->change_commodity_storage_capacity(commodity, cost);
 		}
 	}
 
@@ -218,7 +218,7 @@ QCoro::Task<void> military_unit::set_type(const military_unit_type *type)
 
 	for (const auto &[commodity, cost] : type->get_commodity_costs()) {
 		if (commodity->is_manpower()) {
-			this->get_country()->get_economy()->change_commodity_storage_capacity(commodity, -cost);
+			co_await this->get_country()->get_economy()->change_commodity_storage_capacity(commodity, -cost);
 		}
 	}
 
@@ -695,7 +695,7 @@ QCoro::Task<void> military_unit::disband(const bool dead)
 
 	if (this->get_country() != nullptr) {
 		this->get_country()->get_game_data()->change_military_score(-this->get_score());
-		this->get_country()->get_military()->remove_military_unit(this);
+		co_await this->get_country()->get_military()->remove_military_unit(this);
 	}
 }
 

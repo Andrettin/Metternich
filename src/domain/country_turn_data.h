@@ -1,5 +1,6 @@
 #pragma once
 
+#include "unit/military_unit_type_container.h"
 #include "util/centesimal_int.h"
 #include "util/qunique_ptr.h"
 
@@ -43,6 +44,16 @@ public:
 
 	void add_income_transaction(const income_transaction_type transaction_type, const int amount, const transaction_object_variant &object = nullptr, const int object_quantity = 0, const metternich::domain *other_domain = nullptr);
 	void add_expense_transaction(const expense_transaction_type transaction_type, const int amount, const transaction_object_variant &object = nullptr, const int object_quantity = 0, const metternich::domain *other_domain = nullptr);
+
+	const military_unit_type_map<int> &get_disbanded_military_units() const
+	{
+		return this->disbanded_military_units;
+	}
+
+	void add_disbanded_military_unit(const military_unit_type *military_unit_type)
+	{
+		++this->disbanded_military_units[military_unit_type];
+	}
 
 	bool is_diplomatic_map_dirty() const
 	{
@@ -90,6 +101,7 @@ private:
 	int total_expense = 0;
 	std::vector<qunique_ptr<income_transaction>> income_transactions;
 	std::vector<qunique_ptr<expense_transaction>> expense_transactions;
+	military_unit_type_map<int> disbanded_military_units;
 	bool diplomatic_map_dirty = false;
 	bool realm_diplomatic_map_dirty = false;
 	std::set<diplomatic_map_mode> dirty_diplomatic_map_modes;

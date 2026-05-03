@@ -172,7 +172,7 @@ QCoro::Task<bool> country_military::create_military_unit(const military_unit_typ
 		co_await military_unit->add_promotion(promotion);
 	}
 
-	this->add_military_unit(std::move(military_unit));
+	co_await this->add_military_unit(std::move(military_unit));
 
 	if (game::get()->is_running() && chosen_character != nullptr) {
 		emit leader_recruited(chosen_character);
@@ -181,31 +181,33 @@ QCoro::Task<bool> country_military::create_military_unit(const military_unit_typ
 	co_return true;
 }
 
-void country_military::add_military_unit(qunique_ptr<metternich::military_unit> &&military_unit)
+QCoro::Task<void> country_military::add_military_unit(qunique_ptr<metternich::military_unit> &&military_unit)
 {
-	for (const auto &[commodity, cost] : military_unit->get_type()->get_commodity_costs()) {
-		if (commodity->is_manpower()) {
-			this->domain->get_economy()->change_commodity_storage_capacity(commodity, -cost);
-		}
-	}
-
 	if (military_unit->get_character() != nullptr) {
 		this->add_leader(military_unit->get_character());
 	}
 
+	const military_unit_type *military_unit_type = military_unit->get_type();
+
 	this->get_game_data()->add_unit_name(military_unit->get_name());
 	this->military_units.push_back(std::move(military_unit));
+
+	for (const auto &[commodity, cost] : military_unit_type->get_commodity_costs()) {
+		if (commodity->is_manpower()) {
+			co_await this->domain->get_economy()->change_commodity_storage_capacity(commodity, -cost);
+		}
+	}
 
 	if (game::get()->is_running()) {
 		emit military_units_changed();
 	}
 }
 
-void country_military::remove_military_unit(military_unit *military_unit)
+QCoro::Task<void> country_military::remove_military_unit(military_unit *military_unit)
 {
 	for (const auto &[commodity, cost] : military_unit->get_type()->get_commodity_costs()) {
 		if (commodity->is_manpower()) {
-			this->domain->get_economy()->change_commodity_storage_capacity(commodity, cost);
+			co_await this->domain->get_economy()->change_commodity_storage_capacity(commodity, cost);
 		}
 	}
 
@@ -218,7 +220,7 @@ void country_military::remove_military_unit(military_unit *military_unit)
 	for (size_t i = 0; i < this->military_units.size(); ++i) {
 		if (this->military_units[i].get() == military_unit) {
 			this->military_units.erase(this->military_units.begin() + i);
-			return;
+			co_return;
 		}
 	}
 
