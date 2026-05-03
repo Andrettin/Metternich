@@ -183,6 +183,12 @@ QCoro::Task<bool> country_military::create_military_unit(const military_unit_typ
 
 void country_military::add_military_unit(qunique_ptr<metternich::military_unit> &&military_unit)
 {
+	for (const auto &[commodity, cost] : military_unit->get_type()->get_commodity_costs()) {
+		if (commodity->is_manpower()) {
+			this->domain->get_economy()->change_commodity_storage_capacity(commodity, -cost);
+		}
+	}
+
 	if (military_unit->get_character() != nullptr) {
 		this->add_leader(military_unit->get_character());
 	}
@@ -197,6 +203,12 @@ void country_military::add_military_unit(qunique_ptr<metternich::military_unit> 
 
 void country_military::remove_military_unit(military_unit *military_unit)
 {
+	for (const auto &[commodity, cost] : military_unit->get_type()->get_commodity_costs()) {
+		if (commodity->is_manpower()) {
+			this->domain->get_economy()->change_commodity_storage_capacity(commodity, cost);
+		}
+	}
+
 	if (military_unit->get_character() != nullptr) {
 		this->remove_leader(military_unit->get_character());
 	}
@@ -242,9 +254,12 @@ commodity_map<int> country_military::get_military_unit_type_commodity_costs(cons
 		centesimal_int cost(cost_int);
 		cost *= quantity;
 
-		const int cost_modifier = this->get_military_unit_type_cost_modifier(military_unit_type);
-		cost *= 100 + cost_modifier;
-		cost /= 100;
+		int cost_modifier = 0;
+		if (!commodity->is_manpower()) {
+			cost_modifier = this->get_military_unit_type_cost_modifier(military_unit_type);
+			cost *= 100 + cost_modifier;
+			cost /= 100;
+		}
 
 		cost_int = cost.to_int();
 

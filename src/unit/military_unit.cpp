@@ -9,7 +9,9 @@
 #include "domain/country_military.h"
 #include "domain/diplomacy_state.h"
 #include "domain/domain.h"
+#include "domain/domain_economy.h"
 #include "domain/domain_game_data.h"
+#include "economy/commodity.h"
 #include "game/battle_resolution_type.h"
 #include "game/game.h"
 #include "infrastructure/improvement.h"
@@ -181,6 +183,12 @@ QCoro::Task<void> military_unit::set_type(const military_unit_type *type)
 		this->get_province()->get_game_data()->change_military_unit_category_count(this->get_category(), -1);
 	}
 
+	for (const auto &[commodity, cost] : old_type->get_commodity_costs()) {
+		if (commodity->is_manpower()) {
+			this->get_country()->get_economy()->change_commodity_storage_capacity(commodity, cost);
+		}
+	}
+
 	this->type = type;
 
 	if (this->get_province() != nullptr && different_category) {
@@ -205,6 +213,12 @@ QCoro::Task<void> military_unit::set_type(const military_unit_type *type)
 			this->battle_resolution_type = vector::get_random(type->get_battle_resolution_types());
 		} else {
 			this->battle_resolution_type = static_cast<metternich::battle_resolution_type>(random::get()->generate_in_range(1, static_cast<int>(battle_resolution_type::count) - 1));
+		}
+	}
+
+	for (const auto &[commodity, cost] : type->get_commodity_costs()) {
+		if (commodity->is_manpower()) {
+			this->get_country()->get_economy()->change_commodity_storage_capacity(commodity, -cost);
 		}
 	}
 
