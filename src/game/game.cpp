@@ -1178,27 +1178,36 @@ QCoro::Task<void> game::apply_free_on_start_buildings()
 
 		const province *province = site->get_game_data()->get_province();
 
-		for (const building_type *building : building_type::get_all()) {
-			bool is_free_on_start = false;
+		bool changed = true;
+		while (changed) {
+			changed = false;
 
-			if (building->get_free_on_start_extra_technology() != 0) {
-				assert_throw(building->get_required_technology() != nullptr);
-				const centesimal_int extra_technology = province->get_game_data()->get_extra_technology(building->get_required_technology());
-				const centesimal_int extra_technology_threshold = building->get_free_on_start_extra_technology() + random::get()->generate_in_range(0, 1);
-				if (extra_technology >= extra_technology_threshold) {
+			for (const building_type *building : site->get_game_data()->get_holding_type()->get_building_types()) {
+				bool is_free_on_start = false;
+
+				if (building->get_free_on_start_extra_technology() != 0) {
+					assert_throw(building->get_required_technology() != nullptr);
+					const centesimal_int extra_technology = province->get_game_data()->get_extra_technology(building->get_required_technology());
+					const centesimal_int extra_technology_threshold = building->get_free_on_start_extra_technology() + random::get()->generate_in_range(0, 1);
+					if (extra_technology >= extra_technology_threshold) {
+						is_free_on_start = true;
+					}
+				}
+
+				if (!is_free_on_start && building->get_free_on_start_conditions() != nullptr && building->get_free_on_start_conditions()->check(site, read_only_context(site))) {
 					is_free_on_start = true;
 				}
-			}
 
-			if (!is_free_on_start && building->get_free_on_start_conditions() != nullptr && building->get_free_on_start_conditions()->check(site, read_only_context(site))) {
-				is_free_on_start = true;
-			}
+				if (!is_free_on_start) {
+					continue;
+				}
 
-			if (!is_free_on_start) {
-				continue;
+				const bool added_building = co_await site->get_game_data()->check_free_building(building);
+				if (added_building) {
+					//loop through the buildings again, since the construction of another building might have made another possible to gain
+					changed = true;
+				}
 			}
-
-			co_await site->get_game_data()->check_free_building(building);
 		}
 	}
 }

@@ -11,6 +11,7 @@ Q_MOC_INCLUDE("ui/portrait.h")
 
 namespace metternich {
 
+class building;
 class domain_skill;
 class icon;
 class population_class;
@@ -159,6 +160,16 @@ public:
 		return this->modifier.get();
 	}
 
+	const std::vector<const building_type *> &get_building_types() const
+	{
+		return this->building_types;
+	}
+
+	void add_building_type(const building_type *building_type)
+	{
+		this->building_types.push_back(building_type);
+	}
+
 signals:
 	void changed();
 
@@ -183,6 +194,7 @@ private:
 	std::unique_ptr<const and_condition<site>> conditions;
 	std::unique_ptr<const and_condition<site>> build_conditions;
 	std::unique_ptr<modifier<const site>> modifier;
+	std::vector<const building_type *> building_types;
 };
 
 }

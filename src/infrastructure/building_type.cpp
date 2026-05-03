@@ -71,7 +71,9 @@ void building_type::process_gsml_scope(const gsml_data &scope)
 
 	if (tag == "holding_types") {
 		for (const std::string &value : values) {
-			this->holding_types.push_back(holding_type::get(value));
+			holding_type *holding_type = holding_type::get(value);
+			holding_type->add_building_type(this);
+			this->holding_types.push_back(holding_type);
 		}
 	} else if (tag == "required_buildings") {
 		for (const std::string &value : values) {
