@@ -102,10 +102,10 @@ Rectangle {
 					anchors.left: commodity_icon.left
 					anchors.right: commodity_label.right
 					hoverEnabled: true
-					enabled: commodity.enabled
+					enabled: commodity && commodity.enabled
 					
 					readonly property bool is_wealth: commodity === metternich.defines.wealth_commodity
-					readonly property var commodity_unit: commodity.get_unit(commodity_value)
+					readonly property var commodity_unit: commodity && commodity.get_unit(commodity_value)
 					readonly property int min_income: is_wealth && domain ? domain.game_data.min_income : 0
 					readonly property int max_income: is_wealth && domain ? domain.game_data.max_income : 0
 					readonly property string income_string: get_income_range_string(min_income, max_income)
