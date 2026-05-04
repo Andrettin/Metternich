@@ -1185,10 +1185,10 @@ QCoro::Task<void> game::apply_free_on_start_buildings()
 			for (const building_type *building : site->get_game_data()->get_holding_type()->get_building_types()) {
 				bool is_free_on_start = false;
 
-				if (building->get_free_on_start_extra_technology() != 0) {
+				if (building->get_free_on_start_extra_technology().has_value()) {
 					assert_throw(building->get_required_technology() != nullptr);
 					const centesimal_int extra_technology = province->get_game_data()->get_extra_technology(building->get_required_technology());
-					const centesimal_int extra_technology_threshold = building->get_free_on_start_extra_technology() + random::get()->generate_in_range(0, 1);
+					const centesimal_int extra_technology_threshold = building->get_free_on_start_extra_technology().value() + random::get()->generate_in_range(0, 1);
 					if (extra_technology >= extra_technology_threshold) {
 						is_free_on_start = true;
 					}

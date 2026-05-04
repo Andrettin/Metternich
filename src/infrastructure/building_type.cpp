@@ -238,7 +238,7 @@ void building_type::check() const
 		log::log_error(std::format("Building type \"{}\" has no builder civilian unit types.", this->get_identifier()));
 	}
 
-	if (this->get_free_on_start_extra_technology() != 0 && this->get_required_technology() == nullptr) {
+	if (this->get_free_on_start_extra_technology().has_value() && this->get_required_technology() == nullptr) {
 		throw std::runtime_error(std::format("Building type \"{}\" has a free on start extra technology value, but no required technology.", this->get_identifier()));
 	}
 }

@@ -67,7 +67,7 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(metternich::building_type* base_building MEMBER base_building NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(int min_holding_level MEMBER min_holding_level READ get_min_holding_level NOTIFY changed)
-	Q_PROPERTY(archimedes::centesimal_int free_on_start_extra_technology MEMBER free_on_start_extra_technology READ get_free_on_start_extra_technology NOTIFY changed)
+	Q_PROPERTY(std::optional<archimedes::centesimal_int> free_on_start_extra_technology MEMBER free_on_start_extra_technology READ get_free_on_start_extra_technology NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "building_type";
@@ -280,7 +280,7 @@ public:
 		return this->free_on_start_conditions.get();
 	}
 
-	const centesimal_int &get_free_on_start_extra_technology() const
+	const std::optional<centesimal_int> &get_free_on_start_extra_technology() const
 	{
 		return this->free_on_start_extra_technology;
 	}
@@ -353,7 +353,7 @@ private:
 	std::unique_ptr<and_condition<site>> conditions;
 	std::unique_ptr<const and_condition<site>> build_conditions;
 	std::unique_ptr<const and_condition<site>> free_on_start_conditions;
-	centesimal_int free_on_start_extra_technology; //free on start based on extra technology (compared to the derived technologies for the required technology)
+	std::optional<centesimal_int> free_on_start_extra_technology; //free on start based on extra technology (compared to the derived technologies for the required technology)
 	std::unique_ptr<metternich::modifier<const site>> modifier;
 	std::unique_ptr<metternich::modifier<const province>> province_modifier;
 	std::unique_ptr<metternich::modifier<const domain>> domain_modifier;
