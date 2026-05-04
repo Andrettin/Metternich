@@ -65,6 +65,7 @@
 #include "util/gender.h"
 #include "util/log_util.h"
 #include "util/map_util.h"
+#include "util/number_util.h"
 #include "util/string_util.h"
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
@@ -992,6 +993,11 @@ QCoro::Task<void> site_game_data::set_holding_level_from_buildings(const int lev
 	if (level != this->get_holding_level()) {
 		log::log_error(std::format("Failed to set holding level {} from buildings for site \"{}\".", level, this->site->get_identifier()));
 	}
+}
+
+QString site_game_data::get_fortification_level_qstring() const
+{
+	return QString::fromStdString(number::to_formatted_string(this->get_fortification_level().to_int()));
 }
 
 void site_game_data::set_fortification_level(const centesimal_int &level)

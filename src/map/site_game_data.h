@@ -215,11 +215,7 @@ public:
 		return this->fortification_level;
 	}
 
-	QString get_fortification_level_qstring() const
-	{
-		return QString::fromStdString(this->get_fortification_level().to_string());
-	}
-
+	QString get_fortification_level_qstring() const;
 	void set_fortification_level(const centesimal_int &level);
 
 	void change_fortification_level(const centesimal_int &change)
