@@ -22,7 +22,7 @@ archers = {
 	}
 	commodity_costs = {
 		wealth = 2gb
-		manpower = 200
+		archers = 200
 	}
 	maintenance_commodity_costs = {
 		wealth = 1gb
@@ -48,7 +48,7 @@ crossbowmen = {
 	}
 	commodity_costs = {
 		wealth = 2gb
-		manpower = 200
+		archers = 200
 	}
 	maintenance_commodity_costs = {
 		wealth = 1gb

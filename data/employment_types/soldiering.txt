@@ -1,3 +1,17 @@
+light_infantry = {
+	name = "Light Infantry"
+	base_employment_size = 1
+	employee_types = {
+		soldiers
+	}
+	domain_modifier = {
+		storage_capacity = {
+			commodity = light_infantry
+			capacity = 1
+		}
+	}
+}
+
 heavy_infantry = {
 	name = "Heavy Infantry"
 	base_employment_size = 1
@@ -21,6 +35,20 @@ pikemen = {
 	domain_modifier = {
 		storage_capacity = {
 			commodity = pikemen
+			capacity = 1
+		}
+	}
+}
+
+archery = {
+	name = "Archery"
+	base_employment_size = 1
+	employee_types = {
+		soldiers
+	}
+	domain_modifier = {
+		storage_capacity = {
+			commodity = archers
 			capacity = 1
 		}
 	}

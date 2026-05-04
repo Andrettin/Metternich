@@ -1,3 +1,13 @@
+light_infantry = {
+	name = "Light Infantry"
+	type = resource
+	icon = saber
+	tiny_icon = alliance
+	abstract = true
+	manpower = true
+	special_storage_capacity = true
+}
+
 heavy_infantry = {
 	name = "Heavy Infantry"
 	type = resource
@@ -18,10 +28,30 @@ pikemen = {
 	special_storage_capacity = true
 }
 
+archers = {
+	name = "Archers"
+	type = resource
+	icon = bow
+	tiny_icon = alliance
+	abstract = true
+	manpower = true
+	special_storage_capacity = true
+}
+
 manpower = {
 	name = "Manpower"
 	type = resource
 	icon = labor
+	tiny_icon = alliance
+	abstract = true
+	manpower = true
+	special_storage_capacity = true
+}
+
+sailors = {
+	name = "Sailors"
+	type = resource
+	icon = anchor
 	tiny_icon = alliance
 	abstract = true
 	manpower = true

@@ -1,0 +1,13 @@
+sailing = {
+	name = "Sailing"
+	base_employment_size = 1
+	employee_types = {
+		soldiers
+	}
+	domain_modifier = {
+		storage_capacity = {
+			commodity = sailors
+			capacity = 1
+		}
+	}
+}
