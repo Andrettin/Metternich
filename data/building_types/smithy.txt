@@ -20,3 +20,44 @@ smithy = {
 		stability = 1
 	}
 }
+
+swordsmithy = {
+	name = "Swordsmithy"
+	building_class = swordsmithy
+	portrait = factory
+	icon = saber
+	size = 1
+	build_duration = 1095d
+	required_technology = short_sword
+	free_on_start_extra_technology = 2.5
+	holding_types = {
+		patrician_palace
+		royal_palace
+	}
+	required_buildings = {
+		great_mansion
+	}
+	builder_civilian_unit_types = {
+		ruler
+		marshal
+		engineer
+	}
+	commodity_costs = {
+		wealth = 37500gp
+	}
+	modifier = {
+		employment_capacity = {
+			employment_type = heavy_infantry
+			capacity = 85
+		}
+		employment_capacity = {
+			employment_type = pikemen
+			capacity = 65
+		}
+		population_capacity = 150
+	}
+	domain_modifier = {
+		economy = 1
+		stability = 1
+	}
+}

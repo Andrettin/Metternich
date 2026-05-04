@@ -1,0 +1,69 @@
+bowyer = {
+	name = "Bowyer"
+	building_class = bowyer
+	portrait = factory
+	icon = bow
+	build_duration = 730d
+	required_technology = short_bow
+	free_on_start_extra_technology = 1
+	holding_types = {
+		patrician_palace
+		royal_palace
+	}
+	builder_civilian_unit_types = {
+		ruler
+		marshal
+		engineer
+	}
+	commodity_costs = {
+		wealth = 22500gp
+	}
+	modifier = {
+		employment_capacity = {
+			employment_type = light_infantry
+			capacity = 95
+		}
+		employment_capacity = {
+			employment_type = archery
+			capacity = 95
+		}
+		population_capacity = 190
+	}
+}
+
+crossbow_workshop = {
+	name = "Crossbow Workshop"
+	building_class = crossbow_workshop
+	portrait = factory
+	icon = bow
+	build_duration = 1460d
+	base_building = bowyer
+	required_technology = light_crossbow
+	free_on_start_extra_technology = 4
+	holding_types = {
+		patrician_palace
+		royal_palace
+	}
+	required_buildings = {
+		palace
+	}
+	builder_civilian_unit_types = {
+		ruler
+		marshal
+		engineer
+	}
+	commodity_costs = {
+		wealth = 52500gp
+	}
+	modifier = {
+		employment_capacity = {
+			employment_type = light_infantry
+			capacity = 215
+		}
+		employment_capacity = {
+			employment_type = archery
+			capacity = 215
+		}
+		population_capacity = 430
+	}
+}

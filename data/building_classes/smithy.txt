@@ -2,3 +2,8 @@ smithy = {
 	name = "Smithy"
 	slot_type = smithy
 }
+
+swordsmithy = {
+	name = "Swordsmithy"
+	slot_type = swordsmithy
+}

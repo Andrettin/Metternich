@@ -54,8 +54,16 @@ furniture_factory = {
 	name = "Furniture Factory"
 }
 
+bowyer = {
+	name = "Bowyer"
+}
+
 smithy = {
 	name = "Smithy"
+}
+
+swordsmithy = {
+	name = "Swordsmithy"
 }
 
 sugar_refinery = {

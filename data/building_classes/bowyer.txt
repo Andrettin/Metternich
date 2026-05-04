@@ -1,0 +1,9 @@
+bowyer = {
+	name = "Bowyer"
+	slot_type = bowyer
+}
+
+crossbow_workshop = {
+	name = "Crossbow Workshop"
+	slot_type = bowyer
+}
