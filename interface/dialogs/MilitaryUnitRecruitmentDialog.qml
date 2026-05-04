@@ -28,7 +28,7 @@ DialogBase {
 				id: military_unit_info_column
 				anchors.top: parent.top
 				spacing: 16 * scale_factor
-				width: 48 * scale_factor * 2 + 16 * scale_factor * 1
+				width: 48 * scale_factor * 3 + 16 * scale_factor * 2
 				height: military_unit_grid.height
 				
 				SmallText {
@@ -37,34 +37,47 @@ DialogBase {
 					text: selected_military_unit_type ? selected_military_unit_type.name : ""
 				}
 				
-				Column {
-					id: military_unit_type_stats_column
-					spacing: 4 * scale_factor
+				Row {
+					id: military_unit_type_stats_row
+					spacing: 16 * scale_factor
 					
-					Repeater {
-						model: selected_military_unit_type ? selected_military_unit_type.get_stats_for_domain_qvariant_list(metternich.game.player_country) : []
+					Column {
+						id: military_unit_type_stats_column
+						spacing: 4 * scale_factor
 						
-						Row {
-							id: military_unit_stat_row
-							width: military_unit_info_column.width
-							readonly property string stat_name: model.modelData.key
-							readonly property string stat_value: model.modelData.value
+						Repeater {
+							model: selected_military_unit_type ? selected_military_unit_type.get_stats_for_domain_qvariant_list(metternich.game.player_country) : []
 							
-							SmallText {
-								id: military_unit_stat_name
-								anchors.verticalCenter: parent.verticalCenter
-								text: stat_name + ":"
-								horizontalAlignment: Text.AlignLeft
-							}
-							
-							SmallText {
-								id: military_unit_stat_value
-								anchors.verticalCenter: parent.verticalCenter
-								text: stat_value
-								horizontalAlignment: Text.AlignRight
-								width: military_unit_stat_row.width - military_unit_stat_name.width
+							Row {
+								id: military_unit_stat_row
+								width: military_unit_info_column.width - selected_military_unit_type_icon.width - military_unit_type_stats_row.spacing
+								readonly property string stat_name: model.modelData.key
+								readonly property string stat_value: model.modelData.value
+								
+								SmallText {
+									id: military_unit_stat_name
+									anchors.verticalCenter: parent.verticalCenter
+									text: stat_name + ":"
+									horizontalAlignment: Text.AlignLeft
+								}
+								
+								SmallText {
+									id: military_unit_stat_value
+									anchors.verticalCenter: parent.verticalCenter
+									text: stat_value
+									horizontalAlignment: Text.AlignRight
+									width: military_unit_stat_row.width - military_unit_stat_name.width
+								}
 							}
 						}
+					}
+					
+					CustomIconImage {
+						id: selected_military_unit_type_icon
+						anchors.top: parent.top
+						anchors.topMargin: 8 * scale_factor
+						name: selected_military_unit_type ? selected_military_unit_type.name : ""
+						icon_identifier: selected_military_unit_type ? selected_military_unit_type.icon.identifier : ""
 					}
 				}
 				
