@@ -194,7 +194,7 @@ centesimal_int military_unit_type::get_display_stat_for_domain(const military_un
 	return value;
 }
 
-QString military_unit_type::get_stats_for_domain_qstring(const domain *domain) const
+QVariantList military_unit_type::get_stats_for_domain_qvariant_list(const domain *domain) const
 {
 	std::set<military_unit_stat> used_stats = container::to_set(archimedes::map::get_keys(this->get_stats()));
 	for (const auto &[stat, value] : domain->get_military()->get_military_unit_type_stat_modifiers(this)) {
@@ -208,15 +208,12 @@ QString military_unit_type::get_stats_for_domain_qstring(const domain *domain) c
 
 	std::string str;
 
+	std::map<std::string, std::string> stat_value_strings;
 	for (const military_unit_stat stat : used_stats) {
-		if (!str.empty()) {
-			str += ", ";
-		}
-
-		str += std::format("{} {}", this->get_display_stat_for_domain(stat, domain).to_string(), get_military_unit_stat_short_name(stat));
+		stat_value_strings[std::string(get_military_unit_stat_name(stat))] = this->get_display_stat_for_domain(stat, domain).to_string();
 	}
 
-	return QString::fromStdString(str);
+	return archimedes::map::to_qvariant_list(stat_value_strings);
 }
 
 int military_unit_type::get_score() const

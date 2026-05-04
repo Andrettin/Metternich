@@ -28,12 +28,50 @@ DialogBase {
 				id: military_unit_info_column
 				anchors.top: parent.top
 				spacing: 16 * scale_factor
-				width: 48 * scale_factor * 3 + 16 * scale_factor * 2
+				width: 48 * scale_factor * 2 + 16 * scale_factor * 1
+				height: military_unit_grid.height
 				
 				SmallText {
 					id: military_unit_type_name
 					anchors.horizontalCenter: parent.horizontalCenter
 					text: selected_military_unit_type ? selected_military_unit_type.name : ""
+				}
+				
+				Column {
+					id: military_unit_type_stats_column
+					spacing: 4 * scale_factor
+					
+					Repeater {
+						model: selected_military_unit_type ? selected_military_unit_type.get_stats_for_domain_qvariant_list(metternich.game.player_country) : []
+						
+						Row {
+							id: military_unit_stat_row
+							width: military_unit_info_column.width
+							readonly property string stat_name: model.modelData.key
+							readonly property string stat_value: model.modelData.value
+							
+							SmallText {
+								id: military_unit_stat_name
+								anchors.verticalCenter: parent.verticalCenter
+								text: stat_name + ":"
+								horizontalAlignment: Text.AlignLeft
+							}
+							
+							SmallText {
+								id: military_unit_stat_value
+								anchors.verticalCenter: parent.verticalCenter
+								text: stat_value
+								horizontalAlignment: Text.AlignRight
+								width: military_unit_stat_row.width - military_unit_stat_name.width
+							}
+						}
+					}
+				}
+				
+				Item {
+					id: military_unit_info_column_spacing
+					width: military_unit_type_stats_column.width
+					height: military_unit_grid.height - y - military_unit_type_cost_column.height - military_unit_type_available_commodities_column.height - military_unit_info_column.spacing * 2
 				}
 				
 				Column {
@@ -142,8 +180,6 @@ DialogBase {
 							icon_identifier: military_unit_type !== null ? military_unit_type.icon.identifier : "skull"
 							highlighted: selected_military_unit_type === military_unit_type
 							
-							readonly property string stats_string: military_unit_type !== null ? military_unit_type.get_stats_for_domain_qstring(metternich.game.player_country) : ""
-							
 							onClicked: {
 								selected_military_unit_type = military_unit_type
 							}
@@ -151,10 +187,8 @@ DialogBase {
 							onHoveredChanged: {
 								if (hovered) {
 									status_text = military_unit_type.name
-									middle_status_text = format_text(stats_string)
 								} else {
 									status_text = ""
-									middle_status_text = ""
 								}
 							}
 						}
