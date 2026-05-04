@@ -1,6 +1,6 @@
-castle = {
-	name = "Castle"
-	icon = non_aggression_pact
+royal_palace = {
+	name = "Royal Palace"
+	icon = empire_crown
 	portrait = aristocratic_palace
 	image_filepath = "tiles/settlements/town.png"
 	political = true
@@ -16,13 +16,19 @@ castle = {
 		regency = 1
 	}
 	conditional_names = {
-		"Manor" = {
+		"Royal Palace" = {
 			not = {
-				has_building_class = donjon
+				domain = {
+					government_group = monarchy
+					tier == kingdom
+				}
 			}
 		}
-		"Castle" = {
-			has_building_class = donjon
+		"Imperial Palace" = {
+			domain = {
+				government_group = monarchy
+				tier == empire
+			}
 		}
 	}
 	tier_levels = {
@@ -31,6 +37,8 @@ castle = {
 		county = 3
 		marquisate = 4
 		duchy = 5
+		
+		royal_palace = 6
 	}
 	population_classes = {
 		slaves

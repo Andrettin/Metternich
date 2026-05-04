@@ -3,12 +3,17 @@ mansion = {
 	slot_type = mansion
 }
 
-noble_villa = {
-	name = "Noble Villa"
+great_mansion = {
+	name = "Great Mansion"
 	slot_type = mansion
 }
 
 palace = {
 	name = "Palace"
+	slot_type = mansion
+}
+
+grand_palace = {
+	name = "Grand Palace"
 	slot_type = mansion
 }

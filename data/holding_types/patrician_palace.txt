@@ -1,0 +1,65 @@
+patrician_palace = {
+	name = "Patrician Palace"
+	icon = trade_consulate
+	portrait = trading_post
+	image_filepath = "tiles/settlements/town.png"
+	economic = true
+	domain_skill = trade
+	level_commodity_costs = {
+		wealth = 1gb
+	}
+	level_commodity_costs_per_level = {
+		regency = 1
+	}
+	fortification_level_commodity_costs = {
+		wealth = 4gb
+		regency = 1
+	}
+	population_classes = {
+		slaves
+		untrained_workers
+		trained_workers
+		expert_workers
+		craftsmen
+		farmers
+		laborers
+		merchants
+		capitalists
+	}
+	income_per_level_and_province_level = {
+		1 = { #holding level
+			1 = 1d3-2 #province level
+			2 = 1d2-1
+			3 = 1d2-1
+			4 = 1d2
+			5 = 1d2
+			6 = 1d2
+			7 = 1d3
+		}
+		2 = {
+			2 = 1d2
+			3 = 1d3
+			4 = 1d3
+			5 = 1d3
+			6 = 1d3
+			7 = 1d2+1
+		}
+		3 = {
+			3 = 1d4
+			4 = 1d4
+			5 = 1d4
+			6 = 2d2
+			7 = 1d4+1
+		}
+		4 = {
+			4 = 1d6
+			5 = 1d6
+			6 = 2d3
+			7 = 1d6+1
+		}
+		6 = {
+			6 = 2d4+1
+			7 = 2d4+2
+		}
+	}
+}

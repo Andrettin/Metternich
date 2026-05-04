@@ -33,9 +33,11 @@ rogue = {
 	}
 	favored_holding_types = {
 		guild
+		patrician_palace
 	}
 	allowed_holding_types = {
 		castle
+		royal_palace
 	}
 	min_attribute_values = {
 		dexterity = 9

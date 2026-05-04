@@ -30,6 +30,7 @@ paladin = {
 	}
 	favored_holding_types = {
 		castle
+		royal_palace
 		temple
 	}
 	min_attribute_values = {

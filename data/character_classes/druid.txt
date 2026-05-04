@@ -30,6 +30,7 @@ druid = {
 	}
 	allowed_holding_types = {
 		castle
+		royal_palace
 	}
 	min_attribute_values = {
 		wisdom = 12

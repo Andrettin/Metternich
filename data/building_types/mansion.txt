@@ -3,9 +3,11 @@ mansion = {
 	building_class = mansion
 	portrait = aristocratic_palace
 	icon = heater_shield
+	holding_level = 1
 	size = 1
 	holding_types = {
-		castle
+		patrician_palace
+		royal_palace
 	}
 	builder_civilian_unit_types = {
 		ruler
@@ -24,15 +26,17 @@ mansion = {
 	}
 }
 
-noble_villa = {
-	name = "Noble Villa"
-	building_class = noble_villa
+great_mansion = {
+	name = "Great Mansion"
+	building_class = great_mansion
 	portrait = aristocratic_palace
 	icon = heater_shield
+	holding_level = 2
 	size = 2
 	base_building = mansion
 	holding_types = {
-		castle
+		patrician_palace
+		royal_palace
 	}
 	builder_civilian_unit_types = {
 		ruler
@@ -62,13 +66,12 @@ palace = {
 	building_class = palace
 	portrait = aristocratic_palace
 	icon = heater_shield
+	holding_level = 3
 	size = 4
-	base_building = noble_villa
+	base_building = great_mansion
 	holding_types = {
-		castle
-	}
-	required_buildings = {
-		bureau
+		patrician_palace
+		royal_palace
 	}
 	builder_civilian_unit_types = {
 		ruler
@@ -77,6 +80,35 @@ palace = {
 	}
 	commodity_costs = {
 		wealth = 84gb
+	}
+	modifier = {
+		law = 2
+		society = 1
+	}
+	domain_modifier = {
+		economy = 2
+		loyalty = 6
+		stability = 2
+		#fame = 1
+	}
+}
+
+grand_palace = {
+	name = "Grand Palace"
+	building_class = grand_palace
+	portrait = aristocratic_palace
+	icon = heater_shield
+	holding_level = 4
+	size = 4
+	base_building = palace
+	holding_types = {
+		patrician_palace
+		royal_palace
+	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
 	}
 	modifier = {
 		law = 2
