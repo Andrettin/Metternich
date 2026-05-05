@@ -578,7 +578,7 @@ QCoro::Task<void> character_game_data::do_crafting()
 	}
 
 	if (this->get_craft() < this->get_max_craft()) {
-		const int turn_days = game::get()->get_date().daysTo(game::get()->get_next_date());
+		const int turn_days = game::get()->get_days_until_next_turn();
 		const int recovered_craft = defines::get()->get_craft_recovery_per_day() * turn_days;
 		this->change_craft(recovered_craft);
 	}

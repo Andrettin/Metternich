@@ -10,6 +10,7 @@
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
 #include "domain/domain_government.h"
+#include "domain/domain_technology.h"
 #include "domain/subject_type.h"
 #include "economy/commodity.h"
 #include "economy/employment_type.h"
@@ -208,6 +209,8 @@ QCoro::Task<void> domain_economy::do_production()
 			const int64_t recovery_per_turn = monthly_recovery * game::get()->get_current_months_per_turn();
 			this->change_stored_commodity(commodity, recovery_per_turn);
 		}
+
+		this->get_game_data()->get_technology()->do_population_research();
 
 		const commodity_map<centesimal_int> commodity_inputs = this->get_commodity_inputs();
 		for (const auto &[commodity, input] : commodity_inputs) {

@@ -29,6 +29,7 @@ public:
 	domain_game_data *get_game_data() const;
 
 	[[nodiscard]] QCoro::Task<void> do_research();
+	void do_population_research();
 
 	const technology_set &get_technologies() const;
 	QVariantList get_technologies_qvariant_list() const;

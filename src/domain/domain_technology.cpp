@@ -19,6 +19,8 @@
 #include "map/province_game_data.h"
 #include "map/site.h"
 #include "map/tile.h"
+#include "population/population.h"
+#include "population/population_type.h"
 #include "script/modifier.h"
 #include "technology/technology.h"
 #include "util/assert_util.h"
@@ -68,6 +70,33 @@ QCoro::Task<void> domain_technology::do_research()
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error("Error doing research for domain \"" + this->domain->get_identifier() + "\"."));
 	}
+}
+
+void domain_technology::do_population_research()
+{
+	//generate research points based on population
+
+	const population *domain_population = this->get_game_data()->get_population();
+
+	if (domain_population->get_size() == 0) {
+		return;
+	}
+	
+	const commodity *research_commodity = defines::get()->get_default_research_commodity();
+	assert_throw(research_commodity != nullptr);
+
+	decimillesimal_int daily_research = decimillesimal_int(defines::get()->get_daily_literacy_research()) * domain_population->get_literacy_rate() / 100;
+
+	for (const auto &[population_type, size] : domain_population->get_type_sizes()) {
+		if (population_type->get_daily_research() != 0) {
+			const decimillesimal_int population_type_percent = decimillesimal_int(size) * 100 / domain_population->get_size();
+			daily_research += population_type->get_daily_research() * decimillesimal_int::min(population_type_percent, population_type->get_max_research_population_percent()) / 100;
+		}
+	}
+
+	const int turn_days = game::get()->get_days_until_next_turn();
+	const int64_t generated_research = (daily_research * turn_days).to_int64();
+	this->get_game_data()->get_economy()->change_stored_commodity(research_commodity, generated_research);
 }
 
 const technology_set &domain_technology::get_technologies() const

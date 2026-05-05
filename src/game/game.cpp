@@ -1840,6 +1840,11 @@ QDate game::get_next_date() const
 	return this->get_date().addMonths(this->get_current_months_per_turn());
 }
 
+int game::get_days_until_next_turn() const
+{
+	return this->get_date().daysTo(this->get_next_date());
+}
+
 bool game::is_last_turn_of_year() const
 {
 	return this->get_year() != this->get_next_date().year();

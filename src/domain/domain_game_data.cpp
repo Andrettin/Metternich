@@ -462,7 +462,7 @@ QCoro::Task<void> domain_game_data::do_turn()
 				co_await character->get_game_data()->ai_buy_items();
 			}
 
-			const int turn_days = game::get()->get_date().daysTo(game::get()->get_next_date());
+			const int turn_days = game::get()->get_days_until_next_turn();
 			context ctx(this->domain);
 			co_await character->get_game_data()->decrement_status_effect_durations(std::chrono::days(turn_days), ctx);
 		}

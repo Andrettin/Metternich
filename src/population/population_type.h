@@ -52,6 +52,8 @@ class population_type final : public named_data_entry, public data_type<populati
 	Q_PROPERTY(int output_modifier MEMBER output_modifier READ get_output_modifier NOTIFY changed)
 	Q_PROPERTY(int resource_output_bonus MEMBER resource_output_bonus READ get_resource_output_bonus NOTIFY changed)
 	Q_PROPERTY(archimedes::centesimal_int max_modifier_multiplier MEMBER max_modifier_multiplier READ get_max_modifier_multiplier NOTIFY changed)
+	Q_PROPERTY(int daily_research MEMBER daily_research READ get_daily_research NOTIFY changed)
+	Q_PROPERTY(archimedes::decimillesimal_int max_research_population_percent MEMBER max_research_population_percent READ get_max_research_population_percent NOTIFY changed)
 	Q_PROPERTY(const archimedes::game_rule* required_game_rule MEMBER required_game_rule NOTIFY changed)
 	Q_PROPERTY(bool enabled READ is_enabled NOTIFY changed)
 
@@ -156,6 +158,16 @@ public:
 		return this->max_modifier_multiplier;
 	}
 
+	int get_daily_research() const
+	{
+		return this->daily_research;
+	}
+
+	const decimillesimal_int &get_max_research_population_percent() const
+	{
+		return this->max_research_population_percent;
+	}
+
 	const modifier<const domain> *get_country_modifier() const
 	{
 		return this->country_modifier.get();
@@ -208,7 +220,9 @@ private:
 	int output_value = 0;
 	int output_modifier = 0;
 	int resource_output_bonus = 0;
-	centesimal_int max_modifier_multiplier = centesimal_int(0);
+	centesimal_int max_modifier_multiplier;
+	int daily_research = 0;
+	decimillesimal_int max_research_population_percent;
 	std::unique_ptr<modifier<const domain>> country_modifier;
 	std::vector<const population_type *> equivalent_population_types;
 	commodity_map<decimillesimal_int> life_needs;
