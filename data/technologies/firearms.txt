@@ -3,7 +3,7 @@ flintlock_rifle = {
 	subcategory = army
 	portrait = engineering
 	icon = rifle
-	period = renaissance_age
+	period = castle_age
 	prerequisites = {
 		heavy_crossbow
 		science
@@ -34,7 +34,7 @@ breech_loading_rifle = {
 	subcategory = army
 	portrait = engineering
 	icon = rifle
-	period = gunpowder_age
+	period = renaissance_age
 	prerequisites = {
 		flintlock_rifle
 	}
@@ -57,7 +57,7 @@ machine_gun = {
 	subcategory = army
 	portrait = engineering
 	icon = rifle
-	period = enlightenment_age
+	period = gunpowder_age
 	prerequisites = {
 		breech_loading_rifle
 	}
@@ -80,7 +80,7 @@ bolt_action_rifle = {
 	subcategory = army
 	portrait = engineering
 	icon = rifle
-	period = industrial_age
+	period = enlightenment_age
 	prerequisites = {
 		machine_gun
 	}

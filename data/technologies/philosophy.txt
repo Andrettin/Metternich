@@ -12,7 +12,7 @@ aristotelian_logic = {
 	subcategory = culture
 	portrait = engineering
 	icon = philosophy
-	period = bronze_age #classical_age
+	period = copper_age #classical_age
 	discovery_effects = {
 		domain = {
 			regency += 25
@@ -136,7 +136,7 @@ scholasticism = {
 	subcategory = culture
 	portrait = engineering
 	icon = wooden_cross
-	period = iron_age
+	period = bronze_age
 	prerequisites = {
 		aristotelian_logic
 	}
@@ -263,7 +263,7 @@ astrology_and_astronomy = {
 	subcategory = culture
 	portrait = engineering
 	icon = philosophy
-	period = classical_age
+	period = iron_age
 	prerequisites = {
 		scholasticism
 	}
@@ -384,7 +384,7 @@ natural_philosophy = {
 	subcategory = culture
 	portrait = engineering
 	icon = philosophy
-	period = feudal_age
+	period = classical_age
 	prerequisites = {
 		astrology_and_astronomy
 	}
@@ -511,7 +511,7 @@ science = {
 	subcategory = culture
 	portrait = engineering
 	icon = philosophy
-	period = castle_age
+	period = feudal_age
 	prerequisites = {
 		natural_philosophy
 		university

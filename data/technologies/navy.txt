@@ -3,7 +3,7 @@ large_ship_building = {
 	subcategory = industry
 	portrait = unload
 	icon = anchor
-	period = bronze_age
+	period = copper_age
 	discovery_mean_time_to_happen = {
 		months = 125
 		
@@ -309,7 +309,7 @@ steamer_transport = {
 	subcategory = navy
 	portrait = unload
 	icon = anchor
-	period = renaissance_age
+	period = castle_age
 	prerequisites = {
 		#steamers
 		
@@ -338,7 +338,7 @@ commerce_raider = {
 	subcategory = navy
 	portrait = unload
 	icon = anchor
-	period = gunpowder_age
+	period = renaissance_age
 	prerequisites = {
 		#steamers
 		
@@ -365,7 +365,7 @@ ironclad = {
 	subcategory = navy
 	portrait = unload
 	icon = anchor
-	period = enlightenment_age
+	period = gunpowder_age
 	prerequisites = {
 		#iron_steamers
 		
@@ -395,7 +395,7 @@ protected_cruiser = {
 	subcategory = navy
 	portrait = unload
 	icon = anchor
-	period = industrial_age
+	period = enlightenment_age
 	prerequisites = {
 		#steel_steamers
 		
@@ -423,7 +423,7 @@ dreadnought = {
 	subcategory = navy
 	portrait = unload
 	icon = anchor
-	period = modern_age
+	period = industrial_age
 	prerequisites = {
 		#steam_turbine_ships
 		

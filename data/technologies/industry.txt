@@ -3,7 +3,7 @@ road_building = {
 	subcategory = industry
 	portrait = engineering
 	icon = road
-	period = bronze_age
+	period = copper_age
 	discovery_mean_time_to_happen = {
 		months = 50
 		
@@ -301,7 +301,7 @@ glassblowing = {
 	subcategory = industry
 	portrait = engineering
 	icon = glass
-	period = bronze_age
+	period = copper_age
 	discovery_mean_time_to_happen = {
 		months = 150
 		
@@ -585,7 +585,7 @@ black_coal = {
 	subcategory = industry
 	portrait = factory
 	icon = coal
-	period = castle_age
+	period = feudal_age
 	prerequisites = {
 		natural_philosophy
 	}
@@ -895,7 +895,7 @@ pit_coal = {
 	subcategory = industry
 	portrait = factory
 	icon = coal
-	period = renaissance_age
+	period = castle_age
 	prerequisites = {
 		#clean_coal
 		
@@ -926,7 +926,7 @@ coke = {
 	subcategory = industry
 	portrait = factory
 	icon = coal
-	period = gunpowder_age
+	period = renaissance_age
 	prerequisites = {
 		#clean_coal
 		
@@ -956,7 +956,7 @@ mechanized_slaughtering_block = {
 	subcategory = industry
 	portrait = engineering
 	icon = cattle
-	period = renaissance_age
+	period = castle_age
 	prerequisites = {
 		#mechanical_production
 		
@@ -987,7 +987,7 @@ precision_work = {
 	subcategory = industry
 	portrait = engineering
 	icon = glass
-	period = renaissance_age
+	period = castle_age
 	prerequisites = {
 		#mechanical_production
 		
@@ -1019,7 +1019,7 @@ integral_distillery_process = {
 	subcategory = industry
 	portrait = engineering
 	icon = wine
-	period = renaissance_age
+	period = castle_age
 	prerequisites = {
 		#interchangeable_parts
 		
@@ -1049,7 +1049,7 @@ refrigeration = {
 	subcategory = industry
 	portrait = engineering
 	icon = cattle
-	period = renaissance_age
+	period = castle_age
 	prerequisites = {
 		#assembly_line
 		
@@ -1083,7 +1083,7 @@ bakelite = {
 	subcategory = industry
 	portrait = engineering
 	icon = glass
-	period = gunpowder_age
+	period = renaissance_age
 	prerequisites = {
 		#synthetic_polymers
 		

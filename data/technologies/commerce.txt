@@ -3,7 +3,7 @@ minor_merchant_houses = {
 	subcategory = commerce
 	portrait = trading_post
 	icon = chest
-	period = bronze_age
+	period = copper_age
 	discovery_mean_time_to_happen = {
 		months = 50
 		
@@ -305,7 +305,7 @@ local_merchant_houses = {
 	subcategory = commerce
 	portrait = trading_post
 	icon = chest
-	period = iron_age
+	period = bronze_age
 	prerequisites = {
 		minor_merchant_houses
 	}
@@ -606,7 +606,7 @@ guilds = {
 	subcategory = commerce
 	portrait = trading_post
 	icon = chest
-	period = classical_age
+	period = iron_age
 	prerequisites = {
 		local_merchant_houses
 	}

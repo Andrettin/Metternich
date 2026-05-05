@@ -3,7 +3,7 @@ monastic_school = {
 	subcategory = culture
 	portrait = university
 	icon = wooden_cross
-	period = iron_age
+	period = bronze_age
 	prerequisites = {
 		asceticism
 	}
@@ -237,7 +237,7 @@ cathedral_school = {
 	subcategory = culture
 	portrait = university
 	icon = wooden_cross
-	period = classical_age
+	period = iron_age
 	prerequisites = {
 		monastic_school
 	}
@@ -471,7 +471,7 @@ university = {
 	subcategory = culture
 	portrait = university
 	icon = university
-	period = feudal_age #renaissance_age
+	period = classical_age #renaissance_age
 	prerequisites = {
 		cathedral_school
 		scholasticism

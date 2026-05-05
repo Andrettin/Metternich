@@ -1,5 +1,11 @@
-bronze_age = {
+copper_age = {
 	start_year = -4000
+	end_year = -2000
+}
+
+bronze_age = {
+	parent_period = copper_age
+	start_year = -2000
 	end_year = -1000
 }
 
