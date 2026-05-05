@@ -200,6 +200,10 @@ void technology::initialize()
 	std::sort(this->enabled_pathways.begin(), this->enabled_pathways.end(), pathway_compare());
 	std::sort(this->enabled_river_crossing_pathways.begin(), this->enabled_river_crossing_pathways.end(), pathway_compare());
 
+	if (this->get_level() > 0) {
+		this->commodity_costs[defines::get()->get_default_research_commodity()] = defines::get()->get_research_cost_per_level() * this->get_level();
+	}
+
 	if (this->discovery_mean_time_to_happen != nullptr || this->discovery_monthly_chance != nullptr) {
 		province_event *event = province_event::add(std::format("{}_discovered", this->get_identifier()), this->get_module());
 		event->set_name(std::format("{} Discovered", this->get_name()));
