@@ -90,7 +90,7 @@ void domain_technology::do_population_research()
 	for (const auto &[population_type, size] : domain_population->get_type_sizes()) {
 		if (population_type->get_daily_research() != 0) {
 			const decimillesimal_int population_type_percent = decimillesimal_int(size) * 100 / domain_population->get_size();
-			daily_research += population_type->get_daily_research() * decimillesimal_int::min(population_type_percent, population_type->get_max_research_population_percent()) / 100;
+			daily_research += population_type->get_daily_research() * decimillesimal_int::min(population_type_percent, population_type->get_max_research_population_percent()) / population_type->get_max_research_population_percent();
 		}
 	}
 
