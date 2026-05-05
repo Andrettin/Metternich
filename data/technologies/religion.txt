@@ -1,3 +1,11 @@
+ceremonial_burial = {
+	name = "Ceremonial Burial"
+	subcategory = culture
+	portrait = temple
+	icon = wooden_cross
+	period = copper_age
+}
+
 asceticism = {
 	name = "Asceticism"
 	subcategory = culture
