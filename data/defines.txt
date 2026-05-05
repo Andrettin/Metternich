@@ -58,7 +58,7 @@ wealth_commodity = wealth
 regency_commodity = regency
 piety_commodity = piety
 default_research_commodity = research
-research_cost_per_level = 1000
+research_cost_per_level = 1000 #research cost per technology level
 daily_literacy_research = 4 #daily research generated multiplied by the literacy rate
 advisor_commodity = statesmanship
 
