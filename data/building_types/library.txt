@@ -4,6 +4,7 @@ library = {
 	portrait = university
 	icon = book
 	size = 1
+	required_technology = writing
 	holding_types = {
 		guild
 		magic_source
@@ -39,6 +40,7 @@ library_great_library = {
 	icon = book
 	holding_level = 2
 	size = 1
+	required_technology = writing
 	holding_types = {
 		great_library
 	}
@@ -68,6 +70,7 @@ great_library = {
 	icon = book
 	holding_level = 4
 	base_building = library_great_library
+	required_technology = literacy
 	holding_types = {
 		great_library
 	}

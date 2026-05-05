@@ -1,3 +1,26 @@
+coinage = {
+	name = "Coinage"
+	subcategory = commerce
+	portrait = coinage
+	icon = wealth
+	period = bronze_age
+	prerequisites = {
+		bronze_working
+	}
+}
+
+trade = {
+	name = "Trade"
+	subcategory = commerce
+	portrait = coinage
+	icon = wealth
+	period = iron_age
+	prerequisites = {
+		coinage
+		code_of_laws
+	}
+}
+
 minor_merchant_houses = {
 	name = "Minor Merchant Houses"
 	subcategory = commerce

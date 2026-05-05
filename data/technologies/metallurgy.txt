@@ -1,3 +1,11 @@
+bronze_working = {
+	name = "Bronze Working"
+	subcategory = metallurgy
+	portrait = engineering
+	icon = bronze
+	period = copper_age
+}
+
 advanced_ore_roasting_processes = {
 	name = "Advanced Ore Roasting Processes"
 	subcategory = metallurgy

@@ -1,0 +1,30 @@
+alphabet = {
+	name = "Alphabet"
+	subcategory = culture
+	portrait = university
+	icon = book
+	period = copper_age
+}
+
+writing = {
+	name = "Writing"
+	subcategory = culture
+	portrait = university
+	icon = book
+	period = bronze_age
+	prerequisites = {
+		alphabet
+	}
+}
+
+literacy = {
+	name = "Literacy"
+	subcategory = culture
+	portrait = university
+	icon = book
+	period = iron_age
+	prerequisites = {
+		writing
+		code_of_laws
+	}
+}

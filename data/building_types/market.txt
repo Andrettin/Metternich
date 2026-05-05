@@ -34,6 +34,7 @@ market = {
 	size = 2
 	base_building = shop
 	min_holding_level = 2
+	required_technology = coinage
 	holding_types = {
 		guild
 	}
