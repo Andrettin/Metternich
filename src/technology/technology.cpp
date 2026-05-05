@@ -200,6 +200,10 @@ void technology::initialize()
 	std::sort(this->enabled_pathways.begin(), this->enabled_pathways.end(), pathway_compare());
 	std::sort(this->enabled_river_crossing_pathways.begin(), this->enabled_river_crossing_pathways.end(), pathway_compare());
 
+	if (this->get_level() == 0 && this->discovery_mean_time_to_happen == nullptr && this->discovery_monthly_chance == nullptr) {
+		this->level = this->get_total_prerequisite_depth() + 1;
+	}
+
 	if (this->get_level() > 0) {
 		this->commodity_costs[defines::get()->get_default_research_commodity()] = defines::get()->get_research_cost_per_level() * this->get_level();
 	}
