@@ -2,7 +2,6 @@ frogs = {
 	name = "Frogs"
 	icon = frog
 	tiny_icon = garrison
-	required_game_rule = research_commodity
 	terrain_types = {
 		swamp
 	}

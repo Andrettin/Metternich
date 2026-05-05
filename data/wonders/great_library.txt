@@ -3,7 +3,6 @@ great_library = {
 	portrait = university
 	building = library
 	required_game_rules = {
-		research_commodity
 		additional_buildings
 	}
 	country_modifier = {

@@ -76,7 +76,6 @@ reparatio_calendarii = { #Source: "Encyclopædia Britannica", 1911, vol. 7, p. 6
 	random_weight = 1000
 	conditions = {
 		advisor = nikolaus_von_kues
-		game_rule = research_commodity
 	}
 	option = {
 		effects = {
@@ -94,7 +93,6 @@ de_quadratura_circuli = { #Source: "Encyclopædia Britannica", 1911, vol. 7, p. 
 	random_weight = 1000
 	conditions = {
 		advisor = nikolaus_von_kues
-		game_rule = research_commodity
 	}
 	option = {
 		effects = {
@@ -113,7 +111,6 @@ conjectura_de_novissimis_diebus = { #Source: "Encyclopædia Britannica", 1911, v
 	conditions = {
 		advisor = nikolaus_von_kues
 		year <= 1734
-		game_rule = research_commodity
 	}
 	option = {
 		effects = {

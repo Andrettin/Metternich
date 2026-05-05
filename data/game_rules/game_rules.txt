@@ -20,13 +20,6 @@ culture_commodity = {
 	hidden = true
 }
 
-research_commodity = {
-	name = "Research Commodity"
-	default_value = false
-	description = "Allow the Research commodity, which is used for acquiring technologies"
-	hidden = true
-}
-
 trade_commodity = {
 	name = "Trade Commodity"
 	default_value = false
