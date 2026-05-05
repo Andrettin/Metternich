@@ -18,7 +18,6 @@
 #include "database/preferences.h"
 #include "domain/country_military.h"
 #include "domain/country_rank.h"
-#include "domain/country_technology.h"
 #include "domain/country_turn_data.h"
 #include "domain/diplomacy_state.h"
 #include "domain/domain.h"
@@ -27,6 +26,7 @@
 #include "domain/domain_game_data.h"
 #include "domain/domain_government.h"
 #include "domain/domain_history.h"
+#include "domain/domain_technology.h"
 #include "domain/domain_tier.h"
 #include "domain/government_type.h"
 #include "domain/law.h"
@@ -838,7 +838,7 @@ QCoro::Task<void> game::apply_history(const QDate &start_date)
 			assert_throw(domain != nullptr);
 
 			domain_game_data *domain_game_data = domain->get_game_data();
-			country_technology *country_technology = domain->get_technology();
+			domain_technology *domain_technology = domain->get_technology();
 
 			if (!domain_game_data->is_alive()) {
 				continue;
@@ -852,7 +852,7 @@ QCoro::Task<void> game::apply_history(const QDate &start_date)
 			assert_throw(type != nullptr);
 
 			if (type->get_required_technology() != nullptr) {
-				co_await country_technology->add_technology_with_prerequisites(type->get_required_technology());
+				co_await domain_technology->add_technology_with_prerequisites(type->get_required_technology());
 			}
 
 			const phenotype *phenotype = historical_transporter->get_phenotype();

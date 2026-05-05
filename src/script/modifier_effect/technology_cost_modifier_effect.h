@@ -1,7 +1,7 @@
 #pragma once
 
-#include "domain/country_technology.h"
 #include "domain/domain.h"
+#include "domain/domain_technology.h"
 #include "script/modifier_effect/modifier_effect.h"
 #include "technology/technology_category.h"
 #include "technology/technology_subcategory.h"

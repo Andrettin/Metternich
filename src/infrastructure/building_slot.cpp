@@ -4,10 +4,10 @@
 
 #include "database/defines.h"
 #include "culture/culture.h"
-#include "domain/country_technology.h"
 #include "domain/domain.h"
 #include "domain/domain_economy.h"
 #include "domain/domain_game_data.h"
+#include "domain/domain_technology.h"
 #include "economy/commodity.h"
 #include "game/game.h"
 #include "infrastructure/building_class.h"

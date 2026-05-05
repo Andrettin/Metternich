@@ -12,7 +12,6 @@
 #include "domain/consulate.h"
 #include "domain/country_military.h"
 #include "domain/country_rank.h"
-#include "domain/country_technology.h"
 #include "domain/country_turn_data.h"
 #include "domain/country_type.h"
 #include "domain/diplomacy_state.h"
@@ -22,6 +21,7 @@
 #include "domain/domain_economy.h"
 #include "domain/domain_government.h"
 #include "domain/domain_history.h"
+#include "domain/domain_technology.h"
 #include "domain/domain_tier.h"
 #include "domain/domain_tier_data.h"
 #include "domain/government_group.h"
@@ -119,7 +119,7 @@ domain_game_data::domain_game_data(metternich::domain *domain)
 	this->economy = make_qunique<domain_economy>(domain, this);
 	this->government = make_qunique<domain_government>(domain, this);
 	this->military = make_qunique<country_military>(domain);
-	this->technology = make_qunique<country_technology>(domain, this);
+	this->technology = make_qunique<domain_technology>(domain, this);
 
 	connect(this, &domain_game_data::tier_changed, this, &domain_game_data::title_name_changed);
 	connect(this, &domain_game_data::government_type_changed, this, &domain_game_data::title_name_changed);
@@ -318,7 +318,7 @@ QCoro::Task<void> domain_game_data::apply_history(const QDate &start_date)
 	const domain_history *domain_history = this->domain->get_history();
 	domain_economy *domain_economy = this->get_economy();
 	domain_government *domain_government = this->get_government();
-	country_technology *country_technology = this->get_technology();
+	domain_technology *domain_technology = this->get_technology();
 
 	assert_throw(domain_history->get_owner() == nullptr);
 
@@ -343,13 +343,13 @@ QCoro::Task<void> domain_game_data::apply_history(const QDate &start_date)
 		co_await this->set_government_type(domain_history->get_government_type());
 
 		if (domain_history->get_government_type()->get_required_technology() != nullptr) {
-			co_await country_technology->add_technology_with_prerequisites(domain_history->get_government_type()->get_required_technology());
+			co_await domain_technology->add_technology_with_prerequisites(domain_history->get_government_type()->get_required_technology());
 		}
 	} else if (this->domain->get_default_government_type() != nullptr) {
 		co_await this->set_government_type(this->domain->get_default_government_type());
 
 		if (this->domain->get_default_government_type()->get_required_technology() != nullptr) {
-			co_await country_technology->add_technology_with_prerequisites(this->domain->get_default_government_type()->get_required_technology());
+			co_await domain_technology->add_technology_with_prerequisites(this->domain->get_default_government_type()->get_required_technology());
 		}
 	}
 
@@ -370,14 +370,14 @@ QCoro::Task<void> domain_game_data::apply_history(const QDate &start_date)
 	}
 
 	for (const metternich::technology *technology : domain_history->get_technologies()) {
-		co_await country_technology->add_technology_with_prerequisites(technology);
+		co_await domain_technology->add_technology_with_prerequisites(technology);
 	}
 
 	for (const auto &[law_group, law] : domain_history->get_laws()) {
 		co_await domain_government->set_law(law_group, law);
 
 		if (law->get_required_technology() != nullptr) {
-			co_await country_technology->add_technology_with_prerequisites(law->get_required_technology());
+			co_await domain_technology->add_technology_with_prerequisites(law->get_required_technology());
 		}
 	}
 

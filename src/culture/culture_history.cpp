@@ -2,9 +2,9 @@
 
 #include "culture/culture_history.h"
 
-#include "domain/country_technology.h"
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
+#include "domain/domain_technology.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/region.h"

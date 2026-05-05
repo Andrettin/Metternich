@@ -13,7 +13,7 @@ class domain_game_data;
 class technology_category;
 class technology_subcategory;
 
-class country_technology final : public QObject
+class domain_technology final : public QObject
 {
 	Q_OBJECT
 
@@ -23,8 +23,8 @@ class country_technology final : public QObject
 	Q_PROPERTY(QVariantList current_researches READ get_current_researches_qvariant_list NOTIFY current_researches_changed)
 
 public:
-	explicit country_technology(const metternich::domain *domain, const domain_game_data *game_data);
-	~country_technology();
+	explicit domain_technology(const metternich::domain *domain, const domain_game_data *game_data);
+	~domain_technology();
 
 	domain_game_data *get_game_data() const;
 

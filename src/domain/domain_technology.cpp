@@ -1,6 +1,6 @@
 #include "metternich.h"
 
-#include "domain/country_technology.h"
+#include "domain/domain_technology.h"
 
 #include "database/defines.h"
 #include "domain/domain.h"
@@ -30,22 +30,22 @@
 
 namespace metternich {
 
-country_technology::country_technology(const metternich::domain *domain, const domain_game_data *game_data)
+domain_technology::domain_technology(const metternich::domain *domain, const domain_game_data *game_data)
 	: domain(domain)
 {
-	connect(game_data, &domain_game_data::available_idea_slots_changed, this, &country_technology::available_research_slots_changed);
+	connect(game_data, &domain_game_data::available_idea_slots_changed, this, &domain_technology::available_research_slots_changed);
 }
 
-country_technology::~country_technology()
+domain_technology::~domain_technology()
 {
 }
 
-domain_game_data *country_technology::get_game_data() const
+domain_game_data *domain_technology::get_game_data() const
 {
 	return this->domain->get_game_data();
 }
 
-QCoro::Task<void> country_technology::do_research()
+QCoro::Task<void> domain_technology::do_research()
 {
 	try {
 		if (this->get_gain_technologies_known_by_others_count() > 0) {
@@ -70,7 +70,7 @@ QCoro::Task<void> country_technology::do_research()
 	}
 }
 
-const technology_set &country_technology::get_technologies() const
+const technology_set &domain_technology::get_technologies() const
 {
 	if (this->get_game_data()->get_capital_province() != nullptr) {
 		return this->get_game_data()->get_capital_province()->get_game_data()->get_technologies();
@@ -82,12 +82,12 @@ const technology_set &country_technology::get_technologies() const
 	return empty_set;
 }
 
-QVariantList country_technology::get_technologies_qvariant_list() const
+QVariantList domain_technology::get_technologies_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_technologies());
 }
 
-QCoro::Task<void> country_technology::add_technology(const technology *technology)
+QCoro::Task<void> domain_technology::add_technology(const technology *technology)
 {
 	if (this->get_game_data()->get_capital_province() != nullptr) {
 		co_await this->get_game_data()->get_capital_province()->get_game_data()->add_technology(technology);
@@ -96,7 +96,7 @@ QCoro::Task<void> country_technology::add_technology(const technology *technolog
 	}
 }
 
-QCoro::Task<void> country_technology::add_technology_with_prerequisites(const technology *technology)
+QCoro::Task<void> domain_technology::add_technology_with_prerequisites(const technology *technology)
 {
 	co_await this->add_technology(technology);
 
@@ -105,7 +105,7 @@ QCoro::Task<void> country_technology::add_technology_with_prerequisites(const te
 	}
 }
 
-QCoro::Task<void> country_technology::on_technology_added(const technology *technology)
+QCoro::Task<void> domain_technology::on_technology_added(const technology *technology)
 {
 	if (technology->get_domain_modifier() != nullptr) {
 		co_await technology->get_domain_modifier()->apply(this->domain, 1);
@@ -233,14 +233,14 @@ QCoro::Task<void> country_technology::on_technology_added(const technology *tech
 	}
 }
 
-QCoro::Task<void> country_technology::remove_technology(const technology *technology)
+QCoro::Task<void> domain_technology::remove_technology(const technology *technology)
 {
 	assert_throw(technology != nullptr);
 
 	co_await this->get_game_data()->get_capital_province()->get_game_data()->remove_technology(technology);
 }
 
-QCoro::Task<void> country_technology::on_technology_lost(const technology *technology)
+QCoro::Task<void> domain_technology::on_technology_lost(const technology *technology)
 {
 	if (technology->get_domain_modifier() != nullptr) {
 		co_await technology->get_domain_modifier()->apply(this->domain, -1);
@@ -269,7 +269,7 @@ QCoro::Task<void> country_technology::on_technology_lost(const technology *techn
 	}
 }
 
-QCoro::Task<void> country_technology::check_technologies()
+QCoro::Task<void> domain_technology::check_technologies()
 {
 	//technologies may no longer be available for the country due to e.g. religion change, and may therefore need to be removed
 
@@ -281,7 +281,7 @@ QCoro::Task<void> country_technology::check_technologies()
 	}
 }
 
-bool country_technology::can_gain_technology(const technology *technology) const
+bool domain_technology::can_gain_technology(const technology *technology) const
 {
 	assert_throw(technology != nullptr);
 
@@ -296,7 +296,7 @@ bool country_technology::can_gain_technology(const technology *technology) const
 	return this->get_game_data()->get_capital_province()->get_game_data()->can_gain_technology(technology);
 }
 
-bool country_technology::can_research_technology(const technology *technology) const
+bool domain_technology::can_research_technology(const technology *technology) const
 {
 	if (!this->can_gain_technology(technology)) {
 		return false;
@@ -311,7 +311,7 @@ bool country_technology::can_research_technology(const technology *technology) c
 	return true;
 }
 
-std::vector<const technology *> country_technology::get_researchable_technologies() const
+std::vector<const technology *> domain_technology::get_researchable_technologies() const
 {
 	std::vector<const technology *> researchable_technologies;
 
@@ -328,12 +328,12 @@ std::vector<const technology *> country_technology::get_researchable_technologie
 	return researchable_technologies;
 }
 
-QVariantList country_technology::get_researchable_technologies_qvariant_list() const
+QVariantList domain_technology::get_researchable_technologies_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_researchable_technologies());
 }
 
-bool country_technology::is_technology_researchable(const technology *technology) const
+bool domain_technology::is_technology_researchable(const technology *technology) const
 {
 	if (technology->is_discovery()) {
 		return false;
@@ -346,7 +346,7 @@ bool country_technology::is_technology_researchable(const technology *technology
 	return this->can_gain_technology(technology);
 }
 
-QVariantList country_technology::get_future_technologies_qvariant_list() const
+QVariantList domain_technology::get_future_technologies_qvariant_list() const
 {
 	std::vector<const technology *> future_technologies = this->domain->get_available_technologies();
 	std::erase_if(future_technologies, [this](const technology *technology) {
@@ -372,12 +372,12 @@ QVariantList country_technology::get_future_technologies_qvariant_list() const
 	return container::to_qvariant_list(future_technologies);
 }
 
-QVariantList country_technology::get_current_researches_qvariant_list() const
+QVariantList domain_technology::get_current_researches_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_current_researches());
 }
 
-void country_technology::add_current_research(const technology *technology)
+void domain_technology::add_current_research(const technology *technology)
 {
 	assert_throw(this->can_research_technology(technology));
 
@@ -389,7 +389,7 @@ void country_technology::add_current_research(const technology *technology)
 	emit current_researches_changed();
 }
 
-void country_technology::remove_current_research(const technology *technology, const bool restore_costs)
+void domain_technology::remove_current_research(const technology *technology, const bool restore_costs)
 {
 	assert_throw(this->get_current_researches().contains(technology));
 
@@ -403,7 +403,7 @@ void country_technology::remove_current_research(const technology *technology, c
 	emit current_researches_changed();
 }
 
-QCoro::Task<void> country_technology::on_technology_researched(const technology *technology)
+QCoro::Task<void> domain_technology::on_technology_researched(const technology *technology)
 {
 	if (this->get_current_researches().contains(technology)) {
 		this->remove_current_research(technology, false);
@@ -434,7 +434,7 @@ QCoro::Task<void> country_technology::on_technology_researched(const technology 
 	emit technology_researched(technology);
 }
 
-data_entry_map<technology_category, const technology *> country_technology::get_research_choice_map(const bool is_free) const
+data_entry_map<technology_category, const technology *> domain_technology::get_research_choice_map(const bool is_free) const
 {
 	const std::vector<const technology *> researchable_technologies = this->get_researchable_technologies();
 
@@ -475,7 +475,7 @@ data_entry_map<technology_category, const technology *> country_technology::get_
 	return research_choice_map;
 }
 
-QCoro::Task<void> country_technology::gain_free_technology()
+QCoro::Task<void> domain_technology::gain_free_technology()
 {
 	const data_entry_map<technology_category, const technology *> research_choice_map = this->get_research_choice_map(true);
 
@@ -492,7 +492,7 @@ QCoro::Task<void> country_technology::gain_free_technology()
 	}
 }
 
-QCoro::Task<void> country_technology::gain_free_technologies(const int count)
+QCoro::Task<void> domain_technology::gain_free_technologies(const int count)
 {
 	assert_throw(count > 0);
 
@@ -500,7 +500,7 @@ QCoro::Task<void> country_technology::gain_free_technologies(const int count)
 	co_await this->gain_free_technology();
 }
 
-QCoro::Task<void> country_technology::gain_technologies_known_by_others()
+QCoro::Task<void> domain_technology::gain_technologies_known_by_others()
 {
 	static constexpr int min_countries = 2;
 
@@ -525,7 +525,7 @@ QCoro::Task<void> country_technology::gain_technologies_known_by_others()
 	}
 }
 
-void country_technology::set_technology_category_cost_modifier(const technology_category *category, const centesimal_int &value)
+void domain_technology::set_technology_category_cost_modifier(const technology_category *category, const centesimal_int &value)
 {
 	if (value == this->get_technology_category_cost_modifier(category)) {
 		return;
@@ -538,7 +538,7 @@ void country_technology::set_technology_category_cost_modifier(const technology_
 	}
 }
 
-void country_technology::set_technology_subcategory_cost_modifier(const technology_subcategory *subcategory, const centesimal_int &value)
+void domain_technology::set_technology_subcategory_cost_modifier(const technology_subcategory *subcategory, const centesimal_int &value)
 {
 	if (value == this->get_technology_subcategory_cost_modifier(subcategory)) {
 		return;
@@ -551,7 +551,7 @@ void country_technology::set_technology_subcategory_cost_modifier(const technolo
 	}
 }
 
-QCoro::Task<void> country_technology::set_gain_technologies_known_by_others_count(const int value)
+QCoro::Task<void> domain_technology::set_gain_technologies_known_by_others_count(const int value)
 {
 	const int old_value = this->get_gain_technologies_known_by_others_count();
 	if (value == old_value) {

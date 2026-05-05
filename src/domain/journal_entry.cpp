@@ -6,10 +6,10 @@
 #include "character/character_game_data.h"
 #include "database/defines.h"
 #include "domain/country_military.h"
-#include "domain/country_technology.h"
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
 #include "domain/domain_government.h"
+#include "domain/domain_technology.h"
 #include "domain/office.h"
 #include "game/game.h"
 #include "game/game_rules.h"
@@ -213,10 +213,10 @@ bool journal_entry::check_conditions(const domain *domain) const
 		return false;
 	}
 
-	const country_technology *country_technology = domain->get_technology();
+	const domain_technology *domain_technology = domain->get_technology();
 
 	for (const technology *technology : this->get_researched_technologies()) {
-		if (!technology->is_discovery() && !country_technology->is_technology_researchable(technology) && !country_technology->has_technology(technology)) {
+		if (!technology->is_discovery() && !domain_technology->is_technology_researchable(technology) && !domain_technology->has_technology(technology)) {
 			return false;
 		}
 	}
@@ -248,7 +248,7 @@ bool journal_entry::check_completion_conditions(const domain *domain, const bool
 	}
 
 	const domain_game_data *domain_game_data = domain->get_game_data();
-	const country_technology *country_technology = domain->get_technology();
+	const domain_technology *domain_technology = domain->get_technology();
 
 	for (const province *province : this->owned_provinces) {
 		if (province->get_game_data()->get_owner() != domain) {
@@ -301,7 +301,7 @@ bool journal_entry::check_completion_conditions(const domain *domain, const bool
 	}
 
 	for (const technology *technology : this->get_researched_technologies()) {
-		if (!country_technology->has_technology(technology)) {
+		if (!domain_technology->has_technology(technology)) {
 			return false;
 		}
 	}

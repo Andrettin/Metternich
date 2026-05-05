@@ -255,7 +255,7 @@ country_military *domain::get_military() const
 	return this->get_game_data()->get_military();
 }
 
-country_technology *domain::get_technology() const
+domain_technology *domain::get_technology() const
 {
 	return this->get_game_data()->get_technology();
 }

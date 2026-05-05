@@ -3,11 +3,11 @@
 #include "domain/domain_ai.h"
 
 #include "domain/country_military.h"
-#include "domain/country_technology.h"
 #include "domain/domain.h"
 #include "domain/domain_economy.h"
 #include "domain/domain_game_data.h"
 #include "domain/domain_government.h"
+#include "domain/domain_technology.h"
 #include "domain/idea_type.h"
 #include "domain/journal_entry.h"
 #include "domain/office.h"

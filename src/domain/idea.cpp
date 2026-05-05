@@ -2,8 +2,8 @@
 
 #include "domain/idea.h"
 
-#include "domain/country_technology.h"
 #include "domain/domain.h"
+#include "domain/domain_technology.h"
 #include "domain/idea_slot.h"
 #include "domain/idea_type.h"
 #include "script/condition/and_condition.h"
@@ -56,13 +56,13 @@ bool idea::is_available_for_country_slot(const domain *domain, const idea_slot *
 		return false;
 	}
 
-	const country_technology *country_technology = domain->get_technology();
+	const domain_technology *domain_technology = domain->get_technology();
 
-	if (this->get_required_technology() != nullptr && !country_technology->has_technology(this->get_required_technology())) {
+	if (this->get_required_technology() != nullptr && !domain_technology->has_technology(this->get_required_technology())) {
 		return false;
 	}
 
-	if (this->get_obsolescence_technology() != nullptr && country_technology->has_technology(this->get_obsolescence_technology())) {
+	if (this->get_obsolescence_technology() != nullptr && domain_technology->has_technology(this->get_obsolescence_technology())) {
 		return false;
 	}
 

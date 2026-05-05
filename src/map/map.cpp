@@ -4,9 +4,9 @@
 
 #include "database/defines.h"
 #include "database/preferences.h"
-#include "domain/country_technology.h"
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
+#include "domain/domain_technology.h"
 #include "economy/resource.h"
 #include "game/game.h"
 #include "infrastructure/improvement.h"
@@ -549,17 +549,17 @@ QCoro::Task<void> map::set_tile_resource_discovered(const QPoint &tile_pos, cons
 	if (discovered && resource->get_discovery_technology() != nullptr && tile->get_owner() != nullptr) {
 		for (const domain *domain : game::get()->get_countries()) {
 			domain_game_data *domain_game_data = domain->get_game_data();
-			country_technology *country_technology = domain->get_technology();
+			domain_technology *domain_technology = domain->get_technology();
 
 			if (!domain_game_data->is_tile_explored(tile_pos)) {
 				continue;
 			}
 
-			if (country_technology->can_gain_technology(resource->get_discovery_technology())) {
-				co_await country_technology->add_technology(resource->get_discovery_technology());
+			if (domain_technology->can_gain_technology(resource->get_discovery_technology())) {
+				co_await domain_technology->add_technology(resource->get_discovery_technology());
 
 				if (game::get()->is_running()) {
-					emit country_technology->technology_researched(resource->get_discovery_technology());
+					emit domain_technology->technology_researched(resource->get_discovery_technology());
 				}
 			}
 		}
