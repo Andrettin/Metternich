@@ -40,6 +40,7 @@ temple = {
 	}
 	population_classes = {
 		slaves
+		tribesmen
 		untrained_workers
 		trained_workers
 		expert_workers
