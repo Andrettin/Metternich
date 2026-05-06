@@ -1,11 +1,11 @@
 #pragma once
 
-#include "database/data_entry.h"
 #include "database/data_type.h"
+#include "database/named_data_entry.h"
 
 namespace metternich {
 
-class technological_period final : public data_entry, public data_type<technological_period>
+class technological_period final : public named_data_entry, public data_type<technological_period>
 {
 	Q_OBJECT
 
@@ -19,7 +19,7 @@ public:
 	static constexpr const char database_folder[] = "technological_periods";
 
 public:
-	explicit technological_period(const std::string &identifier) : data_entry(identifier)
+	explicit technological_period(const std::string &identifier) : named_data_entry(identifier)
 	{
 	}
 

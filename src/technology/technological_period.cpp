@@ -23,7 +23,7 @@ void technological_period::initialize()
 		this->index = 0;
 	}
 
-	data_entry::initialize();
+	named_data_entry::initialize();
 }
 
 void technological_period::check() const
