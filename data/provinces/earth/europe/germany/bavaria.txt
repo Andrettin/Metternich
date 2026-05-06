@@ -42,7 +42,7 @@ bavaria = {
 		1337 = {
 			technologies += morning_star
 			technologies += cathedral_school
-			technologies += astrology_and_astronomy
+			technologies += astronomy
 			technologies += ballads
 		}
 		

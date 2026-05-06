@@ -79,7 +79,7 @@ glassblowing = {
 		}
 		modifier = {
 			factor = 0.97
-			technology = astrology_and_astronomy
+			technology = astronomy
 		}
 		modifier = {
 			factor = 0.85

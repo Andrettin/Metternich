@@ -298,8 +298,8 @@ scholasticism = {
 	}
 }
 
-astrology_and_astronomy = {
-	name = "Astrology and Astronomy"
+astronomy = {
+	name = "Astronomy"
 	subcategory = philosophy
 	portrait = engineering
 	icon = philosophy
@@ -426,7 +426,7 @@ natural_philosophy = {
 	icon = philosophy
 	period = renaissance_age
 	prerequisites = {
-		astrology_and_astronomy
+		astronomy
 	}
 	discovery_effects = {
 		domain = {
@@ -480,7 +480,7 @@ natural_philosophy = {
 		
 		modifier = {
 			factor = 0.9
-			technology = astrology_and_astronomy
+			technology = astronomy
 		}
 		modifier = {
 			factor = 0.95

@@ -79,7 +79,7 @@ hill_fort = {
 		}
 		modifier = {
 			factor = 0.95
-			technology = astrology_and_astronomy
+			technology = astronomy
 		}
 		modifier = {
 			factor = 0.97
@@ -429,7 +429,7 @@ small_castle = {
 		}
 		modifier = {
 			factor = 0.95
-			technology = astrology_and_astronomy
+			technology = astronomy
 		}
 		modifier = {
 			factor = 0.97
@@ -779,7 +779,7 @@ medium_castle = {
 		}
 		modifier = {
 			factor = 0.95
-			technology = astrology_and_astronomy
+			technology = astronomy
 		}
 		modifier = {
 			factor = 0.97
@@ -1121,7 +1121,7 @@ large_castle = {
 		}
 		modifier = {
 			factor = 0.95
-			technology = astrology_and_astronomy
+			technology = astronomy
 		}
 		modifier = {
 			factor = 0.97
@@ -1457,7 +1457,7 @@ huge_castle = {
 		}
 		modifier = {
 			factor = 0.95
-			technology = astrology_and_astronomy
+			technology = astronomy
 		}
 		modifier = {
 			factor = 0.97

@@ -50,7 +50,7 @@ short_bow = {
 		}
 		modifier = {
 			factor = 0.98
-			technology = astrology_and_astronomy
+			technology = astronomy
 		}
 		modifier = {
 			factor = 0.98
@@ -224,7 +224,7 @@ long_bow = {
 		}
 		modifier = {
 			factor = 0.98
-			technology = astrology_and_astronomy
+			technology = astronomy
 		}
 		modifier = {
 			factor = 0.98
@@ -394,7 +394,7 @@ composite_bow = {
 		}
 		modifier = {
 			factor = 0.98
-			technology = astrology_and_astronomy
+			technology = astronomy
 		}
 		modifier = {
 			factor = 0.98
@@ -556,7 +556,7 @@ light_crossbow = {
 		}
 		modifier = {
 			factor = 0.98
-			technology = astrology_and_astronomy
+			technology = astronomy
 		}
 		modifier = {
 			factor = 0.98
@@ -714,7 +714,7 @@ heavy_crossbow = {
 		}
 		modifier = {
 			factor = 0.98
-			technology = astrology_and_astronomy
+			technology = astronomy
 		}
 		modifier = {
 			factor = 0.98

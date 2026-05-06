@@ -4,7 +4,7 @@ observatory = {
 	portrait = university
 	icon = research
 	size = 1
-	required_technology = astrology_and_astronomy
+	required_technology = astronomy
 	holding_types = {
 		city
 		guild

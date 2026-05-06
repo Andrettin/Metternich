@@ -51,7 +51,7 @@ mace = {
 		}
 		modifier = {
 			factor = 0.98
-			technology = astrology_and_astronomy
+			technology = astronomy
 		}
 		modifier = {
 			factor = 0.97
@@ -221,7 +221,7 @@ morning_star = {
 		}
 		modifier = {
 			factor = 0.98
-			technology = astrology_and_astronomy
+			technology = astronomy
 		}
 		modifier = {
 			factor = 0.97

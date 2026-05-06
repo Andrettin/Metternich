@@ -117,7 +117,7 @@ minor_merchant_houses = {
 		}
 		modifier = {
 			factor = 0.98
-			technology = astrology_and_astronomy
+			technology = astronomy
 		}
 		modifier = {
 			factor = 0.95
@@ -422,7 +422,7 @@ local_merchant_houses = {
 		}
 		modifier = {
 			factor = 0.98
-			technology = astrology_and_astronomy
+			technology = astronomy
 		}
 		modifier = {
 			factor = 0.95
@@ -723,7 +723,7 @@ guilds = {
 		}
 		modifier = {
 			factor = 0.98
-			technology = astrology_and_astronomy
+			technology = astronomy
 		}
 		modifier = {
 			factor = 0.95

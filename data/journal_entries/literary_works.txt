@@ -20,7 +20,7 @@ de_revolutionibus_orbium_coelestium = { #Source: Isaac Asimov, "Cronologia das C
 		nicolaus_copernicus
 	}
 	researched_technologies = {
-		astrology_and_astronomy
+		astronomy
 	}
 	completion_effects = {
 		research += 5
@@ -36,7 +36,7 @@ epitome_in_cl__ptolemaei_magnam_compositionem = { #Source: "Encyclopædia Britan
 		georg_peurbach
 	}
 	researched_technologies = {
-		astrology_and_astronomy
+		astronomy
 	}
 	completion_effects = {
 		research += 1
@@ -52,7 +52,7 @@ theoricae_planetarum_novae = { #Source: "Encyclopædia Britannica", 1911, vol. 2
 		georg_peurbach
 	}
 	researched_technologies = {
-		astrology_and_astronomy
+		astronomy
 	}
 	completion_effects = {
 		research += 1

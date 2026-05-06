@@ -59,7 +59,7 @@ lower_austria = {
 			technologies += morning_star
 			technologies += large_castle
 			technologies += cathedral_school
-			technologies += astrology_and_astronomy
+			technologies += astronomy
 			technologies += ballads
 		}
 		

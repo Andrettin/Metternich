@@ -85,7 +85,7 @@ black_coal = {
 		}
 		modifier = {
 			factor = 0.95
-			technology = astrology_and_astronomy
+			technology = astronomy
 		}
 		modifier = {
 			factor = 0.95

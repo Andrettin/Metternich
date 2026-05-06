@@ -51,7 +51,7 @@ short_sword = {
 		}
 		modifier = {
 			factor = 0.98
-			technology = astrology_and_astronomy
+			technology = astronomy
 		}
 		modifier = {
 			factor = 0.97
@@ -226,7 +226,7 @@ long_sword = {
 		}
 		modifier = {
 			factor = 0.98
-			technology = astrology_and_astronomy
+			technology = astronomy
 		}
 		modifier = {
 			factor = 0.97
@@ -396,7 +396,7 @@ bastard_sword = {
 		}
 		modifier = {
 			factor = 0.98
-			technology = astrology_and_astronomy
+			technology = astronomy
 		}
 		modifier = {
 			factor = 0.97
