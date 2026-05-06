@@ -1,0 +1,11 @@
+navy = {
+	name = "Navy"
+	category = navy
+	icon = anchor
+}
+
+ship_construction = {
+	name = "Ship Construction"
+	category = navy
+	icon = anchor
+}

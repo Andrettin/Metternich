@@ -1,0 +1,64 @@
+mechanized_slaughtering_block = {
+	name = "Mechanized Slaughtering-Block"
+	subcategory = cattle_herding
+	portrait = engineering
+	icon = cattle
+	period = absolutism_age
+	prerequisites = {
+		#mechanical_production
+		
+		science
+	}
+	monthly_chance = {
+		base_value = 2
+		
+		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	technology = medicine
+		#}
+		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	technology = clean_coal
+		#}
+	}
+	modifier = {
+		cattle_output_modifier = 20
+		wool_output_modifier = 20
+	}
+}
+
+refrigeration = {
+	name = "Refrigeration"
+	subcategory = cattle_herding
+	portrait = engineering
+	icon = cattle
+	period = absolutism_age
+	prerequisites = {
+		#assembly_line
+		
+		science
+	}
+	monthly_chance = {
+		base_value = 2
+		
+		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	technology = food_packing_system
+		#}
+		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	technology = integral_rail_system
+		#}
+	}
+	modifier = {
+		cattle_output_modifier = 20
+		#fruit_output_modifier = 20
+		#fish_output_modifier = 20
+		liquor_output_modifier = 2
+		#wine_output_modifier = 2
+	}
+}

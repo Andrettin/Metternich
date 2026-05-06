@@ -2,6 +2,7 @@ trireme = {
 	name = "Trireme"
 	unit_class = trireme
 	icon = frigate
+	required_technology = map_making
 	stats = {
 		hit_points = 25
 		missile = 2

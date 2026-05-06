@@ -1,0 +1,35 @@
+culture = {
+	name = "Culture"
+	category = culture
+	icon = music
+}
+
+aesthetics = {
+	name = "Aesthetics"
+	category = culture
+	icon = painting
+}
+
+education = {
+	name = "Education"
+	category = culture
+	icon = university
+}
+
+government = {
+	name = "Government"
+	category = culture
+	icon = bell
+}
+
+philosophy = {
+	name = "Philosophy"
+	category = culture
+	icon = philosophy
+}
+
+religion = {
+	name = "Religion"
+	category = culture
+	icon = wooden_cross
+}

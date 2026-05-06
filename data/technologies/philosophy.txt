@@ -1,18 +1,58 @@
 #logics = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 111.
 #	name = "Logics"
-#	category = industry
+#	subcategory = philosophy
 #	portrait = engineering
 #	prerequisites = {
 #		philosophy
 #	}
 #}
 
-aristotelian_logic = {
-	name = "Aristotelian Logic"
-	subcategory = culture
+mathematics = {
+	name = "Mathematics"
+	subcategory = philosophy
+	portrait = engineering
+	icon = cog
+	period = bronze_age
+	prerequisites = {
+		alphabet
+		masonry
+	}
+}
+
+philosophy = {
+	name = "Philosophy"
+	subcategory = philosophy
 	portrait = engineering
 	icon = philosophy
-	period = copper_age #classical_age
+	period = classical_age
+	free_technologies = 1
+	prerequisites = {
+		literacy
+		mysticism
+	}
+}
+
+medicine = {
+	name = "Medicine"
+	subcategory = philosophy
+	portrait = engineering
+	icon = heart
+	period = dark_age
+	prerequisites = {
+		philosophy
+		trade
+	}
+}
+
+aristotelian_logic = {
+	name = "Aristotelian Logic"
+	subcategory = philosophy
+	portrait = engineering
+	icon = philosophy
+	period = dark_age #classical_age
+	prerequisites = {
+		philosophy
+	}
 	discovery_effects = {
 		domain = {
 			regency += 25
@@ -133,10 +173,10 @@ aristotelian_logic = {
 
 scholasticism = {
 	name = "Scholasticism"
-	subcategory = culture
+	subcategory = philosophy
 	portrait = engineering
 	icon = wooden_cross
-	period = bronze_age
+	period = feudal_age
 	prerequisites = {
 		aristotelian_logic
 	}
@@ -260,10 +300,10 @@ scholasticism = {
 
 astrology_and_astronomy = {
 	name = "Astrology and Astronomy"
-	subcategory = culture
+	subcategory = philosophy
 	portrait = engineering
 	icon = philosophy
-	period = iron_age
+	period = castle_age
 	prerequisites = {
 		scholasticism
 	}
@@ -381,10 +421,10 @@ astrology_and_astronomy = {
 
 natural_philosophy = {
 	name = "Natural Philosophy"
-	subcategory = culture
+	subcategory = philosophy
 	portrait = engineering
 	icon = philosophy
-	period = classical_age
+	period = renaissance_age
 	prerequisites = {
 		astrology_and_astronomy
 	}
@@ -508,10 +548,10 @@ natural_philosophy = {
 
 science = {
 	name = "Science"
-	subcategory = culture
+	subcategory = philosophy
 	portrait = engineering
 	icon = philosophy
-	period = feudal_age
+	period = gunpowder_age
 	prerequisites = {
 		natural_philosophy
 		university

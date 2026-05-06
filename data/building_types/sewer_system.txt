@@ -3,6 +3,7 @@ sewer_system = {
 	building_class = sewer_system
 	portrait = hospital
 	icon = architecture
+	required_technology = sanitation
 	holding_types = {
 		castle
 		guild

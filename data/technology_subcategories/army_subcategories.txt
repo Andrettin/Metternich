@@ -1,0 +1,29 @@
+army = {
+	name = "Army"
+	category = army
+	icon = crossed_sabers
+}
+
+infantry = {
+	name = "Infantry"
+	category = army
+	icon = saber
+}
+
+cavalry = {
+	name = "Cavalry"
+	category = army
+	icon = horses
+}
+
+fortification = {
+	name = "Fortification"
+	category = army
+	icon = wall
+}
+
+siege_equipment = {
+	name = "Siege Equipment"
+	category = army
+	icon = cannon
+}

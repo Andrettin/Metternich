@@ -3,6 +3,7 @@ aqueduct = {
 	building_class = aqueduct
 	portrait = hospital
 	icon = architecture
+	required_technology = construction
 	holding_types = {
 		town
 		city

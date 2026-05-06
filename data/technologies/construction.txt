@@ -1,0 +1,55 @@
+masonry = {
+	name = "Masonry"
+	subcategory = construction
+	portrait = engineering
+	icon = architecture
+	period = copper_age
+}
+
+construction = {
+	name = "Construction"
+	subcategory = construction
+	portrait = engineering
+	icon = architecture
+	period = iron_age
+	prerequisites = {
+		masonry
+		coinage
+	}
+}
+
+engineering = {
+	name = "Engineering"
+	subcategory = construction
+	portrait = engineering
+	icon = cog
+	period = classical_age
+	prerequisites = {
+		construction
+		wheel
+	}
+}
+
+invention = {
+	name = "Invention"
+	subcategory = construction
+	portrait = engineering
+	icon = cog
+	period = dark_age
+	prerequisites = {
+		engineering
+		literacy
+	}
+}
+
+sanitation = {
+	name = "Sanitation"
+	subcategory = construction
+	portrait = engineering
+	icon = architecture
+	period = feudal_age
+	prerequisites = {
+		engineering
+		medicine
+	}
+}

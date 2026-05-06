@@ -1,0 +1,66 @@
+horseback_riding = {
+	name = "Horseback Riding"
+	subcategory = cavalry
+	portrait = engineering
+	icon = horses
+	period = copper_age
+}
+
+wheel = {
+	name = "Wheel"
+	subcategory = cavalry
+	portrait = engineering
+	icon = cog
+	period = bronze_age
+	prerequisites = {
+		horseback_riding
+	}
+}
+
+chivalry = {
+	name = "Chivalry"
+	subcategory = cavalry
+	portrait = engineering
+	icon = heater_shield
+	period = dark_age
+	prerequisites = {
+		horseback_riding
+		feudalism
+	}
+}
+
+tank_experiments = {
+	name = "Tank Experiments"
+	subcategory = cavalry
+	portrait = engineering
+	icon = cannon
+	period = modern_age
+	prerequisites = {
+		#infiltration
+		
+		bolt_action_rifle
+		steel_alloys
+	}
+	monthly_chance = {
+		base_value = 1
+		
+		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	technology = elastic_defense_system
+		#}
+		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	war = true
+		#	war_domains = { technology = tank_experiments }
+		#}
+		#modifier = {
+		#	factor = -5
+		#	additive = true
+		#	not = {
+		#		technology = combustion_engine
+		#	}
+		#}
+	}
+}

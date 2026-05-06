@@ -1,90 +1,51 @@
-ceremonial_burial = {
-	name = "Ceremonial Burial"
-	subcategory = religion
-	portrait = temple
-	icon = wooden_cross
-	period = copper_age
-}
-
-polytheism = {
-	name = "Polytheism"
-	subcategory = religion
-	portrait = temple
-	icon = wooden_cross
-	period = bronze_age
-	prerequisites = {
-		ceremonial_burial
-		horseback_riding
-	}
-}
-
-mysticism = {
-	name = "Mysticism"
-	subcategory = religion
-	portrait = temple
-	icon = wooden_cross
-	period = bronze_age
-	prerequisites = {
-		ceremonial_burial
-	}
-}
-
-monotheism = {
-	name = "Monotheism"
-	subcategory = religion
-	portrait = temple
-	icon = wooden_cross
-	period = dark_age
-	prerequisites = {
-		polytheism
-		philosophy
-	}
-}
-
-theology = {
-	name = "Theology"
-	subcategory = religion
-	portrait = temple
-	icon = wooden_cross
-	period = feudal_age
-	prerequisites = {
-		monotheism
-		feudalism
-	}
-}
-
-asceticism = {
-	name = "Asceticism"
-	subcategory = religion
+road_building = {
+	name = "Road Building"
+	subcategory = infrastructure
 	portrait = engineering
-	icon = wooden_cross
+	icon = road
 	period = copper_age
-	spread_conditions = {
-		source_province = {
-			or = {
-				realm = root
-				religion = root
-			}
-		}
-	}
 	discovery_mean_time_to_happen = {
-		months = 75
+		months = 50
 		
 		modifier = {
-			factor = 1.1
-			has_building_class = monastery
+			factor = 0.85
+			has_building_class = university
 		}
 		modifier = {
-			factor = 1.1
-			has_building_class = large_temple
+			factor = 0.9
+			scripted_condition = has_library
 		}
 		modifier = {
-			factor = 1.3
-			has_building_class = cathedral
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.5
+			pathway = road
 		}
 		modifier = {
 			factor = 0.95
-			has_building_class = waterfront
+			domain = {
+				ruler = {
+					trade >= 2
+				}
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				ruler = {
+					trade >= 3
+				}
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				ruler = {
+					trade >= 4
+				}
+			}
 		}
 		modifier = {
 			factor = 0.75
@@ -99,10 +60,34 @@ asceticism = {
 			}
 		}
 		modifier = {
-			factor = 5
+			factor = 0.75
 			domain = {
-				war = true
+				war = false
 			}
+		}
+		modifier = {
+			factor = 0.95
+			technology = aristotelian_logic
+		}
+		modifier = {
+			factor = 0.95
+			technology = scholasticism
+		}
+		modifier = {
+			factor = 0.95
+			technology = astrology_and_astronomy
+		}
+		modifier = {
+			factor = 0.95
+			technology = natural_philosophy
+		}
+		modifier = {
+			factor = 0.95
+			technology = science
+		}
+		modifier = {
+			factor = 0.95
+			technology = asceticism
 		}
 		modifier = {
 			factor = 0.9
@@ -160,20 +145,8 @@ asceticism = {
 		}
 	}
 	spread_mean_time_to_happen = {
-		months = 750
+		months = 500
 		
-		modifier = {
-			factor = 1.1
-			has_building_class = monastery
-		}
-		modifier = {
-			factor = 1.1
-			has_building_class = large_temple
-		}
-		modifier = {
-			factor = 1.3
-			has_building_class = cathedral
-		}
 		modifier = {
 			factor = 0.9
 			has_building_class = waterfront
@@ -185,27 +158,90 @@ asceticism = {
 			}
 		}
 		modifier = {
+			factor = 0.9
+			pathway = road
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				pathway = road
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				ruler = {
+					trade >= 2
+				}
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				ruler = {
+					trade >= 3
+				}
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				ruler = {
+					trade >= 4
+				}
+			}
+		}
+		modifier = {
 			factor = 0.8
 			source_province = {
 				culture = root
 			}
 		}
 		modifier = {
-			factor = 0.7
+			factor = 0.8
+			source_province = {
+				religion = root
+			}
+		}
+		modifier = {
+			factor = 0.3
 			source_province = {
 				domain = root
 			}
 		}
 		modifier = {
-			factor = 0.8
+			factor = 0.6
 			source_province = {
 				realm = root
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				independent = true
+			}
+			source_province = {
+				realm = root
+				domain = {
+					independent = false
+				}
 			}
 		}
 		modifier = {
 			factor = 2
 			domain = {
 				war = true
+			}
+		}
+		modifier = {
+			factor = 5
+			source_province = {
+				not = {
+					realm = root
+				}
+				domain = {
+					war = true
+				}
 			}
 		}
 		modifier = {
@@ -257,5 +293,18 @@ asceticism = {
 				}
 			}
 		}
+	}
+}
+
+bridge_building = {
+	name = "Bridge Building"
+	subcategory = infrastructure
+	portrait = engineering
+	icon = road
+	period = classical_age
+	prerequisites = {
+		road_building
+		construction
+		iron_working
 	}
 }

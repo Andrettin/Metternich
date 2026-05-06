@@ -3,6 +3,7 @@ magocracy = {
 	group = republic
 	icon = university
 	primary_domain_attribute = economy
+	required_technology = republic
 	default_laws = {
 		succession = elective
 	}

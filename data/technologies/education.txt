@@ -1,6 +1,6 @@
 monastic_school = {
 	name = "Monastic School"
-	subcategory = culture
+	subcategory = education
 	portrait = university
 	icon = wooden_cross
 	period = bronze_age
@@ -234,7 +234,7 @@ monastic_school = {
 
 cathedral_school = {
 	name = "Cathedral School"
-	subcategory = culture
+	subcategory = education
 	portrait = university
 	icon = wooden_cross
 	period = iron_age
@@ -468,13 +468,14 @@ cathedral_school = {
 
 university = {
 	name = "University"
-	subcategory = culture
+	subcategory = education
 	portrait = university
 	icon = university
-	period = classical_age #renaissance_age
+	period = dark_age #renaissance_age
 	prerequisites = {
 		cathedral_school
-		scholasticism
+		mathematics
+		philosophy
 	}
 	discovery_mean_time_to_happen = {
 		months = 1000

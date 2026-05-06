@@ -4,26 +4,8 @@ technology = {
 	icon = cog
 }
 
-army = {
-	name = "Army"
-	category = army
-	icon = crossed_sabers
-}
-
 commerce = {
 	name = "Commerce"
 	category = commerce
 	icon = wealth
-}
-
-culture = {
-	name = "Culture"
-	category = culture
-	icon = music
-}
-
-navy = {
-	name = "Navy"
-	category = navy
-	icon = anchor
 }

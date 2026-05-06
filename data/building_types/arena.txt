@@ -3,6 +3,7 @@ arena = {
 	building_class = arena
 	portrait = fort
 	icon = architecture
+	required_technology = construction
 	holding_types = {
 		city
 	}

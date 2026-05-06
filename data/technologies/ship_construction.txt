@@ -1,203 +1,26 @@
-pike = {
-	name = "Pike"
-	subcategory = infantry
-	portrait = bronze_short_sword
-	icon = saber
-	period = dark_age
-	prerequisites = {
-		feudalism
-	}
+large_ship_building = {
+	name = "Large Ship Building"
+	subcategory = ship_construction
+	portrait = unload
+	icon = anchor
+	period = copper_age
 	discovery_mean_time_to_happen = {
-		months = 100
+		months = 125
 		
 		modifier = {
 			factor = 0.9
-			terrain = forest
-		}
-		modifier = {
-			factor = 0.9
-			has_building_class = waterfront
-		}
-		modifier = {
-			factor = 0.9
-			has_building_class = sawmill
-		}
-		modifier = {
-			factor = 0.9
-			has_building_class = smithy
+			scripted_condition = has_school
 		}
 		modifier = {
 			factor = 0.85
-			scripted_condition = has_library
-		}
-		modifier = {
-			factor = 0.75
 			has_building_class = university
 		}
 		modifier = {
-			factor = 0.75
-			domain = {
-				tier >= kingdom
-			}
-		}
-		modifier = {
-			factor = 0.85
-			domain = {
-				tier == duchy
-			}
-		}
-		modifier = {
-			factor = 0.8
-			domain = {
-				war = true
-			}
-		}
-		modifier = {
-			factor = 0.97
-			technology = aristotelian_logic
-		}
-		modifier = {
-			factor = 0.95
-			technology = scholasticism
-		}
-		modifier = {
-			factor = 0.98
-			technology = astrology_and_astronomy
-		}
-		modifier = {
-			factor = 0.97
-			technology = natural_philosophy
-		}
-		modifier = {
 			factor = 0.9
-			technology = science
-		}
-		modifier = {
-			factor = 0.8
-			year >= 1250
-		}
-		modifier = {
-			factor = 0.8
-			year >= 1350
-		}
-	}
-	spread_mean_time_to_happen = {
-		months = 1500
-		
-		modifier = {
-			factor = 0.9
-			has_building_class = military_academy
-		}
-		modifier = {
-			factor = 0.9
-			has_building_class = sawmill
-		}
-		modifier = {
-			factor = 0.9
-			has_building_class = smithy
-		}
-		modifier = {
-			factor = 0.9
-			has_building_class = waterfront
-		}
-		modifier = {
-			factor = 0.9
-			source_province = {
-				has_building_class = waterfront
-			}
-		}
-		modifier = {
-			factor = 0.9
-			source_province = {
-				culture = root
-			}
-		}
-		modifier = {
-			factor = 0.3
-			source_province = {
-				domain = root
-			}
+			scripted_condition = has_library
 		}
 		modifier = {
 			factor = 0.5
-			source_province = {
-				realm = root
-			}
-		}
-		modifier = {
-			factor = 0.75
-			domain = {
-				independent = true
-			}
-			source_province = {
-				realm = root
-				domain = {
-					independent = false
-				}
-			}
-		}
-		modifier = {
-			factor = 0.75
-			domain = {
-				war = true
-			}
-			source_province = {
-				realm = root
-			}
-		}
-		modifier = {
-			factor = 10
-			source_province = {
-				not = {
-					realm = root
-				}
-				domain = {
-					war = true
-				}
-			}
-		}
-		modifier = {
-			factor = 0.85
-			domain = {
-				war = true
-			}
-			source_province = {
-				not = {
-					realm = root
-				}
-				domain = {
-					war = false
-				}
-			}
-		}
-		modifier = {
-			factor = 0.75
-			capital = true
-			source_province = {
-				realm = root
-			}
-		}
-	}
-}
-
-polearm = {
-	name = "Polearm"
-	subcategory = infantry
-	portrait = bronze_short_sword
-	icon = saber
-	period = feudal_age
-	prerequisites = {
-		pike
-	}
-	discovery_mean_time_to_happen = {
-		months = 500
-		
-		modifier = {
-			factor = 0.95
-			terrain = forest
-		}
-		modifier = {
-			factor = 0.9
 			has_building_class = waterfront
 		}
 		modifier = {
@@ -205,22 +28,14 @@ polearm = {
 			pathway = road
 		}
 		modifier = {
-			factor = 0.95
-			has_building_class = smithy
-		}
-		modifier = {
-			factor = 0.95
-			scripted_condition = has_library
-		}
-		modifier = {
-			factor = 0.85
-			has_building_class = university
+			factor = 0.9
+			has_building_class = sawmill
 		}
 		modifier = {
 			factor = 0.95
 			domain = {
 				ruler = {
-					order >= 2
+					trade >= 2
 				}
 			}
 		}
@@ -228,7 +43,7 @@ polearm = {
 			factor = 0.9
 			domain = {
 				ruler = {
-					order >= 3
+					trade >= 3
 				}
 			}
 		}
@@ -236,7 +51,7 @@ polearm = {
 			factor = 0.9
 			domain = {
 				ruler = {
-					order >= 4
+					trade >= 4
 				}
 			}
 		}
@@ -253,13 +68,13 @@ polearm = {
 			}
 		}
 		modifier = {
-			factor = 0.8
+			factor = 0.85
 			domain = {
 				war = true
 			}
 		}
 		modifier = {
-			factor = 0.97
+			factor = 0.95
 			technology = aristotelian_logic
 		}
 		modifier = {
@@ -267,16 +82,20 @@ polearm = {
 			technology = scholasticism
 		}
 		modifier = {
-			factor = 0.98
+			factor = 0.95
 			technology = astrology_and_astronomy
 		}
 		modifier = {
-			factor = 0.97
+			factor = 0.95
 			technology = natural_philosophy
 		}
 		modifier = {
-			factor = 0.9
+			factor = 0.95
 			technology = science
+		}
+		modifier = {
+			factor = 0.95
+			technology = asceticism
 		}
 		modifier = {
 			factor = 0.9
@@ -321,20 +140,20 @@ polearm = {
 			}
 		}
 		modifier = {
-			factor = 1.25
-			year < 1150
+			factor = 0.8
+			year >= 1250
 		}
 		modifier = {
-			factor = 1.25
-			year < 1250
+			factor = 0.8
+			year >= 1350
 		}
 	}
 	spread_mean_time_to_happen = {
-		months = 6000
+		months = 1000
 		
 		modifier = {
 			factor = 0.9
-			has_building_class = military_academy
+			has_building_class = sawmill
 		}
 		modifier = {
 			factor = 0.9
@@ -360,7 +179,7 @@ polearm = {
 			factor = 0.9
 			domain = {
 				ruler = {
-					order >= 2
+					trade >= 2
 				}
 			}
 		}
@@ -368,7 +187,7 @@ polearm = {
 			factor = 0.9
 			domain = {
 				ruler = {
-					order >= 3
+					trade >= 3
 				}
 			}
 		}
@@ -376,7 +195,7 @@ polearm = {
 			factor = 0.9
 			domain = {
 				ruler = {
-					order >= 4
+					trade >= 4
 				}
 			}
 		}
@@ -384,6 +203,12 @@ polearm = {
 			factor = 0.9
 			source_province = {
 				culture = root
+			}
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				religion = root
 			}
 		}
 		modifier = {
@@ -399,7 +224,7 @@ polearm = {
 			}
 		}
 		modifier = {
-			factor = 0.75
+			factor = 0.85
 			domain = {
 				independent = true
 			}
@@ -411,36 +236,19 @@ polearm = {
 			}
 		}
 		modifier = {
-			factor = 0.75
+			factor = 2
 			domain = {
 				war = true
 			}
-			source_province = {
-				realm = root
-			}
 		}
 		modifier = {
-			factor = 10
+			factor = 5
 			source_province = {
 				not = {
 					realm = root
 				}
 				domain = {
 					war = true
-				}
-			}
-		}
-		modifier = {
-			factor = 0.85
-			domain = {
-				war = true
-			}
-			source_province = {
-				not = {
-					realm = root
-				}
-				domain = {
-					war = false
 				}
 			}
 		}
@@ -493,5 +301,147 @@ polearm = {
 				}
 			}
 		}
+	}
+}
+
+steamer_transport = {
+	name = "Steamer Transport"
+	subcategory = ship_construction
+	portrait = unload
+	icon = anchor
+	period = absolutism_age
+	prerequisites = {
+		#steamers
+		
+		large_ship_building
+		black_coal
+		science
+	}
+	monthly_chance = {
+		base_value = 5
+		
+		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	technology = mechanical_production
+		#}
+		#modifier = {
+		#	factor = 1
+		#	additive = true
+		#	technology = clean_coal
+		#}
+	}
+}
+
+commerce_raider = {
+	name = "Commerce Raider"
+	subcategory = ship_construction
+	portrait = unload
+	icon = anchor
+	period = enlightenment_age
+	prerequisites = {
+		#steamers
+		
+		steamer_transport
+	}
+	monthly_chance = {
+		base_value = 5
+		
+		#modifier = {
+		#	factor = 1
+		#	additive = true
+		#	technology = fire_control_systems
+		#}
+		#modifier = {
+		#	factor = 3
+		#	additive = true
+		#	technology = raider_group_doctrine
+		#}
+	}
+}
+
+ironclad = {
+	name = "Ironclad"
+	subcategory = ship_construction
+	portrait = unload
+	icon = anchor
+	period = revolutionary_age
+	prerequisites = {
+		#iron_steamers
+		
+		steamer_transport
+		commerce_raider
+		
+		plate_mail #seems reasonable, and gives allows plate mail to lead to another technology
+	}
+	monthly_chance = {
+		base_value = 5
+		
+		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	technology = monitors
+		#}
+		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	technology = torpedo_boats
+		#}
+	}
+}
+
+protected_cruiser = {
+	name = "Protected Cruiser"
+	subcategory = ship_construction
+	portrait = unload
+	icon = anchor
+	period = industrial_age
+	prerequisites = {
+		#steel_steamers
+		
+		commerce_raider
+		ironclad
+	}
+	monthly_chance = {
+		base_value = 3
+		
+		modifier = {
+			factor = 2
+			additive = true
+			technology = ironclad
+		}
+		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	technology = cheap_steel
+		#}
+	}
+}
+
+dreadnought = {
+	name = "Dreadnought"
+	subcategory = ship_construction
+	portrait = unload
+	icon = anchor
+	period = modern_age
+	prerequisites = {
+		#steam_turbine_ships
+		
+		ironclad
+		protected_cruiser
+	}
+	monthly_chance = {
+		base_value = 5
+		
+		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	technology = pre_dreadnought
+		#}
+		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	technology = naval_logistics
+		#}
 	}
 }

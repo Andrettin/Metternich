@@ -1,5 +1,23 @@
-industry = {
-	name = "Industry"
+cattle_herding = {
+	name = "Cattle Herding"
+	category = industry
+	icon = cattle
+}
+
+construction = {
+	name = "Construction"
+	category = industry
+	icon = architecture
+}
+
+infrastructure = {
+	name = "Infrastructure"
+	category = industry
+	icon = railroad
+}
+
+manufacturing = {
+	name = "Manufacturing"
 	category = industry
 	icon = cog
 }
@@ -8,4 +26,10 @@ metallurgy = {
 	name = "Metallurgy"
 	category = industry
 	icon = steel
+}
+
+mining = {
+	name = "Mining"
+	category = industry
+	icon = iron_ore
 }

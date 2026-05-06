@@ -3,6 +3,7 @@ lighthouse = {
 	building_class = lighthouse
 	portrait = dock
 	icon = anchor
+	required_technology = map_making
 	holding_types = {
 		city
 	}

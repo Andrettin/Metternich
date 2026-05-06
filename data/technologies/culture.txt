@@ -1,6 +1,6 @@
 ballads = {
 	name = "Ballads"
-	subcategory = culture
+	subcategory = aesthetics
 	portrait = engineering
 	icon = music
 	period = copper_age

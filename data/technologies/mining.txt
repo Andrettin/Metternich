@@ -1,0 +1,370 @@
+black_coal = {
+	name = "Black Coal"
+	subcategory = mining
+	portrait = factory
+	icon = coal
+	period = gunpowder_age
+	prerequisites = {
+		natural_philosophy
+	}
+	discovery_conditions = {
+		domain = {
+			any_settlement = {
+				feature = coal_deposit
+			}
+		}
+	}
+	discovery_mean_time_to_happen = {
+		months = 4000
+		
+		modifier = {
+			factor = 0.85
+			has_building_class = university
+		}
+		modifier = {
+			factor = 0.9
+			scripted_condition = has_library
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			scripted_condition = has_mine
+		}
+		modifier = {
+			factor = 0.95
+			domain = {
+				ruler = {
+					trade >= 2
+				}
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				ruler = {
+					trade >= 3
+				}
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				ruler = {
+					trade >= 4
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				tier >= kingdom
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				tier == duchy
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				war = false
+			}
+		}
+		modifier = {
+			factor = 0.95
+			technology = aristotelian_logic
+		}
+		modifier = {
+			factor = 0.95
+			technology = scholasticism
+		}
+		modifier = {
+			factor = 0.95
+			technology = astrology_and_astronomy
+		}
+		modifier = {
+			factor = 0.95
+			technology = natural_philosophy
+		}
+		modifier = {
+			factor = 0.95
+			technology = science
+		}
+		modifier = {
+			factor = 0.95
+			technology = asceticism
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_medium_high_stability
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_high_stability
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_maximal_stability
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_medium_stability
+				}
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_medium_low_stability
+				}
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_low_stability
+				}
+			}
+		}
+		modifier = {
+			factor = 1.25
+			year < 1150
+		}
+		modifier = {
+			factor = 1.25
+			year < 1250
+		}
+		modifier = {
+			factor = 1.25
+			year < 1350
+		}
+	}
+	spread_mean_time_to_happen = {
+		months = 10000
+		
+		modifier = {
+			factor = 0.9
+			has_building_class = smithy
+		}
+		modifier = {
+			factor = 0.9
+			scripted_condition = has_mine
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				has_building_class = waterfront
+			}
+		}
+		modifier = {
+			factor = 0.8
+			terrain = hills
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				ruler = {
+					trade >= 2
+				}
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				ruler = {
+					trade >= 3
+				}
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				ruler = {
+					trade >= 4
+				}
+			}
+		}
+		modifier = {
+			factor = 0.8
+			source_province = {
+				culture = root
+			}
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				religion = root
+			}
+		}
+		modifier = {
+			factor = 0.4
+			source_province = {
+				domain = root
+			}
+		}
+		modifier = {
+			factor = 0.8
+			source_province = {
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				independent = true
+			}
+			source_province = {
+				realm = root
+				domain = {
+					independent = false
+				}
+			}
+		}
+		modifier = {
+			factor = 2
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 5
+			source_province = {
+				not = {
+					realm = root
+				}
+				domain = {
+					war = true
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			capital = true
+			source_province = {
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_medium_high_stability
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_high_stability
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_maximal_stability
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_medium_stability
+				}
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_medium_low_stability
+				}
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_low_stability
+				}
+			}
+		}
+	}
+}
+
+pit_coal = {
+	name = "Pit Coal"
+	subcategory = mining
+	portrait = factory
+	icon = coal
+	period = absolutism_age
+	prerequisites = {
+		#clean_coal
+		
+		black_coal
+		science
+	}
+	monthly_chance = {
+		base_value = 2
+		
+		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	technology = practical_steam_engine
+		#}
+		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	technology = early_railroad
+		#}
+	}
+	modifier = {
+		coal_output_modifier = 50
+	}
+}
+
+coke = {
+	name = "Coke"
+	subcategory = mining
+	portrait = factory
+	icon = coal
+	period = enlightenment_age
+	prerequisites = {
+		#clean_coal
+		
+		pit_coal
+	}
+	monthly_chance = {
+		base_value = 2
+		
+		modifier = {
+			factor = 2
+			additive = true
+			technology = pit_coal
+		}
+		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	technology = early_railroad
+		#}
+	}
+	modifier = {
+		coal_output_modifier = 50
+	}
+}

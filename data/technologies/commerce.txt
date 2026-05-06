@@ -21,12 +21,27 @@ trade = {
 	}
 }
 
+banking = {
+	name = "Banking"
+	subcategory = commerce
+	portrait = coinage
+	icon = wealth
+	period = dark_age
+	prerequisites = {
+		trade
+		republic
+	}
+}
+
 minor_merchant_houses = {
 	name = "Minor Merchant Houses"
 	subcategory = commerce
 	portrait = trading_post
 	icon = chest
-	period = copper_age
+	period = classical_age
+	prerequisites = {
+		trade
+	}
 	discovery_mean_time_to_happen = {
 		months = 50
 		
@@ -328,7 +343,7 @@ local_merchant_houses = {
 	subcategory = commerce
 	portrait = trading_post
 	icon = chest
-	period = bronze_age
+	period = dark_age
 	prerequisites = {
 		minor_merchant_houses
 	}
@@ -629,7 +644,7 @@ guilds = {
 	subcategory = commerce
 	portrait = trading_post
 	icon = chest
-	period = iron_age
+	period = feudal_age
 	prerequisites = {
 		local_merchant_houses
 	}

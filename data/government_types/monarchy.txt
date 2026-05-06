@@ -4,6 +4,7 @@ monarchy = {
 	icon = crown_royal
 	primary_domain_attribute = loyalty
 	regnal_numbering = true
+	required_technology = monarchy
 	default_laws = {
 		succession = primogeniture
 		succession_gender = agnatic_cognatic

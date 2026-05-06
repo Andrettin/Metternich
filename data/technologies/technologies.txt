@@ -3,7 +3,7 @@ dark_ages = {
 	subcategory = technology
 	portrait = engineering
 	icon = iron
-	period = feudal_age
+	period = dark_age
 	prerequisites = {
 		aristotelian_logic
 	}
@@ -14,7 +14,7 @@ middle_ages = {
 	subcategory = technology
 	portrait = engineering
 	icon = iron
-	period = castle_age
+	period = feudal_age
 	prerequisites = {
 		dark_ages
 	}

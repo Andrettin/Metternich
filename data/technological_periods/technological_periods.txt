@@ -21,15 +21,21 @@ classical_age = {
 	end_year = 500
 }
 
-feudal_age = {
+dark_age = {
 	parent_period = classical_age
 	start_year = 500
 	end_year = 1000
 }
 
+feudal_age = {
+	parent_period = dark_age
+	start_year = 1000
+	end_year = 1200
+}
+
 castle_age = {
 	parent_period = feudal_age
-	start_year = 1000
+	start_year = 1200
 	end_year = 1400
 }
 
@@ -42,17 +48,29 @@ renaissance_age = {
 gunpowder_age = {
 	parent_period = renaissance_age
 	start_year = 1500
+	end_year = 1600
+}
+
+absolutism_age = {
+	parent_period = gunpowder_age
+	start_year = 1600
 	end_year = 1700
 }
 
 enlightenment_age = {
-	parent_period = gunpowder_age
+	parent_period = absolutism_age
 	start_year = 1700
+	end_year = 1750
+}
+
+revolutionary_age = {
+	parent_period = enlightenment_age
+	start_year = 1750
 	end_year = 1800
 }
 
 industrial_age = {
-	parent_period = enlightenment_age
+	parent_period = revolutionary_age
 	start_year = 1800
 	end_year = 1900
 }

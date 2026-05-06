@@ -1,6 +1,6 @@
 hill_fort = {
 	name = "Hill Fort"
-	subcategory = army
+	subcategory = fortification
 	portrait = fort
 	icon = wall
 	period = copper_age
@@ -347,7 +347,7 @@ hill_fort = {
 
 small_castle = {
 	name = "Small Castle"
-	subcategory = army
+	subcategory = fortification
 	portrait = fort
 	icon = wall
 	period = bronze_age
@@ -693,7 +693,7 @@ small_castle = {
 
 medium_castle = {
 	name = "Medium Castle"
-	subcategory = army
+	subcategory = fortification
 	portrait = fort
 	icon = wall
 	period = iron_age
@@ -1039,7 +1039,7 @@ medium_castle = {
 
 large_castle = {
 	name = "Large Castle"
-	subcategory = army
+	subcategory = fortification
 	portrait = fort
 	icon = wall
 	period = classical_age
@@ -1375,10 +1375,10 @@ large_castle = {
 
 huge_castle = {
 	name = "Huge Castle"
-	subcategory = army
+	subcategory = fortification
 	portrait = fort
 	icon = wall
-	period = feudal_age
+	period = dark_age
 	prerequisites = {
 		large_castle
 	}

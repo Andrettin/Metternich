@@ -1,10 +1,46 @@
 code_of_laws = {
 	name = "Code of Laws"
-	subcategory = culture
+	subcategory = government
 	portrait = aristocratic_palace
 	icon = courthouse
 	period = bronze_age
 	prerequisites = {
 		alphabet
+	}
+}
+
+monarchy = {
+	name = "Monarchy"
+	subcategory = government
+	portrait = grand_ducal_crown
+	icon = crown_royal
+	period = iron_age
+	prerequisites = {
+		code_of_laws
+		ceremonial_burial
+	}
+}
+
+feudalism = {
+	name = "Feudalism"
+	subcategory = government
+	portrait = aristocratic_palace
+	icon = crown_baronial
+	period = classical_age
+	prerequisites = {
+		monarchy
+		warrior_code
+	}
+}
+
+republic = {
+	name = "Republic"
+	subcategory = government
+	portrait = engineering
+	icon = philosophy
+	period = classical_age
+	prerequisites = {
+		code_of_laws
+		literacy
 	}
 }

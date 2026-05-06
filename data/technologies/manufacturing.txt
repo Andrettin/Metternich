@@ -1,0 +1,383 @@
+pottery = {
+	name = "Pottery"
+	subcategory = manufacturing
+	portrait = engineering
+	icon = cog
+	period = copper_age
+}
+
+glassblowing = {
+	name = "Glassblowing"
+	subcategory = manufacturing
+	portrait = engineering
+	icon = glass
+	period = copper_age
+	discovery_mean_time_to_happen = {
+		months = 150
+		
+		modifier = {
+			factor = 0.85
+			has_building_class = university
+		}
+		modifier = {
+			factor = 0.9
+			scripted_condition = has_library
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.95
+			domain = {
+				ruler = {
+					trade >= 2
+				}
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				ruler = {
+					trade >= 3
+				}
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				ruler = {
+					trade >= 4
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				tier >= kingdom
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				tier == duchy
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				war = false
+			}
+		}
+		modifier = {
+			factor = 0.95
+			technology = aristotelian_logic
+		}
+		modifier = {
+			factor = 0.95
+			technology = scholasticism
+		}
+		modifier = {
+			factor = 0.97
+			technology = astrology_and_astronomy
+		}
+		modifier = {
+			factor = 0.85
+			technology = natural_philosophy
+		}
+		modifier = {
+			factor = 0.8
+			technology = science
+		}
+		modifier = {
+			factor = 0.95
+			technology = asceticism
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_medium_high_stability
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_high_stability
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_maximal_stability
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_medium_stability
+				}
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_medium_low_stability
+				}
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_low_stability
+				}
+			}
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1250
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1350
+		}
+	}
+	spread_mean_time_to_happen = {
+		months = 1500
+		
+		modifier = {
+			factor = 0.9
+			scripted_condition = has_library
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				has_building_class = waterfront
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				ruler = {
+					trade >= 2
+				}
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				ruler = {
+					trade >= 3
+				}
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				ruler = {
+					trade >= 4
+				}
+			}
+		}
+		modifier = {
+			factor = 0.8
+			source_province = {
+				culture = root
+			}
+		}
+		modifier = {
+			factor = 0.8
+			source_province = {
+				religion = root
+			}
+		}
+		modifier = {
+			factor = 0.5
+			source_province = {
+				domain = root
+			}
+		}
+		modifier = {
+			factor = 0.8
+			source_province = {
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				independent = true
+			}
+			source_province = {
+				realm = root
+				domain = {
+					independent = false
+				}
+			}
+		}
+		modifier = {
+			factor = 2
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 5
+			source_province = {
+				not = {
+					realm = root
+				}
+				domain = {
+					war = true
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			capital = true
+			source_province = {
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_medium_high_stability
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_high_stability
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_maximal_stability
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_medium_stability
+				}
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_medium_low_stability
+				}
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_low_stability
+				}
+			}
+		}
+	}
+}
+
+precision_work = {
+	name = "Precision Work"
+	subcategory = manufacturing
+	portrait = engineering
+	icon = glass
+	period = absolutism_age
+	prerequisites = {
+		#mechanical_production
+		
+		glassblowing
+		science
+	}
+	monthly_chance = {
+		base_value = 2
+		
+		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	technology = mechanical_precision_saw
+		#}
+		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	technology = early_railroad
+		#}
+	}
+	modifier = {
+		glass_output_modifier = 10
+		#ammunition_output_modifier = 10
+	}
+}
+
+integral_distillery_process = {
+	name = "Integral Distillery Process"
+	subcategory = manufacturing
+	portrait = engineering
+	icon = wine
+	period = absolutism_age
+	prerequisites = {
+		#interchangeable_parts
+		
+		science
+	}
+	monthly_chance = {
+		base_value = 2
+		
+		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	technology = scientific_management
+		#}
+		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	technology = market_structure
+		#}
+	}
+	modifier = {
+		liquor_output_modifier = 2
+	}
+}
+
+bakelite = {
+	name = "Bakelite"
+	subcategory = manufacturing
+	portrait = engineering
+	icon = glass
+	period = enlightenment_age
+	prerequisites = {
+		#synthetic_polymers
+		
+		precision_work
+	}
+	monthly_chance = {
+		base_value = 2
+		
+		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	technology = bell_and_greys_telephones
+		#}
+		#modifier = {
+		#	factor = 2
+		#	additive = true
+		#	technology = time_saving_measures
+		#}
+	}
+	modifier = {
+		glass_output_modifier = 5
+	}
+}
