@@ -1,0 +1,23 @@
+steam_engine = {
+	name = "Steam Engine"
+	subcategory = power
+	portrait = engineering
+	icon = cog
+	period = absolutism_age
+	prerequisites = {
+		invention
+		physics
+	}
+}
+
+electricity = {
+	name = "Electricity"
+	subcategory = power
+	portrait = engineering
+	icon = research
+	period = enlightenment_age
+	prerequisites = {
+		magnetism
+		metallurgy
+	}
+}

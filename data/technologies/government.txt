@@ -44,3 +44,16 @@ republic = {
 		literacy
 	}
 }
+
+democracy = {
+	name = "Democracy"
+	subcategory = government
+	portrait = engineering
+	icon = philosophy
+	period = feudal_age
+	prerequisites = {
+		republic
+		banking
+		invention
+	}
+}

@@ -17,3 +17,51 @@ gunpowder = {
 		iron_working
 	}
 }
+
+explosives = {
+	name = "Explosives"
+	subcategory = army
+	portrait = fort
+	icon = coal
+	period = castle_age
+	prerequisites = {
+		gunpowder
+		chemistry
+	}
+}
+
+leadership = {
+	name = "Leadership"
+	subcategory = army
+	portrait = fort
+	icon = flag
+	period = castle_age
+	prerequisites = {
+		chivalry
+		gunpowder
+	}
+}
+
+conscription = {
+	name = "Conscription"
+	subcategory = army
+	portrait = fort
+	icon = flag
+	period = renaissance_age
+	prerequisites = {
+		democracy
+		metallurgy
+	}
+}
+
+tactics = {
+	name = "Tactics"
+	subcategory = army
+	portrait = fort
+	icon = flag
+	period = gunpowder_age
+	prerequisites = {
+		leadership
+		conscription
+	}
+}

@@ -18,6 +18,19 @@ iron_working = {
 	}
 }
 
+metallurgy = {
+	name = "Metallurgy"
+	subcategory = metallurgy
+	portrait = engineering
+	icon = iron
+	period = castle_age
+	prerequisites = {
+		iron_working
+		gunpowder
+		university
+	}
+}
+
 advanced_ore_roasting_processes = {
 	name = "Advanced Ore Roasting Processes"
 	subcategory = metallurgy

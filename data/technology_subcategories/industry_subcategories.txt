@@ -33,3 +33,9 @@ mining = {
 	category = industry
 	icon = iron_ore
 }
+
+power = {
+	name = "Power"
+	category = industry
+	icon = research
+}

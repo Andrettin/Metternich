@@ -20,3 +20,27 @@ seafaring = {
 		pottery
 	}
 }
+
+navigation = {
+	name = "Navigation"
+	subcategory = navy
+	portrait = unload
+	icon = anchor
+	period = renaissance_age
+	prerequisites = {
+		seafaring
+		astronomy
+	}
+}
+
+magnetism = {
+	name = "Magnetism"
+	subcategory = navy
+	portrait = unload
+	icon = anchor
+	period = absolutism_age
+	prerequisites = {
+		physics
+		iron_working
+	}
+}

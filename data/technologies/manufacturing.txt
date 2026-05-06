@@ -290,6 +290,18 @@ glassblowing = {
 	}
 }
 
+industrialization = {
+	name = "Industrialization"
+	subcategory = manufacturing
+	portrait = engineering
+	icon = cog
+	period = revolutionary_age
+	prerequisites = {
+		railroad
+		banking
+	}
+}
+
 precision_work = {
 	name = "Precision Work"
 	subcategory = manufacturing

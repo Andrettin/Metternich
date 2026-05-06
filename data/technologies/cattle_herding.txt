@@ -34,11 +34,12 @@ refrigeration = {
 	subcategory = cattle_herding
 	portrait = engineering
 	icon = cattle
-	period = absolutism_age
+	period = revolutionary_age
 	prerequisites = {
 		#assembly_line
 		
-		science
+		electricity
+		sanitation
 	}
 	monthly_chance = {
 		base_value = 2

@@ -6,7 +6,7 @@ brazilian = {
 		human
 	}
 	derivation_conditions = {
-		technology = renaissance
+		technology = navigation
 		province = {
 			core = brazil
 		}

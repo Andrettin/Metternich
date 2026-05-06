@@ -308,3 +308,15 @@ bridge_building = {
 		iron_working
 	}
 }
+
+railroad = {
+	name = "Railroad"
+	subcategory = power
+	portrait = engineering
+	icon = railroad
+	period = enlightenment_age
+	prerequisites = {
+		bridge_building
+		steam_engine
+	}
+}
