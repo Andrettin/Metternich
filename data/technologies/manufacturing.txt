@@ -307,12 +307,12 @@ precision_work = {
 	subcategory = manufacturing
 	portrait = engineering
 	icon = glass
-	period = absolutism_age
+	period = industrial_age
 	prerequisites = {
 		#mechanical_production
 		
 		glassblowing
-		science
+		industrialization
 	}
 	monthly_chance = {
 		base_value = 2
@@ -339,11 +339,11 @@ integral_distillery_process = {
 	subcategory = manufacturing
 	portrait = engineering
 	icon = wine
-	period = absolutism_age
+	period = industrial_age
 	prerequisites = {
 		#interchangeable_parts
 		
-		science
+		industrialization
 	}
 	monthly_chance = {
 		base_value = 2
@@ -369,7 +369,7 @@ bakelite = {
 	subcategory = manufacturing
 	portrait = engineering
 	icon = glass
-	period = enlightenment_age
+	period = modern_age
 	prerequisites = {
 		#synthetic_polymers
 		

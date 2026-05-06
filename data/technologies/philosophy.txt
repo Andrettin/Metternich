@@ -68,6 +68,18 @@ theory_of_gravity = {
 	}
 }
 
+magnetism = {
+	name = "Magnetism"
+	subcategory = philosophy
+	portrait = engineering
+	icon = compass
+	period = absolutism_age
+	prerequisites = {
+		physics
+		iron_working
+	}
+}
+
 atomic_theory = {
 	name = "Atomic Theory"
 	subcategory = philosophy

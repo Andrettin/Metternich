@@ -40,7 +40,7 @@ advanced_ore_roasting_processes = {
 	prerequisites = {
 		#cheap_iron
 		
-		iron_working
+		metallurgy
 		science
 	}
 	monthly_chance = {

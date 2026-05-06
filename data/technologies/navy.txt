@@ -32,15 +32,3 @@ navigation = {
 		astronomy
 	}
 }
-
-magnetism = {
-	name = "Magnetism"
-	subcategory = navy
-	portrait = unload
-	icon = anchor
-	period = absolutism_age
-	prerequisites = {
-		physics
-		iron_working
-	}
-}
