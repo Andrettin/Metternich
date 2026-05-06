@@ -1,18 +1,4 @@
 asian = {
 	name = "Asian"
 	rank = supergroup
-	
-	history = {
-		450 = {
-			technologies += dark_ages
-		}
-		
-		1100 = {
-			technologies += middle_ages
-		}
-		
-		1450 = {
-			technologies += renaissance
-		}
-	}
 }

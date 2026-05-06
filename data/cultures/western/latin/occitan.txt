@@ -6,7 +6,7 @@ occitan = {
 		human
 	}
 	#derivation_conditions = {
-	#	technology = middle_ages
+	#	technology = feudalism
 	#	province = {
 	#		or = {
 	#			core = aquitaine #correct?

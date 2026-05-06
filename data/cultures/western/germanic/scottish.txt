@@ -9,7 +9,7 @@ scottish = {
 		american
 	}
 	derivation_conditions = {
-		technology = middle_ages
+		technology = feudalism
 		province = {
 			core = scotland
 		}

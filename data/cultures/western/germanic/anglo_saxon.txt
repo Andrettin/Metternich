@@ -13,7 +13,7 @@ anglo_saxon = {
 		scottish
 	}
 	derivation_conditions = {
-		technology = dark_ages
+		technology = monarchy
 		province = {
 			core = great_britain
 		}

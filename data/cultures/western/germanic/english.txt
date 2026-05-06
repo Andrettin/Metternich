@@ -9,7 +9,7 @@ english = {
 		american
 	}
 	derivation_conditions = {
-		technology = middle_ages
+		technology = feudalism
 		not = {
 			province = {
 				core = scotland

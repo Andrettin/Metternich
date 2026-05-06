@@ -61,7 +61,7 @@ castle = {
 	fortification_level = 4
 	size = 4
 	base_building = watchtower
-	required_technology = middle_ages
+	required_technology = medium_castle
 	holding_types = {
 		castle
 		guild

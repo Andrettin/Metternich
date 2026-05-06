@@ -1,25 +1,3 @@
-dark_ages = {
-	name = "Dark Ages"
-	subcategory = technology
-	portrait = engineering
-	icon = iron
-	period = dark_age
-	prerequisites = {
-		aristotelian_logic
-	}
-}
-
-middle_ages = {
-	name = "Middle Ages"
-	subcategory = technology
-	portrait = engineering
-	icon = iron
-	period = feudal_age
-	prerequisites = {
-		dark_ages
-	}
-}
-
 renaissance = {
 	name = "Renaissance"
 	subcategory = technology
@@ -27,7 +5,7 @@ renaissance = {
 	icon = painting
 	period = renaissance_age
 	prerequisites = {
-		middle_ages
+		scholasticism
 	}
 }
 

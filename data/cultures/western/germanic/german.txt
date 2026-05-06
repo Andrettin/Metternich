@@ -6,7 +6,7 @@ german = {
 		human
 	}
 	derivation_conditions = {
-		technology = middle_ages
+		technology = feudalism
 		province = {
 			not = {
 				core = austria
