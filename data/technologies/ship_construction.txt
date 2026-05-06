@@ -423,7 +423,7 @@ dreadnought = {
 	subcategory = ship_construction
 	portrait = unload
 	icon = anchor
-	period = modern_age
+	period = imperial_age
 	prerequisites = {
 		#steam_turbine_ships
 		

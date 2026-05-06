@@ -299,10 +299,6 @@ void technology::check() const
 		if (this->get_period()->get_index() != this->get_total_prerequisite_depth()) {
 			log::log_error(std::format("The period for technology \"{}\" (\"{}\", {}-{}, index {}) does not match its total prerequisite depth ({}).", this->get_identifier(), this->get_period()->get_identifier(), this->get_period()->get_start_year(), this->get_period()->get_end_year(), this->get_period()->get_index(), this->get_total_prerequisite_depth()));
 		}
-
-		if (this->leads_to.empty() && !this->get_period()->get_child_periods().empty()) {
-			log::log_error(std::format("Technology \"{}\" is a dead end technology, but its period has child periods.", this->get_identifier()));
-		}
 	} else {
 		log::log_error(std::format("Technology \"{}\" has no period.", this->get_identifier()));
 	}

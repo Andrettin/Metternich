@@ -21,3 +21,15 @@ electricity = {
 		metallurgy
 	}
 }
+
+combustion = {
+	name = "Combustion"
+	subcategory = power
+	portrait = engineering
+	icon = research
+	period = modern_age
+	prerequisites = {
+		explosives
+		refining
+	}
+}

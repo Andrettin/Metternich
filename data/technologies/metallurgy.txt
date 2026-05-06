@@ -31,6 +31,19 @@ metallurgy = {
 	}
 }
 
+steel = {
+	name = "Steel"
+	subcategory = metallurgy
+	portrait = engineering
+	icon = steel
+	period = industrial_age
+	prerequisites = {
+		metallurgy
+		electricity
+		industrialization
+	}
+}
+
 advanced_ore_roasting_processes = {
 	name = "Advanced Ore Roasting Processes"
 	subcategory = metallurgy
@@ -127,12 +140,11 @@ steel_alloys = {
 	subcategory = metallurgy
 	portrait = engineering
 	icon = steel
-	period = industrial_age
+	period = imperial_age
 	prerequisites = {
 		#advanced_metallurgy
 		
-		advanced_ore_smelting_processes
-		coke
+		steel
 	}
 	monthly_chance = {
 		base_value = 2

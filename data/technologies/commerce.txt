@@ -33,6 +33,30 @@ banking = {
 	}
 }
 
+economics = {
+	name = "Economics"
+	subcategory = commerce
+	portrait = coinage
+	icon = wealth
+	period = feudal_age
+	prerequisites = {
+		banking
+		university
+	}
+}
+
+corporation = {
+	name = "Corporation"
+	subcategory = commerce
+	portrait = trading_post
+	icon = wealth
+	period = industrial_age
+	prerequisites = {
+		economics
+		industrialization
+	}
+}
+
 minor_merchant_houses = {
 	name = "Minor Merchant Houses"
 	subcategory = commerce

@@ -34,12 +34,11 @@ tank_experiments = {
 	subcategory = cavalry
 	portrait = engineering
 	icon = cannon
-	period = modern_age
+	period = imperial_age
 	prerequisites = {
 		#infiltration
 		
 		bolt_action_rifle
-		steel_alloys
 	}
 	monthly_chance = {
 		base_value = 1

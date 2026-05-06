@@ -302,6 +302,30 @@ industrialization = {
 	}
 }
 
+refining = {
+	name = "Refining"
+	subcategory = manufacturing
+	portrait = engineering
+	icon = fuel
+	period = imperial_age
+	prerequisites = {
+		chemistry
+		corporation
+	}
+}
+
+machine_tools = {
+	name = "Machine Tools"
+	subcategory = manufacturing
+	portrait = engineering
+	icon = cog
+	period = imperial_age
+	prerequisites = {
+		steel
+		tactics
+	}
+}
+
 precision_work = {
 	name = "Precision Work"
 	subcategory = manufacturing
@@ -369,7 +393,7 @@ bakelite = {
 	subcategory = manufacturing
 	portrait = engineering
 	icon = glass
-	period = modern_age
+	period = imperial_age
 	prerequisites = {
 		#synthetic_polymers
 		
