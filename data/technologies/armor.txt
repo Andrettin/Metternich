@@ -166,9 +166,10 @@ chain_mail = {
 	subcategory = army
 	portrait = helmet
 	icon = clothing
-	period = bronze_age
+	period = iron_age
 	prerequisites = {
 		soft_leather_armor
+		iron_working
 	}
 	discovery_mean_time_to_happen = {
 		months = 500
@@ -344,7 +345,7 @@ plate_mail = {
 	subcategory = army
 	portrait = helmet
 	icon = clothing
-	period = iron_age
+	period = classical_age
 	prerequisites = {
 		chain_mail
 	}
