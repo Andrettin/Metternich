@@ -513,9 +513,11 @@ light_crossbow = {
 	subcategory = infantry
 	portrait = engineering
 	icon = bow
-	period = iron_age
+	period = dark_age
 	prerequisites = {
 		short_bow
+		
+		invention #to place it in the appropriate period
 	}
 	discovery_mean_time_to_happen = {
 		months = 100
@@ -671,7 +673,7 @@ heavy_crossbow = {
 	subcategory = infantry
 	portrait = engineering
 	icon = bow
-	period = civic_age
+	period = feudal_age
 	prerequisites = {
 		light_crossbow
 	}
