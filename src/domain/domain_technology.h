@@ -6,6 +6,11 @@
 
 Q_MOC_INCLUDE("technology/technology.h")
 
+namespace archimedes {
+	class gsml_data;
+	class gsml_property;
+}
+
 namespace metternich {
 
 class domain;
@@ -25,6 +30,11 @@ class domain_technology final : public QObject
 public:
 	explicit domain_technology(const metternich::domain *domain, const domain_game_data *game_data);
 	~domain_technology();
+
+	void process_gsml_property(const gsml_property &property);
+	void process_gsml_scope(const gsml_data &scope);
+
+	gsml_data to_gsml_data() const;
 
 	domain_game_data *get_game_data() const;
 

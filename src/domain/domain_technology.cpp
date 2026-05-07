@@ -42,6 +42,51 @@ domain_technology::~domain_technology()
 {
 }
 
+void domain_technology::process_gsml_property(const gsml_property &property)
+{
+	const std::string &key = property.get_key();
+	const std::string &value = property.get_value();
+
+	if (key == "free_technology_count") {
+		this->free_technology_count = std::stoi(value);
+	} else {
+		throw std::runtime_error(std::format("Invalid domain technology property: \"{}\".", key));
+	}
+}
+
+void domain_technology::process_gsml_scope(const gsml_data &scope)
+{
+	const std::string &tag = scope.get_tag();
+	const std::vector<std::string> &values = scope.get_values();
+
+	if (tag == "current_researches") {
+		for (const std::string &value : values) {
+			this->current_researches.insert(technology::get(value));
+		}
+	} else {
+		throw std::runtime_error(std::format("Invalid domain technology scope: \"{}\".", tag));
+	}
+}
+
+gsml_data domain_technology::to_gsml_data() const
+{
+	gsml_data data("technology");
+
+	if (this->free_technology_count != 0) {
+		data.add_property("free_technology_count", std::to_string(this->free_technology_count));
+	}
+
+	if (!this->get_current_researches().empty()) {
+		gsml_data current_researches_data("current_researches");
+		for (const technology *technology : this->get_current_researches()) {
+			current_researches_data.add_value(technology->get_identifier());
+		}
+		data.add_child(std::move(current_researches_data));
+	}
+
+	return data;
+}
+
 domain_game_data *domain_technology::get_game_data() const
 {
 	return this->domain->get_game_data();
