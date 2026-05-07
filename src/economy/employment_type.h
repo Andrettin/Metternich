@@ -74,6 +74,8 @@ public:
 		return this->domain_modifier.get();
 	}
 
+	bool is_available_for_site(const site *site) const;
+
 signals:
 	void changed();
 

@@ -2,8 +2,14 @@
 
 #include "economy/employment_type.h"
 
+#include "domain/domain.h"
+#include "domain/domain_economy.h"
 #include "economy/commodity.h"
 #include "game/game.h"
+#include "map/province.h"
+#include "map/province_game_data.h"
+#include "map/site.h"
+#include "map/site_game_data.h"
 #include "population/population_type.h"
 #include "script/modifier.h"
 #include "util/assert_util.h"
@@ -112,6 +118,35 @@ int64_t employment_type::get_employment_size_for_input(const commodity *commodit
 	employment_size /= this->get_input_commodities().find(commodity)->second;
 
 	return employment_size;
+}
+
+bool employment_type::is_available_for_site(const site *site) const
+{
+	std::vector<const commodity *> commodities;
+	if (this->get_output_commodity() != nullptr) {
+		commodities.push_back(this->get_output_commodity());
+	}
+	for (const auto &[input_commodity, input_value] : this->get_input_commodities()) {
+		commodities.push_back(input_commodity);
+	}
+
+	for (const commodity *commodity : commodities) {
+		if (site->get_game_data()->get_owner() == nullptr) {
+			return false;
+		}
+
+		if (!site->get_game_data()->get_owner()->get_economy()->get_available_commodities().contains(commodity)) {
+			return false;
+		}
+
+		if (commodity->get_required_technology() != nullptr) {
+			if (!site->get_game_data()->get_province()->get_game_data()->has_technology(commodity->get_required_technology())) {
+				return false;
+			}
+		}
+	}
+
+	return true;
 }
 
 }
