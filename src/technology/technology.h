@@ -28,6 +28,7 @@ class cultural_group;
 class culture;
 class deity;
 class domain;
+class employment_type;
 class government_type;
 class icon;
 class improvement;
@@ -387,6 +388,16 @@ public:
 		this->disabled_deities.push_back(deity);
 	}
 
+	const std::vector<const employment_type *> &get_enabled_employment_types() const
+	{
+		return this->enabled_employment_types;
+	}
+
+	void add_enabled_employment_type(const employment_type *employment_type)
+	{
+		this->enabled_employment_types.push_back(employment_type);
+	}
+
 	const std::vector<const item_type *> &get_enabled_item_types() const
 	{
 		return this->enabled_item_types;
@@ -494,6 +505,7 @@ private:
 	std::vector<const law *> enabled_laws;
 	std::vector<const deity *> enabled_deities;
 	std::vector<const deity *> disabled_deities;
+	std::vector<const employment_type *> enabled_employment_types;
 	std::vector<const item_type *> enabled_item_types;
 	std::unique_ptr<const metternich::modifier<const province>> modifier;
 	std::unique_ptr<const metternich::modifier<const domain>> domain_modifier;

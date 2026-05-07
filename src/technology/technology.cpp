@@ -14,6 +14,7 @@
 #include "domain/office.h"
 #include "economy/commodity.h"
 #include "economy/commodity_type.h"
+#include "economy/employment_type.h"
 #include "economy/resource.h"
 #include "game/event_option.h"
 #include "game/game.h"
@@ -311,6 +312,7 @@ void technology::check() const
 		&& this->get_enabled_civilian_units().empty()
 		&& this->get_enabled_commodities().empty()
 		&& this->get_enabled_deities().empty()
+		&& this->get_enabled_employment_types().empty()
 		&& this->get_enabled_government_types().empty()
 		&& this->get_enabled_improvements().empty()
 		&& this->get_enabled_item_types().empty()
@@ -866,6 +868,17 @@ QString technology::get_effects_string(const metternich::domain *domain) const
 			}
 
 			str += std::format("Obsoletes {} deity", deity->get_name());
+		}
+	}
+
+	const std::vector<const employment_type *> &enabled_employment_types = this->get_enabled_employment_types();
+	if (!enabled_employment_types.empty()) {
+		for (const employment_type *employment_type : enabled_employment_types) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += std::format("Enables {} employment type", employment_type->get_name());
 		}
 	}
 

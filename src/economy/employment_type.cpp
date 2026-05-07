@@ -12,6 +12,7 @@
 #include "map/site_game_data.h"
 #include "population/population_type.h"
 #include "script/modifier.h"
+#include "technology/technology.h"
 #include "util/assert_util.h"
 
 namespace metternich {
@@ -61,6 +62,15 @@ void employment_type::process_gsml_scope(const gsml_data &scope)
 	} else {
 		named_data_entry::process_gsml_scope(scope);
 	}
+}
+
+void employment_type::initialize()
+{
+	if (this->required_technology != nullptr) {
+		this->required_technology->add_enabled_employment_type(this);
+	}
+
+	named_data_entry::initialize();
 }
 
 void employment_type::check() const
@@ -122,6 +132,10 @@ int64_t employment_type::get_employment_size_for_input(const commodity *commodit
 
 bool employment_type::is_available_for_site(const site *site) const
 {
+	if (this->get_required_technology() != nullptr && !site->get_game_data()->get_province()->get_game_data()->has_technology(this->get_required_technology())) {
+		return false;
+	}
+
 	std::vector<const commodity *> commodities;
 	if (this->get_output_commodity() != nullptr) {
 		commodities.push_back(this->get_output_commodity());

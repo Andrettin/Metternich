@@ -6,10 +6,12 @@
 #include "population/population_type_container.h"
 
 Q_MOC_INCLUDE("economy/commodity.h")
+Q_MOC_INCLUDE("technology/technology.h")
 
 namespace metternich {
 
 class commodity;
+class technology;
 
 template <typename scope_type>
 class modifier;
@@ -21,6 +23,7 @@ class employment_type final : public named_data_entry, public data_type<employme
 	Q_PROPERTY(const metternich::commodity *output_commodity MEMBER output_commodity READ get_output_commodity NOTIFY changed)
 	Q_PROPERTY(qint64 monthly_output_value MEMBER monthly_output_value READ get_monthly_output_value NOTIFY changed)
 	Q_PROPERTY(qint64 base_employment_size MEMBER base_employment_size READ get_base_employment_size NOTIFY changed)
+	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "employment_type";
@@ -32,6 +35,7 @@ public:
 
 	virtual void process_gsml_property(const gsml_property &property) override;
 	virtual void process_gsml_scope(const gsml_data &scope) override;
+	virtual void initialize() override;
 	virtual void check() const override;
 
 	const population_type_set &get_employee_types() const
@@ -64,6 +68,11 @@ public:
 		return this->base_employment_size;
 	}
 
+	const technology *get_required_technology() const
+	{
+		return this->required_technology;
+	}
+
 	const modifier<const site> *get_modifier() const
 	{
 		return this->modifier.get();
@@ -85,6 +94,7 @@ private:
 	const commodity *output_commodity = nullptr;
 	int64_t monthly_output_value = 0;
 	int64_t base_employment_size = 0; //the employment size used for calculating the employee output
+	technology *required_technology = nullptr;
 	std::unique_ptr<metternich::modifier<const site>> modifier;
 	std::unique_ptr<metternich::modifier<const domain>> domain_modifier;
 };
