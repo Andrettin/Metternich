@@ -45,7 +45,7 @@ Flickable {
 				SmallText {
 					anchors.verticalCenter: parent.verticalCenter
 					text: number_string(population_unit.size)
-					width: 64 * scale_factor
+					width: 56 * scale_factor
 					horizontalAlignment: Text.AlignLeft
 				}
 				
