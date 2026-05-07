@@ -22,7 +22,7 @@ western = {
 		
 		1180 = {
 			#the English scholar Alexander Neckam (1157-1217) wrote about the uses of magnetism for ascertaining the north/south direction in 1180; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, pp. 164-165.
-			#technologies += compass
+			technologies += magnetism
 		}
 		
 		1249 = {
