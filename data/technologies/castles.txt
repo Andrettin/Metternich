@@ -350,9 +350,11 @@ small_castle = {
 	subcategory = fortification
 	portrait = fort
 	icon = wall
-	period = bronze_age
+	period = dark_age
 	prerequisites = {
 		hill_fort
+		
+		invention #to place it in the appropriate period
 	}
 	discovery_mean_time_to_happen = {
 		months = 150
@@ -696,7 +698,7 @@ medium_castle = {
 	subcategory = fortification
 	portrait = fort
 	icon = wall
-	period = iron_age
+	period = feudal_age
 	prerequisites = {
 		small_castle
 	}
@@ -1042,7 +1044,7 @@ large_castle = {
 	subcategory = fortification
 	portrait = fort
 	icon = wall
-	period = civic_age
+	period = castle_age
 	prerequisites = {
 		medium_castle
 	}
@@ -1378,7 +1380,7 @@ huge_castle = {
 	subcategory = fortification
 	portrait = fort
 	icon = wall
-	period = classical_age
+	period = renaissance_age
 	prerequisites = {
 		large_castle
 	}
