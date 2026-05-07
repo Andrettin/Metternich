@@ -34,7 +34,7 @@ monotheism = {
 	subcategory = religion
 	portrait = temple
 	icon = wooden_cross
-	period = dark_age
+	period = classical_age
 	prerequisites = {
 		polytheism
 		philosophy
@@ -46,7 +46,7 @@ theology = {
 	subcategory = religion
 	portrait = temple
 	icon = wooden_cross
-	period = feudal_age
+	period = dark_age
 	prerequisites = {
 		monotheism
 		feudalism

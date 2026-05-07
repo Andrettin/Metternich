@@ -1042,7 +1042,7 @@ large_castle = {
 	subcategory = fortification
 	portrait = fort
 	icon = wall
-	period = classical_age
+	period = civic_age
 	prerequisites = {
 		medium_castle
 	}
@@ -1378,7 +1378,7 @@ huge_castle = {
 	subcategory = fortification
 	portrait = fort
 	icon = wall
-	period = dark_age
+	period = classical_age
 	prerequisites = {
 		large_castle
 	}

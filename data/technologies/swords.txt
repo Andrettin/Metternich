@@ -345,7 +345,7 @@ bastard_sword = {
 	subcategory = infantry
 	portrait = bronze_short_sword
 	icon = saber
-	period = classical_age
+	period = civic_age
 	prerequisites = {
 		long_sword
 	}

@@ -3,7 +3,7 @@ steam_engine = {
 	subcategory = power
 	portrait = engineering
 	icon = cog
-	period = absolutism_age
+	period = gunpowder_age
 	prerequisites = {
 		invention
 		physics
@@ -15,7 +15,7 @@ electricity = {
 	subcategory = power
 	portrait = engineering
 	icon = research
-	period = enlightenment_age
+	period = absolutism_age
 	prerequisites = {
 		magnetism
 		metallurgy
@@ -27,7 +27,7 @@ combustion = {
 	subcategory = power
 	portrait = engineering
 	icon = research
-	period = modern_age
+	period = imperial_age
 	prerequisites = {
 		explosives
 		refining

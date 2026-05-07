@@ -471,7 +471,7 @@ university = {
 	subcategory = education
 	portrait = university
 	icon = university
-	period = dark_age #renaissance_age
+	period = classical_age #renaissance_age
 	prerequisites = {
 		cathedral_school
 		mathematics

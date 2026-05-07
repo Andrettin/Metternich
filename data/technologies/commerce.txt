@@ -26,7 +26,7 @@ banking = {
 	subcategory = commerce
 	portrait = coinage
 	icon = wealth
-	period = dark_age
+	period = classical_age
 	prerequisites = {
 		trade
 		republic
@@ -38,7 +38,7 @@ economics = {
 	subcategory = commerce
 	portrait = coinage
 	icon = wealth
-	period = feudal_age
+	period = dark_age
 	prerequisites = {
 		banking
 		university
@@ -50,7 +50,7 @@ corporation = {
 	subcategory = commerce
 	portrait = trading_post
 	icon = wealth
-	period = industrial_age
+	period = revolutionary_age
 	prerequisites = {
 		economics
 		industrialization
@@ -62,7 +62,7 @@ minor_merchant_houses = {
 	subcategory = commerce
 	portrait = trading_post
 	icon = chest
-	period = classical_age
+	period = civic_age
 	prerequisites = {
 		trade
 	}
@@ -367,7 +367,7 @@ local_merchant_houses = {
 	subcategory = commerce
 	portrait = trading_post
 	icon = chest
-	period = dark_age
+	period = classical_age
 	prerequisites = {
 		minor_merchant_houses
 	}
@@ -668,7 +668,7 @@ guilds = {
 	subcategory = commerce
 	portrait = trading_post
 	icon = chest
-	period = feudal_age
+	period = dark_age
 	prerequisites = {
 		local_merchant_houses
 	}

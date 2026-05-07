@@ -3,7 +3,7 @@ mechanized_slaughtering_block = {
 	subcategory = cattle_herding
 	portrait = engineering
 	icon = cattle
-	period = absolutism_age
+	period = gunpowder_age
 	prerequisites = {
 		#mechanical_production
 		
@@ -34,7 +34,7 @@ refrigeration = {
 	subcategory = cattle_herding
 	portrait = engineering
 	icon = cattle
-	period = revolutionary_age
+	period = enlightenment_age
 	prerequisites = {
 		#assembly_line
 		

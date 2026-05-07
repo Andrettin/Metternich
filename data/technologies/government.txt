@@ -26,7 +26,7 @@ feudalism = {
 	subcategory = government
 	portrait = aristocratic_palace
 	icon = crown_baronial
-	period = classical_age
+	period = civic_age
 	prerequisites = {
 		monarchy
 		warrior_code
@@ -38,7 +38,7 @@ republic = {
 	subcategory = government
 	portrait = engineering
 	icon = philosophy
-	period = classical_age
+	period = civic_age
 	prerequisites = {
 		code_of_laws
 		literacy
@@ -50,7 +50,7 @@ democracy = {
 	subcategory = government
 	portrait = engineering
 	icon = philosophy
-	period = feudal_age
+	period = dark_age
 	prerequisites = {
 		republic
 		banking

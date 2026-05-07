@@ -295,7 +295,7 @@ industrialization = {
 	subcategory = manufacturing
 	portrait = engineering
 	icon = cog
-	period = revolutionary_age
+	period = enlightenment_age
 	prerequisites = {
 		railroad
 		banking
@@ -307,7 +307,7 @@ refining = {
 	subcategory = manufacturing
 	portrait = engineering
 	icon = fuel
-	period = imperial_age
+	period = industrial_age
 	prerequisites = {
 		chemistry
 		corporation
@@ -319,7 +319,7 @@ machine_tools = {
 	subcategory = manufacturing
 	portrait = engineering
 	icon = cog
-	period = imperial_age
+	period = industrial_age
 	prerequisites = {
 		steel
 		tactics
@@ -331,7 +331,7 @@ precision_work = {
 	subcategory = manufacturing
 	portrait = engineering
 	icon = glass
-	period = industrial_age
+	period = revolutionary_age
 	prerequisites = {
 		#mechanical_production
 		
@@ -363,7 +363,7 @@ integral_distillery_process = {
 	subcategory = manufacturing
 	portrait = engineering
 	icon = wine
-	period = industrial_age
+	period = revolutionary_age
 	prerequisites = {
 		#interchangeable_parts
 		
@@ -393,7 +393,7 @@ bakelite = {
 	subcategory = manufacturing
 	portrait = engineering
 	icon = glass
-	period = imperial_age
+	period = industrial_age
 	prerequisites = {
 		#synthetic_polymers
 		

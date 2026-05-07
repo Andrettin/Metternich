@@ -11,7 +11,7 @@ gunpowder = {
 	subcategory = army
 	portrait = engineering
 	icon = coal
-	period = feudal_age
+	period = dark_age
 	prerequisites = {
 		invention
 		iron_working
@@ -23,7 +23,7 @@ explosives = {
 	subcategory = army
 	portrait = fort
 	icon = coal
-	period = castle_age
+	period = feudal_age
 	prerequisites = {
 		gunpowder
 		chemistry
@@ -35,7 +35,7 @@ leadership = {
 	subcategory = army
 	portrait = fort
 	icon = flag
-	period = castle_age
+	period = feudal_age
 	prerequisites = {
 		chivalry
 		gunpowder
@@ -47,7 +47,7 @@ conscription = {
 	subcategory = army
 	portrait = fort
 	icon = flag
-	period = renaissance_age
+	period = castle_age
 	prerequisites = {
 		democracy
 		metallurgy
@@ -59,7 +59,7 @@ tactics = {
 	subcategory = army
 	portrait = fort
 	icon = flag
-	period = gunpowder_age
+	period = renaissance_age
 	prerequisites = {
 		leadership
 		conscription

@@ -22,7 +22,7 @@ chivalry = {
 	subcategory = cavalry
 	portrait = engineering
 	icon = heater_shield
-	period = dark_age
+	period = classical_age
 	prerequisites = {
 		horseback_riding
 		feudalism
@@ -34,7 +34,7 @@ tank_experiments = {
 	subcategory = cavalry
 	portrait = engineering
 	icon = cannon
-	period = imperial_age
+	period = industrial_age
 	prerequisites = {
 		#infiltration
 		

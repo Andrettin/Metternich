@@ -324,6 +324,10 @@ void technology::check() const
 		&& this->get_enabled_wonders().empty()
 	) {
 		log::log_error(std::format("Technology \"{}\" has no effects.", this->get_identifier()));
+
+		if (this->get_leads_to().empty()) {
+			log::log_error(std::format("Technology \"{}\" has no effects, and does not lead to any other technologies.", this->get_identifier()));
+		}
 	}
 }
 

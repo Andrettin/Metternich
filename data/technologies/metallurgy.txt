@@ -23,7 +23,7 @@ metallurgy = {
 	subcategory = metallurgy
 	portrait = engineering
 	icon = iron
-	period = castle_age
+	period = feudal_age
 	prerequisites = {
 		iron_working
 		gunpowder
@@ -36,7 +36,7 @@ steel = {
 	subcategory = metallurgy
 	portrait = engineering
 	icon = steel
-	period = industrial_age
+	period = revolutionary_age
 	prerequisites = {
 		metallurgy
 		electricity
@@ -49,7 +49,7 @@ advanced_ore_roasting_processes = {
 	subcategory = metallurgy
 	portrait = engineering
 	icon = iron
-	period = absolutism_age
+	period = gunpowder_age
 	prerequisites = {
 		#cheap_iron
 		
@@ -80,7 +80,7 @@ advanced_ore_grinding_processes = {
 	subcategory = metallurgy
 	portrait = engineering
 	icon = iron
-	period = enlightenment_age
+	period = absolutism_age
 	prerequisites = {
 		#cheap_iron
 		
@@ -110,7 +110,7 @@ advanced_ore_smelting_processes = {
 	subcategory = metallurgy
 	portrait = engineering
 	icon = iron
-	period = revolutionary_age
+	period = enlightenment_age
 	prerequisites = {
 		#cheap_iron
 		
@@ -140,7 +140,7 @@ steel_alloys = {
 	subcategory = metallurgy
 	portrait = engineering
 	icon = steel
-	period = imperial_age
+	period = industrial_age
 	prerequisites = {
 		#advanced_metallurgy
 		

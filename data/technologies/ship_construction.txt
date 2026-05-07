@@ -309,7 +309,7 @@ steamer_transport = {
 	subcategory = ship_construction
 	portrait = unload
 	icon = anchor
-	period = absolutism_age
+	period = gunpowder_age
 	prerequisites = {
 		#steamers
 		
@@ -338,7 +338,7 @@ commerce_raider = {
 	subcategory = ship_construction
 	portrait = unload
 	icon = anchor
-	period = enlightenment_age
+	period = absolutism_age
 	prerequisites = {
 		#steamers
 		
@@ -365,7 +365,7 @@ ironclad = {
 	subcategory = ship_construction
 	portrait = unload
 	icon = anchor
-	period = revolutionary_age
+	period = enlightenment_age
 	prerequisites = {
 		#iron_steamers
 		
@@ -395,7 +395,7 @@ protected_cruiser = {
 	subcategory = ship_construction
 	portrait = unload
 	icon = anchor
-	period = industrial_age
+	period = revolutionary_age
 	prerequisites = {
 		#steel_steamers
 		
@@ -423,7 +423,7 @@ dreadnought = {
 	subcategory = ship_construction
 	portrait = unload
 	icon = anchor
-	period = imperial_age
+	period = industrial_age
 	prerequisites = {
 		#steam_turbine_ships
 		

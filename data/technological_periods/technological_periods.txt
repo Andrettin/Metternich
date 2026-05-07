@@ -18,10 +18,17 @@ iron_age = {
 	end_year = -500
 }
 
-classical_age = {
-	name = "Classical Age"
+civic_age = {
+	name = "Civic Age"
 	parent_period = iron_age
 	start_year = -500
+	end_year = 1
+}
+
+classical_age = {
+	name = "Classical Age"
+	parent_period = civic_age
+	start_year = 1
 	end_year = 500
 }
 

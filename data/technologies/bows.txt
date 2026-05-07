@@ -347,7 +347,7 @@ composite_bow = {
 	subcategory = infantry
 	portrait = engineering
 	icon = bow
-	period = classical_age
+	period = civic_age
 	prerequisites = {
 		long_bow
 	}
@@ -671,7 +671,7 @@ heavy_crossbow = {
 	subcategory = infantry
 	portrait = engineering
 	icon = bow
-	period = classical_age
+	period = civic_age
 	prerequisites = {
 		light_crossbow
 	}

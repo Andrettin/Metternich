@@ -23,7 +23,7 @@ engineering = {
 	subcategory = construction
 	portrait = engineering
 	icon = cog
-	period = classical_age
+	period = civic_age
 	prerequisites = {
 		construction
 		wheel
@@ -35,7 +35,7 @@ invention = {
 	subcategory = construction
 	portrait = engineering
 	icon = cog
-	period = dark_age
+	period = classical_age
 	prerequisites = {
 		engineering
 		literacy
@@ -47,7 +47,7 @@ sanitation = {
 	subcategory = construction
 	portrait = engineering
 	icon = architecture
-	period = feudal_age
+	period = dark_age
 	prerequisites = {
 		engineering
 		medicine

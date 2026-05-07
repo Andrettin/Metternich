@@ -24,7 +24,7 @@ philosophy = {
 	subcategory = philosophy
 	portrait = engineering
 	icon = philosophy
-	period = classical_age
+	period = civic_age
 	free_technologies = 1
 	prerequisites = {
 		literacy
@@ -37,7 +37,7 @@ medicine = {
 	subcategory = philosophy
 	portrait = engineering
 	icon = heart
-	period = dark_age
+	period = classical_age
 	prerequisites = {
 		philosophy
 		trade
@@ -49,7 +49,7 @@ physics = {
 	subcategory = philosophy
 	portrait = engineering
 	icon = research
-	period = gunpowder_age
+	period = renaissance_age
 	prerequisites = {
 		literacy
 		navigation
@@ -61,7 +61,7 @@ theory_of_gravity = {
 	subcategory = philosophy
 	portrait = engineering
 	icon = research
-	period = renaissance_age
+	period = castle_age
 	prerequisites = {
 		astronomy
 		university
@@ -73,7 +73,7 @@ magnetism = {
 	subcategory = philosophy
 	portrait = engineering
 	icon = compass
-	period = absolutism_age
+	period = gunpowder_age
 	prerequisites = {
 		physics
 		iron_working
@@ -85,7 +85,7 @@ atomic_theory = {
 	subcategory = philosophy
 	portrait = engineering
 	icon = research
-	period = absolutism_age
+	period = gunpowder_age
 	prerequisites = {
 		physics
 		theory_of_gravity
@@ -97,7 +97,7 @@ chemistry = {
 	subcategory = philosophy
 	portrait = engineering
 	icon = research
-	period = feudal_age
+	period = dark_age
 	prerequisites = {
 		medicine
 		university
@@ -109,7 +109,7 @@ aristotelian_logic = {
 	subcategory = philosophy
 	portrait = engineering
 	icon = philosophy
-	period = dark_age #classical_age
+	period = classical_age
 	prerequisites = {
 		philosophy
 	}
@@ -236,7 +236,7 @@ scholasticism = {
 	subcategory = philosophy
 	portrait = engineering
 	icon = wooden_cross
-	period = feudal_age
+	period = dark_age
 	prerequisites = {
 		aristotelian_logic
 	}
@@ -363,7 +363,7 @@ astronomy = {
 	subcategory = philosophy
 	portrait = engineering
 	icon = philosophy
-	period = castle_age
+	period = feudal_age
 	prerequisites = {
 		scholasticism
 		mathematics
@@ -486,7 +486,7 @@ natural_philosophy = {
 	subcategory = philosophy
 	portrait = engineering
 	icon = philosophy
-	period = renaissance_age
+	period = castle_age
 	prerequisites = {
 		astronomy
 	}
@@ -613,7 +613,7 @@ science = {
 	subcategory = philosophy
 	portrait = engineering
 	icon = philosophy
-	period = gunpowder_age
+	period = renaissance_age
 	prerequisites = {
 		natural_philosophy
 		university

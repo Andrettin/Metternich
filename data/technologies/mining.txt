@@ -3,7 +3,7 @@ black_coal = {
 	subcategory = mining
 	portrait = factory
 	icon = coal
-	period = gunpowder_age
+	period = renaissance_age
 	prerequisites = {
 		natural_philosophy
 	}
@@ -313,7 +313,7 @@ pit_coal = {
 	subcategory = mining
 	portrait = factory
 	icon = coal
-	period = absolutism_age
+	period = gunpowder_age
 	prerequisites = {
 		#clean_coal
 		
@@ -344,7 +344,7 @@ coke = {
 	subcategory = mining
 	portrait = factory
 	icon = coal
-	period = enlightenment_age
+	period = absolutism_age
 	prerequisites = {
 		#clean_coal
 		

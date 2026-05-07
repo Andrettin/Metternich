@@ -345,7 +345,7 @@ plate_mail = {
 	subcategory = army
 	portrait = helmet
 	icon = clothing
-	period = classical_age
+	period = civic_age
 	prerequisites = {
 		chain_mail
 	}

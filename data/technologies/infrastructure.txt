@@ -301,7 +301,7 @@ bridge_building = {
 	subcategory = infrastructure
 	portrait = engineering
 	icon = road
-	period = classical_age
+	period = civic_age
 	prerequisites = {
 		road_building
 		construction
@@ -314,7 +314,7 @@ railroad = {
 	subcategory = power
 	portrait = engineering
 	icon = railroad
-	period = enlightenment_age
+	period = absolutism_age
 	prerequisites = {
 		bridge_building
 		steam_engine
