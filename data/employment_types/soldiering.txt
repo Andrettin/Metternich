@@ -29,6 +29,7 @@ heavy_infantry = {
 pikemen = {
 	name = "Pikemen"
 	base_employment_size = 1
+	required_technology = pike
 	employee_types = {
 		soldiers
 	}
@@ -43,6 +44,7 @@ pikemen = {
 archery = {
 	name = "Archery"
 	base_employment_size = 1
+	required_technology = short_bow
 	employee_types = {
 		soldiers
 	}
