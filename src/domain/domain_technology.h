@@ -78,6 +78,7 @@ public:
 	const decimillesimal_int &get_current_research_progress(const technology *technology) const;
 	Q_INVOKABLE QString get_current_research_progress_qstring(const metternich::technology *technology) const;
 	void change_current_research_progress(const technology *technology, const decimillesimal_int &change);
+	void choose_current_research();
 	[[nodiscard]] QCoro::Task<void> on_technology_researched(const technology *technology);
 
 	data_entry_map<technology_category, const technology *> get_research_choice_map(const bool is_free) const;

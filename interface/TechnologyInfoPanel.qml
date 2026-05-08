@@ -28,6 +28,7 @@ Rectangle {
 		anchors.top: parent.top
 		anchors.topMargin: 16 * scale_factor
 		spacing: research_commodities.length >= 5 ? (4 * scale_factor) : (8 * scale_factor)
+		visible: false
 		
 		Repeater {
 			model: research_commodities

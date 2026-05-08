@@ -23,7 +23,6 @@ public:
 
 	[[nodiscard]] QCoro::Task<void> do_turn();
 
-	void choose_current_research();
 	const technology *get_research_choice(const data_entry_map<technology_category, const technology *> &research_choice_map) const;
 
 	void appoint_ideas();

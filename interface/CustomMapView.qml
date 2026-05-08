@@ -202,6 +202,12 @@ Item {
 			event_dialog.open()
 		}
 		
+		function onTechnology_choosable(potential_technologies) {
+			research_choice_dialog.potential_technologies = potential_technologies
+			research_choice_dialog.free_technology = false
+			research_choice_dialog.open()
+		}
+		
 		function onFree_technology_choosable(potential_technologies) {
 			research_choice_dialog.potential_technologies = potential_technologies
 			research_choice_dialog.free_technology = true

@@ -161,6 +161,7 @@ signals:
 	void combat_notification_added(const QString &title, const QObject *portrait_object, const QString &text);
 	void event_fired(const event_instance *event_instance);
 	void event_closed(const event_instance *event_instance);
+	void technology_choosable(const QVariantList &potential_technologies);
 	void free_technology_choosable(const QVariantList &potential_technologies);
 	void next_advisor_choosable(const QVariantList &potential_advisors);
 	void trait_choosable(const character *character, const trait_type *trait_type, const QVariantList &potential_feats);

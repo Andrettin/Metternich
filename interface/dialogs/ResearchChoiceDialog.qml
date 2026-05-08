@@ -48,6 +48,8 @@ DialogBase {
 					research_choice_dialog.close()
 					if (free_technology) {
 						metternich.game.player_country.game_data.technology.gain_free_technology(technology)
+					} else {
+						metternich.game.player_country.game_data.technology.add_current_research(technology)
 					}
 				}
 			}

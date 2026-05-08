@@ -48,7 +48,6 @@ QCoro::Task<void> domain_ai::do_turn()
 
 	//FIXME: add AI for recruiting civilian units
 
-	this->choose_current_research();
 	this->appoint_office_holders();
 	this->appoint_ideas();
 	this->do_construction();
@@ -76,23 +75,6 @@ QCoro::Task<void> domain_ai::do_turn()
 	}
 
 	this->assign_trade_orders();
-}
-
-void domain_ai::choose_current_research()
-{
-	assert_throw(this->get_game_data()->is_ai());
-
-	const data_entry_map<technology_category, const technology *> research_choice_map = this->domain->get_technology()->get_research_choice_map(false);
-
-	if (research_choice_map.empty()) {
-		return;
-	}
-
-	const technology *chosen_technology = this->get_research_choice(research_choice_map);
-
-	if (chosen_technology != nullptr) {
-		this->domain->get_technology()->add_current_research(chosen_technology);
-	}
 }
 
 const technology *domain_ai::get_research_choice(const data_entry_map<technology_category, const technology *> &research_choice_map) const
