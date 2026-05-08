@@ -21,6 +21,7 @@
 #include "map/tile.h"
 #include "population/population.h"
 #include "population/population_type.h"
+#include "script/factor.h"
 #include "script/modifier.h"
 #include "technology/technology.h"
 #include "ui/portrait.h"
@@ -171,6 +172,10 @@ QCoro::Task<void> domain_technology::do_technology_spread()
 			decimillesimal_int mtth = base_spread_months / game::get()->get_current_months_per_turn();
 			mtth *= 100;
 			mtth /= spread_bonus;
+
+			if (technology->get_spread_mean_time_to_happen_factor() != nullptr) {
+				mtth = technology->get_spread_mean_time_to_happen_factor()->calculate(province, mtth);
+			}
 
 			bool should_spread = false;
 
