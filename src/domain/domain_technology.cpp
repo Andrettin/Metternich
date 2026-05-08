@@ -23,6 +23,7 @@
 #include "population/population_type.h"
 #include "script/modifier.h"
 #include "technology/technology.h"
+#include "ui/portrait.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/point_container.h"
@@ -141,6 +142,8 @@ QCoro::Task<void> domain_technology::do_research()
 
 QCoro::Task<void> domain_technology::do_technology_spread()
 {
+	province_map<std::vector<const technology *>> province_spread_technologies;
+
 	for (const province *province : this->get_game_data()->get_provinces()) {
 		technology_map<decimillesimal_int> technology_spread_bonuses;
 
@@ -181,8 +184,22 @@ QCoro::Task<void> domain_technology::do_technology_spread()
 
 			if (should_spread) {
 				co_await province->get_game_data()->add_technology(technology);
+				province_spread_technologies[province].push_back(technology);
 			}
 		}
+	}
+
+	if (this->domain == game::get()->get_player_country() && !province_spread_technologies.empty()) {
+		const portrait *interior_minister_portrait = this->get_game_data()->get_government()->get_interior_minister_portrait();
+
+		std::string spread_technologies_str;
+		for (const auto &[province, spread_technologies] : province_spread_technologies) {
+			for (const technology *technology : spread_technologies) {
+				spread_technologies_str += std::format("\n{} to {}", technology->get_name(), province->get_game_data()->get_current_cultural_name());
+			}
+		}
+
+		engine_interface::get()->add_notification("Technology Spread", interior_minister_portrait, std::format("{}, new technologies have spread to our provinces!\n\nSpread Technologies:{}", this->get_game_data()->get_form_of_address(), spread_technologies_str));
 	}
 }
 
