@@ -479,6 +479,7 @@ QCoro::Task<void> domain_game_data::do_turn()
 		this->do_civilian_unit_recruitment();
 		co_await this->get_military()->do_military_unit_recruitment();
 		co_await this->get_technology()->do_research();
+		co_await this->get_technology()->do_technology_spread();
 		co_await this->do_construction();
 		co_await this->do_population_growth();
 		this->do_cultural_change();

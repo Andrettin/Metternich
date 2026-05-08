@@ -139,6 +139,53 @@ QCoro::Task<void> domain_technology::do_research()
 	}
 }
 
+QCoro::Task<void> domain_technology::do_technology_spread()
+{
+	for (const province *province : this->get_game_data()->get_provinces()) {
+		technology_map<decimillesimal_int> technology_spread_bonuses;
+
+		for (const metternich::province *neighbor_province : province->get_game_data()->get_neighbor_provinces()) {
+			for (const technology *technology : neighbor_province->get_game_data()->get_technologies()) {
+				if (!province->get_game_data()->can_gain_technology(technology)) {
+					continue;
+				}
+
+				technology_spread_bonuses[technology] += 6 * decimillesimal_int(neighbor_province->get_game_data()->get_extra_technology(technology) + 1);
+			}
+		}
+
+		for (auto &[technology, spread_bonus] : technology_spread_bonuses) {
+			const int spread_modifier = province->get_game_data()->get_technology_category_spread_modifier(technology->get_category());
+			if (spread_modifier != 0) {
+				spread_bonus *= 100 + spread_modifier;
+				spread_bonus /= 100;
+			}
+		}
+
+		for (const auto &[technology, spread_bonus] : technology_spread_bonuses) {
+			static const decimillesimal_int base_spread_years(10);
+			static const decimillesimal_int base_spread_months = base_spread_years * 12;
+			decimillesimal_int mtth = base_spread_months / game::get()->get_current_months_per_turn();
+			mtth *= 100;
+			mtth /= spread_bonus;
+
+			bool should_spread = false;
+
+			if (mtth <= 1) {
+				should_spread = true;
+			} else {
+				const int64_t spread_chance = (decimillesimal_int(1) / mtth).get_value();
+				assert_throw(spread_chance > 0);
+				should_spread = random::get()->generate(10000ll) < spread_chance;
+			}
+
+			if (should_spread) {
+				co_await province->get_game_data()->add_technology(technology);
+			}
+		}
+	}
+}
+
 void domain_technology::do_population_research()
 {
 	//generate research points based on population
