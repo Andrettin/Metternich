@@ -133,7 +133,7 @@ Item {
 						SmallText {
 							anchors.verticalCenter: research_technology_button_item.verticalCenter
 							anchors.horizontalCenter: research_technology_button_item.horizontalCenter
-							text: "Researching"
+							text: country_game_data.technology.current_researches.includes(technology) ? ("Researching: " + country_game_data.technology.get_current_research_progress_qstring(technology) + "%") : ""
 							color: "white"
 							horizontalAlignment: Text.AlignHCenter
 							verticalAlignment: Text.AlignVCenter

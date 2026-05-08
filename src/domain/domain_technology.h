@@ -3,6 +3,7 @@
 #include "database/data_entry_container.h"
 #include "technology/technology_container.h"
 #include "util/centesimal_int.h"
+#include "util/decimillesimal_int.h"
 
 Q_MOC_INCLUDE("technology/technology.h")
 
@@ -73,6 +74,9 @@ public:
 	QVariantList get_current_researches_qvariant_list() const;
 	Q_INVOKABLE void add_current_research(const metternich::technology *technology);
 	Q_INVOKABLE void remove_current_research(const metternich::technology *technology, const bool restore_costs);
+	const decimillesimal_int &get_current_research_progress(const technology *technology) const;
+	Q_INVOKABLE QString get_current_research_progress_qstring(const metternich::technology *technology) const;
+	void change_current_research_progress(const technology *technology, const decimillesimal_int &change);
 	[[nodiscard]] QCoro::Task<void> on_technology_researched(const technology *technology);
 
 	data_entry_map<technology_category, const technology *> get_research_choice_map(const bool is_free) const;
@@ -167,6 +171,7 @@ signals:
 private:
 	const metternich::domain *domain = nullptr;
 	technology_set current_researches;
+	technology_map<decimillesimal_int> current_research_progresses;
 	int free_technology_count = 0;
 	centesimal_int technology_cost_modifier;
 	data_entry_map<technology_category, centesimal_int> technology_category_cost_modifiers;

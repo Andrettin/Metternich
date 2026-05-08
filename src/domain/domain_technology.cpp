@@ -105,13 +105,35 @@ QCoro::Task<void> domain_technology::do_research()
 			co_await this->gain_free_technology();
 		}
 
-		const technology_set current_researches = this->get_current_researches();
-		for (const technology *current_research : current_researches) {
-			co_await this->on_technology_researched(current_research);
-		}
+		decimillesimal_int generated_research = decimillesimal_int(this->get_game_data()->get_economy()->get_stored_commodity(defines::get()->get_default_research_commodity()));
+		this->get_game_data()->get_economy()->set_stored_commodity(defines::get()->get_default_research_commodity(), 0);
 
-		this->current_researches.clear();
-		emit current_researches_changed();
+		while (generated_research > 0 && !this->get_current_researches().empty()) {
+			decimillesimal_int remaining_generated_research = generated_research;
+
+			const technology_set current_researches = this->get_current_researches();
+			for (const technology *current_research : current_researches) {
+				const commodity_map<int64_t> commodity_costs = current_research->get_commodity_costs_for_domain(this->domain);
+				if (!commodity_costs.contains(defines::get()->get_default_research_commodity())) {
+					continue;
+				}
+
+				const decimillesimal_int research_cost = decimillesimal_int(commodity_costs.find(defines::get()->get_default_research_commodity())->second);
+				const decimillesimal_int remaining_research = research_cost * (100 - this->get_current_research_progress(current_research) / 100);
+				const decimillesimal_int research_for_progress = decimillesimal_int::min(remaining_research, generated_research / current_researches.size());
+				this->change_current_research_progress(current_research, research_for_progress * 100 / research_cost);
+				remaining_generated_research -= research_for_progress;
+
+				if (this->get_current_research_progress(current_research) >= 100) {
+					co_await this->on_technology_researched(current_research);
+				}
+			}
+
+			generated_research = remaining_generated_research;
+			if (!this->get_current_researches().empty() && (generated_research / this->get_current_researches().size()) == 0) {
+				break;
+			}
+		}
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error("Error doing research for domain \"" + this->domain->get_identifier() + "\"."));
 	}
@@ -377,6 +399,10 @@ bool domain_technology::can_research_technology(const technology *technology) co
 	}
 
 	for (const auto &[commodity, cost] : technology->get_commodity_costs_for_domain(this->domain)) {
+		if (commodity == defines::get()->get_default_research_commodity()) {
+			continue;
+		}
+
 		if (cost > this->domain->get_economy()->get_stored_commodity(commodity)) {
 			return false;
 		}
@@ -456,10 +482,15 @@ void domain_technology::add_current_research(const technology *technology)
 	assert_throw(this->can_research_technology(technology));
 
 	for (const auto &[commodity, cost] : technology->get_commodity_costs_for_domain(this->domain)) {
+		if (commodity == defines::get()->get_default_research_commodity()) {
+			continue;
+		}
+
 		this->domain->get_economy()->change_stored_commodity(commodity, -cost);
 	}
 
 	this->current_researches.insert(technology);
+	this->current_research_progresses[technology] = decimillesimal_int(0);
 	emit current_researches_changed();
 }
 
@@ -469,12 +500,44 @@ void domain_technology::remove_current_research(const technology *technology, co
 
 	if (restore_costs) {
 		for (const auto &[commodity, cost] : technology->get_commodity_costs_for_domain(this->domain)) {
+			if (commodity == defines::get()->get_default_research_commodity()) {
+				continue;
+			}
+
 			this->domain->get_economy()->change_stored_commodity(commodity, cost);
 		}
 	}
 
 	this->current_researches.erase(technology);
+	this->current_research_progresses.erase(technology);
 	emit current_researches_changed();
+}
+
+const decimillesimal_int &domain_technology::get_current_research_progress(const technology *technology) const
+{
+	const auto find_iterator = this->current_research_progresses.find(technology);
+
+	assert_throw(find_iterator != this->current_research_progresses.end());
+
+	return find_iterator->second;
+}
+
+QString domain_technology::get_current_research_progress_qstring(const technology *technology) const
+{
+	return QString::fromStdString(std::to_string(this->get_current_research_progress(technology).to_int()));
+}
+
+void domain_technology::change_current_research_progress(const technology *technology, const decimillesimal_int &change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const decimillesimal_int &new_value = (this->current_research_progresses[technology] += change);
+	assert_throw(new_value >= 0);
+	if (new_value == 0) {
+		this->current_research_progresses.erase(technology);
+	}
 }
 
 QCoro::Task<void> domain_technology::on_technology_researched(const technology *technology)
