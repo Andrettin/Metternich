@@ -107,9 +107,15 @@ public:
 		return technology::research_commodities;
 	}
 
+	static int get_max_level()
+	{
+		return technology::max_level;
+	}
+
 private:
 	static inline std::vector<const technology *> top_level_technologies;
 	static inline std::vector<const commodity *> research_commodities;
+	static inline int max_level = 0;
 
 public:
 	explicit technology(const std::string &identifier);

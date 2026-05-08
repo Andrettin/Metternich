@@ -209,6 +209,8 @@ void technology::initialize()
 		this->level = this->get_total_prerequisite_depth() + 1;
 	}
 
+	technology::max_level = std::max(technology::max_level, this->get_level());
+
 	if (this->get_level() > 0) {
 		this->commodity_costs[defines::get()->get_default_research_commodity()] = defines::get()->get_research_cost_per_level() * this->get_level();
 	}
