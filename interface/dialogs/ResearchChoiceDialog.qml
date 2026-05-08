@@ -39,7 +39,7 @@ DialogBase {
 				id: technology_button
 				text: format_text(technology.name)
 				width: research_choice_dialog.width - 16 * scale_factor
-				tooltip: effects_string.length > 0 ? format_text(small_text(effects_string)) : ""
+				tooltip: effects_string.length > 0 ? format_text(small_text(effects_string)) : small_text("No effect")
 				
 				readonly property var technology: model.modelData
 				readonly property string effects_string: technology.get_effects_string(metternich.game.player_country)
