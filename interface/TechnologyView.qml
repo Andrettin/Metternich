@@ -101,7 +101,7 @@ Item {
 							id: commodity_costs_row
 							anchors.verticalCenter: research_technology_button_item.verticalCenter
 							anchors.horizontalCenter: research_technology_button_item.horizontalCenter
-							spacing: 8 * scale_factor
+							spacing: 4 * scale_factor
 							
 							readonly property bool researching: country_game_data.technology.current_researches.includes(technology)
 							
@@ -119,7 +119,7 @@ Item {
 								
 								Row {
 									id: commodity_cost_row
-									spacing: 4 * scale_factor
+									spacing: 2 * scale_factor
 									visible: researching === false || commodity == metternich.defines.default_research_commodity
 									
 									readonly property var commodity: model.modelData.key
