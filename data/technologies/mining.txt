@@ -381,3 +381,26 @@ coke = {
 		coal_output_modifier = 50
 	}
 }
+
+square_set_timbering = {
+	name = "Square-Set Timbering"
+	subcategory = mining
+	portrait = engineering
+	icon = coal
+	period = napoleonic_age
+	prerequisites = {
+		high_pressure_steam_engine
+	}
+}
+
+dynamite = {
+	name = "Dynamite"
+	subcategory = mining
+	portrait = engineering
+	icon = coal
+	period = modern_age
+	prerequisites = {
+		square_set_timbering
+		compound_steam_engine
+	}
+}

@@ -10,6 +10,31 @@ steam_engine = {
 	}
 }
 
+high_pressure_steam_engine = {
+	name = "High Pressure Steam Engine"
+	subcategory = power
+	portrait = engineering
+	icon = cog
+	period = revolutionary_age
+	prerequisites = {
+		steam_engine
+		
+		advanced_ore_smelting_processes #to place it in its appropriate period, should change it to something else
+	}
+}
+
+compound_steam_engine = {
+	name = "Compound Steam Engine"
+	subcategory = power
+	portrait = engineering
+	icon = cog
+	period = imperial_age
+	prerequisites = {
+		high_pressure_steam_engine
+		iron_railroad_bridge
+	}
+}
+
 electricity = {
 	name = "Electricity"
 	subcategory = power
@@ -27,7 +52,7 @@ combustion = {
 	subcategory = power
 	portrait = engineering
 	icon = research
-	period = industrial_age
+	period = modern_age
 	prerequisites = {
 		explosives
 		refining

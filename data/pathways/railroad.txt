@@ -5,11 +5,11 @@ railroad = {
 	transport_level = 4
 	required_pathway = road
 	required_technology = railroad
-	river_crossing_required_technology = industrial_era
+	river_crossing_required_technology = iron_railroad_bridge
 	terrain_required_technologies = {
-		hills = industrial_era
-		mountains = modern_era
-		swamp = industrial_era
+		hills = compound_steam_engine
+		mountains = dynamite
+		swamp = iron_railroad_bridge
 	}
 	modifier = {
 		max_level = 1

@@ -318,9 +318,20 @@ railroad = {
 	subcategory = power
 	portrait = engineering
 	icon = railroad
-	period = absolutism_age
+	period = napoleonic_age
 	prerequisites = {
 		bridge_building
-		steam_engine
+		high_pressure_steam_engine
+	}
+}
+
+iron_railroad_bridge = {
+	name = "Iron Railroad Bridge"
+	subcategory = power
+	portrait = engineering
+	icon = railroad
+	period = industrial_age
+	prerequisites = {
+		railroad
 	}
 }
