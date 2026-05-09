@@ -28,7 +28,7 @@ compound_steam_engine = {
 	subcategory = power
 	portrait = engineering
 	icon = cog
-	period = imperial_age
+	period = industrial_age
 	prerequisites = {
 		high_pressure_steam_engine
 		iron_railroad_bridge

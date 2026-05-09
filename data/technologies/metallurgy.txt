@@ -40,7 +40,7 @@ steel = {
 	subcategory = metallurgy
 	portrait = engineering
 	icon = steel
-	period = imperial_age
+	period = industrial_age
 	prerequisites = {
 		metallurgy
 		electricity
@@ -132,7 +132,7 @@ steel_alloys = {
 	subcategory = metallurgy
 	portrait = engineering
 	icon = steel
-	period = modern_age
+	period = imperial_age
 	prerequisites = {
 		#advanced_metallurgy
 		

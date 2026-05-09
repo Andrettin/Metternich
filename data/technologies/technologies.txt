@@ -14,7 +14,7 @@ industrial_era = {
 	subcategory = technology
 	portrait = engineering
 	icon = cog
-	period = industrial_age
+	period = steam_age
 	prerequisites = {
 		renaissance
 	}

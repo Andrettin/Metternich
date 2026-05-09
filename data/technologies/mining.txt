@@ -398,7 +398,7 @@ dynamite = {
 	subcategory = mining
 	portrait = engineering
 	icon = coal
-	period = modern_age
+	period = imperial_age
 	prerequisites = {
 		square_set_timbering
 		compound_steam_engine

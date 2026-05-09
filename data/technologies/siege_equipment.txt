@@ -318,7 +318,7 @@ rifled_artillery = {
 	subcategory = siege_equipment
 	portrait = engineering
 	icon = cannon
-	period = industrial_age
+	period = steam_age
 	prerequisites = {
 		mangonel #previous siege engine
 		railroad #to set in the appropriate period

@@ -106,12 +106,19 @@ napoleonic_age = {
 	name = "Napoleonic Age"
 	parent_period = revolutionary_age
 	start_year = 1800
+	end_year = 1825
+}
+
+steam_age = {
+	name = "Steam Age"
+	parent_period = napoleonic_age
+	start_year = 1825
 	end_year = 1850
 }
 
 industrial_age = {
 	name = "Industrial Age"
-	parent_period = napoleonic_age
+	parent_period = steam_age
 	start_year = 1850
 	end_year = 1875
 }
