@@ -321,17 +321,13 @@ steamer_transport = {
 		black_coal
 		science
 	}
-	monthly_chance = {
-		base_value = 5
-		
+	cost_factor = {
 		#modifier = {
-		#	factor = 2
-		#	additive = true
+		#	factor = 0.71
 		#	technology = mechanical_production
 		#}
 		#modifier = {
-		#	factor = 1
-		#	additive = true
+		#	factor = 0.83
 		#	technology = clean_coal
 		#}
 	}
@@ -348,17 +344,13 @@ commerce_raider = {
 		
 		steamer_transport
 	}
-	monthly_chance = {
-		base_value = 5
-		
+	cost_factor = {
 		#modifier = {
-		#	factor = 1
-		#	additive = true
+		#	factor = 0.83
 		#	technology = fire_control_systems
 		#}
 		#modifier = {
-		#	factor = 3
-		#	additive = true
+		#	factor = 0.625
 		#	technology = raider_group_doctrine
 		#}
 	}
@@ -378,17 +370,13 @@ ironclad = {
 		
 		plate_mail #seems reasonable, and gives allows plate mail to lead to another technology
 	}
-	monthly_chance = {
-		base_value = 5
-		
+	cost_factor = {
 		#modifier = {
-		#	factor = 2
-		#	additive = true
+		#	factor = 0.71
 		#	technology = monitors
 		#}
 		#modifier = {
-		#	factor = 2
-		#	additive = true
+		#	factor = 0.71
 		#	technology = torpedo_boats
 		#}
 	}
@@ -406,17 +394,13 @@ protected_cruiser = {
 		commerce_raider
 		ironclad
 	}
-	monthly_chance = {
-		base_value = 3
-		
+	cost_factor = {
 		modifier = {
-			factor = 2
-			additive = true
+			factor = 0.6
 			technology = ironclad
 		}
 		#modifier = {
-		#	factor = 2
-		#	additive = true
+		#	factor = 0.6
 		#	technology = cheap_steel
 		#}
 	}
@@ -434,17 +418,13 @@ dreadnought = {
 		ironclad
 		protected_cruiser
 	}
-	monthly_chance = {
-		base_value = 5
-		
+	cost_factor = {
 		#modifier = {
-		#	factor = 2
-		#	additive = true
+		#	factor = 0.71
 		#	technology = pre_dreadnought
 		#}
 		#modifier = {
-		#	factor = 2
-		#	additive = true
+		#	factor = 0.71
 		#	technology = naval_logistics
 		#}
 	}

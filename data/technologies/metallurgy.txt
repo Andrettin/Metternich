@@ -60,17 +60,13 @@ advanced_ore_roasting_processes = {
 		metallurgy
 		science
 	}
-	monthly_chance = {
-		base_value = 2
-		
+	cost_factor = {
 		#modifier = {
-		#	factor = 2
-		#	additive = true
+		#	factor = 0.5
 		#	technology = interchangeable_parts
 		#}
 		#modifier = {
-		#	factor = 2
-		#	additive = true
+		#	factor = 0.5
 		#	technology = inorganic_chemistry
 		#}
 	}
@@ -90,17 +86,13 @@ advanced_ore_grinding_processes = {
 		
 		advanced_ore_roasting_processes
 	}
-	monthly_chance = {
-		base_value = 2
-		
+	cost_factor = {
 		modifier = {
-			factor = 2
-			additive = true
+			factor = 0.5
 			technology = advanced_ore_roasting_processes
 		}
 		#modifier = {
-		#	factor = 2
-		#	additive = true
+		#	factor = 0.5
 		#	technology = organized_factories
 		#}
 	}
@@ -120,17 +112,13 @@ advanced_ore_smelting_processes = {
 		
 		advanced_ore_grinding_processes
 	}
-	monthly_chance = {
-		base_value = 2
-		
+	cost_factor = {
 		modifier = {
-			factor = 2
-			additive = true
+			factor = 0.5
 			technology = advanced_ore_grinding_processes
 		}
 		#modifier = {
-		#	factor = 2
-		#	additive = true
+		#	factor = 0.5
 		#	technology = iron_railroad
 		#}
 	}
@@ -150,17 +138,13 @@ steel_alloys = {
 		
 		steel
 	}
-	monthly_chance = {
-		base_value = 2
-		
+	cost_factor = {
 		#modifier = {
-		#	factor = 2
-		#	additive = true
+		#	factor = 0.5
 		#	technology = thomas_steel
 		#}
 		#modifier = {
-		#	factor = 2
-		#	additive = true
+		#	factor = 0.5
 		#	technology = inorganic_chemistry
 		#}
 	}

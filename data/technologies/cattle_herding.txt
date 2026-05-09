@@ -21,17 +21,13 @@ mechanized_slaughtering_block = {
 		domestication #needs domesticated animals
 		science
 	}
-	monthly_chance = {
-		base_value = 2
-		
+	cost_factor = {
+		modifier = {
+			factor = 0.5
+			technology = medicine
+		}
 		#modifier = {
-		#	factor = 2
-		#	additive = true
-		#	technology = medicine
-		#}
-		#modifier = {
-		#	factor = 2
-		#	additive = true
+		#	factor = 0.5
 		#	technology = clean_coal
 		#}
 	}
@@ -53,17 +49,13 @@ refrigeration = {
 		electricity
 		sanitation
 	}
-	monthly_chance = {
-		base_value = 2
-		
+	cost_factor = {
 		#modifier = {
-		#	factor = 2
-		#	additive = true
+		#	factor = 0.5
 		#	technology = food_packing_system
 		#}
 		#modifier = {
-		#	factor = 2
-		#	additive = true
+		#	factor = 0.5
 		#	technology = integral_rail_system
 		#}
 	}

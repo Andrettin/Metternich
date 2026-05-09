@@ -341,17 +341,13 @@ pit_coal = {
 		black_coal
 		science
 	}
-	monthly_chance = {
-		base_value = 2
-		
+	cost_factor = {
 		#modifier = {
-		#	factor = 2
-		#	additive = true
+		#	factor = 0.5
 		#	technology = practical_steam_engine
 		#}
 		#modifier = {
-		#	factor = 2
-		#	additive = true
+		#	factor = 0.5
 		#	technology = early_railroad
 		#}
 	}
@@ -371,17 +367,13 @@ coke = {
 		
 		pit_coal
 	}
-	monthly_chance = {
-		base_value = 2
-		
+	cost_factor = {
 		modifier = {
-			factor = 2
-			additive = true
+			factor = 0.5
 			technology = pit_coal
 		}
 		#modifier = {
-		#	factor = 2
-		#	additive = true
+		#	factor = 0.5
 		#	technology = early_railroad
 		#}
 	}

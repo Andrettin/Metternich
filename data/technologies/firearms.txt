@@ -10,17 +10,13 @@ flintlock_rifle = {
 		
 		composite_bow #so that composite bows lead to another technology
 	}
-	monthly_chance = {
-		base_value = 5
-		
+	cost_factor = {
 		#modifier = {
-		#	factor = 2
-		#	additive = true
+		#	factor = 0.71
 		#	technology = small_arms_production
 		#}
 		#modifier = {
-		#	factor = 2
-		#	additive = true
+		#	factor = 0.71
 		#	war = true
 		#	war_domains = {
 		#		technology = flintlock_rifle
@@ -38,12 +34,9 @@ breech_loading_rifle = {
 	prerequisites = {
 		flintlock_rifle
 	}
-	monthly_chance = {
-		base_value = 5
-		
+	cost_factor = {
 		#modifier = {
-		#	factor = 2
-		#	additive = true
+		#	factor = 0.71
 		#	war = true
 		#	war_domains = {
 		#		technology = breech_loading_rifle
@@ -61,12 +54,9 @@ machine_gun = {
 	prerequisites = {
 		breech_loading_rifle
 	}
-	monthly_chance = {
-		base_value = 5
-		
+	cost_factor = {
 		#modifier = {
-		#	factor = 2
-		#	additive = true
+		#	factor = 0.71
 		#	war = true
 		#	war_domains = {
 		#		technology = machine_gun
@@ -84,12 +74,9 @@ bolt_action_rifle = {
 	prerequisites = {
 		machine_gun
 	}
-	monthly_chance = {
-		base_value = 5
-		
+	cost_factor = {
 		#modifier = {
-		#	factor = 2
-		#	additive = true
+		#	factor = 0.71
 		#	war = true
 		#	war_domains = {
 		#		technology = bolt_action_rifle

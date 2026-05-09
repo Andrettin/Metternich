@@ -364,17 +364,13 @@ precision_work = {
 		glassblowing
 		industrialization
 	}
-	monthly_chance = {
-		base_value = 2
-		
+	cost_factor = {
 		#modifier = {
-		#	factor = 2
-		#	additive = true
+		#	factor = 0.5
 		#	technology = mechanical_precision_saw
 		#}
 		#modifier = {
-		#	factor = 2
-		#	additive = true
+		#	factor = 0.5
 		#	technology = early_railroad
 		#}
 	}
@@ -395,17 +391,13 @@ integral_distillery_process = {
 		
 		industrialization
 	}
-	monthly_chance = {
-		base_value = 2
-		
+	cost_factor = {
 		#modifier = {
-		#	factor = 2
-		#	additive = true
+		#	factor = 0.5
 		#	technology = scientific_management
 		#}
 		#modifier = {
-		#	factor = 2
-		#	additive = true
+		#	factor = 0.5
 		#	technology = market_structure
 		#}
 	}
@@ -425,17 +417,13 @@ bakelite = {
 		
 		precision_work
 	}
-	monthly_chance = {
-		base_value = 2
-		
+	cost_factor = {
 		#modifier = {
-		#	factor = 2
-		#	additive = true
+		#	factor = 0.5
 		#	technology = bell_and_greys_telephones
 		#}
 		#modifier = {
-		#	factor = 2
-		#	additive = true
+		#	factor = 0.5
 		#	technology = time_saving_measures
 		#}
 	}

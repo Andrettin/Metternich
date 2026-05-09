@@ -42,29 +42,19 @@ tank_experiments = {
 	period = napoleonic_age
 	prerequisites = {
 		#infiltration
+		#combustion_engine
 		
 		bolt_action_rifle
 	}
-	monthly_chance = {
-		base_value = 1
-		
+	cost_factor = {
 		#modifier = {
-		#	factor = 2
-		#	additive = true
+		#	factor = 0.33
 		#	technology = elastic_defense_system
 		#}
 		#modifier = {
-		#	factor = 2
-		#	additive = true
+		#	factor = 0.33
 		#	war = true
 		#	war_domains = { technology = tank_experiments }
-		#}
-		#modifier = {
-		#	factor = -5
-		#	additive = true
-		#	not = {
-		#		technology = combustion_engine
-		#	}
 		#}
 	}
 }
