@@ -13,23 +13,6 @@
 
 namespace metternich {
 
-decimillesimal_int population::get_population_daily_research(const int64_t population_group_size, const int64_t total_population_size, const int64_t population_daily_research, const decimillesimal_int &max_research_population_percent)
-{
-	const decimillesimal_int population_type_percent = decimillesimal_int(population_group_size) * 100 / total_population_size;
-	decimillesimal_int daily_research = population_daily_research * decimillesimal_int::min(population_type_percent, max_research_population_percent) / max_research_population_percent;
-	return daily_research;
-}
-
-decimillesimal_int population::get_population_monthly_research(const int64_t population_group_size, const int64_t total_population_size, const int64_t population_daily_research, const decimillesimal_int &max_research_population_percent)
-{
-	return population::get_population_daily_research(population_group_size, total_population_size, population_daily_research, max_research_population_percent) * 30;
-}
-
-int64_t population::get_population_research_per_turn(const int64_t population_group_size, const int64_t total_population_size, const int64_t population_daily_research, const decimillesimal_int &max_research_population_percent)
-{
-	return (population::get_population_monthly_research(population_group_size, total_population_size, population_daily_research, max_research_population_percent) * defines::get()->get_default_months_per_turn()).to_int64();
-}
-
 void population::change_population_unit_count(const int change)
 {
 	if (change == 0) {
