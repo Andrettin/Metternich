@@ -143,7 +143,7 @@ Item {
 					
 					onClicked: {
 						if (country_game_data.technology.current_researches.includes(technology)) {
-							country_game_data.technology.remove_current_research(technology, true)
+							country_game_data.technology.remove_current_research(technology, true, true)
 						} else {
 							if (country_game_data.technology.can_research_technology(technology)) {
 								country_game_data.technology.add_current_research(technology)

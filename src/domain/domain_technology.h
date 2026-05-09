@@ -74,7 +74,7 @@ public:
 
 	QVariantList get_current_researches_qvariant_list() const;
 	Q_INVOKABLE void add_current_research(const metternich::technology *technology);
-	Q_INVOKABLE void remove_current_research(const metternich::technology *technology, const bool restore_costs);
+	Q_INVOKABLE void remove_current_research(const metternich::technology *technology, const bool restore_costs, const bool preserve_progress);
 	const decimillesimal_int &get_current_research_progress(const technology *technology) const;
 	Q_INVOKABLE qint64 get_current_research_progress_commodity_quantity(const metternich::technology *technology) const;
 	Q_INVOKABLE QString get_current_research_progress_qstring(const metternich::technology *technology) const;

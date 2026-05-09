@@ -580,11 +580,13 @@ void domain_technology::add_current_research(const technology *technology)
 	}
 
 	this->current_researches.insert(technology);
-	this->current_research_progresses[technology] = decimillesimal_int(0);
+	if (!this->current_research_progresses.contains(technology)) {
+		this->current_research_progresses[technology] = decimillesimal_int(0);
+	}
 	emit current_researches_changed();
 }
 
-void domain_technology::remove_current_research(const technology *technology, const bool restore_costs)
+void domain_technology::remove_current_research(const technology *technology, const bool restore_costs, const bool preserve_progress)
 {
 	assert_throw(this->get_current_researches().contains(technology));
 
@@ -599,7 +601,9 @@ void domain_technology::remove_current_research(const technology *technology, co
 	}
 
 	this->current_researches.erase(technology);
-	this->current_research_progresses.erase(technology);
+	if (!preserve_progress) {
+		this->current_research_progresses.erase(technology);
+	}
 	emit current_researches_changed();
 }
 
@@ -663,7 +667,7 @@ void domain_technology::choose_current_research()
 QCoro::Task<void> domain_technology::on_technology_researched(const technology *technology)
 {
 	if (this->get_current_researches().contains(technology)) {
-		this->remove_current_research(technology, false);
+		this->remove_current_research(technology, false, false);
 	}
 
 	co_await this->add_technology(technology);
