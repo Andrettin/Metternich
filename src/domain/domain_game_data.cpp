@@ -1056,8 +1056,6 @@ QCoro::Task<void> domain_game_data::set_culture(const metternich::culture *cultu
 		}
 	}
 
-	co_await this->get_technology()->check_technologies();
-
 	if (game::get()->is_running()) {
 		emit culture_changed();
 	}
@@ -1121,8 +1119,6 @@ QCoro::Task<void> domain_game_data::set_religion(const metternich::religion *rel
 			province->get_game_data()->set_religion(this->get_religion());
 		}
 	}
-
-	co_await this->get_technology()->check_technologies();
 
 	if (game::get()->is_running()) {
 		emit religion_changed();

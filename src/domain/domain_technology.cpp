@@ -213,7 +213,10 @@ QCoro::Task<void> domain_technology::do_technology_spread()
 
 			if (should_spread) {
 				co_await province->get_game_data()->add_technology(technology);
-				province_spread_technologies[province].push_back(technology);
+				if (technology->is_available_for_domain(this->domain)) {
+					//only display spread for technologies that are available for this domain
+					province_spread_technologies[province].push_back(technology);
+				}
 			}
 		}
 	}
@@ -455,18 +458,6 @@ QCoro::Task<void> domain_technology::on_technology_lost(const technology *techno
 		emit technology_lost(technology);
 
 		emit technologies_changed();
-	}
-}
-
-QCoro::Task<void> domain_technology::check_technologies()
-{
-	//technologies may no longer be available for the country due to e.g. religion change, and may therefore need to be removed
-
-	const technology_set technologies = this->get_technologies();
-	for (const technology *technology : technologies) {
-		if (!technology->is_available_for_domain(this->domain)) {
-			co_await this->remove_technology(technology);
-		}
 	}
 }
 

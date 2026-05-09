@@ -56,7 +56,6 @@ public:
 	[[nodiscard]] QCoro::Task<void> on_technology_added(const technology *technology);
 	[[nodiscard]] QCoro::Task<void> remove_technology(const technology *technology);
 	[[nodiscard]] QCoro::Task<void> on_technology_lost(const technology *technology);
-	[[nodiscard]] QCoro::Task<void> check_technologies();
 
 	bool can_gain_technology(const technology *technology) const;
 	Q_INVOKABLE bool can_research_technology(const metternich::technology *technology) const;
