@@ -252,6 +252,12 @@ void domain_technology::do_population_research()
 		}
 	}
 
+	const centesimal_int research_output_modifier = this->get_game_data()->get_economy()->get_commodity_output_modifier(research_commodity);
+	if (research_output_modifier != 0) {
+		daily_research *= centesimal_int(100) + research_output_modifier;
+		daily_research /= 100;
+	}
+
 	const int turn_days = game::get()->get_days_until_next_turn();
 	const int64_t generated_research = (daily_research * turn_days).to_int64();
 	this->get_game_data()->get_economy()->change_stored_commodity(research_commodity, generated_research);
