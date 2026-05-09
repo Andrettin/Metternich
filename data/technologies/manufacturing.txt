@@ -316,6 +316,18 @@ glassblowing = {
 	}
 }
 
+saw_mill = {
+	name = "Saw Mill"
+	subcategory = manufacturing
+	portrait = engineering
+	icon = lumber
+	period = classical_age
+	prerequisites = {
+		woodworking #since this is a more advanced form of woodworking
+		engineering #since it is a mill
+	}
+}
+
 industrialization = {
 	name = "Industrialization"
 	subcategory = manufacturing
