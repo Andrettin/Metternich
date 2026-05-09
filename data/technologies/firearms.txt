@@ -5,7 +5,7 @@ flintlock_rifle = {
 	icon = rifle
 	period = gunpowder_age
 	prerequisites = {
-		heavy_crossbow
+		arbalest
 		science
 		
 		composite_bow #so that composite bows lead to another technology

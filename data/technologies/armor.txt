@@ -346,14 +346,38 @@ chain_mail = {
 	}
 }
 
+banded_mail = {
+	name = "Banded Mail"
+	subcategory = army
+	portrait = helmet
+	icon = clothing
+	period = dark_age
+	prerequisites = {
+		chain_mail
+		
+		invention #to place this in its proper period
+	}
+}
+
+half_plate_mail = {
+	name = "Half Plate Mail"
+	subcategory = army
+	portrait = helmet
+	icon = clothing
+	period = feudal_age
+	prerequisites = {
+		banded_mail
+	}
+}
+
 plate_mail = {
 	name = "Plate Mail"
 	subcategory = army
 	portrait = helmet
 	icon = clothing
-	period = civic_age
+	period = castle_age
 	prerequisites = {
-		chain_mail
+		half_plate_mail
 	}
 	cost_factor = {
 		modifier = {
@@ -514,5 +538,16 @@ plate_mail = {
 				realm = root
 			}
 		}
+	}
+}
+
+full_plate_mail = {
+	name = "Full Plate Mail"
+	subcategory = army
+	portrait = helmet
+	icon = clothing
+	period = renaissance_age
+	prerequisites = {
+		plate_mail
 	}
 }

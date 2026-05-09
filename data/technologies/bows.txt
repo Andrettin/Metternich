@@ -672,7 +672,7 @@ light_crossbow = {
 	}
 }
 
-heavy_crossbow = {
+medium_crossbow = {
 	name = "Heavy Crossbow"
 	subcategory = infantry
 	portrait = engineering
@@ -680,6 +680,17 @@ heavy_crossbow = {
 	period = feudal_age
 	prerequisites = {
 		light_crossbow
+	}
+}
+
+heavy_crossbow = {
+	name = "Heavy Crossbow"
+	subcategory = infantry
+	portrait = engineering
+	icon = bow
+	period = castle_age
+	prerequisites = {
+		medium_crossbow
 	}
 	cost_factor = {
 		modifier = {
@@ -828,5 +839,16 @@ heavy_crossbow = {
 				realm = root
 			}
 		}
+	}
+}
+
+arbalest = {
+	name = "Arbalest"
+	subcategory = infantry
+	portrait = engineering
+	icon = bow
+	period = renaissance_age
+	prerequisites = {
+		heavy_crossbow
 	}
 }

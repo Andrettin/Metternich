@@ -368,7 +368,7 @@ ironclad = {
 		steamer_transport
 		commerce_raider
 		
-		plate_mail #seems reasonable, and gives allows plate mail to lead to another technology
+		full_plate_mail #seems reasonable, and gives allows plate mail to lead to another technology
 	}
 	cost_factor = {
 		#modifier = {
