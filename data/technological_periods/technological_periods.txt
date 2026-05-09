@@ -106,13 +106,13 @@ napoleonic_age = {
 	name = "Napoleonic Age"
 	parent_period = revolutionary_age
 	start_year = 1800
-	end_year = 1825
+	end_year = 1850
 }
 
 industrial_age = {
 	name = "Industrial Age"
 	parent_period = napoleonic_age
-	start_year = 1825
+	start_year = 1850
 	end_year = 1875
 }
 
@@ -127,5 +127,5 @@ modern_age = {
 	name = "Modern Age"
 	parent_period = imperial_age
 	start_year = 1900
-	end_year = 2000
+	end_year = 1925
 }
