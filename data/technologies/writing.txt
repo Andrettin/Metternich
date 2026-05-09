@@ -31,3 +31,18 @@ literacy = {
 		code_of_laws
 	}
 }
+
+printing_press = {
+	name = "Printing Press"
+	subcategory = culture
+	portrait = engineering
+	icon = book
+	period = dark_age
+	prerequisites = {
+		literacy #since it involves more advanced forms of writing
+		saw_mill
+	}
+	domain_modifier = {
+		research_output_modifier = 22
+	}
+}

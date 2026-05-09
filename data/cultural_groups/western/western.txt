@@ -32,7 +32,7 @@ western = {
 		
 		1480 = {
 			#by 1480 there were printing presses in 100+ European towns; Source: Henry Kamen, "Early Modern European Society", 2021, p. 286.
-			#technologies += printing_press
+			technologies += printing_press
 		}
 		
 		1492 = {
