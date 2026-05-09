@@ -118,17 +118,12 @@ QCoro::Task<void> domain_technology::do_research()
 
 		assert_throw(this->free_technology_count >= 0);
 
-		if (this->get_current_researches().empty() && this->free_technology_count == 0) {
-			this->choose_current_research();
-			co_return;
-		}
-
 		if (this->free_technology_count > 0) {
 			co_await this->gain_free_technology();
 		}
 
 		if (this->get_current_researches().empty()) {
-			co_return;
+			co_await this->choose_current_research();
 		}
 
 		decimillesimal_int generated_research = decimillesimal_int(this->get_game_data()->get_economy()->get_stored_commodity(defines::get()->get_default_research_commodity()));
@@ -578,6 +573,10 @@ void domain_technology::add_current_research(const technology *technology)
 		this->current_research_progresses[technology] = decimillesimal_int(0);
 	}
 	emit current_researches_changed();
+
+	if (this->technology_chosen_promise != nullptr) {
+		this->technology_chosen_promise->finish();
+	}
 }
 
 void domain_technology::remove_current_research(const technology *technology, const bool restore_costs, const bool preserve_progress)
@@ -638,12 +637,12 @@ void domain_technology::change_current_research_progress(const technology *techn
 	}
 }
 
-void domain_technology::choose_current_research()
+QCoro::Task<void> domain_technology::choose_current_research()
 {
 	const data_entry_map<technology_category, const technology *> research_choice_map = this->domain->get_technology()->get_research_choice_map(false);
 
 	if (research_choice_map.empty()) {
-		return;
+		co_return;
 	}
 
 	if (this->get_game_data()->is_ai()) {
@@ -653,8 +652,13 @@ void domain_technology::choose_current_research()
 			this->domain->get_technology()->add_current_research(chosen_technology);
 		}
 	} else {
+		this->technology_chosen_promise = std::make_unique<QPromise<void>>();
+		const QFuture<void> future = this->technology_chosen_promise->future();
+		this->technology_chosen_promise->start();
+
 		const std::vector<const technology *> potential_technologies = archimedes::map::get_values(research_choice_map);
 		emit engine_interface::get()->technology_choosable(container::to_qvariant_list(potential_technologies));
+		co_await future;
 	}
 }
 
@@ -747,8 +751,13 @@ QCoro::Task<void> domain_technology::gain_free_technology()
 		const technology *chosen_technology = this->domain->get_ai()->get_research_choice(research_choice_map);
 		co_await this->gain_free_technology_coro(chosen_technology);
 	} else {
+		this->technology_chosen_promise = std::make_unique<QPromise<void>>();
+		const QFuture<void> future = this->technology_chosen_promise->future();
+		this->technology_chosen_promise->start();
+
 		const std::vector<const technology *> potential_technologies = archimedes::map::get_values(research_choice_map);
 		emit engine_interface::get()->free_technology_choosable(container::to_qvariant_list(potential_technologies));
+		co_await future;
 	}
 }
 

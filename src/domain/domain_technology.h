@@ -78,7 +78,7 @@ public:
 	Q_INVOKABLE qint64 get_current_research_progress_commodity_quantity(const metternich::technology *technology) const;
 	Q_INVOKABLE QString get_current_research_progress_qstring(const metternich::technology *technology) const;
 	void change_current_research_progress(const technology *technology, const decimillesimal_int &change);
-	void choose_current_research();
+	[[nodiscard]] QCoro::Task<void> choose_current_research();
 	[[nodiscard]] QCoro::Task<void> on_technology_researched(const technology *technology);
 
 	data_entry_map<technology_category, const technology *> get_research_choice_map(const bool is_free) const;
@@ -92,6 +92,10 @@ public:
 
 		if (this->free_technology_count > 0) {
 			co_await this->gain_free_technology();
+		} else {
+			if (this->technology_chosen_promise != nullptr) {
+				this->technology_chosen_promise->finish();
+			}
 		}
 	}
 
@@ -179,6 +183,7 @@ private:
 	data_entry_map<technology_category, centesimal_int> technology_category_cost_modifiers;
 	data_entry_map<technology_subcategory, centesimal_int> technology_subcategory_cost_modifiers;
 	int gain_technologies_known_by_others_count = 0;
+	std::unique_ptr<QPromise<void>> technology_chosen_promise;
 };
 
 }
