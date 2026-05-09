@@ -65,6 +65,10 @@ void domain_technology::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->current_researches.insert(technology::get(value));
 		}
+	} else if (tag == "current_research_progresses") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->current_research_progresses[technology::get(property.get_key())] = decimillesimal_int(property.get_value());
+		});
 	} else {
 		throw std::runtime_error(std::format("Invalid domain technology scope: \"{}\".", tag));
 	}
@@ -84,6 +88,14 @@ gsml_data domain_technology::to_gsml_data() const
 			current_researches_data.add_value(technology->get_identifier());
 		}
 		data.add_child(std::move(current_researches_data));
+	}
+
+	if (!this->current_research_progresses.empty()) {
+		gsml_data current_research_progresses_data("current_research_progresses");
+		for (const auto &[technology, progress] : this->current_research_progresses) {
+			current_research_progresses_data.add_property(technology->get_identifier(), progress.to_string());
+		}
+		data.add_child(std::move(current_research_progresses_data));
 	}
 
 	return data;
