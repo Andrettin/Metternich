@@ -25,6 +25,10 @@ class population final : public QObject
 	Q_PROPERTY(int literate_size READ get_literate_size NOTIFY literate_size_changed)
 
 public:
+	static decimillesimal_int get_population_daily_research(const int64_t population_group_size, const int64_t total_population_size, const int64_t population_daily_research, const decimillesimal_int &max_research_population_percent);
+	static decimillesimal_int get_population_monthly_research(const int64_t population_group_size, const int64_t total_population_size, const int64_t population_daily_research, const decimillesimal_int &max_research_population_percent);
+	static int64_t get_population_research_per_turn(const int64_t population_group_size, const int64_t total_population_size, const int64_t population_daily_research, const decimillesimal_int &max_research_population_percent);
+
 	int get_population_unit_count() const
 	{
 		return this->population_unit_count;
