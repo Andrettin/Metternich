@@ -43,7 +43,7 @@ Item {
 		model: category_technologies
 		delegate: Item {
 			width: technology_list.width
-			height: technology_rectangle.height + entry_border.height
+			height: technology_row.height + entry_border.height
 			
 			readonly property var technology: model.modelData
 			readonly property string effects_string: technology.get_effects_string(metternich.game.player_country)
@@ -65,31 +65,29 @@ Item {
 				width: 1 * scale_factor
 			}
 			
-			Item {
-				id: technology_rectangle
+			Row {
+				id: technology_row
 				anchors.top: parent.top
 				anchors.left: portrait_border.right
+				anchors.leftMargin: 8 * scale_factor
 				anchors.right: parent.right
 				height: portrait.height
+				spacing: 16 * scale_factor
 				clip: true
 				
 				SmallText {
 					id: technology_label
 					text: technology.name
 					anchors.verticalCenter: parent.verticalCenter
-					anchors.left: parent.left
-					anchors.leftMargin: 8 * scale_factor
 					width: 192 * scale_factor
 					wrapMode: Text.WordWrap
 				}
 				
 				ItemButton {
 					id: research_technology_button
-					width: 128 * scale_factor + 6 * scale_factor
+					width: 224 * scale_factor + 6 * scale_factor
 					height: 32 * scale_factor + 6 * scale_factor
 					anchors.verticalCenter: parent.verticalCenter
-					anchors.left: technology_label.right
-					anchors.leftMargin: 16 * scale_factor
 					visible: researchable_technologies.includes(technology)
 					
 					contentItem: Item {
@@ -104,7 +102,17 @@ Item {
 							anchors.verticalCenter: research_technology_button_item.verticalCenter
 							anchors.horizontalCenter: research_technology_button_item.horizontalCenter
 							spacing: 8 * scale_factor
-							visible: country_game_data.technology.current_researches.includes(technology) === false
+							
+							readonly property bool researching: country_game_data.technology.current_researches.includes(technology)
+							
+							SmallText {
+								anchors.verticalCenter: parent.verticalCenter
+								text: "Researching:"
+								color: "white"
+								horizontalAlignment: Text.AlignHCenter
+								verticalAlignment: Text.AlignVCenter
+								visible: commodity_costs_row.researching
+							}
 							
 							Repeater {
 								model: technology.get_commodity_costs_for_domain_qvariant_list(country)
@@ -112,9 +120,11 @@ Item {
 								Row {
 									id: commodity_cost_row
 									spacing: 4 * scale_factor
+									visible: researching === false || commodity == metternich.defines.default_research_commodity
 									
 									readonly property var commodity: model.modelData.key
 									readonly property var commodity_cost: model.modelData.value
+									readonly property bool researching: commodity_costs_row.researching
 									
 									Image {
 										id: commodity_icon
@@ -123,21 +133,11 @@ Item {
 									
 									SmallText {
 										id: cost_label
-										text: commodity.value_to_qstring(commodity_cost)
+										text: (researching ? (number_string(country_game_data.technology.get_current_research_progress_commodity_quantity(technology)) + "/") : "") + commodity.value_to_qstring(commodity_cost) + (researching ? (" (" + country_game_data.technology.get_current_research_progress_qstring(technology) + "%)") : "")
 										anchors.verticalCenter: commodity_icon.verticalCenter
 									}
 								}
 							}
-						}
-						
-						SmallText {
-							anchors.verticalCenter: research_technology_button_item.verticalCenter
-							anchors.horizontalCenter: research_technology_button_item.horizontalCenter
-							text: country_game_data.technology.current_researches.includes(technology) ? ("Researching: " + country_game_data.technology.get_current_research_progress_qstring(technology) + "%") : ""
-							color: "white"
-							horizontalAlignment: Text.AlignHCenter
-							verticalAlignment: Text.AlignVCenter
-							visible: country_game_data.technology.current_researches.includes(technology)
 						}
 					}
 					
@@ -158,9 +158,6 @@ Item {
 					id: technology_effects_label
 					text: format_text(effects_string)
 					anchors.verticalCenter: parent.verticalCenter
-					anchors.right: parent.right
-					anchors.rightMargin: 8 * scale_factor
-					width: 288 * scale_factor
 					wrapMode: Text.WordWrap
 				}
 			}
@@ -168,7 +165,7 @@ Item {
 			Rectangle {
 				id: entry_border
 				color: "gray"
-				anchors.top: technology_rectangle.bottom
+				anchors.top: technology_row.bottom
 				anchors.left: parent.left
 				anchors.right: parent.right
 				height: 1 * scale_factor

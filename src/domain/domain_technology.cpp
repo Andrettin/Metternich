@@ -600,6 +600,16 @@ const decimillesimal_int &domain_technology::get_current_research_progress(const
 	return find_iterator->second;
 }
 
+qint64 domain_technology::get_current_research_progress_commodity_quantity(const technology *technology) const
+{
+	const commodity_map<int64_t> commodity_costs = technology->get_commodity_costs_for_domain(this->domain);
+	if (!commodity_costs.contains(defines::get()->get_default_research_commodity())) {
+		return 0;
+	}
+
+	return (commodity_costs.find(defines::get()->get_default_research_commodity())->second * this->get_current_research_progress(technology) / 100).to_int64();
+}
+
 QString domain_technology::get_current_research_progress_qstring(const technology *technology) const
 {
 	return QString::fromStdString(std::to_string(this->get_current_research_progress(technology).to_int()));
