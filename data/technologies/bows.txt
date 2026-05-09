@@ -511,6 +511,17 @@ composite_bow = {
 	}
 }
 
+slinged_javelin = {
+	name = "Slinged Javelin"
+	subcategory = infantry
+	portrait = engineering
+	icon = bow
+	period = bronze_age
+	prerequisites = {
+		warrior_code #seems reasonable
+	}
+}
+
 light_crossbow = {
 	name = "Light Crossbow"
 	subcategory = infantry
@@ -518,6 +529,7 @@ light_crossbow = {
 	icon = bow
 	period = dark_age
 	prerequisites = {
+		slinged_javelin
 		short_bow
 		
 		invention #to place it in the appropriate period
