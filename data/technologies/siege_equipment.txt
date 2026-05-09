@@ -312,3 +312,27 @@ mangonel = {
 		}
 	}
 }
+
+rifled_artillery = {
+	name = "Rifled Artillery"
+	subcategory = siege_equipment
+	portrait = engineering
+	icon = cannon
+	period = industrial_age
+	prerequisites = {
+		mangonel #previous siege engine
+		railroad #to set in the appropriate period
+	}
+}
+
+large_artillery = {
+	name = "Large Artillery"
+	subcategory = siege_equipment
+	portrait = engineering
+	icon = cannon
+	period = modern_age
+	prerequisites = {
+		rifled_artillery
+		machine_tools
+	}
+}
