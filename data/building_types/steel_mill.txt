@@ -3,7 +3,7 @@ steel_mill = {
 	building_class = steel_mill
 	portrait = factory
 	icon = steel
-	required_technology = renaissance
+	required_technology = steel
 	holding_types = {
 		town
 		city
