@@ -4,6 +4,9 @@ horseback_riding = {
 	portrait = engineering
 	icon = horses
 	period = copper_age
+	prerequisites = {
+		domestication #riding horses requires having domesticated animals first
+	}
 }
 
 wheel = {
@@ -14,6 +17,8 @@ wheel = {
 	period = bronze_age
 	prerequisites = {
 		horseback_riding
+		
+		woodworking #wheels require woodworking
 	}
 }
 

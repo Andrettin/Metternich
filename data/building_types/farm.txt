@@ -4,6 +4,7 @@ cattle_ranch = {
 	portrait = aristocratic_palace
 	icon = cattle
 	size = 1
+	required_technology = domestication
 	holding_types = {
 		castle
 		guild
@@ -91,6 +92,7 @@ sheep_ranch = {
 	portrait = aristocratic_palace
 	icon = wool
 	size = 1
+	required_technology = domestication
 	holding_types = {
 		castle
 		guild

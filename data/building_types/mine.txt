@@ -41,6 +41,7 @@ gold_mine = {
 	portrait = factory
 	icon = gold_ore
 	size = 1
+	required_technology = gold_mining
 	holding_types = {
 		castle
 		guild

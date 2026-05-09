@@ -4,6 +4,9 @@ hill_fort = {
 	portrait = fort
 	icon = wall
 	period = copper_age
+	prerequisites = {
+		woodworking #requires woodworking to have wooden walls
+	}
 	discovery_mean_time_to_happen = {
 		months = 50
 		

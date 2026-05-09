@@ -4,6 +4,9 @@ large_ship_building = {
 	portrait = unload
 	icon = anchor
 	period = copper_age
+	prerequisites = {
+		woodworking #ship-building requires woodworking
+	}
 	discovery_mean_time_to_happen = {
 		months = 125
 		

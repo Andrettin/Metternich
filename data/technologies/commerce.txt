@@ -5,6 +5,7 @@ coinage = {
 	icon = wealth
 	period = bronze_age
 	prerequisites = {
+		gold_mining
 		bronze_working
 	}
 }
@@ -38,7 +39,7 @@ economics = {
 	subcategory = commerce
 	portrait = coinage
 	icon = wealth
-	period = dark_age
+	period = feudal_age
 	prerequisites = {
 		banking
 		university

@@ -4,6 +4,9 @@ ceremonial_burial = {
 	portrait = temple
 	icon = wooden_cross
 	period = copper_age
+	prerequisites = {
+		woodworking #since they might have needed wood implements for making the burial places
+	}
 }
 
 polytheism = {
@@ -58,7 +61,10 @@ asceticism = {
 	subcategory = religion
 	portrait = engineering
 	icon = wooden_cross
-	period = copper_age
+	period = iron_age
+	prerequisites = {
+		mysticism #should be monotheism instead
+	}
 	spread_conditions = {
 		source_province = {
 			or = {

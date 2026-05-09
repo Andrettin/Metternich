@@ -1,3 +1,25 @@
+gold_mining = {
+	name = "Gold Mining"
+	subcategory = mining
+	portrait = engineering
+	icon = gold_ore
+	period = tool_age
+	prerequisites = {
+		toolworking
+	}
+}
+
+stone_mining = {
+	name = "Stone Mining"
+	subcategory = mining
+	portrait = engineering
+	icon = stone
+	period = tool_age
+	prerequisites = {
+		toolworking
+	}
+}
+
 black_coal = {
 	name = "Black Coal"
 	subcategory = mining

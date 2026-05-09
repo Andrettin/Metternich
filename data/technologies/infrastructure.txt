@@ -3,7 +3,10 @@ road_building = {
 	subcategory = infrastructure
 	portrait = engineering
 	icon = road
-	period = copper_age
+	period = bronze_age
+	prerequisites = {
+		masonry #seems like a reasonable requirement, since many roads were built using masonry
+	}
 	discovery_mean_time_to_happen = {
 		months = 50
 		

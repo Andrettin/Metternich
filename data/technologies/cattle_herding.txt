@@ -1,3 +1,14 @@
+domestication = {
+	name = "Domestication"
+	subcategory = cattle_herding
+	portrait = engineering
+	icon = cattle
+	period = tool_age
+	prerequisites = {
+		toolworking
+	}
+}
+
 mechanized_slaughtering_block = {
 	name = "Mechanized Slaughtering-Block"
 	subcategory = cattle_herding
@@ -7,6 +18,7 @@ mechanized_slaughtering_block = {
 	prerequisites = {
 		#mechanical_production
 		
+		domestication #needs domesticated animals
 		science
 	}
 	monthly_chance = {

@@ -1,9 +1,31 @@
+toolworking = {
+	name = "Toolworking"
+	subcategory = manufacturing
+	portrait = engineering
+	icon = tools
+	period = stone_age
+}
+
+woodworking = {
+	name = "Woodworking"
+	subcategory = manufacturing
+	portrait = engineering
+	icon = lumber
+	period = tool_age
+	prerequisites = {
+		toolworking
+	}
+}
+
 pottery = {
 	name = "Pottery"
 	subcategory = manufacturing
 	portrait = engineering
 	icon = cog
-	period = copper_age
+	period = tool_age
+	prerequisites = {
+		toolworking #it makes sense for pottery to require tools
+	}
 }
 
 glassblowing = {
@@ -12,6 +34,9 @@ glassblowing = {
 	portrait = engineering
 	icon = glass
 	period = copper_age
+	prerequisites = {
+		pottery #seems reasonable
+	}
 	discovery_mean_time_to_happen = {
 		months = 150
 		

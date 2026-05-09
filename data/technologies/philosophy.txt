@@ -97,7 +97,7 @@ chemistry = {
 	subcategory = philosophy
 	portrait = engineering
 	icon = research
-	period = dark_age
+	period = feudal_age
 	prerequisites = {
 		medicine
 		university

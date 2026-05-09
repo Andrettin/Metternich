@@ -1,13 +1,27 @@
+stone_age = {
+	name = "Stone Age"
+	start_year = -20000
+	end_year = -10000
+}
+
+tool_age = { #Neolithic
+	name = "Tool Age"
+	parent_period = stone_age
+	start_year = -10000
+	end_year = -5000
+}
+
 copper_age = {
 	name = "Copper Age"
-	start_year = -4000
-	end_year = -2000
+	parent_period = tool_age
+	start_year = -5000
+	end_year = -3000
 }
 
 bronze_age = {
 	name = "Bronze Age"
 	parent_period = copper_age
-	start_year = -2000
+	start_year = -3000
 	end_year = -1000
 }
 

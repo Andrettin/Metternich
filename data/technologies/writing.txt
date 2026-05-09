@@ -4,6 +4,9 @@ alphabet = {
 	portrait = university
 	icon = book
 	period = copper_age
+	prerequisites = {
+		woodworking #it seems somewhat reasonable to require woodworking for early writing
+	}
 }
 
 writing = {
