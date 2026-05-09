@@ -489,7 +489,7 @@ std::vector<const technology *> domain::get_available_technologies() const
 	std::vector<const technology *> technologies;
 
 	for (const technology *technology : technology::get_all()) {
-		if (!technology->is_available_for_country(this)) {
+		if (!technology->is_available_for_domain(this)) {
 			continue;
 		}
 

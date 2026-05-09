@@ -12,14 +12,14 @@ namespace metternich {
 technology_model::technology_model()
 {
 	const auto erase_function = [](const metternich::technology *technology) {
-		return !technology->is_available_for_country(game::get()->get_player_country());
+		return !technology->is_available_for_domain(game::get()->get_player_country());
 	};
 
 	this->top_level_technologies = technology::get_top_level_technologies();
 	std::erase_if(this->top_level_technologies, erase_function);
 
 	for (const metternich::technology *technology : technology::get_all()) {
-		if (!technology->is_available_for_country(game::get()->get_player_country())) {
+		if (!technology->is_available_for_domain(game::get()->get_player_country())) {
 			continue;
 		}
 

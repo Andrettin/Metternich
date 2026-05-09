@@ -157,7 +157,7 @@ public:
 		return this->icon;
 	}
 
-	Q_INVOKABLE bool is_available_for_country(const metternich::domain *domain) const;
+	Q_INVOKABLE bool is_available_for_domain(const metternich::domain *domain) const;
 
 	bool is_discovery() const
 	{

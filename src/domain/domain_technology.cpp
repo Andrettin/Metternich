@@ -463,7 +463,7 @@ QCoro::Task<void> domain_technology::check_technologies()
 
 	const technology_set technologies = this->get_technologies();
 	for (const technology *technology : technologies) {
-		if (!technology->is_available_for_country(this->domain)) {
+		if (!technology->is_available_for_domain(this->domain)) {
 			co_await this->remove_technology(technology);
 		}
 	}
@@ -473,7 +473,7 @@ bool domain_technology::can_gain_technology(const technology *technology) const
 {
 	assert_throw(technology != nullptr);
 
-	if (!technology->is_available_for_country(this->domain)) {
+	if (!technology->is_available_for_domain(this->domain)) {
 		return false;
 	}
 

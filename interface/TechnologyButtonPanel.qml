@@ -134,7 +134,7 @@ Rectangle {
 		for (var subcategory of category.subcategories) {
 			var has_technology = false
 			for (var technology of subcategory.technologies) {
-				if (technology.is_available_for_country(metternich.game.player_country)) {
+				if (technology.is_available_for_domain(metternich.game.player_country)) {
 					has_technology = true
 					break
 				}

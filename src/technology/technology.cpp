@@ -304,7 +304,7 @@ const technology_category *technology::get_category() const
 	return nullptr;
 }
 
-bool technology::is_available_for_country(const domain *domain) const
+bool technology::is_available_for_domain(const domain *domain) const
 {
 	if (!this->is_enabled()) {
 		return false;
@@ -875,7 +875,7 @@ QString technology::get_effects_string(const metternich::domain *domain) const
 
 bool technology::is_hidden_in_tree() const
 {
-	return !this->is_available_for_country(game::get()->get_player_country());
+	return !this->is_available_for_domain(game::get()->get_player_country());
 }
 
 bool technology::is_enabled() const

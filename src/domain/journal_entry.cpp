@@ -190,7 +190,7 @@ bool journal_entry::check_preconditions(const domain *domain) const
 	}
 
 	for (const technology *technology : this->get_researched_technologies()) {
-		if (!technology->is_available_for_country(domain)) {
+		if (!technology->is_available_for_domain(domain)) {
 			return false;
 		}
 	}
