@@ -30,15 +30,11 @@ black_coal = {
 		natural_philosophy
 	}
 	discovery_conditions = {
-		domain = {
-			any_settlement = {
-				feature = coal_deposit
-			}
+		any_settlement = {
+			feature = coal_deposit
 		}
 	}
-	discovery_mean_time_to_happen = {
-		months = 4000
-		
+	cost_factor = {
 		modifier = {
 			factor = 0.85
 			has_building_class = university
@@ -176,6 +172,9 @@ black_coal = {
 			year < 1350
 		}
 	}
+	#discovery_mean_time_to_happen = {
+	#	months = 4000
+	#}
 	spread_mean_time_to_happen = {
 		months = 10000
 		

@@ -7,9 +7,7 @@ monastic_school = {
 	prerequisites = {
 		asceticism
 	}
-	discovery_mean_time_to_happen = {
-		months = 250
-		
+	cost_factor = {
 		modifier = {
 			factor = 0.75
 			has_building_class = university
@@ -115,6 +113,9 @@ monastic_school = {
 			year >= 1350
 		}
 	}
+	#discovery_mean_time_to_happen = {
+	#	months = 250
+	#}
 	spread_mean_time_to_happen = {
 		months = 2000
 		
@@ -241,9 +242,7 @@ cathedral_school = {
 	prerequisites = {
 		monastic_school
 	}
-	discovery_mean_time_to_happen = {
-		months = 500
-		
+	cost_factor = {
 		modifier = {
 			factor = 0.75
 			has_building_class = university
@@ -349,6 +348,9 @@ cathedral_school = {
 			year >= 1350
 		}
 	}
+	#discovery_mean_time_to_happen = {
+	#	months = 500
+	#}
 	spread_mean_time_to_happen = {
 		months = 4000
 		
@@ -477,9 +479,7 @@ university = {
 		mathematics
 		philosophy
 	}
-	discovery_mean_time_to_happen = {
-		months = 1000
-		
+	cost_factor = {
 		modifier = {
 			factor = 0.8
 			has_building_class = university
@@ -585,6 +585,9 @@ university = {
 			year < 1250
 		}
 	}
+	#discovery_mean_time_to_happen = {
+	#	months = 1000
+	#}
 	spread_mean_time_to_happen = {
 		months = 8000
 		

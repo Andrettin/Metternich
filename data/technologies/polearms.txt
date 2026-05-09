@@ -7,9 +7,7 @@ pike = {
 	prerequisites = {
 		feudalism
 	}
-	discovery_mean_time_to_happen = {
-		months = 100
-		
+	cost_factor = {
 		modifier = {
 			factor = 0.9
 			terrain = forest
@@ -81,6 +79,9 @@ pike = {
 			year >= 1350
 		}
 	}
+	#discovery_mean_time_to_happen = {
+	#	months = 100
+	#}
 	spread_mean_time_to_happen = {
 		months = 1500
 		
@@ -189,9 +190,7 @@ polearm = {
 	prerequisites = {
 		pike
 	}
-	discovery_mean_time_to_happen = {
-		months = 500
-		
+	cost_factor = {
 		modifier = {
 			factor = 0.95
 			terrain = forest
@@ -329,6 +328,9 @@ polearm = {
 			year < 1250
 		}
 	}
+	#discovery_mean_time_to_happen = {
+	#	months = 500
+	#}
 	spread_mean_time_to_happen = {
 		months = 6000
 		

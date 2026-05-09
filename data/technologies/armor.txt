@@ -8,9 +8,7 @@ soft_leather_armor = {
 		toolworking
 		domestication #cattle needed to have enough leather production for armor
 	}
-	discovery_mean_time_to_happen = {
-		months = 50
-		
+	cost_factor = {
 		modifier = {
 			factor = 0.9
 			scripted_condition = has_library
@@ -74,6 +72,9 @@ soft_leather_armor = {
 			year >= 1350
 		}
 	}
+	#discovery_mean_time_to_happen = {
+	#	months = 50
+	#}
 	spread_mean_time_to_happen = {
 		months = 500
 		
@@ -175,9 +176,7 @@ chain_mail = {
 		soft_leather_armor
 		iron_working
 	}
-	discovery_mean_time_to_happen = {
-		months = 500
-		
+	cost_factor = {
 		modifier = {
 			factor = 0.9
 			has_building_class = smithy
@@ -249,6 +248,9 @@ chain_mail = {
 			year >= 1350
 		}
 	}
+	#discovery_mean_time_to_happen = {
+	#	months = 500
+	#}
 	spread_mean_time_to_happen = {
 		months = 3000
 		
@@ -353,9 +355,7 @@ plate_mail = {
 	prerequisites = {
 		chain_mail
 	}
-	discovery_mean_time_to_happen = {
-		months = 1250
-		
+	cost_factor = {
 		modifier = {
 			factor = 0.95
 			has_building_class = smithy
@@ -423,6 +423,9 @@ plate_mail = {
 			year < 1250
 		}
 	}
+	#discovery_mean_time_to_happen = {
+	#	months = 1250
+	#}
 	spread_mean_time_to_happen = {
 		months = 6000
 		

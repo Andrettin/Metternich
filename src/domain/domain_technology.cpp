@@ -21,6 +21,8 @@
 #include "map/tile.h"
 #include "population/population.h"
 #include "population/population_type.h"
+#include "script/context.h"
+#include "script/effect/effect_list.h"
 #include "script/factor.h"
 #include "script/modifier.h"
 #include "technology/technology.h"
@@ -671,6 +673,11 @@ QCoro::Task<void> domain_technology::on_technology_researched(const technology *
 	}
 
 	co_await this->add_technology(technology);
+
+	if (technology->get_discovery_effects() != nullptr) {
+		context ctx(this->domain);
+		co_await technology->get_discovery_effects()->do_effects(this->domain, ctx);
+	}
 
 	if (technology->get_free_technologies() > 0) {
 		bool first_to_research = true;

@@ -154,20 +154,17 @@ void technology::process_gsml_scope(const gsml_data &scope)
 		modifier->process_gsml_data(scope);
 		this->domain_modifier = std::move(modifier);
 	} else if (tag == "discovery_conditions") {
-		auto conditions = std::make_unique<and_condition<province>>();
+		auto conditions = std::make_unique<and_condition<domain>>();
 		conditions->process_gsml_data(scope);
 		this->discovery_conditions = std::move(conditions);
 	} else if (tag == "discovery_effects") {
-		auto effects = std::make_unique<effect_list<const province>>();
+		auto effects = std::make_unique<effect_list<const domain>>();
 		effects->process_gsml_data(scope);
 		this->discovery_effects = std::move(effects);
 	} else if (tag == "spread_conditions") {
 		auto conditions = std::make_unique<and_condition<province>>();
 		conditions->process_gsml_data(scope);
 		this->spread_conditions = std::move(conditions);
-	} else if (tag == "discovery_mean_time_to_happen") {
-		this->discovery_mean_time_to_happen = std::make_unique<metternich::mean_time_to_happen<province>>();
-		scope.process(this->discovery_mean_time_to_happen.get());
 	} else if (tag == "spread_mean_time_to_happen") {
 		this->spread_mean_time_to_happen = std::make_unique<metternich::mean_time_to_happen<province>>();
 		scope.process(this->spread_mean_time_to_happen.get());
@@ -215,30 +212,20 @@ void technology::initialize()
 		this->commodity_costs[defines::get()->get_default_research_commodity()] = defines::get()->get_research_cost_per_level() * this->get_level();
 	}
 
-	if (this->discovery_mean_time_to_happen != nullptr || this->discovery_monthly_chance != nullptr) {
+	if (this->discovery_monthly_chance != nullptr) {
 		province_event *event = province_event::add(std::format("{}_discovered", this->get_identifier()), this->get_module());
 		event->set_name(std::format("{} Discovered", this->get_name()));
 		event->set_portrait(this->get_portrait());
 		event->set_description(std::format("[root.domain.form_of_address], the {} technology has been discovered in [root.name]!", string::lowered(this->get_name())));
-		if (this->discovery_monthly_chance != nullptr) {
-			event->set_monthly_chance(std::move(this->discovery_monthly_chance));
-		} else {
-			event->set_mean_time_to_happen(std::move(this->discovery_mean_time_to_happen));
-		}
+		event->set_monthly_chance(std::move(this->discovery_monthly_chance));
 
 		auto event_conditions = std::make_unique<and_condition<province>>();
 		event_conditions->add_condition(std::make_unique<capital_condition<province>>(true));
 		event_conditions->add_condition(std::make_unique<can_gain_technology_condition<province>>(this));
-		if (this->discovery_conditions != nullptr) {
-			event_conditions->add_condition(std::move(this->discovery_conditions));
-		}
 		event->set_conditions(std::move(event_conditions));
 
 		auto event_option = std::make_unique<metternich::event_option<const province>>();
 		event_option->add_effect(std::make_unique<technologies_effect<const province>>(this, gsml_operator::addition));
-		if (this->discovery_effects != nullptr) {
-			event_option->add_effects(std::move(this->discovery_effects));
-		}
 		event->add_option(std::move(event_option));
 
 		event->initialize();
@@ -375,6 +362,10 @@ bool technology::is_available_for_country(const domain *domain) const
 			return true;
 		}
 
+		return false;
+	}
+
+	if (this->get_discovery_conditions() != nullptr && !this->get_discovery_conditions()->check(domain, read_only_context(domain))) {
 		return false;
 	}
 
@@ -681,7 +672,16 @@ std::string technology::get_modifier_string(const province *province) const
 
 QString technology::get_effects_string(const metternich::domain *domain) const
 {
-	std::string str = this->get_modifier_string(domain->get_game_data()->get_capital_province());
+	const province *capital_province = domain->get_game_data()->get_capital_province();
+	std::string str = this->get_modifier_string(capital_province);
+
+	if (this->get_discovery_effects() != nullptr) {
+		if (!str.empty()) {
+			str += "\n";
+		}
+
+		str += this->get_discovery_effects()->get_effects_string(domain, read_only_context(domain));
+	}
 
 	if (this->get_free_technologies() > 0) {
 		if (!str.empty()) {

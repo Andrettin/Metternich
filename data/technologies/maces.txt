@@ -7,9 +7,7 @@ mace = {
 	prerequisites = {
 		woodworking #needs woodworking for the mace's shaft
 	}
-	discovery_mean_time_to_happen = {
-		months = 250
-		
+	cost_factor = {
 		modifier = {
 			factor = 0.9
 			has_building_class = waterfront
@@ -73,6 +71,9 @@ mace = {
 			year >= 1350
 		}
 	}
+	#discovery_mean_time_to_happen = {
+	#	months = 250
+	#}
 	spread_mean_time_to_happen = {
 		months = 2000
 		
@@ -177,9 +178,7 @@ morning_star = {
 	prerequisites = {
 		mace
 	}
-	discovery_mean_time_to_happen = {
-		months = 500
-		
+	cost_factor = {
 		modifier = {
 			factor = 0.9
 			has_building_class = waterfront
@@ -243,6 +242,9 @@ morning_star = {
 			year < 1250
 		}
 	}
+	#discovery_mean_time_to_happen = {
+	#	months = 500
+	#}
 	spread_mean_time_to_happen = {
 		months = 5000
 		

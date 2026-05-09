@@ -7,9 +7,7 @@ ballads = {
 	prerequisites = {
 		woodworking #likely needs woodworking for musical instruments
 	}
-	discovery_mean_time_to_happen = {
-		months = 250
-		
+	cost_factor = {
 		modifier = {
 			factor = 0.85
 			has_building_class = university
@@ -91,6 +89,9 @@ ballads = {
 			year >= 1350
 		}
 	}
+	#discovery_mean_time_to_happen = {
+	#	months = 250
+	#}
 	spread_mean_time_to_happen = {
 		months = 3000
 		
@@ -189,9 +190,7 @@ chronicle_writing = {
 	prerequisites = {
 		writing
 	}
-	discovery_mean_time_to_happen = {
-		months = 250
-		
+	cost_factor = {
 		modifier = {
 			factor = 0.9
 			scripted_condition = has_school
@@ -305,6 +304,9 @@ chronicle_writing = {
 			year >= 1350
 		}
 	}
+	#discovery_mean_time_to_happen = {
+	#	months = 250
+	#}
 	spread_mean_time_to_happen = {
 		months = 1500
 		

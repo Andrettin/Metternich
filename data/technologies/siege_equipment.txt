@@ -7,9 +7,7 @@ mangonel = {
 	prerequisites = {
 		mathematics
 	}
-	discovery_mean_time_to_happen = {
-		months = 750
-		
+	cost_factor = {
 		modifier = {
 			factor = 0.9
 			has_building_class = waterfront
@@ -147,6 +145,9 @@ mangonel = {
 			year < 1250
 		}
 	}
+	#discovery_mean_time_to_happen = {
+	#	months = 750
+	#}
 	spread_mean_time_to_happen = {
 		months = 5000
 		

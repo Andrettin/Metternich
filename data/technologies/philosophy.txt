@@ -114,13 +114,9 @@ aristotelian_logic = {
 		philosophy
 	}
 	discovery_effects = {
-		domain = {
-			regency += 25
-		}
+		regency += 25
 	}
-	discovery_mean_time_to_happen = {
-		months = 250
-		
+	cost_factor = {
 		modifier = {
 			factor = 0.7
 			has_building_class = university
@@ -164,6 +160,9 @@ aristotelian_logic = {
 			year >= 1350
 		}
 	}
+	#discovery_mean_time_to_happen = {
+	#	months = 250
+	#}
 	spread_mean_time_to_happen = {
 		months = 750
 		
@@ -241,13 +240,9 @@ scholasticism = {
 		aristotelian_logic
 	}
 	discovery_effects = {
-		domain = {
-			regency += 25
-		}
+		regency += 25
 	}
-	discovery_mean_time_to_happen = {
-		months = 600
-		
+	cost_factor = {
 		modifier = {
 			factor = 0.75
 			has_building_class = university
@@ -287,6 +282,9 @@ scholasticism = {
 			year >= 1350
 		}
 	}
+	#discovery_mean_time_to_happen = {
+	#	months = 600
+	#}
 	spread_mean_time_to_happen = {
 		months = 1500
 		
@@ -370,13 +368,9 @@ astronomy = {
 		mysticism
 	}
 	discovery_effects = {
-		domain = {
-			regency += 25
-		}
+		regency += 25
 	}
-	discovery_mean_time_to_happen = {
-		months = 1200
-		
+	cost_factor = {
 		modifier = {
 			factor = 0.75
 			has_building_class = university
@@ -416,6 +410,9 @@ astronomy = {
 			year >= 1350
 		}
 	}
+	#discovery_mean_time_to_happen = {
+	#	months = 1200
+	#}
 	spread_mean_time_to_happen = {
 		months = 3000
 		
@@ -491,13 +488,9 @@ natural_philosophy = {
 		astronomy
 	}
 	discovery_effects = {
-		domain = {
-			regency += 50
-		}
+		regency += 50
 	}
-	discovery_mean_time_to_happen = {
-		months = 2500
-		
+	cost_factor = {
 		modifier = {
 			factor = 0.8
 			has_building_class = university
@@ -537,6 +530,9 @@ natural_philosophy = {
 			year < 1250
 		}
 	}
+	#discovery_mean_time_to_happen = {
+	#	months = 2500
+	#}
 	spread_mean_time_to_happen = {
 		months = 5000
 		
@@ -619,13 +615,9 @@ science = {
 		university
 	}
 	discovery_effects = {
-		domain = {
-			regency += 75
-		}
+		regency += 75
 	}
-	discovery_mean_time_to_happen = {
-		months = 5000
-		
+	cost_factor = {
 		modifier = {
 			factor = 0.85
 			has_building_class = university
@@ -669,6 +661,9 @@ science = {
 			year < 1350
 		}
 	}
+	#discovery_mean_time_to_happen = {
+	#	months = 5000
+	#}
 	spread_mean_time_to_happen = {
 		months = 10000
 		

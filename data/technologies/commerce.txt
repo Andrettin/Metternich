@@ -67,9 +67,7 @@ minor_merchant_houses = {
 	prerequisites = {
 		trade
 	}
-	discovery_mean_time_to_happen = {
-		months = 50
-		
+	cost_factor = {
 		modifier = {
 			factor = 0.9
 			scripted_condition = has_school
@@ -211,6 +209,9 @@ minor_merchant_houses = {
 			year >= 1350
 		}
 	}
+	#discovery_mean_time_to_happen = {
+	#	months = 50
+	#}
 	spread_mean_time_to_happen = {
 		months = 750
 		
@@ -372,9 +373,7 @@ local_merchant_houses = {
 	prerequisites = {
 		minor_merchant_houses
 	}
-	discovery_mean_time_to_happen = {
-		months = 125
-		
+	cost_factor = {
 		modifier = {
 			factor = 0.9
 			scripted_condition = has_school
@@ -512,6 +511,9 @@ local_merchant_houses = {
 			year >= 1350
 		}
 	}
+	#discovery_mean_time_to_happen = {
+	#	months = 125
+	#}
 	spread_mean_time_to_happen = {
 		months = 1500
 		
@@ -673,9 +675,7 @@ guilds = {
 	prerequisites = {
 		local_merchant_houses
 	}
-	discovery_mean_time_to_happen = {
-		months = 1500
-		
+	cost_factor = {
 		modifier = {
 			factor = 0.9
 			scripted_condition = has_school
@@ -813,6 +813,9 @@ guilds = {
 			year < 1250
 		}
 	}
+	#discovery_mean_time_to_happen = {
+	#	months = 1500
+	#}
 	spread_mean_time_to_happen = {
 		months = 6000
 		

@@ -73,9 +73,7 @@ asceticism = {
 			}
 		}
 	}
-	discovery_mean_time_to_happen = {
-		months = 75
-		
+	cost_factor = {
 		modifier = {
 			factor = 1.1
 			has_building_class = monastery
@@ -165,6 +163,9 @@ asceticism = {
 			year >= 1350
 		}
 	}
+	#discovery_mean_time_to_happen = {
+	#	months = 75
+	#}
 	spread_mean_time_to_happen = {
 		months = 750
 		
