@@ -332,7 +332,7 @@ refining = {
 	subcategory = manufacturing
 	portrait = engineering
 	icon = fuel
-	period = industrial_age
+	period = napoleonic_age
 	prerequisites = {
 		chemistry
 		corporation
@@ -344,7 +344,7 @@ machine_tools = {
 	subcategory = manufacturing
 	portrait = engineering
 	icon = cog
-	period = industrial_age
+	period = napoleonic_age
 	prerequisites = {
 		steel
 		tactics
@@ -418,7 +418,7 @@ bakelite = {
 	subcategory = manufacturing
 	portrait = engineering
 	icon = glass
-	period = industrial_age
+	period = napoleonic_age
 	prerequisites = {
 		#synthetic_polymers
 		

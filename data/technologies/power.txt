@@ -27,7 +27,7 @@ combustion = {
 	subcategory = power
 	portrait = engineering
 	icon = research
-	period = imperial_age
+	period = industrial_age
 	prerequisites = {
 		explosives
 		refining

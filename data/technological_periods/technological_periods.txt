@@ -102,10 +102,17 @@ revolutionary_age = {
 	end_year = 1800
 }
 
-industrial_age = {
-	name = "Industrial Age"
+napoleonic_age = {
+	name = "Napoleonic Age"
 	parent_period = revolutionary_age
 	start_year = 1800
+	end_year = 1825
+}
+
+industrial_age = {
+	name = "Industrial Age"
+	parent_period = napoleonic_age
+	start_year = 1825
 	end_year = 1875
 }
 

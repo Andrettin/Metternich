@@ -426,7 +426,7 @@ dreadnought = {
 	subcategory = ship_construction
 	portrait = unload
 	icon = anchor
-	period = industrial_age
+	period = napoleonic_age
 	prerequisites = {
 		#steam_turbine_ships
 		

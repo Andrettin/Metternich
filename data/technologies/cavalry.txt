@@ -39,7 +39,7 @@ tank_experiments = {
 	subcategory = cavalry
 	portrait = engineering
 	icon = cannon
-	period = industrial_age
+	period = napoleonic_age
 	prerequisites = {
 		#infiltration
 		

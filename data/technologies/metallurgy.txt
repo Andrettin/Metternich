@@ -144,7 +144,7 @@ steel_alloys = {
 	subcategory = metallurgy
 	portrait = engineering
 	icon = steel
-	period = industrial_age
+	period = napoleonic_age
 	prerequisites = {
 		#advanced_metallurgy
 		
