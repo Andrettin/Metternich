@@ -254,6 +254,10 @@ void technology::check() const
 		throw std::runtime_error(std::format("Technology \"{}\" has no icon.", this->get_identifier()));
 	}
 
+	if (this->get_level() == 0) {
+		throw std::runtime_error(std::format("Technology \"{}\" has no level.", this->get_identifier()));
+	}
+
 	if (this->get_period() != nullptr) {
 		if (this->get_year() != 0) {
 			if (this->get_year() < this->get_period()->get_start_year() || this->get_year() > this->get_period()->get_end_year()) {
@@ -333,10 +337,6 @@ bool technology::is_available_for_domain(const domain *domain) const
 			return true;
 		}
 
-		return false;
-	}
-
-	if (this->get_discovery_conditions() != nullptr && !this->get_discovery_conditions()->check(domain, read_only_context(domain))) {
 		return false;
 	}
 

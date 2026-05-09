@@ -21,6 +21,7 @@
 #include "map/tile.h"
 #include "population/population.h"
 #include "population/population_type.h"
+#include "script/condition/and_condition.h"
 #include "script/context.h"
 #include "script/effect/effect_list.h"
 #include "script/factor.h"
@@ -531,7 +532,7 @@ bool domain_technology::is_technology_researchable(const technology *technology)
 		return false;
 	}
 
-	if (technology->get_level() == 0) {
+	if (technology->get_discovery_conditions() != nullptr && !technology->get_discovery_conditions()->check(this->domain, read_only_context(this->domain))) {
 		return false;
 	}
 
