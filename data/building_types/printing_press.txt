@@ -3,7 +3,7 @@ printing_press = {
 	building_class = printing_press
 	portrait = trading_post
 	icon = newspaper
-	required_technology = renaissance
+	required_technology = printing_press
 	holding_types = {
 		guild
 		town
@@ -24,7 +24,7 @@ newspaper = {
 	portrait = trading_post
 	icon = newspaper
 	base_building = printing_press
-	required_technology = renaissance
+	required_technology = printing_press
 	holding_types = {
 		guild
 		city

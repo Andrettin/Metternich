@@ -1,0 +1,65 @@
+two_field_system = {
+	name = "Two Field System"
+	subcategory = farming
+	portrait = engineering
+	icon = grain
+	period = classical_age
+	prerequisites = {
+		feudalism #to place it in the appropriate period
+	}
+}
+
+three_field_system = {
+	name = "Three Field System"
+	subcategory = farming
+	portrait = engineering
+	icon = grain
+	period = dark_age
+	prerequisites = {
+		two_field_system
+	}
+}
+
+stripe_plowing = {
+	name = "Stripe Plowing"
+	subcategory = farming
+	portrait = engineering
+	icon = grain
+	period = feudal_age
+	prerequisites = {
+		three_field_system
+	}
+}
+
+soil_amelioration = {
+	name = "Soil Amelioration"
+	subcategory = farming
+	portrait = engineering
+	icon = grain
+	period = castle_age
+	prerequisites = {
+		stripe_plowing
+	}
+}
+
+rooting_out = {
+	name = "Rooting Out"
+	subcategory = farming
+	portrait = engineering
+	icon = grain
+	period = renaissance_age
+	prerequisites = {
+		soil_amelioration
+	}
+}
+
+land_enclosure = {
+	name = "Land Enclosure"
+	subcategory = farming
+	portrait = engineering
+	icon = grain
+	period = gunpowder_age
+	prerequisites = {
+		rooting_out
+	}
+}

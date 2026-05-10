@@ -33,6 +33,18 @@ gunpowder = {
 	}
 }
 
+organized_regiments = {
+	name = "Organized Regiments"
+	subcategory = army
+	portrait = helmet
+	icon = crossed_sabers
+	period = absolutism_age
+	prerequisites = {
+		land_enclosure
+		chivalry #since this technology allows Lancers, and they upgrade from Knights, which are allowed by Chivalry
+	}
+}
+
 explosives = {
 	name = "Explosives"
 	subcategory = army
