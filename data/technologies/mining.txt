@@ -20,6 +20,18 @@ stone_mining = {
 	}
 }
 
+iron_mining = {
+	name = "Iron Mining"
+	subcategory = mining
+	portrait = engineering
+	icon = iron_ore
+	period = copper_age
+	prerequisites = {
+		gold_mining #previous mining technology
+		stone_mining #previous mining technology
+	}
+}
+
 black_coal = {
 	name = "Black Coal"
 	subcategory = mining
@@ -326,6 +338,18 @@ black_coal = {
 				}
 			}
 		}
+	}
+}
+
+steam_in_mining = {
+	name = "Steam in Mining"
+	subcategory = mining
+	portrait = factory
+	icon = cog
+	period = absolutism_age
+	prerequisites = {
+		iron_mining
+		steam_engine #seems logical
 	}
 }
 

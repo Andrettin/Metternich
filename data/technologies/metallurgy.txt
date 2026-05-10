@@ -18,6 +18,7 @@ iron_working = {
 	period = bronze_age
 	prerequisites = {
 		bronze_working
+		iron_mining #seems logical
 		warrior_code
 	}
 }
@@ -32,6 +33,18 @@ metallurgy = {
 		iron_working
 		gunpowder
 		university
+	}
+}
+
+crucible_process = {
+	name = "Crucible Process"
+	subcategory = metallurgy
+	portrait = engineering
+	icon = steel
+	period = steam_age
+	prerequisites = {
+		steam_in_mining
+		square_set_timbering
 	}
 }
 

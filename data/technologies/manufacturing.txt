@@ -328,6 +328,19 @@ saw_mill = {
 	}
 }
 
+industrial_machinery = {
+	name = "Industrial Machinery"
+	subcategory = trade_practices
+	portrait = coinage
+	icon = book
+	period = enlightenment_age
+	prerequisites = {
+		steam_in_mining
+		university
+		#trained_journeymen
+	}
+}
+
 industrialization = {
 	name = "Industrialization"
 	subcategory = manufacturing

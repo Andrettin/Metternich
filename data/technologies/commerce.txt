@@ -971,3 +971,18 @@ guilds = {
 		}
 	}
 }
+
+industrial_funding_of_research = {
+	name = "Industrial Funding of Research"
+	subcategory = trade_practices
+	portrait = coinage
+	icon = book
+	period = industrial_age
+	prerequisites = {
+		industrial_machinery
+		crucible_process
+	}
+	domain_modifier = {
+		research_output_modifier = 50
+	}
+}

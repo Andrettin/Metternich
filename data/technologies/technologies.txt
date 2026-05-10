@@ -9,17 +9,6 @@ renaissance = {
 	}
 }
 
-industrial_era = {
-	name = "Industrial Era"
-	subcategory = technology
-	portrait = engineering
-	icon = cog
-	period = steam_age
-	prerequisites = {
-		renaissance
-	}
-}
-
 modern_era = {
 	name = "Modern Era"
 	subcategory = technology
@@ -27,6 +16,6 @@ modern_era = {
 	icon = rifle
 	period = modern_age
 	prerequisites = {
-		industrial_era
+		renaissance
 	}
 }
