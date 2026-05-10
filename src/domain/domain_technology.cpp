@@ -21,6 +21,7 @@
 #include "map/tile.h"
 #include "population/population.h"
 #include "population/population_type.h"
+#include "religion/religion.h"
 #include "script/condition/and_condition.h"
 #include "script/context.h"
 #include "script/effect/effect_list.h"
@@ -193,7 +194,12 @@ QCoro::Task<void> domain_technology::do_technology_spread()
 					continue;
 				}
 
-				technology_spread_bonuses[technology] += 6 * decimillesimal_int(neighbor_province->get_game_data()->get_extra_technology(technology) + 1);
+				decimillesimal_int neighbor_technology_bonus = 6 * decimillesimal_int(neighbor_province->get_game_data()->get_extra_technology(technology) + 1);
+				if (neighbor_province->get_game_data()->get_religion()->get_group() != province->get_game_data()->get_religion()->get_group()) {
+					//the bonus is halved for neighbor provinces of different religion groups
+					neighbor_technology_bonus /= 2;
+				}
+				technology_spread_bonuses[technology] += neighbor_technology_bonus;
 			}
 		}
 
