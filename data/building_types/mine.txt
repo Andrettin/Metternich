@@ -78,6 +78,7 @@ iron_mine = {
 	portrait = factory
 	icon = iron_ore
 	size = 1
+	required_technology = iron_mining
 	holding_types = {
 		castle
 		guild
