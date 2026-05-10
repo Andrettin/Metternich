@@ -9,6 +9,18 @@ warrior_code = {
 	}
 }
 
+siegecraft = {
+	name = "Siegecraft"
+	subcategory = army
+	portrait = engineering
+	icon = wall
+	period = civic_age
+	prerequisites = {
+		construction
+		wheel
+	}
+}
+
 gunpowder = {
 	name = "Gunpowder"
 	subcategory = army

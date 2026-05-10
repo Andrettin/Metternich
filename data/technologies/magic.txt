@@ -1,0 +1,35 @@
+magical_inscription = {
+	name = "Magical Inscription"
+	subcategory = culture
+	portrait = engineering
+	icon = book
+	period = iron_age
+	prerequisites = {
+		alphabet
+		code_of_laws
+	}
+}
+
+transmogrification = {
+	name = "Transmogrification"
+	subcategory = culture
+	portrait = engineering
+	icon = book
+	period = classical_age
+	prerequisites = {
+		magical_inscription
+		siegecraft
+	}
+}
+
+spell_of_animation = {
+	name = "Spell of Animation"
+	subcategory = culture
+	portrait = engineering
+	icon = book
+	period = dark_age
+	prerequisites = {
+		transmogrification
+		iron_working
+	}
+}
