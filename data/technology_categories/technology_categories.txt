@@ -1,29 +1,35 @@
 technology = {
 	name = "Technology"
 	icon = cog
+	domain_skill = culture
 }
 
 army = {
 	name = "Army"
 	icon = crossed_sabers
+	domain_skill = order
 }
 
 commerce = {
 	name = "Commerce"
 	icon = wealth
+	domain_skill = trade
 }
 
 culture = {
 	name = "Culture"
 	icon = music
+	domain_skill = culture
 }
 
 industry = {
 	name = "Industry"
 	icon = cog
+	domain_skill = trade
 }
 
 navy = {
 	name = "Navy"
 	icon = anchor
+	domain_skill = order
 }

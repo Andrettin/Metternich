@@ -8,6 +8,7 @@
 #include "util/dice.h"
 #include "util/singleton.h"
 
+Q_MOC_INCLUDE("character/domain_skill.h")
 Q_MOC_INCLUDE("domain/office.h")
 Q_MOC_INCLUDE("economy/commodity.h")
 Q_MOC_INCLUDE("economy/commodity_unit.h")
@@ -33,6 +34,7 @@ class character;
 class commodity;
 class commodity_unit;
 class cursor;
+class domain_skill;
 class icon;
 class music;
 class office;
@@ -87,6 +89,7 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(const metternich::commodity* default_research_commodity MEMBER default_research_commodity READ get_default_research_commodity NOTIFY changed)
 	Q_PROPERTY(qint64 research_cost_per_level MEMBER research_cost_per_level READ get_research_cost_per_level NOTIFY changed)
 	Q_PROPERTY(int daily_literacy_research MEMBER daily_literacy_research READ get_daily_literacy_research NOTIFY changed)
+	Q_PROPERTY(const metternich::domain_skill* main_research_domain_skill MEMBER main_research_domain_skill READ get_main_research_domain_skill NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity* advisor_commodity MEMBER advisor_commodity NOTIFY changed)
 	Q_PROPERTY(const metternich::icon* tariff_icon MEMBER tariff_icon NOTIFY changed)
 	Q_PROPERTY(const metternich::icon* treasure_fleet_icon MEMBER treasure_fleet_icon NOTIFY changed)
@@ -352,6 +355,11 @@ public:
 		return this->daily_literacy_research;
 	}
 
+	const domain_skill *get_main_research_domain_skill() const
+	{
+		return this->main_research_domain_skill;
+	}
+
 	const commodity *get_advisor_commodity() const
 	{
 		return this->advisor_commodity;
@@ -611,6 +619,7 @@ private:
 	const commodity *default_research_commodity = nullptr;
 	int64_t research_cost_per_level = 0;
 	int daily_literacy_research = 0;
+	const domain_skill *main_research_domain_skill = nullptr;
 	const commodity *advisor_commodity = nullptr;
 	const icon *tariff_icon = nullptr;
 	const icon *treasure_fleet_icon = nullptr;

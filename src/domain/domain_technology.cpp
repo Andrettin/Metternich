@@ -2,6 +2,8 @@
 
 #include "domain/domain_technology.h"
 
+#include "character/character.h"
+#include "character/character_game_data.h"
 #include "database/defines.h"
 #include "domain/domain.h"
 #include "domain/domain_ai.h"
@@ -28,6 +30,7 @@
 #include "script/factor.h"
 #include "script/modifier.h"
 #include "technology/technology.h"
+#include "technology/technology_category.h"
 #include "ui/portrait.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
@@ -130,10 +133,24 @@ QCoro::Task<void> domain_technology::do_research()
 		decimillesimal_int generated_research = decimillesimal_int(this->get_game_data()->get_economy()->get_stored_commodity(defines::get()->get_default_research_commodity()));
 		this->get_game_data()->get_economy()->set_stored_commodity(defines::get()->get_default_research_commodity(), 0);
 
+		data_entry_map<technology_category, decimillesimal_int> generated_research_per_category;
+		for (const auto &[category, category_monthly_research] : this->technology_category_monthly_researches) {
+			if (category_monthly_research > 0) {
+				generated_research_per_category[category] = decimillesimal_int(category_monthly_research) * game::get()->get_current_months_per_turn();
+			}
+		}
+
 		while (generated_research > 0 && !this->get_current_researches().empty()) {
 			decimillesimal_int remaining_generated_research = generated_research;
+			data_entry_map<technology_category, decimillesimal_int> remaining_generated_research_per_category = generated_research_per_category;
 
 			const technology_set current_researches = this->get_current_researches();
+
+			data_entry_map<technology_category, int> current_research_count_per_category;
+			for (const technology *current_research : current_researches) {
+				++current_research_count_per_category[current_research->get_category()];
+			}
+
 			for (const technology *current_research : current_researches) {
 				const commodity_map<int64_t> commodity_costs = current_research->get_commodity_costs_for_domain(this->domain);
 				if (!commodity_costs.contains(defines::get()->get_default_research_commodity())) {
@@ -141,9 +158,25 @@ QCoro::Task<void> domain_technology::do_research()
 				}
 
 				const decimillesimal_int research_cost = decimillesimal_int(commodity_costs.find(defines::get()->get_default_research_commodity())->second);
-				const decimillesimal_int remaining_research = research_cost * (100 - this->get_current_research_progress(current_research) / 100);
+				decimillesimal_int remaining_research = research_cost * (100 - this->get_current_research_progress(current_research) / 100);
+
+				const technology_category *category = current_research->get_category();
+				decimillesimal_int category_research_for_progress(0);
+				if (generated_research_per_category.contains(category)) {
+					category_research_for_progress = decimillesimal_int::min(remaining_research, generated_research_per_category[category] / current_research_count_per_category[category]);
+					remaining_research -= category_research_for_progress;
+
+					remaining_generated_research_per_category[category] -= category_research_for_progress;
+					assert_throw(remaining_generated_research_per_category[category] >= 0);
+					if (remaining_generated_research_per_category[category] == 0) {
+						remaining_generated_research_per_category.erase(category);
+					}
+				}
+
 				const decimillesimal_int research_for_progress = decimillesimal_int::min(remaining_research, generated_research / current_researches.size());
-				this->change_current_research_progress(current_research, research_for_progress * 100 / research_cost);
+
+				this->change_current_research_progress(current_research, (category_research_for_progress + research_for_progress) * 100 / research_cost);
+
 				remaining_generated_research -= research_for_progress;
 
 				if (this->get_current_research_progress(current_research) >= 100) {
@@ -152,6 +185,7 @@ QCoro::Task<void> domain_technology::do_research()
 			}
 
 			generated_research = remaining_generated_research;
+			generated_research_per_category = remaining_generated_research_per_category;
 			if (!this->get_current_researches().empty() && (generated_research / this->get_current_researches().size()) == 0) {
 				break;
 			}
@@ -865,6 +899,19 @@ QCoro::Task<void> domain_technology::set_gain_technologies_known_by_others_count
 
 	if (old_value == 0) {
 		co_await this->gain_technologies_known_by_others();
+	}
+}
+
+void domain_technology::set_technology_category_monthly_research(const technology_category *category, const int64_t value)
+{
+	if (value == this->get_technology_category_monthly_research(category)) {
+		return;
+	}
+
+	if (value == 0) {
+		this->technology_category_monthly_researches.erase(category);
+	} else {
+		this->technology_category_monthly_researches[category] = value;
 	}
 }
 

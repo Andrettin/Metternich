@@ -59,6 +59,7 @@
 #include "script/scripted_character_modifier.h"
 #include "species/species.h"
 #include "spell/spell.h"
+#include "technology/technology_category.h"
 #include "ui/icon.h"
 #include "ui/portrait.h"
 #include "unit/civilian_unit.h"
@@ -2473,7 +2474,9 @@ QCoro::Task<void> character_game_data::change_domain_skill_value(const domain_sk
 		co_return;
 	}
 
-	co_await this->change_stat_value(domain_skill, change, true, false);
+	//can affect the office modifier if this is the ruler, since the domain skill change can affect research
+	const bool affects_office_modifier = this->is_ruler();
+	co_await this->change_stat_value(domain_skill, change, true, affects_office_modifier);
 }
 
 QCoro::Task<void> character_game_data::change_trait_count(const trait *trait, const int change)
@@ -3000,6 +3003,20 @@ QCoro::Task<void> character_game_data::apply_office_modifier(const metternich::d
 	const int attribute_modifier = this->get_office_domain_attribute_modifier(office, nullptr, nullptr);
 	if (office->is_ruler()) {
 		co_await domain->get_game_data()->change_attribute_value(domain->get_game_data()->get_government_type()->get_primary_domain_attribute(), attribute_modifier * multiplier);
+
+		//apply domain skill effects to research
+		static const decimillesimal_int base_monthly_research_per_technology_category = decimillesimal_int(4);
+
+		const int main_research_domain_skill_value = this->get_domain_skill_value(defines::get()->get_main_research_domain_skill());
+
+		for (const technology_category *technology_category : technology_category::get_all()) {
+			const int category_domain_skill_value = this->get_domain_skill_value(technology_category->get_domain_skill());
+
+			decimillesimal_int category_monthly_research = base_monthly_research_per_technology_category;
+			category_monthly_research *= (main_research_domain_skill_value + category_domain_skill_value) * 4;
+
+			domain->get_technology()->change_technology_category_monthly_research(technology_category, category_monthly_research.to_int64() * multiplier);
+		}
 	} else {
 		co_await domain->get_game_data()->change_attribute_value(office->get_domain_attribute(), attribute_modifier * multiplier);
 	}

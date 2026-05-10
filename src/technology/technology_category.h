@@ -3,10 +3,12 @@
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 
+Q_MOC_INCLUDE("character/domain_skill.h")
 Q_MOC_INCLUDE("ui/icon.h")
 
 namespace metternich {
 
+class domain_skill;
 class icon;
 class technology;
 class technology_subcategory;
@@ -16,6 +18,7 @@ class technology_category final : public named_data_entry, public data_type<tech
 	Q_OBJECT
 
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
+	Q_PROPERTY(const metternich::domain_skill* domain_skill MEMBER domain_skill READ get_domain_skill NOTIFY changed)
 	Q_PROPERTY(QVariantList subcategories READ get_subcategories_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList technologies READ get_technologies_qvariant_list NOTIFY changed)
 
@@ -33,6 +36,11 @@ public:
 	const metternich::icon *get_icon() const
 	{
 		return this->icon;
+	}
+
+	const metternich::domain_skill *get_domain_skill() const
+	{
+		return this->domain_skill;
 	}
 
 	const std::vector<const technology_subcategory *> &get_subcategories() const
@@ -64,6 +72,7 @@ signals:
 
 private:
 	const metternich::icon *icon = nullptr;
+	const metternich::domain_skill *domain_skill = nullptr;
 	std::vector<const technology_subcategory *> subcategories;
 	std::vector<const technology *> technologies;
 };

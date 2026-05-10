@@ -167,6 +167,24 @@ public:
 		co_await this->set_gain_technologies_known_by_others_count(this->get_gain_technologies_known_by_others_count() + value);
 	}
 
+	int64_t get_technology_category_monthly_research(const technology_category *category) const
+	{
+		const auto find_iterator = this->technology_category_monthly_researches.find(category);
+
+		if (find_iterator != this->technology_category_monthly_researches.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void set_technology_category_monthly_research(const technology_category *category, const int64_t value);
+
+	void change_technology_category_monthly_research(const technology_category *category, const int64_t value)
+	{
+		this->set_technology_category_monthly_research(category, this->get_technology_category_monthly_research(category) + value);
+	}
+
 signals:
 	void technologies_changed();
 	void current_researches_changed();
@@ -183,6 +201,7 @@ private:
 	data_entry_map<technology_category, centesimal_int> technology_category_cost_modifiers;
 	data_entry_map<technology_subcategory, centesimal_int> technology_subcategory_cost_modifiers;
 	int gain_technologies_known_by_others_count = 0;
+	data_entry_map<technology_category, int64_t> technology_category_monthly_researches;
 	std::unique_ptr<QPromise<void>> technology_chosen_promise;
 };
 

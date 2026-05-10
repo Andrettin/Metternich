@@ -13,6 +13,10 @@ void technology_category::check() const
 		throw std::runtime_error(std::format("Technology category \"{}\" has no icon.", this->get_identifier()));
 	}
 
+	if (this->get_domain_skill() == nullptr) {
+		throw std::runtime_error(std::format("Technology category \"{}\" has no domain skill.", this->get_identifier()));
+	}
+
 	if (this->get_subcategories().empty()) {
 		throw std::runtime_error(std::format("Technology category \"{}\" has no subcategories.", this->get_identifier()));
 	}
