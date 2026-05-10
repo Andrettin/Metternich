@@ -6,6 +6,7 @@
 #include "util/qunique_ptr.h"
 
 Q_MOC_INCLUDE("sound/sound.h")
+Q_MOC_INCLUDE("technology/technology.h")
 Q_MOC_INCLUDE("ui/icon.h")
 
 namespace metternich {
@@ -16,6 +17,7 @@ class divine_domain;
 class icon;
 class item_type;
 class sound;
+class technology;
 enum class attack_result;
 enum class spell_target;
 
@@ -36,6 +38,7 @@ class spell final : public named_data_entry, public data_type<spell>
 	Q_PROPERTY(int battle_range MEMBER battle_range READ get_battle_range NOTIFY changed)
 	Q_PROPERTY(attack_result battle_result MEMBER battle_result READ get_battle_result NOTIFY changed)
 	Q_PROPERTY(bool to_hit_check MEMBER to_hit_check READ requires_to_hit_check NOTIFY changed)
+	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(const metternich::sound* sound MEMBER sound READ get_sound NOTIFY changed)
 
 public:
@@ -48,6 +51,7 @@ public:
 
 	virtual void process_gsml_property(const gsml_property &property) override;
 	virtual void process_gsml_scope(const gsml_data &scope) override;
+	virtual void initialize() override;
 	virtual void check() const override;
 
 	int get_level() const
@@ -100,6 +104,11 @@ public:
 	bool requires_to_hit_check() const
 	{
 		return this->to_hit_check;
+	}
+
+	const technology *get_required_technology() const
+	{
+		return this->required_technology;
 	}
 
 	const std::vector<const arcane_school *> &get_arcane_schools() const
@@ -156,6 +165,7 @@ private:
 	int battle_range = 0;
 	attack_result battle_result{};
 	bool to_hit_check = false;
+	technology *required_technology = nullptr;
 	std::vector<const arcane_school *> arcane_schools;
 	std::vector<const divine_domain *> divine_domains;
 	std::vector<const character_class *> character_classes;

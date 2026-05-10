@@ -158,11 +158,37 @@ qunique_ptr<item> item_creation_type::create_item(const site *creation_site) con
 	}
 
 	if (!this->spells.empty()) {
-		vector::merge(properties, this->spells);
+		std::vector<const spell *> spells = this->spells;
+		std::erase_if(spells, [this, creation_site](const spell *spell) {
+			if (spell->get_required_technology() != nullptr && !creation_site->get_game_data()->has_technology(spell->get_required_technology())) {
+				return true;
+			}
+
+			return false;
+		});
+
+		vector::merge(properties, std::move(spells));
 	}
 
 	if (!this->recipes.empty()) {
-		vector::merge(properties, this->recipes);
+		std::vector<const recipe *> recipes = this->recipes;
+		std::erase_if(recipes, [this, creation_site](const recipe *recipe) {
+			for (const recipe_material &material : recipe->get_materials()) {
+				if (material.item_type != nullptr && material.item_type->get_required_technology() != nullptr && !creation_site->get_game_data()->has_technology(material.item_type->get_required_technology())) {
+					return true;
+				}
+			}
+
+			for (const spell *spell : recipe->get_spells()) {
+				if (spell->get_required_technology() != nullptr && !creation_site->get_game_data()->has_technology(spell->get_required_technology())) {
+					return true;
+				}
+			}
+
+			return false;
+		});
+
+		vector::merge(properties, std::move(recipes));
 	}
 
 	const enchantment *enchantment = nullptr;

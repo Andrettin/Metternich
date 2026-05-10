@@ -42,6 +42,7 @@ class religion;
 class religious_group;
 class resource;
 class site;
+class spell;
 class technological_period;
 class technology_category;
 class technology_subcategory;
@@ -419,6 +420,16 @@ public:
 		this->enabled_item_types.push_back(item_type);
 	}
 
+	const std::vector<const spell *> &get_enabled_spells() const
+	{
+		return this->enabled_spells;
+	}
+
+	void add_enabled_spell(const spell *spell)
+	{
+		this->enabled_spells.push_back(spell);
+	}
+
 	const metternich::modifier<const province> *get_modifier() const
 	{
 		return this->modifier.get();
@@ -529,6 +540,7 @@ private:
 	std::vector<const deity *> disabled_deities;
 	std::vector<const employment_type *> enabled_employment_types;
 	std::vector<const item_type *> enabled_item_types;
+	std::vector<const spell *> enabled_spells;
 	std::unique_ptr<const metternich::modifier<const province>> modifier;
 	std::unique_ptr<const metternich::modifier<const domain>> domain_modifier;
 	std::unique_ptr<and_condition<domain>> discovery_conditions;

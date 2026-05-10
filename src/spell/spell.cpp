@@ -12,6 +12,7 @@
 #include "script/effect/effect_list.h"
 #include "spell/arcane_school.h"
 #include "spell/spell_target.h"
+#include "technology/technology.h"
 #include "util/assert_util.h"
 #include "util/vector_util.h"
 
@@ -85,6 +86,15 @@ void spell::process_gsml_scope(const gsml_data &scope)
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
+}
+
+void spell::initialize()
+{
+	if (this->required_technology != nullptr) {
+		this->required_technology->add_enabled_spell(this);
+	}
+
+	named_data_entry::initialize();
 }
 
 void spell::check() const

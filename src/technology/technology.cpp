@@ -41,6 +41,7 @@
 #include "script/factor.h"
 #include "script/mean_time_to_happen.h"
 #include "script/modifier.h"
+#include "spell/spell.h"
 #include "technology/technological_period.h"
 #include "technology/technology_category.h"
 #include "technology/technology_subcategory.h"
@@ -290,6 +291,7 @@ void technology::check() const
 		&& this->get_enabled_pathways().empty()
 		&& this->get_enabled_resources().empty()
 		&& this->get_enabled_river_crossing_pathways().empty()
+		&& this->get_enabled_spells().empty()
 		&& this->get_enabled_transporters().empty()
 		&& this->get_enabled_wonders().empty()
 	) {
@@ -867,6 +869,17 @@ QString technology::get_effects_string(const metternich::domain *domain) const
 			}
 
 			str += std::format("Enables {} item type", item_type->get_name());
+		}
+	}
+
+	const std::vector<const spell *> &enabled_spells = this->get_enabled_spells();
+	if (!enabled_spells.empty()) {
+		for (const spell *spell : enabled_spells) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += std::format("Enables {} spell", spell->get_name());
 		}
 	}
 
