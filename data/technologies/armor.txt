@@ -1,6 +1,6 @@
 soft_leather_armor = {
 	name = "Soft Leather Armor"
-	subcategory = army
+	subcategory = armor
 	portrait = helmet
 	icon = clothing
 	period = copper_age
@@ -168,7 +168,7 @@ soft_leather_armor = {
 
 chained_leather_armor = {
 	name = "Chained Leather Armor"
-	subcategory = army
+	subcategory = armor
 	portrait = helmet
 	icon = clothing
 	period = bronze_age
@@ -180,7 +180,7 @@ chained_leather_armor = {
 
 light_chain_mail = {
 	name = "Light Chain Mail"
-	subcategory = army
+	subcategory = armor
 	portrait = helmet
 	icon = clothing
 	period = iron_age
@@ -193,7 +193,7 @@ light_chain_mail = {
 
 chain_mail = {
 	name = "Chain Mail"
-	subcategory = army
+	subcategory = armor
 	portrait = helmet
 	icon = clothing
 	period = civic_age
@@ -372,7 +372,7 @@ chain_mail = {
 
 scale_mail = {
 	name = "Scale Mail"
-	subcategory = army
+	subcategory = armor
 	portrait = helmet
 	icon = clothing
 	period = bronze_age
@@ -384,7 +384,7 @@ scale_mail = {
 
 banded_mail = {
 	name = "Banded Mail"
-	subcategory = army
+	subcategory = armor
 	portrait = helmet
 	icon = clothing
 	period = dark_age
@@ -397,7 +397,7 @@ banded_mail = {
 
 half_plate_mail = {
 	name = "Half Plate Mail"
-	subcategory = army
+	subcategory = armor
 	portrait = helmet
 	icon = clothing
 	period = feudal_age
@@ -408,7 +408,7 @@ half_plate_mail = {
 
 plate_mail = {
 	name = "Plate Mail"
-	subcategory = army
+	subcategory = armor
 	portrait = helmet
 	icon = clothing
 	period = castle_age
@@ -579,7 +579,7 @@ plate_mail = {
 
 full_plate_mail = {
 	name = "Full Plate Mail"
-	subcategory = army
+	subcategory = armor
 	portrait = helmet
 	icon = clothing
 	period = renaissance_age

@@ -4,6 +4,12 @@ army = {
 	icon = crossed_sabers
 }
 
+armor = {
+	name = "Armor"
+	category = army
+	icon = heater_shield
+}
+
 infantry = {
 	name = "Infantry"
 	category = army

@@ -3,9 +3,3 @@ technology = {
 	category = technology
 	icon = cog
 }
-
-commerce = {
-	name = "Commerce"
-	category = commerce
-	icon = wealth
-}

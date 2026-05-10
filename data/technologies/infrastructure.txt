@@ -315,7 +315,7 @@ bridge_building = {
 
 railroad = {
 	name = "Railroad"
-	subcategory = power
+	subcategory = infrastructure
 	portrait = engineering
 	icon = railroad
 	period = napoleonic_age
@@ -327,7 +327,7 @@ railroad = {
 
 iron_railroad_bridge = {
 	name = "Iron Railroad Bridge"
-	subcategory = power
+	subcategory = infrastructure
 	portrait = engineering
 	icon = railroad
 	period = steam_age

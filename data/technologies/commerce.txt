@@ -1,6 +1,6 @@
 coinage = {
 	name = "Coinage"
-	subcategory = commerce
+	subcategory = trade_practices
 	portrait = coinage
 	icon = wealth
 	period = bronze_age
@@ -12,7 +12,7 @@ coinage = {
 
 trade = {
 	name = "Trade"
-	subcategory = commerce
+	subcategory = trade_practices
 	portrait = coinage
 	icon = wealth
 	period = iron_age
@@ -24,7 +24,7 @@ trade = {
 
 banking = {
 	name = "Banking"
-	subcategory = commerce
+	subcategory = trade_practices
 	portrait = coinage
 	icon = wealth
 	period = classical_age
@@ -36,7 +36,7 @@ banking = {
 
 economics = {
 	name = "Economics"
-	subcategory = commerce
+	subcategory = trade_practices
 	portrait = coinage
 	icon = wealth
 	period = feudal_age
@@ -48,7 +48,7 @@ economics = {
 
 corporation = {
 	name = "Corporation"
-	subcategory = commerce
+	subcategory = commerce_institutions
 	portrait = trading_post
 	icon = wealth
 	period = industrial_age
@@ -60,7 +60,7 @@ corporation = {
 
 minor_merchant_houses = {
 	name = "Minor Merchant Houses"
-	subcategory = commerce
+	subcategory = commerce_institutions
 	portrait = trading_post
 	icon = chest
 	period = civic_age
@@ -366,7 +366,7 @@ minor_merchant_houses = {
 
 local_merchant_houses = {
 	name = "Local Merchant Houses"
-	subcategory = commerce
+	subcategory = commerce_institutions
 	portrait = trading_post
 	icon = chest
 	period = classical_age
@@ -668,7 +668,7 @@ local_merchant_houses = {
 
 guilds = {
 	name = "Guilds"
-	subcategory = commerce
+	subcategory = commerce_institutions
 	portrait = trading_post
 	icon = chest
 	period = dark_age

@@ -1,0 +1,11 @@
+commerce_institutions = {
+	name = "Commerce Institutions"
+	category = commerce
+	icon = chest
+}
+
+trade_practices = {
+	name = "Trade Practices"
+	category = commerce
+	icon = wealth
+}
