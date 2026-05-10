@@ -167,6 +167,26 @@ QCoro::Task<void> domain_technology::do_technology_spread()
 	for (const province *province : this->get_game_data()->get_provinces()) {
 		technology_map<decimillesimal_int> technology_spread_bonuses;
 
+		//add bonus from other provinces in the same domain
+		for (const metternich::province *domain_province : this->get_game_data()->get_provinces()) {
+			if (domain_province == province) {
+				continue;
+			}
+
+			for (const technology *technology : domain_province->get_game_data()->get_technologies()) {
+				if (!province->get_game_data()->can_gain_technology(technology)) {
+					continue;
+				}
+
+				technology_spread_bonuses[technology] += 6 * decimillesimal_int(domain_province->get_game_data()->get_extra_technology(technology) + 1);
+			}
+		}
+		for (auto &[technology, spread_bonus] : technology_spread_bonuses) {
+			//the maximum bonus from provinces in the same domain is 30%
+			spread_bonus = decimillesimal_int::min(spread_bonus, 30);
+		}
+
+		//add neighbor bonus
 		for (const metternich::province *neighbor_province : province->get_game_data()->get_neighbor_provinces()) {
 			for (const technology *technology : neighbor_province->get_game_data()->get_technologies()) {
 				if (!province->get_game_data()->can_gain_technology(technology)) {
