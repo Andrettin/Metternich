@@ -173,7 +173,7 @@ chain_mail = {
 	icon = clothing
 	period = iron_age
 	prerequisites = {
-		soft_leather_armor
+		scale_mail
 		iron_working
 	}
 	cost_factor = {
@@ -346,6 +346,18 @@ chain_mail = {
 	}
 }
 
+scale_mail = {
+	name = "Scale Mail"
+	subcategory = army
+	portrait = helmet
+	icon = clothing
+	period = bronze_age
+	prerequisites = {
+		soft_leather_armor
+		bronze_working
+	}
+}
+
 banded_mail = {
 	name = "Banded Mail"
 	subcategory = army
@@ -353,7 +365,7 @@ banded_mail = {
 	icon = clothing
 	period = dark_age
 	prerequisites = {
-		chain_mail
+		scale_mail
 		
 		invention #to place this in its proper period
 	}
