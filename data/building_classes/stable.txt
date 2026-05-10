@@ -1,0 +1,24 @@
+small_stable = {
+	name = "Small Stable"
+	slot_type = stable
+}
+
+medium_stable = {
+	name = "Medium Stable"
+	slot_type = stable
+}
+
+large_stable = {
+	name = "Large Stable"
+	slot_type = stable
+}
+
+great_stable = {
+	name = "Great Stable"
+	slot_type = stable
+}
+
+royal_stable = {
+	name = "Royal Stable"
+	slot_type = stable
+}

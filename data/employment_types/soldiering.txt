@@ -26,6 +26,34 @@ heavy_infantry = {
 	}
 }
 
+light_cavalry = {
+	name = "Light Cavalry"
+	base_employment_size = 1
+	employee_types = {
+		soldiers
+	}
+	domain_modifier = {
+		storage_capacity = {
+			commodity = light_cavalry
+			capacity = 1
+		}
+	}
+}
+
+heavy_cavalry = {
+	name = "Heavy Cavalry"
+	base_employment_size = 1
+	employee_types = {
+		soldiers
+	}
+	domain_modifier = {
+		storage_capacity = {
+			commodity = heavy_cavalry
+			capacity = 1
+		}
+	}
+}
+
 pikemen = {
 	name = "Pikemen"
 	base_employment_size = 1

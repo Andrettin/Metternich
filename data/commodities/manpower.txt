@@ -38,6 +38,26 @@ archers = {
 	special_storage_capacity = true
 }
 
+light_cavalry = {
+	name = "Light Cavalry"
+	type = resource
+	icon = saber
+	tiny_icon = alliance
+	abstract = true
+	manpower = true
+	special_storage_capacity = true
+}
+
+heavy_cavalry = {
+	name = "Heavy Cavalry"
+	type = resource
+	icon = heater_shield
+	tiny_icon = alliance
+	abstract = true
+	manpower = true
+	special_storage_capacity = true
+}
+
 manpower = {
 	name = "Manpower"
 	type = resource
