@@ -166,15 +166,39 @@ soft_leather_armor = {
 	}
 }
 
-chain_mail = {
-	name = "Chain Mail"
+chained_leather_armor = {
+	name = "Chained Leather Armor"
+	subcategory = army
+	portrait = helmet
+	icon = clothing
+	period = bronze_age
+	prerequisites = {
+		soft_leather_armor
+		bronze_working #because it requires metalworking for the chain
+	}
+}
+
+light_chain_mail = {
+	name = "Light Chain Mail"
 	subcategory = army
 	portrait = helmet
 	icon = clothing
 	period = iron_age
 	prerequisites = {
+		chained_leather_armor
 		scale_mail
 		iron_working
+	}
+}
+
+chain_mail = {
+	name = "Chain Mail"
+	subcategory = army
+	portrait = helmet
+	icon = clothing
+	period = civic_age
+	prerequisites = {
+		light_chain_mail
 	}
 	cost_factor = {
 		modifier = {
