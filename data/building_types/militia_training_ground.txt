@@ -1,0 +1,112 @@
+militia_training_ground = {
+	name = "Militia Training Ground"
+	building_class = militia_training_ground
+	portrait = fort
+	icon = bow
+	build_duration = 365d
+	required_technology = warrior_code
+	free_on_start_extra_technology = 1
+	holding_types = {
+		castle
+	}
+	builder_civilian_unit_types = {
+		ruler
+		marshal
+		engineer
+	}
+	recruited_military_unit_categories = {
+		light_infantry
+		bowmen
+	}
+	commodity_costs = {
+		wealth = 15000gp
+	}
+	modifier = {
+		employment_capacity = {
+			employment_type = light_infantry
+			capacity = 80
+		}
+		employment_capacity = {
+			employment_type = archery
+			capacity = 10
+		}
+		population_capacity = 90
+	}
+}
+
+archery_range = {
+	name = "Archery Range"
+	building_class = archery_range
+	portrait = fort
+	icon = bow
+	build_duration = 547d
+	base_building = militia_training_ground
+	required_technology = short_bow
+	free_on_start_extra_technology = 2.2
+	holding_types = {
+		castle
+	}
+	required_buildings = {
+		wooden_palisade
+	}
+	builder_civilian_unit_types = {
+		ruler
+		marshal
+		engineer
+	}
+	recruited_military_unit_categories = {
+		light_infantry
+		bowmen
+	}
+	commodity_costs = {
+		wealth = 18000gp
+	}
+	modifier = {
+		employment_capacity = {
+			employment_type = light_infantry
+			capacity = 130
+		}
+		employment_capacity = {
+			employment_type = archery
+			capacity = 60
+		}
+		population_capacity = 190
+	}
+}
+
+large_archery_range = {
+	name = "Large Archery Range"
+	building_class = large_archery_range
+	portrait = fort
+	icon = bow
+	build_duration = 1095d
+	base_building = archery_range
+	required_technology = short_bow
+	free_on_start_extra_technology = 1.2
+	holding_types = {
+		castle
+	}
+	builder_civilian_unit_types = {
+		ruler
+		marshal
+		engineer
+	}
+	recruited_military_unit_categories = {
+		light_infantry
+		bowmen
+	}
+	commodity_costs = {
+		wealth = 30000gp
+	}
+	modifier = {
+		employment_capacity = {
+			employment_type = light_infantry
+			capacity = 150
+		}
+		employment_capacity = {
+			employment_type = archery
+			capacity = 150
+		}
+		population_capacity = 300
+	}
+}

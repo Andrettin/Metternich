@@ -1,3 +1,7 @@
 barracks = {
 	name = "Barracks"
 }
+
+militia_training_ground = {
+	name = "Militia Training Ground"
+}

@@ -1,0 +1,14 @@
+militia_training_ground = {
+	name = "Militia Training Ground"
+	slot_type = militia_training_ground
+}
+
+archery_range = {
+	name = "Archery Range"
+	slot_type = militia_training_ground
+}
+
+large_archery_range = {
+	name = "Large Archery Range"
+	slot_type = militia_training_ground
+}
