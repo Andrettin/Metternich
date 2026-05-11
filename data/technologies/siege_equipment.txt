@@ -313,6 +313,17 @@ mangonel = {
 	}
 }
 
+trebuchet = {
+	name = "Trebuchet"
+	subcategory = siege_equipment
+	portrait = engineering
+	icon = cannon
+	period = civic_age
+	prerequisites = {
+		mangonel
+	}
+}
+
 rifled_artillery = {
 	name = "Rifled Artillery"
 	subcategory = siege_equipment
@@ -320,7 +331,7 @@ rifled_artillery = {
 	icon = cannon
 	period = steam_age
 	prerequisites = {
-		mangonel #previous siege engine
+		trebuchet #previous siege engine
 		railroad #to set in the appropriate period
 	}
 }
