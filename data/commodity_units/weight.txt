@@ -15,3 +15,9 @@ tn = {
 	icon = sack_2
 	suffix = "tn"
 }
+
+ktn = {
+	name = "Kiloton"
+	icon = sack_2
+	suffix = "ktn"
+}
