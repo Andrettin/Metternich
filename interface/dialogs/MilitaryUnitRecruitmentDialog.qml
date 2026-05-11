@@ -9,7 +9,8 @@ DialogBase {
 	height: content_column.y + content_column.height + 8 * scale_factor
 	
 	property var recruitable_military_unit_categories: selected_province ? selected_province.game_data.recruitable_military_unit_categories : []
-	readonly property var country_game_data: metternich.game.player_country.game_data
+	readonly property var domain: metternich.game.player_country
+	readonly property var domain_game_data: domain ? domain.game_data : null
 	property var selected_military_unit_type: null
 	
 	Column {
@@ -101,7 +102,7 @@ DialogBase {
 						spacing: 16 * scale_factor
 						
 						Repeater {
-							model: selected_military_unit_type ? country_game_data.military.get_military_unit_type_commodity_costs_qvariant_list(selected_military_unit_type, 1) : []
+							model: selected_military_unit_type ? domain_game_data.military.get_military_unit_type_commodity_costs_qvariant_list(selected_military_unit_type, 1) : []
 							
 							Column {
 								id: cost_commodity_column
@@ -141,20 +142,22 @@ DialogBase {
 						spacing: military_unit_type_cost_row.spacing
 						
 						Repeater {
-							model: selected_military_unit_type ? country_game_data.military.get_military_unit_type_commodity_costs_qvariant_list(selected_military_unit_type, 1) : []
+							model: selected_military_unit_type ? domain_game_data.military.get_military_unit_type_commodity_costs_qvariant_list(selected_military_unit_type, 1) : []
 							
 							Column {
 								id: available_commodity_column
 								width: 48 * scale_factor
 							
 								readonly property var commodity: model.modelData.key
-								readonly property int stored: country_game_data.economy.stored_commodities.length > 0 ? country_game_data.economy.get_stored_commodity(commodity) : 0
+								readonly property int stored: domain_game_data.economy.stored_commodities.length > 0 ? domain_game_data.economy.get_stored_commodity(commodity) : 0
+								readonly property int commodity_storage_capacity: domain && commodity.special_storage_capacity && domain.game_data.economy.commodity_storage_capacities.length > 0 ? domain.game_data.economy.get_commodity_storage_capacity(commodity) : 0
 								
 								CustomIconImage {
 									id: available_commodity_icon
 									anchors.horizontalCenter: parent.horizontalCenter
 									name: commodity.name
 									icon_identifier: commodity.icon.identifier
+									description: commodity.special_storage_capacity ? format_text("Maximum: " + commodity.value_to_qstring(commodity_storage_capacity)) : ""
 								}
 								
 								SmallText {
@@ -183,7 +186,7 @@ DialogBase {
 						visible: military_unit_type !== null
 						
 						readonly property var military_unit_category: model.modelData
-						readonly property var military_unit_type: country_game_data.military.get_best_military_unit_category_type(military_unit_category)
+						readonly property var military_unit_type: domain_game_data.military.get_best_military_unit_category_type(military_unit_category)
 						readonly property int military_unit_recruitment_count: military_unit_type !== null && selected_province.game_data.military_unit_recruitment_counts.length > 0 ? selected_province.game_data.get_military_unit_recruitment_count(military_unit_type) : 0
 						
 						IconButton {
@@ -264,7 +267,7 @@ DialogBase {
 	
 	onOpened: {
 		for (var military_unit_category of recruitable_military_unit_categories) {
-			var military_unit_type = country_game_data.military.get_best_military_unit_category_type(military_unit_category)
+			var military_unit_type = domain_game_data.military.get_best_military_unit_category_type(military_unit_category)
 			if (military_unit_type !== null) {
 				selected_military_unit_type = military_unit_type
 				break

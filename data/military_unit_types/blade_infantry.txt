@@ -57,7 +57,7 @@ two_handed_swordsmen = {
 		range = 1
 	}
 	commodity_costs = {
-		manpower = 1
+		heavy_infantry = 200
 		fabric = 1
 		iron = 2
 	}
