@@ -2,6 +2,7 @@
 
 #include "economy/employment_type.h"
 
+#include "database/defines.h"
 #include "domain/domain.h"
 #include "domain/domain_economy.h"
 #include "economy/commodity.h"
@@ -34,6 +35,15 @@ void employment_type::process_gsml_property(const gsml_property &property)
 		assert_throw(property.get_operator() == gsml_operator::assignment);
 		assert_throw(this->get_output_commodity() != nullptr);
 		this->monthly_output_value = this->get_output_commodity()->string_to_value(value);
+	} else if (key == "monthly_wealth_output_value") {
+		assert_throw(property.get_operator() == gsml_operator::assignment);
+		assert_throw(this->get_output_commodity() != nullptr);
+		const int64_t monthly_wealth_output_value = defines::get()->get_wealth_commodity()->string_to_value(value);
+		const int64_t output_commodity_base_price = this->get_output_commodity()->get_base_price();
+		if (monthly_wealth_output_value % output_commodity_base_price != 0) {
+			throw std::runtime_error(std::format("Employment type \"{}\" has a monthly wealth output value of {}, which results in a remnant of {} when dividing by the output commodity's base price of {}.", this->get_identifier(), monthly_wealth_output_value, monthly_wealth_output_value % output_commodity_base_price, output_commodity_base_price));
+		}
+		this->monthly_output_value = monthly_wealth_output_value / output_commodity_base_price;
 	} else {
 		named_data_entry::process_gsml_property(property);
 	}
