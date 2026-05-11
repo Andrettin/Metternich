@@ -3,9 +3,9 @@ warrior_code = {
 	subcategory = army
 	portrait = engineering
 	icon = bow
-	period = copper_age
+	period = tool_age
 	prerequisites = {
-		woodworking #for wooden weapons
+		toolworking #to place it in the appropriate period
 	}
 }
 

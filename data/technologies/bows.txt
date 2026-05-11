@@ -3,9 +3,10 @@ short_bow = {
 	subcategory = infantry
 	portrait = engineering
 	icon = bow
-	period = bronze_age
+	period = copper_age
 	prerequisites = {
 		warrior_code
+		woodworking #since bows are made of wood
 	}
 	cost_factor = {
 		modifier = {
@@ -178,7 +179,7 @@ long_bow = {
 	subcategory = infantry
 	portrait = engineering
 	icon = bow
-	period = iron_age
+	period = bronze_age
 	prerequisites = {
 		short_bow
 	}
@@ -349,7 +350,7 @@ composite_bow = {
 	subcategory = infantry
 	portrait = engineering
 	icon = bow
-	period = civic_age
+	period = iron_age
 	prerequisites = {
 		long_bow
 	}
@@ -516,9 +517,10 @@ slinged_javelin = {
 	subcategory = infantry
 	portrait = engineering
 	icon = bow
-	period = bronze_age
+	period = copper_age
 	prerequisites = {
 		warrior_code #seems reasonable
+		woodworking #since javelins are made of wood
 	}
 }
 
