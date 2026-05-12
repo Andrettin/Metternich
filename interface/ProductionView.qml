@@ -80,6 +80,7 @@ Item {
 					anchors.right: parent.right
 					value: domain_game_data.economy.min_commodity_storages.length > 0 ? domain_game_data.economy.get_min_commodity_storage(commodity) : 0
 					max_value: domain_game_data.economy.storage_capacity
+					value_suffix: commodity.storage_unit !== null ? commodity.storage_unit.suffix : ""
 					
 					onDecremented: {
 						if (domain_game_data.economy.get_min_commodity_storage(commodity) === min_storage_slider.min_value) {
@@ -118,6 +119,7 @@ Item {
 					anchors.right: parent.right
 					value: domain_game_data.economy.max_commodity_storages.length > 0 ? domain_game_data.economy.get_max_commodity_storage(commodity) : 0
 					max_value: domain_game_data.economy.storage_capacity
+					value_suffix: commodity.storage_unit !== null ? commodity.storage_unit.suffix : ""
 					
 					onDecremented: {
 						if (domain_game_data.economy.get_max_commodity_storage(commodity) === max_storage_slider.min_value) {

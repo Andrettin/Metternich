@@ -16,6 +16,7 @@ Item {
 	property string tooltip: ""
 	property string decrement_button_tooltip: ""
 	property string increment_button_tooltip: ""
+	property string value_suffix: ""
 	
 	signal decremented()
 	signal incremented()
@@ -51,7 +52,7 @@ Item {
 		
 		SmallText {
 			id: value_label
-			text: number_string(value) + (secondary_value !== value ? (" (" + number_string(secondary_value) + ")") : "")
+			text: number_string(value) + (value_suffix.length > 0 ? (" " + value_suffix) : "") + (secondary_value !== value ? (" (" + number_string(secondary_value) + (value_suffix.length > 0 ? (" " + value_suffix) : "") + ")") : "")
 			anchors.verticalCenter: parent.verticalCenter
 			anchors.horizontalCenter: parent.horizontalCenter
 			visible: !show_handle
