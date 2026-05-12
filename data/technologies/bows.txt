@@ -687,7 +687,7 @@ light_crossbow = {
 }
 
 medium_crossbow = {
-	name = "Heavy Crossbow"
+	name = "Medium Crossbow"
 	subcategory = infantry
 	portrait = engineering
 	icon = bow
