@@ -3,6 +3,7 @@ tobacco = {
 	type = resource
 	icon = tobacco
 	base_price = 50 #5sp
+	storage_unit = tn
 	units = {
 		1 = lb
 		2000 = tn

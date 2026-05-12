@@ -3,6 +3,7 @@ coal = {
 	type = resource
 	icon = coal
 	base_price = 1 #1/4cp
+	storage_unit = tn
 	units = {
 		1 = lb
 		2000 = tn

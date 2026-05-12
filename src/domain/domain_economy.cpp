@@ -555,12 +555,10 @@ QCoro::Task<void> domain_economy::change_commodity_storage_capacity(const commod
 
 int64_t domain_economy::get_storage_for_commodity(const commodity *commodity, int64_t storage)
 {
-	if (commodity->get_units().empty()) {
-		return storage;
+	if (commodity->get_storage_unit() != nullptr) {
+		const int64_t storage_unit_value = commodity->get_unit_value(commodity->get_storage_unit());
+		storage *= storage_unit_value;
 	}
-
-	const int64_t highest_unit_value = commodity->get_units().rbegin()->first;
-	storage *= highest_unit_value;
 
 	return storage;
 }

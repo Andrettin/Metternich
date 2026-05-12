@@ -3,6 +3,7 @@ salt = {
 	type = resource
 	icon = salt
 	base_price = 500 #5gp
+	storage_unit = tn
 	units = {
 		1 = lb
 		2000 = tn

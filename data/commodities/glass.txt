@@ -3,6 +3,7 @@ glass = {
 	type = material
 	icon = glass
 	base_price = 100 #1gp
+	storage_unit = tn
 	units = {
 		1 = lb
 		100 = cwt

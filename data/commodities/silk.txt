@@ -3,7 +3,9 @@ silk = {
 	type = resource
 	icon = silk
 	wealth_value = 1000 #10gp
+	storage_unit = tn
 	units = {
 		1 = sq_yd
+		2000 = tn #correct?
 	}
 }

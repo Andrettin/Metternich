@@ -3,6 +3,7 @@ silver = {
 	type = resource
 	icon = silver
 	wealth_value = 500 #5gp
+	storage_unit = tn
 	units = {
 		1 = lb
 		100 = cwt
