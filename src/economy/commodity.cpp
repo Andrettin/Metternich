@@ -236,4 +236,16 @@ QString commodity::get_units_tooltip() const
 	return QString::fromStdString(str);
 }
 
+int64_t commodity::wealth_value_to_value(const int64_t wealth_value) const
+{
+	const int64_t commodity_base_price = std::max(this->get_base_price(), this->get_wealth_value());
+	assert_throw(commodity_base_price > 0);
+
+	if (wealth_value % commodity_base_price != 0) {
+		throw std::runtime_error(std::format("Tried to calculate the value for commodity \"{}\" for a given wealth value of {}, which results in a remnant of {} when dividing by the commodity's base price (or wealth value) of {}.", this->get_identifier(), wealth_value, wealth_value % commodity_base_price, commodity_base_price));
+	}
+
+	return wealth_value / commodity_base_price;
+}
+
 }
