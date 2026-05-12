@@ -1,3 +1,15 @@
+bayonet = {
+	name = "Bayonet"
+	subcategory = infantry
+	portrait = engineering
+	icon = musket
+	period = industrial_age
+	prerequisites = {
+		polearm
+		crucible_process
+	}
+}
+
 flintlock_rifle = {
 	name = "Flintlock Rifle"
 	subcategory = infantry
