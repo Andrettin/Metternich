@@ -1,3 +1,14 @@
+tobacco_planting = {
+	name = "Tobacco Planting"
+	subcategory = farming
+	portrait = engineering
+	icon = tobacco
+	period = tool_age
+	prerequisites = {
+		toolworking #seems reasonable
+	}
+}
+
 two_field_system = {
 	name = "Two Field System"
 	subcategory = farming

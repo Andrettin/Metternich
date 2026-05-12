@@ -9,6 +9,17 @@ domestication = {
 	}
 }
 
+sheep_ranching = {
+	name = "Sheep Ranching"
+	subcategory = cattle_herding
+	portrait = engineering
+	icon = wool
+	period = copper_age
+	prerequisites = {
+		domestication
+	}
+}
+
 mechanized_slaughtering_block = {
 	name = "Mechanized Slaughtering-Block"
 	subcategory = cattle_herding

@@ -92,7 +92,7 @@ sheep_ranch = {
 	portrait = aristocratic_palace
 	icon = wool
 	size = 1
-	required_technology = domestication
+	required_technology = sheep_ranching
 	holding_types = {
 		castle
 		guild
@@ -134,6 +134,7 @@ tobacco_plantation = {
 	portrait = aristocratic_palace
 	icon = tobacco
 	size = 1
+	required_technology = tobacco_planting
 	holding_types = {
 		castle
 		guild

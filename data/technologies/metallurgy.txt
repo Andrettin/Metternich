@@ -6,7 +6,7 @@ bronze_working = {
 	period = copper_age
 	prerequisites = {
 		toolworking
-		gold_mining #it makes sense that it requires metal mining knowledge
+		copper_and_tin_mining #it makes sense to require the capability to mine the inputs of bronze
 	}
 }
 

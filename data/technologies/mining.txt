@@ -1,3 +1,14 @@
+copper_and_tin_mining = {
+	name = "Copper and Tin Mining"
+	subcategory = mining
+	portrait = engineering
+	icon = copper
+	period = tool_age
+	prerequisites = {
+		toolworking
+	}
+}
+
 gold_mining = {
 	name = "Gold Mining"
 	subcategory = mining
@@ -27,8 +38,7 @@ iron_mining = {
 	icon = iron_ore
 	period = copper_age
 	prerequisites = {
-		gold_mining #previous mining technology
-		stone_mining #previous mining technology
+		copper_and_tin_mining #previous mining technology for bronze, which iron replaced
 	}
 }
 
