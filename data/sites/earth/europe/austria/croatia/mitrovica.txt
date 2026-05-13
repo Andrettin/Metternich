@@ -5,4 +5,7 @@ mitrovica = {
 	type = resource
 	resource = timber
 	province = slavonia
+	features = {
+		prime_timber
+	}
 }

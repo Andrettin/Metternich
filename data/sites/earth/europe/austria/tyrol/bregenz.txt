@@ -5,6 +5,9 @@ bregenz = {
 	type = resource
 	resource = timber
 	province = tyrol
+	features = {
+		prime_timber
+	}
 	
 	history = {
 		919 = {

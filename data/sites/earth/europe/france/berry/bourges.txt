@@ -3,7 +3,6 @@ bourges = {
 	world = earth
 	geocoordinate = { 2.39999792340 47.08372682610 } #from Natural Earth
 	type = holding
-	#resource = timber
 	province = berry
 	cultural_names = {
 		frankish = "Bituricae"
@@ -11,6 +10,7 @@ bourges = {
 	features = {
 		academic #historical university
 		holy_site #historical cathedral
+		prime_timber
 	}
 	
 	history = {

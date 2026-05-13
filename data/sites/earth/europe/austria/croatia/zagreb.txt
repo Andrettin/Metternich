@@ -4,7 +4,6 @@ zagreb = {
 	geocoordinate = { 15.99999466820 45.80000673330 } #from Natural Earth
 	type = holding
 	holding_type = castle
-	#resource = timber
 	province = croatia
 	cultural_names = {
 		roman = "Celeta" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 38-39.
@@ -14,6 +13,7 @@ zagreb = {
 	}
 	features = {
 		academic #historical university
+		prime_timber
 	}
 	
 	history = {

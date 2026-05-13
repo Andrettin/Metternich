@@ -4,13 +4,13 @@ troyes = {
 	geocoordinate = { 4.08335770531 48.34039430650 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	#resource = timber
 	province = champagne
 	cultural_names = {
 		frankish = "Trecae"
 	}
 	features = {
 		crossroads #important market or fair
+		prime_timber
 	}
 	
 	history = {

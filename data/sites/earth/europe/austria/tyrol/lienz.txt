@@ -4,8 +4,10 @@ lienz = {
 	geocoordinate = { 12.769722222222 46.829722222222 }
 	type = holding
 	holding_type = castle
-	#resource = timber
 	province = carinthia
+	features = {
+		prime_timber
+	}
 	
 	history = {
 		610 = {

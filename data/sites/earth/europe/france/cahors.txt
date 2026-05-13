@@ -7,6 +7,7 @@ cahors = {
 	province = guyenne
 	features = {
 		academic #historical university
+		prime_timber
 	}
 	
 	history = {

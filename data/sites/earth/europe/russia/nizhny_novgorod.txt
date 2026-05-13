@@ -4,10 +4,10 @@ nizhny_novgorod = {
 	geocoordinate = { 44.00009435910 56.33300722160 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	#resource = timber
 	province = nizhegorod
 	features = {
 		crossroads #important market or fair
+		prime_timber
 	}
 	
 	history = {

@@ -4,13 +4,13 @@ bologna = {
 	geocoordinate = { 11.34002070990 44.50042197580 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	#resource = timber
 	province = romagna
 	cultural_names = {
 		roman = "Bononia" #Source: William R. Shepherd, "Historical Atlas", 1911, p. 29.
 	}
 	features = {
 		academic #historical university
+		prime_timber
 	}
 	
 	history = {

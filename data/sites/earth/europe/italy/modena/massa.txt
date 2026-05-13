@@ -4,6 +4,8 @@ massa = {
 	geocoordinate = { 10.133333333333 44.033333333333 }
 	type = holding
 	holding_type = temple
-	#resource = timber
 	province = modena
+	features = {
+		prime_timber
+	}
 }

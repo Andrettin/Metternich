@@ -5,6 +5,9 @@ uglich = {
 	type = resource
 	resource = timber
 	province = yaroslavl
+	features = {
+		prime_timber
+	}
 	
 	history = {
 		1360 = {

@@ -8,4 +8,7 @@ vyborg = {
 	cultural_names = {
 		finnish = "Viipuri"
 	}
+	features = {
+		prime_timber
+	}
 }
