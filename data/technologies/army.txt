@@ -45,6 +45,18 @@ organized_regiments = {
 	}
 }
 
+improved_infantry_tactics = {
+	name = "Improved Infantry Tacts"
+	subcategory = army
+	portrait = helmet
+	icon = musket
+	period = enlightenment_age
+	prerequisites = {
+		organized_regiments
+		printing_press
+	}
+}
+
 explosives = {
 	name = "Explosives"
 	subcategory = army

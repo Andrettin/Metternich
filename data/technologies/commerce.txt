@@ -977,7 +977,7 @@ industrial_funding_of_research = {
 	subcategory = trade_practices
 	portrait = coinage
 	icon = book
-	period = industrial_age
+	period = revolutionary_age
 	prerequisites = {
 		industrial_machinery
 		crucible_process

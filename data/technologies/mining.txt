@@ -42,6 +42,17 @@ iron_mining = {
 	}
 }
 
+coal_mining = {
+	name = "Coal Mining"
+	subcategory = mining
+	portrait = engineering
+	icon = coal
+	period = bronze_age
+	prerequisites = {
+		iron_mining #previous mining technology
+	}
+}
+
 black_coal = {
 	name = "Black Coal"
 	subcategory = mining
@@ -49,7 +60,8 @@ black_coal = {
 	icon = coal
 	period = renaissance_age
 	prerequisites = {
-		natural_philosophy
+		coal_mining #seems logical
+		natural_philosophy #to place it in the appropriate period
 	}
 	discovery_conditions = {
 		any_settlement = {
@@ -423,6 +435,7 @@ square_set_timbering = {
 	icon = coal
 	period = napoleonic_age
 	prerequisites = {
+		coal_mining
 		high_pressure_steam_engine
 	}
 }

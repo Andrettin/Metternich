@@ -41,10 +41,10 @@ crucible_process = {
 	subcategory = metallurgy
 	portrait = engineering
 	icon = steel
-	period = steam_age
+	period = enlightenment_age
 	prerequisites = {
 		steam_in_mining
-		square_set_timbering
+		coal_mining
 	}
 }
 

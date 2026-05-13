@@ -3,7 +3,7 @@ bayonet = {
 	subcategory = infantry
 	portrait = engineering
 	icon = musket
-	period = industrial_age
+	period = revolutionary_age
 	prerequisites = {
 		polearm
 		crucible_process
@@ -15,11 +15,12 @@ flintlock_rifle = {
 	subcategory = infantry
 	portrait = engineering
 	icon = rifle
-	period = gunpowder_age
+	period = revolutionary_age
 	prerequisites = {
-		arbalest
-		science
+		improved_infantry_tactics
+		crucible_process
 		
+		arbalest #so that crossbows lead to firearms
 		composite_bow #so that composite bows lead to another technology
 	}
 	cost_factor = {
@@ -42,7 +43,7 @@ breech_loading_rifle = {
 	subcategory = infantry
 	portrait = engineering
 	icon = rifle
-	period = absolutism_age
+	period = napoleonic_age
 	prerequisites = {
 		flintlock_rifle
 	}
@@ -62,7 +63,7 @@ machine_gun = {
 	subcategory = infantry
 	portrait = engineering
 	icon = rifle
-	period = enlightenment_age
+	period = steam_age
 	prerequisites = {
 		breech_loading_rifle
 	}
@@ -82,7 +83,7 @@ bolt_action_rifle = {
 	subcategory = infantry
 	portrait = engineering
 	icon = rifle
-	period = revolutionary_age
+	period = industrial_age
 	prerequisites = {
 		machine_gun
 	}

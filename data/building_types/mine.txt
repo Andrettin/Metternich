@@ -4,7 +4,7 @@ coal_mine = {
 	portrait = factory
 	icon = coal
 	size = 1
-	required_technology = black_coal
+	required_technology = coal_mining
 	holding_types = {
 		castle
 		guild
