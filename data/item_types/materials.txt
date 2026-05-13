@@ -1,3 +1,14 @@
+bear_hair = {
+	name = "Bear Hair"
+	item_class = miscellaneous
+	icon = sack_2
+	price = 5cp
+	stackable = true
+	item_creation_types = {
+		alchemical_item
+	}
+}
+
 cat_fur = {
 	name = "Cat Fur"
 	item_class = miscellaneous
