@@ -46,8 +46,8 @@ organized_regiments = {
 }
 
 improved_infantry_tactics = {
-	name = "Improved Infantry Tacts"
-	subcategory = army
+	name = "Improved Infantry Tactics"
+	subcategory = infantry
 	portrait = helmet
 	icon = musket
 	period = enlightenment_age
@@ -62,10 +62,12 @@ explosives = {
 	subcategory = army
 	portrait = fort
 	icon = coal
-	period = castle_age
+	period = revolutionary_age
 	prerequisites = {
 		gunpowder
 		chemistry
+		weapon_craftsmanship
+		industrial_machinery
 	}
 }
 
