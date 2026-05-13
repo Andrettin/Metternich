@@ -1,0 +1,10 @@
+lumberjacking = {
+	name = "Lumberjacking"
+	output_commodity = lumber #timber
+	monthly_output_value = 8tn
+	base_employment_size = 40000
+	employee_types = {
+		laborers
+		slaves
+	}
+}

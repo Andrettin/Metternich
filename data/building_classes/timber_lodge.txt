@@ -1,0 +1,4 @@
+timber_lodge = {
+	name = "Timber Lodge"
+	slot_type = timber_lodge
+}

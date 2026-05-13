@@ -2,6 +2,10 @@ lumber = {
 	name = "Lumber"
 	type = material
 	icon = lumber
-	base_price = 300
-	required_game_rule = additional_commodities
+	base_price = 100 #1gp, price of hardwood
+	storage_unit = tn
+	units = {
+		1 = lb
+		2000 = tn
+	}
 }

@@ -1,0 +1,33 @@
+timber_lodge = {
+	name = "Timber Lodge"
+	building_class = timber_lodge
+	portrait = aristocratic_palace
+	icon = timber
+	size = 1
+	required_technology = woodworking
+	holding_types = {
+		castle
+		guild
+		temple
+	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
+	conditions = {
+		feature = prime_timber
+	}
+	commodity_costs = {
+		wealth = 3gb #same as sawmill
+	}
+	modifier = {
+		employment_capacity = {
+			employment_type = lumberjacking
+			capacity = 40000
+		}
+		population_capacity = 40000
+	}
+	free_on_start_conditions = {
+	}
+}
