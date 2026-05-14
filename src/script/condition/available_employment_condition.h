@@ -1,5 +1,6 @@
 #pragma once
 
+#include "economy/employment_type.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "population/population_type.h"
@@ -27,6 +28,14 @@ public:
 		Q_UNUSED(ctx);
 
 		for (const auto &[employment_type, employment_capacity] : scope->get_game_data()->get_employment_capacities()) {
+			if (!employment_type->get_employee_types().contains(this->population_type)) {
+				continue;
+			}
+
+			if (!employment_type->is_available_for_site(scope)) {
+				continue;
+			}
+
 			if (scope->get_game_data()->get_available_employment_capacity(employment_type) > 0) {
 				return true;
 			}
