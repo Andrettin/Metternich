@@ -15,6 +15,7 @@ clergymen = {
 	}
 	everyday_needs = {
 		coal = 1tn
+		furniture = 4tn
 		glass = 1cwt
 		tobacco = 3tn
 	}

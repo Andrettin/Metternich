@@ -27,8 +27,10 @@ craftsmen = {
 	}
 	everyday_needs = {
 		coal = 1tn
+		furniture = 3tn
 	}
 	luxury_needs = {
+		furniture = 3tn
 		tobacco = 0.95tn
 	}
 }

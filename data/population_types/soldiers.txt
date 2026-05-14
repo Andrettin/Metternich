@@ -24,8 +24,10 @@ soldiers = {
 	}
 	everyday_needs = {
 		coal = 1tn
+		furniture = 1tn
 	}
 	luxury_needs = {
+		furniture = 3tn
 		tobacco = 0.95tn
 	}
 }

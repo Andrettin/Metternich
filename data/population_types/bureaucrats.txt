@@ -23,6 +23,7 @@ bureaucrats = {
 		wool = 1cwt
 	}
 	everyday_needs = {
+		furniture = 4tn
 		glass = 1cwt
 		coal = 1tn
 		tobacco = 3tn
