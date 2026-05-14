@@ -13,6 +13,7 @@ lyon = {
 	features = {
 		academic #historical university
 		crossroads #important market or fair
+		furniture
 		prime_grain_land
 	}
 	
@@ -41,6 +42,10 @@ lyon = {
 				clergymen.french.jewish = 100
 				officers.french.catholic = 2800
 			}
+		}
+		
+		1861 = {
+			buildings += furniture_factory
 		}
 	}
 }
