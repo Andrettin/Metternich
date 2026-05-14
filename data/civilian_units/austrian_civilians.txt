@@ -7,7 +7,7 @@ austrian_builder = {
 		}
 		
 		1820 = {
-			site = none
+			province = none
 		}
 	}
 }
