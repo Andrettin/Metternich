@@ -12,7 +12,7 @@ coal_mining = {
 gold_mining = {
 	name = "Gold Mining"
 	output_commodity = gold
-	monthly_output_value = 2cwt
+	monthly_output_value = 2st
 	base_employment_size = 40000
 	employee_types = {
 		laborers
@@ -34,7 +34,7 @@ iron_mining = {
 silver_mining = {
 	name = "Silver Mining"
 	output_commodity = silver
-	monthly_output_value = 2cwt
+	monthly_output_value = 2st
 	base_employment_size = 40000
 	employee_types = {
 		laborers
