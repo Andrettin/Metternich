@@ -3,7 +3,6 @@ brewery = {
 	building_class = brewery
 	portrait = trading_post
 	icon = wine
-	size = 1
 	holding_types = {
 		guild
 	}

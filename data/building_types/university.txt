@@ -3,7 +3,6 @@ academy = {
 	building_class = academy
 	portrait = university
 	icon = university
-	size = 2
 	holding_types = {
 		city
 		guild
@@ -49,7 +48,6 @@ university = {
 	building_class = university
 	portrait = university
 	icon = university
-	size = 4
 	base_building = academy
 	required_technology = university
 	free_on_start_extra_technology = 1.2

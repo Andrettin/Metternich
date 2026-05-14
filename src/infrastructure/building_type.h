@@ -63,7 +63,6 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(bool wonder_only MEMBER wonder_only READ is_wonder_only NOTIFY changed)
 	Q_PROPERTY(int holding_level MEMBER holding_level READ get_holding_level NOTIFY changed)
 	Q_PROPERTY(archimedes::centesimal_int fortification_level MEMBER fortification_level READ get_fortification_level NOTIFY changed)
-	Q_PROPERTY(int size MEMBER size READ get_size NOTIFY changed)
 	Q_PROPERTY(metternich::building_type* base_building MEMBER base_building NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(int min_holding_level MEMBER min_holding_level READ get_min_holding_level NOTIFY changed)
@@ -75,8 +74,6 @@ public:
 	static constexpr const char database_folder[] = "building_types";
 
 	static const std::set<std::string> database_dependencies;
-
-	static constexpr int64_t population_capacity_per_size = 250;
 
 public:
 	explicit building_type(const std::string &identifier);
@@ -197,12 +194,6 @@ public:
 		return this->fortification_level;
 	}
 
-	int get_size() const
-	{
-		return this->size;
-	}
-
-	int64_t get_population_capacity() const;
 	int64_t get_population_capacity_for_province_level(const int province_level) const;
 
 	const building_type *get_base_building() const
@@ -341,7 +332,6 @@ private:
 	bool wonder_only = false;
 	int holding_level = 0;
 	centesimal_int fortification_level;
-	int size = 1;
 	building_type *base_building = nullptr;
 	std::vector<const building_type *> derived_buildings; //buildings which are based on this one
 	std::vector<const building_type *> required_buildings;

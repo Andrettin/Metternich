@@ -3,7 +3,6 @@ bardic_college = {
 	building_class = bardic_college
 	portrait = university
 	icon = music
-	size = 2
 	required_technology = ballads
 	min_holding_level = 4
 	holding_types = {

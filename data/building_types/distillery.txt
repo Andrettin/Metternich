@@ -3,7 +3,6 @@ liquor_distillery = {
 	building_class = liquor_distillery
 	portrait = trading_post
 	icon = wine
-	size = 1
 	holding_types = {
 		castle
 		guild

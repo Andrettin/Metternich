@@ -3,7 +3,6 @@ graveyard = {
 	building_class = graveyard
 	portrait = temple
 	icon = skull
-	size = 1
 	holding_types = {
 		temple
 	}

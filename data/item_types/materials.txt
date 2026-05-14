@@ -74,3 +74,11 @@ ox_hair = {
 		alchemical_item
 	}
 }
+
+#bar_of_ogre_steel = { #bar of steel worked by an ogre
+#	name = "Bar of Ogre Steel"
+#	item_class = miscellaneous
+#	icon = steel
+#	price = 1sp
+#	stackable = true
+#}

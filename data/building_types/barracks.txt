@@ -270,7 +270,6 @@ barracks = {
 	building_class = barracks
 	portrait = fort
 	icon = crossed_sabers
-	size = 1
 	holding_types = {
 		city
 	}
@@ -311,7 +310,6 @@ garrison = {
 	building_class = garrison
 	portrait = fort
 	icon = crossed_sabers
-	size = 2
 	base_building = barracks
 	holding_types = {
 		city

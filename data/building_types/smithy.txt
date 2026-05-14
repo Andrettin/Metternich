@@ -3,7 +3,6 @@ smithy = {
 	building_class = smithy
 	portrait = factory
 	icon = tools
-	size = 1
 	holding_types = {
 		guild
 	}
@@ -26,7 +25,6 @@ swordsmithy = {
 	building_class = swordsmithy
 	portrait = factory
 	icon = saber
-	size = 1
 	build_duration = 1095d
 	required_technology = short_sword
 	free_on_start_extra_technology = 2.5

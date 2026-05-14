@@ -3,7 +3,6 @@ cattle_ranch = {
 	building_class = cattle_ranch
 	portrait = aristocratic_palace
 	icon = cattle
-	size = 1
 	required_technology = domestication
 	holding_types = {
 		castle
@@ -50,7 +49,6 @@ grain_farm = {
 	building_class = grain_farm
 	portrait = aristocratic_palace
 	icon = grain
-	size = 1
 	holding_types = {
 		castle
 		guild
@@ -91,7 +89,6 @@ sheep_ranch = {
 	building_class = sheep_ranch
 	portrait = aristocratic_palace
 	icon = wool
-	size = 1
 	required_technology = sheep_ranching
 	holding_types = {
 		castle
@@ -133,7 +130,6 @@ tobacco_plantation = {
 	building_class = tobacco_plantation
 	portrait = aristocratic_palace
 	icon = tobacco
-	size = 1
 	required_technology = tobacco_planting
 	holding_types = {
 		castle

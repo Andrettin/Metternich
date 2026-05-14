@@ -3,7 +3,6 @@ mill = {
 	building_class = mill
 	portrait = factory
 	icon = cog
-	size = 1
 	holding_types = {
 		guild
 	}

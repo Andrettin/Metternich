@@ -3,7 +3,6 @@ library = {
 	building_class = library
 	portrait = university
 	icon = book
-	size = 1
 	required_technology = writing
 	holding_types = {
 		guild
@@ -39,7 +38,6 @@ library_great_library = {
 	portrait = university
 	icon = book
 	holding_level = 2
-	size = 1
 	required_technology = writing
 	holding_types = {
 		great_library

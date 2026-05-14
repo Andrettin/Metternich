@@ -3,7 +3,6 @@ coal_mine = {
 	building_class = coal_mine
 	portrait = factory
 	icon = coal
-	size = 1
 	required_technology = coal_mining
 	holding_types = {
 		castle
@@ -40,7 +39,6 @@ gold_mine = {
 	building_class = gold_mine
 	portrait = factory
 	icon = gold_ore
-	size = 1
 	required_technology = gold_mining
 	holding_types = {
 		castle
@@ -77,7 +75,6 @@ iron_mine = {
 	building_class = iron_mine
 	portrait = factory
 	icon = iron_ore
-	size = 1
 	required_technology = iron_mining
 	holding_types = {
 		castle
@@ -114,7 +111,6 @@ silver_mine = {
 	building_class = silver_mine
 	portrait = factory
 	icon = silver
-	size = 1
 	holding_types = {
 		castle
 		guild

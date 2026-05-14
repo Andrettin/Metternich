@@ -4,7 +4,6 @@ city_wall = {
 	portrait = fort
 	icon = wall
 	fortification_level = 1
-	size = 0
 	holding_types = {
 		guild
 		magic_source
@@ -32,7 +31,6 @@ watchtower = {
 	portrait = fort
 	icon = wall
 	fortification_level = 2
-	size = 1
 	holding_types = {
 		castle
 		guild
@@ -59,7 +57,6 @@ castle = {
 	portrait = fort
 	icon = wall
 	fortification_level = 4
-	size = 4
 	base_building = watchtower
 	required_technology = medium_castle
 	holding_types = {

@@ -82,7 +82,6 @@ class site_game_data final : public QObject
 	Q_PROPERTY(QVariantList population_units READ get_population_units_qvariant_list NOTIFY population_units_changed)
 	Q_PROPERTY(int population_unit_count READ get_population_unit_count NOTIFY population_units_changed)
 	Q_PROPERTY(qint64 population_capacity READ get_population_capacity NOTIFY population_capacity_changed)
-	Q_PROPERTY(int total_building_size READ get_total_building_size NOTIFY total_building_size_changed)
 	Q_PROPERTY(QVariantList commodity_outputs READ get_commodity_outputs_qvariant_list NOTIFY commodity_outputs_changed)
 	Q_PROPERTY(int min_income READ get_min_income NOTIFY income_changed)
 	Q_PROPERTY(int max_income READ get_max_income NOTIFY income_changed)
@@ -479,13 +478,6 @@ public:
 		this->free_food_consumption += change;
 	}
 
-	int get_total_building_size() const
-	{
-		return this->total_building_size;
-	}
-
-	void change_total_building_size(const int change);
-
 	const commodity_map<centesimal_int> &get_base_commodity_outputs() const
 	{
 		return this->base_commodity_outputs;
@@ -671,7 +663,6 @@ signals:
 	void scripted_modifiers_changed();
 	void population_units_changed();
 	void population_capacity_changed();
-	void total_building_size_changed();
 	void commodity_outputs_changed();
 	void income_changed();
 	void visiting_armies_changed();
@@ -701,7 +692,6 @@ private:
 	data_entry_map<employment_type, int64_t> employment_sizes;
 	data_entry_map<employment_type, int64_t> employment_capacities;
 	int free_food_consumption = 0;
-	int total_building_size = 0;
 	commodity_map<centesimal_int> base_commodity_outputs;
 	commodity_map<centesimal_int> commodity_outputs;
 	centesimal_int output_modifier;

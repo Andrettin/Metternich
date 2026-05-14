@@ -1803,10 +1803,6 @@ QCoro::Task<void> site_game_data::on_building_gained(const building_type *buildi
 		co_await building->get_effects()->do_effects(this->site, effects_ctx);
 	}
 
-	this->change_total_building_size(building->get_size() * multiplier);
-
-	this->change_population_capacity(building->get_population_capacity() * multiplier);
-
 	if (building->get_holding_level() > 0) {
 		this->change_population_capacity(building->get_population_capacity_for_province_level(this->get_province()->get_game_data()->get_level()) * multiplier);
 	}
@@ -2329,17 +2325,6 @@ QCoro::Task<void> site_game_data::check_employment_capacities_overflow()
 			assert_throw(this->get_employment_size(employment_type) == capacity);
 		}
 	}
-}
-
-void site_game_data::change_total_building_size(const int change)
-{
-	if (change == 0) {
-		return;
-	}
-
-	this->total_building_size += change;
-
-	emit total_building_size_changed();
 }
 
 void site_game_data::change_base_commodity_output(const commodity *commodity, const centesimal_int &change)

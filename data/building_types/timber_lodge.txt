@@ -3,7 +3,6 @@ timber_lodge = {
 	building_class = timber_lodge
 	portrait = aristocratic_palace
 	icon = timber
-	size = 1
 	required_technology = woodworking
 	holding_types = {
 		castle

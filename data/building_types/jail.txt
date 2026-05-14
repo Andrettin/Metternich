@@ -3,7 +3,6 @@ jail = {
 	building_class = jail
 	portrait = fort
 	icon = skull
-	size = 1
 	holding_types = {
 		castle
 	}

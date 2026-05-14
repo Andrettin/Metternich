@@ -3,7 +3,6 @@ shop = {
 	building_class = shop
 	portrait = trading_post
 	icon = wealth
-	size = 1
 	holding_types = {
 		guild
 	}
@@ -31,7 +30,6 @@ market = {
 	building_class = market
 	portrait = trading_post
 	icon = wealth
-	size = 2
 	base_building = shop
 	min_holding_level = 2
 	required_technology = coinage

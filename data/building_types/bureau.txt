@@ -3,7 +3,6 @@ bureau = {
 	building_class = bureau
 	portrait = trading_post
 	icon = courthouse
-	size = 2
 	min_holding_level = 4
 	holding_types = {
 		castle

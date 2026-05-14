@@ -3,7 +3,6 @@ lumber_mill = {
 	building_class = lumber_mill
 	portrait = factory
 	icon = lumber
-	size = 1
 	required_technology = saw_mill
 	holding_types = {
 		castle
