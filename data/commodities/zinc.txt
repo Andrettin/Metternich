@@ -2,6 +2,7 @@ zinc = {
 	name = "Zinc"
 	type = resource
 	icon = tin
+	mineral = true
 	base_price = 100
 	required_game_rule = brass_commodity
 }

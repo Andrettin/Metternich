@@ -2,6 +2,7 @@ lead = {
 	name = "Lead"
 	type = resource
 	icon = iron_ore
+	mineral = true
 	base_price = 100
 	required_game_rule = lead_commodity
 }
@@ -10,6 +11,7 @@ lead_ingots = {
 	name = "Lead Ingots"
 	type = material
 	icon = iron
+	industrial = true
 	base_price = 300
 	required_game_rule = lead_commodity
 }

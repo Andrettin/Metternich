@@ -2,6 +2,7 @@ brass = {
 	name = "Brass"
 	type = material
 	icon = bronze
+	industrial = true
 	base_price = 300
 	required_game_rule = brass_commodity
 }

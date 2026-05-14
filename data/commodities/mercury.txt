@@ -2,6 +2,7 @@ mercury = {
 	name = "Mercury"
 	type = material
 	icon = iron
+	industrial = true
 	base_price = 300
 	required_game_rule = mercury_commodity
 }

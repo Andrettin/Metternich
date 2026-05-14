@@ -2,6 +2,7 @@ grain = {
 	name = "Grain"
 	type = resource
 	icon = grain
+	agricultural = true
 	food_type = starch
 	base_price = 1 #1cp, price of a pound of wheat
 	storage_unit = tn

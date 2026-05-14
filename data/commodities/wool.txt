@@ -2,6 +2,7 @@ wool = {
 	name = "Wool"
 	type = resource
 	icon = wool
+	agricultural = true
 	base_price = 600 #6gp
 	storage_unit = tn
 	units = {

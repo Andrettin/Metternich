@@ -2,6 +2,7 @@ cotton = {
 	name = "Cotton"
 	type = resource
 	icon = cotton
+	agricultural = true
 	base_price = 800 #8gp
 	storage_unit = tn
 	required_game_rule = additional_commodities

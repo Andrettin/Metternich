@@ -2,6 +2,7 @@ furniture = {
 	name = "Furniture"
 	type = good
 	icon = furniture
+	industrial = true
 	base_price = 490 #49sp, 490% of the price of lumber
 	storage_unit = tn
 	units = {

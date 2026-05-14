@@ -2,6 +2,7 @@ gold = {
 	name = "Gold"
 	type = resource
 	icon = gold
+	mineral = true
 	wealth_value = 5000 #50gp
 	storage_unit = tn
 	units = {

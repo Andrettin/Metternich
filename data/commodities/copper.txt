@@ -2,6 +2,7 @@ copper = {
 	name = "Copper"
 	type = resource
 	icon = copper
+	mineral = true
 	base_price = 50 #5sp
 	storage_unit = tn
 	units = {

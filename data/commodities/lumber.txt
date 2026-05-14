@@ -2,6 +2,7 @@ lumber = {
 	name = "Lumber"
 	type = material
 	icon = lumber
+	industrial = true
 	base_price = 10 #1sp, price of lumber; hardwood would be 1gp
 	storage_unit = tn
 	units = {

@@ -2,6 +2,7 @@ glass = {
 	name = "Glass"
 	type = material
 	icon = glass
+	industrial = true
 	base_price = 100 #1gp
 	storage_unit = tn
 	units = {

@@ -2,6 +2,7 @@ cigars = {
 	name = "Cigars"
 	type = material
 	icon = cigars
+	industrial = true
 	base_price = 300
 	required_game_rule = additional_commodities
 }

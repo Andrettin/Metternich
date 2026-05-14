@@ -2,6 +2,7 @@ liquor = {
 	name = "Liquor"
 	type = good
 	icon = wine
+	industrial = true
 	base_price = 20 #2sp, price of a pound of whiskey
 	storage_unit = tn
 	units = {

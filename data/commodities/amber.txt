@@ -2,6 +2,7 @@ amber = {
 	name = "Amber"
 	type = resource
 	icon = amber
+	mineral = true
 	wealth_value = 300
 	required_game_rule = additional_commodities
 }

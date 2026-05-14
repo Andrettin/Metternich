@@ -2,6 +2,7 @@ silk = {
 	name = "Silk"
 	type = resource
 	icon = silk
+	agricultural = true
 	wealth_value = 1000 #10gp
 	storage_unit = tn
 	units = {

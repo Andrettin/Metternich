@@ -2,6 +2,7 @@ opium = {
 	name = "Opium"
 	type = resource
 	icon = cotton
+	agricultural = true
 	base_price = 100
 	required_game_rule = additional_commodities
 }

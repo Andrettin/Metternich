@@ -2,6 +2,7 @@ horses = {
 	name = "Horses"
 	type = resource
 	icon = horses
+	agricultural = true
 	base_price = 300
 	required_game_rule = additional_commodities
 }

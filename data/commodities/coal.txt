@@ -2,6 +2,7 @@ coal = {
 	name = "Coal"
 	type = resource
 	icon = coal
+	mineral = true
 	base_price = 5 #5cp, price of bituminous coal; anthracite coal would be 1gp
 	storage_unit = tn
 	units = {

@@ -2,6 +2,7 @@ salt = {
 	name = "Salt"
 	type = resource
 	icon = salt
+	mineral = true
 	base_price = 500 #5gp
 	storage_unit = tn
 	units = {

@@ -2,6 +2,7 @@ fur_hats = {
 	name = "Fur Hats"
 	type = material
 	icon = fur_hats
+	industrial = true
 	base_price = 300
 	required_game_rule = additional_commodities
 }

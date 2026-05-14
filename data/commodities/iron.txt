@@ -2,6 +2,7 @@ iron = {
 	name = "Iron"
 	type = resource
 	icon = iron
+	mineral = true
 	base_price = 10 #1sp
 	storage_unit = tn
 	units = {

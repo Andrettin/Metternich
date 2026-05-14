@@ -2,6 +2,7 @@ tea = {
 	name = "Tea"
 	type = resource
 	icon = tobacco
+	agricultural = true
 	base_price = 100
 	required_game_rule = additional_commodities
 }

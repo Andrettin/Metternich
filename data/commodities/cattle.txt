@@ -2,6 +2,7 @@ cattle = {
 	name = "Cattle"
 	type = resource
 	icon = cattle
+	agricultural = true
 	food_type = meat
 	base_price = 1000 #10gp per cow
 	units = {
