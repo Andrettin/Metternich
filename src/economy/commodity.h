@@ -32,6 +32,9 @@ class commodity final : public named_data_entry, public data_type<commodity>
 	Q_PROPERTY(metternich::food_type food_type MEMBER food_type READ get_food_type NOTIFY changed)
 	Q_PROPERTY(bool abstract MEMBER abstract READ is_abstract NOTIFY changed)
 	Q_PROPERTY(bool manpower MEMBER manpower READ is_manpower NOTIFY changed)
+	Q_PROPERTY(bool agricultural MEMBER agricultural READ is_agricultural NOTIFY changed)
+	Q_PROPERTY(bool mineral MEMBER mineral READ is_mineral NOTIFY changed)
+	Q_PROPERTY(bool industrial MEMBER industrial READ is_industrial NOTIFY changed)
 	Q_PROPERTY(bool storable MEMBER storable READ is_storable NOTIFY changed)
 	Q_PROPERTY(bool special_storage_capacity MEMBER special_storage_capacity READ has_special_storage_capacity NOTIFY changed)
 	Q_PROPERTY(bool local MEMBER local READ is_local NOTIFY changed)
@@ -87,6 +90,21 @@ public:
 	bool is_manpower() const
 	{
 		return this->manpower;
+	}
+
+	bool is_agricultural() const
+	{
+		return this->agricultural;
+	}
+
+	bool is_mineral() const
+	{
+		return this->mineral;
+	}
+
+	bool is_industrial() const
+	{
+		return this->industrial;
 	}
 
 	bool is_storable() const
@@ -182,6 +200,9 @@ private:
 	metternich::food_type food_type;
 	bool abstract = false;
 	bool manpower = false; //whether this is some form of manpower, used for recruiting units
+	bool agricultural = false; //benefits from farming efficiency gains
+	bool mineral = false; //benefits from mining efficiency gains
+	bool industrial = false; //benefits from industrial efficiency gains
 	bool storable = true;
 	bool special_storage_capacity = false; //whether this commodity has special storage capacity for itself
 	bool local = false;

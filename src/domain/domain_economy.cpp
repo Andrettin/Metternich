@@ -990,19 +990,6 @@ void domain_economy::set_resource_output_modifier(const int value)
 	}
 }
 
-void domain_economy::set_industrial_output_modifier(const int value)
-{
-	if (value == this->get_industrial_output_modifier()) {
-		return;
-	}
-
-	this->industrial_output_modifier = value;
-
-	if (game::get()->is_running()) {
-		emit industrial_output_modifier_changed();
-	}
-}
-
 void domain_economy::set_commodity_output_modifier(const commodity *commodity, const centesimal_int &value)
 {
 	if (value == this->get_commodity_output_modifier(commodity)) {

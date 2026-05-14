@@ -3,6 +3,7 @@
 #include "script/modifier_effect/modifier_effect.h"
 
 #include "character/character.h"
+#include "script/modifier_effect/agricultural_output_modifier_effect.h"
 #include "script/modifier_effect/ai_building_desire_modifier_effect.h"
 #include "script/modifier_effect/armor_class_modifier_effect.h"
 #include "script/modifier_effect/artillery_cost_modifier_effect.h"
@@ -52,6 +53,7 @@
 #include "script/modifier_effect/max_level_modifier_effect.h"
 #include "script/modifier_effect/merchant_ship_stat_modifier_effect.h"
 #include "script/modifier_effect/military_unit_stat_modifier_effect.h"
+#include "script/modifier_effect/mineral_output_modifier_effect.h"
 #include "script/modifier_effect/monthly_commodity_bonus_modifier_effect.h"
 #include "script/modifier_effect/movement_modifier_effect.h"
 #include "script/modifier_effect/output_modifier_effect.h"
@@ -169,8 +171,6 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<free_warship_promotion_modifier_effect>(value);
 		} else if (key == "gain_technologies_known_by_others") {
 			return std::make_unique<gain_technologies_known_by_others_modifier_effect>(value);
-		} else if (key == "industrial_output_modifier") {
-			return std::make_unique<industrial_output_modifier_effect<scope_type>>(value);
 		} else if (key == "infantry_cost_modifier") {
 			return std::make_unique<infantry_cost_modifier_effect>(value);
 		} else if (key == "law_cost_modifier") {
@@ -291,7 +291,13 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 	if constexpr (std::is_same_v<scope_type, const domain> || std::is_same_v<scope_type, const province> || std::is_same_v<scope_type, const site>) {
 		static const std::string output_modifier_suffix = "_output_modifier";
 
-		if (key == "output_modifier") {
+		if (key == "agricultural_output_modifier") {
+			return std::make_unique<agricultural_output_modifier_effect<scope_type>>(value);
+		} else if (key == "industrial_output_modifier") {
+			return std::make_unique<industrial_output_modifier_effect<scope_type>>(value);
+		} else if (key == "mineral_output_modifier") {
+			return std::make_unique<mineral_output_modifier_effect<scope_type>>(value);
+		} else if (key == "output_modifier") {
 			return std::make_unique<output_modifier_effect<scope_type>>(value);
 		} else if (key == "resource_output_modifier") {
 			return std::make_unique<resource_output_modifier_effect<scope_type>>(value);

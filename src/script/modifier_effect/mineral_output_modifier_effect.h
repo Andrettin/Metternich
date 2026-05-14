@@ -5,23 +5,23 @@
 namespace metternich {
 
 template <typename scope_type>
-class industrial_output_modifier_effect final : public modifier_effect<scope_type>
+class mineral_output_modifier_effect final : public modifier_effect<scope_type>
 {
 public:
-	explicit industrial_output_modifier_effect(const std::string &value) : modifier_effect<scope_type>(value)
+	explicit mineral_output_modifier_effect(const std::string &value) : modifier_effect<scope_type>(value)
 	{
 	}
 
 	virtual const std::string &get_identifier() const override
 	{
-		static const std::string identifier = "industrial_output_modifier";
+		static const std::string identifier = "mineral_output_modifier";
 		return identifier;
 	}
 
 	virtual void apply(const scope_type *scope, const centesimal_int &multiplier) const override
 	{
 		for (const commodity *commodity : commodity::get_all()) {
-			if (commodity->is_industrial()) {
+			if (commodity->is_mineral()) {
 				if constexpr (std::is_same_v<scope_type, const domain>) {
 					scope->get_economy()->change_commodity_output_modifier(commodity, this->value * multiplier);
 				} else {
@@ -35,7 +35,7 @@ public:
 	{
 		Q_UNUSED(scope);
 
-		return "Industrial Output";
+		return "Mineral Output";
 	}
 
 	virtual bool is_percent() const override
