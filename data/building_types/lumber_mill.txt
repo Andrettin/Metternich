@@ -1,11 +1,12 @@
-sawmill = {
-	name = "Sawmill"
-	building_class = sawmill
+lumber_mill = {
+	name = "Lumber Mill"
+	building_class = lumber_mill
 	portrait = factory
 	icon = lumber
 	size = 1
 	required_technology = saw_mill
 	holding_types = {
+		castle
 		guild
 	}
 	builder_civilian_unit_types = {
@@ -14,13 +15,17 @@ sawmill = {
 		engineer
 	}
 	conditions = {
-		terrain = forest
+		feature = lumber
 	}
 	commodity_costs = {
 		wealth = 3gb
 	}
 	modifier = {
-		wealth_bonus = 1gb
+		employment_capacity = {
+			employment_type = lumber_making
+			capacity = 10000
+		}
+		population_capacity = 10000
 	}
 	domain_modifier = {
 		stability = 1

@@ -26,8 +26,8 @@ liquor_distillery = {
 	name = "Liquor Distillery"
 }
 
-sawmill = {
-	name = "Sawmill"
+lumber_mill = {
+	name = "Lumber Mill"
 }
 
 mercury_refinery = {

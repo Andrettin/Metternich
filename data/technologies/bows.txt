@@ -15,7 +15,7 @@ short_bow = {
 		}
 		modifier = {
 			factor = 0.9
-			has_building_class = sawmill
+			has_building_class = lumber_mill
 		}
 		modifier = {
 			factor = 0.9
@@ -84,7 +84,7 @@ short_bow = {
 		}
 		modifier = {
 			factor = 0.9
-			has_building_class = sawmill
+			has_building_class = lumber_mill
 		}
 		modifier = {
 			factor = 0.9
@@ -190,7 +190,7 @@ long_bow = {
 		}
 		modifier = {
 			factor = 0.9
-			has_building_class = sawmill
+			has_building_class = lumber_mill
 		}
 		modifier = {
 			factor = 0.9
@@ -255,7 +255,7 @@ long_bow = {
 		}
 		modifier = {
 			factor = 0.9
-			has_building_class = sawmill
+			has_building_class = lumber_mill
 		}
 		modifier = {
 			factor = 0.9
@@ -361,7 +361,7 @@ composite_bow = {
 		}
 		modifier = {
 			factor = 0.9
-			has_building_class = sawmill
+			has_building_class = lumber_mill
 		}
 		modifier = {
 			factor = 0.9
@@ -422,7 +422,7 @@ composite_bow = {
 		
 		modifier = {
 			factor = 0.9
-			has_building_class = sawmill
+			has_building_class = lumber_mill
 		}
 		modifier = {
 			factor = 0.9

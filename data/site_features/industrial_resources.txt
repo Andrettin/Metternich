@@ -7,3 +7,8 @@ liquor = {
 	name = "Liquor"
 	icon = wine
 }
+
+lumber = {
+	name = "Lumber"
+	icon = lumber
+}

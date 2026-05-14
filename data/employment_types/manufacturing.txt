@@ -24,3 +24,16 @@ liquor_distilling = {
 		craftsmen
 	}
 }
+
+lumber_making = {
+	name = "Lumber Making"
+	input_commodities = {
+		timber = 100tn
+	}
+	output_commodity = lumber
+	monthly_output_value = 110tn
+	base_employment_size = 10000
+	employee_types = {
+		craftsmen
+	}
+}

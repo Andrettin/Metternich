@@ -25,7 +25,7 @@ genoa = {
 		}
 		
 		1187 = {
-			buildings += sawmill
+			buildings += lumber_mill
 			buildings += smithy
 		}
 		
