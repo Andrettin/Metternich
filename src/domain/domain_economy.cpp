@@ -110,6 +110,10 @@ void domain_economy::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([this](const gsml_property &property) {
 			this->population_strata_tax_rates[magic_enum::enum_cast<population_strata>(property.get_key()).value()] = std::stoi(property.get_value());
 		});
+	} else if (tag == "commodity_output_modifiers") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->commodity_output_modifiers[commodity::get(property.get_key())] = centesimal_int(property.get_value());
+		});
 	} else {
 		throw std::runtime_error(std::format("Invalid domain government scope: \"{}\".", tag));
 	}
@@ -175,6 +179,14 @@ gsml_data domain_economy::to_gsml_data() const
 			population_strata_tax_rates_data.add_property(std::string(magic_enum::enum_name(strata)), std::to_string(tax_rate));
 		}
 		data.add_child(std::move(population_strata_tax_rates_data));
+	}
+
+	if (!this->get_commodity_output_modifiers().empty()) {
+		gsml_data commodity_output_modifiers_data("commodity_output_modifiers");
+		for (const auto &[commodity, output_modifier] : this->get_commodity_output_modifiers()) {
+			commodity_output_modifiers_data.add_property(commodity->get_identifier(), output_modifier.to_string());
+		}
+		data.add_child(std::move(commodity_output_modifiers_data));
 	}
 
 	return data;
