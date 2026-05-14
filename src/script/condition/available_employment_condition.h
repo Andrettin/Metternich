@@ -28,7 +28,8 @@ public:
 		Q_UNUSED(ctx);
 
 		for (const auto &[employment_type, employment_capacity] : scope->get_game_data()->get_employment_capacities()) {
-			if (!employment_type->get_employee_types().contains(this->population_type)) {
+			const metternich::population_type *employed_population_type = nullptr;
+			if (!employment_type->can_employ(this->population_type, employed_population_type)) {
 				continue;
 			}
 
@@ -36,9 +37,15 @@ public:
 				continue;
 			}
 
-			if (scope->get_game_data()->get_available_employment_capacity(employment_type) > 0) {
-				return true;
+			if (scope->get_game_data()->get_available_employment_capacity(employment_type) <= 0) {
+				continue;
 			}
+
+			if (scope->get_game_data()->get_available_employment_input_capacity(employment_type) <= 0) {
+				continue;
+			}
+
+			return true;
 		}
 
 		return false;
