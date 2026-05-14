@@ -2,6 +2,10 @@ furniture = {
 	name = "Furniture"
 	type = good
 	icon = furniture
-	base_price = 900
-	required_game_rule = additional_commodities
+	base_price = 490 #49sp, 490% of the price of lumber
+	storage_unit = tn
+	units = {
+		1 = lb
+		2000 = tn
+	}
 }

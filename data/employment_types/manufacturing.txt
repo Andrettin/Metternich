@@ -1,3 +1,17 @@
+furniture_making = {
+	name = "Furniture Making"
+	input_commodities = {
+		lumber = 20tn
+		timber = 20tn
+	}
+	output_commodity = furniture
+	monthly_output_value = 12tn
+	base_employment_size = 10000
+	employee_types = {
+		craftsmen
+	}
+}
+
 glass_making = {
 	name = "Glass Making"
 	input_commodities = {

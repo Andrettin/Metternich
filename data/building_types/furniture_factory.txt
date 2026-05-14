@@ -1,70 +1,28 @@
-carpenters_house = {
-	name = "Carpenter's House"
-	building_class = carpenters_house
-	portrait = factory
-	icon = furniture
-	holding_types = {
-		town
-		city
-	}
-	conditions = {
-		province = {
-			or = {
-				capital = true
-				has_resource = timber
-			}
-		}
-	}
-	commodity_costs = {
-		lumber = 2
-		iron = 2
-	}
-}
-
-carpenters_shop = {
-	name = "Carpenter's Shop"
-	building_class = carpenters_shop
-	portrait = factory
-	icon = furniture
-	base_building = carpenters_house
-	holding_types = {
-		town
-		city
-	}
-	conditions = {
-		province = {
-			or = {
-				capital = true
-				has_resource = timber
-			}
-		}
-	}
-	commodity_costs = {
-		lumber = 4
-		iron = 4
-	}
-}
-
 furniture_factory = {
 	name = "Furniture Factory"
 	building_class = furniture_factory
 	portrait = factory
 	icon = furniture
-	base_building = carpenters_shop
+	required_technology = saw_mill
 	holding_types = {
-		town
-		city
+		guild
+	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
 	}
 	conditions = {
-		province = {
-			or = {
-				capital = true
-				has_resource = timber
-			}
-		}
+		feature = furniture
 	}
 	commodity_costs = {
-		lumber = 8
-		steel = 8
+		wealth = 3gb #same as lumber mill
+	}
+	modifier = {
+		employment_capacity = {
+			employment_type = furniture_making
+			capacity = 10000
+		}
+		population_capacity = 10000
 	}
 }
