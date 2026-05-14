@@ -32,11 +32,11 @@ russia = {
 				horses = 5
 				canned_food = 20
 				fabric = 4
-				lumber = 10
+				lumber = 10tn
 				paper = 2
 				steel = 5
 				clothing = 1
-				furniture = 1
+				furniture = 1tn
 				tools = 1
 				armament = 5
 			}

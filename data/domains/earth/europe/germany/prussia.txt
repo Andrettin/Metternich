@@ -30,14 +30,18 @@ prussia = {
 				horses = 4
 				canned_food = 20
 				fabric = 3
-				lumber = 15
+				lumber = 15tn
 				paper = 8
 				steel = 10
 				clothing = 2
-				furniture = 2
+				furniture = 2tn
 				tools = 2
 				armament = 2
 			}
 		}
+		
+		#1836 = {
+			literacy_rate = 70
+		#}
 	}
 }

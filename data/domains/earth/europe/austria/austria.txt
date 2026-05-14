@@ -251,11 +251,11 @@ austria = {
 				horses = 4
 				canned_food = 20
 				fabric = 3
-				lumber = 15
+				lumber = 15tn
 				paper = 8
 				steel = 10
 				clothing = 3
-				furniture = 3
+				furniture = 3tn
 				tools = 3
 				armament = 2
 			}
@@ -266,6 +266,10 @@ austria = {
 				ruler = ferdinand_i_of_austria #Ferdinand I von Habsburg succeeded his father as Emperor of Austria on 1835.3.2; Source: "Almanach de Gotha pour l'année 1847", 1847, p. 10.
 			}
 		}
+		
+		#1836 = {
+			literacy_rate = 40
+		#}
 		
 		1848.11.21 = {
 			offices = {

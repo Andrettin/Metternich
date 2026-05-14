@@ -75,13 +75,17 @@ france = {
 				horses = 4
 				canned_food = 20
 				fabric = 5
-				lumber = 20
+				lumber = 20tn
 				paper = 10
 				steel = 15
 				clothing = 4
-				furniture = 4
+				furniture = 4tn
 				tools = 4
 			}
 		}
+		
+		#1836 = {
+			literacy_rate = 60
+		#}
 	}
 }

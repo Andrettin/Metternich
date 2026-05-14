@@ -41,11 +41,11 @@ great_britain = {
 				horses = 2
 				canned_food = 20
 				fabric = 10
-				lumber = 20
+				lumber = 20tn
 				paper = 10
 				steel = 15
 				clothing = 8
-				furniture = 5
+				furniture = 5tn
 				tools = 5
 				armament = 2
 			}
