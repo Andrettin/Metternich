@@ -8,6 +8,7 @@ cwt = {
 	name = "Hundredweight"
 	icon = sack_2
 	suffix = "cwt"
+	displayed = false
 }
 
 tn = {
