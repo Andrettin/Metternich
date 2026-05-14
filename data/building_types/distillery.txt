@@ -5,6 +5,7 @@ liquor_distillery = {
 	icon = wine
 	size = 1
 	holding_types = {
+		castle
 		guild
 	}
 	builder_civilian_unit_types = {
