@@ -6,6 +6,7 @@ gold = {
 	storage_unit = tn
 	units = {
 		1 = lb
+		14 = st
 		100 = cwt
 		2000 = tn
 	}
