@@ -15,6 +15,7 @@ vienna = {
 		crossroads #important market or fair
 		glass
 		#holy_site #historical cathedral
+		prime_grain_land
 	}
 	
 	history = {

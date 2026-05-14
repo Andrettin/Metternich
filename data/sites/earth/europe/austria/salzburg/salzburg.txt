@@ -10,6 +10,7 @@ salzburg = {
 	}
 	features = {
 		holy_site #historical cathedral
+		prime_grain_land
 	}
 	
 	history = {

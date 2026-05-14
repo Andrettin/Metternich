@@ -4,6 +4,8 @@ innsbruck = {
 	geocoordinate = { 11.40999059920 47.28040732740 } #from Natural Earth
 	type = holding
 	holding_type = castle
-	#resource = timber
 	province = tyrol
+	features = {
+		prime_timber
+	}
 }
