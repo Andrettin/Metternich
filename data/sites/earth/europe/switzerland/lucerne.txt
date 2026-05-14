@@ -5,6 +5,9 @@ lucerne = {
 	type = holding
 	holding_type = guild
 	province = bern
+	features = {
+		prime_timber
+	}
 	
 	history = {
 		919 = {

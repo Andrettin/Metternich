@@ -2,7 +2,12 @@ coblenz = {
 	name = "Coblenz" #also known as Koblenz
 	world = earth
 	geocoordinate = { 7.59999059920 50.35047833160 } #from Natural Earth
+	type = holding
+	holding_type = guild
 	province = rhineland
+	features = {
+		prime_timber
+	}
 	
 	history = {
 		919 = {

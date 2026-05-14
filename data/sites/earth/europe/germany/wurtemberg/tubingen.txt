@@ -2,6 +2,8 @@ tubingen = {
 	name = "Tubingen"
 	world = earth
 	geocoordinate = { 9.0555555555556 48.52 }
+	type = holding
+	holding_type = castle
 	province = wurtemberg
 	features = {
 		academic #historical university
@@ -13,7 +15,7 @@ tubingen = {
 		}
 		
 		1416 = {
-			buildings += university #University founded in Tubingen in 1416; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+			#buildings += university #University founded in Tubingen in 1416; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
 		}
 	}
 }

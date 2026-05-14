@@ -2,6 +2,8 @@ andernach = {
 	name = "Andernach"
 	world = earth
 	geocoordinate = { 7.4016666666667 50.439722222222 }
+	type = holding
+	holding_type = castle
 	province = rhineland
 	
 	history = {
