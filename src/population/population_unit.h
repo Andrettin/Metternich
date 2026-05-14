@@ -114,11 +114,11 @@ public:
 		return this->size;
 	}
 
-	[[nodiscard]] QCoro::Task<void> set_size(const int64_t size);
+	[[nodiscard]] QCoro::Task<void> set_size(const int64_t size, const bool change_input_storage);
 
-	[[nodiscard]] QCoro::Task<void> change_size(const int64_t change)
+	[[nodiscard]] QCoro::Task<void> change_size(const int64_t change, const bool change_input_storage)
 	{
-		co_await this->set_size(this->get_size() + change);
+		co_await this->set_size(this->get_size() + change, change_input_storage);
 	}
 
 	int64_t get_literate_size() const;

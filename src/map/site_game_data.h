@@ -393,11 +393,11 @@ public:
 		return static_cast<int>(this->get_population_units().size());
 	}
 
-	[[nodiscard]] QCoro::Task<void> add_population_unit(qunique_ptr<population_unit> &&population_unit);
-	[[nodiscard]] QCoro::Task<qunique_ptr<population_unit>> pop_population_unit(population_unit *population_unit);
+	[[nodiscard]] QCoro::Task<void> add_population_unit(qunique_ptr<population_unit> &&population_unit, const bool change_input_storage);
+	[[nodiscard]] QCoro::Task<qunique_ptr<population_unit>> pop_population_unit(population_unit *population_unit, const bool change_input_storage);
 	void clear_population_units();
-	[[nodiscard]] QCoro::Task<void> create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const employment_type *employment_type, const int64_t size, const decimillesimal_int &literacy_rate, const int64_t wealth);
-	[[nodiscard]] QCoro::Task<void> change_population(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const employment_type *employment_type, const int64_t size_change, const decimillesimal_int &literacy_rate, const int64_t wealth);
+	[[nodiscard]] QCoro::Task<void> create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const employment_type *employment_type, const int64_t size, const decimillesimal_int &literacy_rate, const int64_t wealth, const bool change_input_storage);
+	[[nodiscard]] QCoro::Task<void> change_population(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const employment_type *employment_type, const int64_t size_change, const decimillesimal_int &literacy_rate, const int64_t wealth, const bool change_input_storage);
 
 	metternich::population *get_population() const
 	{
@@ -439,7 +439,7 @@ public:
 		return 0;
 	}
 
-	[[nodiscard]] QCoro::Task<void> change_employment_size(const employment_type *employment_type, const int64_t change);
+	[[nodiscard]] QCoro::Task<void> change_employment_size(const employment_type *employment_type, const int64_t change, const bool change_input_storage);
 
 	const data_entry_map<employment_type, int64_t> &get_employment_capacities() const
 	{
@@ -465,7 +465,7 @@ public:
 	}
 
 	int64_t get_available_employment_input_capacity(const employment_type *employment_type) const;
-	[[nodiscard]] QCoro::Task<void> decrease_employment(const employment_type *employment_type, int64_t decrease);
+	[[nodiscard]] QCoro::Task<void> decrease_employment(const employment_type *employment_type, int64_t decrease, const bool change_input_storage);
 	[[nodiscard]] QCoro::Task<void> check_employment();
 	[[nodiscard]] QCoro::Task<void> check_employment_capacities_overflow();
 

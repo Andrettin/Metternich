@@ -401,7 +401,7 @@ QCoro::Task<void> province_game_data::set_owner(const domain *domain)
 		//remove population if this province becomes unowned
 		std::vector<population_unit *> population_units = this->population_units;
 		for (population_unit *population_unit : population_units) {
-			co_await population_unit->get_site()->get_game_data()->pop_population_unit(population_unit);
+			co_await population_unit->get_site()->get_game_data()->pop_population_unit(population_unit, true);
 		}
 	}
 

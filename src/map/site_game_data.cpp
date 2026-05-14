@@ -1982,12 +1982,12 @@ QCoro::Task<void> site_game_data::decrement_scripted_modifiers()
 	}
 }
 
-QCoro::Task<void> site_game_data::add_population_unit(qunique_ptr<population_unit> &&population_unit)
+QCoro::Task<void> site_game_data::add_population_unit(qunique_ptr<population_unit> &&population_unit, const bool change_input_storage)
 {
 	this->get_population()->on_population_unit_gained(population_unit.get());
 
 	if (population_unit->get_employment_type() != nullptr) {
-		co_await this->change_employment_size(population_unit->get_employment_type(), population_unit->get_size());
+		co_await this->change_employment_size(population_unit->get_employment_type(), population_unit->get_size(), change_input_storage);
 	}
 
 	this->population_units.push_back(std::move(population_unit));
@@ -2002,7 +2002,7 @@ QCoro::Task<void> site_game_data::add_population_unit(qunique_ptr<population_uni
 	}
 }
 
-QCoro::Task<qunique_ptr<population_unit>> site_game_data::pop_population_unit(population_unit *population_unit)
+QCoro::Task<qunique_ptr<population_unit>> site_game_data::pop_population_unit(population_unit *population_unit, const bool change_input_storage)
 {
 	for (size_t i = 0; i < this->population_units.size();) {
 		if (this->population_units[i].get() == population_unit) {
@@ -2010,7 +2010,7 @@ QCoro::Task<qunique_ptr<population_unit>> site_game_data::pop_population_unit(po
 			this->population_units.erase(this->population_units.begin() + i);
 
 			if (population_unit->get_employment_type() != nullptr) {
-				co_await this->change_employment_size(population_unit->get_employment_type(), -population_unit->get_size());
+				co_await this->change_employment_size(population_unit->get_employment_type(), -population_unit->get_size(), change_input_storage);
 			}
 
 			population_unit->get_province()->get_game_data()->remove_population_unit(population_unit);
@@ -2043,7 +2043,7 @@ void site_game_data::clear_population_units()
 	this->population_units.clear();
 }
 
-QCoro::Task<void> site_game_data::create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const employment_type *employment_type, const int64_t size, const decimillesimal_int &literacy_rate, const int64_t wealth)
+QCoro::Task<void> site_game_data::create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const employment_type *employment_type, const int64_t size, const decimillesimal_int &literacy_rate, const int64_t wealth, const bool change_input_storage)
 {
 	assert_throw(type != nullptr);
 	assert_throw(type->is_enabled());
@@ -2055,10 +2055,10 @@ QCoro::Task<void> site_game_data::create_population_unit(const population_type *
 	population_unit->change_wealth(wealth);
 	this->get_province()->get_game_data()->add_population_unit(population_unit.get());
 
-	co_await this->add_population_unit(std::move(population_unit));
+	co_await this->add_population_unit(std::move(population_unit), change_input_storage);
 }
 
-QCoro::Task<void> site_game_data::change_population(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const employment_type *employment_type, const int64_t size_change, const decimillesimal_int &literacy_rate, const int64_t wealth)
+QCoro::Task<void> site_game_data::change_population(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const employment_type *employment_type, const int64_t size_change, const decimillesimal_int &literacy_rate, const int64_t wealth, const bool change_input_storage)
 {
 	for (const auto &population_unit : this->get_population_units()) {
 		if (population_unit->get_type() == type && population_unit->get_culture() == culture && population_unit->get_religion() == religion && population_unit->get_phenotype() == phenotype && population_unit->get_employment_type() == employment_type) {
@@ -2066,9 +2066,9 @@ QCoro::Task<void> site_game_data::change_population(const population_type *type,
 				population_unit->set_literacy_rate(((literacy_rate * size_change) + (population_unit->get_literacy_rate() * population_unit->get_size())) / (population_unit->get_size() + size_change));
 			}
 			population_unit->change_wealth(wealth);
-			co_await population_unit->change_size(size_change);
+			co_await population_unit->change_size(size_change, change_input_storage);
 			if (population_unit->get_size() == 0) {
-				co_await this->pop_population_unit(population_unit.get());
+				co_await this->pop_population_unit(population_unit.get(), change_input_storage);
 			}
 			co_return;
 		}
@@ -2077,7 +2077,7 @@ QCoro::Task<void> site_game_data::change_population(const population_type *type,
 	assert_throw(size_change >= 0);
 
 	if (size_change > 0) {
-		co_await this->create_population_unit(type, culture, religion, phenotype, employment_type, size_change, literacy_rate, wealth);
+		co_await this->create_population_unit(type, culture, religion, phenotype, employment_type, size_change, literacy_rate, wealth, change_input_storage);
 	}
 }
 
@@ -2135,7 +2135,7 @@ int64_t site_game_data::get_available_population_capacity() const
 	return std::max(0ll, available_capacity);
 }
 
-QCoro::Task<void> site_game_data::change_employment_size(const employment_type *employment_type, const int64_t change)
+QCoro::Task<void> site_game_data::change_employment_size(const employment_type *employment_type, const int64_t change, const bool change_input_storage)
 {
 	assert_throw(employment_type != nullptr);
 
@@ -2169,7 +2169,7 @@ QCoro::Task<void> site_game_data::change_employment_size(const employment_type *
 
 			assert_throw(this->get_owner()->get_economy()->can_change_commodity_input(commodity, centesimal_int(input_change)));
 
-			this->get_owner()->get_economy()->change_commodity_input(commodity, centesimal_int(input_change), true);
+			this->get_owner()->get_economy()->change_commodity_input(commodity, centesimal_int(input_change), change_input_storage);
 		}
 	}
 
@@ -2216,7 +2216,7 @@ int64_t site_game_data::get_available_employment_input_capacity(const employment
 	return input_capacity;
 }
 
-QCoro::Task<void> site_game_data::decrease_employment(const employment_type *employment_type, int64_t decrease)
+QCoro::Task<void> site_game_data::decrease_employment(const employment_type *employment_type, int64_t decrease, const bool change_input_storage)
 {
 	std::vector<population_unit *> population_units;
 	for (const auto &population_unit : this->get_population_units()) {
@@ -2228,9 +2228,9 @@ QCoro::Task<void> site_game_data::decrease_employment(const employment_type *emp
 		const int64_t unemployment_size = std::min(decrease, population_unit->get_size());
 		const int64_t lost_wealth = population_unit->get_wealth() * unemployment_size / population_unit->get_size();
 
-		co_await this->change_population(population_unit->get_type(), population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), nullptr, unemployment_size, population_unit->get_literacy_rate(), lost_wealth);
+		co_await this->change_population(population_unit->get_type(), population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), nullptr, unemployment_size, population_unit->get_literacy_rate(), lost_wealth, change_input_storage);
 
-		co_await this->change_population(population_unit->get_type(), population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), employment_type, -unemployment_size, population_unit->get_literacy_rate(), -lost_wealth);
+		co_await this->change_population(population_unit->get_type(), population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), employment_type, -unemployment_size, population_unit->get_literacy_rate(), -lost_wealth, change_input_storage);
 
 		decrease -= unemployment_size;
 		if (decrease == 0) {
@@ -2284,9 +2284,9 @@ QCoro::Task<void> site_game_data::check_employment()
 			const int64_t lost_wealth = population_unit->get_wealth() * employee_size / population_unit->get_size();
 			const bool full_employment = employee_size == population_unit->get_size();
 
-			co_await this->change_population(employed_population_type, population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), employment_type, employee_size, population_unit->get_literacy_rate(), lost_wealth);
+			co_await this->change_population(employed_population_type, population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), employment_type, employee_size, population_unit->get_literacy_rate(), lost_wealth, true);
 
-			co_await this->change_population(population_unit->get_type(), population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), nullptr, -employee_size, population_unit->get_literacy_rate(), -lost_wealth);
+			co_await this->change_population(population_unit->get_type(), population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), nullptr, -employee_size, population_unit->get_literacy_rate(), -lost_wealth, true);
 
 			if (full_employment) {
 				unemployed_population_units.erase(unemployed_population_units.begin() + i);
@@ -2309,7 +2309,7 @@ QCoro::Task<void> site_game_data::check_employment_capacities_overflow()
 	for (const auto &[employment_type, employment_size] : employment_sizes) {
 		if (!employment_type->is_available_for_site(this->site)) {
 			//if the employment is no longer allowed for the site, cease it entirely
-			co_await this->decrease_employment(employment_type, employment_size);
+			co_await this->decrease_employment(employment_type, employment_size, true);
 			assert_throw(this->get_employment_size(employment_type) == 0);
 			continue;
 		}
@@ -2319,7 +2319,7 @@ QCoro::Task<void> site_game_data::check_employment_capacities_overflow()
 		//if the employment capacity is below the employment size, reduce the latter
 		int64_t capacity_overflow = employment_size - capacity;
 		if (capacity_overflow > 0) {
-			co_await this->decrease_employment(employment_type, capacity_overflow);
+			co_await this->decrease_employment(employment_type, capacity_overflow, true);
 
 			capacity_overflow = this->get_employment_size(employment_type) - capacity;
 			if (capacity_overflow != 0) {

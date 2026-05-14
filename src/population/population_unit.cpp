@@ -114,9 +114,9 @@ QCoro::Task<void> population_unit::do_promotion(const bool is_demotion)
 	const int64_t promoted_size = (this->get_size() * promotion_rate / 100).to_int64();
 	const int64_t lost_wealth = this->get_wealth() * promoted_size / this->get_size();
 
-	co_await this->get_site()->get_game_data()->change_population(best_promotion_type, this->get_culture(), this->get_religion(), this->get_phenotype(), nullptr, promoted_size, this->get_literacy_rate(), lost_wealth);
+	co_await this->get_site()->get_game_data()->change_population(best_promotion_type, this->get_culture(), this->get_religion(), this->get_phenotype(), nullptr, promoted_size, this->get_literacy_rate(), lost_wealth, true);
 
-	co_await this->get_site()->get_game_data()->change_population(this->get_type(), this->get_culture(), this->get_religion(), this->get_phenotype(), this->get_employment_type(), -promoted_size, this->get_literacy_rate(), -lost_wealth);
+	co_await this->get_site()->get_game_data()->change_population(this->get_type(), this->get_culture(), this->get_religion(), this->get_phenotype(), this->get_employment_type(), -promoted_size, this->get_literacy_rate(), -lost_wealth, true);
 }
 
 std::string population_unit::get_scope_name() const
@@ -214,13 +214,13 @@ QCoro::Task<void> population_unit::set_employment_type(const metternich::employm
 	}
 
 	if (this->get_employment_type() != nullptr) {
-		co_await this->get_site()->get_game_data()->change_employment_size(this->get_employment_type(), -this->get_size());
+		co_await this->get_site()->get_game_data()->change_employment_size(this->get_employment_type(), -this->get_size(), true);
 	}
 
 	this->employment_type = employment_type;
 
 	if (this->get_employment_type() != nullptr) {
-		co_await this->get_site()->get_game_data()->change_employment_size(this->get_employment_type(), this->get_size());
+		co_await this->get_site()->get_game_data()->change_employment_size(this->get_employment_type(), this->get_size(), true);
 	}
 
 	emit employment_type_changed();
@@ -281,7 +281,7 @@ void population_unit::set_site(const metternich::site *site)
 	this->set_country(domain);
 }
 
-[[nodiscard]] QCoro::Task<void> population_unit::set_size(const int64_t size)
+[[nodiscard]] QCoro::Task<void> population_unit::set_size(const int64_t size, const bool change_input_storage)
 {
 	if (size == this->get_size()) {
 		co_return;
@@ -290,7 +290,7 @@ void population_unit::set_site(const metternich::site *site)
 	assert_throw(this->get_site() != nullptr);
 
 	if (this->get_employment_type() != nullptr) {
-		co_await this->get_site()->get_game_data()->change_employment_size(this->get_employment_type(), -this->get_size());
+		co_await this->get_site()->get_game_data()->change_employment_size(this->get_employment_type(), -this->get_size(), change_input_storage);
 	}
 
 	this->get_site()->get_game_data()->get_population()->on_population_unit_lost(this);
@@ -300,7 +300,7 @@ void population_unit::set_site(const metternich::site *site)
 	this->get_site()->get_game_data()->get_population()->on_population_unit_gained(this);
 
 	if (this->get_employment_type() != nullptr) {
-		co_await this->get_site()->get_game_data()->change_employment_size(this->get_employment_type(), this->get_size());
+		co_await this->get_site()->get_game_data()->change_employment_size(this->get_employment_type(), this->get_size(), change_input_storage);
 	}
 
 	emit size_changed();

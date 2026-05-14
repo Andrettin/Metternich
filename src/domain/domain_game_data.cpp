@@ -3055,7 +3055,7 @@ QCoro::Task<void> domain_game_data::grow_population()
 	const population_type *population_type = culture->get_population_class_type(site->get_game_data()->get_default_population_class());
 
 	const int64_t population_size = 100;
-	co_await site->get_game_data()->change_population(population_type, culture, religion, phenotype, nullptr, population_size, population_unit->get_literacy_rate(), 0);
+	co_await site->get_game_data()->change_population(population_type, culture, religion, phenotype, nullptr, population_size, population_unit->get_literacy_rate(), 0, true);
 
 	this->change_population_growth(-defines::get()->get_population_growth_threshold());
 }
@@ -3069,7 +3069,7 @@ QCoro::Task<void> domain_game_data::decrease_population(const bool change_popula
 			if (change_population_growth) {
 				this->change_population_growth(1);
 			}
-			co_await population_unit->get_site()->get_game_data()->pop_population_unit(population_unit);
+			co_await population_unit->get_site()->get_game_data()->pop_population_unit(population_unit, true);
 			co_return;
 		}
 	}

@@ -1570,7 +1570,7 @@ QCoro::Task<int64_t> game::apply_historical_population_group_to_site(const popul
 
 	const int64_t applied_population = std::min(remaining_population, site_game_data->get_available_population_capacity());
 
-	co_await site_game_data->change_population(population_type, culture, religion, phenotype, nullptr, applied_population, literacy_rate, 0);
+	co_await site_game_data->change_population(population_type, culture, religion, phenotype, nullptr, applied_population, literacy_rate, 0, true);
 
 	co_return remaining_population - applied_population;
 }
