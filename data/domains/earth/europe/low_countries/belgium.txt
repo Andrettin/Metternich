@@ -1,6 +1,7 @@
 belgium = {
 	name = "Belgium"
 	type = polity
+	color = { 235 200 127 }
 	flag = belgium
 	culture = walloon
 	default_religion = catholic
