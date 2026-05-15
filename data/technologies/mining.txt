@@ -371,7 +371,7 @@ steam_in_mining = {
 	period = absolutism_age
 	prerequisites = {
 		iron_mining
-		steam_engine #seems logical
+		practical_steam_engine #seems logical
 	}
 }
 
@@ -421,7 +421,7 @@ clean_coal = {
 	period = revolutionary_age
 	prerequisites = {
 		mechanized_mining
-		steam_engine
+		practical_steam_engine
 	}
 	modifier = {
 		coal_output_modifier = 20
@@ -476,10 +476,10 @@ pit_coal = {
 		science
 	}
 	cost_factor = {
-		#modifier = {
-		#	factor = 0.5
-		#	technology = practical_steam_engine
-		#}
+		modifier = {
+			factor = 0.5
+			technology = practical_steam_engine
+		}
 		#modifier = {
 		#	factor = 0.5
 		#	technology = early_railroad

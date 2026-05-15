@@ -20,13 +20,14 @@ water_wheel = {
 	}
 }
 
-steam_engine = {
-	name = "Steam Engine"
+practical_steam_engine = {
+	name = "Practical Steam Engine"
 	subcategory = power
 	portrait = engineering
 	icon = cog
 	period = gunpowder_age
 	prerequisites = {
+		water_wheel
 		invention
 		physics
 	}
@@ -39,7 +40,7 @@ high_pressure_steam_engine = {
 	icon = cog
 	period = revolutionary_age
 	prerequisites = {
-		steam_engine
+		practical_steam_engine
 		
 		advanced_ore_smelting_processes #to place it in its appropriate period, should change it to something else
 	}
