@@ -420,6 +420,7 @@ clean_coal = {
 	icon = coal
 	period = revolutionary_age
 	prerequisites = {
+		black_coal #previous coal mining technology
 		mechanized_mining
 		practical_steam_engine
 	}
@@ -471,9 +472,6 @@ pit_coal = {
 	period = napoleonic_age
 	prerequisites = {
 		clean_coal
-		
-		black_coal
-		science
 	}
 	cost_factor = {
 		modifier = {

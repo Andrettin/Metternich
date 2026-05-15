@@ -61,17 +61,69 @@ steel = {
 	}
 }
 
+cheap_iron = {
+	name = "Cheap Iron"
+	subcategory = metallurgy
+	portrait = factory
+	icon = iron
+	period = napoleonic_age
+	prerequisites = {
+		iron_working #previous iron metallurgy technology
+		clean_coal
+		high_pressure_steam_engine
+		#publishing_industry
+		#experimental_railroad
+		#basic_chemistry
+	}
+	modifier = {
+		gold_output_modifier = 10
+		employment_capacity_modifier = {
+			employment_type = gold_mining
+			modifier = 20
+		}
+		silver_output_modifier = 10
+		employment_capacity_modifier = {
+			employment_type = silver_mining
+			modifier = 20
+		}
+		coal_output_modifier = 10
+		iron_output_modifier = 25
+		employment_capacity_modifier = {
+			employment_type = iron_mining
+			modifier = 20
+		}
+	}
+	weight_factor = {
+		modifier = {
+			factor = 1.3
+			produces_commodity = coal
+		}
+		modifier = {
+			factor = 1.1
+			produces_commodity = iron
+		}
+		#modifier = {
+		#	factor = 1.1
+		#	produces_commodity = sulfur
+		#}
+		modifier = {
+			factor = 1.1
+			or = {
+				produces_commodity = gold
+				produces_commodity = silver
+			}
+		}
+	}
+}
+
 advanced_ore_roasting_processes = {
 	name = "Advanced Ore Roasting Processes"
 	subcategory = metallurgy
 	portrait = engineering
 	icon = iron
-	period = gunpowder_age
+	period = steam_age
 	prerequisites = {
-		#cheap_iron
-		
-		metallurgy
-		science
+		cheap_iron
 	}
 	cost_factor = {
 		#modifier = {
@@ -93,7 +145,7 @@ advanced_ore_grinding_processes = {
 	subcategory = metallurgy
 	portrait = engineering
 	icon = iron
-	period = absolutism_age
+	period = industrial_age
 	prerequisites = {
 		#cheap_iron
 		
@@ -119,7 +171,7 @@ advanced_ore_smelting_processes = {
 	subcategory = metallurgy
 	portrait = engineering
 	icon = iron
-	period = enlightenment_age
+	period = imperial_age
 	prerequisites = {
 		#cheap_iron
 		

@@ -42,7 +42,7 @@ high_pressure_steam_engine = {
 	prerequisites = {
 		practical_steam_engine
 		
-		advanced_ore_smelting_processes #to place it in its appropriate period, should change it to something else
+		mechanized_mining #to place it in its appropriate period, should change it to something else
 	}
 }
 
