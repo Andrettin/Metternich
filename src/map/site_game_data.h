@@ -440,6 +440,42 @@ public:
 
 	[[nodiscard]] QCoro::Task<void> change_employment_size(const employment_type *employment_type, const int64_t change, const bool change_input_storage);
 
+	int64_t get_base_employment_capacity(const employment_type *employment_type) const
+	{
+		const auto find_iterator = this->base_employment_capacities.find(employment_type);
+
+		if (find_iterator != this->base_employment_capacities.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void set_base_employment_capacity(const employment_type *employment_type, const int64_t capacity);
+
+	void change_base_employment_capacity(const employment_type *employment_type, const int64_t change)
+	{
+		this->set_base_employment_capacity(employment_type, this->get_base_employment_capacity(employment_type) + change);
+	}
+
+	int64_t get_employment_capacity_modifier(const employment_type *employment_type) const
+	{
+		const auto find_iterator = this->employment_capacity_modifiers.find(employment_type);
+
+		if (find_iterator != this->employment_capacity_modifiers.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void set_employment_capacity_modifier(const employment_type *employment_type, const int64_t modifier);
+
+	void change_employment_capacity_modifier(const employment_type *employment_type, const int64_t change)
+	{
+		this->set_employment_capacity_modifier(employment_type, this->get_employment_capacity_modifier(employment_type) + change);
+	}
+
 	const data_entry_map<employment_type, int64_t> &get_employment_capacities() const
 	{
 		return this->employment_capacities;
@@ -456,7 +492,7 @@ public:
 		return 0;
 	}
 
-	void change_employment_capacity(const employment_type *employment_type, const int64_t change);
+	void set_employment_capacity(const employment_type *employment_type, const int64_t capacity);
 
 	int64_t get_available_employment_capacity(const employment_type *employment_type) const
 	{
@@ -690,6 +726,8 @@ private:
 	qunique_ptr<metternich::population> population;
 	int64_t population_capacity = 0;
 	data_entry_map<employment_type, int64_t> employment_sizes;
+	data_entry_map<employment_type, int64_t> base_employment_capacities;
+	data_entry_map<employment_type, int64_t> employment_capacity_modifiers;
 	data_entry_map<employment_type, int64_t> employment_capacities;
 	int free_food_consumption = 0;
 	commodity_map<centesimal_int> base_commodity_outputs;

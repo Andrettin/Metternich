@@ -178,6 +178,14 @@ void site_game_data::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([this](const gsml_property &property) {
 			this->employment_sizes[employment_type::get(property.get_key())] = std::stoll(property.get_value());
 		});
+	} else if (tag == "base_employment_capacities") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->base_employment_capacities[employment_type::get(property.get_key())] = std::stoll(property.get_value());
+		});
+	} else if (tag == "employment_capacity_modifiers") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->employment_capacity_modifiers[employment_type::get(property.get_key())] = std::stoll(property.get_value());
+		});
 	} else if (tag == "employment_capacities") {
 		scope.for_each_property([this](const gsml_property &property) {
 			this->employment_capacities[employment_type::get(property.get_key())] = std::stoll(property.get_value());
@@ -285,6 +293,22 @@ gsml_data site_game_data::to_gsml_data() const
 			employment_sizes_data.add_property(employment_type->get_identifier(), std::to_string(employment_size));
 		}
 		data.add_child(std::move(employment_sizes_data));
+	}
+
+	if (!this->base_employment_capacities.empty()) {
+		gsml_data base_employment_capacities_data("base_employment_capacities");
+		for (const auto &[employment_type, employment_capacity] : this->base_employment_capacities) {
+			base_employment_capacities_data.add_property(employment_type->get_identifier(), std::to_string(employment_capacity));
+		}
+		data.add_child(std::move(base_employment_capacities_data));
+	}
+
+	if (!this->employment_capacity_modifiers.empty()) {
+		gsml_data employment_capacity_modifiers_data("employment_capacity_modifiers");
+		for (const auto &[employment_type, modifier] : this->employment_capacity_modifiers) {
+			employment_capacity_modifiers_data.add_property(employment_type->get_identifier(), std::to_string(modifier));
+		}
+		data.add_child(std::move(employment_capacity_modifiers_data));
 	}
 
 	if (!this->get_employment_capacities().empty()) {
@@ -2184,16 +2208,58 @@ QCoro::Task<void> site_game_data::change_employment_size(const employment_type *
 	}
 }
 
-void site_game_data::change_employment_capacity(const employment_type *employment_type, const int64_t change)
+void site_game_data::set_base_employment_capacity(const employment_type *employment_type, const int64_t capacity)
 {
 	assert_throw(employment_type != nullptr);
 
-	const int64_t capacity = (this->employment_capacities[employment_type] += change);
+	if (capacity == this->get_base_employment_capacity(employment_type)) {
+		return;
+	}
+
+	assert_throw(capacity >= 0);
+
+	if (capacity == 0) {
+		this->base_employment_capacities.erase(employment_type);
+	} else {
+		this->base_employment_capacities[employment_type] = capacity;
+	}
+
+	const int64_t modified_capacity = capacity * (100 + this->get_employment_capacity_modifier(employment_type)) / 100;
+	this->set_employment_capacity(employment_type, modified_capacity);
+}
+
+void site_game_data::set_employment_capacity_modifier(const employment_type *employment_type, const int64_t modifier)
+{
+	assert_throw(employment_type != nullptr);
+
+	if (modifier == this->get_employment_capacity_modifier(employment_type)) {
+		return;
+	}
+
+	if (modifier == 0) {
+		this->employment_capacity_modifiers.erase(employment_type);
+	} else {
+		this->employment_capacity_modifiers[employment_type] = modifier;
+	}
+
+	const int64_t modified_capacity = this->get_base_employment_capacity(employment_type) * (100 + modifier) / 100;
+	this->set_employment_capacity(employment_type, modified_capacity);
+}
+
+void site_game_data::set_employment_capacity(const employment_type *employment_type, const int64_t capacity)
+{
+	assert_throw(employment_type != nullptr);
+
+	if (capacity == this->get_employment_capacity(employment_type)) {
+		return;
+	}
 
 	assert_throw(capacity >= 0);
 
 	if (capacity == 0) {
 		this->employment_capacities.erase(employment_type);
+	} else {
+		this->employment_capacities[employment_type] = capacity;
 	}
 }
 

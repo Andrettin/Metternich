@@ -8,14 +8,14 @@
 
 namespace metternich {
 
-class employment_capacity_modifier_effect final : public modifier_effect<const site>
+class employment_capacity_modifier_modifier_effect final : public modifier_effect<const site>
 {
 public:
-	employment_capacity_modifier_effect() = default;
+	employment_capacity_modifier_modifier_effect() = default;
 
 	virtual const std::string &get_identifier() const override
 	{
-		static const std::string identifier = "employment_capacity";
+		static const std::string identifier = "employment_capacity_modifier";
 		return identifier;
 	}
 
@@ -26,7 +26,7 @@ public:
 
 		if (key == "employment_type") {
 			this->employment_type = employment_type::get(value);
-		} else if (key == "capacity") {
+		} else if (key == "modifier") {
 			this->value = centesimal_int(std::stoi(value));
 		} else {
 			modifier_effect::process_gsml_property(property);
@@ -37,7 +37,7 @@ public:
 	{
 		assert_throw(this->employment_type != nullptr);
 
-		scope->get_game_data()->change_base_employment_capacity(this->employment_type, (this->value * multiplier).to_int());
+		scope->get_game_data()->change_employment_capacity_modifier(this->employment_type, (this->value * multiplier).to_int());
 	}
 
 	virtual std::string get_base_string(const site *scope) const override
@@ -47,6 +47,11 @@ public:
 		assert_throw(this->employment_type != nullptr);
 
 		return std::format("{} Employment Capacity", this->employment_type->get_name());
+	}
+
+	virtual bool is_percent() const override
+	{
+		return true;
 	}
 
 private:
