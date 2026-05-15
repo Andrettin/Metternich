@@ -375,14 +375,60 @@ steam_in_mining = {
 	}
 }
 
+mechanized_mining = {
+	name = "Mechanized Mining"
+	subcategory = mining
+	portrait = factory
+	icon = cog
+	period = enlightenment_age
+	prerequisites = {
+		steam_in_mining #seems logical
+		water_wheel
+	}
+	modifier = {
+		iron_output_modifier = 25
+		coal_output_modifier = 25
+		#sulfur_output_modifier = 25
+	}
+}
+
+clean_coal = {
+	name = "Clean Coal"
+	subcategory = mining
+	portrait = factory
+	icon = coal
+	period = revolutionary_age
+	prerequisites = {
+		mechanized_mining
+		steam_engine
+	}
+	modifier = {
+		coal_output_modifier = 20
+		employment_capacity_modifier = {
+			employment_type = coal_mining
+			modifier = 20
+		}
+		#sulfur_output_modifier = 10
+		#employment_capacity_modifier = {
+		#	employment_type = sulfur_mining
+		#	modifier = 20
+		#}
+		iron_output_modifier = 10
+		employment_capacity_modifier = {
+			employment_type = iron_mining
+			modifier = 20
+		}
+	}
+}
+
 pit_coal = {
 	name = "Pit Coal"
 	subcategory = mining
 	portrait = factory
 	icon = coal
-	period = gunpowder_age
+	period = napoleonic_age
 	prerequisites = {
-		#clean_coal
+		clean_coal
 		
 		black_coal
 		science
@@ -407,7 +453,7 @@ coke = {
 	subcategory = mining
 	portrait = factory
 	icon = coal
-	period = absolutism_age
+	period = steam_age
 	prerequisites = {
 		#clean_coal
 		

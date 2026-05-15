@@ -1,3 +1,25 @@
+wind_wheel = {
+	name = "Wind Wheel"
+	subcategory = power
+	portrait = engineering
+	icon = cog
+	period = dark_age
+	prerequisites = {
+		invention #seems reasonable
+	}
+}
+
+water_wheel = {
+	name = "Water Wheel"
+	subcategory = power
+	portrait = engineering
+	icon = cog
+	period = feudal_age
+	prerequisites = {
+		wind_wheel
+	}
+}
+
 steam_engine = {
 	name = "Steam Engine"
 	subcategory = power
