@@ -88,7 +88,7 @@ Item {
 					width: 224 * scale_factor + 6 * scale_factor
 					height: 32 * scale_factor + 6 * scale_factor
 					anchors.verticalCenter: parent.verticalCenter
-					visible: researchable_technologies.includes(technology)
+					visible: researchable_technologies.includes(technology) && (country_game_data.technology.current_researches.includes(technology) || country_game_data.technology.current_researches.length < country_game_data.technology.max_current_researches)
 					
 					contentItem: Item {
 						id: research_technology_button_item

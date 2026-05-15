@@ -887,6 +887,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/initiative_modifier_effect.h
 	src/script/modifier_effect/law_cost_modifier_effect.h
 	src/script/modifier_effect/leader_cost_modifier_effect.h
+	src/script/modifier_effect/max_current_researches_modifier_effect.h
 	src/script/modifier_effect/max_level_modifier_effect.h
 	src/script/modifier_effect/merchant_ship_stat_modifier_effect.h
 	src/script/modifier_effect/military_unit_stat_modifier_effect.h

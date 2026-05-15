@@ -27,8 +27,11 @@ class domain_technology final : public QObject
 	Q_PROPERTY(QVariantList researchable_technologies READ get_researchable_technologies_qvariant_list NOTIFY technologies_changed)
 	Q_PROPERTY(QVariantList future_technologies READ get_future_technologies_qvariant_list NOTIFY technologies_changed)
 	Q_PROPERTY(QVariantList current_researches READ get_current_researches_qvariant_list NOTIFY current_researches_changed)
+	Q_PROPERTY(int max_current_researches READ get_max_current_researches NOTIFY max_current_researches_changed)
 
 public:
+	static constexpr int base_max_current_researches = 3;
+
 	explicit domain_technology(const metternich::domain *domain, const domain_game_data *game_data);
 	~domain_technology();
 
@@ -79,6 +82,19 @@ public:
 	Q_INVOKABLE QString get_current_research_progress_qstring(const metternich::technology *technology) const;
 	void change_current_research_progress(const technology *technology, const decimillesimal_int &change);
 	[[nodiscard]] QCoro::Task<void> choose_current_research();
+
+	int get_max_current_researches() const
+	{
+		return this->max_current_researches;
+	}
+
+	void set_max_current_researches(const int max);
+
+	void change_max_current_researches(const int change)
+	{
+		this->set_max_current_researches(this->get_max_current_researches() + change);
+	}
+
 	[[nodiscard]] QCoro::Task<void> on_technology_researched(const technology *technology);
 
 	data_entry_map<technology_category, const technology *> get_research_choice_map(const bool is_free) const;
@@ -188,6 +204,7 @@ public:
 signals:
 	void technologies_changed();
 	void current_researches_changed();
+	void max_current_researches_changed();
 	void technology_researched(const technology *technology);
 	void technology_lost(const technology *technology);
 	void available_research_slots_changed();
@@ -196,6 +213,7 @@ private:
 	const metternich::domain *domain = nullptr;
 	technology_set current_researches;
 	technology_map<decimillesimal_int> current_research_progresses;
+	int max_current_researches = domain_technology::base_max_current_researches;
 	int free_technology_count = 0;
 	centesimal_int technology_cost_modifier;
 	data_entry_map<technology_category, centesimal_int> technology_category_cost_modifiers;

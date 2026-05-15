@@ -56,7 +56,9 @@ void domain_technology::process_gsml_property(const gsml_property &property)
 	const std::string &key = property.get_key();
 	const std::string &value = property.get_value();
 
-	if (key == "free_technology_count") {
+	if (key == "max_current_researches") {
+		this->max_current_researches = std::stoi(value);
+	} else if (key == "free_technology_count") {
 		this->free_technology_count = std::stoi(value);
 	} else {
 		throw std::runtime_error(std::format("Invalid domain technology property: \"{}\".", key));
@@ -87,6 +89,10 @@ gsml_data domain_technology::to_gsml_data() const
 
 	if (this->free_technology_count != 0) {
 		data.add_property("free_technology_count", std::to_string(this->free_technology_count));
+	}
+
+	if (this->max_current_researches != 0) {
+		data.add_property("max_current_researches", std::to_string(this->max_current_researches));
 	}
 
 	if (!this->get_current_researches().empty()) {
@@ -126,7 +132,8 @@ QCoro::Task<void> domain_technology::do_research()
 			co_await this->gain_free_technology();
 		}
 
-		if (this->get_current_researches().empty()) {
+		const int available_current_research_slots = this->get_max_current_researches() - static_cast<int>(this->get_current_researches().size());
+		for (int i = 0; i < available_current_research_slots; ++i) {
 			co_await this->choose_current_research();
 		}
 
@@ -705,7 +712,7 @@ void domain_technology::change_current_research_progress(const technology *techn
 
 QCoro::Task<void> domain_technology::choose_current_research()
 {
-	const data_entry_map<technology_category, const technology *> research_choice_map = this->domain->get_technology()->get_research_choice_map(false);
+	const data_entry_map<technology_category, const technology *> research_choice_map = this->get_research_choice_map(false);
 
 	if (research_choice_map.empty()) {
 		co_return;
@@ -726,6 +733,21 @@ QCoro::Task<void> domain_technology::choose_current_research()
 		emit engine_interface::get()->technology_choosable(container::to_qvariant_list(potential_technologies));
 		co_await future;
 	}
+}
+
+void domain_technology::set_max_current_researches(const int max)
+{
+	if (max == this->get_max_current_researches()) {
+		return;
+	}
+
+	this->max_current_researches = max;
+
+	while (static_cast<int>(this->get_current_researches().size()) > this->get_max_current_researches()) {
+		this->remove_current_research(*this->get_current_researches().rbegin(), true, true);
+	}
+
+	emit max_current_researches_changed();
 }
 
 QCoro::Task<void> domain_technology::on_technology_researched(const technology *technology)
@@ -774,9 +796,20 @@ data_entry_map<technology_category, const technology *> domain_technology::get_r
 
 	data_entry_map<technology_category, std::vector<const technology *>> potential_technologies_per_category;
 
+	data_entry_set<technology_category> current_research_categories;
+	for (const technology *current_research : this->get_current_researches()) {
+		current_research_categories.insert(current_research->get_category());
+	}
+
 	for (const technology *technology : researchable_technologies) {
-		if (!is_free && !this->can_research_technology(technology)) {
-			continue;
+		if (!is_free) {
+			if (current_research_categories.contains(technology->get_category())) {
+				continue;
+			}
+
+			if (!this->can_research_technology(technology)) {
+				continue;
+			}
 		}
 
 		std::vector<const metternich::technology *> &category_technologies = potential_technologies_per_category[technology->get_category()];
