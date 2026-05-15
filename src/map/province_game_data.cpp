@@ -17,6 +17,7 @@
 #include "domain/domain_technology.h"
 #include "economy/commodity.h"
 #include "economy/commodity_container.h"
+#include "economy/employment_type.h"
 #include "economy/income_transaction_type.h"
 #include "economy/resource.h"
 #include "engine_interface.h"
@@ -128,6 +129,10 @@ void province_game_data::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->technologies.insert(technology::get(value));
 		}
+	} else if (tag == "employment_capacity_modifiers") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->employment_capacity_modifiers[employment_type::get(property.get_key())] = std::stoll(property.get_value());
+		});
 	} else if (tag == "technology_category_spread_modifiers") {
 		scope.for_each_property([this](const gsml_property &property) {
 			this->technology_category_spread_modifiers[technology_category::get(property.get_key())] = std::stoi(property.get_value());
@@ -179,6 +184,14 @@ gsml_data province_game_data::to_gsml_data() const
 			technologies_data.add_value(technology->get_identifier());
 		}
 		data.add_child(std::move(technologies_data));
+	}
+
+	if (!this->employment_capacity_modifiers.empty()) {
+		gsml_data employment_capacity_modifiers_data("employment_capacity_modifiers");
+		for (const auto &[employment_type, modifier] : this->employment_capacity_modifiers) {
+			employment_capacity_modifiers_data.add_property(employment_type->get_identifier(), std::to_string(modifier));
+		}
+		data.add_child(std::move(employment_capacity_modifiers_data));
 	}
 
 	if (!this->technology_category_spread_modifiers.empty()) {
@@ -1514,6 +1527,26 @@ void province_game_data::remove_population_unit(population_unit *population_unit
 void province_game_data::clear_population_units()
 {
 	this->population_units.clear();
+}
+
+void province_game_data::set_employment_capacity_modifier(const employment_type *employment_type, const int64_t modifier)
+{
+	assert_throw(employment_type != nullptr);
+
+	if (modifier == this->get_employment_capacity_modifier(employment_type)) {
+		return;
+	}
+
+	if (modifier == 0) {
+		this->employment_capacity_modifiers.erase(employment_type);
+	} else {
+		this->employment_capacity_modifiers[employment_type] = modifier;
+	}
+
+	//recalculate the affected employment capacity for holdings in this province
+	for (const site *site : this->get_settlement_sites()) {
+		site->get_game_data()->calculate_employment_capacity(employment_type);
+	}
 }
 
 QVariantList province_game_data::get_military_units_qvariant_list() const

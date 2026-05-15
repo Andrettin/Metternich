@@ -8,7 +8,8 @@
 
 namespace metternich {
 
-class employment_capacity_modifier_modifier_effect final : public modifier_effect<const site>
+template <typename scope_type>
+class employment_capacity_modifier_modifier_effect final : public modifier_effect<scope_type>
 {
 public:
 	employment_capacity_modifier_modifier_effect() = default;
@@ -29,18 +30,18 @@ public:
 		} else if (key == "modifier") {
 			this->value = centesimal_int(std::stoi(value));
 		} else {
-			modifier_effect::process_gsml_property(property);
+			modifier_effect<scope_type>::process_gsml_property(property);
 		}
 	}
 
-	virtual void apply(const site *scope, const centesimal_int &multiplier) const override
+	virtual void apply(scope_type *scope, const centesimal_int &multiplier) const override
 	{
 		assert_throw(this->employment_type != nullptr);
 
 		scope->get_game_data()->change_employment_capacity_modifier(this->employment_type, (this->value * multiplier).to_int());
 	}
 
-	virtual std::string get_base_string(const site *scope) const override
+	virtual std::string get_base_string(const scope_type *scope) const override
 	{
 		Q_UNUSED(scope);
 

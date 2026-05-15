@@ -2224,8 +2224,7 @@ void site_game_data::set_base_employment_capacity(const employment_type *employm
 		this->base_employment_capacities[employment_type] = capacity;
 	}
 
-	const int64_t modified_capacity = capacity * (100 + this->get_employment_capacity_modifier(employment_type)) / 100;
-	this->set_employment_capacity(employment_type, modified_capacity);
+	this->calculate_employment_capacity(employment_type);
 }
 
 void site_game_data::set_employment_capacity_modifier(const employment_type *employment_type, const int64_t modifier)
@@ -2242,8 +2241,7 @@ void site_game_data::set_employment_capacity_modifier(const employment_type *emp
 		this->employment_capacity_modifiers[employment_type] = modifier;
 	}
 
-	const int64_t modified_capacity = this->get_base_employment_capacity(employment_type) * (100 + modifier) / 100;
-	this->set_employment_capacity(employment_type, modified_capacity);
+	this->calculate_employment_capacity(employment_type);
 }
 
 void site_game_data::set_employment_capacity(const employment_type *employment_type, const int64_t capacity)
@@ -2261,6 +2259,20 @@ void site_game_data::set_employment_capacity(const employment_type *employment_t
 	} else {
 		this->employment_capacities[employment_type] = capacity;
 	}
+}
+
+void site_game_data::calculate_employment_capacity(const employment_type *employment_type)
+{
+	int64_t capacity = this->get_base_employment_capacity(employment_type);
+	
+	int64_t employment_capacity_modifier = this->get_employment_capacity_modifier(employment_type);
+	employment_capacity_modifier += this->get_province()->get_game_data()->get_employment_capacity_modifier(employment_type);
+	if (employment_capacity_modifier != 0) {
+		capacity *= 100 + employment_capacity_modifier;
+		capacity /= 100;
+	}
+	
+	this->set_employment_capacity(employment_type, capacity);
 }
 
 int64_t site_game_data::get_available_employment_input_capacity(const employment_type *employment_type) const

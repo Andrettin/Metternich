@@ -493,6 +493,7 @@ public:
 	}
 
 	void set_employment_capacity(const employment_type *employment_type, const int64_t capacity);
+	void calculate_employment_capacity(const employment_type *employment_type);
 
 	int64_t get_available_employment_capacity(const employment_type *employment_type) const
 	{

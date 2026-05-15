@@ -356,14 +356,18 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			modifier_effect = std::make_unique<commodity_bonus_per_adjacent_terrain_modifier_effect>();
 		} else if (tag == "employment_capacity") {
 			modifier_effect = std::make_unique<employment_capacity_modifier_effect>();
-		} else if (tag == "employment_capacity_modifier") {
-			modifier_effect = std::make_unique<employment_capacity_modifier_modifier_effect>();
 		}
 	}
 	
 	if constexpr (std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, const domain>) {
 		if (tag == "military_unit_stat") {
 			modifier_effect = std::make_unique<military_unit_stat_modifier_effect<scope_type>>();
+		}
+	}
+
+	if constexpr (std::is_same_v<scope_type, const province> || std::is_same_v<scope_type, const site>) {
+		if (tag == "employment_capacity_modifier") {
+			modifier_effect = std::make_unique<employment_capacity_modifier_modifier_effect<scope_type>>();
 		}
 	}
 

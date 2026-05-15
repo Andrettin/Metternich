@@ -302,6 +302,24 @@ public:
 		return this->population.get();
 	}
 
+	int64_t get_employment_capacity_modifier(const employment_type *employment_type) const
+	{
+		const auto find_iterator = this->employment_capacity_modifiers.find(employment_type);
+
+		if (find_iterator != this->employment_capacity_modifiers.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void set_employment_capacity_modifier(const employment_type *employment_type, const int64_t modifier);
+
+	void change_employment_capacity_modifier(const employment_type *employment_type, const int64_t change)
+	{
+		this->set_employment_capacity_modifier(employment_type, this->get_employment_capacity_modifier(employment_type) + change);
+	}
+
 	const std::vector<military_unit *> &get_military_units() const
 	{
 		return this->military_units;
@@ -627,6 +645,7 @@ private:
 	scripted_province_modifier_map<int> scripted_modifiers;
 	std::vector<population_unit *> population_units;
 	qunique_ptr<metternich::population> population;
+	data_entry_map<employment_type, int64_t> employment_capacity_modifiers;
 	std::vector<military_unit *> military_units;
 	std::map<military_unit_category, int> military_unit_category_counts;
 	std::vector<army *> entering_armies; //armies entering this province
