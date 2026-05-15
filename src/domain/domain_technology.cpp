@@ -814,7 +814,8 @@ data_entry_map<technology_category, const technology *> domain_technology::get_r
 
 		std::vector<const metternich::technology *> &category_technologies = potential_technologies_per_category[technology->get_category()];
 
-		const int weight = technology::get_max_level() + 1 - technology->get_level();
+		const int base_weight = (technology::get_max_level() + 1 - technology->get_level()) * 100;
+		const int weight = technology->get_weight_factor() != nullptr ? technology->get_weight_factor()->calculate(this->domain, decimillesimal_int(base_weight)).to_int() : base_weight;
 		for (int i = 0; i < weight; ++i) {
 			category_technologies.push_back(technology);
 		}

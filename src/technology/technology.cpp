@@ -146,6 +146,10 @@ void technology::process_gsml_scope(const gsml_data &scope)
 		auto factor = std::make_unique<metternich::factor<province>>(100);
 		factor->process_gsml_data(scope);
 		this->spread_mean_time_to_happen_factor = std::move(factor);
+	} else if (tag == "weight_factor") {
+		auto factor = std::make_unique<metternich::factor<domain>>(100);
+		factor->process_gsml_data(scope);
+		this->weight_factor = std::move(factor);
 	} else if (tag == "modifier") {
 		auto modifier = std::make_unique<metternich::modifier<const province>>();
 		modifier->process_gsml_data(scope);

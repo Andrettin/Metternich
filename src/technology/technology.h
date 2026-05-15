@@ -234,6 +234,11 @@ public:
 		return this->spread_mean_time_to_happen_factor.get();
 	}
 
+	const factor<domain> *get_weight_factor() const
+	{
+		return this->weight_factor.get();
+	}
+
 	const std::vector<const commodity *> &get_enabled_commodities() const
 	{
 		return this->enabled_commodities;
@@ -522,6 +527,7 @@ private:
 	commodity_map<int64_t> commodity_costs;
 	std::unique_ptr<const factor<province>> cost_factor;
 	std::unique_ptr<const factor<province>> spread_mean_time_to_happen_factor;
+	std::unique_ptr<const factor<domain>> weight_factor;
 	std::vector<const commodity *> enabled_commodities;
 	std::vector<const resource *> enabled_resources;
 	std::vector<const building_type *> enabled_buildings;
