@@ -709,4 +709,7 @@ university = {
 			}
 		}
 	}
+	domain_modifier = {
+		max_current_researches = 1
+	}
 }
