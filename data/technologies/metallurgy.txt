@@ -192,6 +192,102 @@ advanced_ore_smelting_processes = {
 	}
 }
 
+cheap_steel = {
+	name = "Cheap Steel"
+	subcategory = metallurgy
+	portrait = factory
+	icon = steel
+	period = steam_age
+	prerequisites = {
+		crucible_process #previous steel metallurgy technology
+		cheap_iron
+		#steam_turbine
+		#mechanical_production
+		#early_railroad
+		#medicine
+	}
+	modifier = {
+		gold_output_modifier = 10
+		silver_output_modifier = 10
+		coal_output_modifier = 15
+		iron_output_modifier = 15
+		employment_capacity_modifier = {
+			employment_type = gold_mining
+			modifier = 20
+		}
+		employment_capacity_modifier = {
+			employment_type = silver_mining
+			modifier = 20
+		}
+	}
+	weight_factor = {
+		modifier = {
+			factor = 1.3
+			produces_commodity = coal
+		}
+		modifier = {
+			factor = 1.1
+			produces_commodity = iron
+		}
+		modifier = {
+			factor = 1.1
+			produces_commodity = sulfur
+		}
+		modifier = {
+			factor = 1.1
+			or = {
+				produces_commodity = gold
+				produces_commodity = silver
+			}
+		}
+	}
+}
+
+advanced_metallurgy = {
+	name = "Advanced Metallurgy"
+	subcategory = metallurgy
+	portrait = factory
+	icon = steel
+	period = industrial_age
+	prerequisites = {
+		cheap_steel
+		#combustion_engine
+		#interchangeable_parts
+		#iron_railroad
+		#inorganic_chemistry
+	}
+	modifier = {
+		sulfur_output_modifier = 25
+		coal_output_modifier = 25
+		iron_output_modifier = 25
+		employment_capacity_modifier = {
+			employment_type = sulfur_mining
+			modifier = 20
+		}
+	}
+	weight_factor = {
+		modifier = {
+			factor = 1.3
+			produces_commodity = coal
+		}
+		modifier = {
+			factor = 1.1
+			produces_commodity = iron
+		}
+		modifier = {
+			factor = 1.1
+			produces_commodity = sulfur
+		}
+		modifier = {
+			factor = 1.1
+			or = {
+				produces_commodity = gold
+				produces_commodity = silver
+			}
+		}
+	}
+}
+
 steel_alloys = {
 	name = "Steel Alloys"
 	subcategory = metallurgy
@@ -199,9 +295,7 @@ steel_alloys = {
 	icon = steel
 	period = imperial_age
 	prerequisites = {
-		#advanced_metallurgy
-		
-		steel
+		advanced_metallurgy
 	}
 	cost_factor = {
 		#modifier = {
