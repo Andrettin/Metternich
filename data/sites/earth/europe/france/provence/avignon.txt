@@ -2,17 +2,20 @@ avignon = {
 	name = "Avignon"
 	world = earth
 	geocoordinate = { 4.8083333333333 43.948611111111 }
+	type = holding
+	holding_type = temple
 	province = provence
 	cultural_names = {
 		frankish = "Avinio"
 	}
 	features = {
 		academic #historical university
+		sulfur_deposit
 	}
 	
 	history = {
 		1303 = {
-			buildings += university #University founded in Avignon in 1303; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+			#buildings += university #University founded in Avignon in 1303; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
 		}
 		
 		1836 = {

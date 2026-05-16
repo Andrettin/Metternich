@@ -5,6 +5,9 @@ linz = {
 	type = holding
 	holding_type = guild
 	province = upper_austria
+	features = {
+		sulfur_deposit
+	}
 	
 	history = {
 		919 = {

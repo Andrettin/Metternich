@@ -1,0 +1,11 @@
+weimar = {
+	name = "Weimar"
+	world = earth
+	geocoordinate = { 11.329444444444444 50.98111111111111 }
+	type = holding
+	holding_type = castle
+	province = thuringia
+	features = {
+		sulfur_deposit
+	}
+}

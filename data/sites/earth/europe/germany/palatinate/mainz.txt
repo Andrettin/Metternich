@@ -3,6 +3,7 @@ mainz = {
 	world = earth
 	geocoordinate = { 8.27321915550 49.98247245500 } #from Natural Earth
 	type = holding
+	holding_type = temple
 	cultural_names = {
 		french = "Mayence"
 		roman = "Mogontiacum" #Source: "Ancient Warfare VII.6", 2013, p. 7.
@@ -10,24 +11,24 @@ mainz = {
 	features = {
 		academic #historical university
 		holy_site #historical cathedral
+		sulfur_deposit
 	}
 	
 	history = {
 		395 = {
 			buildings += cathedral #Mayence was the seat of a bishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
-			holding_type = city
 		}
 		
 		919 = {
-			holding_type = city #important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			#important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
 		}
 		
 		1360 = {
-			#holding_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			#existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 
 		1476 = {
-			buildings += university #University founded in Mainz in 1476; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+			#buildings += university #University founded in Mainz in 1476; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
 		}
 	}
 }

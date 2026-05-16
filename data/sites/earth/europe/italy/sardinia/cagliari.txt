@@ -8,6 +8,7 @@ cagliari = {
 	}
 	features = {
 		holy_site #historical cathedral
+		sulfur_deposit
 	}
 	
 	history = {

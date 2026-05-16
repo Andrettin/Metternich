@@ -7,6 +7,7 @@ catania = {
 	province = sicily
 	features = {
 		academic #historical university
+		sulfur_deposit
 	}
 	
 	history = {

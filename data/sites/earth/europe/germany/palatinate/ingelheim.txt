@@ -1,7 +1,9 @@
 ingelheim = {
 	name = "Ingelheim"
 	world = earth
-	#geocoordinate = { 8.0563888888889 49.974722222222 }
+	geocoordinate = { 8.0563888888889 49.974722222222 }
+	type = holding
+	holding_type = castle
 	province = palatinate
 	
 	history = {

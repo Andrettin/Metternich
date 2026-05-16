@@ -5,6 +5,9 @@ epinal = {
 	type = holding
 	holding_type = guild
 	province = lorraine
+	features = {
+		sulfur_deposit
+	}
 	
 	history = {
 		1836 = {

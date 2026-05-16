@@ -2,7 +2,12 @@ saint_etienne = {
 	name = "Saint-Etienne" #"Saint-Étienne"
 	world = earth
 	geocoordinate = { 4.38003210310 45.43039105130 } #from Natural Earth
+	type = holding
+	holding_type = guild
 	province = auvergne
+	features = {
+		sulfur_deposit
+	}
 	
 	history = {
 		1836 = {

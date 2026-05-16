@@ -2,7 +2,12 @@ colmar = {
 	name = "Colmar"
 	world = earth
 	geocoordinate = { 7.355 48.081111111111 }
+	type = holding
+	holding_type = guild
 	province = alsace
+	features = {
+		sulfur_deposit
+	}
 	
 	history = {
 		919 = {
@@ -10,7 +15,7 @@ colmar = {
 		}
 		
 		1789 = {
-			buildings += courthouse #Parlement or conseil souverain existent in Colmar in 1789; Source: William R. Shepherd, "Historical Atlas", 1911, p. 147.
+			#buildings += courthouse #Parlement or conseil souverain existent in Colmar in 1789; Source: William R. Shepherd, "Historical Atlas", 1911, p. 147.
 		}
 		
 		1836 = {
