@@ -19,6 +19,7 @@ miner = {
 		salt
 		silver
 		stone
+		#sulfur
 		tin
 		zinc
 		cerro_de_potosi

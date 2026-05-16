@@ -13,3 +13,7 @@ iron_mine = {
 silver_mine = {
 	name = "Silver Mine"
 }
+
+sulfur_mine = {
+	name = "Sulfur Mine"
+}

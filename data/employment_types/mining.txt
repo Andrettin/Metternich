@@ -41,3 +41,14 @@ silver_mining = {
 		slaves
 	}
 }
+
+sulfur_mining = {
+	name = "Sulfur Mining"
+	output_commodity = sulfur
+	monthly_output_value = 2tn
+	base_employment_size = 40000
+	employee_types = {
+		laborers
+		slaves
+	}
+}

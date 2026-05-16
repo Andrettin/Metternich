@@ -388,7 +388,7 @@ mechanized_mining = {
 	modifier = {
 		iron_output_modifier = 25
 		coal_output_modifier = 25
-		#sulfur_output_modifier = 25
+		sulfur_output_modifier = 25
 	}
 	weight_factor = {
 		modifier = {
@@ -399,10 +399,10 @@ mechanized_mining = {
 			factor = 1.1
 			produces_commodity = iron
 		}
-		#modifier = {
-		#	factor = 1.1
-		#	produces_commodity = sulfur
-		#}
+		modifier = {
+			factor = 1.1
+			produces_commodity = sulfur
+		}
 		modifier = {
 			factor = 1.1
 			or = {
@@ -430,11 +430,11 @@ clean_coal = {
 			employment_type = coal_mining
 			modifier = 20
 		}
-		#sulfur_output_modifier = 10
-		#employment_capacity_modifier = {
-		#	employment_type = sulfur_mining
-		#	modifier = 20
-		#}
+		sulfur_output_modifier = 10
+		employment_capacity_modifier = {
+			employment_type = sulfur_mining
+			modifier = 20
+		}
 		iron_output_modifier = 10
 		employment_capacity_modifier = {
 			employment_type = iron_mining
@@ -450,10 +450,10 @@ clean_coal = {
 			factor = 1.1
 			produces_commodity = iron
 		}
-		#modifier = {
-		#	factor = 1.1
-		#	produces_commodity = sulfur
-		#}
+		modifier = {
+			factor = 1.1
+			produces_commodity = sulfur
+		}
 		modifier = {
 			factor = 1.1
 			or = {

@@ -122,7 +122,7 @@
 /graphics/icons/commodities/silk.png (by Jinn) (licensed under the CC0)
 /graphics/icons/commodities/silver.png (by Jinn) (licensed under the CC0)
 /graphics/icons/commodities/spices.png (by Jinn) (licensed under the CC0)
-/graphics/icons/commodities/spices_extra_1.png (by Jinn) (licensed under the CC0)
+/graphics/icons/commodities/spices_yellow.png (by Jinn) (licensed under the CC0)
 /graphics/icons/commodities/steel.png (by Jinn) (licensed under the CC0)
 /graphics/icons/commodities/steel_extra_1.png (by Jinn) (licensed under the CC0)
 /graphics/icons/commodities/steel_extra_2.png (by Jinn) (licensed under the CC0)

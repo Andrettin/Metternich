@@ -102,10 +102,10 @@ cheap_iron = {
 			factor = 1.1
 			produces_commodity = iron
 		}
-		#modifier = {
-		#	factor = 1.1
-		#	produces_commodity = sulfur
-		#}
+		modifier = {
+			factor = 1.1
+			produces_commodity = sulfur
+		}
 		modifier = {
 			factor = 1.1
 			or = {

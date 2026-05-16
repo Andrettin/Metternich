@@ -17,3 +17,8 @@ silver_deposit = {
 	name = "Silver Deposit"
 	icon = silver
 }
+
+sulfur_deposit = {
+	name = "Sulfur Deposit"
+	icon = spices_yellow
+}

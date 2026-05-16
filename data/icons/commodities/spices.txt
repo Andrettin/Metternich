@@ -1,3 +1,7 @@
 spices = {
 	filepath = "icons/commodities/spices.png"
 }
+
+spices_yellow = {
+	filepath = "icons/commodities/spices_yellow.png"
+}

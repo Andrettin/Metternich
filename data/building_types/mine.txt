@@ -140,3 +140,38 @@ silver_mine = {
 	free_on_start_conditions = {
 	}
 }
+
+sulfur_mine = {
+	name = "Sulfur Mine"
+	building_class = sulfur_mine
+	portrait = factory
+	icon = spices_yellow
+	holding_types = {
+		castle
+		guild
+		temple
+	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
+	conditions = {
+		feature = sulfur_deposit
+	}
+	commodity_costs = {
+		wealth = 6gb
+	}
+	modifier = {
+		employment_capacity = {
+			employment_type = sulfur_mining
+			capacity = 40000
+		}
+		population_capacity = 40000
+	}
+	domain_modifier = {
+		economy = 1
+	}
+	free_on_start_conditions = {
+	}
+}

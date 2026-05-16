@@ -17,3 +17,8 @@ silver_mine = {
 	name = "Silver Mine"
 	slot_type = silver_mine
 }
+
+sulfur_mine = {
+	name = "Sulfur Mine"
+	slot_type = sulfur_mine
+}
