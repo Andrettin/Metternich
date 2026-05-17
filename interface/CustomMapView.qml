@@ -349,6 +349,23 @@ Item {
 		go_to_next_civilian_unit(false)
 	}
 	
+	function select_civilian_unit(civilian_unit) {
+		selected_civilian_unit = civilian_unit
+		selected_site = null
+		selected_province = null
+		selected_garrison = false
+		
+		const active_civilian_unit_index = metternich.active_civilian_units.indexOf(selected_civilian_unit)
+		if (active_civilian_unit_index != -1) {
+			next_civilian_unit_index = active_civilian_unit_index + 1
+			if (next_civilian_unit_index >= metternich.active_civilian_units.length) {
+				next_civilian_unit_index = 0
+			}
+		} else {
+			next_civilian_unit_index = 0
+		}
+	}
+	
 	function go_to_next_civilian_unit(selected_unit_is_unavailable) {
 		if (metternich.active_civilian_units.length > 0) {
 			if (selected_unit_is_unavailable) {
@@ -358,13 +375,8 @@ Item {
 				}
 			}
 			
-			selected_civilian_unit = metternich.active_civilian_units[next_civilian_unit_index]
+			select_civilian_unit(metternich.active_civilian_units[next_civilian_unit_index])
 			province_map.center_on_province(selected_civilian_unit.province)
-			
-			next_civilian_unit_index += 1
-			if (next_civilian_unit_index >= metternich.active_civilian_units.length) {
-				next_civilian_unit_index = 0
-			}
 		} else {
 			selected_civilian_unit = null
 			next_civilian_unit_index = 0

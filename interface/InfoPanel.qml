@@ -756,7 +756,7 @@ Rectangle {
 		IconButton {
 			id: go_to_next_civilian_unit_button
 			icon_identifier: "compass"
-			visible: selected_civilian_unit !== null && metternich.active_civilian_units.length > 0
+			visible: selected_site === null && selected_province === null && metternich.active_civilian_units.length > 0
 			
 			onClicked: {
 				go_to_next_civilian_unit(false)

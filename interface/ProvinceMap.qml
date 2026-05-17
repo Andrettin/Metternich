@@ -483,23 +483,6 @@ Flickable {
 		selected_garrison = false
 	}
 	
-	function select_civilian_unit(civilian_unit) {
-		selected_civilian_unit = civilian_unit
-		selected_site = null
-		selected_province = null
-		selected_garrison = false
-		
-		const active_civilian_unit_index = metternich.active_civilian_units.indexOf(selected_civilian_unit)
-		if (active_civilian_unit_index != -1) {
-			next_civilian_unit_index = active_civilian_unit_index + 1
-			if (next_civilian_unit_index >= metternich.active_civilian_units.length) {
-				next_civilian_unit_index = 0
-			}
-		} else {
-			next_civilian_unit_index = 0
-		}
-	}
-	
 	function get_province_status_text(province) {
 		var text = province.game_data.current_cultural_name
 		
