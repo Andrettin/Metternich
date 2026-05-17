@@ -1008,10 +1008,12 @@ QCoro::Task<void> province_game_data::create_map_image()
 	const map *map = map::get();
 
 	QImage diplomatic_map_image = this->prepare_map_image();
-	QImage selected_diplomatic_map_image = diplomatic_map_image;
+	QImage selected_map_image = diplomatic_map_image;
+	QImage interactive_map_image = diplomatic_map_image;
 
 	const QColor &color = this->get_map_color();
 	const QColor &selected_color = defines::get()->get_selected_country_color();
+	static const QColor interactive_color = QColor(Qt::darkGreen);
 
 	for (int x = 0; x < this->province->get_map_data()->get_territory_rect().width(); ++x) {
 		for (int y = 0; y < this->province->get_map_data()->get_territory_rect().height(); ++y) {
@@ -1023,12 +1025,14 @@ QCoro::Task<void> province_game_data::create_map_image()
 			}
 
 			diplomatic_map_image.setPixelColor(relative_tile_pos, color);
-			selected_diplomatic_map_image.setPixelColor(relative_tile_pos, selected_color);
+			selected_map_image.setPixelColor(relative_tile_pos, selected_color);
+			interactive_map_image.setPixelColor(relative_tile_pos, interactive_color);
 		}
 	}
 
 	this->map_image = co_await this->finalize_map_image(std::move(diplomatic_map_image));
-	this->selected_map_image = co_await this->finalize_map_image(std::move(selected_diplomatic_map_image));
+	this->selected_map_image = co_await this->finalize_map_image(std::move(selected_map_image));
+	this->interactive_map_image = co_await this->finalize_map_image(std::move(interactive_map_image));
 
 	const int tile_pixel_size = map->get_province_map_tile_pixel_size();
 	this->map_image_rect = QRect(this->province->get_map_data()->get_territory_rect().topLeft() * tile_pixel_size * preferences::get()->get_scale_factor(), this->map_image.size());

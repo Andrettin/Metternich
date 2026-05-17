@@ -209,6 +209,11 @@ public:
 		return this->selected_map_image;
 	}
 
+	const QImage &get_interactive_map_image() const
+	{
+		return this->interactive_map_image;
+	}
+
 	const QImage &get_map_mode_image(const province_map_mode mode) const;
 
 	[[nodiscard]]
@@ -637,6 +642,7 @@ private:
 	const metternich::pathway *under_construction_pathway = nullptr;
 	QImage map_image;
 	QImage selected_map_image;
+	QImage interactive_map_image;
 	std::map<province_map_mode, QImage> map_mode_images;
 	QRect map_image_rect;
 	QRect text_rect;

@@ -351,4 +351,14 @@ ApplicationWindow {
 		
 		return number_string(Math.floor(min_income / income_unit_value)) + "-" + number_string(Math.floor(max_income / income_unit_value)) + " " + income_unit.suffix
 	}
+	
+	function object_list_to_array(object_list) {
+		var object_array = []
+		
+		for (var object of object_list) {
+			object_array.push(object)
+		}
+		
+		return object_array
+	}
 }

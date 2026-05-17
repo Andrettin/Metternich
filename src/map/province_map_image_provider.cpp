@@ -36,8 +36,11 @@ QImage province_map_image_provider::requestImage(const QString &id, QSize *size,
 		if (id_list.size() >= 2) {
 			mode_identifier = id_list.at(1);
 		}
+
 		if (mode_identifier == "selected") {
 			image = &province_game_data->get_selected_map_image();
+		} else if (mode_identifier == "interactive") {
+			image = &province_game_data->get_interactive_map_image();
 		} else if (mode_identifier == "terrain") {
 			image = &province_game_data->get_map_mode_image(province_map_mode::terrain);
 		} else if (mode_identifier == "cultural") {

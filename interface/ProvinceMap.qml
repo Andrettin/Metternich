@@ -54,11 +54,12 @@ Flickable {
 			id: province_image
 			x: province.game_data.map_image_rect.x
 			y: province.game_data.map_image_rect.y
-			source: "image://province_map/" + province.identifier + (selected ? "/selected" : get_map_mode_suffix(province_map.mode, province)) + "/" + change_count
+			source: "image://province_map/" + province.identifier + (selected ? "/selected" : (interactive ? "/interactive" : get_map_mode_suffix(province_map.mode, province))) + "/" + change_count
 			cache: false
 			
 			readonly property var province: model.modelData
 			readonly property var selected: selected_province === province && (selected_garrison === false || province_map.show_sites)
+			readonly property var interactive: selected_civilian_unit !== null && !selected_civilian_unit.busy && selected_civilian_unit_interactive_provinces.includes(province)
 			property int change_count: 0
 			
 			Connections {

@@ -25,6 +25,7 @@ Item {
 	property var selected_site: null
 	property var selected_province: null
 	property bool selected_garrison: false
+	readonly property var selected_civilian_unit_interactive_provinces: selected_civilian_unit ? object_list_to_array(selected_civilian_unit.buildable_provinces) : []
 	
 	property bool tile_detail_mode: false
 	
