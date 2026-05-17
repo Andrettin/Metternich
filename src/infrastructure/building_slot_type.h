@@ -1,6 +1,5 @@
 #pragma once
 
-#include "database/data_entry_container.h"
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 
@@ -52,7 +51,7 @@ signals:
 	void changed();
 
 private:
-	data_entry_map<holding_type, std::vector<const building_type *>> building_types_by_holding_type;
+	std::unordered_map<const holding_type *, std::vector<const building_type *>> building_types_by_holding_type;
 	std::vector<const wonder *> wonders;
 };
 
