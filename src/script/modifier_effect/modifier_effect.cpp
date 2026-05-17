@@ -57,6 +57,7 @@
 #include "script/modifier_effect/military_unit_stat_modifier_effect.h"
 #include "script/modifier_effect/mineral_output_modifier_effect.h"
 #include "script/modifier_effect/monthly_commodity_bonus_modifier_effect.h"
+#include "script/modifier_effect/movement_cost_modifier_effect.h"
 #include "script/modifier_effect/movement_modifier_effect.h"
 #include "script/modifier_effect/output_modifier_effect.h"
 #include "script/modifier_effect/population_capacity_modifier_effect.h"
@@ -245,6 +246,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 	} else if constexpr (std::is_same_v<scope_type, const province>) {
 		if (key == "max_level") {
 			return std::make_unique<max_level_modifier_effect>(value);
+		} else if (key == "movement_cost_modifier") {
+			return std::make_unique<movement_cost_modifier_effect>(value);
 		} else if (key == "technology_spread_modifier") {
 			return std::make_unique<technology_spread_modifier_effect>(value);
 		}

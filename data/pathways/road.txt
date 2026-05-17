@@ -10,7 +10,6 @@ road = {
 	}
 	modifier = {
 		max_level = 1
+		movement_cost_modifier = -50 #halves movement cost
 	}
-	
-	#FIXME: should halve movement cost
 }

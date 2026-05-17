@@ -895,6 +895,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/mineral_output_modifier_effect.h
 	src/script/modifier_effect/modifier_effect.h
 	src/script/modifier_effect/monthly_commodity_bonus_modifier_effect.h
+	src/script/modifier_effect/movement_cost_modifier_effect.h
 	src/script/modifier_effect/movement_modifier_effect.h
 	src/script/modifier_effect/output_modifier_effect.h
 	src/script/modifier_effect/population_capacity_modifier_effect.h

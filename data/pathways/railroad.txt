@@ -13,5 +13,6 @@ railroad = {
 	}
 	modifier = {
 		max_level = 1
+		movement_cost_modifier = -65
 	}
 }

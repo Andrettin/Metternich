@@ -597,6 +597,16 @@ public:
 		}
 	}
 
+	int get_movement_cost_modifier() const
+	{
+		return this->movement_cost_modifier;
+	}
+
+	void change_movement_cost_modifier(const int change)
+	{
+		this->movement_cost_modifier += change;
+	}
+
 	bool can_produce_commodity(const commodity *commodity) const;
 
 	int get_min_income() const;
@@ -664,6 +674,7 @@ private:
 	resource_map<commodity_map<int>> improved_resource_commodity_bonuses;
 	commodity_map<std::map<int, int>> commodity_bonuses_for_tile_thresholds;
 	data_entry_map<technology_category, int> technology_category_spread_modifiers;
+	int movement_cost_modifier = 0;
 };
 
 }

@@ -115,6 +115,8 @@ void province_game_data::process_gsml_property(const gsml_property &property)
 		this->pathway = pathway::get(value);
 	} else if (key == "under_construction_pathway") {
 		this->under_construction_pathway = pathway::get(value);
+	} else if (key == "movement_cost_modifier") {
+		this->movement_cost_modifier = std::stoi(value);
 	} else {
 		throw std::runtime_error(std::format("Invalid province game data property: \"{}\".", key));
 	}
@@ -176,6 +178,10 @@ gsml_data province_game_data::to_gsml_data() const
 
 	if (this->get_under_construction_pathway() != nullptr) {
 		data.add_property("under_construction_pathway", this->get_under_construction_pathway()->get_identifier());
+	}
+
+	if (this->get_movement_cost_modifier() != 0) {
+		data.add_property("movement_cost_modifier", std::to_string(this->get_movement_cost_modifier()));
 	}
 
 	if (!this->get_technologies().empty()) {
