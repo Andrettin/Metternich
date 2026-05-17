@@ -135,6 +135,7 @@ set(infrastructure_SRCS
 	src/infrastructure/building_class_container.cpp
 	src/infrastructure/building_item_slot.cpp
 	src/infrastructure/building_slot.cpp
+	src/infrastructure/building_slot_type.cpp
 	src/infrastructure/building_slot_type_container.cpp
 	src/infrastructure/building_type.cpp
 	src/infrastructure/building_type_container.cpp

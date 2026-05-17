@@ -1,11 +1,13 @@
 #pragma once
 
+#include "database/data_entry_container.h"
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 
 namespace metternich {
 
 class building_type;
+class holding_type;
 class wonder;
 
 class building_slot_type final : public named_data_entry, public data_type<building_slot_type>
@@ -22,15 +24,19 @@ public:
 	{
 	}
 
-	const std::vector<const building_type *> &get_building_types() const
+	const std::vector<const building_type *> &get_building_types_for_holding_type(const holding_type *holding_type) const
 	{
-		return this->building_types;
+		const auto find_iterator = this->building_types_by_holding_type.find(holding_type);
+
+		if (find_iterator != this->building_types_by_holding_type.end()) {
+			return find_iterator->second;
+		}
+
+		static const std::vector<const building_type *> empty_vector;
+		return empty_vector;
 	}
 
-	void add_building_type(const building_type *building_type)
-	{
-		this->building_types.push_back(building_type);
-	}
+	void add_building_type(const building_type *building_type);
 
 	const std::vector<const wonder *> &get_wonders() const
 	{
@@ -46,7 +52,7 @@ signals:
 	void changed();
 
 private:
-	std::vector<const building_type *> building_types;
+	data_entry_map<holding_type, std::vector<const building_type *>> building_types_by_holding_type;
 	std::vector<const wonder *> wonders;
 };
 

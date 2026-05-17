@@ -134,6 +134,7 @@ public:
 	}
 
 	std::vector<const building_type *> get_buildable_buildings_for_site(const site *site) const;
+	bool has_buildable_buildings_for_site(const site *site) const;
 	site_map<std::vector<const building_type *>> get_buildable_buildings() const;
 	QVariantList get_buildable_buildings_qvariant_list() const;
 	Q_INVOKABLE void build_building(const metternich::building_type *building_type, const metternich::site *site);

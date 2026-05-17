@@ -510,7 +510,7 @@ void building_slot::cancel_construction()
 
 const building_type *building_slot::get_buildable_building() const
 {
-	for (const building_type *building : this->get_type()->get_building_types()) {
+	for (const building_type *building : this->get_type()->get_building_types_for_holding_type(this->get_settlement()->get_game_data()->get_holding_type())) {
 		if (building->get_required_technology() != nullptr) {
 			if (!this->get_settlement()->get_game_data()->get_province()->get_game_data()->has_technology(building->get_required_technology())) {
 				continue;
@@ -619,7 +619,7 @@ bool building_slot::is_available() const
 		return true;
 	}
 
-	for (const building_type *building : this->get_type()->get_building_types()) {
+	for (const building_type *building : this->get_type()->get_building_types_for_holding_type(this->get_settlement()->get_game_data()->get_holding_type())) {
 		if (building->get_base_building() != nullptr) {
 			continue;
 		}

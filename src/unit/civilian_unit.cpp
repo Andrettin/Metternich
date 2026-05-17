@@ -425,6 +425,35 @@ std::vector<const building_type *> civilian_unit::get_buildable_buildings_for_si
 	return holding_buildable_buildings;
 }
 
+bool civilian_unit::has_buildable_buildings_for_site(const site *site) const
+{
+	assert_throw(site->is_settlement());
+	assert_throw(site->get_game_data()->is_built());
+
+	for (const qunique_ptr<building_slot> &building_slot : site->get_game_data()->get_building_slots()) {
+		if (!building_slot->is_available()) {
+			continue;
+		}
+
+		if (building_slot->get_under_construction_building() != nullptr) {
+			continue;
+		}
+
+		const building_type *buildable_building = building_slot->get_buildable_building();
+		if (buildable_building == nullptr) {
+			continue;
+		}
+
+		if (!this->get_type()->can_build_building(buildable_building)) {
+			continue;
+		}
+
+		return true;
+	}
+
+	return false;
+}
+
 site_map<std::vector<const building_type *>> civilian_unit::get_buildable_buildings() const
 {
 	if (this->get_province() == nullptr) {
@@ -484,7 +513,7 @@ std::vector<const metternich::province *> civilian_unit::get_buildable_provinces
 			continue;
 		}
 
-		if (this->get_buildable_buildings_for_site(site).empty()) {
+		if (!this->has_buildable_buildings_for_site(site)) {
 			continue;
 		}
 
