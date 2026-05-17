@@ -1,5 +1,5 @@
-railroad = {
-	name = "Railroad"
+experimental_railroad = {
+	name = "Experimental Railroad"
 	icon = railroad
 	image_filepath = "tiles/pathways/road.png"
 	transport_level = 4
@@ -13,6 +13,63 @@ railroad = {
 	}
 	modifier = {
 		max_level = 1
+		movement_cost_modifier = -55
+	}
+}
+
+early_railroad = {
+	name = "Early Railroad"
+	icon = railroad
+	image_filepath = "tiles/pathways/road.png"
+	transport_level = 5
+	required_pathway = experimental_railroad
+	required_technology = railroad
+	river_crossing_required_technology = iron_railroad_bridge
+	terrain_required_technologies = {
+		hills = compound_steam_engine
+		mountains = dynamite
+		swamp = iron_railroad_bridge
+	}
+	modifier = {
+		max_level = 1
+		movement_cost_modifier = -60
+	}
+}
+
+iron_railroad = {
+	name = "Iron Railroad"
+	icon = railroad
+	image_filepath = "tiles/pathways/road.png"
+	transport_level = 6
+	required_pathway = early_railroad
+	required_technology = railroad
+	river_crossing_required_technology = iron_railroad_bridge
+	terrain_required_technologies = {
+		hills = compound_steam_engine
+		mountains = dynamite
+		swamp = iron_railroad_bridge
+	}
+	modifier = {
+		max_level = 1
 		movement_cost_modifier = -65
+	}
+}
+
+steel_railroad = {
+	name = "Steel Railroad"
+	icon = railroad
+	image_filepath = "tiles/pathways/road.png"
+	transport_level = 7
+	required_pathway = iron_railroad
+	required_technology = railroad
+	river_crossing_required_technology = iron_railroad_bridge
+	terrain_required_technologies = {
+		hills = compound_steam_engine
+		mountains = dynamite
+		swamp = iron_railroad_bridge
+	}
+	modifier = {
+		max_level = 1
+		movement_cost_modifier = -70
 	}
 }

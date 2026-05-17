@@ -6,12 +6,12 @@ linz_budweis = {
 		budweis
 	}
 	conditions = {
-		pathway = railroad
+		pathway = experimental_railroad
 	}
 	
 	history = {
 		1832 = {
-			pathway = railroad #Linz-Budweiser Pferdeeisenbahn commissioned in 1832; Source: Hans Peter Hye, "Die Wende zur Industrie- und Wissensgesselschaft", 2010, p. 23.
+			pathway = experimental_railroad #Linz-Budweiser Pferdeeisenbahn commissioned in 1832; Source: Hans Peter Hye, "Die Wende zur Industrie- und Wissensgesselschaft", 2010, p. 23.
 		}
 	}
 }
@@ -26,12 +26,12 @@ pest_zagreb_fiume = {
 		croatia
 	}
 	conditions = {
-		pathway = railroad
+		pathway = iron_railroad
 	}
 	
 	history = {
 		1873 = {
-			pathway = railroad #railroad built in 1873; Source: Ivan Erceg, "Außenhandel der Nordadriatischen Seestädte als Faktor im Entstehen der kapitalistischen Beziehungen in Österreich im 18. und 19. Jahrhundert", 1968, p. 465.
+			pathway = iron_railroad #railroad built in 1873; Source: Ivan Erceg, "Außenhandel der Nordadriatischen Seestädte als Faktor im Entstehen der kapitalistischen Beziehungen in Österreich im 18. und 19. Jahrhundert", 1968, p. 465.
 		}
 	}
 }
@@ -53,7 +53,7 @@ vienna_brunn = {
 		}
 		
 		1839.7.7 = {
-			pathway = railroad #the first trains from Vienna arrived in Brno on 1839.7.7; Source: Chad Bryant, "Into an Uncertain Future: Railroads and Vormärz Liberalism in Brno, Vienna, and Prague", 2009, p. 183.
+			pathway = early_railroad #the first trains from Vienna arrived in Brno on 1839.7.7; Source: Chad Bryant, "Into an Uncertain Future: Railroads and Vormärz Liberalism in Brno, Vienna, and Prague", 2009, p. 183.
 		}
 	}
 }
@@ -77,7 +77,7 @@ vienna_trieste = {
 		}
 		
 		1857 = {
-			pathway = railroad #railroad built in 1857; Source: Ivan Erceg, "Außenhandel der Nordadriatischen Seestädte als Faktor im Entstehen der kapitalistischen Beziehungen in Österreich im 18. und 19. Jahrhundert", 1968, p. 465.
+			pathway = iron_railroad #railroad built in 1857; Source: Ivan Erceg, "Außenhandel der Nordadriatischen Seestädte als Faktor im Entstehen der kapitalistischen Beziehungen in Österreich im 18. und 19. Jahrhundert", 1968, p. 465.
 		}
 	}
 }

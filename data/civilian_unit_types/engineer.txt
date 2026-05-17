@@ -9,6 +9,9 @@ engineer = {
 	buildable_pathways = {
 		trail
 		road
-		railroad
+		experimental_railroad
+		early_railroad
+		iron_railroad
+		steel_railroad
 	}
 }

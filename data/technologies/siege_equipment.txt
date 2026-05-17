@@ -332,7 +332,7 @@ rifled_artillery = {
 	period = steam_age
 	prerequisites = {
 		trebuchet #previous siege engine
-		railroad #to set in the appropriate period
+		railroad #to set it in the appropriate period
 	}
 }
 
