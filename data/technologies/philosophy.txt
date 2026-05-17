@@ -61,7 +61,7 @@ theory_of_gravity = {
 	subcategory = philosophy
 	portrait = engineering
 	icon = research
-	period = castle_age
+	period = renaissance_age
 	prerequisites = {
 		astronomy
 		university
@@ -97,7 +97,7 @@ chemistry = {
 	subcategory = philosophy
 	portrait = engineering
 	icon = research
-	period = feudal_age
+	period = renaissance_age
 	prerequisites = {
 		medicine
 		university

@@ -28,7 +28,7 @@ metallurgy = {
 	subcategory = metallurgy
 	portrait = engineering
 	icon = iron
-	period = feudal_age
+	period = renaissance_age
 	prerequisites = {
 		iron_working
 		gunpowder
@@ -43,6 +43,7 @@ crucible_process = {
 	icon = steel
 	period = enlightenment_age
 	prerequisites = {
+		iron_working #previous metallurgy technology
 		steam_in_mining
 		coal_mining
 	}

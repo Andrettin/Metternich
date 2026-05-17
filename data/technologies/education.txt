@@ -1,10 +1,22 @@
+seven_liberal_arts = {
+	name = "Seven Liberal Arts"
+	subcategory = education
+	portrait = university
+	icon = university
+	period = classical_age
+	prerequisites = {
+		philosophy #seems reasonable, and places this in its appropriate period
+	}
+}
+
 monastic_school = {
 	name = "Monastic School"
 	subcategory = education
 	portrait = university
 	icon = wooden_cross
-	period = civic_age
+	period = dark_age
 	prerequisites = {
+		seven_liberal_arts
 		asceticism
 	}
 	cost_factor = {
@@ -238,7 +250,7 @@ cathedral_school = {
 	subcategory = education
 	portrait = university
 	icon = wooden_cross
-	period = classical_age
+	period = feudal_age
 	prerequisites = {
 		monastic_school
 	}
@@ -473,7 +485,7 @@ university = {
 	subcategory = education
 	portrait = university
 	icon = university
-	period = dark_age #renaissance_age
+	period = castle_age
 	prerequisites = {
 		cathedral_school
 		mathematics
@@ -711,5 +723,16 @@ university = {
 	}
 	domain_modifier = {
 		max_current_researches = 1
+	}
+}
+
+academic_disciplines = {
+	name = "Academic Disciplines"
+	subcategory = education
+	portrait = university
+	icon = university
+	period = renaissance_age
+	prerequisites = {
+		university
 	}
 }

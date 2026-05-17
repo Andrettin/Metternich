@@ -88,7 +88,7 @@ conscription = {
 	subcategory = army
 	portrait = fort
 	icon = flag
-	period = castle_age
+	period = gunpowder_age
 	prerequisites = {
 		democracy
 		metallurgy
@@ -100,7 +100,7 @@ tactics = {
 	subcategory = army
 	portrait = fort
 	icon = flag
-	period = renaissance_age
+	period = absolutism_age
 	prerequisites = {
 		leadership
 		conscription
