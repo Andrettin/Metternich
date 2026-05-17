@@ -6,7 +6,9 @@ copenhagen = {
 	holding_type = guild
 	features = {
 		academic #historical university
+		fertilizer
 		liquor
+		prime_grain_land
 	}
 	
 	history = {
@@ -19,6 +21,7 @@ copenhagen = {
 		}
 		
 		1861 = {
+			buildings += fertilizer_factory
 			buildings += liquor_distillery
 		}
 	}

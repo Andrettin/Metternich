@@ -1,0 +1,13 @@
+fertilizer = {
+	name = "Fertilizer"
+	type = material
+	icon = spices_yellow
+	industrial = true
+	base_price = 166 #1gp, 5/3rds the price of sulfur
+	storage_unit = tn
+	units = {
+		1 = lb
+		100 = cwt
+		2000 = tn
+	}
+}

@@ -1,0 +1,4 @@
+fertilizer_factory = {
+	name = "Fertilizer Factory"
+	slot_type = fertilizer_factory
+}

@@ -31,6 +31,7 @@ farmers = {
 	everyday_needs = {
 		coal = 1tn
 		furniture = 1.1tn
+		fertilizer = 0.5tn
 	}
 	luxury_needs = {
 		furniture = 3tn

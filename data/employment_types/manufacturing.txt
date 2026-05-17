@@ -1,3 +1,16 @@
+fertilizer_making = {
+	name = "Fertilizer Making"
+	input_commodities = {
+		sulfur = 6tn
+	}
+	output_commodity = fertilizer
+	monthly_output_value = 5tn
+	base_employment_size = 10000
+	employee_types = {
+		craftsmen
+	}
+}
+
 furniture_making = {
 	name = "Furniture Making"
 	input_commodities = {

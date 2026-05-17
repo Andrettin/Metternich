@@ -1,0 +1,29 @@
+fertilizer_factory = {
+	name = "Fertilizer Factory"
+	building_class = fertilizer_factory
+	portrait = factory
+	icon = spices_yellow
+	holding_types = {
+		castle
+		guild
+		temple
+	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
+	conditions = {
+		feature = fertilizer
+	}
+	commodity_costs = {
+		wealth = 6gb #same as mill
+	}
+	modifier = {
+		employment_capacity = {
+			employment_type = fertilizer_making
+			capacity = 10000
+		}
+		population_capacity = 10000
+	}
+}
