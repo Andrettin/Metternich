@@ -238,6 +238,10 @@ Item {
 		function onTurn_changed() {
 			//FIXME: add preference to display the balance book every turn
 			//menu_stack.push("TradeView.qml")
+			
+			if (selected_civilian_unit === null) {
+				go_to_next_civilian_unit(false)
+			}
 		}
 		
 		function onCombat_running_changed() {
