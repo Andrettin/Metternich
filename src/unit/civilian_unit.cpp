@@ -12,12 +12,12 @@
 #include "domain/domain_game_data.h"
 #include "domain/domain_technology.h"
 #include "economy/resource.h"
+#include "engine_interface.h"
 #include "game/game.h"
 #include "infrastructure/building_slot.h"
 #include "infrastructure/building_type.h"
 #include "infrastructure/improvement.h"
 #include "infrastructure/pathway.h"
-#include "language/name_generator.h"
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
@@ -33,7 +33,6 @@
 #include "util/gender.h"
 #include "util/log_util.h"
 #include "util/map_util.h"
-#include "util/point_util.h"
 #include "util/random.h"
 #include "util/string_conversion_util.h"
 #include "util/vector_util.h"
@@ -65,6 +64,9 @@ civilian_unit::civilian_unit(const civilian_unit_type *type, const domain *owner
 	connect(this->get_owner()->get_game_data(), &domain_game_data::provinces_changed, this, &civilian_unit::prospectable_provinces_changed);
 	connect(this->get_owner()->get_game_data(), &domain_game_data::prospected_tiles_changed, this, &civilian_unit::prospectable_provinces_changed);
 	connect(this->get_owner()->get_technology(), &domain_technology::technologies_changed, this, &civilian_unit::prospectable_provinces_changed);
+
+	connect(this, &civilian_unit::original_province_changed, this, &civilian_unit::busy_changed);
+	connect(this, &civilian_unit::work_progress_changed, this, &civilian_unit::busy_changed);
 }
 
 civilian_unit::civilian_unit(const civilian_unit_type *type, const domain *owner, const metternich::character *character)
@@ -309,6 +311,28 @@ void civilian_unit::set_province(const metternich::province *province)
 	}
 
 	emit province_changed();
+}
+
+void civilian_unit::set_original_province(const metternich::province *province)
+{
+	if (province == this->original_province) {
+		return;
+	}
+
+	const bool was_moving = this->is_moving();
+
+	this->original_province = province;
+	emit original_province_changed();
+
+	if (this->get_owner() == game::get()->get_player_country()) {
+		if (was_moving != this->is_moving()) {
+			if (was_moving) {
+				engine_interface::get()->add_active_civilian_unit(this);
+			} else {
+				engine_interface::get()->remove_active_civilian_unit(this);
+			}
+		}
+	}
 }
 
 bool civilian_unit::can_move_to(const metternich::province *province) const
@@ -792,6 +816,33 @@ QString civilian_unit::get_work_progress_qstring() const
 	}
 
 	return QString::fromStdString(std::to_string(this->work_progress.value().to_int()));
+}
+
+void civilian_unit::set_work_progress(const std::optional<decimillesimal_int> &progress)
+{
+	if (progress == this->work_progress) {
+		return;
+	}
+
+	if (progress > 100) {
+		this->set_work_progress(decimillesimal_int(100));
+		return;
+	}
+
+	const bool was_working = this->is_working();
+
+	this->work_progress = progress;
+	emit work_progress_changed();
+
+	if (this->get_owner() == game::get()->get_player_country()) {
+		if (was_working != this->is_working()) {
+			if (was_working) {
+				engine_interface::get()->add_active_civilian_unit(this);
+			} else {
+				engine_interface::get()->remove_active_civilian_unit(this);
+			}
+		}
+	}
 }
 
 void civilian_unit::increment_work_progress()

@@ -198,7 +198,7 @@ QCoro::Task<void> domain_technology::do_research()
 			}
 		}
 	} catch (...) {
-		std::throw_with_nested(std::runtime_error("Error doing research for domain \"" + this->domain->get_identifier() + "\"."));
+		std::throw_with_nested(std::runtime_error(std::format("Error doing research for domain \"{}\".", this->domain->get_identifier())));
 	}
 }
 

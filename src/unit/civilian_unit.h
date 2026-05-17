@@ -38,6 +38,7 @@ class civilian_unit final : public QObject
 	Q_PROPERTY(const metternich::province* province READ get_province NOTIFY province_changed)
 	Q_PROPERTY(bool moving READ is_moving NOTIFY original_province_changed)
 	Q_PROPERTY(bool working READ is_working NOTIFY work_progress_changed)
+	Q_PROPERTY(bool busy READ is_busy NOTIFY busy_changed)
 	Q_PROPERTY(QString work_progress READ get_work_progress_qstring NOTIFY work_progress_changed)
 	Q_PROPERTY(QVariantList buildable_buildings READ get_buildable_buildings_qvariant_list NOTIFY buildable_buildings_changed)
 	Q_PROPERTY(QVariantList buildable_provinces READ get_buildable_provinces_qvariant_list NOTIFY buildable_provinces_changed)
@@ -111,16 +112,7 @@ public:
 
 	const province *get_province() const;
 	void set_province(const province *province);
-
-	void set_original_province(const metternich::province *province)
-	{
-		if (province == this->original_province) {
-			return;
-		}
-
-		this->original_province = province;
-		emit original_province_changed();
-	}
+	void set_original_province(const metternich::province *province);
 
 	Q_INVOKABLE bool can_move_to(const metternich::province *province) const;
 	Q_INVOKABLE void move_to(const metternich::province *province);
@@ -172,22 +164,7 @@ public:
 	QVariantList get_prospectable_provinces_qvariant_list() const;
 
 	QString get_work_progress_qstring() const;
-
-	void set_work_progress(const std::optional<decimillesimal_int> &progress)
-	{
-		if (progress == this->work_progress) {
-			return;
-		}
-
-		if (progress > 100) {
-			this->set_work_progress(decimillesimal_int(100));
-			return;
-		}
-
-		this->work_progress = progress;
-		emit work_progress_changed();
-	}
-
+	void set_work_progress(const std::optional<decimillesimal_int> &progress);
 	void increment_work_progress();
 
 	[[nodiscard]] QCoro::Task<void> disband(const bool dead);
@@ -208,6 +185,7 @@ signals:
 	void improvable_resources_changed();
 	void prospectable_provinces_changed();
 	void work_progress_changed();
+	void busy_changed();
 
 private:
 	std::string name;

@@ -737,7 +737,7 @@ Rectangle {
 			
 			onClicked: {
 				selected_civilian_unit.build_pathway(pathway)
-				selected_civilian_unit = null
+				go_to_next_civilian_unit(true)
 			}
 			
 			onHoveredChanged: {
@@ -749,6 +749,24 @@ Rectangle {
 					status_text = ""
 					middle_status_text = ""
 					right_status_text = ""
+				}
+			}
+		}
+		
+		IconButton {
+			id: go_to_next_civilian_unit_button
+			icon_identifier: "compass"
+			visible: selected_civilian_unit !== null && metternich.active_civilian_units.length > 0
+			
+			onClicked: {
+				go_to_next_civilian_unit(false)
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Go to Next Civilian Unit"
+				} else {
+					status_text = ""
 				}
 			}
 		}
@@ -815,8 +833,14 @@ Rectangle {
 			visible: selected_civilian_unit !== null
 			
 			onClicked: {
+				var was_busy = selected_civilian_unit.busy
 				selected_civilian_unit.disband()
-				selected_civilian_unit = null
+				
+				if (was_busy == false) {
+					go_to_next_civilian_unit(true)
+				} else {
+					selected_civilian_unit = null
+				}
 			}
 			
 			onHoveredChanged: {

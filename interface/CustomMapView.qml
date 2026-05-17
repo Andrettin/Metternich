@@ -31,6 +31,8 @@ Item {
 	readonly property var event_dialog_component: Qt.createComponent("dialogs/EventDialog.qml")
 	readonly property var trait_choice_dialog_component: Qt.createComponent("dialogs/TraitChoiceDialog.qml")
 	
+	property int next_civilian_unit_index: 0
+	
 	Rectangle {
 		id: map_view_background
 		color: "black"
@@ -344,5 +346,28 @@ Item {
 	
 	Component.onCompleted: {
 		province_map.center_on_country_capital(metternich.game.player_country)
+		go_to_next_civilian_unit(false)
+	}
+	
+	function go_to_next_civilian_unit(selected_unit_is_unavailable) {
+		if (metternich.active_civilian_units.length > 0) {
+			if (selected_unit_is_unavailable) {
+				next_civilian_unit_index -= 1
+				if (next_civilian_unit_index < 0) {
+					next_civilian_unit_index = metternich.active_civilian_units.length - 1
+				}
+			}
+			
+			selected_civilian_unit = metternich.active_civilian_units[next_civilian_unit_index]
+			province_map.center_on_province(selected_civilian_unit.province)
+			
+			next_civilian_unit_index += 1
+			if (next_civilian_unit_index >= metternich.active_civilian_units.length) {
+				next_civilian_unit_index = 0
+			}
+		} else {
+			selected_civilian_unit = null
+			next_civilian_unit_index = 0
+		}
 	}
 }

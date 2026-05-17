@@ -15,6 +15,7 @@ Q_MOC_INCLUDE("sound/media_player.h")
 
 namespace metternich {
 
+class civilian_unit;
 class consulate;
 class cursor;
 class defines;
@@ -47,6 +48,7 @@ class engine_interface final : public QObject, public singleton<engine_interface
 	Q_PROPERTY(metternich::media_player* media_player READ get_media_player CONSTANT)
 	Q_PROPERTY(QString save_path READ get_save_path CONSTANT)
 	Q_PROPERTY(QVariantList selected_military_units READ get_selected_military_units_qvariant_list NOTIFY selected_military_units_changed)
+	Q_PROPERTY(QVariantList active_civilian_units READ get_active_civilian_units_qvariant_list NOTIFY active_civilian_units_changed)
 
 public:
 	engine_interface();
@@ -150,6 +152,27 @@ public:
 
 	Q_INVOKABLE void move_selected_military_units_to(const QPoint &tile_pos);
 
+	const std::vector<civilian_unit *> &get_active_civilian_units() const
+	{
+		return this->active_civilian_units;
+	}
+
+	QVariantList get_active_civilian_units_qvariant_list() const;
+
+	void add_active_civilian_unit(civilian_unit *civilian_unit)
+	{
+		this->active_civilian_units.push_back(civilian_unit);
+		emit active_civilian_units_changed();
+	}
+
+	void remove_active_civilian_unit(const civilian_unit *civilian_unit)
+	{
+		std::erase(this->active_civilian_units, civilian_unit);
+		emit active_civilian_units_changed();
+	}
+
+	void reset_active_civilian_units();
+
 	Q_INVOKABLE QString date_to_string(const QDate &date) const;
 
 	engine_interface &operator =(const engine_interface &other) = delete;
@@ -166,11 +189,13 @@ signals:
 	void next_advisor_choosable(const QVariantList &potential_advisors);
 	void trait_choosable(const character *character, const trait_type *trait_type, const QVariantList &potential_feats);
 	void selected_military_units_changed();
+	void active_civilian_units_changed();
 
 private:
 	bool running = false;
 	std::vector<qunique_ptr<event_instance>> event_instances;
 	std::vector<military_unit *> selected_military_units;
+	std::vector<civilian_unit *> active_civilian_units;
 };
 
 }

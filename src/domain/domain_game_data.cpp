@@ -3911,6 +3911,10 @@ bool domain_game_data::create_civilian_unit(const civilian_unit_type *civilian_u
 
 void domain_game_data::add_civilian_unit(qunique_ptr<civilian_unit> &&civilian_unit)
 {
+	if (this->domain == game::get()->get_player_country()) {
+		engine_interface::get()->add_active_civilian_unit(civilian_unit.get());
+	}
+
 	this->add_unit_name(civilian_unit->get_name());
 	this->civilian_units.push_back(std::move(civilian_unit));
 }
@@ -3918,6 +3922,10 @@ void domain_game_data::add_civilian_unit(qunique_ptr<civilian_unit> &&civilian_u
 void domain_game_data::remove_civilian_unit(civilian_unit *civilian_unit)
 {
 	assert_throw(civilian_unit != nullptr);
+
+	if (this->domain == game::get()->get_player_country()) {
+		engine_interface::get()->remove_active_civilian_unit(civilian_unit);
+	}
 
 	this->remove_unit_name(civilian_unit->get_name());
 

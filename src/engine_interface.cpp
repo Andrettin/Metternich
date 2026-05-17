@@ -8,6 +8,7 @@
 #include "domain/consulate.h"
 #include "domain/country_military.h"
 #include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "domain/domain_tier.h"
 #include "domain/domain_tier_data.h"
 #include "domain/law_group.h"
@@ -33,6 +34,7 @@
 #include "time/era.h"
 #include "ui/cursor.h"
 #include "unit/army.h"
+#include "unit/civilian_unit.h"
 #include "unit/military_unit.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
@@ -322,6 +324,21 @@ void engine_interface::move_selected_military_units_to(const QPoint &tile_pos)
 	}
 
 	this->clear_selected_military_units();
+}
+
+QVariantList engine_interface::get_active_civilian_units_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_active_civilian_units());
+}
+
+void engine_interface::reset_active_civilian_units()
+{
+	this->active_civilian_units.clear();
+	emit active_civilian_units_changed();
+
+	for (const qunique_ptr<civilian_unit> &civilian_unit : game::get()->get_player_country()->get_game_data()->get_civilian_units()) {
+		this->add_active_civilian_unit(civilian_unit.get());
+	}
 }
 
 QString engine_interface::date_to_string(const QDate &date) const

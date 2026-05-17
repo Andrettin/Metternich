@@ -115,7 +115,7 @@ DialogBase {
 	
 	onClosed: {
 		if (civilian_unit === selected_civilian_unit) {
-			selected_civilian_unit = null
+			go_to_next_civilian_unit(true)
 		}
 		
 		civilian_unit = null

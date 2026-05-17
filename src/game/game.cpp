@@ -502,6 +502,8 @@ QCoro::Task<void> game::start_coro()
 			}
 		}
 
+		engine_interface::get()->reset_active_civilian_units();
+
 		this->set_running(true);
 	} catch (...) {
 		exception::report(std::current_exception());
