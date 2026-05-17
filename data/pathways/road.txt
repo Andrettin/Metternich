@@ -5,6 +5,7 @@ road = {
 	transport_level = 2
 	required_pathway = trail
 	required_technology = road_building
+	river_crossing_required_technology = bridge_building
 	commodity_costs = {
 		wealth = 1gb
 	}

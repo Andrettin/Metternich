@@ -313,15 +313,38 @@ bridge_building = {
 	}
 }
 
-railroad = {
-	name = "Railroad"
+experimental_railroad = {
+	name = "Experimental Railroad"
+	subcategory = infrastructure
+	portrait = engineering
+	icon = railroad
+	period = revolutionary_age
+	prerequisites = {
+		bridge_building
+		mechanized_mining #to place it in its appropriate period, should change it to something else
+	}
+}
+
+early_railroad = {
+	name = "Early Railroad"
 	subcategory = infrastructure
 	portrait = engineering
 	icon = railroad
 	period = napoleonic_age
 	prerequisites = {
-		bridge_building
+		experimental_railroad
 		high_pressure_steam_engine
+	}
+}
+
+iron_railroad = {
+	name = "Iron Railroad"
+	subcategory = infrastructure
+	portrait = engineering
+	icon = railroad
+	period = steam_age
+	prerequisites = {
+		early_railroad
 	}
 }
 
@@ -330,8 +353,19 @@ iron_railroad_bridge = {
 	subcategory = infrastructure
 	portrait = engineering
 	icon = railroad
-	period = steam_age
+	period = industrial_age
 	prerequisites = {
-		railroad
+		iron_railroad
+	}
+}
+
+steel_railroad = {
+	name = "Steel Railroad"
+	subcategory = infrastructure
+	portrait = engineering
+	icon = railroad
+	period = imperial_age
+	prerequisites = {
+		iron_railroad_bridge
 	}
 }

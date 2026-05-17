@@ -54,7 +54,7 @@ steel = {
 	subcategory = metallurgy
 	portrait = engineering
 	icon = steel
-	period = industrial_age
+	period = steam_age
 	prerequisites = {
 		metallurgy
 		electricity
@@ -71,10 +71,6 @@ cheap_iron = {
 	prerequisites = {
 		iron_working #previous iron metallurgy technology
 		clean_coal
-		high_pressure_steam_engine
-		#publishing_industry
-		#experimental_railroad
-		#basic_chemistry
 	}
 	modifier = {
 		gold_output_modifier = 10
@@ -202,10 +198,6 @@ cheap_steel = {
 	prerequisites = {
 		crucible_process #previous steel metallurgy technology
 		cheap_iron
-		#steam_turbine
-		#mechanical_production
-		#early_railroad
-		#medicine
 	}
 	modifier = {
 		gold_output_modifier = 10
@@ -252,10 +244,6 @@ advanced_metallurgy = {
 	period = industrial_age
 	prerequisites = {
 		cheap_steel
-		#combustion_engine
-		#interchangeable_parts
-		#iron_railroad
-		#inorganic_chemistry
 	}
 	modifier = {
 		sulfur_output_modifier = 25

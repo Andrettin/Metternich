@@ -332,7 +332,7 @@ rifled_artillery = {
 	period = steam_age
 	prerequisites = {
 		trebuchet #previous siege engine
-		railroad #to set it in the appropriate period
+		early_railroad #to set it in the appropriate period
 	}
 }
 
@@ -341,7 +341,7 @@ large_artillery = {
 	subcategory = siege_equipment
 	portrait = engineering
 	icon = cannon
-	period = modern_age
+	period = imperial_age
 	prerequisites = {
 		rifled_artillery
 		machine_tools

@@ -51,7 +51,7 @@ corporation = {
 	subcategory = commerce_institutions
 	portrait = trading_post
 	icon = wealth
-	period = industrial_age
+	period = steam_age
 	prerequisites = {
 		economics
 		industrialization
