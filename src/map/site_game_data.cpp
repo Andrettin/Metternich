@@ -2204,8 +2204,9 @@ QCoro::Task<void> site_game_data::change_employment_size(const employment_type *
 	}
 
 	if (this->get_owner() != nullptr) {
+		const int throughput_modifier = employment_type->get_output_commodity() ? this->get_total_commodity_throughput_modifier(employment_type->get_output_commodity()) : 0;
 		for (const auto &[commodity, input] : employment_type->get_input_commodities()) {
-			const int64_t input_change = employment_type->get_input_for_employment_size(commodity, size) - employment_type->get_input_for_employment_size(commodity, old_size);
+			const int64_t input_change = employment_type->get_input_for_employment_size(commodity, size, throughput_modifier) - employment_type->get_input_for_employment_size(commodity, old_size, throughput_modifier);
 			if (input_change == 0) {
 				continue;
 			}
@@ -2307,7 +2308,8 @@ int64_t site_game_data::get_available_employment_input_capacity(const employment
 			return 0;
 		}
 
-		input_capacity = std::min(input_capacity, employment_type->get_employment_size_for_input(commodity, this->get_owner()->get_economy()->get_stored_commodity(commodity)));
+		const int throughput_modifier = employment_type->get_output_commodity() ? this->get_total_commodity_throughput_modifier(employment_type->get_output_commodity()) : 0;
+		input_capacity = std::min(input_capacity, employment_type->get_employment_size_for_input(commodity, this->get_owner()->get_economy()->get_stored_commodity(commodity), throughput_modifier));
 	}
 
 	return input_capacity;
@@ -2491,6 +2493,7 @@ void site_game_data::calculate_commodity_outputs()
 
 	centesimal_int output_modifier = this->get_output_modifier();
 	commodity_map<centesimal_int> commodity_output_modifiers = this->get_commodity_output_modifiers();
+	commodity_map<int> commodity_throughput_modifiers = this->get_commodity_throughput_modifiers();
 
 	if (this->get_owner() != nullptr) {
 		for (const auto &[commodity, value] : this->get_owner()->get_economy()->get_commodity_bonuses_per_population()) {
@@ -2527,6 +2530,10 @@ void site_game_data::calculate_commodity_outputs()
 		for (const auto &[commodity, modifier] : province->get_game_data()->get_commodity_output_modifiers()) {
 			commodity_output_modifiers[commodity] += modifier;
 		}
+
+		for (const auto &[commodity, modifier] : province->get_game_data()->get_commodity_throughput_modifiers()) {
+			commodity_throughput_modifiers[commodity] += modifier;
+		}
 	}
 
 	if (this->get_owner() != nullptr) {
@@ -2534,6 +2541,10 @@ void site_game_data::calculate_commodity_outputs()
 
 		for (const auto &[commodity, modifier] : this->get_owner()->get_economy()->get_commodity_output_modifiers()) {
 			commodity_output_modifiers[commodity] += modifier;
+		}
+
+		for (const auto &[commodity, modifier] : this->get_owner()->get_economy()->get_commodity_throughput_modifiers()) {
+			commodity_throughput_modifiers[commodity] += modifier;
 		}
 	}
 
@@ -2544,7 +2555,11 @@ void site_game_data::calculate_commodity_outputs()
 
 		assert_throw(employment_type->get_base_employment_size() > 0);
 
-		const int64_t output = employment_type->get_monthly_output_value() * employment_size / employment_type->get_base_employment_size() * game::get()->get_current_months_per_turn();
+		int64_t output = employment_type->get_monthly_output_value() * game::get()->get_current_months_per_turn();
+		output *= employment_size;
+		output /= employment_type->get_base_employment_size();
+		output *= 100 + commodity_throughput_modifiers[employment_type->get_output_commodity()];
+		output /= 100;
 		outputs[employment_type->get_output_commodity()] += centesimal_int(output);
 	}
 
@@ -2571,6 +2586,8 @@ void site_game_data::set_commodity_throughput_modifier(const commodity *commodit
 	} else {
 		this->commodity_throughput_modifiers[commodity] = value;
 	}
+
+	this->calculate_commodity_outputs();
 }
 
 int site_game_data::get_total_commodity_throughput_modifier(const commodity *commodity) const

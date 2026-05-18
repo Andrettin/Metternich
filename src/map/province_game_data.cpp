@@ -1998,6 +1998,8 @@ void province_game_data::set_commodity_throughput_modifier(const commodity *comm
 	} else {
 		this->commodity_throughput_modifiers[commodity] = value;
 	}
+
+	this->calculate_site_commodity_output(commodity);
 }
 
 void province_game_data::change_improved_resource_commodity_bonus(const resource *resource, const commodity *commodity, const int change)

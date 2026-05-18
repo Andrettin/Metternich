@@ -50,8 +50,8 @@ public:
 		return this->input_commodities;
 	}
 
-	int64_t get_input_for_employment_size(const commodity *commodity, const int64_t employment_size) const;
-	int64_t get_employment_size_for_input(const commodity *commodity, const int64_t input) const;
+	int64_t get_input_for_employment_size(const commodity *commodity, const int64_t employment_size, const int throughput_modifier) const;
+	int64_t get_employment_size_for_input(const commodity *commodity, const int64_t input, const int throughput_modifier) const;
 
 	const commodity *get_output_commodity() const
 	{

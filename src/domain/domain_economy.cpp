@@ -690,7 +690,8 @@ QCoro::Task<void> domain_economy::decrease_commodity_input(const commodity *comm
 				continue;
 			}
 
-			const int64_t employment_input = employment_type->get_input_for_employment_size(commodity, employment_size);
+			const int throughput_modifier = employment_type->get_output_commodity() ? site->get_game_data()->get_total_commodity_throughput_modifier(employment_type->get_output_commodity()) : 0;
+			const int64_t employment_input = employment_type->get_input_for_employment_size(commodity, employment_size, throughput_modifier);
 
 			int64_t employment_input_decrease = 0;
 			int64_t unemployment_size = 0;
@@ -698,9 +699,9 @@ QCoro::Task<void> domain_economy::decrease_commodity_input(const commodity *comm
 				unemployment_size = employment_size;
 				employment_input_decrease = employment_input;
 			} else {
-				const int64_t new_employment_size = employment_type->get_employment_size_for_input(commodity, employment_input - decrease);
+				const int64_t new_employment_size = employment_type->get_employment_size_for_input(commodity, employment_input - decrease, throughput_modifier);
 				unemployment_size = employment_size - new_employment_size;
-				employment_input_decrease = employment_input - employment_type->get_input_for_employment_size(commodity, new_employment_size);
+				employment_input_decrease = employment_input - employment_type->get_input_for_employment_size(commodity, new_employment_size, throughput_modifier);
 				assert_throw(unemployment_size > 0);
 				assert_throw(employment_input_decrease >= 0);
 			}
@@ -1055,6 +1056,8 @@ void domain_economy::set_commodity_throughput_modifier(const commodity *commodit
 	} else {
 		this->commodity_throughput_modifiers[commodity] = value;
 	}
+
+	this->calculate_site_commodity_output(commodity);
 }
 
 void domain_economy::change_improved_resource_commodity_bonus(const resource *resource, const commodity *commodity, const int change)

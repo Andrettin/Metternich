@@ -109,7 +109,7 @@ bool employment_type::can_employ(const population_type *population_type, const m
 	return false;
 }
 
-int64_t employment_type::get_input_for_employment_size(const commodity *commodity, const int64_t employment_size) const
+int64_t employment_type::get_input_for_employment_size(const commodity *commodity, const int64_t employment_size, const int throughput_modifier) const
 {
 	assert_throw(this->get_input_commodities().contains(commodity));
 
@@ -118,17 +118,23 @@ int64_t employment_type::get_input_for_employment_size(const commodity *commodit
 	input *= employment_size;
 	input /= this->get_base_employment_size();
 
+	input *= 100 + throughput_modifier;
+	input /= 100;
+
 	input *= game::get()->get_current_months_per_turn();
 
 	return std::max(input, 1ll);
 }
 
-int64_t employment_type::get_employment_size_for_input(const commodity *commodity, const int64_t input) const
+int64_t employment_type::get_employment_size_for_input(const commodity *commodity, const int64_t input, const int throughput_modifier) const
 {
 	assert_throw(this->get_input_commodities().contains(commodity));
 
 	int64_t employment_size = input;
 	employment_size /= game::get()->get_current_months_per_turn();
+
+	employment_size *= 100;
+	employment_size /= 100 + throughput_modifier;
 
 	employment_size *= this->get_base_employment_size();
 	employment_size /= this->get_input_commodities().find(commodity)->second;
