@@ -1,12 +1,10 @@
 #pragma once
 
-#include "domain/domain_container.h"
 #include "economy/commodity_container.h"
 #include "economy/resource_container.h"
 #include "infrastructure/building_type_container.h"
 #include "infrastructure/improvement_container.h"
 #include "util/centesimal_int.h"
-#include "util/decimillesimal_int.h"
 
 namespace archimedes {
 	class gsml_data;
@@ -38,7 +36,6 @@ class domain_economy final : public QObject
 	Q_PROPERTY(QVariantList bids READ get_bids_qvariant_list NOTIFY bids_changed)
 	Q_PROPERTY(QVariantList offers READ get_offers_qvariant_list NOTIFY offers_changed)
 	Q_PROPERTY(int output_modifier READ get_output_modifier_int NOTIFY output_modifier_changed)
-	Q_PROPERTY(int resource_output_modifier READ get_resource_output_modifier NOTIFY resource_output_modifier_changed)
 	Q_PROPERTY(int throughput_modifier READ get_throughput_modifier NOTIFY throughput_modifier_changed)
 
 public:
@@ -449,18 +446,6 @@ public:
 		this->set_output_modifier(this->get_output_modifier() + change);
 	}
 
-	int get_resource_output_modifier() const
-	{
-		return this->resource_output_modifier;
-	}
-
-	void set_resource_output_modifier(const int value);
-
-	void change_resource_output_modifier(const int value)
-	{
-		this->set_resource_output_modifier(this->get_resource_output_modifier() + value);
-	}
-
 	const commodity_map<centesimal_int> &get_commodity_output_modifiers() const
 	{
 		return this->commodity_output_modifiers;
@@ -764,7 +749,6 @@ signals:
 	void bids_changed();
 	void offers_changed();
 	void output_modifier_changed();
-	void resource_output_modifier_changed();
 	void throughput_modifier_changed();
 
 private:
@@ -785,7 +769,6 @@ private:
 	commodity_map<int> commodity_needs;
 	std::map<population_strata, int> population_strata_tax_rates;
 	centesimal_int output_modifier;
-	int resource_output_modifier = 0;
 	commodity_map<centesimal_int> commodity_output_modifiers;
 	commodity_map<centesimal_int> capital_commodity_output_modifiers;
 	int throughput_modifier = 0;

@@ -570,27 +570,6 @@ public:
 		this->set_output_modifier(this->get_output_modifier() + change);
 	}
 
-	int get_resource_output_modifier() const
-	{
-		return this->resource_output_modifier;
-	}
-
-	void set_resource_output_modifier(const int value)
-	{
-		if (value == this->get_resource_output_modifier()) {
-			return;
-		}
-
-		this->resource_output_modifier = value;
-
-		this->calculate_commodity_outputs();
-	}
-
-	void change_resource_output_modifier(const int value)
-	{
-		this->set_resource_output_modifier(this->get_resource_output_modifier() + value);
-	}
-
 	const commodity_map<centesimal_int> &get_commodity_output_modifiers() const
 	{
 		return this->commodity_output_modifiers;
@@ -734,7 +713,6 @@ private:
 	commodity_map<centesimal_int> base_commodity_outputs;
 	commodity_map<centesimal_int> commodity_outputs;
 	centesimal_int output_modifier;
-	int resource_output_modifier = 0;
 	commodity_map<centesimal_int> commodity_output_modifiers;
 	std::vector<army *> visiting_armies; //armies visiting this site
 	std::vector<const character *> homed_characters;

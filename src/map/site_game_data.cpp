@@ -62,7 +62,6 @@
 #include "ui/portrait.h"
 #include "unit/army.h"
 #include "util/assert_util.h"
-#include "util/gender.h"
 #include "util/log_util.h"
 #include "util/map_util.h"
 #include "util/number_util.h"
@@ -197,6 +196,10 @@ void site_game_data::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "commodity_outputs") {
 		scope.for_each_property([this](const gsml_property &property) {
 			this->commodity_outputs[commodity::get(property.get_key())] = centesimal_int(property.get_value());
+		});
+	} else if (tag == "commodity_output_modifiers") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->commodity_output_modifiers[commodity::get(property.get_key())] = centesimal_int(property.get_value());
 		});
 	} else if (tag == "homed_characters") {
 		for (const std::string &value : values) {
@@ -333,6 +336,14 @@ gsml_data site_game_data::to_gsml_data() const
 			commodity_outputs_data.add_property(commodity->get_identifier(), output.to_string());
 		}
 		data.add_child(std::move(commodity_outputs_data));
+	}
+
+	if (!this->get_commodity_output_modifiers().empty()) {
+		gsml_data commodity_output_modifiers_data("commodity_output_modifiers");
+		for (const auto &[commodity, output_modifier] : this->get_commodity_output_modifiers()) {
+			commodity_output_modifiers_data.add_property(commodity->get_identifier(), output_modifier.to_string());
+		}
+		data.add_child(std::move(commodity_output_modifiers_data));
 	}
 
 	if (!this->get_homed_characters().empty()) {
@@ -2469,10 +2480,6 @@ void site_game_data::calculate_commodity_outputs()
 	centesimal_int output_modifier = this->get_output_modifier();
 	commodity_map<centesimal_int> commodity_output_modifiers = this->get_commodity_output_modifiers();
 
-	if (this->get_resource() != nullptr && this->get_resource()->get_commodity() != nullptr) {
-		commodity_output_modifiers[this->get_resource()->get_commodity()] += this->get_resource_output_modifier();
-	}
-
 	if (this->get_owner() != nullptr) {
 		for (const auto &[commodity, value] : this->get_owner()->get_economy()->get_commodity_bonuses_per_population()) {
 			outputs[commodity] += (value * this->get_population_unit_count());
@@ -2505,10 +2512,6 @@ void site_game_data::calculate_commodity_outputs()
 
 		output_modifier += province->get_game_data()->get_output_modifier();
 
-		if (this->get_resource() != nullptr && this->get_resource()->get_commodity() != nullptr) {
-			commodity_output_modifiers[this->get_resource()->get_commodity()] += province->get_game_data()->get_resource_output_modifier();
-		}
-
 		for (const auto &[commodity, modifier] : province->get_game_data()->get_commodity_output_modifiers()) {
 			commodity_output_modifiers[commodity] += modifier;
 		}
@@ -2516,10 +2519,6 @@ void site_game_data::calculate_commodity_outputs()
 
 	if (this->get_owner() != nullptr) {
 		output_modifier += this->get_owner()->get_economy()->get_output_modifier();
-
-		if (this->get_resource() != nullptr && this->get_resource()->get_commodity() != nullptr) {
-			commodity_output_modifiers[this->get_resource()->get_commodity()] += this->get_owner()->get_economy()->get_resource_output_modifier();
-		}
 
 		for (const auto &[commodity, modifier] : this->get_owner()->get_economy()->get_commodity_output_modifiers()) {
 			commodity_output_modifiers[commodity] += modifier;

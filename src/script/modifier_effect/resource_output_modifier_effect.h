@@ -1,5 +1,7 @@
 #pragma once
 
+#include "economy/commodity.h"
+#include "economy/commodity_type.h"
 #include "script/modifier_effect/modifier_effect.h"
 
 namespace metternich {
@@ -20,10 +22,14 @@ public:
 
 	virtual void apply(const scope_type *scope, const centesimal_int &multiplier) const override
 	{
-		if constexpr (std::is_same_v<scope_type, const domain>) {
-			scope->get_economy()->change_resource_output_modifier((this->value * multiplier).to_int());
-		} else {
-			scope->get_game_data()->change_resource_output_modifier((this->value * multiplier).to_int());
+		for (const commodity *commodity : commodity::get_all()) {
+			if (commodity->get_type() == commodity_type::resource && !commodity->is_abstract()) {
+				if constexpr (std::is_same_v<scope_type, const domain>) {
+					scope->get_economy()->change_commodity_output_modifier(commodity, this->value * multiplier);
+				} else {
+					scope->get_game_data()->change_commodity_output_modifier(commodity, this->value * multiplier);
+				}
+			}
 		}
 	}
 
