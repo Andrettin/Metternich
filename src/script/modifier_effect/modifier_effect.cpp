@@ -47,6 +47,7 @@
 #include "script/modifier_effect/health_per_hit_dice_modifier_effect.h"
 #include "script/modifier_effect/holding_level_modifier_effect.h"
 #include "script/modifier_effect/industrial_output_modifier_effect.h"
+#include "script/modifier_effect/industrial_throughput_modifier_effect.h"
 #include "script/modifier_effect/infantry_cost_modifier_effect.h"
 #include "script/modifier_effect/initiative_modifier_effect.h"
 #include "script/modifier_effect/law_cost_modifier_effect.h"
@@ -299,6 +300,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<agricultural_output_modifier_effect<scope_type>>(value);
 		} else if (key == "industrial_output_modifier") {
 			return std::make_unique<industrial_output_modifier_effect<scope_type>>(value);
+		} else if (key == "industrial_throughput_modifier") {
+			return std::make_unique<industrial_throughput_modifier_effect<scope_type>>(value);
 		} else if (key == "mineral_output_modifier") {
 			return std::make_unique<mineral_output_modifier_effect<scope_type>>(value);
 		} else if (key == "output_modifier") {

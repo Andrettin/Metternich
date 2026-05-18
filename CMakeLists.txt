@@ -884,6 +884,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/hit_dice_modifier_effect.h
 	src/script/modifier_effect/holding_level_modifier_effect.h
 	src/script/modifier_effect/industrial_output_modifier_effect.h
+	src/script/modifier_effect/industrial_throughput_modifier_effect.h
 	src/script/modifier_effect/infantry_cost_modifier_effect.h
 	src/script/modifier_effect/initiative_modifier_effect.h
 	src/script/modifier_effect/law_cost_modifier_effect.h
