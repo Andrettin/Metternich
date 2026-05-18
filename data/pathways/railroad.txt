@@ -14,6 +14,8 @@ experimental_railroad = {
 	modifier = {
 		max_level = 1
 		movement_cost_modifier = -55
+		resource_output_modifier = 16
+		industrial_throughput_modifier = 16
 	}
 }
 
@@ -33,6 +35,8 @@ early_railroad = {
 	modifier = {
 		max_level = 1
 		movement_cost_modifier = -60
+		resource_output_modifier = 32
+		industrial_throughput_modifier = 32
 	}
 }
 
@@ -52,6 +56,8 @@ iron_railroad = {
 	modifier = {
 		max_level = 1
 		movement_cost_modifier = -65
+		resource_output_modifier = 48
+		industrial_throughput_modifier = 48
 	}
 }
 
@@ -69,5 +75,7 @@ steel_railroad = {
 	modifier = {
 		max_level = 1
 		movement_cost_modifier = -70
+		resource_output_modifier = 64
+		industrial_throughput_modifier = 64
 	}
 }
