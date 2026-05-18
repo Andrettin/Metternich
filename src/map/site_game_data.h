@@ -607,6 +607,31 @@ public:
 		this->set_commodity_output_modifier(commodity, this->get_commodity_output_modifier(commodity) + change);
 	}
 
+	const commodity_map<int> &get_commodity_throughput_modifiers() const
+	{
+		return this->commodity_throughput_modifiers;
+	}
+
+	int get_commodity_throughput_modifier(const commodity *commodity) const
+	{
+		const auto find_iterator = this->commodity_throughput_modifiers.find(commodity);
+
+		if (find_iterator != this->commodity_throughput_modifiers.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void set_commodity_throughput_modifier(const commodity *commodity, const int value);
+
+	void change_commodity_throughput_modifier(const commodity *commodity, const int value)
+	{
+		this->set_commodity_throughput_modifier(commodity, this->get_commodity_throughput_modifier(commodity) + value);
+	}
+
+	int get_total_commodity_throughput_modifier(const commodity *commodity) const;
+
 	bool produces_commodity(const commodity *commodity) const
 	{
 		return this->get_commodity_outputs().contains(commodity);
@@ -714,6 +739,7 @@ private:
 	commodity_map<centesimal_int> commodity_outputs;
 	centesimal_int output_modifier;
 	commodity_map<centesimal_int> commodity_output_modifiers;
+	commodity_map<int> commodity_throughput_modifiers;
 	std::vector<army *> visiting_armies; //armies visiting this site
 	std::vector<const character *> homed_characters;
 };

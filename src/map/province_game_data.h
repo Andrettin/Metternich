@@ -484,6 +484,29 @@ public:
 		this->set_commodity_output_modifier(commodity, this->get_commodity_output_modifier(commodity) + change);
 	}
 
+	const commodity_map<int> &get_commodity_throughput_modifiers() const
+	{
+		return this->commodity_throughput_modifiers;
+	}
+
+	int get_commodity_throughput_modifier(const commodity *commodity) const
+	{
+		const auto find_iterator = this->commodity_throughput_modifiers.find(commodity);
+
+		if (find_iterator != this->commodity_throughput_modifiers.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void set_commodity_throughput_modifier(const commodity *commodity, const int value);
+
+	void change_commodity_throughput_modifier(const commodity *commodity, const int value)
+	{
+		this->set_commodity_throughput_modifier(commodity, this->get_commodity_throughput_modifier(commodity) + value);
+	}
+
 	const resource_map<commodity_map<int>> &get_improved_resource_commodity_bonuses() const
 	{
 		return this->improved_resource_commodity_bonuses;
@@ -649,6 +672,7 @@ private:
 	commodity_map<centesimal_int> local_commodity_outputs;
 	centesimal_int output_modifier;
 	commodity_map<centesimal_int> commodity_output_modifiers;
+	commodity_map<int> commodity_throughput_modifiers;
 	resource_map<commodity_map<int>> improved_resource_commodity_bonuses;
 	commodity_map<std::map<int, int>> commodity_bonuses_for_tile_thresholds;
 	data_entry_map<technology_category, int> technology_category_spread_modifiers;

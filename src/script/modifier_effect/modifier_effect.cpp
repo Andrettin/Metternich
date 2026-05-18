@@ -146,7 +146,6 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 		static const std::string output_modifier_suffix = "_output_modifier";
 		static const std::string research_modifier_suffix = "_research_modifier";
 		static const std::string ship_stat_modifier_prefix = "ship_";
-		static const std::string throughput_modifier_suffix = "_throughput_modifier";
 
 		if (key == "artillery_cost_modifier") {
 			return std::make_unique<artillery_cost_modifier_effect>(value);
@@ -212,9 +211,6 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 		} else if (key.ends_with(commodity_bonus_per_population_suffix) && commodity::try_get(key.substr(0, key.size() - commodity_bonus_per_population_suffix.size())) != nullptr) {
 			const commodity *commodity = commodity::get(key.substr(0, key.size() - commodity_bonus_per_population_suffix.size()));
 			return std::make_unique<commodity_bonus_per_population_modifier_effect>(commodity, value);
-		} else if (key.ends_with(throughput_modifier_suffix) && commodity::try_get(key.substr(0, key.size() - throughput_modifier_suffix.size())) != nullptr) {
-			const commodity *commodity = commodity::get(key.substr(0, key.size() - throughput_modifier_suffix.size()));
-			return std::make_unique<commodity_throughput_modifier_effect<scope_type>>(commodity, value);
 		} else if (key.ends_with(bonus_suffix) && population_type::try_get(key.substr(0, key.size() - bonus_suffix.size())) != nullptr) {
 			const population_type *population_type = population_type::get(key.substr(0, key.size() - bonus_suffix.size()));
 
@@ -297,6 +293,7 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 
 	if constexpr (std::is_same_v<scope_type, const domain> || std::is_same_v<scope_type, const province> || std::is_same_v<scope_type, const site>) {
 		static const std::string output_modifier_suffix = "_output_modifier";
+		static const std::string throughput_modifier_suffix = "_throughput_modifier";
 
 		if (key == "agricultural_output_modifier") {
 			return std::make_unique<agricultural_output_modifier_effect<scope_type>>(value);
@@ -311,6 +308,9 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 		} else if (key.ends_with(output_modifier_suffix) && commodity::try_get(key.substr(0, key.size() - output_modifier_suffix.size())) != nullptr) {
 			const commodity *commodity = commodity::get(key.substr(0, key.size() - output_modifier_suffix.size()));
 			return std::make_unique<commodity_output_modifier_effect<scope_type>>(commodity, value);
+		} else if (key.ends_with(throughput_modifier_suffix) && commodity::try_get(key.substr(0, key.size() - throughput_modifier_suffix.size())) != nullptr) {
+			const commodity *commodity = commodity::get(key.substr(0, key.size() - throughput_modifier_suffix.size()));
+			return std::make_unique<commodity_throughput_modifier_effect<scope_type>>(commodity, value);
 		}
 	}
 

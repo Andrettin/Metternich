@@ -139,6 +139,10 @@ void province_game_data::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([this](const gsml_property &property) {
 			this->commodity_output_modifiers[commodity::get(property.get_key())] = centesimal_int(property.get_value());
 		});
+	} else if (tag == "commodity_throughput_modifiers") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->commodity_throughput_modifiers[commodity::get(property.get_key())] = std::stoi(property.get_value());
+		});
 	} else if (tag == "technology_category_spread_modifiers") {
 		scope.for_each_property([this](const gsml_property &property) {
 			this->technology_category_spread_modifiers[technology_category::get(property.get_key())] = std::stoi(property.get_value());
@@ -210,6 +214,14 @@ gsml_data province_game_data::to_gsml_data() const
 			commodity_output_modifiers_data.add_property(commodity->get_identifier(), output_modifier.to_string());
 		}
 		data.add_child(std::move(commodity_output_modifiers_data));
+	}
+
+	if (!this->get_commodity_throughput_modifiers().empty()) {
+		gsml_data commodity_throughput_modifiers_data("commodity_throughput_modifiers");
+		for (const auto &[commodity, throughput_modifier] : this->get_commodity_throughput_modifiers()) {
+			commodity_throughput_modifiers_data.add_property(commodity->get_identifier(), std::to_string(throughput_modifier));
+		}
+		data.add_child(std::move(commodity_throughput_modifiers_data));
 	}
 
 	if (!this->technology_category_spread_modifiers.empty()) {
@@ -1972,6 +1984,19 @@ void province_game_data::change_local_commodity_output(const commodity *commodit
 
 	if (output == 0) {
 		this->local_commodity_outputs.erase(commodity);
+	}
+}
+
+void province_game_data::set_commodity_throughput_modifier(const commodity *commodity, const int value)
+{
+	if (value == this->get_commodity_throughput_modifier(commodity)) {
+		return;
+	}
+
+	if (value == 0) {
+		this->commodity_throughput_modifiers.erase(commodity);
+	} else {
+		this->commodity_throughput_modifiers[commodity] = value;
 	}
 }
 

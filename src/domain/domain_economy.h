@@ -512,6 +512,11 @@ public:
 		this->set_throughput_modifier(this->get_throughput_modifier() + value);
 	}
 
+	const commodity_map<int> &get_commodity_throughput_modifiers() const
+	{
+		return this->commodity_throughput_modifiers;
+	}
+
 	int get_commodity_throughput_modifier(const commodity *commodity) const
 	{
 		const auto find_iterator = this->commodity_throughput_modifiers.find(commodity);

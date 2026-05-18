@@ -201,6 +201,10 @@ void site_game_data::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([this](const gsml_property &property) {
 			this->commodity_output_modifiers[commodity::get(property.get_key())] = centesimal_int(property.get_value());
 		});
+	} else if (tag == "commodity_throughput_modifiers") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->commodity_throughput_modifiers[commodity::get(property.get_key())] = std::stoi(property.get_value());
+		});
 	} else if (tag == "homed_characters") {
 		for (const std::string &value : values) {
 			this->homed_characters.push_back(game::get()->get_character(value));
@@ -344,6 +348,14 @@ gsml_data site_game_data::to_gsml_data() const
 			commodity_output_modifiers_data.add_property(commodity->get_identifier(), output_modifier.to_string());
 		}
 		data.add_child(std::move(commodity_output_modifiers_data));
+	}
+
+	if (!this->get_commodity_throughput_modifiers().empty()) {
+		gsml_data commodity_throughput_modifiers_data("commodity_throughput_modifiers");
+		for (const auto &[commodity, throughput_modifier] : this->get_commodity_throughput_modifiers()) {
+			commodity_throughput_modifiers_data.add_property(commodity->get_identifier(), std::to_string(throughput_modifier));
+		}
+		data.add_child(std::move(commodity_throughput_modifiers_data));
 	}
 
 	if (!this->get_homed_characters().empty()) {
@@ -2546,6 +2558,30 @@ void site_game_data::calculate_commodity_outputs()
 
 		this->set_commodity_output(commodity, output);
 	}
+}
+
+void site_game_data::set_commodity_throughput_modifier(const commodity *commodity, const int value)
+{
+	if (value == this->get_commodity_throughput_modifier(commodity)) {
+		return;
+	}
+
+	if (value == 0) {
+		this->commodity_throughput_modifiers.erase(commodity);
+	} else {
+		this->commodity_throughput_modifiers[commodity] = value;
+	}
+}
+
+int site_game_data::get_total_commodity_throughput_modifier(const commodity *commodity) const
+{
+	int throughput_modifier = this->get_commodity_throughput_modifier(commodity) + this->get_province()->get_game_data()->get_commodity_throughput_modifier(commodity);
+
+	if (this->get_owner() != nullptr) {
+		throughput_modifier += this->get_owner()->get_economy()->get_commodity_throughput_modifier(commodity);
+	}
+
+	return throughput_modifier;
 }
 
 int site_game_data::get_min_income() const

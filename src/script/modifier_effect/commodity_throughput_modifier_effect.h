@@ -28,7 +28,11 @@ public:
 			return;
 		}
 
-		scope->get_economy()->change_commodity_throughput_modifier(this->commodity, (this->value * multiplier).to_int());
+		if constexpr (std::is_same_v<scope_type, const domain>) {
+			scope->get_economy()->change_commodity_throughput_modifier(this->commodity, (this->value * multiplier).to_int());
+		} else {
+			scope->get_game_data()->change_commodity_throughput_modifier(this->commodity, (this->value * multiplier).to_int());
+		}
 	}
 
 	virtual std::string get_base_string(const scope_type *scope) const override
