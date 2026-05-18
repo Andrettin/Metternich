@@ -18,6 +18,9 @@ two_field_system = {
 	prerequisites = {
 		feudalism #to place it in the appropriate period
 	}
+	modifier = {
+		agricultural_output_modifier = 4
+	}
 }
 
 three_field_system = {
@@ -28,6 +31,9 @@ three_field_system = {
 	period = dark_age
 	prerequisites = {
 		two_field_system
+	}
+	modifier = {
+		agricultural_output_modifier = 4
 	}
 }
 
@@ -40,6 +46,9 @@ stripe_plowing = {
 	prerequisites = {
 		three_field_system
 	}
+	modifier = {
+		agricultural_output_modifier = 3
+	}
 }
 
 soil_amelioration = {
@@ -50,6 +59,9 @@ soil_amelioration = {
 	period = castle_age
 	prerequisites = {
 		stripe_plowing
+	}
+	modifier = {
+		agricultural_output_modifier = 2
 	}
 }
 
@@ -62,6 +74,81 @@ rooting_out = {
 	prerequisites = {
 		soil_amelioration
 	}
+	modifier = {
+		agricultural_output_modifier = 1
+	}
+}
+
+wood_plow = {
+	name = "Wood Plow"
+	subcategory = farming
+	portrait = engineering
+	icon = grain
+	period = copper_age
+	prerequisites = {
+		domestication
+	}
+	modifier = {
+		agricultural_output_modifier = 3
+	}
+}
+
+iron_tipped_wood_plow = {
+	name = "Iron-Tipped Wood Plow"
+	subcategory = farming
+	portrait = engineering
+	icon = grain
+	period = iron_age
+	prerequisites = {
+		wood_plow
+		iron_working #since it is partially made of iron
+	}
+	modifier = {
+		agricultural_output_modifier = 2
+	}
+}
+
+iron_plow = {
+	name = "Iron Plow"
+	subcategory = farming
+	portrait = engineering
+	icon = grain
+	period = feudal_age
+	prerequisites = {
+		iron_tipped_wood_plow
+		three_field_system #to place it in the appropriate period
+	}
+	modifier = {
+		agricultural_output_modifier = 3
+	}
+}
+
+pitchforks_and_harrows = {
+	name = "Pitchforks and Harrows"
+	subcategory = farming
+	portrait = engineering
+	icon = grain
+	period = castle_age
+	prerequisites = {
+		iron_plow
+	}
+	modifier = {
+		agricultural_output_modifier = 2
+	}
+}
+
+padded_horse_collar = {
+	name = "Padded Horse Collar"
+	subcategory = farming
+	portrait = engineering
+	icon = horses
+	period = renaissance_age
+	prerequisites = {
+		pitchforks_and_harrows
+	}
+	modifier = {
+		agricultural_output_modifier = 3
+	}
 }
 
 land_enclosure = {
@@ -71,6 +158,7 @@ land_enclosure = {
 	icon = grain
 	period = gunpowder_age
 	prerequisites = {
-		rooting_out
+		rooting_out #earlier farming technology
+		padded_horse_collar #earlier farming technology
 	}
 }
