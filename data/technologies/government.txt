@@ -50,7 +50,7 @@ democracy = {
 	subcategory = government
 	portrait = engineering
 	icon = philosophy
-	period = dark_age
+	period = absolutism_age
 	prerequisites = {
 		republic
 		banking

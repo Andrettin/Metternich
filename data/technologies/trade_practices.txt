@@ -1,0 +1,55 @@
+business_contracts = {
+	name = "Business Contracts"
+	subcategory = trade_practices
+	portrait = coinage
+	icon = wealth
+	period = classical_age
+	prerequisites = {
+		trade #seems reasonable
+		republic #to place it in the appropriate period
+	}
+}
+
+promissory_note = {
+	name = "Promissory Note"
+	subcategory = trade_practices
+	portrait = coinage
+	icon = wealth
+	period = dark_age
+	prerequisites = {
+		business_contracts
+	}
+}
+
+letters_of_credit = {
+	name = "Letters of Credit"
+	subcategory = trade_practices
+	portrait = coinage
+	icon = wealth
+	period = feudal_age
+	prerequisites = {
+		promissory_note
+	}
+}
+
+double_entry_bookkeeping = {
+	name = "Double-Entry Bookkeeping"
+	subcategory = trade_practices
+	portrait = coinage
+	icon = wealth
+	period = castle_age
+	prerequisites = {
+		letters_of_credit
+	}
+}
+
+foreign_accreditation = {
+	name = "Foreign Accreditation"
+	subcategory = trade_practices
+	portrait = coinage
+	icon = wealth
+	period = renaissance_age
+	prerequisites = {
+		double_entry_bookkeeping
+	}
+}

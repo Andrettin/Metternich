@@ -27,8 +27,9 @@ banking = {
 	subcategory = trade_practices
 	portrait = coinage
 	icon = wealth
-	period = classical_age
+	period = gunpowder_age
 	prerequisites = {
+		foreign_accreditation #seems reasonable
 		trade
 		republic
 	}
@@ -39,7 +40,7 @@ economics = {
 	subcategory = trade_practices
 	portrait = coinage
 	icon = wealth
-	period = renaissance_age
+	period = absolutism_age
 	prerequisites = {
 		banking
 		university
