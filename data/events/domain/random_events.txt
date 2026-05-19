@@ -5,8 +5,8 @@ beautiful_statuette = {
 	trigger = per_turn_pulse
 	random = true
 	conditions = {
-		#technology = bronzeworking
-		#unit_class = smithy
+		technology = bronze_working
+		has_building_class = smithy
 	}
 	option = {
 		name = "Marvelous!"
