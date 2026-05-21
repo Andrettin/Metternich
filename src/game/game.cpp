@@ -6,7 +6,6 @@
 #include "character/character_class.h"
 #include "character/character_game_data.h"
 #include "character/character_history.h"
-#include "character/party.h"
 #include "culture/cultural_group.h"
 #include "culture/culture.h"
 #include "culture/culture_history.h"
@@ -27,9 +26,6 @@
 #include "domain/domain_government.h"
 #include "domain/domain_history.h"
 #include "domain/domain_technology.h"
-#include "domain/domain_tier.h"
-#include "domain/government_type.h"
-#include "domain/law.h"
 #include "domain/office.h"
 #include "economy/commodity.h"
 #include "economy/resource.h"
@@ -40,7 +36,6 @@
 #include "game/province_event.h"
 #include "game/scenario.h"
 #include "game/site_event.h"
-#include "infrastructure/building_class.h"
 #include "infrastructure/building_slot.h"
 #include "infrastructure/building_type.h"
 #include "infrastructure/holding_type.h"
@@ -48,9 +43,7 @@
 #include "infrastructure/improvement_slot.h"
 #include "infrastructure/pathway.h"
 #include "infrastructure/wonder.h"
-#include "map/direction.h"
 #include "map/map.h"
-#include "map/map_generator.h"
 #include "map/map_template.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
@@ -70,15 +63,12 @@
 #include "map/terrain_type.h"
 #include "map/tile.h"
 #include "population/population_type.h"
-#include "population/population_unit.h"
 #include "religion/religion.h"
 #include "script/condition/and_condition.h"
 #include "script/effect/delayed_effect_instance.h"
 #include "time/calendar.h"
-#include "time/era.h"
 #include "ui/portrait.h"
 #include "unit/army.h"
-#include "unit/civilian_unit.h"
 #include "unit/civilian_unit_type.h"
 #include "unit/historical_civilian_unit.h"
 #include "unit/historical_civilian_unit_history.h"
@@ -87,12 +77,9 @@
 #include "unit/historical_transporter.h"
 #include "unit/historical_transporter_history.h"
 #include "unit/military_unit.h"
-#include "unit/military_unit_category.h"
 #include "unit/military_unit_stat.h"
 #include "unit/military_unit_type.h"
-#include "unit/transporter.h"
 #include "unit/transporter_type.h"
-#include "util/aggregate_exception.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/date_util.h"
@@ -102,7 +89,6 @@
 #include "util/map_util.h"
 #include "util/number_util.h"
 #include "util/path_util.h"
-#include "util/size_util.h"
 #include "util/string_conversion_util.h"
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
@@ -2048,17 +2034,22 @@ QCoro::Task<void> game::create_diplomatic_map_image()
 	for (const domain *domain : this->get_countries()) {
 		domain_game_data *domain_game_data = domain->get_game_data();
 
-		{
-			QCoro::Task<void> task = domain_game_data->create_diplomatic_map_image();
-			tasks.push_back(std::move(task));
-		}
-
-		{
-			QCoro::Task<void> task = domain_game_data->create_realm_diplomatic_map_image();
-			tasks.push_back(std::move(task));
-		}
+		QCoro::Task<void> task = domain_game_data->create_diplomatic_map_image();
+		tasks.push_back(std::move(task));
 	}
 
+	for (QCoro::Task<void> &task : tasks) {
+		co_await std::move(task);
+	}
+
+	// do the realm diplomatic map images after the others, since they can be the same as the diplomatic map images, and we don't want to re-do those unnecessarily
+	tasks.clear();
+	for (const domain *domain : this->get_countries()) {
+		domain_game_data *domain_game_data = domain->get_game_data();
+
+		QCoro::Task<void> task = domain_game_data->create_realm_diplomatic_map_image();
+		tasks.push_back(std::move(task));
+	}
 	for (QCoro::Task<void> &task : tasks) {
 		co_await std::move(task);
 	}

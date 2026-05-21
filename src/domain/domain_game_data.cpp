@@ -2642,6 +2642,13 @@ QCoro::Task<void> domain_game_data::create_realm_diplomatic_map_image()
 		co_return;
 	}
 
+	if (this->get_vassals().empty() && !this->get_diplomatic_map_image().isNull() && !this->get_selected_diplomatic_map_image().isNull()) {
+		this->realm_diplomatic_map_image = this->get_diplomatic_map_image();
+		this->selected_realm_diplomatic_map_image = this->get_selected_diplomatic_map_image();
+		this->realm_diplomatic_map_image_rect = this->get_diplomatic_map_image_rect();
+		co_return;
+	}
+
 	const map *map = map::get();
 
 	QImage diplomatic_map_image = this->prepare_realm_diplomatic_map_image();
