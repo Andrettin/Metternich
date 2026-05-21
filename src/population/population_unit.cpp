@@ -287,6 +287,7 @@ void population_unit::set_site(const metternich::site *site)
 		co_return;
 	}
 
+	assert_throw(size >= 0);
 	assert_throw(this->get_site() != nullptr);
 
 	if (this->get_employment_type() != nullptr) {

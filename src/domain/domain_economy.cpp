@@ -242,10 +242,10 @@ QCoro::Task<void> domain_economy::do_production()
 				continue;
 			}
 
-			const int input_int = input.to_int();
-			if (this->get_stored_commodity(commodity) < input_int) {
-				co_await this->decrease_commodity_input(commodity, input_int - this->get_stored_commodity(commodity));
+			while (this->get_stored_commodity(commodity) < this->get_commodity_input(commodity).to_int64()) {
+				co_await this->decrease_commodity_input(commodity, std::max(1ll, this->get_commodity_input(commodity).to_int64() - this->get_stored_commodity(commodity)));
 			}
+			assert_throw(this->get_stored_commodity(commodity) >= this->get_commodity_input(commodity).to_int64());
 		}
 
 		//reduce inputs from the storage for the next turn (for production this turn it had already been subtracted)
@@ -718,6 +718,8 @@ QCoro::Task<void> domain_economy::decrease_commodity_input(const commodity *comm
 			break;
 		}
 	}
+
+	assert_throw(decrease <= 0);
 }
 
 QVariantList domain_economy::get_commodity_outputs_qvariant_list() const

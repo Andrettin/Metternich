@@ -2211,7 +2211,9 @@ QCoro::Task<void> site_game_data::change_employment_size(const employment_type *
 				continue;
 			}
 
-			assert_throw(this->get_owner()->get_economy()->can_change_commodity_input(commodity, centesimal_int(input_change)));
+			if (change_input_storage) {
+				assert_throw(this->get_owner()->get_economy()->can_change_commodity_input(commodity, centesimal_int(input_change)));
+			}
 
 			this->get_owner()->get_economy()->change_commodity_input(commodity, centesimal_int(input_change), change_input_storage);
 		}

@@ -113,7 +113,7 @@ int64_t employment_type::get_input_for_employment_size(const commodity *commodit
 {
 	assert_throw(this->get_input_commodities().contains(commodity));
 
-	int64_t input = this->get_input_commodities().find(commodity)->second;
+	decimillesimal_int input = decimillesimal_int(this->get_input_commodities().find(commodity)->second);
 
 	input *= employment_size;
 	input /= this->get_base_employment_size();
@@ -123,14 +123,14 @@ int64_t employment_type::get_input_for_employment_size(const commodity *commodit
 
 	input *= game::get()->get_current_months_per_turn();
 
-	return std::max(input, 1ll);
+	return std::max(input.to_ceil_int64(), 1ll);
 }
 
 int64_t employment_type::get_employment_size_for_input(const commodity *commodity, const int64_t input, const int throughput_modifier) const
 {
 	assert_throw(this->get_input_commodities().contains(commodity));
 
-	int64_t employment_size = input;
+	decimillesimal_int employment_size = decimillesimal_int(input);
 	employment_size /= game::get()->get_current_months_per_turn();
 
 	employment_size *= 100;
@@ -139,7 +139,7 @@ int64_t employment_type::get_employment_size_for_input(const commodity *commodit
 	employment_size *= this->get_base_employment_size();
 	employment_size /= this->get_input_commodities().find(commodity)->second;
 
-	return employment_size;
+	return employment_size.to_int64();
 }
 
 bool employment_type::is_available_for_site(const site *site) const
