@@ -796,6 +796,8 @@ QCoro::Task<void> domain_game_data::do_construction()
 		co_return;
 	}
 
+	this->get_economy()->set_stored_commodity(construction_commodity, 0);
+
 	int under_construction_project_count = 0;
 	for (const province *province : this->get_provinces()) {
 		if (province->get_game_data()->get_under_construction_pathway() != nullptr) {
