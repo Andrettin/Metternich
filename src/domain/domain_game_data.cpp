@@ -788,13 +788,47 @@ QCoro::Task<void> domain_game_data::do_starvation()
 
 QCoro::Task<void> domain_game_data::do_construction()
 {
+	const commodity *construction_commodity = defines::get()->get_construction_commodity();
+
+	const int64_t available_construction = this->get_economy()->get_stored_commodity(construction_commodity);
+
+	if (available_construction == 0) {
+		co_return;
+	}
+
+	int under_construction_project_count = 0;
 	for (const province *province : this->get_provinces()) {
-		co_await province->get_game_data()->do_construction();
+		if (province->get_game_data()->get_under_construction_pathway() != nullptr) {
+			++under_construction_project_count;
+		}
+	}
+	for (const site *site : this->get_sites()) {
+		if (site->is_settlement() && site->get_game_data()->is_built()) {
+			for (const auto &building_slot : site->get_game_data()->get_building_slots()) {
+				if (building_slot->get_under_construction_building() != nullptr) {
+					if (building_slot->is_available()) {
+						++under_construction_project_count;
+					} else {
+						building_slot->cancel_construction();
+					}
+				}
+			}
+		}
+	}
+
+	if (under_construction_project_count == 0) {
+		co_return;
+	}
+
+	const decimillesimal_int construction_per_project = decimillesimal_int(available_construction) / under_construction_project_count;
+
+	for (const province *province : this->get_provinces()) {
+		co_await province->get_game_data()->do_construction(construction_per_project);
 	}
 
 	for (const site *site : this->get_sites()) {
 		if (site->is_settlement() && site->get_game_data()->is_built()) {
-			co_await site->get_game_data()->do_construction();
+			co_await site->get_game_data()->do_construction(construction_per_project);
 		}
 	}
 }

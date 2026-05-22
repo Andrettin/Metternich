@@ -57,6 +57,8 @@ void building_slot::process_gsml_property(const gsml_property &property)
 		this->wonder = wonder::get(value);
 	} else if (key == "under_construction_wonder") {
 		this->under_construction_wonder = wonder::get(value);
+	} else if (key == "construction_progress") {
+		this->construction_progress = decimillesimal_int(value);
 	} else {
 		throw std::runtime_error(std::format("Invalid building slot property: \"{}\".", key));
 	}
@@ -94,6 +96,10 @@ gsml_data building_slot::to_gsml_data() const
 
 	if (this->get_under_construction_wonder() != nullptr) {
 		data.add_property("under_construction_wonder", this->get_under_construction_wonder()->get_identifier());
+	}
+
+	if (this->get_construction_progress() != 0) {
+		data.add_property("construction_progress", this->get_construction_progress().to_string());
 	}
 
 	if (!this->get_item_slots().empty()) {
@@ -542,6 +548,36 @@ const wonder *building_slot::get_buildable_wonder() const
 	}
 
 	return nullptr;
+}
+
+const decimillesimal_int &building_slot::get_construction_progress() const
+{
+	return this->construction_progress;
+}
+
+qint64 building_slot::get_construction_progress_commodity_quantity() const
+{
+	const commodity_map<int> commodity_costs = this->get_under_construction_building()->get_commodity_costs_for_site(this->get_settlement());
+	if (!commodity_costs.contains(defines::get()->get_construction_commodity())) {
+		return 0;
+	}
+
+	return (commodity_costs.find(defines::get()->get_construction_commodity())->second * this->get_construction_progress() / 100).to_int64();
+}
+
+QString building_slot::get_construction_progress_qstring() const
+{
+	return QString::fromStdString(std::to_string(this->get_construction_progress().to_int()));
+}
+
+void building_slot::change_construction_progress(const decimillesimal_int &change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	this->construction_progress += change;
+	assert_throw(this->construction_progress >= 0);
 }
 
 QVariantList building_slot::get_item_slots_qvariant_list() const

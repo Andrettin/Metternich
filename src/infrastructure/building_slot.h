@@ -1,6 +1,6 @@
 #pragma once
 
-#include "economy/commodity_container.h"
+#include "util/decimillesimal_int.h"
 #include "util/qunique_ptr.h"
 
 Q_MOC_INCLUDE("domain/domain.h")
@@ -102,6 +102,11 @@ public:
 	const metternich::building_type *get_buildable_building() const;
 	const metternich::wonder *get_buildable_wonder() const;
 
+	const decimillesimal_int &get_construction_progress() const;
+	Q_INVOKABLE qint64 get_construction_progress_commodity_quantity() const;
+	Q_INVOKABLE QString get_construction_progress_qstring() const;
+	void change_construction_progress(const decimillesimal_int &change);
+
 	const std::vector<qunique_ptr<building_item_slot>> &get_item_slots() const
 	{
 		return this->item_slots;
@@ -135,6 +140,7 @@ private:
 	const building_type *under_construction_building = nullptr;
 	const metternich::wonder *wonder = nullptr;
 	const metternich::wonder *under_construction_wonder = nullptr;
+	decimillesimal_int construction_progress;
 	std::vector<qunique_ptr<building_item_slot>> item_slots;
 };
 

@@ -1,12 +1,9 @@
 #pragma once
 
-#include "culture/culture_container.h"
 #include "database/data_entry_container.h"
 #include "economy/commodity_container.h"
 #include "economy/resource_container.h"
-#include "infrastructure/building_type_container.h"
 #include "map/terrain_type_container.h"
-#include "religion/religion_container.h"
 #include "script/scripted_modifier_container.h"
 #include "technology/technology_container.h"
 #include "unit/military_unit_type_container.h"
@@ -102,7 +99,7 @@ public:
 	void do_ai_turn();
 	void collect_taxes();
 	[[nodiscard]] QCoro::Task<void> do_military_unit_recruitment();
-	[[nodiscard]] QCoro::Task<void> do_construction();
+	[[nodiscard]] QCoro::Task<void> do_construction(const decimillesimal_int &construction_per_project);
 	void do_population_literacy_change();
 
 	bool is_on_map() const;

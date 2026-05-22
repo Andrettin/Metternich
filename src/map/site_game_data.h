@@ -102,7 +102,7 @@ public:
 	[[nodiscard]] QCoro::Task<void> do_events();
 	void collect_income();
 	void check_item_slots();
-	[[nodiscard]] QCoro::Task<void> do_construction();
+	[[nodiscard]] QCoro::Task<void> do_construction(const decimillesimal_int &construction_per_project);
 
 	const QPoint &get_tile_pos() const;
 	tile *get_tile() const;

@@ -368,7 +368,7 @@ QCoro::Task<void> province_game_data::do_military_unit_recruitment()
 	}
 }
 
-QCoro::Task<void> province_game_data::do_construction()
+QCoro::Task<void> province_game_data::do_construction(const decimillesimal_int &construction_per_project)
 {
 	if (this->get_under_construction_pathway() != nullptr) {
 		co_await this->set_pathway(this->get_under_construction_pathway());
