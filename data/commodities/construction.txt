@@ -1,0 +1,7 @@
+carpentry = {
+	name = "Carpentry"
+	type = good
+	icon = hammer
+	tiny_icon = non_aggression_pact
+	abstract = true
+}
