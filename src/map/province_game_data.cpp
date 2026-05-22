@@ -918,7 +918,7 @@ void province_game_data::cancel_pathway_construction()
 const pathway *province_game_data::get_buildable_pathway() const
 {
 	for (const metternich::pathway *pathway : pathway::get_all()) {
-		if (!pathway->is_buildable_in_province(this->province)) {
+		if (!this->can_build_pathway(pathway)) {
 			continue;
 		}
 

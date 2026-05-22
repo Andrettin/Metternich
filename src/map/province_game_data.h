@@ -177,9 +177,9 @@ public:
 	void set_under_construction_pathway(const pathway *pathway);
 	bool has_pathway_or_better(const pathway *pathway) const;
 	bool can_build_pathway(const pathway *pathway) const;
-	void build_pathway(const metternich::pathway *pathway);
-	void cancel_pathway_construction();
-	const metternich::pathway *get_buildable_pathway() const;
+	Q_INVOKABLE void build_pathway(const metternich::pathway *pathway);
+	Q_INVOKABLE void cancel_pathway_construction();
+	Q_INVOKABLE const metternich::pathway *get_buildable_pathway() const;
 
 	const std::vector<QPoint> &get_border_tiles() const;
 	const std::vector<QPoint> &get_resource_tiles() const;

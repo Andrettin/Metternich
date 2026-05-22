@@ -97,10 +97,10 @@ public:
 
 	void build_wonder(const wonder *wonder);
 
-	void build_building(const metternich::building_type *building);
-	void cancel_construction();
-	const metternich::building_type *get_buildable_building() const;
-	const metternich::wonder *get_buildable_wonder() const;
+	Q_INVOKABLE void build_building(const metternich::building_type *building);
+	Q_INVOKABLE void cancel_construction();
+	Q_INVOKABLE const metternich::building_type *get_buildable_building() const;
+	Q_INVOKABLE const metternich::wonder *get_buildable_wonder() const;
 
 	const decimillesimal_int &get_construction_progress() const;
 	Q_INVOKABLE qint64 get_construction_progress_commodity_quantity() const;

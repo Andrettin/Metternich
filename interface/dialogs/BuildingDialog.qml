@@ -13,6 +13,14 @@ DialogBase {
 	readonly property var wonder: building_slot ? building_slot.wonder : null
 	readonly property string modifier_string: building_slot ? building_slot.modifier_string : 0
 	
+	UpgradeBuildingButton {
+		id: upgrade_building_button
+		anchors.top: parent.top
+		anchors.topMargin: 8 * scale_factor
+		anchors.right: parent.right
+		anchors.rightMargin: 8 * scale_factor
+	}
+	
 	Column {
 		id: content_column
 		anchors.top: title_item.bottom
