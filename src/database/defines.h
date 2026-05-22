@@ -90,6 +90,7 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(qint64 research_cost_per_level MEMBER research_cost_per_level READ get_research_cost_per_level NOTIFY changed)
 	Q_PROPERTY(int daily_literacy_research MEMBER daily_literacy_research READ get_daily_literacy_research NOTIFY changed)
 	Q_PROPERTY(const metternich::domain_skill* main_research_domain_skill MEMBER main_research_domain_skill READ get_main_research_domain_skill NOTIFY changed)
+	Q_PROPERTY(const metternich::commodity* construction_commodity MEMBER construction_commodity READ get_construction_commodity NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity* advisor_commodity MEMBER advisor_commodity NOTIFY changed)
 	Q_PROPERTY(const metternich::icon* tariff_icon MEMBER tariff_icon NOTIFY changed)
 	Q_PROPERTY(const metternich::icon* treasure_fleet_icon MEMBER treasure_fleet_icon NOTIFY changed)
@@ -360,6 +361,11 @@ public:
 		return this->main_research_domain_skill;
 	}
 
+	const commodity *get_construction_commodity() const
+	{
+		return this->construction_commodity;
+	}
+
 	const commodity *get_advisor_commodity() const
 	{
 		return this->advisor_commodity;
@@ -620,6 +626,7 @@ private:
 	int64_t research_cost_per_level = 0;
 	int daily_literacy_research = 0;
 	const domain_skill *main_research_domain_skill = nullptr;
+	const commodity *construction_commodity = nullptr;
 	const commodity *advisor_commodity = nullptr;
 	const icon *tariff_icon = nullptr;
 	const icon *treasure_fleet_icon = nullptr;
