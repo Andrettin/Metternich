@@ -1,0 +1,30 @@
+carpenters_shop = {
+	name = "Carpenter's Shop"
+	building_class = carpenters_shop
+	portrait = factory
+	icon = hammer
+	free_in_capital = true
+	required_technology = woodworking
+	holding_types = {
+		castle
+		guild
+		patrician_palace
+		royal_palace
+		temple
+	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
+	commodity_costs = {
+		wealth = 10000gp
+	}
+	modifier = {
+		employment_capacity = {
+			employment_type = carpentry
+			capacity = 10000
+		}
+		population_capacity = 10000
+	}
+}
