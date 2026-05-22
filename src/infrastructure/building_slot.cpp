@@ -317,6 +317,10 @@ bool building_slot::can_build_building(const building_type *building) const
 	const domain_economy *domain_economy = this->get_country()->get_economy();
 
 	for (const auto &[commodity, cost] : building->get_commodity_costs_for_site(this->get_settlement())) {
+		if (commodity == defines::get()->get_construction_commodity()) {
+			continue;
+		}
+
 		if (cost > domain_economy->get_stored_commodity(commodity)) {
 			return false;
 		}
@@ -472,6 +476,10 @@ void building_slot::build_building(const building_type *building)
 	domain_economy *domain_economy = this->get_country()->get_economy();
 
 	for (const auto &[commodity, cost] : building->get_commodity_costs_for_site(this->get_settlement())) {
+		if (commodity == defines::get()->get_construction_commodity()) {
+			continue;
+		}
+
 		domain_economy->change_stored_commodity(commodity, -cost);
 	}
 
@@ -502,6 +510,10 @@ void building_slot::cancel_construction()
 	domain_economy *domain_economy = this->get_country()->get_economy();
 
 	for (const auto &[commodity, cost] : this->get_under_construction_building()->get_commodity_costs_for_site(this->get_settlement())) {
+		if (commodity == defines::get()->get_construction_commodity()) {
+			continue;
+		}
+
 		domain_economy->change_stored_commodity(commodity, cost);
 	}
 
