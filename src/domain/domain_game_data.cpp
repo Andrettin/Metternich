@@ -792,10 +792,6 @@ QCoro::Task<void> domain_game_data::do_construction()
 
 	const int64_t available_construction = this->get_economy()->get_stored_commodity(construction_commodity);
 
-	if (available_construction == 0) {
-		co_return;
-	}
-
 	this->get_economy()->set_stored_commodity(construction_commodity, 0);
 
 	int under_construction_project_count = 0;
