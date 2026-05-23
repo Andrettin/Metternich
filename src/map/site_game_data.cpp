@@ -475,7 +475,7 @@ QCoro::Task<void> site_game_data::do_construction(const decimillesimal_int &cons
 		if (building_slot->get_under_construction_building() != nullptr) {
 			const commodity_map<int> commodity_costs = building_slot->get_under_construction_building()->get_commodity_costs_for_site(this->site);
 			if (commodity_costs.contains(defines::get()->get_construction_commodity())) {
-				const decimillesimal_int construction_cost = decimillesimal_int(commodity_costs.find(defines::get()->get_default_research_commodity())->second);
+				const decimillesimal_int construction_cost = decimillesimal_int(commodity_costs.find(defines::get()->get_construction_commodity())->second);
 				building_slot->change_construction_progress(construction_per_project * 100 / construction_cost);
 			} else {
 				building_slot->change_construction_progress(decimillesimal_int(100));
