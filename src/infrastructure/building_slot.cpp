@@ -186,6 +186,8 @@ void building_slot::set_under_construction_building(const building_type *buildin
 
 	this->under_construction_building = building;
 
+	this->construction_progress = decimillesimal_int(0);
+
 	if (game::get()->is_running()) {
 		emit under_construction_building_changed();
 	}
