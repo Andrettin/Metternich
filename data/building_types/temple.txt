@@ -45,6 +45,7 @@ temple = {
 	}
 	commodity_costs = {
 		wealth = 24gb
+		carpentry = 64k
 	}
 	domain_modifier = {
 		loyalty = 2
@@ -73,6 +74,9 @@ large_temple = {
 		ruler
 		high_priest
 		engineer
+	}
+	commodity_costs = {
+		carpentry = 64k #as Temple
 	}
 	domain_modifier = {
 		loyalty = 2
@@ -107,6 +111,7 @@ cathedral = {
 	}
 	commodity_costs = {
 		wealth = 26gb
+		carpentry = 176k
 		iron = 100tn
 	}
 	modifier = {
@@ -146,6 +151,9 @@ large_cathedral = {
 	conditions = {
 		feature = holy_site
 	}
+	commodity_costs = {
+		carpentry = 176k #as Cathedral
+	}
 	modifier = {
 		law = 2
 	}
@@ -182,6 +190,9 @@ grand_cathedral = {
 	}
 	conditions = {
 		feature = holy_site
+	}
+	commodity_costs = {
+		carpentry = 176k #as Cathedral
 	}
 	modifier = {
 		law = 2
@@ -220,6 +231,7 @@ monastery = {
 	}
 	commodity_costs = {
 		wealth = 16gb
+		carpentry = 64k #as Temple
 	}
 	modifier = {
 		law = 1

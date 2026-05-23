@@ -13,6 +13,7 @@ smithy = {
 	}
 	commodity_costs = {
 		wealth = 6gb
+		carpentry = 64k
 	}
 	domain_modifier = {
 		economy = 1
@@ -42,6 +43,7 @@ swordsmithy = {
 	}
 	commodity_costs = {
 		wealth = 37500gp
+		carpentry = 64k #as Smithy
 	}
 	modifier = {
 		employment_capacity = {

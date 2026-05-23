@@ -21,6 +21,7 @@ small_stable = {
 	}
 	commodity_costs = {
 		wealth = 15000gp
+		carpentry = 64k #as Medium Stable
 	}
 	modifier = {
 		employment_capacity = {
@@ -58,6 +59,7 @@ medium_stable = {
 	}
 	commodity_costs = {
 		wealth = 18000gp
+		carpentry = 64k
 	}
 	modifier = {
 		employment_capacity = {
@@ -99,6 +101,7 @@ large_stable = {
 	}
 	commodity_costs = {
 		wealth = 30000gp
+		carpentry = 64k #as Medium Stable
 	}
 	modifier = {
 		employment_capacity = {
@@ -137,6 +140,7 @@ great_stable = {
 	}
 	commodity_costs = {
 		wealth = 45000gp
+		carpentry = 64k #as Medium Stable
 	}
 	modifier = {
 		employment_capacity = {
@@ -179,6 +183,7 @@ royal_stable = {
 	}
 	commodity_costs = {
 		wealth = 60000gp
+		carpentry = 64k #as Medium Stable
 	}
 	modifier = {
 		employment_capacity = {

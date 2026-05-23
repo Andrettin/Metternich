@@ -14,6 +14,9 @@ wooden_palisade = {
 		marshal
 		engineer
 	}
+	commodity_costs = {
+		carpentry = 64k
+	}
 }
 
 low_stone_wall = {
@@ -32,6 +35,9 @@ low_stone_wall = {
 		ruler
 		marshal
 		engineer
+	}
+	commodity_costs = {
+		carpentry = 120k
 	}
 }
 
@@ -54,6 +60,7 @@ medium_stone_wall = {
 	}
 	commodity_costs = {
 		wealth = 2gb
+		carpentry = 120k
 	}
 	domain_modifier = {
 		unrest = -2
@@ -77,6 +84,9 @@ large_stone_wall = {
 		marshal
 		engineer
 	}
+	commodity_costs = {
+		carpentry = 320k
+	}
 	domain_modifier = {
 		unrest = -2
 	}
@@ -98,6 +108,9 @@ huge_stone_wall = {
 		ruler
 		marshal
 		engineer
+	}
+	commodity_costs = {
+		carpentry = 320k
 	}
 	domain_modifier = {
 		unrest = -2

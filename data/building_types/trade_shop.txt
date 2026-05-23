@@ -13,6 +13,7 @@ trade_shop = {
 	}
 	commodity_costs = {
 		wealth = 10gb
+		carpentry = 64k
 	}
 	modifier = {
 		productivity = 1

@@ -19,6 +19,7 @@ pier = {
 	}
 	commodity_costs = {
 		wealth = 16gb
+		carpentry = 52k
 	}
 	modifier = {
 		crime = 1

@@ -15,6 +15,7 @@ town_hall = {
 	}
 	commodity_costs = {
 		wealth = 22gb
+		carpentry = 64k
 	}
 	modifier = {
 		law = 1
