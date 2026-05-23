@@ -161,14 +161,14 @@ bool pathway::is_buildable_in_province(const province *province) const
 	return true;
 }
 
-QString pathway::get_modifier_string(const province *province) const
+QString pathway::get_modifier_string(const province *province, const bool single_line) const
 {
 	assert_throw(province != nullptr);
 
 	std::string str;
 
 	if (this->get_modifier() != nullptr) {
-		str = this->get_modifier()->get_single_line_string(province);
+		str = single_line ? this->get_modifier()->get_single_line_string(province) : this->get_modifier()->get_string(province);
 	}
 
 	return QString::fromStdString(str);

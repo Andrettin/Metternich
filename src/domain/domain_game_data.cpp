@@ -3282,8 +3282,13 @@ QCoro::Task<void> domain_game_data::on_wonder_gained(const wonder *wonder, const
 
 QCoro::Task<bool> domain_game_data::choose_construction()
 {
-	std::vector<building_slot *> buildable_locations;
+	std::vector<std::variant<building_slot *, const province *>> buildable_locations;
 
+	for (const province *province : this->get_provinces()) {
+		if (province->get_game_data()->get_buildable_pathway() != nullptr) {
+			buildable_locations.push_back(province);
+		}
+	}
 	for (const site *site : this->get_sites()) {
 		if (site->is_settlement() && site->get_game_data()->is_built()) {
 			for (const auto &building_slot : site->get_game_data()->get_building_slots()) {
@@ -3308,8 +3313,16 @@ QCoro::Task<bool> domain_game_data::choose_construction()
 	buildable_locations.resize(std::min(buildable_locations.size(), max_choosable_constructions));
 
 	if (this->is_ai()) {
-		building_slot *chosen_buildable_location = vector::get_random(buildable_locations);
-		chosen_buildable_location->build_building(chosen_buildable_location->get_buildable_building());
+		std::variant<building_slot *, const province *> chosen_buildable_location = vector::get_random(buildable_locations);
+		if (std::holds_alternative<building_slot *>(chosen_buildable_location)) {
+			building_slot *building_slot = std::get<metternich::building_slot *>(chosen_buildable_location);
+			building_slot->build_building(building_slot->get_buildable_building());
+		} else if (std::holds_alternative<const province *>(chosen_buildable_location)) {
+			const province *province = std::get<const metternich::province *>(chosen_buildable_location);
+			province->get_game_data()->build_pathway(province->get_game_data()->get_buildable_pathway());
+		} else {
+			assert_throw(false);
+		}
 	} else {
 		this->construction_chosen_promise = std::make_unique<QPromise<void>>();
 		const QFuture<void> future = this->construction_chosen_promise->future();

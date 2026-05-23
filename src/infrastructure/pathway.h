@@ -102,7 +102,7 @@ public:
 
 	bool is_buildable_in_province(const province *province) const;
 
-	Q_INVOKABLE QString get_modifier_string(const metternich::province *province) const;
+	Q_INVOKABLE QString get_modifier_string(const metternich::province *province, const bool single_line) const;
 
 signals:
 	void changed();

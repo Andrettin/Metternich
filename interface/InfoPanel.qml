@@ -200,7 +200,7 @@ Rectangle {
 			id: pathway_icon
 			name: pathway ? pathway.name : ""
 			icon_identifier: pathway ? pathway.icon.identifier : "mountains"
-			description: pathway ? pathway.get_modifier_string(selected_province) : ""
+			description: pathway ? pathway.get_modifier_string(selected_province, true) : ""
 			visible: selected_province !== null && pathway !== null && !selected_garrison && !viewing_population && !viewing_population_units
 			
 			readonly property var pathway: selected_province ? selected_province.game_data.pathway : null
@@ -745,7 +745,7 @@ Rectangle {
 				if (hovered) {
 					status_text = "Build " + pathway.name
 					middle_status_text = pathway.get_commodity_costs_string_for_province(selected_civilian_unit.province)
-					right_status_text = pathway.get_modifier_string(selected_civilian_unit.province)
+					right_status_text = pathway.get_modifier_string(selected_civilian_unit.province, true)
 				} else {
 					status_text = ""
 					middle_status_text = ""
