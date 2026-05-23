@@ -18,6 +18,11 @@ sheep_ranching = {
 	prerequisites = {
 		domestication
 	}
+	discovery_conditions = {
+		any_settlement = {
+			feature = prime_sheep_land
+		}
+	}
 }
 
 mechanized_slaughtering_block = {
