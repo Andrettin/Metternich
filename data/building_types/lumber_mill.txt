@@ -21,7 +21,7 @@ lumber_mill = {
 	}
 	commodity_costs = {
 		wealth = 3gb
-		#carpentry = 52k
+		timber = 52tn #carpentry = 52k
 	}
 	modifier = {
 		employment_capacity = {
