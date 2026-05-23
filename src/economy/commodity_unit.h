@@ -13,6 +13,7 @@ class commodity_unit final : public named_data_entry, public data_type<commodity
 
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
 	Q_PROPERTY(QString suffix READ get_suffix_qstring NOTIFY changed)
+	Q_PROPERTY(bool numerical MEMBER numerical READ is_numerical NOTIFY changed)
 	Q_PROPERTY(bool displayed MEMBER displayed READ is_displayed NOTIFY changed)
 
 public:
@@ -44,6 +45,11 @@ public:
 		this->suffix = suffix;
 	}
 
+	bool is_numerical() const
+	{
+		return this->numerical;
+	}
+
 	bool is_displayed() const
 	{
 		return this->displayed;
@@ -55,6 +61,7 @@ signals:
 private:
 	const metternich::icon *icon = nullptr;
 	std::string suffix;
+	bool numerical = false;
 	bool displayed = true;
 };
 
