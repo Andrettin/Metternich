@@ -43,10 +43,107 @@ max_literacy_educator_percent = 4
 
 promotion_chance = {
 	base_value = 0.25
+	
+	modifier = {
+		factor = 0.02
+		additive = true
+		literacy_rate >= 5
+	}
+	modifier = {
+		factor = 0.02
+		additive = true
+		literacy_rate >= 10
+	}
+	modifier = {
+		factor = 0.02
+		additive = true
+		literacy_rate >= 20
+	}
+	modifier = {
+		factor = 0.02
+		additive = true
+		literacy_rate >= 30
+	}
+	modifier = {
+		factor = 0.02
+		additive = true
+		literacy_rate >= 40
+	}
+	modifier = {
+		factor = 0.02
+		additive = true
+		literacy_rate >= 50
+	}
+	modifier = {
+		factor = 0.02
+		additive = true
+		literacy_rate >= 60
+	}
+	modifier = {
+		factor = 0.02
+		additive = true
+		literacy_rate >= 70
+	}
+	modifier = {
+		factor = 0.02
+		additive = true
+		literacy_rate >= 80
+	}
+	modifier = {
+		factor = 0.02
+		additive = true
+		literacy_rate >= 90
+	}
 }
 
 demotion_chance = {
 	base_value = 1
+	
+	modifier = {
+		factor = -0.02
+		additive = true
+		literacy_rate < 10
+	}
+	modifier = {
+		factor = -0.02
+		additive = true
+		literacy_rate < 15
+	}
+	modifier = {
+		factor = -0.02
+		additive = true
+		literacy_rate < 20
+	}
+	modifier = {
+		factor = -0.02
+		additive = true
+		literacy_rate < 30
+	}
+	modifier = {
+		factor = -0.02
+		additive = true
+		literacy_rate < 40
+	}
+	modifier = {
+		factor = -0.02
+		additive = true
+		literacy_rate < 60
+	}
+	modifier = {
+		factor = -0.02
+		additive = true
+		literacy_rate < 70
+	}
+	modifier = {
+		factor = -0.02
+		additive = true
+		literacy_rate < 80
+	}
+	modifier = {
+		factor = -0.02
+		additive = true
+		literacy_rate < 90
+	}
 }
 
 settlement_commodity_bonuses = {
