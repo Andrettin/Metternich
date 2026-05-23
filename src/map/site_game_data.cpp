@@ -1003,7 +1003,7 @@ int site_game_data::get_building_holding_level_change(const building_type *build
 	const building_slot *building_slot = this->get_building_slot(building->get_slot_type());
 	assert_throw(building_slot != nullptr);
 
-	int holding_level_change = building->get_holding_level();
+	int holding_level_change = building != nullptr ? building->get_holding_level() : 0;
 
 	if (building_slot->get_building() != nullptr) {
 		holding_level_change -= building_slot->get_building()->get_holding_level();
@@ -1075,7 +1075,7 @@ centesimal_int site_game_data::get_building_fortification_level_change(const bui
 	const building_slot *building_slot = this->get_building_slot(building->get_slot_type());
 	assert_throw(building_slot != nullptr);
 
-	centesimal_int fortification_level_change = building->get_fortification_level();
+	centesimal_int fortification_level_change = building != nullptr ? building->get_fortification_level() : centesimal_int(0);
 
 	if (building_slot->get_building() != nullptr) {
 		fortification_level_change -= building_slot->get_building()->get_fortification_level();
