@@ -7,6 +7,11 @@ tobacco_planting = {
 	prerequisites = {
 		toolworking #seems reasonable
 	}
+	discovery_conditions = {
+		any_settlement = {
+			feature = prime_tobacco_land
+		}
+	}
 }
 
 irrigation = {
