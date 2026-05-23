@@ -2,6 +2,7 @@
 
 #include "economy/commodity.h"
 
+#include "database/defines.h"
 #include "economy/commodity_type.h"
 #include "economy/commodity_unit.h"
 #include "economy/food_type.h"
@@ -93,6 +94,11 @@ void commodity::check() const
 bool commodity::is_food() const
 {
 	return this->get_food_type() != food_type::none;
+}
+
+bool commodity::is_wealth() const
+{
+	return defines::get()->get_wealth_commodity() == this;
 }
 
 bool commodity::is_enabled() const

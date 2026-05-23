@@ -152,6 +152,8 @@ public:
 		return !this->is_abstract() && this->is_storable() && !this->is_convertible_to_wealth();
 	}
 
+	Q_INVOKABLE bool is_wealth() const;
+
 	const commodity_unit *get_storage_unit() const
 	{
 		return this->storage_unit;
