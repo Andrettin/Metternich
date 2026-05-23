@@ -2,6 +2,7 @@ da = {
 	name = "Ten"
 	icon = sack_2
 	suffix = "da"
+	numerical = true
 	displayed = false
 }
 
@@ -9,6 +10,7 @@ h = {
 	name = "Hundred"
 	icon = sack_2
 	suffix = "h"
+	numerical = true
 	displayed = false
 }
 
@@ -16,10 +18,12 @@ k = {
 	name = "Thousand"
 	icon = sack_2
 	suffix = "k"
+	numerical = true
 }
 
 m = {
 	name = "Million"
 	icon = sack_2
 	suffix = "m"
+	numerical = true
 }
