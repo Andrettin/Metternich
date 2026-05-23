@@ -7,9 +7,6 @@ academy = {
 		city
 		guild
 	}
-	required_buildings = {
-		library
-	}
 	builder_civilian_unit_types = {
 		ruler
 		magister

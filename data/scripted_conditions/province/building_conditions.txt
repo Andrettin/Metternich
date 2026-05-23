@@ -1,8 +1,5 @@
 has_library = {
-	or = {
-		has_building_class = library
-		has_building_class = library_great_library
-	}
+	has_building_class = library
 }
 
 has_mine = {

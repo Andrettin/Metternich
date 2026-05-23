@@ -3,11 +3,6 @@ library = {
 	slot_type = library
 }
 
-library_great_library = {
-	name = "Library"
-	slot_type = library
-}
-
 great_library = {
 	name = "Great Library"
 	slot_type = library
