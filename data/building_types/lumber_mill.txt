@@ -14,7 +14,10 @@ lumber_mill = {
 		engineer
 	}
 	conditions = {
-		feature = lumber
+		or = {
+			feature = lumber
+			feature = prime_timber
+		}
 	}
 	commodity_costs = {
 		wealth = 3gb
