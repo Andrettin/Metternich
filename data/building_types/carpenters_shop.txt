@@ -17,6 +17,13 @@ carpenters_shop = {
 		treasurer
 		engineer
 	}
+	conditions = {
+		or = {
+			feature = lumber
+			feature = prime_timber
+			capital = true
+		}
+	}
 	commodity_costs = {
 		wealth = 10gb #same as the Trade Shop
 		#carpentry = 39k
