@@ -62,6 +62,11 @@ Flickable {
 						status_text = building.name
 					} else {
 						status_text = building_slot.type.name + " Slot"
+					}
+					
+					if (building_slot.under_construction_building !== null) {
+						middle_status_text = "Constructing " + building_slot.under_construction_building.name + " (" + building_slot.get_construction_progress_qstring() + "% Complete)"
+					} else {
 						middle_status_text = ""
 					}
 				}
