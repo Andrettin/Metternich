@@ -26,6 +26,7 @@ lumber_mill = {
 			capacity = 10000
 		}
 		population_capacity = 10000
+		carpentry_throughput_modifier = 100
 	}
 	domain_modifier = {
 		stability = 1
