@@ -6,6 +6,7 @@
 #include "culture/culture.h"
 #include "domain/domain.h"
 #include "domain/domain_economy.h"
+#include "domain/domain_game_data.h"
 #include "domain/domain_technology.h"
 #include "game/game.h"
 #include "infrastructure/building_item_slot.h"
@@ -469,6 +470,8 @@ void building_slot::build_wonder(const metternich::wonder *wonder)
 
 void building_slot::build_building(const building_type *building)
 {
+	assert_throw(building != nullptr);
+
 	if (this->get_under_construction_building() != nullptr) {
 		this->cancel_construction();
 	}
@@ -484,6 +487,10 @@ void building_slot::build_building(const building_type *building)
 	}
 
 	this->set_under_construction_building(building);
+
+	if (this->get_country()->get_game_data()->get_construction_chosen_promise() != nullptr) {
+		this->get_country()->get_game_data()->get_construction_chosen_promise()->finish();
+	}
 }
 
 void building_slot::cancel_construction()

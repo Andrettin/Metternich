@@ -5,13 +5,11 @@
 #include "character/character.h"
 #include "character/character_class.h"
 #include "character/character_game_data.h"
-#include "character/party.h"
 #include "culture/culture.h"
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "domain/consulate.h"
 #include "domain/country_military.h"
-#include "domain/country_rank.h"
 #include "domain/country_turn_data.h"
 #include "domain/country_type.h"
 #include "domain/diplomacy_state.h"
@@ -41,11 +39,9 @@
 #include "game/domain_event.h"
 #include "game/event_trigger.h"
 #include "game/game.h"
-#include "game/game_rules.h"
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_item_slot.h"
 #include "infrastructure/building_slot.h"
-#include "infrastructure/building_slot_type.h"
 #include "infrastructure/building_type.h"
 #include "infrastructure/holding_type.h"
 #include "infrastructure/improvement.h"
@@ -62,7 +58,6 @@
 #include "map/site_attribute.h"
 #include "map/site_game_data.h"
 #include "map/site_map_data.h"
-#include "map/site_type.h"
 #include "map/terrain_type.h"
 #include "map/tile.h"
 #include "population/population.h"
@@ -73,7 +68,6 @@
 #include "religion/religion.h"
 #include "script/condition/and_condition.h"
 #include "script/effect/effect_list.h"
-#include "script/factor.h"
 #include "script/flag.h"
 #include "script/modifier.h"
 #include "script/opinion_modifier.h"
@@ -97,10 +91,8 @@
 #include "util/image_util.h"
 #include "util/map_util.h"
 #include "util/number_util.h"
-#include "util/point_util.h"
 #include "util/qunique_ptr.h"
 #include "util/rect_util.h"
-#include "util/size_util.h"
 #include "util/string_conversion_util.h"
 #include "util/string_util.h"
 #include "util/vector_random_util.h"
@@ -811,6 +803,13 @@ QCoro::Task<void> domain_game_data::do_construction()
 					}
 				}
 			}
+		}
+	}
+
+	if (under_construction_project_count == 0) {
+		const bool construction_chosen = co_await this->choose_construction();
+		if (construction_chosen) {
+			++under_construction_project_count;
 		}
 	}
 
@@ -3279,6 +3278,50 @@ QCoro::Task<void> domain_game_data::on_wonder_gained(const wonder *wonder, const
 	} else if (multiplier < 0 && game::get()->get_wonder_country(wonder) == this->domain) {
 		game::get()->set_wonder_country(wonder, nullptr);
 	}
+}
+
+QCoro::Task<bool> domain_game_data::choose_construction()
+{
+	std::vector<building_slot *> buildable_locations;
+
+	for (const site *site : this->get_sites()) {
+		if (site->is_settlement() && site->get_game_data()->is_built()) {
+			for (const auto &building_slot : site->get_game_data()->get_building_slots()) {
+				if (!building_slot->is_available()) {
+					continue;
+				}
+
+				const building_type *buildable_building = building_slot->get_buildable_building();
+				if (buildable_building != nullptr) {
+					buildable_locations.push_back(building_slot.get());
+				}
+			}
+		}
+	}
+
+	if (buildable_locations.empty()) {
+		co_return false;
+	}
+
+	vector::shuffle(buildable_locations);
+	static constexpr size_t max_choosable_constructions = 5;
+	buildable_locations.resize(std::min(buildable_locations.size(), max_choosable_constructions));
+
+	if (this->is_ai()) {
+		building_slot *chosen_buildable_location = vector::get_random(buildable_locations);
+		chosen_buildable_location->build_building(chosen_buildable_location->get_buildable_building());
+	} else {
+		this->construction_chosen_promise = std::make_unique<QPromise<void>>();
+		const QFuture<void> future = this->construction_chosen_promise->future();
+		this->construction_chosen_promise->start();
+
+		emit engine_interface::get()->construction_choosable(container::to_qvariant_list(buildable_locations));
+		co_await future;
+	}
+
+	this->construction_chosen_promise.reset();
+
+	co_return true;
 }
 
 std::vector<building_item_slot *> domain_game_data::get_item_slots() const

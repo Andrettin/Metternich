@@ -6,9 +6,7 @@
 #include "economy/commodity_container.h"
 #include "infrastructure/building_class_container.h"
 #include "infrastructure/building_type_container.h"
-#include "infrastructure/building_slot_type_container.h"
 #include "map/province_container.h"
-#include "map/site_container.h"
 #include "map/terrain_type_container.h"
 #include "population/population_type_container.h"
 #include "script/opinion_modifier_container.h"
@@ -863,6 +861,8 @@ public:
 
 	[[nodiscard]] QCoro::Task<void> on_wonder_gained(const wonder *wonder, const int multiplier);
 
+	[[nodiscard]] QCoro::Task<bool> choose_construction();
+
 	std::vector<building_item_slot *> get_item_slots() const;
 	QVariantList get_item_slots_qvariant_list() const;
 
@@ -1273,6 +1273,11 @@ public:
 		this->flags.erase(flag);
 	}
 
+	QPromise<void> *get_construction_chosen_promise()
+	{
+		return this->construction_chosen_promise.get();
+	}
+
 	Q_INVOKABLE bool can_visit_site(const metternich::site *site) const;
 
 signals:
@@ -1400,6 +1405,7 @@ private:
 	building_class_map<int> free_building_class_counts;
 	consulate_map<int> free_consulate_counts;
 	std::set<const flag *> flags;
+	std::unique_ptr<QPromise<void>> construction_chosen_promise;
 	qunique_ptr<domain_economy> economy;
 	qunique_ptr<domain_government> government;
 	qunique_ptr<country_military> military;

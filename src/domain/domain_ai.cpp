@@ -167,27 +167,6 @@ void domain_ai::do_construction()
 
 		province->get_game_data()->build_pathway(buildable_pathway);
 	}
-
-	for (const site *site : this->get_game_data()->get_sites()) {
-		if (site->is_settlement() && site->get_game_data()->is_built()) {
-			for (const auto &building_slot : site->get_game_data()->get_building_slots()) {
-				if (!building_slot->is_available()) {
-					continue;
-				}
-
-				if (building_slot->get_under_construction_building() != nullptr) {
-					continue;
-				}
-
-				const building_type *buildable_building = building_slot->get_buildable_building();
-				if (buildable_building == nullptr) {
-					continue;
-				}
-
-				building_slot->build_building(buildable_building);
-			}
-		}
-	}
 }
 
 void domain_ai::assign_trade_orders()

@@ -504,18 +504,19 @@ std::string building_type::get_modifier_string(const site *site, const bool sing
 	return str;
 }
 
-QString building_type::get_effects_string(const metternich::site *site) const
+QString building_type::get_effects_string(const metternich::site *site, const bool single_line) const
 {
 	assert_throw(site->is_settlement());
 
-	std::string str = this->get_modifier_string(site, true);
+	std::string str = this->get_modifier_string(site, single_line);
 
 	if (this->get_effects() != nullptr) {
 		if (!str.empty()) {
-			str += ", ";
+			str += single_line ? ", " : "\n";
 		}
 
-		str += this->get_effects()->get_effects_single_line_string(site, read_only_context(site));
+		const read_only_context ctx(site);
+		str += single_line ? this->get_effects()->get_effects_single_line_string(site, ctx) : this->get_effects()->get_effects_string(site, ctx);
 	}
 
 	return QString::fromStdString(str);
