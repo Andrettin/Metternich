@@ -64,6 +64,15 @@ vienna = {
 			population = 237743 #Vienna had a population of 237,743 in 1815; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, vol. 2, p.
 		}
 		
+		1836 = {
+			population_groups = {
+				craftsmen.austrian.catholic = 230000
+				craftsmen.czech.catholic = 23800
+				craftsmen.magyar.catholic = 3920
+				craftsmen.austrian.jewish = 1980
+			}
+		}
+		
 		1839.7.7 = {
 			#the first trains from Vienna arrived in Brno on 1839.7.7; Source: Chad Bryant, "Into an Uncertain Future: Railroads and Vormärz Liberalism in Brno, Vienna, and Prague", 2009, p. 183.
 			#buildings += rail_depot
