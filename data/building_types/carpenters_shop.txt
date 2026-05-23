@@ -18,7 +18,8 @@ carpenters_shop = {
 		engineer
 	}
 	commodity_costs = {
-		carpentry = 39k
+		wealth = 3gb #same as the Lumber Mill
+		#carpentry = 39k
 	}
 	modifier = {
 		employment_capacity = {
