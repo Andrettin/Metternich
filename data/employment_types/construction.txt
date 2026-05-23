@@ -1,10 +1,10 @@
 carpentry = {
 	name = "Carpentry"
 	input_commodities = {
-		lumber = 3tn
+		lumber = 9tn
 	}
 	output_commodity = carpentry
-	monthly_output_value = 3k
+	monthly_output_value = 9k
 	base_employment_size = 120000
 	employee_types = {
 		craftsmen
