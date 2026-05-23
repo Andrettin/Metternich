@@ -34,4 +34,6 @@ lumber_mill = {
 	domain_modifier = {
 		stability = 1
 	}
+	free_on_start_conditions = {
+	}
 }

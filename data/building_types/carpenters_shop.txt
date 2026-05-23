@@ -3,7 +3,6 @@ carpenters_shop = {
 	building_class = carpenters_shop
 	portrait = factory
 	icon = hammer
-	free_in_capital = true
 	required_technology = woodworking
 	holding_types = {
 		castle
@@ -34,5 +33,7 @@ carpenters_shop = {
 			capacity = 10000
 		}
 		population_capacity = 10000
+	}
+	free_on_start_conditions = {
 	}
 }
