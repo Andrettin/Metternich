@@ -28,7 +28,6 @@
 #include "infrastructure/building_type.h"
 #include "infrastructure/dungeon.h"
 #include "infrastructure/holding_type.h"
-#include "infrastructure/improvement.h"
 #include "infrastructure/pathway.h"
 #include "map/diplomatic_map_mode.h"
 #include "map/map.h"
@@ -48,7 +47,6 @@
 #include "population/population_type.h"
 #include "population/population_unit.h"
 #include "religion/religion.h"
-#include "script/condition/and_condition.h"
 #include "script/context.h"
 #include "script/modifier.h"
 #include "script/scripted_province_modifier.h"
@@ -66,9 +64,7 @@
 #include "util/container_util.h"
 #include "util/dice.h"
 #include "util/image_util.h"
-#include "util/log_util.h"
 #include "util/map_util.h"
-#include "util/point_util.h"
 #include "util/vector_random_util.h"
 
 #include "xbrz.h"
@@ -115,6 +111,8 @@ void province_game_data::process_gsml_property(const gsml_property &property)
 		this->pathway = pathway::get(value);
 	} else if (key == "under_construction_pathway") {
 		this->under_construction_pathway = pathway::get(value);
+	} else if (key == "pathway_construction_progress") {
+		this->pathway_construction_progress = decimillesimal_int(value);
 	} else if (key == "movement_cost_modifier") {
 		this->movement_cost_modifier = std::stoi(value);
 	} else {
@@ -186,6 +184,10 @@ gsml_data province_game_data::to_gsml_data() const
 
 	if (this->get_under_construction_pathway() != nullptr) {
 		data.add_property("under_construction_pathway", this->get_under_construction_pathway()->get_identifier());
+	}
+
+	if (this->get_pathway_construction_progress() != 0) {
+		data.add_property("pathway_construction_progress", this->get_pathway_construction_progress().to_string());
 	}
 
 	if (this->get_movement_cost_modifier() != 0) {
@@ -370,7 +372,19 @@ QCoro::Task<void> province_game_data::do_military_unit_recruitment()
 
 QCoro::Task<void> province_game_data::do_construction(const decimillesimal_int &construction_per_project)
 {
-	if (this->get_under_construction_pathway() != nullptr) {
+	if (this->get_under_construction_pathway() == nullptr) {
+		co_return;
+	}
+
+	const commodity_map<int64_t> commodity_costs = this->get_under_construction_pathway()->get_commodity_costs_for_province(this->province);
+	if (commodity_costs.contains(defines::get()->get_construction_commodity())) {
+		const decimillesimal_int construction_cost = decimillesimal_int(commodity_costs.find(defines::get()->get_construction_commodity())->second);
+		this->change_pathway_construction_progress(construction_per_project * 100 / construction_cost);
+	} else {
+		this->change_pathway_construction_progress(decimillesimal_int(100));
+	}
+
+	if (this->get_pathway_construction_progress() >= 100) {
 		co_await this->set_pathway(this->get_under_construction_pathway());
 		this->set_under_construction_pathway(nullptr);
 	}
@@ -838,6 +852,8 @@ void province_game_data::set_under_construction_pathway(const metternich::pathwa
 
 	this->under_construction_pathway = pathway;
 
+	this->pathway_construction_progress = decimillesimal_int(0);
+
 	if (game::get()->is_running()) {
 		emit under_construction_pathway_changed();
 	}
@@ -942,6 +958,36 @@ const pathway *province_game_data::get_buildable_pathway() const
 	}
 
 	return nullptr;
+}
+
+const decimillesimal_int &province_game_data::get_pathway_construction_progress() const
+{
+	return this->pathway_construction_progress;
+}
+
+qint64 province_game_data::get_pathway_construction_progress_commodity_quantity() const
+{
+	const commodity_map<int64_t> commodity_costs = this->get_under_construction_pathway()->get_commodity_costs_for_province(this->province);
+	if (!commodity_costs.contains(defines::get()->get_construction_commodity())) {
+		return 0;
+	}
+
+	return (commodity_costs.find(defines::get()->get_construction_commodity())->second * this->get_pathway_construction_progress() / 100).to_int64();
+}
+
+QString province_game_data::get_pathway_construction_progress_qstring() const
+{
+	return QString::fromStdString(std::to_string(this->get_pathway_construction_progress().to_int()));
+}
+
+void province_game_data::change_pathway_construction_progress(const decimillesimal_int &change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	this->pathway_construction_progress += change;
+	assert_throw(this->pathway_construction_progress >= 0);
 }
 
 const std::vector<QPoint> &province_game_data::get_border_tiles() const

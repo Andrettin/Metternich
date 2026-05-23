@@ -10,6 +10,7 @@
 #include "database/preferences.h"
 #include "domain/consulate.h"
 #include "domain/country_military.h"
+#include "domain/country_rank.h"
 #include "domain/country_turn_data.h"
 #include "domain/country_type.h"
 #include "domain/diplomacy_state.h"

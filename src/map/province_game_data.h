@@ -181,6 +181,11 @@ public:
 	Q_INVOKABLE void cancel_pathway_construction();
 	Q_INVOKABLE const metternich::pathway *get_buildable_pathway() const;
 
+	const decimillesimal_int &get_pathway_construction_progress() const;
+	Q_INVOKABLE qint64 get_pathway_construction_progress_commodity_quantity() const;
+	Q_INVOKABLE QString get_pathway_construction_progress_qstring() const;
+	void change_pathway_construction_progress(const decimillesimal_int &change);
+
 	const std::vector<QPoint> &get_border_tiles() const;
 	const std::vector<QPoint> &get_resource_tiles() const;
 	const std::vector<const site *> &get_sites() const;
@@ -649,6 +654,7 @@ private:
 	const site *provincial_capital = nullptr;
 	const metternich::pathway *pathway = nullptr;
 	const metternich::pathway *under_construction_pathway = nullptr;
+	decimillesimal_int pathway_construction_progress;
 	QImage map_image;
 	QImage selected_map_image;
 	QImage interactive_map_image;
