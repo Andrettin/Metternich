@@ -16,6 +16,9 @@ warehouse = {
 		treasurer
 		engineer
 	}
+	commodity_costs = {
+		carpentry = 80k
+	}
 	domain_modifier = {
 		storage_capacity = 100
 	}
