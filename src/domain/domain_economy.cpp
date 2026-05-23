@@ -397,7 +397,7 @@ void domain_economy::set_stored_commodity(const commodity *commodity, const int6
 	}
 
 	if (value < 0 && !commodity->is_negative_allowed()) {
-		throw std::runtime_error("Tried to set the storage of commodity \"" + commodity->get_identifier() + "\" for country \"" + this->domain->get_identifier() + "\" to a negative number.");
+		throw std::runtime_error(std::format("Tried to set the storage of commodity \"{}\" for domain \"{}\" to a negative number.", commodity->get_identifier(), this->domain->get_identifier()));
 	}
 
 	if (commodity->is_convertible_to_wealth()) {
@@ -846,6 +846,8 @@ void domain_economy::set_bid(const commodity *commodity, const int value)
 		return;
 	}
 
+	assert_throw(value >= 0);
+
 	if (value == 0) {
 		this->bids.erase(commodity);
 	} else {
@@ -879,6 +881,8 @@ void domain_economy::set_offer(const commodity *commodity, const int value)
 	if (value == this->get_offer(commodity)) {
 		return;
 	}
+
+	assert_throw(value >= 0);
 
 	if (value > this->get_stored_commodity(commodity)) {
 		this->set_offer(commodity, this->get_stored_commodity(commodity));
@@ -937,6 +941,7 @@ std::vector<const domain *> domain_economy::get_known_domains_by_trade_priority(
 
 void domain_economy::do_sale(const metternich::domain *other_domain, const commodity *commodity, const int sold_quantity, const bool state_purchase)
 {
+	this->change_offer(commodity, -sold_quantity);
 	this->change_stored_commodity(commodity, -sold_quantity);
 
 	const int price = game::get()->get_price(commodity);
@@ -944,8 +949,6 @@ void domain_economy::do_sale(const metternich::domain *other_domain, const commo
 	const int64_t gained_wealth = this->add_population_wealth(sale_income);
 	this->add_tributable_commodity(defines::get()->get_wealth_commodity(), gained_wealth, income_transaction_type::tariff);
 	this->domain->get_turn_data()->add_income_transaction(income_transaction_type::sale, gained_wealth, commodity, sold_quantity, other_domain != this->domain ? other_domain : nullptr);
-
-	this->change_offer(commodity, -sold_quantity);
 
 	domain_game_data *other_domain_game_data = other_domain->get_game_data();
 	domain_economy *other_domain_economy = other_domain->get_economy();
