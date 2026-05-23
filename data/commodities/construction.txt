@@ -4,4 +4,8 @@ carpentry = {
 	icon = hammer
 	tiny_icon = non_aggression_pact
 	abstract = true
+	units = {
+		100 = h
+		1000 = k
+	}
 }

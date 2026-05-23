@@ -4,7 +4,7 @@ carpentry = {
 		lumber = 3tn
 	}
 	output_commodity = carpentry
-	monthly_output_value = 3
+	monthly_output_value = 3k
 	base_employment_size = 120000
 	employee_types = {
 		craftsmen
