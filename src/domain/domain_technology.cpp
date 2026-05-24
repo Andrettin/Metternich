@@ -275,6 +275,14 @@ QCoro::Task<void> domain_technology::do_technology_spread()
 				if (technology->is_available_for_domain(this->domain)) {
 					//only display spread for technologies that are available for this domain
 					province_spread_technologies[province].push_back(technology);
+
+					if (province->get_game_data()->is_capital()) {
+						if (this->get_current_researches().contains(technology)) {
+							this->remove_current_research(technology, false, false);
+						}
+
+						emit technology_researched(technology);
+					}
 				}
 			}
 		}
