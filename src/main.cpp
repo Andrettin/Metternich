@@ -53,6 +53,7 @@
 #include "infrastructure/building_type.h"
 #include "infrastructure/improvement.h"
 #include "infrastructure/improvement_slot.h"
+#include "infrastructure/pathway.h"
 #include "infrastructure/wonder.h"
 #include "item/affix_type.h"
 #include "item/item.h"
@@ -212,6 +213,7 @@ int main(int argc, char **argv)
 		QCoro::Qml::registerTypes();
 
 		qmlRegisterAnonymousType<building_type>("", 1);
+		qmlRegisterAnonymousType<const building_type>("", 1);
 		qmlRegisterAnonymousType<character>("", 1);
 		qmlRegisterAnonymousType<character_attribute>("", 1);
 		qmlRegisterAnonymousType<character_game_data>("", 1);
@@ -246,6 +248,8 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<law_group>("", 1);
 		qmlRegisterAnonymousType<map>("", 1);
 		qmlRegisterAnonymousType<map_template>("", 1);
+		qmlRegisterAnonymousType<pathway>("", 1);
+		qmlRegisterAnonymousType<const pathway>("", 1);
 		qmlRegisterAnonymousType<population>("", 1);
 		qmlRegisterAnonymousType<population_type>("", 1);
 		qmlRegisterAnonymousType<portrait>("", 1);

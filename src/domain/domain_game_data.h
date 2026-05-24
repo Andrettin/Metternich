@@ -27,6 +27,8 @@ Q_MOC_INCLUDE("domain/domain_tier.h")
 Q_MOC_INCLUDE("domain/government_type.h")
 Q_MOC_INCLUDE("domain/journal_entry.h")
 Q_MOC_INCLUDE("domain/subject_type.h")
+Q_MOC_INCLUDE("infrastructure/building_type.h")
+Q_MOC_INCLUDE("infrastructure/pathway.h")
 Q_MOC_INCLUDE("map/site.h")
 Q_MOC_INCLUDE("population/population.h")
 Q_MOC_INCLUDE("religion/religion.h")
@@ -62,6 +64,7 @@ class idea;
 class idea_slot;
 class journal_entry;
 class opinion_modifier;
+class pathway;
 class phenotype;
 class population;
 class population_class;
@@ -1311,6 +1314,8 @@ signals:
 	void population_type_inputs_changed();
 	void population_type_outputs_changed();
 	void settlement_building_counts_changed();
+	void building_built(const building_type *building, const site *site);
+	void pathway_built(const pathway *pathway, const province *province);
 	void item_slots_changed();
 	void ideas_changed();
 	void appointed_ideas_changed();

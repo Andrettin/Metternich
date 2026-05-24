@@ -385,8 +385,10 @@ QCoro::Task<void> province_game_data::do_construction(const decimillesimal_int &
 	}
 
 	if (this->get_pathway_construction_progress() >= 100) {
+		const metternich::pathway *pathway = this->get_under_construction_pathway();
 		co_await this->set_pathway(this->get_under_construction_pathway());
 		this->set_under_construction_pathway(nullptr);
+		emit this->get_owner()->get_game_data()->pathway_built(pathway, this->province);
 	}
 }
 

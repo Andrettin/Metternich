@@ -482,8 +482,11 @@ QCoro::Task<void> site_game_data::do_construction(const decimillesimal_int &cons
 			}
 
 			if (building_slot->get_construction_progress() >= 100) {
+				const building_type *building = building_slot->get_under_construction_building();
 				co_await building_slot->set_building(building_slot->get_under_construction_building());
 				building_slot->set_under_construction_building(nullptr);
+
+				emit this->get_owner()->get_game_data()->building_built(building, this->site);
 			}
 		}
 	}

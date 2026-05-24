@@ -302,6 +302,40 @@ Item {
 			
 			dialog.open()
 		}
+		
+		function onBuilding_built(building, site) {
+			if (notification_dialog_component.status == Component.Error) {
+				console.error(notification_dialog_component.errorString())
+				return
+			}
+			
+			var effects_string = building.get_effects_string(site, false)
+			
+			var dialog = notification_dialog_component.createObject(map_view, {
+				title: "Building Constructed",
+				portrait_object: metternich.game.player_country.game_data.government.interior_minister_portrait,
+				text: metternich.game.player_country.game_data.form_of_address + ", we have finished the construction of a " + building.name + " in " + site.game_data.current_cultural_name + "!" + (effects_string.length > 0 ? ("\n\nEffects:\n" + effects_string) : "")
+			})
+			
+			dialog.open()
+		}
+		
+		function onPathway_built(pathway, province) {
+			if (notification_dialog_component.status == Component.Error) {
+				console.error(notification_dialog_component.errorString())
+				return
+			}
+			
+			var effects_string = pathway.get_modifier_string(province, false)
+			
+			var dialog = notification_dialog_component.createObject(map_view, {
+				title: "Pathway Built",
+				portrait_object: metternich.game.player_country.game_data.government.interior_minister_portrait,
+				text: metternich.game.player_country.game_data.form_of_address + ", we have finished the construction of a " + pathway.name + " in " + province.game_data.current_cultural_name + "!" + (effects_string.length > 0 ? ("\n\nEffects:\n" + effects_string) : "")
+			})
+			
+			dialog.open()
+		}
 	}
 	
 	Connections {
