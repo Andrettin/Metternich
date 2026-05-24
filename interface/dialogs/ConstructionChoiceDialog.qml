@@ -20,7 +20,7 @@ DialogBase {
 		anchors.leftMargin: 8 * scale_factor
 		anchors.right: parent.right
 		anchors.rightMargin: 8 * scale_factor
-		text: "Which construction project shall we build next?"
+		text: "Which construction project shall we undertake next?"
 		wrapMode: Text.WordWrap
 	}
 	
@@ -46,7 +46,7 @@ DialogBase {
 				readonly property var building: building_slot ? building_slot.get_buildable_building() : null
 				readonly property var pathway: province ? province.game_data.get_buildable_pathway() : null
 				readonly property var construction_name: building ? building.name : pathway.name
-				readonly property var buildable_location_name: building_slot ? building_slot.holding.game_data.current_cultural_name : province.game_data.current_cultural_name
+				readonly property var buildable_location_name: building_slot ? (building_slot.holding.game_data.current_cultural_name + ", " + building_slot.holding.game_data.province.game_data.current_cultural_name) : province.game_data.current_cultural_name
 				readonly property string effects_string: building ? building.get_effects_string(building_slot.holding, false) : pathway.get_modifier_string(province, false)
 				
 				onClicked: {
