@@ -33,6 +33,11 @@ carpenters_shop = {
 			capacity = 10000
 		}
 		population_capacity = 10000
+		productivity = 1 #as Trade Shop
+	}
+	domain_modifier = { #as Trade Shop
+		economy = 1
+		stability = 1
 	}
 	free_on_start_conditions = {
 	}
