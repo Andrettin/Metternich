@@ -100,7 +100,7 @@ commodity_map<int64_t> pathway::get_commodity_costs_for_province(const province 
 	return costs;
 }
 
-QString pathway::get_commodity_costs_string_for_province(const metternich::province *province) const
+QString pathway::get_commodity_costs_string_for_province(const metternich::province *province, const bool single_line) const
 {
 	std::string str;
 
@@ -113,8 +113,17 @@ QString pathway::get_commodity_costs_string_for_province(const metternich::provi
 
 		if (str.empty()) {
 			str = "Costs:";
+			if (single_line) {
+				str += " ";
+			} else {
+				str += "\n";
+			}
 		} else {
-			str += ", ";
+			if (single_line) {
+				str += ", ";
+			} else {
+				str += "\n";
+			}
 		}
 
 		str += commodity->value_to_string(cost);

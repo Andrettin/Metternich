@@ -38,7 +38,7 @@ DialogBase {
 				id: construction_button
 				text: format_text(construction_name + " (" + buildable_location_name + ")")
 				width: construction_choice_dialog.width - 16 * scale_factor
-				tooltip: effects_string.length > 0 ? format_text(small_text(effects_string)) : small_text("No effect")
+				tooltip: format_text(small_text((costs_string.length > 0 ? (costs_string + "\n") : "") + (effects_string.length > 0 ? effects_string : "No effect")))
 				
 				readonly property var buildable_location: model.modelData
 				readonly property var province: buildable_location.class_name === "metternich::province" ? buildable_location : null
@@ -47,6 +47,7 @@ DialogBase {
 				readonly property var pathway: province ? province.game_data.get_buildable_pathway() : null
 				readonly property var construction_name: building ? building.name : pathway.name
 				readonly property var buildable_location_name: building_slot ? (building_slot.holding.game_data.current_cultural_name + ", " + building_slot.holding.game_data.province.game_data.current_cultural_name) : province.game_data.current_cultural_name
+				readonly property string costs_string: building ? building.get_commodity_costs_string_for_site(building_slot.holding, true) : pathway.get_commodity_costs_string_for_province(province, true)
 				readonly property string effects_string: building ? building.get_effects_string(building_slot.holding, false) : pathway.get_modifier_string(province, false)
 				
 				onClicked: {

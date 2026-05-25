@@ -19,7 +19,7 @@ DialogBase {
 		anchors.leftMargin: 8 * scale_factor
 		anchors.right: parent.right
 		anchors.rightMargin: 8 * scale_factor
-		text: pathway && province ? format_text("Do you wish to build a " + pathway.name + " here?\n\n" + pathway.get_commodity_costs_string_for_province(province)) : ""
+		text: pathway && province ? format_text("Do you wish to build a " + pathway.name + " here?\n\n" + pathway.get_commodity_costs_string_for_province(province, false)) : ""
 		wrapMode: Text.WordWrap
 		horizontalAlignment: Text.AlignHCenter
 	}

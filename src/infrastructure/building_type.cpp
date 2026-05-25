@@ -367,7 +367,7 @@ commodity_map<int64_t> building_type::get_commodity_costs_for_site(const site *s
 	return costs;
 }
 
-QString building_type::get_commodity_costs_string_for_site(const metternich::site *site) const
+QString building_type::get_commodity_costs_string_for_site(const metternich::site *site, const bool single_line) const
 {
 	std::string str;
 
@@ -379,9 +379,18 @@ QString building_type::get_commodity_costs_string_for_site(const metternich::sit
 		}
 
 		if (str.empty()) {
-			str = "Costs: ";
+			str = "Costs:";
+			if (single_line) {
+				str += " ";
+			} else {
+				str += "\n";
+			}
 		} else {
-			str += ", ";
+			if (single_line) {
+				str += ", ";
+			} else {
+				str += "\n";
+			}
 		}
 
 		str += commodity->value_to_string(cost);

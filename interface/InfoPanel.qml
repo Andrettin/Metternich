@@ -744,7 +744,7 @@ Rectangle {
 			onHoveredChanged: {
 				if (hovered) {
 					status_text = "Build " + pathway.name
-					middle_status_text = pathway.get_commodity_costs_string_for_province(selected_civilian_unit.province)
+					middle_status_text = pathway.get_commodity_costs_string_for_province(selected_civilian_unit.province, true)
 					right_status_text = pathway.get_modifier_string(selected_civilian_unit.province, true)
 				} else {
 					status_text = ""

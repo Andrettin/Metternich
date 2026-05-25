@@ -19,7 +19,7 @@ DialogBase {
 		anchors.leftMargin: 8 * scale_factor
 		anchors.right: parent.right
 		anchors.rightMargin: 8 * scale_factor
-		text: building ? format_text("Do you wish to build a " + building.name + " here?\n\n" + building.get_commodity_costs_string_for_site(building_slot.holding)) : ""
+		text: building ? format_text("Do you wish to build a " + building.name + " here?\n\n" + building.get_commodity_costs_string_for_site(building_slot.holding, false)) : ""
 		wrapMode: Text.WordWrap
 		horizontalAlignment: Text.AlignHCenter
 	}

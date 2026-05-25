@@ -248,8 +248,8 @@ public:
 		return this->commodity_costs;
 	}
 
-	Q_INVOKABLE QString get_commodity_costs_string_for_site(const metternich::site *site) const;
 	commodity_map<int64_t> get_commodity_costs_for_site(const site *site) const;
+	Q_INVOKABLE QString get_commodity_costs_string_for_site(const metternich::site *site, const bool single_line) const;
 
 	const factor<site> *get_cost_factor() const
 	{
