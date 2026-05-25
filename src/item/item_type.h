@@ -80,7 +80,7 @@ public:
 		return this->icon;
 	}
 
-	int get_price() const
+	int64_t get_price() const
 	{
 		return this->price;
 	}
@@ -131,7 +131,7 @@ signals:
 private:
 	const metternich::item_class *item_class = nullptr;
 	const metternich::icon *icon = nullptr;
-	int price = 0;
+	int64_t price = 0;
 	dice damage_dice;
 	bool two_handed = false;
 	bool stackable = false;

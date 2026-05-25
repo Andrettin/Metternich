@@ -246,9 +246,9 @@ int country_military::get_military_unit_type_cost_modifier(const military_unit_t
 	return 0;
 }
 
-commodity_map<int> country_military::get_military_unit_type_commodity_costs(const military_unit_type *military_unit_type, const int quantity) const
+commodity_map<int64_t> country_military::get_military_unit_type_commodity_costs(const military_unit_type *military_unit_type, const int quantity) const
 {
-	commodity_map<int> commodity_costs = military_unit_type->get_commodity_costs();
+	commodity_map<int64_t> commodity_costs = military_unit_type->get_commodity_costs();
 
 	for (auto &[commodity, cost_int] : commodity_costs) {
 		assert_throw(commodity->is_storable());
@@ -263,14 +263,14 @@ commodity_map<int> country_military::get_military_unit_type_commodity_costs(cons
 			cost /= 100;
 		}
 
-		cost_int = cost.to_int();
+		cost_int = cost.to_int64();
 
 		if (cost_modifier < 0 && cost.get_fractional_value() > 0) {
 			cost_int += 1;
 		}
 
 		if (quantity > 0) {
-			cost_int = std::max(cost_int, 1);
+			cost_int = std::max(cost_int, 1ll);
 		}
 	}
 

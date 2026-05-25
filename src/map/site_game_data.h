@@ -637,8 +637,8 @@ public:
 		return this->get_commodity_outputs().contains(commodity);
 	}
 
-	int get_min_income() const;
-	int get_max_income() const;
+	int64_t get_min_income() const;
+	int64_t get_max_income() const;
 
 	bool can_be_visited_by(const metternich::domain *domain) const;
 

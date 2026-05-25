@@ -124,14 +124,14 @@ bool building_item_slot::can_buy_item(const metternich::character *buyer)
 		return false;
 	}
 	
-	const int item_price = this->get_item()->get_price();
+	const int64_t item_price = this->get_item()->get_price();
 
 	return buyer->get_game_data()->get_wealth() >= item_price;
 }
 
 QCoro::Task<void> building_item_slot::buy_item_coro(const metternich::character *buyer)
 {
-	const int item_price = this->get_item()->get_price();
+	const int64_t item_price = this->get_item()->get_price();
 
 	buyer->get_game_data()->change_wealth(-item_price);
 	co_await buyer->get_game_data()->add_item(this->take_item());

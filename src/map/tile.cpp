@@ -55,7 +55,7 @@ void tile::set_site(const metternich::site *site)
 
 	if (site != nullptr && site->get_game_data()->get_main_improvement() == nullptr && site->is_celestial_body()) {
 		if (site->get_celestial_body_type()->get_variation_count() > 1) {
-			this->improvement_variation = random::get()->generate(site->get_celestial_body_type()->get_variation_count());
+			this->improvement_variation = static_cast<int8_t>(random::get()->generate(site->get_celestial_body_type()->get_variation_count()));
 		} else {
 			this->improvement_variation = 0;
 		}
@@ -105,7 +105,7 @@ void tile::on_main_improvement_changed()
 
 	if (main_improvement != nullptr) {
 		if (main_improvement->get_variation_count() > 1) {
-			this->improvement_variation = random::get()->generate(main_improvement->get_variation_count());
+			this->improvement_variation = static_cast<int8_t>(random::get()->generate(main_improvement->get_variation_count()));
 		} else {
 			this->improvement_variation = 0;
 		}

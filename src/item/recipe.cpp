@@ -130,14 +130,14 @@ void recipe::add_material(const item_type *item_type, const enchantment *enchant
 	this->materials.emplace_back(item_type, enchantment);
 }
 
-int recipe::get_price() const
+int64_t recipe::get_price() const
 {
-	return std::max(1, this->get_result_price() / 25);
+	return std::max(1ll, this->get_result_price() / 25);
 }
 
-int recipe::get_price_of_materials() const
+int64_t recipe::get_price_of_materials() const
 {
-	int price = 0;
+	int64_t price = 0;
 
 	for (const recipe_material &material : this->get_materials()) {
 		price += item::get_price(material.item_type, nullptr, material.enchantment, nullptr, nullptr) * material.quantity;
@@ -146,9 +146,9 @@ int recipe::get_price_of_materials() const
 	return price;
 }
 
-int recipe::get_result_price() const
+int64_t recipe::get_result_price() const
 {
-	int price = this->get_result_item_type()->get_price();
+	int64_t price = this->get_result_item_type()->get_price();
 
 	if (this->get_result_enchantment() != nullptr) {
 		price += this->get_result_enchantment()->get_price();
@@ -159,7 +159,7 @@ int recipe::get_result_price() const
 
 int recipe::get_craft_cost() const
 {
-	return std::max(1, this->get_result_price() / 10 / 100);
+	return std::max(1, static_cast<int>(this->get_result_price() / 10 / 100));
 }
 
 std::string recipe::get_formula_string() const

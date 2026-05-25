@@ -41,7 +41,7 @@ public:
 		return this->affix_type;
 	}
 
-	int get_price() const;
+	int64_t get_price() const;
 
 	bool is_allowed_for_item_type(const item_type *item_type) const;
 
@@ -87,7 +87,7 @@ signals:
 
 private:
 	metternich::affix_type affix_type{};
-	int price = 0;
+	int64_t price = 0;
 	data_entry_set<item_class> item_classes;
 	data_entry_set<item_type> item_types;
 	std::vector<const enchantment *> subenchantments;

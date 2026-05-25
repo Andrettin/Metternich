@@ -158,7 +158,7 @@ public:
 
 	int get_current_months_per_turn() const;
 	QDate get_next_date() const;
-	int get_days_until_next_turn() const;
+	int64_t get_days_until_next_turn() const;
 	bool is_last_turn_of_year() const;
 	bool is_last_turn_of_quarter() const;
 
@@ -218,10 +218,10 @@ public:
 
 	void set_player_country(const domain *domain);
 
-	Q_INVOKABLE int get_price(const metternich::commodity *commodity) const;
-	void set_price(const commodity *commodity, const int value);
+	Q_INVOKABLE qint64 get_price(const metternich::commodity *commodity) const;
+	void set_price(const commodity *commodity, const int64_t value);
 
-	void change_price(const commodity *commodity, const int value)
+	void change_price(const commodity *commodity, const int64_t value)
 	{
 		this->set_price(commodity, this->get_price(commodity) + value);
 	}
@@ -347,7 +347,7 @@ private:
 	std::vector<domain *> countries; //the countries currently in the game, i.e. those with at least 1 province
 	const character *player_character = nullptr;
 	const domain *player_country = nullptr;
-	commodity_map<int> prices;
+	commodity_map<int64_t> prices;
 	QImage exploration_diplomatic_map_image;
 	bool exploration_changed = false;
 	std::map<const wonder *, const domain *> wonder_countries;

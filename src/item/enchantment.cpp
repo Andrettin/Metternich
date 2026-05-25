@@ -99,13 +99,13 @@ void enchantment::check() const
 	}
 }
 
-int enchantment::get_price() const
+int64_t enchantment::get_price() const
 {
 	if (this->price != 0) {
 		return this->price;
 	}
 
-	int price = 0;
+	int64_t price = 0;
 
 	for (const enchantment *subenchantment : this->get_subenchantments()) {
 		price += subenchantment->get_price();

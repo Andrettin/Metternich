@@ -613,8 +613,8 @@ public:
 
 	bool can_produce_commodity(const commodity *commodity) const;
 
-	int get_min_income() const;
-	int get_max_income() const;
+	int64_t get_min_income() const;
+	int64_t get_max_income() const;
 
 	Q_INVOKABLE const metternich::domain *get_trade_zone_domain() const;
 	Q_INVOKABLE const metternich::domain *get_temple_domain() const;

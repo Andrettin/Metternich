@@ -330,7 +330,7 @@ void domain_technology::do_population_research()
 		daily_research /= 100;
 	}
 
-	const int turn_days = game::get()->get_days_until_next_turn();
+	const int64_t turn_days = game::get()->get_days_until_next_turn();
 	const int64_t generated_research = (daily_research * turn_days).to_int64();
 	this->get_game_data()->get_economy()->change_stored_commodity(research_commodity, generated_research);
 }

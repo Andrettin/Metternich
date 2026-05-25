@@ -13,8 +13,8 @@ class transaction : public QObject
 {
 	Q_OBJECT
 
-		Q_PROPERTY(int amount READ get_amount CONSTANT)
-		Q_PROPERTY(int object_quantity READ get_object_quantity CONSTANT)
+		Q_PROPERTY(qint64 amount READ get_amount CONSTANT)
+		Q_PROPERTY(qint64 object_quantity READ get_object_quantity CONSTANT)
 		Q_PROPERTY(const metternich::domain* country READ get_country CONSTANT)
 		Q_PROPERTY(const metternich::icon *icon READ get_icon CONSTANT)
 		Q_PROPERTY(QString name READ get_name CONSTANT)
@@ -23,7 +23,7 @@ class transaction : public QObject
 public:
 	using object_variant = std::variant<std::nullptr_t, const commodity *, const population_type *>;
 
-	explicit transaction(const int amount, const object_variant &object, const int object_quantity, const metternich::domain *domain)
+	explicit transaction(const int64_t amount, const object_variant &object, const int64_t object_quantity, const metternich::domain *domain)
 		: object(object), amount(amount), object_quantity(object_quantity), domain(domain)
 	{
 	}
@@ -35,12 +35,12 @@ public:
 
 	const std::string &get_object_name() const;
 
-	int get_amount() const
+	int64_t get_amount() const
 	{
 		return this->amount;
 	}
 
-	void change_amount(const int change)
+	void change_amount(const int64_t change)
 	{
 		if (change == 0) {
 			return;
@@ -49,12 +49,12 @@ public:
 		this->amount += change;
 	}
 
-	int get_object_quantity() const
+	int64_t get_object_quantity() const
 	{
 		return this->object_quantity;
 	}
 
-	void change_object_quantity(const int change)
+	void change_object_quantity(const int64_t change)
 	{
 		if (change == 0) {
 			return;
@@ -74,8 +74,8 @@ public:
 
 private:
 	object_variant object{};
-	int amount = 0;
-	int object_quantity = 0;
+	int64_t amount = 0;
+	int64_t object_quantity = 0;
 	const metternich::domain *domain = nullptr;
 };
 

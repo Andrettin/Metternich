@@ -64,7 +64,7 @@ public:
 		return this->icon;
 	}
 
-	const int get_price() const
+	int64_t get_price() const
 	{
 		return this->price;
 	}
@@ -156,7 +156,7 @@ signals:
 private:
 	int level = -1;
 	metternich::icon *icon = nullptr;
-	int price = 0;
+	int64_t price = 0;
 	spell_target target{};
 	spell_target battle_target{};
 	int mana_cost = 0;

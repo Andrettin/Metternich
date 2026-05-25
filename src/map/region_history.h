@@ -14,7 +14,7 @@ class region_history final : public data_entry_history
 {
 	Q_OBJECT
 
-	Q_PROPERTY(int population READ get_population WRITE set_population)
+	Q_PROPERTY(qint64 population READ get_population WRITE set_population)
 	Q_PROPERTY(archimedes::decimillesimal_int literacy_rate MEMBER literacy_rate READ get_literacy_rate)
 
 public:
@@ -34,7 +34,7 @@ public:
 		return this->phenotype_weights;
 	}
 
-	int get_population() const
+	int64_t get_population() const
 	{
 		static const population_group_key key;
 
@@ -46,7 +46,7 @@ public:
 		return 0;
 	}
 
-	void set_population(const int population)
+	void set_population(const int64_t population)
 	{
 		static const population_group_key key;
 
@@ -68,7 +68,7 @@ private:
 	const metternich::region *region = nullptr;
 	culture_map<int64_t> culture_weights;
 	phenotype_map<int64_t> phenotype_weights;
-	population_group_map<int> population_groups;
+	population_group_map<int64_t> population_groups;
 	decimillesimal_int literacy_rate;
 };
 

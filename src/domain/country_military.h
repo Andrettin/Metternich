@@ -55,7 +55,7 @@ public:
 	[[nodiscard]] QCoro::Task<void> remove_military_unit(military_unit *military_unit);
 
 	int get_military_unit_type_cost_modifier(const military_unit_type *military_unit_type) const;
-	commodity_map<int> get_military_unit_type_commodity_costs(const military_unit_type *military_unit_type, const int quantity) const;
+	commodity_map<int64_t> get_military_unit_type_commodity_costs(const military_unit_type *military_unit_type, const int quantity) const;
 	Q_INVOKABLE QVariantList get_military_unit_type_commodity_costs_qvariant_list(const metternich::military_unit_type *military_unit_type, const int quantity) const;
 
 	const military_unit_type *get_best_military_unit_category_type(const military_unit_category category, const culture *culture) const;

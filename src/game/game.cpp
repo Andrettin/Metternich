@@ -1441,7 +1441,7 @@ QCoro::Task<int64_t> game::apply_historical_population_group_to_site(const popul
 	if (culture == nullptr) {
 		assert_throw(!culture_weights.empty());
 
-		int new_remaining_population = remaining_population;
+		int64_t new_remaining_population = remaining_population;
 		const int64_t total_weight = archimedes::map::get_total_value(culture_weights);
 
 		for (const auto &[weighted_culture, weight] : culture_weights) {
@@ -1668,8 +1668,8 @@ QCoro::Task<void> game::do_turn_coro()
 	try {
 		co_await this->process_delayed_effects();
 
-		domain_map<commodity_map<int>> old_bids;
-		domain_map<commodity_map<int>> old_offers;
+		domain_map<commodity_map<int64_t>> old_bids;
+		domain_map<commodity_map<int64_t>> old_offers;
 
 		for (province *province : map::get()->get_provinces()) {
 			province->reset_turn_data();
@@ -1795,7 +1795,7 @@ void game::do_trade()
 	}
 
 	//change commodity prices based on whether there were unfulfilled bids/offers
-	commodity_map<int> remaining_demands;
+	commodity_map<int64_t> remaining_demands;
 	for (const domain *domain : trade_domains) {
 		for (const auto &[commodity, bid] : domain->get_economy()->get_bids()) {
 			remaining_demands[commodity] += bid;
@@ -1808,7 +1808,7 @@ void game::do_trade()
 
 	for (const auto &[commodity, value] : remaining_demands) {
 		//change the price according to the extra quantity bid/offered
-		const int change = number::sqrt(std::abs(value)) * number::sign(value);
+		const int64_t change = number::sqrt(std::abs(value)) * number::sign(value);
 
 		if (change == 0) {
 			continue;
@@ -1828,7 +1828,7 @@ QDate game::get_next_date() const
 	return this->get_date().addMonths(this->get_current_months_per_turn());
 }
 
-int game::get_days_until_next_turn() const
+int64_t game::get_days_until_next_turn() const
 {
 	return this->get_date().daysTo(this->get_next_date());
 }
@@ -1986,7 +1986,7 @@ void game::set_player_country(const domain *domain)
 	this->set_player_character(domain ? domain->get_government()->get_ruler() : nullptr);
 }
 
-int game::get_price(const commodity *commodity) const
+int64_t game::get_price(const commodity *commodity) const
 {
 	/*
 	const auto find_iterator = this->prices.find(commodity);
@@ -1999,7 +1999,7 @@ int game::get_price(const commodity *commodity) const
 	return commodity->get_base_price();
 }
 
-void game::set_price(const commodity *commodity, const int value)
+void game::set_price(const commodity *commodity, const int64_t value)
 {
 	if (value == this->get_price(commodity)) {
 		return;

@@ -42,9 +42,9 @@ public:
 
 	virtual void do_addition_effect(const domain *scope) const override
 	{
-		int change = this->get_quantity(scope);
+		int64_t change = this->get_quantity(scope);
 
-		const int storage = scope->get_economy()->get_stored_commodity(this->commodity);
+		const int64_t storage = scope->get_economy()->get_stored_commodity(this->commodity);
 		if (change < 0 && std::abs(change) > storage) {
 			change = -storage;
 		}
@@ -54,9 +54,9 @@ public:
 
 	virtual void do_subtraction_effect(const domain *scope) const override
 	{
-		int change = -this->get_quantity(scope);
+		int64_t change = -this->get_quantity(scope);
 
-		const int storage = scope->get_economy()->get_stored_commodity(this->commodity);
+		const int64_t storage = scope->get_economy()->get_stored_commodity(this->commodity);
 		if (change < 0 && std::abs(change) > storage) {
 			change = -storage;
 		}

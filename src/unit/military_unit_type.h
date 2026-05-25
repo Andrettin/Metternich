@@ -113,12 +113,12 @@ public:
 		return this->required_technology;
 	}
 
-	const commodity_map<int> &get_commodity_costs() const
+	const commodity_map<int64_t> &get_commodity_costs() const
 	{
 		return this->commodity_costs;
 	}
 
-	const commodity_map<int> &get_maintenance_commodity_costs() const
+	const commodity_map<int64_t> &get_maintenance_commodity_costs() const
 	{
 		return this->maintenance_commodity_costs;
 	}
@@ -161,8 +161,8 @@ private:
 	std::vector<battle_resolution_type> battle_resolution_types;
 	std::map<military_unit_stat, centesimal_int> stats;
 	technology *required_technology = nullptr;
-	commodity_map<int> commodity_costs;
-	commodity_map<int> maintenance_commodity_costs; //commodities paid per turn as maintenance for the military unit
+	commodity_map<int64_t> commodity_costs;
+	commodity_map<int64_t> maintenance_commodity_costs; //commodities paid per turn as maintenance for the military unit
 	std::vector<const promotion *> free_promotions;
 	military_unit_type_set upgrades;
 	const sound *melee_attack_sound = nullptr;

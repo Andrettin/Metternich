@@ -4,11 +4,11 @@
 
 namespace metternich {
 
-class available_food_condition final : public numerical_condition<domain, read_only_context>
+class available_food_condition final : public numerical_condition<domain, read_only_context, int64_t>
 {
 public:
 	explicit available_food_condition(const std::string &value, const gsml_operator condition_operator)
-		: numerical_condition<domain, read_only_context>(value, condition_operator)
+		: numerical_condition<domain, read_only_context, int64_t>(value, condition_operator)
 	{
 	}
 
@@ -18,7 +18,7 @@ public:
 		return class_identifier;
 	}
 
-	virtual int get_scope_value(const domain *scope) const override
+	virtual int64_t get_scope_value(const domain *scope) const override
 	{
 		return scope->get_game_data()->get_available_food();
 	}

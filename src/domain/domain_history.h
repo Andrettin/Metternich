@@ -124,7 +124,7 @@ public:
 		return this->wealth;
 	}
 
-	const commodity_map<int> &get_commodities() const
+	const commodity_map<int64_t> &get_commodities() const
 	{
 		return this->commodities;
 	}
@@ -157,7 +157,7 @@ private:
 	std::vector<const technology *> technologies;
 	law_group_map<const law *> laws;
 	int wealth = 0;
-	commodity_map<int> commodities;
+	commodity_map<int64_t> commodities;
 	domain_map<diplomacy_state> diplomacy_states;
 	domain_map<const consulate *> consulates;
 };

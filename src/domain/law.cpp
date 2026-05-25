@@ -29,7 +29,7 @@ void law::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 
 	if (tag == "commodity_costs") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const commodity *commodity = commodity::get(property.get_key());
 			this->commodity_costs[commodity] = commodity->string_to_value(property.get_value());
 		});

@@ -31,7 +31,7 @@ class site_history final : public data_entry_history
 	Q_PROPERTY(const metternich::dungeon* dungeon MEMBER dungeon)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture)
 	Q_PROPERTY(metternich::religion* religion MEMBER religion)
-	Q_PROPERTY(int population READ get_population WRITE set_population)
+	Q_PROPERTY(qint64 population READ get_population WRITE set_population)
 	Q_PROPERTY(archimedes::decimillesimal_int literacy_rate MEMBER literacy_rate READ get_literacy_rate)
 
 public:
@@ -126,26 +126,26 @@ public:
 		return this->religion;
 	}
 
-	int get_population() const
+	int64_t get_population() const
 	{
 		static const population_group_key group_key;
 
 		return this->get_group_population(group_key);
 	}
 
-	void set_population(const int population)
+	void set_population(const int64_t population)
 	{
 		static const population_group_key group_key;
 
 		this->set_group_population(group_key, population);
 	}
 
-	const population_group_map<int> &get_population_groups() const
+	const population_group_map<int64_t> &get_population_groups() const
 	{
 		return this->population_groups;
 	}
 
-	int get_group_population(const population_group_key &group_key) const
+	int64_t get_group_population(const population_group_key &group_key) const
 	{
 		const auto find_iterator = this->population_groups.find(group_key);
 		if (find_iterator != this->population_groups.end()) {
@@ -155,7 +155,7 @@ public:
 		return 0;
 	}
 
-	void set_group_population(const population_group_key &group_key, const int population)
+	void set_group_population(const population_group_key &group_key, const int64_t population)
 	{
 		if (population == 0) {
 			this->population_groups.erase(group_key);
@@ -168,13 +168,13 @@ public:
 	{
 		for (auto it = this->population_groups.begin(); it != this->population_groups.end(); ++it) {
 			const population_group_key &group_key = it->first;
-			const int population = it->second;
+			const int64_t population = it->second;
 
 			auto other_it = it;
 			++other_it;
 			for (; other_it != this->population_groups.end(); ++other_it) {
 				const population_group_key &other_group_key = other_it->first;
-				int &other_population = other_it->second;
+				int64_t &other_population = other_it->second;
 
 				if (other_group_key.contains(group_key)) {
 					other_population -= population;
@@ -200,7 +200,7 @@ private:
 	std::map<improvement_slot, const improvement *> improvements;
 	building_slot_type_map<const building_type *> buildings;
 	building_slot_type_map<const wonder *> wonders;
-	population_group_map<int> population_groups;
+	population_group_map<int64_t> population_groups;
 	decimillesimal_int literacy_rate;
 };
 

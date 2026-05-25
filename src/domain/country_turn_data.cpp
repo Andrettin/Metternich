@@ -27,7 +27,7 @@ QVariantList country_turn_data::get_expense_transactions_qvariant_list() const
 	return container::to_qvariant_list(this->expense_transactions);
 }
 
-void country_turn_data::add_income_transaction(const income_transaction_type transaction_type, const int amount, const transaction_object_variant &object, const int object_quantity, const metternich::domain *other_domain)
+void country_turn_data::add_income_transaction(const income_transaction_type transaction_type, const int64_t amount, const transaction_object_variant &object, const int64_t object_quantity, const metternich::domain *other_domain)
 {
 	this->total_income += amount;
 
@@ -49,7 +49,7 @@ void country_turn_data::add_income_transaction(const income_transaction_type tra
 	this->income_transactions.push_back(std::move(transaction));
 }
 
-void country_turn_data::add_expense_transaction(const expense_transaction_type transaction_type, const int amount, const transaction_object_variant &object, const int object_quantity, const metternich::domain *other_domain)
+void country_turn_data::add_expense_transaction(const expense_transaction_type transaction_type, const int64_t amount, const transaction_object_variant &object, const int64_t object_quantity, const metternich::domain *other_domain)
 {
 	this->total_expense += amount;
 

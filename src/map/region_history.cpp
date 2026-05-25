@@ -46,7 +46,7 @@ void region_history::process_gsml_scope(const gsml_data &scope, const QDate &dat
 			this->phenotype_weights[phenotype] = weight;
 		});
 	} else if (tag == "population_groups") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key_str = property.get_key();
 			const population_group_key key(key_str);
 
@@ -55,7 +55,7 @@ void region_history::process_gsml_scope(const gsml_data &scope, const QDate &dat
 			}
 
 			const std::string &value = property.get_value();
-			const int population = std::stoi(value);
+			const int64_t population = std::stoll(value);
 
 			if (population == 0) {
 				this->population_groups.erase(key);
@@ -108,7 +108,7 @@ void region_history::distribute_population()
 			}
 
 			int province_populatable_site_count = 0;
-			int province_total_populatable_site_group_population = 0;
+			int64_t province_total_populatable_site_group_population = 0;
 
 			for (const site *site : province->get_game_data()->get_sites()) {
 				if (!site->get_game_data()->can_have_population() || !site->get_game_data()->is_built()) {
@@ -128,7 +128,7 @@ void region_history::distribute_population()
 			}
 
 			const province_history *province_history = province->get_history();
-			const int province_group_population = std::max(std::max(province_history->get_group_population(group_key), province_history->get_lower_bound_group_population(group_key)), province_total_populatable_site_group_population);
+			const int64_t province_group_population = std::max(std::max(province_history->get_group_population(group_key), province_history->get_lower_bound_group_population(group_key)), province_total_populatable_site_group_population);
 
 			if (province_group_population != 0) {
 				remaining_population -= province_group_population;
@@ -159,7 +159,7 @@ void region_history::distribute_population()
 			province_history *province_history = province->get_history();
 
 			if (province_history->get_group_population(group_key) == 0) {
-				const int group_population = population_per_site * province_populatable_site_count;
+				const int64_t group_population = population_per_site * province_populatable_site_count;
 				province_history->set_group_population(group_key, group_population);
 			}
 		}

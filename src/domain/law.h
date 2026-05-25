@@ -70,7 +70,7 @@ public:
 		return this->required_technology;
 	}
 
-	const commodity_map<int> &get_commodity_costs() const
+	const commodity_map<int64_t> &get_commodity_costs() const
 	{
 		return this->commodity_costs;
 	}
@@ -98,7 +98,7 @@ private:
 	metternich::succession_type succession_type {};
 	metternich::succession_gender_type succession_gender_type {};
 	technology *required_technology = nullptr;
-	commodity_map<int> commodity_costs;
+	commodity_map<int64_t> commodity_costs;
 	std::unique_ptr<const and_condition<domain>> conditions;
 	std::unique_ptr<const modifier<const domain>> modifier;
 };

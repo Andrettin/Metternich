@@ -88,17 +88,17 @@ public:
 		return this->domain_skill;
 	}
 
-	const commodity_map<int> &get_level_commodity_costs() const
+	const commodity_map<int64_t> &get_level_commodity_costs() const
 	{
 		return this->level_commodity_costs;
 	}
 
-	const commodity_map<int> &get_level_commodity_costs_per_level() const
+	const commodity_map<int64_t> &get_level_commodity_costs_per_level() const
 	{
 		return this->level_commodity_costs_per_level;
 	}
 
-	const commodity_map<int> &get_fortification_level_commodity_costs() const
+	const commodity_map<int64_t> &get_fortification_level_commodity_costs() const
 	{
 		return this->fortification_level_commodity_costs;
 	}
@@ -181,9 +181,9 @@ private:
 	bool economic = false;
 	bool religious = false;
 	const metternich::domain_skill *domain_skill = nullptr;
-	commodity_map<int> level_commodity_costs;
-	commodity_map<int> level_commodity_costs_per_level;
-	commodity_map<int> fortification_level_commodity_costs;
+	commodity_map<int64_t> level_commodity_costs;
+	commodity_map<int64_t> level_commodity_costs_per_level;
+	commodity_map<int64_t> fortification_level_commodity_costs;
 	std::map<std::string, std::unique_ptr<const and_condition<site>>> conditional_names;
 	std::map<std::string, int> tier_levels; //identifiers for particular levels
 	std::vector<const holding_type *> base_holding_types;

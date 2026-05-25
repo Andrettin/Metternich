@@ -232,11 +232,11 @@ std::string item::create_name(const item_type *type, const item_material *materi
 	}
 }
 
-int item::get_price(const item_type *type, const item_material *material, const metternich::enchantment *enchantment, const metternich::spell *spell, const metternich::recipe *recipe)
+int64_t item::get_price(const item_type *type, const item_material *material, const metternich::enchantment *enchantment, const metternich::spell *spell, const metternich::recipe *recipe)
 {
 	Q_UNUSED(material);
 
-	int price = type->get_price();
+	int64_t price = type->get_price();
 
 	if (enchantment != nullptr) {
 		price += enchantment->get_price();
@@ -330,7 +330,7 @@ QString item::get_effects_string(const character *character) const
 	return QString::fromStdString(str);
 }
 
-int item::get_price() const
+int64_t item::get_price() const
 {
 	return item::get_price(this->get_type(), this->get_material(), this->get_enchantment(), this->get_spell(), this->get_recipe());
 }

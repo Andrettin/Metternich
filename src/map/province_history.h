@@ -29,7 +29,7 @@ class province_history final : public data_entry_history
 	Q_PROPERTY(const metternich::religion* religion MEMBER religion)
 	Q_PROPERTY(int level MEMBER level READ get_level)
 	Q_PROPERTY(const metternich::pathway* pathway MEMBER pathway)
-	Q_PROPERTY(int population READ get_population WRITE set_population)
+	Q_PROPERTY(qint64 population READ get_population WRITE set_population)
 	Q_PROPERTY(archimedes::decimillesimal_int literacy_rate MEMBER literacy_rate READ get_literacy_rate)
 	Q_PROPERTY(std::vector<const metternich::technology *> technologies READ get_technologies)
 
@@ -95,26 +95,26 @@ public:
 		return this->pathway;
 	}
 
-	int get_population() const
+	int64_t get_population() const
 	{
 		static const population_group_key group_key;
 
 		return this->get_group_population(group_key);
 	}
 
-	void set_population(const int population)
+	void set_population(const int64_t population)
 	{
 		static const population_group_key group_key;
 
 		this->set_group_population(group_key, population);
 	}
 
-	const population_group_map<int> &get_population_groups() const
+	const population_group_map<int64_t> &get_population_groups() const
 	{
 		return this->population_groups;
 	}
 
-	int get_group_population(const population_group_key &group_key) const
+	int64_t get_group_population(const population_group_key &group_key) const
 	{
 		const auto find_iterator = this->population_groups.find(group_key);
 		if (find_iterator != this->population_groups.end()) {
@@ -124,7 +124,7 @@ public:
 		return 0;
 	}
 
-	void set_group_population(const population_group_key &group_key, const int population)
+	void set_group_population(const population_group_key &group_key, const int64_t population)
 	{
 		if (population == 0) {
 			this->population_groups.erase(group_key);
@@ -133,12 +133,12 @@ public:
 		}
 	}
 
-	const population_group_map<int> &get_lower_bound_population_groups() const
+	const population_group_map<int64_t> &get_lower_bound_population_groups() const
 	{
 		return this->lower_bound_population_groups;
 	}
 
-	int get_lower_bound_group_population(const population_group_key &group_key) const
+	int64_t get_lower_bound_group_population(const population_group_key &group_key) const
 	{
 		const auto find_iterator = this->lower_bound_population_groups.find(group_key);
 		if (find_iterator != this->lower_bound_population_groups.end()) {
@@ -186,8 +186,8 @@ private:
 	phenotype_map<int64_t> phenotype_weights;
 	int level = 0;
 	const metternich::pathway *pathway = nullptr;
-	population_group_map<int> population_groups;
-	population_group_map<int> lower_bound_population_groups;
+	population_group_map<int64_t> population_groups;
+	population_group_map<int64_t> lower_bound_population_groups;
 	decimillesimal_int literacy_rate;
 	std::vector<const technology *> technologies;
 };

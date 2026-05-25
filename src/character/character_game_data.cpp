@@ -579,8 +579,8 @@ QCoro::Task<void> character_game_data::do_crafting()
 	}
 
 	if (this->get_craft() < this->get_max_craft()) {
-		const int turn_days = game::get()->get_days_until_next_turn();
-		const int recovered_craft = defines::get()->get_craft_recovery_per_day() * turn_days;
+		const int64_t turn_days = game::get()->get_days_until_next_turn();
+		const int recovered_craft = static_cast<int>(std::max<int64_t>(this->get_max_craft(), defines::get()->get_craft_recovery_per_day() * turn_days));
 		this->change_craft(recovered_craft);
 	}
 
@@ -3810,7 +3810,7 @@ QCoro::Task<void> character_game_data::sell_item_coro(item *item)
 
 	std::vector<building_item_slot *> potential_item_slots;
 	bool found_empty_slot = false;
-	const int sold_item_price = sold_item->get_price();
+	const int64_t sold_item_price = sold_item->get_price();
 
 	for (building_item_slot *item_slot : accessible_item_slots) {
 		if (!item_slot->get_item_creation_type()->can_create_item_type(sold_item->get_type())) {

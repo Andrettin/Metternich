@@ -85,10 +85,10 @@ public:
 		}
 	}
 
-	int get_wealth() const;
-	void set_wealth(const int wealth);
+	int64_t get_wealth() const;
+	void set_wealth(const int64_t wealth);
 
-	void change_wealth(const int change)
+	void change_wealth(const int64_t change)
 	{
 		this->set_wealth(this->get_wealth() + change);
 	}
@@ -151,7 +151,7 @@ public:
 		this->set_stored_commodity(commodity, this->get_stored_commodity(commodity) + value);
 	}
 
-	void add_tributable_commodity(const commodity *commodity, const int tributable_quantity, const income_transaction_type tribute_income_type);
+	void add_tributable_commodity(const commodity *commodity, const int64_t tributable_quantity, const income_transaction_type tribute_income_type);
 	
 	int64_t add_population_wealth(const int64_t wealth);
 
@@ -311,14 +311,14 @@ public:
 		this->set_max_commodity_storage(commodity, this->get_storage_capacity() * 50 / 100);
 	}
 
-	const commodity_map<int> &get_bids() const
+	const commodity_map<int64_t> &get_bids() const
 	{
 		return this->bids;
 	}
 
 	QVariantList get_bids_qvariant_list() const;
 
-	Q_INVOKABLE int get_bid(const metternich::commodity *commodity) const
+	Q_INVOKABLE qint64 get_bid(const metternich::commodity *commodity) const
 	{
 		const auto find_iterator = this->bids.find(commodity);
 
@@ -329,9 +329,9 @@ public:
 		return 0;
 	}
 
-	Q_INVOKABLE void set_bid(const metternich::commodity *commodity, const int value);
+	Q_INVOKABLE void set_bid(const metternich::commodity *commodity, const qint64 value);
 
-	Q_INVOKABLE void change_bid(const metternich::commodity *commodity, const int change)
+	Q_INVOKABLE void change_bid(const metternich::commodity *commodity, const qint64 change)
 	{
 		this->set_bid(commodity, this->get_bid(commodity) + change);
 	}
@@ -344,14 +344,14 @@ public:
 		emit bids_changed();
 	}
 
-	const commodity_map<int> &get_offers() const
+	const commodity_map<int64_t> &get_offers() const
 	{
 		return this->offers;
 	}
 
 	QVariantList get_offers_qvariant_list() const;
 
-	Q_INVOKABLE int get_offer(const metternich::commodity *commodity) const
+	Q_INVOKABLE qint64 get_offer(const metternich::commodity *commodity) const
 	{
 		const auto find_iterator = this->offers.find(commodity);
 
@@ -362,9 +362,9 @@ public:
 		return 0;
 	}
 
-	Q_INVOKABLE void set_offer(const metternich::commodity *commodity, const int value);
+	Q_INVOKABLE void set_offer(const metternich::commodity *commodity, const qint64 value);
 
-	Q_INVOKABLE void change_offer(const metternich::commodity *commodity, const int change)
+	Q_INVOKABLE void change_offer(const metternich::commodity *commodity, const qint64 change)
 	{
 		this->set_offer(commodity, this->get_offer(commodity) + change);
 	}
@@ -378,7 +378,7 @@ public:
 	}
 
 	std::vector<const domain *> get_known_domains_by_trade_priority() const;
-	void do_sale(const metternich::domain *other_domain, const commodity *commodity, const int sold_quantity, const bool state_purchase);
+	void do_sale(const metternich::domain *other_domain, const commodity *commodity, const int64_t sold_quantity, const bool state_purchase);
 
 	const commodity_map<int> &get_commodity_needs() const
 	{
@@ -769,8 +769,8 @@ private:
 	commodity_map<centesimal_int> commodity_outputs;
 	commodity_map<int64_t> min_commodity_storages; //if storage is below this, import the commodity
 	commodity_map<int64_t> max_commodity_storages; //if storage is above this, export the commodity
-	commodity_map<int> bids;
-	commodity_map<int> offers;
+	commodity_map<int64_t> bids;
+	commodity_map<int64_t> offers;
 	commodity_map<int> commodity_needs;
 	std::map<population_strata, int> population_strata_tax_rates;
 	centesimal_int output_modifier;

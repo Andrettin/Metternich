@@ -838,7 +838,7 @@ public:
 	}
 
 	int get_net_food_consumption() const;
-	int get_available_food() const;
+	int64_t get_available_food() const;
 
 	bool has_building(const building_type *building) const;
 	bool has_building_or_better(const building_type *building) const;
@@ -1033,7 +1033,7 @@ public:
 
 	int get_transporter_type_cost_modifier(const transporter_type *transporter_type) const;
 	Q_INVOKABLE int get_transporter_type_wealth_cost(const metternich::transporter_type *transporter_type, const int quantity) const;
-	commodity_map<int> get_transporter_type_commodity_costs(const transporter_type *transporter_type, const int quantity) const;
+	commodity_map<int64_t> get_transporter_type_commodity_costs(const transporter_type *transporter_type, const int quantity) const;
 	Q_INVOKABLE QVariantList get_transporter_type_commodity_costs_qvariant_list(const metternich::transporter_type *transporter_type, const int quantity) const;
 
 	const transporter_type *get_best_transporter_category_type(const transporter_category category, const culture *culture) const;
@@ -1256,8 +1256,8 @@ public:
 		this->set_free_consulate_count(consulate, this->get_free_consulate_count(consulate) + value);
 	}
 
-	int get_min_income() const;
-	int get_max_income() const;
+	int64_t get_min_income() const;
+	int64_t get_max_income() const;
 	int64_t get_domain_maintenance_cost() const;
 	int64_t get_maintenance_cost() const;
 

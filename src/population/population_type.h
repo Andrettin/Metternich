@@ -48,7 +48,7 @@ class population_type final : public named_data_entry, public data_type<populati
 	Q_PROPERTY(metternich::population_strata strata MEMBER strata READ get_strata NOTIFY changed)
 	Q_PROPERTY(bool educator MEMBER educator READ is_educator NOTIFY changed)
 	Q_PROPERTY(metternich::commodity* output_commodity MEMBER output_commodity NOTIFY changed)
-	Q_PROPERTY(int output_value MEMBER output_value READ get_output_value NOTIFY changed)
+	Q_PROPERTY(qint64 output_value MEMBER output_value READ get_output_value NOTIFY changed)
 	Q_PROPERTY(int output_modifier MEMBER output_modifier READ get_output_modifier NOTIFY changed)
 	Q_PROPERTY(int resource_output_bonus MEMBER resource_output_bonus READ get_resource_output_bonus NOTIFY changed)
 	Q_PROPERTY(archimedes::centesimal_int max_modifier_multiplier MEMBER max_modifier_multiplier READ get_max_modifier_multiplier NOTIFY changed)
@@ -138,7 +138,7 @@ public:
 		return this->output_commodity;
 	}
 
-	int get_output_value() const
+	int64_t get_output_value() const
 	{
 		return this->output_value;
 	}
@@ -217,7 +217,7 @@ private:
 	phenotype_map<const metternich::icon *> phenotype_icons;
 	phenotype_map<const metternich::icon *> phenotype_small_icons;
 	commodity *output_commodity = nullptr;
-	int output_value = 0;
+	int64_t output_value = 0;
 	int output_modifier = 0;
 	int resource_output_bonus = 0;
 	centesimal_int max_modifier_multiplier;

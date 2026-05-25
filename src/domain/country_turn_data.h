@@ -18,8 +18,8 @@ class country_turn_data final : public QObject
 {
 	Q_OBJECT
 
-	Q_PROPERTY(int total_income READ get_total_income CONSTANT)
-	Q_PROPERTY(int total_expense READ get_total_expense CONSTANT)
+	Q_PROPERTY(qint64 total_income READ get_total_income CONSTANT)
+	Q_PROPERTY(qint64 total_expense READ get_total_expense CONSTANT)
 	Q_PROPERTY(QVariantList income_transactions READ get_income_transactions_qvariant_list CONSTANT)
 	Q_PROPERTY(QVariantList expense_transactions READ get_expense_transactions_qvariant_list CONSTANT)
 
@@ -29,12 +29,12 @@ public:
 	explicit country_turn_data(const metternich::domain *domain);
 	~country_turn_data();
 
-	int get_total_income() const
+	int64_t get_total_income() const
 	{
 		return this->total_income;
 	}
 
-	int get_total_expense() const
+	int64_t get_total_expense() const
 	{
 		return this->total_expense;
 	}
@@ -42,8 +42,8 @@ public:
 	QVariantList get_income_transactions_qvariant_list() const;
 	QVariantList get_expense_transactions_qvariant_list() const;
 
-	void add_income_transaction(const income_transaction_type transaction_type, const int amount, const transaction_object_variant &object = nullptr, const int object_quantity = 0, const metternich::domain *other_domain = nullptr);
-	void add_expense_transaction(const expense_transaction_type transaction_type, const int amount, const transaction_object_variant &object = nullptr, const int object_quantity = 0, const metternich::domain *other_domain = nullptr);
+	void add_income_transaction(const income_transaction_type transaction_type, const int64_t amount, const transaction_object_variant &object = nullptr, const int64_t object_quantity = 0, const metternich::domain *other_domain = nullptr);
+	void add_expense_transaction(const expense_transaction_type transaction_type, const int64_t amount, const transaction_object_variant &object = nullptr, const int64_t object_quantity = 0, const metternich::domain *other_domain = nullptr);
 
 	const military_unit_type_map<int> &get_disbanded_military_units() const
 	{
@@ -97,8 +97,8 @@ public:
 
 private:
 	const metternich::domain *domain = nullptr;
-	int total_income = 0;
-	int total_expense = 0;
+	int64_t total_income = 0;
+	int64_t total_expense = 0;
 	std::vector<qunique_ptr<income_transaction>> income_transactions;
 	std::vector<qunique_ptr<expense_transaction>> expense_transactions;
 	military_unit_type_map<int> disbanded_military_units;

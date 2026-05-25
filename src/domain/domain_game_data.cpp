@@ -458,7 +458,7 @@ QCoro::Task<void> domain_game_data::do_turn()
 				co_await character->get_game_data()->ai_buy_items();
 			}
 
-			const int turn_days = game::get()->get_days_until_next_turn();
+			const int64_t turn_days = game::get()->get_days_until_next_turn();
 			context ctx(this->domain);
 			co_await character->get_game_data()->decrement_status_effect_durations(std::chrono::days(turn_days), ctx);
 		}
@@ -593,7 +593,7 @@ void domain_game_data::collect_wealth()
 		}
 
 		const commodity *wealth_commodity = defines::get()->get_wealth_commodity();
-		const int attribute_income = result * defines::get()->get_domain_income_unit_value();
+		const int64_t attribute_income = result * defines::get()->get_domain_income_unit_value();
 
 		this->get_economy()->add_tributable_commodity(wealth_commodity, attribute_income, income_transaction_type::tribute);
 		this->domain->get_turn_data()->add_income_transaction(income_transaction_type::income, attribute_income, nullptr, 0, this->domain);
@@ -709,11 +709,11 @@ QCoro::Task<void> domain_game_data::do_population_growth()
 			co_return;
 		}
 
-		const int available_food = this->get_available_food();
+		const int64_t available_food = this->get_available_food();
 
 		int food_consumption = this->get_net_food_consumption();
 
-		const int population_growth_change = available_food;
+		const int population_growth_change = static_cast<int>(available_food);
 		this->change_population_growth(population_growth_change);
 
 		if (population_growth_change > 0) {
@@ -3122,7 +3122,7 @@ population_unit *domain_game_data::choose_starvation_population_unit()
 
 	bool found_non_food_producer = false;
 	bool found_producer = false;
-	int lowest_output_value = std::numeric_limits<int>::max();
+	int64_t lowest_output_value = std::numeric_limits<int>::max();
 	for (population_unit *population_unit : this->get_population_units()) {
 		if (population_unit->get_site()->is_settlement() && population_unit->get_site()->get_game_data()->get_population_unit_count() == 1) {
 			//do not remove a settlement's last population unit
@@ -3210,7 +3210,7 @@ int domain_game_data::get_net_food_consumption() const
 	return food_consumption;
 }
 
-int domain_game_data::get_available_food() const
+int64_t domain_game_data::get_available_food() const
 {
 	return this->get_economy()->get_stored_food() - this->get_net_food_consumption();
 }
@@ -4190,13 +4190,13 @@ void domain_game_data::change_transporter_recruitment_count(const transporter_ty
 
 	if (change_input_storage) {
 		const int old_count = count - change;
-		const commodity_map<int> old_commodity_costs = this->get_transporter_type_commodity_costs(transporter_type, old_count);
-		const commodity_map<int> new_commodity_costs = this->get_transporter_type_commodity_costs(transporter_type, count);
+		const commodity_map<int64_t> old_commodity_costs = this->get_transporter_type_commodity_costs(transporter_type, old_count);
+		const commodity_map<int64_t> new_commodity_costs = this->get_transporter_type_commodity_costs(transporter_type, count);
 
 		for (const auto &[commodity, cost] : new_commodity_costs) {
 			assert_throw(commodity->is_storable());
 
-			const int cost_change = cost - old_commodity_costs.find(commodity)->second;
+			const int64_t cost_change = cost - old_commodity_costs.find(commodity)->second;
 
 			this->get_economy()->change_stored_commodity(commodity, -cost_change);
 		}
@@ -4216,13 +4216,13 @@ bool domain_game_data::can_increase_transporter_recruitment(const transporter_ty
 
 	const int old_count = this->get_transporter_recruitment_count(transporter_type);
 	const int new_count = old_count + 1;
-	const commodity_map<int> old_commodity_costs = this->get_transporter_type_commodity_costs(transporter_type, old_count);
-	const commodity_map<int> new_commodity_costs = this->get_transporter_type_commodity_costs(transporter_type, new_count);
+	const commodity_map<int64_t> old_commodity_costs = this->get_transporter_type_commodity_costs(transporter_type, old_count);
+	const commodity_map<int64_t> new_commodity_costs = this->get_transporter_type_commodity_costs(transporter_type, new_count);
 
 	for (const auto &[commodity, cost] : new_commodity_costs) {
 		assert_throw(commodity->is_storable());
 
-		const int cost_change = cost - old_commodity_costs.find(commodity)->second;
+		const int64_t cost_change = cost - old_commodity_costs.find(commodity)->second;
 
 		if (this->get_economy()->get_stored_commodity(commodity) < cost_change) {
 			return false;
@@ -4295,9 +4295,9 @@ int domain_game_data::get_transporter_type_wealth_cost(const transporter_type *t
 	return wealth_cost;
 }
 
-commodity_map<int> domain_game_data::get_transporter_type_commodity_costs(const transporter_type *transporter_type, const int quantity) const
+commodity_map<int64_t> domain_game_data::get_transporter_type_commodity_costs(const transporter_type *transporter_type, const int quantity) const
 {
-	commodity_map<int> commodity_costs = transporter_type->get_commodity_costs();
+	commodity_map<int64_t> commodity_costs = transporter_type->get_commodity_costs();
 
 	for (auto &[commodity, cost_int] : commodity_costs) {
 		assert_throw(commodity->is_storable());
@@ -4309,14 +4309,14 @@ commodity_map<int> domain_game_data::get_transporter_type_commodity_costs(const 
 		cost *= 100 + cost_modifier;
 		cost /= 100;
 
-		cost_int = cost.to_int();
+		cost_int = cost.to_int64();
 
 		if (cost_modifier < 0 && cost.get_fractional_value() > 0) {
 			cost_int += 1;
 		}
 
 		if (quantity > 0) {
-			cost_int = std::max(cost_int, 1);
+			cost_int = std::max(cost_int, 1ll);
 		}
 	}
 
@@ -4881,9 +4881,9 @@ void domain_game_data::set_free_consulate_count(const consulate *consulate, cons
 	}
 }
 
-int domain_game_data::get_min_income() const
+int64_t domain_game_data::get_min_income() const
 {
-	int min_income = this->get_economy()->get_commodity_output(defines::get()->get_wealth_commodity()).to_int();
+	int64_t min_income = this->get_economy()->get_commodity_output(defines::get()->get_wealth_commodity()).to_int64();
 
 	for (const province *province : this->get_provinces()) {
 		min_income += province->get_game_data()->get_min_income();
@@ -4900,9 +4900,9 @@ int domain_game_data::get_min_income() const
 	return min_income;
 }
 
-int domain_game_data::get_max_income() const
+int64_t domain_game_data::get_max_income() const
 {
-	int max_income = this->get_economy()->get_commodity_output(defines::get()->get_wealth_commodity()).to_int();
+	int64_t max_income = this->get_economy()->get_commodity_output(defines::get()->get_wealth_commodity()).to_int64();
 
 	for (const province *province : this->get_provinces()) {
 		max_income += province->get_game_data()->get_max_income();

@@ -7,11 +7,11 @@
 
 namespace metternich {
 
-class commodity_condition final : public numerical_condition<domain, read_only_context>
+class commodity_condition final : public numerical_condition<domain, read_only_context, int64_t>
 {
 public:
 	explicit commodity_condition(const metternich::commodity *commodity, const std::string &value, const gsml_operator condition_operator)
-		: numerical_condition<domain, read_only_context>(commodity->string_to_value(value), condition_operator), commodity(commodity)
+		: numerical_condition<domain, read_only_context, int64_t>(commodity->string_to_value(value), condition_operator), commodity(commodity)
 	{
 	}
 
@@ -21,7 +21,7 @@ public:
 		return class_identifier;
 	}
 
-	virtual int get_scope_value(const domain *scope) const override
+	virtual int64_t get_scope_value(const domain *scope) const override
 	{
 		return scope->get_economy()->get_stored_commodity(this->commodity);
 	}

@@ -109,7 +109,7 @@ public:
 		return this->wealth_cost;
 	}
 
-	const commodity_map<int> &get_commodity_costs() const
+	const commodity_map<int64_t> &get_commodity_costs() const
 	{
 		return this->commodity_costs;
 	}
@@ -134,7 +134,7 @@ private:
 	int cargo = 0;
 	technology *required_technology = nullptr;
 	int wealth_cost = 0;
-	commodity_map<int> commodity_costs;
+	commodity_map<int64_t> commodity_costs;
 	std::vector<const transporter_type *> upgrades;
 };
 

@@ -282,16 +282,16 @@ void domain_economy::do_trade()
 
 		const std::vector<const metternich::domain *> trade_domains = this->get_known_domains_by_trade_priority();
 
-		commodity_map<int> offers = this->get_offers();
+		commodity_map<int64_t> offers = this->get_offers();
 		for (auto &[commodity, offer] : offers) {
-			const int price = game::get()->get_price(commodity);
+			const int64_t price = game::get()->get_price(commodity);
 
 			for (const metternich::domain *other_domain : trade_domains) {
 				domain_economy *other_domain_economy = other_domain->get_economy();
 
-				const int bid = other_domain_economy->get_bid(commodity);
+				const int64_t bid = other_domain_economy->get_bid(commodity);
 				if (bid != 0) {
-					int sold_quantity = std::min(offer, bid);
+					int64_t sold_quantity = std::min(offer, bid);
 					sold_quantity = std::min(sold_quantity, other_domain_economy->get_wealth() / price);
 
 					if (sold_quantity > 0) {
@@ -331,12 +331,12 @@ QVariantList domain_economy::get_vassal_resource_counts_qvariant_list() const
 	return archimedes::map::to_qvariant_list(this->get_vassal_resource_counts());
 }
 
-int domain_economy::get_wealth() const
+int64_t domain_economy::get_wealth() const
 {
 	return this->get_stored_commodity(defines::get()->get_wealth_commodity());
 }
 
-void domain_economy::set_wealth(const int wealth)
+void domain_economy::set_wealth(const int64_t wealth)
 {
 	this->set_stored_commodity(defines::get()->get_wealth_commodity(), wealth);
 }
@@ -436,7 +436,7 @@ void domain_economy::set_stored_commodity(const commodity *commodity, const int6
 	}
 }
 
-void domain_economy::add_tributable_commodity(const commodity *commodity, const int tributable_quantity, const income_transaction_type tribute_income_type)
+void domain_economy::add_tributable_commodity(const commodity *commodity, const int64_t tributable_quantity, const income_transaction_type tribute_income_type)
 {
 	assert_throw(commodity != nullptr);
 	assert_throw(tributable_quantity >= 0);
@@ -465,8 +465,8 @@ void domain_economy::add_tributable_commodity(const commodity *commodity, const 
 		return;
 	}
 
-	const int tribute = tributable_quantity * tribute_rate / 100;
-	const int tributed_quantity = tributable_quantity - tribute;
+	const int64_t tribute = tributable_quantity * tribute_rate / 100;
+	const int64_t tributed_quantity = tributable_quantity - tribute;
 
 	this->get_game_data()->get_overlord()->get_economy()->add_tributable_commodity(commodity, tribute, tribute_income_type);
 
@@ -840,7 +840,7 @@ QVariantList domain_economy::get_bids_qvariant_list() const
 	return archimedes::map::to_qvariant_list(this->get_bids());
 }
 
-void domain_economy::set_bid(const commodity *commodity, const int value)
+void domain_economy::set_bid(const commodity *commodity, const int64_t value)
 {
 	if (value == this->get_bid(commodity)) {
 		return;
@@ -876,7 +876,7 @@ QVariantList domain_economy::get_offers_qvariant_list() const
 	return archimedes::map::to_qvariant_list(this->get_offers());
 }
 
-void domain_economy::set_offer(const commodity *commodity, const int value)
+void domain_economy::set_offer(const commodity *commodity, const int64_t value)
 {
 	if (value == this->get_offer(commodity)) {
 		return;
@@ -939,13 +939,13 @@ std::vector<const domain *> domain_economy::get_known_domains_by_trade_priority(
 	return countries;
 }
 
-void domain_economy::do_sale(const metternich::domain *other_domain, const commodity *commodity, const int sold_quantity, const bool state_purchase)
+void domain_economy::do_sale(const metternich::domain *other_domain, const commodity *commodity, const int64_t sold_quantity, const bool state_purchase)
 {
 	this->change_offer(commodity, -sold_quantity);
 	this->change_stored_commodity(commodity, -sold_quantity);
 
-	const int price = game::get()->get_price(commodity);
-	const int sale_income = price * sold_quantity;
+	const int64_t price = game::get()->get_price(commodity);
+	const int64_t sale_income = price * sold_quantity;
 	const int64_t gained_wealth = this->add_population_wealth(sale_income);
 	this->add_tributable_commodity(defines::get()->get_wealth_commodity(), gained_wealth, income_transaction_type::tariff);
 	this->domain->get_turn_data()->add_income_transaction(income_transaction_type::sale, gained_wealth, commodity, sold_quantity, other_domain != this->domain ? other_domain : nullptr);
@@ -955,7 +955,7 @@ void domain_economy::do_sale(const metternich::domain *other_domain, const commo
 
 	if (state_purchase) {
 		other_domain_economy->change_stored_commodity(commodity, sold_quantity);
-		const int purchase_expense = price * sold_quantity;
+		const int64_t purchase_expense = price * sold_quantity;
 		other_domain_economy->change_wealth(-purchase_expense);
 		other_domain->get_turn_data()->add_expense_transaction(expense_transaction_type::purchase, purchase_expense, commodity, sold_quantity, this->domain);
 

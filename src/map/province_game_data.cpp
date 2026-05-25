@@ -317,7 +317,7 @@ void province_game_data::collect_taxes()
 	assert_throw(this->get_owner() != nullptr);
 
 	const dice &taxation_dice = defines::get()->get_province_taxation_for_level(this->get_level());
-	const int taxation = random::get()->roll_dice(taxation_dice) * defines::get()->get_domain_income_unit_value();
+	const int64_t taxation = random::get()->roll_dice(taxation_dice) * defines::get()->get_domain_income_unit_value();
 	if (taxation < 0) {
 		//ignore negative results
 		return;
@@ -1906,13 +1906,13 @@ void province_game_data::change_military_unit_recruitment_count(const military_u
 		assert_throw(this->get_owner() != nullptr);
 
 		const int old_count = count - change;
-		const commodity_map<int> old_commodity_costs = this->get_owner()->get_military()->get_military_unit_type_commodity_costs(military_unit_type, old_count);
-		const commodity_map<int> new_commodity_costs = this->get_owner()->get_military()->get_military_unit_type_commodity_costs(military_unit_type, count);
+		const commodity_map<int64_t> old_commodity_costs = this->get_owner()->get_military()->get_military_unit_type_commodity_costs(military_unit_type, old_count);
+		const commodity_map<int64_t> new_commodity_costs = this->get_owner()->get_military()->get_military_unit_type_commodity_costs(military_unit_type, count);
 
 		for (const auto &[commodity, cost] : new_commodity_costs) {
 			assert_throw(commodity->is_storable());
 
-			const int cost_change = cost - old_commodity_costs.find(commodity)->second;
+			const int64_t cost_change = cost - old_commodity_costs.find(commodity)->second;
 
 			this->get_owner()->get_economy()->change_stored_commodity(commodity, -cost_change);
 		}
@@ -1935,13 +1935,13 @@ bool province_game_data::can_increase_military_unit_recruitment(const military_u
 
 	const int old_count = this->get_military_unit_recruitment_count(military_unit_type);
 	const int new_count = old_count + 1;
-	const commodity_map<int> old_commodity_costs = this->get_owner()->get_military()->get_military_unit_type_commodity_costs(military_unit_type, old_count);
-	const commodity_map<int> new_commodity_costs = this->get_owner()->get_military()->get_military_unit_type_commodity_costs(military_unit_type, new_count);
+	const commodity_map<int64_t> old_commodity_costs = this->get_owner()->get_military()->get_military_unit_type_commodity_costs(military_unit_type, old_count);
+	const commodity_map<int64_t> new_commodity_costs = this->get_owner()->get_military()->get_military_unit_type_commodity_costs(military_unit_type, new_count);
 
 	for (const auto &[commodity, cost] : new_commodity_costs) {
 		assert_throw(commodity->is_storable());
 
-		const int cost_change = cost - old_commodity_costs.find(commodity)->second;
+		const int64_t cost_change = cost - old_commodity_costs.find(commodity)->second;
 
 		if (this->get_owner()->get_economy()->get_stored_commodity(commodity) < cost_change) {
 			return false;
@@ -2145,13 +2145,13 @@ bool province_game_data::can_produce_commodity(const commodity *commodity) const
 	return false;
 }
 
-int province_game_data::get_min_income() const
+int64_t province_game_data::get_min_income() const
 {
 	const dice &taxation_dice = defines::get()->get_province_taxation_for_level(this->get_level());
-	return std::max(0, taxation_dice.get_minimum_result() * defines::get()->get_domain_income_unit_value());
+	return std::max(0ll, taxation_dice.get_minimum_result() * defines::get()->get_domain_income_unit_value());
 }
 
-int province_game_data::get_max_income() const
+int64_t province_game_data::get_max_income() const
 {
 	const dice &taxation_dice = defines::get()->get_province_taxation_for_level(this->get_level());
 	return taxation_dice.get_maximum_result() * defines::get()->get_domain_income_unit_value();

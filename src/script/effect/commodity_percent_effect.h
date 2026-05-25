@@ -29,9 +29,9 @@ public:
 		assert_throw(this->commodity != nullptr);
 	}
 
-	int get_quantity(const domain *scope) const
+	int64_t get_quantity(const domain *scope) const
 	{
-		const int stored_commodity = scope->get_economy()->get_stored_commodity(this->commodity);
+		const int64_t stored_commodity = scope->get_economy()->get_stored_commodity(this->commodity);
 		return stored_commodity * this->percent / 100;
 	}
 
@@ -68,7 +68,7 @@ public:
 		Q_UNUSED(indent);
 		Q_UNUSED(prefix);
 
-		return std::format("Set {} to {}", string::highlight(this->commodity->get_name()), std::to_string(this->get_quantity(scope)));
+		return std::format("Set {} to {}", string::highlight(this->commodity->get_name()), this->get_quantity(scope));
 	}
 
 	virtual std::string get_addition_string(const domain *scope, const read_only_context &ctx, const size_t indent) const override
@@ -76,24 +76,24 @@ public:
 		Q_UNUSED(ctx);
 		Q_UNUSED(indent);
 
-		const int quantity = this->get_quantity(scope);
+		const int64_t quantity = this->get_quantity(scope);
 		if (quantity == 0) {
 			return std::string();
 		}
 
-		return std::format("Gain {} {}", std::to_string(quantity), string::highlight(this->commodity->get_name()));
+		return std::format("Gain {} {}", quantity, string::highlight(this->commodity->get_name()));
 	}
 
 	virtual std::string get_subtraction_string(const domain *scope, const read_only_context &ctx) const override
 	{
 		Q_UNUSED(ctx);
 
-		const int quantity = this->get_quantity(scope);
+		const int64_t quantity = this->get_quantity(scope);
 		if (quantity == 0) {
 			return std::string();
 		}
 
-		return std::format("Lose {} {}", std::to_string(quantity), string::highlight(this->commodity->get_name()));
+		return std::format("Lose {} {}", quantity, string::highlight(this->commodity->get_name()));
 	}
 
 	virtual bool is_hidden() const override

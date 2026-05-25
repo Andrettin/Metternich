@@ -179,7 +179,7 @@ void defines::process_gsml_scope(const gsml_data &scope)
 
 		scope.for_each_property([this](const gsml_property &property) {
 			const int domain_size = std::stoi(property.get_key());
-			const int cost = this->get_wealth_commodity()->string_to_value(property.get_value());
+			const int64_t cost = this->get_wealth_commodity()->string_to_value(property.get_value());
 
 			this->domain_maintenance_cost_per_domain_size[domain_size] = cost;
 		});
@@ -403,7 +403,7 @@ void defines::set_default_menu_background_filepath(const std::filesystem::path &
 	this->default_menu_background_filepath = database::get()->get_graphics_filepath(filepath);
 }
 
-int defines::get_domain_income_unit_value() const
+int64_t defines::get_domain_income_unit_value() const
 {
 	return this->get_wealth_commodity()->get_unit_value(this->get_domain_income_unit());
 }
@@ -437,7 +437,7 @@ const dice &defines::get_province_taxation_for_level(const int level) const
 	return find_iterator->second;
 }
 
-int defines::get_domain_maintenance_cost_for_domain_size(const int domain_size) const
+int64_t defines::get_domain_maintenance_cost_for_domain_size(const int domain_size) const
 {
 	if (domain_size > 100) {
 		//special case for province counts above 100

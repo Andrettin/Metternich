@@ -195,7 +195,7 @@ QCoro::Task<void> scoped_event_base<scope_type>::check_mtth_event_for_scope(cons
 	if (mtth <= 1) {
 		should_fire = true;
 	} else {
-		const int fire_chance = (decimillesimal_int(1) / mtth).get_value();
+		const int64_t fire_chance = (decimillesimal_int(1) / mtth).get_value();
 		assert_throw(fire_chance > 0);
 		should_fire = random::get()->generate(10000) < fire_chance;
 	}

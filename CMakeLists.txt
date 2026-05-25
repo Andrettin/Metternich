@@ -1093,7 +1093,7 @@ set(CMAKE_UNITY_BUILD ON)
 
 if(MSVC)
 	#C4702 needs to be turned off because it apparently can't be suppressed in external headers
-	add_compile_options(/W4 /w44800 /wd4244 /wd4458 /wd4702 /bigobj /external:anglebrackets /external:W0)
+	add_compile_options(/W4 /w44800 /wd4458 /wd4702 /bigobj /external:anglebrackets /external:W0)
 else()
 	add_compile_options(-Wall -Wno-unknown-pragmas)
 endif()

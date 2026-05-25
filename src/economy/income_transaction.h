@@ -12,7 +12,7 @@ class income_transaction final : public transaction
 	Q_OBJECT
 
 public:
-	explicit income_transaction(const income_transaction_type type, const int amount, const object_variant &object, const int object_quantity, const metternich::domain *domain)
+	explicit income_transaction(const income_transaction_type type, const int64_t amount, const object_variant &object, const int64_t object_quantity, const metternich::domain *domain)
 		: transaction(amount, object, object_quantity, domain), type(type)
 	{
 	}
