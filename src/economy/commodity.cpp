@@ -26,11 +26,11 @@ void commodity::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 
 	if (tag == "units") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
-			const int unit_value = std::stoi(key);
+			const int64_t unit_value = std::stoll(key);
 			const commodity_unit *unit = commodity_unit::get(value);
 
 			this->units[unit_value] = unit;
@@ -110,7 +110,7 @@ bool commodity::is_enabled() const
 	return true;
 }
 
-Q_INVOKABLE const metternich::commodity_unit *commodity::get_unit(const int value) const
+const metternich::commodity_unit *commodity::get_unit(const int64_t value) const
 {
 	if (this->units.empty()) {
 		return nullptr;
@@ -135,7 +135,7 @@ Q_INVOKABLE const metternich::commodity_unit *commodity::get_unit(const int valu
 	return nullptr;
 }
 
-int commodity::get_unit_value(const commodity_unit *unit) const
+int64_t commodity::get_unit_value(const commodity_unit *unit) const
 {
 	const auto find_iterator = this->unit_values.find(unit);
 
@@ -178,14 +178,14 @@ int64_t commodity::string_to_value(const std::string &str) const
 	return this->string_to_fractional_value(str).to_int64();
 }
 
-std::pair<std::variant<int, dice>, const commodity_unit *> commodity::string_to_value_variant_with_unit(const std::string &str) const
+std::pair<std::variant<int64_t, dice>, const commodity_unit *> commodity::string_to_value_variant_with_unit(const std::string &str) const
 {
 	const auto [number_str, unit] = this->string_to_number_string_and_unit(str);
 
 	if (number_str.find("d") != std::string::npos) {
 		return { dice(number_str), unit };
 	} else {
-		return { std::stoi(number_str), unit };
+		return { std::stoll(number_str), unit };
 	}
 }
 
@@ -219,7 +219,7 @@ std::string commodity::value_to_string(const centesimal_int &value) const
 	return value.to_formatted_string();
 }
 
-QString commodity::value_to_qstring(const int value) const
+QString commodity::value_to_qstring(const int64_t value) const
 {
 	return QString::fromStdString(this->value_to_string(value));
 }
@@ -229,7 +229,7 @@ QString commodity::get_units_tooltip() const
 	std::string str;
 
 	const commodity_unit *previous_unit = nullptr;
-	int previous_unit_value = 0;
+	int64_t previous_unit_value = 0;
 	for (const auto &[unit_value, unit] : this->units) {
 		if (!unit->is_displayed()) {
 			continue;

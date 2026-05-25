@@ -40,8 +40,8 @@ class commodity final : public named_data_entry, public data_type<commodity>
 	Q_PROPERTY(bool local MEMBER local READ is_local NOTIFY changed)
 	Q_PROPERTY(bool provincial MEMBER provincial READ is_provincial NOTIFY changed)
 	Q_PROPERTY(bool negative_allowed MEMBER negative_allowed READ is_negative_allowed NOTIFY changed)
-	Q_PROPERTY(int wealth_value MEMBER wealth_value READ get_wealth_value NOTIFY changed)
-	Q_PROPERTY(int base_price MEMBER base_price READ get_base_price NOTIFY changed)
+	Q_PROPERTY(qint64 wealth_value MEMBER wealth_value READ get_wealth_value NOTIFY changed)
+	Q_PROPERTY(qint64 base_price MEMBER base_price READ get_base_price NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity_unit* storage_unit MEMBER storage_unit READ get_storage_unit NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(const archimedes::game_rule* required_game_rule MEMBER required_game_rule NOTIFY changed)
@@ -132,7 +132,7 @@ public:
 		return this->negative_allowed;
 	}
 
-	int get_wealth_value() const
+	int64_t get_wealth_value() const
 	{
 		return this->wealth_value;
 	}
@@ -142,7 +142,7 @@ public:
 		return this->get_wealth_value() != 0;
 	}
 
-	int get_base_price() const
+	int64_t get_base_price() const
 	{
 		return this->base_price;
 	}
@@ -166,7 +166,7 @@ public:
 
 	bool is_enabled() const;
 
-	const std::map<int, const commodity_unit *> &get_units() const
+	const std::map<int64_t, const commodity_unit *> &get_units() const
 	{
 		return this->units;
 	}
@@ -176,17 +176,17 @@ public:
 		return this->unit_values.contains(unit);
 	}
 
-	Q_INVOKABLE const metternich::commodity_unit *get_unit(const int value) const;
-	Q_INVOKABLE int get_unit_value(const metternich::commodity_unit *unit) const;
+	Q_INVOKABLE const metternich::commodity_unit *get_unit(const qint64 value) const;
+	Q_INVOKABLE qint64 get_unit_value(const metternich::commodity_unit *unit) const;
 
 	std::pair<std::string, const commodity_unit *> string_to_number_string_and_unit(const std::string &str) const;
 	decimillesimal_int string_to_fractional_value(const std::string &str) const;
 	int64_t string_to_value(const std::string &str) const;
-	std::pair<std::variant<int, dice>, const commodity_unit *> string_to_value_variant_with_unit(const std::string &str) const;
+	std::pair<std::variant<int64_t, dice>, const commodity_unit *> string_to_value_variant_with_unit(const std::string &str) const;
 
 	std::string value_to_string(const int64_t value) const;
 	std::string value_to_string(const centesimal_int &value) const;
-	Q_INVOKABLE QString value_to_qstring(const int value) const;
+	Q_INVOKABLE QString value_to_qstring(const qint64 value) const;
 
 	Q_INVOKABLE QString get_units_tooltip() const;
 
@@ -210,13 +210,13 @@ private:
 	bool local = false;
 	bool provincial = false;
 	bool negative_allowed = false;
-	int wealth_value = 0;
-	int base_price = 0;
+	int64_t wealth_value = 0;
+	int64_t base_price = 0;
 	const commodity_unit *storage_unit = nullptr;
 	technology *required_technology = nullptr;
 	const game_rule *required_game_rule = nullptr;
-	std::map<int, const commodity_unit *> units;
-	data_entry_map<commodity_unit, int> unit_values;
+	std::map<int64_t, const commodity_unit *> units;
+	data_entry_map<commodity_unit, int64_t> unit_values;
 };
 
 }

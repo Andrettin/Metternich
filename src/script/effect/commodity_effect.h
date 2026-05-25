@@ -54,9 +54,9 @@ public:
 			return;
 		}
 
-		int change = this->calculate_quantity();
+		int64_t change = this->calculate_quantity();
 
-		const int storage = scope->get_economy()->get_stored_commodity(this->commodity);
+		const int64_t storage = scope->get_economy()->get_stored_commodity(this->commodity);
 		if (change < 0 && std::abs(change) > storage) {
 			change = -storage;
 		}
@@ -70,9 +70,9 @@ public:
 			return;
 		}
 
-		int change = -this->calculate_quantity();
+		int64_t change = -this->calculate_quantity();
 
-		const int storage = scope->get_economy()->get_stored_commodity(this->commodity);
+		const int64_t storage = scope->get_economy()->get_stored_commodity(this->commodity);
 		if (change < 0 && std::abs(change) > storage) {
 			change = -storage;
 		}
@@ -80,9 +80,9 @@ public:
 		scope->get_economy()->change_stored_commodity(this->commodity, change);
 	}
 
-	int calculate_quantity() const
+	int64_t calculate_quantity() const
 	{
-		int quantity = 0;
+		int64_t quantity = 0;
 
 		if (std::holds_alternative<dice>(this->quantity_variant)) {
 			const dice dice = std::get<archimedes::dice>(this->quantity_variant);
@@ -90,7 +90,7 @@ public:
 			const int roll_result = random::get()->roll_dice(dice);
 			quantity = roll_result;
 		} else {
-			quantity = std::get<int>(this->quantity_variant);
+			quantity = std::get<int64_t>(this->quantity_variant);
 		}
 
 		if (this->unit != nullptr) {
@@ -131,7 +131,7 @@ public:
 			const dice dice = std::get<archimedes::dice>(this->quantity_variant);
 			str = dice.to_display_string();
 		} else {
-			str = number::to_formatted_string(std::get<int>(this->quantity_variant));
+			str = number::to_formatted_string(std::get<int64_t>(this->quantity_variant));
 		}
 
 		if (this->unit != nullptr) {
@@ -152,7 +152,7 @@ public:
 
 private:
 	const metternich::commodity *commodity = nullptr;
-	std::variant<int, dice> quantity_variant;
+	std::variant<int64_t, dice> quantity_variant;
 	const commodity_unit *unit = nullptr;
 };
 
