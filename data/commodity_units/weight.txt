@@ -29,3 +29,9 @@ ktn = {
 	icon = sack_2
 	suffix = "ktn"
 }
+
+Mtn = {
+	name = "Megaton"
+	icon = sack_2
+	suffix = "Mtn"
+}

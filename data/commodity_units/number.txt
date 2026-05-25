@@ -21,9 +21,9 @@ k = {
 	numerical = true
 }
 
-m = {
+M = {
 	name = "Million"
 	icon = sack_2
-	suffix = "m"
+	suffix = "M"
 	numerical = true
 }
