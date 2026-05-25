@@ -3,6 +3,7 @@ academy = {
 	building_class = academy
 	portrait = university
 	icon = university
+	wealth_cost = 52gb
 	holding_types = {
 		city
 		guild
@@ -15,10 +16,9 @@ academy = {
 	conditions = {
 		feature = academic
 	}
-	commodity_costs = {
-		wealth = 52gb
-		carpentry = 160k
-		iron = 50tn
+	commodity_cost_weights = {
+		carpentry = 160
+		iron = 50
 	}
 	modifier = {
 		lore = 2
@@ -47,6 +47,7 @@ university = {
 	portrait = university
 	icon = university
 	base_building = academy
+	wealth_cost = 26gb
 	required_technology = university
 	free_on_start_extra_technology = 1.2
 	holding_types = {
@@ -73,10 +74,9 @@ university = {
 	conditions = {
 		feature = academic
 	}
-	commodity_costs = {
-		wealth = 26gb
-		carpentry = 200k
-		iron = 100tn
+	commodity_cost_weights = {
+		carpentry = 200
+		iron = 100
 	}
 	modifier = {
 		lore = 4
@@ -106,8 +106,8 @@ monastic_school = {
 	building_class = monastic_school
 	portrait = university
 	icon = wooden_cross
+	wealth_cost = 18000gp
 	required_technology = monastic_school
-	build_duration = 547d
 	free_on_start_extra_technology = 0.2
 	holding_types = {
 		temple
@@ -121,9 +121,8 @@ monastic_school = {
 		magister
 		engineer
 	}
-	commodity_costs = {
-		wealth = 18000gp
-		carpentry = 64k
+	commodity_cost_weights = {
+		carpentry = 64
 	}
 	province_modifier = {
 		technology_spread_modifier = 10
@@ -141,6 +140,7 @@ cathedral_school = {
 	portrait = university
 	icon = wooden_cross
 	base_building = monastic_school
+	wealth_cost = 18000gp
 	required_technology = cathedral_school
 	build_duration = 547d
 	free_on_start_extra_technology = 0.2
@@ -156,9 +156,8 @@ cathedral_school = {
 		magister
 		engineer
 	}
-	commodity_costs = {
-		wealth = 18000gp
-		carpentry = 64k
+	commodity_cost_weights = {
+		carpentry = 64
 	}
 	province_modifier = {
 		technology_spread_modifier = 30

@@ -4,6 +4,7 @@ warehouse = {
 	portrait = trading_post
 	icon = chest
 	free_in_capital = true
+	wealth_cost = 8gb
 	holding_types = {
 		city
 		castle
@@ -16,10 +17,14 @@ warehouse = {
 		treasurer
 		engineer
 	}
-	commodity_costs = {
-		carpentry = 80k
+	commodity_cost_weights = {
+		carpentry = 80
+	}
+	modifier = {
+		productivity = 1
 	}
 	domain_modifier = {
 		storage_capacity = 100
+		economy = 1
 	}
 }

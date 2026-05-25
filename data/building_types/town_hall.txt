@@ -4,6 +4,7 @@ town_hall = {
 	portrait = town
 	icon = flag
 	min_holding_level = 5
+	wealth_cost = 22gb
 	holding_types = {
 		castle
 		guild
@@ -13,9 +14,8 @@ town_hall = {
 		royal_enforcer
 		engineer
 	}
-	commodity_costs = {
-		wealth = 22gb
-		carpentry = 64k
+	commodity_cost_weights = {
+		carpentry = 64
 	}
 	modifier = {
 		law = 1

@@ -3,6 +3,7 @@ trade_shop = {
 	building_class = trade_shop
 	portrait = trading_post
 	icon = wealth
+	wealth_cost = 10gb
 	holding_types = {
 		guild
 	}
@@ -11,9 +12,8 @@ trade_shop = {
 		treasurer
 		engineer
 	}
-	commodity_costs = {
-		wealth = 10gb
-		carpentry = 64k
+	commodity_cost_weights = {
+		carpentry = 64
 	}
 	modifier = {
 		productivity = 1

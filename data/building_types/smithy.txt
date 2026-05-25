@@ -3,6 +3,8 @@ smithy = {
 	building_class = smithy
 	portrait = factory
 	icon = tools
+	wealth_cost = 6gb
+	required_technology = bronze_working
 	holding_types = {
 		guild
 	}
@@ -11,9 +13,8 @@ smithy = {
 		treasurer
 		engineer
 	}
-	commodity_costs = {
-		wealth = 6gb
-		carpentry = 64k
+	commodity_cost_weights = {
+		carpentry = 64
 	}
 	domain_modifier = {
 		economy = 1
@@ -26,7 +27,7 @@ swordsmithy = {
 	building_class = swordsmithy
 	portrait = factory
 	icon = saber
-	build_duration = 1095d
+	wealth_cost = 37500gp
 	required_technology = short_sword
 	free_on_start_extra_technology = 2.5
 	holding_types = {
@@ -41,9 +42,8 @@ swordsmithy = {
 		marshal
 		engineer
 	}
-	commodity_costs = {
-		wealth = 37500gp
-		carpentry = 64k #as Smithy
+	commodity_cost_weights = {
+		carpentry = 64 #as Smithy
 	}
 	modifier = {
 		employment_capacity = {

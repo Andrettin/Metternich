@@ -3,7 +3,7 @@ small_stable = {
 	building_class = small_stable
 	portrait = fort
 	icon = horses
-	build_duration = 365d
+	wealth_cost = 15000gp
 	required_technology = horseback_riding
 	free_on_start_extra_technology = 0.8
 	holding_types = {
@@ -19,9 +19,8 @@ small_stable = {
 		light_cavalry
 		heavy_cavalry
 	}
-	commodity_costs = {
-		wealth = 15000gp
-		carpentry = 64k #as Medium Stable
+	commodity_cost_weights = {
+		carpentry = 64 #as Medium Stable
 	}
 	modifier = {
 		employment_capacity = {
@@ -39,6 +38,7 @@ medium_stable = {
 	icon = horses
 	build_duration = 547d
 	base_building = small_stable
+	wealth_cost = 18000gp
 	required_technology = horseback_riding
 	free_on_start_extra_technology = 2.2
 	holding_types = {
@@ -57,9 +57,8 @@ medium_stable = {
 		light_cavalry
 		heavy_cavalry
 	}
-	commodity_costs = {
-		wealth = 18000gp
-		carpentry = 64k
+	commodity_cost_weights = {
+		carpentry = 64
 	}
 	modifier = {
 		employment_capacity = {
@@ -81,6 +80,7 @@ large_stable = {
 	icon = horses
 	build_duration = 730d
 	base_building = medium_stable
+	wealth_cost = 30000gp
 	required_technology = chivalry
 	free_on_start_extra_technology = 1.6
 	holding_types = {
@@ -99,9 +99,8 @@ large_stable = {
 		light_cavalry
 		heavy_cavalry
 	}
-	commodity_costs = {
-		wealth = 30000gp
-		carpentry = 64k #as Medium Stable
+	commodity_cost_weights = {
+		carpentry = 64 #as Medium Stable
 	}
 	modifier = {
 		employment_capacity = {
@@ -123,6 +122,7 @@ great_stable = {
 	icon = horses
 	build_duration = 1095d
 	base_building = large_stable
+	wealth_cost = 45000gp
 	required_technology = chivalry
 	free_on_start_extra_technology = 1.2
 	holding_types = {
@@ -138,9 +138,8 @@ great_stable = {
 		light_cavalry
 		heavy_cavalry
 	}
-	commodity_costs = {
-		wealth = 45000gp
-		carpentry = 64k #as Medium Stable
+	commodity_cost_weights = {
+		carpentry = 64 #as Medium Stable
 	}
 	modifier = {
 		employment_capacity = {
@@ -166,6 +165,7 @@ royal_stable = {
 	icon = horses
 	build_duration = 2190d
 	base_building = great_stable
+	wealth_cost = 60000gp
 	required_technology = chivalry
 	free_on_start_extra_technology = 0.8
 	holding_types = {
@@ -181,9 +181,8 @@ royal_stable = {
 		light_cavalry
 		heavy_cavalry
 	}
-	commodity_costs = {
-		wealth = 60000gp
-		carpentry = 64k #as Medium Stable
+	commodity_cost_weights = {
+		carpentry = 64 #as Medium Stable
 	}
 	modifier = {
 		employment_capacity = {

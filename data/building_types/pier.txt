@@ -3,6 +3,7 @@ pier = {
 	building_class = pier
 	portrait = dock
 	icon = anchor
+	wealth_cost = 16gb
 	required_technology = seafaring
 	holding_types = {
 		guild
@@ -17,9 +18,8 @@ pier = {
 			near_water = true
 		}
 	}
-	commodity_costs = {
-		wealth = 16gb
-		carpentry = 52k
+	commodity_cost_weights = {
+		carpentry = 52
 	}
 	modifier = {
 		crime = 1
