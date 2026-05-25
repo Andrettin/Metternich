@@ -45,7 +45,7 @@ QString expense_transaction::get_description() const
 {
 	std::string str;
 
-	const std::string amount_str = defines::get()->get_wealth_commodity()->value_to_string(this->get_amount());
+	const std::string amount_str = defines::get()->get_wealth_commodity()->value_to_string(this->get_amount(), false);
 
 	switch (this->get_type()) {
 		case expense_transaction_type::purchase:
@@ -61,7 +61,7 @@ QString expense_transaction::get_description() const
 		{
 			if (std::holds_alternative<const metternich::commodity *>(this->get_object())) {
 				const commodity *commodity = std::get<const metternich::commodity *>(this->get_object());
-				str = std::format("Spent {} {} in military maintenance", commodity->value_to_string(this->get_object_quantity()), commodity->get_name());
+				str = std::format("Spent {} {} in military maintenance", commodity->value_to_string(this->get_object_quantity(), true), commodity->get_name());
 			} else {
 				str = std::format("Paid {} in military maintenance", amount_str);
 			}

@@ -48,7 +48,7 @@ public:
 		Q_UNUSED(ignore_decimals);
 
 		const centesimal_int value = this->get_multiplied_value(multiplier);
-		return (value >= 0 ? "+" : "") + this->commodity->value_to_string(value);
+		return (value >= 0 ? "+" : "") + this->commodity->value_to_string(value, false);
 	}
 
 	virtual bool is_hidden(const site *scope) const override

@@ -189,12 +189,12 @@ std::pair<std::variant<int64_t, dice>, const commodity_unit *> commodity::string
 	}
 }
 
-std::string commodity::value_to_string(const int64_t value) const
+std::string commodity::value_to_string(const int64_t value, const bool joined) const
 {
 	const commodity_unit *unit = this->get_unit(value);
 	if (unit != nullptr) {
 		const std::string value_for_unit_str = number::to_formatted_string(value / this->get_unit_value(unit));
-		if (unit->is_numerical()) {
+		if (joined) {
 			return std::format("{}{}", value_for_unit_str, unit->get_suffix());
 		} else {
 			return std::format("{} {}", value_for_unit_str, unit->get_suffix());
@@ -204,12 +204,12 @@ std::string commodity::value_to_string(const int64_t value) const
 	return number::to_formatted_string(value);
 }
 
-std::string commodity::value_to_string(const centesimal_int &value) const
+std::string commodity::value_to_string(const centesimal_int &value, const bool joined) const
 {
 	const commodity_unit *unit = this->get_unit(value.to_int());
 	if (unit != nullptr) {
 		const std::string value_for_unit_str = (value / this->get_unit_value(unit)).to_formatted_string();
-		if (unit->is_numerical()) {
+		if (joined) {
 			return std::format("{}{}", value_for_unit_str, unit->get_suffix());
 		} else {
 			return std::format("{} {}", value_for_unit_str, unit->get_suffix());
@@ -221,7 +221,7 @@ std::string commodity::value_to_string(const centesimal_int &value) const
 
 QString commodity::value_to_qstring(const int64_t value) const
 {
-	return QString::fromStdString(this->value_to_string(value));
+	return QString::fromStdString(this->value_to_string(value, false));
 }
 
 QString commodity::get_units_tooltip() const

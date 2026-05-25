@@ -53,7 +53,7 @@ QString income_transaction::get_description() const
 {
 	std::string str;
 
-	const std::string amount_str = defines::get()->get_wealth_commodity()->value_to_string(this->get_amount());
+	const std::string amount_str = defines::get()->get_wealth_commodity()->value_to_string(this->get_amount(), false);
 
 	switch (this->get_type()) {
 		case income_transaction_type::sale:

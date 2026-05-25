@@ -420,7 +420,7 @@ QString building_type::get_commodity_costs_string_for_site(const metternich::sit
 			}
 		}
 
-		str += commodity->value_to_string(cost);
+		str += commodity->value_to_string(cost, commodity != defines::get()->get_wealth_commodity());
 		if (commodity != defines::get()->get_wealth_commodity()) {
 			str += " " + commodity->get_name();
 		}

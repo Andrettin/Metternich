@@ -687,7 +687,7 @@ void character_data_model::update_wealth_row()
 
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
 
-	this->wealth_row->value = defines::get()->get_wealth_commodity()->value_to_string(character_game_data->get_wealth());
+	this->wealth_row->value = defines::get()->get_wealth_commodity()->value_to_string(character_game_data->get_wealth(), false);
 }
 
 std::optional<size_t> character_data_model::get_top_row_index(const character_data_row *row) const
