@@ -3,4 +3,5 @@ trail = {
 	icon = road
 	image_filepath = "tiles/pathways/road.png"
 	transport_level = 1
+	wealth_cost = 1gb
 }

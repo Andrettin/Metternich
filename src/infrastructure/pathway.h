@@ -41,6 +41,7 @@ public:
 	explicit pathway(const std::string &identifier);
 	~pathway();
 
+	virtual void process_gsml_property(const gsml_property &property) override;
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
 	virtual void check() const override;
@@ -116,6 +117,8 @@ private:
 	technology *river_crossing_required_technology = nullptr;
 	terrain_type_map<const technology *> terrain_required_technologies;
 	commodity_map<int64_t> commodity_costs;
+	int64_t wealth_cost = 0;
+	commodity_map<int> commodity_cost_weights;
 	std::unique_ptr<const metternich::modifier<const province>> modifier;
 };
 

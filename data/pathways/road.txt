@@ -3,11 +3,13 @@ road = {
 	icon = road
 	image_filepath = "tiles/pathways/road.png"
 	transport_level = 2
+	wealth_cost = 1gb
 	required_pathway = trail
 	required_technology = road_building
 	river_crossing_required_technology = bridge_building
-	commodity_costs = {
-		wealth = 1gb
+	commodity_cost_weights = {
+		carpentry = 1
+		iron = 1
 	}
 	modifier = {
 		max_level = 1
