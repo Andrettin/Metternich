@@ -15,7 +15,6 @@
 #include "item/item_creation_type.h"
 #include "script/condition/and_condition.h"
 #include "script/condition/capital_condition.h"
-#include "script/condition/or_condition.h"
 #include "script/condition/provincial_capital_condition.h"
 #include "script/effect/capital_effect.h"
 #include "script/effect/effect_list.h"
@@ -99,7 +98,7 @@ void building_type::process_gsml_scope(const gsml_data &scope)
 			this->recruited_transporter_categories.push_back(magic_enum::enum_cast<transporter_category>(value).value());
 		}
 	} else if (tag == "commodity_costs") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const commodity *commodity = commodity::get(property.get_key());
 			this->commodity_costs[commodity] = commodity->string_to_value(property.get_value());
 		});
@@ -281,11 +280,11 @@ int64_t building_type::get_population_capacity_for_province_level(const int prov
 	return defines::get()->get_province_population_for_level(province_level) * this->get_holding_level() / std::max(province_level, 1);
 }
 
-commodity_map<int> building_type::get_commodity_costs_for_site(const site *site) const
+commodity_map<int64_t> building_type::get_commodity_costs_for_site(const site *site) const
 {
 	assert_throw(site != nullptr);
 
-	commodity_map<int> costs = this->get_commodity_costs();
+	commodity_map<int64_t> costs = this->get_commodity_costs();
 
 	if (this->get_holding_level() > 0) {
 		assert_throw(site->get_game_data()->get_holding_type() != nullptr);
@@ -352,7 +351,7 @@ commodity_map<int> building_type::get_commodity_costs_for_site(const site *site)
 					}
 				}
 
-				cost = std::max(1, cost);
+				cost = std::max(1ll, cost);
 			}
 		}
 	}
@@ -361,7 +360,7 @@ commodity_map<int> building_type::get_commodity_costs_for_site(const site *site)
 		for (auto &[commodity, cost] : costs) {
 			cost = this->get_cost_factor()->calculate(site, decimillesimal_int(cost)).to_int();
 
-			cost = std::max(1, cost);
+			cost = std::max(1ll, cost);
 		}
 	}
 
@@ -372,7 +371,7 @@ QString building_type::get_commodity_costs_string_for_site(const metternich::sit
 {
 	std::string str;
 
-	const commodity_map<int> commodity_costs = this->get_commodity_costs_for_site(site);
+	const commodity_map<int64_t> commodity_costs = this->get_commodity_costs_for_site(site);
 
 	for (const auto &[commodity, cost] : commodity_costs) {
 		if (cost == 0) {

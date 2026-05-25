@@ -243,13 +243,13 @@ public:
 		return this->build_duration;
 	}
 
-	const commodity_map<int> &get_commodity_costs() const
+	const commodity_map<int64_t> &get_commodity_costs() const
 	{
 		return this->commodity_costs;
 	}
 
-	commodity_map<int> get_commodity_costs_for_site(const site *site) const;
 	Q_INVOKABLE QString get_commodity_costs_string_for_site(const metternich::site *site) const;
+	commodity_map<int64_t> get_commodity_costs_for_site(const site *site) const;
 
 	const factor<site> *get_cost_factor() const
 	{
@@ -338,7 +338,7 @@ private:
 	technology *required_technology = nullptr;
 	int min_holding_level = 0;
 	std::chrono::months build_duration{};
-	commodity_map<int> commodity_costs;
+	commodity_map<int64_t> commodity_costs;
 	std::unique_ptr<const factor<site>> cost_factor;
 	std::unique_ptr<and_condition<site>> conditions;
 	std::unique_ptr<const and_condition<site>> build_conditions;

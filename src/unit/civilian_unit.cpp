@@ -901,7 +901,7 @@ void civilian_unit::increment_work_progress()
 			progress_change = decimillesimal_int::min(progress_change, decimillesimal_int(game::get()->get_current_months_per_turn()) * 100 / std::max(build_months, 1));
 		} else {
 			int64_t wealth_cost = 0;
-			const commodity_map<int> commodity_costs = this->under_construction_building->get_commodity_costs_for_site(this->under_construction_building_site);
+			const commodity_map<int64_t> commodity_costs = this->under_construction_building->get_commodity_costs_for_site(this->under_construction_building_site);
 			if (commodity_costs.contains(defines::get()->get_wealth_commodity())) {
 				wealth_cost = commodity_costs.find(defines::get()->get_wealth_commodity())->second;
 			}

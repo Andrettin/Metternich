@@ -173,9 +173,9 @@ decimillesimal_int commodity::string_to_fractional_value(const std::string &str)
 	}
 }
 
-int commodity::string_to_value(const std::string &str) const
+int64_t commodity::string_to_value(const std::string &str) const
 {
-	return this->string_to_fractional_value(str).to_int();
+	return this->string_to_fractional_value(str).to_int64();
 }
 
 std::pair<std::variant<int, dice>, const commodity_unit *> commodity::string_to_value_variant_with_unit(const std::string &str) const
@@ -189,7 +189,7 @@ std::pair<std::variant<int, dice>, const commodity_unit *> commodity::string_to_
 	}
 }
 
-std::string commodity::value_to_string(const int value) const
+std::string commodity::value_to_string(const int64_t value) const
 {
 	const commodity_unit *unit = this->get_unit(value);
 	if (unit != nullptr) {

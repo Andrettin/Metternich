@@ -578,7 +578,7 @@ const decimillesimal_int &building_slot::get_construction_progress() const
 
 qint64 building_slot::get_construction_progress_commodity_quantity() const
 {
-	const commodity_map<int> commodity_costs = this->get_under_construction_building()->get_commodity_costs_for_site(this->get_settlement());
+	const commodity_map<int64_t> commodity_costs = this->get_under_construction_building()->get_commodity_costs_for_site(this->get_settlement());
 	if (!commodity_costs.contains(defines::get()->get_construction_commodity())) {
 		return 0;
 	}
