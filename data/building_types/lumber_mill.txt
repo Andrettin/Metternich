@@ -3,6 +3,7 @@ lumber_mill = {
 	building_class = lumber_mill
 	portrait = factory
 	icon = lumber
+	wealth_cost = 12gb
 	required_technology = saw_mill
 	holding_types = {
 		castle
@@ -19,9 +20,8 @@ lumber_mill = {
 			feature = prime_timber
 		}
 	}
-	commodity_costs = {
-		wealth = 3gb
-		timber = 52tn #carpentry = 52k
+	commodity_cost_weights = {
+		carpentry = 52
 	}
 	modifier = {
 		employment_capacity = {
