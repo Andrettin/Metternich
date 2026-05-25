@@ -338,7 +338,9 @@ private:
 	technology *required_technology = nullptr;
 	int min_holding_level = 0;
 	std::chrono::months build_duration{};
+	int64_t wealth_cost = 0;
 	commodity_map<int64_t> commodity_costs;
+	commodity_map<int> commodity_cost_weights;
 	std::unique_ptr<const factor<site>> cost_factor;
 	std::unique_ptr<and_condition<site>> conditions;
 	std::unique_ptr<const and_condition<site>> build_conditions;

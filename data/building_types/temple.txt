@@ -33,6 +33,7 @@ temple = {
 	icon = wooden_cross
 	holding_level = 2
 	base_building = shrine
+	wealth_cost = 24gb
 	required_technology = ceremonial_burial
 	holding_types = {
 		temple
@@ -43,9 +44,8 @@ temple = {
 		high_priest
 		engineer
 	}
-	commodity_costs = {
-		wealth = 24gb
-		carpentry = 64k
+	commodity_cost_weights = {
+		carpentry = 64
 	}
 	domain_modifier = {
 		loyalty = 2
@@ -96,6 +96,7 @@ cathedral = {
 	icon = golden_cross_detailed
 	holding_level = 4
 	base_building = large_temple
+	wealth_cost = 26gb
 	required_technology = monotheism
 	holding_types = {
 		temple
@@ -109,10 +110,9 @@ cathedral = {
 	conditions = {
 		feature = holy_site
 	}
-	commodity_costs = {
-		wealth = 26gb
-		carpentry = 176k
-		iron = 100tn
+	commodity_cost_weights = {
+		carpentry = 176
+		iron = 100
 	}
 	modifier = {
 		law = 2
@@ -217,6 +217,7 @@ monastery = {
 	building_class = monastery
 	portrait = temple
 	icon = wooden_cross
+	wealth_cost = 16gb
 	required_technology = asceticism
 	holding_types = {
 		temple
@@ -229,9 +230,8 @@ monastery = {
 		high_priest
 		engineer
 	}
-	commodity_costs = {
-		wealth = 16gb
-		carpentry = 64k #as Temple
+	commodity_cost_weights = {
+		carpentry = 64 #as Temple
 	}
 	modifier = {
 		law = 1

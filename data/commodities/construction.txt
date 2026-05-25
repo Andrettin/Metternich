@@ -4,6 +4,7 @@ carpentry = {
 	icon = hammer
 	tiny_icon = non_aggression_pact
 	abstract = true
+	base_price = 10 #same as Lumber
 	units = {
 		100 = h
 		1000 = k

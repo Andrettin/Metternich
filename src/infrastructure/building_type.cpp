@@ -58,6 +58,8 @@ void building_type::process_gsml_property(const gsml_property &property)
 		if ((duration_seconds % std::chrono::months(1)).count() > 0) {
 			this->build_duration += std::chrono::months(1);
 		}
+	} else if (key == "wealth_cost") {
+		this->wealth_cost = defines::get()->get_wealth_commodity()->string_to_value(value);
 	} else {
 		named_data_entry::process_gsml_property(property);
 	}
@@ -101,6 +103,11 @@ void building_type::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([this](const gsml_property &property) {
 			const commodity *commodity = commodity::get(property.get_key());
 			this->commodity_costs[commodity] = commodity->string_to_value(property.get_value());
+		});
+	} else if (tag == "commodity_cost_weights") {
+		scope.for_each_property([this](const gsml_property &property) {
+			const commodity *commodity = commodity::get(property.get_key());
+			this->commodity_cost_weights[commodity] = std::stoi(property.get_value());
 		});
 	} else if (tag == "cost_factor") {
 		auto factor = std::make_unique<metternich::factor<site>>(100);
@@ -148,6 +155,27 @@ void building_type::initialize()
 	assert_throw(this->building_class != nullptr);
 	this->building_class->add_building_type(this);
 	this->building_class->get_slot_type()->add_building_type(this);
+
+	if (this->wealth_cost != 0) {
+		assert_throw(this->commodity_costs.empty());
+
+		if (!this->commodity_cost_weights.empty()) {
+			int64_t total_weight = 0;
+			for (const auto &[commodity, cost_weight] : this->commodity_cost_weights) {
+				total_weight += cost_weight;
+			}
+			for (const auto &[commodity, cost_weight] : this->commodity_cost_weights) {
+				assert_throw(commodity->get_base_price() > 0);
+				this->commodity_costs[commodity] = this->wealth_cost * cost_weight / total_weight / commodity->get_base_price();
+			}
+
+			this->commodity_cost_weights.clear();
+		} else {
+			this->commodity_costs[defines::get()->get_wealth_commodity()] = wealth_cost;
+		}
+
+		this->wealth_cost = 0;
+	}
 
 	if (this->culture != nullptr) {
 		assert_throw(this->culture->get_building_class_type(this->get_building_class()) == nullptr);
