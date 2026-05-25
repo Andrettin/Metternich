@@ -159,20 +159,20 @@ void building_type::initialize()
 	if (this->wealth_cost != 0) {
 		assert_throw(this->commodity_costs.empty());
 
-		if (!this->commodity_cost_weights.empty()) {
-			int64_t total_weight = 0;
-			for (const auto &[commodity, cost_weight] : this->commodity_cost_weights) {
-				total_weight += cost_weight;
-			}
-			for (const auto &[commodity, cost_weight] : this->commodity_cost_weights) {
-				assert_throw(commodity->get_base_price() > 0);
-				this->commodity_costs[commodity] = this->wealth_cost * cost_weight / total_weight / commodity->get_base_price();
-			}
-
-			this->commodity_cost_weights.clear();
-		} else {
-			this->commodity_costs[defines::get()->get_wealth_commodity()] = wealth_cost;
+		if (this->commodity_cost_weights.empty()) {
+			this->commodity_cost_weights[defines::get()->get_construction_commodity()] = 1;
 		}
+
+		int64_t total_weight = 0;
+		for (const auto &[commodity, cost_weight] : this->commodity_cost_weights) {
+			total_weight += cost_weight;
+		}
+		for (const auto &[commodity, cost_weight] : this->commodity_cost_weights) {
+			assert_throw(commodity->get_base_price() > 0);
+			this->commodity_costs[commodity] = this->wealth_cost * cost_weight / total_weight / commodity->get_base_price();
+		}
+
+		this->commodity_cost_weights.clear();
 
 		this->wealth_cost = 0;
 	}
