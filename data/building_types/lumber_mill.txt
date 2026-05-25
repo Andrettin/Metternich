@@ -25,7 +25,6 @@ lumber_mill = {
 		carpentry = 52
 	}
 	modifier = {
-		productivity = 1
 		#employment_capacity = {
 		#	employment_type = lumber_making
 		#	capacity = 10000
@@ -33,6 +32,7 @@ lumber_mill = {
 		#population_capacity = 10000
 		lumber_throughput_modifier = 50 #bonus to sawmill production
 		carpentry_throughput_modifier = 100
+		productivity = 1
 	}
 	domain_modifier = {
 		economy = 1

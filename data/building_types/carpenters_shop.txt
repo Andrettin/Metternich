@@ -3,6 +3,7 @@ carpenters_shop = {
 	building_class = carpenters_shop
 	portrait = factory
 	icon = hammer
+	wealth_cost = 10gb #same as the Trade Shop
 	required_technology = woodworking
 	holding_types = {
 		castle
@@ -17,15 +18,15 @@ carpenters_shop = {
 		engineer
 	}
 	conditions = {
-		or = {
+		or = { #either can have a sawmill, or is the capital
+			terrain = forest
 			feature = lumber
 			feature = prime_timber
 			capital = true
 		}
 	}
-	commodity_costs = {
-		wealth = 10gb #same as the Trade Shop
-		lumber = 39tn #carpentry = 39k
+	commodity_cost_weights = {
+		carpentry = 39
 	}
 	modifier = {
 		employment_capacity = {
