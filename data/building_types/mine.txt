@@ -3,6 +3,7 @@ coal_mine = {
 	building_class = coal_mine
 	portrait = factory
 	icon = coal
+	wealth_cost = 6gb
 	required_technology = coal_mining
 	holding_types = {
 		castle
@@ -16,9 +17,6 @@ coal_mine = {
 	}
 	conditions = {
 		feature = coal_deposit
-	}
-	commodity_costs = {
-		wealth = 6gb
 	}
 	modifier = {
 		employment_capacity = {
@@ -39,6 +37,7 @@ gold_mine = {
 	building_class = gold_mine
 	portrait = factory
 	icon = gold_ore
+	wealth_cost = 6gb
 	required_technology = gold_mining
 	holding_types = {
 		castle
@@ -52,9 +51,6 @@ gold_mine = {
 	}
 	conditions = {
 		feature = gold_deposit
-	}
-	commodity_costs = {
-		wealth = 6gb
 	}
 	modifier = {
 		employment_capacity = {
@@ -75,6 +71,7 @@ iron_mine = {
 	building_class = iron_mine
 	portrait = factory
 	icon = iron_ore
+	wealth_cost = 6gb
 	required_technology = iron_mining
 	holding_types = {
 		castle
@@ -88,9 +85,6 @@ iron_mine = {
 	}
 	conditions = {
 		feature = iron_deposit
-	}
-	commodity_costs = {
-		wealth = 6gb
 	}
 	modifier = {
 		employment_capacity = {
@@ -111,6 +105,7 @@ silver_mine = {
 	building_class = silver_mine
 	portrait = factory
 	icon = silver
+	wealth_cost = 6gb
 	holding_types = {
 		castle
 		guild
@@ -123,9 +118,6 @@ silver_mine = {
 	}
 	conditions = {
 		feature = silver_deposit
-	}
-	commodity_costs = {
-		wealth = 6gb
 	}
 	modifier = {
 		employment_capacity = {
@@ -146,6 +138,7 @@ sulfur_mine = {
 	building_class = sulfur_mine
 	portrait = factory
 	icon = spices_yellow
+	wealth_cost = 6gb
 	holding_types = {
 		castle
 		guild
@@ -158,9 +151,6 @@ sulfur_mine = {
 	}
 	conditions = {
 		feature = sulfur_deposit
-	}
-	commodity_costs = {
-		wealth = 6gb
 	}
 	modifier = {
 		employment_capacity = {
