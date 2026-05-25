@@ -3,7 +3,7 @@ bowyer = {
 	building_class = bowyer
 	portrait = factory
 	icon = bow
-	build_duration = 730d
+	wealth_cost = 22500gp
 	required_technology = short_bow
 	free_on_start_extra_technology = 1
 	holding_types = {
@@ -14,9 +14,6 @@ bowyer = {
 		ruler
 		marshal
 		engineer
-	}
-	commodity_costs = {
-		wealth = 22500gp
 	}
 	modifier = {
 		employment_capacity = {

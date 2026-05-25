@@ -4,6 +4,7 @@ city_wall = {
 	portrait = fort
 	icon = wall
 	fortification_level = 1
+	wealth_cost = 2gb
 	holding_types = {
 		guild
 		magic_source
@@ -13,9 +14,6 @@ city_wall = {
 		ruler
 		marshal
 		engineer
-	}
-	commodity_costs = {
-		wealth = 2gb
 	}
 	domain_modifier = {
 		unrest = -2
@@ -31,6 +29,7 @@ watchtower = {
 	portrait = fort
 	icon = wall
 	fortification_level = 2
+	wealth_cost = 12gb
 	holding_types = {
 		castle
 		guild
@@ -41,9 +40,6 @@ watchtower = {
 		ruler
 		marshal
 		engineer
-	}
-	commodity_costs = {
-		wealth = 12gb
 	}
 	domain_modifier = {
 		stability = 1
@@ -58,6 +54,7 @@ castle = {
 	icon = wall
 	fortification_level = 4
 	base_building = watchtower
+	wealth_cost = 42gb
 	required_technology = medium_castle
 	holding_types = {
 		castle
@@ -69,9 +66,6 @@ castle = {
 		ruler
 		marshal
 		engineer
-	}
-	commodity_costs = {
-		wealth = 42gb
 	}
 	domain_modifier = {
 		economy = 2

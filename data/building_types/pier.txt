@@ -37,6 +37,7 @@ waterfront = {
 	icon = anchor
 	base_building = pier
 	min_holding_level = 4
+	wealth_cost = 74gb
 	required_technology = seafaring
 	holding_types = {
 		guild
@@ -59,9 +60,6 @@ waterfront = {
 		province = {
 			near_water = true
 		}
-	}
-	commodity_costs = {
-		wealth = 74gb
 	}
 	modifier = {
 		crime = 1

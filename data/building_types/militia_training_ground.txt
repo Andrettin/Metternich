@@ -3,7 +3,7 @@ militia_training_ground = {
 	building_class = militia_training_ground
 	portrait = fort
 	icon = bow
-	build_duration = 365d
+	wealth_cost = 15000gp
 	required_technology = warrior_code
 	free_on_start_extra_technology = 1
 	holding_types = {
@@ -17,9 +17,6 @@ militia_training_ground = {
 	recruited_military_unit_categories = {
 		light_infantry
 		bowmen
-	}
-	commodity_costs = {
-		wealth = 15000gp
 	}
 	modifier = {
 		employment_capacity = {
@@ -39,8 +36,8 @@ archery_range = {
 	building_class = archery_range
 	portrait = fort
 	icon = bow
-	build_duration = 547d
 	base_building = militia_training_ground
+	wealth_cost = 18000gp
 	required_technology = short_bow
 	free_on_start_extra_technology = 2.2
 	holding_types = {
@@ -57,9 +54,6 @@ archery_range = {
 	recruited_military_unit_categories = {
 		light_infantry
 		bowmen
-	}
-	commodity_costs = {
-		wealth = 18000gp
 	}
 	modifier = {
 		employment_capacity = {
@@ -79,8 +73,8 @@ large_archery_range = {
 	building_class = large_archery_range
 	portrait = fort
 	icon = bow
-	build_duration = 1095d
 	base_building = archery_range
+	wealth_cost = 30000gp
 	required_technology = short_bow
 	free_on_start_extra_technology = 1.2
 	holding_types = {
@@ -94,9 +88,6 @@ large_archery_range = {
 	recruited_military_unit_categories = {
 		light_infantry
 		bowmen
-	}
-	commodity_costs = {
-		wealth = 30000gp
 	}
 	modifier = {
 		employment_capacity = {

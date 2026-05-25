@@ -3,6 +3,7 @@ orphanage = {
 	building_class = orphanage
 	portrait = temple
 	icon = wooden_cross
+	wealth_cost = 6gb
 	holding_types = {
 		temple
 	}
@@ -13,9 +14,6 @@ orphanage = {
 		ruler
 		high_priest
 		engineer
-	}
-	commodity_costs = {
-		wealth = 6gb
 	}
 	domain_modifier = {
 		stability = 1

@@ -3,6 +3,7 @@ shop = {
 	building_class = shop
 	portrait = trading_post
 	icon = wealth
+	wealth_cost = 8gb
 	holding_types = {
 		guild
 	}
@@ -10,9 +11,6 @@ shop = {
 		ruler
 		treasurer
 		engineer
-	}
-	commodity_costs = {
-		wealth = 8gb
 	}
 	modifier = {
 		productivity = 1
@@ -32,6 +30,7 @@ market = {
 	icon = wealth
 	base_building = shop
 	min_holding_level = 2
+	wealth_cost = 40gb
 	required_technology = coinage
 	holding_types = {
 		guild
@@ -40,9 +39,6 @@ market = {
 		ruler
 		treasurer
 		engineer
-	}
-	commodity_costs = {
-		wealth = 40gb
 	}
 	modifier = {
 		productivity = 1

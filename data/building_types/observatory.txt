@@ -3,6 +3,7 @@ observatory = {
 	building_class = observatory
 	portrait = university
 	icon = research
+	wealth_cost = 12gb
 	required_technology = astronomy
 	holding_types = {
 		city
@@ -16,9 +17,6 @@ observatory = {
 	}
 	conditions = {
 		feature = academic
-	}
-	commodity_costs = {
-		wealth = 12gb
 	}
 	modifier = {
 		lore = 2

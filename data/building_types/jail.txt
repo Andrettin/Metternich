@@ -3,6 +3,7 @@ jail = {
 	building_class = jail
 	portrait = fort
 	icon = skull
+	wealth_cost = 14gb
 	holding_types = {
 		castle
 	}
@@ -10,9 +11,6 @@ jail = {
 		ruler
 		royal_enforcer
 		engineer
-	}
-	commodity_costs = {
-		wealth = 14gb
 	}
 	modifier = {
 		crime = -1

@@ -4,6 +4,7 @@ library = {
 	portrait = university
 	icon = book
 	holding_level = 2
+	wealth_cost = 6gb
 	required_technology = writing
 	holding_types = {
 		great_library
@@ -12,9 +13,6 @@ library = {
 		ruler
 		magister
 		engineer
-	}
-	commodity_costs = {
-		wealth = 6gb
 	}
 	modifier = {
 		lore = 1
@@ -57,7 +55,7 @@ history_collection = {
 	building_class = history_collection
 	portrait = university
 	icon = book
-	build_duration = 24mo
+	wealth_cost = 47400gp
 	required_technology = chronicle_writing
 	holding_types = {
 		great_library
@@ -66,9 +64,6 @@ history_collection = {
 		ruler
 		magister
 		engineer
-	}
-	commodity_costs = {
-		wealth = 47400gp
 	}
 	province_modifier = {
 		technology_spread_modifier = {
@@ -83,7 +78,7 @@ poetry_and_drama_collection = {
 	building_class = poetry_and_drama_collection
 	portrait = university
 	icon = book
-	build_duration = 24mo
+	wealth_cost = 47400gp
 	holding_types = {
 		great_library
 	}
@@ -91,9 +86,6 @@ poetry_and_drama_collection = {
 		ruler
 		magister
 		engineer
-	}
-	commodity_costs = {
-		wealth = 47400gp
 	}
 	province_modifier = {
 		technology_spread_modifier = {
@@ -108,7 +100,7 @@ scribe_room = {
 	building_class = scribe_room
 	portrait = university
 	icon = book
-	build_duration = 24mo
+	wealth_cost = 47400gp
 	holding_types = {
 		great_library
 	}
@@ -116,9 +108,6 @@ scribe_room = {
 		ruler
 		magister
 		engineer
-	}
-	commodity_costs = {
-		wealth = 47400gp
 	}
 	modifier = {
 		monthly_regency_bonus = 0.1

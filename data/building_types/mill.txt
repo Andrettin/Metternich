@@ -3,6 +3,7 @@ mill = {
 	building_class = mill
 	portrait = factory
 	icon = cog
+	wealth_cost = 6gb
 	holding_types = {
 		guild
 	}
@@ -10,9 +11,6 @@ mill = {
 		ruler
 		treasurer
 		engineer
-	}
-	commodity_costs = {
-		wealth = 6gb
 	}
 	modifier = {
 		productivity = 1

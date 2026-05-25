@@ -3,6 +3,7 @@ brewery = {
 	building_class = brewery
 	portrait = trading_post
 	icon = wine
+	wealth_cost = 6gb
 	holding_types = {
 		guild
 	}
@@ -10,9 +11,6 @@ brewery = {
 		ruler
 		treasurer
 		engineer
-	}
-	commodity_costs = {
-		wealth = 6gb
 	}
 	domain_modifier = {
 		loyalty = 1

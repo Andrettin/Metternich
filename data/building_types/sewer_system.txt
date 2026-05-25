@@ -3,6 +3,7 @@ sewer_system = {
 	building_class = sewer_system
 	portrait = hospital
 	icon = architecture
+	wealth_cost = 24gb
 	required_technology = sanitation
 	holding_types = {
 		castle
@@ -13,9 +14,6 @@ sewer_system = {
 		ruler
 		treasurer
 		engineer
-	}
-	commodity_costs = {
-		wealth = 24gb
 	}
 	domain_modifier = {
 		loyalty = 1

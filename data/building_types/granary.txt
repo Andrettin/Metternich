@@ -3,6 +3,7 @@ granary = {
 	building_class = granary
 	portrait = trading_post
 	icon = grain
+	wealth_cost = 12gb
 	required_technology = pottery
 	holding_types = {
 		castle
@@ -12,9 +13,6 @@ granary = {
 		ruler
 		treasurer
 		engineer
-	}
-	commodity_costs = {
-		wealth = 12gb
 	}
 	domain_modifier = {
 		loyalty = 1

@@ -3,6 +3,7 @@ graveyard = {
 	building_class = graveyard
 	portrait = temple
 	icon = skull
+	wealth_cost = 4gb
 	holding_types = {
 		temple
 	}
@@ -13,9 +14,6 @@ graveyard = {
 	}
 	required_buildings = {
 		temple
-	}
-	commodity_costs = {
-		wealth = 4gb
 	}
 	domain_modifier = {
 		loyalty = 1

@@ -14,6 +14,7 @@ trade_shop = {
 	}
 	commodity_cost_weights = {
 		carpentry = 64
+		iron = 20
 	}
 	modifier = {
 		productivity = 1
