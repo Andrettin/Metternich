@@ -8,5 +8,7 @@ lumber = {
 	units = {
 		1 = lb
 		2000 = tn
+		2000000 = ktn
+		#2000000000 = Mtn
 	}
 }

@@ -8,5 +8,6 @@ carpentry = {
 	units = {
 		100 = h
 		1000 = k
+		1000000 = M
 	}
 }
