@@ -33,8 +33,8 @@ crossbow_workshop = {
 	building_class = crossbow_workshop
 	portrait = factory
 	icon = bow
-	build_duration = 1460d
 	base_building = bowyer
+	wealth_cost = 52500gp
 	required_technology = light_crossbow
 	free_on_start_extra_technology = 4
 	holding_types = {
@@ -48,9 +48,6 @@ crossbow_workshop = {
 		ruler
 		marshal
 		engineer
-	}
-	commodity_costs = {
-		wealth = 52500gp
 	}
 	modifier = {
 		employment_capacity = {
