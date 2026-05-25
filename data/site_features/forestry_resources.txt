@@ -1,4 +1,8 @@
 prime_timber = {
 	name = "Prime Timber"
 	icon = timber
+	modifier = {
+		#timber_throughput_modifier = 100
+		lumber_throughput_modifier = 100
+	}
 }

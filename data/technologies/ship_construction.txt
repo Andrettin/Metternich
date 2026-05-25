@@ -30,7 +30,7 @@ large_ship_building = {
 		}
 		modifier = {
 			factor = 0.9
-			has_building_class = lumber_mill
+			has_building_class = sawmill
 		}
 		modifier = {
 			factor = 0.95
@@ -157,7 +157,7 @@ large_ship_building = {
 		
 		modifier = {
 			factor = 0.9
-			has_building_class = lumber_mill
+			has_building_class = sawmill
 		}
 		modifier = {
 			factor = 0.9

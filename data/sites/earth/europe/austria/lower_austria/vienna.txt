@@ -37,7 +37,7 @@ vienna = {
 		}
 		
 		1187 = {
-			buildings += lumber_mill
+			buildings += sawmill
 			#buildings += mine
 			buildings += mill
 			buildings += brewery

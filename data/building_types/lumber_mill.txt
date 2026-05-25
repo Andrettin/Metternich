@@ -8,6 +8,7 @@ lumber_mill = {
 	holding_types = {
 		castle
 		guild
+		temple
 	}
 	builder_civilian_unit_types = {
 		ruler
@@ -24,16 +25,17 @@ lumber_mill = {
 		carpentry = 52
 	}
 	modifier = {
-		employment_capacity = {
-			employment_type = lumber_making
-			capacity = 10000
-		}
-		population_capacity = 10000
+		productivity = 1
+		#employment_capacity = {
+		#	employment_type = lumber_making
+		#	capacity = 10000
+		#}
+		#population_capacity = 10000
+		lumber_throughput_modifier = 50 #bonus to sawmill production
 		carpentry_throughput_modifier = 100
 	}
 	domain_modifier = {
+		economy = 1
 		stability = 1
-	}
-	free_on_start_conditions = {
 	}
 }

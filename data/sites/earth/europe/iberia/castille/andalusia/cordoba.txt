@@ -14,7 +14,7 @@ cordoba = {
 	
 	history = {
 		1187 = {
-			buildings += lumber_mill
+			buildings += sawmill
 			buildings += smithy
 			#buildings += mine
 			buildings += mill

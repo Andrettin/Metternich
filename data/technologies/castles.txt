@@ -718,7 +718,7 @@ medium_castle = {
 		}
 		modifier = {
 			factor = 0.95
-			has_building_class = lumber_mill
+			has_building_class = sawmill
 		}
 		modifier = {
 			factor = 0.85

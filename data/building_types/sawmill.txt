@@ -1,9 +1,10 @@
-timber_lodge = {
-	name = "Timber Lodge"
-	building_class = timber_lodge
-	portrait = aristocratic_palace
-	icon = timber
-	required_technology = woodworking
+sawmill = {
+	name = "Sawmill"
+	building_class = sawmill
+	portrait = factory
+	icon = lumber
+	wealth_cost = 3gb
+	required_technology = saw_mill
 	holding_types = {
 		castle
 		guild
@@ -15,10 +16,10 @@ timber_lodge = {
 		engineer
 	}
 	conditions = {
-		feature = prime_timber
-	}
-	commodity_costs = {
-		wealth = 3gb #same as sawmill
+		or = {
+			terrain = forest
+			feature = prime_timber
+		}
 	}
 	modifier = {
 		employment_capacity = {
@@ -26,6 +27,9 @@ timber_lodge = {
 			capacity = 40000
 		}
 		population_capacity = 40000
+	}
+	domain_modifier = {
+		stability = 1
 	}
 	free_on_start_conditions = {
 	}

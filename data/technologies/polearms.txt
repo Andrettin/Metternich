@@ -18,7 +18,7 @@ pike = {
 		}
 		modifier = {
 			factor = 0.9
-			has_building_class = lumber_mill
+			has_building_class = sawmill
 		}
 		modifier = {
 			factor = 0.9
@@ -91,7 +91,7 @@ pike = {
 		}
 		modifier = {
 			factor = 0.9
-			has_building_class = lumber_mill
+			has_building_class = sawmill
 		}
 		modifier = {
 			factor = 0.9

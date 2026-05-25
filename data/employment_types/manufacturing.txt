@@ -14,8 +14,9 @@ fertilizer_making = {
 furniture_making = {
 	name = "Furniture Making"
 	input_commodities = {
-		lumber = 20tn
-		timber = 20tn
+		#lumber = 20tn
+		#timber = 20tn
+		lumber = 40tn
 	}
 	output_commodity = furniture
 	monthly_output_value = 12tn

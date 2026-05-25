@@ -1,7 +1,7 @@
 lumberjacking = {
 	name = "Lumberjacking"
-	output_commodity = timber
-	monthly_output_value = 8tn
+	output_commodity = lumber
+	monthly_wealth_output_value = 1gb
 	base_employment_size = 40000
 	employee_types = {
 		laborers
