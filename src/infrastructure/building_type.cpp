@@ -173,7 +173,6 @@ void building_type::initialize()
 		}
 
 		this->commodity_cost_weights.clear();
-
 		this->wealth_cost = 0;
 	}
 

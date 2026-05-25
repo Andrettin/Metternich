@@ -91,6 +91,8 @@ signals:
 private:
 	population_type_set employee_types;
 	commodity_map<int64_t> input_commodities;
+	int64_t input_wealth_value = 0;
+	commodity_map<int> input_commodity_weights;
 	const commodity *output_commodity = nullptr;
 	int64_t monthly_output_value = 0;
 	int64_t base_employment_size = 0; //the employment size used for calculating the employee output
