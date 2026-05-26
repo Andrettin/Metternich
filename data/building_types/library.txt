@@ -79,6 +79,7 @@ poetry_and_drama_collection = {
 	portrait = university
 	icon = book
 	wealth_cost = 47400gp
+	required_technology = drama
 	holding_types = {
 		great_library
 	}
@@ -101,6 +102,7 @@ scribe_room = {
 	portrait = university
 	icon = book
 	wealth_cost = 47400gp
+	required_technology = literacy
 	holding_types = {
 		great_library
 	}
