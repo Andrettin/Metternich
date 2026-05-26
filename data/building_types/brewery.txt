@@ -12,6 +12,10 @@ brewery = {
 		treasurer
 		engineer
 	}
+	commodity_cost_weights = {
+		carpentry = 64
+		iron = 20
+	}
 	domain_modifier = {
 		loyalty = 1
 		stability = 1

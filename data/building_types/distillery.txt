@@ -3,6 +3,7 @@ liquor_distillery = {
 	building_class = liquor_distillery
 	portrait = trading_post
 	icon = wine
+	wealth_cost = 6gb #same as brewery
 	holding_types = {
 		castle
 		guild
@@ -15,8 +16,9 @@ liquor_distillery = {
 	conditions = {
 		feature = liquor
 	}
-	commodity_costs = {
-		wealth = 6gb #same as brewery
+	commodity_cost_weights = {
+		carpentry = 64
+		iron = 20
 	}
 	modifier = {
 		employment_capacity = {
