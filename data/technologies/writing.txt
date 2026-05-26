@@ -32,6 +32,17 @@ literacy = {
 	}
 }
 
+literature = {
+	name = "Literature"
+	subcategory = aesthetics
+	portrait = university
+	icon = book
+	period = iron_age
+	prerequisites = {
+		writing
+	}
+}
+
 printing_press = {
 	name = "Printing Press"
 	subcategory = culture

@@ -1,10 +1,22 @@
+tribal_council = {
+	name = "Tribal Council"
+	subcategory = government
+	portrait = grand_ducal_crown
+	icon = crown_baronial
+	period = copper_age
+	prerequisites = {
+		warrior_code
+	}
+}
+
 code_of_laws = {
 	name = "Code of Laws"
 	subcategory = government
-	portrait = aristocratic_palace
+	portrait = grand_ducal_crown
 	icon = courthouse
 	period = bronze_age
 	prerequisites = {
+		tribal_council
 		alphabet
 	}
 }

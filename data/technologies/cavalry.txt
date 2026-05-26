@@ -17,8 +17,7 @@ wheel = {
 	period = bronze_age
 	prerequisites = {
 		horseback_riding
-		
-		woodworking #wheels require woodworking
+		woodworking
 	}
 }
 
