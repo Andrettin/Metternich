@@ -14,8 +14,8 @@ wooden_palisade = {
 		marshal
 		engineer
 	}
-	commodity_costs = {
-		carpentry = 64k
+	commodity_cost_weights = {
+		carpentry = 64
 	}
 }
 
@@ -36,8 +36,9 @@ low_stone_wall = {
 		marshal
 		engineer
 	}
-	commodity_costs = {
-		carpentry = 120k
+	commodity_cost_weights = {
+		carpentry = 120
+		iron = 100
 	}
 }
 
@@ -48,6 +49,7 @@ medium_stone_wall = {
 	icon = wall
 	fortification_level = 2
 	base_building = low_stone_wall
+	wealth_cost = 2gb
 	required_technology = medium_castle
 	free_on_start_extra_technology = 1.2
 	holding_types = {
@@ -58,9 +60,9 @@ medium_stone_wall = {
 		marshal
 		engineer
 	}
-	commodity_costs = {
-		wealth = 2gb
-		carpentry = 120k
+	commodity_cost_weights = {
+		carpentry = 120
+		iron = 100
 	}
 	domain_modifier = {
 		unrest = -2
@@ -84,8 +86,9 @@ large_stone_wall = {
 		marshal
 		engineer
 	}
-	commodity_costs = {
-		carpentry = 320k
+	commodity_cost_weights = {
+		carpentry = 320
+		iron = 200
 	}
 	domain_modifier = {
 		unrest = -2
@@ -109,8 +112,9 @@ huge_stone_wall = {
 		marshal
 		engineer
 	}
-	commodity_costs = {
-		carpentry = 320k
+	commodity_cost_weights = {
+		carpentry = 320
+		iron = 200
 	}
 	domain_modifier = {
 		unrest = -2

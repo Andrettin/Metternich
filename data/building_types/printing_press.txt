@@ -12,8 +12,9 @@ printing_press = {
 	conditions = {
 		game_rule = additional_buildings
 	}
-	commodity_costs = {
-		carpentry = 52k
+	commodity_cost_weights = {
+		carpentry = 52
+		iron = 20
 	}
 	province_modifier = {
 		statesmanship_output_modifier = 50
@@ -35,8 +36,9 @@ newspaper = {
 	conditions = {
 		game_rule = additional_buildings
 	}
-	commodity_costs = {
-		carpentry = 120k
+	commodity_cost_weights = {
+		carpentry = 120
+		iron = 50
 	}
 	province_modifier = {
 		statesmanship_output_modifier = 100

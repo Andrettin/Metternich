@@ -4,6 +4,7 @@ monument = {
 	portrait = aristocratic_palace
 	icon = architecture
 	min_holding_level = 2
+	wealth_cost = 6gb
 	holding_types = {
 		guild #for the Colossus of Rhodes
 		temple
@@ -13,9 +14,6 @@ monument = {
 		high_priest
 		magister
 		engineer
-	}
-	commodity_costs = {
-		wealth = 6gb
 	}
 	domain_modifier = {
 		loyalty = 1

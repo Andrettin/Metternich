@@ -75,8 +75,8 @@ large_temple = {
 		high_priest
 		engineer
 	}
-	commodity_costs = {
-		carpentry = 64k #as Temple
+	commodity_cost_weights = {
+		carpentry = 64 #as Temple
 	}
 	domain_modifier = {
 		loyalty = 2
@@ -151,8 +151,9 @@ large_cathedral = {
 	conditions = {
 		feature = holy_site
 	}
-	commodity_costs = {
-		carpentry = 176k #as Cathedral
+	commodity_cost_weights = {
+		carpentry = 176 #as Cathedral
+		iron = 100 #as Cathedral
 	}
 	modifier = {
 		law = 2
@@ -191,8 +192,9 @@ grand_cathedral = {
 	conditions = {
 		feature = holy_site
 	}
-	commodity_costs = {
-		carpentry = 176k #as Cathedral
+	commodity_cost_weights = {
+		carpentry = 176 #as Cathedral
+		iron = 100 #as Cathedral
 	}
 	modifier = {
 		law = 2
