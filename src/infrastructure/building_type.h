@@ -75,6 +75,8 @@ public:
 
 	static const std::set<std::string> database_dependencies;
 
+	static commodity_map<int64_t> commodity_weights_to_costs(const int64_t wealth_cost, const commodity_map<int> &commodity_cost_weights);
+
 public:
 	explicit building_type(const std::string &identifier);
 	~building_type();

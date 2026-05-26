@@ -39,6 +39,23 @@ const std::set<std::string> building_type::database_dependencies = {
 	commodity::class_identifier
 };
 
+commodity_map<int64_t> building_type::commodity_weights_to_costs(const int64_t wealth_cost, const commodity_map<int> &commodity_cost_weights)
+{
+	commodity_map<int64_t> commodity_costs;
+
+	int total_weight = 0;
+	for (const auto &[commodity, cost_weight] : commodity_cost_weights) {
+		total_weight += cost_weight;
+	}
+
+	for (const auto &[commodity, cost_weight] : commodity_cost_weights) {
+		assert_throw(commodity->get_base_price() > 0);
+		commodity_costs[commodity] = wealth_cost * cost_weight / total_weight / commodity->get_base_price();
+	}
+
+	return commodity_costs;
+}
+
 building_type::building_type(const std::string &identifier) : named_data_entry(identifier)
 {
 }
@@ -156,23 +173,15 @@ void building_type::initialize()
 	this->building_class->add_building_type(this);
 	this->building_class->get_slot_type()->add_building_type(this);
 
+	if (this->commodity_cost_weights.empty()) {
+		this->commodity_cost_weights[defines::get()->get_construction_commodity()] = 1;
+	}
+
 	if (this->wealth_cost != 0) {
 		assert_throw(this->commodity_costs.empty());
 
-		if (this->commodity_cost_weights.empty()) {
-			this->commodity_cost_weights[defines::get()->get_construction_commodity()] = 1;
-		}
+		this->commodity_costs = building_type::commodity_weights_to_costs(this->wealth_cost, this->commodity_cost_weights);
 
-		int64_t total_weight = 0;
-		for (const auto &[commodity, cost_weight] : this->commodity_cost_weights) {
-			total_weight += cost_weight;
-		}
-		for (const auto &[commodity, cost_weight] : this->commodity_cost_weights) {
-			assert_throw(commodity->get_base_price() > 0);
-			this->commodity_costs[commodity] = this->wealth_cost * cost_weight / total_weight / commodity->get_base_price();
-		}
-
-		this->commodity_cost_weights.clear();
 		this->wealth_cost = 0;
 	}
 
@@ -323,7 +332,8 @@ commodity_map<int64_t> building_type::get_commodity_costs_for_site(const site *s
 			}
 
 			for (const auto &[commodity, level_cost_per_level] : site->get_game_data()->get_holding_type()->get_level_commodity_costs_per_level()) {
-				costs[commodity] += level_cost_per_level * (site->get_game_data()->get_holding_level() + 1 + i);
+				const int64_t level_cost = level_cost_per_level * (site->get_game_data()->get_holding_level() + 1 + i);
+				costs[commodity] += level_cost;
 			}
 		}
 
@@ -361,6 +371,16 @@ commodity_map<int64_t> building_type::get_commodity_costs_for_site(const site *s
 			fortification_cost = std::max(fortification_cost, 1);
 			costs[commodity] += fortification_cost;
 		}
+	}
+
+	if (costs.contains(defines::get()->get_wealth_commodity()) && !this->commodity_cost_weights.empty()) {
+		const commodity_map<int64_t> weighted_commodity_costs = building_type::commodity_weights_to_costs(costs.find(defines::get()->get_wealth_commodity())->second, this->commodity_cost_weights);
+
+		for (const auto &[weighted_commodity, weighted_cost] : weighted_commodity_costs) {
+			costs[weighted_commodity] += weighted_cost;
+		}
+
+		costs.erase(defines::get()->get_wealth_commodity());
 	}
 
 	const domain *domain = site->get_game_data()->get_owner();
