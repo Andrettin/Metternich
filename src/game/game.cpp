@@ -713,6 +713,7 @@ QCoro::Task<void> game::apply_history(const QDate &start_date)
 
 		co_await this->apply_character_history(start_date);
 
+		/*
 		for (const historical_civilian_unit *historical_civilian_unit : historical_civilian_unit::get_all()) {
 			try {
 				const historical_civilian_unit_history *historical_civilian_unit_history = historical_civilian_unit->get_history();
@@ -759,6 +760,7 @@ QCoro::Task<void> game::apply_history(const QDate &start_date)
 				std::throw_with_nested(std::runtime_error(std::format("Failed to apply historical civilian unit \"{}\".", historical_civilian_unit->get_identifier())));
 			}
 		}
+		*/
 
 		for (const site *site : map::get()->get_sites()) {
 			//check employment because it could be necessary for providing manpower before applying military units
