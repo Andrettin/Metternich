@@ -39,9 +39,10 @@ DialogBase {
 				id: technology_button
 				text: format_text(technology.name)
 				width: research_choice_dialog.width - 16 * scale_factor
-				tooltip: effects_string.length > 0 ? format_text(small_text(effects_string)) : small_text("No effect")
+				tooltip: format_text(small_text((costs_string.length > 0 ? (costs_string + "\n") : "") + (effects_string.length > 0 ? effects_string : "No effect")))
 				
 				readonly property var technology: model.modelData
+				readonly property string costs_string: "Costs: " + costs_to_string(technology.get_commodity_costs_for_domain_qvariant_list(metternich.game.player_country), 0, ", ")
 				readonly property string effects_string: technology.get_effects_string(metternich.game.player_country)
 				
 				onClicked: {

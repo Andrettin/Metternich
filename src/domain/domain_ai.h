@@ -27,7 +27,6 @@ public:
 
 	void appoint_ideas();
 	void appoint_office_holders();
-	void do_construction();
 
 	void assign_trade_orders();
 

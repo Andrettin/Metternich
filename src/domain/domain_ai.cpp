@@ -50,7 +50,6 @@ QCoro::Task<void> domain_ai::do_turn()
 
 	this->appoint_office_holders();
 	this->appoint_ideas();
-	this->do_construction();
 
 	for (const province *province : this->get_game_data()->get_provinces()) {
 		province->get_game_data()->do_ai_turn();
@@ -150,22 +149,6 @@ void domain_ai::appoint_office_holders()
 		if (character != nullptr) {
 			this->domain->get_government()->set_appointed_office_holder(office, character);
 		}
-	}
-}
-
-void domain_ai::do_construction()
-{
-	for (const province *province : this->get_game_data()->get_provinces()) {
-		if (province->get_game_data()->get_under_construction_pathway() != nullptr) {
-			continue;
-		}
-
-		const pathway *buildable_pathway = province->get_game_data()->get_buildable_pathway();
-		if (buildable_pathway == nullptr) {
-			continue;
-		}
-
-		province->get_game_data()->build_pathway(buildable_pathway);
 	}
 }
 
