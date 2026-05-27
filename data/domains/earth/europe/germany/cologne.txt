@@ -12,8 +12,8 @@ cologne = {
 		medieval_era
 		renaissance_era
 	}
-	core_provinces = {
-		rhineland
+	core_holdings = {
+		cologne
 	}
 	
 	history = {

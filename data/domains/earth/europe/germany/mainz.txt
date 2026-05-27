@@ -1,0 +1,13 @@
+mainz = {
+	name = "Mainz"
+	type = polity
+	color = { 178 145 87 }
+	culture = german
+	default_religion = catholic
+	default_tier = duchy #archbishopric
+	default_government_type = theocracy
+	default_capital = mainz
+	core_holdings = {
+		mainz
+	}
+}

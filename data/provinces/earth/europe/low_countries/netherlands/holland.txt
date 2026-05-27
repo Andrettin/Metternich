@@ -13,6 +13,10 @@ holland = {
 			religion = asatru
 		}
 		
+		middle_ages = {
+			temple_domain = cologne #part of the ecclesiastical province of Cologne in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 94-95.
+		}
+		
 		526 = {
 			owner = frisians #territory of the Frisians in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 			culture = frisian

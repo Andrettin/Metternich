@@ -11,6 +11,10 @@ bern = {
 		culture = gaulish
 		religion = pagan
 		
+		middle_ages = {
+			temple_domain = mainz #part of the ecclesiastical province of Mayence (Mainz) in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 94-95.
+		}
+		
 		526 = {
 			owner = alamanni #territory of the Alamanni in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 			culture = suebi
