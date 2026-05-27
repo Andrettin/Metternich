@@ -195,12 +195,16 @@ void domain::check() const
 	}
 
 	for (const site *site : this->get_core_holdings()) {
-		throw std::runtime_error(std::format("Domain \"{}\" has site \"{}\" set as a core holding for it, but that site is not a holding site.", this->get_identifier(), site->get_identifier()));
+		if (!site->is_settlement()) {
+			throw std::runtime_error(std::format("Domain \"{}\" has site \"{}\" set as a core holding for it, but that site is not a holding site.", this->get_identifier(), site->get_identifier()));
+		}
 	}
 
 	for (const auto &[tier, holdings] : this->tier_core_holdings) {
 		for (const site *site : holdings) {
-			throw std::runtime_error(std::format("Domain \"{}\" has site \"{}\" set as a tier core holding for it, but that site is not a holding site.", this->get_identifier(), site->get_identifier()));
+			if (!site->is_settlement()) {
+				throw std::runtime_error(std::format("Domain \"{}\" has site \"{}\" set as a tier core holding for it, but that site is not a holding site.", this->get_identifier(), site->get_identifier()));
+			}
 		}
 	}
 
