@@ -25,6 +25,10 @@ south_tyrol = {
 			}
 		}
 		
+		middle_ages = {
+			temple_domain = aquileia #part of the ecclesiastical province of Aquileia in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 94-95.
+		}
+		
 		!myths_enabled = {
 			526 = {
 				owner = ostrogothia #part of the Kingdom of the East Goths in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
