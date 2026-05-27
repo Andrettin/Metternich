@@ -1183,16 +1183,24 @@ QCoro::Task<void> province_game_data::create_map_mode_image(const province_map_m
 			}
 		}
 		case province_map_mode::trade_zone: {
-			const domain *trade_zone_domain = this->get_trade_zone_domain();
-			if (trade_zone_domain != nullptr) {
-				province_color = trade_zone_domain->get_color();
+			if (!this->province->is_water_zone()) {
+				const domain *trade_zone_domain = this->get_trade_zone_domain();
+				if (trade_zone_domain != nullptr) {
+					province_color = trade_zone_domain->get_color();
+				} else {
+					province_color = defines::get()->get_minor_nation_color();
+				}
 			}
 			break;
 		}
 		case province_map_mode::temple: {
-			const domain *temple_domain = this->get_temple_domain();
-			if (temple_domain != nullptr) {
-				province_color = temple_domain->get_color();
+			if (!this->province->is_water_zone()) {
+				const domain *temple_domain = this->get_temple_domain();
+				if (temple_domain != nullptr) {
+					province_color = temple_domain->get_color();
+				} else {
+					province_color = defines::get()->get_minor_nation_color();
+				}
 			}
 			break;
 		}
@@ -2185,7 +2193,7 @@ const domain *province_game_data::get_trade_zone_domain() const
 		return best_domain;
 	}
 
-	return this->get_owner();
+	return nullptr;
 }
 
 const domain *province_game_data::get_temple_domain() const
@@ -2216,7 +2224,7 @@ const domain *province_game_data::get_temple_domain() const
 		return best_domain;
 	}
 
-	return this->get_owner();
+	return nullptr;
 }
 
 }
