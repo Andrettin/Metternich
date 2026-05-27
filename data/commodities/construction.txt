@@ -6,8 +6,8 @@ carpentry = {
 	abstract = true
 	base_price = 20000 #same as one ton of lumber
 	units = {
-		100 = h
-		1000 = k
-		1000000 = M
+		#100 = h
+		#1000 = k
+		#1000000 = M
 	}
 }
