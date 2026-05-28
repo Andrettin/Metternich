@@ -24,14 +24,14 @@ QImage diplomatic_map_image_provider::requestImage(const QString &id, QSize *siz
 
 	const std::string &identifier = id_list.at(0);
 
-	const QImage *image = nullptr;
+	QImage image;
 
 	if (identifier == "ocean") {
-		image = &map::get()->get_ocean_diplomatic_map_image();
+		image = map::get()->get_ocean_diplomatic_map_image();
 	} else if (identifier == "minimap") {
-		image = &map::get()->get_minimap_image();
+		image = map::get()->get_minimap_image();
 	} else if (identifier == "exploration") {
-		image = &game::get()->get_exploration_diplomatic_map_image();
+		image = game::get()->get_exploration_diplomatic_map_image();
 	} else {
 		const domain *domain = domain::get(identifier);
 		const domain_game_data *domain_game_data = domain->get_game_data();
@@ -39,12 +39,12 @@ QImage diplomatic_map_image_provider::requestImage(const QString &id, QSize *siz
 		const std::string &mode_identifier = id_list.at(1);
 		if (mode_identifier == "realm") {
 			if (id_list.size() >= 3 && id_list.at(2) == "selected") {
-				image = &domain_game_data->get_selected_realm_diplomatic_map_image();
+				image = domain_game_data->get_selected_realm_diplomatic_map_image_promise()->future().result();
 			} else {
-				image = &domain_game_data->get_realm_diplomatic_map_image();
+				image = domain_game_data->get_realm_diplomatic_map_image_promise()->future().result();
 			}
 		} else if (mode_identifier == "selected") {
-			image = &domain_game_data->get_selected_diplomatic_map_image();
+			image = domain_game_data->get_selected_diplomatic_map_image_promise()->future().result();
 		} else if (mode_identifier == "diplomatic") {
 			std::optional<diplomacy_state> diplomacy_state;
 			const std::string &diplomacy_state_identifier = id_list.at(2);
@@ -53,29 +53,28 @@ QImage diplomatic_map_image_provider::requestImage(const QString &id, QSize *siz
 			}
 			
 			if (diplomacy_state.has_value()) {
-				image = &domain_game_data->get_diplomacy_state_diplomatic_map_image(diplomacy_state.value());
+				image = domain_game_data->get_diplomacy_state_diplomatic_map_image_promise(diplomacy_state.value())->future().result();
 			} else {
-				image = &domain_game_data->get_diplomatic_map_mode_image(diplomatic_map_mode::diplomatic);
+				image = domain_game_data->get_diplomatic_map_mode_image_promise(diplomatic_map_mode::diplomatic)->future().result();
 			}
 		} else if (mode_identifier == "terrain") {
-			image = &domain_game_data->get_diplomatic_map_mode_image(diplomatic_map_mode::terrain);
+			image = domain_game_data->get_diplomatic_map_mode_image_promise(diplomatic_map_mode::terrain)->future().result();
 		} else if (mode_identifier == "cultural") {
-			image = &domain_game_data->get_diplomatic_map_mode_image(diplomatic_map_mode::cultural);
+			image = domain_game_data->get_diplomatic_map_mode_image_promise(diplomatic_map_mode::cultural)->future().result();
 		} else if (mode_identifier == "religious") {
-			image = &domain_game_data->get_diplomatic_map_mode_image(diplomatic_map_mode::religious);
+			image = domain_game_data->get_diplomatic_map_mode_image_promise(diplomatic_map_mode::religious)->future().result();
 		} else {
-			image = &domain_game_data->get_diplomatic_map_image();
+			image = domain_game_data->get_diplomatic_map_image_promise()->future().result();
 		}
 	}
 
-	assert_throw(image != nullptr);
-	assert_log(!image->isNull());
+	assert_log(!image.isNull());
 
 	if (size != nullptr) {
-		*size = image->size();
+		*size = image.size();
 	}
 
-	return *image;
+	return image;
 }
 
 }

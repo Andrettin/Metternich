@@ -2,16 +2,12 @@
 
 #include "map/province_map_image_provider.h"
 
-#include "domain/diplomacy_state.h"
 #include "game/game.h"
-#include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/province_map_mode.h"
 #include "util/assert_util.h"
 #include "util/string_util.h"
-
-#include <magic_enum/magic_enum.hpp>
 
 namespace metternich {
 

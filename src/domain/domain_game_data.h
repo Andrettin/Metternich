@@ -588,74 +588,69 @@ public:
 
 	const QColor &get_diplomatic_map_color() const;
 
-	const QImage &get_diplomatic_map_image() const
+	const QPromise<QImage> *get_diplomatic_map_image_promise() const
 	{
-		return this->diplomatic_map_image;
+		return this->diplomatic_map_image_promise.get();
 	}
 
 	QImage prepare_diplomatic_map_image() const;
 
-	[[nodiscard]]
-	QCoro::Task<QImage> finalize_diplomatic_map_image(QImage &&image) const;
+	[[nodiscard]] static QImage finalize_diplomatic_map_image(QImage &&image);
 
-	[[nodiscard]]
-	QCoro::Task<void> create_diplomatic_map_image();
+	void create_diplomatic_map_image();
 
 	const QRect &get_diplomatic_map_image_rect() const
 	{
 		return this->diplomatic_map_image_rect;
 	}
 
-	const QImage &get_selected_diplomatic_map_image() const
+	const QPromise<QImage> *get_selected_diplomatic_map_image_promise() const
 	{
-		return this->selected_diplomatic_map_image;
+		return this->selected_diplomatic_map_image_promise.get();
 	}
 
-	const QImage &get_realm_diplomatic_map_image() const
+	const QPromise<QImage> *get_realm_diplomatic_map_image_promise() const
 	{
-		return this->realm_diplomatic_map_image;
+		return this->realm_diplomatic_map_image_promise.get();
 	}
 
 	QImage prepare_realm_diplomatic_map_image() const;
 
-	[[nodiscard]]
-	QCoro::Task<void> create_realm_diplomatic_map_image();
+	void create_realm_diplomatic_map_image();
 
 	const QRect &get_realm_diplomatic_map_image_rect() const
 	{
 		return this->realm_diplomatic_map_image_rect;
 	}
 
-	const QImage &get_selected_realm_diplomatic_map_image() const
+	const QPromise<QImage> *get_selected_realm_diplomatic_map_image_promise() const
 	{
-		return this->selected_realm_diplomatic_map_image;
+		return this->selected_realm_diplomatic_map_image_promise.get();
 	}
 
-	const QImage &get_diplomatic_map_mode_image(const diplomatic_map_mode mode) const
+	const QPromise<QImage> *get_diplomatic_map_mode_image_promise(const diplomatic_map_mode mode) const
 	{
-		const auto find_iterator = this->diplomatic_map_mode_images.find(mode);
-		if (find_iterator != this->diplomatic_map_mode_images.end()) {
-			return find_iterator->second;
+		const auto find_iterator = this->diplomatic_map_mode_image_promises.find(mode);
+		if (find_iterator != this->diplomatic_map_mode_image_promises.end()) {
+			return find_iterator->second.get();
 		}
 
-		throw std::runtime_error("No diplomatic map image found for mode " + std::to_string(static_cast<int>(mode)) + ".");
+		throw std::runtime_error(std::format("No diplomatic map image promise found for mode {}.", static_cast<int>(mode)));
 	}
 
-	[[nodiscard]]
-	QCoro::Task<void> create_diplomatic_map_mode_image(const diplomatic_map_mode mode);
+	void create_diplomatic_map_mode_image(const diplomatic_map_mode mode);
 
-	const QImage &get_diplomacy_state_diplomatic_map_image(const diplomacy_state state) const
+	const QPromise<QImage> *get_diplomacy_state_diplomatic_map_image_promise(const diplomacy_state state) const
 	{
-		const auto find_iterator = this->diplomacy_state_diplomatic_map_images.find(state);
-		if (find_iterator != this->diplomacy_state_diplomatic_map_images.end()) {
-			return find_iterator->second;
+		const auto find_iterator = this->diplomacy_state_diplomatic_map_image_promises.find(state);
+		if (find_iterator != this->diplomacy_state_diplomatic_map_image_promises.end()) {
+			return find_iterator->second.get();
 		}
 
-		throw std::runtime_error("No diplomacy state diplomatic map image found for state " + std::to_string(static_cast<int>(state)) + ".");
+		throw std::runtime_error(std::format("No diplomacy state diplomatic map image found for state {}.", static_cast<int>(state)));
 	}
 
-	[[nodiscard]]
-	QCoro::Task<void> create_diplomacy_state_diplomatic_map_image(const diplomacy_state state);
+	void create_diplomacy_state_diplomatic_map_image(const diplomacy_state state);
 
 	const data_entry_map<domain_attribute, int> &get_attribute_values() const
 	{
@@ -1361,12 +1356,12 @@ private:
 	domain_map<const consulate *> consulates;
 	domain_map<int> base_opinions;
 	domain_map<opinion_modifier_map<int>> opinion_modifiers;
-	QImage diplomatic_map_image;
-	QImage selected_diplomatic_map_image;
-	QImage realm_diplomatic_map_image;
-	QImage selected_realm_diplomatic_map_image;
-	std::map<diplomatic_map_mode, QImage> diplomatic_map_mode_images;
-	std::map<diplomacy_state, QImage> diplomacy_state_diplomatic_map_images;
+	std::shared_ptr<QPromise<QImage>> diplomatic_map_image_promise;
+	std::shared_ptr<QPromise<QImage>> selected_diplomatic_map_image_promise;
+	std::shared_ptr<QPromise<QImage>> realm_diplomatic_map_image_promise;
+	std::shared_ptr<QPromise<QImage>> selected_realm_diplomatic_map_image_promise;
+	std::map<diplomatic_map_mode, std::shared_ptr<QPromise<QImage>>> diplomatic_map_mode_image_promises;
+	std::map<diplomacy_state, std::shared_ptr<QPromise<QImage>>> diplomacy_state_diplomatic_map_image_promises;
 	QRect diplomatic_map_image_rect;
 	QRect realm_diplomatic_map_image_rect;
 	data_entry_map<domain_attribute, int> attribute_values;

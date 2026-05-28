@@ -2292,7 +2292,7 @@ void domain_game_data::change_diplomacy_state_count(const diplomacy_state state,
 
 	if (final_count == 0) {
 		this->diplomacy_state_counts.erase(state);
-		this->diplomacy_state_diplomatic_map_images.erase(state);
+		this->diplomacy_state_diplomatic_map_image_promises.erase(state);
 	}
 
 	//if the change added the diplomacy state to the map, then we need to create the diplomatic map image for it
@@ -2542,17 +2542,17 @@ QImage domain_game_data::prepare_diplomatic_map_image() const
 	return image;
 }
 
-QCoro::Task<QImage> domain_game_data::finalize_diplomatic_map_image(QImage &&image) const
+QImage domain_game_data::finalize_diplomatic_map_image(QImage &&image)
 {
+	assert_throw(!image.isNull());
+
 	QImage scaled_image;
 
 	const int tile_pixel_size = map::get()->get_diplomatic_map_tile_pixel_size();
 
 	if (tile_pixel_size > 1) {
-		co_await QtConcurrent::run([tile_pixel_size, &image, &scaled_image]() {
-			scaled_image = image::scale<QImage::Format_ARGB32>(image, centesimal_int(tile_pixel_size), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
-				xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
-			});
+		scaled_image = image::scale<QImage::Format_ARGB32>(image, centesimal_int(tile_pixel_size), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
 		});
 
 		image = std::move(scaled_image);
@@ -2598,19 +2598,17 @@ QCoro::Task<QImage> domain_game_data::finalize_diplomatic_map_image(QImage &&ima
 
 	const centesimal_int &scale_factor = preferences::get()->get_scale_factor();
 
-	co_await QtConcurrent::run([&scale_factor, &image, &scaled_image]() {
-		scaled_image = image::scale<QImage::Format_ARGB32>(image, scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
-			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
-		});
+	scaled_image = image::scale<QImage::Format_ARGB32>(image, scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+		xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
 	});
 
-	co_return scaled_image;
+	return scaled_image;
 }
 
-QCoro::Task<void> domain_game_data::create_diplomatic_map_image()
+void domain_game_data::create_diplomatic_map_image()
 {
 	if (this->get_provinces().empty()) {
-		co_return;
+		return;
 	}
 
 	const map *map = map::get();
@@ -2635,24 +2633,39 @@ QCoro::Task<void> domain_game_data::create_diplomatic_map_image()
 		}
 	}
 
-	this->diplomatic_map_image = co_await this->finalize_diplomatic_map_image(std::move(diplomatic_map_image));
-	this->selected_diplomatic_map_image = co_await this->finalize_diplomatic_map_image(std::move(selected_diplomatic_map_image));
+	std::shared_ptr<QPromise<QImage>> promise = std::make_shared<QPromise<QImage>>();
+	this->diplomatic_map_image_promise = promise;
+	this->diplomatic_map_image_promise->start();
+	assert_throw(!diplomatic_map_image.isNull());
+	QThreadPool::globalInstance()->start([promise, image = std::move(diplomatic_map_image)]() mutable {
+		promise->addResult(domain_game_data::finalize_diplomatic_map_image(std::move(image)));
+		promise->finish();
+	});
+
+	std::shared_ptr<QPromise<QImage>> selected_promise = std::make_shared<QPromise<QImage>>();
+	this->selected_diplomatic_map_image_promise = selected_promise;
+	this->selected_diplomatic_map_image_promise->start();
+	assert_throw(!selected_diplomatic_map_image.isNull());
+	QThreadPool::globalInstance()->start([selected_promise, image = std::move(selected_diplomatic_map_image)]() mutable {
+		selected_promise->addResult(domain_game_data::finalize_diplomatic_map_image(std::move(image)));
+		selected_promise->finish();
+	});
 
 	const int tile_pixel_size = map->get_diplomatic_map_tile_pixel_size();
-	this->diplomatic_map_image_rect = QRect(this->territory_rect.topLeft() * tile_pixel_size * preferences::get()->get_scale_factor(), this->diplomatic_map_image.size());
+	this->diplomatic_map_image_rect = QRect(this->territory_rect.topLeft() * tile_pixel_size * preferences::get()->get_scale_factor(), this->territory_rect.size() * tile_pixel_size * preferences::get()->get_scale_factor());
 
-	co_await this->create_diplomatic_map_mode_image(diplomatic_map_mode::diplomatic);
-	co_await this->create_diplomacy_state_diplomatic_map_image(diplomacy_state::peace);
+	this->create_diplomatic_map_mode_image(diplomatic_map_mode::diplomatic);
+	this->create_diplomacy_state_diplomatic_map_image(diplomacy_state::peace);
 
 	for (const auto &[diplomacy_state, count] : this->get_diplomacy_state_counts()) {
 		if (!is_vassalage_diplomacy_state(diplomacy_state) && !is_overlordship_diplomacy_state(diplomacy_state)) {
-			co_await this->create_diplomacy_state_diplomatic_map_image(diplomacy_state);
+			this->create_diplomacy_state_diplomatic_map_image(diplomacy_state);
 		}
 	}
 
-	co_await this->create_diplomatic_map_mode_image(diplomatic_map_mode::terrain);
-	co_await this->create_diplomatic_map_mode_image(diplomatic_map_mode::cultural);
-	co_await this->create_diplomatic_map_mode_image(diplomatic_map_mode::religious);
+	this->create_diplomatic_map_mode_image(diplomatic_map_mode::terrain);
+	this->create_diplomatic_map_mode_image(diplomatic_map_mode::cultural);
+	this->create_diplomatic_map_mode_image(diplomatic_map_mode::religious);
 
 	emit diplomatic_map_image_changed();
 }
@@ -2668,17 +2681,17 @@ QImage domain_game_data::prepare_realm_diplomatic_map_image() const
 	return image;
 }
 
-QCoro::Task<void> domain_game_data::create_realm_diplomatic_map_image()
+void domain_game_data::create_realm_diplomatic_map_image()
 {
 	if (!this->is_independent() || this->get_provinces().empty()) {
-		co_return;
+		return;
 	}
 
-	if (this->get_vassals().empty() && !this->get_diplomatic_map_image().isNull() && !this->get_selected_diplomatic_map_image().isNull()) {
-		this->realm_diplomatic_map_image = this->get_diplomatic_map_image();
-		this->selected_realm_diplomatic_map_image = this->get_selected_diplomatic_map_image();
+	if (this->get_vassals().empty() && this->get_diplomatic_map_image_promise() != nullptr && this->get_selected_diplomatic_map_image_promise() != nullptr) {
+		this->realm_diplomatic_map_image_promise = this->diplomatic_map_image_promise;
+		this->selected_realm_diplomatic_map_image_promise = this->selected_diplomatic_map_image_promise;
 		this->realm_diplomatic_map_image_rect = this->get_diplomatic_map_image_rect();
-		co_return;
+		return;
 	}
 
 	const map *map = map::get();
@@ -2703,16 +2716,29 @@ QCoro::Task<void> domain_game_data::create_realm_diplomatic_map_image()
 		}
 	}
 
-	this->realm_diplomatic_map_image = co_await this->finalize_diplomatic_map_image(std::move(diplomatic_map_image));
-	this->selected_realm_diplomatic_map_image = co_await this->finalize_diplomatic_map_image(std::move(selected_diplomatic_map_image));
+	std::shared_ptr<QPromise<QImage>> promise = std::make_shared<QPromise<QImage>>();
+	this->realm_diplomatic_map_image_promise = promise;
+	this->realm_diplomatic_map_image_promise->start();
+	QThreadPool::globalInstance()->start([promise, image = std::move(diplomatic_map_image)]() mutable {
+		promise->addResult(domain_game_data::finalize_diplomatic_map_image(std::move(image)));
+		promise->finish();
+	});
+
+	std::shared_ptr<QPromise<QImage>> selected_promise = std::make_shared<QPromise<QImage>>();
+	this->selected_realm_diplomatic_map_image_promise = selected_promise;
+	this->selected_realm_diplomatic_map_image_promise->start();
+	QThreadPool::globalInstance()->start([selected_promise, image = std::move(selected_diplomatic_map_image)]() mutable {
+		selected_promise->addResult(domain_game_data::finalize_diplomatic_map_image(std::move(image)));
+		selected_promise->finish();
+	});
 
 	const int tile_pixel_size = map->get_diplomatic_map_tile_pixel_size();
-	this->realm_diplomatic_map_image_rect = QRect(this->realm_territory_rect.topLeft() * tile_pixel_size * preferences::get()->get_scale_factor(), this->realm_diplomatic_map_image.size());
+	this->realm_diplomatic_map_image_rect = QRect(this->realm_territory_rect.topLeft() * tile_pixel_size * preferences::get()->get_scale_factor(), this->realm_territory_rect.size() * tile_pixel_size * preferences::get()->get_scale_factor());
 
 	emit realm_diplomatic_map_image_changed();
 }
 
-QCoro::Task<void> domain_game_data::create_diplomatic_map_mode_image(const diplomatic_map_mode mode)
+void domain_game_data::create_diplomatic_map_mode_image(const diplomatic_map_mode mode)
 {
 	static const QColor empty_color(Qt::black);
 	static constexpr QColor diplomatic_self_color(170, 148, 214);
@@ -2777,10 +2803,17 @@ QCoro::Task<void> domain_game_data::create_diplomatic_map_mode_image(const diplo
 		}
 	}
 
-	this->diplomatic_map_mode_images[mode] = co_await this->finalize_diplomatic_map_image(std::move(image));
+	std::shared_ptr<QPromise<QImage>> promise = std::make_shared<QPromise<QImage>>();
+	this->diplomatic_map_mode_image_promises[mode] = promise;
+	promise->start();
+
+	QThreadPool::globalInstance()->start([promise, image = std::move(image)]() mutable {
+		promise->addResult(domain_game_data::finalize_diplomatic_map_image(std::move(image)));
+		promise->finish();
+	});
 }
 
-QCoro::Task<void> domain_game_data::create_diplomacy_state_diplomatic_map_image(const diplomacy_state state)
+void domain_game_data::create_diplomacy_state_diplomatic_map_image(const diplomacy_state state)
 {
 	static const QColor empty_color(Qt::black);
 
@@ -2803,7 +2836,14 @@ QCoro::Task<void> domain_game_data::create_diplomacy_state_diplomatic_map_image(
 		}
 	}
 
-	this->diplomacy_state_diplomatic_map_images[state] = co_await this->finalize_diplomatic_map_image(std::move(image));
+	std::shared_ptr<QPromise<QImage>> promise = std::make_shared<QPromise<QImage>>();
+	this->diplomacy_state_diplomatic_map_image_promises[state] = promise;
+	promise->start();
+
+	QThreadPool::globalInstance()->start([promise, image = std::move(image)]() mutable {
+		promise->addResult(domain_game_data::finalize_diplomatic_map_image(std::move(image)));
+		promise->finish();
+	});
 }
 
 QVariantList domain_game_data::get_attribute_values_qvariant_list() const

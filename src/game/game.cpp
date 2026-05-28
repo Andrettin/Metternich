@@ -1730,19 +1730,19 @@ QCoro::Task<void> game::do_turn_coro()
 			}
 
 			if (domain->get_turn_data()->is_diplomatic_map_dirty()) {
-				co_await domain->get_game_data()->create_diplomatic_map_image();
+				domain->get_game_data()->create_diplomatic_map_image();
 			} else {
 				for (const diplomatic_map_mode mode : domain->get_turn_data()->get_dirty_diplomatic_map_modes()) {
-					co_await domain->get_game_data()->create_diplomatic_map_mode_image(mode);
+					domain->get_game_data()->create_diplomatic_map_mode_image(mode);
 				}
 
 				for (const diplomacy_state state : domain->get_turn_data()->get_dirty_diplomatic_map_diplomacy_states()) {
-					co_await domain->get_game_data()->create_diplomacy_state_diplomatic_map_image(state);
+					domain->get_game_data()->create_diplomacy_state_diplomatic_map_image(state);
 				}
 			}
 
 			if (domain->get_turn_data()->is_realm_diplomatic_map_dirty()) {
-				co_await domain->get_game_data()->create_realm_diplomatic_map_image();
+				domain->get_game_data()->create_realm_diplomatic_map_image();
 			}
 		}
 
@@ -2033,27 +2033,15 @@ QCoro::Task<void> game::create_diplomatic_map_image()
 		tasks.push_back(std::move(task));
 	}
 
-	for (const domain *domain : this->get_countries()) {
-		domain_game_data *domain_game_data = domain->get_game_data();
-
-		QCoro::Task<void> task = domain_game_data->create_diplomatic_map_image();
-		tasks.push_back(std::move(task));
-	}
-
 	for (QCoro::Task<void> &task : tasks) {
 		co_await std::move(task);
 	}
 
-	// do the realm diplomatic map images after the others, since they can be the same as the diplomatic map images, and we don't want to re-do those unnecessarily
-	tasks.clear();
 	for (const domain *domain : this->get_countries()) {
 		domain_game_data *domain_game_data = domain->get_game_data();
 
-		QCoro::Task<void> task = domain_game_data->create_realm_diplomatic_map_image();
-		tasks.push_back(std::move(task));
-	}
-	for (QCoro::Task<void> &task : tasks) {
-		co_await std::move(task);
+		domain_game_data->create_diplomatic_map_image();
+		domain_game_data->create_realm_diplomatic_map_image();
 	}
 }
 
