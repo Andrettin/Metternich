@@ -1087,16 +1087,22 @@ QCoro::Task<void> game::apply_site_buildings(const site *site)
 
 	for (auto [building_slot_type, building] : site_history->get_buildings()) {
 		building_slot *building_slot = settlement_game_data->get_building_slot(building_slot_type);
-		assert_throw(building_slot != nullptr);
+		if (building_slot == nullptr) {
+			if (settlement == site) {
+				throw std::runtime_error(std::format("Holding \"{}\" is set in history to have building \"{}\", but does not have its building slot.", settlement->get_identifier(), building->get_identifier()));
+			} else {
+				continue;
+			}
+		}
 
 		while (building != nullptr) {
 			if (settlement == site) {
 				if (holding_type == nullptr) {
-					throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have building \"{}\", but has no holding type.", settlement->get_identifier(), building->get_identifier()));
+					throw std::runtime_error(std::format("Holding \"{}\" is set in history to have building \"{}\", but has no holding type.", settlement->get_identifier(), building->get_identifier()));
 				}
 
 				if (!vector::contains(building->get_holding_types(), holding_type)) {
-					throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have building \"{}\", but its holding type of \"{}\" is not appropriate for it.", settlement->get_identifier(), building->get_identifier(), holding_type->get_identifier()));
+					throw std::runtime_error(std::format("Holding \"{}\" is set in history to have building \"{}\", but its holding type of \"{}\" is not appropriate for it.", settlement->get_identifier(), building->get_identifier(), holding_type->get_identifier()));
 				}
 			}
 

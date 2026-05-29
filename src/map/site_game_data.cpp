@@ -1004,7 +1004,9 @@ int site_game_data::get_building_holding_level_change(const building_type *build
 	assert_throw(building != nullptr);
 
 	const building_slot *building_slot = this->get_building_slot(building->get_slot_type());
-	assert_throw(building_slot != nullptr);
+	if (building_slot == nullptr) {
+		return 0;
+	}
 
 	int holding_level_change = building != nullptr ? building->get_holding_level() : 0;
 
@@ -1076,7 +1078,9 @@ centesimal_int site_game_data::get_building_fortification_level_change(const bui
 	assert_throw(building != nullptr);
 
 	const building_slot *building_slot = this->get_building_slot(building->get_slot_type());
-	assert_throw(building_slot != nullptr);
+	if (building_slot == nullptr) {
+		return centesimal_int(0);
+	}
 
 	centesimal_int fortification_level_change = building != nullptr ? building->get_fortification_level() : centesimal_int(0);
 
@@ -1427,6 +1431,11 @@ void site_game_data::initialize_building_slots()
 	vector::shuffle(building_slot_types);
 
 	for (const building_slot_type *building_slot_type : building_slot_types) {
+		if (this->site->get_holding_type() != nullptr && building_slot_type->get_building_types_for_holding_type(this->site->get_holding_type()).empty()) {
+			//if the site has a predefined holding type and building slot type has no buildings for that holding type, don't create it for the site
+			continue;
+		}
+
 		this->add_building_slot(make_qunique<building_slot>(building_slot_type, this->site));
 	}
 }
@@ -1467,8 +1476,6 @@ const building_type *site_game_data::get_slot_building(const building_slot_type 
 	if (find_iterator != this->building_slot_map.end()) {
 		return find_iterator->second->get_building();
 	}
-
-	assert_throw(false);
 
 	return nullptr;
 }
@@ -1545,7 +1552,12 @@ bool site_game_data::has_building_class_or_better(const building_class *building
 
 bool site_game_data::can_gain_building(const building_type *building) const
 {
-	return this->get_building_slot(building->get_slot_type())->can_gain_building(building);
+	const building_slot *building_slot = this->get_building_slot(building->get_slot_type());
+	if (building_slot == nullptr) {
+		return false;
+	}
+
+	return building_slot->can_gain_building(building);
 }
 
 bool site_game_data::can_gain_building_class(const building_class *building_class) const
@@ -1565,7 +1577,9 @@ QCoro::Task<void> site_game_data::add_building(const building_type *building)
 		co_return;
 	}
 
-	co_await this->get_building_slot(building->get_slot_type())->set_building(building);
+	building_slot *building_slot = this->get_building_slot(building->get_slot_type());
+	assert_throw(building_slot != nullptr);
+	co_await building_slot->set_building(building);
 }
 
 QCoro::Task<void> site_game_data::add_building_with_prerequisites(const building_type *building)
