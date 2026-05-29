@@ -159,6 +159,13 @@ Item {
 					text: format_text(effects_string)
 					anchors.verticalCenter: parent.verticalCenter
 					wrapMode: Text.WordWrap
+					maximumLineCount: 5 //more than that can't be displayed for a row with the same height as the technology portrait
+					
+					Component.onCompleted: {
+						if (truncated) {
+							console.error("The technology \"" + technology.identifier + "\" had its effects string truncated for the technology view, because it contained more lines than the maximum of " + maximumLineCount + ".")
+						}
+					}
 				}
 			}
 			
