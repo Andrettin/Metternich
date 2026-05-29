@@ -23,6 +23,8 @@ public:
 	{
 	}
 
+	virtual void check() const override;
+
 	const std::vector<const building_type *> &get_building_types_for_holding_type(const holding_type *holding_type) const
 	{
 		const auto find_iterator = this->building_types_by_holding_type.find(holding_type);
