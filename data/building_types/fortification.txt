@@ -1,28 +1,3 @@
-city_wall = {
-	name = "City Wall"
-	building_class = city_wall
-	portrait = fort
-	icon = wall
-	fortification_level = 1
-	wealth_cost = 2gb
-	holding_types = {
-		guild
-		magic_source
-		temple
-	}
-	builder_civilian_unit_types = {
-		ruler
-		marshal
-		engineer
-	}
-	domain_modifier = {
-		unrest = -2
-	}
-	free_on_start_conditions = {
-		has_building_class = garrison
-	}
-}
-
 watchtower = {
 	name = "Watchtower"
 	building_class = watchtower

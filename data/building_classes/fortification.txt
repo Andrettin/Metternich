@@ -23,8 +23,28 @@ huge_stone_wall = {
 	slot_type = wall
 }
 
-city_wall = {
-	name = "City Wall"
+town_palisade = {
+	name = "Town Palisade"
+	slot_type = wall
+}
+
+small_city_wall = {
+	name = "Small City Wall"
+	slot_type = wall
+}
+
+medium_city_wall = {
+	name = "Medium City Wall"
+	slot_type = wall
+}
+
+large_city_wall = {
+	name = "Large City Wall"
+	slot_type = wall
+}
+
+huge_city_wall = {
+	name = "Huge City Wall"
 	slot_type = wall
 }
 

@@ -120,3 +120,126 @@ huge_stone_wall = {
 		unrest = -2
 	}
 }
+
+town_palisade = {
+	name = "Town Palisade"
+	building_class = town_palisade
+	portrait = fort
+	icon = wall
+	fortification_level = 0.4
+	required_technology = hill_fort
+	free_on_start_extra_technology = 1
+	holding_types = {
+		guild
+	}
+	builder_civilian_unit_types = {
+		ruler
+		marshal
+		engineer
+	}
+	commodity_cost_weights = {
+		carpentry = 64
+	}
+}
+
+small_city_wall = {
+	name = "Small City Wall"
+	building_class = small_city_wall
+	portrait = fort
+	icon = wall
+	fortification_level = 0.8
+	base_building = town_palisade
+	required_technology = small_castle
+	free_on_start_extra_technology = 1.5
+	holding_types = {
+		guild
+	}
+	builder_civilian_unit_types = {
+		ruler
+		marshal
+		engineer
+	}
+	commodity_cost_weights = {
+		carpentry = 120
+		iron = 100
+	}
+}
+
+medium_city_wall = {
+	name = "Medium City Wall"
+	building_class = medium_city_wall
+	portrait = fort
+	icon = wall
+	fortification_level = 1.2
+	base_building = small_city_wall
+	wealth_cost = 2gb
+	required_technology = medium_castle
+	free_on_start_extra_technology = 2
+	holding_types = {
+		guild
+	}
+	builder_civilian_unit_types = {
+		ruler
+		marshal
+		engineer
+	}
+	commodity_cost_weights = {
+		carpentry = 120
+		iron = 100
+	}
+	domain_modifier = {
+		unrest = -2
+	}
+}
+
+large_city_wall = {
+	name = "Large City Wall"
+	building_class = large_city_wall
+	portrait = fort
+	icon = wall
+	fortification_level = 1.7
+	base_building = medium_city_wall
+	required_technology = large_castle
+	free_on_start_extra_technology = 1
+	holding_types = {
+		guild
+	}
+	builder_civilian_unit_types = {
+		ruler
+		marshal
+		engineer
+	}
+	commodity_cost_weights = {
+		carpentry = 320
+		iron = 200
+	}
+	domain_modifier = {
+		unrest = -2
+	}
+}
+
+huge_city_wall = {
+	name = "Huge City Wall"
+	building_class = huge_city_wall
+	portrait = fort
+	icon = wall
+	fortification_level = 2.7
+	base_building = large_city_wall
+	required_technology = huge_castle
+	free_on_start_extra_technology = 0.2
+	holding_types = {
+		guild
+	}
+	builder_civilian_unit_types = {
+		ruler
+		marshal
+		engineer
+	}
+	commodity_cost_weights = {
+		carpentry = 320
+		iron = 200
+	}
+	domain_modifier = {
+		unrest = -2
+	}
+}
