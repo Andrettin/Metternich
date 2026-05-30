@@ -5,6 +5,7 @@ academy = {
 	icon = university
 	holding_level = 1
 	wealth_cost = 52gb
+	required_technology = seven_liberal_arts
 	holding_types = {
 		university
 	}
@@ -143,7 +144,7 @@ large_university = {
 	base_building = university
 	holding_level = 4
 	wealth_cost = 120000gp
-	required_technology = university
+	required_technology = academic_disciplines
 	free_on_start_extra_technology = 1.2
 	holding_types = {
 		university
