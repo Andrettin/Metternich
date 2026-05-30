@@ -17,7 +17,7 @@ leuven = {
 		}
 		
 		1425 = {
-			buildings += university #University founded in Louvain in 1425; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+			#buildings += university #University founded in Louvain in 1425; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
 		}
 	}
 }

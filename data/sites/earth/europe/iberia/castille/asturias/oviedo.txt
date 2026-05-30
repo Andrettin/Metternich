@@ -3,10 +3,10 @@ oviedo = {
 	world = earth
 	geocoordinate = { -5.82999068340 43.35049216620 } #from Natural Earth
 	type = holding
-	#resource = coal
 	province = asturias
 	features = {
 		academic #historical university
+		coal_deposit
 	}
 	
 	history = {
@@ -15,12 +15,12 @@ oviedo = {
 		}
 		
 		1580 = {
-			buildings += university #University founded in Oviedo in 1580; Source: "The Cambridge Modern History Atlas", 1912, p. 9.
+			#buildings += university #University founded in Oviedo in 1580; Source: "The Cambridge Modern History Atlas", 1912, p. 9.
 			holding_type = city
 		}
 		
 		1608 = {
-			buildings -= university #University abolished in Oviedo in 1608; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
+			#buildings -= university #University abolished in Oviedo in 1608; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
 			holding_type = town
 		}
 	}

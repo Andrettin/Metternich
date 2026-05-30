@@ -44,7 +44,7 @@ milan = {
 		}
 		
 		1565 = {
-			buildings += university #University founded in Milan in 1565; Source: "The Cambridge Modern History Atlas", 1912, p. 9.
+			#buildings += university #University founded in Milan in 1565; Source: "The Cambridge Modern History Atlas", 1912, p. 9.
 		}
 		
 		1600 = {

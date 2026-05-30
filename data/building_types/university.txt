@@ -5,7 +5,6 @@ academy = {
 	icon = university
 	wealth_cost = 52gb
 	holding_types = {
-		guild
 		university
 	}
 	builder_civilian_unit_types = {
@@ -54,7 +53,6 @@ university = {
 	required_technology = university
 	free_on_start_extra_technology = 1.2
 	holding_types = {
-		guild
 		university
 	}
 	builder_civilian_unit_types = {

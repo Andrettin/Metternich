@@ -33,7 +33,7 @@ bordeaux = {
 		}
 		
 		1441 = {
-			buildings += university #University founded in Bordeaux in 1441; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+			#buildings += university #University founded in Bordeaux in 1441; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
 		}
 		
 		1836 = {

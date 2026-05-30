@@ -3,6 +3,7 @@ coimbra = {
 	world = earth
 	geocoordinate = { -8.41668033999 40.20037436830 } #from Natural Earth
 	type = holding
+	holding_type = university
 	features = {
 		academic #historical university
 	}
@@ -10,7 +11,6 @@ coimbra = {
 	history = {
 		1308 = {
 			buildings += university #University founded in Coimbra in 1308; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
-			holding_type = city
 		}
 		
 		1360 = {

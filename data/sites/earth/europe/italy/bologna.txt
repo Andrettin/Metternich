@@ -24,7 +24,7 @@ bologna = {
 		}
 		
 		1360 = {
-			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			#existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 	}
 }

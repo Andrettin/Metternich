@@ -28,7 +28,7 @@ buda = {
 		}
 		
 		1389 = {
-			buildings += university #University founded in Buda in 1389; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+			#buildings += university #University founded in Buda in 1389; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
 		}
 		
 		1815 = {

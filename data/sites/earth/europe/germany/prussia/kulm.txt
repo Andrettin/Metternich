@@ -14,7 +14,8 @@ kulm = {
 	
 	history = {
 		1366 = {
-			buildings += university #University founded in Kulm in 1366; Source: "Atlas de História Mundial", 2001, p. 144.
+			#buildings += university #University founded in Kulm in 1366; Source: "Atlas de História Mundial", 2001, p. 144.
+			developed = true
 		}
 	}
 }

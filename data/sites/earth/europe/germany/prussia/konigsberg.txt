@@ -17,7 +17,7 @@ konigsberg = {
 		}
 		
 		1544 = {
-			buildings += university #University founded in Königsberg in 1544; Source: "The Cambridge Modern History Atlas", 1912, p. 9.
+			#buildings += university #University founded in Königsberg in 1544; Source: "The Cambridge Modern History Atlas", 1912, p. 9.
 		}
 	}
 }

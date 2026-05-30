@@ -17,7 +17,7 @@ pisa = {
 		}
 		
 		1348 = {
-			buildings += university #University founded in Pisa in 1348; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+			#buildings += university #University founded in Pisa in 1348; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
 		}
 	}
 }
