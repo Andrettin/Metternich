@@ -14,8 +14,8 @@ klausenburg = {
 	
 	history = {
 		1580 = {
-			buildings += university #University founded in Klausenburg in 1580; Source: "The Cambridge Modern History Atlas", p. 9.
-			holding_type = city
+			#buildings += university #University founded in Klausenburg in 1580; Source: "The Cambridge Modern History Atlas", p. 9.
+			developed = true
 		}
 	}
 }

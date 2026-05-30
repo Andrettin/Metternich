@@ -3,6 +3,7 @@ utrecht = {
 	world = earth
 	geocoordinate = { 5.12003861351 52.10034568190 } #from Natural Earth
 	type = holding
+	holding_type = temple
 	province = utrecht
 	features = {
 		academic #historical university
@@ -10,7 +11,7 @@ utrecht = {
 	
 	history = {
 		919 = {
-			holding_type = city #important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			developed = true #important settlement in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
 		}
 		
 		1360 = {
@@ -18,7 +19,7 @@ utrecht = {
 		}
 		
 		1636 = {
-			buildings += university #University founded in Utrecht in 1636; Source: Henry Kamen, "Early Modern European Society", 2021, p. 291.
+			#buildings += university #University founded in Utrecht in 1636; Source: Henry Kamen, "Early Modern European Society", 2021, p. 291.
 		}
 	}
 }
