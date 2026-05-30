@@ -952,6 +952,8 @@ QCoro::Task<void> game::apply_sites()
 		co_await domain->get_game_data()->choose_capital();
 	}
 
+	std::vector<std::exception_ptr> exceptions;
+
 	for (const site *site : site::get_all()) {
 		try {
 			site_game_data *site_game_data = site->get_game_data();
@@ -1016,8 +1018,16 @@ QCoro::Task<void> game::apply_sites()
 				co_await map::get()->set_tile_resource_discovered(site_game_data->get_tile_pos(), true);
 			}
 		} catch (...) {
-			std::throw_with_nested(std::runtime_error(std::format("Failed to apply history for site \"{}\".", site->get_identifier())));
+			try {
+				std::throw_with_nested(std::runtime_error(std::format("Failed to apply history for site \"{}\".", site->get_identifier())));
+			} catch (...) {
+				exceptions.push_back(std::current_exception());
+			}
 		}
+	}
+
+	if (!exceptions.empty()) {
+		throw aggregate_exception("Failed to apply site history.", std::move(exceptions));
 	}
 
 	//set province ratings based on holding levels
