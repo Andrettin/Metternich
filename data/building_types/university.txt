@@ -5,8 +5,8 @@ academy = {
 	icon = university
 	wealth_cost = 52gb
 	holding_types = {
-		city
 		guild
+		university
 	}
 	builder_civilian_unit_types = {
 		ruler
@@ -14,7 +14,10 @@ academy = {
 		engineer
 	}
 	conditions = {
-		feature = academic
+		or = {
+			feature = academic
+			holding_type = university
+		}
 	}
 	commodity_cost_weights = {
 		carpentry = 160
@@ -51,8 +54,8 @@ university = {
 	required_technology = university
 	free_on_start_extra_technology = 1.2
 	holding_types = {
-		city
 		guild
+		university
 	}
 	builder_civilian_unit_types = {
 		ruler
@@ -72,7 +75,10 @@ university = {
 		#merchant
 	}
 	conditions = {
-		feature = academic
+		or = {
+			feature = academic
+			holding_type = university
+		}
 	}
 	commodity_cost_weights = {
 		carpentry = 200
