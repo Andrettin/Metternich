@@ -3,6 +3,7 @@ academy = {
 	building_class = academy
 	portrait = university
 	icon = university
+	holding_level = 1
 	wealth_cost = 52gb
 	holding_types = {
 		university
@@ -11,12 +12,6 @@ academy = {
 		ruler
 		magister
 		engineer
-	}
-	conditions = {
-		or = {
-			feature = academic
-			holding_type = university
-		}
 	}
 	commodity_cost_weights = {
 		carpentry = 160
@@ -38,8 +33,48 @@ academy = {
 		medium_scroll_or_wondrous_item
 		medium_scroll_or_wondrous_item
 	}
-	free_on_start_conditions = {
-		has_building_class = cathedral
+}
+
+small_university = {
+	name = "Small University"
+	building_class = small_university
+	portrait = university
+	icon = university
+	holding_level = 2
+	base_building = academy
+	wealth_cost = 90000gp
+	required_technology = university
+	free_on_start_extra_technology = 1.2
+	holding_types = {
+		university
+	}
+	builder_civilian_unit_types = {
+		ruler
+		magister
+		engineer
+	}
+	commodity_cost_weights = {
+		carpentry = 200
+		iron = 100
+	}
+	modifier = {
+		lore = 2
+		productivity = 1
+		society = 2
+	}
+	province_modifier = {
+		technology_spread_modifier = 30
+	}
+	domain_modifier = {
+		economy = 2
+		loyalty = 2
+	}
+	item_creation_types = {
+		minor_scroll_or_wondrous_item
+		minor_scroll_or_wondrous_item
+		minor_scroll_or_wondrous_item
+		medium_scroll_or_wondrous_item
+		medium_scroll_or_wondrous_item
 	}
 }
 
@@ -48,7 +83,8 @@ university = {
 	building_class = university
 	portrait = university
 	icon = university
-	base_building = academy
+	base_building = small_university
+	holding_level = 3
 	wealth_cost = 26gb
 	required_technology = university
 	free_on_start_extra_technology = 1.2
@@ -72,12 +108,6 @@ university = {
 		#spy
 		#merchant
 	}
-	conditions = {
-		or = {
-			feature = academic
-			holding_type = university
-		}
-	}
 	commodity_cost_weights = {
 		carpentry = 200
 		iron = 100
@@ -89,6 +119,63 @@ university = {
 	}
 	province_modifier = {
 		technology_spread_modifier = 60
+	}
+	domain_modifier = {
+		economy = 3
+		loyalty = 3
+		#fame = 1
+	}
+	item_creation_types = {
+		minor_scroll_or_wondrous_item
+		minor_scroll_or_wondrous_item
+		minor_scroll_or_wondrous_item
+		minor_scroll_or_wondrous_item
+		medium_scroll_or_wondrous_item
+		medium_scroll_or_wondrous_item
+	}
+}
+
+large_university = {
+	name = "Large University"
+	building_class = large_university
+	portrait = university
+	icon = university
+	base_building = university
+	holding_level = 4
+	wealth_cost = 120000gp
+	required_technology = university
+	free_on_start_extra_technology = 1.2
+	holding_types = {
+		university
+	}
+	builder_civilian_unit_types = {
+		ruler
+		magister
+		engineer
+	}
+	recruited_civilian_unit_types = {
+		miner
+		#explorer
+		prospector
+		farmer
+		forester
+		engineer
+		rancher
+		driller
+		#spy
+		#merchant
+	}
+	commodity_cost_weights = {
+		carpentry = 200
+		iron = 100
+	}
+	modifier = {
+		lore = 4
+		productivity = 1
+		society = 3
+	}
+	province_modifier = {
+		technology_spread_modifier = 90
 	}
 	domain_modifier = {
 		economy = 3

@@ -14,6 +14,11 @@ university = {
 		wealth = 4gb
 		regency = 1
 	}
+	conditional_names = {
+		"Grand University" = {
+			has_building_class = large_university
+		}
+	}
 	tier_levels = {
 		grand_university = 4
 	}

@@ -31,7 +31,7 @@ cordoba = {
 		}
 		
 		1572 = {
-			buildings += university #Minor university founded in Cordoba in 1572; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
+			buildings += small_university #Minor university founded in Cordoba in 1572; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
 		}
 	}
 }

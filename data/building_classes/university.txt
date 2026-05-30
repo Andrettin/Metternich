@@ -3,8 +3,18 @@ academy = {
 	slot_type = university
 }
 
+small_university = {
+	name = "Small University"
+	slot_type = university
+}
+
 university = {
 	name = "University"
+	slot_type = university
+}
+
+large_university = {
+	name = "Large University"
 	slot_type = university
 }
 

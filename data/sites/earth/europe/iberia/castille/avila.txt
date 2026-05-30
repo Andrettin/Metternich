@@ -11,11 +11,11 @@ avila = {
 	
 	history = {
 		1550 = {
-			buildings += university #Minor university founded in Avila in 1550; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
+			buildings += small_university #Minor university founded in Avila in 1550; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
 		}
 		
 		1787 = {
-			buildings -= university #Minor university abolished in Avila in 1787; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
+			buildings -= small_university #Minor university abolished in Avila in 1787; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
 		}
 	}
 }

@@ -9,11 +9,11 @@ vich = {
 	
 	history = {
 		1599 = {
-			buildings += university #Minor university founded in Vich in 1599; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
+			buildings += small_university #Minor university founded in Vich in 1599; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
 		}
 		
 		1707 = {
-			buildings -= university #Minor university in Vich abolished in 1707; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
+			buildings -= small_university #Minor university in Vich abolished in 1707; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
 		}
 	}
 }
