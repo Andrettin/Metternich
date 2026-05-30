@@ -11,6 +11,10 @@ burgenland = {
 		culture = suebi
 		religion = asatru
 		
+		middle_ages = {
+			temple_domain = esztergom #part of the ecclesiastical province of Gran (Esztergom) in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 94-95.
+		}
+		
 		526 = {
 			owner = bavarians #territory of the Bavarians in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 			culture = suebi
