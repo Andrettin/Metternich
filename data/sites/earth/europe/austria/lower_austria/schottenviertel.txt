@@ -1,0 +1,17 @@
+schottenviertel = { #one of the four medieval districts of the inner city of Vienna
+	name = "Schottenviertel"
+	world = earth
+	geocoordinate = { 16.3614 48.2139 } #Schottentor
+	type = holding
+	holding_type = university
+	province = lower_austria
+	features = {
+		academic #historical university
+	}
+	
+	history = {
+		1365 = {
+			buildings += university #University founded in Vienna in 1365; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+		}
+	}
+}

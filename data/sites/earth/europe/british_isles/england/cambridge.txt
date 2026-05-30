@@ -2,8 +2,9 @@ cambridge = {
 	name = "Cambridge"
 	world = earth
 	geocoordinate = { 0.11662308615 52.20039125480 } #from Natural Earth
-	type = resource
-	resource = grain
+	type = holding
+	holding_type = university
+	#holding_type = guild
 	province = east_anglia
 	cultural_names = {
 		anglo_saxon = "Grantanbrycg" #Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 732.
@@ -12,6 +13,7 @@ cambridge = {
 	}
 	features = {
 		academic #historical university
+		prime_grain_land
 	}
 	
 	history = {

@@ -11,7 +11,6 @@ vienna = {
 		roman = "Vindobona" #Source: "Ancient Warfare VII.6", 2013, p. 7.
 	}
 	features = {
-		academic #historical university
 		crossroads #important market or fair
 		glass
 		#holy_site #historical cathedral
@@ -46,10 +45,6 @@ vienna = {
 		
 		1360 = {
 			#important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
-		}
-		
-		1365 = {
-			buildings += university #University founded in Vienna in 1365; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
 		}
 		
 		1700 = {

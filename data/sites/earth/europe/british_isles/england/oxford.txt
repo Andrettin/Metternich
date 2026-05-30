@@ -2,11 +2,13 @@ oxford = {
 	name = "Oxford"
 	world = earth
 	geocoordinate = { -1.24998600402 51.77041749990 } #from Natural Earth
-	type = resource
-	resource = grain
+	type = holding
+	holding_type = university
+	#holding_type = guild
 	province = warwickshire
 	features = {
 		academic #historical university
+		prime_grain_land
 	}
 	
 	history = {
