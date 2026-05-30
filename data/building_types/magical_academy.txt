@@ -3,7 +3,7 @@ magical_academy = {
 	building_class = magical_academy
 	portrait = university
 	icon = university
-	required_technology = university
+	required_technology = magical_inscription
 	holding_types = {
 		magic_source
 	}
