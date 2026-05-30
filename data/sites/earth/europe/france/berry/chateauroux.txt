@@ -2,8 +2,8 @@ chateauroux = {
 	name = "Chateauroux" #"Châteauroux"
 	world = earth
 	geocoordinate = { 1.6902777777778 46.809722222222 }
-	type = resource
-	resource = grain
+	type = holding
+	holding_type = guild
 	province = berry
 	features = {
 		prime_grain_land

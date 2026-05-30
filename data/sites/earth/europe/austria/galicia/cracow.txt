@@ -25,7 +25,7 @@ cracow = {
 		}
 		
 		1364 = {
-			buildings += university #University founded in Krakow in 1364; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+			#buildings += university #University founded in Krakow in 1364; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
 		}
 	}
 }

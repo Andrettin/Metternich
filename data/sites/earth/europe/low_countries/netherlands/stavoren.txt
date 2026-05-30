@@ -1,7 +1,9 @@
 stavoren = {
 	name = "Stavoren"
 	world = earth
-	#geocoordinate = { 5.3583 52.8833 }
+	geocoordinate = { 5.3583 52.8833 }
+	type = holding
+	holding_type = guild
 	province = friesland
 	
 	history = {

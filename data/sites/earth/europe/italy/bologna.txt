@@ -3,7 +3,8 @@ bologna = {
 	world = earth
 	geocoordinate = { 11.34002070990 44.50042197580 } #from Natural Earth
 	type = holding
-	holding_type = guild
+	holding_type = university #historical university
+	#holding_type = guild
 	province = romagna
 	cultural_names = {
 		roman = "Bononia" #Source: William R. Shepherd, "Historical Atlas", 1911, p. 29.
@@ -15,7 +16,7 @@ bologna = {
 	
 	history = {
 		1187 = {
-			buildings += smithy
+			#buildings += smithy
 		}
 		
 		1250 = {
