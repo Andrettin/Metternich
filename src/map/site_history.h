@@ -13,6 +13,7 @@ Q_MOC_INCLUDE("religion/religion.h")
 namespace metternich {
 
 class building_type;
+class domain;
 class dungeon;
 class holding_type;
 class improvement;
@@ -24,6 +25,7 @@ class site_history final : public data_entry_history
 {
 	Q_OBJECT
 
+	Q_PROPERTY(const metternich::domain* owner MEMBER owner READ get_owner)
 	Q_PROPERTY(bool resource_discovered MEMBER resource_discovered READ is_resource_discovered)
 	Q_PROPERTY(bool developed MEMBER developed)
 	Q_PROPERTY(int development_level MEMBER development_level)
@@ -41,6 +43,11 @@ public:
 
 	virtual void process_gsml_property(const gsml_property &property, const QDate &date) override;
 	virtual void process_gsml_scope(const gsml_data &scope, const QDate &date) override;
+
+	const domain *get_owner() const
+	{
+		return this->owner;
+	}
 
 	bool is_resource_discovered() const
 	{
@@ -190,6 +197,7 @@ public:
 
 private:
 	const metternich::site *site = nullptr;
+	const domain *owner = nullptr;
 	bool resource_discovered = false;
 	bool developed = false;
 	int development_level = 0;
