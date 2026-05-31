@@ -6,10 +6,8 @@ monarchy = {
 	regnal_numbering = true
 	required_technology = monarchy
 	preferred_holding_types = {
-		royal_palace
-	}
-	allowed_holding_types = {
 		castle
+		royal_palace
 	}
 	default_laws = {
 		succession = primogeniture

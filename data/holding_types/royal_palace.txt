@@ -3,7 +3,6 @@ royal_palace = {
 	icon = empire_crown
 	portrait = aristocratic_palace
 	image_filepath = "tiles/settlements/town.png"
-	political = true
 	domain_skill = order
 	level_commodity_costs = {
 		wealth = 1gb
