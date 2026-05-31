@@ -1,24 +1,24 @@
 coal_mine = {
 	name = "Coal Mine"
-	slot_type = coal_mine
+	slot_type = resource
 }
 
 gold_mine = {
 	name = "Gold Mine"
-	slot_type = gold_mine
+	slot_type = resource
 }
 
 iron_mine = {
 	name = "Iron Mine"
-	slot_type = iron_mine
+	slot_type = resource
 }
 
 silver_mine = {
 	name = "Silver Mine"
-	slot_type = silver_mine
+	slot_type = resource
 }
 
 sulfur_mine = {
 	name = "Sulfur Mine"
-	slot_type = sulfur_mine
+	slot_type = resource
 }

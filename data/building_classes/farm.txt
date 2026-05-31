@@ -1,19 +1,19 @@
 cattle_ranch = {
 	name = "Cattle Ranch"
-	slot_type = cattle_ranch
+	slot_type = resource
 }
 
 grain_farm = {
 	name = "Grain Farm"
-	slot_type = grain_farm
+	slot_type = resource
 }
 
 sheep_ranch = {
 	name = "Sheep Ranch"
-	slot_type = sheep_ranch
+	slot_type = resource
 }
 
 tobacco_plantation = {
 	name = "Tobacco Plantation"
-	slot_type = tobacco_plantation
+	slot_type = resource
 }

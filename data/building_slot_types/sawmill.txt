@@ -1,3 +1,0 @@
-sawmill = {
-	name = "Sawmill"
-}

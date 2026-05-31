@@ -1,4 +1,4 @@
 sawmill = {
 	name = "Sawmill"
-	slot_type = sawmill
+	slot_type = resource
 }
