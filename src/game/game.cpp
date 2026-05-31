@@ -455,10 +455,8 @@ QCoro::Task<void> game::start_coro()
 			co_await task;
 		}
 
-		for (const site *site : site::get_all()) {
-			if (!site->get_game_data()->is_on_map()) {
-				continue;
-			}
+		for (const site *site : map::get()->get_sites()) {
+			assert_throw(site->get_game_data()->is_on_map());
 
 			co_await site->get_game_data()->check_holding_type();
 			co_await site->get_game_data()->check_employment();
@@ -859,13 +857,14 @@ QCoro::Task<void> game::apply_history(const QDate &start_date)
 
 QCoro::Task<void> game::apply_sites()
 {
-	for (const site *site : site::get_all()) {
+	for (const site *site : map::get()->get_sites()) {
 		site_game_data *site_game_data = site->get_game_data();
 		const tile *tile = site_game_data->get_tile();
 
-		if (tile == nullptr) {
-			continue;
-		}
+		assert_throw(tile != nullptr);
+
+		//generate features for the start, if any are missing (e.g. resource features)
+		co_await site->get_game_data()->generate_features();
 
 		const province *site_province = site->get_province();
 		if (site_province == nullptr) {

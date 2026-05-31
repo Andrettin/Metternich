@@ -2,6 +2,7 @@
 
 #include "map/site_feature.h"
 
+#include "script/factor.h"
 #include "script/modifier.h"
 
 namespace metternich {
@@ -21,6 +22,9 @@ void site_feature::process_gsml_scope(const gsml_data &scope)
 	if (tag == "modifier") {
 		this->modifier = std::make_unique<metternich::modifier<const site>>();
 		this->modifier->process_gsml_data(scope);
+	} else if (tag == "weight_factor") {
+		this->weight_factor = std::make_unique<factor<site>>();
+		this->weight_factor->process_gsml_data(scope);
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}

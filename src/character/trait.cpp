@@ -8,7 +8,6 @@
 #include "script/condition/and_condition.h"
 #include "script/factor.h"
 #include "script/modifier.h"
-#include "util/assert_util.h"
 
 namespace metternich {
 

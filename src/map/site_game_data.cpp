@@ -57,6 +57,7 @@
 #include "script/condition/and_condition.h"
 #include "script/context.h"
 #include "script/effect/effect_list.h"
+#include "script/factor.h"
 #include "script/modifier.h"
 #include "script/scripted_site_modifier.h"
 #include "ui/portrait.h"
@@ -1305,6 +1306,36 @@ QCoro::Task<void> site_game_data::remove_feature(const site_feature *feature)
 
 	if (game::get()->is_running()) {
 		emit features_changed();
+	}
+}
+
+QCoro::Task<void> site_game_data::generate_features()
+{
+	if (this->site->is_settlement()) {
+		bool has_resource_feature = false;
+		for (const site_feature *feature : this->get_features()) {
+			if (feature->is_resource()) {
+				has_resource_feature = true;
+				break;
+			}
+		}
+
+		if (!has_resource_feature) {
+			//generate a resource feature if this holding has none
+			std::vector<const site_feature *> potential_resources;
+			for (const site_feature *feature : site_feature::get_all()) {
+				if (feature->is_resource() && feature->get_weight_factor() != nullptr) {
+					const int weight = feature->get_weight_factor()->calculate(this->site).to_int();
+					for (int i = 0; i < weight; ++i) {
+						potential_resources.push_back(feature);
+					}
+				}
+			}
+
+			if (!potential_resources.empty()) {
+				co_await this->add_feature(vector::get_random(potential_resources));
+			}
+		}
 	}
 }
 

@@ -8,12 +8,18 @@ gold_deposit = {
 	name = "Gold Deposit"
 	icon = gold_ore
 	resource = true
+	weight_factor = {
+		base_value = 5
+	}
 }
 
 iron_deposit = {
 	name = "Iron Deposit"
 	icon = iron_ore
 	resource = true
+	weight_factor = {
+		base_value = 10
+	}
 }
 
 silver_deposit = {

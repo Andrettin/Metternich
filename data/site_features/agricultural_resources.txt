@@ -8,18 +8,86 @@ prime_cotton_land = {
 	name = "Prime Cotton Land"
 	icon = cotton
 	resource = true
+	#weight_factor = {
+	#	base_value = 20
+	#	
+	#	modifier = {
+	#		factor = 0
+	#		or = {
+	#			terrain = mountains
+	#			terrain = high_mountains
+	#			terrain = forest
+	#			terrain = desert
+	#		}
+	#	}
+	#}
 }
 
 prime_grain_land = {
 	name = "Prime Grain Land"
 	icon = grain
 	resource = true
+	weight_factor = {
+		base_value = 35
+		
+		modifier = {
+			factor = 0
+			terrain = desert
+		}
+		modifier = {
+			factor = 0.15
+			or = {
+				terrain = mountains
+				terrain = high_mountains
+				terrain = forest
+				terrain = hills
+			}
+		}
+		modifier = {
+			factor = 0.25
+			terrain = swamp
+		}
+		modifier = {
+			factor = 0.6
+			or = {
+				terrain = savannah
+				terrain = steppe
+			}
+		}
+	}
 }
 
 prime_sheep_land = {
 	name = "Prime Sheep Land"
 	icon = wool
 	resource = true
+	weight_factor = {
+		base_value = 30
+		
+		modifier = {
+			factor = 0
+			or = {
+				terrain = swamp
+				terrain = hills
+				terrain = forest
+			}
+		}
+		modifier = {
+			factor = 0.15
+			or = {
+				terrain = plains
+				terrain = hills
+				terrain = forest
+			}
+		}
+		modifier = {
+			factor = 1.25
+			or = {
+				terrain = desert
+				terrain = savannah
+			}
+		}
+	}
 }
 
 prime_sugar_land = {
@@ -32,4 +100,16 @@ prime_tobacco_land = {
 	name = "Prime Tobacco Land"
 	icon = tobacco
 	resource = true
+	weight_factor = {
+		base_value = 15
+		
+		modifier = {
+			factor = 0
+			or = {
+				terrain = mountains
+				terrain = high_mountains
+				terrain = desert
+			}
+		}
+	}
 }
