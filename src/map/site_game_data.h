@@ -284,6 +284,7 @@ public:
 		return this->get_features().contains(feature);
 	}
 
+	bool can_have_feature(const site_feature *feature) const;
 	[[nodiscard]] QCoro::Task<void> add_feature(const site_feature *feature);
 	[[nodiscard]] QCoro::Task<void> remove_feature(const site_feature *feature);
 	[[nodiscard]] QCoro::Task<void> generate_features();

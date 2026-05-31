@@ -2,8 +2,18 @@ prime_cattle_land = {
 	name = "Prime Cattle Land"
 	icon = cattle
 	resource = true
+	terrain_types = {
+		plains
+		savannah
+		steppe
+	}
 	weight_factor = {
 		base_value = 30
+		
+		modifier = {
+			factor = 1.5
+			terrain = steppe
+		}
 	}
 }
 
@@ -30,13 +40,13 @@ prime_grain_land = {
 	name = "Prime Grain Land"
 	icon = grain
 	resource = true
+	terrain_types = {
+		plains
+		savannah
+	}
 	weight_factor = {
 		base_value = 35
 		
-		modifier = {
-			factor = 0
-			terrain = desert
-		}
 		modifier = {
 			factor = 0.15
 			or = {
@@ -64,22 +74,17 @@ prime_sheep_land = {
 	name = "Prime Sheep Land"
 	icon = wool
 	resource = true
+	terrain_types = {
+		hills
+	}
 	weight_factor = {
 		base_value = 30
 		
 		modifier = {
-			factor = 0
-			or = {
-				terrain = swamp
-				terrain = hills
-				terrain = forest
-			}
-		}
-		modifier = {
 			factor = 0.15
 			or = {
 				terrain = plains
-				terrain = hills
+				#terrain = hills
 				terrain = forest
 			}
 		}
@@ -103,16 +108,10 @@ prime_tobacco_land = {
 	name = "Prime Tobacco Land"
 	icon = tobacco
 	resource = true
+	terrain_types = {
+		plains
+	}
 	weight_factor = {
 		base_value = 15
-		
-		modifier = {
-			factor = 0
-			or = {
-				terrain = mountains
-				terrain = high_mountains
-				terrain = desert
-			}
-		}
 	}
 }

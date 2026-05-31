@@ -1269,6 +1269,32 @@ QVariantList site_game_data::get_features_qvariant_list() const
 	return archimedes::container::to_qvariant_list(this->get_features());
 }
 
+bool site_game_data::can_have_feature(const site_feature *feature) const
+{
+	if (!feature->get_holding_types().empty()) {
+		//the feature must be present only for the site's inherent holding type, even if it hasn't actually been constructed yet
+		if (this->site->get_holding_type() == nullptr) {
+			return false;
+		}
+
+		if (!vector::contains(feature->get_holding_types(), this->site->get_holding_type())) {
+			return false;
+		}
+	}
+
+	if (!feature->get_terrain_types().empty()) {
+		if (this->get_terrain() == nullptr) {
+			return false;
+		}
+
+		if (!vector::contains(feature->get_terrain_types(), this->get_terrain())) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
 QCoro::Task<void> site_game_data::add_feature(const site_feature *feature)
 {
 	assert_throw(!this->has_feature(feature));
@@ -1325,6 +1351,10 @@ QCoro::Task<void> site_game_data::generate_features()
 			std::vector<const site_feature *> potential_resources;
 			for (const site_feature *feature : site_feature::get_all()) {
 				if (feature->is_resource() && feature->get_weight_factor() != nullptr) {
+					if (!this->can_have_feature(feature)) {
+						continue;
+					}
+
 					const int weight = feature->get_weight_factor()->calculate(this->site).to_int();
 					for (int i = 0; i < weight; ++i) {
 						potential_resources.push_back(feature);

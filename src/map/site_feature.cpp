@@ -2,6 +2,8 @@
 
 #include "map/site_feature.h"
 
+#include "infrastructure/holding_type.h"
+#include "map/terrain_type.h"
 #include "script/factor.h"
 #include "script/modifier.h"
 
@@ -18,8 +20,17 @@ site_feature::~site_feature()
 void site_feature::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
+	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "modifier") {
+	if (tag == "holding_types") {
+		for (const std::string &value : values) {
+			this->holding_types.push_back(holding_type::get(value));
+		}
+	} else if (tag == "terrain_types") {
+		for (const std::string &value : values) {
+			this->terrain_types.push_back(terrain_type::get(value));
+		}
+	} else if (tag == "modifier") {
 		this->modifier = std::make_unique<metternich::modifier<const site>>();
 		this->modifier->process_gsml_data(scope);
 	} else if (tag == "weight_factor") {

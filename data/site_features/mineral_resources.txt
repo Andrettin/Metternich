@@ -2,6 +2,11 @@ coal_deposit = {
 	name = "Coal Deposit"
 	icon = coal
 	resource = true
+	terrain_types = {
+		hills
+		mountains
+		high_mountains
+	}
 	weight_factor = {
 		base_value = 1
 	}
@@ -11,6 +16,10 @@ gold_deposit = {
 	name = "Gold Deposit"
 	icon = gold_ore
 	resource = true
+	terrain_types = {
+		mountains
+		high_mountains
+	}
 	weight_factor = {
 		base_value = 5
 	}
@@ -20,6 +29,11 @@ iron_deposit = {
 	name = "Iron Deposit"
 	icon = iron_ore
 	resource = true
+	terrain_types = {
+		hills
+		mountains
+		high_mountains
+	}
 	weight_factor = {
 		base_value = 10
 	}
@@ -29,6 +43,14 @@ silver_deposit = {
 	name = "Silver Deposit"
 	icon = silver
 	resource = true
+	terrain_types = {
+		hills
+		mountains
+		high_mountains
+	}
+	weight_factor = {
+		base_value = 5 #same as gold
+	}
 }
 
 sulfur_deposit = {

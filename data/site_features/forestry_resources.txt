@@ -2,6 +2,9 @@ prime_timber = {
 	name = "Prime Timber"
 	icon = timber
 	resource = true
+	terrain_types = {
+		forest
+	}
 	modifier = {
 		lumber_throughput_modifier = 100 #bonus to sawmill production
 	}

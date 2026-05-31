@@ -8,7 +8,9 @@ Q_MOC_INCLUDE("ui/icon.h")
 namespace metternich {
 
 class icon;
+class holding_type;
 class site;
+class terrain_type;
 
 template <typename scope_type>
 class factor;
@@ -44,6 +46,16 @@ public:
 		return this->resource;
 	}
 
+	const std::vector<const holding_type *> &get_holding_types() const
+	{
+		return this->holding_types;
+	}
+
+	const std::vector<const terrain_type *> &get_terrain_types() const
+	{
+		return this->terrain_types;
+	}
+
 	const modifier<const site> *get_modifier() const
 	{
 		return this->modifier.get();
@@ -62,6 +74,8 @@ signals:
 private:
 	const metternich::icon *icon = nullptr;
 	bool resource = false;
+	std::vector<const holding_type *> holding_types;
+	std::vector<const terrain_type *> terrain_types;
 	std::unique_ptr<metternich::modifier<const site>> modifier;
 	std::unique_ptr<factor<site>> weight_factor;
 };
