@@ -3352,6 +3352,10 @@ QCoro::Task<bool> domain_game_data::choose_construction()
 					continue;
 				}
 
+				if (building_slot->get_under_construction_building() != nullptr) {
+					continue;
+				}
+
 				const building_type *buildable_building = building_slot->get_buildable_building();
 				if (buildable_building != nullptr) {
 					buildable_locations.push_back(building_slot.get());
