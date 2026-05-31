@@ -16,10 +16,7 @@ sawmill = {
 		engineer
 	}
 	conditions = {
-		or = {
-			terrain = forest
-			feature = prime_timber
-		}
+		feature = prime_timber
 	}
 	modifier = {
 		employment_capacity = {

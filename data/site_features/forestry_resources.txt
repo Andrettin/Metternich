@@ -5,9 +5,9 @@ prime_timber = {
 	terrain_types = {
 		forest
 	}
-	modifier = {
-		lumber_throughput_modifier = 100 #bonus to sawmill production
-	}
+	#modifier = {
+	#	lumber_throughput_modifier = 100 #bonus to sawmill production
+	#}
 	weight_factor = {
 		base_value = 25
 	}
