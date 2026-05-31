@@ -26,6 +26,7 @@
 #include "domain/domain_government.h"
 #include "domain/domain_history.h"
 #include "domain/domain_technology.h"
+#include "domain/government_type.h"
 #include "domain/office.h"
 #include "economy/commodity.h"
 #include "economy/resource.h"
@@ -898,12 +899,24 @@ QCoro::Task<void> game::apply_sites()
 				co_await site_game_data->set_dungeon(site_history->get_dungeon());
 			}
 
-			const province_history *province_history = site_province->get_history();
-			if (province_history->get_trade_zone() != nullptr && site_game_data->get_holding_type() != nullptr && site_game_data->get_holding_type()->is_economic()) {
-				co_await site_game_data->set_owner(province_history->get_trade_zone());
-			}
-			if (province_history->get_temple_domain() != nullptr && site_game_data->get_holding_type() != nullptr && site_game_data->get_holding_type()->is_religious()) {
-				co_await site_game_data->set_owner(province_history->get_temple_domain());
+			if (site_game_data->get_holding_type() != nullptr) {
+				const province_history *province_history = site_province->get_history();
+				if (province_history->get_trade_zone() != nullptr && site_game_data->get_holding_type()->is_economic()) {
+					assert_throw(province_history->get_trade_zone()->get_game_data()->get_government_type()->is_holding_type_allowed(site_game_data->get_holding_type()));
+					co_await site_game_data->set_owner(province_history->get_trade_zone());
+				}
+				if (province_history->get_temple_domain() != nullptr && site_game_data->get_holding_type()->is_religious()) {
+					assert_throw(province_history->get_temple_domain()->get_game_data()->get_government_type()->is_holding_type_allowed(site_game_data->get_holding_type()));
+					co_await site_game_data->set_owner(province_history->get_temple_domain());
+				}
+
+				assert_throw(site_game_data->get_owner() != nullptr);
+				if (!site_game_data->get_owner()->get_game_data()->get_government_type()->is_holding_type_allowed(site_game_data->get_holding_type())) {
+					//clear sites whose owner is not actually allowed to hold them
+					log::log_error(std::format("Clearing holding site \"{}\", since its holding type (\"{}\") is not allowed for the government type (\"{}\") of its owner (\"{}\").", site->get_identifier(), site_game_data->get_holding_type()->get_identifier(), site_game_data->get_owner()->get_game_data()->get_government_type()->get_identifier(), site_game_data->get_owner()->get_identifier()));
+
+					co_await site_game_data->set_holding_type(nullptr);
+				}
 			}
 		}
 	}
@@ -1073,6 +1086,10 @@ QCoro::Task<void> game::apply_site_buildings(const site *site)
 
 	metternich::site_game_data *settlement_game_data = settlement->get_game_data();
 	const metternich::holding_type *holding_type = settlement_game_data->get_holding_type();
+
+	if (holding_type == nullptr) {
+		co_return;
+	}
 
 	const site_history *site_history = site->get_history();
 

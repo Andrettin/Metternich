@@ -882,8 +882,11 @@ QCoro::Task<void> site_game_data::set_holding_type(const metternich::holding_typ
 		if (this->get_holding_type()->get_modifier() != nullptr) {
 			co_await this->get_holding_type()->get_modifier()->apply(this->site, 1);
 		}
+	}
 
-		co_await this->check_building_conditions();
+	co_await this->check_building_conditions();
+
+	if (this->get_holding_type() != nullptr) {
 		co_await this->check_free_buildings();
 	}
 
