@@ -69,6 +69,10 @@ small_university = {
 	domain_modifier = {
 		economy = 2
 		loyalty = 2
+		monthly_technology_category_research = {
+			category = industry
+			value = 5
+		}
 	}
 	item_creation_types = {
 		minor_scroll_or_wondrous_item
@@ -125,6 +129,10 @@ university = {
 		economy = 3
 		loyalty = 3
 		#fame = 1
+		monthly_technology_category_research = {
+			category = industry
+			value = 10
+		}
 	}
 	item_creation_types = {
 		minor_scroll_or_wondrous_item
@@ -182,6 +190,10 @@ large_university = {
 		economy = 3
 		loyalty = 3
 		#fame = 1
+		monthly_technology_category_research = {
+			category = industry
+			value = 15
+		}
 	}
 	item_creation_types = {
 		minor_scroll_or_wondrous_item
@@ -216,14 +228,18 @@ monastic_school = {
 	commodity_cost_weights = {
 		carpentry = 64
 	}
-	province_modifier = {
-		technology_spread_modifier = 10
-	}
 	modifier = {
 		monthly_regency_bonus = 0.05
 	}
-	
-	#FIXME: should increase culture research points
+	province_modifier = {
+		technology_spread_modifier = 10
+	}
+	domain_modifier = {
+		monthly_technology_category_research = {
+			category = culture
+			value = 4
+		}
+	}
 }
 
 cathedral_school = {
@@ -251,12 +267,16 @@ cathedral_school = {
 	commodity_cost_weights = {
 		carpentry = 64
 	}
-	province_modifier = {
-		technology_spread_modifier = 30
-	}
 	modifier = {
 		monthly_regency_bonus = 0.1
 	}
-	
-	#FIXME: should increase culture research points
+	province_modifier = {
+		technology_spread_modifier = 30
+	}
+	domain_modifier = {
+		monthly_technology_category_research = {
+			category = culture
+			value = 8
+		}
+	}
 }
