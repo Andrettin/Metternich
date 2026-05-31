@@ -28,7 +28,7 @@
 #include "util/container_util.h"
 #include "util/gender.h"
 #include "util/log_util.h"
-#include "util/string_util.h"
+#include "util/random.h"
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
 
@@ -143,6 +143,11 @@ void domain::initialize()
 		this->choose_random_flag();
 	} else {
 		this->flag_module = this->get_module();
+	}
+
+	if (!this->color.isValid()) {
+		log::log_error(std::format("Domain \"{}\" has no color. A random one will be generated for it.", this->get_identifier()));
+		this->color = random::get()->generate_color();
 	}
 
 	named_data_entry::initialize();
@@ -288,10 +293,6 @@ bool domain::is_clade() const
 
 const QColor &domain::get_color() const
 {
-	if (!this->color.isValid()) {
-		return defines::get()->get_minor_nation_color();
-	}
-
 	return this->color;
 }
 
