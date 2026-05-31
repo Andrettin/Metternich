@@ -2,6 +2,9 @@ coal_deposit = {
 	name = "Coal Deposit"
 	icon = coal
 	resource = true
+	weight_factor = {
+		base_value = 1
+	}
 }
 
 gold_deposit = {

@@ -5,4 +5,7 @@ prime_timber = {
 	modifier = {
 		lumber_throughput_modifier = 100 #bonus to sawmill production
 	}
+	weight_factor = {
+		base_value = 25
+	}
 }

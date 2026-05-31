@@ -2,6 +2,9 @@ prime_cattle_land = {
 	name = "Prime Cattle Land"
 	icon = cattle
 	resource = true
+	weight_factor = {
+		base_value = 30
+	}
 }
 
 prime_cotton_land = {
