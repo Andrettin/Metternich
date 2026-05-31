@@ -2,4 +2,7 @@ empire = {
 	name = "Empire"
 	icon = crown_imperial
 	min_domain_size = 201
+	modifier = {
+		max_current_constructions = 8
+	}
 }

@@ -144,6 +144,7 @@ class domain_game_data final : public QObject
 	Q_PROPERTY(int population_unit_count READ get_population_unit_count NOTIFY population_units_changed)
 	Q_PROPERTY(metternich::population* population READ get_population CONSTANT)
 	Q_PROPERTY(int population_growth READ get_population_growth NOTIFY population_growth_changed)
+	Q_PROPERTY(int max_current_constructions READ get_max_current_constructions NOTIFY max_current_constructions_changed)
 	Q_PROPERTY(QVariantList item_slots READ get_item_slots_qvariant_list CONSTANT)
 	Q_PROPERTY(QColor diplomatic_map_color READ get_diplomatic_map_color NOTIFY overlord_changed)
 	Q_PROPERTY(QVariantList ideas READ get_ideas_qvariant_list NOTIFY ideas_changed)
@@ -164,6 +165,7 @@ public:
 	static constexpr int first_deity_cost = 10;
 	static constexpr int base_deity_cost = 200;
 	static constexpr int deity_cost_increment = 100;
+	static constexpr int base_max_current_constructions = 1;
 
 	explicit domain_game_data(metternich::domain *domain);
 	~domain_game_data();
@@ -861,6 +863,18 @@ public:
 
 	[[nodiscard]] QCoro::Task<bool> choose_construction();
 
+	int get_max_current_constructions() const
+	{
+		return this->max_current_constructions;
+	}
+
+	void set_max_current_constructions(const int max);
+
+	void change_max_current_constructions(const int change)
+	{
+		this->set_max_current_constructions(this->get_max_current_constructions() + change);
+	}
+
 	std::vector<building_item_slot *> get_item_slots() const;
 	QVariantList get_item_slots_qvariant_list() const;
 
@@ -1309,6 +1323,7 @@ signals:
 	void population_type_inputs_changed();
 	void population_type_outputs_changed();
 	void settlement_building_counts_changed();
+	void max_current_constructions_changed();
 	void building_built(const building_type *building, const site *site);
 	void pathway_built(const pathway *pathway, const province *province);
 	void item_slots_changed();
@@ -1379,6 +1394,7 @@ private:
 	int population_growth = 0; //population growth counter
 	int food_consumption = 0;
 	building_type_map<int> settlement_building_counts;
+	int max_current_constructions = domain_game_data::base_max_current_constructions;
 	std::map<idea_type, data_entry_map<idea_slot, const idea *>> ideas;
 	std::map<idea_type, data_entry_map<idea_slot, const idea *>> appointed_ideas;
 	scripted_domain_modifier_map<int> scripted_modifiers;

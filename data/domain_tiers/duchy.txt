@@ -3,4 +3,7 @@ duchy = {
 	icon = crown_ducal
 	min_domain_size = 51
 	max_domain_size = 100
+	modifier = {
+		max_current_constructions = 4
+	}
 }

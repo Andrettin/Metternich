@@ -3,4 +3,7 @@ kingdom = {
 	icon = crown_royal
 	min_domain_size = 101
 	max_domain_size = 200
+	modifier = {
+		max_current_constructions = 6
+	}
 }

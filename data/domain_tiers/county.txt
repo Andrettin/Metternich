@@ -3,4 +3,7 @@ county = {
 	icon = crown_comital
 	min_domain_size = 26
 	max_domain_size = 50
+	modifier = {
+		max_current_constructions = 1
+	}
 }

@@ -157,6 +157,8 @@ void domain_game_data::process_gsml_property(const gsml_property &property)
 		this->unrest = std::stoi(value);
 	} else if (key == "domain_power") {
 		this->domain_power = std::stoi(value);
+	} else if (key == "max_current_constructions") {
+		this->max_current_constructions = std::stoi(value);
 	} else {
 		throw std::runtime_error(std::format("Invalid domain game data property: \"{}\".", key));
 	}
@@ -235,6 +237,10 @@ gsml_data domain_game_data::to_gsml_data() const
 	data.add_property("consumption", std::to_string(this->get_consumption()));
 	data.add_property("unrest", std::to_string(this->get_unrest()));
 	data.add_property("domain_power", std::to_string(this->get_domain_power()));
+
+	if (this->max_current_constructions != 0) {
+		data.add_property("max_current_constructions", std::to_string(this->max_current_constructions));
+	}
 
 	if (!this->attribute_values.empty()) {
 		gsml_data attributes_data("attributes");
@@ -807,7 +813,8 @@ QCoro::Task<void> domain_game_data::do_construction()
 		}
 	}
 
-	if (under_construction_project_count == 0) {
+	const int available_current_construction_slots = this->get_max_current_constructions() - under_construction_project_count;
+	for (int i = 0; i < available_current_construction_slots; ++i) {
 		const bool construction_chosen = co_await this->choose_construction();
 		if (construction_chosen) {
 			++under_construction_project_count;
@@ -3376,6 +3383,17 @@ QCoro::Task<bool> domain_game_data::choose_construction()
 	this->construction_chosen_promise.reset();
 
 	co_return true;
+}
+
+void domain_game_data::set_max_current_constructions(const int max)
+{
+	if (max == this->get_max_current_constructions()) {
+		return;
+	}
+
+	this->max_current_constructions = max;
+
+	emit max_current_constructions_changed();
 }
 
 std::vector<building_item_slot *> domain_game_data::get_item_slots() const

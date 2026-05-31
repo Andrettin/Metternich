@@ -52,6 +52,7 @@
 #include "script/modifier_effect/initiative_modifier_effect.h"
 #include "script/modifier_effect/law_cost_modifier_effect.h"
 #include "script/modifier_effect/leader_cost_modifier_effect.h"
+#include "script/modifier_effect/max_current_constructions_modifier_effect.h"
 #include "script/modifier_effect/max_current_researches_modifier_effect.h"
 #include "script/modifier_effect/max_level_modifier_effect.h"
 #include "script/modifier_effect/merchant_ship_stat_modifier_effect.h"
@@ -181,6 +182,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<law_cost_modifier_effect>(value);
 		} else if (key == "leader_cost_modifier") {
 			return std::make_unique<leader_cost_modifier_effect>(value);
+		} else if (key == "max_current_constructions") {
+			return std::make_unique<max_current_constructions_modifier_effect>(value);
 		} else if (key == "max_current_researches") {
 			return std::make_unique<max_current_researches_modifier_effect>(value);
 		} else if (key == "population_tax_rate") {
