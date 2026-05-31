@@ -58,6 +58,7 @@
 #include "script/modifier_effect/military_unit_stat_modifier_effect.h"
 #include "script/modifier_effect/mineral_output_modifier_effect.h"
 #include "script/modifier_effect/monthly_commodity_bonus_modifier_effect.h"
+#include "script/modifier_effect/monthly_technology_category_research_modifier_effect.h"
 #include "script/modifier_effect/movement_cost_modifier_effect.h"
 #include "script/modifier_effect/movement_modifier_effect.h"
 #include "script/modifier_effect/output_modifier_effect.h"
@@ -349,6 +350,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			modifier_effect = std::make_unique<commodity_bonus_per_improvement_modifier_effect<scope_type>>();
 		} else if (tag == "commodity_bonus_per_settlement") {
 			modifier_effect = std::make_unique<commodity_bonus_per_settlement_modifier_effect<scope_type>>();
+		} else if (tag == "monthly_technology_category_research") {
+			modifier_effect = std::make_unique<monthly_technology_category_research_modifier_effect>();
 		} else if (tag == "population_strata_tax_rate") {
 			modifier_effect = std::make_unique<population_strata_tax_rate_modifier_effect>();
 		} else if (tag == "storage_capacity") {
