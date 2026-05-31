@@ -8,17 +8,18 @@ granary = {
 	holding_types = {
 		castle
 		guild
+		temple
 	}
 	builder_civilian_unit_types = {
 		ruler
 		treasurer
 		engineer
 	}
+	conditions = {
+		feature = prime_grain_land
+	}
 	domain_modifier = {
 		loyalty = 1
 		stability = 1
-	}
-	free_on_start_conditions = {
-		has_building_class = garrison
 	}
 }
