@@ -7,6 +7,10 @@ magocracy = {
 	preferred_holding_types = {
 		magic_source
 	}
+	allowed_holding_types = {
+		great_library
+		university
+	}
 	default_laws = {
 		succession = elective
 	}

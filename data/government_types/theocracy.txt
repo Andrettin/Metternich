@@ -7,6 +7,10 @@ theocracy = {
 	preferred_holding_types = {
 		temple
 	}
+	allowed_holding_types = {
+		great_library
+		university
+	}
 	default_laws = {
 		succession = elective
 	}

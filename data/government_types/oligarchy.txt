@@ -6,6 +6,10 @@ oligarchy = {
 	preferred_holding_types = {
 		guild
 	}
+	allowed_holding_types = {
+		great_library
+		university
+	}
 	default_laws = {
 		succession = elective
 	}

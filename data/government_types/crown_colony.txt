@@ -8,6 +8,10 @@ crown_colony = {
 		royal_palace
 		castle
 	}
+	allowed_holding_types = {
+		great_library
+		university
+	}
 	default_laws = {
 		succession = elective
 	}

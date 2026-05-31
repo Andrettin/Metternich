@@ -7,6 +7,10 @@ overlordship = {
 		castle
 		guild
 	}
+	allowed_holding_types = {
+		great_library
+		university
+	}
 	default_laws = {
 		succession = elective
 		ruling_class = plutocracy
