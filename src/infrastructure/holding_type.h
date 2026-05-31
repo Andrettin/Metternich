@@ -36,6 +36,7 @@ class holding_type final : public named_data_entry, public data_type<holding_typ
 	Q_PROPERTY(bool economic MEMBER economic READ is_economic NOTIFY changed)
 	Q_PROPERTY(bool religious MEMBER religious READ is_religious NOTIFY changed)
 	Q_PROPERTY(const metternich::domain_skill* domain_skill MEMBER domain_skill READ get_domain_skill NOTIFY changed)
+	Q_PROPERTY(bool resource MEMBER resource READ has_resource NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "holding_type";
@@ -86,6 +87,11 @@ public:
 	const domain_skill *get_domain_skill() const
 	{
 		return this->domain_skill;
+	}
+
+	bool has_resource() const
+	{
+		return this->resource;
 	}
 
 	const commodity_map<int64_t> &get_level_commodity_costs() const
@@ -181,6 +187,7 @@ private:
 	bool economic = false;
 	bool religious = false;
 	const metternich::domain_skill *domain_skill = nullptr;
+	bool resource = false;
 	commodity_map<int64_t> level_commodity_costs;
 	commodity_map<int64_t> level_commodity_costs_per_level;
 	commodity_map<int64_t> fortification_level_commodity_costs;

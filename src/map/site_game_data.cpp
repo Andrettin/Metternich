@@ -1271,15 +1271,8 @@ QVariantList site_game_data::get_features_qvariant_list() const
 
 bool site_game_data::can_have_feature(const site_feature *feature) const
 {
-	if (!feature->get_holding_types().empty()) {
-		//the feature must be present only for the site's inherent holding type, even if it hasn't actually been constructed yet
-		if (this->site->get_holding_type() == nullptr) {
-			return false;
-		}
-
-		if (!vector::contains(feature->get_holding_types(), this->site->get_holding_type())) {
-			return false;
-		}
+	if (!this->site->can_have_feature(feature)) {
+		return false;
 	}
 
 	if (!feature->get_terrain_types().empty()) {
@@ -1338,32 +1331,34 @@ QCoro::Task<void> site_game_data::remove_feature(const site_feature *feature)
 QCoro::Task<void> site_game_data::generate_features()
 {
 	if (this->site->is_settlement()) {
-		bool has_resource_feature = false;
-		for (const site_feature *feature : this->get_features()) {
-			if (feature->is_resource()) {
-				has_resource_feature = true;
-				break;
-			}
-		}
-
-		if (!has_resource_feature) {
-			//generate a resource feature if this holding has none
-			std::vector<const site_feature *> potential_resources;
-			for (const site_feature *feature : site_feature::get_all()) {
-				if (feature->is_resource() && feature->get_weight_factor() != nullptr) {
-					if (!this->can_have_feature(feature)) {
-						continue;
-					}
-
-					const int weight = feature->get_weight_factor()->calculate(this->site).to_int();
-					for (int i = 0; i < weight; ++i) {
-						potential_resources.push_back(feature);
-					}
+		if (this->site->get_holding_type() != nullptr && this->site->get_holding_type()->has_resource()) {
+			bool has_resource_feature = false;
+			for (const site_feature *feature : this->get_features()) {
+				if (feature->is_resource()) {
+					has_resource_feature = true;
+					break;
 				}
 			}
 
-			if (!potential_resources.empty()) {
-				co_await this->add_feature(vector::get_random(potential_resources));
+			if (!has_resource_feature) {
+				//generate a resource feature if this holding has none
+				std::vector<const site_feature *> potential_resources;
+				for (const site_feature *feature : site_feature::get_all()) {
+					if (feature->is_resource() && feature->get_weight_factor() != nullptr) {
+						if (!this->can_have_feature(feature)) {
+							continue;
+						}
+
+						const int weight = feature->get_weight_factor()->calculate(this->site).to_int();
+						for (int i = 0; i < weight; ++i) {
+							potential_resources.push_back(feature);
+						}
+					}
+				}
+
+				if (!potential_resources.empty()) {
+					co_await this->add_feature(vector::get_random(potential_resources));
+				}
 			}
 		}
 	}

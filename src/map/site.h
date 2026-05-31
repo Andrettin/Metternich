@@ -181,6 +181,8 @@ public:
 		return this->features;
 	}
 
+	bool can_have_feature(const site_feature *feature) const;
+
 	const std::string &get_title_name(const government_type *government_type, const int tier, const culture *culture) const;
 
 	const std::vector<const region *> &get_generation_regions() const

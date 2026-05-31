@@ -5,6 +5,7 @@ castle = {
 	image_filepath = "tiles/settlements/town.png"
 	political = true
 	domain_skill = order
+	resource = true
 	level_commodity_costs = {
 		wealth = 1gb
 	}

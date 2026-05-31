@@ -4,6 +4,7 @@ magic_source = {
 	portrait = university
 	image_filepath = "tiles/settlements/town.png"
 	domain_skill = magic
+	resource = true
 	level_commodity_costs = {
 		wealth = 1gb
 	}

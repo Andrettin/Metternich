@@ -5,6 +5,7 @@ guild = {
 	image_filepath = "tiles/settlements/town.png"
 	economic = true
 	domain_skill = trade
+	resource = true
 	level_commodity_costs = {
 		wealth = 1gb
 	}

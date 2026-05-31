@@ -16,11 +16,10 @@
 #include "map/site_map_data.h"
 #include "map/site_type.h"
 #include "map/terrain_type.h"
-#include "map/tile.h"
 #include "map/world.h"
 #include "util/assert_util.h"
-#include "util/gender.h"
 #include "util/log_util.h"
+#include "util/vector_util.h"
 
 #include <magic_enum/magic_enum.hpp>
 
@@ -222,6 +221,28 @@ const std::string &site::get_cultural_name(const cultural_group *cultural_group)
 	}
 
 	return this->get_name();
+}
+
+bool site::can_have_feature(const site_feature *feature) const
+{
+	if (feature->is_resource()) {
+		if (this->get_holding_type() == nullptr || !this->get_holding_type()->has_resource()) {
+			return false;
+		}
+	}
+
+	if (!feature->get_holding_types().empty()) {
+		//the feature must be present only for the site's inherent holding type, even if it hasn't actually been constructed yet
+		if (this->get_holding_type() == nullptr) {
+			return false;
+		}
+
+		if (!vector::contains(feature->get_holding_types(), this->get_holding_type())) {
+			return false;
+		}
+	}
+
+	return true;
 }
 
 const std::string &site::get_title_name(const government_type *government_type, const int tier, const culture *culture) const
