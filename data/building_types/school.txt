@@ -1,0 +1,75 @@
+monastic_school = {
+	name = "Monastic School"
+	building_class = monastic_school
+	portrait = university
+	icon = wooden_cross
+	wealth_cost = 18000gp
+	required_technology = monastic_school
+	free_on_start_extra_technology = 0.2
+	holding_types = {
+		temple
+	}
+	required_buildings = {
+		monastery
+	}
+	builder_civilian_unit_types = {
+		ruler
+		high_priest
+		magister
+		engineer
+	}
+	commodity_cost_weights = {
+		carpentry = 64
+	}
+	modifier = {
+		monthly_regency_bonus = 0.05
+	}
+	province_modifier = {
+		technology_spread_modifier = 10
+	}
+	domain_modifier = {
+		monthly_technology_category_research = {
+			category = culture
+			value = 4
+		}
+	}
+}
+
+cathedral_school = {
+	name = "Cathedral School"
+	building_class = cathedral_school
+	portrait = university
+	icon = wooden_cross
+	base_building = monastic_school
+	wealth_cost = 18000gp
+	required_technology = cathedral_school
+	build_duration = 547d
+	free_on_start_extra_technology = 0.2
+	holding_types = {
+		temple
+	}
+	required_buildings = {
+		cathedral
+	}
+	builder_civilian_unit_types = {
+		ruler
+		high_priest
+		magister
+		engineer
+	}
+	commodity_cost_weights = {
+		carpentry = 64
+	}
+	modifier = {
+		monthly_regency_bonus = 0.1
+	}
+	province_modifier = {
+		technology_spread_modifier = 30
+	}
+	domain_modifier = {
+		monthly_technology_category_research = {
+			category = culture
+			value = 8
+		}
+	}
+}

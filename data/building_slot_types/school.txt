@@ -1,0 +1,31 @@
+school = {
+	name = "School"
+}
+
+university = {
+	name = "University"
+}
+
+bardic_college = {
+	name = "Bardic College"
+}
+
+magical_academy = {
+	name = "Magical Academy"
+}
+
+wing_of_diplomacy = {
+	name = "Wing of Diplomacy"
+}
+
+wing_of_finance = {
+	name = "Wing of Finance"
+}
+
+wing_of_strategy = {
+	name = "Wing of Strategy"
+}
+
+wing_of_theology = {
+	name = "Wing of Theology"
+}

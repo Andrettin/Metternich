@@ -205,78 +205,91 @@ large_university = {
 	}
 }
 
-monastic_school = {
-	name = "Monastic School"
-	building_class = monastic_school
+wing_of_diplomacy = {
+	name = "Wing of Diplomacy"
+	building_class = wing_of_diplomacy
 	portrait = university
-	icon = wooden_cross
-	wealth_cost = 18000gp
-	required_technology = monastic_school
-	free_on_start_extra_technology = 0.2
+	icon = treaty
+	wealth_cost = 47400gp
+	required_technology = diplomacy
 	holding_types = {
-		temple
-	}
-	required_buildings = {
-		monastery
+		university
 	}
 	builder_civilian_unit_types = {
 		ruler
-		high_priest
-		magister
+		#chancellor
 		engineer
-	}
-	commodity_cost_weights = {
-		carpentry = 64
-	}
-	modifier = {
-		monthly_regency_bonus = 0.05
-	}
-	province_modifier = {
-		technology_spread_modifier = 10
 	}
 	domain_modifier = {
 		monthly_technology_category_research = {
 			category = culture
-			value = 4
+			value = 5
 		}
 	}
 }
 
-cathedral_school = {
-	name = "Cathedral School"
-	building_class = cathedral_school
+wing_of_finance = {
+	name = "Wing of Finance"
+	building_class = wing_of_finance
+	portrait = university
+	icon = chest
+	wealth_cost = 47400gp
+	required_technology = economics
+	holding_types = {
+		university
+	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
+	domain_modifier = {
+		monthly_technology_category_research = {
+			category = commerce
+			value = 5
+		}
+	}
+}
+
+wing_of_strategy = {
+	name = "Wing of Strategy"
+	building_class = wing_of_strategy
+	portrait = university
+	icon = crossed_sabers
+	wealth_cost = 47400gp
+	required_technology = leadership
+	holding_types = {
+		university
+	}
+	builder_civilian_unit_types = {
+		ruler
+		marshal
+		engineer
+	}
+	domain_modifier = {
+		monthly_technology_category_research = {
+			category = army
+			value = 5
+		}
+	}
+}
+
+wing_of_theology = {
+	name = "Wing of Theology"
+	building_class = wing_of_theology
 	portrait = university
 	icon = wooden_cross
-	base_building = monastic_school
-	wealth_cost = 18000gp
-	required_technology = cathedral_school
-	build_duration = 547d
-	free_on_start_extra_technology = 0.2
+	wealth_cost = 47400gp
+	required_technology = theology
 	holding_types = {
-		temple
-	}
-	required_buildings = {
-		cathedral
+		university
 	}
 	builder_civilian_unit_types = {
 		ruler
 		high_priest
-		magister
 		engineer
 	}
-	commodity_cost_weights = {
-		carpentry = 64
-	}
-	modifier = {
-		monthly_regency_bonus = 0.1
-	}
 	province_modifier = {
-		technology_spread_modifier = 30
-	}
-	domain_modifier = {
-		monthly_technology_category_research = {
-			category = culture
-			value = 8
-		}
+		technology_spread_modifier = 15
 	}
 }

@@ -20,12 +20,12 @@ large_university = {
 
 monastic_school = {
 	name = "Monastic School"
-	slot_type = university
+	slot_type = school
 }
 
 cathedral_school = {
 	name = "Cathedral School"
-	slot_type = university
+	slot_type = school
 }
 
 bardic_college = {
@@ -36,4 +36,24 @@ bardic_college = {
 magical_academy = {
 	name = "Magical Academy"
 	slot_type = magical_academy
+}
+
+wing_of_diplomacy = {
+	name = "Wing of Diplomacy"
+	slot_type = wing_of_diplomacy
+}
+
+wing_of_finance = {
+	name = "Wing of Finance"
+	slot_type = wing_of_finance
+}
+
+wing_of_strategy = {
+	name = "Wing of Strategy"
+	slot_type = wing_of_strategy
+}
+
+wing_of_theology = {
+	name = "Wing of Theology"
+	slot_type = wing_of_theology
 }

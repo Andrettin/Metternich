@@ -69,3 +69,14 @@ democracy = {
 		invention
 	}
 }
+
+diplomacy = {
+	name = "Diplomacy"
+	subcategory = government
+	portrait = engineering
+	icon = treaty
+	period = iron_age
+	prerequisites = {
+		writing
+	}
+}
