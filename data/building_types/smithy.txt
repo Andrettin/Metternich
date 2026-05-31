@@ -13,6 +13,13 @@ smithy = {
 		treasurer
 		engineer
 	}
+	conditions = {
+		or = {
+			#feature = copper_deposit
+			feature = iron_deposit
+			#feature = tin_deposit
+		}
+	}
 	commodity_cost_weights = {
 		carpentry = 64
 		iron = 20
