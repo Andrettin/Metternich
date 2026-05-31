@@ -22,6 +22,10 @@ wing_of_finance = {
 	name = "Wing of Finance"
 }
 
+wing_of_secrets = {
+	name = "Wing of Secrets"
+}
+
 wing_of_strategy = {
 	name = "Wing of Strategy"
 }

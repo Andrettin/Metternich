@@ -251,6 +251,29 @@ wing_of_finance = {
 	}
 }
 
+wing_of_secrets = {
+	name = "Wing of Secrets"
+	building_class = wing_of_secrets
+	portrait = university
+	icon = skull
+	wealth_cost = 47400gp
+	required_technology = diplomacy #FIXME: change to something intrigue/espionage-related instead
+	holding_types = {
+		university
+	}
+	builder_civilian_unit_types = {
+		ruler
+		#spymaster
+		engineer
+	}
+	domain_modifier = {
+		monthly_technology_category_research = {
+			category = culture
+			value = 5
+		}
+	}
+}
+
 wing_of_strategy = {
 	name = "Wing of Strategy"
 	building_class = wing_of_strategy

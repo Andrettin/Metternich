@@ -48,6 +48,11 @@ wing_of_finance = {
 	slot_type = wing_of_finance
 }
 
+wing_of_secrets = {
+	name = "Wing of Secrets"
+	slot_type = wing_of_secrets
+}
+
 wing_of_strategy = {
 	name = "Wing of Strategy"
 	slot_type = wing_of_strategy
