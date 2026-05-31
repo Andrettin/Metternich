@@ -1801,7 +1801,15 @@ QCoro::Task<void> domain_game_data::choose_capital()
 			continue;
 		}
 
+		if (best_capital != nullptr && !this->get_government_type()->is_holding_type_preferred(best_capital->get_game_data()->get_holding_type()) && this->get_government_type()->is_holding_type_preferred(site_game_data->get_holding_type())) {
+			best_capital = nullptr;
+		}
+
 		if (best_capital != nullptr) {
+			if (this->get_government_type()->is_holding_type_preferred(best_capital->get_game_data()->get_holding_type()) && !this->get_government_type()->is_holding_type_preferred(site_game_data->get_holding_type())) {
+				continue;
+			}
+
 			if (best_capital->get_game_data()->is_provincial_capital() && !site_game_data->is_provincial_capital()) {
 				continue;
 			}

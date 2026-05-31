@@ -8,13 +8,14 @@
 #include "domain/law.h"
 #include "domain/law_group.h"
 #include "domain/office.h"
+#include "infrastructure/holding_type.h"
 #include "script/condition/and_condition.h"
 #include "script/modifier.h"
 #include "technology/technology.h"
-#include "util/assert_util.h"
 #include "util/gender.h"
 #include "util/log_util.h"
 #include "util/string_util.h"
+#include "util/vector_util.h"
 
 #include <magic_enum/magic_enum.hpp>
 
@@ -222,7 +223,17 @@ void government_type::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "forbidden_laws") {
+	if (tag == "preferred_holding_types") {
+		for (const std::string &value : values) {
+			const holding_type *holding_type = holding_type::get(value);
+			this->preferred_holding_types.push_back(holding_type);
+			this->allowed_holding_types.push_back(holding_type);
+		}
+	} else if (tag == "allowed_holding_types") {
+		for (const std::string &value : values) {
+			this->allowed_holding_types.push_back(holding_type::get(value));
+		}
+	} else if (tag == "forbidden_laws") {
 		for (const std::string &value : values) {
 			this->forbidden_laws.push_back(law::get(value));
 		}
@@ -230,7 +241,7 @@ void government_type::process_gsml_scope(const gsml_data &scope)
 		conditions->process_gsml_data(scope);
 		this->conditions = std::move(conditions);
 	} else if (tag == "default_laws") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const law_group *law_group = law_group::get(property.get_key());
 			const law *law = law::get(property.get_value());
 			if (law != nullptr) {
@@ -338,6 +349,16 @@ const std::string &government_type::get_form_of_address(const domain_tier tier, 
 	}
 
 	return this->get_group()->get_form_of_address(tier, gender);
+}
+
+bool government_type::is_holding_type_preferred(const holding_type *holding_type) const
+{
+	return vector::contains(this->preferred_holding_types, holding_type);
+}
+
+bool government_type::is_holding_type_allowed(const holding_type *holding_type) const
+{
+	return vector::contains(this->allowed_holding_types, holding_type);
 }
 
 QString government_type::get_modifier_string(const metternich::domain *domain) const

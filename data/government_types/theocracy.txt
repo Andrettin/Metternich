@@ -4,6 +4,9 @@ theocracy = {
 	icon = wooden_cross
 	regnal_numbering = true
 	primary_domain_attribute = stability
+	preferred_holding_types = {
+		temple
+	}
 	default_laws = {
 		succession = elective
 	}

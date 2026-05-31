@@ -3,6 +3,9 @@ oligarchy = {
 	group = republic
 	icon = chest
 	primary_domain_attribute = economy
+	preferred_holding_types = {
+		guild
+	}
 	default_laws = {
 		succession = elective
 	}

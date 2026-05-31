@@ -3,6 +3,10 @@ overlordship = {
 	group = republic
 	icon = saber
 	primary_domain_attribute = loyalty
+	allowed_holding_types = {
+		castle
+		guild
+	}
 	default_laws = {
 		succession = elective
 		ruling_class = plutocracy

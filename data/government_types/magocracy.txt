@@ -4,6 +4,9 @@ magocracy = {
 	icon = university
 	primary_domain_attribute = economy
 	required_technology = republic
+	preferred_holding_types = {
+		magic_source
+	}
 	default_laws = {
 		succession = elective
 	}

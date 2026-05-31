@@ -3,7 +3,11 @@ crown_colony = {
 	group = monarchy
 	icon = settlement
 	primary_domain_attribute = loyalty
-	required_technology = renaissance
+	required_technology = monarchy
+	preferred_holding_types = {
+		royal_palace
+		castle
+	}
 	default_laws = {
 		succession = elective
 	}

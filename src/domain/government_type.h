@@ -19,6 +19,7 @@ namespace metternich {
 class character_class;
 class domain_attribute;
 class government_group;
+class holding_type;
 class law;
 class law_group;
 class office;
@@ -98,6 +99,9 @@ public:
 		return this->regnal_numbering;
 	}
 
+	bool is_holding_type_preferred(const holding_type *holding_type) const;
+	bool is_holding_type_allowed(const holding_type *holding_type) const;
+
 	const std::vector<const law *> &get_forbidden_laws() const
 	{
 		return this->forbidden_laws;
@@ -149,6 +153,8 @@ private:
 	const metternich::icon *icon = nullptr;
 	const domain_attribute *primary_domain_attribute = nullptr;
 	bool regnal_numbering = false; //whether this government type uses regnal numbers for its rulers
+	std::vector<const holding_type *> preferred_holding_types;
+	std::vector<const holding_type *> allowed_holding_types;
 	std::vector<const law *> forbidden_laws;
 	law_group_map<const law *> default_laws;
 	technology *required_technology = nullptr;

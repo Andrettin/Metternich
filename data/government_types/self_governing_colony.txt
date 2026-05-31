@@ -3,7 +3,10 @@ self_governing_colony = {
 	group = republic
 	icon = settlement
 	primary_domain_attribute = economy
-	required_technology = renaissance
+	required_technology = republic
+	preferred_holding_types = {
+		guild
+	}
 	default_laws = {
 		succession = elective
 	}

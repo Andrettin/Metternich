@@ -5,6 +5,12 @@ monarchy = {
 	primary_domain_attribute = loyalty
 	regnal_numbering = true
 	required_technology = monarchy
+	preferred_holding_types = {
+		royal_palace
+	}
+	allowed_holding_types = {
+		castle
+	}
 	default_laws = {
 		succession = primogeniture
 		succession_gender = agnatic_cognatic

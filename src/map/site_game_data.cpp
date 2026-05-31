@@ -16,6 +16,7 @@
 #include "domain/domain_game_data.h"
 #include "domain/domain_government.h"
 #include "domain/domain_technology.h"
+#include "domain/government_type.h"
 #include "economy/commodity.h"
 #include "economy/employment_type.h"
 #include "economy/income_transaction_type.h"
@@ -570,10 +571,8 @@ bool site_game_data::can_be_capital() const
 		return false;
 	}
 
-	if (!this->get_owner()->get_game_data()->get_provinces().empty()) {
-		if (!this->get_holding_type()->is_political()) {
-			return false;
-		}
+	if (!this->get_owner()->get_game_data()->get_government_type()->is_holding_type_allowed(this->get_holding_type())) {
+		return false;
 	}
 
 	return true;
