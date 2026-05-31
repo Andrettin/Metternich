@@ -13,7 +13,7 @@ cambridge = {
 	}
 	features = {
 		academic #historical university
-		prime_grain_land
+		#prime_grain_land
 	}
 	
 	history = {

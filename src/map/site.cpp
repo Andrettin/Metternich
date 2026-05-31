@@ -144,6 +144,12 @@ void site::check() const
 		throw std::runtime_error(std::format("Site \"{}\" is a celestial body, but has no celestial body type.", this->get_identifier()));
 	}
 
+	for (const site_feature *feature : this->get_features()) {
+		if (!this->can_have_feature(feature)) {
+			throw std::runtime_error(std::format("Site \"{}\" has the \"{}\" feature predefined for it, but the site does not fulfill the feature's requirements.", this->get_identifier(), feature->get_identifier()));
+		}
+	}
+
 	int resource_feature_count = 0;
 	for (const site_feature *feature : this->get_features()) {
 		if (feature->is_resource()) {
@@ -226,7 +232,7 @@ const std::string &site::get_cultural_name(const cultural_group *cultural_group)
 bool site::can_have_feature(const site_feature *feature) const
 {
 	if (feature->is_resource()) {
-		if (this->get_holding_type() == nullptr || !this->get_holding_type()->has_resource()) {
+		if (this->get_holding_type() != nullptr && !this->get_holding_type()->has_resource()) {
 			return false;
 		}
 	}
