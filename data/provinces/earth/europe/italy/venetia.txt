@@ -23,6 +23,10 @@ venetia = {
 			religion = catholic
 		}
 		
+		1066 = {
+			trade_zone = contarini
+		}
+		
 		1204 = {
 			owner = venice #part of Venice in 1204; Source: William R. Shepherd, "Historical Atlas", 1911, p. 73.
 		}

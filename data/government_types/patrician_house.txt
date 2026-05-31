@@ -1,0 +1,41 @@
+patrician_house = {
+	name = "Patrician House"
+	group = republic
+	icon = chest
+	primary_domain_attribute = economy
+	required_technology = minor_merchant_houses
+	preferred_holding_types = {
+		patrician_palace
+	}
+	allowed_holding_types = {
+		guild
+		great_library
+		university
+	}
+	default_laws = {
+		succession = primogeniture
+		ruling_class = plutocracy
+		serfdom = free_subjects
+		press_rights = censored_press
+	}
+	forbidden_laws = {
+		elective
+		aristocracy
+	}
+	conditions = {
+		not = {
+			country_type = clade
+			country_type = tribe
+			subject_type = colony
+		}
+	}
+	ruler_character_classes = {
+		merchant
+	}
+	modifier = { #same as Oligarchy
+		corruption = 1
+		law = -1
+		lore = -1
+		society = 1
+	}
+}

@@ -1,0 +1,15 @@
+contarini = {
+	name = "Contarini"
+	world = earth
+	geocoordinate = { 12.333888888889 45.440555555556 } #Ca' d'Oro
+	type = holding
+	holding_type = patrician_palace
+	province = venetia
+	
+	history = {
+		1066 = {
+			developed = true
+			owner = contarini
+		}
+	}
+}
