@@ -1,24 +1,29 @@
 coal_deposit = {
 	name = "Coal Deposit"
 	icon = coal
+	resource = true
 }
 
 gold_deposit = {
 	name = "Gold Deposit"
 	icon = gold_ore
+	resource = true
 }
 
 iron_deposit = {
 	name = "Iron Deposit"
 	icon = iron_ore
+	resource = true
 }
 
 silver_deposit = {
 	name = "Silver Deposit"
 	icon = silver
+	resource = true
 }
 
 sulfur_deposit = {
 	name = "Sulfur Deposit"
 	icon = spices_yellow
+	resource = true
 }

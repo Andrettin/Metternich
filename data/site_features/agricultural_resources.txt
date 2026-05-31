@@ -1,29 +1,35 @@
 prime_cattle_land = {
 	name = "Prime Cattle Land"
 	icon = cattle
+	resource = true
 }
 
 prime_cotton_land = {
 	name = "Prime Cotton Land"
 	icon = cotton
+	resource = true
 }
 
 prime_grain_land = {
 	name = "Prime Grain Land"
 	icon = grain
+	resource = true
 }
 
 prime_sheep_land = {
 	name = "Prime Sheep Land"
 	icon = wool
+	resource = true
 }
 
 prime_sugar_land = {
 	name = "Prime Sugar Land"
 	icon = sugar_cane
+	resource = true
 }
 
 prime_tobacco_land = {
 	name = "Prime Tobacco Land"
 	icon = tobacco
+	resource = true
 }

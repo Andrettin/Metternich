@@ -1,6 +1,7 @@
 prime_timber = {
 	name = "Prime Timber"
 	icon = timber
+	resource = true
 	modifier = {
 		lumber_throughput_modifier = 100 #bonus to sawmill production
 	}

@@ -18,6 +18,7 @@ class site_feature final : public named_data_entry, public data_type<site_featur
 	Q_OBJECT
 
 	Q_PROPERTY(const metternich::icon *icon MEMBER icon READ get_icon NOTIFY changed)
+	Q_PROPERTY(bool resource MEMBER resource READ is_resource NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "site_feature";
@@ -35,6 +36,11 @@ public:
 		return this->icon;
 	}
 
+	bool is_resource() const
+	{
+		return this->resource;
+	}
+
 	const modifier<const site> *get_modifier() const
 	{
 		return this->modifier.get();
@@ -47,6 +53,7 @@ signals:
 
 private:
 	const metternich::icon *icon = nullptr;
+	bool resource = false;
 	std::unique_ptr<metternich::modifier<const site>> modifier;
 };
 

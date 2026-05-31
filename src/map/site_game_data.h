@@ -3,7 +3,6 @@
 #include "database/data_entry_container.h"
 #include "economy/commodity_container.h"
 #include "infrastructure/building_slot_type_container.h"
-#include "population/population_type_container.h"
 #include "script/scripted_modifier_container.h"
 #include "util/centesimal_int.h"
 #include "util/qunique_ptr.h"

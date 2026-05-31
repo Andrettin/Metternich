@@ -144,6 +144,16 @@ void site::check() const
 	if (this->is_celestial_body() && this->get_celestial_body_type() == nullptr) {
 		throw std::runtime_error(std::format("Site \"{}\" is a celestial body, but has no celestial body type.", this->get_identifier()));
 	}
+
+	int resource_feature_count = 0;
+	for (const site_feature *feature : this->get_features()) {
+		if (feature->is_resource()) {
+			++resource_feature_count;
+		}
+	}
+	if (resource_feature_count > 1) {
+		throw std::runtime_error(std::format("Site \"{}\" has {} resource features, but should have only one.", this->get_identifier(), resource_feature_count));
+	}
 }
 
 data_entry_history *site::get_history_base()

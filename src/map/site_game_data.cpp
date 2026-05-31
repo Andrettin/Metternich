@@ -1272,6 +1272,16 @@ QCoro::Task<void> site_game_data::add_feature(const site_feature *feature)
 {
 	assert_throw(!this->has_feature(feature));
 
+	if (feature->is_resource()) {
+		//if the feature is a resource one, remove any existing resource features (a site can have only one of those)
+		for (const site_feature *existing_feature : this->get_features()) {
+			if (existing_feature->is_resource()) {
+				co_await this->remove_feature(existing_feature);
+				break;
+			}
+		}
+	}
+
 	this->features.insert(feature);
 
 	if (feature->get_modifier() != nullptr) {
