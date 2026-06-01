@@ -1115,7 +1115,7 @@ qt_add_shaders(metternich_main "shaders"
 		"opacitymask.frag.qsb"
 )
 
-target_precompile_headers(metternich PRIVATE archimedes/src/pch.h)
+target_precompile_headers(metternich REUSE_FROM archimedes)
 
 set_target_properties(metternich PROPERTIES
 	UNITY_BUILD_MODE GROUP
@@ -1130,8 +1130,8 @@ set_source_files_properties(${game_test_SRCS} PROPERTIES UNITY_GROUP "game_test"
 
 target_link_libraries(metternich PUBLIC archimedes)
 
-target_precompile_headers(metternich_main PRIVATE archimedes/src/pch.h)
-target_precompile_headers(metternich_test PRIVATE archimedes/src/pch.h)
+target_precompile_headers(metternich_main REUSE_FROM archimedes)
+target_precompile_headers(metternich_test REUSE_FROM archimedes)
 
 if(WIN32)
 	set_target_properties(metternich_main 
