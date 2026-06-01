@@ -15,11 +15,10 @@ royal_palace = {
 		regency = 1
 	}
 	conditional_names = {
-		"Royal Palace" = {
+		"Government Palace" = {
 			not = {
 				domain = {
 					government_group = monarchy
-					tier == kingdom
 				}
 			}
 		}
