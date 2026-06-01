@@ -49,14 +49,14 @@ void holding_type::process_gsml_scope(const gsml_data &scope)
 			this->fortification_level_commodity_costs[commodity] = commodity->string_to_value(property.get_value());
 		});
 	} else if (tag == "conditional_names") {
-		scope.for_each_child([&](const gsml_data &child_scope) {
+		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
 			auto conditions = std::make_unique<and_condition<site>>();
 			conditions->process_gsml_data(child_scope);
 			this->conditional_names[child_tag] = std::move(conditions);
 		});
 	} else if (tag == "tier_levels") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 

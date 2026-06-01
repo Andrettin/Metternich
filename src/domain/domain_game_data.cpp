@@ -1008,6 +1008,10 @@ QCoro::Task<void> domain_game_data::set_tier(const domain_tier tier)
 		}
 	}
 
+	for (const site *site : this->get_sites()) {
+		site->get_game_data()->update_holding_type_name();
+	}
+
 	if (game::get()->is_running()) {
 		emit tier_changed();
 	}
@@ -1342,6 +1346,10 @@ QCoro::Task<void> domain_game_data::set_government_type(const metternich::govern
 	if ((old_government_type == nullptr || !old_government_type->has_regnal_numbering()) && this->get_government_type() != nullptr && this->get_government_type()->has_regnal_numbering() && this->get_government()->get_ruler() != nullptr) {
 		this->historical_monarchs[game::get()->get_date()] = this->get_government()->get_ruler();
 		this->get_government()->get_ruler()->get_game_data()->add_reigned_domain(this->domain);
+	}
+
+	for (const site *site : this->get_sites()) {
+		site->get_game_data()->update_holding_type_name();
 	}
 
 	if (game::get()->is_running()) {
