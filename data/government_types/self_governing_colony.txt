@@ -6,6 +6,7 @@ self_governing_colony = {
 	required_technology = republic
 	preferred_holding_types = {
 		guild
+		royal_palace
 	}
 	allowed_holding_types = {
 		great_library

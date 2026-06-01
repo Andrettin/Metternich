@@ -5,6 +5,7 @@ theocracy = {
 	regnal_numbering = true
 	primary_domain_attribute = stability
 	preferred_holding_types = {
+		royal_palace
 		temple
 	}
 	allowed_holding_types = {

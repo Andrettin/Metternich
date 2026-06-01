@@ -6,6 +6,7 @@ magocracy = {
 	required_technology = republic
 	preferred_holding_types = {
 		magic_source
+		royal_palace
 	}
 	allowed_holding_types = {
 		great_library

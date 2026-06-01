@@ -5,6 +5,7 @@ oligarchy = {
 	primary_domain_attribute = economy
 	preferred_holding_types = {
 		guild
+		royal_palace
 	}
 	allowed_holding_types = {
 		great_library

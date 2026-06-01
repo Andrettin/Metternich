@@ -6,6 +6,7 @@ overlordship = {
 	allowed_holding_types = {
 		castle
 		guild
+		royal_palace
 	}
 	allowed_holding_types = {
 		great_library

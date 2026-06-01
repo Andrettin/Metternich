@@ -5,8 +5,8 @@ crown_colony = {
 	primary_domain_attribute = loyalty
 	required_technology = monarchy
 	preferred_holding_types = {
-		royal_palace
 		castle
+		royal_palace
 	}
 	allowed_holding_types = {
 		great_library
