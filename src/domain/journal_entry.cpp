@@ -200,6 +200,10 @@ bool journal_entry::check_preconditions(const domain *domain) const
 		if (character_domain != nullptr && character_domain != domain) {
 			return false;
 		}
+
+		if (game::get()->get_date() >= character->get_game_data()->get_death_date()) {
+			return false;
+		}
 	}
 
 	return true;
