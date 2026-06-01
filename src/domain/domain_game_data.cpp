@@ -206,6 +206,18 @@ void domain_game_data::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->flags.insert(flag::get(value));
 		}
+	} else if (tag == "active_journal_entries") {
+		for (const std::string &value : values) {
+			this->active_journal_entries.push_back(journal_entry::get(value));
+		}
+	} else if (tag == "inactive_journal_entries") {
+		for (const std::string &value : values) {
+			this->inactive_journal_entries.push_back(journal_entry::get(value));
+		}
+	} else if (tag == "finished_journal_entries") {
+		for (const std::string &value : values) {
+			this->finished_journal_entries.push_back(journal_entry::get(value));
+		}
 	} else if (tag == "economy") {
 		scope.process(this->get_economy());
 	} else if (tag == "government") {
@@ -298,6 +310,30 @@ gsml_data domain_game_data::to_gsml_data() const
 			civilian_units_data.add_child(civilian_unit->to_gsml_data());
 		}
 		data.add_child(std::move(civilian_units_data));
+	}
+
+	if (!this->active_journal_entries.empty()) {
+		gsml_data active_journal_entries_data("active_journal_entries");
+		for (const journal_entry *journal_entry : this->active_journal_entries) {
+			active_journal_entries_data.add_value(journal_entry->get_identifier());
+		}
+		data.add_child(std::move(active_journal_entries_data));
+	}
+
+	if (!this->inactive_journal_entries.empty()) {
+		gsml_data inactive_journal_entries_data("inactive_journal_entries");
+		for (const journal_entry *journal_entry : this->inactive_journal_entries) {
+			inactive_journal_entries_data.add_value(journal_entry->get_identifier());
+		}
+		data.add_child(std::move(inactive_journal_entries_data));
+	}
+
+	if (!this->finished_journal_entries.empty()) {
+		gsml_data finished_journal_entries_data("finished_journal_entries");
+		for (const journal_entry *journal_entry : this->finished_journal_entries) {
+			finished_journal_entries_data.add_value(journal_entry->get_identifier());
+		}
+		data.add_child(std::move(finished_journal_entries_data));
 	}
 
 	if (!this->flags.empty()) {
