@@ -3,6 +3,7 @@ amiens = {
 	world = earth
 	geocoordinate = { 2.30000402691 49.90037660630 } #from Natural Earth
 	type = holding
+	holding_type = guild
 	#resource = fish
 	province = picardy
 	cultural_names = {
@@ -13,16 +14,15 @@ amiens = {
 	
 	history = {
 		919 = {
-			holding_type = town #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
 		}
 		
 		1360 = {
-			holding_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			#existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 		
 		1789 = {
-			buildings += courthouse #Prévôt des maréchaux existent in Amiens in 1789; Source: William R. Shepherd, "Historical Atlas", 1911, p. 147.
-			holding_type = city
+			#buildings += courthouse #Prévôt des maréchaux existent in Amiens in 1789; Source: William R. Shepherd, "Historical Atlas", 1911, p. 147.
 		}
 		
 		1815 = {
