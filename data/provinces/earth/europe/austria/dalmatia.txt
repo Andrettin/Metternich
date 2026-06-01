@@ -18,6 +18,10 @@ dalmatia = {
 			religion = asatru
 		}
 		
+		1075 = {
+			trade_zone = dandolo
+		}
+		
 		1204 = {
 			owner = hungary #part of Hungary in 1204; Source: William R. Shepherd, "Historical Atlas", 1911, p. 73.
 			culture = croatian

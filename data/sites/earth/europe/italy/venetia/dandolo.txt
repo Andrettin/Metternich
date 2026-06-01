@@ -1,0 +1,15 @@
+dandolo = {
+	name = "Dandolo"
+	world = earth
+	geocoordinate = { 12.3421 45.4338 } #Palazzo Dandolo
+	type = holding
+	holding_type = patrician_palace
+	province = venetia
+	
+	history = {
+		1066 = {
+			developed = true
+			owner = dandolo
+		}
+	}
+}

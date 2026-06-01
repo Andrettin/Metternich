@@ -1,0 +1,16 @@
+dandolo = {
+	name = "Dandolo"
+	type = polity
+	culture = italian
+	default_religion = catholic
+	default_tier = barony
+	default_government_type = patrician_house
+	default_capital = dandolo
+	eras = {
+		medieval_era
+		renaissance_era
+	}
+	core_holdings = {
+		dandolo
+	}
+}
