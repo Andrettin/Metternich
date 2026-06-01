@@ -1,0 +1,15 @@
+doria = {
+	name = "Doria"
+	world = earth
+	geocoordinate = { 8.9175 44.416111111111114 } #Villa del Principe (Palazzo di Andrea Doria)
+	type = holding
+	holding_type = patrician_palace
+	province = genoa
+	
+	history = {
+		1000 = {
+			developed = true
+			owner = doria
+		}
+	}
+}

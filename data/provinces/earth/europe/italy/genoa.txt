@@ -20,6 +20,10 @@ genoa = {
 			religion = asatru
 		}
 		
+		1066 = {
+			trade_zone = doria
+		}
+		
 		1477 = {
 			owner = genoa #part of the Republic of Genoa c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
 			culture = italian
