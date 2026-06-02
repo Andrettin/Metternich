@@ -1,0 +1,8 @@
+enns = {
+	name = "Enns" #also known as Enisiburg
+	world = earth
+	geocoordinate = { 14.475 48.216666666667 }
+	type = holding
+	holding_type = castle
+	province = upper_austria
+}
