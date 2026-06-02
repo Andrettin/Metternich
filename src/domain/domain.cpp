@@ -259,7 +259,7 @@ domain_government *domain::get_government() const
 	return this->get_game_data()->get_government();
 }
 
-country_military *domain::get_military() const
+domain_military *domain::get_military() const
 {
 	return this->get_game_data()->get_military();
 }

@@ -1,8 +1,7 @@
 #pragma once
 
-#include "domain/country_military.h"
 #include "domain/domain.h"
-#include "script/modifier.h"
+#include "domain/domain_military.h"
 #include "script/modifier_effect/modifier_effect.h"
 #include "unit/promotion.h"
 

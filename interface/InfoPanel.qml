@@ -581,7 +581,7 @@ Rectangle {
 		IconButton {
 			id: garrison_details_button
 			icon_identifier: "crossed_sabers"
-			visible: selected_garrison && selected_province !== null && selected_province.game_data.get_country_military_units_qvariant_list(metternich.game.player_country).length > 0
+			visible: selected_garrison && selected_province !== null && selected_province.game_data.get_domain_military_units_qvariant_list(metternich.game.player_country).length > 0
 			
 			onReleased: {
 				garrison_dialog.open()
@@ -599,7 +599,7 @@ Rectangle {
 		IconButton {
 			id: explore_dungeon_button
 			icon_identifier: "skull"
-			visible: selected_garrison && selected_province !== null && selected_province.game_data.dungeon_sites.length > 0 && selected_province.game_data.get_country_military_units_qvariant_list(metternich.game.player_country).length > 0 && can_visit_dungeons(metternich.selected_military_units)
+			visible: selected_garrison && selected_province !== null && selected_province.game_data.dungeon_sites.length > 0 && selected_province.game_data.get_domain_military_units_qvariant_list(metternich.game.player_country).length > 0 && can_visit_dungeons(metternich.selected_military_units)
 			
 			onClicked: {
 				dungeon_dialog.dungeon_sites = selected_province.game_data.dungeon_sites

@@ -333,8 +333,8 @@ public:
 	}
 
 	QVariantList get_military_units_qvariant_list() const;
-	std::vector<military_unit *> get_country_military_units(const domain *domain) const;
-	Q_INVOKABLE QVariantList get_country_military_units_qvariant_list(const metternich::domain *domain) const;
+	std::vector<military_unit *> get_domain_military_units(const domain *domain) const;
+	Q_INVOKABLE QVariantList get_domain_military_units_qvariant_list(const metternich::domain *domain) const;
 
 	void add_military_unit(military_unit *military_unit);
 	void remove_military_unit(military_unit *military_unit);
@@ -355,14 +355,14 @@ public:
 
 	void change_military_unit_category_count(const military_unit_category category, const int change);
 
-	bool has_country_military_unit(const domain *domain) const;
-	Q_INVOKABLE QVariantList get_country_military_unit_category_counts(metternich::domain *domain) const;
-	Q_INVOKABLE int get_country_military_unit_category_count(const metternich::military_unit_category category, metternich::domain *domain) const;
+	bool has_domain_military_unit(const domain *domain) const;
+	Q_INVOKABLE QVariantList get_domain_military_unit_category_counts(metternich::domain *domain) const;
+	Q_INVOKABLE int get_domain_military_unit_category_count(const metternich::military_unit_category category, metternich::domain *domain) const;
 
 	Q_INVOKABLE const icon *get_military_unit_icon() const;
 	Q_INVOKABLE const icon *get_military_unit_category_icon(const metternich::military_unit_category category) const;
 	Q_INVOKABLE QString get_military_unit_category_name(const metternich::military_unit_category category) const;
-	Q_INVOKABLE const icon *get_country_military_unit_icon(metternich::domain *domain) const;
+	Q_INVOKABLE const icon *get_domain_military_unit_icon(metternich::domain *domain) const;
 
 	const std::vector<army *> &get_entering_armies() const
 	{

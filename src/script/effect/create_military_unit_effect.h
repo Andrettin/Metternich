@@ -1,8 +1,8 @@
 #pragma once
 
 #include "culture/culture.h"
-#include "domain/country_military.h"
 #include "domain/domain.h"
+#include "domain/domain_military.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "script/effect/effect.h"

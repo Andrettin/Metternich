@@ -15,7 +15,6 @@
 #include "database/gsml_parser.h"
 #include "database/gsml_property.h"
 #include "database/preferences.h"
-#include "domain/country_military.h"
 #include "domain/country_rank.h"
 #include "domain/country_turn_data.h"
 #include "domain/diplomacy_state.h"
@@ -25,6 +24,7 @@
 #include "domain/domain_game_data.h"
 #include "domain/domain_government.h"
 #include "domain/domain_history.h"
+#include "domain/domain_military.h"
 #include "domain/domain_technology.h"
 #include "domain/government_type.h"
 #include "domain/office.h"
@@ -794,7 +794,7 @@ QCoro::Task<void> game::apply_history(const QDate &start_date)
 				assert_throw(domain != nullptr);
 
 				domain_game_data *domain_game_data = domain->get_game_data();
-				country_military *country_military = domain->get_military();
+				domain_military *domain_military = domain->get_military();
 
 				assert_throw(domain_game_data->is_alive());
 
@@ -808,7 +808,7 @@ QCoro::Task<void> game::apply_history(const QDate &start_date)
 				const phenotype *phenotype = historical_military_unit->get_phenotype();
 
 				for (int i = 0; i < historical_military_unit->get_quantity(); ++i) {
-					const bool created = co_await country_military->create_military_unit(type, province, phenotype, historical_military_unit_history->get_promotions());
+					const bool created = co_await domain_military->create_military_unit(type, province, phenotype, historical_military_unit_history->get_promotions());
 					assert_throw(created);
 				}
 			} catch (...) {

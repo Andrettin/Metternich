@@ -1,6 +1,6 @@
 #include "metternich.h"
 
-#include "domain/country_military.h"
+#include "domain/domain_military.h"
 
 #include "character/character.h"
 #include "character/character_game_data.h"
@@ -30,21 +30,21 @@
 
 namespace metternich {
 
-country_military::country_military(const metternich::domain *domain)
+domain_military::domain_military(const metternich::domain *domain)
 	: domain(domain)
 {
 }
 
-country_military::~country_military()
+domain_military::~domain_military()
 {
 }
 
-domain_game_data *country_military::get_game_data() const
+domain_game_data *domain_military::get_game_data() const
 {
 	return this->domain->get_game_data();
 }
 
-QCoro::Task<void> country_military::do_military_unit_recruitment()
+QCoro::Task<void> domain_military::do_military_unit_recruitment()
 {
 	try {
 		if (this->get_game_data()->is_under_anarchy()) {
@@ -59,12 +59,12 @@ QCoro::Task<void> country_military::do_military_unit_recruitment()
 	}
 }
 
-QVariantList country_military::get_leaders_qvariant_list() const
+QVariantList domain_military::get_leaders_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_leaders());
 }
 
-void country_military::add_leader(const character *leader)
+void domain_military::add_leader(const character *leader)
 {
 	assert_throw(leader->get_game_data()->get_domain() == this->domain);
 	this->leaders.push_back(leader);
@@ -72,7 +72,7 @@ void country_military::add_leader(const character *leader)
 	emit leaders_changed();
 }
 
-void country_military::remove_leader(const character *leader)
+void domain_military::remove_leader(const character *leader)
 {
 	vector::contains(this->leaders, leader);
 
@@ -81,7 +81,7 @@ void country_military::remove_leader(const character *leader)
 	emit leaders_changed();
 }
 
-void country_military::clear_leaders()
+void domain_military::clear_leaders()
 {
 	const std::vector<const character *> leaders = this->get_leaders();
 	for (const character *leader : leaders) {
@@ -93,7 +93,7 @@ void country_military::clear_leaders()
 	emit leaders_changed();
 }
 
-QCoro::Task<void> country_military::on_leader_died(const character *leader)
+QCoro::Task<void> domain_military::on_leader_died(const character *leader)
 {
 	if (this->domain == game::get()->get_player_country()) {
 		const portrait *war_minister_portrait = this->domain->get_government()->get_war_minister_portrait();
@@ -106,7 +106,7 @@ QCoro::Task<void> country_military::on_leader_died(const character *leader)
 	co_await leader->get_game_data()->get_military_unit()->disband(false);
 }
 
-QCoro::Task<bool> country_military::create_military_unit(const military_unit_type *military_unit_type, const province *deployment_province, const phenotype *phenotype, const std::vector<const promotion *> &promotions)
+QCoro::Task<bool> domain_military::create_military_unit(const military_unit_type *military_unit_type, const province *deployment_province, const phenotype *phenotype, const std::vector<const promotion *> &promotions)
 {
 	if (deployment_province == nullptr) {
 		deployment_province = this->get_game_data()->get_capital_province();
@@ -181,7 +181,7 @@ QCoro::Task<bool> country_military::create_military_unit(const military_unit_typ
 	co_return true;
 }
 
-QCoro::Task<void> country_military::add_military_unit(qunique_ptr<metternich::military_unit> &&military_unit)
+QCoro::Task<void> domain_military::add_military_unit(qunique_ptr<metternich::military_unit> &&military_unit)
 {
 	if (military_unit->get_character() != nullptr) {
 		this->add_leader(military_unit->get_character());
@@ -203,7 +203,7 @@ QCoro::Task<void> country_military::add_military_unit(qunique_ptr<metternich::mi
 	}
 }
 
-QCoro::Task<void> country_military::remove_military_unit(military_unit *military_unit)
+QCoro::Task<void> domain_military::remove_military_unit(military_unit *military_unit)
 {
 	for (const auto &[commodity, cost] : military_unit->get_type()->get_commodity_costs()) {
 		if (commodity->is_manpower()) {
@@ -229,7 +229,7 @@ QCoro::Task<void> country_military::remove_military_unit(military_unit *military
 	}
 }
 
-int country_military::get_military_unit_type_cost_modifier(const military_unit_type *military_unit_type) const
+int domain_military::get_military_unit_type_cost_modifier(const military_unit_type *military_unit_type) const
 {
 	if (military_unit_type->is_infantry()) {
 		return this->get_infantry_cost_modifier();
@@ -246,7 +246,7 @@ int country_military::get_military_unit_type_cost_modifier(const military_unit_t
 	return 0;
 }
 
-commodity_map<int64_t> country_military::get_military_unit_type_commodity_costs(const military_unit_type *military_unit_type, const int quantity) const
+commodity_map<int64_t> domain_military::get_military_unit_type_commodity_costs(const military_unit_type *military_unit_type, const int quantity) const
 {
 	commodity_map<int64_t> commodity_costs = military_unit_type->get_commodity_costs();
 
@@ -277,12 +277,12 @@ commodity_map<int64_t> country_military::get_military_unit_type_commodity_costs(
 	return commodity_costs;
 }
 
-QVariantList country_military::get_military_unit_type_commodity_costs_qvariant_list(const military_unit_type *military_unit_type, const int quantity) const
+QVariantList domain_military::get_military_unit_type_commodity_costs_qvariant_list(const military_unit_type *military_unit_type, const int quantity) const
 {
 	return archimedes::map::to_qvariant_list(this->get_military_unit_type_commodity_costs(military_unit_type, quantity));
 }
 
-const military_unit_type *country_military::get_best_military_unit_category_type(const military_unit_category category, const culture *culture) const
+const military_unit_type *domain_military::get_best_military_unit_category_type(const military_unit_category category, const culture *culture) const
 {
 	const military_unit_type *best_type = nullptr;
 	int best_score = -1;
@@ -330,17 +330,17 @@ const military_unit_type *country_military::get_best_military_unit_category_type
 	return best_type;
 }
 
-const military_unit_type *country_military::get_best_military_unit_category_type(const military_unit_category category) const
+const military_unit_type *domain_military::get_best_military_unit_category_type(const military_unit_category category) const
 {
 	return this->get_best_military_unit_category_type(category, this->domain->get_game_data()->get_culture());
 }
 
-void country_military::add_army(qunique_ptr<army> &&army)
+void domain_military::add_army(qunique_ptr<army> &&army)
 {
 	this->armies.push_back(std::move(army));
 }
 
-void country_military::remove_army(army *army)
+void domain_military::remove_army(army *army)
 {
 	for (size_t i = 0; i < this->armies.size(); ++i) {
 		if (this->armies[i].get() == army) {
@@ -350,12 +350,12 @@ void country_military::remove_army(army *army)
 	}
 }
 
-void country_military::clear_armies()
+void domain_military::clear_armies()
 {
 	this->armies.clear();
 }
 
-void country_military::set_military_unit_type_stat_modifier(const military_unit_type *type, const military_unit_stat stat, const centesimal_int &value)
+void domain_military::set_military_unit_type_stat_modifier(const military_unit_type *type, const military_unit_stat stat, const centesimal_int &value)
 {
 	const centesimal_int old_value = this->get_military_unit_type_stat_modifier(type, stat);
 
@@ -383,7 +383,7 @@ void country_military::set_military_unit_type_stat_modifier(const military_unit_
 	}
 }
 
-QCoro::Task<void> country_military::set_free_infantry_promotion_count(const promotion *promotion, const int value)
+QCoro::Task<void> domain_military::set_free_infantry_promotion_count(const promotion *promotion, const int value)
 {
 	const int old_value = this->get_free_infantry_promotion_count(promotion);
 	if (value == old_value) {
@@ -407,7 +407,7 @@ QCoro::Task<void> country_military::set_free_infantry_promotion_count(const prom
 	}
 }
 
-QCoro::Task<void> country_military::set_free_cavalry_promotion_count(const promotion *promotion, const int value)
+QCoro::Task<void> domain_military::set_free_cavalry_promotion_count(const promotion *promotion, const int value)
 {
 	const int old_value = this->get_free_cavalry_promotion_count(promotion);
 	if (value == old_value) {
@@ -431,7 +431,7 @@ QCoro::Task<void> country_military::set_free_cavalry_promotion_count(const promo
 	}
 }
 
-QCoro::Task<void> country_military::set_free_artillery_promotion_count(const promotion *promotion, const int value)
+QCoro::Task<void> domain_military::set_free_artillery_promotion_count(const promotion *promotion, const int value)
 {
 	const int old_value = this->get_free_artillery_promotion_count(promotion);
 	if (value == old_value) {
@@ -455,7 +455,7 @@ QCoro::Task<void> country_military::set_free_artillery_promotion_count(const pro
 	}
 }
 
-QCoro::Task<void> country_military::set_free_warship_promotion_count(const promotion *promotion, const int value)
+QCoro::Task<void> domain_military::set_free_warship_promotion_count(const promotion *promotion, const int value)
 {
 	const int old_value = this->get_free_warship_promotion_count(promotion);
 	if (value == old_value) {

@@ -8,12 +8,12 @@
 #include "culture/culture.h"
 #include "database/defines.h"
 #include "database/preferences.h"
-#include "domain/country_military.h"
 #include "domain/country_turn_data.h"
 #include "domain/domain.h"
 #include "domain/domain_economy.h"
 #include "domain/domain_game_data.h"
 #include "domain/domain_government.h"
+#include "domain/domain_military.h"
 #include "domain/domain_technology.h"
 #include "domain/government_type.h"
 #include "economy/commodity.h"
@@ -274,7 +274,7 @@ QCoro::Task<void> province_game_data::do_events()
 void province_game_data::do_ai_turn()
 {
 	//visit visitable sites (if any) with military units of this province's owner
-	if (this->get_owner() != nullptr && this->has_country_military_unit(this->get_owner())) {
+	if (this->get_owner() != nullptr && this->has_domain_military_unit(this->get_owner())) {
 		for (const site *site : this->get_sites()) {
 			site_game_data *site_game_data = site->get_game_data();
 			if (!site_game_data->can_be_visited_by(this->get_owner())) {
@@ -1681,20 +1681,20 @@ QVariantList province_game_data::get_military_units_qvariant_list() const
 	return container::to_qvariant_list(this->get_military_units());
 }
 
-std::vector<military_unit *> province_game_data::get_country_military_units(const domain *domain) const
+std::vector<military_unit *> province_game_data::get_domain_military_units(const domain *domain) const
 {
-	std::vector<military_unit *> country_military_units = this->get_military_units();
+	std::vector<military_unit *> domain_military_units = this->get_military_units();
 
-	std::erase_if(country_military_units, [domain](const military_unit *military_unit) {
+	std::erase_if(domain_military_units, [domain](const military_unit *military_unit) {
 		return military_unit->get_country() != domain;
 	});
 
-	return country_military_units;
+	return domain_military_units;
 }
 
-QVariantList province_game_data::get_country_military_units_qvariant_list(const domain *domain) const
+QVariantList province_game_data::get_domain_military_units_qvariant_list(const domain *domain) const
 {
-	return container::to_qvariant_list(this->get_country_military_units(domain));
+	return container::to_qvariant_list(this->get_domain_military_units(domain));
 }
 
 void province_game_data::add_military_unit(military_unit *military_unit)
@@ -1753,7 +1753,7 @@ void province_game_data::change_military_unit_category_count(const military_unit
 	}
 }
 
-bool province_game_data::has_country_military_unit(const domain *domain) const
+bool province_game_data::has_domain_military_unit(const domain *domain) const
 {
 	for (const military_unit *military_unit : this->get_military_units()) {
 		if (military_unit->get_country() == domain) {
@@ -1764,11 +1764,11 @@ bool province_game_data::has_country_military_unit(const domain *domain) const
 	return false;
 }
 
-QVariantList province_game_data::get_country_military_unit_category_counts(metternich::domain *domain) const
+QVariantList province_game_data::get_domain_military_unit_category_counts(metternich::domain *domain) const
 {
 	std::map<military_unit_category, int> counts;
 
-	for (const military_unit *military_unit : this->get_country_military_units(domain)) {
+	for (const military_unit *military_unit : this->get_domain_military_units(domain)) {
 		if (!military_unit->is_moving()) {
 			++counts[military_unit->get_category()];
 		}
@@ -1777,7 +1777,7 @@ QVariantList province_game_data::get_country_military_unit_category_counts(mette
 	return archimedes::map::to_qvariant_list(counts);
 }
 
-int province_game_data::get_country_military_unit_category_count(const metternich::military_unit_category category, metternich::domain *domain) const
+int province_game_data::get_domain_military_unit_category_count(const metternich::military_unit_category category, metternich::domain *domain) const
 {
 	int count = 0;
 
@@ -1866,7 +1866,7 @@ QString province_game_data::get_military_unit_category_name(const military_unit_
 	return best_name;
 }
 
-const icon *province_game_data::get_country_military_unit_icon(metternich::domain *domain) const
+const icon *province_game_data::get_domain_military_unit_icon(metternich::domain *domain) const
 {
 	icon_map<int> icon_counts;
 

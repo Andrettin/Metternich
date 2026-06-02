@@ -14,7 +14,7 @@ Grid {
 			
 			readonly property var military_unit_category: model.modelData.key
 			readonly property int military_unit_count: model.modelData.value
-			readonly property int country_military_unit_count: selected_province.game_data.get_country_military_unit_category_count(military_unit_category, metternich.game.player_country)
+			readonly property int domain_military_unit_count: selected_province.game_data.get_domain_military_unit_category_count(military_unit_category, metternich.game.player_country)
 			
 			Image {
 				id: military_unit_icon
@@ -44,7 +44,7 @@ Grid {
 				anchors.bottom: military_unit_selected_count_label.top
 				anchors.bottomMargin: 4 * scale_factor
 				source: "image://icon/arrow_up"
-				visible: country_military_unit_count > 0
+				visible: domain_military_unit_count > 0
 				
 				MouseArea {
 					anchors.fill: parent
@@ -65,7 +65,7 @@ Grid {
 				anchors.rightMargin: 4 * scale_factor
 				anchors.bottom: military_unit_down_arrow_icon.top
 				anchors.bottomMargin: 4 * scale_factor
-				visible: country_military_unit_count > 0
+				visible: domain_military_unit_count > 0
 			}
 			
 			Image {
@@ -75,7 +75,7 @@ Grid {
 				anchors.bottom: military_unit_count_label.top
 				anchors.bottomMargin: 4 * scale_factor
 				source: "image://icon/arrow_down"
-				visible: country_military_unit_count > 0
+				visible: domain_military_unit_count > 0
 				
 				MouseArea {
 					anchors.fill: parent
@@ -91,7 +91,7 @@ Grid {
 			
 			SmallText {
 				id: military_unit_count_label
-				text: military_unit_count === country_military_unit_count ? number_string(military_unit_count) : (number_string(country_military_unit_count) + " (" + number_string(military_unit_count) + ")")
+				text: military_unit_count === domain_military_unit_count ? number_string(military_unit_count) : (number_string(domain_military_unit_count) + " (" + number_string(military_unit_count) + ")")
 				anchors.bottom: parent.bottom
 				anchors.right: parent.right
 				anchors.rightMargin: 4 * scale_factor

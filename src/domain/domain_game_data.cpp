@@ -9,7 +9,6 @@
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "domain/consulate.h"
-#include "domain/country_military.h"
 #include "domain/country_rank.h"
 #include "domain/country_turn_data.h"
 #include "domain/country_type.h"
@@ -20,6 +19,7 @@
 #include "domain/domain_economy.h"
 #include "domain/domain_government.h"
 #include "domain/domain_history.h"
+#include "domain/domain_military.h"
 #include "domain/domain_technology.h"
 #include "domain/domain_tier.h"
 #include "domain/domain_tier_data.h"
@@ -111,7 +111,7 @@ domain_game_data::domain_game_data(metternich::domain *domain)
 {
 	this->economy = make_qunique<domain_economy>(domain, this);
 	this->government = make_qunique<domain_government>(domain, this);
-	this->military = make_qunique<country_military>(domain);
+	this->military = make_qunique<domain_military>(domain);
 	this->technology = make_qunique<domain_technology>(domain, this);
 
 	connect(this, &domain_game_data::tier_changed, this, &domain_game_data::title_name_changed);
@@ -127,7 +127,7 @@ domain_game_data::domain_game_data(metternich::domain *domain)
 	connect(this, &domain_game_data::provinces_changed, this, &domain_game_data::maintenance_cost_changed);
 	connect(this, &domain_game_data::sites_changed, this, &domain_game_data::income_changed);
 	connect(this, &domain_game_data::sites_changed, this, &domain_game_data::maintenance_cost_changed);
-	connect(this->get_military(), &country_military::military_units_changed, this, &domain_game_data::maintenance_cost_changed);
+	connect(this->get_military(), &domain_military::military_units_changed, this, &domain_game_data::maintenance_cost_changed);
 }
 
 domain_game_data::~domain_game_data()

@@ -69,7 +69,6 @@ set_source_files_properties(${database_SRCS} PROPERTIES UNITY_GROUP "database")
 set(domain_SRCS
 	src/domain/consulate.cpp
 	src/domain/consulate_container.cpp
-	src/domain/country_military.cpp
 	src/domain/country_rank.cpp
 	src/domain/country_turn_data.cpp
 	src/domain/domain.cpp
@@ -80,6 +79,7 @@ set(domain_SRCS
 	src/domain/domain_game_data.cpp
 	src/domain/domain_government.cpp
 	src/domain/domain_history.cpp
+	src/domain/domain_military.cpp
 	src/domain/domain_technology.cpp
 	src/domain/domain_tier_data.cpp
 	src/domain/government_group.cpp
@@ -442,7 +442,6 @@ source_group(database FILES ${database_HDRS})
 set(domain_HDRS
 	src/domain/consulate.h
 	src/domain/consulate_container.h
-	src/domain/country_military.h
 	src/domain/country_rank.h
 	src/domain/country_turn_data.h
 	src/domain/country_type.h
@@ -455,6 +454,7 @@ set(domain_HDRS
 	src/domain/domain_game_data.h
 	src/domain/domain_government.h
 	src/domain/domain_history.h
+	src/domain/domain_military.h
 	src/domain/domain_technology.h
 	src/domain/domain_tier.h
 	src/domain/domain_tier_data.h

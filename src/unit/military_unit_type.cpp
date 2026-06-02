@@ -5,7 +5,7 @@
 #include "culture/cultural_group.h"
 #include "culture/culture.h"
 #include "domain/domain.h"
-#include "domain/country_military.h"
+#include "domain/domain_military.h"
 #include "economy/commodity.h"
 #include "game/battle_resolution_type.h"
 #include "technology/technology.h"

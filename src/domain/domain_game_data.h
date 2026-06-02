@@ -18,10 +18,10 @@
 
 Q_MOC_INCLUDE("character/character.h")
 Q_MOC_INCLUDE("culture/culture.h")
-Q_MOC_INCLUDE("domain/country_military.h")
 Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("domain/domain_economy.h")
 Q_MOC_INCLUDE("domain/domain_government.h")
+Q_MOC_INCLUDE("domain/domain_military.h")
 Q_MOC_INCLUDE("domain/domain_technology.h")
 Q_MOC_INCLUDE("domain/domain_tier.h")
 Q_MOC_INCLUDE("domain/government_type.h")
@@ -48,7 +48,6 @@ class building_type;
 class character;
 class civilian_unit;
 class consulate;
-class country_military;
 class country_rank;
 class culture;
 class domain;
@@ -56,6 +55,7 @@ class domain_ai;
 class domain_attribute;
 class domain_economy;
 class domain_government;
+class domain_military;
 class domain_technology;
 class event;
 class flag;
@@ -99,7 +99,7 @@ class domain_game_data final : public QObject
 
 	Q_PROPERTY(metternich::domain_economy* economy READ get_economy CONSTANT)
 	Q_PROPERTY(metternich::domain_government* government READ get_government CONSTANT)
-	Q_PROPERTY(metternich::country_military* military READ get_military CONSTANT)
+	Q_PROPERTY(metternich::domain_military* military READ get_military CONSTANT)
 	Q_PROPERTY(metternich::domain_technology* technology READ get_technology CONSTANT)
 	Q_PROPERTY(metternich::domain_tier tier READ get_tier NOTIFY tier_changed)
 	Q_PROPERTY(QString name READ get_name_qstring NOTIFY title_name_changed)
@@ -207,7 +207,7 @@ public:
 		return this->government.get();
 	}
 
-	country_military *get_military() const
+	domain_military *get_military() const
 	{
 		return this->military.get();
 	}
@@ -1424,7 +1424,7 @@ private:
 	std::unique_ptr<QPromise<void>> construction_chosen_promise;
 	qunique_ptr<domain_economy> economy;
 	qunique_ptr<domain_government> government;
-	qunique_ptr<country_military> military;
+	qunique_ptr<domain_military> military;
 	qunique_ptr<domain_technology> technology;
 };
 

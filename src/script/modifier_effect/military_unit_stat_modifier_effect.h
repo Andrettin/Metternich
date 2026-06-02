@@ -2,8 +2,8 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
-#include "domain/country_military.h"
 #include "domain/domain.h"
+#include "domain/domain_military.h"
 #include "script/modifier_effect/modifier_effect.h"
 #include "unit/military_unit.h"
 #include "unit/military_unit_category.h"

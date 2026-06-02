@@ -21,7 +21,6 @@ namespace archimedes {
 namespace metternich {
 
 class character;
-class country_military;
 class country_turn_data;
 class culture;
 class domain_ai;
@@ -29,6 +28,7 @@ class domain_economy;
 class domain_game_data;
 class domain_government;
 class domain_history;
+class domain_military;
 class domain_technology;
 class government_group;
 class government_type;
@@ -104,7 +104,7 @@ public:
 
 	domain_economy *get_economy() const;
 	domain_government *get_government() const;
-	country_military *get_military() const;
+	domain_military *get_military() const;
 	domain_technology *get_technology() const;
 
 	void reset_turn_data();

@@ -18,7 +18,7 @@ class military_unit_type;
 enum class military_unit_category;
 enum class military_unit_stat;
 
-class country_military final : public QObject
+class domain_military final : public QObject
 {
 	Q_OBJECT
 
@@ -27,8 +27,8 @@ class country_military final : public QObject
 public:
 	static constexpr int base_deployment_limit = 10;
 
-	explicit country_military(const metternich::domain *domain);
-	~country_military();
+	explicit domain_military(const metternich::domain *domain);
+	~domain_military();
 
 	domain_game_data *get_game_data() const;
 
@@ -277,7 +277,7 @@ private:
 	std::vector<const character *> leaders;
 	std::vector<qunique_ptr<military_unit>> military_units;
 	std::vector<qunique_ptr<army>> armies;
-	int deployment_limit = country_military::base_deployment_limit;
+	int deployment_limit = domain_military::base_deployment_limit;
 	military_unit_type_map<std::map<military_unit_stat, centesimal_int>> military_unit_type_stat_modifiers;
 	int infantry_cost_modifier = 0;
 	int cavalry_cost_modifier = 0;
