@@ -45,16 +45,16 @@ auersperg = {
 			tier = barony #created as a barony for Trojan I in 1530 (1539); Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 278.
 		}
 		
-		1630.09.11 = {
-			tier = county #created as a county for Johann Andreas II of Auersperg on 1630.09.11; Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 278.
+		1630.9.11 = {
+			tier = county #created as a county for Johann Andreas II of Auersperg on 1630.9.11; Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 278.
 			
 			offices = {
 				ruler = johann_andreas_ii_of_auersperg
 			}
 		}
 		
-		1653.09.17 = {
-			tier = duchy #created as a principality for Johann Weikhard of Auersperg on 1653.09.17; Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 278.
+		1653.9.17 = {
+			tier = duchy #created as a principality for Johann Weikhard of Auersperg on 1653.9.17; Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 278.
 			
 			offices = {
 				ruler = johann_weikhard_of_auersperg #since Johann Weikhard now had the higher Auersperg title, we consider him here to have become ruler of the domain (even though Johann Andreas II was still alive until then)

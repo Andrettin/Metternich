@@ -1,0 +1,60 @@
+heinrich_of_urach = { #Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 676.
+	name = "Heinrich" #the source gives "Henry"
+	dynasty = furstenberg
+	character_class = aristocrat
+	rank = lord #count
+	culture = german
+	religion = catholic
+	home_site = furstenberg
+	gender = male
+	death_date = 1284
+	
+	#was created count of Fürstenberg in 1250
+	#youngest son of Egino V, count of Fryburg
+	#also known as Henry of Urach
+}
+
+hermann_egon_of_furstenberg = { #Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 676.
+	name = "Hermann Egon"
+	dynasty = furstenberg
+	character_class = aristocrat
+	rank = lord #count and later prince
+	culture = german
+	religion = catholic
+	home_site = furstenberg
+	gender = male
+	death_date = 1674
+	
+	#14th count of Fürstenberg
+	#was created prince of Fürstenberg on 1664.5.12
+}
+
+frobenius_ferdinand_of_furstenberg = { #Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 676.
+	name = "Frobenius Ferdinand"
+	dynasty = furstenberg
+	character_class = aristocrat
+	rank = lord #count and later prince
+	culture = german
+	religion = catholic
+	home_site = furstenberg
+	gender = male
+	death_date = 1741
+	
+	#16th count of Fürstenberg of the Moesskirch line
+	#became prince of Fürstenberg on 1716.12.10
+}
+
+joseph_wilhelm_of_furstenberg = { #Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 676.
+	name = "Joseph Wilhelm"
+	dynasty = furstenberg
+	character_class = aristocrat
+	rank = lord #landgrave and later prince
+	culture = german
+	religion = catholic
+	home_site = furstenberg
+	gender = male
+	death_date = 1762
+	
+	#18th count of Fürstenberg of the Stuhlingen line
+	#became prince of Fürstenberg in 1744
+}

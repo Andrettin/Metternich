@@ -37,6 +37,12 @@ etichonen = {
 	}
 }
 
+furstenberg = {
+	name = "Furstenberg" #"Fürstenberg"
+	prefix = "von"
+	culture = german
+}
+
 habsburg = {
 	name = "Habsburg"
 	prefix = "von"
