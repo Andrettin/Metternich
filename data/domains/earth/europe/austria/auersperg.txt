@@ -1,0 +1,41 @@
+auersperg = {
+	name = "Auersperg"
+	type = polity
+	culture = austrian
+	default_religion = catholic
+	default_tier = barony
+	max_tier = duchy #principality
+	default_government_type = monarchy
+	default_capital = auersperg
+	core_holdings = {
+		auersperg
+	}
+	
+	history = {
+		1466 = {
+			government_type = monarchy
+			
+			offices = {
+				ruler = pankraz_ii_of_auersperg #Engelhard I of Auersperg died in 1466, presumably being succeeded by his son Pankraz II, the founder of the Carniolan line of the Auerspergs; Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 278.
+			}
+		}
+		
+		1496 = {
+			offices = {
+				ruler = trojan_i_of_auersperg #Pankraz II of Auersperg died in 1496, presumably being succeeded by Trojan I, who was later created baron of Auersperg; Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 278.
+			}
+		}
+		
+		1530 = {
+			tier = barony #created as a barony for Trojan I in 1530 (1539); Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 278.
+		}
+		
+		1630.09.11 = {
+			tier = county #created as a county for Johann Andreas II of Auersperg on 1630.09.11; Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 278.
+			
+			offices = {
+				ruler = johann_andreas_ii_of_auersperg
+			}
+		}
+	}
+}

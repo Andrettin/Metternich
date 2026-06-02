@@ -1,3 +1,9 @@
+auersperg = { #Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 278.
+	name = "Auersperg"
+	prefix = "von"
+	culture = austrian
+}
+
 karnstein = { #Source: Sheridan Le Fanu, "Carmilla".
 	name = "Karnstein"
 	prefix = "von"

@@ -1,0 +1,85 @@
+adolf_i_of_auersperg = { #Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 278.
+	name = "Adolf"
+	dynasty = auersperg
+	character_class = aristocrat #lord
+	rank = lord
+	culture = austrian
+	religion = catholic
+	home_site = auersperg
+	gender = male
+	death_date = 1060
+	
+	#Adolf I, lord of Auersberg
+}
+
+engelhard_i_of_auersperg = { #Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 278.
+	name = "Engelhard"
+	dynasty = auersperg
+	character_class = aristocrat
+	rank = lord #presumably, given the regnal number
+	culture = austrian
+	religion = catholic
+	home_site = auersperg
+	gender = male
+	death_date = 1466
+}
+
+pankraz_ii_of_auersperg = { #Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 278.
+	name = "Pankraz"
+	dynasty = auersperg
+	character_class = aristocrat
+	rank = lord #presumably, given the regnal number
+	culture = austrian
+	religion = catholic
+	home_site = auersperg
+	gender = male
+	father = engelhard_i_of_auersperg
+	death_date = 1496
+	
+	#founder of the Carniolan line of the Auerspergs
+}
+
+volkhard_vii_of_auersperg = { #Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 278.
+	name = "Volkhard"
+	dynasty = auersperg
+	character_class = aristocrat
+	rank = lord #presumably, given the regnal number
+	culture = austrian
+	religion = catholic
+	home_site = auersperg
+	gender = male
+	father = engelhard_i_of_auersperg
+	death_date = 1508
+	
+	#founder of the Austrian line of the Auerspergs
+}
+
+trojan_i_of_auersperg = { #Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 278.
+	name = "Trojan"
+	dynasty = auersperg
+	character_class = aristocrat
+	rank = lord #baron
+	culture = austrian
+	religion = catholic
+	home_site = auersperg
+	gender = male
+	father = pankraz_ii_of_auersperg #grandson of Engelhard I, and was made baron of Auersperg (which is in Carniola), so possibly his father was Pankraz II, son of Engelhard I and founder of the Carniolan line
+	death_date = 1541
+	
+	#was created baron of Auersperg in 1530 (1539)
+}
+
+johann_andreas_ii_of_auersperg = { #Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 278.
+	name = "Johann Andreas"
+	dynasty = auersperg
+	character_class = aristocrat
+	rank = lord #baron and later count
+	culture = austrian
+	religion = catholic
+	home_site = auersperg
+	gender = male
+	death_date = 1664
+	
+	#5th baron of Auersperg, great-great-grandson of Trojan I
+	#was created count of Auersperg on 1630.09.11
+}
