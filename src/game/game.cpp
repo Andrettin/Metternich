@@ -639,6 +639,14 @@ QCoro::Task<void> game::apply_history(const QDate &start_date)
 			}
 		}
 
+		for (const site *site : map::get()->get_sites()) {
+			site_game_data *site_game_data = site->get_game_data();
+			const site_history *site_history = site->get_history();
+			if (site_history->get_owner() != nullptr) {
+				co_await site_game_data->set_owner(site_history->get_owner());
+			}
+		}
+
 		for (const domain *domain : domain::get_all()) {
 			domain->get_game_data()->apply_ruler_history(start_date);
 		}
@@ -874,10 +882,6 @@ QCoro::Task<void> game::apply_sites()
 
 		if (site_province != nullptr && site_province->get_game_data()->is_on_map()) {
 			const site_history *site_history = site->get_history();
-
-			if (site_history->get_owner() != nullptr) {
-				co_await site_game_data->set_owner(site_history->get_owner());
-			}
 
 			if (site->get_holding_type() != nullptr && site_history->is_developed()) {
 				assert_throw(site_history->get_dungeon() == nullptr);
