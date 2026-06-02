@@ -7,6 +7,8 @@ hanseatic_league = {
 	default_tier = duchy
 	default_government_type = republic
 	default_capital = lubeck
+	definite_article = true
+	short_name = true
 	eras = {
 		medieval_era
 		renaissance_era
