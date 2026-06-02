@@ -333,8 +333,8 @@ Flickable {
 						height: site_icon.height + 4 * scale_factor
 						
 						readonly property var site: model.modelData
-						readonly property var holding_type: site.game_data.holding_type
-						readonly property var dungeon: site.game_data.dungeon
+						readonly property var holding_type: site ? site.game_data.holding_type : null
+						readonly property var dungeon: site ? site.game_data.dungeon : null
 						readonly property bool selected: site === selected_site
 						
 						Rectangle {
@@ -397,16 +397,16 @@ Flickable {
 		
 		Item {
 			id: site_icon_area
-			x: site.game_data.tile_pos.x * metternich.map.province_map_tile_pixel_size * scale_factor - Math.floor(width / 2)
-			y: site.game_data.tile_pos.y * metternich.map.province_map_tile_pixel_size * scale_factor - Math.floor(height / 2)
+			x: site ? site.game_data.tile_pos.x * metternich.map.province_map_tile_pixel_size * scale_factor - Math.floor(width / 2) : 0
+			y: site ? site.game_data.tile_pos.y * metternich.map.province_map_tile_pixel_size * scale_factor - Math.floor(height / 2) : 0
 			width: site_icon.width + 4 * scale_factor
 			height: site_icon.height + 4 * scale_factor
 			visible: province_map.show_sites && (site.settlement || dungeon !== null)
 			
 			readonly property var site: model.modelData
-			readonly property var tile_pos: site.map_data.tile_pos
-			readonly property var holding_type: site.game_data.holding_type
-			readonly property var dungeon: site.game_data.dungeon
+			readonly property var tile_pos: site ? site.map_data.tile_pos : null
+			readonly property var holding_type: site ? site.game_data.holding_type : null
+			readonly property var dungeon: site ? site.game_data.dungeon : null
 			readonly property bool selected: site === selected_site
 			
 			Rectangle {
