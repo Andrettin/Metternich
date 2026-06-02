@@ -22,6 +22,7 @@ Flickable {
 	property string country_suffix: "0"
 	property var selected_country: null
 	property int mode: DiplomaticMap.Mode.Realm
+	property bool show_landless_domains: false
 	readonly property var reference_country: selected_country ? selected_country : (metternich.game.player_country ? metternich.game.player_country : null)
 	
 	Image {
@@ -51,7 +52,7 @@ Flickable {
 			visible: country.game_data.provinces.length > 0 && (country.game_data.is_independent() || diplomatic_map.mode !== DiplomaticMap.Mode.Realm)
 			
 			readonly property var country: model.modelData
-			readonly property var selected: selected_country === country
+			readonly property bool selected: selected_country === country
 			readonly property var diplomatic_map_image_rect: diplomatic_map.mode === DiplomaticMap.Mode.Realm ? country.game_data.realm_diplomatic_map_image_rect : country.game_data.diplomatic_map_image_rect
 			
 			MaskedMouseArea {
@@ -131,13 +132,68 @@ Flickable {
 			horizontalAlignment: contentWidth <= width ? Text.AlignHCenter : (diplomatic_map_image_rect.x === 0 ? Text.AlignLeft : ((diplomatic_map_image_rect.x + diplomatic_map_image_rect.width) >= metternich.map.diplomatic_map_image_size.width * scale_factor ? Text.AlignRight : Text.AlignHCenter))
 			verticalAlignment: contentHeight <= height ? Text.AlignVCenter : (diplomatic_map_image_rect.y === 0 ? Text.AlignTop : ((diplomatic_map_image_rect.y + diplomatic_map_image_rect.height) >= metternich.map.diplomatic_map_image_size.height * scale_factor ? Text.AlignBottom : Text.AlignVCenter))
 			font.pixelSize: Math.min(Math.max(Math.floor(width * 3 / 4 / text.length), 8 * scale_factor), 12 * scale_factor)
-			visible: country.game_data.provinces.length > 0 && (country.game_data.is_independent() || diplomatic_map.mode !== DiplomaticMap.Mode.Realm) && (diplomatic_map.mode === DiplomaticMap.Mode.Realm || diplomatic_map.mode === DiplomaticMap.Mode.Political || diplomatic_map.mode === DiplomaticMap.Mode.Diplomatic)
+			visible: country.game_data.provinces.length > 0 && (country.game_data.is_independent() || diplomatic_map.mode !== DiplomaticMap.Mode.Realm) && (diplomatic_map.mode === DiplomaticMap.Mode.Realm || diplomatic_map.mode === DiplomaticMap.Mode.Political || diplomatic_map.mode === DiplomaticMap.Mode.Diplomatic) && !diplomatic_map.show_landless_domains
 					
 			readonly property var country: model.modelData
 			readonly property var diplomatic_map_image_rect: diplomatic_map.mode === DiplomaticMap.Mode.Realm ? country.game_data.realm_diplomatic_map_image_rect : country.game_data.diplomatic_map_image_rect
 			readonly property var text_rect: diplomatic_map.mode === DiplomaticMap.Mode.Realm ? country.game_data.realm_text_rect : country.game_data.text_rect
 			readonly property int text_rect_width: text_rect.width * metternich.map.diplomatic_map_tile_pixel_size * scale_factor
 			readonly property int text_rect_height: text_rect.height * metternich.map.diplomatic_map_tile_pixel_size * scale_factor
+		}
+	}
+	
+	//icons for domains which don't own any provinces
+	Repeater {
+		model: metternich.game.countries
+		
+		Item {
+			id: site_icon_area
+			x: site.game_data.tile_pos.x * metternich.map.diplomatic_map_tile_pixel_size * scale_factor - Math.floor(width / 2)
+			y: site.game_data.tile_pos.y * metternich.map.diplomatic_map_tile_pixel_size * scale_factor - Math.floor(height / 2)
+			width: site_icon.width + 4 * scale_factor
+			height: site_icon.height + 4 * scale_factor
+			visible: site !== null && domain.game_data.provinces.length === 0 && diplomatic_map.show_landless_domains
+			
+			readonly property var domain: model.modelData
+			readonly property var site: domain.game_data.capital
+			readonly property bool selected: selected_country === domain
+			readonly property var holding_type: site ? site.game_data.holding_type : null
+			
+			Rectangle {
+				id: site_domain_color_circle
+				width: site_icon_area.width
+				height: site_icon_area.height
+				radius: width / 2
+				color: site.game_data.owner ? site.game_data.owner.color : "transparent"
+			}
+			
+			Image {
+				id: site_icon
+				anchors.verticalCenter: parent.verticalCenter
+				anchors.horizontalCenter: parent.horizontalCenter
+				source: holding_type ? ("image://icon/" + holding_type.icon.identifier + (selected ? "/selected" : "")) : "image://empty/"
+			}
+			
+			MouseArea {
+				id: site_mouse_area
+				anchors.fill: parent
+				hoverEnabled: true
+				
+				onClicked: {
+					metternich.defines.click_sound.play()
+					
+					if (selected) {
+						diplomatic_map.selected_country = null
+					} else {
+						diplomatic_map.selected_country = domain
+					}
+				}
+			}
+			
+			CustomTooltip {
+				text: domain.game_data.titled_name
+				visible: site_mouse_area.containsMouse
+			}
 		}
 	}
 	

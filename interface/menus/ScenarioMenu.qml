@@ -87,6 +87,18 @@ MenuBase {
 		}
 		
 		IconButton {
+			id: landless_domains_button
+			icon_identifier: "settlement"
+			tooltip: "Show Landless Domains"
+			enabled: !loading_scenario
+			highlighted: diplomatic_map.show_landless_domains
+			
+			onClicked: {
+				diplomatic_map.show_landless_domains = !diplomatic_map.show_landless_domains
+			}
+		}
+		
+		IconButton {
 			id: diplomatic_map_mode_button
 			icon_identifier: "treaty"
 			tooltip: "Treaty Map"
@@ -201,7 +213,7 @@ MenuBase {
 				) : "")
 				+ "\n" + selected_country.game_data.title_name
 				+ (selected_country.game_data.anarchy ? "\nAnarchy" : "")
-				+ "\n" + number_string(selected_country.game_data.provinces.length) + " " + (selected_country.game_data.provinces.length > 1 ? "Provinces" : "Province")
+				+ (selected_country.game_data.provinces.length > 0 ? ("\n" + number_string(selected_country.game_data.provinces.length) + " " + (selected_country.game_data.provinces.length > 1 ? "Provinces" : "Province")) : "")
 				+ "\n" + number_string(selected_country.game_data.holding_count) + " " + (selected_country.game_data.holding_count > 1 ? "Holdings" : "Holding")
 				+ (!selected_country.game_data.anarchy ? ("\nScore: " + number_string(selected_country.game_data.score) + " (#" + (selected_country.game_data.score_rank + 1) + ")") : "")
 				+ ("\nDomain Power: " + number_string(selected_country.game_data.domain_power))

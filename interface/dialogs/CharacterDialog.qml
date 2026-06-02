@@ -176,10 +176,12 @@ DialogBase {
 					inventory_dialog.receive_focus()
 				}
 				onHoveredChanged: {
-					if (hovered) {
-						status_text = "View Inventory"
-					} else {
-						status_text = ""
+					if (typeof status_text !== 'undefined') {
+						if (hovered) {
+							status_text = "View Inventory"
+						} else {
+							status_text = ""
+						}
 					}
 				}
 			}
@@ -194,10 +196,12 @@ DialogBase {
 					spell_dialog.receive_focus()
 				}
 				onHoveredChanged: {
-					if (hovered) {
-						status_text = "View Spells"
-					} else {
-						status_text = ""
+					if (typeof status_text !== 'undefined') {
+						if (hovered) {
+							status_text = "View Spells"
+						} else {
+							status_text = ""
+						}
 					}
 				}
 			}
@@ -214,10 +218,12 @@ DialogBase {
 					})
 				}
 				onHoveredChanged: {
-					if (hovered) {
-						status_text = "View Family Tree"
-					} else {
-						status_text = ""
+					if (typeof status_text !== 'undefined') {
+						if (hovered) {
+							status_text = "View Family Tree"
+						} else {
+							status_text = ""
+						}
 					}
 				}
 			}
