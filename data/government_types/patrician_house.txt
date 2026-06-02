@@ -38,4 +38,12 @@ patrician_house = {
 		lore = -1
 		society = 1
 	}
+	title_names = {
+		barony = "Patrician House"
+	}
+	office_title_names = {
+		ruler = {
+			barony = "Patrician"
+		}
+	}
 }
