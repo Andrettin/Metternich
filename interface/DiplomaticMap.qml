@@ -164,14 +164,14 @@ Flickable {
 				width: site_icon_area.width
 				height: site_icon_area.height
 				radius: width / 2
-				color: site.game_data.owner ? site.game_data.owner.color : "transparent"
+				color: selected ? metternich.defines.selected_country_color : (site.game_data.owner ? site.game_data.owner.color : "transparent")
 			}
 			
 			Image {
 				id: site_icon
 				anchors.verticalCenter: parent.verticalCenter
 				anchors.horizontalCenter: parent.horizontalCenter
-				source: holding_type ? ("image://icon/" + holding_type.icon.identifier + (selected ? "/selected" : "")) : "image://empty/"
+				source: holding_type ? ("image://icon/" + holding_type.icon.identifier) : "image://empty/"
 			}
 			
 			MouseArea {
