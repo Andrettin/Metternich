@@ -10,6 +10,21 @@ auersperg = {
 	core_holdings = {
 		auersperg
 	}
+	title_names = {
+		monarchy = {
+			duchy = "Principality"
+		}
+	}
+	office_title_names = {
+		ruler = {
+			monarchy = {
+				duchy = {
+					male = "Prince"
+					female = "Princess"
+				}
+			}
+		}
+	}
 	
 	history = {
 		1466 = {
