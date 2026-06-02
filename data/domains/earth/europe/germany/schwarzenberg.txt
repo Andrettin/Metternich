@@ -1,0 +1,39 @@
+schwarzenberg = {
+	name = "Schwarzenberg"
+	type = polity
+	culture = german
+	default_religion = catholic
+	default_tier = barony
+	max_tier = duchy #principality
+	default_government_type = monarchy
+	default_capital = schwarzenberg
+	core_holdings = {
+		schwarzenberg
+	}
+	title_names = {
+		monarchy = {
+			duchy = "Principality"
+		}
+	}
+	office_title_names = {
+		ruler = {
+			monarchy = {
+				duchy = {
+					male = "Prince"
+					female = "Princess"
+				}
+			}
+		}
+	}
+	
+	history = {
+		1429.8.10 = {
+			government_type = monarchy
+			tier = barony
+			
+			offices = {
+				ruler = erkinger_i_of_seinsheim #Erkinger I of Seinsheim was created baron of Schwarzenberg on St. Lawrence's Day (August 10) in 1429; Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 1335.
+			}
+		}
+	}
+}

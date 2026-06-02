@@ -2,6 +2,8 @@ schweinfurt = {
 	name = "Schweinfurt"
 	world = earth
 	geocoordinate = { 10.233333333333333 50.05 }
+	type = holding
+	holding_type = castle
 	province = franconia
 	
 	history = {

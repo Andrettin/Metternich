@@ -30,6 +30,7 @@ furstenberg = {
 	history = {
 		1250 = {
 			government_type = monarchy
+			tier = county
 			
 			offices = {
 				ruler = heinrich_of_urach #Henry of Urach was created count of Fürstenberg in 1250; Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 676.

@@ -1,3 +1,19 @@
+erkinger_i_of_seinsheim = { #Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 1335.
+	name = "Erkinger"
+	dynasty = schwarzenberg
+	character_class = aristocrat
+	rank = lord #baron
+	culture = german
+	religion = catholic
+	home_site = schwarzenberg
+	gender = male
+	start_date = 1405
+	
+	#was created baron of Schwarzenberg on St. Lawrence's Day (August 10) in 1429
+	#also known as Erkinger I of Seinsheim
+	#lord of Stefansberg from 1405 to 1420
+}
+
 johann_zu_schwarzenberg = { #Source: "Encyclopædia Britannica", 1911, vol. 24, p. 390.
 	name = "Johann"
 	dynasty = schwarzenberg

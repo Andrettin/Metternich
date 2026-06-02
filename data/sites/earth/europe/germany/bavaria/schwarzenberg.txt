@@ -1,0 +1,15 @@
+schwarzenberg = {
+	name = "Schwarzenberg"
+	world = earth
+	geocoordinate = { 10.4732917742448 49.6718484776648 } #Schloss Schwarzenberg
+	type = holding
+	holding_type = castle
+	province = franconia
+	
+	history = {
+		1429.8.10 = {
+			tier = barony #created as a barony on St. Lawrence's Day (August 10) in 1429; Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 1335.
+			owner = schwarzenberg
+		}
+	}
+}
