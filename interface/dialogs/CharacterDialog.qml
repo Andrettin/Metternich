@@ -131,9 +131,9 @@ DialogBase {
 			IconButton {
 				id: military_deployment_button
 				icon_identifier: "flag"
-				visible: character !== null && deployable_military_unit_type !== null && character.game_data.military_unit === null && character.game_data.civilian_unit === null && character.game_data.domain === metternich.game.player_country
+				visible: character !== null && !character.game_data.dead && deployable_military_unit_type !== null && character.game_data.military_unit === null && character.game_data.civilian_unit === null && character.game_data.domain === metternich.game.player_country
 				
-				readonly property var deployable_military_unit_type: character !== null ? character.game_data.get_deployable_military_unit_type() : null
+				readonly property var deployable_military_unit_type: character !== null && !character.game_data.dead ? character.game_data.get_deployable_military_unit_type() : null
 				
 				onClicked: {
 					character.game_data.deploy_as_military_unit()
@@ -150,9 +150,9 @@ DialogBase {
 			IconButton {
 				id: civilian_deployment_button
 				icon_identifier: "labor_hammer"
-				visible: character !== null && deployable_civilian_unit_type !== null && character.game_data.military_unit === null && character.game_data.civilian_unit === null && character.game_data.domain === metternich.game.player_country
+				visible: character !== null && !character.game_data.dead && deployable_civilian_unit_type !== null && character.game_data.military_unit === null && character.game_data.civilian_unit === null && character.game_data.domain === metternich.game.player_country
 				
-				readonly property var deployable_civilian_unit_type: character !== null ? character.game_data.get_deployable_civilian_unit_type() : null
+				readonly property var deployable_civilian_unit_type: character !== null && !character.game_data.dead ? character.game_data.get_deployable_civilian_unit_type() : null
 				
 				onClicked: {
 					character.game_data.deploy_as_civilian_unit()
@@ -169,7 +169,7 @@ DialogBase {
 			IconButton {
 				id: inventory_button
 				icon_identifier: "sack_3"
-				visible: character !== null && character.game_data.items.length > 0
+				visible: character !== null && !character.game_data.dead && character.game_data.items.length > 0
 				onClicked: {
 					inventory_dialog.character = character_dialog.character
 					inventory_dialog.open()
