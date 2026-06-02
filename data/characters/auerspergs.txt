@@ -69,6 +69,21 @@ trojan_i_of_auersperg = { #Source: Marquis of Ruvigny, "The Titled Nobility of E
 	#was created baron of Auersperg in 1530 (1539)
 }
 
+dietrich_ii_of_auersperg = { #Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 278.
+	name = "Dietrich"
+	dynasty = auersperg
+	character_class = aristocrat
+	rank = lord #baron and later count
+	culture = austrian
+	religion = catholic
+	home_site = auersperg
+	gender = male
+	death_date = 1634
+	
+	#baron of Auersperg, and uncle to Johann Andreas II of Auersperg
+	#was created count of Auersperg on 1630.09.11
+}
+
 johann_andreas_ii_of_auersperg = { #Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 278.
 	name = "Johann Andreas"
 	dynasty = auersperg
@@ -82,4 +97,35 @@ johann_andreas_ii_of_auersperg = { #Source: Marquis of Ruvigny, "The Titled Nobi
 	
 	#5th baron of Auersperg, great-great-grandson of Trojan I
 	#was created count of Auersperg on 1630.09.11
+}
+
+johann_weikhard_of_auersperg = { #Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 278.
+	name = "Johann Weikhard"
+	dynasty = auersperg
+	character_class = aristocrat
+	rank = lord #count and later prince
+	culture = austrian
+	religion = catholic
+	home_site = auersperg
+	gender = male
+	father = dietrich_ii_of_auersperg #3rd son of Dietrich II
+	death_date = 1677.11.13
+	
+	#count of Auersperg
+	#was created prince of Auersperg on 1653.09.17
+}
+
+karl_joseph_of_auersperg = { #Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 278.
+	name = "Karl Joseph"
+	dynasty = auersperg
+	character_class = aristocrat
+	rank = lord #prince
+	culture = austrian
+	religion = catholic
+	home_site = auersperg
+	gender = male
+	death_date = 1800
+	
+	#5th prince of Auersperg
+	#was created duke of Gottschee on 1791.11.11
 }

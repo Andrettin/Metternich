@@ -2,11 +2,18 @@ wels = {
 	name = "Wels"
 	world = earth
 	geocoordinate = { 14.016666666667 48.15 }
+	type = holding
+	holding_type = castle #county
 	province = upper_austria
 	
 	history = {
 		919 = {
 			developed = true #existed in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		1653.09.17 = {
+			tier = county #granted as a county to the principality of Auersperg on 1653.09.17; Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 278.
+			owner = auersperg
 		}
 	}
 }
