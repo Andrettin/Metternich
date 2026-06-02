@@ -11,7 +11,9 @@
 Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("domain/office.h")
 Q_MOC_INCLUDE("unit/civilian_unit.h")
+Q_MOC_INCLUDE("unit/civilian_unit_type.h")
 Q_MOC_INCLUDE("unit/military_unit.h")
+Q_MOC_INCLUDE("unit/military_unit_type.h")
 Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("ui/portrait.h")
 

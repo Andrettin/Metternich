@@ -96,8 +96,10 @@
 #include "ui/interface_image_provider.h"
 #include "ui/portrait.h"
 #include "ui/portrait_image_provider.h"
+#include "unit/civilian_unit_type.h"
 #include "unit/military_unit_category.h"
 #include "unit/military_unit_domain.h"
+#include "unit/military_unit_type.h"
 #include "unit/transporter_category.h"
 #include "util/empty_image_provider.h"
 #include "util/exception_util.h"
@@ -217,6 +219,8 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<character>("", 1);
 		qmlRegisterAnonymousType<character_attribute>("", 1);
 		qmlRegisterAnonymousType<character_game_data>("", 1);
+		qmlRegisterAnonymousType<civilian_unit_type>("", 1);
+		qmlRegisterAnonymousType<const civilian_unit_type>("", 1);
 		qmlRegisterAnonymousType<commodity_unit>("", 1);
 		qmlRegisterAnonymousType<const commodity_unit>("", 1);
 		qmlRegisterAnonymousType<consulate>("", 1);
@@ -248,6 +252,8 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<law_group>("", 1);
 		qmlRegisterAnonymousType<map>("", 1);
 		qmlRegisterAnonymousType<map_template>("", 1);
+		qmlRegisterAnonymousType<military_unit_type>("", 1);
+		qmlRegisterAnonymousType<const military_unit_type>("", 1);
 		qmlRegisterAnonymousType<pathway>("", 1);
 		qmlRegisterAnonymousType<const pathway>("", 1);
 		qmlRegisterAnonymousType<population>("", 1);
