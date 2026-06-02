@@ -523,7 +523,7 @@ QCoro::Task<void> domain_technology::on_technology_lost(const technology *techno
 		}
 	}
 
-	if (!technology->get_enabled_laws().empty()) {
+	if (!technology->get_enabled_laws().empty() && game::get()->is_running()) {
 		co_await this->domain->get_government()->check_laws();
 	}
 
