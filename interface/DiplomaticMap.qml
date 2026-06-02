@@ -148,8 +148,8 @@ Flickable {
 		
 		Item {
 			id: site_icon_area
-			x: site.game_data.tile_pos.x * metternich.map.diplomatic_map_tile_pixel_size * scale_factor - Math.floor(width / 2)
-			y: site.game_data.tile_pos.y * metternich.map.diplomatic_map_tile_pixel_size * scale_factor - Math.floor(height / 2)
+			x: site ? site.game_data.tile_pos.x * metternich.map.diplomatic_map_tile_pixel_size * scale_factor - Math.floor(width / 2) : 0
+			y: site ? site.game_data.tile_pos.y * metternich.map.diplomatic_map_tile_pixel_size * scale_factor - Math.floor(height / 2) : 0
 			width: site_icon.width + 4 * scale_factor
 			height: site_icon.height + 4 * scale_factor
 			visible: site !== null && domain.game_data.provinces.length === 0 && diplomatic_map.show_landless_domains
@@ -164,7 +164,7 @@ Flickable {
 				width: site_icon_area.width
 				height: site_icon_area.height
 				radius: width / 2
-				color: selected ? metternich.defines.selected_country_color : (site.game_data.owner ? site.game_data.owner.color : "transparent")
+				color: selected ? metternich.defines.selected_country_color : (site && site.game_data.owner ? site.game_data.owner.color : "transparent")
 			}
 			
 			Image {
