@@ -2,8 +2,8 @@ namur = {
 	name = "Namur"
 	world = earth
 	geocoordinate = { 4.87002803409 50.47039349270 } #from Natural Earth
-	type = resource
-	resource = iron_ore
+	type = holding
+	holding_type = castle
 	province = liege
 	features = {
 		iron_deposit

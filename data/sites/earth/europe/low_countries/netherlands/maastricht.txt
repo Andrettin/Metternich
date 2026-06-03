@@ -1,7 +1,9 @@
 maastricht = {
 	name = "Maastricht"
 	world = earth
-	#geocoordinate = { 5.67700247661 50.85299706720 } #from Natural Earth
+	geocoordinate = { 5.67700247661 50.85299706720 } #from Natural Earth
+	type = holding
+	holding_type = guild
 	province = zeeland
 	
 	history = {

@@ -2,6 +2,8 @@ bouillon = {
 	name = "Bouillon"
 	world = earth
 	geocoordinate = { 5.0680555555556 49.795555555556 }
+	type = holding
+	holding_type = castle
 	province = luxembourg
 	
 	history = {
