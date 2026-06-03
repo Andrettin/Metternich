@@ -31,6 +31,7 @@ castle = {
 		county = 3
 		marquisate = 4
 		duchy = 5
+		grand_duchy = 6
 	}
 	population_classes = {
 		slaves
