@@ -114,13 +114,15 @@ johann_adolphus_of_schwarzenberg = { #Source: Marquis of Ruvigny, "The Titled No
 georg_ludwig_von_schwarzenberg = { #Source: "Encyclopædia Britannica", 1911, vol. 24, p. 390.
 	name = "Georg Ludwig"
 	dynasty = schwarzenberg
-	character_class = warrior
+	character_class = aristocrat
+	rank = lord #count
 	culture = german #Franconian
 	religion = catholic
 	home_site = schwarzenberg
 	gender = male
 	birth_date = 1586
 	death_date = 1646
+	
 	#count of Schwarzenberg
 	#Austrian statesman in the Thirty Years' War
 }
@@ -129,6 +131,7 @@ karl_philipp_zu_schwarzenberg = { #Source: "Encyclopædia Britannica", 1911, vol
 	name = "Karl Philipp"
 	dynasty = schwarzenberg
 	character_class = warrior
+	rank = lord #prince
 	culture = austrian
 	religion = catholic
 	home_site = schwarzenberg #born in Vienna; prince of Schwarzenberg
@@ -168,6 +171,7 @@ friedrich_zu_schwarzenberg = { #Source: "Encyclopædia Britannica", 1911, vol. 2
 	name = "Friedrich"
 	dynasty = schwarzenberg
 	character_class = warrior
+	rank = lord #prince
 	culture = austrian
 	religion = catholic
 	home_site = schwarzenberg
@@ -175,6 +179,7 @@ friedrich_zu_schwarzenberg = { #Source: "Encyclopædia Britannica", 1911, vol. 2
 	father = karl_philipp_zu_schwarzenberg
 	birth_date = 1800
 	death_date = 1870
+	
 	#prince of Schwarzenberg
 	
 	history = {
@@ -194,6 +199,7 @@ karl_philipp_ii_zu_schwarzenberg = { #Source: "Encyclopædia Britannica", 1911, 
 	gender = male
 	father = karl_philipp_zu_schwarzenberg
 	death_date = 1858
+	
 	#Feldzeugmeister
 }
 
@@ -241,6 +247,7 @@ edmund_leopold_friedrich_zu_schwarzenberg = { #Source: "Encyclopædia Britannica
 	father = karl_philipp_zu_schwarzenberg
 	birth_date = 1803
 	death_date = 1873
+	
 	#field marshal in the Austrian army
 }
 
@@ -254,6 +261,7 @@ friedrich_johann_josef_coelestin_zu_schwarzenberg = { #Source: "Encyclopædia Br
 	gender = male
 	birth_date = 1809
 	death_date = 1885
+	
 	#nephew of Karl Philipp zu Schwarzenberg
 	#cardinal
 }
