@@ -11,5 +11,9 @@ furstenberg = {
 			tier = county #created as a county in 1250; Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 676.
 			owner = furstenberg
 		}
+		
+		1664.5.12 = {
+			tier = duchy #created as a principality on 1664.5.12; Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 676.
+		}
 	}
 }

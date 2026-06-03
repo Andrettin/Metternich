@@ -14,13 +14,45 @@ erkinger_i_of_seinsheim = { #Source: Marquis of Ruvigny, "The Titled Nobility of
 	#lord of Stefansberg from 1405 to 1420
 }
 
+michael_i_of_schwarzenberg = { #Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 1335.
+	name = "Michael"
+	dynasty = schwarzenberg
+	character_class = aristocrat
+	rank = lord #presumably, given the regnal number
+	culture = german
+	religion = catholic
+	home_site = schwarzenberg
+	gender = male
+	father = erkinger_i_of_seinsheim
+	death_date = 1469
+	
+	#known as Michael I
+	#founder of the Stefansberg line of the Schwarzenbergs
+}
+
+sigismund_i_of_schwarzenberg = { #Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 1335.
+	name = "Sigismund"
+	dynasty = schwarzenberg
+	character_class = aristocrat
+	rank = lord #presumably, given the regnal number
+	culture = german
+	religion = catholic
+	home_site = schwarzenberg
+	gender = male
+	father = erkinger_i_of_seinsheim
+	death_date = 1502
+	
+	#known as Sigismund I
+	#founder of the Schwartzenberg-Hohenlandsberg line of the Schwarzenbergs
+}
+
 johann_zu_schwarzenberg = { #Source: "Encyclopædia Britannica", 1911, vol. 24, p. 390.
 	name = "Johann"
 	dynasty = schwarzenberg
 	character_class = warrior
 	culture = german #Franconian
 	religion = catholic
-	home_site = nuremberg
+	home_site = schwarzenberg
 	gender = male
 	birth_date = 1463
 	death_date = 1528
@@ -30,18 +62,53 @@ johann_zu_schwarzenberg = { #Source: "Encyclopædia Britannica", 1911, vol. 24, 
 	description = "Moralist and reformer who, as judge of the episcopal court at Bamberg, introduced a new code of evidence which amended the procedure then prevalent in Europe by securing for the accused a more impartial hearing."
 }
 
-adolf_von_schwarzenberg = { #Source: "Encyclopædia Britannica", 1911, vol. 24, p. 390.
+johann_iii_of_schwarzenberg = { #Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 1335.
+	name = "Johann" #the source gives "John"
+	dynasty = schwarzenberg
+	character_class = aristocrat
+	rank = lord #lord and later count
+	culture = german
+	religion = catholic
+	home_site = schwarzenberg
+	gender = male
+	death_date = 1588
+	
+	#5th lord of Schwarzenberg
+	#descendant of Sigismund I of Schwarzenberg
+	#was created count of Schwarzenberg on 1566.5.21
+}
+
+adolf_of_schwarzenberg = { #Source: "Encyclopædia Britannica", 1911, vol. 24, p. 390.
 	name = "Adolf"
 	dynasty = schwarzenberg
-	character_class = warrior
+	character_class = warrior #general
+	rank = lord #count
 	culture = german #Franconian
 	religion = catholic
-	home_site = nuremberg
+	home_site = schwarzenberg
 	gender = male
 	birth_date = 1547
 	death_date = 1600 #killed in a mutiny of soldiers at Papa in Hungary
-	#count of Schwarzenberg
+	
+	#was created count of Schwarzenberg on 1599.6.5; Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 1335.
+	#descendant of Michael I; Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 1335.
 	#renowned general of the empire
+}
+
+johann_adolphus_of_schwarzenberg = { #Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 1335.
+	name = "Johann Adolphus" #the source gives "John Adolphus"
+	dynasty = schwarzenberg
+	character_class = aristocrat
+	rank = lord #count and later prince
+	culture = german
+	religion = catholic
+	home_site = schwarzenberg
+	gender = male
+	death_date = 1683
+	
+	#3rd count of Schwarzenberg (for the created title of 1599, since two different comital Schwarzenberg lines existed simultaneously)
+	#became the 9th lord of Schwarzenberg on the extinction of the younger Schwartzenberg-Hohenlandsberg line in 1646
+	#was created prince of Schwarzenberg on 1670.7.14
 }
 
 georg_ludwig_von_schwarzenberg = { #Source: "Encyclopædia Britannica", 1911, vol. 24, p. 390.
@@ -50,7 +117,7 @@ georg_ludwig_von_schwarzenberg = { #Source: "Encyclopædia Britannica", 1911, vo
 	character_class = warrior
 	culture = german #Franconian
 	religion = catholic
-	home_site = nuremberg
+	home_site = schwarzenberg
 	gender = male
 	birth_date = 1586
 	death_date = 1646
@@ -64,7 +131,7 @@ karl_philipp_zu_schwarzenberg = { #Source: "Encyclopædia Britannica", 1911, vol
 	character_class = warrior
 	culture = austrian
 	religion = catholic
-	home_site = vienna #born in Vienna
+	home_site = schwarzenberg #born in Vienna; prince of Schwarzenberg
 	gender = male
 	birth_date = 1771.4.15
 	death_date = 1820.10.15 #died of a (second) stroke
@@ -103,7 +170,7 @@ friedrich_zu_schwarzenberg = { #Source: "Encyclopædia Britannica", 1911, vol. 2
 	character_class = warrior
 	culture = austrian
 	religion = catholic
-	home_site = vienna
+	home_site = schwarzenberg
 	gender = male
 	father = karl_philipp_zu_schwarzenberg
 	birth_date = 1800
@@ -123,7 +190,7 @@ karl_philipp_ii_zu_schwarzenberg = { #Source: "Encyclopædia Britannica", 1911, 
 	character_class = warrior
 	culture = austrian
 	religion = catholic
-	home_site = vienna
+	home_site = schwarzenberg
 	gender = male
 	father = karl_philipp_zu_schwarzenberg
 	death_date = 1858
@@ -136,7 +203,7 @@ felix_zu_schwarzenberg = { #Source: "Encyclopædia Britannica", 1911, vol. 24, p
 	character_class = warrior #statesman
 	culture = austrian
 	religion = catholic
-	home_site = vienna
+	home_site = schwarzenberg
 	gender = male
 	birth_date = 1800
 	death_date = 1852
@@ -169,7 +236,7 @@ edmund_leopold_friedrich_zu_schwarzenberg = { #Source: "Encyclopædia Britannica
 	character_class = warrior
 	culture = austrian
 	religion = catholic
-	home_site = vienna
+	home_site = schwarzenberg
 	gender = male
 	father = karl_philipp_zu_schwarzenberg
 	birth_date = 1803
@@ -183,7 +250,7 @@ friedrich_johann_josef_coelestin_zu_schwarzenberg = { #Source: "Encyclopædia Br
 	character_class = cleric
 	culture = austrian
 	religion = catholic
-	home_site = vienna
+	home_site = schwarzenberg
 	gender = male
 	birth_date = 1809
 	death_date = 1885

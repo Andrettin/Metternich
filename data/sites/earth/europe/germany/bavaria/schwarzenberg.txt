@@ -11,5 +11,13 @@ schwarzenberg = {
 			tier = barony #created as a barony on St. Lawrence's Day (August 10) in 1429; Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 1335.
 			owner = schwarzenberg
 		}
+		
+		1566.5.21 = {
+			tier = county #created as a county on 1566.5.21; Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 1335.
+		}
+		
+		1670.7.14 = {
+			tier = duchy #created as a principality on 1670.7.14; Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 1335.
+		}
 	}
 }

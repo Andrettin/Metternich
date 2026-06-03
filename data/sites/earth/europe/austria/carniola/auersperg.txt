@@ -19,5 +19,9 @@ auersperg = {
 		1630.9.11 = {
 			tier = county #created as a county on 1630.9.11; Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 278.
 		}
+		
+		1653.9.17 = {
+			tier = duchy #created as a principality on 1653.9.17; Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914, p. 278.
+		}
 	}
 }
