@@ -1,0 +1,8 @@
+mons = {
+	name = "Mons"
+	world = earth
+	geocoordinate = { 3.93900356095 50.44599910900 } #from Natural Earth
+	type = holding
+	holding_type = guild
+	province = brabant
+}

@@ -1,0 +1,8 @@
+chievres = {
+	name = "Chievres"
+	world = earth
+	geocoordinate = { 3.8 50.583333333333 }
+	type = holding
+	holding_type = castle
+	province = brabant
+}

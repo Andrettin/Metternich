@@ -4,6 +4,7 @@ cambrai = {
 	geocoordinate = { 3.2347222222222 50.175833333333 }
 	type = holding
 	holding_type = guild
+	#holding_type = temple
 	province = picardy
 	features = {
 		coal_deposit

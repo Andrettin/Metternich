@@ -2,6 +2,8 @@ valenciennes = {
 	name = "Valenciennes"
 	world = earth
 	geocoordinate = { 3.5233333333333334 50.35805555555555 }
+	type = holding
+	holding_type = guild
 	province = picardy
 	
 	history = {
@@ -10,7 +12,7 @@ valenciennes = {
 		}
 		
 		1789 = {
-			buildings += courthouse #Prévôt des maréchaux existent in Valenciennes in 1789; Source: William R. Shepherd, "Historical Atlas", 1911, p. 147.
+			#buildings += courthouse #Prévôt des maréchaux existent in Valenciennes in 1789; Source: William R. Shepherd, "Historical Atlas", 1911, p. 147.
 		}
 	}
 }

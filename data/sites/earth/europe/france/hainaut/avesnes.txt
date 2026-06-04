@@ -1,0 +1,8 @@
+avesnes = {
+	name = "Avesnes"
+	world = earth
+	geocoordinate = { 3.932676 50.122394 } #Avesnes-sur-Helpe
+	type = holding
+	holding_type = castle
+	province = picardy
+}
