@@ -1,0 +1,15 @@
+gurk = {
+	name = "Gurk"
+	world = earth
+	geocoordinate = { 14.288888888889 46.875277777778 }
+	type = holding
+	holding_type = temple
+	province = carinthia
+	
+	history = {
+		high_middle_ages = {
+			tier = bishopric #seat of a bishopric in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 94-95.
+			buildings += cathedral
+		}
+	}
+}
