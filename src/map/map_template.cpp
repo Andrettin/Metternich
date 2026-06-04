@@ -70,6 +70,10 @@ bool map_template::is_site_in_province(const site *site, const province *provinc
 
 void map_template::initialize()
 {
+	if (this->update_province_image) {
+		this->write_province_image();
+	}
+
 	if (!this->get_province_image_filepath().empty()) {
 		const QRect map_rect(QPoint(0, 0), this->get_size());
 
@@ -544,7 +548,7 @@ void map_template::write_province_image()
 			assert_throw(!base_image.isNull());
 		}
 
-		std::filesystem::path output_filepath = this->get_province_image_filepath().filename();
+		std::filesystem::path output_filepath = this->get_province_image_filepath();
 		if (output_filepath.empty()) {
 			output_filepath = "provinces.png";
 		}

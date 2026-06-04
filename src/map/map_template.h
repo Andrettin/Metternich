@@ -46,6 +46,7 @@ class map_template final : public named_data_entry, public data_type<map_templat
 	Q_PROPERTY(int average_temperature MEMBER average_temperature READ get_average_temperature NOTIFY changed)
 	Q_PROPERTY(bool separate_poles MEMBER separate_poles READ are_poles_separate NOTIFY changed)
 	Q_PROPERTY(int pole_flattening MEMBER pole_flattening READ get_pole_flattening NOTIFY changed)
+	Q_PROPERTY(bool update_province_image MEMBER update_province_image NOTIFY changed)
 
 public:
 	using province_geodata_map_type = province_map<std::vector<std::unique_ptr<QGeoShape>>>;
@@ -234,6 +235,7 @@ private:
 	bool separate_poles = false; //whether the poles are ensured to be separate continents
 	int pole_flattening = 0;
 	point_map<const site *> sites_by_position;
+	bool update_province_image = false;
 };
 
 }
