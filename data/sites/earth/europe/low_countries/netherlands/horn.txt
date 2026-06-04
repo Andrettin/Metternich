@@ -1,0 +1,8 @@
+horn = {
+	name = "Horn"
+	world = earth
+	geocoordinate = { 5.9428 51.2111 }
+	type = holding
+	holding_type = castle
+	province = zeeland
+}

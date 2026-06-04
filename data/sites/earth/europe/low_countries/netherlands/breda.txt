@@ -2,8 +2,8 @@ breda = {
 	name = "Breda"
 	world = earth
 	geocoordinate = { 4.775833333333333 51.58888888888889 }
-	type = resource
-	resource = cattle #Cattle raising or mixed use with pasture dominant; Source: Map No. 76863 of the Perry-Castañeda Library Map Collection, 1970.
+	type = holding
+	holding_type = castle
 	province = zeeland
 	
 	history = {
