@@ -5,6 +5,9 @@ lavant = {
 	type = holding
 	holding_type = temple
 	province = carinthia
+	features = {
+		holy_site #historical cathedral
+	}
 	
 	history = {
 		high_middle_ages = {
