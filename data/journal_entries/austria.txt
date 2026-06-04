@@ -7,6 +7,7 @@ austrian_netherlands = {
 	owned_provinces = {
 		brabant
 		flanders
+		hainaut
 		luxembourg
 	}
 	completion_effects = {

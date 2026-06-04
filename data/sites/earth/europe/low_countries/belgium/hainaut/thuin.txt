@@ -2,7 +2,7 @@ thuin = {
 	name = "Thuin"
 	world = earth
 	geocoordinate = { 4.2870475 50.3397445 }
-	province = brabant
+	province = hainaut
 	
 	history = {
 		919 = {

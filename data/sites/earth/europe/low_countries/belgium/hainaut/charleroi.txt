@@ -4,5 +4,5 @@ charleroi = {
 	geocoordinate = { 4.45000199242 50.42039654450 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	province = brabant
+	province = hainaut
 }

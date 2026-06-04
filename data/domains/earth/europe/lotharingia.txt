@@ -14,6 +14,7 @@ lotharingia = {
 	core_provinces = {
 		rhineland
 		brabant
+		hainaut
 		liege
 		lorraine
 		luxembourg

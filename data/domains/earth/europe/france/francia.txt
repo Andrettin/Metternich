@@ -17,6 +17,7 @@ francia = {
 		brabant
 		champagne
 		flanders
+		hainaut
 		hesse
 		liege
 		lorraine

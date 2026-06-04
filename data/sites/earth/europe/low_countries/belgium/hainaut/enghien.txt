@@ -4,5 +4,5 @@ enghien = {
 	geocoordinate = { 4.041111111111111 50.69555555555556 }
 	type = holding
 	holding_type = castle
-	province = brabant
+	province = hainaut
 }

@@ -13,6 +13,7 @@ lower_lotharingia = {
 	core_provinces = {
 		rhineland
 		brabant
+		hainaut
 		liege
 	}
 }

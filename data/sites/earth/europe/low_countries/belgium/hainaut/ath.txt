@@ -4,5 +4,5 @@ ath = {
 	geocoordinate = { 3.776941 50.631139 }
 	type = holding
 	holding_type = castle
-	province = brabant
+	province = hainaut
 }

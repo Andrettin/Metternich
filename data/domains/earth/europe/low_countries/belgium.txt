@@ -14,6 +14,7 @@ belgium = {
 	core_provinces = {
 		brabant
 		flanders
+		hainaut
 		liege
 	}
 }

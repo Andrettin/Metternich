@@ -4,7 +4,7 @@ tournai = {
 	geocoordinate = { 3.388055555555556 50.605555555555554 }
 	type = resource
 	resource = coal
-	province = brabant
+	province = hainaut
 	features = {
 		coal_deposit
 	}
