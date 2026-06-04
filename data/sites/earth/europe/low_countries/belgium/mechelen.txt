@@ -1,0 +1,8 @@
+mechelen = {
+	name = "Mechelen"
+	world = earth
+	geocoordinate = { 4.480277777777777 51.028055555555554 }
+	type = holding
+	holding_type = temple
+	province = brabant
+}

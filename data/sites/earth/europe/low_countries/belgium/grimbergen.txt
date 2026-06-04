@@ -1,0 +1,8 @@
+grimbergen = {
+	name = "Grimbergen"
+	world = earth
+	geocoordinate = { 4.3833333333333 50.933333333333 }
+	type = holding
+	holding_type = castle
+	province = brabant
+}

@@ -1,0 +1,8 @@
+lier = {
+	name = "Lier"
+	world = earth
+	geocoordinate = { 4.5697222222222225 51.13111111111111 }
+	type = holding
+	holding_type = castle
+	province = brabant
+}

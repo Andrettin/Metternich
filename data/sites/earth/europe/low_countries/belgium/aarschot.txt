@@ -1,0 +1,8 @@
+aarschot = {
+	name = "Aarschot"
+	world = earth
+	geocoordinate = { 4.8333 50.9842 }
+	type = holding
+	holding_type = castle
+	province = brabant
+}
