@@ -185,6 +185,11 @@ public:
 
 	const std::string &get_title_name(const government_type *government_type, const int tier, const culture *culture) const;
 
+	const std::vector<const province *> &get_generation_provinces() const
+	{
+		return this->generation_provinces;
+	}
+
 	const std::vector<const region *> &get_generation_regions() const
 	{
 		return this->generation_regions;
@@ -213,6 +218,7 @@ private:
 	std::map<const cultural_group *, std::string> cultural_group_names;
 	std::vector<const site_feature *> features;
 	site_title_name_map title_names;
+	std::vector<const metternich::province *> generation_provinces;
 	std::vector<const region *> generation_regions; //regions other than its own province where this site can be generated; this is used if the map's world is not the site's own world
 	qunique_ptr<site_history> history;
 	qunique_ptr<site_map_data> map_data;

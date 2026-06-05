@@ -847,6 +847,8 @@ void map_template::generate_site(const site *site) const
 {
 	std::set<const province *> province_set;
 
+	set::merge(province_set, site->get_generation_provinces());
+
 	for (const region *region : site->get_generation_regions()) {
 		set::merge(province_set, region->get_provinces());
 	}

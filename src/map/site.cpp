@@ -65,6 +65,10 @@ void site::process_gsml_scope(const gsml_data &scope)
 		}
 	} else if (tag == "title_names") {
 		government_type::process_site_title_name_scope(this->title_names, scope);
+	} else if (tag == "generation_provinces") {
+		for (const std::string &value : values) {
+			this->generation_provinces.push_back(province::get(value));
+		}
 	} else if (tag == "generation_regions") {
 		for (const std::string &value : values) {
 			this->generation_regions.push_back(region::get(value));
@@ -76,7 +80,7 @@ void site::process_gsml_scope(const gsml_data &scope)
 
 void site::initialize()
 {
-	assert_throw(this->world != nullptr || this->is_celestial_body() || !this->get_generation_regions().empty());
+	assert_throw(this->world != nullptr || this->is_celestial_body() || !this->get_generation_provinces().empty() || !this->get_generation_regions().empty());
 	if (this->world != nullptr) {
 		this->world->add_site(this);
 	}
@@ -107,8 +111,8 @@ void site::check() const
 
 	switch (this->get_type()) {
 		case site_type::holding:
-			if (this->get_province() == nullptr && this->get_generation_regions().empty()) {
-				log::log_error(std::format("Holding site \"{}\" has neither a province nor generation regions.", this->get_identifier()));
+			if (this->get_province() == nullptr && this->get_generation_provinces().empty() && this->get_generation_regions().empty()) {
+				log::log_error(std::format("Holding site \"{}\" has neither a province nor generation provinces/regions.", this->get_identifier()));
 			}
 			break;
 		case site_type::habitable_world:
@@ -284,6 +288,12 @@ const std::string &site::get_title_name(const government_type *government_type, 
 bool site::can_be_generated_on_world(const metternich::world *world) const
 {
 	//whether the site can be generated on a given world other than its own
+	for (const metternich::province *province : this->get_generation_provinces()) {
+		if (province->get_world() == world) {
+			return true;
+		}
+	}
+
 	for (const region *region : this->get_generation_regions()) {
 		if (region->get_world() == world) {
 			return true;
