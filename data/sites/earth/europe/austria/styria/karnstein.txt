@@ -1,0 +1,16 @@
+karnstein = {
+	name = "Karnstein"
+	type = holding
+	holding_type = castle
+	generation_provinces = {
+		styria
+	}
+	
+	history = {
+		1698 = {
+			#in the novel "Carmilla", Mircalla was countess of Karnstein in 1698 AD
+			tier = county
+			owner = karnstein
+		}
+	}
+}

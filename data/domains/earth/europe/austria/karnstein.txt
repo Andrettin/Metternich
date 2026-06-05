@@ -1,0 +1,23 @@
+karnstein = {
+	name = "Karnstein"
+	type = polity
+	culture = austrian
+	default_religion = catholic
+	default_tier = county
+	default_government_type = monarchy
+	default_capital = karnstein
+	core_holdings = {
+		karnstein
+	}
+	
+	history = {
+		1698 = {
+			government_type = monarchy
+			tier = county
+			
+			offices = {
+				#ruler = carmilla_karnstein #in the novel "Carmilla", Mircalla was countess of Karnstein in 1698 AD
+			}
+		}
+	}
+}
