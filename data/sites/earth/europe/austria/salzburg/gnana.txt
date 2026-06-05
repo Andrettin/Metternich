@@ -1,0 +1,17 @@
+gnana = { #capital of Untersberg; Source: Franz Hartmann, "Among the Gnomes", 1895, p. 179.
+	name = "Gnana"
+	world = earth
+	geocoordinate = { 12.9481 47.7547 } #Untersberg-Vorland
+	type = holding
+	holding_type = castle
+	province = salzburg
+	
+	history = {
+		high_middle_ages = {
+			owner = untersberg
+			culture = gnomish
+			religion = pagan
+			developed = true
+		}
+	}
+}

@@ -5,14 +5,14 @@ untersberg = {
 	default_religion = pagan
 	default_tier = kingdom
 	default_government_type = monarchy
-	default_capital = salzburg
+	default_capital = gnana
 	eras = {
 		ancient_era
 		medieval_era
 		renaissance_era
 		industrial_era
 	}
-	core_provinces = {
-		salzburg
+	core_holdings = {
+		gnana
 	}
 }
