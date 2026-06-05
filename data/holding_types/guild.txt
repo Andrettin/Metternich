@@ -23,6 +23,7 @@ guild = {
 		
 		trading_post = 1
 		market = 2
+		fair = 4
 		
 		seaport = 4
 		
