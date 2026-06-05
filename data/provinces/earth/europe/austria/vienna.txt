@@ -1,5 +1,5 @@
 vienna = { #Industrieviertel
-	name = "Vienna "
+	name = "Vienna"
 	color = { 49 97 65 }
 	default_provincial_capital = vienna
 	regions = {
