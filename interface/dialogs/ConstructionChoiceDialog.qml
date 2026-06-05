@@ -57,12 +57,10 @@ DialogBase {
 					} else {
 						province.game_data.build_pathway(pathway)
 					}
+					
+					buildable_locations = []
 				}
 			}
 		}
-	}
-	
-	onClosed: {
-		buildable_locations = []
 	}
 }

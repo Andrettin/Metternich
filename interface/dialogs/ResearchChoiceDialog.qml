@@ -52,12 +52,10 @@ DialogBase {
 					} else {
 						metternich.game.player_country.game_data.technology.add_current_research(technology)
 					}
+					
+					potential_technologies = []
 				}
 			}
 		}
-	}
-	
-	onClosed: {
-		potential_technologies = []
 	}
 }
