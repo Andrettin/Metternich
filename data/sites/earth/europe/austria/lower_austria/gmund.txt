@@ -4,5 +4,5 @@ gmund = {
 	geocoordinate = { 14.983333333333 48.766666666667 }
 	type = resource
 	resource = grain #Crop cultivation with livestock; Source: Map No. 77706 of the Perry-Castañeda Library Map Collection, 1969.
-	province = lower_austria
+	province = krems
 }

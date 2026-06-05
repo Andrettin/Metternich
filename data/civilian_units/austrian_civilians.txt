@@ -3,7 +3,7 @@ austrian_builder = {
 	
 	history = {
 		1492 = {
-			province = lower_austria
+			province = vienna
 		}
 		
 		1820 = {
@@ -17,7 +17,7 @@ austrian_farmer = {
 	
 	history = {
 		1820 = {
-			province = lower_austria
+			province = vienna
 		}
 	}
 }
@@ -27,7 +27,7 @@ austrian_prospector = {
 	
 	history = {
 		1820 = {
-			province = lower_austria
+			province = vienna
 		}
 	}
 }

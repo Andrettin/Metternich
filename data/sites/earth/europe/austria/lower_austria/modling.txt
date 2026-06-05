@@ -2,7 +2,7 @@ modling = {
 	name = "Modling" #"Mödling"
 	world = earth
 	#geocoordinate = { 16.283055555556 48.085555555556 }
-	province = lower_austria
+	province = vienna
 	
 	history = {
 		1900 = {

@@ -2,7 +2,7 @@ stokerau = {
 	name = "Stokerau"
 	world = earth
 	#geocoordinate = { 16.210833333333 48.385833333333 }
-	province = lower_austria
+	province = krems
 	
 	history = {
 		1900 = {

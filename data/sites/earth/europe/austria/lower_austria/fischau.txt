@@ -4,5 +4,5 @@ fischau = {
 	geocoordinate = { 16.1652777777778 47.8319444444444 } #Bad Fischau
 	type = holding
 	holding_type = guild
-	province = lower_austria
+	province = vienna
 }

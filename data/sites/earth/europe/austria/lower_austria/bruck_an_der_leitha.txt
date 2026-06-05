@@ -2,7 +2,7 @@ bruck_an_der_leitha = {
 	name = "Bruck an der Leitha"
 	world = earth
 	geocoordinate = { 16.778972222222 48.0255 }
-	province = lower_austria
+	province = vienna
 	
 	history = {
 		1900 = {

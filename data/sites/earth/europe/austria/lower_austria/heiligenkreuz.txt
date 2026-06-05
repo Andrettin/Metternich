@@ -2,7 +2,7 @@ heiligenkreuz = {
 	name = "Heiligenkreuz"
 	world = earth
 	geocoordinate = { 16.129166666667 48.056388888889 }
-	province = lower_austria
+	province = vienna
 	
 	history = {
 		1133 = {

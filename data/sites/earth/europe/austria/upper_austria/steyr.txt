@@ -4,7 +4,7 @@ steyr = {
 	geocoordinate = { 14.416666666667 48.05 }
 	type = holding
 	holding_type = guild
-	province = upper_austria
+	province = traungau
 	
 	history = {
 		919 = {

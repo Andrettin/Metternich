@@ -88,7 +88,7 @@ austrian_3rd_infantry_regiment = { #Source: "Almanach de Gotha pour l'année 184
 	
 	history = {
 		1847 = { #existed as of 1847
-			province = lower_austria
+			province = vienna
 		}
 	}
 }
@@ -99,7 +99,7 @@ austrian_4th_infantry_regiment = { #Source: "Almanach de Gotha pour l'année 184
 	
 	history = {
 		1847 = { #existed as of 1847
-			province = lower_austria
+			province = vienna
 		}
 	}
 }
@@ -110,7 +110,7 @@ austrian_3rd_dragoons_regiment = { #Source: "Almanach de Gotha pour l'année 184
 	
 	history = {
 		1847 = { #existed as of 1847
-			province = lower_austria
+			province = vienna
 		}
 	}
 }
@@ -121,7 +121,7 @@ austrian_3rd_ulans_regiment = { #Source: "Almanach de Gotha pour l'année 1847",
 	
 	history = {
 		1847 = { #existed as of 1847
-			province = lower_austria
+			province = vienna
 		}
 	}
 }

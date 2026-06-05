@@ -4,7 +4,7 @@ krems = {
 	geocoordinate = { 15.616666666667 48.416666666667 }
 	type = holding
 	holding_type = guild
-	province = lower_austria
+	province = krems
 	features = {
 		prime_grain_land
 	}

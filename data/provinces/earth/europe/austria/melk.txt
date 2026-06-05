@@ -1,0 +1,83 @@
+melk = { #Mostviertel
+	name = "Melk"
+	color = { 66 240 112 }
+	default_provincial_capital = melk
+	regions = {
+		lower_austria
+	}
+	
+	history = {
+		owner = gaul
+		culture = gaulish
+		religion = pagan
+		
+		526 = {
+			owner = bavarians #territory of the Bavarians in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = suebi
+			religion = asatru
+		}
+		
+		907 = {
+			owner = hungary #became part of Hungary in 907; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			religion = catholic
+		}
+		
+		955 = {
+			owner = bavaria #became the Bavarian East March in 955; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			culture = german
+		}
+		
+		high_middle_ages = {
+			temple_domain = salzburg #part of the ecclesiastical province of Salzburg in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 94-95.
+		}
+		
+		1066 = {
+			technologies += hill_fort
+		}
+		
+		1156 = {
+			owner = austria #became part of the Duchy of Austria in 1156; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			culture = austrian
+		}
+		
+		1187 = {
+			technologies += short_bow
+			technologies += long_bow
+			technologies += light_crossbow
+			technologies += soft_leather_armor
+			technologies += chain_mail
+			technologies += mace
+			technologies += short_sword
+			technologies += long_sword
+			technologies += pike
+			technologies += small_castle
+			technologies += medium_castle
+			technologies += monastic_school
+			technologies += aristotelian_logic
+			technologies += scholasticism
+			technologies += asceticism
+		}
+		
+		1337 = {
+			technologies += morning_star
+			technologies += large_castle
+			technologies += cathedral_school
+			technologies += astronomy
+			technologies += ballads
+		}
+		
+		1477 = {
+			owner = austria #part of the Archduchy of Austria c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+		}
+		
+		1740 = {
+			owner = austria #part of Austria c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1815 = {
+			owner = austria #part of the Empire of Austria in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+			
+			culture = austrian #German; Source: "The British Dominions Year Book 1918", 1918, Map 3.
+		}
+	}
+}

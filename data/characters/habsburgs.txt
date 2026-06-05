@@ -632,7 +632,7 @@ karl_von_habsburg = { #Archduke Karl; Source: "Almanach de Gotha pour l'année 1
 			#field marshal-general and proprietary of the 3rd infantry regiment and of the 3rd ulans regiment as of 1847
 			#traits += cavalry_leader
 			country = austria
-			deployment_province = lower_austria
+			deployment_province = vienna
 		}
 	}
 }
@@ -664,7 +664,7 @@ joseph_anton_von_habsburg = { #Archduke Joseph Anton Johann; Source: "Almanach d
 		1847 = { #field marshal-general and proprietary of the 2nd and 12th hussars regiments as of 1847
 			#traits += cavalry_leader
 			#country = austria
-			#deployment_province = lower_austria
+			#deployment_province = vienna
 		}
 	}
 }

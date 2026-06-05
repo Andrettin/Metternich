@@ -22,8 +22,11 @@ austria = {
 		industrial_era
 	}
 	core_provinces = {
-		lower_austria
-		upper_austria
+		freistadt
+		krems
+		melk
+		traungau
+		vienna
 	}
 	tier_core_provinces = {
 		kingdom = {

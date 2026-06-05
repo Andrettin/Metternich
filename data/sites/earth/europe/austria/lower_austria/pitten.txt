@@ -4,7 +4,7 @@ pitten = {
 	geocoordinate = { 16.186388888889 47.716111111111 }
 	type = holding
 	holding_type = castle
-	province = lower_austria
+	province = vienna
 	
 	history = {
 		919 = {

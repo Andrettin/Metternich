@@ -4,7 +4,7 @@ muhldorf = {
 	geocoordinate = { 15.35 48.366666666667 }
 	type = resource
 	resource = coal
-	province = lower_austria
+	province = krems
 	features = {
 		coal_deposit #Graphite nearby; Source: "Encyclopædia Britannica", 1911, vol. 3, p. 1.
 	}

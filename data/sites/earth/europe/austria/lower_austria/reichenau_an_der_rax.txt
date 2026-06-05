@@ -2,7 +2,7 @@ reichenau_an_der_rax = {
 	name = "Reichenau an der Rax"
 	world = earth
 	geocoordinate = { 15.833333333333 47.7 }
-	province = lower_austria
+	province = vienna
 	
 	history = {
 		1900 = {

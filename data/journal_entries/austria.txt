@@ -189,7 +189,7 @@ linzer_wollzeugfabrik = { #Source: Josef Dullinger, "Die Handelskompagnien Oeste
 	portrait = factory
 	description = "The Linzer Wollzeugfabrik was a wool textile mill located in Linz, which was founded by Christian Sind in 1672."
 	preconditions = {
-		owns_province = upper_austria
+		owns_site = linz
 	}
 	built_buildings = {
 		textile_mill

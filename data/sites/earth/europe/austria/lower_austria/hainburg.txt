@@ -2,7 +2,7 @@ hainburg = {
 	name = "Hainburg"
 	world = earth
 	geocoordinate = { 16.941944444444 48.147777777778 }
-	province = lower_austria
+	province = vienna
 	
 	history = {
 		919 = {

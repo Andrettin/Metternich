@@ -4,5 +4,5 @@ kuenring = {
 	geocoordinate = { 15.784722222222 48.633888888889 } #Kühnring
 	type = holding
 	holding_type = castle
-	province = lower_austria
+	province = krems
 }

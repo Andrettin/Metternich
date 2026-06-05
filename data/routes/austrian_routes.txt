@@ -2,7 +2,8 @@ linz_budweis = {
 	name = "Linz-Budweis"
 	color = { 0 71 102 }
 	path_provinces = {
-		upper_austria
+		traungau
+		freistadt
 		budweis
 	}
 	conditions = {
@@ -40,7 +41,8 @@ vienna_brunn = {
 	name = "Vienna-Brunn"
 	color = { 139 105 112 }
 	path_provinces = {
-		lower_austria
+		vienna
+		krems
 		brunn
 	}
 	conditions = {
@@ -62,7 +64,7 @@ vienna_trieste = {
 	name = "Vienna-Trieste"
 	color = { 191 242 151 }
 	path_provinces = {
-		lower_austria
+		vienna
 		styria
 		carniola
 		istria

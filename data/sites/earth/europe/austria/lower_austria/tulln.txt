@@ -2,7 +2,7 @@ tulln = {
 	name = "Tulln"
 	world = earth
 	geocoordinate = { 16.05 48.333333333333 }
-	province = lower_austria
+	province = melk
 	
 	history = {
 		919 = {

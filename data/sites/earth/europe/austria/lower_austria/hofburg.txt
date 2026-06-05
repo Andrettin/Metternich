@@ -4,7 +4,7 @@ hofburg = {
 	geocoordinate = { 16.365277777777777 48.20638888888889 }
 	type = holding
 	holding_type = royal_palace
-	province = lower_austria
+	province = vienna
 	
 	history = {
 		1198 = {

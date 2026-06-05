@@ -4,7 +4,7 @@ wels = {
 	geocoordinate = { 14.016666666667 48.15 }
 	type = holding
 	holding_type = castle #county
-	province = upper_austria
+	province = traungau
 	
 	history = {
 		919 = {

@@ -4,5 +4,5 @@ enns = {
 	geocoordinate = { 14.475 48.216666666667 }
 	type = holding
 	holding_type = castle
-	province = upper_austria
+	province = traungau
 }

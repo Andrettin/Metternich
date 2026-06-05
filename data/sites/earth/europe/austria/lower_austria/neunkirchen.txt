@@ -2,7 +2,7 @@ neunkirchen = {
 	name = "Neunkirchen"
 	world = earth
 	#geocoordinate = { 16.081666666667 47.726944444444 }
-	province = lower_austria
+	province = vienna
 	
 	history = {
 		1900 = {

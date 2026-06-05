@@ -4,7 +4,7 @@ linz = {
 	geocoordinate = { 14.28878128930 48.31923280750 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	province = upper_austria
+	province = traungau
 	features = {
 		sulfur_deposit
 	}

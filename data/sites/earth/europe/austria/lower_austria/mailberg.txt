@@ -2,7 +2,7 @@ mailberg = {
 	name = "Mailberg"
 	world = earth
 	geocoordinate = { 16.183333333333 48.666666666667 }
-	province = lower_austria
+	province = krems
 	
 	history = {
 		919 = {

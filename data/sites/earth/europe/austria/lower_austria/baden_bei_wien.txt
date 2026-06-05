@@ -2,7 +2,7 @@ baden_bei_wien = {
 	name = "Baden bei Wien"
 	world = earth
 	#geocoordinate = { 16.234444444444 48.0075 }
-	province = lower_austria
+	province = vienna
 	
 	history = {
 		1900 = {

@@ -154,7 +154,7 @@ karl_philipp_zu_schwarzenberg = { #Source: "Encyclopædia Britannica", 1911, vol
 		
 		1799 = {
 			#became lieutenant field marshal in 1799
-			deployment_province = lower_austria 
+			deployment_province = vienna 
 			country = austria
 		}
 		

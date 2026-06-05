@@ -4,7 +4,7 @@ wiener_neustadt = {
 	geocoordinate = { 16.24995357120 47.81598187160 } #from Natural Earth
 	type = resource
 	resource = cattle #Meadow and pasture; Source: Map No. 77706 of the Perry-Castañeda Library Map Collection, 1969.
-	province = lower_austria
+	province = vienna
 	
 	history = {
 		1807 = {

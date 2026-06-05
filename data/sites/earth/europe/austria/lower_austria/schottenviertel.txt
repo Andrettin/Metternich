@@ -4,7 +4,7 @@ schottenviertel = { #one of the four medieval districts of the inner city of Vie
 	geocoordinate = { 16.3614 48.2139 } #Schottentor
 	type = holding
 	holding_type = university
-	province = lower_austria
+	province = vienna
 	features = {
 		academic #historical university
 	}

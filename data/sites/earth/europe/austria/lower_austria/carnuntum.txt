@@ -2,7 +2,7 @@ carnuntum = {
 	name = "Carnuntum"
 	world = earth
 	#geocoordinate = { 16.866666666667 48.116666666667 }
-	province = lower_austria
+	province = vienna
 	
 	history = {
 		374 = {

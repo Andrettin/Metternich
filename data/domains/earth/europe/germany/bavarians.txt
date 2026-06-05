@@ -16,13 +16,16 @@ bavarians = {
 		buda
 		budweis
 		burgenland
+		freistadt
 		gyor
 		iglau
-		lower_austria
+		krems
 		lower_silesia
+		melk
 		olmutz
 		pilsen
 		salzburg
-		upper_austria
+		traungau
+		vienna
 	}
 }
