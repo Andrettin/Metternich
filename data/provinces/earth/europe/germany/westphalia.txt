@@ -25,10 +25,6 @@ westphalia = {
 			}
 		}
 		
-		middle_ages = {
-			temple_domain = cologne #part of the ecclesiastical province of Cologne in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 94-95.
-		}
-		
 		!myths_enabled = {
 			526 = {
 				owner = saxons #territory of the Saxons in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
@@ -44,6 +40,8 @@ westphalia = {
 		}
 		
 		high_middle_ages = {
+			temple_domain = cologne #part of the ecclesiastical province of Cologne in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 94-95.
+			
 			trade_zone = hanseatic_league #Hanseatic presence in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
 		}
 		

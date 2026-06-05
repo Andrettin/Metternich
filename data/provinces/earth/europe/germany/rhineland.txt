@@ -11,10 +11,6 @@ rhineland = {
 		culture = gaulish
 		religion = pagan
 		
-		middle_ages = {
-			temple_domain = cologne #part of the ecclesiastical province of Cologne in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 94-95.
-		}
-		
 		526 = {
 			owner = francia #part of the Kingdom of the Franks in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 			culture = frankish
@@ -34,6 +30,8 @@ rhineland = {
 		}
 		
 		high_middle_ages = {
+			temple_domain = cologne #part of the ecclesiastical province of Cologne in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 94-95.
+			
 			trade_zone = hanseatic_league #Hanseatic presence in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
 		}
 		

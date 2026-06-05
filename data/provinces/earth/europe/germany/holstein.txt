@@ -17,10 +17,6 @@ holstein = {
 			religion = asatru
 		}
 		
-		middle_ages = {
-			temple_domain = bremen #part of the ecclesiastical province of Bremen in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 94-95.
-		}
-		
 		919 = {
 			owner = saxony #part of the Duchy of Saxony in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
 			culture = german
@@ -28,6 +24,8 @@ holstein = {
 		}
 		
 		high_middle_ages = {
+			temple_domain = bremen #part of the ecclesiastical province of Bremen in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 94-95.
+			
 			trade_zone = hanseatic_league #Hanseatic presence in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
 		}
 		

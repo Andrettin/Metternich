@@ -12,10 +12,6 @@ lower_austria = {
 		culture = gaulish
 		religion = pagan
 		
-		middle_ages = {
-			temple_domain = salzburg #part of the ecclesiastical province of Salzburg in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 94-95.
-		}
-		
 		526 = {
 			owner = bavarians #territory of the Bavarians in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 			culture = suebi
@@ -30,6 +26,10 @@ lower_austria = {
 		955 = {
 			owner = bavaria #became the Bavarian East March in 955; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
 			culture = german
+		}
+		
+		high_middle_ages = {
+			temple_domain = salzburg #part of the ecclesiastical province of Salzburg in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 94-95.
 		}
 		
 		1066 = {

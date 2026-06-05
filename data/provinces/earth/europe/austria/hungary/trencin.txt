@@ -14,10 +14,6 @@ trencin = {
 		culture = lombard
 		religion = asatru
 		
-		middle_ages = {
-			temple_domain = esztergom #part of the ecclesiastical province of Gran (Esztergom) in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 94-95.
-		}
-		
 		526 = {
 			owner = lombards #territory of the Lombards in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 			culture = lombard
@@ -28,6 +24,10 @@ trencin = {
 			owner = hungary #part of Hungary in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
 			culture = slovak
 			religion = catholic
+		}
+		
+		high_middle_ages = {
+			temple_domain = esztergom #part of the ecclesiastical province of Gran (Esztergom) in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 94-95.
 		}
 		
 		1360 = {

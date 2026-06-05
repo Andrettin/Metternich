@@ -13,10 +13,6 @@ istria = {
 		culture = gaulish
 		religion = pagan
 		
-		middle_ages = {
-			temple_domain = aquileia #part of the ecclesiastical province of Aquileia in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 94-95.
-		}
-		
 		526 = {
 			owner = ostrogothia #part of the Kingdom of the East Goths in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 			culture = gothic
@@ -35,6 +31,10 @@ istria = {
 		
 		1040 = {
 			owner = istria #became part of the March of Istria in 1040; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		high_middle_ages = {
+			temple_domain = aquileia #part of the ecclesiastical province of Aquileia in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 94-95.
 		}
 		
 		1110 = {
