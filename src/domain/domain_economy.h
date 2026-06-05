@@ -133,17 +133,7 @@ public:
 
 	QVariantList get_stored_commodities_qvariant_list() const;
 
-	Q_INVOKABLE qint64 get_stored_commodity(const metternich::commodity *commodity) const
-	{
-		const auto find_iterator = this->stored_commodities.find(commodity);
-
-		if (find_iterator != this->stored_commodities.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
+	Q_INVOKABLE qint64 get_stored_commodity(const metternich::commodity *commodity) const;
 	void set_stored_commodity(const commodity *commodity, const int64_t value);
 
 	void change_stored_commodity(const commodity *commodity, const int64_t value)

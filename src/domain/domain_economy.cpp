@@ -386,6 +386,19 @@ QVariantList domain_economy::get_stored_commodities_qvariant_list() const
 	return archimedes::map::to_qvariant_list(this->get_stored_commodities());
 }
 
+int64_t domain_economy::get_stored_commodity(const commodity *commodity) const
+{
+	assert_throw(commodity != nullptr);
+
+	const auto find_iterator = this->stored_commodities.find(commodity);
+
+	if (find_iterator != this->stored_commodities.end()) {
+		return find_iterator->second;
+	}
+
+	return 0;
+}
+
 void domain_economy::set_stored_commodity(const commodity *commodity, const int64_t value)
 {
 	if (!commodity->is_enabled()) {

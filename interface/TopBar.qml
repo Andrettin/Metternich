@@ -75,7 +75,7 @@ Rectangle {
 				height: commodities_row.height
 				
 				readonly property var commodity: model.modelData
-				readonly property var commodity_value: domain !== null && stored_commodities.length > 0 ? domain.game_data.economy.get_stored_commodity(commodity) : 0 //refer to the stored commodities to ensure the counter is updated when the storage value for this commodity changes
+				readonly property var commodity_value: commodity && domain !== null && stored_commodities.length > 0 ? domain.game_data.economy.get_stored_commodity(commodity) : 0 //refer to the stored commodities to ensure the counter is updated when the storage value for this commodity changes
 				
 				Image {
 					id: commodity_icon
@@ -105,13 +105,13 @@ Rectangle {
 					enabled: commodity && commodity.enabled
 					
 					readonly property bool is_wealth: commodity === metternich.defines.wealth_commodity
-					readonly property var commodity_unit: commodity && commodity.get_unit(commodity_value)
+					readonly property var commodity_unit: commodity ? commodity.get_unit(commodity_value) : null
 					readonly property int min_income: is_wealth && domain ? domain.game_data.min_income : 0
 					readonly property int max_income: is_wealth && domain ? domain.game_data.max_income : 0
 					readonly property string income_string: get_income_range_string(min_income, max_income)
 					readonly property int maintenance_cost: is_wealth && domain ? domain.game_data.maintenance_cost : 0
 					readonly property int commodity_storage_capacity: domain && commodity.special_storage_capacity && commodity_storage_capacities.length > 0 ? domain.game_data.economy.get_commodity_storage_capacity(commodity) : 0
-					readonly property string commodity_status_text: (commodity_unit && is_wealth ? get_plural_form(commodity_unit.name) : commodity.name)
+					readonly property string commodity_status_text: (commodity_unit && is_wealth ? get_plural_form(commodity_unit.name) : (commodity ? commodity.name : ""))
 						+ (is_wealth && income_string.length > 0 ? format_text("\t\tIncome: " + income_string) : "")
 						+ (is_wealth ? format_text("\t\tMaintenance Cost: " + commodity.value_to_qstring(maintenance_cost)) : "")
 						+ (commodity.special_storage_capacity ? format_text("\t\tMaximum: " + commodity.value_to_qstring(commodity_storage_capacity)) : "")
