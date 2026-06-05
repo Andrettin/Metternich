@@ -25,6 +25,7 @@ warrior = {
 	allowed_species = {
 		dwarf
 		elf
+		gnome
 		half_elf
 		halfling
 		human
