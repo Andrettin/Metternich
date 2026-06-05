@@ -342,7 +342,7 @@ ApplicationWindow {
 	}
 	
 	function get_income_range_string(min_income, max_income) {
-		if (max_income == 0) {
+		if (max_income == 0 || metternich.defines.wealth_commodity === null) {
 			return ""
 		}
 		

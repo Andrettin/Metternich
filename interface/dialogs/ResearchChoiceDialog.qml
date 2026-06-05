@@ -56,4 +56,8 @@ DialogBase {
 			}
 		}
 	}
+	
+	onClosed: {
+		potential_technologies = []
+	}
 }

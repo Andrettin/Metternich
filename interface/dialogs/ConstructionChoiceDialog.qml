@@ -61,4 +61,8 @@ DialogBase {
 			}
 		}
 	}
+	
+	onClosed: {
+		buildable_locations = []
+	}
 }

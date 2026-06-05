@@ -52,9 +52,9 @@ Flickable {
 		
 		Image {
 			id: province_image
-			x: province.game_data.map_image_rect.x
-			y: province.game_data.map_image_rect.y
-			source: "image://province_map/" + province.identifier + (selected ? "/selected" : (interactive ? "/interactive" : get_map_mode_suffix(province_map.mode, province))) + "/" + change_count
+			x: province ? province.game_data.map_image_rect.x : 0
+			y: province ? province.game_data.map_image_rect.y : 0
+			source: province ? ("image://province_map/" + province.identifier + (selected ? "/selected" : (interactive ? "/interactive" : get_map_mode_suffix(province_map.mode, province))) + "/" + change_count) : "image://empty/"
 			cache: false
 			
 			readonly property var province: model.modelData
@@ -63,7 +63,7 @@ Flickable {
 			property int change_count: 0
 			
 			Connections {
-				target: province.game_data
+				target: province ? province.game_data : null
 				
 				function onMap_image_changed() {
 					change_count += 1
@@ -151,7 +151,7 @@ Flickable {
 		
 		TinyText {
 			id: province_label
-			text: province.game_data.current_cultural_name
+			text: province ? province.game_data.current_cultural_name : ""
 			x: Math.floor(text_rect.x * metternich.map.province_map_tile_pixel_size * scale_factor)
 			y: Math.floor(text_rect.y * metternich.map.province_map_tile_pixel_size * scale_factor)
 			width: Math.floor(text_rect_width)
@@ -159,10 +159,10 @@ Flickable {
 			visible: !province_map.show_sites
 			wrapMode: Text.WordWrap
 			horizontalAlignment: contentWidth <= width ? Text.AlignHCenter : (province.game_data.map_image_rect.x === 0 ? Text.AlignLeft : ((province.game_data.map_image_rect.x + province.game_data.map_image_rect.width) >= metternich.map.province_map_image_size.width * scale_factor ? Text.AlignRight : Text.AlignHCenter))
-			verticalAlignment: contentHeight <= height ? Text.AlignVCenter : (province.game_data.map_image_rect.y === 0 ? Text.AlignTop : ((province.game_data.map_image_rect.y + province.game_data.map_image_rect.height) >= metternich.map.province_map_image_size.height * scale_factor ? Text.AlignBottom : Text.AlignVCenter))
+			verticalAlignment: contentHeight <= height ? Text.AlignVCenter : (province && province.game_data.map_image_rect.y === 0 ? Text.AlignTop : (province && (province.game_data.map_image_rect.y + province.game_data.map_image_rect.height) >= metternich.map.province_map_image_size.height * scale_factor ? Text.AlignBottom : Text.AlignVCenter))
 			
 			readonly property var province: model.modelData
-			readonly property var text_rect: province.game_data.text_rect
+			readonly property var text_rect: province ? province.game_data.text_rect : Qt.rect(0, 0, 0, 0)
 			readonly property int text_rect_width: text_rect.width * metternich.map.province_map_tile_pixel_size * scale_factor
 			readonly property int text_rect_height: text_rect.height * metternich.map.province_map_tile_pixel_size * scale_factor
 			
@@ -212,7 +212,7 @@ Flickable {
 				Image {
 					id: garrison_icon
 					source: "image://icon/garrison" + (selected ? "/selected" : "")
-					visible: province.game_data.military_unit_category_counts.length > 0
+					visible: province && province.game_data.military_unit_category_counts.length > 0
 					
 					readonly property bool selected: visible && selected_province === province && selected_garrison
 					
@@ -248,7 +248,7 @@ Flickable {
 				}
 				
 				Repeater {
-					model: province.game_data.civilian_units
+					model: province ? province.game_data.civilian_units : []
 					
 					Image {
 						id: civilian_unit_icon
@@ -296,7 +296,7 @@ Flickable {
 				Image {
 					id: entering_army_icon
 					source: "image://icon/war"
-					visible: province.game_data.entering_armies.length > 0
+					visible: province && province.game_data.entering_armies.length > 0
 					
 					MouseArea {
 						anchors.fill: parent
@@ -325,7 +325,7 @@ Flickable {
 				columns: 4
 				
 				Repeater {
-					model: province.game_data.visible_sites
+					model: province ? province.game_data.visible_sites : []
 					
 					Item {
 						id: site_icon_area
