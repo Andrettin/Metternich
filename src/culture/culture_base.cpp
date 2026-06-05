@@ -25,7 +25,6 @@
 #include "util/assert_util.h"
 #include "util/gender.h"
 #include "util/string_util.h"
-#include "util/vector_util.h"
 
 #include <magic_enum/magic_enum.hpp>
 #include <magic_enum/magic_enum_utility.hpp>

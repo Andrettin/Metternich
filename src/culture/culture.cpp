@@ -71,37 +71,41 @@ void culture::check() const
 		throw std::runtime_error(std::format("Culture \"{}\" has no species set for it.", this->get_identifier()));
 	}
 
-	if (this->get_weighted_phenotypes().empty()) {
-		throw std::runtime_error(std::format("Culture \"{}\" has no weighted phenotypes.", this->get_identifier()));
+	if (this->get_phenotype_weights().empty()) {
+		throw std::runtime_error(std::format("Culture \"{}\" has no phenotype weights.", this->get_identifier()));
 	}
 
 	culture_base::check();
 }
 
-std::vector<const phenotype *> culture::get_weighted_phenotypes() const
+const phenotype_map<int64_t> culture::get_phenotype_weights() const
 {
-	phenotype_map<int64_t> phenotype_weights = this->get_phenotype_weights();
+	phenotype_map<int64_t> phenotype_weights = culture_base::get_phenotype_weights();
 
 	std::erase_if(phenotype_weights, [this](const auto &element) {
 		const auto &[key, value] = element;
 		return !vector::contains(this->get_species(), key->get_species());
 	});
 
-	if (!phenotype_weights.empty()) {
-		return archimedes::map::to_weighted_vector(phenotype_weights);
+	if (phenotype_weights.empty()) {
+		if (this->get_default_phenotype() != nullptr) {
+			phenotype_weights[this->get_default_phenotype()] = 1;
+		} else {
+			for (const metternich::species *species : this->get_species()) {
+				for (const phenotype *phenotype : species->get_phenotypes()) {
+					++phenotype_weights[phenotype];
+				}
+			}
+		}
 	}
 
-	if (this->get_default_phenotype() != nullptr) {
-		return { this->get_default_phenotype() };
-	}
+	return phenotype_weights;
+}
 
-	std::vector<const phenotype *> weighted_phenotypes;
-
-	for (const metternich::species *species : this->get_species()) {
-		vector::merge(weighted_phenotypes, species->get_phenotypes());
-	}
-
-	return weighted_phenotypes;
+std::vector<const phenotype *> culture::get_weighted_phenotypes() const
+{
+	const phenotype_map<int64_t> phenotype_weights = this->get_phenotype_weights();
+	return archimedes::map::to_weighted_vector(phenotype_weights);
 }
 
 }
