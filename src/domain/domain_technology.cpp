@@ -17,6 +17,7 @@
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/site.h"
+#include "map/site_game_data.h"
 #include "map/tile.h"
 #include "population/population.h"
 #include "population/population_type.h"
@@ -339,8 +340,8 @@ const technology_set &domain_technology::get_technologies() const
 {
 	if (this->get_game_data()->get_capital_province() != nullptr) {
 		return this->get_game_data()->get_capital_province()->get_game_data()->get_technologies();
-	} else if (this->domain->get_default_capital()->get_province()->get_game_data()->is_on_map()) {
-		return this->domain->get_default_capital()->get_province()->get_game_data()->get_technologies();
+	} else if (this->domain->get_default_capital()->get_game_data()->is_on_map() && this->domain->get_default_capital()->get_game_data()->get_province()->get_game_data()->is_on_map()) {
+		return this->domain->get_default_capital()->get_game_data()->get_province()->get_game_data()->get_technologies();
 	}
 
 	static const technology_set empty_set;
@@ -356,8 +357,8 @@ QCoro::Task<void> domain_technology::add_technology(const technology *technology
 {
 	if (this->get_game_data()->get_capital_province() != nullptr) {
 		co_await this->get_game_data()->get_capital_province()->get_game_data()->add_technology(technology);
-	} else if (this->domain->get_default_capital()->get_province()->get_game_data()->is_on_map()) {
-		co_await this->domain->get_default_capital()->get_province()->get_game_data()->add_technology(technology);
+	} else if (this->domain->get_default_capital()->get_game_data()->is_on_map() && this->domain->get_default_capital()->get_game_data()->get_province()->get_game_data()->is_on_map()) {
+		co_await this->domain->get_default_capital()->get_game_data()->get_province()->get_game_data()->add_technology(technology);
 	}
 }
 
