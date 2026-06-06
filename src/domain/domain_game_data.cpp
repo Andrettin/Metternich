@@ -2803,16 +2803,10 @@ void domain_game_data::create_diplomatic_map_mode_image(const diplomatic_map_mod
 					color = &diplomatic_self_color;
 					break;
 				case diplomatic_map_mode::terrain:
-					color = &tile->get_terrain()->get_color();
+					color = &tile->get_province()->get_map_data()->get_terrain()->get_color();
 					break;
 				case diplomatic_map_mode::cultural: {
-					const metternich::culture *culture = nullptr;
-
-					if (tile->get_site() != nullptr && tile->get_site()->get_game_data()->can_have_population() && tile->get_site()->get_game_data()->get_culture() != nullptr) {
-						culture = tile->get_site()->get_game_data()->get_culture();
-					} else {
-						culture = tile->get_province()->get_game_data()->get_culture();
-					}
+					const metternich::culture *culture = tile->get_province()->get_game_data()->get_culture();
 
 					if (culture != nullptr) {
 						color = &culture->get_color();
@@ -2822,13 +2816,7 @@ void domain_game_data::create_diplomatic_map_mode_image(const diplomatic_map_mod
 					break;
 				}
 				case diplomatic_map_mode::religious: {
-					const metternich::religion *religion = nullptr;
-
-					if (tile->get_settlement() != nullptr && tile->get_settlement()->get_game_data()->get_religion() != nullptr) {
-						religion = tile->get_settlement()->get_game_data()->get_religion();
-					} else {
-						religion = tile->get_province()->get_game_data()->get_religion();
-					}
+					const metternich::religion *religion = tile->get_province()->get_game_data()->get_religion();
 
 					if (religion != nullptr) {
 						color = &religion->get_color();
