@@ -2,8 +2,8 @@ karnstein = {
 	name = "Karnstein"
 	type = holding
 	holding_type = castle
-	generation_provinces = {
-		styria
+	generation_regions = {
+		ducal_styria
 	}
 	
 	history = {

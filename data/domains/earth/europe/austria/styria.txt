@@ -13,6 +13,7 @@ styria = {
 	}
 	core_provinces = {
 		styria
+		marburg
 	}
 	
 	history = {

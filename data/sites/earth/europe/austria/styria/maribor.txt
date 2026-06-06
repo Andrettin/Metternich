@@ -4,7 +4,7 @@ maribor = {
 	geocoordinate = { 15.65004186880 46.54047833160 } #from Natural Earth
 	type = holding
 	holding_type = castle
-	province = styria
+	province = marburg
 	cultural_group_names = {
 		german = "Marburg"
 	}

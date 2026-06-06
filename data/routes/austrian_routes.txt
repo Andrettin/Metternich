@@ -66,6 +66,7 @@ vienna_trieste = {
 	path_provinces = {
 		vienna
 		styria
+		marburg
 		carniola
 		istria
 	}

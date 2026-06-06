@@ -47,11 +47,17 @@ holy_roman_empire = {
 		#Austria
 		carinthia
 		carniola
+		freistadt
 		istria
+		krems
+		marburg
+		melk
 		salzburg
 		south_tyrol
 		styria
+		traungau
 		tyrol
+		vienna
 		
 		#Bohemia
 		bohemia

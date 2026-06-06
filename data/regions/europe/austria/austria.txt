@@ -143,3 +143,35 @@ upper_austria = {
 		}
 	}
 }
+
+ducal_styria = {
+	superregions = {
+		imperial_austria_1806
+	}
+	
+	history = {
+		1801 = {
+			population = 811114 #Styria had a population of 811,114 in 1801 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+
+		1803 = {
+			population = 816326 #Styria had a population of 816,326 in 1803 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+
+		1805 = {
+			population = 836257 #Styria had a population of 836,257 in 1805 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+
+		1806 = {
+			population = 813113 #Styria had a population of 813,113 in 1806 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+
+		1807 = {
+			population = 806974 #Styria had a population of 806,974 in 1807 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+
+		1809 = {
+			population = 812000 #Styria had an estimated population of 812,000 in 1809 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+	}
+}

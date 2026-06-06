@@ -33,6 +33,7 @@ austria = {
 			carinthia
 			carniola
 			istria
+			marburg
 			salzburg
 			south_tyrol
 			styria

@@ -1,10 +1,13 @@
-styria = {
-	name = "Styria"
-	color = { 176 97 65 }
-	default_provincial_capital = graz
+marburg = { #Lower Styria
+	name = "Marburg"
+	color = { 246 11 92 }
+	default_provincial_capital = maribor
+	cultural_names = {
+		slovene = "Maribor"
+	}
 	regions = {
-		austria
 		ducal_styria
+		slovenia
 	}
 	
 	history = {
@@ -31,7 +34,7 @@ styria = {
 		}
 		
 		high_middle_ages = {
-			temple_domain = salzburg #part of the ecclesiastical province of Salzburg in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 94-95.
+			temple_domain = aquileia #part of the ecclesiastical province of Aquileia in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 94-95.
 		}
 		
 		1477 = {
@@ -47,7 +50,7 @@ styria = {
 		1815 = {
 			owner = austria #part of the Empire of Austria in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
 			
-			culture = austrian #German; Source: "The British Dominions Year Book 1918", 1918, Map 3.
+			culture = slovene #Source: "The British Dominions Year Book 1918", 1918, Map 3.
 		}
 	}
 }

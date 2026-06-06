@@ -6,7 +6,7 @@ cilli = {
 	#resource = grapes
 	resource = fruit
 	#max_tier = county
-	province = styria
+	province = marburg
 	cultural_names = {
 		slovene = "Celje"
 	}
