@@ -1,0 +1,8 @@
+neuberg = {
+	name = "Neuberg"
+	world = earth
+	geocoordinate = { 15.57226 47.66423 } #Neuberg an der Mürz
+	type = holding
+	holding_type = temple
+	province = styria
+}

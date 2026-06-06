@@ -1,0 +1,8 @@
+leibnitz = {
+	name = "Leibnitz"
+	world = earth
+	geocoordinate = { 15.545 46.783055555556 }
+	type = holding
+	holding_type = guild
+	province = styria
+}

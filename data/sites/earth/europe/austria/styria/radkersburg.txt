@@ -1,0 +1,8 @@
+radkersburg = {
+	name = "Radkersburg"
+	world = earth
+	geocoordinate = { 15.988611111111 46.689722222222 } #Bad Radkersburg
+	type = holding
+	holding_type = temple
+	province = styria
+}
