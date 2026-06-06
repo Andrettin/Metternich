@@ -1,0 +1,8 @@
+losenstein = {
+	name = "Losenstein"
+	world = earth
+	geocoordinate = { 14.433333333333 47.925277777778 }
+	type = holding
+	holding_type = castle
+	province = traungau
+}
