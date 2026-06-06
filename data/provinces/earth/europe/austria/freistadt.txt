@@ -1,6 +1,7 @@
 freistadt = { #Upper Austria north of the Danube
 	name = "Freistadt"
 	color = { 176 201 113 }
+	terrain = hills
 	default_provincial_capital = freistadt
 	regions = {
 		upper_austria

@@ -1,6 +1,7 @@
 krems = { #Waldviertel and Weinviertel
 	name = "Krems"
 	color = { 16 41 63 }
+	terrain = hills
 	default_provincial_capital = krems
 	regions = {
 		lower_austria

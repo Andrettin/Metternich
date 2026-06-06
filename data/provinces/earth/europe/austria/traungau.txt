@@ -1,6 +1,7 @@
 traungau = { #Upper Austria south of the Danube
 	name = "Traungau"
 	color = { 144 1 160 }
+	terrain = forest
 	default_provincial_capital = linz
 	regions = {
 		upper_austria

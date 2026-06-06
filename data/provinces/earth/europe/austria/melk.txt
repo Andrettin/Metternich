@@ -1,6 +1,7 @@
 melk = { #Mostviertel
 	name = "Melk"
 	color = { 66 240 112 }
+	terrain = hills
 	default_provincial_capital = melk
 	regions = {
 		lower_austria

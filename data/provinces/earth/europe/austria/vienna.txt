@@ -1,6 +1,7 @@
 vienna = { #Industrieviertel
 	name = "Vienna"
 	color = { 49 97 65 }
+	terrain = hills
 	default_provincial_capital = vienna
 	regions = {
 		lower_austria
