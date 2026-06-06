@@ -350,7 +350,7 @@ Flickable {
 							id: site_icon
 							anchors.verticalCenter: parent.verticalCenter
 							anchors.horizontalCenter: parent.horizontalCenter
-							source: "image://icon/" + (holding_type ? holding_type.icon.identifier : (dungeon ? dungeon.icon.identifier : "garrison"))
+							source: "image://icon/" + (holding_type ? holding_type.icon.identifier : (dungeon ? dungeon.icon.identifier : (site.holding_type ? (site.holding_type.icon.identifier + "/blank_silhouette") : "garrison")))
 						}
 						
 						MouseArea {
@@ -422,7 +422,7 @@ Flickable {
 				id: site_icon
 				anchors.verticalCenter: parent.verticalCenter
 				anchors.horizontalCenter: parent.horizontalCenter
-				source: "image://icon/" + (holding_type ? holding_type.icon.identifier : (dungeon ? dungeon.icon.identifier : "garrison"))
+				source: "image://icon/" + (holding_type ? holding_type.icon.identifier : (dungeon ? dungeon.icon.identifier : (site.holding_type ? (site.holding_type.icon.identifier + "/blank_silhouette") : "garrison")))
 			}
 			
 			MouseArea {
