@@ -45,7 +45,6 @@ public:
 	void create_tiles();
 	void initialize(const bool province_post_processing_enabled);
 	void process_border_tiles();
-	void process_site_tiles();
 	Q_INVOKABLE void clear();
 
 	const QSize &get_size() const

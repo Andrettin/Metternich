@@ -171,8 +171,6 @@ void game::process_gsml_scope(const gsml_data &scope)
 
 			map::get()->add_site(site);
 		});
-
-		map::get()->process_site_tiles();
 	} else if (tag == "routes") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
 			const route *route = route::get(child_scope.get_tag());

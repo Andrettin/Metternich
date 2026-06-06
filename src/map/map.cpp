@@ -223,7 +223,6 @@ void map::initialize(const bool province_post_processing_enabled)
 	}
 
 	this->process_border_tiles();
-	this->process_site_tiles();
 
 	std::set<province *, province_compare> provinces;
 	std::vector<const site *> sites;
@@ -303,25 +302,6 @@ void map::process_border_tiles()
 
 			if (is_border_tile) {
 				tile_province->get_map_data()->add_border_tile(tile_pos);
-			}
-		}
-	}
-}
-
-void map::process_site_tiles()
-{
-	for (int x = 0; x < this->get_width(); ++x) {
-		for (int y = 0; y < this->get_height(); ++y) {
-			const QPoint tile_pos(x, y);
-			tile *tile = this->get_tile(tile_pos);
-			const province *tile_province = tile->get_province();
-
-			if (tile_province == nullptr) {
-				continue;
-			}
-
-			if (tile->get_site() != nullptr) {
-				tile_province->get_map_data()->process_site_tile(tile_pos);
 			}
 		}
 	}
@@ -515,6 +495,9 @@ void map::set_tile_site(const QPoint &tile_pos, const site *site)
 	}
 
 	site->get_map_data()->set_tile_pos(tile_pos);
+
+	assert_throw(tile->get_province() != nullptr);
+	tile->get_province()->get_map_data()->process_site_tile(tile_pos);
 }
 
 QCoro::Task<void> map::set_tile_resource_discovered(const QPoint &tile_pos, const bool discovered)
