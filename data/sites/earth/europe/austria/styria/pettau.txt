@@ -1,0 +1,8 @@
+pettau = {
+	name = "Pettau"
+	world = earth
+	geocoordinate = { 15.871388888889 46.418611111111 } #Ptuj
+	type = holding
+	holding_type = guild
+	province = marburg
+}

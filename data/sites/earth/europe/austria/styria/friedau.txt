@@ -1,0 +1,8 @@
+friedau = {
+	name = "Friedau"
+	world = earth
+	geocoordinate = { 16.150534332 46.407125458 } #Ormož
+	type = holding
+	holding_type = temple
+	province = marburg
+}
