@@ -262,11 +262,7 @@ gsml_data game::to_gsml_data() const
 	data.add_child(std::move(domains_data));
 
 	gsml_data sites_data("sites");
-	for (const site *site : site::get_all()) {
-		if (!site->get_map_data()->is_on_map()) {
-			continue;
-		}
-
+	for (const site *site : map::get()->get_sites()) {
 		sites_data.add_child(site->get_game_data()->to_gsml_data());
 	}
 	data.add_child(std::move(sites_data));
