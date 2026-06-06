@@ -2,10 +2,9 @@
 
 #include "map/region.h"
 
-#include "economy/resource.h"
 #include "map/province.h"
 #include "map/region_history.h"
-#include "map/site.h"
+#include "util/assert_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -27,7 +26,7 @@ void region::initialize()
 		}
 
 		if (subregion->get_world() == nullptr && this->get_world() != nullptr) {
-			subregion->world = this->get_world();
+			subregion->set_world_recursively(this->get_world());
 		}
 
 		//add provinces from subregions
@@ -52,6 +51,19 @@ data_entry_history *region::get_history_base()
 void region::reset_history()
 {
 	this->history = make_qunique<region_history>(this);
+}
+
+void region::set_world_recursively(const metternich::world *world)
+{
+	assert_throw(world != nullptr);
+
+	this->world = world;
+
+	for (region *subregion : this->subregions) {
+		if (subregion->get_world() == nullptr) {
+			subregion->set_world_recursively(world);
+		}
+	}
 }
 
 void region::add_province(province *province)

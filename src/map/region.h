@@ -44,6 +44,8 @@ public:
 		return this->world;
 	}
 
+	void set_world_recursively(const metternich::world *world);
+
 	bool is_continent() const
 	{
 		return this->continent;
