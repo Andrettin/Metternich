@@ -9,7 +9,6 @@
 #include "economy/resource.h"
 #include "game/game.h"
 #include "infrastructure/holding_type.h"
-#include "infrastructure/improvement.h"
 #include "map/celestial_body_type.h"
 #include "map/map.h"
 #include "map/province.h"
@@ -32,7 +31,6 @@ map_grid_model::map_grid_model()
 	connect(map::get(), &map::tile_prospection_changed, this, &map_grid_model::on_tile_prospection_changed);
 	connect(map::get(), &map::tile_resource_changed, this, &map_grid_model::on_tile_resource_changed);
 	connect(map::get(), &map::tile_holding_type_changed, this, &map_grid_model::on_tile_holding_type_changed);
-	connect(map::get(), &map::tile_improvement_changed, this, &map_grid_model::on_tile_improvement_changed);
 }
 
 QString map_grid_model::build_image_source(const terrain_type *terrain, const short tile_frame)
@@ -98,21 +96,11 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 					if (tile->get_site() != nullptr && tile->get_site()->is_celestial_body()) {
 						QString image_source = "tile/celestial_body/" + tile->get_site()->get_celestial_body_type()->get_identifier_qstring();
 
-						image_source += "/" + QString::number(tile->get_improvement_variation());
+						image_source += "/0"; //FIXME: add celestial body variations
 
 						object_image_sources.push_back(std::move(image_source));
 					} else if (tile->get_holding_type() != nullptr) {
 						QString image_source = "tile/settlement/" + tile->get_holding_type()->get_identifier_qstring() + "/0";
-						object_image_sources.push_back(std::move(image_source));
-					} else if (tile->get_site()->get_game_data()->get_main_improvement() != nullptr) {
-						QString image_source = "tile/improvement/" + tile->get_site()->get_game_data()->get_main_improvement()->get_identifier_qstring();
-
-						if (tile->get_site()->get_game_data()->get_main_improvement()->has_terrain_image_filepath(tile->get_terrain())) {
-							image_source += "/" + tile->get_terrain()->get_identifier_qstring();
-						}
-
-						image_source += "/" + QString::number(tile->get_improvement_variation());
-
 						object_image_sources.push_back(std::move(image_source));
 					}
 
@@ -120,7 +108,7 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 						tile->get_resource() != nullptr
 						&& tile->is_resource_discovered()
 						&& (
-							(tile->get_holding_type() == nullptr && tile->get_site()->get_game_data()->get_main_improvement() == nullptr && !tile->get_site()->is_celestial_body())
+							(tile->get_holding_type() == nullptr && !tile->get_site()->is_celestial_body())
 							|| tile->get_resource()->is_natural_wonder()
 						)
 					) {
@@ -152,12 +140,6 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 				}
 
 				return QVariant::fromValue(tile->get_resource());
-			case role::improvement:
-				if (tile->get_site() == nullptr) {
-					return QVariant::fromValue(nullptr);
-				}
-
-				return QVariant::fromValue(tile->get_site()->get_game_data()->get_main_improvement());
 			case role::upper_label: {
 				const QPoint upper_tile_pos = tile_pos - QPoint(0, 1);
 
@@ -244,15 +226,6 @@ void map_grid_model::on_tile_holding_type_changed(const QPoint &tile_pos)
 	const QModelIndex index = this->index(tile_pos.y(), tile_pos.x());
 	emit dataChanged(index, index, {
 		static_cast<int>(role::object_image_sources)
-	});
-}
-
-void map_grid_model::on_tile_improvement_changed(const QPoint &tile_pos)
-{
-	const QModelIndex index = this->index(tile_pos.y(), tile_pos.x());
-	emit dataChanged(index, index, {
-		static_cast<int>(role::object_image_sources),
-		static_cast<int>(role::improvement)
 	});
 }
 

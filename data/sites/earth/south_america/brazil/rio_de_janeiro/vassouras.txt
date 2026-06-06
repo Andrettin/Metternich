@@ -2,8 +2,9 @@ vassouras = {
 	name = "Vassouras"
 	world = earth
 	geocoordinate = { -43.662777777778 -22.403888888889 }
-	type = resource
-	resource = coffee
+	type = holding
+	holding_type = castle #barony
+	#resource = coffee
 	province = rio_de_janeiro
 	#max_tier = barony #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, p. 532.
 	

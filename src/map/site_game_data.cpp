@@ -34,8 +34,6 @@
 #include "infrastructure/dungeon.h"
 #include "infrastructure/dungeon_area.h"
 #include "infrastructure/holding_type.h"
-#include "infrastructure/improvement.h"
-#include "infrastructure/improvement_slot.h"
 #include "infrastructure/pathway.h"
 #include "infrastructure/wonder.h"
 #include "item/item.h"
@@ -582,8 +580,6 @@ int site_game_data::get_level() const
 {
 	if (this->get_holding_type() != nullptr) {
 		return this->get_holding_level();
-	} else if (this->get_resource_improvement() != nullptr) {
-		return this->get_resource_improvement()->get_level();
 	}
 
 	return 0;
@@ -667,16 +663,6 @@ QCoro::Task<void> site_game_data::set_owner(const domain *owner)
 	const domain *old_owner = this->get_owner();
 
 	if (old_owner != nullptr) {
-		for (const auto &[improvement, commodity_bonuses] : old_owner->get_economy()->get_improvement_commodity_bonuses()) {
-			if (!this->has_improvement(improvement)) {
-				continue;
-			}
-
-			for (const auto &[commodity, bonus] : commodity_bonuses) {
-				this->change_base_commodity_output(commodity, -bonus);
-			}
-		}
-
 		if (this->can_have_population()) {
 			this->population->remove_upper_population(old_owner->get_game_data()->get_population());
 		}
@@ -723,16 +709,6 @@ QCoro::Task<void> site_game_data::set_owner(const domain *owner)
 			}
 
 			this->get_owner()->get_economy()->change_commodity_output(commodity, this->get_commodity_output(commodity));
-		}
-
-		for (const auto &[improvement, commodity_bonuses] : this->get_owner()->get_economy()->get_improvement_commodity_bonuses()) {
-			if (!this->has_improvement(improvement)) {
-				continue;
-			}
-
-			for (const auto &[commodity, bonus] : commodity_bonuses) {
-				this->change_base_commodity_output(commodity, bonus);
-			}
 		}
 
 		if (this->can_have_population()) {
@@ -1121,9 +1097,9 @@ bool site_game_data::is_built() const
 {
 	if (this->site->is_settlement()) {
 		return this->get_holding_type() != nullptr;
-	} else {
-		return this->get_main_improvement() != nullptr && !this->get_main_improvement()->is_visitable();
 	}
+
+	return false;
 }
 
 bool site_game_data::is_used() const
@@ -1187,70 +1163,6 @@ bool site_game_data::can_have_dungeon(const metternich::dungeon *dungeon) const
 	}
 
 	return true;
-}
-
-const improvement *site_game_data::get_main_improvement() const
-{
-	const improvement *main_improvement = this->get_improvement(improvement_slot::main);
-
-	if (main_improvement != nullptr) {
-		return main_improvement;
-	}
-
-	return this->get_improvement(improvement_slot::resource);
-}
-
-const improvement *site_game_data::get_resource_improvement() const
-{
-	return this->get_improvement(improvement_slot::resource);
-}
-
-bool site_game_data::has_improvement(const improvement *improvement) const
-{
-	assert_throw(improvement != nullptr);
-
-	return this->get_improvement(improvement->get_slot()) == improvement;
-}
-
-bool site_game_data::has_improvement_or_better(const improvement *improvement) const
-{
-	if (this->has_improvement(improvement)) {
-		return true;
-	}
-
-	for (const metternich::improvement *requiring_improvement : improvement->get_requiring_improvements()) {
-		if (this->has_improvement_or_better(requiring_improvement)) {
-			return true;
-		}
-	}
-
-	return false;
-}
-
-QCoro::Task<void> site_game_data::set_improvement(const improvement_slot slot, const improvement *improvement)
-{
-	const metternich::improvement *old_improvement = this->get_improvement(slot);
-
-	if (old_improvement == improvement) {
-		co_return;
-	}
-
-	if (old_improvement != nullptr) {
-		co_await this->on_improvement_gained(old_improvement, -1);
-	}
-
-	this->improvements[slot] = improvement;
-
-	if (improvement != nullptr) {
-		co_await this->on_improvement_gained(improvement, 1);
-	}
-
-	if (slot == improvement_slot::main || (slot == improvement_slot::resource && this->get_improvement(improvement_slot::main) == nullptr)) {
-		this->get_tile()->on_main_improvement_changed();
-	}
-
-	emit improvements_changed();
-	emit map::get()->tile_improvement_changed(this->get_tile_pos());
 }
 
 const portrait *site_game_data::get_portrait() const
@@ -1865,21 +1777,6 @@ QCoro::Task<bool> site_game_data::check_free_building(const building_type *build
 	co_return true;
 }
 
-QCoro::Task<bool> site_game_data::check_free_improvement(const improvement *improvement)
-{
-	if (improvement->get_required_technology() != nullptr && (this->get_owner() == nullptr || !this->get_owner()->get_technology()->has_technology(improvement->get_required_technology()))) {
-		co_return false;
-	}
-
-	if (!improvement->is_buildable_on_site(this->site)) {
-		co_return false;
-	}
-
-	co_await this->set_improvement(improvement->get_slot(), improvement);
-
-	co_return true;
-}
-
 QCoro::Task<void> site_game_data::on_settlement_built(const int multiplier)
 {
 	this->get_province()->get_game_data()->change_settlement_count(multiplier);
@@ -1957,41 +1854,6 @@ QCoro::Task<void> site_game_data::on_wonder_gained(const wonder *wonder, const i
 
 	if (wonder->get_province_modifier() != nullptr) {
 		co_await wonder->get_province_modifier()->apply(this->get_province(), multiplier);
-	}
-}
-
-QCoro::Task<void> site_game_data::on_improvement_gained(const improvement *improvement, const int multiplier)
-{
-	if (this->get_province() != nullptr && this->get_resource() != nullptr && improvement->get_slot() == improvement_slot::resource) {
-		for (const auto &[commodity, value] : this->get_province()->get_game_data()->get_improved_resource_commodity_bonuses(this->get_resource())) {
-			this->change_base_commodity_output(commodity, centesimal_int(value) * multiplier);
-		}
-	}
-
-	if (this->get_owner() != nullptr) {
-		const domain_economy *domain_economy = this->get_owner()->get_economy();
-
-		for (const auto &[commodity, bonus] : domain_economy->get_improvement_commodity_bonuses(improvement)) {
-			this->change_base_commodity_output(commodity, bonus * multiplier);
-		}
-	}
-
-	if (this->get_resource() != nullptr && improvement->get_slot() == improvement_slot::resource) {
-		if (this->get_resource()->get_improved_modifier() != nullptr) {
-			co_await this->get_resource()->get_improved_modifier()->apply(this->site, multiplier);
-		}
-
-		if (this->get_resource()->get_improved_country_modifier() != nullptr && this->get_owner() != nullptr) {
-			co_await this->get_resource()->get_improved_country_modifier()->apply(this->get_owner(), multiplier);
-		}
-	}
-
-	if (improvement->get_modifier() != nullptr) {
-		co_await improvement->get_modifier()->apply(this->site, multiplier);
-	}
-
-	if (improvement->get_country_modifier() != nullptr && this->get_owner() != nullptr) {
-		co_await improvement->get_country_modifier()->apply(this->get_owner(), multiplier);
 	}
 }
 
@@ -2086,9 +1948,9 @@ bool site_game_data::can_have_population_type(const population_type *type) const
 
 	if (this->site->is_settlement()) {
 		return this->get_holding_type()->can_have_population_type(type);
-	} else {
-		return this->get_main_improvement()->can_have_population_type(type);
 	}
+
+	return false;
 }
 
 QVariantList site_game_data::get_population_units_qvariant_list() const
@@ -2232,10 +2094,6 @@ const population_class *site_game_data::get_default_population_class() const
 {
 	assert_throw(this->can_have_population());
 	assert_throw(this->is_built());
-
-	if (!this->site->is_settlement() && this->get_main_improvement()->get_default_population_class() != nullptr) {
-		return this->get_main_improvement()->get_default_population_class();
-	}
 
 	if (this->get_owner() != nullptr) {
 		return this->get_owner()->get_game_data()->get_default_population_class();

@@ -45,8 +45,6 @@
 #include "infrastructure/building_slot.h"
 #include "infrastructure/building_type.h"
 #include "infrastructure/holding_type.h"
-#include "infrastructure/improvement.h"
-#include "infrastructure/improvement_slot.h"
 #include "infrastructure/wonder.h"
 #include "item/item.h"
 #include "map/diplomatic_map_mode.h"
@@ -1598,12 +1596,6 @@ void domain_game_data::on_province_gained(const province *province, const int mu
 		this->change_tile_terrain_count(terrain, count * multiplier);
 	}
 
-	for (const auto &[resource, commodity_map] : this->get_economy()->get_improved_resource_commodity_bonuses()) {
-		for (const auto &[commodity, value] : commodity_map) {
-			province_game_data->change_improved_resource_commodity_bonus(resource, commodity, value * multiplier);
-		}
-	}
-
 	for (const auto &[commodity, threshold_map] : this->get_economy()->get_commodity_bonuses_for_tile_thresholds()) {
 		for (const auto &[threshold, value] : threshold_map) {
 			province_game_data->change_commodity_bonus_for_tile_threshold(commodity, threshold, value * multiplier);
@@ -1750,18 +1742,7 @@ QCoro::Task<void> domain_game_data::on_site_gained(const site *site, const int m
 		if (site_resource->get_country_modifier() != nullptr) {
 			co_await site_resource->get_country_modifier()->apply(this->domain, multiplier);
 		}
-
-		if (site_resource->get_improved_country_modifier() != nullptr && site->get_game_data()->get_resource_improvement() != nullptr) {
-			co_await site_resource->get_improved_country_modifier()->apply(this->domain, multiplier);
-		}
 	}
-
-	magic_enum::enum_for_each<improvement_slot>([this, site, multiplier](const improvement_slot slot) {
-		const improvement *improvement = site->get_game_data()->get_improvement(slot);
-		if (improvement != nullptr && improvement->get_country_modifier() != nullptr) {
-			QCoro::waitFor(improvement->get_country_modifier()->apply(this->domain, multiplier));
-		}
-	});
 }
 
 QCoro::Task<void> domain_game_data::set_capital(const site *capital)

@@ -31,7 +31,6 @@ class domain;
 class employment_type;
 class government_type;
 class icon;
-class improvement;
 class item_type;
 class law;
 class military_unit_type;
@@ -81,7 +80,6 @@ class technology final : public named_data_entry, public data_type<technology>
 	Q_PROPERTY(int free_technologies MEMBER free_technologies READ get_free_technologies NOTIFY changed)
 	Q_PROPERTY(QVariantList prerequisites READ get_prerequisites_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_buildings READ get_enabled_buildings_qvariant_list NOTIFY changed)
-	Q_PROPERTY(QVariantList enabled_improvements READ get_enabled_improvements_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_pathways READ get_enabled_pathways_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_civilian_units READ get_enabled_civilian_units_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_military_units READ get_enabled_military_units_qvariant_list NOTIFY changed)
@@ -294,18 +292,6 @@ public:
 	void add_disabled_wonder(const wonder *wonder)
 	{
 		this->disabled_wonders.push_back(wonder);
-	}
-
-	const std::vector<const improvement *> &get_enabled_improvements() const
-	{
-		return this->enabled_improvements;
-	}
-
-	QVariantList get_enabled_improvements_qvariant_list() const;
-
-	void add_enabled_improvement(const improvement *improvement)
-	{
-		this->enabled_improvements.push_back(improvement);
 	}
 
 	const std::vector<const pathway *> &get_enabled_pathways() const
@@ -533,7 +519,6 @@ private:
 	std::vector<const building_type *> enabled_buildings;
 	std::vector<const wonder *> enabled_wonders;
 	std::vector<const wonder *> disabled_wonders;
-	std::vector<const improvement *> enabled_improvements;
 	std::vector<const pathway *> enabled_pathways;
 	std::vector<const pathway *> enabled_river_crossing_pathways;
 	pathway_map<std::vector<const terrain_type *>> enabled_pathway_terrains;

@@ -5,7 +5,6 @@
 #include "database/defines.h"
 #include "domain/domain.h"
 #include "economy/resource.h"
-#include "infrastructure/improvement.h"
 #include "map/celestial_body_type.h"
 #include "map/direction.h"
 #include "map/province.h"
@@ -52,14 +51,6 @@ void tile::set_site(const metternich::site *site)
 	}
 
 	this->site = site;
-
-	if (site != nullptr && site->get_game_data()->get_main_improvement() == nullptr && site->is_celestial_body()) {
-		if (site->get_celestial_body_type()->get_variation_count() > 1) {
-			this->improvement_variation = static_cast<int8_t>(random::get()->generate(site->get_celestial_body_type()->get_variation_count()));
-		} else {
-			this->improvement_variation = 0;
-		}
-	}
 }
 
 const metternich::site *tile::get_settlement() const
@@ -97,21 +88,6 @@ bool tile::is_resource_discovered() const
 	}
 
 	return false;
-}
-
-void tile::on_main_improvement_changed()
-{
-	const improvement *main_improvement = this->get_site()->get_game_data()->get_main_improvement();
-
-	if (main_improvement != nullptr) {
-		if (main_improvement->get_variation_count() > 1) {
-			this->improvement_variation = static_cast<int8_t>(random::get()->generate(main_improvement->get_variation_count()));
-		} else {
-			this->improvement_variation = 0;
-		}
-	} else {
-		this->improvement_variation = 0;
-	}
 }
 
 void tile::add_river_direction(const direction direction)

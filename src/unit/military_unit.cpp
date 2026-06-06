@@ -14,7 +14,6 @@
 #include "economy/commodity.h"
 #include "game/battle_resolution_type.h"
 #include "game/game.h"
-#include "infrastructure/improvement.h"
 #include "language/name_generator.h"
 #include "map/map.h"
 #include "map/province.h"

@@ -11,8 +11,6 @@
 #include "game/domain_event.h"
 #include "game/event_trigger.h"
 #include "game/game.h"
-#include "infrastructure/improvement.h"
-#include "infrastructure/improvement_slot.h"
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"

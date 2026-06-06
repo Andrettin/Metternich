@@ -1077,59 +1077,6 @@ void domain_economy::set_commodity_throughput_modifier(const commodity *commodit
 	this->calculate_site_commodity_output(commodity);
 }
 
-void domain_economy::change_improved_resource_commodity_bonus(const resource *resource, const commodity *commodity, const int change)
-{
-	if (change == 0) {
-		return;
-	}
-
-	const int count = (this->improved_resource_commodity_bonuses[resource][commodity] += change);
-
-	assert_throw(count >= 0);
-
-	if (count == 0) {
-		this->improved_resource_commodity_bonuses[resource].erase(commodity);
-
-		if (this->improved_resource_commodity_bonuses[resource].empty()) {
-			this->improved_resource_commodity_bonuses.erase(resource);
-		}
-	}
-
-	for (const province *province : this->get_game_data()->get_provinces()) {
-		province->get_game_data()->change_improved_resource_commodity_bonus(resource, commodity, change);
-	}
-}
-
-void domain_economy::change_improvement_commodity_bonus(const improvement *improvement, const commodity *commodity, const centesimal_int &change)
-{
-	if (change == 0) {
-		return;
-	}
-
-	const centesimal_int &count = (this->improvement_commodity_bonuses[improvement][commodity] += change);
-
-	assert_throw(count >= 0);
-
-	if (count == 0) {
-		this->improvement_commodity_bonuses[improvement].erase(commodity);
-
-		if (this->improvement_commodity_bonuses[improvement].empty()) {
-			this->improvement_commodity_bonuses.erase(improvement);
-		}
-	}
-
-	for (const province *province : this->get_game_data()->get_provinces()) {
-		for (const QPoint &tile_pos : province->get_game_data()->get_resource_tiles()) {
-			const tile *tile = map::get()->get_tile(tile_pos);
-			const site *site = tile->get_site();
-
-			if (site->get_game_data()->has_improvement(improvement)) {
-				site->get_game_data()->change_base_commodity_output(commodity, change);
-			}
-		}
-	}
-}
-
 void domain_economy::change_building_commodity_bonus(const building_type *building, const commodity *commodity, const int change)
 {
 	if (change == 0) {

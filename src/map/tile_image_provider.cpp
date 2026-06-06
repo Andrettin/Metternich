@@ -5,7 +5,6 @@
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "infrastructure/holding_type.h"
-#include "infrastructure/improvement.h"
 #include "infrastructure/pathway.h"
 #include "map/celestial_body_type.h"
 #include "map/terrain_type.h"
@@ -53,17 +52,6 @@ QCoro::Task<void> tile_image_provider::load_image(const std::string id)
 	} else if (tile_image_type == "settlement") {
 		const holding_type *holding_type = holding_type::get(identifier);
 		filepath = holding_type->get_image_filepath();
-		is_frame_image = true;
-	} else if (tile_image_type == "improvement") {
-		const improvement *improvement = improvement::get(identifier);
-		if (id_list.size() >= 4) {
-			const std::string &terrain_identifier = id_list.at(2);
-			const terrain_type *terrain = terrain_type::get(terrain_identifier);
-			filepath = improvement->get_terrain_image_filepath(terrain);
-		} else {
-			filepath = improvement->get_image_filepath();
-		}
-		
 		is_frame_image = true;
 	} else if (tile_image_type == "pathway") {
 		const pathway *pathway = pathway::get(identifier);

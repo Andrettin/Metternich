@@ -16,10 +16,8 @@ class building_type;
 class domain;
 class dungeon;
 class holding_type;
-class improvement;
 class site;
 class wonder;
-enum class improvement_slot;
 
 class site_history final : public data_entry_history
 {
@@ -56,7 +54,7 @@ public:
 
 	bool is_developed() const
 	{
-		return this->developed || this->development_level > 0 || this->get_holding_type() != nullptr || !this->get_improvements().empty() || !this->get_buildings().empty() || !this->get_wonders().empty() || !this->get_population_groups().empty();
+		return this->developed || this->development_level > 0 || this->get_holding_type() != nullptr || !this->get_buildings().empty() || !this->get_wonders().empty() || !this->get_population_groups().empty();
 	}
 
 	int get_development_level() const
@@ -76,21 +74,6 @@ public:
 	const metternich::dungeon *get_dungeon() const
 	{
 		return this->dungeon;
-	}
-
-	const std::map<improvement_slot, const improvement *> &get_improvements() const
-	{
-		return this->improvements;
-	}
-
-	const improvement *get_improvement(const improvement_slot slot) const
-	{
-		const auto find_iterator = this->improvements.find(slot);
-		if (find_iterator != this->improvements.end()) {
-			return find_iterator->second;
-		}
-
-		return nullptr;
 	}
 
 	const building_slot_type_map<const building_type *> &get_buildings() const
@@ -205,7 +188,6 @@ private:
 	const metternich::dungeon *dungeon = nullptr;
 	metternich::culture *culture = nullptr;
 	metternich::religion *religion = nullptr;
-	std::map<improvement_slot, const improvement *> improvements;
 	building_slot_type_map<const building_type *> buildings;
 	building_slot_type_map<const wonder *> wonders;
 	population_group_map<int64_t> population_groups;

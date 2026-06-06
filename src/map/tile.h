@@ -11,7 +11,6 @@ namespace metternich {
 
 class domain;
 class holding_type;
-class improvement;
 class province;
 class resource;
 class site;
@@ -54,18 +53,6 @@ public:
 	const metternich::resource *get_resource() const;
 	bool is_resource_discovered() const;
 
-	void on_main_improvement_changed();
-
-	short get_improvement_variation() const
-	{
-		return this->improvement_variation;
-	}
-
-	void clear_improvement_variation()
-	{
-		this->improvement_variation = 0;
-	}
-
 	bool has_inner_river() const
 	{
 		return this->inner_river;
@@ -104,7 +91,6 @@ private:
 	const terrain_type *terrain = nullptr;
 	metternich::province *province = nullptr;
 	const metternich::site *site = nullptr;
-	int8_t improvement_variation = 0;
 	bool inner_river = false; //whether the tile has an in-tile river
 	std::vector<direction> river_directions;
 };

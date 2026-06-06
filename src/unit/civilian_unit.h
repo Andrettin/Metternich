@@ -22,7 +22,6 @@ class character;
 class civilian_unit_type;
 class domain;
 class icon;
-class improvement;
 class pathway;
 class phenotype;
 class province;
@@ -47,7 +46,6 @@ class civilian_unit final : public QObject
 	Q_PROPERTY(QVariantList prospectable_provinces READ get_prospectable_provinces_qvariant_list NOTIFY prospectable_provinces_changed)
 
 public:
-	static constexpr int improvement_construction_turns = 2;
 	static constexpr int exploration_turns = 1;
 	static constexpr int prospection_turns = 1;
 
@@ -148,12 +146,7 @@ public:
 	Q_INVOKABLE bool can_build_on_tile() const;
 	Q_INVOKABLE void build_on_tile();
 
-	bool can_build_improvement(const improvement *improvement) const;
-	bool can_build_improvement_on_tile(const improvement *improvement, const QPoint &tile_pos) const;
-	void build_improvement(const improvement *improvement);
 	Q_INVOKABLE void cancel_work();
-
-	const improvement *get_buildable_resource_improvement_for_tile(const QPoint &tile_pos) const;
 
 	resource_map<std::vector<QPoint>> get_improvable_resource_tiles() const;
 	QVariantList get_improvable_resource_tiles_qvariant_list() const;
@@ -199,7 +192,6 @@ private:
 	const building_type *under_construction_building = nullptr;
 	const site *under_construction_building_site = nullptr;
 	const pathway *under_construction_pathway = nullptr;
-	const improvement *improvement_under_construction = nullptr;
 	bool exploring = false;
 	bool prospecting = false;
 	std::optional<decimillesimal_int> work_progress;

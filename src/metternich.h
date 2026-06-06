@@ -27,7 +27,6 @@ namespace metternich {
 	class government_type;
 	class holding_type;
 	class icon;
-	class improvement;
 	class map;
 	class map_template;
 	class military_unit_class;

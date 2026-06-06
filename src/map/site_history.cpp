@@ -7,8 +7,6 @@
 #include "infrastructure/building_slot_type.h"
 #include "infrastructure/building_type.h"
 #include "infrastructure/holding_type.h"
-#include "infrastructure/improvement.h"
-#include "infrastructure/improvement_slot.h"
 #include "infrastructure/wonder.h"
 #include "map/site.h"
 #include "population/population_type.h"
@@ -29,24 +27,6 @@ void site_history::process_gsml_property(const gsml_property &property, const QD
 		assert_throw(property.get_operator() == gsml_operator::assignment);
 		if (holding_type != nullptr) {
 			this->development_level = holding_type->get_tier_level(value);
-		}
-	} else if (key == "improvements") {
-		const improvement *improvement = improvement::get(value);
-		const improvement_slot slot = improvement->get_slot();
-
-		switch (property.get_operator()) {
-			case gsml_operator::addition:
-				this->improvements[slot] = improvement;
-				break;
-			case gsml_operator::subtraction:
-				if (this->get_improvement(slot) != improvement) {
-					throw std::runtime_error(std::format("Tried to remove the \"{}\" improvement in the history of the \"{}\" site, but the improvement was not present.", improvement->get_identifier(), this->site->get_identifier()));
-				}
-
-				this->improvements.erase(slot);
-				break;
-			default:
-				assert_throw(false);
 		}
 	} else if (key == "buildings") {
 		const building_type *building = building_type::get(value);
@@ -93,22 +73,8 @@ void site_history::process_gsml_scope(const gsml_data &scope, const QDate &date)
 {
 	const std::string &tag = scope.get_tag();
 
-	if (tag == "improvements") {
-		scope.for_each_property([&](const gsml_property &property) {
-			const std::string &key = property.get_key();
-			const std::string &value = property.get_value();
-
-			const improvement_slot slot = magic_enum::enum_cast<improvement_slot>(key).value();
-			const improvement *improvement = improvement::get(value);
-
-			if (improvement == nullptr) {
-				this->improvements.erase(slot);
-			} else {
-				this->improvements[slot] = improvement;
-			}
-		});
-	} else if (tag == "buildings") {
-		scope.for_each_property([&](const gsml_property &property) {
+	if (tag == "buildings") {
+		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
@@ -122,7 +88,7 @@ void site_history::process_gsml_scope(const gsml_data &scope, const QDate &date)
 			}
 		});
 	} else if (tag == "wonders") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 

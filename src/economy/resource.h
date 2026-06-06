@@ -17,7 +17,6 @@ namespace metternich {
 class commodity;
 class domain;
 class icon;
-class improvement;
 class technology;
 class terrain_type;
 enum class site_type;
@@ -125,16 +124,6 @@ public:
 
 	const terrain_type *get_fallback_terrain(const terrain_type *terrain) const;
 
-	const std::vector<const improvement *> &get_improvements() const
-	{
-		return this->improvements;
-	}
-
-	void add_improvement(const improvement *improvement)
-	{
-		this->improvements.push_back(improvement);
-	}
-
 	const modifier<const site> *get_modifier() const
 	{
 		return this->modifier.get();
@@ -143,16 +132,6 @@ public:
 	const modifier<const domain> *get_country_modifier() const
 	{
 		return this->country_modifier.get();
-	}
-
-	const modifier<const site> *get_improved_modifier() const
-	{
-		return this->improved_modifier.get();
-	}
-
-	const modifier<const domain> *get_improved_country_modifier() const
-	{
-		return this->improved_country_modifier.get();
 	}
 
 	bool is_enabled() const;
@@ -173,11 +152,8 @@ private:
 	technology *discovery_technology = nullptr; //technology which is obtained when exploring this resource tile
 	std::vector<const terrain_type *> terrain_types;
 	std::set<site_type> site_types;
-	std::vector<const improvement *> improvements;
 	std::unique_ptr<metternich::modifier<const site>> modifier;
 	std::unique_ptr<metternich::modifier<const domain>> country_modifier;
-	std::unique_ptr<metternich::modifier<const site>> improved_modifier;
-	std::unique_ptr<metternich::modifier<const domain>> improved_country_modifier;
 	const game_rule *required_game_rule = nullptr;
 };
 

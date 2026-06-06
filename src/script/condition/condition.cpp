@@ -73,7 +73,6 @@
 #include "script/condition/has_terrain_condition.h"
 #include "script/condition/holding_level_condition.h"
 #include "script/condition/holding_type_condition.h"
-#include "script/condition/improvement_condition.h"
 #include "script/condition/independent_condition.h"
 #include "script/condition/infantry_condition.h"
 #include "script/condition/is_military_unit_category_available_condition.h"
@@ -256,8 +255,6 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			return std::make_unique<holding_level_condition>(value, condition_operator);
 		} else if (key == "holding_type") {
 			return std::make_unique<holding_type_condition>(value, condition_operator);
-		} else if (key == "improvement") {
-			return std::make_unique<improvement_condition>(value, condition_operator);
 		} else if (key == "resource") {
 			return std::make_unique<resource_condition>(value, condition_operator);
 		} else if (key == "river") {

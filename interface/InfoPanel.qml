@@ -119,7 +119,7 @@ Rectangle {
 		readonly property string icon_identifier: selected_civilian_unit ? selected_civilian_unit.icon.identifier : (
 			selected_site ? (
 				(selected_site.settlement && selected_site.game_data.holding_type !== null) ? "" : (
-					(selected_site.game_data.improvement && selected_site.game_data.improvement.visitable) ? "skull" : (selected_site.map_data.resource && selected_site.map_data.resource.icon ? selected_site.map_data.resource.icon.identifier : (selected_site.map_data.resource && selected_site.map_data.resource.commodity ? selected_site.map_data.resource.commodity.icon.identifier : ""))
+					selected_site.map_data.resource && selected_site.map_data.resource.icon ? selected_site.map_data.resource.icon.identifier : (selected_site.map_data.resource && selected_site.map_data.resource.commodity ? selected_site.map_data.resource.commodity.icon.identifier : "")
 				)
 			) : ""
 		)
@@ -168,12 +168,7 @@ Rectangle {
 		horizontalAlignment: Text.AlignHCenter
 		text: selected_province && selected_garrison ? "Garrison" : format_text((selected_site && !selected_garrison) ? (
 			selected_site.settlement ? "" : (
-				selected_site.game_data.improvement ? (
-					selected_site.game_data.improvement.name
-					//+ (site_title_name.length > 0 ? ("\n\n" + site_title_name) : "")
-				) : (
-					selected_site.map_data.resource ? (selected_site.map_data.resource.natural_wonder ? "Natural Wonder" : selected_site.map_data.resource.name) : ""
-				)
+				selected_site.map_data.resource ? (selected_site.map_data.resource.natural_wonder ? "Natural Wonder" : selected_site.map_data.resource.name) : ""
 			)
 		) : (selected_civilian_unit ? selected_civilian_unit.name
 			: (!selected_province && metternich.game.player_character && metternich.game.player_character.game_data.character_class ? ("Level " + metternich.game.player_character.game_data.level + " " + metternich.game.player_character.game_data.character_class.name) : "")))

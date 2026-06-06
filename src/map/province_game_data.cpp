@@ -2095,40 +2095,6 @@ void province_game_data::set_commodity_throughput_modifier(const commodity *comm
 	this->calculate_site_commodity_output(commodity);
 }
 
-void province_game_data::change_improved_resource_commodity_bonus(const resource *resource, const commodity *commodity, const int change)
-{
-	if (change == 0) {
-		return;
-	}
-
-	const int count = (this->improved_resource_commodity_bonuses[resource][commodity] += change);
-
-	assert_throw(count >= 0);
-
-	if (count == 0) {
-		this->improved_resource_commodity_bonuses[resource].erase(commodity);
-
-		if (this->improved_resource_commodity_bonuses[resource].empty()) {
-			this->improved_resource_commodity_bonuses.erase(resource);
-		}
-	}
-
-	for (const QPoint &tile_pos : this->get_resource_tiles()) {
-		tile *tile = map::get()->get_tile(tile_pos);
-		if (tile->get_resource() != resource) {
-			continue;
-		}
-
-		assert_throw(tile->get_site() != nullptr);
-
-		if (tile->get_site()->get_game_data()->get_resource_improvement() == nullptr) {
-			continue;
-		}
-
-		tile->get_site()->get_game_data()->change_base_commodity_output(commodity, centesimal_int(change));
-	}
-}
-
 void province_game_data::set_commodity_bonus_for_tile_threshold(const commodity *commodity, const int threshold, const int value)
 {
 	const int old_value = this->get_commodity_bonus_for_tile_threshold(commodity, threshold);

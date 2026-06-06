@@ -51,8 +51,6 @@
 #include "game/scenario.h"
 #include "game/scenario_model.h"
 #include "infrastructure/building_type.h"
-#include "infrastructure/improvement.h"
-#include "infrastructure/improvement_slot.h"
 #include "infrastructure/pathway.h"
 #include "infrastructure/wonder.h"
 #include "item/affix_type.h"
@@ -197,7 +195,6 @@ int main(int argc, char **argv)
 		database_util::register_enum<geological_era>();
 		database_util::register_enum<grammatical_gender>();
 		database_util::register_enum<idea_type>();
-		database_util::register_enum<improvement_slot>();
 		database_util::register_enum<military_unit_category>();
 		database_util::register_enum<military_unit_domain>();
 		database_util::register_enum<moisture_type>();
@@ -242,7 +239,6 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<icon>("", 1);
 		qmlRegisterAnonymousType<idea>("", 1);
 		qmlRegisterAnonymousType<idea_slot>("", 1);
-		qmlRegisterAnonymousType<improvement>("", 1);
 		qmlRegisterAnonymousType<item>("", 1);
 		qmlRegisterAnonymousType<const item>("", 1);
 		qmlRegisterAnonymousType<item_slot>("", 1);

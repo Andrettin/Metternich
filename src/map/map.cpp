@@ -9,7 +9,6 @@
 #include "domain/domain_technology.h"
 #include "economy/resource.h"
 #include "game/game.h"
-#include "infrastructure/improvement.h"
 #include "map/direction.h"
 #include "map/province.h"
 #include "map/province_container.h"
@@ -346,21 +345,6 @@ void map::clear()
 	this->sites.clear();
 	this->tiles.reset();
 	this->ocean_diplomatic_map_image = QImage();
-}
-
-void map::clear_tile_game_data()
-{
-	if (this->tiles == nullptr) {
-		return;
-	}
-
-	try {
-		for (tile &tile : *this->tiles) {
-			tile.clear_improvement_variation();
-		}
-	} catch (...) {
-		std::throw_with_nested(std::runtime_error("Failed to clear tile game data for the map."));
-	}
 }
 
 int map::get_pos_index(const QPoint &pos) const

@@ -21,7 +21,6 @@
 #include "game/game_rules.h"
 #include "game/province_event.h"
 #include "infrastructure/building_type.h"
-#include "infrastructure/improvement.h"
 #include "infrastructure/pathway.h"
 #include "infrastructure/wonder.h"
 #include "item/item_type.h"
@@ -287,7 +286,6 @@ void technology::check() const
 		&& this->get_enabled_deities().empty()
 		&& this->get_enabled_employment_types().empty()
 		&& this->get_enabled_government_types().empty()
-		&& this->get_enabled_improvements().empty()
 		&& this->get_enabled_item_types().empty()
 		&& this->get_enabled_laws().empty()
 		&& this->get_enabled_military_units().empty()
@@ -465,11 +463,6 @@ std::vector<const wonder *> technology::get_disabled_wonders_for_country(const d
 	}
 
 	return wonders;
-}
-
-QVariantList technology::get_enabled_improvements_qvariant_list() const
-{
-	return container::to_qvariant_list(this->get_enabled_improvements());
 }
 
 QVariantList technology::get_enabled_pathways_qvariant_list() const
@@ -730,16 +723,6 @@ QString technology::get_effects_string(const metternich::domain *domain) const
 			}
 
 			str += std::format("Obsoletes {} wonder", wonder->get_name());
-		}
-	}
-
-	if (!this->get_enabled_improvements().empty()) {
-		for (const improvement *improvement : this->get_enabled_improvements()) {
-			if (!str.empty()) {
-				str += "\n";
-			}
-
-			str += std::format("Enables {} improvement", improvement->get_name());
 		}
 	}
 

@@ -32,7 +32,6 @@ class commodity;
 class culture;
 class domain;
 class icon;
-class improvement;
 class military_unit;
 class pathway;
 class phenotype;
@@ -509,41 +508,6 @@ public:
 		this->set_commodity_throughput_modifier(commodity, this->get_commodity_throughput_modifier(commodity) + value);
 	}
 
-	const resource_map<commodity_map<int>> &get_improved_resource_commodity_bonuses() const
-	{
-		return this->improved_resource_commodity_bonuses;
-	}
-
-	const commodity_map<int> &get_improved_resource_commodity_bonuses(const resource *resource) const
-	{
-		static const commodity_map<int> empty_map;
-
-		const auto find_iterator = this->improved_resource_commodity_bonuses.find(resource);
-
-		if (find_iterator != this->improved_resource_commodity_bonuses.end()) {
-			return find_iterator->second;
-		}
-
-		return empty_map;
-	}
-
-	int get_improved_resource_commodity_bonus(const resource *resource, const commodity *commodity) const
-	{
-		const auto find_iterator = this->improved_resource_commodity_bonuses.find(resource);
-
-		if (find_iterator != this->improved_resource_commodity_bonuses.end()) {
-			const auto sub_find_iterator = find_iterator->second.find(commodity);
-
-			if (sub_find_iterator != find_iterator->second.end()) {
-				return sub_find_iterator->second;
-			}
-		}
-
-		return 0;
-	}
-
-	void change_improved_resource_commodity_bonus(const resource *resource, const commodity *commodity, const int change);
-
 	const commodity_map<std::map<int, int>> &get_commodity_bonuses_for_tile_thresholds() const
 	{
 		return this->commodity_bonuses_for_tile_thresholds;
@@ -676,7 +640,6 @@ private:
 	centesimal_int output_modifier;
 	commodity_map<centesimal_int> commodity_output_modifiers;
 	commodity_map<int> commodity_throughput_modifiers;
-	resource_map<commodity_map<int>> improved_resource_commodity_bonuses;
 	commodity_map<std::map<int, int>> commodity_bonuses_for_tile_thresholds;
 	data_entry_map<technology_category, int> technology_category_spread_modifiers;
 	int movement_cost_modifier = 0;

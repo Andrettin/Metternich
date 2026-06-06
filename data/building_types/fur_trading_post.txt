@@ -19,7 +19,7 @@ fur_trading_post = {
 		}
 	}
 	province_modifier = {
-		trade_per_improved_beavers = 1
-		trade_per_improved_deer = 1
+		#trade_per_improved_beavers = 1
+		#trade_per_improved_deer = 1
 	}
 }

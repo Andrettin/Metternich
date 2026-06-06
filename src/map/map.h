@@ -10,7 +10,6 @@ namespace archimedes {
 
 namespace metternich {
 
-class improvement;
 class province;
 class resource;
 class site;
@@ -48,7 +47,6 @@ public:
 	void process_border_tiles();
 	void process_site_tiles();
 	Q_INVOKABLE void clear();
-	void clear_tile_game_data();
 
 	const QSize &get_size() const
 	{
@@ -172,7 +170,6 @@ signals:
 	void tile_prospection_changed(const QPoint &tile_pos);
 	void tile_resource_changed(const QPoint &tile_pos);
 	void tile_holding_type_changed(const QPoint &tile_pos);
-	void tile_improvement_changed(const QPoint &tile_pos);
 	void provinces_changed();
 	void sites_changed();
 	void diplomatic_map_image_size_changed();

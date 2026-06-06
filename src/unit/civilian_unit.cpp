@@ -16,7 +16,6 @@
 #include "game/game.h"
 #include "infrastructure/building_slot.h"
 #include "infrastructure/building_type.h"
-#include "infrastructure/improvement.h"
 #include "infrastructure/pathway.h"
 #include "map/map.h"
 #include "map/province.h"
@@ -198,11 +197,6 @@ QCoro::Task<void> civilian_unit::do_turn()
 
 				this->under_construction_pathway = nullptr;
 			}
-
-			if (this->improvement_under_construction != nullptr) {
-				//co_await this->get_tile()->get_site()->get_game_data()->set_improvement(this->improvement_under_construction->get_slot(), this->improvement_under_construction);
-				this->improvement_under_construction = nullptr;
-			}
 		}
 	}
 }
@@ -212,29 +206,6 @@ void civilian_unit::do_ai_turn()
 	if (this->is_busy()) {
 		return;
 	}
-
-	/*
-	for (const metternich::province *province : this->get_owner()->get_game_data()->get_provinces()) {
-		for (const QPoint &resource_tile_pos : province->get_game_data()->get_resource_tiles()) {
-			if (resource_tile_pos != this->get_tile_pos() && !this->can_move_to(resource_tile_pos)) {
-				continue;
-			}
-
-			const improvement *improvement = this->get_buildable_resource_improvement_for_tile(resource_tile_pos);
-			if (improvement == nullptr) {
-				continue;
-			}
-
-			if (resource_tile_pos == this->get_tile_pos()) {
-				this->build_improvement(improvement);
-				return;
-			} else {
-				this->move_to(resource_tile_pos);
-				return;
-			}
-		}
-	}
-	*/
 }
 
 void civilian_unit::generate_name()
@@ -558,76 +529,10 @@ void civilian_unit::build_pathway(const metternich::pathway *pathway)
 bool civilian_unit::can_build_on_tile() const
 {
 	return false;
-	//return this->get_buildable_resource_improvement_for_tile(this->get_tile_pos()) != nullptr;
 }
 
 void civilian_unit::build_on_tile()
 {
-	/*
-	const improvement *buildable_improvement = this->get_buildable_resource_improvement_for_tile(this->get_tile_pos());
-	assert_throw(buildable_improvement != nullptr);
-	this->build_improvement(buildable_improvement);
-	*/
-}
-
-bool civilian_unit::can_build_improvement(const improvement *improvement) const
-{
-	const domain_economy *domain_economy = this->get_owner()->get_economy();
-	const domain_technology *domain_technology = this->get_owner()->get_technology();
-
-	if (improvement->get_required_technology() != nullptr && !domain_technology->has_technology(improvement->get_required_technology())) {
-		return false;
-	}
-
-	if (improvement->get_wealth_cost() > 0 && improvement->get_wealth_cost() > domain_economy->get_wealth()) {
-		return false;
-	}
-
-	for (const auto &[commodity, cost] : improvement->get_commodity_costs()) {
-		if (cost > domain_economy->get_stored_commodity(commodity)) {
-			return false;
-		}
-	}
-
-	return true;
-}
-
-bool civilian_unit::can_build_improvement_on_tile(const improvement *improvement, const QPoint &tile_pos) const
-{
-	if (!this->can_build_improvement(improvement)) {
-		return false;
-	}
-
-	const tile *tile = map::get()->get_tile(tile_pos);
-	const site *site = tile->get_site();
-
-	if (site == nullptr) {
-		return false;
-	}
-
-	if (tile->get_resource() != nullptr && !this->get_type()->can_improve_resource(tile->get_resource())) {
-		return false;
-	}
-
-	return improvement->is_buildable_on_site(site);
-}
-
-void civilian_unit::build_improvement(const improvement *improvement)
-{
-	this->improvement_under_construction = improvement;
-
-	//FIXME: set the task completion turns as a field for each improvement?
-	this->set_work_progress(decimillesimal_int(0));
-
-	domain_economy *domain_economy = this->get_owner()->get_economy();
-
-	if (improvement->get_wealth_cost() > 0) {
-		domain_economy->change_wealth(-improvement->get_wealth_cost());
-	}
-
-	for (const auto &[commodity, cost] : improvement->get_commodity_costs()) {
-		domain_economy->change_stored_commodity(commodity, -cost);
-	}
 }
 
 void civilian_unit::cancel_work()
@@ -648,45 +553,12 @@ void civilian_unit::cancel_work()
 		}
 	}
 
-	if (this->improvement_under_construction != nullptr) {
-		domain_economy *domain_economy = this->get_owner()->get_economy();
-		if (this->improvement_under_construction->get_wealth_cost() > 0) {
-			domain_economy->change_wealth(this->improvement_under_construction->get_wealth_cost());
-		}
-
-		for (const auto &[commodity, cost] : this->improvement_under_construction->get_commodity_costs()) {
-			domain_economy->change_stored_commodity(commodity, cost);
-		}
-	}
-
 	this->set_work_progress(std::nullopt);
 	this->under_construction_building = nullptr;
 	this->under_construction_building_site = nullptr;
 	this->under_construction_pathway = nullptr;
-	this->improvement_under_construction = nullptr;
 	this->exploring = false;
 	this->prospecting = false;
-}
-
-const improvement *civilian_unit::get_buildable_resource_improvement_for_tile(const QPoint &tile_pos) const
-{
-	const tile *tile = map::get()->get_tile(tile_pos);
-
-	if (tile->get_resource() == nullptr) {
-		return nullptr;
-	}
-
-	for (const improvement *improvement : tile->get_resource()->get_improvements()) {
-		assert_throw(!improvement->get_resources().empty());
-
-		if (!this->can_build_improvement_on_tile(improvement, tile_pos)) {
-			continue;
-		}
-
-		return improvement;
-	}
-
-	return nullptr;
 }
 
 resource_map<std::vector<QPoint>> civilian_unit::get_improvable_resource_tiles() const
@@ -709,10 +581,10 @@ resource_map<std::vector<QPoint>> civilian_unit::get_improvable_resource_tiles()
 				continue;
 			}
 
-			const improvement *improvement = this->get_buildable_resource_improvement_for_tile(tile_pos);
-			if (improvement != nullptr) {
-				resource_tiles[tile->get_resource()].push_back(tile_pos);
-			}
+			//const improvement *improvement = this->get_buildable_resource_improvement_for_tile(tile_pos);
+			//if (improvement != nullptr) {
+			//	resource_tiles[tile->get_resource()].push_back(tile_pos);
+			//}
 		}
 	}
 
@@ -888,10 +760,6 @@ void civilian_unit::increment_work_progress()
 
 	if (this->prospecting) {
 		progress_change = decimillesimal_int::min(progress_change, decimillesimal_int(100) / civilian_unit::prospection_turns);
-	}
-
-	if (this->improvement_under_construction != nullptr) {
-		progress_change = decimillesimal_int::min(progress_change, decimillesimal_int(100) / civilian_unit::improvement_construction_turns);
 	}
 
 	if (this->under_construction_building != nullptr) {

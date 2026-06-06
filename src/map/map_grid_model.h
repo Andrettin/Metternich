@@ -24,7 +24,6 @@ public:
 		terrain,
 		river,
 		resource,
-		improvement,
 		upper_label,
 		prospected
 	};
@@ -69,7 +68,6 @@ public:
 		role_names.insert(static_cast<int>(role::terrain), "terrain");
 		role_names.insert(static_cast<int>(role::river), "river");
 		role_names.insert(static_cast<int>(role::resource), "resource");
-		role_names.insert(static_cast<int>(role::improvement), "improvement");
 		role_names.insert(static_cast<int>(role::upper_label), "upper_label");
 		role_names.insert(static_cast<int>(role::prospected), "prospected");
 
@@ -81,7 +79,6 @@ public:
 	void on_tile_prospection_changed(const QPoint &tile_pos);
 	void on_tile_resource_changed(const QPoint &tile_pos);
 	void on_tile_holding_type_changed(const QPoint &tile_pos);
-	void on_tile_improvement_changed(const QPoint &tile_pos);
 };
 
 }

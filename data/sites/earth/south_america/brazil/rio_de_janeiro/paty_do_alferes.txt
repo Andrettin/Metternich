@@ -2,8 +2,9 @@ paty_do_alferes = {
 	name = "Paty do Alferes"
 	world = earth
 	geocoordinate = { -43.418888888889 -22.428888888889 }
-	type = resource
-	resource = coffee
+	type = holding
+	holding_type = castle #barony
+	#resource = coffee
 	province = rio_de_janeiro
 	#max_tier = barony #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, pp. 343-344.
 	

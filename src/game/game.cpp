@@ -40,8 +40,6 @@
 #include "infrastructure/building_slot.h"
 #include "infrastructure/building_type.h"
 #include "infrastructure/holding_type.h"
-#include "infrastructure/improvement.h"
-#include "infrastructure/improvement_slot.h"
 #include "infrastructure/pathway.h"
 #include "infrastructure/wonder.h"
 #include "map/map.h"
@@ -525,8 +523,6 @@ QCoro::Task<void> game::clear_coro()
 
 		co_await this->reset_game_data();
 
-		map::get()->clear_tile_game_data();
-
 		this->scenario = nullptr;
 		this->countries.clear();
 		this->wonder_countries.clear();
@@ -992,45 +988,6 @@ QCoro::Task<void> game::apply_sites()
 
 			if (tile == nullptr) {
 				continue;
-			}
-
-			std::map<improvement_slot, const improvement *> site_improvements = site_history->get_improvements();
-
-			if (site->get_map_data()->get_resource() != nullptr && site_history->is_developed() && (!site_improvements.contains(improvement_slot::resource) || site_improvements.find(improvement_slot::resource)->second->get_level() < site_history->get_development_level())) {
-				//if the site is marked as developed, but has no specific improvement set for it, or has an improvement with a level below its development level, pick an appropriate improvement for its resource
-				for (const improvement *improvement : site->get_map_data()->get_resource()->get_improvements()) {
-					if (improvement->get_level() != site_history->get_development_level()) {
-						continue;
-					}
-
-					site_improvements[improvement_slot::resource] = improvement;
-					break;
-				}
-			}
-
-			for (const auto &[improvement_slot, improvement] : site_improvements) {
-				if (improvement != nullptr) {
-					if (!improvement->get_resources().empty()) {
-						assert_throw(site->get_type() == site_type::resource || site->get_type() == site_type::celestial_body || site->is_settlement());
-
-						if (tile->get_resource() == nullptr) {
-							throw std::runtime_error(std::format("Failed to set resource improvement for tile for site \"{}\", as it has no resource.", site->get_identifier()));
-						}
-
-						if (!vector::contains(improvement->get_resources(), tile->get_resource())) {
-							throw std::runtime_error(std::format("Failed to set resource improvement for tile for site \"{}\", as its resource is different than that of the improvement.", site->get_identifier()));
-						}
-
-						co_await map::get()->set_tile_resource_discovered(site_game_data->get_tile_pos(), true);
-					}
-
-					co_await site_game_data->set_improvement(improvement->get_slot(), improvement);
-
-					//add prerequisites for the tile's improvement to its owner's researched technologies
-					if (improvement->get_required_technology() != nullptr && tile->get_owner() != nullptr) {
-						co_await tile->get_province()->get_game_data()->add_technology_with_prerequisites(improvement->get_required_technology());
-					}
-				}
 			}
 
 			if (site_history->is_resource_discovered()) {
@@ -1665,18 +1622,6 @@ QCoro::Task<void> game::on_setup_finished()
 			for (const site *site : province->get_game_data()->get_sites()) {
 				//check employment here because it can affect the population type charts via equivalent population types for employment
 				co_await site->get_game_data()->check_employment();
-
-				for (const improvement *improvement : improvement::get_all()) {
-					if (improvement->get_free_on_start_conditions() == nullptr) {
-						continue;
-					}
-
-					if (!improvement->get_free_on_start_conditions()->check(site)) {
-						continue;
-					}
-
-					co_await site->get_game_data()->check_free_improvement(improvement);
-				}
 			}
 		}
 

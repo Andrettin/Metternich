@@ -10,7 +10,6 @@
 Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("infrastructure/dungeon.h")
 Q_MOC_INCLUDE("infrastructure/holding_type.h")
-Q_MOC_INCLUDE("infrastructure/improvement.h")
 Q_MOC_INCLUDE("map/province.h")
 Q_MOC_INCLUDE("population/population.h")
 
@@ -33,7 +32,6 @@ class domain;
 class dungeon;
 class employment_type;
 class holding_type;
-class improvement;
 class party;
 class pathway;
 class phenotype;
@@ -50,7 +48,6 @@ class site_attribute;
 class site_feature;
 class technology;
 class tile;
-enum class improvement_slot;
 
 class site_game_data final : public QObject
 {
@@ -68,8 +65,6 @@ class site_game_data final : public QObject
 	Q_PROPERTY(int holding_level READ get_holding_level NOTIFY holding_level_changed)
 	Q_PROPERTY(QString fortification_level READ get_fortification_level_qstring NOTIFY fortification_level_changed)
 	Q_PROPERTY(const metternich::dungeon* dungeon READ get_dungeon NOTIFY dungeon_changed)
-	Q_PROPERTY(const metternich::improvement* improvement READ get_main_improvement NOTIFY improvements_changed)
-	Q_PROPERTY(const metternich::improvement* resource_improvement READ get_resource_improvement NOTIFY improvements_changed)
 	Q_PROPERTY(const metternich::portrait* portrait READ get_portrait NOTIFY portrait_changed)
 	Q_PROPERTY(QVariantList features READ get_features_qvariant_list NOTIFY features_changed)
 	Q_PROPERTY(QVariantList attribute_values READ get_attribute_values_qvariant_list NOTIFY attribute_values_changed)
@@ -253,23 +248,6 @@ public:
 	[[nodiscard]] QCoro::Task<void> set_dungeon(const metternich::dungeon *dungeon);
 	bool can_have_dungeon(const metternich::dungeon *dungeon) const;
 
-	const improvement *get_improvement(const improvement_slot slot) const
-	{
-		const auto find_iterator = this->improvements.find(slot);
-
-		if (find_iterator != this->improvements.end()) {
-			return find_iterator->second;
-		}
-
-		return nullptr;
-	}
-
-	const improvement *get_main_improvement() const;
-	const improvement *get_resource_improvement() const;
-	bool has_improvement(const improvement *improvement) const;
-	bool has_improvement_or_better(const improvement *improvement) const;
-	[[nodiscard]] QCoro::Task<void> set_improvement(const improvement_slot slot, const improvement *improvement);
-
 	const portrait *get_portrait() const;
 
 	const data_entry_set<site_feature> &get_features() const
@@ -355,12 +333,10 @@ public:
 	[[nodiscard]] QCoro::Task<void> check_free_buildings();
 	bool can_gain_free_building(const building_type *building, const bool check_required_buildings, const bool check_required_technologies) const;
 	[[nodiscard]] QCoro::Task<bool> check_free_building(const building_type *building);
-	[[nodiscard]] QCoro::Task<bool> check_free_improvement(const improvement *improvement);
 
 	[[nodiscard]] QCoro::Task<void> on_settlement_built(const int multiplier);
 	[[nodiscard]] QCoro::Task<void> on_building_gained(const building_type *building, const int multiplier);
 	[[nodiscard]] QCoro::Task<void> on_wonder_gained(const wonder *wonder, const int multiplier);
-	[[nodiscard]] QCoro::Task<void> on_improvement_gained(const improvement *improvement, const int multiplier);
 
 	std::vector<building_item_slot *> get_item_slots() const;
 	QVariantList get_item_slots_qvariant_list() const;
@@ -692,7 +668,6 @@ signals:
 	void owner_changed();
 	void culture_changed();
 	void religion_changed();
-	void improvements_changed();
 	void holding_type_changed();
 	void holding_level_changed();
 	void fortification_level_changed();
@@ -720,7 +695,6 @@ private:
 	std::string holding_type_name;
 	const metternich::dungeon *dungeon = nullptr;
 	data_entry_set<dungeon_area> explored_dungeon_areas;
-	std::map<improvement_slot, const improvement *> improvements;
 	bool resource_discovered = false;
 	data_entry_set<site_feature> features;
 	data_entry_map<site_attribute, int> attribute_values;

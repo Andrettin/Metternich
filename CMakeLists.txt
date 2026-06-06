@@ -142,8 +142,6 @@ set(infrastructure_SRCS
 	src/infrastructure/dungeon.cpp
 	src/infrastructure/dungeon_area.cpp
 	src/infrastructure/holding_type.cpp
-	src/infrastructure/improvement.cpp
-	src/infrastructure/improvement_container.cpp
 	src/infrastructure/pathway.cpp
 	src/infrastructure/pathway_container.cpp
 	src/infrastructure/wonder.cpp
@@ -530,9 +528,6 @@ set(infrastructure_HDRS
 	src/infrastructure/dungeon.h
 	src/infrastructure/dungeon_area.h
 	src/infrastructure/holding_type.h
-	src/infrastructure/improvement.h
-	src/infrastructure/improvement_container.h
-	src/infrastructure/improvement_slot.h
 	src/infrastructure/pathway.h
 	src/infrastructure/pathway_container.h
 	src/infrastructure/wonder.h
@@ -717,7 +712,6 @@ set(script_condition_HDRS
 	src/script/condition/has_terrain_condition.h
 	src/script/condition/holding_level_condition.h
 	src/script/condition/holding_type_condition.h
-	src/script/condition/improvement_condition.h
 	src/script/condition/independent_condition.h
 	src/script/condition/infantry_condition.h
 	src/script/condition/is_military_unit_category_available_condition.h
@@ -781,7 +775,6 @@ source_group(script\\condition FILES ${script_condition_HDRS})
 
 set(script_effect_HDRS
 	src/script/effect/add_building_class_effect.h
-	src/script/effect/add_improvement_effect.h
 	src/script/effect/any_known_domain_effect.h
 	src/script/effect/any_neighbor_country_effect.h
 	src/script/effect/attribute_check_effect.h
@@ -857,8 +850,6 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/commodity_bonus_modifier_effect.h
 	src/script/modifier_effect/commodity_bonus_per_adjacent_terrain_modifier_effect.h
 	src/script/modifier_effect/commodity_bonus_per_building_modifier_effect.h
-	src/script/modifier_effect/commodity_bonus_per_improved_resource_modifier_effect.h
-	src/script/modifier_effect/commodity_bonus_per_improvement_modifier_effect.h
 	src/script/modifier_effect/commodity_bonus_per_settlement_modifier_effect.h
 	src/script/modifier_effect/commodity_bonus_per_population_modifier_effect.h
 	src/script/modifier_effect/commodity_output_modifier_effect.h

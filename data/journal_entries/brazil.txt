@@ -9,7 +9,7 @@ barony_of_paty_do_alferes = {
 			}
 		}
 	}
-	built_resource_site_levels = {
+	built_holding_site_levels = {
 		paty_do_alferes = 1
 	}
 	completion_effects = {
@@ -28,7 +28,7 @@ barony_of_vassouras = {
 			}
 		}
 	}
-	built_resource_site_levels = {
+	built_holding_site_levels = {
 		vassouras = 1
 	}
 	completion_effects = {

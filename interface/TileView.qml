@@ -94,8 +94,8 @@ Item {
 		anchors.leftMargin: 8 * scale_factor + 2 * scale_factor
 		anchors.top: parent.top
 		anchors.topMargin: 8 * scale_factor
-		source: resource ? ("image://icon/" + (site && site.game_data.resource_improvement ? site.game_data.resource_improvement.icon.identifier : resource.tiny_icon.identifier)) : "image://empty/"
-		visible: province !== null && is_center_tile && resource !== null && site && (site.game_data.holding_type !== null || (improvement !== null && improvement.resource === null))
+		source: resource ? ("image://icon/" + resource.tiny_icon.identifier) : "image://empty/"
+		visible: province !== null && is_center_tile && resource !== null && site && site.game_data.holding_type !== null)
 	}
 	
 	Rectangle {
@@ -147,29 +147,6 @@ Item {
 		verticalAlignment: Text.AlignTop
 	}
 	
-	Item {
-		id: tile_detail_item
-		anchors.fill: parent
-		visible: site && site.game_data.resource_improvement !== null && resource !== null && tile_detail_mode
-		
-		LargeText {
-			anchors.horizontalCenter: parent.horizontalCenter
-			anchors.verticalCenter: parent.verticalCenter
-			anchors.verticalCenterOffset: -24 * scale_factor
-			text: resource && resource.commodity && site && site.game_data.commodity_outputs.length > 0 ? site.game_data.get_commodity_output(resource.commodity) : "" //refer to the commodity_outputs property so that this will be reevaluated if it changes (e.g. if the value changes)
-			visible: tile_detail_resource_icon.visible
-		}
-		
-		Image {
-			id: tile_detail_resource_icon
-			anchors.horizontalCenter: parent.horizontalCenter
-			anchors.verticalCenter: parent.verticalCenter
-			source: resource && resource.commodity ? ("image://icon/" + resource.commodity.icon.identifier) : "image://empty/"
-			fillMode: Image.Pad
-			visible: site && site.game_data.resource_improvement !== null && resource !== null
-		}
-	}
-	
 	MouseArea {
 		anchors.fill: parent
 		hoverEnabled: true
@@ -218,7 +195,7 @@ Item {
 				selected_civilian_unit = civilian_unit
 				selected_site = null
 				selected_province = null
-			} else if (site !== null && (site !== selected_site || selected_garrison) && (site.settlement || resource || improvement)) {
+			} else if (site !== null && (site !== selected_site || selected_garrison) && (site.settlement || resource)) {
 				selected_site = site
 				selected_province = null
 				selected_civilian_unit = null
@@ -256,21 +233,11 @@ Item {
 				
 				if (resource !== null) {
 					text += ") ("
-					if (site.game_data.resource_improvement !== null) {
-						text += site.game_data.resource_improvement.name
-						if (resource.natural_wonder) {
-							text += ") (Natural Wonder"
-						}
-					} else if (resource.natural_wonder) {
+					if (resource.natural_wonder) {
 						text += "Natural Wonder"
 					} else {
 						text += resource.name
 					}
-				}
-			} else if (improvement !== null) {
-				text += improvement.name
-				if (resource !== null && resource.natural_wonder) {
-					text += ") (Natural Wonder"
 				}
 			} else if (resource !== null) {
 				if (resource.natural_wonder) {
@@ -289,12 +256,12 @@ Item {
 			}
 			
 			if (explored) {
-				if (site !== null && (improvement !== null || resource !== null || site.settlement)) {
+				if (site !== null && (resource !== null || site.settlement)) {
 					text += site.game_data.current_cultural_name
 				}
 				
 				if (province !== null) {
-					if (site !== null && (improvement !== null || resource !== null || site.settlement)) {
+					if (site !== null && (resource !== null || site.settlement)) {
 						text += ", "
 					}
 					
@@ -356,11 +323,7 @@ Item {
 		visible: enabled
 		
 		onEntered: {
-			if (site.game_data.resource_improvement !== null) {
-				status_text = site.game_data.resource_improvement.name
-			} else {
-				status_text = resource.name
-			}
+			status_text = resource.name
 		}
 	}
 }
