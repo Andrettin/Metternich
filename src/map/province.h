@@ -58,6 +58,8 @@ public:
 	static constexpr const char database_folder[] = "provinces";
 	static constexpr bool history_enabled = true;
 
+	static constexpr size_t max_holdings = 8;
+
 	static const std::set<std::string> database_dependencies;
 
 	static province *get_by_color(const QColor &color)

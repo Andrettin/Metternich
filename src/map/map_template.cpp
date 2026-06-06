@@ -864,6 +864,10 @@ void map_template::generate_site(const site *site) const
 			continue;
 		}
 
+		if (province_map_data->get_settlement_sites().size() >= province::max_holdings) {
+			continue;
+		}
+
 		const resource *resource = site->get_map_data()->get_resource();
 		const bool is_near_water = resource != nullptr && resource->is_near_water();
 		const bool is_coastal = resource != nullptr && resource->is_coastal();
