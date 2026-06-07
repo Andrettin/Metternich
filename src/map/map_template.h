@@ -2,7 +2,6 @@
 
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
-#include "economy/resource_container.h"
 #include "map/province_container.h"
 #include "util/decimillesimal_int.h"
 #include "util/georectangle.h"
@@ -19,6 +18,8 @@ namespace archimedes {
 
 namespace metternich {
 
+class province;
+class region;
 class site;
 class world;
 
@@ -63,6 +64,7 @@ public:
 	{
 	}
 
+	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
 	virtual void check() const override;
 
@@ -212,6 +214,8 @@ public:
 	bool is_pos_available_for_site(const QPoint &tile_pos, const province *site_province, const QImage &province_image) const;
 	bool is_pos_available_for_site_generation(const QPoint &tile_pos, const province *site_province) const;
 
+	bool is_province_ignored(const province *province) const;
+
 signals:
 	void changed();
 
@@ -233,6 +237,8 @@ private:
 	int average_temperature = 50;
 	bool separate_poles = false; //whether the poles are ensured to be separate continents
 	int pole_flattening = 0;
+	std::unordered_set<const province *> ignored_provinces;
+	std::unordered_set<const region *> ignored_regions;
 	point_map<const site *> sites_by_position;
 	bool update_province_image = false;
 };

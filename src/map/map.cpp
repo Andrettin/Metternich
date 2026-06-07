@@ -178,6 +178,10 @@ void map::initialize(const bool province_post_processing_enabled)
 
 						const metternich::tile *adjacent_tile = this->get_tile(adjacent_pos);
 
+						if (adjacent_tile->get_terrain() == defines::get()->get_unexplored_terrain()) {
+							return;
+						}
+
 						if (tile->get_terrain()->is_water() != adjacent_tile->get_terrain()->is_water()) {
 							return;
 						}

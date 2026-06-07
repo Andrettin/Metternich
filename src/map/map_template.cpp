@@ -63,6 +63,24 @@ bool map_template::is_site_in_province(const site *site, const province *provinc
 	return false;
 }
 
+void map_template::process_gsml_scope(const gsml_data &scope)
+{
+	const std::string &tag = scope.get_tag();
+	const std::vector<std::string> &values = scope.get_values();
+
+	if (tag == "ignored_provinces") {
+		for (const std::string &value : values) {
+			this->ignored_provinces.insert(province::get(value));
+		}
+	} else if (tag == "ignored_regions") {
+		for (const std::string &value : values) {
+			this->ignored_regions.insert(region::get(value));
+		}
+	} else {
+		data_entry::process_gsml_scope(scope);
+	}
+}
+
 void map_template::initialize()
 {
 	if (this->update_province_image) {
@@ -103,6 +121,10 @@ void map_template::initialize()
 			if (site->get_province() != nullptr) {
 				site_province = site->get_province();
 			} else {
+				continue;
+			}
+
+			if (this->is_province_ignored(site_province)) {
 				continue;
 			}
 
@@ -727,32 +749,6 @@ void map_template::apply_provinces() const
 
 	map *map = map::get();
 
-	std::map<const province *, int> province_tile_counts;
-
-	for (int x = 0; x < map->get_width(); ++x) {
-		for (int y = 0; y < map->get_height(); ++y) {
-			const QPoint tile_pos(x, y);
-			const QColor tile_color = province_image.pixelColor(tile_pos);
-
-			if (tile_color.alpha() == 0) {
-				continue;
-			}
-
-			const province *province = province::get_by_color(tile_color);
-			++province_tile_counts[province];
-		}
-	}
-
-	std::map<const province *, int> province_holding_counts;
-	for (const auto &[tile_pos, site] : this->sites_by_position) {
-		assert_throw(site->get_province() != nullptr);
-		if (site->is_settlement()) {
-			++province_holding_counts[site->get_province()];
-		}
-	}
-
-	static constexpr int min_province_tile_count = 96;
-
 	for (int x = 0; x < map->get_width(); ++x) {
 		for (int y = 0; y < map->get_height(); ++y) {
 			const QPoint tile_pos(x, y);
@@ -764,13 +760,8 @@ void map_template::apply_provinces() const
 
 			province *province = province::get_by_color(tile_color);
 
-			if (province_tile_counts.find(province)->second < min_province_tile_count) {
-				//do not place provinces if they would be too small
-				continue;
-			}
-
-			if (!province->is_water_zone() && !province_holding_counts.contains(province)) {
-				//do not place land provinces if they would have no holdings
+			if (this->is_province_ignored(province)) {
+				map->set_tile_terrain(tile_pos, defines::get()->get_unexplored_terrain());
 				continue;
 			}
 
@@ -1033,6 +1024,21 @@ bool map_template::is_pos_available_for_site_generation(const QPoint &tile_pos, 
 	});
 
 	return available;
+}
+
+bool map_template::is_province_ignored(const province *province) const
+{
+	if (this->ignored_provinces.contains(province)) {
+		return true;
+	}
+
+	for (const region *region : province->get_regions()) {
+		if (this->ignored_regions.contains(region)) {
+			return true;
+		}
+	}
+
+	return false;
 }
 
 }
