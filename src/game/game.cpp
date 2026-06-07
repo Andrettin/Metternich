@@ -439,13 +439,10 @@ QCoro::Task<void> game::start_coro()
 
 		map::get()->create_minimap_image();
 
-		std::vector<QCoro::Task<void>> tasks;
-		tasks.push_back(this->create_exploration_diplomatic_map_image());
+		co_await this->create_exploration_diplomatic_map_image();
+
 		for (const province *province : map::get()->get_provinces()) {
-			tasks.push_back(province->get_game_data()->create_map_image());
-		}
-		for (QCoro::Task<void> &task : tasks) {
-			co_await task;
+			province->get_game_data()->create_map_image();
 		}
 
 		for (const site *site : map::get()->get_sites()) {
@@ -1727,11 +1724,11 @@ QCoro::Task<void> game::do_turn_coro()
 
 		for (const province *province : map::get()->get_provinces()) {
 			if (province->get_turn_data()->is_province_map_dirty()) {
-				co_await province->get_game_data()->create_map_image();
+				province->get_game_data()->create_map_image();
 			} else {
 				const std::set<province_map_mode> dirty_map_modes = province->get_turn_data()->get_dirty_province_map_modes();
 				for (const province_map_mode mode : dirty_map_modes) {
-					co_await province->get_game_data()->create_map_mode_image(mode);
+					province->get_game_data()->create_map_mode_image(mode);
 				}
 			}
 		}

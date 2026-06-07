@@ -192,33 +192,29 @@ public:
 
 	const QColor &get_map_color() const;
 
-	const QImage &get_map_image() const
+	const QPromise<QImage> *get_map_image_promise() const
 	{
-		return this->map_image;
+		return this->map_image_promise.get();
 	}
 
 	QImage prepare_map_image() const;
+	[[nodiscard]] static QImage finalize_map_image(QImage &&image);
 
-	[[nodiscard]]
-	QCoro::Task<QImage> finalize_map_image(QImage &&image) const;
+	void create_map_image();
 
-	[[nodiscard]]
-	QCoro::Task<void> create_map_image();
-
-	const QImage &get_selected_map_image() const
+	const QPromise<QImage> *get_selected_map_image_promise() const
 	{
-		return this->selected_map_image;
+		return this->selected_map_image_promise.get();
 	}
 
-	const QImage &get_interactive_map_image() const
+	const QPromise<QImage> *get_interactive_map_image_promise() const
 	{
-		return this->interactive_map_image;
+		return this->interactive_map_image_promise.get();
 	}
 
-	const QImage &get_map_mode_image(const province_map_mode mode) const;
+	const QPromise<QImage> *get_map_mode_image_promise(const province_map_mode mode) const;
 
-	[[nodiscard]]
-	QCoro::Task<void> create_map_mode_image(const province_map_mode mode);
+	void create_map_mode_image(const province_map_mode mode);
 
 	const QRect &get_map_image_rect() const
 	{
@@ -619,10 +615,10 @@ private:
 	const metternich::pathway *pathway = nullptr;
 	const metternich::pathway *under_construction_pathway = nullptr;
 	decimillesimal_int pathway_construction_progress;
-	QImage map_image;
-	QImage selected_map_image;
-	QImage interactive_map_image;
-	std::map<province_map_mode, QImage> map_mode_images;
+	std::shared_ptr<QPromise<QImage>> map_image_promise;
+	std::shared_ptr<QPromise<QImage>> selected_map_image_promise;
+	std::shared_ptr<QPromise<QImage>> interactive_map_image_promise;
+	std::map<province_map_mode, std::shared_ptr<QPromise<QImage>>> map_mode_image_promises;
 	QRect map_image_rect;
 	QRect text_rect;
 	int settlement_count = 0; //only includes built settlements

@@ -20,10 +20,10 @@ QImage province_map_image_provider::requestImage(const QString &id, QSize *size,
 
 	const std::string &identifier = id_list.at(0);
 
-	const QImage *image = nullptr;
+	QImage image;
 
 	if (identifier == "exploration") {
-		image = &game::get()->get_exploration_diplomatic_map_image();
+		image = game::get()->get_exploration_diplomatic_map_image();
 	} else {
 		const province *province = province::get(identifier);
 		const province_game_data *province_game_data = province->get_game_data();
@@ -34,32 +34,31 @@ QImage province_map_image_provider::requestImage(const QString &id, QSize *size,
 		}
 
 		if (mode_identifier == "selected") {
-			image = &province_game_data->get_selected_map_image();
+			image = province_game_data->get_selected_map_image_promise()->future().result();
 		} else if (mode_identifier == "interactive") {
-			image = &province_game_data->get_interactive_map_image();
+			image = province_game_data->get_interactive_map_image_promise()->future().result();
 		} else if (mode_identifier == "terrain") {
-			image = &province_game_data->get_map_mode_image(province_map_mode::terrain);
+			image = province_game_data->get_map_mode_image_promise(province_map_mode::terrain)->future().result();
 		} else if (mode_identifier == "cultural") {
-			image = &province_game_data->get_map_mode_image(province_map_mode::cultural);
+			image = province_game_data->get_map_mode_image_promise(province_map_mode::cultural)->future().result();
 		} else if (mode_identifier == "technology") {
-			image = &province_game_data->get_map_mode_image(province_map_mode::technology);
+			image = province_game_data->get_map_mode_image_promise(province_map_mode::technology)->future().result();
 		} else if (mode_identifier == "trade_zone") {
-			image = &province_game_data->get_map_mode_image(province_map_mode::trade_zone);
+			image = province_game_data->get_map_mode_image_promise(province_map_mode::trade_zone)->future().result();
 		} else if (mode_identifier == "temple") {
-			image = &province_game_data->get_map_mode_image(province_map_mode::temple);
+			image = province_game_data->get_map_mode_image_promise(province_map_mode::temple)->future().result();
 		} else {
-			image = &province_game_data->get_map_image();
+			image = province_game_data->get_map_image_promise()->future().result();
 		}
 	}
 
-	assert_throw(image != nullptr);
-	assert_log(!image->isNull());
+	assert_log(!image.isNull());
 
 	if (size != nullptr) {
-		*size = image->size();
+		*size = image.size();
 	}
 
-	return *image;
+	return image;
 }
 
 }

@@ -1057,68 +1057,68 @@ QImage province_game_data::prepare_map_image() const
 	return image;
 }
 
-QCoro::Task<QImage> province_game_data::finalize_map_image(QImage &&image) const
+QImage province_game_data::finalize_map_image(QImage &&image)
 {
+	assert_throw(!image.isNull());
+
 	QImage scaled_image;
 
 	const int tile_pixel_size = map::get()->get_province_map_tile_pixel_size();
 
-	co_await QtConcurrent::run([tile_pixel_size, &image, &scaled_image]() {
-		scaled_image = image::scale<QImage::Format_ARGB32>(image, centesimal_int(tile_pixel_size), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
-			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
-		});
-
-		image = std::move(scaled_image);
-
-		std::vector<QPoint> border_pixels;
-
-		for (int x = 0; x < image.width(); ++x) {
-			for (int y = 0; y < image.height(); ++y) {
-				const QPoint pixel_pos(x, y);
-				const QColor pixel_color = image.pixelColor(pixel_pos);
-
-				if (pixel_color.alpha() == 0) {
-					continue;
-				}
-
-				if (pixel_pos.x() == 0 || pixel_pos.y() == 0 || pixel_pos.x() == (image.width() - 1) || pixel_pos.y() == (image.height() - 1)) {
-					border_pixels.push_back(pixel_pos);
-					continue;
-				}
-
-				if (pixel_color.alpha() != 255) {
-					//blended color
-					border_pixels.push_back(pixel_pos);
-					continue;
-				}
-
-				const QPoint north_pos = pixel_pos + QPoint(0, -1);
-				const QPoint east_pos = pixel_pos + QPoint(1, 0);
-				const bool is_border_pixel = image.pixelColor(north_pos).alpha() == 0 || image.pixelColor(east_pos).alpha() == 0;
-
-				if (is_border_pixel) {
-					border_pixels.push_back(pixel_pos);
-				}
-			}
-		}
-
-		const QColor &border_pixel_color = defines::get()->get_country_border_color();
-
-		for (const QPoint &border_pixel_pos : border_pixels) {
-			image.setPixelColor(border_pixel_pos, border_pixel_color);
-		}
-
-		const centesimal_int &scale_factor = preferences::get()->get_scale_factor();
-
-		scaled_image = image::scale<QImage::Format_ARGB32>(image, scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
-			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
-		});
+	scaled_image = image::scale<QImage::Format_ARGB32>(image, centesimal_int(tile_pixel_size), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+		xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
 	});
 
-	co_return scaled_image;
+	image = std::move(scaled_image);
+
+	std::vector<QPoint> border_pixels;
+
+	for (int x = 0; x < image.width(); ++x) {
+		for (int y = 0; y < image.height(); ++y) {
+			const QPoint pixel_pos(x, y);
+			const QColor pixel_color = image.pixelColor(pixel_pos);
+
+			if (pixel_color.alpha() == 0) {
+				continue;
+			}
+
+			if (pixel_pos.x() == 0 || pixel_pos.y() == 0 || pixel_pos.x() == (image.width() - 1) || pixel_pos.y() == (image.height() - 1)) {
+				border_pixels.push_back(pixel_pos);
+				continue;
+			}
+
+			if (pixel_color.alpha() != 255) {
+				//blended color
+				border_pixels.push_back(pixel_pos);
+				continue;
+			}
+
+			const QPoint north_pos = pixel_pos + QPoint(0, -1);
+			const QPoint east_pos = pixel_pos + QPoint(1, 0);
+			const bool is_border_pixel = image.pixelColor(north_pos).alpha() == 0 || image.pixelColor(east_pos).alpha() == 0;
+
+			if (is_border_pixel) {
+				border_pixels.push_back(pixel_pos);
+			}
+		}
+	}
+
+	const QColor &border_pixel_color = defines::get()->get_country_border_color();
+
+	for (const QPoint &border_pixel_pos : border_pixels) {
+		image.setPixelColor(border_pixel_pos, border_pixel_color);
+	}
+
+	const centesimal_int &scale_factor = preferences::get()->get_scale_factor();
+
+	scaled_image = image::scale<QImage::Format_ARGB32>(image, scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+		xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+	});
+
+	return scaled_image;
 }
 
-QCoro::Task<void> province_game_data::create_map_image()
+void province_game_data::create_map_image()
 {
 	const map *map = map::get();
 
@@ -1145,35 +1145,58 @@ QCoro::Task<void> province_game_data::create_map_image()
 		}
 	}
 
-	this->map_image = co_await this->finalize_map_image(std::move(diplomatic_map_image));
-	this->selected_map_image = co_await this->finalize_map_image(std::move(selected_map_image));
-	this->interactive_map_image = co_await this->finalize_map_image(std::move(interactive_map_image));
+	std::shared_ptr<QPromise<QImage>> promise = std::make_shared<QPromise<QImage>>();
+	this->map_image_promise = promise;
+	this->map_image_promise->start();
+	assert_throw(!diplomatic_map_image.isNull());
+	QThreadPool::globalInstance()->start([promise, image = std::move(diplomatic_map_image)]() mutable {
+		promise->addResult(province_game_data::finalize_map_image(std::move(image)));
+		promise->finish();
+	});
+
+	std::shared_ptr<QPromise<QImage>> selected_promise = std::make_shared<QPromise<QImage>>();
+	this->selected_map_image_promise = selected_promise;
+	this->selected_map_image_promise->start();
+	assert_throw(!selected_map_image.isNull());
+	QThreadPool::globalInstance()->start([selected_promise, image = std::move(selected_map_image)]() mutable {
+		selected_promise->addResult(province_game_data::finalize_map_image(std::move(image)));
+		selected_promise->finish();
+	});
+
+	std::shared_ptr<QPromise<QImage>> interactive_promise = std::make_shared<QPromise<QImage>>();
+	this->interactive_map_image_promise = interactive_promise;
+	this->interactive_map_image_promise->start();
+	assert_throw(!interactive_map_image.isNull());
+	QThreadPool::globalInstance()->start([interactive_promise, image = std::move(interactive_map_image)]() mutable {
+		interactive_promise->addResult(province_game_data::finalize_map_image(std::move(image)));
+		interactive_promise->finish();
+	});
 
 	const int tile_pixel_size = map->get_province_map_tile_pixel_size();
-	this->map_image_rect = QRect(this->province->get_map_data()->get_territory_rect().topLeft() * tile_pixel_size * preferences::get()->get_scale_factor(), this->map_image.size());
+	this->map_image_rect = QRect(this->province->get_map_data()->get_territory_rect().topLeft() * tile_pixel_size * preferences::get()->get_scale_factor(), this->province->get_map_data()->get_territory_rect().size() * tile_pixel_size * preferences::get()->get_scale_factor());
 
-	co_await this->create_map_mode_image(province_map_mode::terrain);
-	co_await this->create_map_mode_image(province_map_mode::cultural);
-	co_await this->create_map_mode_image(province_map_mode::technology);
-	co_await this->create_map_mode_image(province_map_mode::trade_zone);
-	co_await this->create_map_mode_image(province_map_mode::temple);
+	this->create_map_mode_image(province_map_mode::terrain);
+	this->create_map_mode_image(province_map_mode::cultural);
+	this->create_map_mode_image(province_map_mode::technology);
+	this->create_map_mode_image(province_map_mode::trade_zone);
+	this->create_map_mode_image(province_map_mode::temple);
 
 	this->calculate_text_rect();
 
 	emit map_image_changed();
 }
 
-const QImage &province_game_data::get_map_mode_image(const province_map_mode mode) const
+const QPromise<QImage> *province_game_data::get_map_mode_image_promise(const province_map_mode mode) const
 {
-	const auto find_iterator = this->map_mode_images.find(mode);
-	if (find_iterator != this->map_mode_images.end()) {
-		return find_iterator->second;
+	const auto find_iterator = this->map_mode_image_promises.find(mode);
+	if (find_iterator != this->map_mode_image_promises.end()) {
+		return find_iterator->second.get();
 	}
 
-	throw std::runtime_error(std::format("No map image found for mode {}.", magic_enum::enum_name(mode)));
+	throw std::runtime_error(std::format("No map image promise found for mode {}.", magic_enum::enum_name(mode)));
 }
 
-QCoro::Task<void> province_game_data::create_map_mode_image(const province_map_mode mode)
+void province_game_data::create_map_mode_image(const province_map_mode mode)
 {
 	static const QColor empty_color(Qt::black);
 
@@ -1262,7 +1285,14 @@ QCoro::Task<void> province_game_data::create_map_mode_image(const province_map_m
 		}
 	}
 
-	this->map_mode_images[mode] = co_await this->finalize_map_image(std::move(image));
+	std::shared_ptr<QPromise<QImage>> promise = std::make_shared<QPromise<QImage>>();
+	this->map_mode_image_promises[mode] = promise;
+	promise->start();
+
+	QThreadPool::globalInstance()->start([promise, image = std::move(image)]() mutable {
+		promise->addResult(province_game_data::finalize_map_image(std::move(image)));
+		promise->finish();
+	});
 
 	emit map_mode_image_changed(QString::fromUtf8(magic_enum::enum_name(mode)));
 }

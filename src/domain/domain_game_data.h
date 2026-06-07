@@ -596,7 +596,6 @@ public:
 	}
 
 	QImage prepare_diplomatic_map_image() const;
-
 	[[nodiscard]] static QImage finalize_diplomatic_map_image(QImage &&image);
 
 	void create_diplomatic_map_image();
