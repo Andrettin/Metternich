@@ -864,7 +864,7 @@ void map_template::generate_site(const site *site) const
 		if (!site_terrains.empty()) {
 			bool has_terrain = false;
 			for (const terrain_type *terrain : site_terrains) {
-				if (province_map_data->get_tile_terrain_counts().contains(terrain)) {
+				if (province_map_data->get_terrain() == terrain) {
 					has_terrain = true;
 					break;
 				}
@@ -877,10 +877,6 @@ void map_template::generate_site(const site *site) const
 		for (const QPoint &tile_pos : province_tiles) {
 			const tile *tile = map->get_tile(tile_pos);
 			if (tile->get_site() != nullptr) {
-				continue;
-			}
-
-			if (!site_terrains.empty() && !vector::contains(site_terrains, tile->get_terrain())) {
 				continue;
 			}
 
