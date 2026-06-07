@@ -1183,6 +1183,9 @@ QCoro::Task<void> province_game_data::create_map_mode_image(const province_map_m
 
 	QColor province_color = this->get_map_color();
 	switch (mode) {
+		case province_map_mode::terrain:
+			province_color = this->get_terrain()->get_color();
+			break;
 		case province_map_mode::cultural: {
 			const metternich::culture *culture = this->get_culture();
 			if (culture != nullptr) {
@@ -1242,8 +1245,6 @@ QCoro::Task<void> province_game_data::create_map_mode_image(const province_map_m
 
 			switch (mode) {
 				case province_map_mode::terrain:
-					color = &tile->get_terrain()->get_color();
-					break;
 				case province_map_mode::cultural:
 				case province_map_mode::technology:
 				case province_map_mode::trade_zone:
