@@ -567,7 +567,6 @@ void map_template::apply() const
 		map_generator.generate();
 	} else {
 		this->apply_terrain();
-		this->apply_site_terrain();
 		this->apply_rivers();
 		this->apply_border_rivers();
 		this->apply_provinces();
@@ -596,35 +595,6 @@ void map_template::apply_terrain() const
 			const terrain_type *terrain = terrain_type::get_by_color(tile_color);
 			map->set_tile_terrain(tile_pos, terrain);
 		}
-	}
-}
-
-void map_template::apply_site_terrain() const
-{
-	map *map = map::get();
-
-	for (const auto &[tile_pos, site] : this->sites_by_position) {
-		const terrain_type *site_terrain = site->get_terrain_type();
-		const resource *site_resource = site->get_map_data()->get_resource();
-
-		//use a fallback terrain if the tile's terrain doesn't match the site's resource
-		if (site_terrain == nullptr && site_resource != nullptr) {
-			const tile *tile = map->get_tile(tile_pos);
-			const terrain_type *tile_terrain = tile->get_terrain();
-			const std::vector<const terrain_type *> &resource_terrains = site_resource->get_terrain_types();
-
-			if (tile_terrain != nullptr && !vector::contains(resource_terrains, tile_terrain)) {
-				site_terrain = site_resource->get_fallback_terrain(tile_terrain);
-			}
-		}
-
-		if (site_terrain == nullptr) {
-			continue;
-		}
-
-		assert_throw(site->get_type() == site_type::resource || site->get_type() == site_type::holding);
-
-		map->set_tile_terrain(tile_pos, site_terrain);
 	}
 }
 

@@ -203,7 +203,6 @@ public:
 
 	void apply() const;
 	void apply_terrain() const;
-	void apply_site_terrain() const;
 	void apply_rivers() const;
 	void apply_border_rivers() const;
 	void apply_provinces() const;
