@@ -38,6 +38,12 @@ void province_map_data::on_map_created()
 
 		this->terrain = best_terrain;
 		assert_throw(this->get_terrain() != nullptr);
+
+		for (const site *site : this->get_sites()) {
+			if (site->get_map_data()->get_terrain() == nullptr) {
+				site->get_map_data()->set_terrain(this->get_terrain());
+			}
+		}
 	}
 
 	/*

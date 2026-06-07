@@ -4,6 +4,8 @@
 
 #include "economy/resource.h"
 #include "map/map.h"
+#include "map/province.h"
+#include "map/province_map_data.h"
 #include "map/site.h"
 #include "map/tile.h"
 #include "util/assert_util.h"
@@ -13,6 +15,10 @@ namespace metternich {
 site_map_data::site_map_data(const metternich::site *site)
 	: site(site)
 {
+	if (site->get_terrain_type() != nullptr) {
+		this->terrain = site->get_terrain_type();
+	}
+
 	if (site->get_resource() != nullptr && site->get_resource()->is_enabled()) {
 		this->set_resource(site->get_resource());
 	}

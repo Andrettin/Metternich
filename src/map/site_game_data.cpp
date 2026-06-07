@@ -754,7 +754,7 @@ QCoro::Task<void> site_game_data::set_owner(const domain *owner)
 
 const terrain_type *site_game_data::get_terrain() const
 {
-	return this->get_province()->get_map_data()->get_terrain();
+	return this->site->get_map_data()->get_terrain();
 }
 
 const std::string &site_game_data::get_current_cultural_name() const

@@ -3,6 +3,7 @@
 #include "map/terrain_type_container.h"
 
 Q_MOC_INCLUDE("economy/resource.h")
+Q_MOC_INCLUDE("map/terrain_type.h")
 
 namespace metternich {
 
@@ -14,6 +15,7 @@ class site_map_data final : public QObject
 	Q_OBJECT
 
 	Q_PROPERTY(QPoint tile_pos READ get_tile_pos NOTIFY tile_pos_changed)
+	Q_PROPERTY(const metternich::terrain_type* terrain READ get_terrain CONSTANT)
 	Q_PROPERTY(const metternich::resource* resource READ get_resource CONSTANT)
 
 public:
@@ -30,6 +32,16 @@ public:
 	bool is_on_map() const
 	{
 		return this->get_tile_pos() != QPoint(-1, -1);
+	}
+
+	const terrain_type *get_terrain() const
+	{
+		return this->terrain;
+	}
+
+	void set_terrain(const terrain_type *terrain)
+	{
+		this->terrain = terrain;
 	}
 
 	const metternich::resource *get_resource() const
@@ -51,6 +63,7 @@ signals:
 private:
 	const metternich::site *site = nullptr;
 	QPoint tile_pos = QPoint(-1, -1);
+	const terrain_type *terrain = nullptr;
 	const metternich::resource *resource = nullptr;
 };
 
