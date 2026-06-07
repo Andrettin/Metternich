@@ -113,6 +113,7 @@
 #include "qcoro/qml/qcoroqml.h"
 
 #include <QDir>
+#include <QImageReader>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #pragma warning(pop)
@@ -170,6 +171,8 @@ int main(int argc, char **argv)
 		app.setApplicationVersion("1.0.0");
 		app.setOrganizationName("Metternich");
 		app.setOrganizationDomain("andrettin.github.io");
+
+		QImageReader::setAllocationLimit(1024);
 
 		database::get()->set_defines(defines::get());
 
