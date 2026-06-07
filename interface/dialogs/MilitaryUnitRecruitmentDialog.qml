@@ -212,13 +212,10 @@ DialogBase {
 						Row {
 							anchors.horizontalCenter: parent.horizontalCenter
 							
-							IconButton {
+							TinyIconButton {
 								id: decrement_button
 								anchors.verticalCenter: parent.verticalCenter
-								width: 16 * scale_factor
-								height: 16 * scale_factor
 								icon_identifier: "trade_consulate"
-								use_opacity_mask: false
 								
 								onReleased: {
 									if (selected_province.game_data.can_decrease_military_unit_recruitment(military_unit_type)) {
@@ -235,13 +232,10 @@ DialogBase {
 								horizontalAlignment: Text.AlignHCenter
 							}
 							
-							IconButton {
+							TinyIconButton {
 								id: increment_button
 								anchors.verticalCenter: parent.verticalCenter
-								width: 16 * scale_factor
-								height: 16 * scale_factor
 								icon_identifier: "trade_consulate"
-								use_opacity_mask: false
 								
 								onReleased: {
 									if (selected_province.game_data.can_increase_military_unit_recruitment(military_unit_type)) {

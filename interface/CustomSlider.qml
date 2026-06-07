@@ -98,15 +98,12 @@ Item {
 		}
 	}
 	
-	IconButton {
+	TinyIconButton {
 		id: decrement_button
 		anchors.verticalCenter: parent.verticalCenter
 		anchors.left: parent.left
-		width: 16 * scale_factor
-		height: 16 * scale_factor
 		icon_identifier: "trade_consulate"
 		tooltip: decrement_button_tooltip
-		use_opacity_mask: false
 		
 		onReleased: {
 			if (value <= min_value) {
@@ -117,15 +114,12 @@ Item {
 		}
 	}
 	
-	IconButton {
+	TinyIconButton {
 		id: increment_button
 		anchors.verticalCenter: parent.verticalCenter
 		anchors.right: parent.right
-		width: 16 * scale_factor
-		height: 16 * scale_factor
 		icon_identifier: "trade_consulate"
 		tooltip: increment_button_tooltip
-		use_opacity_mask: false
 		
 		onReleased: {
 			if (value >= max_value) {
