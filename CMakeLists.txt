@@ -649,7 +649,6 @@ set(script_HDRS
 source_group(script FILES ${script_HDRS})
 
 set(script_condition_HDRS
-	src/script/condition/adjacent_terrain_condition.h
 	src/script/condition/advisor_condition.h
 	src/script/condition/age_category_condition.h
 	src/script/condition/age_condition.h
@@ -848,7 +847,6 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/character_stat_modifier_effect.h
 	src/script/modifier_effect/commodity_bonus_for_tile_threshold_modifier_effect.h
 	src/script/modifier_effect/commodity_bonus_modifier_effect.h
-	src/script/modifier_effect/commodity_bonus_per_adjacent_terrain_modifier_effect.h
 	src/script/modifier_effect/commodity_bonus_per_building_modifier_effect.h
 	src/script/modifier_effect/commodity_bonus_per_settlement_modifier_effect.h
 	src/script/modifier_effect/commodity_bonus_per_population_modifier_effect.h

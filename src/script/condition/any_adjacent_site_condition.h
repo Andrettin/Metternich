@@ -3,6 +3,7 @@
 #include "map/map.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
+#include "map/site_map_data.h"
 #include "map/tile.h"
 #include "script/condition/scope_condition_base.h"
 #include "script/context.h"

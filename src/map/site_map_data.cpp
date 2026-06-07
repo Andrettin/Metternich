@@ -5,10 +5,8 @@
 #include "economy/resource.h"
 #include "map/map.h"
 #include "map/site.h"
-#include "map/terrain_type.h"
 #include "map/tile.h"
 #include "util/assert_util.h"
-#include "util/point_util.h"
 
 namespace metternich {
 
@@ -36,8 +34,6 @@ void site_map_data::set_tile_pos(const QPoint &tile_pos)
 
 	this->tile_pos = tile_pos;
 	emit tile_pos_changed();
-
-	this->calculate_adjacent_terrain_counts();
 }
 
 tile *site_map_data::get_tile() const
@@ -66,32 +62,13 @@ const province *site_map_data::get_province() const
 	return nullptr;
 }
 
-void site_map_data::calculate_adjacent_terrain_counts()
-{
-	point::for_each_adjacent(this->get_tile_pos(), [this](const QPoint &adjacent_pos) {
-		if (!map::get()->contains(adjacent_pos)) {
-			return;
-		}
-
-		const metternich::tile *adjacent_tile = map::get()->get_tile(adjacent_pos);
-		assert_throw(adjacent_tile->get_terrain() != nullptr);
-		++this->adjacent_terrain_counts[adjacent_tile->get_terrain()];
-	});
-}
-
 bool site_map_data::is_coastal() const
 {
 	if (!this->is_on_map()) {
 		return false;
 	}
 
-	for (const auto &[terrain, count] : this->adjacent_terrain_counts) {
-		if (terrain->is_water()) {
-			return true;
-		}
-	}
-
-	return false;
+	return this->get_province()->get_map_data()->is_coastal();
 }
 
 bool site_map_data::has_river() const

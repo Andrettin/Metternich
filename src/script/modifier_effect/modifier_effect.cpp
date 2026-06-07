@@ -18,7 +18,6 @@
 #include "script/modifier_effect/character_stat_modifier_effect.h"
 #include "script/modifier_effect/commodity_bonus_modifier_effect.h"
 #include "script/modifier_effect/commodity_bonus_for_tile_threshold_modifier_effect.h"
-#include "script/modifier_effect/commodity_bonus_per_adjacent_terrain_modifier_effect.h"
 #include "script/modifier_effect/commodity_bonus_per_building_modifier_effect.h"
 #include "script/modifier_effect/commodity_bonus_per_population_modifier_effect.h"
 #include "script/modifier_effect/commodity_bonus_per_settlement_modifier_effect.h"
@@ -354,9 +353,7 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			modifier_effect = std::make_unique<technology_spread_modifier_effect>();
 		}
 	} else if constexpr (std::is_same_v<scope_type, const site>) {
-		if (tag == "commodity_bonus_per_adjacent_terrain") {
-			modifier_effect = std::make_unique<commodity_bonus_per_adjacent_terrain_modifier_effect>();
-		} else if (tag == "employment_capacity") {
+		if (tag == "employment_capacity") {
 			modifier_effect = std::make_unique<employment_capacity_modifier_effect>();
 		}
 	}
