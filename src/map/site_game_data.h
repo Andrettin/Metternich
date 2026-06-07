@@ -7,11 +7,13 @@
 #include "util/centesimal_int.h"
 #include "util/qunique_ptr.h"
 
+Q_MOC_INCLUDE("culture/culture.h")
 Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("infrastructure/dungeon.h")
 Q_MOC_INCLUDE("infrastructure/holding_type.h")
 Q_MOC_INCLUDE("map/province.h")
 Q_MOC_INCLUDE("population/population.h")
+Q_MOC_INCLUDE("religion/religion.h")
 
 namespace archimedes {
 	class dice;
@@ -59,6 +61,8 @@ class site_game_data final : public QObject
 	Q_PROPERTY(QString titled_name READ get_titled_name_qstring NOTIFY titled_name_changed)
 	Q_PROPERTY(QString display_text READ get_display_text_qstring NOTIFY display_text_changed)
 	Q_PROPERTY(const metternich::domain* owner READ get_owner NOTIFY owner_changed)
+	Q_PROPERTY(const metternich::culture* culture READ get_culture NOTIFY culture_changed)
+	Q_PROPERTY(const metternich::religion* religion READ get_religion NOTIFY religion_changed)
 	Q_PROPERTY(QString current_cultural_name READ get_current_cultural_name_qstring NOTIFY culture_changed)
 	Q_PROPERTY(const metternich::terrain_type* terrain READ get_terrain CONSTANT)
 	Q_PROPERTY(const metternich::holding_type* holding_type READ get_holding_type NOTIFY holding_type_changed)
