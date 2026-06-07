@@ -490,8 +490,16 @@ void map_template::write_border_river_image()
 		QImage base_image(this->get_size(), QImage::Format_RGBA8888);
 		base_image.fill(Qt::transparent);
 
+		std::filesystem::path output_filepath = this->get_border_river_image_filepath().filename();
+		if (output_filepath.empty()) {
+			output_filepath = "border_rivers.png";
+		}
+
 		//write border river geoshapes
-		geoshape::write_to_image(base_image, geodata_map, this->get_georectangle(), this->map_projection, this->geocoordinate_x_offset);
+		QTimer timer;
+		timer.setInterval(std::chrono::minutes(1));
+		timer.start();
+		geoshape::write_to_image(base_image, geodata_map, this->get_georectangle(), this->map_projection, this->geocoordinate_x_offset, timer, output_filepath);
 
 		QImage image;
 		if (!this->get_border_river_image_filepath().empty()) {
@@ -513,11 +521,6 @@ void map_template::write_border_river_image()
 
 				image.setPixelColor(x / 2, y / 2, tile_color);
 			}
-		}
-
-		std::filesystem::path output_filepath = this->get_border_river_image_filepath().filename();
-		if (output_filepath.empty()) {
-			output_filepath = "border_rivers.png";
 		}
 
 		image.save(path::to_qstring(output_filepath));
