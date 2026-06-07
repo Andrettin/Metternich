@@ -50,7 +50,6 @@ class site_attribute;
 class site_feature;
 class technology;
 class tile;
-enum class province_map_mode;
 
 class site_game_data final : public QObject
 {
@@ -254,10 +253,6 @@ public:
 	bool can_have_dungeon(const metternich::dungeon *dungeon) const;
 
 	const portrait *get_portrait() const;
-
-	Q_INVOKABLE QColor get_map_color() const;
-	const QColor &get_map_color_for_mode(const province_map_mode mode) const;
-	Q_INVOKABLE QColor get_map_color_for_mode(const QString &mode_str) const;
 
 	const data_entry_set<site_feature> &get_features() const
 	{

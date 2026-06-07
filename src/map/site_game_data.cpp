@@ -43,13 +43,11 @@
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/province_map_data.h"
-#include "map/province_map_mode.h"
 #include "map/site.h"
 #include "map/site_attribute.h"
 #include "map/site_feature.h"
 #include "map/site_map_data.h"
 #include "map/site_type.h"
-#include "map/terrain_type.h"
 #include "map/tile.h"
 #include "population/population.h"
 #include "population/population_type.h"
@@ -70,8 +68,6 @@
 #include "util/string_util.h"
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
-
-#include <magic_enum/magic_enum.hpp>
 
 namespace metternich {
 
@@ -1182,53 +1178,6 @@ const portrait *site_game_data::get_portrait() const
 	}
 
 	return nullptr;
-}
-
-QColor site_game_data::get_map_color() const
-{
-	if (this->get_owner() != nullptr && this->get_owner() != this->get_province()->get_game_data()->get_owner()) {
-		return this->get_owner()->get_game_data()->get_diplomatic_map_color();
-	}
-
-	static const QColor transparent_color(Qt::transparent);
-	return transparent_color;
-}
-
-const QColor &site_game_data::get_map_color_for_mode(const province_map_mode mode) const
-{
-	const province_game_data *province_game_data = this->get_province()->get_game_data();
-	
-	switch (mode) {
-		case province_map_mode::terrain:
-			if (this->get_terrain() != province_game_data->get_terrain()) {
-				return this->get_terrain()->get_color();
-			}
-			break;
-		case province_map_mode::cultural: {
-			const metternich::culture *culture = this->get_culture();
-			if (culture != nullptr && culture != province_game_data->get_culture()) {
-				return culture->get_color();
-			}
-			break;
-		}
-		case province_map_mode::religious: {
-			const metternich::religion *religion = this->get_religion();
-			if (religion != nullptr && religion != province_game_data->get_religion()) {
-				return religion->get_color();
-			}
-			break;
-		}
-		default:
-			break;
-	}
-
-	static const QColor transparent_color(Qt::transparent);
-	return transparent_color;
-}
-
-QColor site_game_data::get_map_color_for_mode(const QString &mode_str) const
-{
-	return this->get_map_color_for_mode(magic_enum::enum_cast<province_map_mode>(mode_str.toStdString()).value());
 }
 
 QVariantList site_game_data::get_features_qvariant_list() const

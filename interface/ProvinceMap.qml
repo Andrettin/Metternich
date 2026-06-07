@@ -62,7 +62,6 @@ Flickable {
 			readonly property var selected: selected_province === province && (selected_garrison === false || province_map.show_sites)
 			readonly property var interactive: selected_civilian_unit !== null && !selected_civilian_unit.busy && selected_civilian_unit_interactive_provinces.includes(province)
 			property int change_count: 0
-			readonly property bool contained_by_view: x < (province_map.contentX + province_map.width - 1) && (x + width - 1) > province_map.contentX && y < (province_map.contentY + province_map.height - 1) && (y + height - 1) > province_map.contentY
 			
 			Connections {
 				target: province ? province.game_data : null
@@ -172,7 +171,6 @@ Flickable {
 			readonly property var text_rect: province ? province.game_data.text_rect : Qt.rect(0, 0, 0, 0)
 			readonly property int text_rect_width: text_rect.width * metternich.map.province_map_tile_pixel_size * scale_factor
 			readonly property int text_rect_height: text_rect.height * metternich.map.province_map_tile_pixel_size * scale_factor
-			readonly property bool contained_by_view: x < (province_map.contentX + province_map.width - 1) && (x + width - 1) > province_map.contentX && y < (province_map.contentY + province_map.height - 1) && (y + height - 1) > province_map.contentY
 			
 			MouseArea {
 				anchors.fill: parent
@@ -350,9 +348,8 @@ Flickable {
 							width: site_icon_area.width
 							height: site_icon_area.height
 							radius: width / 2
-							color: selected ? metternich.defines.selected_country_color : map_color
-							
-							readonly property color map_color: site && contained_by_view ? (province_map.mode === ProvinceMap.Mode.Political ? site.game_data.get_map_color() : site.game_data.get_map_color_for_mode(get_map_mode_identifier(province_map.mode))) : "transparent"
+							color: selected ? metternich.defines.selected_country_color : (site.game_data.owner ? site.game_data.owner.color : "transparent")
+							visible: selected || (site.game_data.owner !== null && site.game_data.owner !== site.game_data.province.game_data.owner)
 						}
 						
 						Image {
@@ -417,17 +414,14 @@ Flickable {
 			readonly property var holding_type: site ? site.game_data.holding_type : null
 			readonly property var dungeon: site ? site.game_data.dungeon : null
 			readonly property bool selected: site === selected_site
-			readonly property var province: site ? site.game_data.province : null
-			readonly property bool contained_by_view: x < (province_map.contentX + province_map.width - 1) && (x + width - 1) > province_map.contentX && y < (province_map.contentY + province_map.height - 1) && (y + height - 1) > province_map.contentY
 			
 			Rectangle {
 				id: site_domain_color_circle
 				width: site_icon_area.width
 				height: site_icon_area.height
 				radius: width / 2
-				color: selected ? metternich.defines.selected_country_color : map_color
-				
-				readonly property color map_color: site && contained_by_view ? (province_map.mode === ProvinceMap.Mode.Political ? site.game_data.get_map_color() : site.game_data.get_map_color_for_mode(get_map_mode_identifier(province_map.mode))) : "transparent"
+				color: selected ? metternich.defines.selected_country_color : (site.game_data.owner ? site.game_data.owner.color : "transparent")
+				visible: selected || (site.game_data.owner !== null && site.game_data.owner !== site.game_data.province.game_data.owner)
 			}
 			
 			Image {
@@ -575,27 +569,6 @@ Flickable {
 				return "/trade_zone"
 			case ProvinceMap.Mode.Temple:
 				return "/temple"
-		}
-		
-		return ""
-	}
-	
-	function get_map_mode_identifier(mode) {
-		switch (mode) {
-			case ProvinceMap.Mode.Terrain:
-				return "terrain"
-			case ProvinceMap.Mode.Cultural:
-				return "cultural"
-			case ProvinceMap.Mode.Religious:
-				return "religious"
-			case ProvinceMap.Mode.Technology:
-				return "technology"
-			case ProvinceMap.Mode.TradeZone:
-				return "trade_zone"
-			case ProvinceMap.Mode.Temple:
-				return "temple"
-			default:
-				break
 		}
 		
 		return ""
