@@ -41,6 +41,8 @@ QImage province_map_image_provider::requestImage(const QString &id, QSize *size,
 			image = province_game_data->get_map_mode_image_promise(province_map_mode::terrain)->future().result();
 		} else if (mode_identifier == "cultural") {
 			image = province_game_data->get_map_mode_image_promise(province_map_mode::cultural)->future().result();
+		} else if (mode_identifier == "religious") {
+			image = province_game_data->get_map_mode_image_promise(province_map_mode::religious)->future().result();
 		} else if (mode_identifier == "technology") {
 			image = province_game_data->get_map_mode_image_promise(province_map_mode::technology)->future().result();
 		} else if (mode_identifier == "trade_zone") {

@@ -14,6 +14,7 @@ Flickable {
 		Political,
 		Terrain,
 		Cultural,
+		Religious,
 		Technology,
 		TradeZone,
 		Temple
@@ -80,6 +81,11 @@ Flickable {
 							break
 						case ProvinceMap.Mode.Cultural:
 							if (map_mode_identifier !== "cultural") {
+								return
+							}
+							break
+						case ProvinceMap.Mode.Religious:
+							if (map_mode_identifier !== "religious") {
 								return
 							}
 							break
@@ -498,6 +504,8 @@ Flickable {
 		
 		if (province_map.mode === ProvinceMap.Mode.Cultural && province.game_data.culture !== null) {
 			text += " (" + province.game_data.culture.name + ")"
+		} else if (province_map.mode === ProvinceMap.Mode.Religious && province.game_data.religion !== null) {
+			text += " (" + province.game_data.religion.name + ")"
 		} else if (province_map.mode === ProvinceMap.Mode.Terrain && province.map_data.terrain !== null) {
 			text += " (" + province.map_data.terrain.name + ")"
 		} else if (province_map.mode === ProvinceMap.Mode.Technology) {
@@ -553,6 +561,8 @@ Flickable {
 				return "/terrain"
 			case ProvinceMap.Mode.Cultural:
 				return "/cultural"
+			case ProvinceMap.Mode.Religious:
+				return "/religious"
 			case ProvinceMap.Mode.Technology:
 				return "/technology"
 			case ProvinceMap.Mode.TradeZone:

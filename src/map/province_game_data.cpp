@@ -551,6 +551,8 @@ void province_game_data::set_religion(const metternich::religion *religion)
 	}
 
 	if (game::get()->is_running()) {
+		this->province->get_turn_data()->set_province_map_mode_dirty(province_map_mode::religious);
+
 		if (this->get_owner() != nullptr) {
 			this->get_owner()->get_turn_data()->set_diplomatic_map_mode_dirty(diplomatic_map_mode::religious);
 		}
@@ -1177,6 +1179,7 @@ void province_game_data::create_map_image()
 
 	this->create_map_mode_image(province_map_mode::terrain);
 	this->create_map_mode_image(province_map_mode::cultural);
+	this->create_map_mode_image(province_map_mode::religious);
 	this->create_map_mode_image(province_map_mode::technology);
 	this->create_map_mode_image(province_map_mode::trade_zone);
 	this->create_map_mode_image(province_map_mode::temple);
@@ -1213,6 +1216,13 @@ void province_game_data::create_map_mode_image(const province_map_mode mode)
 			const metternich::culture *culture = this->get_culture();
 			if (culture != nullptr) {
 				province_color = culture->get_color();
+			}
+			break;
+		}
+		case province_map_mode::religious: {
+			const metternich::religion *religion = this->get_religion();
+			if (religion != nullptr) {
+				province_color = religion->get_color();
 			}
 			break;
 		}
@@ -1269,6 +1279,7 @@ void province_game_data::create_map_mode_image(const province_map_mode mode)
 			switch (mode) {
 				case province_map_mode::terrain:
 				case province_map_mode::cultural:
+				case province_map_mode::religious:
 				case province_map_mode::technology:
 				case province_map_mode::trade_zone:
 				case province_map_mode::temple:

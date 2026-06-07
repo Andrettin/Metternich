@@ -185,6 +185,24 @@ Rectangle {
 		}
 		
 		TinyIconButton {
+			id: religious_map_mode_button
+			icon_identifier: "peace"
+			highlighted: province_map.mode === ProvinceMap.Mode.Religious
+			
+			onClicked: {
+				province_map.mode = ProvinceMap.Mode.Religious
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Religious Map Mode"
+				} else {
+					status_text = ""
+				}
+			}
+		}
+		
+		TinyIconButton {
 			id: technology_map_mode_button
 			icon_identifier: "law"
 			highlighted: province_map.mode === ProvinceMap.Mode.Technology
