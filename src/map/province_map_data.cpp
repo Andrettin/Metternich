@@ -2,7 +2,6 @@
 
 #include "map/province_map_data.h"
 
-#include "database/data_entry_container.h"
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "map/map.h"
@@ -26,25 +25,7 @@ province_map_data::province_map_data(const metternich::province *province) : pro
 
 void province_map_data::on_map_created()
 {
-	if (this->get_terrain() == nullptr) {
-		const terrain_type *best_terrain = nullptr;
-		int best_terrain_count = 0;
-		for (const auto &[tile_terrain, count] : this->get_tile_terrain_counts()) {
-			if (count > best_terrain_count) {
-				best_terrain = tile_terrain;
-				best_terrain_count = count;
-			}
-		}
-
-		this->terrain = best_terrain;
-		assert_throw(this->get_terrain() != nullptr);
-
-		for (const site *site : this->get_sites()) {
-			if (site->get_map_data()->get_terrain() == nullptr) {
-				site->get_map_data()->set_terrain(this->get_terrain());
-			}
-		}
-	}
+	this->initialize_terrain();
 
 	/*
 	if (this->get_tiles().size() <= 10000) {
@@ -160,6 +141,30 @@ void province_map_data::on_map_created()
 
 	if (this->get_settlement_sites().size() > province::max_holdings) {
 		log::log_error(std::format("Province \"{}\" has {} holding sites, more than the maximum of {}.", this->province->get_identifier(), this->get_settlement_sites().size(), province::max_holdings));
+	}
+}
+
+void province_map_data::initialize_terrain()
+{
+	if (this->get_terrain() == nullptr) {
+		const terrain_type *best_terrain = nullptr;
+		int best_terrain_count = 0;
+		for (const auto &[tile_terrain, count] : this->get_tile_terrain_counts()) {
+			if (count > best_terrain_count) {
+				best_terrain = tile_terrain;
+				best_terrain_count = count;
+			}
+		}
+
+		this->terrain = best_terrain;
+		assert_throw(this->get_terrain() != nullptr);
+	}
+
+	//set the terrain type for the province's sites too
+	for (const site *site : this->get_sites()) {
+		if (site->get_map_data()->get_terrain() == nullptr) {
+			site->get_map_data()->set_terrain(this->get_terrain());
+		}
 	}
 }
 
