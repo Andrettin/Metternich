@@ -498,6 +498,8 @@ Flickable {
 		
 		if (province_map.mode === ProvinceMap.Mode.Cultural && province.game_data.culture !== null) {
 			text += " (" + province.game_data.culture.name + ")"
+		} else if (province_map.mode === ProvinceMap.Mode.Terrain && province.map_data.terrain !== null) {
+			text += " (" + province.map_data.terrain.name + ")"
 		} else if (province_map.mode === ProvinceMap.Mode.Technology) {
 			if (!province.water_zone) {
 				text += " (" + province.game_data.technologies.length + " Technologies)"
