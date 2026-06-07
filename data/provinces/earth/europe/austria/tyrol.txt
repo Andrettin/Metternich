@@ -1,6 +1,7 @@
 tyrol = {
 	name = "Tyrol"
 	color = { 81 192 224 }
+	terrain = mountains
 	default_provincial_capital = innsbruck
 	regions = {
 		austria

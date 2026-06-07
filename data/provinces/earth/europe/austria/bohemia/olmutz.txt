@@ -1,6 +1,7 @@
 olmutz = {
 	name = "Olmutz"
 	color = { 113 224 128 }
+	terrain = hills
 	default_provincial_capital = olmutz
 	cultural_names = {
 		czech = "Olomouc"

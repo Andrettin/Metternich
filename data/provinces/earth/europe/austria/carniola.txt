@@ -1,6 +1,7 @@
 carniola = {
 	name = "Carniola"
 	color = { 176 224 64 }
+	terrain = hills
 	default_provincial_capital = laibach
 	regions = {
 		cisleithania

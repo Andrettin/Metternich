@@ -1,6 +1,7 @@
 troppau = {
 	name = "Troppau"
 	color = { 113 149 102 }
+	terrain = hills
 	default_provincial_capital = troppau
 	cultural_names = {
 		czech = "Opava"

@@ -1,6 +1,7 @@
 venetia = {
 	name = "Venetia"
 	color = { 176 1 160 }
+	terrain = plains
 	default_provincial_capital = venice
 	regions = {
 		italy

@@ -1,6 +1,7 @@
 styria = {
 	name = "Styria"
 	color = { 176 97 65 }
+	terrain = hills
 	default_provincial_capital = graz
 	regions = {
 		austria

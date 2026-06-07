@@ -1,6 +1,7 @@
 piedmont = {
 	name = "Piedmont"
 	color = { 208 128 224 }
+	terrain = mountains
 	default_provincial_capital = turin
 	regions = {
 		italy

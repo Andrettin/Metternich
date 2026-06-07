@@ -1,6 +1,7 @@
 brunn = {
 	name = "Brunn" #"Brünn"
 	color = { 239 96 128 }
+	terrain = forest
 	default_provincial_capital = brunn
 	cultural_names = {
 		czech = "Brno"

@@ -1,6 +1,7 @@
 lombardy = {
 	name = "Lombardy"
 	color = { 208 64 96 }
+	terrain = plains
 	default_provincial_capital = milan
 	regions = {
 		italy

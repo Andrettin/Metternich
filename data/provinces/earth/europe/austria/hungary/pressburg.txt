@@ -1,6 +1,7 @@
 pressburg = {
 	name = "Pressburg"
 	color = { 81 97 97 }
+	terrain = plains
 	default_provincial_capital = pressburg
 	cultural_names = {
 		slovak = "Bratislava"

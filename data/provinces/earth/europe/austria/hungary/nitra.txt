@@ -1,6 +1,7 @@
 nitra = {
 	name = "Nitra"
 	color = { 160 184 129 }
+	terrain = plains
 	default_provincial_capital = nitra
 	cultural_names = {
 		magyar = "Nyitra"

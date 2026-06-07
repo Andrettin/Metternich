@@ -1,6 +1,7 @@
 marburg = { #Lower Styria
 	name = "Marburg"
 	color = { 246 11 92 }
+	terrain = hills
 	default_provincial_capital = maribor
 	cultural_names = {
 		slovene = "Maribor"

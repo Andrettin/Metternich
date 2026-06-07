@@ -1,6 +1,7 @@
 parma = {
 	name = "Parma"
 	color = { 112 1 32 }
+	terrain = mountains
 	default_provincial_capital = parma
 	regions = {
 		italy

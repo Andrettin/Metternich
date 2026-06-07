@@ -1,6 +1,7 @@
 istria = {
 	name = "Istria"
 	color = { 144 0 33 }
+	terrain = plains
 	default_provincial_capital = trieste
 	regions = {
 		cisleithania

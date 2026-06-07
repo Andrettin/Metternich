@@ -1,6 +1,7 @@
 burgenland = {
 	name = "Burgenland"
 	color = { 28 192 79 }
+	terrain = plains
 	default_provincial_capital = eisenstadt
 	regions = {
 		hungary

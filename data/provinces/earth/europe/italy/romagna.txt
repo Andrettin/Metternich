@@ -1,6 +1,7 @@
 romagna = {
 	name = "Romagna"
 	color = { 112 0 160 }
+	terrain = plains
 	default_provincial_capital = bologna
 	regions = {
 		italy

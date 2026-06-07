@@ -1,6 +1,7 @@
 genoa = {
 	name = "Genoa"
 	color = { 144 64 97 }
+	terrain = hills
 	default_provincial_capital = genoa
 	cultural_names = {
 		roman = "Genua" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 34-35.
