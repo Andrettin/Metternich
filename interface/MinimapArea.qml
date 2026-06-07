@@ -102,36 +102,19 @@ Rectangle {
 				}
 			}
 		}
-		
-		IconButton {
-			id: cultural_map_mode_button
-			icon_identifier: "music"
-			highlighted: province_map.mode === ProvinceMap.Mode.Cultural
-			
-			onClicked: {
-				province_map.mode = ProvinceMap.Mode.Cultural
-			}
-			
-			onHoveredChanged: {
-				if (hovered) {
-					status_text = "Cultural Map Mode"
-				} else {
-					status_text = ""
-				}
-			}
-		}
 	}
 	
-	Column {
-		id: minimap_mode_right_column
+	Grid {
+		id: minimap_mode_right_grid
 		anchors.left: minimap_borders.right
 		anchors.leftMargin: 4 * scale_factor
 		anchors.verticalCenter: parent.verticalCenter
 		spacing: 4 * scale_factor
+		columns: 2
 		
-		IconButton {
+		TinyIconButton {
 			id: trade_zone_map_mode_button
-			icon_identifier: "chest"
+			icon_identifier: "trade_consulate"
 			highlighted: province_map.mode === ProvinceMap.Mode.TradeZone
 			
 			onClicked: {
@@ -147,9 +130,9 @@ Rectangle {
 			}
 		}
 		
-		IconButton {
+		TinyIconButton {
 			id: temple_map_mode_button
-			icon_identifier: "wooden_cross"
+			icon_identifier: "temple"
 			highlighted: province_map.mode === ProvinceMap.Mode.Temple
 			
 			onClicked: {
@@ -165,28 +148,9 @@ Rectangle {
 			}
 		}
 		
-		IconButton {
-			id: technology_map_mode_button
-			icon_identifier: "cog"
-			highlighted: province_map.mode === ProvinceMap.Mode.Technology
-			
-			onClicked: {
-				province_map.mode = ProvinceMap.Mode.Technology
-			}
-			
-			onHoveredChanged: {
-				if (hovered) {
-					status_text = "Technology Map Mode"
-				} else {
-					status_text = ""
-				}
-			}
-		}
-		
-		/*
-		IconButton {
+		TinyIconButton {
 			id: terrain_map_mode_button
-			icon_identifier: "mountains"
+			icon_identifier: "alliance"
 			highlighted: province_map.mode === ProvinceMap.Mode.Terrain
 			
 			onClicked: {
@@ -201,6 +165,41 @@ Rectangle {
 				}
 			}
 		}
-		*/
+		
+		TinyIconButton {
+			id: cultural_map_mode_button
+			icon_identifier: "embassy"
+			highlighted: province_map.mode === ProvinceMap.Mode.Cultural
+			
+			onClicked: {
+				province_map.mode = ProvinceMap.Mode.Cultural
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Cultural Map Mode"
+				} else {
+					status_text = ""
+				}
+			}
+		}
+		
+		TinyIconButton {
+			id: technology_map_mode_button
+			icon_identifier: "law"
+			highlighted: province_map.mode === ProvinceMap.Mode.Technology
+			
+			onClicked: {
+				province_map.mode = ProvinceMap.Mode.Technology
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Technology Map Mode"
+				} else {
+					status_text = ""
+				}
+			}
+		}
 	}
 }
