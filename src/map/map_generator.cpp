@@ -14,6 +14,7 @@
 #include "map/moisture_type.h"
 #include "map/province.h"
 #include "map/province_history.h"
+#include "map/province_map_data.h"
 #include "map/region.h"
 #include "map/site.h"
 #include "map/site_map_data.h"
@@ -116,7 +117,10 @@ void map_generator::generate()
 
 		province *province = find_iterator->second;
 		assert_throw(province != nullptr);
-		map->set_tile_province(point::from_index(static_cast<int>(i), this->get_width()), province);
+		const QPoint tile_pos = point::from_index(static_cast<int>(i), this->get_width());
+		map->set_tile_province(tile_pos, province);
+
+		province->get_map_data()->change_tile_terrain_count(map::get()->get_tile(tile_pos)->get_terrain(), 1);
 	}
 
 	this->generate_sites();

@@ -720,8 +720,10 @@ void map_template::apply_border_rivers() const
 void map_template::apply_provinces() const
 {
 	assert_throw(!this->get_province_image_filepath().empty());
+	assert_throw(!this->get_terrain_image_filepath().empty());
 
 	const QImage province_image(path::to_qstring(this->get_province_image_filepath()));
+	const QImage terrain_image(path::to_qstring(this->get_terrain_image_filepath()));
 
 	map *map = map::get();
 
@@ -773,7 +775,21 @@ void map_template::apply_provinces() const
 			}
 
 			map->set_tile_province(tile_pos, province);
+
+			const QColor tile_terrain_color = terrain_image.pixelColor(tile_pos);
+			if (tile_terrain_color.alpha() != 0) {
+				const terrain_type *terrain = terrain_type::get_by_color(tile_terrain_color);
+				province->get_map_data()->change_tile_terrain_count(terrain, 1);
+			}
 		}
+	}
+
+	for (const province *province : province::get_all()) {
+		if (!province->get_map_data()->is_on_map()) {
+			continue;
+		}
+
+		province->get_map_data()->initialize_terrain();
 	}
 
 	//apply tile sites

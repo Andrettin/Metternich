@@ -113,6 +113,11 @@ public:
 		return this->tile_terrain_counts;
 	}
 
+	void change_tile_terrain_count(const terrain_type *terrain, const int change)
+	{
+		this->tile_terrain_counts[terrain] += change;
+	}
+
 	const std::vector<QPolygon> &get_polygons() const
 	{
 		return this->polygons;
