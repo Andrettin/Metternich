@@ -1592,9 +1592,7 @@ void domain_game_data::on_province_gained(const province *province, const int mu
 		}
 	}
 
-	for (const auto &[terrain, count] : province_game_data->get_tile_terrain_counts()) {
-		this->change_tile_terrain_count(terrain, count * multiplier);
-	}
+	this->change_tile_terrain_count(province_game_data->get_terrain(), static_cast<int>(province->get_map_data()->get_tiles().size() - province->get_map_data()->get_sites().size()) * multiplier);
 
 	for (const auto &[commodity, threshold_map] : this->get_economy()->get_commodity_bonuses_for_tile_thresholds()) {
 		for (const auto &[threshold, value] : threshold_map) {
@@ -1743,6 +1741,8 @@ QCoro::Task<void> domain_game_data::on_site_gained(const site *site, const int m
 			co_await site_resource->get_country_modifier()->apply(this->domain, multiplier);
 		}
 	}
+
+	this->change_tile_terrain_count(site->get_map_data()->get_terrain(), 1 * multiplier);
 }
 
 QCoro::Task<void> domain_game_data::set_capital(const site *capital)
