@@ -1,6 +1,6 @@
 great_library = {
 	name = "Great Library"
-	icon = temple
+	icon = law
 	portrait = university
 	image_filepath = "tiles/settlements/town.png"
 	domain_skill = culture
