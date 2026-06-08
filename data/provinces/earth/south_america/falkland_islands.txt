@@ -2,6 +2,9 @@ falkland_islands = {
 	name = "Falkland Islands"
 	color = { 137 35 47 }
 	default_provincial_capital = stanley
+	regions = {
+		south_america
+	}
 	
 	history = {
 		religion = pagan
