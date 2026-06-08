@@ -457,11 +457,6 @@ public:
 
 	void calculate_realm_text_rect();
 
-	const std::vector<QPoint> &get_border_tiles() const
-	{
-		return this->border_tiles;
-	}
-
 	const terrain_type_map<int> &get_tile_terrain_counts() const
 	{
 		return this->tile_terrain_counts;
@@ -1361,7 +1356,6 @@ private:
 	std::vector<QRect> realm_contiguous_territory_rects;
 	QRect main_realm_contiguous_territory_rect;
 	QRect realm_text_rect;
-	std::vector<QPoint> border_tiles;
 	terrain_type_map<int> tile_terrain_counts;
 	const metternich::subject_type *subject_type = nullptr;
 	domain_set known_countries;

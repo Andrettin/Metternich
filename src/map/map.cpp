@@ -614,37 +614,6 @@ bool map::is_tile_near_celestial_body(const QPoint &tile_pos) const
 	return result;
 }
 
-bool map::is_tile_on_country_border(const QPoint &tile_pos) const
-{
-	const tile *tile = this->get_tile(tile_pos);
-	const domain *tile_domain = tile->get_owner();
-
-	if (tile_domain == nullptr) {
-		return false;
-	}
-
-	bool result = false;
-
-	point::for_each_adjacent_until(tile_pos, [this, tile_domain, &result](const QPoint &adjacent_pos) {
-		if (!this->contains(adjacent_pos)) {
-			result = true;
-			return true;
-		}
-
-		const metternich::tile *adjacent_tile = this->get_tile(adjacent_pos);
-		const domain *adjacent_domain = adjacent_tile->get_owner();
-
-		if (tile_domain != adjacent_domain) {
-			result = true;
-			return true;
-		}
-
-		return false;
-	});
-
-	return result;
-}
-
 bool map::is_tile_on_province_border(const QPoint &tile_pos) const
 {
 	const tile *tile = this->get_tile(tile_pos);

@@ -1420,7 +1420,6 @@ QCoro::Task<void> domain_game_data::add_province(const province *province)
 
 	this->on_province_gained(province, 1);
 
-	map *map = map::get();
 	const province_game_data *province_game_data = province->get_game_data();
 
 	for (const QPoint &tile_pos : province_game_data->get_resource_tiles()) {
@@ -1451,18 +1450,6 @@ QCoro::Task<void> domain_game_data::add_province(const province *province)
 		//province ceased to be a country border province, remove it from the list
 		if (vector::contains(this->get_border_provinces(), neighbor_province) && !neighbor_province_game_data->is_country_border_province()) {
 			std::erase(this->border_provinces, neighbor_province);
-		}
-
-		for (const QPoint &tile_pos : neighbor_province_game_data->get_border_tiles()) {
-			if (!map->is_tile_on_country_border(tile_pos)) {
-				std::erase(this->border_tiles, tile_pos);
-			}
-		}
-	}
-
-	for (const QPoint &tile_pos : province_game_data->get_border_tiles()) {
-		if (map->is_tile_on_country_border(tile_pos)) {
-			this->border_tiles.push_back(tile_pos);
 		}
 	}
 
@@ -1501,12 +1488,7 @@ QCoro::Task<void> domain_game_data::remove_province(const province *province)
 
 	this->on_province_gained(province, -1);
 
-	map *map = map::get();
 	const province_game_data *province_game_data = province->get_game_data();
-
-	for (const QPoint &tile_pos : province_game_data->get_border_tiles()) {
-		std::erase(this->border_tiles, tile_pos);
-	}
 
 	std::erase(this->border_provinces, province);
 
@@ -1519,12 +1501,6 @@ QCoro::Task<void> domain_game_data::remove_province(const province *province)
 		//province has become a country border province, add it to the list
 		if (neighbor_province_game_data->is_country_border_province() && !vector::contains(this->get_border_provinces(), neighbor_province)) {
 			this->border_provinces.push_back(neighbor_province);
-		}
-
-		for (const QPoint &tile_pos : neighbor_province_game_data->get_border_tiles()) {
-			if (map->is_tile_on_country_border(tile_pos) && !vector::contains(this->get_border_tiles(), tile_pos)) {
-				this->border_tiles.push_back(tile_pos);
-			}
 		}
 	}
 
