@@ -442,8 +442,15 @@ QCoro::Task<void> game::start_coro()
 
 		co_await this->create_exploration_diplomatic_map_image();
 
+		std::vector<QFuture<void>> futures;
 		for (const province *province : map::get()->get_provinces()) {
-			province->get_game_data()->create_map_image();
+			QFuture<void> future = QtConcurrent::run([province]() {
+				province->get_game_data()->create_map_image();
+			});
+			futures.push_back(std::move(future));
+		}
+		for (QFuture<void> &future : futures) {
+			co_await future;
 		}
 
 		for (const site *site : map::get()->get_sites()) {
