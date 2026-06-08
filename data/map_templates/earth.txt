@@ -1,17 +1,29 @@
-#earth = {
-#	name = "Earth"
-#	size = { 1024 529 }
-#	world = earth
-#	map_projection = miller
-#	min_longitude = -180
-#	max_longitude = 180
-#	min_latitude = -60.05
-#	max_latitude = 85
-#	geocoordinate_x_offset = -32 #shift all positions derived from geocoordinates by this offset
-#	terrain_image_filepath = "earth/terrain.png"
-#	river_image_filepath = "earth/rivers.png"
-#	province_image_filepath = "earth/provinces.png"
-#}
+earth = {
+	name = "Earth"
+	size = { 16384 8464 }
+	world = earth
+	map_projection = miller
+	min_longitude = -180
+	max_longitude = 180
+	min_latitude = -60.05
+	max_latitude = 85
+	geocoordinate_x_offset = -512 #shift all positions derived from geocoordinates by this offset; this will place the Florence meridian at the center of the map
+	terrain_image_filepath = "earth/terrain.png"
+	#river_image_filepath = "earth/rivers.png"
+	province_image_filepath = "earth/provinces.png"
+	ignored_regions = {
+		africa
+		america
+		asia
+		indian_ocean
+		oceania
+		pacific_ocean
+	}
+	ignored_provinces = {
+		north_atlantic_ocean
+		south_atlantic_ocean
+	}
+}
 
 #earth_random = {
 #	name = "Earth"
