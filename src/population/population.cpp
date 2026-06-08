@@ -175,7 +175,7 @@ void population::change_phenotype_size(const phenotype *phenotype, const int64_t
 	}
 }
 
-std::vector<const phenotype *> population::get_weighted_phenotypes_for_culture(const culture *culture) const
+phenotype_map<int64_t> population::get_phenotype_sizes_for_culture(const culture *culture) const
 {
 	assert_throw(culture != nullptr);
 
@@ -186,7 +186,7 @@ std::vector<const phenotype *> population::get_weighted_phenotypes_for_culture(c
 		return !vector::contains(culture->get_species(), key->get_species());
 	});
 
-	return archimedes::map::to_weighted_vector(phenotype_sizes);
+	return phenotype_sizes;
 }
 
 void population::change_literate_size(const int64_t change)

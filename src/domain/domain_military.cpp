@@ -23,6 +23,7 @@
 #include "unit/military_unit_type.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
+#include "util/map_random_util.h"
 #include "util/map_util.h"
 #include "util/string_util.h"
 #include "util/vector_random_util.h"
@@ -155,9 +156,9 @@ QCoro::Task<bool> domain_military::create_military_unit(const military_unit_type
 		military_unit = co_await metternich::military_unit::create(military_unit_type, this->domain, chosen_character);
 	} else {
 		if (phenotype == nullptr) {
-			const std::vector<const metternich::phenotype *> weighted_phenotypes = this->get_game_data()->get_weighted_phenotypes();
-			assert_throw(!weighted_phenotypes.empty());
-			phenotype = vector::get_random(weighted_phenotypes);
+			const phenotype_map<int64_t> phenotype_weights = this->get_game_data()->get_phenotype_weights();
+			assert_throw(!phenotype_weights.empty());
+			phenotype = archimedes::map::get_random_weight_map_key(phenotype_weights);
 		}
 		assert_throw(phenotype != nullptr);
 

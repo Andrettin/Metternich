@@ -102,10 +102,4 @@ const phenotype_map<int64_t> culture::get_phenotype_weights() const
 	return phenotype_weights;
 }
 
-std::vector<const phenotype *> culture::get_weighted_phenotypes() const
-{
-	const phenotype_map<int64_t> phenotype_weights = this->get_phenotype_weights();
-	return archimedes::map::to_weighted_vector(phenotype_weights);
-}
-
 }

@@ -11,6 +11,7 @@
 #include "population/population_type_container.h"
 #include "script/opinion_modifier_container.h"
 #include "script/scripted_modifier_container.h"
+#include "species/phenotype_container.h"
 #include "unit/transporter_type_container.h"
 #include "util/centesimal_int.h"
 #include "util/point_container.h"
@@ -803,7 +804,7 @@ public:
 
 	void on_population_unit_gained(const population_unit *population_unit, const int multiplier);
 
-	std::vector<const phenotype *> get_weighted_phenotypes() const;
+	phenotype_map<int64_t> get_phenotype_weights() const;
 
 	int get_population_growth() const
 	{

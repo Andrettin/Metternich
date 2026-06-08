@@ -66,7 +66,6 @@ public:
 	}
 
 	const phenotype_map<int64_t> get_phenotype_weights() const;
-	std::vector<const phenotype *> get_weighted_phenotypes() const;
 
 	const std::vector<const culture *> &get_derived_cultures() const
 	{

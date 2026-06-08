@@ -141,8 +141,7 @@ public:
 
 	QVariantList get_phenotype_sizes_qvariant_list() const;
 	void change_phenotype_size(const phenotype *phenotype, const int64_t change);
-
-	std::vector<const phenotype *> get_weighted_phenotypes_for_culture(const culture *culture) const;
+	phenotype_map<int64_t> get_phenotype_sizes_for_culture(const culture *culture) const;
 
 	int64_t get_literate_size() const
 	{

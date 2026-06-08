@@ -88,6 +88,7 @@
 #include "util/date_util.h"
 #include "util/gender.h"
 #include "util/image_util.h"
+#include "util/map_random_util.h"
 #include "util/map_util.h"
 #include "util/number_util.h"
 #include "util/point_util.h"
@@ -3123,15 +3124,15 @@ void domain_game_data::on_population_unit_gained(const population_unit *populati
 	*/
 }
 
-std::vector<const phenotype *> domain_game_data::get_weighted_phenotypes() const
+phenotype_map<int64_t> domain_game_data::get_phenotype_weights() const
 {
-	std::vector<const phenotype *> weighted_phenotypes = this->get_population()->get_weighted_phenotypes_for_culture(this->get_culture());
+	phenotype_map<int64_t> phenotype_weights = this->get_population()->get_phenotype_sizes_for_culture(this->get_culture());
 
-	if (weighted_phenotypes.empty()) {
-		weighted_phenotypes = this->get_culture()->get_weighted_phenotypes();
+	if (phenotype_weights.empty()) {
+		phenotype_weights = this->get_culture()->get_phenotype_weights();
 	}
 
-	return weighted_phenotypes;
+	return phenotype_weights;
 }
 
 void domain_game_data::set_population_growth(const int growth)
@@ -4072,12 +4073,12 @@ bool domain_game_data::create_civilian_unit(const civilian_unit_type *civilian_u
 	qunique_ptr<civilian_unit> civilian_unit;
 
 	if (phenotype == nullptr) {
-		const std::vector<const metternich::phenotype *> weighted_phenotypes = this->get_weighted_phenotypes();
-		if (weighted_phenotypes.empty()) {
+		const phenotype_map<int64_t> phenotype_weights = this->get_phenotype_weights();
+		if (phenotype_weights.empty()) {
 			return false;
 		}
 
-		phenotype = vector::get_random(weighted_phenotypes);
+		phenotype = archimedes::map::get_random_weight_map_key(phenotype_weights);
 	}
 
 	assert_throw(phenotype != nullptr);
@@ -4225,9 +4226,9 @@ bool domain_game_data::create_transporter(const transporter_type *transporter_ty
 	qunique_ptr<transporter> transporter;
 
 	if (phenotype == nullptr) {
-		const std::vector<const metternich::phenotype *> weighted_phenotypes = this->get_weighted_phenotypes();
-		assert_throw(!weighted_phenotypes.empty());
-		phenotype = vector::get_random(weighted_phenotypes);
+		const phenotype_map<int64_t> phenotype_weights = this->get_phenotype_weights();
+		assert_throw(!phenotype_weights.empty());
+		phenotype = archimedes::map::get_random_weight_map_key(phenotype_weights);
 	}
 	assert_throw(phenotype != nullptr);
 
