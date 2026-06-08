@@ -90,6 +90,7 @@
 #include "util/image_util.h"
 #include "util/map_util.h"
 #include "util/number_util.h"
+#include "util/point_util.h"
 #include "util/qunique_ptr.h"
 #include "util/rect_util.h"
 #include "util/string_conversion_util.h"
@@ -2011,7 +2012,8 @@ void domain_game_data::calculate_territory_rect_center()
 		return;
 	}
 
-	QPoint sum(0, 0);
+	int64_t sum_x = 0;
+	int64_t sum_y = 0;
 	int tile_count = 0;
 
 	for (const province *province : this->get_provinces()) {
@@ -2021,11 +2023,12 @@ void domain_game_data::calculate_territory_rect_center()
 		}
 
 		const int province_tile_count = static_cast<int>(province_map_data->get_tiles().size());
-		sum += province_map_data->get_territory_rect_center() * province_tile_count;
+		sum_x += static_cast<int64_t>(province_map_data->get_territory_rect_center().x()) * province_tile_count;
+		sum_y += static_cast<int64_t>(province_map_data->get_territory_rect_center().y()) * province_tile_count;
 		tile_count += province_tile_count;
 	}
 
-	this->territory_rect_center = QPoint(sum.x() / tile_count, sum.y() / tile_count);
+	this->territory_rect_center = QPoint(static_cast<int>(sum_x / tile_count), static_cast<int>(sum_y / tile_count));
 }
 
 QVariantList domain_game_data::get_contiguous_territory_rects_qvariant_list() const
@@ -2063,7 +2066,9 @@ QRect domain_game_data::calculate_text_rect(const QRect &main_contiguous_territo
 		center_pos = this->get_capital()->get_game_data()->get_tile_pos();
 	}
 
-	assert_throw(map->contains(center_pos));
+	if (!map->contains(center_pos)) {
+		throw std::runtime_error(std::format("Domain \"{}\" has a center pos of {}, which is not contained by the map.", this->domain->get_identifier(), point::to_string(center_pos)));
+	}
 
 	if (map->get_tile(center_pos)->get_owner() != this->domain) {
 		return QRect();

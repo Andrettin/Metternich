@@ -174,13 +174,15 @@ void province_map_data::calculate_territory_rect_center()
 
 	assert_throw(tile_count > 0);
 
-	QPoint sum(0, 0);
+	int64_t sum_x = 0;
+	int64_t sum_y = 0;
 
 	for (const QPoint &tile_pos : this->get_tiles()) {
-		sum += tile_pos;
+		sum_x += tile_pos.x();
+		sum_y += tile_pos.y();
 	}
 
-	this->territory_rect_center = QPoint(sum.x() / tile_count, sum.y() / tile_count);
+	this->territory_rect_center = QPoint(static_cast<int>(sum_x / tile_count), static_cast<int>(sum_y / tile_count));
 }
 
 void province_map_data::add_neighbor_province(const metternich::province *province)
