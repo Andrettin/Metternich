@@ -2021,11 +2021,17 @@ QCoro::Task<void> game::create_diplomatic_map_image()
 		co_await std::move(task);
 	}
 
+	std::vector<QFuture<void>> futures;
 	for (const domain *domain : this->get_countries()) {
-		domain_game_data *domain_game_data = domain->get_game_data();
-
-		domain_game_data->create_diplomatic_map_image();
-		domain_game_data->create_realm_diplomatic_map_image();
+		QFuture<void> future = QtConcurrent::run([domain]() {
+			domain_game_data *domain_game_data = domain->get_game_data();
+			domain_game_data->create_diplomatic_map_image();
+			domain_game_data->create_realm_diplomatic_map_image();
+		});
+		futures.push_back(std::move(future));
+	}
+	for (QFuture<void> &future : futures) {
+		co_await future;
 	}
 }
 
