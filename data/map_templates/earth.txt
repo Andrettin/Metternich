@@ -11,6 +11,9 @@ earth = {
 	terrain_image_filepath = "earth/terrain.png"
 	#river_image_filepath = "earth/rivers.png"
 	province_image_filepath = "earth/provinces.png"
+	province_post_processing_terrains = {
+		ocean
+	}
 	ignored_regions = {
 		africa
 		america

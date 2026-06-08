@@ -68,7 +68,11 @@ void map_template::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "ignored_provinces") {
+	if (tag == "province_post_processing_terrains") {
+		for (const std::string &value : values) {
+			this->province_post_processing_terrains.insert(terrain_type::get(value));
+		}
+	} else if (tag == "ignored_provinces") {
 		for (const std::string &value : values) {
 			this->ignored_provinces.insert(province::get(value));
 		}

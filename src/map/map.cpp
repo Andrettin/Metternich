@@ -148,14 +148,27 @@ void map::create_tiles()
 	}
 }
 
-void map::initialize(const bool province_post_processing_enabled)
+void map::initialize(const bool province_post_processing_enabled, const std::unordered_set<const terrain_type *> &province_post_processing_terrains)
 {
 	if (province_post_processing_enabled) {
 		//assign tiles without provinces to the most-adjacent province
 		std::vector<QPoint> tiles_to_check;
 		for (int x = 0; x < this->get_width(); ++x) {
 			for (int y = 0; y < this->get_height(); ++y) {
-				tiles_to_check.push_back(QPoint(x, y));
+				QPoint tile_pos(x, y);
+				const tile *tile = this->get_tile(tile_pos);
+
+				if (!province_post_processing_terrains.empty()) {
+					if (!province_post_processing_terrains.contains(tile->get_terrain())) {
+						continue;
+					}
+				} else {
+					if (tile->get_terrain() == defines::get()->get_unexplored_terrain()) {
+						continue;
+					}
+				}
+
+				tiles_to_check.push_back(std::move(tile_pos));
 			}
 		}
 		vector::shuffle(tiles_to_check);

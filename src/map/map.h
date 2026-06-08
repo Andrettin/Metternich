@@ -43,7 +43,7 @@ public:
 	gsml_data to_gsml_data() const;
 
 	void create_tiles();
-	void initialize(const bool province_post_processing_enabled);
+	void initialize(const bool province_post_processing_enabled, const std::unordered_set<const terrain_type *> &province_post_processing_terrains);
 	void process_border_tiles();
 	Q_INVOKABLE void clear();
 

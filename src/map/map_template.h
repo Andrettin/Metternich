@@ -178,6 +178,11 @@ public:
 		return this->province_post_processing_enabled;
 	}
 
+	const std::unordered_set<const terrain_type *> &get_province_post_processing_terrains() const
+	{
+		return this->province_post_processing_terrains;
+	}
+
 	int get_land_percent() const
 	{
 		return this->land_percent;
@@ -232,6 +237,7 @@ private:
 	std::filesystem::path province_image_filepath;
 	bool randomly_generated = false;
 	bool province_post_processing_enabled = true;
+	std::unordered_set<const terrain_type *> province_post_processing_terrains;
 	int land_percent = 30;
 	int steepness = 30;
 	int average_temperature = 50;
