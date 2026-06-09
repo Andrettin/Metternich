@@ -2,23 +2,14 @@
 
 #include "map/tile.h"
 
-#include "database/defines.h"
 #include "domain/domain.h"
 #include "economy/resource.h"
-#include "map/celestial_body_type.h"
-#include "map/direction.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "map/site_map_data.h"
-#include "map/site_type.h"
-#include "map/terrain_adjacency_type.h"
 #include "map/terrain_type.h"
-#include "util/assert_util.h"
-#include "util/random.h"
-#include "util/vector_random_util.h"
-#include "util/vector_util.h"
 
 namespace metternich {
 

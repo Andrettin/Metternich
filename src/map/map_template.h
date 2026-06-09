@@ -192,7 +192,7 @@ public:
 
 	void apply() const;
 	void apply_terrain() const;
-	void apply_provinces() const;
+	void apply_terrain_and_provinces() const;
 	void generate_additional_sites() const;
 	void generate_site(const site *site) const;
 

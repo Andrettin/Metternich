@@ -432,7 +432,7 @@ void map_template::apply() const
 		map_generator.generate();
 	} else {
 		this->apply_terrain();
-		this->apply_provinces();
+		this->apply_terrain_and_provinces();
 	}
 
 	this->generate_additional_sites();
@@ -461,7 +461,7 @@ void map_template::apply_terrain() const
 	}
 }
 
-void map_template::apply_provinces() const
+void map_template::apply_terrain_and_provinces() const
 {
 	assert_throw(!this->get_province_image_filepath().empty());
 	assert_throw(!this->get_terrain_image_filepath().empty());
@@ -502,14 +502,23 @@ void map_template::apply_provinces() const
 			const QPoint tile_pos(x, y);
 			const QColor tile_color = province_image.pixelColor(tile_pos);
 
-			if (tile_color.alpha() == 0) {
-				continue;
+			province *province = nullptr;
+			if (tile_color.alpha() != 0) {
+				province = province::get_by_color(tile_color);
+
+				if (this->is_province_ignored(province)) {
+					continue;
+				}
 			}
 
-			province *province = province::get_by_color(tile_color);
+			const QColor tile_terrain_color = terrain_image.pixelColor(tile_pos);
+			const terrain_type *terrain = nullptr;
+			if (tile_terrain_color.alpha() != 0) {
+				terrain = terrain_type::get_by_color(tile_terrain_color);
+				map->set_tile_terrain(tile_pos, terrain);
+			}
 
-			if (this->is_province_ignored(province)) {
-				map->set_tile_terrain(tile_pos, defines::get()->get_unexplored_terrain());
+			if (province == nullptr) {
 				continue;
 			}
 
@@ -525,9 +534,7 @@ void map_template::apply_provinces() const
 
 			map->set_tile_province(tile_pos, province);
 
-			const QColor tile_terrain_color = terrain_image.pixelColor(tile_pos);
-			if (tile_terrain_color.alpha() != 0) {
-				const terrain_type *terrain = terrain_type::get_by_color(tile_terrain_color);
+			if (terrain != nullptr) {
 				province->get_map_data()->change_tile_terrain_count(terrain, 1);
 			}
 		}
