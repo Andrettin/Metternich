@@ -38,7 +38,6 @@ class map_template final : public named_data_entry, public data_type<map_templat
 	Q_PROPERTY(int geocoordinate_x_offset MEMBER geocoordinate_x_offset)
 	Q_PROPERTY(std::filesystem::path terrain_image_filepath MEMBER terrain_image_filepath WRITE set_terrain_image_filepath)
 	Q_PROPERTY(std::filesystem::path river_image_filepath MEMBER river_image_filepath WRITE set_river_image_filepath)
-	Q_PROPERTY(std::filesystem::path border_river_image_filepath MEMBER border_river_image_filepath WRITE set_border_river_image_filepath)
 	Q_PROPERTY(std::filesystem::path province_image_filepath MEMBER province_image_filepath WRITE set_province_image_filepath)
 	Q_PROPERTY(bool randomly_generated MEMBER randomly_generated READ is_randomly_generated NOTIFY changed)
 	Q_PROPERTY(bool province_post_processing_enabled MEMBER province_post_processing_enabled READ is_province_post_processing_enabled NOTIFY changed)
@@ -152,14 +151,6 @@ public:
 	void set_river_image_filepath(const std::filesystem::path &filepath);
 	Q_INVOKABLE void write_river_image();
 
-	const std::filesystem::path &get_border_river_image_filepath() const
-	{
-		return this->border_river_image_filepath;
-	}
-
-	void set_border_river_image_filepath(const std::filesystem::path &filepath);
-	Q_INVOKABLE void write_border_river_image();
-
 	const std::filesystem::path &get_province_image_filepath() const
 	{
 		return this->province_image_filepath;
@@ -211,7 +202,6 @@ public:
 	void apply() const;
 	void apply_terrain() const;
 	void apply_rivers() const;
-	void apply_border_rivers() const;
 	void apply_provinces() const;
 	void generate_additional_sites() const;
 	void generate_site(const site *site) const;
@@ -233,7 +223,6 @@ private:
 	int geocoordinate_x_offset = 0;
 	std::filesystem::path terrain_image_filepath;
 	std::filesystem::path river_image_filepath;
-	std::filesystem::path border_river_image_filepath;
 	std::filesystem::path province_image_filepath;
 	bool randomly_generated = false;
 	bool province_post_processing_enabled = true;

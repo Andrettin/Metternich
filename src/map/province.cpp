@@ -56,13 +56,6 @@ void province::process_gsml_scope(const gsml_data &scope)
 			const cultural_group *cultural_group = cultural_group::get(property.get_key());
 			this->cultural_group_names[cultural_group] = property.get_value();
 		});
-	} else if (tag == "border_rivers") {
-		scope.for_each_property([&](const gsml_property &property) {
-			province *border_province = province::get(property.get_key());
-			const terrain_feature *border_river = terrain_feature::get(property.get_value());
-			this->border_rivers[border_province] = border_river;
-			border_province->border_rivers[this] = border_river;
-		});
 	} else if (tag == "generation_worlds") {
 		for (const std::string &value : values) {
 			this->generation_worlds.push_back(world::get(value));
@@ -122,12 +115,6 @@ void province::check() const
 
 	if (this->get_primary_star() != nullptr && !this->get_primary_star()->is_celestial_body()) {
 		throw std::runtime_error(std::format("Province \"{}\" has a primary star (\"{}\") which is not a celestial body.", this->get_identifier(), this->get_primary_star()->get_identifier()));
-	}
-
-	for (const auto &[border_province, border_river] : this->border_rivers) {
-		if (!border_river->is_river() && !border_river->is_border_river()) {
-			throw std::runtime_error(std::format("Province \"{}\" has the terrain feature \"{}\" set as a border river, but the latter is not a river.", this->get_identifier(), border_river->get_identifier()));
-		}
 	}
 }
 

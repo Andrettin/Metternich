@@ -5,9 +5,6 @@ coahuila = {
 	regions = {
 		mexico
 	}
-	border_rivers = {
-		#texas = rio_grande
-	}
 	
 	history = {
 		owner = aztec_empire

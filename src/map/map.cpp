@@ -139,13 +139,10 @@ void map::create_tiles()
 	assert_throw(!this->get_size().isNull());
 
 	const int tile_quantity = this->get_width() * this->get_height();
-	this->tiles->reserve(tile_quantity);
 
 	const terrain_type *unexplored_terrain = defines::get()->get_unexplored_terrain();
 
-	for (int i = 0; i < tile_quantity; ++i) {
-		this->tiles->emplace_back(unexplored_terrain);
-	}
+	this->tiles->resize(tile_quantity, tile(unexplored_terrain));
 }
 
 void map::initialize(const bool province_post_processing_enabled, const std::unordered_set<const terrain_type *> &province_post_processing_terrains)
@@ -288,10 +285,10 @@ void map::process_border_tiles()
 
 			bool is_border_tile = false;
 
-			point::for_each_adjacent(tile_pos, [this, tile, &tile_pos, tile_province, &is_border_tile](const QPoint &adjacent_pos) {
+			point::for_each_adjacent_until(tile_pos, [this, tile, &tile_pos, tile_province, &is_border_tile](const QPoint &adjacent_pos) {
 				if (!this->contains(adjacent_pos)) {
 					is_border_tile = true;
-					return;
+					return true;
 				}
 
 				const metternich::tile *adjacent_tile = this->get_tile(adjacent_pos);
@@ -305,16 +302,11 @@ void map::process_border_tiles()
 						}
 
 						is_border_tile = true;
-					}
-
-					if (tile_province != nullptr && adjacent_province != nullptr && tile_province->is_water_zone() == adjacent_province->is_water_zone()) {
-						const direction border_direction = offset_to_direction(adjacent_pos - tile_pos);
-
-						if (tile_province->get_border_rivers().contains(adjacent_province)) {
-							this->add_tile_border_river_direction(tile_pos, border_direction, adjacent_province);
-						}
+						return true;
 					}
 				}
+
+				return false;
 			});
 
 			if (is_border_tile) {
@@ -362,89 +354,6 @@ void map::set_tile_terrain(const QPoint &tile_pos, const terrain_type *terrain)
 
 	if (game::get()->is_running()) {
 		emit tile_terrain_changed(tile_pos);
-	}
-}
-
-void map::add_tile_border_river_direction(const QPoint &tile_pos, const direction direction, const province *border_province)
-{
-	tile *tile = this->get_tile(tile_pos);
-	tile->add_river_direction(direction);
-
-	switch (direction) {
-		case direction::west: {
-			const QPoint northwest_tile_pos = tile_pos + QPoint(-1, -1);
-			if (this->contains(northwest_tile_pos)) {
-				metternich::tile *northwest_tile = this->get_tile(northwest_tile_pos);
-				if (northwest_tile->get_province() == border_province || northwest_tile->get_province() == tile->get_province()) {
-					tile->add_river_direction(direction::northwest);
-				}
-			}
-
-			const QPoint southwest_tile_pos = tile_pos + QPoint(-1, 1);
-			if (this->contains(southwest_tile_pos)) {
-				metternich::tile *southwest_tile = this->get_tile(southwest_tile_pos);
-				if (southwest_tile->get_province() == border_province || southwest_tile->get_province() == tile->get_province()) {
-					tile->add_river_direction(direction::southwest);
-				}
-			}
-			break;
-		}
-		case direction::east: {
-			const QPoint northeast_tile_pos = tile_pos + QPoint(1, -1);
-			if (this->contains(northeast_tile_pos)) {
-				metternich::tile *northeast_tile = this->get_tile(northeast_tile_pos);
-				if (northeast_tile->get_province() == border_province || northeast_tile->get_province() == tile->get_province()) {
-					tile->add_river_direction(direction::northeast);
-				}
-			}
-
-			const QPoint southeast_tile_pos = tile_pos + QPoint(1, 1);
-			if (this->contains(southeast_tile_pos)) {
-				metternich::tile *southeast_tile = this->get_tile(southeast_tile_pos);
-				if (southeast_tile->get_province() == border_province || southeast_tile->get_province() == tile->get_province()) {
-					tile->add_river_direction(direction::southeast);
-				}
-			}
-			break;
-		}
-		case direction::north: {
-			const QPoint northwest_tile_pos = tile_pos + QPoint(-1, -1);
-			if (this->contains(northwest_tile_pos)) {
-				metternich::tile *northwest_tile = this->get_tile(northwest_tile_pos);
-				if (northwest_tile->get_province() == border_province || northwest_tile->get_province() == tile->get_province()) {
-					tile->add_river_direction(direction::northwest);
-				}
-			}
-
-			const QPoint northeast_tile_pos = tile_pos + QPoint(1, -1);
-			if (this->contains(northeast_tile_pos)) {
-				metternich::tile *northeast_tile = this->get_tile(northeast_tile_pos);
-				if (northeast_tile->get_province() == border_province || northeast_tile->get_province() == tile->get_province()) {
-					tile->add_river_direction(direction::northeast);
-				}
-			}
-			break;
-		}
-		case direction::south: {
-			const QPoint southwest_tile_pos = tile_pos + QPoint(-1, 1);
-			if (this->contains(southwest_tile_pos)) {
-				metternich::tile *southwest_tile = this->get_tile(southwest_tile_pos);
-				if (southwest_tile->get_province() == border_province || southwest_tile->get_province() == tile->get_province()) {
-					tile->add_river_direction(direction::southwest);
-				}
-			}
-
-			const QPoint southeast_tile_pos = tile_pos + QPoint(1, 1);
-			if (this->contains(southeast_tile_pos)) {
-				metternich::tile *southeast_tile = this->get_tile(southeast_tile_pos);
-				if (southeast_tile->get_province() == border_province || southeast_tile->get_province() == tile->get_province()) {
-					tile->add_river_direction(direction::southeast);
-				}
-			}
-			break;
-		}
-		default:
-			break;
 	}
 }
 

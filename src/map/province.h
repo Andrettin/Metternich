@@ -239,11 +239,6 @@ public:
 
 	bool has_core_country_of_culture(const culture *culture) const;
 
-	const province_map<const terrain_feature *> &get_border_rivers() const
-	{
-		return this->border_rivers;
-	}
-
 	const std::vector<const metternich::world *> &get_generation_worlds() const
 	{
 		return this->generation_worlds;
@@ -292,7 +287,6 @@ private:
 	std::map<const cultural_group *, std::string> cultural_group_names;
 	std::vector<region *> regions; //regions where this province is located
 	std::vector<const domain *> core_countries;
-	province_map<const terrain_feature *> border_rivers;
 	std::vector<const metternich::world *> generation_worlds; //worlds other than its own where this province can be generated
 	std::vector<const site *> sites; //sites located in this province, used for map generation
 	std::vector<const route *> routes;
