@@ -828,6 +828,11 @@ void map_template::apply_provinces() const
 
 	//apply tile sites
 	for (const auto &[tile_pos, site] : this->sites_by_position) {
+		if (site->get_province() != nullptr && this->is_province_ignored(site->get_province())) {
+			//skip sites whose provinces are ignored
+			continue;
+		}
+
 		map->set_tile_site(tile_pos, site);
 	}
 }
