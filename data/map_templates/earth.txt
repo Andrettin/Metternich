@@ -21,10 +21,26 @@ earth = {
 		indian_ocean
 		oceania
 		pacific_ocean
+		british_isles
+		armenia
+		azerbaijan
+		georgia
+		iberia
+		russia
+		scandinavia
 	}
 	ignored_provinces = {
+		bay_of_campeche
+		caribbean_sea
+		davis_strait
+		gulf_of_maine
+		gulf_of_mexico
+		gulf_of_saint_lawrence
+		labrador_sea
 		north_atlantic_ocean
+		sargasso_sea
 		south_atlantic_ocean
+		straits_of_florida
 	}
 }
 
