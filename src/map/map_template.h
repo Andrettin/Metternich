@@ -131,6 +131,11 @@ public:
 		this->georectangle.set_max_latitude(lat);
 	}
 
+	int get_geocoordinate_x_offset() const
+	{
+		return this->geocoordinate_x_offset;
+	}
+
 	QPoint get_geocoordinate_pos(const geocoordinate &geocoordinate) const;
 	geocoordinate get_pos_geocoordinate(const QPoint &pos) const;
 

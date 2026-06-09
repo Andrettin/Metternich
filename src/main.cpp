@@ -102,7 +102,6 @@
 #include "util/empty_image_provider.h"
 #include "util/exception_util.h"
 #include "util/gender.h"
-#include "util/image_util.h"
 #include "util/log_output_handler.h"
 #include "util/log_util.h"
 #include "util/path_util.h"

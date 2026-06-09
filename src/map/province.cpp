@@ -6,20 +6,16 @@
 #include "culture/culture.h"
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
-#include "economy/resource.h"
 #include "map/province_game_data.h"
 #include "map/province_history.h"
 #include "map/province_map_data.h"
 #include "map/province_turn_data.h"
 #include "map/region.h"
 #include "map/site.h"
-#include "map/site_type.h"
-#include "map/terrain_feature.h"
 #include "map/terrain_type.h"
 #include "map/world.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
-#include "util/log_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -27,6 +23,26 @@ namespace metternich {
 const std::set<std::string> province::database_dependencies = {
 	region::class_identifier
 };
+
+void province::initialize_all()
+{
+	data_type::initialize_all();
+
+	std::map<const metternich::world *, world::province_geodata_map_type> world_province_geodata_maps;
+
+	for (province *province : province::get_all()) {
+		if (province->get_world() != nullptr && province->uses_geopolygons()) {
+			if (!world_province_geodata_maps.contains(province->get_world())) {
+				world_province_geodata_maps[province->get_world()] = province->get_world()->parse_provinces_geojson_folder();
+			}
+
+			const auto world_find_iterator = world_province_geodata_maps.find(province->get_world());
+			const auto province_find_iterator = world_find_iterator->second.find(province);
+
+			province->geopolygons = std::move(province_find_iterator->second);
+		}
+	}
+}
 
 province::province(const std::string &identifier) : named_data_entry(identifier)
 {

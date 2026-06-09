@@ -44,6 +44,7 @@ class province final : public named_data_entry, public data_type<province>
 	Q_PROPERTY(metternich::site* default_provincial_capital MEMBER default_provincial_capital NOTIFY changed)
 	Q_PROPERTY(metternich::site* primary_star MEMBER primary_star NOTIFY changed)
 	Q_PROPERTY(bool coastal MEMBER coastal READ is_coastal NOTIFY changed)
+	Q_PROPERTY(bool use_geopolygons MEMBER use_geopolygons READ uses_geopolygons NOTIFY changed)
 	Q_PROPERTY(bool hidden MEMBER hidden READ is_hidden NOTIFY changed)
 	Q_PROPERTY(std::vector<metternich::region *> regions READ get_regions NOTIFY changed)
 	Q_PROPERTY(QVariantList routes READ get_routes_qvariant_list NOTIFY changed)
@@ -81,6 +82,8 @@ public:
 
 		return nullptr;
 	}
+
+	static void initialize_all();
 
 	static void clear()
 	{
@@ -204,6 +207,11 @@ public:
 		return this->coastal;
 	}
 
+	bool uses_geopolygons() const
+	{
+		return this->use_geopolygons;
+	}
+
 	bool is_hidden() const
 	{
 		return this->hidden;
@@ -266,6 +274,16 @@ public:
 		this->routes.push_back(route);
 	}
 
+	const std::vector<std::unique_ptr<QGeoShape>> &get_geopolygons() const
+	{
+		return this->geopolygons;
+	}
+
+	void add_geopolygon(std::unique_ptr<QGeoShape> &&geopolygon)
+	{
+		this->geopolygons.push_back(std::move(geopolygon));
+	}
+
 signals:
 	void changed();
 	void turn_data_changed() const;
@@ -281,6 +299,7 @@ private:
 	site *default_provincial_capital = nullptr;
 	site *primary_star = nullptr;
 	bool coastal = false;
+	bool use_geopolygons = false;
 	bool hidden = false;
 	std::vector<const metternich::terrain_type *> terrain_types;
 	std::map<const culture *, std::string> cultural_names;
@@ -290,6 +309,7 @@ private:
 	std::vector<const metternich::world *> generation_worlds; //worlds other than its own where this province can be generated
 	std::vector<const site *> sites; //sites located in this province, used for map generation
 	std::vector<const route *> routes;
+	std::vector<std::unique_ptr<QGeoShape>> geopolygons;
 	qunique_ptr<province_history> history;
 	qunique_ptr<province_map_data> map_data;
 	qunique_ptr<province_game_data> game_data;

@@ -4,7 +4,11 @@
 
 #include "database/defines.h"
 #include "database/preferences.h"
+#include "game/game.h"
+#include "game/scenario.h"
 #include "map/map.h"
+#include "map/map_projection.h"
+#include "map/map_template.h"
 #include "map/province.h"
 #include "map/site.h"
 #include "map/site_map_data.h"
@@ -26,6 +30,18 @@ province_map_data::province_map_data(const metternich::province *province) : pro
 void province_map_data::on_map_created()
 {
 	this->initialize_terrain();
+
+	if (this->province->uses_geopolygons()) {
+		const map_template *map_template = game::get()->get_scenario()->get_map_template();
+		const QSize &map_size = map_template->get_size();
+		const int geocoordinate_x_offset = map_template->get_geocoordinate_x_offset();
+
+		for (const std::unique_ptr<QGeoShape> &geoshape : this->province->get_geopolygons()) {
+			const QGeoPolygon *geopolygon = static_cast<const QGeoPolygon *>(geoshape.get());
+			QPolygon polygon = map_template->get_map_projection()->geopolygon_to_polygon(*geopolygon, map_template->get_georectangle(), map_size, geocoordinate_x_offset);
+			this->polygons.push_back(std::move(polygon));
+		}
+	}
 
 	/*
 	if (this->get_tiles().size() <= 10000) {
