@@ -702,8 +702,6 @@ QCoro::Task<void> map::create_ocean_diplomatic_map_image()
 	});
 
 	this->ocean_diplomatic_map_image = std::move(scaled_ocean_diplomatic_map_image);
-
-	this->ocean_diplomatic_map_image = this->ocean_diplomatic_map_image.convertToFormat(QImage::Format_Indexed8, { QColor(Qt::transparent).rgba(), color.rgba(), QColor(Qt::black).rgba() });
 }
 
 void map::create_minimap_image()
