@@ -1453,7 +1453,9 @@ QCoro::Task<void> domain_game_data::add_province(const province *province)
 		}
 	}
 
-	this->calculate_territory_rect();
+	if (game::get()->is_loaded()) {
+		this->calculate_territory_rect();
+	}
 
 	if (this->is_alive() && !was_alive) {
 		game::get()->add_country(this->domain);
@@ -1504,7 +1506,9 @@ QCoro::Task<void> domain_game_data::remove_province(const province *province)
 		}
 	}
 
-	this->calculate_territory_rect();
+	if (game::get()->is_loaded()) {
+		this->calculate_territory_rect();
+	}
 
 	//remove this as a known country for other countries, if they no longer have explored tiles in this country's territory
 	for (const metternich::domain *domain : game::get()->get_countries()) {
@@ -2296,7 +2300,9 @@ QCoro::Task<void> domain_game_data::set_diplomacy_state(const metternich::domain
 	}
 
 	if (is_overlordship_diplomacy_state(old_state) || is_overlordship_diplomacy_state(state)) {
-		this->calculate_realm_territory_rect();
+		if (game::get()->is_loaded()) {
+			this->calculate_realm_territory_rect();
+		}
 	}
 
 	if (game::get()->is_running()) {

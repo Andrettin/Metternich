@@ -1589,6 +1589,11 @@ QCoro::Task<void> game::apply_character_history(const QDate &start_date)
 
 QCoro::Task<void> game::on_setup_finished()
 {
+	for (const domain *domain : this->get_countries()) {
+		domain_game_data *domain_game_data = domain->get_game_data();
+		domain_game_data->calculate_territory_rect();
+	}
+
 	co_await this->create_map_images();
 
 	emit countries_changed();
