@@ -431,34 +431,10 @@ void map_template::apply() const
 		map_generator map_generator(this);
 		map_generator.generate();
 	} else {
-		this->apply_terrain();
 		this->apply_terrain_and_provinces();
 	}
 
 	this->generate_additional_sites();
-}
-
-void map_template::apply_terrain() const
-{
-	assert_throw(!this->get_terrain_image_filepath().empty());
-
-	const QImage terrain_image(path::to_qstring(this->get_terrain_image_filepath()));
-
-	map *map = map::get();
-
-	for (int x = 0; x < map->get_width(); ++x) {
-		for (int y = 0; y < map->get_height(); ++y) {
-			const QPoint tile_pos(x, y);
-			const QColor tile_color = terrain_image.pixelColor(tile_pos);
-
-			if (tile_color.alpha() == 0) {
-				continue;
-			}
-
-			const terrain_type *terrain = terrain_type::get_by_color(tile_color);
-			map->set_tile_terrain(tile_pos, terrain);
-		}
-	}
 }
 
 void map_template::apply_terrain_and_provinces() const
