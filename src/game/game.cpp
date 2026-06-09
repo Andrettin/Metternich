@@ -2016,14 +2016,9 @@ QCoro::Task<void> game::create_map_images()
 QCoro::Task<void> game::create_diplomatic_map_image()
 {
 	std::vector<QCoro::Task<void>> tasks;
-
 	if (map::get()->get_ocean_diplomatic_map_image().isNull()) {
 		QCoro::Task<void> task = map::get()->create_ocean_diplomatic_map_image();
 		tasks.push_back(std::move(task));
-	}
-
-	for (QCoro::Task<void> &task : tasks) {
-		co_await std::move(task);
 	}
 
 	std::vector<QFuture<void>> futures;
@@ -2035,6 +2030,11 @@ QCoro::Task<void> game::create_diplomatic_map_image()
 		});
 		futures.push_back(std::move(future));
 	}
+
+	for (QCoro::Task<void> &task : tasks) {
+		co_await std::move(task);
+	}
+
 	for (QFuture<void> &future : futures) {
 		co_await future;
 	}
