@@ -47,9 +47,14 @@ public:
 		return this->coastal;
 	}
 
+	bool has_river() const
+	{
+		return this->river;
+	}
+
 	bool is_near_water() const
 	{
-		return this->is_coastal() || this->has_river;
+		return this->is_coastal() || this->has_river();
 	}
 
 	const QRect &get_territory_rect() const
@@ -134,7 +139,7 @@ private:
 	const terrain_type *terrain = nullptr;
 	QPoint center_tile_pos = QPoint(-1, -1);
 	bool coastal = false;
-	bool has_river = false;
+	bool river = false;
 	QRect territory_rect;
 	QPoint territory_rect_center = QPoint(-1, -1);
 	std::vector<const metternich::province *> neighbor_provinces;

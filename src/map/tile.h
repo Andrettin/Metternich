@@ -53,35 +53,6 @@ public:
 	const metternich::resource *get_resource() const;
 	bool is_resource_discovered() const;
 
-	bool has_inner_river() const
-	{
-		return this->inner_river;
-	}
-
-	void set_inner_river(const bool value)
-	{
-		this->inner_river = value;
-	}
-
-	const std::vector<direction> &get_river_directions() const
-	{
-		return this->river_directions;
-	}
-
-	void add_river_direction(const direction direction);
-
-	void sort_river_directions()
-	{
-		std::sort(this->river_directions.begin(), this->river_directions.end());
-	}
-
-	bool has_river() const
-	{
-		return this->has_inner_river() || !this->get_river_directions().empty();
-	}
-
-	bool is_river_crossing_direction(const direction direction) const;
-
 	const commodity_map<centesimal_int> &get_commodity_outputs() const;
 	void calculate_commodity_outputs();
 
@@ -91,8 +62,6 @@ private:
 	const terrain_type *terrain = nullptr;
 	metternich::province *province = nullptr;
 	const metternich::site *site = nullptr;
-	bool inner_river = false; //whether the tile has an in-tile river
-	std::vector<direction> river_directions;
 };
 
 }

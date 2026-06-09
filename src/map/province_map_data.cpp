@@ -197,12 +197,6 @@ void province_map_data::add_neighbor_province(const metternich::province *provin
 void province_map_data::add_tile(const QPoint &tile_pos)
 {
 	this->tiles.push_back(tile_pos);
-
-	const tile *tile = map::get()->get_tile(tile_pos);
-
-	if (tile->has_river()) {
-		this->has_river = true;
-	}
 }
 
 void province_map_data::process_site_tile(const QPoint &tile_pos)

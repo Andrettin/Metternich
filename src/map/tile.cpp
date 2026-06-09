@@ -90,31 +90,6 @@ bool tile::is_resource_discovered() const
 	return false;
 }
 
-void tile::add_river_direction(const direction direction)
-{
-	if (vector::contains(this->get_river_directions(), direction)) {
-		return;
-	}
-
-	this->river_directions.push_back(direction);
-}
-
-bool tile::is_river_crossing_direction(const direction direction) const
-{
-	switch (direction) {
-		case direction::north:
-		case direction::south:
-			return vector::contains(this->get_river_directions(), direction::west) && vector::contains(this->get_river_directions(), direction::east);
-		case direction::west:
-		case direction::east:
-			return vector::contains(this->get_river_directions(), direction::west) && vector::contains(this->get_river_directions(), direction::east);
-		default:
-			assert_throw(false);
-	}
-
-	return false;
-}
-
 const commodity_map<centesimal_int> &tile::get_commodity_outputs() const
 {
 	static commodity_map<centesimal_int> empty_map;

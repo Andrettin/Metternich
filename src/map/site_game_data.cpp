@@ -1796,8 +1796,7 @@ QCoro::Task<void> site_game_data::on_settlement_built(const int multiplier)
 			this->change_base_commodity_output(commodity, centesimal_int(bonus));
 		}
 
-		const tile *tile = this->get_tile();
-		if (tile != nullptr && tile->has_river()) {
+		if (this->site->get_map_data()->has_river()) {
 			for (const auto &[commodity, bonus] : defines::get()->get_river_settlement_commodity_bonuses()) {
 				this->change_base_commodity_output(commodity, centesimal_int(bonus));
 			}

@@ -251,10 +251,6 @@ Item {
 			
 			text += ") "
 			
-			if (river === true && !province.water_zone) {
-				text += "(River) "
-			}
-			
 			if (explored) {
 				if (site !== null && (resource !== null || site.settlement)) {
 					text += site.game_data.current_cultural_name

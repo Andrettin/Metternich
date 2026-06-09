@@ -90,7 +90,6 @@ public:
 	[[nodiscard]] QCoro::Task<void> set_tile_resource_discovered(const QPoint &tile_pos, const bool discovered);
 
 	bool is_tile_water(const QPoint &tile_pos) const;
-	bool is_tile_near_water(const QPoint &tile_pos) const;
 	bool is_tile_coastal(const QPoint &tile_pos) const;
 	bool is_tile_near_celestial_body(const QPoint &tile_pos) const;
 

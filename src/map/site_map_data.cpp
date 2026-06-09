@@ -83,8 +83,7 @@ bool site_map_data::has_river() const
 		return false;
 	}
 
-	const tile *tile = this->get_tile();
-	return tile->has_river();
+	return this->get_province()->get_map_data()->has_river();
 }
 
 bool site_map_data::is_near_water() const

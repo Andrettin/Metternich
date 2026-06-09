@@ -1,8 +1,7 @@
 #pragma once
 
 #include "map/site.h"
-#include "map/site_game_data.h"
-#include "map/tile.h"
+#include "map/site_map_data.h"
 #include "script/condition/condition.h"
 #include "util/string_conversion_util.h"
 
@@ -27,12 +26,7 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		const tile *tile = scope->get_game_data()->get_tile();
-		if (tile == nullptr) {
-			return false;
-		}
-
-		return tile->has_river();
+		return scope->get_map_data()->has_river();
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override

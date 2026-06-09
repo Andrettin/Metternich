@@ -407,11 +407,11 @@ void map::set_tile_site(const QPoint &tile_pos, const site *site)
 	}
 
 	if (tile->get_resource() != nullptr) {
-		if (tile->get_resource()->is_near_water() && !this->is_tile_near_water(tile_pos)) {
+		if (tile->get_resource()->is_near_water() && tile->get_province() != nullptr && !tile->get_province()->get_map_data()->is_near_water()) {
 			log::log_error(std::format("Site \"{}\" {} has near water resource \"{}\", but is not near water.", site->get_identifier(), point::to_string(tile_pos), tile->get_resource()->get_identifier()));
 		}
 
-		if (tile->get_resource()->is_coastal() && !this->is_tile_coastal(tile_pos)) {
+		if (tile->get_resource()->is_coastal() && tile->get_province() != nullptr && !tile->get_province()->get_map_data()->is_coastal()) {
 			log::log_error(std::format("Site \"{}\" {} has coastal resource \"{}\", but is not coastal.", site->get_identifier(), point::to_string(tile_pos), tile->get_resource()->get_identifier()));
 		}
 
@@ -465,12 +465,6 @@ bool map::is_tile_water(const QPoint &tile_pos) const
 {
 	const tile *tile = this->get_tile(tile_pos);
 	return tile->get_terrain() != nullptr && tile->get_terrain()->is_water();
-}
-
-bool map::is_tile_near_water(const QPoint &tile_pos) const
-{
-	const tile *tile = this->get_tile(tile_pos);
-	return tile->has_river() || this->is_tile_coastal(tile_pos);
 }
 
 bool map::is_tile_coastal(const QPoint &tile_pos) const
