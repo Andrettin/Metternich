@@ -132,6 +132,8 @@ void game::process_gsml_property(const gsml_property &property)
 		this->date = string::to_date(value);
 	} else if (key == "turn") {
 		this->turn = std::stoi(value);
+	} else if (key == "scenario") {
+		this->scenario = scenario::get(value);
 	} else if (key == "player_character") {
 		this->player_character = this->get_character(value);
 	} else if (key == "player_country") {
@@ -244,6 +246,10 @@ gsml_data game::to_gsml_data() const
 
 	data.add_property("date", date::to_string(this->get_date()));
 	data.add_property("turn", std::to_string(this->turn));
+
+	if (this->get_scenario() != nullptr) {
+		data.add_property("scenario", this->get_scenario()->get_identifier());
+	}
 
 	gsml_data provinces_data("provinces");
 	for (const province *province : map::get()->get_provinces()) {
