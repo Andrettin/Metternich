@@ -1,5 +1,11 @@
 cmake_minimum_required(VERSION 3.18.0)
 
+if(MSVC)
+	set(VCPKG_ROOT "" CACHE PATH "Sets the path to vcpkg.")
+	set(CMAKE_TOOLCHAIN_FILE "${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake")
+	set(VCPKG_TARGET_TRIPLET "x64-windows-static")
+endif()
+
 project(metternich VERSION 1.0.0)
 
 set(CMAKE_CONFIGURATION_TYPES "Debug;RelWithDebInfo" CACHE STRING "" FORCE)
