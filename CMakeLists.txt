@@ -18,7 +18,6 @@ add_subdirectory(archimedes)
 
 include_directories(
 	archimedes/src
-	archimedes/src/third_party/magic_enum/include
 	archimedes/src/third_party/maskedmousearea
 	src
 	src/third_party
