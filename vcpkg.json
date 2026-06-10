@@ -2,7 +2,10 @@
 	"name": "metternich",
 	"version-string": "1.0.0",
 	"dependencies": [
-		"boost-math",
+		{
+			"name": "boost-math",
+			"default-features": false
+		},
 		"boost-random",
 		"boost-test",
 		"magic-enum"
