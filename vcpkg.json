@@ -12,7 +12,7 @@
 		{
 			"name": "qtbase",
 			"default-features": false,
-			"features": ["concurrent", "gui", "opengl", "png", "widgets"]
+			"features": ["concurrent", "gui", "opengl", "png", "widgets", "windeployqt"]
 		},
 		{
 			"name": "qtmultimedia",
