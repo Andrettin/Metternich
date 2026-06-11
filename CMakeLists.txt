@@ -1053,7 +1053,7 @@ set(metternich_test_SRCS
 
 option(WITH_GEOJSON "Compile with support for generating map data from GeoJSON files" OFF)
 
-find_package(Boost 1.69.0 REQUIRED)
+find_package(Boost 1.69.0 REQUIRED COMPONENTS math random unit_test_framework)
 
 include_directories(${Boost_INCLUDE_DIRS})
 add_definitions(-DBOOST_DATE_TIME_NO_LIB)
@@ -1061,15 +1061,16 @@ add_definitions(-DBOOST_DATE_TIME_NO_LIB)
 #Qt6 modules
 #different modules have different licenses, make sure all modules used here are compatible with the GPL 3.0 license
 set(CMAKE_AUTOMOC ON)
-find_package(Qt6 6.5 COMPONENTS Core REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
-find_package(Qt6 6.5 COMPONENTS Gui REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
-find_package(Qt6 6.5 COMPONENTS Widgets REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
-find_package(Qt6 6.5 COMPONENTS Multimedia REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
-find_package(Qt6 6.5 COMPONENTS Location REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
-find_package(Qt6 6.5 COMPONENTS Qml REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
-find_package(Qt6 6.5 COMPONENTS Quick REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
-find_package(Qt6 6.5 COMPONENTS Charts REQUIRED) #licensed under the GPL 3.0
-find_package(Qt6 6.5 COMPONENTS ShaderTools REQUIRED)
+find_package(Qt6 6.8 COMPONENTS Core REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
+find_package(Qt6 6.8 COMPONENTS Gui REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
+find_package(Qt6 6.8 COMPONENTS Widgets REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
+find_package(Qt6 6.8 COMPONENTS Multimedia REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
+find_package(Qt6 6.8 COMPONENTS Location REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
+find_package(Qt6 6.8 COMPONENTS Qml REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
+find_package(Qt6 6.8 COMPONENTS Quick REQUIRED) #licensed under the GPL 2.0, as well as the LGPL 3.0
+find_package(Qt6 6.8 COMPONENTS Charts REQUIRED) #licensed under the GPL 3.0
+find_package(Qt6 6.8 COMPONENTS ShaderTools REQUIRED)
+
 
 if(WITH_GEOJSON)
 	add_definitions(-DUSE_GEOJSON)
@@ -1143,4 +1144,4 @@ set_target_properties(metternich_main PROPERTIES
 )
 
 target_link_libraries(metternich_main PUBLIC metternich Qt6::Charts)
-target_link_libraries(metternich_test PUBLIC metternich)
+target_link_libraries(metternich_test PUBLIC metternich Boost::unit_test_framework)
