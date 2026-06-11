@@ -22,7 +22,17 @@
 		"qtsvg",
 		"qtdeclarative",
 		"qtpositioning",
-		"qtlocation"
+		"qtlocation",
+		{
+			"name": "qtcharts",
+			"default-features": false,
+			"features": ["qml"]
+		},
+		{
+			"name": "qcoro",
+			"default-features": false,
+			"features": ["qml", "quick"]
+		}
 	],
 	"builtin-baseline": "32305df7d0b9a308e6ac454dd98ebfe550342c09"
 }

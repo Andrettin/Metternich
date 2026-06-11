@@ -26,12 +26,9 @@
 #include "religion/deity.h"
 #include "religion/religion.h"
 #include "script/condition/and_condition.h"
-#include "script/modifier.h"
 #include "species/phenotype.h"
 #include "species/species.h"
 #include "spell/spell.h"
-#include "technology/technology.h"
-#include "time/calendar.h"
 #include "unit/civilian_unit_class.h"
 #include "unit/military_unit_category.h"
 #include "util/assert_util.h"
@@ -42,11 +39,12 @@
 #include "util/number_util.h"
 #include "util/random.h"
 #include "util/string_conversion_util.h"
-#include "util/string_util.h"
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
 
 #include <magic_enum/magic_enum.hpp>
+
+#include <QUuid>
 
 namespace metternich {
 

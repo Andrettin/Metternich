@@ -109,7 +109,7 @@
 #include "maskedmousearea.h"
 
 #pragma warning(push, 0)
-#include "qcoro/qml/qcoroqml.h"
+#include <QCoroQml>
 
 #include <QDir>
 #include <QImageReader>
