@@ -1130,10 +1130,6 @@ target_precompile_headers(metternich_test REUSE_FROM archimedes)
 
 if(WIN32)
 	set_target_properties(metternich_main 
-		PROPERTIES VS_DEBUGGER_ENVIRONMENT "PATH=%PATH%;${Qt6_DIR}/../../../bin;"
-	)
-	
-	set_target_properties(metternich_main 
 		PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "$(ProjectDir).."
 	)
 endif()
