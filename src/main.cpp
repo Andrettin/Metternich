@@ -295,7 +295,7 @@ int main(int argc, char **argv)
 		engine.addImageProvider("tile", new tile_image_provider);
 
 		const QString root_path = path::to_qstring(database::get()->get_root_path());
-		engine.addImportPath(root_path + "/libraries/qml");
+		engine.addImportPath(root_path + "/qml");
 
 		QUrl url = QDir(root_path + "/interface/").absoluteFilePath("Main.qml");
 		url.setScheme("file");
