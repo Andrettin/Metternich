@@ -124,8 +124,8 @@ Flickable {
 		TinyText {
 			id: country_label
 			text: country.game_data.name
-			x: Math.floor(text_rect.x * metternich.map.diplomatic_map_tile_pixel_size * scale_factor)
-			y: Math.floor(text_rect.y * metternich.map.diplomatic_map_tile_pixel_size * scale_factor)
+			x: Math.floor(text_rect.x * metternich.defines.diplomatic_map_tile_scale_double * scale_factor)
+			y: Math.floor(text_rect.y * metternich.defines.diplomatic_map_tile_scale_double * scale_factor)
 			width: Math.floor(text_rect_width)
 			height: Math.floor(text_rect_height)
 			wrapMode: Text.WordWrap
@@ -137,8 +137,8 @@ Flickable {
 			readonly property var country: model.modelData
 			readonly property var diplomatic_map_image_rect: diplomatic_map.mode === DiplomaticMap.Mode.Realm ? country.game_data.realm_diplomatic_map_image_rect : country.game_data.diplomatic_map_image_rect
 			readonly property var text_rect: diplomatic_map.mode === DiplomaticMap.Mode.Realm ? country.game_data.realm_text_rect : country.game_data.text_rect
-			readonly property int text_rect_width: text_rect.width * metternich.map.diplomatic_map_tile_pixel_size * scale_factor
-			readonly property int text_rect_height: text_rect.height * metternich.map.diplomatic_map_tile_pixel_size * scale_factor
+			readonly property int text_rect_width: Math.floor(text_rect.width * metternich.defines.diplomatic_map_tile_scale_double * scale_factor)
+			readonly property int text_rect_height: Math.floor(text_rect.height * metternich.defines.diplomatic_map_tile_scale_double * scale_factor)
 		}
 	}
 	
@@ -148,8 +148,8 @@ Flickable {
 		
 		Item {
 			id: site_icon_area
-			x: site ? site.game_data.tile_pos.x * metternich.map.diplomatic_map_tile_pixel_size * scale_factor - Math.floor(width / 2) : 0
-			y: site ? site.game_data.tile_pos.y * metternich.map.diplomatic_map_tile_pixel_size * scale_factor - Math.floor(height / 2) : 0
+			x: site ? Math.floor(site.game_data.tile_pos.x * metternich.defines.diplomatic_map_tile_scale_double * scale_factor) - Math.floor(width / 2) : 0
+			y: site ? Math.floor(site.game_data.tile_pos.y * metternich.defines.diplomatic_map_tile_scale_double * scale_factor) - Math.floor(height / 2) : 0
 			width: site_icon.width + 4 * scale_factor
 			height: site_icon.height + 4 * scale_factor
 			visible: site !== null && domain.game_data.provinces.length === 0 && diplomatic_map.show_landless_domains
@@ -220,8 +220,8 @@ Flickable {
 		
 		Image {
 			id: consulate_icon
-			x: other_country_capital ? (other_country_capital.game_data.tile_pos.x * metternich.map.diplomatic_map_tile_pixel_size * scale_factor - width / 2) : 0
-			y: other_country_capital ? (other_country_capital.game_data.tile_pos.y * metternich.map.diplomatic_map_tile_pixel_size * scale_factor - height / 2) : 0
+			x: other_country_capital ? Math.floor(other_country_capital.game_data.tile_pos.x * metternich.defines.diplomatic_map_tile_scale_double * scale_factor - width / 2) : 0
+			y: other_country_capital ? Math.floor(other_country_capital.game_data.tile_pos.y * metternich.defines.diplomatic_map_tile_scale_double * scale_factor - height / 2) : 0
 			source: "image://icon/" + consulate.icon.identifier
 			visible: !reference_country.game_data.anarchy && !other_country.game_data.anarchy && diplomatic_map.mode === DiplomaticMap.Mode.Treaty
 			
@@ -249,8 +249,8 @@ Flickable {
 	}
 	
 	function center_on_tile(tile_x, tile_y) {
-		var pixel_x = Math.round(tile_x * metternich.map.diplomatic_map_tile_pixel_size * scale_factor - diplomatic_map.width / 2)
-		var pixel_y = Math.round(tile_y * metternich.map.diplomatic_map_tile_pixel_size * scale_factor - diplomatic_map.height / 2)
+		var pixel_x = Math.round(tile_x * metternich.defines.diplomatic_map_tile_scale_double * scale_factor - diplomatic_map.width / 2)
+		var pixel_y = Math.round(tile_y * metternich.defines.diplomatic_map_tile_scale_double * scale_factor - diplomatic_map.height / 2)
 		
 		diplomatic_map.contentX = Math.min(Math.max(pixel_x, 0), diplomatic_map.contentWidth - diplomatic_map.width)
 		diplomatic_map.contentY = Math.min(Math.max(pixel_y, 0), diplomatic_map.contentHeight - diplomatic_map.height)

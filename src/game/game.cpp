@@ -2050,49 +2050,52 @@ QCoro::Task<void> game::create_exploration_diplomatic_map_image()
 {
 	const map *map = map::get();
 
-	const int tile_pixel_size = map->get_diplomatic_map_tile_pixel_size();
+	const decimillesimal_int &tile_scale = defines::get()->get_diplomatic_map_tile_scale();
 
-	this->exploration_diplomatic_map_image = QImage(map->get_size(), QImage::Format_RGBA8888);
+	this->exploration_diplomatic_map_image = QImage(map->get_size() * tile_scale, QImage::Format_RGBA8888);
 	this->exploration_diplomatic_map_image.fill(Qt::transparent);
 
 	const QColor &color = defines::get()->get_unexplored_terrain()->get_color();
 
 	const domain_game_data *domain_game_data = this->get_player_country()->get_game_data();
 
-	for (int x = 0; x < map->get_width(); ++x) {
-		for (int y = 0; y < map->get_height(); ++y) {
-			const QPoint tile_pos = QPoint(x, y);
+	for (int x = 0; x < this->exploration_diplomatic_map_image.width(); ++x) {
+		for (int y = 0; y < this->exploration_diplomatic_map_image.height(); ++y) {
+			const QPoint pixel_pos = QPoint(x, y);
+			const QPoint tile_pos = pixel_pos / tile_scale;
 
 			if (domain_game_data->is_tile_explored(tile_pos)) {
 				continue;
 			}
 
-			this->exploration_diplomatic_map_image.setPixelColor(tile_pos, color);
+			this->exploration_diplomatic_map_image.setPixelColor(pixel_pos, color);
 		}
 	}
 
 	QImage scaled_exploration_diplomatic_map_image;
 
-	co_await QtConcurrent::run([this, tile_pixel_size, &scaled_exploration_diplomatic_map_image]() {
-		scaled_exploration_diplomatic_map_image = image::scale<QImage::Format_ARGB32>(this->exploration_diplomatic_map_image, centesimal_int(tile_pixel_size), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
-			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+	if (tile_scale > 1) {
+		co_await QtConcurrent::run([this, tile_scale, &scaled_exploration_diplomatic_map_image]() {
+			scaled_exploration_diplomatic_map_image = image::scale<QImage::Format_ARGB32>(this->exploration_diplomatic_map_image, centesimal_int(tile_scale), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+				xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+			});
 		});
-	});
 
-	this->exploration_diplomatic_map_image = std::move(scaled_exploration_diplomatic_map_image);
+		this->exploration_diplomatic_map_image = std::move(scaled_exploration_diplomatic_map_image);
 
-	//make semi-transparent pixels non-transparent
-	for (int x = 0; x < this->exploration_diplomatic_map_image.width(); ++x) {
-		for (int y = 0; y < this->exploration_diplomatic_map_image.height(); ++y) {
-			const QPoint pixel_pos(x, y);
-			QColor pixel_color = this->exploration_diplomatic_map_image.pixelColor(pixel_pos);
+		//make semi-transparent pixels non-transparent
+		for (int x = 0; x < this->exploration_diplomatic_map_image.width(); ++x) {
+			for (int y = 0; y < this->exploration_diplomatic_map_image.height(); ++y) {
+				const QPoint pixel_pos(x, y);
+				QColor pixel_color = this->exploration_diplomatic_map_image.pixelColor(pixel_pos);
 
-			if (pixel_color.alpha() == 0 || pixel_color.alpha() == 255) {
-				continue;
+				if (pixel_color.alpha() == 0 || pixel_color.alpha() == 255) {
+					continue;
+				}
+
+				pixel_color.setAlpha(255);
+				this->exploration_diplomatic_map_image.setPixelColor(pixel_pos, pixel_color);
 			}
-
-			pixel_color.setAlpha(255);
-			this->exploration_diplomatic_map_image.setPixelColor(pixel_pos, pixel_color);
 		}
 	}
 

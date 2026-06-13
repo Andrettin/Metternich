@@ -26,12 +26,10 @@ class map final : public QObject, public singleton<map>
 	Q_PROPERTY(QVariantList provinces READ get_provinces_qvariant_list NOTIFY provinces_changed)
 	Q_PROPERTY(QVariantList sites READ get_sites_qvariant_list NOTIFY sites_changed)
 	Q_PROPERTY(QSize diplomatic_map_image_size READ get_diplomatic_map_image_size NOTIFY diplomatic_map_image_size_changed)
-	Q_PROPERTY(int diplomatic_map_tile_pixel_size READ get_diplomatic_map_tile_pixel_size NOTIFY diplomatic_map_image_size_changed)
 	Q_PROPERTY(QSize province_map_image_size READ get_province_map_image_size NOTIFY province_map_image_size_changed)
 	Q_PROPERTY(int province_map_tile_pixel_size READ get_province_map_tile_pixel_size NOTIFY province_map_image_size_changed)
 
 public:
-	static constexpr QSize min_diplomatic_map_image_size = QSize(512, 256);
 	static constexpr QSize min_province_map_image_size = QSize(800, 600);
 
 	map();
@@ -136,11 +134,6 @@ public:
 		return this->diplomatic_map_image_size;
 	}
 
-	int get_diplomatic_map_tile_pixel_size() const
-	{
-		return this->diplomatic_map_tile_pixel_size;
-	}
-
 	const QSize &get_province_map_image_size() const
 	{
 		return this->province_map_image_size;
@@ -178,7 +171,6 @@ private:
 	std::vector<const site *> sites; //the sites which are on the map
 	QImage ocean_diplomatic_map_image;
 	QSize diplomatic_map_image_size;
-	int diplomatic_map_tile_pixel_size = 1;
 	QSize province_map_image_size;
 	int province_map_tile_pixel_size = 1;
 	QImage minimap_image;

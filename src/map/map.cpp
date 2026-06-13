@@ -578,25 +578,11 @@ QVariantList map::get_sites_qvariant_list() const
 
 void map::initialize_diplomatic_map()
 {
-	const int min_tile_scale = defines::get()->get_min_diplomatic_map_tile_scale();
-
-	const QSize min_diplomatic_map_image_size = map::min_diplomatic_map_image_size * preferences::get()->get_scale_factor();
-	const QSize min_scaled_map_size = this->get_size() * min_tile_scale;
-
-	QSize image_size = min_scaled_map_size;
-	int tile_scale = min_tile_scale;
-	while (image_size.width() < min_diplomatic_map_image_size.width() || image_size.height() < min_diplomatic_map_image_size.height()) {
-		++tile_scale;
-		image_size = this->get_size() * tile_scale;
-	}
-
+	const QSize image_size = this->get_size() * defines::get()->get_diplomatic_map_tile_scale();
 	if (image_size != this->diplomatic_map_image_size) {
 		this->diplomatic_map_image_size = image_size;
 		emit diplomatic_map_image_size_changed();
 	}
-
-	const QSize relative_size = this->diplomatic_map_image_size / this->get_size();
-	this->diplomatic_map_tile_pixel_size = std::max(relative_size.width(), relative_size.height());
 }
 
 void map::initialize_province_map()
@@ -624,35 +610,40 @@ void map::initialize_province_map()
 
 QCoro::Task<void> map::create_ocean_diplomatic_map_image()
 {
-	const int tile_pixel_size = this->get_diplomatic_map_tile_pixel_size();
+	const decimillesimal_int &tile_scale = defines::get()->get_diplomatic_map_tile_scale();
 
-	this->ocean_diplomatic_map_image = QImage(this->get_size(), QImage::Format_RGBA8888);
+	this->ocean_diplomatic_map_image = QImage(this->get_size() * tile_scale, QImage::Format_RGBA8888);
 	this->ocean_diplomatic_map_image.fill(Qt::transparent);
 
 	const QColor &color = defines::get()->get_ocean_color();
 
-	for (int x = 0; x < this->get_width(); ++x) {
-		for (int y = 0; y < this->get_height(); ++y) {
-			const QPoint tile_pos = QPoint(x, y);
+	const QSize image_size = this->ocean_diplomatic_map_image.size();
+
+	for (int x = 0; x < image_size.width(); ++x) {
+		for (int y = 0; y < image_size.height(); ++y) {
+			const QPoint pixel_pos = QPoint(x, y);
+			const QPoint tile_pos = pixel_pos / tile_scale;
 			const tile *tile = this->get_tile(tile_pos);
 
 			if (!tile->get_terrain()->is_water()) {
 				continue;
 			}
 
-			this->ocean_diplomatic_map_image.setPixelColor(tile_pos, color);
+			this->ocean_diplomatic_map_image.setPixelColor(pixel_pos, color);
 		}
 	}
 
 	QImage scaled_ocean_diplomatic_map_image;
 
-	co_await QtConcurrent::run([this, tile_pixel_size, &scaled_ocean_diplomatic_map_image]() {
-		scaled_ocean_diplomatic_map_image = image::scale<QImage::Format_ARGB32>(this->ocean_diplomatic_map_image, centesimal_int(tile_pixel_size), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
-			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+	if (tile_scale > 1) {
+		co_await QtConcurrent::run([this, tile_scale, &scaled_ocean_diplomatic_map_image]() {
+			scaled_ocean_diplomatic_map_image = image::scale<QImage::Format_ARGB32>(this->ocean_diplomatic_map_image, centesimal_int(tile_scale), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+				xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+			});
 		});
-	});
 
-	this->ocean_diplomatic_map_image = std::move(scaled_ocean_diplomatic_map_image);
+		this->ocean_diplomatic_map_image = std::move(scaled_ocean_diplomatic_map_image);
+	}
 
 	std::vector<QPoint> border_pixels;
 
