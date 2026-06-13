@@ -1,0 +1,8 @@
+petralia = {
+	name = "Petralia"
+	world = earth
+	geocoordinate = { 14.083333333333 37.8 } #Petralia Sottana
+	type = holding
+	holding_type = castle
+	province = sicily
+}

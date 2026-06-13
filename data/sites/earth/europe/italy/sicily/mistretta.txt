@@ -1,0 +1,8 @@
+mistretta = {
+	name = "Mistretta"
+	world = earth
+	geocoordinate = { 14.36287 37.92985 }
+	type = holding
+	holding_type = temple
+	province = sicily
+}

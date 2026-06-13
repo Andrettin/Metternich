@@ -1,0 +1,8 @@
+gratteri = {
+	name = "Gratteri"
+	world = earth
+	geocoordinate = { 13.966666666667 37.966666666667 }
+	type = holding
+	holding_type = castle
+	province = sicily
+}

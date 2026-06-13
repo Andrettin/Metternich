@@ -1,0 +1,8 @@
+misilmeri = {
+	name = "Misilmeri"
+	world = earth
+	geocoordinate = { 13.45 38.033333333333 }
+	type = holding
+	holding_type = castle
+	province = sicily
+}

@@ -3,6 +3,7 @@ palermo = {
 	world = earth
 	geocoordinate = { 13.35002722030 38.12502300930 } #from Natural Earth
 	type = holding
+	holding_type = guild
 	#resource = fish
 	province = sicily
 	cultural_names = {
@@ -15,7 +16,7 @@ palermo = {
 	
 	history = {
 		1360 = {
-			holding_type = city #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			developed = true #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 		
 		1394 = {

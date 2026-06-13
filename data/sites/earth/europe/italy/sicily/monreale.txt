@@ -1,0 +1,8 @@
+monreale = {
+	name = "Monreale"
+	world = earth
+	geocoordinate = { 13.288888888889 38.081666666667 }
+	type = holding
+	holding_type = castle
+	province = sicily
+}

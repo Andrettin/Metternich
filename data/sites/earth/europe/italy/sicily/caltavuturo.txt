@@ -1,0 +1,8 @@
+caltavuturo = {
+	name = "Caltavuturo"
+	world = earth
+	geocoordinate = { 13.883333333333 37.816666666667 }
+	type = holding
+	holding_type = guild
+	province = sicily
+}

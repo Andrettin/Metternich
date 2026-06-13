@@ -1,0 +1,8 @@
+cefalu = {
+	name = "Cefalu" #"Cefalù"
+	world = earth
+	geocoordinate = { 14.022061111111 38.039480555556 }
+	type = holding
+	holding_type = temple
+	province = sicily
+}
