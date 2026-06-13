@@ -1178,11 +1178,14 @@ void province_game_data::create_map_image()
 	this->map_image_rect = QRect(this->province->get_map_data()->get_territory_rect().topLeft() * tile_pixel_size * preferences::get()->get_scale_factor(), this->province->get_map_data()->get_territory_rect().size() * tile_pixel_size * preferences::get()->get_scale_factor());
 
 	this->create_map_mode_image(province_map_mode::terrain);
-	this->create_map_mode_image(province_map_mode::cultural);
-	this->create_map_mode_image(province_map_mode::religious);
-	this->create_map_mode_image(province_map_mode::technology);
-	this->create_map_mode_image(province_map_mode::trade_zone);
-	this->create_map_mode_image(province_map_mode::temple);
+
+	if (!this->province->is_water_zone()) {
+		this->create_map_mode_image(province_map_mode::cultural);
+		this->create_map_mode_image(province_map_mode::religious);
+		this->create_map_mode_image(province_map_mode::technology);
+		this->create_map_mode_image(province_map_mode::trade_zone);
+		this->create_map_mode_image(province_map_mode::temple);
+	}
 
 	this->calculate_text_rect();
 
@@ -1191,6 +1194,10 @@ void province_game_data::create_map_image()
 
 const QPromise<QImage> *province_game_data::get_map_mode_image_promise(const province_map_mode mode) const
 {
+	if (this->province->is_water_zone() && mode != province_map_mode::terrain) {
+		return this->get_map_image_promise();
+	}
+
 	const auto find_iterator = this->map_mode_image_promises.find(mode);
 	if (find_iterator != this->map_mode_image_promises.end()) {
 		return find_iterator->second.get();
@@ -1201,6 +1208,8 @@ const QPromise<QImage> *province_game_data::get_map_mode_image_promise(const pro
 
 void province_game_data::create_map_mode_image(const province_map_mode mode)
 {
+	assert_throw(!this->province->is_water_zone() || mode == province_map_mode::terrain);
+
 	static const QColor empty_color(Qt::black);
 
 	const map *map = map::get();
