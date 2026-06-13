@@ -1,0 +1,8 @@
+ischia = {
+	name = "Ischia"
+	world = earth
+	geocoordinate = { 13.95 40.733333333333334 }
+	type = holding
+	holding_type = castle
+	province = naples
+}

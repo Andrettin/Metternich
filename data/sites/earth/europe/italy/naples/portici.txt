@@ -1,0 +1,8 @@
+portici = {
+	name = "Portici"
+	world = earth
+	geocoordinate = { 14.341111111111 40.819722222222 }
+	type = holding
+	holding_type = castle
+	province = naples
+}

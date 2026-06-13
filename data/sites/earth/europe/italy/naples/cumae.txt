@@ -1,0 +1,8 @@
+cumae = {
+	name = "Cumae"
+	world = earth
+	geocoordinate = { 14.053611 40.848611 }
+	type = holding
+	holding_type = temple
+	province = naples
+}

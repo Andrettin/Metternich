@@ -1,0 +1,8 @@
+turris_octava = {
+	name = "Turris Octava"
+	world = earth
+	geocoordinate = { 14.395277777778 40.785277777778 } #Torre del Greco
+	type = holding
+	holding_type = guild
+	province = naples
+}
