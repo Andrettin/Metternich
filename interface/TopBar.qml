@@ -32,8 +32,10 @@ Rectangle {
 		hoverEnabled: true
 		
 		onContainsMouseChanged: {
-			if (containsMouse) {
-				status_text = ""
+			if (typeof status_text !== 'undefined') {
+				if (containsMouse) {
+					status_text = ""
+				}
 			}
 		}
 	}
@@ -50,10 +52,14 @@ Rectangle {
 			anchors.fill: parent
 			hoverEnabled: true
 			onEntered: {
-				status_text = "Current Season and Year"
+				if (typeof status_text !== 'undefined') {
+					status_text = "Current Season and Year"
+				}
 			}
 			onExited: {
-				status_text = ""
+				if (typeof status_text !== 'undefined') {
+					status_text = ""
+				}
 			}
 		}
 	}
@@ -118,17 +124,17 @@ Rectangle {
 						+ (commodity_unit ? format_text("\t\t" + commodity.get_units_tooltip()) : "")) : ""
 					
 					onEntered: {
-						if (status_text !== undefined) {
+						if (typeof status_text !== 'undefined') {
 							status_text = commodity_status_text
 						}
 					}
 					onExited: {
-						if (status_text !== undefined) {
+						if (typeof status_text !== 'undefined') {
 							status_text = ""
 						}
 					}
 					onCommodity_status_textChanged: {
-						if (containsMouse) {
+						if (containsMouse && typeof status_text !== 'undefined') {
 							status_text = commodity_status_text
 						}
 					}
