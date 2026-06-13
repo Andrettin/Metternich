@@ -31,6 +31,7 @@ class map final : public QObject, public singleton<map>
 
 public:
 	static constexpr QSize min_province_map_image_size = QSize(800, 600);
+	static constexpr bool exploration_enabled = false;
 
 	map();
 	~map();

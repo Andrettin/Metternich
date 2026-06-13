@@ -4554,20 +4554,22 @@ void domain_game_data::set_building_class_cost_efficiency_modifier(const buildin
 
 bool domain_game_data::is_tile_explored(const QPoint &tile_pos) const
 {
-	const tile *tile = map::get()->get_tile(tile_pos);
+	if constexpr (map::exploration_enabled) {
+		const tile *tile = map::get()->get_tile(tile_pos);
 
-	if (tile->get_province() != nullptr && this->explored_provinces.contains(tile->get_province())) {
+		if (tile->get_province() != nullptr && this->explored_provinces.contains(tile->get_province())) {
+			return true;
+		}
+
+		if (this->explored_tiles.contains(tile_pos)) {
+			return true;
+		}
+
+		return false;
+	} else {
+		//exploration mechanics are disabled, the entire map is always explored
 		return true;
 	}
-
-	if (this->explored_tiles.contains(tile_pos)) {
-		return true;
-	}
-
-	//return false;
-
-	//disable exploration mechanics for now
-	return true;
 }
 
 bool domain_game_data::is_province_discovered(const province *province) const
