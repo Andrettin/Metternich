@@ -2,8 +2,8 @@ sassari = {
 	name = "Sassari"
 	world = earth
 	geocoordinate = { 8.57000890975 40.73000612290 } #from Natural Earth
-	type = resource
-	resource = grain
+	type = holding
+	holding_type = guild #or castle
 	province = sardinia
 	features = {
 		prime_grain_land
