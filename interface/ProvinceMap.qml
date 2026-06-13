@@ -116,7 +116,7 @@ Flickable {
 		height: province_map.contentHeight
 		hoverEnabled: true
 		
-		onClicked: function (mouse) {
+		onReleased: function (mouse) {
 			metternich.defines.click_sound.play()
 			
 			var province = metternich.map.get_tile_province(Qt.point(Math.floor(mouse.x / metternich.map.province_map_tile_pixel_size / scale_factor), Math.floor(mouse.y / metternich.map.province_map_tile_pixel_size / scale_factor)))
@@ -175,7 +175,7 @@ Flickable {
 				anchors.fill: parent
 				hoverEnabled: true
 				
-				onClicked: {
+				onReleased: {
 					metternich.defines.click_sound.play()
 					if ((selected_province === province && selected_garrison === false) || province.water_zone) {
 						select_province(null)

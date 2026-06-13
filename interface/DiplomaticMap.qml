@@ -82,7 +82,7 @@ Flickable {
 		height: diplomatic_map.contentHeight
 		hoverEnabled: true
 		
-		onClicked: function (mouse) {
+		onReleased: function (mouse) {
 			metternich.defines.click_sound.play()
 			
 			var province = metternich.map.get_tile_province(Qt.point(Math.floor(mouse.x / metternich.defines.diplomatic_map_tile_scale_double / scale_factor), Math.floor(mouse.y / metternich.defines.diplomatic_map_tile_scale_double / scale_factor)))
