@@ -2799,11 +2799,14 @@ void domain_game_data::create_diplomatic_map_mode_image(const diplomatic_map_mod
 	const QPoint top_left = this->territory_rect.topLeft() * tile_scale;
 	const QSize image_size = image.size();
 
+	//normalize the tile top left
+	const QPoint tile_top_left = this->territory_rect.topLeft() * tile_scale / tile_scale;
+
 	for (int x = 0; x < image_size.width(); ++x) {
 		for (int y = 0; y < image_size.height(); ++y) {
 			const QPoint pixel_pos = QPoint(x, y);
 			const QPoint relative_tile_pos = pixel_pos / tile_scale;
-			const tile *tile = map->get_tile(this->territory_rect.topLeft() + relative_tile_pos);
+			const tile *tile = map->get_tile(tile_top_left + relative_tile_pos);
 
 			if (tile->get_owner() != this->domain) {
 				continue;
@@ -2866,11 +2869,14 @@ void domain_game_data::create_diplomacy_state_diplomatic_map_image(const diploma
 	const QPoint top_left = this->territory_rect.topLeft() * tile_scale;
 	const QSize image_size = image.size();
 
+	//normalize the tile top left
+	const QPoint tile_top_left = this->territory_rect.topLeft() * tile_scale / tile_scale;
+
 	for (int x = 0; x < image_size.width(); ++x) {
 		for (int y = 0; y < image_size.height(); ++y) {
 			const QPoint pixel_pos = QPoint(x, y);
 			const QPoint relative_tile_pos = pixel_pos / tile_scale;
-			const tile *tile = map->get_tile(this->territory_rect.topLeft() + relative_tile_pos);
+			const tile *tile = map->get_tile(tile_top_left + relative_tile_pos);
 
 			if (tile->get_owner() != this->domain) {
 				continue;
