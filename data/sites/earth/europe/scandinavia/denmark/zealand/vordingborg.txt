@@ -1,0 +1,8 @@
+vordingborg = {
+	name = "Vordingborg"
+	world = earth
+	geocoordinate = { 11.910277777778 55.008333333333 }
+	type = holding
+	holding_type = guild
+	province = zealand
+}

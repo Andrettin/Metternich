@@ -1,0 +1,8 @@
+slagelse = {
+	name = "Slagelse"
+	world = earth
+	geocoordinate = { 11.35 55.400833333333 }
+	type = holding
+	holding_type = castle
+	province = zealand
+}

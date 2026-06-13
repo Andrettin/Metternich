@@ -1,0 +1,8 @@
+kalundborg = {
+	name = "Kalundborg"
+	world = earth
+	geocoordinate = { 11.085 55.681388888889 }
+	type = holding
+	holding_type = castle
+	province = zealand
+}

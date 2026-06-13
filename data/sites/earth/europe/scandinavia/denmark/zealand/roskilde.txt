@@ -1,0 +1,8 @@
+roskilde = {
+	name = "Roskilde"
+	world = earth
+	geocoordinate = { 12.08333451200 55.64997397780 } #from Natural Earth
+	type = holding
+	holding_type = guild
+	province = zealand
+}

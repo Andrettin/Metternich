@@ -1,0 +1,6 @@
+soro = {
+	name = "Soro" #"Sorø"
+	world = earth
+	geocoordinate = { 11.56670160440 55.43299811450 } #from Natural Earth
+	province = zealand
+}

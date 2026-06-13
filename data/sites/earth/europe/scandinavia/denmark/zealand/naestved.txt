@@ -1,0 +1,8 @@
+naestved = {
+	name = "Naestved" #"Næstved"
+	world = earth
+	geocoordinate = { 11.76666667 55.23333333 }
+	type = holding
+	holding_type = guild
+	province = zealand
+}

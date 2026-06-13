@@ -1,0 +1,8 @@
+ringsted = {
+	name = "Ringsted"
+	world = earth
+	geocoordinate = { 11.7936 55.4406 }
+	type = holding
+	holding_type = castle
+	province = zealand
+}

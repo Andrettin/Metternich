@@ -1,0 +1,8 @@
+helsingor = {
+	name = "Helsingor" #"Helsingør"
+	world = earth
+	geocoordinate = { 12.6106 56.036 }
+	type = holding
+	holding_type = guild
+	province = zealand
+}
