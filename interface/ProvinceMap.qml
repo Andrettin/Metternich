@@ -1,7 +1,6 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Shapes
-import MaskedMouseArea 1.0
 
 Flickable {
 	id: province_map
@@ -466,25 +465,6 @@ Flickable {
 			}
 		}
 	}
-	
-	/*
-	Image {
-		id: exploration_image
-		source: metternich.game.running ? "image://province_map/exploration" : "image://empty/"
-		cache: false
-		
-		MaskedMouseArea {
-			id: exploration_mouse_area
-			anchors.fill: parent
-			alphaThreshold: 0.4
-			maskSource: parent.source
-			
-			onClicked: {
-				select_province(null)
-			}
-		}
-	}
-	*/
 	
 	function select_province(province) {
 		selected_civilian_unit = null

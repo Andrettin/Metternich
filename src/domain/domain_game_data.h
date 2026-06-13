@@ -1164,7 +1164,7 @@ public:
 		return this->explored_provinces;
 	}
 
-	bool is_province_explored(const province *province) const
+	Q_INVOKABLE bool is_province_explored(const metternich::province *province) const
 	{
 		//get whether the province has been fully explored
 		return this->explored_provinces.contains(province);

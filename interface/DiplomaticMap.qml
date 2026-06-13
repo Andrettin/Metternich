@@ -1,6 +1,5 @@
 import QtQuick
 import QtQuick.Controls
-import MaskedMouseArea 1.0
 
 Flickable {
 	id: diplomatic_map
@@ -31,15 +30,6 @@ Flickable {
 		cache: false
 	}
 	
-	MouseArea {
-		width: diplomatic_map.contentWidth
-		height: diplomatic_map.contentHeight
-		
-		onClicked: {
-			diplomatic_map.selected_country = null
-		}
-	}
-	
 	Repeater {
 		model: metternich.game.countries
 		
@@ -54,67 +44,6 @@ Flickable {
 			readonly property var country: model.modelData
 			readonly property bool selected: selected_country === country
 			readonly property var diplomatic_map_image_rect: diplomatic_map.mode === DiplomaticMap.Mode.Realm ? country.game_data.realm_diplomatic_map_image_rect : country.game_data.diplomatic_map_image_rect
-			
-			MaskedMouseArea {
-				id: country_mouse_area
-				anchors.fill: parent
-				alphaThreshold: 0.4
-				maskSource: parent.source
-				
-				onClicked: {
-					metternich.defines.click_sound.play()
-					
-					if (selected) {
-						diplomatic_map.selected_country = null
-					} else {
-						diplomatic_map.selected_country = country
-					}
-				}
-			}
-			
-			CustomTooltip {
-				text: country.game_data.titled_name + tooltip_suffix
-				visible: country_mouse_area.containsMouse
-				
-				property string tooltip_suffix: country_mouse_area.containsMouse ? (diplomatic_map.mode === DiplomaticMap.Mode.Terrain ?
-					format_text("\n" + small_text(counts_to_percent_strings(country.game_data.tile_terrain_counts)))
-				: (diplomatic_map.mode === DiplomaticMap.Mode.Cultural ?
-					format_text("\n" + small_text(counts_to_percent_strings(country.game_data.population.culture_sizes)))
-				: (diplomatic_map.mode === DiplomaticMap.Mode.Religious ?
-					format_text("\n" + small_text(counts_to_percent_strings(country.game_data.population.religion_sizes)))
-				: ""))) : ""
-				
-				
-				function counts_to_percent_strings(counts) {
-					var str = ""
-					
-					var total_count = 0
-					
-					for (const kv_pair of counts) {
-						var count = kv_pair.value
-						total_count += count
-					}
-					
-					var first = true
-					
-					for (const kv_pair of counts) {
-						var key = kv_pair.key
-						var count = kv_pair.value
-						
-						if (first) {
-							first = false
-						} else {
-							str += "\n"
-						}
-						
-						var color_hex_str = color_hex_string(key.color)
-						
-						str += "<font color=\"#" + color_hex_str + "\">⬤</font> " + (count * 100 / total_count).toFixed(2) + "% " + key.name
-					}
-					
-					return str
-				}
-			}
 		}
 	}
 	
@@ -142,6 +71,40 @@ Flickable {
 		}
 	}
 	
+	Image {
+		id: exploration_image
+		source: metternich.game.running ? "image://diplomatic_map/exploration" : "image://empty/"
+		cache: false
+	}
+	
+	MouseArea {
+		width: diplomatic_map.contentWidth
+		height: diplomatic_map.contentHeight
+		hoverEnabled: true
+		
+		onClicked: function (mouse) {
+			metternich.defines.click_sound.play()
+			
+			var province = metternich.map.get_tile_province(Qt.point(Math.floor(mouse.x / metternich.defines.diplomatic_map_tile_scale_double / scale_factor), Math.floor(mouse.y / metternich.defines.diplomatic_map_tile_scale_double / scale_factor)))
+			
+			if (metternich.game.player_country !== null && !metternich.game.player_country.game_data.is_province_explored(province)) {
+				diplomatic_map.selected_country = null
+				return
+			}
+			
+			var domain = province.game_data.owner
+			if (diplomatic_map.mode === DiplomaticMap.Mode.Realm && domain !== null) {
+				domain = domain.game_data.realm
+			}
+			
+			if (diplomatic_map.selected_country === domain) {
+				diplomatic_map.selected_country = null
+			} else {
+				diplomatic_map.selected_country = domain
+			}
+		}
+	}
+	
 	//icons for domains which don't own any provinces
 	Repeater {
 		model: metternich.game.countries
@@ -152,7 +115,7 @@ Flickable {
 			y: site ? Math.floor(site.game_data.tile_pos.y * metternich.defines.diplomatic_map_tile_scale_double * scale_factor) - Math.floor(height / 2) : 0
 			width: site_icon.width + 4 * scale_factor
 			height: site_icon.height + 4 * scale_factor
-			visible: site !== null && domain.game_data.provinces.length === 0 && diplomatic_map.show_landless_domains
+			visible: site !== null && domain.game_data.provinces.length === 0 && diplomatic_map.show_landless_domains && (metternich.game.player_country === null || metternich.game.player_country.game_data.is_tile_explored(site.game_data.tile_pos))
 			
 			readonly property var domain: model.modelData
 			readonly property var site: domain.game_data.capital
@@ -197,24 +160,6 @@ Flickable {
 		}
 	}
 	
-	Image {
-		id: exploration_image
-		source: metternich.game.running ? "image://diplomatic_map/exploration" : "image://empty/"
-		cache: false
-		
-		MaskedMouseArea {
-			id: exploration_mouse_area
-			anchors.fill: parent
-			alphaThreshold: 0.4
-			maskSource: parent.source
-			
-			onClicked: {
-				metternich.defines.click_sound.play()
-				diplomatic_map.selected_country = null
-			}
-		}
-	}
-	
 	Repeater {
 		model: reference_country ? reference_country.game_data.consulates : []
 		
@@ -229,11 +174,10 @@ Flickable {
 			readonly property var other_country_capital: other_country.game_data.capital
 			readonly property var consulate: model.modelData.value
 			
-			MaskedMouseArea {
+			MouseArea {
 				id: consulate_mouse_area
 				anchors.fill: parent
-				alphaThreshold: 0.4
-				maskSource: parent.source
+				hoverEnabled: true
 				
 				onClicked: {
 					metternich.defines.click_sound.play()
