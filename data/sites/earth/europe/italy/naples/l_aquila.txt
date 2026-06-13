@@ -2,9 +2,12 @@ l_aquila = {
 	name = "L'Aquila"
 	world = earth
 	geocoordinate = { 13.39002477890 42.35039817210 } #from Natural Earth
-	type = resource
-	resource = sheep
+	type = holding
+	holding_type = guild
 	province = naples
+	features = {
+		prime_sheep_land
+	}
 	
 	history = {
 		1360 = {

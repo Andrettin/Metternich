@@ -2,8 +2,9 @@ salerno = {
 	name = "Salerno"
 	world = earth
 	geocoordinate = { 14.76994055040 40.68039674790 } #from Natural Earth
-	type = resource
-	resource = fruit
+	type = holding
+	holding_type = castle
+	#resource = fruit
 	province = naples
 	features = {
 		academic #historical university
@@ -11,7 +12,8 @@ salerno = {
 	
 	history = {
 		1250 = {
-			buildings += university #University existent in Salerno in 1250; Source: "Atlas de História Mundial", 2001, p. 144.
+			#buildings += university #University existent in Salerno in 1250; Source: "Atlas de História Mundial", 2001, p. 144.
+			developed = true
 		}
 	}
 }

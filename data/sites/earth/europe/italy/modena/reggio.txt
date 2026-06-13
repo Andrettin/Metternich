@@ -1,7 +1,7 @@
 reggio = {
 	name = "Reggio"
 	world = earth
-	geocoordinate = { 10.633333333333 44.7 }
+	geocoordinate = { 10.633333333333 44.7 } #Reggio Emilia
 	type = holding
 	holding_type = temple
 	province = modena

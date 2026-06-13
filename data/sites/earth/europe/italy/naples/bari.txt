@@ -2,8 +2,8 @@ bari = {
 	name = "Bari"
 	world = earth
 	geocoordinate = { 16.87275793320 41.11422039700 } #from Natural Earth
-	type = resource
-	resource = grain
+	type = holding
+	holding_type = guild
 	province = taranto
 	features = {
 		prime_grain_land

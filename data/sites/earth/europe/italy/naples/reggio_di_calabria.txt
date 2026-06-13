@@ -2,8 +2,9 @@ reggio_di_calabria = {
 	name = "Reggio di Calabria"
 	world = earth
 	geocoordinate = { 15.64136022810 38.11499778140 } #from Natural Earth
-	type = resource
-	resource = fish
+	type = holding
+	holding_type = guild
+	#resource = fish
 	province = cosenza
 	
 	history = {
