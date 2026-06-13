@@ -2,5 +2,7 @@ santarem = {
 	name = "Santarem" #"Santarém"
 	world = earth
 	geocoordinate = { -8.68200255248 39.23100008340 } #from Natural Earth
+	type = holding
+	holding_type = guild
 	province = estremadura
 }

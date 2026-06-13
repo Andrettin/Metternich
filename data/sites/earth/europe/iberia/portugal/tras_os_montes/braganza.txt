@@ -3,10 +3,11 @@ braganza = {
 	world = earth
 	geocoordinate = { -6.75500342578 41.80799701420 } #from Natural Earth
 	type = holding
+	holding_type = castle
 	
 	history = {
 		1360 = {
-			holding_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 	}
 }

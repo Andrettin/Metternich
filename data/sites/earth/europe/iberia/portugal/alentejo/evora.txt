@@ -3,14 +3,15 @@ evora = {
 	world = earth
 	geocoordinate = { -7.90599556130 38.55999611470 } #from Natural Earth
 	type = holding
+	holding_type = castle
 	features = {
 		holy_site #historical cathedral
 	}
 	
 	history = {
 		395 = {
-			buildings += cathedral #Evora was the seat of a bishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
-			holding_type = city
+			#buildings += cathedral #Evora was the seat of a bishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
+			developed = true
 		}
 	}
 }

@@ -2,7 +2,10 @@ covilha = {
 	name = "Covilha" #"Covilhã"
 	world = earth
 	geocoordinate = { -7.49999210756 40.28334088040 } #from Natural Earth
-	type = resource
-	resource = sheep
+	type = holding
+	holding_type = guild
 	province = beira
+	features = {
+		prime_sheep_land
+	}
 }

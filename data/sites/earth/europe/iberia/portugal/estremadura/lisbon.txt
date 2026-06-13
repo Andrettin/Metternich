@@ -3,6 +3,7 @@ lisbon = {
 	world = earth
 	geocoordinate = { -9.14486630549 38.72272287790 } #from Natural Earth
 	type = holding
+	holding_type = castle
 	#resource = fish #Source: Map No. 500530 of the Perry-Castañeda Library Map Collection, 1972.
 	cultural_names = {
 		roman = "Olisipo" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 34-35.
@@ -13,7 +14,7 @@ lisbon = {
 	
 	history = {
 		1360 = {
-			holding_type = city #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			developed = true #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 		
 		1600 = {
