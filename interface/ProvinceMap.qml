@@ -467,6 +467,7 @@ Flickable {
 		}
 	}
 	
+	/*
 	Image {
 		id: exploration_image
 		source: metternich.game.running ? "image://province_map/exploration" : "image://empty/"
@@ -483,6 +484,7 @@ Flickable {
 			}
 		}
 	}
+	*/
 	
 	function select_province(province) {
 		selected_civilian_unit = null
