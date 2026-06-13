@@ -1,6 +1,7 @@
 qara_qoyunlu = {
 	name = "Qara Qoyunlu"
 	type = tribe
+	color = { 54 117 136 }
 	culture = azerbaijani
 	default_religion = shiite
 	default_tier = kingdom

@@ -1,6 +1,7 @@
 trebizond = {
 	name = "Trebizond"
 	type = polity
+	color = { 40 164 157 }
 	culture = greek
 	default_religion = orthodox
 	default_tier = empire

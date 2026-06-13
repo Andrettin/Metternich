@@ -1,6 +1,7 @@
 morocco = {
 	name = "Morocco"
 	type = polity
+	color = { 224 146 113 }
 	culture = arabic
 	default_religion = sunni
 	default_tier = kingdom

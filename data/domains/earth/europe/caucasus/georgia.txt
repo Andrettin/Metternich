@@ -1,6 +1,7 @@
 georgia = {
 	name = "Georgia"
 	type = polity
+	color = { 36 132 247 }
 	culture = georgian
 	default_religion = orthodox
 	default_tier = kingdom

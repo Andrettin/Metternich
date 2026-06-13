@@ -1,6 +1,7 @@
 golden_horde = {
 	name = "Golden Horde"
 	type = tribe
+	color = { 250 182 3 }
 	culture = mongol
 	default_religion = pagan
 	default_tier = kingdom

@@ -1,6 +1,7 @@
 seljuk_turks = {
 	name = "Seljuk Turks"
 	type = tribe
+	color = { 99 168 74 }
 	culture = turkish
 	default_religion = sunni
 	default_tier = duchy

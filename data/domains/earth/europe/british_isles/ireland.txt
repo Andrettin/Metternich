@@ -1,6 +1,7 @@
 ireland = {
 	name = "Ireland"
 	type = polity
+	color = { 112 150 105 }
 	culture = irish
 	default_religion = catholic
 	default_tier = kingdom

@@ -1,6 +1,7 @@
 scotland = {
 	name = "Scotland"
 	type = polity
+	color = { 199 175 12 }
 	cultures = {
 		highlander
 		scottish

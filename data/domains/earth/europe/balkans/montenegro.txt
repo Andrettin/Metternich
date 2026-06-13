@@ -1,6 +1,7 @@
 montenegro = {
 	name = "Montenegro"
 	type = polity
+	color = { 39 108 140 }
 	culture = serbian
 	default_religion = orthodox
 	default_tier = kingdom

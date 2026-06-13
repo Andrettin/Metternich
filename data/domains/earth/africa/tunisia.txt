@@ -1,6 +1,7 @@
 tunisia = {
 	name = "Tunisia"
 	type = polity
+	color = { 131 101 85 }
 	culture = arabic
 	default_religion = sunni
 	default_tier = kingdom
