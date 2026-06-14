@@ -1110,6 +1110,14 @@ qt_add_shaders(metternich_main "shaders"
 		"opacitymask.frag.qsb"
 )
 
+qt_add_shaders(metternich_main "xbrz_shader"
+	PREFIX "/"
+	FILES
+		"shaders/xbrz.glsl"
+	OUTPUTS
+		"xbrz.glsl.qsb"
+)
+
 target_precompile_headers(metternich REUSE_FROM archimedes)
 
 set_target_properties(metternich PROPERTIES

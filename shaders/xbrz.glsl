@@ -41,6 +41,9 @@
 // * do so, delete this exception statement from your version.                *
 // ****************************************************************************
 
+#version 440
+#define FRAGMENT 1
+
 #if defined(VERTEX)
 
 #if __VERSION__ >= 130
@@ -67,11 +70,11 @@ COMPAT_VARYING vec4 TEX0;
 
 vec4 _oPosition1; 
 uniform mat4 MVPMatrix;
-uniform COMPAT_PRECISION int FrameDirection;
-uniform COMPAT_PRECISION int FrameCount;
+//uniform COMPAT_PRECISION int FrameDirection;
+//uniform COMPAT_PRECISION int FrameCount;
 uniform COMPAT_PRECISION vec2 OutputSize;
 uniform COMPAT_PRECISION vec2 TextureSize;
-uniform COMPAT_PRECISION vec2 InputSize;
+//uniform COMPAT_PRECISION vec2 InputSize;
 
 // compatibility #defines
 #define vTexCoord TEX0.xy
@@ -106,20 +109,20 @@ precision mediump float;
 #if __VERSION__ >= 130
 #define COMPAT_VARYING in
 #define COMPAT_TEXTURE texture
-out COMPAT_PRECISION vec4 FragColor;
+layout(location = 0) out COMPAT_PRECISION vec4 FragColor;
 #else
 #define COMPAT_VARYING varying
 #define FragColor gl_FragColor
 #define COMPAT_TEXTURE texture2D
 #endif
 
-uniform COMPAT_PRECISION int FrameDirection;
-uniform COMPAT_PRECISION int FrameCount;
-uniform COMPAT_PRECISION vec2 OutputSize;
-uniform COMPAT_PRECISION vec2 TextureSize;
-uniform COMPAT_PRECISION vec2 InputSize;
-uniform sampler2D Texture;
-COMPAT_VARYING vec4 TEX0;
+//uniform COMPAT_PRECISION int FrameDirection;
+//uniform COMPAT_PRECISION int FrameCount;
+layout(location = 1) COMPAT_VARYING COMPAT_PRECISION vec2 OutputSize;
+layout(location = 2) COMPAT_VARYING COMPAT_PRECISION vec2 TextureSize;
+//uniform COMPAT_PRECISION vec2 InputSize;
+layout(binding = 0) uniform sampler2D Texture;
+layout(location = 0) COMPAT_VARYING vec4 TEX0;
 
 // compatibility #defines
 #define Source Texture
