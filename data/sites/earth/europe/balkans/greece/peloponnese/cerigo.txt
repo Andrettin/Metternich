@@ -1,0 +1,8 @@
+cerigo = {
+	name = "Cerigo"
+	world = earth
+	geocoordinate = { 22.987902777778 36.149669444444 } #Kythera (village)
+	type = holding
+	holding_type = castle
+	province = peloponnese
+}
