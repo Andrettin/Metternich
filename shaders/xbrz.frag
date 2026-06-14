@@ -42,58 +42,26 @@
 // ****************************************************************************
 
 #version 440
-#define FRAGMENT 1
 
-#if defined(VERTEX)
+layout(location = 0) in vec2 qt_TexCoord0;
+layout(location = 0) out vec4 fragColor;
 
-#if __VERSION__ >= 130
-#define COMPAT_VARYING out
-#define COMPAT_ATTRIBUTE in
-#define COMPAT_TEXTURE texture
-#else
-#define COMPAT_VARYING varying 
-#define COMPAT_ATTRIBUTE attribute 
-#define COMPAT_TEXTURE texture2D
-#endif
+layout(std140, binding = 0) uniform buf {
+    // qt_Matrix and qt_Opacity must always be both present
+    // if the built-in vertex shader is used.
+    mat4 qt_Matrix;
+    float qt_Opacity;
+    vec2 outputSize;
+    vec2 inputSize;
+};
 
-#ifdef GL_ES
-#define COMPAT_PRECISION mediump
-#else
-#define COMPAT_PRECISION
-#endif
+layout(binding = 1) uniform sampler2D source;
+layout(binding = 2) uniform sampler2D maskSource;
 
-COMPAT_ATTRIBUTE vec4 VertexCoord;
-COMPAT_ATTRIBUTE vec4 COLOR;
-COMPAT_ATTRIBUTE vec4 TexCoord;
-COMPAT_VARYING vec4 COL0;
-COMPAT_VARYING vec4 TEX0;
-
-vec4 _oPosition1; 
-uniform mat4 MVPMatrix;
-//uniform COMPAT_PRECISION int FrameDirection;
-//uniform COMPAT_PRECISION int FrameCount;
-uniform COMPAT_PRECISION vec2 OutputSize;
-uniform COMPAT_PRECISION vec2 TextureSize;
-//uniform COMPAT_PRECISION vec2 InputSize;
-
-// compatibility #defines
-#define vTexCoord TEX0.xy
-#define SourceSize vec4(TextureSize, 1.0 / TextureSize) //either TextureSize or InputSize
-#define OutSize vec4(OutputSize, 1.0 / OutputSize)
-
-#ifdef PARAMETER_UNIFORM
-uniform COMPAT_PRECISION float WHATEVER;
-#else
-#define WHATEVER 0.0
-#endif
-
-void main()
-{
-    gl_Position = MVPMatrix * VertexCoord;
-    TEX0.xy = TexCoord.xy * 1.0001;
-}
-
-#elif defined(FRAGMENT)
+//void main()
+//{
+//    fragColor = texture(source, qt_TexCoord0.st) * (texture(source, qt_TexCoord0.st).a) * qt_Opacity;
+//}
 
 #ifdef GL_ES
 #ifdef GL_FRAGMENT_PRECISION_HIGH
@@ -107,29 +75,17 @@ precision mediump float;
 #endif
 
 #if __VERSION__ >= 130
-#define COMPAT_VARYING in
 #define COMPAT_TEXTURE texture
-layout(location = 0) out COMPAT_PRECISION vec4 FragColor;
 #else
-#define COMPAT_VARYING varying
-#define FragColor gl_FragColor
 #define COMPAT_TEXTURE texture2D
 #endif
 
-//uniform COMPAT_PRECISION int FrameDirection;
-//uniform COMPAT_PRECISION int FrameCount;
-layout(location = 1) COMPAT_VARYING COMPAT_PRECISION vec2 OutputSize;
-layout(location = 2) COMPAT_VARYING COMPAT_PRECISION vec2 TextureSize;
-//uniform COMPAT_PRECISION vec2 InputSize;
-layout(binding = 0) uniform sampler2D Texture;
-layout(location = 0) COMPAT_VARYING vec4 TEX0;
-
 // compatibility #defines
-#define Source Texture
-#define vTexCoord TEX0.xy
+#define Source source
+#define vTexCoord qt_TexCoord0
 
-#define SourceSize vec4(TextureSize, 1.0 / TextureSize) //either TextureSize or InputSize
-#define OutSize vec4(OutputSize, 1.0 / OutputSize)
+#define SourceSize vec4(inputSize, 1.0 / inputSize)
+#define OutSize vec4(outputSize, 1.0 / outputSize)
 
 #define BLEND_NONE 0
 #define BLEND_NORMAL 1
@@ -184,7 +140,7 @@ void main()
   //                       x|G|H|I|x
   //                       -|x|x|x|-
 
-  vec2 scale = OutputSize.xy * SourceSize.zw;
+  vec2 scale = outputSize.xy * SourceSize.zw;
   vec2 pos = fract(vTexCoord * SourceSize.xy) - vec2(0.5, 0.5);
   vec2 coord = vTexCoord - pos * SourceSize.zw;
 
@@ -373,6 +329,5 @@ void main()
     res = mix(res, blendPix, get_left_ratio(pos, origin, direction, scale));
   }
 
- 	FragColor = vec4(res, 1.0);
+ 	fragColor = vec4(res, 1.0);
 } 
-#endif

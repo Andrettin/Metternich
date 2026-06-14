@@ -1113,9 +1113,9 @@ qt_add_shaders(metternich_main "shaders"
 qt_add_shaders(metternich_main "xbrz_shader"
 	PREFIX "/"
 	FILES
-		"shaders/xbrz.glsl"
+		"shaders/xbrz.frag"
 	OUTPUTS
-		"xbrz.glsl.qsb"
+		"xbrz.frag.qsb"
 )
 
 target_precompile_headers(metternich REUSE_FROM archimedes)
