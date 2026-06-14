@@ -2577,11 +2577,11 @@ QImage domain_game_data::finalize_diplomatic_map_image(QImage &&image)
 {
 	assert_throw(!image.isNull());
 
-	QImage scaled_image;
-
 	const decimillesimal_int &tile_scale = map::get()->get_diplomatic_map_tile_scale();
 
 	if (tile_scale > 1) {
+		QImage scaled_image;
+
 		scaled_image = image::scale<QImage::Format_ARGB32>(image, centesimal_int(tile_scale), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
 			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
 		});
@@ -2627,13 +2627,7 @@ QImage domain_game_data::finalize_diplomatic_map_image(QImage &&image)
 		image.setPixelColor(border_pixel_pos, border_pixel_color);
 	}
 
-	const centesimal_int &scale_factor = preferences::get()->get_scale_factor();
-
-	scaled_image = image::scale<QImage::Format_ARGB32>(image, scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
-		xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
-	});
-
-	return scaled_image;
+	return image;
 }
 
 void domain_game_data::create_diplomatic_map_image()
@@ -2690,7 +2684,7 @@ void domain_game_data::create_diplomatic_map_image()
 		selected_promise->finish();
 	});
 
-	this->diplomatic_map_image_rect = QRect(top_left * preferences::get()->get_scale_factor(), image_size * preferences::get()->get_scale_factor());
+	this->diplomatic_map_image_rect = QRect(top_left, image_size);
 
 	this->create_diplomatic_map_mode_image(diplomatic_map_mode::diplomatic);
 	this->create_diplomacy_state_diplomatic_map_image(diplomacy_state::peace);
@@ -2781,7 +2775,7 @@ void domain_game_data::create_realm_diplomatic_map_image()
 		selected_promise->finish();
 	});
 
-	this->realm_diplomatic_map_image_rect = QRect(top_left * preferences::get()->get_scale_factor(), image_size * preferences::get()->get_scale_factor());
+	this->realm_diplomatic_map_image_rect = QRect(top_left, image_size);
 
 	emit realm_diplomatic_map_image_changed();
 }

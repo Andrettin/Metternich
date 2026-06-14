@@ -2078,9 +2078,9 @@ QCoro::Task<void> game::create_exploration_diplomatic_map_image()
 		}
 	}
 
-	QImage scaled_exploration_diplomatic_map_image;
-
 	if (tile_scale > 1) {
+		QImage scaled_exploration_diplomatic_map_image;
+
 		co_await QtConcurrent::run([this, tile_scale, &scaled_exploration_diplomatic_map_image]() {
 			scaled_exploration_diplomatic_map_image = image::scale<QImage::Format_ARGB32>(this->exploration_diplomatic_map_image, centesimal_int(tile_scale), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
 				xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
@@ -2104,16 +2104,6 @@ QCoro::Task<void> game::create_exploration_diplomatic_map_image()
 			}
 		}
 	}
-
-	const centesimal_int &scale_factor = preferences::get()->get_scale_factor();
-
-	co_await QtConcurrent::run([this, scale_factor, &scaled_exploration_diplomatic_map_image]() {
-		scaled_exploration_diplomatic_map_image = image::scale<QImage::Format_ARGB32>(this->exploration_diplomatic_map_image, scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
-			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
-		});
-	});
-
-	this->exploration_diplomatic_map_image = std::move(scaled_exploration_diplomatic_map_image);
 
 	assert_throw(this->exploration_diplomatic_map_image.size() == map::get()->get_diplomatic_map_image_size() * preferences::get()->get_scale_factor());
 	assert_throw(this->exploration_diplomatic_map_image.size

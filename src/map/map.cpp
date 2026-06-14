@@ -634,9 +634,9 @@ QCoro::Task<void> map::create_ocean_diplomatic_map_image()
 		}
 	}
 
-	QImage scaled_ocean_diplomatic_map_image;
-
 	if (tile_scale > 1) {
+		QImage scaled_ocean_diplomatic_map_image;
+
 		co_await QtConcurrent::run([this, tile_scale, &scaled_ocean_diplomatic_map_image]() {
 			scaled_ocean_diplomatic_map_image = image::scale<QImage::Format_ARGB32>(this->ocean_diplomatic_map_image, centesimal_int(tile_scale), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
 				xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
@@ -684,16 +684,6 @@ QCoro::Task<void> map::create_ocean_diplomatic_map_image()
 	for (const QPoint &border_pixel_pos : border_pixels) {
 		this->ocean_diplomatic_map_image.setPixelColor(border_pixel_pos, border_pixel_color);
 	}
-
-	const centesimal_int &scale_factor = preferences::get()->get_scale_factor();
-
-	co_await QtConcurrent::run([this, &scale_factor, &scaled_ocean_diplomatic_map_image]() {
-		scaled_ocean_diplomatic_map_image = image::scale<QImage::Format_ARGB32>(this->ocean_diplomatic_map_image, scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
-			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
-		});
-	});
-
-	this->ocean_diplomatic_map_image = std::move(scaled_ocean_diplomatic_map_image);
 }
 
 void map::create_minimap_image()
