@@ -2,8 +2,9 @@ waterford = {
 	name = "Waterford"
 	world = earth
 	geocoordinate = { -7.11192793927 52.25829469720 } #from Natural Earth
-	type = resource
-	resource = fish
+	type = holding
+	holding_type = castle
+	#resource = fish
 	province = munster
 	
 	history = {

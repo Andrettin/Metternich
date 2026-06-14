@@ -2,9 +2,12 @@ cuenca = {
 	name = "Cuenca"
 	world = earth
 	geocoordinate = { -2.135 40.071666666667 }
-	type = resource
-	resource = grain
+	type = holding
+	holding_type = castle
 	province = castille
+	features = {
+		prime_grain_land
+	}
 	
 	history = {
 		1360 = {
