@@ -1,0 +1,8 @@
+serapeum = {
+	name = "Serapeum"
+	world = earth
+	geocoordinate = { 32.31583333 30.47694444 } #Sr'bium (Serapeum)
+	type = holding
+	holding_type = castle
+	province = suez #Ismailia Governorate
+}

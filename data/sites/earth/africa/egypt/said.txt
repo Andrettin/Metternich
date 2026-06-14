@@ -1,0 +1,8 @@
+said = {
+	name = "Said"
+	world = earth
+	geocoordinate = { 32.29000809600 31.25998984680 } #from Natural Earth (Bur Said/Port Said)
+	type = holding
+	holding_type = guild
+	province = suez
+}

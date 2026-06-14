@@ -1,0 +1,8 @@
+tinnis = {
+	name = "Tinnis"
+	world = earth
+	geocoordinate = { 32.2333 31.2 }
+	type = holding
+	holding_type = castle
+	province = suez
+}
