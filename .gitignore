@@ -1,10 +1,10 @@
 build/
 libraries/
 qml/
-shaders/
 temp/
 *.dll
 *.exe
+*.qsb
 error.log
 output.log
 qt.conf
