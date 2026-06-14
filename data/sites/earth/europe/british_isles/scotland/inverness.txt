@@ -3,4 +3,5 @@ inverness = {
 	world = earth
 	geocoordinate = { -4.23326644023 57.46712404290 } #from Natural Earth
 	type = holding
+	holding_type = guild
 }

@@ -2,8 +2,8 @@ aberdeen = {
 	name = "Aberdeen"
 	world = earth
 	geocoordinate = { -2.07998702128 57.17039796870 } #from Natural Earth
-	type = resource
-	resource = sheep
+	type = holding
+	holding_type = guild
 	province = highlands
 	features = {
 		academic #historical university
@@ -16,7 +16,7 @@ aberdeen = {
 		}
 		
 		1494 = {
-			buildings += university #University founded in Aberdeen in 1494; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+			#buildings += university #University founded in Aberdeen in 1494; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
 		}
 		
 		1593 = {

@@ -1,7 +1,9 @@
 st_andrews = {
 	name = "St. Andrews"
 	world = earth
-	#geocoordinate = { -2.7988888888889 56.338888888889 }
+	geocoordinate = { -2.7988888888889 56.338888888889 }
+	type = holding
+	holding_type = temple
 	province = highlands
 	features = {
 		academic #historical university
@@ -9,7 +11,8 @@ st_andrews = {
 	
 	history = {
 		1413 = {
-			buildings += university #University founded in St. Andrews in 1413; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+			#buildings += university #University founded in St. Andrews in 1413; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+			developed = true
 		}
 	}
 }

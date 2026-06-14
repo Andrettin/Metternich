@@ -2,11 +2,12 @@ glasgow = {
 	name = "Glasgow"
 	world = earth
 	geocoordinate = { -4.25070723613 55.87440472320 } #from Natural Earth
-	type = resource
-	resource = coal
+	type = holding
+	holding_type = guild
 	province = ayrshire
 	features = {
 		academic #historical university
+		coal_deposit
 	}
 	
 	history = {
@@ -15,7 +16,7 @@ glasgow = {
 		}
 		
 		1450 = {
-			buildings += university #University founded in Glasgow in 1450; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+			#buildings += university #University founded in Glasgow in 1450; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
 		}
 	}
 }

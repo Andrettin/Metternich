@@ -3,13 +3,14 @@ edinburgh = {
 	world = earth
 	geocoordinate = { -3.21909061829 55.94832785960 } #from Natural Earth
 	type = holding
+	holding_type = guild
 	features = {
 		academic #historical university
 	}
 	
 	history = {
 		1360 = {
-			holding_type = city #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			developed = true #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 		
 		1583 = {
