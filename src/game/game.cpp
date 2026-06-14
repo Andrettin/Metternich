@@ -2105,7 +2105,7 @@ QCoro::Task<void> game::create_exploration_diplomatic_map_image()
 		}
 	}
 
-	assert_throw(this->exploration_diplomatic_map_image.size() == map::get()->get_diplomatic_map_image_size() * preferences::get()->get_scale_factor());
+	assert_throw(this->exploration_diplomatic_map_image.size() == map::get()->get_diplomatic_map_image_size());
 	assert_throw(this->exploration_diplomatic_map_image.size
 	() == map::get()->get_ocean_diplomatic_map_image().size());
 }

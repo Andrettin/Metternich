@@ -1063,15 +1063,17 @@ QImage province_game_data::finalize_map_image(QImage &&image)
 {
 	assert_throw(!image.isNull());
 
-	QImage scaled_image;
-
 	const int tile_scale = defines::get()->get_province_map_tile_scale();
 
-	scaled_image = image::scale<QImage::Format_ARGB32>(image, centesimal_int(tile_scale), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
-		xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
-	});
+	if (tile_scale > 1) {
+		QImage scaled_image;
 
-	image = std::move(scaled_image);
+		scaled_image = image::scale<QImage::Format_ARGB32>(image, centesimal_int(tile_scale), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+		});
+
+		image = std::move(scaled_image);
+	}
 
 	std::vector<QPoint> border_pixels;
 
@@ -1111,13 +1113,7 @@ QImage province_game_data::finalize_map_image(QImage &&image)
 		image.setPixelColor(border_pixel_pos, border_pixel_color);
 	}
 
-	const centesimal_int &scale_factor = preferences::get()->get_scale_factor();
-
-	scaled_image = image::scale<QImage::Format_ARGB32>(image, scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
-		xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
-	});
-
-	return scaled_image;
+	return image;
 }
 
 void province_game_data::create_map_image()
@@ -1175,7 +1171,7 @@ void province_game_data::create_map_image()
 	});
 
 	const int tile_scale = defines::get()->get_province_map_tile_scale();
-	this->map_image_rect = QRect(this->province->get_map_data()->get_territory_rect().topLeft() * tile_scale * preferences::get()->get_scale_factor(), this->province->get_map_data()->get_territory_rect().size() * tile_scale * preferences::get()->get_scale_factor());
+	this->map_image_rect = QRect(this->province->get_map_data()->get_territory_rect().topLeft() * tile_scale, this->province->get_map_data()->get_territory_rect().size() * tile_scale);
 
 	this->create_map_mode_image(province_map_mode::terrain);
 
