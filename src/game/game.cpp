@@ -2056,7 +2056,7 @@ QCoro::Task<void> game::create_exploration_diplomatic_map_image()
 
 	const map *map = map::get();
 
-	const decimillesimal_int &tile_scale = defines::get()->get_diplomatic_map_tile_scale();
+	const decimillesimal_int &tile_scale = map::get()->get_diplomatic_map_tile_scale();
 
 	this->exploration_diplomatic_map_image = QImage(map->get_size() * tile_scale, QImage::Format_RGBA8888);
 	this->exploration_diplomatic_map_image.fill(Qt::transparent);

@@ -45,6 +45,8 @@ class map_template final : public named_data_entry, public data_type<map_templat
 	Q_PROPERTY(int average_temperature MEMBER average_temperature READ get_average_temperature NOTIFY changed)
 	Q_PROPERTY(bool separate_poles MEMBER separate_poles READ are_poles_separate NOTIFY changed)
 	Q_PROPERTY(int pole_flattening MEMBER pole_flattening READ get_pole_flattening NOTIFY changed)
+	Q_PROPERTY(archimedes::decimillesimal_int minimap_tile_scale MEMBER minimap_tile_scale READ get_minimap_tile_scale NOTIFY changed)
+	Q_PROPERTY(archimedes::decimillesimal_int diplomatic_map_tile_scale MEMBER diplomatic_map_tile_scale READ get_diplomatic_map_tile_scale NOTIFY changed)
 	Q_PROPERTY(bool update_province_image MEMBER update_province_image NOTIFY changed)
 
 public:
@@ -195,6 +197,16 @@ public:
 		return this->pole_flattening;
 	}
 
+	const decimillesimal_int &get_minimap_tile_scale() const
+	{
+		return this->minimap_tile_scale;
+	}
+
+	const decimillesimal_int &get_diplomatic_map_tile_scale() const
+	{
+		return this->diplomatic_map_tile_scale;
+	}
+
 	void apply() const;
 	void apply_terrain_and_provinces() const;
 	void generate_additional_sites() const;
@@ -225,6 +237,8 @@ private:
 	int average_temperature = 50;
 	bool separate_poles = false; //whether the poles are ensured to be separate continents
 	int pole_flattening = 0;
+	decimillesimal_int minimap_tile_scale = decimillesimal_int(0);
+	decimillesimal_int diplomatic_map_tile_scale = decimillesimal_int(0);
 	std::unordered_set<const province *> ignored_provinces;
 	std::unordered_set<const region *> ignored_regions;
 	point_map<const site *> sites_by_position;

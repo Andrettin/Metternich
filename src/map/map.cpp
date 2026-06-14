@@ -9,21 +9,16 @@
 #include "domain/domain_technology.h"
 #include "economy/resource.h"
 #include "game/game.h"
-#include "map/direction.h"
 #include "map/province.h"
 #include "map/province_container.h"
-#include "map/province_game_data.h"
 #include "map/province_map_data.h"
 #include "map/route.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "map/site_map_data.h"
 #include "map/site_type.h"
-#include "map/terrain_adjacency.h"
-#include "map/terrain_adjacency_type.h"
 #include "map/terrain_type.h"
 #include "map/tile.h"
-#include "technology/technology.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/exception_util.h"
@@ -50,7 +45,11 @@ void map::process_gsml_property(const gsml_property &property)
 	const std::string &key = property.get_key();
 	const std::string &value = property.get_value();
 
-	if (key == "tile_terrains") {
+	if (key == "diplomatic_map_tile_scale") {
+		this->diplomatic_map_tile_scale = decimillesimal_int(value);
+	} else if (key == "minimap_tile_scale") {
+		this->minimap_tile_scale = decimillesimal_int(value);
+	} else if (key == "tile_terrains") {
 		for (size_t i = 0; i < value.size(); ++i) {
 			const char c = value[i];
 			(*this->tiles)[i].set_terrain(terrain_type::get_by_character(c));
@@ -103,6 +102,8 @@ gsml_data map::to_gsml_data() const
 	gsml_data data("map");
 
 	data.add_child("size", gsml_data::from_size(this->get_size()));
+	data.add_property("diplomatic_map_tile_scale", this->get_diplomatic_map_tile_scale().to_string());
+	data.add_property("minimap_tile_scale", this->get_minimap_tile_scale().to_string());
 
 	std::string tile_terrains_str;
 	tile_terrains_str.reserve(this->tiles->size());
@@ -578,7 +579,7 @@ QVariantList map::get_sites_qvariant_list() const
 
 void map::initialize_diplomatic_map()
 {
-	const QSize image_size = this->get_size() * defines::get()->get_diplomatic_map_tile_scale();
+	const QSize image_size = this->get_size() * this->get_diplomatic_map_tile_scale();
 	if (image_size != this->diplomatic_map_image_size) {
 		this->diplomatic_map_image_size = image_size;
 		emit diplomatic_map_image_size_changed();
@@ -610,7 +611,7 @@ void map::initialize_province_map()
 
 QCoro::Task<void> map::create_ocean_diplomatic_map_image()
 {
-	const decimillesimal_int &tile_scale = defines::get()->get_diplomatic_map_tile_scale();
+	const decimillesimal_int &tile_scale = this->get_diplomatic_map_tile_scale();
 
 	this->ocean_diplomatic_map_image = QImage(this->get_size() * tile_scale, QImage::Format_RGBA8888);
 	this->ocean_diplomatic_map_image.fill(Qt::transparent);
@@ -697,7 +698,7 @@ QCoro::Task<void> map::create_ocean_diplomatic_map_image()
 
 void map::create_minimap_image()
 {
-	this->minimap_image = QImage(this->get_size() * defines::get()->get_minimap_tile_scale(), QImage::Format_RGBA8888);
+	this->minimap_image = QImage(this->get_size() * this->get_minimap_tile_scale(), QImage::Format_RGBA8888);
 	this->minimap_image.fill(Qt::transparent);
 
 	this->update_minimap_rect(QRect(QPoint(0, 0), this->get_size()));
@@ -705,7 +706,7 @@ void map::create_minimap_image()
 
 void map::update_minimap_rect(const QRect &tile_rect)
 {
-	static const decimillesimal_int &minimap_tile_scale = defines::get()->get_minimap_tile_scale();
+	static const decimillesimal_int &minimap_tile_scale = this->get_minimap_tile_scale();
 
 	const int start_x = (tile_rect.x() * minimap_tile_scale).to_int();
 	const int start_y = (tile_rect.y() * minimap_tile_scale).to_int();

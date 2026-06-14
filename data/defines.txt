@@ -10,7 +10,7 @@ neutral_target_cursor = yellow_crosshair
 enemy_target_cursor = red_crosshair
 
 tile_size = { 64 64 }
-minimap_tile_scale = 0.5
+default_minimap_tile_scale = 0.5
 default_base_terrain = plains
 unexplored_terrain = unexplored
 default_province_terrain = plains
@@ -332,7 +332,7 @@ diplomacy_state_colors = {
 river_image_filepath = "tiles/river.png"
 rivermouth_image_filepath = "tiles/rivermouth.png"
 province_border_image_filepath = "tiles/borders/province_border.png"
-diplomatic_map_tile_scale = 1
+default_diplomatic_map_tile_scale = 1
 min_province_map_tile_scale = 2
 
 event_trigger_none_random_weights = {

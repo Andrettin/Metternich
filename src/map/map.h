@@ -1,5 +1,6 @@
 #pragma once
 
+#include "util/decimillesimal_int.h"
 #include "util/singleton.h"
 
 namespace archimedes {
@@ -26,8 +27,10 @@ class map final : public QObject, public singleton<map>
 	Q_PROPERTY(QVariantList provinces READ get_provinces_qvariant_list NOTIFY provinces_changed)
 	Q_PROPERTY(QVariantList sites READ get_sites_qvariant_list NOTIFY sites_changed)
 	Q_PROPERTY(QSize diplomatic_map_image_size READ get_diplomatic_map_image_size NOTIFY diplomatic_map_image_size_changed)
+	Q_PROPERTY(double diplomatic_map_tile_scale_double READ get_diplomatic_map_tile_scale_double NOTIFY diplomatic_map_tile_scale_changed)
 	Q_PROPERTY(QSize province_map_image_size READ get_province_map_image_size NOTIFY province_map_image_size_changed)
 	Q_PROPERTY(int province_map_tile_pixel_size READ get_province_map_tile_pixel_size NOTIFY province_map_image_size_changed)
+	Q_PROPERTY(double minimap_tile_scale_double READ get_minimap_tile_scale_double NOTIFY minimap_tile_scale_changed)
 
 public:
 	static constexpr QSize min_province_map_image_size = QSize(800, 600);
@@ -135,6 +138,23 @@ public:
 		return this->diplomatic_map_image_size;
 	}
 
+	const decimillesimal_int &get_diplomatic_map_tile_scale() const
+	{
+		return this->diplomatic_map_tile_scale;
+	}
+
+	double get_diplomatic_map_tile_scale_double() const
+	{
+		return this->get_diplomatic_map_tile_scale().to_double();
+	}
+
+	void set_diplomatic_map_tile_scale(const decimillesimal_int &tile_scale)
+	{
+		this->diplomatic_map_tile_scale = tile_scale;
+
+		emit diplomatic_map_tile_scale_changed();
+	}
+
 	const QSize &get_province_map_image_size() const
 	{
 		return this->province_map_image_size;
@@ -153,6 +173,23 @@ public:
 	void create_minimap_image();
 	void update_minimap_rect(const QRect &tile_rect);
 
+	const decimillesimal_int &get_minimap_tile_scale() const
+	{
+		return this->minimap_tile_scale;
+	}
+
+	double get_minimap_tile_scale_double() const
+	{
+		return this->get_minimap_tile_scale().to_double();
+	}
+
+	void set_minimap_tile_scale(const decimillesimal_int &tile_scale)
+	{
+		this->minimap_tile_scale = tile_scale;
+
+		emit minimap_tile_scale_changed();
+	}
+
 signals:
 	void size_changed();
 	void tile_terrain_changed(const QPoint &tile_pos);
@@ -163,7 +200,9 @@ signals:
 	void provinces_changed();
 	void sites_changed();
 	void diplomatic_map_image_size_changed();
+	void diplomatic_map_tile_scale_changed();
 	void province_map_image_size_changed();
+	void minimap_tile_scale_changed();
 
 private:
 	QSize size;
@@ -172,9 +211,11 @@ private:
 	std::vector<const site *> sites; //the sites which are on the map
 	QImage ocean_diplomatic_map_image;
 	QSize diplomatic_map_image_size;
+	decimillesimal_int diplomatic_map_tile_scale = decimillesimal_int(1);
 	QSize province_map_image_size;
 	int province_map_tile_pixel_size = 1;
 	QImage minimap_image;
+	decimillesimal_int minimap_tile_scale = decimillesimal_int(1);
 };
 
 }

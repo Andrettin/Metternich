@@ -7,9 +7,10 @@ earth = {
 	max_longitude = 180
 	min_latitude = -60.05
 	max_latitude = 85
+	minimap_tile_scale = 0.25
+	diplomatic_map_tile_scale = 0.5
 	geocoordinate_x_offset = -512 #shift all positions derived from geocoordinates by this offset; this will place the Florence meridian at the center of the map
 	terrain_image_filepath = "earth/terrain.png"
-	#river_image_filepath = "earth/rivers.png"
 	province_image_filepath = "earth/provinces.png"
 	province_post_processing_terrains = {
 		ocean
@@ -65,8 +66,9 @@ europe = {
 	max_longitude = 45
 	min_latitude = 30
 	max_latitude = 60
+	minimap_tile_scale = 0.25
+	diplomatic_map_tile_scale = 0.5
 	terrain_image_filepath = "earth/terrain_europe.png"
-	#river_image_filepath = "earth/rivers_europe.png"
 	province_image_filepath = "earth/provinces_europe.png"
 }
 
@@ -80,6 +82,5 @@ central_europe = {
 	min_latitude = 44
 	max_latitude = 56.01
 	terrain_image_filepath = "earth/terrain_central_europe.png"
-	#river_image_filepath = "earth/rivers_europe.png"
 	province_image_filepath = "earth/provinces_central_europe.png"
 }

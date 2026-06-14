@@ -5,7 +5,6 @@
 #include "database/database.h"
 #include "database/defines.h"
 #include "economy/resource.h"
-#include "map/direction.h"
 #include "map/map.h"
 #include "map/map_generator.h"
 #include "map/map_projection.h"
@@ -15,8 +14,6 @@
 #include "map/site.h"
 #include "map/site_map_data.h"
 #include "map/site_type.h"
-#include "map/terrain_adjacency.h"
-#include "map/terrain_adjacency_type.h"
 #include "map/terrain_feature.h"
 #include "map/terrain_type.h"
 #include "map/tile.h"
@@ -426,6 +423,18 @@ void map_template::apply() const
 	map->clear();
 	map->set_size(this->get_size());
 	map->create_tiles();
+
+	if (this->get_minimap_tile_scale() != 0) {
+		map->set_minimap_tile_scale(this->get_minimap_tile_scale());
+	} else {
+		map->set_minimap_tile_scale(defines::get()->get_default_minimap_tile_scale());
+	}
+
+	if (this->get_diplomatic_map_tile_scale() != 0) {
+		map->set_diplomatic_map_tile_scale(this->get_diplomatic_map_tile_scale());
+	} else {
+		map->set_diplomatic_map_tile_scale(defines::get()->get_default_diplomatic_map_tile_scale());
+	}
 
 	if (this->is_randomly_generated()) {
 		map_generator map_generator(this);

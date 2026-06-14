@@ -2564,7 +2564,7 @@ QImage domain_game_data::prepare_diplomatic_map_image() const
 	assert_throw(this->territory_rect.width() > 0);
 	assert_throw(this->territory_rect.height() > 0);
 
-	const decimillesimal_int &tile_scale = defines::get()->get_diplomatic_map_tile_scale();
+	const decimillesimal_int &tile_scale = map::get()->get_diplomatic_map_tile_scale();
 	const QSize image_size((this->territory_rect.width() * tile_scale).to_ceil_int(), (this->territory_rect.height() * tile_scale).to_ceil_int());
 
 	QImage image(image_size, QImage::Format_RGBA8888);
@@ -2579,7 +2579,7 @@ QImage domain_game_data::finalize_diplomatic_map_image(QImage &&image)
 
 	QImage scaled_image;
 
-	const decimillesimal_int &tile_scale = defines::get()->get_diplomatic_map_tile_scale();
+	const decimillesimal_int &tile_scale = map::get()->get_diplomatic_map_tile_scale();
 
 	if (tile_scale > 1) {
 		scaled_image = image::scale<QImage::Format_ARGB32>(image, centesimal_int(tile_scale), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
@@ -2650,7 +2650,7 @@ void domain_game_data::create_diplomatic_map_image()
 	const QColor &color = this->get_diplomatic_map_color();
 	const QColor &selected_color = defines::get()->get_selected_country_color();
 
-	const decimillesimal_int &tile_scale = defines::get()->get_diplomatic_map_tile_scale();
+	const decimillesimal_int &tile_scale = map::get()->get_diplomatic_map_tile_scale();
 	const QPoint top_left = this->territory_rect.topLeft() * tile_scale;
 	const QSize image_size = diplomatic_map_image.size();
 
@@ -2713,7 +2713,7 @@ QImage domain_game_data::prepare_realm_diplomatic_map_image() const
 	assert_throw(this->realm_territory_rect.width() > 0);
 	assert_throw(this->realm_territory_rect.height() > 0);
 
-	const decimillesimal_int &tile_scale = defines::get()->get_diplomatic_map_tile_scale();
+	const decimillesimal_int &tile_scale = map::get()->get_diplomatic_map_tile_scale();
 	const QSize image_size((this->realm_territory_rect.width() * tile_scale).to_ceil_int(), (this->realm_territory_rect.height() * tile_scale).to_ceil_int());
 
 	QImage image(image_size, QImage::Format_RGBA8888);
@@ -2743,7 +2743,7 @@ void domain_game_data::create_realm_diplomatic_map_image()
 	const QColor &color = this->get_diplomatic_map_color();
 	const QColor &selected_color = defines::get()->get_selected_country_color();
 
-	const decimillesimal_int &tile_scale = defines::get()->get_diplomatic_map_tile_scale();
+	const decimillesimal_int &tile_scale = map::get()->get_diplomatic_map_tile_scale();
 	const QPoint top_left = this->realm_territory_rect.topLeft() * tile_scale;
 	const QSize image_size = diplomatic_map_image.size();
 
@@ -2795,7 +2795,7 @@ void domain_game_data::create_diplomatic_map_mode_image(const diplomatic_map_mod
 
 	QImage image = this->prepare_diplomatic_map_image();
 
-	const decimillesimal_int &tile_scale = defines::get()->get_diplomatic_map_tile_scale();
+	const decimillesimal_int &tile_scale = map::get()->get_diplomatic_map_tile_scale();
 	const QPoint top_left = this->territory_rect.topLeft() * tile_scale;
 	const QSize image_size = image.size();
 
@@ -2865,7 +2865,7 @@ void domain_game_data::create_diplomacy_state_diplomatic_map_image(const diploma
 
 	QImage image = this->prepare_diplomatic_map_image();
 
-	const decimillesimal_int &tile_scale = defines::get()->get_diplomatic_map_tile_scale();
+	const decimillesimal_int &tile_scale = map::get()->get_diplomatic_map_tile_scale();
 	const QPoint top_left = this->territory_rect.topLeft() * tile_scale;
 	const QSize image_size = image.size();
 
