@@ -110,7 +110,7 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(std::filesystem::path province_border_image_filepath MEMBER province_border_image_filepath WRITE set_province_border_image_filepath)
 	Q_PROPERTY(QString default_menu_background_filepath READ get_default_menu_background_filepath_qstring NOTIFY changed)
 	Q_PROPERTY(archimedes::decimillesimal_int default_diplomatic_map_tile_scale MEMBER default_diplomatic_map_tile_scale READ get_default_diplomatic_map_tile_scale NOTIFY changed)
-	Q_PROPERTY(int min_province_map_tile_scale MEMBER min_province_map_tile_scale READ get_min_province_map_tile_scale NOTIFY changed)
+	Q_PROPERTY(int province_map_tile_scale MEMBER province_map_tile_scale READ get_province_map_tile_scale NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity_unit* domain_income_unit MEMBER domain_income_unit READ get_domain_income_unit NOTIFY changed)
 	Q_PROPERTY(const metternich::sound* click_sound MEMBER click_sound READ get_click_sound NOTIFY changed)
 	Q_PROPERTY(const metternich::sound* error_sound MEMBER error_sound READ get_error_sound NOTIFY changed)
@@ -528,9 +528,9 @@ public:
 		return this->default_diplomatic_map_tile_scale;
 	}
 
-	int get_min_province_map_tile_scale() const
+	int get_province_map_tile_scale() const
 	{
-		return this->min_province_map_tile_scale;
+		return this->province_map_tile_scale;
 	}
 
 	const commodity_unit *get_domain_income_unit() const
@@ -652,7 +652,7 @@ private:
 	std::map<event_trigger, int> event_trigger_none_random_weights; //the weight for no event happening for a given event trigger's random event selection
 	std::filesystem::path default_menu_background_filepath;
 	decimillesimal_int default_diplomatic_map_tile_scale = decimillesimal_int(1);
-	int min_province_map_tile_scale = 2;
+	int province_map_tile_scale = 2;
 	const commodity_unit *domain_income_unit = nullptr;
 	commodity_map<int> province_level_commodity_costs_per_level;
 	std::map<int, int> province_population_per_level;

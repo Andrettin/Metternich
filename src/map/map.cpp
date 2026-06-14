@@ -588,25 +588,12 @@ void map::initialize_diplomatic_map()
 
 void map::initialize_province_map()
 {
-	const int min_tile_scale = defines::get()->get_min_province_map_tile_scale();
-
-	const QSize min_province_map_image_size = map::min_province_map_image_size * preferences::get()->get_scale_factor();
-	const QSize min_scaled_map_size = this->get_size() * min_tile_scale;
-
-	QSize image_size = min_scaled_map_size;
-	int tile_scale = min_tile_scale;
-	while (image_size.width() < min_province_map_image_size.width() || image_size.height() < min_province_map_image_size.height()) {
-		++tile_scale;
-		image_size = this->get_size() * tile_scale;
-	}
-
+	const int tile_scale = defines::get()->get_province_map_tile_scale();
+	const QSize image_size = this->get_size() * tile_scale;
 	if (image_size != this->province_map_image_size) {
 		this->province_map_image_size = image_size;
 		emit province_map_image_size_changed();
 	}
-
-	const QSize relative_size = this->province_map_image_size / this->get_size();
-	this->province_map_tile_pixel_size = std::max(relative_size.width(), relative_size.height());
 }
 
 QCoro::Task<void> map::create_ocean_diplomatic_map_image()

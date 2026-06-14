@@ -119,7 +119,7 @@ Flickable {
 		onReleased: function (mouse) {
 			metternich.defines.click_sound.play()
 			
-			var province = metternich.map.get_tile_province(Qt.point(Math.floor(mouse.x / metternich.map.province_map_tile_pixel_size / scale_factor), Math.floor(mouse.y / metternich.map.province_map_tile_pixel_size / scale_factor)))
+			var province = metternich.map.get_tile_province(Qt.point(Math.floor(mouse.x / metternich.defines.province_map_tile_scale / scale_factor), Math.floor(mouse.y / metternich.defines.province_map_tile_scale / scale_factor)))
 			
 			if (province === null || (selected_province === province && selected_garrison === false) || province.water_zone) {
 				select_province(null)
@@ -140,7 +140,7 @@ Flickable {
 		}
 		
 		onPositionChanged: function (mouse) {
-			var province = metternich.map.get_tile_province(Qt.point(Math.floor(mouse.x / metternich.map.province_map_tile_pixel_size / scale_factor), Math.floor(mouse.y / metternich.map.province_map_tile_pixel_size / scale_factor)))
+			var province = metternich.map.get_tile_province(Qt.point(Math.floor(mouse.x / metternich.defines.province_map_tile_scale / scale_factor), Math.floor(mouse.y / metternich.defines.province_map_tile_scale / scale_factor)))
 			
 			if (province !== null) {
 				var text = get_province_status_text(province)
@@ -157,8 +157,8 @@ Flickable {
 		TinyText {
 			id: province_label
 			text: province ? province.game_data.current_cultural_name : ""
-			x: Math.floor(text_rect.x * metternich.map.province_map_tile_pixel_size * scale_factor)
-			y: Math.floor(text_rect.y * metternich.map.province_map_tile_pixel_size * scale_factor)
+			x: Math.floor(text_rect.x * metternich.defines.province_map_tile_scale * scale_factor)
+			y: Math.floor(text_rect.y * metternich.defines.province_map_tile_scale * scale_factor)
 			width: Math.floor(text_rect_width)
 			height: Math.floor(text_rect_height)
 			visible: !province_map.show_sites
@@ -168,8 +168,8 @@ Flickable {
 			
 			readonly property var province: model.modelData
 			readonly property var text_rect: province ? province.game_data.text_rect : Qt.rect(0, 0, 0, 0)
-			readonly property int text_rect_width: text_rect.width * metternich.map.province_map_tile_pixel_size * scale_factor
-			readonly property int text_rect_height: text_rect.height * metternich.map.province_map_tile_pixel_size * scale_factor
+			readonly property int text_rect_width: text_rect.width * metternich.defines.province_map_tile_scale * scale_factor
+			readonly property int text_rect_height: text_rect.height * metternich.defines.province_map_tile_scale * scale_factor
 			
 			MouseArea {
 				anchors.fill: parent
@@ -402,8 +402,8 @@ Flickable {
 		
 		Item {
 			id: site_icon_area
-			x: site ? site.game_data.tile_pos.x * metternich.map.province_map_tile_pixel_size * scale_factor - Math.floor(width / 2) : 0
-			y: site ? site.game_data.tile_pos.y * metternich.map.province_map_tile_pixel_size * scale_factor - Math.floor(height / 2) : 0
+			x: site ? site.game_data.tile_pos.x * metternich.defines.province_map_tile_scale * scale_factor - Math.floor(width / 2) : 0
+			y: site ? site.game_data.tile_pos.y * metternich.defines.province_map_tile_scale * scale_factor - Math.floor(height / 2) : 0
 			width: site_icon.width + 4 * scale_factor
 			height: site_icon.height + 4 * scale_factor
 			visible: province_map.show_sites && (site.settlement || dungeon !== null)
@@ -510,8 +510,8 @@ Flickable {
 	}
 	
 	function center_on_tile(tile_x, tile_y) {
-		var pixel_x = Math.round(tile_x * metternich.map.province_map_tile_pixel_size * scale_factor - province_map.width / 2)
-		var pixel_y = Math.round(tile_y * metternich.map.province_map_tile_pixel_size * scale_factor - province_map.height / 2)
+		var pixel_x = Math.round(tile_x * metternich.defines.province_map_tile_scale * scale_factor - province_map.width / 2)
+		var pixel_y = Math.round(tile_y * metternich.defines.province_map_tile_scale * scale_factor - province_map.height / 2)
 		
 		province_map.contentX = Math.min(Math.max(pixel_x, 0), province_map.contentWidth - province_map.width)
 		province_map.contentY = Math.min(Math.max(pixel_y, 0), province_map.contentHeight - province_map.height)

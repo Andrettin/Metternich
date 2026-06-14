@@ -29,11 +29,9 @@ class map final : public QObject, public singleton<map>
 	Q_PROPERTY(QSize diplomatic_map_image_size READ get_diplomatic_map_image_size NOTIFY diplomatic_map_image_size_changed)
 	Q_PROPERTY(double diplomatic_map_tile_scale_double READ get_diplomatic_map_tile_scale_double NOTIFY diplomatic_map_tile_scale_changed)
 	Q_PROPERTY(QSize province_map_image_size READ get_province_map_image_size NOTIFY province_map_image_size_changed)
-	Q_PROPERTY(int province_map_tile_pixel_size READ get_province_map_tile_pixel_size NOTIFY province_map_image_size_changed)
 	Q_PROPERTY(double minimap_tile_scale_double READ get_minimap_tile_scale_double NOTIFY minimap_tile_scale_changed)
 
 public:
-	static constexpr QSize min_province_map_image_size = QSize(800, 600);
 	static constexpr bool exploration_enabled = false;
 
 	map();
@@ -160,11 +158,6 @@ public:
 		return this->province_map_image_size;
 	}
 
-	int get_province_map_tile_pixel_size() const
-	{
-		return this->province_map_tile_pixel_size;
-	}
-
 	const QImage &get_minimap_image() const
 	{
 		return this->minimap_image;
@@ -213,7 +206,6 @@ private:
 	QSize diplomatic_map_image_size;
 	decimillesimal_int diplomatic_map_tile_scale = decimillesimal_int(1);
 	QSize province_map_image_size;
-	int province_map_tile_pixel_size = 1;
 	QImage minimap_image;
 	decimillesimal_int minimap_tile_scale = decimillesimal_int(1);
 };
