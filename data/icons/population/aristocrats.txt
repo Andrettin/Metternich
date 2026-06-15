@@ -1,0 +1,17 @@
+aristocrat = {
+	filepath = "icons/population/aristocrat.png"
+	character_conditions = {
+		or = {
+			species = half_elf
+			species = human
+			species = halfling
+			species = titan
+			species = triton
+		}
+		character_class = aristocrat
+	}
+}
+
+aristocrat_small = {
+	filepath = "icons/population/aristocrat_small.png"
+}

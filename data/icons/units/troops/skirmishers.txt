@@ -1,0 +1,3 @@
+skirmisher = {
+	filepath = "icons/units/troops/skirmisher.png"
+}

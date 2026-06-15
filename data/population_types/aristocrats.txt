@@ -3,24 +3,12 @@ aristocrats = {
 	aliases += aristocrat
 	population_class = aristocrats
 	color = { 11 40 93 }
-	icon = rifle_infantry_light
-	small_icon = rifle_infantry_light_small
+	icon = aristocrat
+	small_icon = aristocrat_small
 	strata = upper
 	max_modifier_multiplier = 5
 	country_modifier = {
 		resource_output_modifier = 10
-	}
-	phenotype_icons = {
-		afro_european = rifle_infantry_medium
-		amerindian = rifle_infantry_medium
-		south_asian = rifle_infantry_medium
-		african = rifle_infantry_dark
-	}
-	phenotype_small_icons = {
-		afro_european = rifle_infantry_medium_small
-		amerindian = rifle_infantry_medium_small
-		south_asian = rifle_infantry_medium_small
-		african = rifle_infantry_dark_small
 	}
 	life_needs = {
 		cattle = 0.75da

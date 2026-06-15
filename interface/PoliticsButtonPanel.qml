@@ -32,7 +32,7 @@ Rectangle {
 		
 		IconButton {
 			id: court_button
-			icon_identifier: "rifle_infantry_light_small"
+			icon_identifier: "aristocrat_small"
 			highlighted: politics_view_mode === PoliticsView.Mode.Court
 			
 			onClicked: {
