@@ -1,0 +1,8 @@
+durnberg = {
+	name = "Durnberg" #"Dürrnberg"/"Dürnberg"
+	world = earth
+	geocoordinate = { 13.089722222222 47.665555555556 } #Bad Dürrnberg (Hallein)
+	type = holding
+	holding_type = guild
+	province = salzburg
+}

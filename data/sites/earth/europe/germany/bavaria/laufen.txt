@@ -1,0 +1,8 @@
+laufen = {
+	name = "Laufen"
+	world = earth
+	geocoordinate = { 12.933333333333 47.933333333333 }
+	type = holding
+	holding_type = castle
+	province = bavaria
+}

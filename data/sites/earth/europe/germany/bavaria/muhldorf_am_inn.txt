@@ -2,6 +2,8 @@ muhldorf_am_inn = {
 	name = "Muhldorf am Inn" #"Mühldorf am Inn"
 	world = earth
 	geocoordinate = { 12.522777777778 48.245555555556 }
+	type = holding
+	holding_type = guild
 	province = bavaria
 	
 	history = {

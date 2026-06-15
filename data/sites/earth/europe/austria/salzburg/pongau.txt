@@ -1,0 +1,8 @@
+pongau = {
+	name = "Pongau"
+	world = earth
+	geocoordinate = { 13.203 47.349 } #St. Johann im Pongau
+	type = holding
+	holding_type = castle
+	province = salzburg
+}

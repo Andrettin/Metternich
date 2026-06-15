@@ -1,0 +1,8 @@
+plain = {
+	name = "Plain"
+	world = earth
+	geocoordinate = { 13.04 47.8326 } #Plain (Bergheim, Salzburg)
+	type = holding
+	holding_type = castle
+	province = salzburg
+}

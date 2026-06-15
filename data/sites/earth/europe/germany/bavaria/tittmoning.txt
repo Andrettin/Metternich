@@ -1,0 +1,8 @@
+tittmoning = {
+	name = "Tittmoning"
+	world = earth
+	geocoordinate = { 12.766944444444 48.063055555556 }
+	type = holding
+	holding_type = castle
+	province = bavaria
+}

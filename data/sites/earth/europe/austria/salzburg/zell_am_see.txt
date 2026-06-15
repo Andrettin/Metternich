@@ -1,0 +1,8 @@
+zell_am_see = {
+	name = "Zell am See" #also known as Zelle
+	world = earth
+	geocoordinate = { 12.798055555556 47.323333333333 }
+	type = holding
+	holding_type = temple
+	province = salzburg
+}

@@ -1,0 +1,8 @@
+gastein = {
+	name = "Gastein"
+	world = earth
+	geocoordinate = { 13.1347 47.1145 } #Bad Gastein
+	type = holding
+	holding_type = castle
+	province = salzburg
+}
