@@ -44,5 +44,6 @@ castle = {
 		laborers
 		soldiers
 		officers
+		aristocrats
 	}
 }

@@ -48,5 +48,6 @@ royal_palace = {
 		laborers
 		soldiers
 		officers
+		aristocrats
 	}
 }
