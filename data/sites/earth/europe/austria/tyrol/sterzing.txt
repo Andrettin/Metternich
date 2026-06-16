@@ -1,0 +1,8 @@
+sterzing = {
+	name = "Sterzing"
+	world = earth
+	geocoordinate = { 11.43194 46.896324 }
+	type = holding
+	holding_type = castle
+	province = south_tyrol
+}

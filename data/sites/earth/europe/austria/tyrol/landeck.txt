@@ -1,0 +1,8 @@
+landeck = {
+	name = "Landeck"
+	world = earth
+	geocoordinate = { 10.566666666667 47.133333333333 }
+	type = holding
+	holding_type = castle
+	province = tyrol
+}

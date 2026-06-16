@@ -2,8 +2,8 @@ bregenz = {
 	name = "Bregenz"
 	world = earth
 	geocoordinate = { 9.76670158807 47.51669706580 } #from Natural Earth
-	type = resource
-	resource = timber
+	type = holding
+	holding_type = guild
 	province = tyrol
 	features = {
 		prime_timber
