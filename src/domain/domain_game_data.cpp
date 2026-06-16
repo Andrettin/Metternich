@@ -7,7 +7,6 @@
 #include "character/character_game_data.h"
 #include "culture/culture.h"
 #include "database/defines.h"
-#include "database/preferences.h"
 #include "domain/consulate.h"
 #include "domain/country_rank.h"
 #include "domain/country_turn_data.h"
@@ -1547,6 +1546,9 @@ QCoro::Task<void> domain_game_data::remove_province(const province *province)
 	}
 
 	if (!this->is_alive()) {
+		for (const character *character : this->get_characters()) {
+			character->get_game_data()->set_domain(nullptr);
+		}
 		co_await game::get()->remove_country(this->domain);
 	}
 
@@ -1677,6 +1679,9 @@ QCoro::Task<void> domain_game_data::remove_site(const site *site)
 	}
 
 	if (!this->is_alive()) {
+		for (const character *character : this->get_characters()) {
+			character->get_game_data()->set_domain(nullptr);
+		}
 		co_await game::get()->remove_country(this->domain);
 	}
 
