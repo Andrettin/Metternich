@@ -1,0 +1,8 @@
+schlanders = {
+	name = "Schlanders"
+	world = earth
+	geocoordinate = { 10.773477 46.628069 }
+	type = holding
+	holding_type = castle
+	province = south_tyrol
+}

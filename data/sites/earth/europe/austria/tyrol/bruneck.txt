@@ -1,0 +1,8 @@
+bruneck = {
+	name = "Bruneck"
+	world = earth
+	geocoordinate = { 11.935512 46.796319 }
+	type = holding
+	holding_type = castle
+	province = south_tyrol
+}
