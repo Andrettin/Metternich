@@ -304,7 +304,7 @@ Flickable {
 				anchors.top: province_label.verticalCenter
 				anchors.topMargin: Math.floor(province_label.contentHeight / 2) + 2 * scale_factor
 				spacing: 1 * scale_factor
-				columns: 4
+				columns: 3
 				
 				Repeater {
 					model: province ? province.game_data.visible_sites : []
