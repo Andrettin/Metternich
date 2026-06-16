@@ -1,0 +1,8 @@
+jenbach = {
+	name = "Jenbach"
+	world = earth
+	geocoordinate = { 11.776666666667 47.393333333333 }
+	type = holding
+	holding_type = castle
+	province = tyrol
+}

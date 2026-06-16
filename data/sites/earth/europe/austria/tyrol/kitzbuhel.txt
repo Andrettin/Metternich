@@ -1,0 +1,8 @@
+kitzbuhel = {
+	name = "Kitzbuhel" #"Kitzbühel"
+	world = earth
+	geocoordinate = { 12.391944444444 47.446388888889 }
+	type = holding
+	holding_type = castle
+	province = tyrol
+}

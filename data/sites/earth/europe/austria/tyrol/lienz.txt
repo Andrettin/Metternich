@@ -4,7 +4,7 @@ lienz = {
 	geocoordinate = { 12.769722222222 46.829722222222 }
 	type = holding
 	holding_type = castle
-	province = carinthia
+	province = carinthia #East Tyrol
 	features = {
 		prime_timber
 	}

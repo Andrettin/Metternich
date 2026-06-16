@@ -1,0 +1,8 @@
+kufstein = {
+	name = "Kufstein"
+	world = earth
+	geocoordinate = { 12.166666666667 47.583333333333 }
+	type = holding
+	holding_type = guild
+	province = tyrol
+}
