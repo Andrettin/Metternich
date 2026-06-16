@@ -185,43 +185,6 @@ Flickable {
 			readonly property int text_rect_width: text_rect.width * metternich.defines.province_map_tile_scale * scale_factor
 			readonly property int text_rect_height: text_rect.height * metternich.defines.province_map_tile_scale * scale_factor
 			
-			MouseArea {
-				anchors.fill: parent
-				hoverEnabled: true
-				
-				onReleased: {
-					metternich.defines.click_sound.play()
-					if ((selected_province === province && selected_garrison === false) || province.water_zone) {
-						select_province(null)
-					} else {
-						if (metternich.selected_military_units.length > 0) {
-							metternich.move_selected_military_units_to(province.game_data.provincial_capital ? province.game_data.provincial_capital.map_data.tile_pos : province.game_data.center_tile_pos)
-							select_province(null)
-							metternich.clear_selected_military_units()
-							return
-						} else if (selected_civilian_unit !== null && !selected_civilian_unit.moving && !selected_civilian_unit.working && selected_civilian_unit.can_move_to(province)) {
-							selected_civilian_unit.move_to(province)
-							select_civilian_unit(null)
-							return
-						}
-						
-						select_province(province)
-					}
-				}
-				
-				onContainsMouseChanged: {
-					if (containsMouse) {
-						var text = get_province_status_text(province)
-						status_text = text
-					}
-				}
-				
-				onPositionChanged: {
-					var text = get_province_status_text(province)
-					status_text = text
-				}
-			}
-			
 			Row {
 				anchors.horizontalCenter: province_label.horizontalCenter
 				anchors.bottom: province_label.verticalCenter
