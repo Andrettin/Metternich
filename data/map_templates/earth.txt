@@ -15,34 +15,6 @@ earth = {
 	province_post_processing_terrains = {
 		ocean
 	}
-	ignored_regions = {
-		africa
-		america
-		asia
-		indian_ocean
-		oceania
-		pacific_ocean
-		british_isles
-		armenia
-		azerbaijan
-		georgia
-		iberia
-		russia
-		scandinavia
-	}
-	ignored_provinces = {
-		bay_of_campeche
-		caribbean_sea
-		davis_strait
-		gulf_of_maine
-		gulf_of_mexico
-		gulf_of_saint_lawrence
-		labrador_sea
-		north_atlantic_ocean
-		sargasso_sea
-		south_atlantic_ocean
-		straits_of_florida
-	}
 }
 
 #earth_random = {
@@ -61,15 +33,16 @@ europe = {
 	name = "Europe"
 	size = { 2730 1715 }
 	world = earth
-	map_projection = miller
-	min_longitude = -15
-	max_longitude = 45
-	min_latitude = 30
-	max_latitude = 60
+	main_map_template = earth
+	map_start_pos = { 7168 2048 }
 	minimap_tile_scale = 0.25
 	diplomatic_map_tile_scale = 0.5
-	terrain_image_filepath = "earth/terrain_europe.png"
-	province_image_filepath = "earth/provinces_europe.png"
+	ignored_provinces = {
+		casablanca
+		hamadan
+		medenine
+		samara
+	}
 }
 
 central_europe = {
