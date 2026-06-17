@@ -451,43 +451,38 @@ void map_template::apply_terrain_and_provinces() const
 	assert_throw(!this->get_province_image_filepath().empty());
 	assert_throw(!this->get_terrain_image_filepath().empty());
 
-	const QImage province_image(path::to_qstring(this->get_province_image_filepath()));
-	const QImage terrain_image(path::to_qstring(this->get_terrain_image_filepath()));
+	QImage province_image(path::to_qstring(this->get_province_image_filepath()));
+	if (province_image.format() != QImage::Format_ARGB32) {
+		province_image = province_image.convertToFormat(QImage::Format_ARGB32);
+	}
+
+	QImage terrain_image(path::to_qstring(this->get_terrain_image_filepath()));
+	if (terrain_image.format() != QImage::Format_ARGB32) {
+		terrain_image = terrain_image.convertToFormat(QImage::Format_ARGB32);
+	}
 
 	map *map = map::get();
 
-	for (int x = 0; x < map->get_width(); ++x) {
-		for (int y = 0; y < map->get_height(); ++y) {
-			const QPoint tile_pos(x, y);
-			const QColor tile_color = province_image.pixelColor(tile_pos);
+	const std::span<const QRgb> province_image_data{ reinterpret_cast<const QRgb *>(province_image.constBits()), static_cast<size_t>(province_image.sizeInBytes() / 4)};
+	const std::span<const QRgb> terrain_image_data{ reinterpret_cast<const QRgb *>(terrain_image.constBits()), static_cast<size_t>(terrain_image.sizeInBytes() / 4)};
 
-			province *province = nullptr;
-			if (tile_color.alpha() != 0) {
-				province = province::get_by_color(tile_color);
+	std::vector<QFuture<std::vector<std::pair<QPoint, province *>>>> futures;
+	for (int y = 0; y < map->get_height(); ++y) {
+		QFuture<std::vector<std::pair<QPoint, province *>>> future = QtConcurrent::run([this, y, province_image_data, terrain_image_data]() -> std::vector<std::pair<QPoint, province *>> {
+			return this->apply_terrain_and_provinces_for_map_line(y, province_image_data, terrain_image_data);
+		});
+		futures.push_back(std::move(future));
+	}
 
-				if (this->is_province_ignored(province)) {
-					continue;
-				}
-			}
+	for (QFuture<std::vector<std::pair<QPoint, province *>>> &future : futures) {
+		const std::vector<std::pair<QPoint, province *>> tile_province_pairs = future.takeResult();
 
-			const terrain_type *terrain = nullptr;
-
-			if (province == nullptr || province->get_terrain() == nullptr) {
-				const QColor tile_terrain_color = terrain_image.pixelColor(tile_pos);
-				if (tile_terrain_color.alpha() != 0) {
-					terrain = terrain_type::get_by_color(tile_terrain_color);
-					map->set_tile_terrain(tile_pos, terrain);
-				}
-			}
-
-			if (province == nullptr) {
-				continue;
-			}
-
+		for (const auto &[tile_pos, province] : tile_province_pairs) {
 			map->set_tile_province(tile_pos, province);
 
-			if (terrain != nullptr) {
-				province->get_map_data()->change_tile_terrain_count(terrain, 1);
+			const tile *tile = map->get_tile(tile_pos);
+			if (tile->get_terrain() != nullptr) {
+				province->get_map_data()->change_tile_terrain_count(tile->get_terrain(), 1);
 			}
 		}
 	}
@@ -509,6 +504,49 @@ void map_template::apply_terrain_and_provinces() const
 
 		map->set_tile_site(tile_pos, site);
 	}
+}
+
+std::vector<std::pair<QPoint, province *>> map_template::apply_terrain_and_provinces_for_map_line(const int y, const std::span<const QRgb> &province_image_data, const std::span<const QRgb> &terrain_image_data) const
+{
+	map *map = map::get();
+
+	std::vector<std::pair<QPoint, province *>> tile_province_pairs;
+	tile_province_pairs.reserve(map->get_width());
+
+	for (int x = 0; x < map->get_width(); ++x) {
+		const QPoint tile_pos(x, y);
+		const size_t tile_index = static_cast<size_t>(y) * static_cast<size_t>(map->get_width()) + static_cast<size_t>(x);
+		const QColor tile_color = QColor::fromRgba(province_image_data[tile_index]);
+
+		province *province = nullptr;
+		if (tile_color.alpha() != 0) {
+			province = province::get_by_color(tile_color);
+
+			if (this->is_province_ignored(province)) {
+				continue;
+			}
+		}
+
+		const terrain_type *terrain = nullptr;
+
+		tile *tile = map::get()->get_tile(tile_pos);
+
+		if (province == nullptr || province->get_terrain() == nullptr) {
+			const QColor tile_terrain_color = QColor::fromRgba(terrain_image_data[tile_index]);
+			if (tile_terrain_color.alpha() != 0) {
+				terrain = terrain_type::get_by_color(tile_terrain_color);
+				tile->set_terrain(terrain);
+			}
+		}
+
+		if (province == nullptr) {
+			continue;
+		}
+
+		tile_province_pairs.emplace_back(tile_pos, province);
+	}
+
+	return tile_province_pairs;
 }
 
 void map_template::generate_additional_sites() const

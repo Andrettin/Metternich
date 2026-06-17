@@ -3,10 +3,6 @@
 #include "economy/commodity_container.h"
 #include "util/centesimal_int.h"
 
-namespace archimedes {
-	enum class direction;
-}
-
 namespace metternich {
 
 class domain;
