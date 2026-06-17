@@ -456,32 +456,6 @@ void map_template::apply_terrain_and_provinces() const
 
 	map *map = map::get();
 
-	std::map<const province *, int> province_tile_counts;
-
-	for (int x = 0; x < map->get_width(); ++x) {
-		for (int y = 0; y < map->get_height(); ++y) {
-			const QPoint tile_pos(x, y);
-			const QColor tile_color = province_image.pixelColor(tile_pos);
-
-			if (tile_color.alpha() == 0) {
-				continue;
-			}
-
-			const province *province = province::get_by_color(tile_color);
-			++province_tile_counts[province];
-		}
-	}
-
-	std::map<const province *, int> province_holding_counts;
-	for (const auto &[tile_pos, site] : this->sites_by_position) {
-		assert_throw(site->get_province() != nullptr);
-		if (site->is_settlement()) {
-			++province_holding_counts[site->get_province()];
-		}
-	}
-
-	static constexpr int min_province_tile_count = 96;
-
 	for (int x = 0; x < map->get_width(); ++x) {
 		for (int y = 0; y < map->get_height(); ++y) {
 			const QPoint tile_pos(x, y);
@@ -496,24 +470,17 @@ void map_template::apply_terrain_and_provinces() const
 				}
 			}
 
-			const QColor tile_terrain_color = terrain_image.pixelColor(tile_pos);
 			const terrain_type *terrain = nullptr;
-			if (tile_terrain_color.alpha() != 0) {
-				terrain = terrain_type::get_by_color(tile_terrain_color);
-				map->set_tile_terrain(tile_pos, terrain);
+
+			if (province == nullptr || province->get_terrain() == nullptr) {
+				const QColor tile_terrain_color = terrain_image.pixelColor(tile_pos);
+				if (tile_terrain_color.alpha() != 0) {
+					terrain = terrain_type::get_by_color(tile_terrain_color);
+					map->set_tile_terrain(tile_pos, terrain);
+				}
 			}
 
 			if (province == nullptr) {
-				continue;
-			}
-
-			if (province_tile_counts.find(province)->second < min_province_tile_count) {
-				//do not place provinces if they would be too small
-				continue;
-			}
-
-			if (!province->is_water_zone() && !province_holding_counts.contains(province)) {
-				//do not place land provinces if they would have no holdings
 				continue;
 			}
 
