@@ -5,7 +5,6 @@
 #include "character/character.h"
 #include "character/character_game_data.h"
 #include "database/gsml_operator.h"
-#include "database/named_data_entry.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "population/population_unit.h"
@@ -13,8 +12,6 @@
 #include "script/condition/age_category_condition.h"
 #include "script/condition/age_condition.h"
 #include "script/condition/anarchy_condition.h"
-#include "script/condition/and_condition.h"
-#include "script/condition/any_adjacent_site_condition.h"
 #include "script/condition/any_known_country_condition.h"
 #include "script/condition/any_neighbor_country_condition.h"
 #include "script/condition/any_neighbor_province_condition.h"
@@ -434,10 +431,6 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 	} else if constexpr (std::is_same_v<scope_type, province>) {
 		if (tag == "any_neighbor_province") {
 			condition = std::make_unique<any_neighbor_province_condition>(condition_operator);
-		}
-	} else if constexpr (std::is_same_v<scope_type, site>) {
-		if (tag == "any_adjacent_site") {
-			condition = std::make_unique<any_adjacent_site_condition>(condition_operator);
 		}
 	}
 
