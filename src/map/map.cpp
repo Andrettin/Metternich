@@ -239,26 +239,21 @@ void map::initialize(const bool province_post_processing_enabled, const std::uno
 
 	this->process_border_tiles();
 
-	std::set<province *, province_compare> provinces;
-	std::vector<const site *> sites;
-
-	for (int x = 0; x < this->get_width(); ++x) {
-		for (int y = 0; y < this->get_height(); ++y) {
-			const QPoint tile_pos(x, y);
-			tile *tile = this->get_tile(tile_pos);
-			province *tile_province = tile->get_province();
-
-			if (tile_province != nullptr) {
-				provinces.insert(tile_province);
-			}
-
-			if (tile->get_site() != nullptr) {
-				sites.push_back(tile->get_site());
-			}
+	std::vector<province *> provinces;
+	for (province *province : province::get_all()) {
+		if (province->get_map_data()->is_on_map()) {
+			provinces.push_back(province);
 		}
 	}
 
-	this->provinces = container::to_vector(provinces);
+	std::vector<const site *> sites;
+	for (const site *site : site::get_all()) {
+		if (site->get_map_data()->is_on_map()) {
+			sites.push_back(site);
+		}
+	}
+
+	this->provinces = std::move(provinces);
 	this->sites = std::move(sites);
 
 	for (const province *province : this->get_provinces()) {
@@ -274,30 +269,27 @@ void map::initialize(const bool province_post_processing_enabled, const std::uno
 
 void map::process_border_tiles()
 {
-	for (int x = 0; x < this->get_width(); ++x) {
-		for (int y = 0; y < this->get_height(); ++y) {
-			const QPoint tile_pos(x, y);
-			tile *tile = this->get_tile(tile_pos);
-			const province *tile_province = tile->get_province();
+	for (const province *province : province::get_all()) {
+		province_map_data *province_map_data = province->get_map_data();
+		if (!province_map_data->is_on_map()) {
+			continue;
+		}
 
-			if (tile_province == nullptr) {
-				continue;
-			}
-
+		for (const QPoint &tile_pos : province_map_data->get_tiles()) {
 			bool is_border_tile = false;
 
-			point::for_each_adjacent_until(tile_pos, [this, tile, &tile_pos, tile_province, &is_border_tile](const QPoint &adjacent_pos) {
+			point::for_each_adjacent_until(tile_pos, [this, &tile_pos, province, &is_border_tile](const QPoint &adjacent_pos) {
 				if (!this->contains(adjacent_pos)) {
 					is_border_tile = true;
 					return true;
 				}
 
 				const metternich::tile *adjacent_tile = this->get_tile(adjacent_pos);
-				const province *adjacent_province = adjacent_tile->get_province();
+				const metternich::province *adjacent_province = adjacent_tile->get_province();
 
-				if (tile_province != adjacent_province) {
+				if (province != adjacent_province) {
 					if (!is_border_tile) {
-						province_map_data *tile_province_map_data = tile_province->get_map_data();
+						metternich::province_map_data *tile_province_map_data = province->get_map_data();
 						if (adjacent_province != nullptr && !vector::contains(tile_province_map_data->get_neighbor_provinces(), adjacent_province)) {
 							tile_province_map_data->add_neighbor_province(adjacent_province);
 						}
@@ -311,7 +303,7 @@ void map::process_border_tiles()
 			});
 
 			if (is_border_tile) {
-				tile_province->get_map_data()->process_border_tile(tile_pos);
+				province_map_data->process_border_tile(tile_pos);
 			}
 		}
 	}
