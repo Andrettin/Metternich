@@ -11,6 +11,6 @@ trent = {
 		medieval_era
 	}
 	core_provinces = {
-		south_tyrol
+		trent
 	}
 }

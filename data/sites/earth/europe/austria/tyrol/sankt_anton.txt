@@ -4,5 +4,5 @@ sankt_anton = {
 	geocoordinate = { 9.8666666666667 47.116666666667 } #Sankt Anton im Montafon
 	type = holding
 	holding_type = temple
-	province = tyrol #Vorarlberg
+	province = vorarlberg
 }

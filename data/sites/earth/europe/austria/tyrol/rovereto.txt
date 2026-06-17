@@ -4,5 +4,5 @@ rovereto = {
 	geocoordinate = { 11.034166666667 45.883333333333 }
 	type = holding
 	holding_type = castle
-	province = south_tyrol
+	province = trent
 }

@@ -4,7 +4,7 @@ trent = {
 	geocoordinate = { 11.11998246120 46.08042889310 } #from Natural Earth
 	type = holding
 	holding_type = temple
-	province = south_tyrol
+	province = trent
 	cultural_names = {
 		italian = "Trento"
 	}

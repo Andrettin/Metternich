@@ -4,7 +4,7 @@ gossensass = {
 	geocoordinate = { 11.444825 46.938301 }
 	type = resource
 	resource = silver
-	province = south_tyrol
+	province = bozen
 	features = {
 		silver_deposit
 	}

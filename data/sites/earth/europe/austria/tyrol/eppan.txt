@@ -4,5 +4,5 @@ eppan = {
 	geocoordinate = { 11.259049 46.455333 } #Eppan an der Weinstraße
 	type = holding
 	holding_type = castle
-	province = south_tyrol
+	province = bozen
 }

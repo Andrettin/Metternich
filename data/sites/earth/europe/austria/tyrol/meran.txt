@@ -4,5 +4,5 @@ meran = {
 	geocoordinate = { 11.159419 46.669555 } #Merano
 	type = holding
 	holding_type = guild
-	province = south_tyrol
+	province = bozen
 }

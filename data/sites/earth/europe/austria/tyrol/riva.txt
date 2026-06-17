@@ -4,5 +4,5 @@ riva = {
 	geocoordinate = { 10.84117 45.88577 } #Riva del Garda
 	type = holding
 	holding_type = guild
-	province = south_tyrol
+	province = trent
 }

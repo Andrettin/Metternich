@@ -4,5 +4,5 @@ dornbirn = {
 	geocoordinate = { 9.75 47.416666666667 }
 	type = holding
 	holding_type = castle
-	province = tyrol #Vorarlberg
+	province = vorarlberg
 }

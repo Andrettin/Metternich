@@ -30,14 +30,16 @@ austria = {
 	}
 	tier_core_provinces = {
 		kingdom = {
+			bozen
 			carinthia
 			carniola
 			istria
 			marburg
 			salzburg
-			south_tyrol
 			styria
+			trent
 			tyrol
+			vorarlberg
 		}
 		empire = {
 			#Bohemia

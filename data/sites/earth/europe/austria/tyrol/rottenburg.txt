@@ -7,7 +7,7 @@ rottenburg = {
 	
 	history = {
 		1411 = {
-			dungeon = ruined_castle
+			#dungeon = ruined_castle
 		}
 	}
 }

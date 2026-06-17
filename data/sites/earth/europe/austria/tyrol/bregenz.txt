@@ -4,7 +4,7 @@ bregenz = {
 	geocoordinate = { 9.76670158807 47.51669706580 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	province = tyrol
+	province = vorarlberg
 	features = {
 		prime_timber
 	}

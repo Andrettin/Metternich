@@ -4,7 +4,7 @@ brixen = {
 	geocoordinate = { 11.657851 46.716549 }
 	type = holding
 	holding_type = temple
-	province = south_tyrol
+	province = bozen
 	cultural_names = {
 		italian = "Bressanone"
 	}

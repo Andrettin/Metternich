@@ -4,7 +4,7 @@ bozen = {
 	geocoordinate = { 11.36001948920 46.50042909660 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	province = south_tyrol
+	province = bozen
 	cultural_names = {
 		italian = "Bolzano"
 	}

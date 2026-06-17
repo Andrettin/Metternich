@@ -45,6 +45,7 @@ holy_roman_empire = {
 		wurtemberg
 		
 		#Austria
+		bozen
 		carinthia
 		carniola
 		freistadt
@@ -53,11 +54,12 @@ holy_roman_empire = {
 		marburg
 		melk
 		salzburg
-		south_tyrol
 		styria
 		traungau
+		trent
 		tyrol
 		vienna
+		vorarlberg
 		
 		#Bohemia
 		bohemia

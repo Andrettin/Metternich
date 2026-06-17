@@ -4,7 +4,7 @@ rosengarten = { #domain of the dwarven king Laurin in medieval German legend
 	geocoordinate = { 11.65 46.466666666667 } #Rosengarten group
 	type = holding
 	holding_type = castle
-	province = south_tyrol
+	province = trent
 	
 	history = {
 		high_middle_ages = {

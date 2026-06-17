@@ -2,7 +2,7 @@ seben = {
 	name = "Seben" #also known as Säben
 	world = earth
 	geocoordinate = { 11.56779 46.64461 }
-	province = south_tyrol
+	province = bozen
 	
 	history = {
 		919 = {
