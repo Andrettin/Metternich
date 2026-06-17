@@ -311,7 +311,7 @@ void map::process_border_tiles()
 			});
 
 			if (is_border_tile) {
-				tile_province->get_map_data()->add_border_tile(tile_pos);
+				tile_province->get_map_data()->process_border_tile(tile_pos);
 			}
 		}
 	}

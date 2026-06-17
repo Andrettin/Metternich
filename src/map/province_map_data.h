@@ -83,13 +83,7 @@ public:
 
 	void add_tile(const QPoint &tile_pos);
 	void process_site_tile(const QPoint &tile_pos);
-
-	const std::vector<QPoint> &get_border_tiles() const
-	{
-		return this->border_tiles;
-	}
-
-	void add_border_tile(const QPoint &tile_pos);
+	void process_border_tile(const QPoint &tile_pos);
 
 	const std::vector<QPoint> &get_resource_tiles() const
 	{
@@ -144,7 +138,6 @@ private:
 	QPoint territory_rect_center = QPoint(-1, -1);
 	std::vector<const metternich::province *> neighbor_provinces;
 	std::vector<QPoint> tiles;
-	std::vector<QPoint> border_tiles;
 	std::vector<QPoint> resource_tiles;
 	std::vector<const site *> sites;
 	std::vector<const site *> settlement_sites; //includes all settlements, even if unbuilt

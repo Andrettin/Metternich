@@ -304,20 +304,7 @@ QCoro::Task<void> military_unit::set_province(const metternich::province *provin
 					continue;
 				}
 
-				if (neighbor_province->is_water_zone()) {
-					co_await this->get_country()->get_game_data()->explore_province(neighbor_province);
-				} else {
-					//for coastal provinces bordering the water zone, explore all their tiles bordering it
-					for (const QPoint &coastal_tile_pos : neighbor_province->get_game_data()->get_border_tiles()) {
-						if (!map::get()->is_tile_on_province_border_with(coastal_tile_pos, this->get_province())) {
-							continue;
-						}
-
-						if (!this->get_country()->get_game_data()->is_tile_explored(coastal_tile_pos)) {
-							co_await this->get_country()->get_game_data()->explore_tile(coastal_tile_pos);
-						}
-					}
-				}
+				co_await this->get_country()->get_game_data()->explore_province(neighbor_province);
 			}
 		}
 	}

@@ -43,108 +43,6 @@ void province_map_data::on_map_created()
 		}
 	}
 
-	/*
-	if (this->get_tiles().size() <= 10000) {
-		std::vector<QPoint> tiles_to_process = this->get_border_tiles();
-		for (size_t i = 0; i < tiles_to_process.size(); ++i) {
-			const QPoint &tile_pos = tiles_to_process.at(i);
-
-			QPolygon polygon;
-			polygon.append(tile_pos);
-
-			QPoint current_tile_pos = tile_pos;
-			bool changed = true;
-			while (changed) {
-				changed = false;
-
-				for (int multiplier = 1; multiplier >= -1; multiplier -= 2) {
-					bool added_east = false;
-					for (int x_offset = 1;; ++x_offset) {
-						const QPoint &east_tile_pos = current_tile_pos + QPoint(x_offset * multiplier, 0);
-						if (multiplier > 0) {
-							if (east_tile_pos.x() >= map::get()->get_width()) {
-								break;
-							}
-						} else {
-							if (east_tile_pos.x() < 0) {
-								break;
-							}
-						}
-
-						if (vector::contains(tiles_to_process, east_tile_pos)) {
-							if (added_east)
-								polygon.back() = east_tile_pos;
-							else {
-								polygon.append(east_tile_pos);
-								added_east = true;
-							}
-							std::erase(tiles_to_process, east_tile_pos);
-							changed = true;
-						} else {
-							break;
-						}
-					}
-					current_tile_pos = polygon.back();
-
-					bool added_south = false;
-					for (int y_offset = 1;; ++y_offset) {
-						const QPoint &south_tile_pos = current_tile_pos + QPoint(0, y_offset * multiplier);
-						if (multiplier > 0) {
-							if (south_tile_pos.y() >= map::get()->get_height()) {
-								break;
-							}
-						} else {
-							if (south_tile_pos.y() < 0) {
-								break;
-							}
-						}
-
-						if (vector::contains(tiles_to_process, south_tile_pos)) {
-							if (added_south)
-								polygon.back() = south_tile_pos;
-							else {
-								polygon.append(south_tile_pos);
-								added_south = true;
-							}
-							std::erase(tiles_to_process, south_tile_pos);
-							changed = true;
-						} else {
-							break;
-						}
-					}
-					current_tile_pos = polygon.back();
-				}
-
-				current_tile_pos = polygon.back();
-			}
-
-			polygon.append(polygon.front());
-			this->polygons.push_back(std::move(polygon));
-		}
-
-		bool changed = true;
-		while (changed) {
-			changed = false;
-
-			for (size_t i = 0; i < this->polygons.size(); ++i) {
-				QPolygon &first_polygon = this->polygons.at(i);
-
-				for (size_t j = i + 1; j < this->polygons.size();) {
-					const QPolygon &second_polygon = this->polygons.at(j);
-
-					if (first_polygon.intersects(second_polygon)) {
-						first_polygon = first_polygon.united(second_polygon);
-						this->polygons.erase(this->polygons.begin() + j);
-						changed = true;
-					} else {
-						++j;
-					}
-				}
-			}
-		}
-	}
-	*/
-
 	this->calculate_territory_rect_center();
 
 	if (this->province->get_default_provincial_capital() != nullptr && this->province->get_default_provincial_capital()->get_map_data()->get_province() == this->province && this->province->get_default_provincial_capital()->get_map_data()->is_on_map()) {
@@ -235,10 +133,8 @@ void province_map_data::process_site_tile(const QPoint &tile_pos)
 	}
 }
 
-void province_map_data::add_border_tile(const QPoint &tile_pos)
+void province_map_data::process_border_tile(const QPoint &tile_pos)
 {
-	this->border_tiles.push_back(tile_pos);
-
 	if (this->get_territory_rect().isNull()) {
 		this->territory_rect = QRect(tile_pos, QSize(1, 1));
 	} else {

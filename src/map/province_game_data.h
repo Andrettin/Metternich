@@ -185,7 +185,6 @@ public:
 	Q_INVOKABLE QString get_pathway_construction_progress_qstring() const;
 	void change_pathway_construction_progress(const decimillesimal_int &change);
 
-	const std::vector<QPoint> &get_border_tiles() const;
 	const std::vector<QPoint> &get_resource_tiles() const;
 	const std::vector<const site *> &get_sites() const;
 	const std::vector<const site *> &get_settlement_sites() const;

@@ -1015,11 +1015,6 @@ void province_game_data::change_pathway_construction_progress(const decimillesim
 	assert_throw(this->pathway_construction_progress >= 0);
 }
 
-const std::vector<QPoint> &province_game_data::get_border_tiles() const
-{
-	return this->province->get_map_data()->get_border_tiles();
-}
-
 const std::vector<QPoint> &province_game_data::get_resource_tiles() const
 {
 	return this->province->get_map_data()->get_resource_tiles();
