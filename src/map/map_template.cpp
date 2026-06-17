@@ -417,7 +417,7 @@ void map_template::write_province_image()
 	}
 }
 
-void map_template::apply() const
+QCoro::Task<void> map_template::apply() const
 {
 	map *map = map::get();
 	map->clear();
@@ -440,13 +440,13 @@ void map_template::apply() const
 		map_generator map_generator(this);
 		map_generator.generate();
 	} else {
-		this->apply_terrain_and_provinces();
+		co_await this->apply_terrain_and_provinces();
 	}
 
 	this->generate_additional_sites();
 }
 
-void map_template::apply_terrain_and_provinces() const
+QCoro::Task<void> map_template::apply_terrain_and_provinces() const
 {
 	assert_throw(!this->get_province_image_filepath().empty());
 	assert_throw(!this->get_terrain_image_filepath().empty());
@@ -475,7 +475,7 @@ void map_template::apply_terrain_and_provinces() const
 	}
 
 	for (QFuture<std::vector<std::pair<QPoint, province *>>> &future : futures) {
-		const std::vector<std::pair<QPoint, province *>> tile_province_pairs = future.takeResult();
+		const std::vector<std::pair<QPoint, province *>> tile_province_pairs = co_await qCoro(future).takeResult();
 
 		for (const auto &[tile_pos, province] : tile_province_pairs) {
 			map->set_tile_province(tile_pos, province);

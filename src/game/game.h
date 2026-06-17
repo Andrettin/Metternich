@@ -60,8 +60,7 @@ public:
 	void save(const std::filesystem::path &filepath) const;
 	Q_INVOKABLE void save(const QUrl &filepath) const;
 
-	[[nodiscard]]
-	QCoro::Task<void> load(const std::filesystem::path &filepath);
+	[[nodiscard]] QCoro::Task<void> load(const std::filesystem::path &filepath);
 
 	Q_INVOKABLE QCoro::QmlTask load(const QUrl &filepath);
 
@@ -101,8 +100,7 @@ public:
 		return this->setup_scenario_coro(scenario);
 	}
 
-	[[nodiscard]]
-	QCoro::Task<void> setup_scenario_coro(const metternich::scenario *scenario);
+	[[nodiscard]] QCoro::Task<void> setup_scenario_coro(const metternich::scenario *scenario);
 
 	Q_INVOKABLE QCoro::QmlTask start()
 	{
@@ -226,19 +224,15 @@ public:
 		this->set_price(commodity, this->get_price(commodity) + value);
 	}
 
-	[[nodiscard]]
-	QCoro::Task<void> create_map_images();
-
-	[[nodiscard]]
-	QCoro::Task<void> create_diplomatic_map_image();
+	[[nodiscard]] QCoro::Task<void> create_map_images();
+	[[nodiscard]] QCoro::Task<void> create_diplomatic_map_image();
 
 	const QImage &get_exploration_diplomatic_map_image() const
 	{
 		return this->exploration_diplomatic_map_image;
 	}
 
-	[[nodiscard]]
-	QCoro::Task<void> create_exploration_diplomatic_map_image();
+	[[nodiscard]] QCoro::Task<void> create_exploration_diplomatic_map_image();
 
 	void set_exploration_changed()
 	{
@@ -281,13 +275,11 @@ public:
 	void add_generated_character(qunique_ptr<character> &&character);
 	void remove_generated_character(character *character);
 
-	[[nodiscard]]
-	QCoro::Task<void> process_delayed_effects();
+	[[nodiscard]] QCoro::Task<void> process_delayed_effects();
 
 private:
 	template <typename scope_type>
-	[[nodiscard]]
-	QCoro::Task<void> process_delayed_effects(std::vector<std::unique_ptr<delayed_effect_instance<scope_type>>> &delayed_effects)
+	[[nodiscard]] QCoro::Task<void> process_delayed_effects(std::vector<std::unique_ptr<delayed_effect_instance<scope_type>>> &delayed_effects)
 	{
 		for (size_t i = 0; i < delayed_effects.size();) {
 			const std::unique_ptr<delayed_effect_instance<scope_type>> &delayed_effect = delayed_effects[i];

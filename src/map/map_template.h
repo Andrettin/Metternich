@@ -207,8 +207,8 @@ public:
 		return this->diplomatic_map_tile_scale;
 	}
 
-	void apply() const;
-	void apply_terrain_and_provinces() const;
+	[[nodiscard]] QCoro::Task<void> apply() const;
+	[[nodiscard]] QCoro::Task<void> apply_terrain_and_provinces() const;
 	std::vector<std::pair<QPoint, province *>> apply_terrain_and_provinces_for_map_line(const int y, const std::span<const QRgb> &province_image_data, const std::span<const QRgb> &terrain_image_data) const;
 	void generate_additional_sites() const;
 	void generate_site(const site *site) const;
