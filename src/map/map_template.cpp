@@ -448,15 +448,28 @@ QCoro::Task<void> map_template::apply() const
 
 QCoro::Task<void> map_template::apply_terrain_and_provinces() const
 {
-	assert_throw(!this->get_province_image_filepath().empty());
-	assert_throw(!this->get_terrain_image_filepath().empty());
+	QImage province_image;
+	QImage terrain_image;
 
-	QImage province_image(path::to_qstring(this->get_province_image_filepath()));
+	if (this->get_main_map_template() != nullptr) {
+		const QRect map_rect(this->get_map_start_pos(), this->get_size());
+
+		province_image = QImage(path::to_qstring(this->get_main_map_template()->get_province_image_filepath()));
+		province_image = province_image.copy(map_rect);
+
+		terrain_image = QImage(path::to_qstring(this->get_main_map_template()->get_terrain_image_filepath()));
+		terrain_image = terrain_image.copy(map_rect);
+	} else {
+		assert_throw(!this->get_province_image_filepath().empty());
+		assert_throw(!this->get_terrain_image_filepath().empty());
+
+		province_image = QImage(path::to_qstring(this->get_province_image_filepath()));
+		terrain_image = QImage(path::to_qstring(this->get_terrain_image_filepath()));
+	}
+
 	if (province_image.format() != QImage::Format_ARGB32) {
 		province_image = province_image.convertToFormat(QImage::Format_ARGB32);
 	}
-
-	QImage terrain_image(path::to_qstring(this->get_terrain_image_filepath()));
 	if (terrain_image.format() != QImage::Format_ARGB32) {
 		terrain_image = terrain_image.convertToFormat(QImage::Format_ARGB32);
 	}
@@ -496,13 +509,30 @@ QCoro::Task<void> map_template::apply_terrain_and_provinces() const
 	}
 
 	//apply tile sites
-	for (const auto &[tile_pos, site] : this->sites_by_position) {
-		if (site->get_province() != nullptr && this->is_province_ignored(site->get_province())) {
-			//skip sites whose provinces are ignored
-			continue;
-		}
+	if (this->get_main_map_template() != nullptr) {
+		const QRect map_rect(this->get_map_start_pos(), this->get_size());
 
-		map->set_tile_site(tile_pos, site);
+		for (const auto &[tile_pos, site] : this->get_main_map_template()->get_sites_by_position()) {
+			if (!map_rect.contains(tile_pos)) {
+				continue;
+			}
+
+			if (site->get_province() != nullptr && this->is_province_ignored(site->get_province())) {
+				//skip sites whose provinces are ignored
+				continue;
+			}
+
+			map->set_tile_site(tile_pos - map_rect.topLeft(), site);
+		}
+	} else {
+		for (const auto &[tile_pos, site] : this->get_sites_by_position()) {
+			if (site->get_province() != nullptr && this->is_province_ignored(site->get_province())) {
+				//skip sites whose provinces are ignored
+				continue;
+			}
+
+			map->set_tile_site(tile_pos, site);
+		}
 	}
 }
 
