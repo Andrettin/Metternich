@@ -101,6 +101,11 @@ Flickable {
 			
 			var province = metternich.map.get_tile_province(Qt.point(Math.floor(mouse.x / metternich.map.diplomatic_map_tile_scale_double / scale_factor), Math.floor(mouse.y / metternich.map.diplomatic_map_tile_scale_double / scale_factor)))
 			
+			if (province === null) {
+				diplomatic_map.selected_country = null
+				return
+			}
+			
 			if (metternich.game.player_country !== null && !metternich.game.player_country.game_data.is_province_explored(province)) {
 				diplomatic_map.selected_country = null
 				return
