@@ -4,5 +4,5 @@ paxos = {
 	geocoordinate = { 20.185194444444 39.197138888889 } #Gaios
 	type = holding
 	holding_type = castle
-	province = attica
+	province = corfu
 }

@@ -4,5 +4,5 @@ zakynthos = {
 	geocoordinate = { 20.896179 37.782875 } #Zakynthos (city)
 	type = holding
 	holding_type = castle
-	province = attica
+	province = zakynthos
 }

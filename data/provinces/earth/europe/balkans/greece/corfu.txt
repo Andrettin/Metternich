@@ -1,0 +1,29 @@
+corfu = {
+	name = "Corfu"
+	color = { 184 216 185 }
+	default_provincial_capital = palaio_frourio
+	regions = {
+		greece
+	}
+	
+	history = {
+		-750 = {
+			owner = greece #Greek territory in the 750-625 BC period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 5.
+			culture = greek
+			religion = hellenic
+		}
+		
+		526 = {
+			owner = eastern_rome #part of the East Roman Empire in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			religion = orthodox
+		}
+		
+		1360 = {
+			owner = naples #part of the Kingdom of Naples in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1740 = {
+			owner = venice #Venetian possession c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+	}
+}

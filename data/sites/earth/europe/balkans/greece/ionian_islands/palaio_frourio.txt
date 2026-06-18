@@ -4,5 +4,5 @@ palaio_frourio = {
 	geocoordinate = { 19.929444444444446 39.623333333333335 } #Old Fortress of Corfu
 	type = holding
 	holding_type = castle
-	province = attica #Corfu
+	province = corfu
 }
