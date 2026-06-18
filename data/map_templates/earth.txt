@@ -1,12 +1,12 @@
 earth = {
 	name = "Earth"
-	size = { 16384 8464 }
+	size = { 16384 12013 }
 	world = earth
 	map_projection = miller
 	min_longitude = -180
 	max_longitude = 180
-	min_latitude = -60.05
-	max_latitude = 85
+	min_latitude = -90
+	max_latitude = 90
 	minimap_tile_scale = 0.25
 	diplomatic_map_tile_scale = 0.5
 	geocoordinate_x_offset = -512 #shift all positions derived from geocoordinates by this offset; this will place the Florence meridian at the center of the map
