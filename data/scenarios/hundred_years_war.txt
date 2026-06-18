@@ -1,7 +1,7 @@
 hundred_years_war = {
 	name = "Hundred Years' War"
 	start_date = 1337
-	map_template = central_europe
+	map_template = europe
 	hidden = true
 	default_countries = {
 		england

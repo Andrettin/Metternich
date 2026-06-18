@@ -44,16 +44,3 @@ europe = {
 		samara
 	}
 }
-
-central_europe = {
-	name = "Central Europe"
-	size = { 1092 716 }
-	world = earth
-	map_projection = miller
-	min_longitude = 2
-	max_longitude = 26
-	min_latitude = 44
-	max_latitude = 56.01
-	terrain_image_filepath = "earth/terrain_central_europe.png"
-	province_image_filepath = "earth/provinces_central_europe.png"
-}

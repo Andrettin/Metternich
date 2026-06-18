@@ -1,7 +1,7 @@
 high_middle_ages = {
 	name = "High Middle Ages"
 	start_date = 1066.12.26
-	map_template = central_europe
+	map_template = europe
 	hidden = true
 	default_countries = {
 		#apulia
