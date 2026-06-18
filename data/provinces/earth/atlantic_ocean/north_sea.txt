@@ -40,15 +40,6 @@ north_sea = {
 	}
 }
 
-norwegian_sea = {
-	name = "Norwegian Sea"
-	geocoordinate = { 0 69 }
-	sea = true
-	regions = {
-		atlantic_ocean
-	}
-}
-
 skagerrak = {
 	name = "Skagerrak"
 	color = { 0 120 144 }

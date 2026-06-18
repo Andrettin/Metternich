@@ -1,0 +1,5 @@
+arctic_ocean = {
+	name = "Arctic Ocean"
+	ocean = true
+	world = earth
+}

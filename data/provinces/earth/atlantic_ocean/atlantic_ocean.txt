@@ -55,6 +55,15 @@ davis_strait = {
 	}
 }
 
+denmark_strait = {
+	name = "Denmark Strait"
+	color = { 55 2 150 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
 english_channel = {
 	name = "English Channel"
 	color = { 48 128 128 }
@@ -142,6 +151,16 @@ north_atlantic_ocean = {
 	name = "North Atlantic Ocean"
 	geocoordinate = { -33 47 }
 	color = { 135 11 136 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
+norwegian_sea = {
+	name = "Norwegian Sea"
+	color = { 187 212 38 }
+	geocoordinate = { 0 69 }
 	sea = true
 	regions = {
 		atlantic_ocean

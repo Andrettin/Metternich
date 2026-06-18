@@ -1,0 +1,8 @@
+arctic_ocean = {
+	name = "Arctic Ocean"
+	color = { 251 14 161 }
+	sea = true
+	regions = {
+		arctic_ocean
+	}
+}
