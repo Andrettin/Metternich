@@ -213,15 +213,6 @@ geocoordinate map_template::get_pos_geocoordinate(const QPoint &pos) const
 	return this->map_projection->point_to_geocoordinate(pos, this->get_georectangle(), this->get_size(), this->geocoordinate_x_offset);
 }
 
-void map_template::set_terrain_image_filepath(const std::filesystem::path &filepath)
-{
-	if (filepath == this->get_terrain_image_filepath()) {
-		return;
-	}
-
-	this->terrain_image_filepath = database::get()->get_maps_path(this->get_module()) / filepath;
-}
-
 void map_template::write_terrain_image()
 {
 	assert_throw(this->get_world() != nullptr);
@@ -262,15 +253,8 @@ void map_template::write_terrain_image()
 
 	this->map_projection->validate_area(this->get_georectangle(), this->get_size());
 
-	QImage base_image;
-
-	if (!this->get_terrain_image_filepath().empty()) {
-		base_image = QImage(path::to_qstring(this->get_terrain_image_filepath()));
-		assert_throw(!base_image.isNull());
-	} else {
-		base_image = QImage(this->get_size(), QImage::Format_RGBA8888);
-		base_image.fill(Qt::transparent);
-	}
+	QImage base_image = QImage(this->get_size(), QImage::Format_RGBA8888);
+	base_image.fill(Qt::transparent);
 
 	QImage province_image;
 
@@ -313,10 +297,7 @@ void map_template::write_terrain_image()
 	}
 
 	//write terrain geoshapes
-	std::filesystem::path output_filepath = this->get_terrain_image_filepath().filename();
-	if (output_filepath.empty()) {
-		output_filepath = "terrain.png";
-	}
+	std::filesystem::path output_filepath = "terrain.png";
 
 	geoshape::write_image(output_filepath, geodata_map, this->get_georectangle(), this->get_size(), this->map_projection, base_image, this->geocoordinate_x_offset);
 
@@ -453,7 +434,6 @@ QCoro::Task<void> map_template::apply_provinces() const
 		province_image = province_image.copy(map_rect);
 	} else {
 		assert_throw(!this->get_province_image_filepath().empty());
-		assert_throw(!this->get_terrain_image_filepath().empty());
 
 		province_image = QImage(path::to_qstring(this->get_province_image_filepath()));
 	}
