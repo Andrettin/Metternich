@@ -24,6 +24,8 @@ province_map_data::province_map_data(const metternich::province *province) : pro
 {
 	if (province->get_terrain() != nullptr) {
 		this->terrain = province->get_terrain();
+	} else {
+		this->terrain = defines::get()->get_default_province_terrain();
 	}
 }
 
@@ -60,19 +62,7 @@ void province_map_data::on_map_created()
 
 void province_map_data::initialize_terrain()
 {
-	if (this->get_terrain() == nullptr) {
-		const terrain_type *best_terrain = nullptr;
-		int best_terrain_count = 0;
-		for (const auto &[tile_terrain, count] : this->get_tile_terrain_counts()) {
-			if (count > best_terrain_count) {
-				best_terrain = tile_terrain;
-				best_terrain_count = count;
-			}
-		}
-
-		this->terrain = best_terrain;
-		assert_throw(this->get_terrain() != nullptr);
-	}
+	assert_throw(this->get_terrain() != nullptr);
 
 	//set the terrain type for the province's sites too
 	for (const site *site : this->get_sites()) {

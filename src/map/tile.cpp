@@ -9,22 +9,8 @@
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "map/site_map_data.h"
-#include "map/terrain_type.h"
 
 namespace metternich {
-
-tile::tile(const terrain_type *terrain) : terrain(terrain)
-{
-}
-
-void tile::set_terrain(const terrain_type *terrain)
-{
-	if (terrain == this->get_terrain()) {
-		return;
-	}
-
-	this->terrain = terrain;
-}
 
 const domain *tile::get_owner() const
 {

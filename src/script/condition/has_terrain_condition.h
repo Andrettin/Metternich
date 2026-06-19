@@ -3,7 +3,7 @@
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
 #include "map/province.h"
-#include "map/province_game_data.h"
+#include "map/province_map_data.h"
 #include "map/terrain_type.h"
 #include "script/condition/condition.h"
 
@@ -29,7 +29,11 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		return scope->get_game_data()->get_tile_terrain_counts().contains(this->terrain);
+		if constexpr (std::is_same_v<scope_type, domain>) {
+			return scope->get_game_data()->get_tile_terrain_counts().contains(this->terrain);
+		} else {
+			return scope->get_map_data()->get_terrain() == this->terrain;
+		}
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override

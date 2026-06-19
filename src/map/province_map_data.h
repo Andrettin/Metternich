@@ -107,16 +107,6 @@ public:
 		return this->resource_counts;
 	}
 
-	const terrain_type_map<int> &get_tile_terrain_counts() const
-	{
-		return this->tile_terrain_counts;
-	}
-
-	void change_tile_terrain_count(const terrain_type *terrain, const int change)
-	{
-		this->tile_terrain_counts[terrain] += change;
-	}
-
 	const std::vector<QPolygon> &get_polygons() const
 	{
 		return this->polygons;
@@ -142,7 +132,6 @@ private:
 	std::vector<const site *> sites;
 	std::vector<const site *> settlement_sites; //includes all settlements, even if unbuilt
 	resource_map<int> resource_counts;
-	terrain_type_map<int> tile_terrain_counts;
 	std::vector<QPolygon> polygons;
 };
 

@@ -49,11 +49,6 @@ void map::process_gsml_property(const gsml_property &property)
 		this->diplomatic_map_tile_scale = decimillesimal_int(value);
 	} else if (key == "minimap_tile_scale") {
 		this->minimap_tile_scale = decimillesimal_int(value);
-	} else if (key == "tile_terrains") {
-		for (size_t i = 0; i < value.size(); ++i) {
-			const char c = value[i];
-			(*this->tiles)[i].set_terrain(terrain_type::get_by_character(c));
-		}
 	} else {
 		throw std::runtime_error(std::format("Invalid map data property: \"{}\".", key));
 	}
@@ -69,7 +64,7 @@ void map::process_gsml_scope(const gsml_data &scope)
 		this->create_tiles();
 	} else if (tag == "tile_provinces") {
 		int y = 0;
-		scope.for_each_child([&](const gsml_data &child_scope) {
+		scope.for_each_child([this, &y](const gsml_data &child_scope) {
 			for (size_t x = 0; x < child_scope.get_values().size(); ++x) {
 				const std::string &value = child_scope.get_values()[x];
 				province *province = nullptr;
@@ -105,13 +100,6 @@ gsml_data map::to_gsml_data() const
 	data.add_property("diplomatic_map_tile_scale", this->get_diplomatic_map_tile_scale().to_string());
 	data.add_property("minimap_tile_scale", this->get_minimap_tile_scale().to_string());
 
-	std::string tile_terrains_str;
-	tile_terrains_str.reserve(this->tiles->size());
-	for (const tile &tile : *this->tiles) {
-		tile_terrains_str += tile.get_terrain()->get_character();
-	}
-	data.add_property("tile_terrains", tile_terrains_str);
-
 	std::map<const province *, size_t> map_province_indices;
 	for (size_t i = 0; i < this->get_provinces().size(); ++i) {
 		map_province_indices[this->get_provinces().at(i)] = i;
@@ -141,12 +129,10 @@ void map::create_tiles()
 
 	const int tile_quantity = this->get_width() * this->get_height();
 
-	const terrain_type *unexplored_terrain = defines::get()->get_unexplored_terrain();
-
-	this->tiles->resize(tile_quantity, tile(unexplored_terrain));
+	this->tiles->resize(tile_quantity, tile());
 }
 
-void map::initialize(const bool province_post_processing_enabled, const std::unordered_set<const terrain_type *> &province_post_processing_terrains)
+void map::initialize(const bool province_post_processing_enabled)
 {
 	if (province_post_processing_enabled) {
 		//assign tiles without provinces to the most-adjacent province
@@ -156,85 +142,17 @@ void map::initialize(const bool province_post_processing_enabled, const std::uno
 				QPoint tile_pos(x, y);
 				const tile *tile = this->get_tile(tile_pos);
 
-				if (!province_post_processing_terrains.empty()) {
-					if (!province_post_processing_terrains.contains(tile->get_terrain())) {
-						continue;
-					}
-				} else {
-					if (tile->get_terrain() == defines::get()->get_unexplored_terrain()) {
-						continue;
-					}
+				if (tile->get_province() != nullptr) {
+					continue;
 				}
 
 				tiles_to_check.push_back(std::move(tile_pos));
 			}
 		}
 		vector::shuffle(tiles_to_check);
-		while (!tiles_to_check.empty()) {
-			std::vector<QPoint> new_tiles_to_check;
 
-			for (const QPoint &tile_pos : tiles_to_check) {
-				try {
-					const tile *tile = this->get_tile(tile_pos);
-					if (tile->get_province() != nullptr) {
-						continue;
-					}
-
-					std::map<province *, int, province_compare> adjacent_province_counts;
-					std::vector<QPoint> adjacent_without_province;
-					point::for_each_adjacent(tile_pos, [this, tile, &adjacent_province_counts, &adjacent_without_province](const QPoint &adjacent_pos) {
-						if (!this->contains(adjacent_pos)) {
-							return;
-						}
-
-						const metternich::tile *adjacent_tile = this->get_tile(adjacent_pos);
-
-						if (adjacent_tile->get_terrain() == defines::get()->get_unexplored_terrain()) {
-							return;
-						}
-
-						if (tile->get_terrain()->is_water() != adjacent_tile->get_terrain()->is_water()) {
-							return;
-						}
-
-						if (adjacent_tile->get_province() == nullptr) {
-							adjacent_without_province.push_back(adjacent_pos);
-							return;
-						}
-
-						if (tile->get_terrain()->is_water() != adjacent_tile->get_province()->is_water_zone()) {
-							return;
-						}
-
-						adjacent_province_counts[adjacent_tile->get_province()]++;
-					});
-
-					int best_count = 0;
-					std::vector<province *> best_provinces;
-
-					for (const auto &[province, province_count] : adjacent_province_counts) {
-						if (province_count > best_count) {
-							best_provinces.clear();
-							best_count = province_count;
-						} else if (province_count < best_count) {
-							continue;
-						}
-
-						best_provinces.push_back(province);
-					}
-
-					if (!best_provinces.empty()) {
-						this->set_tile_province(tile_pos, vector::get_random(best_provinces));
-						vector::merge(new_tiles_to_check, std::move(adjacent_without_province));
-					}
-				} catch (...) {
-					exception::report(std::current_exception());
-				}
-			}
-
-			tiles_to_check = std::move(new_tiles_to_check);
-			vector::shuffle(tiles_to_check);
-		}
+		this->do_province_post_processing(tiles_to_check, true);
+		this->do_province_post_processing(tiles_to_check, false);
 	}
 
 	this->process_border_tiles();
@@ -265,6 +183,68 @@ void map::initialize(const bool province_post_processing_enabled, const std::uno
 
 	emit provinces_changed();
 	emit sites_changed();
+}
+
+void map::do_province_post_processing(std::vector<QPoint> tiles_to_check, const bool only_water_zones)
+{
+	//assign tiles without provinces to the most-adjacent province
+	while (!tiles_to_check.empty()) {
+		std::vector<QPoint> new_tiles_to_check;
+
+		for (const QPoint &tile_pos : tiles_to_check) {
+			try {
+				const tile *tile = this->get_tile(tile_pos);
+				if (tile->get_province() != nullptr) {
+					continue;
+				}
+
+				std::map<province *, int, province_compare> adjacent_province_counts;
+				std::vector<QPoint> adjacent_without_province;
+				point::for_each_adjacent(tile_pos, [this, tile, &adjacent_province_counts, &adjacent_without_province, only_water_zones](const QPoint &adjacent_pos) {
+					if (!this->contains(adjacent_pos)) {
+						return;
+					}
+
+					const metternich::tile *adjacent_tile = this->get_tile(adjacent_pos);
+
+					if (adjacent_tile->get_province() == nullptr) {
+						adjacent_without_province.push_back(adjacent_pos);
+						return;
+					}
+
+					if (only_water_zones && !adjacent_tile->get_province()->is_water_zone()) {
+						return;
+					}
+
+					adjacent_province_counts[adjacent_tile->get_province()]++;
+				});
+
+				int best_count = 0;
+				std::vector<province *> best_provinces;
+
+				for (const auto &[province, province_count] : adjacent_province_counts) {
+					if (province_count > best_count) {
+						best_provinces.clear();
+						best_count = province_count;
+					} else if (province_count < best_count) {
+						continue;
+					}
+
+					best_provinces.push_back(province);
+				}
+
+				if (!best_provinces.empty()) {
+					this->set_tile_province(tile_pos, vector::get_random(best_provinces));
+					vector::merge(new_tiles_to_check, std::move(adjacent_without_province));
+				}
+			} catch (...) {
+				exception::report(std::current_exception());
+			}
+		}
+
+		tiles_to_check = std::move(new_tiles_to_check);
+		vector::shuffle(tiles_to_check);
+	}
 }
 
 void map::process_border_tiles()
@@ -340,16 +320,6 @@ tile *map::get_tile(const QPoint &pos) const
 	return &this->tiles->at(index);
 }
 
-void map::set_tile_terrain(const QPoint &tile_pos, const terrain_type *terrain)
-{
-	tile *tile = this->get_tile(tile_pos);
-	tile->set_terrain(terrain);
-
-	if (game::get()->is_running()) {
-		emit tile_terrain_changed(tile_pos);
-	}
-}
-
 const metternich::province *map::get_tile_province(const QPoint &tile_pos) const
 {
 	const tile *tile = this->get_tile(tile_pos);
@@ -367,10 +337,6 @@ void map::set_tile_province(const QPoint &tile_pos, province *province)
 	tile *tile = this->get_tile(tile_pos);
 	tile->set_province(province);
 	province->get_map_data()->add_tile(tile_pos);
-
-	if (tile->get_terrain()->is_water() != province->is_water_zone()) {
-		log::log_error(std::format("Tile {} has terrain type \"{}\", which has a water value that doesn't match the tile's \"{}\" province.", point::to_string(tile_pos), tile->get_terrain()->get_identifier(), province->get_identifier()));
-	}
 }
 
 void map::set_tile_site(const QPoint &tile_pos, const site *site)
@@ -408,8 +374,8 @@ void map::set_tile_site(const QPoint &tile_pos, const site *site)
 			log::log_error(std::format("Site \"{}\" {} has coastal resource \"{}\", but is not coastal.", site->get_identifier(), point::to_string(tile_pos), tile->get_resource()->get_identifier()));
 		}
 
-		if (!vector::contains(tile->get_resource()->get_terrain_types(), tile->get_terrain())) {
-			log::log_error(std::format("Site \"{}\" {} has resource \"{}\", which doesn't match its \"{}\" terrain type.", site->get_identifier(), point::to_string(tile_pos), tile->get_resource()->get_identifier(), tile->get_terrain()->get_identifier()));
+		if (!vector::contains(tile->get_resource()->get_terrain_types(), site->get_map_data()->get_terrain())) {
+			log::log_error(std::format("Site \"{}\" {} has resource \"{}\", which doesn't match its \"{}\" terrain type.", site->get_identifier(), point::to_string(tile_pos), tile->get_resource()->get_identifier(), site->get_map_data()->get_terrain()->get_identifier()));
 		}
 	}
 
@@ -452,40 +418,6 @@ QCoro::Task<void> map::set_tile_resource_discovered(const QPoint &tile_pos, cons
 	}
 
 	emit tile_resource_changed(tile_pos);
-}
-
-bool map::is_tile_water(const QPoint &tile_pos) const
-{
-	const tile *tile = this->get_tile(tile_pos);
-	return tile->get_terrain() != nullptr && tile->get_terrain()->is_water();
-}
-
-bool map::is_tile_coastal(const QPoint &tile_pos) const
-{
-	const tile *tile = this->get_tile(tile_pos);
-
-	if (tile->get_terrain()->is_water()) {
-		return false;
-	}
-
-	bool result = false;
-
-	point::for_each_adjacent_until(tile_pos, [this, &result](const QPoint &adjacent_pos) {
-		if (!this->contains(adjacent_pos)) {
-			return false;
-		}
-
-		const metternich::tile *adjacent_tile = this->get_tile(adjacent_pos);
-
-		if (adjacent_tile->get_terrain()->is_water()) {
-			result = true;
-			return true;
-		}
-
-		return false;
-	});
-
-	return result;
 }
 
 bool map::is_tile_near_celestial_body(const QPoint &tile_pos) const
@@ -605,7 +537,11 @@ QCoro::Task<void> map::create_ocean_diplomatic_map_image()
 			const QPoint tile_pos = pixel_pos / tile_scale;
 			const tile *tile = this->get_tile(tile_pos);
 
-			if (!tile->get_terrain()->is_water()) {
+			if (tile->get_province() == nullptr) {
+				continue;
+			}
+
+			if (!tile->get_province()->is_water_zone()) {
 				continue;
 			}
 
@@ -691,9 +627,8 @@ void map::update_minimap_rect(const QRect &tile_rect)
 
 			if (game::get()->get_player_country()->get_game_data()->is_tile_explored(tile_pos)) {
 				const tile *tile = this->get_tile(tile_pos);
-				const terrain_type *terrain = tile->get_terrain();
 
-				if (terrain->is_water()) {
+				if (tile->get_province() != nullptr && tile->get_province()->is_water_zone()) {
 					this->minimap_image.setPixelColor(pixel_pos, defines::get()->get_minimap_ocean_color());
 					continue;
 				}

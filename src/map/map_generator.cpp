@@ -120,7 +120,7 @@ void map_generator::generate()
 		const QPoint tile_pos = point::from_index(static_cast<int>(i), this->get_width());
 		map->set_tile_province(tile_pos, province);
 
-		province->get_map_data()->change_tile_terrain_count(map::get()->get_tile(tile_pos)->get_terrain(), 1);
+		//province->get_map_data()->change_tile_terrain_count(map::get()->get_tile(tile_pos)->get_terrain(), 1);
 	}
 
 	this->generate_sites();
@@ -145,7 +145,7 @@ void map_generator::generate_terrain()
 		for (int x = 0; x < map->get_width(); ++x) {
 			for (int y = 0; y < map->get_height(); ++y) {
 				const QPoint tile_pos(x, y);
-				map->set_tile_terrain(tile_pos, defines::get()->get_default_space_terrain());
+				//map->set_tile_terrain(tile_pos, defines::get()->get_default_space_terrain());
 			}
 		}
 	} else {
@@ -153,6 +153,7 @@ void map_generator::generate_terrain()
 	}
 
 	//build the zone tiles by terrain map
+	/*
 	for (zone &zone : this->zones) {
 		for (const QPoint &tile_pos : zone.tiles) {
 			const terrain_type *terrain = map->get_tile(tile_pos)->get_terrain();
@@ -163,6 +164,7 @@ void map_generator::generate_terrain()
 			}
 		}
 	}
+	*/
 }
 
 void map_generator::generate_world_terrain()
@@ -208,14 +210,14 @@ void map_generator::generate_world_terrain()
 				elevation = this->get_min_land_elevation();
 			}
 
-			const elevation_type elevation_type = this->get_tile_elevation_type(tile_pos);
-			const temperature_type temperature_type = this->get_tile_temperature_type(tile_pos);
-			const moisture_type moisture_type = this->get_tile_moisture_type(tile_pos);
-			const forestation_type forestation_type = this->get_tile_forestation_type(tile_pos);
+			//const elevation_type elevation_type = this->get_tile_elevation_type(tile_pos);
+			//const temperature_type temperature_type = this->get_tile_temperature_type(tile_pos);
+			//const moisture_type moisture_type = this->get_tile_moisture_type(tile_pos);
+			//const forestation_type forestation_type = this->get_tile_forestation_type(tile_pos);
 
-			const terrain_type *terrain = terrain_type::get_by_biome(elevation_type, temperature_type, moisture_type, forestation_type);
+			//const terrain_type *terrain = terrain_type::get_by_biome(elevation_type, temperature_type, moisture_type, forestation_type);
 
-			map->set_tile_terrain(tile_pos, terrain);
+			//map->set_tile_terrain(tile_pos, terrain);
 		}
 	}
 
@@ -1276,9 +1278,10 @@ void map_generator::generate_sites()
 
 			assert_throw(province->get_default_provincial_capital()->get_map_data()->is_on_map());
 
-			const QPoint &tile_pos = province->get_default_provincial_capital()->get_map_data()->get_tile_pos();
+			//const QPoint &tile_pos = province->get_default_provincial_capital()->get_map_data()->get_tile_pos();
 
 			if (!province->is_star_system()) {
+				/*
 				//change non-flatlands or forested terrain to unforested flatlands for settlements
 				const terrain_type *tile_terrain = map->get_tile(tile_pos)->get_terrain();
 				if (tile_terrain->get_elevation_type() != elevation_type::flatlands || tile_terrain->get_forestation_type() != forestation_type::none) {
@@ -1287,8 +1290,9 @@ void map_generator::generate_sites()
 
 					const terrain_type *terrain = terrain_type::get_by_biome(elevation_type::flatlands, temperature_type, moisture_type, forestation_type::none);
 
-					map->set_tile_terrain(tile_pos, terrain);
+					//map->set_tile_terrain(tile_pos, terrain);
 				}
+				*/
 			}
 		}
 

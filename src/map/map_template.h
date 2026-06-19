@@ -179,11 +179,6 @@ public:
 		return this->province_post_processing_enabled;
 	}
 
-	const std::unordered_set<const terrain_type *> &get_province_post_processing_terrains() const
-	{
-		return this->province_post_processing_terrains;
-	}
-
 	int get_land_percent() const
 	{
 		return this->land_percent;
@@ -220,8 +215,8 @@ public:
 	}
 
 	[[nodiscard]] QCoro::Task<void> apply() const;
-	[[nodiscard]] QCoro::Task<void> apply_terrain_and_provinces() const;
-	std::vector<std::pair<QPoint, province *>> apply_terrain_and_provinces_for_map_line(const int y, const std::span<const QRgb> &province_image_data, const std::span<const QRgb> &terrain_image_data) const;
+	[[nodiscard]] QCoro::Task<void> apply_provinces() const;
+	std::vector<std::pair<QPoint, province *>> apply_provinces_for_map_line(const int y, const std::span<const QRgb> &province_image_data) const;
 	void generate_additional_sites() const;
 	void generate_site(const site *site) const;
 
@@ -251,7 +246,6 @@ private:
 	std::filesystem::path province_image_filepath;
 	bool randomly_generated = false;
 	bool province_post_processing_enabled = true;
-	std::unordered_set<const terrain_type *> province_post_processing_terrains;
 	int land_percent = 30;
 	int steepness = 30;
 	int average_temperature = 50;

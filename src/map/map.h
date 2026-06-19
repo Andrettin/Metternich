@@ -43,7 +43,8 @@ public:
 	gsml_data to_gsml_data() const;
 
 	void create_tiles();
-	void initialize(const bool province_post_processing_enabled, const std::unordered_set<const terrain_type *> &province_post_processing_terrains);
+	void initialize(const bool province_post_processing_enabled);
+	void do_province_post_processing(std::vector<QPoint> tiles_to_check, const bool only_water_zones);
 	void process_border_tiles();
 	Q_INVOKABLE void clear();
 
@@ -83,14 +84,11 @@ public:
 	int get_pos_index(const QPoint &pos) const;
 
 	tile *get_tile(const QPoint &pos) const;
-	void set_tile_terrain(const QPoint &tile_pos, const terrain_type *terrain);
 	Q_INVOKABLE const metternich::province *get_tile_province(const QPoint &tile_pos) const;
 	void set_tile_province(const QPoint &tile_pos, province *province);
 	void set_tile_site(const QPoint &tile_pos, const site *site);
 	[[nodiscard]] QCoro::Task<void> set_tile_resource_discovered(const QPoint &tile_pos, const bool discovered);
 
-	bool is_tile_water(const QPoint &tile_pos) const;
-	bool is_tile_coastal(const QPoint &tile_pos) const;
 	bool is_tile_near_celestial_body(const QPoint &tile_pos) const;
 
 	bool is_tile_on_province_border(const QPoint &tile_pos) const;
@@ -185,7 +183,6 @@ public:
 
 signals:
 	void size_changed();
-	void tile_terrain_changed(const QPoint &tile_pos);
 	void tile_exploration_changed(const QPoint &tile_pos);
 	void tile_prospection_changed(const QPoint &tile_pos);
 	void tile_resource_changed(const QPoint &tile_pos);

@@ -15,15 +15,6 @@ class terrain_type;
 class tile final
 {
 public:
-	explicit tile(const terrain_type *terrain);
-
-	const terrain_type *get_terrain() const
-	{
-		return this->terrain;
-	}
-
-	void set_terrain(const terrain_type *terrain);
-
 	metternich::province *get_province() const
 	{
 		return this->province;
@@ -55,7 +46,6 @@ public:
 	bool produces_commodity(const commodity *commodity) const;
 
 private:
-	const terrain_type *terrain = nullptr;
 	metternich::province *province = nullptr;
 	const metternich::site *site = nullptr;
 };

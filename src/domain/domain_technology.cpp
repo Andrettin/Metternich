@@ -399,7 +399,7 @@ QCoro::Task<void> domain_technology::on_technology_added(const technology *techn
 					continue;
 				}
 
-				if (!vector::contains(discovered_resource->get_terrain_types(), tile->get_terrain())) {
+				if (!vector::contains(discovered_resource->get_terrain_types(), tile->get_province()->get_game_data()->get_terrain())) {
 					continue;
 				}
 

@@ -74,7 +74,6 @@ public:
 		return role_names;
 	}
 
-	void on_tile_terrain_changed(const QPoint &tile_pos);
 	void on_tile_exploration_changed(const QPoint &tile_pos);
 	void on_tile_prospection_changed(const QPoint &tile_pos);
 	void on_tile_resource_changed(const QPoint &tile_pos);

@@ -1474,11 +1474,6 @@ const resource_map<int> &province_game_data::get_resource_counts() const
 	return this->province->get_map_data()->get_resource_counts();
 }
 
-const terrain_type_map<int> &province_game_data::get_tile_terrain_counts() const
-{
-	return this->province->get_map_data()->get_tile_terrain_counts();
-}
-
 const terrain_type *province_game_data::get_terrain() const
 {
 	return this->province->get_map_data()->get_terrain();

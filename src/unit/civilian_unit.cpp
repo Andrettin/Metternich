@@ -644,7 +644,7 @@ bool civilian_unit::can_prospect_province(const metternich::province *province) 
 				continue;
 			}
 
-			if (!vector::contains(resource->get_terrain_types(), tile->get_terrain())) {
+			if (!vector::contains(resource->get_terrain_types(), province->get_game_data()->get_terrain())) {
 				continue;
 			}
 
@@ -686,7 +686,7 @@ terrain_type_map<std::vector<const metternich::province *>> civilian_unit::get_p
 	for (const metternich::province *province : this->get_owner()->get_game_data()->get_provinces()) {
 		bool has_prospectable_terrain = false;
 		for (const terrain_type *prospectable_terrain : prospectable_terrains) {
-			if (province->get_game_data()->get_tile_terrain_counts().contains(prospectable_terrain)) {
+			if (province->get_map_data()->get_terrain() == prospectable_terrain) {
 				has_prospectable_terrain = true;
 				break;
 			}

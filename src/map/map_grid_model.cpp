@@ -5,7 +5,6 @@
 #include "database/defines.h"
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
-#include "economy/commodity.h"
 #include "economy/resource.h"
 #include "game/game.h"
 #include "infrastructure/holding_type.h"
@@ -26,7 +25,6 @@ namespace metternich {
 
 map_grid_model::map_grid_model()
 {
-	connect(map::get(), &map::tile_terrain_changed, this, &map_grid_model::on_tile_terrain_changed);
 	connect(map::get(), &map::tile_exploration_changed, this, &map_grid_model::on_tile_exploration_changed);
 	connect(map::get(), &map::tile_prospection_changed, this, &map_grid_model::on_tile_prospection_changed);
 	connect(map::get(), &map::tile_resource_changed, this, &map_grid_model::on_tile_resource_changed);
@@ -131,7 +129,7 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 			case role::province:
 				return QVariant::fromValue(tile->get_province());
 			case role::terrain:
-				return QVariant::fromValue(tile->get_terrain());
+				return QVariant::fromValue(tile->get_province()->get_game_data()->get_terrain());
 			case role::resource:
 				if (!tile->is_resource_discovered()) {
 					return QVariant::fromValue(nullptr);
@@ -179,17 +177,6 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 	}
 
 	return QVariant();
-}
-
-void map_grid_model::on_tile_terrain_changed(const QPoint &tile_pos)
-{
-	const QModelIndex index = this->index(tile_pos.y(), tile_pos.x());
-	emit dataChanged(index, index, {
-		static_cast<int>(role::image_sources),
-		static_cast<int>(role::underlay_image_sources),
-		static_cast<int>(role::overlay_image_sources),
-		static_cast<int>(role::terrain)
-	});
 }
 
 void map_grid_model::on_tile_exploration_changed(const QPoint &tile_pos)

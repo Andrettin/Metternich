@@ -12,9 +12,6 @@ earth = {
 	geocoordinate_x_offset = -512 #shift all positions derived from geocoordinates by this offset; this will place the Florence meridian at the center of the map
 	terrain_image_filepath = "earth/terrain.png"
 	province_image_filepath = "earth/provinces.png"
-	province_post_processing_terrains = {
-		ocean
-	}
 }
 
 #earth_random = {

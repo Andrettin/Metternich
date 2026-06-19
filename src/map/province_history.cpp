@@ -114,7 +114,7 @@ phenotype_map<int64_t> province_history::get_phenotype_weights_for_culture(const
 
 	phenotype_map<int64_t> phenotype_weights = this->get_phenotype_weights();
 
-	std::erase_if(phenotype_weights, [culture](const auto & element) {
+	std::erase_if(phenotype_weights, [culture](const auto &element) {
 		const auto &[key, value] = element;
 		return !vector::contains(culture->get_species(), key->get_species());
 	});
