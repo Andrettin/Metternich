@@ -31,16 +31,10 @@ earth = {
 
 europe = {
 	name = "Europe"
-	size = { 2730 1715 }
+	size = { 2048 2048 }
 	world = earth
 	main_map_template = earth
-	map_start_pos = { 7168 2048 }
+	map_start_pos = { 7168 2560 }
 	minimap_tile_scale = 0.25
 	diplomatic_map_tile_scale = 0.5
-	ignored_provinces = {
-		casablanca
-		hamadan
-		medenine
-		samara
-	}
 }
