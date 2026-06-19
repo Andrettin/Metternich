@@ -25,7 +25,11 @@ province_map_data::province_map_data(const metternich::province *province) : pro
 	if (province->get_terrain() != nullptr) {
 		this->terrain = province->get_terrain();
 	} else {
-		this->terrain = defines::get()->get_default_province_terrain();
+		if (province->is_water_zone()) {
+			this->terrain = defines::get()->get_default_water_zone_terrain();
+		} else {
+			this->terrain = defines::get()->get_default_province_terrain();
+		}
 	}
 }
 
