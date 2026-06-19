@@ -27,6 +27,10 @@ peloponnese = {
 			religion = orthodox
 		}
 		
+		1121 = {
+			trade_zone = morosini
+		}
+		
 		1360 = {
 			owner = byzantium #part of the Byzantine Empire in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}

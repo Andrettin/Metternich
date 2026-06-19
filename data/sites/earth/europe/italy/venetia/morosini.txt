@@ -1,0 +1,15 @@
+morosini = {
+	name = "Morosini"
+	world = earth
+	geocoordinate = { 12.34093 45.438036 } #Palazzo Morosini del Pestrin
+	type = holding
+	holding_type = patrician_palace
+	province = venetia
+	
+	history = {
+		980 = {
+			developed = true
+			owner = morosini
+		}
+	}
+}
