@@ -37,6 +37,15 @@ caribbean_sea = {
 	}
 }
 
+coast_of_portugal = {
+	name = "Coast of Portugal"
+	color = { 242 171 141 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
 cumberland_sound = {
 	name = "Cumberland Sound"
 	color = { 2 61 163 }
