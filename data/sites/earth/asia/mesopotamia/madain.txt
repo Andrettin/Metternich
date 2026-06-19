@@ -1,0 +1,8 @@
+madain = {
+	name = "Madain"
+	world = earth
+	geocoordinate = { 44.58561 33.09947 } #Al-Mada'in District
+	type = holding
+	holding_type = castle
+	province = diyala
+}

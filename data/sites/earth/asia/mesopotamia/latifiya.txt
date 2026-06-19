@@ -1,0 +1,8 @@
+latifiya = {
+	name = "Latifiya"
+	world = earth
+	geocoordinate = { 44.355 32.966388888889 }
+	type = holding
+	holding_type = castle
+	province = diyala
+}

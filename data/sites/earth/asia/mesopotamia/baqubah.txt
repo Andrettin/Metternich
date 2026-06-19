@@ -1,0 +1,8 @@
+baqubah = {
+	name = "Baqubah"
+	world = earth
+	geocoordinate = { 44.657264 33.747642 } #from Natural Earth
+	type = holding
+	holding_type = castle
+	province = diyala
+}

@@ -1,0 +1,8 @@
+iskandriya = {
+	name = "Iskandriya"
+	world = earth
+	geocoordinate = { 44.35 32.9 } #Iskandariya
+	type = holding
+	holding_type = castle
+	province = babylon
+}

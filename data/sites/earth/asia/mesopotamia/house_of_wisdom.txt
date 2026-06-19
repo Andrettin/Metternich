@@ -1,0 +1,8 @@
+house_of_wisdom = {
+	name = "House of Wisdom"
+	world = earth
+	geocoordinate = { 44.3836 33.3423 }
+	type = holding
+	holding_type = great_library
+	province = diyala
+}
