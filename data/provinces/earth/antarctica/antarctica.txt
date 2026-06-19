@@ -1,0 +1,8 @@
+antarctica = {
+	name = "Antarctica"
+	color = { 117 21 210 }
+	default_provincial_capital = esperanza_base
+	regions = {
+		antarctica
+	}
+}

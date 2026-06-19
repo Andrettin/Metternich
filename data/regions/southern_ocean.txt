@@ -1,0 +1,5 @@
+southern_ocean = {
+	name = "Southern Ocean"
+	ocean = true
+	world = earth
+}

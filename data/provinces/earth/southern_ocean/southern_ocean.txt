@@ -1,0 +1,8 @@
+southern_ocean = {
+	name = "Southern Ocean"
+	color = { 175 36 54 }
+	sea = true
+	regions = {
+		southern_ocean
+	}
+}

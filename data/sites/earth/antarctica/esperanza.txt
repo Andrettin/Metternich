@@ -1,0 +1,8 @@
+esperanza_base = {
+	name = "Esperanza"
+	world = earth
+	geocoordinate = { -57.025902 -63.375329 } #from Natural Earth
+	type = holding
+	holding_type = university #scientific station
+	province = antarctica
+}

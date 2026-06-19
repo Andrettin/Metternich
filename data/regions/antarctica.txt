@@ -1,0 +1,4 @@
+antarctica = {
+	name = "Antarctica"
+	world = earth
+}
