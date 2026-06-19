@@ -1,6 +1,7 @@
 zakynthos = {
 	name = "Zakynthos"
 	color = { 156 168 251 }
+	terrain = mountains
 	default_provincial_capital = zakynthos
 	regions = {
 		greece

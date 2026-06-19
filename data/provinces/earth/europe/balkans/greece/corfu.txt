@@ -1,6 +1,7 @@
 corfu = {
 	name = "Corfu"
 	color = { 184 216 185 }
+	terrain = mountains
 	default_provincial_capital = palaio_frourio
 	regions = {
 		greece

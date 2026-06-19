@@ -1,6 +1,7 @@
 cephalonia = {
 	name = "Cephalonia"
 	color = { 90 46 254 }
+	terrain = mountains
 	default_provincial_capital = cephalonia
 	regions = {
 		greece
