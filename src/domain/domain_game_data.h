@@ -1151,11 +1151,6 @@ public:
 		this->diplomatic_penalty_for_expansion_modifier += change;
 	}
 
-	const point_set &get_explored_tiles() const
-	{
-		return this->explored_tiles;
-	}
-
 	Q_INVOKABLE bool is_tile_explored(const QPoint &tile_pos) const;
 	bool is_province_discovered(const province *province) const;
 
@@ -1164,15 +1159,10 @@ public:
 		return this->explored_provinces;
 	}
 
-	Q_INVOKABLE bool is_province_explored(const metternich::province *province) const
-	{
-		//get whether the province has been fully explored
-		return this->explored_provinces.contains(province);
-	}
+	Q_INVOKABLE bool is_province_explored(const metternich::province *province) const;
 
 	bool is_region_discovered(const region *region) const;
 
-	[[nodiscard]] QCoro::Task<void> explore_tile(const QPoint &tile_pos);
 	[[nodiscard]] QCoro::Task<void> explore_province(const province *province);
 
 	const point_set &get_prospected_tiles() const
@@ -1407,7 +1397,6 @@ private:
 	int wonder_cost_efficiency_modifier = 0;
 	int diplomatic_penalty_for_expansion_modifier = 0;
 	province_set explored_provinces;
-	point_set explored_tiles; //used for tiles in partially-explored provinces
 	point_set prospected_tiles;
 	std::vector<const journal_entry *> active_journal_entries;
 	std::vector<const journal_entry *> inactive_journal_entries;

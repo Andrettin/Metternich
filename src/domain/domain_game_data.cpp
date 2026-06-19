@@ -4560,10 +4560,6 @@ bool domain_game_data::is_tile_explored(const QPoint &tile_pos) const
 			return true;
 		}
 
-		if (this->explored_tiles.contains(tile_pos)) {
-			return true;
-		}
-
 		return false;
 	} else {
 		//exploration mechanics are disabled, the entire map is always explored
@@ -4583,15 +4579,17 @@ bool domain_game_data::is_province_discovered(const province *province) const
 		return true;
 	}
 
-	if (!this->explored_tiles.empty()) {
-		for (const QPoint &tile_pos : province_map_data->get_tiles()) {
-			if (this->explored_tiles.contains(tile_pos)) {
-				return true;
-			}
-		}
-	}
-
 	return false;
+}
+
+bool domain_game_data::is_province_explored(const metternich::province *province) const
+{
+	if constexpr (map::exploration_enabled) {
+		//get whether the province has been fully explored
+		return this->explored_provinces.contains(province);
+	} else {
+		return true;
+	}
 }
 
 bool domain_game_data::is_region_discovered(const region *region) const
@@ -4607,59 +4605,7 @@ bool domain_game_data::is_region_discovered(const region *region) const
 		}
 	}
 
-	//go through the explored tiles instead of each province's tiles, as this is likely faster
-	for (const QPoint &tile_pos : this->explored_tiles) {
-		const tile *tile = map::get()->get_tile(tile_pos);
-		if (tile->get_province() != nullptr && vector::contains(region->get_provinces(), tile->get_province())) {
-			return true;
-		}
-	}
-
 	return false;
-}
-
-QCoro::Task<void> domain_game_data::explore_tile(const QPoint &tile_pos)
-{
-	this->explored_tiles.insert(tile_pos);
-
-	if (this->domain == game::get()->get_player_country()) {
-		map::get()->update_minimap_rect(QRect(tile_pos, QSize(1, 1)));
-		game::get()->set_exploration_changed();
-		emit map::get()->tile_exploration_changed(tile_pos);
-	}
-
-	const tile *tile = map::get()->get_tile(tile_pos);
-	const metternich::domain *tile_owner = tile->get_owner();
-	const resource *tile_resource = tile->get_resource();
-
-	if (tile_owner != nullptr && tile_owner != this->domain && !this->is_country_known(tile_owner)) {
-		co_await this->add_known_country(tile_owner);
-	}
-
-	if (tile_resource != nullptr && tile->is_resource_discovered() && tile_resource->get_discovery_technology() != nullptr) {
-		if (this->get_technology()->can_gain_technology(tile_resource->get_discovery_technology())) {
-			co_await this->get_technology()->add_technology(tile_resource->get_discovery_technology());
-
-			if (game::get()->is_running()) {
-				emit get_technology()->technology_researched(tile_resource->get_discovery_technology());
-			}
-		}
-	}
-
-	if (tile->get_province() != nullptr) {
-		//add the tile's province to the explored provinces if all of its tiles have been explored
-		const province_map_data *province_map_data = tile->get_province()->get_map_data();
-		if (this->explored_tiles.size() >= province_map_data->get_tiles().size()) {
-			for (const QPoint &province_tile_pos : province_map_data->get_tiles()) {
-				if (!this->explored_tiles.contains(province_tile_pos)) {
-					co_return;
-				}
-			}
-
-			//add the province to the explored provinces and remove its tiles from the explored tiles, as they no longer need to be taken into account separately
-			co_await this->explore_province(tile->get_province());
-		}
-	}
 }
 
 QCoro::Task<void> domain_game_data::explore_province(const province *province)
@@ -4668,9 +4614,10 @@ QCoro::Task<void> domain_game_data::explore_province(const province *province)
 		co_return;
 	}
 
-	const province_game_data *province_game_data = province->get_game_data();
-	assert_throw(province_game_data->is_on_map());
+	const province_map_data *province_map_data = province->get_map_data();
+	assert_throw(province_map_data->is_on_map());
 
+	const province_game_data *province_game_data = province->get_game_data();
 	const metternich::domain *province_owner = province_game_data->get_owner();
 
 	if (province_owner != nullptr && province_owner != this->domain && !this->is_country_known(province_owner)) {
@@ -4685,25 +4632,12 @@ QCoro::Task<void> domain_game_data::explore_province(const province *province)
 		}
 	}
 
-	const province_map_data *province_map_data = province->get_map_data();
-
-	if (!this->explored_tiles.empty()) {
-		for (const QPoint &tile_pos : province_map_data->get_tiles()) {
-			if (this->explored_tiles.contains(tile_pos)) {
-				this->explored_tiles.erase(tile_pos);
-			}
-		}
-	}
 
 	this->explored_provinces.insert(province);
 
 	if (this->domain == game::get()->get_player_country()) {
 		map::get()->update_minimap_rect(province_map_data->get_territory_rect());
 		game::get()->set_exploration_changed();
-
-		for (const QPoint &tile_pos : province_map_data->get_tiles()) {
-			emit map::get()->tile_exploration_changed(tile_pos);
-		}
 	}
 
 	for (const QPoint &tile_pos : province_map_data->get_resource_tiles()) {

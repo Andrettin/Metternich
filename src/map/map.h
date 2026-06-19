@@ -183,7 +183,6 @@ public:
 
 signals:
 	void size_changed();
-	void tile_exploration_changed(const QPoint &tile_pos);
 	void tile_prospection_changed(const QPoint &tile_pos);
 	void tile_resource_changed(const QPoint &tile_pos);
 	void tile_holding_type_changed(const QPoint &tile_pos);

@@ -463,31 +463,6 @@ QCoro::Task<void> domain_technology::on_technology_added(const technology *techn
 				}
 			}
 		}
-
-		for (const QPoint &tile_pos : this->get_game_data()->get_explored_tiles()) {
-			const tile *tile = map::get()->get_tile(tile_pos);
-			const resource *tile_resource = tile->get_resource();
-
-			if (tile_resource == nullptr) {
-				continue;
-			}
-
-			if (!tile->is_resource_discovered()) {
-				continue;
-			}
-
-			if (tile_resource->get_discovery_technology() == nullptr) {
-				continue;
-			}
-
-			if (this->can_gain_technology(tile_resource->get_discovery_technology())) {
-				co_await this->add_technology(tile_resource->get_discovery_technology());
-
-				if (game::get()->is_running()) {
-					emit technology_researched(tile_resource->get_discovery_technology());
-				}
-			}
-		}
 	}
 
 	if (game::get()->is_running()) {

@@ -25,7 +25,6 @@ namespace metternich {
 
 map_grid_model::map_grid_model()
 {
-	connect(map::get(), &map::tile_exploration_changed, this, &map_grid_model::on_tile_exploration_changed);
 	connect(map::get(), &map::tile_prospection_changed, this, &map_grid_model::on_tile_prospection_changed);
 	connect(map::get(), &map::tile_resource_changed, this, &map_grid_model::on_tile_resource_changed);
 	connect(map::get(), &map::tile_holding_type_changed, this, &map_grid_model::on_tile_holding_type_changed);
@@ -177,16 +176,6 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 	}
 
 	return QVariant();
-}
-
-void map_grid_model::on_tile_exploration_changed(const QPoint &tile_pos)
-{
-	const QModelIndex index = this->index(tile_pos.y(), tile_pos.x());
-	emit dataChanged(index, index, {
-		static_cast<int>(role::object_image_sources),
-		static_cast<int>(role::site),
-		static_cast<int>(role::upper_label)
-	});
 }
 
 void map_grid_model::on_tile_prospection_changed(const QPoint &tile_pos)
