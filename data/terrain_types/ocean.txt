@@ -1,6 +1,7 @@
 ocean = {
 	name = "Ocean"
-	color = { 69 91 186 }
+	#color = { 69 91 186 }
+	color = { 49 82 123 }
 	character = 4
 	icon = mountains
 	image_filepath = "tiles/terrain/shallow_water.png"
