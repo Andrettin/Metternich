@@ -1,7 +1,9 @@
 mistra = {
 	name = "Mistra"
 	world = earth
-	#geocoordinate = { 22.3673 37.074 }
+	geocoordinate = { 22.3673 37.074 }
+	type = holding
+	holding_type = castle #or temple
 	province = peloponnese
 	
 	history = {

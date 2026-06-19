@@ -1,6 +1,7 @@
 peloponnese = {
 	name = "Peloponnese"
 	color = { 247 168 1 }
+	terrain = hills
 	default_provincial_capital = sparta
 	regions = {
 		greece

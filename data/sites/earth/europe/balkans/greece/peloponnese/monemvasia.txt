@@ -1,0 +1,8 @@
+monemvasia = {
+	name = "Monemvasia"
+	world = earth
+	geocoordinate = { 23.055555555555557 36.687777777777775 }
+	type = holding
+	holding_type = temple #or castle
+	province = peloponnese
+}
