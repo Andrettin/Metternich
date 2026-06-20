@@ -134,6 +134,7 @@ void map_template::initialize()
 			if (!is_pos_valid) {
 				bool found_pos = false;
 				int64_t best_distance = std::numeric_limits<int64_t>::max();
+				QPoint best_tile_pos = tile_pos;
 
 				static constexpr int max_range = 16;
 				for (int i = 1; i <= max_range; ++i) {
@@ -160,7 +161,7 @@ void map_template::initialize()
 						const int64_t distance = point::square_distance_to(tile_pos, checked_pos);
 						if (distance < best_distance) {
 							best_distance = distance;
-							tile_pos = checked_pos;
+							best_tile_pos = checked_pos;
 							found_pos = true;
 						}
 					});
@@ -177,6 +178,8 @@ void map_template::initialize()
 				if (!found_pos) {
 					throw std::runtime_error(std::format("No position found for site \"{}\" in province \"{}\".", site->get_identifier(), site_province->get_identifier()));
 				}
+
+				tile_pos = best_tile_pos;
 			}
 
 			assert_throw(map_rect.contains(tile_pos));
