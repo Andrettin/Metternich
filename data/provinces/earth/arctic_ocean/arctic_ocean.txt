@@ -6,3 +6,39 @@ arctic_ocean = {
 		arctic_ocean
 	}
 }
+
+barents_sea = {
+	name = "Barents Sea"
+	color = { 2 123 175 }
+	sea = true
+	regions = {
+		arctic_ocean
+	}
+}
+
+greenland_sea = {
+	name = "Greenland Sea"
+	color = { 120 251 251 }
+	sea = true
+	regions = {
+		arctic_ocean
+	}
+}
+
+kara_sea = {
+	name = "Kara Sea"
+	color = { 87 25 195 }
+	sea = true
+	regions = {
+		arctic_ocean
+	}
+}
+
+white_sea = {
+	name = "White Sea"
+	color = { 14 200 250 }
+	sea = true
+	regions = {
+		arctic_ocean
+	}
+}
