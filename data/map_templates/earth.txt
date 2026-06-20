@@ -34,3 +34,13 @@ europe = {
 	minimap_tile_scale = 0.25
 	diplomatic_map_tile_scale = 0.5
 }
+
+eastern_mediterranean = {
+	name = "Eastern Mediterranean"
+	size = { 1536 1568 }
+	world = earth
+	main_map_template = earth
+	map_start_pos = { 8544 3968 }
+	minimap_tile_scale = 0.25
+	diplomatic_map_tile_scale = 0.5
+}
