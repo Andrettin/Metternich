@@ -29,6 +29,8 @@
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
 
+#include <QImageReader>
+
 namespace metternich {
 
 const std::set<std::string> map_template::database_dependencies = {
@@ -433,8 +435,10 @@ QCoro::Task<void> map_template::apply_provinces() const
 	if (this->get_main_map_template() != nullptr) {
 		const QRect map_rect(this->get_map_start_pos(), this->get_size());
 
-		province_image = QImage(path::to_qstring(this->get_main_map_template()->get_province_image_filepath()));
-		province_image = province_image.copy(map_rect);
+		QImageReader image_reader(path::to_qstring(this->get_main_map_template()->get_province_image_filepath()));
+		image_reader.setClipRect(map_rect);
+
+		province_image = image_reader.read();
 	} else {
 		assert_throw(!this->get_province_image_filepath().empty());
 
