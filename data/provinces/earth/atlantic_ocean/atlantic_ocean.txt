@@ -46,6 +46,42 @@ coast_of_andalusia = {
 	}
 }
 
+coast_of_cornwall = {
+	name = "Coast of Cornwall"
+	color = { 54 49 63 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
+coast_of_france = {
+	name = "Coast of France"
+	color = { 168 36 32 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
+coast_of_galicia = {
+	name = "Coast of Galicia"
+	color = { 168 21 157 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
+coast_of_ireland = {
+	name = "Coast of Ireland"
+	color = { 126 168 54 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
 coast_of_morocco = {
 	name = "Coast of Morocco"
 	color = { 84 180 56 }
@@ -58,6 +94,24 @@ coast_of_morocco = {
 coast_of_portugal = {
 	name = "Coast of Portugal"
 	color = { 242 171 141 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
+coast_of_scotland = {
+	name = "Coast of Scotland"
+	color = { 182 249 109 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
+coast_of_the_faroes = {
+	name = "Coast of the Faroes"
+	color = { 168 171 182 }
 	sea = true
 	regions = {
 		atlantic_ocean
