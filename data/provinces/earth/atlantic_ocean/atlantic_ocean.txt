@@ -91,6 +91,15 @@ coast_of_ireland = {
 	}
 }
 
+coast_of_madeira = {
+	name = "Coast of Madeira"
+	color = { 106 105 170 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
 coast_of_morocco = {
 	name = "Coast of Morocco"
 	color = { 84 180 56 }
@@ -112,6 +121,15 @@ coast_of_portugal = {
 coast_of_scotland = {
 	name = "Coast of Scotland"
 	color = { 182 249 109 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
+coast_of_the_azores = {
+	name = "Coast of the Azores"
+	color = { 62 202 252 }
 	sea = true
 	regions = {
 		atlantic_ocean
