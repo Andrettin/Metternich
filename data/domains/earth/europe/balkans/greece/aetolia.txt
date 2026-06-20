@@ -1,0 +1,17 @@
+aetolia = {
+	name = "Aetolia"
+	type = polity
+	color = { 154 79 125 }
+	culture = greek
+	default_religion = hellenic
+	default_tier = county
+	default_government_type = monarchy
+	#default_capital = pleuron
+	default_capital = lefkas
+	eras = {
+		ancient_era
+	}
+	core_provinces = {
+		aetolia
+	}
+}

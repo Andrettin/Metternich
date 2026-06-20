@@ -1,0 +1,17 @@
+thebes = {
+	name = "Thebes"
+	type = polity
+	color = { 212 72 164 }
+	culture = greek
+	default_religion = hellenic
+	default_tier = county
+	default_government_type = monarchy
+	#default_capital = thebes
+	default_capital = salona
+	eras = {
+		ancient_era
+	}
+	core_provinces = {
+		boeotia
+	}
+}

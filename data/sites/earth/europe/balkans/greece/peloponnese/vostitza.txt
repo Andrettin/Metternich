@@ -4,5 +4,5 @@ vostitza = {
 	geocoordinate = { 22.08111111111111 38.25055555555556 } #Aigio
 	type = holding
 	holding_type = guild
-	province = peloponnese
+	province = achaea
 }

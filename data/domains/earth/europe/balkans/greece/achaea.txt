@@ -1,0 +1,16 @@
+achaea = {
+	name = "Achaea"
+	type = polity
+	color = { 192 31 136 }
+	culture = greek
+	default_religion = hellenic
+	default_tier = county
+	default_government_type = monarchy
+	default_capital = vostitza
+	eras = {
+		ancient_era
+	}
+	core_provinces = {
+		achaea
+	}
+}
