@@ -37,7 +37,7 @@ europe = {
 
 eastern_mediterranean = {
 	name = "Eastern Mediterranean"
-	size = { 1536 1568 }
+	size = { 1856 1568 }
 	world = earth
 	main_map_template = earth
 	map_start_pos = { 8544 3968 }
