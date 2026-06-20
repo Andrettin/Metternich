@@ -186,6 +186,15 @@ english_channel = {
 	}
 }
 
+galician_shelf = {
+	name = "Galician Shelf"
+	color = { 62 65 109 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
 galway_bay = {
 	name = "Galway Bay"
 	geocoordinate = { -9.2333333333333 53.2 }
@@ -241,6 +250,15 @@ irish_sea = {
 		#gaelic = "Hibernian Ocean"
 		roman = "Hibernian Ocean"
 	}
+	regions = {
+		atlantic_ocean
+	}
+}
+
+irish_shelf = {
+	name = "Irish Shelf"
+	color = { 130 34 253 }
+	sea = true
 	regions = {
 		atlantic_ocean
 	}
