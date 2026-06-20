@@ -1312,17 +1312,11 @@ void province_game_data::calculate_text_rect()
 {
 	this->text_rect = QRect();
 
-	QPoint center_pos = this->get_territory_rect_center();
+	const QPoint center_pos = this->get_center_tile_pos();
 
 	const map *map = map::get();
 
-	if (map->get_tile(center_pos)->get_province() != this->province && this->province->get_default_provincial_capital() != nullptr && this->province->get_default_provincial_capital()->get_map_data()->is_on_map()) {
-		center_pos = this->province->get_default_provincial_capital()->get_game_data()->get_tile_pos();
-
-		if (map->get_tile(center_pos)->get_province() != this->province) {
-			return;
-		}
-	}
+	assert_throw(map->get_tile(center_pos)->get_province() == this->province);
 
 	this->text_rect = QRect(center_pos, QSize(1, 1));
 

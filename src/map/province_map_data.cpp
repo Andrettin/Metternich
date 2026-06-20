@@ -16,7 +16,8 @@
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/log_util.h"
-#include "util/vector_util.h"
+#include "util/point_util.h"
+#include "util/rect_util.h"
 
 namespace metternich {
 
@@ -50,14 +51,7 @@ void province_map_data::on_map_created()
 	}
 
 	this->calculate_territory_rect_center();
-
-	if (this->province->get_default_provincial_capital() != nullptr && this->province->get_default_provincial_capital()->get_map_data()->get_province() == this->province && this->province->get_default_provincial_capital()->get_map_data()->is_on_map()) {
-		this->center_tile_pos = this->province->get_default_provincial_capital()->get_map_data()->get_tile_pos();
-	} else {
-		this->center_tile_pos = this->get_territory_rect_center();
-	}
-
-	assert_throw(this->get_center_tile_pos() != QPoint(-1, -1));
+	this->calculate_center_tile_pos();
 
 	if (this->get_settlement_sites().size() > province::max_holdings) {
 		log::log_error(std::format("Province \"{}\" has {} holding sites, more than the maximum of {}.", this->province->get_identifier(), this->get_settlement_sites().size(), province::max_holdings));
@@ -91,6 +85,69 @@ void province_map_data::calculate_territory_rect_center()
 	}
 
 	this->territory_rect_center = QPoint(static_cast<int>(sum_x / tile_count), static_cast<int>(sum_y / tile_count));
+}
+
+void province_map_data::calculate_center_tile_pos()
+{
+	if (this->province->get_default_provincial_capital() != nullptr && this->province->get_default_provincial_capital()->get_map_data()->get_province() == this->province && this->province->get_default_provincial_capital()->get_map_data()->is_on_map()) {
+		this->center_tile_pos = this->province->get_default_provincial_capital()->get_map_data()->get_tile_pos();
+	} else {
+		this->center_tile_pos = this->get_territory_rect_center();
+	}
+
+	assert_throw(this->get_center_tile_pos() != QPoint(-1, -1));
+
+	if (map::get()->get_tile(this->get_center_tile_pos())->get_province() != this->province) {
+		//if the center pos is not in the province, set it to the nearest tile that is actually in the province instead
+
+		const QRect map_rect(QPoint(0, 0), map::get()->get_size());
+		bool found_pos = false;
+		int64_t best_distance = std::numeric_limits<int64_t>::max();
+		QPoint best_tile_pos = this->get_center_tile_pos();
+
+		const int max_range = std::max(16, std::max(this->get_territory_rect().width(), this->get_territory_rect().height()));
+		for (int i = 1; i <= max_range; ++i) {
+			const QRect rect(this->get_center_tile_pos() - QPoint(i, i), this->get_center_tile_pos() + QPoint(i, i));
+
+			bool checked_on_map = false;
+
+			rect::for_each_edge_point(rect, [this, &map_rect, &found_pos, &best_distance, &best_tile_pos, &checked_on_map](const QPoint &checked_pos) {
+				if (!map_rect.contains(checked_pos)) {
+					return;
+				}
+
+				checked_on_map = true;
+
+				const metternich::province *tile_province = map::get()->get_tile_province(checked_pos);
+				if (tile_province != this->province) {
+					return;
+				}
+
+				const int64_t distance = point::square_distance_to(this->get_center_tile_pos(), checked_pos);
+				if (distance < best_distance) {
+					best_distance = distance;
+					best_tile_pos = checked_pos;
+					found_pos = true;
+				}
+			});
+
+			if (found_pos) {
+				break;
+			}
+
+			if (!checked_on_map) {
+				break;
+			}
+		}
+
+		if (!found_pos) {
+			throw std::runtime_error(std::format("No position found for the center tile pos of province \"{}\".", this->province->get_identifier()));
+		}
+
+		this->center_tile_pos = best_tile_pos;
+	}
+
+	assert_throw(map::get()->get_tile(this->get_center_tile_pos())->get_province() == this->province);
 }
 
 void province_map_data::add_neighbor_province(const metternich::province *province)

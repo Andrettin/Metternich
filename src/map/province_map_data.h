@@ -68,6 +68,7 @@ public:
 	}
 
 	void calculate_territory_rect_center();
+	void calculate_center_tile_pos();
 
 	const std::vector<const metternich::province *> &get_neighbor_provinces() const
 	{
