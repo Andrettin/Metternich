@@ -37,6 +37,24 @@ caribbean_sea = {
 	}
 }
 
+coast_of_andalusia = {
+	name = "Coast of Andalusia"
+	color = { 0 9 155 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
+coast_of_morocco = {
+	name = "Coast of Morocco"
+	color = { 84 180 56 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
 coast_of_portugal = {
 	name = "Coast of Portugal"
 	color = { 242 171 141 }
