@@ -43,9 +43,9 @@ public:
 	gsml_data to_gsml_data() const;
 
 	void create_tiles();
-	void initialize(const bool province_post_processing_enabled);
+	[[nodiscard]] QCoro::Task<void> initialize(const bool province_post_processing_enabled);
 	void do_province_post_processing(std::vector<QPoint> tiles_to_check, const bool only_water_zones);
-	void process_border_tiles();
+	[[nodiscard]] QCoro::Task<void> process_border_tiles();
 	Q_INVOKABLE void clear();
 
 	const QSize &get_size() const

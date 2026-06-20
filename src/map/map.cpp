@@ -81,7 +81,7 @@ void map::process_gsml_scope(const gsml_data &scope)
 			++y;
 		});
 
-		this->process_border_tiles();
+		QCoro::waitFor(this->process_border_tiles());
 		for (const province *province : this->get_provinces()) {
 			province->get_map_data()->on_map_created();
 		}
@@ -132,7 +132,7 @@ void map::create_tiles()
 	this->tiles->resize(tile_quantity, tile());
 }
 
-void map::initialize(const bool province_post_processing_enabled)
+QCoro::Task<void> map::initialize(const bool province_post_processing_enabled)
 {
 	if (province_post_processing_enabled) {
 		//assign tiles without provinces to the most-adjacent province
@@ -155,7 +155,7 @@ void map::initialize(const bool province_post_processing_enabled)
 		this->do_province_post_processing(tiles_to_check, false);
 	}
 
-	this->process_border_tiles();
+	co_await this->process_border_tiles();
 
 	std::vector<province *> provinces;
 	for (province *province : province::get_all()) {
@@ -247,45 +247,49 @@ void map::do_province_post_processing(std::vector<QPoint> tiles_to_check, const 
 	}
 }
 
-void map::process_border_tiles()
+QCoro::Task<void> map::process_border_tiles()
 {
+	std::vector<QFuture<void>> futures;
+
 	for (const province *province : province::get_all()) {
 		province_map_data *province_map_data = province->get_map_data();
 		if (!province_map_data->is_on_map()) {
 			continue;
 		}
 
-		for (const QPoint &tile_pos : province_map_data->get_tiles()) {
-			bool is_border_tile = false;
+		QFuture<void> future = QtConcurrent::run([this, province, province_map_data]() {
+			for (const QPoint &tile_pos : province_map_data->get_tiles()) {
+				bool is_border_tile = false;
 
-			point::for_each_adjacent_until(tile_pos, [this, &tile_pos, province, &is_border_tile](const QPoint &adjacent_pos) {
-				if (!this->contains(adjacent_pos)) {
-					is_border_tile = true;
-					return true;
-				}
+				point::for_each_adjacent(tile_pos, [this, &tile_pos, province, province_map_data, &is_border_tile](const QPoint &adjacent_pos) {
+					if (!this->contains(adjacent_pos)) {
+						is_border_tile = true;
+						return;
+					}
 
-				const metternich::tile *adjacent_tile = this->get_tile(adjacent_pos);
-				const metternich::province *adjacent_province = adjacent_tile->get_province();
+					const metternich::tile *adjacent_tile = this->get_tile(adjacent_pos);
+					const metternich::province *adjacent_province = adjacent_tile->get_province();
 
-				if (province != adjacent_province) {
-					if (!is_border_tile) {
-						metternich::province_map_data *tile_province_map_data = province->get_map_data();
-						if (adjacent_province != nullptr && !vector::contains(tile_province_map_data->get_neighbor_provinces(), adjacent_province)) {
-							tile_province_map_data->add_neighbor_province(adjacent_province);
+					if (province != adjacent_province) {
+						if (adjacent_province != nullptr && !vector::contains(province_map_data->get_neighbor_provinces(), adjacent_province)) {
+							province_map_data->add_neighbor_province(adjacent_province);
 						}
 
 						is_border_tile = true;
-						return true;
 					}
+				});
+
+				if (is_border_tile) {
+					province_map_data->process_border_tile(tile_pos);
 				}
-
-				return false;
-			});
-
-			if (is_border_tile) {
-				province_map_data->process_border_tile(tile_pos);
 			}
-		}
+		});
+
+		futures.push_back(std::move(future));
+	}
+
+	for (QFuture<void> &future : futures) {
+		co_await future;
 	}
 }
 
