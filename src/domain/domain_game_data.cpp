@@ -2570,7 +2570,12 @@ QImage domain_game_data::prepare_diplomatic_map_image() const
 	assert_throw(this->territory_rect.height() > 0);
 
 	const decimillesimal_int &tile_scale = map::get()->get_diplomatic_map_tile_scale();
-	const QSize image_size((this->territory_rect.width() * tile_scale).to_ceil_int(), (this->territory_rect.height() * tile_scale).to_ceil_int());
+	QSize image_size;
+	if (tile_scale < 1) {
+		image_size = QSize((this->territory_rect.width() * tile_scale).to_ceil_int(), (this->territory_rect.height() * tile_scale).to_ceil_int());
+	} else {
+		image_size = this->territory_rect.size();
+	}
 
 	QImage image(image_size, QImage::Format_RGBA8888);
 	image.fill(Qt::transparent);
@@ -2651,6 +2656,7 @@ void domain_game_data::create_diplomatic_map_image()
 
 	const decimillesimal_int &tile_scale = map::get()->get_diplomatic_map_tile_scale();
 	const QPoint top_left = this->territory_rect.topLeft() * tile_scale;
+
 	const QSize image_size = diplomatic_map_image.size();
 
 	//normalize the tile top left
@@ -2659,7 +2665,7 @@ void domain_game_data::create_diplomatic_map_image()
 	for (int x = 0; x < image_size.width(); ++x) {
 		for (int y = 0; y < image_size.height(); ++y) {
 			const QPoint pixel_pos = QPoint(x, y);
-			const QPoint relative_tile_pos = pixel_pos / tile_scale;
+			const QPoint relative_tile_pos = tile_scale < 1 ? pixel_pos / tile_scale : pixel_pos;
 			const tile *tile = map->get_tile(tile_top_left + relative_tile_pos);
 
 			if (tile->get_owner() != this->domain) {
@@ -2713,7 +2719,12 @@ QImage domain_game_data::prepare_realm_diplomatic_map_image() const
 	assert_throw(this->realm_territory_rect.height() > 0);
 
 	const decimillesimal_int &tile_scale = map::get()->get_diplomatic_map_tile_scale();
-	const QSize image_size((this->realm_territory_rect.width() * tile_scale).to_ceil_int(), (this->realm_territory_rect.height() * tile_scale).to_ceil_int());
+	QSize image_size;
+	if (tile_scale < 1) {
+		image_size = QSize((this->realm_territory_rect.width() * tile_scale).to_ceil_int(), (this->realm_territory_rect.height() * tile_scale).to_ceil_int());
+	} else {
+		image_size = this->realm_territory_rect.size();
+	}
 
 	QImage image(image_size, QImage::Format_RGBA8888);
 	image.fill(Qt::transparent);
@@ -2744,6 +2755,7 @@ void domain_game_data::create_realm_diplomatic_map_image()
 
 	const decimillesimal_int &tile_scale = map::get()->get_diplomatic_map_tile_scale();
 	const QPoint top_left = this->realm_territory_rect.topLeft() * tile_scale;
+
 	const QSize image_size = diplomatic_map_image.size();
 
 	//normalize the tile top left
@@ -2752,7 +2764,7 @@ void domain_game_data::create_realm_diplomatic_map_image()
 	for (int x = 0; x < image_size.width(); ++x) {
 		for (int y = 0; y < image_size.height(); ++y) {
 			const QPoint pixel_pos = QPoint(x, y);
-			const QPoint relative_tile_pos = pixel_pos / tile_scale;
+			const QPoint relative_tile_pos = tile_scale < 1 ? pixel_pos / tile_scale : pixel_pos;
 			const tile *tile = map->get_tile(tile_top_left + relative_tile_pos);
 
 			if (tile->get_owner() == nullptr || tile->get_owner()->get_game_data()->get_realm() != this->domain) {
@@ -2796,6 +2808,7 @@ void domain_game_data::create_diplomatic_map_mode_image(const diplomatic_map_mod
 
 	const decimillesimal_int &tile_scale = map::get()->get_diplomatic_map_tile_scale();
 	const QPoint top_left = this->territory_rect.topLeft() * tile_scale;
+
 	const QSize image_size = image.size();
 
 	//normalize the tile top left
@@ -2804,7 +2817,7 @@ void domain_game_data::create_diplomatic_map_mode_image(const diplomatic_map_mod
 	for (int x = 0; x < image_size.width(); ++x) {
 		for (int y = 0; y < image_size.height(); ++y) {
 			const QPoint pixel_pos = QPoint(x, y);
-			const QPoint relative_tile_pos = pixel_pos / tile_scale;
+			const QPoint relative_tile_pos = tile_scale < 1 ? pixel_pos / tile_scale : pixel_pos;
 			const tile *tile = map->get_tile(tile_top_left + relative_tile_pos);
 
 			if (tile->get_owner() != this->domain) {
@@ -2866,6 +2879,7 @@ void domain_game_data::create_diplomacy_state_diplomatic_map_image(const diploma
 
 	const decimillesimal_int &tile_scale = map::get()->get_diplomatic_map_tile_scale();
 	const QPoint top_left = this->territory_rect.topLeft() * tile_scale;
+
 	const QSize image_size = image.size();
 
 	//normalize the tile top left
@@ -2874,7 +2888,7 @@ void domain_game_data::create_diplomacy_state_diplomatic_map_image(const diploma
 	for (int x = 0; x < image_size.width(); ++x) {
 		for (int y = 0; y < image_size.height(); ++y) {
 			const QPoint pixel_pos = QPoint(x, y);
-			const QPoint relative_tile_pos = pixel_pos / tile_scale;
+			const QPoint relative_tile_pos = tile_scale < 1 ? pixel_pos / tile_scale : pixel_pos;
 			const tile *tile = map->get_tile(tile_top_left + relative_tile_pos);
 
 			if (tile->get_owner() != this->domain) {

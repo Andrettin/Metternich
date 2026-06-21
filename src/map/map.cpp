@@ -507,7 +507,9 @@ QVariantList map::get_sites_qvariant_list() const
 
 void map::initialize_diplomatic_map()
 {
-	const QSize image_size = this->get_size() * this->get_diplomatic_map_tile_scale();
+	const decimillesimal_int &tile_scale = this->get_diplomatic_map_tile_scale();
+	const QSize image_size = this->get_size() * tile_scale;
+
 	if (image_size != this->diplomatic_map_image_size) {
 		this->diplomatic_map_image_size = image_size;
 		emit diplomatic_map_image_size_changed();
@@ -527,18 +529,22 @@ void map::initialize_province_map()
 QCoro::Task<void> map::create_ocean_diplomatic_map_image()
 {
 	const decimillesimal_int &tile_scale = this->get_diplomatic_map_tile_scale();
+	QSize image_size;
+	if (tile_scale < 1) {
+		image_size = this->get_size() * tile_scale;
+	} else {
+		image_size = this->get_size();
+	}
 
-	this->ocean_diplomatic_map_image = QImage(this->get_size() * tile_scale, QImage::Format_RGBA8888);
+	this->ocean_diplomatic_map_image = QImage(image_size, QImage::Format_RGBA8888);
 	this->ocean_diplomatic_map_image.fill(Qt::transparent);
 
 	const QColor &color = defines::get()->get_ocean_color();
 
-	const QSize image_size = this->ocean_diplomatic_map_image.size();
-
 	for (int x = 0; x < image_size.width(); ++x) {
 		for (int y = 0; y < image_size.height(); ++y) {
 			const QPoint pixel_pos = QPoint(x, y);
-			const QPoint tile_pos = pixel_pos / tile_scale;
+			const QPoint tile_pos = tile_scale < 1 ? pixel_pos / tile_scale : pixel_pos;
 			const tile *tile = this->get_tile(tile_pos);
 
 			if (tile->get_province() == nullptr) {

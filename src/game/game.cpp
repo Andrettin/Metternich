@@ -2057,8 +2057,14 @@ QCoro::Task<void> game::create_exploration_diplomatic_map_image()
 	const map *map = map::get();
 
 	const decimillesimal_int &tile_scale = map::get()->get_diplomatic_map_tile_scale();
+	QSize image_size;
+	if (tile_scale < 1) {
+		image_size = map::get()->get_size() * tile_scale;
+	} else {
+		image_size = map->get_size();
+	}
 
-	this->exploration_diplomatic_map_image = QImage(map->get_size() * tile_scale, QImage::Format_RGBA8888);
+	this->exploration_diplomatic_map_image = QImage(image_size, QImage::Format_RGBA8888);
 	this->exploration_diplomatic_map_image.fill(Qt::transparent);
 
 	const QColor &color = defines::get()->get_unexplored_terrain()->get_color();
@@ -2068,7 +2074,7 @@ QCoro::Task<void> game::create_exploration_diplomatic_map_image()
 	for (int x = 0; x < this->exploration_diplomatic_map_image.width(); ++x) {
 		for (int y = 0; y < this->exploration_diplomatic_map_image.height(); ++y) {
 			const QPoint pixel_pos = QPoint(x, y);
-			const QPoint tile_pos = pixel_pos / tile_scale;
+			const QPoint tile_pos = tile_scale < 1 ? pixel_pos / tile_scale : pixel_pos;
 
 			if (domain_game_data->is_tile_explored(tile_pos)) {
 				continue;
