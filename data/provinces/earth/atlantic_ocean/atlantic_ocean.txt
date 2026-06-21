@@ -46,6 +46,24 @@ coast_of_andalusia = {
 	}
 }
 
+coast_of_argentina = {
+	name = "Coast of Argentina"
+	color = { 238 45 208 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
+coast_of_brazil = {
+	name = "Coast of Brazil"
+	color = { 25 202 202 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
 coast_of_cornwall = {
 	name = "Coast of Cornwall"
 	color = { 54 49 63 }
@@ -136,9 +154,27 @@ coast_of_the_azores = {
 	}
 }
 
+coast_of_the_falklands = {
+	name = "Coast of the Falklands"
+	color = { 82 202 252 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
 coast_of_the_faroes = {
 	name = "Coast of the Faroes"
 	color = { 168 171 182 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
+coast_of_uruguay = {
+	name = "Coast of Uruguay"
+	color = { 239 79 30 }
 	sea = true
 	regions = {
 		atlantic_ocean
@@ -288,6 +324,15 @@ norwegian_sea = {
 	color = { 187 212 38 }
 	geocoordinate = { 0 69 }
 	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
+rio_de_la_plata = {
+	name = "Rio de la Plata"
+	color = { 31 222 252 }
+	bay = true
 	regions = {
 		atlantic_ocean
 	}
