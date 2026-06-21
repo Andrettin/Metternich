@@ -89,11 +89,7 @@ void province_map_data::calculate_territory_rect_center()
 
 void province_map_data::calculate_center_tile_pos()
 {
-	if (this->province->get_default_provincial_capital() != nullptr && this->province->get_default_provincial_capital()->get_map_data()->get_province() == this->province && this->province->get_default_provincial_capital()->get_map_data()->is_on_map()) {
-		this->center_tile_pos = this->province->get_default_provincial_capital()->get_map_data()->get_tile_pos();
-	} else {
-		this->center_tile_pos = this->get_territory_rect_center();
-	}
+	this->center_tile_pos = this->get_territory_rect_center();
 
 	assert_throw(this->get_center_tile_pos() != QPoint(-1, -1));
 

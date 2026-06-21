@@ -1756,8 +1756,10 @@ QCoro::Task<void> domain_game_data::set_capital(const site *capital)
 			capital->get_map_data()->get_province()->get_game_data()->choose_provincial_capital();
 		}
 
-		this->calculate_text_rect();
-		this->calculate_realm_text_rect();
+		if (game::get()->is_loaded()) {
+			this->calculate_text_rect();
+			this->calculate_realm_text_rect();
+		}
 	}
 
 	if (old_capital != nullptr) {
@@ -1982,14 +1984,19 @@ void domain_game_data::calculate_territory_rect()
 		}
 	}
 
-	this->calculate_territory_rect_center();
-	this->calculate_text_rect();
+	if (!this->get_territory_rect().isNull()) {
+		this->calculate_territory_rect_center();
+		this->calculate_center_tile_pos();
+		this->calculate_text_rect();
+	}
 
 	if (game::get()->is_running()) {
 		this->domain->get_turn_data()->set_diplomatic_map_dirty(true);
 	}
 
-	this->calculate_realm_territory_rect();
+	if (!this->get_territory_rect().isNull()) {
+		this->calculate_realm_territory_rect();
+	}
 }
 
 void domain_game_data::calculate_territory_rect_center()
@@ -2015,6 +2022,70 @@ void domain_game_data::calculate_territory_rect_center()
 	}
 
 	this->territory_rect_center = QPoint(static_cast<int>(sum_x / tile_count), static_cast<int>(sum_y / tile_count));
+}
+
+
+void domain_game_data::calculate_center_tile_pos()
+{
+	if (this->get_provinces().empty()) {
+		return;
+	}
+
+	this->center_tile_pos = this->get_territory_rect_center();
+
+	assert_throw(this->get_center_tile_pos() != QPoint(-1, -1));
+
+	if (map::get()->get_tile(this->get_center_tile_pos())->get_owner() != this->domain) {
+		//if the center pos is not in the domain, set it to the nearest tile that is actually in the domain instead
+
+		const QRect map_rect(QPoint(0, 0), map::get()->get_size());
+		bool found_pos = false;
+		int64_t best_distance = std::numeric_limits<int64_t>::max();
+		QPoint best_tile_pos = this->get_center_tile_pos();
+
+		const int max_range = std::max(16, std::max(this->get_main_contiguous_territory_rect().width(), this->get_main_contiguous_territory_rect().height()));
+		for (int i = 1; i <= max_range; ++i) {
+			const QRect rect(this->get_center_tile_pos() - QPoint(i, i), this->get_center_tile_pos() + QPoint(i, i));
+
+			bool checked_on_map = false;
+
+			rect::for_each_edge_point(rect, [this, &map_rect, &found_pos, &best_distance, &best_tile_pos, &checked_on_map](const QPoint &checked_pos) {
+				if (!map_rect.contains(checked_pos)) {
+					return;
+				}
+
+				checked_on_map = true;
+
+				const metternich::domain *tile_domain = map::get()->get_tile(checked_pos)->get_owner();
+				if (tile_domain != this->domain) {
+					return;
+				}
+
+				const int64_t distance = point::square_distance_to(this->get_center_tile_pos(), checked_pos);
+				if (distance < best_distance) {
+					best_distance = distance;
+					best_tile_pos = checked_pos;
+					found_pos = true;
+				}
+			});
+
+			if (found_pos) {
+				break;
+			}
+
+			if (!checked_on_map) {
+				break;
+			}
+		}
+
+		if (!found_pos) {
+			throw std::runtime_error(std::format("No position found for the center tile pos of domain \"{}\".", this->domain->get_identifier()));
+		}
+
+		this->center_tile_pos = best_tile_pos;
+	}
+
+	assert_throw(map::get()->get_tile(this->get_center_tile_pos())->get_owner() == this->domain);
 }
 
 QVariantList domain_game_data::get_contiguous_territory_rects_qvariant_list() const
@@ -2046,11 +2117,7 @@ QRect domain_game_data::calculate_text_rect(const QRect &main_contiguous_territo
 
 	const map *map = map::get();
 
-	QPoint center_pos = this->get_territory_rect_center();
-
-	if (this->get_capital() != nullptr && map->get_tile(this->get_capital()->get_game_data()->get_tile_pos())->get_owner() == this->domain) {
-		center_pos = this->get_capital()->get_game_data()->get_tile_pos();
-	}
+	const QPoint center_pos = this->get_center_tile_pos();
 
 	if (!map->contains(center_pos)) {
 		throw std::runtime_error(std::format("Domain \"{}\" has a center pos of {}, which is not contained by the map.", this->domain->get_identifier(), point::to_string(center_pos)));
@@ -2152,6 +2219,12 @@ QRect domain_game_data::calculate_text_rect(const QRect &main_contiguous_territo
 
 void domain_game_data::calculate_realm_territory_rect()
 {
+	if (this->get_territory_rect().isNull()) {
+		//if the territory rect hasn't been calculated yet, do so
+		this->calculate_territory_rect();
+		return; //we can return here, since the territory rect calculation will trigger a further realm territory rect calculation by itself
+	}
+
 	QRect territory_rect = this->get_territory_rect();
 	this->realm_contiguous_territory_rects = this->get_contiguous_territory_rects();
 

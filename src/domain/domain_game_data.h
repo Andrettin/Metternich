@@ -413,6 +413,13 @@ public:
 
 	void calculate_territory_rect_center();
 
+	const QPoint &get_center_tile_pos() const
+	{
+		return this->center_tile_pos;
+	}
+
+	void calculate_center_tile_pos();
+
 	const std::vector<QRect> &get_contiguous_territory_rects() const
 	{
 		return this->contiguous_territory_rects;
@@ -1339,6 +1346,7 @@ private:
 	int coastal_province_count = 0;
 	QRect territory_rect;
 	QPoint territory_rect_center = QPoint(-1, -1);
+	QPoint center_tile_pos = QPoint(-1, -1);
 	std::vector<QRect> contiguous_territory_rects;
 	QRect main_contiguous_territory_rect;
 	QRect text_rect;
