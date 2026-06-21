@@ -1,0 +1,12 @@
+paraguayan_war = {
+	name = "Paraguayan War"
+	parent_scenario = restoration_of_europe
+	start_date = 1864
+	map_template = south_america
+	hidden = true
+	default_countries = {
+		argentina
+		brazil
+		#paraguay
+	}
+}

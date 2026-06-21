@@ -76,3 +76,13 @@ europe = {
 	minimap_tile_scale = 0.25
 	diplomatic_map_tile_scale = 0.5
 }
+
+south_america = {
+	name = "South America"
+	size = { 2208 3488 }
+	world = earth
+	main_map_template = earth
+	map_start_pos = { 3936 5408 }
+	minimap_tile_scale = 0.25
+	diplomatic_map_tile_scale = 0.5
+}
