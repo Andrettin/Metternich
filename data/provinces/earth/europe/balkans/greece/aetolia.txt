@@ -1,8 +1,8 @@
 aetolia = {
 	name = "Aetolia"
 	color = { 43 105 168 }
-	#default_provincial_capital = pleuron
-	default_provincial_capital = lefkas
+	terrain = plains
+	default_provincial_capital = naupaktos
 	regions = {
 		greece
 	}

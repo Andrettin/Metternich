@@ -6,8 +6,7 @@ aetolia = {
 	default_religion = hellenic
 	default_tier = county
 	default_government_type = monarchy
-	#default_capital = pleuron
-	default_capital = lefkas
+	default_capital = naupaktos
 	eras = {
 		ancient_era
 	}

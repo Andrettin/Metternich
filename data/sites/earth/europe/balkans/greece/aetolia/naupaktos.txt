@@ -1,0 +1,8 @@
+naupaktos = {
+	name = "Naupaktos"
+	world = earth
+	geocoordinate = { 21.8275 38.391666666667 } #Nafpaktos
+	type = holding
+	holding_type = castle
+	province = aetolia
+}

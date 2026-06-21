@@ -1,0 +1,8 @@
+paravola = {
+	name = "Paravola"
+	world = earth
+	geocoordinate = { 21.520555555556 38.614722222222 }
+	type = holding
+	holding_type = guild
+	province = aetolia
+}
