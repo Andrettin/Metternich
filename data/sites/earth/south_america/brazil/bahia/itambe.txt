@@ -2,6 +2,8 @@ itambe = {
 	name = "Itambe" #"Itambé"
 	world = earth
 	geocoordinate = { -40.62998539380 -15.23960081090 } #from Natural Earth
+	type = holding
+	holding_type = castle #barony
 	province = bahia
 	#max_tier = barony #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, p. 209.
 	

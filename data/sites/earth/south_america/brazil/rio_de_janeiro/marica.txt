@@ -2,8 +2,9 @@ marica = {
 	name = "Marica" #"Maricá"
 	world = earth
 	geocoordinate = { -42.818888888889 -22.918888888889 }
-	type = resource
-	resource = fruit #bananas
+	type = holding
+	holding_type = castle #viscounty/marquisate
+	#resource = fruit #bananas
 	province = rio_de_janeiro
 	#max_tier = marquisate #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, pp. 277-278.
 	

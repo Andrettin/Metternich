@@ -1,7 +1,9 @@
 olinda = {
 	name = "Olinda"
 	world = earth
-	#geocoordinate = { -34.84995060380 -7.99999102899 } #from Natural Earth
+	geocoordinate = { -34.84995060380 -7.99999102899 } #from Natural Earth
+	type = holding
+	holding_type = castle #marquisate
 	province = pernambuco
 	#max_tier = marquisate
 	features = {

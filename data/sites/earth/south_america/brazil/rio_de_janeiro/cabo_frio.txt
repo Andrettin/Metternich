@@ -2,8 +2,9 @@ cabo_frio = {
 	name = "Cabo Frio"
 	world = earth
 	geocoordinate = { -42.03997684890 -22.88998655310 }
-	type = resource
-	resource = salt #also brazilwood
+	type = holding
+	holding_type = castle #barony/viscounty
+	#resource = salt #also brazilwood
 	province = rio_de_janeiro
 	#max_tier = viscounty #Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, pp. 88-89.
 	
