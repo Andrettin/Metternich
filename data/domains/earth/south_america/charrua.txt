@@ -1,6 +1,7 @@
 charrua = {
 	name = "Charrua"
 	type = tribe
+	color = { 174 151 145 }
 	culture = charruan
 	default_religion = pagan
 	default_tier = kingdom

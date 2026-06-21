@@ -1,6 +1,7 @@
 brazil = {
 	name = "Brazil"
 	type = polity
+	color = { 129 177 125 }
 	flag = brazil_imperial
 	culture = brazilian
 	default_religion = catholic

@@ -1,6 +1,7 @@
 colombia = {
 	name = "Colombia"
 	type = polity
+	color = { 255 234 168 }
 	culture = castillian
 	default_religion = catholic
 	default_tier = kingdom

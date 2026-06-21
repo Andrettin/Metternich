@@ -1,6 +1,7 @@
 arawaks = {
 	name = "Arawaks"
 	type = tribe
+	color = { 102 120 225 }
 	culture = arawak
 	default_religion = pagan
 	default_tier = kingdom

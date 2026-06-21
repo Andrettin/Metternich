@@ -1,6 +1,7 @@
 mapuche = {
 	name = "Mapuche"
 	type = tribe
+	color = { 225 71 35 }
 	culture = mapuche
 	default_religion = pagan
 	default_tier = kingdom
