@@ -25,14 +25,14 @@ earth = {
 #	pole_flattening = 100
 #}
 
-europe = {
-	name = "Europe"
-	size = { 3072 2368 }
+aegean = {
+	name = "Aegean"
+	size = { 480 416 }
 	world = earth
 	main_map_template = earth
-	map_start_pos = { 6560 2016 }
-	minimap_tile_scale = 0.25
-	diplomatic_map_tile_scale = 0.5
+	map_start_pos = { 8544 3968 }
+	minimap_tile_scale = 1
+	diplomatic_map_tile_scale = 2
 }
 
 eastern_mediterranean = {
@@ -41,6 +41,16 @@ eastern_mediterranean = {
 	world = earth
 	main_map_template = earth
 	map_start_pos = { 8544 3968 }
+	minimap_tile_scale = 0.25
+	diplomatic_map_tile_scale = 0.5
+}
+
+europe = {
+	name = "Europe"
+	size = { 3072 2368 }
+	world = earth
+	main_map_template = earth
+	map_start_pos = { 6560 2016 }
 	minimap_tile_scale = 0.25
 	diplomatic_map_tile_scale = 0.5
 }

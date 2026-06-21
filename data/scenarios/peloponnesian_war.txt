@@ -1,0 +1,10 @@
+peloponnesian_war = {
+	name = "Peloponnesian War"
+	start_date = -431
+	map_template = aegean
+	hidden = true
+	default_countries = {
+		athens
+		sparta
+	}
+}
