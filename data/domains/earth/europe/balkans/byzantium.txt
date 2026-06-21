@@ -17,8 +17,13 @@ byzantium = {
 	}
 	core_provinces = {
 		thrace
+		achaea
+		aetolia
 		attica
+		boeotia
 		central_macedonia
+		cephalonia
+		corfu
 		crete
 		east_macedonia
 		eastern_rumelia
@@ -26,6 +31,7 @@ byzantium = {
 		peloponnese
 		thessaly
 		west_macedonia
+		zakynthos
 	}
 	
 	history = {

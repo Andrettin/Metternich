@@ -17,6 +17,8 @@ eastern_rome = {
 	}
 	core_provinces = {
 		thrace
+		achaea
+		aetolia
 		afyonkarahisar
 		albania
 		alexandria
@@ -25,10 +27,13 @@ eastern_rome = {
 		attica
 		aydin
 		benghazi
+		boeotia
 		bulgaria
 		burdur
 		bursa
 		central_macedonia
+		cephalonia
+		corfu
 		crete
 		cyrenaica
 		denizli
@@ -54,5 +59,6 @@ eastern_rome = {
 		tobruk
 		troad
 		west_macedonia
+		zakynthos
 	}
 }

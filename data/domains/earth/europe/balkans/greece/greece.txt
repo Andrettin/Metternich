@@ -12,7 +12,10 @@ greece = {
 		ancient_era
 	}
 	core_provinces = {
+		achaea
+		aetolia
 		attica
+		boeotia
 		peloponnese
 		thessaly
 	}
