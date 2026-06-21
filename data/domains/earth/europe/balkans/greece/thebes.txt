@@ -6,8 +6,7 @@ thebes = {
 	default_religion = hellenic
 	default_tier = county
 	default_government_type = monarchy
-	#default_capital = thebes
-	default_capital = salona
+	default_capital = thebes
 	eras = {
 		ancient_era
 	}

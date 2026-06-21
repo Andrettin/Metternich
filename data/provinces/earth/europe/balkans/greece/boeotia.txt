@@ -1,8 +1,8 @@
 boeotia = {
 	name = "Boeotia"
 	color = { 0 147 165 }
-	#default_provincial_capital = thebes
-	default_provincial_capital = salona
+	terrain = hills
+	default_provincial_capital = thebes
 	regions = {
 		greece
 	}
@@ -25,6 +25,10 @@ boeotia = {
 		526 = {
 			owner = eastern_rome #part of the East Roman Empire in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 			religion = orthodox
+		}
+		
+		1089 = {
+			trade_zone = morosini
 		}
 		
 		1360 = {

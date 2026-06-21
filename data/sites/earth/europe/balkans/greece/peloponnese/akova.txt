@@ -1,0 +1,8 @@
+akova = {
+	name = "Akova"
+	world = earth
+	geocoordinate = { 21.9881 37.7176 } #Akova Castle
+	type = holding
+	holding_type = castle
+	province = peloponnese
+}

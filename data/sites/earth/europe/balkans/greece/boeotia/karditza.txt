@@ -1,0 +1,8 @@
+karditza = {
+	name = "Karditza"
+	world = earth
+	geocoordinate = { 23.220833333333 38.456666666667 } #Akraifnio
+	type = holding
+	holding_type = castle
+	province = boeotia
+}

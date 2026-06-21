@@ -1,0 +1,8 @@
+geraki = {
+	name = "Geraki"
+	world = earth
+	geocoordinate = { 21.394444444444 37.794444444444 } #Geraki, Elis
+	type = holding
+	holding_type = castle
+	province = achaea
+}

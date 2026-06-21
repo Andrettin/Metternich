@@ -1,0 +1,8 @@
+andravida = {
+	name = "Andravida"
+	world = earth
+	geocoordinate = { 21.26666667 37.90583333 }
+	type = holding
+	holding_type = guild
+	province = achaea
+}

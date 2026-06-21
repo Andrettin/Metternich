@@ -1,8 +1,8 @@
-salona = {
-	name = "Salona" #also known as Soula
+amphissa = {
+	name = "Amphissa" #also known as Salona or Soula
 	world = earth
 	geocoordinate = { 22.375277777778 38.525277777778 } #Amfissa
 	type = holding
-	holding_type = castle
+	holding_type = temple #or castle
 	province = boeotia
 }

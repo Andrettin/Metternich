@@ -1,0 +1,8 @@
+kalavryta = {
+	name = "Kalavryta"
+	world = earth
+	geocoordinate = { 22.108611 38.030833 }
+	type = holding
+	holding_type = castle
+	province = achaea
+}

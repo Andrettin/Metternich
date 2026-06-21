@@ -1,0 +1,8 @@
+chalandritza = {
+	name = "Chalandritza"
+	world = earth
+	geocoordinate = { 21.783211093605633 38.10756892283298 }
+	type = holding
+	holding_type = castle
+	province = achaea
+}

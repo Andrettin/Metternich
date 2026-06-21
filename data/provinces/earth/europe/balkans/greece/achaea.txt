@@ -1,6 +1,7 @@
 achaea = {
 	name = "Achaea"
 	color = { 42 150 38 }
+	terrain = mountains
 	default_provincial_capital = vostitza
 	regions = {
 		greece
@@ -24,6 +25,10 @@ achaea = {
 		526 = {
 			owner = eastern_rome #part of the East Roman Empire in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 			religion = orthodox
+		}
+		
+		1099 = {
+			trade_zone = morosini
 		}
 		
 		1360 = {

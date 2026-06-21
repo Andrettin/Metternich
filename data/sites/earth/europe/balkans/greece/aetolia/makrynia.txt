@@ -1,0 +1,8 @@
+makrynia = {
+	name = "Makrynia"
+	world = earth
+	geocoordinate = { 21.53333333 38.53333333 } #Makrynia Municipal Unit
+	type = holding
+	holding_type = guild
+	province = aetolia
+}

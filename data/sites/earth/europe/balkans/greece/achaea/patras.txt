@@ -1,0 +1,8 @@
+patras = {
+	name = "Patras"
+	world = earth
+	geocoordinate = { 21.729981 38.230004 } #from Natural Earth (Patra)
+	type = holding
+	holding_type = castle
+	province = achaea
+}

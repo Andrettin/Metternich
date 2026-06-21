@@ -1,0 +1,8 @@
+kastri = {
+	name = "Kastri"
+	world = earth
+	geocoordinate = { 22.5016871 38.4812634 } #Kastri, Phocis
+	type = holding
+	holding_type = castle
+	province = boeotia
+}
