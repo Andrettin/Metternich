@@ -50,6 +50,51 @@ black_sea = {
 	}
 }
 
+coast_of_cyprus = {
+	name = "Coast of Cyprus"
+	color = { 171 7 112 }
+	sea = true
+	regions = {
+		mediterranean_sea
+	}
+}
+
+coast_of_egypt = {
+	name = "Coast of Egypt"
+	color = { 126 45 69 }
+	sea = true
+	regions = {
+		mediterranean_sea
+	}
+}
+
+coast_of_lebanon = {
+	name = "Coast of Lebanon"
+	color = { 203 198 0 }
+	sea = true
+	regions = {
+		mediterranean_sea
+	}
+}
+
+coast_of_palestine = {
+	name = "Coast of Palestine"
+	color = { 67 220 250 }
+	sea = true
+	regions = {
+		mediterranean_sea
+	}
+}
+
+coast_of_syria = {
+	name = "Coast of Syria"
+	color = { 37 127 158 }
+	sea = true
+	regions = {
+		mediterranean_sea
+	}
+}
+
 eastern_mediterranean_sea = {
 	name = "Eastern Mediterranean Sea"
 	color = { 193 100 102 }
