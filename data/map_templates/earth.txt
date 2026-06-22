@@ -85,4 +85,7 @@ south_america = {
 	map_start_pos = { 3936 5408 }
 	minimap_tile_scale = 0.25
 	diplomatic_map_tile_scale = 0.5
+	ignored_provinces = {
+		south_atlantic_ocean #it was being split in two in the map by other sea zones
+	}
 }
