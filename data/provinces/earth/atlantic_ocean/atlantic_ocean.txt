@@ -1,3 +1,12 @@
+argentinian_shelf = {
+	name = "Argentinian Shelf"
+	color = { 196 13 16 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
 bay_of_biscay = {
 	name = "Bay of Biscay"
 	color = { 28 250 250 }
@@ -231,6 +240,15 @@ english_channel = {
 	}
 }
 
+falklandic_shelf = {
+	name = "Falklandic Shelf"
+	color = { 177 101 151 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
 galician_shelf = {
 	name = "Galician Shelf"
 	color = { 62 65 109 }
@@ -379,6 +397,15 @@ south_atlantic_ocean = {
 south_brazilian_shelf = {
 	name = "South Brazilian Shelf"
 	color = { 232 153 103 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
+south_georgian_shelf = {
+	name = "South Georgian Shelf"
+	color = { 59 35 234 }
 	sea = true
 	regions = {
 		atlantic_ocean
