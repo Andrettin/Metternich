@@ -145,6 +145,15 @@ coast_of_scotland = {
 	}
 }
 
+coast_of_south_georgia = {
+	name = "Coast of South Georgia"
+	color = { 114 203 253 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
 coast_of_the_azores = {
 	name = "Coast of the Azores"
 	color = { 62 202 252 }
@@ -338,6 +347,15 @@ rio_de_la_plata = {
 	}
 }
 
+riograndense_shelf = {
+	name = "Riograndense Shelf"
+	color = { 115 95 254 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
 sargasso_sea = {
 	name = "Sargasso Sea"
 	color = { 221 89 67 }
@@ -358,10 +376,28 @@ south_atlantic_ocean = {
 	}
 }
 
+south_brazilian_shelf = {
+	name = "South Brazilian Shelf"
+	color = { 232 153 103 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
 straits_of_florida = {
 	name = "Straits of Florida"
 	color = { 208 222 251 }
 	geocoordinate = { -80.925833333333 23.934166666667 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
+uruguayan_shelf = {
+	name = "Uruguayan Shelf"
+	color = { 101 15 49 }
 	sea = true
 	regions = {
 		atlantic_ocean

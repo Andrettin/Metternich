@@ -1,0 +1,17 @@
+south_georgia = {
+	name = "South Georgia"
+	color = { 181 16 12 }
+	default_provincial_capital = grytviken
+	regions = {
+		south_america
+	}
+	
+	history = {
+		religion = pagan
+		
+		-4000 = {
+			owner = mapuche
+			culture = mapuche
+		}
+	}
+}

@@ -1,0 +1,7 @@
+grytviken = {
+	name = "Grytviken"
+	world = earth
+	geocoordinate = { -36.507989 -54.280577 } #from Natural Earth
+	type = holding
+	province = south_georgia
+}
