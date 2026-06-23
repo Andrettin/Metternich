@@ -24,6 +24,7 @@ Item {
 	readonly property var selected_country_game_data: selected_country ? selected_country.game_data : null
 	property int selected_diplomacy_state: -1
 	property var selected_consulate: null
+	property string status_text: ""
 	
 	Rectangle {
 		id: diplomatic_map_background
@@ -71,6 +72,16 @@ Item {
 		anchors.top: parent.top
 		anchors.left: left_bar.right
 		anchors.right: right_bar.left
+		
+		SmallText {
+			id: status_label
+			text: status_text
+			anchors.top: parent.top
+			anchors.topMargin: 1 * scale_factor
+			anchors.right: parent.right
+			anchors.rightMargin: 8 * scale_factor
+			width: 384 * scale_factor
+		}
 	}
 	
 	CharacterDialog {

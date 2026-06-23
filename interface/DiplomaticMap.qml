@@ -122,6 +122,18 @@ Flickable {
 				diplomatic_map.selected_country = domain
 			}
 		}
+		
+		onPositionChanged: function (mouse) {
+			if (typeof status_text !== 'undefined') {
+				var province = metternich.map.get_tile_province(Qt.point(Math.floor(mouse.x / metternich.map.diplomatic_map_tile_scale_double / scale_factor), Math.floor(mouse.y / metternich.map.diplomatic_map_tile_scale_double / scale_factor)))
+				
+				if (province !== null) {
+					status_text = get_status_text(province)
+				} else {
+					status_text = ""
+				}
+			}
+		}
 	}
 	
 	//icons for domains which don't own any provinces
@@ -245,6 +257,34 @@ Flickable {
 				return "/cultural"
 			case DiplomaticMap.Mode.Religious:
 				return "/religious"
+		}
+		
+		return ""
+	}
+	
+	function get_status_text(province) {
+		if (province === null) {
+			return ""
+		}
+		
+		var domain = province.game_data.owner
+		
+		if (domain === null) {
+			return ""
+		}
+		
+		switch (diplomatic_map.mode) {
+			case DiplomaticMap.Mode.Realm:
+				return domain.game_data.realm.name
+			case DiplomaticMap.Mode.Political:
+			case DiplomaticMap.Mode.Treaty:
+				return domain.name
+			case DiplomaticMap.Mode.Terrain:
+				return province.map_data.terrain.name
+			case DiplomaticMap.Mode.Cultural:
+				return province.game_data.culture.name
+			case DiplomaticMap.Mode.Religious:
+				return province.game_data.religion.name
 		}
 		
 		return ""
