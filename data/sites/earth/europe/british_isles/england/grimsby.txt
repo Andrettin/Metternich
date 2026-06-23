@@ -1,13 +1,10 @@
-ipswich = {
-	name = "Ipswich"
+grimsby = {
+	name = "Grimsby"
 	world = earth
-	geocoordinate = { 1.16999548199 52.07034751290 } #from Natural Earth
+	geocoordinate = { -0.08 53.5675 }
 	type = holding
 	holding_type = guild
-	province = east_anglia
-	features = {
-		prime_grain_land
-	}
+	province = derbyshire
 	
 	history = {
 		high_middle_ages = {

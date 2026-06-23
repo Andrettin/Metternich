@@ -1,13 +1,10 @@
-ipswich = {
-	name = "Ipswich"
+yarmouth = {
+	name = "Yarmouth"
 	world = earth
-	geocoordinate = { 1.16999548199 52.07034751290 } #from Natural Earth
+	geocoordinate = { 1.7330555555555556 52.60777777777778 } #Great Yarmouth
 	type = holding
 	holding_type = guild
 	province = east_anglia
-	features = {
-		prime_grain_land
-	}
 	
 	history = {
 		high_middle_ages = {

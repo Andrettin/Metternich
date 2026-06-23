@@ -1,13 +1,10 @@
-ipswich = {
-	name = "Ipswich"
+rochester = {
+	name = "Rochester"
 	world = earth
-	geocoordinate = { 1.16999548199 52.07034751290 } #from Natural Earth
+	geocoordinate = { 0.50546 51.38764 }
 	type = holding
 	holding_type = guild
-	province = east_anglia
-	features = {
-		prime_grain_land
-	}
+	province = kent
 	
 	history = {
 		high_middle_ages = {

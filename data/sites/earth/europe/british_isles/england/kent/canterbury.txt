@@ -6,4 +6,11 @@ canterbury = {
 	features = {
 		#holy_site
 	}
+	
+	history = {
+		high_middle_ages = {
+			#foreign city in which the Hanseatic League, or any of its members, possessed trading privileges in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
+			developed = true
+		}
+	}
 }

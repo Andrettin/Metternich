@@ -3,11 +3,13 @@ boston_lincolnshire = {
 	world = earth
 	geocoordinate = { -0.0214 52.9746 }
 	type = holding
-	holding_type = guild
+	holding_type = guild #important market or fair in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
 	province = derbyshire
 	
 	history = {
 		high_middle_ages = {
+			tier = market #important market or fair in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
+			buildings += market
 			owner = hanseatic_league #foreign city in which the Hanseatic League, or any of its members, possessed trading privileges in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
 			developed = true
 		}
