@@ -648,6 +648,9 @@ void map::update_minimap_rect(const QRect &tile_rect)
 				if (domain != nullptr) {
 					this->minimap_image.setPixelColor(pixel_pos, domain->get_game_data()->get_diplomatic_map_color());
 					continue;
+				} else if (tile->get_province() != nullptr && !tile->get_province()->is_water_zone()) {
+					this->minimap_image.setPixelColor(pixel_pos, defines::get()->get_minor_nation_color());
+					continue;
 				}
 			}
 
