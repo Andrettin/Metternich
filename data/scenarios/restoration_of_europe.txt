@@ -1,12 +1,24 @@
 restoration_of_europe = {
 	name = "Restoration of Europe"
 	start_date = 1815.11.20
-	map_template = central_europe
+	map_template = europe
+	hidden = true
 	default_countries = {
 		austria
 		france
 		#great_britain
 		prussia
 		russia
+	}
+}
+
+german_confederation = {
+	name = "German Confederation"
+	start_date = 1815.11.20
+	map_template = central_europe
+	default_countries = {
+		austria
+		france
+		prussia
 	}
 }
