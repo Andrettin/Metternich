@@ -7,7 +7,7 @@ earth = {
 	max_longitude = 180
 	min_latitude = -90
 	max_latitude = 90
-	minimap_tile_scale = 0.25
+	minimap_tile_scale = 0.125
 	diplomatic_map_tile_scale = 0.5
 	geocoordinate_x_offset = -512 #shift all positions derived from geocoordinates by this offset; this will place the Florence meridian at the center of the map
 	province_image_filepath = "earth/provinces.png"
@@ -31,7 +31,7 @@ aegean = {
 	world = earth
 	main_map_template = earth
 	map_start_pos = { 8544 3968 }
-	minimap_tile_scale = 1
+	minimap_tile_scale = 0.5
 	diplomatic_map_tile_scale = 2
 }
 
@@ -41,7 +41,7 @@ central_europe = {
 	world = earth
 	main_map_template = earth
 	map_start_pos = { 7776 3136 }
-	minimap_tile_scale = 0.5
+	minimap_tile_scale = 0.25
 	diplomatic_map_tile_scale = 1
 	ignored_provinces = {
 		bessarabia
@@ -63,7 +63,7 @@ eastern_mediterranean = {
 	world = earth
 	main_map_template = earth
 	map_start_pos = { 8544 3968 }
-	minimap_tile_scale = 0.25
+	minimap_tile_scale = 0.125
 	diplomatic_map_tile_scale = 0.5
 }
 
@@ -73,7 +73,7 @@ europe = {
 	world = earth
 	main_map_template = earth
 	map_start_pos = { 6560 2016 }
-	minimap_tile_scale = 0.25
+	minimap_tile_scale = 0.125
 	diplomatic_map_tile_scale = 0.5
 }
 
@@ -83,7 +83,7 @@ south_america = {
 	world = earth
 	main_map_template = earth
 	map_start_pos = { 3936 5408 }
-	minimap_tile_scale = 0.25
+	minimap_tile_scale = 0.125
 	diplomatic_map_tile_scale = 0.5
 	ignored_provinces = {
 		south_atlantic_ocean #it was being split in two in the map by other sea zones

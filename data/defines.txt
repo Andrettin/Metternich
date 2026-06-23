@@ -10,7 +10,7 @@ neutral_target_cursor = yellow_crosshair
 enemy_target_cursor = red_crosshair
 
 tile_size = { 64 64 }
-default_minimap_tile_scale = 0.5
+default_minimap_tile_scale = 0.25
 default_base_terrain = plains
 unexplored_terrain = unexplored
 default_province_terrain = plains
