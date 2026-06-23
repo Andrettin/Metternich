@@ -37,12 +37,19 @@ Rectangle {
 			id: realm_map_mode_button
 			icon_identifier: "globe"
 			highlighted: diplomatic_map.mode === DiplomaticMap.Mode.Realm
-			tooltip: "Realm Map"
 			
 			onClicked: {
 				diplomatic_map.mode = DiplomaticMap.Mode.Realm
 				if (diplomatic_map.selected_country !== null && !diplomatic_map.selected_country.game_data.is_independent()) {
 					diplomatic_map.selected_country = null
+				}
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Realm Map"
+				} else {
+					status_text = ""
 				}
 			}
 		}
@@ -51,10 +58,17 @@ Rectangle {
 			id: political_map_mode_button
 			icon_identifier: "flag"
 			highlighted: diplomatic_map.mode === DiplomaticMap.Mode.Political
-			tooltip: "Political Map"
 			
 			onClicked: {
 				diplomatic_map.mode = DiplomaticMap.Mode.Political
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Political Map"
+				} else {
+					status_text = ""
+				}
 			}
 		}
 		
@@ -62,10 +76,17 @@ Rectangle {
 			id: landless_domains_button
 			icon_identifier: "settlement"
 			highlighted: diplomatic_map.show_landless_domains
-			tooltip: "Show Landless Domains"
 			
 			onClicked: {
 				diplomatic_map.show_landless_domains = !diplomatic_map.show_landless_domains
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Show Landless Domains"
+				} else {
+					status_text = ""
+				}
 			}
 		}
 		
@@ -73,12 +94,19 @@ Rectangle {
 			id: diplomatic_map_mode_button
 			icon_identifier: "treaty"
 			highlighted: diplomatic_map.mode === DiplomaticMap.Mode.Treaty
-			tooltip: "Treaty Map"
 			
 			onClicked: {
 				diplomatic_map.mode = DiplomaticMap.Mode.Treaty
 				diplomatic_map_view.selected_diplomacy_state = -1
 				diplomatic_map_view.selected_consulate = null
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Treaty Map"
+				} else {
+					status_text = ""
+				}
 			}
 		}
 		
@@ -86,10 +114,17 @@ Rectangle {
 			id: terrain_map_mode_button
 			icon_identifier: "mountains"
 			highlighted: diplomatic_map.mode === DiplomaticMap.Mode.Terrain
-			tooltip: "Terrain Map"
 			
 			onClicked: {
 				diplomatic_map.mode = DiplomaticMap.Mode.Terrain
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Terrain Map"
+				} else {
+					status_text = ""
+				}
 			}
 		}
 		
@@ -97,10 +132,17 @@ Rectangle {
 			id: cultural_map_mode_button
 			icon_identifier: "music"
 			highlighted: diplomatic_map.mode === DiplomaticMap.Mode.Cultural
-			tooltip: "Cultural Map"
 			
 			onClicked: {
 				diplomatic_map.mode = DiplomaticMap.Mode.Cultural
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Cultural Map"
+				} else {
+					status_text = ""
+				}
 			}
 		}
 		
@@ -108,10 +150,17 @@ Rectangle {
 			id: religious_map_mode_button
 			icon_identifier: "wooden_cross"
 			highlighted: diplomatic_map.mode === DiplomaticMap.Mode.Religious
-			tooltip: "Religious Map"
 			
 			onClicked: {
 				diplomatic_map.mode = DiplomaticMap.Mode.Religious
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Religious Map"
+				} else {
+					status_text = ""
+				}
 			}
 		}
 		
@@ -119,10 +168,17 @@ Rectangle {
 			id: trade_zone_map_mode_button
 			icon_identifier: "chest"
 			highlighted: diplomatic_map.mode === DiplomaticMap.Mode.TradeZone
-			tooltip: "Trade Zone Map"
 			
 			onClicked: {
 				diplomatic_map.mode = DiplomaticMap.Mode.TradeZone
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Trade Zone Map"
+				} else {
+					status_text = ""
+				}
 			}
 		}
 		
@@ -130,10 +186,17 @@ Rectangle {
 			id: temple_map_mode_button
 			icon_identifier: "bronze_cross_detailed"
 			highlighted: diplomatic_map.mode === DiplomaticMap.Mode.Temple
-			tooltip: "Temple Map"
 			
 			onClicked: {
 				diplomatic_map.mode = DiplomaticMap.Mode.Temple
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Temple Map"
+				} else {
+					status_text = ""
+				}
 			}
 		}
 	}
@@ -204,7 +267,14 @@ Rectangle {
 		anchors.left: country_text.left
 		anchors.leftMargin: 256 * scale_factor
 		character: selected_country_ruler
-		tooltip: selected_country_ruler ? selected_country_ruler.game_data.titled_name : ""
+			
+		onHoveredChanged: {
+			if (hovered) {
+				status_text = selected_country_ruler ? selected_country_ruler.game_data.titled_name : ""
+			} else {
+				status_text = ""
+			}
+		}
 	}
 	
 	TextButton {
@@ -288,7 +358,6 @@ Rectangle {
 			id: offer_peace_button
 			icon_identifier: "philosophy"
 			highlighted: diplomatic_map_view.selected_diplomacy_state === DiplomaticView.DiplomacyState.Peace
-			tooltip: "Offer Peace"
 			
 			onClicked: {
 				if (diplomatic_map_view.selected_diplomacy_state === DiplomaticView.DiplomacyState.Peace) {
@@ -298,13 +367,20 @@ Rectangle {
 					diplomatic_map_view.selected_consulate = null
 				}
 			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Offer Peace"
+				} else {
+					status_text = ""
+				}
+			}
 		}
 		
 		IconButton {
 			id: declare_war_button
 			icon_identifier: "crossed_sabers"
 			highlighted: diplomatic_map_view.selected_diplomacy_state === DiplomaticView.DiplomacyState.War
-			tooltip: "Declare War"
 			
 			onClicked: {
 				if (diplomatic_map_view.selected_diplomacy_state === DiplomaticView.DiplomacyState.War) {
@@ -312,6 +388,14 @@ Rectangle {
 				} else {
 					diplomatic_map_view.selected_diplomacy_state = DiplomaticView.DiplomacyState.War
 					diplomatic_map_view.selected_consulate = null
+				}
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Declare War"
+				} else {
+					status_text = ""
 				}
 			}
 		}
@@ -329,7 +413,6 @@ Rectangle {
 			id: offer_pact_button
 			icon_identifier: "wall"
 			highlighted: diplomatic_map_view.selected_diplomacy_state === DiplomaticView.DiplomacyState.NonAggressionPact
-			tooltip: "Offer Non-Aggression Pact"
 			
 			onClicked: {
 				if (diplomatic_map_view.selected_diplomacy_state === DiplomaticView.DiplomacyState.NonAggressionPact) {
@@ -339,13 +422,20 @@ Rectangle {
 					diplomatic_map_view.selected_consulate = null
 				}
 			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Offer Non-Aggression Pact"
+				} else {
+					status_text = ""
+				}
+			}
 		}
 		
 		IconButton {
 			id: offer_alliance_button
 			icon_identifier: "flag"
 			highlighted: diplomatic_map_view.selected_diplomacy_state === DiplomaticView.DiplomacyState.Alliance
-			tooltip: "Offer Alliance"
 			
 			onClicked: {
 				if (diplomatic_map_view.selected_diplomacy_state === DiplomaticView.DiplomacyState.Alliance) {
@@ -355,13 +445,20 @@ Rectangle {
 					diplomatic_map_view.selected_consulate = null
 				}
 			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Offer Alliance"
+				} else {
+					status_text = ""
+				}
+			}
 		}
 		
 		IconButton {
 			id: join_empire_button
 			icon_identifier: "crown_imperial"
 			highlighted: diplomatic_map_view.selected_diplomacy_state === DiplomaticView.DiplomacyState.Vassal
-			tooltip: "Invite to Join Empire"
 			
 			onClicked: {
 				if (diplomatic_map_view.selected_diplomacy_state === DiplomaticView.DiplomacyState.Vassal) {
@@ -369,6 +466,14 @@ Rectangle {
 				} else {
 					diplomatic_map_view.selected_diplomacy_state = DiplomaticView.DiplomacyState.Vassal
 					diplomatic_map_view.selected_consulate = null
+				}
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Invite to Join Empire"
+				} else {
+					status_text = ""
 				}
 			}
 		}
@@ -386,7 +491,6 @@ Rectangle {
 			id: build_trade_consulate_button
 			icon_identifier: "wealth"
 			highlighted: diplomatic_map_view.selected_consulate === consulate
-			tooltip: "Build a Trade Consulate"
 			
 			readonly property var consulate: metternich.get_consulate("trade_consulate")
 			
@@ -398,13 +502,20 @@ Rectangle {
 					diplomatic_map_view.selected_diplomacy_state = -1
 				}
 			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Build a Trade Consulate"
+				} else {
+					status_text = ""
+				}
+			}
 		}
 		
 		IconButton {
 			id: build_embassy_button
 			icon_identifier: "treaty"
 			highlighted: diplomatic_map_view.selected_consulate === consulate
-			tooltip: "Build an Embassy"
 			
 			readonly property var consulate: metternich.get_consulate("embassy")
 			
@@ -414,6 +525,14 @@ Rectangle {
 				} else {
 					diplomatic_map_view.selected_consulate = consulate
 					diplomatic_map_view.selected_diplomacy_state = -1
+				}
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Build an Embassy"
+				} else {
+					status_text = ""
 				}
 			}
 		}
