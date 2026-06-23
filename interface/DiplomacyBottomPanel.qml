@@ -114,6 +114,28 @@ Rectangle {
 				diplomatic_map.mode = DiplomaticMap.Mode.Religious
 			}
 		}
+		
+		IconButton {
+			id: trade_zone_map_mode_button
+			icon_identifier: "chest"
+			highlighted: diplomatic_map.mode === DiplomaticMap.Mode.TradeZone
+			tooltip: "Trade Zone Map"
+			
+			onClicked: {
+				diplomatic_map.mode = DiplomaticMap.Mode.TradeZone
+			}
+		}
+		
+		IconButton {
+			id: temple_map_mode_button
+			icon_identifier: "bronze_cross_detailed"
+			highlighted: diplomatic_map.mode === DiplomaticMap.Mode.Temple
+			tooltip: "Temple Map"
+			
+			onClicked: {
+				diplomatic_map.mode = DiplomaticMap.Mode.Temple
+			}
+		}
 	}
 	
 	Item {

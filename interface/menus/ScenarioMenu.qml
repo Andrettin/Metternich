@@ -110,6 +110,7 @@ MenuBase {
 			}
 		}
 		
+		/*
 		IconButton {
 			id: terrain_map_mode_button
 			icon_identifier: "mountains"
@@ -145,6 +146,7 @@ MenuBase {
 				diplomatic_map.mode = DiplomaticMap.Mode.Religious
 			}
 		}
+		*/
 	}
 	
 	SmallText {

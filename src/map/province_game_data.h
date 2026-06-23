@@ -3,7 +3,6 @@
 #include "database/data_entry_container.h"
 #include "economy/commodity_container.h"
 #include "economy/resource_container.h"
-#include "map/terrain_type_container.h"
 #include "script/scripted_modifier_container.h"
 #include "technology/technology_container.h"
 #include "unit/military_unit_type_container.h"
@@ -56,6 +55,8 @@ class province_game_data final : public QObject
 	Q_PROPERTY(const metternich::domain* owner READ get_owner NOTIFY owner_changed)
 	Q_PROPERTY(const metternich::culture* culture READ get_culture NOTIFY culture_changed)
 	Q_PROPERTY(const metternich::religion* religion READ get_religion NOTIFY religion_changed)
+	Q_PROPERTY(const metternich::domain* trade_zone_domain READ get_trade_zone_domain NOTIFY trade_zone_domain_changed)
+	Q_PROPERTY(const metternich::domain* temple_domain READ get_temple_domain NOTIFY temple_domain_changed)
 	Q_PROPERTY(int level READ get_level NOTIFY level_changed)
 	Q_PROPERTY(int max_level READ get_max_level NOTIFY max_level_changed)
 	Q_PROPERTY(QColor map_color READ get_map_color NOTIFY owner_changed)
@@ -134,6 +135,22 @@ public:
 	{
 		return QString::fromStdString(this->get_current_cultural_name());
 	}
+
+	const metternich::domain *get_trade_zone_domain() const
+	{
+		return this->trade_zone_domain;
+	}
+
+	void set_trade_zone_domain(const metternich::domain *trade_zone_domain);
+	void check_trade_zone_domain();
+
+	const metternich::domain *get_temple_domain() const
+	{
+		return this->temple_domain;
+	}
+
+	void set_temple_domain(const metternich::domain *temple_domain);
+	void check_temple_domain();
 
 	int get_level() const
 	{
@@ -574,15 +591,14 @@ public:
 	int64_t get_min_income() const;
 	int64_t get_max_income() const;
 
-	Q_INVOKABLE const metternich::domain *get_trade_zone_domain() const;
-	Q_INVOKABLE const metternich::domain *get_temple_domain() const;
-
 	province_game_data &operator =(const province_game_data &other) = delete;
 
 signals:
 	void owner_changed();
 	void culture_changed();
 	void religion_changed();
+	void trade_zone_domain_changed();
+	void temple_domain_changed();
 	void level_changed();
 	void max_level_changed();
 	void provincial_capital_changed();
@@ -607,6 +623,8 @@ private:
 	const domain *owner = nullptr;
 	const metternich::culture *culture = nullptr;
 	const metternich::religion *religion = nullptr;
+	const domain *trade_zone_domain = nullptr;
+	const domain *temple_domain = nullptr;
 	int level = 0;
 	int max_level = 0;
 	const site *provincial_capital = nullptr;

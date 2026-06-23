@@ -6,7 +6,9 @@ enum class diplomatic_map_mode {
 	diplomatic,
 	terrain,
 	cultural,
-	religious
+	religious,
+	trade_zone,
+	temple
 };
 
 }

@@ -7,7 +7,6 @@
 #include "character/party.h"
 #include "culture/culture.h"
 #include "database/defines.h"
-#include "database/preferences.h"
 #include "domain/country_turn_data.h"
 #include "domain/domain.h"
 #include "domain/domain_economy.h"
@@ -102,6 +101,10 @@ void province_game_data::process_gsml_property(const gsml_property &property)
 		this->culture = culture::get(value);
 	} else if (key == "religion") {
 		this->religion = religion::get(value);
+	} else if (key == "trade_zone_domain") {
+		this->trade_zone_domain = domain::get(value);
+	} else if (key == "temple_domain") {
+		this->temple_domain = domain::get(value);
 	} else if (key == "level") {
 		this->level = std::stoi(value);
 	} else if (key == "max_level") {
@@ -165,6 +168,14 @@ gsml_data province_game_data::to_gsml_data() const
 
 	if (this->get_religion() != nullptr) {
 		data.add_property("religion", this->get_religion()->get_identifier());
+	}
+
+	if (this->get_trade_zone_domain() != nullptr) {
+		data.add_property("trade_zone_domain", this->get_trade_zone_domain()->get_identifier());
+	}
+
+	if (this->get_temple_domain() != nullptr) {
+		data.add_property("temple_domain", this->get_temple_domain()->get_identifier());
 	}
 
 	if (this->get_level() != 0) {
@@ -575,6 +586,98 @@ void province_game_data::on_population_main_religion_changed(const metternich::r
 const std::string &province_game_data::get_current_cultural_name() const
 {
 	return this->province->get_cultural_name(this->get_culture());
+}
+
+void province_game_data::set_trade_zone_domain(const metternich::domain *trade_zone_domain)
+{
+	if (trade_zone_domain == this->get_trade_zone_domain()) {
+		return;
+	}
+
+	this->trade_zone_domain = trade_zone_domain;
+
+	if (game::get()->is_running()) {
+		this->province->get_turn_data()->set_province_map_mode_dirty(province_map_mode::trade_zone);
+
+		if (this->get_owner() != nullptr) {
+			this->get_owner()->get_turn_data()->set_diplomatic_map_mode_dirty(diplomatic_map_mode::trade_zone);
+		}
+	}
+
+	emit trade_zone_domain_changed();
+}
+
+void province_game_data::check_trade_zone_domain()
+{
+	domain_map<int> domain_economic_holding_levels;
+	for (const site *holding_site : this->get_settlement_sites()) {
+		if (holding_site->get_game_data()->get_owner() == nullptr) {
+			continue;
+		}
+
+		if (holding_site->get_game_data()->get_holding_type() == nullptr || !holding_site->get_game_data()->get_holding_type()->is_economic()) {
+			continue;
+		}
+
+		domain_economic_holding_levels[holding_site->get_game_data()->get_owner()] += holding_site->get_game_data()->get_holding_level();
+	}
+
+	int best_holding_level = -1;
+	const domain *best_domain = nullptr;
+	for (const auto &[domain, holding_level] : domain_economic_holding_levels) {
+		if (holding_level > best_holding_level) {
+			best_holding_level = holding_level;
+			best_domain = domain;
+		}
+	}
+
+	this->set_trade_zone_domain(best_domain);
+}
+
+void province_game_data::set_temple_domain(const metternich::domain *temple_domain)
+{
+	if (temple_domain == this->get_temple_domain()) {
+		return;
+	}
+
+	this->temple_domain = temple_domain;
+
+	if (game::get()->is_running()) {
+		this->province->get_turn_data()->set_province_map_mode_dirty(province_map_mode::temple);
+
+		if (this->get_owner() != nullptr) {
+			this->get_owner()->get_turn_data()->set_diplomatic_map_mode_dirty(diplomatic_map_mode::temple);
+		}
+	}
+
+	emit temple_domain_changed();
+}
+
+void province_game_data::check_temple_domain()
+{
+	domain_map<int> domain_religious_holding_levels;
+	for (const site *holding_site : this->get_settlement_sites()) {
+		if (holding_site->get_game_data()->get_owner() == nullptr) {
+			continue;
+		}
+
+		if (holding_site->get_game_data()->get_holding_type() == nullptr || !holding_site->get_game_data()->get_holding_type()->is_religious()) {
+			continue;
+		}
+
+		domain_religious_holding_levels[holding_site->get_game_data()->get_owner()] += holding_site->get_game_data()->get_holding_level();
+	}
+
+	int best_holding_level = -1;
+	const domain *best_domain = nullptr;
+	for (const auto &[domain, holding_level] : domain_religious_holding_levels) {
+		if (holding_level > best_holding_level) {
+			best_holding_level = holding_level;
+			best_domain = domain;
+		}
+	}
+
+	this->set_temple_domain(best_domain);
 }
 
 void province_game_data::set_level(const int level)
@@ -2181,68 +2284,6 @@ int64_t province_game_data::get_max_income() const
 {
 	const dice &taxation_dice = defines::get()->get_province_taxation_for_level(this->get_level());
 	return taxation_dice.get_maximum_result() * defines::get()->get_domain_income_unit_value();
-}
-
-const domain *province_game_data::get_trade_zone_domain() const
-{
-	domain_map<int> domain_economic_holding_levels;
-	for (const site *holding_site : this->get_settlement_sites()) {
-		if (holding_site->get_game_data()->get_owner() == nullptr) {
-			continue;
-		}
-
-		if (holding_site->get_game_data()->get_holding_type() == nullptr || !holding_site->get_game_data()->get_holding_type()->is_economic()) {
-			continue;
-		}
-
-		domain_economic_holding_levels[holding_site->get_game_data()->get_owner()] += holding_site->get_game_data()->get_holding_level();
-	}
-
-	int best_holding_level = -1;
-	const domain *best_domain = nullptr;
-	for (const auto &[domain, holding_level] : domain_economic_holding_levels) {
-		if (holding_level > best_holding_level) {
-			best_holding_level = holding_level;
-			best_domain = domain;
-		}
-	}
-
-	if (best_domain != nullptr) {
-		return best_domain;
-	}
-
-	return nullptr;
-}
-
-const domain *province_game_data::get_temple_domain() const
-{
-	domain_map<int> domain_religious_holding_levels;
-	for (const site *holding_site : this->get_settlement_sites()) {
-		if (holding_site->get_game_data()->get_owner() == nullptr) {
-			continue;
-		}
-
-		if (holding_site->get_game_data()->get_holding_type() == nullptr || !holding_site->get_game_data()->get_holding_type()->is_religious()) {
-			continue;
-		}
-
-		domain_religious_holding_levels[holding_site->get_game_data()->get_owner()] += holding_site->get_game_data()->get_holding_level();
-	}
-
-	int best_holding_level = -1;
-	const domain *best_domain = nullptr;
-	for (const auto &[domain, holding_level] : domain_religious_holding_levels) {
-		if (holding_level > best_holding_level) {
-			best_holding_level = holding_level;
-			best_domain = domain;
-		}
-	}
-
-	if (best_domain != nullptr) {
-		return best_domain;
-	}
-
-	return nullptr;
 }
 
 }

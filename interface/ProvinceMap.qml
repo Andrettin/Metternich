@@ -472,12 +472,12 @@ Flickable {
 				text += " (" + province.game_data.technologies.length + " Technologies)"
 			}
 		} else if (province_map.mode === ProvinceMap.Mode.TradeZone) {
-			var trade_zone_domain = province.game_data.get_trade_zone_domain()
+			var trade_zone_domain = province.game_data.trade_zone_domain
 			if (trade_zone_domain !== null) {
 				text += " (" + trade_zone_domain.name + ")"
 			}
 		} else if (province_map.mode === ProvinceMap.Mode.Temple) {
-			var temple_domain = province.game_data.get_temple_domain()
+			var temple_domain = province.game_data.temple_domain
 			if (temple_domain !== null) {
 				text += " (" + temple_domain.name + ")"
 			}

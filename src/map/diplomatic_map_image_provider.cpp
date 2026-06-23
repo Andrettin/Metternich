@@ -63,6 +63,10 @@ QImage diplomatic_map_image_provider::requestImage(const QString &id, QSize *siz
 			image = domain_game_data->get_diplomatic_map_mode_image_promise(diplomatic_map_mode::cultural)->future().result();
 		} else if (mode_identifier == "religious") {
 			image = domain_game_data->get_diplomatic_map_mode_image_promise(diplomatic_map_mode::religious)->future().result();
+		} else if (mode_identifier == "trade_zone") {
+			image = domain_game_data->get_diplomatic_map_mode_image_promise(diplomatic_map_mode::trade_zone)->future().result();
+		} else if (mode_identifier == "temple") {
+			image = domain_game_data->get_diplomatic_map_mode_image_promise(diplomatic_map_mode::temple)->future().result();
 		} else {
 			image = domain_game_data->get_diplomatic_map_image_promise()->future().result();
 		}

@@ -14,7 +14,9 @@ Flickable {
 		Treaty,
 		Terrain,
 		Cultural,
-		Religious
+		Religious,
+		TradeZone,
+		Temple
 	}
 	
 	property string ocean_suffix: ""
@@ -257,6 +259,10 @@ Flickable {
 				return "/cultural"
 			case DiplomaticMap.Mode.Religious:
 				return "/religious"
+			case DiplomaticMap.Mode.TradeZone:
+				return "/trade_zone"
+			case DiplomaticMap.Mode.Temple:
+				return "/temple"
 		}
 		
 		return ""
@@ -285,6 +291,16 @@ Flickable {
 				return province.game_data.culture.name
 			case DiplomaticMap.Mode.Religious:
 				return province.game_data.religion.name
+			case DiplomaticMap.Mode.TradeZone:
+				if (province.game_data.trade_zone_domain !== null) {
+					return province.game_data.trade_zone_domain.name
+				}
+				break
+			case DiplomaticMap.Mode.Temple:
+				if (province.game_data.temple_domain !== null) {
+					return province.game_data.temple_domain.name
+				}
+				break
 		}
 		
 		return ""
