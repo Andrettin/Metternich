@@ -25,8 +25,6 @@ bremen = {
 		
 		high_middle_ages = {
 			temple_domain = bremen #part of the ecclesiastical province of Bremen in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 94-95.
-			
-			trade_zone = hanseatic_league #Hanseatic presence in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
 		}
 		
 		1477 = {

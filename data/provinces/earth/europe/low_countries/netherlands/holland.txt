@@ -27,8 +27,6 @@ holland = {
 		
 		high_middle_ages = {
 			temple_domain = cologne #part of the ecclesiastical province of Cologne in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 94-95.
-			
-			trade_zone = hanseatic_league #Hanseatic presence in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
 		}
 		
 		1477 = {

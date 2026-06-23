@@ -1,13 +1,10 @@
-hull = { #Kingston upon Hull
-	name = "Hull"
+boston_lincolnshire = {
+	name = "Boston"
 	world = earth
-	geocoordinate = { -0.32999047993 53.75042584140 } #from Natural Earth
+	geocoordinate = { -0.0214 52.9746 }
 	type = holding
 	holding_type = guild
-	province = yorkshire
-	features = {
-		coal_deposit
-	}
+	province = derbyshire
 	
 	history = {
 		high_middle_ages = {

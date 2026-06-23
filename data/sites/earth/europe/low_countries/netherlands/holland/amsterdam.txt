@@ -10,6 +10,11 @@ amsterdam = {
 	}
 	
 	history = {
+		high_middle_ages = {
+			owner = hanseatic_league #city belonging to the Hanseatic League in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
+			developed = true
+		}
+		
 		1600 = {
 			population = 100000 #Amsterdam had a population of 100,000+ in 1600; Source: Henry Kamen, "Early Modern European Society", 2021, p. 34.
 		}

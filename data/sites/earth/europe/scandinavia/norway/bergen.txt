@@ -8,6 +8,12 @@ bergen = {
 	province = hordaland
 	
 	history = {
+		high_middle_ages = {
+			tier = market #important market or fair in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
+			buildings += market
+			owner = hanseatic_league #had a foreign office of the Hanseatic League in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
+		}
+		
 		1187 = {
 			buildings += smithy
 		}
