@@ -28,6 +28,7 @@ hungary = {
 		szekesfehervar
 		transylvania
 		trencin
+		vas
 		zalaegerszeg
 	}
 	

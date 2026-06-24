@@ -66,6 +66,7 @@ austria = {
 			szekesfehervar
 			transylvania
 			trencin
+			vas
 			zalaegerszeg
 			#Croatia
 			croatia

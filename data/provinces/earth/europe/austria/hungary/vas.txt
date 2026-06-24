@@ -1,0 +1,48 @@
+vas = {
+	name = "Vas"
+	color = { 168 84 27 }
+	default_provincial_capital = vasvar
+	regions = {
+		hungary
+	}
+	
+	history = {
+		owner = ostrogothia
+		culture = gothic
+		religion = asatru
+		
+		526 = {
+			owner = ostrogothia #part of the Kingdom of the East Goths in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = gothic
+			religion = asatru
+		}
+		
+		919 = {
+			owner = hungary #part of Hungary in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			culture = magyar
+			religion = catholic
+		}
+		
+		high_middle_ages = {
+			temple_domain = esztergom #part of the ecclesiastical province of Gran (Esztergom) in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 94-95.
+		}
+		
+		1360 = {
+			owner = hungary #part of Hungary in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1477 = {
+			owner = hungary #part of the Kingdom of Hungary c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+		}
+		
+		1740 = {
+			owner = austria #Austrian possession c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1815 = {
+			owner = hungary #part of the Kingdom of Hungary (within the Empire of Austria) in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+			
+			culture = magyar #Source: "The British Dominions Year Book 1918", 1918, Map 3.
+		}
+	}
+}

@@ -4,7 +4,7 @@ szombathely = {
 	geocoordinate = { 16.62874181990 47.22534608870 } #from Natural Earth
 	type = holding
 	holding_type = castle
-	province = gyor
+	province = vas
 	cultural_group_names = {
 		german = "Steinamanger"
 	}

@@ -4,5 +4,5 @@ celldomolk = {
 	geocoordinate = { 17.1525 47.2575 }
 	type = holding
 	holding_type = castle
-	province = gyor
+	province = vas
 }
