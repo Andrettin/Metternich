@@ -1,0 +1,59 @@
+maastricht = {
+	name = "Maastricht"
+	color = { 0 0 223 }
+	terrain = plains
+	default_provincial_capital = maastricht
+	regions = {
+		netherlands
+	}
+	
+	history = {
+		-4000 = {
+			owner = frisians
+			culture = frisian
+			religion = asatru
+		}
+		
+		526 = {
+			owner = francia #part of the Kingdom of the Franks in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = frankish
+			religion = catholic
+		}
+		
+		911 = {
+			owner = france #became part of France in 911; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		925 = {
+			owner = lotharingia #became part of the Duchy of Lotharingia in 925; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		959 = {
+			owner = lower_lotharingia #became part of the Duchy of Lower Lotharingia in 959; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		high_middle_ages = {
+			temple_domain = cologne #part of the ecclesiastical province of Cologne in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 94-95.
+		}
+		
+		1477 = {
+			owner = burgundy #Burgundian possession c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+		}
+		
+		1609 = {
+			owner = spain #part of the Spanish Netherlands in 1609; Source: William R. Shepherd, "Historical Atlas", 1911, p. 117.
+		}
+		
+		1740 = {
+			owner = austria #part of the Austrian Netherlands c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1815 = {
+			owner = netherlands #part of the Kingdom of the Netherlands in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+		
+		1839 = {
+			#became part of the Germanic Confederation in 1839; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+	}
+}

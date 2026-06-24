@@ -4,5 +4,5 @@ tilburg = {
 	geocoordinate = { 5.0911 51.5572 }
 	type = holding
 	holding_type = temple
-	province = zeeland
+	province = breda
 }

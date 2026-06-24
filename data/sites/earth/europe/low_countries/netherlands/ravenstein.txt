@@ -4,5 +4,5 @@ ravenstein = {
 	geocoordinate = { 5.6515777777778 51.797022222222 }
 	type = holding
 	holding_type = castle
-	province = zeeland
+	province = breda
 }

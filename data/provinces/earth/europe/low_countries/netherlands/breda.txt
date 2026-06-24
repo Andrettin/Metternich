@@ -1,8 +1,8 @@
-zeeland = {
-	name = "Zeeland"
-	color = { 1 192 160 }
+breda = {
+	name = "Breda"
+	color = { 84 63 46 }
 	terrain = plains
-	default_provincial_capital = middelburg
+	default_provincial_capital = breda
 	regions = {
 		netherlands
 	}
@@ -15,15 +15,21 @@ zeeland = {
 		}
 		
 		526 = {
-			owner = frisians #territory of the Frisians in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
-			culture = frisian
-			religion = asatru
+			owner = francia #part of the Kingdom of the Franks in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = frankish
+			religion = catholic
 		}
 		
-		919 = {
-			owner = friesland #part of Friesland in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
-			culture = dutch
-			religion = catholic
+		911 = {
+			owner = france #became part of France in 911; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		925 = {
+			owner = lotharingia #became part of the Duchy of Lotharingia in 925; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		959 = {
+			owner = lower_lotharingia #became part of the Duchy of Lower Lotharingia in 959; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
 		}
 		
 		high_middle_ages = {
@@ -35,8 +41,7 @@ zeeland = {
 		}
 		
 		1609 = {
-			owner = netherlands #part of the United Netherlands in 1609; Source: William R. Shepherd, "Historical Atlas", 1911, p. 117.
-			religion = protestant
+			owner = spain #part of the Spanish Netherlands in 1609; Source: William R. Shepherd, "Historical Atlas", 1911, p. 117.
 		}
 		
 		1740 = {

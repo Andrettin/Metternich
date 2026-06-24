@@ -15,10 +15,12 @@ netherlands = {
 	}
 	core_provinces = {
 		holland
+		breda
+		friesland
+		groningen
+		maastricht
+		overijssel
 		utrecht
 		zeeland
-		overijssel
-		groningen
-		friesland
 	}
 }

@@ -4,7 +4,7 @@ breda = {
 	geocoordinate = { 4.775833333333333 51.58888888888889 }
 	type = holding
 	holding_type = castle
-	province = zeeland
+	province = breda
 	
 	history = {
 		919 = {

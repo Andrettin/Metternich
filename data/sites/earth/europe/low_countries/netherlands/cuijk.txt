@@ -4,5 +4,5 @@ cuijk = {
 	geocoordinate = { 5.87944 51.72694 }
 	type = holding
 	holding_type = castle
-	province = zeeland
+	province = breda
 }

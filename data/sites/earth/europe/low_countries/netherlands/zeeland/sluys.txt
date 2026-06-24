@@ -1,7 +1,7 @@
 sluys = {
 	name = "Sluys"
 	world = earth
-	#geocoordinate = { 3.3883 51.3089 }
+	geocoordinate = { 3.3883 51.3089 }
 	province = zeeland
 	
 	history = {

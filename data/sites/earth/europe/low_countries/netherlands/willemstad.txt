@@ -4,5 +4,5 @@ willemstad = {
 	geocoordinate = { 4.4378 51.6919 }
 	type = holding
 	holding_type = castle
-	province = zeeland
+	province = breda
 }

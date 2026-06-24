@@ -4,5 +4,5 @@ venlo = {
 	geocoordinate = { 6.16806 51.37 }
 	type = resource
 	resource = grain #Agriculture (horticulture and cereals); Source: Map No. 76863 of the Perry-Castañeda Library Map Collection, 1970.
-	province = zeeland
+	province = maastricht
 }

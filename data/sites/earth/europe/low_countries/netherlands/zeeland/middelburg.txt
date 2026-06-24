@@ -4,6 +4,5 @@ middelburg = {
 	geocoordinate = { 3.60999954067 51.50199617730 } #from Natural Earth
 	type = holding
 	holding_type = castle
-	#resource = grain #Agriculture (horticulture and cereals); Source: Map No. 76863 of the Perry-Castañeda Library Map Collection, 1970.
 	province = zeeland
 }

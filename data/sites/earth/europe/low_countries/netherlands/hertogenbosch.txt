@@ -4,5 +4,5 @@ hertogenbosch = {
 	geocoordinate = { 5.31666048481 51.68333714270 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	province = zeeland
+	province = breda
 }

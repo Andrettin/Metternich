@@ -4,5 +4,5 @@ bergen_op_zoom = {
 	geocoordinate = { 4.3 51.5 }
 	type = holding
 	holding_type = castle
-	province = zeeland
+	province = breda
 }
