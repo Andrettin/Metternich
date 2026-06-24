@@ -48,6 +48,7 @@ austria = {
 			budweis
 			pilsen
 			brunn
+			hodonin
 			iglau
 			olmutz
 			znojmo

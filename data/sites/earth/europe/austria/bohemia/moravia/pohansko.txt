@@ -4,5 +4,5 @@ pohansko = {
 	geocoordinate = { 16.8966417 48.7289817 }
 	type = holding
 	holding_type = castle
-	province = brunn
+	province = hodonin
 }

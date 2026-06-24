@@ -39,6 +39,7 @@ duchy_of_silesia = {
 		owns_province = bohemia
 		owns_province = brunn
 		owns_province = budweis
+		owns_province = hodonin
 		owns_province = iglau
 		owns_province = olmutz
 		owns_province = pilsen
@@ -95,6 +96,7 @@ kingdom_of_bohemia = {
 		bohemia
 		brunn
 		budweis
+		hodonin
 		iglau
 		olmutz
 		pilsen
@@ -147,6 +149,7 @@ kingdom_of_galicia_and_lodomeria = {
 		owns_province = bohemia
 		owns_province = brunn
 		owns_province = budweis
+		owns_province = hodonin
 		owns_province = iglau
 		owns_province = olmutz
 		owns_province = pilsen

@@ -4,5 +4,8 @@ lundenburg = {
 	geocoordinate = { 16.882020775128 48.758991122507 } #Břeclav
 	type = holding
 	holding_type = castle
-	province = brunn
+	province = hodonin
+	cultural_names = {
+		czech = "Breclav" #"Břeclav"
+	}
 }

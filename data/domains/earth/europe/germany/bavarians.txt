@@ -18,6 +18,7 @@ bavarians = {
 		burgenland
 		freistadt
 		gyor
+		hodonin
 		iglau
 		krems
 		lower_silesia

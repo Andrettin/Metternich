@@ -67,6 +67,7 @@ holy_roman_empire = {
 		budweis
 		pilsen
 		brunn
+		hodonin
 		iglau
 		olmutz
 		znojmo

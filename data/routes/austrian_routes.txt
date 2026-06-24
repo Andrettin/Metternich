@@ -43,6 +43,7 @@ vienna_brunn = {
 	path_provinces = {
 		vienna
 		krems
+		hodonin
 		brunn
 	}
 	conditions = {

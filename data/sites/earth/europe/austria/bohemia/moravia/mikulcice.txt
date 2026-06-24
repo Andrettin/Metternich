@@ -4,5 +4,5 @@ mikulcice = {
 	geocoordinate = { 17.051058436611 48.816445716431 }
 	type = holding
 	holding_type = guild
-	province = brunn
+	province = hodonin
 }
