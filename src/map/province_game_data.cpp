@@ -609,6 +609,10 @@ void province_game_data::set_trade_zone_domain(const metternich::domain *trade_z
 
 void province_game_data::check_trade_zone_domain()
 {
+	if (this->province->is_water_zone()) {
+		return;
+	}
+
 	domain_map<int> domain_economic_holding_levels;
 	for (const site *holding_site : this->get_settlement_sites()) {
 		if (holding_site->get_game_data()->get_owner() == nullptr) {
@@ -622,6 +626,24 @@ void province_game_data::check_trade_zone_domain()
 		domain_economic_holding_levels[holding_site->get_game_data()->get_owner()] += holding_site->get_game_data()->get_holding_level();
 	}
 
+	if (domain_economic_holding_levels.empty()) {
+		//if the province itself has no economic holdings, use those of neighboring provinces instead for this calculation
+
+		for (const metternich::province *neighbor_province : this->get_neighbor_provinces()) {
+			for (const site *holding_site : neighbor_province->get_game_data()->get_settlement_sites()) {
+				if (holding_site->get_game_data()->get_owner() == nullptr) {
+					continue;
+				}
+
+				if (holding_site->get_game_data()->get_holding_type() == nullptr || !holding_site->get_game_data()->get_holding_type()->is_economic()) {
+					continue;
+				}
+
+				domain_economic_holding_levels[holding_site->get_game_data()->get_owner()] += holding_site->get_game_data()->get_holding_level();
+			}
+		}
+	}
+
 	int best_holding_level = -1;
 	const domain *best_domain = nullptr;
 	for (const auto &[domain, holding_level] : domain_economic_holding_levels) {
@@ -632,6 +654,15 @@ void province_game_data::check_trade_zone_domain()
 	}
 
 	this->set_trade_zone_domain(best_domain);
+}
+
+void province_game_data::check_trade_zone_domain_for_province_and_neighbors()
+{
+	this->check_trade_zone_domain();
+
+	for (const metternich::province *neighbor_province : this->get_neighbor_provinces()) {
+		neighbor_province->get_game_data()->check_trade_zone_domain();
+	}
 }
 
 void province_game_data::set_temple_domain(const metternich::domain *temple_domain)
@@ -668,6 +699,24 @@ void province_game_data::check_temple_domain()
 		domain_religious_holding_levels[holding_site->get_game_data()->get_owner()] += holding_site->get_game_data()->get_holding_level();
 	}
 
+	if (domain_religious_holding_levels.empty()) {
+		//if the province itself has no economic holdings, use those of neighboring provinces instead for this calculation
+
+		for (const metternich::province *neighbor_province : this->get_neighbor_provinces()) {
+			for (const site *holding_site : neighbor_province->get_game_data()->get_settlement_sites()) {
+				if (holding_site->get_game_data()->get_owner() == nullptr) {
+					continue;
+				}
+
+				if (holding_site->get_game_data()->get_holding_type() == nullptr || !holding_site->get_game_data()->get_holding_type()->is_religious()) {
+					continue;
+				}
+
+				domain_religious_holding_levels[holding_site->get_game_data()->get_owner()] += holding_site->get_game_data()->get_holding_level();
+			}
+		}
+	}
+
 	int best_holding_level = -1;
 	const domain *best_domain = nullptr;
 	for (const auto &[domain, holding_level] : domain_religious_holding_levels) {
@@ -678,6 +727,15 @@ void province_game_data::check_temple_domain()
 	}
 
 	this->set_temple_domain(best_domain);
+}
+
+void province_game_data::check_temple_domain_for_province_and_neighbors()
+{
+	this->check_temple_domain();
+
+	for (const metternich::province *neighbor_province : this->get_neighbor_provinces()) {
+		neighbor_province->get_game_data()->check_temple_domain();
+	}
 }
 
 void province_game_data::set_level(const int level)

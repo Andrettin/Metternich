@@ -143,6 +143,7 @@ public:
 
 	void set_trade_zone_domain(const metternich::domain *trade_zone_domain);
 	void check_trade_zone_domain();
+	void check_trade_zone_domain_for_province_and_neighbors();
 
 	const metternich::domain *get_temple_domain() const
 	{
@@ -151,6 +152,7 @@ public:
 
 	void set_temple_domain(const metternich::domain *temple_domain);
 	void check_temple_domain();
+	void check_temple_domain_for_province_and_neighbors();
 
 	int get_level() const
 	{

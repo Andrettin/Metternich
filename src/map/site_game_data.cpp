@@ -749,11 +749,11 @@ QCoro::Task<void> site_game_data::set_owner(const domain *owner)
 
 	if (this->get_holding_type() != nullptr) {
 		if (this->get_holding_type()->is_economic()) {
-			this->get_province()->get_game_data()->check_trade_zone_domain();
+			this->get_province()->get_game_data()->check_trade_zone_domain_for_province_and_neighbors();
 		}
 
 		if (this->get_holding_type()->is_religious()) {
-			this->get_province()->get_game_data()->check_temple_domain();
+			this->get_province()->get_game_data()->check_temple_domain_for_province_and_neighbors();
 		}
 	}
 
@@ -869,11 +869,11 @@ QCoro::Task<void> site_game_data::set_holding_type(const metternich::holding_typ
 	this->update_holding_type_name();
 
 	if ((this->get_holding_type() != nullptr && this->get_holding_type()->is_economic()) || (old_holding_type != nullptr && old_holding_type->is_economic())) {
-		this->get_province()->get_game_data()->check_trade_zone_domain();
+		this->get_province()->get_game_data()->check_trade_zone_domain_for_province_and_neighbors();
 	}
 
 	if ((this->get_holding_type() != nullptr && this->get_holding_type()->is_religious()) || (old_holding_type != nullptr && old_holding_type->is_religious())) {
-		this->get_province()->get_game_data()->check_temple_domain();
+		this->get_province()->get_game_data()->check_temple_domain_for_province_and_neighbors();
 	}
 
 	if (game::get()->is_running()) {
@@ -983,11 +983,11 @@ void site_game_data::set_holding_level(const int level)
 
 	if (this->get_holding_type() != nullptr) {
 		if (this->get_holding_type()->is_economic()) {
-			this->get_province()->get_game_data()->check_trade_zone_domain();
+			this->get_province()->get_game_data()->check_trade_zone_domain_for_province_and_neighbors();
 		}
 
 		if (this->get_holding_type()->is_religious()) {
-			this->get_province()->get_game_data()->check_temple_domain();
+			this->get_province()->get_game_data()->check_temple_domain_for_province_and_neighbors();
 		}
 	}
 
