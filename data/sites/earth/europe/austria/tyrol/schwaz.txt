@@ -4,5 +4,5 @@ schwaz = {
 	geocoordinate = { 11.708080555555556 47.34538888888889 }
 	type = holding
 	holding_type = castle
-	province = tyrol
+	province = innsbruck
 }

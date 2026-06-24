@@ -4,5 +4,5 @@ stams = {
 	geocoordinate = { 10.983333333333 47.276388888889 }
 	type = holding
 	holding_type = temple
-	province = tyrol
+	province = landeck
 }

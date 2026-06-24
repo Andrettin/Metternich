@@ -1,0 +1,8 @@
+dornbirn = {
+	name = "Dornbirn"
+	world = earth
+	geocoordinate = { 9.75 47.416666666667 }
+	type = holding
+	holding_type = castle
+	province = vorarlberg
+}

@@ -3,7 +3,7 @@ rottenburg = {
 	world = earth
 	geocoordinate = { 11.7981 47.3844 }
 	type = dungeon
-	province = tyrol
+	province = innsbruck
 	
 	history = {
 		1411 = {

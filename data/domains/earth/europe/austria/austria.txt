@@ -33,12 +33,13 @@ austria = {
 			bozen
 			carinthia
 			carniola
+			innsbruck
 			istria
+			landeck
 			marburg
 			salzburg
 			styria
 			trent
-			tyrol
 			vorarlberg
 		}
 		empire = {
@@ -49,6 +50,7 @@ austria = {
 			brunn
 			iglau
 			olmutz
+			znojmo
 			#Hungary
 			banat
 			banska_bystrica

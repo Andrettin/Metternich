@@ -4,5 +4,5 @@ imst = {
 	geocoordinate = { 10.738055555556 47.239444444444 }
 	type = holding
 	holding_type = castle
-	province = tyrol
+	province = landeck
 }

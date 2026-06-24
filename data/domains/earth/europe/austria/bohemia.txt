@@ -20,6 +20,7 @@ bohemia = {
 		brunn
 		iglau
 		olmutz
+		znojmo
 	}
 	
 	history = {

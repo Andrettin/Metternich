@@ -42,6 +42,7 @@ duchy_of_silesia = {
 		owns_province = iglau
 		owns_province = olmutz
 		owns_province = pilsen
+		owns_province = znojmo
 	}
 	owned_provinces = {
 		lower_silesia
@@ -96,6 +97,7 @@ kingdom_of_bohemia = {
 		iglau
 		olmutz
 		pilsen
+		znojmo
 	}
 	completion_effects = {
 		wealth += 1000
@@ -147,6 +149,7 @@ kingdom_of_galicia_and_lodomeria = {
 		owns_province = olmutz
 		owns_province = pilsen
 		owns_province = troppau
+		owns_province = znojmo
 	}
 	owned_provinces = {
 		west_galicia

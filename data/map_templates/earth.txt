@@ -35,6 +35,16 @@ aegean = {
 	diplomatic_map_tile_scale = 2
 }
 
+africa = {
+	name = "Africa"
+	size = { 3200 3520 }
+	world = earth
+	main_map_template = earth
+	map_start_pos = { 6848 4192 }
+	minimap_tile_scale = 0.125
+	diplomatic_map_tile_scale = 0.5
+}
+
 central_europe = {
 	name = "Central Europe"
 	size = { 1120 768 }

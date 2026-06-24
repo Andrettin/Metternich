@@ -49,15 +49,16 @@ holy_roman_empire = {
 		carinthia
 		carniola
 		freistadt
+		innsbruck
 		istria
 		krems
+		landeck
 		marburg
 		melk
 		salzburg
 		styria
 		traungau
 		trent
-		tyrol
 		vienna
 		vorarlberg
 		
@@ -68,6 +69,7 @@ holy_roman_empire = {
 		brunn
 		iglau
 		olmutz
+		znojmo
 	}
 	
 	history = {

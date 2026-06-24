@@ -1,8 +1,0 @@
-nenzing = {
-	name = "Nenzing"
-	world = earth
-	geocoordinate = { 9.6833333333333 47.166666666667 }
-	type = holding
-	holding_type = castle
-	province = vorarlberg
-}

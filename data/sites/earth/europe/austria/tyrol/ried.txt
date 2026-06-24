@@ -4,5 +4,5 @@ ried = {
 	geocoordinate = { 10.654444444444 47.055277777778 } #Ried im Oberinntal
 	type = holding
 	holding_type = castle
-	province = tyrol
+	province = landeck
 }

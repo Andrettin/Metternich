@@ -27,5 +27,6 @@ bavarians = {
 		salzburg
 		traungau
 		vienna
+		znojmo
 	}
 }

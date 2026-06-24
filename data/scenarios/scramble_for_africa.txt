@@ -1,0 +1,13 @@
+scramble_for_africa = {
+	name = "Scramble for Africa"
+	start_date = 1885
+	map_template = africa
+	hidden = true
+	default_countries = {
+		france
+		germany
+		great_britain
+		italy
+		portugal
+	}
+}

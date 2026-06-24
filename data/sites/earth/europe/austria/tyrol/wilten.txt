@@ -1,8 +1,8 @@
 wilten = {
 	name = "Wilten"
 	world = earth
-	#geocoordinate = { 11.3861 47.2569 }
-	province = tyrol
+	geocoordinate = { 11.3861 47.2569 }
+	province = innsbruck
 	
 	history = {
 		919 = {
