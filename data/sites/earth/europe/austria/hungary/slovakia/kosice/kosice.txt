@@ -2,9 +2,12 @@ kosice = {
 	name = "Kosice" #"Košice"
 	world = earth
 	geocoordinate = { 21.25001013050 48.73044801750 } #from Natural Earth
-	type = resource
-	resource = coal
-	province = kesmark
+	type = holding
+	holding_type = guild
+	province = kosice
+	cultural_names = {
+		magyar = "Kassa"
+	}
 	cultural_group_names = {
 		german = "Kaschau"
 	}

@@ -4,7 +4,7 @@ roznava = {
 	geocoordinate = { 20.531388888889 48.658611111111 }
 	type = holding
 	holding_type = castle
-	province = kesmark
+	province = kosice
 	cultural_names = {
 		magyar = "Rozsnyo"
 	}

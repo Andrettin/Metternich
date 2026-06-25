@@ -66,9 +66,11 @@ grand_principality_of_transylvania = {
 		owns_province = banska_bystrica
 		owns_province = buda
 		owns_province = burgenland
+		owns_province = gemer
 		owns_province = gyor
 		owns_province = kaposvar
 		owns_province = kesmark
+		owns_province = kosice
 		owns_province = nitra
 		owns_province = orava
 		owns_province = pecs
@@ -119,9 +121,11 @@ kingdom_of_croatia = {
 		owns_province = banska_bystrica
 		owns_province = buda
 		owns_province = burgenland
+		owns_province = gemer
 		owns_province = gyor
 		owns_province = kaposvar
 		owns_province = kesmark
+		owns_province = kosice
 		owns_province = nitra
 		owns_province = orava
 		owns_province = pecs
@@ -178,9 +182,11 @@ kingdom_of_hungary = {
 		banska_bystrica
 		buda
 		burgenland
+		gemer
 		gyor
 		kaposvar
 		kesmark
+		kosice
 		nitra
 		orava
 		pecs

@@ -19,9 +19,11 @@ hungary = {
 		banska_bystrica
 		buda
 		burgenland
+		gemer
 		gyor
 		kaposvar
 		kesmark
+		kosice
 		nitra
 		orava
 		pecs

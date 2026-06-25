@@ -1,0 +1,48 @@
+kosice = {
+	name = "Kosice"
+	color = { 81 224 97 }
+	default_provincial_capital = kosice
+	cultural_names = {
+		magyar = "Kassa"
+	}
+	cultural_group_names = {
+		german = "Kaschau"
+	}
+	regions = {
+		slovakia
+	}
+	
+	history = {
+		owner = lombards
+		culture = lombard
+		religion = asatru
+		
+		526 = {
+			owner = lombards #territory of the Lombards in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = lombard
+			religion = asatru
+		}
+		
+		1000 = {
+			owner = hungary #part of the Kingdom of Hungary c. 1000; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 58-59.
+			culture = slovak
+			religion = catholic
+		}
+		
+		1360 = {
+			owner = hungary #part of Hungary in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = slovak
+			religion = catholic
+		}
+		
+		1740 = {
+			owner = austria #Austrian possession c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1815 = {
+			owner = hungary #part of the Kingdom of Hungary (within the Empire of Austria) in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+			
+			culture = slovak #Source: "The British Dominions Year Book 1918", 1918, Map 3.
+		}
+	}
+}

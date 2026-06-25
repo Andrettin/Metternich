@@ -4,7 +4,7 @@ losonc = {
 	geocoordinate = { 19.670833333333 48.331388888889 } #Lučenec/Losonc
 	type = holding
 	holding_type = temple
-	province = banska_bystrica
+	province = gemer
 	
 	history = {
 		1815 = {

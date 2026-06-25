@@ -270,7 +270,7 @@ Flickable {
 				
 				Image {
 					id: entering_army_icon
-					source: "image://icon/war"
+					source: "image://icon/war" //FIXME: show the alliance icon if the army is entering a friendly province
 					visible: province && province.game_data.entering_armies.length > 0
 					
 					MouseArea {
