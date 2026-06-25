@@ -58,24 +58,6 @@ Rectangle {
 		spacing: 4 * scale_factor
 		
 		IconButton {
-			id: political_map_mode_button
-			icon_identifier: "flag"
-			highlighted: province_map.mode === ProvinceMap.Mode.Political
-			
-			onClicked: {
-				province_map.mode = ProvinceMap.Mode.Political
-			}
-			
-			onHoveredChanged: {
-				if (hovered) {
-					status_text = "Political Map Mode"
-				} else {
-					status_text = ""
-				}
-			}
-		}
-		
-		IconButton {
 			id: site_map_mode_button
 			icon_identifier: "settlement"
 			highlighted: province_map.show_sites
@@ -111,6 +93,24 @@ Rectangle {
 		anchors.verticalCenter: parent.verticalCenter
 		spacing: 4 * scale_factor
 		columns: 2
+		
+		TinyIconButton {
+			id: political_map_mode_button
+			icon_identifier: "alliance"
+			highlighted: province_map.mode === ProvinceMap.Mode.Political
+			
+			onClicked: {
+				province_map.mode = ProvinceMap.Mode.Political
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Political Map Mode"
+				} else {
+					status_text = ""
+				}
+			}
+		}
 		
 		TinyIconButton {
 			id: trade_zone_map_mode_button
@@ -150,7 +150,7 @@ Rectangle {
 		
 		TinyIconButton {
 			id: terrain_map_mode_button
-			icon_identifier: "alliance"
+			icon_identifier: "dungeon"
 			highlighted: province_map.mode === ProvinceMap.Mode.Terrain
 			
 			onClicked: {
