@@ -170,8 +170,8 @@ Flickable {
 		
 		Column {
 			id: province_label_area
-			x: Math.max(Math.floor(text_rect.x * metternich.defines.province_map_tile_scale * scale_factor) + Math.max(0, Math.floor((text_rect_width - width) / 2)), Math.floor((province_label.contentWidth - width) / 2 + 1 * scale_factor))
-			y: Math.floor(text_rect.y * metternich.defines.province_map_tile_scale * scale_factor) + Math.max(0, Math.floor((text_rect_height - height) / 2))
+			x: Math.max(Math.floor(text_rect.x * metternich.defines.province_map_tile_scale * scale_factor) + Math.floor((text_rect_width - width) / 2), Math.floor((province_label.contentWidth - width) / 2 + 1 * scale_factor))
+			y: Math.floor(text_rect.y * metternich.defines.province_map_tile_scale * scale_factor) + Math.floor((text_rect_height - height) / 2)
 			spacing: 2 * scale_factor
 			visible: !province_map.show_sites
 			
