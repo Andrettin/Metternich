@@ -168,27 +168,20 @@ Flickable {
 	Repeater {
 		model: metternich.map.provinces
 		
-		TinyText {
-			id: province_label
-			text: province ? province.game_data.current_cultural_name : ""
-			x: Math.floor(text_rect.x * metternich.defines.province_map_tile_scale * scale_factor)
-			y: Math.floor(text_rect.y * metternich.defines.province_map_tile_scale * scale_factor)
-			width: Math.floor(text_rect_width)
-			height: Math.floor(text_rect_height)
+		Column {
+			id: province_label_area
+			x: Math.max(Math.floor(text_rect.x * metternich.defines.province_map_tile_scale * scale_factor) + Math.max(0, Math.floor((text_rect_width - width) / 2)), Math.floor((province_label.contentWidth - width) / 2 + 1 * scale_factor))
+			y: Math.floor(text_rect.y * metternich.defines.province_map_tile_scale * scale_factor) + Math.max(0, Math.floor((text_rect_height - height) / 2))
+			spacing: 2 * scale_factor
 			visible: !province_map.show_sites
-			wrapMode: Text.WordWrap
-			horizontalAlignment: contentWidth <= width ? Text.AlignHCenter : (province.game_data.map_image_rect.x === 0 ? Text.AlignLeft : ((province.game_data.map_image_rect.x + province.game_data.map_image_rect.width) >= metternich.map.province_map_image_size.width * scale_factor ? Text.AlignRight : Text.AlignHCenter))
-			verticalAlignment: contentHeight <= height ? Text.AlignVCenter : (province && province.game_data.map_image_rect.y === 0 ? Text.AlignTop : (province && (province.game_data.map_image_rect.y + province.game_data.map_image_rect.height) >= metternich.map.province_map_image_size.height * scale_factor ? Text.AlignBottom : Text.AlignVCenter))
 			
 			readonly property var province: model.modelData
 			readonly property var text_rect: province ? province.game_data.text_rect : Qt.rect(0, 0, 0, 0)
-			readonly property int text_rect_width: text_rect.width * metternich.defines.province_map_tile_scale * scale_factor
-			readonly property int text_rect_height: text_rect.height * metternich.defines.province_map_tile_scale * scale_factor
+			readonly property int text_rect_width: Math.floor(text_rect.width * metternich.defines.province_map_tile_scale * scale_factor)
+			readonly property int text_rect_height: Math.floor(text_rect.height * metternich.defines.province_map_tile_scale * scale_factor)
 			
 			Row {
-				anchors.horizontalCenter: province_label.horizontalCenter
-				anchors.bottom: province_label.verticalCenter
-				anchors.bottomMargin: Math.floor(province_label.contentHeight / 2) + 2 * scale_factor
+				anchors.horizontalCenter: province_label_area.horizontalCenter
 				spacing: 2 * scale_factor
 				
 				Image {
@@ -299,10 +292,18 @@ Flickable {
 				}
 			}
 			
+			TinyText {
+				id: province_label
+				anchors.horizontalCenter: province_label_area.horizontalCenter
+				text: province ? province.game_data.current_cultural_name : ""
+				wrapMode: Text.WordWrap
+				horizontalAlignment: Text.AlignHCenter
+				verticalAlignment: Text.AlignVCenter
+				width: province_label_area.width
+			}
+			
 			Grid {
-				anchors.horizontalCenter: province_label.horizontalCenter
-				anchors.top: province_label.verticalCenter
-				anchors.topMargin: Math.floor(province_label.contentHeight / 2) + 2 * scale_factor
+				anchors.horizontalCenter: province_label_area.horizontalCenter
 				spacing: 1 * scale_factor
 				columns: 3
 				
