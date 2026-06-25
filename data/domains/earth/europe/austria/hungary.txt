@@ -23,6 +23,7 @@ hungary = {
 		kaposvar
 		kesmark
 		nitra
+		orava
 		pecs
 		pressburg
 		szekesfehervar

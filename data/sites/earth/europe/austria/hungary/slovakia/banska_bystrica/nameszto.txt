@@ -4,5 +4,5 @@ nameszto = {
 	geocoordinate = { 19.48 49.41 } #Námestovo
 	type = holding
 	holding_type = guild
-	province = banska_bystrica
+	province = orava
 }

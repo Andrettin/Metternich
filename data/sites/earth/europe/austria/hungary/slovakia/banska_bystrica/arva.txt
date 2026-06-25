@@ -4,5 +4,5 @@ arva = {
 	geocoordinate = { 19.358055555556 49.261666666667 } #Orava Castle
 	type = holding
 	holding_type = castle
-	province = banska_bystrica
+	province = orava
 }

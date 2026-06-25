@@ -70,6 +70,7 @@ grand_principality_of_transylvania = {
 		owns_province = kaposvar
 		owns_province = kesmark
 		owns_province = nitra
+		owns_province = orava
 		owns_province = pecs
 		owns_province = pest
 		owns_province = pressburg
@@ -122,6 +123,7 @@ kingdom_of_croatia = {
 		owns_province = kaposvar
 		owns_province = kesmark
 		owns_province = nitra
+		owns_province = orava
 		owns_province = pecs
 		owns_province = pest
 		owns_province = pressburg
@@ -180,6 +182,7 @@ kingdom_of_hungary = {
 		kaposvar
 		kesmark
 		nitra
+		orava
 		pecs
 		pest
 		pressburg

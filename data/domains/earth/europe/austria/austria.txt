@@ -61,6 +61,7 @@ austria = {
 			kaposvar
 			kesmark
 			nitra
+			orava
 			pecs
 			pest
 			pressburg
