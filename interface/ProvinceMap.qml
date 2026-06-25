@@ -299,7 +299,7 @@ Flickable {
 				wrapMode: Text.WordWrap
 				horizontalAlignment: Text.AlignHCenter
 				verticalAlignment: Text.AlignVCenter
-				width: province_label_area.width
+				width: province_label_area.width > 0 ? province_label_area.width : contentWidth
 			}
 			
 			Grid {
