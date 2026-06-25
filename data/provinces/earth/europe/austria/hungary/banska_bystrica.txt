@@ -1,6 +1,7 @@
 banska_bystrica = {
 	name = "Banska Bystrica"
 	color = { 181 132 40 }
+	terrain = mountains
 	default_provincial_capital = zolyom
 	regions = {
 		slovakia

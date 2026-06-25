@@ -1,6 +1,7 @@
 kesmark = {
 	name = "Kesmark"
 	color = { 45 81 158 }
+	terrain = hills
 	default_provincial_capital = kesmark
 	regions = {
 		slovakia

@@ -1,6 +1,7 @@
 kosice = {
 	name = "Kosice"
 	color = { 81 224 97 }
+	terrain = plains
 	default_provincial_capital = kosice
 	cultural_names = {
 		magyar = "Kassa"

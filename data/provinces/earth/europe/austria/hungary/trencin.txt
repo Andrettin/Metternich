@@ -1,6 +1,7 @@
 trencin = {
 	name = "Trencin"
 	color = { 194 162 206 }
+	terrain = mountains
 	default_provincial_capital = trencin
 	cultural_names = {
 		magyar = "Trencsen"

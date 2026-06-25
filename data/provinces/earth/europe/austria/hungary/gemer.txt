@@ -1,6 +1,7 @@
 gemer = {
 	name = "Gemer"
 	color = { 168 81 62 }
+	terrain = hills
 	default_provincial_capital = gomor
 	regions = {
 		slovakia

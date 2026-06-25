@@ -1,6 +1,7 @@
 orava = {
 	name = "Orava"
 	color = { 0 84 190 }
+	terrain = mountains
 	default_provincial_capital = arva
 	regions = {
 		slovakia
