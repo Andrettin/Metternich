@@ -1,6 +1,7 @@
 nordgau = {
 	name = "Nordgau"
 	color = { 42 165 63 }
+	terrain = forest
 	default_provincial_capital = strasbourg
 	regions = {
 		france

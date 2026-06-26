@@ -1,6 +1,7 @@
 sundgau = {
 	name = "Sundgau"
 	color = { 168 189 67 }
+	terrain = forest
 	default_provincial_capital = colmar
 	regions = {
 		france
