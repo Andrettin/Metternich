@@ -11,6 +11,7 @@ gepids = {
 		medieval_era
 	}
 	core_provinces = {
+		bihar
 		transylvania
 	}
 }

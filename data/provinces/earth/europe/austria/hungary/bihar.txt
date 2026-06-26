@@ -1,0 +1,44 @@
+bihar = {
+	name = "Bihar"
+	color = { 0 69 60 }
+	default_provincial_capital = bihar
+	regions = {
+		romania
+		royal_hungary
+	}
+	
+	history = {
+		owner = gepids
+		culture = gothic
+		religion = asatru
+		
+		526 = {
+			owner = gepids #territory of the Gepids in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = gothic
+			religion = asatru
+		}
+		
+		high_middle_ages = {
+			#temple_domain = kalocsa #part of the ecclesiastical province of Kalocsa in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 94-95.
+		}
+		
+		1204 = {
+			owner = hungary #part of Hungary in 1204; Source: William R. Shepherd, "Historical Atlas", 1911, p. 73.
+		}
+		
+		1360 = {
+			owner = hungary #part of Hungary in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1740 = {
+			owner = austria #Austrian possession c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1815 = {
+			owner = hungary #part of the Kingdom of Hungary (within the Empire of Austria) in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+			
+			culture = romanian #Source: "The British Dominions Year Book 1918", 1918, Map 3.
+			religion = orthodox
+		}
+	}
+}

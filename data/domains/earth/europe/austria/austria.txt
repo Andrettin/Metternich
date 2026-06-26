@@ -55,6 +55,7 @@ austria = {
 			#Hungary
 			banat
 			banska_bystrica
+			bihar
 			buda
 			burgenland
 			gemer

@@ -4,5 +4,5 @@ bihar = {
 	geocoordinate = { 21.920341 47.152888 }
 	type = holding
 	holding_type = castle
-	province = pest
+	province = bihar
 }

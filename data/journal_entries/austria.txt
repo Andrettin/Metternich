@@ -64,6 +64,7 @@ grand_principality_of_transylvania = {
 	conditions = {
 		owns_province = banat
 		owns_province = banska_bystrica
+		owns_province = bihar
 		owns_province = buda
 		owns_province = burgenland
 		owns_province = gemer
@@ -119,6 +120,7 @@ kingdom_of_croatia = {
 	conditions = {
 		owns_province = banat
 		owns_province = banska_bystrica
+		owns_province = bihar
 		owns_province = buda
 		owns_province = burgenland
 		owns_province = gemer
@@ -180,6 +182,7 @@ kingdom_of_hungary = {
 	owned_provinces = {
 		banat
 		banska_bystrica
+		bihar
 		buda
 		burgenland
 		gemer

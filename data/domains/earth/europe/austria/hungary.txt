@@ -17,6 +17,7 @@ hungary = {
 		pest
 		banat
 		banska_bystrica
+		bihar
 		buda
 		burgenland
 		gemer

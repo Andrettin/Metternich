@@ -4,5 +4,5 @@ szalard = {
 	geocoordinate = { 22.040851 47.216228 } #Sălard
 	type = holding
 	holding_type = castle
-	province = pest
+	province = bihar
 }
