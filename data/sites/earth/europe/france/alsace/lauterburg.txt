@@ -4,7 +4,7 @@ lauterburg = {
 	geocoordinate = { 8.1738888888889 48.975277777778 }
 	type = holding
 	holding_type = guild
-	province = alsace
+	province = nordgau
 	
 	history = {
 		1815 = {

@@ -4,5 +4,5 @@ mulhouse = {
 	geocoordinate = { 7.34998001977 47.75040447900 } #from Natural Earth
 	type = holding
 	holding_type = castle
-	province = alsace
+	province = sundgau
 }

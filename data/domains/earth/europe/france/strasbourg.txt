@@ -11,7 +11,7 @@ strasbourg = {
 		medieval_era
 		renaissance_era
 	}
-	core_provinces = {
-		alsace
+	core_holdings = {
+		strasbourg
 	}
 }

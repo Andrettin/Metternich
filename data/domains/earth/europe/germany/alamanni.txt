@@ -13,8 +13,9 @@ alamanni = {
 		baden
 		wurtemberg
 		augsburg
-		alsace
 		bern
+		nordgau
+		sundgau
 		zurich
 	}
 }

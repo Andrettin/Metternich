@@ -4,5 +4,5 @@ schlettstadt = {
 	geocoordinate = { 7.4541666666667 48.259444444444 } #Sélestat
 	type = holding
 	holding_type = guild
-	province = alsace
+	province = nordgau
 }

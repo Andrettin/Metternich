@@ -4,7 +4,7 @@ colmar = {
 	geocoordinate = { 7.355 48.081111111111 }
 	type = holding
 	holding_type = guild
-	province = alsace
+	province = sundgau
 	features = {
 		sulfur_deposit
 	}

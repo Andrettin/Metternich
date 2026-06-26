@@ -1,6 +1,6 @@
-alsace = {
-	name = "Alsace"
-	color = { 110 72 145 }
+nordgau = {
+	name = "Nordgau"
+	color = { 42 165 63 }
 	default_provincial_capital = strasbourg
 	regions = {
 		france
