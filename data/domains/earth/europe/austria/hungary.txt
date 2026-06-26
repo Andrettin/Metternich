@@ -20,6 +20,7 @@ hungary = {
 		bihar
 		buda
 		burgenland
+		feher
 		gemer
 		gyor
 		kaposvar

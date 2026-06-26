@@ -45,3 +45,20 @@ hungary_croatia_slavonia = { #Royal Hungary without the military frontier, the B
 		}
 	}
 }
+
+transylvania = {
+	superregions = {
+		romania
+		royal_hungary
+	}
+	
+	history = {
+		1786 = {
+			population = 1412985 #Transylvania (without its military frontier) had a population of 1,412,985 in 1786 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+		
+		1809 = {
+			population = 1660600 #Transylvania (without its military frontier) had an estimated population of 1,660,600 in 1809 AD; Source: Joseph Marx von Liechtenstern, "Statistische Uebersicht des Oesterreichischen Kaiser-Staats", 1809, p. 10.
+		}
+	}
+}

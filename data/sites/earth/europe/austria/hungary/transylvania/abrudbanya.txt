@@ -4,5 +4,5 @@ abrudbanya = {
 	geocoordinate = { 23.05 46.273888888889 } #Abrud
 	type = holding
 	holding_type = castle
-	province = transylvania
+	province = feher
 }

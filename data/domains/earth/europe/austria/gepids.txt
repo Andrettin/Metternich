@@ -12,6 +12,7 @@ gepids = {
 	}
 	core_provinces = {
 		bihar
+		feher
 		transylvania
 	}
 }

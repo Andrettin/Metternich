@@ -1,7 +1,7 @@
-transylvania = {
-	name = "Transylvania"
-	color = { 108 208 7 }
-	default_provincial_capital = klausenburg
+feher = {
+	name = "Feher"
+	color = { 168 66 187 }
+	default_provincial_capital = gyulafehervar
 	regions = {
 		transylvania
 	}

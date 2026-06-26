@@ -83,6 +83,7 @@ grand_principality_of_transylvania = {
 		owns_province = zalaegerszeg
 	}
 	owned_provinces = {
+		feher
 		transylvania
 	}
 	completion_effects = {

@@ -4,5 +4,5 @@ tovis = {
 	geocoordinate = { 23.68 46.2 } #Teiuș
 	type = holding
 	holding_type = castle
-	province = transylvania
+	province = feher
 }
