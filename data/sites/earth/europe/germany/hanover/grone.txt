@@ -1,7 +1,7 @@
 grone = {
 	name = "Grone"
 	world = earth
-	#geocoordinate = { 9.90067 51.5346 }
+	geocoordinate = { 9.90067 51.5346 }
 	province = hanover
 	
 	history = {

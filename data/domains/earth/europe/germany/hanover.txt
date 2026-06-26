@@ -14,5 +14,6 @@ hanover = {
 	}
 	core_provinces = {
 		hanover
+		luneburg
 	}
 }

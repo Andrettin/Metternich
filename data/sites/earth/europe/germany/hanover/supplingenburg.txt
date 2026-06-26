@@ -1,7 +1,7 @@
 supplingenburg = {
 	name = "Supplingenburg" #"Süpplingenburg"
 	world = earth
-	#geocoordinate = { 10.916666666667 52.25 }
+	geocoordinate = { 10.916666666667 52.25 }
 	province = hanover
 	
 	history = {

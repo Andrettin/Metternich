@@ -29,6 +29,7 @@ germany = {
 		hither_pomerania
 		holstein
 		lower_silesia
+		luneburg
 		magdeburg
 		mecklenburg
 		nassau

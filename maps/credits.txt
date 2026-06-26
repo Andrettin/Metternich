@@ -1,5 +1,6 @@
 /maps/earth/provinces/atlantic_ocean.geojson (www.naturalearthdata.com and www.marineregions.org) (licensed under the CC-BY 4.0)
 /maps/earth/provinces/europe/austria.geojson (www.naturalearthdata.com, www.github.com/OpenHistoricalMap/data and www.geoboundaries.org) (licensed under the CC-BY 4.0)
+/maps/earth/provinces/europe/denmark.geojson (www.naturalearthdata.com and www.geoboundaries.org) (licensed under the CC-BY 4.0)
 /maps/earth/provinces/europe/germany.geojson (www.naturalearthdata.com, www.github.com/OpenHistoricalMap/data and gdz.bkg.bund.de) (licensed under the DL-DE-BY-2.0)
 /maps/earth/provinces/ (www.naturalearthdata.com and www.github.com/OpenHistoricalMap/data) (licensed under the CC0)
 /maps/earth/terrain/ (www.naturalearthdata.com) (released to the public domain)

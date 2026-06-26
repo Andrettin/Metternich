@@ -4,5 +4,5 @@ luchow = {
 	geocoordinate = { 11.15 52.966666666667 }
 	type = holding
 	holding_type = castle
-	province = hanover
+	province = luneburg
 }

@@ -1,7 +1,7 @@
 steterburg = {
 	name = "Steterburg"
 	world = earth
-	#geocoordinate = { 10.47361088 52.19361115 }
+	geocoordinate = { 10.47361088 52.19361115 }
 	province = hanover
 	
 	history = {

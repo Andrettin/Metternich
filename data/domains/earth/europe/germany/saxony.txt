@@ -15,6 +15,7 @@ saxony = {
 		hanover
 		bremen
 		holstein
+		luneburg
 		magdeburg
 		oldenburg
 		westphalia

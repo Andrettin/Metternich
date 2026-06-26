@@ -11,5 +11,6 @@ saxons = {
 	}
 	core_provinces = {
 		hanover
+		luneburg
 	}
 }
