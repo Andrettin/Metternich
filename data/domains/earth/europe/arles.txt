@@ -15,6 +15,7 @@ arles = { #Kingdom of Arles
 		bern
 		franche_comte
 		geneva
+		nice
 		savoy
 	}
 }

@@ -4,5 +4,5 @@ antibes = {
 	geocoordinate = { 7.1230555555556 43.58 }
 	type = holding
 	holding_type = castle
-	province = provence
+	province = nice
 }

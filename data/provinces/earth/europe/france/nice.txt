@@ -1,0 +1,39 @@
+nice = {
+	name = "Nice"
+	color = { 0 51 15 }
+	terrain = mountains
+	default_provincial_capital = nice
+	regions = {
+		france
+	}
+	
+	history = {
+		owner = gaul
+		culture = gaulish
+		religion = pagan
+		
+		526 = {
+			owner = ostrogothia #part of the Kingdom of the East Goths in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = gothic
+			religion = asatru
+		}
+		
+		1477 = {
+			owner = savoy #part of the Duchy of Savoy c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+			culture = french
+			religion = catholic
+		}
+		
+		1740 = {
+			owner = savoy #Savoyard possession c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1815 = {
+			owner = sardinia #part of the Kingdom of Sardinia in the 1815-1860 period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 161.
+		}
+		
+		1860 = {
+			owner = france #became part of France in 1860; Source: William R. Shepherd, "Historical Atlas", 1911, p. 161.
+		}
+	}
+}

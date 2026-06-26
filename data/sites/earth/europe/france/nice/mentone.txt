@@ -4,5 +4,5 @@ mentone = {
 	geocoordinate = { 7.4997222222222 43.774722222222 } #Menton
 	type = holding
 	holding_type = guild
-	province = provence
+	province = nice
 }
