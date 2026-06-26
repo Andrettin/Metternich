@@ -60,25 +60,47 @@ Rectangle {
 		IconButton {
 			id: site_map_mode_button
 			icon_identifier: "settlement"
-			highlighted: province_map.show_sites
+			highlighted: province_map.show_site_mode !== ProvinceMap.SiteMode.Hide
 			
 			onClicked: {
-				province_map.show_sites = !province_map.show_sites
+				switch (province_map.show_site_mode) {
+					case ProvinceMap.SiteMode.Show:
+						province_map.show_site_mode = ProvinceMap.SiteMode.ShowLocations
+						break
+					case ProvinceMap.SiteMode.ShowLocations:
+						province_map.show_site_mode = ProvinceMap.SiteMode.Hide
+						break
+					case ProvinceMap.SiteMode.Hide:
+						province_map.show_site_mode = ProvinceMap.SiteMode.Show
+						break
+				}
 				
-				if (province_map.show_sites) {
-					status_text = "Hide Sites"
-				} else {
-					status_text = "Show Sites"
+				switch (province_map.show_site_mode) {
+					case ProvinceMap.SiteMode.Show:
+						status_text = "Show Site Locations"
+						break
+					case ProvinceMap.SiteMode.ShowLocations:
+						status_text = "Hide Sites"
+						break
+					case ProvinceMap.SiteMode.Hide:
+						status_text = "Show Sites"
+						break
 				}
 			}
 			
 			onHoveredChanged: {
 				if (hovered) {
-					if (province_map.show_sites) {
+				switch (province_map.show_site_mode) {
+					case ProvinceMap.SiteMode.Show:
+						status_text = "Show Site Locations"
+						break
+					case ProvinceMap.SiteMode.ShowLocations:
 						status_text = "Hide Sites"
-					} else {
+						break
+					case ProvinceMap.SiteMode.Hide:
 						status_text = "Show Sites"
-					}
+						break
+				}
 				} else {
 					status_text = ""
 				}

@@ -19,8 +19,14 @@ Flickable {
 		Temple
 	}
 	
+	enum SiteMode {
+		Show,
+		ShowLocations,
+		Hide
+	}
+	
 	property int mode: ProvinceMap.Mode.Political
-	property bool show_sites: false
+	property int show_site_mode: ProvinceMap.SiteMode.Show
 	readonly property var reference_country: selected_province ? selected_province.game_data.owner : (metternich.game.player_country ? metternich.game.player_country : null)
 	property var hovered_site: null
 	
@@ -64,7 +70,7 @@ Flickable {
 				cache: false
 				
 				readonly property var province: model.modelData
-				readonly property var selected: selected_province === province && (selected_garrison === false || province_map.show_sites)
+				readonly property var selected: selected_province === province && (selected_garrison === false || province_map.show_site_mode === ProvinceMap.SiteMode.ShowLocations)
 				readonly property var interactive: selected_civilian_unit !== null && !selected_civilian_unit.busy && selected_civilian_unit_interactive_provinces.includes(province)
 				property int change_count: 0
 				
@@ -173,7 +179,7 @@ Flickable {
 			x: Math.max(Math.floor(text_rect.x * metternich.defines.province_map_tile_scale * scale_factor) + Math.max(0, Math.floor((text_rect_width - width) / 2)), Math.floor((province_label.contentWidth - width) / 2 + 1 * scale_factor))
 			y: Math.floor(text_rect.y * metternich.defines.province_map_tile_scale * scale_factor) + Math.max(0, Math.floor((text_rect_height - height) / 2))
 			spacing: 2 * scale_factor
-			visible: !province_map.show_sites
+			visible: province_map.show_site_mode !== ProvinceMap.SiteMode.ShowLocations
 			
 			readonly property var province: model.modelData
 			readonly property var text_rect: province ? province.game_data.text_rect : Qt.rect(0, 0, 0, 0)
@@ -306,6 +312,7 @@ Flickable {
 				anchors.horizontalCenter: province_label_area.horizontalCenter
 				spacing: 1 * scale_factor
 				columns: 3
+				visible: province_map.show_site_mode === ProvinceMap.SiteMode.Show
 				
 				Repeater {
 					model: province ? province.game_data.visible_sites : []
@@ -384,7 +391,7 @@ Flickable {
 			y: site ? Math.min(Math.max(site.game_data.tile_pos.y * metternich.defines.province_map_tile_scale * scale_factor - Math.floor(height / 2), 0), province_map.contentHeight - height) : 0
 			width: site_icon.width + 4 * scale_factor
 			height: site_icon.height + 4 * scale_factor
-			visible: province_map.show_sites && (site.settlement || dungeon !== null)
+			visible: province_map.show_site_mode === ProvinceMap.SiteMode.ShowLocations && (site.settlement || dungeon !== null)
 			
 			readonly property var site: model.modelData
 			readonly property var tile_pos: site ? site.map_data.tile_pos : null
