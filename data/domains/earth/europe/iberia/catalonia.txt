@@ -1,6 +1,7 @@
 catalonia = {
 	name = "Catalonia"
 	type = polity
+	color = { 213 132 76 }
 	culture = catalan
 	default_religion = catholic
 	default_tier = county

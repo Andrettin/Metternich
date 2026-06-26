@@ -1,6 +1,7 @@
 israel = {
 	name = "Israel"
 	type = polity
+	color = { 150 212 214 }
 	culture = hebrew
 	default_religion = jewish
 	default_tier = kingdom

@@ -1,6 +1,7 @@
 cuba = {
 	name = "Cuba"
 	type = polity
+	color = { 87 92 104 }
 	culture = castillian
 	default_religion = catholic
 	default_tier = duchy

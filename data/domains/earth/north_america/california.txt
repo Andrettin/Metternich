@@ -1,6 +1,7 @@
 california = {
 	name = "California"
 	type = polity
+	color = { 144 181 106 }
 	culture = castillian
 	default_religion = catholic
 	default_tier = duchy

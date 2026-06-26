@@ -1,6 +1,7 @@
 bosnia = {
 	name = "Bosnia"
 	type = polity
+	color = { 240 167 130 }
 	culture = bosnian
 	default_religion = orthodox
 	default_tier = kingdom

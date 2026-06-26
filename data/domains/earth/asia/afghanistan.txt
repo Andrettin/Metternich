@@ -1,6 +1,7 @@
 afghanistan = {
 	name = "Afghanistan"
 	type = polity
+	color = { 92 148 152 }
 	culture = pashtun
 	default_religion = sunni
 	default_tier = kingdom

@@ -1,6 +1,7 @@
 hawaii = {
 	name = "Hawaii"
 	type = polity
+	color = { 48 169 96 }
 	culture = polynesian
 	default_religion = pagan
 	default_tier = duchy

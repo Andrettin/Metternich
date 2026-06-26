@@ -1,6 +1,7 @@
 romania = {
 	name = "Romania"
 	type = polity
+	color = { 200 190 126 }
 	flag = romania
 	culture = romanian
 	default_religion = orthodox

@@ -1,6 +1,7 @@
 philippines = {
 	name = "Philippines"
 	type = polity
+	color = { 92 87 122 }
 	culture = filipino
 	default_religion = catholic
 	default_tier = kingdom

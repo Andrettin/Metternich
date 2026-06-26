@@ -1,6 +1,7 @@
 cherokee = {
 	name = "Cherokee"
 	type = tribe
+	color = { 105 145 40 }
 	culture = cherokee
 	default_religion = pagan
 	default_tier = kingdom
