@@ -35,6 +35,7 @@ france = {
 		upper_languedoc
 		lower_languedoc
 		provence
+		vivarais
 	}
 	
 	history = {

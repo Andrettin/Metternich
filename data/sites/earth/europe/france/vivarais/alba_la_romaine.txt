@@ -4,5 +4,5 @@ alba_la_romaine = {
 	geocoordinate = { 4.5980555555556 44.555 }
 	type = holding
 	holding_type = temple
-	province = lower_languedoc
+	province = vivarais
 }

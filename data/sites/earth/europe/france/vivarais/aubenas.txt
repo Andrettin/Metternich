@@ -4,5 +4,5 @@ aubenas = {
 	geocoordinate = { 4.3902777777778 44.619722222222 }
 	type = holding
 	holding_type = castle
-	province = lower_languedoc
+	province = vivarais
 }

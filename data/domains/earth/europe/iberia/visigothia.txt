@@ -24,6 +24,7 @@ visigothia = {
 		lower_languedoc
 		murcia
 		valencia
+		vivarais
 	}
 	
 	history = {

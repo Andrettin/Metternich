@@ -4,5 +4,5 @@ tournon = {
 	geocoordinate = { 4.8327777777778 45.067222222222 } #Tournon-sur-Rhône
 	type = holding
 	holding_type = guild
-	province = lower_languedoc
+	province = vivarais
 }

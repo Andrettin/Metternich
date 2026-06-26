@@ -4,5 +4,5 @@ le_cheylard = {
 	geocoordinate = { 4.4222222222222 44.905277777778 }
 	type = holding
 	holding_type = guild
-	province = lower_languedoc
+	province = vivarais
 }

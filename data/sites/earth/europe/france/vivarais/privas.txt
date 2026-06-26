@@ -4,5 +4,5 @@ privas = {
 	geocoordinate = { 4.5991666666667 44.735 }
 	type = holding
 	holding_type = castle
-	province = lower_languedoc
+	province = vivarais
 }

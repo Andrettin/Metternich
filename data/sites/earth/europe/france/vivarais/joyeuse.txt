@@ -4,5 +4,5 @@ joyeuse = {
 	geocoordinate = { 4.2377777777778 44.479444444444 }
 	type = holding
 	holding_type = castle
-	province = lower_languedoc
+	province = vivarais
 }
