@@ -145,6 +145,15 @@ coast_of_portugal = {
 	}
 }
 
+coast_of_sao_tome = {
+	name = "Coast of Sao Tome"
+	color = { 71 197 76 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
 coast_of_scotland = {
 	name = "Coast of Scotland"
 	color = { 182 249 109 }
@@ -261,6 +270,15 @@ galician_shelf = {
 galway_bay = {
 	name = "Galway Bay"
 	geocoordinate = { -9.2333333333333 53.2 }
+	bay = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
+gulf_of_guinea = {
+	name = "Gulf of Guinea"
+	color = { 247 143 123 }
 	bay = true
 	regions = {
 		atlantic_ocean
