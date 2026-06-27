@@ -4,7 +4,7 @@ salzwedel = {
 	geocoordinate = { 11.1525 52.854444444444 }
 	type = holding
 	holding_type = castle
-	province = magdeburg
+	province = werben
 	
 	history = {
 		919 = {

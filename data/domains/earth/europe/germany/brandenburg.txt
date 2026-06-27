@@ -15,6 +15,7 @@ brandenburg = {
 	core_provinces = {
 		brandenburg
 		magdeburg
+		werben
 	}
 	
 	history = {

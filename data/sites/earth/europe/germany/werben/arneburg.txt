@@ -2,7 +2,7 @@ arneburg = {
 	name = "Arneburg"
 	world = earth
 	geocoordinate = { 12 52.6667 }
-	province = magdeburg
+	province = werben
 	
 	history = {
 		919 = {

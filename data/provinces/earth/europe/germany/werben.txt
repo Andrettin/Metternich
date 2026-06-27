@@ -1,8 +1,8 @@
-magdeburg = {
-	name = "Magdeburg"
-	color = { 160 128 224 }
+werben = {
+	name = "Werben"
+	color = { 168 75 182 }
 	terrain = plains
-	default_provincial_capital = magdeburg
+	default_provincial_capital = werben
 	regions = {
 		germany
 	}
@@ -25,7 +25,7 @@ magdeburg = {
 		}
 		
 		1477 = {
-			owner = magdeburg #part of the Archbishopric of Magdeburg c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+			owner = brandenburg #part of the Margraviate of Brandenburg c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
 		}
 		
 		1740 = {

@@ -44,6 +44,7 @@ holy_roman_empire = {
 		thuringia
 		upper_saxony
 		upper_silesia
+		werben
 		westphalia
 		wurtemberg
 		

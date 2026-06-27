@@ -4,5 +4,5 @@ tangermunde = {
 	geocoordinate = { 11.968888888889 52.540833333333 }
 	type = holding
 	holding_type = castle
-	province = magdeburg
+	province = werben
 }

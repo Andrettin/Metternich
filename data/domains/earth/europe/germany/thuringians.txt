@@ -14,5 +14,6 @@ thuringians = {
 		franconia
 		magdeburg
 		upper_saxony
+		werben
 	}
 }

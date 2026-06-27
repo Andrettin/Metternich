@@ -42,6 +42,7 @@ germany = {
 		thuringia
 		upper_saxony
 		upper_silesia
+		werben
 		westphalia
 		wurtemberg
 	}

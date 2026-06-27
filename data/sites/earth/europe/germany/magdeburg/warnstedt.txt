@@ -1,7 +1,7 @@
 warnstedt = {
 	name = "Warnstedt"
 	world = earth
-	#geocoordinate = { 11.0575 51.77444 }
+	geocoordinate = { 11.0575 51.77444 }
 	province = magdeburg
 	
 	history = {

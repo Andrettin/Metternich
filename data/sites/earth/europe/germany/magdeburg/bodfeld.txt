@@ -1,7 +1,7 @@
 bodfeld = {
 	name = "Bodfeld"
 	world = earth
-	#geocoordinate = { 10.838611111111 51.788888888889 }
+	geocoordinate = { 10.838611111111 51.788888888889 }
 	province = magdeburg
 	
 	history = {

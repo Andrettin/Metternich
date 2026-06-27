@@ -15,13 +15,14 @@ prussia = {
 	core_provinces = {
 		brandenburg
 		east_prussia
-		west_prussia
-		magdeburg
 		lower_silesia
-		upper_silesia
+		magdeburg
 		minden
 		paderborn
 		rhineland
+		upper_silesia
+		werben
+		west_prussia
 		westphalia
 	}
 	

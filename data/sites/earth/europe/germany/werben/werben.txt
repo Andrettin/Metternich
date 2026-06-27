@@ -4,7 +4,7 @@ werben = {
 	geocoordinate = { 11.966666666667 52.866666666667 }
 	type = holding
 	holding_type = castle
-	province = magdeburg
+	province = werben
 	
 	history = {
 		919 = {

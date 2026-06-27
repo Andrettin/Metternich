@@ -2,7 +2,7 @@ walsleben = {
 	name = "Walsleben"
 	world = earth
 	geocoordinate = { 11.849722222222 52.759722222222 }
-	province = magdeburg
+	province = werben
 	
 	history = {
 		919 = {
