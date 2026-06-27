@@ -1,7 +1,7 @@
 nabburg = {
 	name = "Nabburg"
 	world = earth
-	#geocoordinate = { 12.18 49.453333333333 }
+	geocoordinate = { 12.18 49.453333333333 }
 	province = bavaria
 	
 	history = {

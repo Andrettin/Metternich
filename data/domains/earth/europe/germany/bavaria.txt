@@ -22,6 +22,7 @@ bavaria = {
 	}
 	core_provinces = {
 		bavaria
+		passau
 	}
 	
 	history = {

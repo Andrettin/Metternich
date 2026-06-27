@@ -39,6 +39,7 @@ holy_roman_empire = {
 		oldenburg
 		paderborn
 		palatinate
+		passau
 		rhineland
 		schleswig
 		thuringia

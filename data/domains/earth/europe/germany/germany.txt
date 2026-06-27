@@ -37,6 +37,7 @@ germany = {
 		oldenburg
 		paderborn
 		palatinate
+		passau
 		rhineland
 		schleswig
 		thuringia

@@ -24,6 +24,7 @@ bavarians = {
 		lower_silesia
 		melk
 		olmutz
+		passau
 		pilsen
 		salzburg
 		traungau
