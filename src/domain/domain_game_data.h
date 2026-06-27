@@ -58,6 +58,7 @@ class domain_economy;
 class domain_government;
 class domain_military;
 class domain_technology;
+class dynasty;
 class event;
 class flag;
 class government_type;
@@ -330,6 +331,8 @@ public:
 
 	bool is_tribal() const;
 	bool is_clade() const;
+
+	const dynasty *get_dynasty() const;
 
 	const std::vector<const province *> &get_provinces() const
 	{

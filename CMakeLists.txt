@@ -697,6 +697,7 @@ set(script_condition_HDRS
 	src/script/condition/domain_skill_condition.h
 	src/script/condition/dungeon_area_condition.h
 	src/script/condition/dungeon_condition.h
+	src/script/condition/dynasty_condition.h
 	src/script/condition/event_condition.h
 	src/script/condition/explored_dungeon_area_condition.h
 	src/script/condition/feature_condition.h

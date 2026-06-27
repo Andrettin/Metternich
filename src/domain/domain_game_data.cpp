@@ -1404,6 +1404,15 @@ bool domain_game_data::is_clade() const
 	return this->get_government_type()->get_group()->is_clade();
 }
 
+const dynasty *domain_game_data::get_dynasty() const
+{
+	if (this->get_government()->get_ruler() == nullptr) {
+		return nullptr;
+	}
+
+	return this->get_government()->get_ruler()->get_dynasty();
+}
+
 QVariantList domain_game_data::get_provinces_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_provinces());

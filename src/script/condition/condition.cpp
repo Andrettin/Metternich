@@ -49,8 +49,9 @@
 #include "script/condition/domain_exists_condition.h"
 #include "script/condition/domain_scope_condition.h"
 #include "script/condition/domain_skill_condition.h"
-#include "script/condition/dungeon_condition.h"
 #include "script/condition/dungeon_area_condition.h"
+#include "script/condition/dungeon_condition.h"
+#include "script/condition/dynasty_condition.h"
 #include "script/condition/event_condition.h"
 #include "script/condition/explored_dungeon_area_condition.h"
 #include "script/condition/feature_condition.h"
@@ -261,7 +262,9 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 	}
 	
 	if constexpr (std::is_same_v<scope_type, character> || std::is_same_v<scope_type, domain>) {
-		if (key == "has_flag") {
+		if (key == "dynasty") {
+			return std::make_unique<dynasty_condition<scope_type>>(value, condition_operator);
+		} else if (key == "has_flag") {
 			return std::make_unique<has_flag_condition<scope_type>>(value, condition_operator);
 		} else if (key == "item") {
 			return std::make_unique<item_condition<scope_type>>(value, condition_operator);
