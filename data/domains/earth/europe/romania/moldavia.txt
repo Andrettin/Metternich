@@ -2,6 +2,7 @@ moldavia = {
 	name = "Moldavia"
 	type = polity
 	color = { 136 157 23 }
+	flag = moldavia
 	culture = romanian
 	default_religion = orthodox
 	default_tier = duchy

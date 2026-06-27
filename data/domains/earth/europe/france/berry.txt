@@ -2,6 +2,7 @@ berry = {
 	name = "Berry"
 	type = polity
 	color = { 85 65 215 }
+	flag = berry
 	culture = french
 	default_religion = catholic
 	default_tier = duchy
