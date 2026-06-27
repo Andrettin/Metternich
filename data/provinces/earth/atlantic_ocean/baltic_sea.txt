@@ -20,6 +20,15 @@ bay_of_mecklenburg = {
 	}
 }
 
+coast_of_prussia = {
+	name = "Coast of Prussia"
+	color = { 235 35 204 }
+	sea = true
+	regions = {
+		baltic_sea
+	}
+}
+
 gulf_of_bothnia = {
 	name = "Gulf of Bothnia"
 	color = { 16 144 144 }
