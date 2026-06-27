@@ -42,6 +42,7 @@
 /graphics/flags/lorraine.svg (by Patricia.fidi, from the Wikimedia Commons) (licensed under the CC0)
 /graphics/flags/magdeburg.svg (by David Liuzzo, from the Wikimedia Commons) (released to the public domain)
 /graphics/flags/mecklenburg.svg (by David Liuzzo, from the Wikimedia Commons) (in the public domain)
+/graphics/flags/meissen.svg (from the Wikimedia Commons) (in the public domain)
 /graphics/flags/milan.svg (by F l a n k e r, from the Wikimedia Commons) (released to the public domain)
 /graphics/flags/modena.svg (by Gryffindor, Panairjdde and Yaddah, from the Wikimedia Commons) (released to the public domain)
 /graphics/flags/nassau.svg (by Sebastian Walderich, from the Wikimedia Commons) (in the public domain)
