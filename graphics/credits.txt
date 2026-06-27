@@ -66,6 +66,8 @@
 /graphics/flags/sweden.svg (from the Wikimedia Commons) (in the public domain)
 /graphics/flags/switzerland.svg (by Denelson83, from the Wikimedia Commons) (released to the public domain)
 /graphics/flags/thuringia.svg (by Madden, from the Wikimedia Commons) (in the public domain)
+/graphics/flags/tuscany.svg (by Euryrel, from the Wikimedia Commons) (licensed under the CC-BY-SA 4.0)
+/graphics/flags/tuscany_habsburg.svg (by Euryrel, from the Wikimedia Commons) (licensed under the CC-BY-SA 4.0)
 /graphics/flags/venetia.svg (by F l a n k e r, from the Wikimedia Commons) (released to the public domain)
 /graphics/flags/wales.svg (by Tobias Jakobs, from the Wikimedia Commons) (licensed under the CC0)
 /graphics/flags/wallachia.svg (by Alex:D, from the Wikimedia Commons) (in the public domain)

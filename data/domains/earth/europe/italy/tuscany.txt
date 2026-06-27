@@ -2,11 +2,17 @@ tuscany = {
 	name = "Tuscany"
 	type = polity
 	color = { 84 96 136 }
+	flag = tuscany
 	culture = italian
 	default_religion = catholic
 	default_tier = duchy
 	default_government_type = monarchy
 	default_capital = florence
+	conditional_flags = {
+		tuscany_habsburg = {
+			dynasty = habsburg
+		}
+	}
 	eras = {
 		medieval_era
 		industrial_era
