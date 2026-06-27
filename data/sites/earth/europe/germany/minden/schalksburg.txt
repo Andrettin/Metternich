@@ -2,7 +2,7 @@ schalksburg = {
 	name = "Schalksburg"
 	world = earth
 	geocoordinate = { 8.92108 52.2396 }
-	province = westphalia
+	province = minden
 	
 	history = {
 		919 = {

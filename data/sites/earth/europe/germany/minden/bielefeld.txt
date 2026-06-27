@@ -4,5 +4,5 @@ bielefeld = {
 	geocoordinate = { 8.53001135116 52.02998821930 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	province = westphalia
+	province = minden
 }

@@ -1,0 +1,27 @@
+munster = {
+	name = "Munster" #"Münster"
+	type = polity
+	color = { 213 216 212 }
+	culture = german
+	default_religion = catholic
+	default_tier = county #bishopric
+	default_government_type = theocracy
+	default_capital = munster
+	eras = {
+		medieval_era
+		renaissance_era
+	}
+	core_holdings = {
+		munster
+	}
+	
+	history = {
+		1477 = {
+			#part of the Holy Roman Empire c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+			diplomacy_state = {
+				domain = holy_roman_empire
+				subject_type = princely_state
+			}
+		}
+	}
+}

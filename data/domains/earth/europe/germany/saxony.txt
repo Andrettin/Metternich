@@ -17,6 +17,7 @@ saxony = {
 		holstein
 		luneburg
 		magdeburg
+		minden
 		oldenburg
 		westphalia
 	}

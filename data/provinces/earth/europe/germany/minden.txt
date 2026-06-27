@@ -1,7 +1,8 @@
-westphalia = {
-	name = "Westphalia"
-	color = { 1 128 224 }
-	default_provincial_capital = munster
+minden = {
+	name = "Minden"
+	color = { 169 186 217 }
+	terrain = plains
+	default_provincial_capital = minden
 	regions = {
 		germany
 	}
@@ -11,26 +12,10 @@ westphalia = {
 		culture = saxon
 		religion = asatru
 		
-		myths_enabled = {
-			-3000 = {
-				owner = goldemarland
-				culture = dwarven
-				religion = pagan
-			}
-			
-			450 = {
-				owner = goldemarland
-				culture = dwarven
-				religion = pagan
-			}
-		}
-		
-		!myths_enabled = {
-			526 = {
-				owner = saxons #territory of the Saxons in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
-				culture = saxon
-				religion = asatru
-			}
+		526 = {
+			owner = saxons #territory of the Saxons in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = saxon
+			religion = asatru
 		}
 		
 		919 = {
@@ -44,7 +29,7 @@ westphalia = {
 		}
 		
 		1477 = {
-			owner = munster #part of the Bishopric of Münster c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+			owner = minden #part of the Bishopric of Minden c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
 		}
 		
 		1815 = {

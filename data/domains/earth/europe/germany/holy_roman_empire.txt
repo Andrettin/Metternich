@@ -34,6 +34,7 @@ holy_roman_empire = {
 		luneburg
 		magdeburg
 		mecklenburg
+		minden
 		nassau
 		oldenburg
 		palatinate

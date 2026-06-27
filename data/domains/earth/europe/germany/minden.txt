@@ -1,0 +1,27 @@
+minden = {
+	name = "Minden"
+	type = polity
+	color = { 214 214 190 }
+	culture = german
+	default_religion = catholic
+	default_tier = county #bishopric
+	default_government_type = theocracy
+	default_capital = minden
+	eras = {
+		medieval_era
+		renaissance_era
+	}
+	core_holdings = {
+		minden
+	}
+	
+	history = {
+		1477 = {
+			#part of the Holy Roman Empire c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+			diplomacy_state = {
+				domain = holy_roman_empire
+				subject_type = princely_state
+			}
+		}
+	}
+}

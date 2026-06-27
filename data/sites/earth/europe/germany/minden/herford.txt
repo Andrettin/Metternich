@@ -4,5 +4,5 @@ herford = {
 	geocoordinate = { 8.673430555555555 52.11456944444444 }
 	type = holding
 	holding_type = temple
-	province = westphalia
+	province = minden
 }

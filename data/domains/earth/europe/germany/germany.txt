@@ -32,6 +32,7 @@ germany = {
 		luneburg
 		magdeburg
 		mecklenburg
+		minden
 		nassau
 		oldenburg
 		palatinate
