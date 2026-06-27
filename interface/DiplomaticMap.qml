@@ -275,29 +275,37 @@ Flickable {
 		
 		var domain = province.game_data.owner
 		
-		if (domain === null) {
-			return ""
-		}
-		
 		switch (diplomatic_map.mode) {
 			case DiplomaticMap.Mode.Realm:
-				return domain.game_data.realm.name
+				if (domain !== null) {
+					return domain.game_data.realm.name
+				}
+				break
 			case DiplomaticMap.Mode.Political:
 			case DiplomaticMap.Mode.Treaty:
-				return domain.name
+				if (domain !== null) {
+					return domain.name
+				}
+				break
 			case DiplomaticMap.Mode.Terrain:
 				return province.map_data.terrain.name
 			case DiplomaticMap.Mode.Cultural:
-				return province.game_data.culture.name
+				if (province.game_data.culture !== null) {
+					return province.game_data.culture.name
+				}
+				break
 			case DiplomaticMap.Mode.Religious:
-				return province.game_data.religion.name
+				if (province.game_data.religion !== null) {
+					return province.game_data.religion.name
+				}
+				break
 			case DiplomaticMap.Mode.TradeZone:
-				if (province.game_data.trade_zone_domain !== null) {
+				if (province.game_data.trade_zone_domain !== null && domain !== null) {
 					return province.game_data.trade_zone_domain.name
 				}
 				break
 			case DiplomaticMap.Mode.Temple:
-				if (province.game_data.temple_domain !== null) {
+				if (province.game_data.temple_domain !== null && domain !== null) {
 					return province.game_data.temple_domain.name
 				}
 				break
