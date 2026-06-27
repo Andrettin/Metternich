@@ -21,6 +21,7 @@ bavaria = {
 		industrial_era
 	}
 	core_provinces = {
+		eichstatt
 		freising
 		passau
 		regensburg

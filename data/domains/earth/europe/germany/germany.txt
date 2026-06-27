@@ -21,6 +21,7 @@ germany = {
 		baden
 		bremen
 		east_friesland
+		eichstatt
 		farther_pomerania
 		franconia
 		freising

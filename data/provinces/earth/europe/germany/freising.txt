@@ -1,6 +1,7 @@
 freising = {
 	name = "Freising"
 	color = { 0 15 80 }
+	terrain = forest
 	default_provincial_capital = munich
 	regions = {
 		germany

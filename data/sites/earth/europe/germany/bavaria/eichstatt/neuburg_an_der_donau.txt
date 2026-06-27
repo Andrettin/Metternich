@@ -2,7 +2,7 @@ neuburg_an_der_donau = {
 	name = "Neuburg an der Donau"
 	world = earth
 	geocoordinate = { 11.183333333333334 48.733333333333334 }
-	province = freising
+	province = eichstatt
 	
 	history = {
 		919 = {

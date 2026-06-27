@@ -1,6 +1,7 @@
 passau = {
 	name = "Passau"
 	color = { 84 63 151 }
+	terrain = forest
 	default_provincial_capital = passau
 	regions = {
 		germany

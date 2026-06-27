@@ -1,6 +1,7 @@
 regensburg = {
 	name = "Regensburg"
 	color = { 1 201 50 }
+	terrain = hills
 	default_provincial_capital = regensburg
 	regions = {
 		germany
