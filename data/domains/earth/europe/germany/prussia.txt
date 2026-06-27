@@ -20,6 +20,7 @@ prussia = {
 		lower_silesia
 		upper_silesia
 		minden
+		paderborn
 		rhineland
 		westphalia
 	}

@@ -4,7 +4,7 @@ detmold = {
 	geocoordinate = { 8.8833333333333 51.937777777778 }
 	type = holding
 	holding_type = castle
-	province = westphalia
+	province = paderborn
 	
 	history = {
 		919 = {

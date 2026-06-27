@@ -35,6 +35,7 @@ germany = {
 		minden
 		nassau
 		oldenburg
+		paderborn
 		palatinate
 		rhineland
 		schleswig

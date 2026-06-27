@@ -4,5 +4,5 @@ lippe = {
 	geocoordinate = { 8.9166666666667 52 } #Lippe District
 	type = holding
 	holding_type = guild
-	province = westphalia
+	province = paderborn
 }

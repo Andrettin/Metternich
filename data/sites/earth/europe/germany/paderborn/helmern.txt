@@ -2,7 +2,7 @@ helmern = {
 	name = "Helmern"
 	world = earth
 	geocoordinate = { 9.07625 51.6144 }
-	province = westphalia
+	province = paderborn
 	
 	history = {
 		919 = {

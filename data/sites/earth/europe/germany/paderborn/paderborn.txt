@@ -4,7 +4,7 @@ paderborn = {
 	geocoordinate = { 8.766666666666667 51.71666666666667 }
 	type = holding
 	holding_type = temple
-	province = westphalia
+	province = paderborn
 	features = {
 		academic #historical university
 	}

@@ -37,6 +37,7 @@ holy_roman_empire = {
 		minden
 		nassau
 		oldenburg
+		paderborn
 		palatinate
 		rhineland
 		schleswig
