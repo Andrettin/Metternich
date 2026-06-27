@@ -10,12 +10,12 @@ bavarians = {
 		medieval_era
 	}
 	core_provinces = {
-		bavaria
 		bohemia
 		brunn
 		buda
 		budweis
 		burgenland
+		freising
 		freistadt
 		gyor
 		hodonin
@@ -26,6 +26,7 @@ bavarians = {
 		olmutz
 		passau
 		pilsen
+		regensburg
 		salzburg
 		traungau
 		vienna

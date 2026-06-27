@@ -21,11 +21,11 @@ holy_roman_empire = {
 		brandenburg
 		augsburg
 		baden
-		bavaria
 		bremen
 		east_friesland
 		farther_pomerania
 		franconia
+		freising
 		hanover
 		hesse
 		hither_pomerania
@@ -40,6 +40,7 @@ holy_roman_empire = {
 		paderborn
 		palatinate
 		passau
+		regensburg
 		rhineland
 		schleswig
 		thuringia

@@ -4,7 +4,7 @@ ebersberg = {
 	geocoordinate = { 11.966666666666667 48.083333333333336 }
 	type = holding
 	holding_type = castle
-	province = bavaria
+	province = freising
 	
 	history = {
 		919 = {

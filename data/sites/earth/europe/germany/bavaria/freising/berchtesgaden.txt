@@ -4,5 +4,5 @@ berchtesgaden = {
 	geocoordinate = { 13.004166666667 47.631388888889 }
 	type = holding
 	holding_type = temple
-	province = bavaria
+	province = freising
 }

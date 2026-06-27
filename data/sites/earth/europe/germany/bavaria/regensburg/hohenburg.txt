@@ -1,8 +1,10 @@
-polling = {
-	name = "Polling"
+hohenburg = {
+	name = "Hohenburg"
 	world = earth
-	geocoordinate = { 11.130833333333 47.811111111111 }
-	province = bavaria
+	geocoordinate = { 11.797688888888889 49.29546111111111 }
+	type = holding
+	holding_type = castle
+	province = regensburg
 	
 	history = {
 		919 = {

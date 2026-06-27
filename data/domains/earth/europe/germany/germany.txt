@@ -19,11 +19,11 @@ germany = {
 		brandenburg
 		augsburg
 		baden
-		bavaria
 		bremen
 		east_friesland
 		farther_pomerania
 		franconia
+		freising
 		hanover
 		hesse
 		hither_pomerania
@@ -38,6 +38,7 @@ germany = {
 		paderborn
 		palatinate
 		passau
+		regensburg
 		rhineland
 		schleswig
 		thuringia

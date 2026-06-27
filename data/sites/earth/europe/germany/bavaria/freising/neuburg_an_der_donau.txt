@@ -1,8 +1,8 @@
-nabburg = {
-	name = "Nabburg"
+neuburg_an_der_donau = {
+	name = "Neuburg an der Donau"
 	world = earth
-	geocoordinate = { 12.18 49.453333333333 }
-	province = bavaria
+	geocoordinate = { 11.183333333333334 48.733333333333334 }
+	province = freising
 	
 	history = {
 		919 = {

@@ -2,7 +2,7 @@ ingolstadt = {
 	name = "Ingolstadt"
 	world = earth
 	geocoordinate = { 11.44998815780 48.77041973780 } #from Natural Earth
-	province = bavaria
+	province = freising
 	features = {
 		academic #historical university
 	}

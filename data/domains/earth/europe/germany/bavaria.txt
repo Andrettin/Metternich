@@ -21,8 +21,9 @@ bavaria = {
 		industrial_era
 	}
 	core_provinces = {
-		bavaria
+		freising
 		passau
+		regensburg
 	}
 	
 	history = {

@@ -1,8 +1,8 @@
-neuburg_an_der_donau = {
-	name = "Neuburg an der Donau"
+leuchtenberg = {
+	name = "Leuchtenberg"
 	world = earth
-	geocoordinate = { 11.183333333333334 48.733333333333334 }
-	province = bavaria
+	geocoordinate = { 12.258333333333 49.5975 }
+	province = regensburg
 	
 	history = {
 		919 = {

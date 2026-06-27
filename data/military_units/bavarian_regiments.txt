@@ -4,7 +4,7 @@ bavarian_crossbowmen = {
 	
 	history = {
 		1492 = {
-			province = bavaria
+			province = freising
 		}
 		
 		1815 = { #1820 = {

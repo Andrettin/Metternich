@@ -2,7 +2,7 @@ scheyern = {
 	name = "Scheyern"
 	world = earth
 	geocoordinate = { 11.466666666667 48.5 }
-	province = bavaria
+	province = freising
 	
 	history = {
 		919 = {

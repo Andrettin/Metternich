@@ -4,7 +4,7 @@ eichstatt = {
 	geocoordinate = { 11.18388888888889 48.89194444444445 }
 	type = holding
 	holding_type = castle
-	province = bavaria
+	province = freising
 	
 	history = {
 		919 = {

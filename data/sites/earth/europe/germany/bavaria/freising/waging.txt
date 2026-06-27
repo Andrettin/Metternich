@@ -4,5 +4,5 @@ waging = {
 	geocoordinate = { 12.733333333333333 47.93333333333333 } #Waging am See
 	type = holding
 	holding_type = castle
-	province = bavaria
+	province = freising
 }

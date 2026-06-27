@@ -1,7 +1,7 @@
-bavaria = {
-	name = "Bavaria"
-	color = { 176 1 33 }
-	default_provincial_capital = munich
+regensburg = {
+	name = "Regensburg"
+	color = { 1 201 50 }
+	default_provincial_capital = regensburg
 	regions = {
 		germany
 	}
@@ -25,29 +25,6 @@ bavaria = {
 		
 		high_middle_ages = {
 			temple_domain = salzburg #part of the ecclesiastical province of Salzburg in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 94-95.
-		}
-		
-		1187 = {
-			technologies += short_bow
-			technologies += long_bow
-			technologies += light_crossbow
-			technologies += soft_leather_armor
-			technologies += chain_mail
-			technologies += mace
-			technologies += short_sword
-			technologies += long_sword
-			technologies += pike
-			technologies += monastic_school
-			technologies += aristotelian_logic
-			technologies += scholasticism
-			technologies += asceticism
-		}
-		
-		1337 = {
-			technologies += morning_star
-			technologies += cathedral_school
-			technologies += astronomy
-			technologies += ballads
 		}
 		
 		1360 = {

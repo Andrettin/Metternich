@@ -4,7 +4,7 @@ freising = {
 	geocoordinate = { 11.748888888889 48.402777777778 }
 	type = holding
 	holding_type = temple
-	province = bavaria
+	province = freising
 	features = {
 		holy_site #historical cathedral
 	}
