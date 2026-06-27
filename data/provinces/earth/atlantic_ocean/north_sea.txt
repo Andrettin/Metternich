@@ -1,3 +1,30 @@
+coast_of_hanover = {
+	name = "Coast of Hanover"
+	color = { 180 224 71 }
+	sea = true
+	regions = {
+		north_sea
+	}
+}
+
+coast_of_jutland = {
+	name = "Coast of Jutland"
+	color = { 41 131 130 }
+	sea = true
+	regions = {
+		north_sea
+	}
+}
+
+coast_of_the_netherlands = {
+	name = "Coast of the Netherlands"
+	color = { 72 88 106 }
+	sea = true
+	regions = {
+		north_sea
+	}
+}
+
 danish_waters = {
 	name = "Danish Waters"
 	color = { 247 251 87 }
