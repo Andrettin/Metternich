@@ -1,6 +1,42 @@
+arafura_sea = {
+	name = "Arafura Sea"
+	color = { 108 45 204 }
+	sea = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+bali_sea = {
+	name = "Bali Sea"
+	color = { 56 196 255 }
+	sea = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+banda_sea = {
+	name = "Banda Sea"
+	color = { 24 251 251 }
+	sea = true
+	regions = {
+		pacific_ocean
+	}
+}
+
 bering_sea = {
 	name = "Bering Sea"
 	color = { 34 15 222 }
+	sea = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+bismarck_sea = {
+	name = "Bismarck Sea"
+	color = { 175 131 31 }
 	sea = true
 	regions = {
 		pacific_ocean
@@ -16,9 +52,72 @@ bohai_sea = {
 	}
 }
 
+bohol_sea = {
+	name = "Bohol Sea"
+	color = { 186 242 4 }
+	sea = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+celebes_sea = {
+	name = "Celebes Sea"
+	color = { 22 201 251 }
+	sea = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+ceram_sea = {
+	name = "Ceram Sea"
+	color = { 216 76 239 }
+	sea = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+coral_sea = {
+	name = "Coral Sea"
+	color = { 53 201 201 }
+	sea = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+dampier_strait = {
+	name = "Dampier Strait"
+	color = { 69 255 188 }
+	sea = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+davao_gulf = {
+	name = "Davao Gulf"
+	color = { 37 97 11 }
+	bay = true
+	regions = {
+		pacific_ocean
+	}
+}
+
 east_china_sea = {
 	name = "East China Sea"
 	color = { 81 123 181 }
+	sea = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+flores_sea = {
+	name = "Flores Sea"
+	color = { 23 33 73 }
 	sea = true
 	regions = {
 		pacific_ocean
@@ -34,9 +133,63 @@ gulf_of_alaska = {
 	}
 }
 
+gulf_of_buli = {
+	name = "Gulf of Buli"
+	color = { 110 139 224 }
+	bay = true
+	regions = {
+		pacific_ocean
+	}
+}
+
 gulf_of_california = {
 	name = "Gulf of California"
 	color = { 53 37 186 }
+	bay = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+gulf_of_carpentaria = {
+	name = "Gulf of Carpentaria"
+	color = { 33 201 201 }
+	bay = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+gulf_of_kau = {
+	name = "Gulf of Kau"
+	color = { 59 123 191 }
+	bay = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+gulf_of_papua = {
+	name = "Gulf of Papua"
+	color = { 3 183 69 }
+	bay = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+gulf_of_thailand = {
+	name = "Gulf of Thailand" #also knowns as the Gulf of Siam
+	color = { 116 250 250 }
+	bay = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+gulf_of_tomini = {
+	name = "Gulf of Tomini"
+	color = { 189 146 90 }
 	bay = true
 	regions = {
 		pacific_ocean
@@ -47,6 +200,51 @@ gulf_of_tonkin = {
 	name = "Gulf of Tonkin"
 	color = { 148 249 244 }
 	bay = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+halmahera_sea = {
+	name = "Halmahera Sea"
+	color = { 167 11 126 }
+	sea = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+java_sea = {
+	name = "Java Sea"
+	color = { 109 200 200 }
+	sea = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+leyte_gulf = {
+	name = "Leyte Gulf"
+	color = { 20 251 251 }
+	bay = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+makassar_strait = {
+	name = "Makassar Strait"
+	color = { 110 200 250 }
+	sea = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+molucca_sea = {
+	name = "Molucca Sea"
+	color = { 154 238 158 }
+	sea = true
 	regions = {
 		pacific_ocean
 	}
@@ -64,6 +262,24 @@ north_pacific_ocean = {
 philippine_sea = {
 	name = "Philippine Sea"
 	color = { 0 108 208 }
+	sea = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+ragay_gulf = {
+	name = "Ragay Gulf"
+	color = { 106 8 117 }
+	bay = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+samar_sea = {
+	name = "Samar Sea"
+	color = { 178 22 181 }
 	sea = true
 	regions = {
 		pacific_ocean
@@ -97,6 +313,24 @@ shelikhova_gulf = {
 	}
 }
 
+sibuyan_sea = {
+	name = "Sibuyan Sea"
+	color = { 175 176 239 }
+	sea = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+solomon_sea = {
+	name = "Solomon Sea"
+	color = { 55 221 251 }
+	sea = true
+	regions = {
+		pacific_ocean
+	}
+}
+
 south_china_sea = {
 	name = "South China Sea"
 	color = { 98 195 222 }
@@ -115,9 +349,54 @@ south_pacific_ocean = {
 	}
 }
 
+sulu_sea = {
+	name = "Sulu Sea"
+	color = { 21 201 201 }
+	sea = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+surigao_strait = {
+	name = "Surigao Strait"
+	color = { 95 226 96 }
+	sea = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+tasman_sea = {
+	name = "Tasman Sea"
+	color = { 44 251 251 }
+	sea = true
+	regions = {
+		pacific_ocean
+	}
+}
+
 taiwan_strait = {
 	name = "Taiwan Strait"
 	color = { 112 161 232 }
+	sea = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+tayabas_bay = {
+	name = "Tayabas Bay"
+	color = { 83 116 145 }
+	bay = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+torres_strait = {
+	name = "Torres Strait"
+	color = { 30 201 251 }
 	sea = true
 	regions = {
 		pacific_ocean
@@ -128,6 +407,15 @@ uchiura_bay = {
 	name = "Uchiura Bay"
 	color = { 19 114 245 }
 	bay = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+visayan_sea = {
+	name = "Visayan Sea"
+	color = { 176 56 187 }
+	sea = true
 	regions = {
 		pacific_ocean
 	}
