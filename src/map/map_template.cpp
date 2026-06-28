@@ -119,7 +119,9 @@ void map_template::initialize()
 
 			if (site->get_province() != nullptr) {
 				site_province = site->get_province();
-			} else {
+			}
+
+			if (site_province == nullptr) {
 				continue;
 			}
 
