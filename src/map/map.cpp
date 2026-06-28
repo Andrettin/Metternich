@@ -349,19 +349,19 @@ void map::set_tile_site(const QPoint &tile_pos, const site *site)
 	tile->set_site(site);
 
 	if (site->get_province() != nullptr && site->get_province() != tile->get_province() && site->get_province()->get_map_data()->is_on_map()) {
-		log::log_error(std::format("Site \"{}\" was not placed within its province.", site->get_identifier()));
+		throw std::runtime_error(std::format("Site \"{}\" was not placed within its province.", site->get_identifier()));
 	}
 
 	switch (site->get_type()) {
 		case site_type::holding:
 		case site_type::habitable_world:
 			if (tile->get_province() == nullptr || (site->get_province() != nullptr && tile->get_province() != site->get_province())) {
-				log::log_error(std::format("Holding \"{}\" {} was not placed within its province.", site->get_identifier(), point::to_string(tile_pos)));
+				throw std::runtime_error(std::format("Holding \"{}\" {} was not placed within its province.", site->get_identifier(), point::to_string(tile_pos)));
 			}
 			break;
 		case site_type::resource:
 			if (site->get_map_data()->get_resource() == nullptr) {
-				log::log_error(std::format("Resource site \"{}\" {} has no resource.", site->get_identifier(), point::to_string(tile_pos)));
+				throw std::runtime_error(std::format("Resource site \"{}\" {} has no resource.", site->get_identifier(), point::to_string(tile_pos)));
 				break;
 			}
 			break;
