@@ -1,8 +1,8 @@
-eberstein = {
-	name = "Eberstein"
+twiel = {
+	name = "Twiel" #also known as Hohentwiel
 	world = earth
-	#geocoordinate = { 8.34306 48.7494 } #commented out because it conflicts with Baden
-	province = baden
+	geocoordinate = { 8.81888889 47.76472222 }
+	province = furstenberg
 	
 	history = {
 		919 = {

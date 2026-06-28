@@ -5,17 +5,18 @@ alamanni = {
 	default_religion = asatru
 	default_tier = duchy
 	default_government_type = tribal_despotism
-	default_capital = karlsruhe
+	default_capital = freiburg
 	eras = {
 		medieval_era
 	}
 	core_provinces = {
-		baden
-		wurtemberg
+		breisgau
 		augsburg
 		bern
+		furstenberg
 		nordgau
 		sundgau
+		wurtemberg
 		zurich
 	}
 }

@@ -1,8 +1,8 @@
-twiel = {
-	name = "Twiel" #also known as Hohentwiel
+zahringen = {
+	name = "Zahringen" #"Zähringen"
 	world = earth
-	#geocoordinate = { 8.81888889 47.76472222 } #commented out because it conflicts with Constance
-	province = baden
+	geocoordinate = { 7.884167 48.025278 }
+	province = breisgau
 	
 	history = {
 		919 = {

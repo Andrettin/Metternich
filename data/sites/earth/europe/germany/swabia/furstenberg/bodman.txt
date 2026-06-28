@@ -1,8 +1,8 @@
-breisach = {
-	name = "Breisach"
+bodman = {
+	name = "Bodman" #also known as Bodmann
 	world = earth
-	#geocoordinate = { 7.58 48.028888888889 } #commented out because it conflicts with Freiburg
-	province = baden
+	geocoordinate = { 9.0461 47.7954 }
+	province = furstenberg
 	
 	history = {
 		919 = {

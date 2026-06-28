@@ -4,7 +4,7 @@ furstenberg = {
 	geocoordinate = { 8.5601 47.8907 } #Fürstenberg Castle (Hüfingen)
 	type = holding
 	holding_type = castle
-	province = baden
+	province = furstenberg
 	
 	history = {
 		1250 = {

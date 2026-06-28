@@ -1,8 +1,8 @@
-baden = {
-	name = "Baden"
-	color = { 0 162 190 }
-	terrain = hills
-	default_provincial_capital = karlsruhe
+breisgau = {
+	name = "Breisgau"
+	color = { 0 111 25 }
+	terrain = forest
+	default_provincial_capital = freiburg
 	regions = {
 		germany
 	}
@@ -13,13 +13,13 @@ baden = {
 		religion = pagan
 		
 		526 = {
-			owner = francia #part of the Kingdom of the Franks in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
-			culture = frankish
-			religion = catholic
+			owner = alamanni #territory of the Alamanni in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = suebi
+			religion = asatru
 		}
 		
 		919 = {
-			owner = franconia #part of the Duchy of Franconia in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			owner = swabia #part of the Duchy of Swabia in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
 			culture = german
 			religion = catholic
 		}
@@ -29,7 +29,7 @@ baden = {
 		}
 		
 		1477 = {
-			owner = baden #part of the Margraviate of Baden c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+			owner = burgundy #Burgundian possession c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
 		}
 		
 		1815 = {

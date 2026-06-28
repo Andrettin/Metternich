@@ -19,12 +19,14 @@ germany = {
 		brandenburg
 		augsburg
 		baden
+		breisgau
 		bremen
 		east_friesland
 		eichstatt
 		farther_pomerania
 		franconia
 		freising
+		furstenberg
 		hanover
 		hesse
 		hither_pomerania

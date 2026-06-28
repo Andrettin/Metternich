@@ -12,8 +12,10 @@ swabia = {
 	}
 	core_provinces = {
 		wurtemberg
-		baden
 		augsburg
+		baden
+		breisgau
+		furstenberg
 	}
 	
 	history = {

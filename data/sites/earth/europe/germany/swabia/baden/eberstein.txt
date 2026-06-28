@@ -1,7 +1,7 @@
-zahringen = {
-	name = "Zahringen" #"Zähringen"
+eberstein = {
+	name = "Eberstein"
 	world = earth
-	#geocoordinate = { 7.884167 48.025278 } #commented out because it conflicts with Freiburg
+	geocoordinate = { 8.34306 48.7494 }
 	province = baden
 	
 	history = {

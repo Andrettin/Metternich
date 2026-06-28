@@ -1,8 +1,8 @@
-bodman = {
-	name = "Bodman" #also known as Bodmann
+wahlwies = {
+	name = "Wahlwies"
 	world = earth
-	#geocoordinate = { 9.0461 47.7954 } #commented out because it conflicts with Constance
-	province = baden
+	geocoordinate = { 8.9673 47.8168 }
+	province = furstenberg
 	
 	history = {
 		919 = {

@@ -5,5 +5,5 @@ black_forest = {
 	type = resource
 	terrain_type = forest
 	resource = timber
-	province = baden
+	province = breisgau
 }

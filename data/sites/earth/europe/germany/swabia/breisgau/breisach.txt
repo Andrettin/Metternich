@@ -1,8 +1,8 @@
-wahlwies = {
-	name = "Wahlwies"
+breisach = {
+	name = "Breisach"
 	world = earth
-	#geocoordinate = { 8.9673 47.8168 } #commented out because it conflicts with Constance
-	province = baden
+	geocoordinate = { 7.58 48.028888888889 }
+	province = breisgau
 	
 	history = {
 		919 = {

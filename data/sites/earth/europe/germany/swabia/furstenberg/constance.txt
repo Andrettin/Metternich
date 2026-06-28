@@ -4,7 +4,7 @@ constance = {
 	geocoordinate = { 9.1752777777778 47.663333333333 }
 	type = holding
 	holding_type = temple
-	province = baden
+	province = furstenberg
 	cultural_group_names = {
 		#german = "Konstanz"
 	}
