@@ -378,8 +378,8 @@ void map::set_tile_site(const QPoint &tile_pos, const site *site)
 			log::log_error(std::format("Site \"{}\" {} has coastal resource \"{}\", but is not coastal.", site->get_identifier(), point::to_string(tile_pos), tile->get_resource()->get_identifier()));
 		}
 
-		if (!vector::contains(tile->get_resource()->get_terrain_types(), site->get_map_data()->get_terrain())) {
-			log::log_error(std::format("Site \"{}\" {} has resource \"{}\", which doesn't match its \"{}\" terrain type.", site->get_identifier(), point::to_string(tile_pos), tile->get_resource()->get_identifier(), site->get_map_data()->get_terrain()->get_identifier()));
+		if (!vector::contains(tile->get_resource()->get_terrain_types(), tile->get_province()->get_map_data()->get_terrain())) {
+			log::log_error(std::format("Site \"{}\" {} has resource \"{}\", which doesn't match its \"{}\" terrain type.", site->get_identifier(), point::to_string(tile_pos), tile->get_resource()->get_identifier(), tile->get_province()->get_map_data()->get_terrain()->get_identifier()));
 		}
 	}
 
