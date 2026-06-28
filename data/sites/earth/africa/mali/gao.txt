@@ -1,0 +1,7 @@
+gao = {
+	name = "Gao"
+	world = earth
+	geocoordinate = { -0.050008 16.266590 } #from Natural Earth
+	type = holding
+	holding_type = castle
+}

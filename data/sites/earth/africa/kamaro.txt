@@ -1,0 +1,8 @@
+kamaro = {
+	name = "Kamaro"
+	world = earth
+	type = holding
+	holding_type = guild
+	
+	#in the Mali Empire?
+}

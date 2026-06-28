@@ -1,0 +1,7 @@
+bourem = {
+	name = "Bourem"
+	world = earth
+	geocoordinate = { -0.349989 16.900375 } #from Natural Earth
+	type = holding
+	holding_type = castle
+}

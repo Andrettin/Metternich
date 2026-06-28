@@ -1,0 +1,8 @@
+niani = {
+	name = "Niani"
+	world = earth
+	geocoordinate = { -8.38417 11.37972 }
+	type = holding
+	holding_type = castle
+	province = mali #Guinea
+}

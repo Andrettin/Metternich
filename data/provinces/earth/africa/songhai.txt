@@ -1,0 +1,14 @@
+songhai = {
+	name = "Songhai"
+	color = { 122 101 212 }
+	default_provincial_capital = gao
+	regions = {
+		africa
+	}
+	
+	history = {
+		owner = carthage
+		culture = songhai
+		religion = pagan
+	}
+}

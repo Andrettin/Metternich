@@ -1,0 +1,7 @@
+dialakoro = {
+	name = "Dialakoro"
+	world = earth
+	geocoordinate = { -8.91666667 11.4 } #Dialakoro, Kankan
+	type = holding
+	holding_type = castle
+}

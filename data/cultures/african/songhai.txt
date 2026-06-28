@@ -1,0 +1,8 @@
+songhai = {
+	name = "Songhai"
+	group = west_african
+	color = { 127 89 25 }
+	species = {
+		human
+	}
+}

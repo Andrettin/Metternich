@@ -1,0 +1,8 @@
+mande = {
+	name = "Mande" #"Mandé"
+	group = west_african
+	color = { 114 114 51 }
+	species = {
+		human
+	}
+}

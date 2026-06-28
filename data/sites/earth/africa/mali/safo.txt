@@ -1,0 +1,7 @@
+safo = {
+	name = "Safo"
+	world = earth
+	geocoordinate = { -7.923611 12.7675 } #Safo, Mali
+	type = holding
+	holding_type = castle
+}

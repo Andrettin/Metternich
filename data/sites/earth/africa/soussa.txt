@@ -1,0 +1,8 @@
+soussa = {
+	name = "Soussa"
+	world = earth
+	type = holding
+	holding_type = castle
+	
+	#in the Mali Empire?
+}

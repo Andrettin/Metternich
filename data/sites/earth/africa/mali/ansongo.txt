@@ -1,0 +1,7 @@
+ansongo = {
+	name = "Ansongo"
+	world = earth
+	geocoordinate = { 0.50277777777778 15.665 }
+	type = holding
+	holding_type = castle
+}

@@ -1,0 +1,7 @@
+gabero = {
+	name = "Gabero"
+	world = earth
+	geocoordinate = { 0.119722 16.041944 }
+	type = holding
+	holding_type = castle
+}

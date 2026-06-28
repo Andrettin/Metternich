@@ -1,0 +1,7 @@
+gao_saney = {
+	name = "Gao-Saney" #also known as Sarnah
+	world = earth
+	geocoordinate = { -0.00305556 16.25083333 }
+	type = holding
+	holding_type = guild #or temple
+}

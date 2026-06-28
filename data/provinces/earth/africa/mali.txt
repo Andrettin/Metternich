@@ -1,0 +1,14 @@
+mali = {
+	name = "Mali"
+	color = { 22 71 12 }
+	default_provincial_capital = niani
+	regions = {
+		africa
+	}
+	
+	history = {
+		owner = carthage
+		culture = mande
+		religion = pagan
+	}
+}
