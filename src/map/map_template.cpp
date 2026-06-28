@@ -135,6 +135,8 @@ void map_template::initialize()
 				continue;
 			}
 
+			assert_throw(!site_province->is_water_zone());
+
 			//if the site is not placed in its province, nudge its position to be in the nearest point in its province; also nudge sites if they are too close to other sites
 			const bool is_pos_valid = (site_province == tile_province || province_image.isNull()) && this->is_pos_available_for_site(tile_pos, site_province, province_image);
 			if (!is_pos_valid) {
