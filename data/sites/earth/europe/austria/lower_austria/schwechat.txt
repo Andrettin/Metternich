@@ -1,7 +1,7 @@
 schwechat = {
 	name = "Schwechat"
 	world = earth
-	#geocoordinate = { 16.478611111111 48.141111111111 } #commented out because it is in the same spot as Vienna
+	geocoordinate = { 16.478611111111 48.141111111111 }
 	province = vienna
 	
 	history = {

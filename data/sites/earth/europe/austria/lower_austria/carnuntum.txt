@@ -1,7 +1,7 @@
 carnuntum = {
 	name = "Carnuntum"
 	world = earth
-	#geocoordinate = { 16.866666666667 48.116666666667 }
+	geocoordinate = { 16.866666666667 48.116666666667 }
 	province = vienna
 	
 	history = {

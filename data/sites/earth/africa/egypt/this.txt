@@ -1,7 +1,7 @@
 this = {
 	name = "This"
 	world = earth
-	#geocoordinate = { 31.9 26.333333333333 }
+	geocoordinate = { 31.9 26.333333333333 }
 	type = resource
 	resource = stone #clay
 	province = upper_egypt

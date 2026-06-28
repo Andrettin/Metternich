@@ -1,7 +1,7 @@
 pochlarn = {
 	name = "Pochlarn" #"Pöchlarn"
 	world = earth
-	#geocoordinate = { 15.2 48.2 }
+	geocoordinate = { 15.2 48.2 }
 	province = melk
 	
 	history = {

@@ -1,7 +1,7 @@
 neunkirchen = {
 	name = "Neunkirchen"
 	world = earth
-	#geocoordinate = { 16.081666666667 47.726944444444 }
+	geocoordinate = { 16.081666666667 47.726944444444 }
 	province = vienna
 	
 	history = {

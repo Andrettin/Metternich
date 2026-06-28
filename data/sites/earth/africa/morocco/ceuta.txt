@@ -1,7 +1,7 @@
 ceuta = {
 	name = "Ceuta"
 	world = earth
-	#geocoordinate = { -5.30699935039 35.88898378400 } #from Natural Earth
+	geocoordinate = { -5.30699935039 35.88898378400 } #from Natural Earth
 	province = tangier
 	
 	history = {

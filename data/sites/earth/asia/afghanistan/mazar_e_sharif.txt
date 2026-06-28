@@ -1,7 +1,7 @@
 mazar_e_sharif = {
 	name = "Mazar-e Sharif"
 	world = earth
-	#geocoordinate = { 67.10002803430 36.69999371240 } #from Natural Earth
+	geocoordinate = { 67.10002803430 36.69999371240 } #from Natural Earth
 	type = resource
 	resource = grain #Irrigated cultivation; Source: Map No. 504958 of the Perry-Castañeda Library Map Collection, 1971.
 	province = afghanistan
