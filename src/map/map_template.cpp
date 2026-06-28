@@ -22,6 +22,7 @@
 #include "util/container_util.h"
 #include "util/exception_util.h"
 #include "util/geoshape_util.h"
+#include "util/log_util.h"
 #include "util/path_util.h"
 #include "util/point_util.h"
 #include "util/rect_util.h"
@@ -29,6 +30,7 @@
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
 
+#include <QElapsedTimer>
 #include <QImageReader>
 
 namespace metternich {
@@ -394,7 +396,13 @@ void map_template::write_province_image()
 			output_filepath = "provinces.png";
 		}
 
+		QElapsedTimer elapsed_timer;
+		elapsed_timer.start();
+
 		geoshape::write_image(output_filepath, geodata_map, this->get_georectangle(), this->get_size(), this->map_projection, base_image, this->geocoordinate_x_offset);
+
+		const std::chrono::milliseconds elapsed_ms(elapsed_timer.elapsed());
+		log_info(std::format("Wrote province image for map template \"{}\" in {} minutes and {} seconds.", this->get_identifier(), std::chrono::duration_cast<std::chrono::minutes>(elapsed_ms), (elapsed_ms.count() / 1000) % 60));
 	} catch (...) {
 		exception::report(std::current_exception());
 		QApplication::exit(EXIT_FAILURE);
