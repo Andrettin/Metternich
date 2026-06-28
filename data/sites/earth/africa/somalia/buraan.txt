@@ -1,0 +1,8 @@
+buraan = {
+	name = "Buraan"
+	world = earth
+	geocoordinate = { 48.7 10.216666666667 }
+	type = holding
+	holding_type = castle
+	province = somaliland
+}

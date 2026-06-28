@@ -1,0 +1,8 @@
+las_anod = {
+	name = "Las Anod"
+	world = earth
+	geocoordinate = { 47.316700 8.433297 } #from Natural Earth
+	type = holding
+	holding_type = temple
+	province = somaliland
+}

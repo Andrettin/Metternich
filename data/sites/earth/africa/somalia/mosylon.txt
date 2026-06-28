@@ -1,0 +1,8 @@
+mosylon = {
+	name = "Mosylon"
+	world = earth
+	geocoordinate = { 49.18333333333333 11.283333333333333 }
+	type = holding
+	holding_type = castle
+	province = bosaso
+}

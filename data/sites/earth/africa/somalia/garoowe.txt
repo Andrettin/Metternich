@@ -1,0 +1,8 @@
+garoowe = {
+	name = "Garoowe"
+	world = earth
+	geocoordinate = { 48.500026 8.399990 } #from Natural Earth
+	type = holding
+	holding_type = castle
+	province = bosaso #Nugaal
+}

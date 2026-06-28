@@ -1,0 +1,8 @@
+hadaftimo = {
+	name = "Hadaftimo"
+	world = earth
+	geocoordinate = { 48.1 10.766666666667 }
+	type = holding
+	holding_type = castle
+	province = somaliland
+}

@@ -1,0 +1,14 @@
+bosaso = {
+	name = "Bosaso"
+	color = { 168 183 92 }
+	default_provincial_capital = mosylon
+	regions = {
+		africa
+	}
+	
+	history = {
+		owner = egypt
+		culture = somali
+		religion = pagan
+	}
+}

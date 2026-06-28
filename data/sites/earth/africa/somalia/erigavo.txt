@@ -1,0 +1,8 @@
+erigavo = {
+	name = "Erigavo"
+	world = earth
+	geocoordinate = { 47.333305 10.583298 } #from Natural Earth
+	type = holding
+	holding_type = guild
+	province = somaliland
+}

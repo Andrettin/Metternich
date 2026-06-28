@@ -1,0 +1,8 @@
+qardho = {
+	name = "Qardho"
+	world = earth
+	geocoordinate = { 49.165981 9.500414 } #from Natural Earth
+	type = holding
+	holding_type = castle
+	province = bosaso
+}

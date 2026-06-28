@@ -1,0 +1,8 @@
+bosaso = {
+	name = "Bosaso" #also known as Bandar Qassim
+	world = earth
+	geocoordinate = { 49.179985 11.280021 } #from Natural Earth
+	type = holding
+	holding_type = guild
+	province = bosaso
+}
