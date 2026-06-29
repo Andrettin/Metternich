@@ -96,8 +96,10 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(int craft_recovery_per_day MEMBER craft_recovery_per_day READ get_craft_recovery_per_day NOTIFY changed)
 	Q_PROPERTY(const metternich::office* ruler_office MEMBER ruler_office READ get_ruler_office NOTIFY changed)
 	Q_PROPERTY(const metternich::office* heir_office MEMBER heir_office READ get_heir_office NOTIFY changed)
+	Q_PROPERTY(const metternich::office* foreign_minister_office MEMBER foreign_minister_office READ get_foreign_minister_office NOTIFY changed)
 	Q_PROPERTY(const metternich::office* interior_minister_office MEMBER interior_minister_office READ get_interior_minister_office NOTIFY changed)
 	Q_PROPERTY(const metternich::office* war_minister_office MEMBER war_minister_office READ get_war_minister_office NOTIFY changed)
+	Q_PROPERTY(const metternich::portrait* foreign_minister_portrait MEMBER foreign_minister_portrait READ get_foreign_minister_portrait NOTIFY changed)
 	Q_PROPERTY(const metternich::portrait* interior_minister_portrait MEMBER interior_minister_portrait READ get_interior_minister_portrait NOTIFY changed)
 	Q_PROPERTY(const metternich::portrait* war_minister_portrait MEMBER war_minister_portrait READ get_war_minister_portrait NOTIFY changed)
 	Q_PROPERTY(QColor minor_nation_color MEMBER minor_nation_color READ get_minor_nation_color NOTIFY changed)
@@ -394,6 +396,11 @@ public:
 		return this->heir_office;
 	}
 
+	const office *get_foreign_minister_office() const
+	{
+		return this->foreign_minister_office;
+	}
+
 	const office *get_interior_minister_office() const
 	{
 		return this->interior_minister_office;
@@ -402,6 +409,11 @@ public:
 	const office *get_war_minister_office() const
 	{
 		return this->war_minister_office;
+	}
+
+	const portrait *get_foreign_minister_portrait() const
+	{
+		return this->foreign_minister_portrait;
 	}
 
 	const portrait *get_interior_minister_portrait() const
@@ -627,8 +639,10 @@ private:
 	int craft_recovery_per_day = 0;
 	const office *ruler_office = nullptr;
 	const office *heir_office = nullptr;
+	const office *foreign_minister_office = nullptr;
 	const office *interior_minister_office = nullptr;
 	const office *war_minister_office = nullptr;
+	const portrait *foreign_minister_portrait = nullptr;
 	const portrait *interior_minister_portrait = nullptr;
 	const portrait *war_minister_portrait = nullptr;
 	std::map<int, int64_t> experience_per_level;

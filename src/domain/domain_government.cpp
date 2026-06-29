@@ -889,6 +889,16 @@ bool domain_government::can_have_appointable_offices() const
 	return !this->get_appointable_available_offices().empty();
 }
 
+const metternich::portrait *domain_government::get_foreign_minister_portrait() const
+{
+	const character *office_holder = this->get_office_holder(defines::get()->get_foreign_minister_office());
+	if (office_holder != nullptr) {
+		return office_holder->get_game_data()->get_portrait();
+	}
+
+	return defines::get()->get_foreign_minister_portrait();
+}
+
 const metternich::portrait *domain_government::get_interior_minister_portrait() const
 {
 	const character *office_holder = this->get_office_holder(defines::get()->get_interior_minister_office());

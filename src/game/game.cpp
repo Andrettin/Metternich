@@ -1896,7 +1896,9 @@ void game::add_country(domain *domain)
 
 QCoro::Task<void> game::remove_country(domain *domain)
 {
-	std::erase(this->countries, domain);
+	for (const character *character : domain->get_game_data()->get_characters()) {
+		character->get_game_data()->set_domain(nullptr);
+	}
 
 	domain->get_military()->clear_leaders();
 
@@ -1905,12 +1907,15 @@ QCoro::Task<void> game::remove_country(domain *domain)
 
 		if (other_domain_game_data->get_diplomacy_state(domain) != diplomacy_state::peace) {
 			co_await other_domain_game_data->set_diplomacy_state(domain, diplomacy_state::peace);
+			co_await domain->get_game_data()->set_diplomacy_state(other_domain, diplomacy_state::peace);
 		}
 
 		if (other_domain_game_data->get_consulate(domain) != nullptr) {
 			other_domain_game_data->set_consulate(domain, nullptr);
 		}
 	}
+
+	std::erase(this->countries, domain);
 
 	if (this->is_running()) {
 		emit countries_changed();

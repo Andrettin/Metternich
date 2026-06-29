@@ -29,6 +29,7 @@ class domain_government final : public QObject
 	Q_PROPERTY(QVariantList appointed_office_holders READ get_appointed_office_holders_qvariant_list NOTIFY appointed_office_holders_changed)
 	Q_PROPERTY(QVariantList available_offices READ get_available_offices_qvariant_list NOTIFY available_offices_changed)
 	Q_PROPERTY(int advisor_cost READ get_advisor_cost NOTIFY office_holders_changed)
+	Q_PROPERTY(const metternich::portrait* foreign_minister_portrait READ get_foreign_minister_portrait NOTIFY office_holders_changed)
 	Q_PROPERTY(const metternich::portrait* interior_minister_portrait READ get_interior_minister_portrait NOTIFY office_holders_changed)
 	Q_PROPERTY(const metternich::portrait* war_minister_portrait READ get_war_minister_portrait NOTIFY office_holders_changed)
 
@@ -179,6 +180,7 @@ public:
 
 	bool can_have_appointable_offices() const;
 
+	const metternich::portrait *get_foreign_minister_portrait() const;
 	const metternich::portrait *get_interior_minister_portrait() const;
 	const metternich::portrait *get_war_minister_portrait() const;
 

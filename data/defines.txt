@@ -230,8 +230,10 @@ max_character_normal_level = 20 #used for calculating character level based on l
 craft_recovery_per_day = 100
 ruler_office = ruler
 heir_office = heir
+foreign_minister_office = chancellor
 interior_minister_office = treasurer
 war_minister_office = marshal
+foreign_minister_portrait = metternich
 interior_minister_portrait = jp_morgan
 war_minister_portrait = otto_von_bismarck
 

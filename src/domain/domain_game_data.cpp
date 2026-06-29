@@ -420,13 +420,13 @@ QCoro::Task<void> domain_game_data::apply_history(const QDate &start_date)
 
 	domain_economy->set_wealth(domain_history->get_wealth());
 
-	for (const auto &[other_country, diplomacy_state] : domain_history->get_diplomacy_states()) {
-		if (!other_country->get_game_data()->is_alive()) {
+	for (const auto &[other_domain, diplomacy_state] : domain_history->get_diplomacy_states()) {
+		if (!other_domain->get_game_data()->is_alive()) {
 			continue;
 		}
 
-		co_await this->set_diplomacy_state(other_country, diplomacy_state);
-		co_await other_country->get_game_data()->set_diplomacy_state(this->domain, get_diplomacy_state_counterpart(diplomacy_state));
+		co_await this->set_diplomacy_state(other_domain, diplomacy_state);
+		co_await other_domain->get_game_data()->set_diplomacy_state(this->domain, get_diplomacy_state_counterpart(diplomacy_state));
 	}
 
 	for (const auto &[other_country, consulate] : domain_history->get_consulates()) {
@@ -991,6 +991,8 @@ QCoro::Task<void> domain_game_data::set_tier(const domain_tier tier)
 	assert_throw(tier >= this->domain->get_min_tier());
 	assert_throw(tier <= this->domain->get_max_tier());
 
+	const domain_tier old_tier = this->get_tier();
+
 	if (this->get_tier() != domain_tier::none) {
 		const domain_tier_data *tier_data = domain_tier_data::get(this->get_tier());
 		if (tier_data->get_modifier() != nullptr) {
@@ -1009,6 +1011,40 @@ QCoro::Task<void> domain_game_data::set_tier(const domain_tier tier)
 
 	for (const site *site : this->get_sites()) {
 		site->get_game_data()->update_holding_type_name();
+	}
+
+	if (tier < old_tier) {
+		//if the domain's tier decreases to the point that it is no longer above the tier of any of its vassals, that vassal then becomes independent
+		const std::vector<const metternich::domain *> vassals = this->get_vassals();
+		for (const metternich::domain *vassal : vassals) {
+			if (this->get_tier() <= vassal->get_game_data()->get_tier()) {
+				co_await this->set_diplomacy_state(vassal, diplomacy_state::peace);
+				co_await vassal->get_game_data()->set_diplomacy_state(this->domain, diplomacy_state::peace);
+
+				if (this->domain == game::get()->get_player_country()) {
+					const portrait *foreign_minister_portrait = this->get_government()->get_foreign_minister_portrait();
+
+					engine_interface::get()->add_notification("Vassal Breaks Free", foreign_minister_portrait, std::format("{}, due to the loss of standing incurred by our demotion to {} {}, our vassal, the {}, has decided to break free of our control!", this->get_form_of_address(), string::get_indefinite_article(this->get_title_name()), this->get_title_name(), vassal->get_game_data()->get_titled_name()));
+				} else if (vassal == game::get()->get_player_country()) {
+					const portrait *foreign_minister_portrait = vassal->get_government()->get_foreign_minister_portrait();
+
+					engine_interface::get()->add_notification("Independence!", foreign_minister_portrait, std::format("{}, due to the loss of standing incurred by the demotion of our overlord, the {}, to {} {}, we have managed to break free of their control!", vassal->get_game_data()->get_form_of_address(), this->get_titled_name(), string::get_indefinite_article(this->get_title_name()), this->get_title_name()));
+				}
+			}
+		}
+	} else if (tier > old_tier && this->get_overlord() != nullptr && tier >= this->get_overlord()->get_game_data()->get_tier()) {
+		if (this->get_overlord() == game::get()->get_player_country()) {
+			const portrait *foreign_minister_portrait = this->get_overlord()->get_government()->get_foreign_minister_portrait();
+
+			engine_interface::get()->add_notification("Vassal Breaks Free", foreign_minister_portrait, std::format("{}, due to the increase in standing incurred by the promotion of our vassal, the {}, to {} {}, they have decided to break free of our control!", this->get_overlord()->get_game_data()->get_form_of_address(), this->get_titled_name(), string::get_indefinite_article(this->get_title_name()), this->get_title_name()));
+		} else if (this->domain == game::get()->get_player_country()) {
+			const portrait *foreign_minister_portrait = this->get_government()->get_foreign_minister_portrait();
+
+			engine_interface::get()->add_notification("Independence!", foreign_minister_portrait, std::format("{}, due to the increase in standing incurred by our promotion to {} {}, we have managed to break free of the control of our overlord, the {}!", this->get_form_of_address(), string::get_indefinite_article(this->get_title_name()), this->get_title_name(), this->get_overlord()->get_game_data()->get_titled_name()));
+		}
+
+		co_await this->get_overlord()->get_game_data()->set_diplomacy_state(this->domain, diplomacy_state::peace);
+		co_await this->set_diplomacy_state(this->get_overlord(), diplomacy_state::peace);
 	}
 
 	if (game::get()->is_running()) {
@@ -1037,11 +1073,16 @@ QCoro::Task<void> domain_game_data::check_tier()
 		}
 
 		const domain_tier_data *tier_data = domain_tier_data::get(tier);
-		if (domain_size < tier_data->get_min_domain_size() || domain_size > tier_data->get_max_domain_size()) {
+		if (domain_size < tier_data->get_min_domain_size()) {
 			return;
 		}
 
 		if (tier > current_tier) {
+			//if the tier is higher than the current tier, only allow it if the tier would still be below that of the overlord (if any)
+			if (this->get_overlord() != nullptr && tier >= this->get_overlord()->get_game_data()->get_tier()) {
+				return;
+			}
+
 			//if the tier is higher than the current tier, require the domain to have the appropriate tier core provinces/holdings
 			const std::vector<const province *> tier_core_provinces = this->domain->get_core_provinces_for_tier(tier);
 			for (const province *core_province : tier_core_provinces) {
@@ -1207,6 +1248,10 @@ QCoro::Task<void> domain_game_data::set_overlord(const metternich::domain *overl
 {
 	if (overlord == this->get_overlord()) {
 		co_return;
+	}
+
+	if (overlord->get_game_data()->get_tier() <= this->get_tier()) {
+		throw std::runtime_error(std::format("Tried to set \"{}\" as the overlord of \"{}\", but the former does not have a higher tier than the latter.", overlord->get_identifier(), this->domain->get_identifier()));
 	}
 
 	if (this->get_overlord() != nullptr) {
@@ -1555,9 +1600,6 @@ QCoro::Task<void> domain_game_data::remove_province(const province *province)
 	}
 
 	if (!this->is_alive()) {
-		for (const character *character : this->get_characters()) {
-			character->get_game_data()->set_domain(nullptr);
-		}
 		co_await game::get()->remove_country(this->domain);
 	}
 
@@ -1688,9 +1730,6 @@ QCoro::Task<void> domain_game_data::remove_site(const site *site)
 	}
 
 	if (!this->is_alive()) {
-		for (const character *character : this->get_characters()) {
-			character->get_game_data()->set_domain(nullptr);
-		}
 		co_await game::get()->remove_country(this->domain);
 	}
 
