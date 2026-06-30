@@ -1,37 +1,52 @@
 {
-	"name": "metternich",
-	"version-string": "1.0.0",
-	"dependencies": [
-		{
-			"name": "boost-math",
-			"default-features": false
-		},
-		"boost-random",
-		"boost-test",
-		"magic-enum",
-		{
-			"name": "qtbase",
-			"default-features": false,
-			"features": ["concurrent", "gui", "opengl", "png", "widgets", "windeployqt"]
-		},
-		{
-			"name": "qtmultimedia",
-			"features": ["qml", "widgets"]
-		},
-		"qtsvg",
-		"qtdeclarative",
-		"qtpositioning",
-		"qtlocation",
-		{
-			"name": "qtcharts",
-			"default-features": false,
-			"features": ["qml"]
-		},
-		{
-			"name": "qcoro",
-			"default-features": false,
-			"features": ["qml", "quick"]
-		}
-	],
-	"builtin-baseline": "32305df7d0b9a308e6ac454dd98ebfe550342c09"
+  "name": "metternich",
+  "version-string": "1.0.0",
+  "dependencies": [
+    {
+      "name": "boost-math",
+      "default-features": false
+    },
+    "boost-random",
+    "boost-test",
+    "magic-enum",
+    {
+      "name": "qtbase",
+      "default-features": false,
+      "features": [
+        "concurrent",
+        "gui",
+        "opengl",
+        "png",
+        "widgets",
+        "windeployqt"
+      ]
+    },
+    {
+      "name": "qtmultimedia",
+      "features": [
+        "qml",
+        "widgets"
+      ]
+    },
+    "qtsvg",
+    "qtdeclarative",
+    "qtpositioning",
+    "qtlocation",
+    {
+      "name": "qtcharts",
+      "default-features": false,
+      "features": [
+        "qml"
+      ]
+    },
+    {
+      "name": "qcoro",
+      "default-features": false,
+      "features": [
+        "qml",
+        "quick"
+      ]
+    }
+  ],
+  "builtin-baseline": "86dc619bd8d9697405ae5c944b474117ea9457ce"
 }
