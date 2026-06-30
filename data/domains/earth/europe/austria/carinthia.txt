@@ -14,4 +14,22 @@ carinthia = {
 	core_provinces = {
 		carinthia
 	}
+	
+	history = {
+		919 = {
+			#part of Bavaria in the 919-976 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			diplomacy_state = {
+				domain = bavaria
+				subject_type = vassal
+			}
+		}
+		
+		976 = {
+			#detached from Bavaria in 976, becoming a direct part of the Holy Roman Empire; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			diplomacy_state = {
+				domain = holy_roman_empire
+				subject_type = princely_state
+			}
+		}
+	}
 }

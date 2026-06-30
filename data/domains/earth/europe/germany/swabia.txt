@@ -19,6 +19,14 @@ swabia = {
 	}
 	
 	history = {
+		919 = {
+			#part of the Holy Roman Empire in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			diplomacy_state = {
+				domain = holy_roman_empire
+				subject_type = princely_state
+			}
+		}
+		
 		957 = {
 			government_type = monarchy
 			
