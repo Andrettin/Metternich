@@ -7,6 +7,8 @@
 #include "game/game.h"
 #include "population/population_type.h"
 #include "population/population_unit.h"
+#include "religion/religion.h"
+#include "species/phenotype.h"
 #include "util/assert_util.h"
 #include "util/map_util.h"
 #include "util/vector_util.h"

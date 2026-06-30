@@ -1121,12 +1121,12 @@ qt_add_shaders(metternich_main "xbrz_shader"
 target_precompile_headers(metternich REUSE_FROM archimedes)
 
 set_target_properties(metternich PROPERTIES
-	UNITY_BUILD_MODE GROUP
+	UNITY_BUILD_MODE BATCH
 	COMPILE_WARNING_AS_ERROR ON
 )
 
 set_target_properties(metternich_test PROPERTIES
-	UNITY_BUILD_MODE GROUP
+	UNITY_BUILD_MODE BATCH
 	COMPILE_WARNING_AS_ERROR ON
 )
 set_source_files_properties(${game_test_SRCS} PROPERTIES UNITY_GROUP "game_test")

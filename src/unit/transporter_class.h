@@ -4,6 +4,10 @@
 #include "database/named_data_entry.h"
 #include "unit/transporter_class_container.h"
 
+namespace archimedes {
+	class name_generator;
+}
+
 namespace metternich {
 
 class transporter_type;

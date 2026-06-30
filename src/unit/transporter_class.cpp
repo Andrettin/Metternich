@@ -6,7 +6,6 @@
 #include "unit/transporter_category.h"
 #include "unit/transporter_type.h"
 #include "util/assert_util.h"
-#include "util/vector_util.h"
 
 namespace metternich {
 

@@ -8,7 +8,7 @@
 #include "util/path_util.h"
 #include "util/vector_random_util.h"
 
-#include <qcorosignal.h>
+#include <QCoroSignal>
 
 #include <QSoundEffect>
 

@@ -5,6 +5,7 @@
 #include "database/gsml_data.h"
 #include "domain/domain.h"
 #include "game/event.h"
+#include "game/event_instance.h"
 #include "game/event_option.h"
 #include "game/event_random_group.h"
 #include "game/event_trigger.h"
@@ -26,7 +27,7 @@
 #include "util/random.h"
 #include "util/vector_random_util.h"
 
-#include <qcorosignal.h>
+#include <QCoroSignal>
 
 namespace metternich {
 

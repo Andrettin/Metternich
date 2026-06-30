@@ -8,6 +8,7 @@
 #include "character/character_class.h"
 #include "character/character_game_data.h"
 #include "character/character_history.h"
+#include "character/character_reference.h"
 #include "character/dynasty.h"
 #include "character/monster_type.h"
 #include "character/mythic_path.h"
