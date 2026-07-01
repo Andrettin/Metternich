@@ -3,7 +3,6 @@
 #include "game/game.h"
 
 #include "character/character.h"
-#include "character/character_class.h"
 #include "character/character_game_data.h"
 #include "character/character_history.h"
 #include "culture/cultural_group.h"
@@ -88,8 +87,8 @@
 #include "util/map_util.h"
 #include "util/number_util.h"
 #include "util/path_util.h"
+#include "util/random.h"
 #include "util/string_conversion_util.h"
-#include "util/vector_random_util.h"
 #include "util/vector_util.h"
 
 #include "xbrz.h"
