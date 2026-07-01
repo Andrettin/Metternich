@@ -1,0 +1,8 @@
+kirchroth = {
+	name = "Kirchroth"
+	world = earth
+	geocoordinate = { 12.55 48.95 }
+	type = holding
+	holding_type = castle
+	province = passau
+}

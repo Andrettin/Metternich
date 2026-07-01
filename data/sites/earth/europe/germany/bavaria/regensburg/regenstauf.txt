@@ -1,0 +1,8 @@
+regenstauf = {
+	name = "Regenstauf"
+	world = earth
+	geocoordinate = { 12.128333333333 49.123611111111 }
+	type = holding
+	holding_type = castle
+	province = regensburg
+}

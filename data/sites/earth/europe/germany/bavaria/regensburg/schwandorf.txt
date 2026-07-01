@@ -1,0 +1,8 @@
+schwandorf = {
+	name = "Schwandorf"
+	world = earth
+	geocoordinate = { 12.09935 49.3236 }
+	type = holding
+	holding_type = temple
+	province = regensburg
+}
