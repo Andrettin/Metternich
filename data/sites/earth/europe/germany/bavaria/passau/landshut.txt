@@ -1,0 +1,8 @@
+landshut = {
+	name = "Landshut"
+	world = earth
+	geocoordinate = { 12.150833333333 48.539722222222 }
+	type = holding
+	holding_type = castle
+	province = passau
+}
