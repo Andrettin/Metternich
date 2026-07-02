@@ -8,7 +8,7 @@ high_middle_ages = {
 		bohemia
 		denmark
 		#england
-		#holy_roman_empire
+		holy_roman_empire
 		#normandy
 		#norway
 		#scotland
