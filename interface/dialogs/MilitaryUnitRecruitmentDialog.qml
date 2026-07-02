@@ -215,7 +215,7 @@ DialogBase {
 							TinyIconButton {
 								id: decrement_button
 								anchors.verticalCenter: parent.verticalCenter
-								icon_identifier: "trade_consulate"
+								icon_identifier: "arrow_left"
 								
 								onReleased: {
 									if (selected_province.game_data.can_decrease_military_unit_recruitment(military_unit_type)) {
@@ -235,7 +235,7 @@ DialogBase {
 							TinyIconButton {
 								id: increment_button
 								anchors.verticalCenter: parent.verticalCenter
-								icon_identifier: "trade_consulate"
+								icon_identifier: "arrow_right"
 								
 								onReleased: {
 									if (selected_province.game_data.can_increase_military_unit_recruitment(military_unit_type)) {

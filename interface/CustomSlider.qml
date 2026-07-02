@@ -102,7 +102,7 @@ Item {
 		id: decrement_button
 		anchors.verticalCenter: parent.verticalCenter
 		anchors.left: parent.left
-		icon_identifier: "trade_consulate"
+		icon_identifier: "arrow_left"
 		tooltip: decrement_button_tooltip
 		
 		onReleased: {
@@ -118,7 +118,7 @@ Item {
 		id: increment_button
 		anchors.verticalCenter: parent.verticalCenter
 		anchors.right: parent.right
-		icon_identifier: "trade_consulate"
+		icon_identifier: "arrow_right"
 		tooltip: increment_button_tooltip
 		
 		onReleased: {

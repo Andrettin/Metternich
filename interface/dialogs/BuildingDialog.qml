@@ -87,7 +87,7 @@ DialogBase {
 						TinyIconButton {
 							id: decrement_button
 							anchors.verticalCenter: parent.verticalCenter
-							icon_identifier: "trade_consulate"
+							icon_identifier: "arrow_left"
 							
 							onReleased: {
 								if (country_game_data.can_decrease_civilian_unit_recruitment(civilian_unit_type)) {
@@ -108,7 +108,7 @@ DialogBase {
 						TinyIconButton {
 							id: increment_button
 							anchors.verticalCenter: parent.verticalCenter
-							icon_identifier: "trade_consulate"
+							icon_identifier: "arrow_right"
 							
 							onReleased: {
 								if (country_game_data.can_increase_civilian_unit_recruitment(civilian_unit_type)) {
@@ -168,7 +168,7 @@ DialogBase {
 						TinyIconButton {
 							id: decrement_button
 							anchors.verticalCenter: parent.verticalCenter
-							icon_identifier: "trade_consulate"
+							icon_identifier: "arrow_left"
 							
 							onReleased: {
 								if (country_game_data.can_decrease_transporter_recruitment(transporter_type)) {
@@ -189,7 +189,7 @@ DialogBase {
 						TinyIconButton {
 							id: increment_button
 							anchors.verticalCenter: parent.verticalCenter
-							icon_identifier: "trade_consulate"
+							icon_identifier: "arrow_right"
 							
 							onReleased: {
 								if (country_game_data.can_increase_transporter_recruitment(transporter_type)) {

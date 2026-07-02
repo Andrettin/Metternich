@@ -5,3 +5,11 @@ arrow_up = {
 arrow_down = {
 	filepath = "icons/arrow_down.png"
 }
+
+arrow_left = {
+	filepath = "icons/arrow_left.png"
+}
+
+arrow_right = {
+	filepath = "icons/arrow_right.png"
+}

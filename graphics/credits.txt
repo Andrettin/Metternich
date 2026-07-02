@@ -261,6 +261,8 @@
 /graphics/icons/units/troops/whitecoats.png (by Jinn) (licensed under the CC0)
 /graphics/icons/anchor.png (by Jinn) (licensed under the CC0)
 /graphics/icons/arrow_down.png (by Jinn) (licensed under the CC0)
+/graphics/icons/arrow_left.png (by Jinn) (licensed under the CC0)
+/graphics/icons/arrow_right.png (by Jinn) (licensed under the CC0)
 /graphics/icons/arrow_up.png (by Jinn) (licensed under the CC0)
 /graphics/icons/bell.png (by Jinn) (licensed under the CC0)
 /graphics/icons/blood.png (by Exidelo) (licensed under the CC0)
