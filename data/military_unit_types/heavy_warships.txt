@@ -1,7 +1,7 @@
 galleon = {
 	name = "Galleon"
 	unit_class = galleon
-	icon = ship_of_the_line
+	icon = galleon
 	#cargo = 6
 	required_technology = magnetism
 	stats = {

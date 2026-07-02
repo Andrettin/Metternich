@@ -1,3 +1,7 @@
+galleon = {
+	filepath = "icons/units/ships/galleon.png"
+}
+
 ship_of_the_line = {
 	filepath = "icons/units/ships/ship_of_the_line.png"
 }

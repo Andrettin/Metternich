@@ -221,6 +221,7 @@
 /graphics/icons/units/ships/carrack.png (by Jinn) (licensed under the CC0)
 /graphics/icons/units/ships/fluyte.png (by Jinn) (licensed under the CC0)
 /graphics/icons/units/ships/freighter.png (by Jinn) (licensed under the CC0)
+/graphics/icons/units/ships/galleon.png (by Jinn) (licensed under the CC0)
 /graphics/icons/units/ships/indiaman.png (by Jinn) (licensed under the CC0)
 /graphics/icons/units/ships/paddlewheeler.png (by Jinn) (licensed under the CC0)
 /graphics/icons/units/troops/archers.png (by Jinn) (licensed under the CC0)
