@@ -3,7 +3,7 @@ overlordship = {
 	group = republic
 	icon = saber
 	primary_domain_attribute = loyalty
-	allowed_holding_types = {
+	preferred_holding_types = {
 		castle
 		guild
 		royal_palace
