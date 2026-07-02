@@ -1,13 +1,14 @@
 uppsala = {
-	name = "Uppsala"
+	name = "Uppsala" #also known as Österås
 	world = earth
 	geocoordinate = { 17.63999792350 59.86005291660 } #from Natural Earth
-	type = resource
-	resource = timber
+	type = holding
+	holding_type = temple
 	province = uppland
 	features = {
 		academic #historical university
 		holy_site #historical cathedral
+		prime_timber
 	}
 	
 	history = {

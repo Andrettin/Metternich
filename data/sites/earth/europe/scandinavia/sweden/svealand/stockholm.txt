@@ -3,11 +3,12 @@ stockholm = {
 	world = earth
 	geocoordinate = { 18.09733473280 59.35075995430 } #from Natural Earth
 	type = holding
+	holding_type = guild
 	province = uppland
 	
 	history = {
 		1360 = {
-			holding_type = city #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			developed = true #important settlement in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 	}
 }

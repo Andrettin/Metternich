@@ -1,0 +1,8 @@
+alsno = {
+	name = "Alsno" #"Alsnö"
+	world = earth
+	geocoordinate = { 17.535 59.36055556 } #Alsnö hus
+	type = holding
+	holding_type = castle
+	province = uppland
+}

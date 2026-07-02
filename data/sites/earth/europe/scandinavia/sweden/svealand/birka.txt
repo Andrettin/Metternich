@@ -1,0 +1,8 @@
+birka = {
+	name = "Birka"
+	world = earth
+	geocoordinate = { 17.545 59.336666666667 }
+	type = holding
+	holding_type = guild
+	province = uppland
+}

@@ -1,0 +1,8 @@
+enkoping = {
+	name = "Enkoping" #"Enköping"
+	world = earth
+	geocoordinate = { 17.072521250874 59.640280006134 }
+	type = holding
+	holding_type = guild
+	province = uppland
+}
