@@ -2,12 +2,18 @@ saxony = {
 	name = "Saxony"
 	type = polity
 	color = { 120 25 25 }
-	culture = german
-	default_religion = catholic
+	cultures = {
+		saxon
+		german
+	}
+	default_religion = asatru
 	default_tier = duchy
 	default_government_type = monarchy
-	default_capital = hanover #Brunswick
+	default_capital = brunswick
 	max_tier = kingdom
+	short_names = {
+		tribe = "Saxons"
+	}
 	eras = {
 		medieval_era
 	}
@@ -25,12 +31,18 @@ saxony = {
 	}
 	
 	history = {
+		government_type = tribal_despotism
+	
 		919 = {
 			#part of the Holy Roman Empire in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
 			diplomacy_state = {
 				domain = holy_roman_empire
 				subject_type = princely_state
 			}
+			
+			culture = german
+			religion = catholic
+			government_type = monarchy
 		}
 	}
 }
