@@ -1,0 +1,21 @@
+brigantia = {
+	name = "Brigantia"
+	type = polity
+	color = { 160 20 245 }
+	culture = brigantic
+	default_religion = pagan
+	default_tier = duchy
+	default_government_type = tribal_despotism
+	default_capital = york #correct?
+	short_names = {
+		tribe = "Brigantes"
+	}
+	eras = {
+		ancient_era
+	}
+	core_provinces = {
+		cumberland
+		northumberland
+		yorkshire
+	}
+}

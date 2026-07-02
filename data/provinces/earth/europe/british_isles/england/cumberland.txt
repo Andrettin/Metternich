@@ -10,13 +10,19 @@ cumberland = {
 		religion = pagan
 		
 		-4000 = {
-			owner = britons
-			culture = briton
+			owner = brigantia
+			culture = brigantic
+		}
+		
+		-264 = {
+			owner = brigantia #territory of the Brigantes in the 264 BC - 180 AD period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 34-35.
+			culture = brigantic
+			religion = pagan
 		}
 		
 		526 = {
-			owner = britons #territory of the Britons in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
-			culture = briton
+			owner = brigantia #territory of the Britons in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = brigantic
 		}
 		
 		802 = {

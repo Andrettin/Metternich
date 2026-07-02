@@ -1,0 +1,13 @@
+brigantic = {
+	name = "Brigantic"
+	group = brythonic
+	color = { 160 20 245 }
+	species = {
+		human
+	}
+	office_title_names = {
+		ruler = {
+			theocracy = "Druid"
+		}
+	}
+}
