@@ -615,15 +615,21 @@ void province_game_data::check_trade_zone_domain()
 
 	domain_map<int> domain_economic_holding_levels;
 	for (const site *holding_site : this->get_settlement_sites()) {
-		if (holding_site->get_game_data()->get_owner() == nullptr) {
+		const domain *holding_site_owner = holding_site->get_game_data()->get_owner();
+		if (holding_site_owner == nullptr) {
 			continue;
 		}
 
-		if (holding_site->get_game_data()->get_holding_type() == nullptr || !holding_site->get_game_data()->get_holding_type()->is_economic()) {
+		const holding_type *holding_type = holding_site->get_game_data()->get_holding_type();
+		if (holding_type == nullptr || !holding_type->is_economic()) {
 			continue;
 		}
 
-		domain_economic_holding_levels[holding_site->get_game_data()->get_owner()] += holding_site->get_game_data()->get_holding_level();
+		if (!holding_site_owner->get_game_data()->get_government_type()->is_holding_type_allowed(holding_type)) {
+			continue;
+		}
+
+		domain_economic_holding_levels[holding_site_owner] += holding_site->get_game_data()->get_holding_level();
 	}
 
 	if (domain_economic_holding_levels.empty()) {
@@ -631,15 +637,21 @@ void province_game_data::check_trade_zone_domain()
 
 		for (const metternich::province *neighbor_province : this->get_neighbor_provinces()) {
 			for (const site *holding_site : neighbor_province->get_game_data()->get_settlement_sites()) {
-				if (holding_site->get_game_data()->get_owner() == nullptr) {
+				const domain *holding_site_owner = holding_site->get_game_data()->get_owner();
+				if (holding_site_owner == nullptr) {
 					continue;
 				}
 
-				if (holding_site->get_game_data()->get_holding_type() == nullptr || !holding_site->get_game_data()->get_holding_type()->is_economic()) {
+				const holding_type *holding_type = holding_site->get_game_data()->get_holding_type();
+				if (holding_type == nullptr || !holding_type->is_economic()) {
 					continue;
 				}
 
-				domain_economic_holding_levels[holding_site->get_game_data()->get_owner()] += holding_site->get_game_data()->get_holding_level();
+				if (!holding_site_owner->get_game_data()->get_government_type()->is_holding_type_allowed(holding_type)) {
+					continue;
+				}
+
+				domain_economic_holding_levels[holding_site_owner] += holding_site->get_game_data()->get_holding_level();
 			}
 		}
 	}
@@ -688,11 +700,17 @@ void province_game_data::check_temple_domain()
 {
 	domain_map<int> domain_religious_holding_levels;
 	for (const site *holding_site : this->get_settlement_sites()) {
-		if (holding_site->get_game_data()->get_owner() == nullptr) {
+		const domain *holding_site_owner = holding_site->get_game_data()->get_owner();
+		if (holding_site_owner == nullptr) {
 			continue;
 		}
 
-		if (holding_site->get_game_data()->get_holding_type() == nullptr || !holding_site->get_game_data()->get_holding_type()->is_religious()) {
+		const holding_type *holding_type = holding_site->get_game_data()->get_holding_type();
+		if (holding_type == nullptr || !holding_type->is_religious()) {
+			continue;
+		}
+
+		if (!holding_site_owner->get_game_data()->get_government_type()->is_holding_type_allowed(holding_type)) {
 			continue;
 		}
 
@@ -704,15 +722,21 @@ void province_game_data::check_temple_domain()
 
 		for (const metternich::province *neighbor_province : this->get_neighbor_provinces()) {
 			for (const site *holding_site : neighbor_province->get_game_data()->get_settlement_sites()) {
-				if (holding_site->get_game_data()->get_owner() == nullptr) {
+				const domain *holding_site_owner = holding_site->get_game_data()->get_owner();
+				if (holding_site_owner == nullptr) {
 					continue;
 				}
 
-				if (holding_site->get_game_data()->get_holding_type() == nullptr || !holding_site->get_game_data()->get_holding_type()->is_religious()) {
+				const holding_type *holding_type = holding_site->get_game_data()->get_holding_type();
+				if (holding_type == nullptr || !holding_type->is_religious()) {
 					continue;
 				}
 
-				domain_religious_holding_levels[holding_site->get_game_data()->get_owner()] += holding_site->get_game_data()->get_holding_level();
+				if (!holding_site_owner->get_game_data()->get_government_type()->is_holding_type_allowed(holding_type)) {
+					continue;
+				}
+
+				domain_religious_holding_levels[holding_site_owner] += holding_site->get_game_data()->get_holding_level();
 			}
 		}
 	}

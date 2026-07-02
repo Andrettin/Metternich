@@ -868,62 +868,67 @@ QCoro::Task<void> game::apply_sites()
 {
 	for (const site *site : map::get()->get_sites()) {
 		site_game_data *site_game_data = site->get_game_data();
-		const tile *tile = site_game_data->get_tile();
 
-		assert_throw(tile != nullptr);
+		assert_throw(site->get_map_data()->is_on_map());
 
 		//generate features for the start, if any are missing (e.g. resource features)
 		co_await site->get_game_data()->generate_features();
 
-		const province *site_province = site->get_province();
-		if (site_province == nullptr) {
-			site_province = tile->get_province();
-		}
+		const province *site_province = site->get_map_data()->get_province();
+		assert_throw(site_province != nullptr);
+		assert_throw(site_province->get_game_data()->is_on_map());
 
-		if (site_province != nullptr && site_province->get_game_data()->is_on_map()) {
-			const site_history *site_history = site->get_history();
+		const site_history *site_history = site->get_history();
 
-			if (site->get_holding_type() != nullptr && site_history->is_developed()) {
-				assert_throw(site_history->get_dungeon() == nullptr);
+		if (site->get_holding_type() != nullptr && site_history->is_developed()) {
+			assert_throw(site_history->get_dungeon() == nullptr);
 
-				co_await site_game_data->set_holding_type(site->get_holding_type());
+			co_await site_game_data->set_holding_type(site->get_holding_type());
 
-				if (tile->get_resource() != nullptr) {
-					co_await map::get()->set_tile_resource_discovered(site_game_data->get_tile_pos(), true);
-				}
-			} else if (site_history->get_holding_type() != nullptr) {
-				if (!site->is_settlement()) {
-					throw std::runtime_error(std::format("Site \"{}\" has a holding type in history, but is not a holding.", site->get_identifier()));
-				}
-
-				assert_throw(site_history->get_dungeon() == nullptr);
-
-				co_await site_game_data->set_holding_type(site_history->get_holding_type());
-
-				if (tile->get_resource() != nullptr) {
-					co_await map::get()->set_tile_resource_discovered(site_game_data->get_tile_pos(), true);
-				}
-			} else if (site_history->get_dungeon() != nullptr) {
-				co_await site_game_data->set_dungeon(site_history->get_dungeon());
+			if (site_game_data->get_resource() != nullptr) {
+				co_await map::get()->set_tile_resource_discovered(site_game_data->get_tile_pos(), true);
+			}
+		} else if (site_history->get_holding_type() != nullptr) {
+			if (!site->is_settlement()) {
+				throw std::runtime_error(std::format("Site \"{}\" has a holding type in history, but is not a holding.", site->get_identifier()));
 			}
 
-			if (site_game_data->get_holding_type() != nullptr) {
-				assert_throw(site_game_data->get_owner() != nullptr);
+			assert_throw(site_history->get_dungeon() == nullptr);
 
-				if (site_game_data->get_owner() != nullptr && !site_game_data->get_owner()->get_game_data()->get_government_type()->is_holding_type_allowed(site_game_data->get_holding_type())) {
-					const province_history *province_history = site_province->get_history();
-					if (province_history->get_trade_zone() != nullptr && site_game_data->get_holding_type()->is_economic()) {
-						assert_throw(province_history->get_trade_zone()->get_game_data()->get_government_type()->is_holding_type_allowed(site_game_data->get_holding_type()));
-						co_await site_game_data->set_owner(province_history->get_trade_zone());
-					} else if (province_history->get_temple_domain() != nullptr && site_game_data->get_holding_type()->is_religious()) {
-						assert_throw(province_history->get_temple_domain()->get_game_data()->get_government_type()->is_holding_type_allowed(site_game_data->get_holding_type()));
-						co_await site_game_data->set_owner(province_history->get_temple_domain());
-					} else {
-						//clear sites whose owner is not actually allowed to hold them
-						log::log_error(std::format("Clearing holding site \"{}\", since its holding type (\"{}\") is not allowed for the government type (\"{}\") of its owner (\"{}\").", site->get_identifier(), site_game_data->get_holding_type()->get_identifier(), site_game_data->get_owner()->get_game_data()->get_government_type()->get_identifier(), site_game_data->get_owner()->get_identifier()));
+			co_await site_game_data->set_holding_type(site_history->get_holding_type());
 
-						co_await site_game_data->set_holding_type(nullptr);
-					}
+			if (site_game_data->get_resource() != nullptr) {
+				co_await map::get()->set_tile_resource_discovered(site_game_data->get_tile_pos(), true);
+			}
+		} else if (site_history->get_dungeon() != nullptr) {
+			co_await site_game_data->set_dungeon(site_history->get_dungeon());
+		}
+	}
+
+	for (const site *site : map::get()->get_sites()) {
+		site_game_data *site_game_data = site->get_game_data();
+
+		if (site_game_data->get_holding_type() != nullptr) {
+			assert_throw(site_game_data->get_owner() != nullptr);
+
+			if (site_game_data->get_owner() != nullptr && !site_game_data->get_owner()->get_game_data()->get_government_type()->is_holding_type_allowed(site_game_data->get_holding_type())) {
+				//for e.g. economic holding types, if the holding type is not allowed for the domain, see if there is a trade zone domain set in province history to hold it, and otherwise see if the province already has a calculated trade zone domain which can be used for this
+				const province *site_province = site->get_map_data()->get_province();
+				const province_history *province_history = site_province->get_history();
+				const domain *province_trade_zone_domain = province_history->get_trade_zone() != nullptr ? province_history->get_trade_zone() : site_province->get_game_data()->get_trade_zone_domain();
+				const domain *province_temple_domain = province_history->get_temple_domain() != nullptr ? province_history->get_temple_domain() : site_province->get_game_data()->get_temple_domain();
+
+				if (province_trade_zone_domain != nullptr && site_game_data->get_holding_type()->is_economic()) {
+					assert_throw(province_trade_zone_domain->get_game_data()->get_government_type()->is_holding_type_allowed(site_game_data->get_holding_type()));
+					co_await site_game_data->set_owner(province_trade_zone_domain);
+				} else if (province_temple_domain != nullptr && site_game_data->get_holding_type()->is_religious()) {
+					assert_throw(province_temple_domain->get_game_data()->get_government_type()->is_holding_type_allowed(site_game_data->get_holding_type()));
+					co_await site_game_data->set_owner(province_temple_domain);
+				} else {
+					//clear sites whose owner is not actually allowed to hold them
+					log::log_error(std::format("Clearing holding site \"{}\", since its holding type (\"{}\") is not allowed for the government type (\"{}\") of its owner (\"{}\").", site->get_identifier(), site_game_data->get_holding_type()->get_identifier(), site_game_data->get_owner()->get_game_data()->get_government_type()->get_identifier(), site_game_data->get_owner()->get_identifier()));
+
+					co_await site_game_data->set_holding_type(nullptr);
 				}
 			}
 		}
