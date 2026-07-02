@@ -1,0 +1,8 @@
+ortenburg = {
+	name = "Ortenburg"
+	world = earth
+	geocoordinate = { 13.21835 48.54555 }
+	type = holding
+	holding_type = guild
+	province = passau
+}

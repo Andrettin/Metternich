@@ -4,6 +4,7 @@ passau = {
 	geocoordinate = { 13.46660925160 48.56704713860 } #from Natural Earth
 	type = holding
 	holding_type = temple #bishopric; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 78-79.
+	#holding_type = castle
 	province = passau
 	
 	history = {

@@ -1,0 +1,8 @@
+formbach = {
+	name = "Formbach"
+	world = earth
+	geocoordinate = { 13.4364 48.4858 } #Vornbach
+	type = holding
+	holding_type = castle
+	province = passau
+}

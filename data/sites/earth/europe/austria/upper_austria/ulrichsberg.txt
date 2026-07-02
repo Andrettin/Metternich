@@ -1,0 +1,8 @@
+ulrichsberg = {
+	name = "Ulrichsberg"
+	world = earth
+	geocoordinate = { 13.912222222222 48.675555555556 } #Ulrichsberg, Upper Austria
+	type = holding
+	holding_type = castle
+	province = freistadt
+}

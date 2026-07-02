@@ -1,0 +1,8 @@
+raab = {
+	name = "Raab"
+	world = earth
+	geocoordinate = { 13.65 48.35 } #Raab, Upper Austria
+	type = holding
+	holding_type = castle
+	province = traungau
+}

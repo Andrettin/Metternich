@@ -1,0 +1,8 @@
+freyung = {
+	name = "Freyung"
+	world = earth
+	geocoordinate = { 13.5475 48.8075 }
+	type = holding
+	holding_type = castle
+	province = passau
+}
