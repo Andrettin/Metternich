@@ -1,0 +1,17 @@
+saint_peters = {
+	name = "Saint Peters" #York cathedral
+	world = earth
+	geocoordinate = { -1.081944 53.961944 } #York Minster
+	type = holding
+	holding_type = temple #archbishopric
+	province = yorkshire
+	features = {
+		holy_site #historical cathedral
+	}
+	
+	history = {
+		735 = {
+			buildings += cathedral #archbishopric of York permanently instituted in 735 AD; Source: Frank Stenton, "Anglo-Saxon England", 1971, pp. 109, 133.
+		}
+	}
+}

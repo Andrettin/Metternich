@@ -1,0 +1,8 @@
+middlesbrough = {
+	name = "Middlesbrough"
+	world = earth
+	geocoordinate = { -1.230013 54.580375 } #from Natural Earth
+	type = holding
+	holding_type = temple
+	province = yorkshire
+}

@@ -1,0 +1,8 @@
+whitby = {
+	name = "Whitby"
+	world = earth
+	geocoordinate = { -0.6206 54.4858 }
+	type = holding
+	holding_type = temple
+	province = yorkshire
+}

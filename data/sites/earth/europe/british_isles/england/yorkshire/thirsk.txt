@@ -1,0 +1,8 @@
+thirsk = {
+	name = "Thirsk"
+	world = earth
+	geocoordinate = { -1.34205 54.232730555556 }
+	type = holding
+	holding_type = castle
+	province = yorkshire
+}

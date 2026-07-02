@@ -1,0 +1,8 @@
+richmond_yorkshire = {
+	name = "Richmond"
+	world = earth
+	geocoordinate = { -1.737222 54.403611 } #Richmond, North Yorkshire
+	type = holding
+	holding_type = castle
+	province = yorkshire
+}

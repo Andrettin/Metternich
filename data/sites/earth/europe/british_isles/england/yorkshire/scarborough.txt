@@ -1,0 +1,8 @@
+scarborough = {
+	name = "Scarborough"
+	world = earth
+	geocoordinate = { -0.429984 54.280394 } #from Natural Earth
+	type = holding
+	holding_type = guild
+	province = yorkshire
+}

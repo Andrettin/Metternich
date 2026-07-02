@@ -3,23 +3,19 @@ york = {
 	world = earth
 	geocoordinate = { -1.08002221822 53.97038657540 } #from Natural Earth
 	type = holding
-	holding_type = temple #archbishopric
+	holding_type = guild #foreign city in which the Hanseatic League, or any of its members, possessed trading privileges in the Middle Ages
+	#holding_type = castle
+	province = yorkshire
 	cultural_names = {
 		anglo_saxon = "Eoforwic" #Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 732.
 		briton = "Eboracum"
 		roman = "Eboracum" #Source: William R. Shepherd, "Historical Atlas", 1911, p. 51.
 	}
-	features = {
-		holy_site #historical cathedral
-	}
 	
 	history = {
-		735 = {
-			buildings += cathedral #archbishopric of York permanently instituted in 735 AD; Source: Frank Stenton, "Anglo-Saxon England", 1971, pp. 109, 133.
-		}
-		
 		high_middle_ages = {
-			#foreign city in which the Hanseatic League, or any of its members, possessed trading privileges in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
+			owner = hanseatic_league #foreign city in which the Hanseatic League, or any of its members, possessed trading privileges in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
+			developed = true
 		}
 		
 		1360 = {
