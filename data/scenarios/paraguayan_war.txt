@@ -4,7 +4,7 @@ paraguayan_war = {
 	start_date = 1864
 	map_template = south_america
 	hidden = true
-	default_countries = {
+	default_domains = {
 		argentina
 		brazil
 		#paraguay

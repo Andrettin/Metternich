@@ -3,7 +3,7 @@ scramble_for_africa = {
 	start_date = 1885
 	map_template = africa
 	hidden = true
-	default_countries = {
+	default_domains = {
 		france
 		germany
 		great_britain

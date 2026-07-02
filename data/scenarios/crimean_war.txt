@@ -4,7 +4,7 @@ crimean_war = {
 	start_date = 1853
 	map_template = europe
 	hidden = true
-	default_countries = {
+	default_domains = {
 		france
 		great_britain
 		russia

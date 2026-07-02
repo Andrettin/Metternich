@@ -3,7 +3,7 @@ gothic_war = {
 	start_date = 535
 	map_template = europe
 	hidden = true
-	default_countries = {
+	default_domains = {
 		eastern_rome
 		ostrogothia
 	}

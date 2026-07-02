@@ -4,7 +4,7 @@ third_crusade = {
 	start_date = 1187
 	map_template = europe
 	hidden = true
-	default_countries = {
+	default_domains = {
 		england
 		france
 		#holy_roman_empire

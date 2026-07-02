@@ -28,7 +28,7 @@ class scenario final : public named_data_entry, public data_type<scenario>
 	Q_PROPERTY(const metternich::map_template* map_template MEMBER map_template READ get_map_template NOTIFY changed)
 	Q_PROPERTY(bool hidden MEMBER hidden READ is_hidden NOTIFY changed)
 	Q_PROPERTY(QString description READ get_description_qstring NOTIFY changed)
-	Q_PROPERTY(QVariantList default_countries READ get_default_countries_qvariant_list NOTIFY changed)
+	Q_PROPERTY(QVariantList default_domains READ get_default_domains_qvariant_list NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "scenario";
@@ -109,7 +109,7 @@ public:
 		return QString::fromStdString(this->get_description());
 	}
 
-	QVariantList get_default_countries_qvariant_list() const;
+	QVariantList get_default_domains_qvariant_list() const;
 
 signals:
 	void changed();
@@ -123,7 +123,7 @@ private:
 	const metternich::map_template *map_template = nullptr;
 	bool hidden = false;
 	std::string description;
-	std::vector<const domain *> default_countries;
+	std::vector<const domain *> default_domains;
 };
 
 }

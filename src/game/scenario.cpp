@@ -36,9 +36,9 @@ void scenario::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "default_countries") {
+	if (tag == "default_domains") {
 		for (const std::string &value : values) {
-			this->default_countries.push_back(domain::get(value));
+			this->default_domains.push_back(domain::get(value));
 		}
 	} else {
 		data_entry::process_gsml_scope(scope);
@@ -64,9 +64,9 @@ void scenario::check() const
 	assert_throw(this->get_map_template() != nullptr);
 }
 
-QVariantList scenario::get_default_countries_qvariant_list() const
+QVariantList scenario::get_default_domains_qvariant_list() const
 {
-	return container::to_qvariant_list(this->default_countries);
+	return container::to_qvariant_list(this->default_domains);
 }
 
 }

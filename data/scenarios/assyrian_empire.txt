@@ -3,7 +3,7 @@ assyrian_empire = {
 	start_date = -720
 	map_template = europe
 	hidden = true
-	default_countries = {
+	default_domains = {
 		assyria
 	}
 }

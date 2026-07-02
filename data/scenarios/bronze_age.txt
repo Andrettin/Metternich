@@ -3,7 +3,7 @@ bronze_age = {
 	start_date = -1450
 	map_template = eastern_mediterranean
 	hidden = true
-	default_countries = {
+	default_domains = {
 		assyria
 		babylonia
 		egypt
@@ -18,7 +18,7 @@ mycenaean_greece_and_the_orient = {
 	start_date = -1450
 	map_template = eastern_mediterranean
 	hidden = true
-	default_countries = {
+	default_domains = {
 		assyria
 		babylonia
 		egypt

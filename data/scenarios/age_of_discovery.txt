@@ -3,7 +3,7 @@ age_of_discovery = {
 	start_date = 1492
 	map_template = europe
 	hidden = true
-	default_countries = {
+	default_domains = {
 		england
 		france
 		portugal

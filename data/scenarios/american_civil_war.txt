@@ -4,7 +4,7 @@ american_civil_war = {
 	start_date = 1861
 	map_template = europe
 	hidden = true
-	default_countries = {
+	default_domains = {
 		united_states
 	}
 }

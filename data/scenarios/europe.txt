@@ -3,7 +3,7 @@ europe_1360 = {
 	start_date = 1360
 	map_template = europe
 	hidden = true
-	default_countries = {
+	default_domains = {
 		byzantium
 		castille
 		england

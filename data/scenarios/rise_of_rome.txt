@@ -3,7 +3,7 @@ rise_of_rome = {
 	start_date = -304.10.1
 	map_template = europe
 	hidden = true
-	default_countries = {
+	default_domains = {
 		rome
 	}
 }
@@ -14,7 +14,7 @@ pyrrhic_war = {
 	start_date = -280
 	map_template = europe
 	hidden = true
-	default_countries = {
+	default_domains = {
 		rome
 	}
 }
@@ -25,7 +25,7 @@ first_punic_war = {
 	start_date = -264
 	map_template = europe
 	hidden = true
-	default_countries = {
+	default_domains = {
 		rome
 		carthage
 	}
@@ -37,7 +37,7 @@ second_punic_war = {
 	start_date = -218
 	map_template = europe
 	hidden = true
-	default_countries = {
+	default_domains = {
 		rome
 		carthage
 	}

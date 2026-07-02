@@ -4,7 +4,7 @@ first_world_war = {
 	start_date = 1914.7.28
 	map_template = europe
 	hidden = true
-	default_countries = {
+	default_domains = {
 		austria
 		france
 		germany

@@ -3,7 +3,7 @@ peloponnesian_war = {
 	start_date = -431
 	map_template = aegean
 	hidden = true
-	default_countries = {
+	default_domains = {
 		athens
 		sparta
 	}

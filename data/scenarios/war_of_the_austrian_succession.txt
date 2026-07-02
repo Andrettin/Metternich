@@ -4,7 +4,7 @@ war_of_the_austrian_succession = {
 	start_date = 1740
 	map_template = europe
 	hidden = true
-	default_countries = {
+	default_domains = {
 		austria
 		prussia
 	}

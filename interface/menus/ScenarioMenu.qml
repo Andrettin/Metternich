@@ -551,8 +551,8 @@ MenuBase {
 	}
 	
 	function select_random_country() {
-		if (selected_scenario.default_countries.length > 0) {
-			diplomatic_map.selected_country = selected_scenario.default_countries[random(selected_scenario.default_countries.length)]
+		if (selected_scenario.default_domains.length > 0) {
+			diplomatic_map.selected_country = selected_scenario.default_domains[random(selected_scenario.default_domains.length)]
 		} else {
 			diplomatic_map.selected_country = metternich.game.countries[random(metternich.game.countries.length)]
 		}

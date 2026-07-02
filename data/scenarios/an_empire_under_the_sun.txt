@@ -4,7 +4,7 @@ an_empire_under_the_sun = {
 	start_date = 1836
 	map_template = europe
 	hidden = true
-	default_countries = {
+	default_domains = {
 		great_britain
 	}
 }

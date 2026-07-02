@@ -4,7 +4,7 @@ austro_sardinian_war = {
 	start_date = 1859
 	map_template = europe
 	hidden = true
-	default_countries = {
+	default_domains = {
 		austria
 		sardinia
 	}

@@ -6,7 +6,7 @@ germanys_future = {
 	map_template = europe
 	hidden = true
 	description = "In early 1917, a pamphlet titled \"Germany's Future\" was officially circulated in Britain, detailing how Europe and Africa might look like in the event of a German victory in the Great War. How would the world fare if that had truly come to pass?"
-	default_countries = {
+	default_domains = {
 		germany
 	}
 }

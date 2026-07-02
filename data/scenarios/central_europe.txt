@@ -3,7 +3,7 @@ central_europe_919 = {
 	start_date = 919
 	map_template = europe
 	hidden = true
-	default_countries = {
+	default_domains = {
 	}
 }
 
@@ -12,6 +12,6 @@ central_europe_1125 = {
 	start_date = 1125
 	map_template = europe
 	hidden = true
-	default_countries = {
+	default_domains = {
 	}
 }

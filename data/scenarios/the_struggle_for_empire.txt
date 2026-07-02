@@ -3,7 +3,7 @@ the_struggle_for_empire = {
 	start_date = 2236
 	map_template = universe
 	hidden = true
-	default_countries = {
+	default_domains = {
 		terran_federation
 	}
 }

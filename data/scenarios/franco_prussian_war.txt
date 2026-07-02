@@ -4,7 +4,7 @@ franco_prussian_war = {
 	start_date = 1870
 	map_template = europe
 	hidden = true
-	default_countries = {
+	default_domains = {
 		france
 		prussia
 	}
