@@ -1,0 +1,8 @@
+akershus = {
+	name = "Akershus"
+	world = earth
+	geocoordinate = { 10.7362478855 59.9066059071 } #Akershus Fortress
+	type = holding
+	holding_type = castle
+	province = akershus
+}

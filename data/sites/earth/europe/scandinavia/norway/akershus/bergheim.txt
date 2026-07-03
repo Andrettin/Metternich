@@ -1,0 +1,8 @@
+bergheim = {
+	name = "Bergheim" #also known as Bærum
+	world = earth
+	geocoordinate = { 10.526 59.8904 } #Bærum
+	type = holding
+	holding_type = temple #or castle
+	province = akershus
+}

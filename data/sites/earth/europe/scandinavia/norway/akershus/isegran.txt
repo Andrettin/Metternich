@@ -1,0 +1,8 @@
+isegran = {
+	name = "Isegran"
+	world = earth
+	geocoordinate = { 10.95 59.2 }
+	type = holding
+	holding_type = castle
+	province = akershus #Østfold
+}
