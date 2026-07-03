@@ -278,13 +278,13 @@ Flickable {
 		switch (diplomatic_map.mode) {
 			case DiplomaticMap.Mode.Realm:
 				if (domain !== null) {
-					return domain.game_data.realm.name
+					return domain.game_data.realm.game_data.name
 				}
 				break
 			case DiplomaticMap.Mode.Political:
 			case DiplomaticMap.Mode.Treaty:
 				if (domain !== null) {
-					return domain.name
+					return domain.game_data.name
 				}
 				break
 			case DiplomaticMap.Mode.Terrain:
@@ -301,12 +301,12 @@ Flickable {
 				break
 			case DiplomaticMap.Mode.TradeZone:
 				if (province.game_data.trade_zone_domain !== null && domain !== null) {
-					return province.game_data.trade_zone_domain.name
+					return province.game_data.trade_zone_domain.game_data.name
 				}
 				break
 			case DiplomaticMap.Mode.Temple:
 				if (province.game_data.temple_domain !== null && domain !== null) {
-					return province.game_data.temple_domain.name
+					return province.game_data.temple_domain.game_data.name
 				}
 				break
 		}

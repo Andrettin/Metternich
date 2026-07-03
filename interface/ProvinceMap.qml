@@ -482,10 +482,10 @@ Flickable {
 		var text = province.game_data.current_cultural_name
 		
 		if (province.game_data.owner !== null) {
-			text += ", " + province.game_data.owner.name
+			text += ", " + province.game_data.owner.game_data.name
 			
 			if (province.game_data.owner.game_data.realm !== province.game_data.owner) {
-				text += ", " + province.game_data.owner.game_data.realm.name
+				text += ", " + province.game_data.owner.game_data.realm.game_data.name
 			}
 		}
 		
@@ -502,12 +502,12 @@ Flickable {
 		} else if (province_map.mode === ProvinceMap.Mode.TradeZone) {
 			var trade_zone_domain = province.game_data.trade_zone_domain
 			if (trade_zone_domain !== null) {
-				text += " (" + trade_zone_domain.name + ")"
+				text += " (" + trade_zone_domain.game_data.name + ")"
 			}
 		} else if (province_map.mode === ProvinceMap.Mode.Temple) {
 			var temple_domain = province.game_data.temple_domain
 			if (temple_domain !== null) {
-				text += " (" + temple_domain.name + ")"
+				text += " (" + temple_domain.game_data.name + ")"
 			}
 		}
 		

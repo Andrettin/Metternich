@@ -264,7 +264,7 @@ Item {
 					text += province.game_data.current_cultural_name
 					
 					if (province.game_data.owner !== null) {
-						text += ", " + province.game_data.owner.name
+						text += ", " + province.game_data.owner.game_data.name
 					}
 				}
 			}
