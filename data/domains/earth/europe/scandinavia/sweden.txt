@@ -8,6 +8,22 @@ sweden = {
 	default_tier = kingdom
 	default_government_type = monarchy
 	default_capital = stockholm
+	max_tier = empire
+	short_names = {
+		monarchy = {
+			empire = "Swedish Empire"
+		}
+	}
+	office_title_names = {
+		ruler = {
+			monarchy = {
+				empire = {
+					male = "King"
+					female = "Queen"
+				}
+			}
+		}
+	}
 	eras = {
 		medieval_era
 		renaissance_era
@@ -30,6 +46,11 @@ sweden = {
 			offices = {
 				ruler = gustav_i_of_sweden #Gustav I became king of Sweden in 1523; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 205.
 			}
+		}
+		
+		1814 = {
+			#united with Norway as the Kingdom of Sweden and Norway in 1814/1815; Source: William R. Shepherd, "Historical Atlas", 1911, p. 157.
+			tier = empire #so that it can have Norway as a vassal
 		}
 	}
 }
