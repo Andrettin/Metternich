@@ -141,7 +141,7 @@ Flickable {
 			
 			var province = metternich.map.get_tile_province(Qt.point(Math.floor(mouse.x / metternich.defines.province_map_tile_scale / scale_factor), Math.floor(mouse.y / metternich.defines.province_map_tile_scale / scale_factor)))
 			
-			if (province === null || (selected_province === province && selected_garrison === false) || province.water_zone) {
+			if (province === null || (selected_province === province && selected_garrison === false) || (province.water_zone && metternich.selected_military_units.length === 0)) {
 				select_province(null)
 			} else {
 				if (metternich.selected_military_units.length > 0) {
