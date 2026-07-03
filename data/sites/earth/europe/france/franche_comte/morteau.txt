@@ -1,0 +1,8 @@
+morteau = {
+	name = "Morteau"
+	world = earth
+	geocoordinate = { 6.6061111111111 47.058055555556 }
+	type = holding
+	holding_type = castle
+	province = franche_comte
+}

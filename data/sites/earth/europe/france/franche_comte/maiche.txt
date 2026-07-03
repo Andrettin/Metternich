@@ -1,0 +1,8 @@
+maiche = {
+	name = "Maiche" #"Maîche"
+	world = earth
+	geocoordinate = { 6.8036111111111 47.251111111111 }
+	type = holding
+	holding_type = castle
+	province = franche_comte
+}

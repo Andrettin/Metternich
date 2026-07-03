@@ -15,7 +15,7 @@ cumberland = {
 		}
 		
 		-264 = {
-			owner = brigantia #territory of the Brigantes in the 264 BC - 180 AD period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 34-35.
+			owner = brigantia #territory of the Brigantes in the 264 BC - 43 AD period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 34-35.
 			culture = brigantic
 			religion = pagan
 		}

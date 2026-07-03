@@ -1,0 +1,8 @@
+valdahon = {
+	name = "Valdahon"
+	world = earth
+	geocoordinate = { 6.3447222222222 47.149722222222 }
+	type = holding
+	holding_type = castle
+	province = franche_comte
+}

@@ -1,0 +1,8 @@
+bellevaux = {
+	name = "Bellevaux"
+	world = earth
+	geocoordinate = { 6.1203 47.4044 } #Bellevaux Abbey
+	type = holding
+	holding_type = temple
+	province = franche_comte
+}
