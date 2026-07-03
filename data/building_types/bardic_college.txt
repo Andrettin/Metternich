@@ -6,7 +6,7 @@ bardic_college = {
 	required_technology = ballads
 	min_holding_level = 4
 	holding_types = {
-		guild
+		university
 	}
 	builder_civilian_unit_types = {
 		ruler
