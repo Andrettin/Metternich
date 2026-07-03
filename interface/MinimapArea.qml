@@ -58,49 +58,55 @@ Rectangle {
 		spacing: 4 * scale_factor
 		
 		IconButton {
-			id: site_map_mode_button
-			icon_identifier: "settlement"
-			highlighted: province_map.show_site_mode !== ProvinceMap.SiteMode.Hide
+			id: show_sites_button
+			icon_identifier: "flag"
+			highlighted: province_map.show_site_mode === ProvinceMap.SiteMode.Show
 			
 			onClicked: {
-				switch (province_map.show_site_mode) {
-					case ProvinceMap.SiteMode.Show:
-						province_map.show_site_mode = ProvinceMap.SiteMode.ShowLocations
-						break
-					case ProvinceMap.SiteMode.ShowLocations:
-						province_map.show_site_mode = ProvinceMap.SiteMode.Hide
-						break
-					case ProvinceMap.SiteMode.Hide:
-						province_map.show_site_mode = ProvinceMap.SiteMode.Show
-						break
-				}
-				
-				switch (province_map.show_site_mode) {
-					case ProvinceMap.SiteMode.Show:
-						status_text = "Show Site Locations"
-						break
-					case ProvinceMap.SiteMode.ShowLocations:
-						status_text = "Hide Sites"
-						break
-					case ProvinceMap.SiteMode.Hide:
-						status_text = "Show Sites"
-						break
+				if (province_map.show_site_mode === ProvinceMap.SiteMode.Show) {
+					province_map.show_site_mode = ProvinceMap.SiteMode.Hide
+					status_text = "Show Province Sites"
+				} else {
+					province_map.show_site_mode = ProvinceMap.SiteMode.Show
+					status_text = "Hide Province Sites"
 				}
 			}
 			
 			onHoveredChanged: {
 				if (hovered) {
-				switch (province_map.show_site_mode) {
-					case ProvinceMap.SiteMode.Show:
-						status_text = "Show Site Locations"
-						break
-					case ProvinceMap.SiteMode.ShowLocations:
-						status_text = "Hide Sites"
-						break
-					case ProvinceMap.SiteMode.Hide:
-						status_text = "Show Sites"
-						break
+					if (province_map.show_site_mode === ProvinceMap.SiteMode.Show) {
+						status_text = "Hide Province Sites"
+					} else {
+						status_text = "Show Province Sites"
+					}
+				} else {
+					status_text = ""
 				}
+			}
+		}
+		
+		IconButton {
+			id: show_site_locations_button
+			icon_identifier: "settlement"
+			highlighted: province_map.show_site_mode === ProvinceMap.SiteMode.ShowLocations
+			
+			onClicked: {
+				if (province_map.show_site_mode === ProvinceMap.SiteMode.ShowLocations) {
+					province_map.show_site_mode = ProvinceMap.SiteMode.Hide
+					status_text = "Show Site Locations"
+				} else {
+					province_map.show_site_mode = ProvinceMap.SiteMode.ShowLocations
+					status_text = "Hide Site Locations"
+				}
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					if (province_map.show_site_mode === ProvinceMap.SiteMode.ShowLocations) {
+						status_text = "Hide Site Locations"
+					} else {
+						status_text = "Show Site Locations"
+					}
 				} else {
 					status_text = ""
 				}
