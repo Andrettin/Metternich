@@ -15,3 +15,14 @@ high_middle_ages = {
 		#tuscany
 	}
 }
+
+barbarossa = {
+	name = "Barbarossa"
+	parent_scenario = high_middle_ages
+	start_date = 1152.3.4
+	map_template = central_europe
+	hidden = true
+	default_domains = {
+		holy_roman_empire
+	}
+}
