@@ -166,7 +166,7 @@ Rectangle {
 		anchors.topMargin: 16 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
 		horizontalAlignment: Text.AlignHCenter
-		text: selected_province && selected_garrison ? "Garrison" : format_text((selected_site && !selected_garrison) ? (
+		text: selected_province && selected_garrison ? (selected_province.water_zone ? "Fleet" : "Garrison") : format_text((selected_site && !selected_garrison) ? (
 			selected_site.settlement ? "" : (
 				selected_site.map_data.resource ? (selected_site.map_data.resource.natural_wonder ? "Natural Wonder" : selected_site.map_data.resource.name) : ""
 			)

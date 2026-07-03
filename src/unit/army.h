@@ -3,11 +3,13 @@
 Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("map/province.h")
 Q_MOC_INCLUDE("map/site.h")
+Q_MOC_INCLUDE("ui/icon.h")
 
 namespace metternich {
 
 class character;
 class domain;
+class icon;
 class military_unit;
 class party;
 class province;
@@ -73,6 +75,8 @@ public:
 	const character *get_commander() const;
 
 	std::unique_ptr<party> to_party() const;
+
+	Q_INVOKABLE const icon *get_military_unit_icon() const;
 
 signals:
 	void military_units_changed();

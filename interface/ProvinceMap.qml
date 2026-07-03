@@ -279,23 +279,38 @@ Flickable {
 					}
 				}
 				
-				Image {
-					id: entering_army_icon
-					source: "image://icon/war" //FIXME: show the alliance icon if the army is entering a friendly province
-					visible: province && province.game_data.entering_armies.length > 0
+				Repeater {
+					model: province ? province.game_data.entering_armies : []
 					
-					MouseArea {
-						anchors.fill: parent
-						hoverEnabled: true
+					Image {
+						id: entering_army_icon
+						source: "image://icon/" + (province.water_zone && army.military_units.length > 0 ? army.get_military_unit_icon().identifier : "war") //FIXME: show the alliance icon if the army is entering a friendly province
+						visible: army.military_units.length > 0
 						
-						onContainsMouseChanged: {
-							var text = province.water_zone ? "Entering Fleet" : "Entering Army"
+						readonly property var army: model.modelData
+						
+						Image {
+							id: moving_fleet_icon
+							anchors.top: parent.top
+							anchors.topMargin: 8 * scale_factor
+							anchors.right: parent.right
+							anchors.rightMargin: 8 * scale_factor
+							source: "image://icon/war" //FIXME: should be a steering wheel instead
+						}
+						
+						MouseArea {
+							anchors.fill: parent
+							hoverEnabled: true
 							
-							if (containsMouse) {
-								status_text = text
-							} else {
-								if (status_text === text) {
-									status_text = ""
+							onContainsMouseChanged: {
+								var text = province.water_zone ? "Entering Fleet" : "Entering Army"
+								
+								if (containsMouse) {
+									status_text = text
+								} else {
+									if (status_text === text) {
+										status_text = ""
+									}
 								}
 							}
 						}

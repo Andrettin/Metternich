@@ -8,15 +8,14 @@
 #include "domain/domain_government.h"
 #include "engine_interface.h"
 #include "game/battle.h"
-#include "game/domain_event.h"
-#include "game/event_trigger.h"
 #include "game/game.h"
-#include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "script/context.h"
+#include "ui/icon.h"
+#include "ui/icon_container.h"
 #include "ui/portrait.h"
 #include "unit/military_unit.h"
 #include "util/assert_util.h"
@@ -231,6 +230,28 @@ const character *army::get_commander() const
 std::unique_ptr<party> army::to_party() const
 {
 	return std::make_unique<party>(army::get_characters(this->get_military_units()));
+}
+
+const icon *army::get_military_unit_icon() const
+{
+	icon_map<int> icon_counts;
+
+	for (const military_unit *military_unit : this->get_military_units()) {
+		++icon_counts[military_unit->get_icon()];
+	}
+
+	const icon *best_icon = nullptr;
+	int best_icon_count = 0;
+	for (const auto &[icon, count] : icon_counts) {
+		if (count > best_icon_count) {
+			best_icon = icon;
+			best_icon_count = count;
+		}
+	}
+
+	assert_throw(best_icon != nullptr);
+
+	return best_icon;
 }
 
 }
