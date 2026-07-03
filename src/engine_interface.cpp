@@ -262,6 +262,10 @@ void engine_interface::change_selected_military_unit_category_count(const metter
 				continue;
 			}
 
+			if (military_unit->is_moving()) {
+				continue;
+			}
+
 			this->add_selected_military_unit(military_unit);
 
 			++added_count;

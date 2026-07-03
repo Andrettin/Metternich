@@ -44,6 +44,7 @@ army::army(const std::vector<military_unit *> &military_units, target_variant &&
 	this->domain = this->get_military_units().at(0)->get_country();
 
 	for (military_unit *military_unit : this->get_military_units()) {
+		assert_throw(military_unit->get_army() == nullptr);
 		military_unit->set_army(this);
 	}
 
@@ -64,10 +65,17 @@ army::army(const std::vector<military_unit *> &military_units, target_variant &&
 
 army::~army()
 {
+	assert_throw(this->get_military_units().empty());
+	assert_throw(std::holds_alternative<std::monostate>(this->target));
+}
+
+void army::clear()
+{
 	for (military_unit *military_unit : this->get_military_units()) {
 		assert_throw(military_unit->get_army() == this);
 		military_unit->set_army(nullptr);
 	}
+	this->military_units.clear();
 
 	std::visit([this](auto &&target_value) {
 		using target_type = std::decay_t<decltype(target_value)>;
@@ -80,6 +88,8 @@ army::~army()
 			target_value->get_game_data()->remove_visiting_army(this);
 		}
 	}, this->target);
+
+	this->target = std::monostate();
 }
 
 QCoro::Task<void> army::do_turn()
@@ -141,7 +151,9 @@ QCoro::Task<void> army::do_turn()
 		}
 
 		if (success) {
-			for (military_unit *military_unit : this->get_military_units()) {
+			const std::vector<military_unit *> military_units = this->get_military_units();
+			for (military_unit *military_unit : military_units) {
+				this->remove_military_unit(military_unit);
 				co_await military_unit->set_province(target_province);
 			}
 		}

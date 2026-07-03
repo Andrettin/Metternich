@@ -31,6 +31,8 @@ public:
 	explicit army(const std::vector<military_unit *> &military_units, target_variant &&target);
 	~army();
 
+	void clear();
+
 	[[nodiscard]]
 	QCoro::Task<void> do_turn();
 

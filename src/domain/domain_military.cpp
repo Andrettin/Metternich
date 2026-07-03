@@ -345,6 +345,7 @@ void domain_military::remove_army(army *army)
 {
 	for (size_t i = 0; i < this->armies.size(); ++i) {
 		if (this->armies[i].get() == army) {
+			army->clear();
 			this->armies.erase(this->armies.begin() + i);
 			return;
 		}
@@ -353,6 +354,10 @@ void domain_military::remove_army(army *army)
 
 void domain_military::clear_armies()
 {
+	for (const qunique_ptr<army> &army : this->armies) {
+		army->clear();
+	}
+
 	this->armies.clear();
 }
 
