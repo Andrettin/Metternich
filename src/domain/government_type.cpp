@@ -23,7 +23,7 @@ namespace metternich {
 
 void government_type::process_title_name_scope(std::map<government_variant, title_name_map> &title_names, const gsml_data &scope)
 {
-	scope.for_each_property([&](const gsml_property &property) {
+	scope.for_each_property([&title_names](const gsml_property &property) {
 		const std::string &key = property.get_key();
 		const std::string &value = property.get_value();
 
@@ -38,7 +38,7 @@ void government_type::process_title_name_scope(std::map<government_variant, titl
 		title_names[government_variant][domain_tier::none] = value;
 	});
 
-	scope.for_each_child([&](const gsml_data &child_scope) {
+	scope.for_each_child([&title_names](const gsml_data &child_scope) {
 		government_variant government_variant{};
 		const government_group *government_group = government_group::try_get(child_scope.get_tag());
 		if (government_group != nullptr) {
@@ -53,7 +53,7 @@ void government_type::process_title_name_scope(std::map<government_variant, titl
 
 void government_type::process_title_name_scope(title_name_map &title_names, const gsml_data &scope)
 {
-	scope.for_each_property([&](const gsml_property &property) {
+	scope.for_each_property([&title_names](const gsml_property &property) {
 		const std::string &key = property.get_key();
 		const std::string &value = property.get_value();
 		const domain_tier tier = magic_enum::enum_cast<domain_tier>(key).value();

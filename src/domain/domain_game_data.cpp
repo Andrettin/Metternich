@@ -419,29 +419,11 @@ QCoro::Task<void> domain_game_data::apply_history(const QDate &start_date)
 	}
 
 	domain_economy->set_wealth(domain_history->get_wealth());
-
-	for (const auto &[other_domain, diplomacy_state] : domain_history->get_diplomacy_states()) {
-		if (!other_domain->get_game_data()->is_alive()) {
-			continue;
-		}
-
-		co_await this->set_diplomacy_state(other_domain, diplomacy_state);
-		co_await other_domain->get_game_data()->set_diplomacy_state(this->domain, get_diplomacy_state_counterpart(diplomacy_state));
-	}
-
-	for (const auto &[other_country, consulate] : domain_history->get_consulates()) {
-		if (!other_country->get_game_data()->is_alive()) {
-			continue;
-		}
-
-		this->set_consulate(other_country, consulate);
-		other_country->get_game_data()->set_consulate(this->domain, consulate);
-	}
 }
 
 void domain_game_data::apply_ruler_history(const QDate &start_date)
 {
-	domain_history *domain_history = this->domain->get_history();
+	const domain_history *domain_history = this->domain->get_history();
 
 	this->historical_rulers = domain_history->get_historical_rulers();
 	this->historical_monarchs = domain_history->get_historical_monarchs();
@@ -470,6 +452,29 @@ void domain_game_data::apply_ruler_history(const QDate &start_date)
 
 			this->historical_monarchs[date] = historical_monarch;
 		}
+	}
+}
+
+QCoro::Task<void> domain_game_data::apply_diplomatic_history()
+{
+	const domain_history *domain_history = this->domain->get_history();
+
+	for (const auto &[other_domain, diplomacy_state] : domain_history->get_diplomacy_states()) {
+		if (!other_domain->get_game_data()->is_alive()) {
+			continue;
+		}
+
+		co_await this->set_diplomacy_state(other_domain, diplomacy_state);
+		co_await other_domain->get_game_data()->set_diplomacy_state(this->domain, get_diplomacy_state_counterpart(diplomacy_state));
+	}
+
+	for (const auto &[other_country, consulate] : domain_history->get_consulates()) {
+		if (!other_country->get_game_data()->is_alive()) {
+			continue;
+		}
+
+		this->set_consulate(other_country, consulate);
+		other_country->get_game_data()->set_consulate(this->domain, consulate);
 	}
 }
 
@@ -1250,7 +1255,7 @@ QCoro::Task<void> domain_game_data::set_overlord(const metternich::domain *overl
 		co_return;
 	}
 
-	if (overlord->get_game_data()->get_tier() <= this->get_tier()) {
+	if (overlord != nullptr && overlord->get_game_data()->get_tier() <= this->get_tier()) {
 		throw std::runtime_error(std::format("Tried to set \"{}\" as the overlord of \"{}\", but the former does not have a higher tier than the latter.", overlord->get_identifier(), this->domain->get_identifier()));
 	}
 

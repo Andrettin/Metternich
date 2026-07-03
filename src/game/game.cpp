@@ -655,6 +655,11 @@ QCoro::Task<void> game::apply_history(const QDate &start_date)
 			co_await domain->get_game_data()->apply_history(start_date);
 		}
 
+		for (const domain *domain : this->get_countries()) {
+			//diplomatic history has to be applied after main domain history application, so that tiers are correct when setting vassalage relationships
+			co_await domain->get_game_data()->apply_diplomatic_history();
+		}
+
 		for (const cultural_group *cultural_group : cultural_group::get_all()) {
 			const culture_history *culture_history = cultural_group->get_history();
 

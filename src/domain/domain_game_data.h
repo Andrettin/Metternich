@@ -179,6 +179,7 @@ public:
 
 	[[nodiscard]] QCoro::Task<void> apply_history(const QDate &start_date);
 	void apply_ruler_history(const QDate &start_date);
+	[[nodiscard]] QCoro::Task<void> apply_diplomatic_history();
 
 	[[nodiscard]]
 	QCoro::Task<void> do_turn();
