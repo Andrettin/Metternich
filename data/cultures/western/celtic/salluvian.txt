@@ -1,0 +1,8 @@
+salluvian = {
+	name = "Salluvian"
+	group = gallic
+	color = { 199 93 77 }
+	species = {
+		human
+	}
+}

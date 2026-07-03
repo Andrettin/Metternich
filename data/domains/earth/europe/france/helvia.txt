@@ -1,0 +1,19 @@
+helvia = {
+	name = "Helvia"
+	type = polity
+	color = { 98 188 200 }
+	culture = salluvian
+	default_religion = pagan
+	default_tier = duchy
+	default_government_type = tribal_despotism
+	default_capital = alba_la_romaine
+	short_names = {
+		tribe = "Helvii"
+	}
+	eras = {
+		ancient_era
+	}
+	core_provinces = {
+		vivarais
+	}
+}
