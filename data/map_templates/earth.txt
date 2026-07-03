@@ -77,6 +77,16 @@ eastern_mediterranean = {
 	diplomatic_map_tile_scale = 0.5
 }
 
+egypt = {
+	name = "Egypt"
+	size = { 448 864 }
+	world = earth
+	main_map_template = earth
+	map_start_pos = { 8960 4244 }
+	minimap_tile_scale = 0.5
+	diplomatic_map_tile_scale = 2
+}
+
 europe = {
 	name = "Europe"
 	size = { 3072 2368 }
