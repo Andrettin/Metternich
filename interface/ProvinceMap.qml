@@ -192,7 +192,12 @@ Flickable {
 				
 				Image {
 					id: garrison_icon
-					source: "image://icon/garrison" + (selected ? "/selected" : "")
+					source: "image://icon/" + (visible && province.water_zone ? 
+						((province.game_data.military_unit_category_counts.length > 0 && province.game_data.get_domain_military_unit_category_counts(metternich.game.player_country).length > 0) ?
+							province.game_data.get_domain_military_unit_icon(metternich.game.player_country).identifier
+							: province.game_data.get_military_unit_icon().identifier
+						) : "garrison")
+						+ (selected ? "/selected" : "")
 					visible: province && province.game_data.military_unit_category_counts.length > 0
 					
 					readonly property bool selected: visible && selected_province === province && selected_garrison
