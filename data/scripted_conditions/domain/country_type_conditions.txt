@@ -7,6 +7,6 @@ is_civilized = {
 is_tribe = {
 	or = {
 		country_type = tribe
-		government_type = tribal_despotism
+		government_group = tribe
 	}
 }

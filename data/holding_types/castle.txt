@@ -16,13 +16,26 @@ castle = {
 		regency = 1
 	}
 	conditional_names = {
+		"Tribal Hold" = {
+			domain = {
+				scripted_condition = is_tribe
+			}
+		}
 		"Manor" = {
 			not = {
 				has_building_class = donjon
+				domain = {
+					scripted_condition = is_tribe
+				}
 			}
 		}
 		"Castle" = {
 			has_building_class = donjon
+			not = {
+				domain = {
+					scripted_condition = is_tribe
+				}
+			}
 		}
 	}
 	tier_levels = {
