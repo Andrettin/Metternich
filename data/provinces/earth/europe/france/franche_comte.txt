@@ -11,6 +11,11 @@ franche_comte = {
 		culture = helvetian
 		religion = pagan
 		
+		time_of_augustus = {
+			#inhabited by the Sequani in the time of Augustus; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 38-39.
+			culture = helvetian
+		}
+		
 		526 = {
 			owner = burgundians #territory of the Burgundians in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 			religion = asatru

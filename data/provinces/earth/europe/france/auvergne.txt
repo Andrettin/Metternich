@@ -11,6 +11,11 @@ auvergne = {
 		culture = arverni
 		religion = pagan
 		
+		time_of_augustus = {
+			#inhabited by the Arverni in the time of Augustus; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 38-39.
+			culture = arverni
+		}
+		
 		526 = {
 			owner = francia #part of the Kingdom of the Franks in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 			culture = frankish
