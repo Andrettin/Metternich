@@ -22,6 +22,20 @@ Rectangle {
 		height: 1 * scale_factor
 	}
 	
+	MouseArea {
+		id: panel_mouse_area
+		anchors.fill: parent
+		hoverEnabled: true
+		
+		onContainsMouseChanged: {
+			if (typeof status_text !== 'undefined') {
+				if (containsMouse) {
+					status_text = ""
+				}
+			}
+		}
+	}
+	
 	Grid {
 		id: map_mode_button_grid
 		anchors.top: parent.top
