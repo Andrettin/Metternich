@@ -8,10 +8,11 @@ maastricht = {
 	}
 	
 	history = {
+		religion = pagan
+		
 		-4000 = {
-			owner = frisians
-			culture = frisian
-			religion = asatru
+			owner = gaul
+			culture = gaulish
 		}
 		
 		526 = {
