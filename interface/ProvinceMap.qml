@@ -220,7 +220,7 @@ Flickable {
 						}
 						
 						onContainsMouseChanged: {
-							var text = "View Garrison"
+							var text = province.water_zone ? "View Fleet" : "View Garrison"
 							
 							if (containsMouse) {
 								status_text = text
@@ -289,7 +289,7 @@ Flickable {
 						hoverEnabled: true
 						
 						onContainsMouseChanged: {
-							var text = "Entering Army"
+							var text = province.water_zone ? "Entering Fleet" : "Entering Army"
 							
 							if (containsMouse) {
 								status_text = text
