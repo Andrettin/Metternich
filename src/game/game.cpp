@@ -1604,15 +1604,6 @@ QCoro::Task<void> game::apply_character_history(const QDate &start_date)
 
 QCoro::Task<void> game::on_setup_finished()
 {
-	for (const domain *domain : this->get_countries()) {
-		domain_game_data *domain_game_data = domain->get_game_data();
-		domain_game_data->calculate_territory_rect();
-	}
-
-	co_await this->create_map_images();
-
-	emit countries_changed();
-
 	for (const route *route : route::get_all()) {
 		if (!route->get_game_data()->is_on_map()) {
 			continue;
@@ -1657,6 +1648,15 @@ QCoro::Task<void> game::on_setup_finished()
 	co_await this->apply_free_on_start_buildings();
 
 	this->calculate_country_ranks();
+
+	for (const domain *domain : this->get_countries()) {
+		domain_game_data *domain_game_data = domain->get_game_data();
+		domain_game_data->calculate_territory_rect();
+	}
+
+	co_await this->create_map_images();
+
+	emit countries_changed();
 
 	for (const character *character : character::get_all()) {
 		character->get_game_data()->on_setup_finished();
