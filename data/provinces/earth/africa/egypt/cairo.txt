@@ -10,10 +10,14 @@ cairo = {
 	}
 	
 	history = {
-		-1450 = {
-			owner = egypt #part of Egypt c. 1450 BC; Source: William R. Shepherd, "Historical Atlas", 1911, p. 4.
+		-2700 = {
+			owner = egypt #part of Egypt in the 2700-2180 BC period; Source: "History of the World Map by Map", 2023, pp. 36-37.
 			culture = egyptian
 			religion = pagan
+		}
+		
+		-1450 = {
+			owner = egypt #part of Egypt c. 1450 BC; Source: William R. Shepherd, "Historical Atlas", 1911, p. 4.
 		}
 		
 		1360 = {
