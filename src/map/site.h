@@ -92,7 +92,7 @@ public:
 		return this->map_data.get();
 	}
 
-	[[nodiscard]] QCoro::Task<void> reset_game_data();
+	void reset_game_data();
 
 	site_game_data *get_game_data() const
 	{

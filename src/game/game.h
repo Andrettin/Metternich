@@ -125,6 +125,8 @@ public:
 
 	[[nodiscard]] QCoro::Task<void> reset_game_data();
 
+	[[nodiscard]] QCoro::Task<void> initialize();
+
 	[[nodiscard]] QCoro::Task<void> apply_history(const QDate &start_date);
 	[[nodiscard]] QCoro::Task<void> apply_sites();
 	[[nodiscard]] QCoro::Task<void> apply_site_buildings(const site *site);

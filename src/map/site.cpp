@@ -177,10 +177,9 @@ void site::reset_map_data()
 	this->map_data = make_qunique<site_map_data>(this);
 }
 
-QCoro::Task<void> site::reset_game_data()
+void site::reset_game_data()
 {
 	this->game_data = make_qunique<site_game_data>(this);
-	co_await this->get_game_data()->initialize();
 }
 
 bool site::is_settlement() const

@@ -73,38 +73,6 @@ namespace metternich {
 
 site_game_data::site_game_data(const metternich::site *site) : site(site)
 {
-	if (site->is_settlement()) {
-		this->initialize_building_slots();
-		this->free_food_consumption = site_game_data::settlement_base_free_food_consumption;
-	}
-
-	const resource *resource = this->get_resource();
-	if (resource == nullptr || resource->get_required_technology() != nullptr || resource->is_prospectable()) {
-		this->set_resource_discovered(false);
-	} else {
-		this->set_resource_discovered(true);
-	}
-
-	this->population = make_qunique<metternich::population>();
-	connect(this->get_population(), &population::type_size_changed, this, &site_game_data::on_population_type_size_changed);
-	connect(this->get_population(), &population::main_culture_changed, this, &site_game_data::on_population_main_culture_changed);
-	connect(this->get_population(), &population::main_religion_changed, this, &site_game_data::on_population_main_religion_changed);
-	if (this->get_province() != nullptr) {
-		this->get_population()->add_upper_population(this->get_province()->get_game_data()->get_population());
-	}
-
-	connect(this, &site_game_data::holding_type_name_changed, this, &site_game_data::title_name_changed);
-	connect(this, &site_game_data::dungeon_changed, this, &site_game_data::title_name_changed);
-
-	connect(this, &site_game_data::title_name_changed, this, &site_game_data::titled_name_changed);
-	connect(this, &site_game_data::culture_changed, this, &site_game_data::titled_name_changed);
-
-	connect(this, &site_game_data::titled_name_changed, this, &site_game_data::display_text_changed);
-
-	connect(this, &site_game_data::holding_type_changed, this, &site_game_data::portrait_changed);
-	connect(this, &site_game_data::dungeon_changed, this, &site_game_data::portrait_changed);
-
-	connect(this, &site_game_data::holding_level_changed, this, &site_game_data::income_changed);
 }
 
 void site_game_data::process_gsml_property(const gsml_property &property)
@@ -373,7 +341,39 @@ gsml_data site_game_data::to_gsml_data() const
 
 QCoro::Task<void> site_game_data::initialize()
 {
+	if (this->site->is_settlement()) {
+		this->initialize_building_slots();
+		this->free_food_consumption = site_game_data::settlement_base_free_food_consumption;
+	}
+
 	const resource *resource = this->get_resource();
+	if (resource == nullptr || resource->get_required_technology() != nullptr || resource->is_prospectable()) {
+		this->set_resource_discovered(false);
+	} else {
+		this->set_resource_discovered(true);
+	}
+
+	this->population = make_qunique<metternich::population>();
+	connect(this->get_population(), &population::type_size_changed, this, &site_game_data::on_population_type_size_changed);
+	connect(this->get_population(), &population::main_culture_changed, this, &site_game_data::on_population_main_culture_changed);
+	connect(this->get_population(), &population::main_religion_changed, this, &site_game_data::on_population_main_religion_changed);
+	if (this->get_province() != nullptr) {
+		this->get_population()->add_upper_population(this->get_province()->get_game_data()->get_population());
+	}
+
+	connect(this, &site_game_data::holding_type_name_changed, this, &site_game_data::title_name_changed);
+	connect(this, &site_game_data::dungeon_changed, this, &site_game_data::title_name_changed);
+
+	connect(this, &site_game_data::title_name_changed, this, &site_game_data::titled_name_changed);
+	connect(this, &site_game_data::culture_changed, this, &site_game_data::titled_name_changed);
+
+	connect(this, &site_game_data::titled_name_changed, this, &site_game_data::display_text_changed);
+
+	connect(this, &site_game_data::holding_type_changed, this, &site_game_data::portrait_changed);
+	connect(this, &site_game_data::dungeon_changed, this, &site_game_data::portrait_changed);
+
+	connect(this, &site_game_data::holding_level_changed, this, &site_game_data::income_changed);
+
 	if (resource != nullptr && resource->get_modifier() != nullptr) {
 		co_await resource->get_modifier()->apply(this->site);
 	}

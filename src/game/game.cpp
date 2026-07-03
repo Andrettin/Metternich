@@ -364,6 +364,8 @@ QCoro::Task<void> game::load(const std::filesystem::path &filepath)
 			co_await this->reset_game_data();
 		}
 
+		co_await this->initialize();
+
 		gsml_parser parser;
 		gsml_data data;
 
@@ -426,6 +428,7 @@ QCoro::Task<void> game::setup_scenario_coro(const metternich::scenario *scenario
 			co_await this->reset_game_data();
 		}
 
+		co_await this->initialize();
 		co_await this->apply_history(start_date);
 
 		co_await this->on_setup_finished();
@@ -551,7 +554,7 @@ QCoro::Task<void> game::reset_game_data()
 	}
 
 	for (site *site : site::get_all()) {
-		co_await site->reset_game_data();
+		site->reset_game_data();
 	}
 
 	for (domain *domain : domain::get_all()) {
@@ -563,6 +566,13 @@ QCoro::Task<void> game::reset_game_data()
 	}
 
 	this->generated_characters.clear();
+}
+
+QCoro::Task<void> game::initialize()
+{
+	for (const site *site : map::get()->get_sites()) {
+		co_await site->get_game_data()->initialize();
+	}
 }
 
 QCoro::Task<void> game::apply_history(const QDate &start_date)
