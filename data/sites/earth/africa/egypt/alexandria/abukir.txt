@@ -1,0 +1,8 @@
+abukir = {
+	name = "Abukir"
+	world = earth
+	geocoordinate = { 30.066666666667 31.316666666667 } #Abu Qir
+	type = holding
+	holding_type = castle
+	province = alexandria
+}

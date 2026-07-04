@@ -1,0 +1,8 @@
+hammam = {
+	name = "Hammam"
+	world = earth
+	geocoordinate = { 29.394 30.8419 } #El-Hamam
+	type = holding
+	holding_type = guild
+	province = alexandria #Matrouh
+}

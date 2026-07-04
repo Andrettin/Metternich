@@ -1,0 +1,8 @@
+marabout = {
+	name = "Marabout"
+	world = earth
+	geocoordinate = { 29.8852 31.213 } #Citadel of Qaitbay
+	type = holding
+	holding_type = guild
+	province = alexandria
+}

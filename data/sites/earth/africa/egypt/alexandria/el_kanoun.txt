@@ -1,0 +1,8 @@
+el_kanoun = {
+	name = "El-Kanoun"
+	world = earth
+	type = holding
+	holding_type = castle
+	
+	#in Alexandria?
+}

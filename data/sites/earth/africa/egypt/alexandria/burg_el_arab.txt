@@ -1,0 +1,8 @@
+burg_el_arab = {
+	name = "Burg El-Arab"
+	world = earth
+	geocoordinate = { 29.533333333333 30.916666666667 } #Borg El Arab
+	type = holding
+	holding_type = castle
+	province = alexandria
+}
