@@ -1,0 +1,8 @@
+burlus = {
+	name = "Burlus"
+	world = earth
+	geocoordinate = { 31.09169 31.59913 } #Markaz al Burullus
+	type = holding
+	holding_type = guild
+	province = damietta #Kafr el-Sheikh
+}

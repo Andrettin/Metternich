@@ -4,7 +4,7 @@ mansura = {
 	geocoordinate = { 31.38003779980 31.05044191390 } #from Natural Earth
 	type = resource
 	resource = fruit
-	province = cairo
+	province = damietta
 	
 	history = {
 		1360 = {

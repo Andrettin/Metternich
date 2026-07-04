@@ -1,10 +1,10 @@
-tanis = {
-	name = "Tanis"
+sais = {
+	name = "Sais"
 	world = earth
-	geocoordinate = { 31.88 30.976944444444 }
+	geocoordinate = { 30.768333333333 30.964722222222 }
 	type = resource
-	resource = timber #papyrus
-	province = cairo
+	resource = fruit
+	province = damietta
 	
 	history = {
 		-1450 = {

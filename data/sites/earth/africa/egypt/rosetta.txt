@@ -2,7 +2,7 @@ rosetta = {
 	name = "Rosetta"
 	world = earth
 	geocoordinate = { 30.39002071000 31.46039105120 } #from Natural Earth
-	province = cairo
+	province = alexandria
 	
 	history = {
 		1360 = {

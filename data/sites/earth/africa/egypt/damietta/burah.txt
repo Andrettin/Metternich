@@ -1,0 +1,8 @@
+burah = {
+	name = "Burah"
+	world = earth
+	geocoordinate = { 31.73778 31.40398 } #Kafr El Battikh
+	type = holding
+	holding_type = castle
+	province = damietta
+}

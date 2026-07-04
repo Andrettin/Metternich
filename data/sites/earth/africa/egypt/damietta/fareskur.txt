@@ -1,0 +1,8 @@
+fareskur = {
+	name = "Fareskur"
+	world = earth
+	geocoordinate = { 31.71472222222222 31.329722222222223 } #Faraskur
+	type = holding
+	holding_type = castle
+	province = damietta
+}

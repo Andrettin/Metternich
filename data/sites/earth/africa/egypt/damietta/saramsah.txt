@@ -1,0 +1,8 @@
+saramsah = {
+	name = "Saramsah"
+	world = earth
+	geocoordinate = { 31.59641 31.18967 } #Sheremsah
+	type = holding
+	holding_type = temple
+	province = damietta
+}

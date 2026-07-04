@@ -2,9 +2,12 @@ damietta = {
 	name = "Damietta" #also known as Dumyat
 	world = earth
 	geocoordinate = { 31.82001094440 31.42039349270 } #from Natural Earth
-	type = resource
-	resource = grain
-	province = cairo
+	type = holding
+	holding_type = castle
+	province = damietta
+	features = {
+		prime_grain_land
+	}
 	
 	history = {
 		1360 = {
