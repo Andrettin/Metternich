@@ -404,7 +404,7 @@ void map_template::write_province_image()
 		geoshape::write_image(output_filepath, geodata_map, this->get_georectangle(), this->get_size(), this->map_projection, base_image, this->geocoordinate_x_offset);
 
 		const std::chrono::milliseconds elapsed_ms(elapsed_timer.elapsed());
-		log_info(std::format("Wrote province image for map template \"{}\" in {} minutes and {} seconds.", this->get_identifier(), std::chrono::duration_cast<std::chrono::minutes>(elapsed_ms), (elapsed_ms.count() / 1000) % 60));
+		log_info(std::format("Wrote province image for map template \"{}\" in {} minutes and {} seconds.", this->get_identifier(), std::chrono::duration_cast<std::chrono::minutes>(elapsed_ms).count(), (elapsed_ms.count() / 1000) % 60));
 	} catch (...) {
 		exception::report(std::current_exception());
 		QApplication::exit(EXIT_FAILURE);
