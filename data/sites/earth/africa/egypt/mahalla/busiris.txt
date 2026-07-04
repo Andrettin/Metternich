@@ -1,0 +1,8 @@
+busiris = {
+	name = "Busiris"
+	world = earth
+	geocoordinate = { 31.24277777777778 30.912777777777777 } #Busiris/Abusir Bana
+	type = holding
+	holding_type = guild
+	province = mahalla
+}

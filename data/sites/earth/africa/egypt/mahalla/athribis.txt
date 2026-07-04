@@ -1,0 +1,8 @@
+athribis = {
+	name = "Athribis"
+	world = earth
+	geocoordinate = { 31.183333 30.466667 }
+	type = holding
+	holding_type = castle
+	province = mahalla #Qalyubia
+}

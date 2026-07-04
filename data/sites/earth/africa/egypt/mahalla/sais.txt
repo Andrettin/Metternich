@@ -4,7 +4,7 @@ sais = {
 	geocoordinate = { 30.768333333333 30.964722222222 }
 	type = resource
 	resource = fruit
-	province = damietta
+	province = mahalla
 	
 	history = {
 		-1450 = {

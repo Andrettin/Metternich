@@ -4,5 +4,5 @@ baramun = {
 	geocoordinate = { 31.571388 31.258611 } #Tell el-Balamun
 	type = holding
 	holding_type = guild
-	province = damietta
+	province = damietta #Dakahlia
 }

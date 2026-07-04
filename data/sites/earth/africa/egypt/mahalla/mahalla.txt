@@ -1,0 +1,8 @@
+mahalla = {
+	name = "Mahalla"
+	world = earth
+	geocoordinate = { 31.166666666667 30.966666666667 } #El Mahalla El Kubra
+	type = holding
+	holding_type = castle
+	province = mahalla
+}

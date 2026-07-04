@@ -21,6 +21,7 @@ egypt = {
 		cairo
 		alexandria
 		damietta
+		mahalla
 		sinai
 		suez
 		tinnis

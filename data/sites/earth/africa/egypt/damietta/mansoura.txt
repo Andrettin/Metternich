@@ -1,0 +1,15 @@
+mansoura = {
+	name = "Mansoura" #also known as Mansura
+	world = earth
+	geocoordinate = { 31.380038 31.050442 } #from Natural Earth (El Mansura)
+	type = holding
+	holding_type = castle
+	#resource = fruit
+	province = damietta #Dakahlia
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

@@ -1,0 +1,8 @@
+tanta = {
+	name = "Tanta"
+	world = earth
+	geocoordinate = { 31.000009 30.790432 } #from Natural Earth
+	type = holding
+	holding_type = temple
+	province = mahalla
+}

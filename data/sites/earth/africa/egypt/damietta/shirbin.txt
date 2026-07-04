@@ -4,5 +4,5 @@ shirbin = {
 	geocoordinate = { 31.52388889 31.19222222 } #Sherbin
 	type = holding
 	holding_type = castle
-	province = damietta
+	province = damietta #Dakahlia
 }
