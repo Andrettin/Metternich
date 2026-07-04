@@ -19,5 +19,10 @@ egyptian = {
 			#the first major Egyptian irrigation project was done in 3100 BC; Source: "History of the World Map by Map", 2023, pp. 24-25.
 			technologies += irrigation
 		}
+		
+		-2700 = {
+			#the Old Kingdom of Egypt existed in the 2700-2180 BC period; Source: "History of the World Map by Map", 2023, pp. 36-37.
+			technologies += monarchy
+		}
 	}
 }

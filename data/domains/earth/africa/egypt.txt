@@ -27,6 +27,12 @@ egypt = {
 	}
 	
 	history = {
+		-2700 = {
+			government_type = monarchy #the Old Kingdom of Egypt existed in the 2700-2180 BC period; Source: "History of the World Map by Map", 2023, pp. 36-37.
+			culture = egyptian
+			religion = pagan
+		}
+		
 		1360 = {
 			culture = arabic #the Mameluke Sultanates existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 			religion = sunni
