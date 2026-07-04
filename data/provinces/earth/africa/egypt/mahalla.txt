@@ -1,6 +1,7 @@
 mahalla = {
 	name = "Mahalla"
 	color = { 84 48 226 }
+	terrain = plains
 	default_provincial_capital = mahalla
 	regions = {
 		egypt

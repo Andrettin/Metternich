@@ -1,6 +1,7 @@
 tinnis = {
 	name = "Tinnis"
 	color = { 168 24 222 }
+	terrain = plains
 	default_provincial_capital = tinnis
 	regions = {
 		egypt

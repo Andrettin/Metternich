@@ -1,6 +1,7 @@
 damietta = {
 	name = "Damietta"
 	color = { 126 51 99 }
+	terrain = plains
 	default_provincial_capital = damietta
 	regions = {
 		egypt

@@ -1,7 +1,11 @@
 rosetta = {
 	name = "Rosetta"
 	color = { 168 54 227 }
+	terrain = plains
 	default_provincial_capital = rosetta
+	cultural_names = {
+		arabic = "Rashid"
+	}
 	regions = {
 		egypt
 	}

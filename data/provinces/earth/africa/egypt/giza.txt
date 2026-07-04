@@ -1,6 +1,7 @@
 giza = {
 	name = "Giza"
 	color = { 0 57 0 }
+	terrain = desert
 	default_provincial_capital = giza
 	regions = {
 		egypt
