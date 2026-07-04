@@ -1,0 +1,8 @@
+lisht = {
+	name = "Lisht"
+	world = earth
+	geocoordinate = { 31.231111111111 29.570277777778 }
+	type = holding
+	holding_type = castle
+	province = giza
+}

@@ -1,0 +1,8 @@
+abusir = {
+	name = "Abusir"
+	world = earth
+	geocoordinate = { 31.203611111111 29.896111111111 } #Abusir, Giza
+	type = holding
+	holding_type = guild
+	province = giza
+}

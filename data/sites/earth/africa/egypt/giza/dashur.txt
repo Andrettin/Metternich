@@ -1,0 +1,8 @@
+dashur = {
+	name = "Dashur"
+	world = earth
+	geocoordinate = { 31.233333333333 29.8 } #Dahshur
+	type = holding
+	holding_type = guild
+	province = giza
+}

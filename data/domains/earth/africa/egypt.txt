@@ -21,6 +21,7 @@ egypt = {
 		cairo
 		alexandria
 		damietta
+		giza
 		mahalla
 		rosetta
 		sinai

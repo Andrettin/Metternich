@@ -1,0 +1,8 @@
+zawyet_al_ayran = {
+	name = "Zawyet al-Ayran"
+	world = earth
+	geocoordinate = { 31.2 29.9 } #Zawyet el'Aryan
+	type = holding
+	holding_type = castle
+	province = giza
+}

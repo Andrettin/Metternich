@@ -1,0 +1,8 @@
+abu_ghorob = {
+	name = "Abu Ghorob"
+	world = earth
+	geocoordinate = { 31.194195 29.903944 } #Abu Gorab
+	type = holding
+	holding_type = castle
+	province = giza
+}

@@ -1,0 +1,8 @@
+saqqara = {
+	name = "Saqqara"
+	world = earth
+	geocoordinate = { 31.233333333333 29.85 }
+	type = holding
+	holding_type = castle
+	province = giza
+}

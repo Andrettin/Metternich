@@ -1,0 +1,8 @@
+abu_rowash = {
+	name = "Abu Rowash"
+	world = earth
+	geocoordinate = { 31.074722222222 30.032222222222 } #Abu Rawash
+	type = holding
+	holding_type = castle
+	province = giza
+}

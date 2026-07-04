@@ -1,0 +1,8 @@
+giza = {
+	name = "Giza"
+	world = earth
+	geocoordinate = { 31.190024 30.009989 } #from Natural Earth
+	type = holding
+	holding_type = temple
+	province = giza
+}
