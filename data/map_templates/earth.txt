@@ -85,6 +85,13 @@ egypt = {
 	map_start_pos = { 8960 4244 }
 	minimap_tile_scale = 0.5
 	diplomatic_map_tile_scale = 2
+	ignored_provinces = {
+		aegean_sea
+		attica
+		burdur
+		denizli
+		sea_of_crete
+	}
 }
 
 europe = {
