@@ -21,9 +21,10 @@ egypt = {
 		cairo
 		alexandria
 		damietta
-		suez
-		upper_egypt
 		sinai
+		suez
+		tinnis
+		upper_egypt
 	}
 	
 	history = {

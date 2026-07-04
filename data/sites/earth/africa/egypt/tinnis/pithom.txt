@@ -4,5 +4,5 @@ pithom = {
 	geocoordinate = { 32.098611111111 30.551944444444 }
 	type = holding
 	holding_type = castle
-	province = suez #Ismailia Governorate
+	province = tinnis
 }

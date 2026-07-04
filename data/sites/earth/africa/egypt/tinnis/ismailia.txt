@@ -4,5 +4,5 @@ ismailia = {
 	geocoordinate = { 32.25998408890 30.59034079900 } #from Natural Earth
 	type = holding
 	holding_type = castle
-	province = suez
+	province = tinnis
 }

@@ -4,5 +4,5 @@ sile = {
 	geocoordinate = { 32.35055556 30.85722222 } #Tjaru
 	type = holding
 	holding_type = castle
-	province = suez
+	province = tinnis
 }
