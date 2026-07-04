@@ -1,0 +1,8 @@
+disuq = {
+	name = "Disuq"
+	world = earth
+	geocoordinate = { 30.647777777778 31.1325 } #Desouk
+	type = holding
+	holding_type = castle
+	province = mahalla #Kafr el-Sheikh
+}

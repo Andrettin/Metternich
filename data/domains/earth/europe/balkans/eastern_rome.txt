@@ -52,6 +52,7 @@ eastern_rome = {
 		north_macedonia
 		novi_pazar
 		peloponnese
+		rosetta
 		saruhan
 		serbia
 		smyrna

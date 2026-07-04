@@ -4,5 +4,5 @@ naucratis = {
 	geocoordinate = { 30.616667 30.9 }
 	type = holding
 	holding_type = castle
-	province = alexandria #Beheira
+	province = rosetta
 }

@@ -1,0 +1,17 @@
+rosetta = {
+	name = "Rosetta"
+	world = earth
+	geocoordinate = { 30.39002071000 31.46039105120 } #from Natural Earth (Rashid)
+	type = holding
+	holding_type = castle
+	province = rosetta
+	cultural_names = {
+		arabic = "Rashid"
+	}
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

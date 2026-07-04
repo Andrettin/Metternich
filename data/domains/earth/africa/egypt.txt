@@ -22,6 +22,7 @@ egypt = {
 		alexandria
 		damietta
 		mahalla
+		rosetta
 		sinai
 		suez
 		tinnis

@@ -3,6 +3,10 @@ damanhur = {
 	world = earth
 	geocoordinate = { 30.470016 31.050442 } #from Natural Earth
 	type = holding
-	holding_type = temple
-	province = alexandria #Beheira
+	holding_type = temple #or guild
+	province = rosetta
+	cultural_names = {
+		egyptian = "Hermopolis"
+		greek = "Hermopolis"
+	}
 }

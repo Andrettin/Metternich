@@ -1,0 +1,8 @@
+fuwa = {
+	name = "Fuwa"
+	world = earth
+	geocoordinate = { 30.550277777778 31.202777777778 } #Fuwwah
+	type = holding
+	holding_type = temple
+	province = mahalla #Kafr el-Sheikh
+}

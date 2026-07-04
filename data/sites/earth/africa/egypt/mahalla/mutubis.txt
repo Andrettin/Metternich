@@ -1,0 +1,8 @@
+mutubis = {
+	name = "Mutubis"
+	world = earth
+	geocoordinate = { 30.52222222 31.29166667 } #Metoubes
+	type = holding
+	holding_type = castle
+	province = mahalla #Kafr el-Sheikh
+}

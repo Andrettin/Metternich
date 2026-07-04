@@ -1,0 +1,8 @@
+buto = {
+	name = "Buto"
+	world = earth
+	geocoordinate = { 30.744722222222 31.196388888889 }
+	type = holding
+	holding_type = castle
+	province = mahalla #Kafr el-Sheikh
+}
