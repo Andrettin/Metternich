@@ -1,0 +1,8 @@
+yahudiyya = {
+	name = "Yahudiyya" #Tell el-Yahudiyya
+	world = earth
+	geocoordinate = { 31.3326 30.2934 } #Leontopolis
+	type = holding
+	holding_type = castle
+	province = mahalla #Qalyubia
+}

@@ -1,0 +1,8 @@
+merimda_ben_salama = {
+	name = "Merimda Ben Salama"
+	world = earth
+	geocoordinate = { 30.85 30.316 } #Merimde Beni Salama
+	type = holding
+	holding_type = castle
+	province = giza
+}

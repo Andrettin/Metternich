@@ -1,0 +1,8 @@
+helwan = {
+	name = "Helwan"
+	world = earth
+	geocoordinate = { 31.3327 29.8493 }
+	type = holding
+	holding_type = castle
+	province = cairo
+}

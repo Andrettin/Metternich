@@ -1,0 +1,8 @@
+fustat = {
+	name = "Fustat"
+	world = earth
+	geocoordinate = { 31.2375 30.005 } #El-Fustat
+	type = holding
+	holding_type = guild #or castle
+	province = cairo
+}
