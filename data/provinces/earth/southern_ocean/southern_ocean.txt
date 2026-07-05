@@ -1,3 +1,12 @@
+coast_of_queen_maud_land = {
+	name = "Coast of Queen Maud Land"
+	color = { 140 108 152 }
+	sea = true
+	regions = {
+		southern_ocean
+	}
+}
+
 southern_ocean = {
 	name = "Southern Ocean"
 	color = { 175 36 54 }
