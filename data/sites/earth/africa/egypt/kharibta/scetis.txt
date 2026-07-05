@@ -1,0 +1,8 @@
+scetis = {
+	name = "Scetis"
+	world = earth
+	geocoordinate = { 30.333333333333 30.416666666667 } #Wadi El Natrun
+	type = holding
+	holding_type = temple
+	province = kharibta
+}

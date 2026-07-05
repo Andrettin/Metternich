@@ -1,0 +1,8 @@
+kharibta = {
+	name = "Kharibta"
+	world = earth
+	geocoordinate = { 30.62638888888889 30.778055555555554 } #Andropolis
+	type = holding
+	holding_type = castle
+	province = kharibta
+}

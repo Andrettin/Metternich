@@ -3,6 +3,6 @@ naucratis = {
 	world = earth
 	geocoordinate = { 30.616667 30.9 }
 	type = holding
-	holding_type = castle
+	holding_type = guild #or castle
 	province = rosetta
 }

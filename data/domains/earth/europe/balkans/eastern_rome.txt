@@ -45,6 +45,7 @@ eastern_rome = {
 		germiyan
 		karasi
 		kastamonu
+		kharibta
 		kosovo
 		montenegro
 		mugla
