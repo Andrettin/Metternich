@@ -1,0 +1,8 @@
+bubastis = {
+	name = "Bubastis"
+	world = earth
+	geocoordinate = { 31.51 30.572777777778 }
+	type = holding
+	holding_type = guild
+	province = bilbays
+}

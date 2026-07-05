@@ -1,0 +1,8 @@
+haifar = {
+	name = "Haifar" #Al-Haifar
+	world = earth
+	type = holding
+	holding_type = castle
+	
+	#in Al Sharqia?
+}

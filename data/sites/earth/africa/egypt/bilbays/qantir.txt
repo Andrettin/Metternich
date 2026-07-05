@@ -1,0 +1,8 @@
+qantir = {
+	name = "Qantir"
+	world = earth
+	geocoordinate = { 31.83795 30.803188888889 }
+	type = holding
+	holding_type = temple
+	province = bilbays
+}

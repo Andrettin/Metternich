@@ -1,0 +1,8 @@
+bilbays = {
+	name = "Bilbays"
+	world = earth
+	geocoordinate = { 31.566666666667 30.416666666667 } #Belbis/Bilbeis
+	type = holding
+	holding_type = castle
+	province = bilbays
+}

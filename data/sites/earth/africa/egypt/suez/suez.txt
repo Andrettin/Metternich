@@ -3,10 +3,12 @@ suez = {
 	world = earth
 	geocoordinate = { 32.54994055050 30.00497601220 } #from Natural Earth
 	type = holding
+	holding_type = guild
+	province = suez
 	
 	history = {
 		1360 = {
-			holding_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 	}
 }

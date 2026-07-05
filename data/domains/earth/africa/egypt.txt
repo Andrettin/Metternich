@@ -20,6 +20,7 @@ egypt = {
 	core_provinces = {
 		cairo
 		alexandria
+		bilbays
 		damietta
 		giza
 		kharibta

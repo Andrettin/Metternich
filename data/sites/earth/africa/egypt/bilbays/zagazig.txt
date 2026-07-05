@@ -1,0 +1,8 @@
+zagazig = {
+	name = "Zagazig"
+	world = earth
+	geocoordinate = { 31.516660 30.583332 } #from Natural Earth
+	type = holding
+	holding_type = castle
+	province = bilbays
+}

@@ -1,0 +1,8 @@
+shallufa = {
+	name = "Shallufa"
+	world = earth
+	geocoordinate = { 32.541666666666664 30.052777777777777 } #Shaluffa Air Force Base
+	type = holding
+	holding_type = castle
+	province = suez
+}

@@ -1,8 +1,8 @@
-cairo = {
-	name = "Cairo"
-	color = { 42 45 98 }
+bilbays = {
+	name = "Bilbays"
+	color = { 0 27 95 }
 	terrain = desert
-	default_provincial_capital = cairo
+	default_provincial_capital = bilbays
 	regions = {
 		egypt
 	}

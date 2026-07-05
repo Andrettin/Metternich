@@ -1,0 +1,8 @@
+agruda = {
+	name = "Agruda"
+	world = earth
+	type = holding
+	holding_type = castle
+	
+	#in Al Sharqia?
+}

@@ -4,7 +4,7 @@ tanis = {
 	geocoordinate = { 31.88 30.976944444444 }
 	type = holding
 	holding_type = castle
-	province = damietta #Al Sharqia
+	province = bilbays #Al Sharqia
 	features = {
 		prime_timber #papyrus
 	}
