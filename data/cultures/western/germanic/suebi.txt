@@ -10,12 +10,12 @@ suebi = {
 		human
 		half_elf
 	}
-	derived_cultures = {
-		alsatian
-		austrian
-		german
-	}
-
+	#derived_cultures = {
+	#	alsatian
+	#	austrian
+	#	german
+	#}
+	
 	given_names = {
 		male = {
 			#Suebi kings in Hispania

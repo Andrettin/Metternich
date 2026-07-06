@@ -3,15 +3,13 @@
 #include "culture/culture.h"
 
 #include "culture/cultural_group.h"
-#include "infrastructure/building_class.h"
-#include "population/population_class.h"
 #include "script/condition/and_condition.h"
+#include "script/mean_time_to_happen.h"
 #include "script/modifier.h"
 #include "species/phenotype.h"
 #include "species/species.h"
 #include "util/assert_util.h"
 #include "util/log_util.h"
-#include "util/map_util.h"
 #include "util/random.h"
 #include "util/vector_util.h"
 
@@ -36,14 +34,19 @@ void culture::process_gsml_scope(const gsml_data &scope)
 			species->add_culture(this);
 			this->species.push_back(species);
 		}
-	} else if (tag == "derived_cultures") {
-		for (const std::string &value : values) {
-			this->derived_cultures.push_back(culture::get(value));
-		}
-	} else if (tag == "derivation_conditions") {
-		auto conditions = std::make_unique<and_condition<population_unit>>();
-		conditions->process_gsml_data(scope);
-		this->derivation_conditions = std::move(conditions);
+	} else if (tag == "cultural_derivations") {
+		assert_throw(values.empty());
+
+		scope.for_each_child([this](const gsml_data &child_scope) {
+			const std::string &child_tag = child_scope.get_tag();
+			auto derivation = std::make_unique<cultural_derivation>(culture::get(child_tag));
+
+			child_scope.for_each_child([this, &derivation](const gsml_data &grandchild_scope) {
+				derivation->process_gsml_scope(grandchild_scope);
+			});
+
+			this->cultural_derivations.push_back(std::move(derivation));
+		});
 	} else if (tag == "character_modifier") {
 		auto modifier = std::make_unique<metternich::modifier<const character>>();
 		modifier->process_gsml_data(scope);
@@ -100,6 +103,30 @@ const phenotype_map<int64_t> culture::get_phenotype_weights() const
 	}
 
 	return phenotype_weights;
+}
+
+culture::cultural_derivation::cultural_derivation(const metternich::culture *culture) : culture(culture)
+{
+}
+
+culture::cultural_derivation::~cultural_derivation()
+{
+}
+
+void culture::cultural_derivation::process_gsml_scope(const gsml_data &scope)
+{
+	const std::string &tag = scope.get_tag();
+
+	if (tag == "conditions") {
+		auto conditions = std::make_unique<and_condition<population_unit>>();
+		conditions->process_gsml_data(scope);
+		this->conditions = std::move(conditions);
+	} else if (tag == "mean_time_to_happen") {
+		this->mean_time_to_happen = std::make_unique<metternich::mean_time_to_happen<population_unit>>();
+		scope.process(this->mean_time_to_happen.get());
+	} else {
+		throw std::runtime_error(std::format("Invalid cultural derivation scope: \"{}\".", scope.get_tag()));
+	}
 }
 
 }

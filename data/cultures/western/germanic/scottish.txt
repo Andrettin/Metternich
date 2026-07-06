@@ -5,13 +5,13 @@ scottish = {
 	species = {
 		human
 	}
-	derived_cultures = {
-		american
-	}
-	derivation_conditions = {
-		technology = feudalism
-		province = {
-			core = scotland
-		}
-	}
+	#derived_cultures = {
+	#	american
+	#}
+	#derivation_conditions = {
+	#	technology = feudalism
+	#	province = {
+	#		core = scotland
+	#	}
+	#}
 }

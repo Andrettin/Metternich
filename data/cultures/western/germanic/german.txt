@@ -5,18 +5,18 @@ german = {
 	species = {
 		human
 	}
-	derivation_conditions = {
-		technology = feudalism
-		province = {
-			not = {
-				core = austria
-				core = belgium
-				core = great_britain
-				core = netherlands
-				core = strasbourg
-			}
-		}
-	}
+	#derivation_conditions = {
+	#	technology = feudalism
+	#	province = {
+	#		not = {
+	#			core = austria
+	#			core = belgium
+	#			core = great_britain
+	#			core = netherlands
+	#			core = strasbourg
+	#		}
+	#	}
+	#}
 	office_title_names = {
 		ruler = {
 			democratic_republic = "Chancellor"

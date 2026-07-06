@@ -5,10 +5,10 @@ alsatian = {
 	species = {
 		human
 	}
-	derivation_conditions = {
-		technology = feudalism
-		province = {
-			core = strasbourg
-		}
-	}
+	#derivation_conditions = {
+	#	technology = feudalism
+	#	province = {
+	#		core = strasbourg
+	#	}
+	#}
 }

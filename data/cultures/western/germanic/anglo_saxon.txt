@@ -8,16 +8,16 @@ anglo_saxon = {
 		half_elf
 		half_orc
 	}
-	derived_cultures = {
-		english
-		scottish
-	}
-	derivation_conditions = {
-		technology = monarchy
-		province = {
-			core = great_britain
-		}
-	}
+	#derived_cultures = {
+	#	english
+	#	scottish
+	#}
+	#derivation_conditions = {
+	#	technology = monarchy
+	#	province = {
+	#		core = great_britain
+	#	}
+	#}
 	patronyms = {
 		male = "sson"
 		female = "sdohtor"

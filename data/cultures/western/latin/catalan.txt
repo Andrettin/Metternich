@@ -5,13 +5,13 @@ catalan = {
 	species = {
 		human
 	}
-	derivation_conditions = {
-		technology = feudalism
-		province = {
-			or = {
-				core = catalonia
-				core = valencia
-			}
-		}
-	}
+	#derivation_conditions = {
+	#	technology = feudalism
+	#	province = {
+	#		or = {
+	#			core = catalonia
+	#			core = valencia
+	#		}
+	#	}
+	#}
 }

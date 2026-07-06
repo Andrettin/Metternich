@@ -5,10 +5,10 @@ brazilian = {
 	species = {
 		human
 	}
-	derivation_conditions = {
-		technology = navigation
-		province = {
-			core = brazil
-		}
-	}
+	#derivation_conditions = {
+	#	technology = navigation
+	#	province = {
+	#		core = brazil
+	#	}
+	#}
 }

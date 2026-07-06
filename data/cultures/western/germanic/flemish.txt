@@ -5,10 +5,10 @@ flemish = {
 	species = {
 		human
 	}
-	derivation_conditions = {
-		technology = feudalism
-		province = {
-			core = belgium
-		}
-	}
+	#derivation_conditions = {
+	#	technology = feudalism
+	#	province = {
+	#		core = belgium
+	#	}
+	#}
 }

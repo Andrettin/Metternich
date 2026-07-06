@@ -5,10 +5,10 @@ romanian = {
 	species = {
 		human
 	}
-	derivation_conditions = {
-		technology = feudalism
-		province = {
-			core = romania
-		}
-	}
+	#derivation_conditions = {
+	#	technology = feudalism
+	#	province = {
+	#		core = romania
+	#	}
+	#}
 }

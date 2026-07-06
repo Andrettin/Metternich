@@ -5,10 +5,10 @@ icelandic = {
 	species = {
 		human
 	}
-	derivation_conditions = {
-		technology = feudalism
-		province = {
-			core = iceland
-		}
-	}
+	#derivation_conditions = {
+	#	technology = feudalism
+	#	province = {
+	#		core = iceland
+	#	}
+	#}
 }

@@ -5,10 +5,10 @@ danish = {
 	species = {
 		human
 	}
-	derivation_conditions = {
-		technology = monarchy
-		province = {
-			core = denmark
-		}
-	}
+	#derivation_conditions = {
+	#	technology = monarchy
+	#	province = {
+	#		core = denmark
+	#	}
+	#}
 }

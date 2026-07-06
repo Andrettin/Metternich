@@ -1,7 +1,9 @@
 #pragma once
 
 #include "culture/culture_base.h"
+#include "culture/culture_container.h"
 #include "database/data_type.h"
+#include "species/phenotype_container.h"
 
 namespace archimedes {
 	class language;
@@ -18,6 +20,9 @@ template <typename scope_type>
 class and_condition;
 
 template <typename scope_type>
+class mean_time_to_happen;
+
+template <typename scope_type>
 class modifier;
 
 class culture final : public culture_base, public data_type<culture>
@@ -29,6 +34,18 @@ class culture final : public culture_base, public data_type<culture>
 	Q_PROPERTY(bool surname_first MEMBER surname_first READ is_surname_first NOTIFY changed)
 
 public:
+	struct cultural_derivation final
+	{
+		explicit cultural_derivation(const metternich::culture *culture);
+		~cultural_derivation();
+
+		void process_gsml_scope(const gsml_data &scope);
+
+		const metternich::culture *culture = nullptr;
+		std::unique_ptr<const and_condition<population_unit>> conditions;
+		std::unique_ptr<metternich::mean_time_to_happen<population_unit>> mean_time_to_happen;
+	};
+
 	static constexpr const char class_identifier[] = "culture";
 	static constexpr const char property_class_identifier[] = "metternich::culture*";
 	static constexpr const char database_folder[] = "cultures";
@@ -67,14 +84,9 @@ public:
 
 	const phenotype_map<int64_t> get_phenotype_weights() const;
 
-	const std::vector<const culture *> &get_derived_cultures() const
+	const std::vector<std::unique_ptr<const cultural_derivation>> &get_cultural_derivations() const
 	{
-		return this->derived_cultures;
-	}
-
-	const and_condition<population_unit> *get_derivation_conditions() const
-	{
-		return this->derivation_conditions.get();
+		return this->cultural_derivations;
 	}
 
 	const metternich::modifier<const character> *get_character_modifier() const
@@ -90,8 +102,7 @@ private:
 	const archimedes::language *language = nullptr;
 	bool surname_first = false;
 	std::vector<const metternich::species *> species; //species which can have this culture
-	std::vector<const culture *> derived_cultures;
-	std::unique_ptr<const and_condition<population_unit>> derivation_conditions;
+	std::vector<std::unique_ptr<const cultural_derivation>> cultural_derivations;
 	std::unique_ptr<const metternich::modifier<const character>> character_modifier;
 };
 

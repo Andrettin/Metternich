@@ -5,13 +5,13 @@ swedish = {
 	species = {
 		human
 	}
-	derivation_conditions = {
-		technology = feudalism
-		province = {
-			or = {
-				core = sweden
-				core = finland
-			}
-		}
-	}
+	#derivation_conditions = {
+	#	technology = feudalism
+	#	province = {
+	#		or = {
+	#			core = sweden
+	#			core = finland
+	#		}
+	#	}
+	#}
 }

@@ -11,7 +11,7 @@ teutonian = {
 		half_elf
 		half_orc
 	}
-	derived_cultures = {
-		german
-	}
+	#derived_cultures = {
+	#	german
+	#}
 }

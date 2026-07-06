@@ -11,8 +11,8 @@ anglian = {
 		half_elf
 		half_orc
 	}
-	derived_cultures = {
-		anglo_saxon
-		german
-	}
+	#derived_cultures = {
+	#	anglo_saxon
+	#	german
+	#}
 }

@@ -9,20 +9,17 @@
 #include "domain/domain_game_data.h"
 #include "economy/commodity.h"
 #include "economy/employment_type.h"
-#include "economy/resource.h"
 #include "game/game.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
-#include "map/site_map_data.h"
-#include "map/site_type.h"
 #include "population/population.h"
 #include "population/population_type.h"
 #include "religion/religion.h"
 #include "script/condition/and_condition.h"
 #include "script/factor.h"
-#include "script/modifier.h"
+#include "script/mean_time_to_happen.h"
 #include "species/phenotype.h"
 #include "species/species.h"
 #include "ui/icon.h"
@@ -50,6 +47,39 @@ population_unit::population_unit(const population_type *type, const metternich::
 	assert_throw(this->get_country() != nullptr);
 
 	connect(this, &population_unit::type_changed, this, &population_unit::icon_changed);
+}
+
+QCoro::Task<void> population_unit::do_cultural_change()
+{
+	assert_throw(this->get_site()->get_game_data()->get_population()->get_size() > 0);
+	assert_throw(this->get_province()->get_game_data()->get_population()->get_size() > 0);
+	assert_throw(this->get_country()->get_game_data()->get_population()->get_size() > 0);
+
+	for (const std::unique_ptr<const culture::cultural_derivation> &cultural_derivation : this->get_culture()->get_cultural_derivations()) {
+		decimillesimal_int derivation_rate(0);
+
+		if (cultural_derivation->mean_time_to_happen != nullptr) {
+			const decimillesimal_int mtth = cultural_derivation->mean_time_to_happen->calculate(this, game::get()->get_year());
+			derivation_rate = decimillesimal_int(100) / mtth;
+		}
+
+		if (derivation_rate == 0) {
+			continue;
+		}
+
+		const int64_t derived_size = std::max((this->get_size() * derivation_rate / 100).to_ceil_int64(), 1ll);
+		const int64_t lost_wealth = this->get_wealth() * derived_size / this->get_size();
+
+		const population_type *culture_population_type = cultural_derivation->culture->get_population_class_type(this->get_type()->get_population_class());
+
+		if (!this->get_site()->get_game_data()->can_have_population_type(culture_population_type)) {
+			continue;
+		}
+
+		co_await this->get_site()->get_game_data()->change_population(culture_population_type, cultural_derivation->culture, this->get_religion(), this->get_phenotype(), nullptr, derived_size, this->get_literacy_rate(), lost_wealth, true);
+
+		co_await this->get_site()->get_game_data()->change_population(this->get_type(), this->get_culture(), this->get_religion(), this->get_phenotype(), this->get_employment_type(), -derived_size, this->get_literacy_rate(), -lost_wealth, true);
+	}
 }
 
 QCoro::Task<void> population_unit::do_promotion()

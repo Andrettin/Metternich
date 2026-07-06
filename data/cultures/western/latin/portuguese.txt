@@ -5,13 +5,13 @@ portuguese = {
 	species = {
 		human
 	}
-	derived_cultures = {
-		brazilian
-	}
-	derivation_conditions = {
-		technology = feudalism
-		province = {
-			core = portugal
-		}
-	}
+	#derived_cultures = {
+	#	brazilian
+	#}
+	#derivation_conditions = {
+	#	technology = feudalism
+	#	province = {
+	#		core = portugal
+	#	}
+	#}
 }

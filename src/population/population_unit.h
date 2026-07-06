@@ -48,6 +48,7 @@ class population_unit final : public QObject
 public:
 	explicit population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const metternich::employment_type *employment_type, const int64_t size, const decimillesimal_int &literacy_rate, const site *site);
 
+	[[nodiscard]] QCoro::Task<void> do_cultural_change();
 	[[nodiscard]] QCoro::Task<void> do_promotion();
 	[[nodiscard]] QCoro::Task<void> do_promotion(const bool is_demotion);
 

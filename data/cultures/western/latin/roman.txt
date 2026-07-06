@@ -5,16 +5,16 @@ roman = {
 	species = {
 		human
 	}
-	derived_cultures = {
-		aragonese
-		catalan
-		castillian
-		french
-		galician
-		italian
-		norman
-		portuguese
-		romanian
-		walloon
-	}
+	#derived_cultures = {
+	#	aragonese
+	#	catalan
+	#	castillian
+	#	french
+	#	galician
+	#	italian
+	#	norman
+	#	portuguese
+	#	romanian
+	#	walloon
+	#}
 }

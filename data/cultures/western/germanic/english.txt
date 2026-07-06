@@ -5,17 +5,17 @@ english = {
 	species = {
 		human
 	}
-	derived_cultures = {
-		american
-	}
-	derivation_conditions = {
-		technology = feudalism
-		not = {
-			province = {
-				core = scotland
-			}
-		}
-	}
+	#derived_cultures = {
+	#	american
+	#}
+	#derivation_conditions = {
+	#	technology = feudalism
+	#	not = {
+	#		province = {
+	#			core = scotland
+	#		}
+	#	}
+	#}
 	office_title_names = {
 		ruler = {
 			democratic_republic = "Prime Minister"

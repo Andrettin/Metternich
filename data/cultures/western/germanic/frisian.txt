@@ -10,11 +10,11 @@ frisian = {
 		human
 		half_elf
 	}
-	derived_cultures = {
-		dutch
-		flemish
-		german
-	}
+	#derived_cultures = {
+	#	dutch
+	#	flemish
+	#	german
+	#}
 	patronyms = {
 		male = "sson"
 		female = "sdohtor"

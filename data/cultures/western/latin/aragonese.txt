@@ -5,14 +5,14 @@ aragonese = {
 	species = {
 		human
 	}
-	derivation_conditions = {
-		technology = feudalism
-		province = {
-			core = aragon
-			not = {
-				core = catalonia
-				core = valencia
-			}
-		}
-	}
+	#derivation_conditions = {
+	#	technology = feudalism
+	#	province = {
+	#		core = aragon
+	#		not = {
+	#			core = catalonia
+	#			core = valencia
+	#		}
+	#	}
+	#}
 }

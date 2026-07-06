@@ -5,12 +5,12 @@ austrian = {
 	species = {
 		human
 	}
-	derivation_conditions = {
-		technology = feudalism
-		province = {
-			core = austria
-		}
-	}
+	#derivation_conditions = {
+	#	technology = feudalism
+	#	province = {
+	#		core = austria
+	#	}
+	#}
 	
 	given_names = {
 		female = {

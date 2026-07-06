@@ -521,8 +521,8 @@ QCoro::Task<void> domain_game_data::do_turn()
 		co_await this->get_technology()->do_technology_spread();
 		co_await this->do_construction();
 		co_await this->do_population_growth();
-		this->do_cultural_change();
 		this->do_population_literacy_change();
+		co_await this->do_population_cultural_change();
 		co_await this->do_population_promotion();
 		co_await this->do_population_employment();
 
@@ -878,53 +878,18 @@ QCoro::Task<void> domain_game_data::do_construction()
 	}
 }
 
-void domain_game_data::do_cultural_change()
-{
-	static constexpr int base_cultural_derivation_chance = 1;
-
-	for (population_unit *population_unit : this->population_units) {
-		const metternich::culture *current_culture = population_unit->get_culture();
-
-		std::vector<const metternich::culture *> potential_cultures;
-
-		const read_only_context ctx(population_unit);
-
-		for (const metternich::culture *culture : current_culture->get_derived_cultures()) {
-			if (culture->get_derivation_conditions() != nullptr && !culture->get_derivation_conditions()->check(population_unit, ctx)) {
-				continue;
-			}
-
-			potential_cultures.push_back(culture);
-		}
-
-		if (potential_cultures.empty()) {
-			continue;
-		}
-
-		vector::shuffle(potential_cultures);
-
-		for (const metternich::culture *culture : potential_cultures) {
-			int chance = base_cultural_derivation_chance;
-
-			if (this->get_culture() == culture) {
-				chance *= 2;
-			}
-
-			if (random::get()->generate(100) >= chance) {
-				continue;
-			}
-
-			const metternich::culture *new_culture = vector::get_random(potential_cultures);
-			population_unit->set_culture(new_culture);
-			break;
-		}
-	}
-}
-
 void domain_game_data::do_population_literacy_change()
 {
 	for (const province *province : this->get_provinces()) {
 		province->get_game_data()->do_population_literacy_change();
+	}
+}
+
+QCoro::Task<void> domain_game_data::do_population_cultural_change()
+{
+	const std::vector<population_unit *> population_units = this->get_population_units();
+	for (population_unit *population_unit : population_units) {
+		co_await population_unit->do_cultural_change();
 	}
 }
 

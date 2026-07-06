@@ -5,15 +5,15 @@ french = {
 	species = {
 		human
 	}
-	derivation_conditions = {
-		technology = feudalism
-		province = {
-			core = france
-			not = {
-				core = normandy
-			}
-		}
-	}
+	#derivation_conditions = {
+	#	technology = feudalism
+	#	province = {
+	#		core = france
+	#		not = {
+	#			core = normandy
+	#		}
+	#	}
+	#}
 	office_title_names = {
 		ruler = {
 			democratic_republic = "Premier"

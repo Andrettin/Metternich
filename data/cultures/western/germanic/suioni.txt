@@ -7,7 +7,7 @@ suioni = {
 		human
 		half_elf
 	}
-	derived_cultures = {
-		norse
-	}
+	#derived_cultures = {
+	#	norse
+	#}
 }

@@ -1,13 +1,11 @@
 #pragma once
 
 #include "culture/culture_container.h"
-#include "database/data_entry_container.h"
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 #include "economy/commodity_container.h"
 #include "infrastructure/pathway_container.h"
 #include "religion/religion_container.h"
-#include "util/decimillesimal_int.h"
 
 Q_MOC_INCLUDE("game/game_rule.h")
 Q_MOC_INCLUDE("technology/technology_category.h")

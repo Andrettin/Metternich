@@ -5,12 +5,12 @@ italian = {
 	species = {
 		human
 	}
-	derivation_conditions = {
-		technology = feudalism
-		province = {
-			core = italy
-		}
-	}
+	#derivation_conditions = {
+	#	technology = feudalism
+	#	province = {
+	#		core = italy
+	#	}
+	#}
 	
 	given_names = {
 		male = {

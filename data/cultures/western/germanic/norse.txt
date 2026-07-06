@@ -10,12 +10,12 @@ norse = {
 		human
 		half_elf
 	}
-	derived_cultures = {
-		danish
-		icelandic
-		norwegian
-		swedish
-	}
+	#derived_cultures = {
+	#	danish
+	#	icelandic
+	#	norwegian
+	#	swedish
+	#}
 	patronyms = {
 		male = "sson"
 		female = "sdottir"

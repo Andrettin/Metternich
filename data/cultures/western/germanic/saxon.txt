@@ -10,12 +10,25 @@ saxon = {
 		human
 		half_elf
 	}
-	derived_cultures = {
-		anglo_saxon
-		german
-	}
+	#derived_cultures = {
+	#	anglo_saxon
+	#}
 	patronyms = {
 		male = "sson"
 		female = "sdohtor"
+	}
+	cultural_derivations = {
+		german = {
+			mean_time_to_happen = {
+				months = 3600
+				
+				modifier = {
+					factor = 0.5
+					domain = {
+						culture = german
+					}
+				}
+			}
+		}
 	}
 }

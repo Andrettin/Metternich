@@ -56,6 +56,7 @@ decimillesimal_int mean_time_to_happen<scope_type>::calculate(const scope_type *
 
 template class mean_time_to_happen<character>;
 template class mean_time_to_happen<domain>;
+template class mean_time_to_happen<population_unit>;
 template class mean_time_to_happen<province>;
 template class mean_time_to_happen<site>;
 
