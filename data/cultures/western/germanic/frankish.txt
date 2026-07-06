@@ -11,8 +11,31 @@ frankish = {
 		half_elf
 	}
 	#derived_cultures = {
-	#	dutch
 	#	flemish
 	#	german
 	#}
+	cultural_derivations = {
+		dutch = {
+			conditions = {
+				technology = feudalism #Carolingian era
+				province = {
+					or = {
+						core = brabant
+						core = flanders
+						core = netherlands #FIXME: should exclude Maastricht
+					}
+				}
+			}
+			mean_time_to_happen = {
+				months = 3600
+				
+				modifier = {
+					factor = 0.5
+					domain = {
+						culture = dutch
+					}
+				}
+			}
+		}
+	}
 }
