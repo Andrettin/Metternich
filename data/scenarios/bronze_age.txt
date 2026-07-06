@@ -26,3 +26,14 @@ mycenaean_greece_and_the_orient = {
 		phoenicia
 	}
 }
+
+nordic_bronze_age = {
+	name = "Nordic Bronze Age"
+	parent_scenario = bronze_age
+	start_date = -2000
+	map_template = central_europe
+	hidden = true
+	default_domains = {
+		suionia
+	}
+}
