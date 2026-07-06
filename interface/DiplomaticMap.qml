@@ -47,7 +47,7 @@ Flickable {
 				y: diplomatic_map_image_rect.y
 				source: visible ? ("image://diplomatic_map/" + country.identifier + (diplomatic_map.mode === DiplomaticMap.Mode.Realm ? "/realm" : "") + (selected ? "/selected" : get_map_mode_suffix(diplomatic_map.mode, country)) + "/" + country_suffix) : "image://empty/"
 				cache: false
-				visible: country.game_data.provinces.length > 0 && (country.game_data.is_independent() || diplomatic_map.mode !== DiplomaticMap.Mode.Realm)
+				visible: country && country.game_data.provinces.length > 0 && (country.game_data.is_independent() || diplomatic_map.mode !== DiplomaticMap.Mode.Realm)
 				
 				readonly property var country: model.modelData
 				readonly property bool selected: selected_country === country
