@@ -2,6 +2,7 @@ suioni = {
 	name = "Suioni"
 	group = scandinavian
 	color = { 150 108 150 }
+	language = proto_germanic
 	species = {
 		human
 		half_elf
