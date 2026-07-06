@@ -1,0 +1,8 @@
+cynopolis = {
+	name = "Cynopolis"
+	world = earth
+	geocoordinate = { 30.7833 28.4833 } #Cynopolis (Upper Egypt)
+	type = holding
+	holding_type = temple
+	province = ikhmim #Minya
+}

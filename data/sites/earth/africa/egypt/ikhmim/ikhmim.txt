@@ -1,0 +1,8 @@
+ikhmim = {
+	name = "Ikhmim"
+	world = earth
+	geocoordinate = { 31.746111111111 26.564166666667 } #Akhmim
+	type = holding
+	holding_type = castle
+	province = ikhmim
+}

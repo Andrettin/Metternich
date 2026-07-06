@@ -4,7 +4,7 @@ abydos = {
 	geocoordinate = { 31.918889 26.185167 }
 	type = resource
 	resource = grain
-	province = upper_egypt
+	province = ikhmim
 	
 	history = {
 		-1450 = {

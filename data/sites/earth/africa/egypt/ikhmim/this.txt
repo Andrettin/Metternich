@@ -4,7 +4,7 @@ this = {
 	geocoordinate = { 31.9 26.333333333333 }
 	type = resource
 	resource = stone #clay
-	province = upper_egypt
+	province = ikhmim
 	
 	history = {
 		-1450 = {

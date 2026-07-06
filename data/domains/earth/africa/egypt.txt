@@ -23,6 +23,7 @@ egypt = {
 		bilbays
 		damietta
 		giza
+		ikhmim
 		kharibta
 		mahalla
 		rosetta
