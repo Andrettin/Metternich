@@ -58,6 +58,10 @@ QCoro::Task<void> population_unit::do_cultural_change()
 	for (const std::unique_ptr<const culture::cultural_derivation> &cultural_derivation : this->get_culture()->get_cultural_derivations()) {
 		decimillesimal_int derivation_rate(0);
 
+		if (cultural_derivation->conditions != nullptr && !cultural_derivation->conditions->check(this)) {
+			continue;
+		}
+
 		if (cultural_derivation->mean_time_to_happen != nullptr) {
 			const decimillesimal_int mtth = cultural_derivation->mean_time_to_happen->calculate(this, game::get()->get_year());
 			derivation_rate = decimillesimal_int(100) / mtth;
