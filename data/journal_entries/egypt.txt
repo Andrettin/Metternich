@@ -1,0 +1,13 @@
+battle_of_megiddo = {
+	name = "Battle of Megiddo"
+	portrait = helmet
+	preconditions = {
+		domain = egypt
+	}
+	owned_provinces = {
+		palestine
+	}
+	completion_effects = {
+		regency += 10
+	}
+}
