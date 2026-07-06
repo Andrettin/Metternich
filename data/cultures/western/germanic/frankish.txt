@@ -37,5 +37,28 @@ frankish = {
 				}
 			}
 		}
+		french = {
+			conditions = {
+				year >= 776
+				province = {
+					core = france #should exclude Alsace-Moselle?
+					not = {
+						core = brabant
+						core = flanders
+						core = netherlands #FIXME: should exclude Maastricht
+					}
+				}
+			}
+			mean_time_to_happen = {
+				months = 1200
+				
+				modifier = {
+					factor = 0.5
+					domain = {
+						cultural_group = latin
+					}
+				}
+			}
+		}
 	}
 }

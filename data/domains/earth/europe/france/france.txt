@@ -23,18 +23,19 @@ france = {
 		ile_de_france
 		orleanais
 		anjou
+		auvergne
+		burgundy
 		champagne
+		dauphiny
+		franche_comte
+		limousin
+		gascony
+		guyenne
+		lower_languedoc
 		picardy
 		poitou
-		burgundy
-		limousin
-		auvergne
-		dauphiny
-		guyenne
-		gascony
-		upper_languedoc
-		lower_languedoc
 		provence
+		upper_languedoc
 		vivarais
 	}
 	
