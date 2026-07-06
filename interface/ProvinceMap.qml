@@ -174,194 +174,38 @@ Flickable {
 	Repeater {
 		model: metternich.map.provinces
 		
-		Column {
+		Item {
 			id: province_label_area
 			x: Math.max(Math.floor(text_rect.x * metternich.defines.province_map_tile_scale * scale_factor) + Math.max(0, Math.floor((text_rect_width - width) / 2)), Math.floor((province_label.contentWidth - width) / 2 + 1 * scale_factor))
 			y: Math.floor(text_rect.y * metternich.defines.province_map_tile_scale * scale_factor) + Math.max(0, Math.floor((text_rect_height - height) / 2))
-			spacing: 2 * scale_factor
-			visible: province_map.show_site_mode !== ProvinceMap.SiteMode.ShowLocations
+			width: province_label_column.width
+			height: province_label_column.height
 			
 			readonly property var province: model.modelData
 			readonly property var text_rect: province ? province.game_data.text_rect : Qt.rect(0, 0, 0, 0)
 			readonly property int text_rect_width: Math.floor(text_rect.width * metternich.defines.province_map_tile_scale * scale_factor)
 			readonly property int text_rect_height: Math.floor(text_rect.height * metternich.defines.province_map_tile_scale * scale_factor)
 			
-			Row {
-				anchors.horizontalCenter: province_label_area.horizontalCenter
+			Column {
+				id: province_label_column
 				spacing: 2 * scale_factor
+				visible: province_map.show_site_mode !== ProvinceMap.SiteMode.ShowLocations
 				
-				Image {
-					id: garrison_icon
-					source: "image://icon/" + (visible && province.water_zone ? 
-						((province.game_data.military_unit_category_counts.length > 0 && province.game_data.get_domain_military_unit_category_counts(metternich.game.player_country).length > 0) ?
-							province.game_data.get_domain_military_unit_icon(metternich.game.player_country).identifier
-							: province.game_data.get_military_unit_icon().identifier
-						) : "garrison")
-						+ (selected ? "/selected" : "")
-					visible: province && province.game_data.military_unit_category_counts.length > 0
-					
-					readonly property bool selected: visible && selected_province === province && selected_garrison
-					
-					MouseArea {
-						anchors.fill: parent
-						hoverEnabled: true
-						
-						onClicked: {
-							metternich.defines.click_sound.play()
-							selected_civilian_unit = null
-							selected_site = null
-							if (selected_province === province && selected_garrison) {
-								selected_province = null
-								selected_garrison = false
-							} else {
-								selected_province = province
-								selected_garrison = true
-							}
-						}
-						
-						onContainsMouseChanged: {
-							var text = province.water_zone ? "View Fleet" : "View Garrison"
-							
-							if (containsMouse) {
-								status_text = text
-							} else {
-								if (status_text === text) {
-									status_text = ""
-								}
-							}
-						}
-					}
-				}
-				
-				Repeater {
-					model: province ? province.game_data.civilian_units : []
+				Row {
+					anchors.horizontalCenter: province_label_column.horizontalCenter
+					spacing: 2 * scale_factor
 					
 					Image {
-						id: civilian_unit_icon
-						source: "image://icon/alliance" + (grayscale ? "/grayscale" : "") + (selected ? "/selected" : "")
-						visible: civilian_unit.owner === metternich.game.player_country
+						id: garrison_icon
+						source: "image://icon/" + (visible && province.water_zone ? 
+							((province.game_data.military_unit_category_counts.length > 0 && province.game_data.get_domain_military_unit_category_counts(metternich.game.player_country).length > 0) ?
+								province.game_data.get_domain_military_unit_icon(metternich.game.player_country).identifier
+								: province.game_data.get_military_unit_icon().identifier
+							) : "garrison")
+							+ (selected ? "/selected" : "")
+						visible: province && province.game_data.military_unit_category_counts.length > 0
 						
-						readonly property var civilian_unit: model.modelData
-						readonly property bool civilian_unit_interactive: civilian_unit.owner === metternich.game.player_country
-						readonly property bool selected: civilian_unit === selected_civilian_unit
-						readonly property bool grayscale: civilian_unit.moving || civilian_unit.working
-						
-						MouseArea {
-							anchors.fill: parent
-							hoverEnabled: true
-							
-							onClicked: {
-								metternich.defines.click_sound.play()
-								if (civilian_unit_interactive && civilian_unit !== selected_civilian_unit) {
-									select_civilian_unit(civilian_unit)
-								} else {
-									select_civilian_unit(null)
-								}
-							}
-							
-							onContainsMouseChanged: {
-								var text = civilian_unit.type.name
-								if (civilian_unit.working) {
-									text += " (Working)"
-								} else if (civilian_unit.moving) {
-									text += " (Moving)"
-								}
-								
-								if (containsMouse) {
-									status_text = text
-								} else {
-									if (status_text === text) {
-										status_text = ""
-									}
-								}
-							}
-						}
-					}
-				}
-				
-				Repeater {
-					model: province ? province.game_data.entering_armies : []
-					
-					Image {
-						id: entering_army_icon
-						source: "image://icon/" + (province.water_zone && army.military_units.length > 0 ? army.get_military_unit_icon().identifier : "war") //FIXME: show the alliance icon if the army is entering a friendly province
-						visible: army.military_units.length > 0
-						
-						readonly property var army: model.modelData
-						
-						Image {
-							id: moving_fleet_icon
-							anchors.top: parent.top
-							anchors.topMargin: 8 * scale_factor
-							anchors.right: parent.right
-							anchors.rightMargin: 8 * scale_factor
-							source: "image://icon/war" //FIXME: should be a steering wheel instead
-						}
-						
-						MouseArea {
-							anchors.fill: parent
-							hoverEnabled: true
-							
-							onContainsMouseChanged: {
-								var text = province.water_zone ? "Entering Fleet" : "Entering Army"
-								
-								if (containsMouse) {
-									status_text = text
-								} else {
-									if (status_text === text) {
-										status_text = ""
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-			
-			TinyText {
-				id: province_label
-				anchors.horizontalCenter: province_label_area.horizontalCenter
-				text: province ? province.game_data.current_cultural_name : ""
-				wrapMode: Text.WordWrap
-				horizontalAlignment: Text.AlignHCenter
-				verticalAlignment: Text.AlignVCenter
-				width: province_label_area.width > 0 ? province_label_area.width : contentWidth
-			}
-			
-			Grid {
-				anchors.horizontalCenter: province_label_area.horizontalCenter
-				spacing: 1 * scale_factor
-				columns: 3
-				visible: province_map.show_site_mode === ProvinceMap.SiteMode.Show
-				
-				Repeater {
-					model: province ? province.game_data.visible_sites : []
-					
-					Item {
-						id: site_icon_area
-						width: site_icon.width + 4 * scale_factor
-						height: site_icon.height + 4 * scale_factor
-						
-						readonly property var site: model.modelData
-						readonly property var holding_type: site ? site.game_data.holding_type : null
-						readonly property var dungeon: site ? site.game_data.dungeon : null
-						readonly property bool selected: site === selected_site
-						
-						Rectangle {
-							id: site_domain_color_circle
-							width: site_icon_area.width
-							height: site_icon_area.height
-							radius: width / 2
-							color: selected ? metternich.defines.selected_country_color : (site.game_data.owner ? site.game_data.owner.color : "transparent")
-							visible: selected || (site.game_data.owner !== null && site.game_data.owner !== site.game_data.province.game_data.owner)
-						}
-						
-						Image {
-							id: site_icon
-							anchors.verticalCenter: parent.verticalCenter
-							anchors.horizontalCenter: parent.horizontalCenter
-							source: "image://icon/" + (holding_type ? holding_type.icon.identifier : (dungeon ? dungeon.icon.identifier : (site.holding_type ? (site.holding_type.icon.identifier + "/blank_silhouette") : "garrison")))
-						}
+						readonly property bool selected: visible && selected_province === province && selected_garrison
 						
 						MouseArea {
 							anchors.fill: parent
@@ -370,32 +214,203 @@ Flickable {
 							onClicked: {
 								metternich.defines.click_sound.play()
 								selected_civilian_unit = null
-								selected_province = null
-								selected_garrison = false
-								if (selected_site === site) {
-									selected_site = null
+								selected_site = null
+								if (selected_province === province && selected_garrison) {
+									selected_province = null
+									selected_garrison = false
 								} else {
-									selected_site = site
+									selected_province = province
+									selected_garrison = true
 								}
 							}
 							
 							onContainsMouseChanged: {
-								var text = site.game_data.display_text
+								var text = province.water_zone ? "View Fleet" : "View Garrison"
 								
 								if (containsMouse) {
-									hovered_site = site
 									status_text = text
 								} else {
 									if (status_text === text) {
 										status_text = ""
 									}
+								}
+							}
+						}
+					}
+					
+					Repeater {
+						model: province ? province.game_data.civilian_units : []
+						
+						Image {
+							id: civilian_unit_icon
+							source: "image://icon/alliance" + (grayscale ? "/grayscale" : "") + (selected ? "/selected" : "")
+							visible: civilian_unit.owner === metternich.game.player_country
+							
+							readonly property var civilian_unit: model.modelData
+							readonly property bool civilian_unit_interactive: civilian_unit.owner === metternich.game.player_country
+							readonly property bool selected: civilian_unit === selected_civilian_unit
+							readonly property bool grayscale: civilian_unit.moving || civilian_unit.working
+							
+							MouseArea {
+								anchors.fill: parent
+								hoverEnabled: true
+								
+								onClicked: {
+									metternich.defines.click_sound.play()
+									if (civilian_unit_interactive && civilian_unit !== selected_civilian_unit) {
+										select_civilian_unit(civilian_unit)
+									} else {
+										select_civilian_unit(null)
+									}
+								}
+								
+								onContainsMouseChanged: {
+									update_civilian_unit_status_text(civilian_unit, containsMouse)
+								}
+							}
+						}
+					}
+					
+					Repeater {
+						model: province ? province.game_data.entering_armies : []
+						
+						Image {
+							id: entering_army_icon
+							source: "image://icon/" + (province.water_zone && army.military_units.length > 0 ? army.get_military_unit_icon().identifier : "war") //FIXME: show the alliance icon if the army is entering a friendly province
+							visible: army.military_units.length > 0
+							
+							readonly property var army: model.modelData
+							
+							Image {
+								id: moving_fleet_icon
+								anchors.top: parent.top
+								anchors.topMargin: 8 * scale_factor
+								anchors.right: parent.right
+								anchors.rightMargin: 8 * scale_factor
+								source: "image://icon/war" //FIXME: should be a steering wheel instead
+							}
+							
+							MouseArea {
+								anchors.fill: parent
+								hoverEnabled: true
+								
+								onContainsMouseChanged: {
+									var text = province.water_zone ? "Entering Fleet" : "Entering Army"
 									
-									if (hovered_site === site) {
-										hovered_site = null
+									if (containsMouse) {
+										status_text = text
+									} else {
+										if (status_text === text) {
+											status_text = ""
+										}
 									}
 								}
 							}
 						}
+					}
+				}
+				
+				TinyText {
+					id: province_label
+					anchors.horizontalCenter: province_label_column.horizontalCenter
+					text: province ? province.game_data.current_cultural_name : ""
+					wrapMode: Text.WordWrap
+					horizontalAlignment: Text.AlignHCenter
+					verticalAlignment: Text.AlignVCenter
+					width: province_label_column.width > 0 ? province_label_column.width : contentWidth
+				}
+				
+				Grid {
+					anchors.horizontalCenter: province_label_column.horizontalCenter
+					spacing: 1 * scale_factor
+					columns: 3
+					visible: province_map.show_site_mode === ProvinceMap.SiteMode.Show
+					
+					Repeater {
+						model: province ? province.game_data.visible_sites : []
+						
+						Item {
+							id: site_icon_area
+							width: site_icon.width + 4 * scale_factor
+							height: site_icon.height + 4 * scale_factor
+							
+							readonly property var site: model.modelData
+							readonly property var holding_type: site ? site.game_data.holding_type : null
+							readonly property var dungeon: site ? site.game_data.dungeon : null
+							readonly property bool selected: site === selected_site
+							
+							Rectangle {
+								id: site_domain_color_circle
+								width: site_icon_area.width
+								height: site_icon_area.height
+								radius: width / 2
+								color: selected ? metternich.defines.selected_country_color : (site.game_data.owner ? site.game_data.owner.color : "transparent")
+								visible: selected || (site.game_data.owner !== null && site.game_data.owner !== site.game_data.province.game_data.owner)
+							}
+							
+							Image {
+								id: site_icon
+								anchors.verticalCenter: parent.verticalCenter
+								anchors.horizontalCenter: parent.horizontalCenter
+								source: "image://icon/" + (holding_type ? holding_type.icon.identifier : (dungeon ? dungeon.icon.identifier : (site.holding_type ? (site.holding_type.icon.identifier + "/blank_silhouette") : "garrison")))
+							}
+							
+							MouseArea {
+								anchors.fill: parent
+								hoverEnabled: true
+								
+								onClicked: {
+									metternich.defines.click_sound.play()
+									selected_civilian_unit = null
+									selected_province = null
+									selected_garrison = false
+									if (selected_site === site) {
+										selected_site = null
+									} else {
+										selected_site = site
+									}
+								}
+								
+								onContainsMouseChanged: {
+									var text = site.game_data.display_text
+									
+									if (containsMouse) {
+										hovered_site = site
+										status_text = text
+									} else {
+										if (status_text === text) {
+											status_text = ""
+										}
+										
+										if (hovered_site === site) {
+											hovered_site = null
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			
+			Image {
+				id: selected_civilian_unit_icon
+				anchors.verticalCenter: parent.verticalCenter
+				anchors.horizontalCenter: parent.horizontalCenter
+				source: selected_civilian_unit !== null && selected_civilian_unit.province === province ? ("image://icon/" + selected_civilian_unit.icon.identifier + "/selected") : "image://empty/"
+				visible: selected_civilian_unit !== null && selected_civilian_unit.province === province
+				
+				MouseArea {
+					anchors.fill: parent
+					hoverEnabled: true
+					
+					onClicked: {
+						metternich.defines.click_sound.play()
+						select_civilian_unit(null)
+					}
+					
+					onContainsMouseChanged: {
+						update_civilian_unit_status_text(selected_civilian_unit, containsMouse)
 					}
 				}
 			}
@@ -559,5 +574,26 @@ Flickable {
 		}
 		
 		return ""
+	}
+	
+	function update_civilian_unit_status_text(civilian_unit, show_text) {
+		var text = ""
+		
+		if (civilian_unit !== null) {
+			text = civilian_unit.type.name
+			if (civilian_unit.working) {
+				text += " (Working)"
+			} else if (civilian_unit.moving) {
+				text += " (Moving)"
+			}
+		}
+		
+		if (show_text) {
+			status_text = text
+		} else {
+			if (status_text === text) {
+				status_text = ""
+			}
+		}
 	}
 }
