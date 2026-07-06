@@ -47,19 +47,18 @@ africa = {
 
 central_europe = {
 	name = "Central Europe"
-	size = { 1120 768 }
+	size = { 1120 1088 }
 	world = earth
 	main_map_template = earth
-	map_start_pos = { 7776 3136 }
+	map_start_pos = { 7776 2816 }
 	minimap_tile_scale = 0.25
 	diplomatic_map_tile_scale = 1
 	ignored_provinces = {
 		bessarabia
-		courland
 		gulf_of_lion
-		livonia
 		minsk
 		montenegro
+		satakunta
 		tyrrhenian_sea
 		upper_languedoc
 		vitebsk
