@@ -3,11 +3,17 @@ denmark = {
 	type = polity
 	color = { 172 70 66 }
 	flag = denmark
-	culture = danish
+	cultures = {
+		danish
+		norse
+	}
 	default_religion = protestant
 	default_tier = kingdom
 	default_government_type = monarchy
 	default_capital = copenhagen
+	short_names = {
+		tribe = "Danes"
+	}
 	eras = {
 		medieval_era
 		renaissance_era
@@ -16,5 +22,21 @@ denmark = {
 	core_provinces = {
 		zealand
 		jutland
+	}
+	
+	history = {
+		culture = norse
+		religion = asatru
+		government_type = tribal_despotism
+		
+		high_middle_ages = {
+			culture = danish
+			religion = catholic
+			government_type = monarchy
+		}
+		
+		1550 = {
+			religion = protestant
+		}
 	}
 }
