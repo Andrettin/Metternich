@@ -1,6 +1,7 @@
 suez = {
 	name = "Suez"
-	color = { 176 56 21 }
+	color = { 44 54 3 }
+	terrain = desert
 	default_provincial_capital = suez
 	regions = {
 		egypt

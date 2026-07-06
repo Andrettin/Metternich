@@ -1,0 +1,8 @@
+sokhna = {
+	name = "Sokhna"
+	world = earth
+	geocoordinate = { 32.334444444444 29.645 } #Ain Sokhna
+	type = holding
+	holding_type = guild
+	province = suez
+}

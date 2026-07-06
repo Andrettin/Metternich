@@ -1,0 +1,8 @@
+kolzum = {
+	name = "Kolzum"
+	world = earth
+	geocoordinate = { 32.573972 29.954611 } #Clysma
+	type = holding
+	holding_type = castle
+	province = suez
+}
