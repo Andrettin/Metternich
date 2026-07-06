@@ -28,6 +28,7 @@
 /graphics/flags/denmark.svg (by Madden, from the Wikimedia Commons) (in the public domain)
 /graphics/flags/egypt.svg (by Mysid, from the Wikimedia Commons) (released to the public domain)
 /graphics/flags/england.svg (by Plugsly, from the Wikimedia Commons) (licensed under the CC-BY-SA 4.0)
+/graphics/flags/flanders.svg (by Tom Lemmens, from the Wikimedia Commons) (licensed under the CC0)
 /graphics/flags/france.svg (by Skopp, from the Wikimedia Commons) (in the public domain)
 /graphics/flags/france_royal.svg (by Oren neu dag, from the Wikimedia Commons) (licensed under the CC-BY-SA 3.0)
 /graphics/flags/genoa.svg (by Himasaram, from the Wikimedia Commons) (released to the public domain)

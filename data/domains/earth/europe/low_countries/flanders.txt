@@ -1,0 +1,17 @@
+flanders = {
+	name = "Flanders"
+	type = polity
+	color = { 43 141 172 }
+	flag = flanders
+	culture = flemish
+	default_religion = catholic
+	default_tier = county
+	default_government_type = monarchy
+	default_capital = bruges
+	eras = {
+		medieval_era
+	}
+	core_provinces = {
+		flanders
+	}
+}
