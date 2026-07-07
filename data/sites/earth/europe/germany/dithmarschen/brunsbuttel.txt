@@ -4,5 +4,5 @@ brunsbuttel = {
 	geocoordinate = { 9.1386111111111 53.896388888889 }
 	type = holding
 	holding_type = castle
-	province = holstein
+	province = dithmarschen
 }

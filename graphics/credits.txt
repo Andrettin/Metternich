@@ -26,6 +26,7 @@
 /graphics/flags/cologne.svg (by Jürgen Krause, from the Wikimedia Commons) (in the public domain)
 /graphics/flags/croatia.svg (by Samhanin, from the Wikimedia Commons) (licensed under the CC0)
 /graphics/flags/denmark.svg (by Madden, from the Wikimedia Commons) (in the public domain)
+/graphics/flags/dithmarschen.svg (by Wilhelm Horst Lippert, from the Wikimedia Commons) (in the public domain)
 /graphics/flags/egypt.svg (by Mysid, from the Wikimedia Commons) (released to the public domain)
 /graphics/flags/england.svg (by Plugsly, from the Wikimedia Commons) (licensed under the CC-BY-SA 4.0)
 /graphics/flags/flanders.svg (by Tom Lemmens, from the Wikimedia Commons) (licensed under the CC0)

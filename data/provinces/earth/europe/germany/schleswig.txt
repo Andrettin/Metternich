@@ -1,6 +1,7 @@
 schleswig = {
 	name = "Schleswig"
 	color = { 0 192 96 }
+	terrain = plains
 	default_provincial_capital = flensburg
 	cultural_names = {
 		danish = "Slesvig"
