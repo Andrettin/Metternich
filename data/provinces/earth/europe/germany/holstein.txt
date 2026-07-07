@@ -1,6 +1,7 @@
 holstein = {
 	name = "Holstein"
 	color = { 128 65 96 }
+	terrain = plains
 	default_provincial_capital = kiel
 	regions = {
 		germany
