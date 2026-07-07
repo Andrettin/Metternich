@@ -2,8 +2,8 @@ ribe = {
 	name = "Ribe"
 	world = earth
 	geocoordinate = { 8.763056 55.327222 }
-	type = resource
-	resource = cattle
+	type = holding
+	holding_type = temple
 	province = schleswig
 	features = {
 		prime_cattle_land

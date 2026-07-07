@@ -1,0 +1,8 @@
+haderslev = {
+	name = "Haderslev"
+	world = earth
+	geocoordinate = { 9.5 55.25 }
+	type = holding
+	holding_type = guild
+	province = schleswig
+}

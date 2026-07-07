@@ -1,0 +1,8 @@
+kolding = {
+	name = "Kolding"
+	world = earth
+	geocoordinate = { 9.4722222222222 55.490833333333 }
+	type = holding
+	holding_type = castle
+	province = schleswig
+}

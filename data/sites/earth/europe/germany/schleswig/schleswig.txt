@@ -2,7 +2,12 @@ schleswig = {
 	name = "Schleswig"
 	world = earth
 	geocoordinate = { 9.5697222222222 54.515277777778 }
+	type = holding
+	holding_type = castle
 	province = schleswig
+	cultural_names = {
+		danish = "Slesvig"
+	}
 	
 	history = {
 		919 = {

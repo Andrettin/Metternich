@@ -1,7 +1,9 @@
 hedeby = {
 	name = "Hedeby"
 	world = earth
-	#geocoordinate = { 9.5652777777778 54.491111111111 }
+	geocoordinate = { 9.5652777777778 54.491111111111 }
+	type = holding
+	holding_type = guild
 	province = schleswig
 	cultural_group_names = {
 		german = "Haddeby"

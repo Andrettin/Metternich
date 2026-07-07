@@ -1,0 +1,8 @@
+sonderborg = {
+	name = "Sonderborg" #"Sønderborg"
+	world = earth
+	geocoordinate = { 9.7866666666667 54.911388888889 }
+	type = holding
+	holding_type = castle
+	province = schleswig
+}

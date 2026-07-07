@@ -1,0 +1,8 @@
+tonder = {
+	name = "Tonder" #"Tønder"
+	world = earth
+	geocoordinate = { 8.8638888888889 54.942777777778 }
+	type = holding
+	holding_type = castle
+	province = schleswig
+}
