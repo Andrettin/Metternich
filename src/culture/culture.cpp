@@ -78,6 +78,10 @@ void culture::check() const
 		throw std::runtime_error(std::format("Culture \"{}\" has no phenotype weights.", this->get_identifier()));
 	}
 
+	if (this->get_language() == nullptr) {
+		log::log_error(std::format("Culture \"{}\" has no language.", this->get_identifier()));
+	}
+
 	culture_base::check();
 }
 
