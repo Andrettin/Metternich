@@ -2,6 +2,7 @@ austrian = {
 	name = "Austrian"
 	group = german
 	color = { 244 121 126 }
+	language = high_german
 	species = {
 		human
 	}

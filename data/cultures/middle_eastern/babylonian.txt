@@ -2,6 +2,7 @@ babylonian = {
 	name = "Babylonian"
 	group = mesopotamian
 	color = { 27 73 157 }
+	language = babylonian
 	species = {
 		human
 	}

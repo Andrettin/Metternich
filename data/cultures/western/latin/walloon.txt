@@ -2,6 +2,7 @@ walloon = {
 	name = "Walloon"
 	group = french
 	color = { 190 90 20 }
+	language = french
 	species = {
 		human
 	}

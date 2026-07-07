@@ -2,6 +2,7 @@ assyrian = {
 	name = "Assyrian"
 	group = mesopotamian
 	color = { 102 76 153 }
+	language = assyrian
 	species = {
 		human
 	}

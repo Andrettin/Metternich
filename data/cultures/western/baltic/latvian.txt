@@ -2,6 +2,7 @@ latvian = {
 	name = "Latvian"
 	group = baltic
 	color = { 162 17 48 }
+	language = latvian
 	species = {
 		human
 	}

@@ -1,5 +1,6 @@
 orcish = {
 	name = "Orcish"
+	language = orcish
 	species = {
 		orc
 		half_orc

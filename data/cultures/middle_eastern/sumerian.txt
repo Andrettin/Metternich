@@ -1,6 +1,7 @@
 sumerian = {
 	name = "Sumerian"
 	group = mesopotamian
+	language = sumerian
 	species = {
 		human
 	}

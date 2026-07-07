@@ -2,6 +2,7 @@ gaulish = {
 	name = "Gaulish"
 	group = gallic
 	color = { 44 102 30 }
+	language = gaulish
 	species = {
 		human
 	}

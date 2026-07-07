@@ -2,6 +2,7 @@ italian = {
 	name = "Italian"
 	group = italian
 	color = { 142 167 80 }
+	language = italian
 	species = {
 		human
 	}

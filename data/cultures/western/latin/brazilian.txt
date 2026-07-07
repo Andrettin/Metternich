@@ -2,6 +2,7 @@ brazilian = {
 	name = "Brazilian"
 	group = iberian
 	color = { 0 112 66 }
+	language = portuguese
 	species = {
 		human
 	}

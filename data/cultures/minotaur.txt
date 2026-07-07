@@ -1,6 +1,7 @@
 minotaur = {
 	name = "Minotaur"
 	group = giant
+	language = minotaur
 	species = {
 		minotaur
 	}

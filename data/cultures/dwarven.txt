@@ -1,6 +1,7 @@
 dwarven = {
 	name = "Dwarven"
 	color = { 178 114 25 }
+	language = dwarvish
 	given_name_markov_chain_size = 2
 	species = {
 		dwarf

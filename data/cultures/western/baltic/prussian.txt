@@ -2,6 +2,7 @@ prussian = {
 	name = "Prussian"
 	group = baltic
 	color = { 142 140 102 }
+	language = old_prussian
 	species = {
 		human
 	}

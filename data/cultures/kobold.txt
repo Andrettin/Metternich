@@ -1,6 +1,7 @@
 kobold = {
 	name = "Kobold"
 	group = draconic
+	language = kobold
 	species = {
 		kobold
 	}

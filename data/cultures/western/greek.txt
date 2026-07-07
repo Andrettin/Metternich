@@ -2,6 +2,7 @@ greek = {
 	name = "Greek"
 	group = hellenic
 	color = { 122 180 210 }
+	language = greek
 	species = {
 		human
 	}

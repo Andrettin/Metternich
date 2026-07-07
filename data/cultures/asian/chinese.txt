@@ -2,6 +2,7 @@ chinese = {
 	name = "Chinese"
 	group = asian
 	default_phenotype = east_asian
+	language = chinese
 	color = { 145 30 30 }
 	species = {
 		human

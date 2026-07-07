@@ -2,6 +2,7 @@ irish = {
 	name = "Irish"
 	group = celtic
 	color = { 35 140 50 }
+	language = irish
 	species = {
 		human
 	}

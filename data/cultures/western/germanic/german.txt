@@ -2,6 +2,7 @@ german = {
 	name = "German"
 	group = german
 	color = { 245 167 97 }
+	language = high_german
 	species = {
 		human
 	}

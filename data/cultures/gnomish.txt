@@ -1,5 +1,6 @@
 gnomish = {
 	name = "Gnomish"
+	language = gnomish
 	species = {
 		gnome
 		#rock_gnome

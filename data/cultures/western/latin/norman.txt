@@ -2,6 +2,7 @@ norman = {
 	name = "Norman"
 	group = french
 	color = { 204 178 25 }
+	language = french
 	species = {
 		human
 	}

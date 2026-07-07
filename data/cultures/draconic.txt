@@ -1,6 +1,7 @@
 draconic = {
 	name = "Draconic"
 	group = draconic
+	language = draconic
 	species = {
 		kobold #FIXME: use other draconic species instead
 	}
