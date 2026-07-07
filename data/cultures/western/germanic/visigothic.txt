@@ -10,4 +10,32 @@ visigothic = {
 		human
 		half_elf
 	}
+	cultural_derivations = {
+		castillian = {
+			conditions = {
+				year >= 850
+				not = {
+					religious_group = muslim
+				}
+				or = {
+					province = {
+						core = castille
+					}
+					domain = {
+						culture = castillian
+					}
+				}
+			}
+			mean_time_to_happen = {
+				months = 3600
+				
+				modifier = {
+					factor = 0.5
+					domain = {
+						culture = castillian
+					}
+				}
+			}
+		}
+	}
 }

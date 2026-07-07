@@ -15,6 +15,34 @@ suebi = {
 	#	austrian
 	#	german
 	#}
+	cultural_derivations = {
+		portuguese = {
+			conditions = {
+				year >= 850
+				or = {
+					province = {
+						or = {
+							core = galicia
+							core = portugal
+						}
+					}
+					domain = {
+						culture = portuguese
+					}
+				}
+			}
+			mean_time_to_happen = {
+				months = 3600
+				
+				modifier = {
+					factor = 0.5
+					domain = {
+						culture = portuguese
+					}
+				}
+			}
+		}
+	}
 	
 	given_names = {
 		male = {
