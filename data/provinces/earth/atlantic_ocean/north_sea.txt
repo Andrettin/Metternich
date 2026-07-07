@@ -61,6 +61,7 @@ north_sea = {
 		gothic = "German Ocean"
 		roman = "German Ocean" #Source: "Ancient Warfare VII.6", 2013, p. 7.
 		suebi = "German Ocean"
+		visigothic = "German Ocean"
 	}
 	regions = {
 		north_sea

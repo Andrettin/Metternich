@@ -55,5 +55,6 @@ odin = {
 		swedish
 		teutonian
 		vandal
+		visigothic
 	}
 }
