@@ -20,7 +20,7 @@ alexandria = {
 		}
 		
 		-250 = {
-			wonders += great_library
+			#wonders += great_library
 		}
 		
 		high_middle_ages = {
