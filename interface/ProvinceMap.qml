@@ -512,7 +512,7 @@ Flickable {
 			text += " (" + province.map_data.terrain.name + ")"
 		} else if (province_map.mode === ProvinceMap.Mode.Technology) {
 			if (!province.water_zone) {
-				text += " (" + province.game_data.technologies.length + " Technologies)"
+				text += " (" + province.game_data.technologies.length + " " + (province.game_data.technologies.length === 1 ? "Technology" : "Technologies") + ")"
 			}
 		} else if (province_map.mode === ProvinceMap.Mode.TradeZone) {
 			var trade_zone_domain = province.game_data.trade_zone_domain
