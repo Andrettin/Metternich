@@ -440,7 +440,8 @@ public:
 	}
 
 	std::string get_modifier_string(const province *province) const;
-	Q_INVOKABLE QString get_effects_string(const metternich::domain *domain) const;
+	std::string get_effects_string(const domain *domain) const;
+	Q_INVOKABLE QString get_effects_qstring(const metternich::domain *domain) const;
 
 	virtual named_data_entry *get_tree_parent() const override
 	{

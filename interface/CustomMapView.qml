@@ -347,7 +347,7 @@ Item {
 				return
 			}
 			
-			var effects_string = technology.get_effects_string(metternich.game.player_country)
+			var effects_string = technology.get_effects_qstring(metternich.game.player_country)
 			
 			var dialog = notification_dialog_component.createObject(map_view, {
 				title: technology.discovery ? "Discovery" : "Technology Researched",

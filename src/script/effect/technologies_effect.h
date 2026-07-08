@@ -32,8 +32,12 @@ public:
 
 		if constexpr (std::is_same_v<scope_type, const domain>) {
 			co_await scope->get_technology()->add_technology(this->technology);
+			emit scope->get_technology()->technology_researched(technology);
 		} else {
 			co_await scope->get_game_data()->add_technology(this->technology);
+			if (scope->get_game_data()->is_capital()) {
+				emit scope->get_game_data()->get_owner()->get_technology()->technology_researched(technology);
+			}
 		}
 	}
 
@@ -50,12 +54,12 @@ public:
 
 	virtual std::string get_addition_string() const override
 	{
-		return "Gain the " + string::highlight(this->technology->get_name()) + " technology";
+		return std::format("Gain the {} technology", string::highlight(this->technology->get_name()));
 	}
 
 	virtual std::string get_subtraction_string() const override
 	{
-		return "Lose the " + string::highlight(this->technology->get_name()) + " technology";
+		return std::format("Lose the {} technology", string::highlight(this->technology->get_name()));
 	}
 
 private:

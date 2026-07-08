@@ -664,7 +664,7 @@ std::string technology::get_modifier_string(const province *province) const
 	return str;
 }
 
-QString technology::get_effects_string(const metternich::domain *domain) const
+std::string technology::get_effects_string(const domain *domain) const
 {
 	const province *capital_province = domain->get_game_data()->get_capital_province();
 	assert_throw(capital_province != nullptr);
@@ -895,7 +895,12 @@ QString technology::get_effects_string(const metternich::domain *domain) const
 		}
 	}
 
-	return QString::fromStdString(str);
+	return str;
+}
+
+QString technology::get_effects_qstring(const domain *domain) const
+{
+	return QString::fromStdString(this->get_effects_string(domain));
 }
 
 bool technology::is_hidden_in_tree() const

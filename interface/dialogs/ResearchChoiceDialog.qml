@@ -43,7 +43,7 @@ DialogBase {
 				
 				readonly property var technology: model.modelData
 				readonly property string costs_string: "Costs: " + costs_to_string(technology.get_commodity_costs_for_domain_qvariant_list(metternich.game.player_country), 0, ", ")
-				readonly property string effects_string: technology.get_effects_string(metternich.game.player_country)
+				readonly property string effects_string: technology.get_effects_qstring(metternich.game.player_country)
 				
 				onClicked: {
 					research_choice_dialog.close()
