@@ -1,38 +1,3 @@
-banking = {
-	name = "Banking"
-	subcategory = trade_practices
-	portrait = coinage
-	icon = wealth
-	period = gunpowder_age
-	prerequisites = {
-		foreign_accreditation #seems reasonable
-	}
-}
-
-economics = {
-	name = "Economics"
-	subcategory = trade_practices
-	portrait = coinage
-	icon = wealth
-	period = absolutism_age
-	prerequisites = {
-		banking
-		university
-	}
-}
-
-corporation = {
-	name = "Corporation"
-	subcategory = commerce_institutions
-	portrait = trading_post
-	icon = wealth
-	period = steam_age
-	prerequisites = {
-		economics
-		industrialization
-	}
-}
-
 minor_merchant_houses = {
 	name = "Minor Merchant Houses"
 	subcategory = commerce_institutions

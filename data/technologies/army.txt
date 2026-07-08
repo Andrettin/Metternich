@@ -1,57 +1,10 @@
-gunpowder = {
-	name = "Gunpowder"
-	subcategory = army
-	portrait = engineering
-	icon = coal
-	period = dark_age
-	prerequisites = {
-		science
-	}
-}
-
-organized_regiments = {
-	name = "Organized Regiments"
-	subcategory = army
-	portrait = helmet
-	icon = crossed_sabers
-	period = absolutism_age
-	prerequisites = {
-		lance #since this technology allows Lancers, and they upgrade from Knights, which are allowed by Lance
-	}
-}
-
-improved_infantry_tactics = {
-	name = "Improved Infantry Tactics"
-	subcategory = infantry
-	portrait = helmet
-	icon = musket
-	period = enlightenment_age
-	prerequisites = {
-		organized_regiments
-		printing_press
-	}
-}
-
-explosives = {
-	name = "Explosives"
-	subcategory = army
-	portrait = fort
-	icon = coal
-	period = revolutionary_age
-	prerequisites = {
-		gunpowder
-		weapon_craftsmanship
-	}
-}
-
-leadership = {
-	name = "Leadership"
+hierarchical_command = {
+	name = "Hierarchical Command"
 	subcategory = army
 	portrait = fort
 	icon = flag
 	period = feudal_age
 	prerequisites = {
 		lance
-		gunpowder
 	}
 }

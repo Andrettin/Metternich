@@ -233,7 +233,7 @@ wing_of_finance = {
 	portrait = university
 	icon = chest
 	wealth_cost = 47400gp
-	required_technology = economics
+	required_technology = double_entry_bookkeeping
 	holding_types = {
 		university
 	}
@@ -278,7 +278,7 @@ wing_of_strategy = {
 	portrait = university
 	icon = crossed_sabers
 	wealth_cost = 47400gp
-	required_technology = leadership
+	required_technology = hierarchical_command
 	holding_types = {
 		university
 	}

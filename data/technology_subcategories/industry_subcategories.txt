@@ -40,8 +40,8 @@ mining = {
 	icon = iron_ore
 }
 
-power = {
-	name = "Power"
-	category = industry
-	icon = research
-}
+#power = {
+#	name = "Power"
+#	category = industry
+#	icon = research
+#}

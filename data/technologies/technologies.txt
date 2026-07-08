@@ -8,14 +8,3 @@ renaissance = {
 		scholasticism
 	}
 }
-
-modern_era = {
-	name = "Modern Era"
-	subcategory = technology
-	portrait = engineering
-	icon = rifle
-	period = modern_age
-	prerequisites = {
-		renaissance
-	}
-}

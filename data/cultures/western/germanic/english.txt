@@ -72,7 +72,7 @@ english = {
 		
 		1249 = {
 			#the Englishman Roger Bacon wrote about gunpowder in 1249; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, pp. 169-170.
-			technologies += gunpowder
+			#technologies += gunpowder
 		}
 		
 		1620 = {

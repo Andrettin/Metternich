@@ -319,26 +319,3 @@ trebuchet = {
 		mangonel
 	}
 }
-
-rifled_artillery = {
-	name = "Rifled Artillery"
-	subcategory = siege_equipment
-	portrait = engineering
-	icon = cannon
-	period = steam_age
-	prerequisites = {
-		trebuchet #previous siege engine
-		early_railroad #to set it in the appropriate period
-	}
-}
-
-large_artillery = {
-	name = "Large Artillery"
-	subcategory = siege_equipment
-	portrait = engineering
-	icon = cannon
-	period = imperial_age
-	prerequisites = {
-		rifled_artillery
-	}
-}

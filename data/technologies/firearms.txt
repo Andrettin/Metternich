@@ -1,28 +1,3 @@
-weapon_craftsmanship = {
-	name = "Weapon Craftsmanship"
-	subcategory = infantry
-	portrait = engineering
-	icon = musket
-	period = enlightenment_age
-	prerequisites = {
-		arbalest #so that crossbows lead to firearms
-		organized_regiments
-		composite_bow #so that composite bows lead to another technology
-	}
-}
-
-bayonet = {
-	name = "Bayonet"
-	subcategory = infantry
-	portrait = engineering
-	icon = musket
-	period = revolutionary_age
-	prerequisites = {
-		polearm
-		ironworks
-	}
-}
-
 flintlock_rifle = {
 	name = "Flintlock Rifle"
 	subcategory = infantry
@@ -30,8 +5,7 @@ flintlock_rifle = {
 	icon = rifle
 	period = revolutionary_age
 	prerequisites = {
-		improved_infantry_tactics
-		ironworks
+		manufactories
 	}
 	cost_factor = {
 		#modifier = {

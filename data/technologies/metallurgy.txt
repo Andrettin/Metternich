@@ -78,48 +78,6 @@ advanced_ore_smelting_processes = {
 	}
 }
 
-advanced_metallurgy = {
-	name = "Advanced Metallurgy"
-	subcategory = metallurgy
-	portrait = factory
-	icon = steel
-	period = industrial_age
-	prerequisites = {
-		ironworks #previous metallurgy technology
-		black_coal
-	}
-	modifier = {
-		sulfur_output_modifier = 25
-		coal_output_modifier = 25
-		iron_output_modifier = 25
-		employment_capacity_modifier = {
-			employment_type = sulfur_mining
-			modifier = 20
-		}
-	}
-	weight_factor = {
-		modifier = {
-			factor = 1.3
-			produces_commodity = coal
-		}
-		modifier = {
-			factor = 1.1
-			produces_commodity = iron
-		}
-		modifier = {
-			factor = 1.1
-			produces_commodity = sulfur
-		}
-		modifier = {
-			factor = 1.1
-			or = {
-				produces_commodity = gold
-				produces_commodity = silver
-			}
-		}
-	}
-}
-
 steel_alloys = {
 	name = "Steel Alloys"
 	subcategory = metallurgy
@@ -127,7 +85,8 @@ steel_alloys = {
 	icon = steel
 	period = imperial_age
 	prerequisites = {
-		advanced_metallurgy
+		ironworks #previous metallurgy technology
+		black_coal
 	}
 	cost_factor = {
 		#modifier = {

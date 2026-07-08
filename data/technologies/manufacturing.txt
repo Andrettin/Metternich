@@ -289,30 +289,18 @@ manufactories = {
 	icon = cog
 	period = absolutism_age
 	prerequisites = {
-		banking
+		guilds
 	}
 }
 
 industrialization = {
 	name = "Industrialization"
 	subcategory = manufacturing
-	portrait = engineering
+	portrait = factory
 	icon = cog
 	period = napoleonic_age
 	prerequisites = {
 		manufactories
-	}
-}
-
-refining = {
-	name = "Refining"
-	subcategory = manufacturing
-	portrait = engineering
-	icon = fuel
-	period = industrial_age
-	prerequisites = {
-		university
-		corporation
 	}
 }
 

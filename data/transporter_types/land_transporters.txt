@@ -19,7 +19,7 @@ locomotive = {
 	icon = paddlewheeler
 	hit_points = 10
 	cargo = 2
-	required_technology = experimental_railroad
+	required_technology = industrialization
 	stats = {
 		movement = 2
 	}

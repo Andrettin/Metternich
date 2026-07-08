@@ -3,7 +3,7 @@ bank = {
 	building_class = bank
 	portrait = trading_post
 	icon = wealth
-	required_technology = banking
+	required_technology = foreign_accreditation
 	min_holding_level = 4
 	holding_types = {
 		guild

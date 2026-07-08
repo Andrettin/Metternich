@@ -353,15 +353,3 @@ coke = {
 		coal_output_modifier = 50
 	}
 }
-
-dynamite = {
-	name = "Dynamite"
-	subcategory = mining
-	portrait = engineering
-	icon = coal
-	period = imperial_age
-	prerequisites = {
-		black_coal
-		compound_steam_engine
-	}
-}

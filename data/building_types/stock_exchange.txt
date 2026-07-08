@@ -3,7 +3,7 @@ stock_exchange = {
 	building_class = stock_exchange
 	portrait = trading_post
 	icon = wealth
-	required_technology = economics
+	required_technology = global_trade
 	holding_types = {
 		guild
 	}
