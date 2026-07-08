@@ -12,7 +12,7 @@ Item {
 	
 	readonly property var country: metternich.game.player_country
 	readonly property var country_game_data: country ? country.game_data : null
-	readonly property var country_turn_data: country ? country.turn_data : null
+	readonly property var domain_turn_data: country ? country.turn_data : null
 	property string status_text: ""
 	property string middle_status_text: ""
 	

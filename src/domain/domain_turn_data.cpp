@@ -1,6 +1,6 @@
 #include "metternich.h"
 
-#include "domain/country_turn_data.h"
+#include "domain/domain_turn_data.h"
 
 #include "economy/expense_transaction.h"
 #include "economy/income_transaction.h"
@@ -9,25 +9,25 @@
 
 namespace metternich {
 
-country_turn_data::country_turn_data(const metternich::domain *domain) : domain(domain)
+domain_turn_data::domain_turn_data(const metternich::domain *domain) : domain(domain)
 {
 }
 
-country_turn_data::~country_turn_data()
+domain_turn_data::~domain_turn_data()
 {
 }
 
-QVariantList country_turn_data::get_income_transactions_qvariant_list() const
+QVariantList domain_turn_data::get_income_transactions_qvariant_list() const
 {
 	return container::to_qvariant_list(this->income_transactions);
 }
 
-QVariantList country_turn_data::get_expense_transactions_qvariant_list() const
+QVariantList domain_turn_data::get_expense_transactions_qvariant_list() const
 {
 	return container::to_qvariant_list(this->expense_transactions);
 }
 
-void country_turn_data::add_income_transaction(const income_transaction_type transaction_type, const int64_t amount, const transaction_object_variant &object, const int64_t object_quantity, const metternich::domain *other_domain)
+void domain_turn_data::add_income_transaction(const income_transaction_type transaction_type, const int64_t amount, const transaction_object_variant &object, const int64_t object_quantity, const metternich::domain *other_domain)
 {
 	this->total_income += amount;
 
@@ -49,7 +49,7 @@ void country_turn_data::add_income_transaction(const income_transaction_type tra
 	this->income_transactions.push_back(std::move(transaction));
 }
 
-void country_turn_data::add_expense_transaction(const expense_transaction_type transaction_type, const int64_t amount, const transaction_object_variant &object, const int64_t object_quantity, const metternich::domain *other_domain)
+void domain_turn_data::add_expense_transaction(const expense_transaction_type transaction_type, const int64_t amount, const transaction_object_variant &object, const int64_t object_quantity, const metternich::domain *other_domain)
 {
 	this->total_expense += amount;
 

@@ -3,12 +3,12 @@
 #include "domain/domain_technology.h"
 
 #include "database/defines.h"
-#include "domain/country_turn_data.h"
 #include "domain/domain.h"
 #include "domain/domain_ai.h"
 #include "domain/domain_economy.h"
 #include "domain/domain_game_data.h"
 #include "domain/domain_government.h"
+#include "domain/domain_turn_data.h"
 #include "economy/commodity.h"
 #include "economy/resource.h"
 #include "engine_interface.h"

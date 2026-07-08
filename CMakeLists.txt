@@ -75,7 +75,6 @@ set(domain_SRCS
 	src/domain/consulate.cpp
 	src/domain/consulate_container.cpp
 	src/domain/country_rank.cpp
-	src/domain/country_turn_data.cpp
 	src/domain/domain.cpp
 	src/domain/domain_ai.cpp
 	src/domain/domain_attribute.cpp
@@ -87,6 +86,7 @@ set(domain_SRCS
 	src/domain/domain_military.cpp
 	src/domain/domain_technology.cpp
 	src/domain/domain_tier_data.cpp
+	src/domain/domain_turn_data.cpp
 	src/domain/government_group.cpp
 	src/domain/government_type.cpp
 	src/domain/government_type_container.cpp
@@ -446,7 +446,6 @@ set(domain_HDRS
 	src/domain/consulate.h
 	src/domain/consulate_container.h
 	src/domain/country_rank.h
-	src/domain/country_turn_data.h
 	src/domain/country_type.h
 	src/domain/diplomacy_state.h
 	src/domain/domain.h
@@ -461,6 +460,7 @@ set(domain_HDRS
 	src/domain/domain_technology.h
 	src/domain/domain_tier.h
 	src/domain/domain_tier_data.h
+	src/domain/domain_turn_data.h
 	src/domain/government_group.h
 	src/domain/government_type.h
 	src/domain/government_type_container.h

@@ -6,7 +6,6 @@
 #include "culture/culture.h"
 #include "database/database.h"
 #include "database/defines.h"
-#include "domain/country_turn_data.h"
 #include "domain/country_type.h"
 #include "domain/domain_ai.h"
 #include "domain/domain_game_data.h"
@@ -14,6 +13,7 @@
 #include "domain/domain_history.h"
 #include "domain/domain_tier.h"
 #include "domain/domain_tier_data.h"
+#include "domain/domain_turn_data.h"
 #include "domain/government_group.h"
 #include "domain/government_type.h"
 #include "domain/office.h"
@@ -271,7 +271,7 @@ domain_technology *domain::get_technology() const
 
 void domain::reset_turn_data()
 {
-	this->turn_data = make_qunique<country_turn_data>(this);
+	this->turn_data = make_qunique<domain_turn_data>(this);
 	emit turn_data_changed();
 }
 

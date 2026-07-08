@@ -25,7 +25,7 @@ Flickable {
 				anchors.right: parent.horizontalCenter
 				
 				Repeater {
-					model: country_turn_data.income_transactions
+					model: domain_turn_data.income_transactions
 					
 					Item {
 						width: income_transactions_column.width
@@ -88,7 +88,7 @@ Flickable {
 				anchors.right: parent.right
 				
 				Repeater {
-					model: country_turn_data.expense_transactions
+					model: domain_turn_data.expense_transactions
 					
 					Item {
 						width: expense_transactions_column.width
@@ -161,7 +161,7 @@ Flickable {
 			
 			SmallText {
 				id: total_income_value_label
-				text: metternich.defines.wealth_commodity.value_to_qstring(country_turn_data.total_income)
+				text: metternich.defines.wealth_commodity.value_to_qstring(domain_turn_data.total_income)
 				anchors.top: total_income_label.top
 				anchors.right: parent.right
 				anchors.rightMargin: 4 * scale_factor
@@ -177,7 +177,7 @@ Flickable {
 			
 			SmallText {
 				id: total_expense_value_label
-				text: "-" + metternich.defines.wealth_commodity.value_to_qstring(country_turn_data.total_expense)
+				text: "-" + metternich.defines.wealth_commodity.value_to_qstring(domain_turn_data.total_expense)
 				anchors.top: total_expense_label.top
 				anchors.right: total_income_value_label.right
 			}
@@ -202,7 +202,7 @@ Flickable {
 			
 			SmallText {
 				id: balance_value_label
-				text: metternich.defines.wealth_commodity.value_to_qstring(country_turn_data.total_income - country_turn_data.total_expense)
+				text: metternich.defines.wealth_commodity.value_to_qstring(domain_turn_data.total_income - domain_turn_data.total_expense)
 				anchors.top: balance_label.top
 				anchors.right: total_income_value_label.right
 			}

@@ -3,8 +3,8 @@
 #include "game/scoped_event_base.h"
 
 #include "database/gsml_data.h"
-#include "domain/country_turn_data.h"
 #include "domain/domain.h"
+#include "domain/domain_turn_data.h"
 #include "game/event.h"
 #include "game/event_instance.h"
 #include "game/event_option.h"

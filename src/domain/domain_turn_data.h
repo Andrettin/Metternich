@@ -15,7 +15,7 @@ enum class diplomatic_map_mode;
 enum class expense_transaction_type;
 enum class income_transaction_type;
 
-class country_turn_data final : public QObject
+class domain_turn_data final : public QObject
 {
 	Q_OBJECT
 
@@ -27,8 +27,8 @@ class country_turn_data final : public QObject
 public:
 	using transaction_object_variant = std::variant<std::nullptr_t, const commodity *, const population_type *>;
 
-	explicit country_turn_data(const metternich::domain *domain);
-	~country_turn_data();
+	explicit domain_turn_data(const metternich::domain *domain);
+	~domain_turn_data();
 
 	int64_t get_total_income() const
 	{

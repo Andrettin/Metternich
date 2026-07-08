@@ -5,10 +5,10 @@
 #include "database/named_data_entry.h"
 #include "util/qunique_ptr.h"
 
-Q_MOC_INCLUDE("domain/country_turn_data.h")
 Q_MOC_INCLUDE("domain/domain_ai.h")
 Q_MOC_INCLUDE("domain/domain_game_data.h")
 Q_MOC_INCLUDE("domain/domain_tier.h")
+Q_MOC_INCLUDE("domain/domain_turn_data.h")
 Q_MOC_INCLUDE("domain/government_type.h")
 Q_MOC_INCLUDE("map/site.h")
 Q_MOC_INCLUDE("religion/religion.h")
@@ -21,7 +21,6 @@ namespace archimedes {
 namespace metternich {
 
 class character;
-class country_turn_data;
 class culture;
 class domain_ai;
 class domain_economy;
@@ -30,6 +29,7 @@ class domain_government;
 class domain_history;
 class domain_military;
 class domain_technology;
+class domain_turn_data;
 class government_group;
 class government_type;
 class office;
@@ -63,7 +63,7 @@ class domain final : public named_data_entry, public data_type<domain>
 	Q_PROPERTY(bool definite_article MEMBER definite_article READ has_definite_article NOTIFY changed)
 	Q_PROPERTY(QVariantList available_technologies READ get_available_technologies_qvariant_list NOTIFY changed)
 	Q_PROPERTY(metternich::domain_game_data* game_data READ get_game_data NOTIFY game_data_changed)
-	Q_PROPERTY(metternich::country_turn_data* turn_data READ get_turn_data NOTIFY turn_data_changed)
+	Q_PROPERTY(metternich::domain_turn_data* turn_data READ get_turn_data NOTIFY turn_data_changed)
 	Q_PROPERTY(metternich::domain_ai* ai READ get_ai NOTIFY ai_changed)
 
 public:
@@ -109,7 +109,7 @@ public:
 
 	void reset_turn_data();
 
-	country_turn_data *get_turn_data() const
+	domain_turn_data *get_turn_data() const
 	{
 		return this->turn_data.get();
 	}
@@ -277,7 +277,7 @@ private:
 	std::map<domain_tier, std::vector<const site *>> tier_core_holdings;
 	qunique_ptr<domain_history> history;
 	qunique_ptr<domain_game_data> game_data;
-	qunique_ptr<country_turn_data> turn_data;
+	qunique_ptr<domain_turn_data> turn_data;
 	qunique_ptr<domain_ai> ai;
 };
 
