@@ -120,6 +120,10 @@ domain_game_data *domain_technology::get_game_data() const
 QCoro::Task<void> domain_technology::do_research()
 {
 	try {
+		if (this->get_game_data()->is_under_anarchy()) {
+			co_return;
+		}
+
 		if (this->get_gain_technologies_known_by_others_count() > 0) {
 			co_await this->gain_technologies_known_by_others();
 		}
