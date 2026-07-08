@@ -4,10 +4,6 @@ bronze_working = {
 	portrait = engineering
 	icon = bronze
 	period = copper_age
-	prerequisites = {
-		toolworking
-		copper_and_tin_mining #it makes sense to require the capability to mine the inputs of bronze
-	}
 }
 
 iron_working = {

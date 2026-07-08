@@ -14,7 +14,7 @@ mathematics = {
 	icon = cog
 	period = bronze_age
 	prerequisites = {
-		alphabet
+		woodworking
 		masonry
 	}
 }

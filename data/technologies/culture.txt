@@ -5,7 +5,7 @@ drama = {
 	icon = music
 	period = classical_age
 	prerequisites = {
-		literature
+		writing
 		philosophy
 	}
 }

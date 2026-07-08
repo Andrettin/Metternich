@@ -4,9 +4,6 @@ tobacco_planting = {
 	portrait = engineering
 	icon = tobacco
 	period = tool_age
-	prerequisites = {
-		toolworking #seems reasonable
-	}
 	discovery_conditions = {
 		any_settlement = {
 			feature = prime_tobacco_land

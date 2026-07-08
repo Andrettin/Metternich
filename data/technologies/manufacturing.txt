@@ -1,20 +1,9 @@
-toolworking = {
-	name = "Toolworking"
-	subcategory = manufacturing
-	portrait = engineering
-	icon = tools
-	period = stone_age
-}
-
 woodworking = {
 	name = "Woodworking"
 	subcategory = manufacturing
 	portrait = engineering
 	icon = lumber
 	period = tool_age
-	prerequisites = {
-		toolworking
-	}
 }
 
 pottery = {
@@ -23,9 +12,6 @@ pottery = {
 	portrait = engineering
 	icon = cog
 	period = tool_age
-	prerequisites = {
-		toolworking #it makes sense for pottery to require tools
-	}
 }
 
 glassblowing = {

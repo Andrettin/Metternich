@@ -4,9 +4,6 @@ masonry = {
 	portrait = engineering
 	icon = architecture
 	period = copper_age
-	prerequisites = {
-		stone_mining #it makes sense for masonry to require stone mining, since it uses stone
-	}
 }
 
 construction = {

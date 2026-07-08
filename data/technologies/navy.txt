@@ -5,7 +5,7 @@ map_making = {
 	icon = anchor
 	period = bronze_age
 	prerequisites = {
-		alphabet
+		woodworking
 	}
 }
 

@@ -4,9 +4,6 @@ warrior_code = {
 	portrait = engineering
 	icon = bow
 	period = tool_age
-	prerequisites = {
-		toolworking #to place it in the appropriate period
-	}
 }
 
 siegecraft = {

@@ -4,9 +4,6 @@ domestication = {
 	portrait = engineering
 	icon = cattle
 	period = tool_age
-	prerequisites = {
-		toolworking
-	}
 }
 
 sheep_ranching = {
