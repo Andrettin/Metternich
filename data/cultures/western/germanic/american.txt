@@ -7,7 +7,7 @@ american = {
 		human
 	}
 	#derivation_conditions = {
-	#	technology = navigation
+	#	technology = global_trade
 	#	province = {
 	#		core = united_states
 	#	}

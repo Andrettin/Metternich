@@ -41,7 +41,6 @@ explosives = {
 	prerequisites = {
 		gunpowder
 		weapon_craftsmanship
-		industrial_machinery
 	}
 }
 

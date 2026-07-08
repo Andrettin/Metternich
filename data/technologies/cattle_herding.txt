@@ -1,3 +1,19 @@
+poultry_domestication = {
+	name = "Poultry Domestication"
+	subcategory = cattle_herding
+	portrait = engineering
+	icon = cattle
+	period = tool_age
+}
+
+goatherding = {
+	name = "Goatherding"
+	subcategory = cattle_herding
+	portrait = engineering
+	icon = cattle
+	period = copper_age
+}
+
 mechanized_slaughtering_block = {
 	name = "Mechanized Slaughtering-Block"
 	subcategory = cattle_herding
@@ -32,8 +48,7 @@ refrigeration = {
 	prerequisites = {
 		#assembly_line
 		
-		sanitation
-		magnetism
+		mechanized_slaughtering_block
 	}
 	cost_factor = {
 		#modifier = {

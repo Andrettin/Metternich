@@ -282,14 +282,14 @@ glassblowing = {
 	}
 }
 
-industrial_machinery = {
-	name = "Industrial Machinery"
-	subcategory = trade_practices
-	portrait = coinage
-	icon = book
-	period = enlightenment_age
+manufactories = {
+	name = "Manufactories"
+	subcategory = manufacturing
+	portrait = engineering
+	icon = cog
+	period = absolutism_age
 	prerequisites = {
-		university
+		banking
 	}
 }
 
@@ -300,7 +300,7 @@ industrialization = {
 	icon = cog
 	period = napoleonic_age
 	prerequisites = {
-		banking
+		manufactories
 	}
 }
 

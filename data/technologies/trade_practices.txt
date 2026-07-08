@@ -49,3 +49,15 @@ foreign_accreditation = {
 		double_entry_bookkeeping
 	}
 }
+
+global_trade = {
+	name = "Global Trade"
+	subcategory = trade_practices
+	portrait = coinage
+	icon = wealth
+	period = gunpowder_age
+	prerequisites = {
+		foreign_accreditation
+		colonialism
+	}
+}

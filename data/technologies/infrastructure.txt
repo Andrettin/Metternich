@@ -296,17 +296,6 @@ road_building = {
 	}
 }
 
-bridge_building = {
-	name = "Bridge Building"
-	subcategory = infrastructure
-	portrait = engineering
-	icon = road
-	period = civic_age
-	prerequisites = {
-		road_building
-	}
-}
-
 experimental_railroad = {
 	name = "Experimental Railroad"
 	subcategory = infrastructure
@@ -314,7 +303,7 @@ experimental_railroad = {
 	icon = railroad
 	period = revolutionary_age
 	prerequisites = {
-		bridge_building
+		road_building
 		industrialization #to place it in its appropriate period, should change it to something else
 	}
 }

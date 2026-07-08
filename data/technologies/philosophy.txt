@@ -6,28 +6,6 @@
 #	}
 #}
 
-physics = {
-	name = "Physics"
-	subcategory = philosophy
-	portrait = engineering
-	icon = research
-	period = renaissance_age
-	prerequisites = {
-		navigation
-	}
-}
-
-magnetism = {
-	name = "Magnetism"
-	subcategory = philosophy
-	portrait = engineering
-	icon = compass
-	period = gunpowder_age
-	prerequisites = {
-		physics
-	}
-}
-
 aristotelian_logic = {
 	name = "Aristotelian Logic"
 	subcategory = philosophy
@@ -657,5 +635,17 @@ science = {
 				realm = root
 			}
 		}
+	}
+}
+
+enlightenment = {
+	name = "Enlightenment"
+	subcategory = philosophy
+	portrait = engineering
+	icon = philosophy
+	period = enlightenment_age
+	prerequisites = {
+		renaissance
+		science
 	}
 }

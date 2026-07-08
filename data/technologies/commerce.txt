@@ -940,18 +940,3 @@ guilds = {
 		}
 	}
 }
-
-industrial_funding_of_research = {
-	name = "Industrial Funding of Research"
-	subcategory = trade_practices
-	portrait = coinage
-	icon = book
-	period = revolutionary_age
-	prerequisites = {
-		industrial_machinery
-		ironworks
-	}
-	domain_modifier = {
-		research_output_modifier = 50
-	}
-}

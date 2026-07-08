@@ -7,7 +7,7 @@ brazilian = {
 		human
 	}
 	#derivation_conditions = {
-	#	technology = navigation
+	#	technology = global_trade
 	#	province = {
 	#		core = brazil
 	#	}

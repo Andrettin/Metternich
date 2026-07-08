@@ -49,11 +49,3 @@ gothic_buttresses = {
 		cylindrical_structures
 	}
 }
-
-sanitation = {
-	name = "Sanitation"
-	subcategory = architecture
-	portrait = engineering
-	icon = architecture
-	period = dark_age
-}
