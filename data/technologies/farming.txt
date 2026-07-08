@@ -88,9 +88,6 @@ wood_plow = {
 	portrait = engineering
 	icon = grain
 	period = copper_age
-	prerequisites = {
-		domestication
-	}
 	modifier = {
 		agricultural_output_modifier = 3
 	}

@@ -4,9 +4,6 @@ soft_leather_armor = {
 	portrait = helmet
 	icon = clothing
 	period = copper_age
-	prerequisites = {
-		domestication #cattle needed to have enough leather production for armor
-	}
 	discovery_mean_time_to_happen = {
 		months = 50
 		

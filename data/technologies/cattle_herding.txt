@@ -1,27 +1,3 @@
-domestication = {
-	name = "Domestication"
-	subcategory = cattle_herding
-	portrait = engineering
-	icon = cattle
-	period = tool_age
-}
-
-sheep_ranching = {
-	name = "Sheep Ranching"
-	subcategory = cattle_herding
-	portrait = engineering
-	icon = wool
-	period = copper_age
-	prerequisites = {
-		domestication
-	}
-	discovery_conditions = {
-		any_settlement = {
-			feature = prime_sheep_land
-		}
-	}
-}
-
 mechanized_slaughtering_block = {
 	name = "Mechanized Slaughtering-Block"
 	subcategory = cattle_herding
@@ -29,10 +5,7 @@ mechanized_slaughtering_block = {
 	icon = cattle
 	period = gunpowder_age
 	prerequisites = {
-		#mechanical_production
-		
-		domestication #needs domesticated animals
-		science
+		industrialization
 	}
 	cost_factor = {
 		#modifier = {

@@ -3,7 +3,6 @@ cattle_ranch = {
 	building_class = cattle_ranch
 	portrait = aristocratic_palace
 	icon = cattle
-	required_technology = domestication
 	holding_types = {
 		castle
 		guild
@@ -89,7 +88,6 @@ sheep_ranch = {
 	building_class = sheep_ranch
 	portrait = aristocratic_palace
 	icon = wool
-	required_technology = sheep_ranching
 	holding_types = {
 		castle
 		guild

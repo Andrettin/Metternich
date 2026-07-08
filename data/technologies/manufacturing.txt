@@ -1,20 +1,9 @@
-pottery = {
-	name = "Pottery"
-	subcategory = manufacturing
-	portrait = engineering
-	icon = cog
-	period = tool_age
-}
-
 glassblowing = {
 	name = "Glassblowing"
 	subcategory = manufacturing
 	portrait = engineering
 	icon = glass
 	period = copper_age
-	prerequisites = {
-		pottery #seems reasonable
-	}
 	discovery_mean_time_to_happen = {
 		months = 150
 		

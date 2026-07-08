@@ -17,17 +17,6 @@ feudalism = {
 	}
 }
 
-republic = {
-	name = "Republic"
-	subcategory = government
-	portrait = engineering
-	icon = philosophy
-	period = civic_age
-	prerequisites = {
-		literacy
-	}
-}
-
 colonialism = {
 	name = "Colonialism"
 	subcategory = government

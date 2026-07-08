@@ -4,9 +4,6 @@ business_contracts = {
 	portrait = coinage
 	icon = wealth
 	period = classical_age
-	prerequisites = {
-		republic #to place it in the appropriate period
-	}
 }
 
 promissory_note = {

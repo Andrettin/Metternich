@@ -6,7 +6,6 @@ banking = {
 	period = gunpowder_age
 	prerequisites = {
 		foreign_accreditation #seems reasonable
-		republic
 	}
 }
 
