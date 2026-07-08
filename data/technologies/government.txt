@@ -12,8 +12,8 @@ feudalism = {
 	discovery_conditions = {
 		year >= 1000
 	}
-	discovery_mean_time_to_happen = {
-		years = 1
+	discovery_yearly_chance = {
+		base_value = 100
 	}
 }
 
