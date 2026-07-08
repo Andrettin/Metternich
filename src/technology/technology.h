@@ -35,6 +35,7 @@ class military_unit_type;
 class pathway;
 class portrait;
 class province;
+class province_event;
 class religion;
 class religious_group;
 class resource;
@@ -487,6 +488,11 @@ public:
 
 	bool is_enabled() const;
 
+	const province_event *get_spread_event() const
+	{
+		return this->spread_event;
+	}
+
 signals:
 	void changed();
 
@@ -539,6 +545,7 @@ private:
 	const game_rule *required_game_rule = nullptr;
 	std::unique_ptr<metternich::mean_time_to_happen<province>> discovery_mean_time_to_happen;
 	std::unique_ptr<metternich::mean_time_to_happen<province>> spread_mean_time_to_happen;
+	const province_event *spread_event = nullptr;
 };
 
 }

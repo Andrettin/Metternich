@@ -255,6 +255,11 @@ QCoro::Task<void> domain_technology::do_technology_spread()
 		}
 
 		for (const auto &[technology, spread_bonus] : technology_spread_bonuses) {
+			if (technology->get_spread_event() != nullptr) {
+				//this technology already has a spread event, so we don't need to use spread mechanics
+				continue;
+			}
+
 			static const decimillesimal_int base_spread_years(10);
 			static const decimillesimal_int base_spread_months = base_spread_years * 12;
 			decimillesimal_int mtth = base_spread_months / game::get()->get_current_months_per_turn();

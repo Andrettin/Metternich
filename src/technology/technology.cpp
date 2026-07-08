@@ -263,6 +263,8 @@ void technology::initialize()
 		event->add_option(std::move(event_option));
 
 		event->initialize();
+
+		this->spread_event = event;
 	}
 
 	named_data_entry::initialize();
