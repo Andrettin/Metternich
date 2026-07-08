@@ -179,7 +179,7 @@ western = {
 			technologies += astronomy
 			
 			#Andreas Vesalius published his "De Corporis Humani Fabrica" in 1543, which revolutionized the understanding of anatomy; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 211.
-			technologies += medicine
+			#technologies += medicine
 			
 			#Europeans reached Japan for the first time in 1543; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 211.
 			explored_regions += japan

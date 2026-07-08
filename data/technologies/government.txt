@@ -52,7 +52,6 @@ colonialism = {
 	}
 }
 
-democracy = {
 	name = "Democracy"
 	subcategory = government
 	portrait = engineering

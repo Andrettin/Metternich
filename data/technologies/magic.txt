@@ -18,6 +18,5 @@ transmogrification = {
 	period = classical_age
 	prerequisites = {
 		magical_inscription
-		siegecraft
 	}
 }

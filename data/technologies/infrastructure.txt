@@ -308,7 +308,6 @@ bridge_building = {
 	prerequisites = {
 		road_building
 		construction
-		iron_working
 	}
 }
 
@@ -332,7 +331,6 @@ early_railroad = {
 	period = napoleonic_age
 	prerequisites = {
 		experimental_railroad
-		high_pressure_steam_engine
 	}
 }
 

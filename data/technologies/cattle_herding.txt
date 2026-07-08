@@ -35,10 +35,10 @@ mechanized_slaughtering_block = {
 		science
 	}
 	cost_factor = {
-		modifier = {
-			factor = 0.5
-			technology = medicine
-		}
+		#modifier = {
+		#	factor = 0.5
+		#	technology = medicine
+		#}
 		#modifier = {
 		#	factor = 0.5
 		#	technology = clean_coal
@@ -59,8 +59,8 @@ refrigeration = {
 	prerequisites = {
 		#assembly_line
 		
-		electricity
 		sanitation
+		magnetism
 	}
 	cost_factor = {
 		#modifier = {

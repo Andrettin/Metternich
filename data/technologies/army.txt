@@ -6,18 +6,6 @@ warrior_code = {
 	period = tool_age
 }
 
-siegecraft = {
-	name = "Siegecraft"
-	subcategory = army
-	portrait = engineering
-	icon = wall
-	period = civic_age
-	prerequisites = {
-		construction
-		wheel
-	}
-}
-
 gunpowder = {
 	name = "Gunpowder"
 	subcategory = army
@@ -25,8 +13,8 @@ gunpowder = {
 	icon = coal
 	period = dark_age
 	prerequisites = {
-		invention
-		iron_working
+		construction
+		bronze_working
 	}
 }
 

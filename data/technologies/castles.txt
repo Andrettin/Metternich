@@ -356,8 +356,6 @@ small_castle = {
 	period = dark_age
 	prerequisites = {
 		hill_fort
-		
-		invention #to place it in the appropriate period
 	}
 	discovery_mean_time_to_happen = {
 		months = 150

@@ -17,7 +17,7 @@ egyptian = {
 	history = {
 		-3100 = {
 			#the first major Egyptian irrigation project was done in 3100 BC; Source: "History of the World Map by Map", 2023, pp. 24-25.
-			technologies += irrigation
+			#technologies += irrigation
 		}
 		
 		-2700 = {

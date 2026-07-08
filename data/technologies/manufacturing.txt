@@ -309,7 +309,8 @@ saw_mill = {
 	period = classical_age
 	prerequisites = {
 		woodworking #since this is a more advanced form of woodworking
-		engineering #since it is a mill
+		construction
+		wheel
 	}
 }
 

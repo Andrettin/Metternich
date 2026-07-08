@@ -530,8 +530,6 @@ light_crossbow = {
 	prerequisites = {
 		slinged_javelin
 		short_bow
-		
-		invention #to place it in the appropriate period
 	}
 	discovery_mean_time_to_happen = {
 		months = 100

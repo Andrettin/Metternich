@@ -1,51 +1,3 @@
-wind_wheel = {
-	name = "Wind Wheel"
-	subcategory = power
-	portrait = engineering
-	icon = cog
-	period = dark_age
-	prerequisites = {
-		invention #seems reasonable
-	}
-}
-
-water_wheel = {
-	name = "Water Wheel"
-	subcategory = power
-	portrait = engineering
-	icon = cog
-	period = feudal_age
-	prerequisites = {
-		wind_wheel
-	}
-}
-
-practical_steam_engine = {
-	name = "Practical Steam Engine"
-	subcategory = power
-	portrait = engineering
-	icon = cog
-	period = gunpowder_age
-	prerequisites = {
-		water_wheel
-		invention
-		physics
-	}
-}
-
-high_pressure_steam_engine = {
-	name = "High Pressure Steam Engine"
-	subcategory = power
-	portrait = engineering
-	icon = cog
-	period = revolutionary_age
-	prerequisites = {
-		practical_steam_engine
-		
-		mechanized_mining #to place it in its appropriate period, should change it to something else
-	}
-}
-
 compound_steam_engine = {
 	name = "Compound Steam Engine"
 	subcategory = power
@@ -53,20 +5,10 @@ compound_steam_engine = {
 	icon = cog
 	period = industrial_age
 	prerequisites = {
-		high_pressure_steam_engine
+		construction
+		physics
+		mechanized_mining
 		iron_railroad #iron_railroad_bridge
-	}
-}
-
-electricity = {
-	name = "Electricity"
-	subcategory = power
-	portrait = engineering
-	icon = research
-	period = absolutism_age
-	prerequisites = {
-		magnetism
-		metallurgy
 	}
 }
 

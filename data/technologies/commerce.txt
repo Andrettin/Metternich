@@ -10,18 +10,6 @@ coinage = {
 	}
 }
 
-trade = {
-	name = "Trade"
-	subcategory = trade_practices
-	portrait = coinage
-	icon = wealth
-	period = iron_age
-	prerequisites = {
-		coinage
-		code_of_laws
-	}
-}
-
 banking = {
 	name = "Banking"
 	subcategory = trade_practices
@@ -30,7 +18,7 @@ banking = {
 	period = gunpowder_age
 	prerequisites = {
 		foreign_accreditation #seems reasonable
-		trade
+		coinage
 		republic
 	}
 }
@@ -66,7 +54,7 @@ minor_merchant_houses = {
 	icon = chest
 	period = civic_age
 	prerequisites = {
-		trade
+		coinage
 	}
 	discovery_mean_time_to_happen = {
 		months = 50

@@ -185,7 +185,6 @@ light_chain_mail = {
 	prerequisites = {
 		chained_leather_armor
 		scale_mail
-		iron_working
 	}
 }
 
@@ -387,8 +386,6 @@ banded_mail = {
 	period = dark_age
 	prerequisites = {
 		scale_mail
-		
-		invention #to place this in its proper period
 	}
 }
 

@@ -6,32 +6,6 @@ bronze_working = {
 	period = copper_age
 }
 
-iron_working = {
-	name = "Iron Working"
-	subcategory = metallurgy
-	portrait = engineering
-	icon = iron
-	period = bronze_age
-	prerequisites = {
-		bronze_working
-		iron_mining #seems logical
-		warrior_code
-	}
-}
-
-metallurgy = {
-	name = "Metallurgy"
-	subcategory = metallurgy
-	portrait = engineering
-	icon = iron
-	period = renaissance_age
-	prerequisites = {
-		iron_working
-		gunpowder
-		university
-	}
-}
-
 crucible_process = {
 	name = "Crucible Process"
 	subcategory = metallurgy
@@ -39,22 +13,9 @@ crucible_process = {
 	icon = steel
 	period = enlightenment_age
 	prerequisites = {
-		iron_working #previous metallurgy technology
+		bronze_working #previous metallurgy technology
 		steam_in_mining
 		coal_mining
-	}
-}
-
-steel = {
-	name = "Steel"
-	subcategory = metallurgy
-	portrait = engineering
-	icon = steel
-	period = steam_age
-	prerequisites = {
-		metallurgy
-		electricity
-		industrialization
 	}
 }
 
@@ -65,7 +26,7 @@ cheap_iron = {
 	icon = iron
 	period = napoleonic_age
 	prerequisites = {
-		iron_working #previous iron metallurgy technology
+		bronze_working #previous metallurgy technology
 		clean_coal
 	}
 	modifier = {

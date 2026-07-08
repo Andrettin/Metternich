@@ -6,18 +6,6 @@
 #	}
 #}
 
-medicine = {
-	name = "Medicine"
-	subcategory = philosophy
-	portrait = engineering
-	icon = heart
-	period = classical_age
-	prerequisites = {
-		literacy
-		trade
-	}
-}
-
 physics = {
 	name = "Physics"
 	subcategory = philosophy
@@ -50,19 +38,6 @@ magnetism = {
 	period = gunpowder_age
 	prerequisites = {
 		physics
-		iron_working
-	}
-}
-
-atomic_theory = {
-	name = "Atomic Theory"
-	subcategory = philosophy
-	portrait = engineering
-	icon = research
-	period = gunpowder_age
-	prerequisites = {
-		physics
-		theory_of_gravity
 	}
 }
 
@@ -73,7 +48,7 @@ chemistry = {
 	icon = research
 	period = renaissance_age
 	prerequisites = {
-		medicine
+		literacy
 		university
 	}
 }

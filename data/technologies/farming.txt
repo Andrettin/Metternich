@@ -11,17 +11,6 @@ tobacco_planting = {
 	}
 }
 
-irrigation = {
-	name = "Irrigation"
-	subcategory = farming
-	portrait = engineering
-	icon = grain
-	period = bronze_age
-	prerequisites = {
-		wood_plow
-	}
-}
-
 two_field_system = {
 	name = "Two Field System"
 	subcategory = farming
@@ -29,7 +18,7 @@ two_field_system = {
 	icon = grain
 	period = classical_age
 	prerequisites = {
-		irrigation #earlier agricultural technology
+		wood_plow #earlier agricultural technology
 		feudalism #to place it in the appropriate period
 	}
 	modifier = {
@@ -115,7 +104,6 @@ iron_tipped_wood_plow = {
 	period = iron_age
 	prerequisites = {
 		wood_plow
-		iron_working #since it is partially made of iron
 	}
 	modifier = {
 		agricultural_output_modifier = 2
