@@ -22,6 +22,12 @@ government = {
 	icon = bell
 }
 
+noble_customs = {
+	name = "Noble Customs"
+	category = culture
+	icon = crown_baronial
+}
+
 philosophy = {
 	name = "Philosophy"
 	category = culture

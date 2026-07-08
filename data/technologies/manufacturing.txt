@@ -364,18 +364,6 @@ refining = {
 	}
 }
 
-machine_tools = {
-	name = "Machine Tools"
-	subcategory = manufacturing
-	portrait = engineering
-	icon = cog
-	period = industrial_age
-	prerequisites = {
-		steel
-		tactics
-	}
-}
-
 precision_work = {
 	name = "Precision Work"
 	subcategory = manufacturing

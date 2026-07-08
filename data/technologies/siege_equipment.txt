@@ -343,6 +343,5 @@ large_artillery = {
 	period = imperial_age
 	prerequisites = {
 		rifled_artillery
-		machine_tools
 	}
 }

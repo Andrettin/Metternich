@@ -4,7 +4,7 @@ monarchy = {
 	icon = crown_royal
 	primary_domain_attribute = loyalty
 	regnal_numbering = true
-	required_technology = monarchy
+	required_technology = divine_right
 	preferred_holding_types = {
 		castle
 		royal_palace

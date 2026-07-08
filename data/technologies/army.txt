@@ -82,27 +82,3 @@ leadership = {
 		gunpowder
 	}
 }
-
-conscription = {
-	name = "Conscription"
-	subcategory = army
-	portrait = fort
-	icon = flag
-	period = enlightenment_age
-	prerequisites = {
-		democracy
-		metallurgy
-	}
-}
-
-tactics = {
-	name = "Tactics"
-	subcategory = army
-	portrait = fort
-	icon = flag
-	period = revolutionary_age
-	prerequisites = {
-		leadership
-		conscription
-	}
-}

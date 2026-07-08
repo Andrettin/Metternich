@@ -3,7 +3,7 @@ crown_colony = {
 	group = monarchy
 	icon = settlement
 	primary_domain_attribute = loyalty
-	required_technology = monarchy
+	required_technology = colonialism
 	preferred_holding_types = {
 		castle
 		royal_palace

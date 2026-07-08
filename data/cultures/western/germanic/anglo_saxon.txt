@@ -13,7 +13,7 @@ anglo_saxon = {
 	#	scottish
 	#}
 	#derivation_conditions = {
-	#	technology = monarchy
+	#	technology = divine_right
 	#	province = {
 	#		core = great_britain
 	#	}

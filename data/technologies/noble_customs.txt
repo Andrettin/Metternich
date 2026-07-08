@@ -1,0 +1,7 @@
+divine_right = {
+	name = "Divine Right"
+	subcategory = noble_customs
+	portrait = grand_ducal_crown
+	icon = crown_royal
+	period = iron_age
+}

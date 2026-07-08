@@ -22,7 +22,7 @@ egyptian = {
 		
 		-2700 = {
 			#the Old Kingdom of Egypt existed in the 2700-2180 BC period; Source: "History of the World Map by Map", 2023, pp. 36-37.
-			technologies += monarchy
+			technologies += divine_right #monarchy
 		}
 	}
 }

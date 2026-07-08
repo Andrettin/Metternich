@@ -6,7 +6,7 @@ danish = {
 		human
 	}
 	#derivation_conditions = {
-	#	technology = monarchy
+	#	technology = feudalism
 	#	province = {
 	#		core = denmark
 	#	}

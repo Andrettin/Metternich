@@ -64,6 +64,17 @@ republic = {
 	}
 }
 
+colonialism = {
+	name = "Colonialism"
+	subcategory = government
+	portrait = dock
+	icon = globe
+	period = gunpowder_age
+	prerequisites = {
+		renaissance
+	}
+}
+
 democracy = {
 	name = "Democracy"
 	subcategory = government
