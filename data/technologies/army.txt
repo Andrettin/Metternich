@@ -14,7 +14,6 @@ gunpowder = {
 	period = dark_age
 	prerequisites = {
 		construction
-		bronze_working
 	}
 }
 

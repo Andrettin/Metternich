@@ -1,15 +1,3 @@
-coinage = {
-	name = "Coinage"
-	subcategory = trade_practices
-	portrait = coinage
-	icon = wealth
-	period = bronze_age
-	prerequisites = {
-		gold_mining
-		bronze_working
-	}
-}
-
 banking = {
 	name = "Banking"
 	subcategory = trade_practices
@@ -18,7 +6,6 @@ banking = {
 	period = gunpowder_age
 	prerequisites = {
 		foreign_accreditation #seems reasonable
-		coinage
 		republic
 	}
 }
@@ -53,9 +40,6 @@ minor_merchant_houses = {
 	portrait = trading_post
 	icon = chest
 	period = civic_age
-	prerequisites = {
-		coinage
-	}
 	discovery_mean_time_to_happen = {
 		months = 50
 		
@@ -966,7 +950,7 @@ industrial_funding_of_research = {
 	period = revolutionary_age
 	prerequisites = {
 		industrial_machinery
-		crucible_process
+		ironworks
 	}
 	domain_modifier = {
 		research_output_modifier = 50

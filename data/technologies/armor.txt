@@ -172,7 +172,6 @@ chained_leather_armor = {
 	period = bronze_age
 	prerequisites = {
 		soft_leather_armor
-		bronze_working #because it requires metalworking for the chain
 	}
 }
 
@@ -374,7 +373,6 @@ scale_mail = {
 	period = bronze_age
 	prerequisites = {
 		soft_leather_armor
-		bronze_working
 	}
 }
 

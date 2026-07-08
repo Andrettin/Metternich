@@ -19,7 +19,7 @@ bayonet = {
 	period = revolutionary_age
 	prerequisites = {
 		polearm
-		crucible_process
+		ironworks
 	}
 }
 
@@ -31,7 +31,7 @@ flintlock_rifle = {
 	period = revolutionary_age
 	prerequisites = {
 		improved_infantry_tactics
-		crucible_process
+		ironworks
 	}
 	cost_factor = {
 		#modifier = {

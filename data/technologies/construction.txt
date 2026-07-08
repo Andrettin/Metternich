@@ -14,7 +14,6 @@ construction = {
 	period = iron_age
 	prerequisites = {
 		masonry
-		coinage
 	}
 }
 

@@ -11,7 +11,7 @@ germanic = {
 		
 		-2000 = {
 			#the prevalence of bronzeworking (compared to copperworking) in Scandinavia began c. 2000 BC; Source: "Ancient Europe 8000 B.C.-A.D. 1000: Encyclopedia of the Barbarian World", 2004, vol. 2, p. 73.
-			technologies += bronze_working
+			#technologies += bronze_working
 		}
 	}
 }

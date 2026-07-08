@@ -5,7 +5,6 @@ business_contracts = {
 	icon = wealth
 	period = classical_age
 	prerequisites = {
-		coinage #seems reasonable
 		republic #to place it in the appropriate period
 	}
 }

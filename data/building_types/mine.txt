@@ -38,7 +38,6 @@ gold_mine = {
 	portrait = factory
 	icon = gold_ore
 	wealth_cost = 6gb
-	required_technology = gold_mining
 	holding_types = {
 		castle
 		guild
@@ -72,7 +71,6 @@ iron_mine = {
 	portrait = factory
 	icon = iron_ore
 	wealth_cost = 6gb
-	required_technology = iron_mining
 	holding_types = {
 		castle
 		guild

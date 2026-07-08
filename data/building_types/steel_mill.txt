@@ -3,7 +3,7 @@ steel_mill = {
 	building_class = steel_mill
 	portrait = factory
 	icon = steel
-	required_technology = crucible_process
+	#required_technology = crucible_process
 	holding_types = {
 		town
 		city

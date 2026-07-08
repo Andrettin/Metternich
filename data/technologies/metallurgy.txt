@@ -1,22 +1,9 @@
-bronze_working = {
-	name = "Bronze Working"
+ironworks = {
+	name = "Ironworks"
 	subcategory = metallurgy
-	portrait = engineering
-	icon = bronze
-	period = copper_age
-}
-
-crucible_process = {
-	name = "Crucible Process"
-	subcategory = metallurgy
-	portrait = engineering
-	icon = steel
-	period = enlightenment_age
-	prerequisites = {
-		bronze_working #previous metallurgy technology
-		construction
-		black_coal
-	}
+	portrait = factory
+	icon = iron
+	period = renaissance_age
 }
 
 advanced_ore_roasting_processes = {
@@ -26,7 +13,7 @@ advanced_ore_roasting_processes = {
 	icon = iron
 	period = steam_age
 	prerequisites = {
-		bronze_working #previous metallurgy technology
+		ironworks #previous metallurgy technology
 	}
 	cost_factor = {
 		#modifier = {
@@ -98,7 +85,8 @@ advanced_metallurgy = {
 	icon = steel
 	period = industrial_age
 	prerequisites = {
-		crucible_process #previous steel metallurgy technology
+		ironworks #previous metallurgy technology
+		black_coal
 	}
 	modifier = {
 		sulfur_output_modifier = 25

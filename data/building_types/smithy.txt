@@ -4,7 +4,6 @@ smithy = {
 	portrait = factory
 	icon = tools
 	wealth_cost = 6gb
-	required_technology = bronze_working
 	holding_types = {
 		guild
 	}

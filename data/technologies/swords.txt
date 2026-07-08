@@ -177,7 +177,6 @@ broad_sword = {
 	period = bronze_age
 	prerequisites = {
 		short_sword
-		bronze_working
 	}
 }
 
