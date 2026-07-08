@@ -567,7 +567,10 @@ bool domain_technology::is_technology_researchable(const technology *technology)
 	}
 
 	const province *capital_province = this->get_game_data()->get_capital_province();
-	assert_throw(capital_province != nullptr);
+	if (capital_province == nullptr) {
+		return false;
+	}
+
 	if (technology->get_discovery_conditions() != nullptr && !technology->get_discovery_conditions()->check(capital_province, read_only_context(capital_province))) {
 		return false;
 	}
