@@ -3,7 +3,6 @@ furniture_factory = {
 	building_class = furniture_factory
 	portrait = factory
 	icon = furniture
-	required_technology = saw_mill
 	holding_types = {
 		guild
 	}

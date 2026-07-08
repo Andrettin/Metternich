@@ -128,7 +128,6 @@ tobacco_plantation = {
 	building_class = tobacco_plantation
 	portrait = aristocratic_palace
 	icon = tobacco
-	required_technology = tobacco_planting
 	holding_types = {
 		castle
 		guild

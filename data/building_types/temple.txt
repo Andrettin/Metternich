@@ -4,7 +4,6 @@ shrine = {
 	portrait = temple
 	icon = wooden_cross
 	holding_level = 1
-	required_technology = ceremonial_burial
 	holding_types = {
 		temple
 		city
@@ -34,7 +33,7 @@ temple = {
 	holding_level = 2
 	base_building = shrine
 	wealth_cost = 24gb
-	required_technology = ceremonial_burial
+	required_technology = basilican_structures
 	holding_types = {
 		temple
 		city
@@ -65,7 +64,7 @@ large_temple = {
 	icon = wooden_cross
 	holding_level = 3
 	base_building = temple
-	required_technology = ceremonial_burial
+	required_technology = brickwork_structures
 	holding_types = {
 		temple
 		city
@@ -97,7 +96,7 @@ cathedral = {
 	holding_level = 4
 	base_building = large_temple
 	wealth_cost = 26gb
-	required_technology = monotheism
+	required_technology = romanesque_vaulting
 	holding_types = {
 		temple
 		city
@@ -139,7 +138,7 @@ large_cathedral = {
 	icon = golden_cross_detailed
 	holding_level = 5
 	base_building = cathedral
-	required_technology = monotheism
+	required_technology = cylindrical_structures
 	holding_types = {
 		temple
 	}
@@ -180,7 +179,7 @@ grand_cathedral = {
 	icon = golden_cross_detailed
 	holding_level = 6
 	base_building = large_cathedral
-	required_technology = monotheism
+	required_technology = gothic_buttresses
 	holding_types = {
 		temple
 	}

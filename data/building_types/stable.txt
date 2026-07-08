@@ -4,8 +4,7 @@ small_stable = {
 	portrait = fort
 	icon = horses
 	wealth_cost = 15000gp
-	required_technology = horseback_riding
-	free_on_start_extra_technology = 0.8
+	#free_on_start_extra_technology = 0.8
 	holding_types = {
 		castle
 	}
@@ -39,8 +38,7 @@ medium_stable = {
 	build_duration = 547d
 	base_building = small_stable
 	wealth_cost = 18000gp
-	required_technology = horseback_riding
-	free_on_start_extra_technology = 2.2
+	#free_on_start_extra_technology = 2.2
 	holding_types = {
 		castle
 	}
@@ -81,7 +79,7 @@ large_stable = {
 	build_duration = 730d
 	base_building = medium_stable
 	wealth_cost = 30000gp
-	required_technology = chivalry
+	required_technology = feudalism
 	free_on_start_extra_technology = 1.6
 	holding_types = {
 		castle
@@ -123,7 +121,7 @@ great_stable = {
 	build_duration = 1095d
 	base_building = large_stable
 	wealth_cost = 45000gp
-	required_technology = chivalry
+	required_technology = feudalism
 	free_on_start_extra_technology = 1.2
 	holding_types = {
 		castle
@@ -166,7 +164,7 @@ royal_stable = {
 	build_duration = 2190d
 	base_building = great_stable
 	wealth_cost = 60000gp
-	required_technology = chivalry
+	required_technology = feudalism
 	free_on_start_extra_technology = 0.8
 	holding_types = {
 		castle

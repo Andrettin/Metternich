@@ -1,34 +1,3 @@
-horseback_riding = {
-	name = "Horseback Riding"
-	subcategory = cavalry
-	portrait = engineering
-	icon = horses
-	period = copper_age
-}
-
-wheel = {
-	name = "Wheel"
-	subcategory = cavalry
-	portrait = engineering
-	icon = cog
-	period = bronze_age
-	prerequisites = {
-		horseback_riding
-	}
-}
-
-chivalry = {
-	name = "Chivalry"
-	subcategory = cavalry
-	portrait = engineering
-	icon = heater_shield
-	period = classical_age
-	prerequisites = {
-		horseback_riding
-		feudalism
-	}
-}
-
 tank_experiments = {
 	name = "Tank Experiments"
 	subcategory = cavalry

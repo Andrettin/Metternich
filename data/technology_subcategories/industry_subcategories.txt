@@ -1,13 +1,13 @@
+architecture = {
+	name = "Architecture"
+	category = industry
+	icon = architecture
+}
+
 cattle_herding = {
 	name = "Cattle Herding"
 	category = industry
 	icon = cattle
-}
-
-construction = {
-	name = "Construction"
-	category = industry
-	icon = architecture
 }
 
 farming = {

@@ -323,6 +323,10 @@ void technology::check() const
 		throw std::runtime_error(std::format("Technology \"{}\" has no icon.", this->get_identifier()));
 	}
 
+	if (this->get_level() == 0 && this->get_discovery_event() == nullptr) {
+		log::log_error(std::format("Technology \"{}\" neither has a level for research, nor has a discovery event.", this->get_identifier()));
+	}
+
 	if (this->get_period() != nullptr) {
 		if (this->get_year() != 0) {
 			if (this->get_year() < this->get_period()->get_start_year() || this->get_year() > this->get_period()->get_end_year()) {

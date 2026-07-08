@@ -180,6 +180,17 @@ pike = {
 	}
 }
 
+lance = {
+	name = "Lance"
+	subcategory = cavalry
+	portrait = bronze_short_sword
+	icon = saber
+	period = feudal_age
+	prerequisites = {
+		pike
+	}
+}
+
 polearm = {
 	name = "Polearm"
 	subcategory = infantry

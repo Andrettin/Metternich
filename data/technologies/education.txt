@@ -4,9 +4,6 @@ seven_liberal_arts = {
 	portrait = university
 	icon = university
 	period = classical_age
-	prerequisites = {
-		literacy #seems reasonable
-	}
 }
 
 monastic_school = {

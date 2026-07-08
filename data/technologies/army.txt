@@ -1,11 +1,3 @@
-warrior_code = {
-	name = "Warrior Code"
-	subcategory = army
-	portrait = engineering
-	icon = bow
-	period = tool_age
-}
-
 gunpowder = {
 	name = "Gunpowder"
 	subcategory = army
@@ -24,7 +16,7 @@ organized_regiments = {
 	icon = crossed_sabers
 	period = absolutism_age
 	prerequisites = {
-		chivalry #since this technology allows Lancers, and they upgrade from Knights, which are allowed by Chivalry
+		lance #since this technology allows Lancers, and they upgrade from Knights, which are allowed by Lance
 	}
 }
 
@@ -48,7 +40,6 @@ explosives = {
 	period = revolutionary_age
 	prerequisites = {
 		gunpowder
-		chemistry
 		weapon_craftsmanship
 		industrial_machinery
 	}
@@ -61,7 +52,7 @@ leadership = {
 	icon = flag
 	period = feudal_age
 	prerequisites = {
-		chivalry
+		lance
 		gunpowder
 	}
 }

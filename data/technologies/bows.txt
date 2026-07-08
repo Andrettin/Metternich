@@ -4,9 +4,6 @@ short_bow = {
 	portrait = engineering
 	icon = bow
 	period = copper_age
-	prerequisites = {
-		warrior_code
-	}
 	discovery_mean_time_to_happen = {
 		months = 50
 		
@@ -514,9 +511,6 @@ slinged_javelin = {
 	portrait = engineering
 	icon = bow
 	period = copper_age
-	prerequisites = {
-		warrior_code #seems reasonable
-	}
 }
 
 light_crossbow = {

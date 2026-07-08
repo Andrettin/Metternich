@@ -1,44 +1,9 @@
-ceremonial_burial = {
-	name = "Ceremonial Burial"
-	subcategory = religion
-	portrait = temple
-	icon = wooden_cross
-	period = copper_age
-}
-
-monotheism = {
-	name = "Monotheism"
-	subcategory = religion
-	portrait = temple
-	icon = wooden_cross
-	period = classical_age
-	prerequisites = {
-		ceremonial_burial
-		literacy
-	}
-}
-
-theology = {
-	name = "Theology"
-	subcategory = religion
-	portrait = temple
-	icon = wooden_cross
-	period = dark_age
-	prerequisites = {
-		monotheism
-		feudalism
-	}
-}
-
 asceticism = {
 	name = "Asceticism"
 	subcategory = religion
 	portrait = engineering
 	icon = wooden_cross
 	period = iron_age
-	prerequisites = {
-		monotheism
-	}
 	spread_conditions = {
 		source_province = {
 			or = {

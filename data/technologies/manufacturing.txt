@@ -282,17 +282,6 @@ glassblowing = {
 	}
 }
 
-saw_mill = {
-	name = "Saw Mill"
-	subcategory = manufacturing
-	portrait = engineering
-	icon = lumber
-	period = classical_age
-	prerequisites = {
-		wheel
-	}
-}
-
 industrial_machinery = {
 	name = "Industrial Machinery"
 	subcategory = trade_practices
@@ -322,7 +311,7 @@ refining = {
 	icon = fuel
 	period = industrial_age
 	prerequisites = {
-		chemistry
+		university
 		corporation
 	}
 }

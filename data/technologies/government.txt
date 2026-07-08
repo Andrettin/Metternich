@@ -7,7 +7,6 @@ feudalism = {
 	discover_only_once = true
 	prerequisites = {
 		divine_right
-		warrior_code
 	}
 	discovery_conditions = {
 		year >= 1000
@@ -26,12 +25,4 @@ colonialism = {
 	prerequisites = {
 		renaissance
 	}
-}
-
-diplomacy = {
-	name = "Diplomacy"
-	subcategory = government
-	portrait = engineering
-	icon = treaty
-	period = iron_age
 }

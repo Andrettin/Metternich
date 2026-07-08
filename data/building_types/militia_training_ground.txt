@@ -4,8 +4,7 @@ militia_training_ground = {
 	portrait = fort
 	icon = bow
 	wealth_cost = 15000gp
-	required_technology = warrior_code
-	free_on_start_extra_technology = 1
+	#free_on_start_extra_technology = 1
 	holding_types = {
 		castle
 	}

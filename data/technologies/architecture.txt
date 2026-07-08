@@ -1,0 +1,59 @@
+basilican_structures = {
+	name = "Basilican Structures"
+	subcategory = architecture
+	portrait = engineering
+	icon = architecture
+	period = classical_age
+}
+
+brickwork_structures = {
+	name = "Brickwork Structures"
+	subcategory = architecture
+	portrait = engineering
+	icon = architecture
+	period = dark_age
+	prerequisites = {
+		basilican_structures
+	}
+}
+
+romanesque_vaulting = {
+	name = "Romanesque Vaulting"
+	subcategory = architecture
+	portrait = engineering
+	icon = architecture
+	period = feudal_age
+	prerequisites = {
+		brickwork_structures
+	}
+}
+
+cylindrical_structures = {
+	name = "Cylindrical Structures"
+	subcategory = architecture
+	portrait = engineering
+	icon = architecture
+	period = castle_age
+	prerequisites = {
+		romanesque_vaulting
+	}
+}
+
+gothic_buttresses = {
+	name = "Gothic Buttresses"
+	subcategory = architecture
+	portrait = engineering
+	icon = architecture
+	period = renaissance_age
+	prerequisites = {
+		cylindrical_structures
+	}
+}
+
+sanitation = {
+	name = "Sanitation"
+	subcategory = architecture
+	portrait = engineering
+	icon = architecture
+	period = dark_age
+}

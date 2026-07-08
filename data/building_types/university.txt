@@ -211,7 +211,6 @@ wing_of_diplomacy = {
 	portrait = university
 	icon = treaty
 	wealth_cost = 47400gp
-	required_technology = diplomacy
 	holding_types = {
 		university
 	}
@@ -257,7 +256,6 @@ wing_of_secrets = {
 	portrait = university
 	icon = skull
 	wealth_cost = 47400gp
-	required_technology = diplomacy #FIXME: change to something intrigue/espionage-related instead
 	holding_types = {
 		university
 	}
@@ -303,7 +301,6 @@ wing_of_theology = {
 	portrait = university
 	icon = wooden_cross
 	wealth_cost = 47400gp
-	required_technology = theology
 	holding_types = {
 		university
 	}

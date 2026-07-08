@@ -1,11 +1,3 @@
-literacy = {
-	name = "Literacy"
-	subcategory = culture
-	portrait = university
-	icon = book
-	period = iron_age
-}
-
 printing_press = {
 	name = "Printing Press"
 	subcategory = culture
@@ -13,8 +5,7 @@ printing_press = {
 	icon = book
 	period = dark_age
 	prerequisites = {
-		literacy #since it involves more advanced forms of writing
-		saw_mill
+		renaissance
 	}
 	domain_modifier = {
 		research_output_modifier = 22

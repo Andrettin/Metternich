@@ -1,16 +1,3 @@
-tobacco_planting = {
-	name = "Tobacco Planting"
-	subcategory = farming
-	portrait = engineering
-	icon = tobacco
-	period = tool_age
-	discovery_conditions = {
-		any_settlement = {
-			feature = prime_tobacco_land
-		}
-	}
-}
-
 two_field_system = {
 	name = "Two Field System"
 	subcategory = farming

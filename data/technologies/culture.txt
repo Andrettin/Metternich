@@ -1,14 +1,3 @@
-drama = {
-	name = "Drama"
-	subcategory = aesthetics
-	portrait = engineering
-	icon = music
-	period = classical_age
-	prerequisites = {
-		literacy
-	}
-}
-
 ballads = {
 	name = "Ballads"
 	subcategory = aesthetics

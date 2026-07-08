@@ -13,20 +13,7 @@ physics = {
 	icon = research
 	period = renaissance_age
 	prerequisites = {
-		literacy
 		navigation
-	}
-}
-
-theory_of_gravity = {
-	name = "Theory of Gravity"
-	subcategory = philosophy
-	portrait = engineering
-	icon = research
-	period = renaissance_age
-	prerequisites = {
-		astronomy
-		university
 	}
 }
 
@@ -41,27 +28,12 @@ magnetism = {
 	}
 }
 
-chemistry = {
-	name = "Chemistry"
-	subcategory = philosophy
-	portrait = engineering
-	icon = research
-	period = renaissance_age
-	prerequisites = {
-		literacy
-		university
-	}
-}
-
 aristotelian_logic = {
 	name = "Aristotelian Logic"
 	subcategory = philosophy
 	portrait = engineering
 	icon = philosophy
 	period = classical_age
-	prerequisites = {
-		literacy
-	}
 	discovery_effects = {
 		domain = {
 			regency += 25

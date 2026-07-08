@@ -4,7 +4,6 @@ sawmill = {
 	portrait = factory
 	icon = lumber
 	wealth_cost = 3gb
-	required_technology = saw_mill
 	holding_types = {
 		castle
 		guild
