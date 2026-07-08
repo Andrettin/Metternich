@@ -218,6 +218,7 @@ void technology::initialize()
 		event->set_name(std::format("{} Discovered", this->get_name()));
 		event->set_portrait(this->get_portrait());
 		event->set_description(std::format("[root.domain.form_of_address], the {} technology has been discovered in [root.name]!", string::lowered(this->get_name())));
+		event->set_only_once(this->is_discovered_only_once());
 		event->set_mean_time_to_happen(std::move(this->discovery_mean_time_to_happen));
 
 		auto event_conditions = std::make_unique<and_condition<province>>();
@@ -225,6 +226,7 @@ void technology::initialize()
 		event_conditions->add_condition(std::make_unique<can_gain_technology_condition<province>>(this));
 		if (this->discovery_conditions != nullptr) {
 			event_conditions->add_condition(std::move(this->discovery_conditions));
+			this->discovery_conditions = nullptr;
 		}
 		event->set_conditions(std::move(event_conditions));
 
@@ -232,10 +234,13 @@ void technology::initialize()
 		event_option->add_effect(std::make_unique<technologies_effect<const province>>(this, gsml_operator::addition));
 		if (this->discovery_effects != nullptr) {
 			event_option->add_effects(std::move(this->discovery_effects));
+			this->discovery_effects = nullptr;
 		}
 		event->add_option(std::move(event_option));
 
 		event->initialize();
+
+		this->discovery_event = event;
 	}
 
 	if (this->spread_mean_time_to_happen != nullptr) {

@@ -113,6 +113,11 @@ public:
 		return this->only_once;
 	}
 
+	void set_only_once(const bool only_once)
+	{
+		this->only_once = only_once;
+	}
+
 	bool is_news() const
 	{
 		return this->news;

@@ -1700,6 +1700,11 @@ QCoro::Task<void> province_game_data::add_technology(const technology *technolog
 		co_await this->get_owner()->get_technology()->on_technology_added(technology);
 	}
 
+	if (technology->is_discovered_only_once() && technology->get_discovery_event() != nullptr) {
+		//ensure that if a technology is set to be discovered only once, it won't be re-discovered if obtained through means other than its discovery event
+		game::get()->add_fired_event(technology->get_discovery_event());
+	}
+
 	if (game::get()->is_running()) {
 		this->province->get_turn_data()->set_province_map_mode_dirty(province_map_mode::technology);
 

@@ -82,6 +82,7 @@ class technology final : public named_data_entry, public data_type<technology>
 	Q_PROPERTY(QVariantList enabled_pathways READ get_enabled_pathways_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_civilian_units READ get_enabled_civilian_units_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_military_units READ get_enabled_military_units_qvariant_list NOTIFY changed)
+	Q_PROPERTY(bool discover_only_once MEMBER discover_only_once READ is_discovered_only_once NOTIFY changed)
 	Q_PROPERTY(const QObject* tree_parent READ get_tree_parent CONSTANT)
 	Q_PROPERTY(QVariantList secondary_tree_parents READ get_secondary_tree_parents CONSTANT)
 	Q_PROPERTY(const archimedes::game_rule* required_game_rule MEMBER required_game_rule NOTIFY changed)
@@ -430,6 +431,11 @@ public:
 		return this->domain_modifier.get();
 	}
 
+	bool is_discovered_only_once() const
+	{
+		return this->discover_only_once;
+	}
+
 	const and_condition<province> *get_discovery_conditions() const
 	{
 		return this->discovery_conditions.get();
@@ -438,6 +444,16 @@ public:
 	const effect_list<const province> *get_discovery_effects() const
 	{
 		return this->discovery_effects.get();
+	}
+
+	const province_event *get_discovery_event() const
+	{
+		return this->discovery_event;
+	}
+
+	const province_event *get_spread_event() const
+	{
+		return this->spread_event;
 	}
 
 	std::string get_modifier_string(const province *province) const;
@@ -488,11 +504,6 @@ public:
 
 	bool is_enabled() const;
 
-	const province_event *get_spread_event() const
-	{
-		return this->spread_event;
-	}
-
 signals:
 	void changed();
 
@@ -539,13 +550,15 @@ private:
 	std::vector<const spell *> enabled_spells;
 	std::unique_ptr<const metternich::modifier<const province>> modifier;
 	std::unique_ptr<const metternich::modifier<const domain>> domain_modifier;
+	bool discover_only_once = false;
 	std::unique_ptr<and_condition<province>> discovery_conditions;
 	std::unique_ptr<effect_list<const province>> discovery_effects;
-	std::unique_ptr<and_condition<province>> spread_conditions;
-	const game_rule *required_game_rule = nullptr;
 	std::unique_ptr<metternich::mean_time_to_happen<province>> discovery_mean_time_to_happen;
+	const province_event *discovery_event = nullptr;
+	std::unique_ptr<and_condition<province>> spread_conditions;
 	std::unique_ptr<metternich::mean_time_to_happen<province>> spread_mean_time_to_happen;
 	const province_event *spread_event = nullptr;
+	const game_rule *required_game_rule = nullptr;
 };
 
 }
