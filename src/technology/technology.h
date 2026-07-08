@@ -553,10 +553,14 @@ private:
 	bool discover_only_once = false;
 	std::unique_ptr<and_condition<province>> discovery_conditions;
 	std::unique_ptr<effect_list<const province>> discovery_effects;
-	std::unique_ptr<metternich::mean_time_to_happen<province>> discovery_mean_time_to_happen;
+	std::unique_ptr<mean_time_to_happen<province>> discovery_mean_time_to_happen;
+	std::unique_ptr<factor<province>> discovery_monthly_chance;
+	std::unique_ptr<factor<province>> discovery_yearly_chance;
 	const province_event *discovery_event = nullptr;
 	std::unique_ptr<and_condition<province>> spread_conditions;
-	std::unique_ptr<metternich::mean_time_to_happen<province>> spread_mean_time_to_happen;
+	std::unique_ptr<mean_time_to_happen<province>> spread_mean_time_to_happen;
+	std::unique_ptr<factor<province>> spread_monthly_chance;
+	std::unique_ptr<factor<province>> spread_yearly_chance;
 	const province_event *spread_event = nullptr;
 	const game_rule *required_game_rule = nullptr;
 };
