@@ -64,6 +64,7 @@
 #include "religion/religion.h"
 #include "script/condition/and_condition.h"
 #include "script/effect/delayed_effect_instance.h"
+#include "technology/technology.h"
 #include "time/calendar.h"
 #include "ui/portrait.h"
 #include "unit/army.h"
@@ -1736,6 +1737,19 @@ QCoro::Task<void> game::do_turn_coro()
 			}
 
 			engine_interface::get()->add_notification("Military Units Disbanded", war_minister_portrait, std::format("{}, due to a lack of available resources, we were forced to disband some of our military units.\n\nDisbanded Units:{}", game::get()->get_player_country()->get_game_data()->get_form_of_address(), disbanded_units_str));
+		}
+
+		if (!game::get()->get_player_country()->get_turn_data()->get_province_spread_technologies().empty()) {
+			const portrait *interior_minister_portrait = game::get()->get_player_country()->get_game_data()->get_government()->get_interior_minister_portrait();
+
+			std::string spread_technologies_str;
+			for (const auto &[province, spread_technologies] : game::get()->get_player_country()->get_turn_data()->get_province_spread_technologies()) {
+				for (const technology *technology : spread_technologies) {
+					spread_technologies_str += std::format("\n{} to {}", technology->get_name(), province->get_game_data()->get_current_cultural_name());
+				}
+			}
+
+			engine_interface::get()->add_notification("Technology Spread", interior_minister_portrait, std::format("{}, new technologies have spread to our provinces!\n\nSpread Technologies:{}", game::get()->get_player_country()->get_game_data()->get_form_of_address(), spread_technologies_str));
 		}
 
 		for (const domain *domain : this->get_countries()) {

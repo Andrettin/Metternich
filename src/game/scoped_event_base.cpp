@@ -3,6 +3,7 @@
 #include "game/scoped_event_base.h"
 
 #include "database/gsml_data.h"
+#include "domain/country_turn_data.h"
 #include "domain/domain.h"
 #include "game/event.h"
 #include "game/event_instance.h"
@@ -203,6 +204,13 @@ QCoro::Task<void> scoped_event_base<scope_type>::check_mtth_event_for_scope(cons
 
 	if (should_fire) {
 		co_await event->fire(scope, context(scope));
+
+		if constexpr (std::is_same_v<scope_type, const province>) {
+			const province_event *province_event = static_cast<const metternich::province_event *>(event);
+			if (province_event->get_spread_technology() != nullptr && scope->get_game_data()->get_owner() != nullptr) {
+				scope->get_game_data()->get_owner()->get_turn_data()->add_province_spread_technology(scope, province_event->get_spread_technology());
+			}
+		}
 	}
 }
 

@@ -1,7 +1,7 @@
 #pragma once
 
+#include "map/province_container.h"
 #include "unit/military_unit_type_container.h"
-#include "util/centesimal_int.h"
 #include "util/qunique_ptr.h"
 
 namespace metternich {
@@ -9,6 +9,7 @@ namespace metternich {
 class domain;
 class expense_transaction;
 class income_transaction;
+class technology;
 enum class diplomacy_state;
 enum class diplomatic_map_mode;
 enum class expense_transaction_type;
@@ -53,6 +54,16 @@ public:
 	void add_disbanded_military_unit(const military_unit_type *military_unit_type)
 	{
 		++this->disbanded_military_units[military_unit_type];
+	}
+
+	const province_map<std::vector<const technology *>> &get_province_spread_technologies() const
+	{
+		return this->province_spread_technologies;
+	}
+
+	void add_province_spread_technology(const province *province, const technology *technology)
+	{
+		this->province_spread_technologies[province].push_back(technology);
 	}
 
 	bool is_diplomatic_map_dirty() const
@@ -102,6 +113,7 @@ private:
 	std::vector<qunique_ptr<income_transaction>> income_transactions;
 	std::vector<qunique_ptr<expense_transaction>> expense_transactions;
 	military_unit_type_map<int> disbanded_military_units;
+	province_map<std::vector<const technology *>> province_spread_technologies;
 	bool diplomatic_map_dirty = false;
 	bool realm_diplomatic_map_dirty = false;
 	std::set<diplomatic_map_mode> dirty_diplomatic_map_modes;

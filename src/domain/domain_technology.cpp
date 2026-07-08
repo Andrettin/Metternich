@@ -2,8 +2,8 @@
 
 #include "domain/domain_technology.h"
 
-#include "character/character.h"
 #include "database/defines.h"
+#include "domain/country_turn_data.h"
 #include "domain/domain.h"
 #include "domain/domain_ai.h"
 #include "domain/domain_economy.h"
@@ -206,8 +206,6 @@ QCoro::Task<void> domain_technology::do_research()
 
 QCoro::Task<void> domain_technology::do_technology_spread()
 {
-	province_map<std::vector<const technology *>> province_spread_technologies;
-
 	for (const province *province : this->get_game_data()->get_provinces()) {
 		technology_map<decimillesimal_int> technology_spread_bonuses;
 
@@ -284,7 +282,7 @@ QCoro::Task<void> domain_technology::do_technology_spread()
 				co_await province->get_game_data()->add_technology(technology);
 				if (technology->is_available_for_domain(this->domain)) {
 					//only display spread for technologies that are available for this domain
-					province_spread_technologies[province].push_back(technology);
+					this->domain->get_turn_data()->add_province_spread_technology(province, technology);
 
 					if (province->get_game_data()->is_capital()) {
 						if (this->get_current_researches().contains(technology)) {
@@ -296,19 +294,6 @@ QCoro::Task<void> domain_technology::do_technology_spread()
 				}
 			}
 		}
-	}
-
-	if (this->domain == game::get()->get_player_country() && !province_spread_technologies.empty()) {
-		const portrait *interior_minister_portrait = this->get_game_data()->get_government()->get_interior_minister_portrait();
-
-		std::string spread_technologies_str;
-		for (const auto &[province, spread_technologies] : province_spread_technologies) {
-			for (const technology *technology : spread_technologies) {
-				spread_technologies_str += std::format("\n{} to {}", technology->get_name(), province->get_game_data()->get_current_cultural_name());
-			}
-		}
-
-		engine_interface::get()->add_notification("Technology Spread", interior_minister_portrait, std::format("{}, new technologies have spread to our provinces!\n\nSpread Technologies:{}", this->get_game_data()->get_form_of_address(), spread_technologies_str));
 	}
 }
 
