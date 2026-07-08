@@ -39,9 +39,16 @@ feudalism = {
 	portrait = aristocratic_palace
 	icon = crown_baronial
 	period = civic_age
+	discover_only_once = true
 	prerequisites = {
 		monarchy
 		warrior_code
+	}
+	discovery_conditions = {
+		year >= 1000
+	}
+	discovery_mean_time_to_happen = {
+		years = 1
 	}
 }
 
