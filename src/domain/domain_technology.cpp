@@ -576,7 +576,13 @@ bool domain_technology::is_technology_researchable(const technology *technology)
 		return false;
 	}
 
-	if (technology->get_discovery_conditions() != nullptr && !technology->get_discovery_conditions()->check(this->domain, read_only_context(this->domain))) {
+	const province *capital_province = this->get_game_data()->get_capital_province();
+	assert_throw(capital_province != nullptr);
+	if (technology->get_discovery_conditions() != nullptr && !technology->get_discovery_conditions()->check(capital_province, read_only_context(capital_province))) {
+		return false;
+	}
+
+	if (technology->get_level() == 0) {
 		return false;
 	}
 
@@ -743,9 +749,11 @@ QCoro::Task<void> domain_technology::on_technology_researched(const technology *
 
 	co_await this->add_technology(technology);
 
+	const province *capital_province = this->get_game_data()->get_capital_province();
+	assert_throw(capital_province != nullptr);
 	if (technology->get_discovery_effects() != nullptr) {
-		context ctx(this->domain);
-		co_await technology->get_discovery_effects()->do_effects(this->domain, ctx);
+		context ctx(capital_province);
+		co_await technology->get_discovery_effects()->do_effects(capital_province, ctx);
 	}
 
 	if (technology->get_free_technologies() > 0) {

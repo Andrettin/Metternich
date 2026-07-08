@@ -7,7 +7,9 @@ large_ship_building = {
 	prerequisites = {
 		woodworking #ship-building requires woodworking
 	}
-	cost_factor = {
+	discovery_mean_time_to_happen = {
+		months = 125
+		
 		modifier = {
 			factor = 0.9
 			scripted_condition = has_school
@@ -149,9 +151,6 @@ large_ship_building = {
 			year >= 1350
 		}
 	}
-	#discovery_mean_time_to_happen = {
-	#	months = 125
-	#}
 	spread_mean_time_to_happen = {
 		months = 1000
 		

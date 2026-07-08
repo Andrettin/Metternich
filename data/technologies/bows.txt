@@ -8,7 +8,9 @@ short_bow = {
 		warrior_code
 		woodworking #since bows are made of wood
 	}
-	cost_factor = {
+	discovery_mean_time_to_happen = {
+		months = 50
+		
 		modifier = {
 			factor = 0.95
 			terrain = forest
@@ -72,9 +74,6 @@ short_bow = {
 			year >= 1350
 		}
 	}
-	#discovery_mean_time_to_happen = {
-	#	months = 50
-	#}
 	spread_mean_time_to_happen = {
 		months = 500
 		
@@ -183,7 +182,9 @@ long_bow = {
 	prerequisites = {
 		short_bow
 	}
-	cost_factor = {
+	discovery_mean_time_to_happen = {
+		months = 100
+		
 		modifier = {
 			factor = 0.95
 			terrain = forest
@@ -243,9 +244,6 @@ long_bow = {
 			year >= 1350
 		}
 	}
-	#discovery_mean_time_to_happen = {
-	#	months = 100
-	#}
 	spread_mean_time_to_happen = {
 		months = 1000
 		
@@ -354,7 +352,9 @@ composite_bow = {
 	prerequisites = {
 		long_bow
 	}
-	cost_factor = {
+	discovery_mean_time_to_happen = {
+		months = 250
+		
 		modifier = {
 			factor = 0.95
 			terrain = forest
@@ -414,9 +414,6 @@ composite_bow = {
 			year >= 1350
 		}
 	}
-	#discovery_mean_time_to_happen = {
-	#	months = 250
-	#}
 	spread_mean_time_to_happen = {
 		months = 2000
 		
@@ -536,7 +533,9 @@ light_crossbow = {
 		
 		invention #to place it in the appropriate period
 	}
-	cost_factor = {
+	discovery_mean_time_to_happen = {
+		months = 100
+		
 		modifier = {
 			factor = 0.9
 			has_building_class = waterfront
@@ -592,9 +591,6 @@ light_crossbow = {
 			year >= 1350
 		}
 	}
-	#discovery_mean_time_to_happen = {
-	#	months = 100
-	#}
 	spread_mean_time_to_happen = {
 		months = 1000
 		
@@ -706,7 +702,9 @@ heavy_crossbow = {
 	prerequisites = {
 		medium_crossbow
 	}
-	cost_factor = {
+	discovery_mean_time_to_happen = {
+		months = 500
+		
 		modifier = {
 			factor = 0.9
 			has_building_class = waterfront
@@ -762,9 +760,6 @@ heavy_crossbow = {
 			year < 1250
 		}
 	}
-	#discovery_mean_time_to_happen = {
-	#	months = 500
-	#}
 	spread_mean_time_to_happen = {
 		months = 5000
 		

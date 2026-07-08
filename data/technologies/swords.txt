@@ -7,7 +7,9 @@ short_sword = {
 	prerequisites = {
 		woodworking #for the sword hilt
 	}
-	cost_factor = {
+	discovery_mean_time_to_happen = {
+		months = 75
+		
 		modifier = {
 			factor = 0.9
 			has_building_class = waterfront
@@ -75,9 +77,6 @@ short_sword = {
 			year >= 1350
 		}
 	}
-	#discovery_mean_time_to_happen = {
-	#	months = 75
-	#}
 	spread_mean_time_to_happen = {
 		months = 750
 		
@@ -195,7 +194,9 @@ long_sword = {
 		broad_sword
 		iron_working
 	}
-	cost_factor = {
+	discovery_mean_time_to_happen = {
+		months = 500
+		
 		modifier = {
 			factor = 0.9
 			has_building_class = waterfront
@@ -259,9 +260,6 @@ long_sword = {
 			year >= 1350
 		}
 	}
-	#discovery_mean_time_to_happen = {
-	#	months = 500
-	#}
 	spread_mean_time_to_happen = {
 		months = 3000
 		
@@ -366,7 +364,9 @@ bastard_sword = {
 	prerequisites = {
 		long_sword
 	}
-	cost_factor = {
+	discovery_mean_time_to_happen = {
+		months = 1000
+		
 		modifier = {
 			factor = 0.9
 			has_building_class = waterfront
@@ -430,9 +430,6 @@ bastard_sword = {
 			year < 1250
 		}
 	}
-	#discovery_mean_time_to_happen = {
-	#	months = 1000
-	#}
 	spread_mean_time_to_happen = {
 		months = 6000
 		

@@ -429,12 +429,12 @@ public:
 		return this->domain_modifier.get();
 	}
 
-	const and_condition<domain> *get_discovery_conditions() const
+	const and_condition<province> *get_discovery_conditions() const
 	{
 		return this->discovery_conditions.get();
 	}
 
-	const effect_list<const domain> *get_discovery_effects() const
+	const effect_list<const province> *get_discovery_effects() const
 	{
 		return this->discovery_effects.get();
 	}
@@ -532,10 +532,11 @@ private:
 	std::vector<const spell *> enabled_spells;
 	std::unique_ptr<const metternich::modifier<const province>> modifier;
 	std::unique_ptr<const metternich::modifier<const domain>> domain_modifier;
-	std::unique_ptr<and_condition<domain>> discovery_conditions;
-	std::unique_ptr<effect_list<const domain>> discovery_effects;
+	std::unique_ptr<and_condition<province>> discovery_conditions;
+	std::unique_ptr<effect_list<const province>> discovery_effects;
 	std::unique_ptr<and_condition<province>> spread_conditions;
 	const game_rule *required_game_rule = nullptr;
+	std::unique_ptr<metternich::mean_time_to_happen<province>> discovery_mean_time_to_happen;
 	std::unique_ptr<metternich::mean_time_to_happen<province>> spread_mean_time_to_happen;
 };
 

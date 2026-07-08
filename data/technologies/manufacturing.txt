@@ -37,7 +37,9 @@ glassblowing = {
 	prerequisites = {
 		pottery #seems reasonable
 	}
-	cost_factor = {
+	discovery_mean_time_to_happen = {
+		months = 150
+		
 		modifier = {
 			factor = 0.85
 			has_building_class = university
@@ -167,9 +169,6 @@ glassblowing = {
 			year >= 1350
 		}
 	}
-	#discovery_mean_time_to_happen = {
-	#	months = 150
-	#}
 	spread_mean_time_to_happen = {
 		months = 1500
 		

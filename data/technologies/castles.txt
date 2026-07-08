@@ -7,7 +7,9 @@ hill_fort = {
 	prerequisites = {
 		woodworking #requires woodworking to have wooden walls
 	}
-	cost_factor = {
+	discovery_mean_time_to_happen = {
+		months = 50
+		
 		modifier = {
 			factor = 0.9
 			has_building_class = waterfront
@@ -145,9 +147,6 @@ hill_fort = {
 			year >= 1350
 		}
 	}
-	#discovery_mean_time_to_happen = {
-	#	months = 50
-	#}
 	spread_mean_time_to_happen = {
 		months = 500
 		
@@ -360,7 +359,9 @@ small_castle = {
 		
 		invention #to place it in the appropriate period
 	}
-	cost_factor = {
+	discovery_mean_time_to_happen = {
+		months = 150
+		
 		modifier = {
 			factor = 0.9
 			has_building_class = waterfront
@@ -494,9 +495,6 @@ small_castle = {
 			year >= 1350
 		}
 	}
-	#discovery_mean_time_to_happen = {
-	#	months = 150
-	#}
 	spread_mean_time_to_happen = {
 		months = 1000
 		
@@ -707,7 +705,9 @@ medium_castle = {
 	prerequisites = {
 		small_castle
 	}
-	cost_factor = {
+	discovery_mean_time_to_happen = {
+		months = 500
+		
 		modifier = {
 			factor = 0.9
 			has_building_class = waterfront
@@ -845,9 +845,6 @@ medium_castle = {
 			year >= 1350
 		}
 	}
-	#discovery_mean_time_to_happen = {
-	#	months = 500
-	#}
 	spread_mean_time_to_happen = {
 		months = 2000
 		
@@ -1054,7 +1051,9 @@ large_castle = {
 	prerequisites = {
 		medium_castle
 	}
-	cost_factor = {
+	discovery_mean_time_to_happen = {
+		months = 1000
+		
 		modifier = {
 			factor = 0.9
 			has_building_class = waterfront
@@ -1188,9 +1187,6 @@ large_castle = {
 			year < 1250
 		}
 	}
-	#discovery_mean_time_to_happen = {
-	#	months = 1000
-	#}
 	spread_mean_time_to_happen = {
 		months = 5000
 		
@@ -1391,7 +1387,9 @@ huge_castle = {
 	prerequisites = {
 		large_castle
 	}
-	cost_factor = {
+	discovery_mean_time_to_happen = {
+		months = 5000
+		
 		modifier = {
 			factor = 0.9
 			has_building_class = waterfront
@@ -1529,9 +1527,6 @@ huge_castle = {
 			year < 1350
 		}
 	}
-	#discovery_mean_time_to_happen = {
-	#	months = 5000
-	#}
 	spread_mean_time_to_happen = {
 		months = 10000
 		

@@ -68,7 +68,9 @@ black_coal = {
 			feature = coal_deposit
 		}
 	}
-	cost_factor = {
+	discovery_mean_time_to_happen = {
+		months = 4000
+		
 		modifier = {
 			factor = 0.85
 			has_building_class = university
@@ -206,9 +208,6 @@ black_coal = {
 			year < 1350
 		}
 	}
-	#discovery_mean_time_to_happen = {
-	#	months = 4000
-	#}
 	spread_mean_time_to_happen = {
 		months = 10000
 		
