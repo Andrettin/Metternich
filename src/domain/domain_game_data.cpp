@@ -3504,6 +3504,10 @@ QCoro::Task<bool> domain_game_data::choose_construction()
 	std::vector<std::variant<building_slot *, const province *>> buildable_locations;
 
 	for (const province *province : this->get_provinces()) {
+		if (province->get_game_data()->get_under_construction_pathway() != nullptr) {
+			continue;
+		}
+
 		if (province->get_game_data()->get_buildable_pathway() != nullptr) {
 			buildable_locations.push_back(province);
 		}
