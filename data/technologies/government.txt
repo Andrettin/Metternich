@@ -6,7 +6,6 @@ code_of_laws = {
 	period = bronze_age
 	prerequisites = {
 		warrior_code
-		woodworking
 	}
 }
 
@@ -49,18 +48,6 @@ colonialism = {
 	period = gunpowder_age
 	prerequisites = {
 		renaissance
-	}
-}
-
-	name = "Democracy"
-	subcategory = government
-	portrait = engineering
-	icon = philosophy
-	period = absolutism_age
-	prerequisites = {
-		republic
-		banking
-		invention
 	}
 }
 

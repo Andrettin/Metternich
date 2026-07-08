@@ -4,9 +4,6 @@ writing = {
 	portrait = university
 	icon = book
 	period = bronze_age
-	prerequisites = {
-		woodworking #it seems somewhat reasonable to require woodworking for early writing
-	}
 }
 
 literacy = {

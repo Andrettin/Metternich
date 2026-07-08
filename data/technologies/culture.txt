@@ -15,9 +15,6 @@ ballads = {
 	portrait = engineering
 	icon = music
 	period = copper_age
-	prerequisites = {
-		woodworking #likely needs woodworking for musical instruments
-	}
 	discovery_mean_time_to_happen = {
 		months = 250
 		

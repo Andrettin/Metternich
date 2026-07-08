@@ -152,15 +152,3 @@ padded_horse_collar = {
 		agricultural_output_modifier = 3
 	}
 }
-
-land_enclosure = {
-	name = "Land Enclosure"
-	subcategory = farming
-	portrait = engineering
-	icon = grain
-	period = gunpowder_age
-	prerequisites = {
-		rooting_out #earlier farming technology
-		padded_horse_collar #earlier farming technology
-	}
-}

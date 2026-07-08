@@ -4,9 +4,6 @@ mace = {
 	portrait = bronze_short_sword
 	icon = saber
 	period = copper_age
-	prerequisites = {
-		woodworking #needs woodworking for the mace's shaft
-	}
 	discovery_mean_time_to_happen = {
 		months = 250
 		

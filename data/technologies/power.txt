@@ -7,7 +7,6 @@ compound_steam_engine = {
 	prerequisites = {
 		construction
 		physics
-		mechanized_mining
 		iron_railroad #iron_railroad_bridge
 	}
 }

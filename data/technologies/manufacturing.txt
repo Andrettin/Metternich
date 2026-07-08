@@ -1,11 +1,3 @@
-woodworking = {
-	name = "Woodworking"
-	subcategory = manufacturing
-	portrait = engineering
-	icon = lumber
-	period = tool_age
-}
-
 pottery = {
 	name = "Pottery"
 	subcategory = manufacturing
@@ -308,7 +300,6 @@ saw_mill = {
 	icon = lumber
 	period = classical_age
 	prerequisites = {
-		woodworking #since this is a more advanced form of woodworking
 		construction
 		wheel
 	}
@@ -321,9 +312,8 @@ industrial_machinery = {
 	icon = book
 	period = enlightenment_age
 	prerequisites = {
-		steam_in_mining
+		construction
 		university
-		#trained_journeymen
 	}
 }
 
@@ -334,7 +324,6 @@ industrialization = {
 	icon = cog
 	period = napoleonic_age
 	prerequisites = {
-		experimental_railroad
 		banking
 	}
 }

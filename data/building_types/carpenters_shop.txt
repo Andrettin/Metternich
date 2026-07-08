@@ -4,7 +4,6 @@ carpenters_shop = {
 	portrait = factory
 	icon = hammer
 	wealth_cost = 10gb #same as the Trade Shop
-	required_technology = woodworking
 	holding_types = {
 		castle
 		guild

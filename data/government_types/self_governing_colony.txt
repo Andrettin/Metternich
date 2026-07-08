@@ -3,7 +3,7 @@ self_governing_colony = {
 	group = republic
 	icon = settlement
 	primary_domain_attribute = economy
-	required_technology = republic
+	required_technology = colonialism
 	preferred_holding_types = {
 		guild
 		royal_palace

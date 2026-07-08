@@ -14,17 +14,6 @@ iron_mining = {
 	period = copper_age
 }
 
-coal_mining = {
-	name = "Coal Mining"
-	subcategory = mining
-	portrait = engineering
-	icon = coal
-	period = bronze_age
-	prerequisites = {
-		iron_mining #previous mining technology
-	}
-}
-
 black_coal = {
 	name = "Black Coal"
 	subcategory = mining
@@ -32,7 +21,7 @@ black_coal = {
 	icon = coal
 	period = renaissance_age
 	prerequisites = {
-		coal_mining #seems logical
+		iron_mining #previous mining technology
 		natural_philosophy #to place it in the appropriate period
 	}
 	discovery_conditions = {
@@ -334,107 +323,6 @@ black_coal = {
 	}
 }
 
-steam_in_mining = {
-	name = "Steam in Mining"
-	subcategory = mining
-	portrait = factory
-	icon = cog
-	period = absolutism_age
-	prerequisites = {
-		iron_mining
-		construction
-	}
-}
-
-mechanized_mining = {
-	name = "Mechanized Mining"
-	subcategory = mining
-	portrait = factory
-	icon = cog
-	period = enlightenment_age
-	prerequisites = {
-		steam_in_mining #seems logical
-		construction
-		wheel
-	}
-	modifier = {
-		iron_output_modifier = 25
-		coal_output_modifier = 25
-		sulfur_output_modifier = 25
-	}
-	weight_factor = {
-		modifier = {
-			factor = 1.3
-			produces_commodity = coal
-		}
-		modifier = {
-			factor = 1.1
-			produces_commodity = iron
-		}
-		modifier = {
-			factor = 1.1
-			produces_commodity = sulfur
-		}
-		modifier = {
-			factor = 1.1
-			or = {
-				produces_commodity = gold
-				produces_commodity = silver
-			}
-		}
-	}
-}
-
-clean_coal = {
-	name = "Clean Coal"
-	subcategory = mining
-	portrait = factory
-	icon = coal
-	period = revolutionary_age
-	prerequisites = {
-		black_coal #previous coal mining technology
-		mechanized_mining
-	}
-	modifier = {
-		coal_output_modifier = 20
-		employment_capacity_modifier = {
-			employment_type = coal_mining
-			modifier = 20
-		}
-		sulfur_output_modifier = 10
-		employment_capacity_modifier = {
-			employment_type = sulfur_mining
-			modifier = 20
-		}
-		iron_output_modifier = 10
-		employment_capacity_modifier = {
-			employment_type = iron_mining
-			modifier = 20
-		}
-	}
-	weight_factor = {
-		modifier = {
-			factor = 1.3
-			produces_commodity = coal
-		}
-		modifier = {
-			factor = 1.1
-			produces_commodity = iron
-		}
-		modifier = {
-			factor = 1.1
-			produces_commodity = sulfur
-		}
-		modifier = {
-			factor = 1.1
-			or = {
-				produces_commodity = gold
-				produces_commodity = silver
-			}
-		}
-	}
-}
-
 pit_coal = {
 	name = "Pit Coal"
 	subcategory = mining
@@ -442,7 +330,7 @@ pit_coal = {
 	icon = coal
 	period = napoleonic_age
 	prerequisites = {
-		clean_coal
+		black_coal #previous coal mining technology
 	}
 	cost_factor = {
 		#modifier = {
@@ -466,8 +354,6 @@ coke = {
 	icon = coal
 	period = steam_age
 	prerequisites = {
-		#clean_coal
-		
 		pit_coal
 	}
 	cost_factor = {
@@ -485,17 +371,6 @@ coke = {
 	}
 }
 
-square_set_timbering = {
-	name = "Square-Set Timbering"
-	subcategory = mining
-	portrait = engineering
-	icon = coal
-	period = napoleonic_age
-	prerequisites = {
-		coal_mining
-	}
-}
-
 dynamite = {
 	name = "Dynamite"
 	subcategory = mining
@@ -503,7 +378,7 @@ dynamite = {
 	icon = coal
 	period = imperial_age
 	prerequisites = {
-		square_set_timbering
+		black_coal
 		compound_steam_engine
 	}
 }

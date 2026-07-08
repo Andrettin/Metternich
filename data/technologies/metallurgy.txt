@@ -14,59 +14,8 @@ crucible_process = {
 	period = enlightenment_age
 	prerequisites = {
 		bronze_working #previous metallurgy technology
-		steam_in_mining
-		coal_mining
-	}
-}
-
-cheap_iron = {
-	name = "Cheap Iron"
-	subcategory = metallurgy
-	portrait = factory
-	icon = iron
-	period = napoleonic_age
-	prerequisites = {
-		bronze_working #previous metallurgy technology
-		clean_coal
-	}
-	modifier = {
-		gold_output_modifier = 10
-		employment_capacity_modifier = {
-			employment_type = gold_mining
-			modifier = 20
-		}
-		silver_output_modifier = 10
-		employment_capacity_modifier = {
-			employment_type = silver_mining
-			modifier = 20
-		}
-		coal_output_modifier = 10
-		iron_output_modifier = 25
-		employment_capacity_modifier = {
-			employment_type = iron_mining
-			modifier = 20
-		}
-	}
-	weight_factor = {
-		modifier = {
-			factor = 1.3
-			produces_commodity = coal
-		}
-		modifier = {
-			factor = 1.1
-			produces_commodity = iron
-		}
-		modifier = {
-			factor = 1.1
-			produces_commodity = sulfur
-		}
-		modifier = {
-			factor = 1.1
-			or = {
-				produces_commodity = gold
-				produces_commodity = silver
-			}
-		}
+		construction
+		black_coal
 	}
 }
 
@@ -77,7 +26,7 @@ advanced_ore_roasting_processes = {
 	icon = iron
 	period = steam_age
 	prerequisites = {
-		cheap_iron
+		bronze_working #previous metallurgy technology
 	}
 	cost_factor = {
 		#modifier = {
@@ -101,8 +50,6 @@ advanced_ore_grinding_processes = {
 	icon = iron
 	period = industrial_age
 	prerequisites = {
-		#cheap_iron
-		
 		advanced_ore_roasting_processes
 	}
 	cost_factor = {
@@ -127,8 +74,6 @@ advanced_ore_smelting_processes = {
 	icon = iron
 	period = imperial_age
 	prerequisites = {
-		#cheap_iron
-		
 		advanced_ore_grinding_processes
 	}
 	cost_factor = {
@@ -146,53 +91,6 @@ advanced_ore_smelting_processes = {
 	}
 }
 
-cheap_steel = {
-	name = "Cheap Steel"
-	subcategory = metallurgy
-	portrait = factory
-	icon = steel
-	period = steam_age
-	prerequisites = {
-		crucible_process #previous steel metallurgy technology
-		cheap_iron
-	}
-	modifier = {
-		gold_output_modifier = 10
-		silver_output_modifier = 10
-		coal_output_modifier = 15
-		iron_output_modifier = 15
-		employment_capacity_modifier = {
-			employment_type = gold_mining
-			modifier = 20
-		}
-		employment_capacity_modifier = {
-			employment_type = silver_mining
-			modifier = 20
-		}
-	}
-	weight_factor = {
-		modifier = {
-			factor = 1.3
-			produces_commodity = coal
-		}
-		modifier = {
-			factor = 1.1
-			produces_commodity = iron
-		}
-		modifier = {
-			factor = 1.1
-			produces_commodity = sulfur
-		}
-		modifier = {
-			factor = 1.1
-			or = {
-				produces_commodity = gold
-				produces_commodity = silver
-			}
-		}
-	}
-}
-
 advanced_metallurgy = {
 	name = "Advanced Metallurgy"
 	subcategory = metallurgy
@@ -200,7 +98,7 @@ advanced_metallurgy = {
 	icon = steel
 	period = industrial_age
 	prerequisites = {
-		cheap_steel
+		crucible_process #previous steel metallurgy technology
 	}
 	modifier = {
 		sulfur_output_modifier = 25

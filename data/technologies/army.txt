@@ -25,7 +25,6 @@ organized_regiments = {
 	icon = crossed_sabers
 	period = absolutism_age
 	prerequisites = {
-		land_enclosure
 		chivalry #since this technology allows Lancers, and they upgrade from Knights, which are allowed by Chivalry
 	}
 }

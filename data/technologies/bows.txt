@@ -6,7 +6,6 @@ short_bow = {
 	period = copper_age
 	prerequisites = {
 		warrior_code
-		woodworking #since bows are made of wood
 	}
 	discovery_mean_time_to_happen = {
 		months = 50
@@ -517,7 +516,6 @@ slinged_javelin = {
 	period = copper_age
 	prerequisites = {
 		warrior_code #seems reasonable
-		woodworking #since javelins are made of wood
 	}
 }
 

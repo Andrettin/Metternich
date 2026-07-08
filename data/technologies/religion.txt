@@ -4,9 +4,6 @@ ceremonial_burial = {
 	portrait = temple
 	icon = wooden_cross
 	period = copper_age
-	prerequisites = {
-		woodworking #since they might have needed wood implements for making the burial places
-	}
 }
 
 monotheism = {

@@ -319,7 +319,7 @@ experimental_railroad = {
 	period = revolutionary_age
 	prerequisites = {
 		bridge_building
-		mechanized_mining #to place it in its appropriate period, should change it to something else
+		industrialization #to place it in its appropriate period, should change it to something else
 	}
 }
 

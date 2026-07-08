@@ -4,9 +4,6 @@ map_making = {
 	portrait = unload
 	icon = anchor
 	period = bronze_age
-	prerequisites = {
-		woodworking
-	}
 }
 
 seafaring = {

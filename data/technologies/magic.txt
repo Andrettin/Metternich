@@ -5,7 +5,6 @@ magical_inscription = {
 	icon = book
 	period = iron_age
 	prerequisites = {
-		woodworking
 		code_of_laws
 	}
 }
