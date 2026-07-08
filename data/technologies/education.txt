@@ -5,7 +5,7 @@ seven_liberal_arts = {
 	icon = university
 	period = classical_age
 	prerequisites = {
-		philosophy #seems reasonable, and places this in its appropriate period
+		literacy #seems reasonable
 	}
 }
 
@@ -486,8 +486,6 @@ university = {
 	period = castle_age
 	prerequisites = {
 		cathedral_school
-		mathematics
-		philosophy
 	}
 	discovery_mean_time_to_happen = {
 		months = 1000

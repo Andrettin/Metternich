@@ -9,29 +9,6 @@ ceremonial_burial = {
 	}
 }
 
-polytheism = {
-	name = "Polytheism"
-	subcategory = religion
-	portrait = temple
-	icon = wooden_cross
-	period = bronze_age
-	prerequisites = {
-		ceremonial_burial
-		horseback_riding
-	}
-}
-
-mysticism = {
-	name = "Mysticism"
-	subcategory = religion
-	portrait = temple
-	icon = wooden_cross
-	period = bronze_age
-	prerequisites = {
-		ceremonial_burial
-	}
-}
-
 monotheism = {
 	name = "Monotheism"
 	subcategory = religion
@@ -39,8 +16,8 @@ monotheism = {
 	icon = wooden_cross
 	period = classical_age
 	prerequisites = {
-		polytheism
-		philosophy
+		ceremonial_burial
+		literacy
 	}
 }
 
@@ -63,7 +40,7 @@ asceticism = {
 	icon = wooden_cross
 	period = iron_age
 	prerequisites = {
-		mysticism #should be monotheism instead
+		monotheism
 	}
 	spread_conditions = {
 		source_province = {

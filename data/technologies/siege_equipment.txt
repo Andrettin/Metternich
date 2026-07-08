@@ -4,9 +4,6 @@ mangonel = {
 	portrait = engineering
 	icon = cannon
 	period = iron_age
-	prerequisites = {
-		mathematics
-	}
 	discovery_mean_time_to_happen = {
 		months = 750
 		

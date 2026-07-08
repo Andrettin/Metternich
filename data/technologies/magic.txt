@@ -21,15 +21,3 @@ transmogrification = {
 		siegecraft
 	}
 }
-
-spell_of_animation = {
-	name = "Spell of Animation"
-	subcategory = culture
-	portrait = engineering
-	icon = book
-	period = dark_age
-	prerequisites = {
-		transmogrification
-		iron_working
-	}
-}

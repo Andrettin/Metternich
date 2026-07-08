@@ -3,34 +3,8 @@
 #	subcategory = philosophy
 #	portrait = engineering
 #	prerequisites = {
-#		philosophy
 #	}
 #}
-
-mathematics = {
-	name = "Mathematics"
-	subcategory = philosophy
-	portrait = engineering
-	icon = cog
-	period = bronze_age
-	prerequisites = {
-		woodworking
-		masonry
-	}
-}
-
-philosophy = {
-	name = "Philosophy"
-	subcategory = philosophy
-	portrait = engineering
-	icon = philosophy
-	period = civic_age
-	free_technologies = 1
-	prerequisites = {
-		literacy
-		mysticism
-	}
-}
 
 medicine = {
 	name = "Medicine"
@@ -39,7 +13,7 @@ medicine = {
 	icon = heart
 	period = classical_age
 	prerequisites = {
-		philosophy
+		literacy
 		trade
 	}
 }
@@ -111,7 +85,7 @@ aristotelian_logic = {
 	icon = philosophy
 	period = classical_age
 	prerequisites = {
-		philosophy
+		literacy
 	}
 	discovery_effects = {
 		domain = {
@@ -366,8 +340,6 @@ astronomy = {
 	period = feudal_age
 	prerequisites = {
 		scholasticism
-		mathematics
-		mysticism
 	}
 	discovery_effects = {
 		domain = {
