@@ -5,7 +5,6 @@ library = {
 	icon = book
 	holding_level = 2
 	wealth_cost = 6gb
-	required_technology = writing
 	holding_types = {
 		great_library
 	}

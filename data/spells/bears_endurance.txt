@@ -5,7 +5,6 @@ bears_endurance = {
 	price = 150gp
 	target = ally
 	range = 1
-	required_technology = transmogrification
 	sound = magic_holy
 	arcane_schools = {
 		alteration #transmutation

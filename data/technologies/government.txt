@@ -1,14 +1,3 @@
-code_of_laws = {
-	name = "Code of Laws"
-	subcategory = government
-	portrait = grand_ducal_crown
-	icon = courthouse
-	period = bronze_age
-	prerequisites = {
-		warrior_code
-	}
-}
-
 feudalism = {
 	name = "Feudalism"
 	subcategory = government
@@ -35,7 +24,6 @@ republic = {
 	icon = philosophy
 	period = civic_age
 	prerequisites = {
-		code_of_laws
 		literacy
 	}
 }
@@ -57,7 +45,4 @@ diplomacy = {
 	portrait = engineering
 	icon = treaty
 	period = iron_age
-	prerequisites = {
-		writing
-	}
 }

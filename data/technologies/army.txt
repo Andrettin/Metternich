@@ -13,7 +13,7 @@ gunpowder = {
 	icon = coal
 	period = dark_age
 	prerequisites = {
-		construction
+		science
 	}
 }
 

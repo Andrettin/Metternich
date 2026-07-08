@@ -5,7 +5,6 @@ compound_steam_engine = {
 	icon = cog
 	period = industrial_age
 	prerequisites = {
-		construction
 		physics
 		iron_railroad #iron_railroad_bridge
 	}

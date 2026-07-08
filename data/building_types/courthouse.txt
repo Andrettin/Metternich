@@ -4,7 +4,6 @@ courthouse = {
 	portrait = trading_post
 	icon = courthouse
 	min_holding_level = 5
-	required_technology = code_of_laws
 	holding_types = {
 		castle
 		city

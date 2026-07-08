@@ -300,7 +300,6 @@ saw_mill = {
 	icon = lumber
 	period = classical_age
 	prerequisites = {
-		construction
 		wheel
 	}
 }
@@ -312,7 +311,6 @@ industrial_machinery = {
 	icon = book
 	period = enlightenment_age
 	prerequisites = {
-		construction
 		university
 	}
 }

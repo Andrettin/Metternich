@@ -9,7 +9,7 @@ sumerian = {
 	history = {
 		-3500 = {
 			#writing was developed in Sumeria around 3500 BC; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, pp. 70-72.
-			technologies += writing
+			#technologies += writing
 		}
 		
 		-1800 = {

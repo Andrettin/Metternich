@@ -194,9 +194,6 @@ chronicle_writing = {
 	portrait = engineering
 	icon = treaty
 	period = iron_age
-	prerequisites = {
-		writing
-	}
 	discovery_mean_time_to_happen = {
 		months = 250
 		
