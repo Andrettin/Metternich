@@ -15,6 +15,52 @@ feudalism = {
 	discovery_yearly_chance = {
 		base_value = 100
 	}
+	spread_yearly_chance = {
+		base_value = 0
+	
+		modifier = {
+			factor = 0.5
+			additive = true
+			any_nearby_province = { #any friendly nearby province
+				technology = feudalism
+				domain = {
+					opinion = {
+						domain = root
+						value >= 0
+					}
+				}
+			}
+		}
+		modifier = {
+			factor = 0.1
+			additive = true
+			any_neighbor_province = {
+				technology = feudalism
+			}
+		}
+		modifier = {
+			factor = 0.1
+			additive = true
+			capital = true
+			not = {
+				region = america
+				region = oceania
+				domain = {
+					government_group = tribe
+				}
+			}
+		}
+		modifier = {
+			factor = 2
+			additive = true
+			domain = {
+				technology = feudalism
+				not = {
+					subject_type = chartered_company
+				}
+			}
+		}
+	}
 }
 
 colonialism = {
