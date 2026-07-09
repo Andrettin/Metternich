@@ -20,8 +20,10 @@ public:
 		return class_identifier;
 	}
 
-	virtual int get_scope_value(const domain *scope) const override
+	virtual int get_scope_value(const domain *scope, const read_only_context &ctx) const override
 	{
+		Q_UNUSED(ctx);
+
 		return scope->get_game_data()->get_province_count();
 	}
 

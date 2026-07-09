@@ -21,8 +21,10 @@ public:
 		return class_identifier;
 	}
 
-	virtual int get_scope_value(const character *scope) const override
+	virtual int get_scope_value(const character *scope, const read_only_context &ctx) const override
 	{
+		Q_UNUSED(ctx);
+
 		return scope->get_game_data()->get_domain_skill_value(this->domain_skill);
 	}
 

@@ -21,8 +21,10 @@ public:
 		return class_identifier;
 	}
 
-	virtual centesimal_int get_scope_value(const scope_type *scope) const override
+	virtual centesimal_int get_scope_value(const scope_type *scope, const read_only_context &ctx) const override
 	{
+		Q_UNUSED(ctx);
+
 		if (scope->get_game_data()->get_population()->get_size() == 0) {
 			return centesimal_int(0);
 		}

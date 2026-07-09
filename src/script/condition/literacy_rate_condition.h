@@ -19,8 +19,10 @@ public:
 		return class_identifier;
 	}
 
-	virtual centesimal_int get_scope_value(const scope_type *scope) const override
+	virtual centesimal_int get_scope_value(const scope_type *scope, const read_only_context &ctx) const override
 	{
+		Q_UNUSED(ctx);
+
 		if constexpr (std::is_same_v<scope_type, population_unit>) {
 			return centesimal_int(scope->get_literacy_rate());
 		} else {

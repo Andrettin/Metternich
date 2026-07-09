@@ -20,9 +20,10 @@ public:
 		return class_identifier;
 	}
 
-	virtual int get_scope_value(const scope_type *scope) const override
+	virtual int get_scope_value(const scope_type *scope, const read_only_context &ctx) const override
 	{
 		Q_UNUSED(scope);
+		Q_UNUSED(ctx);
 
 		return game::get()->get_year();
 	}

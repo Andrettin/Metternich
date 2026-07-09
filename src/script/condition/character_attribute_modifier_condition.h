@@ -39,8 +39,10 @@ public:
 		}
 	}
 
-	virtual int get_scope_value(const character *scope) const override
+	virtual int get_scope_value(const character *scope, const read_only_context &ctx) const override
 	{
+		Q_UNUSED(ctx);
+
 		return scope->get_game_data()->get_best_attribute_modifier(this->attribute, this->modifier_type.value());
 	}
 

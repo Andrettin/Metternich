@@ -22,8 +22,10 @@ public:
 		return class_identifier;
 	}
 
-	virtual centesimal_int get_scope_value(const domain *scope) const override
+	virtual centesimal_int get_scope_value(const domain *scope, const read_only_context &ctx) const override
 	{
+		Q_UNUSED(ctx);
+
 		return centesimal_int(scope->get_economy()->get_stored_commodity(this->commodity));
 	}
 

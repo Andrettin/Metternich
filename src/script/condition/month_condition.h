@@ -24,9 +24,10 @@ public:
 		return class_identifier;
 	}
 
-	virtual int get_scope_value(const scope_type *scope) const override
+	virtual int get_scope_value(const scope_type *scope, const read_only_context &ctx) const override
 	{
 		Q_UNUSED(scope);
+		Q_UNUSED(ctx);
 
 		return game::get()->get_date().month();
 	}
@@ -42,31 +43,31 @@ public:
 		return "is the current month";
 	}
 
-	virtual bool check_equality(const scope_type *scope) const override
+	virtual bool check_equality(const scope_type *scope, const read_only_context &ctx) const override
 	{
 		if (game::get()->get_current_months_per_turn() >= 12) {
 			return true;
 		}
 
-		return numerical_condition<scope_type, read_only_context>::check_equality(scope);
+		return numerical_condition<scope_type, read_only_context>::check_equality(scope, ctx);
 	}
 
-	virtual bool check_less_than(const scope_type *scope) const override
+	virtual bool check_less_than(const scope_type *scope, const read_only_context &ctx) const override
 	{
 		if (game::get()->get_current_months_per_turn() >= 12) {
 			return true;
 		}
 
-		return numerical_condition<scope_type, read_only_context>::check_less_than(scope);
+		return numerical_condition<scope_type, read_only_context>::check_less_than(scope, ctx);
 	}
 
-	virtual bool check_greater_than(const scope_type *scope) const override
+	virtual bool check_greater_than(const scope_type *scope, const read_only_context &ctx) const override
 	{
 		if (game::get()->get_current_months_per_turn() >= 12) {
 			return true;
 		}
 
-		return numerical_condition<scope_type, read_only_context>::check_greater_than(scope);
+		return numerical_condition<scope_type, read_only_context>::check_greater_than(scope, ctx);
 	}
 };
 

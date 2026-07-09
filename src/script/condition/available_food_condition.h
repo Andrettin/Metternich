@@ -18,8 +18,10 @@ public:
 		return class_identifier;
 	}
 
-	virtual int64_t get_scope_value(const domain *scope) const override
+	virtual int64_t get_scope_value(const domain *scope, const read_only_context &ctx) const override
 	{
+		Q_UNUSED(ctx);
+
 		return scope->get_game_data()->get_available_food();
 	}
 
