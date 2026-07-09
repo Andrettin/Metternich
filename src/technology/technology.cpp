@@ -7,13 +7,10 @@
 #include "database/defines.h"
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
-#include "domain/domain_government.h"
 #include "domain/domain_technology.h"
 #include "domain/government_type.h"
 #include "domain/law.h"
-#include "domain/office.h"
 #include "economy/commodity.h"
-#include "economy/commodity_type.h"
 #include "economy/employment_type.h"
 #include "economy/resource.h"
 #include "game/event_option.h"
@@ -24,8 +21,6 @@
 #include "infrastructure/pathway.h"
 #include "infrastructure/wonder.h"
 #include "item/item_type.h"
-#include "map/site.h"
-#include "map/site_game_data.h"
 #include "map/terrain_type.h"
 #include "religion/deity.h"
 #include "religion/religion.h"
@@ -33,6 +28,7 @@
 #include "script/condition/and_condition.h"
 #include "script/condition/can_gain_technology_condition.h"
 #include "script/condition/capital_condition.h"
+#include "script/condition/event_condition.h"
 #include "script/condition/source_province_scope_condition.h"
 #include "script/condition/technology_condition.h"
 #include "script/effect/effect_list.h"
@@ -52,7 +48,6 @@
 #include "util/container_util.h"
 #include "util/log_util.h"
 #include "util/map_util.h"
-#include "util/number_util.h"
 #include "util/string_util.h"
 #include "util/vector_util.h"
 
@@ -268,6 +263,8 @@ void technology::initialize()
 	}
 
 	if (this->spread_mean_time_to_happen != nullptr || this->spread_monthly_chance != nullptr || this->spread_yearly_chance != nullptr) {
+		assert_throw(this->get_discovery_event() != nullptr);
+
 		province_event *event = province_event::add(std::format("{}_spread", this->get_identifier()), this->get_module());
 		event->set_name(std::format("{} Spread to [root.name]", this->get_name()));
 		event->set_portrait(this->get_portrait());
@@ -284,10 +281,13 @@ void technology::initialize()
 		}
 
 		auto event_conditions = std::make_unique<and_condition<province>>();
+		event_conditions->add_condition(std::make_unique<event_condition<province>>(this->get_discovery_event())); //the discovery event must have happened
 		event_conditions->add_condition(std::make_unique<can_gain_technology_condition<province>>(this));
-		auto source_condition = std::make_unique<source_province_scope_condition<province>>();
-		source_condition->add_condition(std::make_unique<technology_condition<province>>(this));
-		event_conditions->add_condition(std::move(source_condition));
+		if (this->spread_from_neighbor) {
+			auto source_condition = std::make_unique<source_province_scope_condition<province>>();
+			source_condition->add_condition(std::make_unique<technology_condition<province>>(this));
+			event_conditions->add_condition(std::move(source_condition));
+		}
 		if (this->spread_conditions != nullptr) {
 			event_conditions->add_condition(std::move(this->spread_conditions));
 		}

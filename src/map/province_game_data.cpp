@@ -1704,8 +1704,8 @@ QCoro::Task<void> province_game_data::add_technology(const technology *technolog
 		co_await this->get_owner()->get_technology()->on_technology_added(technology);
 	}
 
-	if (technology->is_discovered_only_once() && technology->get_discovery_event() != nullptr) {
-		//ensure that if a technology is set to be discovered only once, it won't be re-discovered if obtained through means other than its discovery event
+	if (technology->get_discovery_event() != nullptr) {
+		//ensure that a technology's discovery event is in the list of fired events if someone has that technology
 		game::get()->add_fired_event(technology->get_discovery_event());
 	}
 

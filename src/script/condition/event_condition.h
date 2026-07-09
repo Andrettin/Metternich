@@ -13,20 +13,31 @@ template <typename scope_type>
 class event_condition final : public condition<scope_type>
 {
 public:
-	explicit event_condition(const std::string &value, const gsml_operator condition_operator)
-		: condition<scope_type>(condition_operator)
+	static const scoped_event_base<const scope_type> *get_event(const std::string &value)
 	{
 		if constexpr (std::is_same_v<scope_type, character>) {
-			this->event = character_event::get(value);
+			return character_event::get(value);
 		} else if constexpr (std::is_same_v<scope_type, domain>) {
-			this->event = domain_event::get(value);
+			return domain_event::get(value);
 		} else if constexpr (std::is_same_v<scope_type, province>) {
-			this->event = province_event::get(value);
+			return province_event::get(value);
 		} else if constexpr (std::is_same_v<scope_type, site>) {
-			this->event = site_event::get(value);
+			return site_event::get(value);
 		} else {
 			assert_throw(false);
+			return nullptr;
 		}
+	}
+
+	explicit event_condition(const scoped_event_base<const scope_type> *event, const gsml_operator condition_operator = gsml_operator::assignment)
+		: condition<scope_type>(condition_operator)
+	{
+		this->event = event;
+	}
+
+	explicit event_condition(const std::string &value, const gsml_operator condition_operator)
+		: event_condition(get_event(value), condition_operator)
+	{
 	}
 
 	virtual const std::string &get_class_identifier() const override
@@ -47,7 +58,7 @@ public:
 	{
 		Q_UNUSED(indent);
 
-		return "The " + this->event->get_name() + " event has been triggered";
+		return std::format("The {} event has been triggered", this->event->get_name());
 	}
 
 private:
