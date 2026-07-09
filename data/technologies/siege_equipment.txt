@@ -3,7 +3,7 @@ mangonel = {
 	subcategory = siege_equipment
 	portrait = engineering
 	icon = cannon
-	period = iron_age
+	period = classical_age
 	discovery_mean_time_to_happen = {
 		months = 750
 		
@@ -314,7 +314,7 @@ trebuchet = {
 	subcategory = siege_equipment
 	portrait = engineering
 	icon = cannon
-	period = civic_age
+	period = dark_age
 	prerequisites = {
 		mangonel
 	}

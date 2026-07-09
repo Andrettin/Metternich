@@ -3,7 +3,7 @@ road_building = {
 	subcategory = infrastructure
 	portrait = engineering
 	icon = road
-	period = bronze_age
+	period = classical_age
 	discovery_mean_time_to_happen = {
 		months = 50
 		

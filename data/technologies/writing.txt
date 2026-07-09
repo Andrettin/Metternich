@@ -3,9 +3,9 @@ printing_press = {
 	subcategory = culture
 	portrait = engineering
 	icon = book
-	period = dark_age
+	period = renaissance_age
 	prerequisites = {
-		renaissance
+		natural_philosophy
 	}
 	domain_modifier = {
 		research_output_modifier = 22

@@ -3,7 +3,7 @@ short_bow = {
 	subcategory = infantry
 	portrait = engineering
 	icon = bow
-	period = copper_age
+	period = classical_age
 	discovery_mean_time_to_happen = {
 		months = 50
 		
@@ -174,7 +174,7 @@ long_bow = {
 	subcategory = infantry
 	portrait = engineering
 	icon = bow
-	period = bronze_age
+	period = dark_age
 	prerequisites = {
 		short_bow
 	}
@@ -344,7 +344,7 @@ composite_bow = {
 	subcategory = infantry
 	portrait = engineering
 	icon = bow
-	period = iron_age
+	period = feudal_age
 	prerequisites = {
 		long_bow
 	}
@@ -510,7 +510,7 @@ slinged_javelin = {
 	subcategory = infantry
 	portrait = engineering
 	icon = bow
-	period = copper_age
+	period = classical_age
 }
 
 light_crossbow = {

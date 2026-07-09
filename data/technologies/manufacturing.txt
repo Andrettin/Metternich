@@ -3,7 +3,7 @@ glassblowing = {
 	subcategory = manufacturing
 	portrait = engineering
 	icon = glass
-	period = copper_age
+	period = classical_age
 	discovery_mean_time_to_happen = {
 		months = 150
 		
@@ -290,6 +290,7 @@ manufactories = {
 	period = absolutism_age
 	prerequisites = {
 		guilds
+		colonialism
 	}
 }
 
@@ -298,9 +299,10 @@ industrialization = {
 	subcategory = manufacturing
 	portrait = factory
 	icon = cog
-	period = napoleonic_age
+	period = revolutionary_age
 	prerequisites = {
 		manufactories
+		enlightenment
 	}
 }
 
@@ -309,7 +311,7 @@ precision_work = {
 	subcategory = manufacturing
 	portrait = engineering
 	icon = glass
-	period = steam_age
+	period = napoleonic_age
 	prerequisites = {
 		#mechanical_production
 		
@@ -337,7 +339,7 @@ integral_distillery_process = {
 	subcategory = manufacturing
 	portrait = engineering
 	icon = wine
-	period = steam_age
+	period = napoleonic_age
 	prerequisites = {
 		#interchangeable_parts
 		
@@ -363,7 +365,7 @@ bakelite = {
 	subcategory = manufacturing
 	portrait = engineering
 	icon = glass
-	period = industrial_age
+	period = steam_age
 	prerequisites = {
 		#synthetic_polymers
 		

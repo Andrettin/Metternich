@@ -3,5 +3,5 @@ divine_right = {
 	subcategory = noble_customs
 	portrait = grand_ducal_crown
 	icon = crown_royal
-	period = iron_age
+	period = classical_age
 }

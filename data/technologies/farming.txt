@@ -4,10 +4,6 @@ two_field_system = {
 	portrait = engineering
 	icon = grain
 	period = classical_age
-	prerequisites = {
-		wood_plow #earlier agricultural technology
-		feudalism #to place it in the appropriate period
-	}
 	modifier = {
 		agricultural_output_modifier = 4
 	}
@@ -74,7 +70,7 @@ wood_plow = {
 	subcategory = farming
 	portrait = engineering
 	icon = grain
-	period = copper_age
+	period = classical_age
 	modifier = {
 		agricultural_output_modifier = 3
 	}
@@ -85,7 +81,7 @@ iron_tipped_wood_plow = {
 	subcategory = farming
 	portrait = engineering
 	icon = grain
-	period = iron_age
+	period = dark_age
 	prerequisites = {
 		wood_plow
 	}

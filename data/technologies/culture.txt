@@ -3,7 +3,7 @@ ballads = {
 	subcategory = aesthetics
 	portrait = engineering
 	icon = music
-	period = copper_age
+	period = classical_age
 	discovery_mean_time_to_happen = {
 		months = 250
 		
@@ -182,7 +182,7 @@ chronicle_writing = {
 	subcategory = culture
 	portrait = engineering
 	icon = treaty
-	period = iron_age
+	period = classical_age
 	discovery_mean_time_to_happen = {
 		months = 250
 		

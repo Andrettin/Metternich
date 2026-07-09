@@ -3,7 +3,7 @@ short_sword = {
 	subcategory = infantry
 	portrait = bronze_short_sword
 	icon = saber
-	period = copper_age
+	period = classical_age
 	discovery_mean_time_to_happen = {
 		months = 75
 		
@@ -174,7 +174,7 @@ broad_sword = {
 	subcategory = infantry
 	portrait = bronze_short_sword
 	icon = saber
-	period = bronze_age
+	period = dark_age
 	prerequisites = {
 		short_sword
 	}
@@ -185,7 +185,7 @@ long_sword = {
 	subcategory = infantry
 	portrait = bronze_short_sword
 	icon = saber
-	period = iron_age
+	period = feudal_age
 	prerequisites = {
 		broad_sword
 	}
@@ -355,7 +355,7 @@ bastard_sword = {
 	subcategory = infantry
 	portrait = bronze_short_sword
 	icon = saber
-	period = civic_age
+	period = castle_age
 	prerequisites = {
 		long_sword
 	}

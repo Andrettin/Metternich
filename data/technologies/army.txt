@@ -3,7 +3,7 @@ hierarchical_command = {
 	subcategory = army
 	portrait = fort
 	icon = flag
-	period = feudal_age
+	period = renaissance_age
 	prerequisites = {
 		lance
 	}

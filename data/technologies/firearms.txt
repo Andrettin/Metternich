@@ -6,6 +6,7 @@ flintlock_rifle = {
 	period = revolutionary_age
 	prerequisites = {
 		manufactories
+		enlightenment #to place it in the appropriate period
 	}
 	cost_factor = {
 		#modifier = {

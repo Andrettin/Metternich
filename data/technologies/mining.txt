@@ -314,6 +314,7 @@ pit_coal = {
 	period = napoleonic_age
 	prerequisites = {
 		black_coal #previous coal mining technology
+		industrialization #to place it in the appropriate period
 	}
 	cost_factor = {
 		#modifier = {

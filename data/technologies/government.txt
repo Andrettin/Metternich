@@ -3,7 +3,7 @@ feudalism = {
 	subcategory = government
 	portrait = aristocratic_palace
 	icon = crown_baronial
-	period = civic_age
+	period = dark_age
 	discover_only_once = true
 	prerequisites = {
 		divine_right

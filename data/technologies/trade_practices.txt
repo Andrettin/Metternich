@@ -55,7 +55,7 @@ global_trade = {
 	subcategory = trade_practices
 	portrait = coinage
 	icon = wealth
-	period = gunpowder_age
+	period = absolutism_age
 	prerequisites = {
 		foreign_accreditation
 		colonialism

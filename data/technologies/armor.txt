@@ -3,7 +3,7 @@ soft_leather_armor = {
 	subcategory = armor
 	portrait = helmet
 	icon = clothing
-	period = copper_age
+	period = classical_age
 	discovery_mean_time_to_happen = {
 		months = 50
 		
@@ -166,9 +166,9 @@ chained_leather_armor = {
 	subcategory = armor
 	portrait = helmet
 	icon = clothing
-	period = bronze_age
+	period = classical_age
 	prerequisites = {
-		soft_leather_armor
+		#soft_leather_armor
 	}
 }
 
@@ -177,7 +177,7 @@ light_chain_mail = {
 	subcategory = armor
 	portrait = helmet
 	icon = clothing
-	period = iron_age
+	period = dark_age
 	prerequisites = {
 		chained_leather_armor
 		scale_mail
@@ -189,7 +189,7 @@ chain_mail = {
 	subcategory = armor
 	portrait = helmet
 	icon = clothing
-	period = civic_age
+	period = feudal_age
 	prerequisites = {
 		light_chain_mail
 	}
@@ -367,9 +367,9 @@ scale_mail = {
 	subcategory = armor
 	portrait = helmet
 	icon = clothing
-	period = bronze_age
+	period = classical_age
 	prerequisites = {
-		soft_leather_armor
+		#soft_leather_armor
 	}
 }
 

@@ -3,7 +3,7 @@ pike = {
 	subcategory = infantry
 	portrait = bronze_short_sword
 	icon = saber
-	period = classical_age
+	period = feudal_age
 	prerequisites = {
 		feudalism
 	}
@@ -185,7 +185,7 @@ lance = {
 	subcategory = cavalry
 	portrait = bronze_short_sword
 	icon = saber
-	period = feudal_age
+	period = castle_age
 	prerequisites = {
 		pike
 	}
@@ -196,7 +196,7 @@ polearm = {
 	subcategory = infantry
 	portrait = bronze_short_sword
 	icon = saber
-	period = dark_age
+	period = castle_age
 	prerequisites = {
 		pike
 	}

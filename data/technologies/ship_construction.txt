@@ -3,7 +3,7 @@ large_ship_building = {
 	subcategory = ship_construction
 	portrait = unload
 	icon = anchor
-	period = copper_age
+	period = classical_age
 	discovery_mean_time_to_happen = {
 		months = 125
 		
@@ -309,13 +309,13 @@ steamer_transport = {
 	subcategory = ship_construction
 	portrait = unload
 	icon = anchor
-	period = gunpowder_age
+	period = napoleonic_age
 	prerequisites = {
 		#steamers
 		
 		large_ship_building
 		black_coal
-		science
+		industrialization
 	}
 	cost_factor = {
 		#modifier = {
@@ -334,7 +334,7 @@ commerce_raider = {
 	subcategory = ship_construction
 	portrait = unload
 	icon = anchor
-	period = absolutism_age
+	period = steam_age
 	prerequisites = {
 		#steamers
 		
@@ -357,7 +357,7 @@ ironclad = {
 	subcategory = ship_construction
 	portrait = unload
 	icon = anchor
-	period = enlightenment_age
+	period = industrial_age
 	prerequisites = {
 		#iron_steamers
 		
@@ -383,7 +383,7 @@ protected_cruiser = {
 	subcategory = ship_construction
 	portrait = unload
 	icon = anchor
-	period = revolutionary_age
+	period = imperial_age
 	prerequisites = {
 		#steel_steamers
 		
@@ -407,7 +407,7 @@ dreadnought = {
 	subcategory = ship_construction
 	portrait = unload
 	icon = anchor
-	period = napoleonic_age
+	period = modern_age
 	prerequisites = {
 		#steam_turbine_ships
 		

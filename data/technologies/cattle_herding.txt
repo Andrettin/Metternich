@@ -3,7 +3,7 @@ poultry_domestication = {
 	subcategory = cattle_herding
 	portrait = engineering
 	icon = cattle
-	period = tool_age
+	period = classical_age
 }
 
 goatherding = {
@@ -11,7 +11,43 @@ goatherding = {
 	subcategory = cattle_herding
 	portrait = engineering
 	icon = cattle
-	period = copper_age
+	period = dark_age
+	prerequisites = {
+		poultry_domestication
+	}
+}
+
+meat_livestock = {
+	name = "Meat Livestock"
+	subcategory = cattle_herding
+	portrait = engineering
+	icon = cattle
+	period = feudal_age
+	prerequisites = {
+		goatherding
+	}
+}
+
+weaving = {
+	name = "Weaving"
+	subcategory = cattle_herding
+	portrait = engineering
+	icon = wool
+	period = castle_age
+	prerequisites = {
+		meat_livestock
+	}
+}
+
+dairy_farming = {
+	name = "Dairy Farming"
+	subcategory = cattle_herding
+	portrait = engineering
+	icon = cattle
+	period = renaissance_age
+	prerequisites = {
+		weaving
+	}
 }
 
 mechanized_slaughtering_block = {
@@ -19,9 +55,10 @@ mechanized_slaughtering_block = {
 	subcategory = cattle_herding
 	portrait = engineering
 	icon = cattle
-	period = gunpowder_age
+	period = napoleonic_age
 	prerequisites = {
-		industrialization
+		dairy_farming #previous cattle herding technology
+		industrialization #to place it in the appropriate period
 	}
 	cost_factor = {
 		#modifier = {
@@ -44,7 +81,7 @@ refrigeration = {
 	subcategory = cattle_herding
 	portrait = engineering
 	icon = cattle
-	period = enlightenment_age
+	period = steam_age
 	prerequisites = {
 		#assembly_line
 		

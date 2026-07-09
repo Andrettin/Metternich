@@ -5,6 +5,7 @@ renaissance = {
 	icon = painting
 	period = renaissance_age
 	prerequisites = {
-		scholasticism
+		natural_philosophy
+		feudalism
 	}
 }

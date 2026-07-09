@@ -645,7 +645,8 @@ enlightenment = {
 	icon = philosophy
 	period = enlightenment_age
 	prerequisites = {
-		renaissance
 		science
+		global_trade
+		printing_press
 	}
 }

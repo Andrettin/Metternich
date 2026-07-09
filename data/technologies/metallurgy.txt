@@ -3,7 +3,7 @@ ironworks = {
 	subcategory = metallurgy
 	portrait = factory
 	icon = iron
-	period = renaissance_age
+	period = classical_age
 }
 
 advanced_ore_roasting_processes = {
@@ -11,9 +11,10 @@ advanced_ore_roasting_processes = {
 	subcategory = metallurgy
 	portrait = engineering
 	icon = iron
-	period = steam_age
+	period = napoleonic_age
 	prerequisites = {
 		ironworks #previous metallurgy technology
+		industrialization #to place it in the appropriate period
 	}
 	cost_factor = {
 		#modifier = {
@@ -35,7 +36,7 @@ advanced_ore_grinding_processes = {
 	subcategory = metallurgy
 	portrait = engineering
 	icon = iron
-	period = industrial_age
+	period = steam_age
 	prerequisites = {
 		advanced_ore_roasting_processes
 	}
@@ -59,7 +60,7 @@ advanced_ore_smelting_processes = {
 	subcategory = metallurgy
 	portrait = engineering
 	icon = iron
-	period = imperial_age
+	period = industrial_age
 	prerequisites = {
 		advanced_ore_grinding_processes
 	}
@@ -83,10 +84,10 @@ steel_alloys = {
 	subcategory = metallurgy
 	portrait = engineering
 	icon = steel
-	period = imperial_age
+	period = napoleonic_age
 	prerequisites = {
 		ironworks #previous metallurgy technology
-		black_coal
+		industrialization #to place it in the appropriate period
 	}
 	cost_factor = {
 		#modifier = {

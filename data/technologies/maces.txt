@@ -3,7 +3,7 @@ mace = {
 	subcategory = infantry
 	portrait = bronze_short_sword
 	icon = saber
-	period = copper_age
+	period = classical_age
 	discovery_mean_time_to_happen = {
 		months = 250
 		
@@ -170,7 +170,7 @@ morning_star = {
 	subcategory = infantry
 	portrait = bronze_short_sword
 	icon = saber
-	period = bronze_age
+	period = dark_age
 	prerequisites = {
 		mace
 	}

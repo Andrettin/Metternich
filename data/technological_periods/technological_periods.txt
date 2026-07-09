@@ -41,7 +41,7 @@ civic_age = {
 
 classical_age = {
 	name = "Classical Age"
-	parent_period = civic_age
+	#parent_period = civic_age
 	start_year = 1
 	end_year = 500
 }
