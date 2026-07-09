@@ -99,6 +99,7 @@
 #include "script/condition/provincial_capital_condition.h"
 #include "script/condition/random_chance_condition.h"
 #include "script/condition/realm_condition.h"
+#include "script/condition/region_condition.h"
 #include "script/condition/religion_condition.h"
 #include "script/condition/religious_group_condition.h"
 #include "script/condition/resource_condition.h"
@@ -342,6 +343,8 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			return std::make_unique<pathway_condition<scope_type>>(value, condition_operator);
 		} else if (key == "provincial_capital") {
 			return std::make_unique<provincial_capital_condition<scope_type>>(value, condition_operator);
+		} else if (key == "region") {
+			return std::make_unique<region_condition<scope_type>>(value, condition_operator);
 		} else if (key == "terrain") {
 			return std::make_unique<terrain_condition<scope_type>>(value, condition_operator);
 		}
