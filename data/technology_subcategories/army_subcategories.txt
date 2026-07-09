@@ -51,3 +51,9 @@ siege_equipment = {
 	category = army
 	icon = cannon
 }
+
+swords = {
+	name = "Swords"
+	category = army
+	icon = saber
+}
