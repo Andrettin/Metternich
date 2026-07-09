@@ -2932,7 +2932,7 @@ void domain_game_data::create_diplomatic_map_mode_image(const diplomatic_map_mod
 					if (culture != nullptr) {
 						color = &culture->get_color();
 					} else {
-						color = &defines::get()->get_minor_nation_color();
+						color = &defines::get()->get_map_blank_color();
 					}
 					break;
 				}
@@ -2942,7 +2942,7 @@ void domain_game_data::create_diplomatic_map_mode_image(const diplomatic_map_mod
 					if (religion != nullptr) {
 						color = &religion->get_color();
 					} else {
-						color = &defines::get()->get_minor_nation_color();
+						color = &defines::get()->get_map_blank_color();
 					}
 					break;
 				}
@@ -2952,7 +2952,7 @@ void domain_game_data::create_diplomatic_map_mode_image(const diplomatic_map_mod
 					if (trade_zone_domain != nullptr) {
 						color = &trade_zone_domain->get_game_data()->get_diplomatic_map_color();
 					} else {
-						color = &defines::get()->get_minor_nation_color();
+						color = &defines::get()->get_map_blank_color();
 					}
 					break;
 				}
@@ -2962,7 +2962,7 @@ void domain_game_data::create_diplomatic_map_mode_image(const diplomatic_map_mod
 					if (temple_domain != nullptr) {
 						color = &temple_domain->get_game_data()->get_diplomatic_map_color();
 					} else {
-						color = &defines::get()->get_minor_nation_color();
+						color = &defines::get()->get_map_blank_color();
 					}
 					break;
 				}

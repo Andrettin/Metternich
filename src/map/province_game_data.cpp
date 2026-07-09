@@ -1224,7 +1224,7 @@ const QColor &province_game_data::get_map_color() const
 	if (this->province->is_water_zone()) {
 		return defines::get()->get_ocean_color();
 	} else {
-		return defines::get()->get_minor_nation_color();
+		return defines::get()->get_map_blank_color();
 	}
 }
 
@@ -1415,7 +1415,7 @@ void province_game_data::create_map_mode_image(const province_map_mode mode)
 			if (!this->province->is_water_zone()) {
 				const int province_technology_count = static_cast<int>(this->get_technologies().size());
 				const int total_technology_count = static_cast<int>(technology::get_all().size());
-				const QColor &min_technology_color = defines::get()->get_minor_nation_color();
+				const QColor &min_technology_color = defines::get()->get_map_blank_color();
 				static const QColor max_technology_color(Qt::darkBlue);
 
 				assert_throw(min_technology_color.red() >= max_technology_color.red());
@@ -1434,7 +1434,7 @@ void province_game_data::create_map_mode_image(const province_map_mode mode)
 				if (trade_zone_domain != nullptr) {
 					province_color = trade_zone_domain->get_color();
 				} else {
-					province_color = defines::get()->get_minor_nation_color();
+					province_color = defines::get()->get_map_blank_color();
 				}
 			}
 			break;
@@ -1445,7 +1445,7 @@ void province_game_data::create_map_mode_image(const province_map_mode mode)
 				if (temple_domain != nullptr) {
 					province_color = temple_domain->get_color();
 				} else {
-					province_color = defines::get()->get_minor_nation_color();
+					province_color = defines::get()->get_map_blank_color();
 				}
 			}
 			break;

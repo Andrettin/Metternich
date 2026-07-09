@@ -102,7 +102,7 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(const metternich::portrait* foreign_minister_portrait MEMBER foreign_minister_portrait READ get_foreign_minister_portrait NOTIFY changed)
 	Q_PROPERTY(const metternich::portrait* interior_minister_portrait MEMBER interior_minister_portrait READ get_interior_minister_portrait NOTIFY changed)
 	Q_PROPERTY(const metternich::portrait* war_minister_portrait MEMBER war_minister_portrait READ get_war_minister_portrait NOTIFY changed)
-	Q_PROPERTY(QColor minor_nation_color MEMBER minor_nation_color READ get_minor_nation_color NOTIFY changed)
+	Q_PROPERTY(QColor map_blank_color MEMBER map_blank_color READ get_map_blank_color NOTIFY changed)
 	Q_PROPERTY(QColor country_border_color MEMBER country_border_color READ get_country_border_color NOTIFY changed)
 	Q_PROPERTY(QColor selected_country_color MEMBER selected_country_color READ get_selected_country_color NOTIFY changed)
 	Q_PROPERTY(QColor ocean_color MEMBER ocean_color READ get_ocean_color NOTIFY changed)
@@ -466,9 +466,9 @@ public:
 
 	int get_mana_cost_for_spell_level(const int level) const;
 
-	const QColor &get_minor_nation_color() const
+	const QColor &get_map_blank_color() const
 	{
-		return this->minor_nation_color;
+		return this->map_blank_color;
 	}
 
 	const QColor &get_country_border_color() const
@@ -653,7 +653,7 @@ private:
 	std::map<divine_rank, int> divine_rank_levels;
 	std::map<int, std::unique_ptr<const metternich::modifier<const character>>> divine_rank_modifiers;
 	std::map<int, int> mana_cost_per_spell_level;
-	QColor minor_nation_color;
+	QColor map_blank_color;
 	QColor country_border_color;
 	QColor selected_country_color;
 	QColor ocean_color;

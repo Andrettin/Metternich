@@ -73,7 +73,7 @@ QCoro::Task<void> icon_image_provider::load_image(const std::string id)
 			} else if (state == "silhouette") {
 				image = image::to_silhouette(image, Qt::black);
 			} else if (state == "blank_silhouette") {
-				QColor silhouette_color = defines::get()->get_minor_nation_color();
+				QColor silhouette_color = defines::get()->get_map_blank_color();
 				silhouette_color.setAlpha(128);
 				image = image::to_silhouette(image, silhouette_color);
 			} else if (state == "small") {

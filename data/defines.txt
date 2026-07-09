@@ -319,7 +319,7 @@ mana_cost_per_spell_level = {
 	9 = 120
 }
 
-minor_nation_color = { 221 216 181 }
+map_blank_color = { 221 216 181 }
 country_border_color = { 0 0 0 }
 selected_country_color = { 255 255 0 }
 ocean_color = { 49 82 123 }
