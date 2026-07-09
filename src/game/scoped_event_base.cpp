@@ -14,6 +14,7 @@
 #include "game/province_event.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
+#include "map/province_map_data.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "script/condition/and_condition.h"
@@ -148,9 +149,9 @@ QCoro::Task<void> scoped_event_base<scope_type>::check_mtth_events_for_scope(con
 	for (const scoped_event_base *event : scoped_event_base::mtth_events) {
 		if constexpr (std::is_same_v<scope_type, const province>) {
 			if (event->is_from_neighbor()) {
-				for (const province *neighbor_province : scope->get_game_data()->get_neighbor_provinces()) {
+				for (const province *nearby_province : scope->get_map_data()->get_nearby_provinces()) {
 					read_only_context event_ctx(scope);
-					event_ctx.source_scope = neighbor_province;
+					event_ctx.source_scope = nearby_province;
 					co_await scoped_event_base::check_mtth_event_for_scope(event, scope, event_ctx);
 				}
 

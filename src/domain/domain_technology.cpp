@@ -16,6 +16,7 @@
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
+#include "map/province_map_data.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "map/tile.h"
@@ -229,14 +230,14 @@ QCoro::Task<void> domain_technology::do_technology_spread()
 		}
 
 		//add neighbor bonus
-		for (const metternich::province *neighbor_province : province->get_game_data()->get_neighbor_provinces()) {
-			for (const technology *technology : neighbor_province->get_game_data()->get_technologies()) {
+		for (const metternich::province *nearby_province : province->get_map_data()->get_nearby_provinces()) {
+			for (const technology *technology : nearby_province->get_game_data()->get_technologies()) {
 				if (!province->get_game_data()->can_gain_technology(technology)) {
 					continue;
 				}
 
-				decimillesimal_int neighbor_technology_bonus = 6 * decimillesimal_int(neighbor_province->get_game_data()->get_extra_technology(technology) + 1);
-				if (neighbor_province->get_game_data()->get_religion()->get_group() != province->get_game_data()->get_religion()->get_group()) {
+				decimillesimal_int neighbor_technology_bonus = 6 * decimillesimal_int(nearby_province->get_game_data()->get_extra_technology(technology) + 1);
+				if (nearby_province->get_game_data()->get_religion()->get_group() != province->get_game_data()->get_religion()->get_group()) {
 					//the bonus is halved for neighbor provinces of different religion groups
 					neighbor_technology_bonus /= 2;
 				}

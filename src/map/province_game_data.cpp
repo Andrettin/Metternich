@@ -635,8 +635,8 @@ void province_game_data::check_trade_zone_domain()
 	if (domain_economic_holding_levels.empty()) {
 		//if the province itself has no economic holdings, use those of neighboring provinces instead for this calculation
 
-		for (const metternich::province *neighbor_province : this->get_neighbor_provinces()) {
-			for (const site *holding_site : neighbor_province->get_game_data()->get_settlement_sites()) {
+		for (const metternich::province *nearby_province : this->province->get_map_data()->get_nearby_provinces()) {
+			for (const site *holding_site : nearby_province->get_game_data()->get_settlement_sites()) {
 				const domain *holding_site_owner = holding_site->get_game_data()->get_owner();
 				if (holding_site_owner == nullptr) {
 					continue;
@@ -672,8 +672,8 @@ void province_game_data::check_trade_zone_domain_for_province_and_neighbors()
 {
 	this->check_trade_zone_domain();
 
-	for (const metternich::province *neighbor_province : this->get_neighbor_provinces()) {
-		neighbor_province->get_game_data()->check_trade_zone_domain();
+	for (const metternich::province *nearby_province : this->province->get_map_data()->get_nearby_provinces()) {
+		nearby_province->get_game_data()->check_trade_zone_domain();
 	}
 }
 
@@ -720,8 +720,8 @@ void province_game_data::check_temple_domain()
 	if (domain_religious_holding_levels.empty()) {
 		//if the province itself has no economic holdings, use those of neighboring provinces instead for this calculation
 
-		for (const metternich::province *neighbor_province : this->get_neighbor_provinces()) {
-			for (const site *holding_site : neighbor_province->get_game_data()->get_settlement_sites()) {
+		for (const metternich::province *nearby_province : this->province->get_map_data()->get_nearby_provinces()) {
+			for (const site *holding_site : nearby_province->get_game_data()->get_settlement_sites()) {
 				const domain *holding_site_owner = holding_site->get_game_data()->get_owner();
 				if (holding_site_owner == nullptr) {
 					continue;
@@ -757,8 +757,8 @@ void province_game_data::check_temple_domain_for_province_and_neighbors()
 {
 	this->check_temple_domain();
 
-	for (const metternich::province *neighbor_province : this->get_neighbor_provinces()) {
-		neighbor_province->get_game_data()->check_temple_domain();
+	for (const metternich::province *nearby_province : this->province->get_map_data()->get_nearby_provinces()) {
+		nearby_province->get_game_data()->check_temple_domain();
 	}
 }
 
