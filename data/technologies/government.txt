@@ -5,6 +5,7 @@ feudalism = {
 	icon = crown_baronial
 	period = dark_age
 	discover_only_once = true
+	spread_from_neighbor = false
 	prerequisites = {
 		divine_right
 	}
