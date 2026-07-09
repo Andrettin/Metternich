@@ -4,8 +4,21 @@ renaissance = {
 	portrait = engineering
 	icon = painting
 	period = renaissance_age
+	discover_only_once = true
+	spread_from_neighbor = false
 	prerequisites = {
 		natural_philosophy
 		feudalism
+	}
+	discovery_conditions = {
+		year >= 1450
+		region = italy
+		or = {
+			capital = true
+			year >= 1475
+		}
+	}
+	discovery_yearly_chance = {
+		base_value = 5
 	}
 }
