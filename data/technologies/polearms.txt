@@ -1,11 +1,19 @@
-pike = {
-	name = "Pike"
-	subcategory = infantry
+longspear = {
+	name = "Longspear"
+	subcategory = polearms
 	portrait = bronze_short_sword
 	icon = saber
-	period = feudal_age
+	period = classical_age
+}
+
+pike = {
+	name = "Pike"
+	subcategory = polearms
+	portrait = bronze_short_sword
+	icon = saber
+	period = dark_age
 	prerequisites = {
-		feudalism
+		longspear
 	}
 	discovery_mean_time_to_happen = {
 		months = 100
@@ -182,10 +190,10 @@ pike = {
 
 lance = {
 	name = "Lance"
-	subcategory = cavalry
+	subcategory = polearms
 	portrait = bronze_short_sword
 	icon = saber
-	period = castle_age
+	period = feudal_age
 	prerequisites = {
 		pike
 	}
@@ -193,12 +201,12 @@ lance = {
 
 polearm = {
 	name = "Polearm"
-	subcategory = infantry
+	subcategory = polearms
 	portrait = bronze_short_sword
 	icon = saber
 	period = castle_age
 	prerequisites = {
-		pike
+		lance
 	}
 	discovery_mean_time_to_happen = {
 		months = 500

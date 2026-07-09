@@ -10,10 +10,10 @@ armor = {
 	icon = heater_shield
 }
 
-infantry = {
-	name = "Infantry"
+bows = {
+	name = "Bows"
 	category = army
-	icon = saber
+	icon = bow
 }
 
 cavalry = {
@@ -22,10 +22,28 @@ cavalry = {
 	icon = horses
 }
 
+crossbows = {
+	name = "Crossbows"
+	category = army
+	icon = bow
+}
+
 fortification = {
 	name = "Fortification"
 	category = army
 	icon = wall
+}
+
+infantry = {
+	name = "Infantry"
+	category = army
+	icon = saber
+}
+
+polearms = {
+	name = "Polearms"
+	category = army
+	icon = saber
 }
 
 siege_equipment = {

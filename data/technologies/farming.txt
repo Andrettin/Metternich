@@ -98,7 +98,6 @@ iron_plow = {
 	period = feudal_age
 	prerequisites = {
 		iron_tipped_wood_plow
-		three_field_system #to place it in the appropriate period
 	}
 	modifier = {
 		agricultural_output_modifier = 3
