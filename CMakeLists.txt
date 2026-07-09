@@ -660,6 +660,7 @@ set(script_condition_HDRS
 	src/script/condition/anarchy_condition.h
 	src/script/condition/and_condition.h
 	src/script/condition/any_known_country_condition.h
+	src/script/condition/any_nearby_province_condition.h
 	src/script/condition/any_neighbor_country_condition.h
 	src/script/condition/any_neighbor_province_condition.h
 	src/script/condition/any_settlement_condition.h
