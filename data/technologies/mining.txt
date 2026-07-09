@@ -1,3 +1,23 @@
+stonepit = {
+	name = "Stonepit"
+	subcategory = mining
+	portrait = factory
+	icon = stone
+	period = classical_age
+}
+
+percussion_drilling = {
+	name = "Percussion Drilling"
+	subcategory = mining
+	portrait = factory
+	icon = cog
+	period = castle_age
+	prerequisites = {
+		stonepit #seems reasonable
+		ironworks
+	}
+}
+
 black_coal = {
 	name = "Black Coal"
 	subcategory = mining
@@ -5,7 +25,8 @@ black_coal = {
 	icon = coal
 	period = renaissance_age
 	prerequisites = {
-		natural_philosophy #to place it in the appropriate period
+		percussion_drilling #seems reasonable
+		water_wheel
 	}
 	discovery_conditions = {
 		any_settlement = {

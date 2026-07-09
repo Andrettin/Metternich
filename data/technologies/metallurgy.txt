@@ -1,9 +1,35 @@
+charcoal = {
+	name = "Charcoal"
+	subcategory = metallurgy
+	portrait = factory
+	icon = coal
+	period = dark_age
+	prerequisites = {
+		stonepit
+	}
+}
+
 ironworks = {
 	name = "Ironworks"
 	subcategory = metallurgy
 	portrait = factory
 	icon = iron
-	period = classical_age
+	period = feudal_age
+	prerequisites = {
+		charcoal
+	}
+}
+
+cast_iron = {
+	name = "Cast Iron"
+	subcategory = metallurgy
+	portrait = factory
+	icon = iron
+	period = renaissance_age
+	prerequisites = {
+		ironworks #seems reasonable
+		percussion_drilling
+	}
 }
 
 advanced_ore_roasting_processes = {
@@ -13,7 +39,7 @@ advanced_ore_roasting_processes = {
 	icon = iron
 	period = napoleonic_age
 	prerequisites = {
-		ironworks #previous metallurgy technology
+		cast_iron #previous metallurgy technology
 		industrialization #to place it in the appropriate period
 	}
 	cost_factor = {
@@ -86,7 +112,8 @@ steel_alloys = {
 	icon = steel
 	period = napoleonic_age
 	prerequisites = {
-		ironworks #previous metallurgy technology
+		cast_iron #previous metallurgy technology
+		black_coal #seems reasonable for steel
 		industrialization #to place it in the appropriate period
 	}
 	cost_factor = {

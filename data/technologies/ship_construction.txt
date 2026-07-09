@@ -3,7 +3,10 @@ large_ship_building = {
 	subcategory = ship_construction
 	portrait = unload
 	icon = anchor
-	period = classical_age
+	period = dark_age
+	prerequisites = {
+		road_building
+	}
 	discovery_mean_time_to_happen = {
 		months = 125
 		

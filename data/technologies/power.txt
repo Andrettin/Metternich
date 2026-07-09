@@ -1,0 +1,21 @@
+wind_wheel = {
+	name = "Wind Wheel"
+	subcategory = power
+	portrait = engineering
+	icon = cog
+	period = feudal_age
+	prerequisites = {
+		large_ship_building
+	}
+}
+
+water_wheel = {
+	name = "Water Wheel"
+	subcategory = power
+	portrait = engineering
+	icon = cog
+	period = castle_age
+	prerequisites = {
+		wind_wheel
+	}
+}

@@ -601,14 +601,25 @@ local_merchant_houses = {
 	}
 }
 
-guilds = {
-	name = "Guilds"
+mint = {
+	name = "Mint"
 	subcategory = commerce_institutions
 	portrait = trading_post
 	icon = chest
 	period = feudal_age
 	prerequisites = {
 		local_merchant_houses
+	}
+}
+
+guilds = {
+	name = "Guilds"
+	subcategory = commerce_institutions
+	portrait = trading_post
+	icon = chest
+	period = castle_age
+	prerequisites = {
+		mint
 	}
 	discovery_mean_time_to_happen = {
 		months = 1500
@@ -903,5 +914,16 @@ guilds = {
 				}
 			}
 		}
+	}
+}
+
+renowned_merchant_houses = {
+	name = "Renowned Merchant Houses"
+	subcategory = commerce_institutions
+	portrait = trading_post
+	icon = chest
+	period = renaissance_age
+	prerequisites = {
+		guilds
 	}
 }

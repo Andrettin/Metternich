@@ -1,197 +1,31 @@
-short_bow = {
-	name = "Short Bow"
-	subcategory = bows
+slinged_javelin = {
+	name = "Slinged Javelin"
+	subcategory = crossbows
 	portrait = engineering
 	icon = bow
 	period = classical_age
-	discovery_mean_time_to_happen = {
-		months = 50
-		
-		modifier = {
-			factor = 0.95
-			terrain = forest
-		}
-		modifier = {
-			factor = 0.9
-			has_building_class = sawmill
-		}
-		modifier = {
-			factor = 0.9
-			has_building_class = waterfront
-		}
-		modifier = {
-			factor = 0.75
-			domain = {
-				tier >= kingdom
-			}
-		}
-		modifier = {
-			factor = 0.85
-			domain = {
-				tier == duchy
-			}
-		}
-		modifier = {
-			factor = 0.8
-			domain = {
-				war = true
-			}
-		}
-		modifier = {
-			factor = 0.95
-			technology = aristotelian_logic
-		}
-		modifier = {
-			factor = 0.97
-			technology = scholasticism
-		}
-		modifier = {
-			factor = 0.98
-			technology = astronomy
-		}
-		modifier = {
-			factor = 0.98
-			technology = natural_philosophy
-		}
-		modifier = {
-			factor = 0.9
-			technology = science
-		}
-		modifier = {
-			factor = 0.8
-			year >= 1150
-		}
-		modifier = {
-			factor = 0.8
-			year >= 1250
-		}
-		modifier = {
-			factor = 0.8
-			year >= 1350
-		}
-	}
-	spread_mean_time_to_happen = {
-		months = 500
-		
-		modifier = {
-			factor = 0.9
-			terrain = forest
-		}
-		modifier = {
-			factor = 0.9
-			has_building_class = sawmill
-		}
-		modifier = {
-			factor = 0.9
-			has_building_class = military_academy
-		}
-		modifier = {
-			factor = 0.9
-			has_building_class = waterfront
-		}
-		modifier = {
-			factor = 0.9
-			source_province = {
-				has_building_class = waterfront
-			}
-		}
-		modifier = {
-			factor = 0.9
-			source_province = {
-				culture = root
-			}
-		}
-		modifier = {
-			factor = 0.3
-			source_province = {
-				domain = root
-			}
-		}
-		modifier = {
-			factor = 0.5
-			source_province = {
-				realm = root
-			}
-		}
-		modifier = {
-			factor = 0.75
-			domain = {
-				independent = true
-			}
-			source_province = {
-				realm = root
-				domain = {
-					independent = false
-				}
-			}
-		}
-		modifier = {
-			factor = 0.75
-			domain = {
-				war = true
-			}
-			source_province = {
-				realm = root
-			}
-		}
-		modifier = {
-			factor = 10
-			source_province = {
-				not = {
-					realm = root
-				}
-				domain = {
-					war = true
-				}
-			}
-		}
-		modifier = {
-			factor = 0.85
-			domain = {
-				war = true
-			}
-			source_province = {
-				not = {
-					realm = root
-				}
-				domain = {
-					war = false
-				}
-			}
-		}
-		modifier = {
-			factor = 0.75
-			capital = true
-			source_province = {
-				realm = root
-			}
-		}
-	}
 }
 
-long_bow = {
-	name = "Long Bow"
-	subcategory = bows
+light_crossbow = {
+	name = "Light Crossbow"
+	subcategory = crossbows
 	portrait = engineering
 	icon = bow
 	period = dark_age
 	prerequisites = {
+		slinged_javelin
 		short_bow
 	}
 	discovery_mean_time_to_happen = {
 		months = 100
 		
 		modifier = {
-			factor = 0.95
-			terrain = forest
-		}
-		modifier = {
-			factor = 0.9
-			has_building_class = sawmill
-		}
-		modifier = {
 			factor = 0.9
 			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = smithy
 		}
 		modifier = {
 			factor = 0.75
@@ -243,180 +77,6 @@ long_bow = {
 	spread_mean_time_to_happen = {
 		months = 1000
 		
-		modifier = {
-			factor = 0.9
-			terrain = forest
-		}
-		modifier = {
-			factor = 0.9
-			has_building_class = sawmill
-		}
-		modifier = {
-			factor = 0.9
-			has_building_class = military_academy
-		}
-		modifier = {
-			factor = 0.9
-			has_building_class = waterfront
-		}
-		modifier = {
-			factor = 0.9
-			source_province = {
-				has_building_class = waterfront
-			}
-		}
-		modifier = {
-			factor = 0.9
-			source_province = {
-				culture = root
-			}
-		}
-		modifier = {
-			factor = 0.3
-			source_province = {
-				domain = root
-			}
-		}
-		modifier = {
-			factor = 0.5
-			source_province = {
-				realm = root
-			}
-		}
-		modifier = {
-			factor = 0.75
-			domain = {
-				independent = true
-			}
-			source_province = {
-				realm = root
-				domain = {
-					independent = false
-				}
-			}
-		}
-		modifier = {
-			factor = 0.75
-			domain = {
-				war = true
-			}
-			source_province = {
-				realm = root
-			}
-		}
-		modifier = {
-			factor = 10
-			source_province = {
-				not = {
-					realm = root
-				}
-				domain = {
-					war = true
-				}
-			}
-		}
-		modifier = {
-			factor = 0.85
-			domain = {
-				war = true
-			}
-			source_province = {
-				not = {
-					realm = root
-				}
-				domain = {
-					war = false
-				}
-			}
-		}
-		modifier = {
-			factor = 0.75
-			capital = true
-			source_province = {
-				realm = root
-			}
-		}
-	}
-}
-
-composite_bow = {
-	name = "Composite Bow"
-	subcategory = bows
-	portrait = engineering
-	icon = bow
-	period = feudal_age
-	prerequisites = {
-		long_bow
-	}
-	discovery_mean_time_to_happen = {
-		months = 250
-		
-		modifier = {
-			factor = 0.95
-			terrain = forest
-		}
-		modifier = {
-			factor = 0.9
-			has_building_class = sawmill
-		}
-		modifier = {
-			factor = 0.9
-			has_building_class = waterfront
-		}
-		modifier = {
-			factor = 0.75
-			domain = {
-				tier >= kingdom
-			}
-		}
-		modifier = {
-			factor = 0.85
-			domain = {
-				tier == duchy
-			}
-		}
-		modifier = {
-			factor = 0.8
-			domain = {
-				war = true
-			}
-		}
-		modifier = {
-			factor = 0.95
-			technology = aristotelian_logic
-		}
-		modifier = {
-			factor = 0.97
-			technology = scholasticism
-		}
-		modifier = {
-			factor = 0.98
-			technology = astronomy
-		}
-		modifier = {
-			factor = 0.98
-			technology = natural_philosophy
-		}
-		modifier = {
-			factor = 0.9
-			technology = science
-		}
-		modifier = {
-			factor = 1.25
-			year < 1150
-		}
-		modifier = {
-			factor = 0.8
-			year >= 1350
-		}
-	}
-	spread_mean_time_to_happen = {
-		months = 2000
-		
-		modifier = {
-			factor = 0.9
-			has_building_class = sawmill
-		}
 		modifier = {
 			factor = 0.9
 			has_building_class = military_academy
@@ -505,24 +165,182 @@ composite_bow = {
 	}
 }
 
-reinforced_long_bow = {
-	name = "Reinforced Long Bow"
-	subcategory = bows
+medium_crossbow = {
+	name = "Medium Crossbow"
+	subcategory = crossbows
+	portrait = engineering
+	icon = bow
+	period = feudal_age
+	prerequisites = {
+		light_crossbow
+	}
+}
+
+heavy_crossbow = {
+	name = "Heavy Crossbow"
+	subcategory = crossbows
 	portrait = engineering
 	icon = bow
 	period = castle_age
 	prerequisites = {
-		composite_bow
+		medium_crossbow
+	}
+	discovery_mean_time_to_happen = {
+		months = 500
+		
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = smithy
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				tier >= kingdom
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				tier == duchy
+			}
+		}
+		modifier = {
+			factor = 0.8
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 0.95
+			technology = aristotelian_logic
+		}
+		modifier = {
+			factor = 0.97
+			technology = scholasticism
+		}
+		modifier = {
+			factor = 0.98
+			technology = astronomy
+		}
+		modifier = {
+			factor = 0.98
+			technology = natural_philosophy
+		}
+		modifier = {
+			factor = 0.9
+			technology = science
+		}
+		modifier = {
+			factor = 1.25
+			year < 1150
+		}
+		modifier = {
+			factor = 1.25
+			year < 1250
+		}
+	}
+	spread_mean_time_to_happen = {
+		months = 5000
+		
+		modifier = {
+			factor = 0.9
+			has_building_class = military_academy
+		}
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				has_building_class = waterfront
+			}
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				culture = root
+			}
+		}
+		modifier = {
+			factor = 0.35
+			source_province = {
+				domain = root
+			}
+		}
+		modifier = {
+			factor = 0.6
+			source_province = {
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				independent = true
+			}
+			source_province = {
+				realm = root
+				domain = {
+					independent = false
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				war = true
+			}
+			source_province = {
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 10
+			source_province = {
+				not = {
+					realm = root
+				}
+				domain = {
+					war = true
+				}
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				war = true
+			}
+			source_province = {
+				not = {
+					realm = root
+				}
+				domain = {
+					war = false
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			capital = true
+			source_province = {
+				realm = root
+			}
+		}
 	}
 }
 
-marksman_long_bow = {
-	name = "Marksman Long Bow"
-	subcategory = bows
+arbalest = {
+	name = "Arbalest"
+	subcategory = crossbows
 	portrait = engineering
 	icon = bow
 	period = renaissance_age
 	prerequisites = {
-		reinforced_long_bow
+		heavy_crossbow
 	}
 }

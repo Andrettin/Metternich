@@ -5,6 +5,6 @@ hierarchical_command = {
 	icon = flag
 	period = renaissance_age
 	prerequisites = {
-		lance
+		polearm #to place it in the appropriate period
 	}
 }

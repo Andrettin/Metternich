@@ -1,9 +1,42 @@
+battering_ram = {
+	name = "Battering Ram"
+	subcategory = siege_equipment
+	portrait = engineering
+	icon = cannon
+	period = classical_age
+}
+
+siege_ladders = {
+	name = "Siege Ladders"
+	subcategory = siege_equipment
+	portrait = engineering
+	icon = cannon
+	period = dark_age
+	prerequisites = {
+		battering_ram
+	}
+}
+
+siege_towers = {
+	name = "Siege Towers"
+	subcategory = siege_equipment
+	portrait = engineering
+	icon = cannon
+	period = feudal_age
+	prerequisites = {
+		siege_ladders
+	}
+}
+
 mangonel = {
 	name = "Mangonel"
 	subcategory = siege_equipment
 	portrait = engineering
 	icon = cannon
-	period = classical_age
+	period = castle_age
+	prerequisites = {
+		siege_towers
+	}
 	discovery_mean_time_to_happen = {
 		months = 750
 		
@@ -314,7 +347,7 @@ trebuchet = {
 	subcategory = siege_equipment
 	portrait = engineering
 	icon = cannon
-	period = dark_age
+	period = renaissance_age
 	prerequisites = {
 		mangonel
 	}

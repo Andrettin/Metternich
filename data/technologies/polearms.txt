@@ -514,3 +514,14 @@ polearm = {
 		}
 	}
 }
+
+heavy_lance = {
+	name = "Heavy Lance"
+	subcategory = polearms
+	portrait = bronze_short_sword
+	icon = saber
+	period = renaissance_age
+	prerequisites = {
+		polearm
+	}
+}

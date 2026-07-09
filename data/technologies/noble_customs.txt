@@ -5,3 +5,290 @@ divine_right = {
 	icon = crown_royal
 	period = classical_age
 }
+
+chronicle_writing = {
+	name = "Chronicle Writing"
+	subcategory = culture
+	portrait = engineering
+	icon = treaty
+	period = dark_age
+	prerequisites = {
+		divine_right
+	}
+	discovery_mean_time_to_happen = {
+		months = 250
+		
+		modifier = {
+			factor = 0.9
+			scripted_condition = has_school
+		}
+		modifier = {
+			factor = 0.85
+			has_building_class = university
+		}
+		modifier = {
+			factor = 0.9
+			scripted_condition = has_library
+		}
+		modifier = {
+			factor = 0.95
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.95
+			pathway = road
+		}
+		modifier = {
+			factor = 0.95
+			domain = {
+				ruler = {
+					culture >= 2
+				}
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				ruler = {
+					culture >= 3
+				}
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				ruler = {
+					culture >= 4
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			domain = {
+				tier >= kingdom
+			}
+		}
+		modifier = {
+			factor = 0.85
+			domain = {
+				tier == duchy
+			}
+		}
+		modifier = {
+			factor = 5
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_medium_high_stability
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_high_stability
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_maximal_stability
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_medium_stability
+				}
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_medium_low_stability
+				}
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_low_stability
+				}
+			}
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1250
+		}
+		modifier = {
+			factor = 0.8
+			year >= 1350
+		}
+	}
+	spread_mean_time_to_happen = {
+		months = 1500
+		
+		modifier = {
+			factor = 0.9
+			has_building_class = waterfront
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				has_building_class = waterfront
+			}
+		}
+		modifier = {
+			factor = 0.9
+			pathway = road
+		}
+		modifier = {
+			factor = 0.9
+			source_province = {
+				pathway = road
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				ruler = {
+					culture >= 2
+				}
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				ruler = {
+					culture >= 3
+				}
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				ruler = {
+					culture >= 4
+				}
+			}
+		}
+		modifier = {
+			factor = 0.7
+			source_province = {
+				culture = root
+			}
+		}
+		modifier = {
+			factor = 0.8
+			source_province = {
+				religion = root
+			}
+		}
+		modifier = {
+			factor = 0.5
+			source_province = {
+				domain = root
+			}
+		}
+		modifier = {
+			factor = 0.5
+			source_province = {
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 5
+			domain = {
+				war = true
+			}
+		}
+		modifier = {
+			factor = 0.75
+			capital = true
+			source_province = {
+				realm = root
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_medium_high_stability
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_high_stability
+			}
+		}
+		modifier = {
+			factor = 0.9
+			domain = {
+				scripted_condition = has_maximal_stability
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_medium_stability
+				}
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_medium_low_stability
+				}
+			}
+		}
+		modifier = {
+			factor = 1.1
+			domain = {
+				not = {
+					scripted_condition = has_low_stability
+				}
+			}
+		}
+	}
+}
+
+romantic_poetry = {
+	name = "Romantic Poetry"
+	subcategory = noble_customs
+	portrait = engineering
+	icon = music
+	period = feudal_age
+	prerequisites = {
+		chronicle_writing
+	}
+}
+
+heraldry = {
+	name = "Heraldry"
+	subcategory = noble_customs
+	portrait = dwarven_heater_shield
+	icon = heater_shield
+	period = castle_age
+	prerequisites = {
+		romantic_poetry
+	}
+}
+
+noblesse_oblige = {
+	name = "Noblesse Oblige"
+	subcategory = noble_customs
+	portrait = aristocratic_palace
+	icon = aristocrat_small
+	period = renaissance_age
+	prerequisites = {
+		heraldry
+	}
+}
