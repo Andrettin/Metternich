@@ -1,9 +1,3 @@
-technology = {
-	name = "Technology"
-	icon = cog
-	domain_skill = culture
-}
-
 army = {
 	name = "Army"
 	icon = crossed_sabers
