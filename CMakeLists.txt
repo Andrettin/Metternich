@@ -731,6 +731,7 @@ set(script_condition_HDRS
 	src/script/condition/mythic_path_condition.h
 	src/script/condition/near_water_condition.h
 	src/script/condition/office_condition.h
+	src/script/condition/opinion_condition.h
 	src/script/condition/owns_province_condition.h
 	src/script/condition/owns_site_condition.h
 	src/script/condition/pathway_condition.h
