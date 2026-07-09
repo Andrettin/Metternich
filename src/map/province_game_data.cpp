@@ -1415,8 +1415,12 @@ void province_game_data::create_map_mode_image(const province_map_mode mode)
 			if (!this->province->is_water_zone()) {
 				const int province_technology_count = static_cast<int>(this->get_technologies().size());
 				const int total_technology_count = static_cast<int>(technology::get_all().size());
-				static const QColor min_technology_color(Qt::white);
+				const QColor &min_technology_color = defines::get()->get_minor_nation_color();
 				static const QColor max_technology_color(Qt::darkBlue);
+
+				assert_throw(min_technology_color.red() >= max_technology_color.red());
+				assert_throw(min_technology_color.green() >= max_technology_color.green());
+				assert_throw(min_technology_color.blue() >= max_technology_color.blue());
 
 				province_color.setRed(max_technology_color.red() + (min_technology_color.red() - max_technology_color.red()) * (total_technology_count - province_technology_count) / total_technology_count);
 				province_color.setGreen(max_technology_color.green() + (min_technology_color.green() - max_technology_color.green()) * (total_technology_count - province_technology_count) / total_technology_count);
