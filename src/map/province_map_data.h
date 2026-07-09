@@ -77,6 +77,11 @@ public:
 
 	void add_neighbor_province(const metternich::province *province);
 
+	const std::vector<const metternich::province *> &get_nearby_provinces() const
+	{
+		return this->nearby_provinces;
+	}
+
 	const std::vector<QPoint> &get_tiles() const
 	{
 		return this->tiles;
@@ -128,6 +133,7 @@ private:
 	QRect territory_rect;
 	QPoint territory_rect_center = QPoint(-1, -1);
 	std::vector<const metternich::province *> neighbor_provinces;
+	std::vector<const metternich::province *> nearby_provinces; //neighbor provinces plus land provinces connected by a water zone
 	std::vector<QPoint> tiles;
 	std::vector<QPoint> resource_tiles;
 	std::vector<const site *> sites;

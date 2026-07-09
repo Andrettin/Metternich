@@ -18,6 +18,7 @@
 #include "util/log_util.h"
 #include "util/point_util.h"
 #include "util/rect_util.h"
+#include "util/vector_util.h"
 
 namespace metternich {
 
@@ -37,6 +38,29 @@ province_map_data::province_map_data(const metternich::province *province) : pro
 void province_map_data::on_map_created()
 {
 	this->initialize_terrain();
+
+	this->nearby_provinces = this->get_neighbor_provinces();
+
+	//add provinces connected by a water zone to the nearby provinces list
+	if (!this->province->is_water_zone()) {
+		for (const metternich::province *neighbor_province : this->get_neighbor_provinces()) {
+			if (!neighbor_province->is_water_zone()) {
+				continue;
+			}
+
+			for (const metternich::province *nearby_province : neighbor_province->get_map_data()->get_neighbor_provinces()) {
+				if (nearby_province->is_water_zone()) {
+					continue;
+				}
+
+				if (nearby_province == this->province || vector::contains(this->nearby_provinces, nearby_province)) {
+					continue;
+				}
+
+				this->nearby_provinces.push_back(nearby_province);
+			}
+		}
+	}
 
 	if (this->province->uses_geopolygons()) {
 		const map_template *map_template = game::get()->get_scenario()->get_map_template();
