@@ -83,6 +83,7 @@ class technology final : public named_data_entry, public data_type<technology>
 	Q_PROPERTY(QVariantList enabled_civilian_units READ get_enabled_civilian_units_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList enabled_military_units READ get_enabled_military_units_qvariant_list NOTIFY changed)
 	Q_PROPERTY(bool discover_only_once MEMBER discover_only_once READ is_discovered_only_once NOTIFY changed)
+	Q_PROPERTY(bool spread_from_neighbor MEMBER spread_from_neighbor NOTIFY changed)
 	Q_PROPERTY(const QObject* tree_parent READ get_tree_parent CONSTANT)
 	Q_PROPERTY(QVariantList secondary_tree_parents READ get_secondary_tree_parents CONSTANT)
 	Q_PROPERTY(const archimedes::game_rule* required_game_rule MEMBER required_game_rule NOTIFY changed)
@@ -557,6 +558,7 @@ private:
 	std::unique_ptr<factor<province>> discovery_monthly_chance;
 	std::unique_ptr<factor<province>> discovery_yearly_chance;
 	const province_event *discovery_event = nullptr;
+	bool spread_from_neighbor = true;
 	std::unique_ptr<and_condition<province>> spread_conditions;
 	std::unique_ptr<mean_time_to_happen<province>> spread_mean_time_to_happen;
 	std::unique_ptr<factor<province>> spread_monthly_chance;

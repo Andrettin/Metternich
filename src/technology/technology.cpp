@@ -272,7 +272,7 @@ void technology::initialize()
 		event->set_name(std::format("{} Spread to [root.name]", this->get_name()));
 		event->set_portrait(this->get_portrait());
 		event->set_description(std::format("[root.domain.form_of_address], the {} technology has spread to [root.name].", string::lowered(this->get_name())));
-		event->set_from_neighbor(true);
+		event->set_from_neighbor(this->spread_from_neighbor);
 		event->set_spread_technology(this);
 		event->set_hidden(true); //too many events could be displayed for a large domain if this is not hidden
 		if (this->spread_monthly_chance != nullptr) {
