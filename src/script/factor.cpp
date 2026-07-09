@@ -5,6 +5,8 @@
 #include "database/gsml_data.h"
 #include "database/gsml_operator.h"
 #include "database/gsml_property.h"
+#include "map/province.h"
+#include "map/province_game_data.h"
 #include "script/factor_modifier.h"
 
 namespace metternich {
@@ -78,10 +80,18 @@ decimillesimal_int factor<scope_type>::calculate(const scope_type *scope, const 
 	if (scope != nullptr) {
 		for (const std::unique_ptr<factor_modifier<scope_type>> &modifier : this->modifiers) {
 			if (modifier->check_conditions(scope)) {
+				decimillesimal_int modifier_factor = modifier->get_factor();
+
+				if constexpr (std::is_same_v<scope_type, province>) {
+					if (modifier->is_province_level_scaled()) {
+						modifier_factor *= scope->get_game_data()->get_level();
+					}
+				}
+
 				if (modifier->is_additive()) {
-					value += modifier->get_factor();
+					value += modifier_factor;
 				} else {
-					value *= modifier->get_factor();
+					value *= modifier_factor;
 				}
 			}
 		}
