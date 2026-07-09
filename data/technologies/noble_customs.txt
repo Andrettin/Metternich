@@ -8,7 +8,7 @@ divine_right = {
 
 chronicle_writing = {
 	name = "Chronicle Writing"
-	subcategory = culture
+	subcategory = noble_customs
 	portrait = engineering
 	icon = treaty
 	period = dark_age
