@@ -7,6 +7,12 @@ wind_wheel = {
 	prerequisites = {
 		large_ship_building
 	}
+	discovery_mean_time_to_happen = {
+		months = 500
+	}
+	spread_mean_time_to_happen = {
+		months = 2000
+	}
 }
 
 water_wheel = {
@@ -17,5 +23,11 @@ water_wheel = {
 	period = castle_age
 	prerequisites = {
 		wind_wheel
+	}
+	discovery_mean_time_to_happen = {
+		months = 1500
+	}
+	spread_mean_time_to_happen = {
+		months = 5000
 	}
 }

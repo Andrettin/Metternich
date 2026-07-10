@@ -324,7 +324,7 @@ void technology::check() const
 	}
 
 	if (this->get_level() == 0 && this->get_discovery_event() == nullptr) {
-		log::log_error(std::format("Technology \"{}\" neither has a level for research, nor has a discovery event.", this->get_identifier()));
+		log::log_error(std::format("Technology \"{}\" has neither a level for research, nor a discovery event.", this->get_identifier()));
 	}
 
 	if (this->get_period() != nullptr) {

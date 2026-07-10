@@ -7,4 +7,10 @@ hierarchical_command = {
 	prerequisites = {
 		polearm #to place it in the appropriate period
 	}
+	discovery_mean_time_to_happen = {
+		months = 3000
+	}
+	spread_mean_time_to_happen = {
+		months = 10000
+	}
 }

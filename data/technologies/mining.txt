@@ -4,6 +4,12 @@ stonepit = {
 	portrait = factory
 	icon = stone
 	period = classical_age
+	discovery_mean_time_to_happen = {
+		months = 65
+	}
+	spread_mean_time_to_happen = {
+		months = 750
+	}
 }
 
 percussion_drilling = {
@@ -15,6 +21,12 @@ percussion_drilling = {
 	prerequisites = {
 		stonepit #seems reasonable
 		ironworks
+	}
+	discovery_mean_time_to_happen = {
+		months = 2000
+	}
+	spread_mean_time_to_happen = {
+		months = 6000
 	}
 }
 

@@ -7,6 +7,12 @@ charcoal = {
 	prerequisites = {
 		stonepit
 	}
+	discovery_mean_time_to_happen = {
+		months = 150
+	}
+	spread_mean_time_to_happen = {
+		months = 1500
+	}
 }
 
 ironworks = {
@@ -17,6 +23,12 @@ ironworks = {
 	period = feudal_age
 	prerequisites = {
 		charcoal
+	}
+	discovery_mean_time_to_happen = {
+		months = 600
+	}
+	spread_mean_time_to_happen = {
+		months = 3000
 	}
 }
 
@@ -29,6 +41,12 @@ cast_iron = {
 	prerequisites = {
 		ironworks #seems reasonable
 		percussion_drilling
+	}
+	discovery_mean_time_to_happen = {
+		months = 5000
+	}
+	spread_mean_time_to_happen = {
+		months = 10000
 	}
 }
 
