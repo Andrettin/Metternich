@@ -21,7 +21,7 @@ feudalism = {
 		modifier = {
 			factor = 0.5
 			additive = true
-			province_level_scale = 1
+			province_level_scale = 3
 			any_nearby_province = { #any friendly nearby province
 				technology = feudalism
 				domain = {
@@ -35,7 +35,7 @@ feudalism = {
 		modifier = {
 			factor = 0.1
 			additive = true
-			province_level_scale = 1
+			province_level_scale = 3
 			any_neighbor_province = {
 				technology = feudalism
 			}
@@ -43,7 +43,7 @@ feudalism = {
 		modifier = {
 			factor = 5
 			additive = true
-			province_level_scale = 1
+			province_level_scale = 3
 			or = {
 				coastal = true
 				capital = true
@@ -59,24 +59,13 @@ feudalism = {
 		modifier = {
 			factor = 0.1
 			additive = true
-			province_level_scale = 1
+			province_level_scale = 3
 			capital = true
 			not = {
 				region = america
 				region = oceania
 				domain = {
 					government_group = tribe
-				}
-			}
-		}
-		modifier = {
-			factor = 2
-			additive = true
-			province_level_scale = 1
-			domain = {
-				technology = feudalism
-				not = {
-					subject_type = chartered_company
 				}
 			}
 		}
