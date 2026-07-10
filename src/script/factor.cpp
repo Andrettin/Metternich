@@ -83,8 +83,8 @@ decimillesimal_int factor<scope_type>::calculate(const scope_type *scope, const 
 				decimillesimal_int modifier_factor = modifier->get_factor();
 
 				if constexpr (std::is_same_v<scope_type, province>) {
-					if (modifier->is_province_level_scaled()) {
-						modifier_factor *= scope->get_game_data()->get_level();
+					if (modifier->get_province_level_scale() != 0) {
+						modifier_factor *= scope->get_game_data()->get_level() * modifier->get_province_level_scale();
 					}
 				}
 

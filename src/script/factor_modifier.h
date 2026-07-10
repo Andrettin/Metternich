@@ -41,9 +41,9 @@ public:
 		return this->additive;
 	}
 
-	bool is_province_level_scaled() const
+	int get_province_level_scale() const
 	{
-		return this->province_level_scaled;
+		return this->province_level_scale;
 	}
 
 	bool check_conditions(const scope_type *scope) const;
@@ -51,7 +51,7 @@ public:
 private:
 	decimillesimal_int factor; //the factor of the modifier itself
 	bool additive = false; //whether the modifier is additive instead of multiplicative
-	bool province_level_scaled = false; //whether the modifier is scaled with province level
+	int province_level_scale = 0; //whether the modifier is scaled with province level, and if so at which scale
 	std::unique_ptr<and_condition<scope_type>> conditions; //conditions for whether the modifier is to be applied
 };
 

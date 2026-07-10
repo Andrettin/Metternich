@@ -42,9 +42,9 @@ void factor_modifier<scope_type>::process_gsml_property(const gsml_property &pro
 		} else {
 			throw std::runtime_error(std::format("Invalid operator for property (\"{}\").", property.get_key()));
 		}
-	} else if (std::is_same_v<scope_type, province> && key == "province_level_scaled") {
+	} else if (std::is_same_v<scope_type, province> && key == "province_level_scale") {
 		if (gsml_operator == gsml_operator::assignment) {
-			this->province_level_scaled = string::to_bool(value);
+			this->province_level_scale = std::stoi(value);
 		} else {
 			throw std::runtime_error(std::format("Invalid operator for property (\"{}\").", property.get_key()));
 		}
