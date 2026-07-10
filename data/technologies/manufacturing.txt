@@ -385,6 +385,7 @@ industrialization = {
 	prerequisites = {
 		manufactories
 		enlightenment
+		black_coal #seems reasonable
 	}
 	discovery_conditions = {
 		year >= 1750
