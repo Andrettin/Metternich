@@ -86,6 +86,7 @@
 #include "script/condition/near_water_condition.h"
 #include "script/condition/office_condition.h"
 #include "script/condition/opinion_condition.h"
+#include "script/condition/overlord_scope_condition.h"
 #include "script/condition/owns_province_condition.h"
 #include "script/condition/owns_site_condition.h"
 #include "script/condition/pathway_condition.h"
@@ -433,6 +434,8 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			condition = std::make_unique<any_subject_country_condition>(condition_operator);
 		} else if (tag == "opinion") {
 			condition = std::make_unique<opinion_condition>(condition_operator);
+		} else if (tag == "overlord") {
+			condition = std::make_unique<overlord_scope_condition>(condition_operator);
 		}
 	} else if constexpr (std::is_same_v<scope_type, population_unit>) {
 		if (tag == "site") {
