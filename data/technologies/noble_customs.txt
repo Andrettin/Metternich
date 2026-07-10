@@ -4,6 +4,12 @@ divine_right = {
 	portrait = grand_ducal_crown
 	icon = crown_royal
 	period = classical_age
+	discovery_mean_time_to_happen = {
+		months = 75
+	}
+	spread_mean_time_to_happen = {
+		months = 750
+	}
 }
 
 chronicle_writing = {
@@ -269,6 +275,12 @@ romantic_poetry = {
 	prerequisites = {
 		chronicle_writing
 	}
+	discovery_mean_time_to_happen = {
+		months = 500
+	}
+	spread_mean_time_to_happen = {
+		months = 3000
+	}
 }
 
 heraldry = {
@@ -280,6 +292,12 @@ heraldry = {
 	prerequisites = {
 		romantic_poetry
 	}
+	discovery_mean_time_to_happen = {
+		months = 1000
+	}
+	spread_mean_time_to_happen = {
+		months = 5000
+	}
 }
 
 noblesse_oblige = {
@@ -290,5 +308,11 @@ noblesse_oblige = {
 	period = renaissance_age
 	prerequisites = {
 		heraldry
+	}
+	discovery_mean_time_to_happen = {
+		months = 2000
+	}
+	spread_mean_time_to_happen = {
+		months = 10000
 	}
 }
