@@ -49,6 +49,12 @@ persia = {
 	}
 }
 
+south_asia = {
+	superregions = {
+		asia
+	}
+}
+
 tajikistan = {
 	superregions = {
 		asia
