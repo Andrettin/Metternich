@@ -4,6 +4,12 @@ poultry_domestication = {
 	portrait = engineering
 	icon = cattle
 	period = classical_age
+	discovery_mean_time_to_happen = {
+		months = 50
+	}
+	spread_mean_time_to_happen = {
+		months = 500
+	}
 }
 
 goatherding = {
@@ -14,6 +20,12 @@ goatherding = {
 	period = dark_age
 	prerequisites = {
 		poultry_domestication
+	}
+	discovery_mean_time_to_happen = {
+		months = 125
+	}
+	spread_mean_time_to_happen = {
+		months = 1000
 	}
 }
 
@@ -26,6 +38,12 @@ meat_livestock = {
 	prerequisites = {
 		goatherding
 	}
+	discovery_mean_time_to_happen = {
+		months = 500
+	}
+	spread_mean_time_to_happen = {
+		months = 2000
+	}
 }
 
 weaving = {
@@ -37,6 +55,12 @@ weaving = {
 	prerequisites = {
 		meat_livestock
 	}
+	discovery_mean_time_to_happen = {
+		months = 1500
+	}
+	spread_mean_time_to_happen = {
+		months = 5000
+	}
 }
 
 dairy_farming = {
@@ -47,6 +71,12 @@ dairy_farming = {
 	period = renaissance_age
 	prerequisites = {
 		weaving
+	}
+	discovery_mean_time_to_happen = {
+		months = 5000
+	}
+	spread_mean_time_to_happen = {
+		months = 10000
 	}
 }
 

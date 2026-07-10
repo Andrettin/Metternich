@@ -4,6 +4,12 @@ basilican_structures = {
 	portrait = engineering
 	icon = architecture
 	period = classical_age
+	discovery_mean_time_to_happen = {
+		months = 50
+	}
+	spread_mean_time_to_happen = {
+		months = 750
+	}
 }
 
 brickwork_structures = {
@@ -14,6 +20,12 @@ brickwork_structures = {
 	period = dark_age
 	prerequisites = {
 		basilican_structures
+	}
+	discovery_mean_time_to_happen = {
+		months = 150
+	}
+	spread_mean_time_to_happen = {
+		months = 1500
 	}
 }
 
@@ -26,6 +38,12 @@ romanesque_vaulting = {
 	prerequisites = {
 		brickwork_structures
 	}
+	discovery_mean_time_to_happen = {
+		months = 500
+	}
+	spread_mean_time_to_happen = {
+		months = 3000
+	}
 }
 
 cylindrical_structures = {
@@ -37,6 +55,12 @@ cylindrical_structures = {
 	prerequisites = {
 		romanesque_vaulting
 	}
+	discovery_mean_time_to_happen = {
+		months = 1500
+	}
+	spread_mean_time_to_happen = {
+		months = 6000
+	}
 }
 
 gothic_buttresses = {
@@ -47,5 +71,11 @@ gothic_buttresses = {
 	period = renaissance_age
 	prerequisites = {
 		cylindrical_structures
+	}
+	discovery_mean_time_to_happen = {
+		months = 3000
+	}
+	spread_mean_time_to_happen = {
+		months = 10000
 	}
 }

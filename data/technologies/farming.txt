@@ -7,6 +7,12 @@ two_field_system = {
 	modifier = {
 		agricultural_output_modifier = 4
 	}
+	discovery_mean_time_to_happen = {
+		months = 50
+	}
+	spread_mean_time_to_happen = {
+		months = 500
+	}
 }
 
 three_field_system = {
@@ -20,6 +26,12 @@ three_field_system = {
 	}
 	modifier = {
 		agricultural_output_modifier = 4
+	}
+	discovery_mean_time_to_happen = {
+		months = 125
+	}
+	spread_mean_time_to_happen = {
+		months = 1000
 	}
 }
 
@@ -35,6 +47,12 @@ stripe_plowing = {
 	modifier = {
 		agricultural_output_modifier = 3
 	}
+	discovery_mean_time_to_happen = {
+		months = 500
+	}
+	spread_mean_time_to_happen = {
+		months = 2000
+	}
 }
 
 soil_amelioration = {
@@ -49,6 +67,12 @@ soil_amelioration = {
 	modifier = {
 		agricultural_output_modifier = 2
 	}
+	discovery_mean_time_to_happen = {
+		months = 1500
+	}
+	spread_mean_time_to_happen = {
+		months = 5000
+	}
 }
 
 rooting_out = {
@@ -62,6 +86,12 @@ rooting_out = {
 	}
 	modifier = {
 		agricultural_output_modifier = 1
+	}
+	discovery_mean_time_to_happen = {
+		months = 5000
+	}
+	spread_mean_time_to_happen = {
+		months = 10000
 	}
 }
 
