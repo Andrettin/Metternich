@@ -392,28 +392,6 @@ Flickable {
 					}
 				}
 			}
-			
-			Image {
-				id: selected_civilian_unit_icon
-				anchors.verticalCenter: parent.verticalCenter
-				anchors.horizontalCenter: parent.horizontalCenter
-				source: selected_civilian_unit !== null && selected_civilian_unit.province === province ? ("image://icon/" + selected_civilian_unit.icon.identifier + "/selected") : "image://empty/"
-				visible: selected_civilian_unit !== null && selected_civilian_unit.province === province
-				
-				MouseArea {
-					anchors.fill: parent
-					hoverEnabled: true
-					
-					onClicked: {
-						metternich.defines.click_sound.play()
-						select_civilian_unit(null)
-					}
-					
-					onContainsMouseChanged: {
-						update_civilian_unit_status_text(selected_civilian_unit, containsMouse)
-					}
-				}
-			}
 		}
 	}
 	
