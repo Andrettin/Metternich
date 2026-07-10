@@ -4,6 +4,12 @@ battering_ram = {
 	portrait = engineering
 	icon = cannon
 	period = classical_age
+	discovery_mean_time_to_happen = {
+		months = 65
+	}
+	spread_mean_time_to_happen = {
+		months = 500
+	}
 }
 
 siege_ladders = {
@@ -15,6 +21,12 @@ siege_ladders = {
 	prerequisites = {
 		battering_ram
 	}
+	discovery_mean_time_to_happen = {
+		months = 125
+	}
+	spread_mean_time_to_happen = {
+		months = 1000
+	}
 }
 
 siege_towers = {
@@ -25,6 +37,12 @@ siege_towers = {
 	period = feudal_age
 	prerequisites = {
 		siege_ladders
+	}
+	discovery_mean_time_to_happen = {
+		months = 350
+	}
+	spread_mean_time_to_happen = {
+		months = 2000
 	}
 }
 
@@ -350,5 +368,11 @@ trebuchet = {
 	period = renaissance_age
 	prerequisites = {
 		mangonel
+	}
+	discovery_mean_time_to_happen = {
+		months = 2500
+	}
+	spread_mean_time_to_happen = {
+		months = 10000
 	}
 }

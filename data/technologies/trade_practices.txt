@@ -4,6 +4,12 @@ business_contracts = {
 	portrait = coinage
 	icon = wealth
 	period = classical_age
+	discovery_mean_time_to_happen = {
+		months = 50
+	}
+	spread_mean_time_to_happen = {
+		months = 750
+	}
 }
 
 promissory_note = {
@@ -14,6 +20,12 @@ promissory_note = {
 	period = dark_age
 	prerequisites = {
 		business_contracts
+	}
+	discovery_mean_time_to_happen = {
+		months = 125
+	}
+	spread_mean_time_to_happen = {
+		months = 1500
 	}
 }
 
@@ -26,6 +38,12 @@ letters_of_credit = {
 	prerequisites = {
 		promissory_note
 	}
+	discovery_mean_time_to_happen = {
+		months = 500
+	}
+	spread_mean_time_to_happen = {
+		months = 3000
+	}
 }
 
 double_entry_bookkeeping = {
@@ -37,6 +55,12 @@ double_entry_bookkeeping = {
 	prerequisites = {
 		letters_of_credit
 	}
+	discovery_mean_time_to_happen = {
+		months = 1500
+	}
+	spread_mean_time_to_happen = {
+		months = 6000
+	}
 }
 
 foreign_accreditation = {
@@ -47,6 +71,12 @@ foreign_accreditation = {
 	period = renaissance_age
 	prerequisites = {
 		double_entry_bookkeeping
+	}
+	discovery_mean_time_to_happen = {
+		months = 5000
+	}
+	spread_mean_time_to_happen = {
+		months = 10000
 	}
 }
 
