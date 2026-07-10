@@ -291,6 +291,7 @@ heraldry = {
 	period = castle_age
 	prerequisites = {
 		romantic_poetry
+		feudalism #seems reasonable
 	}
 	discovery_mean_time_to_happen = {
 		months = 1000

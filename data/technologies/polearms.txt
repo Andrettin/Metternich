@@ -202,6 +202,7 @@ lance = {
 	period = feudal_age
 	prerequisites = {
 		pike
+		feudalism #seems reasonable
 	}
 	discovery_mean_time_to_happen = {
 		months = 250

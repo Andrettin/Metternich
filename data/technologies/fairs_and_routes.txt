@@ -37,6 +37,7 @@ distant_trading = {
 	period = feudal_age
 	prerequisites = {
 		local_fairs
+		large_ship_building #seems reasonable, since distant trading benefits strongly from larger ships
 	}
 	discovery_mean_time_to_happen = {
 		months = 500

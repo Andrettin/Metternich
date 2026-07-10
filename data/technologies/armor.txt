@@ -204,6 +204,7 @@ chain_mail = {
 	period = feudal_age
 	prerequisites = {
 		light_chain_mail
+		feudalism #seems reasonable
 	}
 	discovery_mean_time_to_happen = {
 		months = 500
@@ -416,6 +417,7 @@ half_plate_mail = {
 	period = feudal_age
 	prerequisites = {
 		banded_mail
+		feudalism #seems reasonable
 	}
 	discovery_mean_time_to_happen = {
 		months = 600

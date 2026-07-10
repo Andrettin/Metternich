@@ -699,6 +699,7 @@ medium_castle = {
 	period = feudal_age
 	prerequisites = {
 		small_castle
+		feudalism #seems reasonable
 	}
 	discovery_mean_time_to_happen = {
 		months = 500
