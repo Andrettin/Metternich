@@ -89,7 +89,22 @@ colonialism = {
 	portrait = dock
 	icon = globe
 	period = gunpowder_age
+	discover_only_once = true
+	spread_from_neighbor = false
 	prerequisites = {
 		renaissance
+	}
+	discovery_conditions = {
+		year >= 1500
+		or = {
+			region = europe
+			region = asia
+			region = africa
+		}
+		coastal = true
+		capital = true
+	}
+	discovery_yearly_chance = {
+		base_value = 5
 	}
 }
