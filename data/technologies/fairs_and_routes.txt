@@ -1,0 +1,81 @@
+annual_sailing = {
+	name = "Annual Sailing"
+	subcategory = fairs_and_routes
+	portrait = coinage
+	icon = anchor
+	period = classical_age
+	discovery_mean_time_to_happen = {
+		months = 50
+	}
+	spread_mean_time_to_happen = {
+		months = 750
+	}
+}
+
+local_fairs = {
+	name = "Local Fairs"
+	subcategory = fairs_and_routes
+	portrait = coinage
+	icon = wealth
+	period = dark_age
+	prerequisites = {
+		annual_sailing
+	}
+	discovery_mean_time_to_happen = {
+		months = 125
+	}
+	spread_mean_time_to_happen = {
+		months = 1500
+	}
+}
+
+distant_trading = {
+	name = "Distant Trading"
+	subcategory = fairs_and_routes
+	portrait = coinage
+	icon = wealth
+	period = feudal_age
+	prerequisites = {
+		local_fairs
+	}
+	discovery_mean_time_to_happen = {
+		months = 500
+	}
+	spread_mean_time_to_happen = {
+		months = 3000
+	}
+}
+
+exotic_trading = {
+	name = "Exotic Trading"
+	subcategory = fairs_and_routes
+	portrait = coinage
+	icon = wealth
+	period = castle_age
+	prerequisites = {
+		distant_trading
+	}
+	discovery_mean_time_to_happen = {
+		months = 1500
+	}
+	spread_mean_time_to_happen = {
+		months = 6000
+	}
+}
+
+international_fairs = {
+	name = "International Fairs"
+	subcategory = fairs_and_routes
+	portrait = coinage
+	icon = wealth
+	period = renaissance_age
+	prerequisites = {
+		exotic_trading
+	}
+	discovery_mean_time_to_happen = {
+		months = 5000
+	}
+	spread_mean_time_to_happen = {
+		months = 10000
+	}
+}

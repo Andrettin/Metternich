@@ -103,6 +103,18 @@ colonialism = {
 		}
 		coastal = true
 		capital = true
+		#or = {
+			#any_province = {
+			#	region = america
+			#}
+			#any_subject_country = {
+			#	subject_type = colony
+			#	capital_province = {
+			#		region = america
+			#	}
+			#}
+		#}
+		#discovered_region = america
 	}
 	discovery_yearly_chance = {
 		base_value = 5

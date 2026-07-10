@@ -4,6 +4,12 @@ commerce_institutions = {
 	icon = chest
 }
 
+fairs_and_routes = {
+	name = "Fairs and Routes"
+	category = commerce
+	icon = globe
+}
+
 trade_practices = {
 	name = "Trade Practices"
 	category = commerce
