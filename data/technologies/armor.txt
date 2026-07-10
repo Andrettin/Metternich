@@ -170,6 +170,12 @@ chained_leather_armor = {
 	prerequisites = {
 		#soft_leather_armor
 	}
+	discovery_mean_time_to_happen = {
+		months = 100
+	}
+	spread_mean_time_to_happen = {
+		months = 750
+	}
 }
 
 light_chain_mail = {
@@ -181,6 +187,12 @@ light_chain_mail = {
 	prerequisites = {
 		chained_leather_armor
 		scale_mail
+	}
+	discovery_mean_time_to_happen = {
+		months = 200
+	}
+	spread_mean_time_to_happen = {
+		months = 1500
 	}
 }
 
@@ -371,6 +383,12 @@ scale_mail = {
 	prerequisites = {
 		#soft_leather_armor
 	}
+	discovery_mean_time_to_happen = {
+		months = 125
+	}
+	spread_mean_time_to_happen = {
+		months = 750
+	}
 }
 
 banded_mail = {
@@ -382,6 +400,12 @@ banded_mail = {
 	prerequisites = {
 		scale_mail
 	}
+	discovery_mean_time_to_happen = {
+		months = 250
+	}
+	spread_mean_time_to_happen = {
+		months = 1500
+	}
 }
 
 half_plate_mail = {
@@ -392,6 +416,12 @@ half_plate_mail = {
 	period = feudal_age
 	prerequisites = {
 		banded_mail
+	}
+	discovery_mean_time_to_happen = {
+		months = 600
+	}
+	spread_mean_time_to_happen = {
+		months = 3000
 	}
 }
 
@@ -573,5 +603,11 @@ full_plate_mail = {
 	period = renaissance_age
 	prerequisites = {
 		plate_mail
+	}
+	discovery_mean_time_to_happen = {
+		months = 2500
+	}
+	spread_mean_time_to_happen = {
+		months = 10000
 	}
 }

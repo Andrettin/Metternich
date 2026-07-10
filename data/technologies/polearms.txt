@@ -4,6 +4,12 @@ longspear = {
 	portrait = bronze_short_sword
 	icon = saber
 	period = classical_age
+	discovery_mean_time_to_happen = {
+		months = 40
+	}
+	spread_mean_time_to_happen = {
+		months = 750
+	}
 }
 
 pike = {
@@ -196,6 +202,12 @@ lance = {
 	period = feudal_age
 	prerequisites = {
 		pike
+	}
+	discovery_mean_time_to_happen = {
+		months = 250
+	}
+	spread_mean_time_to_happen = {
+		months = 3000
 	}
 }
 
@@ -523,5 +535,11 @@ heavy_lance = {
 	period = renaissance_age
 	prerequisites = {
 		polearm
+	}
+	discovery_mean_time_to_happen = {
+		months = 1500
+	}
+	spread_mean_time_to_happen = {
+		months = 10000
 	}
 }

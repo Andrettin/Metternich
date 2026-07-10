@@ -4,6 +4,12 @@ slinged_javelin = {
 	portrait = engineering
 	icon = bow
 	period = classical_age
+	discovery_mean_time_to_happen = {
+		months = 50
+	}
+	spread_mean_time_to_happen = {
+		months = 500
+	}
 }
 
 light_crossbow = {
@@ -174,6 +180,12 @@ medium_crossbow = {
 	prerequisites = {
 		light_crossbow
 	}
+	discovery_mean_time_to_happen = {
+		months = 250
+	}
+	spread_mean_time_to_happen = {
+		months = 2000
+	}
 }
 
 heavy_crossbow = {
@@ -342,5 +354,11 @@ arbalest = {
 	period = renaissance_age
 	prerequisites = {
 		heavy_crossbow
+	}
+	discovery_mean_time_to_happen = {
+		months = 1500
+	}
+	spread_mean_time_to_happen = {
+		months = 10000
 	}
 }

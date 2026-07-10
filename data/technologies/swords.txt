@@ -178,6 +178,12 @@ broad_sword = {
 	prerequisites = {
 		short_sword
 	}
+	discovery_mean_time_to_happen = {
+		months = 250
+	}
+	spread_mean_time_to_happen = {
+		months = 1500
+	}
 }
 
 long_sword = {

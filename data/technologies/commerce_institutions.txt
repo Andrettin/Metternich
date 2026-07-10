@@ -610,6 +610,12 @@ mint = {
 	prerequisites = {
 		local_merchant_houses
 	}
+	discovery_mean_time_to_happen = {
+		months = 500
+	}
+	spread_mean_time_to_happen = {
+		months = 3000
+	}
 }
 
 guilds = {
@@ -925,5 +931,11 @@ renowned_merchant_houses = {
 	period = renaissance_age
 	prerequisites = {
 		guilds
+	}
+	discovery_mean_time_to_happen = {
+		months = 4000
+	}
+	spread_mean_time_to_happen = {
+		months = 10000
 	}
 }

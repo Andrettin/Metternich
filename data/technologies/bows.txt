@@ -514,6 +514,12 @@ reinforced_long_bow = {
 	prerequisites = {
 		composite_bow
 	}
+	discovery_mean_time_to_happen = {
+		months = 500
+	}
+	spread_mean_time_to_happen = {
+		months = 4000
+	}
 }
 
 marksman_long_bow = {
@@ -524,5 +530,11 @@ marksman_long_bow = {
 	period = renaissance_age
 	prerequisites = {
 		reinforced_long_bow
+	}
+	discovery_mean_time_to_happen = {
+		months = 1500
+	}
+	spread_mean_time_to_happen = {
+		months = 10000
 	}
 }
