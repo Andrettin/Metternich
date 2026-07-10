@@ -431,6 +431,32 @@ Item {
 		}
 	}
 	
+	function does_civilian_unit_have_available_actions(civilian_unit) {
+		return civilian_unit.buildable_provinces.length > 0
+	}
+	
+	function get_next_civilian_unit() {
+		var initial_index = next_civilian_unit_index
+		
+		var civilian_unit = metternich.active_civilian_units[next_civilian_unit_index]
+		
+		while (does_civilian_unit_have_available_actions(civilian_unit) === false) {
+			next_civilian_unit_index = next_civilian_unit_index + 1
+			if (next_civilian_unit_index >= metternich.active_civilian_units.length) {
+				next_civilian_unit_index = 0
+			}
+			
+			if (next_civilian_unit_index === initial_index) {
+				//if we circled around and didn't find a suitable unit, return null
+				return null
+			}
+			
+			civilian_unit = metternich.active_civilian_units[next_civilian_unit_index]
+		}
+		
+		return civilian_unit
+	}
+	
 	function go_to_next_civilian_unit(selected_unit_is_unavailable) {
 		if (metternich.active_civilian_units.length > 0) {
 			if (selected_unit_is_unavailable) {
@@ -440,7 +466,14 @@ Item {
 				}
 			}
 			
-			select_civilian_unit(metternich.active_civilian_units[next_civilian_unit_index])
+			var civilian_unit = get_next_civilian_unit()
+			if (civilian_unit === null) {
+				selected_civilian_unit = null
+				next_civilian_unit_index = 0
+				return
+			}
+			
+			select_civilian_unit(civilian_unit)
 			province_map.center_on_province(selected_civilian_unit.province)
 		} else {
 			selected_civilian_unit = null
