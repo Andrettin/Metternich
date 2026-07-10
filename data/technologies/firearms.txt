@@ -4,17 +4,22 @@ flintlock_rifle = {
 	portrait = engineering
 	icon = rifle
 	period = revolutionary_age
+	spread_from_neighbor = false
 	prerequisites = {
-		manufactories
+		manufactories #seems reasonable
 		enlightenment #to place it in the appropriate period
 	}
-	cost_factor = {
+	monthly_chance = {
+		base_value = 5
+		
 		#modifier = {
-		#	factor = 0.71
+		#	additive = true
+		#	factor = 2
 		#	technology = small_arms_production
 		#}
 		#modifier = {
-		#	factor = 0.71
+		#	additive = true
+		#	factor = 2
 		#	war = true
 		#	war_domains = {
 		#		technology = flintlock_rifle
@@ -29,12 +34,16 @@ breech_loading_rifle = {
 	portrait = engineering
 	icon = rifle
 	period = napoleonic_age
+	spread_from_neighbor = false
 	prerequisites = {
 		flintlock_rifle
 	}
-	cost_factor = {
+	monthly_chance = {
+		base_value = 5
+		
 		#modifier = {
-		#	factor = 0.71
+		#	additive = true
+		#	factor = 2
 		#	war = true
 		#	war_domains = {
 		#		technology = breech_loading_rifle
@@ -49,12 +58,16 @@ machine_gun = {
 	portrait = engineering
 	icon = rifle
 	period = steam_age
+	spread_from_neighbor = false
 	prerequisites = {
 		breech_loading_rifle
 	}
-	cost_factor = {
+	monthly_chance = {
+		base_value = 5
+		
 		#modifier = {
-		#	factor = 0.71
+		#	additive = true
+		#	factor = 2
 		#	war = true
 		#	war_domains = {
 		#		technology = machine_gun
@@ -69,12 +82,16 @@ bolt_action_rifle = {
 	portrait = engineering
 	icon = rifle
 	period = industrial_age
+	spread_from_neighbor = false
 	prerequisites = {
 		machine_gun
 	}
-	cost_factor = {
+	monthly_chance = {
+		base_value = 5
+		
 		#modifier = {
-		#	factor = 0.71
+		#	additive = true
+		#	factor = 2
 		#	war = true
 		#	war_domains = {
 		#		technology = bolt_action_rifle

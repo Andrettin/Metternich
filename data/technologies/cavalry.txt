@@ -4,21 +4,28 @@ tank_experiments = {
 	portrait = engineering
 	icon = cannon
 	period = imperial_age
+	spread_from_neighbor = false
 	prerequisites = {
 		#infiltration
 		#combustion_engine
 		
 		bolt_action_rifle
 	}
-	cost_factor = {
+	monthly_chance = {
+		base_value = 1
+		
 		#modifier = {
-		#	factor = 0.33
+		#	additive = true
+		#	factor = 2
 		#	technology = elastic_defense_system
 		#}
 		#modifier = {
-		#	factor = 0.33
+		#	additive = true
+		#	factor = 2
 		#	war = true
-		#	war_domains = { technology = tank_experiments }
+		#	war_domains = {
+		#		technology = tank_experiments
+		#	}
 		#}
 	}
 }
