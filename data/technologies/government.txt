@@ -41,6 +41,22 @@ feudalism = {
 			}
 		}
 		modifier = {
+			factor = 5
+			additive = true
+			province_level_scaled = true
+			or = {
+				coastal = true
+				capital = true
+			}
+			domain = {
+				independent = false
+				subject_type = colony
+				overlord = {
+					technology = feudalism
+				}
+			}
+		}
+		modifier = {
 			factor = 0.1
 			additive = true
 			province_level_scaled = true
