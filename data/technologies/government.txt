@@ -92,7 +92,11 @@ colonialism = {
 	discover_only_once = true
 	spread_from_neighbor = false
 	prerequisites = {
+		feudalism
 		renaissance
+		renowned_merchant_houses #seems reasonable
+		international_fairs #seems reasonable
+		large_ship_building #seems reasonable
 	}
 	discovery_conditions = {
 		year >= 1500

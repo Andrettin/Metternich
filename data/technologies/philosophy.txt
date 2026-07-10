@@ -648,8 +648,11 @@ enlightenment = {
 	spread_from_neighbor = false
 	prerequisites = {
 		science
+		academic_disciplines #seems reasonable
+		renaissance #seems reasonable
 		global_trade
 		printing_press
+		manufactories
 	}
 	discovery_conditions = {
 		year >= 1700

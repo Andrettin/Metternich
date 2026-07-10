@@ -360,6 +360,7 @@ manufactories = {
 	spread_from_neighbor = false
 	prerequisites = {
 		papermaking
+		cast_iron #seems reasonable
 		guilds
 		colonialism
 		printing_press

@@ -6,6 +6,8 @@ flintlock_rifle = {
 	period = revolutionary_age
 	spread_from_neighbor = false
 	prerequisites = {
+		marksman_long_bow #earlier ranged weapon
+		arbalest #earlier ranged weapon
 		manufactories #seems reasonable
 		enlightenment #to place it in the appropriate period
 	}
@@ -37,6 +39,7 @@ breech_loading_rifle = {
 	spread_from_neighbor = false
 	prerequisites = {
 		flintlock_rifle
+		industrialization #seems reasonable
 	}
 	monthly_chance = {
 		base_value = 5

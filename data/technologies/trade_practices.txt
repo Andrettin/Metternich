@@ -92,6 +92,8 @@ global_trade = {
 		foreign_accreditation
 		colonialism
 		printing_press
+		renowned_merchant_houses #seems reasonable
+		international_fairs #seems reasonable
 	}
 	discovery_conditions = {
 		year >= 1600
