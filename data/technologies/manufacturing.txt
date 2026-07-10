@@ -1,9 +1,26 @@
+salt_refining = {
+	name = "Salt Refining"
+	subcategory = manufacturing
+	portrait = engineering
+	icon = salt
+	period = classical_age
+	discovery_mean_time_to_happen = {
+		months = 65
+	}
+	spread_mean_time_to_happen = {
+		months = 750
+	}
+}
+
 glassblowing = {
 	name = "Glassblowing"
 	subcategory = manufacturing
 	portrait = engineering
 	icon = glass
-	period = classical_age
+	period = dark_age
+	prerequisites = {
+		salt_refining
+	}
 	discovery_mean_time_to_happen = {
 		months = 150
 		
@@ -282,6 +299,57 @@ glassblowing = {
 	}
 }
 
+clothmaking = {
+	name = "Clothmaking"
+	subcategory = manufacturing
+	portrait = engineering
+	icon = fabric
+	period = feudal_age
+	prerequisites = {
+		glassblowing
+	}
+	discovery_mean_time_to_happen = {
+		months = 750
+	}
+	spread_mean_time_to_happen = {
+		months = 3000
+	}
+}
+
+sugar_refining = {
+	name = "Sugar Refining"
+	subcategory = manufacturing
+	portrait = engineering
+	icon = refined_sugar
+	period = castle_age
+	prerequisites = {
+		clothmaking
+	}
+	discovery_mean_time_to_happen = {
+		months = 2000
+	}
+	spread_mean_time_to_happen = {
+		months = 6000
+	}
+}
+
+papermaking = {
+	name = "Papermaking"
+	subcategory = manufacturing
+	portrait = engineering
+	icon = paper
+	period = renaissance_age
+	prerequisites = {
+		sugar_refining
+	}
+	discovery_mean_time_to_happen = {
+		months = 5000
+	}
+	spread_mean_time_to_happen = {
+		months = 10000
+	}
+}
+
 manufactories = {
 	name = "Manufactories"
 	subcategory = manufacturing
@@ -291,6 +359,7 @@ manufactories = {
 	discover_only_once = true
 	spread_from_neighbor = false
 	prerequisites = {
+		papermaking
 		guilds
 		colonialism
 		printing_press

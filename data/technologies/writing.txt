@@ -3,10 +3,11 @@ printing_press = {
 	subcategory = culture
 	portrait = engineering
 	icon = book
-	period = renaissance_age
+	period = gunpowder_age
 	discover_only_once = true
 	spread_from_neighbor = false
 	prerequisites = {
+		papermaking
 		natural_philosophy
 	}
 	domain_modifier = {
