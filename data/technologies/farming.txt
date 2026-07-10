@@ -74,6 +74,12 @@ wood_plow = {
 	modifier = {
 		agricultural_output_modifier = 3
 	}
+	discovery_mean_time_to_happen = {
+		months = 50
+	}
+	spread_mean_time_to_happen = {
+		months = 500
+	}
 }
 
 iron_tipped_wood_plow = {
@@ -87,6 +93,12 @@ iron_tipped_wood_plow = {
 	}
 	modifier = {
 		agricultural_output_modifier = 2
+	}
+	discovery_mean_time_to_happen = {
+		months = 125
+	}
+	spread_mean_time_to_happen = {
+		months = 1000
 	}
 }
 
@@ -102,6 +114,12 @@ iron_plow = {
 	modifier = {
 		agricultural_output_modifier = 3
 	}
+	discovery_mean_time_to_happen = {
+		months = 500
+	}
+	spread_mean_time_to_happen = {
+		months = 2000
+	}
 }
 
 pitchforks_and_harrows = {
@@ -116,6 +134,12 @@ pitchforks_and_harrows = {
 	modifier = {
 		agricultural_output_modifier = 2
 	}
+	discovery_mean_time_to_happen = {
+		months = 1500
+	}
+	spread_mean_time_to_happen = {
+		months = 5000
+	}
 }
 
 padded_horse_collar = {
@@ -129,5 +153,11 @@ padded_horse_collar = {
 	}
 	modifier = {
 		agricultural_output_modifier = 3
+	}
+	discovery_mean_time_to_happen = {
+		months = 5000
+	}
+	spread_mean_time_to_happen = {
+		months = 10000
 	}
 }

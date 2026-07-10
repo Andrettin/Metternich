@@ -4,6 +4,12 @@ seven_liberal_arts = {
 	portrait = university
 	icon = university
 	period = classical_age
+	discovery_mean_time_to_happen = {
+		months = 75
+	}
+	spread_mean_time_to_happen = {
+		months = 1000
+	}
 }
 
 monastic_school = {
@@ -726,5 +732,11 @@ academic_disciplines = {
 	period = renaissance_age
 	prerequisites = {
 		university
+	}
+	discovery_mean_time_to_happen = {
+		months = 2000
+	}
+	spread_mean_time_to_happen = {
+		months = 15000
 	}
 }
