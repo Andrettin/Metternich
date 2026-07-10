@@ -21,6 +21,11 @@ void technology_category::check() const
 		throw std::runtime_error(std::format("Technology category \"{}\" has no subcategories.", this->get_identifier()));
 	}
 
+	static constexpr size_t max_subcategories = 11;
+	if (this->get_subcategories().size() > max_subcategories) {
+		throw std::runtime_error(std::format("Technology category \"{}\" has {} subcategories, more than the maximum of {}.", this->get_identifier(), this->get_subcategories().size(), max_subcategories));
+	}
+
 	if (this->get_technologies().empty()) {
 		throw std::runtime_error(std::format("Technology category \"{}\" has no technologies.", this->get_identifier()));
 	}

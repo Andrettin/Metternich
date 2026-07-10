@@ -313,6 +313,7 @@ steamer_transport = {
 	portrait = unload
 	icon = anchor
 	period = napoleonic_age
+	spread_from_neighbor = false
 	prerequisites = {
 		#steamers
 		
@@ -320,13 +321,17 @@ steamer_transport = {
 		black_coal
 		industrialization
 	}
-	cost_factor = {
+	monthly_chance = {
+		base_value = 5
+		
 		#modifier = {
-		#	factor = 0.71
+		#	additive = true
+		#	factor = 2
 		#	technology = mechanical_production
 		#}
 		#modifier = {
-		#	factor = 0.83
+		#	additive = true
+		#	factor = 1
 		#	technology = clean_coal
 		#}
 	}
@@ -338,18 +343,23 @@ commerce_raider = {
 	portrait = unload
 	icon = anchor
 	period = steam_age
+	spread_from_neighbor = false
 	prerequisites = {
 		#steamers
 		
 		steamer_transport
 	}
-	cost_factor = {
+	monthly_chance = {
+		base_value = 5
+		
 		#modifier = {
-		#	factor = 0.83
+		#	additive = true
+		#	factor = 1
 		#	technology = fire_control_systems
 		#}
 		#modifier = {
-		#	factor = 0.625
+		#	additive = true
+		#	factor = 3
 		#	technology = raider_group_doctrine
 		#}
 	}
@@ -361,6 +371,7 @@ ironclad = {
 	portrait = unload
 	icon = anchor
 	period = industrial_age
+	spread_from_neighbor = false
 	prerequisites = {
 		#iron_steamers
 		
@@ -369,13 +380,17 @@ ironclad = {
 		
 		full_plate_mail #seems reasonable, and allows plate mail to lead to another technology
 	}
-	cost_factor = {
+	monthly_chance = {
+		base_value = 5
+		
 		#modifier = {
-		#	factor = 0.71
+		#	additive = true
+		#	factor = 2
 		#	technology = monitors
 		#}
 		#modifier = {
-		#	factor = 0.71
+		#	additive = true
+		#	factor = 2
 		#	technology = torpedo_boats
 		#}
 	}
@@ -387,19 +402,24 @@ protected_cruiser = {
 	portrait = unload
 	icon = anchor
 	period = imperial_age
+	spread_from_neighbor = false
 	prerequisites = {
 		#steel_steamers
 		
 		commerce_raider
 		ironclad
 	}
-	cost_factor = {
+	monthly_chance = {
+		base_value = 3
+		
 		modifier = {
-			factor = 0.6
+			additive = true
+			factor = 2
 			technology = ironclad
 		}
 		#modifier = {
-		#	factor = 0.6
+		#	additive = true
+		#	factor = 2
 		#	technology = cheap_steel
 		#}
 	}
@@ -411,19 +431,24 @@ dreadnought = {
 	portrait = unload
 	icon = anchor
 	period = modern_age
+	spread_from_neighbor = false
 	prerequisites = {
 		#steam_turbine_ships
 		
 		ironclad
 		protected_cruiser
 	}
-	cost_factor = {
+	monthly_chance = {
+		base_value = 5
+		
 		#modifier = {
-		#	factor = 0.71
+		#	additive = true
+		#	factor = 2
 		#	technology = pre_dreadnought
 		#}
 		#modifier = {
-		#	factor = 0.71
+		#	additive = true
+		#	factor = 2
 		#	technology = naval_logistics
 		#}
 	}

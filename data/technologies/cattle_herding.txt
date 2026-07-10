@@ -56,23 +56,28 @@ mechanized_slaughtering_block = {
 	portrait = engineering
 	icon = cattle
 	period = napoleonic_age
+	spread_from_neighbor = false
 	prerequisites = {
 		dairy_farming #previous cattle herding technology
 		industrialization #to place it in the appropriate period
 	}
-	cost_factor = {
-		#modifier = {
-		#	factor = 0.5
-		#	technology = medicine
-		#}
-		#modifier = {
-		#	factor = 0.5
-		#	technology = clean_coal
-		#}
-	}
 	modifier = {
 		cattle_output_modifier = 20
 		wool_output_modifier = 20
+	}
+	monthly_chance = {
+		base_value = 2
+		
+		#modifier = {
+		#	additive = true
+		#	factor = 2
+		#	technology = medicine
+		#}
+		#modifier = {
+		#	additive = true
+		#	factor = 2
+		#	technology = clean_coal
+		#}
 	}
 }
 
@@ -82,20 +87,11 @@ refrigeration = {
 	portrait = engineering
 	icon = cattle
 	period = steam_age
+	spread_from_neighbor = false
 	prerequisites = {
 		#assembly_line
 		
 		mechanized_slaughtering_block
-	}
-	cost_factor = {
-		#modifier = {
-		#	factor = 0.5
-		#	technology = food_packing_system
-		#}
-		#modifier = {
-		#	factor = 0.5
-		#	technology = integral_rail_system
-		#}
 	}
 	modifier = {
 		cattle_output_modifier = 20
@@ -103,5 +99,19 @@ refrigeration = {
 		#fish_output_modifier = 20
 		liquor_output_modifier = 2
 		#wine_output_modifier = 2
+	}
+	monthly_chance = {
+		base_value = 2
+		
+		#modifier = {
+		#	additive = true
+		#	factor = 2
+		#	technology = food_packing_system
+		#}
+		#modifier = {
+		#	additive = true
+		#	factor = 2
+		#	technology = integral_rail_system
+		#}
 	}
 }

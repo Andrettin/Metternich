@@ -56,22 +56,27 @@ advanced_ore_roasting_processes = {
 	portrait = engineering
 	icon = iron
 	period = napoleonic_age
+	spread_from_neighbor = false
 	prerequisites = {
 		cast_iron #previous metallurgy technology
 		industrialization #to place it in the appropriate period
 	}
-	cost_factor = {
+	modifier = {
+		iron_output_modifier = 40
+	}
+	monthly_chance = {
+		base_value = 2
+		
 		#modifier = {
-		#	factor = 0.5
+		#	additive = true
+		#	factor = 2
 		#	technology = interchangeable_parts
 		#}
 		#modifier = {
-		#	factor = 0.5
+		#	additive = true
+		#	factor = 2
 		#	technology = inorganic_chemistry
 		#}
-	}
-	modifier = {
-		iron_output_modifier = 40
 	}
 }
 
@@ -81,21 +86,26 @@ advanced_ore_grinding_processes = {
 	portrait = engineering
 	icon = iron
 	period = steam_age
+	spread_from_neighbor = false
 	prerequisites = {
 		advanced_ore_roasting_processes
 	}
-	cost_factor = {
+	modifier = {
+		iron_output_modifier = 25
+	}
+	monthly_chance = {
+		base_value = 2
+		
 		modifier = {
-			factor = 0.5
+			additive = true
+			factor = 2
 			technology = advanced_ore_roasting_processes
 		}
 		#modifier = {
-		#	factor = 0.5
+		#	additive = true
+		#	factor = 2
 		#	technology = organized_factories
 		#}
-	}
-	modifier = {
-		iron_output_modifier = 25
 	}
 }
 
@@ -105,21 +115,26 @@ advanced_ore_smelting_processes = {
 	portrait = engineering
 	icon = iron
 	period = industrial_age
+	spread_from_neighbor = false
 	prerequisites = {
 		advanced_ore_grinding_processes
 	}
-	cost_factor = {
+	modifier = {
+		iron_output_modifier = 25
+	}
+	monthly_chance = {
+		base_value = 2
+		
 		modifier = {
-			factor = 0.5
+			additive = true
+			factor = 2
 			technology = advanced_ore_grinding_processes
 		}
 		#modifier = {
-		#	factor = 0.5
+		#	additive = true
+		#	factor = 2
 		#	technology = iron_railroad
 		#}
-	}
-	modifier = {
-		iron_output_modifier = 25
 	}
 }
 
@@ -129,23 +144,28 @@ steel_alloys = {
 	portrait = engineering
 	icon = steel
 	period = napoleonic_age
+	spread_from_neighbor = false
 	prerequisites = {
 		cast_iron #previous metallurgy technology
 		black_coal #seems reasonable for steel
 		industrialization #to place it in the appropriate period
 	}
-	cost_factor = {
-		#modifier = {
-		#	factor = 0.5
-		#	technology = thomas_steel
-		#}
-		#modifier = {
-		#	factor = 0.5
-		#	technology = inorganic_chemistry
-		#}
-	}
 	modifier = {
 		gold_output_modifier = 5
 		silver_output_modifier = 5
+	}
+	monthly_chance = {
+		base_value = 2
+		
+		#modifier = {
+		#	additive = true
+		#	factor = 2
+		#	technology = thomas_steel
+		#}
+		#modifier = {
+		#	additive = true
+		#	factor = 2
+		#	technology = inorganic_chemistry
+		#}
 	}
 }

@@ -345,22 +345,27 @@ pit_coal = {
 	portrait = factory
 	icon = coal
 	period = napoleonic_age
+	spread_from_neighbor = false
 	prerequisites = {
 		black_coal #previous coal mining technology
 		industrialization #to place it in the appropriate period
 	}
-	cost_factor = {
+	modifier = {
+		coal_output_modifier = 50
+	}
+	monthly_chance = {
+		base_value = 2
+		
 		#modifier = {
-		#	factor = 0.5
+		#	additive = true
+		#	factor = 2
 		#	technology = practical_steam_engine
 		#}
 		#modifier = {
-		#	factor = 0.5
+		#	additive = true
+		#	factor = 2
 		#	technology = early_railroad
 		#}
-	}
-	modifier = {
-		coal_output_modifier = 50
 	}
 }
 
@@ -370,20 +375,25 @@ coke = {
 	portrait = factory
 	icon = coal
 	period = steam_age
+	spread_from_neighbor = false
 	prerequisites = {
 		pit_coal
 	}
-	cost_factor = {
+	modifier = {
+		coal_output_modifier = 50
+	}
+	monthly_chance = {
+		base_value = 2
+		
 		modifier = {
-			factor = 0.5
+			additive = true
+			factor = 2
 			technology = pit_coal
 		}
 		#modifier = {
-		#	factor = 0.5
+		#	additive = true
+		#	factor = 2
 		#	technology = early_railroad
 		#}
-	}
-	modifier = {
-		coal_output_modifier = 50
 	}
 }

@@ -312,25 +312,30 @@ precision_work = {
 	portrait = engineering
 	icon = glass
 	period = napoleonic_age
+	spread_from_neighbor = false
 	prerequisites = {
 		#mechanical_production
 		
 		glassblowing
 		industrialization
 	}
-	cost_factor = {
-		#modifier = {
-		#	factor = 0.5
-		#	technology = mechanical_precision_saw
-		#}
-		#modifier = {
-		#	factor = 0.5
-		#	technology = early_railroad
-		#}
-	}
 	modifier = {
 		glass_output_modifier = 10
 		#ammunition_output_modifier = 10
+	}
+	monthly_chance = {
+		base_value = 2
+		
+		#modifier = {
+		#	additive = true
+		#	factor = 2
+		#	technology = mechanical_precision_saw
+		#}
+		#modifier = {
+		#	additive = true
+		#	factor = 2
+		#	technology = early_railroad
+		#}
 	}
 }
 
@@ -340,23 +345,28 @@ integral_distillery_process = {
 	portrait = engineering
 	icon = wine
 	period = napoleonic_age
+	spread_from_neighbor = false
 	prerequisites = {
 		#interchangeable_parts
 		
 		industrialization
 	}
-	cost_factor = {
+	modifier = {
+		liquor_output_modifier = 2
+	}
+	monthly_chance = {
+		base_value = 2
+		
 		#modifier = {
-		#	factor = 0.5
+		#	additive = true
+		#	factor = 2
 		#	technology = scientific_management
 		#}
 		#modifier = {
-		#	factor = 0.5
+		#	additive = true
+		#	factor = 2
 		#	technology = market_structure
 		#}
-	}
-	modifier = {
-		liquor_output_modifier = 2
 	}
 }
 
@@ -366,22 +376,27 @@ bakelite = {
 	portrait = engineering
 	icon = glass
 	period = steam_age
+	spread_from_neighbor = false
 	prerequisites = {
 		#synthetic_polymers
 		
 		precision_work
 	}
-	cost_factor = {
+	modifier = {
+		glass_output_modifier = 5
+	}
+	monthly_chance = {
+		base_value = 2
+		
 		#modifier = {
-		#	factor = 0.5
+		#	additive = true
+		#	factor = 2
 		#	technology = bell_and_greys_telephones
 		#}
 		#modifier = {
-		#	factor = 0.5
+		#	additive = true
+		#	factor = 2
 		#	technology = time_saving_measures
 		#}
-	}
-	modifier = {
-		glass_output_modifier = 5
 	}
 }
