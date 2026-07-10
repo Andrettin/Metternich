@@ -86,8 +86,18 @@ global_trade = {
 	portrait = coinage
 	icon = wealth
 	period = absolutism_age
+	discover_only_once = true
+	spread_from_neighbor = false
 	prerequisites = {
 		foreign_accreditation
 		colonialism
+		printing_press
+	}
+	discovery_conditions = {
+		year >= 1600
+		capital = true
+	}
+	discovery_yearly_chance = {
+		base_value = 25
 	}
 }

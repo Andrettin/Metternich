@@ -4,10 +4,24 @@ printing_press = {
 	portrait = engineering
 	icon = book
 	period = renaissance_age
+	discover_only_once = true
+	spread_from_neighbor = false
 	prerequisites = {
 		natural_philosophy
 	}
 	domain_modifier = {
 		research_output_modifier = 22
+	}
+	discovery_conditions = {
+		year >= 1550
+		capital = true
+		or = {
+			religion = protestant
+			religion = reformed
+			cultural_group = german
+		}
+	}
+	discovery_yearly_chance = {
+		base_value = 5
 	}
 }

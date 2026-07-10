@@ -288,9 +288,19 @@ manufactories = {
 	portrait = engineering
 	icon = cog
 	period = absolutism_age
+	discover_only_once = true
+	spread_from_neighbor = false
 	prerequisites = {
 		guilds
 		colonialism
+		printing_press
+	}
+	discovery_conditions = {
+		year >= 1650
+		capital = true
+	}
+	discovery_yearly_chance = {
+		base_value = 10
 	}
 }
 
@@ -300,9 +310,18 @@ industrialization = {
 	portrait = factory
 	icon = cog
 	period = revolutionary_age
+	discover_only_once = true
+	spread_from_neighbor = false
 	prerequisites = {
 		manufactories
 		enlightenment
+	}
+	discovery_conditions = {
+		year >= 1750
+		capital = true
+	}
+	discovery_yearly_chance = {
+		base_value = 100
 	}
 }
 

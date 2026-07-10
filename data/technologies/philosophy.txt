@@ -644,9 +644,19 @@ enlightenment = {
 	portrait = engineering
 	icon = philosophy
 	period = enlightenment_age
+	discover_only_once = true
+	spread_from_neighbor = false
 	prerequisites = {
 		science
 		global_trade
 		printing_press
+	}
+	discovery_conditions = {
+		year >= 1700
+		capital = true
+		has_building_class = university
+	}
+	discovery_yearly_chance = {
+		base_value = 10
 	}
 }
