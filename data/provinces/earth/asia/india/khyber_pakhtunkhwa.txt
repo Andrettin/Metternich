@@ -3,7 +3,7 @@ khyber_pakhtunkhwa = {
 	color = { 242 213 48 }
 	default_provincial_capital = peshawar
 	regions = {
-		asia
+		pakistan
 	}
 	
 	history = {

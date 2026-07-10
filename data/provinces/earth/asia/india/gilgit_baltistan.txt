@@ -3,7 +3,7 @@ gilgit_baltistan = {
 	color = { 201 16 69 }
 	default_provincial_capital = gilgit
 	regions = {
-		asia
+		pakistan
 	}
 	
 	history = {

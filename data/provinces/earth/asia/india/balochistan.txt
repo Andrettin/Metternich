@@ -3,7 +3,7 @@ balochistan = {
 	color = { 231 212 242 }
 	default_provincial_capital = quetta
 	regions = {
-		asia
+		pakistan
 	}
 	
 	history = {

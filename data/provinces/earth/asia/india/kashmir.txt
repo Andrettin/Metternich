@@ -3,7 +3,7 @@ kashmir = {
 	color = { 181 54 213 }
 	default_provincial_capital = leh
 	regions = {
-		asia
+		india
 	}
 	
 	history = {

@@ -3,7 +3,7 @@ haryana = {
 	color = { 143 126 67 }
 	default_provincial_capital = delhi
 	regions = {
-		asia
+		india
 	}
 	
 	history = {

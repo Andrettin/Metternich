@@ -3,7 +3,7 @@ sindh = {
 	color = { 123 198 91 }
 	default_provincial_capital = karachi
 	regions = {
-		asia
+		pakistan
 	}
 	
 	history = {

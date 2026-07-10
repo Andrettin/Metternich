@@ -2,6 +2,12 @@ asia = {
 	world = earth
 }
 
+india = {
+	superregions = {
+		asia
+	}
+}
+
 japan = {
 	superregions = {
 		asia
@@ -27,6 +33,12 @@ kyrgyzstan = {
 		asia
 		commonwealth_of_independent_states
 		soviet_union
+	}
+}
+
+pakistan = {
+	superregions = {
+		asia
 	}
 }
 
