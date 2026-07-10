@@ -32,6 +32,11 @@ void technology_subcategory::check() const
 		throw std::runtime_error(std::format("Technology subcategory \"{}\" has no technologies.", this->get_identifier()));
 	}
 
+	static constexpr size_t min_subcategory_technologies = 5;
+	if (this->get_technologies().size() < min_subcategory_technologies) {
+		log::log_error(std::format("Technology subcategory \"{}\" only has {} technologies, less than the expected minimum of {}.", this->get_identifier(), this->get_technologies().size(), min_subcategory_technologies));
+	}
+
 	log_trace(std::format("Technology subcategory \"{}\" has {} technologies.", this->get_identifier(), this->get_technologies().size()));
 }
 
