@@ -1,8 +1,63 @@
+agnes_von_saarbrucken = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
+	name = "Agnes"
+	character_class = warrior
+	dynasty = saarbrucken
+	culture = rhenish
+	religion = catholic
+	home_site = saarbrucken
+	gender = female
+}
+
+nikolaus_von_kues = { #Source: "Encyclopædia Britannica", 1911, vol. 7, pp. 665-666.
+	name = "Nikolaus"
+	surname = "von Kues"
+	character_class = cleric #scholar, cardinal and theologian
+	culture = rhenish
+	religion = catholic
+	home_site = trier #born in Kues, in the Archbishopric of Trier
+	gender = male
+	#son of a poor fisherman called Krypffs or Krebs
+	birth_date = 1401
+	death_date = 1464.8.11 #died at Lodi in Umbria on 1464.8.11
+	level_ratio = 5/6
+	traits = {
+		#natural_scientist
+	}
+	
+	#text based on that of the Encyclopædia Britannica, in the public domain
+	description = "Cardinal, theologian and scholar, he was a member of the council of Basel, and was entrusted with various missions in the interests of Catholic unity. In 1448, in recognition of his services, Nicholas V. raised him to the cardinalate; and in 1450 he was appointed bishop of Brixen.\n\nAlthough one of the great leaders in the reform movement of the 15th century, Nikolaus von Kues' interest for later times lies in his philosophical much more than in his political or ecclesiastical activity. In mathematical and physical science Kues was much in advance of his age. He proposed the reform of the calendar after a method resembling that adopted by Gregory. Most noteworthy, however, in this connexion is the fact that he anticipated Copernicus by maintaining the theory of the rotation of the earth."
+	
+	history = {
+		#wrote "De concordantia Catholica", presenting it at the Council of Basel
+		#wrote "Reparatio Calendarii", presenting it at the Council of Basel
+		#wrote "De Quadratura Circuli"
+		#wrote "Conjectura de novissimis diebus"
+		#wrote "De docta ignorantia" in 1440
+		#published "De conjecturis libri" in 1440
+		#raised to a cardinal by Nicholas V in 1448
+		#appointed bishop of Brixen in 1450
+		#acted as governor of Rome in 1459
+		#wrote "Crebratio Alcorani"
+	}
+}
+
+anne_of_cleves = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 209.
+	name = "Anne"
+	surname = "of Cleves"
+	character_class = aristocrat
+	culture = rhenish
+	religion = protestant
+	home_site = cleves
+	gender = female
+	birth_date = 1515
+	death_date = 1577
+}
+
 magdelina_leim = { #Source: "Encyclopædia Britannica", 1911, vol. 3, pp. 644-645.
 	name = "Magdelina"
 	surname = "Leim" #the source also gives the alternative "Laym"
 	character_class = merchant #cook, since her father was chief cook
-	culture = german #Rhenish
+	culture = rhenish
 	religion = catholic
 	home_site = coblenz #Ehrenbreitstein
 	gender = female
@@ -15,7 +70,7 @@ magdelina_leim = { #Source: "Encyclopædia Britannica", 1911, vol. 3, pp. 644-64
 pfeiffer = { #Source: "Encyclopædia Britannica", 1911, vol. 3, p. 645.
 	surname = "Pfeiffer"
 	character_class = bard #singer, and gave clavier lessons
-	culture = german #Rhenish
+	culture = rhenish
 	religion = catholic
 	home_site = bonn
 	gender = male
@@ -25,7 +80,7 @@ pfeiffer = { #Source: "Encyclopædia Britannica", 1911, vol. 3, p. 645.
 zambona = { #Source: "Encyclopædia Britannica", 1911, vol. 3, p. 645.
 	surname = "Zambona"
 	character_class = bard #scholar
-	culture = german #Rhenish
+	culture = rhenish
 	religion = catholic
 	home_site = bonn
 	gender = male
@@ -35,7 +90,7 @@ zambona = { #Source: "Encyclopædia Britannica", 1911, vol. 3, p. 645.
 van_den_eeden = { #Source: "Encyclopædia Britannica", 1911, vol. 3, p. 645.
 	surname = "van den Eeden"
 	character_class = bard #organist
-	culture = german #Rhenish
+	culture = rhenish
 	religion = catholic
 	home_site = bonn
 	gender = male
@@ -48,7 +103,7 @@ van_den_eeden = { #Source: "Encyclopædia Britannica", 1911, vol. 3, p. 645.
 neefe = { #Source: "Encyclopædia Britannica", 1911, vol. 3, p. 645.
 	surname = "Neefe" #the source gives the name "C. G. Neefe", presumably the first two comprising at least partially the given name
 	character_class = bard #organist
-	culture = german #Rhenish
+	culture = rhenish
 	religion = catholic
 	home_site = bonn
 	gender = male
@@ -60,13 +115,13 @@ ludwig_van_beethoven = { #Source: "Encyclopædia Britannica", 1911, vol. 3, pp. 
 	surname = "van Beethoven"
 	character_class = bard #composer
 	rank = master_bard
-	culture = german #Rhenish
+	culture = rhenish
 	religion = catholic
 	home_site = bonn #baptized at Bonn
 	gender = male
 	mother = magdelina_leim
 	birth_date = 1770.12.17 #baptized on 1770.12.17 at Bonn
-	death_date = 1827
+	death_date = 1827.3.26
 	
 	history = {
 		#published his earliest composition in 1783

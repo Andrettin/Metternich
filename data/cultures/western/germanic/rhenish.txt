@@ -1,0 +1,15 @@
+rhenish = {
+	name = "Rhenish"
+	group = german
+	color = { 114 171 184 }
+	language = high_german
+	species = {
+		human
+	}
+	#derivation_conditions = {
+	#	technology = feudalism
+	#	province = {
+	#		core = rhineland
+	#	}
+	#}
+}

@@ -5,6 +5,7 @@ holy_roman_empire = {
 	cultures = {
 		german
 		austrian
+		rhenish
 	}
 	default_religion = catholic
 	default_tier = empire

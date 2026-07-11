@@ -35,7 +35,7 @@ rhineland = {
 		
 		1477 = {
 			owner = cologne #part of the Archbishopric of Cologne c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
-			culture = german
+			culture = rhenish
 			religion = catholic
 		}
 		
