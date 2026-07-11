@@ -40,6 +40,7 @@
 #include "util/number_util.h"
 #include "util/random.h"
 #include "util/string_conversion_util.h"
+#include "util/string_util.h"
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
 
@@ -730,7 +731,13 @@ std::string character::get_full_name(const metternich::domain *regnal_domain, co
 	if (this->get_mythic_path() != nullptr) {
 		const std::string &mythic_title_name = this->get_mythic_path()->get_tier_title_name(this->get_mythic_tier());
 		if (!mythic_title_name.empty()) {
-			return std::format("{} {}", mythic_title_name, name);
+			if (!name.empty()) {
+				return std::format("{} {}", mythic_title_name, name);
+			} else if (!this->get_epithet().empty()) {
+				return std::format("{} {}", mythic_title_name, this->get_epithet());
+			} else if (!this->get_surname().empty()) {
+				return std::format("{} {}", mythic_title_name, this->get_surname());
+			}
 		}
 	}
 
@@ -743,6 +750,10 @@ std::string character::get_full_name(const metternich::domain *regnal_domain, co
 
 		full_name += this->get_epithet();
 	} else if (regnal_number.has_value()) {
+		if (full_name.empty() && !this->get_surname().empty()) {
+			full_name = string::capitalized(this->get_surname());
+		}
+
 		if (!full_name.empty()) {
 			full_name += " ";
 		}
@@ -757,14 +768,14 @@ std::string character::get_full_name(const metternich::domain *regnal_domain, co
 			if (!full_name.empty()) {
 				full_name = this->get_surname() + " " + full_name;
 			} else {
-				full_name = this->get_surname();
+				full_name = string::capitalized(this->get_surname());
 			}
 		} else {
 			if (!full_name.empty()) {
-				full_name += " ";
+				full_name += " " + this->get_surname();
+			} else {
+				full_name = string::capitalized(this->get_surname());
 			}
-
-			full_name += this->get_surname();
 		}
 	}
 
