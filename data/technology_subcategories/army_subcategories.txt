@@ -1,5 +1,5 @@
-army = {
-	name = "Army"
+army_doctrine = {
+	name = "Army Doctrine"
 	category = army
 	icon = crossed_sabers
 }
@@ -14,12 +14,6 @@ bows = {
 	name = "Bows"
 	category = army
 	icon = bow
-}
-
-cavalry = {
-	name = "Cavalry"
-	category = army
-	icon = horses
 }
 
 crossbows = {

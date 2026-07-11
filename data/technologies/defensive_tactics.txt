@@ -1,0 +1,82 @@
+defensive_terrain = {
+	name = "Defensive Terrain"
+	subcategory = army_doctrine
+	portrait = helmet
+	icon = mountains
+	period = classical_age
+	discovery_mean_time_to_happen = {
+		months = 75
+	}
+	spread_mean_time_to_happen = {
+		months = 750
+	}
+}
+
+positional_combat = {
+	name = "Positional Combat"
+	subcategory = army_doctrine
+	portrait = helmet
+	icon = crossed_sabers
+	period = dark_age
+	prerequisites = {
+		defensive_terrain
+	}
+	discovery_mean_time_to_happen = {
+		months = 150
+	}
+	spread_mean_time_to_happen = {
+		months = 1500
+	}
+}
+
+missile_barrage = {
+	name = "Missile Barrage"
+	subcategory = army_doctrine
+	portrait = helmet
+	icon = bow
+	period = feudal_age
+	prerequisites = {
+		positional_combat
+	}
+	discovery_mean_time_to_happen = {
+		months = 300
+	}
+	spread_mean_time_to_happen = {
+		months = 3000
+	}
+}
+
+drilled_pikemen = {
+	name = "Drilled Pikemen"
+	subcategory = army_doctrine
+	portrait = helmet
+	icon = crossed_sabers
+	period = castle_age
+	prerequisites = {
+		missile_barrage
+		pike #seems reasonable
+	}
+	discovery_mean_time_to_happen = {
+		months = 1000
+	}
+	spread_mean_time_to_happen = {
+		months = 6000
+	}
+}
+
+unit_organization = {
+	name = "Unit Organization"
+	subcategory = army_doctrine
+	portrait = helmet
+	icon = crossed_sabers
+	period = renaissance_age
+	prerequisites = {
+		drilled_pikemen
+	}
+	discovery_mean_time_to_happen = {
+		months = 3000
+	}
+	spread_mean_time_to_happen = {
+		months = 10000
+	}
+}

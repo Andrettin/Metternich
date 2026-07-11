@@ -1,0 +1,81 @@
+offensive_terrain = {
+	name = "Offensive Terrain"
+	subcategory = army_doctrine
+	portrait = helmet
+	icon = mountains
+	period = classical_age
+	discovery_mean_time_to_happen = {
+		months = 75
+	}
+	spread_mean_time_to_happen = {
+		months = 750
+	}
+}
+
+frontal_charge = {
+	name = "Frontal Charge"
+	subcategory = army_doctrine
+	portrait = helmet
+	icon = crossed_sabers
+	period = dark_age
+	prerequisites = {
+		offensive_terrain
+	}
+	discovery_mean_time_to_happen = {
+		months = 150
+	}
+	spread_mean_time_to_happen = {
+		months = 1500
+	}
+}
+
+reserves = {
+	name = "Reserves"
+	subcategory = army_doctrine
+	portrait = helmet
+	icon = crossed_sabers
+	period = feudal_age
+	prerequisites = {
+		frontal_charge
+	}
+	discovery_mean_time_to_happen = {
+		months = 300
+	}
+	spread_mean_time_to_happen = {
+		months = 3000
+	}
+}
+
+dismounted_knights = {
+	name = "Dismounted Knights"
+	subcategory = army_doctrine
+	portrait = helmet
+	icon = crossed_sabers
+	period = castle_age
+	prerequisites = {
+		reserves
+	}
+	discovery_mean_time_to_happen = {
+		months = 1000
+	}
+	spread_mean_time_to_happen = {
+		months = 6000
+	}
+}
+
+hierarchical_command = {
+	name = "Hierarchical Command"
+	subcategory = army_doctrine
+	portrait = helmet
+	icon = crossed_sabers
+	period = renaissance_age
+	prerequisites = {
+		dismounted_knights
+	}
+	discovery_mean_time_to_happen = {
+		months = 3000
+	}
+	spread_mean_time_to_happen = {
+		months = 10000
+	}
+}

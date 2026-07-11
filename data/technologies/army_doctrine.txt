@@ -1,6 +1,6 @@
 tank_experiments = {
 	name = "Tank Experiments"
-	subcategory = cavalry
+	subcategory = army_doctrine
 	portrait = engineering
 	icon = cannon
 	period = imperial_age
