@@ -967,6 +967,7 @@ public:
 	void add_character(const character *character);
 	void remove_character(const character *character);
 	[[nodiscard]] QCoro::Task<void> check_characters();
+	[[nodiscard]] QCoro::Task<void> on_character_recruited(const character *character);
 
 	[[nodiscard]] QCoro::Task<void> generate_ruler();
 

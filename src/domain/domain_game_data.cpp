@@ -4094,6 +4094,8 @@ QCoro::Task<void> domain_game_data::check_characters()
 			if (this->domain == game::get()->get_player_country()) {
 				engine_interface::get()->add_notification(std::format("{} Joined Us", site_character->get_game_data()->get_full_name()), site_character, std::format("{} has joined our domain!", site_character->get_game_data()->get_full_name()));
 			}
+
+			co_await on_character_recruited(site_character);
 		}
 	}
 
@@ -4126,6 +4128,13 @@ QCoro::Task<void> domain_game_data::check_characters()
 	co_await this->get_government()->check_office_holders();
 }
 
+QCoro::Task<void> domain_game_data::on_character_recruited(const character *character)
+{
+	context ctx(this->domain);
+	ctx.source_scope = character;
+	co_await domain_event::check_events_for_scope(this->domain, event_trigger::character_recruited, ctx);
+}
+
 QCoro::Task<void> domain_game_data::generate_ruler()
 {
 	const metternich::government_type *government_type = this->get_government_type();
@@ -4155,6 +4164,7 @@ QCoro::Task<void> domain_game_data::generate_ruler()
 
 	const character *ruler = co_await character::generate(species, character_class, 1, nullptr, this->get_culture(), this->get_religion(), this->get_capital(), {}, 0, {}, false, gender::none);
 	ruler->get_game_data()->set_domain(this->domain);
+	co_await this->on_character_recruited(ruler);
 	co_await this->get_government()->set_office_holder(defines::get()->get_ruler_office(), ruler);
 }
 

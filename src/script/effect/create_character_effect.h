@@ -87,6 +87,7 @@ public:
 		}
 
 		created_character->get_game_data()->set_domain(scope);
+		co_await scope->get_game_data()->on_character_recruited(created_character);
 
 		if (!this->saved_scope_name.empty()) {
 			ctx.get_saved_scopes<const metternich::character>()[this->saved_scope_name] = created_character;

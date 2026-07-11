@@ -502,6 +502,7 @@ QCoro::Task<void> domain_government::set_office_holder(const office *office, con
 	if (character != nullptr) {
 		if (character->get_game_data()->get_domain() != this->domain) {
 			character->get_game_data()->set_domain(this->domain);
+			co_await this->get_game_data()->on_character_recruited(character);
 		}
 
 		this->office_holders[office] = character;
