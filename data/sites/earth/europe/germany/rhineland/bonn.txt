@@ -2,6 +2,8 @@ bonn = {
 	name = "Bonn"
 	world = earth
 	geocoordinate = { 7.08002233748 50.72045574860 } #from Natural Earth
+	type = holding
+	holding_type = castle
 	province = rhineland
 	
 	history = {
