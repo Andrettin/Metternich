@@ -1,9 +1,43 @@
+sculptures = {
+	name = "Sculptures"
+	subcategory = aesthetics
+	portrait = engineering
+	icon = philosophy
+	period = classical_age
+	discovery_mean_time_to_happen = {
+		months = 50
+	}
+	spread_mean_time_to_happen = {
+		months = 750
+	}
+}
+
+musical_instruments = {
+	name = "Musical Instruments"
+	subcategory = aesthetics
+	portrait = engineering
+	icon = music
+	period = dark_age
+	prerequisites = {
+		sculptures
+	}
+	discovery_mean_time_to_happen = {
+		months = 120
+	}
+	spread_mean_time_to_happen = {
+		months = 1500
+	}
+}
+
 ballads = {
 	name = "Ballads"
 	subcategory = aesthetics
 	portrait = engineering
 	icon = music
-	period = classical_age
+	period = feudal_age
+	prerequisites = {
+		musical_instruments
+	}
 	discovery_mean_time_to_happen = {
 		months = 250
 		
@@ -174,5 +208,39 @@ ballads = {
 				}
 			}
 		}
+	}
+}
+
+fashionable_clothes = {
+	name = "Fashionable Clothes"
+	subcategory = aesthetics
+	portrait = engineering
+	icon = clothing
+	period = castle_age
+	prerequisites = {
+		ballads
+	}
+	discovery_mean_time_to_happen = {
+		months = 750
+	}
+	spread_mean_time_to_happen = {
+		months = 6000
+	}
+}
+
+vernacular_literature = {
+	name = "Vernacular Literature"
+	subcategory = aesthetics
+	portrait = engineering
+	icon = book_red
+	period = renaissance_age
+	prerequisites = {
+		fashionable_clothes
+	}
+	discovery_mean_time_to_happen = {
+		months = 2500
+	}
+	spread_mean_time_to_happen = {
+		months = 10000
 	}
 }
