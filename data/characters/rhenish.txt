@@ -1,0 +1,82 @@
+magdelina_leim = { #Source: "Encyclopædia Britannica", 1911, vol. 3, pp. 644-645.
+	name = "Magdelina"
+	surname = "Leim" #the source also gives the alternative "Laym"
+	character_class = merchant #cook, since her father was chief cook
+	culture = german #Rhenish
+	religion = catholic
+	home_site = coblenz #Ehrenbreitstein
+	gender = female
+	death_date = 1787.7 #died in July 1787
+	
+	#daughter of the chief cook at Ehrenbreitstein
+	#widow of vâlet-de-chambre of the elector of Trier
+}
+
+pfeiffer = { #Source: "Encyclopædia Britannica", 1911, vol. 3, p. 645.
+	surname = "Pfeiffer"
+	character_class = bard #singer, and gave clavier lessons
+	culture = german #Rhenish
+	religion = catholic
+	home_site = bonn
+	gender = male
+	start_date = 1779 #gave clavier lessons to Ludwig van Beethoven when the latter was 9 years old, and Beethoven was born in 1770
+}
+
+zambona = { #Source: "Encyclopædia Britannica", 1911, vol. 3, p. 645.
+	surname = "Zambona"
+	character_class = bard #scholar
+	culture = german #Rhenish
+	religion = catholic
+	home_site = bonn
+	gender = male
+	start_date = 1779 #taught general education to Ludwig van Beethoven when the latter was (apparently) 9 years old, and Beethoven was born in 1770
+}
+
+van_den_eeden = { #Source: "Encyclopædia Britannica", 1911, vol. 3, p. 645.
+	surname = "van den Eeden"
+	character_class = bard #organist
+	culture = german #Rhenish
+	religion = catholic
+	home_site = bonn
+	gender = male
+	start_date = 1779 #taught the organ and the pianoforte to Ludwig van Beethoven when the latter was (apparently) 9 years old, and Beethoven was born in 1770
+	
+	#court organist at the archbishopric of Cologne
+	#friend of Ludwig van Beethoven's grandfather
+}
+
+neefe = { #Source: "Encyclopædia Britannica", 1911, vol. 3, p. 645.
+	surname = "Neefe" #the source gives the name "C. G. Neefe", presumably the first two comprising at least partially the given name
+	character_class = bard #organist
+	culture = german #Rhenish
+	religion = catholic
+	home_site = bonn
+	gender = male
+	start_date = 1781 #succeeded Van den Eeden as court organist at the archbishopric of Cologne in 1781
+}
+
+ludwig_van_beethoven = { #Source: "Encyclopædia Britannica", 1911, vol. 3, pp. 644-651.
+	name = "Ludwig"
+	surname = "van Beethoven"
+	character_class = bard #composer
+	rank = master_bard
+	culture = german #Rhenish
+	religion = catholic
+	home_site = bonn #baptized at Bonn
+	gender = male
+	mother = magdelina_leim
+	birth_date = 1770.12.17 #baptized on 1770.12.17 at Bonn
+	death_date = 1827
+	
+	history = {
+		#published his earliest composition in 1783
+		#became cembalist in the Bonn theater in 1783
+		#officially became assistant to C.G. Neefe, court organist of Cologne, in 1784
+		#visited Vienna in the spring of 1787, where he met Mozart
+		
+		1792.7 = {
+			#met Haydn at Bonn in July 1792, with Beethoven being sent afterwards to Vienna to study under him
+			domain = austria
+		}
+	}
+}

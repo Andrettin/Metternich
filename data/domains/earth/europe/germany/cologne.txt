@@ -24,5 +24,11 @@ cologne = {
 				subject_type = princely_state
 			}
 		}
+		
+		1792 = {
+			offices = {
+				ruler = maximilian_franz_of_cologne #Maximilian Franz was archbishop of Cologne by 1792; Source: "Encyclopædia Britannica", 1911, vol. 3, p. 645.
+			}
+		}
 	}
 }

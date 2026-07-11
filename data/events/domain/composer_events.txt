@@ -1,0 +1,14 @@
+ludwig_van_beethoven = { #Source: "Encyclopædia Britannica", 1911, vol. 3, pp. 644-651.
+	name = "Ludwig van Beethoven"
+	description = "A German musical composer, he was born in December 1770 at Bonn. The unequalled impressiveness of his playing and extemporization, quickly secured his footing with the exceptionally intelligent and musical aristocracy of Vienna, who to the end of his life treated him with genuine affection and respect, bearing with all the roughness of his manners and temper, not as with the eccentricities of a fashionable genius, but as with signs of the sufferings of a passionate and noble nature.\n\nThere is no means of measuring Beethoven's influence upon subsequent music. The immense changes he brought about in the range of music have their most obvious effect in the possibilities of emotional expression." #text based on that of the Encyclopædia Britannica, in the public domain
+	trigger = character_recruited
+	only_once = true
+	conditions = {
+		source_character = ludwig_van_beethoven
+	}
+	option = {
+		effects = {
+			regency += 2
+		}
+	}
+}

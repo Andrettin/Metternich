@@ -495,6 +495,19 @@ leopold_ii_of_the_holy_roman_empire = { #Emperor Leopold II of the Holy Roman Em
 	}
 }
 
+maximilian_franz_of_cologne = { #Source: "Encyclopædia Britannica", 1911, vol. 3, p. 645.
+	name = "Maximilian Franz" #the source gives "Max Franz"
+	dynasty = habsburg
+	character_class = cleric #archbishop
+	rank = canon #archbishop
+	culture = austrian
+	religion = catholic
+	home_site = cologne #archbishop of Cologne
+	gender = male
+	mother = maria_theresia_of_austria #brother of Joseph II of the Holy Roman Empire
+	start_date = 1792 #was archbishop of Cologne by 1792
+}
+
 marie_christine_von_habsburg = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 5.
 	name = "Marie Christine"
 	dynasty = habsburg

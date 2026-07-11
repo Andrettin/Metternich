@@ -58,3 +58,24 @@ andreas_vesalius = { #Source: Isaac Asimov, "Cronologia das Ciências e das Desc
 		#published the book "De Corporis Humani Fabrica" in 1543
 	}
 }
+
+louis_van_beethoven = { #Source: "Encyclopædia Britannica", 1911, vol. 3, pp. 644-645.
+	name = "Louis"
+	surname = "van Beethoven"
+	character_class = bard #musician
+	culture = flemish
+	religion = catholic
+	home_site = antwerp #from Antwerp
+	gender = male
+	start_date = 1732
+	death_date = 1774 #Ludwig van Beethoven was four years old when Louis died, and Ludwig van Beethoven was born in 1770
+	
+	#grandfather of Ludwig van Beethoven
+	#a genial man of estimable character
+	
+	history = {
+		1732 = {
+			domain = cologne #came to Bonn in 1732, becoming one of the court musicians of the archbishop-elector of Cologne
+		}
+	}
+}
