@@ -42,6 +42,15 @@ bard = {
 		intelligence = 13
 		charisma = 15
 	}
+	rank_levels = {
+		rhymer = 1
+		lyrist = 2
+		sonneteer = 3
+		jongleur = 6
+		troubadour = 7
+		minstrel = 8
+		master_bard = 12
+	}
 	experience_per_level = {
 		1 = 0
 		2 = 1250
