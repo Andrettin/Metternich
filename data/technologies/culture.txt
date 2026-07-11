@@ -1,6 +1,6 @@
 renaissance = {
 	name = "Renaissance"
-	subcategory = culture
+	subcategory = philosophy
 	portrait = engineering
 	icon = painting
 	period = renaissance_age
@@ -8,6 +8,7 @@ renaissance = {
 	spread_from_neighbor = false
 	prerequisites = {
 		natural_philosophy
+		fashionable_clothes #aesthetics technology before the period for this one
 		feudalism
 	}
 	discovery_conditions = {

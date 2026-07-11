@@ -1,6 +1,6 @@
 printing_press = {
 	name = "Printing Press"
-	subcategory = culture
+	subcategory = manufacturing
 	portrait = engineering
 	icon = book_red
 	period = gunpowder_age

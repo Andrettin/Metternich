@@ -1,9 +1,3 @@
-culture = {
-	name = "Culture"
-	category = culture
-	icon = music
-}
-
 aesthetics = {
 	name = "Aesthetics"
 	category = culture
@@ -44,4 +38,10 @@ religion = {
 	name = "Religion"
 	category = culture
 	icon = wooden_cross
+}
+
+spiritual_art = {
+	name = "Spiritual Art"
+	category = culture
+	icon = bronze_cross_detailed
 }

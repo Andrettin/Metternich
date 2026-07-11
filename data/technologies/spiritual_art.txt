@@ -1,0 +1,81 @@
+relics = {
+	name = "Relics"
+	subcategory = spiritual_art
+	portrait = engineering
+	icon = bronze_cross_detailed
+	period = classical_age
+	discovery_mean_time_to_happen = {
+		months = 50
+	}
+	spread_mean_time_to_happen = {
+		months = 750
+	}
+}
+
+music_notation_system = {
+	name = "Music Notation System"
+	subcategory = spiritual_art
+	portrait = engineering
+	icon = music
+	period = dark_age
+	prerequisites = {
+		relics
+	}
+	discovery_mean_time_to_happen = {
+		months = 125
+	}
+	spread_mean_time_to_happen = {
+		months = 1500
+	}
+}
+
+choir_songs = {
+	name = "Choir Songs"
+	subcategory = spiritual_art
+	portrait = engineering
+	icon = music
+	period = feudal_age
+	prerequisites = {
+		music_notation_system
+	}
+	discovery_mean_time_to_happen = {
+		months = 450
+	}
+	spread_mean_time_to_happen = {
+		months = 3000
+	}
+}
+
+tapestries = {
+	name = "Tapestries"
+	subcategory = spiritual_art
+	portrait = engineering
+	icon = fabric
+	period = castle_age
+	prerequisites = {
+		choir_songs
+	}
+	discovery_mean_time_to_happen = {
+		months = 1000
+	}
+	spread_mean_time_to_happen = {
+		months = 6000
+	}
+}
+
+extravagant_decoration = {
+	name = "Extravagant Decoration"
+	subcategory = spiritual_art
+	portrait = engineering
+	icon = painting
+	period = renaissance_age
+	prerequisites = {
+		tapestries
+	}
+	discovery_mean_time_to_happen = {
+		months = 2500
+	}
+	spread_mean_time_to_happen = {
+		months = 10000
+	}
+}
