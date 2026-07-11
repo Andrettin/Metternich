@@ -1,0 +1,30 @@
+handaxe = {
+	name = "Handaxe"
+	subcategory = infantry
+	portrait = bronze_short_sword
+	icon = saber
+	period = classical_age
+	discovery_mean_time_to_happen = {
+		months = 40
+	}
+	spread_mean_time_to_happen = {
+		months = 500
+	}
+}
+
+battle_axe = {
+	name = "Battle Axe"
+	subcategory = infantry
+	portrait = bronze_short_sword
+	icon = saber
+	period = renaissance_age
+	prerequisites = {
+		morning_star
+	}
+	discovery_mean_time_to_happen = {
+		months = 1500
+	}
+	spread_mean_time_to_happen = {
+		months = 10000
+	}
+}

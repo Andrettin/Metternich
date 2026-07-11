@@ -4,6 +4,7 @@ battle_axe = {
 	icon = saber
 	price = 5gp
 	damage_dice = 1d8
+	required_technology = battle_axe
 	attack_sound = axe
 }
 

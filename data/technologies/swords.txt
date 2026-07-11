@@ -525,3 +525,20 @@ bastard_sword = {
 		}
 	}
 }
+
+greatsword = {
+	name = "Greatsword"
+	subcategory = swords
+	portrait = bronze_short_sword
+	icon = saber
+	period = renaissance_age
+	prerequisites = {
+		bastard_sword
+	}
+	discovery_mean_time_to_happen = {
+		months = 2500
+	}
+	spread_mean_time_to_happen = {
+		months = 10000
+	}
+}

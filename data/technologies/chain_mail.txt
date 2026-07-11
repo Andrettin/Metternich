@@ -66,10 +66,10 @@ chain_mail = {
 			factor = 0.9
 			technology = soft_leather_armor
 		}
-		#modifier = {
-		#	factor = 0.9
-		#	technology = reinforced_leather_armor
-		#}
+		modifier = {
+			factor = 0.9
+			technology = reinforced_leather_armor
+		}
 		modifier = {
 			factor = 0.75
 			domain = {
@@ -212,236 +212,31 @@ chain_mail = {
 	}
 }
 
-scale_mail = {
-	name = "Scale Mail"
-	subcategory = armor
-	portrait = helmet
-	icon = clothing
-	period = classical_age
-	prerequisites = {
-		#soft_leather_armor
-	}
-	discovery_mean_time_to_happen = {
-		months = 125
-	}
-	spread_mean_time_to_happen = {
-		months = 750
-	}
-}
-
-banded_mail = {
-	name = "Banded Mail"
-	subcategory = armor
-	portrait = helmet
-	icon = clothing
-	period = dark_age
-	prerequisites = {
-		scale_mail
-	}
-	discovery_mean_time_to_happen = {
-		months = 250
-	}
-	spread_mean_time_to_happen = {
-		months = 1500
-	}
-}
-
-half_plate_mail = {
-	name = "Half Plate Mail"
-	subcategory = armor
-	portrait = helmet
-	icon = clothing
-	period = feudal_age
-	prerequisites = {
-		banded_mail
-		feudalism #seems reasonable
-	}
-	discovery_mean_time_to_happen = {
-		months = 600
-	}
-	spread_mean_time_to_happen = {
-		months = 3000
-	}
-}
-
-plate_mail = {
-	name = "Plate Mail"
+full_chain_mail = {
+	name = "Full Chain Mail"
 	subcategory = armor
 	portrait = helmet
 	icon = clothing
 	period = castle_age
 	prerequisites = {
-		half_plate_mail
+		chain_mail
 	}
 	discovery_mean_time_to_happen = {
-		months = 1250
-		
-		modifier = {
-			factor = 0.95
-			has_building_class = smithy
-		}
-		modifier = {
-			factor = 0.95
-			scripted_condition = has_library
-		}
-		modifier = {
-			factor = 0.8
-			has_building_class = university
-		}
-		modifier = {
-			factor = 0.9
-			has_building_class = waterfront
-		}
-		#modifier = {
-		#	factor = 0.9
-		#	technology = plated_chain_mail
-		#}
-		modifier = {
-			factor = 0.75
-			domain = {
-				tier >= kingdom
-			}
-		}
-		modifier = {
-			factor = 0.85
-			domain = {
-				tier == duchy
-			}
-		}
-		modifier = {
-			factor = 0.8
-			domain = {
-				war = true
-			}
-		}
-		modifier = {
-			factor = 0.97
-			technology = aristotelian_logic
-		}
-		modifier = {
-			factor = 0.95
-			technology = scholasticism
-		}
-		modifier = {
-			factor = 0.98
-			technology = astronomy
-		}
-		modifier = {
-			factor = 0.97
-			technology = natural_philosophy
-		}
-		modifier = {
-			factor = 0.9
-			technology = science
-		}
-		modifier = {
-			factor = 1.25
-			year < 1150
-		}
-		modifier = {
-			factor = 1.25
-			year < 1250
-		}
+		months = 1000
 	}
 	spread_mean_time_to_happen = {
 		months = 6000
-		
-		modifier = {
-			factor = 0.9
-			has_building_class = military_academy
-		}
-		modifier = {
-			factor = 0.9
-			has_building_class = waterfront
-		}
-		modifier = {
-			factor = 0.9
-			source_province = {
-				has_building_class = waterfront
-			}
-		}
-		modifier = {
-			factor = 0.9
-			source_province = {
-				culture = root
-			}
-		}
-		modifier = {
-			factor = 0.4
-			source_province = {
-				domain = root
-			}
-		}
-		modifier = {
-			factor = 0.7
-			source_province = {
-				realm = root
-			}
-		}
-		modifier = {
-			factor = 0.75
-			domain = {
-				independent = true
-			}
-			source_province = {
-				realm = root
-				domain = {
-					independent = false
-				}
-			}
-		}
-		modifier = {
-			factor = 0.75
-			domain = {
-				war = true
-			}
-			source_province = {
-				realm = root
-			}
-		}
-		modifier = {
-			factor = 10
-			source_province = {
-				not = {
-					realm = root
-				}
-				domain = {
-					war = true
-				}
-			}
-		}
-		modifier = {
-			factor = 0.85
-			domain = {
-				war = true
-			}
-			source_province = {
-				not = {
-					realm = root
-				}
-				domain = {
-					war = false
-				}
-			}
-		}
-		modifier = {
-			factor = 0.75
-			capital = true
-			source_province = {
-				realm = root
-			}
-		}
 	}
 }
 
-full_plate_mail = {
-	name = "Full Plate Mail"
+plated_chain_mail = {
+	name = "Plated Chain Mail"
 	subcategory = armor
 	portrait = helmet
 	icon = clothing
 	period = renaissance_age
 	prerequisites = {
-		plate_mail
+		full_chain_mail
 	}
 	discovery_mean_time_to_happen = {
 		months = 2500

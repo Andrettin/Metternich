@@ -1,9 +1,29 @@
+warhammer = {
+	name = "Warhammer"
+	subcategory = infantry
+	portrait = bronze_short_sword
+	icon = saber
+	period = dark_age
+	prerequisites = {
+		handaxe
+	}
+	discovery_mean_time_to_happen = {
+		months = 100
+	}
+	spread_mean_time_to_happen = {
+		months = 1000
+	}
+}
+
 mace = {
 	name = "Mace"
 	subcategory = infantry
 	portrait = bronze_short_sword
 	icon = saber
-	period = classical_age
+	period = feudal_age
+	prerequisites = {
+		warhammer
+	}
 	discovery_mean_time_to_happen = {
 		months = 250
 		
@@ -170,7 +190,7 @@ morning_star = {
 	subcategory = infantry
 	portrait = bronze_short_sword
 	icon = saber
-	period = dark_age
+	period = castle_age
 	prerequisites = {
 		mace
 	}
