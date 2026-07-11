@@ -1,0 +1,81 @@
+divine_duty = {
+	name = "Divine Duty"
+	subcategory = popular_customs
+	portrait = engineering
+	icon = labor
+	period = classical_age
+	discovery_mean_time_to_happen = {
+		months = 75
+	}
+	spread_mean_time_to_happen = {
+		months = 750
+	}
+}
+
+jongleurs = {
+	name = "Jongleurs"
+	subcategory = popular_customs
+	portrait = engineering
+	icon = music
+	period = dark_age
+	prerequisites = {
+		divine_duty
+	}
+	discovery_mean_time_to_happen = {
+		months = 250
+	}
+	spread_mean_time_to_happen = {
+		months = 1500
+	}
+}
+
+troubadours = {
+	name = "Troubadours"
+	subcategory = popular_customs
+	portrait = engineering
+	icon = music
+	period = feudal_age
+	prerequisites = {
+		jongleurs
+	}
+	discovery_mean_time_to_happen = {
+		months = 500
+	}
+	spread_mean_time_to_happen = {
+		months = 3000
+	}
+}
+
+miracle_plays = {
+	name = "Miracle Plays"
+	subcategory = popular_customs
+	portrait = engineering
+	icon = music
+	period = castle_age
+	prerequisites = {
+		troubadours
+	}
+	discovery_mean_time_to_happen = {
+		months = 1000
+	}
+	spread_mean_time_to_happen = {
+		months = 6000
+	}
+}
+
+carnivals = {
+	name = "Carnivals"
+	subcategory = popular_customs
+	portrait = engineering
+	icon = music
+	period = renaissance_age
+	prerequisites = {
+		miracle_plays
+	}
+	discovery_mean_time_to_happen = {
+		months = 2000
+	}
+	spread_mean_time_to_happen = {
+		months = 10000
+	}
+}

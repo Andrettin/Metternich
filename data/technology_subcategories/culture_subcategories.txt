@@ -34,6 +34,12 @@ philosophy = {
 	icon = philosophy
 }
 
+popular_customs = {
+	name = "Popular Customs"
+	category = culture
+	icon = music
+}
+
 religion = {
 	name = "Religion"
 	category = culture
