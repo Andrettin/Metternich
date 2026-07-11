@@ -118,7 +118,7 @@ francis_bacon = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobe
 	
 	history = {
 		1620 = {
-			country = england #published his "Novum Organum" in 1620
+			domain = england #published his "Novum Organum" in 1620
 		}
 	}
 }

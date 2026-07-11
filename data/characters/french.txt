@@ -145,7 +145,7 @@ jacques_marquette = {
 	
 	history = {
 		1673 = {
-			country = new_france
+			domain = new_france
 		}
 	}
 }
@@ -163,7 +163,7 @@ sieur_de_la_salle = {
 	
 	history = {
 		1682 = {
-			country = new_france #acquired new territories for New France in 1682; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
+			domain = new_france #acquired new territories for New France in 1682; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
 		}
 	}
 }

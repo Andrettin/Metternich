@@ -15,7 +15,7 @@ robert_stevenson = { #Source: "Encyclopædia Britannica", 1911, vol. 25, p. 907.
 	
 	history = {
 		1797 = {
-			country = great_britain #was engineer to the Commissioners of Northern Lighthouses from 1797 to 1843
+			domain = great_britain #was engineer to the Commissioners of Northern Lighthouses from 1797 to 1843
 		}
 		
 		#married the daughter of Thomas Smith in 1799

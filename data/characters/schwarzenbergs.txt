@@ -155,7 +155,7 @@ karl_philipp_zu_schwarzenberg = { #Source: "Encyclopædia Britannica", 1911, vol
 		1799 = {
 			#became lieutenant field marshal in 1799
 			deployment_province = vienna 
-			country = austria
+			domain = austria
 		}
 		
 		#became a commander of the order of Maria Theresa in 1805
@@ -227,7 +227,7 @@ felix_zu_schwarzenberg = { #Source: "Encyclopædia Britannica", 1911, vol. 24, p
 		#served for 6 years in the Austrian army
 		
 		1824 = {
-			country = austria #served as an Austrian diplomat from 1824 to 1848
+			domain = austria #served as an Austrian diplomat from 1824 to 1848
 		}
 		
 		1848.11.21 = {

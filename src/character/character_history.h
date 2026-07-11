@@ -18,7 +18,7 @@ class character_history final : public data_entry_history
 {
 	Q_OBJECT
 
-	Q_PROPERTY(const metternich::domain* country MEMBER domain)
+	Q_PROPERTY(const metternich::domain* domain MEMBER domain)
 	Q_PROPERTY(int level MEMBER level READ get_level)
 	Q_PROPERTY(const metternich::character* spouse READ get_spouse WRITE set_spouse)
 	Q_PROPERTY(const metternich::character* heir READ get_heir WRITE set_heir)
@@ -29,7 +29,7 @@ public:
 
 	virtual void process_gsml_property(const gsml_property &property, const QDate &date) override;
 
-	const metternich::domain *get_country() const
+	const metternich::domain *get_domain() const
 	{
 		return this->domain;
 	}

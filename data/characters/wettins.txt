@@ -429,7 +429,7 @@ albert_von_wettin = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnüge
 		
 		1815 = {
 			#imperial Austrian field-marshal as of 1815
-			country = austria
+			domain = austria
 			deployment_province = vienna
 		}
 	}

@@ -39,7 +39,7 @@ ferdinand_magellan = { #Source: Isaac Asimov, "Cronologia das Ciências e das De
 	
 	history = {
 		1519.9.20 = {
-			country = spain #went on an expedition financed by Spain in 1519.9.20; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 203.
+			domain = spain #went on an expedition financed by Spain in 1519.9.20; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 203.
 		}
 	}
 }
@@ -58,7 +58,7 @@ bartolomeu_dias = {
 		1487 = {
 			#sailed around Africa's southern tip in 1487; Source: Henry Kamen, "Early Modern European Society", 2021, p. 3.
 			deployment_province = indian_ocean
-			country = portugal
+			domain = portugal
 		}
 	}
 }
@@ -77,7 +77,7 @@ vasco_da_gama = {
 		1498.5 = {
 			#was in Malabar in 1498.5; Source: Henry Kamen, "Early Modern European Society", 2021, p. 2.
 			deployment_province = laccadive_sea
-			country = portugal
+			domain = portugal
 		}
 	}
 }

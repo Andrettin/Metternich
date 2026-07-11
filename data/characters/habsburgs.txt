@@ -631,7 +631,7 @@ karl_von_habsburg = { #Archduke Karl; Source: "Almanach de Gotha pour l'année 1
 		1847 = {
 			#field marshal-general and proprietary of the 3rd infantry regiment and of the 3rd ulans regiment as of 1847
 			#traits += cavalry_leader
-			country = austria
+			domain = austria
 			deployment_province = vienna
 		}
 	}
@@ -663,7 +663,7 @@ joseph_anton_von_habsburg = { #Archduke Joseph Anton Johann; Source: "Almanach d
 		
 		1847 = { #field marshal-general and proprietary of the 2nd and 12th hussars regiments as of 1847
 			#traits += cavalry_leader
-			#country = austria
+			#domain = austria
 			#deployment_province = vienna
 		}
 	}
@@ -713,7 +713,7 @@ ferdinand_karl_von_habsburg = { #Archduke Ferdinand Karl Joseph von Habsburg; So
 	history = {
 		1847 = { #fieldmarshal, commander-in-chief and proprietary of the 3rd hussars regiment, as well as of the imperial Russian hussars regiment of Isum., as of 1847
 			#traits += cavalry_leader
-			country = austria
+			domain = austria
 			#effect = {
 			#	make_commander_effect = yes
 			#}
@@ -740,7 +740,7 @@ johann_baptiste_von_habsburg = { #Archduke Johann Baptiste Joseph von Habsburg; 
 		1847 = { #was fieldmarshal and general director of engineering and fortifications, as well as proprietary of the 1st regiment of dragoons and the 16th Prussian regiment of infantry in 1847; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 11-12.
 			#traits += architect #engineer
 			trait = siegecraft
-			country = austria
+			domain = austria
 			#effect = {
 			#	make_commander_effect = yes
 			#}
@@ -765,7 +765,7 @@ maximilian_joseph_von_habsburg = { #Archduke Maximilian Joseph Johann von Habsbu
 	history = {
 		1847 = {
 			#general-"feldzeugmestre", proprietary of the 4th infantry regiment and grandmaster of the Teutonic Order within the Empire of Austria as of 1847
-			country = austria
+			domain = austria
 			#effect = {
 			#	make_commander_effect = yes
 			#}
@@ -796,7 +796,7 @@ reiner_joseph_von_habsburg = { #Archduke Reiner Joseph Johann von Habsburg; Sour
 		#was (Austrian) viceroy of Lombardy-Venetia in 1847; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 11-12.
 		
 		1847 = { #was general-"feldzeugmestre" and proprietary of the 11th regiment of infantry in 1847; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 11-12.
-			#country = austria
+			#domain = austria
 			#effect = {
 			#	make_commander_effect = yes
 			#}
@@ -867,7 +867,7 @@ franz_von_habsburg = { #Archduke Franz; Source: "Almanach de Gotha pour l'année
 		}
 		
 		1847 = { #FMLieut. and proprietary of the 52nd infantry regiment as of 1847
-			country = austria
+			domain = austria
 			#effect = {
 			#	make_commander_effect = yes
 			#}
@@ -892,7 +892,7 @@ stefan_franz_von_habsburg = { #Stefan Franz Victor von Habsburg; Source: "Almana
 	
 	history = {
 		1847 = { #major-general and proprietary of the 58th infantry regiment as of 1847
-			#country = austria
+			#domain = austria
 			#effect = {
 			#	make_commander_effect = yes
 			#}
@@ -920,7 +920,7 @@ ferdinand_von_habsburg_1818 = { #Archduke (Karl) Ferdinand; Source: "Almanach de
 	history = {
 		1847 = { #FMLieut. and commander of the division in Prague, proprietary of the 51st imperial and royal infantry regiment, as well as the Russian ulans regiment of Belgorod as of 1847
 			#traits += cavalry_leader
-			country = austria
+			domain = austria
 			#effect = {
 			#	make_commander_effect = yes
 			#}
@@ -958,7 +958,7 @@ friedrich_von_habsburg = { #Archduke Friedrich; Source: "Almanach de Gotha pour 
 	
 	history = {
 		1847 = { #FMLieut., vice-admiral and commander-in-chief of the imperial navy, proprietary of the 16th infantry regiment as of 1847
-			country = austria
+			domain = austria
 			#effect = {
 			#	make_commander_effect = yes
 			#}
@@ -983,7 +983,7 @@ leopold_ludwig_von_habsburg = { #Leopold Ludwig Maria von Habsburg; Source: "Alm
 	history = {
 		1847 = { #colonel and proprietary of the 53rd infantry regiment, and colonel of the dragoons of the regiment "King of Bavaria" as of 1847
 			#traits += cavalry_leader
-			country = austria
+			domain = austria
 			#effect = {
 			#	make_commander_effect = yes
 			#}
@@ -1008,7 +1008,7 @@ ernst_karl_von_habsburg = { #Ernst Karl Felix von Habsburg; Source: "Almanach de
 	history = {
 		1847 = { #proprietary of the 48th infantry regiment and colonel of the hussars regiment "King of Sardinia", number 5, as of 1847
 			#traits += cavalry_leader
-			country = austria
+			domain = austria
 			#effect = {
 			#	make_commander_effect = yes
 			#}
@@ -1051,7 +1051,7 @@ sigmund_leopold_von_habsburg = { #Sigmund Leopold Reiner von Habsburg; Source: "
 	
 	history = {
 		1847 = { #imperial and royal colonel of the 11th infantry regiment as of 1847
-			country = austria
+			domain = austria
 			#effect = {
 			#	make_commander_effect = yes
 			#}
@@ -1075,7 +1075,7 @@ reiner_ferdinand_von_habsburg = { #Reiner Ferdinand Maria von Habsburg; Source: 
 	
 	history = {
 		1847 = { #imperial and royal colonel of the infantry regiment "The Emperor", number 1, as of 1847
-			country = austria
+			domain = austria
 			#effect = {
 			#	make_commander_effect = yes
 			#}
@@ -1099,7 +1099,7 @@ wilhelm_von_habsburg = { #Archduke Wilhelm; Source: "Almanach de Gotha pour l'an
 	
 	history = {
 		1847 = { #proprietary of the 12th infantry regiment as of 1847
-			country = austria
+			domain = austria
 			#effect = {
 			#	make_commander_effect = yes
 			#}
@@ -1123,7 +1123,7 @@ heinrich_anton_von_habsburg = { #Heinrich Anton Maria von Habsburg; Source: "Alm
 	
 	history = {
 		1847 = { #imperial and royal colonel of the regiment "Archduke Karl", number 3, as of 1847
-			country = austria
+			domain = austria
 			#effect = {
 			#	make_commander_effect = yes
 			#}
@@ -1152,7 +1152,7 @@ franz_joseph_i_of_austria = { #Emperor Franz Joseph I of Austria; Source: "Alman
 	history = {
 		1847 = { #colonel and proprietary of the 3rd dragoons regiment as of 1847
 			#traits += cavalry_leader
-			country = austria
+			domain = austria
 			#effect = {
 			#	make_commander_effect = yes
 			#}

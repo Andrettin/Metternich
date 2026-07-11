@@ -952,7 +952,7 @@ QCoro::Task<void> character_game_data::apply_history(const QDate &start_date)
 		co_return;
 	}
 
-	const metternich::domain *domain = character_history->get_country();
+	const metternich::domain *domain = character_history->get_domain();
 
 	if (domain != nullptr && !domain->get_game_data()->is_under_anarchy()) {
 		this->set_domain(domain);
