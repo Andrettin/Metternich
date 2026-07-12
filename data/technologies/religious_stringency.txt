@@ -1,0 +1,121 @@
+clerical_celibacy = {
+	name = "Clerical Celibacy"
+	subcategory = religious_stringency
+	portrait = engineering
+	icon = wooden_cross
+	period = classical_age
+	spread_conditions = {
+		source_province = {
+			or = {
+				realm = root
+				religion = root
+			}
+		}
+	}
+	discovery_mean_time_to_happen = {
+		months = 100
+	}
+	spread_mean_time_to_happen = {
+		months = 750
+	}
+}
+
+letters_of_indulgence = {
+	name = "Letters of Indulgence"
+	subcategory = religious_stringency
+	portrait = engineering
+	icon = wooden_cross
+	period = dark_age
+	prerequisites = {
+		clerical_celibacy
+	}
+	spread_conditions = {
+		source_province = {
+			or = {
+				realm = root
+				religion = root
+			}
+		}
+	}
+	discovery_mean_time_to_happen = {
+		months = 250
+	}
+	spread_mean_time_to_happen = {
+		months = 1500
+	}
+}
+
+inquisition = {
+	name = "Inquisition"
+	subcategory = religious_stringency
+	portrait = engineering
+	icon = wooden_cross
+	period = feudal_age
+	prerequisites = {
+		letters_of_indulgence
+	}
+	spread_conditions = {
+		source_province = {
+			or = {
+				realm = root
+				religion = root
+			}
+		}
+	}
+	discovery_mean_time_to_happen = {
+		months = 1000
+	}
+	spread_mean_time_to_happen = {
+		months = 3000
+	}
+}
+
+formalized_liturgy = {
+	name = "Formalized Liturgy"
+	subcategory = religious_stringency
+	portrait = engineering
+	icon = wooden_cross
+	period = castle_age
+	prerequisites = {
+		inquisition
+	}
+	spread_conditions = {
+		source_province = {
+			or = {
+				realm = root
+				religion = root
+			}
+		}
+	}
+	discovery_mean_time_to_happen = {
+		months = 1500
+	}
+	spread_mean_time_to_happen = {
+		months = 6000
+	}
+}
+
+jubilee = {
+	name = "Jubilee"
+	subcategory = religious_stringency
+	portrait = engineering
+	icon = wooden_cross
+	period = renaissance_age
+	prerequisites = {
+		formalized_liturgy
+	}
+	spread_conditions = {
+		source_province = {
+			or = {
+				realm = root
+				religion = root
+			}
+		}
+	}
+	discovery_mean_time_to_happen = {
+		months = 2500
+	}
+	spread_mean_time_to_happen = {
+		months = 10000
+	}
+}

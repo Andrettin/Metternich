@@ -5,7 +5,4 @@
 #	icon = research
 #	period = 1600_1650
 #	year = 1620
-#	free_technologies = 2
-#	prerequisites = {
-#	}
 #}

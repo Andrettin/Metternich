@@ -34,10 +34,16 @@ popular_customs = {
 	icon = music
 }
 
-religion = {
-	name = "Religion"
+religious_flexibility = {
+	name = "Religious Flexibility"
 	category = culture
 	icon = wooden_cross
+}
+
+religious_stringency = {
+	name = "Religious Flexibility"
+	category = culture
+	icon = silver_cross
 }
 
 spiritual_art = {
