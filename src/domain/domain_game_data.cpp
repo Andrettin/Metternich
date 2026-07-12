@@ -4089,6 +4089,18 @@ QCoro::Task<void> domain_game_data::check_characters()
 				continue;
 			}
 
+			const metternich::population *home_province_population = site->get_map_data()->get_province()->get_game_data()->get_population();
+
+			//the character's culture must be present in their home province's population
+			if (!home_province_population->get_culture_sizes().contains(site_character->get_culture())) {
+				continue;
+			}
+
+			//the character's religion must be present in their home province's population
+			if (!home_province_population->get_religion_sizes().contains(site_character->get_religion())) {
+				continue;
+			}
+
 			site_character->get_game_data()->set_domain(this->domain);
 
 			if (this->domain == game::get()->get_player_country()) {
