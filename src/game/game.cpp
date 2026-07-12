@@ -1995,13 +1995,13 @@ void game::remove_country(domain *domain)
 
 void game::calculate_domain_ranks()
 {
-	std::vector<metternich::domain *> countries = game::get()->get_domains();
+	std::vector<metternich::domain *> domains = game::get()->get_domains();
 
-	if (countries.empty()) {
+	if (domains.empty()) {
 		return;
 	}
 
-	std::sort(countries.begin(), countries.end(), [](const metternich::domain *lhs, const metternich::domain *rhs) {
+	std::sort(domains.begin(), domains.end(), [](const metternich::domain *lhs, const metternich::domain *rhs) {
 		if (lhs->get_game_data()->is_under_anarchy() != rhs->get_game_data()->is_under_anarchy()) {
 			return rhs->get_game_data()->is_under_anarchy();
 		}
@@ -2010,21 +2010,25 @@ void game::calculate_domain_ranks()
 	});
 
 	int64_t average_score = 0;
-	int highest_score = countries.at(0)->get_game_data()->get_score();
+	int highest_score = domains.at(0)->get_game_data()->get_score();
 	
-	for (size_t i = 0; i < countries.size(); ++i) {
-		const domain *domain = countries.at(i);
+	for (size_t i = 0; i < domains.size(); ++i) {
+		const domain *domain = domains.at(i);
 		domain->get_game_data()->set_score_rank(static_cast<int>(i));
 
 		average_score += domain->get_game_data()->get_score();
 	}
 
-	average_score /= countries.size();
+	average_score /= domains.size();
 
-	for (const domain *domain : countries) {
+	for (const domain *domain : domains) {
 		const domain_rank *best_rank = nullptr;
 		for (const domain_rank *rank : domain_rank::get_all()) {
 			if (best_rank != nullptr && best_rank->get_priority() >= rank->get_priority()) {
+				continue;
+			}
+
+			if (rank->get_conditions() != nullptr && !rank->get_conditions()->check(domain)) {
 				continue;
 			}
 
