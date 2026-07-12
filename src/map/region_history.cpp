@@ -13,6 +13,10 @@
 #include "map/site_history.h"
 #include "population/population_type.h"
 #include "species/phenotype.h"
+#include "technology/technological_period.h"
+#include "technology/technology.h"
+#include "technology/technology_category.h"
+#include "technology/technology_subcategory.h"
 #include "util/decimal_int.h"
 #include "util/vector_util.h"
 
@@ -64,6 +68,28 @@ void region_history::process_gsml_scope(const gsml_data &scope, const QDate &dat
 				this->population_groups[key] = population;
 			}
 		});
+	} else if (tag == "technology_category_period") {
+		const technology_category *category = technology_category::get(scope.get_property_value("category"));
+		const technological_period *period = technological_period::get(scope.get_property_value("period"));
+
+		for (const technology *technology : category->get_technologies()) {
+			if (technology->get_period()->get_start_year() <= period->get_start_year()) {
+				if (!vector::contains(this->get_technologies(), technology)) {
+					this->technologies.push_back(technology);
+				}
+			}
+		}
+	} else if (tag == "technology_subcategory_period") {
+		const technology_subcategory *subcategory = technology_subcategory::get(scope.get_property_value("subcategory"));
+		const technological_period *period = technological_period::get(scope.get_property_value("period"));
+
+		for (const technology *technology : subcategory->get_technologies()) {
+			if (technology->get_period()->get_start_year() <= period->get_start_year()) {
+				if (!vector::contains(this->get_technologies(), technology)) {
+					this->technologies.push_back(technology);
+				}
+			}
+		}
 	} else {
 		data_entry_history::process_gsml_scope(scope, date);
 	}
