@@ -4,6 +4,7 @@
 
 #include "culture/culture.h"
 #include "map/province.h"
+#include "map/province_container.h"
 #include "map/province_game_data.h"
 #include "map/province_history.h"
 #include "map/region.h"
@@ -161,6 +162,25 @@ void region_history::distribute_population()
 			if (province_history->get_group_population(group_key) == 0) {
 				const int64_t group_population = population_per_site * province_populatable_site_count;
 				province_history->set_group_population(group_key, group_population);
+			}
+		}
+	}
+}
+
+void region_history::apply_to_provinces() const
+{
+	if (this->get_technologies().empty()) {
+		return;
+	}
+
+	for (const province *province : this->region->get_provinces()) {
+		if (province->is_water_zone()) {
+			continue;
+		}
+
+		for (const technology *technology : this->get_technologies()) {
+			if (!vector::contains(province->get_history()->get_technologies(), technology)) {
+				province->get_history()->add_technology(technology);
 			}
 		}
 	}

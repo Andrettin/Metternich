@@ -591,6 +591,10 @@ QCoro::Task<void> game::initialize()
 QCoro::Task<void> game::apply_history(const QDate &start_date)
 {
 	try {
+		for (const region *region : region::get_all()) {
+			region->get_history()->apply_to_provinces();
+		}
+
 		for (const province *province : map::get()->get_provinces()) {
 			try {
 				const province_history *province_history = province->get_history();

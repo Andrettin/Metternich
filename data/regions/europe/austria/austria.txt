@@ -56,6 +56,118 @@ austria = { #the territory of the modern Republic of Austria
 	}
 }
 
+austria_proper = { #Lower Austria and Upper Austria
+	superregions = {
+		austria
+		imperial_austria_1806
+	}
+	
+	history = {
+		1066 = {
+			technologies += hill_fort
+			technologies += basilican_structures
+			technologies += brickwork_structures
+			technologies += chained_leather_armor
+			technologies += handaxe
+			technologies += longspear
+		}
+		
+		1187 = {
+			technologies += short_bow
+			technologies += long_bow
+			technologies += slinged_javelin
+			technologies += light_crossbow
+			technologies += soft_leather_armor
+			technologies += reinforced_leather_armor
+			technologies += boiled_leather_armor
+			technologies += light_chain_mail
+			technologies += chain_mail
+			technologies += scale_mail
+			technologies += banded_mail
+			technologies += half_plate_mail
+			technologies += warhammer
+			technologies += mace
+			technologies += short_sword
+			technologies += broad_sword
+			technologies += long_sword
+			technologies += pike
+			technologies += lance
+			technologies += battering_ram
+			technologies += siege_ladders
+			technologies += siege_towers
+			technologies += small_castle
+			technologies += medium_castle
+			technologies += defensive_terrain
+			technologies += positional_combat
+			technologies += missile_barrage
+			technologies += offensive_terrain
+			technologies += frontal_charge
+			technologies += reserves
+			technologies += dismounted_knights
+			technologies += two_field_system
+			technologies += three_field_system
+			technologies += wood_plow
+			technologies += iron_tipped_wood_plow
+			technologies += poultry_domestication
+			technologies += goatherding
+			technologies += salt_refining
+			technologies += stonepit
+			technologies += charcoal
+			technologies += road_building
+			technologies += wind_wheel
+			technologies += water_wheel
+			technologies += minor_merchant_houses
+			technologies += local_merchant_houses
+			technologies += business_contracts
+			technologies += promissory_note
+			technologies += annual_sailing
+			technologies += local_fairs
+			technologies += divine_right
+			technologies += divine_duty
+			technologies += seven_liberal_arts
+			technologies += monastic_school
+			technologies += aristotelian_logic
+			technologies += scholasticism
+			technologies += sculptures
+			technologies += relics
+			technologies += clerical_celibacy
+			technologies += letters_of_indulgence
+			technologies += asceticism
+			technologies += apostolic_poverty
+		}
+		
+		1337 = {
+			technologies += medium_crossbow
+			technologies += morning_star
+			technologies += battle_axe
+			technologies += large_castle
+			technologies += stripe_plowing
+			technologies += iron_plow
+			technologies += meat_livestock
+			technologies += glassblowing
+			technologies += clothmaking
+			technologies += ironworks
+			technologies += romanesque_vaulting
+			technologies += cylindrical_structures
+			technologies += large_ship_building
+			technologies += black_coal
+			technologies += mint
+			technologies += letters_of_credit
+			technologies += distant_trading
+			technologies += chronicle_writing
+			technologies += romantic_poetry
+			technologies += jongleurs
+			technologies += troubadours
+			technologies += cathedral_school
+			technologies += astronomy
+			technologies += musical_instruments
+			technologies += ballads
+			technologies += music_notation_system
+			technologies += choir_songs
+		}
+	}
+}
+
 ducal_styria = {
 	superregions = {
 		imperial_austria_1806
@@ -91,6 +203,7 @@ ducal_styria = {
 lower_austria = {
 	superregions = {
 		austria
+		austria_proper
 		imperial_austria_1806
 	}
 	
@@ -145,6 +258,7 @@ tyrol = {
 upper_austria = {
 	superregions = {
 		austria
+		austria_proper
 		imperial_austria_1806
 	}
 	

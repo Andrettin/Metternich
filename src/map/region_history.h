@@ -9,6 +9,7 @@
 namespace metternich {
 
 class region;
+class technology;
 
 class region_history final : public data_entry_history
 {
@@ -16,6 +17,7 @@ class region_history final : public data_entry_history
 
 	Q_PROPERTY(qint64 population READ get_population WRITE set_population)
 	Q_PROPERTY(archimedes::decimillesimal_int literacy_rate MEMBER literacy_rate READ get_literacy_rate)
+	Q_PROPERTY(std::vector<const metternich::technology *> technologies READ get_technologies)
 
 public:
 	explicit region_history(const metternich::region *region) : region(region)
@@ -64,12 +66,30 @@ public:
 		return this->literacy_rate;
 	}
 
+	const std::vector<const technology *> &get_technologies() const
+	{
+		return this->technologies;
+	}
+
+	Q_INVOKABLE void add_technology(const technology *technology)
+	{
+		this->technologies.push_back(technology);
+	}
+
+	Q_INVOKABLE void remove_technology(const technology *technology)
+	{
+		std::erase(this->technologies, technology);
+	}
+
+	void apply_to_provinces() const;
+
 private:
 	const metternich::region *region = nullptr;
 	culture_map<int64_t> culture_weights;
 	phenotype_map<int64_t> phenotype_weights;
 	population_group_map<int64_t> population_groups;
 	decimillesimal_int literacy_rate;
+	std::vector<const technology *> technologies;
 };
 
 }
