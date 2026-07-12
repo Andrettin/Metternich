@@ -650,6 +650,7 @@ enlightenment = {
 		science
 		academic_disciplines #seems reasonable
 		renaissance #seems reasonable
+		religious_critical_thinking #seems reasonable
 		global_trade
 		printing_press
 		manufactories
