@@ -236,11 +236,113 @@ vernacular_literature = {
 	period = renaissance_age
 	prerequisites = {
 		fashionable_clothes
+		romantic_poetry #earlier literature-related technology
 	}
 	discovery_mean_time_to_happen = {
 		months = 2500
 	}
 	spread_mean_time_to_happen = {
 		months = 10000
+	}
+}
+
+romanticist_literature = {
+	name = "Romanticist Literature"
+	subcategory = aesthetics
+	portrait = engineering
+	icon = book_red
+	period = napoleonic_age
+	prerequisites = {
+		vernacular_literature #earlier literature-related technology
+		industrialization #to place it in the appropriate period
+		enlightenment #seems reasonable
+	}
+	shared_commodities = {
+		regency = 5
+	}
+	monthly_chance = {
+		base_value = 2
+		
+		#modifier = {
+		#	additive = true
+		#	factor = -2
+		#	or = {
+		#		technology = romanticist_art
+		#		technology = romanticist_music
+		#	}
+		#}
+	}
+}
+
+romanticist_art = {
+	name = "Romanticist Art"
+	subcategory = aesthetics
+	portrait = engineering
+	icon = painting
+	period = napoleonic_age
+	prerequisites = {
+		sculptures #earlier art-related technology
+		extravagant_decoration #earlier art-related technology
+		industrialization #to place it in the appropriate period
+		enlightenment #seems reasonable
+	}
+	shared_commodities = {
+		regency = 5
+	}
+	monthly_chance = {
+		base_value = 2
+		
+		modifier = {
+			additive = true
+			factor = 2
+			domain = {
+				regency >= 30
+			}
+		}
+		modifier = {
+			additive = true
+			factor = -2
+			or = {
+				technology = romanticist_literature
+				technology = romanticist_music
+			}
+		}
+	}
+}
+
+romanticist_music = {
+	name = "Romanticist Music"
+	subcategory = aesthetics
+	portrait = engineering
+	icon = music
+	period = napoleonic_age
+	prerequisites = {
+		ballads #earlier music-related technology
+		troubadours #earlier music-related technology
+		choir_songs #earlier music-related technology
+		industrialization #to place it in the appropriate period
+		enlightenment #seems reasonable
+	}
+	shared_commodities = {
+		regency = 5
+	}
+	monthly_chance = {
+		base_value = 2
+		
+		modifier = {
+			additive = true
+			factor = 3
+			domain = {
+				rank < great_power
+			}
+		}
+		#modifier = {
+		#	additive = true
+		#	factor = -2
+		#	or = {
+		#		technology = romanticist_art
+		#		technology = romanticist_literature
+		#	}
+		#}
 	}
 }
