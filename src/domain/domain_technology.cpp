@@ -372,6 +372,12 @@ QCoro::Task<void> domain_technology::on_technology_added(const technology *techn
 		co_await technology->get_domain_modifier()->apply(this->domain, 1);
 	}
 
+	if (!technology->get_shared_commodities().empty() && !this->get_game_data()->get_provinces().empty()) {
+		for (const auto &[commodity, value] : technology->get_shared_commodities_for_domain(this->domain)) {
+			this->get_game_data()->get_economy()->change_stored_commodity(commodity, value);
+		}
+	}
+
 	for (const commodity *enabled_commodity : technology->get_enabled_commodities()) {
 		if (!enabled_commodity->is_enabled()) {
 			continue;

@@ -144,6 +144,11 @@ void technology::process_gsml_scope(const gsml_data &scope)
 		auto factor = std::make_unique<metternich::factor<domain>>(100);
 		factor->process_gsml_data(scope);
 		this->weight_factor = std::move(factor);
+	} else if (tag == "shared_commodities") {
+		scope.for_each_property([this](const gsml_property &property) {
+			const commodity *commodity = commodity::get(property.get_key());
+			this->shared_commodities[commodity] = commodity->string_to_value(property.get_value());
+		});
 	} else if (tag == "modifier") {
 		auto modifier = std::make_unique<metternich::modifier<const province>>();
 		modifier->process_gsml_data(scope);
@@ -361,6 +366,7 @@ void technology::check() const
 		&& this->get_enabled_spells().empty()
 		&& this->get_enabled_transporters().empty()
 		&& this->get_enabled_wonders().empty()
+		&& this->get_shared_commodities().empty()
 	) {
 		if (this->get_leads_to().empty()) {
 			log::log_error(std::format("Technology \"{}\" has no effects, and does not lead to any other technologies.", this->get_identifier()));
@@ -684,6 +690,36 @@ std::vector<const deity *> technology::get_disabled_deities_for_country(const do
 	return deities;
 }
 
+commodity_map<int64_t> technology::get_shared_commodities_for_domain(const domain *domain) const
+{
+	commodity_map<int64_t> commodities = this->get_shared_commodities();
+
+	if (commodities.empty()) {
+		return commodities;
+	}
+
+	for (const metternich::domain *loop_country : game::get()->get_countries()) {
+		if (loop_country == domain) {
+			continue;
+		}
+
+		if (loop_country->get_technology()->has_technology(this)) {
+			bool all_commodities_at_lowest = true;
+			for (auto &[commodity, value] : commodities) {
+				value /= 2;
+				value = std::max(value, 1ll);
+				all_commodities_at_lowest = (all_commodities_at_lowest && value == 1);
+			}
+
+			if (all_commodities_at_lowest) {
+				break;
+			}
+		}
+	}
+
+	return commodities;
+}
+
 std::string technology::get_modifier_string(const province *province) const
 {
 	assert_throw(province != nullptr);
@@ -725,6 +761,16 @@ std::string technology::get_effects_string(const domain *domain) const
 		}
 
 		str += std::format("{} free {} for the first to research", this->get_free_technologies(), this->get_free_technologies() > 1 ? "technologies" : "technology");
+	}
+
+	if (!this->get_shared_commodities().empty()) {
+		for (const auto &[commodity, value] : this->get_shared_commodities_for_domain(domain)) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += std::format("+{} {}", value, commodity->get_name());
+		}
 	}
 
 	if (!this->get_enabled_commodities().empty()) {
