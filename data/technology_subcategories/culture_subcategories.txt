@@ -41,7 +41,7 @@ religious_flexibility = {
 }
 
 religious_stringency = {
-	name = "Religious Flexibility"
+	name = "Religious Stringency"
 	category = culture
 	icon = silver_cross
 }
