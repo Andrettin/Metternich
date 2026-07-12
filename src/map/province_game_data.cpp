@@ -1700,8 +1700,10 @@ QCoro::Task<void> province_game_data::add_technology(const technology *technolog
 
 	co_await this->on_technology_gained(technology, 1);
 
-	if (this->get_owner() != nullptr && this->is_capital()) {
-		co_await this->get_owner()->get_technology()->on_technology_added(technology);
+	for (const site *holding_site : this->get_settlement_sites()) {
+		if (holding_site->get_game_data()->is_capital()) {
+			co_await holding_site->get_game_data()->get_owner()->get_technology()->on_technology_added(technology);
+		}
 	}
 
 	if (technology->get_discovery_event() != nullptr) {
@@ -1737,8 +1739,10 @@ QCoro::Task<void> province_game_data::remove_technology(const technology *techno
 
 	co_await this->on_technology_gained(technology, -1);
 
-	if (this->get_owner() != nullptr && this->is_capital()) {
-		co_await this->get_owner()->get_technology()->on_technology_lost(technology);
+	for (const site *holding_site : this->get_settlement_sites()) {
+		if (holding_site->get_game_data()->is_capital()) {
+			co_await holding_site->get_game_data()->get_owner()->get_technology()->on_technology_lost(technology);
+		}
 	}
 
 	//remove any technologies requiring this one as well
