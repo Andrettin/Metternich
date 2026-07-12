@@ -43,6 +43,7 @@ stripe_plowing = {
 	period = feudal_age
 	prerequisites = {
 		three_field_system
+		feudalism #seems reasonable
 	}
 	modifier = {
 		agricultural_output_modifier = 3
