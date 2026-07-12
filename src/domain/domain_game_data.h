@@ -49,7 +49,6 @@ class building_type;
 class character;
 class civilian_unit;
 class consulate;
-class country_rank;
 class culture;
 class domain;
 class domain_ai;
@@ -57,6 +56,7 @@ class domain_attribute;
 class domain_economy;
 class domain_government;
 class domain_military;
+class domain_rank;
 class domain_technology;
 class dynasty;
 class event;
@@ -766,12 +766,12 @@ public:
 		emit score_rank_changed();
 	}
 
-	const country_rank *get_rank() const
+	const domain_rank *get_rank() const
 	{
 		return this->rank;
 	}
 
-	void set_rank(const country_rank *rank)
+	void set_rank(const domain_rank *rank)
 	{
 		if (rank == this->get_rank()) {
 			return;
@@ -1381,7 +1381,7 @@ private:
 	int consumption = 0;
 	int unrest = 0;
 	int score = 0;
-	const country_rank *rank = nullptr;
+	const domain_rank *rank = nullptr;
 	int score_rank = 0;
 	int economic_score = 0;
 	int military_score = 0;

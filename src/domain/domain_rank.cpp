@@ -1,20 +1,20 @@
 #include "metternich.h"
 
-#include "domain/country_rank.h"
+#include "domain/domain_rank.h"
 
 #include "script/condition/and_condition.h"
 
 namespace metternich {
 
-country_rank::country_rank(const std::string &identifier) : named_data_entry(identifier)
+domain_rank::domain_rank(const std::string &identifier) : named_data_entry(identifier)
 {
 }
 
-country_rank::~country_rank()
+domain_rank::~domain_rank()
 {
 }
 
-void country_rank::process_gsml_scope(const gsml_data &scope)
+void domain_rank::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 
@@ -27,7 +27,7 @@ void country_rank::process_gsml_scope(const gsml_data &scope)
 	}
 }
 
-void country_rank::check() const
+void domain_rank::check() const
 {
 	if (this->get_conditions() != nullptr) {
 		this->get_conditions()->check_validity();

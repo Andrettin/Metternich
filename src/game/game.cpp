@@ -14,7 +14,6 @@
 #include "database/gsml_parser.h"
 #include "database/gsml_property.h"
 #include "database/preferences.h"
-#include "domain/country_rank.h"
 #include "domain/diplomacy_state.h"
 #include "domain/domain.h"
 #include "domain/domain_ai.h"
@@ -23,6 +22,7 @@
 #include "domain/domain_government.h"
 #include "domain/domain_history.h"
 #include "domain/domain_military.h"
+#include "domain/domain_rank.h"
 #include "domain/domain_technology.h"
 #include "domain/domain_turn_data.h"
 #include "domain/government_type.h"
@@ -1670,7 +1670,7 @@ QCoro::Task<void> game::on_setup_finished()
 
 	co_await this->apply_free_on_start_buildings();
 
-	this->calculate_country_ranks();
+	this->calculate_domain_ranks();
 
 	for (const domain *domain : this->get_domains()) {
 		domain_game_data *domain_game_data = domain->get_game_data();
@@ -1803,7 +1803,7 @@ QCoro::Task<void> game::do_turn_coro()
 			this->exploration_changed = false;
 		}
 
-		this->calculate_country_ranks();
+		this->calculate_domain_ranks();
 
 		this->increment_turn();
 	} catch (...) {
@@ -1993,7 +1993,7 @@ void game::remove_country(domain *domain)
 	}
 }
 
-void game::calculate_country_ranks()
+void game::calculate_domain_ranks()
 {
 	std::vector<metternich::domain *> countries = game::get()->get_domains();
 
@@ -2022,8 +2022,8 @@ void game::calculate_country_ranks()
 	average_score /= countries.size();
 
 	for (const domain *domain : countries) {
-		const country_rank *best_rank = nullptr;
-		for (const country_rank *rank : country_rank::get_all()) {
+		const domain_rank *best_rank = nullptr;
+		for (const domain_rank *rank : domain_rank::get_all()) {
 			if (best_rank != nullptr && best_rank->get_priority() >= rank->get_priority()) {
 				continue;
 			}

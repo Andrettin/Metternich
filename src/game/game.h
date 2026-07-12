@@ -204,7 +204,7 @@ public:
 	void add_country(domain *domain);
 	void remove_country(domain *domain);
 
-	void calculate_country_ranks();
+	void calculate_domain_ranks();
 
 	const character *get_player_character() const
 	{

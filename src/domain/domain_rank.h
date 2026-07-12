@@ -11,7 +11,7 @@ class domain;
 template <typename scope_type>
 class and_condition;
 
-class country_rank final : public named_data_entry, public data_type<country_rank>
+class domain_rank final : public named_data_entry, public data_type<domain_rank>
 {
 	Q_OBJECT
 
@@ -20,12 +20,12 @@ class country_rank final : public named_data_entry, public data_type<country_ran
 	Q_PROPERTY(archimedes::centesimal_int relative_score_threshold MEMBER relative_score_threshold READ get_relative_score_threshold)
 
 public:
-	static constexpr const char class_identifier[] = "country_rank";
-	static constexpr const char property_class_identifier[] = "metternich::country_rank*";
-	static constexpr const char database_folder[] = "country_ranks";
+	static constexpr const char class_identifier[] = "domain_rank";
+	static constexpr const char property_class_identifier[] = "metternich::domain_rank*";
+	static constexpr const char database_folder[] = "domain_ranks";
 
-	explicit country_rank(const std::string &identifier);
-	~country_rank();
+	explicit domain_rank(const std::string &identifier);
+	~domain_rank();
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;

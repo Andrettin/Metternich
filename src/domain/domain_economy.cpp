@@ -16,6 +16,7 @@
 #include "economy/employment_type.h"
 #include "economy/expense_transaction_type.h"
 #include "economy/income_transaction_type.h"
+#include "economy/resource.h"
 #include "game/game.h"
 #include "map/map.h"
 #include "map/province.h"
