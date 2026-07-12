@@ -1,3 +1,9 @@
 europe = {
 	world = earth
+	
+	history = {
+		1730 = {
+			technologies += enlightenment
+		}
+	}
 }

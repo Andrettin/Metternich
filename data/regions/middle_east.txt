@@ -16,6 +16,10 @@ middle_east = {
 			population = 14804643 #the Middle East had a population of c. 14,804,643 in 1 AD; Source: http://themasites.pbl.nl/tridion/en/themasites/hyde/basicdrivingfactors/population/index-2.html
 		}
 		
+		1800 = {
+			technologies += enlightenment
+		}
+		
 		1810 = {
 			population = 24975363 #the Middle East had a population of c. 24,975,363 in 1810 AD; Source: http://themasites.pbl.nl/tridion/en/themasites/hyde/basicdrivingfactors/population/index-2.html
 		}
