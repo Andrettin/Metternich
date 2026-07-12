@@ -1,7 +1,7 @@
 asceticism = {
 	name = "Asceticism"
 	subcategory = religious_flexibility
-	portrait = engineering
+	portrait = temple
 	icon = wooden_cross
 	period = classical_age
 	spread_conditions = {
@@ -202,5 +202,105 @@ asceticism = {
 				}
 			}
 		}
+	}
+}
+
+apostolic_poverty = {
+	name = "Apostolic Poverty"
+	subcategory = religious_flexibility
+	portrait = temple
+	icon = wooden_cross
+	period = dark_age
+	prerequisites = {
+		asceticism
+	}
+	spread_conditions = {
+		source_province = {
+			or = {
+				realm = root
+				religion = root
+			}
+		}
+	}
+	discovery_mean_time_to_happen = {
+		months = 250
+	}
+	spread_mean_time_to_happen = {
+		months = 1500
+	}
+}
+
+critical_bible_interpretations = {
+	name = "Critical Bible Interpretations"
+	subcategory = religious_flexibility
+	portrait = temple
+	icon = wooden_cross
+	period = feudal_age
+	prerequisites = {
+		apostolic_poverty
+	}
+	spread_conditions = {
+		source_province = {
+			or = {
+				realm = root
+				religion = root
+			}
+		}
+	}
+	discovery_mean_time_to_happen = {
+		months = 500
+	}
+	spread_mean_time_to_happen = {
+		months = 3000
+	}
+}
+
+bible_translations = {
+	name = "Bible Translations"
+	subcategory = religious_flexibility
+	portrait = temple
+	icon = wooden_cross
+	period = castle_age
+	prerequisites = {
+		critical_bible_interpretations
+	}
+	spread_conditions = {
+		source_province = {
+			or = {
+				realm = root
+				religion = root
+			}
+		}
+	}
+	discovery_mean_time_to_happen = {
+		months = 1000
+	}
+	spread_mean_time_to_happen = {
+		months = 6000
+	}
+}
+
+religious_critical_thinking = {
+	name = "Religious Critical Thinking"
+	subcategory = religious_flexibility
+	portrait = temple
+	icon = wooden_cross
+	period = renaissance_age
+	prerequisites = {
+		bible_translations
+	}
+	spread_conditions = {
+		source_province = {
+			or = {
+				realm = root
+				religion = root
+			}
+		}
+	}
+	discovery_mean_time_to_happen = {
+		months = 2000
+	}
+	spread_mean_time_to_happen = {
+		months = 10000
 	}
 }
