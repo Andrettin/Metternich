@@ -346,3 +346,93 @@ romanticist_music = {
 		#}
 	}
 }
+
+realist_literature = {
+	name = "Realist Literature"
+	subcategory = aesthetics
+	portrait = engineering
+	icon = book_red
+	period = steam_age
+	prerequisites = {
+		romanticist_literature #earlier literature-related technology
+	}
+	shared_commodities = {
+		regency = 10
+	}
+	monthly_chance = {
+		base_value = 2
+		
+		modifier = {
+			additive = true
+			factor = 3
+			domain = {
+				rank < great_power
+			}
+		}
+		#modifier = {
+		#	additive = true
+		#	factor = -2
+		#	or = {
+		#		technology = realist_art
+		#		technology = realist_music
+		#	}
+		#}
+	}
+}
+
+realist_art = {
+	name = "Realist Art"
+	subcategory = aesthetics
+	portrait = engineering
+	icon = painting
+	period = steam_age
+	prerequisites = {
+		romanticist_art #earlier art-related technology
+	}
+	shared_commodities = {
+		regency = 10
+	}
+	monthly_chance = {
+		base_value = 2
+		
+		#modifier = {
+		#	additive = true
+		#	factor = -2
+		#	or = {
+		#		technology = realist_literature
+		#		technology = realist_music
+		#	}
+		#}
+	}
+}
+
+realist_music = {
+	name = "Realist Music"
+	subcategory = aesthetics
+	portrait = engineering
+	icon = music
+	period = steam_age
+	prerequisites = {
+		romanticist_music #earlier music-related technology
+	}
+	shared_commodities = {
+		regency = 10
+	}
+	monthly_chance = {
+		base_value = 2
+		
+		#modifier = {
+		#	additive = true
+		#	factor = -2
+		#	or = {
+		#		technology = realist_art
+		#		technology = realist_literature
+		#	}
+		#}
+		#modifier = {
+		#	additive = true
+		#	factor = 2
+		#	technology = idealism
+		#}
+	}
+}
