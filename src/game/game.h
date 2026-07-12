@@ -39,6 +39,7 @@ class game final : public QObject, public singleton<game>
 	Q_PROPERTY(int year READ get_year NOTIFY turn_changed)
 	Q_PROPERTY(QString date_string READ get_date_qstring NOTIFY turn_changed)
 	Q_PROPERTY(int turn READ get_turn NOTIFY turn_changed)
+	Q_PROPERTY(QVariantList domains READ get_domains_qvariant_list NOTIFY domains_changed)
 	Q_PROPERTY(QVariantList countries READ get_countries_qvariant_list NOTIFY countries_changed)
 	Q_PROPERTY(const metternich::character* player_character READ get_player_character WRITE set_player_character NOTIFY player_character_changed)
 	Q_PROPERTY(const metternich::domain* player_country READ get_player_country WRITE set_player_country NOTIFY player_country_changed)
@@ -185,6 +186,15 @@ public:
 
 	std::string year_range_to_labeled_string(const int start_year, const int end_year) const;
 
+	const std::vector<domain *> &get_domains() const
+	{
+		return this->domains;
+	}
+
+	QVariantList get_domains_qvariant_list() const;
+	void add_domain(domain *domain);
+	[[nodiscard]] QCoro::Task<void> remove_domain(domain *domain);
+
 	const std::vector<domain *> &get_countries() const
 	{
 		return this->countries;
@@ -192,7 +202,7 @@ public:
 
 	QVariantList get_countries_qvariant_list() const;
 	void add_country(domain *domain);
-	[[nodiscard]] QCoro::Task<void> remove_country(domain *domain);
+	void remove_country(domain *domain);
 
 	void calculate_country_ranks();
 
@@ -324,6 +334,7 @@ signals:
 	void running_changed();
 	void setup_finished();
 	void turn_changed();
+	void domains_changed();
 	void countries_changed();
 	void player_character_changed();
 	void player_country_changed();
@@ -338,7 +349,8 @@ private:
 	const metternich::scenario *scenario = nullptr;
 	QDate date; //the current date in the game
 	int turn = 1;
-	std::vector<domain *> countries; //the countries currently in the game, i.e. those with at least 1 province
+	std::vector<domain *> domains; //the domain currently in the game, i.e. those with at least 1 province or holding
+	std::vector<domain *> countries; //the domains which have at least 1 province
 	const character *player_character = nullptr;
 	const domain *player_country = nullptr;
 	commodity_map<int64_t> prices;

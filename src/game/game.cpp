@@ -146,6 +146,7 @@ void game::process_gsml_property(const gsml_property &property)
 void game::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
+	const std::vector<std::string> &values = scope.get_values();
 
 	if (tag == "rules") {
 		auto rules = make_qunique<game_rules>();
@@ -157,8 +158,12 @@ void game::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_child([this](const gsml_data &domain_data) {
 			domain *domain = domain::get(domain_data.get_tag());
 			domain_data.process(domain->get_game_data());
-			this->countries.push_back(domain);
+			this->domains.push_back(domain);
 		});
+	} else if (tag == "countries") {
+		for (const std::string &value : values) {
+			this->countries.push_back(domain::get(value));
+		}
 	} else if (tag == "provinces") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
 			province *province = province::get(child_scope.get_tag());
@@ -260,10 +265,16 @@ gsml_data game::to_gsml_data() const
 	data.add_child("map", map::get()->to_gsml_data());
 
 	gsml_data domains_data("domains");
-	for (const domain *domain : this->get_countries()) {
+	for (const domain *domain : this->get_domains()) {
 		domains_data.add_child(domain->get_game_data()->to_gsml_data());
 	}
 	data.add_child(std::move(domains_data));
+
+	gsml_data countries_data("countries");
+	for (const domain *country : this->get_countries()) {
+		countries_data.add_value(country->get_identifier());
+	}
+	data.add_child(std::move(countries_data));
 
 	gsml_data sites_data("sites");
 	for (const site *site : map::get()->get_sites()) {
@@ -386,7 +397,7 @@ QCoro::Task<void> game::load(const std::filesystem::path &filepath)
 
 		data.process(this);
 
-		for (const domain *domain : this->get_countries()) {
+		for (const domain *domain : this->get_domains()) {
 			domain->get_game_data()->calculate_territory_rect();
 		}
 
@@ -470,7 +481,7 @@ QCoro::Task<void> game::start_coro()
 			site->get_game_data()->calculate_commodity_outputs();
 		}
 
-		for (const domain *domain : this->get_countries()) {
+		for (const domain *domain : this->get_domains()) {
 			domain_game_data *domain_game_data = domain->get_game_data();
 			domain_government *domain_government = domain->get_government();
 
@@ -532,6 +543,7 @@ QCoro::Task<void> game::clear_coro()
 		co_await this->reset_game_data();
 
 		this->scenario = nullptr;
+		this->domains.clear();
 		this->countries.clear();
 		this->wonder_countries.clear();
 		this->prices.clear();
@@ -662,11 +674,11 @@ QCoro::Task<void> game::apply_history(const QDate &start_date)
 			domain->get_game_data()->apply_ruler_history(start_date);
 		}
 
-		for (const domain *domain : this->get_countries()) {
+		for (const domain *domain : this->get_domains()) {
 			co_await domain->get_game_data()->apply_history(start_date);
 		}
 
-		for (const domain *domain : this->get_countries()) {
+		for (const domain *domain : this->get_domains()) {
 			//diplomatic history has to be applied after main domain history application, so that tiers are correct when setting vassalage relationships
 			co_await domain->get_game_data()->apply_diplomatic_history();
 		}
@@ -674,7 +686,7 @@ QCoro::Task<void> game::apply_history(const QDate &start_date)
 		for (const cultural_group *cultural_group : cultural_group::get_all()) {
 			const culture_history *culture_history = cultural_group->get_history();
 
-			for (const domain *domain : this->get_countries()) {
+			for (const domain *domain : this->get_domains()) {
 				if (!domain->get_game_data()->get_culture()->is_part_of_group(cultural_group)) {
 					continue;
 				}
@@ -686,7 +698,7 @@ QCoro::Task<void> game::apply_history(const QDate &start_date)
 		for (const culture *culture : culture::get_all()) {
 			const culture_history *culture_history = culture->get_history();
 
-			for (const domain *domain : this->get_countries()) {
+			for (const domain *domain : this->get_domains()) {
 				if (domain->get_game_data()->get_culture() != culture) {
 					continue;
 				}
@@ -695,7 +707,7 @@ QCoro::Task<void> game::apply_history(const QDate &start_date)
 			}
 		}
 
-		for (const domain *domain : this->get_countries()) {
+		for (const domain *domain : this->get_domains()) {
 			domain_game_data *domain_game_data = domain->get_game_data();
 
 			if (domain_game_data->get_overlord() != nullptr) {
@@ -728,7 +740,7 @@ QCoro::Task<void> game::apply_history(const QDate &start_date)
 		co_await this->apply_population_history();
 
 		//set stored commodities from history after the initial buildings have been constructed, so that buildings granting storage capacity (e.g. warehouses) will already be present
-		for (const domain *domain : this->get_countries()) {
+		for (const domain *domain : this->get_domains()) {
 			for (const auto &[commodity, quantity] : domain->get_history()->get_commodities()) {
 				domain->get_economy()->set_stored_commodity(commodity, quantity);
 			}
@@ -988,7 +1000,7 @@ QCoro::Task<void> game::apply_sites()
 	}
 
 	//set the capitals here, so that building requirements that require a capital can be fulfilled
-	for (const domain *domain : this->get_countries()) {
+	for (const domain *domain : this->get_domains()) {
 		co_await domain->get_game_data()->set_capital(nullptr);
 		co_await domain->get_game_data()->choose_capital();
 	}
@@ -1623,7 +1635,7 @@ QCoro::Task<void> game::on_setup_finished()
 		route->get_game_data()->check_active();
 	}
 
-	for (const domain *domain : this->get_countries()) {
+	for (const domain *domain : this->get_domains()) {
 		domain_game_data *domain_game_data = domain->get_game_data();
 		//domain_economy *domain_economy = domain->get_economy();
 		domain_government *domain_government = domain->get_government();
@@ -1660,13 +1672,14 @@ QCoro::Task<void> game::on_setup_finished()
 
 	this->calculate_country_ranks();
 
-	for (const domain *domain : this->get_countries()) {
+	for (const domain *domain : this->get_domains()) {
 		domain_game_data *domain_game_data = domain->get_game_data();
 		domain_game_data->calculate_territory_rect();
 	}
 
 	co_await this->create_map_images();
 
+	emit domains_changed();
 	emit countries_changed();
 
 	for (const character *character : character::get_all()) {
@@ -1692,7 +1705,7 @@ QCoro::Task<void> game::do_turn_coro()
 			province->reset_turn_data();
 		}
 
-		for (domain *domain : this->get_countries()) {
+		for (domain *domain : this->get_domains()) {
 			domain->reset_turn_data();
 
 			domain->get_economy()->calculate_commodity_needs();
@@ -1705,7 +1718,7 @@ QCoro::Task<void> game::do_turn_coro()
 			old_offers[domain] = domain->get_economy()->get_offers();
 		}
 
-		for (const domain *domain : this->get_countries()) {
+		for (const domain *domain : this->get_domains()) {
 			co_await domain->get_game_data()->do_turn();
 
 			domain->get_economy()->prepare_bids();
@@ -1714,7 +1727,7 @@ QCoro::Task<void> game::do_turn_coro()
 
 		this->do_trade();
 
-		for (const domain *domain : this->get_countries()) {
+		for (const domain *domain : this->get_domains()) {
 			//do country events after processing the turn for each country, so that e.g. events won't refer to a scope which no longer exists by the time the player gets to choose an option
 			co_await domain->get_game_data()->do_events();
 
@@ -1752,7 +1765,7 @@ QCoro::Task<void> game::do_turn_coro()
 			engine_interface::get()->add_notification("Technology Spread", interior_minister_portrait, std::format("{}, new technologies have spread to our provinces!\n\nSpread Technologies:{}", game::get()->get_player_country()->get_game_data()->get_form_of_address(), spread_technologies_str));
 		}
 
-		for (const domain *domain : this->get_countries()) {
+		for (const domain *domain : this->get_domains()) {
 			if (domain->get_game_data()->get_province_count() == 0) {
 				continue;
 			}
@@ -1802,7 +1815,7 @@ QCoro::Task<void> game::do_turn_coro()
 
 void game::do_trade()
 {
-	std::vector<metternich::domain *> trade_domains = this->get_countries();
+	std::vector<metternich::domain *> trade_domains = this->get_domains();
 
 	std::erase_if(trade_domains, [this](const domain *domain) {
 		if (domain->get_game_data()->is_under_anarchy()) {
@@ -1913,6 +1926,50 @@ std::string game::year_range_to_labeled_string(const int start_year, const int e
 	return date::year_range_to_labeled_string(start_year, end_year);
 }
 
+QVariantList game::get_domains_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_domains());
+}
+
+void game::add_domain(domain *domain)
+{
+	this->domains.push_back(domain);
+
+	if (this->is_running()) {
+		emit domains_changed();
+	}
+}
+
+QCoro::Task<void> game::remove_domain(domain *domain)
+{
+	for (const character *character : domain->get_game_data()->get_characters()) {
+		character->get_game_data()->set_domain(nullptr);
+	}
+
+	domain->get_military()->clear_leaders();
+
+	for (const metternich::domain *other_domain : this->get_domains()) {
+		domain_game_data *other_domain_game_data = other_domain->get_game_data();
+
+		if (other_domain_game_data->get_diplomacy_state(domain) != diplomacy_state::peace) {
+			co_await other_domain_game_data->set_diplomacy_state(domain, diplomacy_state::peace);
+			co_await domain->get_game_data()->set_diplomacy_state(other_domain, diplomacy_state::peace);
+		}
+
+		if (other_domain_game_data->get_consulate(domain) != nullptr) {
+			other_domain_game_data->set_consulate(domain, nullptr);
+		}
+	}
+
+	std::erase(this->domains, domain);
+
+	if (this->is_running()) {
+		emit domains_changed();
+	}
+
+	co_await domain->reset_game_data(true);
+}
+
 QVariantList game::get_countries_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_countries());
@@ -1927,39 +1984,18 @@ void game::add_country(domain *domain)
 	}
 }
 
-QCoro::Task<void> game::remove_country(domain *domain)
+void game::remove_country(domain *domain)
 {
-	for (const character *character : domain->get_game_data()->get_characters()) {
-		character->get_game_data()->set_domain(nullptr);
-	}
-
-	domain->get_military()->clear_leaders();
-
-	for (const metternich::domain *other_domain : this->get_countries()) {
-		domain_game_data *other_domain_game_data = other_domain->get_game_data();
-
-		if (other_domain_game_data->get_diplomacy_state(domain) != diplomacy_state::peace) {
-			co_await other_domain_game_data->set_diplomacy_state(domain, diplomacy_state::peace);
-			co_await domain->get_game_data()->set_diplomacy_state(other_domain, diplomacy_state::peace);
-		}
-
-		if (other_domain_game_data->get_consulate(domain) != nullptr) {
-			other_domain_game_data->set_consulate(domain, nullptr);
-		}
-	}
-
 	std::erase(this->countries, domain);
 
 	if (this->is_running()) {
 		emit countries_changed();
 	}
-
-	co_await domain->reset_game_data(true);
 }
 
 void game::calculate_country_ranks()
 {
-	std::vector<metternich::domain *> countries = game::get()->get_countries();
+	std::vector<metternich::domain *> countries = game::get()->get_domains();
 
 	if (countries.empty()) {
 		return;
@@ -2066,7 +2102,7 @@ QCoro::Task<void> game::create_diplomatic_map_image()
 	}
 
 	std::vector<QFuture<void>> futures;
-	for (const domain *domain : this->get_countries()) {
+	for (const domain *domain : this->get_domains()) {
 		QFuture<void> future = QtConcurrent::run([domain]() {
 			domain_game_data *domain_game_data = domain->get_game_data();
 			domain_game_data->create_diplomatic_map_image();

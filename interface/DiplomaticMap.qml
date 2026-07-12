@@ -140,7 +140,7 @@ Flickable {
 	
 	//icons for domains which don't own any provinces
 	Repeater {
-		model: metternich.game.countries
+		model: metternich.game.domains
 		
 		Item {
 			id: site_icon_area

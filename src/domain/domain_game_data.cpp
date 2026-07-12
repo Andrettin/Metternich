@@ -1480,11 +1480,15 @@ QCoro::Task<void> domain_game_data::add_province(const province *province)
 		this->calculate_territory_rect();
 	}
 
-	if (this->is_alive() && !was_alive) {
+	if (this->get_provinces().size() == 1) {
 		game::get()->add_country(this->domain);
 	}
 
-	for (const metternich::domain *domain : game::get()->get_countries()) {
+	if (this->is_alive() && !was_alive) {
+		game::get()->add_domain(this->domain);
+	}
+
+	for (const metternich::domain *domain : game::get()->get_domains()) {
 		if (domain == this->domain) {
 			continue;
 		}
@@ -1534,7 +1538,7 @@ QCoro::Task<void> domain_game_data::remove_province(const province *province)
 	}
 
 	//remove this as a known country for other countries, if they no longer have explored tiles in this country's territory
-	for (const metternich::domain *domain : game::get()->get_countries()) {
+	for (const metternich::domain *domain : game::get()->get_domains()) {
 		if (domain == this->domain) {
 			continue;
 		}
@@ -1569,8 +1573,12 @@ QCoro::Task<void> domain_game_data::remove_province(const province *province)
 		}
 	}
 
+	if (this->get_provinces().empty()) {
+		game::get()->remove_country(this->domain);
+	}
+
 	if (!this->is_alive()) {
-		co_await game::get()->remove_country(this->domain);
+		co_await game::get()->remove_domain(this->domain);
 	}
 
 	if (game::get()->is_running()) {
@@ -1639,7 +1647,7 @@ QCoro::Task<void> domain_game_data::add_site(const site *site)
 	this->sites.push_back(site);
 
 	if (this->is_alive() && !was_alive) {
-		game::get()->add_country(this->domain);
+		game::get()->add_domain(this->domain);
 	}
 
 	co_await this->on_site_gained(site, 1);
@@ -1664,7 +1672,7 @@ QCoro::Task<void> domain_game_data::remove_site(const site *site)
 	co_await this->on_site_gained(site, -1);
 
 	//remove this as a known country for other countries, if they no longer have explored tiles in this country's territory
-	for (const metternich::domain *domain : game::get()->get_countries()) {
+	for (const metternich::domain *domain : game::get()->get_domains()) {
 		if (domain == this->domain) {
 			continue;
 		}
@@ -1700,7 +1708,7 @@ QCoro::Task<void> domain_game_data::remove_site(const site *site)
 	}
 
 	if (!this->is_alive()) {
-		co_await game::get()->remove_country(this->domain);
+		co_await game::get()->remove_domain(this->domain);
 	}
 
 	if (game::get()->is_running()) {

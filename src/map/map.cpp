@@ -403,7 +403,7 @@ QCoro::Task<void> map::set_tile_resource_discovered(const QPoint &tile_pos, cons
 	tile->get_site()->get_game_data()->set_resource_discovered(discovered);
 
 	if (discovered && resource->get_discovery_technology() != nullptr && tile->get_owner() != nullptr) {
-		for (const domain *domain : game::get()->get_countries()) {
+		for (const domain *domain : game::get()->get_domains()) {
 			domain_game_data *domain_game_data = domain->get_game_data();
 			domain_technology *domain_technology = domain->get_technology();
 

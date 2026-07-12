@@ -520,7 +520,7 @@ MenuBase {
 				diplomatic_map.ocean_suffix = selected_scenario.map_template.identifier
 			}
 			
-			if (selected_country !== null && !metternich.game.countries.includes(selected_country)) {
+			if (selected_country !== null && !metternich.game.domains.includes(selected_country)) {
 				diplomatic_map.selected_country = null
 			}
 			
@@ -554,7 +554,7 @@ MenuBase {
 		if (selected_scenario.default_domains.length > 0) {
 			diplomatic_map.selected_country = selected_scenario.default_domains[random(selected_scenario.default_domains.length)]
 		} else {
-			diplomatic_map.selected_country = metternich.game.countries[random(metternich.game.countries.length)]
+			diplomatic_map.selected_country = metternich.game.domains[random(metternich.game.domains.length)]
 		}
 		diplomatic_map.center_on_selected_country_capital()
 	}

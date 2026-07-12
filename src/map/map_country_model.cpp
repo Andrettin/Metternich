@@ -31,7 +31,7 @@ void map_country_model::reset_model()
 		country_province_geopolygons[province->get_game_data()->get_owner()].push_back(geopolygon);
 	}
 
-	for (const domain *domain : game::get()->get_countries()) {
+	for (const domain *domain : game::get()->get_domains()) {
 		this->create_country_geopolygons(domain, country_province_geopolygons[domain]);
 	}
 

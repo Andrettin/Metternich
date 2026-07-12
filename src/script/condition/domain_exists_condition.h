@@ -28,7 +28,7 @@ public:
 		Q_UNUSED(scope);
 		Q_UNUSED(ctx);
 
-		return vector::contains(game::get()->get_countries(), this->domain);
+		return vector::contains(game::get()->get_domains(), this->domain);
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override

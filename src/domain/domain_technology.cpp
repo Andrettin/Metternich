@@ -754,7 +754,7 @@ QCoro::Task<void> domain_technology::on_technology_researched(const technology *
 		bool first_to_research = true;
 
 		//technology grants a free technology for the first one to research it
-		for (const metternich::domain *domain : game::get()->get_countries()) {
+		for (const metternich::domain *domain : game::get()->get_domains()) {
 			if (domain == this->domain) {
 				continue;
 			}
