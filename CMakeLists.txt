@@ -747,6 +747,7 @@ set(script_condition_HDRS
 	src/script/condition/province_count_condition.h
 	src/script/condition/provincial_capital_condition.h
 	src/script/condition/random_chance_condition.h
+	src/script/condition/rank_condition.h
 	src/script/condition/realm_condition.h
 	src/script/condition/region_condition.h
 	src/script/condition/religion_condition.h

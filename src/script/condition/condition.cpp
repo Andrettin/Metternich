@@ -101,6 +101,7 @@
 #include "script/condition/province_count_condition.h"
 #include "script/condition/provincial_capital_condition.h"
 #include "script/condition/random_chance_condition.h"
+#include "script/condition/rank_condition.h"
 #include "script/condition/realm_condition.h"
 #include "script/condition/region_condition.h"
 #include "script/condition/religion_condition.h"
@@ -209,6 +210,8 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			return std::make_unique<owns_site_condition>(value, condition_operator);
 		} else if (key == "province_count") {
 			return std::make_unique<province_count_condition>(value, condition_operator);
+		} else if (key == "rank") {
+			return std::make_unique<rank_condition>(value, condition_operator);
 		} else if (key == "ruler") {
 			return std::make_unique<ruler_condition>(value, condition_operator);
 		} else if (key == "subject_type") {
