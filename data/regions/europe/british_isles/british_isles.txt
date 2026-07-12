@@ -13,6 +13,56 @@ british_isles = {
 		-3000 = {
 			population = 0
 		}
+		
+		1066 = {
+			technology_category_period = {
+				category = army
+				period = dark_age
+			}
+			technology_category_period = {
+				category = commerce
+				period = dark_age
+			}
+			technology_category_period = {
+				category = culture
+				period = dark_age
+			}
+			technology_category_period = {
+				category = industry
+				period = dark_age
+			}
+			technology_category_period = {
+				category = navy
+				period = dark_age
+			}
+		}
+		
+		1337 = {
+			technology_category_period = {
+				category = army
+				period = feudal_age
+			}
+			technology_category_period = {
+				category = commerce
+				period = feudal_age
+			}
+			technology_category_period = {
+				category = culture
+				period = feudal_age
+			}
+			technology_category_period = {
+				category = industry
+				period = feudal_age
+			}
+			technology_category_period = {
+				category = navy
+				period = feudal_age
+			}
+			technology_subcategory_period = {
+				subcategory = fortification
+				period = castle_age
+			}
+		}
 	}
 }
 

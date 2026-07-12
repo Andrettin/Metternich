@@ -13,12 +13,77 @@ italy = { #the territory of modern Italy
 			population = 7000000 #Italy had a population of 7,000,000 in 1 AD; Source: Angus Maddison, "Statistics on World Population, GDP and Per Capita GDP, 1-2008 AD", 2010.
 		}
 		
+		769 = {
+			technology_category_period = {
+				category = commerce
+				period = dark_age
+			}
+			technology_category_period = {
+				category = culture
+				period = dark_age
+			}
+			technology_category_period = {
+				category = industry
+				period = dark_age
+			}
+			technology_category_period = {
+				category = navy
+				period = dark_age
+			}
+			technology_subcategory_period = {
+				subcategory = fortification
+				period = dark_age
+			}
+		}
+		
 		1000 = {
 			population = 5000000 #Italy had a population of 5,000,000 in 1000 AD; Source: Angus Maddison, "Statistics on World Population, GDP and Per Capita GDP, 1-2008 AD", 2010.
 		}
 		
+		1066 = {
+			technology_category_period = {
+				category = army
+				period = dark_age
+			}
+			technology_subcategory_period = {
+				subcategory = trade_practices
+				period = feudal_age
+			}
+		}
+		
 		1301 = {
 			population = 11000000 #11 million people lived in Italy during the 14th century; Source: Josiah Cox Russell, "Medieval Population", 1937, p. 504.
+		}
+		
+		1337 = {
+			technology_category_period = {
+				category = army
+				period = feudal_age
+			}
+			technology_category_period = {
+				category = commerce
+				period = feudal_age
+			}
+			technology_category_period = {
+				category = culture
+				period = feudal_age
+			}
+			technology_category_period = {
+				category = industry
+				period = feudal_age
+			}
+			technology_category_period = {
+				category = navy
+				period = feudal_age
+			}
+			technology_subcategory_period = {
+				subcategory = fortification
+				period = castle_age
+			}
+			technology_subcategory_period = {
+				subcategory = trade_practices
+				period = castle_age
+			}
 		}
 		
 		1500 = {
