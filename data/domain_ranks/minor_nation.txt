@@ -1,4 +1,15 @@
 minor_nation = {
 	name = "Minor Nation"
 	priority = 1
+	conditions = {
+		province_count >= 1
+	}
+}
+
+minor_domain = {
+	name = "Minor Domain"
+	priority = 1
+	conditions = {
+		province_count == 0
+	}
 }
