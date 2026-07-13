@@ -69,12 +69,17 @@ void technology::initialize_all()
 		return lhs->get_identifier() < rhs->get_identifier();
 	};
 
+	const auto named_data_entry_sort_function = [&sort_function](const named_data_entry *lhs, const named_data_entry *rhs) {
+		return sort_function(static_cast<const technology *>(lhs), static_cast<const technology *>(rhs));
+	};
+
 	technology::sort_instances(sort_function);
 	std::sort(technology::top_level_technologies.begin(), technology::top_level_technologies.end(), sort_function);
 
 	for (technology *technology : technology::get_all()) {
 		if (!technology->child_technologies.empty()) {
 			std::sort(technology->child_technologies.begin(), technology->child_technologies.end(), sort_function);
+			std::sort(technology->get_tree_children().begin(), technology->get_tree_children().end(), named_data_entry_sort_function);
 		}
 	}
 
