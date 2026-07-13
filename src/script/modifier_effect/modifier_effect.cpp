@@ -213,10 +213,6 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 		} else if (key.ends_with(commodity_bonus_per_population_suffix) && commodity::try_get(key.substr(0, key.size() - commodity_bonus_per_population_suffix.size())) != nullptr) {
 			const commodity *commodity = commodity::get(key.substr(0, key.size() - commodity_bonus_per_population_suffix.size()));
 			return std::make_unique<commodity_bonus_per_population_modifier_effect>(commodity, value);
-		} else if (key.ends_with(bonus_suffix) && population_type::try_get(key.substr(0, key.size() - bonus_suffix.size())) != nullptr) {
-			const population_type *population_type = population_type::get(key.substr(0, key.size() - bonus_suffix.size()));
-
-			return std::make_unique<population_type_bonus_modifier_effect>(population_type, value);
 		}
 		
 		size_t infix_pos = key.find(commodity_per_building_infix);
@@ -281,6 +277,10 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			const commodity *commodity = commodity::get(key.substr(0, commodity_identifier_size));
 
 			return std::make_unique<commodity_bonus_for_tile_threshold_modifier_effect<scope_type>>(commodity, value);
+		} else if (key.ends_with(bonus_suffix) && population_type::try_get(key.substr(0, key.size() - bonus_suffix.size())) != nullptr) {
+			const population_type *population_type = population_type::get(key.substr(0, key.size() - bonus_suffix.size()));
+
+			return std::make_unique<population_type_bonus_modifier_effect<scope_type>>(population_type, value);
 		}
 	}
 

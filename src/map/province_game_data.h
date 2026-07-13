@@ -3,6 +3,7 @@
 #include "database/data_entry_container.h"
 #include "economy/commodity_container.h"
 #include "economy/resource_container.h"
+#include "population/population_type_container.h"
 #include "script/scripted_modifier_container.h"
 #include "technology/technology_container.h"
 #include "unit/military_unit_type_container.h"
@@ -322,6 +323,26 @@ public:
 	}
 
 	[[nodiscard]] QCoro::Task<void> on_population_type_size_changed(const population_type *population_type, const int64_t change);
+
+	const centesimal_int &get_population_type_modifier_multiplier(const population_type *population_type) const
+	{
+		const auto find_iterator = this->population_type_modifier_multipliers.find(population_type);
+
+		if (find_iterator != this->population_type_modifier_multipliers.end()) {
+			return find_iterator->second;
+		}
+
+		static const centesimal_int one(1);
+		return one;
+	}
+
+	[[nodiscard]] QCoro::Task<void> set_population_type_modifier_multiplier(const population_type *population_type, const centesimal_int &value);
+
+	[[nodiscard]] QCoro::Task<void> change_population_type_modifier_multiplier(const population_type *population_type, const centesimal_int &change)
+	{
+		co_await this->set_population_type_modifier_multiplier(population_type, this->get_population_type_modifier_multiplier(population_type) + change);
+	}
+
 
 	int64_t get_employment_capacity_modifier(const employment_type *employment_type) const
 	{
@@ -646,6 +667,7 @@ private:
 	scripted_province_modifier_map<int> scripted_modifiers;
 	std::vector<population_unit *> population_units;
 	qunique_ptr<metternich::population> population;
+	population_type_map<centesimal_int> population_type_modifier_multipliers;
 	data_entry_map<employment_type, int64_t> employment_capacity_modifiers;
 	std::vector<military_unit *> military_units;
 	std::map<military_unit_category, int> military_unit_category_counts;

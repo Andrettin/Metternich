@@ -1108,11 +1108,11 @@ public:
 		return one;
 	}
 
-	void set_population_type_modifier_multiplier(const population_type *type, const centesimal_int &value);
+	[[nodiscard]] QCoro::Task<void> set_population_type_modifier_multiplier(const population_type *type, const centesimal_int &value);
 
-	void change_population_type_modifier_multiplier(const population_type *type, const centesimal_int &change)
+	[[nodiscard]] QCoro::Task<void> change_population_type_modifier_multiplier(const population_type *type, const centesimal_int &change)
 	{
-		this->set_population_type_modifier_multiplier(type, this->get_population_type_modifier_multiplier(type) + change);
+		co_await this->set_population_type_modifier_multiplier(type, this->get_population_type_modifier_multiplier(type) + change);
 	}
 
 	int get_building_cost_efficiency_modifier() const

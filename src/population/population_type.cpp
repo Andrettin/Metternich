@@ -160,6 +160,10 @@ void population_type::check() const
 		if (this->get_base_modifier_population_size() == 0) {
 			throw std::runtime_error(std::format("Population type \"{}\" has a domain or province modifier, but has no base modifier population size.", this->get_identifier()));
 		}
+
+		if (this->get_max_modifier_multiplier() == 0) {
+			throw std::runtime_error(std::format("Population type \"{}\" has a domain or province modifier, but has no maximum modifier multiplier.", this->get_identifier()));
+		}
 	}
 
 	for (const auto &[commodity, need] : this->get_life_needs()) {

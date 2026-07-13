@@ -134,6 +134,10 @@ void province_game_data::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->technologies.insert(technology::get(value));
 		}
+	} else if (tag == "population_type_modifier_multipliers") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->population_type_modifier_multipliers[population_type::get(property.get_key())] = centesimal_int(property.get_value());
+		});
 	} else if (tag == "employment_capacity_modifiers") {
 		scope.for_each_property([this](const gsml_property &property) {
 			this->employment_capacity_modifiers[employment_type::get(property.get_key())] = std::stoll(property.get_value());
@@ -213,6 +217,14 @@ gsml_data province_game_data::to_gsml_data() const
 			technologies_data.add_value(technology->get_identifier());
 		}
 		data.add_child(std::move(technologies_data));
+	}
+
+	if (!this->population_type_modifier_multipliers.empty()) {
+		gsml_data population_type_modifier_multipliers_data("population_type_modifier_multipliers");
+		for (const auto &[population_type, multiplier] : this->population_type_modifier_multipliers) {
+			population_type_modifier_multipliers_data.add_property(population_type->get_identifier(), multiplier.to_string());
+		}
+		data.add_child(std::move(population_type_modifier_multipliers_data));
 	}
 
 	if (!this->employment_capacity_modifiers.empty()) {
@@ -1891,13 +1903,40 @@ QCoro::Task<void> province_game_data::on_population_type_size_changed(const popu
 	if (population_type->get_province_modifier() != nullptr) {
 		const int64_t new_population_type_size = this->get_population()->get_type_size(population_type);
 		const int64_t old_population_type_size = new_population_type_size - change;
+		const centesimal_int population_type_modifier_multiplier = this->get_population_type_modifier_multiplier(population_type);
 
-		const centesimal_int old_multiplier = centesimal_int(old_population_type_size) / population_type->get_base_modifier_population_size();
-		const centesimal_int new_multiplier = centesimal_int(new_population_type_size) / population_type->get_base_modifier_population_size();
+		const centesimal_int old_multiplier = centesimal_int::min(centesimal_int(old_population_type_size) / population_type->get_base_modifier_population_size() * population_type_modifier_multiplier, population_type->get_max_modifier_multiplier());
+		const centesimal_int new_multiplier = centesimal_int::min(centesimal_int(new_population_type_size) / population_type->get_base_modifier_population_size() * population_type_modifier_multiplier, population_type->get_max_modifier_multiplier());
 
 		co_await population_type->get_province_modifier()->apply(this->province,  -old_multiplier);
 		co_await population_type->get_province_modifier()->apply(this->province, new_multiplier);
 	}
+}
+
+
+QCoro::Task<void> province_game_data::set_population_type_modifier_multiplier(const population_type *population_type, const centesimal_int &value)
+{
+	const centesimal_int old_value = this->get_population_type_modifier_multiplier(population_type);
+
+	if (value == old_value) {
+		co_return;
+	}
+
+	assert_throw(population_type->get_province_modifier() != nullptr);
+
+	if (value == 1) {
+		this->population_type_modifier_multipliers.erase(population_type);
+	} else {
+		this->population_type_modifier_multipliers[population_type] = value;
+	}
+
+	const int64_t population_type_size = this->get_population()->get_type_size(population_type);
+
+	const centesimal_int old_multiplier = centesimal_int::min(centesimal_int(population_type_size) / population_type->get_base_modifier_population_size() * old_value, population_type->get_max_modifier_multiplier());
+	const centesimal_int new_multiplier = centesimal_int::min(centesimal_int(population_type_size) / population_type->get_base_modifier_population_size() * value, population_type->get_max_modifier_multiplier());
+
+	co_await population_type->get_province_modifier()->apply(this->province, -old_multiplier);
+	co_await population_type->get_province_modifier()->apply(this->province, new_multiplier);
 }
 
 void province_game_data::set_employment_capacity_modifier(const employment_type *employment_type, const int64_t modifier)

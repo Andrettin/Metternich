@@ -4676,12 +4676,12 @@ void domain_game_data::set_transporter_type_stat_modifier(const transporter_type
 	}
 }
 
-void domain_game_data::set_population_type_modifier_multiplier(const population_type *type, const centesimal_int &value)
+QCoro::Task<void> domain_game_data::set_population_type_modifier_multiplier(const population_type *type, const centesimal_int &value)
 {
 	const centesimal_int old_value = this->get_population_type_modifier_multiplier(type);
 
 	if (value == old_value) {
-		return;
+		co_return;
 	}
 
 	assert_throw(type->get_domain_modifier() != nullptr);

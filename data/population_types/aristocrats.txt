@@ -6,6 +6,7 @@ aristocrats = {
 	icon = aristocrat
 	small_icon = aristocrat_small
 	strata = upper
+	max_modifier_multiplier = 5
 	base_modifier_population_size = 100000
 	province_modifier = {
 		resource_output_modifier = 10
