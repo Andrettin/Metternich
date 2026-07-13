@@ -59,9 +59,12 @@ void population_type::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "country_modifier") {
-		this->country_modifier = std::make_unique<modifier<const domain>>();
-		this->country_modifier->process_gsml_data(scope);
+	if (tag == "province_modifier") {
+		this->province_modifier = std::make_unique<modifier<const province>>();
+		this->province_modifier->process_gsml_data(scope);
+	} else if (tag == "domain_modifier") {
+		this->domain_modifier = std::make_unique<modifier<const domain>>();
+		this->domain_modifier->process_gsml_data(scope);
 	} else if (tag == "equivalent_population_types") {
 		for (const std::string &value : values) {
 			this->equivalent_population_types.push_back(population_type::get(value));
@@ -153,9 +156,9 @@ void population_type::check() const
 		throw std::runtime_error(std::format("Population type \"{}\" has an output commodity, but has no output value.", this->get_identifier()));
 	}
 
-	if (this->get_country_modifier() != nullptr) {
-		if (this->get_max_modifier_multiplier() == 0) {
-			throw std::runtime_error(std::format("Population type \"{}\" has a country modifier, but has no maximum modifier multiplier.", this->get_identifier()));
+	if (this->get_domain_modifier() != nullptr || this->get_province_modifier() != nullptr) {
+		if (this->get_base_modifier_population_size() == 0) {
+			throw std::runtime_error(std::format("Population type \"{}\" has a domain or province modifier, but has no base modifier population size.", this->get_identifier()));
 		}
 	}
 
@@ -178,9 +181,9 @@ void population_type::check() const
 	}
 }
 
-QString population_type::get_country_modifier_string(const metternich::domain *domain) const
+QString population_type::get_domain_modifier_string(const metternich::domain *domain) const
 {
-	if (this->get_output_commodity() == nullptr && this->get_country_modifier() == nullptr) {
+	if (this->get_output_commodity() == nullptr && this->get_domain_modifier() == nullptr) {
 		return QString();
 	}
 

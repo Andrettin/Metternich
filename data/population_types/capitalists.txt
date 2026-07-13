@@ -6,9 +6,9 @@ capitalists = {
 	icon = rifle_infantry_light
 	small_icon = rifle_infantry_light_small
 	strata = upper
-	max_modifier_multiplier = 5
+	base_modifier_population_size = 100000
 	required_game_rule = additional_population_types
-	country_modifier = {
+	province_modifier = {
 		industrial_output_modifier = 10
 	}
 	phenotype_icons = {

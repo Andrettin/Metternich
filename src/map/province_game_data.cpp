@@ -77,6 +77,7 @@ province_game_data::province_game_data(const metternich::province *province)
 	: province(province)
 {
 	this->population = make_qunique<metternich::population>();
+	connect(this->get_population(), &population::type_size_changed, this, &province_game_data::on_population_type_size_changed);
 	connect(this->get_population(), &population::main_culture_changed, this, &province_game_data::on_population_main_culture_changed);
 	connect(this->get_population(), &population::main_religion_changed, this, &province_game_data::on_population_main_religion_changed);
 
@@ -1883,6 +1884,20 @@ void province_game_data::remove_population_unit(population_unit *population_unit
 void province_game_data::clear_population_units()
 {
 	this->population_units.clear();
+}
+
+QCoro::Task<void> province_game_data::on_population_type_size_changed(const population_type *population_type, const int64_t change)
+{
+	if (population_type->get_province_modifier() != nullptr) {
+		const int64_t new_population_type_size = this->get_population()->get_type_size(population_type);
+		const int64_t old_population_type_size = new_population_type_size - change;
+
+		const centesimal_int old_multiplier = centesimal_int(old_population_type_size) / population_type->get_base_modifier_population_size();
+		const centesimal_int new_multiplier = centesimal_int(new_population_type_size) / population_type->get_base_modifier_population_size();
+
+		co_await population_type->get_province_modifier()->apply(this->province,  -old_multiplier);
+		co_await population_type->get_province_modifier()->apply(this->province, new_multiplier);
+	}
 }
 
 void province_game_data::set_employment_capacity_modifier(const employment_type *employment_type, const int64_t modifier)

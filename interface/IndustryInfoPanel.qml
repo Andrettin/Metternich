@@ -40,7 +40,7 @@ Rectangle {
 			
 			readonly property var population_type: model.modelData.key
 			readonly property int population_count: model.modelData.value
-			readonly property string modifier_string: population_type.get_country_modifier_string(country)
+			readonly property string modifier_string: population_type.get_domain_modifier_string(country)
 		}
 	}
 	

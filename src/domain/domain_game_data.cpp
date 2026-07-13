@@ -4684,7 +4684,7 @@ void domain_game_data::set_population_type_modifier_multiplier(const population_
 		return;
 	}
 
-	assert_throw(type->get_country_modifier() != nullptr);
+	assert_throw(type->get_domain_modifier() != nullptr);
 
 	if (value == 1) {
 		this->population_type_modifier_multipliers.erase(type);

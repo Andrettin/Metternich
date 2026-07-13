@@ -321,6 +321,8 @@ public:
 		return this->population.get();
 	}
 
+	[[nodiscard]] QCoro::Task<void> on_population_type_size_changed(const population_type *population_type, const int64_t change);
+
 	int64_t get_employment_capacity_modifier(const employment_type *employment_type) const
 	{
 		const auto find_iterator = this->employment_capacity_modifiers.find(employment_type);
