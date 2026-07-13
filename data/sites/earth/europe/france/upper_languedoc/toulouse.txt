@@ -3,6 +3,7 @@ toulouse = {
 	world = earth
 	geocoordinate = { 1.44992671571 43.61995892240 } #from Natural Earth
 	type = holding
+	holding_type = castle
 	province = upper_languedoc
 	cultural_names = {
 		frankish = "Tolosa"
@@ -17,8 +18,8 @@ toulouse = {
 	
 	history = {
 		395 = {
-			buildings += cathedral #Toulouse was the seat of a bishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
-			holding_type = city
+			#buildings += cathedral #Toulouse was the seat of a bishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
+			developed = true
 		}
 		
 		1230 = {
@@ -26,7 +27,7 @@ toulouse = {
 		}
 		
 		1360 = {
-			#holding_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			#existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 		
 		1836 = {
