@@ -3,10 +3,10 @@ chained_leather_armor = {
 	subcategory = armor
 	portrait = helmet
 	icon = clothing
-	period = classical_age
+	period = bronze_age
 	prerequisites = {
 		soft_leather_armor #seems reasonable
-		road_building #to place it in the appropriate period
+		short_sword #to place it in the appropriate period
 	}
 	discovery_mean_time_to_happen = {
 		months = 100
@@ -21,7 +21,7 @@ light_chain_mail = {
 	subcategory = armor
 	portrait = helmet
 	icon = clothing
-	period = dark_age
+	period = iron_age
 	prerequisites = {
 		chained_leather_armor
 		scale_mail
@@ -39,10 +39,9 @@ chain_mail = {
 	subcategory = armor
 	portrait = helmet
 	icon = clothing
-	period = feudal_age
+	period = civic_age
 	prerequisites = {
 		light_chain_mail
-		feudalism #seems reasonable
 	}
 	discovery_mean_time_to_happen = {
 		months = 500
@@ -221,6 +220,7 @@ full_chain_mail = {
 	period = castle_age
 	prerequisites = {
 		chain_mail
+		boiled_leather_armor #to place it in the appropriate period
 	}
 	discovery_mean_time_to_happen = {
 		months = 1000
