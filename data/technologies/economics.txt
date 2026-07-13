@@ -1,0 +1,13 @@
+early_classical_theory_and_critique = {
+	name = "Early Classical Theory and Critique"
+	subcategory = economic_thought
+	portrait = coinage
+	icon = chest
+	period = revolutionary_age
+	prerequisites = {
+		enlightenment #seems reasonable, and to place it in the appropriate period
+	}
+	modifier = {
+		capitalist_bonus = 2
+	}
+}

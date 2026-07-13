@@ -4,6 +4,12 @@ commerce_institutions = {
 	icon = chest
 }
 
+economic_thought = {
+	name = "Economic Thought"
+	category = commerce
+	icon = book_red
+}
+
 fairs_and_routes = {
 	name = "Fairs and Routes"
 	category = commerce
