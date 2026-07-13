@@ -24,7 +24,7 @@ banded_mail = {
 	period = dark_age
 	prerequisites = {
 		scale_mail
-		longspear #to place it in the appropriate period
+		defensive_terrain #to place it in the appropriate period
 	}
 	discovery_mean_time_to_happen = {
 		months = 250

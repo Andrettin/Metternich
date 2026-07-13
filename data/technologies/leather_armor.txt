@@ -172,7 +172,7 @@ reinforced_leather_armor = {
 	period = dark_age
 	prerequisites = {
 		soft_leather_armor
-		longspear #to place it in the appropriate period
+		defensive_terrain #to place it in the appropriate period
 	}
 	discovery_mean_time_to_happen = {
 		months = 100
