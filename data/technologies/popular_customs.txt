@@ -4,6 +4,9 @@ divine_duty = {
 	portrait = engineering
 	icon = labor
 	period = classical_age
+	prerequisites = {
+		dairy_farming #to place it in the appropriate period
+	}
 	discovery_mean_time_to_happen = {
 		months = 75
 	}

@@ -12,6 +12,9 @@ aristotelian_logic = {
 	portrait = engineering
 	icon = philosophy
 	period = classical_age
+	prerequisites = {
+		dairy_farming #to place it in the appropriate period
+	}
 	discovery_effects = {
 		domain = {
 			regency += 25

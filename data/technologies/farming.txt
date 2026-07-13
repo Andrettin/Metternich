@@ -4,6 +4,9 @@ two_field_system = {
 	portrait = engineering
 	icon = grain
 	period = classical_age
+	prerequisites = {
+		dairy_farming #to place it in the appropriate period
+	}
 	modifier = {
 		agricultural_output_modifier = 4
 	}
@@ -102,6 +105,9 @@ wood_plow = {
 	portrait = engineering
 	icon = grain
 	period = classical_age
+	prerequisites = {
+		dairy_farming #to place it in the appropriate period
+	}
 	modifier = {
 		agricultural_output_modifier = 3
 	}

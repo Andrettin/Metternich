@@ -3,7 +3,8 @@ poultry_domestication = {
 	subcategory = cattle_herding
 	portrait = engineering
 	icon = cattle
-	period = classical_age
+	period = stone_age
+	year = -10000 #the wild junglefowl (ancestor of chickens) was domesticated in South Asia before 10,000 BC; Source: "History of the World Map by Map", 2023, pp. 24-25.
 	discovery_mean_time_to_happen = {
 		months = 50
 	}
@@ -17,7 +18,8 @@ goatherding = {
 	subcategory = cattle_herding
 	portrait = engineering
 	icon = cattle
-	period = dark_age
+	period = tool_age
+	year = -10000 #sheeps and goats were domesticated in the Near East by 10,000 BC; Source: "History of the World Map by Map", 2023, pp. 24-25.
 	prerequisites = {
 		poultry_domestication
 	}
@@ -34,7 +36,7 @@ meat_livestock = {
 	subcategory = cattle_herding
 	portrait = engineering
 	icon = cattle
-	period = feudal_age
+	period = copper_age
 	prerequisites = {
 		goatherding
 	}
@@ -51,7 +53,7 @@ weaving = {
 	subcategory = cattle_herding
 	portrait = engineering
 	icon = wool
-	period = castle_age
+	period = bronze_age
 	prerequisites = {
 		meat_livestock
 	}
@@ -68,7 +70,7 @@ dairy_farming = {
 	subcategory = cattle_herding
 	portrait = engineering
 	icon = cattle
-	period = renaissance_age
+	period = iron_age
 	prerequisites = {
 		weaving
 	}

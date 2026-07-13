@@ -4,6 +4,9 @@ longspear = {
 	portrait = bronze_short_sword
 	icon = saber
 	period = classical_age
+	prerequisites = {
+		dairy_farming #to place it in the appropriate period
+	}
 	discovery_mean_time_to_happen = {
 		months = 40
 	}

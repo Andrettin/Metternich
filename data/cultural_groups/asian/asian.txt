@@ -1,11 +1,4 @@
 asian = {
 	name = "Asian"
 	rank = supergroup
-	
-	history = {
-		-10000 = {
-			#the wild junglefowl (ancestor of chickens) was domesticated in South Asia before 10,000 BC; Source: "History of the World Map by Map", 2023, pp. 24-25.
-			technologies += poultry_domestication
-		}
-	}
 }
