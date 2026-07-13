@@ -5,7 +5,7 @@ chained_leather_armor = {
 	icon = clothing
 	period = classical_age
 	prerequisites = {
-		#soft_leather_armor
+		soft_leather_armor #seems reasonable
 		road_building #to place it in the appropriate period
 	}
 	discovery_mean_time_to_happen = {

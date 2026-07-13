@@ -5,6 +5,7 @@ defensive_terrain = {
 	icon = mountains
 	period = classical_age
 	prerequisites = {
+		short_bow #earlier military technology
 		road_building #to place it in the appropriate period
 	}
 	discovery_mean_time_to_happen = {

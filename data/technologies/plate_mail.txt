@@ -3,12 +3,10 @@ scale_mail = {
 	subcategory = armor
 	portrait = helmet
 	icon = clothing
-	period = classical_age
+	period = bronze_age
 	prerequisites = {
-		road_building #to place it in the appropriate period
-	}
-	prerequisites = {
-		#soft_leather_armor
+		soft_leather_armor #earlier armor technology
+		short_sword #to place it in the appropriate period
 	}
 	discovery_mean_time_to_happen = {
 		months = 125
@@ -26,6 +24,7 @@ banded_mail = {
 	period = dark_age
 	prerequisites = {
 		scale_mail
+		chained_leather_armor #to place it in the appropriate period
 	}
 	discovery_mean_time_to_happen = {
 		months = 250

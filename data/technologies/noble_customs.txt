@@ -5,6 +5,7 @@ divine_right = {
 	icon = crown_royal
 	period = classical_age
 	prerequisites = {
+		long_sword #seems reasonable
 		road_building #to place it in the appropriate period
 	}
 	discovery_mean_time_to_happen = {

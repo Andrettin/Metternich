@@ -3,9 +3,9 @@ handaxe = {
 	subcategory = infantry
 	portrait = bronze_short_sword
 	icon = saber
-	period = classical_age
+	period = tool_age
 	prerequisites = {
-		road_building #to place it in the appropriate period
+		poultry_domestication #to place it in the appropriate period
 	}
 	discovery_mean_time_to_happen = {
 		months = 40

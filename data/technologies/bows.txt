@@ -3,9 +3,9 @@ short_bow = {
 	subcategory = bows
 	portrait = engineering
 	icon = bow
-	period = classical_age
+	period = tool_age
 	prerequisites = {
-		road_building #to place it in the appropriate period
+		poultry_domestication #to place it in the appropriate period
 	}
 	discovery_mean_time_to_happen = {
 		months = 50
@@ -180,6 +180,7 @@ long_bow = {
 	period = dark_age
 	prerequisites = {
 		short_bow
+		slinged_javelin #to place it in the appropriate period
 	}
 	discovery_mean_time_to_happen = {
 		months = 100

@@ -6,6 +6,7 @@ warhammer = {
 	period = dark_age
 	prerequisites = {
 		handaxe
+		longspear #to place it in the appropriate period
 	}
 	discovery_mean_time_to_happen = {
 		months = 100

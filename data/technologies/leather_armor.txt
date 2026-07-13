@@ -3,9 +3,9 @@ soft_leather_armor = {
 	subcategory = armor
 	portrait = helmet
 	icon = clothing
-	period = classical_age
+	period = tool_age
 	prerequisites = {
-		road_building #to place it in the appropriate period
+		poultry_domestication #to place it in the appropriate period
 	}
 	discovery_mean_time_to_happen = {
 		months = 50
@@ -172,6 +172,7 @@ reinforced_leather_armor = {
 	period = dark_age
 	prerequisites = {
 		soft_leather_armor
+		chained_leather_armor #to place it in the appropriate period
 	}
 	discovery_mean_time_to_happen = {
 		months = 100

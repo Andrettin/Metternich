@@ -5,6 +5,7 @@ longspear = {
 	icon = saber
 	period = classical_age
 	prerequisites = {
+		handaxe #earlier melee weapon technology
 		road_building #to place it in the appropriate period
 	}
 	discovery_mean_time_to_happen = {

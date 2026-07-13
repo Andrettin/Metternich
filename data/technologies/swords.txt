@@ -3,9 +3,9 @@ short_sword = {
 	subcategory = swords
 	portrait = bronze_short_sword
 	icon = saber
-	period = classical_age
+	period = copper_age
 	prerequisites = {
-		road_building #to place it in the appropriate period
+		handaxe #seems reasonable
 	}
 	discovery_mean_time_to_happen = {
 		months = 75
@@ -177,7 +177,7 @@ broad_sword = {
 	subcategory = swords
 	portrait = bronze_short_sword
 	icon = saber
-	period = dark_age
+	period = bronze_age
 	prerequisites = {
 		short_sword
 	}
@@ -194,7 +194,7 @@ long_sword = {
 	subcategory = swords
 	portrait = bronze_short_sword
 	icon = saber
-	period = feudal_age
+	period = iron_age
 	prerequisites = {
 		broad_sword
 	}
@@ -367,6 +367,7 @@ bastard_sword = {
 	period = castle_age
 	prerequisites = {
 		long_sword
+		ironworks #to place it in the appropriate period
 	}
 	discovery_mean_time_to_happen = {
 		months = 1000
