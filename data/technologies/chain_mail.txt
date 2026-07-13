@@ -6,7 +6,7 @@ chained_leather_armor = {
 	period = classical_age
 	prerequisites = {
 		#soft_leather_armor
-		dairy_farming #to place it in the appropriate period
+		road_building #to place it in the appropriate period
 	}
 	discovery_mean_time_to_happen = {
 		months = 100

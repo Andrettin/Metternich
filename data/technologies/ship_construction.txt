@@ -6,6 +6,7 @@ large_ship_building = {
 	period = dark_age
 	prerequisites = {
 		road_building
+		annual_sailing #seems reasonable, and to place it on the appropriate period
 	}
 	discovery_mean_time_to_happen = {
 		months = 125
