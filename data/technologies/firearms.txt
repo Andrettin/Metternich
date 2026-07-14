@@ -8,6 +8,7 @@ flintlock_rifle = {
 	prerequisites = {
 		marksman_long_bow #earlier ranged weapon
 		arbalest #earlier ranged weapon
+		spanish_square #earlier military technology
 		manufactories #seems reasonable
 		enlightenment #to place it in the appropriate period
 	}

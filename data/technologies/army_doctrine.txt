@@ -1,3 +1,15 @@
+spanish_square = {
+	name = "Spanish Square"
+	subcategory = army_doctrine
+	portrait = helmet
+	icon = musket
+	period = gunpowder_age
+	year = 1525 #the Spanish Army based on the tercio was preeminent from 1525 to 1643; Source: "Encyclopædia Britannica", 1911, vol. 2, pp. 598-599.
+	prerequisites = {
+		unit_organization #earlier army doctrine technology
+		hierarchical_command #earlier army doctrine technology
+	}
+}
 tank_experiments = {
 	name = "Tank Experiments"
 	subcategory = army_doctrine

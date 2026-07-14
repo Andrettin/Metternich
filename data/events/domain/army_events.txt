@@ -1,0 +1,32 @@
+the_spanish_tercio = { #Source: "Encyclopædia Britannica", 1911, vol. 2, pp. 598-599.
+	name = "The Spanish Tercio"
+	portrait = helmet
+	description = "Probably the oldest line regiments in Europe are those descended from the famous <i>tercios</i>, whose formation marks the beginning of military establishments.  The great captains who led the new army soon assimilated the best points of the Swiss system, and it was the Spanish army which evolved the typical combination of pike and musket which flourished up to 1700. Outside the domain of tactics, it must be credited with an important contribution to the science of army organization, in the depot system, whereby the <i>tercios</i> in the field were continually \"fed\" and kept up to strength." #text based on that of the Encyclopædia Britannica, in the public domain
+	trigger = per_turn_pulse
+	only_once = true
+	conditions = {
+		year >= 1525 #the Spanish Army based on the tercio was preeminent from 1525 to 1643
+		or = {
+			owns_province = castille
+			owns_province = vienna #so that it can trigger for the Central Europe scenario
+		}
+		or = {
+			and = {
+				technology = spanish_square
+				year >= 1525
+				year <= 1643
+				or = {
+					domain = castille
+					domain = spain
+				}
+			}
+			can_gain_technology = spanish_square
+		}
+	}
+	option = {
+		effects = {
+			technologies += spanish_square
+			regency += 16
+		}
+	}
+}
