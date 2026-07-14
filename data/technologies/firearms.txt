@@ -89,6 +89,7 @@ bolt_action_rifle = {
 	spread_from_neighbor = false
 	prerequisites = {
 		machine_gun
+		post_napoleonic_thought #seems reasonable
 	}
 	monthly_chance = {
 		base_value = 5

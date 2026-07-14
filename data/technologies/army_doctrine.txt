@@ -10,6 +10,20 @@ spanish_square = {
 		hierarchical_command #earlier army doctrine technology
 	}
 }
+
+post_napoleonic_thought = {
+	name = "Post-Napoleonic Thought"
+	subcategory = army_doctrine
+	portrait = fort
+	icon = crossed_sabers
+	period = steam_age
+	year = 1832 #Karl von Clausewitz published On War in 1832
+	prerequisites = {
+		spanish_square #earlier army doctrine technology
+		breech_loading_rifle #to place it in the appropriate period
+	}
+}
+
 tank_experiments = {
 	name = "Tank Experiments"
 	subcategory = army_doctrine
