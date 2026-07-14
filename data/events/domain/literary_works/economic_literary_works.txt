@@ -15,6 +15,11 @@ the_wealth_of_nations = { #Source: "Encyclopædia Britannica", 1911, vol. 25, pp
 			and = {
 				technology = early_classical_theory_and_critique
 				year == 1776
+				or = {
+					domain = england
+					domain = scotland
+					domain = great_britain
+				}
 			}
 			can_gain_technology = early_classical_theory_and_critique
 		}

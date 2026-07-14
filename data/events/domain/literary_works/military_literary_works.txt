@@ -11,6 +11,11 @@ vom_kriege = { #Source: "Encyclopædia Britannica", 1911, vol. 6, p. 467.
 			and = {
 				technology = post_napoleonic_thought
 				year == 1832
+				or = {
+					domain = brandenburg
+					domain = prussia
+					domain = germany
+				}
 			}
 			can_gain_technology = post_napoleonic_thought
 		}
