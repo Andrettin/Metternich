@@ -1,0 +1,5 @@
+#cattle = {
+#	name = "Cattle"
+#	domain = land
+#	category = mace_infantry
+#}

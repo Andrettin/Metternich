@@ -1,0 +1,18 @@
+#cattle = {
+#	name = "Cattle"
+#	unit_class = cattle
+#	icon = cow
+#	stats = {
+#		hit_points = 2
+#		movement = 3
+#		defense = 2
+#		melee = 2
+#		range = 1
+#	}
+#	commodity_costs = {
+#		cattle = 200
+#	}
+#	maintenance_commodity_costs = {
+#		wealth = 1gb
+#	}
+#}
