@@ -1,7 +1,7 @@
 the_wealth_of_nations = { #Source: "Encyclopædia Britannica", 1911, vol. 25, pp. 255-256.
 	name = "The Wealth of Nations"
 	portrait = coinage
-	description = "It is on the Wealth of Nations that Adam Smith's fame rests. In his view, nature has made provision for social wellbeing by the principle of the human constitution which prompts every man to better his condition: the individual aims only at his private gain, but is \"led by an invisible hand\" to promote the public good; human institutions, by interfering with this principle in the name of the public interest, defeat their own end; but, when all systems of preference or restraint are taken away, \"the obvious and simple system of natural liberty establishes itself of its own accord\"." #text based on that of the Encyclopædia Britannica, in the public domain
+	description = "Adam Smith published his \"Inquiry into the Nature and Causes of the Wealth of Nations\" in 1776, on which his fame rests. In his view, nature has made provision for social wellbeing by the principle of the human constitution which prompts every man to better his condition: the individual aims only at his private gain, but is \"led by an invisible hand\" to promote the public good; human institutions, by interfering with this principle in the name of the public interest, defeat their own end; but, when all systems of preference or restraint are taken away, \"the obvious and simple system of natural liberty establishes itself of its own accord\"." #text based on that of the Encyclopædia Britannica, in the public domain
 	trigger = per_turn_pulse
 	only_once = true
 	conditions = {
@@ -9,7 +9,7 @@ the_wealth_of_nations = { #Source: "Encyclopædia Britannica", 1911, vol. 25, pp
 		or = {
 			#owns_site = kirkcaldy #Adam Smith's home site
 			owns_site = toulouse #Adam Smith lived there for a while; this is here so that the event can trigger for a Continental Europe map
-			owns_site = paris #this is here so that the event can trigger for the Central Europe map
+			owns_province = ile_de_france #this is here so that the event can trigger for the Central Europe map
 		}
 		or = {
 			and = {
