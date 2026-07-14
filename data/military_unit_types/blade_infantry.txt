@@ -2,15 +2,23 @@ axemen = {
 	name = "Axemen"
 	unit_class = axemen
 	icon = longswordsmen
+	required_technology = handaxe
+	melee_attack_sound = axe
 	death_sound = human_death
 	stats = {
-		melee = 4
-		defense = 5
-		movement = 4
-		range = 1
+		hit_points = 2
+		movement = 1
+		defense = 3
+		melee = 3
+		missile = 1
+		range = 3
 	}
 	commodity_costs = {
-		manpower = 1
+		wealth = 2gb
+		heavy_infantry = 200
+	}
+	maintenance_commodity_costs = {
+		wealth = 1gb
 	}
 	upgrades = {
 		swordsmen
