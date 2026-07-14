@@ -2180,7 +2180,20 @@ QVariantList province_game_data::get_entering_armies_qvariant_list() const
 
 const std::vector<military_unit_category> &province_game_data::get_recruitable_military_unit_categories() const
 {
-	static const std::vector<military_unit_category> recruitable_military_unit_categories{ military_unit_category::light_infantry, military_unit_category::regular_infantry, military_unit_category::heavy_infantry, military_unit_category::light_cavalry, military_unit_category::heavy_cavalry, military_unit_category::light_artillery, military_unit_category::heavy_artillery };
+	static const std::vector<military_unit_category> recruitable_military_unit_categories{
+		military_unit_category::light_infantry,
+		military_unit_category::regular_infantry,
+		military_unit_category::heavy_infantry,
+		military_unit_category::mace_infantry,
+		military_unit_category::blade_infantry,
+		military_unit_category::spear_infantry,
+		military_unit_category::bowmen,
+		military_unit_category::light_cavalry,
+		military_unit_category::heavy_cavalry,
+		military_unit_category::spear_cavalry,
+		military_unit_category::light_artillery,
+		military_unit_category::heavy_artillery
+	};
 
 	return recruitable_military_unit_categories;
 }
