@@ -2,5 +2,6 @@ piety = {
 	name = "Piety"
 	type = resource
 	icon = wooden_cross
+	tiny_icon = temple
 	abstract = true
 }
