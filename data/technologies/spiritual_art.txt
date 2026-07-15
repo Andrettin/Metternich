@@ -58,6 +58,9 @@ tapestries = {
 	prerequisites = {
 		choir_songs
 	}
+	modifier = {
+		piety_output_modifier = 5
+	}
 	discovery_mean_time_to_happen = {
 		months = 1000
 	}
@@ -74,6 +77,9 @@ extravagant_decoration = {
 	period = renaissance_age
 	prerequisites = {
 		tapestries
+	}
+	modifier = {
+		piety_output_modifier = 5
 	}
 	discovery_mean_time_to_happen = {
 		months = 2500
