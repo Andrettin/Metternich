@@ -18,6 +18,7 @@
 #include "map/terrain_type.h"
 #include "map/world.h"
 #include "util/assert_util.h"
+#include "util/container_util.h"
 #include "util/log_util.h"
 #include "util/vector_util.h"
 
@@ -249,6 +250,11 @@ bool site::can_have_feature(const site_feature *feature) const
 	}
 
 	return true;
+}
+
+QVariantList site::get_routes_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_routes());
 }
 
 const std::string &site::get_title_name(const government_type *government_type, const int tier, const culture *culture) const

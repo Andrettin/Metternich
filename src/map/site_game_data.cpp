@@ -43,6 +43,8 @@
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/province_map_data.h"
+#include "map/route.h"
+#include "map/route_game_data.h"
 #include "map/site.h"
 #include "map/site_attribute.h"
 #include "map/site_feature.h"
@@ -956,6 +958,12 @@ void site_game_data::set_holding_level(const int level)
 		return;
 	}
 
+	for (const route *route : this->site->get_routes()) {
+		if (route->get_game_data()->is_active()) {
+			route->get_game_data()->apply_output(-1);
+		}
+	}
+
 	if (this->get_owner() != nullptr) {
 		this->get_owner()->get_game_data()->change_score(-this->get_holding_level() * 100);
 		this->get_owner()->get_game_data()->change_domain_power(-this->get_holding_level());
@@ -971,6 +979,12 @@ void site_game_data::set_holding_level(const int level)
 	if (this->get_owner() != nullptr) {
 		this->get_owner()->get_game_data()->change_score(this->get_holding_level() * 100);
 		this->get_owner()->get_game_data()->change_domain_power(this->get_holding_level());
+	}
+
+	for (const route *route : this->site->get_routes()) {
+		if (route->get_game_data()->is_active()) {
+			route->get_game_data()->apply_output(1);
+		}
 	}
 
 	if (level > 0) {

@@ -35,6 +35,9 @@ public:
 	void set_active(const bool active);
 	void check_active();
 
+	centesimal_int get_output() const;
+	void apply_output(const int multiplier);
+
 signals:
 	void active_changed();
 

@@ -5,6 +5,7 @@
 #include "map/province.h"
 #include "map/route_game_data.h"
 #include "map/route_history.h"
+#include "map/site.h"
 #include "script/condition/and_condition.h"
 #include "util/log_util.h"
 
@@ -39,10 +40,29 @@ void route::process_gsml_scope(const gsml_data &scope)
 	}
 }
 
+void route::initialize()
+{
+	if (this->get_start_site() != nullptr) {
+		this->start_site->add_route(this);
+	}
+
+	if (this->get_end_site() != nullptr) {
+		this->end_site->add_route(this);
+	}
+
+	named_data_entry::initialize();
+}
+
 void route::check() const
 {
 	if (!this->get_color().isValid()) {
 		throw std::runtime_error(std::format("Route \"{}\" has no color.", this->get_identifier()));
+	}
+
+	if (this->get_output_commodity() == nullptr) {
+		log::log_error(std::format("Route \"{}\" has no output commodity.", this->get_identifier()));
+	} else if (this->get_start_site() == nullptr || this->get_end_site() == nullptr) {
+		log::log_error(std::format("Route \"{}\" has an output commodity, but no start or end sites.", this->get_identifier()));
 	}
 
 	if (this->get_path_provinces().empty()) {

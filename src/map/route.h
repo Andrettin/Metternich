@@ -9,9 +9,11 @@ Q_MOC_INCLUDE("map/route_game_data.h")
 
 namespace metternich {
 
+class commodity;
 class province;
 class route_game_data;
 class route_history;
+class site;
 
 template <typename scope_type>
 class and_condition;
@@ -21,6 +23,9 @@ class route final : public named_data_entry, public data_type<route>
 	Q_OBJECT
 
 	Q_PROPERTY(QColor color READ get_color WRITE set_color NOTIFY changed)
+	Q_PROPERTY(const metternich::commodity* output_commodity MEMBER output_commodity READ get_output_commodity NOTIFY changed)
+	Q_PROPERTY(metternich::site* start_site MEMBER start_site NOTIFY changed)
+	Q_PROPERTY(metternich::site* end_site MEMBER end_site NOTIFY changed)
 	Q_PROPERTY(bool hidden MEMBER hidden READ is_hidden NOTIFY changed)
 	Q_PROPERTY(metternich::route_game_data* game_data READ get_game_data NOTIFY changed)
 
@@ -65,6 +70,7 @@ public:
 	~route();
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
+	virtual void initialize() override;
 	virtual void check() const override;
 	virtual data_entry_history *get_history_base() override;
 
@@ -101,6 +107,21 @@ public:
 		route::routes_by_color[color] = this;
 	}
 
+	const commodity *get_output_commodity() const
+	{
+		return this->output_commodity;
+	}
+
+	const site *get_start_site() const
+	{
+		return this->start_site;
+	}
+
+	const site *get_end_site() const
+	{
+		return this->end_site;
+	}
+
 	bool is_hidden() const
 	{
 		return this->hidden;
@@ -121,6 +142,9 @@ signals:
 
 private:
 	QColor color;
+	const commodity *output_commodity = nullptr;
+	site *start_site = nullptr;
+	site *end_site = nullptr;
 	bool hidden = false;
 	std::vector<const province *> path_provinces;
 	std::unique_ptr<const and_condition<province>> conditions;

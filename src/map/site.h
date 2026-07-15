@@ -29,6 +29,7 @@ class holding_type;
 class province;
 class region;
 class resource;
+class route;
 class site_feature;
 class site_game_data;
 class site_history;
@@ -55,6 +56,7 @@ class site final : public named_data_entry, public data_type<site>
 	Q_PROPERTY(metternich::terrain_type* terrain_type MEMBER terrain_type)
 	Q_PROPERTY(metternich::resource* resource MEMBER resource NOTIFY changed)
 	Q_PROPERTY(metternich::province* province MEMBER province NOTIFY changed)
+	Q_PROPERTY(QVariantList routes READ get_routes_qvariant_list NOTIFY changed)
 	Q_PROPERTY(metternich::site_map_data* map_data READ get_map_data NOTIFY changed)
 	Q_PROPERTY(metternich::site_game_data* game_data READ get_game_data NOTIFY changed)
 
@@ -183,6 +185,18 @@ public:
 
 	bool can_have_feature(const site_feature *feature) const;
 
+	const std::vector<const route *> &get_routes() const
+	{
+		return this->routes;
+	}
+
+	QVariantList get_routes_qvariant_list() const;
+
+	void add_route(const route *route)
+	{
+		this->routes.push_back(route);
+	}
+
 	const std::string &get_title_name(const government_type *government_type, const int tier, const culture *culture) const;
 
 	const std::vector<const province *> &get_generation_provinces() const
@@ -217,6 +231,7 @@ private:
 	std::map<const culture *, std::string> cultural_names;
 	std::map<const cultural_group *, std::string> cultural_group_names;
 	std::vector<const site_feature *> features;
+	std::vector<const route *> routes;
 	site_title_name_map title_names;
 	std::vector<const metternich::province *> generation_provinces;
 	std::vector<const region *> generation_regions; //regions other than its own province where this site can be generated; this is used if the map's world is not the site's own world
