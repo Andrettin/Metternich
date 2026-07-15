@@ -38,6 +38,8 @@ public:
 	centesimal_int get_output() const;
 	void apply_output(const int multiplier);
 
+	Q_INVOKABLE QString get_site_modifier_string() const;
+
 signals:
 	void active_changed();
 

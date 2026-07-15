@@ -202,12 +202,13 @@ Rectangle {
 		}
 		
 		Repeater {
-			model: selected_province !== null ? selected_province.routes : []
+			model: selected_province !== null ? selected_province.routes : (selected_site !== null ? selected_site.routes : [])
 			
 			CustomIconImage {
 				id: route_icon
 				name: route.name
 				icon_identifier: "road"
+				description: route && selected_site !== null ? route.game_data.get_site_modifier_string() : ""
 				visible: route.game_data.active && !selected_garrison && !viewing_population && !viewing_population_units
 				
 				readonly property var route: model.modelData

@@ -2,6 +2,8 @@
 
 #include "map/route_game_data.h"
 
+#include "database/defines.h"
+#include "economy/commodity.h"
 #include "map/province.h"
 #include "map/province_map_data.h"
 #include "map/route.h"
@@ -11,6 +13,7 @@
 #include "script/condition/and_condition.h"
 #include "util/assert_util.h"
 #include "util/string_conversion_util.h"
+#include "util/string_util.h"
 
 namespace metternich {
 
@@ -141,6 +144,21 @@ void route_game_data::apply_output(const int multiplier)
 
 	this->route->get_start_site()->get_game_data()->change_base_commodity_output(this->route->get_output_commodity(), output * multiplier);
 	this->route->get_end_site()->get_game_data()->change_base_commodity_output(this->route->get_output_commodity(), output * multiplier);
+}
+
+QString route_game_data::get_site_modifier_string() const
+{
+	std::string str;
+
+	if (this->route->get_output_commodity() != nullptr) {
+		const centesimal_int output = this->get_output();
+		const std::string number_str = "+" + this->route->get_output_commodity()->value_to_string(output, false);
+		const QColor &number_color = defines::get()->get_green_text_color();
+		const std::string colored_number_str = string::colored(number_str, number_color);
+		str += std::format("{} Output: {}", this->route->get_output_commodity()->get_name(), colored_number_str);
+	}
+
+	return QString::fromStdString(str);
 }
 
 }
