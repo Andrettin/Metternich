@@ -11,7 +11,8 @@ Rectangle {
 	readonly property var stored_commodities: domain ? domain.game_data.economy.stored_commodities : []
 	readonly property var commodity_storage_capacities: domain ? domain.game_data.economy.commodity_storage_capacities : []
 	readonly property var regency_commodity: metternich.get_commodity("regency")
-	readonly property var top_bar_commodities: [metternich.defines.wealth_commodity, regency_commodity]
+	readonly property var piety_commodity: metternich.get_commodity("piety")
+	readonly property var top_bar_commodities: [metternich.defines.wealth_commodity, regency_commodity, piety_commodity]
 	property bool commodities_visible: domain ? true : false
 	
 	PanelTiledBackground {
@@ -79,6 +80,7 @@ Rectangle {
 			Item {
 				width: commodity_icon.width + (2 + 96) * scale_factor
 				height: commodities_row.height
+				visible: commodity === metternich.defines.wealth_commodity || commodity === metternich.defines.regency_commodity || commodity_value > 0
 				
 				readonly property var commodity: model.modelData
 				readonly property var commodity_value: commodity && domain !== null && stored_commodities.length > 0 ? domain.game_data.economy.get_stored_commodity(commodity) : 0 //refer to the stored commodities to ensure the counter is updated when the storage value for this commodity changes
