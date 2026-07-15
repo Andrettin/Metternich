@@ -5,6 +5,9 @@ poultry_domestication = {
 	icon = cattle
 	period = stone_age
 	year = -10000 #the wild junglefowl (ancestor of chickens) was domesticated in South Asia before 10,000 BC; Source: "History of the World Map by Map", 2023, pp. 24-25.
+	modifier = {
+		agricultural_output_modifier = 2
+	}
 	discovery_mean_time_to_happen = {
 		months = 50
 	}
@@ -23,6 +26,9 @@ goatherding = {
 	prerequisites = {
 		poultry_domestication
 	}
+	modifier = {
+		agricultural_output_modifier = 2
+	}
 	discovery_mean_time_to_happen = {
 		months = 125
 	}
@@ -39,6 +45,9 @@ meat_livestock = {
 	period = copper_age
 	prerequisites = {
 		goatherding
+	}
+	modifier = {
+		agricultural_output_modifier = 3
 	}
 	discovery_mean_time_to_happen = {
 		months = 500
@@ -57,6 +66,9 @@ weaving = {
 	prerequisites = {
 		meat_livestock
 	}
+	modifier = {
+		wool_output_modifier = 3
+	}
 	discovery_mean_time_to_happen = {
 		months = 1500
 	}
@@ -73,6 +85,9 @@ dairy_farming = {
 	period = iron_age
 	prerequisites = {
 		weaving
+	}
+	modifier = {
+		cattle_output_modifier = 4
 	}
 	discovery_mean_time_to_happen = {
 		months = 5000
