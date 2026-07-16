@@ -2,6 +2,12 @@ overijssel = {
 	name = "Overijssel"
 	color = { 192 65 160 }
 	default_provincial_capital = zwolle
+	resource_counts = {
+		iron_deposit = 2
+		prime_cattle_land = 3
+		prime_grain_land = 2
+		prime_sheep_land = 3
+	}
 	regions = {
 		netherlands
 	}

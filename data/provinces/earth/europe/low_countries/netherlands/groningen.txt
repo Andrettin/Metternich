@@ -2,6 +2,11 @@ groningen = {
 	name = "Groningen"
 	color = { 192 192 33 }
 	default_provincial_capital = groningen
+	resource_counts = {
+		prime_cattle_land = 1
+		prime_grain_land = 1
+		#tin_deposit
+	}
 	regions = {
 		netherlands
 	}

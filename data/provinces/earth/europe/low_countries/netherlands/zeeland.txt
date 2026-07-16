@@ -3,6 +3,12 @@ zeeland = {
 	color = { 1 192 160 }
 	terrain = plains
 	default_provincial_capital = middelburg
+	resource_counts = {
+		coal_deposit = 1
+		prime_grain_land = 1
+		prime_sheep_land = 2
+		prime_timber = 1
+	}
 	regions = {
 		netherlands
 	}

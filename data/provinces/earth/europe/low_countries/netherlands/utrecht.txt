@@ -2,6 +2,12 @@ utrecht = {
 	name = "Utrecht"
 	color = { 192 64 33 }
 	default_provincial_capital = utrecht
+	resource_counts = {
+		prime_cattle_land = 1
+		prime_grain_land = 5
+		prime_sheep_land = 1
+		prime_timber = 1
+	}
 	regions = {
 		netherlands
 	}
