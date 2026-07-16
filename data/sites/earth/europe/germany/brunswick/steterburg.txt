@@ -1,10 +1,8 @@
-northeim = {
-	name = "Northeim"
+steterburg = {
+	name = "Steterburg"
 	world = earth
-	geocoordinate = { 10.001111111111 51.706666666667 }
-	type = holding
-	holding_type = castle
-	province = hanover
+	geocoordinate = { 10.47361088 52.19361115 }
+	province = brunswick #Salzgitter
 	
 	history = {
 		919 = {

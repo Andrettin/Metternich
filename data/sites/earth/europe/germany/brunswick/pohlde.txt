@@ -2,7 +2,7 @@ pohlde = {
 	name = "Pohlde" #"Pöhlde"
 	world = earth
 	geocoordinate = { 10.3169 51.6136 }
-	province = hanover
+	province = brunswick #Göttingen
 	
 	history = {
 		919 = {

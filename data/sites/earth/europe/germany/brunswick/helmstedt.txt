@@ -4,7 +4,7 @@ helmstedt = {
 	geocoordinate = { 11.010555555556 52.228055555556 }
 	type = holding
 	holding_type = castle
-	province = hanover
+	province = brunswick #Helmstedt
 	features = {
 		academic #historical university
 	}
@@ -13,6 +13,7 @@ helmstedt = {
 		1569 = {
 			#buildings += university #University founded in Helmstedt in 1569; Source: Henry Kamen, "Early Modern European Society", 2021, p. 291.
 			#The Cambridge Modern History Atlas gives the year as 1576 instead; Source: "The Cambridge Modern History Atlas", 1912, p. 9.
+			developed = true
 		}
 		
 		1609 = {

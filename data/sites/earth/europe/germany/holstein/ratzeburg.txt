@@ -2,6 +2,7 @@ ratzeburg = {
 	name = "Ratzeburg"
 	world = earth
 	geocoordinate = { 10.756666666667 53.701666666667 }
+	province = holstein
 	
 	history = {
 		919 = {

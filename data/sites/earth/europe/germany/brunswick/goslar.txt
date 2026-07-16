@@ -4,7 +4,7 @@ goslar = {
 	geocoordinate = { 10.429163 51.906003 }
 	type = holding
 	holding_type = castle
-	province = hanover
+	province = brunswick #Goslar
 	
 	history = {
 		919 = {

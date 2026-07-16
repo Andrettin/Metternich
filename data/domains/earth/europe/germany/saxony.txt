@@ -18,8 +18,10 @@ saxony = {
 		medieval_era
 	}
 	core_provinces = {
-		hanover
+		brunswick
 		bremen
+		hamburg
+		hanover
 		holstein
 		luneburg
 		magdeburg

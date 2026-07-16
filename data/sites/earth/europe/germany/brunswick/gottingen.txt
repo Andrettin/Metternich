@@ -4,7 +4,7 @@ gottingen = {
 	geocoordinate = { 9.92000402695 51.52043275870 } #from Natural Earth
 	type = holding
 	holding_type = castle
-	province = hanover
+	province = brunswick #Göttingen
 	
 	history = {
 		1815 = {

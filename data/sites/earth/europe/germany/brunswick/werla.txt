@@ -2,7 +2,7 @@ werla = {
 	name = "Werla"
 	world = earth
 	geocoordinate = { 10.5548 52.0377 }
-	province = hanover
+	province = brunswick #Wolfenbüttel
 	
 	history = {
 		919 = {

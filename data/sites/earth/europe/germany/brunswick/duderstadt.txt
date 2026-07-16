@@ -1,8 +1,8 @@
-steterburg = {
-	name = "Steterburg"
+duderstadt = {
+	name = "Duderstadt"
 	world = earth
-	geocoordinate = { 10.47361088 52.19361115 }
-	province = hanover
+	geocoordinate = { 10.259722222222 51.5125 }
+	province = brunswick #Göttingen
 	
 	history = {
 		919 = {

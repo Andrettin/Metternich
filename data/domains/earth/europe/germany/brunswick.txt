@@ -6,12 +6,12 @@ brunswick = {
 	default_religion = protestant
 	default_tier = duchy
 	default_government_type = monarchy
-	default_capital = hanover #Brunswick
+	default_capital = brunswick
 	eras = {
 		medieval_era
 		renaissance_era
 	}
 	core_provinces = {
-		hanover
+		brunswick
 	}
 }

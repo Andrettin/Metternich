@@ -4,5 +4,5 @@ gifhorn = {
 	geocoordinate = { 10.546388888889 52.488611111111 }
 	type = holding
 	holding_type = temple
-	province = hanover
+	province = brunswick #Gifhorn
 }

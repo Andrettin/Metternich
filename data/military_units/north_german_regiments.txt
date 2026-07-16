@@ -4,7 +4,7 @@ hamburg_pikemen = {
 	
 	history = {
 		1492 = {
-			province = holstein
+			province = hamburg
 		}
 		
 		1815 = { #1820 = {
@@ -19,7 +19,7 @@ hamburg_arquebusiers = {
 	
 	history = {
 		1492 = {
-			province = holstein
+			province = hamburg
 		}
 		
 		1815 = { #1820 = {
@@ -34,7 +34,7 @@ hamburg_crossbowmen = {
 	
 	history = {
 		1492 = {
-			province = holstein
+			province = hamburg
 		}
 		
 		1815 = { #1820 = {
@@ -64,7 +64,7 @@ brunswick_crossbowmen = {
 	
 	history = {
 		1492 = {
-			province = hanover
+			province = brunswick
 		}
 		
 		1815 = { #1820 = {
@@ -94,7 +94,7 @@ hamburg_regulars = {
 	
 	history = {
 		1815 = { #1820 = {
-			province = holstein
+			province = hamburg
 		}
 	}
 }
@@ -105,7 +105,7 @@ hamburg_artillery = {
 	
 	history = {
 		1815 = { #1820 = {
-			province = holstein
+			province = hamburg
 		}
 	}
 }

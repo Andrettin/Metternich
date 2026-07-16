@@ -2,7 +2,7 @@ harzburg = {
 	name = "Harzburg"
 	world = earth
 	geocoordinate = { 10.5675 51.8714 }
-	province = hanover
+	province = brunswick #Goslar
 	
 	history = {
 		919 = {

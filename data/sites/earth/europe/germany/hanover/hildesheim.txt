@@ -4,7 +4,7 @@ hildesheim = {
 	geocoordinate = { 9.95 52.15 }
 	type = holding
 	holding_type = guild
-	province = hanover
+	province = hanover #Hildesheim
 	
 	history = {
 		919 = {

@@ -6,7 +6,7 @@ brunswick = {
 	holding_type = guild #important market or fair, and center of the Hanseatic League in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
 	#holding_type = castle
 	#resource = fruit
-	province = hanover
+	province = brunswick
 	
 	history = {
 		919 = {

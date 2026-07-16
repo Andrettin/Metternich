@@ -1,0 +1,47 @@
+hamburg = {
+	name = "Hamburg"
+	color = { 42 144 158 }
+	terrain = plains
+	default_provincial_capital = hamburg
+	regions = {
+		germany
+	}
+	
+	history = {
+		owner = saxony
+		culture = saxon
+		religion = asatru
+		
+		-264 = {
+			owner = saxony #territory of the Saxons in the 264 BC - 180 AD period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 34-35.
+			culture = saxon
+			religion = asatru
+		}
+		
+		919 = {
+			owner = saxony #part of the Duchy of Saxony in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			culture = german
+			religion = catholic
+		}
+		
+		high_middle_ages = {
+			temple_domain = bremen #part of the ecclesiastical province of Bremen in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 94-95.
+		}
+		
+		1477 = {
+			owner = hamburg #part of the Imperial City of Hamburg c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+		}
+		
+		1560 = {
+			religion = protestant #Lutheran c. 1560; Source: William R. Shepherd, "Historical Atlas", 1911, p. 116.
+		}
+		
+		1815 = {
+			owner = hamburg #part of Hamburg in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+		
+		1871 = {
+			owner = germany #became part of the German Empire in 1871; Source: William R. Shepherd, "Historical Atlas", 1911, p. 161.
+		}
+	}
+}

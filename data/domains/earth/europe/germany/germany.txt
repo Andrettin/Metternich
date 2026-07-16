@@ -22,12 +22,14 @@ germany = {
 		baden
 		breisgau
 		bremen
+		brunswick
 		east_friesland
 		eichstatt
 		farther_pomerania
 		franconia
 		freising
 		furstenberg
+		hamburg
 		hanover
 		hesse
 		hither_pomerania

@@ -4,5 +4,5 @@ altona = {
 	geocoordinate = { 9.9333 53.55 }
 	type = holding
 	holding_type = guild
-	province = holstein
+	province = hamburg
 }

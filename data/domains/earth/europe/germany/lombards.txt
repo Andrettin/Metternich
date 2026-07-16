@@ -6,11 +6,12 @@ lombards = {
 	default_religion = asatru
 	default_tier = duchy
 	default_government_type = tribal_despotism
-	default_capital = hanover #Brunswick
+	default_capital = brunswick
 	eras = {
 		medieval_era
 	}
 	core_provinces = {
+		brunswick
 		hanover
 	}
 }

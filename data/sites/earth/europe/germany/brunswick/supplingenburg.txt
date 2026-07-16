@@ -2,7 +2,7 @@ supplingenburg = {
 	name = "Supplingenburg" #"Süpplingenburg"
 	world = earth
 	geocoordinate = { 10.916666666667 52.25 }
-	province = hanover
+	province = brunswick #Helmstedt
 	
 	history = {
 		919 = {

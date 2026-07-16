@@ -1,0 +1,47 @@
+brunswick = {
+	name = "Brunswick"
+	color = { 84 132 156 }
+	terrain = hills
+	default_provincial_capital = brunswick
+	regions = {
+		germany
+	}
+	
+	history = {
+		owner = saxony
+		culture = saxon
+		religion = asatru
+		
+		526 = {
+			owner = saxony #territory of the Saxons in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = saxon
+			religion = asatru
+		}
+		
+		919 = {
+			owner = saxony #part of the Duchy of Saxony in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			culture = german
+			religion = catholic
+		}
+		
+		high_middle_ages = {
+			temple_domain = mainz #part of the ecclesiastical province of Mayence (Mainz) in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 94-95.
+		}
+		
+		1477 = {
+			owner = brunswick #part of the Duchy of Brunswick-Wolfenbüttel c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+		}
+		
+		1815 = {
+			owner = brunswick #part of the Duchy of Brunswick in 1815; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		}
+		
+		1866 = {
+			owner = prussia #part of Prussia in 1866; Source: William R. Shepherd, "Historical Atlas", 1911, p. 161.
+		}
+		
+		1871 = {
+			owner = germany #became part of the German Empire in 1871; Source: William R. Shepherd, "Historical Atlas", 1911, p. 161.
+		}
+	}
+}
