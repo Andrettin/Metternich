@@ -2,6 +2,13 @@ zurich = {
 	name = "Zurich" #"Zürich"
 	color = { 126 75 134 }
 	default_provincial_capital = zurich
+	resource_counts = {
+		coal_deposit = 2
+		iron_deposit = 1
+		prime_cattle_land = 1
+		prime_grain_land = 1
+		prime_timber = 1
+	}
 	regions = {
 		switzerland
 	}

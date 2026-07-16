@@ -3,6 +3,11 @@ basel = {
 	color = { 84 87 21 }
 	terrain = hills
 	default_provincial_capital = basel
+	resource_counts = {
+		coal_deposit = 1
+		prime_cattle_land = 1
+		prime_grain_land = 1
+	}
 	regions = {
 		switzerland
 	}

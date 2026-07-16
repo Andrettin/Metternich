@@ -2,6 +2,12 @@ bern = {
 	name = "Bern"
 	color = { 80 128 96 }
 	default_provincial_capital = bern
+	resource_counts = {
+		#copper_deposit = 1
+		iron_deposit = 1
+		prime_grain_land = 2
+		prime_sheep_land = 2
+	}
 	regions = {
 		switzerland
 	}
