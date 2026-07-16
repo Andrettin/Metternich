@@ -3,8 +3,8 @@ holland = {
 	color = { 119 119 50 }
 	default_provincial_capital = amsterdam
 	resource_counts = {
-		prime_grain_land = 3
 		prime_cattle_land = 1
+		prime_grain_land = 3
 	}
 	regions = {
 		netherlands

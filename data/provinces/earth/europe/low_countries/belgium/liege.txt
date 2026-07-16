@@ -2,6 +2,15 @@ liege = {
 	name = "Liege" #"Liège"
 	color = { 239 32 64 }
 	default_provincial_capital = liege
+	resource_counts = {
+		#copper_deposit = 1
+		iron_deposit = 1
+		prime_cattle_land = 1
+		prime_grain_land = 2
+		#prime_horse_land = 1
+		prime_sheep_land = 2
+		prime_timber = 2
+	}
 	regions = {
 		belgium
 	}
