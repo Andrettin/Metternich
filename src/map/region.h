@@ -1,14 +1,15 @@
 #pragma once
 
+#include "database/data_entry_container.h"
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
-#include "economy/resource_container.h"
 #include "util/qunique_ptr.h"
 
 namespace metternich {
 
 class province;
 class region_history;
+class site_feature;
 
 class region final : public named_data_entry, public data_type<region>
 {
@@ -29,6 +30,7 @@ public:
 	explicit region(const std::string &identifier);
 	~region();
 
+	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
 	virtual data_entry_history *get_history_base() override;
 
@@ -87,6 +89,11 @@ public:
 
 	bool is_part_of(const region *other_region) const;
 
+	const data_entry_map<site_feature, int> &get_resource_counts() const
+	{
+		return this->resource_counts;
+	}
+
 private:
 	const metternich::world *world = nullptr;
 	bool continent = false;
@@ -94,6 +101,7 @@ private:
 	std::vector<province *> provinces; //provinces located in the region
 	std::vector<region *> subregions; //subregions of this region
 	std::vector<region *> superregions; //regions for which this region is a subregion
+	data_entry_map<site_feature, int> resource_counts;
 	qunique_ptr<region_history> history;
 };
 

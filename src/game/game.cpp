@@ -903,52 +903,112 @@ QCoro::Task<void> game::generate_site_resource_features()
 	//generate province resource sites
 	for (const province *province : map::get()->get_provinces()) {
 		data_entry_map<site_feature, int> resource_counts = province->get_resource_counts();
+		if (resource_counts.empty()) {
+			continue;
+		}
 
 		//remove the already-existing resource sites from the counts
 		for (const auto &[resource, count] : province->get_game_data()->get_site_feature_counts()) {
 			resource_counts[resource] -= count;
 		}
 
-		for (const auto &[resource, count] : resource_counts) {
-			if (count <= 0) {
+		std::vector<const site *> available_sites;
+		for (const site *site : province->get_map_data()->get_sites()) {
+			if (site->get_type() != site_type::holding) {
 				continue;
 			}
 
-			assert_throw(resource->is_resource());
+			available_sites.push_back(site);
+		}
 
-			std::vector<const site *> potential_resource_sites;
+		if (available_sites.empty()) {
+			continue;
+		}
+
+		co_await this->generate_site_resource_features(resource_counts, available_sites);
+	}
+
+	std::vector<region *> regions = region::get_all();
+
+	std::sort(regions.begin(), regions.end(), [](const region *lhs, const region *rhs) {
+		//give priority to smaller regions
+		if (lhs->get_provinces().size() != rhs->get_provinces().size()) {
+			return lhs->get_provinces().size() < rhs->get_provinces().size();
+		}
+
+		return lhs->get_identifier() < rhs->get_identifier();
+	});
+
+	for (const region *region : regions) {
+		data_entry_map<site_feature, int> resource_counts = region->get_resource_counts();
+		if (resource_counts.empty()) {
+			continue;
+		}
+
+		std::vector<const site *> available_sites;
+
+		for (const province *province : region->get_provinces()) {
+			//remove the already-existing resource sites from the counts
+			for (const auto &[resource, count] : province->get_game_data()->get_site_feature_counts()) {
+				resource_counts[resource] -= count;
+			}
 
 			for (const site *site : province->get_map_data()->get_sites()) {
 				if (site->get_type() != site_type::holding) {
 					continue;
 				}
 
-				bool has_resource_feature = false;
-				for (const site_feature *feature : site->get_game_data()->get_features()) {
-					if (feature->is_resource()) {
-						has_resource_feature = true;
-						break;
-					}
-				}
-				if (has_resource_feature) {
-					continue;
-				}
-
-				if (!site->get_game_data()->can_have_feature(resource)) {
-					continue;
-				}
-
-				potential_resource_sites.push_back(site);
+				available_sites.push_back(site);
 			}
+		}
 
-			for (int i = 0; i < count; ++i) {
-				if (potential_resource_sites.empty()) {
+		if (available_sites.empty()) {
+			continue;
+		}
+
+		co_await this->generate_site_resource_features(resource_counts, available_sites);
+	}
+}
+
+QCoro::Task<void> game::generate_site_resource_features(const data_entry_map<site_feature, int> &resource_counts, std::vector<const site *> &available_sites)
+{
+	//generate resource sites
+	for (const auto &[resource, count] : resource_counts) {
+		if (count <= 0) {
+			continue;
+		}
+
+		assert_throw(resource->is_resource());
+
+		std::vector<const site *> potential_resource_sites;
+
+		for (const site *site : available_sites) {
+			bool has_resource_feature = false;
+			for (const site_feature *feature : site->get_game_data()->get_features()) {
+				if (feature->is_resource()) {
+					has_resource_feature = true;
 					break;
 				}
-
-				const site *resource_site = vector::take_random(potential_resource_sites);
-				co_await resource_site->get_game_data()->add_feature(resource);
 			}
+			if (has_resource_feature) {
+				continue;
+			}
+
+			if (!site->get_game_data()->can_have_feature(resource)) {
+				continue;
+			}
+
+			potential_resource_sites.push_back(site);
+		}
+
+		for (int i = 0; i < count; ++i) {
+			if (potential_resource_sites.empty()) {
+				break;
+			}
+
+			const site *resource_site = vector::take_random(potential_resource_sites);
+			co_await resource_site->get_game_data()->add_feature(resource);
+			std::erase(available_sites, resource_site);
 		}
 	}
 }

@@ -4,6 +4,7 @@
 
 #include "map/province.h"
 #include "map/region_history.h"
+#include "map/site_feature.h"
 #include "util/assert_util.h"
 #include "util/vector_util.h"
 
@@ -15,6 +16,20 @@ region::region(const std::string &identifier) : named_data_entry(identifier)
 
 region::~region()
 {
+}
+
+void region::process_gsml_scope(const gsml_data &scope)
+{
+	const std::string &tag = scope.get_tag();
+
+	if (tag == "resource_counts") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const site_feature *resource_feature = site_feature::get(property.get_key());
+			this->resource_counts[resource_feature] = std::stoi(property.get_value());
+		});
+	} else {
+		named_data_entry::process_gsml_scope(scope);
+	}
 }
 
 void region::initialize()

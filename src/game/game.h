@@ -1,5 +1,6 @@
 #pragma once
 
+#include "database/data_entry_container.h"
 #include "economy/commodity_container.h"
 #include "util/qunique_ptr.h"
 #include "util/singleton.h"
@@ -24,6 +25,7 @@ class party;
 class province;
 class scenario;
 class site;
+class site_feature;
 class wonder;
 struct population_group_key;
 
@@ -130,6 +132,7 @@ public:
 
 	[[nodiscard]] QCoro::Task<void> apply_history(const QDate &start_date);
 	[[nodiscard]] QCoro::Task<void> generate_site_resource_features();
+	[[nodiscard]] QCoro::Task<void> generate_site_resource_features(const data_entry_map<site_feature, int> &resource_counts, std::vector<const site *> &available_sites);
 	[[nodiscard]] QCoro::Task<void> apply_sites();
 	[[nodiscard]] QCoro::Task<void> apply_site_buildings(const site *site);
 	[[nodiscard]] QCoro::Task<void> apply_free_on_start_buildings();
