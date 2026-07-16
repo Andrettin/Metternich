@@ -3,6 +3,10 @@ brunswick = {
 	color = { 84 132 156 }
 	terrain = hills
 	default_provincial_capital = brunswick
+	resource_counts = {
+		prime_cattle_land = 1
+		prime_grain_land = 3
+	}
 	regions = {
 		germany
 	}

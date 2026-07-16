@@ -3,6 +3,12 @@ hamburg = {
 	color = { 42 144 158 }
 	terrain = plains
 	default_provincial_capital = hamburg
+	resource_counts = {
+		prime_cattle_land = 1
+		prime_grain_land = 3
+		prime_sheep_land = 1
+		#tin_deposit = 1
+	}
 	regions = {
 		germany
 	}
