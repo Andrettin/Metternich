@@ -5,7 +5,7 @@ basel = {
 	type = holding
 	holding_type = guild #important market or fair
 	#holding_type = castle
-	province = bern
+	province = basel
 	features = {
 		academic #historical university
 		crossroads #important market or fair

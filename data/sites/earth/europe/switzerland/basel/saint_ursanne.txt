@@ -1,0 +1,8 @@
+saint_ursanne = {
+	name = "Saint-Ursanne"
+	world = earth
+	geocoordinate = { 7.154645583908892 47.36504648359477 }
+	type = holding
+	holding_type = temple
+	province = basel #Jura
+}

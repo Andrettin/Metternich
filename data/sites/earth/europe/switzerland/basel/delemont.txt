@@ -1,0 +1,8 @@
+delemont = {
+	name = "Delemont" #"Delémont"
+	world = earth
+	geocoordinate = { 7.345000 47.369997 } #from Natural Earth
+	type = holding
+	holding_type = guild
+	province = basel #Jura
+}

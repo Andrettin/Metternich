@@ -4,6 +4,7 @@ bern = {
 	geocoordinate = { 7.46697546248 46.91668275870 } #from Natural Earth
 	type = holding
 	holding_type = guild
+	province = bern
 	
 	history = {
 		919 = {

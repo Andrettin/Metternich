@@ -12,6 +12,7 @@ arles = { #Kingdom of Arles
 	}
 	core_provinces = {
 		provence
+		basel
 		bern
 		franche_comte
 		geneva

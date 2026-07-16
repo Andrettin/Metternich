@@ -12,6 +12,7 @@ alamanni = {
 	core_provinces = {
 		breisgau
 		augsburg
+		basel
 		bern
 		furstenberg
 		nordgau

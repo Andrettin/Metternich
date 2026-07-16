@@ -4,7 +4,7 @@ habsburg = {
 	geocoordinate = { 8.1861111111111 47.463611111111 }
 	type = holding
 	holding_type = castle
-	province = bern
+	province = basel #Aargau
 	
 	history = {
 		919 = {

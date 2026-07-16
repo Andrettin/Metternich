@@ -11,6 +11,7 @@ upper_burgundy = {
 	}
 	core_provinces = {
 		geneva
+		basel
 		bern
 		franche_comte
 	}

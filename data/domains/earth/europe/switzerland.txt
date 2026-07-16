@@ -14,8 +14,9 @@ switzerland = {
 	}
 	core_provinces = {
 		bern
-		zurich
+		basel
 		geneva
+		zurich
 	}
 	
 	history = {

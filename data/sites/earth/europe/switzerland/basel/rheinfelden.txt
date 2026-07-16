@@ -2,7 +2,7 @@ rheinfelden = {
 	name = "Rheinfelden"
 	world = earth
 	geocoordinate = { 7.7958333333333 47.553888888889 }
-	province = bern
+	province = basel #Aargau
 	
 	history = {
 		919 = {

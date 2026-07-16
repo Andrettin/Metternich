@@ -1,0 +1,41 @@
+basel = {
+	name = "Basel"
+	color = { 84 87 21 }
+	terrain = hills
+	default_provincial_capital = basel
+	regions = {
+		switzerland
+	}
+	
+	history = {
+		owner = gaul
+		culture = gaulish
+		religion = pagan
+		
+		526 = {
+			owner = alamanni #territory of the Alamanni in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = suebi
+			religion = asatru
+		}
+		
+		919 = {
+			owner = upper_burgundy #part of Upper Burgundy in 919; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			culture = german
+			religion = catholic
+		}
+		
+		933 = {
+			owner = arles #became part of the Kingdom of Burgundy in 933; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		high_middle_ages = {
+			#temple_domain = besancon #part of the ecclesiastical province of Besançon in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 94-95.
+		}
+		
+		1740 = {
+			owner = switzerland #part of Switzerland c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+			culture = german
+			religion = protestant
+		}
+	}
+}
