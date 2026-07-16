@@ -35,6 +35,11 @@ bavaria = { #the modern state of Bavaria
 	superregions = {
 		germany
 	}
+	resource_counts = {
+		prime_grain_land = 1
+		prime_sheep_land = 2
+		prime_timber = 2
+	}
 }
 
 pomerania = {

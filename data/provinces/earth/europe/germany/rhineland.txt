@@ -2,6 +2,10 @@ rhineland = {
 	name = "Rhineland"
 	color = { 81 128 33 }
 	default_provincial_capital = cologne
+	resource_counts = {
+		prime_grain_land = 4
+		prime_sheep_land = 1
+	}
 	regions = {
 		germany
 	}
