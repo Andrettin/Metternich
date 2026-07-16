@@ -1,5 +1,6 @@
 #pragma once
 
+#include "database/data_entry_container.h"
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 #include "util/color_container.h"
@@ -24,6 +25,7 @@ class province_turn_data;
 class region;
 class route;
 class site;
+class site_feature;
 class terrain_feature;
 class terrain_type;
 class world;
@@ -225,6 +227,11 @@ public:
 	const std::string &get_cultural_name(const culture *culture) const;
 	const std::string &get_cultural_name(const cultural_group *cultural_group) const;
 
+	const data_entry_map<site_feature, int> &get_resource_counts() const
+	{
+		return this->resource_counts;
+	}
+
 	const std::vector<region *> &get_regions() const
 	{
 		return this->regions;
@@ -303,6 +310,7 @@ private:
 	std::vector<const metternich::terrain_type *> terrain_types;
 	std::map<const culture *, std::string> cultural_names;
 	std::map<const cultural_group *, std::string> cultural_group_names;
+	data_entry_map<site_feature, int> resource_counts;
 	std::vector<region *> regions; //regions where this province is located
 	std::vector<const domain *> core_countries;
 	std::vector<const metternich::world *> generation_worlds; //worlds other than its own where this province can be generated

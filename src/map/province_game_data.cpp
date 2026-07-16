@@ -38,6 +38,7 @@
 #include "map/route.h"
 #include "map/route_game_data.h"
 #include "map/site.h"
+#include "map/site_feature.h"
 #include "map/site_game_data.h"
 #include "map/site_map_data.h"
 #include "map/site_type.h"
@@ -134,6 +135,10 @@ void province_game_data::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->technologies.insert(technology::get(value));
 		}
+	} else if (tag == "site_feature_counts") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->site_feature_counts[site_feature::get(property.get_key())] = std::stoi(property.get_value());
+		});
 	} else if (tag == "population_type_modifier_multipliers") {
 		scope.for_each_property([this](const gsml_property &property) {
 			this->population_type_modifier_multipliers[population_type::get(property.get_key())] = centesimal_int(property.get_value());
@@ -209,6 +214,14 @@ gsml_data province_game_data::to_gsml_data() const
 
 	if (this->get_movement_cost_modifier() != 0) {
 		data.add_property("movement_cost_modifier", std::to_string(this->get_movement_cost_modifier()));
+	}
+
+	if (!this->get_site_feature_counts().empty()) {
+		gsml_data site_feature_counts_data("site_feature_counts");
+		for (const auto &[feature, count] : this->get_site_feature_counts()) {
+			site_feature_counts_data.add_property(feature->get_identifier(), std::to_string(count));
+		}
+		data.add_child(std::move(site_feature_counts_data));
 	}
 
 	if (!this->get_technologies().empty()) {

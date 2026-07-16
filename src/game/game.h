@@ -129,6 +129,7 @@ public:
 	[[nodiscard]] QCoro::Task<void> initialize();
 
 	[[nodiscard]] QCoro::Task<void> apply_history(const QDate &start_date);
+	[[nodiscard]] QCoro::Task<void> generate_site_resource_features();
 	[[nodiscard]] QCoro::Task<void> apply_sites();
 	[[nodiscard]] QCoro::Task<void> apply_site_buildings(const site *site);
 	[[nodiscard]] QCoro::Task<void> apply_free_on_start_buildings();

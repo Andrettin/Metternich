@@ -41,6 +41,7 @@ class province;
 class religion;
 class scripted_province_modifier;
 class site;
+class site_feature;
 class tile;
 class wonder;
 enum class military_unit_category;
@@ -258,6 +259,25 @@ public:
 	}
 
 	const resource_map<int> &get_resource_counts() const;
+
+	const data_entry_map<site_feature, int> &get_site_feature_counts() const
+	{
+		return this->site_feature_counts;
+	}
+
+	void change_site_feature_count(const site_feature *feature, const int change)
+	{
+		if (change == 0) {
+			return;
+		}
+
+		const int new_value = (this->site_feature_counts[feature] += change);
+
+		if (new_value == 0) {
+			this->site_feature_counts.erase(feature);
+		}
+	}
+
 	const terrain_type *get_terrain() const;
 
 	std::vector<const site *> get_visible_sites() const;
@@ -663,6 +683,7 @@ private:
 	QRect map_image_rect;
 	QRect text_rect;
 	int settlement_count = 0; //only includes built settlements
+	data_entry_map<site_feature, int> site_feature_counts;
 	technology_set technologies;
 	scripted_province_modifier_map<int> scripted_modifiers;
 	std::vector<population_unit *> population_units;

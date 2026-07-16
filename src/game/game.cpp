@@ -54,6 +54,7 @@
 #include "map/route_game_data.h"
 #include "map/route_history.h"
 #include "map/site.h"
+#include "map/site_feature.h"
 #include "map/site_game_data.h"
 #include "map/site_history.h"
 #include "map/site_map_data.h"
@@ -90,6 +91,7 @@
 #include "util/path_util.h"
 #include "util/random.h"
 #include "util/string_conversion_util.h"
+#include "util/vector_random_util.h"
 #include "util/vector_util.h"
 
 #include "xbrz.h"
@@ -896,15 +898,72 @@ QCoro::Task<void> game::apply_history(const QDate &start_date)
 	}
 }
 
+QCoro::Task<void> game::generate_site_resource_features()
+{
+	//generate province resource sites
+	for (const province *province : map::get()->get_provinces()) {
+		data_entry_map<site_feature, int> resource_counts = province->get_resource_counts();
+
+		//remove the already-existing resource sites from the counts
+		for (const auto &[resource, count] : province->get_game_data()->get_site_feature_counts()) {
+			resource_counts[resource] -= count;
+		}
+
+		for (const auto &[resource, count] : resource_counts) {
+			if (count <= 0) {
+				continue;
+			}
+
+			assert_throw(resource->is_resource());
+
+			std::vector<const site *> potential_resource_sites;
+
+			for (const site *site : province->get_map_data()->get_sites()) {
+				if (site->get_type() != site_type::holding) {
+					continue;
+				}
+
+				bool has_resource_feature = false;
+				for (const site_feature *feature : site->get_game_data()->get_features()) {
+					if (feature->is_resource()) {
+						has_resource_feature = true;
+						break;
+					}
+				}
+				if (has_resource_feature) {
+					continue;
+				}
+
+				if (!site->get_game_data()->can_have_feature(resource)) {
+					continue;
+				}
+
+				potential_resource_sites.push_back(site);
+			}
+
+			for (int i = 0; i < count; ++i) {
+				if (potential_resource_sites.empty()) {
+					break;
+				}
+
+				const site *resource_site = vector::take_random(potential_resource_sites);
+				co_await resource_site->get_game_data()->add_feature(resource);
+			}
+		}
+	}
+}
+
 QCoro::Task<void> game::apply_sites()
 {
+	co_await this->generate_site_resource_features();
+
 	for (const site *site : map::get()->get_sites()) {
 		site_game_data *site_game_data = site->get_game_data();
 
 		assert_throw(site->get_map_data()->is_on_map());
 
 		//generate features for the start, if any are missing (e.g. resource features)
-		co_await site->get_game_data()->generate_features();
+		//co_await site->get_game_data()->generate_features();
 
 		const province *site_province = site->get_map_data()->get_province();
 		assert_throw(site_province != nullptr);

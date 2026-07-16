@@ -12,6 +12,7 @@
 #include "map/province_turn_data.h"
 #include "map/region.h"
 #include "map/site.h"
+#include "map/site_feature.h"
 #include "map/terrain_type.h"
 #include "map/world.h"
 #include "util/assert_util.h"
@@ -71,6 +72,11 @@ void province::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([&](const gsml_property &property) {
 			const cultural_group *cultural_group = cultural_group::get(property.get_key());
 			this->cultural_group_names[cultural_group] = property.get_value();
+		});
+	} else if (tag == "resource_counts") {
+		scope.for_each_property([&](const gsml_property &property) {
+			const site_feature *resource = site_feature::get(property.get_key());
+			this->resource_counts[resource] = std::stoi(property.get_value());
 		});
 	} else if (tag == "generation_worlds") {
 		for (const std::string &value : values) {

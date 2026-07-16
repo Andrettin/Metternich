@@ -1221,6 +1221,7 @@ bool site_game_data::can_have_feature(const site_feature *feature) const
 		return false;
 	}
 
+	/*
 	if (!feature->get_terrain_types().empty()) {
 		if (this->get_terrain() == nullptr) {
 			return false;
@@ -1230,6 +1231,7 @@ bool site_game_data::can_have_feature(const site_feature *feature) const
 			return false;
 		}
 	}
+	*/
 
 	return true;
 }
@@ -1254,6 +1256,8 @@ QCoro::Task<void> site_game_data::add_feature(const site_feature *feature)
 		co_await feature->get_modifier()->apply(this->site);
 	}
 
+	this->get_province()->get_game_data()->change_site_feature_count(feature, 1);
+
 	if (game::get()->is_running()) {
 		emit features_changed();
 	}
@@ -1268,6 +1272,8 @@ QCoro::Task<void> site_game_data::remove_feature(const site_feature *feature)
 	if (feature->get_modifier() != nullptr) {
 		co_await feature->get_modifier()->remove(this->site);
 	}
+
+	this->get_province()->get_game_data()->change_site_feature_count(feature, -1);
 
 	if (game::get()->is_running()) {
 		emit features_changed();
