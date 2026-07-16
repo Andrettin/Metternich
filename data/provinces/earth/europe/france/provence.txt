@@ -3,6 +3,11 @@ provence = {
 	color = { 49 192 223 }
 	terrain = plains
 	default_provincial_capital = marseilles
+	resource_counts = {
+		prime_cattle_land = 1
+		prime_sheep_land = 1
+		prime_timber = 1
+	}
 	regions = {
 		france
 	}
