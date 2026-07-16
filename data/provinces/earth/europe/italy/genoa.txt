@@ -6,6 +6,10 @@ genoa = {
 	cultural_names = {
 		roman = "Genua" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 34-35.
 	}
+	resource_counts = {
+		prime_cattle_land = 2
+		prime_grain_land = 4
+	}
 	regions = {
 		italy
 	}

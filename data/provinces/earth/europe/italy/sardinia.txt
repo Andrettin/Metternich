@@ -2,6 +2,11 @@ sardinia = {
 	name = "Sardinia"
 	color = { 128 208 32 }
 	default_provincial_capital = cagliari
+	resource_counts = {
+		prime_cattle_land = 1
+		prime_grain_land = 2
+		prime_sheep_land = 1
+	}
 	regions = {
 		italy
 	}

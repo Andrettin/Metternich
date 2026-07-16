@@ -2,6 +2,10 @@ corsica = {
 	name = "Corsica"
 	color = { 239 64 32 }
 	default_provincial_capital = ajaccio
+	resource_counts = {
+		prime_cattle_land = 1
+		prime_grain_land = 1
+	}
 	regions = {
 		france
 	}

@@ -2,6 +2,11 @@ tuscany = {
 	name = "Tuscany"
 	color = { 112 128 160 }
 	default_provincial_capital = florence
+	resource_counts = {
+		iron_deposit = 1
+		prime_cattle_land = 2
+		prime_grain_land = 4
+	}
 	regions = {
 		italy
 	}

@@ -3,6 +3,12 @@ savoy = {
 	color = { 208 0 224 }
 	terrain = mountains
 	default_provincial_capital = chambery
+	resource_counts = {
+		coal_deposit = 2
+		prime_cattle_land = 1
+		prime_grain_land = 3
+		prime_sheep_land = 2
+	}
 	regions = {
 		france
 	}

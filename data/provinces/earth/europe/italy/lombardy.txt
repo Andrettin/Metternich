@@ -3,6 +3,12 @@ lombardy = {
 	color = { 208 64 96 }
 	terrain = plains
 	default_provincial_capital = milan
+	resource_counts = {
+		#copper_deposit = 1
+		prime_cattle_land = 1
+		prime_grain_land = 1
+		prime_sheep_land = 3
+	}
 	regions = {
 		italy
 	}
