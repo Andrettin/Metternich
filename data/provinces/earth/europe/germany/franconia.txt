@@ -3,7 +3,7 @@ franconia = {
 	color = { 202 229 25 }
 	default_provincial_capital = nuremberg
 	regions = {
-		germany
+		bavaria
 	}
 	
 	history = {

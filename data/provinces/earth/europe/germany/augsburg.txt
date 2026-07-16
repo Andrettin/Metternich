@@ -3,7 +3,7 @@ augsburg = {
 	color = { 188 0 180 }
 	default_provincial_capital = augsburg
 	regions = {
-		germany
+		bavaria
 	}
 	
 	history = {

@@ -31,6 +31,12 @@ germany = { #the territory of modern Germany
 	}
 }
 
+bavaria = { #the modern state of Bavaria
+	superregions = {
+		germany
+	}
+}
+
 pomerania = {
 	superregions = {
 		europe

@@ -4,7 +4,7 @@ freising = {
 	terrain = forest
 	default_provincial_capital = munich
 	regions = {
-		germany
+		bavaria
 	}
 	
 	history = {
