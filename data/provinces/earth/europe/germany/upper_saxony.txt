@@ -2,6 +2,14 @@ upper_saxony = {
 	name = "Upper Saxony"
 	color = { 121 83 104 }
 	default_provincial_capital = dresden
+	resource_counts = {
+		iron_deposit = 1
+		prime_cattle_land = 4
+		prime_grain_land = 3
+		#prime_horse_land = 1
+		prime_sheep_land = 1
+		prime_timber = 1
+	}
 	regions = {
 		germany
 	}
