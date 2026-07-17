@@ -3,7 +3,7 @@ lower_languedoc = {
 	color = { 109 163 20 }
 	default_provincial_capital = montpellier
 	regions = {
-		france
+		languedoc
 	}
 	
 	history = {

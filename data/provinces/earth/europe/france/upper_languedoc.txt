@@ -3,7 +3,7 @@ upper_languedoc = {
 	color = { 48 96 128 }
 	default_provincial_capital = toulouse
 	regions = {
-		france
+		languedoc
 	}
 	
 	history = {

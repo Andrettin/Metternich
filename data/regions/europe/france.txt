@@ -49,6 +49,19 @@ france = {
 	}
 }
 
+languedoc = {
+	superregions = {
+		france
+	}
+	resource_counts = {
+		iron_deposit = 1
+		prime_cattle_land = 1
+		prime_grain_land = 3
+		prime_sheep_land = 1
+		prime_timber = 2
+	}
+}
+
 lorraine = {
 	superregions = {
 		france

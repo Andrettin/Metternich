@@ -2,6 +2,10 @@ normandy = {
 	name = "Normandy"
 	color = { 144 32 192 }
 	default_provincial_capital = rouen
+	resource_counts = {
+		prime_cattle_land = 2
+		prime_grain_land = 2
+	}
 	regions = {
 		france
 	}
