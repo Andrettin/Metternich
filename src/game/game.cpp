@@ -948,6 +948,10 @@ QCoro::Task<void> game::generate_site_resource_features()
 		std::vector<const site *> available_sites;
 
 		for (const province *province : region->get_provinces()) {
+			if (!province->get_map_data()->is_on_map()) {
+				continue;
+			}
+
 			//remove the already-existing resource sites from the counts
 			for (const auto &[resource, count] : province->get_game_data()->get_site_feature_counts()) {
 				resource_counts[resource] -= count;
