@@ -1,6 +1,7 @@
 brunswick = {
 	name = "Brunswick"
 	type = polity
+	color = { 116 92 39 }
 	flag = brunswick
 	culture = german
 	default_religion = protestant
