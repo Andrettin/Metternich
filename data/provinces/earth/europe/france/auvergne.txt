@@ -2,6 +2,11 @@ auvergne = {
 	name = "Auvergne"
 	color = { 112 192 96 }
 	default_provincial_capital = clermont
+	resource_counts = {
+		coal_deposit = 2
+		prime_grain_land = 1
+		prime_sheep_land = 1
+	}
 	regions = {
 		france
 	}

@@ -2,6 +2,10 @@ picardy = {
 	name = "Picardy"
 	color = { 16 160 192 }
 	default_provincial_capital = amiens
+	resource_counts = {
+		prime_cattle_land = 2
+		prime_grain_land = 2
+	}
 	regions = {
 		france
 	}

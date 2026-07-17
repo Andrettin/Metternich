@@ -2,6 +2,11 @@ dauphiny = {
 	name = "Dauphiny"
 	color = { 48 192 96 }
 	default_provincial_capital = grenoble
+	resource_counts = {
+		iron_deposit = 1
+		prime_grain_land = 1
+		prime_sheep_land = 1
+	}
 	regions = {
 		france
 	}

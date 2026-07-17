@@ -2,6 +2,12 @@ berry = {
 	name = "Berry"
 	color = { 144 224 0 }
 	default_provincial_capital = bourges
+	resource_counts = {
+		prime_cattle_land = 2
+		prime_grain_land = 1
+		#prime_horse_land = 1
+		prime_sheep_land = 1
+	}
 	regions = {
 		france
 	}

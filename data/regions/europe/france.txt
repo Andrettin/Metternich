@@ -53,4 +53,8 @@ lorraine = {
 	superregions = {
 		france
 	}
+	resource_counts = {
+		prime_grain_land = 1
+		prime_sheep_land = 2
+	}
 }
