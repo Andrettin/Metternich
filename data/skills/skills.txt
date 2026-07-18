@@ -99,7 +99,7 @@ blacksmithing = {
 	name = "Blacksmithing"
 	icon = tools
 	check_dice = 1d20
-	base_attribute = strength
+	base_attribute = muscle
 	profitability = fair
 	groups = {
 		general
@@ -122,7 +122,7 @@ carpentry = {
 	name = "Carpentry"
 	icon = lumber
 	check_dice = 1d20
-	base_attribute = strength
+	base_attribute = stamina
 	profitability = fair #woodworker
 	groups = {
 		general
@@ -373,7 +373,7 @@ stonemasonry = {
 	name = "Stonemasonry"
 	icon = architecture
 	check_dice = 1d20
-	base_attribute = strength
+	base_attribute = stamina
 	base_value = -2
 	profitability = fair
 	groups = {
@@ -396,7 +396,7 @@ swimming = {
 	name = "Swimming"
 	icon = anchor
 	check_dice = 1d20
-	base_attribute = strength
+	base_attribute = stamina
 	groups = {
 		general
 	}
@@ -406,7 +406,7 @@ tumbling = {
 	name = "Tumbling"
 	icon = labor
 	check_dice = 1d20
-	base_attribute = dexterity
+	base_attribute = balance
 	groups = {
 		rogue
 	}

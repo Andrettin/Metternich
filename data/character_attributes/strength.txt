@@ -1,5 +1,10 @@
 strength = {
 	name = "Strength"
+}
+
+muscle = {
+	name = "Muscle"
+	base_attribute = strength
 	value_modifiers = {
 		1 = {
 			to_hit_bonus = -5
@@ -29,11 +34,11 @@ strength = {
 			to_hit_bonus = 1
 		}
 		18 = {
-			damage_bonus = 1
+			damage_bonus = 2
 		}
 		19 = {
 			to_hit_bonus = 2
-			damage_bonus = 5
+			damage_bonus = 4
 		}
 		20 = {
 			damage_bonus = 1
@@ -58,4 +63,9 @@ strength = {
 			damage_bonus = 2
 		}
 	}
+}
+
+stamina = {
+	name = "Stamina"
+	base_attribute = strength
 }
