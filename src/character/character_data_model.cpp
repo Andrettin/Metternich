@@ -350,6 +350,12 @@ void character_data_model::update_attribute_rows()
 		this->create_attribute_row(attribute, value, attribute_rows);
 	}
 
+	//ensure attribute rows are sorted by name
+	//since base attribute rows can be created by subattribute rows, they might be out of order otherwise
+	std::sort(this->attribute_row->child_rows.begin(), this->attribute_row->child_rows.end(), [](const std::unique_ptr<character_data_row> &lhs, const std::unique_ptr<character_data_row> &rhs) {
+		return lhs->name < rhs->name;
+	});
+
 	this->on_child_rows_inserted(this->attribute_row);
 }
 
