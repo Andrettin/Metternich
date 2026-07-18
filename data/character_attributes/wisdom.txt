@@ -11,3 +11,8 @@ wisdom = {
 		}
 	}
 }
+
+intuition = {
+	name = "Intuition"
+	base_attribute = wisdom
+}

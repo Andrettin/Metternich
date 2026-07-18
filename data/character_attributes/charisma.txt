@@ -1,3 +1,8 @@
 charisma = {
 	name = "Charisma"
 }
+
+appearance = {
+	name = "Appearance"
+	base_attribute = charisma
+}

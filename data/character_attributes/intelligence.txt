@@ -19,3 +19,13 @@ intelligence = {
 		}
 	}
 }
+
+knowledge = {
+	name = "Knowledge"
+	base_attribute = intelligence
+}
+
+reason = {
+	name = "Reason"
+	base_attribute = intelligence
+}
