@@ -2529,4 +2529,14 @@ void game::set_current_combat(qunique_ptr<combat_base> &&combat)
 	emit current_combat_changed();
 }
 
+QVariantList game::get_active_routes_qvariant_list() const
+{
+	std::vector<route *> routes = route::get_all();
+	std::erase_if(routes, [this](const route *route) {
+		return !route->get_game_data()->is_active();
+	});
+
+	return container::to_qvariant_list(routes);
+}
+
 }

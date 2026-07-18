@@ -3,7 +3,9 @@
 #include "map/route_game_data.h"
 
 #include "database/defines.h"
+#include "database/preferences.h"
 #include "economy/commodity.h"
+#include "game/game.h"
 #include "map/province.h"
 #include "map/province_map_data.h"
 #include "map/route.h"
@@ -16,6 +18,11 @@
 #include "util/string_util.h"
 
 namespace metternich {
+
+route_game_data::route_game_data(const metternich::route *route) : route(route)
+{
+	connect(this, &route_game_data::active_changed, game::get(), &game::active_routes_changed);
+}
 
 void route_game_data::process_gsml_property(const gsml_property &property)
 {
@@ -159,6 +166,35 @@ QString route_game_data::get_site_modifier_string() const
 	}
 
 	return QString::fromStdString(str);
+}
+
+QString route_game_data::get_line_path() const
+{
+	if (!this->is_active()) {
+		return QString();
+	}
+
+	std::string line_path;
+
+	bool first = true;
+
+	for (const province *path_province : this->route->get_path_provinces()) {
+		QPoint point = path_province->get_map_data()->get_center_tile_pos();
+		if (path_province == this->route->get_path_provinces().front() && this->route->get_start_site() != nullptr) {
+			point = this->route->get_start_site()->get_map_data()->get_tile_pos();
+		} else if (path_province == this->route->get_path_provinces().back() && this->route->get_end_site() != nullptr) {
+			point = this->route->get_end_site()->get_map_data()->get_tile_pos();
+		}
+
+		if (first) {
+			line_path += std::format("M {} {}", (point.x() * defines::get()->get_province_map_tile_scale() * preferences::get()->get_scale_factor()).to_int(), (point.y() * defines::get()->get_province_map_tile_scale() * preferences::get()->get_scale_factor()).to_int());
+			first = false;
+		} else {
+			line_path += std::format(" L {} {}", (point.x() * defines::get()->get_province_map_tile_scale() * preferences::get()->get_scale_factor()).to_int(), (point.y() * defines::get()->get_province_map_tile_scale() * preferences::get()->get_scale_factor()).to_int());
+		}
+	}
+
+	return QString::fromStdString(line_path);
 }
 
 }

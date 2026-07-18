@@ -16,9 +16,7 @@ class route_game_data final : public QObject
 	Q_PROPERTY(bool active MEMBER active READ is_active NOTIFY active_changed)
 
 public:
-	explicit route_game_data(const metternich::route *route) : route(route)
-	{
-	}
+	explicit route_game_data(const metternich::route *route);
 
 	void process_gsml_property(const gsml_property &property);
 	void process_gsml_scope(const gsml_data &scope);
@@ -39,6 +37,7 @@ public:
 	void apply_output(const int multiplier);
 
 	Q_INVOKABLE QString get_site_modifier_string() const;
+	Q_INVOKABLE QString get_line_path() const;
 
 signals:
 	void active_changed();

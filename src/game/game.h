@@ -47,6 +47,7 @@ class game final : public QObject, public singleton<game>
 	Q_PROPERTY(const metternich::domain* player_country READ get_player_country WRITE set_player_country NOTIFY player_country_changed)
 	Q_PROPERTY(bool combat_running READ is_combat_running NOTIFY combat_running_changed)
 	Q_PROPERTY(metternich::combat_base* current_combat READ get_current_combat NOTIFY current_combat_changed)
+	Q_PROPERTY(QVariantList active_routes READ get_active_routes_qvariant_list NOTIFY active_routes_changed)
 	Q_PROPERTY(const metternich::game_rules* rules READ get_rules CONSTANT)
 
 public:
@@ -334,6 +335,8 @@ public:
 		return this->get_current_combat() != nullptr;
 	}
 
+	QVariantList get_active_routes_qvariant_list() const;
+
 signals:
 	void running_changed();
 	void setup_finished();
@@ -344,6 +347,7 @@ signals:
 	void player_country_changed();
 	void combat_running_changed();
 	void current_combat_changed();
+	void active_routes_changed();
 	void game_over();
 
 private:

@@ -7,6 +7,7 @@
 #include "map/route_history.h"
 #include "map/site.h"
 #include "script/condition/and_condition.h"
+#include "util/assert_util.h"
 #include "util/log_util.h"
 
 namespace metternich {
@@ -44,10 +45,16 @@ void route::initialize()
 {
 	if (this->get_start_site() != nullptr) {
 		this->start_site->add_route(this);
+
+		assert_throw(!this->get_path_provinces().empty());
+		assert_throw(this->get_start_site()->get_province() == this->get_path_provinces().front());
 	}
 
 	if (this->get_end_site() != nullptr) {
 		this->end_site->add_route(this);
+
+		assert_throw(!this->get_path_provinces().empty());
+		assert_throw(this->get_end_site()->get_province() == this->get_path_provinces().back());
 	}
 
 	named_data_entry::initialize();
