@@ -324,6 +324,7 @@ country_border_color = { 0 0 0 }
 selected_country_color = { 255 255 0 }
 ocean_color = { 49 82 123 }
 minimap_ocean_color = { 49 82 123 }
+route_color = { 255 215 0 }
 diplomacy_state_colors = {
 	peace = { 229 225 219 }
 	war = { 94 92 95 }

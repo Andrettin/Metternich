@@ -182,8 +182,8 @@ Flickable {
 			readonly property var route_line_path: route.game_data.get_line_path()
 			
 			ShapePath {
-				strokeWidth: 1 * scale_factor
-				strokeColor: metternich.defines.selected_country_color
+				strokeWidth: 2 * scale_factor
+				strokeColor: metternich.defines.route_color
 				fillColor: "transparent"
 				capStyle: ShapePath.RoundCap
 				joinStyle: ShapePath.RoundJoin

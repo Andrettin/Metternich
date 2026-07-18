@@ -107,6 +107,7 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(QColor selected_country_color MEMBER selected_country_color READ get_selected_country_color NOTIFY changed)
 	Q_PROPERTY(QColor ocean_color MEMBER ocean_color READ get_ocean_color NOTIFY changed)
 	Q_PROPERTY(QColor minimap_ocean_color MEMBER minimap_ocean_color READ get_minimap_ocean_color NOTIFY changed)
+	Q_PROPERTY(QColor route_color MEMBER route_color READ get_route_color NOTIFY changed)
 	Q_PROPERTY(std::filesystem::path river_image_filepath MEMBER river_image_filepath WRITE set_river_image_filepath)
 	Q_PROPERTY(std::filesystem::path rivermouth_image_filepath MEMBER rivermouth_image_filepath WRITE set_rivermouth_image_filepath)
 	Q_PROPERTY(std::filesystem::path province_border_image_filepath MEMBER province_border_image_filepath WRITE set_province_border_image_filepath)
@@ -491,6 +492,11 @@ public:
 		return this->minimap_ocean_color;
 	}
 
+	const QColor &get_route_color() const
+	{
+		return this->route_color;
+	}
+
 	const QColor &get_diplomacy_state_color(const diplomacy_state state) const
 	{
 		const auto find_iterator = this->diplomacy_state_colors.find(state);
@@ -658,6 +664,7 @@ private:
 	QColor selected_country_color;
 	QColor ocean_color;
 	QColor minimap_ocean_color;
+	QColor route_color;
 	std::map<diplomacy_state, QColor> diplomacy_state_colors;
 	std::filesystem::path river_image_filepath;
 	std::filesystem::path rivermouth_image_filepath;
