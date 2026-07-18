@@ -258,6 +258,16 @@ public:
 		this->settlement_count += change;
 	}
 
+	int get_total_holding_level() const
+	{
+		return this->total_holding_level;
+	}
+
+	void change_total_holding_level(const int change)
+	{
+		this->total_holding_level += change;
+	}
+
 	const resource_map<int> &get_resource_counts() const;
 
 	const data_entry_map<site_feature, int> &get_site_feature_counts() const
@@ -683,6 +693,7 @@ private:
 	QRect map_image_rect;
 	QRect text_rect;
 	int settlement_count = 0; //only includes built settlements
+	int total_holding_level = 0;
 	data_entry_map<site_feature, int> site_feature_counts;
 	technology_set technologies;
 	scripted_province_modifier_map<int> scripted_modifiers;
