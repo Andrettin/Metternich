@@ -411,8 +411,12 @@ int64_t defines::get_domain_income_unit_value() const
 int defines::get_province_population_for_level(const int level) const
 {
 	const auto find_iterator = this->province_population_per_level.find(level);
-	assert_throw(find_iterator != this->province_population_per_level.end());
-	return find_iterator->second;
+	if (find_iterator != this->province_population_per_level.end()) {
+		return find_iterator->second;
+	}
+
+	//as a fallback, use the square of the province level * 1000
+	return level * level * 1000;
 }
 
 int defines::get_province_level_for_population(const int population) const
