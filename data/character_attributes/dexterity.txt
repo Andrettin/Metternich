@@ -2,10 +2,103 @@ dexterity = {
 	name = "Dexterity"
 	value_modifiers = {
 		1 = {
-			armor_class = -5
 			find_disarm_traps = -10
-			open_locks = -10
-			pick_pockets = -15
+		}
+		11 = {
+			find_disarm_traps = 5
+		}
+		12 = {
+			find_disarm_traps = 5
+		}
+		18 = {
+			find_disarm_traps = 5
+		}
+		19 = {
+			find_disarm_traps = 5
+		}
+	}
+}
+
+aim = {
+	name = "Aim"
+	base_attribute = dexterity
+	value_modifiers = {
+		1 = {
+			open_locks = -30
+			pick_pockets = -30
+		}
+		4 = {
+			open_locks = 5
+			pick_pockets = 5
+		}
+		5 = {
+			open_locks = 5
+		}
+		6 = {
+			pick_pockets = 5
+		}
+		7 = {
+			open_locks = 5
+		}
+		8 = {
+			pick_pockets = 5
+		}
+		9 = {
+			open_locks = 5
+		}
+		10 = {
+			open_locks = 5
+			pick_pockets = 5
+		}
+		11 = {
+			open_locks = 5
+			pick_pockets = 5
+		}
+		12 = {
+			pick_pockets = 5
+		}
+		16 = {
+			open_locks = 5
+		}
+		17 = {
+			open_locks = 5
+			pick_pockets = 5
+		}
+		18 = {
+			open_locks = 5
+			pick_pockets = 5
+		}
+		19 = {
+			open_locks = 5
+			pick_pockets = 5
+		}
+		20 = {
+			pick_pockets = 5
+		}
+		21 = {
+			open_locks = 5
+		}
+		22 = {
+			pick_pockets = 5
+		}
+		23 = {
+			open_locks = 5
+		}
+		24 = {
+			pick_pockets = 5
+		}
+		25 = {
+			open_locks = 5
+		}
+	}
+}
+
+balance = {
+	name = "Balance"
+	base_attribute = dexterity
+	value_modifiers = {
+		1 = {
+			armor_class = -5
 			reflex = -5
 		}
 		3 = {
@@ -23,46 +116,22 @@ dexterity = {
 		7 = {
 			armor_class = 1
 		}
-		10 = {
-			open_locks = 5
-			pick_pockets = 5
-		}
-		11 = {
-			find_disarm_traps = 5
-			open_locks = 5
-			pick_pockets = 5
-		}
-		12 = {
-			find_disarm_traps = 5
-			pick_pockets = 5
-		}
 		15 = {
 			armor_class = 1
 		}
 		16 = {
 			armor_class = 1
-			open_locks = 5
 		}
 		17 = {
 			armor_class = 1
-			open_locks = 5
-			pick_pockets = 5
 		}
 		18 = {
 			armor_class = 1
-			find_disarm_traps = 5
-			open_locks = 5
-			pick_pockets = 5
-		}
-		19 = {
-			find_disarm_traps = 5
-			open_locks = 5
-			pick_pockets = 5
 		}
 		21 = {
 			armor_class = 1
 		}
-		24 = {
+		23 = {
 			armor_class = 1
 		}
 	}
