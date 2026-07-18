@@ -15,6 +15,7 @@ etruria = {
 	}
 	core_provinces = {
 		tuscany
+		arezzo
 	}
 	
 	history = {

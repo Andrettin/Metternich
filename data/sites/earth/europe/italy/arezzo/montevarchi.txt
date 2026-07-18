@@ -1,0 +1,8 @@
+montevarchi = {
+	name = "Montevarchi"
+	world = earth
+	geocoordinate = { 11.567866666667 43.523397222222 }
+	type = holding
+	holding_type = castle
+	province = arezzo
+}

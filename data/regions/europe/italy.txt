@@ -109,3 +109,9 @@ italy = { #the territory of modern Italy
 		}
 	}
 }
+
+tuscany = {
+	superregions = {
+		italy
+	}
+}

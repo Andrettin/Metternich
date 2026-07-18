@@ -1,0 +1,8 @@
+lucignano = {
+	name = "Lucignano"
+	world = earth
+	geocoordinate = { 11.746013888889 43.274527777778 }
+	type = holding
+	holding_type = temple
+	province = arezzo
+}

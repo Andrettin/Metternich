@@ -18,6 +18,7 @@ tuscany = {
 		industrial_era
 	}
 	core_provinces = {
+		arezzo
 		tuscany
 	}
 }

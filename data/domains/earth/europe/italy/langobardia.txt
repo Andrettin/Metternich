@@ -12,6 +12,7 @@ langobardia = {
 	}
 	core_provinces = {
 		lombardy
+		arezzo
 		modena
 		parma
 		piedmont

@@ -1,12 +1,8 @@
-tuscany = {
-	name = "Tuscany"
-	color = { 112 128 160 }
-	default_provincial_capital = florence
-	resource_counts = {
-		iron_deposit = 1
-		prime_cattle_land = 2
-		prime_grain_land = 4
-	}
+arezzo = {
+	name = "Arezzo"
+	color = { 127 27 184 }
+	terrain = mountains
+	default_provincial_capital = arezzo
 	regions = {
 		tuscany
 	}
@@ -16,13 +12,9 @@ tuscany = {
 		culture = etruscan
 		religion = pagan
 		
-		-750 = {
-			owner = etruria #Etruscan territory in the 750-625 BC period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 5.
-			culture = etruscan
-		}
-		
 		-500 = {
 			owner = etruria #part of Etruria in the 500-100 BC period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 29.
+			culture = etruscan
 		}
 		
 		526 = {
@@ -33,14 +25,10 @@ tuscany = {
 			owner = langobardia #became part of the Kingdom of the Lombards in 568; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 		}
 		
-		1477 = {
-			owner = florence #part of the Republic of Florence c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
-			culture = italian
-			religion = catholic
-		}
-		
 		1737 = {
 			owner = tuscany #part of the Grand Duchy of Tuscany in 1737; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+			culture = italian
+			religion = catholic
 		}
 		
 		1815 = {

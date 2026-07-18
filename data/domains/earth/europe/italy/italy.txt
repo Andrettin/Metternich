@@ -13,6 +13,7 @@ italy = {
 	}
 	core_provinces = {
 		latium
+		arezzo
 		cosenza
 		genoa
 		lombardy
