@@ -25,6 +25,10 @@ arezzo = {
 			owner = langobardia #became part of the Kingdom of the Lombards in 568; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 		}
 		
+		high_middle_ages = {
+			temple_domain = papal_states #part of the ecclesiastical province of Rome in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 94-95.
+		}
+		
 		1737 = {
 			owner = tuscany #part of the Grand Duchy of Tuscany in 1737; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
 			culture = italian

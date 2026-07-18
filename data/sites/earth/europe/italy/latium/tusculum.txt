@@ -1,0 +1,8 @@
+tusculum = {
+	name = "Tusculum"
+	world = earth
+	geocoordinate = { 12.710833333333 41.798333333333 }
+	type = holding
+	holding_type = castle
+	province = latium
+}

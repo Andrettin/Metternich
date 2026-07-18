@@ -1,0 +1,8 @@
+tivoli = {
+	name = "Tivoli"
+	world = earth
+	geocoordinate = { 12.8 41.966666666667 }
+	type = holding
+	holding_type = castle
+	province = latium
+}

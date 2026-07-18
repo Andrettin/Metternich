@@ -1,0 +1,8 @@
+anagni = {
+	name = "Anagni"
+	world = earth
+	geocoordinate = { 13.15 41.75 }
+	type = holding
+	holding_type = temple
+	province = latium
+}

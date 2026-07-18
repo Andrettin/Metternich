@@ -1,0 +1,8 @@
+sutri = {
+	name = "Sutri"
+	world = earth
+	geocoordinate = { 12.215833333333 42.247777777778 }
+	type = holding
+	holding_type = castle
+	province = latium
+}

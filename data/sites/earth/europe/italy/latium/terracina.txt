@@ -1,0 +1,8 @@
+terracina = {
+	name = "Terracina"
+	world = earth
+	geocoordinate = { 13.25 41.283333333333 }
+	type = holding
+	holding_type = castle
+	province = latium
+}

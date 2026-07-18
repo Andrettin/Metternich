@@ -1,0 +1,8 @@
+lateran = {
+	name = "Lateran" #Apostolic Palace of the Lateran
+	world = earth
+	geocoordinate = { 12.505277777777778 41.88666666666667 } #Lateran Palace
+	type = holding
+	holding_type = temple #or royal palace
+	province = latium
+}
