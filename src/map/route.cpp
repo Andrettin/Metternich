@@ -55,10 +55,6 @@ void route::initialize()
 
 void route::check() const
 {
-	if (!this->get_color().isValid()) {
-		throw std::runtime_error(std::format("Route \"{}\" has no color.", this->get_identifier()));
-	}
-
 	if (this->get_output_commodity() == nullptr) {
 		log::log_error(std::format("Route \"{}\" has no output commodity.", this->get_identifier()));
 	} else if (this->get_start_site() == nullptr || this->get_end_site() == nullptr) {
