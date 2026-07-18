@@ -128,25 +128,8 @@ public:
 		this->cultures.push_back(culture);
 	}
 
-	int get_min_attribute_value(const character_attribute *attribute) const
-	{
-		const auto find_iterator = this->min_attribute_values.find(attribute);
-		if (find_iterator != this->min_attribute_values.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
-	int get_max_attribute_value(const character_attribute *attribute) const
-	{
-		const auto find_iterator = this->max_attribute_values.find(attribute);
-		if (find_iterator != this->max_attribute_values.end()) {
-			return find_iterator->second;
-		}
-
-		return std::numeric_limits<int>::max();
-	}
+	int get_min_attribute_value(const character_attribute *attribute) const;
+	int get_max_attribute_value(const character_attribute *attribute) const;
 
 	int get_character_class_level_limit(const character_class *character_class) const;
 

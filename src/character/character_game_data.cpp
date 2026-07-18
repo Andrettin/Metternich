@@ -743,8 +743,14 @@ QCoro::Task<void> character_game_data::generate_attributes()
 			continue;
 		}
 
-		static constexpr dice attribute_dice(3, 6);
-		const int minimum_possible_result = attribute_dice.get_minimum_result() + this->get_attribute_value(attribute);
+		static constexpr dice main_attribute_dice(3, 6);
+		static constexpr dice subattribute_dice(1, 4);
+
+		const bool is_subattribute = attribute->is_subattribute();
+
+		const dice &attribute_dice = is_subattribute ? subattribute_dice : main_attribute_dice;
+
+		const int minimum_possible_result = (is_subattribute ? -attribute_dice.get_maximum_result() : attribute_dice.get_minimum_result()) + this->get_attribute_value(attribute);
 		const int maximum_possible_result = attribute_dice.get_maximum_result() + this->get_attribute_value(attribute);
 		if ((maximum_possible_result < min_result || minimum_possible_result > max_result)) {
 			throw std::runtime_error(std::format("Character \"{}\" of species \"{}\" cannot be generated{}, since it cannot possibly fulfill the attribute requirements.", this->character->get_identifier(), species->get_identifier(), character_class != nullptr ? std::format(" with character class \"{}\"", character_class->get_identifier()) : ""));
@@ -752,7 +758,15 @@ QCoro::Task<void> character_game_data::generate_attributes()
 
 		bool valid_result = false;
 		while (!valid_result) {
-			const int base_result = random::get()->roll_dice(attribute_dice);
+			int base_result = random::get()->roll_dice(attribute_dice);
+			if (is_subattribute) {
+				//for subattributes, increase or decrease the value (which is based on that of the base attribute) by 1d4
+				const bool is_negative = random::get()->generate(2) == 0;
+				if (is_negative) {
+					base_result *= -1;
+				}
+			}
+
 			const int result = base_result + this->get_attribute_value(attribute);
 
 			valid_result = result >= min_result && result <= max_result;
@@ -1813,6 +1827,10 @@ QCoro::Task<void> character_game_data::change_attribute_value(const character_at
 	const bool is_office_attribute = this->get_office() != nullptr && vector::contains(this->get_office()->get_character_attributes(), attribute);
 
 	co_await this->change_stat_value(attribute, change, true, is_office_attribute);
+
+	for (const character_attribute *subattribute : attribute->get_subattributes()) {
+		co_await this->change_attribute_value(subattribute, change);
+	}
 
 	for (const skill *skill : attribute->get_derived_skills()) {
 		co_await this->change_skill_value(skill, change);

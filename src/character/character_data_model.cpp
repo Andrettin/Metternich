@@ -339,17 +339,42 @@ void character_data_model::update_attribute_rows()
 
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
 
+	data_entry_map<character_attribute, character_data_row *> attribute_rows;
+
 	for (const auto &[stat, value] : character_game_data->get_stat_values()) {
 		const character_attribute *attribute = dynamic_cast<const character_attribute *>(stat);
 		if (attribute == nullptr) {
 			continue;
 		}
 
-		auto row = std::make_unique<character_data_row>(attribute->get_name() + ":", std::to_string(value), this->attribute_row);
-		this->attribute_row->child_rows.push_back(std::move(row));
+		this->create_attribute_row(attribute, value, attribute_rows);
 	}
 
 	this->on_child_rows_inserted(this->attribute_row);
+}
+
+void character_data_model::create_attribute_row(const character_attribute *attribute, const int value, data_entry_map<character_attribute, character_data_row *> &attribute_rows)
+{
+	if (attribute_rows.contains(attribute)) {
+		//already created by subattribute row
+		return;
+	}
+
+	character_data_row *parent_row = nullptr;
+
+	if (attribute->get_base_attribute() != nullptr) {
+		if (!attribute_rows.contains(attribute->get_base_attribute())) {
+			this->create_attribute_row(attribute->get_base_attribute(), this->character->get_game_data()->get_attribute_value(attribute->get_base_attribute()), attribute_rows);
+		}
+
+		parent_row = attribute_rows.find(attribute->get_base_attribute())->second;
+	} else {
+		parent_row = this->attribute_row;
+	}
+
+	auto row = std::make_unique<character_data_row>(attribute->get_name() + ":", std::to_string(value), parent_row);
+	attribute_rows[attribute] = row.get();
+	parent_row->child_rows.push_back(std::move(row));
 }
 
 void character_data_model::create_mana_row()
@@ -550,6 +575,11 @@ void character_data_model::update_saving_throw_rows()
 
 void character_data_model::create_saving_throw_row(const saving_throw_type *saving_throw_type, const int bonus, data_entry_map<metternich::saving_throw_type, character_data_row *> &saving_throw_type_rows)
 {
+	if (saving_throw_type_rows.contains(saving_throw_type)) {
+		//already created by derived saving throw row
+		return;
+	}
+
 	character_data_row *parent_row = nullptr;
 
 	if (saving_throw_type->get_base_saving_throw_type() != nullptr) {

@@ -7,6 +7,20 @@
 #include "util/string_util.h"
 
 namespace metternich {
+	
+void character_attribute::initialize_all()
+{
+	data_type::initialize_all();
+
+	character_attribute::sort_instances([](const character_attribute *lhs, const character_attribute *rhs) {
+		if (lhs->is_subattribute() != rhs->is_subattribute()) {
+			//main attributes should come first in the list; this is important for e.g. character attribute generation order
+			return !lhs->is_subattribute();
+		}
+
+		return lhs->get_identifier() < rhs->get_identifier();
+	});
+}
 
 character_attribute::character_attribute(const std::string &identifier) : character_stat(identifier)
 {
@@ -40,6 +54,15 @@ void character_attribute::process_gsml_scope(const gsml_data &scope)
 	} else {
 		character_stat::process_gsml_scope(scope);
 	}
+}
+
+void character_attribute::initialize()
+{
+	if (this->base_attribute != nullptr) {
+		this->base_attribute->add_subattribute(this);
+	}
+
+	character_stat::initialize();
 }
 
 }

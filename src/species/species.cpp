@@ -264,6 +264,36 @@ bool species::is_prehistoric() const
 	return this->get_era() < geological_era::holocene;
 }
 
+int species::get_min_attribute_value(const character_attribute *attribute) const
+{
+	const auto find_iterator = this->min_attribute_values.find(attribute);
+	if (find_iterator != this->min_attribute_values.end()) {
+		return find_iterator->second;
+	}
+
+	if (attribute->get_base_attribute() != nullptr) {
+		//if the species has no specific minimum for a subattribute, use the same minimum as the base attribute
+		return this->get_min_attribute_value(attribute->get_base_attribute());
+	}
+
+	return 0;
+}
+
+int species::get_max_attribute_value(const character_attribute *attribute) const
+{
+	const auto find_iterator = this->max_attribute_values.find(attribute);
+	if (find_iterator != this->max_attribute_values.end()) {
+		return find_iterator->second;
+	}
+
+	if (attribute->get_base_attribute() != nullptr) {
+		//if the species has no specific maximum for a subattribute, use the same maximum as the base attribute
+		return this->get_max_attribute_value(attribute->get_base_attribute());
+	}
+
+	return std::numeric_limits<int>::max();
+}
+
 int species::get_character_class_level_limit(const character_class *character_class) const
 {
 	const auto find_iterator = this->character_class_level_limits.find(character_class);

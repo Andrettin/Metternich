@@ -12,6 +12,7 @@ namespace archimedes {
 
 namespace metternich {
 
+class character_attribute;
 class saving_throw_type;
 
 class character_data_model : public QAbstractItemModel
@@ -78,6 +79,7 @@ public:
 	void create_divine_domain_rows();
 	void create_attribute_rows();
 	void update_attribute_rows();
+	void create_attribute_row(const character_attribute *attribute, const int value, data_entry_map<character_attribute, character_data_row *> &attribute_rows);
 	void create_mana_row();
 	void update_mana_row();
 	void create_craft_row();
