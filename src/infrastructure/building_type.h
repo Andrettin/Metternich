@@ -196,7 +196,7 @@ public:
 		return this->fortification_level;
 	}
 
-	int64_t get_population_capacity_for_province_level(const int province_level) const;
+	int64_t get_population_capacity_for_province_level(const int province_level, const int province_total_holding_level) const;
 
 	const building_type *get_base_building() const
 	{

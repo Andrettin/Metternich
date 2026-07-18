@@ -311,9 +311,9 @@ QVariantList building_type::get_recruited_transporter_categories_qvariant_list()
 	return container::to_qvariant_list(this->get_recruited_transporter_categories());
 }
 
-int64_t building_type::get_population_capacity_for_province_level(const int province_level) const
+int64_t building_type::get_population_capacity_for_province_level(const int province_level, const int province_total_holding_level) const
 {
-	return defines::get()->get_province_population_for_level(province_level) * this->get_holding_level() / std::max(province_level, 1);
+	return defines::get()->get_province_population_for_level(province_level) * this->get_holding_level() / std::max(province_total_holding_level, 1);
 }
 
 commodity_map<int64_t> building_type::get_commodity_costs_for_site(const site *site) const
@@ -545,7 +545,7 @@ std::string building_type::get_modifier_string(const site *site, const bool sing
 
 	int64_t population_capacity = 0;
 	if (this->get_holding_level() > 0) {
-		population_capacity += this->get_population_capacity_for_province_level(site->get_game_data()->get_province()->get_game_data()->get_level());
+		population_capacity += this->get_population_capacity_for_province_level(site->get_game_data()->get_province()->get_game_data()->get_level(), site->get_game_data()->get_province()->get_game_data()->get_total_holding_level());
 	}
 	if (population_capacity > 0) {
 		if (!str.empty()) {

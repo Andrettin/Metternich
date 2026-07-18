@@ -833,8 +833,8 @@ void province_game_data::set_level(const int level)
 				continue;
 			}
 
-			const int64_t old_population_capacity = building->get_population_capacity_for_province_level(old_level);
-			const int64_t new_population_capacity = building->get_population_capacity_for_province_level(level);
+			const int64_t old_population_capacity = building->get_population_capacity_for_province_level(old_level, this->get_total_holding_level());
+			const int64_t new_population_capacity = building->get_population_capacity_for_province_level(level, this->get_total_holding_level());
 			holding_site->get_game_data()->change_population_capacity(new_population_capacity - old_population_capacity);
 		}
 
@@ -1682,6 +1682,35 @@ QVariantList province_game_data::get_dungeon_sites_qvariant_list() const
 	}
 
 	return container::to_qvariant_list(dungeon_sites);
+}
+
+void province_game_data::change_total_holding_level(const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const int old_total_holding_level = this->get_total_holding_level();
+
+	this->total_holding_level += change;
+
+	for (const site *holding_site : this->get_settlement_sites()) {
+		if (!holding_site->get_game_data()->is_built()) {
+			continue;
+		}
+
+		for (const qunique_ptr<building_slot> &building_slot : holding_site->get_game_data()->get_building_slots()) {
+			const building_type *building = building_slot->get_building();
+
+			if (building == nullptr || building->get_holding_level() == 0) {
+				continue;
+			}
+
+			const int64_t old_population_capacity = building->get_population_capacity_for_province_level(this->get_level(), old_total_holding_level);
+			const int64_t new_population_capacity = building->get_population_capacity_for_province_level(this->get_level(), this->get_total_holding_level());
+			holding_site->get_game_data()->change_population_capacity(new_population_capacity - old_population_capacity);
+		}
+	}
 }
 
 const resource_map<int> &province_game_data::get_resource_counts() const

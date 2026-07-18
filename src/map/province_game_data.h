@@ -263,10 +263,7 @@ public:
 		return this->total_holding_level;
 	}
 
-	void change_total_holding_level(const int change)
-	{
-		this->total_holding_level += change;
-	}
+	void change_total_holding_level(const int change);
 
 	const resource_map<int> &get_resource_counts() const;
 
