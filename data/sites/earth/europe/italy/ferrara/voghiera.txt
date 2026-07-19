@@ -1,0 +1,8 @@
+voghiera = {
+	name = "Voghiera"
+	world = earth
+	geocoordinate = { 11.75 44.766666666667 }
+	type = holding
+	holding_type = castle
+	province = ferrara
+}

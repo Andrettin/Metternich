@@ -1,0 +1,8 @@
+copparo = {
+	name = "Copparo"
+	world = earth
+	geocoordinate = { 11.833333333333 44.9 }
+	type = holding
+	holding_type = castle
+	province = ferrara
+}

@@ -1,0 +1,8 @@
+tresigallo = {
+	name = "Tresigallo"
+	world = earth
+	geocoordinate = { 11.89472 44.81598 }
+	type = holding
+	holding_type = guild
+	province = ferrara
+}

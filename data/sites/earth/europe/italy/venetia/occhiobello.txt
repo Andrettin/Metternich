@@ -1,0 +1,8 @@
+occhiobello = {
+	name = "Occhiobello"
+	world = earth
+	geocoordinate = { 11.5812 44.9216 }
+	type = holding
+	holding_type = castle
+	province = venetia #Rovigo
+}

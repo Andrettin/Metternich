@@ -1,0 +1,8 @@
+codigoro = {
+	name = "Codigoro"
+	world = earth
+	geocoordinate = { 12.116666666667 44.833333333333 }
+	type = holding
+	holding_type = castle
+	province = ferrara
+}

@@ -1,0 +1,14 @@
+comacchio = {
+	name = "Comacchio"
+	world = earth
+	geocoordinate = { 12.183333333333 44.7 }
+	type = holding
+	holding_type = temple
+	province = ferrara
+	
+	history = {
+		1494 = {
+			developed = true #existed c. 1494; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 90-91.
+		}
+	}
+}

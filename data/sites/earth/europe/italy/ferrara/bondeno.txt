@@ -1,0 +1,8 @@
+bondeno = {
+	name = "Bondeno"
+	world = earth
+	geocoordinate = { 11.41542 44.88944 }
+	type = holding
+	holding_type = castle
+	province = ferrara
+}
