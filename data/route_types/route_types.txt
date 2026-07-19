@@ -1,0 +1,11 @@
+pilgrimage_route = {
+	name = "Pilgrimage Route"
+	output_commodity = piety
+	output_multiplier = 1
+}
+
+trade_route = {
+	name = "Trade Route"
+	output_commodity = wealth
+	output_multiplier = 1gb
+}

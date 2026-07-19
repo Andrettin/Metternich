@@ -197,6 +197,7 @@ set(map_SRCS
 	src/map/route.cpp
 	src/map/route_container.cpp
 	src/map/route_game_data.cpp
+	src/map/route_type.cpp
 	src/map/site.cpp
 	src/map/site_attribute.cpp
 	src/map/site_container.cpp
@@ -588,6 +589,7 @@ set(map_HDRS
 	src/map/route_container.h
 	src/map/route_game_data.h
 	src/map/route_history.h
+	src/map/route_type.h
 	src/map/site.h
 	src/map/site_attribute.h
 	src/map/site_container.h

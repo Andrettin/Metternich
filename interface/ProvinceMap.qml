@@ -176,7 +176,7 @@ Flickable {
 		
 		Shape {
 			id: route_shape
-			visible: route.game_data.active && route.output_commodity !== null && (province_map.mode === ProvinceMap.Mode.TradeZone || route.output_commodity !== metternich.defines.wealth_commodity) && (province_map.mode === ProvinceMap.Mode.Temple || route.output_commodity !== metternich.defines.piety_commodity)
+			visible: route.game_data.active && route.type !== null && (province_map.mode === ProvinceMap.Mode.TradeZone || route.type.output_commodity !== metternich.defines.wealth_commodity) && (province_map.mode === ProvinceMap.Mode.Temple || route.type.output_commodity !== metternich.defines.piety_commodity)
 			
 			readonly property var route: model.modelData
 			readonly property var route_line_path: route.game_data.get_line_path()

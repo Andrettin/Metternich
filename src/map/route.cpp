@@ -6,6 +6,7 @@
 #include "map/province.h"
 #include "map/route_game_data.h"
 #include "map/route_history.h"
+#include "map/route_type.h"
 #include "map/site.h"
 #include "script/condition/and_condition.h"
 #include "util/assert_util.h"
@@ -20,19 +21,6 @@ route::route(const std::string &identifier) : named_data_entry(identifier)
 
 route::~route()
 {
-}
-
-void route::process_gsml_property(const gsml_property &property)
-{
-	const std::string &key = property.get_key();
-	const std::string &value = property.get_value();
-
-	if (key == "output_multiplier") {
-		assert_throw(this->get_output_commodity() != nullptr);
-		this->output_multiplier = this->get_output_commodity()->string_to_value(value);
-	} else {
-		named_data_entry::process_gsml_property(property);
-	}
 }
 
 void route::process_gsml_scope(const gsml_data &scope)
@@ -76,10 +64,10 @@ void route::initialize()
 
 void route::check() const
 {
-	if (this->get_output_commodity() == nullptr) {
-		log::log_error(std::format("Route \"{}\" has no output commodity.", this->get_identifier()));
+	if (this->get_type() == nullptr) {
+		log::log_error(std::format("Route \"{}\" has no type.", this->get_identifier()));
 	} else if (this->get_start_site() == nullptr || this->get_end_site() == nullptr) {
-		log::log_error(std::format("Route \"{}\" has an output commodity, but no start or end sites.", this->get_identifier()));
+		log::log_error(std::format("Route \"{}\" has a type, but no start or end sites.", this->get_identifier()));
 	}
 
 	if (this->get_path_provinces().empty()) {
@@ -100,6 +88,24 @@ void route::reset_history()
 void route::reset_game_data()
 {
 	this->game_data = make_qunique<route_game_data>(this);
+}
+
+const commodity *route::get_output_commodity() const
+{
+	if (this->get_type() == nullptr) {
+		return nullptr;
+	}
+
+	return this->get_type()->get_output_commodity();
+}
+
+int64_t route::get_output_multiplier() const
+{
+	if (this->get_type() == nullptr) {
+		return 0;
+	}
+
+	return this->get_type()->get_output_multiplier();
 }
 
 }

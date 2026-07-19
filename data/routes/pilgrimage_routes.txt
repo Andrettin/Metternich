@@ -1,6 +1,6 @@
 via_di_francesco = { #Source: "Exploration Map by Map", 2025, p. 50.
 	name = "Via di Francesco"
-	output_commodity = piety
+	type = pilgrimage_route
 	start_site = lucignano #La Verna
 	end_site = lateran #Rome
 	path_provinces = {

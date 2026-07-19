@@ -6,6 +6,7 @@
 #include "util/qunique_ptr.h"
 
 Q_MOC_INCLUDE("map/route_game_data.h")
+Q_MOC_INCLUDE("map/route_type.h")
 
 namespace metternich {
 
@@ -13,6 +14,7 @@ class commodity;
 class province;
 class route_game_data;
 class route_history;
+class route_type;
 class site;
 
 template <typename scope_type>
@@ -23,7 +25,7 @@ class route final : public named_data_entry, public data_type<route>
 	Q_OBJECT
 
 	Q_PROPERTY(QColor color READ get_color WRITE set_color NOTIFY changed)
-	Q_PROPERTY(const metternich::commodity* output_commodity MEMBER output_commodity READ get_output_commodity NOTIFY changed)
+	Q_PROPERTY(const metternich::route_type* type MEMBER type READ get_type NOTIFY changed)
 	Q_PROPERTY(metternich::site* start_site MEMBER start_site NOTIFY changed)
 	Q_PROPERTY(metternich::site* end_site MEMBER end_site NOTIFY changed)
 	Q_PROPERTY(bool hidden MEMBER hidden READ is_hidden NOTIFY changed)
@@ -69,7 +71,6 @@ public:
 	explicit route(const std::string &identifier);
 	~route();
 
-	virtual void process_gsml_property(const gsml_property &property) override;
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
 	virtual void check() const override;
@@ -108,15 +109,13 @@ public:
 		route::routes_by_color[color] = this;
 	}
 
-	const commodity *get_output_commodity() const
+	const route_type *get_type() const
 	{
-		return this->output_commodity;
+		return this->type;
 	}
 
-	int64_t get_output_multiplier() const
-	{
-		return this->output_multiplier;
-	}
+	const commodity *get_output_commodity() const;
+	int64_t get_output_multiplier() const;
 
 	const site *get_start_site() const
 	{
@@ -148,8 +147,7 @@ signals:
 
 private:
 	QColor color;
-	const commodity *output_commodity = nullptr;
-	int64_t output_multiplier = 1;
+	const route_type *type = nullptr;
 	site *start_site = nullptr;
 	site *end_site = nullptr;
 	bool hidden = false;
