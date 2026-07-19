@@ -1,6 +1,8 @@
 linz_budweis = {
 	name = "Linz-Budweis"
-	color = { 0 71 102 }
+	type = trade_route
+	start_site = linz
+	end_site = budweis
 	path_provinces = {
 		traungau
 		freistadt
@@ -19,7 +21,9 @@ linz_budweis = {
 
 pest_zagreb_fiume = {
 	name = "Pest-Zagreb-Fiume"
-	color = { 226 180 121 }
+	type = trade_route
+	start_site = pest
+	end_site = karlovac #Rijeka/Fiume
 	path_provinces = {
 		pest
 		szekesfehervar
@@ -39,7 +43,9 @@ pest_zagreb_fiume = {
 
 vienna_brunn = {
 	name = "Vienna-Brunn"
-	color = { 139 105 112 }
+	type = trade_route
+	start_site = vienna
+	end_site = boskovice #Brunn
 	path_provinces = {
 		vienna
 		krems
@@ -47,14 +53,10 @@ vienna_brunn = {
 		brunn
 	}
 	conditions = {
-		pathway = road
+		pathway = early_railroad
 	}
 	
 	history = {
-		1000 = {
-			pathway = road
-		}
-		
 		1839.7.7 = {
 			pathway = early_railroad #the first trains from Vienna arrived in Brno on 1839.7.7; Source: Chad Bryant, "Into an Uncertain Future: Railroads and Vormärz Liberalism in Brno, Vienna, and Prague", 2009, p. 183.
 		}
@@ -63,7 +65,9 @@ vienna_brunn = {
 
 vienna_trieste = {
 	name = "Vienna-Trieste"
-	color = { 191 242 151 }
+	type = trade_route
+	start_site = vienna
+	end_site = trieste
 	path_provinces = {
 		vienna
 		styria
@@ -72,14 +76,10 @@ vienna_trieste = {
 		istria
 	}
 	conditions = {
-		pathway = road
+		pathway = iron_railroad
 	}
 	
 	history = {
-		1000 = {
-			pathway = road
-		}
-		
 		1857 = {
 			pathway = iron_railroad #railroad built in 1857; Source: Ivan Erceg, "Außenhandel der Nordadriatischen Seestädte als Faktor im Entstehen der kapitalistischen Beziehungen in Österreich im 18. und 19. Jahrhundert", 1968, p. 465.
 		}
