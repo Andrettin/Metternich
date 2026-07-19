@@ -1,0 +1,8 @@
+gambettola = {
+	name = "Gambettola"
+	world = earth
+	geocoordinate = { 12.333333333333 44.116666666667 }
+	type = holding
+	holding_type = castle
+	province = ravenna #Forlì-Cesena
+}

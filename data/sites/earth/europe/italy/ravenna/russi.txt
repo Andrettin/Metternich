@@ -1,0 +1,8 @@
+russi = {
+	name = "Russi"
+	world = earth
+	geocoordinate = { 12.03335 44.37645 }
+	type = holding
+	holding_type = castle
+	province = ravenna
+}

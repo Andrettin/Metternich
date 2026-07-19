@@ -1,0 +1,8 @@
+cervia = {
+	name = "Cervia"
+	world = earth
+	geocoordinate = { 12.366666666667 44.25 }
+	type = holding
+	holding_type = castle
+	province = ravenna
+}

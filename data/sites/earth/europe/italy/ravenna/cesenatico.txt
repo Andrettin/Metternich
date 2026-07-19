@@ -1,0 +1,8 @@
+cesenatico = {
+	name = "Cesenatico"
+	world = earth
+	geocoordinate = { 12.4006894 44.2011897 }
+	type = holding
+	holding_type = castle
+	province = ravenna #Forlì-Cesena
+}

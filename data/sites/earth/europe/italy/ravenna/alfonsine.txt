@@ -1,0 +1,8 @@
+alfonsine = {
+	name = "Alfonsine"
+	world = earth
+	geocoordinate = { 12.041111111111 44.506111111111 }
+	type = holding
+	holding_type = castle
+	province = ravenna
+}

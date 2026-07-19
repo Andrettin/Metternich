@@ -1,0 +1,8 @@
+cesena = {
+	name = "Cesena"
+	world = earth
+	geocoordinate = { 12.233333333333 44.133333333333 }
+	type = holding
+	holding_type = guild
+	province = ravenna #Forlì-Cesena
+}
