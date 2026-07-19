@@ -194,10 +194,6 @@ QString route_game_data::get_line_path() const
 
 		std::vector<const site *> province_holding_sites = path_province->get_map_data()->get_settlement_sites();
 
-		if (end_province && this->route->get_end_site() != nullptr) {
-			std::erase(province_holding_sites, this->route->get_end_site());
-		}
-
 		bool first = true;
 
 		while (!province_holding_sites.empty()) {
@@ -228,6 +224,11 @@ QString route_game_data::get_line_path() const
 			}
 
 			assert_throw(best_holding_site != nullptr);
+
+			if (end_province && best_holding_site == this->route->get_end_site()) {
+				break;
+			}
+
 			line_points.push_back(best_holding_site->get_map_data()->get_tile_pos());
 			first = false;
 		}
