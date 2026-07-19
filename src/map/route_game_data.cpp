@@ -14,6 +14,7 @@
 #include "map/site_map_data.h"
 #include "script/condition/and_condition.h"
 #include "util/assert_util.h"
+#include "util/point_util.h"
 #include "util/string_conversion_util.h"
 #include "util/string_util.h"
 
@@ -174,18 +175,69 @@ QString route_game_data::get_line_path() const
 		return QString();
 	}
 
-	std::string line_path;
+	std::vector<QPoint> line_points;
 
-	bool first = true;
+	const QPoint &start_point = this->route->get_start_site() != nullptr ? this->route->get_start_site()->get_map_data()->get_tile_pos() : this->route->get_path_provinces().front()->get_map_data()->get_center_tile_pos();
+	const QPoint &end_point = this->route->get_end_site() != nullptr ? this->route->get_end_site()->get_map_data()->get_tile_pos() : this->route->get_path_provinces().back()->get_map_data()->get_center_tile_pos();
 
-	for (const province *path_province : this->route->get_path_provinces()) {
-		QPoint point = path_province->get_map_data()->get_center_tile_pos();
-		if (path_province == this->route->get_path_provinces().front() && this->route->get_start_site() != nullptr) {
-			point = this->route->get_start_site()->get_map_data()->get_tile_pos();
-		} else if (path_province == this->route->get_path_provinces().back() && this->route->get_end_site() != nullptr) {
-			point = this->route->get_end_site()->get_map_data()->get_tile_pos();
+	line_points.push_back(start_point);
+
+	//use the holding site locations in the path provinces to form the path
+	for (size_t i = 0; i < this->route->get_path_provinces().size(); ++i) {
+		const province *path_province = this->route->get_path_provinces().at(i);
+
+		const bool start_province = (path_province == this->route->get_path_provinces().front());
+		const bool end_province = (path_province == this->route->get_path_provinces().back());
+
+		const QPoint &next_province_point = end_province ? end_point : this->route->get_path_provinces().at(i + 1)->get_map_data()->get_center_tile_pos();
+
+		std::vector<const site *> province_holding_sites = path_province->get_map_data()->get_settlement_sites();
+
+		if (end_province && this->route->get_end_site() != nullptr) {
+			std::erase(province_holding_sites, this->route->get_end_site());
 		}
 
+		bool first = true;
+
+		while (!province_holding_sites.empty()) {
+			const QPoint &previous_point = line_points.back();
+			const int previous_point_distance = point::distance_to(previous_point, next_province_point);
+
+			std::erase_if(province_holding_sites, [&next_province_point, previous_point_distance](const site *site) {
+				return point::distance_to(site->get_map_data()->get_tile_pos(), next_province_point) >= previous_point_distance;
+			});
+
+			if (province_holding_sites.empty()) {
+				//for the start and end province we shouldn't add the center tile pos if no sites were available that were close enough, since we already add points in them as the start and end points anyway
+				if (first && !start_province && !end_province) {
+					line_points.push_back(path_province->get_map_data()->get_center_tile_pos());
+				}
+				break;
+			}
+
+			int best_distance_to_previous = std::numeric_limits<int>::max();
+			const site *best_holding_site = nullptr;
+
+			for (const site *holding_site : province_holding_sites) {
+				const int distance_to_previous = point::distance_to(holding_site->get_map_data()->get_tile_pos(), previous_point);
+				if (distance_to_previous < best_distance_to_previous) {
+					best_holding_site = holding_site;
+					best_distance_to_previous = distance_to_previous;
+				}
+			}
+
+			assert_throw(best_holding_site != nullptr);
+			line_points.push_back(best_holding_site->get_map_data()->get_tile_pos());
+			first = false;
+		}
+	}
+
+	line_points.push_back(end_point);
+
+	std::string line_path;
+	bool first = true;
+
+	for (const QPoint &point : line_points) {
 		if (first) {
 			line_path += std::format("M {} {}", (point.x() * defines::get()->get_province_map_tile_scale() * preferences::get()->get_scale_factor()).to_int(), (point.y() * defines::get()->get_province_map_tile_scale() * preferences::get()->get_scale_factor()).to_int());
 			first = false;
