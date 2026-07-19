@@ -65,7 +65,9 @@ flaminian_way = {
 
 postumian_way = {
 	name = "Postumian Way"
-	color = { 87 243 152 }
+	type = trade_route
+	start_site = genoa #Genua
+	end_site = piacenza #Placentia
 	path_provinces = {
 		genoa
 		piedmont
