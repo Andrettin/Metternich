@@ -2,7 +2,6 @@
 
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
-#include "util/color_container.h"
 #include "util/qunique_ptr.h"
 
 Q_MOC_INCLUDE("map/route_game_data.h")
@@ -24,7 +23,6 @@ class route final : public named_data_entry, public data_type<route>
 {
 	Q_OBJECT
 
-	Q_PROPERTY(QColor color READ get_color WRITE set_color NOTIFY changed)
 	Q_PROPERTY(const metternich::route_type* type MEMBER type READ get_type NOTIFY changed)
 	Q_PROPERTY(metternich::site* start_site MEMBER start_site NOTIFY changed)
 	Q_PROPERTY(metternich::site* end_site MEMBER end_site NOTIFY changed)
@@ -37,37 +35,6 @@ public:
 	static constexpr const char database_folder[] = "routes";
 	static constexpr bool history_enabled = true;
 
-	static route *get_by_color(const QColor &color)
-	{
-		route *route = route::try_get_by_color(color);
-
-		if (route == nullptr) {
-			throw std::runtime_error(std::format("No route found for color: ({}, {}, {}).", color.red(), color.green(), color.blue()));
-		}
-
-		return route;
-	}
-
-	static route *try_get_by_color(const QColor &color)
-	{
-		const auto find_iterator = route::routes_by_color.find(color);
-		if (find_iterator != route::routes_by_color.end()) {
-			return find_iterator->second;
-		}
-
-		return nullptr;
-	}
-
-	static void clear()
-	{
-		data_type::clear();
-		route::routes_by_color.clear();
-	}
-
-private:
-	static inline color_map<route *> routes_by_color;
-
-public:
 	explicit route(const std::string &identifier);
 	~route();
 
@@ -88,25 +55,6 @@ public:
 	route_game_data *get_game_data() const
 	{
 		return this->game_data.get();
-	}
-
-	const QColor &get_color() const
-	{
-		return this->color;
-	}
-
-	void set_color(const QColor &color)
-	{
-		if (color == this->get_color()) {
-			return;
-		}
-
-		if (route::try_get_by_color(color) != nullptr) {
-			throw std::runtime_error("Color is already used by another route.");
-		}
-
-		this->color = color;
-		route::routes_by_color[color] = this;
 	}
 
 	const route_type *get_type() const
@@ -146,7 +94,6 @@ signals:
 	void changed();
 
 private:
-	QColor color;
 	const route_type *type = nullptr;
 	site *start_site = nullptr;
 	site *end_site = nullptr;
