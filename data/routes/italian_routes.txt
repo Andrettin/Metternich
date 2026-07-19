@@ -6,6 +6,7 @@ aemilian_way = {
 	path_provinces = {
 		rimini
 		romagna
+		bologna
 		modena
 		parma
 	}

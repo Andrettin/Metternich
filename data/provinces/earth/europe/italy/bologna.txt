@@ -1,8 +1,8 @@
-romagna = {
-	name = "Romagna"
-	color = { 112 0 160 }
-	terrain = hills
-	default_provincial_capital = ravenna
+bologna = {
+	name = "Bologna"
+	color = { 84 204 76 }
+	terrain = plains
+	default_provincial_capital = bologna
 	regions = {
 		italy
 	}
@@ -15,10 +15,6 @@ romagna = {
 			owner = ostrogothia #part of the Kingdom of the East Goths in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 			culture = gothic
 			religion = asatru
-		}
-		
-		1130 = {
-			trade_zone = contarini
 		}
 		
 		1204 = {

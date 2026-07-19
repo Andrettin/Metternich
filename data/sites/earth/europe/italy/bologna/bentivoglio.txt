@@ -1,0 +1,8 @@
+bentivoglio = {
+	name = "Bentivoglio"
+	world = earth
+	geocoordinate = { 11.418888888889 44.635277777778 }
+	type = holding
+	holding_type = castle
+	province = bologna
+}

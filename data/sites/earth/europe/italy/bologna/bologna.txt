@@ -5,7 +5,7 @@ bologna = {
 	type = holding
 	holding_type = university #historical university
 	#holding_type = guild
-	province = romagna
+	province = bologna
 	cultural_names = {
 		roman = "Bononia" #Source: William R. Shepherd, "Historical Atlas", 1911, p. 29.
 	}

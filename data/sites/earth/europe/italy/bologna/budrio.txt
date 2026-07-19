@@ -1,0 +1,8 @@
+budrio = {
+	name = "Budrio"
+	world = earth
+	geocoordinate = { 11.53439 44.53745 }
+	type = holding
+	holding_type = castle
+	province = bologna
+}

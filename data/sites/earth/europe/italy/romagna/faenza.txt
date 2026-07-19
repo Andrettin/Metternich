@@ -1,0 +1,8 @@
+faenza = {
+	name = "Faenza"
+	world = earth
+	geocoordinate = { 11.883333333333 44.285555555556 }
+	type = holding
+	holding_type = castle
+	province = romagna #Ravenna
+}

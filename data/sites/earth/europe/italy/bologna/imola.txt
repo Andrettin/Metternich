@@ -1,0 +1,8 @@
+imola = {
+	name = "Imola"
+	world = earth
+	geocoordinate = { 11.714722222222 44.353055555556 }
+	type = holding
+	holding_type = guild
+	province = bologna
+}

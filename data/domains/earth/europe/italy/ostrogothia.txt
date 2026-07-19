@@ -13,6 +13,7 @@ ostrogothia = {
 	core_provinces = {
 		romagna
 		arezzo
+		bologna
 		cosenza
 		genoa
 		latium

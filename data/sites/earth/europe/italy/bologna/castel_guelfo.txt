@@ -1,0 +1,8 @@
+castel_guelfo = {
+	name = "Castel Guelfo"
+	world = earth
+	geocoordinate = { 11.683333333333 44.433333333333 } #Castel Guelfo di Bologna
+	type = holding
+	holding_type = castle
+	province = bologna
+}

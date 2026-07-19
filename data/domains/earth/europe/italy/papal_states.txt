@@ -17,6 +17,7 @@ papal_states = {
 	}
 	core_provinces = {
 		latium
+		bologna
 		rimini
 		romagna
 	}

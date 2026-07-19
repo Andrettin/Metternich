@@ -1,0 +1,8 @@
+bagnacavallo = {
+	name = "Bagnacavallo"
+	world = earth
+	geocoordinate = { 11.9760633 44.4168618 }
+	type = holding
+	holding_type = castle
+	province = romagna #Ravenna
+}
