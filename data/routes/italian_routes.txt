@@ -1,6 +1,8 @@
 aemilian_way = {
 	name = "Aemilian Way"
-	color = { 2 80 57 }
+	type = trade_route
+	start_site = rimini #Ariminum
+	end_site = piacenza #Placentia
 	path_provinces = {
 		rimini
 		romagna
