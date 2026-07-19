@@ -5,4 +5,10 @@ rimini = {
 	type = holding
 	holding_type = guild
 	province = rimini
+	
+	history = {
+		526 = {
+			developed = true #existed in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+		}
+	}
 }
