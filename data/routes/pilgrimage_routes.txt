@@ -9,6 +9,13 @@ via_di_francesco = { #Source: "Exploration Map by Map", 2025, p. 50.
 		latium
 	}
 	conditions = {
+		pathway = trail
 		religion = catholic
+	}
+	
+	history = {
+		high_middle_ages = {
+			pathway = trail #the Via di Francesco pilgrimage route existed in the Middle Ages; Source: "Exploration Map by Map", 2025, p. 50.
+		}
 	}
 }
