@@ -131,7 +131,8 @@ centesimal_int route_game_data::get_output() const
 
 	const int total_holding_level = this->route->get_start_site()->get_game_data()->get_holding_level() + this->route->get_end_site()->get_game_data()->get_holding_level();
 
-	centesimal_int output(total_holding_level);
+	centesimal_int output(this->route->get_output_multiplier());
+	output *= total_holding_level;
 	output /= 2; //average of the holding levels of the two connected sites
 	output /= 2; //the half-share for each of the two connected sites
 	return output;

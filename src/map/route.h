@@ -69,6 +69,7 @@ public:
 	explicit route(const std::string &identifier);
 	~route();
 
+	virtual void process_gsml_property(const gsml_property &property) override;
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
 	virtual void check() const override;
@@ -112,6 +113,11 @@ public:
 		return this->output_commodity;
 	}
 
+	int64_t get_output_multiplier() const
+	{
+		return this->output_multiplier;
+	}
+
 	const site *get_start_site() const
 	{
 		return this->start_site;
@@ -143,6 +149,7 @@ signals:
 private:
 	QColor color;
 	const commodity *output_commodity = nullptr;
+	int64_t output_multiplier = 1;
 	site *start_site = nullptr;
 	site *end_site = nullptr;
 	bool hidden = false;

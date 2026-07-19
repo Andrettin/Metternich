@@ -2,6 +2,7 @@
 
 #include "map/route.h"
 
+#include "economy/commodity.h"
 #include "map/province.h"
 #include "map/route_game_data.h"
 #include "map/route_history.h"
@@ -19,6 +20,19 @@ route::route(const std::string &identifier) : named_data_entry(identifier)
 
 route::~route()
 {
+}
+
+void route::process_gsml_property(const gsml_property &property)
+{
+	const std::string &key = property.get_key();
+	const std::string &value = property.get_value();
+
+	if (key == "output_multiplier") {
+		assert_throw(this->get_output_commodity() != nullptr);
+		this->output_multiplier = this->get_output_commodity()->string_to_value(value);
+	} else {
+		named_data_entry::process_gsml_property(property);
+	}
 }
 
 void route::process_gsml_scope(const gsml_data &scope)
