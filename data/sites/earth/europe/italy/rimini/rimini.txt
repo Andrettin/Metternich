@@ -1,0 +1,8 @@
+rimini = {
+	name = "Rimini"
+	world = earth
+	geocoordinate = { 12.568333333333 44.059444444444 }
+	type = holding
+	holding_type = guild
+	province = rimini
+}

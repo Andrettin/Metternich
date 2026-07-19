@@ -1,0 +1,42 @@
+rimini = {
+	name = "Rimini"
+	color = { 43 21 183 }
+	terrain = plains
+	default_provincial_capital = rimini
+	regions = {
+		italy
+	}
+	
+	history = {
+		culture = gothic
+		religion = asatru
+		
+		526 = {
+			owner = ostrogothia #part of the Kingdom of the East Goths in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = gothic
+			religion = asatru
+		}
+		
+		1204 = {
+			owner = papal_states #part of the Papal States in 1204; Source: William R. Shepherd, "Historical Atlas", 1911, p. 73.
+			culture = italian
+			religion = catholic
+		}
+		
+		1360 = {
+			owner = papal_states #part of the Papal States in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1477 = {
+			owner = papal_states #part of the Papal States c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+		}
+		
+		1740 = {
+			owner = papal_states #part of the Papal States c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1815 = {
+			culture = italian #Source: "The British Dominions Year Book 1918", 1918, Map 3.
+		}
+	}
+}

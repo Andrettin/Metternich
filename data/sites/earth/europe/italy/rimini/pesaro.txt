@@ -1,0 +1,8 @@
+pesaro = {
+	name = "Pesaro"
+	world = earth
+	geocoordinate = { 12.9133 43.91015 }
+	type = holding
+	holding_type = temple
+	province = rimini #Pesaro e Urbino
+}

@@ -5,7 +5,7 @@ ancona = {
 	type = holding
 	holding_type = guild
 	#resource = fruit
-	province = romagna
+	province = rimini #Ancona
 	
 	history = {
 		1815 = {

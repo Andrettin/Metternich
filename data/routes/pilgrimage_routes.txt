@@ -5,7 +5,7 @@ via_di_francesco = { #Source: "Exploration Map by Map", 2025, p. 50.
 	end_site = lateran #Rome
 	path_provinces = {
 		arezzo
-		romagna
+		rimini
 		latium
 	}
 	conditions = {

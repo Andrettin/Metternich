@@ -1,0 +1,8 @@
+gabicce = {
+	name = "Gabicce"
+	world = earth
+	geocoordinate = { 12.756261111111 43.966838888889 } #Gabicce Mare
+	type = holding
+	holding_type = castle
+	province = rimini #Pesaro e Urbino
+}

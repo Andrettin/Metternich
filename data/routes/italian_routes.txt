@@ -2,6 +2,7 @@ aemilian_way = {
 	name = "Aemilian Way"
 	color = { 2 80 57 }
 	path_provinces = {
+		rimini
 		romagna
 		modena
 		parma

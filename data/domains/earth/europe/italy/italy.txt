@@ -21,6 +21,7 @@ italy = {
 		naples
 		parma
 		piedmont
+		rimini
 		romagna
 		sardinia
 		sicily

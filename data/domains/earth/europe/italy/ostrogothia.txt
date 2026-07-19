@@ -19,6 +19,7 @@ ostrogothia = {
 		lombardy
 		naples
 		piedmont
+		rimini
 		sicily
 		taranto
 		tuscany
