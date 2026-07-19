@@ -4,5 +4,5 @@ forli = {
 	geocoordinate = { 12.04138888888889 44.22277777777778 } #Forlì
 	type = holding
 	holding_type = temple
-	province = romagna #Forlì-Cesena
+	province = ravenna #Forlì-Cesena
 }

@@ -16,14 +16,15 @@ italy = {
 		arezzo
 		bologna
 		cosenza
+		ferrara
 		genoa
 		lombardy
 		modena
 		naples
 		parma
 		piedmont
+		ravenna
 		rimini
-		romagna
 		sardinia
 		sicily
 		taranto

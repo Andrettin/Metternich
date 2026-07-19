@@ -11,10 +11,11 @@ ostrogothia = {
 		medieval_era
 	}
 	core_provinces = {
-		romagna
+		ravenna
 		arezzo
 		bologna
 		cosenza
+		ferrara
 		genoa
 		latium
 		lombardy

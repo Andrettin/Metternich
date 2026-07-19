@@ -5,7 +5,7 @@ aemilian_way = {
 	end_site = piacenza #Placentia
 	path_provinces = {
 		rimini
-		romagna
+		ravenna
 		bologna
 		modena
 		parma

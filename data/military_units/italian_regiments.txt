@@ -109,7 +109,7 @@ romagna_regulars = {
 	
 	history = {
 		1815 = { #1820 = {
-			province = romagna
+			province = ravenna
 		}
 	}
 }

@@ -18,7 +18,8 @@ papal_states = {
 	core_provinces = {
 		latium
 		bologna
+		ferrara
+		ravenna
 		rimini
-		romagna
 	}
 }
