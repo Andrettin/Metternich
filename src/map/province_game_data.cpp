@@ -1010,8 +1010,10 @@ const site *province_game_data::get_best_provincial_capital_slot() const
 
 	assert_throw(this->get_provincial_capital() == nullptr);
 
+	const government_type *government_type = this->get_owner()->get_game_data()->get_government_type();
 	std::vector<const site *> potential_provincial_capitals;
 	bool found_default_provincial_capital = false;
+	bool found_preferred_holding_type = false;
 	int best_holding_level = 0;
 
 	for (const site *site : this->province->get_map_data()->get_settlement_sites()) {
@@ -1027,7 +1029,7 @@ const site *province_game_data::get_best_provincial_capital_slot() const
 			continue;
 		}
 
-		if (!this->get_owner()->get_game_data()->get_government_type()->is_holding_type_allowed(site->get_holding_type())) {
+		if (!government_type->is_holding_type_allowed(site->get_holding_type())) {
 			continue;
 		}
 
@@ -1038,6 +1040,16 @@ const site *province_game_data::get_best_provincial_capital_slot() const
 			potential_provincial_capitals = { site };
 			found_default_provincial_capital = true;
 		} else if (!found_default_provincial_capital) {
+			if (found_preferred_holding_type) {
+				if (!government_type->is_holding_type_preferred(site->get_holding_type())) {
+					continue;
+				}
+			} else if (government_type->is_holding_type_preferred(site->get_holding_type())) {
+				potential_provincial_capitals.clear();
+				found_preferred_holding_type = true;
+				best_holding_level = site->get_game_data()->get_holding_level();
+			}
+
 			if (site->get_game_data()->get_holding_level() > best_holding_level) {
 				potential_provincial_capitals.clear();
 				best_holding_level = site->get_game_data()->get_holding_level();
