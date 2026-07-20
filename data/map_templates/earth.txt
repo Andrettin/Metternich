@@ -95,12 +95,15 @@ egypt = {
 
 europe = {
 	name = "Europe"
-	size = { 3072 2368 }
+	size = { 2400 1824 }
 	world = earth
 	main_map_template = earth
-	map_start_pos = { 6560 2016 }
+	map_start_pos = { 7168 2816 }
 	minimap_tile_scale = 0.125
 	diplomatic_map_tile_scale = 0.5
+	ignored_provinces = {
+		upper_egypt
+	}
 }
 
 south_america = {
