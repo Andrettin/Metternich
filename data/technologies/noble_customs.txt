@@ -297,6 +297,9 @@ heraldry = {
 		romantic_poetry
 		feudalism #seems reasonable
 	}
+	modifier = {
+		regency_output_modifier = 5
+	}
 	discovery_mean_time_to_happen = {
 		months = 1000
 	}
@@ -313,6 +316,9 @@ noblesse_oblige = {
 	period = renaissance_age
 	prerequisites = {
 		heraldry
+	}
+	modifier = {
+		regency_output_modifier = 5
 	}
 	discovery_mean_time_to_happen = {
 		months = 2000
