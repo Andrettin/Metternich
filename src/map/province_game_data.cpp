@@ -121,6 +121,8 @@ void province_game_data::process_gsml_property(const gsml_property &property)
 		this->pathway_construction_progress = decimillesimal_int(value);
 	} else if (key == "total_holding_level") {
 		this->total_holding_level = std::stoi(value);
+	} else if (key == "trade_efficiency_modifier") {
+		this->trade_efficiency_modifier = std::stoi(value);
 	} else if (key == "movement_cost_modifier") {
 		this->movement_cost_modifier = std::stoi(value);
 	} else {
@@ -216,6 +218,10 @@ gsml_data province_game_data::to_gsml_data() const
 
 	if (this->get_total_holding_level() != 0) {
 		data.add_property("total_holding_level", std::to_string(this->get_total_holding_level()));
+	}
+
+	if (this->get_trade_efficiency_modifier() != 0) {
+		data.add_property("trade_efficiency_modifier", std::to_string(this->get_trade_efficiency_modifier()));
 	}
 
 	if (this->get_movement_cost_modifier() != 0) {
@@ -2476,6 +2482,27 @@ void province_game_data::set_commodity_bonus_for_tile_threshold(const commodity 
 		}
 
 		tile->calculate_commodity_outputs();
+	}
+}
+
+void province_game_data::set_trade_efficiency_modifier(const int value)
+{
+	if (value == this->get_trade_efficiency_modifier()) {
+		return;
+	}
+
+	for (const route *route : this->province->get_routes()) {
+		if (route->get_game_data()->is_active() && route->get_output_commodity() != nullptr && route->get_output_commodity()->is_wealth()) {
+			route->get_game_data()->apply_output(-1);
+		}
+	}
+
+	this->trade_efficiency_modifier = value;
+
+	for (const route *route : this->province->get_routes()) {
+		if (route->get_game_data()->is_active() && route->get_output_commodity() != nullptr && route->get_output_commodity()->is_wealth()) {
+			route->get_game_data()->apply_output(1);
+		}
 	}
 }
 

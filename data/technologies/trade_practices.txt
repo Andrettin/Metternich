@@ -7,6 +7,9 @@ business_contracts = {
 	prerequisites = {
 		road_building #to place it in the appropriate period
 	}
+	modifier = {
+		trade_efficiency = 1
+	}
 	discovery_mean_time_to_happen = {
 		months = 50
 	}
@@ -23,6 +26,9 @@ promissory_note = {
 	period = dark_age
 	prerequisites = {
 		business_contracts
+	}
+	modifier = {
+		trade_efficiency = 2
 	}
 	discovery_mean_time_to_happen = {
 		months = 125
@@ -41,6 +47,9 @@ letters_of_credit = {
 	prerequisites = {
 		promissory_note
 	}
+	modifier = {
+		trade_efficiency = 3
+	}
 	discovery_mean_time_to_happen = {
 		months = 500
 	}
@@ -58,6 +67,9 @@ double_entry_bookkeeping = {
 	prerequisites = {
 		letters_of_credit
 	}
+	modifier = {
+		trade_efficiency = 4
+	}
 	discovery_mean_time_to_happen = {
 		months = 1500
 	}
@@ -74,6 +86,9 @@ foreign_accreditation = {
 	period = renaissance_age
 	prerequisites = {
 		double_entry_bookkeeping
+	}
+	modifier = {
+		trade_efficiency = 5
 	}
 	discovery_mean_time_to_happen = {
 		months = 5000

@@ -7,6 +7,9 @@ minor_merchant_houses = {
 	prerequisites = {
 		road_building #to place it in the appropriate period
 	}
+	modifier = {
+		trade_efficiency = 1
+	}
 	discovery_mean_time_to_happen = {
 		months = 50
 		
@@ -312,6 +315,9 @@ local_merchant_houses = {
 	prerequisites = {
 		minor_merchant_houses
 	}
+	modifier = {
+		trade_efficiency = 2
+	}
 	discovery_mean_time_to_happen = {
 		months = 125
 		
@@ -613,6 +619,9 @@ mint = {
 	prerequisites = {
 		local_merchant_houses
 	}
+	modifier = {
+		trade_efficiency = 5
+	}
 	discovery_mean_time_to_happen = {
 		months = 500
 	}
@@ -629,6 +638,9 @@ guilds = {
 	period = castle_age
 	prerequisites = {
 		mint
+	}
+	modifier = {
+		trade_efficiency = 2
 	}
 	discovery_mean_time_to_happen = {
 		months = 1500
@@ -934,6 +946,9 @@ renowned_merchant_houses = {
 	period = renaissance_age
 	prerequisites = {
 		guilds
+	}
+	modifier = {
+		trade_efficiency = 5
 	}
 	discovery_mean_time_to_happen = {
 		months = 4000

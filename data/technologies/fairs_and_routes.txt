@@ -7,6 +7,9 @@ annual_sailing = {
 	prerequisites = {
 		road_building #to place it in the appropriate period
 	}
+	modifier = {
+		trade_efficiency = 1
+	}
 	discovery_mean_time_to_happen = {
 		months = 50
 	}
@@ -23,6 +26,9 @@ local_fairs = {
 	period = dark_age
 	prerequisites = {
 		annual_sailing
+	}
+	modifier = {
+		trade_efficiency = 1
 	}
 	discovery_mean_time_to_happen = {
 		months = 125
@@ -42,6 +48,9 @@ distant_trading = {
 		local_fairs
 		large_ship_building #seems reasonable, since distant trading benefits strongly from larger ships
 	}
+	modifier = {
+		trade_efficiency = 2
+	}
 	discovery_mean_time_to_happen = {
 		months = 500
 	}
@@ -59,6 +68,9 @@ exotic_trading = {
 	prerequisites = {
 		distant_trading
 	}
+	modifier = {
+		trade_efficiency = 3
+	}
 	discovery_mean_time_to_happen = {
 		months = 1500
 	}
@@ -75,6 +87,9 @@ international_fairs = {
 	period = renaissance_age
 	prerequisites = {
 		exotic_trading
+	}
+	modifier = {
+		trade_efficiency = 6
 	}
 	discovery_mean_time_to_happen = {
 		months = 5000

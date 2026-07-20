@@ -7,6 +7,7 @@
 #include "economy/commodity.h"
 #include "game/game.h"
 #include "map/province.h"
+#include "map/province_game_data.h"
 #include "map/province_map_data.h"
 #include "map/route.h"
 #include "map/site.h"
@@ -133,6 +134,27 @@ centesimal_int route_game_data::get_output() const
 
 	centesimal_int output(this->route->get_output_multiplier());
 	output *= total_holding_level;
+
+	if (this->route->get_output_commodity()->is_wealth()) {
+		int trade_efficiency_modifier = 0;
+		int trade_efficiency_province_count = 0;
+
+		for (const province *province : this->route->get_path_provinces()) {
+			if (province->is_water_zone()) {
+				continue;
+			}
+			
+			trade_efficiency_modifier += province->get_game_data()->get_trade_efficiency_modifier();
+			++trade_efficiency_province_count;
+		}
+
+		assert_throw(trade_efficiency_province_count > 0);
+		trade_efficiency_modifier /= trade_efficiency_province_count;
+
+		output *= 100 + trade_efficiency_modifier;
+		output /= 100;
+	}
+
 	output /= 2; //average of the holding levels of the two connected sites
 	output /= 2; //the half-share for each of the two connected sites
 	return output;

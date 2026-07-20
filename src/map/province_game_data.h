@@ -608,6 +608,18 @@ public:
 		this->set_commodity_bonus_for_tile_threshold(commodity, threshold, this->get_commodity_bonus_for_tile_threshold(commodity, threshold) + value);
 	}
 
+	int get_trade_efficiency_modifier() const
+	{
+		return this->trade_efficiency_modifier;
+	}
+
+	void set_trade_efficiency_modifier(const int value);
+
+	void change_trade_efficiency_modifier(const int change)
+	{
+		this->set_trade_efficiency_modifier(this->get_trade_efficiency_modifier() + change);
+	}
+
 	int get_technology_category_spread_modifier(const technology_category *category) const
 	{
 		const auto find_iterator = this->technology_category_spread_modifiers.find(category);
@@ -708,6 +720,7 @@ private:
 	commodity_map<centesimal_int> commodity_output_modifiers;
 	commodity_map<int> commodity_throughput_modifiers;
 	commodity_map<std::map<int, int>> commodity_bonuses_for_tile_thresholds;
+	int trade_efficiency_modifier = 0;
 	data_entry_map<technology_category, int> technology_category_spread_modifiers;
 	int movement_cost_modifier = 0;
 };
