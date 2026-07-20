@@ -3,6 +3,12 @@ nice = {
 	color = { 0 51 15 }
 	terrain = mountains
 	default_provincial_capital = nice
+	cultural_names = {
+		frankish = "Nicea"
+		gaulish = "Nicaea"
+		italian = "Nizza"
+		roman = "Nicaea"
+	}
 	regions = {
 		france
 	}
@@ -16,6 +22,10 @@ nice = {
 			owner = ostrogothia #part of the Kingdom of the East Goths in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 			culture = gothic
 			religion = asatru
+		}
+		
+		1066 = {
+			trade_zone = spinola
 		}
 		
 		1477 = {

@@ -1,0 +1,15 @@
+spinola = {
+	name = "Spinola"
+	world = earth
+	geocoordinate = { 8.930318 44.410783 } #Palazzo Spinola di Pellicceria
+	type = holding
+	holding_type = patrician_palace
+	province = genoa
+	
+	history = {
+		950 = {
+			developed = true
+			owner = spinola
+		}
+	}
+}

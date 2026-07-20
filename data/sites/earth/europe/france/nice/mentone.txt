@@ -5,4 +5,10 @@ mentone = {
 	type = holding
 	holding_type = guild
 	province = nice
+	
+	history = {
+		1418 = {
+			developed = true #existed in the 1418-1748 period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 130.
+		}
+	}
 }

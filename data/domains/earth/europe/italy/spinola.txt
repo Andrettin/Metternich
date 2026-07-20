@@ -1,0 +1,16 @@
+spinola = {
+	name = "Spinola"
+	type = polity
+	culture = italian
+	default_religion = catholic
+	default_tier = barony
+	default_government_type = patrician_house
+	default_capital = spinola
+	eras = {
+		medieval_era
+		renaissance_era
+	}
+	core_holdings = {
+		spinola
+	}
+}
