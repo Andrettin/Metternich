@@ -76,6 +76,9 @@ mage = {
 	}
 	level_modifiers = {
 		1 = {
+			courageous = -2
+			cautious = 2
+			trusting = -2
 			#trait_of_type = past_experience
 			trait_of_type = proficiency
 			trait_of_type = proficiency

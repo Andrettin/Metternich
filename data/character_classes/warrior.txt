@@ -87,6 +87,8 @@ warrior = {
 	}
 	level_modifiers = {
 		1 = {
+			courageous = 3
+			cautious = -3
 			#trait_of_type = past_experience
 			trait_of_type = proficiency
 			trait_of_type = proficiency

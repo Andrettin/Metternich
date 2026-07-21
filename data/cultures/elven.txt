@@ -11,6 +11,11 @@ elven = {
 		#wood_elf
 		half_elf
 	}
+	character_modifier = {
+		honest = 2
+		modest = -2
+		cautious = 2
+	}
 	
 	given_names = {
 		male = {

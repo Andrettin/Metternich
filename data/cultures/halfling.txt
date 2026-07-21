@@ -6,4 +6,9 @@ halfling = {
 		#lightfoot_halfling
 		#tallfellow
 	}
+	character_modifier = {
+		peaceful = 2
+		cautious = -2
+		energetic = 2
+	}
 }

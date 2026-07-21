@@ -8,6 +8,11 @@ dwarven = {
 		#hill_dwarf
 		#mountain_dwarf
 	}
+	character_modifier = {
+		trusting = -2
+		dogmatic = 2
+		generous = -2
+	}
 	
 	given_names = {
 		male = {
