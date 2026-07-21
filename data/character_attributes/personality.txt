@@ -1,0 +1,59 @@
+cautious = {
+	name = "Cautious"
+	type = personality
+}
+
+courageous = {
+	name = "Courageous"
+	type = personality
+}
+
+dogmatic = {
+	name = "Dogmatic"
+	type = personality
+}
+
+energetic = {
+	name = "Energetic"
+	type = personality
+}
+
+forgiving = {
+	name = "Forgiving"
+	type = personality
+}
+
+generous = {
+	name = "Generous"
+	type = personality
+}
+
+honest = {
+	name = "Honest"
+	type = personality
+}
+
+loyal = {
+	name = "Loyal"
+	type = personality
+}
+
+modest = {
+	name = "Modest"
+	type = personality
+}
+
+peaceful = {
+	name = "Peaceful"
+	type = personality
+}
+
+reverent = {
+	name = "Reverent"
+	type = personality
+}
+
+trusting = {
+	name = "Trusting"
+	type = personality
+}
