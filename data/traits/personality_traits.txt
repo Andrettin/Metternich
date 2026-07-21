@@ -1,0 +1,11 @@
+deceitful = {
+	name = "Deceitful"
+	icon = dagger_bloody
+	types = {
+		personality_trait
+	}
+	modifier = {
+		disguise = 2
+		forgery = 2
+	}
+}

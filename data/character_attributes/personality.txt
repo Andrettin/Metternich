@@ -1,59 +1,70 @@
 cautious = {
-	name = "Cautious"
+	name = "Cautious" #opposite: Rash
 	type = personality
 }
 
 courageous = {
-	name = "Courageous"
+	name = "Courageous" #opposite: Fearful
 	type = personality
 }
 
 dogmatic = {
-	name = "Dogmatic"
+	name = "Dogmatic" #opposite: Open-Minded
 	type = personality
 }
 
 energetic = {
-	name = "Energetic"
+	name = "Energetic" #opposite: Lazy
 	type = personality
 }
 
 forgiving = {
-	name = "Forgiving"
+	name = "Forgiving" #opposite: Vengeful
 	type = personality
 }
 
 generous = {
-	name = "Generous"
+	name = "Generous" #opposite: Greedy
 	type = personality
 }
 
 honest = {
-	name = "Honest"
+	name = "Honest" #opposite: Deceitful
 	type = personality
+	value_modifiers = {
+		1 = {
+			trait = deceitful
+		}
+		6 = {
+			trait_count = {
+				trait = deceitful
+				count = -1
+			}
+		}
+	}
 }
 
 loyal = {
-	name = "Loyal"
+	name = "Loyal" #opposite: Unreliable
 	type = personality
 }
 
 modest = {
-	name = "Modest"
+	name = "Modest" #opposite: Proud
 	type = personality
 }
 
 peaceful = {
-	name = "Peaceful"
+	name = "Peaceful" #opposite: Violent
 	type = personality
 }
 
 reverent = {
-	name = "Reverent"
+	name = "Reverent" #opposite: Godless
 	type = personality
 }
 
 trusting = {
-	name = "Trusting"
+	name = "Trusting" #opposite: Suspicious
 	type = personality
 }

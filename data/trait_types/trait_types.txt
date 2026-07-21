@@ -25,6 +25,10 @@ flaw = {
 	}
 }
 
+personality_trait = {
+	name = "Personality Trait"
+}
+
 mythic_trait = {
 	name = "Mythic Trait"
 }
