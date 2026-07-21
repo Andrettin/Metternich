@@ -332,6 +332,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			modifier_effect = std::make_unique<attribute_skill_bonus_modifier_effect>();
 		} else if (tag == "species_armor_class_bonus") {
 			modifier_effect = std::make_unique<species_armor_class_bonus_modifier_effect>();
+		} else if (tag == "trait_count") {
+			modifier_effect = std::make_unique<trait_modifier_effect>();
 		} else if (character_stat::try_get_stat(tag) != nullptr) {
 			modifier_effect = std::make_unique<character_stat_modifier_effect>(character_stat::get_stat(tag));
 		}

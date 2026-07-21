@@ -2,7 +2,6 @@
 
 #include "character/character_attribute.h"
 
-#include "script/modifier.h"
 #include "util/assert_util.h"
 #include "util/string_util.h"
 
