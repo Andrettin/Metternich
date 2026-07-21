@@ -1,5 +1,6 @@
 dexterity = {
 	name = "Dexterity"
+	type = main
 	value_modifiers = {
 		1 = {
 			find_disarm_traps = -10
@@ -21,6 +22,7 @@ dexterity = {
 
 aim = {
 	name = "Aim"
+	type = main
 	base_attribute = dexterity
 	value_modifiers = {
 		1 = {
@@ -95,6 +97,7 @@ aim = {
 
 balance = {
 	name = "Balance"
+	type = main
 	base_attribute = dexterity
 	value_modifiers = {
 		1 = {

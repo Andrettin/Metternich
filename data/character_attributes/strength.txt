@@ -1,9 +1,11 @@
 strength = {
 	name = "Strength"
+	type = main
 }
 
 muscle = {
 	name = "Muscle"
+	type = main
 	base_attribute = strength
 	value_modifiers = {
 		1 = {
@@ -67,5 +69,6 @@ muscle = {
 
 stamina = {
 	name = "Stamina"
+	type = main
 	base_attribute = strength
 }

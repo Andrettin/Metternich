@@ -6,11 +6,13 @@
 namespace metternich {
 
 class skill;
+enum class character_attribute_type;
 
 class character_attribute final : public character_stat, public data_type<character_attribute>
 {
 	Q_OBJECT
 
+	Q_PROPERTY(metternich::character_attribute_type type MEMBER type READ get_type NOTIFY changed)
 	Q_PROPERTY(metternich::character_attribute* base_attribute MEMBER base_attribute NOTIFY changed)
 
 public:
@@ -25,6 +27,11 @@ public:
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
+
+	character_attribute_type get_type() const
+	{
+		return this->type;
+	}
 
 	const character_attribute *get_base_attribute() const
 	{
@@ -75,6 +82,7 @@ signals:
 	void changed();
 
 private:
+	character_attribute_type type{};
 	character_attribute *base_attribute = nullptr;
 	std::map<std::string, std::pair<int, int>> rating_ranges; //names for particular ranges
 	std::vector<const character_attribute *> subattributes;

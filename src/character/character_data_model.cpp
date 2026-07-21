@@ -5,6 +5,7 @@
 #include "character/bloodline.h"
 #include "character/character.h"
 #include "character/character_attribute.h"
+#include "character/character_attribute_type.h"
 #include "character/character_class.h"
 #include "character/character_game_data.h"
 #include "character/domain_skill.h"
@@ -134,6 +135,7 @@ void character_data_model::set_character(const metternich::character *character)
 {
 	if (this->character != nullptr) {
 		disconnect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_attribute_rows);
+		disconnect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_personality_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::mana_changed, this, &character_data_model::update_mana_row);
 		disconnect(this->character->get_game_data(), &character_game_data::max_mana_changed, this, &character_data_model::update_mana_row);
 		disconnect(this->character->get_game_data(), &character_game_data::craft_changed, this, &character_data_model::update_craft_row);
@@ -159,6 +161,7 @@ void character_data_model::set_character(const metternich::character *character)
 
 	if (character != nullptr) {
 		connect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_attribute_rows);
+		connect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_personality_rows);
 		connect(this->character->get_game_data(), &character_game_data::mana_changed, this, &character_data_model::update_mana_row);
 		connect(this->character->get_game_data(), &character_game_data::max_mana_changed, this, &character_data_model::update_mana_row);
 		connect(this->character->get_game_data(), &character_game_data::craft_changed, this, &character_data_model::update_craft_row);
@@ -187,7 +190,7 @@ void character_data_model::reset_model()
 	this->resetting_model = true;
 
 	this->top_rows.clear();
-	this->attribute_row = nullptr;
+	this->attribute_type_rows.clear();
 	this->mana_row = nullptr;
 	this->craft_row = nullptr;
 	this->armor_class_row = nullptr;
@@ -267,7 +270,8 @@ void character_data_model::reset_model()
 
 		this->top_rows.push_back(std::make_unique<character_data_row>("Challenge Rating:", std::to_string(character_game_data->get_challenge_rating())));
 
-		this->create_attribute_rows();
+		this->create_attribute_type_rows(character_attribute_type::main);
+		this->create_attribute_type_rows(character_attribute_type::personality);
 
 		this->top_rows.push_back(std::make_unique<character_data_row>("Health:", std::format("{}/{}", character_game_data->get_health(), character_game_data->get_max_health())));
 
@@ -322,20 +326,36 @@ void character_data_model::create_divine_domain_rows()
 	this->top_rows.push_back(std::move(top_row));
 }
 
-void character_data_model::create_attribute_rows()
+void character_data_model::create_attribute_type_rows(const character_attribute_type type)
 {
-	auto row = std::make_unique<character_data_row>("Attributes");
-	this->attribute_row = row.get();
+	std::string_view attribute_row_name;
+
+	switch (type) {
+		case character_attribute_type::main:
+			attribute_row_name = "Attributes";
+			break;
+		case character_attribute_type::personality:
+			attribute_row_name = "Personality";
+			break;
+		default:
+			assert_throw(false);
+			break;
+	}
+
+	auto row = std::make_unique<character_data_row>(std::string(attribute_row_name));
+	this->attribute_type_rows[type] = row.get();
 	this->top_rows.push_back(std::move(row));
 
-	this->update_attribute_rows();
+	this->update_attribute_type_rows(type);
 }
 
-void character_data_model::update_attribute_rows()
+void character_data_model::update_attribute_type_rows(const character_attribute_type type)
 {
-	assert_throw(this->attribute_row != nullptr);
+	character_data_row *attribute_type_row = this->attribute_type_rows[type];
 
-	this->clear_child_rows(this->attribute_row);
+	assert_throw(attribute_type_row != nullptr);
+
+	this->clear_child_rows(attribute_type_row);
 
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
 
@@ -347,16 +367,20 @@ void character_data_model::update_attribute_rows()
 			continue;
 		}
 
+		if (attribute->get_type() != type) {
+			continue;
+		}
+
 		this->create_attribute_row(attribute, value, attribute_rows);
 	}
 
 	//ensure attribute rows are sorted by name
 	//since base attribute rows can be created by subattribute rows, they might be out of order otherwise
-	std::sort(this->attribute_row->child_rows.begin(), this->attribute_row->child_rows.end(), [](const std::unique_ptr<character_data_row> &lhs, const std::unique_ptr<character_data_row> &rhs) {
+	std::sort(attribute_type_row->child_rows.begin(), attribute_type_row->child_rows.end(), [](const std::unique_ptr<character_data_row> &lhs, const std::unique_ptr<character_data_row> &rhs) {
 		return lhs->name < rhs->name;
 	});
 
-	this->on_child_rows_inserted(this->attribute_row);
+	this->on_child_rows_inserted(attribute_type_row);
 }
 
 void character_data_model::create_attribute_row(const character_attribute *attribute, const int value, data_entry_map<character_attribute, character_data_row *> &attribute_rows)
@@ -368,19 +392,29 @@ void character_data_model::create_attribute_row(const character_attribute *attri
 
 	character_data_row *parent_row = nullptr;
 
-	if (attribute->get_base_attribute() != nullptr) {
+	if (attribute->get_base_attribute() != nullptr && attribute->get_base_attribute()->get_type() == attribute->get_type()) {
 		if (!attribute_rows.contains(attribute->get_base_attribute())) {
 			this->create_attribute_row(attribute->get_base_attribute(), this->character->get_game_data()->get_attribute_value(attribute->get_base_attribute()), attribute_rows);
 		}
 
 		parent_row = attribute_rows.find(attribute->get_base_attribute())->second;
 	} else {
-		parent_row = this->attribute_row;
+		parent_row = this->attribute_type_rows[attribute->get_type()];
 	}
 
 	auto row = std::make_unique<character_data_row>(attribute->get_name() + ":", std::to_string(value), parent_row);
 	attribute_rows[attribute] = row.get();
 	parent_row->child_rows.push_back(std::move(row));
+}
+
+void character_data_model::update_attribute_rows()
+{
+	this->update_attribute_type_rows(character_attribute_type::main);
+}
+
+void character_data_model::update_personality_rows()
+{
+	this->update_attribute_type_rows(character_attribute_type::personality);
 }
 
 void character_data_model::create_mana_row()

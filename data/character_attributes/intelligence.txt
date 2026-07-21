@@ -1,5 +1,6 @@
 intelligence = {
 	name = "Intelligence"
+	type = main
 	rating_ranges = {
 		none = 0
 		animal = 1
@@ -22,10 +23,12 @@ intelligence = {
 
 knowledge = {
 	name = "Knowledge"
+	type = main
 	base_attribute = intelligence
 }
 
 reason = {
 	name = "Reason"
+	type = main
 	base_attribute = intelligence
 }

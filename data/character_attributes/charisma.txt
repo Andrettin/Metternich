@@ -1,8 +1,10 @@
 charisma = {
 	name = "Charisma"
+	type = main
 }
 
 appearance = {
 	name = "Appearance"
+	type = main
 	base_attribute = charisma
 }

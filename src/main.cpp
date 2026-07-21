@@ -3,6 +3,7 @@
 #include "character/bloodline_strength_category.h"
 #include "character/character.h"
 #include "character/character_attribute.h"
+#include "character/character_attribute_type.h"
 #include "character/character_data_model.h"
 #include "character/character_game_data.h"
 #include "character/dynasty.h"
@@ -184,6 +185,7 @@ int main(int argc, char **argv)
 		database_util::register_enum<attack_result>();
 		database_util::register_enum<battle_resolution_type>();
 		database_util::register_enum<bloodline_strength_category>();
+		database_util::register_enum<character_attribute_type>();
 		database_util::register_enum<commodity_type>();
 		database_util::register_enum<country_type>();
 		database_util::register_enum<cultural_group_rank>();

@@ -1,5 +1,6 @@
 wisdom = {
 	name = "Wisdom"	
+	type = main
 	value_modifiers = {
 		1 = {
 			will = -5
@@ -14,5 +15,6 @@ wisdom = {
 
 intuition = {
 	name = "Intuition"
+	type = main
 	base_attribute = wisdom
 }

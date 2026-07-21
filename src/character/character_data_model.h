@@ -14,6 +14,7 @@ namespace metternich {
 
 class character_attribute;
 class saving_throw_type;
+enum class character_attribute_type;
 
 class character_data_model : public QAbstractItemModel
 {
@@ -77,9 +78,11 @@ public:
 
 	void reset_model();
 	void create_divine_domain_rows();
-	void create_attribute_rows();
-	void update_attribute_rows();
+	void create_attribute_type_rows(const character_attribute_type type);
+	void update_attribute_type_rows(const character_attribute_type type);
 	void create_attribute_row(const character_attribute *attribute, const int value, data_entry_map<character_attribute, character_data_row *> &attribute_rows);
+	void update_attribute_rows();
+	void update_personality_rows();
 	void create_mana_row();
 	void update_mana_row();
 	void create_craft_row();
@@ -118,7 +121,7 @@ signals:
 private:
 	const metternich::character *character = nullptr;
 	std::vector<std::unique_ptr<const character_data_row>> top_rows;
-	character_data_row *attribute_row = nullptr;
+	std::map<character_attribute_type, character_data_row *> attribute_type_rows;
 	character_data_row *mana_row = nullptr;
 	character_data_row *craft_row = nullptr;
 	character_data_row *armor_class_row = nullptr;
