@@ -1,0 +1,91 @@
+is_rash = {
+	cautious <= 5
+}
+
+is_cautious = {
+	cautious >= 15
+}
+
+is_fearful = {
+	courageous <= 5
+}
+
+is_courageous = {
+	courageous >= 15
+}
+
+is_open_minded = {
+	dogmatic <= 5
+}
+
+is_dogmatic = {
+	dogmatic >= 15
+}
+
+is_lazy = {
+	energetic <= 5
+}
+
+is_energetic = {
+	energetic >= 15
+}
+
+is_vengeful = {
+	forgiving <= 5
+}
+
+is_forgiving = {
+	forgiving >= 15
+}
+
+is_greedy = {
+	generous <= 5
+}
+
+is_generous = {
+	generous >= 15
+}
+
+is_honest = {
+	honest >= 15
+}
+
+is_unreliable = {
+	loyal <= 5
+}
+
+is_loyal = {
+	loyal >= 15
+}
+
+is_proud = {
+	modest <= 5
+}
+
+is_modest = {
+	modest >= 15
+}
+
+is_violent = {
+	peaceful <= 5
+}
+
+is_peaceful = {
+	peaceful >= 15
+}
+
+is_godless = {
+	reverent <= 5
+}
+
+is_reverent = {
+	reverent >= 15
+}
+
+is_suspicious = {
+	trusting <= 5
+}
+
+is_trusting = {
+	trusting >= 15
+}
