@@ -1,0 +1,16 @@
+embriaco = {
+	name = "Embriaco"
+	type = polity
+	culture = italian
+	default_religion = catholic
+	default_tier = barony
+	default_government_type = patrician_house
+	default_capital = embriaco
+	eras = {
+		medieval_era
+		renaissance_era
+	}
+	core_holdings = {
+		embriaco
+	}
+}

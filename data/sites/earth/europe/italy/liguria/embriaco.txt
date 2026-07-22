@@ -1,0 +1,15 @@
+embriaco = {
+	name = "Embriaco"
+	world = earth
+	geocoordinate = { 8.92925833 44.40586944 } #Palazzo Giulio Sale
+	type = holding
+	holding_type = patrician_palace
+	province = genoa
+	
+	history = {
+		1066 = {
+			developed = true
+			owner = embriaco
+		}
+	}
+}
