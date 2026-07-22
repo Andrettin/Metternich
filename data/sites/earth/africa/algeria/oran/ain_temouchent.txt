@@ -1,0 +1,8 @@
+ain_temouchent = {
+	name = "Ain Temouchent" #"Aïn Témouchent"
+	world = earth
+	geocoordinate = { -1.14 35.304444444444 }
+	type = holding
+	holding_type = temple
+	province = oran #Aïn Témouchent
+}

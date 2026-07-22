@@ -1,0 +1,8 @@
+gdyel = {
+	name = "Gdyel"
+	world = earth
+	geocoordinate = { -0.43333333 35.78333333 }
+	type = holding
+	holding_type = castle
+	province = oran
+}

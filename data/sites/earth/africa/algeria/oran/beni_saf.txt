@@ -1,0 +1,8 @@
+beni_saf = {
+	name = "Beni Saf"
+	world = earth
+	geocoordinate = { -1.3836111111111 35.302222222222 }
+	type = holding
+	holding_type = castle
+	province = oran #Aïn Témouchent
+}

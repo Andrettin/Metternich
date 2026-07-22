@@ -1,0 +1,8 @@
+maghnia = {
+	name = "Maghnia"
+	world = earth
+	geocoordinate = { -1.7275 34.849444444444 }
+	type = holding
+	holding_type = castle
+	province = oran #Tlemcen
+}

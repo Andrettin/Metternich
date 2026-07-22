@@ -1,0 +1,8 @@
+mostaganem = {
+	name = "Mostaganem"
+	world = earth
+	geocoordinate = { 0.089984 35.940376 } #from Natural Earth
+	type = holding
+	holding_type = guild
+	province = oran #Mostaganem
+}

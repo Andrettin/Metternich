@@ -3,11 +3,12 @@ oran = {
 	world = earth
 	geocoordinate = { -0.61997277974 35.71000246080 } #from Natural Earth
 	type = holding
+	holding_type = castle
 	province = oran
 	
 	history = {
 		1360 = {
-			holding_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 	}
 }

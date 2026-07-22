@@ -1,0 +1,8 @@
+ain_el_berd = {
+	name = "Ain-el-Berd"
+	world = earth
+	geocoordinate = { -0.51277778 35.36583333 }
+	type = holding
+	holding_type = castle
+	province = oran #Sidi Bel Abbès
+}

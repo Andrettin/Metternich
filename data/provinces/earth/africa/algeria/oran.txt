@@ -1,6 +1,7 @@
 oran = {
 	name = "Oran"
-	color = { 238 7 180 }
+	color = { 84 153 16 }
+	terrain = plains
 	default_provincial_capital = oran
 	regions = {
 		algeria

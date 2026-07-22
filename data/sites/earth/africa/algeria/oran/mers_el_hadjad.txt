@@ -1,0 +1,8 @@
+mers_el_hadjad = {
+	name = "Mers-El-Hadjad"
+	world = earth
+	geocoordinate = { -0.166667 35.7833 } #Mers El Hadjadj
+	type = holding
+	holding_type = castle
+	province = oran
+}
