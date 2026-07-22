@@ -1,0 +1,8 @@
+nakoleia = {
+	name = "Nakoleia"
+	world = earth
+	geocoordinate = { 30.718444 39.478001 } #Nacolea
+	type = holding
+	holding_type = castle
+	province = eskisehir
+}

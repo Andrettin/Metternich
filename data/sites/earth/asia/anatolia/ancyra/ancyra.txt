@@ -1,0 +1,29 @@
+ancyra = {
+	name = "Ancyra" #also known as Angora
+	world = earth
+	geocoordinate = { 32.86439164100 39.92723858550 } #from Natural Earth
+	type = holding
+	holding_type = castle
+	province = ancyra
+	cultural_names = {
+		turkish = "Ankara"
+	}
+	features = {
+		holy_site #historical cathedral
+	}
+	
+	history = {
+		395 = {
+			#buildings += cathedral #Ancyra was the seat of a bishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
+			developed = true
+		}
+		
+		1360 = {
+			#existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1815 = {
+			population = 50000 #Angora had a population of 50,000 in 1815; Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, vol. 2, p. 81.
+		}
+	}
+}

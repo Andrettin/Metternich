@@ -1,0 +1,8 @@
+gordium = {
+	name = "Gordium"
+	world = earth
+	geocoordinate = { 31.97857 39.650103 } #Gordion
+	type = holding
+	holding_type = castle
+	province = ancyra
+}

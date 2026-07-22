@@ -17,7 +17,7 @@ bursa = {
 		}
 		
 		1360 = {
-			owner = ottoman_turks #territory of the Ottoman Turks in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			owner = ottoman_empire #territory of the Ottoman Turks in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 			culture = turkish
 			religion = sunni
 		}

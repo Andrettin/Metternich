@@ -15,7 +15,7 @@ phrygia = {
 	}
 	core_provinces = {
 		afyonkarahisar
-		ankara
+		ancyra
 		burdur
 		eskisehir
 		kastamonu

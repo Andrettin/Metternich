@@ -1,0 +1,8 @@
+gordoservon = {
+	name = "Gordoservon"
+	world = earth
+	geocoordinate = { 31.562376 40.127261 } #Juliopolis, Galatia
+	type = holding
+	holding_type = temple #or castle
+	province = ancyra
+}

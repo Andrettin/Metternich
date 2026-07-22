@@ -1,0 +1,8 @@
+haymana = {
+	name = "Haymana"
+	world = earth
+	geocoordinate = { 32.505 39.44166666666667 }
+	type = holding
+	holding_type = castle
+	province = ancyra
+}

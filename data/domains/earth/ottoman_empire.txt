@@ -6,21 +6,35 @@ ottoman_empire = {
 	culture = turkish
 	default_religion = sunni
 	default_tier = empire
-	default_government_type = monarchy
-	default_capital = constantinople
+	default_government_type = tribal_despotism
+	default_capital = constantinople #earlier Bursa
+	min_tier = duchy
 	definite_article = true
 	short_name = true
+	short_names = {
+		tribe = "Ottoman Turks"
+	}
 	eras = {
+		medieval_era
 		renaissance_era
 		industrial_era
 	}
 	core_provinces = {
 		thrace
+		ancyra
+		bursa
+		eskisehir
+		germiyan
+		karasi
+		troad
 	}
 	
 	history = {
+		#capital = bursa
+		
 		1512 = {
 			government_type = monarchy
+			#capital = constantinople
 			
 			offices = {
 				ruler = selim_i_of_the_ottoman_empire #Selim I became Sultan of the Ottoman Empire in 1512; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 204.

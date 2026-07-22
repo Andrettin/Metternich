@@ -22,7 +22,7 @@ eastern_rome = {
 		afyonkarahisar
 		albania
 		alexandria
-		ankara
+		ancyra
 		antalya
 		attica
 		aydin

@@ -1,0 +1,8 @@
+amorion = {
+	name = "Amorion"
+	world = earth
+	geocoordinate = { 31.266575 39.026452 } #Amorium
+	type = holding
+	holding_type = castle
+	province = afyonkarahisar
+}

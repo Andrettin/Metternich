@@ -1,0 +1,8 @@
+germa = {
+	name = "Germa"
+	world = earth
+	geocoordinate = { 31.6268837 39.5317603 }
+	type = holding
+	holding_type = guild
+	province = eskisehir
+}
