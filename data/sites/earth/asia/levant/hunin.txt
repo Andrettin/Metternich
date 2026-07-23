@@ -1,0 +1,8 @@
+hunin = {
+	name = "Hunin"
+	world = earth
+	geocoordinate = { 35.54472222 33.21444444 }
+	type = holding
+	holding_type = castle
+	province = palestine #Hazafon
+}

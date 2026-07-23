@@ -1,0 +1,8 @@
+montfort = {
+	name = "Montfort"
+	world = earth
+	geocoordinate = { 35.22611111111111 33.04472222222222 } #Montfort Castle
+	type = holding
+	holding_type = castle
+	province = palestine #Hazafon
+}

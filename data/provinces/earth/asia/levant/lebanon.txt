@@ -1,6 +1,7 @@
 lebanon = {
 	name = "Lebanon"
 	color = { 245 81 77 }
+	terrain = plains
 	default_provincial_capital = tyre
 	cultural_names = {
 		carthaginian = "Phoenicia"
@@ -16,6 +17,10 @@ lebanon = {
 			owner = phoenicia #part of Phoenician territory c. 1450 BC; Source: William R. Shepherd, "Historical Atlas", 1911, p. 4.
 			culture = phoenician
 			religion = pagan
+		}
+		
+		1291 = {
+			trade_zone = contarini
 		}
 		
 		1360 = {

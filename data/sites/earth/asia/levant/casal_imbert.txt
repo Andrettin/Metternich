@@ -1,0 +1,8 @@
+casal_imbert = {
+	name = "Casal Imbert"
+	world = earth
+	geocoordinate = { 35.10167222 33.04808056 } #Az-Zeeb
+	type = holding
+	holding_type = castle
+	province = palestine #Hazafon
+}
