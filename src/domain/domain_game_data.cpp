@@ -1075,6 +1075,13 @@ QCoro::Task<void> domain_game_data::check_tier()
 	assert_throw(new_tier != domain_tier::none);
 	assert_throw(new_tier != current_tier);
 
+	//ensure that the tier will still be above that of all vassals (if any)
+	domain_tier highest_vassal_tier = domain_tier::none;
+	for (const metternich::domain *vassal : this->get_vassals()) {
+		highest_vassal_tier = std::max(highest_vassal_tier, vassal->get_game_data()->get_tier());
+	}
+	new_tier = std::max(new_tier, static_cast<domain_tier>(static_cast<int>(highest_vassal_tier) + 1));
+
 	new_tier = std::max(new_tier, this->domain->get_min_tier());
 	new_tier = std::min(new_tier, this->domain->get_max_tier());
 
