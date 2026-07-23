@@ -1,0 +1,8 @@
+nehardea = {
+	name = "Nehardea"
+	world = earth
+	geocoordinate = { 43.71583333 33.37861111 }
+	type = holding
+	holding_type = temple
+	province = anbar
+}

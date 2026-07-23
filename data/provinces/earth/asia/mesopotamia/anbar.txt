@@ -1,7 +1,8 @@
-al_anbar = {
-	name = "Al Anbar"
-	color = { 123 82 229 }
-	default_provincial_capital = ramadi
+anbar = {
+	name = "Anbar"
+	color = { 172 3 142 }
+	terrain = desert
+	default_provincial_capital = anbar
 	regions = {
 		asia
 		middle_east

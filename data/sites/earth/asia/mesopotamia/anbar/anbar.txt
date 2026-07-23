@@ -1,0 +1,8 @@
+anbar = {
+	name = "Anbar"
+	world = earth
+	geocoordinate = { 43.716666666667 33.375 }
+	type = holding
+	holding_type = temple
+	province = anbar
+}

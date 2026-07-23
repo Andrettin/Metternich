@@ -1,0 +1,8 @@
+rawa = {
+	name = "Rawa"
+	world = earth
+	geocoordinate = { 41.908333333333 34.479166666667 }
+	type = holding
+	holding_type = castle
+	province = anbar
+}

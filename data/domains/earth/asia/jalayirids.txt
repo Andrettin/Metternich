@@ -11,7 +11,7 @@ jalayirids = {
 	}
 	core_provinces = {
 		diyala
-		al_anbar
+		anbar
 		babylon
 		chaldea
 		east_azarbaijan

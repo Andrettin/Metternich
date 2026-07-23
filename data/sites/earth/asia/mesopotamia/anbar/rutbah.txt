@@ -1,0 +1,8 @@
+rutbah = {
+	name = "Rutbah"
+	world = earth
+	geocoordinate = { 40.284456 33.038460 } #from Natural Earth (Ar Rutbah)
+	type = holding
+	holding_type = guild
+	province = anbar
+}

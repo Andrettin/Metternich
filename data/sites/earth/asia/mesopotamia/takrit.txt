@@ -1,0 +1,8 @@
+takrit = {
+	name = "Takrit"
+	world = earth
+	geocoordinate = { 43.676962 34.597047 } #from Natural Earth (Tikrit)
+	type = holding
+	holding_type = castle
+	province = saladin
+}

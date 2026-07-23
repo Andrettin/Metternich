@@ -1,0 +1,8 @@
+kasra = {
+	name = "Kasra"
+	world = earth
+	geocoordinate = { 44.580722222222 33.093722222222 } #Taq-i Kisra
+	type = holding
+	holding_type = castle
+	province = diyala #Baghdad
+}

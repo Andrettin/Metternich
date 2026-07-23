@@ -3,4 +3,6 @@ ramadi = {
 	world = earth
 	geocoordinate = { 43.29998205440 33.42001304020 } #from Natural Earth
 	type = holding
+	holding_type = guild
+	province = anbar
 }

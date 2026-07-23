@@ -1,0 +1,8 @@
+hit = {
+	name = "Hit"
+	world = earth
+	geocoordinate = { 42.825 33.641666666667 }
+	type = holding
+	holding_type = castle
+	province = anbar
+}
