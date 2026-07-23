@@ -72,6 +72,10 @@ coast_of_lebanon = {
 	name = "Coast of Lebanon"
 	color = { 203 198 0 }
 	sea = true
+	cultural_names = {
+		carthaginian = "Coast of Phoenicia"
+		phoenician = "Coast of Phoenicia"
+	}
 	regions = {
 		mediterranean_sea
 	}
