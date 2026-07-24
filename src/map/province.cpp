@@ -17,6 +17,7 @@
 #include "map/world.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
+#include "util/log_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -125,6 +126,10 @@ void province::initialize()
 
 void province::check() const
 {
+	if (this->get_terrain() == nullptr && !this->is_water_zone() && this->get_primary_star() == nullptr) {
+		log::log_error(std::format("Land province \"{}\" has no terrain.", this->get_identifier()));
+	}
+
 	if (this->get_default_provincial_capital() == nullptr && !this->is_water_zone()) {
 		throw std::runtime_error(std::format("Province \"{}\" has no default provincial capital.", this->get_identifier()));
 	} else if (this->get_default_provincial_capital() != nullptr && this->is_water_zone()) {
