@@ -5,10 +5,4 @@ canary_islands = {
 	regions = {
 		spain
 	}
-	
-	history = {
-		owner = carthage
-		culture = carthaginian
-		religion = pagan
-	}
 }

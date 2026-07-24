@@ -7,7 +7,6 @@ songhai = {
 	}
 	
 	history = {
-		owner = carthage
 		culture = songhai
 		religion = pagan
 	}

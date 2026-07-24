@@ -7,7 +7,6 @@ mali = {
 	}
 	
 	history = {
-		owner = carthage
 		culture = mande
 		religion = pagan
 	}

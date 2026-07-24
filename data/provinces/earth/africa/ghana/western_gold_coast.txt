@@ -7,7 +7,6 @@ western_gold_coast = {
 	}
 	
 	history = {
-		owner = carthage
 		culture = akan
 		religion = pagan
 		

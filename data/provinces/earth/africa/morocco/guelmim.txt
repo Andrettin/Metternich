@@ -7,7 +7,6 @@ guelmim = {
 	}
 	
 	history = {
-		owner = carthage
 		culture = maurian
 		religion = pagan
 	}

@@ -7,7 +7,6 @@ togo = {
 	}
 	
 	history = {
-		owner = carthage
 		culture = ewe
 		religion = pagan
 		

@@ -5,10 +5,4 @@ ghadamis = {
 	regions = {
 		libya
 	}
-	
-	history = {
-		owner = carthage
-		culture = carthaginian
-		religion = pagan
-	}
 }

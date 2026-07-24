@@ -5,10 +5,4 @@ adrar = {
 	regions = {
 		algeria
 	}
-	
-	history = {
-		owner = carthage
-		culture = carthaginian
-		religion = pagan
-	}
 }

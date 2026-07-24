@@ -7,7 +7,6 @@ accra = {
 	}
 	
 	history = {
-		owner = carthage
 		culture = akan
 		religion = pagan
 		
