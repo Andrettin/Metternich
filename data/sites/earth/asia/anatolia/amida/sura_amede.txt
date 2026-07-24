@@ -1,0 +1,8 @@
+sura_amede = {
+	name = "Sura Amede"
+	world = earth
+	geocoordinate = { 40.227277777778 37.910861111111 } #Diyarbakır Fortress
+	type = holding
+	holding_type = castle
+	province = amida
+}

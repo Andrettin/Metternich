@@ -1,0 +1,8 @@
+mayyafarikin = {
+	name = "Mayyafarikin"
+	world = earth
+	geocoordinate = { 41.008055555556 38.136944444444 } #Silvan, Diyarbakir
+	type = holding
+	holding_type = guild
+	province = amida
+}

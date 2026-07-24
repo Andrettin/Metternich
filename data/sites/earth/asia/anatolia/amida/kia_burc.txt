@@ -1,0 +1,8 @@
+kia_burc = {
+	name = "Kia Burc"
+	world = earth
+	geocoordinate = { 40.2368384 37.905554 } #Goat Tower (Keçi Burcu), Diyarbakır
+	type = holding
+	holding_type = castle
+	province = amida
+}

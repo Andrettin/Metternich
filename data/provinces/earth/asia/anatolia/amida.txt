@@ -1,6 +1,7 @@
 amida = {
 	name = "Amida"
-	color = { 166 199 2 }
+	color = { 126 132 169 }
+	terrain = mountains
 	default_provincial_capital = amida
 	cultural_names = {
 		turkish = "Diyarbakir" #"Diyarbakır"

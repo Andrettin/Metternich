@@ -1,0 +1,8 @@
+egil = {
+	name = "Egil"
+	world = earth
+	geocoordinate = { 40.074444444444 38.2575 } #Eğil
+	type = holding
+	holding_type = guild
+	province = amida
+}

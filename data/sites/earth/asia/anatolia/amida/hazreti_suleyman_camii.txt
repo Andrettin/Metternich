@@ -1,0 +1,8 @@
+hazreti_suleyman_camii = {
+	name = "Hazreti Suleyman Camii"
+	world = earth
+	geocoordinate = { 40.242031 37.914882 } #Hazreti Süleyman Mosque
+	type = holding
+	holding_type = temple
+	province = amida
+}

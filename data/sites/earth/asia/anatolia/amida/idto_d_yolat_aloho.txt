@@ -1,0 +1,8 @@
+idto_d_yolat_aloho = {
+	name = "Idto d-Yolat Aloho"
+	world = earth
+	geocoordinate = { 40.2306 37.9089 } #St. Mary Church, Diyarbakır
+	type = holding
+	holding_type = temple
+	province = amida
+}

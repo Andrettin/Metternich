@@ -1,0 +1,8 @@
+ulu_camii = {
+	name = "Ulu Camii"
+	world = earth
+	geocoordinate = { 40.235833333333 37.912222222222 } #Great Mosque of Diyarbakır
+	type = holding
+	holding_type = temple
+	province = amida
+}
