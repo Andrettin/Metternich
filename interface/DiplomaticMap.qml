@@ -80,8 +80,8 @@ Flickable {
 			width: Math.floor(text_rect_width)
 			height: Math.floor(text_rect_height)
 			wrapMode: Text.WordWrap
-			horizontalAlignment: contentWidth <= width ? Text.AlignHCenter : (diplomatic_map_image_rect.x === 0 ? Text.AlignLeft : ((diplomatic_map_image_rect.x + diplomatic_map_image_rect.width) >= metternich.map.diplomatic_map_image_size.width * scale_factor ? Text.AlignRight : Text.AlignHCenter))
-			verticalAlignment: contentHeight <= height ? Text.AlignVCenter : (diplomatic_map_image_rect.y === 0 ? Text.AlignTop : ((diplomatic_map_image_rect.y + diplomatic_map_image_rect.height) >= metternich.map.diplomatic_map_image_size.height * scale_factor ? Text.AlignBottom : Text.AlignVCenter))
+			horizontalAlignment: contentWidth <= width ? Text.AlignHCenter : (diplomatic_map_image_rect.x === 0 ? Text.AlignLeft : ((diplomatic_map_image_rect.x + diplomatic_map_image_rect.width) >= metternich.map.diplomatic_map_image_size.width ? Text.AlignRight : Text.AlignHCenter))
+			verticalAlignment: contentHeight <= height ? Text.AlignVCenter : (diplomatic_map_image_rect.y === 0 ? Text.AlignTop : ((diplomatic_map_image_rect.y + diplomatic_map_image_rect.height) >= metternich.map.diplomatic_map_image_size.height ? Text.AlignBottom : Text.AlignVCenter))
 			font.pixelSize: Math.min(Math.max(Math.floor(width * 3 / 4 / text.length), 8 * scale_factor), 12 * scale_factor)
 			visible: country.game_data.provinces.length > 0 && (country.game_data.is_independent() || diplomatic_map.mode !== DiplomaticMap.Mode.Realm) && (diplomatic_map.mode === DiplomaticMap.Mode.Realm || diplomatic_map.mode === DiplomaticMap.Mode.Political || diplomatic_map.mode === DiplomaticMap.Mode.Diplomatic) && !diplomatic_map.show_landless_domains && (contentWidth <= (width * 2) || country.game_data.provinces.length > 1) && (metternich.game.player_country === null || (country.game_data.capital !== null && metternich.game.player_country.game_data.is_tile_explored(country.game_data.capital)))
 					
