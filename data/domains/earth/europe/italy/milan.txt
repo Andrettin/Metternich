@@ -1,6 +1,7 @@
 milan = {
 	name = "Milan"
 	type = polity
+	color = { 166 108 146 }
 	flag = milan
 	culture = italian
 	default_religion = catholic

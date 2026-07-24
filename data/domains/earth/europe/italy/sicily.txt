@@ -1,6 +1,7 @@
 sicily = {
 	name = "Sicily"
 	type = polity
+	color = { 73 152 76 }
 	culture = italian
 	default_religion = catholic
 	default_tier = kingdom

@@ -1,6 +1,7 @@
 granada = {
 	name = "Granada"
 	type = polity
+	color = { 210 220 175 }
 	culture = arabic
 	default_religion = sunni
 	default_tier = duchy

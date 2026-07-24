@@ -1,6 +1,7 @@
 asturia = {
 	name = "Asturia"
 	type = polity
+	color = { 25 85 181 }
 	culture = asturian
 	default_religion = pagan
 	default_tier = duchy

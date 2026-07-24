@@ -1,6 +1,7 @@
 aragon = {
 	name = "Aragon"
 	type = polity
+	color = { 166 68 72 }
 	culture = aragonese
 	default_religion = catholic
 	default_tier = kingdom

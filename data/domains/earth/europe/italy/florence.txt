@@ -1,6 +1,7 @@
 florence = {
 	name = "Florence"
 	type = polity
+	color = { 236 47 47 }
 	culture = italian
 	default_religion = catholic
 	default_tier = duchy
