@@ -287,7 +287,7 @@ Item {
 		width: Math.min(garrison_icon.width + 8 * scale_factor, tile_size)
 		height: Math.min(garrison_icon.height + 8 * scale_factor, tile_size)
 		hoverEnabled: true
-		enabled: garrison_icon.visible && province !== null && ((province.water_zone && province.game_data.military_unit_category_counts.length > 0 && province.game_data.get_domain_military_unit_category_counts(metternich.game.player_country).length > 0) || (province.game_data.owner !== null && (province.game_data.owner === metternich.game.player_country || province.game_data.owner.diplomacy.is_any_vassal_of(metternich.game.player_country))))
+		enabled: garrison_icon.visible && province !== null && ((province.water_zone && province.game_data.military_unit_category_counts.length > 0 && province.game_data.get_domain_military_unit_category_counts(metternich.game.player_country).length > 0) || (province.game_data.owner !== null && (province.game_data.owner === metternich.game.player_country || province.game_data.owner.game_data.diplomacy.is_any_vassal_of(metternich.game.player_country))))
 		visible: enabled
 		
 		onReleased: {

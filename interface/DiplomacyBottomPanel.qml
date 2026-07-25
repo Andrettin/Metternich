@@ -54,7 +54,7 @@ Rectangle {
 			
 			onClicked: {
 				diplomatic_map.mode = DiplomaticMap.Mode.Realm
-				if (diplomatic_map.selected_country !== null && !diplomatic_map.selected_country_game_data.diplomacy.is_independent()) {
+				if (diplomatic_map.selected_country !== null && !diplomatic_map.selected_country.game_data.diplomacy.is_independent()) {
 					diplomatic_map.selected_country = null
 				}
 			}
@@ -245,8 +245,8 @@ Rectangle {
 		id: country_text
 		text: format_text(selected_country && selected_country_game_data ? (
 			selected_country_game_data.type_name
-			+ (selected_country.diplomacy.overlord ? (
-				"\n" + selected_country.diplomacy.subject_type.name + " of " + selected_country.diplomacy.overlord.name
+			+ (selected_country_game_data.diplomacy.overlord ? (
+				"\n" + selected_country_game_data.diplomacy.subject_type.name + " of " + selected_country_game_data.diplomacy.overlord.name
 			) : "")
 			+ "\n" + selected_country_game_data.title_name
 			+ (selected_country_game_data.anarchy ? "\nAnarchy" : "")

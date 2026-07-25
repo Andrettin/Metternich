@@ -47,11 +47,11 @@ Flickable {
 				y: diplomatic_map_image_rect.y
 				source: visible ? ("image://diplomatic_map/" + country.identifier + (diplomatic_map.mode === DiplomaticMap.Mode.Realm ? "/realm" : "") + (selected ? "/selected" : get_map_mode_suffix(diplomatic_map.mode, country)) + "/" + country_suffix) : "image://empty/"
 				cache: false
-				visible: country && country.game_data.provinces.length > 0 && (country.diplomacy.is_independent() || diplomatic_map.mode !== DiplomaticMap.Mode.Realm)
+				visible: country && country.game_data.provinces.length > 0 && (country.game_data.diplomacy.is_independent() || diplomatic_map.mode !== DiplomaticMap.Mode.Realm)
 				
 				readonly property var country: model.modelData
 				readonly property bool selected: selected_country === country
-				readonly property var diplomatic_map_image_rect: diplomatic_map.mode === DiplomaticMap.Mode.Realm ? country.diplomacy.realm_diplomatic_map_image_rect : country.diplomacy.diplomatic_map_image_rect
+				readonly property var diplomatic_map_image_rect: diplomatic_map.mode === DiplomaticMap.Mode.Realm ? country.game_data.diplomacy.realm_diplomatic_map_image_rect : country.game_data.diplomacy.diplomatic_map_image_rect
 			}
 		}
 		
@@ -83,10 +83,10 @@ Flickable {
 			horizontalAlignment: contentWidth <= width ? Text.AlignHCenter : (diplomatic_map_image_rect.x === 0 ? Text.AlignLeft : ((diplomatic_map_image_rect.x + diplomatic_map_image_rect.width) >= metternich.map.diplomatic_map_image_size.width ? Text.AlignRight : Text.AlignHCenter))
 			verticalAlignment: contentHeight <= height ? Text.AlignVCenter : (diplomatic_map_image_rect.y === 0 ? Text.AlignTop : ((diplomatic_map_image_rect.y + diplomatic_map_image_rect.height) >= metternich.map.diplomatic_map_image_size.height ? Text.AlignBottom : Text.AlignVCenter))
 			font.pixelSize: Math.min(Math.max(Math.floor(width * 3 / 4 / text.length), 8 * scale_factor), 12 * scale_factor)
-			visible: country.game_data.provinces.length > 0 && (country.diplomacy.is_independent() || diplomatic_map.mode !== DiplomaticMap.Mode.Realm) && (diplomatic_map.mode === DiplomaticMap.Mode.Realm || diplomatic_map.mode === DiplomaticMap.Mode.Political || diplomatic_map.mode === DiplomaticMap.Mode.Diplomatic) && !diplomatic_map.show_landless_domains && (contentWidth <= (width * 2) || country.game_data.provinces.length > 1) && (metternich.game.player_country === null || (country.game_data.capital !== null && metternich.game.player_country.game_data.is_tile_explored(country.game_data.capital)))
+			visible: country.game_data.provinces.length > 0 && (country.game_data.diplomacy.is_independent() || diplomatic_map.mode !== DiplomaticMap.Mode.Realm) && (diplomatic_map.mode === DiplomaticMap.Mode.Realm || diplomatic_map.mode === DiplomaticMap.Mode.Political || diplomatic_map.mode === DiplomaticMap.Mode.Diplomatic) && !diplomatic_map.show_landless_domains && (contentWidth <= (width * 2) || country.game_data.provinces.length > 1) && (metternich.game.player_country === null || (country.game_data.capital !== null && metternich.game.player_country.game_data.is_tile_explored(country.game_data.capital)))
 					
 			readonly property var country: model.modelData
-			readonly property var diplomatic_map_image_rect: diplomatic_map.mode === DiplomaticMap.Mode.Realm ? country.diplomacy.realm_diplomatic_map_image_rect : country.diplomacy.diplomatic_map_image_rect
+			readonly property var diplomatic_map_image_rect: diplomatic_map.mode === DiplomaticMap.Mode.Realm ? country.game_data.diplomacy.realm_diplomatic_map_image_rect : country.game_data.diplomacy.diplomatic_map_image_rect
 			readonly property var text_rect: diplomatic_map.mode === DiplomaticMap.Mode.Realm ? country.game_data.realm_text_rect : country.game_data.text_rect
 			readonly property int text_rect_width: Math.floor(text_rect.width * metternich.map.diplomatic_map_tile_scale_double * scale_factor)
 			readonly property int text_rect_height: Math.floor(text_rect.height * metternich.map.diplomatic_map_tile_scale_double * scale_factor)
@@ -194,7 +194,7 @@ Flickable {
 	}
 	
 	Repeater {
-		model: reference_country ? reference_country.diplomacy.consulates : []
+		model: reference_country ? reference_country.game_data.diplomacy.consulates : []
 		
 		Image {
 			id: consulate_icon
@@ -250,7 +250,7 @@ Flickable {
 		switch (mode) {
 			case DiplomaticMap.Mode.Treaty:
 				if (reference_country !== null) {
-					return "/diplomatic/" + reference_country.diplomacy.get_diplomacy_state_diplomatic_map_suffix(country)
+					return "/diplomatic/" + reference_country.game_data.diplomacy.get_diplomacy_state_diplomatic_map_suffix(country)
 				}
 				break
 			case DiplomaticMap.Mode.Terrain:
