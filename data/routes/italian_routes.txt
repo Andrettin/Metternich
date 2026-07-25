@@ -23,6 +23,14 @@ aemilian_way = {
 
 appian_way = {
 	name = "Appian Way"
+	type = trade_route
+	start_site = rome
+	end_site = brindisi #Brundisium
+	path_provinces = {
+		latium
+		naples
+		taranto
+	}
 	conditions = {
 		pathway = road
 	}
@@ -36,6 +44,16 @@ appian_way = {
 
 cassian_way = {
 	name = "Cassian Way"
+	type = trade_route
+	start_site = rome
+	end_site = imola #Bologna
+	path_provinces = {
+		latium
+		tuscany
+		arezzo
+		tuscany
+		bologna
+	}
 	conditions = {
 		pathway = road
 	}
@@ -49,6 +67,13 @@ cassian_way = {
 
 flaminian_way = {
 	name = "Flaminian Way"
+	type = trade_route
+	start_site = rome
+	end_site = rimini #Ariminum
+	path_provinces = {
+		latium
+		rimini
+	}
 	conditions = {
 		pathway = road
 	}

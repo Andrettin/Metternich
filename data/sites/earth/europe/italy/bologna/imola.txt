@@ -5,4 +5,13 @@ imola = {
 	type = holding
 	holding_type = guild
 	province = bologna
+	cultural_names = {
+		roman = "Forum Cornelii" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 26-27.
+	}
+	
+	history = {
+		classical_antiquity = {
+			developed = true #Forum Cornelii existed in Antiquity; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 26-27.
+		}
+	}
 }

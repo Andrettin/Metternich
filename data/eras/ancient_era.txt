@@ -3,6 +3,11 @@ ancient_era = {
 	start_date = -1450
 }
 
+classical_antiquity = {
+	name = "Classical Antiquity"
+	start_date = -500
+}
+
 time_of_augustus = {
 	name = "Time of Augustus"
 	start_date = -27
