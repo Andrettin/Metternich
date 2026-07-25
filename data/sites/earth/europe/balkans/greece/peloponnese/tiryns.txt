@@ -1,9 +1,20 @@
 tiryns = {
 	name = "Tiryns"
 	world = earth
-	#geocoordinate = { 22.799722222222 37.599444444444 }
+	geocoordinate = { 22.799722222222 37.599444444444 }
+	type = holding
+	holding_type = royal_palace #major Mycenaean palace
+	province = peloponnese
 	
 	history = {
+		-1600 = {
+			buildings += palace #had a major Mycenaean palace in the 1600-1100 BC period; Source: "History of the World Map by Map", 2023, pp. 40-41.
+		}
+		
+		-1400 = {
+			#fortified in the 1400-1200 BC period; Source: "History of the World Map by Map", 2023, pp. 40-41.
+		}
+		
 		-1450 = {
 			developed = true #existed c. 1450 BC; Source: William R. Shepherd, "Historical Atlas", 1911, p. 4.
 		}

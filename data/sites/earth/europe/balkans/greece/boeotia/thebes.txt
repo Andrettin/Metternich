@@ -3,6 +3,16 @@ thebes = {
 	world = earth
 	geocoordinate = { 23.317777777777778 38.32083333333333 }
 	type = holding
-	holding_type = castle
+	holding_type = royal_palace #major Mycenaean palace
 	province = boeotia
+	
+	history = {
+		-1600 = {
+			buildings += palace #had a major Mycenaean palace in the 1600-1100 BC period; Source: "History of the World Map by Map", 2023, pp. 40-41.
+		}
+		
+		-1200 = {
+			buildings -= palace #the palace in Thebes was destroyed by a fire c. 1200 BC; Source: "History of the World Map by Map", 2023, pp. 40-41.
+		}
+	}
 }
