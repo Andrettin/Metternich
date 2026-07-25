@@ -3,6 +3,7 @@ navarre = {
 	color = { 16 224 192 }
 	default_provincial_capital = pamplona
 	regions = {
+		northern_iberia
 		spain
 	}
 	
