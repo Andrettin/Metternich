@@ -1791,8 +1791,6 @@ QCoro::Task<void> game::on_setup_finished()
 			domain_game_data->decrease_population(false);
 		}
 		*/
-
-		emit domain->game_data_changed();
 	}
 
 	co_await this->apply_free_on_start_buildings();
@@ -1806,6 +1804,9 @@ QCoro::Task<void> game::on_setup_finished()
 
 	co_await this->create_map_images();
 
+	for (const domain *domain : this->get_domains()) {
+		emit domain->game_data_changed();
+	}
 	emit domains_changed();
 	emit countries_changed();
 

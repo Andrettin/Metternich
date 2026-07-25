@@ -2818,7 +2818,9 @@ void domain_game_data::create_diplomatic_map_image()
 	this->create_diplomatic_map_mode_image(diplomatic_map_mode::trade_zone);
 	this->create_diplomatic_map_mode_image(diplomatic_map_mode::temple);
 
-	emit diplomatic_map_image_changed();
+	if (game::get()->is_running()) {
+		emit diplomatic_map_image_changed();
+	}
 }
 
 QImage domain_game_data::prepare_realm_diplomatic_map_image() const
@@ -2902,7 +2904,9 @@ void domain_game_data::create_realm_diplomatic_map_image()
 
 	this->realm_diplomatic_map_image_rect = QRect(top_left, image_size);
 
-	emit realm_diplomatic_map_image_changed();
+	if (game::get()->is_running()) {
+		emit realm_diplomatic_map_image_changed();
+	}
 }
 
 void domain_game_data::create_diplomatic_map_mode_image(const diplomatic_map_mode mode)
