@@ -3,6 +3,7 @@ asturias = {
 	color = { 80 96 192 }
 	default_provincial_capital = oviedo
 	regions = {
+		northern_iberia
 		spain
 	}
 	

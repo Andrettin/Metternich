@@ -54,7 +54,7 @@ Rectangle {
 			
 			onClicked: {
 				diplomatic_map.mode = DiplomaticMap.Mode.Realm
-				if (diplomatic_map.selected_country !== null && !diplomatic_map.selected_country.diplomacy.is_independent()) {
+				if (diplomatic_map.selected_country !== null && !diplomatic_map.selected_country_game_data.diplomacy.is_independent()) {
 					diplomatic_map.selected_country = null
 				}
 			}

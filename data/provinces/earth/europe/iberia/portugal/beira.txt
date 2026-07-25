@@ -3,6 +3,7 @@ beira = {
 	color = { 76 222 162 }
 	default_provincial_capital = coimbra
 	regions = {
+		northern_iberia
 		portugal
 	}
 	

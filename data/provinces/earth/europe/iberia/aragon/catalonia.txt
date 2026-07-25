@@ -3,6 +3,7 @@ catalonia = {
 	color = { 224 192 32 }
 	default_provincial_capital = barcelona
 	regions = {
+		northern_iberia
 		spain
 	}
 	

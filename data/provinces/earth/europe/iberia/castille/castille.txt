@@ -3,6 +3,7 @@ castille = {
 	color = { 48 32 128 }
 	default_provincial_capital = madrid
 	regions = {
+		northern_iberia
 		spain
 	}
 	

@@ -3,6 +3,7 @@ galicia = {
 	color = { 84 45 206 }
 	default_provincial_capital = santiago_de_compostela
 	regions = {
+		northern_iberia
 		spain
 	}
 	

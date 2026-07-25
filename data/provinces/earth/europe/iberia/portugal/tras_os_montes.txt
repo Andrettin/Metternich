@@ -3,6 +3,7 @@ tras_os_montes = {
 	color = { 33 112 128 }
 	default_provincial_capital = braganza
 	regions = {
+		northern_iberia
 		portugal
 	}
 	

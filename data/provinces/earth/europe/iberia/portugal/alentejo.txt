@@ -4,6 +4,7 @@ alentejo = {
 	default_provincial_capital = evora
 	regions = {
 		portugal
+		southern_iberia
 	}
 	
 	history = {

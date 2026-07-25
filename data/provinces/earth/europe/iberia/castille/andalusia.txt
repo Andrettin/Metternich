@@ -3,6 +3,7 @@ andalusia = {
 	color = { 128 16 32 }
 	default_provincial_capital = seville
 	regions = {
+		southern_iberia
 		spain
 	}
 	

@@ -4,6 +4,7 @@ estremadura = {
 	default_provincial_capital = lisbon
 	regions = {
 		portugal
+		southern_iberia
 	}
 	
 	history = {

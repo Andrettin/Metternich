@@ -3,6 +3,7 @@ palencia = {
 	color = { 74 63 31 }
 	default_provincial_capital = palencia
 	regions = {
+		northern_iberia
 		spain
 	}
 	

@@ -3,6 +3,7 @@ valladolid = {
 	color = { 66 18 25 }
 	default_provincial_capital = valladolid
 	regions = {
+		northern_iberia
 		spain
 	}
 	

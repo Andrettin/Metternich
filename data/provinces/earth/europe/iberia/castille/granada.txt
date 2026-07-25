@@ -3,6 +3,7 @@ granada = {
 	color = { 160 176 64 }
 	default_provincial_capital = granada
 	regions = {
+		southern_iberia
 		spain
 	}
 	

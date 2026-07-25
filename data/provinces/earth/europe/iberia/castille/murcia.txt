@@ -3,6 +3,7 @@ murcia = {
 	color = { 98 104 120 }
 	default_provincial_capital = murcia
 	regions = {
+		southern_iberia
 		spain
 	}
 	

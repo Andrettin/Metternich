@@ -6,6 +6,7 @@ leon = {
 		roman = "Castra Legionis" #Source: "Ancient Warfare VII.6", 2013, p. 7.
 	}
 	regions = {
+		northern_iberia
 		spain
 	}
 	

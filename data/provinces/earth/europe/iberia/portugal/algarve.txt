@@ -4,6 +4,7 @@ algarve = {
 	default_provincial_capital = faro
 	regions = {
 		portugal
+		southern_iberia
 	}
 	
 	history = {

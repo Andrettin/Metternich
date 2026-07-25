@@ -3,6 +3,7 @@ salamanca = {
 	color = { 213 19 142 }
 	default_provincial_capital = salamanca
 	regions = {
+		northern_iberia
 		spain
 	}
 	

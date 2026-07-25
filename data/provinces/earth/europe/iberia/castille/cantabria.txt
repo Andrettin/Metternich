@@ -3,6 +3,7 @@ cantabria = {
 	color = { 82 47 191 }
 	default_provincial_capital = santander
 	regions = {
+		northern_iberia
 		spain
 	}
 	

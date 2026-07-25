@@ -3,6 +3,7 @@ extremadura = {
 	color = { 80 48 192 }
 	default_provincial_capital = merida
 	regions = {
+		southern_iberia
 		spain
 	}
 	

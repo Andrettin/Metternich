@@ -3,6 +3,7 @@ aragon = {
 	color = { 80 96 64 }
 	default_provincial_capital = zaragoza
 	regions = {
+		northern_iberia
 		spain
 	}
 	

@@ -3,6 +3,7 @@ minho = {
 	color = { 208 160 0 }
 	default_provincial_capital = oporto
 	regions = {
+		northern_iberia
 		portugal
 	}
 	
