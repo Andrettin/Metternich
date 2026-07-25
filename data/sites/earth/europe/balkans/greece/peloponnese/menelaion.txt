@@ -1,0 +1,14 @@
+menelaion = {
+	name = "Menelaion"
+	world = earth
+	geocoordinate = { 22.4535 37.0658 }
+	type = holding
+	holding_type = royal_palace #major Mycenaean palace
+	province = peloponnese
+	
+	history = {
+		-1600 = {
+			buildings += palace #had a major Mycenaean palace in the 1600-1100 BC period; Source: "History of the World Map by Map", 2023, pp. 40-41.
+		}
+	}
+}
