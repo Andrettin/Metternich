@@ -1,7 +1,7 @@
 #pragma once
 
 #include "domain/domain.h"
-#include "domain/domain_game_data.h"
+#include "domain/domain_diplomacy.h"
 #include "script/condition/scope_condition_base.h"
 
 namespace metternich {
@@ -22,7 +22,7 @@ public:
 
 	virtual bool check_assignment(const domain *upper_scope, const read_only_context &ctx) const override
 	{
-		for (const domain *known_domain : upper_scope->get_game_data()->get_known_countries()) {
+		for (const domain *known_domain : upper_scope->get_diplomacy()->get_known_countries()) {
 			if (this->check_scope(known_domain, ctx)) {
 				return true;
 			}

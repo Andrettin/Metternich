@@ -4,7 +4,7 @@
 
 #include "character/party.h"
 #include "domain/domain.h"
-#include "domain/domain_game_data.h"
+#include "domain/domain_diplomacy.h"
 #include "domain/domain_government.h"
 #include "engine_interface.h"
 #include "game/battle.h"
@@ -106,7 +106,7 @@ QCoro::Task<void> army::do_turn()
 		}
 
 		bool success = true;
-		const bool can_conquer_province = this->get_domain()->get_game_data()->can_attack(target_province->get_game_data()->get_owner());
+		const bool can_conquer_province = this->get_domain()->get_diplomacy()->can_attack(target_province->get_game_data()->get_owner());
 
 		if (!garrison.empty() || can_conquer_province) {
 			if (!garrison.empty()) {

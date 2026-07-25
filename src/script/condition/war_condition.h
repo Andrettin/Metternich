@@ -2,6 +2,8 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
+#include "domain/domain.h"
+#include "domain/domain_diplomacy.h"
 #include "script/condition/condition.h"
 #include "util/string_conversion_util.h"
 
@@ -34,7 +36,7 @@ public:
 			domain = scope;
 		}
 
-		return this->value == domain->get_game_data()->at_war();
+		return this->value == domain->get_diplomacy()->at_war();
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override

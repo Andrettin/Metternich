@@ -23,6 +23,7 @@ namespace metternich {
 class character;
 class culture;
 class domain_ai;
+class domain_diplomacy;
 class domain_economy;
 class domain_game_data;
 class domain_government;
@@ -102,6 +103,7 @@ public:
 		return this->game_data.get();
 	}
 
+	domain_diplomacy *get_diplomacy() const;
 	domain_economy *get_economy() const;
 	domain_government *get_government() const;
 	domain_military *get_military() const;

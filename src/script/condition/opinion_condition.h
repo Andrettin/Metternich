@@ -1,7 +1,7 @@
 #pragma once
 
 #include "domain/domain.h"
-#include "domain/domain_game_data.h"
+#include "domain/domain_diplomacy.h"
 #include "script/condition/numerical_condition.h"
 #include "script/domain_target_variant.h"
 
@@ -38,7 +38,7 @@ public:
 
 	virtual int get_scope_value(const domain *scope, const read_only_context &ctx) const override
 	{
-		return scope->get_game_data()->get_opinion_of(get_domain_from_target(this->domain_target, ctx));
+		return scope->get_diplomacy()->get_opinion_of(get_domain_from_target(this->domain_target, ctx));
 	}
 
 	virtual std::string get_value_name() const override

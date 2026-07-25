@@ -78,6 +78,7 @@ set(domain_SRCS
 	src/domain/domain_ai.cpp
 	src/domain/domain_attribute.cpp
 	src/domain/domain_container.cpp
+	src/domain/domain_diplomacy.cpp
 	src/domain/domain_economy.cpp
 	src/domain/domain_game_data.cpp
 	src/domain/domain_government.cpp
@@ -453,6 +454,7 @@ set(domain_HDRS
 	src/domain/domain_ai.h
 	src/domain/domain_attribute.h
 	src/domain/domain_container.h
+	src/domain/domain_diplomacy.h
 	src/domain/domain_economy.h
 	src/domain/domain_game_data.h
 	src/domain/domain_government.h

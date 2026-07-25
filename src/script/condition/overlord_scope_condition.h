@@ -1,5 +1,6 @@
 #pragma once
 
+#include "domain/domain_diplomacy.h"
 #include "script/condition/scope_condition.h"
 
 namespace metternich {
@@ -24,7 +25,7 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		return upper_scope->get_game_data()->get_overlord();
+		return upper_scope->get_diplomacy()->get_overlord();
 	}
 
 	virtual std::string get_scope_name() const override

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "domain/domain.h"
-#include "domain/domain_game_data.h"
+#include "domain/domain_diplomacy.h"
 #include "script/condition/and_condition.h"
 #include "script/effect/scope_effect_base.h"
 #include "util/vector_random_util.h"
@@ -39,7 +39,7 @@ public:
 	{
 		std::vector<const domain *> potential_countries;
 
-		for (const domain *known_domain : upper_scope->get_game_data()->get_known_countries()) {
+		for (const domain *known_domain : upper_scope->get_diplomacy()->get_known_countries()) {
 			if (!this->conditions.check(known_domain, ctx)) {
 				continue;
 			}

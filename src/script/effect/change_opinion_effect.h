@@ -70,10 +70,10 @@ public:
 			return;
 		}
 
-		scope->get_game_data()->change_base_opinion(target_scope, this->value);
+		scope->get_diplomacy()->change_base_opinion(target_scope, this->value);
 
 		if (this->mutual) {
-			target_scope->get_game_data()->change_base_opinion(scope, this->value);
+			target_scope->get_diplomacy()->change_base_opinion(scope, this->value);
 		}
 	}
 

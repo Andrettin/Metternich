@@ -6,26 +6,22 @@
 #include "character/character_game_data.h"
 #include "culture/cultural_group.h"
 #include "culture/culture.h"
-#include "domain/diplomacy_state.h"
 #include "domain/domain.h"
+#include "domain/domain_diplomacy.h"
 #include "domain/domain_economy.h"
 #include "domain/domain_game_data.h"
 #include "domain/domain_military.h"
 #include "economy/commodity.h"
 #include "game/battle_resolution_type.h"
 #include "game/game.h"
-#include "language/name_generator.h"
-#include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/province_map_data.h"
 #include "map/terrain_type.h"
-#include "map/tile.h"
 #include "script/condition/and_condition.h"
 #include "script/modifier.h"
 #include "ui/icon.h"
 #include "unit/army.h"
-#include "unit/military_unit_class.h"
 #include "unit/military_unit_domain.h"
 #include "unit/military_unit_stat.h"
 #include "unit/military_unit_type.h"
@@ -33,7 +29,6 @@
 #include "unit/promotion_container.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
-#include "util/gender.h"
 #include "util/log_util.h"
 #include "util/map_util.h"
 #include "util/number_util.h"
@@ -379,11 +374,11 @@ bool military_unit::can_move_to(const metternich::province *province) const
 				return true;
 			}
 
-			if (province_owner->get_game_data()->is_any_vassal_of(this->get_country())) {
+			if (province_owner->get_diplomacy()->is_any_vassal_of(this->get_country())) {
 				return true;
 			}
 
-			return this->get_country()->get_game_data()->can_attack(province_owner);
+			return this->get_country()->get_diplomacy()->can_attack(province_owner);
 		}
 	}
 
@@ -392,7 +387,7 @@ bool military_unit::can_move_to(const metternich::province *province) const
 
 bool military_unit::is_hostile_to(const metternich::domain *domain) const
 {
-	return this->get_country()->get_game_data()->can_attack(domain);
+	return this->get_country()->get_diplomacy()->can_attack(domain);
 }
 
 QCoro::Task<void> military_unit::set_hit_points(const int hit_points)

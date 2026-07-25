@@ -8,6 +8,7 @@
 #include "culture/culture.h"
 #include "database/defines.h"
 #include "domain/domain.h"
+#include "domain/domain_diplomacy.h"
 #include "domain/domain_economy.h"
 #include "domain/domain_game_data.h"
 #include "domain/domain_government.h"
@@ -1268,7 +1269,7 @@ const std::vector<const site *> &province_game_data::get_settlement_sites() cons
 const QColor &province_game_data::get_map_color() const
 {
 	if (this->get_owner() != nullptr) {
-		return this->get_owner()->get_game_data()->get_diplomatic_map_color();
+		return this->get_owner()->get_diplomacy()->get_diplomatic_map_color();
 	}
 
 	if (this->province->is_water_zone()) {

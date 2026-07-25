@@ -5,6 +5,7 @@
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "domain/domain.h"
+#include "domain/domain_diplomacy.h"
 #include "domain/domain_game_data.h"
 #include "domain/domain_technology.h"
 #include "economy/resource.h"
@@ -646,7 +647,7 @@ void map::update_minimap_rect(const QRect &tile_rect)
 				const domain *domain = tile->get_owner();
 
 				if (domain != nullptr) {
-					this->minimap_image.setPixelColor(pixel_pos, domain->get_game_data()->get_diplomatic_map_color());
+					this->minimap_image.setPixelColor(pixel_pos, domain->get_diplomacy()->get_diplomatic_map_color());
 					continue;
 				} else if (tile->get_province() != nullptr && !tile->get_province()->is_water_zone()) {
 					this->minimap_image.setPixelColor(pixel_pos, defines::get()->get_map_blank_color());

@@ -17,6 +17,7 @@
 #include "domain/diplomacy_state.h"
 #include "domain/domain.h"
 #include "domain/domain_ai.h"
+#include "domain/domain_diplomacy.h"
 #include "domain/domain_economy.h"
 #include "domain/domain_game_data.h"
 #include "domain/domain_government.h"
@@ -686,7 +687,7 @@ QCoro::Task<void> game::apply_history(const QDate &start_date)
 
 		for (const domain *domain : this->get_domains()) {
 			//diplomatic history has to be applied after main domain history application, so that tiers are correct when setting vassalage relationships
-			co_await domain->get_game_data()->apply_diplomatic_history();
+			co_await domain->get_diplomacy()->apply_diplomatic_history();
 		}
 
 		for (const cultural_group *cultural_group : cultural_group::get_all()) {
@@ -714,17 +715,18 @@ QCoro::Task<void> game::apply_history(const QDate &start_date)
 		}
 
 		for (const domain *domain : this->get_domains()) {
+			domain_diplomacy *domain_diplomacy = domain->get_diplomacy();
 			domain_game_data *domain_game_data = domain->get_game_data();
 
-			if (domain_game_data->get_overlord() != nullptr) {
-				if (domain_game_data->get_subject_type() == nullptr) {
-					throw std::runtime_error(std::format("Country \"{}\" is a vassal, but has no subject type.", domain->get_identifier()));
+			if (domain_diplomacy->get_overlord() != nullptr) {
+				if (domain_diplomacy->get_subject_type() == nullptr) {
+					throw std::runtime_error(std::format("Domain \"{}\" is a vassal, but has no subject type.", domain->get_identifier()));
 				}
 			} else {
-				if (domain_game_data->get_subject_type() != nullptr) {
-					log::log_error(std::format("Country \"{}\" is not a vassal, but has a subject type.", domain->get_identifier()));
+				if (domain_diplomacy->get_subject_type() != nullptr) {
+					log::log_error(std::format("Domain \"{}\" is not a vassal, but has a subject type.", domain->get_identifier()));
 
-					co_await domain_game_data->set_subject_type(nullptr);
+					co_await domain_diplomacy->set_subject_type(nullptr);
 				}
 			}
 
@@ -1899,19 +1901,19 @@ QCoro::Task<void> game::do_turn_coro()
 			}
 
 			if (domain->get_turn_data()->is_diplomatic_map_dirty()) {
-				domain->get_game_data()->create_diplomatic_map_image();
+				domain->get_diplomacy()->create_diplomatic_map_image();
 			} else {
 				for (const diplomatic_map_mode mode : domain->get_turn_data()->get_dirty_diplomatic_map_modes()) {
-					domain->get_game_data()->create_diplomatic_map_mode_image(mode);
+					domain->get_diplomacy()->create_diplomatic_map_mode_image(mode);
 				}
 
 				for (const diplomacy_state state : domain->get_turn_data()->get_dirty_diplomatic_map_diplomacy_states()) {
-					domain->get_game_data()->create_diplomacy_state_diplomatic_map_image(state);
+					domain->get_diplomacy()->create_diplomacy_state_diplomatic_map_image(state);
 				}
 			}
 
 			if (domain->get_turn_data()->is_realm_diplomatic_map_dirty()) {
-				domain->get_game_data()->create_realm_diplomatic_map_image();
+				domain->get_diplomacy()->create_realm_diplomatic_map_image();
 			}
 		}
 
@@ -2077,15 +2079,15 @@ QCoro::Task<void> game::remove_domain(domain *domain)
 	domain->get_military()->clear_leaders();
 
 	for (const metternich::domain *other_domain : this->get_domains()) {
-		domain_game_data *other_domain_game_data = other_domain->get_game_data();
+		domain_diplomacy *other_domain_diplomacy = other_domain->get_diplomacy();
 
-		if (other_domain_game_data->get_diplomacy_state(domain) != diplomacy_state::peace) {
-			co_await other_domain_game_data->set_diplomacy_state(domain, diplomacy_state::peace);
-			co_await domain->get_game_data()->set_diplomacy_state(other_domain, diplomacy_state::peace);
+		if (other_domain_diplomacy->get_diplomacy_state(domain) != diplomacy_state::peace) {
+			co_await other_domain_diplomacy->set_diplomacy_state(domain, diplomacy_state::peace);
+			co_await domain->get_diplomacy()->set_diplomacy_state(other_domain, diplomacy_state::peace);
 		}
 
-		if (other_domain_game_data->get_consulate(domain) != nullptr) {
-			other_domain_game_data->set_consulate(domain, nullptr);
+		if (other_domain_diplomacy->get_consulate(domain) != nullptr) {
+			other_domain_diplomacy->set_consulate(domain, nullptr);
 		}
 	}
 
@@ -2236,9 +2238,9 @@ QCoro::Task<void> game::create_diplomatic_map_image()
 	std::vector<QFuture<void>> futures;
 	for (const domain *domain : this->get_domains()) {
 		QFuture<void> future = QtConcurrent::run([domain]() {
-			domain_game_data *domain_game_data = domain->get_game_data();
-			domain_game_data->create_diplomatic_map_image();
-			domain_game_data->create_realm_diplomatic_map_image();
+			domain_diplomacy *domain_diplomacy = domain->get_diplomacy();
+			domain_diplomacy->create_diplomatic_map_image();
+			domain_diplomacy->create_realm_diplomatic_map_image();
 		});
 		futures.push_back(std::move(future));
 	}

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <util/centesimal_int.h>
+
 namespace archimedes {
 	class gsml_data;
 	class gsml_property;

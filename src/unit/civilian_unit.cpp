@@ -8,6 +8,7 @@
 #include "culture/culture.h"
 #include "database/defines.h"
 #include "domain/domain.h"
+#include "domain/domain_diplomacy.h"
 #include "domain/domain_economy.h"
 #include "domain/domain_game_data.h"
 #include "domain/domain_technology.h"
@@ -317,7 +318,7 @@ bool civilian_unit::can_move_to(const metternich::province *province) const
 	}
 
 	if (province->get_game_data()->get_owner() != nullptr) {
-		return province->get_game_data()->get_owner()->get_game_data()->is_any_vassal_of(this->get_owner());
+		return province->get_game_data()->get_owner()->get_diplomacy()->is_any_vassal_of(this->get_owner());
 	}
 
 	return false;

@@ -2,7 +2,7 @@
 
 #include "domain/consulate.h"
 #include "domain/domain.h"
-#include "domain/domain_game_data.h"
+#include "domain/domain_diplomacy.h"
 #include "script/modifier_effect/modifier_effect.h"
 
 namespace metternich {
@@ -24,7 +24,7 @@ public:
 
 	virtual void apply(const domain *scope, const centesimal_int &multiplier) const override
 	{
-		scope->get_game_data()->change_free_consulate_count(this->consulate, (this->value * multiplier).to_int());
+		scope->get_diplomacy()->change_free_consulate_count(this->consulate, (this->value * multiplier).to_int());
 	}
 
 	virtual std::string get_base_string(const domain *scope) const override

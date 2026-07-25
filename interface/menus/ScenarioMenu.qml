@@ -68,7 +68,7 @@ MenuBase {
 			
 			onClicked: {
 				diplomatic_map.mode = DiplomaticMap.Mode.Realm
-				if (diplomatic_map.selected_country !== null && !diplomatic_map.selected_country.game_data.is_independent()) {
+				if (diplomatic_map.selected_country !== null && !diplomatic_map.selected_country.diplomacy.is_independent()) {
 					diplomatic_map.selected_country = null
 				}
 			}
@@ -210,8 +210,8 @@ MenuBase {
 			wrapMode: Text.WordWrap
 			text: selected_country ? format_text(
 				selected_country.game_data.type_name
-				+ (selected_country.game_data.overlord ? (
-					"\n" + selected_country.game_data.subject_type.name + " of " + (selected_country.game_data.overlord.definite_article ? "the " : "") + selected_country.game_data.overlord.name
+				+ (selected_country.diplomacy.overlord ? (
+					"\n" + selected_country.diplomacy.subject_type.name + " of " + (selected_country.diplomacy.overlord.definite_article ? "the " : "") + selected_country.diplomacy.overlord.name
 				) : "")
 				+ "\n" + selected_country.game_data.title_name
 				+ (selected_country.game_data.anarchy ? "\nAnarchy" : "")
@@ -224,7 +224,7 @@ MenuBase {
 				+ (selected_country.game_data.unrest > 0 ? ("\nUnrest: " + number_string(selected_country.game_data.unrest)) : "")
 				+ (population_visible ? ("\nPopulation: " + number_string(selected_country.game_data.population.size)) : "")
 				+ "\nLiteracy: " + selected_country.game_data.population.literacy_rate + "%"
-				+ get_subject_type_counts_string(selected_country.game_data.subject_type_counts)
+				+ get_subject_type_counts_string(selected_country.diplomacy.subject_type_counts)
 				+ get_resource_counts_string(selected_country.game_data.economy.resource_counts)
 			) : ""
 			

@@ -7,7 +7,6 @@
 #include "script/opinion_modifier.h"
 #include "script/special_target_type.h"
 #include "script/target_variant.h"
-#include "util/assert_util.h"
 #include "util/number_util.h"
 
 namespace metternich {
@@ -96,12 +95,20 @@ public:
 
 	virtual void do_addition_effect(const scope_type *scope, context &ctx) const override
 	{
-		scope->get_game_data()->add_opinion_modifier(this->get_target_scope(ctx), this->modifier, this->get_duration());
+		if constexpr (std::is_same_v<scope_type, const domain>) {
+			scope->get_diplomacy()->add_opinion_modifier(this->get_target_scope(ctx), this->modifier, this->get_duration());
+		} else {
+			scope->get_game_data()->add_opinion_modifier(this->get_target_scope(ctx), this->modifier, this->get_duration());
+		}
 	}
 
 	virtual void do_subtraction_effect(const scope_type *scope, context &ctx) const override
 	{
-		scope->get_game_data()->remove_opinion_modifier(this->get_target_scope(ctx), this->modifier);
+		if constexpr (std::is_same_v<scope_type, const domain>) {
+			scope->get_diplomacy()->remove_opinion_modifier(this->get_target_scope(ctx), this->modifier);
+		} else {
+			scope->get_game_data()->remove_opinion_modifier(this->get_target_scope(ctx), this->modifier);
+		}
 	}
 
 	virtual std::string get_addition_string(const scope_type *scope, const read_only_context &ctx, const size_t indent) const override

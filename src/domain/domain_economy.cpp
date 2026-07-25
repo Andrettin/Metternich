@@ -6,6 +6,7 @@
 #include "character/character_game_data.h"
 #include "database/defines.h"
 #include "domain/domain.h"
+#include "domain/domain_diplomacy.h"
 #include "domain/domain_game_data.h"
 #include "domain/domain_government.h"
 #include "domain/domain_military.h"
@@ -43,7 +44,7 @@ domain_economy::domain_economy(const metternich::domain *domain, const domain_ga
 	: domain(domain)
 {
 	connect(game_data, &domain_game_data::provinces_changed, this, &domain_economy::resource_counts_changed);
-	connect(game_data, &domain_game_data::diplomacy_states_changed, this, &domain_economy::vassal_resource_counts_changed);
+	connect(game_data->get_diplomacy(), &domain_diplomacy::diplomacy_states_changed, this, &domain_economy::vassal_resource_counts_changed);
 
 	for (const commodity *commodity : commodity::get_all()) {
 		if (!commodity->is_enabled()) {
@@ -459,18 +460,18 @@ void domain_economy::add_tributable_commodity(const commodity *commodity, const 
 		return;
 	}
 
-	if (this->get_game_data()->get_overlord() == nullptr) {
+	if (this->domain->get_diplomacy()->get_overlord() == nullptr) {
 		this->change_stored_commodity(commodity, tributable_quantity);
 		return;
 	}
 
-	assert_throw(this->get_game_data()->get_subject_type() != nullptr);
+	assert_throw(this->domain->get_diplomacy()->get_subject_type() != nullptr);
 
 	int tribute_rate = 0;
 	if (commodity == defines::get()->get_wealth_commodity()) {
-		tribute_rate = this->get_game_data()->get_subject_type()->get_wealth_tribute_rate();
+		tribute_rate = this->domain->get_diplomacy()->get_subject_type()->get_wealth_tribute_rate();
 	} else if (commodity == defines::get()->get_regency_commodity()) {
-		tribute_rate = this->get_game_data()->get_subject_type()->get_regency_tribute_rate();
+		tribute_rate = this->domain->get_diplomacy()->get_subject_type()->get_regency_tribute_rate();
 	}
 
 	if (tribute_rate == 0) {
@@ -481,13 +482,13 @@ void domain_economy::add_tributable_commodity(const commodity *commodity, const 
 	const int64_t tribute = tributable_quantity * tribute_rate / 100;
 	const int64_t tributed_quantity = tributable_quantity - tribute;
 
-	this->get_game_data()->get_overlord()->get_economy()->add_tributable_commodity(commodity, tribute, tribute_income_type);
+	this->domain->get_diplomacy()->get_overlord()->get_economy()->add_tributable_commodity(commodity, tribute, tribute_income_type);
 
 	this->change_stored_commodity(commodity, tributed_quantity);
 
 	if (tribute != 0 && commodity == defines::get()->get_wealth_commodity()) {
-		this->get_game_data()->get_overlord()->get_turn_data()->add_income_transaction(tribute_income_type, tribute, nullptr, 0, this->domain);
-		this->domain->get_turn_data()->add_expense_transaction(expense_transaction_type::tribute, tribute, nullptr, 0, this->get_game_data()->get_overlord());
+		this->domain->get_diplomacy()->get_overlord()->get_turn_data()->add_income_transaction(tribute_income_type, tribute, nullptr, 0, this->domain);
+		this->domain->get_turn_data()->add_expense_transaction(expense_transaction_type::tribute, tribute, nullptr, 0, this->domain->get_diplomacy()->get_overlord());
 	}
 }
 
@@ -928,19 +929,19 @@ void domain_economy::prepare_offers()
 std::vector<const domain *> domain_economy::get_known_domains_by_trade_priority() const
 {
 	//get the known countries and sort them by priority
-	std::vector<const metternich::domain *> countries = container::to_vector(this->get_game_data()->get_known_countries());
+	std::vector<const metternich::domain *> countries = container::to_vector(this->domain->get_diplomacy()->get_known_countries());
 	std::sort(countries.begin(), countries.end(), [&](const metternich::domain *lhs, const metternich::domain *rhs) {
-		if (this->get_game_data()->is_vassal_of(lhs) != this->get_game_data()->is_vassal_of(rhs)) {
-			return this->get_game_data()->is_vassal_of(lhs);
+		if (this->domain->get_diplomacy()->is_vassal_of(lhs) != this->domain->get_diplomacy()->is_vassal_of(rhs)) {
+			return this->domain->get_diplomacy()->is_vassal_of(lhs);
 		}
 
-		if (this->get_game_data()->is_any_vassal_of(lhs) != this->get_game_data()->is_any_vassal_of(rhs)) {
-			return this->get_game_data()->is_any_vassal_of(lhs);
+		if (this->domain->get_diplomacy()->is_any_vassal_of(lhs) != this->domain->get_diplomacy()->is_any_vassal_of(rhs)) {
+			return this->domain->get_diplomacy()->is_any_vassal_of(lhs);
 		}
 
 		//give trade priority by opinion
-		const int lhs_opinion = this->get_game_data()->get_opinion_of(lhs);
-		const int rhs_opinion = this->get_game_data()->get_opinion_of(rhs);
+		const int lhs_opinion = this->domain->get_diplomacy()->get_opinion_of(lhs);
+		const int rhs_opinion = this->domain->get_diplomacy()->get_opinion_of(rhs);
 
 		if (lhs_opinion != rhs_opinion) {
 			return lhs_opinion > rhs_opinion;
@@ -963,7 +964,7 @@ void domain_economy::do_sale(const metternich::domain *other_domain, const commo
 	this->add_tributable_commodity(defines::get()->get_wealth_commodity(), gained_wealth, income_transaction_type::tariff);
 	this->domain->get_turn_data()->add_income_transaction(income_transaction_type::sale, gained_wealth, commodity, sold_quantity, other_domain != this->domain ? other_domain : nullptr);
 
-	domain_game_data *other_domain_game_data = other_domain->get_game_data();
+	domain_diplomacy *other_domain_diplomacy = other_domain->get_diplomacy();
 	domain_economy *other_domain_economy = other_domain->get_economy();
 
 	if (state_purchase) {
@@ -977,8 +978,8 @@ void domain_economy::do_sale(const metternich::domain *other_domain, const commo
 
 	//improve relations between the two countries after they traded (even if it was not a state purchase)
 	if (this->domain != other_domain) {
-		this->get_game_data()->change_base_opinion(other_domain, 1);
-		other_domain_game_data->change_base_opinion(this->domain, 1);
+		this->domain->get_diplomacy()->change_base_opinion(other_domain, 1);
+		other_domain_diplomacy->change_base_opinion(this->domain, 1);
 	}
 }
 

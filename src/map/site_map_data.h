@@ -1,7 +1,5 @@
 #pragma once
 
-#include "map/terrain_type_container.h"
-
 Q_MOC_INCLUDE("economy/resource.h")
 Q_MOC_INCLUDE("map/terrain_type.h")
 
@@ -9,6 +7,7 @@ namespace metternich {
 
 class resource;
 class site;
+class tile;
 
 class site_map_data final : public QObject
 {

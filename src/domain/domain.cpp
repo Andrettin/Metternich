@@ -249,6 +249,11 @@ QCoro::Task<void> domain::reset_game_data(const bool preserve_ruler_history)
 	}
 }
 
+domain_diplomacy *domain::get_diplomacy() const
+{
+	return this->get_game_data()->get_diplomacy();
+}
+
 domain_economy *domain::get_economy() const
 {
 	return this->get_game_data()->get_economy();

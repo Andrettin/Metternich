@@ -1,7 +1,7 @@
 #pragma once
 
 #include "domain/domain.h"
-#include "domain/domain_game_data.h"
+#include "domain/domain_diplomacy.h"
 #include "script/condition/condition.h"
 #include "util/string_conversion_util.h"
 #include "util/string_util.h"
@@ -27,7 +27,7 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		return scope->get_game_data()->is_independent() == this->value;
+		return scope->get_diplomacy()->is_independent() == this->value;
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override

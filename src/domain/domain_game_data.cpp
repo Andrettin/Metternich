@@ -7,12 +7,12 @@
 #include "character/character_game_data.h"
 #include "culture/culture.h"
 #include "database/defines.h"
-#include "domain/consulate.h"
 #include "domain/country_type.h"
 #include "domain/diplomacy_state.h"
 #include "domain/domain.h"
 #include "domain/domain_ai.h"
 #include "domain/domain_attribute.h"
+#include "domain/domain_diplomacy.h"
 #include "domain/domain_economy.h"
 #include "domain/domain_government.h"
 #include "domain/domain_history.h"
@@ -46,7 +46,6 @@
 #include "infrastructure/holding_type.h"
 #include "infrastructure/wonder.h"
 #include "item/item.h"
-#include "map/diplomatic_map_mode.h"
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
@@ -68,7 +67,6 @@
 #include "script/effect/effect_list.h"
 #include "script/flag.h"
 #include "script/modifier.h"
-#include "script/opinion_modifier.h"
 #include "script/scripted_domain_modifier.h"
 #include "species/phenotype.h"
 #include "ui/icon.h"
@@ -86,7 +84,6 @@
 #include "util/container_util.h"
 #include "util/date_util.h"
 #include "util/gender.h"
-#include "util/image_util.h"
 #include "util/map_random_util.h"
 #include "util/map_util.h"
 #include "util/number_util.h"
@@ -98,8 +95,6 @@
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
 
-#include "xbrz.h"
-
 #include <magic_enum/magic_enum.hpp>
 #include <magic_enum/magic_enum_utility.hpp>
 
@@ -108,6 +103,7 @@ namespace metternich {
 domain_game_data::domain_game_data(metternich::domain *domain)
 	: domain(domain), tier(domain_tier::none), culture(domain->get_default_culture()), religion(domain->get_default_religion())
 {
+	this->diplomacy = make_qunique<domain_diplomacy>(domain, this);
 	this->economy = make_qunique<domain_economy>(domain, this);
 	this->government = make_qunique<domain_government>(domain, this);
 	this->military = make_qunique<domain_military>(domain);
@@ -217,6 +213,8 @@ void domain_game_data::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->finished_journal_entries.push_back(journal_entry::get(value));
 		}
+	} else if (tag == "diplomacy") {
+		scope.process(this->get_diplomacy());
 	} else if (tag == "economy") {
 		scope.process(this->get_economy());
 	} else if (tag == "government") {
@@ -343,6 +341,7 @@ gsml_data domain_game_data::to_gsml_data() const
 		data.add_child(std::move(flags_data));
 	}
 
+	data.add_child(this->get_diplomacy()->to_gsml_data());
 	data.add_child(this->get_economy()->to_gsml_data());
 	data.add_child(this->get_government()->to_gsml_data());
 	data.add_child(this->get_technology()->to_gsml_data());
@@ -373,7 +372,7 @@ QCoro::Task<void> domain_game_data::apply_history(const QDate &start_date)
 
 	const metternich::subject_type *subject_type = domain_history->get_subject_type();
 	if (subject_type != nullptr) {
-		co_await this->set_subject_type(subject_type);
+		co_await this->get_diplomacy()->set_subject_type(subject_type);
 	}
 
 	if (domain_history->get_government_type() != nullptr) {
@@ -452,29 +451,6 @@ void domain_game_data::apply_ruler_history(const QDate &start_date)
 
 			this->historical_monarchs[date] = historical_monarch;
 		}
-	}
-}
-
-QCoro::Task<void> domain_game_data::apply_diplomatic_history()
-{
-	const domain_history *domain_history = this->domain->get_history();
-
-	for (const auto &[other_domain, diplomacy_state] : domain_history->get_diplomacy_states()) {
-		if (!other_domain->get_game_data()->is_alive()) {
-			continue;
-		}
-
-		co_await this->set_diplomacy_state(other_domain, diplomacy_state);
-		co_await other_domain->get_game_data()->set_diplomacy_state(this->domain, get_diplomacy_state_counterpart(diplomacy_state));
-	}
-
-	for (const auto &[other_country, consulate] : domain_history->get_consulates()) {
-		if (!other_country->get_game_data()->is_alive()) {
-			continue;
-		}
-
-		this->set_consulate(other_country, consulate);
-		other_country->get_game_data()->set_consulate(this->domain, consulate);
 	}
 }
 
@@ -985,11 +961,11 @@ QCoro::Task<void> domain_game_data::set_tier(const domain_tier tier)
 
 	if (tier < old_tier) {
 		//if the domain's tier decreases to the point that it is no longer above the tier of any of its vassals, that vassal then becomes independent
-		const std::vector<const metternich::domain *> vassals = this->get_vassals();
+		const std::vector<const metternich::domain *> vassals = this->get_diplomacy()->get_vassals();
 		for (const metternich::domain *vassal : vassals) {
 			if (this->get_tier() <= vassal->get_game_data()->get_tier()) {
-				co_await this->set_diplomacy_state(vassal, diplomacy_state::peace);
-				co_await vassal->get_game_data()->set_diplomacy_state(this->domain, diplomacy_state::peace);
+				co_await this->get_diplomacy()->set_diplomacy_state(vassal, diplomacy_state::peace);
+				co_await vassal->get_diplomacy()->set_diplomacy_state(this->domain, diplomacy_state::peace);
 
 				if (this->domain == game::get()->get_player_country()) {
 					const portrait *foreign_minister_portrait = this->get_government()->get_foreign_minister_portrait();
@@ -1002,19 +978,19 @@ QCoro::Task<void> domain_game_data::set_tier(const domain_tier tier)
 				}
 			}
 		}
-	} else if (tier > old_tier && this->get_overlord() != nullptr && tier >= this->get_overlord()->get_game_data()->get_tier()) {
-		if (this->get_overlord() == game::get()->get_player_country()) {
-			const portrait *foreign_minister_portrait = this->get_overlord()->get_government()->get_foreign_minister_portrait();
+	} else if (tier > old_tier && this->get_diplomacy()->get_overlord() != nullptr && tier >= this->get_diplomacy()->get_overlord()->get_game_data()->get_tier()) {
+		if (this->get_diplomacy()->get_overlord() == game::get()->get_player_country()) {
+			const portrait *foreign_minister_portrait = this->get_diplomacy()->get_overlord()->get_government()->get_foreign_minister_portrait();
 
-			engine_interface::get()->add_notification("Vassal Breaks Free", foreign_minister_portrait, std::format("{}, due to the increase in standing incurred by the promotion of our vassal, the {}, to {} {}, they have decided to break free of our control!", this->get_overlord()->get_game_data()->get_form_of_address(), this->get_titled_name(), string::get_indefinite_article(this->get_title_name()), this->get_title_name()));
+			engine_interface::get()->add_notification("Vassal Breaks Free", foreign_minister_portrait, std::format("{}, due to the increase in standing incurred by the promotion of our vassal, the {}, to {} {}, they have decided to break free of our control!", this->get_diplomacy()->get_overlord()->get_game_data()->get_form_of_address(), this->get_titled_name(), string::get_indefinite_article(this->get_title_name()), this->get_title_name()));
 		} else if (this->domain == game::get()->get_player_country()) {
 			const portrait *foreign_minister_portrait = this->get_government()->get_foreign_minister_portrait();
 
-			engine_interface::get()->add_notification("Independence!", foreign_minister_portrait, std::format("{}, due to the increase in standing incurred by our promotion to {} {}, we have managed to break free of the control of our overlord, the {}!", this->get_form_of_address(), string::get_indefinite_article(this->get_title_name()), this->get_title_name(), this->get_overlord()->get_game_data()->get_titled_name()));
+			engine_interface::get()->add_notification("Independence!", foreign_minister_portrait, std::format("{}, due to the increase in standing incurred by our promotion to {} {}, we have managed to break free of the control of our overlord, the {}!", this->get_form_of_address(), string::get_indefinite_article(this->get_title_name()), this->get_title_name(), this->get_diplomacy()->get_overlord()->get_game_data()->get_titled_name()));
 		}
 
-		co_await this->get_overlord()->get_game_data()->set_diplomacy_state(this->domain, diplomacy_state::peace);
-		co_await this->set_diplomacy_state(this->get_overlord(), diplomacy_state::peace);
+		co_await this->get_diplomacy()->get_overlord()->get_diplomacy()->set_diplomacy_state(this->domain, diplomacy_state::peace);
+		co_await this->get_diplomacy()->set_diplomacy_state(this->get_diplomacy()->get_overlord(), diplomacy_state::peace);
 	}
 
 	if (game::get()->is_running()) {
@@ -1049,7 +1025,7 @@ QCoro::Task<void> domain_game_data::check_tier()
 
 		if (tier > current_tier) {
 			//if the tier is higher than the current tier, only allow it if the tier would still be below that of the overlord (if any)
-			if (this->get_overlord() != nullptr && tier >= this->get_overlord()->get_game_data()->get_tier()) {
+			if (this->get_diplomacy()->get_overlord() != nullptr && tier >= this->get_diplomacy()->get_overlord()->get_game_data()->get_tier()) {
 				return;
 			}
 
@@ -1077,7 +1053,7 @@ QCoro::Task<void> domain_game_data::check_tier()
 
 	//ensure that the tier will still be above that of all vassals (if any)
 	domain_tier highest_vassal_tier = domain_tier::none;
-	for (const metternich::domain *vassal : this->get_vassals()) {
+	for (const metternich::domain *vassal : this->get_diplomacy()->get_vassals()) {
 		highest_vassal_tier = std::max(highest_vassal_tier, vassal->get_game_data()->get_tier());
 	}
 	new_tier = std::max(new_tier, static_cast<domain_tier>(static_cast<int>(highest_vassal_tier) + 1));
@@ -1221,84 +1197,10 @@ QCoro::Task<void> domain_game_data::set_religion(const metternich::religion *rel
 	}
 }
 
-QCoro::Task<void> domain_game_data::set_overlord(const metternich::domain *overlord)
-{
-	if (overlord == this->get_overlord()) {
-		co_return;
-	}
-
-	if (overlord != nullptr && overlord->get_game_data()->get_tier() <= this->get_tier()) {
-		throw std::runtime_error(std::format("Tried to set \"{}\" as the overlord of \"{}\", but the former does not have a higher tier than the latter.", overlord->get_identifier(), this->domain->get_identifier()));
-	}
-
-	if (this->get_overlord() != nullptr) {
-		this->get_overlord()->get_game_data()->change_economic_score(-this->get_economic_score() * this->get_subject_type()->get_wealth_tribute_rate() / 100);
-
-		for (const auto &[resource, count] : this->get_economy()->get_resource_counts()) {
-			this->get_overlord()->get_economy()->change_vassal_resource_count(resource, -count);
-		}
-	}
-
-	this->overlord = overlord;
-
-	if (this->get_overlord() != nullptr) {
-		this->get_overlord()->get_game_data()->change_economic_score(this->get_economic_score() * this->get_subject_type()->get_wealth_tribute_rate() / 100);
-
-		for (const auto &[resource, count] : this->get_economy()->get_resource_counts()) {
-			this->get_overlord()->get_economy()->change_vassal_resource_count(resource, count);
-		}
-	} else {
-		co_await this->set_subject_type(nullptr);
-	}
-
-	if (game::get()->is_running()) {
-		emit overlord_changed();
-	}
-}
-
-bool domain_game_data::is_vassal_of(const metternich::domain *domain) const
-{
-	return this->get_overlord() == domain;
-}
-
-bool domain_game_data::is_any_vassal_of(const metternich::domain *domain) const
-{
-	if (this->is_vassal_of(domain)) {
-		return true;
-	}
-
-	if (this->get_overlord() != nullptr) {
-		return this->get_overlord()->get_game_data()->is_any_vassal_of(domain);
-	}
-
-	return false;
-}
-
-bool domain_game_data::is_overlord_of(const metternich::domain *domain) const
-{
-	return domain->get_game_data()->is_vassal_of(this->domain);
-}
-
-bool domain_game_data::is_any_overlord_of(const metternich::domain *domain) const
-{
-	if (this->is_overlord_of(domain)) {
-		return true;
-	}
-
-	const std::vector<const metternich::domain *> vassals = this->get_vassals();
-	for (const metternich::domain *vassal : this->get_vassals()) {
-		if (vassal->get_game_data()->is_any_overlord_of(domain)) {
-			return true;
-		}
-	}
-
-	return false;
-}
-
 const metternich::domain *domain_game_data::get_realm() const
 {
-	if (this->get_overlord() != nullptr) {
-		return this->get_overlord()->get_game_data()->get_realm();
+	if (this->get_diplomacy()->get_overlord() != nullptr) {
+		return this->get_diplomacy()->get_overlord()->get_game_data()->get_realm();
 	}
 
 	return this->domain;
@@ -1319,21 +1221,6 @@ std::string domain_game_data::get_type_name() const
 	}
 
 	return std::string();
-}
-
-QCoro::Task<void> domain_game_data::set_subject_type(const metternich::subject_type *subject_type)
-{
-	if (subject_type == this->get_subject_type()) {
-		co_return;
-	}
-
-	this->subject_type = subject_type;
-
-	if (game::get()->is_running()) {
-		emit subject_type_changed();
-	}
-
-	co_await this->check_government_type();
 }
 
 QCoro::Task<void> domain_game_data::set_government_type(const metternich::government_type *government_type)
@@ -1500,8 +1387,8 @@ QCoro::Task<void> domain_game_data::add_province(const province *province)
 			continue;
 		}
 
-		if (!domain->get_game_data()->is_country_known(this->domain) && domain->get_game_data()->is_province_discovered(province)) {
-			co_await domain->get_game_data()->add_known_country(this->domain);
+		if (!domain->get_diplomacy()->is_country_known(this->domain) && domain->get_game_data()->is_province_discovered(province)) {
+			co_await domain->get_diplomacy()->add_known_country(this->domain);
 		}
 	}
 
@@ -1550,7 +1437,7 @@ QCoro::Task<void> domain_game_data::remove_province(const province *province)
 			continue;
 		}
 
-		if (!domain->get_game_data()->is_country_known(this->domain)) {
+		if (!domain->get_diplomacy()->is_country_known(this->domain)) {
 			continue;
 		}
 
@@ -1576,7 +1463,7 @@ QCoro::Task<void> domain_game_data::remove_province(const province *province)
 		}
 
 		if (!known_province && !known_site) {
-			domain->get_game_data()->remove_known_country(this->domain);
+			domain->get_diplomacy()->remove_known_country(this->domain);
 		}
 	}
 
@@ -1607,8 +1494,8 @@ void domain_game_data::on_province_gained(const province *province, const int mu
 	for (const auto &[resource, count] : province_game_data->get_resource_counts()) {
 		this->get_economy()->change_resource_count(resource, count * multiplier);
 
-		if (this->get_overlord() != nullptr) {
-			this->get_overlord()->get_economy()->change_vassal_resource_count(resource, count * multiplier);
+		if (this->get_diplomacy()->get_overlord() != nullptr) {
+			this->get_diplomacy()->get_overlord()->get_economy()->change_vassal_resource_count(resource, count * multiplier);
 		}
 	}
 
@@ -1684,7 +1571,7 @@ QCoro::Task<void> domain_game_data::remove_site(const site *site)
 			continue;
 		}
 
-		if (!domain->get_game_data()->is_country_known(this->domain)) {
+		if (!domain->get_diplomacy()->is_country_known(this->domain)) {
 			continue;
 		}
 
@@ -1710,7 +1597,7 @@ QCoro::Task<void> domain_game_data::remove_site(const site *site)
 		}
 
 		if (!known_province && !known_site) {
-			domain->get_game_data()->remove_known_country(this->domain);
+			domain->get_diplomacy()->remove_known_country(this->domain);
 		}
 	}
 
@@ -1915,8 +1802,7 @@ int domain_game_data::get_holding_count_with_vassals() const
 {
 	int holding_count = this->get_holding_count();
 
-	const std::vector<const metternich::domain *> vassals = this->get_vassals();
-	for (const metternich::domain *vassal : this->get_vassals()) {
+	for (const metternich::domain *vassal : this->get_diplomacy()->get_vassals()) {
 		holding_count += vassal->get_game_data()->get_holding_count_with_vassals();
 	}
 
@@ -2261,7 +2147,7 @@ void domain_game_data::calculate_realm_territory_rect()
 	QRect territory_rect = this->get_territory_rect();
 	this->realm_contiguous_territory_rects = this->get_contiguous_territory_rects();
 
-	for (const metternich::domain *vassal : this->get_vassals()) {
+	for (const metternich::domain *vassal : this->get_diplomacy()->get_vassals()) {
 		if (vassal->get_game_data()->get_realm_territory_rect().isNull()) {
 			continue;
 		}
@@ -2316,12 +2202,12 @@ void domain_game_data::calculate_realm_territory_rect()
 
 	this->calculate_realm_text_rect();
 
-	if (game::get()->is_running() && this->is_independent()) {
+	if (game::get()->is_running() && this->get_diplomacy()->is_independent()) {
 		this->domain->get_turn_data()->set_realm_diplomatic_map_dirty(true);
 	}
 
-	if (this->get_overlord() != nullptr) {
-		this->get_overlord()->get_game_data()->calculate_realm_territory_rect();
+	if (this->get_diplomacy()->get_overlord() != nullptr) {
+		this->get_diplomacy()->get_overlord()->get_game_data()->calculate_realm_territory_rect();
 	}
 }
 
@@ -2329,7 +2215,7 @@ void domain_game_data::calculate_realm_text_rect()
 {
 	this->realm_text_rect = QRect();
 
-	if (!this->is_alive() || !this->is_independent()) {
+	if (!this->is_alive() || !this->get_diplomacy()->is_independent()) {
 		return;
 	}
 
@@ -2347,291 +2233,6 @@ QVariantList domain_game_data::get_tile_terrain_counts_qvariant_list() const
 	std::sort(counts.begin(), counts.end(), [](const QVariant &lhs, const QVariant &rhs) {
 		return lhs.toMap().value("value").toInt() > rhs.toMap().value("value").toInt();
 	});
-	return counts;
-}
-
-QCoro::Task<void> domain_game_data::add_known_country(const metternich::domain *other_domain)
-{
-	this->known_countries.insert(other_domain);
-
-	const consulate *current_consulate = this->get_consulate(other_domain);
-
-	const consulate *best_free_consulate = nullptr;
-	for (const auto &[consulate, count] : this->free_consulate_counts) {
-		if (best_free_consulate == nullptr || consulate->get_level() > best_free_consulate->get_level()) {
-			best_free_consulate = consulate;
-		}
-	}
-
-	if (best_free_consulate != nullptr && (current_consulate == nullptr || current_consulate->get_level() < best_free_consulate->get_level())) {
-		this->set_consulate(other_domain, best_free_consulate);
-	}
-
-	if (this->get_technology()->get_gain_technologies_known_by_others_count() > 0) {
-		co_await this->get_technology()->gain_technologies_known_by_others();
-	}
-}
-
-diplomacy_state domain_game_data::get_diplomacy_state(const metternich::domain *other_domain) const
-{
-	const auto find_iterator = this->diplomacy_states.find(other_domain);
-
-	if (find_iterator != this->diplomacy_states.end()) {
-		return find_iterator->second;
-	}
-
-	return diplomacy_state::peace;
-}
-
-QCoro::Task<void> domain_game_data::set_diplomacy_state(const metternich::domain *other_domain, const diplomacy_state state)
-{
-	const diplomacy_state old_state = this->get_diplomacy_state(other_domain);
-
-	if (state == old_state) {
-		co_return;
-	}
-
-	if (is_vassalage_diplomacy_state(state)) {
-		co_await this->set_overlord(other_domain);
-	} else {
-		if (this->get_overlord() == other_domain) {
-			co_await this->set_overlord(nullptr);
-		}
-	}
-
-	if (old_state != diplomacy_state::peace) {
-		this->change_diplomacy_state_count(old_state, -1);
-	}
-
-	if (state == diplomacy_state::peace) {
-		this->diplomacy_states.erase(other_domain);
-	} else {
-		this->diplomacy_states[other_domain] = state;
-		this->change_diplomacy_state_count(state, 1);
-	}
-
-	if (is_overlordship_diplomacy_state(old_state) || is_overlordship_diplomacy_state(state)) {
-		if (game::get()->is_loaded()) {
-			this->calculate_realm_territory_rect();
-		}
-	}
-
-	if (game::get()->is_running()) {
-		emit diplomacy_states_changed();
-
-		if (is_vassalage_diplomacy_state(state) || is_vassalage_diplomacy_state(old_state)) {
-			emit type_name_changed();
-		}
-	}
-}
-
-void domain_game_data::change_diplomacy_state_count(const diplomacy_state state, const int change)
-{
-	const int final_count = (this->diplomacy_state_counts[state] += change);
-
-	if (final_count == 0) {
-		this->diplomacy_state_counts.erase(state);
-		this->diplomacy_state_diplomatic_map_image_promises.erase(state);
-	}
-
-	//if the change added the diplomacy state to the map, then we need to create the diplomatic map image for it
-	if (game::get()->is_running() && final_count == change && !is_vassalage_diplomacy_state(state) && !is_overlordship_diplomacy_state(state)) {
-		this->domain->get_turn_data()->set_diplomatic_map_diplomacy_state_dirty(state);
-	}
-}
-
-QString domain_game_data::get_diplomacy_state_diplomatic_map_suffix(metternich::domain *other_domain) const
-{
-	if (other_domain == this->domain || this->is_any_overlord_of(other_domain) || this->is_any_vassal_of(other_domain)) {
-		return "empire";
-	}
-
-	return QString::fromStdString(std::string(magic_enum::enum_name(this->get_diplomacy_state(other_domain))));
-}
-
-bool domain_game_data::at_war() const
-{
-	return this->diplomacy_state_counts.contains(diplomacy_state::war);
-}
-
-bool domain_game_data::can_attack(const metternich::domain *other_domain) const
-{
-	if (other_domain == nullptr) {
-		return false;
-	}
-
-	if (other_domain == this->domain) {
-		return false;
-	}
-
-	if (this->is_any_overlord_of(other_domain)) {
-		return false;
-	}
-
-	if (other_domain->is_clade()) {
-		return true;
-	} else if (this->is_clade()) {
-		return false;
-	}
-
-	switch (this->get_diplomacy_state(other_domain)) {
-		case diplomacy_state::non_aggression_pact:
-		case diplomacy_state::alliance:
-			return false;
-		case diplomacy_state::war:
-			return true;
-		default:
-			break;
-	}
-
-	if (other_domain->get_game_data()->is_tribal() || this->is_tribal()) {
-		return true;
-	}
-
-	if (other_domain->get_game_data()->is_under_anarchy() || this->is_under_anarchy()) {
-		return true;
-	}
-
-	return false;
-}
-
-std::optional<diplomacy_state> domain_game_data::get_offered_diplomacy_state(const metternich::domain *other_domain) const
-{
-	const auto find_iterator = this->offered_diplomacy_states.find(other_domain);
-
-	if (find_iterator != this->offered_diplomacy_states.end()) {
-		return find_iterator->second;
-	}
-
-	return std::nullopt;
-}
-
-void domain_game_data::set_offered_diplomacy_state(const metternich::domain *other_domain, const std::optional<diplomacy_state> &state)
-{
-	const diplomacy_state old_state = this->get_diplomacy_state(other_domain);
-
-	if (state == old_state) {
-		return;
-	}
-
-	if (state.has_value()) {
-		this->offered_diplomacy_states[other_domain] = state.value();
-	} else {
-		this->offered_diplomacy_states.erase(other_domain);
-	}
-
-	if (game::get()->is_running()) {
-		emit offered_diplomacy_states_changed();
-	}
-}
-
-QVariantList domain_game_data::get_consulates_qvariant_list() const
-{
-	return archimedes::map::to_qvariant_list(this->consulates);
-}
-
-void domain_game_data::set_consulate(const metternich::domain *other_domain, const consulate *consulate)
-{
-	if (consulate == nullptr) {
-		this->consulates.erase(other_domain);
-	} else {
-		this->consulates[other_domain] = consulate;
-
-		if (other_domain->get_game_data()->get_consulate(this->domain) != consulate) {
-			other_domain->get_game_data()->set_consulate(this->domain, consulate);
-		}
-	}
-
-	if (game::get()->is_running()) {
-		emit consulates_changed();
-	}
-}
-
-int domain_game_data::get_opinion_of(const metternich::domain *other) const
-{
-	int opinion = this->get_base_opinion(other);
-
-	for (const auto &[modifier, duration] : this->get_opinion_modifiers_for(other)) {
-		opinion += modifier->get_value();
-	}
-
-	opinion = std::clamp(opinion, domain::min_opinion, domain::max_opinion);
-
-	return opinion;
-}
-
-void domain_game_data::set_base_opinion(const metternich::domain *other, const int opinion)
-{
-	assert_throw(other != this->domain);
-
-	if (opinion == this->get_base_opinion(other)) {
-		return;
-	}
-
-	if (opinion < domain::min_opinion) {
-		this->set_base_opinion(other, domain::min_opinion);
-		return;
-	} else if (opinion > domain::max_opinion) {
-		this->set_base_opinion(other, domain::max_opinion);
-		return;
-	}
-
-	if (opinion == 0) {
-		this->base_opinions.erase(other);
-	} else {
-		this->base_opinions[other] = opinion;
-	}
-}
-
-void domain_game_data::add_opinion_modifier(const metternich::domain *other, const opinion_modifier *modifier, const int duration)
-{
-	this->opinion_modifiers[other][modifier] = std::max(this->opinion_modifiers[other][modifier], duration);
-}
-
-void domain_game_data::remove_opinion_modifier(const metternich::domain *other, const opinion_modifier *modifier)
-{
-	opinion_modifier_map<int> &opinion_modifiers = this->opinion_modifiers[other];
-	opinion_modifiers.erase(modifier);
-
-	if (opinion_modifiers.empty()) {
-		this->opinion_modifiers.erase(other);
-	}
-}
-
-std::vector<const metternich::domain *> domain_game_data::get_vassals() const
-{
-	std::vector<const metternich::domain *> vassals;
-
-	for (const auto &[domain, diplomacy_state] : this->diplomacy_states) {
-		if (is_overlordship_diplomacy_state(diplomacy_state)) {
-			vassals.push_back(domain);
-		}
-	}
-
-	return vassals;
-}
-
-QVariantList domain_game_data::get_vassals_qvariant_list() const
-{
-	return container::to_qvariant_list(this->get_vassals());
-}
-
-QVariantList domain_game_data::get_subject_type_counts_qvariant_list() const
-{
-	std::map<const metternich::subject_type *, int> subject_type_counts;
-
-	for (const auto &[country, diplomacy_state] : this->diplomacy_states) {
-		if (is_overlordship_diplomacy_state(diplomacy_state)) {
-			assert_throw(country->get_game_data()->get_subject_type() != nullptr);
-			++subject_type_counts[country->get_game_data()->get_subject_type()];
-		}
-	}
-
-	QVariantList counts = archimedes::map::to_qvariant_list(subject_type_counts);
-	std::sort(counts.begin(), counts.end(), [](const QVariant &lhs, const QVariant &rhs) {
-		return lhs.toMap().value("value").toInt() > rhs.toMap().value("value").toInt();
-	});
-
 	return counts;
 }
 
@@ -2659,388 +2260,6 @@ std::vector<const metternich::domain *> domain_game_data::get_neighbor_countries
 	}
 
 	return neighbor_countries;
-}
-
-const QColor &domain_game_data::get_diplomatic_map_color() const
-{
-	if (this->get_overlord() != nullptr) {
-		return this->get_overlord()->get_game_data()->get_diplomatic_map_color();
-	}
-
-	return this->domain->get_color();
-}
-
-QImage domain_game_data::prepare_diplomatic_map_image() const
-{
-	assert_throw(this->territory_rect.width() > 0);
-	assert_throw(this->territory_rect.height() > 0);
-
-	const decimillesimal_int &tile_scale = map::get()->get_diplomatic_map_tile_scale();
-	QSize image_size;
-	if (tile_scale < 1) {
-		image_size = QSize((this->territory_rect.width() * tile_scale).to_ceil_int(), (this->territory_rect.height() * tile_scale).to_ceil_int());
-	} else {
-		image_size = this->territory_rect.size();
-	}
-
-	QImage image(image_size, QImage::Format_RGBA8888);
-	image.fill(Qt::transparent);
-
-	return image;
-}
-
-QImage domain_game_data::finalize_diplomatic_map_image(QImage &&image)
-{
-	assert_throw(!image.isNull());
-
-	const decimillesimal_int &tile_scale = map::get()->get_diplomatic_map_tile_scale();
-
-	if (tile_scale > 1) {
-		QImage scaled_image;
-
-		scaled_image = image::scale<QImage::Format_ARGB32>(image, centesimal_int(tile_scale), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
-			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
-		});
-
-		image = std::move(scaled_image);
-	}
-
-	std::vector<QPoint> border_pixels;
-
-	for (int x = 0; x < image.width(); ++x) {
-		for (int y = 0; y < image.height(); ++y) {
-			const QPoint pixel_pos(x, y);
-			const QColor pixel_color = image.pixelColor(pixel_pos);
-
-			if (pixel_color.alpha() == 0) {
-				continue;
-			}
-
-			if (pixel_pos.x() == 0 || pixel_pos.y() == 0 || pixel_pos.x() == (image.width() - 1) || pixel_pos.y() == (image.height() - 1)) {
-				border_pixels.push_back(pixel_pos);
-				continue;
-			}
-
-			if (pixel_color.alpha() != 255) {
-				//blended color
-				border_pixels.push_back(pixel_pos);
-				continue;
-			}
-
-			const QPoint north_pos = pixel_pos + QPoint(0, -1);
-			const QPoint east_pos = pixel_pos + QPoint(1, 0);
-			const bool is_border_pixel = image.pixelColor(north_pos).alpha() == 0 || image.pixelColor(east_pos).alpha() == 0;
-
-			if (is_border_pixel) {
-				border_pixels.push_back(pixel_pos);
-			}
-		}
-	}
-
-	const QColor &border_pixel_color = defines::get()->get_country_border_color();
-
-	for (const QPoint &border_pixel_pos : border_pixels) {
-		image.setPixelColor(border_pixel_pos, border_pixel_color);
-	}
-
-	return image;
-}
-
-void domain_game_data::create_diplomatic_map_image()
-{
-	if (this->get_provinces().empty()) {
-		return;
-	}
-
-	const map *map = map::get();
-
-	QImage diplomatic_map_image = this->prepare_diplomatic_map_image();
-	QImage selected_diplomatic_map_image = diplomatic_map_image;
-
-	const QColor &color = this->get_diplomatic_map_color();
-	const QColor &selected_color = defines::get()->get_selected_country_color();
-
-	const decimillesimal_int &tile_scale = map::get()->get_diplomatic_map_tile_scale();
-	const QPoint top_left = this->territory_rect.topLeft() * tile_scale;
-
-	const QSize image_size = diplomatic_map_image.size();
-
-	//normalize the tile top left
-	const QPoint tile_top_left = this->territory_rect.topLeft() * tile_scale / tile_scale;
-
-	for (int x = 0; x < image_size.width(); ++x) {
-		for (int y = 0; y < image_size.height(); ++y) {
-			const QPoint pixel_pos = QPoint(x, y);
-			const QPoint relative_tile_pos = tile_scale < 1 ? pixel_pos / tile_scale : pixel_pos;
-			const tile *tile = map->get_tile(tile_top_left + relative_tile_pos);
-
-			if (tile->get_owner() != this->domain) {
-				continue;
-			}
-
-			diplomatic_map_image.setPixelColor(pixel_pos, color);
-			selected_diplomatic_map_image.setPixelColor(pixel_pos, selected_color);
-		}
-	}
-
-	std::shared_ptr<QPromise<QImage>> promise = std::make_shared<QPromise<QImage>>();
-	this->diplomatic_map_image_promise = promise;
-	this->diplomatic_map_image_promise->start();
-	assert_throw(!diplomatic_map_image.isNull());
-	QThreadPool::globalInstance()->start([promise, image = std::move(diplomatic_map_image)]() mutable {
-		promise->addResult(domain_game_data::finalize_diplomatic_map_image(std::move(image)));
-		promise->finish();
-	});
-
-	std::shared_ptr<QPromise<QImage>> selected_promise = std::make_shared<QPromise<QImage>>();
-	this->selected_diplomatic_map_image_promise = selected_promise;
-	this->selected_diplomatic_map_image_promise->start();
-	assert_throw(!selected_diplomatic_map_image.isNull());
-	QThreadPool::globalInstance()->start([selected_promise, image = std::move(selected_diplomatic_map_image)]() mutable {
-		selected_promise->addResult(domain_game_data::finalize_diplomatic_map_image(std::move(image)));
-		selected_promise->finish();
-	});
-
-	this->diplomatic_map_image_rect = QRect(top_left, image_size);
-
-	this->create_diplomatic_map_mode_image(diplomatic_map_mode::diplomatic);
-	this->create_diplomacy_state_diplomatic_map_image(diplomacy_state::peace);
-
-	for (const auto &[diplomacy_state, count] : this->get_diplomacy_state_counts()) {
-		if (!is_vassalage_diplomacy_state(diplomacy_state) && !is_overlordship_diplomacy_state(diplomacy_state)) {
-			this->create_diplomacy_state_diplomatic_map_image(diplomacy_state);
-		}
-	}
-
-	this->create_diplomatic_map_mode_image(diplomatic_map_mode::terrain);
-	this->create_diplomatic_map_mode_image(diplomatic_map_mode::cultural);
-	this->create_diplomatic_map_mode_image(diplomatic_map_mode::religious);
-	this->create_diplomatic_map_mode_image(diplomatic_map_mode::trade_zone);
-	this->create_diplomatic_map_mode_image(diplomatic_map_mode::temple);
-
-	if (game::get()->is_running()) {
-		emit diplomatic_map_image_changed();
-	}
-}
-
-QImage domain_game_data::prepare_realm_diplomatic_map_image() const
-{
-	assert_throw(this->realm_territory_rect.width() > 0);
-	assert_throw(this->realm_territory_rect.height() > 0);
-
-	const decimillesimal_int &tile_scale = map::get()->get_diplomatic_map_tile_scale();
-	QSize image_size;
-	if (tile_scale < 1) {
-		image_size = QSize((this->realm_territory_rect.width() * tile_scale).to_ceil_int(), (this->realm_territory_rect.height() * tile_scale).to_ceil_int());
-	} else {
-		image_size = this->realm_territory_rect.size();
-	}
-
-	QImage image(image_size, QImage::Format_RGBA8888);
-	image.fill(Qt::transparent);
-
-	return image;
-}
-
-void domain_game_data::create_realm_diplomatic_map_image()
-{
-	if (!this->is_independent() || this->get_provinces().empty()) {
-		return;
-	}
-
-	if (this->get_vassals().empty() && this->get_diplomatic_map_image_promise() != nullptr && this->get_selected_diplomatic_map_image_promise() != nullptr) {
-		this->realm_diplomatic_map_image_promise = this->diplomatic_map_image_promise;
-		this->selected_realm_diplomatic_map_image_promise = this->selected_diplomatic_map_image_promise;
-		this->realm_diplomatic_map_image_rect = this->get_diplomatic_map_image_rect();
-		return;
-	}
-
-	const map *map = map::get();
-
-	QImage diplomatic_map_image = this->prepare_realm_diplomatic_map_image();
-	QImage selected_diplomatic_map_image = diplomatic_map_image;
-
-	const QColor &color = this->get_diplomatic_map_color();
-	const QColor &selected_color = defines::get()->get_selected_country_color();
-
-	const decimillesimal_int &tile_scale = map::get()->get_diplomatic_map_tile_scale();
-	const QPoint top_left = this->realm_territory_rect.topLeft() * tile_scale;
-
-	const QSize image_size = diplomatic_map_image.size();
-
-	//normalize the tile top left
-	const QPoint tile_top_left = this->realm_territory_rect.topLeft() * tile_scale / tile_scale;
-
-	for (int x = 0; x < image_size.width(); ++x) {
-		for (int y = 0; y < image_size.height(); ++y) {
-			const QPoint pixel_pos = QPoint(x, y);
-			const QPoint relative_tile_pos = tile_scale < 1 ? pixel_pos / tile_scale : pixel_pos;
-			const tile *tile = map->get_tile(tile_top_left + relative_tile_pos);
-
-			if (tile->get_owner() == nullptr || tile->get_owner()->get_game_data()->get_realm() != this->domain) {
-				continue;
-			}
-
-			diplomatic_map_image.setPixelColor(pixel_pos, color);
-			selected_diplomatic_map_image.setPixelColor(pixel_pos, selected_color);
-		}
-	}
-
-	std::shared_ptr<QPromise<QImage>> promise = std::make_shared<QPromise<QImage>>();
-	this->realm_diplomatic_map_image_promise = promise;
-	this->realm_diplomatic_map_image_promise->start();
-	QThreadPool::globalInstance()->start([promise, image = std::move(diplomatic_map_image)]() mutable {
-		promise->addResult(domain_game_data::finalize_diplomatic_map_image(std::move(image)));
-		promise->finish();
-	});
-
-	std::shared_ptr<QPromise<QImage>> selected_promise = std::make_shared<QPromise<QImage>>();
-	this->selected_realm_diplomatic_map_image_promise = selected_promise;
-	this->selected_realm_diplomatic_map_image_promise->start();
-	QThreadPool::globalInstance()->start([selected_promise, image = std::move(selected_diplomatic_map_image)]() mutable {
-		selected_promise->addResult(domain_game_data::finalize_diplomatic_map_image(std::move(image)));
-		selected_promise->finish();
-	});
-
-	this->realm_diplomatic_map_image_rect = QRect(top_left, image_size);
-
-	if (game::get()->is_running()) {
-		emit realm_diplomatic_map_image_changed();
-	}
-}
-
-void domain_game_data::create_diplomatic_map_mode_image(const diplomatic_map_mode mode)
-{
-	static const QColor empty_color(Qt::black);
-	static constexpr QColor diplomatic_self_color(170, 148, 214);
-
-	const map *map = map::get();
-
-	QImage image = this->prepare_diplomatic_map_image();
-
-	const decimillesimal_int &tile_scale = map::get()->get_diplomatic_map_tile_scale();
-	const QPoint top_left = this->territory_rect.topLeft() * tile_scale;
-
-	const QSize image_size = image.size();
-
-	//normalize the tile top left
-	const QPoint tile_top_left = this->territory_rect.topLeft() * tile_scale / tile_scale;
-
-	for (int x = 0; x < image_size.width(); ++x) {
-		for (int y = 0; y < image_size.height(); ++y) {
-			const QPoint pixel_pos = QPoint(x, y);
-			const QPoint relative_tile_pos = tile_scale < 1 ? pixel_pos / tile_scale : pixel_pos;
-			const tile *tile = map->get_tile(tile_top_left + relative_tile_pos);
-
-			if (tile->get_owner() != this->domain) {
-				continue;
-			}
-
-			const QColor *color = nullptr;
-
-			switch (mode) {
-				case diplomatic_map_mode::diplomatic:
-					color = &diplomatic_self_color;
-					break;
-				case diplomatic_map_mode::terrain:
-					color = &tile->get_province()->get_map_data()->get_terrain()->get_color();
-					break;
-				case diplomatic_map_mode::cultural: {
-					const metternich::culture *culture = tile->get_province()->get_game_data()->get_culture();
-
-					if (culture != nullptr) {
-						color = &culture->get_color();
-					} else {
-						color = &defines::get()->get_map_blank_color();
-					}
-					break;
-				}
-				case diplomatic_map_mode::religious: {
-					const metternich::religion *religion = tile->get_province()->get_game_data()->get_religion();
-
-					if (religion != nullptr) {
-						color = &religion->get_color();
-					} else {
-						color = &defines::get()->get_map_blank_color();
-					}
-					break;
-				}
-				case diplomatic_map_mode::trade_zone: {
-					const metternich::domain *trade_zone_domain = tile->get_province()->get_game_data()->get_trade_zone_domain();
-
-					if (trade_zone_domain != nullptr) {
-						color = &trade_zone_domain->get_game_data()->get_diplomatic_map_color();
-					} else {
-						color = &defines::get()->get_map_blank_color();
-					}
-					break;
-				}
-				case diplomatic_map_mode::temple: {
-					const metternich::domain *temple_domain = tile->get_province()->get_game_data()->get_temple_domain();
-
-					if (temple_domain != nullptr) {
-						color = &temple_domain->get_game_data()->get_diplomatic_map_color();
-					} else {
-						color = &defines::get()->get_map_blank_color();
-					}
-					break;
-				}
-			}
-
-			image.setPixelColor(pixel_pos, *color);
-		}
-	}
-
-	std::shared_ptr<QPromise<QImage>> promise = std::make_shared<QPromise<QImage>>();
-	this->diplomatic_map_mode_image_promises[mode] = promise;
-	promise->start();
-
-	QThreadPool::globalInstance()->start([promise, image = std::move(image)]() mutable {
-		promise->addResult(domain_game_data::finalize_diplomatic_map_image(std::move(image)));
-		promise->finish();
-	});
-}
-
-void domain_game_data::create_diplomacy_state_diplomatic_map_image(const diplomacy_state state)
-{
-	static const QColor empty_color(Qt::black);
-
-	const map *map = map::get();
-
-	QImage image = this->prepare_diplomatic_map_image();
-
-	const decimillesimal_int &tile_scale = map::get()->get_diplomatic_map_tile_scale();
-	const QPoint top_left = this->territory_rect.topLeft() * tile_scale;
-
-	const QSize image_size = image.size();
-
-	//normalize the tile top left
-	const QPoint tile_top_left = this->territory_rect.topLeft() * tile_scale / tile_scale;
-
-	for (int x = 0; x < image_size.width(); ++x) {
-		for (int y = 0; y < image_size.height(); ++y) {
-			const QPoint pixel_pos = QPoint(x, y);
-			const QPoint relative_tile_pos = tile_scale < 1 ? pixel_pos / tile_scale : pixel_pos;
-			const tile *tile = map->get_tile(tile_top_left + relative_tile_pos);
-
-			if (tile->get_owner() != this->domain) {
-				continue;
-			}
-
-			const QColor &color = defines::get()->get_diplomacy_state_color(state);
-
-			image.setPixelColor(pixel_pos, color);
-		}
-	}
-
-	std::shared_ptr<QPromise<QImage>> promise = std::make_shared<QPromise<QImage>>();
-	this->diplomacy_state_diplomatic_map_image_promises[state] = promise;
-	promise->start();
-
-	QThreadPool::globalInstance()->start([promise, image = std::move(image)]() mutable {
-		promise->addResult(domain_game_data::finalize_diplomatic_map_image(std::move(image)));
-		promise->finish();
-	});
 }
 
 QVariantList domain_game_data::get_attribute_values_qvariant_list() const
@@ -3204,16 +2423,16 @@ void domain_game_data::change_economic_score(const int change)
 		return;
 	}
 
-	if (this->get_overlord() != nullptr) {
-		this->get_overlord()->get_game_data()->change_economic_score(-this->get_economic_score() * this->get_subject_type()->get_wealth_tribute_rate() / 100);
+	if (this->get_diplomacy()->get_overlord() != nullptr) {
+		this->get_diplomacy()->get_overlord()->get_game_data()->change_economic_score(-this->get_economic_score() * this->get_diplomacy()->get_subject_type()->get_wealth_tribute_rate() / 100);
 	}
 
 	this->economic_score += change;
 
 	this->change_score(change);
 
-	if (this->get_overlord() != nullptr) {
-		this->get_overlord()->get_game_data()->change_economic_score(this->get_economic_score() * this->get_subject_type()->get_wealth_tribute_rate() / 100);
+	if (this->get_diplomacy()->get_overlord() != nullptr) {
+		this->get_diplomacy()->get_overlord()->get_game_data()->change_economic_score(this->get_economic_score() * this->get_diplomacy()->get_subject_type()->get_wealth_tribute_rate() / 100);
 	}
 }
 
@@ -3625,19 +2844,6 @@ QVariantList domain_game_data::get_item_slots_qvariant_list() const
 	return qvariant_list;
 }
 
-bool domain_game_data::can_declare_war_on(const metternich::domain *other_domain) const
-{
-	if (!this->domain->can_declare_war()) {
-		return false;
-	}
-
-	if (this->get_overlord() != nullptr) {
-		return other_domain == this->get_overlord();
-	}
-
-	return true;
-}
-
 QVariantList domain_game_data::get_ideas_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_ideas());
@@ -4022,29 +3228,7 @@ QCoro::Task<void> domain_game_data::decrement_scripted_modifiers()
 		co_await this->remove_scripted_modifier(modifier);
 	}
 
-	//decrement opinion modifiers
-	domain_map<std::vector<const opinion_modifier *>> opinion_modifiers_to_remove;
-
-	for (auto &[country, opinion_modifier_map] : this->opinion_modifiers) {
-		for (auto &[modifier, duration] : opinion_modifier_map) {
-			if (duration == -1) {
-				//eternal
-				continue;
-			}
-
-			--duration;
-
-			if (duration == 0) {
-				opinion_modifiers_to_remove[country].push_back(modifier);
-			}
-		}
-	}
-
-	for (const auto &[country, opinion_modifiers] : opinion_modifiers_to_remove) {
-		for (const opinion_modifier *modifier : opinion_modifiers) {
-			this->remove_opinion_modifier(country, modifier);
-		}
-	}
+	this->get_diplomacy()->decrement_opinion_modifiers();
 }
 
 QCoro::Task<void> domain_game_data::apply_modifier(const modifier<const metternich::domain> *modifier, const int multiplier)
@@ -4792,15 +3976,15 @@ QCoro::Task<void> domain_game_data::explore_province(const province *province)
 	const province_game_data *province_game_data = province->get_game_data();
 	const metternich::domain *province_owner = province_game_data->get_owner();
 
-	if (province_owner != nullptr && province_owner != this->domain && !this->is_country_known(province_owner)) {
-		co_await this->add_known_country(province_owner);
+	if (province_owner != nullptr && province_owner != this->domain && !this->get_diplomacy()->is_country_known(province_owner)) {
+		co_await this->get_diplomacy()->add_known_country(province_owner);
 	}
 
 	for (const site *site : province_game_data->get_sites()) {
 		const metternich::domain *site_owner = site->get_game_data()->get_owner();
 
-		if (site_owner != nullptr && site_owner != this->domain && !this->is_country_known(site_owner)) {
-			co_await this->add_known_country(site_owner);
+		if (site_owner != nullptr && site_owner != this->domain && !this->get_diplomacy()->is_country_known(site_owner)) {
+			co_await this->get_diplomacy()->add_known_country(site_owner);
 		}
 	}
 
@@ -5068,29 +4252,6 @@ QCoro::Task<void> domain_game_data::set_free_building_class_count(const building
 			}
 
 			co_await site->get_game_data()->check_free_buildings();
-		}
-	}
-}
-
-void domain_game_data::set_free_consulate_count(const consulate *consulate, const int value)
-{
-	const int old_value = this->get_free_consulate_count(consulate);
-	if (value == old_value) {
-		return;
-	}
-
-	assert_throw(value >= 0);
-
-	if (value == 0) {
-		this->free_consulate_counts.erase(consulate);
-	} else if (old_value == 0) {
-		this->free_consulate_counts[consulate] = value;
-
-		for (const metternich::domain *known_country : this->get_known_countries()) {
-			const metternich::consulate *current_consulate = this->get_consulate(known_country);
-			if (current_consulate == nullptr || current_consulate->get_level() < consulate->get_level()) {
-				this->set_consulate(known_country, consulate);
-			}
 		}
 	}
 }

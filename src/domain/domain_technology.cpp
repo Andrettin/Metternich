@@ -5,6 +5,7 @@
 #include "database/defines.h"
 #include "domain/domain.h"
 #include "domain/domain_ai.h"
+#include "domain/domain_diplomacy.h"
 #include "domain/domain_economy.h"
 #include "domain/domain_game_data.h"
 #include "domain/domain_government.h"
@@ -868,7 +869,7 @@ QCoro::Task<void> domain_technology::gain_technologies_known_by_others()
 
 	technology_map<int> technology_known_counts;
 
-	for (const metternich::domain *known_country : this->get_game_data()->get_known_countries()) {
+	for (const metternich::domain *known_country : this->domain->get_diplomacy()->get_known_countries()) {
 		for (const technology *technology : known_country->get_technology()->get_technologies()) {
 			++technology_known_counts[technology];
 		}
