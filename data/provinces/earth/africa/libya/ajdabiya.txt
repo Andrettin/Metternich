@@ -7,10 +7,6 @@ ajdabiya = {
 	}
 	
 	history = {
-		owner = egypt
-		culture = egyptian
-		religion = pagan
-		
 		1360 = {
 			owner = egypt #part of the Mameluke Sultanates in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 			culture = arabic
