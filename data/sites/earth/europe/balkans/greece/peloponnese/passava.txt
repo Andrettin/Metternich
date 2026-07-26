@@ -4,5 +4,5 @@ passava = {
 	geocoordinate = { 22.50444444 36.7275 } #Las
 	type = holding
 	holding_type = castle
-	province = peloponnese
+	province = monemvasia
 }

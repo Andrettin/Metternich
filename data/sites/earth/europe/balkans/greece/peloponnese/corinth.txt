@@ -4,5 +4,5 @@ corinth = {
 	geocoordinate = { 22.927222222222223 37.93861111111111 }
 	type = holding
 	holding_type = castle
-	province = peloponnese
+	province = corinth
 }

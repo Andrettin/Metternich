@@ -4,7 +4,7 @@ pylos = {
 	geocoordinate = { 21.69638888888889 36.91388888888889 }
 	type = holding
 	holding_type = royal_palace #major Mycenaean palace
-	province = peloponnese
+	province = methone
 	
 	history = {
 		-1600 = {

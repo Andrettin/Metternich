@@ -4,5 +4,5 @@ argos = {
 	geocoordinate = { 22.729166666666668 37.63333333333333 }
 	type = holding
 	holding_type = castle
-	province = peloponnese
+	province = corinth #Argolis
 }

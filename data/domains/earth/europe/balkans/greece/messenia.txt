@@ -1,16 +1,16 @@
-argos = {
-	name = "Argos"
+messenia = {
+	name = "Messenia"
 	type = polity
-	color = { 136 164 26 }
+	color = { 210 203 25 }
 	culture = greek
 	default_religion = hellenic
 	default_tier = duchy
 	default_government_type = monarchy
-	default_capital = argos
+	default_capital = pylos #Messene
 	eras = {
 		ancient_era
 	}
 	core_provinces = {
-		corinth
+		methone
 	}
 }

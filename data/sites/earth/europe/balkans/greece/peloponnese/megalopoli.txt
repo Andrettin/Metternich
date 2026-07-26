@@ -4,5 +4,5 @@ megalopoli = {
 	geocoordinate = { 22.133333333333 37.4 }
 	type = holding
 	holding_type = castle
-	province = peloponnese
+	province = corinth #Arcadia
 }

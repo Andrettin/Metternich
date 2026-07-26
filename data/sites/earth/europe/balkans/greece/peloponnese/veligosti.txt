@@ -4,5 +4,5 @@ veligosti = {
 	geocoordinate = { 22.1167 37.3167 }
 	type = holding
 	holding_type = castle
-	province = peloponnese
+	province = corinth #Arcadia
 }

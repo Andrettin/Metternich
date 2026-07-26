@@ -4,7 +4,7 @@ menelaion = {
 	geocoordinate = { 22.4535 37.0658 }
 	type = holding
 	holding_type = royal_palace #major Mycenaean palace
-	province = peloponnese
+	province = monemvasia
 	
 	history = {
 		-1600 = {

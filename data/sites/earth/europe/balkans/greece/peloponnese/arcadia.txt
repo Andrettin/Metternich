@@ -4,5 +4,5 @@ arcadia = {
 	geocoordinate = { 21.670524 37.250777 } #Kyparissia
 	type = holding
 	holding_type = guild
-	province = peloponnese
+	province = methone
 }

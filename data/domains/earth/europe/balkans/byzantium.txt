@@ -24,11 +24,13 @@ byzantium = {
 		central_macedonia
 		cephalonia
 		corfu
+		corinth
 		crete
 		east_macedonia
 		eastern_rumelia
 		epirus
-		peloponnese
+		methone
+		monemvasia
 		thessaly
 		west_macedonia
 		zakynthos

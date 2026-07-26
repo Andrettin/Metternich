@@ -1,0 +1,50 @@
+monemvasia = {
+	name = "Monemvasia"
+	color = { 126 156 39 }
+	terrain = hills
+	default_provincial_capital = sparta
+	regions = {
+		greece
+	}
+	
+	history = {
+		-1600 = {
+			owner = sparta #Menelaion had a major Mycenaean palace in the 1600-1100 BC period; Source: "History of the World Map by Map", 2023, pp. 40-41.
+			culture = greek
+			religion = hellenic
+		}
+		
+		-1450 = {
+			#part of the Mycenaean civilization c. 1450 BC; Source: William R. Shepherd, "Historical Atlas", 1911, p. 4.
+		}
+		
+		-750 = {
+			owner = greece #Greek territory in the 750-625 BC period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 5.
+		}
+		
+		-700 = {
+			owner = sparta #part of Sparta in the 700-600 BC period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 8.
+		}
+		
+		526 = {
+			owner = eastern_rome #part of the East Roman Empire in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			religion = orthodox
+		}
+		
+		1121 = {
+			trade_zone = morosini
+		}
+		
+		1360 = {
+			owner = byzantium #part of the Byzantine Empire in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1699 = {
+			owner = venice #became a Venetian possession in 1699; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1713 = {
+			owner = ottoman_empire #became part of the Ottoman Empire in 1713; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+	}
+}

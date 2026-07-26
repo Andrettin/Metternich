@@ -16,7 +16,9 @@ greece = {
 		aetolia
 		attica
 		boeotia
-		peloponnese
+		corinth
+		methone
+		monemvasia
 		thessaly
 	}
 }

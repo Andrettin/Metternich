@@ -1,8 +1,8 @@
-peloponnese = {
-	name = "Peloponnese"
-	color = { 247 168 1 }
+corinth = {
+	name = "Corinth"
+	color = { 42 165 168 }
 	terrain = hills
-	default_provincial_capital = sparta
+	default_provincial_capital = corinth
 	regions = {
 		greece
 	}
@@ -23,7 +23,7 @@ peloponnese = {
 		}
 		
 		-700 = {
-			owner = sparta #part of Sparta in the 700-600 BC period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 8.
+			owner = argos #part of Argos in the 700-600 BC period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 8.
 		}
 		
 		526 = {
@@ -31,12 +31,12 @@ peloponnese = {
 			religion = orthodox
 		}
 		
-		1121 = {
+		1137 = {
 			trade_zone = morosini
 		}
 		
 		1360 = {
-			owner = byzantium #part of the Byzantine Empire in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			owner = achaea #part of the Principality of Achaia in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 		
 		1699 = {

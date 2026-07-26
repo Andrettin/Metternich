@@ -34,6 +34,7 @@ eastern_rome = {
 		central_macedonia
 		cephalonia
 		corfu
+		corinth
 		crete
 		cyrenaica
 		denizli
@@ -47,12 +48,13 @@ eastern_rome = {
 		kastamonu
 		kharibta
 		kosovo
+		methone
+		monemvasia
 		montenegro
 		mugla
 		nis
 		north_macedonia
 		novi_pazar
-		peloponnese
 		rosetta
 		saruhan
 		serbia

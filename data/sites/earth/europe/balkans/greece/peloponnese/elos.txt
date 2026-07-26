@@ -4,5 +4,5 @@ elos = {
 	geocoordinate = { 22.697884 36.832809 }
 	type = holding
 	holding_type = castle
-	province = peloponnese
+	province = monemvasia
 }

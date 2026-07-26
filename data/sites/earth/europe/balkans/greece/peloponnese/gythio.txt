@@ -4,5 +4,5 @@ gythio = {
 	geocoordinate = { 22.56611111 36.76166667 } #Gytheio
 	type = holding
 	holding_type = castle
-	province = peloponnese
+	province = monemvasia
 }

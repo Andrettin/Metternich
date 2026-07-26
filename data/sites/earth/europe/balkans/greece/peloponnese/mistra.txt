@@ -4,7 +4,7 @@ mistra = {
 	geocoordinate = { 22.3673 37.074 }
 	type = holding
 	holding_type = castle #or temple
-	province = peloponnese
+	province = monemvasia
 	
 	history = {
 		1360 = {

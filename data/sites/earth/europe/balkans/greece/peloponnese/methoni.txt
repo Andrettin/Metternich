@@ -2,7 +2,9 @@ methoni = {
 	name = "Methoni"
 	world = earth
 	geocoordinate = { 21.706944444444 36.821666666667 }
-	province = peloponnese
+	type = holding
+	holding_type = guild #or castle
+	province = methone
 	cultural_names = {
 		italian = "Modon"
 	}

@@ -4,7 +4,7 @@ tiryns = {
 	geocoordinate = { 22.799722222222 37.599444444444 }
 	type = holding
 	holding_type = royal_palace #major Mycenaean palace
-	province = peloponnese
+	province = corinth #Argolis
 	
 	history = {
 		-1600 = {

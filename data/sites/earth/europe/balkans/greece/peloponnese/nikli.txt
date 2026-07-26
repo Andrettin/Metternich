@@ -4,5 +4,5 @@ nikli = {
 	geocoordinate = { 22.4205 37.455333 } #Tegea
 	type = holding
 	holding_type = temple #or castle
-	province = peloponnese
+	province = corinth #Arcadia
 }
