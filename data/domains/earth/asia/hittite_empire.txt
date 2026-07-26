@@ -1,0 +1,22 @@
+hittite_empire = {
+	name = "Hittite Empire"
+	type = polity
+	color = { 18 137 154 }
+	culture = hittite
+	default_religion = pagan
+	default_tier = empire
+	default_government_type = monarchy
+	default_capital = corum #Hattusa
+	definite_article = true
+	short_name = true
+	short_names = {
+		tribe = "Hittites"
+	}
+	eras = {
+		ancient_era
+	}
+	core_provinces = {
+		corum
+		ancyra
+	}
+}
