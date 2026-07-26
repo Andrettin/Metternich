@@ -4,4 +4,5 @@ sparta = {
 	geocoordinate = { 22.42967972690 37.07371767070 } #from Natural Earth
 	type = holding
 	holding_type = castle
+	province = monemvasia
 }

@@ -1,7 +1,8 @@
-epidaurus = {
-	name = "Epidaurus"
+gerenia = {
+	name = "Gerenia"
 	world = earth
-	geocoordinate = { 23.1602 37.6335 }
+	geocoordinate = { 22.195 36.934 }
+	province = methone
 	
 	history = {
 		-1450 = {

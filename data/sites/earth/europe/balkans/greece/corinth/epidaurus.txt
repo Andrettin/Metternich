@@ -1,7 +1,8 @@
-gerenia = {
-	name = "Gerenia"
+epidaurus = {
+	name = "Epidaurus"
 	world = earth
-	#geocoordinate = { 22.195 36.934 }
+	geocoordinate = { 23.1602 37.6335 }
+	province = corinth #Argolis
 	
 	history = {
 		-1450 = {
