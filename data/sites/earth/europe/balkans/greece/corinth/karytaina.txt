@@ -1,0 +1,8 @@
+karytaina = {
+	name = "Karytaina"
+	world = earth
+	geocoordinate = { 22.0421 37.485135 }
+	type = holding
+	holding_type = castle
+	province = corinth #Arcadia
+}

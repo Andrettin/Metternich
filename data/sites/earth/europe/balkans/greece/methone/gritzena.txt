@@ -1,0 +1,8 @@
+gritzena = {
+	name = "Gritzena"
+	world = earth
+	geocoordinate = { 21.793088 37.090572 } #Barony of Gritzena
+	type = holding
+	holding_type = castle
+	province = methone
+}

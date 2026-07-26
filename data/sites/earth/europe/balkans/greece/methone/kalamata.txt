@@ -1,0 +1,8 @@
+kalamata = {
+	name = "Kalamata"
+	world = earth
+	geocoordinate = { 22.114195 37.038914 } #from Natural Earth
+	type = holding
+	holding_type = guild #or castle
+	province = methone
+}

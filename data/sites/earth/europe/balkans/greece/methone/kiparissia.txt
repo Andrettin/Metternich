@@ -1,8 +1,8 @@
-arcadia = {
-	name = "Arcadia"
+kiparissia = {
+	name = "Kiparissia" #also known as Arcadia
 	world = earth
 	geocoordinate = { 21.670524 37.250777 } #Kyparissia
 	type = holding
-	holding_type = guild
+	holding_type = guild #or temple
 	province = methone
 }

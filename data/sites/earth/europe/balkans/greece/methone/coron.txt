@@ -1,0 +1,8 @@
+coron = {
+	name = "Coron"
+	world = earth
+	geocoordinate = { 21.956944444444446 36.79694444444444 } #Koroni
+	type = holding
+	holding_type = castle
+	province = methone
+}

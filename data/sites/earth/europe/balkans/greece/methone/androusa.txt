@@ -1,0 +1,8 @@
+androusa = {
+	name = "Androusa"
+	world = earth
+	geocoordinate = { 21.943333333333 37.11 }
+	type = holding
+	holding_type = castle
+	province = methone
+}
