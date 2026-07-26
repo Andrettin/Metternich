@@ -145,7 +145,12 @@ void domain::initialize()
 		this->flag_module = this->get_module();
 	}
 
-	if (!this->color.isValid()) {
+	if (this->color.isValid()) {
+		const auto [it, inserted] = domain::domain_colors.insert(this->get_color());
+		if (!inserted) {
+			throw std::runtime_error(std::format("The color for domain \"{}\" is already used for a different domain.", this->get_identifier()));
+		}
+	} else {
 		log::log_error(std::format("Domain \"{}\" has no color. A random one will be generated for it.", this->get_identifier()));
 		this->color = random::get()->generate_color();
 	}

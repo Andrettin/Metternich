@@ -1,7 +1,7 @@
 muscovy = {
 	name = "Muscovy"
 	type = polity
-	color = { 111 177 210 }
+	color = { 206 181 97 }
 	culture = russian
 	default_religion = orthodox
 	default_tier = duchy

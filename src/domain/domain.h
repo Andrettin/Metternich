@@ -3,6 +3,7 @@
 #include "database/data_entry_container.h"
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
+#include "util/color_container.h"
 #include "util/qunique_ptr.h"
 
 Q_MOC_INCLUDE("domain/domain_ai.h")
@@ -80,6 +81,10 @@ public:
 	static constexpr int min_opinion = -200;
 	static constexpr int max_opinion = 200;
 
+private:
+	static inline color_set domain_colors;
+
+public:
 	explicit domain(const std::string &identifier);
 	~domain();
 

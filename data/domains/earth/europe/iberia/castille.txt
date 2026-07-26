@@ -1,7 +1,7 @@
 castille = {
 	name = "Castille"
 	type = polity
-	color = { 255 173 41 }
+	color = { 193 171 8 }
 	flag = castille
 	culture = castillian
 	default_religion = catholic

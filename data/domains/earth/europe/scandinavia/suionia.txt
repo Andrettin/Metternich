@@ -1,7 +1,7 @@
 suionia = {
 	name = "Suionia"
 	type = polity
-	color = { 0 173 198 }
+	color = { 150 108 150 }
 	culture = suioni
 	default_religion = asatru
 	default_tier = kingdom

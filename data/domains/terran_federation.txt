@@ -1,7 +1,6 @@
 terran_federation = {
 	name = "Terran Federation"
 	type = polity
-	color = { 87 139 166 }
 	culture = terran
 	default_religion = atheist
 	default_tier = empire

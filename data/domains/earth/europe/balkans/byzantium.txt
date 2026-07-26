@@ -1,7 +1,7 @@
 byzantium = {
 	name = "Byzantium"
 	type = polity
-	color = { 170 148 214 }
+	color = { 147 82 173 }
 	culture = greek
 	default_religion = orthodox
 	default_tier = empire

@@ -1,8 +1,7 @@
 great_britain = {
 	name = "Great Britain"
 	type = polity
-	#color = { 254 249 69 }
-	color = { 206 8 8 }
+	color = { 254 249 69 }
 	flag = great_britain
 	culture = english
 	default_religion = protestant

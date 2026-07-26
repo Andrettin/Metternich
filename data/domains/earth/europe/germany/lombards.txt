@@ -1,7 +1,6 @@
 lombards = {
 	name = "Lombards"
 	type = tribe
-	color = { 234 217 110 }
 	culture = lombard
 	default_religion = asatru
 	default_tier = duchy

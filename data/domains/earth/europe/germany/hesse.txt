@@ -1,7 +1,7 @@
 hesse = {
 	name = "Hesse"
 	type = polity
-	color = { 48 169 96 }
+	color = { 114 171 184 }
 	flag = hesse
 	culture = rhenish
 	default_religion = protestant

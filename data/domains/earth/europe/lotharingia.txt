@@ -1,7 +1,7 @@
 lotharingia = {
 	name = "Lotharingia"
 	type = polity
-	color = { 95 106 207 }
+	color = { 110 110 160 }
 	culture = frankish
 	default_religion = catholic
 	default_tier = kingdom

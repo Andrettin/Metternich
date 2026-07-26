@@ -1,7 +1,7 @@
 francia = {
 	name = "Francia"
 	type = polity
-	color = { 87 139 166 }
+	color = { 11 22 170 }
 	culture = frankish
 	default_religion = catholic
 	default_tier = kingdom

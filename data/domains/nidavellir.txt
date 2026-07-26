@@ -1,7 +1,6 @@
 nidavellir = {
 	name = "Nidavellir"
 	type = polity
-	color = { 206 8 8 }
 	culture = dwarven
 	default_religion = asatru
 	default_tier = duchy

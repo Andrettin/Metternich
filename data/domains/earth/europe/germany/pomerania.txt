@@ -3,8 +3,11 @@ pomerania = {
 	type = polity
 	color = { 61 136 66 }
 	flag = pomerania
-	culture = german
-	default_religion = protestant
+	cultures = {
+		pomeranian
+		german
+	}
+	default_religion = pagan
 	default_tier = duchy
 	default_government_type = monarchy
 	default_capital = stettin
@@ -16,22 +19,12 @@ pomerania = {
 		hither_pomerania
 		farther_pomerania
 	}
-}
-
-pomerania_slavic = {
-	name = "Pomerania"
-	type = polity
-	color = { 61 136 66 }
-	culture = pomeranian
-	default_religion = pagan
-	default_tier = duchy
-	default_government_type = monarchy
-	default_capital = danzig
-	eras = {
-		medieval_era
-	}
-	core_provinces = {
-		farther_pomerania
-		west_prussia
+	
+	history = {
+		1477 = {
+			#the Duchy of Pomerania existed c. 1477; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
+			culture = german
+			religion = catholic
+		}
 	}
 }

@@ -1,7 +1,7 @@
 svithjod = {
 	name = "Svithjod" #"Sviþjod"
 	type = polity
-	color = { 0 173 198 }
+	color = { 55 112 170 }
 	culture = norse
 	default_religion = asatru
 	default_tier = kingdom
