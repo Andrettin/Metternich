@@ -95,17 +95,20 @@ egypt = {
 
 europe = {
 	name = "Europe"
-	size = { 2400 1824 }
+	size = { 2816 2144 }
 	world = earth
 	main_map_template = earth
 	map_start_pos = { 7168 2816 }
 	minimap_tile_scale = 0.125
 	diplomatic_map_tile_scale = 0.5
 	ignored_provinces = {
-		assyria
+		karelia
+		lake_onega
+		mazandaran
+		nubia
+		qatar
 		satakunta
-		upper_egypt
-		volgograd
+		teheran
 	}
 }
 
