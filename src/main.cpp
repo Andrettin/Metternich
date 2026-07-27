@@ -71,7 +71,6 @@
 #include "map/moisture_type.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
-#include "map/province_map_image_provider.h"
 #include "map/site.h"
 #include "map/site_attribute.h"
 #include "map/site_game_data.h"
@@ -293,7 +292,6 @@ int main(int argc, char **argv)
 		engine.addImageProvider("icon", new icon_image_provider);
 		engine.addImageProvider("interface", new interface_image_provider);
 		engine.addImageProvider("portrait", new portrait_image_provider);
-		engine.addImageProvider("province_map", new province_map_image_provider);
 		engine.addImageProvider("tile", new tile_image_provider);
 
 		const QString root_path = path::to_qstring(database::get()->get_root_path());

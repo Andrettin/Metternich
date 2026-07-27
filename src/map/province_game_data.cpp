@@ -2,8 +2,6 @@
 
 #include "map/province_game_data.h"
 
-#include "character/character.h"
-#include "character/character_game_data.h"
 #include "character/party.h"
 #include "culture/culture.h"
 #include "database/defines.h"
@@ -35,7 +33,6 @@
 #include "map/province.h"
 #include "map/province_map_data.h"
 #include "map/province_map_mode.h"
-#include "map/province_turn_data.h"
 #include "map/route.h"
 #include "map/route_game_data.h"
 #include "map/site.h"
@@ -65,11 +62,8 @@
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/dice.h"
-#include "util/image_util.h"
 #include "util/map_util.h"
 #include "util/vector_random_util.h"
-
-#include "xbrz.h"
 
 #include <magic_enum/magic_enum.hpp>
 
@@ -521,9 +515,8 @@ QCoro::Task<void> province_game_data::set_owner(const domain *domain)
 	if (game::get()->is_running()) {
 		map::get()->update_minimap_rect(this->get_territory_rect());
 
-		this->province->get_turn_data()->set_province_map_dirty(true);
-
 		emit owner_changed();
+		emit map_image_changed();
 	}
 }
 
@@ -545,7 +538,7 @@ void province_game_data::set_culture(const metternich::culture *culture)
 	this->culture = culture;
 
 	if (game::get()->is_running()) {
-		this->province->get_turn_data()->set_province_map_mode_dirty(province_map_mode::cultural);
+		emit map_mode_image_changed(QString::fromUtf8(magic_enum::enum_name(province_map_mode::cultural)));
 
 		if (this->get_owner() != nullptr) {
 			this->get_owner()->get_turn_data()->set_diplomatic_map_mode_dirty(diplomatic_map_mode::cultural);
@@ -601,7 +594,7 @@ void province_game_data::set_religion(const metternich::religion *religion)
 	}
 
 	if (game::get()->is_running()) {
-		this->province->get_turn_data()->set_province_map_mode_dirty(province_map_mode::religious);
+		emit map_mode_image_changed(QString::fromUtf8(magic_enum::enum_name(province_map_mode::religious)));
 
 		if (this->get_owner() != nullptr) {
 			this->get_owner()->get_turn_data()->set_diplomatic_map_mode_dirty(diplomatic_map_mode::religious);
@@ -636,7 +629,7 @@ void province_game_data::set_trade_zone_domain(const metternich::domain *trade_z
 	this->trade_zone_domain = trade_zone_domain;
 
 	if (game::get()->is_running()) {
-		this->province->get_turn_data()->set_province_map_mode_dirty(province_map_mode::trade_zone);
+		emit map_mode_image_changed(QString::fromUtf8(magic_enum::enum_name(province_map_mode::trade_zone)));
 
 		if (this->get_owner() != nullptr) {
 			this->get_owner()->get_turn_data()->set_diplomatic_map_mode_dirty(diplomatic_map_mode::trade_zone);
@@ -725,7 +718,7 @@ void province_game_data::set_temple_domain(const metternich::domain *temple_doma
 	this->temple_domain = temple_domain;
 
 	if (game::get()->is_running()) {
-		this->province->get_turn_data()->set_province_map_mode_dirty(province_map_mode::temple);
+		emit map_mode_image_changed(QString::fromUtf8(magic_enum::enum_name(province_map_mode::temple)));
 
 		if (this->get_owner() != nullptr) {
 			this->get_owner()->get_turn_data()->set_diplomatic_map_mode_dirty(diplomatic_map_mode::temple);
@@ -1301,275 +1294,6 @@ QColor province_game_data::get_technology_map_color() const
 	return province_color;
 }
 
-QImage province_game_data::prepare_map_image() const
-{
-	assert_throw(this->province->get_map_data()->get_territory_rect().width() > 0);
-	assert_throw(this->province->get_map_data()->get_territory_rect().height() > 0);
-
-	QImage image(this->province->get_map_data()->get_territory_rect().size(), QImage::Format_RGBA8888);
-	image.fill(Qt::transparent);
-
-	return image;
-}
-
-QImage province_game_data::finalize_map_image(QImage &&image)
-{
-	assert_throw(!image.isNull());
-
-	const int tile_scale = defines::get()->get_province_map_tile_scale();
-
-	if (tile_scale > 1) {
-		QImage scaled_image;
-
-		scaled_image = image::scale<QImage::Format_ARGB32>(image, centesimal_int(tile_scale), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
-			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
-		});
-
-		image = std::move(scaled_image);
-	}
-
-	std::vector<QPoint> border_pixels;
-
-	for (int x = 0; x < image.width(); ++x) {
-		for (int y = 0; y < image.height(); ++y) {
-			const QPoint pixel_pos(x, y);
-			const QColor pixel_color = image.pixelColor(pixel_pos);
-
-			if (pixel_color.alpha() == 0) {
-				continue;
-			}
-
-			if (pixel_pos.x() == 0 || pixel_pos.y() == 0 || pixel_pos.x() == (image.width() - 1) || pixel_pos.y() == (image.height() - 1)) {
-				border_pixels.push_back(pixel_pos);
-				continue;
-			}
-
-			if (pixel_color.alpha() != 255) {
-				//blended color
-				border_pixels.push_back(pixel_pos);
-				continue;
-			}
-
-			const QPoint north_pos = pixel_pos + QPoint(0, -1);
-			const QPoint east_pos = pixel_pos + QPoint(1, 0);
-			const bool is_border_pixel = image.pixelColor(north_pos).alpha() == 0 || image.pixelColor(east_pos).alpha() == 0;
-
-			if (is_border_pixel) {
-				border_pixels.push_back(pixel_pos);
-			}
-		}
-	}
-
-	const QColor &border_pixel_color = defines::get()->get_country_border_color();
-
-	for (const QPoint &border_pixel_pos : border_pixels) {
-		image.setPixelColor(border_pixel_pos, border_pixel_color);
-	}
-
-	return image;
-}
-
-void province_game_data::create_map_image()
-{
-	const map *map = map::get();
-
-	QImage diplomatic_map_image = this->prepare_map_image();
-	QImage selected_map_image = diplomatic_map_image;
-	QImage interactive_map_image = diplomatic_map_image;
-
-	const QColor &color = this->get_map_color();
-	const QColor &selected_color = defines::get()->get_selected_country_color();
-	static const QColor interactive_color = QColor(Qt::darkGreen);
-
-	for (int x = 0; x < this->province->get_map_data()->get_territory_rect().width(); ++x) {
-		for (int y = 0; y < this->province->get_map_data()->get_territory_rect().height(); ++y) {
-			const QPoint relative_tile_pos = QPoint(x, y);
-			const tile *tile = map->get_tile(this->province->get_map_data()->get_territory_rect().topLeft() + relative_tile_pos);
-
-			if (tile->get_province() != this->province) {
-				continue;
-			}
-
-			diplomatic_map_image.setPixelColor(relative_tile_pos, color);
-			selected_map_image.setPixelColor(relative_tile_pos, selected_color);
-			interactive_map_image.setPixelColor(relative_tile_pos, interactive_color);
-		}
-	}
-
-	std::shared_ptr<QPromise<QImage>> promise = std::make_shared<QPromise<QImage>>();
-	this->map_image_promise = promise;
-	this->map_image_promise->start();
-	assert_throw(!diplomatic_map_image.isNull());
-	QThreadPool::globalInstance()->start([promise, image = std::move(diplomatic_map_image)]() mutable {
-		promise->addResult(province_game_data::finalize_map_image(std::move(image)));
-		promise->finish();
-	});
-
-	std::shared_ptr<QPromise<QImage>> selected_promise = std::make_shared<QPromise<QImage>>();
-	this->selected_map_image_promise = selected_promise;
-	this->selected_map_image_promise->start();
-	assert_throw(!selected_map_image.isNull());
-	QThreadPool::globalInstance()->start([selected_promise, image = std::move(selected_map_image)]() mutable {
-		selected_promise->addResult(province_game_data::finalize_map_image(std::move(image)));
-		selected_promise->finish();
-	});
-
-	std::shared_ptr<QPromise<QImage>> interactive_promise = std::make_shared<QPromise<QImage>>();
-	this->interactive_map_image_promise = interactive_promise;
-	this->interactive_map_image_promise->start();
-	assert_throw(!interactive_map_image.isNull());
-	QThreadPool::globalInstance()->start([interactive_promise, image = std::move(interactive_map_image)]() mutable {
-		interactive_promise->addResult(province_game_data::finalize_map_image(std::move(image)));
-		interactive_promise->finish();
-	});
-
-	const int tile_scale = defines::get()->get_province_map_tile_scale();
-	this->map_image_rect = QRect(this->province->get_map_data()->get_territory_rect().topLeft() * tile_scale, this->province->get_map_data()->get_territory_rect().size() * tile_scale);
-
-	this->create_map_mode_image(province_map_mode::terrain);
-
-	if (!this->province->is_water_zone()) {
-		this->create_map_mode_image(province_map_mode::cultural);
-		this->create_map_mode_image(province_map_mode::religious);
-		this->create_map_mode_image(province_map_mode::technology);
-		this->create_map_mode_image(province_map_mode::trade_zone);
-		this->create_map_mode_image(province_map_mode::temple);
-	}
-
-	this->calculate_text_rect();
-
-	emit map_image_changed();
-}
-
-const QPromise<QImage> *province_game_data::get_map_mode_image_promise(const province_map_mode mode) const
-{
-	if (this->province->is_water_zone() && mode != province_map_mode::terrain) {
-		return this->get_map_image_promise();
-	}
-
-	const auto find_iterator = this->map_mode_image_promises.find(mode);
-	if (find_iterator != this->map_mode_image_promises.end()) {
-		return find_iterator->second.get();
-	}
-
-	throw std::runtime_error(std::format("No map image promise found for mode {}.", magic_enum::enum_name(mode)));
-}
-
-void province_game_data::create_map_mode_image(const province_map_mode mode)
-{
-	assert_throw(!this->province->is_water_zone() || mode == province_map_mode::terrain);
-
-	static const QColor empty_color(Qt::black);
-
-	const map *map = map::get();
-
-	QImage image = this->prepare_map_image();
-
-	QColor province_color = this->get_map_color();
-	switch (mode) {
-		case province_map_mode::terrain:
-			province_color = this->get_terrain()->get_color();
-			break;
-		case province_map_mode::cultural: {
-			const metternich::culture *culture = this->get_culture();
-			if (culture != nullptr) {
-				province_color = culture->get_color();
-			}
-			break;
-		}
-		case province_map_mode::religious: {
-			const metternich::religion *religion = this->get_religion();
-			if (religion != nullptr) {
-				province_color = religion->get_color();
-			}
-			break;
-		}
-		case province_map_mode::technology: {
-			if (!this->province->is_water_zone()) {
-				const int province_technology_count = static_cast<int>(this->get_technologies().size());
-				const int total_technology_count = static_cast<int>(technology::get_all().size());
-				const QColor &min_technology_color = defines::get()->get_map_blank_color();
-				static const QColor max_technology_color(Qt::darkBlue);
-
-				assert_throw(min_technology_color.red() >= max_technology_color.red());
-				assert_throw(min_technology_color.green() >= max_technology_color.green());
-				assert_throw(min_technology_color.blue() >= max_technology_color.blue());
-
-				province_color.setRed(max_technology_color.red() + (min_technology_color.red() - max_technology_color.red()) * (total_technology_count - province_technology_count) / total_technology_count);
-				province_color.setGreen(max_technology_color.green() + (min_technology_color.green() - max_technology_color.green()) * (total_technology_count - province_technology_count) / total_technology_count);
-				province_color.setBlue(max_technology_color.blue() + (min_technology_color.blue() - max_technology_color.blue()) * (total_technology_count - province_technology_count) / total_technology_count);
-				break;
-			}
-		}
-		case province_map_mode::trade_zone: {
-			if (!this->province->is_water_zone()) {
-				const domain *trade_zone_domain = this->get_trade_zone_domain();
-				if (trade_zone_domain != nullptr) {
-					province_color = trade_zone_domain->get_color();
-				} else {
-					province_color = defines::get()->get_map_blank_color();
-				}
-			}
-			break;
-		}
-		case province_map_mode::temple: {
-			if (!this->province->is_water_zone()) {
-				const domain *temple_domain = this->get_temple_domain();
-				if (temple_domain != nullptr) {
-					province_color = temple_domain->get_color();
-				} else {
-					province_color = defines::get()->get_map_blank_color();
-				}
-			}
-			break;
-		}
-		default:
-			break;
-	}
-
-	for (int x = 0; x < this->get_territory_rect().width(); ++x) {
-		for (int y = 0; y < this->get_territory_rect().height(); ++y) {
-			const QPoint relative_tile_pos = QPoint(x, y);
-			const tile *tile = map->get_tile(this->get_territory_rect().topLeft() + relative_tile_pos);
-
-			if (tile->get_province() != this->province) {
-				continue;
-			}
-
-			const QColor *color = nullptr;
-
-			switch (mode) {
-				case province_map_mode::terrain:
-				case province_map_mode::cultural:
-				case province_map_mode::religious:
-				case province_map_mode::technology:
-				case province_map_mode::trade_zone:
-				case province_map_mode::temple:
-					color = &province_color;
-					break;
-				default:
-					assert_throw(false);
-					break;
-			}
-
-			assert_throw(color != nullptr);
-
-			image.setPixelColor(relative_tile_pos, *color);
-		}
-	}
-
-	std::shared_ptr<QPromise<QImage>> promise = std::make_shared<QPromise<QImage>>();
-	this->map_mode_image_promises[mode] = promise;
-	promise->start();
-
-	QThreadPool::globalInstance()->start([promise, image = std::move(image)]() mutable {
-		promise->addResult(province_game_data::finalize_map_image(std::move(image)));
-		promise->finish();
-	});
-
-	emit map_mode_image_changed(QString::fromUtf8(magic_enum::enum_name(mode)));
-}
-
 void province_game_data::calculate_text_rect()
 {
 	this->text_rect = QRect();
@@ -1674,6 +1398,8 @@ void province_game_data::calculate_text_rect()
 			changed = true;
 		}
 	}
+
+	emit text_rect_changed();
 }
 
 std::vector<const site *> province_game_data::get_visible_sites() const
@@ -1814,9 +1540,9 @@ QCoro::Task<void> province_game_data::add_technology(const technology *technolog
 	}
 
 	if (game::get()->is_running()) {
-		this->province->get_turn_data()->set_province_map_mode_dirty(province_map_mode::technology);
-
 		emit technologies_changed();
+
+		emit map_mode_image_changed(QString::fromUtf8(magic_enum::enum_name(province_map_mode::technology)));
 	}
 }
 
@@ -1853,9 +1579,9 @@ QCoro::Task<void> province_game_data::remove_technology(const technology *techno
 	}
 
 	if (game::get()->is_running()) {
-		this->province->get_turn_data()->set_province_map_mode_dirty(province_map_mode::technology);
-
 		emit technologies_changed();
+
+		emit map_mode_image_changed(QString::fromUtf8(magic_enum::enum_name(province_map_mode::technology)));
 	}
 }
 

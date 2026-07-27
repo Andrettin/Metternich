@@ -468,7 +468,7 @@ QCoro::Task<void> game::start_coro()
 		std::vector<QFuture<void>> futures;
 		for (const province *province : map::get()->get_provinces()) {
 			QFuture<void> future = QtConcurrent::run([province]() {
-				province->get_game_data()->create_map_image();
+				province->get_game_data()->calculate_text_rect();
 			});
 			futures.push_back(std::move(future));
 		}
@@ -1914,17 +1914,6 @@ QCoro::Task<void> game::do_turn_coro()
 
 			if (domain->get_turn_data()->is_realm_diplomatic_map_dirty()) {
 				domain->get_diplomacy()->create_realm_diplomatic_map_image();
-			}
-		}
-
-		for (const province *province : map::get()->get_provinces()) {
-			if (province->get_turn_data()->is_province_map_dirty()) {
-				province->get_game_data()->create_map_image();
-			} else {
-				const std::set<province_map_mode> dirty_map_modes = province->get_turn_data()->get_dirty_province_map_modes();
-				for (const province_map_mode mode : dirty_map_modes) {
-					province->get_game_data()->create_map_mode_image(mode);
-				}
 			}
 		}
 

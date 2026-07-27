@@ -47,10 +47,11 @@ Flickable {
 				readonly property var province_polygon_path: province.map_data.polygon_path.length > 0 ? province.map_data.polygon_path : null
 				readonly property var selected: selected_province === province && (selected_garrison === false || province_map.show_site_mode === ProvinceMap.SiteMode.ShowLocations)
 				readonly property var interactive: selected_civilian_unit !== null && !selected_civilian_unit.busy && selected_civilian_unit_interactive_provinces.includes(province)
+				property int change_count: 0
 				
 				ShapePath {
 					strokeColor: fillColor
-					fillColor: selected ? metternich.defines.selected_country_color : (interactive ? "darkGreen" : get_map_mode_color(province_map.mode, province))
+					fillColor: selected ? metternich.defines.selected_country_color : (interactive ? "darkGreen" : get_map_mode_color(province_map.mode, province, change_count)) //the change count is there to force a re-evaluation of the binding if a relevant property has changed
 					startX: 0
 					startY: 0
 					
@@ -58,20 +59,6 @@ Flickable {
 						path: province_polygon_path ? province_polygon_path : ""
 					}
 				}
-			}
-			
-			/*
-			Image {
-				id: province_image
-				x: province ? province.game_data.map_image_rect.x : 0
-				y: province ? province.game_data.map_image_rect.y : 0
-				source: province ? ("image://province_map/" + province.identifier + (selected ? "/selected" : (interactive ? "/interactive" : get_map_mode_suffix(province_map.mode, province))) + "/" + change_count) : "image://empty/"
-				cache: false
-				
-				readonly property var province: model.modelData
-				readonly property var selected: selected_province === province && (selected_garrison === false || province_map.show_site_mode === ProvinceMap.SiteMode.ShowLocations)
-				readonly property var interactive: selected_civilian_unit !== null && !selected_civilian_unit.busy && selected_civilian_unit_interactive_provinces.includes(province)
-				property int change_count: 0
 				
 				Connections {
 					target: province ? province.game_data : null
@@ -120,7 +107,6 @@ Flickable {
 					}
 				}
 			}
-			*/
 		}
 	}
 	
@@ -580,7 +566,7 @@ Flickable {
 		return ""
 	}
 	
-	function get_map_mode_color(mode, province) {
+	function get_map_mode_color(mode, province, change_count) {
 		switch (mode) {
 			case ProvinceMap.Mode.Political:
 				return province.game_data.map_color

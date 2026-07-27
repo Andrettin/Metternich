@@ -8,6 +8,7 @@
 #include "technology/technology_container.h"
 #include "unit/military_unit_type_container.h"
 #include "util/centesimal_int.h"
+#include "util/decimillesimal_int.h"
 #include "util/qunique_ptr.h"
 
 Q_MOC_INCLUDE("character/character.h")
@@ -45,7 +46,6 @@ class site_feature;
 class tile;
 class wonder;
 enum class military_unit_category;
-enum class province_map_mode;
 
 template <typename scope_type>
 class modifier;
@@ -63,8 +63,7 @@ class province_game_data final : public QObject
 	Q_PROPERTY(int max_level READ get_max_level NOTIFY max_level_changed)
 	Q_PROPERTY(QColor map_color READ get_map_color NOTIFY owner_changed)
 	Q_PROPERTY(QColor technology_map_color READ get_technology_map_color NOTIFY technologies_changed)
-	Q_PROPERTY(QRect map_image_rect READ get_map_image_rect NOTIFY map_image_changed)
-	Q_PROPERTY(QRect text_rect READ get_text_rect NOTIFY map_image_changed)
+	Q_PROPERTY(QRect text_rect READ get_text_rect NOTIFY text_rect_changed)
 	Q_PROPERTY(QString current_cultural_name READ get_current_cultural_name_qstring NOTIFY culture_changed)
 	Q_PROPERTY(bool coastal READ is_coastal CONSTANT)
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect CONSTANT)
@@ -213,35 +212,6 @@ public:
 
 	const QColor &get_map_color() const;
 	QColor get_technology_map_color() const;
-
-	const QPromise<QImage> *get_map_image_promise() const
-	{
-		return this->map_image_promise.get();
-	}
-
-	QImage prepare_map_image() const;
-	[[nodiscard]] static QImage finalize_map_image(QImage &&image);
-
-	void create_map_image();
-
-	const QPromise<QImage> *get_selected_map_image_promise() const
-	{
-		return this->selected_map_image_promise.get();
-	}
-
-	const QPromise<QImage> *get_interactive_map_image_promise() const
-	{
-		return this->interactive_map_image_promise.get();
-	}
-
-	const QPromise<QImage> *get_map_mode_image_promise(const province_map_mode mode) const;
-
-	void create_map_mode_image(const province_map_mode mode);
-
-	const QRect &get_map_image_rect() const
-	{
-		return this->map_image_rect;
-	}
 
 	const QRect &get_text_rect() const
 	{
@@ -672,6 +642,7 @@ signals:
 	void under_construction_pathway_changed();
 	void map_image_changed();
 	void map_mode_image_changed(QString map_mode_identifier);
+	void text_rect_changed();
 	void visible_sites_changed();
 	void dungeon_sites_changed();
 	void technologies_changed();
@@ -697,11 +668,6 @@ private:
 	const metternich::pathway *pathway = nullptr;
 	const metternich::pathway *under_construction_pathway = nullptr;
 	decimillesimal_int pathway_construction_progress;
-	std::shared_ptr<QPromise<QImage>> map_image_promise;
-	std::shared_ptr<QPromise<QImage>> selected_map_image_promise;
-	std::shared_ptr<QPromise<QImage>> interactive_map_image_promise;
-	std::map<province_map_mode, std::shared_ptr<QPromise<QImage>>> map_mode_image_promises;
-	QRect map_image_rect;
 	QRect text_rect;
 	int settlement_count = 0; //only includes built settlements
 	int total_holding_level = 0;
