@@ -1279,6 +1279,28 @@ const QColor &province_game_data::get_map_color() const
 	}
 }
 
+QColor province_game_data::get_technology_map_color() const
+{
+	if (this->province->is_water_zone()) {
+		return this->get_map_color();
+	}
+
+	const int province_technology_count = static_cast<int>(this->get_technologies().size());
+	const int total_technology_count = static_cast<int>(technology::get_all().size());
+	const QColor &min_technology_color = defines::get()->get_map_blank_color();
+	static const QColor max_technology_color(Qt::darkBlue);
+
+	assert_throw(min_technology_color.red() >= max_technology_color.red());
+	assert_throw(min_technology_color.green() >= max_technology_color.green());
+	assert_throw(min_technology_color.blue() >= max_technology_color.blue());
+
+	QColor province_color;
+	province_color.setRed(max_technology_color.red() + (min_technology_color.red() - max_technology_color.red()) * (total_technology_count - province_technology_count) / total_technology_count);
+	province_color.setGreen(max_technology_color.green() + (min_technology_color.green() - max_technology_color.green()) * (total_technology_count - province_technology_count) / total_technology_count);
+	province_color.setBlue(max_technology_color.blue() + (min_technology_color.blue() - max_technology_color.blue()) * (total_technology_count - province_technology_count) / total_technology_count);
+	return province_color;
+}
+
 QImage province_game_data::prepare_map_image() const
 {
 	assert_throw(this->province->get_map_data()->get_territory_rect().width() > 0);

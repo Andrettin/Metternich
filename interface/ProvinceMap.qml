@@ -39,17 +39,18 @@ Flickable {
 		Repeater {
 			model: metternich.map.provinces
 			
-			/*
 			Shape {
 				id: province_shape
 				visible: province_polygon_path !== null
 				
 				readonly property var province: model.modelData
 				readonly property var province_polygon_path: province.map_data.polygon_path.length > 0 ? province.map_data.polygon_path : null
+				readonly property var selected: selected_province === province && (selected_garrison === false || province_map.show_site_mode === ProvinceMap.SiteMode.ShowLocations)
+				readonly property var interactive: selected_civilian_unit !== null && !selected_civilian_unit.busy && selected_civilian_unit_interactive_provinces.includes(province)
 				
 				ShapePath {
 					strokeColor: fillColor
-					fillColor: selected_province === province ? metternich.defines.selected_country_color : province.game_data.map_color
+					fillColor: selected ? metternich.defines.selected_country_color : (interactive ? "darkGreen" : get_map_mode_color(province_map.mode, province))
 					startX: 0
 					startY: 0
 					
@@ -58,8 +59,8 @@ Flickable {
 					}
 				}
 			}
-			*/
 			
+			/*
 			Image {
 				id: province_image
 				x: province ? province.game_data.map_image_rect.x : 0
@@ -119,6 +120,7 @@ Flickable {
 					}
 				}
 			}
+			*/
 		}
 	}
 	
@@ -576,6 +578,43 @@ Flickable {
 		}
 		
 		return ""
+	}
+	
+	function get_map_mode_color(mode, province) {
+		switch (mode) {
+			case ProvinceMap.Mode.Political:
+				return province.game_data.map_color
+			case ProvinceMap.Mode.Terrain:
+				return province.map_data.terrain.color
+			case ProvinceMap.Mode.Cultural:
+				if (province.game_data.culture !== null) {
+					return province.game_data.culture.color
+				}
+				break
+			case ProvinceMap.Mode.Religious:
+				if (province.game_data.religion !== null) {
+					return province.game_data.religion.color
+				}
+				break
+			case ProvinceMap.Mode.Technology:
+				return province.game_data.technology_map_color
+			case ProvinceMap.Mode.TradeZone:
+				if (province.game_data.trade_zone_domain !== null) {
+					return province.game_data.trade_zone_domain.color
+				}
+				break
+			case ProvinceMap.Mode.Temple:
+				if (province.game_data.temple_domain !== null) {
+					return province.game_data.temple_domain.color
+				}
+				break
+		}
+		
+		if (province.water_zone) {
+			return metternich.defines.ocean_color
+		} else {
+			return metternich.defines.map_blank_color
+		}
 	}
 	
 	function update_civilian_unit_status_text(civilian_unit, show_text) {

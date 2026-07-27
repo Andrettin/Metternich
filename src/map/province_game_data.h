@@ -62,6 +62,7 @@ class province_game_data final : public QObject
 	Q_PROPERTY(int level READ get_level NOTIFY level_changed)
 	Q_PROPERTY(int max_level READ get_max_level NOTIFY max_level_changed)
 	Q_PROPERTY(QColor map_color READ get_map_color NOTIFY owner_changed)
+	Q_PROPERTY(QColor technology_map_color READ get_technology_map_color NOTIFY technologies_changed)
 	Q_PROPERTY(QRect map_image_rect READ get_map_image_rect NOTIFY map_image_changed)
 	Q_PROPERTY(QRect text_rect READ get_text_rect NOTIFY map_image_changed)
 	Q_PROPERTY(QString current_cultural_name READ get_current_cultural_name_qstring NOTIFY culture_changed)
@@ -211,6 +212,7 @@ public:
 	const std::vector<const site *> &get_settlement_sites() const;
 
 	const QColor &get_map_color() const;
+	QColor get_technology_map_color() const;
 
 	const QPromise<QImage> *get_map_image_promise() const
 	{
