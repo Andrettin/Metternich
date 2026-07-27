@@ -17,6 +17,7 @@ class province_map_data final : public QObject
 	Q_PROPERTY(bool coastal READ is_coastal CONSTANT)
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect NOTIFY territory_changed)
 	Q_PROPERTY(QVariantList sites READ get_sites_qvariant_list CONSTANT)
+	Q_PROPERTY(QString polygon_path READ get_polygon_path CONSTANT)
 	Q_PROPERTY(QVariantList polygon_paths READ get_polygon_paths_qvariant_list CONSTANT)
 	Q_PROPERTY(QVariantList polygon_rects READ get_polygon_rects_qvariant_list CONSTANT)
 
@@ -118,6 +119,7 @@ public:
 		return this->polygons;
 	}
 
+	QString get_polygon_path() const;
 	QVariantList get_polygon_paths_qvariant_list() const;
 	QVariantList get_polygon_rects_qvariant_list() const;
 

@@ -1082,6 +1082,8 @@ find_package(Qt6 6.8 COMPONENTS Quick REQUIRED) #licensed under the GPL 2.0, as 
 find_package(Qt6 6.8 COMPONENTS Charts REQUIRED) #licensed under the GPL 3.0
 find_package(Qt6 6.8 COMPONENTS ShaderTools REQUIRED)
 
+find_package(OpenCV REQUIRED)
+include_directories(${OpenCV_INCLUDE_DIRS})
 
 if(WITH_GEOJSON)
 	add_definitions(-DUSE_GEOJSON)
@@ -1142,7 +1144,7 @@ set_target_properties(metternich_test PROPERTIES
 )
 set_source_files_properties(${game_test_SRCS} PROPERTIES UNITY_GROUP "game_test")
 
-target_link_libraries(metternich PUBLIC archimedes)
+target_link_libraries(metternich PUBLIC archimedes ${OpenCV_LIBS})
 
 target_precompile_headers(metternich_main REUSE_FROM archimedes)
 target_precompile_headers(metternich_test REUSE_FROM archimedes)

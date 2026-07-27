@@ -10,6 +10,18 @@
     "boost-test",
     "magic-enum",
     {
+      "name": "opencv",
+      "default-features": false,
+      "features": [
+      ]
+    },
+    {
+      "name": "opencv4",
+      "default-features": false,
+      "features": [
+      ]
+    },
+    {
       "name": "qtbase",
       "default-features": false,
       "features": [

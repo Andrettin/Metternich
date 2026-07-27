@@ -20,6 +20,11 @@
 #include "util/rect_util.h"
 #include "util/vector_util.h"
 
+#include <opencv2/core/core.hpp>
+#include <opencv2/core/mat.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/imgproc/types_c.h>
+
 namespace metternich {
 
 province_map_data::province_map_data(const metternich::province *province) : province(province)
@@ -70,6 +75,37 @@ void province_map_data::on_map_created()
 		for (const std::unique_ptr<QGeoShape> &geoshape : this->province->get_geopolygons()) {
 			const QGeoPolygon *geopolygon = static_cast<const QGeoPolygon *>(geoshape.get());
 			QPolygon polygon = map_template->get_map_projection()->geopolygon_to_polygon(*geopolygon, map_template->get_georectangle(), map_size, geocoordinate_x_offset);
+			this->polygons.push_back(std::move(polygon));
+		}
+	} else {
+		const map *map = map::get();
+
+		cv::Mat image(this->get_territory_rect().height(), this->get_territory_rect().width(), CV_8UC1);
+
+		for (int x = 0; x < this->get_territory_rect().width(); ++x) {
+			for (int y = 0; y < this->get_territory_rect().height(); ++y) {
+				const QPoint relative_tile_pos = QPoint(x, y);
+				const tile *tile = map->get_tile(this->get_territory_rect().topLeft() + relative_tile_pos);
+
+				if (tile->get_province() != this->province) {
+					image.at<uchar>(y, x) = 0;
+					continue;
+				}
+
+				image.at<uchar>(y, x) = 1;
+			}
+		}
+
+		std::vector<std::vector<cv::Point>> contours;
+		cv::findContours(image, contours, CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE);
+
+		for (const std::vector<cv::Point> &contour : contours) {
+			QPolygon polygon;
+
+			for (const cv::Point &point : contour) {
+				polygon.append(QPoint(this->get_territory_rect().x() + point.x, this->get_territory_rect().y() + point.y));
+			}
+
 			this->polygons.push_back(std::move(polygon));
 		}
 	}
@@ -229,6 +265,28 @@ QVariantList province_map_data::get_sites_qvariant_list() const
 	return container::to_qvariant_list(this->get_sites());
 }
 
+QString province_map_data::get_polygon_path() const
+{
+	QString polygon_path;
+
+	for (const QPolygon &polygon : this->get_polygons()) {
+		bool first = true;
+
+		for (const QPoint &point : polygon) {
+			if (first) {
+				polygon_path += std::format("M {} {}", point.x() * defines::get()->get_province_map_tile_scale(), point.y() * defines::get()->get_province_map_tile_scale());
+				first = false;
+			} else {
+				polygon_path += std::format(" L {} {}", point.x() * defines::get()->get_province_map_tile_scale(), point.y() * defines::get()->get_province_map_tile_scale());
+			}
+		}
+
+		polygon_path += "z";
+	}
+
+	return polygon_path;
+}
+
 QVariantList province_map_data::get_polygon_paths_qvariant_list() const
 {
 	QVariantList polygon_paths;
@@ -240,10 +298,10 @@ QVariantList province_map_data::get_polygon_paths_qvariant_list() const
 
 		for (const QPoint &point : polygon) {
 			if (first) {
-				polygon_path += std::format("M {} {}", (point.x() * defines::get()->get_province_map_tile_scale() * preferences::get()->get_scale_factor()).to_int(), (point.y() * defines::get()->get_province_map_tile_scale() * preferences::get()->get_scale_factor()).to_int());
+				polygon_path += std::format("M {} {}", point.x() * defines::get()->get_province_map_tile_scale(), point.y() * defines::get()->get_province_map_tile_scale());
 				first = false;
 			} else {
-				polygon_path += std::format(" L {} {}", (point.x() * defines::get()->get_province_map_tile_scale() * preferences::get()->get_scale_factor()).to_int(), (point.y() * defines::get()->get_province_map_tile_scale() * preferences::get()->get_scale_factor()).to_int());
+				polygon_path += std::format(" L {} {}", point.x() * defines::get()->get_province_map_tile_scale(), point.y() * defines::get()->get_province_map_tile_scale());
 			}
 		}
 
