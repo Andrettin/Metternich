@@ -1,36 +1,64 @@
 cautious = {
-	name = "Cautious" #opposite: Rash
+	name = "Cautious"
 	type = personality
+	rating_ranges = {
+		rash = 1-5
+		cautious = 15-20
+	}
 }
 
 courageous = {
-	name = "Courageous" #opposite: Fearful
+	name = "Courageous"
 	type = personality
+	rating_ranges = {
+		fearful = 1-5
+		courageous = 15-20
+	}
 }
 
 dogmatic = {
-	name = "Dogmatic" #opposite: Open-Minded
+	name = "Dogmatic"
 	type = personality
+	rating_ranges = {
+		open_minded = 1-5
+		dogmatic = 15-20
+	}
 }
 
 energetic = {
-	name = "Energetic" #opposite: Lazy
+	name = "Energetic"
 	type = personality
+	rating_ranges = {
+		lazy = 1-5
+		energetic = 15-20
+	}
 }
 
 forgiving = {
-	name = "Forgiving" #opposite: Vengeful
+	name = "Forgiving"
 	type = personality
+	rating_ranges = {
+		vengeful = 1-5
+		forgiving = 15-20
+	}
 }
 
 generous = {
-	name = "Generous" #opposite: Greedy
+	name = "Generous"
 	type = personality
+	rating_ranges = {
+		greedy = 1-5
+		generous = 15-20
+	}
 }
 
 honest = {
-	name = "Honest" #opposite: Deceitful
+	name = "Honest"
 	type = personality
+	rating_ranges = {
+		deceitful = 1-5
+		honest = 15-20
+	}
 	value_modifiers = {
 		1 = {
 			trait = deceitful
@@ -45,26 +73,46 @@ honest = {
 }
 
 loyal = {
-	name = "Loyal" #opposite: Unreliable
+	name = "Loyal"
 	type = personality
+	rating_ranges = {
+		unreliable = 1-5
+		loyal = 15-20
+	}
 }
 
 modest = {
-	name = "Modest" #opposite: Proud
+	name = "Modest"
 	type = personality
+	rating_ranges = {
+		proud = 1-5
+		modest = 15-20
+	}
 }
 
 peaceful = {
-	name = "Peaceful" #opposite: Violent
+	name = "Peaceful"
 	type = personality
+	rating_ranges = {
+		violent = 1-5
+		peaceful = 15-20
+	}
 }
 
 reverent = {
-	name = "Reverent" #opposite: Godless
+	name = "Reverent"
 	type = personality
+	rating_ranges = {
+		godless = 1-5
+		reverent = 15-20
+	}
 }
 
 trusting = {
-	name = "Trusting" #opposite: Suspicious
+	name = "Trusting"
 	type = personality
+	rating_ranges = {
+		suspicious = 1-5
+		trusting = 15-20
+	}
 }
