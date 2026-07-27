@@ -81,6 +81,24 @@ coast_of_lebanon = {
 	}
 }
 
+coast_of_libya = {
+	name = "Coast of Libya"
+	color = { 217 25 24 }
+	sea = true
+	regions = {
+		mediterranean_sea
+	}
+}
+
+coast_of_malta = {
+	name = "Coast of Malta"
+	color = { 219 249 48 }
+	sea = true
+	regions = {
+		mediterranean_sea
+	}
+}
+
 coast_of_palestine = {
 	name = "Coast of Palestine"
 	color = { 67 220 250 }
@@ -90,9 +108,27 @@ coast_of_palestine = {
 	}
 }
 
+coast_of_sicily = {
+	name = "Coast of Sicily"
+	color = { 61 77 158 }
+	sea = true
+	regions = {
+		mediterranean_sea
+	}
+}
+
 coast_of_syria = {
 	name = "Coast of Syria"
 	color = { 37 127 158 }
+	sea = true
+	regions = {
+		mediterranean_sea
+	}
+}
+
+coast_of_tunisia = {
+	name = "Coast of Tunisia"
+	color = { 198 46 97 }
 	sea = true
 	regions = {
 		mediterranean_sea
