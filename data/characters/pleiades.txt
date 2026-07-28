@@ -18,3 +18,13 @@ maia = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 297
 	father = atlas
 	mother = pleione
 }
+
+sterope = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 449.
+	name = "Sterope" #also known as Asterope
+	monster_type = nymph
+	culture = fey
+	religion = hellenic
+	gender = female
+	father = atlas
+	mother = pleione
+}
