@@ -660,10 +660,6 @@ QCoro::Task<void> game::apply_history(const QDate &start_date)
 					}
 				}
 				co_await province_game_data->set_owner(owner);
-
-				if (owner == nullptr) {
-					log::log_error(std::format("Province \"{}\" has no owner for scenario \"{}\".", province->get_identifier(), this->scenario->get_identifier()));
-				}
 			} catch (...) {
 				std::throw_with_nested(std::runtime_error(std::format("Failed to apply history for province \"{}\".", province->get_identifier())));
 			}
