@@ -735,6 +735,10 @@ void province_game_data::set_temple_domain(const metternich::domain *temple_doma
 
 void province_game_data::check_temple_domain()
 {
+	if (this->province->is_water_zone()) {
+		return;
+	}
+
 	domain_map<int> domain_religious_holding_levels;
 	for (const site *holding_site : this->get_settlement_sites()) {
 		const domain *holding_site_owner = holding_site->get_game_data()->get_owner();
