@@ -4,10 +4,10 @@ bronze_age = {
 	map_template = eastern_mediterranean
 	hidden = true
 	default_domains = {
+		argos #Mycenae
 		assyria
 		babylonia
 		egypt
-		mycenae
 		phoenicia
 	}
 }
@@ -19,10 +19,10 @@ mycenaean_greece_and_the_orient = {
 	map_template = eastern_mediterranean
 	hidden = true
 	default_domains = {
+		argos #Mycenae
 		assyria
 		babylonia
 		egypt
-		mycenae
 		phoenicia
 	}
 }
