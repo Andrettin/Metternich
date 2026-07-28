@@ -126,8 +126,21 @@ public:
 		return this->ocean_diplomatic_map_image;
 	}
 
-	[[nodiscard]]
-	QCoro::Task<void> create_ocean_diplomatic_map_image();
+	[[nodiscard]] QCoro::Task<void> create_ocean_diplomatic_map_image();
+
+	const QImage &get_empty_diplomatic_map_image() const
+	{
+		return this->empty_diplomatic_map_image;
+	}
+
+	[[nodiscard]] QCoro::Task<void> create_empty_diplomatic_map_image();
+
+	const QImage &get_empty_terrain_diplomatic_map_image() const
+	{
+		return this->empty_terrain_diplomatic_map_image;
+	}
+
+	[[nodiscard]] QCoro::Task<void> create_empty_terrain_diplomatic_map_image();
 
 	const QSize &get_diplomatic_map_image_size() const
 	{
@@ -199,6 +212,8 @@ private:
 	std::vector<province *> provinces; //the provinces which are on the map
 	std::vector<const site *> sites; //the sites which are on the map
 	QImage ocean_diplomatic_map_image;
+	QImage empty_diplomatic_map_image; //diplomatic map image for ownerless land provinces
+	QImage empty_terrain_diplomatic_map_image; //terrain diplomatic map image for ownerless land provinces
 	QSize diplomatic_map_image_size;
 	decimillesimal_int diplomatic_map_tile_scale = decimillesimal_int(1);
 	QSize province_map_image_size;

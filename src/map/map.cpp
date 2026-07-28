@@ -312,6 +312,8 @@ void map::clear()
 	this->sites.clear();
 	this->tiles.reset();
 	this->ocean_diplomatic_map_image = QImage();
+	this->empty_diplomatic_map_image = QImage();
+	this->empty_terrain_diplomatic_map_image = QImage();
 }
 
 int map::get_pos_index(const QPoint &pos) const
@@ -609,6 +611,175 @@ QCoro::Task<void> map::create_ocean_diplomatic_map_image()
 
 	for (const QPoint &border_pixel_pos : border_pixels) {
 		this->ocean_diplomatic_map_image.setPixelColor(border_pixel_pos, border_pixel_color);
+	}
+}
+
+QCoro::Task<void> map::create_empty_diplomatic_map_image()
+{
+	const decimillesimal_int &tile_scale = this->get_diplomatic_map_tile_scale();
+	QSize image_size;
+	if (tile_scale < 1) {
+		image_size = this->get_size() * tile_scale;
+	} else {
+		image_size = this->get_size();
+	}
+
+	this->empty_diplomatic_map_image = QImage(image_size, QImage::Format_RGBA8888);
+	this->empty_diplomatic_map_image.fill(Qt::transparent);
+
+	const QColor &color = defines::get()->get_map_blank_color();
+
+	for (int x = 0; x < image_size.width(); ++x) {
+		for (int y = 0; y < image_size.height(); ++y) {
+			const QPoint pixel_pos = QPoint(x, y);
+			const QPoint tile_pos = tile_scale < 1 ? pixel_pos / tile_scale : pixel_pos;
+			const tile *tile = this->get_tile(tile_pos);
+
+			if (tile->get_province() == nullptr) {
+				continue;
+			}
+
+			if (tile->get_province()->is_water_zone() || tile->get_owner() != nullptr) {
+				continue;
+			}
+
+			this->empty_diplomatic_map_image.setPixelColor(pixel_pos, color);
+		}
+	}
+
+	if (tile_scale > 1) {
+		QImage scaled_empty_diplomatic_map_image;
+
+		co_await QtConcurrent::run([this, tile_scale, &scaled_empty_diplomatic_map_image]() {
+			scaled_empty_diplomatic_map_image = image::scale<QImage::Format_ARGB32>(this->empty_diplomatic_map_image, centesimal_int(tile_scale), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+				xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+			});
+		});
+
+		this->empty_diplomatic_map_image = std::move(scaled_empty_diplomatic_map_image);
+	}
+
+	std::vector<QPoint> border_pixels;
+
+	const QRect image_rect = this->empty_diplomatic_map_image.rect();
+
+	for (int x = 0; x < this->empty_diplomatic_map_image.width(); ++x) {
+		for (int y = 0; y < this->empty_diplomatic_map_image.height(); ++y) {
+			const QPoint pixel_pos(x, y);
+			const QColor pixel_color = this->empty_diplomatic_map_image.pixelColor(pixel_pos);
+
+			if (pixel_color.alpha() == 0) {
+				continue;
+			}
+
+			if (pixel_pos.x() == 0 || pixel_pos.y() == 0 || pixel_pos.x() == (this->empty_diplomatic_map_image.width() - 1) || pixel_pos.y() == (this->empty_diplomatic_map_image.height() - 1)) {
+				continue;
+			}
+
+			if (pixel_color != color) {
+				//blended color
+				border_pixels.push_back(pixel_pos);
+				continue;
+			}
+
+			const QPoint north_pos = pixel_pos + QPoint(0, -1);
+			const QPoint east_pos = pixel_pos + QPoint(1, 0);
+			const bool is_border_pixel = this->empty_diplomatic_map_image.pixelColor(north_pos).alpha() == 0 || this->empty_diplomatic_map_image.pixelColor(east_pos).alpha() == 0;
+
+			if (is_border_pixel) {
+				border_pixels.push_back(pixel_pos);
+			}
+		}
+	}
+
+	const QColor &border_pixel_color = defines::get()->get_country_border_color();
+
+	for (const QPoint &border_pixel_pos : border_pixels) {
+		this->empty_diplomatic_map_image.setPixelColor(border_pixel_pos, border_pixel_color);
+	}
+}
+
+QCoro::Task<void> map::create_empty_terrain_diplomatic_map_image()
+{
+	const decimillesimal_int &tile_scale = this->get_diplomatic_map_tile_scale();
+	QSize image_size;
+	if (tile_scale < 1) {
+		image_size = this->get_size() * tile_scale;
+	} else {
+		image_size = this->get_size();
+	}
+
+	this->empty_terrain_diplomatic_map_image = QImage(image_size, QImage::Format_RGBA8888);
+	this->empty_terrain_diplomatic_map_image.fill(Qt::transparent);
+
+	for (int x = 0; x < image_size.width(); ++x) {
+		for (int y = 0; y < image_size.height(); ++y) {
+			const QPoint pixel_pos = QPoint(x, y);
+			const QPoint tile_pos = tile_scale < 1 ? pixel_pos / tile_scale : pixel_pos;
+			const tile *tile = this->get_tile(tile_pos);
+
+			if (tile->get_province() == nullptr) {
+				continue;
+			}
+
+			if (tile->get_province()->is_water_zone() || tile->get_owner() != nullptr) {
+				continue;
+			}
+
+			const QColor &color = tile->get_province()->get_map_data()->get_terrain()->get_color();
+			this->empty_terrain_diplomatic_map_image.setPixelColor(pixel_pos, color);
+		}
+	}
+
+	if (tile_scale > 1) {
+		QImage scaled_empty_terrain_diplomatic_map_image;
+
+		co_await QtConcurrent::run([this, tile_scale, &scaled_empty_terrain_diplomatic_map_image]() {
+			scaled_empty_terrain_diplomatic_map_image = image::scale<QImage::Format_ARGB32>(this->empty_terrain_diplomatic_map_image, centesimal_int(tile_scale), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+				xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+			});
+		});
+
+		this->empty_terrain_diplomatic_map_image = std::move(scaled_empty_terrain_diplomatic_map_image);
+	}
+
+	std::vector<QPoint> border_pixels;
+
+	const QRect image_rect = this->empty_terrain_diplomatic_map_image.rect();
+
+	for (int x = 0; x < this->empty_terrain_diplomatic_map_image.width(); ++x) {
+		for (int y = 0; y < this->empty_terrain_diplomatic_map_image.height(); ++y) {
+			const QPoint pixel_pos(x, y);
+			const QColor pixel_color = this->empty_terrain_diplomatic_map_image.pixelColor(pixel_pos);
+
+			if (pixel_color.alpha() == 0) {
+				continue;
+			}
+
+			if (pixel_pos.x() == 0 || pixel_pos.y() == 0 || pixel_pos.x() == (this->empty_terrain_diplomatic_map_image.width() - 1) || pixel_pos.y() == (this->empty_terrain_diplomatic_map_image.height() - 1)) {
+				continue;
+			}
+
+			if (pixel_color.alpha() != 255) {
+				//blended color
+				border_pixels.push_back(pixel_pos);
+				continue;
+			}
+
+			const QPoint north_pos = pixel_pos + QPoint(0, -1);
+			const QPoint east_pos = pixel_pos + QPoint(1, 0);
+			const bool is_border_pixel = this->empty_terrain_diplomatic_map_image.pixelColor(north_pos).alpha() == 0 || this->empty_terrain_diplomatic_map_image.pixelColor(east_pos).alpha() == 0;
+
+			if (is_border_pixel) {
+				border_pixels.push_back(pixel_pos);
+			}
+		}
+	}
+
+	const QColor &border_pixel_color = defines::get()->get_country_border_color();
+
+	for (const QPoint &border_pixel_pos : border_pixels) {
+		this->empty_terrain_diplomatic_map_image.setPixelColor(border_pixel_pos, border_pixel_color);
 	}
 }
 

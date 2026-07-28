@@ -2219,10 +2219,14 @@ QCoro::Task<void> game::create_map_images()
 QCoro::Task<void> game::create_diplomatic_map_image()
 {
 	std::vector<QCoro::Task<void>> tasks;
+
 	if (map::get()->get_ocean_diplomatic_map_image().isNull()) {
 		QCoro::Task<void> task = map::get()->create_ocean_diplomatic_map_image();
 		tasks.push_back(std::move(task));
 	}
+
+	tasks.push_back(map::get()->create_empty_diplomatic_map_image());
+	tasks.push_back(map::get()->create_empty_terrain_diplomatic_map_image());
 
 	std::vector<QFuture<void>> futures;
 	for (const domain *domain : this->get_domains()) {

@@ -38,6 +38,12 @@ Flickable {
 			cache: false
 		}
 		
+		Image {
+			id: empty_image //ownerless land
+			source: ocean_suffix.length > 0 ? ("image://diplomatic_map/" + (diplomatic_map.mode === DiplomaticMap.Mode.Terrain ? "empty_terrain" : "empty") + "/" + country_suffix) : "image://empty/"
+			cache: false
+		}
+		
 		Repeater {
 			model: metternich.game.countries
 			

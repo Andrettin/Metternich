@@ -28,6 +28,10 @@ QImage diplomatic_map_image_provider::requestImage(const QString &id, QSize *siz
 
 	if (identifier == "ocean") {
 		image = map::get()->get_ocean_diplomatic_map_image();
+	} else if (identifier == "empty") {
+		image = map::get()->get_empty_diplomatic_map_image();
+	} else if (identifier == "empty_terrain") {
+		image = map::get()->get_empty_terrain_diplomatic_map_image();
 	} else if (identifier == "minimap") {
 		image = map::get()->get_minimap_image();
 	} else if (identifier == "exploration") {

@@ -515,6 +515,11 @@ QCoro::Task<void> province_game_data::set_owner(const domain *domain)
 	if (game::get()->is_running()) {
 		map::get()->update_minimap_rect(this->get_territory_rect());
 
+		if (old_owner == nullptr) {
+			co_await map::get()->create_empty_diplomatic_map_image();
+			co_await map::get()->create_empty_terrain_diplomatic_map_image();
+		}
+
 		emit owner_changed();
 		emit map_image_changed();
 	}
