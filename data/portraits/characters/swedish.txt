@@ -5,10 +5,12 @@ gustav_adolf_of_sweden = {
 		or = {
 			culture = swedish
 			culture = russian
+			species = frost_giant
 		}
 		or = {
 			character_class = aristocrat
 			character_class = warrior
+			species = frost_giant
 		}
 	}
 }

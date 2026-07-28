@@ -8,6 +8,10 @@ philip_ii_of_spain = {
 			species = half_elf
 			species = halfling
 			taxon = archon
+			species = air_elemental
+			species = titan
+			species = triton
+			species = water_elemental
 		}
 		not = {
 			cultural_group = african
@@ -17,7 +21,15 @@ philip_ii_of_spain = {
 			character_class = aristocrat
 			character_class = warrior
 			character_class = paladin
+			taxon = archon
+			species = air_elemental
+			species = titan
+			species = triton
+			species = water_elemental
 		}
-		age_category < old
+		or = {
+			age_category < old
+			immortal = true
+		}
 	}
 }

@@ -6,7 +6,19 @@ henry_the_navigator = {
 			culture = portuguese
 			culture = brazilian
 			cultural_group = middle_eastern
+			taxon = archon
+			species = air_elemental
+			species = titan
+			species = triton
+			species = water_elemental
 		}
-		character_class = rogue #navigator
+		or = {
+			character_class = rogue #navigator
+			taxon = archon
+			species = air_elemental
+			species = titan
+			species = triton
+			species = water_elemental
+		}
 	}
 }
