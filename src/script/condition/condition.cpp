@@ -71,6 +71,7 @@
 #include "script/condition/has_terrain_condition.h"
 #include "script/condition/holding_level_condition.h"
 #include "script/condition/holding_type_condition.h"
+#include "script/condition/immortal_condition.h"
 #include "script/condition/independent_condition.h"
 #include "script/condition/infantry_condition.h"
 #include "script/condition/is_military_unit_category_available_condition.h"
@@ -164,6 +165,8 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			return std::make_unique<class_skill_condition>(value, condition_operator);
 		} else if (key == "divine_rank") {
 			return std::make_unique<divine_rank_condition>(value, condition_operator);
+		} else if (key == "immortal") {
+			return std::make_unique<immortal_condition>(value, condition_operator);
 		} else if (key == "level") {
 			return std::make_unique<level_condition>(value, condition_operator);
 		} else if (key == "mythic_path") {

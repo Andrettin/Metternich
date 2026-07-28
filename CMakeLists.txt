@@ -720,6 +720,7 @@ set(script_condition_HDRS
 	src/script/condition/has_terrain_condition.h
 	src/script/condition/holding_level_condition.h
 	src/script/condition/holding_type_condition.h
+	src/script/condition/immortal_condition.h
 	src/script/condition/independent_condition.h
 	src/script/condition/infantry_condition.h
 	src/script/condition/is_military_unit_category_available_condition.h
