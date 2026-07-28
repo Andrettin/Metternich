@@ -7,7 +7,6 @@ kordofan = {
 	}
 	
 	history = {
-		owner = egypt
 		culture = nuba
 		religion = pagan
 	}

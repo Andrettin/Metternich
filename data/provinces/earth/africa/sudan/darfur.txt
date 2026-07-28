@@ -7,7 +7,6 @@ darfur = {
 	}
 	
 	history = {
-		owner = egypt
 		culture = fur
 		religion = pagan
 	}

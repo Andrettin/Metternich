@@ -7,7 +7,6 @@ bahr_el_ghazal = {
 	}
 	
 	history = {
-		owner = egypt
 		culture = dinka
 		religion = pagan
 	}

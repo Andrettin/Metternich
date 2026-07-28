@@ -5,10 +5,4 @@ karakalpakstan = {
 	regions = {
 		uzbekistan
 	}
-	
-	history = {
-		owner = mongolia
-		culture = mongol
-		religion = pagan
-	}
 }

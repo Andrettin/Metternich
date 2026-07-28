@@ -5,10 +5,4 @@ chuy = {
 	regions = {
 		kyrgyzstan
 	}
-	
-	history = {
-		owner = mongolia
-		culture = mongol
-		religion = pagan
-	}
 }

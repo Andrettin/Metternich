@@ -5,10 +5,4 @@ gorno_badakhshan = {
 	regions = {
 		tajikistan
 	}
-	
-	history = {
-		owner = mongolia
-		culture = mongol
-		religion = pagan
-	}
 }

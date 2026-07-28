@@ -7,7 +7,6 @@ inner_mongolia = {
 	}
 	
 	history = {
-		owner = mongolia
 		culture = mongol
 		religion = pagan
 	}

@@ -5,10 +5,4 @@ merv = {
 	regions = {
 		turkmenistan
 	}
-	
-	history = {
-		owner = mongolia
-		culture = mongol
-		religion = pagan
-	}
 }

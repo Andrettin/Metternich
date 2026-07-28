@@ -7,16 +7,10 @@ kabardino_balkaria = {
 	}
 	
 	history = {
-		religion = pagan
-		
-		-4000 = {
-			owner = mongolia
-			culture = mongol
-		}
-		
 		1360 = {
 			owner = golden_horde #part of the Khanate of the Golden Horde in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 			culture = mongol
+			religion = pagan
 		}
 		
 		germanys_future = {

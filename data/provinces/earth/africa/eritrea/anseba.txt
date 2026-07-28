@@ -7,7 +7,6 @@ anseba = {
 	}
 	
 	history = {
-		owner = egypt
 		culture = tigray
 		religion = pagan
 	}

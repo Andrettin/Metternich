@@ -5,10 +5,4 @@ kufra = {
 	regions = {
 		libya
 	}
-	
-	history = {
-		owner = egypt
-		culture = egyptian
-		religion = pagan
-	}
 }

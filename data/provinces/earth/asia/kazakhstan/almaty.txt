@@ -5,10 +5,4 @@ almaty = {
 	regions = {
 		kazakhstan
 	}
-	
-	history = {
-		owner = mongolia
-		culture = mongol
-		religion = pagan
-	}
 }

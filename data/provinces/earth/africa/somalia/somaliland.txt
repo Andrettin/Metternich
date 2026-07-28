@@ -7,7 +7,6 @@ somaliland = {
 	}
 	
 	history = {
-		owner = egypt
 		culture = somali
 		religion = pagan
 	}

@@ -7,16 +7,10 @@ saratov = {
 	}
 	
 	history = {
-		religion = pagan
-		
-		-4000 = {
-			owner = mongolia
-			culture = bolghar
-		}
-		
 		1360 = {
 			owner = great_bulgaria #part of Great Bulgaria in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 			culture = bolghar
+			religion = pagan
 		}
 	}
 }
