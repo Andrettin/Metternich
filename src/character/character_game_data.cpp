@@ -638,9 +638,6 @@ QCoro::Task<void> character_game_data::apply_species_and_class(const int level, 
 
 	co_await this->generate_attributes();
 	this->apply_bloodline(apply_history);
-	if (this->get_reputation() < character::base_reputation) {
-		this->set_reputation(character::base_reputation);
-	}
 
 	const metternich::character_class *character_class = this->get_character_class();
 	if (character_class != nullptr) {
@@ -686,6 +683,10 @@ QCoro::Task<void> character_game_data::apply_species_and_class(const int level, 
 
 	if (!this->target_traits.empty()) {
 		throw std::runtime_error(std::format("Could not acquire all target traits for character \"{}\".", this->character->get_identifier()));
+	}
+
+	if (this->get_reputation() < character::min_reputation) {
+		this->set_reputation(character::min_reputation);
 	}
 
 	co_await this->add_starting_items();
@@ -1547,6 +1548,10 @@ QCoro::Task<void> character_game_data::on_level_gained(const int affected_level,
 
 	if (character_class->get_craft_bonus_table() != nullptr) {
 		this->change_max_craft(character_class->get_craft_bonus_table()->get_bonus_per_level(affected_level) * multiplier, true);
+	}
+
+	if (character_class->get_reputation_bonus_table() != nullptr) {
+		this->change_reputation(character_class->get_reputation_bonus_table()->get_bonus_per_level(affected_level) * multiplier);
 	}
 
 	if (character_class->get_to_hit_bonus_table() != nullptr) {

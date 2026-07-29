@@ -3,6 +3,7 @@ aristocrat = {
 	base_class = warrior
 	military_unit_category = general
 	max_level = 20
+	reputation_bonus_table = early_reputation_bonus
 	domain_skill_bonus_tables = {
 		culture = high_domain_skill_bonus
 	}

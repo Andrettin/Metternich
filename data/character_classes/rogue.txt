@@ -5,6 +5,7 @@ rogue = {
 	max_level = 20
 	starting_age_category = intuitive
 	craft_bonus_table = craft_bonus
+	reputation_bonus_table = late_reputation_bonus
 	to_hit_bonus_table = rogue_to_hit_bonus
 	saving_throw_bonus_tables = {
 		fortitude = low_saving_throw_bonus

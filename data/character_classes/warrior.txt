@@ -5,6 +5,7 @@ warrior = {
 	max_level = 20
 	starting_age_category = self_taught
 	craft_bonus_table = craft_bonus
+	reputation_bonus_table = medium_reputation_bonus
 	to_hit_bonus_table = warrior_to_hit_bonus
 	saving_throw_bonus_tables = {
 		fortitude = high_saving_throw_bonus

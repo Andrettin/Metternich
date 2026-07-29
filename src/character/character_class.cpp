@@ -163,6 +163,10 @@ void character_class::check() const
 		throw std::runtime_error(std::format("Character class \"{}\" has no starting age category.", this->get_identifier()));
 	}
 
+	if (this->get_reputation_bonus_table() == nullptr) {
+		throw std::runtime_error(std::format("Character class \"{}\" has no reputation bonus table.", this->get_identifier()));
+	}
+
 	if (this->get_to_hit_bonus_table() == nullptr) {
 		throw std::runtime_error(std::format("Character class \"{}\" has no to hit bonus table.", this->get_identifier()));
 	}

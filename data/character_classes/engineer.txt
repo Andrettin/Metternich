@@ -5,6 +5,7 @@ engineer = {
 	civilian_unit_class = engineer
 	max_level = 20
 	starting_age_category = trained
+	reputation_bonus_table = medium_reputation_bonus
 	to_hit_bonus_table = cleric_to_hit_bonus
 	saving_throw_bonus_tables = {
 		fortitude = high_saving_throw_bonus

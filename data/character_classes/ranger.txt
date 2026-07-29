@@ -6,6 +6,7 @@ ranger = {
 	starting_age_category = self_taught
 	mana_bonus_table = ranger_mana_bonus
 	craft_bonus_table = craft_bonus
+	reputation_bonus_table = late_reputation_bonus
 	to_hit_bonus_table = cleric_to_hit_bonus
 	saving_throw_bonus_tables = {
 		fortitude = high_saving_throw_bonus
