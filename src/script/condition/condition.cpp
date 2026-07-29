@@ -107,6 +107,7 @@
 #include "script/condition/region_condition.h"
 #include "script/condition/religion_condition.h"
 #include "script/condition/religious_group_condition.h"
+#include "script/condition/reputation_condition.h"
 #include "script/condition/resource_condition.h"
 #include "script/condition/river_condition.h"
 #include "script/condition/root_character_condition.h"
@@ -175,6 +176,8 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			return std::make_unique<office_condition>(value, condition_operator);
 		} else if (key == "primary_attribute") {
 			return std::make_unique<primary_attribute_condition>(value, condition_operator);
+		} else if (key == "reputation") {
+			return std::make_unique<reputation_condition>(value, condition_operator);
 		} else if (key == "skill_training") {
 			return std::make_unique<skill_training_condition>(value, condition_operator);
 		} else if (key == "spell") {
