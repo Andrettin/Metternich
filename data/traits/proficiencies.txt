@@ -42,6 +42,20 @@ lightning_reflexes = {
 	}
 }
 
+low_profile = {
+	name = "Low Profile"
+	icon = skull
+	types = {
+		proficiency
+	}
+	gain_conditions = {
+		reputation > 3
+	}
+	modifier = {
+		reputation = -3
+	}
+}
+
 negotiator = {
 	name = "Negotiator"
 	icon = treaty
