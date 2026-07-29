@@ -74,6 +74,17 @@ nimble_fingers = {
 	}
 }
 
+renown = {
+	name = "Renown"
+	icon = heater_shield
+	types = {
+		proficiency
+	}
+	modifier = {
+		reputation = 3
+	}
+}
+
 skill_focus_agriculture = {
 	name = "Skill Focus: Agriculture"
 	icon = grain
