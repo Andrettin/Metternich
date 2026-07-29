@@ -103,8 +103,6 @@ public:
 
 	static const std::set<std::string> database_dependencies;
 
-	static constexpr int min_reputation = 1;
-
 	static void initialize_all();
 	static void initialize_all_vital_dates();
 	static void initialize_all_home_sites();

@@ -94,6 +94,7 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(const metternich::icon* treasure_fleet_icon MEMBER treasure_fleet_icon NOTIFY changed)
 	Q_PROPERTY(int max_character_normal_level MEMBER max_character_normal_level READ get_max_character_normal_level NOTIFY changed)
 	Q_PROPERTY(int craft_recovery_per_day MEMBER craft_recovery_per_day READ get_craft_recovery_per_day NOTIFY changed)
+	Q_PROPERTY(archimedes::dice ruler_reputation_dice MEMBER ruler_reputation_dice READ get_ruler_reputation_dice NOTIFY changed)
 	Q_PROPERTY(const metternich::office* ruler_office MEMBER ruler_office READ get_ruler_office NOTIFY changed)
 	Q_PROPERTY(const metternich::office* heir_office MEMBER heir_office READ get_heir_office NOTIFY changed)
 	Q_PROPERTY(const metternich::office* foreign_minister_office MEMBER foreign_minister_office READ get_foreign_minister_office NOTIFY changed)
@@ -387,6 +388,11 @@ public:
 		return this->craft_recovery_per_day;
 	}
 	
+	const dice &get_ruler_reputation_dice() const
+	{
+		return this->ruler_reputation_dice;
+	}
+	
 	const office *get_ruler_office() const
 	{
 		return this->ruler_office;
@@ -643,6 +649,7 @@ private:
 	const icon *treasure_fleet_icon = nullptr;
 	int max_character_normal_level = 0;
 	int craft_recovery_per_day = 0;
+	dice ruler_reputation_dice;
 	const office *ruler_office = nullptr;
 	const office *heir_office = nullptr;
 	const office *foreign_minister_office = nullptr;

@@ -685,10 +685,6 @@ QCoro::Task<void> character_game_data::apply_species_and_class(const int level, 
 		throw std::runtime_error(std::format("Could not acquire all target traits for character \"{}\".", this->character->get_identifier()));
 	}
 
-	if (this->get_reputation() < character::min_reputation) {
-		this->set_reputation(character::min_reputation);
-	}
-
 	co_await this->add_starting_items();
 	this->add_starting_spells();
 
@@ -3976,6 +3972,19 @@ QCoro::Task<void> character_game_data::decrement_status_effect_durations(const s
 			}
 		}
 	}
+}
+
+void character_game_data::add_ruled_domain(const metternich::domain *domain)
+{
+	if (this->get_ruled_domains().empty()) {
+		//if this is the first time that the character has become a ruler, add generated ruler reputation for the character
+		const int result = random::get()->roll_dice(defines::get()->get_ruler_reputation_dice());
+		this->change_reputation(result);
+	}
+
+	assert_throw(this->get_reputation() >= 1);
+
+	this->ruled_domains.insert(domain);
 }
 
 const site *character_game_data::get_location() const

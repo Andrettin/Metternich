@@ -970,10 +970,7 @@ public:
 		return this->ruled_domains;
 	}
 
-	void add_ruled_domain(const metternich::domain *domain)
-	{
-		this->ruled_domains.insert(domain);
-	}
+	void add_ruled_domain(const metternich::domain *domain);
 	
 	const domain_set &get_reigned_domains() const
 	{
