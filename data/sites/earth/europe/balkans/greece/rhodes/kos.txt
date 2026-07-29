@@ -1,0 +1,8 @@
+kos = {
+	name = "Kos"
+	world = earth
+	geocoordinate = { 27.288815 36.893729 } #from Natural Earth
+	type = holding
+	holding_type = guild
+	province = rhodes
+}

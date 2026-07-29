@@ -1,0 +1,8 @@
+haraki = {
+	name = "Haraki"
+	world = earth
+	geocoordinate = { 28.09 36.17 } #Charaki
+	type = holding
+	holding_type = castle
+	province = rhodes
+}

@@ -1,0 +1,8 @@
+karpathos = {
+	name = "Karpathos"
+	world = earth
+	geocoordinate = { 27.21361 35.5075 } #Karpathos (town)
+	type = holding
+	holding_type = castle
+	province = rhodes
+}

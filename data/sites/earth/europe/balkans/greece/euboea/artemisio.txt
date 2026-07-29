@@ -1,0 +1,8 @@
+artemisio = {
+	name = "Artemisio"
+	world = earth
+	geocoordinate = { 23.226944444444 39.0125 }
+	type = holding
+	holding_type = castle
+	province = euboea
+}

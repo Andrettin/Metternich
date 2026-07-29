@@ -29,8 +29,11 @@ byzantium = {
 		east_macedonia
 		eastern_rumelia
 		epirus
+		euboea
 		methone
 		monemvasia
+		naxos
+		rhodes
 		thessaly
 		west_macedonia
 		zakynthos

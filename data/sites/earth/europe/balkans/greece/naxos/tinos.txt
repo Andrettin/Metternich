@@ -1,0 +1,8 @@
+tinos = {
+	name = "Tinos"
+	world = earth
+	geocoordinate = { 25.16106 37.537743 } #Tinos (town)
+	type = holding
+	holding_type = castle
+	province = naxos
+}

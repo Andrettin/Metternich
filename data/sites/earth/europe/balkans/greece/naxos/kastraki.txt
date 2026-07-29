@@ -1,0 +1,8 @@
+kastraki = {
+	name = "Kastraki"
+	world = earth
+	geocoordinate = { 25.38872 37.00598 } #Kastraki, Naxos
+	type = holding
+	holding_type = castle
+	province = naxos
+}

@@ -1,0 +1,8 @@
+pefkos = {
+	name = "Pefkos"
+	world = earth
+	geocoordinate = { 28.05153 36.07574 }
+	type = holding
+	holding_type = castle
+	province = rhodes
+}

@@ -1,0 +1,8 @@
+koskinou = {
+	name = "Koskinou"
+	world = earth
+	geocoordinate = { 28.21666667 36.38333333 }
+	type = holding
+	holding_type = castle
+	province = rhodes
+}

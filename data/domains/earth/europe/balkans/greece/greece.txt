@@ -17,8 +17,11 @@ greece = {
 		attica
 		boeotia
 		corinth
+		euboea
 		methone
 		monemvasia
+		naxos
+		rhodes
 		thessaly
 	}
 }

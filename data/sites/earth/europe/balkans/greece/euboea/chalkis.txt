@@ -1,0 +1,8 @@
+chalkis = {
+	name = "Chalkis"
+	world = earth
+	geocoordinate = { 23.612398 38.463995 } #from Natural Earth (Chalkida)
+	type = holding
+	holding_type = castle
+	province = euboea
+}

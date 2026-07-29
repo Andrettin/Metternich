@@ -1,0 +1,8 @@
+naxos = {
+	name = "Naxos"
+	world = earth
+	geocoordinate = { 25.37944444 37.10194444 } #Naxos (city)
+	type = holding
+	holding_type = castle
+	province = naxos
+}

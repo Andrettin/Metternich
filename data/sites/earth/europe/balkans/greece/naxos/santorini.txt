@@ -1,0 +1,8 @@
+santorini = {
+	name = "Santorini"
+	world = earth
+	geocoordinate = { 25.4325 36.415 }
+	type = holding
+	holding_type = guild
+	province = naxos
+}

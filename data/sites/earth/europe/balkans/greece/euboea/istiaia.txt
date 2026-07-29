@@ -1,0 +1,8 @@
+istiaia = {
+	name = "Istiaia"
+	world = earth
+	geocoordinate = { 23.15 38.95 }
+	type = holding
+	holding_type = castle
+	province = euboea
+}

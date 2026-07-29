@@ -1,0 +1,8 @@
+hermoupolis = {
+	name = "Hermoupolis"
+	world = earth
+	geocoordinate = { 24.933300 37.450413 } #from Natural Earth
+	type = holding
+	holding_type = temple
+	province = naxos
+}

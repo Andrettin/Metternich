@@ -1,0 +1,8 @@
+oreoi = {
+	name = "Oreoi"
+	world = earth
+	geocoordinate = { 23.0917 38.95 }
+	type = holding
+	holding_type = castle
+	province = euboea
+}

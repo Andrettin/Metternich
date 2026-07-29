@@ -1,7 +1,7 @@
 aphidnae = {
 	name = "Aphidnae"
 	world = earth
-	#geocoordinate = { 23.87916667 38.1875 }
+	geocoordinate = { 23.87916667 38.1875 }
 	province = attica
 	
 	history = {

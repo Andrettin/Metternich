@@ -1,7 +1,10 @@
 ialysus = {
-	name = "Ialysus"
+	name = "Ialysus" #also known as Ialysos
 	world = earth
-	#geocoordinate = { 28.143 36.399 }
+	geocoordinate = { 28.143 36.399 }
+	type = holding
+	holding_type = castle
+	province = rhodes
 	
 	history = {
 		-1450 = {

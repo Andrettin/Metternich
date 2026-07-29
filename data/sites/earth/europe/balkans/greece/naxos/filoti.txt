@@ -1,0 +1,8 @@
+filoti = {
+	name = "Filoti"
+	world = earth
+	geocoordinate = { 25.498333333333 37.051944444444 } #Filoti, Naxos
+	type = holding
+	holding_type = castle
+	province = naxos
+}

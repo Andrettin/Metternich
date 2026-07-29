@@ -1,0 +1,8 @@
+andros = {
+	name = "Andros"
+	world = earth
+	geocoordinate = { 24.9365 37.837 } #Andros (town)
+	type = holding
+	holding_type = castle
+	province = naxos
+}

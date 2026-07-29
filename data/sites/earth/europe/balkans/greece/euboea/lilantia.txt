@@ -1,0 +1,8 @@
+lilantia = {
+	name = "Lilantia"
+	world = earth
+	geocoordinate = { 23.66666667 38.43333333 } #Lilandii
+	type = holding
+	holding_type = castle
+	province = euboea
+}

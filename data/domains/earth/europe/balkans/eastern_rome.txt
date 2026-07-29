@@ -42,6 +42,7 @@ eastern_rome = {
 		eastern_rumelia
 		epirus
 		eskisehir
+		euboea
 		germiyan
 		karasi
 		kastamonu
@@ -51,9 +52,11 @@ eastern_rome = {
 		monemvasia
 		montenegro
 		mugla
+		naxos
 		nis
 		north_macedonia
 		novi_pazar
+		rhodes
 		rosetta
 		saruhan
 		serbia

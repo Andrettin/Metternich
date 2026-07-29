@@ -2,9 +2,9 @@ rhodes = {
 	name = "Rhodes"
 	world = earth
 	geocoordinate = { 28.22250443390 36.44122397770 } #from Natural Earth
-	type = resource
-	resource = grain
-	province = attica
+	type = holding
+	holding_type = castle
+	province = rhodes
 	features = {
 		prime_grain_land
 	}
