@@ -129,6 +129,71 @@ ctimene = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp.
 	mother = anticleia
 }
 
+pluto = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 507.
+	name = "Pluto"
+	character_class = aristocrat
+	culture = greek
+	religion = hellenic
+	gender = female
+}
+
+tantalus = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 507.
+	name = "Tantalus"
+	character_class = aristocrat
+	culture = greek
+	religion = hellenic
+	gender = male
+	father = zeus
+	mother = pluto
+}
+
+oenomaus = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 507.
+	name = "Oenomaus"
+	character_class = aristocrat
+	culture = greek
+	religion = hellenic
+	gender = male
+	father = ares
+	mother = sterope
+}
+
+hippodameia = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 507.
+	name = "Hippodameia"
+	character_class = aristocrat
+	culture = greek
+	religion = hellenic
+	gender = female
+	father = oenomaus
+}
+
+pelops = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 507.
+	name = "Pelops"
+	character_class = aristocrat
+	culture = greek
+	religion = hellenic
+	gender = male
+	father = tantalus
+	mother = hippodameia
+}
+
+pittheus = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 507.
+	name = "Pittheus"
+	character_class = aristocrat
+	culture = greek
+	religion = hellenic
+	gender = male
+	father = pelops
+}
+
+aethra = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 507.
+	name = "Aethra"
+	character_class = aristocrat
+	culture = greek
+	religion = hellenic
+	gender = female
+	father = pittheus
+}
+
 archimedes = {
 	name = "Archimedes"
 	character_class = engineer
