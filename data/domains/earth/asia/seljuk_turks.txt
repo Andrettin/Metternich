@@ -22,7 +22,7 @@ seljuk_turks = {
 		mersin
 		mugla
 		samsun
-		saruhan
+		sardis
 		sinope
 		sivas
 		smyrna

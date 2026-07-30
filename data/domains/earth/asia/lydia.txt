@@ -5,12 +5,12 @@ lydia = {
 	default_religion = pagan
 	default_tier = kingdom
 	default_government_type = monarchy
-	default_capital = manisa
+	default_capital = sardis
 	eras = {
 		ancient_era
 	}
 	core_provinces = {
-		saruhan
+		sardis
 		denizli
 		germiyan
 		karasi

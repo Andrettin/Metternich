@@ -1,22 +1,25 @@
-saruhan = {
-	name = "Saruhan"
-	color = { 175 27 216 }
-	default_provincial_capital = manisa
+sardis = {
+	name = "Sardis"
+	color = { 1 54 195 }
+	terrain = mountains
+	default_provincial_capital = sardis
+	cultural_names = {
+		turkish = "Saruhan"
+	}
 	regions = {
 		anatolia
 	}
 	
 	history = {
-		culture = lydian
-		religion = pagan
-		
 		-750 = {
 			owner = lydia #part of Lydia in the 750-625 BC period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 5.
 			culture = lydian
+			religion = pagan
 		}
 		
 		526 = {
 			owner = eastern_rome #part of the East Roman Empire in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = greek
 			religion = orthodox
 		}
 		

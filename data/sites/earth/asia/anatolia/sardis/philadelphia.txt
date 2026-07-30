@@ -1,0 +1,8 @@
+philadelphia_anatolia = {
+	name = "Philadelphia"
+	world = earth
+	geocoordinate = { 28.516666666667 38.35 } #Alaşehir
+	type = holding
+	holding_type = guild
+	province = sardis
+}

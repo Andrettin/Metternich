@@ -58,7 +58,7 @@ eastern_rome = {
 		novi_pazar
 		rhodes
 		rosetta
-		saruhan
+		sardis
 		serbia
 		smyrna
 		thessaly

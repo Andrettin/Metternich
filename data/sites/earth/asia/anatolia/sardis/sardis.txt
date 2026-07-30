@@ -1,0 +1,14 @@
+sardis = {
+	name = "Sardis"
+	world = earth
+	geocoordinate = { 28.040286 38.488314 }
+	type = holding
+	holding_type = castle
+	province = sardis
+	
+	history = {
+		-600 = {
+			developed = true #existed c. 600 BC; Source: William R. Shepherd, "Historical Atlas", 1911, p. 8.
+		}
+	}
+}
