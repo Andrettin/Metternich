@@ -1,0 +1,8 @@
+selge = {
+	name = "Selge"
+	world = earth
+	geocoordinate = { 31.127926 37.228321 }
+	type = holding
+	holding_type = castle
+	province = attaleia
+}

@@ -1,7 +1,7 @@
 attaleia = {
 	name = "Attaleia"
 	color = { 0 135 205 }
-	default_provincial_capital = antalya
+	default_provincial_capital = attaleia
 	cultural_names = {
 		turkish = "Antalya"
 	}

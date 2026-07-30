@@ -1,0 +1,8 @@
+side = {
+	name = "Side"
+	world = earth
+	geocoordinate = { 31.3934 36.7724 } #Side, Antalya
+	type = holding
+	holding_type = guild
+	province = attaleia
+}

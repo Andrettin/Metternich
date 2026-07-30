@@ -1,0 +1,8 @@
+panemotichus = {
+	name = "Panemotichus"
+	world = earth
+	geocoordinate = { 30.500706 37.264347 }
+	type = holding
+	holding_type = castle
+	province = burdur
+}

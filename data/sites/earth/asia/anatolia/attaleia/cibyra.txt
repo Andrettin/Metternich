@@ -1,0 +1,8 @@
+cibyra = {
+	name = "Cibyra"
+	world = earth
+	geocoordinate = { 31.661413 36.659526 } #Cibyra Minor
+	type = holding
+	holding_type = temple
+	province = attaleia
+}

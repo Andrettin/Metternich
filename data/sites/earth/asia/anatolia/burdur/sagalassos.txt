@@ -1,0 +1,8 @@
+sagalassos = {
+	name = "Sagalassos"
+	world = earth
+	geocoordinate = { 30.5253 37.6801 }
+	type = holding
+	holding_type = castle
+	province = burdur
+}

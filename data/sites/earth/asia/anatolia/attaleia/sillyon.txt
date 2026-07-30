@@ -1,0 +1,8 @@
+sillyon = {
+	name = "Sillyon"
+	world = earth
+	geocoordinate = { 30.98638 36.990721 }
+	type = holding
+	holding_type = castle
+	province = attaleia
+}

@@ -5,7 +5,7 @@ pamphylians = {
 	default_religion = pagan
 	default_tier = duchy
 	default_government_type = tribal_despotism
-	default_capital = antalya
+	default_capital = attaleia
 	eras = {
 		ancient_era
 	}
