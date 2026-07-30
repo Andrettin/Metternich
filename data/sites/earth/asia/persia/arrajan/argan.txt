@@ -1,0 +1,8 @@
+argan = {
+	name = "Argan" #also known as Behbahan
+	world = earth
+	geocoordinate = { 50.261469 30.581814 } #from Natural Earth (Behbehan)
+	type = holding
+	holding_type = guild #or castle
+	province = arrajan
+}

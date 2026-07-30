@@ -1,0 +1,11 @@
+ahvaz = {
+	name = "Ahvaz"
+	world = earth
+	geocoordinate = { 48.718067 31.281935 } #from Natural Earth
+	type = resource
+	resource = grain
+	province = arrajan
+	features = {
+		prime_grain_land
+	}
+}

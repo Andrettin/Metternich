@@ -1,0 +1,8 @@
+omidiyeh = {
+	name = "Omidiyeh"
+	world = earth
+	geocoordinate = { 49.705 30.759722222222 }
+	type = holding
+	holding_type = castle
+	province = arrajan
+}

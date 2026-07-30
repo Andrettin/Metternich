@@ -1,0 +1,8 @@
+bandar_shahpur = {
+	name = "Bandar Shahpur"
+	world = earth
+	geocoordinate = { 49.05861827095732 30.549112105580733 } #Bandar Imam Khomeini
+	type = holding
+	holding_type = castle
+	province = arrajan
+}

@@ -1,0 +1,8 @@
+ramhormoz = {
+	name = "Ramhormoz"
+	world = earth
+	geocoordinate = { 49.603611111111114 31.28 }
+	type = holding
+	holding_type = castle
+	province = arrajan
+}

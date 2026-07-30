@@ -16,6 +16,7 @@ persia = {
 	}
 	core_provinces = {
 		teheran
+		arrajan
 		elam
 		fars
 		hamadan
@@ -23,7 +24,6 @@ persia = {
 		isfahan
 		kerman
 		kermanshah
-		khuzestan
 		lorestan
 		north_khorasan
 		razavi_khorasan

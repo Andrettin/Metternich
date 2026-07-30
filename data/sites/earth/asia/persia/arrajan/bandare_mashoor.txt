@@ -1,0 +1,8 @@
+bandare_mashoor = {
+	name = "Bandar-e Ma'shoor"
+	world = earth
+	geocoordinate = { 49.18861111111111 30.556666666666665 } #Mahshahr
+	type = holding
+	holding_type = castle
+	province = arrajan
+}

@@ -1,8 +1,0 @@
-ahvaz = {
-	name = "Ahvaz"
-	world = earth
-	geocoordinate = { 48.72001297890 31.27998862610 }
-	type = resource
-	resource = grain
-	province = khuzestan
-}

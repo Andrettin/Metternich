@@ -1,0 +1,11 @@
+dezful = {
+	name = "Dezful"
+	world = earth
+	geocoordinate = { 48.470002 32.380387 } #from Natural Earth
+	type = resource
+	resource = cotton
+	province = arrajan
+	features = {
+		prime_cotton_land
+	}
+}

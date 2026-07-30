@@ -10,7 +10,7 @@ elam = {
 		ancient_era
 	}
 	core_provinces = {
-		khuzestan
+		arrajan
 		elam
 	}
 }

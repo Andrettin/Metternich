@@ -12,6 +12,7 @@ jalayirids = {
 	core_provinces = {
 		diyala
 		anbar
+		arrajan
 		babylon
 		chaldea
 		east_azarbaijan
@@ -20,7 +21,6 @@ jalayirids = {
 		karbala
 		kermanshah
 		kordestan
-		khuzestan
 		lorestan
 		najaf
 		saladin

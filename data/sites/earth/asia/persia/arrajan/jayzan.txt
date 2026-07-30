@@ -1,0 +1,8 @@
+jayzan = {
+	name = "Jayzan"
+	world = earth
+	geocoordinate = { 49.85 30.883333 } #Jayezan
+	type = holding
+	holding_type = castle
+	province = arrajan
+}
