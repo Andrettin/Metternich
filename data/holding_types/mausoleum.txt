@@ -1,0 +1,40 @@
+mausoleum = {
+	name = "Mausoleum"
+	icon = temple
+	portrait = temple
+	image_filepath = "tiles/settlements/town.png"
+	religious = true
+	domain_skill = faith
+	level_commodity_costs = {
+		wealth = 1gb
+	}
+	level_commodity_costs_per_level = {
+		regency = 1
+	}
+	fortification_level_commodity_costs = {
+		wealth = 4gb
+		regency = 1
+	}
+	conditional_names = {
+		"Mausoleum" = {
+			not = {
+				has_building_class = grand_mausoleum
+			}
+		}
+		"Grand Mausoleum" = {
+			has_building_class = grand_mausoleum
+		}
+	}
+	tier_levels = {
+		grand_mausoleum = 4
+	}
+	population_classes = {
+		slaves
+		untrained_workers
+		trained_workers
+		expert_workers
+		laborers
+		clergymen
+		firebrand_preachers
+	}
+}

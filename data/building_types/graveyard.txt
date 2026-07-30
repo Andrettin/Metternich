@@ -5,20 +5,14 @@ graveyard = {
 	icon = skull
 	wealth_cost = 4gb
 	holding_types = {
-		temple
+		mausoleum
 	}
 	builder_civilian_unit_types = {
 		ruler
 		high_priest
 		engineer
 	}
-	required_buildings = {
-		temple
-	}
 	domain_modifier = {
 		loyalty = 1
-	}
-	free_on_start_conditions = {
-		has_building_class = temple
 	}
 }

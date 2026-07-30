@@ -1,0 +1,9 @@
+mausoleum = {
+	name = "Mausoleum"
+	slot_type = mausoleum
+}
+
+grand_mausoleum = {
+	name = "Grand Mausoleum"
+	slot_type = mausoleum
+}

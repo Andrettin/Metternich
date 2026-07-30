@@ -1,0 +1,34 @@
+mausoleum = {
+	name = "Mausoleum"
+	building_class = mausoleum
+	portrait = temple
+	icon = skull
+	holding_level = 2
+	holding_types = {
+		mausoleum
+	}
+	builder_civilian_unit_types = {
+		ruler
+		high_priest
+		engineer
+	}
+	free_on_start_conditions = {
+	}
+}
+
+grand_mausoleum = {
+	name = "Grand Mausoleum"
+	building_class = grand_mausoleum
+	portrait = temple
+	icon = skull
+	holding_level = 4
+	base_building = mausoleum
+	holding_types = {
+		mausoleum
+	}
+	builder_civilian_unit_types = {
+		ruler
+		high_priest
+		engineer
+	}
+}
