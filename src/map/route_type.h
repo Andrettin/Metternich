@@ -7,6 +7,7 @@
 namespace metternich {
 
 class commodity;
+class holding_type;
 
 template <typename scope_type>
 class and_condition;
@@ -27,6 +28,7 @@ public:
 	}
 
 	virtual void process_gsml_property(const gsml_property &property) override;
+	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;
 
 	const commodity *get_output_commodity() const
@@ -39,12 +41,20 @@ public:
 		return this->output_multiplier;
 	}
 
+	const std::vector<const holding_type *> &get_holding_types() const
+	{
+		return this->holding_types;
+	}
+
+	bool has_holding_type(const holding_type *holding_type) const;
+
 signals:
 	void changed();
 
 private:
 	const commodity *output_commodity = nullptr;
 	int64_t output_multiplier = 0;
+	std::vector<const holding_type *> holding_types; //the holding types that can be connected by this route type
 };
 
 }

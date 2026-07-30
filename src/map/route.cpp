@@ -68,6 +68,10 @@ void route::check() const
 		log::log_error(std::format("Route \"{}\" has no type.", this->get_identifier()));
 	} else if (this->get_start_site() == nullptr || this->get_end_site() == nullptr) {
 		log::log_error(std::format("Route \"{}\" has a type, but no start or end sites.", this->get_identifier()));
+	} else {
+		if (!this->get_type()->has_holding_type(this->get_start_site()->get_holding_type()) || !this->get_type()->has_holding_type(this->get_end_site()->get_holding_type())) {
+			throw std::runtime_error(std::format("The holding type of the connected sites for route \"{}\" does not match the allowed holding types for its route type.", this->get_identifier()));
+		}
 	}
 
 	if (this->get_path_provinces().empty()) {
