@@ -1,0 +1,8 @@
+myra = {
+	name = "Myra"
+	world = earth
+	geocoordinate = { 29.993638 36.250801 }
+	type = holding
+	holding_type = temple
+	province = attaleia
+}

@@ -1,0 +1,8 @@
+patara = {
+	name = "Patara"
+	world = earth
+	geocoordinate = { 29.313364 36.260565 }
+	type = holding
+	holding_type = castle
+	province = attaleia
+}

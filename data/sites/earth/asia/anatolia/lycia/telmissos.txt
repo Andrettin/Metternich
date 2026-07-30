@@ -1,0 +1,8 @@
+telmissos = {
+	name = "Telmissos"
+	world = earth
+	geocoordinate = { 29.120348 36.623779 } #Telmessos
+	type = holding
+	holding_type = guild
+	province = lycia
+}

@@ -1,0 +1,8 @@
+kibyra = {
+	name = "Kibyra"
+	world = earth
+	geocoordinate = { 29.4963 37.1593 } #Kibyra/Cibyra Magna
+	type = holding
+	holding_type = castle
+	province = burdur
+}

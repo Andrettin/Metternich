@@ -1,0 +1,8 @@
+limyra = {
+	name = "Limyra"
+	world = earth
+	geocoordinate = { 30.170238 36.341965 }
+	type = holding
+	holding_type = castle
+	province = attaleia
+}
