@@ -1,5 +1,22 @@
 persian_royal_highway = {
 	name = "Persian Royal Highway"
+	type = trade_route
+	start_site = philadelphia_anatolia #Sardis
+	end_site = argan #Susa
+	path_provinces = {
+		sardis
+		germiyan
+		eskisehir
+		ancyra
+		corum
+		sivas
+		malatya
+		amida
+		assyria
+		kermanshah
+		elam
+		arrajan
+	}
 	conditions = {
 		pathway = road
 	}
