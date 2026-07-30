@@ -22,7 +22,7 @@ eastern_rome = {
 		albania
 		alexandria
 		ancyra
-		antalya
+		attaleia
 		attica
 		aydin
 		benghazi
@@ -48,10 +48,10 @@ eastern_rome = {
 		kastamonu
 		kharibta
 		kosovo
+		lycia
 		methone
 		monemvasia
 		montenegro
-		mugla
 		naxos
 		nis
 		north_macedonia

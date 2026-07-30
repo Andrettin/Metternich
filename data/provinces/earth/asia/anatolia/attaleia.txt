@@ -1,23 +1,24 @@
-antalya = {
-	name = "Antalya"
-	color = { 157 119 6 }
+attaleia = {
+	name = "Attaleia"
+	color = { 0 135 205 }
 	default_provincial_capital = antalya
+	cultural_names = {
+		turkish = "Antalya"
+	}
 	regions = {
 		anatolia
 	}
 	
 	history = {
-		owner = pamphylians
-		culture = pamphylian
-		religion = pagan
-		
 		-750 = {
 			owner = pamphylians #Pamphylian territory in the 750-625 BC period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 5.
 			culture = pamphylian
+			religion = pagan
 		}
 		
 		526 = {
 			owner = eastern_rome #part of the East Roman Empire in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = greek
 			religion = orthodox
 		}
 		

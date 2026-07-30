@@ -3,4 +3,5 @@ antalya = {
 	world = earth
 	geocoordinate = { 30.69997595090 36.88998211570 } #from Natural Earth
 	type = holding
+	province = attaleia
 }

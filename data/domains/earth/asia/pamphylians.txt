@@ -10,6 +10,6 @@ pamphylians = {
 		ancient_era
 	}
 	core_provinces = {
-		antalya
+		attaleia
 	}
 }

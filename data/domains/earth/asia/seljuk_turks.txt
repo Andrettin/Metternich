@@ -13,14 +13,14 @@ seljuk_turks = {
 	core_provinces = {
 		karaman
 		afyonkarahisar
-		antalya
+		attaleia
 		aydin
 		burdur
 		corum
 		denizli
 		kastamonu
+		lycia
 		mersin
-		mugla
 		samsun
 		sardis
 		sinope
