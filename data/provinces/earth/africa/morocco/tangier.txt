@@ -7,9 +7,6 @@ tangier = {
 	}
 	
 	history = {
-		culture = maurian
-		religion = pagan
-		
 		1360 = {
 			owner = morocco #part of Morocco in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 			culture = arabic

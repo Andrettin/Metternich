@@ -1,0 +1,6 @@
+arabic = {
+	name = "Arabic"
+	group = pagan
+	color = { 67 153 45 }
+	icon = oasis
+}
