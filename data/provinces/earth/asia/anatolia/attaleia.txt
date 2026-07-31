@@ -1,6 +1,7 @@
 attaleia = {
 	name = "Attaleia"
 	color = { 0 135 205 }
+	terrain = mountains
 	default_provincial_capital = attaleia
 	cultural_names = {
 		turkish = "Antalya"
