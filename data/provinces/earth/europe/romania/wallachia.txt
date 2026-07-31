@@ -7,9 +7,6 @@ wallachia = {
 	}
 	
 	history = {
-		culture = romanian
-		religion = pagan
-		
 		1360 = {
 			owner = wallachia #part of Wallachia in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 			culture = romanian

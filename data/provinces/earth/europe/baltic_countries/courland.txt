@@ -7,14 +7,13 @@ courland = {
 	}
 	
 	history = {
-		religion = pagan
-		
 		-419200000 = {
 			#Ventastega lived in Latvia in the Devonian; Source: https://paleobiodb.org/classic/basicTaxonInfo?taxon_no=txn:226306
 		}
 		
 		-4000 = {
 			culture = latvian
+			religion = pagan
 		}
 		
 		1360 = {

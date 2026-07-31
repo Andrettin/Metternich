@@ -7,12 +7,6 @@ vologda = {
 	}
 	
 	history = {
-		religion = pagan
-		
-		-4000 = {
-			culture = slavic
-		}
-		
 		1560 = {
 			owner = muscovy #part of the Muscovite Dominions c. 1560; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 118-119.
 			culture = russian

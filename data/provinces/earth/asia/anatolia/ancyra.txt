@@ -13,15 +13,17 @@ ancyra = {
 	history = {
 		owner = phrygia
 		culture = phrygian
-		religion = pagan
+		religion = cybelene
 		
 		-750 = {
 			owner = phrygia #Phrygian territory in the 750-625 BC period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 5.
 			culture = phrygian
+			religion = cybelene
 		}
 		
 		526 = {
 			owner = eastern_rome #part of the East Roman Empire in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = greek
 			religion = orthodox
 		}
 		

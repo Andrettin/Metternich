@@ -7,13 +7,10 @@ mecklenburg = {
 	}
 	
 	history = {
-		owner = slavs
-		culture = slavic
-		religion = pagan
-		
 		526 = {
 			owner = slavs #territory of Slavic peoples in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 			culture = slavic
+			religion = slovianskan
 		}
 		
 		919 = {

@@ -7,10 +7,6 @@ georgia_caucasus = {
 	}
 	
 	history = {
-		owner = persia
-		culture = georgian
-		religion = pagan
-		
 		1204 = {
 			owner = georgia #part of the Kingdom of Georgia in 1204; Source: William R. Shepherd, "Historical Atlas", 1911, p. 73.
 			culture = georgian

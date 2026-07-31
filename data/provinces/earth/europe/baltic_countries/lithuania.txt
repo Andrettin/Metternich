@@ -8,11 +8,10 @@ lithuania = {
 	}
 	
 	history = {
-		religion = pagan
-		
 		-4000 = {
 			owner = estonians
 			culture = estonian
+			religion = pagan
 		}
 		
 		526 = {

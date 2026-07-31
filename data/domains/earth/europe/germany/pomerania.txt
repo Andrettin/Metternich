@@ -7,7 +7,7 @@ pomerania = {
 		pomeranian
 		german
 	}
-	default_religion = pagan
+	default_religion = slovianskan
 	default_tier = duchy
 	default_government_type = monarchy
 	default_capital = stettin

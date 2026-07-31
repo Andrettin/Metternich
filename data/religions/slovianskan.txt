@@ -1,0 +1,6 @@
+slovianskan = {
+	name = "Slovianskan"
+	group = pagan
+	color = { 178 153 76 }
+	icon = pine_tree
+}

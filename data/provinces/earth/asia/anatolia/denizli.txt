@@ -8,15 +8,17 @@ denizli = {
 	
 	history = {
 		culture = lydian
-		religion = pagan
+		religion = cybelene
 		
 		-750 = {
 			owner = lydia #part of Lydia in the 750-625 BC period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 5.
 			culture = lydian
+			religion = cybelene
 		}
 		
 		526 = {
 			owner = eastern_rome #part of the East Roman Empire in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = greek
 			religion = orthodox
 		}
 		

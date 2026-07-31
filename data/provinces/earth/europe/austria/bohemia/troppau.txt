@@ -13,10 +13,6 @@ troppau = {
 	}
 	
 	history = {
-		owner = gaul
-		culture = gaulish
-		religion = pagan
-		
 		919 = {
 			owner = bohemia #part of the Duchy of Bohemia in the 919-1003 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
 			culture = czech

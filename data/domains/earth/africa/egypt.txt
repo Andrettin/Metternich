@@ -7,7 +7,7 @@ egypt = {
 		egyptian
 		arabic
 	}
-	default_religion = pagan
+	default_religion = kemetic
 	default_tier = kingdom
 	default_government_type = monarchy
 	default_capital = cairo
@@ -37,7 +37,7 @@ egypt = {
 		-2700 = {
 			government_type = monarchy #the Old Kingdom of Egypt existed in the 2700-2180 BC period; Source: "History of the World Map by Map", 2023, pp. 36-37.
 			culture = egyptian
-			religion = pagan
+			religion = kemetic
 		}
 		
 		1360 = {

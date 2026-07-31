@@ -7,11 +7,9 @@ albania = {
 	}
 	
 	history = {
-		culture = albanian
-		religion = pagan
-		
 		526 = {
 			owner = eastern_rome #part of the East Roman Empire in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = albanian
 			religion = orthodox
 		}
 		

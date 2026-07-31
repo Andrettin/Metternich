@@ -7,10 +7,9 @@ estonia = {
 	}
 	
 	history = {
-		religion = pagan
-		
 		-4000 = {
 			culture = estonian
+			religion = pagan
 		}
 		
 		1360 = {

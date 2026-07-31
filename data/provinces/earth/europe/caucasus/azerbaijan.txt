@@ -7,7 +7,6 @@ azerbaijan = {
 	}
 	
 	history = {
-		owner = persia
 		culture = azerbaijani
 		religion = pagan
 		

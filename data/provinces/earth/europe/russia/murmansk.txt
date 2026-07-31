@@ -7,10 +7,9 @@ murmansk = {
 	}
 	
 	history = {
-		religion = pagan
-		
 		-4000 = {
-			culture = russian
+			culture = slavic
+			religion = slovianskan
 		}
 		
 		germanys_future = {

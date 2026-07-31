@@ -7,9 +7,6 @@ bessarabia = {
 	}
 	
 	history = {
-		culture = romanian
-		religion = pagan
-		
 		1360 = {
 			owner = moldavia #part of Moldavia in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 			culture = romanian

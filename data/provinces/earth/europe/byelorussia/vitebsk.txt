@@ -8,10 +8,9 @@ vitebsk = {
 	}
 	
 	history = {
-		religion = pagan
-		
 		-4000 = {
 			culture = slavic
+			religion = slovianskan
 		}
 		
 		1360 = {

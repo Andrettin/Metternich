@@ -1,0 +1,6 @@
+kemetic = {
+	name = "Kemetic"
+	group = pagan
+	color = { 38 255 178 }
+	icon = oasis
+}

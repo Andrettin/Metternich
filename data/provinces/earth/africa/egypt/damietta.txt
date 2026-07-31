@@ -11,7 +11,7 @@ damietta = {
 		-2700 = {
 			owner = egypt #part of Egypt in the 2700-2180 BC period; Source: "History of the World Map by Map", 2023, pp. 36-37.
 			culture = egyptian
-			religion = pagan
+			religion = kemetic
 		}
 		
 		-1450 = {

@@ -1,0 +1,6 @@
+cybelene = {
+	name = "Cybelene"
+	group = pagan
+	color = { 76 102 51 }
+	icon = mountains
+}
