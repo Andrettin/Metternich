@@ -1,0 +1,6 @@
+chaldean = {
+	name = "Chaldean"
+	group = pagan
+	color = { 127 38 0 }
+	icon = oasis
+}

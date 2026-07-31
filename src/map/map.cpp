@@ -329,6 +329,11 @@ tile *map::get_tile(const QPoint &pos) const
 
 const metternich::province *map::get_tile_province(const QPoint &tile_pos) const
 {
+	if (!this->contains(tile_pos)) {
+		log::log_error(std::format("Tried to get province for invalid tile pos: {}", point::to_string(tile_pos)));
+		return nullptr;
+	}
+
 	const tile *tile = this->get_tile(tile_pos);
 	if (tile == nullptr) {
 		return nullptr;

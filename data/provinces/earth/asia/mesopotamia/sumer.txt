@@ -11,7 +11,7 @@ sumer = {
 		-1450 = {
 			owner = babylonia #part of Babylonia c. 1450 BC; Source: William R. Shepherd, "Historical Atlas", 1911, p. 4.
 			culture = sumerian #part of the region of Sumer c. 1450 BC; Source: William R. Shepherd, "Historical Atlas", 1911, p. 4.
-			religion = pagan
+			religion = chaldean
 		}
 		
 		1360 = {
