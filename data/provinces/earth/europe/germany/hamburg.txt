@@ -14,10 +14,6 @@ hamburg = {
 	}
 	
 	history = {
-		owner = saxony
-		culture = saxon
-		religion = asatru
-		
 		-264 = {
 			owner = saxony #territory of the Saxons in the 264 BC - 180 AD period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 34-35.
 			culture = saxon

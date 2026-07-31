@@ -11,10 +11,6 @@ ancyra = {
 	}
 	
 	history = {
-		owner = phrygia
-		culture = phrygian
-		religion = cybelene
-		
 		-750 = {
 			owner = phrygia #Phrygian territory in the 750-625 BC period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 5.
 			culture = phrygian
