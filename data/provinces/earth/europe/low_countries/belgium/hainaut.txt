@@ -7,15 +7,8 @@ hainaut = {
 	}
 	
 	history = {
-		religion = pagan
-		
 		-419200000 = {
 			#Ichthyostega lived in Belgium in the Devonian; Source: https://paleobiodb.org/classic/basicTaxonInfo?taxon_no=txn:36965
-		}
-		
-		-4000 = {
-			owner = gaul
-			culture = gaulish
 		}
 		
 		526 = {

@@ -7,17 +7,10 @@ yorkshire = {
 	}
 	
 	history = {
-		religion = pagan
-		
-		-4000 = {
-			owner = brigantia
-			culture = brigantic
-		}
-		
 		-264 = {
 			owner = brigantia #territory of the Brigantes in the 264 BC - 43 AD period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 34-35.
 			culture = brigantic
-			religion = pagan
+			religion = druidic
 		}
 		
 		526 = {

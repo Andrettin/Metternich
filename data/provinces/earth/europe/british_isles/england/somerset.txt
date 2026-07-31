@@ -7,13 +7,6 @@ somerset = {
 	}
 	
 	history = {
-		religion = pagan
-		
-		-4000 = {
-			owner = britons
-			culture = briton
-		}
-		
 		526 = {
 			owner = anglo_saxons #territory of the Anglo-Saxons in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 			culture = anglo_saxon

@@ -9,11 +9,12 @@ franche_comte = {
 	history = {
 		owner = sequania
 		culture = helvetian
-		religion = pagan
+		religion = druidic
 		
 		time_of_augustus = {
 			#inhabited by the Sequani in the time of Augustus; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 38-39.
 			culture = helvetian
+			religion = druidic
 		}
 		
 		526 = {

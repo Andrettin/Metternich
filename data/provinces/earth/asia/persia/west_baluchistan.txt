@@ -7,10 +7,6 @@ west_baluchistan = {
 	}
 	
 	history = {
-		owner = persia
-		culture = persian
-		religion = pagan
-		
 		1801 = {
 			owner = persia #part of Persia in 1801; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 170-171.
 			culture = persian

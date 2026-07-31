@@ -1,6 +1,6 @@
 kemetic = {
 	name = "Kemetic"
 	group = pagan
-	color = { 38 255 178 }
+	color = { 178 160 0 }
 	icon = oasis
 }

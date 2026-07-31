@@ -7,16 +7,10 @@ cornwall = {
 	}
 	
 	history = {
-		religion = pagan
-		
-		-4000 = {
-			owner = britons
-			culture = briton
-		}
-		
 		526 = {
 			owner = britons #territory of the Britons in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 			culture = briton
+			religion = druidic
 		}
 		
 		802 = {

@@ -7,16 +7,10 @@ ayrshire = {
 	}
 	
 	history = {
-		religion = pagan
-		
-		-4000 = {
-			owner = pictland
-			culture = pictish
-		}
-		
 		526 = {
 			owner = pictland #territory of the Picts in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 			culture = pictish
+			religion = druidic
 		}
 		
 		802 = {

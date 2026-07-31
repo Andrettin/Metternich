@@ -7,10 +7,6 @@ westphalia = {
 	}
 	
 	history = {
-		owner = saxony
-		culture = saxon
-		religion = asatru
-		
 		myths_enabled = {
 			-3000 = {
 				owner = goldemarland

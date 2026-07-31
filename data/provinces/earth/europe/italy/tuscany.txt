@@ -12,13 +12,10 @@ tuscany = {
 	}
 	
 	history = {
-		owner = etruria
-		culture = etruscan
-		religion = pagan
-		
 		-750 = {
 			owner = etruria #Etruscan territory in the 750-625 BC period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 5.
 			culture = etruscan
+			religion = hellenic
 		}
 		
 		-500 = {

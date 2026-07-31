@@ -8,10 +8,6 @@ breisgau = {
 	}
 	
 	history = {
-		owner = gaul
-		culture = gaulish
-		religion = pagan
-		
 		526 = {
 			owner = alamanni #territory of the Alamanni in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 			culture = suebi

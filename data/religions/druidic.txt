@@ -1,0 +1,6 @@
+druidic = {
+	name = "Druidic"
+	group = pagan
+	color = { 44 102 30 }
+	icon = pine_tree
+}

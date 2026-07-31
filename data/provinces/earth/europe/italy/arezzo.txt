@@ -8,13 +8,10 @@ arezzo = {
 	}
 	
 	history = {
-		owner = etruria
-		culture = etruscan
-		religion = pagan
-		
 		-500 = {
 			owner = etruria #part of Etruria in the 500-100 BC period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 29.
 			culture = etruscan
+			religion = hellenic
 		}
 		
 		526 = {
