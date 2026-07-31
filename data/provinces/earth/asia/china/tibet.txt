@@ -7,7 +7,6 @@ tibet = {
 	}
 	
 	history = {
-		owner = china
 		culture = chinese
 		religion = pagan
 	}

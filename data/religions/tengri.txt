@@ -1,0 +1,6 @@
+tengri = {
+	name = "Tengri"
+	group = pagan
+	color = { 0 51 204 }
+	icon = horses
+}

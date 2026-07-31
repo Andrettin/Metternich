@@ -8,20 +8,16 @@ lithuania = {
 	}
 	
 	history = {
-		-4000 = {
-			owner = estonians
-			culture = estonian
-			religion = pagan
-		}
-		
 		526 = {
 			owner = estonians #territory of the Esthonians in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 			culture = estonian
+			religion = pagan
 		}
 		
 		1000 = {
 			owner = lithuania #territory of the Lithuanians c. 1000; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 58-59.
 			culture = lithuanian
+			religion = pagan
 		}
 		
 		1360 = {

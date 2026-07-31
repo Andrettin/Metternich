@@ -7,7 +7,6 @@ hokkaido = {
 	}
 	
 	history = {
-		owner = japan
 		culture = japanese
 		religion = pagan
 	}

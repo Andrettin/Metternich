@@ -7,7 +7,6 @@ shanxi = {
 	}
 	
 	history = {
-		owner = china
 		culture = chinese
 		religion = pagan
 	}

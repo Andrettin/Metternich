@@ -10,7 +10,7 @@ samara = {
 		1360 = {
 			owner = great_bulgaria #part of Great Bulgaria in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 			culture = bolghar
-			religion = pagan
+			religion = tengri
 		}
 	}
 }

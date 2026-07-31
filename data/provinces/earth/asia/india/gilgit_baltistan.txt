@@ -7,7 +7,6 @@ gilgit_baltistan = {
 	}
 	
 	history = {
-		owner = india
 		culture = indian
 		religion = pagan
 	}

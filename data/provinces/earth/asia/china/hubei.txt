@@ -7,7 +7,6 @@ hubei = {
 	}
 	
 	history = {
-		owner = china
 		culture = chinese
 		religion = pagan
 	}

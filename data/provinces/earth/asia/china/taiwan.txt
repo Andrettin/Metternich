@@ -10,7 +10,6 @@ taiwan = {
 	}
 	
 	history = {
-		owner = china
 		culture = chinese
 		religion = pagan
 	}

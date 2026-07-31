@@ -8,6 +8,6 @@ inner_mongolia = {
 	
 	history = {
 		culture = mongol
-		religion = pagan
+		religion = tengri
 	}
 }

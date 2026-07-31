@@ -7,7 +7,6 @@ jiangxi = {
 	}
 	
 	history = {
-		owner = china
 		culture = chinese
 		religion = pagan
 	}
