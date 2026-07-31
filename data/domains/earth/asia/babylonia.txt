@@ -2,6 +2,7 @@ babylonia = {
 	name = "Babylonia"
 	type = polity
 	color = { 27 73 157 }
+	flag = chaldea
 	culture = babylonian
 	default_religion = chaldean
 	default_tier = kingdom

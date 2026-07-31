@@ -2,6 +2,7 @@ athens = {
 	name = "Athens"
 	type = polity
 	color = { 19 139 244 }
+	flag = athens
 	cultures = {
 		greek
 		catalan #the Catalan Duchy of Athens (Athenes)
