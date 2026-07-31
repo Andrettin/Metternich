@@ -1,0 +1,6 @@
+canaanite = {
+	name = "Canaanite"
+	group = pagan
+	color = { 102 18 186 }
+	icon = oasis
+}

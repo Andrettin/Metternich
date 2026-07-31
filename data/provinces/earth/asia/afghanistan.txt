@@ -7,10 +7,6 @@ afghanistan = {
 	}
 	
 	history = {
-		owner = persia
-		culture = pashtun
-		religion = pagan
-		
 		1801 = {
 			owner = afghanistan #part of Afghanistan in 1801; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 170-171.
 			culture = pashtun
