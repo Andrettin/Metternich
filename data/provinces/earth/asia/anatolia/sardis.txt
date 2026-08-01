@@ -11,6 +11,12 @@ sardis = {
 	}
 	
 	history = {
+		-1279 = {
+			owner = hittite_empire #part of the Hittite Empire in the 1279-1213 BC period; Source: "History of the World Map by Map", 2023, pp. 36-37.
+			culture = hittite
+			religion = cybelene
+		}
+		
 		-750 = {
 			owner = lydia #part of Lydia in the 750-625 BC period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 5.
 			culture = lydian

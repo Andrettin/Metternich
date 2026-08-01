@@ -4,7 +4,7 @@ hittite_empire = {
 	color = { 18 137 154 }
 	culture = hittite
 	default_religion = cybelene
-	default_tier = empire
+	default_tier = kingdom
 	default_government_type = monarchy
 	default_capital = corum #Hattusa
 	definite_article = true
@@ -17,6 +17,21 @@ hittite_empire = {
 	}
 	core_provinces = {
 		corum
+		afyonkarahisar
 		ancyra
+		attaleia
+		burdur
+		denizli
+		gaziantep
+		germiyan
+		hatay
+		karaman
+		kayseri
+		lykandos
+		malatya
+		mersin
+		ramadan
+		sardis
+		smyrna
 	}
 }
