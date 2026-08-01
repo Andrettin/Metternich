@@ -59,6 +59,7 @@ guildhall = {
 	holding_level = 4
 	base_building = large_merchant_enclave
 	required_technology = guilds
+	free_on_start_extra_technology = 0.8
 	holding_types = {
 		guild
 	}
