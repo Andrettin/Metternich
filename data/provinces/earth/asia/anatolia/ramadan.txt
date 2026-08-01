@@ -7,11 +7,10 @@ ramadan = {
 	}
 	
 	history = {
-		culture = aramaic
-		religion = chaldean
-		
 		-1450 = {
 			owner = egypt #subject to Egypt c. 1450 BC; Source: William R. Shepherd, "Historical Atlas", 1911, p. 4.
+			culture = hittite #inhabited by Hittites c. 1450 BC; Source: William R. Shepherd, "Historical Atlas", 1911, p. 4.
+			religion = cybelene
 		}
 		
 		1360 = {
