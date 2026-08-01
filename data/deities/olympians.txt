@@ -125,6 +125,33 @@ athena = {
 	}
 }
 
+cybele = {
+	name = "Cybele"
+	pantheon = olympian
+	divine_rank = greater_deity
+	religions = {
+		cybelene
+		hellenic
+	}
+	cultural_names = {
+		hittite = "Cybebe"
+	}
+	major_domains = {
+		earth
+		#fertility
+		protection
+	}
+	character = {
+		monster_type = trumpet_archon
+		culture = celestial
+		religion = cybelene
+		gender = female
+		father = zeus #born of Zeus' semen which had fallen on the ground; Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 141.
+	}
+	
+	#goddess of fertility and wild nature; Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 141.
+}
+
 demeter = {
 	name = "Demeter"
 	pantheon = olympian
