@@ -11,7 +11,8 @@ montauban = {
 	
 	history = {
 		1789 = {
-			buildings += courthouse #Chambre des comptes and prévôt des maréchaux existent in Montauban in 1789; Source: William R. Shepherd, "Historical Atlas", 1911, p. 147.
+			#buildings += courthouse #Chambre des comptes and prévôt des maréchaux existent in Montauban in 1789; Source: William R. Shepherd, "Historical Atlas", 1911, p. 147.
+			developed = true
 		}
 		
 		1836 = {
