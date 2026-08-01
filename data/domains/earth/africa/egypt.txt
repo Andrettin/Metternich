@@ -40,6 +40,12 @@ egypt = {
 			religion = kemetic
 		}
 		
+		-1279 = {
+			offices = {
+				ruler = ramesses_ii_of_egypt #Ramesses II became king of Egypt in 1279 BC; Source: "History of the World Map by Map", 2023, pp. 36-37.
+			}
+		}
+		
 		1360 = {
 			culture = arabic #the Mameluke Sultanates existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 			religion = sunni
