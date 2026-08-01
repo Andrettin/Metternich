@@ -1,0 +1,8 @@
+arabissus = {
+	name = "Arabissus"
+	world = earth
+	geocoordinate = { 36.906 38.239 }
+	type = holding
+	holding_type = castle
+	province = lykandos
+}

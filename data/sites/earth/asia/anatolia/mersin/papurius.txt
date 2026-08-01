@@ -1,0 +1,7 @@
+papurius = {
+	name = "Papurius"
+	world = earth
+	type = holding
+	holding_type = castle
+	#province = mersin #correct?
+}

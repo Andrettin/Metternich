@@ -1,0 +1,8 @@
+tzamandos = {
+	name = "Tzamandos"
+	world = earth
+	geocoordinate = { 36.39111111111111 38.721944444444446 }
+	type = holding
+	holding_type = guild
+	province = kayseri
+}

@@ -1,0 +1,8 @@
+lykandos = {
+	name = "Lykandos"
+	world = earth
+	geocoordinate = { 37.183333333333 38.2 } #Elbistan
+	type = holding
+	holding_type = castle
+	province = lykandos
+}

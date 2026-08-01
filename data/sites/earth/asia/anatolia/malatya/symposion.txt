@@ -1,0 +1,8 @@
+symposion = {
+	name = "Symposion"
+	world = earth
+	geocoordinate = { 38.7342033 38.368206 } #Kaleköy Castle, Malatya
+	type = holding
+	holding_type = castle
+	province = malatya
+}

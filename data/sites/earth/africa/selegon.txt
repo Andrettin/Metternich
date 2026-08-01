@@ -1,8 +1,0 @@
-selegon = {
-	name = "Selegon"
-	world = earth
-	type = holding
-	holding_type = temple
-	
-	#in the Mali Empire?
-}

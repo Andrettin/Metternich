@@ -1,0 +1,8 @@
+cocussus = {
+	name = "Cocussus"
+	world = earth
+	geocoordinate = { 36.497222222222 38.020833333333 } #Göksun
+	type = holding
+	holding_type = castle
+	province = lykandos
+}

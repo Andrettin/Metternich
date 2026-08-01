@@ -1,8 +1,0 @@
-galanauros = {
-	name = "Galanauros"
-	world = earth
-	geocoordinate = { 31.999722222222 36.543611111111 } #Alanya/Kalonoros
-	type = holding
-	holding_type = castle
-	province = attaleia
-}
