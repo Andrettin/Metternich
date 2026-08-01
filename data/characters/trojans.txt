@@ -98,5 +98,7 @@ priam = {
 	home_site = troy
 	gender = male
 	father = laomedon #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 508.
-	death_date = -1184 #Troy was destroyed by Mycenae in 1184 BC; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 90.
+	death_date = -1209.6.5 #according to the Parian Marble, Troy was destroyed on the 5th of June, 1209 BC; Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 489.
+	
+	#according to Asimov, Troy was destroyed by Mycenae in 1184 BC; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 90.
 }
