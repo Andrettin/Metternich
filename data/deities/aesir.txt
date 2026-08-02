@@ -46,9 +46,14 @@ frigg = { #Source: Kevin Crossley-Holland, "The Norse Myths", 1980, p. 242; Sour
 		plant
 		sun
 		weather
+		
+		community
 	}
 	minor_domains = {
 		animal
+	}
+	traits = {
+		extra_divine_domain_community
 	}
 	character = {
 		species = human
@@ -119,6 +124,11 @@ loki = { #son of two giants; attractive, mischief-making and ambivalent god; kno
 		healing
 		plant
 		summoning
+		
+		destruction
+	}
+	traits = {
+		extra_divine_domain_destruction
 	}
 	character = {
 		species = human
@@ -146,10 +156,19 @@ odin = { #known as Allfather, the Terrible One, One-eyed, Father of Battle; Sour
 		divination
 		protection
 		summoning
+		
+		air
+		knowledge
+		trickery
 	}
 	minor_domains = {
 		animal
 		elemental
+	}
+	traits = {
+		extra_divine_domain_air
+		extra_divine_domain_knowledge
+		extra_divine_domain_trickery
 	}
 	character = {
 		species = human
@@ -176,9 +195,17 @@ thor = { #Sif's husband; known as the Thunder God and the Charioteer; Source: Ke
 		protection
 		sun
 		weather
+		
+		strength
+		war
 	}
 	minor_domains = {
 		charm
+	}
+	traits = {
+		extra_divine_domain_protection
+		extra_divine_domain_strength
+		extra_divine_domain_war
 	}
 	character = {
 		species = human

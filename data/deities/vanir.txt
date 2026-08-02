@@ -6,12 +6,16 @@ frey = { #Source: Kevin Crossley-Holland, "The Norse Myths", 1980, p. 242; Sourc
 		asatru
 	}
 	major_domains = {
+		air
 		animal
 		charm
 		divination
 		protection
 		sun
 		weather
+	}
+	traits = {
+		extra_divine_domain_air
 	}
 	character = {
 		species = elf
@@ -37,6 +41,9 @@ freyja = { #Source: Peter Buchholz, "Perspectives for Historical Research in Ger
 		divination
 		healing
 		necromantic
+	}
+	traits = {
+		extra_divine_domain_charm
 	}
 	character = {
 		species = elf

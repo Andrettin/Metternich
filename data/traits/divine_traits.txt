@@ -117,6 +117,18 @@ extra_divine_domain_chaos = {
 	}
 }
 
+extra_divine_domain_charm = {
+	name = "Extra Divine Domain: Charm"
+	icon = love
+	divine_domain = charm
+	types = {
+		divine_trait
+	}
+	conditions = {
+		divine_rank >= 6
+	}
+}
+
 extra_divine_domain_community = {
 	name = "Extra Divine Domain: Community"
 	icon = settlement
@@ -129,10 +141,70 @@ extra_divine_domain_community = {
 	}
 }
 
+extra_divine_domain_darkness = {
+	name = "Extra Divine Domain: Darkness"
+	icon = skull
+	divine_domain = darkness
+	types = {
+		divine_trait
+	}
+	conditions = {
+		divine_rank >= 6
+	}
+}
+
+extra_divine_domain_death = {
+	name = "Extra Divine Domain: Death"
+	icon = skull
+	divine_domain = death
+	types = {
+		divine_trait
+	}
+	conditions = {
+		divine_rank >= 6
+	}
+}
+
 extra_divine_domain_destruction = {
 	name = "Extra Divine Domain: Destruction"
 	icon = skull
 	divine_domain = destruction
+	types = {
+		divine_trait
+	}
+	conditions = {
+		divine_rank >= 6
+	}
+}
+
+extra_divine_domain_earth = {
+	name = "Extra Divine Domain: Earth"
+	icon = iron_ore
+	divine_domain = earth
+	types = {
+		divine_trait
+	}
+	conditions = {
+		divine_rank >= 6
+	}
+}
+
+extra_divine_domain_evil = {
+	name = "Extra Divine Domain: Evil"
+	icon = skull
+	divine_domain = evil
+	types = {
+		divine_trait
+	}
+	conditions = {
+		divine_rank >= 6
+	}
+}
+
+extra_divine_domain_fire = {
+	name = "Extra Divine Domain: Fire"
+	icon = coal
+	divine_domain = fire
 	types = {
 		divine_trait
 	}
@@ -189,6 +261,18 @@ extra_divine_domain_law = {
 	}
 }
 
+extra_divine_domain_liberation = {
+	name = "Extra Divine Domain: Liberation"
+	icon = labor
+	divine_domain = liberation
+	types = {
+		divine_trait
+	}
+	conditions = {
+		divine_rank >= 6
+	}
+}
+
 extra_divine_domain_luck = {
 	name = "Extra Divine Domain: Luck"
 	icon = flag
@@ -225,6 +309,18 @@ extra_divine_domain_protection = {
 	}
 }
 
+extra_divine_domain_repose = {
+	name = "Extra Divine Domain: Repose"
+	icon = settlement
+	divine_domain = repose
+	types = {
+		divine_trait
+	}
+	conditions = {
+		divine_rank >= 6
+	}
+}
+
 extra_divine_domain_strength = {
 	name = "Extra Divine Domain: Strength"
 	icon = labor
@@ -249,10 +345,46 @@ extra_divine_domain_sun = {
 	}
 }
 
+extra_divine_domain_travel = {
+	name = "Extra Divine Domain: Travel"
+	icon = compass
+	divine_domain = travel
+	types = {
+		divine_trait
+	}
+	conditions = {
+		divine_rank >= 6
+	}
+}
+
+extra_divine_domain_trickery = {
+	name = "Extra Divine Domain: Trickery"
+	icon = skull
+	divine_domain = trickery
+	types = {
+		divine_trait
+	}
+	conditions = {
+		divine_rank >= 6
+	}
+}
+
 extra_divine_domain_war = {
 	name = "Extra Divine Domain: War"
 	icon = crossed_sabers
 	divine_domain = war
+	types = {
+		divine_trait
+	}
+	conditions = {
+		divine_rank >= 6
+	}
+}
+
+extra_divine_domain_water = {
+	name = "Extra Divine Domain: Water"
+	icon = anchor
+	divine_domain = water
 	types = {
 		divine_trait
 	}
