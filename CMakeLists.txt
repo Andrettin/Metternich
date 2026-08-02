@@ -1091,13 +1091,6 @@ if(WITH_GEOJSON)
 	add_definitions(-DUSE_GEOJSON)
 endif()
 
-if(MSVC)
-	add_definitions(/FI"metternich.h")
-else()
-	#GCC/Clang
-	add_definitions(-include metternich.h)
-endif()
-
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -1134,6 +1127,13 @@ qt_add_shaders(metternich_main "xbrz_shader"
 )
 
 target_precompile_headers(metternich PRIVATE src/metternich_pch.h)
+
+if(MSVC)
+	target_compile_options(metternich PRIVATE /FI"metternich.h")
+else()
+	#GCC/Clang
+	add_definitions(-include metternich.h)
+endif()
 
 set_target_properties(metternich PROPERTIES
 	UNITY_BUILD_MODE BATCH
