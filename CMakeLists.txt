@@ -1047,6 +1047,7 @@ set(metternich_HDRS
 	${xbrz_HDRS}
 	src/engine_interface.h
 	src/metternich.h
+	src/metternich_pch.h
 )
 
 set(metternich_main_SRCS
@@ -1132,7 +1133,7 @@ qt_add_shaders(metternich_main "xbrz_shader"
 		"xbrz.frag.qsb"
 )
 
-target_precompile_headers(metternich REUSE_FROM archimedes)
+target_precompile_headers(metternich PRIVATE src/metternich_pch.h)
 
 set_target_properties(metternich PROPERTIES
 	UNITY_BUILD_MODE BATCH
@@ -1147,8 +1148,8 @@ set_source_files_properties(${game_test_SRCS} PROPERTIES UNITY_GROUP "game_test"
 
 target_link_libraries(metternich PUBLIC archimedes ${OpenCV_LIBS})
 
-target_precompile_headers(metternich_main REUSE_FROM archimedes)
-target_precompile_headers(metternich_test REUSE_FROM archimedes)
+target_precompile_headers(metternich_main REUSE_FROM metternich)
+target_precompile_headers(metternich_test REUSE_FROM metternich)
 
 if(WIN32)
 	set_target_properties(metternich_main 
