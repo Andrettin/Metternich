@@ -139,6 +139,7 @@ cybele = {
 	major_domains = {
 		earth
 		#fertility
+		good
 		protection
 	}
 	character = {

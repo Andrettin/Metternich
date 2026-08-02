@@ -58,12 +58,20 @@ elemental = {
 	name = "Elemental"
 }
 
+evil = {
+	name = "Evil"
+}
+
 fire = {
 	name = "Fire"
 }
 
 glory = {
 	name = "Glory"
+}
+
+good = {
+	name = "Good"
 }
 
 guardian = {

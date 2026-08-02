@@ -13,6 +13,7 @@ blade_barrier = {
 	}
 	divine_domains = {
 		creation
+		good
 		guardian
 	}
 	character_classes = {
