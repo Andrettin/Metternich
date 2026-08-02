@@ -1,0 +1,312 @@
+geb = { #Source: Claude Traunecker, "Os Deuses do Egito", 1992, pp. 30, 91, 96.
+	name = "Geb"
+	pantheon = pharaonic
+	divine_rank = intermediate_deity
+	religions = {
+		kemetic
+	}
+	major_domains = {
+		astral
+		elemental
+		guardian
+		protection
+		summoning
+	}
+	minor_domains = {
+		combat
+		creation
+	}
+	character = {
+		species = human
+		character_class = aristocrat
+		culture = egyptian
+		religion = kemetic
+		gender = male
+		father = shu
+		mother = tefnut
+	}
+	
+	#god of earth and fate
+}
+
+horus = { #Source: Claude Traunecker, "Os Deuses do Egito", 1992, pp. 41, 55, 66, 96.
+	name = "Horus"
+	pantheon = pharaonic
+	divine_rank = lesser_deity
+	religions = {
+		kemetic
+	}
+	major_domains = {
+		combat
+		sun
+	}
+	minor_domains = {
+		guardian
+		healing
+		necromantic
+		protection
+	}
+	character = {
+		species = human
+		character_class = warrior
+		culture = egyptian
+		religion = kemetic
+		gender = male
+		father = osiris
+		mother = isis
+	}
+	
+	#warrior god who takes the shape of a falcon
+}
+
+isis = { #Source: Claude Traunecker, "Os Deuses do Egito", 1992, pp. 55, 95-96.
+	name = "Isis"
+	pantheon = pharaonic
+	divine_level = 17
+	religions = {
+		kemetic
+	}
+	major_domains = {
+		astral
+		charm
+		combat
+		creation
+		divination
+		elemental
+		guardian
+		healing
+		protection
+		sun
+		
+		water
+	}
+	minor_domains = {
+		necromantic
+	}
+	traits = {
+		extra_divine_domain_water
+	}
+	character = {
+		species = human
+		character_class = aristocrat
+		culture = egyptian
+		religion = kemetic
+		gender = female
+		father = geb
+		mother = nut
+		birth_date = -4000
+	}
+	
+	#wife of Osiris
+}
+
+nephthys = { #Source: Claude Traunecker, "Os Deuses do Egito", 1992, pp. 95-96.
+	name = "Nephthys"
+	pantheon = pharaonic
+	divine_level = 12
+	religions = {
+		kemetic
+	}
+	major_domains = {
+		charm
+		combat
+		guardian
+		healing
+		protection
+		sun
+		
+		repose
+	}
+	minor_domains = {
+		weather
+	}
+	traits = {
+		extra_divine_domain_repose
+	}
+	character = {
+		species = human
+		character_class = aristocrat
+		culture = egyptian
+		religion = kemetic
+		gender = female
+		father = geb
+		mother = nut
+	}
+}
+
+nut = { #Source: Claude Traunecker, "Os Deuses do Egito", 1992, pp. 47, 50, 91, 96.
+	name = "Nut"
+	pantheon = pharaonic
+	divine_rank = intermediate_deity
+	religions = {
+		kemetic
+	}
+	major_domains = {
+		astral
+		charm
+		divination
+		guardian
+		protection
+		weather
+	}
+	minor_domains = {
+		healing
+	}
+	character = {
+		species = human
+		character_class = aristocrat
+		culture = egyptian
+		religion = kemetic
+		gender = female
+		father = shu
+		mother = tefnut
+	}
+	
+	#sky goddess
+	#takes the shape of a cow
+}
+
+osiris = { #Source: Claude Traunecker, "Os Deuses do Egito", 1992, pp. 51, 61, 66, 68, 96, 109-110.
+	name = "Osiris"
+	pantheon = pharaonic
+	divine_level = 18
+	religions = {
+		kemetic
+	}
+	major_domains = {
+		astral
+		guardian
+		healing
+		necromantic
+		protection
+		
+		air
+		earth
+		repose
+	}
+	minor_domains = {
+		charm
+		combat
+	}
+	traits = {
+		extra_divine_domain_air
+		extra_divine_domain_earth
+		extra_divine_domain_repose
+	}
+	character = {
+		species = human
+		character_class = aristocrat
+		culture = egyptian
+		religion = kemetic
+		gender = male
+		father = geb
+		mother = nut
+	}
+	
+	#rules over the underworld world of Duat
+	#deity of royalty, death and fertility
+	#has the appearance of a mummy
+	#uses a heqa (a sheepherd's staff) and a nekhekh (a lash)
+	#murdered by his brother Seth, but came back to life thanks to the magic of Isis and Nephthys
+}
+
+set = { #Source: Claude Traunecker, "Os Deuses do Egito", 1992, pp. 95-96, 129.
+	name = "Set"
+	pantheon = pharaonic
+	divine_level = 16
+	religions = {
+		kemetic
+	}
+	major_domains = {
+		astral
+		combat
+		guardian
+		necromantic
+		summoning
+		
+		air
+		destruction
+		strength
+	}
+	minor_domains = {
+		healing
+		protection
+	}
+	traits = {
+		extra_divine_domain_air
+		extra_divine_domain_destruction
+		extra_divine_domain_strength
+	}
+	character = {
+		species = human
+		character_class = warrior
+		culture = egyptian
+		religion = kemetic
+		gender = male
+		father = geb
+		mother = nut
+	}
+	
+	#associated with brutal strength and with the desertic wildernesses
+}
+
+shu = { #Source: Claude Traunecker, "Os Deuses do Egito", 1992, pp. 48, 91, 94.
+	name = "Shu"
+	pantheon = pharaonic
+	divine_rank = intermediate_deity
+	religions = {
+		kemetic
+	}
+	major_domains = {
+		astral
+		elemental
+		sun
+	}
+	minor_domains = {
+		guardian
+		protection
+		weather
+	}
+	character = {
+		species = human
+		character_class = aristocrat
+		culture = egyptian
+		religion = kemetic
+		gender = male
+	}
+	
+	#associated with the space between earth and sky
+	#son of Atum
+}
+
+tefnut = { #Source: Claude Traunecker, "Os Deuses do Egito", 1992, p. 94.
+	name = "Tefnut"
+	pantheon = pharaonic
+	divine_rank = intermediate_deity
+	religions = {
+		kemetic
+	}
+	major_domains = {
+		astral
+		creation
+		elemental
+		protection
+		sun
+		weather
+	}
+	minor_domains = {
+		charm
+		divination
+	}
+	character = {
+		species = human
+		character_class = aristocrat
+		culture = egyptian
+		religion = kemetic
+		gender = female
+	}
+	
+	#associated with the atmosphere of the underworld
+	#associated with flaming destruction
+	#daughter of Atum
+}
