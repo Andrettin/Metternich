@@ -78,7 +78,6 @@ MenuBase {
 		IconButton {
 			id: realm_map_mode_button
 			icon_identifier: "globe"
-			tooltip: "Realm Map"
 			enabled: !loading_scenario
 			highlighted: diplomatic_map.mode === DiplomaticMap.Mode.Realm
 			
@@ -88,29 +87,51 @@ MenuBase {
 					diplomatic_map.selected_country = null
 				}
 			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Realm Map"
+				} else {
+					status_text = ""
+				}
+			}
 		}
 		
 		IconButton {
 			id: political_map_mode_button
 			icon_identifier: "flag"
-			tooltip: "Political Map"
 			enabled: !loading_scenario
 			highlighted: diplomatic_map.mode === DiplomaticMap.Mode.Political
 			
 			onClicked: {
 				diplomatic_map.mode = DiplomaticMap.Mode.Political
 			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Political Map"
+				} else {
+					status_text = ""
+				}
+			}
 		}
 		
 		IconButton {
 			id: landless_domains_button
 			icon_identifier: "settlement"
-			tooltip: "Show Landless Domains"
 			enabled: !loading_scenario
 			highlighted: diplomatic_map.show_landless_domains
 			
 			onClicked: {
 				diplomatic_map.show_landless_domains = !diplomatic_map.show_landless_domains
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Show Landless Domains"
+				} else {
+					status_text = ""
+				}
 			}
 		}
 		
@@ -124,45 +145,110 @@ MenuBase {
 			onClicked: {
 				diplomatic_map.mode = DiplomaticMap.Mode.Treaty
 			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Treaty Map"
+				} else {
+					status_text = ""
+				}
+			}
 		}
 		
-		/*
 		IconButton {
 			id: terrain_map_mode_button
 			icon_identifier: "mountains"
-			tooltip: "Terrain Map"
 			enabled: !loading_scenario
 			highlighted: diplomatic_map.mode === DiplomaticMap.Mode.Terrain
 			
 			onClicked: {
 				diplomatic_map.mode = DiplomaticMap.Mode.Terrain
 			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Terrain Map"
+				} else {
+					status_text = ""
+				}
+			}
 		}
 		
 		IconButton {
 			id: cultural_map_mode_button
 			icon_identifier: "music"
-			tooltip: "Cultural Map"
 			enabled: !loading_scenario
 			highlighted: diplomatic_map.mode === DiplomaticMap.Mode.Cultural
 			
 			onClicked: {
 				diplomatic_map.mode = DiplomaticMap.Mode.Cultural
 			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Cultural Map"
+				} else {
+					status_text = ""
+				}
+			}
 		}
 		
 		IconButton {
 			id: religious_map_mode_button
 			icon_identifier: "wooden_cross"
-			tooltip: "Religious Map"
 			enabled: !loading_scenario
 			highlighted: diplomatic_map.mode === DiplomaticMap.Mode.Religious
 			
 			onClicked: {
 				diplomatic_map.mode = DiplomaticMap.Mode.Religious
 			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Religious Map"
+				} else {
+					status_text = ""
+				}
+			}
 		}
-		*/
+		
+		IconButton {
+			id: trade_zone_map_mode_button
+			icon_identifier: "chest"
+			enabled: !loading_scenario
+			highlighted: diplomatic_map.mode === DiplomaticMap.Mode.TradeZone
+			
+			onClicked: {
+				diplomatic_map.mode = DiplomaticMap.Mode.TradeZone
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Trade Zone Map"
+				} else {
+					status_text = ""
+				}
+			}
+		}
+		
+		IconButton {
+			id: temple_map_mode_button
+			icon_identifier: "bronze_cross_detailed"
+			enabled: !loading_scenario
+			highlighted: diplomatic_map.mode === DiplomaticMap.Mode.Temple
+			
+			onClicked: {
+				diplomatic_map.mode = DiplomaticMap.Mode.Temple
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Temple Map"
+				} else {
+					status_text = ""
+				}
+			}
+		}
 	}
 	
 	SmallText {
