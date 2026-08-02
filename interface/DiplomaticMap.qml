@@ -57,7 +57,7 @@ Flickable {
 				
 				readonly property var country: model.modelData
 				readonly property bool selected: selected_country === country
-				readonly property var diplomatic_map_image_rect: diplomatic_map.mode === DiplomaticMap.Mode.Realm ? country.game_data.diplomacy.realm_diplomatic_map_image_rect : country.game_data.diplomacy.diplomatic_map_image_rect
+				readonly property var diplomatic_map_image_rect: country ? (diplomatic_map.mode === DiplomaticMap.Mode.Realm ? country.game_data.diplomacy.realm_diplomatic_map_image_rect : country.game_data.diplomacy.diplomatic_map_image_rect) : Qt.rect(0, 0, 0, 0)
 			}
 		}
 		
@@ -80,7 +80,7 @@ Flickable {
 		
 		TinyText {
 			id: country_label
-			text: country.game_data.name
+			text: country ? country.game_data.name : ""
 			x: Math.floor(text_rect.x * metternich.map.diplomatic_map_tile_scale_double * scale_factor)
 			y: Math.floor(text_rect.y * metternich.map.diplomatic_map_tile_scale_double * scale_factor)
 			width: Math.floor(text_rect_width)
@@ -89,11 +89,11 @@ Flickable {
 			horizontalAlignment: contentWidth <= width ? Text.AlignHCenter : (diplomatic_map_image_rect.x === 0 ? Text.AlignLeft : ((diplomatic_map_image_rect.x + diplomatic_map_image_rect.width) >= metternich.map.diplomatic_map_image_size.width ? Text.AlignRight : Text.AlignHCenter))
 			verticalAlignment: contentHeight <= height ? Text.AlignVCenter : (diplomatic_map_image_rect.y === 0 ? Text.AlignTop : ((diplomatic_map_image_rect.y + diplomatic_map_image_rect.height) >= metternich.map.diplomatic_map_image_size.height ? Text.AlignBottom : Text.AlignVCenter))
 			font.pixelSize: Math.min(Math.max(Math.floor(width * 3 / 4 / text.length), 8 * scale_factor), 12 * scale_factor)
-			visible: country.game_data.provinces.length > 0 && (country.game_data.diplomacy.is_independent() || diplomatic_map.mode !== DiplomaticMap.Mode.Realm) && (diplomatic_map.mode === DiplomaticMap.Mode.Realm || diplomatic_map.mode === DiplomaticMap.Mode.Political || diplomatic_map.mode === DiplomaticMap.Mode.Diplomatic) && !diplomatic_map.show_landless_domains && (contentWidth <= (width * 2) || country.game_data.provinces.length > 1) && (metternich.game.player_country === null || (country.game_data.capital !== null && metternich.game.player_country.game_data.is_tile_explored(country.game_data.capital)))
+			visible: country && country.game_data.provinces.length > 0 && (country.game_data.diplomacy.is_independent() || diplomatic_map.mode !== DiplomaticMap.Mode.Realm) && (diplomatic_map.mode === DiplomaticMap.Mode.Realm || diplomatic_map.mode === DiplomaticMap.Mode.Political || diplomatic_map.mode === DiplomaticMap.Mode.Diplomatic) && !diplomatic_map.show_landless_domains && (contentWidth <= (width * 2) || country.game_data.provinces.length > 1) && (metternich.game.player_country === null || (country.game_data.capital !== null && metternich.game.player_country.game_data.is_tile_explored(country.game_data.capital)))
 					
 			readonly property var country: model.modelData
-			readonly property var diplomatic_map_image_rect: diplomatic_map.mode === DiplomaticMap.Mode.Realm ? country.game_data.diplomacy.realm_diplomatic_map_image_rect : country.game_data.diplomacy.diplomatic_map_image_rect
-			readonly property var text_rect: diplomatic_map.mode === DiplomaticMap.Mode.Realm ? country.game_data.realm_text_rect : country.game_data.text_rect
+			readonly property var diplomatic_map_image_rect: country ? (diplomatic_map.mode === DiplomaticMap.Mode.Realm ? country.game_data.diplomacy.realm_diplomatic_map_image_rect : country.game_data.diplomacy.diplomatic_map_image_rect) : Qt.rect(0, 0, 0, 0)
+			readonly property var text_rect: country ? (diplomatic_map.mode === DiplomaticMap.Mode.Realm ? country.game_data.realm_text_rect : country.game_data.text_rect) : Qt.rect(0, 0, 0, 0)
 			readonly property int text_rect_width: Math.floor(text_rect.width * metternich.map.diplomatic_map_tile_scale_double * scale_factor)
 			readonly property int text_rect_height: Math.floor(text_rect.height * metternich.map.diplomatic_map_tile_scale_double * scale_factor)
 		}
@@ -154,10 +154,10 @@ Flickable {
 			y: site ? Math.floor(site.game_data.tile_pos.y * metternich.map.diplomatic_map_tile_scale_double * scale_factor) - Math.floor(height / 2) : 0
 			width: site_icon.width + 4 * scale_factor
 			height: site_icon.height + 4 * scale_factor
-			visible: site !== null && domain.game_data.provinces.length === 0 && diplomatic_map.show_landless_domains && (metternich.game.player_country === null || metternich.game.player_country.game_data.is_tile_explored(site.game_data.tile_pos))
+			visible: site !== null && domain !== null && domain.game_data.provinces.length === 0 && diplomatic_map.show_landless_domains && (metternich.game.player_country === null || metternich.game.player_country.game_data.is_tile_explored(site.game_data.tile_pos))
 			
 			readonly property var domain: model.modelData
-			readonly property var site: domain.game_data.capital
+			readonly property var site: domain ? domain.game_data.capital : null
 			readonly property bool selected: selected_country === domain
 			readonly property var holding_type: site ? site.game_data.holding_type : null
 			
@@ -190,11 +190,20 @@ Flickable {
 						diplomatic_map.selected_country = domain
 					}
 				}
-			}
-			
-			CustomTooltip {
-				text: domain.game_data.titled_name
-				visible: site_mouse_area.containsMouse
+				
+				onContainsMouseChanged: {
+					if (typeof status_text !== 'undefined') {
+						var text = domain.game_data.titled_name
+						
+						if (containsMouse) {
+							status_text = text
+						} else {
+							if (status_text === text) {
+								status_text = ""
+							}
+						}
+					}
+				}
 			}
 		}
 	}
