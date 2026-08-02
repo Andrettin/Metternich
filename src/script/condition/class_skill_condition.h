@@ -5,6 +5,7 @@
 #include "character/character_game_data.h"
 #include "character/skill.h"
 #include "script/condition/condition.h"
+#include "species/species.h"
 
 namespace metternich {
 
@@ -26,6 +27,10 @@ public:
 	virtual bool check_assignment(const character *scope, const read_only_context &ctx) const override
 	{
 		Q_UNUSED(ctx);
+
+		if (scope->get_species() != nullptr && scope->get_species()->has_class_skill(this->skill)) {
+			return true;
+		}
 
 		return scope->get_game_data()->get_character_class() != nullptr && scope->get_game_data()->get_character_class()->has_class_skill(this->skill);
 	}

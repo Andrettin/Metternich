@@ -11,6 +11,8 @@ class character;
 class character_attribute;
 class culture;
 class phenotype;
+class skill;
+class skill_group;
 class taxon;
 enum class geological_era;
 enum class taxonomic_rank;
@@ -128,6 +130,18 @@ public:
 		this->cultures.push_back(culture);
 	}
 
+	const data_entry_set<skill> &get_class_skills() const
+	{
+		return this->class_skills;
+	}
+
+	const data_entry_set<skill_group> &get_class_skill_groups() const
+	{
+		return this->class_skill_groups;
+	}
+
+	bool has_class_skill(const skill *skill) const;
+
 	int get_min_attribute_value(const character_attribute *attribute) const;
 	int get_max_attribute_value(const character_attribute *attribute) const;
 
@@ -149,6 +163,8 @@ private:
 	std::vector<const species *> evolutions; //species to which this one can evolve
 	std::vector<const phenotype *> phenotypes;
 	std::vector<const culture *> cultures;
+	data_entry_set<skill> class_skills;
+	data_entry_set<skill_group> class_skill_groups;
 	data_entry_map<character_attribute, int> min_attribute_values;
 	data_entry_map<character_attribute, int> max_attribute_values;
 	character_class_map<int> character_class_level_limits;

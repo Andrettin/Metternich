@@ -4,6 +4,8 @@
 
 #include "character/character_attribute.h"
 #include "character/character_class.h"
+#include "character/skill.h"
+#include "character/skill_group.h"
 #include "character/starting_age_category.h"
 #include "script/modifier.h"
 #include "species/geological_era.h"
@@ -157,6 +159,14 @@ void species::process_gsml_scope(const gsml_data &scope)
 			character_class *character_class = character_class::get(value);
 			character_class->add_allowed_species(this);
 		}
+	} else if (tag == "class_skills") {
+		for (const std::string &value : values) {
+			this->class_skills.insert(skill::get(value));
+		}
+	} else if (tag == "class_skill_groups") {
+		for (const std::string &value : values) {
+			this->class_skill_groups.insert(skill_group::get(value));
+		}
 	} else if (tag == "min_attribute_values") {
 		scope.for_each_property([&](const gsml_property &property) {
 			const std::string &key = property.get_key();
@@ -262,6 +272,17 @@ std::string species::get_scientific_name() const
 bool species::is_prehistoric() const
 {
 	return this->get_era() < geological_era::holocene;
+}
+
+bool species::has_class_skill(const skill *skill) const
+{
+	for (const skill_group *skill_group : skill->get_groups()) {
+		if (this->get_class_skill_groups().contains(skill_group)) {
+			return true;
+		}
+	}
+
+	return this->get_class_skills().contains(skill);
 }
 
 int species::get_min_attribute_value(const character_attribute *attribute) const
