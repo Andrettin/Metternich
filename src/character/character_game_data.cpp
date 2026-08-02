@@ -51,6 +51,7 @@
 #include "map/site_game_data.h"
 #include "map/tile.h"
 #include "religion/deity.h"
+#include "religion/religion.h"
 #include "script/condition/and_condition.h"
 #include "script/effect/effect_list.h"
 #include "script/factor.h"
@@ -644,6 +645,7 @@ QCoro::Task<void> character_game_data::apply_species_and_class(const int level, 
 
 	co_await this->generate_attributes();
 	this->apply_bloodline(apply_history);
+	this->initialize_patron_deity();
 
 	const metternich::character_class *character_class = this->get_character_class();
 	if (character_class != nullptr) {
@@ -1461,6 +1463,42 @@ std::vector<const metternich::character *> character_game_data::get_next_of_kin(
 	}
 
 	return next_of_kin;
+}
+
+void character_game_data::initialize_patron_deity()
+{
+	assert_throw(this->get_patron_deity() == nullptr);
+
+	if (this->character->get_patron_deity() != nullptr) {
+		this->patron_deity = this->character->get_patron_deity();
+	} else if (this->character->get_deity() != nullptr) {
+		this->patron_deity = this->character->get_deity();
+	} else if (this->character->get_religion() != nullptr) {
+		//if a character has a deity-derived bloodline, they will choose that deity as their patron deity
+		if (this->get_bloodline() != nullptr && this->get_bloodline()->get_founder()->get_deity() != nullptr && vector::contains(this->character->get_religion()->get_deities(), this->get_bloodline()->get_founder()->get_deity())) {
+			this->patron_deity = this->get_bloodline()->get_founder()->get_deity();
+			return;
+		}
+
+		std::vector<const metternich::deity *> potential_deities;
+		for (const metternich::deity *deity : this->character->get_religion()->get_deities()) {
+			for (int i = 0; i < deity->get_divine_level(); ++i) {
+				potential_deities.push_back(deity);
+			}
+		}
+
+		if (!potential_deities.empty()) {
+			this->patron_deity = vector::get_random(potential_deities);
+		}
+	}
+
+	if (this->get_patron_deity() != nullptr && this->character->get_religion() == nullptr) {
+		throw std::runtime_error(std::format("Character \"{}\" has a patron deity, but no religion.", this->character->get_identifier()));
+	}
+
+	if (this->character->get_deity() != nullptr && this->get_patron_deity() != this->character->get_deity()) {
+		throw std::runtime_error(std::format("Character \"{}\" is a deity, but it has a different patron deity than itself.", this->character->get_identifier()));
+	}
 }
 
 const metternich::character_class *character_game_data::get_character_class() const

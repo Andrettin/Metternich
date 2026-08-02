@@ -221,8 +221,6 @@ QCoro::Task<character *> character::generate(const metternich::species *species,
 		generated_character->initialize_bloodline();
 	}
 
-	generated_character->initialize_patron_deity();
-
 	generated_character->check();
 
 	co_await generated_character->reset_game_data();
@@ -412,7 +410,6 @@ void character::initialize()
 	}
 
 	this->initialize_bloodline();
-	this->initialize_patron_deity();
 
 	this->calculate_ancestry_depth();
 
@@ -445,14 +442,6 @@ void character::check() const
 
 	if (this->get_religion() == nullptr && this->get_species()->is_sapient() && !this->is_temporary()) {
 		throw std::runtime_error(std::format("Character \"{}\" has no religion.", this->get_identifier()));
-	}
-
-	if (this->get_patron_deity() != nullptr && this->get_religion() == nullptr) {
-		throw std::runtime_error(std::format("Character \"{}\" has a patron deity, but no religion.", this->get_identifier()));
-	}
-
-	if (this->get_deity() != nullptr && this->get_patron_deity() != this->get_deity()) {
-		throw std::runtime_error(std::format("Character \"{}\" is a deity, but it has a different patron deity than itself.", this->get_identifier()));
 	}
 
 	if (this->get_phenotype() == nullptr) {
@@ -512,9 +501,6 @@ gsml_data character::to_gsml_data() const
 	}
 	if (this->get_religion() != nullptr) {
 		data.add_property("religion", this->get_religion()->get_identifier());
-	}
-	if (this->get_patron_deity() != nullptr) {
-		data.add_property("patron_deity", this->get_patron_deity()->get_identifier());
 	}
 	if (this->get_phenotype() != nullptr) {
 		data.add_property("phenotype", this->get_phenotype()->get_identifier());
@@ -831,39 +817,6 @@ const civilian_unit_type *character::get_civilian_unit_type() const
 	}
 
 	return nullptr;
-}
-
-void character::initialize_patron_deity()
-{
-	if (this->get_patron_deity() != nullptr) {
-		return;
-	}
-
-	if (this->get_deity() != nullptr) {
-		this->patron_deity = this->get_deity();
-		return;
-	}
-
-	if (this->get_religion() == nullptr) {
-		return;
-	}
-
-	//if a character has a deity-derived bloodline, they will choose that deity as their patron deity
-	if (this->get_bloodline() != nullptr && this->get_bloodline()->get_founder()->get_deity() != nullptr && vector::contains(this->get_religion()->get_deities(), this->get_bloodline()->get_founder()->get_deity())) {
-		this->patron_deity = this->get_bloodline()->get_founder()->get_deity();
-		return;
-	}
-
-	std::vector<const metternich::deity *> potential_deities;
-	for (const metternich::deity *deity : this->get_religion()->get_deities()) {
-		for (int i = 0; i < deity->get_divine_level(); ++i) {
-			potential_deities.push_back(deity);
-		}
-	}
-
-	if (!potential_deities.empty()) {
-		this->patron_deity = vector::get_random(potential_deities);
-	}
 }
 
 bool character::is_innate_deity() const

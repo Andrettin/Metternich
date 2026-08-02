@@ -220,8 +220,6 @@ public:
 		return this->patron_deity;
 	}
 
-	void initialize_patron_deity();
-
 	const metternich::phenotype *get_phenotype() const
 	{
 		return this->phenotype;

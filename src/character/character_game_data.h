@@ -243,6 +243,8 @@ public:
 		return this->patron_deity;
 	}
 
+	void initialize_patron_deity();
+
 	const site *get_home_site() const
 	{
 		return this->home_site;
