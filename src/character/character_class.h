@@ -36,6 +36,7 @@ class character_class final : public named_data_entry, public data_type<characte
 	Q_PROPERTY(const metternich::character_attribute* attribute MEMBER attribute READ get_attribute NOTIFY changed)
 	Q_PROPERTY(metternich::military_unit_category military_unit_category MEMBER military_unit_category READ get_military_unit_category NOTIFY changed)
 	Q_PROPERTY(const metternich::civilian_unit_class* civilian_unit_class MEMBER civilian_unit_class READ get_civilian_unit_class NOTIFY changed)
+	Q_PROPERTY(bool divine_spellcaster MEMBER divine_spellcaster NOTIFY changed)
 	Q_PROPERTY(int max_level MEMBER max_level READ get_max_level NOTIFY changed)
 	Q_PROPERTY(metternich::starting_age_category starting_age_category MEMBER starting_age_category READ get_starting_age_category NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
@@ -82,6 +83,11 @@ public:
 	const metternich::civilian_unit_class *get_civilian_unit_class() const
 	{
 		return this->civilian_unit_class;
+	}
+
+	bool is_divine_spellcaster() const
+	{
+		return this->divine_spellcaster || (this->get_base_class() != nullptr && this->get_base_class()->is_divine_spellcaster());
 	}
 
 	int get_max_level() const
@@ -305,6 +311,7 @@ private:
 	const character_attribute *attribute = nullptr;
 	metternich::military_unit_category military_unit_category;
 	const metternich::civilian_unit_class *civilian_unit_class = nullptr;
+	bool divine_spellcaster = false;
 	int max_level = 0;
 	metternich::starting_age_category starting_age_category{};
 	technology *required_technology = nullptr;

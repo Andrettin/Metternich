@@ -17,6 +17,7 @@
 #include "religion/divine_rank.h"
 #include "religion/pantheon.h"
 #include "religion/religion.h"
+#include "spell/spell.h"
 #include "technology/technology.h"
 #include "util/assert_util.h"
 #include "util/log_util.h"
@@ -191,6 +192,19 @@ divine_rank deity::get_divine_rank() const
 std::string_view deity::get_divine_rank_name() const
 {
 	return this->get_pantheon()->get_divine_rank_name(this->get_divine_rank());
+}
+
+bool deity::can_grant_spell(const spell *spell) const
+{
+	if (vector::intersects(this->get_major_domains(), spell->get_divine_domains())) {
+		return true;
+	}
+
+	if (spell->get_level() <= spell::max_spell_level_for_minor_divine_domain && vector::intersects(this->get_minor_domains(), spell->get_divine_domains())) {
+		return true;
+	}
+
+	return false;
 }
 
 bool deity::is_available_for_country_slot(const domain *domain, const idea_slot *slot) const

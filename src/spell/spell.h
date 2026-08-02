@@ -45,6 +45,7 @@ public:
 	static constexpr const char class_identifier[] = "spell";
 	static constexpr const char property_class_identifier[] = "metternich::spell*";
 	static constexpr const char database_folder[] = "spells";
+	static constexpr int max_spell_level_for_minor_divine_domain = 3;
 
 	explicit spell(const std::string &identifier);
 	~spell();

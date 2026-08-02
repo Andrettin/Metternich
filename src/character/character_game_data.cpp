@@ -3204,6 +3204,15 @@ bool character_game_data::can_learn_spell(const spell *spell, std::string *reaso
 		return false;
 	}
 
+	if (this->get_character_class()->is_divine_spellcaster() && !spell->get_divine_domains().empty()) {
+		if (
+			(this->get_patron_deity() == nullptr || !this->get_patron_deity()->can_grant_spell(spell))
+			&& (this->character->get_religion() == nullptr || !vector::intersects(this->character->get_religion()->get_divine_domains(), spell->get_divine_domains()))
+		) {
+			return false;
+		}
+	}
+
 	if (this->has_learned_spell(spell)) {
 		if (reason != nullptr) {
 			*reason = "already learned";

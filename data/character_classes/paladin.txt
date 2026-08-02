@@ -2,6 +2,7 @@ paladin = {
 	name = "Paladin"
 	attribute = strength
 	military_unit_category = general
+	divine_spellcaster = true
 	max_level = 20
 	starting_age_category = self_taught
 	mana_bonus_table = paladin_mana_bonus

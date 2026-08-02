@@ -16,6 +16,7 @@ class cultural_group;
 class divine_domain;
 class pantheon;
 class religion;
+class spell;
 class trait;
 enum class divine_rank;
 
@@ -93,6 +94,8 @@ public:
 	{
 		return this->traits;
 	}
+
+	bool can_grant_spell(const spell *spell) const;
 
 	virtual bool is_available_for_country_slot(const domain *domain, const idea_slot *slot) const override;
 
