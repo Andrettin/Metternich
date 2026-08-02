@@ -7,7 +7,6 @@ import "../dialogs"
 
 MenuBase {
 	id: scenario_menu
-	title: qsTr("Scenario")
 	
 	property var loading_scenario: false
 	property var map_template_loaded: false
@@ -17,6 +16,25 @@ MenuBase {
 	readonly property var selected_country_game_data: selected_country ? selected_country.game_data : null
 	property int setup_count: 0
 	readonly property var scenarios: metternich.get_top_level_scenarios()
+	property string status_text: ""
+	
+	Item {
+		id: top_area
+		anchors.left: parent.left
+		anchors.right: parent.right
+		anchors.top: parent.top
+		height: 16 * scale_factor
+		
+		SmallText {
+			id: status_label
+			text: status_text
+			anchors.top: parent.top
+			anchors.topMargin: 1 * scale_factor
+			anchors.right: parent.right
+			anchors.rightMargin: 8 * scale_factor
+			width: 384 * scale_factor
+		}
+	}
 	
 	Rectangle {
 		id: diplomatic_map_background
@@ -35,8 +53,7 @@ MenuBase {
 		anchors.leftMargin: 16 * scale_factor
 		anchors.right: map_mode_button_column.left
 		anchors.rightMargin: 16 * scale_factor
-		anchors.top: title_item.bottom
-		anchors.topMargin: 32 * scale_factor
+		anchors.top: top_area.bottom
 		anchors.bottom: domain_name_area.top
 		anchors.bottomMargin: 16 * scale_factor
 		width: 512 * scale_factor
@@ -198,7 +215,7 @@ MenuBase {
 		anchors.rightMargin: 4 * scale_factor
 		anchors.bottom: parent.bottom
 		anchors.bottomMargin: 4 * scale_factor
-		height: 96 * scale_factor
+		height: 136 * scale_factor
 		contentWidth: contentItem.childrenRect.width
 		contentHeight: contentItem.childrenRect.height
 		boundsBehavior: Flickable.StopAtBounds
@@ -390,8 +407,7 @@ MenuBase {
 		id: scenario_list
 		anchors.left: parent.left
 		anchors.leftMargin: 16 * scale_factor
-		anchors.top: title_item.bottom
-		anchors.topMargin: 32 * scale_factor
+		anchors.top: top_area.bottom
 		anchors.bottom: button_column.top
 		anchors.bottomMargin: 16 * scale_factor
 		width: 256 * scale_factor
