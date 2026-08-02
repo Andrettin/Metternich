@@ -8,6 +8,7 @@
 #include "character/trait.h"
 #include "culture/cultural_group.h"
 #include "culture/culture.h"
+#include "database/data_entry_container.h"
 #include "database/defines.h"
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
@@ -118,6 +119,9 @@ void deity::initialize()
 	if (this->get_obsolescence_technology() != nullptr) {
 		this->get_obsolescence_technology()->add_disabled_deity(this);
 	}
+
+	std::sort(this->major_domains.begin(), this->major_domains.end(), data_entry_compare<divine_domain>());
+	std::sort(this->minor_domains.begin(), this->minor_domains.end(), data_entry_compare<divine_domain>());
 
 	idea::initialize();
 }

@@ -32,6 +32,7 @@
 #include "item/object_type.h"
 #include "map/site_attribute.h"
 #include "map/site_feature.h"
+#include "religion/divine_domain.h"
 #include "species/species.h"
 #include "technology/technology_category.h"
 #include "technology/technology_subcategory.h"
@@ -55,6 +56,7 @@ template struct data_entry_compare<civilian_unit_type>;
 template struct data_entry_compare<commodity_unit>;
 template struct data_entry_compare<cultural_group>;
 template struct data_entry_compare<culture_base>;
+template struct data_entry_compare<divine_domain>;
 template struct data_entry_compare<domain_attribute>;
 template struct data_entry_compare<domain_skill>;
 template struct data_entry_compare<dungeon_area>;
