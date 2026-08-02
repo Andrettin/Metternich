@@ -17,6 +17,10 @@ void religion::initialize()
 		this->color = random::get()->generate_color();
 	}
 
+	if (this->get_group()->is_monotheistic()) {
+		this->set_monotheistic(true);
+	}
+
 	named_data_entry::initialize();
 }
 

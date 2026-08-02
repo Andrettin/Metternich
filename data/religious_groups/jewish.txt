@@ -1,3 +1,4 @@
 jewish = {
 	name = "Jewish"
+	monotheistic = true
 }

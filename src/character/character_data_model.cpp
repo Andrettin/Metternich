@@ -262,8 +262,41 @@ void character_data_model::reset_model()
 			this->top_rows.push_back(std::make_unique<character_data_row>("Culture:", this->character->get_culture()->get_name()));
 		}
 
-		if (!character_game_data->is_deity() && this->character->get_religion() != nullptr) {
-			this->top_rows.push_back(std::make_unique<character_data_row>("Religion:", this->character->get_religion()->get_name()));
+		if (!character_game_data->is_deity()) {
+			if (this->character->get_religion() != nullptr) {
+				this->top_rows.push_back(std::make_unique<character_data_row>("Religion:", this->character->get_religion()->get_name()));
+			}
+
+			if (character_game_data->get_patron_deity() != nullptr) {
+				auto row = std::make_unique<character_data_row>(std::format("Patron {}:", this->character->get_religion()->is_monotheistic() ? "Saint" : "Deity"), character_game_data->get_patron_deity()->get_name());
+
+				std::string tooltip = "Divine Domains: ";
+				bool first = true;
+				for (const divine_domain *domain : character_game_data->get_patron_deity()->get_major_domains()) {
+					if (first) {
+						first = false;
+					} else {
+						tooltip += ", ";
+					}
+
+					tooltip += domain->get_name();
+				}
+				for (const divine_domain *domain : character_game_data->get_patron_deity()->get_minor_domains()) {
+					if (first) {
+						first = false;
+					} else {
+						tooltip += ", ";
+					}
+
+					tooltip += domain->get_name() + " (Minor)";
+				}
+				if (first) {
+					tooltip += "None";
+				}
+
+				row->tooltip = std::move(tooltip);
+				this->top_rows.push_back(std::move(row));
+			}
 		}
 
 		this->top_rows.push_back(std::make_unique<character_data_row>("Reputation:", std::to_string(character_game_data->get_reputation())));

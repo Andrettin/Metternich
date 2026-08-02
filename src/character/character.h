@@ -75,7 +75,8 @@ class character final : public character_base, public data_type<character>
 	Q_PROPERTY(const metternich::mythic_path* mythic_path READ get_mythic_path WRITE set_mythic_path NOTIFY changed)
 	Q_PROPERTY(int mythic_tier MEMBER mythic_tier READ get_mythic_tier NOTIFY changed)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
-	Q_PROPERTY(const metternich::religion* religion MEMBER religion NOTIFY changed)
+	Q_PROPERTY(const metternich::religion* religion MEMBER religion READ get_religion NOTIFY changed)
+	Q_PROPERTY(const metternich::deity* patron_deity MEMBER patron_deity READ get_patron_deity NOTIFY changed)
 	Q_PROPERTY(const metternich::phenotype* phenotype MEMBER phenotype READ get_phenotype NOTIFY changed)
 	Q_PROPERTY(const metternich::deity* deity READ get_deity CONSTANT)
 	Q_PROPERTY(const metternich::bloodline* bloodline MEMBER bloodline READ get_bloodline NOTIFY changed)
@@ -213,6 +214,13 @@ public:
 	{
 		return this->religion;
 	}
+
+	const metternich::deity *get_patron_deity() const
+	{
+		return this->patron_deity;
+	}
+
+	void initialize_patron_deity();
 
 	const metternich::phenotype *get_phenotype() const
 	{
@@ -421,6 +429,7 @@ private:
 	int mythic_tier = 0;
 	metternich::culture *culture = nullptr;
 	const metternich::religion *religion = nullptr;
+	const metternich::deity *patron_deity = nullptr;
 	const metternich::phenotype *phenotype = nullptr;
 	const metternich::deity *deity = nullptr; //the deity which the character is (if it is a deity)
 	const metternich::bloodline *bloodline = nullptr;

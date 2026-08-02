@@ -95,6 +95,7 @@ character_game_data::character_game_data(const metternich::character *character)
 	this->birth_date = this->character->get_birth_date();
 	this->death_date = this->character->get_death_date();
 	this->start_date = this->character->get_start_date();
+	this->patron_deity = this->character->get_patron_deity();
 	this->home_site = this->character->get_home_site();
 }
 
@@ -117,6 +118,8 @@ void character_game_data::process_gsml_property(const gsml_property &property)
 		this->death_date = string::to_date(value);
 	} else if (key == "start_date") {
 		this->start_date = string::to_date(value);
+	} else if (key == "patron_deity") {
+		this->patron_deity = deity::get(value);
 	} else if (key == "home_site") {
 		this->home_site = site::get(value);
 	} else if (key == "character_class") {
@@ -285,6 +288,9 @@ gsml_data character_game_data::to_gsml_data() const
 	data.add_property("birth_date", date::to_string(this->get_birth_date()));
 	if (this->get_death_date().isValid()) {
 		data.add_property("death_date", date::to_string(this->get_death_date()));
+	}
+	if (this->get_patron_deity() != nullptr) {
+		data.add_property("patron_deity", this->get_patron_deity()->get_identifier());
 	}
 	if (this->get_home_site() != nullptr) {
 		data.add_property("home_site", this->get_home_site()->get_identifier());

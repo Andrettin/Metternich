@@ -52,7 +52,7 @@ frigg = { #Source: Kevin Crossley-Holland, "The Norse Myths", 1980, p. 242; Sour
 	}
 	character = {
 		species = human
-		character_class = warrior #aristocrat
+		character_class = aristocrat
 		culture = norse
 		religion = asatru
 		gender = female

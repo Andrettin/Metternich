@@ -18,6 +18,8 @@ class religion_base : public named_data_entry
 {
 	Q_OBJECT
 
+	Q_PROPERTY(bool monotheistic READ is_monotheistic WRITE set_monotheistic NOTIFY changed)
+
 public:
 	using government_variant = std::variant<const government_type *, const government_group *>;
 	using title_name_map = std::map<government_variant, std::map<domain_tier, std::string>>;
@@ -29,14 +31,24 @@ public:
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 
+	bool is_monotheistic() const
+	{
+		return this->monotheistic;
+	}
+
+	void set_monotheistic(const bool value)
+	{
+		this->monotheistic = value;
+	}
+
 	const std::string &get_title_name(const government_type *government_type, const domain_tier tier) const;
 	const std::string &get_office_title_name(const office *office, const government_type *government_type, const domain_tier tier, const gender gender) const;
-
 
 signals:
 	void changed();
 
 private:
+	bool monotheistic = false; //monotheistic religions call deities with a lower rank than overdeity saints instead
 	title_name_map title_names;
 	office_title_name_map office_title_names;
 };

@@ -31,6 +31,7 @@ class character;
 class character_attribute;
 class character_stat;
 class civilian_unit;
+class deity;
 class domain;
 class domain_skill;
 class enchantment;
@@ -235,6 +236,11 @@ public:
 	void set_start_date(const QDate &date)
 	{
 		this->start_date = date;
+	}
+
+	const deity *get_patron_deity() const
+	{
+		return this->patron_deity;
 	}
 
 	const site *get_home_site() const
@@ -1059,6 +1065,7 @@ private:
 	QDate birth_date;
 	QDate death_date;
 	QDate start_date;
+	const deity *patron_deity = nullptr;
 	const site *home_site = nullptr;
 	const metternich::character_class *character_class = nullptr;
 	int level = 0;

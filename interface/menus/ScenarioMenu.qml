@@ -20,7 +20,7 @@ MenuBase {
 	
 	Item {
 		id: top_area
-		anchors.left: parent.left
+		anchors.left: diplomatic_map_background.left
 		anchors.right: parent.right
 		anchors.top: parent.top
 		height: 16 * scale_factor
@@ -30,9 +30,8 @@ MenuBase {
 			text: status_text
 			anchors.top: parent.top
 			anchors.topMargin: 1 * scale_factor
-			anchors.right: parent.right
-			anchors.rightMargin: 8 * scale_factor
-			width: 384 * scale_factor
+			anchors.left: parent.left
+			anchors.leftMargin: 8 * scale_factor
 		}
 	}
 	

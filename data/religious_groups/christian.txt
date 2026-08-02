@@ -1,5 +1,6 @@
 christian = {
 	name = "Christian"
+	monotheistic = true
 	title_names = {
 		theocracy = {
 			barony = "Parish"
