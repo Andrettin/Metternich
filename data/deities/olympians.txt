@@ -337,12 +337,13 @@ hermes = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 
 hestia = {
 	name = "Hestia"
 	pantheon = olympian
-	divine_rank = lesser_deity
+	divine_level = 9
 	religions = {
 		hellenic
 	}
 	major_domains = {
 		community
+		good
 		protection
 	}
 	character = {
