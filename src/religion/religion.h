@@ -10,6 +10,7 @@ Q_MOC_INCLUDE("ui/icon.h")
 namespace metternich {
 
 class deity;
+class divine_domain;
 class icon;
 class office;
 class religious_group;
@@ -31,6 +32,7 @@ public:
 	{
 	}
 
+	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
 	virtual void check() const override;
 
@@ -47,6 +49,11 @@ public:
 	const icon *get_icon() const
 	{
 		return this->icon;
+	}
+
+	const std::vector<const divine_domain *> &get_divine_domains() const
+	{
+		return this->divine_domains;
 	}
 
 	const std::vector<const deity *> &get_deities() const
@@ -69,6 +76,7 @@ private:
 	religious_group *group = nullptr;
 	QColor color;
 	const metternich::icon *icon = nullptr;
+	std::vector<const divine_domain *> divine_domains;
 	std::vector<const deity *> deities;
 };
 
