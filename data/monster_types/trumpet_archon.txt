@@ -10,6 +10,10 @@ trumpet_archon = {
 		hit_dice = 11d8
 		armor_class = 13
 		to_hit_bonus = 9
-		movement = 12
+		trait_of_type = proficiency
+		trait_of_type = proficiency
+		trait_of_type = proficiency
+		trait_of_type = proficiency
+		trait_of_type = proficiency
 	}
 }

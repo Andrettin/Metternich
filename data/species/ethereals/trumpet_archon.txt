@@ -3,4 +3,31 @@ trumpet_archon = {
 	supertaxon = archon
 	era = holocene
 	sapient = true
+	class_skill_groups = { #as paladin
+		general
+		priest
+		warrior
+	}
+	min_attribute_values = {
+		strength = 9
+		dexterity = 9
+		constitution = 9
+		intelligence = 12
+		wisdom = 12
+		charisma = 16
+	}
+	max_attribute_values = {
+		strength = 18
+		dexterity = 18
+		constitution = 18
+		intelligence = 19
+		wisdom = 20
+		charisma = 21
+	}
+	modifier = {
+		charisma = 3
+		intelligence = 1
+		wisdom = 2
+		movement = 12
+	}
 }
