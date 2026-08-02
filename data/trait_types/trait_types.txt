@@ -35,6 +35,7 @@ mythic_trait = {
 
 divine_trait = {
 	name = "Divine Trait"
+	none_weight = 1 #allow deities to gain no trait when gaining divine levels
 }
 
 past_experience = {

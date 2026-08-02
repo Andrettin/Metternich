@@ -22,7 +22,7 @@ saint_cuthbert = { #Source: Frank Stenton, "Anglo-Saxon England", 1971, pp. 126,
 		#wards
 	}
 	traits = {
-		#extra_divine_domain_destruction
+		extra_divine_domain_destruction
 	}
 	character = {
 		name = "Cuthbert"

@@ -303,7 +303,64 @@ divine_rank_levels = {
 
 divine_rank_modifiers = {
 	1 = {
-		#trait_of_type = divine_trait
+		trait_of_type = divine_trait
+	}
+	2 = {
+		trait_of_type = divine_trait
+	}
+	3 = {
+		trait_of_type = divine_trait
+	}
+	4 = {
+		trait_of_type = divine_trait
+	}
+	5 = {
+		trait_of_type = divine_trait
+	}
+	6 = {
+		trait_of_type = divine_trait
+	}
+	7 = {
+		trait_of_type = divine_trait
+	}
+	8 = {
+		trait_of_type = divine_trait
+	}
+	9 = {
+		trait_of_type = divine_trait
+	}
+	10 = {
+		trait_of_type = divine_trait
+	}
+	11 = {
+		trait_of_type = divine_trait
+	}
+	12 = {
+		trait_of_type = divine_trait
+	}
+	13 = {
+		trait_of_type = divine_trait
+	}
+	14 = {
+		trait_of_type = divine_trait
+	}
+	15 = {
+		trait_of_type = divine_trait
+	}
+	16 = {
+		trait_of_type = divine_trait
+	}
+	17 = {
+		trait_of_type = divine_trait
+	}
+	18 = {
+		trait_of_type = divine_trait
+	}
+	19 = {
+		trait_of_type = divine_trait
+	}
+	20 = {
+		trait_of_type = divine_trait
 	}
 }
 

@@ -126,10 +126,10 @@ void defines::process_gsml_scope(const gsml_data &scope)
 		});
 	} else if (tag == "divine_rank_modifiers") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
-			const int rank_interval = std::stoi(child_scope.get_tag());
+			const int divine_level = std::stoi(child_scope.get_tag());
 			auto modifier = std::make_unique<metternich::modifier<const character>>();
 			modifier->process_gsml_data(child_scope);
-			this->divine_rank_modifiers[rank_interval] = std::move(modifier);
+			this->divine_rank_modifiers[divine_level] = std::move(modifier);
 		});
 	} else if (tag == "mana_cost_per_spell_level") {
 		scope.for_each_property([this](const gsml_property &property) {
