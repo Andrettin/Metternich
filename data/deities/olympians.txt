@@ -33,9 +33,15 @@ apollo = {
 		divination
 		healing
 		sun
+		
+		knowledge
 	}
 	minor_domains = {
 		charm
+	}
+	traits = {
+		#extra_divine_domain_healing
+		extra_divine_domain_knowledge
 	}
 	character = {
 		monster_type = trumpet_archon
@@ -57,9 +63,14 @@ ares = {
 		combat
 		healing
 		weather
+		
+		chaos
 	}
 	minor_domains = {
 		elemental
+	}
+	traits = {
+		extra_divine_domain_chaos
 	}
 	character = {
 		monster_type = trumpet_archon
@@ -87,9 +98,14 @@ artemis = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp.
 		healing
 		plant
 		weather
+		
+		sun
 	}
 	minor_domains = {
 		divination
+	}
+	traits = {
+		extra_divine_domain_sun
 	}
 	character = {
 		monster_type = trumpet_archon
@@ -114,6 +130,15 @@ athena = {
 		divination
 		healing
 		protection
+		
+		community
+		law
+		war
+	}
+	traits = {
+		extra_divine_domain_community
+		extra_divine_domain_law
+		extra_divine_domain_war
 	}
 	character = {
 		monster_type = trumpet_archon
@@ -247,6 +272,13 @@ hephaestus = {
 		healing
 		sun
 		weather
+		
+		community
+		good
+	}
+	traits = {
+		extra_divine_domain_community
+		extra_divine_domain_good
 	}
 	character = {
 		monster_type = trumpet_archon
@@ -285,6 +317,9 @@ hera = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 23
 	minor_domains = {
 		combat
 	}
+	traits = {
+		extra_divine_domain_protection
+	}
 	character = {
 		monster_type = trumpet_archon
 		culture = celestial
@@ -317,9 +352,16 @@ hermes = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 
 		healing
 		protection
 		summoning
+		
+		good
+		luck
 	}
 	minor_domains = {
 		divination
+	}
+	traits = {
+		extra_divine_domain_good
+		extra_divine_domain_luck
 	}
 	character = {
 		monster_type = trumpet_archon
@@ -415,11 +457,20 @@ zeus = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 28
 		healing
 		protection
 		weather
+		
+		air
+		nobility
+		strength
 	}
 	minor_domains = {
 		animal
 		divination
 		elemental
+	}
+	traits = {
+		extra_divine_domain_air
+		extra_divine_domain_nobility
+		extra_divine_domain_strength
 	}
 	character = {
 		monster_type = trumpet_archon #Olympian
