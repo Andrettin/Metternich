@@ -232,6 +232,10 @@ QCoro::Task<void> domain_technology::do_technology_spread()
 
 		//add neighbor bonus
 		for (const metternich::province *nearby_province : province->get_map_data()->get_nearby_provinces()) {
+			if (nearby_province->get_game_data()->get_owner() == nullptr) {
+				continue;
+			}
+
 			for (const technology *technology : nearby_province->get_game_data()->get_technologies()) {
 				if (!province->get_game_data()->can_gain_technology(technology)) {
 					continue;
