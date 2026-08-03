@@ -16,7 +16,7 @@ sargon_ii_of_assyria = {
 	character_class = aristocrat
 	culture = assyrian
 	religion = chaldean
-	home_site = nineveh
+	home_site = assur
 	gender = male
 	start_date = -721 #reign began as king of Assyria; Source: "History of the World Map by Map", 2023, pp. 50-51.
 	death_date = -705 #reign ended; Source: "History of the World Map by Map", 2023, pp. 50-51.
@@ -26,6 +26,18 @@ sargon_ii_of_assyria = {
 			rank = lord #king
 		}
 	}
+}
+
+sennacherib_of_assyria = {
+	name = "Sennacherib"
+	character_class = aristocrat
+	rank = lord #king
+	culture = assyrian
+	religion = chaldean
+	home_site = nineveh #Dur-Sharrukin/Khorsabad; correct?
+	gender = male
+	start_date = -704 #reign began as king of Assyria; Source: "History of the World Map by Map", 2023, pp. 50-51.
+	death_date = -681 #reign ended; Source: "History of the World Map by Map", 2023, pp. 50-51.
 }
 
 esarhaddon_of_assyria = {
@@ -46,6 +58,7 @@ assurbanipal_of_assyria = { #Source: William R. Shepherd, "Historical Atlas", 19
 	religion = chaldean
 	home_site = nineveh
 	gender = male
+	father = esarhaddon_of_assyria #Source: "History of the World Map by Map", 2023, pp. 50-51.
 	start_date = -640 #ruled the Assyrian Empire in 640 BC
 	
 	history = {

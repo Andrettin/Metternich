@@ -1,0 +1,11 @@
+sargon_of_akkad = {
+	name = "Sargon"
+	character_class = aristocrat
+	rank = lord #king
+	culture = babylonian #Akkadian
+	religion = chaldean
+	home_site = babylon #Kish/Akkad
+	gender = male
+	start_date = -2296 #reign began as king of Akkad c. 2296 BC; Source: "History of the World Map by Map", 2023, pp. 32-33.
+	death_date = -2240 #reign ended c. 2240 BC; Source: "History of the World Map by Map", 2023, pp. 32-33.
+}

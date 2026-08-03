@@ -9,3 +9,41 @@ hammurabi_of_babylon = {
 	start_date = -1782 #reign began as king of Babylon; Source: "History of the World Map by Map", 2023, pp. 50-51.
 	death_date = -1750 #reign ended; Source: "History of the World Map by Map", 2023, pp. 50-51.
 }
+
+nabopolassar_of_babylon = {
+	name = "Nabopolassar"
+	character_class = aristocrat
+	rank = lord #king
+	culture = babylonian
+	religion = chaldean
+	home_site = babylon
+	gender = male
+	start_date = -626 #reign began as king of Babylon; Source: "History of the World Map by Map", 2023, pp. 50-51.
+	death_date = -605 #reign ended; Source: "History of the World Map by Map", 2023, pp. 50-51.
+}
+
+nabuchadnezzar_ii_of_babylon = {
+	name = "Nabuchadnezzar"
+	epithet = "II"
+	character_class = aristocrat
+	rank = lord #king
+	culture = babylonian
+	religion = chaldean
+	home_site = babylon
+	gender = male
+	father = nabopolassar_of_babylon #Source: "History of the World Map by Map", 2023, pp. 50-51.
+	start_date = -605 #reign began as king of Babylon; Source: "History of the World Map by Map", 2023, pp. 50-51.
+	death_date = -562 #reign ended; Source: "History of the World Map by Map", 2023, pp. 50-51.
+}
+
+nabonidus_of_babylon = {
+	name = "Nabonidus"
+	character_class = aristocrat
+	rank = lord #king
+	culture = babylonian
+	religion = chaldean
+	home_site = babylon
+	gender = male
+	start_date = -556 #reign began as king of Babylon; Source: "History of the World Map by Map", 2023, pp. 50-51.
+	death_date = -539 #reign ended; Source: "History of the World Map by Map", 2023, pp. 50-51.
+}

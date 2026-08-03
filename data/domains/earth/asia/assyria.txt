@@ -34,9 +34,15 @@ assyria = {
 			}
 		}
 		
+		-721 = {
+			offices = {
+				ruler = sennacherib_of_assyria #Sennacherib became king of Assyria in 721 BC; Source: "History of the World Map by Map", 2023, pp. 50-51.
+			}
+		}
+		
 		-671 = {
 			offices = {
-				ruler = esarhaddon_of_assyria #Esarhaddon was king of Assyrua as of 671 BC; Source: "History of the World Map by Map", 2023, pp. 50-51.
+				ruler = esarhaddon_of_assyria #Esarhaddon was king of Assyria as of 671 BC; Source: "History of the World Map by Map", 2023, pp. 50-51.
 			}
 		}
 		

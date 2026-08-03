@@ -23,5 +23,23 @@ babylonia = {
 				ruler = hammurabi_of_babylon #Hammurabi became king of Babylon in 1782 BC; Source: "History of the World Map by Map", 2023, pp. 50-51.
 			}
 		}
+		
+		-626 = {
+			offices = {
+				ruler = nabopolassar_of_babylon #Nabopolassar became king of Babylon in 626 BC; Source: "History of the World Map by Map", 2023, pp. 50-51.
+			}
+		}
+		
+		-605 = {
+			offices = {
+				ruler = nabuchadnezzar_ii_of_babylon #Nabuchadnezzar II became king of Babylon in 605 BC; Source: "History of the World Map by Map", 2023, pp. 50-51.
+			}
+		}
+		
+		-556 = {
+			offices = {
+				ruler = nabonidus_of_babylon #Nabonidus became king of Babylon in 556 BC; Source: "History of the World Map by Map", 2023, pp. 50-51.
+			}
+		}
 	}
 }
