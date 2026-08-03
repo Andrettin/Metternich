@@ -46,6 +46,12 @@ egypt = {
 			}
 		}
 		
+		-1479 = {
+			offices = {
+				ruler = thutmose_iii_of_egypt #Thutmose III became king of Egypt in 1479 BC; Source: "History of the World Map by Map", 2023, pp. 36-37.
+			}
+		}
+		
 		-1351 = {
 			offices = {
 				ruler = akhenaten_of_egypt #Akhenaten/Amenhotep IV became king of Egypt in 1351 BC; Source: "History of the World Map by Map", 2023, pp. 36-37.

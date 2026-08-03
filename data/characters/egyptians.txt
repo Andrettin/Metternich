@@ -12,6 +12,19 @@ ahmose_of_egypt = {
 	#expelled the Hyksos from Lower Egypt in 1532 BC; Source: "History of the World Map by Map", 2023, pp. 36-37.
 }
 
+thutmose_iii_of_egypt = {
+	name = "Thutmose"
+	epithet = "III"
+	character_class = aristocrat
+	rank = lord #king
+	culture = egyptian
+	religion = kemetic
+	home_site = luxor #Thebes; correct?
+	gender = male
+	start_date = -1479 #reign began as king of Egypt; Source: "History of the World Map by Map", 2023, pp. 36-37.
+	death_date = -1425 #reign ended; Source: "History of the World Map by Map", 2023, pp. 36-37.
+}
+
 akhenaten_of_egypt = {
 	name = "Akhenaten" #also known as Amenhotep IV, he renamed himself as Akhenaten after ascending to the Egyptian throne
 	character_class = aristocrat
@@ -34,6 +47,17 @@ nefertiti = {
 	contemporary_character = akhenaten_of_egypt
 	
 	#main queen of king Akhenaten of Egypt; Source: "History of the World Map by Map", 2023, pp. 36-37.
+}
+
+
+thutmose = {
+	name = "Thutmose"
+	character_class = engineer #sculptor
+	culture = egyptian
+	religion = kemetic
+	home_site = minya #Akhetaten/El-Amarna; correct?
+	gender = male
+	start_date = -1345 #sculpted a bust of Queen Nefertiti c. 1345 BC; Source: "History of the World Map by Map", 2023, pp. 36-37.
 }
 
 ramesses_ii_of_egypt = {
