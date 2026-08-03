@@ -1,6 +1,5 @@
 ahmose_of_egypt = {
 	name = "Ahmose" #also known as Ahmose of Thebes
-	epithet = "II"
 	character_class = aristocrat
 	rank = lord #king
 	culture = egyptian
