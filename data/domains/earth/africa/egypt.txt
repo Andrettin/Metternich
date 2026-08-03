@@ -34,10 +34,14 @@ egypt = {
 	}
 	
 	history = {
-		-2700 = {
-			government_type = monarchy #the Old Kingdom of Egypt existed in the 2700-2180 BC period; Source: "History of the World Map by Map", 2023, pp. 36-37.
+		-3100 = {
+			government_type = monarchy
 			culture = egyptian
 			religion = kemetic
+			
+			offices = {
+				ruler = narmer_of_egypt #king Narmer unified Lower and Upper Egypt c. 3100 BC; Source: "History of the World Map by Map", 2023, pp. 32-33.
+			}
 		}
 		
 		-1532 = {

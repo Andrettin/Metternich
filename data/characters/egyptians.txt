@@ -1,3 +1,14 @@
+narmer_of_egypt = {
+	name = "Narmer"
+	character_class = aristocrat
+	rank = lord #king
+	culture = egyptian
+	religion = kemetic
+	home_site = luxor #Hierakonpolis
+	gender = male
+	start_date = -3100 #unified Lower and Upper Egypt c. 3100 BC; Source: "History of the World Map by Map", 2023, pp. 32-33.
+}
+
 ahmose_of_egypt = {
 	name = "Ahmose" #also known as Ahmose of Thebes
 	character_class = aristocrat
