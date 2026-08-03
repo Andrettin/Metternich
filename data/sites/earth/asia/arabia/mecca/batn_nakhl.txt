@@ -1,0 +1,8 @@
+batn_nakhl = {
+	name = "Batn Nakhl"
+	world = earth
+	geocoordinate = { 39.89747222222222 22.497722222222222 } #Nakhla
+	type = holding
+	holding_type = castle
+	province = mecca
+}

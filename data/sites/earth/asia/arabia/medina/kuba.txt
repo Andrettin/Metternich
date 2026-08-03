@@ -1,0 +1,8 @@
+kuba = {
+	name = "Kuba"
+	world = earth
+	geocoordinate = { 39.617222222222 24.439166666667 } #Quba Mosque
+	type = holding
+	holding_type = temple
+	province = medina
+}

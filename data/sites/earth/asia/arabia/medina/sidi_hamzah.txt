@@ -1,0 +1,8 @@
+sidi_hamzah = {
+	name = "Sidi Hamzah"
+	world = earth
+	geocoordinate = { 39.6167 24.5 }
+	type = holding
+	holding_type = guild
+	province = medina
+}
