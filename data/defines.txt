@@ -304,6 +304,7 @@ divine_rank_levels = {
 divine_rank_modifiers = {
 	1 = {
 		trait_of_type = divine_trait
+		trait_of_type = divine_trait
 	}
 	2 = {
 		trait_of_type = divine_trait
@@ -318,6 +319,7 @@ divine_rank_modifiers = {
 		trait_of_type = divine_trait
 	}
 	6 = {
+		trait_of_type = divine_trait
 		trait_of_type = divine_trait
 	}
 	7 = {
@@ -334,6 +336,7 @@ divine_rank_modifiers = {
 	}
 	11 = {
 		trait_of_type = divine_trait
+		trait_of_type = divine_trait
 	}
 	12 = {
 		trait_of_type = divine_trait
@@ -348,6 +351,8 @@ divine_rank_modifiers = {
 		trait_of_type = divine_trait
 	}
 	16 = {
+		trait_of_type = divine_trait
+		trait_of_type = divine_trait
 		trait_of_type = divine_trait
 	}
 	17 = {
