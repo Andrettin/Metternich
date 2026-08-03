@@ -6,6 +6,10 @@ aesir = {
 	name = "Aesir"
 }
 
+mesopotamian = {
+	name = "Mesopotamian"
+}
+
 olympian = {
 	name = "Olympian"
 }

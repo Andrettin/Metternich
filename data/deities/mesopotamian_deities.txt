@@ -1,0 +1,45 @@
+ea = {
+	name = "Ea"
+	pantheon = mesopotamian
+	divine_rank = intermediate_deity
+	religions = {
+		chaldean
+	}
+	major_domains = {
+		good
+		knowledge
+		law
+		water
+	}
+	character = {
+		species = human
+		character_class = aristocrat
+		culture = babylonian
+		religion = chaldean
+		gender = male
+	}
+}
+
+marduk = {
+	name = "Marduk"
+	pantheon = mesopotamian
+	divine_rank = lesser_deity
+	religions = {
+		chaldean
+	}
+	major_domains = {
+		good
+		law
+		luck
+		war
+	}
+	character = {
+		species = human
+		character_class = aristocrat
+		culture = babylonian
+		religion = chaldean
+		gender = male
+		father = ea
+		start_date = -1782 #worshipped in Babylon in the 1782-500 BC period; Source: "History of the World Map by Map", 2023, pp. 50-51.
+	}
+}
