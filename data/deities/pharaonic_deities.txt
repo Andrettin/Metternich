@@ -1,3 +1,53 @@
+anubis = { #Source: Claude Traunecker, "Os Deuses do Egito", 1992, pp. 64, 72.
+	name = "Anubis"
+	pantheon = pharaonic
+	divine_level = 6
+	religions = {
+		kemetic
+	}
+	major_domains = {
+		law
+		magic
+		repose
+	}
+	character = {
+		species = human
+		character_class = cleric
+		culture = egyptian
+		religion = kemetic
+		gender = male
+		birth_date = -4000
+	}
+	
+	#god of embalming who guards over necropolises
+	#appears as an anthropomorphic canine
+}
+
+bes = { #Source: Warren R. Dawson, "Pygmies and Dwarfs in Ancient Egypt", 1938, p. 186; Source: Kamyar Abdi, "Bes in the Achaemenid Empire", 1999, p. 114.
+	name = "Bes"
+	pantheon = pharaonic
+	divine_level = 7
+	religions = {
+		kemetic
+	}
+	major_domains = {
+		luck
+		protection
+		trickery
+	}
+	character = {
+		species = human
+		character_class = aristocrat
+		culture = egyptian
+		religion = kemetic
+		gender = male
+		birth_date = -4000
+	}
+	
+	#has a dwarf-like appearance
+	#wards childbirths, bestows luck and prosperity on families and protects against malignant beings
+}
+
 geb = { #Source: Claude Traunecker, "Os Deuses do Egito", 1992, pp. 30, 91, 96.
 	name = "Geb"
 	pantheon = pharaonic
@@ -27,6 +77,34 @@ geb = { #Source: Claude Traunecker, "Os Deuses do Egito", 1992, pp. 30, 91, 96.
 	}
 	
 	#god of earth and fate
+}
+
+hathor = { #Source: Claude Traunecker, "Os Deuses do Egito", 1992, pp. 13, 29, 61, 68, 74, 129.
+	name = "Hathor"
+	pantheon = pharaonic
+	divine_level = 8
+	religions = {
+		kemetic
+	}
+	major_domains = {
+		community
+		good
+		luck
+	}
+	character = {
+		species = human
+		character_class = aristocrat
+		culture = egyptian
+		religion = kemetic
+		gender = female
+		birth_date = -4000
+	}
+	
+	#celestial goddess
+	#appears in the form of a cow
+	#goddess of happiness, love and lust
+	#one of her symbols was the papyrus reed
+	#known as the Lady of Turquoise
 }
 
 horus = { #Source: Claude Traunecker, "Os Deuses do Egito", 1992, pp. 41, 55, 66, 96.
@@ -210,6 +288,76 @@ osiris = { #Source: Claude Traunecker, "Os Deuses do Egito", 1992, pp. 51, 61, 6
 	#murdered by his brother Seth, but came back to life thanks to the magic of Isis and Nephthys
 }
 
+ptah = { #Source: Claude Traunecker, "Os Deuses do Egito", 1992, pp. 66, 83, 100, 122.
+	name = "Ptah"
+	pantheon = pharaonic
+	divine_level = 15
+	religions = {
+		kemetic
+	}
+	major_domains = {
+		astral
+		charm
+		creation
+		divination
+		elemental
+		sun
+		
+		knowledge
+		law
+		travel
+	}
+	minor_domains = {
+		summoning
+	}
+	traits = {
+		extra_divine_domain_law
+	}
+	character = {
+		species = human
+		character_class = mage
+		culture = egyptian
+		religion = kemetic
+		gender = male
+		birth_date = -4000
+	}
+	
+	#god of artisanship, sculpting and masonry
+	#represented as a mummy
+	#known as the king of the sky
+	#his worship is particularly important in the Egyptian city of Memphis
+}
+
+ra = { #Source: Claude Traunecker, "Os Deuses do Egito", 1992, pp. 41, 104.
+	name = "Ra"
+	pantheon = pharaonic
+	divine_rank = greater_deity
+	religions = {
+		kemetic
+	}
+	major_domains = {
+		astral
+		charm
+		creation
+		elemental
+		sun
+	}
+	minor_domains = {
+		weather
+	}
+	character = {
+		species = human
+		character_class = aristocrat
+		culture = egyptian
+		religion = kemetic
+		gender = male
+		birth_date = -4000
+	}
+	
+	#mighty sun god
+	#son of Neith
+}
+
 set = { #Source: Claude Traunecker, "Os Deuses do Egito", 1992, pp. 95-96, 129.
 	name = "Set"
 	pantheon = pharaonic
@@ -279,6 +427,32 @@ shu = { #Source: Claude Traunecker, "Os Deuses do Egito", 1992, pp. 48, 91, 94.
 	#son of Atum
 }
 
+sobek = { #Source: Claude Traunecker, "Os Deuses do Egito", 1992, p. 25.
+	name = "Sobek"
+	pantheon = pharaonic
+	divine_level = 3
+	religions = {
+		kemetic
+	}
+	major_domains = {
+		animal
+		evil
+		water
+	}
+	character = {
+		species = human
+		character_class = aristocrat
+		culture = egyptian
+		religion = kemetic
+		gender = male
+		birth_date = -4000
+	}
+	
+	#takes the shape of a crocodile
+	#holds aquatic animals as his domain
+	#linked to vegetation growth
+}
+
 tefnut = { #Source: Claude Traunecker, "Os Deuses do Egito", 1992, p. 94.
 	name = "Tefnut"
 	pantheon = pharaonic
@@ -309,4 +483,40 @@ tefnut = { #Source: Claude Traunecker, "Os Deuses do Egito", 1992, p. 94.
 	#associated with the atmosphere of the underworld
 	#associated with flaming destruction
 	#daughter of Atum
+}
+
+thoth = { #Source: Claude Traunecker, "Os Deuses do Egito", 1992, pp. 55, 64, 66, 68, 122.
+	name = "Thoth"
+	pantheon = pharaonic
+	divine_level = 13
+	religions = {
+		kemetic
+	}
+	major_domains = {
+		astral
+		charm
+		guardian
+		healing
+		protection
+		sun
+		
+		knowledge
+	}
+	minor_domains = {
+		divination
+		weather
+	}
+	character = {
+		species = human
+		character_class = mage
+		culture = egyptian
+		religion = kemetic
+		gender = male
+		birth_date = -4000
+	}
+	
+	#god of writing and knowledge
+	#appears as an anthropomorphic ibis, equipped with a scribe's utensil
+	#sometimes takes the form of an ibis itself, or even a baboon
+	#often worshiped by scribes
 }
