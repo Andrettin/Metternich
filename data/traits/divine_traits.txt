@@ -105,6 +105,18 @@ extra_divine_domain_air = {
 	}
 }
 
+extra_divine_domain_animal = {
+	name = "Extra Divine Domain: Animal"
+	icon = deer
+	divine_domain = animal
+	types = {
+		divine_trait
+	}
+	conditions = {
+		divine_rank >= 6
+	}
+}
+
 extra_divine_domain_chaos = {
 	name = "Extra Divine Domain: Chaos"
 	icon = skull
@@ -141,6 +153,18 @@ extra_divine_domain_community = {
 	}
 }
 
+extra_divine_domain_creation = {
+	name = "Extra Divine Domain: Creation"
+	icon = research
+	divine_domain = creation
+	types = {
+		divine_trait
+	}
+	conditions = {
+		divine_rank >= 6
+	}
+}
+
 extra_divine_domain_darkness = {
 	name = "Extra Divine Domain: Darkness"
 	icon = skull
@@ -169,6 +193,18 @@ extra_divine_domain_destruction = {
 	name = "Extra Divine Domain: Destruction"
 	icon = skull
 	divine_domain = destruction
+	types = {
+		divine_trait
+	}
+	conditions = {
+		divine_rank >= 6
+	}
+}
+
+extra_divine_domain_divination = {
+	name = "Extra Divine Domain: Divination"
+	icon = research
+	divine_domain = divination
 	types = {
 		divine_trait
 	}
@@ -297,6 +333,18 @@ extra_divine_domain_nobility = {
 	}
 }
 
+extra_divine_domain_plant = {
+	name = "Extra Divine Domain: Plant"
+	icon = pine_tree
+	divine_domain = plant
+	types = {
+		divine_trait
+	}
+	conditions = {
+		divine_rank >= 6
+	}
+}
+
 extra_divine_domain_protection = {
 	name = "Extra Divine Domain: Protection"
 	icon = heater_shield
@@ -325,6 +373,18 @@ extra_divine_domain_strength = {
 	name = "Extra Divine Domain: Strength"
 	icon = labor
 	divine_domain = strength
+	types = {
+		divine_trait
+	}
+	conditions = {
+		divine_rank >= 6
+	}
+}
+
+extra_divine_domain_summoning = {
+	name = "Extra Divine Domain: Summoning"
+	icon = research
+	divine_domain = summoning
 	types = {
 		divine_trait
 	}
@@ -385,6 +445,18 @@ extra_divine_domain_water = {
 	name = "Extra Divine Domain: Water"
 	icon = anchor
 	divine_domain = water
+	types = {
+		divine_trait
+	}
+	conditions = {
+		divine_rank >= 6
+	}
+}
+
+extra_divine_domain_weather = {
+	name = "Extra Divine Domain: Weather"
+	icon = flag
+	divine_domain = weather
 	types = {
 		divine_trait
 	}
