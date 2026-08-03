@@ -40,6 +40,18 @@ egypt = {
 			religion = kemetic
 		}
 		
+		-1532 = {
+			offices = {
+				ruler = ahmose_of_egypt #Ahmose of Thebes expelled the Hyksos from Lower Egypt in 1532 BC; Source: "History of the World Map by Map", 2023, pp. 36-37.
+			}
+		}
+		
+		-1351 = {
+			offices = {
+				ruler = akhenaten_of_egypt #Akhenaten/Amenhotep IV became king of Egypt in 1351 BC; Source: "History of the World Map by Map", 2023, pp. 36-37.
+			}
+		}
+		
 		-1279 = {
 			offices = {
 				ruler = ramesses_ii_of_egypt #Ramesses II became king of Egypt in 1279 BC; Source: "History of the World Map by Map", 2023, pp. 36-37.

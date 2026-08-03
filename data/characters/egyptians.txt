@@ -1,7 +1,46 @@
+ahmose_of_egypt = {
+	name = "Ahmose" #also known as Ahmose of Thebes
+	epithet = "II"
+	character_class = aristocrat
+	rank = lord #king
+	culture = egyptian
+	religion = kemetic
+	home_site = luxor #Thebes
+	gender = male
+	start_date = -1549 #reign began (in Thebes); Source: "History of the World Map by Map", 2023, pp. 36-37.
+	death_date = -1524 #reign ended; Source: "History of the World Map by Map", 2023, pp. 36-37.
+	
+	#expelled the Hyksos from Lower Egypt in 1532 BC; Source: "History of the World Map by Map", 2023, pp. 36-37.
+}
+
+akhenaten_of_egypt = {
+	name = "Akhenaten" #also known as Amenhotep IV, he renamed himself as Akhenaten after ascending to the Egyptian throne
+	character_class = aristocrat
+	rank = lord #king
+	culture = egyptian
+	religion = kemetic #actually a worshipper of the god Aten, whom he claimed to be the only god
+	home_site = minya #Akhetaten/El-Amarna
+	gender = male
+	start_date = -1351 #reign began as king of Egypt; Source: "History of the World Map by Map", 2023, pp. 36-37.
+	death_date = -1336 #reign ended; Source: "History of the World Map by Map", 2023, pp. 36-37.
+}
+
+nefertiti = {
+	name = "Nefertiti"
+	character_class = aristocrat
+	culture = egyptian
+	religion = kemetic #actually a worshipper of the god Aten, whom he claimed to be the only god
+	home_site = minya #Akhetaten/El-Amarna; correct?
+	gender = female
+	contemporary_character = akhenaten_of_egypt
+	
+	#main queen of king Akhenaten of Egypt; Source: "History of the World Map by Map", 2023, pp. 36-37.
+}
+
 ramesses_ii_of_egypt = {
 	name = "Ramesses"
 	epithet = "II"
-	character_class = warrior
+	character_class = aristocrat
 	rank = lord #king
 	culture = egyptian
 	religion = kemetic
