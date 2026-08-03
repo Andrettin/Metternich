@@ -3,6 +3,18 @@ catholic = {
 	group = christian
 	color = { 173 197 189 }
 	icon = wooden_cross
+	major_divine_domains = {
+		divination
+		healing
+		protection
+	}
+	minor_divine_domains = {
+		animal
+		charm
+		necromantic
+		sun
+		weather
+	}
 	title_names = {
 		theocracy = {
 			kingdom = "Papacy"

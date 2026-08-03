@@ -3,4 +3,12 @@ jewish = {
 	group = jewish
 	color = { 88 212 234 }
 	icon = mountains
+	major_divine_domains = {
+		good
+		#heaven
+		law
+		knowledge
+		protection
+		strength
+	}
 }

@@ -4,10 +4,12 @@
 
 #include "religion/divine_domain.h"
 #include "religion/religious_group.h"
+#include "spell/spell.h"
 #include "util/assert_util.h"
 #include "util/log_util.h"
 #include "util/random.h"
 #include "util/string_util.h"
+#include "util/vector_util.h"
 
 namespace metternich {
 
@@ -16,10 +18,15 @@ void religion::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "divine_domains") {
+	if (tag == "major_divine_domains") {
 		for (const std::string &value : values) {
 			const divine_domain *domain = divine_domain::get(value);
-			this->divine_domains.push_back(domain);
+			this->major_divine_domains.push_back(domain);
+		}
+	} else if (tag == "minor_divine_domains") {
+		for (const std::string &value : values) {
+			const divine_domain *domain = divine_domain::get(value);
+			this->minor_divine_domains.push_back(domain);
 		}
 	} else {
 		religion_base::process_gsml_scope(scope);
@@ -50,11 +57,24 @@ void religion::check() const
 		throw std::runtime_error(std::format("Religion \"{}\" has no icon.", this->get_identifier()));
 	}
 
-	if (this->get_deities().empty() && this->get_divine_domains().empty()) {
-		log::log_error(std::format("Religion \"{}\" has no deities, and no divine domains of its own.", this->get_identifier()));
+	if (this->get_deities().empty() && this->get_major_divine_domains().empty()) {
+		log::log_error(std::format("Religion \"{}\" has no deities, and no major divine domains of its own.", this->get_identifier()));
 	}
 
 	assert_throw(this->get_color().isValid());
+}
+
+bool religion::can_grant_spell(const spell *spell) const
+{
+	if (vector::intersects(this->get_major_divine_domains(), spell->get_divine_domains())) {
+		return true;
+	}
+
+	if (spell->get_level() <= spell::max_spell_level_for_minor_divine_domain && vector::intersects(this->get_minor_divine_domains(), spell->get_divine_domains())) {
+		return true;
+	}
+
+	return false;
 }
 
 const std::string &religion::get_title_name(const government_type *government_type, const domain_tier tier) const

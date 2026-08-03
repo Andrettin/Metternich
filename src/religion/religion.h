@@ -1,7 +1,6 @@
 #pragma once
 
 #include "database/data_type.h"
-#include "database/named_data_entry.h"
 #include "religion/religion_base.h"
 
 Q_MOC_INCLUDE("religion/religious_group.h")
@@ -14,6 +13,7 @@ class divine_domain;
 class icon;
 class office;
 class religious_group;
+class spell;
 
 class religion final : public religion_base, public data_type<religion>
 {
@@ -51,9 +51,14 @@ public:
 		return this->icon;
 	}
 
-	const std::vector<const divine_domain *> &get_divine_domains() const
+	const std::vector<const divine_domain *> &get_major_divine_domains() const
 	{
-		return this->divine_domains;
+		return this->major_divine_domains;
+	}
+
+	const std::vector<const divine_domain *> &get_minor_divine_domains() const
+	{
+		return this->minor_divine_domains;
 	}
 
 	const std::vector<const deity *> &get_deities() const
@@ -66,6 +71,8 @@ public:
 		this->deities.push_back(deity);
 	}
 
+	bool can_grant_spell(const spell *spell) const;
+
 	const std::string &get_title_name(const government_type *government_type, const domain_tier tier) const;
 	const std::string &get_office_title_name(const office *office, const government_type *government_type, const domain_tier tier, const gender gender) const;
 
@@ -76,7 +83,8 @@ private:
 	religious_group *group = nullptr;
 	QColor color;
 	const metternich::icon *icon = nullptr;
-	std::vector<const divine_domain *> divine_domains;
+	std::vector<const divine_domain *> major_divine_domains;
+	std::vector<const divine_domain *> minor_divine_domains;
 	std::vector<const deity *> deities;
 };
 
