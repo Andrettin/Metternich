@@ -1,0 +1,8 @@
+farsh = {
+	name = "Farsh"
+	world = earth
+	geocoordinate = { 39.2814 24.22 } #Al Furaysh
+	type = holding
+	holding_type = castle
+	province = medina
+}

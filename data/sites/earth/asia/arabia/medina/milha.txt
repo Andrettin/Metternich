@@ -1,0 +1,8 @@
+milha = {
+	name = "Milha"
+	world = earth
+	geocoordinate = { 38.3 24.05 } #Milhah
+	type = holding
+	holding_type = temple
+	province = medina
+}

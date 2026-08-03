@@ -1,0 +1,8 @@
+sharmah = {
+	name = "Sharmah"
+	world = earth
+	geocoordinate = { 35.25 27.933333333333334 }
+	type = holding
+	holding_type = castle
+	province = tabuk
+}

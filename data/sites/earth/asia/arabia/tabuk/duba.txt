@@ -1,0 +1,8 @@
+duba = {
+	name = "Duba"
+	world = earth
+	geocoordinate = { 35.6962 27.3493 }
+	type = holding
+	holding_type = guild
+	province = tabuk
+}

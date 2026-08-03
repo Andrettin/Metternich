@@ -1,0 +1,8 @@
+usayla = {
+	name = "Usayla"
+	world = earth
+	geocoordinate = { 39.6731 24.0186 } #Ushayrah
+	type = holding
+	holding_type = guild
+	province = medina
+}

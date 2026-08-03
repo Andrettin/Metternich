@@ -1,0 +1,8 @@
+muwaylih = {
+	name = "Muwaylih"
+	world = earth
+	geocoordinate = { 35.473748 27.681678 } #Muwaylih Castle
+	type = holding
+	holding_type = castle
+	province = tabuk
+}

@@ -1,6 +1,7 @@
 tabuk = {
 	name = "Tabuk"
-	color = { 238 169 174 }
+	color = { 42 33 188 }
+	terrain = mountains
 	default_provincial_capital = tabuk
 	regions = {
 		asia

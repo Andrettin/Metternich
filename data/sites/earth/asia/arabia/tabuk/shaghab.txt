@@ -1,0 +1,8 @@
+shaghab = {
+	name = "Shaghab"
+	world = earth
+	geocoordinate = { 36.449722222222 27.258611111111 }
+	type = holding
+	holding_type = castle
+	province = tabuk
+}
