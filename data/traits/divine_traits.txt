@@ -117,6 +117,18 @@ extra_divine_domain_animal = {
 	}
 }
 
+extra_divine_domain_astral = {
+	name = "Extra Divine Domain: Astral"
+	icon = research
+	divine_domain = astral
+	types = {
+		divine_trait
+	}
+	conditions = {
+		divine_rank >= 6
+	}
+}
+
 extra_divine_domain_chaos = {
 	name = "Extra Divine Domain: Chaos"
 	icon = skull
