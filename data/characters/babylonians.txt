@@ -1,0 +1,11 @@
+hammurabi_of_babylon = {
+	name = "Hammurabi"
+	character_class = aristocrat
+	rank = lord #king
+	culture = babylonian
+	religion = chaldean
+	home_site = babylon
+	gender = male
+	start_date = -1782 #reign began as king of Babylon; Source: "History of the World Map by Map", 2023, pp. 50-51.
+	death_date = -1750 #reign ended; Source: "History of the World Map by Map", 2023, pp. 50-51.
+}

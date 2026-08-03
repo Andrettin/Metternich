@@ -1,23 +1,47 @@
-sargon_ii_of_assyria = { #Source: William R. Shepherd, "Historical Atlas", 1911, p. 5.
+assurnasirpal_ii_of_assyria = {
+	name = "Assurnasirpal"
+	epithet = "II"
+	character_class = aristocrat
+	rank = lord #king
+	culture = assyrian
+	religion = chaldean
+	home_site = assur
+	gender = male
+	start_date = -859 #was king of Assyria as of 859 BC; Source: "History of the World Map by Map", 2023, pp. 50-51.
+}
+
+sargon_ii_of_assyria = {
 	name = "Sargon"
 	epithet = "II"
-	character_class = warrior
+	character_class = aristocrat
 	culture = assyrian
 	religion = chaldean
 	home_site = nineveh
 	gender = male
-	start_date = -720 #ruled the Assyrian Empire in 720 BC
+	start_date = -721 #reign began as king of Assyria; Source: "History of the World Map by Map", 2023, pp. 50-51.
+	death_date = -705 #reign ended; Source: "History of the World Map by Map", 2023, pp. 50-51.
 	
 	history = {
-		-720 = {
-			rank = lord
+		-721 = {
+			rank = lord #king
 		}
 	}
 }
 
+esarhaddon_of_assyria = {
+	name = "Esarhaddon"
+	character_class = aristocrat
+	rank = lord #king
+	culture = assyrian
+	religion = chaldean
+	home_site = nineveh
+	gender = male
+	start_date = -671 #captured Memphis and conquered Egypt in 671 BC; Source: "History of the World Map by Map", 2023, pp. 50-51.
+}
+
 assurbanipal_of_assyria = { #Source: William R. Shepherd, "Historical Atlas", 1911, p. 5.
 	name = "Assurbanipal"
-	character_class = warrior
+	character_class = aristocrat
 	culture = assyrian
 	religion = chaldean
 	home_site = nineveh
@@ -26,7 +50,7 @@ assurbanipal_of_assyria = { #Source: William R. Shepherd, "Historical Atlas", 19
 	
 	history = {
 		-640 = {
-			rank = lord
+			rank = lord #king
 		}
 	}
 }

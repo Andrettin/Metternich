@@ -14,4 +14,14 @@ babylonia = {
 	core_provinces = {
 		babylon
 	}
+	
+	history = {
+		-1782 = {
+			government_type = monarchy
+			
+			offices = {
+				ruler = hammurabi_of_babylon #Hammurabi became king of Babylon in 1782 BC; Source: "History of the World Map by Map", 2023, pp. 50-51.
+			}
+		}
+	}
 }

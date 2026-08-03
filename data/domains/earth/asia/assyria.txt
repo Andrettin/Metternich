@@ -20,11 +20,23 @@ assyria = {
 	}
 	
 	history = {
-		-720 = {
+		-859 = {
 			government_type = monarchy
 			
 			offices = {
-				ruler = sargon_ii_of_assyria #Source: William R. Shepherd, "Historical Atlas", 1911, p. 5.
+				ruler = assurnasirpal_ii_of_assyria #Assurnasirpal II was king of Assyria as of 859 BC; Source: "History of the World Map by Map", 2023, pp. 50-51.
+			}
+		}
+		
+		-721 = {
+			offices = {
+				ruler = sargon_ii_of_assyria #Sargon II became king of Assyria in 721 BC; Source: "History of the World Map by Map", 2023, pp. 50-51.
+			}
+		}
+		
+		-671 = {
+			offices = {
+				ruler = esarhaddon_of_assyria #Esarhaddon was king of Assyrua as of 671 BC; Source: "History of the World Map by Map", 2023, pp. 50-51.
 			}
 		}
 		
