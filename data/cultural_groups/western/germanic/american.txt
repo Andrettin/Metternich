@@ -1,0 +1,5 @@
+american = {
+	name = "American"
+	rank = microgroup
+	upper_group = anglo_saxon
+}

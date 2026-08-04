@@ -1,4 +1,4 @@
-central_germanic = {
+central_germanic = { #Central European Irminones and Istvaeones
 	name = "Central Germanic"
 	rank = infragroup
 	upper_group = west_germanic

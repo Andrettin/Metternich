@@ -1,6 +1,6 @@
 english = {
 	name = "English"
-	group = anglo_saxon
+	group = british
 	color = { 206 8 8 }
 	language = english
 	species = {

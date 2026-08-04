@@ -1,6 +1,6 @@
 anglo_saxon = {
 	name = "Anglo-Saxon"
-	group = anglo_saxon
+	group = british
 	color = { 204 76 76 }
 	language = old_english
 	species = {

@@ -1,5 +1,5 @@
 araucanian = {
 	name = "Araucanian"
 	rank = group
-	upper_group = american
+	upper_group = amerindian
 }

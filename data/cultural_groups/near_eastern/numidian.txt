@@ -1,5 +1,5 @@
 numidian = {
 	name = "Numidian"
-	rank = group
-	upper_group = near_eastern
+	rank = subgroup
+	upper_group = berber
 }

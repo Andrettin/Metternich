@@ -1,0 +1,5 @@
+british = { #Anglo-Saxon cultures located in the British Isles
+	name = "British"
+	rank = microgroup
+	upper_group = anglo_saxon
+}

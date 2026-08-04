@@ -1,6 +1,6 @@
 norse = {
 	name = "Norse"
-	group = scandinavian
+	group = nordic
 	color = { 76 140 204 }
 	language = old_norse
 	use_language_data_for_name_generation = true

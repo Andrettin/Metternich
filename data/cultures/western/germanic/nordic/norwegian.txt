@@ -1,6 +1,6 @@
 norwegian = {
 	name = "Norwegian"
-	group = scandinavian
+	group = nordic
 	color = { 140 20 140 }
 	language = norwegian
 	primary_domain = norway

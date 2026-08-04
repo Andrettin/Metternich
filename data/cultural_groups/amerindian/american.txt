@@ -1,5 +1,5 @@
-american = {
-	name = "American"
+amerindian = {
+	name = "Amerindian"
 	rank = supergroup
 	default_phenotype = amerindian
 }

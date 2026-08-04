@@ -1,6 +1,6 @@
 icelandic = {
 	name = "Icelandic"
-	group = scandinavian
+	group = nordic
 	color = { 80 20 150 }
 	species = {
 		human

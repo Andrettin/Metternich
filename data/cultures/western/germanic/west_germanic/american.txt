@@ -1,6 +1,6 @@
 american = {
 	name = "American"
-	group = anglo_saxon
+	group = american
 	color = { 65 65 129 }
 	language = english
 	species = {

@@ -1,6 +1,6 @@
 suioni = {
 	name = "Suioni"
-	group = scandinavian
+	group = nordic
 	color = { 150 108 150 }
 	language = proto_germanic
 	primary_domain = suionia

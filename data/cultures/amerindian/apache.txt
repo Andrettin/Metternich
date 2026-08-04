@@ -1,6 +1,6 @@
 apache = {
 	name = "Apache"
-	group = american
+	group = amerindian
 	color = { 195 174 134 }
 	species = {
 		human
