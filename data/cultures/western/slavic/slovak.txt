@@ -1,6 +1,6 @@
 slovak = {
 	name = "Slovak"
-	group = west_slavic
+	group = czechoslovak
 	color = { 120 255 255 }
 	species = {
 		human

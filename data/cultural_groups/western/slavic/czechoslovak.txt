@@ -1,0 +1,5 @@
+czechoslovak = {
+	name = "Czechoslovak"
+	rank = infragroup
+	upper_group = west_slavic
+}
