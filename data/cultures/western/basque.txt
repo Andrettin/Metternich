@@ -2,6 +2,7 @@ basque = {
 	name = "Basque"
 	group = western
 	color = { 220 170 30 }
+	language = basque
 	species = {
 		human
 	}

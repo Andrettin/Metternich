@@ -1,0 +1,4 @@
+norwegian = {
+	name = "Norwegian"
+	family = germanic
+}
