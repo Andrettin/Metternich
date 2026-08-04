@@ -1,0 +1,6 @@
+tibeto_burman = {
+	name = "Tibeto-Burman"
+	rank = group
+	upper_group = asian
+	default_phenotype = east_asian
+}

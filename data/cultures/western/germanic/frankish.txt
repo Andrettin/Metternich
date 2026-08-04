@@ -1,6 +1,6 @@
 frankish = {
 	name = "Frankish"
-	group = west_germanic
+	group = central_germanic
 	color = { 76 76 127 }
 	language = old_frankish
 	primary_domain = francia

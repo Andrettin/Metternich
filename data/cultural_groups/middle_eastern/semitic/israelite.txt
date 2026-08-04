@@ -1,0 +1,5 @@
+israelite = {
+	name = "Israelite"
+	rank = infragroup
+	upper_group = levantine
+}

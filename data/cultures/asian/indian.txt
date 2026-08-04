@@ -1,6 +1,6 @@
 indian = {
 	name = "Indian"
-	group = asian
+	group = indo_aryan
 	default_phenotype = south_asian
 	color = { 90 190 41 }
 	species = {

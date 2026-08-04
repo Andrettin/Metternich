@@ -37,7 +37,7 @@ frigg = { #Source: Kevin Crossley-Holland, "The Norse Myths", 1980, p. 242; Sour
 	}
 	cultural_group_names = {
 		anglo_saxon = "Frig" #"Frig" is the Anglo-Saxon name for the goddess according to Stenton, while Larrington gives "Fricg" instead; Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 98.
-		west_germanic = "Friia" #as given in the second Merseburg charm (which is in Old High German); in the charm Volla is described as being her sister; Source: Peter Buchholz, "Perspectives for Historical Research in Germanic Religion", 1968, p. 129; Source: Susan D. Fuller, "Pagan Charms in Tenth-Century Saxony? The Function of the Merseburg Charms", 1909, p. 162.
+		central_germanic = "Friia" #as given in the second Merseburg charm (which is in Old High German); in the charm Volla is described as being her sister; Source: Peter Buchholz, "Perspectives for Historical Research in Germanic Religion", 1968, p. 129; Source: Susan D. Fuller, "Pagan Charms in Tenth-Century Saxony? The Function of the Merseburg Charms", 1909, p. 162.
 	}
 	major_domains = {
 		charm
@@ -178,7 +178,7 @@ odin = { #known as Allfather, the Terrible One, One-eyed, Father of Battle; Sour
 	}
 	cultural_group_names = {
 		anglo_saxon = "Woden"
-		west_germanic = "Wodan" #Old High German name for the deity, as seen in the second Merseburg charm; Source: Susan D. Fuller, "Pagan Charms in Tenth-Century Saxony? The Function of the Merseburg Charms", 1909, p. 162.
+		central_germanic = "Wodan" #Old High German name for the deity, as seen in the second Merseburg charm; Source: Susan D. Fuller, "Pagan Charms in Tenth-Century Saxony? The Function of the Merseburg Charms", 1909, p. 162.
 	}
 	major_domains = {
 		combat
@@ -256,7 +256,7 @@ tyr = { #Source: Kevin Crossley-Holland, "The Norse Myths", 1980, pp. 34-36, 251
 	}
 	cultural_group_names = {
 		anglo_saxon = "Tiw" #"Tīw"; Old English name of the god; Source: Peter Buchholz, "Perspectives for Historical Research in Germanic Religion", 1968, p. 115.
-		west_germanic = "Ziu" #Old High German name of the god; Source: Peter Buchholz, "Perspectives for Historical Research in Germanic Religion", 1968, p. 115.
+		central_germanic = "Ziu" #Old High German name of the god; Source: Peter Buchholz, "Perspectives for Historical Research in Germanic Religion", 1968, p. 115.
 	}
 	major_domains = {
 		combat

@@ -1,0 +1,6 @@
+indo_aryan = {
+	name = "Indo-Aryan"
+	rank = group
+	upper_group = asian
+	default_phenotype = south_asian
+}

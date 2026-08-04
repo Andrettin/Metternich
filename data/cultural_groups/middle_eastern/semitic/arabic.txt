@@ -1,0 +1,5 @@
+arabic = {
+	name = "Arabic"
+	rank = subgroup
+	upper_group = semitic
+}

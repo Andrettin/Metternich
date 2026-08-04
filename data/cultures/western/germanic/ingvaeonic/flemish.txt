@@ -1,6 +1,6 @@
 flemish = {
 	name = "Flemish"
-	group = west_germanic
+	group = ingvaeonic
 	color = { 43 141 172 }
 	species = {
 		human

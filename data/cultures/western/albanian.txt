@@ -1,6 +1,6 @@
 albanian = {
 	name = "Albanian"
-	group = western
+	group = illyrian
 	color = { 140 0 0 }
 	language = albanian
 	species = {

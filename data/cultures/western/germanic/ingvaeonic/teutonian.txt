@@ -1,8 +1,8 @@
-anglian = {
-	name = "Anglian"
-	group = west_germanic
-	color = { 140 37 40 }
-	language = old_english
+teutonian = {
+	name = "Teutonian"
+	group = ingvaeonic
+	color = { 175 175 90 }
+	language = old_saxon
 	use_language_data_for_name_generation = true
 	given_name_markov_chain_size = 2
 	surname_markov_chain_size = 2
@@ -12,7 +12,6 @@ anglian = {
 		half_orc
 	}
 	#derived_cultures = {
-	#	anglo_saxon
 	#	german
 	#}
 }

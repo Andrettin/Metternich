@@ -1,0 +1,5 @@
+finno_ugric = {
+	name = "Finno-Ugric"
+	rank = group
+	upper_group = western
+}

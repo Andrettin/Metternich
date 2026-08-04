@@ -1,7 +1,7 @@
 german = {
 	name = "German"
 	rank = infragroup
-	upper_group = west_germanic
+	upper_group = central_germanic
 	cultural_union = germany
 	
 	history = {

@@ -1,6 +1,6 @@
 ashkenazi = {
 	name = "Ashkenazi"
-	group = german
+	group = israelite
 	color = { 130 100 100 }
 	species = {
 		human

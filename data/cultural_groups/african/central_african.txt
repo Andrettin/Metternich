@@ -1,0 +1,5 @@
+central_african = {
+	name = "Central African"
+	rank = group
+	upper_group = african
+}

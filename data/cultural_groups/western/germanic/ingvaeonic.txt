@@ -1,5 +1,5 @@
-west_germanic = {
-	name = "West Germanic"
+ingvaeonic = {
+	name = "Ingvaeonic"
 	rank = subgroup
 	upper_group = germanic
 }

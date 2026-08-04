@@ -1,0 +1,5 @@
+altaic = {
+	name = "Altaic"
+	rank = group
+	upper_group = middle_eastern
+}

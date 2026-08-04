@@ -1,6 +1,6 @@
 hebrew = {
 	name = "Hebrew"
-	group = levantine
+	group = israelite
 	color = { 99 193 217 }
 	language = hebrew
 	species = {

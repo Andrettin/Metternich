@@ -1,0 +1,5 @@
+central_germanic = {
+	name = "Central Germanic"
+	rank = subgroup
+	upper_group = germanic
+}
