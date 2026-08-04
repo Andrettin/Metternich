@@ -1,4 +1,0 @@
-middle_eastern = {
-	name = "Middle Eastern"
-	species = human
-}

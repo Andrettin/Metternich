@@ -1,5 +1,5 @@
 berber = {
 	name = "Berber"
 	rank = group
-	upper_group = middle_eastern
+	upper_group = near_eastern
 }

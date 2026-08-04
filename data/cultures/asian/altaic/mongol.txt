@@ -1,8 +1,8 @@
 mongol = {
 	name = "Mongol"
 	group = altaic
-	default_phenotype = east_asian
 	color = { 230 230 44 }
+	default_phenotype = east_asian
 	species = {
 		human
 	}

@@ -1,5 +1,5 @@
 semitic = {
 	name = "Semitic"
 	rank = group
-	upper_group = middle_eastern
+	upper_group = near_eastern
 }

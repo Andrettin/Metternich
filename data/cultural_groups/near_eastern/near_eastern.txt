@@ -1,7 +1,7 @@
-middle_eastern = {
-	name = "Middle Eastern"
+near_eastern = {
+	name = "Near Eastern"
 	rank = supergroup
-	default_phenotype = middle_eastern
+	default_phenotype = near_eastern
 	
 	history = {
 		explored_regions += middle_east

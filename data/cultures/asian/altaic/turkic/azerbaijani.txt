@@ -2,6 +2,7 @@ azerbaijani = {
 	name = "Azerbaijani"
 	group = turkic
 	color = { 47 44 107 }
+	default_phenotype = near_eastern
 	species = {
 		human
 	}

@@ -1,7 +1,7 @@
 anatolian = {
 	name = "Anatolian"
 	rank = group
-	upper_group = middle_eastern
+	upper_group = near_eastern
 	
 	history = {
 		-4000 = {

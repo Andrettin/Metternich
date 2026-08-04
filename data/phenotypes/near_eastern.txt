@@ -1,0 +1,4 @@
+near_eastern = {
+	name = "Near Eastern"
+	species = human
+}

@@ -3,6 +3,7 @@ turkish = {
 	group = turkic
 	color = { 170 148 214 }
 	language = turkish
+	default_phenotype = near_eastern
 	species = {
 		human
 	}
