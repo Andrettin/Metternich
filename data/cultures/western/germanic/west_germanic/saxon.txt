@@ -1,6 +1,6 @@
 saxon = {
 	name = "Saxon"
-	group = ingvaeonic
+	group = west_germanic
 	color = { 127 25 25 }
 	language = old_saxon
 	use_language_data_for_name_generation = true

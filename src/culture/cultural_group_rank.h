@@ -4,6 +4,7 @@ namespace metternich {
 
 enum class cultural_group_rank {
 	none,
+	microgroup,
 	infragroup,
 	subgroup,
 	group,

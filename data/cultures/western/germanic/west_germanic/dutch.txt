@@ -1,6 +1,6 @@
 dutch = {
 	name = "Dutch"
-	group = ingvaeonic
+	group = west_germanic
 	color = { 255 90 8 }
 	language = dutch
 	primary_domain = netherlands

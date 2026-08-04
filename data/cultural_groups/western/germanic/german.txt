@@ -1,6 +1,6 @@
 german = {
 	name = "German"
-	rank = infragroup
+	rank = microgroup
 	upper_group = central_germanic
 	cultural_union = germany
 	

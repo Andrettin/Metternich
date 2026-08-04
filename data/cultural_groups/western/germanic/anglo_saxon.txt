@@ -1,5 +1,5 @@
 anglo_saxon = {
 	name = "Anglo-Saxon"
 	rank = infragroup
-	upper_group = ingvaeonic
+	upper_group = west_germanic
 }
