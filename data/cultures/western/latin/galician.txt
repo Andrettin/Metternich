@@ -1,6 +1,6 @@
 galician = {
 	name = "Galician"
-	group = iberian
+	group = ibero_romance
 	color = { 93 179 191 }
 	species = {
 		human

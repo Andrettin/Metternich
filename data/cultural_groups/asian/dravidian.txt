@@ -1,0 +1,6 @@
+dravidian = {
+	name = "Dravidian"
+	rank = group
+	upper_group = asian
+	default_phenotype = south_asian
+}

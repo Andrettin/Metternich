@@ -1,0 +1,5 @@
+bactrian = {
+	name = "Bactrian"
+	rank = subgroup
+	upper_group = iranian
+}

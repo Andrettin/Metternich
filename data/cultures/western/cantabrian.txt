@@ -1,6 +1,6 @@
 cantabrian = {
 	name = "Cantabrian"
-	group = western
+	group = occidental
 	color = { 49 119 115 }
 	species = {
 		human

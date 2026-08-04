@@ -2,9 +2,4 @@ celtiberian = {
 	name = "Celtiberian"
 	rank = subgroup
 	upper_group = celtic
-	office_title_names = {
-		ruler = {
-			theocracy = "Druid"
-		}
-	}
 }

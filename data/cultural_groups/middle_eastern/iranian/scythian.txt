@@ -1,0 +1,5 @@
+scythian = {
+	name = "Scythian"
+	rank = subgroup
+	upper_group = iranian
+}

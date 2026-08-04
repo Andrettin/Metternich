@@ -1,0 +1,5 @@
+ibero_romance = {
+	name = "Ibero-Romance"
+	rank = subgroup
+	upper_group = latin
+}

@@ -3,4 +3,9 @@ druidic = {
 	group = pagan
 	color = { 44 102 30 }
 	icon = pine_tree
+	office_title_names = {
+		ruler = {
+			theocracy = "Druid"
+		}
+	}
 }

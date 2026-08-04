@@ -1,6 +1,6 @@
 brazilian = {
 	name = "Brazilian"
-	group = iberian
+	group = ibero_romance
 	color = { 0 112 66 }
 	language = portuguese
 	species = {

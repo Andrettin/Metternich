@@ -5,9 +5,4 @@ brigantic = {
 	species = {
 		human
 	}
-	office_title_names = {
-		ruler = {
-			theocracy = "Druid"
-		}
-	}
 }

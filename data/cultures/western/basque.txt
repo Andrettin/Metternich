@@ -1,6 +1,6 @@
 basque = {
 	name = "Basque"
-	group = western
+	group = occidental
 	color = { 220 170 30 }
 	language = basque
 	species = {

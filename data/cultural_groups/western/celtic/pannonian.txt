@@ -1,5 +1,5 @@
-gallic = {
-	name = "Gallic"
+pannonian = {
+	name = "Pannonian"
 	rank = subgroup
 	upper_group = celtic
 }

@@ -1,0 +1,5 @@
+occidental = { #Basque and similar languages
+	name = "Occidental"
+	rank = group
+	upper_group = western
+}

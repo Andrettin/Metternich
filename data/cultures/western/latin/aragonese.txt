@@ -1,6 +1,6 @@
 aragonese = {
 	name = "Aragonese"
-	group = iberian
+	group = ibero_romance
 	color = { 204 170 61 }
 	species = {
 		human

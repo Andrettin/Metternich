@@ -1,0 +1,5 @@
+iberian = {
+	name = "Iberian"
+	rank = group
+	upper_group = western
+}

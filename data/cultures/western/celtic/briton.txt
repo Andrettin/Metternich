@@ -5,11 +5,6 @@ briton = {
 	species = {
 		human
 	}
-	office_title_names = {
-		ruler = {
-			theocracy = "Druid"
-		}
-	}
 	
 	given_names = {
 		male = {
