@@ -1,7 +1,7 @@
 old_kingdom_of_egypt = {
 	name = "Old Kingdom of Egypt"
 	start_date = -2700
-	map_template = egypt
+	map_template = europe
 	hidden = true
 	default_domains = {
 		egypt
@@ -12,7 +12,7 @@ middle_kingdom_of_egypt = {
 	name = "Middle Kingdom of Egypt"
 	parent_scenario = old_kingdom_of_egypt
 	start_date = -2040
-	map_template = egypt
+	map_template = europe
 	hidden = true
 	default_domains = {
 		egypt
@@ -23,7 +23,18 @@ new_kingdom_of_egypt = {
 	name = "New Kingdom of Egypt"
 	parent_scenario = old_kingdom_of_egypt
 	start_date = -1570
-	map_template = egypt
+	map_template = europe
+	hidden = true
+	default_domains = {
+		egypt
+	}
+}
+
+ramesses_ii = {
+	name = "Ramesses II"
+	parent_scenario = old_kingdom_of_egypt
+	start_date = -1279
+	map_template = europe
 	hidden = true
 	default_domains = {
 		egypt
