@@ -28,7 +28,6 @@ druid = {
 		human
 	}
 	favored_holding_types = {
-		mausoleum
 		temple
 	}
 	allowed_holding_types = {

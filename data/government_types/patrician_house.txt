@@ -9,8 +9,6 @@ patrician_house = {
 	}
 	allowed_holding_types = {
 		guild
-		great_library
-		university
 	}
 	default_laws = {
 		succession = primogeniture

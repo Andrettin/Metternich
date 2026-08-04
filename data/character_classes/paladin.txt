@@ -32,7 +32,6 @@ paladin = {
 	}
 	favored_holding_types = {
 		castle
-		mausoleum
 		royal_palace
 		temple
 	}

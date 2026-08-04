@@ -11,6 +11,7 @@ monarchy = {
 	}
 	allowed_holding_types = {
 		great_library
+		mausoleum
 		university
 	}
 	default_laws = {

@@ -32,8 +32,9 @@ bard = {
 		human
 	}
 	favored_holding_types = {
-		university
 		great_library
+		mausoleum
+		university
 	}
 	allowed_holding_types = {
 		guild

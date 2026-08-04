@@ -10,6 +10,7 @@ magocracy = {
 	allowed_holding_types = {
 		castle
 		great_library
+		mausoleum
 		university
 	}
 	default_laws = {
