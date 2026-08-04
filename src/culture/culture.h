@@ -13,6 +13,7 @@ namespace metternich {
 
 class character;
 class cultural_group;
+class domain;
 class population_unit;
 class species;
 
@@ -31,6 +32,7 @@ class culture final : public culture_base, public data_type<culture>
 
 	Q_PROPERTY(QColor color MEMBER color READ get_color NOTIFY changed)
 	Q_PROPERTY(const archimedes::language* language MEMBER language READ get_language NOTIFY changed)
+	Q_PROPERTY(metternich::domain* primary_domain MEMBER primary_domain NOTIFY changed)
 	Q_PROPERTY(bool surname_first MEMBER surname_first READ is_surname_first NOTIFY changed)
 
 public:
@@ -72,6 +74,11 @@ public:
 		return this->language;
 	}
 
+	const domain *get_primary_domain() const
+	{
+		return this->primary_domain;
+	}
+
 	bool is_surname_first() const
 	{
 		return this->surname_first;
@@ -100,6 +107,7 @@ signals:
 private:
 	QColor color;
 	const archimedes::language *language = nullptr;
+	domain *primary_domain = nullptr;
 	bool surname_first = false;
 	std::vector<const metternich::species *> species; //species which can have this culture
 	std::vector<std::unique_ptr<const cultural_derivation>> cultural_derivations;

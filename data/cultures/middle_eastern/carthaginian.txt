@@ -3,6 +3,7 @@ carthaginian = {
 	group = levantine
 	color = { 74 174 85 }
 	language = phoenician
+	primary_domain = carthage
 	species = {
 		human
 	}

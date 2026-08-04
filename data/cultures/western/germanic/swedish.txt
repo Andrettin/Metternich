@@ -2,6 +2,7 @@ swedish = {
 	name = "Swedish"
 	group = scandinavian
 	color = { 0 173 198 }
+	primary_domain = sweden
 	species = {
 		human
 	}

@@ -3,6 +3,7 @@
 #include "culture/culture.h"
 
 #include "culture/cultural_group.h"
+#include "domain/domain.h"
 #include "script/condition/and_condition.h"
 #include "script/mean_time_to_happen.h"
 #include "script/modifier.h"
@@ -61,6 +62,10 @@ void culture::initialize()
 	if (!this->color.isValid()) {
 		log::log_error(std::format("Culture \"{}\" has no color. A random one will be generated for it.", this->get_identifier()));
 		this->color = random::get()->generate_color();
+	}
+
+	if (this->get_primary_domain() != nullptr && !vector::contains(this->get_primary_domain()->get_cultures(), this)) {
+		this->primary_domain->add_culture(this);
 	}
 
 	culture_base::initialize();

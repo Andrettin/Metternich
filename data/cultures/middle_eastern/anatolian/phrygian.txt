@@ -3,6 +3,7 @@ phrygian = {
 	group = anatolian
 	color = { 246 223 15 }
 	language = phrygian
+	primary_domain = phrygia
 	species = {
 		human
 	}

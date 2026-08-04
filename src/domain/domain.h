@@ -190,6 +190,11 @@ public:
 		return this->get_cultures().at(0);
 	}
 
+	void add_culture(const culture *culture)
+	{
+		this->cultures.push_back(culture);
+	}
+
 	const religion *get_default_religion() const
 	{
 		return this->default_religion;

@@ -2,6 +2,8 @@ hittite = {
 	name = "Hittite"
 	group = anatolian
 	color = { 18 137 154 }
+	language = hittite
+	primary_domain = hittite_empire
 	species = {
 		human
 	}

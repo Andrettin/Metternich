@@ -3,6 +3,7 @@ babylonian = {
 	group = mesopotamian
 	color = { 27 73 157 }
 	language = babylonian
+	primary_domain = babylonia
 	species = {
 		human
 	}

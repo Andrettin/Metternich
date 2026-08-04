@@ -3,6 +3,7 @@ dutch = {
 	group = west_germanic
 	color = { 255 90 8 }
 	language = dutch
+	primary_domain = netherlands
 	species = {
 		human
 	}
