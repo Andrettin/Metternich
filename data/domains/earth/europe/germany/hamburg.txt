@@ -15,4 +15,10 @@ hamburg = {
 	core_provinces = {
 		hamburg
 	}
+	
+	history = {
+		high_middle_ages = {
+			owner = hanseatic_league #center of the Hanseatic League in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
+		}
+	}
 }
