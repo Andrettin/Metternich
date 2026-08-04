@@ -577,6 +577,10 @@ bool site_game_data::can_be_capital() const
 		return false;
 	}
 
+	if (this->get_owner()->get_game_data()->get_province_count() > 0 && this->get_province()->get_game_data()->get_owner() != this->get_owner()) {
+		return false;
+	}
+
 	return true;
 }
 
