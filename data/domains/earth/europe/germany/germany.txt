@@ -3,11 +3,7 @@ germany = {
 	type = polity
 	color = { 245 167 97 }
 	flag = germany
-	cultures = {
-		german
-		austrian
-		rhenish
-	}
+	culture = german
 	default_religion = protestant
 	default_tier = empire
 	default_government_type = monarchy
@@ -15,43 +11,5 @@ germany = {
 	min_tier = kingdom
 	eras = {
 		industrial_era
-	}
-	core_provinces = {
-		brandenburg
-		augsburg
-		baden
-		breisgau
-		bremen
-		brunswick
-		east_friesland
-		eichstatt
-		farther_pomerania
-		franconia
-		freising
-		furstenberg
-		hamburg
-		hanover
-		hesse
-		hither_pomerania
-		holstein
-		lower_silesia
-		luneburg
-		magdeburg
-		mecklenburg
-		minden
-		nassau
-		oldenburg
-		paderborn
-		palatinate
-		passau
-		regensburg
-		rhineland
-		schleswig
-		thuringia
-		upper_saxony
-		upper_silesia
-		werben
-		westphalia
-		wurtemberg
 	}
 }

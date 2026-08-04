@@ -1116,7 +1116,7 @@ QCoro::Task<void> domain_game_data::set_culture(const metternich::culture *cultu
 		co_return;
 	}
 
-	if (!this->domain->is_culture_allowed(culture)) {
+	if (!this->is_culture_allowed(culture)) {
 		throw std::runtime_error(std::format("Tried to set culture \"{}\" for domain \"{}\", which does not have that culture as an allowed one.", culture->get_identifier(), this->domain->get_identifier()));
 	}
 
@@ -1137,7 +1137,7 @@ QCoro::Task<void> domain_game_data::check_culture()
 {
 	std::vector<const metternich::culture *> potential_cultures;
 
-	if (this->get_government()->get_ruler() != nullptr && this->domain->is_culture_allowed(this->get_government()->get_ruler()->get_culture())) {
+	if (this->get_government()->get_ruler() != nullptr && this->is_culture_allowed(this->get_government()->get_ruler()->get_culture())) {
 		//use the ruler's culture for the domain if it is allowed for it
 		potential_cultures = { this->get_government()->get_ruler()->get_culture() };
 	} else {
@@ -1145,7 +1145,7 @@ QCoro::Task<void> domain_game_data::check_culture()
 		int64_t best_size = 0;
 
 		for (const auto &[culture, size] : this->get_population()->get_culture_sizes()) {
-			if (!this->domain->is_culture_allowed(culture)) {
+			if (!this->is_culture_allowed(culture)) {
 				continue;
 			}
 
@@ -1176,6 +1176,30 @@ QCoro::Task<void> domain_game_data::check_culture()
 
 		engine_interface::get()->add_notification("New State Culture", interior_minister_portrait, std::format("{}, the {} culture has taken hold of our institutions, becoming our new state culture!", this->get_form_of_address(), chosen_culture->get_name()));
 	}
+}
+
+bool domain_game_data::is_culture_allowed(const metternich::culture *culture) const
+{
+	assert_throw(culture != nullptr);
+
+	if (this->domain->get_cultures().empty()) {
+		//if the domain has no listed cultures, then any culture is allowed for it
+		return true;
+	}
+
+	if (vector::contains(this->domain->get_cultures(), culture)) {
+		//if this culture is part of the domain's listed cultures, then it is always allowed for it
+		return true;
+	}
+
+	if (!this->domain->get_core_provinces().empty() || !this->domain->get_core_holdings().empty()) {
+		if (this->has_domain_cores(this->domain)) {
+			//if a domain has cores, and it owns those cores, then any culture is allowed for it
+			return true;
+		}
+	}
+
+	return false;
 }
 
 QCoro::Task<void> domain_game_data::set_religion(const metternich::religion *religion)
@@ -4331,8 +4355,8 @@ bool domain_game_data::can_form_domain(const metternich::domain *other) const
 		return false;
 	}
 
-	if (this->get_culture()->get_primary_domain() == other) {
-		//FIXME: allow forming the primary domain of our culture if we own the majority of provinces (or holdings, if there are no provinces of this culture?) of that culture
+	if (this->get_culture()->get_primary_domain() == other || other->is_cultural_union_of(this->get_culture())) {
+		//FIXME: allow forming the primary domain of our culture or one of its cultural unions if we own the majority of provinces (or holdings, if there are no provinces of this culture?) of that culture/group, and if we aren't already the cultural union of an upper group
 	}
 
 	if (!other->get_core_provinces().empty() || !other->get_core_holdings().empty()) {
@@ -4353,10 +4377,10 @@ bool domain_game_data::can_release_domain(const metternich::domain *other) const
 		return false;
 	}
 
-	if (this->get_culture()->get_primary_domain() != other) {
+	if (this->get_culture()->get_primary_domain() != other && !other->is_cultural_union_of(this->get_culture())) {
 		for (const metternich::culture *culture : other->get_cultures()) {
-			if (culture->get_primary_domain() == other) {
-				//FIXME: allow releasing the primary domain of a culture if we own the majority of provinces (or holdings, if there are no provinces of this culture?) of that culture
+			if (culture->get_primary_domain() == other || other->is_cultural_union_of(culture)) {
+				//FIXME: allow releasing the primary domain of a culture or cultural group if we own the majority of provinces (or holdings, if there are no provinces of this culture?) of that culture/group
 			}
 		}
 	}

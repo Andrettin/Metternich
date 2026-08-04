@@ -90,6 +90,13 @@ void culture::check() const
 	culture_base::check();
 }
 
+void culture::set_group(cultural_group *group)
+{
+	culture_base::set_group(group);
+
+	group->add_culture(this);
+}
+
 const phenotype_map<int64_t> culture::get_phenotype_weights() const
 {
 	phenotype_map<int64_t> phenotype_weights = culture_base::get_phenotype_weights();

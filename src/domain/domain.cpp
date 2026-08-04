@@ -422,15 +422,22 @@ const std::string &domain::get_office_title_name(const office *office, const gov
 	return government_type->get_office_title_name(office, tier, gender);
 }
 
-bool domain::is_culture_allowed(const culture *culture) const
+bool domain::is_cultural_union_of(const culture *culture) const
 {
-	assert_throw(culture != nullptr);
-
-	if (this->get_cultures().empty()) {
-		return true;
+	if (!vector::contains(this->get_cultures(), culture)) {
+		return false;
 	}
 
-	return vector::contains(this->get_cultures(), culture);
+	const cultural_group *cultural_group = culture->get_group();
+	while (cultural_group != nullptr) {
+		if (cultural_group->get_cultural_union() == this) {
+			return true;
+		}
+
+		cultural_group = cultural_group->get_upper_group();
+	}
+
+	return false;
 }
 
 std::vector<const province *> domain::get_core_provinces_for_tier(const domain_tier tier) const

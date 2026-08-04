@@ -64,6 +64,8 @@ public:
 
 	using culture_base::get_group;
 
+	virtual void set_group(cultural_group *group) override;
+
 	const QColor &get_color() const
 	{
 		return this->color;

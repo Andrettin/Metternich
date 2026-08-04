@@ -179,7 +179,7 @@ public:
 		return this->cultures;
 	}
 
-	bool is_culture_allowed(const culture *culture) const;
+	bool is_cultural_union_of(const culture *culture) const;
 
 	const culture *get_default_culture() const
 	{

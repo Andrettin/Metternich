@@ -40,8 +40,8 @@ class culture_base : public named_data_entry
 {
 	Q_OBJECT
 
-	Q_PROPERTY(metternich::cultural_group* group MEMBER group NOTIFY changed)
-	Q_PROPERTY(metternich::cultural_group* upper_group MEMBER group NOTIFY changed)
+	Q_PROPERTY(metternich::cultural_group* group MEMBER group WRITE set_group NOTIFY changed)
+	Q_PROPERTY(metternich::cultural_group* upper_group MEMBER group WRITE set_group NOTIFY changed)
 	Q_PROPERTY(bool use_language_data_for_name_generation MEMBER use_language_data_for_name_generation READ uses_language_data_for_name_generation)
 	Q_PROPERTY(metternich::phenotype* default_phenotype MEMBER default_phenotype)
 
@@ -72,6 +72,16 @@ public:
 	const cultural_group *get_group() const
 	{
 		return this->group;
+	}
+
+	cultural_group *get_group()
+	{
+		return this->group;
+	}
+
+	virtual void set_group(cultural_group *group)
+	{
+		this->group = group;
 	}
 
 	bool is_part_of_group(const cultural_group *group) const;

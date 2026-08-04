@@ -265,6 +265,7 @@ public:
 
 	[[nodiscard]] QCoro::Task<void> set_culture(const metternich::culture *culture);
 	[[nodiscard]] QCoro::Task<void> check_culture();
+	bool is_culture_allowed(const metternich::culture *culture) const;
 
 	const metternich::religion *get_religion() const
 	{
