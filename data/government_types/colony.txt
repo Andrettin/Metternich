@@ -3,16 +3,10 @@ colony = {
 	group = republic
 	icon = settlement
 	primary_domain_attribute = stability
-	allowed_holding_types = {
+	preferred_holding_types = {
 		castle
 		guild
 		royal_palace
-	}
-	allowed_holding_types = {
-		castle
-		great_library
-		mausoleum
-		university
 	}
 	default_laws = {
 		succession = elective

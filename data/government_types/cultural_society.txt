@@ -1,20 +1,20 @@
-republic = {
-	name = "Republic"
+cultural_society = {
+	name = "Cultural Society"
 	group = republic
 	icon = philosophy
 	primary_domain_attribute = economy
 	preferred_holding_types = {
-		guild
-		royal_palace
+		university
 	}
 	allowed_holding_types = {
-		castle
+		great_library
+		mausoleum
 	}
 	default_laws = {
 		succession = elective
 		ruling_class = plutocracy
 		serfdom = free_subjects
-		press_rights = censored_press
+		press_rights = free_press
 	}
 	forbidden_laws = {
 		primogeniture
@@ -26,17 +26,23 @@ republic = {
 			country_type = tribe
 			subject_type = colony
 		}
-		province_count > 0
+		province_count == 0
 	}
 	ruler_character_classes = {
-		aristocrat
-		merchant
-		warrior
+		bard
 	}
-	modifier = {
+	modifier = { #same as Republic
 		crime = -1
 		law = -1
 		productivity = 1
 		society = 1
+	}
+	title_names = {
+		duchy = "Cultural Society"
+	}
+	office_title_names = {
+		ruler = {
+			duchy = "Magus"
+		}
 	}
 }

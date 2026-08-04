@@ -8,11 +8,6 @@ overlordship = {
 		guild
 		royal_palace
 	}
-	allowed_holding_types = {
-		great_library
-		mausoleum
-		university
-	}
 	default_laws = {
 		succession = elective
 		ruling_class = plutocracy
@@ -30,6 +25,7 @@ overlordship = {
 			country_type = tribe
 			subject_type = colony
 		}
+		province_count > 0
 	}
 	ruler_character_classes = {
 		aristocrat
