@@ -104,6 +104,8 @@ void province_game_data::process_gsml_property(const gsml_property &property)
 		this->trade_zone_domain = domain::get(value);
 	} else if (key == "temple_domain") {
 		this->temple_domain = domain::get(value);
+	} else if (key == "cultural_society_domain") {
+		this->cultural_society_domain = domain::get(value);
 	} else if (key == "level") {
 		this->level = std::stoi(value);
 	} else if (key == "max_level") {
@@ -184,9 +186,11 @@ gsml_data province_game_data::to_gsml_data() const
 	if (this->get_trade_zone_domain() != nullptr) {
 		data.add_property("trade_zone_domain", this->get_trade_zone_domain()->get_identifier());
 	}
-
 	if (this->get_temple_domain() != nullptr) {
 		data.add_property("temple_domain", this->get_temple_domain()->get_identifier());
+	}
+	if (this->get_cultural_society_domain() != nullptr) {
+		data.add_property("cultural_society_domain", this->get_cultural_society_domain()->get_identifier());
 	}
 
 	if (this->get_level() != 0) {
@@ -761,7 +765,7 @@ void province_game_data::check_temple_domain()
 	}
 
 	if (domain_religious_holding_levels.empty()) {
-		//if the province itself has no economic holdings, use those of neighboring provinces instead for this calculation
+		//if the province itself has no religious holdings, use those of neighboring provinces instead for this calculation
 
 		for (const metternich::province *nearby_province : this->province->get_map_data()->get_nearby_provinces()) {
 			for (const site *holding_site : nearby_province->get_game_data()->get_settlement_sites()) {
@@ -802,6 +806,95 @@ void province_game_data::check_temple_domain_for_province_and_neighbors()
 
 	for (const metternich::province *nearby_province : this->province->get_map_data()->get_nearby_provinces()) {
 		nearby_province->get_game_data()->check_temple_domain();
+	}
+}
+
+void province_game_data::set_cultural_society_domain(const metternich::domain *cultural_society_domain)
+{
+	if (cultural_society_domain == this->get_cultural_society_domain()) {
+		return;
+	}
+
+	this->cultural_society_domain = cultural_society_domain;
+
+	if (game::get()->is_running()) {
+		emit map_mode_image_changed(QString::fromUtf8(magic_enum::enum_name(province_map_mode::cultural_society)));
+
+		if (this->get_owner() != nullptr) {
+			this->get_owner()->get_turn_data()->set_diplomatic_map_mode_dirty(diplomatic_map_mode::cultural_society);
+		}
+	}
+
+	emit cultural_society_domain_changed();
+}
+
+void province_game_data::check_cultural_society_domain()
+{
+	if (this->province->is_water_zone()) {
+		return;
+	}
+
+	domain_map<int> domain_cultural_holding_levels;
+	for (const site *holding_site : this->get_settlement_sites()) {
+		const domain *holding_site_owner = holding_site->get_game_data()->get_owner();
+		if (holding_site_owner == nullptr) {
+			continue;
+		}
+
+		const holding_type *holding_type = holding_site->get_game_data()->get_holding_type();
+		if (holding_type == nullptr || !holding_type->is_cultural()) {
+			continue;
+		}
+
+		if (!holding_site_owner->get_game_data()->get_government_type()->is_holding_type_allowed(holding_type)) {
+			continue;
+		}
+
+		domain_cultural_holding_levels[holding_site->get_game_data()->get_owner()] += holding_site->get_game_data()->get_holding_level();
+	}
+
+	if (domain_cultural_holding_levels.empty()) {
+		//if the province itself has no cultural holdings, use those of neighboring provinces instead for this calculation
+
+		for (const metternich::province *nearby_province : this->province->get_map_data()->get_nearby_provinces()) {
+			for (const site *holding_site : nearby_province->get_game_data()->get_settlement_sites()) {
+				const domain *holding_site_owner = holding_site->get_game_data()->get_owner();
+				if (holding_site_owner == nullptr) {
+					continue;
+				}
+
+				const holding_type *holding_type = holding_site->get_game_data()->get_holding_type();
+				if (holding_type == nullptr || !holding_type->is_cultural()) {
+					continue;
+				}
+
+				if (!holding_site_owner->get_game_data()->get_government_type()->is_holding_type_allowed(holding_type)) {
+					continue;
+				}
+
+				domain_cultural_holding_levels[holding_site_owner] += holding_site->get_game_data()->get_holding_level();
+			}
+		}
+	}
+
+	int best_holding_level = -1;
+	const domain *best_domain = nullptr;
+	for (const auto &[domain, holding_level] : domain_cultural_holding_levels) {
+		if (holding_level > best_holding_level) {
+			best_holding_level = holding_level;
+			best_domain = domain;
+		}
+	}
+
+	this->set_cultural_society_domain(best_domain);
+}
+
+void province_game_data::check_cultural_society_domain_for_province_and_neighbors()
+{
+	this->check_cultural_society_domain();
+
+	for (const metternich::province *nearby_province : this->province->get_map_data()->get_nearby_provinces()) {
+		nearby_province->get_game_data()->check_cultural_society_domain();
 	}
 }
 

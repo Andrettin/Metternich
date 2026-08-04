@@ -177,6 +177,24 @@ Rectangle {
 		}
 		
 		TinyIconButton {
+			id: cultural_society_map_mode_button
+			icon_identifier: "embassy"
+			highlighted: province_map.mode === ProvinceMap.Mode.CulturalSociety
+			
+			onClicked: {
+				province_map.mode = ProvinceMap.Mode.CulturalSociety
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Cultural Society Map Mode"
+				} else {
+					status_text = ""
+				}
+			}
+		}
+		
+		TinyIconButton {
 			id: terrain_map_mode_button
 			icon_identifier: "dungeon"
 			highlighted: province_map.mode === ProvinceMap.Mode.Terrain

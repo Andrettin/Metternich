@@ -8,7 +8,8 @@ enum class diplomatic_map_mode {
 	cultural,
 	religious,
 	trade_zone,
-	temple
+	temple,
+	cultural_society
 };
 
 }

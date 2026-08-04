@@ -34,6 +34,7 @@ class holding_type final : public named_data_entry, public data_type<holding_typ
 	Q_PROPERTY(std::filesystem::path image_filepath MEMBER image_filepath WRITE set_image_filepath NOTIFY changed)
 	Q_PROPERTY(bool economic MEMBER economic READ is_economic NOTIFY changed)
 	Q_PROPERTY(bool religious MEMBER religious READ is_religious NOTIFY changed)
+	Q_PROPERTY(bool cultural MEMBER cultural READ is_cultural NOTIFY changed)
 	Q_PROPERTY(const metternich::domain_skill* domain_skill MEMBER domain_skill READ get_domain_skill NOTIFY changed)
 	Q_PROPERTY(bool resource MEMBER resource READ has_resource NOTIFY changed)
 
@@ -76,6 +77,11 @@ public:
 	bool is_religious() const
 	{
 		return this->religious;
+	}
+
+	bool is_cultural() const
+	{
+		return this->cultural;
 	}
 
 	const domain_skill *get_domain_skill() const
@@ -179,6 +185,7 @@ private:
 	std::filesystem::path image_filepath;
 	bool economic = false;
 	bool religious = false;
+	bool cultural = false;
 	const metternich::domain_skill *domain_skill = nullptr;
 	bool resource = false;
 	commodity_map<int64_t> level_commodity_costs;

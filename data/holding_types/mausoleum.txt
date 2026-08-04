@@ -3,6 +3,7 @@ mausoleum = {
 	icon = temple
 	portrait = temple
 	image_filepath = "tiles/settlements/town.png"
+	cultural = true
 	domain_skill = culture
 	level_commodity_costs = {
 		wealth = 1gb

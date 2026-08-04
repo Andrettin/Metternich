@@ -71,6 +71,8 @@ QImage diplomatic_map_image_provider::requestImage(const QString &id, QSize *siz
 			image = domain_diplomacy->get_diplomatic_map_mode_image_promise(diplomatic_map_mode::trade_zone)->future().result();
 		} else if (mode_identifier == "temple") {
 			image = domain_diplomacy->get_diplomatic_map_mode_image_promise(diplomatic_map_mode::temple)->future().result();
+		} else if (mode_identifier == "cultural_society") {
+			image = domain_diplomacy->get_diplomatic_map_mode_image_promise(diplomatic_map_mode::cultural_society)->future().result();
 		} else {
 			image = domain_diplomacy->get_diplomatic_map_image_promise()->future().result();
 		}

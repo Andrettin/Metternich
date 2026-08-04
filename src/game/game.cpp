@@ -1065,6 +1065,8 @@ QCoro::Task<void> game::apply_sites()
 				co_await site_game_data->set_owner(site_province->get_history()->get_trade_zone());
 			} else if (site_game_data->get_holding_type()->is_religious() && site_province->get_history()->get_temple_domain() != nullptr) {
 				co_await site_game_data->set_owner(site_province->get_history()->get_temple_domain());
+			} else if (site_game_data->get_holding_type()->is_cultural() && site_province->get_history()->get_cultural_society_domain() != nullptr) {
+				co_await site_game_data->set_owner(site_province->get_history()->get_cultural_society_domain());
 			}
 		}
 	}
@@ -1119,6 +1121,7 @@ QCoro::Task<void> game::apply_sites()
 			const province *site_province = site->get_map_data()->get_province();
 			const domain *province_trade_zone_domain = site_province->get_game_data()->get_trade_zone_domain();
 			const domain *province_temple_domain = site_province->get_game_data()->get_temple_domain();
+			const domain *province_cultural_society_domain = site_province->get_game_data()->get_cultural_society_domain();
 
 			if (province_trade_zone_domain != nullptr && site_game_data->get_holding_type()->is_economic()) {
 				assert_throw(province_trade_zone_domain->get_game_data()->get_government_type()->is_holding_type_allowed(site_game_data->get_holding_type()));
@@ -1127,6 +1130,10 @@ QCoro::Task<void> game::apply_sites()
 			} else if (province_temple_domain != nullptr && site_game_data->get_holding_type()->is_religious()) {
 				assert_throw(province_temple_domain->get_game_data()->get_government_type()->is_holding_type_allowed(site_game_data->get_holding_type()));
 				co_await site_game_data->set_owner(province_temple_domain);
+				changed = true;
+			} else if (province_cultural_society_domain != nullptr && site_game_data->get_holding_type()->is_cultural()) {
+				assert_throw(province_cultural_society_domain->get_game_data()->get_government_type()->is_holding_type_allowed(site_game_data->get_holding_type()));
+				co_await site_game_data->set_owner(province_cultural_society_domain);
 				changed = true;
 			}
 		}

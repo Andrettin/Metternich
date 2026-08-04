@@ -16,7 +16,8 @@ Flickable {
 		Religious,
 		Technology,
 		TradeZone,
-		Temple
+		Temple,
+		CulturalSociety
 	}
 	
 	enum SiteMode {
@@ -98,6 +99,11 @@ Flickable {
 								break
 							case ProvinceMap.Mode.Temple:
 								if (map_mode_identifier !== "temple") {
+									return
+								}
+								break
+							case ProvinceMap.Mode.CulturalSociety:
+								if (map_mode_identifier !== "cultural_society") {
 									return
 								}
 								break
@@ -514,6 +520,11 @@ Flickable {
 			if (temple_domain !== null) {
 				text += " (" + temple_domain.game_data.name + ")"
 			}
+		} else if (province_map.mode === ProvinceMap.Mode.CulturalSociety) {
+			var cultural_society_domain = province.game_data.cultural_society_domain
+			if (cultural_society_domain !== null) {
+				text += " (" + cultural_society_domain.game_data.name + ")"
+			}
 		}
 		
 		return text
@@ -561,6 +572,8 @@ Flickable {
 				return "/trade_zone"
 			case ProvinceMap.Mode.Temple:
 				return "/temple"
+			case ProvinceMap.Mode.CulturalSociety:
+				return "/cultural_society"
 		}
 		
 		return ""
@@ -592,6 +605,11 @@ Flickable {
 			case ProvinceMap.Mode.Temple:
 				if (province.game_data.temple_domain !== null) {
 					return province.game_data.temple_domain.color
+				}
+				break
+			case ProvinceMap.Mode.CulturalSociety:
+				if (province.game_data.cultural_society_domain !== null) {
+					return province.game_data.cultural_society_domain.color
 				}
 				break
 		}

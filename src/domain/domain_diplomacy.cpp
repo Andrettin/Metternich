@@ -687,6 +687,7 @@ void domain_diplomacy::create_diplomatic_map_image()
 	this->create_diplomatic_map_mode_image(diplomatic_map_mode::religious);
 	this->create_diplomatic_map_mode_image(diplomatic_map_mode::trade_zone);
 	this->create_diplomatic_map_mode_image(diplomatic_map_mode::temple);
+	this->create_diplomatic_map_mode_image(diplomatic_map_mode::cultural_society);
 
 	if (game::get()->is_running()) {
 		emit diplomatic_map_image_changed();
@@ -850,6 +851,16 @@ void domain_diplomacy::create_diplomatic_map_mode_image(const diplomatic_map_mod
 
 					if (temple_domain != nullptr) {
 						color = &temple_domain->get_diplomacy()->get_diplomatic_map_color();
+					} else {
+						color = &defines::get()->get_map_blank_color();
+					}
+					break;
+				}
+				case diplomatic_map_mode::cultural_society: {
+					const metternich::domain *cultural_society_domain = tile->get_province()->get_game_data()->get_cultural_society_domain();
+
+					if (cultural_society_domain != nullptr) {
+						color = &cultural_society_domain->get_diplomacy()->get_diplomatic_map_color();
 					} else {
 						color = &defines::get()->get_map_blank_color();
 					}

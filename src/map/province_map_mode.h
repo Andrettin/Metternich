@@ -8,7 +8,8 @@ enum class province_map_mode {
 	religious,
 	technology,
 	trade_zone,
-	temple
+	temple,
+	cultural_society
 };
 
 }

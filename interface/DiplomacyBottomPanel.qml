@@ -213,6 +213,24 @@ Rectangle {
 				}
 			}
 		}
+		
+		IconButton {
+			id: cultural_society_map_mode_button
+			icon_identifier: "painting"
+			highlighted: diplomatic_map.mode === DiplomaticMap.Mode.CulturalSociety
+			
+			onClicked: {
+				diplomatic_map.mode = DiplomaticMap.Mode.CulturalSociety
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Cultural Society Map"
+				} else {
+					status_text = ""
+				}
+			}
+		}
 	}
 	
 	Item {

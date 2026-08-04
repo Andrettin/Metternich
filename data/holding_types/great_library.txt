@@ -3,6 +3,7 @@ great_library = {
 	icon = law
 	portrait = university
 	image_filepath = "tiles/settlements/town.png"
+	cultural = true
 	domain_skill = culture
 	level_commodity_costs = {
 		wealth = 1gb
