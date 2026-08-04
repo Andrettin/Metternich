@@ -4413,6 +4413,41 @@ bool domain_game_data::can_release_domain(const metternich::domain *other) const
 	return false;
 }
 
+[[nodiscard]] QCoro::Task<void> domain_game_data::release_domain(const metternich::domain *releasable_domain)
+{
+	for (const site *holding_site : releasable_domain->get_core_holdings()) {
+		if (holding_site->get_game_data()->get_owner() != this->domain) {
+			continue;
+		}
+
+		if (!holding_site->get_game_data()->is_built()) {
+			continue;
+		}
+
+		co_await holding_site->get_game_data()->set_owner(releasable_domain);
+	}
+
+	for (const province *province : releasable_domain->get_core_provinces()) {
+		if (province->get_game_data()->get_owner() != this->domain) {
+			continue;
+		}
+
+		co_await province->get_game_data()->set_owner(releasable_domain);
+	}
+
+	//if the release domain is a cultural union or a culture's primary domain, transfer all provinces with the appropriate cultures to it
+	if (!releasable_domain->get_cultures().empty()) {
+		const std::vector<const province *> provinces = this->get_provinces();
+		for (const province *province : provinces) {
+			if (!vector::contains(releasable_domain->get_cultures(), province->get_game_data()->get_culture())) {
+				continue;
+			}
+
+			co_await province->get_game_data()->set_owner(releasable_domain);
+		}
+	}
+}
+
 bool domain_game_data::has_domain_cores(const metternich::domain *other) const
 {
 	if (!other->get_core_provinces().empty() || !other->get_core_holdings().empty()) {

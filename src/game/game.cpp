@@ -1066,6 +1066,35 @@ QCoro::Task<void> game::apply_sites()
 		}
 	}
 
+	//release holdings whose owner cannot hold as their own domains, if any is available
+	for (const site *site : map::get()->get_sites()) {
+		site_game_data *site_game_data = site->get_game_data();
+
+		if (site_game_data->get_holding_type() == nullptr) {
+			continue;
+		}
+
+		const domain *site_owner = site_game_data->get_owner();
+		assert_throw(site_owner != nullptr);
+
+		if (site_owner->get_game_data()->get_government_type()->is_holding_type_allowed(site_game_data->get_holding_type())) {
+			continue;
+		}
+
+		std::vector<const domain *> releasable_domains;
+		for (const domain *core_domain : site->get_core_domains()) {
+			if (!site_owner->get_game_data()->can_release_domain(core_domain)) {
+				continue;
+			}
+
+			releasable_domains.push_back(core_domain);
+		}
+
+		if (!releasable_domains.empty()) {
+			co_await site_owner->get_game_data()->release_domain(vector::get_random(releasable_domains));
+		}
+	}
+
 	bool changed = true;
 	while (changed) {
 		changed = false;
@@ -1073,25 +1102,29 @@ QCoro::Task<void> game::apply_sites()
 		for (const site *site : map::get()->get_sites()) {
 			site_game_data *site_game_data = site->get_game_data();
 
-			if (site_game_data->get_holding_type() != nullptr) {
-				assert_throw(site_game_data->get_owner() != nullptr);
+			if (site_game_data->get_holding_type() == nullptr) {
+				continue;
+			}
 
-				if (site_game_data->get_owner() != nullptr && !site_game_data->get_owner()->get_game_data()->get_government_type()->is_holding_type_allowed(site_game_data->get_holding_type())) {
-					//for e.g. economic holding types, if the holding type is not allowed for the domain, see if the province already has a calculated trade zone domain which can be used for this
-					const province *site_province = site->get_map_data()->get_province();
-					const domain *province_trade_zone_domain = site_province->get_game_data()->get_trade_zone_domain();
-					const domain *province_temple_domain = site_province->get_game_data()->get_temple_domain();
+			assert_throw(site_game_data->get_owner() != nullptr);
 
-					if (province_trade_zone_domain != nullptr && site_game_data->get_holding_type()->is_economic()) {
-						assert_throw(province_trade_zone_domain->get_game_data()->get_government_type()->is_holding_type_allowed(site_game_data->get_holding_type()));
-						co_await site_game_data->set_owner(province_trade_zone_domain);
-						changed = true;
-					} else if (province_temple_domain != nullptr && site_game_data->get_holding_type()->is_religious()) {
-						assert_throw(province_temple_domain->get_game_data()->get_government_type()->is_holding_type_allowed(site_game_data->get_holding_type()));
-						co_await site_game_data->set_owner(province_temple_domain);
-						changed = true;
-					}
-				}
+			if (site_game_data->get_owner()->get_game_data()->get_government_type()->is_holding_type_allowed(site_game_data->get_holding_type())) {
+				continue;
+			}
+
+			//for e.g. economic holding types, if the holding type is not allowed for the domain, see if the province already has a calculated trade zone domain which can be used for this
+			const province *site_province = site->get_map_data()->get_province();
+			const domain *province_trade_zone_domain = site_province->get_game_data()->get_trade_zone_domain();
+			const domain *province_temple_domain = site_province->get_game_data()->get_temple_domain();
+
+			if (province_trade_zone_domain != nullptr && site_game_data->get_holding_type()->is_economic()) {
+				assert_throw(province_trade_zone_domain->get_game_data()->get_government_type()->is_holding_type_allowed(site_game_data->get_holding_type()));
+				co_await site_game_data->set_owner(province_trade_zone_domain);
+				changed = true;
+			} else if (province_temple_domain != nullptr && site_game_data->get_holding_type()->is_religious()) {
+				assert_throw(province_temple_domain->get_game_data()->get_government_type()->is_holding_type_allowed(site_game_data->get_holding_type()));
+				co_await site_game_data->set_owner(province_temple_domain);
+				changed = true;
 			}
 		}
 	}

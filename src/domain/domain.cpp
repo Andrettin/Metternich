@@ -16,6 +16,7 @@
 #include "domain/government_group.h"
 #include "domain/government_type.h"
 #include "domain/office.h"
+#include "infrastructure/holding_type.h"
 #include "map/province.h"
 #include "map/site.h"
 #include "religion/religion.h"
@@ -184,6 +185,10 @@ void domain::check() const
 	for (const site *site : this->get_core_holdings()) {
 		if (!site->is_settlement()) {
 			throw std::runtime_error(std::format("Domain \"{}\" has site \"{}\" set as a core holding for it, but that site is not a holding site.", this->get_identifier(), site->get_identifier()));
+		}
+
+		if (site->get_holding_type() != nullptr && !this->get_default_government_type()->is_holding_type_allowed(site->get_holding_type())) {
+			throw std::runtime_error(std::format("Domain \"{}\" has site \"{}\" set as a core holding for it, but the domain's default government type (\"{}\") cannot hold the holding's type (\"{}\").", this->get_identifier(), site->get_identifier(), this->get_default_government_type()->get_identifier(), site->get_holding_type()->get_identifier()));
 		}
 	}
 

@@ -1011,11 +1011,9 @@ public:
 		return 0;
 	}
 
-	[[nodiscard]]
-	QCoro::Task<void> set_free_building_class_count(const building_class *building_class, const int value);
+	[[nodiscard]] QCoro::Task<void> set_free_building_class_count(const building_class *building_class, const int value);
 
-	[[nodiscard]]
-	QCoro::Task<void> change_free_building_class_count(const building_class *building_class, const int value)
+	[[nodiscard]] QCoro::Task<void> change_free_building_class_count(const building_class *building_class, const int value)
 	{
 		co_await this->set_free_building_class_count(building_class, this->get_free_building_class_count(building_class) + value);
 	}
@@ -1027,6 +1025,7 @@ public:
 
 	bool can_form_domain(const metternich::domain *other) const;
 	bool can_release_domain(const metternich::domain *other) const;
+	[[nodiscard]] QCoro::Task<void> release_domain(const metternich::domain *releasable_domain);
 	bool has_domain_cores(const metternich::domain *other) const;
 
 	bool has_flag(const flag *flag) const
