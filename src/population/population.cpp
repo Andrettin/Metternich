@@ -90,6 +90,16 @@ QVariantList population::get_culture_sizes_qvariant_list() const
 	return sizes;
 }
 
+int64_t population::get_culture_size(const culture *culture) const
+{
+	const auto find_iterator = this->get_culture_sizes().find(culture);
+	if (find_iterator != this->get_culture_sizes().end()) {
+		return find_iterator->second;
+	}
+
+	return 0;
+}
+
 void population::change_culture_size(const culture *culture, const int64_t change)
 {
 	if (change == 0) {

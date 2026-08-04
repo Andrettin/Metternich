@@ -22,6 +22,7 @@ class domain;
 class event;
 class game_rules;
 class party;
+class population;
 class province;
 class scenario;
 class site;
@@ -337,6 +338,11 @@ public:
 
 	QVariantList get_active_routes_qvariant_list() const;
 
+	metternich::population *get_population() const
+	{
+		return this->population.get();
+	}
+
 signals:
 	void running_changed();
 	void setup_finished();
@@ -373,6 +379,7 @@ private:
 	std::vector<std::unique_ptr<delayed_effect_instance<const site>>> site_delayed_effects;
 	std::set<const metternich::event *> fired_events;
 	qunique_ptr<combat_base> current_combat;
+	qunique_ptr<metternich::population> population;
 };
 
 }

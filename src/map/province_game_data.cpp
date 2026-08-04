@@ -77,6 +77,8 @@ province_game_data::province_game_data(const metternich::province *province)
 	connect(this->get_population(), &population::main_culture_changed, this, &province_game_data::on_population_main_culture_changed);
 	connect(this->get_population(), &population::main_religion_changed, this, &province_game_data::on_population_main_religion_changed);
 
+	this->get_population()->add_upper_population(game::get()->get_population());
+
 	connect(this, &province_game_data::provincial_capital_changed, this, &province_game_data::visible_sites_changed);
 	connect(this, &province_game_data::dungeon_sites_changed, this, &province_game_data::visible_sites_changed);
 

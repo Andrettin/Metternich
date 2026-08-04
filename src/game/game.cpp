@@ -62,6 +62,7 @@
 #include "map/site_type.h"
 #include "map/terrain_type.h"
 #include "map/tile.h"
+#include "population/population.h"
 #include "population/population_type.h"
 #include "religion/religion.h"
 #include "script/condition/and_condition.h"
@@ -563,6 +564,8 @@ QCoro::Task<void> game::clear_coro()
 
 QCoro::Task<void> game::reset_game_data()
 {
+	this->population = make_qunique<metternich::population>();
+
 	//clear data related to the game (i.e. the data determined by history), but not that related only to the map
 	//this is so that game setup speed can be faster if changing from one scenario to another with the same map template
 	for (province *province : province::get_all()) {

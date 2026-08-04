@@ -64,6 +64,7 @@ public:
 	}
 
 	QVariantList get_culture_sizes_qvariant_list() const;
+	int64_t get_culture_size(const culture *culture) const;
 	void change_culture_size(const culture *culture, const int64_t change);
 
 	const culture *get_main_culture() const

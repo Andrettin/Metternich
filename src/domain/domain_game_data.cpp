@@ -4356,7 +4356,25 @@ bool domain_game_data::can_form_domain(const metternich::domain *other) const
 	}
 
 	if (this->get_culture()->get_primary_domain() == other || other->is_cultural_union_of(this->get_culture())) {
-		//FIXME: allow forming the primary domain of our culture or one of its cultural unions if we own the majority of provinces (or holdings, if there are no provinces of this culture?) of that culture/group, and if we aren't already the cultural union of an upper group
+		if (this->get_province_count() > 0) { //only for domains with provinces
+			//allow forming the primary domain of our culture or one of its cultural unions if we own the majority of the population for that culture/group, and if we aren't already the cultural union of an upper group
+			int64_t domain_culture_population = 0;
+			int64_t total_culture_population = 0;
+
+			for (const metternich::culture *culture : other->get_cultures()) {
+				total_culture_population += game::get()->get_population()->get_culture_size(culture);
+			}
+
+			for (const province *province : this->get_provinces()) {
+				for (const metternich::culture *culture : other->get_cultures()) {
+					domain_culture_population += province->get_game_data()->get_population()->get_culture_size(culture);
+				}
+			}
+
+			if (total_culture_population > 0 && (domain_culture_population * 100 / total_culture_population) >= 50) {
+				return true;
+			}
+		}
 	}
 
 	if (!other->get_core_provinces().empty() || !other->get_core_holdings().empty()) {
@@ -4377,11 +4395,26 @@ bool domain_game_data::can_release_domain(const metternich::domain *other) const
 		return false;
 	}
 
-	if (this->get_culture()->get_primary_domain() != other && !other->is_cultural_union_of(this->get_culture())) {
+	if (!other->get_cultures().empty() && this->get_culture()->get_primary_domain() != other && !other->is_cultural_union_of(this->get_culture())) {
+		//allow releasing the primary domain of a culture or cultural group if our provinces have a majority of the population for that culture/group
+		int64_t releasable_domain_culture_population = 0;
+		int64_t total_culture_population = 0;
+
 		for (const metternich::culture *culture : other->get_cultures()) {
-			if (culture->get_primary_domain() == other || other->is_cultural_union_of(culture)) {
-				//FIXME: allow releasing the primary domain of a culture or cultural group if we own the majority of provinces (or holdings, if there are no provinces of this culture?) of that culture/group
+			total_culture_population += game::get()->get_population()->get_culture_size(culture);
+		}
+
+		for (const province *province : this->get_provinces()) {
+			if (vector::contains(other->get_cultures(), province->get_game_data()->get_culture())) {
+				//only count provinces with a majority of that culture, since they will be the ones getting released
+				for (const metternich::culture *culture : other->get_cultures()) {
+					releasable_domain_culture_population += province->get_game_data()->get_population()->get_culture_size(culture);
+				}
 			}
+		}
+
+		if (total_culture_population > 0 && (releasable_domain_culture_population * 100 / total_culture_population) >= 50) {
+			return true;
 		}
 	}
 
