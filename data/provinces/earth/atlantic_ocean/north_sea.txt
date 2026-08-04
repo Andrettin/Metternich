@@ -1,3 +1,12 @@
+coast_of_britain = {
+	name = "Coast of Britain"
+	color = { 46 205 106 }
+	sea = true
+	regions = {
+		north_sea
+	}
+}
+
 coast_of_hanover = {
 	name = "Coast of Hanover"
 	color = { 180 224 71 }
