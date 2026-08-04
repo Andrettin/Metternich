@@ -248,10 +248,6 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 		if (key == "population_type") {
 			return std::make_unique<population_type_condition>(value, condition_operator);
 		}
-	} else if constexpr (std::is_same_v<scope_type, province>) {
-		if (key == "core") {
-			return std::make_unique<core_condition>(value, condition_operator);
-		}
 	} else if constexpr (std::is_same_v<scope_type, site>) {
 		if (key == "available_employment") {
 			return std::make_unique<available_employment_condition>(value, condition_operator);
@@ -347,7 +343,9 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 	}
 
 	if constexpr (std::is_same_v<scope_type, province> || std::is_same_v<scope_type, site>) {
-		if (key == "has_route") {
+		if (key == "core") {
+			return std::make_unique<core_condition<scope_type>>(value, condition_operator);
+		} else if (key == "has_route") {
 			return std::make_unique<has_route_condition<scope_type>>(value, condition_operator);
 		} else if (key == "near_water") {
 			return std::make_unique<near_water_condition<scope_type>>(value, condition_operator);

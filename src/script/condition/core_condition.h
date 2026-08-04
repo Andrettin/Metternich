@@ -1,17 +1,17 @@
 #pragma once
 
 #include "domain/domain.h"
-#include "map/province.h"
 #include "script/condition/condition.h"
 #include "util/vector_util.h"
 
 namespace metternich {
 
-class core_condition final : public condition<province>
+template <typename scope_type>
+class core_condition final : public condition<scope_type>
 {
 public:
 	explicit core_condition(const std::string &value, const gsml_operator condition_operator)
-		: condition<province>(condition_operator)
+		: condition<scope_type>(condition_operator)
 	{
 		this->domain = domain::get(value);
 	}
@@ -22,18 +22,18 @@ public:
 		return class_identifier;
 	}
 
-	virtual bool check_assignment(const province *scope, const read_only_context &ctx) const override
+	virtual bool check_assignment(const scope_type *scope, const read_only_context &ctx) const override
 	{
 		Q_UNUSED(ctx);
 
-		return vector::contains(scope->get_core_countries(), this->domain);
+		return vector::contains(scope->get_core_domains(), this->domain);
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override
 	{
 		Q_UNUSED(indent);
 
-		return condition<province>::get_object_string(this->domain) + " core";
+		return condition<scope_type>::get_object_string(this->domain) + " core";
 	}
 
 private:
