@@ -52,7 +52,6 @@ void domain::process_gsml_property(const gsml_property &property)
 		assert_throw(property.get_operator() == gsml_operator::assignment);
 		culture *culture = culture::get(value);
 		this->cultures = { culture };
-		culture->add_domain(this);
 	} else {
 		named_data_entry::process_gsml_property(property);
 	}
@@ -67,7 +66,6 @@ void domain::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			culture *culture = culture::get(value);
 			this->cultures.push_back(culture);
-			culture->add_domain(this);
 		}
 	} else if (tag == "conditional_flags") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
@@ -139,11 +137,7 @@ void domain::initialize()
 		province->add_core_country(this);
 	}
 
-	if (this->has_random_flag()) {
-		this->choose_random_flag();
-	} else {
-		this->flag_module = this->get_module();
-	}
+	this->flag_module = this->get_module();
 
 	if (this->color.isValid()) {
 		const auto [it, inserted] = domain::domain_colors.insert(this->get_color());
@@ -304,31 +298,6 @@ bool domain::is_clade() const
 const QColor &domain::get_color() const
 {
 	return this->color;
-}
-
-void domain::choose_random_flag()
-{
-	std::vector<const domain *> potential_flag_domains;
-
-	const culture_base *culture = this->get_default_culture();
-	while (culture != nullptr && potential_flag_domains.empty()) {
-
-		for (const domain *domain : culture->get_domains()) {
-			if (domain->has_random_flag() || domain->get_flag().empty()) {
-				continue;
-			}
-
-			potential_flag_domains.push_back(domain);
-		}
-
-		culture = culture->get_group();
-	}
-
-	if (!potential_flag_domains.empty()) {
-		const domain *flag_domain = vector::get_random(potential_flag_domains);
-		this->flag = flag_domain->get_flag();
-		this->flag_module = flag_domain->get_module();
-	}
 }
 
 const std::string &domain::get_name(const government_type *government_type, const domain_tier tier) const

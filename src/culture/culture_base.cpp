@@ -246,10 +246,6 @@ void culture_base::initialize()
 		}
 
 		this->group->add_names_from(this);
-
-		for (const domain *domain : this->get_domains()) {
-			this->group->add_domain(domain);
-		}
 	}
 
 	if (this->given_name_generator != nullptr) {
@@ -825,15 +821,6 @@ void culture_base::change_phenotype_weight(const phenotype *phenotype, const int
 
 	if (this->group != nullptr) {
 		this->group->change_phenotype_weight(phenotype, change);
-	}
-}
-
-void culture_base::add_domain(const domain *domain)
-{
-	this->domains.insert(domain);
-
-	if (this->group != nullptr) {
-		this->group->add_domain(domain);
 	}
 }
 

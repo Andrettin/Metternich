@@ -137,13 +137,6 @@ public:
 	const phenotype_map<int64_t> &get_phenotype_weights() const;
 	void change_phenotype_weight(const phenotype *phenotype, const int64_t change);
 
-	const domain_set &get_domains() const
-	{
-		return this->domains;
-	}
-
-	void add_domain(const domain *domain);
-
 signals:
 	void changed();
 
@@ -166,7 +159,6 @@ private:
 	transporter_class_map<std::unique_ptr<name_generator>> transporter_class_name_generators;
 	std::unique_ptr<name_generator> ship_name_generator;
 	phenotype_map<int64_t> phenotype_weights;
-	domain_set domains;
 	qunique_ptr<culture_history> history;
 };
 

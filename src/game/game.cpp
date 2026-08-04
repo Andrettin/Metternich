@@ -2134,7 +2134,7 @@ void game::remove_country(domain *domain)
 
 void game::calculate_domain_ranks()
 {
-	std::vector<metternich::domain *> domains = game::get()->get_domains();
+	std::vector<metternich::domain *> domains = this->get_domains();
 
 	if (domains.empty()) {
 		return;
