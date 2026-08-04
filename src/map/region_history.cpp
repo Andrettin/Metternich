@@ -195,7 +195,7 @@ void region_history::distribute_population()
 
 void region_history::apply_to_provinces() const
 {
-	if (this->get_technologies().empty()) {
+	if (this->get_technologies().empty() && this->get_trade_zone() == nullptr && this->get_temple_domain() == nullptr && this->get_cultural_society_domain() == nullptr) {
 		return;
 	}
 
@@ -208,6 +208,16 @@ void region_history::apply_to_provinces() const
 			if (!vector::contains(province->get_history()->get_technologies(), technology)) {
 				province->get_history()->add_technology(technology);
 			}
+		}
+
+		if (this->get_trade_zone() != nullptr && province->get_history()->get_trade_zone() == nullptr) {
+			province->get_history()->set_trade_zone(this->get_trade_zone());
+		}
+		if (this->get_temple_domain() != nullptr && province->get_history()->get_temple_domain() == nullptr) {
+			province->get_history()->set_temple_domain(this->get_temple_domain());
+		}
+		if (this->get_cultural_society_domain() != nullptr && province->get_history()->get_cultural_society_domain() == nullptr) {
+			province->get_history()->set_cultural_society_domain(this->get_cultural_society_domain());
 		}
 	}
 }

@@ -2,6 +2,10 @@ europe = {
 	world = earth
 	
 	history = {
+		classical_antiquity = {
+			cultural_society_domain = hermetic_society
+		}
+		
 		1730 = {
 			technologies += enlightenment
 		}

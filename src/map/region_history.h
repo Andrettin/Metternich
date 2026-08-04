@@ -6,8 +6,11 @@
 #include "species/phenotype_container.h"
 #include "util/decimillesimal_int.h"
 
+Q_MOC_INCLUDE("domain/domain.h")
+
 namespace metternich {
 
+class domain;
 class region;
 class technology;
 
@@ -15,6 +18,9 @@ class region_history final : public data_entry_history
 {
 	Q_OBJECT
 
+	Q_PROPERTY(const metternich::domain* trade_zone MEMBER trade_zone)
+	Q_PROPERTY(const metternich::domain* temple_domain MEMBER temple_domain)
+	Q_PROPERTY(const metternich::domain* cultural_society_domain MEMBER cultural_society_domain)
 	Q_PROPERTY(qint64 population READ get_population WRITE set_population)
 	Q_PROPERTY(archimedes::decimillesimal_int literacy_rate MEMBER literacy_rate READ get_literacy_rate)
 	Q_PROPERTY(std::vector<const metternich::technology *> technologies READ get_technologies)
@@ -25,6 +31,21 @@ public:
 	}
 
 	virtual void process_gsml_scope(const gsml_data &scope, const QDate &date) override;
+
+	const domain *get_trade_zone() const
+	{
+		return this->trade_zone;
+	}
+
+	const domain *get_temple_domain() const
+	{
+		return this->temple_domain;
+	}
+
+	const domain *get_cultural_society_domain() const
+	{
+		return this->cultural_society_domain;
+	}
 
 	const culture_map<int64_t> &get_culture_weights() const
 	{
@@ -85,6 +106,9 @@ public:
 
 private:
 	const metternich::region *region = nullptr;
+	const domain *trade_zone = nullptr;
+	const domain *temple_domain = nullptr;
+	const domain *cultural_society_domain = nullptr;
 	culture_map<int64_t> culture_weights;
 	phenotype_map<int64_t> phenotype_weights;
 	population_group_map<int64_t> population_groups;

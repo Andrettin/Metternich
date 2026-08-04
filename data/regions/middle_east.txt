@@ -17,6 +17,10 @@ middle_east = {
 			population = 10146444 #the Middle East had a population of c. 10,146,444 in 1000 BC; Source: http://themasites.pbl.nl/tridion/en/themasites/hyde/basicdrivingfactors/population/index-2.html
 		}
 		
+		classical_antiquity = {
+			cultural_society_domain = hermetic_society
+		}
+		
 		1 = {
 			population = 14804643 #the Middle East had a population of c. 14,804,643 in 1 AD; Source: http://themasites.pbl.nl/tridion/en/themasites/hyde/basicdrivingfactors/population/index-2.html
 		}

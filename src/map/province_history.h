@@ -52,14 +52,29 @@ public:
 		return this->trade_zone;
 	}
 
+	void set_trade_zone(const domain *domain)
+	{
+		this->trade_zone = domain;
+	}
+
 	const domain *get_temple_domain() const
 	{
 		return this->temple_domain;
 	}
 
+	void set_temple_domain(const domain *domain)
+	{
+		this->temple_domain = domain;
+	}
+
 	const domain *get_cultural_society_domain() const
 	{
 		return this->cultural_society_domain;
+	}
+
+	void set_cultural_society_domain(const domain *domain)
+	{
+		this->cultural_society_domain = domain;
 	}
 
 	const culture_map<int64_t> &get_culture_weights() const
