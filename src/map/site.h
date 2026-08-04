@@ -197,6 +197,16 @@ public:
 		this->routes.push_back(route);
 	}
 
+	const std::vector<const domain *> &get_core_domains() const
+	{
+		return this->core_domains;
+	}
+
+	void add_core_domain(const domain *domain)
+	{
+		this->core_domains.push_back(domain);
+	}
+
 	const std::string &get_title_name(const government_type *government_type, const int tier, const culture *culture) const;
 
 	const std::vector<const province *> &get_generation_provinces() const
@@ -232,6 +242,7 @@ private:
 	std::map<const cultural_group *, std::string> cultural_group_names;
 	std::vector<const site_feature *> features;
 	std::vector<const route *> routes;
+	std::vector<const domain *> core_domains;
 	site_title_name_map title_names;
 	std::vector<const metternich::province *> generation_provinces;
 	std::vector<const region *> generation_regions; //regions other than its own province where this site can be generated; this is used if the map's world is not the site's own world

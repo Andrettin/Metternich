@@ -5,7 +5,6 @@
 #include "culture/cultural_group.h"
 #include "culture/culture.h"
 #include "database/database.h"
-#include "database/defines.h"
 #include "domain/country_type.h"
 #include "domain/domain_ai.h"
 #include "domain/domain_game_data.h"
@@ -29,7 +28,6 @@
 #include "util/gender.h"
 #include "util/log_util.h"
 #include "util/random.h"
-#include "util/vector_random_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -67,11 +65,15 @@ void domain::process_gsml_scope(const gsml_data &scope)
 		government_type::process_office_title_name_scope(this->office_title_names, scope);
 	} else if (tag == "core_provinces") {
 		for (const std::string &value : values) {
-			this->core_provinces.push_back(province::get(value));
+			province *province = province::get(value);
+			province->add_core_domain(this);
+			this->core_provinces.push_back(province);
 		}
 	} else if (tag == "core_holdings") {
 		for (const std::string &value : values) {
-			this->core_holdings.push_back(site::get(value));
+			site *holding_site = site::get(value);
+			holding_site->add_core_domain(this);
+			this->core_holdings.push_back(holding_site);
 		}
 	} else if (tag == "tier_core_provinces") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
@@ -112,10 +114,6 @@ void domain::initialize()
 
 	if (this->is_tribe() || this->is_clade()) {
 		this->short_name = true;
-	}
-
-	for (province *province : this->get_core_provinces()) {
-		province->add_core_country(this);
 	}
 
 	this->flag_module = this->get_module();

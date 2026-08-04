@@ -226,7 +226,7 @@ public:
 		return this->eras;
 	}
 
-	const std::vector<province *> &get_core_provinces() const
+	const std::vector<const province *> &get_core_provinces() const
 	{
 		return this->core_provinces;
 	}
@@ -271,7 +271,7 @@ private:
 	title_name_map short_names;
 	title_name_map title_names;
 	office_title_name_map office_title_names;
-	std::vector<province *> core_provinces;
+	std::vector<const province *> core_provinces;
 	std::vector<const site *> core_holdings;
 	std::map<domain_tier, std::vector<const province *>> tier_core_provinces;
 	std::map<domain_tier, std::vector<const site *>> tier_core_holdings;

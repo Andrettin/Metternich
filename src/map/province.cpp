@@ -240,17 +240,6 @@ std::vector<const region *> province::get_shared_regions_with(const province *ot
 	return vector::intersected<region *, std::vector<const region *>>(this->get_regions(), other_province->get_regions());
 }
 
-bool province::has_core_country_of_culture(const culture *culture) const
-{
-	for (const domain *domain : this->get_core_countries()) {
-		if (domain->get_game_data()->get_culture() == culture) {
-			return true;
-		}
-	}
-
-	return false;
-}
-
 QVariantList province::get_routes_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_routes());

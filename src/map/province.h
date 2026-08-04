@@ -241,17 +241,15 @@ public:
 	Q_INVOKABLE void remove_region(region *region);
 	std::vector<const region *> get_shared_regions_with(const province *other_province) const;
 
-	const std::vector<const domain *> &get_core_countries() const
+	const std::vector<const domain *> &get_core_domains() const
 	{
-		return this->core_countries;
+		return this->core_domains;
 	}
 
-	void add_core_country(const domain *domain)
+	void add_core_domain(const domain *domain)
 	{
-		this->core_countries.push_back(domain);
+		this->core_domains.push_back(domain);
 	}
-
-	bool has_core_country_of_culture(const culture *culture) const;
 
 	const std::vector<const metternich::world *> &get_generation_worlds() const
 	{
@@ -312,7 +310,7 @@ private:
 	std::map<const cultural_group *, std::string> cultural_group_names;
 	data_entry_map<site_feature, int> resource_counts;
 	std::vector<region *> regions; //regions where this province is located
-	std::vector<const domain *> core_countries;
+	std::vector<const domain *> core_domains;
 	std::vector<const metternich::world *> generation_worlds; //worlds other than its own where this province can be generated
 	std::vector<const site *> sites; //sites located in this province, used for map generation
 	std::vector<const route *> routes;
