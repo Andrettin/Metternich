@@ -1,0 +1,16 @@
+hermetic_society = {
+	name = "Hermetic Society"
+	type = polity
+	default_culture = italian
+	default_religion = catholic
+	default_tier = duchy
+	default_government_type = cultural_society
+	default_capital = schottenviertel #FIXME: change to something more appropriate
+	short_name = true
+	definite_article = true
+	office_title_names = {
+		ruler = {
+			duchy = "Magus"
+		}
+	}
+}
