@@ -1,7 +1,9 @@
 marburg_an_der_lahn = {
 	name = "Marburg an der Lahn"
 	world = earth
-	#geocoordinate = { 8.7666666666667 50.816666666667 }
+	geocoordinate = { 8.7666666666667 50.816666666667 }
+	type = holding
+	holding_type = university
 	province = hesse
 	features = {
 		academic #historical university

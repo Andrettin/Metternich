@@ -2,6 +2,8 @@ osuna = {
 	name = "Osuna"
 	world = earth
 	geocoordinate = { -5.1030555555556 37.237222222222 }
+	type = holding
+	holding_type = university
 	province = andalusia
 	features = {
 		academic #historical university

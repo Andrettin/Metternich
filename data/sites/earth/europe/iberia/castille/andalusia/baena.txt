@@ -2,6 +2,8 @@ baena = {
 	name = "Baena"
 	world = earth
 	geocoordinate = { -4.3260458 37.6194451 }
+	type = holding
+	holding_type = university
 	province = andalusia
 	features = {
 		academic #historical university

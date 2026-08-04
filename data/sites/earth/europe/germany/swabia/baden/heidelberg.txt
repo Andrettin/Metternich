@@ -2,6 +2,8 @@ heidelberg = {
 	name = "Heidelberg"
 	world = earth
 	geocoordinate = { 8.69997513697 49.41999249180 } #from Natural Earth
+	type = holding
+	holding_type = university
 	province = baden
 	features = {
 		academic #historical university

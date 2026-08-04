@@ -2,6 +2,8 @@ dillingen = {
 	name = "Dillingen"
 	world = earth
 	geocoordinate = { 10.42 48.58 }
+	type = holding
+	holding_type = university
 	province = augsburg
 	features = {
 		academic #historical university

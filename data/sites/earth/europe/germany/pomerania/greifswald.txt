@@ -2,6 +2,8 @@ greifswald = {
 	name = "Greifswald"
 	world = earth
 	geocoordinate = { 13.383333333333 54.083333333333 }
+	type = holding
+	holding_type = university
 	province = hither_pomerania
 	features = {
 		academic #historical university

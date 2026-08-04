@@ -2,6 +2,8 @@ dole = {
 	name = "Dole" #"Dôle"
 	world = earth
 	geocoordinate = { 5.4897222222222 47.092222222222 }
+	type = holding
+	holding_type = university
 	province = franche_comte
 	features = {
 		academic #historical university

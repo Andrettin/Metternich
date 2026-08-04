@@ -3,7 +3,7 @@ molsheim = {
 	world = earth
 	geocoordinate = { 7.4922222222222 48.542777777778 }
 	type = holding
-	holding_type = castle
+	holding_type = university
 	province = nordgau
 	features = {
 		academic #historical university
@@ -11,7 +11,7 @@ molsheim = {
 	
 	history = {
 		1618 = {
-			#buildings += university #University founded in Molsheim in 1618; Source: "The Cambridge Modern History Atlas", 1912, p. 9.
+			buildings += university #University founded in Molsheim in 1618; Source: "The Cambridge Modern History Atlas", 1912, p. 9.
 		}
 	}
 }

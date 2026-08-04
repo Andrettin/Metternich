@@ -2,6 +2,8 @@ vercelli = {
 	name = "Vercelli"
 	world = earth
 	geocoordinate = { 8.4166666666667 45.316666666667 }
+	type = holding
+	holding_type = university
 	province = piedmont
 	features = {
 		academic #historical university

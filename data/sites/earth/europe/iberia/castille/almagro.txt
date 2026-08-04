@@ -2,6 +2,8 @@ almagro = {
 	name = "Almagro"
 	world = earth
 	geocoordinate = { -3.7118218 38.888238 }
+	type = holding
+	holding_type = university
 	province = castille
 	features = {
 		academic #historical university

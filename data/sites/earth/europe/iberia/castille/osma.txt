@@ -2,6 +2,8 @@ osma = {
 	name = "Osma"
 	world = earth
 	geocoordinate = { -3.0672222222222 41.586666666667 }
+	type = holding
+	holding_type = university
 	province = castille
 	features = {
 		academic #historical university

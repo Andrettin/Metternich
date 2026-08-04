@@ -2,6 +2,8 @@ orihuela = {
 	name = "Orihuela"
 	world = earth
 	geocoordinate = { -0.94694444444444 38.085555555556 }
+	type = holding
+	holding_type = university
 	province = valencia
 	features = {
 		academic #historical university

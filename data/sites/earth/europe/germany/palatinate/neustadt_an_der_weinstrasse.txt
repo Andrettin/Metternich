@@ -2,6 +2,8 @@ neustadt_an_der_weinstrasse = {
 	name = "Neustadt an der Weinstrasse"
 	world = earth
 	geocoordinate = { 8.13607 49.353621 }
+	type = holding
+	holding_type = university
 	province = palatinate
 	features = {
 		academic #historical university

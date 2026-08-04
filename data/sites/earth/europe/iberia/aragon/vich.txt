@@ -2,6 +2,8 @@ vich = {
 	name = "Vich"
 	world = earth
 	geocoordinate = { 2.254575 41.930379 }
+	type = holding
+	holding_type = university
 	province = catalonia
 	features = {
 		academic #historical university

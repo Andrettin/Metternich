@@ -2,6 +2,8 @@ jena = {
 	name = "Jena"
 	world = earth
 	geocoordinate = { 11.58000606150 50.93044293120 } #from Natural Earth
+	type = holding
+	holding_type = university
 	province = thuringia
 	features = {
 		academic #historical university

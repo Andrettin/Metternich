@@ -2,6 +2,8 @@ douai = {
 	name = "Douai"
 	world = earth
 	geocoordinate = { 3.0791666666667 50.370833333333 }
+	type = holding
+	holding_type = university
 	province = picardy
 	features = {
 		academic #historical university
