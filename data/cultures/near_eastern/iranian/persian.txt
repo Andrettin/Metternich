@@ -3,6 +3,7 @@ persian = {
 	group = iranian
 	color = { 144 88 81 }
 	language = persian
+	primary_domain = persia
 	species = {
 		human
 	}

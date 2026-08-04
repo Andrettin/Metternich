@@ -2,4 +2,5 @@ italian = {
 	name = "Italian"
 	rank = subgroup
 	upper_group = latin
+	cultural_union = italy
 }

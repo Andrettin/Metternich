@@ -3,6 +3,7 @@ haedui = {
 	group = gallic
 	color = { 121 9 9 }
 	language = gaulish
+	primary_domain = aeduia
 	species = {
 		human
 	}

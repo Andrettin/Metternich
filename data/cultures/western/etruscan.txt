@@ -3,6 +3,7 @@ etruscan = {
 	group = latin
 	color = { 48 30 180 }
 	language = etruscan
+	primary_domain = etruria
 	species = {
 		human
 	}

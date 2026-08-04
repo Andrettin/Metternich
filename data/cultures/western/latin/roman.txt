@@ -3,6 +3,7 @@ roman = {
 	group = latin
 	color = { 204 51 51 }
 	language = latin
+	primary_domain = rome
 	species = {
 		human
 	}

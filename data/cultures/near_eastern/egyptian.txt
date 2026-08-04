@@ -3,6 +3,7 @@ egyptian = {
 	group = near_eastern
 	color = { 178 160 0 }
 	language = egyptian
+	primary_domain = egypt
 	species = {
 		human
 	}

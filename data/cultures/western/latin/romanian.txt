@@ -3,6 +3,7 @@ romanian = {
 	group = latin
 	color = { 240 240 140 }
 	language = romanian
+	primary_domain = romania
 	species = {
 		human
 	}

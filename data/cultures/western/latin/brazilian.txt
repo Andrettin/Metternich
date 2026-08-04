@@ -3,6 +3,7 @@ brazilian = {
 	group = ibero_romance
 	color = { 0 112 66 }
 	language = portuguese
+	primary_domain = brazil
 	species = {
 		human
 	}

@@ -2,6 +2,7 @@ brigantic = {
 	name = "Brigantic"
 	group = brythonic
 	color = { 160 20 245 }
+	primary_domain = brigantia
 	species = {
 		human
 	}

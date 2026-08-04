@@ -3,6 +3,7 @@ finnish = {
 	group = finnic
 	color = { 220 220 220 }
 	language = finnish
+	primary_domain = finland
 	species = {
 		human
 	}

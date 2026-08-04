@@ -2,6 +2,7 @@ bulgarian = {
 	name = "Bulgarian"
 	group = south_slavic
 	color = { 65 150 100 }
+	primary_domain = bulgaria
 	species = {
 		human
 	}

@@ -2,6 +2,7 @@ croatian = {
 	name = "Croatian"
 	group = south_slavic
 	color = { 140 140 190 }
+	primary_domain = croatia
 	species = {
 		human
 	}

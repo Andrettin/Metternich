@@ -3,6 +3,7 @@ english = {
 	group = british
 	color = { 206 8 8 }
 	language = english
+	primary_domain = england
 	species = {
 		human
 	}

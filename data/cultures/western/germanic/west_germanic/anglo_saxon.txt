@@ -3,6 +3,7 @@ anglo_saxon = {
 	group = british
 	color = { 204 76 76 }
 	language = old_english
+	primary_domain = england
 	species = {
 		human
 		half_elf

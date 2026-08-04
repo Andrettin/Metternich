@@ -3,6 +3,7 @@ scottish = {
 	group = british
 	color = { 72 79 127 }
 	language = english
+	primary_domain = scotland
 	species = {
 		human
 	}

@@ -1,6 +1,7 @@
 elamite = {
 	name = "Elamite"
 	group = iranian
+	primary_domain = elam
 	species = {
 		human
 	}

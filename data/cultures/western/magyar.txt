@@ -3,6 +3,7 @@ magyar = {
 	group = finno_ugric
 	color = { 180 255 120 }
 	language = hungarian
+	primary_domain = hungary
 	species = {
 		human
 	}

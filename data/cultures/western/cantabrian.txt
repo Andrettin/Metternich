@@ -2,6 +2,7 @@ cantabrian = {
 	name = "Cantabrian"
 	group = occidental
 	color = { 49 119 115 }
+	primary_domain = cantabria
 	species = {
 		human
 	}

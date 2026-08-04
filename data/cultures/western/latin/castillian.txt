@@ -3,6 +3,7 @@ castillian = {
 	group = ibero_romance
 	color = { 255 173 41 }
 	language = castillian
+	primary_domain = castille
 	species = {
 		human
 	}

@@ -3,6 +3,7 @@ albanian = {
 	group = illyrian
 	color = { 140 0 0 }
 	language = albanian
+	primary_domain = albania
 	species = {
 		human
 	}

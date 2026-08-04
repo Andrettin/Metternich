@@ -3,6 +3,7 @@ portuguese = {
 	group = ibero_romance
 	color = { 0 66 24 }
 	language = portuguese
+	primary_domain = portugal
 	species = {
 		human
 	}

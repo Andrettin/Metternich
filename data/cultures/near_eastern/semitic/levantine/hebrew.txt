@@ -3,6 +3,7 @@ hebrew = {
 	group = israelite
 	color = { 99 193 217 }
 	language = hebrew
+	primary_domain = israel
 	species = {
 		human
 	}

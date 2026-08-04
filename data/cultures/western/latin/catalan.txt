@@ -3,6 +3,7 @@ catalan = {
 	group = ibero_romance
 	color = { 220 110 30 }
 	language = catalan
+	primary_domain = catalonia
 	species = {
 		human
 	}
