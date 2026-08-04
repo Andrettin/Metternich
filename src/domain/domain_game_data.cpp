@@ -1164,10 +1164,11 @@ QCoro::Task<void> domain_game_data::check_culture()
 		co_return;
 	}
 
-	const metternich::culture *chosen_culture = vector::get_random(potential_cultures);
-	if (chosen_culture == this->get_culture()) {
+	if (vector::contains(potential_cultures, this->get_culture())) {
 		co_return;
 	}
+
+	const metternich::culture *chosen_culture = vector::get_random(potential_cultures);
 
 	co_await this->set_culture(chosen_culture);
 
