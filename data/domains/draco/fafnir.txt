@@ -1,7 +1,7 @@
 fafnir = {
 	name = "Fafnir"
 	type = polity
-	culture = draconic
+	default_culture = draconic
 	default_religion = asatru
 	default_tier = duchy
 	default_government_type = tribal_despotism

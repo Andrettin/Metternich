@@ -1,7 +1,7 @@
 lydia = {
 	name = "Lydia"
 	type = polity
-	culture = lydian
+	default_culture = lydian
 	default_religion = cybelene
 	default_tier = kingdom
 	default_government_type = monarchy

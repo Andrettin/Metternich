@@ -3,10 +3,7 @@ denmark = {
 	type = polity
 	color = { 172 70 66 }
 	flag = denmark
-	cultures = {
-		danish
-		norse
-	}
+	default_culture = danish
 	default_religion = protestant
 	default_tier = kingdom
 	default_government_type = monarchy

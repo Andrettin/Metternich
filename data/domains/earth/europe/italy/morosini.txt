@@ -1,7 +1,7 @@
 morosini = {
 	name = "Morosini"
 	type = polity
-	culture = italian
+	default_culture = italian
 	default_religion = catholic
 	default_tier = barony
 	default_government_type = patrician_house

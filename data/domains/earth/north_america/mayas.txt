@@ -1,7 +1,7 @@
 mayas = {
 	name = "Mayas"
 	type = tribe
-	culture = maya
+	default_culture = maya
 	default_religion = pagan
 	default_tier = kingdom
 	default_government_type = tribal_despotism

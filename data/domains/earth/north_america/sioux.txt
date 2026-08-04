@@ -1,7 +1,7 @@
 sioux = {
 	name = "Sioux"
 	type = tribe
-	culture = sioux
+	default_culture = sioux
 	default_religion = pagan
 	default_tier = kingdom
 	default_government_type = tribal_despotism

@@ -3,10 +3,7 @@ england = {
 	type = polity
 	color = { 206 8 8 }
 	flag = england
-	cultures = {
-		english
-		anglo_saxon
-	}
+	default_culture = english
 	default_religion = protestant
 	default_tier = kingdom
 	default_government_type = monarchy

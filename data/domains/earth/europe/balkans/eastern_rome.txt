@@ -1,7 +1,7 @@
 eastern_rome = {
 	name = "Eastern Rome"
 	type = polity
-	culture = roman
+	default_culture = roman
 	default_religion = orthodox
 	default_tier = empire
 	default_government_type = monarchy

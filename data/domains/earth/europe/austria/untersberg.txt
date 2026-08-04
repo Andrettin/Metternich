@@ -1,7 +1,7 @@
 untersberg = {
 	name = "Untersberg"
 	type = polity
-	culture = gnomish
+	default_culture = gnomish
 	default_religion = pagan
 	default_tier = kingdom
 	default_government_type = monarchy

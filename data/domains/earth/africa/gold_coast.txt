@@ -1,7 +1,7 @@
 gold_coast = {
 	name = "Gold Coast"
 	type = polity
-	culture = akan
+	default_culture = akan
 	default_religion = pagan
 	default_tier = duchy
 	default_government_type = tribal_despotism

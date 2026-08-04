@@ -1,7 +1,7 @@
 burgundians = {
 	name = "Burgundians"
 	type = tribe
-	culture = gothic
+	default_culture = gothic
 	default_religion = asatru
 	default_tier = duchy
 	default_government_type = tribal_despotism

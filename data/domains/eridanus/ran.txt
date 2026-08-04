@@ -1,7 +1,7 @@
 ran = {
 	name = "Ran"
 	type = polity
-	culture = aquan
+	default_culture = aquan
 	default_religion = asatru
 	default_tier = duchy
 	default_government_type = tribal_despotism

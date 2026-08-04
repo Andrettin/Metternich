@@ -1,7 +1,7 @@
 middlesex = {
 	name = "Middlesex"
 	type = polity
-	culture = anglo_saxon
+	default_culture = anglo_saxon
 	default_religion = catholic
 	default_tier = county
 	default_government_type = monarchy

@@ -1,7 +1,7 @@
 frisians = {
 	name = "Frisians"
 	type = tribe
-	culture = frisian
+	default_culture = frisian
 	default_religion = asatru
 	default_tier = duchy
 	default_government_type = tribal_despotism

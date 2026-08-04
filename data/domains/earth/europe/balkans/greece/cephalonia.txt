@@ -2,10 +2,7 @@ cephalonia = {
 	name = "Cephalonia"
 	type = polity
 	color = { 222 155 155 }
-	cultures = {
-		greek
-		italian
-	}
+	default_culture = greek
 	default_religion = catholic
 	default_tier = county
 	default_government_type = monarchy

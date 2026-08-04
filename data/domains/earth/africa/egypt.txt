@@ -3,10 +3,7 @@ egypt = {
 	type = polity
 	color = { 143 141 128 }
 	flag = egypt
-	cultures = {
-		egyptian
-		arabic
-	}
+	default_culture = egyptian
 	default_religion = kemetic
 	default_tier = kingdom
 	default_government_type = monarchy

@@ -1,7 +1,7 @@
 auersperg = {
 	name = "Auersperg"
 	type = polity
-	culture = austrian
+	default_culture = austrian
 	default_religion = catholic
 	default_tier = barony
 	max_tier = duchy #principality

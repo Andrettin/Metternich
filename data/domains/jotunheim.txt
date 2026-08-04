@@ -1,7 +1,7 @@
 jotunheim = {
 	name = "Jotunheim"
 	type = polity
-	culture = giant
+	default_culture = giant
 	default_religion = asatru
 	default_tier = duchy
 	default_government_type = tribal_despotism

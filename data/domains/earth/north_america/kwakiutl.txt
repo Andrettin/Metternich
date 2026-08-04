@@ -1,7 +1,7 @@
 kwakiutl = {
 	name = "Kwakiutl"
 	type = tribe
-	culture = kwakiutl
+	default_culture = kwakiutl
 	default_religion = pagan
 	default_tier = kingdom
 	default_government_type = tribal_despotism

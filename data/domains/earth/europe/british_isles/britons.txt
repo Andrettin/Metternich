@@ -1,7 +1,7 @@
 britons = {
 	name = "Britons"
 	type = tribe
-	culture = briton
+	default_culture = briton
 	default_religion = druidic
 	default_tier = kingdom
 	default_government_type = tribal_despotism

@@ -43,31 +43,12 @@ domain::~domain()
 {
 }
 
-void domain::process_gsml_property(const gsml_property &property)
-{
-	const std::string &key = property.get_key();
-	const std::string &value = property.get_value();
-
-	if (key == "culture") {
-		assert_throw(property.get_operator() == gsml_operator::assignment);
-		culture *culture = culture::get(value);
-		this->cultures = { culture };
-	} else {
-		named_data_entry::process_gsml_property(property);
-	}
-}
-
 void domain::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "cultures") {
-		for (const std::string &value : values) {
-			culture *culture = culture::get(value);
-			this->cultures.push_back(culture);
-		}
-	} else if (tag == "conditional_flags") {
+	if (tag == "conditional_flags") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
 			auto conditions = std::make_unique<and_condition<domain>>();
@@ -180,6 +161,10 @@ void domain::check() const
 
 	if (this->get_max_tier() == domain_tier::none) {
 		throw std::runtime_error(std::format("Domain \"{}\" has no max tier.", this->get_identifier()));
+	}
+
+	if (this->get_default_culture() == nullptr) {
+		throw std::runtime_error(std::format("Domain \"{}\" has no default culture.", this->get_identifier()));
 	}
 
 	if (this->get_default_religion() == nullptr) {

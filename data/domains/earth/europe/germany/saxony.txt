@@ -2,10 +2,7 @@ saxony = {
 	name = "Saxony"
 	type = polity
 	color = { 120 25 25 }
-	cultures = {
-		saxon
-		german
-	}
+	default_culture = saxon
 	default_religion = asatru
 	default_tier = duchy
 	default_government_type = monarchy

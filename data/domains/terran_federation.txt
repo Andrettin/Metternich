@@ -1,7 +1,7 @@
 terran_federation = {
 	name = "Terran Federation"
 	type = polity
-	culture = terran
+	default_culture = terran
 	default_religion = atheist
 	default_tier = empire
 	default_government_type = republic

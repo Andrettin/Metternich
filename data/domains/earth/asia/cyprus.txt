@@ -1,7 +1,7 @@
 cyprus = {
 	name = "Cyprus"
 	type = polity
-	culture = greek
+	default_culture = greek
 	default_religion = catholic
 	default_tier = kingdom
 	default_government_type = monarchy

@@ -1,7 +1,7 @@
 pictland = {
 	name = "Pictland"
 	type = polity
-	culture = pictish
+	default_culture = pictish
 	default_religion = druidic
 	default_tier = duchy
 	default_government_type = tribal_despotism

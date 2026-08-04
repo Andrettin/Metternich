@@ -1,7 +1,7 @@
 iceland = {
 	name = "Iceland"
 	type = polity
-	culture = icelandic
+	default_culture = icelandic
 	default_religion = protestant
 	default_tier = duchy
 	default_government_type = monarchy

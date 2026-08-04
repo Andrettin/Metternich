@@ -1,7 +1,7 @@
 schwarzenberg = {
 	name = "Schwarzenberg"
 	type = polity
-	culture = german
+	default_culture = german
 	default_religion = catholic
 	default_tier = barony
 	max_tier = duchy #principality

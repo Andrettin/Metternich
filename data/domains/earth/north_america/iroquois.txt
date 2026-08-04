@@ -1,7 +1,7 @@
 iroquois = {
 	name = "Iroquois"
 	type = tribe
-	culture = iroquois
+	default_culture = iroquois
 	default_religion = pagan
 	default_tier = kingdom
 	default_government_type = tribal_despotism

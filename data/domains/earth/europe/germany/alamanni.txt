@@ -1,7 +1,7 @@
 alamanni = {
 	name = "Alamanni"
 	type = tribe
-	culture = suebi
+	default_culture = suebi
 	default_religion = asatru
 	default_tier = duchy
 	default_government_type = tribal_despotism

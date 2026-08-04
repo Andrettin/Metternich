@@ -1,7 +1,7 @@
 tupi = {
 	name = "Tupi"
 	type = tribe
-	culture = tupi
+	default_culture = tupi
 	default_religion = pagan
 	default_tier = kingdom
 	default_government_type = tribal_despotism

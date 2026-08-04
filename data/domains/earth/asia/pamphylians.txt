@@ -1,7 +1,7 @@
 pamphylians = {
 	name = "Pamphylians"
 	type = tribe
-	culture = pamphylian
+	default_culture = pamphylian
 	default_religion = cybelene
 	default_tier = duchy
 	default_government_type = tribal_despotism

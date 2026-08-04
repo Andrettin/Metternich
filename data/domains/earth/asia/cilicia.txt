@@ -1,7 +1,7 @@
 cilicia = {
 	name = "Cilicia"
 	type = polity
-	culture = cilician
+	default_culture = cilician
 	default_religion = cybelene
 	default_tier = kingdom
 	default_government_type = monarchy

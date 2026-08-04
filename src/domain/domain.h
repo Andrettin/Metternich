@@ -57,6 +57,7 @@ class domain final : public named_data_entry, public data_type<domain>
 	Q_PROPERTY(metternich::domain_tier default_tier MEMBER default_tier READ get_default_tier)
 	Q_PROPERTY(metternich::domain_tier min_tier MEMBER min_tier READ get_min_tier)
 	Q_PROPERTY(metternich::domain_tier max_tier MEMBER max_tier READ get_max_tier)
+	Q_PROPERTY(metternich::culture* default_culture MEMBER default_culture NOTIFY changed)
 	Q_PROPERTY(metternich::religion* default_religion MEMBER default_religion NOTIFY changed)
 	Q_PROPERTY(metternich::government_type* default_government_type MEMBER default_government_type NOTIFY changed)
 	Q_PROPERTY(metternich::site* default_capital MEMBER default_capital NOTIFY changed)
@@ -87,7 +88,6 @@ public:
 	explicit domain(const std::string &identifier);
 	~domain();
 
-	virtual void process_gsml_property(const gsml_property &property) override;
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
 	virtual void check() const override;
@@ -174,21 +174,17 @@ public:
 	const std::string &get_title_name(const government_type *government_type, const domain_tier tier, const culture *culture, const religion *religion) const;
 	const std::string &get_office_title_name(const office *office, const government_type *government_type, const domain_tier tier, const gender gender, const culture *culture, const religion *religion) const;
 
+	const culture *get_default_culture() const
+	{
+		return this->default_culture;
+	}
+
 	const std::vector<const culture *> &get_cultures() const
 	{
 		return this->cultures;
 	}
 
 	bool is_cultural_union_of(const culture *culture) const;
-
-	const culture *get_default_culture() const
-	{
-		if (this->get_cultures().empty()) {
-			return nullptr;
-		}
-
-		return this->get_cultures().at(0);
-	}
 
 	void add_culture(const culture *culture)
 	{
@@ -263,6 +259,7 @@ private:
 	domain_tier default_tier{};
 	domain_tier min_tier{};
 	domain_tier max_tier{};
+	culture *default_culture = nullptr;
 	std::vector<const culture *> cultures;
 	religion *default_religion = nullptr;
 	government_type *default_government_type = nullptr;

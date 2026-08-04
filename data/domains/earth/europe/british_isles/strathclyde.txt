@@ -1,7 +1,7 @@
 strathclyde = {
 	name = "Strathclyde"
 	type = polity
-	culture = cumbrian
+	default_culture = cumbrian
 	default_religion = druidic
 	default_tier = kingdom
 	default_government_type = monarchy

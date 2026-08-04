@@ -1,7 +1,7 @@
 ruperts_land = {
 	name = "Rupert's Land"
 	type = polity
-	culture = english
+	default_culture = english
 	default_religion = protestant
 	default_tier = duchy
 	default_government_type = republic

@@ -1,7 +1,7 @@
 jalayirids = {
 	name = "Jalayirids"
 	type = tribe
-	culture = mongol
+	default_culture = mongol
 	default_religion = shiite
 	default_tier = kingdom
 	default_government_type = tribal_despotism

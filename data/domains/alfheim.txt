@@ -1,7 +1,7 @@
 alfheim = {
 	name = "Alfheim"
 	type = polity
-	culture = elven
+	default_culture = elven
 	default_religion = asatru
 	default_tier = duchy
 	default_government_type = monarchy

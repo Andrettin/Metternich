@@ -1,7 +1,7 @@
 latins = {
 	name = "Latins"
 	type = tribe
-	culture = roman
+	default_culture = roman
 	default_religion = hellenic
 	default_tier = duchy
 	default_government_type = tribal_despotism

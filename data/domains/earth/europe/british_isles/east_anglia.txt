@@ -1,7 +1,7 @@
 east_anglia = {
 	name = "East Anglia"
 	type = polity
-	culture = anglo_saxon
+	default_culture = anglo_saxon
 	default_religion = catholic
 	default_tier = kingdom
 	default_government_type = monarchy

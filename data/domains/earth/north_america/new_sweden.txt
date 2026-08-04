@@ -1,7 +1,7 @@
 new_sweden = {
 	name = "New Sweden"
 	type = polity
-	culture = swedish
+	default_culture = swedish
 	default_religion = protestant
 	default_tier = duchy
 	default_government_type = republic

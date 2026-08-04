@@ -1,7 +1,7 @@
 lombards = {
 	name = "Lombards"
 	type = tribe
-	culture = lombard
+	default_culture = lombard
 	default_religion = asatru
 	default_tier = duchy
 	default_government_type = tribal_despotism

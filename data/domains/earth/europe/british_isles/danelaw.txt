@@ -1,7 +1,7 @@
 danelaw = {
 	name = "Danelaw"
 	type = polity
-	culture = norse
+	default_culture = norse
 	default_religion = asatru
 	default_tier = kingdom
 	default_government_type = monarchy

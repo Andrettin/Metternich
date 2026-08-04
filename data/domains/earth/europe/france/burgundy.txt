@@ -1,7 +1,7 @@
 burgundy = {
 	name = "Burgundy"
 	type = polity
-	culture = french
+	default_culture = french
 	default_religion = catholic
 	default_tier = duchy
 	default_government_type = monarchy

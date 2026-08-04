@@ -1,7 +1,7 @@
 togoland = {
 	name = "Togoland"
 	type = polity
-	culture = ewe
+	default_culture = ewe
 	default_religion = pagan
 	default_tier = duchy
 	default_government_type = tribal_despotism

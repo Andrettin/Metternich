@@ -1,7 +1,7 @@
 new_mexico = {
 	name = "New Mexico"
 	type = polity
-	culture = american
+	default_culture = american
 	default_religion = protestant
 	default_tier = duchy
 	default_government_type = republic

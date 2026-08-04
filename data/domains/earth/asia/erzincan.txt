@@ -1,7 +1,7 @@
 erzincan = {
 	name = "Erzincan"
 	type = polity
-	culture = turkish
+	default_culture = turkish
 	default_religion = sunni
 	default_tier = duchy
 	default_government_type = tribal_despotism

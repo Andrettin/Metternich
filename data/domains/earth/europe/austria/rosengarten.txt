@@ -1,7 +1,7 @@
 rosengarten = {
 	name = "Rosengarten"
 	type = polity
-	culture = dwarven
+	default_culture = dwarven
 	default_religion = pagan
 	default_tier = kingdom
 	default_government_type = monarchy

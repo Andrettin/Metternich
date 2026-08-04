@@ -3,10 +3,7 @@ pomerania = {
 	type = polity
 	color = { 61 136 66 }
 	flag = pomerania
-	cultures = {
-		pomeranian
-		german
-	}
+	default_culture = pomeranian
 	default_religion = slovianskan
 	default_tier = duchy
 	default_government_type = monarchy
