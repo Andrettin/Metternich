@@ -133,7 +133,7 @@ void deity::check() const
 	}
 
 	if (this->get_religions().empty()) {
-		throw std::runtime_error(std::format("Deity \"{}\" is not worshipped by any religions.", this->get_identifier()));
+		throw std::runtime_error(std::format("Deity \"{}\" is not worshiped by any religions.", this->get_identifier()));
 	}
 
 	if (this->get_divine_level() == 0) {

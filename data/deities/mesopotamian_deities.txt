@@ -1,3 +1,48 @@
+adad = {
+	name = "Adad"
+	pantheon = mesopotamian
+	divine_rank = intermediate_deity
+	religions = {
+		chaldean
+	}
+	major_domains = {
+		air
+		chaos
+		strength
+		water
+	}
+	character = {
+		species = human
+		character_class = warrior #barbarian
+		culture = babylonian
+		religion = chaldean
+		gender = male
+		contemporary_character = marduk #to give him a start date
+	}
+}
+
+anu = {
+	name = "Anu"
+	pantheon = mesopotamian
+	divine_rank = greater_deity
+	religions = {
+		chaldean
+	}
+	major_domains = {
+		law
+		magic
+		protection
+		travel
+	}
+	character = {
+		species = human
+		character_class = warrior
+		culture = babylonian
+		religion = chaldean
+		gender = male
+	}
+}
+
 ea = {
 	name = "Ea"
 	pantheon = mesopotamian
@@ -17,6 +62,30 @@ ea = {
 		culture = babylonian
 		religion = chaldean
 		gender = male
+	}
+}
+
+ishtar = {
+	name = "Ishtar"
+	pantheon = mesopotamian
+	divine_rank = intermediate_deity
+	religions = {
+		chaldean
+	}
+	major_domains = {
+		animal
+		chaos
+		trickery
+		war
+	}
+	character = {
+		species = human
+		character_class = bard
+		culture = babylonian
+		religion = chaldean
+		gender = female
+		father = anu
+		contemporary_character = marduk #to give her a start date
 	}
 }
 
