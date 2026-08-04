@@ -1827,6 +1827,7 @@ QCoro::Task<void> game::on_setup_finished()
 
 		co_await domain_game_data->check_government_type();
 		co_await domain_government->check_laws();
+		co_await domain_game_data->check_culture();
 
 		for (const office *office : office::get_all()) {
 			co_await domain_government->check_office_holder(office);

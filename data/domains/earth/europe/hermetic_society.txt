@@ -10,7 +10,12 @@ hermetic_society = {
 	definite_article = true
 	office_title_names = {
 		ruler = {
-			duchy = "Magus"
+			cultural_society = {
+				duchy = {
+					male = "Magus"
+					female = "Maga"
+				}
+			}
 		}
 	}
 }

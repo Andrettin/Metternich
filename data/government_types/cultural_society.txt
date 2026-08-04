@@ -42,7 +42,10 @@ cultural_society = {
 	}
 	office_title_names = {
 		ruler = {
-			duchy = "Magus"
+			duchy = {
+				male = "Magus"
+				female = "Maga"
+			}
 		}
 	}
 }
