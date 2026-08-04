@@ -4325,6 +4325,91 @@ int64_t domain_game_data::get_maintenance_cost() const
 	return maintenance_cost;
 }
 
+bool domain_game_data::can_form_domain(const metternich::domain *other) const
+{
+	if (vector::contains(game::get()->get_domains(), other)) {
+		return false;
+	}
+
+	if (this->get_culture()->get_primary_domain() == other) {
+		//FIXME: allow forming the primary domain of our culture if we own the majority of provinces (or holdings, if there are no provinces of this culture?) of that culture
+	}
+
+	if (!other->get_core_provinces().empty() || !other->get_core_holdings().empty()) {
+		//to form a domain by core provinces/holdings, the formable domain must have a higher maximum tier than our current domain
+		if (other->get_max_tier() <= this->domain->get_max_tier()) {
+			return false;
+		}
+
+		return this->has_domain_cores(other);
+	}
+
+	return false;
+}
+
+bool domain_game_data::can_release_domain(const metternich::domain *other) const
+{
+	if (vector::contains(game::get()->get_domains(), other)) {
+		return false;
+	}
+
+	if (this->get_culture()->get_primary_domain() != other) {
+		for (const metternich::culture *culture : other->get_cultures()) {
+			if (culture->get_primary_domain() == other) {
+				//FIXME: allow releasing the primary domain of a culture if we own the majority of provinces (or holdings, if there are no provinces of this culture?) of that culture
+			}
+		}
+	}
+
+	if (!other->get_core_provinces().empty() || !other->get_core_holdings().empty()) {
+		if (!this->has_domain_cores(other)) {
+			return false;
+		}
+
+		//they must not have a core on our capital or its province
+		if (vector::contains(other->get_core_provinces(), this->get_capital_province())) {
+			return false;
+		}
+		if (vector::contains(other->get_core_holdings(), this->get_capital())) {
+			return false;
+		}
+
+		//to release a domain via ownership of their core provinces/holdings, there must be no intersection between their cores and our own
+		if (vector::intersects(this->domain->get_core_provinces(), other->get_core_provinces())) {
+			return false;
+		}
+
+		if (vector::intersects(this->domain->get_core_holdings(), other->get_core_holdings())) {
+			return false;
+		}
+
+		return true;
+	}
+
+	return false;
+}
+
+bool domain_game_data::has_domain_cores(const metternich::domain *other) const
+{
+	if (!other->get_core_provinces().empty() || !other->get_core_holdings().empty()) {
+		for (const province *province : other->get_core_provinces()) {
+			if (province->get_game_data()->get_owner() != this->domain) {
+				return false;
+			}
+		}
+
+		for (const site *holding : other->get_core_holdings()) {
+			if (holding->get_game_data()->get_owner() != this->domain) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	return false;
+}
+
 bool domain_game_data::can_visit_site(const metternich::site *site) const
 {
 	//a site can be visited if either this domain owns the site or its province, or if it owns any site within the province

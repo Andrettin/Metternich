@@ -1024,6 +1024,10 @@ public:
 	int64_t get_domain_maintenance_cost() const;
 	int64_t get_maintenance_cost() const;
 
+	bool can_form_domain(const metternich::domain *other) const;
+	bool can_release_domain(const metternich::domain *other) const;
+	bool has_domain_cores(const metternich::domain *other) const;
+
 	bool has_flag(const flag *flag) const
 	{
 		return this->flags.contains(flag);
