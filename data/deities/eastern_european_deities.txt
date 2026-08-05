@@ -21,6 +21,29 @@ dazhbog = {
 	}
 }
 
+death_crone = {
+	name = "Death Crone"
+	pantheon = eastern_european
+	divine_rank = intermediate_deity #correct?
+	religions = {
+		slovianskan
+	}
+	major_domains = {
+		death
+		evil
+		magic
+		trickery
+	}
+	character = {
+		species = human
+		character_class = cleric
+		culture = slavic
+		religion = slovianskan
+		gender = female
+		start_date = -2000
+	}
+}
+
 gabija = {
 	name = "Gabija"
 	pantheon = eastern_european
@@ -40,6 +63,37 @@ gabija = {
 		culture = lithuanian
 		religion = romuva
 		gender = female
+		start_date = -2000
+	}
+}
+
+jarilo = {
+	name = "Jarilo"
+	pantheon = eastern_european
+	divine_rank = intermediate_deity #correct?
+	religions = {
+		slovianskan
+	}
+	major_domains = {
+		chaos
+		luck
+		plant
+		protection
+	}
+	worshiper_conditions = {
+		or = {
+			character_class = bard #lovers
+			character_class = cleric
+			#farmer
+			character_class = warrior
+		}
+	}
+	character = {
+		species = human
+		character_class = bard
+		culture = slavic
+		religion = slovianskan
+		gender = male
 		start_date = -2000
 	}
 }
@@ -70,6 +124,29 @@ jurate = {
 		culture = lithuanian
 		religion = romuva
 		gender = female
+		start_date = -2000
+	}
+}
+
+lunt_ater = {
+	name = "Lunt-Ater"
+	pantheon = eastern_european
+	divine_rank = intermediate_deity #correct?
+	religions = {
+		turumic
+	}
+	major_domains = {
+		healing
+		knowledge
+		magic
+		sun
+	}
+	character = {
+		species = human
+		character_class = druid #shaman
+		culture = khanty
+		religion = turumic
+		gender = male
 		start_date = -2000
 	}
 }

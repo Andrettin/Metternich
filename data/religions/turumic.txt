@@ -1,0 +1,6 @@
+turumic = {
+	name = "Turumic"
+	group = pagan
+	color = { 230 230 230 }
+	icon = deer
+}

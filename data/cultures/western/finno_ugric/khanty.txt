@@ -1,0 +1,8 @@
+khanty = {
+	name = "Khanty"
+	group = finno_ugric
+	color = { 102 165 51 }
+	species = {
+		human
+	}
+}
