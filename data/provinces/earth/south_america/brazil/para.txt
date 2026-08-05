@@ -8,11 +8,10 @@ para = {
 	}
 	
 	history = {
-		religion = pagan
-		
 		-4000 = {
 			owner = tupi
 			culture = tupi
+			religion = pagan
 		}
 		
 		1790 = {
