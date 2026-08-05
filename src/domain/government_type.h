@@ -53,6 +53,7 @@ public:
 	static constexpr const char property_class_identifier[] = "metternich::government_type*";
 	static constexpr const char database_folder[] = "government_types";
 
+	static void process_title_name_scope(std::map<const culture_base *, std::map<government_variant, title_name_map>> &title_names, const gsml_data &scope);
 	static void process_title_name_scope(std::map<government_variant, title_name_map> &title_names, const gsml_data &scope);
 	static void process_title_name_scope(title_name_map &title_names, const gsml_data &scope);
 	static void process_site_title_name_scope(std::map<government_variant, site_title_name_map> &title_names, const gsml_data &scope);

@@ -1076,7 +1076,7 @@ QCoro::Task<void> domain_game_data::check_tier()
 
 const std::string &domain_game_data::get_name() const
 {
-	return this->domain->get_name(this->get_government_type(), this->get_tier());
+	return this->domain->get_name(this->get_culture(), this->get_government_type(), this->get_tier());
 }
 
 std::string domain_game_data::get_titled_name() const

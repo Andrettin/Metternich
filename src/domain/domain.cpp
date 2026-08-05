@@ -29,6 +29,7 @@
 #include "util/gender.h"
 #include "util/log_util.h"
 #include "util/random.h"
+#include "util/string_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -58,6 +59,14 @@ void domain::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->eras.push_back(era::get(value));
 		}
+	} else if (tag == "cultural_names") {
+		scope.for_each_property([this](const gsml_property &property) {
+			const culture_base *culture = culture::try_get(property.get_key());
+			if (culture == nullptr) {
+				culture = cultural_group::get(property.get_key());
+			}
+			this->cultural_names[culture] = property.get_value();
+		});
 	} else if (tag == "short_names") {
 		government_type::process_title_name_scope(this->short_names, scope);
 	} else if (tag == "title_names") {
@@ -288,47 +297,78 @@ const QColor &domain::get_color() const
 	return this->color;
 }
 
-const std::string &domain::get_name(const government_type *government_type, const domain_tier tier) const
+const std::string &domain::get_name(const culture *culture, const government_type *government_type, const domain_tier tier) const
 {
 	if (government_type == nullptr) {
 		return this->get_name();
 	}
 
-	auto find_iterator = this->short_names.find(government_type);
-	if (find_iterator == this->short_names.end()) {
-		find_iterator = this->short_names.find(government_type->get_group());
+	const std::string &short_name = this->get_short_name(culture, government_type, tier);
+	if (!short_name.empty()) {
+		return short_name;
 	}
 
-	if (find_iterator != this->short_names.end()) {
-		const std::string &short_name = government_type::get_title_name(find_iterator->second, tier);
-		if (!short_name.empty()) {
-			return short_name;
+	return this->get_cultural_name(culture);
+}
+
+const std::string &domain::get_cultural_name(const culture_base *culture) const
+{
+	if (culture != nullptr) {
+		const auto find_iterator = this->cultural_names.find(culture);
+		if (find_iterator != this->cultural_names.end()) {
+			return find_iterator->second;
+		}
+
+		if (culture->get_group() != nullptr) {
+			return this->get_cultural_name(culture->get_group());
 		}
 	}
 
 	return this->get_name();
 }
 
-std::string domain::get_titled_name(const government_type *government_type, const domain_tier tier, const culture *culture, const religion *religion) const
+const std::string &domain::get_short_name(const culture *culture, const government_type *government_type, const domain_tier tier) const
 {
-	auto find_iterator = this->short_names.find(government_type);
-	if (find_iterator == this->short_names.end()) {
-		find_iterator = this->short_names.find(government_type->get_group());
+	const culture_base *lookup_culture = culture;
+	auto culture_find_iterator = this->short_names.end();
+	while (culture_find_iterator == this->short_names.end() && lookup_culture != nullptr) {
+		culture_find_iterator = this->short_names.find(lookup_culture);
+		lookup_culture = lookup_culture->get_group();
+	}
+	if (culture_find_iterator == this->short_names.end()) {
+		culture_find_iterator = this->short_names.find(nullptr);
 	}
 
-	if (find_iterator != this->short_names.end()) {
-		const std::string &short_name = government_type::get_title_name(find_iterator->second, tier);
-		if (!short_name.empty()) {
-			return short_name;
+	if (culture_find_iterator != this->short_names.end()) {
+		auto find_iterator = culture_find_iterator->second.find(government_type);
+		if (find_iterator == culture_find_iterator->second.end()) {
+			find_iterator = culture_find_iterator->second.find(government_type->get_group());
+		}
+
+		if (find_iterator != culture_find_iterator->second.end()) {
+			const std::string &short_name = government_type::get_title_name(find_iterator->second, tier);
+			if (!short_name.empty()) {
+				return short_name;
+			}
 		}
 	}
 
+	return string::empty_str;
+}
+
+std::string domain::get_titled_name(const government_type *government_type, const domain_tier tier, const culture *culture, const religion *religion) const
+{
+	const std::string &short_name = this->get_short_name(culture, government_type, tier);
+	if (!short_name.empty()) {
+		return short_name;
+	}
+
 	if (this->has_short_name()) {
-		return this->get_name();
+		return this->get_cultural_name(culture);
 	}
 
 	const std::string &title_name = this->get_title_name(government_type, tier, culture, religion);
-	const std::string &domain_name = this->get_name();
+	const std::string &domain_name = this->get_cultural_name(culture);
 	if (this->definite_article) {
 		return std::format("{} of the {}", title_name, domain_name);
 	} else {

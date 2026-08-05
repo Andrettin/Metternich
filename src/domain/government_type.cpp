@@ -3,6 +3,8 @@
 #include "domain/government_type.h"
 
 #include "character/character_class.h"
+#include "culture/cultural_group.h"
+#include "culture/culture.h"
 #include "domain/domain_tier.h"
 #include "domain/government_group.h"
 #include "domain/law.h"
@@ -20,6 +22,54 @@
 #include <magic_enum/magic_enum.hpp>
 
 namespace metternich {
+
+void government_type::process_title_name_scope(std::map<const culture_base *, std::map<government_variant, title_name_map>> &title_names, const gsml_data &scope)
+{
+	scope.for_each_property([&title_names](const gsml_property &property) {
+		const std::string &key = property.get_key();
+		const std::string &value = property.get_value();
+
+		const culture_base *culture = culture::try_get(key);
+		if (culture == nullptr) {
+			culture = cultural_group::try_get(key);
+		}
+
+		government_variant government_variant{};
+
+		if (culture == nullptr) {
+			const government_group *government_group = government_group::try_get(key);
+			if (government_group != nullptr) {
+				government_variant = government_group;
+			} else {
+				government_variant = government_type::get(key);
+			}
+		}
+
+		title_names[culture][government_variant][domain_tier::none] = value;
+	});
+
+	scope.for_each_child([&title_names](const gsml_data &child_scope) {
+		const std::string &child_tag = child_scope.get_tag();
+
+		const culture_base *culture = culture::try_get(child_tag);
+		if (culture == nullptr) {
+			culture = cultural_group::try_get(child_tag);
+		}
+
+		government_variant government_variant{};
+
+		if (culture == nullptr) {
+			const government_group *government_group = government_group::try_get(child_tag);
+			if (government_group != nullptr) {
+				government_variant = government_group;
+			} else {
+				government_variant = government_type::get(child_tag);
+			}
+		}
+
+		government_type::process_title_name_scope(title_names[culture][government_variant], child_scope);
+	});
+}
 
 void government_type::process_title_name_scope(std::map<government_variant, title_name_map> &title_names, const gsml_data &scope)
 {

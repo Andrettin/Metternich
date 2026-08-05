@@ -129,7 +129,7 @@ std::string text_processor::process_domain_tokens(const domain *domain, std::que
 	const std::string front_subtoken = queue::take(subtokens);
 
 	if (front_subtoken == "name") {
-		return domain->get_name();
+		return domain->get_game_data()->get_name();
 	} else if (front_subtoken == "form_of_address") {
 		return domain->get_game_data()->get_form_of_address();
 	} else {

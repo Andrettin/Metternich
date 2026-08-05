@@ -23,6 +23,7 @@ namespace metternich {
 
 class character;
 class culture;
+class culture_base;
 class domain_ai;
 class domain_diplomacy;
 class domain_economy;
@@ -169,7 +170,9 @@ public:
 
 	using named_data_entry::get_name;
 
-	const std::string &get_name(const government_type *government_type, const domain_tier tier) const;
+	const std::string &get_name(const culture *culture, const government_type *government_type, const domain_tier tier) const;
+	const std::string &get_cultural_name(const culture_base *culture) const;
+	const std::string &get_short_name(const culture *culture, const government_type *government_type, const domain_tier tier) const;
 	std::string get_titled_name(const government_type *government_type, const domain_tier tier, const culture *culture, const religion *religion) const;
 	const std::string &get_title_name(const government_type *government_type, const domain_tier tier, const culture *culture, const religion *religion) const;
 	const std::string &get_office_title_name(const office *office, const government_type *government_type, const domain_tier tier, const gender gender, const culture *culture, const religion *religion) const;
@@ -268,7 +271,8 @@ private:
 	bool definite_article = false;
 	std::map<std::string, std::unique_ptr<const and_condition<domain>>> conditional_flags;
 	std::vector<const era *> eras; //eras this country appears in at start, for random maps
-	title_name_map short_names;
+	std::map<const culture_base *, std::string> cultural_names;
+	std::map<const culture_base *, title_name_map> short_names;
 	title_name_map title_names;
 	office_title_name_map office_title_names;
 	std::vector<const province *> core_provinces;
