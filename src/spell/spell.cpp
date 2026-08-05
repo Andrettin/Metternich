@@ -14,6 +14,7 @@
 #include "spell/spell_target.h"
 #include "technology/technology.h"
 #include "util/assert_util.h"
+#include "util/log_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -111,6 +112,13 @@ void spell::check() const
 
 	assert_throw(this->get_target() != spell_target::none || this->get_battle_target() != spell_target::none);
 	assert_throw(this->get_target_effects() != nullptr || this->get_battle_result() != attack_result::none);
+
+	for (const character_class *character_class : this->get_character_classes()) {
+		if (character_class->is_divine_spellcaster() && this->get_divine_domains().empty()) {
+			log::log_error(std::format("Spell \"{}\" can be cast by a divine spellcasting class, but has no divine domains.", this->get_identifier()));
+			break;
+		}
+	}
 }
 
 int spell::get_mana_cost(const character_class *character_class) const
