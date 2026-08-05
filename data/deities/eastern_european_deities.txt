@@ -1,9 +1,31 @@
+dazhbog = {
+	name = "Dazhbog"
+	pantheon = eastern_european
+	divine_rank = intermediate_deity #correct?
+	religions = {
+		slovianskan
+	}
+	major_domains = {
+		good
+		law
+		protection
+		sun
+	}
+	character = {
+		species = human
+		character_class = aristocrat
+		culture = slavic
+		religion = slovianskan
+		gender = male
+		father = svarog
+	}
+}
+
 perun = {
 	name = "Perun"
 	pantheon = eastern_european
 	divine_rank = greater_deity #correct?
 	religions = {
-		matrist
 		slovianskan
 	}
 	major_domains = {
@@ -22,4 +44,76 @@ perun = {
 	}
 	
 	#Slavic thunder-god; Source: "Germans, Avars and Slavs", p. 125; Source: H. Munro Chadwick, "The Oak and the Thunder-God", 1900, p. 27.
+}
+
+stribog = {
+	name = "Stribog"
+	pantheon = eastern_european
+	divine_rank = intermediate_deity #correct?
+	religions = {
+		slovianskan
+	}
+	major_domains = {
+		air
+		destruction
+		evil
+		winter
+	}
+	character = {
+		species = human
+		character_class = mage
+		culture = slavic
+		religion = slovianskan
+		gender = male
+		father = svarog
+	}
+}
+
+svarog = {
+	name = "Svarog"
+	pantheon = eastern_european
+	divine_rank = greater_deity #correct?
+	religions = {
+		slovianskan
+	}
+	major_domains = {
+		fire
+		good
+		healing
+		law
+		sun
+	}
+	character = {
+		species = human
+		character_class = aristocrat
+		culture = slavic
+		religion = slovianskan
+		gender = male
+		start_date = -2000
+	}
+	
+	#Slavic light-god; Source: "Germans, Avars and Slavs", p. 125.
+}
+
+svarozic = {
+	name = "Svarozic"
+	pantheon = eastern_european
+	divine_rank = intermediate_deity #correct?
+	religions = {
+		slovianskan
+	}
+	major_domains = {
+		animal
+		fire
+		good
+		healing
+	}
+	character = {
+		species = human
+		character_class = cleric
+		culture = slavic
+		religion = slovianskan
+		gender = male
+		father = svarog
+	}
 }
