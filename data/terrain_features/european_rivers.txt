@@ -59,7 +59,7 @@ meuse_river = {
 	river = true
 	color = { 218 134 30 }
 	hidden = true
-	#cultural_group_names = {
+	#cultural_names = {
 	#	german = "Maas River"
 	#}
 }

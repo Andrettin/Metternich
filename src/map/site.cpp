@@ -52,13 +52,11 @@ void site::process_gsml_scope(const gsml_data &scope)
 		}
 	} else if (tag == "cultural_names") {
 		scope.for_each_property([this](const gsml_property &property) {
-			const culture *culture = culture::get(property.get_key());
+			const culture_base *culture = cultural_group::try_get(property.get_key());
+			if (culture == nullptr) {
+				culture = culture::get(property.get_key());
+			}
 			this->cultural_names[culture] = property.get_value();
-		});
-	} else if (tag == "cultural_group_names") {
-		scope.for_each_property([this](const gsml_property &property) {
-			const cultural_group *cultural_group = cultural_group::get(property.get_key());
-			this->cultural_group_names[cultural_group] = property.get_value();
 		});
 	} else if (tag == "features") {
 		for (const std::string &value : values) {
@@ -198,7 +196,7 @@ std::string site::get_scope_name() const
 	return this->get_game_data()->get_current_cultural_name();
 }
 
-const std::string &site::get_cultural_name(const culture *culture) const
+const std::string &site::get_cultural_name(const culture_base *culture) const
 {
 	if (culture != nullptr) {
 		const auto find_iterator = this->cultural_names.find(culture);
@@ -208,22 +206,6 @@ const std::string &site::get_cultural_name(const culture *culture) const
 
 		if (culture->get_group() != nullptr) {
 			return this->get_cultural_name(culture->get_group());
-		}
-	}
-
-	return this->get_name();
-}
-
-const std::string &site::get_cultural_name(const cultural_group *cultural_group) const
-{
-	if (cultural_group != nullptr) {
-		const auto group_find_iterator = this->cultural_group_names.find(cultural_group);
-		if (group_find_iterator != this->cultural_group_names.end()) {
-			return group_find_iterator->second;
-		}
-
-		if (cultural_group->get_upper_group() != nullptr) {
-			return this->get_cultural_name(cultural_group->get_upper_group());
 		}
 	}
 

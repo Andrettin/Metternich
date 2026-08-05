@@ -7,6 +7,8 @@ Q_MOC_INCLUDE("ui/portrait.h")
 
 namespace metternich {
 
+class culture;
+class culture_base;
 class domain;
 class portrait;
 class idea_slot;
@@ -34,24 +36,14 @@ public:
 
 	virtual idea_type get_idea_type() const = 0;
 
-	virtual const std::string &get_cultural_name(const culture *culture) const
+	virtual const std::string &get_cultural_name(const culture_base *culture) const
 	{
 		Q_UNUSED(culture);
 
 		return this->get_name();
 	}
 
-	virtual const std::string &get_cultural_name(const cultural_group *cultural_group) const
-	{
-		Q_UNUSED(cultural_group);
-
-		return this->get_name();
-	}
-
-	Q_INVOKABLE QString get_cultural_name_qstring(const metternich::culture *culture) const
-	{
-		return QString::fromStdString(this->get_cultural_name(culture));
-	}
+	Q_INVOKABLE QString get_cultural_name_qstring(const metternich::culture *culture) const;
 
 	const metternich::portrait *get_portrait() const
 	{

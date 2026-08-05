@@ -4,7 +4,7 @@ novi_sad = {
 	geocoordinate = { 19.84994055040 45.25037619940 } #from Natural Earth
 	type = resource
 	resource = sheep
-	cultural_group_names = {
+	cultural_names = {
 		german = "Neusatz"
 	}
 	features = {

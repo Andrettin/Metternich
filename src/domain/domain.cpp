@@ -61,9 +61,9 @@ void domain::process_gsml_scope(const gsml_data &scope)
 		}
 	} else if (tag == "cultural_names") {
 		scope.for_each_property([this](const gsml_property &property) {
-			const culture_base *culture = culture::try_get(property.get_key());
+			const culture_base *culture = cultural_group::try_get(property.get_key());
 			if (culture == nullptr) {
-				culture = cultural_group::get(property.get_key());
+				culture = culture::get(property.get_key());
 			}
 			this->cultural_names[culture] = property.get_value();
 		});

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "culture/culture_container.h"
 #include "domain/idea.h"
 #include "database/data_entry_container.h"
 #include "database/data_type.h"
@@ -12,7 +11,7 @@ Q_MOC_INCLUDE("religion/pantheon.h")
 namespace metternich {
 
 class character;
-class cultural_group;
+class culture_base;
 class divine_domain;
 class pantheon;
 class religion;
@@ -52,8 +51,7 @@ public:
 
 	virtual idea_type get_idea_type() const override;
 
-	virtual const std::string &get_cultural_name(const culture *culture) const override;
-	virtual const std::string &get_cultural_name(const cultural_group *cultural_group) const override;
+	virtual const std::string &get_cultural_name(const culture_base *culture) const override;
 
 	const metternich::pantheon *get_pantheon() const
 	{
@@ -118,8 +116,7 @@ private:
 	metternich::character *character = nullptr;
 	std::vector<const divine_domain *> major_domains;
 	std::vector<const divine_domain *> minor_domains;
-	culture_map<std::string> cultural_names;
-	data_entry_map<cultural_group, std::string> cultural_group_names;
+	data_entry_map<culture_base, std::string> cultural_names;
 	std::vector<const trait *> traits;
 	std::unique_ptr<const and_condition<metternich::character>> worshiper_conditions;
 };

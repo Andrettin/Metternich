@@ -5,7 +5,7 @@ mikulov = {
 	type = holding
 	holding_type = guild
 	province = hodonin
-	cultural_group_names = {
+	cultural_names = {
 		german = "Nikolsburg"
 	}
 	

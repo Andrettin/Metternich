@@ -5,7 +5,7 @@ komarom = {
 	type = holding
 	holding_type = castle
 	province = buda
-	cultural_group_names = {
+	cultural_names = {
 		german = "Komorn"
 	}
 	

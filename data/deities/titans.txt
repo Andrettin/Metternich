@@ -132,7 +132,7 @@ rhea = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 42
 	religions = {
 		hellenic
 	}
-	cultural_group_names = {
+	cultural_names = {
 		latin = "Ops"
 	}
 	major_domains = {

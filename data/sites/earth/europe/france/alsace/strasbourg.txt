@@ -8,10 +8,8 @@ strasbourg = {
 	cultural_names = {
 		frankish = "Argentoratum"
 		gaulish = "Argentoratum"
-		roman = "Argentoratum" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 38-39.
-	}
-	cultural_group_names = {
 		german = "Strassburg"
+		roman = "Argentoratum" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 38-39.
 	}
 	features = {
 		academic #historical university

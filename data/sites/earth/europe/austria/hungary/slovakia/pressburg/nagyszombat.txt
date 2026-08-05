@@ -5,7 +5,7 @@ nagyszombat = {
 	type = holding
 	holding_type = temple
 	province = pressburg
-	cultural_group_names = {
+	cultural_names = {
 		german = "Tyrnau"
 	}
 	

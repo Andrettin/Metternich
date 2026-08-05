@@ -4,10 +4,8 @@ kosice = {
 	terrain = plains
 	default_provincial_capital = kosice
 	cultural_names = {
-		magyar = "Kassa"
-	}
-	cultural_group_names = {
 		german = "Kaschau"
+		magyar = "Kassa"
 	}
 	regions = {
 		slovakia

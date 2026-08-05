@@ -5,7 +5,7 @@ szekesfehervar = {
 	type = holding
 	holding_type = castle
 	province = szekesfehervar
-	cultural_group_names = {
+	cultural_names = {
 		german = "Stuhlweissenburg"
 	}
 	features = {

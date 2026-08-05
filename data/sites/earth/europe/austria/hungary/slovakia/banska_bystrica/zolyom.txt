@@ -6,10 +6,8 @@ zolyom = {
 	holding_type = castle
 	province = banska_bystrica
 	cultural_names = {
-		slovak = "Zvolen"
-	}
-	cultural_group_names = {
 		german = "Altsohl"
+		slovak = "Zvolen"
 	}
 	
 	history = {

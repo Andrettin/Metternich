@@ -2,15 +2,13 @@
 
 #include "domain/idea.h"
 
+#include "culture/culture.h"
 #include "domain/domain.h"
 #include "domain/domain_technology.h"
 #include "domain/idea_slot.h"
 #include "domain/idea_type.h"
 #include "script/condition/and_condition.h"
-#include "script/modifier.h"
-#include "technology/technology.h"
 #include "util/assert_util.h"
-#include "util/string_util.h"
 
 #include <magic_enum/magic_enum.hpp>
 
@@ -44,6 +42,11 @@ void idea::check() const
 	if (this->get_conditions() != nullptr) {
 		this->get_conditions()->check_validity();
 	}
+}
+
+QString idea::get_cultural_name_qstring(const metternich::culture *culture) const
+{
+	return QString::fromStdString(this->get_cultural_name(culture));
 }
 
 bool idea::is_available_for_country_slot(const domain *domain, const idea_slot *slot) const

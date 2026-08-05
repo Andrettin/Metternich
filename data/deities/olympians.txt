@@ -305,7 +305,7 @@ hera = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 23
 	religions = {
 		hellenic
 	}
-	cultural_group_names = {
+	cultural_names = {
 		latin = "Juno"
 	}
 	major_domains = {
@@ -344,7 +344,7 @@ hermes = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 
 	religions = {
 		hellenic
 	}
-	cultural_group_names = {
+	cultural_names = {
 		latin = "Mercury"
 	}
 	major_domains = {
@@ -419,7 +419,7 @@ poseidon = {
 	religions = {
 		hellenic
 	}
-	cultural_group_names = {
+	cultural_names = {
 		latin = "Neptune"
 	}
 	#traits = {

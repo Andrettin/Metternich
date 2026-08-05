@@ -6,10 +6,8 @@ gyulafehervar = {
 	holding_type = guild
 	province = feher
 	cultural_names = {
-		romanian = "Alba Iulia"
-	}
-	cultural_group_names = {
 		german = "Karlsburg" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
+		romanian = "Alba Iulia"
 	}
 	features = {
 		prime_grain_land

@@ -19,37 +19,26 @@ void dynasty::process_gsml_scope(const gsml_data &scope)
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
-			this->cultural_names[culture::get(key)][gender::none] = value;
+			const culture_base *culture = cultural_group::try_get(key);
+			if (culture == nullptr) {
+				culture = culture::get(key);
+			}
+
+			this->cultural_names[culture][gender::none] = value;
 		});
 
 		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
-			const metternich::culture *culture = culture::get(child_tag);
+			const culture_base *culture = cultural_group::try_get(child_tag);
+			if (culture == nullptr) {
+				culture = culture::get(child_tag);
+			}
 
 			child_scope.for_each_property([this, culture](const gsml_property &property) {
 				const std::string &key = property.get_key();
 				const std::string &value = property.get_value();
 
 				this->cultural_names[culture][magic_enum::enum_cast<gender>(key).value()] = value;
-			});
-		});
-	} else if (tag == "cultural_group_names") {
-		scope.for_each_property([this](const gsml_property &property) {
-			const std::string &key = property.get_key();
-			const std::string &value = property.get_value();
-
-			this->cultural_names[cultural_group::get(key)][gender::none] = value;
-		});
-
-		scope.for_each_child([this](const gsml_data &child_scope) {
-			const std::string &child_tag = child_scope.get_tag();
-			const metternich::cultural_group *cultural_group = cultural_group::get(child_tag);
-
-			child_scope.for_each_property([this, cultural_group](const gsml_property &property) {
-				const std::string &key = property.get_key();
-				const std::string &value = property.get_value();
-
-				this->cultural_names[cultural_group][magic_enum::enum_cast<gender>(key).value()] = value;
 			});
 		});
 	} else if (tag == "gendered_names") {

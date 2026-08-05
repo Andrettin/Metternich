@@ -5,7 +5,7 @@ ivancice = {
 	type = holding
 	holding_type = castle
 	province = brunn
-	cultural_group_names = {
+	cultural_names = {
 		german = "Eibenschutz" #"Eibenschütz"
 	}
 }

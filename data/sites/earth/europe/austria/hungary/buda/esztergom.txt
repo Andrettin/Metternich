@@ -5,7 +5,7 @@ esztergom = {
 	type = holding
 	holding_type = temple
 	province = buda
-	cultural_group_names = {
+	cultural_names = {
 		german = "Gran"
 	}
 	

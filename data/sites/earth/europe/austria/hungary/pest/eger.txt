@@ -3,7 +3,7 @@ eger = {
 	world = earth
 	geocoordinate = { 20.38300257840 47.89500313620 } #from Natural Earth
 	province = pest
-	cultural_group_names = {
+	cultural_names = {
 		german = "Erlau"
 	}
 	

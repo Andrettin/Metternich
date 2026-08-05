@@ -21,8 +21,8 @@ namespace archimedes {
 namespace metternich {
 
 class celestial_body_type;
-class cultural_group;
 class culture;
+class culture_base;
 class government_group;
 class government_type;
 class holding_type;
@@ -175,8 +175,7 @@ public:
 	}
 
 	virtual std::string get_scope_name() const override;
-	const std::string &get_cultural_name(const culture *culture) const;
-	const std::string &get_cultural_name(const cultural_group *cultural_group) const;
+	const std::string &get_cultural_name(const culture_base *culture) const;
 
 	const std::vector<const site_feature *> &get_features() const
 	{
@@ -238,8 +237,7 @@ private:
 	metternich::resource *resource = nullptr;
 	metternich::province *province = nullptr;
 	std::vector<const metternich::terrain_type *> terrain_types;
-	std::map<const culture *, std::string> cultural_names;
-	std::map<const cultural_group *, std::string> cultural_group_names;
+	std::map<const culture_base *, std::string> cultural_names;
 	std::vector<const site_feature *> features;
 	std::vector<const route *> routes;
 	std::vector<const domain *> core_domains;

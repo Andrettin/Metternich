@@ -6,10 +6,8 @@ zagreb = {
 	holding_type = castle
 	province = croatia
 	cultural_names = {
-		roman = "Celeta" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 38-39.
-	}
-	cultural_group_names = {
 		german = "Agram"
+		roman = "Celeta" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 38-39.
 	}
 	features = {
 		academic #historical university

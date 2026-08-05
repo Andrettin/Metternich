@@ -3,7 +3,7 @@ nijmegen = {
 	world = earth
 	#geocoordinate = { 5.8625 51.8475 }
 	province = utrecht
-	cultural_group_names = {
+	cultural_names = {
 		german = "Nimwegen" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
 	}
 	

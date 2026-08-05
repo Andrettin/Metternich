@@ -3,7 +3,7 @@ znojmo = {
 	color = { 42 60 23 }
 	terrain = hills
 	default_provincial_capital = znojmo
-	cultural_group_names = {
+	cultural_names = {
 		german = "Znaym"
 	}
 	regions = {

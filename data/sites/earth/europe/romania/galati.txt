@@ -5,7 +5,7 @@ galati = {
 	type = resource
 	resource = grain
 	province = moldavia
-	cultural_group_names = {
+	cultural_names = {
 		german = "Galatz"
 	}
 	features = {

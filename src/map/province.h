@@ -15,8 +15,7 @@ Q_MOC_INCLUDE("map/site.h")
 namespace metternich {
 
 class character;
-class cultural_group;
-class culture;
+class culture_base;
 class domain;
 class province_game_data;
 class province_history;
@@ -224,8 +223,7 @@ public:
 	}
 
 	virtual std::string get_scope_name() const override;
-	const std::string &get_cultural_name(const culture *culture) const;
-	const std::string &get_cultural_name(const cultural_group *cultural_group) const;
+	const std::string &get_cultural_name(const culture_base *culture) const;
 
 	const data_entry_map<site_feature, int> &get_resource_counts() const
 	{
@@ -306,8 +304,7 @@ private:
 	bool use_geopolygons = false;
 	bool hidden = false;
 	std::vector<const metternich::terrain_type *> terrain_types;
-	std::map<const culture *, std::string> cultural_names;
-	std::map<const cultural_group *, std::string> cultural_group_names;
+	std::map<const culture_base *, std::string> cultural_names;
 	data_entry_map<site_feature, int> resource_counts;
 	std::vector<region *> regions; //regions where this province is located
 	std::vector<const domain *> core_domains;

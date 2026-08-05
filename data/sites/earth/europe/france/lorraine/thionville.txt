@@ -5,7 +5,7 @@ thionville = {
 	type = holding
 	holding_type = castle
 	province = moselle
-	cultural_group_names = {
+	cultural_names = {
 		german = "Diedenhofen" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
 	}
 	

@@ -5,10 +5,8 @@ milan = {
 	type = holding
 	holding_type = guild
 	cultural_names = {
-		roman = "Mediolanum" #Source: "Ancient Warfare VII.6", 2013, p. 7.
-	}
-	cultural_group_names = {
 		#german = "Mailand"
+		roman = "Mediolanum" #Source: "Ancient Warfare VII.6", 2013, p. 7.
 	}
 	features = {
 		academic #historical university

@@ -5,7 +5,7 @@ maribor = {
 	type = holding
 	holding_type = castle
 	province = marburg
-	cultural_group_names = {
+	cultural_names = {
 		german = "Marburg"
 	}
 	features = {

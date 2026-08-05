@@ -6,7 +6,7 @@ karlovac = {
 	holding_type = guild
 	#resource = fruit
 	province = croatia
-	cultural_group_names = {
+	cultural_names = {
 		german = "Karlstadt" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 158-159.
 	}
 	

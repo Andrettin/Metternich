@@ -6,7 +6,7 @@ sopron = {
 	holding_type = castle
 	#resource = fruit
 	province = gyor
-	cultural_group_names = {
+	cultural_names = {
 		german = "Odenburg" #"Ödenburg"; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
 	}
 	

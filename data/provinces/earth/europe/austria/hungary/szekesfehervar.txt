@@ -2,7 +2,7 @@ szekesfehervar = {
 	name = "Szekesfehervar"
 	color = { 184 244 60 }
 	default_provincial_capital = szekesfehervar
-	cultural_group_names = {
+	cultural_names = {
 		german = "Stuhlweissenburg"
 	}
 	regions = {

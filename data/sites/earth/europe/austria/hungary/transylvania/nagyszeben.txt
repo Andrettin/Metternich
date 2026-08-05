@@ -6,10 +6,8 @@ nagyszeben = {
 	resource = cattle
 	province = transylvania
 	cultural_names = {
-		romanian = "Sibiu"
-	}
-	cultural_group_names = {
 		german = "Hermannstadt"
+		romanian = "Sibiu"
 	}
 	features = {
 		prime_cattle_land

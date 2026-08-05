@@ -5,7 +5,7 @@ constance = {
 	type = holding
 	holding_type = temple
 	province = furstenberg
-	cultural_group_names = {
+	cultural_names = {
 		#german = "Konstanz"
 	}
 	features = {

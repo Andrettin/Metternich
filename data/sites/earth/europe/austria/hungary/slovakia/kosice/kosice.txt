@@ -6,10 +6,8 @@ kosice = {
 	holding_type = guild
 	province = kosice
 	cultural_names = {
-		magyar = "Kassa"
-	}
-	cultural_group_names = {
 		german = "Kaschau"
+		magyar = "Kassa"
 	}
 	features = {
 		coal_deposit

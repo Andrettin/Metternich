@@ -5,7 +5,7 @@ postojna = {
 	type = resource
 	resource = grain
 	province = carniola
-	cultural_group_names = {
+	cultural_names = {
 		german = "Adelsberg"
 	}
 	features = {

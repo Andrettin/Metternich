@@ -2,7 +2,7 @@ gyor = {
 	name = "Gyor"
 	color = { 162 78 236 }
 	default_provincial_capital = gyor
-	cultural_group_names = {
+	cultural_names = {
 		german = "Raab"
 	}
 	regions = {

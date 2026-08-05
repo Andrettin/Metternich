@@ -1130,6 +1130,7 @@ target_precompile_headers(metternich PRIVATE src/metternich_pch.h)
 
 if(MSVC)
 	target_compile_options(metternich PRIVATE /FI"metternich.h")
+	target_compile_options(metternich_test PRIVATE /FI"metternich.h")
 else()
 	#GCC/Clang
 	add_definitions(-include metternich.h)
@@ -1148,7 +1149,6 @@ set_source_files_properties(${game_test_SRCS} PROPERTIES UNITY_GROUP "game_test"
 
 target_link_libraries(metternich PUBLIC archimedes ${OpenCV_LIBS})
 
-target_precompile_headers(metternich_main PRIVATE src/metternich_pch.h)
 target_precompile_headers(metternich_test PRIVATE src/metternich_pch.h)
 
 if(WIN32)

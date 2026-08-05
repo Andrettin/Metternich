@@ -5,7 +5,7 @@ pecs = {
 	type = holding
 	holding_type = castle
 	province = pecs
-	cultural_group_names = {
+	cultural_names = {
 		german = "Funfkirchen" #"Fünfkirchen"
 	}
 	features = {

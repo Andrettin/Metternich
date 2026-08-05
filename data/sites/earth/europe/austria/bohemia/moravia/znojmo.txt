@@ -5,7 +5,7 @@ znojmo = {
 	type = holding
 	holding_type = castle
 	province = znojmo
-	cultural_group_names = {
+	cultural_names = {
 		german = "Znaym"
 	}
 	

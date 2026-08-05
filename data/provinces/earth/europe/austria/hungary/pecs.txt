@@ -2,7 +2,7 @@ pecs = {
 	name = "Pecs"
 	color = { 217 155 119 }
 	default_provincial_capital = pecs
-	cultural_group_names = {
+	cultural_names = {
 		german = "Funfkirchen" #"Fünfkirchen"
 	}
 	regions = {

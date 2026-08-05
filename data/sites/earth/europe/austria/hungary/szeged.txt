@@ -4,7 +4,7 @@ szeged = {
 	geocoordinate = { 20.15002559270 46.25039267890 } #from Natural Earth
 	type = resource
 	resource = fruit
-	cultural_group_names = {
+	cultural_names = {
 		german = "Szegedin"
 	}
 	
