@@ -3,6 +3,7 @@ visigothic = {
 	group = east_germanic
 	color = { 140 140 38 }
 	language = gothic
+	primary_domain = visigothia
 	use_language_data_for_name_generation = true
 	given_name_markov_chain_size = 2
 	surname_markov_chain_size = 2

@@ -6,26 +6,7 @@ visigothia = {
 	default_religion = catholic #Arianism
 	default_tier = kingdom
 	default_government_type = monarchy
-	default_capital = madrid #Toledo
-	eras = {
-		medieval_era
-	}
-	core_provinces = {
-		castille
-		alentejo
-		algarve
-		andalusia
-		aragon
-		catalonia
-		estremadura
-		extremadura
-		granada
-		leon
-		lower_languedoc
-		murcia
-		valencia
-		vivarais
-	}
+	default_capital = toledo
 	
 	history = {
 		700 = {

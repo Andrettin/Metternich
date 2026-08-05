@@ -7,15 +7,4 @@ vandalia = {
 	default_tier = kingdom
 	default_government_type = monarchy
 	default_capital = tunis #Carthage
-	eras = {
-		medieval_era
-	}
-	core_provinces = {
-		tunisia
-		algeria
-		constantine
-		corsica
-		sardinia
-		tripolitania
-	}
 }
