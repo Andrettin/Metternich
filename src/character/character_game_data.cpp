@@ -675,7 +675,7 @@ QCoro::Task<void> character_game_data::apply_species_and_class(const int level, 
 
 		if (base_major_divine_domain_count > deity::base_deity_major_domains) {
 			const int major_domain_count = static_cast<int>(this->character->get_deity()->get_major_domains().size());
-			log::log_error(std::format("Deity \"{}\" has {} major domains, but its base major domains and traits only provide access to {} of them.", this->character->get_deity()->get_identifier(), major_domain_count, major_domain_count - (base_major_divine_domain_count - deity::base_deity_major_domains)));
+			throw std::runtime_error(std::format("Deity \"{}\" has {} major domains, but its base major domains and traits only provide access to {} of them.", this->character->get_deity()->get_identifier(), major_domain_count, major_domain_count - (base_major_divine_domain_count - deity::base_deity_major_domains)));
 		}
 	}
 
