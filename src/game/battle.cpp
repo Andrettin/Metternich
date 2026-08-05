@@ -168,7 +168,7 @@ void battle::deploy_units(std::vector<military_unit *> units, const bool defende
 
 			battle_tile &tile = this->get_tile(tile_pos);
 			if (tile.is_occupied()) {
-				point::for_each_cardinally_adjacent(tile_pos, [&](const QPoint &adjacent_pos) {
+				point::for_each_cardinally_adjacent(tile_pos, [this, &tiles_to_check](const QPoint &adjacent_pos) {
 					if (!this->get_map_rect().contains(adjacent_pos)) {
 						return;
 					}
@@ -288,7 +288,7 @@ QCoro::Task<void> battle::do_unit_round(military_unit *unit, std::vector<militar
 				int best_square_distance = std::numeric_limits<int>::max();
 				std::vector<QPoint> potential_tiles;
 
-				point::for_each_adjacent(current_tile_pos, [&](const QPoint &adjacent_pos) {
+				point::for_each_adjacent(current_tile_pos, [this, &chosen_target_tile_pos, current_square_distance, &best_square_distance, &potential_tiles](const QPoint &adjacent_pos) {
 					if (!this->get_map_rect().contains(adjacent_pos)) {
 						return;
 					}

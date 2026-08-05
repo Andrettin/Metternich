@@ -36,14 +36,14 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 	const std::vector<std::string> &values = scope.get_values();
 
 	if (tag == "saving_throw_bonus_tables") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
 			this->saving_throw_bonus_tables[saving_throw_type::get(key)] = level_bonus_table::get(value);
 		});
 	} else if (tag == "domain_skill_bonus_tables") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
@@ -72,28 +72,28 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 			this->allowed_holding_types.push_back(holding_type);
 		}
 	} else if (tag == "min_attribute_values") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
 			this->min_attribute_values[character_attribute::get(key)] = std::stoi(value);
 		});
 	} else if (tag == "rank_levels") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
 			this->rank_levels[key] = std::stoi(value);
 		});
 	} else if (tag == "experience_per_level") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const int level = std::stoi(property.get_key());
 			const int64_t experience = std::stoll(property.get_value());
 
 			this->experience_per_level[level] = experience;
 		});
 	} else if (tag == "health_bonus_per_level") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const int level = std::stoi(property.get_key());
 			const std::string &number_str = property.get_value();
 
@@ -104,7 +104,7 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 			}
 		});
 	} else if (tag == "level_modifiers") {
-		scope.for_each_child([&](const gsml_data &child_scope) {
+		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
 			const int level = std::stoi(child_tag);
 			if (!this->level_modifiers.contains(level)) {
@@ -115,7 +115,7 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "recurring_level_modifiers") {
 		assert_throw(this->get_max_level() != 0);
 
-		scope.for_each_child([&](const gsml_data &child_scope) {
+		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
 			const int level_interval = std::stoi(child_tag);
 			for (int i = level_interval; i <= this->get_max_level(); i += level_interval) {
@@ -130,7 +130,7 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 			this->starting_items.push_back(item_type::get(value));
 		}
 
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 			const item_type *item_type = item_type::get(key);

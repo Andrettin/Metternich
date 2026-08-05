@@ -8,12 +8,9 @@
 #include "character/party.h"
 #include "character/monster_type.h"
 #include "database/data_entry_container.h"
-#include "database/defines.h"
 #include "database/gsml_data.h"
 #include "database/gsml_property.h"
 #include "domain/domain.h"
-#include "domain/domain_government.h"
-#include "engine_interface.h"
 #include "game/combat.h"
 #include "game/game.h"
 #include "infrastructure/dungeon.h"
@@ -28,12 +25,12 @@
 #include "script/effect/effect_list.h"
 #include "script/target_variant.h"
 #include "species/species.h"
-#include "ui/portrait.h"
 #include "util/assert_util.h"
 #include "util/number_util.h"
 #include "util/qunique_ptr.h"
 #include "util/random.h"
 #include "util/string_conversion_util.h"
+#include "util/string_util.h"
 #include "util/vector_random_util.h"
 
 namespace metternich {
@@ -45,7 +42,7 @@ public:
 	{
 		this->monster_type = monster_type::get(scope.get_tag());
 
-		scope.for_each_element([&](const gsml_property &property) {
+		scope.for_each_element([this](const gsml_property &property) {
 			if (property.get_key() == "health") {
 				this->health = std::stoi(property.get_value());
 			} else if (property.get_key() == "placement") {
@@ -53,7 +50,7 @@ public:
 			} else {
 				assert_throw(false);
 			}
-		}, [&](const gsml_data &child_scope) {
+		}, [this](const gsml_data &child_scope) {
 			if (child_scope.get_tag() == "placement_offset") {
 				this->placement_offset = child_scope.to_point();
 			} else if (child_scope.get_tag() == "items") {
@@ -61,7 +58,7 @@ public:
 					this->items.push_back(item_type::get(value));
 				}
 
-				child_scope.for_each_property([&](const gsml_property &property) {
+				child_scope.for_each_property([this](const gsml_property &property) {
 					const std::string &key = property.get_key();
 					const std::string &value = property.get_value();
 					const item_type *item_type = item_type::get(key);
@@ -130,7 +127,7 @@ public:
 		{
 			this->object_type = object_type::get(scope.get_tag());
 
-			scope.for_each_element([&](const gsml_property &property) {
+			scope.for_each_element([this](const gsml_property &property) {
 				if (property.get_key() == "description") {
 					this->description = property.get_value();
 				} else if (property.get_key() == "trap") {
@@ -140,7 +137,7 @@ public:
 				} else {
 					assert_throw(false);
 				}
-			}, [&](const gsml_data &child_scope) {
+			}, [this](const gsml_data &child_scope) {
 				if (child_scope.get_tag() == "placement_offset") {
 					this->placement_offset = child_scope.to_point();
 				} else if (child_scope.get_tag() == "on_used") {
@@ -226,7 +223,7 @@ public:
 		if (tag == "map_size") {
 			this->map_size = scope.to_size();
 		} else if (tag == "enemies") {
-			scope.for_each_element([&](const gsml_property &property) {
+			scope.for_each_element([this](const gsml_property &property) {
 				const std::string &key = property.get_key();
 				const monster_type *monster_type = monster_type::get(key);
 
@@ -236,7 +233,7 @@ public:
 				} else {
 					this->enemy_counts[monster_type] = dice(value);
 				}
-			}, [&](const gsml_data &child_scope) {
+			}, [this](const gsml_data &child_scope) {
 				auto enemy = std::make_unique<metternich::enemy>(child_scope);
 				if (!this->enemy_counts.contains(enemy->get_monster_type())) {
 					this->enemy_counts[enemy->get_monster_type()] = 0;
@@ -248,7 +245,7 @@ public:
 				this->enemy_characters.push_back(string_to_target_variant<const character>(value));
 			}
 		} else if (tag == "objects") {
-			scope.for_each_child([&](const gsml_data &child_scope) {
+			scope.for_each_child([this](const gsml_data &child_scope) {
 				auto object = std::make_unique<combat_effect::object>(child_scope);
 				++this->object_counts[object->get_object_type()];
 				this->objects.push_back(std::move(object));

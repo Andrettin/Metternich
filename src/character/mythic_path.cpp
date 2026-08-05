@@ -20,21 +20,21 @@ void mythic_path::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 
 	if (tag == "rank_tiers") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
 			this->rank_tiers[key] = std::stoi(value);
 		});
 	} else if (tag == "tier_title_names") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
 			this->tier_title_names[std::stoi(key)] = value;
 		});
 	} else if (tag == "tier_modifiers") {
-		scope.for_each_child([&](const gsml_data &child_scope) {
+		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
 			const int tier = std::stoi(child_tag);
 			if (!this->tier_modifiers.contains(tier)) {

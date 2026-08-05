@@ -150,7 +150,7 @@ void map_template::initialize()
 
 					bool checked_on_map = false;
 
-					rect::for_each_edge_point(rect, [&](const QPoint &checked_pos) {
+					rect::for_each_edge_point(rect, [this, &map_rect, &checked_on_map, &province_image, site_province, &tile_pos, &best_distance, &best_tile_pos, &found_pos](const QPoint &checked_pos) {
 						if (!map_rect.contains(checked_pos)) {
 							return;
 						}

@@ -90,12 +90,12 @@ void deity::process_gsml_scope(const gsml_data &scope)
 			this->minor_domains.push_back(domain);
 		}
 	} else if (tag == "cultural_names") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const culture *culture = culture::get(property.get_key());
 			this->cultural_names[culture] = property.get_value();
 		});
 	} else if (tag == "cultural_group_names") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const cultural_group *cultural_group = cultural_group::get(property.get_key());
 			this->cultural_group_names[cultural_group] = property.get_value();
 		});

@@ -107,19 +107,19 @@ void terrain_type::process_gsml_scope(const gsml_data &scope)
 			this->tiles.push_back(std::stoi(value));
 		}
 	} else if (tag == "adjacency_tiles") {
-		scope.for_each_child([&](const gsml_data &child_scope) {
+		scope.for_each_child([this](const gsml_data &child_scope) {
 			std::vector<int> tiles;
 			tiles.push_back(std::stoi(child_scope.get_tag()));
 
 			terrain_adjacency adjacency;
 
-			child_scope.for_each_property([&](const gsml_property &property) {
+			child_scope.for_each_property([this, &adjacency](const gsml_property &property) {
 				const direction direction = string_to_direction(property.get_key());
 				const terrain_adjacency_type adjacency_type = string_to_terrain_adjacency_type(property.get_value());
 				adjacency.set_direction_adjacency_type(direction, adjacency_type);
 			});
 
-			child_scope.for_each_child([&](const gsml_data &grandchild_scope) {
+			child_scope.for_each_child([this, &tiles](const gsml_data &grandchild_scope) {
 				if (grandchild_scope.get_tag() == "variations") {
 					for (const std::string &value : grandchild_scope.get_values()) {
 						tiles.push_back(std::stoi(value));
@@ -136,19 +136,19 @@ void terrain_type::process_gsml_scope(const gsml_data &scope)
 			this->subtiles.push_back(std::stoi(value));
 		}
 	} else if (tag == "adjacency_subtiles") {
-		scope.for_each_child([&](const gsml_data &child_scope) {
+		scope.for_each_child([this](const gsml_data &child_scope) {
 			std::vector<int> subtiles;
 			subtiles.push_back(std::stoi(child_scope.get_tag()));
 
 			terrain_adjacency adjacency;
 
-			child_scope.for_each_property([&](const gsml_property &property) {
+			child_scope.for_each_property([this, &adjacency](const gsml_property &property) {
 				const direction direction = string_to_direction(property.get_key());
 				const terrain_adjacency_type adjacency_type = string_to_terrain_adjacency_type(property.get_value());
 				adjacency.set_direction_adjacency_type(direction, adjacency_type);
 			});
 
-			child_scope.for_each_child([&](const gsml_data &grandchild_scope) {
+			child_scope.for_each_child([this, &subtiles](const gsml_data &grandchild_scope) {
 				if (grandchild_scope.get_tag() == "variations") {
 					for (const std::string &value : grandchild_scope.get_values()) {
 						subtiles.push_back(std::stoi(value));

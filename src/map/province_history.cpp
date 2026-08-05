@@ -49,7 +49,7 @@ void province_history::process_gsml_scope(const gsml_data &scope, const QDate &d
 	if (tag == "culture_weights") {
 		this->culture_weights.clear();
 
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const metternich::culture *culture = culture::get(key);
 
@@ -61,7 +61,7 @@ void province_history::process_gsml_scope(const gsml_data &scope, const QDate &d
 	} else if (tag == "phenotype_weights") {
 		this->phenotype_weights.clear();
 
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const phenotype *phenotype = phenotype::get(key);
 

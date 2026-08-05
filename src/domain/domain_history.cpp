@@ -75,7 +75,7 @@ void domain_history::process_gsml_scope(const gsml_data &scope, const QDate &dat
 			}
 		});
 	} else if (tag == "laws") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const law_group *law_group = law_group::get(property.get_key());
 			const law *law = law::get(property.get_value());
 			if (law != nullptr) {
@@ -94,7 +94,7 @@ void domain_history::process_gsml_scope(const gsml_data &scope, const QDate &dat
 		std::optional<diplomacy_state> state;
 		const metternich::subject_type *subject_type = nullptr;
 
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([&other_domain, &state, &subject_type](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
@@ -146,7 +146,7 @@ void domain_history::process_gsml_scope(const gsml_data &scope, const QDate &dat
 		const metternich::domain *other_domain = nullptr;
 		const consulate *consulate = nullptr;
 
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([&other_domain, &consulate](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 

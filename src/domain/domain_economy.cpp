@@ -930,7 +930,7 @@ std::vector<const domain *> domain_economy::get_known_domains_by_trade_priority(
 {
 	//get the known countries and sort them by priority
 	std::vector<const metternich::domain *> countries = container::to_vector(this->domain->get_diplomacy()->get_known_countries());
-	std::sort(countries.begin(), countries.end(), [&](const metternich::domain *lhs, const metternich::domain *rhs) {
+	std::sort(countries.begin(), countries.end(), [this](const metternich::domain *lhs, const metternich::domain *rhs) {
 		if (this->domain->get_diplomacy()->is_vassal_of(lhs) != this->domain->get_diplomacy()->is_vassal_of(rhs)) {
 			return this->domain->get_diplomacy()->is_vassal_of(lhs);
 		}

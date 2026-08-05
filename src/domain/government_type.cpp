@@ -113,7 +113,7 @@ void government_type::process_title_name_scope(title_name_map &title_names, cons
 
 void government_type::process_site_title_name_scope(std::map<government_variant, site_title_name_map> &title_names, const gsml_data &scope)
 {
-	scope.for_each_property([&](const gsml_property &property) {
+	scope.for_each_property([&title_names](const gsml_property &property) {
 		const std::string &key = property.get_key();
 		const std::string &value = property.get_value();
 
@@ -128,7 +128,7 @@ void government_type::process_site_title_name_scope(std::map<government_variant,
 		title_names[government_variant][0] = value;
 	});
 
-	scope.for_each_child([&](const gsml_data &child_scope) {
+	scope.for_each_child([&title_names](const gsml_data &child_scope) {
 		government_variant government_variant{};
 		const government_group *government_group = government_group::try_get(child_scope.get_tag());
 		if (government_group != nullptr) {
@@ -143,7 +143,7 @@ void government_type::process_site_title_name_scope(std::map<government_variant,
 
 void government_type::process_site_title_name_scope(site_title_name_map &title_names, const gsml_data &scope)
 {
-	scope.for_each_property([&](const gsml_property &property) {
+	scope.for_each_property([&title_names](const gsml_property &property) {
 		const std::string &key = property.get_key();
 		const std::string &value = property.get_value();
 		const int tier = std::stoi(key);
@@ -153,7 +153,7 @@ void government_type::process_site_title_name_scope(site_title_name_map &title_n
 
 void government_type::process_office_title_name_scope(data_entry_map<office, std::map<government_variant, office_title_inner_name_map>> &office_title_names, const gsml_data &scope)
 {
-	scope.for_each_child([&](const gsml_data &child_scope) {
+	scope.for_each_child([&office_title_names](const gsml_data &child_scope) {
 		const office *office = office::get(child_scope.get_tag());
 
 		government_type::process_office_title_name_scope(office_title_names[office], child_scope);
@@ -162,7 +162,7 @@ void government_type::process_office_title_name_scope(data_entry_map<office, std
 
 void government_type::process_office_title_name_scope(office_title_name_map &office_title_names, const gsml_data &scope)
 {
-	scope.for_each_child([&](const gsml_data &child_scope) {
+	scope.for_each_child([&office_title_names](const gsml_data &child_scope) {
 		const office *office = office::get(child_scope.get_tag());
 
 		government_type::process_office_title_name_scope(office_title_names[office], child_scope);
@@ -171,7 +171,7 @@ void government_type::process_office_title_name_scope(office_title_name_map &off
 
 void government_type::process_office_title_name_scope(std::map<government_variant, office_title_inner_name_map> &office_title_names, const gsml_data &scope)
 {
-	scope.for_each_child([&](const gsml_data &child_scope) {
+	scope.for_each_child([&office_title_names](const gsml_data &child_scope) {
 		government_variant government_variant{};
 		const government_group *government_group = government_group::try_get(child_scope.get_tag());
 		if (government_group != nullptr) {
@@ -186,7 +186,7 @@ void government_type::process_office_title_name_scope(std::map<government_varian
 
 void government_type::process_office_title_name_scope(office_title_inner_name_map &office_title_names, const gsml_data &scope)
 {
-	scope.for_each_property([&](const gsml_property &property) {
+	scope.for_each_property([&office_title_names](const gsml_property &property) {
 		const std::string &key = property.get_key();
 		const std::string &value = property.get_value();
 		if (magic_enum::enum_contains<domain_tier>(key)) {
@@ -198,7 +198,7 @@ void government_type::process_office_title_name_scope(office_title_inner_name_ma
 		}
 	});
 
-	scope.for_each_child([&](const gsml_data &child_scope) {
+	scope.for_each_child([&office_title_names](const gsml_data &child_scope) {
 		const domain_tier tier = magic_enum::enum_cast<domain_tier>(child_scope.get_tag()).value();
 		government_type::process_office_title_name_scope(office_title_names[tier], child_scope);
 	});
@@ -206,7 +206,7 @@ void government_type::process_office_title_name_scope(office_title_inner_name_ma
 
 void government_type::process_office_title_name_scope(std::map<gender, std::string> &office_title_names, const gsml_data &scope)
 {
-	scope.for_each_property([&](const gsml_property &property) {
+	scope.for_each_property([&office_title_names](const gsml_property &property) {
 		const std::string &key = property.get_key();
 		const std::string &value = property.get_value();
 		const gender gender = enum_converter<archimedes::gender>::to_enum(key);

@@ -30,14 +30,14 @@ void taxon_base::process_gsml_scope(const gsml_data &scope)
 	const std::vector<std::string> &values = scope.get_values();
 
 	if (tag == "starting_age_modifiers") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
 			this->starting_age_modifiers[magic_enum::enum_cast<starting_age_category>(key).value()] = dice(value);
 		});
 	} else if (tag == "item_slots") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
@@ -52,7 +52,7 @@ void taxon_base::process_gsml_scope(const gsml_data &scope)
 			this->given_name_generator->add_names(gender::none, values);
 		}
 
-		scope.for_each_child([&](const gsml_data &child_scope) {
+		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &tag = child_scope.get_tag();
 
 			const gender gender = enum_converter<archimedes::gender>::to_enum(tag);

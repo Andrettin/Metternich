@@ -26,7 +26,7 @@ void site_attribute::process_gsml_scope(const gsml_data &scope)
 			this->affected_skills.push_back(skill::get(value));
 		}
 	} else if (tag == "value_modifiers") {
-		scope.for_each_child([&](const gsml_data &child_scope) {
+		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
 			const int value = std::stoi(child_tag);
 			if (!this->value_modifiers.contains(value)) {
@@ -37,7 +37,7 @@ void site_attribute::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "recurring_value_modifiers") {
 		static constexpr int max_value = std::numeric_limits<uint8_t>::max();
 
-		scope.for_each_child([&](const gsml_data &child_scope) {
+		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
 			const int value_interval = std::stoi(child_tag);
 			for (int i = value_interval; i <= max_value; i += value_interval) {

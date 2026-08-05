@@ -168,21 +168,21 @@ void species::process_gsml_scope(const gsml_data &scope)
 			this->class_skill_groups.insert(skill_group::get(value));
 		}
 	} else if (tag == "min_attribute_values") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
 			this->min_attribute_values[character_attribute::get(key)] = std::stoi(value);
 		});
 	} else if (tag == "max_attribute_values") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
 			this->max_attribute_values[character_attribute::get(key)] = std::stoi(value);
 		});
 	} else if (tag == "character_class_level_limits") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
@@ -225,7 +225,7 @@ void species::check() const
 	}
 
 	if (this->is_sapient()) {
-		magic_enum::enum_for_each<starting_age_category>([&](const starting_age_category category) {
+		magic_enum::enum_for_each<starting_age_category>([this](const starting_age_category category) {
 			if (category == starting_age_category::none) {
 				return;
 			}

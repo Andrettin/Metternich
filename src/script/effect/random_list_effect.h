@@ -18,9 +18,9 @@ public:
 		this->weight_factor = std::make_unique<factor<std::remove_const_t<scope_type>>>(base_weight);
 		this->effects = std::make_unique<effect_list<scope_type>>();
 
-		scope.for_each_element([&](const gsml_property &property) {
+		scope.for_each_element([this](const gsml_property &property) {
 			this->effects->process_gsml_property(property);
-		}, [&](const gsml_data &child_scope) {
+		}, [this](const gsml_data &child_scope) {
 			if (child_scope.get_tag() == "modifier") {
 				this->weight_factor->process_gsml_scope(child_scope);
 			} else {

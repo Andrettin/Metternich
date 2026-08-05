@@ -47,7 +47,7 @@ public:
 		const std::string &tag = scope.get_tag();
 
 		if (tag == "enemies") {
-			scope.for_each_property([&](const gsml_property &property) {
+			scope.for_each_property([this](const gsml_property &property) {
 				const std::string &key = property.get_key();
 				const military_unit_type *military_unit_type = military_unit_type::get(key);
 

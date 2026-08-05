@@ -192,7 +192,7 @@ void combat::deploy_objects()
 
 			combat_tile &tile = this->get_tile(tile_pos);
 			if (tile.is_occupied()) {
-				point::for_each_cardinally_adjacent(tile_pos, [&](const QPoint &adjacent_pos) {
+				point::for_each_cardinally_adjacent(tile_pos, [this, &tiles_to_check](const QPoint &adjacent_pos) {
 					if (!this->get_map_rect().contains(adjacent_pos)) {
 						return;
 					}
@@ -261,7 +261,7 @@ void combat::deploy_characters(std::vector<const character *> characters, const 
 
 			combat_tile &tile = this->get_tile(tile_pos);
 			if (tile.is_occupied()) {
-				point::for_each_cardinally_adjacent(tile_pos, [&](const QPoint &adjacent_pos) {
+				point::for_each_cardinally_adjacent(tile_pos, [this, &tiles_to_check](const QPoint &adjacent_pos) {
 					if (!this->get_map_rect().contains(adjacent_pos)) {
 						return;
 					}
@@ -428,7 +428,7 @@ QCoro::Task<int64_t> combat::do_character_round(const character *character, part
 				int best_square_distance = std::numeric_limits<int>::max();
 				std::vector<QPoint> potential_tiles;
 
-				point::for_each_adjacent(current_tile_pos, [&](const QPoint &adjacent_pos) {
+				point::for_each_adjacent(current_tile_pos, [this, &chosen_target_tile_pos, current_square_distance, &best_square_distance, &potential_tiles](const QPoint &adjacent_pos) {
 					if (!this->get_map_rect().contains(adjacent_pos)) {
 						return;
 					}
@@ -913,7 +913,7 @@ QCoro::Task<void> combat::move_character_to(const character *character, const QP
 	tile.character = character;
 
 	//check for traps in adjacent tiles
-	point::for_each_adjacent(tile_pos, [&](const QPoint &adjacent_pos) {
+	point::for_each_adjacent(tile_pos, [this, character](const QPoint &adjacent_pos) {
 		if (!this->get_map_rect().contains(adjacent_pos)) {
 			return;
 		}

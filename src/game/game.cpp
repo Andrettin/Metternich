@@ -2008,7 +2008,7 @@ void game::do_trade()
 		return false;
 	});
 
-	std::sort(trade_domains.begin(), trade_domains.end(), [&](const metternich::domain *lhs, const metternich::domain *rhs) {
+	std::sort(trade_domains.begin(), trade_domains.end(), [](const metternich::domain *lhs, const metternich::domain *rhs) {
 		return lhs->get_identifier() < rhs->get_identifier();
 	});
 

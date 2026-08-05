@@ -279,7 +279,7 @@ void character::process_gsml_scope(const gsml_data &scope)
 	const std::vector<std::string> &values = scope.get_values();
 
 	if (tag == "attributes") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 			const int value_int = std::stoi(value);
@@ -287,7 +287,7 @@ void character::process_gsml_scope(const gsml_data &scope)
 			this->attribute_ranges[character_attribute::get(key)] = std::make_pair(value_int, value_int);
 		});
 	} else if (tag == "attribute_ratings") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
@@ -302,7 +302,7 @@ void character::process_gsml_scope(const gsml_data &scope)
 			this->starting_items.push_back(item_type::get(value));
 		}
 
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 			const item_type *item_type = item_type::get(key);

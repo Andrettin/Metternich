@@ -4,9 +4,9 @@
 #include "character/character_game_data.h"
 #include "character/saving_throw_type.h"
 #include "character/status_effect.h"
+#include "engine_interface.h"
 #include "script/effect/effect.h"
-#include "util/dice.h"
-#include "util/random.h"
+#include "ui/portrait.h"
 
 namespace metternich {
 

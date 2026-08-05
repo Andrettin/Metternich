@@ -175,7 +175,7 @@ void map_generator::generate_world_terrain()
 
 	//ensure edge zones are water
 	const QRect map_rect(QPoint(0, 0), this->get_size());
-	rect::for_each_edge_point(map_rect, [&](const QPoint &tile_pos) {
+	rect::for_each_edge_point(map_rect, [this](const QPoint &tile_pos) {
 		const int tile_index = point::to_index(tile_pos, this->get_width());
 		const int zone_index = this->tile_zones[tile_index];
 		const QPoint &zone_seed = this->zones.at(zone_index).seed;
@@ -461,7 +461,7 @@ void map_generator::expand_tile_value_seeds(const std::vector<QPoint> &base_seed
 		for (const QPoint &seed_pos : seeds) {
 			const int tile_value = tile_values[point::to_index(seed_pos, this->get_width())];
 
-			point::for_each_cardinally_adjacent(seed_pos, [&](QPoint &&adjacent_pos) {
+			point::for_each_cardinally_adjacent(seed_pos, [this, map, &tile_values, max_decrease, tile_value, &new_seeds](QPoint &&adjacent_pos) {
 				if (!map->contains(adjacent_pos)) {
 					return;
 				}
@@ -561,7 +561,7 @@ void map_generator::expand_zone_seeds(const std::vector<QPoint> &base_seeds)
 
 			std::vector<QPoint> adjacent_positions;
 
-			point::for_each_cardinally_adjacent(seed_pos, [&](QPoint &&adjacent_pos) {
+			point::for_each_cardinally_adjacent(seed_pos, [this, map, &map_size, &zone, zone_index, &adjacent_positions](QPoint &&adjacent_pos) {
 				if (!map->contains(adjacent_pos)) {
 					return;
 				}
@@ -622,7 +622,7 @@ void map_generator::expand_zone_seeds(const std::vector<QPoint> &base_seeds)
 
 			std::map<int, int> zone_neighbor_counts;
 
-			point::for_each_cardinally_adjacent(tile_pos, [&](QPoint &&adjacent_pos) {
+			point::for_each_cardinally_adjacent(tile_pos, [this, map, &map_size, &zone_neighbor_counts](QPoint &&adjacent_pos) {
 				if (!map->contains(adjacent_pos)) {
 					return;
 				}

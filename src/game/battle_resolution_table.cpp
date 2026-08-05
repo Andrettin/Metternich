@@ -17,11 +17,11 @@ battle_resolution_table::battle_resolution_table(const gsml_data &scope)
 		const std::string &child_tag = child_scope.get_tag();
 		const battle_resolution_type attacker_resolution_type = magic_enum::enum_cast<battle_resolution_type>(child_tag).value();
 
-		child_scope.for_each_child([&](const gsml_data &grandchild_scope) {
+		child_scope.for_each_child([this, attacker_resolution_type](const gsml_data &grandchild_scope) {
 			const std::string &grandchild_tag = grandchild_scope.get_tag();
 			const battle_resolution_type defender_resolution_type = magic_enum::enum_cast<battle_resolution_type>(grandchild_tag).value();
 
-			grandchild_scope.for_each_property([&](const gsml_property &property) {
+			grandchild_scope.for_each_property([this, attacker_resolution_type, defender_resolution_type](const gsml_property &property) {
 				const int attack_defense_difference = std::stoi(property.get_key());
 				const attack_result result = magic_enum::enum_cast<attack_result>(property.get_value()).value();
 

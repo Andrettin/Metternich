@@ -13,7 +13,7 @@ void icon_base::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 
 	if (tag == "hue_ignored_colors") {
-		scope.for_each_child([&](const gsml_data &child_scope) {
+		scope.for_each_child([this](const gsml_data &child_scope) {
 			this->hue_ignored_colors.insert(child_scope.to_color());
 		});
 	} else {

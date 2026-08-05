@@ -45,7 +45,7 @@ void trait::process_gsml_scope(const gsml_data &scope)
 			this->types.push_back(trait_type);
 		}
 	} else if (tag == "attribute_bonuses") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const character_attribute *attribute = character_attribute::get(property.get_key());
 			const int value = std::stoi(property.get_value());
 
@@ -64,21 +64,21 @@ void trait::process_gsml_scope(const gsml_data &scope)
 		modifier->process_gsml_data(scope);
 		this->modifier = std::move(modifier);
 	} else if (tag == "per_mythic_tier_modifiers") {
-		scope.for_each_child([&](const gsml_data &child_scope) {
+		scope.for_each_child([this](const gsml_data &child_scope) {
 			const int tier_interval = std::stoi(child_scope.get_tag());
 			auto modifier = std::make_unique<metternich::modifier<const character>>();
 			modifier->process_gsml_data(child_scope);
 			this->per_mythic_tier_modifiers[tier_interval] = std::move(modifier);
 		});
 	} else if (tag == "per_divine_rank_modifiers") {
-		scope.for_each_child([&](const gsml_data &child_scope) {
+		scope.for_each_child([this](const gsml_data &child_scope) {
 			const int rank_interval = std::stoi(child_scope.get_tag());
 			auto modifier = std::make_unique<metternich::modifier<const character>>();
 			modifier->process_gsml_data(child_scope);
 			this->per_divine_rank_modifiers[rank_interval] = std::move(modifier);
 		});
 	} else if (tag == "office_modifiers") {
-		scope.for_each_child([&](const gsml_data &child_scope) {
+		scope.for_each_child([this](const gsml_data &child_scope) {
 			const office *office = office::get(child_scope.get_tag());
 			auto modifier = std::make_unique<metternich::modifier<const domain>>();
 			modifier->process_gsml_data(child_scope);

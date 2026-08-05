@@ -93,7 +93,7 @@ void journal_entry::process_gsml_scope(const gsml_data &scope)
 			const site *settlement = site::get(property.get_key());
 			const building_type *building = building_type::get(property.get_value());
 			this->built_settlement_buildings[settlement].push_back(building);
-		}, [&](const gsml_data &child_scope) {
+		}, [this](const gsml_data &child_scope) {
 			const site *settlement = site::get(child_scope.get_tag());
 
 			for (const std::string &value : child_scope.get_values()) {

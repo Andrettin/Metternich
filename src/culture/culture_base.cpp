@@ -89,7 +89,7 @@ void culture_base::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "office_title_names") {
 		government_type::process_office_title_name_scope(this->office_title_names, scope);
 	} else if (tag == "building_class_types") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
@@ -98,7 +98,7 @@ void culture_base::process_gsml_scope(const gsml_data &scope)
 			this->set_building_class_type(building_class, building_type);
 		});
 	} else if (tag == "population_class_types") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
@@ -107,7 +107,7 @@ void culture_base::process_gsml_scope(const gsml_data &scope)
 			this->set_population_class_type(population_class, population_type);
 		});
 	} else if (tag == "civilian_class_unit_types") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
@@ -116,7 +116,7 @@ void culture_base::process_gsml_scope(const gsml_data &scope)
 			this->set_civilian_class_unit_type(unit_class, unit_type);
 		});
 	} else if (tag == "military_class_unit_types") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
@@ -125,7 +125,7 @@ void culture_base::process_gsml_scope(const gsml_data &scope)
 			this->set_military_class_unit_type(unit_class, unit_type);
 		});
 	} else if (tag == "transporter_class_types") {
-		scope.for_each_property([&](const gsml_property &property) {
+		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
@@ -142,7 +142,7 @@ void culture_base::process_gsml_scope(const gsml_data &scope)
 			this->given_name_generator->add_names(gender::none, values);
 		}
 
-		scope.for_each_child([&](const gsml_data &child_scope) {
+		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &tag = child_scope.get_tag();
 
 			const gender gender = enum_converter<archimedes::gender>::to_enum(tag);
@@ -158,7 +158,7 @@ void culture_base::process_gsml_scope(const gsml_data &scope)
 			this->surname_generator->add_names(gender::none, values);
 		}
 
-		scope.for_each_child([&](const gsml_data &child_scope) {
+		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &tag = child_scope.get_tag();
 
 			const gender gender = enum_converter<archimedes::gender>::to_enum(tag);
@@ -166,7 +166,7 @@ void culture_base::process_gsml_scope(const gsml_data &scope)
 			this->surname_generator->add_names(gender, child_scope.get_values());
 		});
 	} else if (tag == "military_unit_class_names") {
-		scope.for_each_child([&](const gsml_data &child_scope) {
+		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &tag = child_scope.get_tag();
 
 			const military_unit_class *unit_class = military_unit_class::get(tag);
@@ -178,7 +178,7 @@ void culture_base::process_gsml_scope(const gsml_data &scope)
 			this->military_unit_class_name_generators[unit_class]->add_names(child_scope.get_values());
 		});
 	} else if (tag == "transporter_class_names") {
-		scope.for_each_child([&](const gsml_data &child_scope) {
+		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &tag = child_scope.get_tag();
 
 			const transporter_class *unit_class = transporter_class::get(tag);
