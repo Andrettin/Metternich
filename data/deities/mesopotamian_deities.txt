@@ -49,6 +49,30 @@ anu = {
 	}
 }
 
+belet_ili = {
+	name = "Belet-Ili"
+	pantheon = mesopotamian
+	divine_rank = greater_deity
+	religions = {
+		chaldean
+	}
+	major_domains = {
+		animal
+		earth
+		good
+		healing
+		plant
+	}
+	character = {
+		species = human
+		character_class = druid
+		culture = babylonian
+		religion = chaldean
+		gender = female
+		contemporary_character = marduk #to give her a start date
+	}
+}
+
 ea = {
 	name = "Ea"
 	pantheon = mesopotamian
@@ -62,9 +86,17 @@ ea = {
 		law
 		water
 	}
+	worshiper_conditions = {
+		or = {
+			#character_class = farmer
+			character_class = engineer #blacksmith
+			character_class = cleric #healer
+			character_class = mage #seer
+		}
+	}
 	character = {
 		species = human
-		character_class = aristocrat
+		character_class = mage
 		culture = babylonian
 		religion = chaldean
 		gender = male
