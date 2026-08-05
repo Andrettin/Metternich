@@ -6,6 +6,10 @@ aesir = {
 	name = "Aesir"
 }
 
+eastern_european = {
+	name = "Eastern European"
+}
+
 mesopotamian = {
 	name = "Mesopotamian"
 }

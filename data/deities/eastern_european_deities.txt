@@ -1,0 +1,25 @@
+perun = {
+	name = "Perun"
+	pantheon = eastern_european
+	divine_rank = greater_deity #correct?
+	religions = {
+		matrist
+		slovianskan
+	}
+	major_domains = {
+		air
+		law
+		thunder
+		strength
+	}
+	character = {
+		species = human
+		character_class = warrior
+		culture = slavic
+		religion = slovianskan
+		gender = male
+		start_date = -2000
+	}
+	
+	#Slavic thunder-god; Source: "Germans, Avars and Slavs", p. 125; Source: H. Munro Chadwick, "The Oak and the Thunder-God", 1900, p. 27.
+}
