@@ -13,6 +13,7 @@ adad = {
 	}
 	worshiper_conditions = {
 		or = {
+			character_class = cleric
 			#character_class = farmer
 			character_class = warrior #barbarian
 		}
@@ -39,6 +40,13 @@ anu = {
 		magic
 		protection
 		travel
+	}
+	worshiper_conditions = {
+		or = {
+			character_class = aristocrat
+			character_class = cleric
+			#leader
+		}
 	}
 	character = {
 		species = human
@@ -88,6 +96,7 @@ ea = {
 	}
 	worshiper_conditions = {
 		or = {
+			character_class = cleric
 			#character_class = farmer
 			character_class = engineer #blacksmith
 			character_class = cleric #healer
@@ -103,6 +112,58 @@ ea = {
 	}
 }
 
+enlil = {
+	name = "Enlil"
+	pantheon = mesopotamian
+	divine_rank = intermediate_deity
+	religions = {
+		chaldean
+	}
+	major_domains = {
+		air
+		animal
+		law
+		protection
+	}
+	worshiper_conditions = {
+		or = {
+			character_class = aristocrat #lawmaker
+			character_class = cleric
+		}
+	}
+	character = {
+		species = human
+		character_class = aristocrat
+		culture = babylonian
+		religion = chaldean
+		gender = male
+		contemporary_character = marduk #to give him a start date
+	}
+}
+
+ereshkigal = {
+	name = "Ereshkigal"
+	pantheon = mesopotamian
+	divine_rank = intermediate_deity
+	religions = {
+		chaldean
+	}
+	major_domains = {
+		death
+		evil
+		knowledge
+		law
+	}
+	character = {
+		species = human
+		character_class = cleric
+		culture = babylonian
+		religion = chaldean
+		gender = female
+		contemporary_character = marduk #to give her a start date
+	}
+}
+
 ishtar = {
 	name = "Ishtar"
 	pantheon = mesopotamian
@@ -115,6 +176,13 @@ ishtar = {
 		chaos
 		trickery
 		war
+	}
+	worshiper_conditions = {
+		or = {
+			character_class = bard
+			character_class = cleric
+			character_class = warrior #warlord/conqueror
+		}
 	}
 	character = {
 		species = human
@@ -148,5 +216,131 @@ marduk = {
 		gender = male
 		father = ea
 		start_date = -1782 #worshipped in Babylon in the 1782-500 BC period; Source: "History of the World Map by Map", 2023, pp. 50-51.
+	}
+}
+
+nergal = {
+	name = "Nergal"
+	pantheon = mesopotamian
+	divine_rank = lesser_deity
+	religions = {
+		chaldean
+	}
+	major_domains = {
+		chaos
+		death
+		destruction
+		evil
+	}
+	worshiper_conditions = {
+		or = {
+			character_class = cleric
+			character_class = rogue
+			character_class = warrior
+			#assassin/bounty hunter/executioner
+		}
+	}
+	character = {
+		species = human
+		character_class = warrior
+		culture = babylonian
+		religion = chaldean
+		gender = male
+		contemporary_character = marduk #to give him a start date
+	}
+}
+
+ninurta = {
+	name = "Ninurta"
+	pantheon = mesopotamian
+	divine_rank = lesser_deity
+	religions = {
+		chaldean
+	}
+	major_domains = {
+		good
+		plant
+		strength
+		travel
+	}
+	worshiper_conditions = {
+		or = {
+			#athlete
+			character_class = cleric
+			character_class = ranger #hunter
+			#farmer
+		}
+	}
+	character = {
+		species = human
+		character_class = aristocrat
+		culture = babylonian
+		religion = chaldean
+		gender = male
+		father = ea
+	}
+}
+
+shamash = {
+	name = "Shamash"
+	pantheon = mesopotamian
+	divine_rank = intermediate_deity
+	religions = {
+		chaldean
+	}
+	major_domains = {
+		good
+		knowledge
+		law
+		sun
+		travel
+	}
+	worshiper_conditions = {
+		or = {
+			character_class = aristocrat #judge
+			character_class = cleric
+			#traveler
+		}
+	}
+	character = {
+		species = human
+		character_class = aristocrat
+		culture = babylonian
+		religion = chaldean
+		gender = male
+		contemporary_character = marduk #to give him a start date
+	}
+}
+
+sin = {
+	name = "Sin"
+	pantheon = mesopotamian
+	divine_rank = intermediate_deity
+	religions = {
+		chaldean
+	}
+	major_domains = {
+		animal
+		knowledge
+		plant
+		protection
+	}
+	worshiper_conditions = {
+		or = {
+			#astronomer
+			character_class = cleric
+			character_class = druid
+			character_class = mage #defensive magic
+			#oracle
+		}
+	}
+	character = {
+		species = human
+		character_class = cleric
+		culture = babylonian
+		religion = chaldean
+		gender = male
+		father = enlil
+		#mother = ninlil
 	}
 }
