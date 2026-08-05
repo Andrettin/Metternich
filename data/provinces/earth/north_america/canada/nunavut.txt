@@ -7,11 +7,10 @@ nunavut = {
 	}
 	
 	history = {
-		religion = pagan
-		
 		-4000 = {
 			owner = sioux
 			culture = sioux
+			religion = pagan
 		}
 		
 		1670 = {

@@ -10,7 +10,7 @@ east_prussia = {
 		919 = {
 			owner = pruthenia #territory of the Prussians in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
 			culture = prussian
-			religion = pagan
+			religion = romuva
 		}
 		
 		1360 = {

@@ -7,8 +7,6 @@ alberta = {
 	}
 	
 	history = {
-		religion = pagan
-		
 		-143100000 = {
 			#Alphadon lived in Alberta in the Cretaceous; Source: https://paleobiodb.org/classic/basicTaxonInfo?taxon_no=487156
 		}
@@ -16,6 +14,7 @@ alberta = {
 		-4000 = {
 			owner = sioux
 			culture = sioux
+			religion = pagan
 		}
 		
 		1670 = {

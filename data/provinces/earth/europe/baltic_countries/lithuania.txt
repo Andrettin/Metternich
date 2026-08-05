@@ -17,7 +17,7 @@ lithuania = {
 		1000 = {
 			owner = lithuania #territory of the Lithuanians c. 1000; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 58-59.
 			culture = lithuanian
-			religion = pagan
+			religion = romuva
 		}
 		
 		1360 = {

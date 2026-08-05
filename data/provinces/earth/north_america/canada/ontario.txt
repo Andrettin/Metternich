@@ -7,16 +7,10 @@ ontario = {
 	}
 	
 	history = {
-		religion = pagan
-		
-		-4000 = {
-			owner = huron
-			culture = huron
-		}
-		
 		1300 = {
 			owner = huron #territory of the Northeastern cultural group (to which the Huron belonged) in the 1300-1535 period; Source: "Atlas de História Mundial", 2001, pp. 148-149.
 			culture = huron
+			religion = pagan
 		}
 		
 		1600 = {

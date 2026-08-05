@@ -44,6 +44,36 @@ gabija = {
 	}
 }
 
+jurate = {
+	name = "Jurate"
+	pantheon = eastern_european
+	divine_rank = intermediate_deity #correct?
+	religions = {
+		romuva
+	}
+	major_domains = {
+		healing
+		luck
+		travel
+		water
+	}
+	worshiper_conditions = {
+		or = {
+			character_class = cleric
+			#fisherman
+			#sailor
+		}
+	}
+	character = {
+		species = human
+		character_class = aristocrat
+		culture = lithuanian
+		religion = romuva
+		gender = female
+		start_date = -2000
+	}
+}
+
 meness = {
 	name = "Meness"
 	pantheon = eastern_european
@@ -81,7 +111,6 @@ mokosh = {
 	pantheon = eastern_european
 	divine_rank = intermediate_deity #correct?
 	religions = {
-		matrist
 		slovianskan
 	}
 	major_domains = {
@@ -219,5 +248,35 @@ svarozic = {
 		religion = slovianskan
 		gender = male
 		father = svarog
+	}
+}
+
+volos = {
+	name = "Volos"
+	pantheon = eastern_european
+	divine_rank = intermediate_deity #correct?
+	religions = {
+		slovianskan
+	}
+	major_domains = {
+		animal
+		luck
+		plant
+		travel
+	}
+	worshiper_conditions = {
+		or = {
+			character_class = cleric
+			#craftsman
+			character_class = merchant
+		}
+	}
+	character = {
+		species = human
+		character_class = aristocrat
+		culture = slavic
+		religion = slovianskan
+		gender = male
+		start_date = -2000
 	}
 }

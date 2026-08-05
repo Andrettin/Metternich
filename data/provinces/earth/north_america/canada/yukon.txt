@@ -7,11 +7,10 @@ yukon = {
 	}
 	
 	history = {
-		religion = pagan
-		
 		-4000 = {
 			owner = kwakiutl
 			culture = kwakiutl
+			religion = pagan
 		}
 	}
 }

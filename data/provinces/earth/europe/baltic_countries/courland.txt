@@ -13,7 +13,7 @@ courland = {
 		
 		-4000 = {
 			culture = latvian
-			religion = pagan
+			religion = romuva
 		}
 		
 		1360 = {

@@ -7,11 +7,10 @@ labrador = {
 	}
 	
 	history = {
-		religion = pagan
-		
 		-4000 = {
 			owner = huron
 			culture = huron
+			religion = pagan
 		}
 		
 		1600 = {
