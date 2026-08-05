@@ -11,7 +11,7 @@ lithuania = {
 		526 = {
 			owner = estonians #territory of the Esthonians in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 			culture = estonian
-			religion = pagan
+			religion = suomenusko
 		}
 		
 		1000 = {

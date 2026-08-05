@@ -1,0 +1,23 @@
+ukko = {
+	name = "Ukko"
+	pantheon = finnish
+	divine_rank = greater_deity
+	religions = {
+		suomenusko
+	}
+	major_domains = {
+		air
+		good
+		healing
+		law
+		water
+	}
+	character = {
+		species = human
+		character_class = mage
+		culture = finnish
+		religion = suomenusko
+		gender = male
+		start_date = -3000
+	}
+}

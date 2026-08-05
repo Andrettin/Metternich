@@ -1,0 +1,6 @@
+suomenusko = {
+	name = "Suomenusko"
+	group = pagan
+	color = { 127 127 0 }
+	icon = deer
+}

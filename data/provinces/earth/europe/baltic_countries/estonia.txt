@@ -9,7 +9,7 @@ estonia = {
 	history = {
 		-4000 = {
 			culture = estonian
-			religion = pagan
+			religion = suomenusko
 		}
 		
 		1360 = {
