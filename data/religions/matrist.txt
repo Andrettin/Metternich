@@ -1,0 +1,6 @@
+matrist = {
+	name = "Matrist"
+	group = pagan
+	color = { 107 178 178 }
+	icon = pine_tree
+}

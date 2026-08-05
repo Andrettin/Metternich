@@ -1,0 +1,18 @@
+venedia = {
+	name = "Venedia"
+	type = polity
+	color = { 140 109 140 }
+	default_culture = aestian
+	default_religion = matrist
+	default_tier = duchy
+	default_government_type = tribal_despotism
+	default_capital = volodymyr #correct?
+	short_names = {
+		tribe = "Venedae"
+	}
+	core_provinces = {
+		brest
+		lublin
+		rivne
+	}
+}

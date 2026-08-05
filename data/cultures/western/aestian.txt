@@ -1,0 +1,8 @@
+aestian = {
+	name = "Aestian"
+	group = veneti
+	color = { 107 178 178 }
+	species = {
+		human
+	}
+}

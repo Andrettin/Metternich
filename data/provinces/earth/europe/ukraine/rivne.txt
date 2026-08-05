@@ -11,6 +11,12 @@ rivne = {
 	}
 	
 	history = {
+		-264 = {
+			owner = venedia #territory of the Venedae in the 264 BC - 43 AD period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 34-35.
+			culture = aestian
+			religion = matrist
+		}
+		
 		526 = {
 			owner = slavs #territory of Slavic peoples in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 			culture = slavic
