@@ -8,8 +8,11 @@ bologna = {
 	}
 	
 	history = {
-		culture = gothic
-		religion = asatru
+		-500 = {
+			owner = etruria #territory of the Etruscans in the 500-100 BC period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 29.
+			culture = etruscan
+			religion = hellenic
+		}
 		
 		526 = {
 			owner = ostrogothia #part of the Kingdom of the East Goths in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
