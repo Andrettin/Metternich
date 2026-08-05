@@ -834,6 +834,10 @@ QCoro::Task<void> site_game_data::set_holding_type(const metternich::holding_typ
 		co_return;
 	}
 
+	if (holding_type != nullptr && this->get_owner() == nullptr) {
+		throw std::runtime_error(std::format("Tried to set a holding type for site \"{}\", which has no owner.", this->site->get_identifier()));
+	}
+
 	const metternich::holding_type *old_holding_type = this->get_holding_type();
 
 	if (old_holding_type != nullptr) {
