@@ -10,7 +10,7 @@ rosengarten = { #domain of the dwarven king Laurin in medieval German legend
 		high_middle_ages = {
 			owner = rosengarten
 			culture = dwarven
-			religion = pagan
+			religion = asatru
 			developed = true
 		}
 	}

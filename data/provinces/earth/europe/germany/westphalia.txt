@@ -11,13 +11,13 @@ westphalia = {
 			-3000 = {
 				owner = goldemarland
 				culture = dwarven
-				religion = pagan
+				religion = asatru
 			}
 			
 			450 = {
 				owner = goldemarland
 				culture = dwarven
-				religion = pagan
+				religion = asatru
 			}
 		}
 		
