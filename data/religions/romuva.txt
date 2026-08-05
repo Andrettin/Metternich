@@ -1,0 +1,6 @@
+romuva = { #Baltic paganism
+	name = "Romuva"
+	group = pagan
+	color = { 153 102 76 }
+	icon = pine_tree
+}

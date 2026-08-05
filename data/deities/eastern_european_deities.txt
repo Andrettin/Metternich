@@ -21,11 +21,91 @@ dazhbog = {
 	}
 }
 
+gabija = {
+	name = "Gabija"
+	pantheon = eastern_european
+	divine_rank = intermediate_deity #correct?
+	religions = {
+		romuva
+	}
+	major_domains = {
+		fire
+		good
+		healing
+		protection
+	}
+	character = {
+		species = human
+		character_class = aristocrat
+		culture = lithuanian
+		religion = romuva
+		gender = female
+		start_date = -2000
+	}
+}
+
+meness = {
+	name = "Meness"
+	pantheon = eastern_european
+	divine_rank = intermediate_deity #correct?
+	religions = {
+		matrist
+		romuva
+	}
+	major_domains = {
+		luck
+		travel
+		trickery
+		war
+	}
+	worshiper_conditions = {
+		or = {
+			character_class = cleric
+			character_class = ranger #hunting
+			character_class = rogue
+			character_class = warrior
+		}
+	}
+	character = {
+		species = human
+		character_class = aristocrat
+		culture = lithuanian
+		religion = romuva
+		gender = male
+		start_date = -2000
+	}
+}
+
+mokosh = {
+	name = "Mokosh"
+	pantheon = eastern_european
+	divine_rank = intermediate_deity #correct?
+	religions = {
+		matrist
+		slovianskan
+	}
+	major_domains = {
+		animal
+		earth
+		healing
+		plant
+	}
+	character = {
+		species = human
+		character_class = aristocrat
+		culture = slavic
+		religion = slovianskan
+		gender = female
+		start_date = -2000
+	}
+}
+
 perun = {
 	name = "Perun"
 	pantheon = eastern_european
 	divine_rank = greater_deity #correct?
 	religions = {
+		matrist
 		slovianskan
 	}
 	major_domains = {
@@ -44,6 +124,30 @@ perun = {
 	}
 	
 	#Slavic thunder-god; Source: "Germans, Avars and Slavs", p. 125; Source: H. Munro Chadwick, "The Oak and the Thunder-God", 1900, p. 27.
+}
+
+saule = {
+	name = "Saule"
+	pantheon = eastern_european
+	divine_rank = intermediate_deity #correct?
+	religions = {
+		matrist
+		romuva
+	}
+	major_domains = {
+		divination
+		good
+		healing
+		sun
+	}
+	character = {
+		species = human
+		character_class = aristocrat
+		culture = lithuanian
+		religion = romuva
+		gender = female
+		start_date = -2000
+	}
 }
 
 stribog = {
