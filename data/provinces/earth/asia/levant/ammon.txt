@@ -11,11 +11,10 @@ ammon = {
 	}
 	
 	history = {
-		culture = aramaic
-		religion = chaldean
-		
 		-1450 = {
 			owner = egypt #subject to Egypt c. 1450 BC; Source: William R. Shepherd, "Historical Atlas", 1911, p. 4.
+			culture = aramaic
+			religion = chaldean
 		}
 		
 		1360 = {
