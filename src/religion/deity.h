@@ -20,6 +20,9 @@ class spell;
 class trait;
 enum class divine_rank;
 
+template <typename scope_type>
+class and_condition;
+
 class deity final : public idea, public data_type<deity>
 {
 	Q_OBJECT
@@ -95,6 +98,11 @@ public:
 		return this->traits;
 	}
 
+	const and_condition<character> *get_worshiper_conditions() const
+	{
+		return this->worshiper_conditions.get();
+	}
+
 	bool can_grant_spell(const spell *spell) const;
 
 	virtual bool is_available_for_country_slot(const domain *domain, const idea_slot *slot) const override;
@@ -113,6 +121,7 @@ private:
 	culture_map<std::string> cultural_names;
 	data_entry_map<cultural_group, std::string> cultural_group_names;
 	std::vector<const trait *> traits;
+	std::unique_ptr<const and_condition<metternich::character>> worshiper_conditions;
 };
 
 }

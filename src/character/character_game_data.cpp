@@ -1482,6 +1482,10 @@ void character_game_data::initialize_patron_deity()
 
 		std::vector<const metternich::deity *> potential_deities;
 		for (const metternich::deity *deity : this->character->get_religion()->get_deities()) {
+			if (deity->get_worshiper_conditions() != nullptr && !deity->get_worshiper_conditions()->check(this->character)) {
+				continue;
+			}
+
 			for (int i = 0; i < deity->get_divine_level(); ++i) {
 				potential_deities.push_back(deity);
 			}

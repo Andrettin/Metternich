@@ -18,6 +18,7 @@
 #include "religion/divine_rank.h"
 #include "religion/pantheon.h"
 #include "religion/religion.h"
+#include "script/condition/and_condition.h"
 #include "spell/spell.h"
 #include "technology/technology.h"
 #include "util/assert_util.h"
@@ -103,6 +104,10 @@ void deity::process_gsml_scope(const gsml_data &scope)
 			const trait *trait = trait::get(value);
 			this->traits.push_back(trait);
 		}
+	} else if (tag == "worshiper_conditions") {
+		auto conditions = std::make_unique<and_condition<metternich::character>>();
+		conditions->process_gsml_data(scope);
+		this->worshiper_conditions = std::move(conditions);
 	} else if (tag == "character") {
 		this->character->process_gsml_data(scope);
 	} else {

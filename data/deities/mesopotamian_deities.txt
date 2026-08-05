@@ -11,6 +11,12 @@ adad = {
 		strength
 		water
 	}
+	worshiper_conditions = {
+		or = {
+			#character_class = farmer
+			character_class = warrior #barbarian
+		}
+	}
 	character = {
 		species = human
 		character_class = warrior #barbarian
