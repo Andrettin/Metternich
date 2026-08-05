@@ -2,6 +2,7 @@ cumbrian = {
 	name = "Cumbrian"
 	group = brythonic
 	color = { 73 91 183 }
+	language = british
 	species = {
 		human
 	}

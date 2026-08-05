@@ -2,6 +2,7 @@ highlander = {
 	name = "Highlander"
 	group = gaelic
 	color = { 76 178 178 }
+	language = scottish
 	species = {
 		human
 	}

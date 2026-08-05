@@ -2,6 +2,7 @@ polish = {
 	name = "Polish"
 	group = west_slavic
 	color = { 255 120 120 }
+	language = polish
 	primary_domain = poland
 	species = {
 		human

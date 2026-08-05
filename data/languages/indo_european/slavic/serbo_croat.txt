@@ -1,0 +1,4 @@
+serbo_croat = {
+	name = "Serbo-Croat"
+	family = slavic
+}

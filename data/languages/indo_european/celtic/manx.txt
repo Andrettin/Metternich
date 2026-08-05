@@ -1,0 +1,4 @@
+manx = {
+	name = "Manx"
+	family = celtic
+}

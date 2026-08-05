@@ -1,0 +1,4 @@
+burgundian = {
+	name = "Burgundian"
+	family = germanic
+}

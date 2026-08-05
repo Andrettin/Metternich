@@ -1,0 +1,4 @@
+proto_slavic = {
+	name = "Proto-Slavic"
+	family = slavic
+}

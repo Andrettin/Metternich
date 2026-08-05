@@ -1,6 +1,7 @@
 slavic = {
 	name = "Slavic"
 	group = slavic
+	language = proto_slavic
 	species = {
 		human
 	}

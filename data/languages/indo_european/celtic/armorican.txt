@@ -1,0 +1,4 @@
+armorican = {
+	name = "Armorican"
+	family = celtic
+}

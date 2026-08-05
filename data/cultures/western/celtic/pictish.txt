@@ -2,6 +2,7 @@ pictish = {
 	name = "Pictish"
 	group = brythonic
 	color = { 51 153 153 }
+	language = british
 	species = {
 		human
 	}

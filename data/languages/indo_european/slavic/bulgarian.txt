@@ -1,0 +1,4 @@
+bulgarian = {
+	name = "Bulgarian"
+	family = slavic
+}

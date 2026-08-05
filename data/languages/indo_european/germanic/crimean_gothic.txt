@@ -1,0 +1,4 @@
+crimean_gothic = {
+	name = "Crimean Gothic"
+	family = germanic
+}

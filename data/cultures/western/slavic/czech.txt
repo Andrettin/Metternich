@@ -2,6 +2,7 @@ czech = {
 	name = "Czech"
 	group = czechoslovak
 	color = { 120 120 255 }
+	language = czech
 	species = {
 		human
 	}

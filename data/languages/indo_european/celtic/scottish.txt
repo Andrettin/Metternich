@@ -1,0 +1,4 @@
+scottish = {
+	name = "Scottish"
+	family = celtic
+}

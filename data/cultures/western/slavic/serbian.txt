@@ -2,6 +2,7 @@ serbian = {
 	name = "Serbian"
 	group = south_slavic
 	color = { 150 65 80 }
+	language = serbo_croat
 	primary_domain = serbia
 	species = {
 		human

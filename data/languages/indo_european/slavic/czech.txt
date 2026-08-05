@@ -1,0 +1,4 @@
+czech = {
+	name = "Czech"
+	family = slavic
+}
