@@ -155,6 +155,29 @@ perun = {
 	#Slavic thunder-god; Source: "Germans, Avars and Slavs", p. 125; Source: H. Munro Chadwick, "The Oak and the Thunder-God", 1900, p. 27.
 }
 
+rod = {
+	name = "Rod"
+	pantheon = eastern_european
+	divine_rank = intermediate_deity #correct?
+	religions = {
+		slovianskan
+	}
+	major_domains = {
+		healing
+		knowledge
+		plant
+		protection
+	}
+	character = {
+		species = human
+		character_class = cleric
+		culture = slavic
+		religion = slovianskan
+		gender = male
+		start_date = -2000
+	}
+}
+
 saule = {
 	name = "Saule"
 	pantheon = eastern_european
@@ -199,6 +222,29 @@ stribog = {
 		religion = slovianskan
 		gender = male
 		father = svarog
+	}
+}
+
+svantovit = {
+	name = "Svantovit"
+	pantheon = eastern_european
+	divine_rank = intermediate_deity #correct?
+	religions = {
+		slovianskan
+	}
+	major_domains = {
+		divination
+		luck
+		plant
+		war
+	}
+	character = {
+		species = human
+		character_class = warrior
+		culture = slavic
+		religion = slovianskan
+		gender = male
+		start_date = -2000
 	}
 }
 
