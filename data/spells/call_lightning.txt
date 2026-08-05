@@ -11,6 +11,7 @@ call_lightning = {
 		alteration
 	}
 	divine_domains = {
+		thunder
 		weather
 	}
 	character_classes = {

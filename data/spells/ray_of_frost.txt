@@ -10,7 +10,11 @@ ray_of_frost = {
 	arcane_schools = {
 		evocation #Evocation: Cold
 	}
+	divine_domains = {
+		winter
+	}
 	character_class_levels = {
+		cleric = 1 #winter divine domain
 		mage = 0
 		#sorcerer = 0
 	}

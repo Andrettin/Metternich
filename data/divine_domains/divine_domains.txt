@@ -158,6 +158,10 @@ thought = {
 	name = "Thought"
 }
 
+thunder = {
+	name = "Thunder"
+}
+
 travel = {
 	name = "Travel"
 }
@@ -176,4 +180,8 @@ water = {
 
 weather = {
 	name = "Weather"
+}
+
+winter = {
+	name = "Winter"
 }
