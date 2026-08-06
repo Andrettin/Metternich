@@ -1,7 +1,7 @@
 peloponnesian_war = {
 	name = "Peloponnesian War"
 	start_date = -431
-	map_template = aegean
+	map_template = europe
 	hidden = true
 	default_domains = {
 		athens

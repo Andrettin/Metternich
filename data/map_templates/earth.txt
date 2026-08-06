@@ -25,16 +25,6 @@ earth = {
 #	pole_flattening = 100
 #}
 
-aegean = {
-	name = "Aegean"
-	size = { 512 512 }
-	world = earth
-	main_map_template = earth
-	map_start_pos = { 8544 3968 }
-	minimap_tile_scale = 0.5
-	diplomatic_map_tile_scale = 2
-}
-
 africa = {
 	name = "Africa"
 	size = { 3328 3584 }
@@ -63,33 +53,6 @@ central_europe = {
 		upper_languedoc
 		vitebsk
 		western_mediterranean_sea
-	}
-}
-
-eastern_mediterranean = {
-	name = "Eastern Mediterranean"
-	size = { 2048 1792 }
-	world = earth
-	main_map_template = earth
-	map_start_pos = { 8448 3840 }
-	minimap_tile_scale = 0.125
-	diplomatic_map_tile_scale = 0.5
-}
-
-egypt = {
-	name = "Egypt"
-	size = { 512 1024 }
-	world = earth
-	main_map_template = earth
-	map_start_pos = { 8960 4352 }
-	minimap_tile_scale = 0.5
-	diplomatic_map_tile_scale = 2
-	ignored_provinces = {
-		aegean_sea
-		attica
-		burdur
-		denizli
-		sea_of_crete
 	}
 }
 
