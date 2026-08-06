@@ -1,0 +1,232 @@
+aranzahas = {
+	name = "Aranzahas"
+	pantheon = hittite
+	divine_rank = lesser_deity
+	religions = {
+		cybelene
+	}
+	major_domains = {
+		chaos
+		war
+		water
+	}
+	worshiper_conditions = {
+		or = {
+			character_class = cleric
+			#traveler
+			character_class = warrior
+		}
+	}
+	character = {
+		species = human
+		character_class = warrior
+		culture = hittite
+		religion = cybelene
+		gender = male
+		father = kumarbis
+	}
+}
+
+cybele = {
+	name = "Cybele"
+	pantheon = hittite
+	divine_rank = greater_deity
+	religions = {
+		cybelene
+		hellenic
+	}
+	cultural_names = {
+		hittite = "Cybebe"
+	}
+	major_domains = {
+		earth
+		#fertility
+		good
+		protection
+	}
+	character = {
+		species = human
+		character_class = aristocrat
+		culture = hittite
+		religion = cybelene
+		gender = female
+		father = zeus #born of Zeus' semen which had fallen on the ground; Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 141.
+	}
+	
+	#goddess of fertility and wild nature; Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 141.
+}
+
+hebat = {
+	name = "Hebat"
+	pantheon = hittite
+	divine_rank = intermediate_deity
+	religions = {
+		cybelene
+	}
+	major_domains = {
+		animal
+		earth
+		plant
+		sun
+		war
+	}
+	worshiper_conditions = {
+		gender = female
+	}
+	character = {
+		species = human
+		character_class = aristocrat
+		culture = hittite
+		religion = cybelene
+		gender = female
+	}
+}
+
+innaras = {
+	name = "Innaras"
+	pantheon = hittite
+	divine_rank = lesser_deity
+	religions = {
+		cybelene
+	}
+	major_domains = {
+		animal
+		trickery
+		war
+	}
+	worshiper_conditions = {
+		or = {
+			character_class = cleric
+			character_class = rogue
+			gender = female
+		}
+	}
+	character = {
+		species = human
+		character_class = warrior
+		culture = hittite
+		religion = cybelene
+		gender = female
+		father = teshub
+	}
+}
+
+kumarbis = {
+	name = "Kumarbis"
+	pantheon = hittite
+	divine_rank = intermediate_deity
+	religions = {
+		cybelene
+	}
+	major_domains = {
+		chaos
+		evil
+		air #heaven
+	}
+	worshiper_conditions = {
+		or = {
+			character_class = cleric
+			character_class = mage #sage
+		}
+	}
+	character = {
+		species = human
+		character_class = mage
+		culture = hittite
+		religion = cybelene
+		gender = male
+	}
+}
+
+sharrumma = {
+	name = "Sharrumma"
+	pantheon = hittite
+	divine_rank = lesser_deity
+	religions = {
+		cybelene
+	}
+	major_domains = {
+		animal
+		protection
+		war
+	}
+	worshiper_conditions = {
+		or = {
+			character_class = aristocrat
+			character_class = cleric
+			character_class = warrior
+		}
+	}
+	character = {
+		species = human
+		character_class = warrior
+		culture = hittite
+		religion = cybelene
+		gender = male
+		father = teshub
+		mother = hebat
+	}
+}
+
+tasmisus = {
+	name = "Tasmisus"
+	pantheon = hittite
+	divine_rank = demigod
+	religions = {
+		cybelene
+	}
+	major_domains = {
+		good
+		protection
+		travel
+	}
+	worshiper_conditions = {
+		or = {
+			character_class = aristocrat #diplomat
+			character_class = cleric
+			#messenger
+		}
+	}
+	character = {
+		species = human
+		character_class = aristocrat
+		culture = hittite
+		religion = cybelene
+		gender = male
+		father = kumarbis
+	}
+}
+
+teshub = {
+	name = "Teshub"
+	pantheon = hittite
+	divine_rank = greater_deity
+	religions = {
+		cybelene
+	}
+	major_domains = {
+		#fertility
+		air #heaven
+		law
+		protection
+		thunder
+		war
+	}
+	worshiper_conditions = {
+		or = {
+			character_class = aristocrat
+			character_class = cleric
+			#charioteer
+			character_class = warrior
+		}
+	}
+	character = {
+		species = human
+		character_class = warrior
+		culture = hittite
+		religion = cybelene
+		gender = male
+		father = kumarbis
+		start_date = -1600 #Nerik was the main Hittite religious shrine in the c. 1600-1200 BC period, being dedicated to their Storm God; Source: "Civilizations Map by Map", 2026, p. 50.
+	}
+}

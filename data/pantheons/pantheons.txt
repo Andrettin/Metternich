@@ -14,6 +14,10 @@ finnish = {
 	name = "Finnish"
 }
 
+hittite = {
+	name = "Hittite"
+}
+
 mesopotamian = {
 	name = "Mesopotamian"
 }
