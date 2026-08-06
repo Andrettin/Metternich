@@ -68,7 +68,6 @@ europe = {
 		karelia
 		lake_onega
 		mazandaran
-		nubia
 		qatar
 		satakunta
 		teheran
