@@ -75,6 +75,16 @@ europe = {
 	}
 }
 
+earth_center = {
+	name = "Earth (Center)"
+	size = { 16384 8192 }
+	world = earth
+	main_map_template = earth
+	map_start_pos = { 0 768 }
+	minimap_tile_scale = 0.125
+	diplomatic_map_tile_scale = 0.5
+}
+
 south_america = {
 	name = "South America"
 	size = { 2304 3584 }
