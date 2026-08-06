@@ -344,11 +344,11 @@ void character::initialize()
 	}
 
 	if (this->get_deity() != nullptr) {
-		if (this->get_name().empty()) {
+		if (this->get_name().empty() && this->get_deity()->get_character()->get_nickname() != this->get_deity()->get_name()) {
 			this->set_name(this->get_deity()->get_name());
 		}
 
-		if (this->get_name_word() == nullptr) {
+		if (this->get_name_word() == nullptr && this->get_deity()->get_name_word() != nullptr && this->get_deity()->get_character()->get_nickname() != this->get_deity()->get_name_word()->get_anglicized_name()) {
 			this->set_name_word(this->get_deity()->get_name_word());
 		}
 	}

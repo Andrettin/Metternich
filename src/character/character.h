@@ -3,7 +3,6 @@
 #include "character/character_base.h"
 #include "database/data_entry_container.h"
 #include "database/data_type.h"
-#include "util/centesimal_int.h"
 #include "util/qunique_ptr.h"
 
 Q_MOC_INCLUDE("character/bloodline.h")
