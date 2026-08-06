@@ -38,7 +38,7 @@ map_grid_model::map_grid_model()
 				}
 			}
 
-			static constexpr int site_map_range = 8;
+			static const int site_map_range = (12 / defines::get()->get_province_map_tile_scale() / 2) + 1;
 			const QRect map_block_site_rect(QPoint(map_block_start_x - site_map_range, map_block_start_y - site_map_range), defines::get()->get_map_block_size() + QSize(site_map_range * 2, site_map_range * 2));
 
 			for (const site *site : map::get()->get_sites()) {
