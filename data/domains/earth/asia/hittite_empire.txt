@@ -16,4 +16,20 @@ hittite_empire = {
 			kingdom = "Hittite Kingdom"
 		}
 	}
+	
+	history = {
+		-1650 = {
+			government_type = monarchy
+			
+			offices = {
+				ruler = hattusili_of_the_hittite_empire #Hattusili was king of the Hittites c. 1650 BC; Source: "Civilizations Map by Map", 2026, p. 50.
+			}
+		}
+		
+		-1595 = {
+			offices = {
+				ruler = mursili_i_of_the_hittite_empire #Mursili I was king of the Hittites c. 1595 BC; Source: "Civilizations Map by Map", 2026, p. 50.
+			}
+		}
+	}
 }

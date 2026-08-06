@@ -1,0 +1,26 @@
+hattusili_of_the_hittite_empire = {
+	name = "Hattusili"
+	character_class = aristocrat
+	rank = lord #king
+	culture = hittite
+	religion = cybelene
+	home_site = hattusa
+	gender = male
+	start_date = -1650 #was king of the Hittites c. 1650 BC; Source: "Civilizations Map by Map", 2026, p. 50.
+	
+	#originally named Labarna, he took a new regnal name, Hattusili, after establishing his capital at Hattusa; Source: "Civilizations Map by Map", 2026, p. 50.
+}
+
+mursili_i_of_the_hittite_empire = {
+	name = "Mursili"
+	character_class = aristocrat
+	rank = lord #king
+	culture = hittite
+	religion = cybelene
+	home_site = hattusa
+	gender = male
+	start_date = -1595 #was king of the Hittites c. 1595 BC; Source: "Civilizations Map by Map", 2026, p. 50.
+	death_date = -1590 #assassinated c. 1590 BC; Source: "Civilizations Map by Map", 2026, p. 50.
+	
+	#grandson of king Hattusili; Source: "Civilizations Map by Map", 2026, p. 50.
+}
