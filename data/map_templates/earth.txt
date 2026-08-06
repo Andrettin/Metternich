@@ -58,7 +58,7 @@ central_europe = {
 
 europe = {
 	name = "Europe"
-	size = { 2816 2304 }
+	size = { 2816 2816 }
 	world = earth
 	main_map_template = earth
 	map_start_pos = { 7168 2816 }
