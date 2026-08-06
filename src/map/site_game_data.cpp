@@ -863,6 +863,8 @@ QCoro::Task<void> site_game_data::set_holding_type(const metternich::holding_typ
 			if (this->get_owner()->get_game_data()->get_capital() == this->site) {
 				co_await this->get_owner()->get_game_data()->choose_capital();
 			}
+
+			co_await this->set_owner(this->get_province()->get_game_data()->get_owner());
 		}
 	}
 
