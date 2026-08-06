@@ -21,6 +21,7 @@ philip_ii_of_spain = {
 			character_class = aristocrat
 			character_class = warrior
 			character_class = paladin
+			character_class = ranger
 			taxon = archon
 			species = air_elemental
 			species = titan

@@ -27,6 +27,34 @@ aranzahas = {
 	}
 }
 
+astabis = {
+	name = "Astabis"
+	pantheon = hittite
+	divine_rank = lesser_deity
+	religions = {
+		cybelene
+	}
+	major_domains = {
+		protection
+		strength
+		war
+	}
+	worshiper_conditions = {
+		or = {
+			character_class = cleric
+			character_class = warrior
+		}
+	}
+	character = {
+		species = human
+		character_class = warrior
+		culture = hittite
+		religion = cybelene
+		gender = male
+		contemporary_character = teshub #to give him a start date
+	}
+}
+
 cybele = {
 	name = "Cybele"
 	pantheon = hittite
@@ -54,6 +82,88 @@ cybele = {
 	}
 	
 	#goddess of fertility and wild nature; Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 141.
+}
+
+gulses = { #actually three different goddesses
+	name = "Gulses"
+	pantheon = hittite
+	divine_rank = demigod
+	religions = {
+		cybelene
+	}
+	major_domains = {
+		death
+		healing
+		luck
+		#pestilence
+	}
+	worshiper_conditions = {
+		or = {
+			character_class = cleric
+			character_class = mage #diviner
+		}
+	}
+	character = {
+		species = human
+		character_class = cleric
+		culture = hittite
+		religion = cybelene
+		gender = female
+		contemporary_character = teshub #to give them a start date
+	}
+}
+
+hannahanna = {
+	name = "Hannahanna"
+	pantheon = hittite
+	divine_rank = lesser_deity
+	religions = {
+		cybelene
+	}
+	major_domains = {
+		animal
+		chaos
+		#fertility
+		good
+		air #heaven
+	}
+	worshiper_conditions = {
+		or = {
+			character_class = cleric
+			#herdsman
+			gender = female #wives
+		}
+	}
+	character = {
+		species = human
+		character_class = aristocrat
+		culture = hittite
+		religion = cybelene
+		gender = female
+		contemporary_character = teshub #to give her a start date
+	}
+}
+
+hattia = {
+	name = "Hattia"
+	pantheon = hittite
+	divine_rank = intermediate_deity
+	religions = {
+		cybelene
+	}
+	major_domains = {
+		protection
+		strength
+		war
+	}
+	character = {
+		species = human
+		character_class = warrior
+		culture = hittite
+		religion = cybelene
+		gender = male
+		contemporary_character = teshub #to give him a start date
+	}
 }
 
 hebat = {
@@ -98,7 +208,7 @@ innaras = {
 		or = {
 			character_class = cleric
 			character_class = rogue
-			gender = female
+			gender = female #daughters
 		}
 	}
 	character = {
@@ -108,6 +218,93 @@ innaras = {
 		religion = cybelene
 		gender = female
 		father = teshub
+	}
+}
+
+kamrusepas = {
+	name = "Kamrusepas"
+	pantheon = hittite
+	divine_rank = lesser_deity
+	religions = {
+		cybelene
+	}
+	major_domains = {
+		fire
+		healing
+		knowledge
+		magic
+	}
+	worshiper_conditions = {
+		or = {
+			character_class = cleric
+			character_class = cleric #healer
+			character_class = mage #sorcerer
+		}
+	}
+	character = {
+		species = human
+		character_class = cleric
+		culture = hittite
+		religion = cybelene
+		gender = female
+		contemporary_character = teshub #to give her a start date
+	}
+}
+
+karunta = {
+	name = "Karunta"
+	pantheon = hittite
+	divine_rank = lesser_deity
+	religions = {
+		cybelene
+	}
+	major_domains = {
+		good
+		protection
+		travel
+	}
+	worshiper_conditions = {
+		or = {
+			character_class = cleric
+			character_class = ranger
+			#villager
+		}
+	}
+	character = {
+		species = human
+		character_class = ranger
+		culture = hittite
+		religion = cybelene
+		gender = male
+		contemporary_character = teshub #to give him a start date
+	}
+}
+
+kashku = {
+	name = "Kashku"
+	pantheon = hittite
+	divine_rank = lesser_deity
+	religions = {
+		cybelene
+	}
+	major_domains = {
+		chaos
+		protection
+		travel
+	}
+	worshiper_conditions = {
+		or = {
+			character_class = cleric
+			#traveler
+		}
+	}
+	character = {
+		species = human
+		character_class = aristocrat
+		culture = hittite
+		religion = cybelene
+		gender = male
+		contemporary_character = teshub #to give him a start date
 	}
 }
 
@@ -168,6 +365,38 @@ sharrumma = {
 	}
 }
 
+the_sword_god = {
+	name = "The Sword God"
+	pantheon = hittite
+	divine_rank = intermediate_deity
+	religions = {
+		cybelene
+	}
+	major_domains = {
+		death
+		destruction
+		evil
+		healing
+	}
+	worshiper_conditions = {
+		or = {
+			character_class = cleric
+			character_class = mage #sorcerer
+			#necromancer
+			character_class = rogue #thief
+		}
+	}
+	character = {
+		nickname = "The Sword God"
+		species = human
+		character_class = warrior
+		culture = hittite
+		religion = cybelene
+		gender = male
+		contemporary_character = teshub #to give him a start date
+	}
+}
+
 tasmisus = {
 	name = "Tasmisus"
 	pantheon = hittite
@@ -194,6 +423,34 @@ tasmisus = {
 		religion = cybelene
 		gender = male
 		father = kumarbis
+	}
+}
+
+telipinu = {
+	name = "Telipinu"
+	pantheon = hittite
+	divine_rank = intermediate_deity
+	religions = {
+		cybelene
+	}
+	major_domains = {
+		earth #fertility
+		good
+		plant
+	}
+	worshiper_conditions = {
+		or = {
+			character_class = cleric
+			#farmer
+		}
+	}
+	character = {
+		species = human
+		character_class = aristocrat
+		culture = hittite
+		religion = cybelene
+		gender = male
+		contemporary_character = teshub #to give him a start date
 	}
 }
 

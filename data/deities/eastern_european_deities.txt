@@ -35,6 +35,7 @@ death_crone = {
 		trickery
 	}
 	character = {
+		nickname = "Death Crone"
 		species = human
 		character_class = cleric
 		culture = slavic
